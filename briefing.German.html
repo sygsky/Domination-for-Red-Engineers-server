@@ -1,0 +1,215 @@
+<html>
+<head>
+<title>briefing.html</title>
+<meta name="author" content="Xeno">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#FF0000" alink="#FF0000" vlink="#FF0000">
+
+<h2><a name="Main"></a></h2>
+
+<h6>
+Version Domination! 4.1+ for Red Engineers ARMA server, ACE1.09<br>
+Der Feind sind die Kraefte der USA.<br>
+Das Ziel ist es, die Insel von allen feindlichen Truppen befreien.<br>
+Um ein Ziel zu befreien, sind die feindlichen Kraefte dort und der Radio Tower zu zerstoeren.
+<br><br>Waehrend dem Spiel gibt es verschiedene Nebenmissionen (Side Missions) bei denen ihr euch extra Fahrzeuge verdienen koennt, wenn ihr sie loest.
+<br><br>
+Sobald ein Hauptziel befreit ist, wird an einem zufaelligen Ort im Bereich des Hauptziels ein Flaggenmast erstellt, von wo aus man per Parajump abspringen kann (falls aktiviert).
+<br><br>
+Alle Fahrzeuge koennen mit den Mi17 Helikoptern transportiert werden, Ausnahmen stellen die M1, T72 und Shilkas dar.<br><br>
+Die MHQ BMPs sind die mobilen respawn Punkte, also diese bitte moeglichst nicht vergessen.<br>
+Der Fahrer eines MHQ BMP oder der Pilot eines Helikopters kann Munitionskisten abwerfen!<br>
+Dafuer muss aber eine Munitionskiste am Ammo Point in der Basis geladen werden !!!<br>
+Maximal koennen 10 Munitionskisten gleichzeitig erstellt werden. Die Munitionskisten geloescht, wenn sie zerstoert wurde. Ansonsten muss wieder eine Munitionskiste auf der Basis geladen werden.
+<br><br>
+Der Engineer kann alle Fahrzeuge reparieren (in der AI Version koennen dies alle Spieler). Ebenso ist er in der Lage, umgekippte Panzer wieder auf die Kette zu stellen, wenn er einen Reparatur Truck in der Naehe hat. 
+Engineers koennen auch statische Waffen, wie D30, DSHKM, etc, auf Ural Salvage Trucks laden. Die Trucks befinden sich auf der Basis.
+Ein Engineer kann nur einmal reparieren/refuellen (muss an der Basis wieder aufgeladen werden) wenn kein Salvage oder Repair Truck in der N�he ist.
+<br><br>
+Die Flagge auf Deiner Basis kann als Teleporter zu den Mobile Respawns und fuer den Parajump benutzt werden.
+<br><br>
+Die Mitglieder von Team Bravo (Specops) koennen ueber Hindernisse wie Mauern oder Zaeune klettern (in der AI Version koennen dies alle Spieler).
+<br><br>
+Wenn ein gewonnenes Vehikel (Main Target oder Sidemission) zerstoert wird, so kann dieses Vehikel mit dem Chopper 4 (oder W) geborgen und zu dem Wreck Repair Point an der Base geflogen werden. Dort wird ein neues Vehikel erstellt.<br>
+Chopper 4 (W) kann nur noch diese zerstoerten Wracks transportieren.
+<br><br>
+Die Artillery Operators koennen alle sechs Minuten Artillery Schlaege ausfuehren (in der AI Version koennen dies alle Spieler). Sie sind ebenfalls zum retten von Geiseln vorgesehen (Hauptziel Mission). Die Geiseln muessen zu der <a href = "marker:teleporter">Flagge</a> auf der Base gebracht werden.
+<br><br>
+Die Leader von Gruppe Alpha und Gruppe Charlie (alpha_1 und charlie_1) koennen per Air Drop entweder ein Artillerie Geschuetz, ein Fahrzeug oder eine Munkiste einfliegen lassen (in der AI Version koennen dies alle Spieler).
+<br><br>
+MG Schuetzen koennen MG Nester aufstellen, Sanitaeter Medic Zelte.
+<br><br>
+Wenn der sogenannnte Headbug/Freelookbug auftritt, einfach das "Fix Headbug" Button im Status Dialog druecken um den Fehler zu beheben. Ebenso laesst sich die Sichtweite per Status Dialog einstellen.
+<BR><BR>
+Die Hauptwaffe kann in den Rucksack (Backpack) getan werden, die Magazine werden dann ebenfalls dort abgelegt. So kann man eine zweite Waffe aufnehmen und zwischen dieser und der im Rucksack hin und her wechseln.
+<br><br>
+Ränge nach Punkten:<br>
+<p align="left"><img src="img\pvt.paa" width="64" height="64">   0 score = Privat</p><br>
+<p align="left"><img src="img\corp.paa" width="64" height="64">  40 score = Corporal</p><br>
+<p align="left"><img src="img\sgt.paa" width="64" height="64">  60 score = Sergeant</p><br>
+<p align="left"><img src="img\ltn.paa" width="64" height="64"> 100 score = Leutenean</p><br>
+<p align="left"><img src="img\cpt.paa" width="64" height="64"> 150 score = Kapitän</p><br>
+<p align="left"><img src="img\mjr.paa" width="64" height="64"> 300 score = Dur</p><br>
+<p align="left"><img src="img\col.paa" width="64" height="64"> 800 score = Oberst</p><br>
+<br><br><br>Der Feind sind die US-Truppen.<br>
+    Mission by Xeno<BR><BR>Verwendet KillJoys Wetter-Skript (erweitert), Tage HALO parajump Skript (erweitert), load/unload-Skripte (erweitert) " aus -eutf-Myke, norrins revive scripts, Dr. Augapfel ist Teamstatus Dialog, KRON_Strings von Kronzky, ROMMELS suppresive Skripte, Mandos Fallschirm und heliroute und animierte Buchstaben von BIS.<br>
+    (Alle Scripte geändert werden).
+<BR><BR>
+Have a lot of FUN !
+</h6>
+<hr>
+
+<p><a name="plan"></a>
+Welcome to Domination! One Team 3<br><br>
+Kaempfe gegen die US Truppen und nimm alle Ziele auf Sahrani ein.
+Dein Team startet auf dem <a href="marker:Start">Flughafen Paraiso</a>.
+</p>
+<hr>
+<p><a name="obj_1"></a>
+<!-- [OBJ_1] -->
+Hehmen und zu halten Flugplatz...
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_2"></a>
+<!-- [OBJ_2] -->
+Nehmt <a href = "marker:dummy_marker">Cayo</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_3"></a>
+<!-- [OBJ_3] -->
+Nehmt <a href = "marker:dummy_marker">Iguana</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_4"></a>
+<!-- [OBJ_4] -->
+Nehmt <a href = "marker:dummy_marker">Arcadia</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_5"></a>
+<!-- [OBJ_5] -->
+Nehmt <a href = "marker:dummy_marker">Chantico</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_6"></a>
+<!-- [OBJ_6] -->
+Nehmt <a href = "marker:dummy_marker">Somato</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_7"></a>
+<!-- [OBJ_7] -->
+Nehmt <a href = "marker:dummy_marker">Paraiso</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_8"></a>
+<!-- [OBJ_8] -->
+Nehmt <a href = "marker:dummy_marker">Ortego</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_9"></a>
+<!-- [OBJ_9] -->
+Nehmt <a href = "marker:dummy_marker">Dolores</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_10"></a>
+<!-- [OBJ_10] -->
+Nehmt <a href = "marker:dummy_marker">Corazol</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_11"></a>
+<!-- [OBJ_11] -->
+Nehmt <a href = "marker:dummy_marker">Obregan</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_12"></a>
+<!-- [OBJ_12] -->
+Nehmt <a href = "marker:dummy_marker">Mercalillo</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_13"></a>
+<!-- [OBJ_13] -->
+Nehmt <a href = "marker:dummy_marker">Bagango</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_14"></a>
+<!-- [OBJ_14] -->
+Nehmt <a href = "marker:dummy_marker">Masbete</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_15"></a>
+<!-- [OBJ_15] -->
+Nehmt <a href = "marker:dummy_marker">Pita</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_16"></a>
+<!-- [OBJ_16] -->
+Nehmt <a href = "marker:dummy_marker">Eponia</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_17"></a>
+<!-- [OBJ_17] -->
+Nehmt <a href = "marker:dummy_marker">Everon</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_18"></a>
+<!-- [OBJ_18] -->
+Nehmt <a href = "marker:dummy_marker">Pacamac</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_19"></a>
+<!-- [OBJ_19] -->
+Nehmt <a href = "marker:dummy_marker">Hunapu</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_20"></a>
+<!-- [OBJ_20] -->
+Nehmt <a href = "marker:dummy_marker">Mataredo</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_21"></a>
+<!-- [OBJ_21] -->
+Nehmt <a href = "marker:dummy_marker">Carmen</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_22"></a>
+<!-- [OBJ_22] -->
+Nehmt <a href = "marker:dummy_marker">Rahmadi</a> ein
+<!-- [END] -->
+</p>
+<hr>
+<p><a name="obj_23"></a>
+<!-- [OBJ_22] -->
+Nehmt <a href = "marker:dummy_marker">Gaula</a> ein
+<!-- [END] -->
+</p>
+<hr>
+
+<h2><p><a name="Debriefing:End1">Mission successful!!!</a></p></h2>
+<br>
+<p>
+Alle Hauptziele sind befreit.
+</p>
+<br>
+
+</body>
+</html>

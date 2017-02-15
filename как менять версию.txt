@@ -1,0 +1,22 @@
+Версия меняется в следующих местах:
+0. имя самого файла/директории миссии, 
+   пример: 
+	
+	domination_3_81_east_ace_ra.sara
+
+1. mission.sqm. 
+	пример:
+	
+	class Intel
+	{
+		briefingName="co@10 Domination!ACE East [3.82] RA DBG";
+		
+2. briefing.html,
+  пример:
+  
+	Версия Domination! 3.81 for Red Engineers ARMA server, ACE1.09
+	
+3. briefing.Russian.html - там же
+
+5. server.cfg на сервере - в нижней части файла, в имени миссии, чтобы к ней правильно обратиться при очередном запуске,
+   например: template = domination_3_821_east_ace_ra.sara;
