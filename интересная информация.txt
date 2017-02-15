@@ -1,24 +1,24 @@
-1. Город очищается от остатков войск и техники через 6 минут после его освобождения в радиусе +50 метровот границы зоны.
-2. Город проверяется на наличие минимального кол-ва пехоты (5 чел.) и техники (1 шт.) в радиусе +20 метров от границы зоны
-3. Активная зона у каждого города своя, но отображается на карте всегда максимальная зона (радиус маркера) в 300 метров.
-   Реально зону в 300 метров имеют только города: Paraiso, Dolores и Corasol. Возможно, зона в 300 метров будет установлена для Bagango и Ortego.
-4. Погода генерируется на сервере. Через weathergen2.sqf, вызываемый из init.sqf с проверкой на серверный запуск.
+1. Р“РѕСЂРѕРґ РѕС‡РёС‰Р°РµС‚СЃСЏ РѕС‚ РѕСЃС‚Р°С‚РєРѕРІ РІРѕР№СЃРє Рё С‚РµС…РЅРёРєРё С‡РµСЂРµР· 6 РјРёРЅСѓС‚ РїРѕСЃР»Рµ РµРіРѕ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ РІ СЂР°РґРёСѓСЃРµ +50 РјРµС‚СЂРѕРІРѕС‚ РіСЂР°РЅРёС†С‹ Р·РѕРЅС‹.
+2. Р“РѕСЂРѕРґ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ РЅР° РЅР°Р»РёС‡РёРµ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ РєРѕР»-РІР° РїРµС…РѕС‚С‹ (5 С‡РµР».) Рё С‚РµС…РЅРёРєРё (1 С€С‚.) РІ СЂР°РґРёСѓСЃРµ +20 РјРµС‚СЂРѕРІ РѕС‚ РіСЂР°РЅРёС†С‹ Р·РѕРЅС‹
+3. РђРєС‚РёРІРЅР°СЏ Р·РѕРЅР° Сѓ РєР°Р¶РґРѕРіРѕ РіРѕСЂРѕРґР° СЃРІРѕСЏ, РЅРѕ РѕС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ РЅР° РєР°СЂС‚Рµ РІСЃРµРіРґР° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ Р·РѕРЅР° (СЂР°РґРёСѓСЃ РјР°СЂРєРµСЂР°) РІ 300 РјРµС‚СЂРѕРІ.
+   Р РµР°Р»СЊРЅРѕ Р·РѕРЅСѓ РІ 300 РјРµС‚СЂРѕРІ РёРјРµСЋС‚ С‚РѕР»СЊРєРѕ РіРѕСЂРѕРґР°: Paraiso, Dolores Рё Corasol. Р’РѕР·РјРѕР¶РЅРѕ, Р·РѕРЅР° РІ 300 РјРµС‚СЂРѕРІ Р±СѓРґРµС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅР° РґР»СЏ Bagango Рё Ortego.
+4. РџРѕРіРѕРґР° РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ РЅР° СЃРµСЂРІРµСЂРµ. Р§РµСЂРµР· weathergen2.sqf, РІС‹Р·С‹РІР°РµРјС‹Р№ РёР· init.sqf СЃ РїСЂРѕРІРµСЂРєРѕР№ РЅР° СЃРµСЂРІРµСЂРЅС‹Р№ Р·Р°РїСѓСЃРє.
 
-Сохранение строк, вдруг пригодятся:
-STR_SYS_160,"Engineer","Ingenieur","инженер"
-STR_SYS_161,"Engineering platoon commander","Der Kommandant von Engineering-PLATOON","командир инженерного взвода"
-STR_SYS_162,"AT Soldier","BEI Soldaten","гранатометчик"
-STR_SYS_163,"GL Soldier","GL Soldat","боец с подствольником"
-STR_SYS_164,"MG Gunner","MG Shooter","пулемётчик"
-STR_SYS_165,"Group Leader","Gruppenleiter","командир"
-STR_SYS_166,"Medic","Honig","медик"
-STR_SYS_167,"Sniper","Sniper","снайпер"
-STR_SYS_168,"VDV Leader","Fuhrer VDV","комвзвода ВДВ"
-STR_SYS_169,"Medic VDV Irina","Honig VDV Irina","медик ВДВ Ирина";
-STR_SYS_170,"Spotter","Spotter","корректировщик"
-STR_SYS_171,"Platoon commander","Zugfuhrer","командир взвода"
-STR_SYS_172,"Operator","Operator","оператор"
-STR_SYS_173,"SpecOps leader","SpecOps Fuhrer","комвзвода спецназа"
-STR_SYS_174,"First Artillery Operator and Rescue","Ersten Artillerie-Betreiber und Rettung","первый артиллерист-спасатель"
-STR_SYS_175,"Second Artillery Operator and Rescue","Zweite Artillerie-Betreiber und Rettung","второй артиллерист-спасатель"
-STR_SYS_176,"Mech-Inf. platoon commander","Mech-Inf. Zugfuhrer","комвзвода мотострелков"
+РЎРѕС…СЂР°РЅРµРЅРёРµ СЃС‚СЂРѕРє, РІРґСЂСѓРі РїСЂРёРіРѕРґСЏС‚СЃСЏ:
+STR_SYS_160,"Engineer","Ingenieur","РёРЅР¶РµРЅРµСЂ"
+STR_SYS_161,"Engineering platoon commander","Der Kommandant von Engineering-PLATOON","РєРѕРјР°РЅРґРёСЂ РёРЅР¶РµРЅРµСЂРЅРѕРіРѕ РІР·РІРѕРґР°"
+STR_SYS_162,"AT Soldier","BEI Soldaten","РіСЂР°РЅР°С‚РѕРјРµС‚С‡РёРє"
+STR_SYS_163,"GL Soldier","GL Soldat","Р±РѕРµС† СЃ РїРѕРґСЃС‚РІРѕР»СЊРЅРёРєРѕРј"
+STR_SYS_164,"MG Gunner","MG Shooter","РїСѓР»РµРјС‘С‚С‡РёРє"
+STR_SYS_165,"Group Leader","Gruppenleiter","РєРѕРјР°РЅРґРёСЂ"
+STR_SYS_166,"Medic","Honig","РјРµРґРёРє"
+STR_SYS_167,"Sniper","Sniper","СЃРЅР°Р№РїРµСЂ"
+STR_SYS_168,"VDV Leader","Fuhrer VDV","РєРѕРјРІР·РІРѕРґР° Р’Р”Р’"
+STR_SYS_169,"Medic VDV Irina","Honig VDV Irina","РјРµРґРёРє Р’Р”Р’ РСЂРёРЅР°";
+STR_SYS_170,"Spotter","Spotter","РєРѕСЂСЂРµРєС‚РёСЂРѕРІС‰РёРє"
+STR_SYS_171,"Platoon commander","Zugfuhrer","РєРѕРјР°РЅРґРёСЂ РІР·РІРѕРґР°"
+STR_SYS_172,"Operator","Operator","РѕРїРµСЂР°С‚РѕСЂ"
+STR_SYS_173,"SpecOps leader","SpecOps Fuhrer","РєРѕРјРІР·РІРѕРґР° СЃРїРµС†РЅР°Р·Р°"
+STR_SYS_174,"First Artillery Operator and Rescue","Ersten Artillerie-Betreiber und Rettung","РїРµСЂРІС‹Р№ Р°СЂС‚РёР»Р»РµСЂРёСЃС‚-СЃРїР°СЃР°С‚РµР»СЊ"
+STR_SYS_175,"Second Artillery Operator and Rescue","Zweite Artillerie-Betreiber und Rettung","РІС‚РѕСЂРѕР№ Р°СЂС‚РёР»Р»РµСЂРёСЃС‚-СЃРїР°СЃР°С‚РµР»СЊ"
+STR_SYS_176,"Mech-Inf. platoon commander","Mech-Inf. Zugfuhrer","РєРѕРјРІР·РІРѕРґР° РјРѕС‚РѕСЃС‚СЂРµР»РєРѕРІ"
