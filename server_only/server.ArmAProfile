@@ -1,0 +1,78 @@
+class Difficulties
+{
+	class regular				// Displayed as "Cadet"
+	{
+		class Flags
+		{
+			// These are the settings. Set a value to 0 to disable the feature, or set it to 1 to enable it.
+			
+			Armor=1;		// Gives you improved body armor, tank armor etc
+			
+			FriendlyTag=1;		// Displays information on friendly units. ONLY WORKS WITH 'Weaponcursor=0', eg crosshair on.
+			EnemyTag=1;		// Displays information on enemy units
+			
+			HUD=1;			// Shows you leaders location and your position in formation
+			HUDPerm=1;		// Shows HUD permanently
+			
+			HUDWp=1;		// Shows Waypoints right after they're ordered to you
+			HUDWpPerm=1;		// Shows Waypoints permanently
+			
+			WeaponCursor=1;		// Shows the crosshair for your weapon
+			AutoAim=1;		// Enables auto aim when you're not looking through your weapon's scope. Also works with crosshair off
+			AutoGuideAT=1;		// AT missiles will be automatically guided to their target. If 0, player has to lock onto the target.
+			
+			3rdPersonView=1;	// This turns 3rd(third) person view and group leader view on or off. Please never talk of this as "3D view" - ArmA is not an arcade game !
+			ClockIndicator=1;	// Displays the clock indicator on the left of your screen when giving/receiving orders like "At 11 o'clock, enemy man at 200 meters"
+			Map=1;			// Shows symbols for all objects known to your gruop on the map. This will NOT disable the map itself !
+			Tracers=1;		// Displays tracers even of small arms that in real life would not have tracers
+			
+			AutoSpot=1;		// If you're close enough to an enemy, you'll report it without right-clicking
+			UltraAI=0;		// Enables some kind of super AI that hears and sses more and has better tactics. This is for both friendly and enemy sides.
+			
+			UnlimitedSaves=1;	// Enables saing permanently. For single player missions. But you then can only load the last save state.
+			
+			DeathMessages=1;	// (1.09 and later) Displays "XXX was killed by YYY" messages in multiplayer
+			NetStats=1;		// (1.09 and later) Enables the scoreboard functionality in MP
+			VonID=1;		// (1.09 and later) When using VoN, display the name of the player speaking.
+		};
+		
+		// These are the skills. Value may range from 0.000000 to 1.000000
+		skillFriendly=0.350000;		// Friendly tactics skill
+		skillEnemy=0.350000;		// Enemy tactics skill
+		precisionFriendly=0.350000;	// Friendly shooting precision
+		precisionEnemy=0.350000;	// Enemy shooting precision
+	};
+	
+	
+	class veteran			// Most of the options from above are not available, because they're off by default.
+	{
+		// Also soldiers/vehicles die sooner upon damage (have no armor or body armor).
+		class Flags
+		{
+			HUD=1;			// Shows you leaders location and your position in formation
+			HUDWp=1;		// Shows Waypoints right after they're ordered to you 
+			HUDWpPerm=0;		// Shows Waypoints permanently
+			ClockIndicator=1;	// Displays the clock indicator on the left of your screen when giving/receiving orders like "At 11 o'clock, eemy man at 200 meters"
+			3rdPersonView=1;	// This turns 3rd(third) person view and group leader view on or off. Please never talk of this as "3D view" - ArmA is not an arcade game !
+			Tracers=0;		// Displays tracers even of small arms that in real life would not have tracers
+
+			WeaponCursor=0;		// Shows the crosshair for your weapon
+			AutoAim=0;		// Enables auto aim when you're not looking through your weapon's scope. Also works with crosshair off
+			AutoGuideAT=0;		// AT missiles will be automatically guided to their target. If 0, player has to lock onto the target.
+
+			Map=0;			// Shows symbols for all objects known to your group on the map. This will NOT disable the map itself !
+			AutoSpot=1;		// If you're close enough to an enemy, you'll report it without right-clicking
+			UltraAI=1;		// Enables some kind of super AI that hears and sses more and has better tactics. This is for both friendly and enemy sides.
+
+			DeathMessages=1;	// (1.09 and later) Displays "XXX was killed by YYY" messages in multiplayer
+			NetStats=1;		// (1.09 and later) Enables the scoreboard functionality in MP
+			VonID=0;		// (1.09 and later) When using VoN, display the name of the player speaking.
+		};
+		
+		// These are the skills. Value may range from 0.000000 to 1.000000
+		skillFriendly=0.850000;
+		skillEnemy=1.000000;
+		precisionFriendly=0.850000;
+		precisionEnemy=0.850000;
+	};
+};
