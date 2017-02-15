@@ -1,4 +1,2 @@
-tik
+Xeno Domination for Red-Engineers Server
 ===
-
-First attempt to share "tik" project
