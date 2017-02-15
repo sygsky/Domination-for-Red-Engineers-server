@@ -1,0 +1,125 @@
+Still WIP, so things may change (specially for D4 for ArmA 2)
+
+Small HowTo.
+
+You have to put your sidemission file into folder m for Sahrani.
+The filename needs an index number, for example 12 for x_m12.sqf.
+
+Add that index number to x_missionssetup.sqf in sm_array (#ifdef __DEFAULT__ for Sahrani)
+
+Random sidemissions get picked if d_random_sm_array is set to true.
+If set to false, the same order is used as specified in sm_array.
+
+The mission file itself just needs the following:
+
+1.
+x_sm_pos
+x_sm_type
+
+x_sm_pos is an array with position arrays. First element (position) is the exact location of the sidemission.
+(For convoy missions the first element (position) is the startpoint of the convoy, the second element (position) is the endpoint).
+
+x_sm_type = "normal" for all normal missions, "convoy" for convoy missions.
+
+Example:
+x_sm_pos = [[14258.5,15169.1,0]]; // radar tower on Pico de Perez
+x_sm_type = "normal"; // "convoy"
+
+2.
+#ifdef __SMMISSIONS_MARKER__
+if (true) exitWith {};
+#endif
+You have to add that if you want to debug the sidemissions positions but it is optional.
+
+3.
+Add a text for the current mission in current_mission_text and a text for the resolved mission in current_mission_resolved_text.
+Be sure that you add the if statement if (X_Client) then { around it.
+
+Example:
+if (X_Client) then {
+	current_mission_text = "There is a radar tower on the top of mount Pico de Perez. Find it and destroy it.";
+	current_mission_resolved_text = "Good job. The radar tower on top of mount Pico de Perez is down.";
+};
+
+4.
+The buildup of the sidemission on the server. Units, vehicles, whatever you want. It's up to you.
+
+Example:
+if (isServer) then {
+	__Poss
+	_vehicle = "Land_radar" createvehicle (_poss);
+	_vehicle setVectorUp [0,0,1];
+	[_vehicle] spawn XCheckSMHardTarget;
+	sleep 3.21;
+	["specops", 1, "basic", 1, _poss,50,true] spawn XCreateInf;
+	__AddToExtraVec(_vehicle)
+};
+Creates a small radar tower and a specops and normal infantry group.
+Everything concerning the radio tower gets handled in XCheckSMHardTarget.
+
+5.
+To end a sidemission you have just to set the following variables...
+
+side_mission_winner = 2;
+and
+side_mission_resolved = true;
+
+If side_mission_resolved gets set to true the sidemission will end and that will get announced to the players.
+So be sure to set the correct side_mission_winner ;)
+In all normal version side_mission_winner is 2, so set side_mission_winner = 2; before you set side_mission_resolved to true.
+
+There are some other values for side_mission_winner:
+
+-1: The sidemission target died due to a tragic accident...
+-2: The enemy decided to destroy the sidemission target by itself...
+-300: The convoy reached its destination..."
+-400: None or less than 8 prisoners made it back to base..."
+-500: The enemy officer was killed..."
+-600: The prototype was destroyed before it reached your base..."
+
+
+
+Some special functions and macros for sidemissions:
+
+XCreateInf:
+	Example: ["specops", 1, "basic", 1, _poss,50,true] spawn XCreateInf;
+	Will spawn one specops group and one normal infantry group.
+
+	Parameters:
+	1: can be "specops" or "basic"
+	2: number of groups for first type
+	3: can be "specops" or "basic"
+	4: number of groups for second type
+	5: position
+	6: random radius where the groups will spawn
+	7: true = groups will patrol, false = groups do not patrol
+	   (patrol makes only sense if radius is >= 50)
+
+XCreateArmor:
+	Example: ["shilka", 1, "bmp", 1, "tank", 1, _pos_other,1,100,true] spawn XCreateArmor;
+	Will spawn one AA group, one APC group and one tank group.
+
+	Parameters:
+	1: can be "shilka", "bmp", "tank", "brdm", "uaz_mg", "uaz_grenade"
+	2: number of groups for first type
+	3: can be "shilka", "bmp", "tank", "brdm", "uaz_mg", "uaz_grenade"
+	4: number of groups for second type
+	5: can be "shilka", "bmp", "tank", "brdm", "uaz_mg", "uaz_grenade"
+	6: number of groups for third type
+	7: position
+	8: vehicles in group
+	9: random radius where the groups will spawn
+	10: true = groups will patrol, false = groups do not patrol
+	    (patrol makes only sense if radius is >= 50)
+
+XCheckSMHardTarget:
+	Example: [_vehicle] spawn XCheckSMHardTarget;
+	Will add the vehicle to the hard target handler.
+	Means, it will add hit and damaged eventhandlers to the vehicle and remove it if player is within 20 m and
+	it will add a killed eventhandler to end the sidemission if the vehicle (vehicle, building, whatever) gets destroyed
+	(side_mission_winner = 2; and side_mission_resolved = true; get added automatically)
+
+__AddToExtraVec(ddvec)
+	Macro
+	Will add ddvec to extra_mission_vehicle_remover_array which will remove all extra mission vehicles after the mission
+	is finished. You have to include x_macros.sqf for that (#include "x_macros.sqf")
