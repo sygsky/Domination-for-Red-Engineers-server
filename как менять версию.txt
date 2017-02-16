@@ -18,5 +18,7 @@
 	
 3. briefing.Russian.html - там же
 
+4. briefing.German.html - там же
+
 5. server.cfg на сервере - в нижней части файла, в имени миссии, чтобы к ней правильно обратиться при очередном запуске,
    например: template = domination_3_821_east_ace_ra.sara;
