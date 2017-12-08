@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = "На вершине горы Monte Liberacion построена телебашня. Враг разместил на ней своё радиопередающее оборудование. Задача: уничтожить источник дезинформации.";
 	current_mission_resolved_text = "Задание выполнено! Вражеская телеигла уничтожена. На очереди - Останкинская...";

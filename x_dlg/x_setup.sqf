@@ -17,7 +17,7 @@
 // select which version you want to create
 // you can uncomment multiple versions
 // comment all for the Two Teams version
-//#define __AI__
+#define __AI__
 //#define __MANDO__
 //#define __REVIVE__
 #define __ACE__
@@ -91,21 +91,31 @@
 //+++ Sygsky: play New Year music on base
 //#define __SYG_NEW_YEAR_GIFT__
 
-//+++ Sygsky: debug governor state
+//+++ Sygsky: show some info about governor state
 #define __SYG_GOVERNOR_INFO__
 
-//++ set player command to animate bargates on the base
+//+++ enable player command menu to base flag for bargate animation
 //#define __BARGATE_ANIM__
 
 //+++ enable your eauipment (weapn, magazines, ammo etc) to save on server by base flag menu new command
 #define __STORE_EQUIPMENT__
 
-// rearm Su-34 kind planes to carry 2x816 FAB500M62 freefall bombs
 #ifdef __ACE__
-#define __REARM_SU34__
+
+//+++ uncomment to rearm Su-34 kind planes to carry 2x816 FAB500M62 freefall bombs
+//#define __REARM_SU34__
+
+//+++ uncomment to replace ACE_Stryker_TOW with ACE_M60 and ACE_M60A3
+#define __USE_M60__
+
 #endif
 
-//++ enable to run easiest side missions first, before all other
-#define __EASY_SM_GO_FIRST__
-//+++ let you create Su34 on the base and adds 1000 score to allow get in
+//+++ uncomment to run easiest side missions first, before all other
+//#define __EASY_SM_GO_FIRST__
+
+//+++ uncomment to create Su34 on the base,
+// add 1000 score to allow get in,
+// add some Vehciles and ammoBoxes near Corazol and on base
 //#define __DEBUG_ADD_VEHICLES__
+
+#define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2

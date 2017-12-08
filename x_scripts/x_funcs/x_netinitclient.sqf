@@ -214,6 +214,7 @@ XHandleNetStartScriptClient = {
 		case "sec_solved": {
 			[_this select 1] execVM "x_scripts\x_secsolved.sqf";
 		};
+		// last target town cleared, no more target remained !!!
 		case "target_clear": {
 			playSound "fanfare";
 			target_clear = (_this select 1);
@@ -243,6 +244,8 @@ XHandleNetStartScriptClient = {
 			// playMusic "invasion"; // now music is played from lower script run
 			execVM "x_scripts\x_createnexttargetclient.sqf";
 		};
+
+		// обновление информации о сторонней миссии и инициализация новой миссии на клиенте
 		case "update_mission": {
 			current_mission_index = _this select 1;
 			if ( count _this > 2 ) then
@@ -257,7 +260,8 @@ XHandleNetStartScriptClient = {
 		};
 		case "all_sm_res": {
 			__compile_to_var
-			current_mission_text=localize "STR_SYS_121"; // "All missions resolved!"
+			current_mission_text = localize "STR_SYS_121"; // "All missions resolved!"
+			playSound "fanfare";
 			hint current_mission_resolved_text;
 		};
 		#ifndef __TT__
@@ -271,27 +275,34 @@ XHandleNetStartScriptClient = {
 		// this message sent on main tower down. Params are: ["mt_radio_down", mt_radio_down (true or false),name_of_person_killed_tower]]
 		case "mt_radio_down": {
 			__compile_to_var
-			if (mt_radio_down && (mt_radio_pos select 0 != 0)) then 
+			if (mt_radio_down && ( argp(mt_radio_pos,0) != 0)) then
 			{
 				private ["_msg","_ind"];
 //				_msg = [localize "STR_SYS_300",localize "STR_SYS_301",localize "STR_SYS_302",localize "STR_SYS_303",localize "STR_SYS_303"] call XfRandomArrayVal;
-                _msg = "STR_MAIN_COMPLETED_NUM" call SYG_getRandomText;
+                _msg = "STR_MAIN_COMPLETED_NUM" call SYG_getLocalizedRandomText; // _msg must be localized
                 #ifdef __RANKED__
                 if ( (count _this) > 2) then
                 {
-                    if (typeName (_this select 2) == "STRING") then
+                    _name = arg(2);
+                    if (typeName (arg(2)) == "STRING") then
                     {
-                        if ( (name player) == (_this select 2)) then
+                        _score =  argp(d_ranked_a,9);
+                        if ( (name player) == _name) then
                         {
-                            _msg = format["%1 (+%2)! %3",localize "STR_MAIN_COMPLETED_BY_YOU", d_ranked_a select 9, localize _msg ];
-                            player addScore (d_ranked_a select 9);
+                            _msg = format["%1 (+%2)! %3",localize "STR_MAIN_COMPLETED_BY_YOU", _score, _msg ];
+                            player addScore ( _score );
+                        }
+                        else
+                        {
+                            // inform about new hero
+                            _msg = format["(+%1)! %2", _name, _msg ];
                         };
                     };
                 };
                 #endif
 //				call compile format["_ind = floor (random %1);", localize "STR_MAIN_COMPLETED_NUM"];
 //				call compile format["_msg = localize ""STR_MAIN_COMPLETED_%1"";", _ind];
-				deleteMarkerLocal "main_target_radiotower";[ format[localize "STR_SYS_311", localize _msg], "HQ"] call XHintChatMsg; //"Радиовышка уничтожена... %1"
+				deleteMarkerLocal "main_target_radiotower";[ format[localize "STR_SYS_311", _msg], "HQ"] call XHintChatMsg; //"Радиовышка уничтожена... %1"
 			};
 		};
 		case "mt_radio": {
@@ -461,11 +472,11 @@ XHandleNetStartScriptClient = {
 		case "d_ataxi": {
 			if (player == (_this select 2)) then {
 				switch (_this select 1) do {
-					case 0: {"Air taxi is on the way... hold your position!!!" call XfHQChat};
-					case 1: {"Air taxi canceled, you've died !!!" call XfHQChat;d_heli_taxi_available = true};
-					case 2: {"Air taxi damaged or destroyed !!!" call XfHQChat;d_heli_taxi_available = true};
-					case 3: {"Air taxi heading to base in a few seconds !!!" call XfHQChat};
-					case 4: {"Air taxi leaving now, have a nice day !!!" call XfHQChat;d_heli_taxi_available = true};
+					case 0: {(localize "STR_SYS_1182") call XfHQChat}; // "Air taxi is on the way... hold your position!!!"
+					case 1: {(localize "STR_SYS_1183") call XfHQChat;d_heli_taxi_available = true}; // "Air taxi canceled, you've died !!!"
+					case 2: {(localize "STR_SYS_1184") call XfHQChat;d_heli_taxi_available = true}; // "Air taxi damaged or destroyed !!!"
+					case 3: { (localize "STR_SYS_1185") call XfHQChat}; // "Air taxi heading to base in a few seconds !!!"
+					case 4: {(localize "STR_SYS_1186") call XfHQChat;d_heli_taxi_available = true}; // "Air taxi leaving now, have a nice day !!!"
 				};
 			};
 		};
@@ -477,9 +488,25 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		#endif
+		case "syg_observer_kill" : {
+            if (str(arg(1)) == str(player)) then
+            {
+                hint localize format["x_netinitclient.sqf: Observer killed by %1", name player];
+                // add scores
+                player addScore argp( d_ranked_a, 27 );
+                // play music
+                playMusic "no_more_waiting";
+                // show message
+                (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
+            };
+		};
+		// to inform player about his server stored data
 		case "d_player_stuff": {
-			if (name player == ((_this select 1) select 2)) then {
+		    _pname = argp(arg(1),2);
+			if (name player == _pname) then {
 				__compile_to_var
+				SYG_dateStart = arg(2); // set server start date
+				hint localize format["d_player_stuff: SYG_dateStart = %1", SYG_dateStart];
 			};
 		};
 		case "d_hq_sm_msg": {
@@ -518,16 +545,29 @@ XHandleNetStartScriptClient = {
 		 // msg is displayed using titleText ["...", "PLAIN DOWN"];
 		case "msg_to_user":	{
 			private [ "_msg_arr","_msg_res","_name","_delay","_localize" ];
-			if ((_this select 0) == "msg_about_new_patrol") then 
+/*
+			if ((_this select 0) == "msg_about_new_patrol") then
 			{
 				__SetGVar(PATROL_COUNT,(__GetGVar(PATROL_COUNT)+1) min 5);
 			};
+*/
 			_name = _this select 1;
 			// hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
 			if  (typeName _name == "ARRAY") then
 			{
 			    if ( count _name == 0) then {_name = "";}
-			    else { _name = _name select 0 };
+			    else
+			    {
+			        _ind = _name find (name player);
+			        if ( _ind >= 0) then
+			        {
+			            _name = name player;
+			        }
+			        else
+			        {
+			            _name = _name select 0;
+			        };
+			    };
 			};
 			if ((_name == name player) || (_name == "") || (_name == "*")) then // msg to this player || any
 			{
@@ -598,7 +638,7 @@ XHandleNetStartScriptClient = {
 		case "GRU_msg_patrol_detected"; // TODO: message about new patrol detected
 		case "GRU_msg": {
 			hint localize format["x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
-			if ((_this select 0) == "GRU_msg_patrol_detected") then 
+			if (arg(0) == "GRU_msg_patrol_detected") then
 			{
 				__SetGVar(PATROL_COUNT,(__GetGVar(PATROL_COUNT)+1) min 5);
 				_this set[0, "GRU_msg"];
@@ -615,6 +655,10 @@ XHandleNetStartScriptClient = {
                 player addScore -_score; // subract score by number of resurrected items
                 format[localize "STR_RESTORE_DLG_7", _score] call XfGlobalChat; // "scores subtracted %1"
 			};
+		};
+        case "say_sound": // say user sound from predefined vehicle/unit
+		{
+		    arg(1) say arg(2); // do this on clients only
 		};
 
 	}; //switch (_this select 0) do {

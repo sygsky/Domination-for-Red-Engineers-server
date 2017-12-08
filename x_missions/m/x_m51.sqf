@@ -10,6 +10,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = format[localize "STR_SYS_504","Bagango",15]; //"Возле Bagango был сбит наш вертолет. Ваша задача как можно быстрее выдвинуться на поиски экипажа вертолета. Вражеские войска так же выслали свои силы в зону крушения. У вас примерно 15 минут до их прибытия. (Завершить миссию может только игрок в роли спасателя)";
 	current_mission_resolved_text = localize "STR_SYS_505"; //"Задание выполнено! Операция по спасению экипижа вертолета прошла успешно";

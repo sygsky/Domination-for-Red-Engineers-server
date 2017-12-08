@@ -59,13 +59,18 @@ while {true} do {
 			_indexheli = (toUpper (_vrs select 2)) call XGetRankIndex; // heli
 			_indexplane = (toUpper (_vrs select 3)) call XGetRankIndex; // plane
 			if (_vec isKindOf "LandVehicle") then {
-				if (_vec isKindOf "StrykerBase" OR _vec isKindOf "BRDM2" OR _vec isKindOf "BMP2" OR (_vec isKindOf "M113" AND !(_vec isKindOf "Vulcan"))) then {
+				if ( _vec isKindOf "BMP2" || _vec isKindOf "M113" || _vec isKindOf "Vulcan" OR _vec isKindOf "StrykerBase") then {
+				    if (!(_vec isKindOf "StrykerBase")) then // play light armour entering sound
+				    {
+    				    _vec say "APC_GetIn";
+				    };
 					if (_index < _indexsb) then {
 						_not_allowed = true;
 						_needed_rank = (_vrs select 0);
 					};
 				} else {
 					if (_vec isKindOf "Tank") then {
+					    _vec say "Tank_GetIn";
 						if (_index < _indexta) then {
 							_not_allowed = true;
 							_needed_rank = (_vrs select 1);
@@ -95,6 +100,13 @@ while {true} do {
 						};
 					};
 				};
+			};
+		}
+		else
+		{
+			if (_vec in [MRR1,MRR2] ) then
+			{
+							    _vec say "APC_GetIn";
 			};
 		};
 		_bulky_weapon = player call SYG_getVecRoleBulkyWeapon;

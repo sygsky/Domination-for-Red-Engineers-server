@@ -6,7 +6,6 @@ private ["_type", "_pos", "_wp_behave", "_crew_member", "_addToClean", "_heli_ty
  "_old_target", "_loop_do", "_dummy", "_current_target_pos", "_wp", "_pat_pos", "_radius", "_dist", "_old_pat_pos", "_angle",
   "_x1", "_y1", "_i", "_vecx","_new_group","_pilot","_good_units", "_counter","_rejoinPilots", "_ret", "_lastDamage"];
 
-
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"

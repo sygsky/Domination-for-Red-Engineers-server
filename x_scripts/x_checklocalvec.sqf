@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_checklocalvec.sqf. Time by time move all deleted vehicles to the common dead object list of the mission
 private ["_check_vec_list", "_remove_from_list", "_zz", "_dead", "_hastime"];
 if (!isServer) exitWith{};
 

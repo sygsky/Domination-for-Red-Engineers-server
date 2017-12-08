@@ -11,9 +11,12 @@ _vec = _objs select 0;
 _pos = position _vec;
 _nil = "Logic" createVehicle _pos;
 _tmp = position _nil;
-playMusic "upsidedown";
-sleep 0.01;
+//playMusic "upsidedown";
 _vec setPos _tmp;
+// send message to all clients through server
+["say_sound", _vec, "upsidedown"] call XSendNetStartScriptServer;
+sleep 0.01;
+sleep 0.01;
 deleteVehicle _nil;
 player removeAction _aid;
 

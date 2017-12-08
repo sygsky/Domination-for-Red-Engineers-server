@@ -1,4 +1,4 @@
-// by Xeno, calld on client with params:
+// by Xeno, x_sec_solved.sqf, called on client with params:
 // ["sec_solved", kind_solved,killer_name]
 private ["_sec_solved","_is_solved"];
 if (!X_Client) exitWith {};

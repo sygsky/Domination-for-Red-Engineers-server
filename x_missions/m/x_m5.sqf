@@ -11,14 +11,16 @@ x_sm_type = "normal"; // not "convoy"
 
 _new_pos_arr = [[10412.7,7732.9,0],[10329.0,7621.2],[10513.5,7834.5,0]];
 
+#ifdef __SMMISSIONS_MARKER__
+if (true) exitWith {};
+#endif
+
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_143"; //"Стало известно, что король Sedia придается плотским утехам в отеле вблизи Vallejo. Он является хорошим другом и ставленником вражеского правительства. Уничтожьте его!";
 	current_mission_resolved_text = localize "STR_SYS_144"; //"Король наказан! Молодцы, ребята!";
 };
 
-#ifdef __SMMISSIONS_MARKER__
-if (true) exitWith {};
-#endif
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (isServer) then {
 	__PossAndOther
@@ -26,6 +28,7 @@ if (isServer) then {
 	__GetEGrp(_newgroup)
 	king = _newgroup createUnit ["King", _poss, [], 0, "FORM"];
 	[king] join _newgroup;
+//	publicVariable "king";  // is will be PV in king_escape.sqf
 	
 	//+++ Sygsky: rearm with random pistol
 	if (d_enemy_side != "EAST") then
@@ -50,8 +53,8 @@ if (isServer) then {
 	//_no_list = [86,87,88,89,148,149,150,151,210,211,212,213,262,263,264,265];
 
     // create hut at random position somewhere higher along hotel canyon
-    _ind = _new_pos_arr call XfRandomFloorArray;
-    _kulna = createVehicle ["Land_kulna", _new_pos_arr select _ind, [], 0, "CAN_COLLIDE"];
+    _new_pos= _new_pos_arr call XfRandomArrayVal;
+    _kulna = createVehicle ["Land_kulna", _new_pos, [], 0, "CAN_COLLIDE"];
     sleep 0.5;
     _kulna setDir random 360;
     _pos = _kulna buildingPos 0;
@@ -76,7 +79,7 @@ if (isServer) then {
 	} forEach _grps;
 	_cnt = (_grps select 0) call SYG_rearmSpecopsGroup;
 #ifdef __DEBUG__		
-	hint localize format["%1 x_m19.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grp_ret select 0)];
+	hint localize format["%1 x_m5.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grps select 0)];
 #endif
 
 	sleep 2.222;
@@ -92,8 +95,6 @@ if (isServer) then {
     SYG_sm_trigger setTriggerArea [21.0, 20.5, -1, true];
     SYG_sm_trigger setTriggerActivation ["EAST", "WEST D", false];
     SYG_sm_trigger setTriggerStatements["this", "king execVM ""GRU_scripts\king_escape.sqf""; hint localize format[""king trigger (%1) deleted"", SYG_sm_trigger]; deleteVehicle SYG_sm_trigger;", ""];
-
-    //SYG_sm_trigger execVM "GRU_scripts\king_check.sqf"; // kill trigger on king death
 
 };
 

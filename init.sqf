@@ -50,6 +50,9 @@ hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span 
 
 SYG_firesAreCreated  = false; // are fires on airbase created
 
+current_mission_counter = 0;    // side missions counter (init on server and client)
+
+
 if (isNil "x_funcs1_compiled") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions1.sqf";
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_netinit.sqf";
@@ -90,7 +93,7 @@ execVM "r_init.sqf";
 execVM "mando_missiles\mando_missileinit.sqf";
 #endif
 
-
+// Weather tuning and settings
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
 
@@ -101,7 +104,7 @@ if (isServer) then {
 		publicVariable "fRainLess";
 
 		//fRainMore = 0.175 + random 0.375; //1.1 for better chance of actual thunderstorms
-		fRainMore = 0.175 + random 0.825; //1.1 for better chance of actual thunderstorms
+		fRainMore = 0.175 + (random 0.825)^2; //tendency towards nicer weather in rainy weather areas
 		publicVariable "fRainMore";
 
 		//  fFogLess = random 0.33; //linear random
@@ -131,6 +134,8 @@ if (isServer) then {
 	createVehicle ["ACE_Truck5t_Reammo", [14539.819336,9925.484375,0], [], 0, "NONE"] setDir -75;
 	createVehicle ["ACE_Truck5t_Repair", [14544.724609,9927.985352,0], [], 0, "NONE"] setDir -75;
 	createVehicle ["ACE_WeaponBox", [14539.072266,9921.990234,0], [], 0, "NONE"] setDir -75;
+	createVehicle ["ACE_WeaponBox", [9672.142578,9991.166992,0], [], 0, "NONE"] setDir 270;
+
 	_vec = createVehicle ["ACE_Su34B", [9658.247070,10020.545898,0], [], 0, "NONE"];
 	_vec setDir 90;
 	_vec call SYG_rearmAnySu34;
@@ -143,7 +148,7 @@ if (isServer) then {
 #endif	
 
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
-	[moto1,moto2,moto3,moto4] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add 4 travelling motocycles at base
+	[moto1,moto2,moto3,moto4,moto5] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add 4 travelling motocycles at base
 
 	if (d_weather) then {execVM "scripts\weather\weathergen2.sqf";};
 
@@ -164,9 +169,11 @@ if (isServer) then {
 	maintargets_list = (count target_names) call XfRandomIndexArray;
 #endif
 
-    {
-    	maintargets_list = [_x] + (maintargets_list - [x]);
-    } forEach [];  // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // insert special towns at the list head
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    _first_array = [];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
+    maintargets_list = _first_array + (maintargets_list - _first_array);
 
 	__DEBUG_SERVER("init.sqf", maintargets_list)
 	// create random list of side missions
@@ -176,60 +183,56 @@ if (isServer) then {
 
 	if (d_random_sm_array) then {
 		side_missions_random = sm_array call XfRandomArray;
-#ifdef __EASY_SM_GO_FIRST__
-        easy_sm_array = easy_sm_array call XfRandomArray;
-#endif
-
-//+++ Sygsky: move ranked player missions out of the list beginning
-#ifdef __DEFAULT__
-		if ( (!isNil "ranked_sm_array") && (isNil "easy_sm_array") ) then
-		{
-			ranked_sm_array spawn {
-				private ["_lowestPos","_rankedSMArr","_cnt","_ind", "_newInd","_val"];
-				_lowestPos = _this select 0; // first allowed position for missions that need some rank (to drive tank,heli, airplane)
-				_rankedSMArr = _this select 1;
-				sleep 60.845;
-				_cnt = 0;
-				// forEach ranked_sm_array;
-				{
-					_ind = side_missions_random find _x;
-					if ( (_ind >= 0) && (_ind < _lowestPos) ) then // found, bump it to righter position in array
-					{
-						_val = _rankedSMArr select 0;
-						while { _val in _rankedSMArr } do
-						{
-							_newInd = [_lowestPos, count side_missions_random] call XfGetRandomRangeInt;
-							_val = side_missions_random select _newInd;
-						};
-						side_missions_random set [_ind, _val];
-						side_missions_random set [_newInd, _x];
-						_cnt = _cnt + 1;
-					}
-				} forEach _rankedSMArr;
-			};
-		};
-#endif		
-	} else
+	}
+	else
 	{
 		side_missions_random = sm_array;
     };
 
 #ifdef __EASY_SM_GO_FIRST__
-    side_missions_random = easy_sm_array + side_missions_random; // adds easiest side missions to the head of common list
-    hint localize format["SM goes first: %1", side_missions_random];
+        easy_sm_array = easy_sm_array call XfRandomArray;
+        // adds easiest side missions to the head of common list
+        side_missions_random = easy_sm_array + side_missions_random;
+        hint localize format["SM goes first: %1", side_missions_random];
 #endif
+
+//+++ Sygsky: move ranked player missions out of the list beginning
+#ifdef __DEFAULT__
+    hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
+    if (!isNil("ranked_sm_array") ) then
+    {
+        private ["_lowestPos","_rankedSMArr","_ind", "_newInd","_val"];
+        _lowestPos = ranked_sm_array select 0; // first allowed position for missions that need some rank (to drive tank,heli, airplane)
+        _rankedSMArr = ranked_sm_array select 1; // mission ids
+        // forEach ranked_sm_array;
+        {
+            _ind = side_missions_random find _x;
+            if ( (_ind >= 0) && (_ind < _lowestPos) ) then // found, bump it to righter position in array
+            {
+                _val = _rankedSMArr select 0;
+                while { _val in _rankedSMArr } do
+                {
+                    _newInd = [_lowestPos, count side_missions_random] call XfGetRandomRangeInt;
+                    _val = side_missions_random select _newInd;
+                };
+                side_missions_random set [_ind, _val];
+                side_missions_random set [_newInd, _x];
+            }
+        } forEach _rankedSMArr;
+    };
+#endif
+
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //+ fill _first_sm_array with sm numbers to go first in any case +
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_sm_array = [];
-    side_missions_random = _first_sm_array + (side_missions_random - _first_sm_array);
+    _first_array = [55]; // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest
+    side_missions_random = _first_array + (side_missions_random - _first_array);
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
 
 	current_target_index = -1;
 	current_counter = 0;
-	current_mission_counter = 0;
 
 	side_mission_resolved = false;
 
@@ -288,8 +291,7 @@ if (isServer) then {
 	d_player_array_misc = []; // [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
 	d_placed_objs = [];
 	
-	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
-	[] spawn {	
+	[] spawn {
 		private ["_hnd","_srvDate"];
 		/*
 			script "srvtime.sqf" should be situated in Arma.exe root directory when started on server.
@@ -308,30 +310,35 @@ if (isServer) then {
 			start "" "C:\Program Files\ArmA\arma_server.exe -config=server.cfg -mod=@ACE;@SIX_Pack3 -name=server -pid=pids.log"
 			--------------- end of srvtime.bat
 		*/
-		_hnd = [] execVM "\srvtime.sqf"; 
-		waitUntil {scriptDone _hnd};
-		//SYG_serverTime = time; // to synchronize mission start time and function 'time' value
-		while {true} do 
-		{
-			// now check NewYear period
-			_srvDate = call SYG_getServerDate;
-			if ( _srvDate call SYG_isNewYear0 ) exitWith
-			{ // make gift for a player on a New Year event
-				hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", _srvDate call SYG_humanDateStr];
-				private ["_vec","_snd"];
-				_vec = "Radio" createVehicle [0, 0, 0];
-				 // set radio on top of the table
-				_vec setPos [ 9384.3, 9972.8, 1.5];
-				_vec setDir 90;	
-				sleep 30.512;	// wait until dropped to ground
-				_snd = createSoundSource ["Music", (getpos _vec), [], 0];// only one source on the server should be created
+		//_hnd = [] execVM "\srvtime.sqf";
+		//waitUntil {scriptDone _hnd};
 
-			//	hint localize format["SoundSource created: %1, typeOf %2", _snd, typeOf _snd];
+    	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
+    	while {isNil "SYG_mission_start"} do {sleep 1}; // wait for 1st user connection and receiving real server time from him (this is Arma!!!)
+    	if ( (argp(SYG_mission_start,1) == 12) || ((argp(SYG_mission_start,1)) == 1 && (argp(SYG_mission_start,1) < 10))) then
+    	{
+            while {true} do
+            {
+                // now check NewYear period
+                _srvDate = call SYG_getServerDate;
+                if ( _srvDate call SYG_isNewYear0 ) exitWith
+                { // make gift for a player on a New Year event
+                    hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", _srvDate call SYG_humanDateStr];
+                    private ["_vec","_snd"];
+                    _vec = "Radio" createVehicle [0, 0, 0];
+                     // set radio on top of the table
+                    _vec setPos [ 9384.3, 9972.8, 1.5];
+                    _vec setDir 90;
+                    sleep 30.512;	// wait until dropped to ground
+                    _snd = createSoundSource ["Music", (getpos _vec), [], 0];// only one source on the server should be created
 
-				_vec setVariable ["SoundSource", _snd];
-				_vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
-			};
-			sleep 3600; // wait 1 hour to check new year next hour
+                //	hint localize format["SoundSource created: %1, typeOf %2", _snd, typeOf _snd];
+
+                    _vec setVariable ["SoundSource", _snd];
+                    _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
+                };
+                sleep 3600; // wait 1 hour to check new year next hour
+            };
 		};
 	};
 	
@@ -339,10 +346,18 @@ if (isServer) then {
 	// ACE sys network uses onPlayerConnected too
 	// not a good idea since a mission onPlayerConnected overwrites it or vice versa
 	// means, it can only be used once
+
+	// OnPlayer Connected DB
 	if (isNil "ace_sys_network_OPCB") then {ace_sys_network_OPCB = []};
 	ace_sys_network_OPCB = ace_sys_network_OPCB + [{[_this select 0] execVM "x_scripts\x_serverOPC.sqf"}];
+	hint localize format["ACE:ace_sys_network_OPCB[%1] = %2",count ace_sys_network_OPCB,ace_sys_network_OPCB];
+	hint localize format["ACE:ace_sys_network_OPC[%1] = %2",count ace_sys_network_OPC,ace_sys_network_OPC];
+
+	// On Player Disconnect
 	if (isNil "ace_sys_network_OPD") then {ace_sys_network_OPD = []};
 	ace_sys_network_OPD = ace_sys_network_OPD + [{[_this select 0] execVM "x_scripts\x_serverOPD.sqf"}];
+	hint localize format["ACE:ace_sys_network_OPD[%1] = %2",count ace_sys_network_OPD,ace_sys_network_OPD];
+
 #else
 	onPlayerConnected "xhandle = [_name] execVM ""x_scripts\x_serverOPC.sqf""";
 	onPlayerDisconnected "xhandle = [_name] execVM ""x_scripts\x_serverOPD.sqf""";
@@ -365,18 +380,39 @@ if (isServer) then {
 #ifdef __DEFAULT__
 	//+++ Sygsky: remove map Zavora objects 
 	[] spawn {
+        private ["_obj"];
 		// Create new Zavoras on server ONLY
 		// add animated bar gates somewhere on clients ONLY
 		{
-			_zav = createVehicle ["ZavoraAnim", [0,0,0],[],0, "CAN_COLLIDE"];
+			_obj = createVehicle ["ZavoraAnim", [0,0,0],[],0, "CAN_COLLIDE"];
 			sleep 0.01;
-			if ( (count _x) >= 2 ) then { _zav setDir (_x select 1)};
-			_zav setPos (_x select 0);
+			if ( (count _x) >= 2 ) then { _obj setDir (_x select 1)};
+			_obj setPos (_x select 0);
 		} forEach [ 
 			[[9532.405273,9760.648438,0.3],270], // at outer gate (to mainland)
 			[[9524.4,9925.8,0.3],90],            // at inner gate (to airfield)
 			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraico
 				  ];
+        sleep 1.0;
+        // set island hotels to be more undestructible as usual
+        {
+            _obj = [10000,10000,0] nearestObject _x;
+            if ( !isNull _obj ) then
+            {
+//                player groupChat "Hotel event handled to ""HIT""";
+                if ( typeOf _obj == "Land_Hotel" ) then
+                {
+                    _obj addEventHandler ["hit",
+                    {
+//                        private [ "_str" ];
+//                        _str = format["Hotel damaged with %1, dmg = %2",_this select 2,getDammage (_this select 0)];
+//                        hint _str;
+                        (_this select 0) setDammage -1;
+                    }];
+                };
+            };
+        } forEach [172902,64642,555078];
+
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
@@ -384,7 +420,7 @@ if (isServer) then {
 		waitUntil { sleep 10.737; current_target_index >= 0 };
 		while { true } do
 		{
-			sleep 150+(random 300); // max delay 5 minutes to update
+			sleep 150+(random 300); // average delay 5 minutes to update
 			call SYG_updateIntelBuilding; // update all GRU objects
 		};
 	};
@@ -507,7 +543,7 @@ if (X_SPE) then {
 execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 
 #ifdef __DEFAULT__
-// hide default bargates on base on all client ocmputers
+// hide default bargates on base on all client computers etc
 [] spawn {
 	private ["_pos","_zav","_arr"];
 	_pos = [9621,9874,0];
@@ -520,6 +556,10 @@ execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 			sleep 0.1;
 		};
 	}forEach [353,355,362/* ,367 */];
+    sleep 0.5;
+	// build flag on Antigua (just in case)
+	[17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
+
 };
 #endif
 

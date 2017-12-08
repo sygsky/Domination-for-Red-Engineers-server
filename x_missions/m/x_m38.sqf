@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = format[localize "STR_SYS_520","Passo Epone"];// "По данным разведки, враг разместил где-то в районе Passo Epone располагается производство химического оружия. Ваша задача найти башню водохранилища и уничтожить её.";
 	current_mission_resolved_text = localize "STR_SYS_521"; //"Задание выполнено! Химреактор уничтожен.";

@@ -12,7 +12,7 @@ _killedfriendly = false;
 if (!isNull _killer && side _killer == d_side_player && !isPlayer _killer) then {
 	_leader_killer = leader _killer;
 	if (isPlayer _leader_killer) then {
-		_s = format ["You were killed by the AI of %1", name _leader_killer];
+		_s = format [localize "STR_SYS_1170", name _leader_killer]; //"You were killed by the AI of %1"
 		[_s, "GLOBAL"] call XHintChatMsg;
 		_unit_killer = [name _leader_killer, name _killed, _killer];
 		["unit_killer",_unit_killer] call XSendNetStartScriptClient;

@@ -31,6 +31,10 @@ if (isServer) then {
 					};
 				};
 			};
+		}
+		else
+		{
+        	hint localize "+++ GDTModTracked detected";
 		};
 	} else {
 		d_found_gdtmodtracked = true;
@@ -41,11 +45,6 @@ d_found_gdtmodtracked = true;
 d_use_mod_tracked = false;
 XGDTTracked = {};
 #endif
-
-if (d_found_gdtmodtracked) then
-{
-	hint localize "+++ GDTModTracked detected";
-};
 
 #ifndef __ACE__
 d_found_DMSmokeGrenadeVB = (if ("DMSmokeGrenadeVB" in _search_array) then {true} else {false});

@@ -23,7 +23,7 @@ x_sm_type = "normal" for all normal missions, "convoy" for convoy missions.
 
 Example:
 x_sm_pos = [[14258.5,15169.1,0]]; // radar tower on Pico de Perez
-x_sm_type = "normal"; // "convoy"
+x_sm_type = "normal"; // not "convoy"
 
 2.
 #ifdef __SMMISSIONS_MARKER__
@@ -76,6 +76,7 @@ There are some other values for side_mission_winner:
 -400: None or less than 8 prisoners made it back to base..."
 -500: The enemy officer was killed..."
 -600: The prototype was destroyed before it reached your base..."
+-700: All pilots were dead before returning to base
 
 
 

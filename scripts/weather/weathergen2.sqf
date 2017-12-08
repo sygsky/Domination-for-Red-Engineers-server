@@ -1,5 +1,5 @@
 // weathergen2.sqf - server cloud areas trajectory planner. 
-// TODO: add sandstorm on desert regions only (south part of Sahrani)
+// TODO: add sandstorm on desert regions only (south part of Sahrani) with Y <= 7500
 private ["_world_center", "_y", "_x_max", "_x_start", "_y_start", "_y_ran", "_x_fog_start", "_x_fog_ran", "_y_fog_ran", "_rainy_helper", "_rainy2_helper", "_rainy3_helper", "_foggy_helper", "_counter", "_acc", "_randx", "_randy", "_fogdx","_fogdy"];
 
 #include "x_macros.sqf"
@@ -11,10 +11,14 @@ if (!isServer) exitWith {};
 #define FOG_DAY_Y_MAX 18500
 #define FOG_DAY_X_MIN 0
 #define FOG_DAY_X_MAX 21700
+
+// Top Y bound for sandstorms
+#define SANDSTORM_TOP_Y 7500
+
 #define FOG_ON_ISLAND_MIN_TIME 5
 #define FOG_ON_ISLAND_MAX_TIME 19
 #define CLOUDY_X_STEP_SIZE 20
-#define CLOUDY_Y_STEP_SIZE (-1 + (floor random 3))
+#define CLOUDY_Y_STEP_SIZE (-10 + (floor random 21))
 #define FOG_X_STEP_SIZE 2
 #define FOG_Y_STEP_SIZE (-1 + (floor random 3))
 
@@ -87,7 +91,7 @@ while {true} do {
 		if(_counter <= 0) then { // change fog ellipse
 			//+++Sygsky: disable for the day time between 5:00 and 19:00
 			_fogdy = FOG_Y_STEP_SIZE;
-			if ( (daytime >= FOG_ON_ISLAND_MAX_TIME) OR (daytime < FOG_ON_ISLAND_MIN_TIME) ) then // night time is foggy
+			if ( (daytime >= FOG_ON_ISLAND_MAX_TIME) || (daytime < FOG_ON_ISLAND_MIN_TIME) ) then // night time is foggy
 			{
 				_randx = _x_fog_start+(random _x_fog_ran);
 				_randy = _x_fog_start+(random _y_fog_ran);
@@ -109,14 +113,14 @@ while {true} do {
 		}
 		else
 		{
-			_foggy_helper = [(_foggy_helper select 0)+_fogdx,(_foggy_helper select 1)+ _fogdy,0]
+			_foggy_helper = [(_foggy_helper select 0)+_fogdx,(_foggy_helper select 1)+ _fogdy,0];
 		};
 		_counter = (_counter - 1);
 	};
 	_acc = _acc + 1;
 	if (_acc == 2) then {
 		x_weather_array = [_rainy_helper,_rainy2_helper,_rainy3_helper];
-		if (d_weather_fog) then {x_weather_array = x_weather_array + [_foggy_helper]};
+		if (d_weather_fog) then {x_weather_array = x_weather_array + [_foggy_helper];};
 		["x_weather_array",x_weather_array] call XSendNetVarClient;
 		_acc = 0;
 	};

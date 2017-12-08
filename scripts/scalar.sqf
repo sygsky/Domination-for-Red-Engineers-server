@@ -30,7 +30,7 @@ if (X_Client) then {
 	_size = [15.5];
 	_size2 = [2.025];
 
-	_light = _l1 createVehiclelocal [0,0,0];
+	_light = _l1 createVehicleLocal [0,0,0];
 	_light setLightBrightness _brightness; 
 	_light setLightColor _colour;
 	_light lightAttachObject [_tower, [0,0,30]];
@@ -41,13 +41,13 @@ if (X_Client) then {
 	_blue = 0;
 	_speed = 0.5 * random 1;
 
-	_PS = "#particlesource" createVehicleLocal getpos _tower;
+	_PS = "#particlesource" createVehicleLocal getPos _tower;
 
 	_PS setParticleCircle [0, [0, 0, 3]];
 	_PS setParticleRandom [0.02, [0.1, 0.1, 0], [1, 1, 0], 1, 0.5, [0, 0, 0, 0], 0, 0];
 	_PS setDropInterval 0.07;
 
-	_PS1 = "#particlesource" createVehicleLocal getpos _tower;
+	_PS1 = "#particlesource" createVehicleLocal getPos _tower;
 	_PS1 setParticleCircle [0, [0, 0, 0]];
 	_PS1 setDropInterval 0.021;
 
@@ -71,7 +71,7 @@ if (X_Client) then {
 	sleep 4;
 
 	_OBJ = _tower;
-	_PS3 = "#particlesource" createVehicleLocal getpos _OBJ;
+	_PS3 = "#particlesource" createVehicleLocal getPos _OBJ;
 	playSound "scalarDown";
 	_PS3 setParticleCircle [0, [0, 0, 0]];
 	_PS3 setParticleRandom [0, [10, 10, 0], [0.25, 0.25, 0], 0, 1.5, [0, 0, 0, 0], 0, 0];
@@ -79,10 +79,10 @@ if (X_Client) then {
 	_PS3 setParticleParams [["\ca\data\blesk1.p3d", 1, 0, 1], "", "SpaceObject", 1, 5, [0, 0, 30], [0, 0, -20], 1, 10, 1, 0.2, [1.5, 1.5], [[1, 1, 1 ,1], [1, 1, 1, 1], [1, 1, 1, 1]], [0, 1], 1, 0, "", "", _OBJ];
 	_PS3 setDropInterval 0.04;
 	sleep 2;
-	deletevehicle _light;
-	deletevehicle _PS;
-	deletevehicle _PS1;
-	deletevehicle _PS3;
+	deleteVehicle _light;
+	deleteVehicle _PS;
+	deleteVehicle _PS1;
+	deleteVehicle _PS3;
 };
 
 if (isServer) then {
@@ -90,7 +90,7 @@ if (isServer) then {
 		sleep 0.02;
 	};
 	_end1 = "Bo_GBU12_LGB" createVehicle ( getPos _tower);
-	_end1 setPos [(getpos _tower) select 0 , (getpos _tower) select 1, ((getpos _tower) select 2) +25];
+	_end1 setPos [(getPos _tower) select 0 , (getPos _tower) select 1, ((getPos _tower) select 2) +25];
 };
 /*
 Format: 

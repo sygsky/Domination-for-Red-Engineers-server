@@ -9,18 +9,18 @@
 
 if !(isServer) exitWith {};
 
-private ["_g", "_i", "_k","_s", "_b", "_l", "_d", "_t", "_o", "_od", "_c","_setGrpBehaviour","_splitByMG","_fC","_fD"];
+private ["_g", "_i", "_k","_s", "_b", "_leader", "_d", "_t", "_o", "_od", "_c","_setGrpBehaviour","_splitByMG","_fC","_fD"];
 
 // set group behaviour
 _setGrpBehaviour = {
 	_g = _this select 0; // group
-	_s = _this select 1; // speen
+	_s = _this select 1; // speed
 	_b = _this select 2; // combat mode
 	_f = _this select 3; // possible error: no such parameter in any call
 
-	_l = leader _g;
+	_leader = leader _g;
 
-	{if (alive _x) then {_x doFollow _l; _x setUnitPos "AUTO";}} forEach units _g;
+	{if (alive _x) then {_x doFollow _leader; _x setUnitPos "AUTO";}} forEach units _g;
 
 	_g setCombatMode _b;
 	_g setSpeedMode _s;
@@ -147,12 +147,13 @@ while {_i > 0} do {
 	};
 	if (_i == 0) exitWith {};
 
-	_l = leader _g;
-	_d = getDir _l;
+	_leader = leader _g;
+	_d = getDir _leader;
 	_t = time;
 
-	if (!(isNull _l)) then {
-		_o = nearestObject [_l, "BulletBase"];
+	if (!(isNull _leader)) then {
+
+		_o = nearestObject [_leader, "BulletBase"];
 
 		if (!(isNull _o)) exitWith {
 			_od = getDir _o - 180; // where bullet is from
@@ -162,34 +163,34 @@ while {_i > 0} do {
 			};
 		};
 
-		_o = nearestObject [_l, "GrenadeHand"];
+		_o = nearestObject [_leader, "GrenadeHand"];
 		if (!(isNull _o)) exitWith {
 			{if (alive _x) then {[_x, _k] spawn _fC}} forEach units _g;
 			_k = true;
 			_c = _t + 43;
 		};
-		_o = nearestObject [_l, "G_40mm_HE"];
+		_o = nearestObject [_leader, "G_40mm_HE"];
 
 		if (!(isNull _o)) exitWith {
 			{if (alive _x) then {[_x, _k] spawn _fC}} forEach units _g;
 			_k = true;
 			_c = _t + 23;
 		};
-		_o = nearestObject [_l, "RocketCore"];
+		_o = nearestObject [_leader, "RocketCore"];
 
 		if (!(isNull _o)) exitWith {
 			{if (alive _x) then {[_x, _k] spawn _fC}} forEach units _g;
 			_k = true;
 			_c = _t + 33;
 		};
-		_o = nearestObject [_l, "ShellCore"];
+		_o = nearestObject [_leader, "ShellCore"];
 
 		if (!(isNull _o)) exitWith {
 			{if (alive _x) then {[_x, _k] spawn _fC}} forEach units _g;
 			_k = true;
 			_c = _t + 23;
 		};
-		_o = nearestObject [_l, "MissileCore"];
+		_o = nearestObject [_leader, "MissileCore"];
 
 		if (!(isNull _o)) exitWith {
 			{if (alive _x) then {[_x, _k] spawn _fC}} forEach units _g;

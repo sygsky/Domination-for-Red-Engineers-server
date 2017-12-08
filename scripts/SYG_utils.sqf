@@ -19,12 +19,12 @@
 #define MIN_POSSIBLE_GROUP_SIZE 2
 #define NOT_POPULATE_LOADER_TO_TANK
 #define NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT
-#define ADD_1CARGO_TO_TRUCKS_AND_HMMW
 // ACE_Binocular, ACE_LaserDesignator, ACE_LaserDesignatorMag, ACE_Laserbatteries
 
 if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 {
 	SYG_UTILS_COMPILED = true;
+	//hint localize "+++ SYG_utils initialization started";
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsWeapon.sqf";	// Weapons, re-arming etc
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsGeom.sqf";		// Geometry, mathematics
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsDateTime.sqf";	// Date-time
@@ -34,6 +34,8 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsVehicles.sqf";	// Vehicles
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
+	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";		// Text functions
+	//hint localize "--- SYG_utils initialization finished";
 };
 
 /**
@@ -76,7 +78,7 @@ SYG_findNearestSideGroup = {
 		
 //		if ( (count _this ) > 2 ) then { _pos = _this select 2};
 		_pos = argopt(2,(getPos _unit));
-		if ((count _pos) <3) then {_pos = getPos _unit};
+		if ((count _pos) <3) then {_pos = getPos _unit;};
 
 		_min_count = argopt(3, DEFAULT_MIN_GROUP_SIZE);
 		_min_count  = _min_count max MIN_POSSIBLE_GROUP_SIZE; // minimal possible size of group is 2
@@ -99,376 +101,13 @@ SYG_findNearestSideGroup = {
 */
 
 		{
-			// find good, healhy, fast and agressive group for our man :o)
+			// find good, healthy, fast and agressive infantry group for our poor man
 			if ( ((side _x) == _side) && (alive _x) && ( ! (isNull (group _x)) )
 			&& (vehicle _x == _x) && (!isPlayer _x) && ( (group _x) != (group _unit) )
-			&& ( ({(alive _x) && (canStand _x)} count (units group _x)) >= _min_count)) exitWith { _grp = group _x};
+			&& ( ({(alive _x) && (canStand _x)} count (units group _x)) >= _min_count)) exitWith { _grp = group _x;};
 		} forEach nearestObjects [_pos, _types, _dist]; //_nearArr;
 	};
 	_grp
-};
-
-//
-// Changes positon for sound created with call to createSoundSource function
-//
-// Example: 
-// _sndArr = [_sound];
-// [ _caller, _sndArr] call SYG_moveSoundSource; // 1st sound ar index 0 from _sndArr is changed place to the _caller position
-//
-SYG_moveSoundSource = {
-	private ["_caller", "_id", "_args", "_snd", "_pos"];
-
-	_caller = _this select 0;
-	_args = _this select 1; // [ [snd1, snd2 ...], pos ]
-	_arr = _args select 0; // array with sounds
-	_pos = 0; // pos in array
-	if ( count _this > 2 ) then
-	{
-		_pos = _this select 2; // special pos in array, not zero one
-	};
-	_snd = _arr select _pos; // sound to move to
-	if ( !isNull snd ) then
-	{
-		deleteVehicle _snd;
-		sleep 0.1;
-		_snd = createSoundSource ["Music", getPosASL _caller, [], 0];
-		_arr set [ _pos, _snd];
-		_caller globalChat format["Movesnd: snd pos: %2, new pos is %1", getPosASL _caller, getPosASL _snd];
-	};
-};
-
-SYG_ffunc = {
-	private ["_l","_vUp","_angle", "_pos", "_tr", "_tr1", "_res","_dist"];
-	if ((vehicle player) == player) then 
-	{
-		objectID1=(position player nearestObject "LandVehicle");
-		if (!alive objectID1 || player distance objectID1 > 8) then {false}
-		else
-		{
-			_vUp=vectorUp objectID1;
-			_res = true;
-			_tr = player nearestObject d_rep_truck;
-#ifdef __ACE__			
-			_tr1 = player nearestObject "ACE_Truck5t_Repair";
-#else				
-			_tr1 = player nearestObject "Truck5tRepair";
-#endif			
-			if ( (isNull _tr) && (isNull _tr1) ) then { _res = false;} // no any repair tracks near
-			else
-			{
-				if ( isNull _tr ) then // _tr1 != null
-				{ 
-					_dist = player distance (position _tr1);
-				}
-				else // _tr != null
-				{
-					_dist = player distance (position _tr);
-					if ( !(isNull _tr1) ) then // then both are found near me. Rare case but why not!)
-					{
-						// find nearest of two
-						if ( (player distance (position _tr1)) < _dist ) then { _dist = player distance (position _tr1);};
-					};
-				};
-				_res = true;
-			};
-
-			if ( _res ) then 
-			{
-				if((_vUp select 2) < 0 && (_dist < 20))then {true}
-				else // vehicle still can lay on one of its side
-				{
-					_l=sqrt((_vUp select 0)^2+(_vUp select 1)^2);
-					if( _l != 0 )then
-					{
-						_angle=(_vUp select 2) atan2 _l;
-						if( (_angle < 30) && (_dist < 20)) then {true} else{false};
-					} else {false}; // standing in good posiition
-				};
-			}
-			else{false};
-		}
-	} 
-	else {false}
-};
-
-// call: _turretNumber = _unit call SYG_turretNumber;
-SYG_turretNumber = {
-	count (configFile >> "CfgVehicles" >> typeof _this >> "turrets")	
-};
-
-//
-// call: _turretList = _vehicle call SYG_turretsList; 
-// get list of vehicle positions
-// { moveInTurret [_vehicle, _x]} forEach _turretList; 
-// populate all turrets of vehicle
-//
-SYG_turretsList = {
-	private [ "_cfg", "_out", "_mtc", "_mti", "_mt", "_st", "_stc", "_sti" ];
-	_out =  [];
-	_cfg = configFile >> "CfgVehicles" >> typeof _this >> "turrets";
-	_mtc = (count _cfg); // number of main turrets
-	if ( _mtc > 0 ) then
-	{
-		for "_mti" from 0 to _mtc-1 do {
-			_out = _out + [[_mti]]; // + main turret
-			_mt = (_cfg select _mti);
-			_st = _mt >> "turrets";
-			_stc = count _st; // sub-turrets in current main one count
-			if ( _stc > 0 ) then
-			{
-				for "_sti" from 0 to _stc-1 do {
-					_out = _out + [[_mti, _sti]]; // + sub-turret
-				};
-			};
-		};
-	};
-	//player globalChat format["Turret list: %1", _out];
-	_out // returns list of ready positions in vehicle turrets
-};
-
-/**
- * call: _res_list = [_single_turr_descr, _veh_turr_arr] call SYG_removeFromTurretList;
- */
-SYG_removeFromTurretList = 
-{
-	private ["_i", "_j", "_arr", "_role_arr", "_tlist", "_rarr_cnt", "_diff"];
-	_role_arr = arg(0);
-	if ( typeName _role_arr != "ARRAY" )  exitWith {player globalChat "SYG_removeFromTurretList: 1st param not ARRAY";};
-	_rarr_cnt = count _role_arr;
-	if (_rarr_cnt == 0 ) exitWith {player globalChat "SYG_removeFromTurretList: 1st array is of zero length!";};
-	_tlist = arg(1);
-	if ( count _tlist > 0 ) then
-	{
-		for "_i" from 0 to ((count _tlist)-1) do 
-		{ // find unit position in vehicle turret list and remove it from list
-			_diff = 0;
-			_arr = _tlist select _i; // current turret description array
-			if ( count _arr == _rarr_cnt ) then
-			{
-				for "_j" from 0 to (_rarr_cnt - 1) do
-				{
-					if (( _arr select _j) != (_role_arr select _j) ) exitWith { _diff = 1};
-				};
-				if ( _diff == 0 ) exitWith { _tlist set [_i, "RM_ITEM_NOW"]};
-			};
-		};
-	};
-	_tlist = _tlist -  ["RM_ITEM_NOW"];
-	sleep 0.01;
-	_tlist
-};
-
-/**
- * Version 2.0 Populates without creation any excessive units
- * Populates any totally empty vehicle (air, land or marine one) will full battle vehicle crew including all turret seats.
- * Note: cargo crew is not populated in this function
- *
- * call as: _grp = [_veh, _grp, _utype<, _skill<, _randomSkillPart>>] call SYG_populateVehicle;
- *  where:
- *			_vehicle - vehicle to populate (Striker, Abrams etc)
- *			_grp - group for vehicle, all needed crew is added to this group
- *			_utype - "SoldierWCrew" etc to fill any positions in vehicle
- * 			_skill - <optional> skill for group, default is 0.5
- *         _randomSkillPart - <optional> additional random part default 0.5
- * return: group of team member for vehicle created or grpNull on error
- *
- * Function tryes to first populate commander, then driver and only after  all other available turret gunners
- * No man added to the vehicle cargo
- */
-SYG_populateVehicle ={
-	private [ "_veh", "_utype", "_grpskill", "_grprndskill", "_grprndskill", "_pos", "_tlist", "_role_arr", "_unit",
-	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh"];
-
-	_veh   = arg(0);
-	_grp   = arg(1);
-	_utype = arg(2);
-	
-	if ( count _this > 3 ) then {_grpskill = _this select 3}
-	else {_grpskill = 0.5};
-	
-	if ( count _this > 4 ) then {_grprndskill = (_this select 4) min (1.0 - _grpskill)}
-	else {_grprndskill = 0;};
-	
-	_pos = getPos _veh;
-	
-	_tlist = _veh call SYG_turretsList;
-#ifdef NOT_POPULATE_LOADER_TO_TANK
-	if ( _veh isKindOf "Tank" ) then 
-	{
-		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
-	};
-#endif
-
-#ifdef NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT
-	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then 
-	{
-		_tlist = [[1], _tlist] call SYG_removeFromTurretList;
-		_tlist = [[2], _tlist] call SYG_removeFromTurretList;
-	};
-#endif
-
-	_isAirVeh = _veh isKindOf "Air";
-//	player globalChat format["Turrs %1", _tlist ];
-	// first try to put commander (according to role of name)
-	if (_veh emptyPositions "Commander" > 0) then 
-	{
-		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
-		_unit setSkill _grpskill + random (_grprndskill );
-		[_unit] joinSilent _grp;
-		if ( _isAirVeh ) then {_unit call SYG_armPilot};
-		_unit assignAsCommander _veh;
-		_unit moveInCommander _veh;
-		sleep 0.01;
-		_role_arr = assignedVehicleRole _unit;
-		if (count _role_arr > 0 ) then
-		{
-			if ( _role_arr select 0 == "Turret" ) then 
-			{
-				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
-			};
-		};
-	};
-		
-	// second try to put driver (no turrets be occupied)
-	if ( isNull driver _veh ) then  // add driver if he is not already assigned as commander
-	{
-		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
-		_unit setSkill _grpskill + random (_grprndskill );
-		[_unit] joinSilent _grp;
-		if ( _isAirVeh ) then {_unit call SYG_armPilot};
-		_unit assignAsDriver _veh;
-		_unit moveInDriver _veh;
-		sleep 0.01;
-		_role_arr = assignedVehicleRole _unit;
-		if (count _role_arr > 0 ) then
-		{
-			if ( _role_arr select 0 == "Turret" ) then 
-			{
-				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
-			};
-		};
-	};
-
-	// now populate remaining turrets
-	{	// create one more unit and try to fit it to current turret
-		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
-		_unit setSkill _grpskill + random (_grprndskill );
-		[_unit] joinSilent _grp;
-		if ( _isAirVeh ) then {_unit call SYG_armPilot};
-		_unit moveInTurret [_veh, _x];
-		sleep 0.02;
-	} forEach _tlist;
-
-	// never populate small mguns of HMMWV_GVT
-	// well, lets look if we should fill some cargo places in trucks and canons, may be in M113, MG strikes, AT humwee
-	
-#ifdef ADD_1CARGO_TO_TRUCKS_AND_HMMW
-	if ( (_veh isKindOf "Truck") OR (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
-	{
-        // add "ACE_SoldierWMAT_A" as a passenger
-        _emptypos = _veh emptyPositions "Cargo";
-        if ( _emptypos > 0 ) then
-        {
-            _unit=_grp createUnit ["ACE_SoldierWMAT_A", _pos, [], 0, "FORM"];
-            _unit setSkill _grpskill + random (_grprndskill );
-            [_unit] joinSilent _grp;
-            _unit moveInCargo _veh;
-            sleep 0.02;
-        };
-	};
-#endif
-	_grp
-};
-
-//
-// call as: 
-//  _musicName = _music_index call SYG_musicTrackName; // index from 0 to ((call SYG_musicTrackCount) - 1)
-//  playMusic ( floor( random (call SYG_musicTrackCount) ) call SYG_musicTrackName);
-//
-SYG_musicTrackName = {
-	if ( _this < 0 or _this >= (call SYG_musicCount) ) exitWith { "" }; // no such track
-	configName((configFile >> "CfgMusic") select _this)
-};
-
-/*
- * call as: 1 call SYG_playMusicTrack;
- * Returns started track name, or "" if bad index designated
- */
-SYG_playMusicTrack = {
-	private ["_name"];
-	if ( _this < 0 or _this >= (call SYG_musicCount) ) exitWith { "" }; // no such track
-	_name = _this call SYG_musicTrackName;
-	playMusic ( _name);
-	_name
-};
-
-/*
- * call as: call SYG_randomMusicTrack;
- * Returns random track name
- * playMusic ( call SYG_randomMusicTrack);
- */
-SYG_randomMusicTrack = {
-	(floor (random (call SYG_musicTrackCount))) call SYG_musicTrackName
-};
-
-SYG_defeatTracks = ["ATrack9","ATrack10","ATrack14","ATrack15","ATrack16","ATrack17","ATrack18","ATrack19","ATrack20","ATrack21","ATrack22"];
-
-SYG_playRandomDefeatTrack = {
-	playMusic (SYG_defeatTracks call XfRandomArrayVal);
-};
-
-SYG_OFPTracks = [
-			["ATrack24",[[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]]],
-			["ATrack25",[[0,11.978],[13.573,10.142],[158.644,6.417],[105.974,9.508],[138.443,-1]]]
-			    ];
-
-SYG_playRandomOFPTrack = {
-    private ["_arr", "_trk"];
-	_arr = SYG_OFPTracks call XfRandomArrayVal;
-	_trk = argp(_arr,1) call XfRandomArrayVal;
-#ifdef __DEBUG__	
-	hint localize format["SYG_playRandomOFPTrack: %1",[argp(_arr,0),argp(_trk,0),argp(_trk,1)]];
-#endif	
-	if ( argp(_trk,1) > 0) then
-	{
-		[argp(_arr,0),argp(_trk,0),argp(_trk,1)] spawn {playMusic [arg(0),arg(1)];sleep arg(2);playMusic "";};
-	}
-	else
-	{
-		playMusic [argp(_arr,0),argp(_trk,0)];
-	};
-};
-
-
-//
-// call as: _musCnt = call SYG_musicTrackCount;
-//
-SYG_musicTrackCount = {
-	count (configFile >> "CfgMusic" )
-};
-
-//
-// _isCivic = _vehicle call SYG_isCivicMGCar;
-//
-SYG_isCivicMGCar = {
-	[_this,  ["DATSUN_PK1", "HILUX_PK1","LandroverMG"] ] call SYG_isKindOfList
-};
-
-// is Mg car civic or militry one
-// _isCivic = _vehicle call SYG_isCivicMGCar;
-//
-SYG_isMGCar = {
-	_this call isCivicMGCar or _this isKindOf "UAZMG" or _this isKindOf "HMMWV50"
-};
-
-//
-// _fuelCapacity = _vehicle call SYG_fuelCapacity;
-// or
-// _fuelCapacity = (typeOf _vehicle) call SYG_fuelCapacity;
-//
-SYG_fuelCapacity = {
-	if ((typeName _this)=="OBJECT")then{_this=(typeOf _this)};
-	getNumber(configFile >> "CfgVehicles" >> _this >> "fuelCapacity")
 };
 
 SYG_readSlots = {
@@ -515,7 +154,7 @@ SYG_makeUndestructible = {
 
 /**
  * Makes designated objects  with specified type (e.g. "Land_hotel") indestructible by setting event handlers. Works only for CfgVehicles branch of the class hierachy.
- * calls: _res = [_type, [_id1, _id2,..., _idN]] call SYG_makeTypeUndestructible;
+ * calls: _res = [_type<, _id1, _id2,..., _idN>] call SYG_makeTypeUndestructible;
  * params: _type - object type to processDiaryLink
  *        [...]  - array with objects id
  *
@@ -566,14 +205,14 @@ SYG_findVehWithFreeCargo = {
 			if ( _emptypos > 0 ) then 
 			{ 
 				 _dist = _pos distance _x;
-				 if ( _dist < _mindist ) then {_mindist = _dist; _reta = [_x, _emptypos]};
+				 if ( _dist < _mindist ) then {_mindist = _dist; _reta = [_x, _emptypos];};
 			};
 #ifdef __DEBUG__
 			_str = _str + format["%1 cargo %2; ",typeOf _x, _emptypos];
 #endif	
 		}
 #ifdef __DEBUG__
-		else { _str = _str + "<null>; "}
+		else { _str = _str + "<null>; ";}
 #endif	
 		;
 	} forEach _vecs;
@@ -620,7 +259,7 @@ SYG_findGroupAtTargets = {
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
 	_str = "";
 	{
-		if ( count _x == 0 ) then {_str = _str + " <>"} else {_str = _str + format[" %1", round (_x distance _unit)]};
+		if ( count _x == 0 ) then {_str = _str + " <>";} else {_str = _str + format[" %1", round (_x distance _unit)];};
 	} forEach _pos_arr;
 	
 	//hint localize format["SYG_utils.sqf.SYG_findGroupAtTargets: pos near ""%3"" [MSOA/ret] = [%1/%2]", _str, _ret, text (_pos call SYG_nearestLocation) ];
@@ -744,7 +383,7 @@ SYG_findAndAssignAsCargo = {
  */
 SYG_vehIsUpsideDown = {
 	private ["_l","_vUp","_angle"];
-	if ( (!(isNull _this)) AND (alive _this) AND (_this isKindOf "LandVehicle")) then 
+	if ( (!(isNull _this)) && (alive _this) && (_this isKindOf "LandVehicle")) then
 	{
 		_vUp = vectorUp _this;	// vector up for the goal
 		if((_vUp select 2) < 0 )then {true}

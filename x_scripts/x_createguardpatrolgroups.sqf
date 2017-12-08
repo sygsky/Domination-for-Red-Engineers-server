@@ -40,7 +40,7 @@ _selectitmen = {
 	_num = _this select 1;
 	_a_vng2 = _array select _num;
 	_num_ret = round (random (_a_vng2 select 0));
-	if (_num_ret < (_a_vng2 select 1)) then {_num_ret = (_a_vng2 select 1)};
+	if (_num_ret < (_a_vng2 select 1)) then {_num_ret = (_a_vng2 select 1);};
 	_num_ret
 };
 
@@ -55,7 +55,7 @@ _selectitvec = {
 	_a_vng = _array select _num;
 	_a_vng2 = _a_vng select 0;
 	_num_ret = round (random (_a_vng2 select 0));
-	if (_num_ret < (_a_vng2 select 1)) then {_num_ret = (_a_vng2 select 1)};
+	if (_num_ret < (_a_vng2 select 1)) then {_num_ret = (_a_vng2 select 1);};
 	_num_ret
 };
 _number_tank_guard = [d_vehicle_numbers_guard,0] call _selectitvec;
@@ -117,16 +117,18 @@ for "_xx" from 0 to (count _type_list_guard - 1) do {
 sleep 0.233;
 
 
-// guard static vehicles
+// guard static vehicles (tanks, bmps, shilkas etc) in one group
+_agrp = call SYG_createEnemyGroup;
 for "_xx" from 0 to (count _type_list_guard_static - 1) do {
 	_typeidx = _type_list_guard_static select _xx;
-	call compile format["if (_number_%1_guardstatic > 0) then {for ""_xxx"" from 1 to _number_%1_guardstatic do {_wp_ran = (count _wp_array) call XfRandomFloor;[_typeidx select 0, [_wp_array select _wp_ran], _trg_center, _typeidx select 1, ""guardstatic"",d_enemy_side,0,-1.111] execVM ""x_scripts\x_makegroup.sqf"";_wp_array set [_wp_ran, ""X_RM_ME""];_wp_array = _wp_array - [""X_RM_ME""];sleep 1.123;};};",_typeidx select 0];
+	call compile format["if (_number_%1_guardstatic > 0) then {for ""_xxx"" from 1 to _number_%1_guardstatic do {_wp_ran = (count _wp_array) call XfRandomFloor;[_typeidx select 0, [_wp_array select _wp_ran], _trg_center, _typeidx select 1, ""guardstatic"",d_enemy_side,_agrp,-1.111] execVM ""x_scripts\x_makegroup.sqf"";_wp_array set [_wp_ran, ""X_RM_ME""];_wp_array = _wp_array - [""X_RM_ME""];sleep 1.123;};};",_typeidx select 0];
 };
 
 
 // create common group of static weapons: mg, at, aa, canons etc
-__WaitForGroup
-_grp = [d_enemy_side] call x_creategroup;
+//while {!can_create_group} do {sleep 0.1 + random (0.2)}; //__WaitForGroup
+//_grp = [d_enemy_side] call x_creategroup;
+_grp = call SYG_createEnemyGroup;
 for "_xx" from 0 to (count _type_list_guard_static2 - 1) do {
 	_typeidx = _type_list_guard_static2 select _xx;
 	call compile format["
@@ -190,8 +192,11 @@ _type_list_guard_static2 = nil;
 sleep 2.124;
 
 // Create group of trucks (repair, reammo, refuel)
-__WaitForGroup
-__GetEGrp(_agrp)
+//while {!can_create_group} do {sleep 0.1 + random (0.2)};//__WaitForGroup
+//_agrp = [d_enemy_side] call x_creategroup; //__GetEGrp(_agrp)
+
+_agrp = call SYG_createEnemyGroup;
+
 _xx_ran = (count _wp_array) call XfRandomFloor;
 _xpos = _wp_array select _xx_ran;
 _wp_array set [_xx_ran, "X_RM_ME"];
@@ -216,7 +221,7 @@ sleep 2.124;
 
 if (!no_more_observers) then {
 	// artillery observers
-	nr_observers = (floor random 4) max 2;
+	nr_observers = 2 + (floor random 2); // 2 or 3
 	Observer1 = objNull;
 	Observer2 = objNull;
 	Observer3 = objNull;
@@ -225,8 +230,9 @@ if (!no_more_observers) then {
 
 	_unit_array = ["artiobserver", d_enemy_side] call x_getunitliste;
 	for "_xx" from 1 to nr_observers do {
-		__WaitForGroup
-		__GetEGrp(_agrp)
+		//__WaitForGroup
+		//__GetEGrp(_agrp)
+	    _agrp = call SYG_createEnemyGroup;
 		_xx_ran = (count _wp_array) call XfRandomFloor;
 		_xpos = _wp_array select _xx_ran;
 		_wp_array set [_xx_ran, "X_RM_ME"];
@@ -245,7 +251,7 @@ if (!no_more_observers) then {
 		_grp_array execVM "x_scripts\x_groupsm.sqf";
 		call compile format ["
 			Observer%1 = _units select 0;
-			Observer%1 addEventHandler [""killed"", {Observer%1 = objNull;nr_observers = nr_observers - 1;if (nr_observers == 0) then {update_observers = -1; [""update_observers"",update_observers] call XSendNetStartScriptClient;}}];
+			Observer%1 addEventHandler [""killed"", {Observer%1 = objNull;call SAddObserverKillScores;nr_observers = nr_observers - 1;if (nr_observers == 0) then {update_observers = -1; [""update_observers"",update_observers] call XSendNetStartScriptClient;}}];
 		",_xx];
 		sleep 1.231;
 	};
@@ -269,7 +275,7 @@ d_run_illum = true;
 #ifdef __DEBUG_STAT_SERVICE__
 
 waitUntil { sleep 10; main_target_ready };
-_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get score on current town
+//_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get score on current town
 
 #endif
 

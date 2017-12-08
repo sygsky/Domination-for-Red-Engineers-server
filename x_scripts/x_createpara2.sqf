@@ -41,6 +41,10 @@ _chopper flyInHeight 100; // fly on height about 100 meters
 
 // store time of the last infiltration on base
 __SetGVar(INFILTRATION_TIME, date);
+#ifdef __DEBUG_PRINT__
+hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено, установка переменной даёт %1",
+                      __HasGVar(INFILTRATION_TIME)];
+#endif
 
 _parachute_type = (
 	switch (d_enemy_side) do {
@@ -74,13 +78,13 @@ while {_helifirstpoint distance (leader _vgrp) > 250} do {
 // try to anumate ramp opening
 #ifdef __ACE__	
 	// animate heli action
-	if ( _chopper isKindOf "ACE_CH47D" ) then
+	if ( alive _chopper  && _chopper isKindOf "ACE_CH47D" ) then
 	{
 		_chopper animate ["ramp", 1]; // open ramp
 		// hint localize "x_createpara2.sqf: _chopper animate [""ramp"", 1] executed";
 	};
-#endif	
 	sleep 5.123;
+#endif
 
 if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _chopper) ) then // create sabotage group
 {
@@ -163,7 +167,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 	//"Std definitions for x_createpara2.sqf detected" call XfGlobalChat; // last parameters stands for rejoin try if 2 men in group remained
 	_i = d_base_patrol_array call XfRandomFloorArray; // random index
 	_xx = d_base_patrol_array select _i; // value of this iundex
- 	hint localize format["%1 x_createpara2.sqf: paratroopers patrol area #%5 %2 selected for group %3(%4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp, _i];
+ 	hint localize format["%1 x_createpara2.sqf: paratroopers patrol area ind #%5 %2 selected for group %3(%4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp, _i];
 
 	_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,_xx,[],-1,1,[],300 + (random 50),1,[2]]; // try rejoin if number of units <= 2
 //	_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[_current_target_pos,200],[],-1,0,[],300 + (random 50),0];	
@@ -185,7 +189,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 #ifdef	__DEBUG_PRINT__
 	hint localize format["x_createpara2.sqf: sabotage.sqf started with squad of %1 units", _cnt];
 #endif
-	[_paragrp/*, _dbg*/] execVM "scripts\sabotage.sqf"; // run sabotage logic (separate from patrol one)
+	[_paragrp] execVM "scripts\sabotage.sqf"; // run sabotage logic (separate from patrol one)
 
 	// check previous groups and add to common list
 	if (!isNil "d_on_base_groups") then 
@@ -233,7 +237,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 	};
 };
 
-if (isNull _chopper || !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
+if ( !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
 	[driver _chopper, _chopper] spawn {
 		private ["_driver_veh","_vehicle"];
 		_driver_veh = _this select 0;
@@ -259,7 +263,7 @@ if ( !isNull _nenemy) then
 };
 
 while {(_heliendpoint distance (leader _vgrp) > 300)} do {
-	if (isNull _chopper || !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
+	if (!alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
 		[driver _chopper, _chopper] spawn {
 			private ["_driver_veh","_vehicle"];
 			_driver_veh = _this select 0;

@@ -692,7 +692,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=213;
+		items=215;
 		class Item0
 		{
 			position[]={9657.131836,139.994995,9987.144531};
@@ -2483,7 +2483,7 @@ class Mission
 		};
 		class Item179
 		{
-			position[]={9397.2,134.994995,10044.0};
+			position[]={9397.200195,134.994995,10044.000000};
 			azimut=90.000000;
 			special="NONE";
 			id=219;
@@ -2494,7 +2494,7 @@ class Mission
 		};
 		class Item180
 		{
-			position[]={10064.2,143.996796,10071.25};
+			position[]={10064.200195,143.996796,10071.250000};
 			azimut=270.000000;
 			special="NONE";
 			id=220;
@@ -2823,10 +2823,29 @@ class Mission
 			leader=1;
 			skill=0.600000;
 		};
+		class Item213
+		{
+			position[]={9823.500000,139.994995,10045.400391};
+			azimut=270.000000;
+			special="NONE";
+			id=253;
+			side="EMPTY";
+			vehicle="TT650C";
+			skill=1.000000;
+			text="moto5";
+		};
+		class Item214
+		{
+			position[]={17984.046875,7.715221,18994.664063};
+			id=254;
+			side="EMPTY";
+			vehicle="Heli_H_civil";
+			skill=0.600000;
+		};
 	};
 	class Markers
 	{
-		items=51;
+		items=52;
 		class Item0
 		{
 			position[]={9511.406250,139.994995,9995.546875};
@@ -3221,10 +3240,18 @@ class Mission
 			colorName="ACE_ColorBrown";
 			angle=78.301201;
 		};
+		class Item51
+		{
+			position[]={17984.830078,7.734782,18995.089844};
+			name="chopper_service_1";
+			text="@STR_MIS_10";
+			type="ACE_Friendly_Maintainance";
+			colorName="ACE_ColorBrown";
+		};
 	};
 	class Sensors
 	{
-		items=6;
+		items=7;
 		class Item0
 		{
 			position[]={4499.221680,0.484293,13120.274414};
@@ -3314,6 +3341,23 @@ class Mission
 			expActiv="xhandle = [thislist, ""Plane""] execVM ""x_scripts\x_reload.sqf"";";
 			class Effects
 			{
+			};
+		};
+		class Item6
+		{
+			position[]={17984.070313,7.718117,18994.781250};
+			a=5.000000;
+			b=5.000000;
+			activationBy="ANY";
+			repeating=1;
+			interruptable=1;
+			age="UNKNOWN";
+			expCond="(""Helicopter"" countType thislist  > 0) && ((getpos (thislist select 0)) select 2 < 1)";
+			expActiv="xhandle= [thislist, ""Helicopter""] execVM ""x_scripts\x_reload.sqf"";";
+			class Effects
+			{
+				voice="upsidedown";
+				soundEnv="Sea";
 			};
 		};
 	};

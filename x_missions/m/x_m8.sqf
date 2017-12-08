@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_510"; //"На вершине горы Pico de Revolucion находится ТельаВизионная башня. Враг использует её для зомбирования общества. Простая задача, уничтожьте телебашню.";
 	current_mission_resolved_text = localize "STR_SYS_511"; //"Отличная работа! Местные жители больше не увидят ни Ксении Собчак, ни любимца её папаши.";

@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_mediccheck.sqf
 private ["_nearestbase", "_healerslist", "_objs", "_points", "_nobs", "_i", "_h"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -13,27 +13,30 @@ _nearestbase = (
 	}
 );
 _healerslist = [];
+// how many to add on healing
+_score_to_add = if (format ["%1",player] in d_is_medic) then {d_ranked_a select 17} else {1};
 
 while {true} do {
 	_objs = [];
 	_points = 0;
 	if (alive player) then {
 		_objs = nearestObjects [player, [_nearestbase], 3];
-	};
-	if (count _objs > 0) then {
-		{
-			if (!(_x in _healerslist) && (_x != player)) then {
-				if (animationState _x in ["ainvpknlmstpslaywrfldnon_healed","amovppnemstpsraswrfldnon_healed"]) then {
-					_points = _points + (d_ranked_a select 17);
-					_healerslist = _healerslist + [_x];
-				};
-			};
-		} forEach _objs;
-		if (_points > 0) then {
-			player addScore _points;
-			(format ["You get %1 points for healing other units!", _points]) call XfHQChat;
-		};
-		sleep 0.01;
+        if (count _objs > 0) then {
+            {
+                if (!(_x in _healerslist) && (_x != player)) then {
+                    if (animationState _x in ["ainvpknlmstpslaywrfldnon_healed","amovppnemstpsraswrfldnon_healed"]) then {
+                        playSound "healing";
+                        _points = _points + _score_to_add;
+                        _healerslist = _healerslist + [_x];
+                    };
+                };
+            } forEach _objs;
+            if (_points > 0) then {
+                player addScore _points;
+                (format [localize "STR_MED_8", _points]) call XfHQChat; //"You get %1 points for healing other units!"
+            };
+            sleep 0.01;
+        };
 	};
 	if (count _healerslist > 0) then {
 		for "_i" from 0 to (count _healerslist - 1) do {

@@ -12,9 +12,9 @@ sleep 1500 + (random 300);
 
 _vecs = [];
 switch (d_enemy_side) do {
-	case "EAST" : {{_vecs = _vecs + _x} forEach d_veh_a_E};
-	case "WEST" : {{_vecs = _vecs + _x} forEach d_veh_a_W};
-	case "RACS" : {{_vecs = _vecs + _x} forEach d_veh_a_G};
+	case "EAST" : {{_vecs = _vecs + _x;} forEach d_veh_a_E};
+	case "WEST" : {{_vecs = _vecs + _x;} forEach d_veh_a_W};
+	case "RACS" : {{_vecs = _vecs + _x;} forEach d_veh_a_G};
 };
 
 _no = nearestObjects [_pos, _vecs, _radius];

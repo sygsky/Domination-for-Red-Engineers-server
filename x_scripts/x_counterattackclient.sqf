@@ -10,14 +10,14 @@ _reason = _this select 0;
 switch (_reason) do {
 	case "start" : {
 		__TargetInfo
-		_s = format ["Похоже что враг не собирается просто так отдавать %1 и готовит контратаку. Занимайте оборонительные позиции и готовьте встречу...", _current_target_name];
+		_s = format [localize "STR_SYS_541", _current_target_name]; // "It seems that the enemy doesn't want to give up %1 and starts a counterattack. Search defensive positions, the attack will start in a few minutes..."
 		[_s, "HQ"] call XHintChatMsg;
 	};
 	case "start_real": {
-		["Контратака началась!!! Удержите текущий город. Удачи... ... ...", "HQ"] call XHintChatMsg;
+		[localize "STR_SYS_541_1", "HQ"] call XHintChatMsg; // "The counterattack starts. Hold the current target. Good luck and god help us all...
 	};
 	case "over" : {
-		["Задача выполнена! Контратака отбита...", "HQ"] call XHintChatMsg;
+		[localize "STR_SYS_541_2", "HQ"] call XHintChatMsg; // "Good job. The counterattack was defeated."
 	};
 };
 

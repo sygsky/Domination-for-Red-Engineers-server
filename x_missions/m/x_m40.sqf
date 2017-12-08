@@ -14,6 +14,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 
 	current_mission_text = format[localize "STR_SYS_118", "Tiberia"];//	"В Tiberia расположен лагерь, где незаконно удерживается и подвергается различным пыткам гражданское население. Ваша задача - освободить гражданских и доставить их на базу. Для выполнения задания хотя бы один заложник должен добраться до базы живым. (Завершить миссию может только игрок в роли спасателя).";

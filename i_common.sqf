@@ -138,103 +138,80 @@ d_version = d_version + ["RANKED"]; // Ranked version
 target_names =
 	#ifdef __SCHMALFELDEN__
 	[
-		[[1368.8,921.382,0],"Naicha", 220],
-		[[1096.4,1889.11,0],"Schmalfelden", 300],
-		[[2290.62,2229.37,0],"Grossbaerenweiler", 250],
-		[[1528.58,3573.05,0],"Speckheim", 300],
-		[[3210.08,4493.66,0],"Funkstatt", 250],
-		[[4786.72,4465.79,0],"Windisch-Bockenfeld", 180],
-		[[3827.83,3025.79,0],"Wolfskreut",250],
-		[[3541.6,1733.37,0],"Kleinbaerenweiler",250],
-		[[4143.13,576.173,0],"Heufelwinden",250]
+		[[1368.8,921.382,0],"Naicha", 220,2],
+		[[1096.4,1889.11,0],"Schmalfelden", 300,3],
+		[[2290.62,2229.37,0],"Grossbaerenweiler", 250,4],
+		[[1528.58,3573.05,0],"Speckheim", 300,5],
+		[[3210.08,4493.66,0],"Funkstatt", 250,6],
+		[[4786.72,4465.79,0],"Windisch-Bockenfeld", 180,7],
+		[[3827.83,3025.79,0],"Wolfskreut",250,8],
+		[[3541.6,1733.37,0],"Kleinbaerenweiler",250,9],
+		[[4143.13,576.173,0],"Heufelwinden",250,10]
 	];
 	#endif
 	#ifdef __UHAO__
 	[
-		[[3840.62,2843.14,0],"Varona", 190],
-		[[5090.98,4693.36,0],"Ahaiki", 180],
-		[[7362.44,2172,0],"Wailupe", 195],
-		[[3799.57,5566.33,0],"Waipio", 220],
-		[[4992.73,8670.71,0],"Kahuku", 130],
-		[[3323.07,7701.39,0],"Haleiwa", 150],
-		[[2147.85,6697.09,0],"Mokuleia", 140]
+		[[3840.62,2843.14,0],"Varona", 190, 2],
+		[[5090.98,4693.36,0],"Ahaiki", 180, 3],
+		[[7362.44,2172,0],"Wailupe", 195, 4],
+		[[3799.57,5566.33,0],"Waipio", 220, 5],
+		[[4992.73,8670.71,0],"Kahuku", 130, 6],
+		[[3323.07,7701.39,0],"Haleiwa", 150, 7],
+		[[2147.85,6697.09,0],"Mokuleia", 140, 8]
 	];
 	#endif
 	#ifdef __DEFAULT__
 	[
-		[[9349,5893,0],"Cayo", 210],       // 0
-		[[10693,4973,0],"Iguana", 270],    // 1
-		[[7613,6424,0],"Arcadia", 235],    // 2
-		[[8262,9017,0],"Chantico", 180],   // 3
-		[[9170,8309,0],"Somato", 230],     // 4
-//		[[10580.1,9430.44,0],"Paraiso", 300],
-		[[10550,9375,0],"Paraiso", 405], // 5
-		[[12399,7141,0],"Ortego",280],     // 6 *
-//		[[11452,6075.97,0],"Dolores",300],
-		[[11450,6026,0],"Dolores",350],    // 7
-//		[[13351.8,8937.45,0],"Corazol",300], // 8
-		[[13302,8937,0],"Corazol",450],  // 8
-		[[14470,10774,0],"Obregan",240],   // 9
-		[[13172,11320,0],"Mercalillo",210],// 10
-//		[[14232.7,12525,0],"Bagango",230],
-		[[14233,12545,0],"Bagango",350],      // 11
-		[[17271,14193,0],"Masbete",180],   // 12
-		[[18984,13764,0],"Pita",250],      // 13
-		[[12508,15004,0],"Eponia",270],    // 14
-		[[16596,9358,0],"Everon",200],     // 15
-		[[9773,14436,0],"Pacamac",150],    // 16
-		[[7722,15802,0],"Hunapu",150],     // 17
-		[[10593,16194,0],"Mataredo",150],  // 18
-		[[12387,13388,0],"Carmen",200],    // 19
-		[[2826,2891,0],"Rahmadi",180],      // 20
-		[[14444,8554,0],"Gaula",180]      // 21
-	];
-	/*
-	position[]={14444.307617,27.427725,8554.075195};
-			name="Gaula";
-	*/
-	#endif
-	#ifdef __TT__
-	[
-		[[9348.73,5923.4,0],"Cayo", 210], // 0
-		[[10692.9,4953.4,0],"Iguana", 250], //1
-		[[7613.23,6424.32,0],"Arcadia", 235], //2
-		[[8241.74,9016.77,0],"Chantico", 200], // 3
-		[[9170.43,8309.3,0],"Somato", 230], //4
-//		[[10580.1,9430.44,0],"Paraiso", 300],
-		[[10550,9375,0],"Paraiso", 405], // 5
-		[[12399,7141.23,0],"Ortego",280], //6
-//		[[11452,6075.97,0],"Dolores",300],
-		[[11450,6026,0],"Dolores",350],    // 7
-//		[[13351.8,8937.45,0],"Corazol",300], // 8
-		[[13302,8937,0],"Corazol",450],  // 8
-		[[14470,10773.5,0],"Obregan",240], //9
-		[[13172,11319.6,0],"Mercalillo",210], // 10
-//		[[14232.7,12525,0],"Bagango",230],
-		[[14233,12545,0],"Bagango",350],      // 11
-		[[17291,14213.4,0],"Masbete",180], //12
-		[[19033.5,13814.3,0],"Pita",230], //13
-		[[12538.3,15004.2,0],"Eponia",210], //14
-		[[16595.8,9357.96,0],"Everon",200], //15
-		[[9773.03,14435.7,0],"Pacamac",150], //16
-		[[7771.72,15802.1,0],"Hunapu",150], //17
-		[[10592.5,16193.8,0],"Mataredo",150], //18
-		[[12426.8,13387.6,0],"Carmen",170], //19
-		[[2826,2891,0],"Rahmadi",180],      // 20
-		[[14444,8554,0],"Gaula",180]      // 21
+		[[9349,5893,0],"Cayo", 210, 2],        // 0
+		[[10693,4973,0],"Iguana", 270, 3],     // 1
+		[[7613,6424,0],"Arcadia", 235, 4],     // 2
+		[[8262,9017,0],"Chantico", 180, 5],    // 3
+		[[9170,8309,0],"Somato", 230, 6],      // 4
+//		[[10580.1,9430.44,0],"Paraiso", 300, 7],
+		[[10550,9375,0],"Paraiso", 405, 7],    // 5
+		[[12399,7141,0],"Ortego",280, 8],      // 6 *
+//		[[11452,6075.97,0],"Dolores",300, 9],
+		[[11450,6026,0],"Dolores",350, 9],     // 7
+//		[[13351.8,8937.45,0],"Corazol",300, 10], // 8
+		[[13302,8937,0],"Corazol",450, 10],    // 8
+		[[14470,10774,0],"Obregan",240, 11],   // 9
+		[[13172,11320,0],"Mercalillo",210, 12],// 10
+//		[[14232.7,12525,0],"Bagango",230,  13],
+		[[14233,12545,0],"Bagango",350, 13],   // 11
+		[[17271,14193,0],"Masbete",180, 14],   // 12
+		[[18984,13764,0],"Pita",250, 15],      // 13
+		[[12508,15004,0],"Eponia",270, 16],    // 14
+		[[16596,9358,0],"Everon",200, 17],     // 15
+		[[9773,14436,0],"Pacamac",150, 18],    // 16
+		[[7722,15802,0],"Hunapu",150, 19],     // 17
+//		[[10593,16194,0],"Mataredo",150, 20],  // 18
+		[[12387,13388,0],"Carmen",200, 21],    // 19
+		[[2826,2891,0],"Rahmadi",180, 22],     // 20
+//		[[14444,8554,0],"Gaula",180, 23],      // 22
+		[[6850,8069,0],"Estrella",200, 24],    // 23
+		[[15404,13829,0],"Benoma",279, 25]     // 24
+//		[[9321,5275,0],"Tiberia",300, 26]       // 25
 	];
 	#endif
-	
+
 #ifdef __DEFAULT__
-d_mountine_towns = ["Hunapu","Pacamac"];
+d_mountine_towns = ["Hunapu","Pacamac","Masbete","Benoma"];
 #endif
 	
 big_town_radious = 280; // if town radious >= this number, town is considered as big one, else as small
 	
-for "_xxxxx" from 2 to ((count target_names) + 1) do { // hide all town markers from the map
-	call compile format ["""%1"" objStatus ""HIDDEN"";", _xxxxx];
+//for "_xxxxx" from 2 to ((count target_names) + 1) do { // hide all town markers from the map
+// FIXME: hidden all [unresoved] items
+//_list = [];
+
+// hide all possible town markers from the map
+for "_xxxxx" from ((target_names select 0) select 3) to 30 /*((target_names select ((count target_names) - 1)) select 3)*/ do {
+//	call compile format ["""%1"" objStatus ""HIDDEN"";", (target_names select _xxxxx) select 3];
+//	_list = _list + [(target_names select _xxxxx) select 3];
+    (str _xxxxx) objStatus "HIDDEN";
 };
 
+//hint localize format["+++ objects HIDDEN: %1 +++",_list ];
 //"0" objStatus "HIDDEN"; // TODO: for future airbase init seizing mission
 
 #ifdef __DEBUG__
@@ -348,14 +325,8 @@ FLAG_BASE setFlagTexture "\CSLA_Warfare\Images\csla_cssr_flag.paa";
 FLAG_BASE setPos [position FLAG_BASE select 0, position FLAG_BASE select 1, 0];
 #endif
 
-// is engineer
-#ifndef __TT__
-d_is_engineer = ["delta_1","delta_2","delta_3","delta_4"];
-#else
-d_is_engineer = ["west_9","west_10","racs_9","racs_10"];
-#endif
 
-//+++ Sygsky: enable limited refuelling enabled
+//+++ Sygsky: enable limited refuelling enabled for engineers
 #ifdef __LIMITED_REFUELLING__
 d_refuel_volume = 50; // how many liters engineer can fill up into any repaired vehicle
 d_refuel_per_rank = 20;
@@ -363,7 +334,12 @@ d_refuel_rank_for_upgrade = "Major"; // begins from Major rank you are  allowed 
 #endif
 //--- Sygsky
 
-
+// is engineer
+#ifndef __TT__
+d_is_engineer = ["delta_1","delta_2","delta_3","delta_4"];
+#else
+d_is_engineer = ["west_9","west_10","racs_9","racs_10"];
+#endif
 
 // is artillery operator
 d_can_use_artillery = ["RESCUE","RESCUE2"];
@@ -428,7 +404,7 @@ sm_bonus_vehicle_array = (
 		case "RACS": {["Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","HMMWVTOW","Stryker_TOW","M113_RACS"]};
 		case "WEST": {
 			if (__ACEVer) then {
-				["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT","ACE_Stryker_RV","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","ACE_HMMWV_GAU19","ACE_M113_A3","ACE_M2A2","ACE_M2A1"]
+				["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","ACE_HMMWV_GAU19","ACE_M113_A3","ACE_M2A2","ACE_M2A1"]
 			} else {
 				["Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","HMMWVTOW","Stryker_TOW","M113"]
 			}
@@ -451,7 +427,8 @@ sm_bonus_vehicle_array = (
 "ACE_BRDM2_SA9",    // 9
 "ACE_BMP1_D",       // 10
 "ACE_BMD1p",        // 11
-"ACE_BRDM2"         // 12
+"ACE_T80_U",
+"ACE_T72_BM"         // 12
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -520,7 +497,7 @@ mt_bonus_vehicle_array = (
 "ACE_Su34",     	    //21
 "ACE_Su34B",            //22
 
-"ACE_Su34",             //23 - first vehicles of good jets
+"ACE_Su34B",             //23 - first vehicles of good jets
 "ACE_Su30Mk_Kh29T",     //24
 "ACE_Su30Mk_KAB500KR"   //25
 ]
@@ -816,21 +793,24 @@ if (d_enemy_side == "EAST") then {
 };
 // position base, a,b, for the enemy at base trigger and marker
 d_base_array =
+
 #ifdef __SCHMALFELDEN__
 	[[2545.45,156.443,0], 300, 200];
 #endif
+
 #ifdef __UHAO__
 	[[2141,4371.059,0], 150, 150];
 #endif
+
 #ifdef __DEFAULT__
 	//+++ Sygsky: Paraiso airfield coordinates and its boundary rectangle box (semi-axis sizes)
 	[[9821.47,9971.04,0], 600, 200, 0];
-	
 #endif
+
 #ifdef __TT__
 	[
-		[[2551.25,2709.68,0], 300, 100, 90], // West
-		[[18092.4,18289.4,0], 300, 100, 80]  // Racs
+		[[2551.25,2709.68,0], 300, 100, 90], // West, Rahmadi
+		[[18092.4,18289.4,0], 300, 100, 80]  // Racs, Antigua or Pita, not sure
 	];
 #endif
 
@@ -891,7 +871,9 @@ d_with_wind_effect = true;
 d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","DIAMOND"];
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Array of all global variables, see \global_vars.sqf for each variable offset defines
+// Array of all global variables, see "global_vars.sqf" for each variable offset defines
 //
 SYG_global_vars = [0];
- //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+hint localize format["i_common.date = %1", date];

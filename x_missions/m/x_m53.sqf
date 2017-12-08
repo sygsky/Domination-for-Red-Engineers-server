@@ -1,4 +1,4 @@
-// by Xeno
+// by Sygsky
 private ["_vehicle"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -12,6 +12,8 @@ x_sm_type = "normal"; // "convoy"
 #ifdef __SMMISSIONS_MARKER__
 if (true) exitWith {};
 #endif
+
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
 	current_mission_text = format[localize "STR_SM_2","Rahmadi"]; // "Враг испытывает новый многоцелевой самолёт в %1. Захватите его и доставьте на базу.";

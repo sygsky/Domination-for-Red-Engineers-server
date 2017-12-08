@@ -25,7 +25,7 @@ switch (ari_type2) do {
         _arix = getPos AriTarget2 select 0;
         _ariy = getPos AriTarget2 select 1;
         call compile format ["_ang = (_arix - (getPos %1 select 0)) atan2 (_ariy - (getPos %1 select 1));", _arti_operator];
-        if(abs _ang != _ang) then {angle = _ang + 360};
+        if(abs _ang != _ang) then {angle = _ang + 360;};
         _posf = [_arix + _radius * sin(_ang), _ariy + _radius * cos(_ang)]; //in front range
         _posb = [_arix - _radius * sin(_ang), _ariy - _radius * cos(_ang)]; //behind range
         _posl = [_arix + _radius * sin(_ang-90), _ariy + _radius * cos(_ang-90)]; //left lateral

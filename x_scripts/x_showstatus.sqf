@@ -15,17 +15,17 @@ _XD_display = findDisplay 11001;
 _target_array2 = [];
 _current_target_name = "";
 
-if (current_target_index == -1) then
+if (current_target_index == -1) then // before 1st town
 {
     _target_array2 = d_base_array;
     _current_target_name = localize "STR_SYS_215"; //"Airbase";
 }
-else
+else // next target town ready
 {
     if (client_target_counter < number_targets ) then {
         __TargetInfo
     } else {
-        _current_target_name = localize "STR_SYS_208"; // "Нет целей"
+        _current_target_name = localize "STR_SYS_208"; // "No target"
     };
 };
 
@@ -119,7 +119,7 @@ if ((current_mission_text != localize "STR_SYS_120") && (current_mission_text !=
 					//"Заложники (в живых %1 из %2) находятся в примерном радиусе %3 м от точки задания. %4"
 					_s = _s + format["\n" + localize "STR_SYS_117", _alive_cnt, _cnt, _dist, _s1 ];
 				}
-				else {	_s = _s + "\n" + (localize "STR_SYS_122")}; //"Заложники не обнаружены"
+				else {	_s = _s + "\n" + (localize "STR_SYS_122");}; //"Заложники не обнаружены"
 				_units = nil;
 			};
 		};
@@ -154,7 +154,7 @@ if ((current_mission_text != localize "STR_SYS_120") && (current_mission_text !=
 					_angle  = [_pos, _leader] call XfDirToObj;
 					_s1     = format[ localize "STR_SYS_131", _dist, (ceil(_angle/10))*10, _s1 ]; // Is at dist %1 and angle %2 from %3
 				}
-				else {_s1 = localize "STR_SYS_134"}; // "Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
+				else {_s1 = localize "STR_SYS_134";}; // "Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
 				_units = nil;
 			};
 			_s = _s + "\n" + _s1;
@@ -184,7 +184,30 @@ _s = _current_target_name;
 // if town is big type info about it
 if ( current_target_index >= 0 && (client_target_counter < number_targets)) then
 {
-    if ( (_target_array2 select 2) >= big_town_radious) then { _s = format["%1 (%2)", _s, localize "STR_SYS_59_1"];};
+
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+    if (! call SYG_isMainTargetAllowed) then // show some special info
+    {
+        _s = localize "STR_SYS_59_3"; // You are Asked to complete next SM!
+    }
+    else
+    {
+#endif
+        _s1 = "";
+        if ( (_target_array2 select 2) >= big_town_radious) then // big town
+        {
+            _s1 = localize "STR_SYS_59_1";
+        };
+        if (client_target_counter == number_targets-1) then // last town
+        {
+            if ( _s1 != "" ) then {_s1 = _s1 + ",";};
+            _s1 = _s1 + localize "STR_SYS_59_2";
+        };
+        if ( _s1 != "" ) then { _s1 = format["(%1)",_s1]; };
+        _s = format["%1%2", _s, _s1];
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+    };
+#endif
 };
 
 _ctrl = _XD_display displayCtrl 11003;
@@ -192,7 +215,7 @@ _ctrl ctrlSetText _s;
 
 // Current count/Whole main target numbers
 _cnt = client_target_counter;
-if ( client_target_counter < number_targets ) then {_cnt = _cnt + 1 };
+if ( client_target_counter < number_targets ) then {_cnt = _cnt + 1;};
 _s = format ["%1/%2", _cnt, number_targets];
 _ctrl = _XD_display displayCtrl 11006;
 _ctrl ctrlSetText _s;
@@ -202,8 +225,8 @@ if ( !isNil "ACE_FV") then {
 	_ctrl = _XD_display displayCtrl 11016;
 	_s = (round(ACE_FV/1.3))/10;
 	_color = [0,1,0,1];
-	if ( _s >= 3 ) then {_color = [1,1,0,1]};
-	if ( _s >= 7 ) then {_color = [1,0,0,1]};
+	if ( _s >= 3 ) then {_color = [1,1,0,1];};
+	if ( _s >= 7 ) then {_color = [1,0,0,1];};
 	_ctrl ctrlSetTextColor _color;
 	_ctrl ctrlSetText format[localize "STR_SYS_11_1", _s];// "Усталость %1"
 };
@@ -211,8 +234,8 @@ if ( !isNil "ACE_FV") then {
 _ctrl = _XD_display displayCtrl 11015;
 _s = (round((1.0-(damage player))*100))/10;
 _color = [0,1,0,1];
-if ( _s <= 9.0 ) then {_color = [1,1,0,1]};
-if ( _s <= 7.0 ) then {_color = [1,0,0,1]};
+if ( _s <= 9.0 ) then {_color = [1,1,0,1];};
+if ( _s <= 7.0 ) then {_color = [1,0,0,1];};
 _ctrl ctrlSetTextColor _color;
 _ctrl ctrlSetText format[localize "STR_SYS_11", _s];// "Здоровье: %1"
 //--- Sygsky

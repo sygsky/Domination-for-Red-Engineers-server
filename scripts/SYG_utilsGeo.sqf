@@ -17,7 +17,9 @@
 if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 {
 	SYG_UTILS_GEO_COMPILED = true;
-	
+
+#ifdef __DEFAULT__
+
 	SYG_Sahrani_p0 = [13231.3,8890.26,0]; // City Corazol center
 	SYG_Sahrani_p1 = [14878.6,7736.74,0]; // Vector dividing island to 2 parts (North and South) begininig, point p1
 	SYG_Sahrani_p2 = [5264.39,16398.1,0]; // Vector dividing island to 2 parts (North and South) end, point p2
@@ -27,7 +29,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 		["isle1",[12281.7,10650.4,0],600, "острова в заливе Abra de Boca"],
 		["isle2",[14019.2,8010.04,0],220, "Islas Gatunas"],
 		["isle3",[17497.5,4029.05,0],1500,"Antigua Isles group"],
-		["isle4",[17454.8,18862.8,0],1500,"Юго-восточные острова"],
+		["isle4",[17462.2,18669.0,0],1500,"Юго-восточные острова"],
 		["isle5",[7821.18,14328.8,0],400, "Trelobada"],
 		["isle6",[5159.06,15475.9,0],1000,"Isla de Vassal"],
 		["isle7",[2115.56,17959.3,0],1100,"Most western islets"],
@@ -39,8 +41,51 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 
 	SYG_RahmadiIslet = ["isle12",[2537.55,2538.37,0],1500,"Rahmadi"];
 
+    SYG_chasmArray = [
+        [[14269,10545,0],70,[13919,10632,0], "Obregan"],
+        [[11725,15467,0],70,[11371,14877], "Pesados"]
+    ];
+
+#endif
+
 };	
 
+//
+// Checks if pos of vehicle is in one of chasm (no exit by BIS algorithm)
+// if found that chasm wayout waypoit is returned
+// if not in chasm, empty array is returned
+//  call:
+//  _newWP = (getPos _vehicle) call SYG_chasmExitWP;
+//  if ( count _newWP == 3) _vehicle addWP _newWP
+//
+SYG_chasmExitWP = {
+    private ["_ret","_center","_radious"];
+   _ret = [];
+#ifdef __DEFAULT__
+    if ( typeName _this == "OBJECT") then
+    {
+        _this = getPos _this;
+    };
+    if ( typeName _this != "ARRAY") exitWith
+    {
+        _ret
+    };
+    if ( count _this != 3 ) exitWith
+    {
+        _ret
+    };
+    {
+        _center = _x select 0;
+        _radious = _x select 1;
+        if ([_this, _circle, _radious] call SYG_pointInCircle) exitWith
+        {
+            // yes, in circle
+            _ret = _x select 2;
+        };
+    } forEach SYG_chasmArray;
+#endif
+    _ret
+};
 
 /**
  * Finds designated location type nearest to the designated point within designated radious
@@ -107,9 +152,9 @@ SYG_nearestLocationA = {
 };
 
 /**
- * Text name of nearest main location
+ * Text name of location found with call to SYG_nearestLocation
  */
-SYG_nearestLocationName = text (_this call SYG_nearestLocationA);
+SYG_nearestLocationName = {text (_this call SYG_nearestLocation)};
 
 /**
  * Call:
@@ -271,7 +316,7 @@ SYG_nearestZoneOfInterest = {
 							if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
 							{
 								_dist1 = _pos1 distance _pos;
-								if ( (_dist1 < _dist) || (_dist < 0)) then { _dist = _dist1; _pos2 = _pos1};
+								if ( (_dist1 < _dist) || (_dist < 0)) then { _dist = _dist1; _pos2 = _pos1;};
 							};
 						} forEach d_recapture_indices;
 						_pos1 = _pos2;
@@ -306,23 +351,23 @@ SYG_nearestZoneOfInterest = {
  
 /**
  * call:
- *    _part = _getPos player call SYG_whatPartOfIsland; // "NORTH", "SOUTH", "CENTER" for Sahrani
+ *    _part = _getPos player call SYG_whatPartOfIsland; // "NORTH", "SOUTH", "CENTER" for Corazol area
  */
 SYG_whatPartOfIsland = {
 	private ["_pos","_str","_res"];
 	_pos = [];
 	switch toUpper(typeName _this) do
 	{
-		case "OBJECT": {_pos = getPos _this};
-		case "LOCATION": {_pos = locationPosition _this};
-		case "GROUP": {_pos = getPos leader _this};
-		case "ARRAY": {_pos = _this};
+		case "OBJECT": {_pos = getPos _this;};
+		case "LOCATION": {_pos = locationPosition _this;};
+		case "GROUP": {_pos = getPos leader _this;};
+		case "ARRAY": {_pos = _this;};
 	};
 	_str = "<ERROR DETECTED>";
 	if ( count _pos > 0 ) then
 	{
 		_res = _pos distance SYG_Sahrani_p0;
-		if ( _res < 400 ) then {_str = "CENTER"} else 
+		if ( _res < 500 ) then {_str = "CENTER";} else
 		{
 			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel;
 			_str = if (_res > 0) then {"NORTH"} else {if (_res < 0) then {"SOUTH"} else {"CENTER"}};
@@ -339,14 +384,20 @@ SYG_whatPartOfIsland = {
 SYG_pointOnIslet = {
 	private ["_ret"];
 	_ret = false;
-	if (typeName _this != "ARRAY") then {_this = position _this};
+	if (typeName _this != "ARRAY") then {_this = position _this;};
 	{
-		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = true};
+		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = true;};
 	}forEach SYG_SahraniIsletCircles;
 	_ret
 };
 
+/**
+ * Detects if point is on any of small islet, not on main Island Sahrani
+ * call:
+ *    _bool = (getPos player) call SYG_pointOnIslet; // true or false is returned
+ */
 SYG_pointOnRahmadi = {
+	if (typeName _this != "ARRAY") then {_this = position _this;};
 	[_this,SYG_RahmadiIslet select 1, SYG_RahmadiIslet select 2] call SYG_pointInCircle
 };
 
@@ -384,7 +435,7 @@ SYG_getTargetTownName = {
 };
 
 /**
- * Returns index for current side mission. If no mission is availabler, -1 is returned;
+ * Returns index for current side mission. If no mission is available, -1 is returned;
  * call:
  *      _smindex = call SYG_getSideMissionIndex;
  */
@@ -437,9 +488,9 @@ SYG_pointInMarker = {
 			switch  count _mrk do
 			{
 				//hint localize format["Marker for circle ""%1"" converted to a form [center,w,h,angle]",_mrk];
-				case 2: {_mrk = [argp(_mrk,0), argp(_mrk,1),0,0,"CIRCLE"]};
-				case 3: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),0,"RECTANGLE"]};
-				case 4: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),argp(_mrk,3),"RECTANGLE"]};
+				case 2: {_mrk = [argp(_mrk,0), argp(_mrk,1),0,0,"CIRCLE"];};
+				case 3: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),0,"RECTANGLE"];};
+				case 4: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),argp(_mrk,3),"RECTANGLE"];};
 			};
 		};
 		case "STRING":  // marker name, convert to Xeno array
@@ -477,7 +528,7 @@ SYG_gendirlistE = ["C","С-СВ","СВ","В-СВ","В","В-ЮВ","ЮВ","В-ЮВ
 SYG_getDirName = {
 //	hint localize format["SYG_getDirName: this %1", _this];
 	_this  = _this mod 360;
-	if ( _this < 0 ) then {_this = _this + 360};
+	if ( _this < 0 ) then {_this = _this + 360;};
 	switch localize "STR_LANG" do
 	{
 		case "RUSSIAN": { SYG_gendirlistE select (round (_this/22.5))};
@@ -490,7 +541,7 @@ SYG_getDirName = {
 SYG_getDirNameEng = {
 //	hint localize format["SYG_getDirNameEng: this %1", _this];
 		_this  = _this mod 360;
-	if ( _this < 0 ) then {_this = _this + 360};
+	if ( _this < 0 ) then {_this = _this + 360;};
 	SYG_gendirlistW select (round (_this/22.5))
 };
 
@@ -501,6 +552,7 @@ SYG_intelObjects =
 [
 	[[9709.46,9960.43,1.4], 155, "Computer", "GRU_scripts\computer.sqf", "STR_COMP_ENTER"],
 	[[9712.41,9960,0.6], 90, "Wallmap", ""]
+	// GRUBox position[]={9707.685547,143.645111,9963.350586};	azimut=90.000000;
 ];
 
 SYG_computerPos = {argp(argp(SYG_intelObjects, 0),0)};
@@ -541,6 +593,11 @@ SYG_getMainTaskTargetPos = { (call SYG_getTargetTown) select 0 };
 #define __DEBUG_COMP__
 //
 // Updates GRU house equipment. Call only from server if MP
+// 1. Check for the computer house presence,
+// 2. Check for computer presence if not present, create all equipment
+// 3. Check if computer is in nearest house
+// 4. if true, wait until next loop
+// 5. if false, moves computer to the nearest hose
 //
 SYG_updateIntelBuilding = {
 	private ["_house","_compArr","_comp","_pos","_pos1","_mapArr","_maps","_map"];
@@ -624,7 +681,7 @@ SYG_updateIntelBuilding = {
 	}
 	else
 	{
-		// 1.1 check if equipment is damaged orstand not in place
+		// 1.1 check if equipment is damaged or stand not in place
 		//if ( !alive _map) then { _map setDamage 0;};
 		_pos  = getPos _map;
 		_pos set [2, 0];

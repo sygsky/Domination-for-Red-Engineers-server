@@ -1,5 +1,7 @@
-// by Xeno: x_sideconvoy.sqf
-private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_newgroup","_nr_convoy","_pos_end","_pos_start","_side","_side1","_vehicles","_wp","_wps","_selector", "_veh_arr","_footmen_check_time","_str","_pos1","_pos2","_dist","_dir"];
+// by Xeno: [_poss, _pos_other, 0] execVM "x_sideconvoy.sqf"
+private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_newgroup",
+         "_nr_convoy","_pos_end","_pos_start","_side","_side1","_vehicles","_wp","_wps",
+         "_selector", "_veh_arr","_footmen_check_time","_str","_pos1","_pos2","_dist","_dir","_vecnum"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -62,7 +64,7 @@ _side = d_enemy_side;
 _side1 = if ( d_enemy_side == "WEST" ) then {west} else {east};
 __WaitForGroup
 _newgroup = [_side] call x_creategroup;
-[d_sm_convoy_vehicles select 0, _side] call x_getunitliste;
+//[d_sm_convoy_vehicles select 0, _side] call x_getunitliste;
 _vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select 0), _newgroup, 0, _c_array select 1] call x_makevgroup;
 (_vehicles select 0) lock true;
 _veh_arr = [_vehicles select 0];
@@ -89,6 +91,7 @@ for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
 	sleep 0.933;
 	_vehicles = nil;
 };
+_vecnum = 0;
 
 #ifdef __DEBUG_PRINT__		
 	_str = "";
@@ -149,13 +152,29 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 				_dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
 //					hint localize format["%1 x_groupsm.sqf: grp %2, count (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
 
-				hint localize format["%6 x_sideconvoy.sqf: alive vecs %1/%5, pos. %3 m to %4 from %2", {alive _x} count _veh_arr, text _loc, (round (_dist/50))*50, _dir, count _veh_arr, call SYG_nowTimeToStr ];
+				hint localize format["%6 x_sideconvoy.sqf: alive vecs %1/%5(%7), pos. %3 m to %4 from %2", {alive _x} count _veh_arr, text _loc, (round (_dist/50))*50, _dir, count _veh_arr, call SYG_nowTimeToStr, typeOf (vehicle _leader) ];
 			}
 			else
 			{
 				hint localize "x_sideconvoy.sqf: no leader exists";
 			};
 			_time2print = time + PRINT_DELAY;
+			// check new convoy vehicle state
+			_newcnt = {({alive _x} count crew _x) > 0} count _veh_arr;
+			if ( _newcnt != _vecnum) then
+			{
+			    if ( _newcnt == 0) then
+			    {
+                    _msg = ["STR_SYS_500_2"]; // "All the vehicles in the convoy lost crew!"
+			    }
+			    else
+			    {
+                    _msg = ["STR_SYS_500_1",_newcnt ]; // "Moving vehicles in the convoy: %1"
+			    };
+			    // send message to users about
+                ["msg_to_user","",[_msg],4,4] call XSendNetStartScriptClient;
+			    _vecnum = _newcnt;
+			};
 		};
 #endif							
 		if ( ({ !isNull _x && alive _x } count _veh_arr) == 0 ) then
@@ -209,15 +228,22 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 					
 					if ( count _footmen > 0 ) then // try to assign as cargo in other moveable vehicle
 					{
+#ifdef __DEBUG_PRINT__
+    					_cnt = count _footmen;
+#endif
 						_footmen = [_footmen, _vehicles] call SYG_findAndAssignAsCargo;
 #ifdef __DEBUG_PRINT__
-						if ( count _footmen > 0 ) then // kill remained
+						if ( count _footmen > 0 ) then // TODO: kill remained may be?
 						{
-							hint localize format["x_sideconvoy.sqf: %1 units still walking by feet", count _footmen];
+                            if ( (count _footmen) < _cnt ) then
+                            {
+                                hint localize format["x_sideconvoy.sqf: %1 walking units were reassigned to other vehicles",_cnt - (count _footmen)];
+                            };
+  							hint localize format["x_sideconvoy.sqf: %1 units still walking by feet", count _footmen];
 						}
 						else
 						{
-							hint localize "x_sideconvoy.sqf: all walking units are reassigned to other vehicles";
+							hint localize "x_sideconvoy.sqf: all walking units were reassigned to other vehicles";
 						};
 #endif
 					};
@@ -278,8 +304,11 @@ else
 };
 #endif
 
-_newgroup spawn {sleep 120; _this call _clearFeetmen};
 
 side_mission_resolved = true;
+
+// remove all footmen
+sleep 120;
+_newgroup call _clearFeetmen;
 
 if (true) exitWith {};

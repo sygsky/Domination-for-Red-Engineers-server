@@ -82,7 +82,7 @@ while {!_pilots_at_base && !_is_dead} do {
 					_nobjs = nearestObjects [_x, ["Man"], 20];
 					_pilot = _x;
 					{
-						if ((isPlayer _x) AND ((format ["%1", _x] in ["RESCUE","RESCUE2"]) OR (leader group _x == _x))) exitWith {
+						if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
 							if ((_x distance _pilot) < _dist) then
 							{
 								_rescue = _x;
@@ -103,6 +103,8 @@ while {!_pilots_at_base && !_is_dead} do {
 				  {
 					_x setUnitPos "AUTO";
 					_x enableAI "MOVE";
+					[_x] join objNull;
+					sleep 0.1;
 					[_x] join (leader _rescue);
 				  };
 				} forEach [_pilot1, _pilot2];
@@ -148,7 +150,8 @@ while {!_pilots_at_base && !_is_dead} do {
 	if (!alive _pilot1 && !alive _pilot2) then {
 		_is_dead = true;
 	} else {
-		if (!_rescued) then {
+		if (!_rescued) then
+		{
 			_nobjs = [];
 			if (alive _pilot1) then {
 				_nobjs = _nobjs + nearestObjects [_pilot1, ["Man"], 20];
@@ -156,24 +159,22 @@ while {!_pilots_at_base && !_is_dead} do {
 			if (alive _pilot2) then {
 				_nobjs = _nobjs + nearestObjects [_pilot2, ["Man"], 20];
 			};
-			if (count _nobjs > 0) then {
-				{
-					if (isPlayer _x) exitWith {
-						_rescued = true;
-						if (alive _pilot1) then {
-							_pilot1 setUnitPos "AUTO";
-							_pilot1 enableAI "MOVE";
-							[_pilot1] join (leader _x);
-						};
-						if (alive _pilot2) then {
-							_pilot2 setUnitPos "AUTO";
-							_pilot2 enableAI "MOVE";
-							[_pilot2] join (leader _x);
-						};
-					};
-					sleep 0.01;
-				} forEach _nobjs;
-			};
+            {
+                if ( isPlayer _x ) exitWith {
+                    _rescued = true;
+                    _leader = (leader _x);
+                    {
+                        if (alive _x) then {
+                            _x setUnitPos "AUTO";
+                            _x enableAI "MOVE";
+                            [_x] join grpNull;
+                            sleep 0.1;
+                            [_x] join _leader;
+                        };
+                    } forEach [_pilot1,_pilot2];
+                };
+                sleep 0.01;
+            } forEach _nobjs;
 		} else {
 			if (alive _pilot1 && alive _pilot2) then {
 				if (_pilot1 distance FLAG_BASE < 20 && _pilot2 distance FLAG_BASE < 20) then {
@@ -236,7 +237,7 @@ if (_is_dead) then {
 	side_mission_winner = -700;
 } else {
 	if (_pilots_at_base) then {
-		#ifdef __RANKED__
+#ifdef __RANKED__
 		if (!(__TTVer)) then {
 			["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
 		} else {
@@ -246,30 +247,25 @@ if (_is_dead) then {
 				["d_sm_p_pos", position WFLAG_BASE] call XSendNetVarClient;
 			}
 		};
-		#endif
+#endif
 		if (_winner != 0) then {
 			side_mission_winner = _winner;
 		} else {
 			side_mission_winner = 2;
 		};
 		sleep 2.123;
-		if (alive _pilot1) then {
-			if (vehicle _pilot1 != _pilot1) then {
-				_pilot1 action ["eject", vehicle _pilot1];
-				unassignVehicle _pilot1;
-				_pilot1 setPos [0,0,0];
-			};
-		};
-		if (alive _pilot2) then {
-			if (vehicle _pilot2 != _pilot2) then {
-				_pilot1 action ["eject", vehicle _pilot2];
-				unassignVehicle _pilot2;
-				_pilot2 setPos [0,0,0];
-			};
-		};
-		sleep 0.5;
-		deleteVehicle _pilot1;
-		deleteVehicle _pilot2;
+		{
+            if (alive _x) then {
+                if (vehicle _x != _x) then {
+                    _x action ["eject", vehicle _x];
+                    unassignVehicle _x;
+                    sleep 0.5;
+                    _x setPos [0,0,0];
+                };
+            };
+            sleep 0.5;
+            deleteVehicle _x;
+		} forEach [_pilot1,_pilot2];
 	};
 };
 

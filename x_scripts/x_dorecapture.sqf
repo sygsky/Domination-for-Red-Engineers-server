@@ -15,6 +15,9 @@ _helih = _this select 3;
 _veclist = [];
 _unitslist = [];
 
+_veccnt = 0; // vehicle cnt
+_infcnt = 0; // infantry cnt
+
 {
 	_ulist = [_x,d_enemy_side] call x_getunitliste;
 	_posran = [_target_center, _radius] call XfGetRanPointCircle;
@@ -25,6 +28,7 @@ _unitslist = [];
 	__WaitForGroup
 	_grp = [d_enemy_side] call x_creategroup;
 	_vecs = [(2 call XfRandomCeil),_posran,(_ulist select 2), (_ulist select 1),_grp,0,-1.111,true] call x_makevgroup;
+	_veccnt = _veccnt + (count _vecs);
 	{_x lock true} forEach _vecs;
 	sleep 1.012;
 	_veclist = _vecs;
@@ -53,6 +57,7 @@ for "_i" from 0 to 1 do {
 	__WaitForGroup
 	_grp = [d_enemy_side] call x_creategroup;
 	_units = [_posran,(_ulist select 0),_grp,true] call x_makemgroup;
+	_infcnt = _infcnt + 1;
 	_unitslist = _unitslist + _units;
 	sleep 0.01;
 	_grp_array = [_grp, _posran, 0,[_target_center,_radius],[],-1,0,[],(_radius max 300) + (random 50),-1];
@@ -60,6 +65,8 @@ for "_i" from 0 to 1 do {
 	sleep 0.512;
 };
 
+
+hint localize format["+++ Town recaptured (center %1, radius %2) with %3 vehicles and %4 infantry groups", _target_center, _radius, _veccnt, _infcnt];
 sleep 10;
 
 while {({alive _x} count (_unitslist + _veclist)) > 5} do {sleep 10.312};

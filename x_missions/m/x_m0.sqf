@@ -12,6 +12,7 @@ x_sm_type = "normal"; // not "convoy"
 #ifdef __SMMISSIONS_MARKER__
 if (true) exitWith {};
 #endif
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_312"; // "На востоке от Bagango расположены две радиоантенны. Одна из них используется врагом для передачи данных. Ваша задача: уничтожить нужную радиоантенну.";

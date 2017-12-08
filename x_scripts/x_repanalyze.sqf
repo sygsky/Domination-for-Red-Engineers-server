@@ -4,7 +4,11 @@
 //
 // runs only on client side
 //
+
+#include "x_setup.sqf"
+
 private ["_aid","_caller","_coef","_damage","_damage_val","_estimated_time","_fuel","_fuel_val","_rep_count","_this","_type_name","_fuelCapacity"];
+
 _caller = _this select 1;
 _aid = _this select 2;
 //_caller removeAction _aid;
@@ -24,10 +28,10 @@ if (objectID2 isKindOf "Air") then {
 _fuel = fuel objectID2;
 _damage = damage objectID2;
 
-
 _damage_val = (_damage / _rep_count);
 
 _fuelCapacity = objectID2 call SYG_fuelCapacity; // litres of fuel in vehicle fuel tanks
+
 #ifdef __LIMITED_REFUELLING__
 _fuel_val = (d_refuel_volume min (_fuelCapacity * (1 - _fuel))) / 20; //how many 
 

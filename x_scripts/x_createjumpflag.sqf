@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_createjumpflag.sqf - creates jump flag at designated point
 private ["_dummy", "_current_target_pos", "_radius", "_posi", "_ftype", "_flag"];
 if (!isServer) exitWith {};
 

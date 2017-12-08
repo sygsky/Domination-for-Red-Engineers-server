@@ -4,7 +4,7 @@ private ["_name", "_miscp", "_index", "_bit_array", "_var", "_bitasnum","_tmp_a"
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG_PRINT__
+#define __DEBUG_PRINT__
 
 _name = _this select 0;
 

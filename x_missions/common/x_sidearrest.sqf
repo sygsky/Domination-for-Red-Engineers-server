@@ -36,7 +36,7 @@ while {!_offz_at_base && !_is_dead} do {
 			_nobjs = nearestObjects [_officer, ["Man"], 20];
 			if (count _nobjs > 0) then {
 				{
-					if ((isPlayer _x) AND ((format ["%1", _x] in ["RESCUE","RESCUE2"]) OR (leader group _x == _x))) exitWith {
+					if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
 						_rescued = true;
                         [_officer] join _x;
                         _officer setCaptive true;

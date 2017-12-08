@@ -14,7 +14,7 @@ scopeName "load_static_scope";
 
 #ifndef __AI__
 _str_p = format ["%1", _engineer];
-if (!(_str_p in d_is_engineer)) then {hint localize "STR_SYG_02";breakOut "load_static_scope";}; // "Only engineers can load static weapons"
+if (!(_str_p in d_is_engineer)) exitWith {hint localize "STR_SYG_02";}; // "Only engineers can load static weapons"
 #endif
 
 _tr_full = false;

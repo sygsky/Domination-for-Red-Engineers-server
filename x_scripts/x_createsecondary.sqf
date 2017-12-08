@@ -161,7 +161,7 @@ switch (sec_kind) do {
                 _unit = _newgroup createUnit [ _type, _poss, [], 0, "FORM"];
                 [_unit] join _newgroup;
                 _pos = _vehicle buildingPos _i;
-                hint localize format["x_createsecondary.sqf: guard %5 on top of tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit];
+                hint localize format["x_createsecondary.sqf: guard %5 (grp %6) on top of tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit, _newgroup];
                 _unit disableAI "MOVE";
                 _unit setBehaviour "SAFE";
                 _unit setPos _pos;
@@ -318,12 +318,15 @@ while {count _poss == 0} do {
 _vehicle = "Land_telek1" createvehicle (_poss);
 _vehicle setVectorUp [0,0,1];
 [_vehicle] spawn XCheckMTHardTarget;
-mt_radio_down = false;
+mt_radio_down = false; // set radio tower to alive status
 mt_radio_pos = _poss;
 ["mt_radio",mt_radio_down,mt_radio_pos] call XSendNetStartScriptClient;
 createGuardedPoint[d_side_enemy,position _vehicle, -1, _vehicle];
 
-// add guard group
+mt_spotted = false; // set player status  as 'not spotted'
+hint localize "+++ x_scripts/x_createsecondary.sqf: mt_spotted = false; +++";
+
+// add guard group n tower
 
 _posCnt = _vehicle call SYG_housePosCount;
 _cnt = floor (random (3 min _posCnt));    // add guard[s] on the top of radar
@@ -331,26 +334,42 @@ if (_cnt > 0) then
 {
     __WaitForGroup
     __GetEGrp(_newgroup)
-    _types =
-#ifdef __ACE__
-        ["ACE_SoldierWAR_A","ACE_SoldierWMG_A"];
-#else
-        ["SoldierWSniper","SoldierWMG"];
-#endif
-    for "_i" from 0 to _cnt - 1 do
+    sleep 0.1;
+    if ( !isNull _newgroup) then
     {
-        _pos = _vehicle buildingPos _i;
-        _type = _types call XfRandomArrayVal;
-        _unit = _newgroup createUnit [_type, [0,0,0], [], 0, "FORM"];
-        [_unit] join _newgroup;
-#ifdef __DEBUG_PRINT__
-        hint localize format["x_createsecondary.sqf: guard %5 on top of main tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit];
+        _types =
+#ifdef __ACE__
+            ["ACE_SoldierWAR_A","ACE_SoldierWMG_A"];
+#else
+            ["SoldierWSniper","SoldierWMG"];
 #endif
-        _unit setPos _pos;
-        _unit setSkill 1.0;
-        _unit setBehaviour "SAFE";
-        _unit disableAI "MOVE";
-        _unit addEventHandler ["killed", {[_this select 0] call XAddDead;}];
+        for "_i" from 0 to _cnt - 1 do
+        {
+            _pos = _vehicle buildingPos _i;
+            _type = _types call XfRandomArrayVal;
+            _unit = _newgroup createUnit [_type, [0,0,0], [], 0, "FORM"];
+            if ( !isNull _unit) then
+            {
+                [_unit] join _newgroup;
+#ifdef __DEBUG_PRINT__
+                hint localize format["x_createsecondary.sqf: guard %5 (group %6) on top of main tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit, _newgroup];
+#endif
+                _unit setPos _pos;
+                _unit setSkill 1.0;
+                _unit setBehaviour "SAFE";
+                _unit disableAI "MOVE";
+                _unit addEventHandler ["killed", {[_this select 0] call XAddDead;}];
+            }
+            else
+            {
+                hint localize format["--- x_createsecondary.sqf: guard of type %1 created (group %2) on top of a main tower is NULL", _type, _newgroup];
+            };
+        };
+
+    }
+    else
+    {
+        hint localize "-- x_createsecondary.sqf: group created for a tower guard[s] is NULL";
     };
 }
 #ifdef __DEBUG_PRINT__
@@ -371,7 +390,7 @@ _current_target_radius = _dummy select 2;
 _act2 = d_enemy_side + " D";
 d_f_check_trigger2 = objNull;
 d_f_check_trigger = createTrigger["EmptyDetector",_current_target_pos];
-d_f_check_trigger setTriggerArea [_current_target_radius + 300, _current_target_radius + 300, 0, false];
+d_f_check_trigger setTriggerArea [_current_target_radius + 500, _current_target_radius + 500, 0, false]; // increased by 200 m. from 300
 d_f_check_trigger setTriggerActivation [d_own_side_trigger, _act2, false];
 d_f_check_trigger setTriggerStatements["this", "xhandle = [] spawn {if (!create_new_paras) then {create_new_paras = true;[] execVM ""x_scripts\x_parahandler.sqf"";};mt_spotted = true;[""mt_spotted""] call XSendNetStartScriptClient;sleep 5;deleteVehicle d_f_check_trigger;if (!isNull d_f_check_trigger2) then {deleteVehicle d_f_check_trigger2}}", ""];
 

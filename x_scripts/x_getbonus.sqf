@@ -1,19 +1,43 @@
 // x_scripts/x_getbonus.sqf : by Xeno
 // creates bonus vehicle for side missions and place it to the ground
-private ["_dir","_pos","_posa","_vehicle"];
+private ["_dir","_pos","_posa","_vehicle", "_vec_number"];
 
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 
-bonus_number = floor (random (count sm_bonus_vehicle_array));
+bonus_number = sm_bonus_vehicle_array call XfRandomFloorArray;
+
+// ensure that next bonus isn't the same
+if (!isNil "last_sm_bonus_vehicle_number") then
+{
+    hint format["+++ x_scripts/x_getbonus.sqf(1): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
+    // try to get vehicle different to the last received one
+     while {bonus_number == last_sm_bonus_vehicle_number} do
+     {
+        bonus_number = sm_bonus_vehicle_array call XfRandomFloorArray; // Note: we have to get random index, not bonus vehicle type
+     };
+};
+last_sm_bonus_vehicle_number = bonus_number;
+hint format["+++ x_scripts/x_getbonus.sqf(2): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
+
 sleep 1.012;
 
 _dir = 0;
 _pos = [];
+
+#ifdef __NO_ETERNAL_BONUS__
+    _resurrect = false;
+#else
+    _resurrect = true;
+#endif
+
+
+
 #ifndef __TT__
 _posa = sm_bonus_positions select bonus_number; _pos = _posa select 0;_dir = _posa select 1;
 #endif
+
 #ifdef __TT__
 if (side_mission_winner == 2) then {
 	_west = sm_bonus_positions select 0;
@@ -21,21 +45,25 @@ if (side_mission_winner == 2) then {
 } else {
 	if (side_mission_winner == 1) then {
 		_racs = sm_bonus_positions select 1;
-		_posa = _racs select bonus_number; _pos = _posa select 0;_dir = _posa select 1;
+		_posa = _racs select bonus_number; _pos = _posa select 0; _dir = _posa select 1;
 	} else {
 		if (side_mission_winner == 123) then {
 			_west = sm_bonus_positions select 0;
-			_posa = _west select bonus_number; _pos = _posa select 0;_dir = _posa select 1;
+			_posa = _west select bonus_number; _pos = _posa select 0; _dir = _posa select 1;
 			_vehicle2 = (sm_bonus_vehicle_array select bonus_number) createVehicle (_pos);
 			_vehicle2 setDir _dir;
-			_vehicle2 execVM "x_scripts\x_wreckmarker.sqf";
+			if ( _resurrect) then {	_vehicle2 execVM "x_scripts\x_wreckmarker.sqf"; };
 			_racs = sm_bonus_positions select 1;
-			_posa = _racs select bonus_number; _pos = _posa select 0;_dir = _posa select 1;
+			_posa = _racs select bonus_number; _pos = _posa select 0; _dir = _posa select 1;
 		};
 	};
 };
 #endif
-_vehicle = (sm_bonus_vehicle_array select bonus_number) createVehicle (_pos);
+
+_vec_type = sm_bonus_vehicle_array select bonus_number;
+
+_vehicle = (_vec_type) createVehicle (_pos);
+
 _vehicle setDir _dir;
 
 _pos = nil;
@@ -44,6 +72,7 @@ _posa = nil;
 ["sm_res_client",side_mission_winner,bonus_number] call XSendNetStartScriptClient;
 
 side_mission_winner = 0;
-_vehicle execVM "x_scripts\x_wreckmarker.sqf";
+
+if ( _resurrect) then {	_vehicle execVM "x_scripts\x_wreckmarker.sqf"; };
 
 if (true) exitWith {};

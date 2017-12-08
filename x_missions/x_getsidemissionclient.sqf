@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_missions\x_getsidemissionclient.sqf, клиентский скрипт обработки сторонней миссии
 private ["_do_hint","_mis_fname"];
 #include "x_setup.sqf"
 if (!X_Client) exitWith{};

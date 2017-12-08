@@ -30,12 +30,12 @@ _ctrl lbSetCurSel _vdindex;
 
 _ctrl = _XD_display displayCtrl 1001;
 // Трава "Без травы"  "Средняя" "Полная"
-_rarray = [localize "STR_GRASS_1", localize "STR_GRASS_2", localize "STR_GRASS_3"];
+_rarray = ["STR_GRASS_1", "STR_GRASS_2", "STR_GRASS_3"];
 
 _glindex = -1;
 
 for "_i" from 0 to (count _rarray - 1) do {
-	call compile format ["_index = _ctrl lbAdd ""%1"";if (d_graslayer_index == _index) then {_glindex = _index};",_rarray select _i];
+	call compile format ["_index = _ctrl lbAdd ""%1"";if (d_graslayer_index == _index) then {_glindex = _index};",localize (_rarray select _i)];
 };
 
 _ctrl lbSetCurSel _glindex;
@@ -81,7 +81,7 @@ _strNo1 = localize "STR_SYS_401_1";
 
 if (__ACEVer || __CSLAVer) then {
 	if (__ACEVer) then {
-		_str = _str + (localize "STR_SET_1")/* "Версия" */ + ": A.C.E ";
+		_str = _str + (localize "STR_SET_1")/* "Версия" */ + ": A.C.E.";
 	} else {
 		_str = _str + (localize "STR_SET_1")/* "Версия" */ + ": CSLA. ";
 	};
@@ -185,8 +185,8 @@ _str = _str + "Максимальное кол-во статических об�
 
 _str = _str + "Транспорт, способный загружать ящики снабжения: ";
 for "_i" from 0 to (count d_check_ammo_load_vecs - 1) do {
-	if (_i > 0) then { _str1 = ", '%1'" }
-	else {_str1 = "'%1'"};
+	if (_i > 0) then { _str1 = ", '%1'";}
+	else {_str1 = "'%1'";};
 	_str = _str + format[_str1, ([d_check_ammo_load_vecs select _i,0] call XfGetDisplayName)];
 };
 _str = _str + "\n";
@@ -249,7 +249,7 @@ _str = _str + "Очков необходимо инженеру для обсл�
 _str = _str + "Инженер получает очков за ремонт:\n";
 _str = _str + "Авиатехника: " + str((d_ranked_a select 1) select 0) + ", бронетехника: " + str((d_ranked_a select 1) select 1) + ", транспорт: " + str((d_ranked_a select 1) select 2) + "\n";
 _str = _str + "Инженер получает очков за ремонт (прочее): " + str((d_ranked_a select 1) select 3) + "\n";
-_str = _str + "Очков списывается с инженера за ремонта сервисов на базе: " + str(d_ranked_a select 13) + "\n";
+_str = _str + "Очков списывается с инженера за ремонт сервисов на базе: " + str(d_ranked_a select 13) + "\n";
 _str = _str + "Очков списывается за вызов одного залпа артиллерии: " + str(d_ranked_a select 2) + "\n";
 if (__AIVer) then {
 	_str = _str + "Очков за найм одного АИ: " + str(d_ranked_a select 3) + "\n";
@@ -287,7 +287,7 @@ if (d_limit_weapons) then {
 
 _str = _str + "Радиус сброса снабжения (0 = точная позиция): " + str(d_drop_radius) + " м.\n";
 
-_str = _str + "Время 1-го цикла перезарядки/заправки/ремонта: " + str(x_reload_time_factor) + "\n";
+_str = _str + "Время 1-го цикла перезарядки/заправки/ремонта: " + str(x_reload_time_factor) + " сек.\n";
 
 _str = _str + (localize "STR_SYS_361") /* "Отключение двигателей в пункте перезарядки: " */;
 if (d_reload_engineoff) then {
@@ -529,12 +529,17 @@ if ( isNil "player_is_on_town_raid" ) then
 	};
 	if (!isNil "d_on_base_groups") then
 	{
-	    if ( count d_on_base_groups > 0) then
+	    _not_empty = false;
+	    {
+	        if ( ({alive _x} count (units _x)) > 0 ) exitWith {_not_empty = true;};
+	    } forEach d_on_base_groups;
+
+	    if ( _not_empty ) then
 	    {
 	        _str = _str + localize "STR_GRU_47" + "\n";
 	    };
 	};
-	_str = _str + localize "STR_SYS_56" + "\n"""; // GRU agent ...
+	_str = _str + localize "STR_SYS_56" + "\n"; // GRU agent ...
 }
 else
 {
@@ -579,7 +584,8 @@ else
 			_index = _index - _counter;
 		};
 	};
-	_str1 =  call compile format["localize ""STR_RUM_%1"" + """"""\n""", _index];
+	_str1 = format["STR_RUM_%1",_index];
+	_str1 =  (localize _str1) + "\n";
 #ifdef __DEBUG__	
 	hint localize format["x_settingsdialog.sqf: SYG_rumor_index %1, SYG_rumor_hour %2, _index %3, _rnd %4",
 	                         SYG_rumor_index,SYG_rumor_hour,_index,_rnd];

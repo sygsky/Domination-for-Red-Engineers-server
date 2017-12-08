@@ -11,6 +11,12 @@ private ["_vehicle"];
 x_sm_pos = [[4726.85,15689,0],[4385.75,15825.4,0],[4415.64,15790.9,0],[4375.74,15790.8,0],[4392.87,15521.3,0],[4532.88,15304.8,0],[4585.08,15287.2,0],[4978.4,15466.1,0],[4855.92,15535.1,0],[4930.69,15514.1,0],[4956.34,15760.8,0],[4949.85,15827.9,0],[4964.33,16067,0],[4987.25,15717.1,0],[4395.8,15350.6,0],   [4574.74,15374.2,0],[4368.82,15737,0],[5044.83,15799.3,0],[4860.15,15679.2,0]]; // index: 25,   enemy officer on Isla del Vasal or Isla del Vida
 x_sm_type = "normal"; // "convoy"
 
+#ifdef __SMMISSIONS_MARKER__
+if (true) exitWith {};
+#endif
+
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 #define __SUPER_AA_DEFENSE__
 #define __DEBUG__
 #define DELAY_BEFORE_NEXT_CREATION 120
@@ -26,9 +32,6 @@ _M2HD_mini_TriPod_arr = [[4359.98,15937,0.0],[4341.64,15541.9,0.0]]; // Isla da 
 
 #endif
 
-#ifdef __SMMISSIONS_MARKER__
-if (true) exitWith {};
-#endif
 
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_508"; //"Стало известно, что виновный в развязывании войны офицер, возглавивший агрессию на Сахрани, прячется на одном из этих островов Isla del Vasal или Isla del Vida. Ликвидируйте негодяя!";
@@ -43,8 +46,9 @@ if (isServer) then {
 	//_fortress setDir 290.789;
 	//extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_fortress];
 	//sleep 2.123;
-	__WaitForGroup
-	__GetEGrp(_newgroup)
+	//__WaitForGroup
+	//__GetEGrp(_newgroup)
+	_newgroup = call SYG_createEnemyGroup;
 	_sm_vehicle = _newgroup createUnit [_officer, _poss, [], 0, "FORM"];
 	[_sm_vehicle] join _newgroup;
 	
@@ -122,8 +126,9 @@ if (isServer) then {
 
 	_mgtype = ["ACE_ZU23M"] + [if (d_enemy_side == "EAST") then {"DSHkM_Mini_TriPod"} else {"M2HD_mini_TriPod"}];   // Lucky player bonus :o)
 	
-	__WaitForGroup
-	__GetEGrp(_grp)
+	//__WaitForGroup
+	//__GetEGrp(_grp)
+	_grp = call SYG_createEnemyGroup;
 	{ //  forEach weapon group
 		{
 //			_wpn = _x select 0;

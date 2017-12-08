@@ -183,7 +183,7 @@ SYG_nearestGoodHouse = {
 		_type = typeOf _x;
 		if  ( _good_type == "" ) then
 		{
-			if ( ( !( _type in _spec_list) ) || ( ( _x call SYG_housePosCount ) >= _minPosCnt ) ) then
+			if ( ( !( _type in _spec_list) ) && ( ( _x call SYG_housePosCount ) >= _minPosCnt ) ) then
 			{
 				_good_type = _type;
 			}
@@ -194,7 +194,7 @@ SYG_nearestGoodHouse = {
 		}
 		else // good house type already detected
 		{
-			if ( _type != _good_type ) then { _arr set [_i, "RM_ME"]; }; // remove bad type houses
+			if ( _type != _good_type ) then { _arr set [_i, "RM_ME"]; }; // remove all except first found good type
 		};
 		_i = _i + 1;
 	} forEach _arr;

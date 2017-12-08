@@ -7,7 +7,6 @@
 #include "GRUCommon.sqf"
 
 #define __DEBUG__
-private ["_msg"];
 
 // removes action "remove document" from player menu. If no action id found in player variables, nothing occures
 // call: call GRU_removeDocAction;

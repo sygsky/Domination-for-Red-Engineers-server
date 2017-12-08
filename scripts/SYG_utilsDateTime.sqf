@@ -29,7 +29,8 @@ if ( !isNil "SYG_timeStart" ) exitWith {};
 
 // set some internal info
 SYG_timeStart = time;
-hint localize format["SYG_utilsDateTime.sqf: init with SYG_timeStart = %1", SYG_timeStart];
+SYG_dateStart = date;
+hint localize format["SYG_utilsDateTime.sqf: init with SYG_timeStart = %1, SYG_dateStart = %2", SYG_timeStart, SYG_dateStart];
 
 // creates 1 digit number as 2 symbol string, adding zero before dogit
 SYG_twoDigsNumber0 = {
@@ -114,7 +115,7 @@ SYG_userTimeToStr = {
  * call: _days = ceil(call SYG_missionDayToNum); // to return current day number mission run, be 1 for first day, 2 for second etc
  */
 SYG_missionDayToNum = {
-	time / DAY_SECS
+    ([SYG_dateStart, date] call SYG_getDateDiff) + 1 // mission length in days
 };
 
 /**
@@ -269,7 +270,7 @@ SYG_leapYear = {
 };
 
 //
-// returns current server date, based on variable SYG_mission_start (filled with srvtime.sqf script created BEFORE server started),
+// returns real time (from real world) server date, based on variable SYG_mission_start (filled with missionStart info from user on "d_p_a" message ),
 // SYG_mission_time  and current server time
 //
 SYG_getServerDate = {
@@ -352,9 +353,17 @@ SYG_countDaysInMonth = {
 //
 // Example: _diff = [[2016,5,17,15,45],[2016,4,26,9,5]] call SYG_getDateDiff;
 //
-// returns difference between two dates in days
+// returns integer number between two dates in days. Use JDN calculatuions from: https://en.wikipedia.org/wiki/Julian_day
+/*
+All division is integer division, operator % is modulus.
+Given integer y, m, d, calculate day number g as:
+function g(y,m,d)
+m = (m + 9) % 12
+y = y - m/10
+return 365*y + y/4 - y/100 + y/400 + (m*306 + 5)/10 + ( d - 1 )
+Difference between two dates = g(y2,m2,d2) - g(y1,m1,d1)
+*/
 SYG_getDateDiff = {
-	private [ "_diff", "_date1", "_date2", "_days", "_hours", "_mins", "_y1","_y2","_m1","_m2", "_d2", "_dm2", "_h2"];
 	_date1 = arg(0);
 	_date2 = arg(1);
 	// check what date is younger
@@ -365,64 +374,13 @@ SYG_getDateDiff = {
 		if (argp(_date1, _x) > argp(_date2, _x)) exitWith { };
 		if (argp(_date1, _x) < argp(_date2, _x)) exitWith {	_date2 = arg(0);	_date1 = arg(1); };
 	} forEach _ids;
+    (_date1 call SYG_JDN) - (_date2 call SYG_JDN)
+};
 
-	_days = 0; // initial day count
-	_y1 = argp(_date1,0);
-	_y2 = argp(_date2,0);
-	if ( (_y1 - _y2) > 1 ) then // full year[s] difference detected
-	{
-		for "_i" from _y1+1 to _y2-1 do
-		{
-			_days = _days + ([1,12,_i] call  SYG_countDaysInMonth);
-		};
-	};
-	// full months of last year
-	_m1 = argp(_date1,1);
-	if ( _m1 > 1) then  // full months of 1st year
-	{
-		_days = _days + ([1, _m1 - 1, _y1] call SYG_countDaysInMonth);
-	};
-
-	// full months of first year
-	_m2 = argp(_date2,1);
-	if ( _m2 < 12) then  // full months of 1st year
-	{
-		_days = _days + ([_m2 + 1, 12, _y2] call SYG_countDaysInMonth);
-	};
-	
-	// count full days in partial months
-	_days = _days + argp(_date1,2) - 1;
-
-	_d2 = argp(_date2,2);
-	
-	_dm2 = if ( (_y2 call SYG_leapYear) && (_m2 == 2)) then { 29} else {argp(SYG_monLength, _m2)};
-	_days = _days + _dm2 - _d2;
-
-	if ( !_short_date ) then
-	{
-        // count full hours
-        _hours = argp(_date1,3);
-        _h2 = argp(_date2,3);
-        _hours = _hours + 24 - _h2 - 1;
-
-        // mins
-        _mins = argp(_date1,4);
-        _m2 = argp(_date2,4);
-        _mins = _mins + 60 - _m2 - 1;
-        if ( _mins > 60 ) then
-        {
-            _hours = _hours + 1;
-            _mins = _mins - 60;
-        };
-        if ( _hours > 24 ) then
-        {
-            _days = _days + 1;
-            _hours = _hours - 24;
-        };
-        _hours = _hours + _mins  / 60;
-        _days  = _days  + _hours / 24;
-	};
-	_days
+SYG_JDN = {
+    _m = (arg(1) + 9) % 12;
+    _y = arg(0) - floor(_m/10);
+    365 * _y + floor(_y/4) - floor(_y/100) + floor(_y/400) + floor((_m*306 + 5)/10) + ( arg(2) - 1 )
 };
 
 // [day,mon,range<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
@@ -440,7 +398,7 @@ SYG_holidayTable =
 // _ret = _mode call  SYG_runHolidayMusic;
 // where:
 //   _mode == 0 intro mode runs music if holiday found, returns true if music played else false
-//   _mode = 1 return true if new year detectedm else false
+//   _mode = 1 return true if new year detected else false
 SYG_runHolidayMusic =
 {
     _date = date;

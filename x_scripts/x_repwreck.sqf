@@ -34,8 +34,10 @@ while {true} do {
 	_new_vec setPos _dpos;
 	_new_vec lock true;
 	_type_name = [_type,0] call XfGetDisplayName;
-	x_wreck_repair = [_type_name, _name,0];
-	["x_wreck_repair",x_wreck_repair] call XSendNetStartScriptClient;
+	x_wreck_repair = [_type_name, _name, 0];
+	["x_wreck_repair", x_wreck_repair] call XSendNetStartScriptClient;
+    _new_vec say "horse"; //  whi-i-i-i-nn-y-i-i
+
 	_sleep_time = 120;
 	if (_new_vec isKindOf "Plane") then {
 		_sleep_time = 360;
@@ -46,11 +48,12 @@ while {true} do {
 	};
 	sleep _sleep_time + (random 10);
 	_new_vec lock false;
-	x_wreck_repair = [_type_name, _name,1];
+	x_wreck_repair = [_type_name, _name, 1];
 	["x_wreck_repair",x_wreck_repair] call XSendNetStartScriptClient;
 	_new_vec execVM "x_scripts\x_wreckmarker.sqf";
 #ifdef __REARM_SU34__
-	_new_vec call SYG_rearmAnySu34; // try to rearm as Su-34
+//	_new_vec call SYG_rearmAnySu34; // try to rearm as Su-34
+	_new_vec call SYG_rearmVehicleA; // try to rearm  upgraded vehicle
 #endif
 };
 

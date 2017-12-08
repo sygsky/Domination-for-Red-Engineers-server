@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = "Враг получил в распоряжение новый вертолет. Отправляйтесь в San Thomas захватите его и доставьте на базу.";
 	current_mission_resolved_text = "Задание выполнено! Вы получили в распоряжение ударный вертолет противника.";

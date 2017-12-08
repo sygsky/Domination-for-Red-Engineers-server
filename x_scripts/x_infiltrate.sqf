@@ -2,7 +2,7 @@
 // by Xeno
 //
 // +++ Sygsky: periodically (12- 24 hours) base cleaning from "WeaponHolder", "PipeBomb", dead "Land_MAP_AH64_Wreck", dead enemy too
-private ["_pilot", "_chopper", "_player_num_delay", "_grp", "_vehicle", "_unit", "_attack_pos", "_arr"];
+private ["_pilot", "_chopper", "_player_num_delay", "_grp", "_vehicle", "_attack_pos", "_arr"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -76,13 +76,34 @@ _search_radious = sqrt( _dx * _dx + _dy * _dy) + 10;
 
 while { true } do {
 
+    // zombi AI features: group is null, name == "Error: No unit", is alive, isKindOf "CaManBase"
 	if ( time >= _time_to_clean ) then
 	{
 		_cnt1 = count _items_to_clean;
 		{ 
 			if ( !isNull _x ) then
 			{
-			    if ( !((_x isKindOf "CaManBase") && (alive _x)) ) then {deleteVehicle _x; sleep 0.1;};
+			    _man = _x isKindOf "CaManBase";
+			    _alive = alive _x;
+			    if ( ! _man ) then
+				{
+					deleteVehicle _x; sleep 0.1;
+				}
+				else // may be alive so called zombi
+				{
+				    if ( !_alive ) then
+				    {
+    					deleteVehicle _x; sleep 0.1;
+				    }
+				    else // alive man
+				    {
+                        if ( isNull (group _x) && (name _x == "Error: No unit")) then // zombi - arghhhhhh!!!
+                        {
+                            hint localize format["+++ x_infiltrate.sqf: try to delete zombi %1 pos %2 from base in clean proc", _x, getPos _x];
+                            deleteVehicle _x; sleep 0.1;
+                        };
+				    };
+				}
 			};
 		} forEach _items_to_clean; // clean  all old WeaponHolders and dead Apaches from the base
 		_items_to_clean = [];
@@ -97,35 +118,52 @@ while { true } do {
 		sleep 0.5;
 		_arr = _arr + (_base_center nearObjects ["Land_MAP_AH64_Wreck",_search_radious]);
 		sleep 0.5;
-		for "_i" from 0 to count _arr - 1 do
+		if (count _arr > 0) then
 		{
-			_vehicle = _arr select _i;
-			if ( !isNull _vehicle ) then
-			{
-				_good = _vehicle isKindOf "Land_MAP_AH64_Wreck";
-				if (!_good) then
-				{
-				    if ( _vehicle isKindOf "CaManBase") then
-				    { // check if dead man not player
-				        _good = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies
-				    }
-				    else
-				    { // check if holder is on the ground or is hanging in air (some Arma bug)
-					    _good = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
-				    };
-				};
-				if ( _good ) then
-				{
-					if (!(_vehicle in _items_to_clean)) then
-					{
-						if ( [getPos _vehicle, d_base_array] call SYG_pointInRect ) then
-						{
-							_items_to_clean = _items_to_clean + [_vehicle];
-						};
-					};
-				};
-			};
-		}; // for "_i" from 0 to count _arr - 1 do //forEach _arr;
+            for "_i" from 0 to count _arr - 1 do
+            {
+                _vehicle = _arr select _i;
+                if ( !isNull _vehicle ) then
+                {
+                    _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
+                    if (!_found) then
+                    {
+                        if ( _vehicle isKindOf "CaManBase") then
+                        { // check if dead man not player
+                            _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
+                            // check for zombies found
+                            if ( !_found ) then
+                            {
+                                if ( isNull (group _vehicle) && (name _vehicle == "Error: No unit")) then
+								{
+									// Yesss, he is ZOMBIiiiii..... try to remove him in any way
+									hint localize format["+++ x_infiltrate.sqf: zombi detected in clean proc, try to remove it away from the base"];
+									_vehicle setPos [ 0, 0, 0 ];
+									sleep 0.1;
+									_vehicle setDamage 1.1;
+									sleep 0.1;
+									_found = true;
+								};
+                            };
+                        }
+                        else
+                        { // check if holder is on the ground or is hanging in air (some Arma bug)
+                            _found = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
+                        };
+                    };
+                    if ( _found ) then
+                    {
+                        if (!(_vehicle in _items_to_clean)) then
+                        {
+                            if ( [getPos _vehicle, d_base_array] call SYG_pointInRect ) then
+                            {
+                                _items_to_clean = _items_to_clean + [_vehicle];
+                            };
+                        };
+                    };
+                };
+            }; // for "_i" from 0 to count _arr - 1 do //forEach _arr;
+		};
 		// set new time to clean
 		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2));
 		_time_to_clean = time + _delay;
@@ -184,6 +222,7 @@ while { true } do {
 	
 	sleep 0.1;
 	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
+	__SetGVar(INFILTRATION_TIME, date);
 	
 #ifdef __DEBUG__
 	sleep 1200; // 20 mins to kill them all or be down himself

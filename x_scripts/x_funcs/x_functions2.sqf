@@ -460,6 +460,15 @@ XfGetAliveUnits = {
 	({alive _x} count _this)
 };
 
+// count all alive and fully health units in units or group
+// call: _cnt = units _grp call XfGetAliveUnits;
+// or call: _cnt = _grp call XfGetAliveUnits
+XfGetHealthyUnits = {
+	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
+	({alive _x && (damage _x == 0)} count _this)
+};
+
+
 // count all group alive units  not in vehicles
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits

@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = "Враг наладил маршрут поставки снаряжения, который проходит через Dolores. Вам надлежит разрушить дорожную инфраструктуру города Dolores. Для этого достаточно будет взорвать мосты.";
 	current_mission_resolved_text = "Задание выполнено! Мосты уничтожены.";

@@ -6,12 +6,14 @@ private ["_vehicle"];
 #define __Poss _poss = x_sm_pos select 0;
 #define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
 
-x_sm_pos = [[12723,8729.78,0], [6946.93,8226.66,0]]; // index: 21,   Convoy Corazol to Estrella, start and end position
+x_sm_pos = [[12723,8729.78,0], [6946.93,8226.66,0]]; // index: 21,   Convoy from Corazol to Estrella, start and end position
 x_sm_type = "convoy"; // "convoy"
 
 #ifdef __SMMISSIONS_MARKER__
 if (true) exitWith {};
 #endif
+
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,1)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
 	current_mission_text = format[localize "STR_SYS_500","Corazol","Estrella"]; //"Враг отправил колонну снабжения усиленную бронетехникой из Corazol в Estrella. Ваша задача, обнаружить и уничтожить конвой."

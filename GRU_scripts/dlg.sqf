@@ -76,9 +76,10 @@ _info = [];
 			}
 			else
 			{
-				ctrlEnable [ _id, false]; // no task as illegal weapon detected
+				ctrlEnable [ _id, false]; // no task button as illegal weapon detected
 			};
-			_info set [_i, call GRU_mainTaskDescription];
+			_info set [_i, call GRU_mainTaskDescription]; // set text of order
+			[1] execVM "x_scripts\x_showsidemain.sqf"; // go to the main tanget on the map
 		}
 		else
 		{

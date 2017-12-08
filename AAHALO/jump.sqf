@@ -30,7 +30,7 @@ titleText ["","Plain"];
 uh60p = createVehicle [_jump_helo, _StartLocation, [], 0, "FLY"];
 _halo_height = d_halo_height;
 #ifdef __ACE__
-if (_paratype  == "ACE_ParachutePack") then {_halo_height = d_halo_height * 2;} else {_halo_height = d_halo_height / 2;};
+if (_paratype  == "ACE_ParachutePack") then {_halo_height = d_halo_height * 2;} else {_halo_height = d_halo_height / 4;};
 #endif
 
 uh60p setPos [_StartLocation select 0,_StartLocation select 1, _halo_height];
@@ -38,10 +38,8 @@ uh60p engineOn true;
 player moveInCargo uh60p;
 _obj_jump = player;
 if(vehicle player == player)exitWith {};
+
 #ifdef __ACE__
-/*if (!(_obj_jump hasWeapon "ACE_ParachutePack")) then {
-	_obj_jump addWeapon "ACE_ParachutePack";
-};*/
 [uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf";
 
 sleep 3;
@@ -51,7 +49,7 @@ if (__AIVer) then {
 		[position player, velocity player, direction player] execVM "x_scripts\x_moveai.sqf";
 	};
 };
-if (true) exitWith {};
+if (true) exitWith {}; // ++++++++++++++++ end of script
 #endif
 
 //===================CONFIG========================

@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text =  localize "STR_SM_37"; //"На острове обнаружены множественные незаконные постройки. Самая крупная из них - особняк на Isla de Victoria. Уничтожьте постройку.";
 	current_mission_resolved_text = localize "STR_SM_037"; // "Задание выполнено! Здание уничтожено.";

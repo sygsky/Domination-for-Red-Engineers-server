@@ -8,9 +8,9 @@ if ( isNil "GRU_tasks" ) then
 	GRU_tasks = [
 	//=========================
 	// Main task parameters:
-	//  _main_info = [[[9349,5893,0],"Cayo", 210],START_SCORE,PARTICIPANTS_LIST]; // array target_names from i_common.sqf, start town score, list of participants 
+	//  _main_info = [[[9349,5893,0],"Cayo", 210,1],START_SCORE,PARTICIPANTS_LIST]; // array target_names from i_common.sqf, start town score, list of participants
 	//=========================
-		[], // main target (in towns): [target_tow_info, initial_score, list_of_participants]
+		[], // main target (in towns): [target_town_info, initial_score, list_of_participants]
 		
 	//=========================
 	//   Secondary task parameters:
@@ -92,11 +92,7 @@ GRU_mainTaskDescription = {
 	{
 		_score_plus = GRU_MAIN_GET_SCORE_FROM_TASK(_task); // real score on town
 
-#ifdef __RANKED__
 		_score_minus = d_ranked_a select 24;
-#else
-		_score_minus = GRU_MAIN_GET_SCORE_MINUS(_score_plus);
-#endif
 		_str = format [localize "STR_GRU_TASK_DESCR_0_INFO", GRU_MAIN_GET_TOWN_NAME_FROM_TASK(_task), localize "STR_GRU_26", _score_plus, _score_minus ];
 	}
 	else { _str = localize "STR_GRU_29";}; // "Главная задача не определена..."

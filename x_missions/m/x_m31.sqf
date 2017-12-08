@@ -13,11 +13,12 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
-if (X_Client) then {
-	current_mission_text = "По данным разведки, в районе города Everon, есть старая, заброшенная база. Враг использует её как склад для бронетехники. Отыщите этот склад и уничтожьте бронетехнику врага.";
-	current_mission_resolved_text = "Задание выполнено! Все танки уничтожены.";
-};
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
+if (X_Client) then {
+	current_mission_text = localize "STR_SM_31";
+	current_mission_resolved_text = localize "STR_SM_031";
+};
 if (isServer) then {
 	[x_sm_pos, 1] execVM "x_missions\common\x_sidetanks.sqf";
 };

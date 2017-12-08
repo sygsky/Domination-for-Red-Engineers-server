@@ -1,4 +1,4 @@
-// x_deleteunits by Xeno. Removes all enemy units (men+vecs) in the range around town/airbase
+// x_deleteunits.sqf by Xeno. Removes all alive enemy units (men+vecs) in the range around town/airbase
 private ["_index", "_dummy", "_current_target_pos", "_current_target_rad", "_old_units_trigger", "_i", "_list"];
 
 if (!isServer) exitWith{};
@@ -25,7 +25,7 @@ else // take of airfield completed (new action, before any town!!!)
 _old_units_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
 _old_units_trigger setTriggerStatements["this", "", ""];
 
-sleep 240;
+sleep 240; // wait 4 minutes before cleaning
 
 for "_i" from 0 to 6 do {
 	_list = [];

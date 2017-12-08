@@ -18,6 +18,8 @@ if (X_Client) then {
 	current_mission_resolved_text = localize "STR_SM_06"; //"Задание выполнено! Вражеский ангар уничтожен.";
 };
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (isServer) then {
 	__PossAndOther
 	_pos_other2 = x_sm_pos select 2;

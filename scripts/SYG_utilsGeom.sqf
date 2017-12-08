@@ -118,6 +118,44 @@ SYG_rotatePointAroundPoint = {
 	_pnt2
 };
 
+// Position are in 3D format [X,Y,Z]
+// adds difference point [dx,dy,dz] to the base point [X,Y,Z]
+// _newPos = [_basePos, _posOff] call SYG_addDiff2Pos;
+SYG_addDiff2Pos = {
+    private [ "_pos", "_offs", "_newPos" ];
+    _pos =  arg(0);
+    _offs = arg(1);
+    _newPos = [];
+    {
+        _newPos set [_x, argp(_pos,_x) + argp(_offs, _x)];
+    } forEach [0,1,2];
+    _newPos
+};
+
+//
+// _newpos = [_basePos, _diffPos, _angle] call SYG_calcPosRotation;
+//
+SYG_calcPosRotation = {
+    [ arg(0), ([[0,0,0], arg(1), -arg(2)] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
+};
+
+//
+// Calculates real position and direction of thing according to object (house)
+// _posRelArr = [_house, _relArr] call SYG_calcRelArr;
+//
+// Where: _relArr = [[_dx,_dy,_dz], _ang]; _posRelArr = [[_x,_y,_z], _dir];
+//
+SYG_calcRelArr = {
+    _house = arg(0);
+    _houseDir = getDir _house;
+    _thingObjArr = arg(1);
+    _thingRelPos = argp(_thingObjArr,0);
+    _thingAng = argp(_thingObjArr,1);
+    _thingPos = [_house modelToWorld [0,0,0], ([[0,0,0], _thingRelPos, -_houseDir] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
+    _thingDir = _thingAng + _houseDir;
+    [_thingPos, _thingDir]
+};
+
 /**
  * =======================================
  * call:
@@ -183,7 +221,7 @@ SYG_pointInRect = {
 		};
 	};
 	//player groupChat format["SYG_pointInRect: rect %1, pnt %2", _rect,_pnt];
-	((abs(argp(_pnt,0)-argp(_rpnt,0)) <= argp(_rect,1)) AND (abs(argp(_pnt,1)-argp(_rpnt,1)) <= argp(_rect,2)))
+	((abs(argp(_pnt,0)-argp(_rpnt,0)) <= argp(_rect,1)) && (abs(argp(_pnt,1)-argp(_rpnt,1)) <= argp(_rect,2)))
 };
 
 /**
@@ -196,10 +234,10 @@ SYG_pointInRect = {
 SYG_elongate2 = {
 	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
 	_pnt1 = arg(0);
-	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1};
+	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1;};
 	_pnt1 set [2, 0];
 	_pnt2 = arg(1);
-	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2};
+	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
 	_pnt2 set [2, 0];
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
@@ -219,9 +257,9 @@ SYG_elongate2 = {
 SYG_elongate2Z = {
 	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
 	_pnt1 = arg(0);
-	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1};
+	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1;};
 	_pnt2 = arg(1);
-	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2};
+	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
 	_dx = argp(_pnt2,X_POS) - argp(_pnt1,X_POS); // (_pnt2 select 0) - (_pnt1 select 0);
@@ -264,11 +302,11 @@ SYG_cubeRoot = {
 /**
  * Input: [width,height] - full width and height of designated rectangle to overlap with cirlces
  
- *   call: _ret_arr = [_w,_h] call SYG_getCirlesByRect;
+ *   call: _ret_arr = [_w,_h] call SYG_getCirclesByRect;
  
  * Output: [[rad,x,y] ... [rad,x,y]]- arrays for each circle to used to overlap rectanle totally. Offsets are according to the bottom-left rectangle corner
  */
-SYG_getCirlesByRect = {
+SYG_getCirclesByRect = {
 	private ["_w","_h","_moveOnX","_shortSide","_longSide","_rad","_len","_pos","_yoff","_xoff","_ret"];
 	_w = arg(0);
 	_h = arg(1);
@@ -282,7 +320,7 @@ SYG_getCirlesByRect = {
 	_pos = 0;
 	_yoff = _shortSide / 2; 
 	_ret = [];
-	//hint localize format["SYG_getCirlesByRect: w %1, h %2, _moveOnX %3, _rad %4, full steps %5 ", _w, _h, _moveOnX, _rad, floor(_longSide /_shortSide)];
+	//hint localize format["SYG_getCirclesByRect: w %1, h %2, _moveOnX %3, _rad %4, full steps %5 ", _w, _h, _moveOnX, _rad, floor(_longSide /_shortSide)];
 	_xoff = 0;
 	_yoff = 0;
 	while { _len >= _shortSide } do
@@ -298,7 +336,7 @@ SYG_getCirlesByRect = {
 		};
 		_len = _len - _shortSide;
 		_pos = _pos + _shortSide;
-		//hint localize format["SYG_getCirlesByRect step: _xoff %1, _yoff %2, _ret %3", _xoff, _yoff, _ret];
+		//hint localize format["SYG_getCirclesByRect step: _xoff %1, _yoff %2, _ret %3", _xoff, _yoff, _ret];
 	};
 	// process remainder of rectangle
 	if ( _len > ( _longSide / 33 ) ) then // if more than 3 % of total area remained

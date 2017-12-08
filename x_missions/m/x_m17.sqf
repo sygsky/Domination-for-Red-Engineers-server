@@ -14,6 +14,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_149";// "Сегодня в Valor прибыл вражеский офицер. Ваша задача ликвидация офицера!";
 	current_mission_resolved_text = localize "STR_SYS_150";// "Задание выполнено! Вражеский офицер уничтожен.";
@@ -51,7 +53,11 @@ if (isServer) then {
 	if (d_enemy_side != "EAST") then
 	{
 		sleep 0.5;
-		_sm_vehicle call SYG_rearmHeavySniper;
+		if ( _sm_vehicle call SYG_rearmHeavySniper) then
+		{
+            SM_HeavySniperCnt = 1;
+            publicVariable "SM_HeavySniperCnt";
+		};
 	};
 	//--- Sygsky
 	

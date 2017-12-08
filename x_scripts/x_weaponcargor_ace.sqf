@@ -12,7 +12,7 @@ if (isNil "x_ranked_weapons") then {
 [
 //АВТОМАТИЧЕСКОЕ ОРУЖИЕ
 //################################################################################
-				// РЯДОВОЙ
+				// РЯДОВОЙ 0
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -21,7 +21,7 @@ if (isNil "x_ranked_weapons") then {
 //				,["ACE_M1014",10]
 				#endif
 			],
-				// ЕФРЕЙТОР
+				// ЕФРЕЙТОР 1
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -30,7 +30,7 @@ if (isNil "x_ranked_weapons") then {
 //				,["ACE_M1014_Eotech", 10]
 				#endif
 			],
-				// СЕРЖАНТ
+				// СЕРЖАНТ 2
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -38,7 +38,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AKS74USD",10],["ACE_Bizon_SD",10],["ACE_AKMS_PBS1",10],["ACE_Val",10]
 				#endif
 			],
-				// ЛЕЙТЕНАНТ
+				// ЛЕЙТЕНАНТ 3
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -46,7 +46,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AKS74U_Cobra",10],["ACE_Bizon_Cobra",10],["ACE_AKM_Cobra",10],["ACE_AKMGL_Cobra",10]/* ,["ACE_AKMS_Cobra",10] */
 				#endif
 			],
-				// КАПИТАН
+				// КАПИТАН 4
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -54,7 +54,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Val_Cobra",10],["ACE_AKS74USD_Cobra",10],["ACE_Bizon_SD_Cobra",10]
 				#endif
 			],
-				// МАЙОР
+				// МАЙОР 5
 			[
 			    #ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -62,7 +62,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AKMS_PBS1_Cobra",10]
 				#endif
 			],
-				// ПОЛКОВНИК
+				// ПОЛКОВНИК 6
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -260,7 +260,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_PISTOL",3]
 				#else
-				["ACE_MakarovSD",10]
+				["ACE_TT",10]
 				#endif
 			],
 				// СЕРЖАНТ
@@ -268,7 +268,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_PISTOL",3]
 				#else
-				["ACE_TT",10]
+				["ACE_MakarovSD",10]
 				#endif
 			],
 				// ЛЕЙТЕНАНТ
@@ -276,7 +276,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_PISTOL",3]
 				#else
-				["ACE_Scorpion",10],["ACE_M32",10]
+				["ACE_M32",10]
 				#endif
 			],
 				// КАПИТАН
@@ -284,6 +284,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_PISTOL",3]
 				#else
+				["ACE_Scorpion",10]
 				#endif
 			],
 				// МАЙОР
@@ -315,26 +316,27 @@ _ve spawn {
 			_old_rank = rank player;
 			_index = _old_rank call XGetRankIndex;
             // weaponcargo that is allways in a box
-            _ve addweaponcargo ["NVGoggles",5];
-            _ve addweaponcargo ["Binocular",5];
-            _ve addweaponcargo ["LaserDesignator",5];
-            _ve addweaponcargo ["ACE_ParachutePack",5]; //_ve addweaponcargo ["T-10",10];
+            _ve addWeaponCargo ["NVGoggles",5];
+            _ve addWeaponCargo ["Binocular",5];
+            _ve addWeaponCargo ["LaserDesignator",5];
+            _ve addWeaponCargo ["ACE_ParachutePack",5];
+            _ve addWeaponCargo ["ACE_ParachuteRoundPack",5];
 			if (d_enemy_side == "EAST") then {
-				_ve addweaponcargo ["ACE_ANPRC77_Alice",5];
+				_ve addWeaponCargo ["ACE_ANPRC77_Alice",5];
 
 				// ranked stuff
 				{
 					_weapons = _x;
 					for "_i" from 0 to _index do {
 						_rk = _weapons select _i;
-						{_ve addweaponcargo _x} forEach _rk;
+						{_ve addWeaponCargo _x} forEach _rk;
 					};
 				} forEach x_ranked_weapons;
 
-				_ve addmagazinecargo ["ACE_Dummy_EQUIP",48];
+				_ve addMagazineCargo ["ACE_Dummy_EQUIP",48];
 
 			} else {
-				//_ve addweaponcargo ["ACE_ANPRC77_Alice",100];
+				//_ve addWeaponCargo ["ACE_ANPRC77_Alice",100];
 
 
 				// ranked stuff
@@ -342,94 +344,94 @@ _ve spawn {
 					_weapons = _x;
 					for "_i" from 0 to _index do {
 						_rk = _weapons select _i;
-						{_ve addweaponcargo _x} forEach _rk;
+						{_ve addWeaponCargo _x} forEach _rk;
 					};
 				} forEach x_ranked_weapons;
-			_ve addmagazinecargo ["ACE_Dummy_EQUIP",3];
-				_ve addmagazinecargo ["ACE_Bandage",100];
-				_ve addmagazinecargo ["ACE_Morphine",100];
-				_ve addmagazinecargo ["ACE_Epinephrine",100];
-				_ve addmagazinecargo ["Laserbatteries",100];
-				_ve addmagazinecargo ["ACE_IRStrobe",100];
-				_ve addmagazinecargo ["ACE_SandBag_Magazine",100];
-				_ve addmagazinecargo ["ACE_Flashbang",100];
-				_ve addmagazinecargo ["ACE_POMZ_M",100];
-				//_ve addmagazinecargo ["ACE_Claymore_M",100];
-			_ve addmagazinecargo ["ACE_Dummy_RIFLE",3];
-   				_ve addmagazinecargo ["ACE_30Rnd_545x39_B_AK",100];
-				_ve addmagazinecargo ["ACE_30Rnd_545x39_BT_AK",100];
-				_ve addmagazinecargo ["ACE_30Rnd_545x39_SD_AK",100];
-				_ve addmagazinecargo ["ACE_30Rnd_762x39_B_RPK",100];
-				_ve addmagazinecargo ["ACE_30Rnd_762x39_B_AK",100];
-				_ve addmagazinecargo ["ACE_30Rnd_762x39_BT_AK",100];
-				_ve addmagazinecargo ["ACE_30Rnd_762x39_SD_AK",100];
-				_ve addmagazinecargo ["ACE_64Rnd_9x18_B_Bizon",100];
-				_ve addmagazinecargo ["ACE_20Rnd_9x39_B_VAL",100];
-//				_ve addmagazinecargo ["ACE_8Rnd_12Ga_Slug",100];
-//				_ve addmagazinecargo ["ACE_8Rnd_12Ga_Buck00",100];
-				_ve addmagazinecargo ["ACE_9Rnd_12Ga_Slug",100];
-				_ve addmagazinecargo ["ACE_9Rnd_12Ga_Buck00",100];
-			_ve addmagazinecargo ["ACE_Dummy_SNIPER",3];
-				_ve addmagazinecargo ["ACE_10Rnd_762x54_SB_SVD",100];
-				//_ve addmagazinecargo ["ACE_10Rnd_762x54_SB_SV98",100];
- 				_ve addmagazinecargo ["ACE_10Rnd_9x39_SB_VSS",100];
-               	_ve addmagazinecargo ["ACE_5Rnd_127x108_SB_KSVK",100];
-				_ve addmagazinecargo ["ACE_5Rnd_127x108_BT_KSVK",100];
-				//_ve addmagazinecargo ["ACE_5Rnd_127x108_SB_OSV96",100];
-			_ve addmagazinecargo ["ACE_Dummy_MG",3];
-				_ve addmagazinecargo ["ACE_40Rnd_762x39_B_AK",100];
-				_ve addmagazinecargo ["ACE_40Rnd_762x39_BT_AK",100];
-				_ve addmagazinecargo ["ACE_45Rnd_545x39_B_AK",100];
-				_ve addmagazinecargo ["ACE_45Rnd_545x39_BT_AK",100];
-				_ve addmagazinecargo ["ACE_75Rnd_762x39_B_AK",100];
-				_ve addmagazinecargo ["ACE_75Rnd_762x39_BT_AK",100];
-				_ve addmagazinecargo ["ACE_100Rnd_762x54_B_PK",100];
-				_ve addmagazinecargo ["ACE_100Rnd_762x54_BT_PK",100];
-				_ve addmagazinecargo ["ACE_NSV_CSWDM",100];
-			_ve addmagazinecargo ["ACE_Dummy_LAUNCHER",3];
-				_ve addmagazinecargo ["ACE_Strela",100];
-				_ve addmagazinecargo ["ACE_RPG7_PG7V",100];
-				_ve addmagazinecargo ["ACE_RPG7_PG7VR",100];
-				_ve addmagazinecargo ["ACE_RPG7_PG7VL",100];
-				_ve addmagazinecargo ["ACE_RPG7_OG7V",100];
-				_ve addmagazinecargo ["ACE_RPG7_TBG7V",100];
-				_ve addmagazinecargo ["ACE_RPG22",100];
-				_ve addmagazinecargo ["ACE_RPG27",100];
-				_ve addmagazinecargo ["ACE_RPO_A",100];
-				_ve addmagazinecargo ["ACE_RPG29_PG29",100];
-				_ve addmagazinecargo ["ACE_RPG29_TBG29",100];
-				_ve addmagazinecargo ["ACE_AGS30_CSWDM",100];
-			_ve addmagazinecargo ["ACE_Dummy_PISTOL",3];
-				_ve addmagazinecargo ["ACE_8Rnd_9x18_B_Makarov",100];
-				_ve addmagazinecargo ["ACE_8Rnd_9x18_SD_Makarov",100];
-				_ve addmagazinecargo ["ACE_8Rnd_762x25_B_Tokarev",100];
-				_ve addmagazinecargo ["ACE_20Rnd_765x17_vz61",100];
-				_ve addmagazinecargo ["ACE_1Rnd_Flare_White",100];
-				_ve addmagazinecargo ["ACE_1Rnd_Flare_Green",100];
-				_ve addmagazinecargo ["ACE_1Rnd_Flare_Red",100];
-				_ve addmagazinecargo ["ACE_1Rnd_Flare_Yellow",100];
-			//_ve addmagazinecargo ["ACE_Dummy_RIFLE",3];
-				_ve addmagazinecargo ["ACE_40mm_FlareWhite_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_FlareGreen_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_FlareRed_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_FlareYellow_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_SmokeWhite_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_SmokeRed_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_SmokeGreen_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_SmokeYellow_GP25",100];
-				_ve addmagazinecargo ["ACE_SmokeGrenade_White",100];
-				_ve addmagazinecargo ["ACE_SmokeGrenade_Red",100];
-				_ve addmagazinecargo ["ACE_SmokeGrenade_Green",100];
-				_ve addmagazinecargo ["ACE_SmokeGrenade_Yellow",100];
-				_ve addmagazinecargo ["ACE_SmokeGrenade_Violet",100];
-				_ve addmagazinecargo ["ACE_HandGrenade",100];
-				_ve addmagazinecargo ["ACE_HandGrenadeRGN",30];
-				_ve addmagazinecargo ["ACE_HandGrenadeRGO",30];
-				_ve addmagazinecargo ["ACE_40mm_HEDP_GP25",100];
-				_ve addmagazinecargo ["ACE_40mm_VOG25P_GP25",100];
-				_ve addmagazinecargo ["ACE_PipeBomb",100];
-//				_ve addmagazinecargo ["ACE_Mine",100];
-				_ve addmagazinecargo ["ACE_MineE",100];
+			_ve addMagazineCargo ["ACE_Dummy_EQUIP",3];
+				_ve addMagazineCargo ["ACE_Bandage",100];
+				_ve addMagazineCargo ["ACE_Morphine",100];
+				_ve addMagazineCargo ["ACE_Epinephrine",100];
+				_ve addMagazineCargo ["Laserbatteries",100];
+				_ve addMagazineCargo ["ACE_IRStrobe",100];
+				_ve addMagazineCargo ["ACE_SandBag_Magazine",100];
+				_ve addMagazineCargo ["ACE_Flashbang",100];
+				_ve addMagazineCargo ["ACE_POMZ_M",100];
+				//_ve addMagazineCargo ["ACE_Claymore_M",100];
+			_ve addMagazineCargo ["ACE_Dummy_RIFLE",3];
+   				_ve addMagazineCargo ["ACE_30Rnd_545x39_B_AK",100];
+				_ve addMagazineCargo ["ACE_30Rnd_545x39_BT_AK",100];
+				_ve addMagazineCargo ["ACE_30Rnd_545x39_SD_AK",100];
+				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_RPK",100];
+				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_AK",100];
+				_ve addMagazineCargo ["ACE_30Rnd_762x39_BT_AK",100];
+				_ve addMagazineCargo ["ACE_30Rnd_762x39_SD_AK",100];
+				_ve addMagazineCargo ["ACE_64Rnd_9x18_B_Bizon",100];
+				_ve addMagazineCargo ["ACE_20Rnd_9x39_B_VAL",100];
+//				_ve addMagazineCargo ["ACE_8Rnd_12Ga_Slug",100];
+//				_ve addMagazineCargo ["ACE_8Rnd_12Ga_Buck00",100];
+				_ve addMagazineCargo ["ACE_9Rnd_12Ga_Slug",100];
+				_ve addMagazineCargo ["ACE_9Rnd_12Ga_Buck00",100];
+			_ve addMagazineCargo ["ACE_Dummy_SNIPER",3];
+				_ve addMagazineCargo ["ACE_10Rnd_762x54_SB_SVD",100];
+				//_ve addMagazineCargo ["ACE_10Rnd_762x54_SB_SV98",100];
+ 				_ve addMagazineCargo ["ACE_10Rnd_9x39_SB_VSS",100];
+               	_ve addMagazineCargo ["ACE_5Rnd_127x108_SB_KSVK",100];
+				_ve addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",100];
+				//_ve addMagazineCargo ["ACE_5Rnd_127x108_SB_OSV96",100];
+			_ve addMagazineCargo ["ACE_Dummy_MG",3];
+				_ve addMagazineCargo ["ACE_40Rnd_762x39_B_AK",100];
+				_ve addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",100];
+				_ve addMagazineCargo ["ACE_45Rnd_545x39_B_AK",100];
+				_ve addMagazineCargo ["ACE_45Rnd_545x39_BT_AK",100];
+				_ve addMagazineCargo ["ACE_75Rnd_762x39_B_AK",100];
+				_ve addMagazineCargo ["ACE_75Rnd_762x39_BT_AK",100];
+				_ve addMagazineCargo ["ACE_100Rnd_762x54_B_PK",100];
+				_ve addMagazineCargo ["ACE_100Rnd_762x54_BT_PK",100];
+				_ve addMagazineCargo ["ACE_NSV_CSWDM",100];
+			_ve addMagazineCargo ["ACE_Dummy_LAUNCHER",3];
+				_ve addMagazineCargo ["ACE_Strela",100];
+				_ve addMagazineCargo ["ACE_RPG7_PG7V",100];
+				_ve addMagazineCargo ["ACE_RPG7_PG7VR",100];
+				_ve addMagazineCargo ["ACE_RPG7_PG7VL",100];
+				_ve addMagazineCargo ["ACE_RPG7_OG7V",100];
+				_ve addMagazineCargo ["ACE_RPG7_TBG7V",100];
+				_ve addMagazineCargo ["ACE_RPG22",100];
+				_ve addMagazineCargo ["ACE_RPG27",100];
+				_ve addMagazineCargo ["ACE_RPO_A",100];
+				_ve addMagazineCargo ["ACE_RPG29_PG29",100];
+				_ve addMagazineCargo ["ACE_RPG29_TBG29",100];
+				_ve addMagazineCargo ["ACE_AGS30_CSWDM",100];
+			_ve addMagazineCargo ["ACE_Dummy_PISTOL",3];
+				_ve addMagazineCargo ["ACE_8Rnd_9x18_B_Makarov",100];
+				_ve addMagazineCargo ["ACE_8Rnd_9x18_SD_Makarov",100];
+				_ve addMagazineCargo ["ACE_8Rnd_762x25_B_Tokarev",100];
+				_ve addMagazineCargo ["ACE_20Rnd_765x17_vz61",100];
+				_ve addMagazineCargo ["ACE_1Rnd_Flare_White",100];
+				_ve addMagazineCargo ["ACE_1Rnd_Flare_Green",100];
+				_ve addMagazineCargo ["ACE_1Rnd_Flare_Red",100];
+				_ve addMagazineCargo ["ACE_1Rnd_Flare_Yellow",100];
+			//_ve addMagazineCargo ["ACE_Dummy_RIFLE",3];
+				_ve addMagazineCargo ["ACE_40mm_FlareWhite_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_FlareGreen_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_FlareRed_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_FlareYellow_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_SmokeWhite_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_SmokeRed_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_SmokeGreen_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_SmokeYellow_GP25",100];
+				_ve addMagazineCargo ["ACE_SmokeGrenade_White",100];
+				_ve addMagazineCargo ["ACE_SmokeGrenade_Red",100];
+				_ve addMagazineCargo ["ACE_SmokeGrenade_Green",100];
+				_ve addMagazineCargo ["ACE_SmokeGrenade_Yellow",100];
+				_ve addMagazineCargo ["ACE_SmokeGrenade_Violet",100];
+				_ve addMagazineCargo ["ACE_HandGrenade",100];
+				_ve addMagazineCargo ["ACE_HandGrenadeRGN",30];
+				_ve addMagazineCargo ["ACE_HandGrenadeRGO",30];
+				_ve addMagazineCargo ["ACE_40mm_HEDP_GP25",100];
+				_ve addMagazineCargo ["ACE_40mm_VOG25P_GP25",100];
+				_ve addMagazineCargo ["ACE_PipeBomb",100];
+//				_ve addMagazineCargo ["ACE_Mine",100];
+				_ve addMagazineCargo ["ACE_MineE",100];
 			};
 		};
 		sleep 2.32;

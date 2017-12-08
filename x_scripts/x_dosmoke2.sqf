@@ -75,6 +75,8 @@ if (_issmoking) exitWith
     #endif
 };
 
+_vec setVariable ["D_IS_SMOKING",true]; // we are smoking!!!
+
 _wpns = weapons _vec;
 _muzzle = _wpns select (count _wpns - 1); // get last weapon (it should be a smoke launcher!)
 _vec selectWeapon _muzzle;
@@ -89,7 +91,7 @@ _vec fire _muzzle;
 sleep 0.27;
 _vec doWatch objNull; // stop watching
 sleep 0.512;
-
+_crew = crew _vec;
 {
 	if (alive _x) then {
 		_x disableAI "TARGET";
@@ -109,7 +111,7 @@ if (canMove _vec) then {
 };
 
 sleep 8;
-
+_crew = crew _vec;
 {
 	if (alive _x) then {
 		_x enableAI "TARGET";

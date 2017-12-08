@@ -237,10 +237,11 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 #endif
 
 				_time = time;
-				_timeout = _time + ((_shell_unit distance _obj) + 60);
+				_timeout = (_shell_unit distance _obj) + 60;
 #ifdef __PRINT__
-				hint localize format["sabotage.sqf: Run bombing script for  unit %1 with timeout  %2", _shell_unit, round((_shell_unit distance _obj) + 60)];
+				hint localize format["sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (group _shell_unit) call XfGetAliveUnits, round(_timeout)];
 #endif
+                _timeout = _time + _timeout;
 	
 				while {	(time < _timeout) &&  (!(scriptDone _bombScript )) } do  // wait 600 seconds (10 minutes) to complete script
 				{
@@ -287,7 +288,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 #endif	
 						sleep 0.3;
 					}					
-					else // no other group found so put him to his fate
+					else // no other group found so put him to his fate.
 					{
 						if ( !(_shell_unit call SYG_ACEUnitUnconscious) ) then // unit can move
 						{
@@ -297,7 +298,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 							hint localize "sabotage.sqf: no group found, find some cover for an alone bomberman";
 #endif	
 							
-							// TODO: send unit to the roof of any suitable building (towers, hangars, air terminal, some hoouses etc)
+							// TODO: send unit to the roof of any suitable building (towers, hangars, air terminal, some houses etc)
 							// find enemy to hide from
 							_obj = _shell_unit findNearestEnemy (position _shell_unit);
 							if ( isNull _obj ) then // no enemies found
@@ -320,7 +321,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 							if ( isNull _obj ) then
 							{
 #ifdef __PRINT__
-    							hint localize "sabotage.sqf: cover not found, use FLAG/factory afor it";
+    							hint localize "sabotage.sqf: cover not found, use FLAG/factory for it";
 #endif
 								if ( !isNil "FLAG_BASE" ) then
 								{
@@ -426,7 +427,7 @@ if ( !isNil "d_on_base_groups") then
         for "_i" from 0 to (count d_on_base_groups) - 1 do
         {
             _grp = d_on_base_groups select _i;
-            if ( ({alive _x} count (units _grp))  == 0 ) then // grouyp is dead, remove it from list
+            if ( ({alive _x} count (units _grp))  == 0 ) then // group is dead, remove it from list
             {
                 d_on_base_groups set [_i, "RM_ME"];
             };

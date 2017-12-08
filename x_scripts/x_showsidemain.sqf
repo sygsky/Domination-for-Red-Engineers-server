@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_showsidemain.sqf
 if (!XClient) exitWith {};
 
 #include "x_setup.sqf"
@@ -6,8 +6,12 @@ if (!XClient) exitWith {};
 _which = _this select 0;
 
 if ((_which == 1 && ((current_target_index == -1)) || (client_target_counter >= number_targets))) exitWith {};
+
 //if (_which == 0 && (current_mission_text == "Все миссии выполнены!!!" || current_mission_text == "Новых дополнительных заданий не определено..." || current_mission_text == "В настоящие время дополнительное задание не определено...")) exitWith {};
-if (_which == 0 && ((current_mission_text == localize "STR_SYS_120") || current_mission_text == localize "STR_SYS_121")) exitWith {};
+if (_which == 0 && ((current_mission_text == localize "STR_SYS_120") || (current_mission_text == localize "STR_SYS_121"))) exitWith
+{
+    hint localize "--- x_scripts/x_showsidemain.sqf: SM mission text is empty, exit ---"
+};
 
 _display = findDisplay 11001;
 
@@ -29,11 +33,19 @@ _start_pos = (
 _end_pos = [];
 _exit_it = false;
 
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+if (_which == 1) then
+{
+    if (!call isSYG_isMainTargetAllowed) then { _which = 0;  }; // show side mission except of main one
+};
+#endif
+
 switch (_which) do {
 	case 0: {
 		_markername = format ["XMISSIONM%1", current_mission_index + 1];
 		_end_pos = markerPos _markername;
 		if (format ["%1", _end_pos] == "[0,0,0]") then {
+		    hint localize format["--- x_scripts/x_showsidemain.sqf: SM marker name %1, pos %2, exit ---", _markername,_end_pos];
 			_exit_it = true;
 		};
 	};

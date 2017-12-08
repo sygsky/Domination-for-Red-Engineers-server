@@ -1,11 +1,12 @@
-// by Xeno, x_gettargetbonus.sqf
-private ["_dir","_pos","_posa","_vehicle","_town"];
+// by Xeno, x_gettargetbonus.sqf, creates bonus vehicle for main targed completion
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//  smart select bonus according to the size of sieged town -> the largertown the bigger bonus
+private ["_dir","_pos","_posa","_vehicle","_town"];
+
+//  smart select bonus according to the size of sieged town -> the larger town the bigger bonus
 // 
 // current_target_index -> index of completed town in target list
 
@@ -22,21 +23,38 @@ if ( count _town > 0 ) then // town is defined
 	{
 		extra_bonus_number = floor (random (big_bonus_vec_index)); // select any except Ka-50 and jets
 	};
+	if ( !(isNil "last_mt_bonus_vehicle_number") ) then
+	{
+        while {extra_bonus_number == last_mt_bonus_vehicle_number} do
+        {
+            if ( (_town select 2) >= big_town_radious ) then // select from best jets and helis (big bonus)
+            {
+                extra_bonus_number = [big_bonus_vec_index, count mt_bonus_vehicle_array] call XfGetRandomRangeInt;
+            }
+            else
+            {
+                extra_bonus_number = floor (random (big_bonus_vec_index)); // select any except Ka-50 and jets
+            };
+        };
+	};
+	last_mt_bonus_vehicle_number = extra_bonus_number;
 }
 else
 {
-	hint localize "--- error in x_gettargetbonus.sqf: seized town not defined!!!";
+	hint localize "--- error in x_gettargetbonus.sqf: a newly captured city not defined!!!";
 };
 #endif
+
 if ( extra_bonus_number < 0 ) then
 {
-	extra_bonus_number = floor (random (count mt_bonus_vehicle_array));
+	extra_bonus_number = mt_bonus_vehicle_array call XfRandomFloorArray; // случайное число в диапазоне длины массива
 };
 sleep 1.012;
 
 #ifndef __TT__
 _posa = mt_bonus_positions select extra_bonus_number; _pos = _posa select 0;_dir = _posa select 1;
 #endif
+
 #ifdef __TT__
 _pos = [];
 _dir = 0;
@@ -68,27 +86,54 @@ target_clear=true; // town is liberated, no any occupied towns from now
 ["target_clear",target_clear, extra_bonus_number] call XSendNetStartScriptClient;
 
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
+
+hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created %1", typeOf _vehicle];
+
 _vehicle setDir _dir;
 
+#ifdef __REARM_SU34__
+_vehicle call SYG_rearmVehicleA; // rearm if bonus vehicle is marked to rearm
+#endif
+
+
+#ifdef __NO_ETERNAL_BONUS__
+
+
+#else
+
+// set marker procedure for the newly created vehicle
 _vehicle execVM "x_scripts\x_wreckmarker.sqf";
 
-if ( _vehicle isKindOf "Plane") then
+#endif
+
+//
+// RESTORE DESTROYED BUILDINGS
+//
+#ifdef __DEFAULT__
 {
-    _pos =  [9359.855469, 10047.625000,0];
-    _vehicle  = nearestObject [_pos, "MASH"];
-    if ( !isNull ( _vehicle ) ) then
+    _mash = nearestObject [argp( _x, 0), "MASH"];
+    _rebuild_mash = false;
+    // try to repair object if it is damaged
+    if ( !isNull ( _mash ) ) then
     {
-        if (!alive _vehicle) then {deleteVehicle _vehicle; sleep 0.2; _vehicle = objNull;};
+        if (!alive _mash) then {deleteVehicle _mash; sleep 0.2; _mash = objNull; _rebuild_mash = true;};
     };
-    if ( isNull _vehicle) then
+    // (re)build mash if not available
+    if ( (_vehicle isKindOf "Plane") || _rebuild_mash ) then
     {
-        _mash = createVehicle ["MASH", _pos, [], 0, "NONE"];
-        _mash setDir 189;
-        ADD_HIT_EH(_mash)
-        ADD_DAM_EH(_mash)
-        hint localize format["x_scripts\x_gettargetbonus.sqf: MASH created near plane service with target bonus %1", typeOf _vehicle];
+        if ( isNull _mash) then
+        {
+            _mash = createVehicle ["MASH", argp(_x,0), [], 0, "NONE"];
+            sleep 1;
+            _mash setDir argp(_x,1);
+            ADD_HIT_EH(_mash)
+            ADD_DAM_EH(_mash)
+            hint localize format["x_scripts\x_gettargetbonus.sqf: MASH created near plane service at %2 with target bonus %1", typeOf _vehicle, argp(_x,0) call SYG_nearestLocationName];
+        };
     };
-};
+
+} forEach [ [ [ 9359.855469, 10047.625000, 0 ], 190 ], [ [18035,18908,0 ], 260 ] ]; // two mash sites
+#endif
 
 _pos = nil;
 _dir = nil;

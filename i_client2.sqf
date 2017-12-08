@@ -1,9 +1,17 @@
 // init include client 2
 
+_bmp_list =
+#ifdef __USE_M60__
+			["ACE_M60", "ACE_M60_A3"] +
+#else
+			["ACE_Stryker_TOW"] +
+#endif
+			["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"]; // bmp
+
 if (X_Client) then {
 #ifdef __OWN_SIDE_EAST__
 _armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {
-["ACE_Stryker_TOW","ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT","ACE_Stryker_RV","ACE_M113","ACE_M113_A1","ACE_M113_A3","ACE_M2A1","ACE_M2A2","ACE_PIVADS","ACE_Vulcan","ACE_M6A1"]
+    _bmp_list + ["ACE_M113","ACE_M113_A1","ACE_M113_A3","ACE_M2A1","ACE_M2A3","ACE_PIVADS","ACE_Vulcan","ACE_M6A1"]
 } else {["Stryker_ICV_M2","Stryker_ICV_MK19","Vulcan","Stryker_TOW"]}} else {[]});
 _car = (if (!d_lock_ai_car) then {if (__ACEVer) then {["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t","ACE_Truck5t_MG","ACE_HMMWV_GMV","ACE_HMMWV_GMV2"]} else {["HMMWV50","HMMWVMK","HMMWVTOW"]}} else {[]});
 #endif
@@ -35,7 +43,7 @@ d_helilift1_types =
 	#endif
 	#ifdef __OWN_SIDE_WEST__
 	if (__ACEVer) then {
-		["M113_MHQ","ACE_M113_Ambul","ACE_M2A2","ACE_M2A1","ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT","ACE_Stryker_RV","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","ACE_HMMWV_GAU19","ACE_M113_A3","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t"] + _armor + _car
+		["M113_MHQ","ACE_M113_Ambul","ACE_M2A2","ACE_M2A1","ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT",/*"ACE_Stryker_RV",*/"ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","ACE_HMMWV_GAU19","ACE_M113_A3","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t"] + _armor + _car
 	} else {
 		["M113_MHQ","M113Ambul","M113AmbulRacs","WarfareWestSalvageTruck","Truck5tRepair","Truck5tRefuel","Truck5tReammo","Truck5tOpen","Truck5tMG","Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","Stryker_TOW","HMMWVTOW","M113_RACS","Vulcan_RACS","Vulcan"] + _armor + _car
 	};

@@ -52,7 +52,7 @@ while {(!unitReady _pilot)&&(alive _pilot)&&(damage _heli < 0.5)} do {Sleep 2;};
 if (!(alive _pilot) || (damage _heli >= 0.5)) exitWith {_heli setVariable ["mando_heliroute", "damaged"];};
 
 // The chopper moves through the route positions
-for [{_j = 0},{_j < count _route},{_j = _j + 1}] do { 
+for [{_j = 0;},{_j < count _route},{_j = _j + 1;}] do {
 	_endpos = _route select _j;
 	_inipos = getPos _heli;
 	_dist = sqrt(((_endpos select 0) - (_inipos select 0))^2 + ((_endpos select 1) - (_inipos select 1))^2);
@@ -61,7 +61,7 @@ for [{_j = 0},{_j < count _route},{_j = _j + 1}] do {
 	_ang = ((_endpos select 0) - (_inipos select 0)) atan2 ((_endpos select 1) - (_inipos select 1));
 
 	// Each route position is reached in steps no larger than 3Km
-	for [{_i = 0},{_i < _steps},{_i = _i + 1}] do {
+	for [{_i = 0;},{_i < _steps},{_i = _i + 1;}] do {
 		_pos = [(_inipos select 0) + sin(_ang)*3000*_i,(_inipos select 1) + cos(_ang)*3000*_i];
 		_pilot doMove _pos;
 		Sleep 2;
@@ -101,7 +101,7 @@ if (_dist > 2) then {
 	_angh = (_pos select 0) atan2 (_pos select 1);
 	_dist = sqrt((_pos select 0)^2+(_pos select 1)^2);
 
-	for [{_i = 0},{_i < abs(_angh)},{_i = _i + 1}] do {
+	for [{_i = 0;},{_i < abs(_angh)},{_i = _i + 1;}] do {
 		if (!(alive _pilot) || (damage _heli >= 0.5)) exitWith {};
 		_heli setDir ((getDir _heli)+abs(_angh)/_angh);
 		_heli setVelocity [0,0,0];
@@ -142,7 +142,7 @@ if (_landing) then {
 		Sleep 0.01;
 	};
 
-	for [{_i = 0},{_i < 100},{_i = _i + 1}] do {
+	for [{_i = 0;},{_i < 100},{_i = _i + 1;}] do {
 		_heli setVelocity [0,0,-0.1];
 		Sleep 0.05;
 	};

@@ -13,9 +13,11 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
-	current_mission_text = "Высший офицерский состав расслабляется в городе Paraiso. Выша задача взорвать электростанцию на востоке города, тем самым оставив их бордель без электричества.";
-	current_mission_resolved_text = "Задание выполнено! Электростанция уничтожена, бордель закрылся.";
+	current_mission_text = localize "STR_SM_34"; // "Высший офицерский состав расслабляется в городе Paraiso. Выша задача взорвать электростанцию на востоке города, тем самым оставив их бордель без электричества.";
+	current_mission_resolved_text = localize "STR_SM034";//"Задание выполнено! Электростанция уничтожена, бордель закрылся.";
 };
 
 if (isServer) then {

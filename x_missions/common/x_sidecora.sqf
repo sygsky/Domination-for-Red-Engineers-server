@@ -11,7 +11,7 @@ _objs = [(_poss nearestObject 488815),(_poss nearestObject 488837),(_poss neares
 sm_points_west = 0;
 sm_points_racs = 0;
 {
-	_x addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
+	_x addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1;};case resistance: {sm_points_racs = sm_points_racs + 1;}}}];
 } forEach _objs;
 #endif
 

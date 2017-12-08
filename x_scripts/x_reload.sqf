@@ -19,9 +19,12 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
         }
         else
         {
-            if ( ((velocity _x) distance [0,0,0]) > ((velocity object) distance [0,0,0]) ) then
+            if (!(_object isKindOf "ParachuteBase")) then
             {
-                _object = _x;
+                if ( ((velocity _x) distance [0,0,0]) > ((velocity _object) distance [0,0,0]) ) then
+                {
+                    _object = _x;
+                };
             };
         };
     };
@@ -29,18 +32,33 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
 
 if ( isNull _object) exitWith{};
 
-if (_object isKindOf "ParachuteBase") exitWith {};
 if (!alive _object) exitWith {};
+
+// Special check for helicopters
+_exit = false;
+if ( _object isKindOf "Helicopter") then
+{
+    _already_loading = _object getVariable "already_on_load";
+    if (format ["%1", _already_loading] == "<null>") exitWith { _exit = true;  };
+    _object setVariable ["already_on_load", true];
+};
+if ( _exit) exitWith
+{
+    _object setVariable ["already_on_load", nil];
+    [_object, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
+};
 
 _magazines = [];
 
 _type = typeOf _object;
 
 #ifdef __REARM_SU34__
-_su34 = _object call SYG_rearmAnySu34;
+//_su34 = _object call SYG_rearmAnySu34;
+_su34 = _object call SYG_rearmVehicleA;
 if ( _su34 ) then // Su34 is rearmed
 {
-    _magazines = argp((_type call SYG_getSu34Table),1); // get magazines list to reload each time
+    //_magazines = argp((_type call SYG_getSu34Table),1); // get magazines list to reload each time
+    _magazines = argp((_type call SYG_getVehicleTable),1); // get magazines list to reload each time
 };
 #endif
 
@@ -80,7 +98,7 @@ if (count _magazines > 0) then {
 	{
 		[_object, format [localize "STR_SYS_256", _x]] call XfVehicleChat; // "Перезарядка: %1"
 		sleep x_reload_time_factor;
-		if (!alive _object) exitWith {};
+		if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
 		_object addMagazine _x;
 	} forEach _magazines;
 };
@@ -165,11 +183,11 @@ if (__MandoVer) then {
 	};
 };
 sleep x_reload_time_factor;
-if (!alive _object) exitWith {};
+if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
 [_object, localize "STR_SYS_258"] call XfVehicleChat; // "Починка..."
 _object setDamage 0;
 sleep x_reload_time_factor;
-if (!alive _object) exitWith {};
+if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
 [_object, localize "STR_SYS_257"] call XfVehicleChat; //"Заправка..."
 while {fuel _object < 0.99} do {
 	_object setFuel (((fuel _object) + 0.1) min 1);
@@ -177,7 +195,8 @@ while {fuel _object < 0.99} do {
 	sleep 0.3;
 };
 sleep x_reload_time_factor;
-if (!alive _object) exitWith {};
+if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
 [_object, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
 
-if (true) exitWith {};
+
+if (true) exitWith {_object setVariable ["already_on_load", nil];};

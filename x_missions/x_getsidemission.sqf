@@ -1,4 +1,4 @@
-// by Xeno, x_getsidemission.sqf
+// by Xeno, x_getsidemission.sqf, server side
 private ["_bpos","_grps","_leader","_leadero","_nbuilding","_newgroup","_no_list","_ogroup","_pos_other","_pos_other2","_posi_array","_poss","_sm_vehicle","_unitsg","_vehicle","_officer","_building2","_xtank","_xplane","_xchopper","_xarti"];
 #include "x_setup.sqf"
 
@@ -18,7 +18,9 @@ if (current_mission_counter == number_side_missions) exitWith {
 
 while {!main_target_ready} do {sleep 12.321};
 
+// index of current side mission, not number of executed one
 current_mission_index = side_missions_random select current_mission_counter;
+// mission execured counter, at the start == 0
 current_mission_counter = current_mission_counter + 1;
 
 extra_mission_remover_array = [];

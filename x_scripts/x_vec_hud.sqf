@@ -1,9 +1,9 @@
 // by Xeno
 private ["_speed_str", "_fuel_str", "_dam_str", "_dir_str", /* "_gendirlist", */ "_welcome_message", "_vec", "_welcome_str", "_vec_msg1", "_struct_text", "_endtime", "_type_name", "_vec_string", "_vdir", "_gendir", "_dstr", "_count", "_control", "_type_weap", "_dirtmp"];
-_speed_str = "Скорость: %1 km/h";
-_fuel_str =  "Топливо: %1";
-_dam_str =   "Повреждения: %1";
-_dir_str =   "Dir: %1 (%2)";
+_speed_str = localize "STR_SYS_324_1"; // Speed
+_fuel_str =  localize "STR_SYS_324_2"; // Fuel
+_dam_str =   localize "STR_SYS_324_3"; // Damage
+_dir_str =   localize "STR_SYS_324_4"; //"Dir: %1 (%2)"
 //_gendirlist = ["N","N-NE","NE","E-NE","E","E-SE","SE","S-SE","S","S-SW","SW","W-SW","W","W-NW","NW","N-NW","N"];
 
 #include "x_setup.sqf"

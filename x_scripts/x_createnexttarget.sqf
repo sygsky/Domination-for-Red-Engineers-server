@@ -1,4 +1,4 @@
-// x_createnexttarget.sqf, by Xeno
+// x_createnexttarget.sqf, by Xeno, server side
 
 if (!isServer) exitWith{};
 
@@ -8,15 +8,41 @@ if (!isServer) exitWith{};
 
 #define COUNT_DELAY 4
 
-private ["_current_target_pos","_current_target_radius","_dummy","_emptyH"];
-
-current_target_index = maintargets_list select current_counter;
-current_counter = current_counter + 1;
-
 #ifdef __DEBUG__
     hint localize "+++ x_createnexttarget.sqf started +++";
 #endif
 
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+private ["_time"];
+
+hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 )", current_counter, current_mission_counter];
+
+_time = time;
+if ( !( call SYG_isMainTargetAllowed ) ) then
+{
+    _msg = [ "localize", "STR_SYS_1151_1", current_mission_counter + 1 ]; // "Finish SM(%1)"
+    ["msg_to_user", "*", [_msg], 0, 4] call XSendNetStartScriptClient;
+    hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 ) false", current_counter, current_mission_counter];
+};
+
+while { !(call SYG_isMainTargetAllowed) } do
+{
+    sleep 4 + random 2;
+};
+
+if ( ((time - _time) > 60) ) then
+{
+    _msg = [ "localize", "STR_SYS_1152" ]; // "The people of Sahrani thank you for your liberation mission!"
+    ["msg_to_user", "*", [_msg], 0, 4] call XSendNetStartScriptClient;
+    hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 ) true", current_counter, current_mission_counter];
+};
+#endif
+
+private ["_current_target_pos","_current_target_radius","_dummy","_emptyH"];
+
+current_target_index = maintargets_list select current_counter;
+
+current_counter = current_counter + 1;
 
 sleep 1.0123;
 if (first_time_after_start) then {
@@ -40,7 +66,7 @@ _current_target_radius = _dummy select 2;
 check_trigger=createTrigger["EmptyDetector",_current_target_pos];
 check_trigger setTriggerArea [(_current_target_radius max 300) + 20, (_current_target_radius max 300) + 20, 0, false];
 check_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
-check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""]; 
+check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""];
 
 [_current_target_pos, _current_target_radius] execVM "x_scripts\x_createguardpatrolgroups.sqf";
 
@@ -64,12 +90,12 @@ if (call SYG_getTargetTownName == "Rahmadi") then
 };
 
 #ifdef __DEBUG__
-    hint localize "+++ x_createnexttarget.sqf completed +++";
+hint localize format["+++ x_createnexttarget.sqf (%1)completed +++", _dummy select 1];
 #endif
 
 [] spawn {
     if ( (count resolved_targets) < COUNT_DELAY) exitWith {}; // start on Nth town to clean it
-    private ["_dummy","_target_pos","_target_radius","_list","_cnt"];
+    private ["_dummy","_target_pos","_target_radius","_list","_cnt", "_cnt1"];
     sleep random 30;
     _this = resolved_targets select (current_counter - COUNT_DELAY); // index of town to clean;
     _dummy = target_names select _this;
@@ -77,7 +103,7 @@ if (call SYG_getTargetTownName == "Rahmadi") then
     _target_radius = _dummy select 2;
     // find all dead bodies assuming than they always are long time dead
     _list = _target_pos nearObjects ["CAManBase", _target_radius + 50];
-    sleep 1800; // wait for a while to remove old dead corpses
+    sleep 300; // wait for a while to remove old dead corpses
     _cnt = 0;
      {
         if ( !alive _x) then
@@ -90,15 +116,63 @@ if (call SYG_getTargetTownName == "Rahmadi") then
                 _x removeAllEventHandlers "getin"; //+++ Sygsky: just in case
                 _x removeAllEventHandlers "getout"; //+++ Sygsky: just in case
                 deleteVehicle _x;
+                sleep 0.01;
                 _cnt = _cnt + 1;
             };
         };
      } forEach _list;
+     // remove underwater weapon holders
+    _list = _target_pos nearObjects ["WeaponHolder", _target_radius + 50];
+    _cnt1 = 0;
+     {
+        if (surfaceIsWater (getPos _x)) then
+        {
+            deleteVehicle _x;
+            sleep 0.01;
+                _cnt1 = _cnt1 + 1;
+        };
+     } forEach _list;
 #ifdef __DEBUG__
-    hint localize format["x_createnexttarget.sqf. Old dead bodies cleaned in %3: found men %1, clean dead %2", count _list, _cnt, _dummy select 1];
+    hint localize format["x_createnexttarget.sqf: Old dead bodies cleaned in %3: found men %1, clean dead %2, in water weapon holders %4", count _list, _cnt, _dummy select 1, _cnt1];
 #endif
      _list = nil;
      sleep 2.56;
 };
+
+#ifdef __AI__
+
+// check for the AI_HUT to be alive
+if (isNil "AI_HUT") exitWith {hint localize "--- x_scripts/x_createnexttarget.sqf: no AI_HUT detected"}; // no hut
+if ( damage AI_HUT == 0) exitWith{};
+if (damage AI_HUT < 1 ) exitWith {AI_HUT setDamage 0};
+
+// AI_HUT is destroyed, lets restore it
+_ruin = pos_ nearestObject "land_budova2_ruin";
+if ( isNull _ruin) then
+{
+    hint localize "--- x_scripts/x_createnexttarget.sqf: try to repair, but no land_budova2_ruin found near";
+    deleteVehicle _ruin;
+    sleep 0.05;
+};
+
+AI_HUT setDamage 0;
+AI_HUT setDir (d_pos_ai_hut select 1);
+AI_HUT setPos (d_pos_ai_hut select 0);
+sleep 0.1;
+AI_HUT say "fanfare";
+AI_HUT removeAllEventHandlers "hit";
+AI_HUT removeAllEventHandlers "damage";
+sleep 0.1;
+
+AI_HUT addEventHandler ["hit", {(_this select 0) setDamage 0}];
+AI_HUT addEventHandler ["damage", {(_this select 0) setDamage 0}];
+
+// ADD_HIT_EH(AI_HUT)
+// ADD_DAM_EH(AI_HUT)
+
+publicVariable "AI_HUT";
+hint localize "--- x_scripts/x_createnexttarget.sqf: AI_HUT resurrected";
+
+#endif
 
 if (true) exitWith {};

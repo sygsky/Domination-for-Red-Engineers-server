@@ -83,9 +83,6 @@ XHandleNetStartScriptServer = {
 		case "d_air_taxi": {
 			(_this select 1) execVM "x_scripts\x_airtaxiserver.sqf";
 		};
-		case "d_p_a": {
-			(_this select 1) spawn XGetPlayerPoints;
-		};
 		case "d_rem_box": {
 			private ["_i", "_box_a", "_pos"];
 			for "_i" from 0 to (count d_ammo_boxes - 1) do {
@@ -100,22 +97,41 @@ XHandleNetStartScriptServer = {
 			(_this select 1) setVariable ["d_end_time", (time + d_remove_mhq_vec_time + 60)];
 			[(_this select 1)] call XAddCheckDead;
 		};
+		// store currect player score
 		case "d_ad_sc": {
 			[(_this select 1),(_this select 2)] spawn XAddPlayerScore;
 		};
-		// add weapon description
+		// store player weapon list on server
 		// params: ["d_ad_wp", _player_name,_player_weapon_str_array]
 		case "d_ad_wp": {
 			[(_this select 1),(_this select 2)] spawn SYG_storePlayerEquipmentAsStr;
 		};
-		case "d_p_varname": {
+
+		// info from user about his name and missionStart value
+		case "d_p_a": {
+			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance
+			if ( count _this > 2) then // missionStart received
+			{
+			    if (isNil "SYG_mission_start") then// 1st player connected/server started
+			    {
+			        SYG_mission_start = arg(2);
+			        hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", %1, %2", arg(1), arg(2)];
+			    }
+			    else
+			    {
+			        hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", %1", arg(1)];
+			    };
+			};
+		};
 		/*
-			// answer to message sent from client as follow:
-			_name = name player;
-			["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
-		*/
+		 * Answer to initiation message sent from client as follow:
+		 * _name = name player;
+		 * ["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
+		 */
+		case "d_p_varname": {
 			private ["_index","_parray", "_msg_arr"];
 			_index = d_player_array_names find arg(1);
+			//hint localize format["***************** _index = %1 *********************", _index];
 			_parray = [];
 			if (_index >= 0) then {
 				_parray = d_player_array_misc select _index;
@@ -124,23 +140,71 @@ XHandleNetStartScriptServer = {
 
 			// Prepare messages for the new player
 
-			if (isNil "d_connection_number") then {	d_connection_number = 1;} else {d_connection_number = d_connection_number + 1;};
-			_msg_arr = [[/*"localize",*/"STR_SYS_604",d_connection_number]]; // "Население Сахрани приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога оккупанта, солдат!"""
+			if (isNil "d_connection_number") then
+			{
+			    d_connection_number = 1;
+    			_msg_arr = [["STR_SYS_604_0"]]; // 'You are the first [English speaking] warrior in this dangerous mission to liberate Sahrani!"
+			}
+			else
+			{
+			    d_connection_number = d_connection_number + 1;
+    			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the 1% of the warrior-internationalist in their troubled land"
+			};
+
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then // first time entry after half of game
 			{
-				_msg_arr set [ count _msg_arr, ["STR_SYS_604_1"] ]; // "Уже половина Сахрани освобождена, но население Сахрани..."
+				_msg_arr set [ count _msg_arr, ["STR_SYS_604_1"] ]; // "Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty"
 			};
+
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+			// info about side mission before next town
+			if ( !call SYG_isMainTargetAllowed ) then
+			{
+				_msg_arr set [ count _msg_arr, ["STR_SYS_1151_1", current_mission_counter + 1 ] ]; // "Finish SM(%1)"
+			};
+#endif
+
 			_equip_empty = true;
-            if ( count _parray >= 6 ) then
+            if ( count _parray >= 6 ) then // ammunition is stored some time ago, restore it now
             {
-                if ( (_parray select 5) != "") then
+                _equipment = _parray select 5; // read string with equipment array
+                if ( _equipment != "") then
                 {
                     _msg_arr set [ count _msg_arr, ["STR_SYS_612"] ]; // "Вам было выдано снаряжение с прошлого раза"
                     _equip_empty = false;
-                }
+                    // check for distance view
+                    _wpnArr = _equipment call SYG_unpackEquipmentFromStr;
+                    if ( (count _wpnArr) >= 5 ) then
+                    {
+                        if ( typeName argp(_wpnArr,4) == "SCALAR") then // old variant
+                        {
+                            _msg_arr set [ count _msg_arr, ["STR_SYS_618",_wpnArr select 4] ]; // "Viewdistance restore to %1 m."
+                        }
+                        else
+                        {
+                        // TODO: implement code for parsing array of user settings
+                            if ( typeName argp(_wpnArr, 4) == "ARRAY") then // new variant
+                            {
+                                _settingsArr = _wpnArr select 4;
+                                _val = [_settingsArr, "VD"] call SYG_getParamFromSettingsArray;
+                                if ( _val >= 0) then
+                                {
+                                    _msg_arr set [ count _msg_arr, ["STR_SYS_618",_val] ]; // "Viewdistance restore to %1 m."
+                                };
+                            };
+                        };
+                    };
+                };
             };
-            if ( _equip_empty ) then {_msg_arr set [ count _msg_arr, ["STR_SYS_614"] ];}; // ammunition record not found
+            if ( _equip_empty  && (_index >= 0)) then
+            {
+                if ( argp(_parray,3) > 0) then // non-zero score and report about record absence
+                {
+                    _msg_arr set [ count _msg_arr, ["STR_SYS_614"] ]; // ammunition record not found
+                };
+            };
 
+            hint localize format["+++ __HasGVar(INFILTRATION_TIME) = %1",__HasGVar(INFILTRATION_TIME)];
 			if (__HasGVar(INFILTRATION_TIME)) then
 			{
 			    _date = __GetGVar(INFILTRATION_TIME);
@@ -153,6 +217,8 @@ XHandleNetStartScriptServer = {
 			// TODO: add here more messages for the 1st greeting to user
 
 			["msg_to_user", arg(1), _msg_arr, 0, 30] call XSendNetStartScriptClient;
+			sleep 1.0;
+			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
 			// log info  about logging
 			hint localize format["x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1),arg(2), call SYG_missionTimeInfoStr ];
@@ -168,6 +234,23 @@ XHandleNetStartScriptServer = {
             ["syg_plants_restored", arg(1), arg(2), arg(3), _score] call XSendNetStartScriptClient;
 		    hint localize format["+++ Server send msg: %1", ["syg_plants_restored", arg(1), arg(2), arg(3)]];
 		};
+        case "say_sound": // say user sound from predefined vehicle/unit
+		{
+		    _vehicle = argopt(1, objNull);   // vehicle to play sound on it
+		    if ( isNull _vehicle ) exitWith {hint localize "--- ""say_sound"" _vehicle is null";};
+		    _sound   = argopt(2, "");        // sound to play
+		    if (    _sound == "" ) exitWith {hint localize "--- ""say_sound"" _vehicle sound is empty";};
+		    hint localize format["server ""play_sound"" (%1, %2)", typeOf _vehicle, _sound];
+		    _this call XSendNetStartScriptClient; // resend to all clients
+//		    _vehicle say _sound; // do this on clients only
+		};
+		// ["add_vehicle",_player_name] call XSendNetStartScriptServer;
+		case "add_vehicle":
+		{
+
+		};
+
+
 	}; // switch (_this select 0) do
 }; // XHandleNetStartScriptServer = {
  

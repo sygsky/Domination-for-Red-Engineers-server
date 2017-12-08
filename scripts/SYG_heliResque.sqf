@@ -78,7 +78,7 @@ while {true} do
 #endif	
 		for "_i" from 0 to count _heli_down_list - 1 do
 		{
-			if (daytime > SYG_shortNightStart) AND  (daytime > SYG_shortNightStart) exitWith {}; // end of night cycle
+			if (daytime > SYG_shortNightStart) &&  (daytime > SYG_shortNightStart) exitWith {}; // end of night cycle
 			scopeName "main_loop";
 			for "_temp" from 0 to 0 do
 			{
@@ -99,7 +99,7 @@ while {true} do
 				//= We are here if heli is alive =
 				//================================
 				// 1. Find alive pilots nearby: withing 3-5 km and on the same island part
-				_cnt = if ( _x isKindof "AH1W" OR _x isKindOf "UH60MG" OR _x isKindOf "ACE_AH64_AGM_HE" ) then {2} else {1};
+				_cnt = if ( _x isKindof "AH1W" || _x isKindOf "UH60MG" || _x isKindOf "ACE_AH64_AGM_HE" ) then {2} else {1};
 				if ( !(_heli isKindOf "Plane") ) then // planes still not supported
 				{
 					sleep 0.5;

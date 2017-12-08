@@ -73,6 +73,7 @@ while {true} do {
 		_moto = _x select MOTO_ITSELF;
 		_timeout = _x select MOTO_TIMEOUT;
 		_pos = _x select MOTO_ORIG_POS;
+		_pos set [2,0];
 
 		_pos1 = getPos _moto;
 		if ( _timeout == TIMEOUT_ZERO ) then

@@ -28,7 +28,7 @@ _helper4 = "HeliHEmpty" createVehicleLocal [(d_medtent select 0) - 4, d_medtent 
 if ((abs (((getPosASL _helper1) select 2) - ((getPosASL _helper2) select 2)) > 2) || (abs (((getPosASL _helper3) select 2) - ((getPosASL _helper4) select 2)) > 2)) exitWith {
 	(localize "STR_MG_5") call XfGlobalChat; // "Попробуйте в другом месте..."
 	d_medtent = [];
-	for "_mt" from 1 to 4 do {call compile format ["deleteVehicle _helper%1;", _mt];};
+	//for "_mt" from 1 to 4 do {call compile format ["deleteVehicle _helper%1;", _mt];};
 };
 
 for "_mt" from 1 to 4 do {call compile format ["deleteVehicle _helper%1;", _mt];};

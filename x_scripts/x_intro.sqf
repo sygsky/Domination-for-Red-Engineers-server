@@ -2,8 +2,8 @@
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_Sahrani_island","_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
 		 "_year","_mon","_day","_newyear"];
-if (!X_Client) exitWith {};
-
+if (!X_Client) exitWith {hint localize "--- x_intro run not in client!!!";};
+//hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
 
 #include "x_setup.sqf"
@@ -60,15 +60,13 @@ else // music normally played on intro
     }
     else
     {
-        _music = "grant";
-        if ( localize "STR_LANG" != "RUSSIAN") then
-        {
-            _music = [(localize "STR_INTRO_MUSIC"),"bond","grant","stavka_bolshe_chem","burnash","podolinam"] call _XfRandomArrayVal;
-        }
-        else
-        {
-            _music = [(localize "STR_INTRO_MUSIC"),"bond","stavka_bolshe_chem","burnash","podolinam"] call _XfRandomArrayVal;
-        };
+        _music = (call compile format["[%1]", (localize "STR_INTRO_MUSIC")]) +
+        [
+            "bond","grant","stavka_bolshe_chem","red_alert_soviet_march",
+            "burnash","adjutant","lastdime","english_murder","requiem"
+        ] call _XfRandomArrayVal;
+//        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
+//        _music = (call compile _music) call _XfRandomArrayVal;
         playMusic _music;
         //playMusic "ATrack25";
 	 };
@@ -173,7 +171,7 @@ if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !side_missi
 	[_current_target_name, _current_target_pos,"ELLIPSE",_color,[300,300]] call XfCreateMarkerLocal;
 	"dummy_marker" setMarkerPosLocal _current_target_pos;
 	"1" objStatus "DONE";
-	call compile format ["""%1"" ObjStatus ""VISIBLE"";", current_target_index + 2];
+	call compile format ["""%1"" objStatus ""VISIBLE"";", current_target_index + 2];
  */};
  //--- Sygsky
 
@@ -189,7 +187,7 @@ if (_Sahrani_island ) then // 7703.5,7483.2, 0
     [[19684.6,14128.7,25.0],[17681.2,13076.8,40.0],[15397.763672,11924.510742,50.0],[11420.0,8570.0,20.0],[10869,9172,40.0],[19356,14018,0]], // Pita (3)
     [[1224.0,1391.0,1.0],[1580.0,1711.0,20.0],[8971,8170,70],1], // Rahmadi (4)
     [[18534.0,2730.0,1.0],[18259.0,2978.0,10.0],[11420.0,8570.0,20.0],[10628.0,9328.0,40.0],1], // vulcano Asharan (5)
-	[[12113.0,5833.0,1.0],[11820.0,6059.0,6.0],[11717.1,6068.6,8.0],[11642.0,6336.0,8.0],[11480.0,6658.0,9.0],[11147.0,7138.0,10.0],[10992.0,7749.0,20.0],[11014.0,7990.0,30.0],[11121.0,8155.0,50.0],[11420.0,8570.0,45.0],[10869,9172,40.0],[12025,6082,0]], // Dolores (6)
+	[[12113.0,5833.0,1.0],[11820.0,6059.0,6.0],[11717.1,6068.6,9.0],[11642.0,6336.0,9.0],[11480.0,6658.0,10.0],[11147.0,7138.0,11.0],[10992.0,7749.0,21.0],[11014.0,7990.0,31.0],[11121.0,8155.0,51.0],[11420.0,8570.0,46.0],[10869,9172,41.0],[12025,6082,0]], // Dolores (6)
 	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777.0,150.0],[11930,14526,0]] // Cabo Valiente (7)
   ] call _SYG_selectIntroPath;
   _pos = _camstart select 1;
@@ -204,6 +202,8 @@ else
 };
 
 _lobj = (["LODy_test", "Barrels", /*"ACamp",*/ "Land_kulna","misc01", "Land_helfenburk","FireLit"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
+sleep 0.1;
+_lobj  setVectorUp [0,0,1]; // make object be upright
 switch typeOf _lobj do
 {
 	case "Barrels": { _lobj setDamage 1.0;};
@@ -359,8 +359,8 @@ _start spawn {
 	{
 		_txt = switch _x do
 		{
-			case 1;
-			case 2: { localize format["STR_INTRO_%1", _x ] }; // Alternative reality\nNorth Atlantic
+			case 1: { localize "STR_INTRO_1" }; // Alternative reality
+			case 2: { localize "STR_INTRO_2" }; // North Atlantic
 			case 3: { format[localize "STR_INTRO_3", date call SYG_humanDateStr, (date call SYG_weekDay) call SYG_weekDayLocalName, call SYG_nowHourMinToStr, ceil(call SYG_missionDayToNum)] }; // landing time / week day 
 			case 4: { format[localize "STR_INTRO_4", text (_this call SYG_nearestSettlement)] }; // settlement
 		};
@@ -376,7 +376,7 @@ _start spawn {
 //
 	_cnt = count _camstart;
 //	hint localize format["%1 x_intro.sqf: start commits for %2", call SYG_daytimeToStr, _camstart];
-	_wait = 1;
+
 	for "_i" from 1 to (_cnt-1) do
 	{
 		_pos = _camstart select _i; // next point to look and go to it
@@ -386,17 +386,15 @@ _start spawn {
 			_tgt set [2, 0]; // point on the ground
 			_pos set [2, abs(_pos select 2)]; // point above the ground
 			hint localize format["_x_init.sqf: spec point tgt %1, pnt %2", _tgt, _pos];
-			_wait = 0;
 		}
 		else
 		{
 			_tgt = [_start, _pos, 30000.0] call SYG_elongate2Z;
-			_wait = _wait + 1;
 		};
 
  		_camera camPrepareTarget _tgt; // let look to over there
-		_camera camCommitPrepared 0.5; // time to rotate to target
-		waitUntil {camCommitted _camera}; // wait until pointing to the target
+//		_camera camCommitPrepared 0.5; // time to rotate to target
+//		waitUntil {camCommitted _camera}; // wait until pointing to the target
 
 //		hint localize format["_x_init.sqf: %2, vectorDir at %1", vectorDir _camera, time];
 		

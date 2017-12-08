@@ -17,6 +17,7 @@ x_sm_type = "normal"; // "convoy"
 #ifdef __SMMISSIONS_MARKER__
 if (true) exitWith {};
 #endif
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
 	#ifdef __TT__

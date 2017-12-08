@@ -36,6 +36,9 @@ XSideMissionResolved = {
 	};
 };
 
+//
+// Clear all side missions vehicles and start next SM
+//
 XClearSidemission = {
 	private ["_waittime", "_num_p", "_was_captured", "_man", "_vehicle"];
 	_waittime = 200 + random 20;
@@ -60,7 +63,12 @@ XClearSidemission = {
 					// check vehicle being on base
 					if ( ! _was_captured ) then
 					{
+#ifdef __OWN_SIDE_EAST__
 						_was_captured = (side _x != west) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && (getDammage _x < 0.000001);
+#else
+						_was_captured = (side _x != east) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && (getDammage _x < 0.000001);
+#endif
+						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
 					if (_was_captured) then { // vehicle was captured by player
 						[_vehicle] call XAddCheckDead;
@@ -86,7 +94,7 @@ XClearSidemission = {
     SM_HeavySniperCnt = 0;
     publicVariable "SM_HeavySniperCnt"; // set SM heavy sniper being wiped out status
 
-	execVM "x_missions\x_getsidemission.sqf";
+	execVM "x_missions\x_getsidemission.sqf"; // start next SM
 };
 
 _trigger = createTrigger["EmptyDetector" ,_pos];
@@ -148,7 +156,7 @@ XCheckSMHardTarget = {
 	if (typeOf _vehicle == "Land_telek1") then {
 		_vec_init = _vec_init + "xhandle = [this] execVM ""scripts\scalar.sqf"";";
 	};
-	_vehicle setVehicleInit _vec_init;
+	_vehicle setVehicleInit  _vec_init;
 	#endif
 	#ifndef __WITH_SCALAR__
 	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
@@ -191,9 +199,11 @@ XCheckSMHardTarget = {
 XCheckMTHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
 	_vehicle = _this select 0;
+//	_vehicle addEventHandler ["killed", {mt_radio_down = true;["mt_radio_down",mt_radio_down,if (!isNull (_this select 1)) then { name (_this select 1) } else {""}] call XSendNetStartScriptClient;_this spawn x_removevehiextra;}];
 	_vehicle addEventHandler ["killed", {mt_spotted = false;mt_radio_down = true;["mt_radio_down",mt_radio_down,if (!isNull (_this select 1)) then { name (_this select 1) } else {""}] call XSendNetStartScriptClient;_this spawn x_removevehiextra;}];
 	#ifdef __TT__
-	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);mt_spotted = false;["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
+//	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);mt_spotted = false;["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
+	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
 	#endif
 	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
 	processInitCommands;
@@ -241,7 +251,7 @@ XFacRebuild = {
 	for "_i" from 0 to (count d_aircraft_facs - 1) do {
 		_element = d_aircraft_facs select _i;
 		_apos = _element select 0;
-		if (_apos distance _pos < 20) exitWith {
+		if (_apos distance _pos < 20) exitWith { // todo: не понятно, зачем это вычисляется!!!
 			_index = _i;
 			_buildpos = _apos;
 			_dir = _element select 1;
@@ -313,17 +323,24 @@ execVM "x_scripts\x_delaiserv.sqf";
 	private ["_waittime","_num_p"];
 	sleep 20;
     hint localize "x_getsidemission.sqf execution loop spawn";
-	_waittime = 200 + random 10;
+#ifdef __FAST_START_SM__
+	_waittime = 40;
+#else
+	_waittime = 200 + random 10; // default wait value if no players in the game
+#endif
+#ifdef __FAST_START_SM__
+    sleep 30;
+#else
 	_num_p = call XPlayersNumber;
 	if (_num_p > 0) then {
 		{
-			if (_num_p <= (_x select 0)) exitWith {
-				_waittime = (_x select 1) + random 10;
-			}
+			_waittime = (_x select 1) + random 10;
+			if (_num_p <= (_x select 0)) exitWith {true};
 		} forEach d_time_until_next_sidemission;
 	};
     hint localize format["Wait %1 secs for 1st sidemission spawn", round(_waittime)];
 	sleep _waittime;
+#endif
 
 	execVM "x_missions\x_getsidemission.sqf";
 };
@@ -350,5 +367,23 @@ if ( d_with_wind_effect ) then
 #endif
 
 //hint localize format["x_setupserver.sqf: d_with_wind_effect == %1",d_with_wind_effect];
+
+//
+// Detect is it request for Side Mission position or call for Sm execution, for konvoy return finish point, for all other - 1st point in array
+//
+SYG_isSMPosRequest = {
+    private ["_ret"];
+    _ret = false;
+    if ( !isNull _this ) then
+    {
+        if (typeof _this == "STRING") then
+        {
+            if (_this == "SM_POS_REQUEST") then
+            {
+                _ret = true;
+            };
+        };
+    };
+};
 
 if (true) exitWith {};

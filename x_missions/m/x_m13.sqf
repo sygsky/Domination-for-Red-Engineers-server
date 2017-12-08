@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_147";// "Премьер-министр Сахрани прибыл в Estrella договариваться за НАТО. Ваша задача - ликвидация премьер-министра.";
 	current_mission_resolved_text = localize "STR_SYS_148";// "Задание выполнено! Премьер-министр уничтожен.";

@@ -1,4 +1,4 @@
-﻿// by Xeno
+﻿// by Xeno, x_scripts/x_sidemissionwinner.sqf. Called from x_getbonus.sqf
 private ["_bonus_pos","_bonus_string","_bonus_vehicle","_s"];
 
 if (!X_Client) exitWith {};
@@ -25,22 +25,29 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 
 #ifdef __RANKED__
 	_get_points = false;
-	if (isNil "d_sm_p_pos") then {
+	if (isNil "d_sm_p_pos") then
+	{
+	    hint localize format["x_scripts\x_sidemissionwinner.sqf:d_sm_p_pos is nil, x_sm_pos %1 ", x_sm_pos];
 		_posi_array = x_sm_pos;
 		_posione = _posi_array select 0;
 		if (player distance _posione < (d_ranked_a select 12)) then {
 			_get_points = true;
 		};
-	} else {
-		if (!(isNil "d_sm_p_pos") && d_was_at_sm && x_sm_type != "convoy") then {
-			if (player distance d_sm_p_pos < (d_ranked_a select 12)) then {
+	}
+	else
+	{ // not is nil
+		if ( d_was_at_sm && x_sm_type != "convoy") then
+		{
+			if (player distance d_sm_p_pos < (d_ranked_a select 12)) then
+			{
 				_get_points = true;
 			};
-		} else {
-			if (!(isNil "d_sm_p_pos")) then {
-				if (player distance d_sm_p_pos < (d_ranked_a select 12)) then {
+		}
+		else
+		{
+			if (player distance d_sm_p_pos < (d_ranked_a select 12)) then
+			{
 					_get_points = true;
-				};
 			};
 		};
 	};

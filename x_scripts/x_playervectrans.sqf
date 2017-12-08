@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_playervectrans.sqf, on client only
 if (!XClient) exitWith {};
 
 sleep 6;
@@ -13,7 +13,7 @@ d_getOutEHPoints = {
 	if (alive player && _unit != player && isPlayer _unit && alive _unit) then {
 		_var = _unit getVariable "D_TRANS_START";
 		if (format ["%1",_var] != "<null>") then {
-			if (_var distance position _unit > d_transport_distance) then 
+			if (_var distance position _unit > d_transport_distance) then
 			{
 				_var = d_ranked_a select 18;
 				player addScore ( _var );

@@ -14,19 +14,31 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_516"; //"The enemy uses a fuelstation located in a camp north of Arcadia to refuel its vehicles. Simple task, destroy it to cut down fuel supplies.";
 	current_mission_resolved_text = localize "STR_SYS_517"; //"Good job. The fuelstation is down.";
 };
 
 if (isServer) then {
-	if ( (random 1) < 0.5) then
+    _reselect_pos = (random 1) < 0.5;
+	if ( _reselect_pos ) then
 	{
-	     x_sm_pos set [0, x_sm_pos select 1];
-	     publicVariable "x_sm_pos";
+#ifdef __RANKED__
+        d_sm_p_pos = nil;
+#endif
+	    x_sm_pos set [0, x_sm_pos select 1];
+	    publicVariable "x_sm_pos";
 	};
 	__Poss
-	_vehicle = "Land_fuelstation_army" createvehicle (_poss);
+#ifdef __RANKED__
+    if ( _reselect_pos ) then
+    {
+    	["d_sm_p_pos", _poss] call XSendNetVarClient;
+    };
+#endif
+	_vehicle = "Land_fuelstation_army" createVehicle (_poss);
 	[_vehicle] spawn XCheckSMHardTarget;
 	//createGuardedPoint[d_side_enemy, position _vehicle, -1, _vehicle];
 	sleep 2.22;

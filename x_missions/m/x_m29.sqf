@@ -13,9 +13,11 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
-	current_mission_text = "К югу от Cabo Juventudo расположена вражеская база. По данным разведки на базе находится на ремонте от одного до двух танковых взводов. Задача - уничтожить все танки.";
-	current_mission_resolved_text = "Задание выполнено! Все танки уничтожены.";
+	current_mission_text = localize "STR_SM_29"; // "There is an enemy depot in a base south of Cabo Juventudo. Destroy all tanks there to weaken the enemy troops."
+	current_mission_resolved_text = localize "STR_SM_029"; // "Good job. All tanks are down."
 };
 
 if (isServer) then {

@@ -44,6 +44,7 @@
 #define arg(x) (_this select(x))
 #define argp(a,x) ((a)select(x))
 #define argopt(num,val) if((count _this)<=(num))then{val}else{arg(num)}
+#define argpopt(a,num,val) if((count a)<=(num))then{val}else{argp(a,num)}
 
 #define DEBUG_MSG(msg) 	((msg)createVehicleLocal[0,0,0])
 

@@ -418,14 +418,22 @@ d_veh_a_E = (
 	}
 );
 
+_bmp_list =
+#ifdef __USE_M60__
+			["ACE_M60", "ACE_M60_A3"] +
+#else
+			["ACE_Stryker_TOW"] +
+#endif
+			["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"]; // bmp
+
 d_veh_a_W = (
 	if (__ACEVer) then {
 		[
 // ТЕХНИКА В ГОРОДЕ
 //##############################################################################
 			["ACE_M1Abrams","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_SEP_TUSK","ACE_M1A2_TUSK"], // tank
-			["ACE_Stryker_TOW","ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"], // bmp
-			["ACE_M113_A3","ACE_M2A2"], // brdm
+            _bmp_list, // bmp
+			["ACE_M113_A3","ACE_M2A3"], // brdm
 			["ACE_PIVADS","ACE_Vulcan","ACE_M6A1"], // shilka
 			["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_Truck5t_MG","ACE_HMMWV_GMV", "ACE_HMMWV_GMV2"], // uaz_mg
 			["ACE_HMMWV_GL","ACE_HMMWV_TOW"], // uaz_grenade
@@ -478,7 +486,7 @@ d_veh_a_G = [
 	["LandroverMG"],
 	["HMMWVMK"],
 	["M2StaticMG","M2HD_mini_TriPod"],
-	["MK19_TriPod","Stinger_Pod","TOW_Tripod"],
+	["MK19_TriPod","Stinger_Pod","ACE_TOW"],
 	["M119"],
 	["Truck5tRefuel"],
 	["Truck5tRepair"],
@@ -664,7 +672,7 @@ d_airki_attack_chopper = (
 
 // ВЕРТОЛЕТЫ НАД ГОРОДОМ
 //##############################################################################
-["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F","ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F","ACE_AH64_AGM_AIM","ACE_AH64_AGM_HE","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"]
+["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F","ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM",*/"ACE_AH64_AGM_HE","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/]
 	}
 );
 #endif
@@ -921,7 +929,7 @@ d_pos_ai_hut =
 #endif
 
 // max number of cities that the enemy will recapture at once
-// if set to -1 no check is done
+// if set to value <= 0 no check is done
 d_max_recaptures = 1;
 
 #ifdef __AI__

@@ -18,6 +18,7 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
 	current_mission_text = localize "STR_SM_30";// "Противник проводит эксперименты в кратере вулкана на острове Asharah. Ваша задача ликвидировать ученого. Внимание, ПВО острова усилено!"
@@ -99,7 +100,7 @@ if (isServer) then {
 	_aa_types = [if (d_enemy_side == "EAST") then {"Stinger_Pod_East"} else {"Stinger_Pod"},"ACE_ZU23M"];
 	_utype = if (d_enemy_side == "EAST") then {d_crewman2_E} else {d_crewman2_W};
 	{
-		[_newgroup, _aa_types call XfRandomArrayVal, _utype, _x] call SYG_createStaticWeaponGroup;
+		[_newgroup, _aa_types, _utype, _x] call SYG_createStaticWeaponGroup;
 	}forEach [[18266.2,2966.5,0],[18212.8,2960.9,0],[18240.4,2902.3,0],[17894.4,3406.75,0]];
 	
 	_newgroup allowFleeing 0;

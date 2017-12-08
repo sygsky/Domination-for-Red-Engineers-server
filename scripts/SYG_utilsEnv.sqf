@@ -7,6 +7,9 @@
 #include "x_macros.sqf"
 
 #define DEFAULT_RESURRECT_DIST 10
+#define DEFAULT_RADIOUS_STEP 5
+#define DEFAULT_RADIOUS_MAX 100
+
 #define inc(x) (x=x+1)
 #define arg(x) (_this select (x))
 #define argp(param,x) ((param)select(x))
@@ -273,4 +276,56 @@ SYG_makeRestoreArray = {
     };
      //player groupChat format["SYG_makeRestoreArray: returns %1", _res];
     _res
+};
+
+///
+// Sets grass level, example: 0 call  SYG_setGrassLevel; // sets full grass level
+//
+SYG_setGrassLevel = {
+    private ["_real_list","_vlist"];
+    _real_list = [50, 25, 12.5];
+    _vlist = ["STR_SYS_011","STR_SYS_012","STR_SYS_013"]; // "No Grass", "Medium Grass", "Full Grass"
+    _this = (_this max 0) min ((count _real_list) - 1);
+    if (d_graslayer_index != _this) then {
+        d_graslayer_index = _this;
+        setTerrainGrid (_real_list select d_graslayer_index);
+
+        (format [localize "STR_SYS_01"/* "Grass layer set to: %1" */ , localize (_vlist select d_graslayer_index)]) call XfGlobalChat;
+    };
+};
+
+SYG_viewDistanceArray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
+
+// Call only on client
+//
+// Sets view distance. Call as:
+// _dist = 0 call SYG_setViewDistance;
+// _dist = [0] call SYG_setViewDistance;
+// _dist = 1200 call SYG_setViewDistance;
+// _dist = [10000] call SYG_setViewDistance;
+//
+SYG_setViewDistance = {
+    //hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2+++++", _this, isServer ];
+    if ( isServer ) exitWith {false};
+    private ["_selectedIndex"];
+    _selectedIndex = _this;
+    if ( typeName _this == "ARRAY") then {_selectedIndex = arg(0);};
+    if (_selectedIndex >= argp(SYG_viewDistanceArray, 0)) then {_selectedIndex = SYG_viewDistanceArray find _selectedIndex;};
+    _selectedIndex == (_selectedIndex max 0) min ((count SYG_viewDistanceArray) -1);
+    //hint localize format["+++++ _selectedIndex = %1", _selectedIndex ];
+    if (d_viewdistance != (SYG_viewDistanceArray select _selectedIndex)) then {
+        d_viewdistance = SYG_viewDistanceArray select _selectedIndex;
+        setViewDistance d_viewdistance;
+        (format [localize "STR_SYS_1140", d_viewdistance]) call XfGlobalChat; // "Viewdistance set to: %1"
+    };
+    d_viewdistance
+};
+
+//
+// gets view distance by index. Call as:
+// _dist = call SYG_getViewDistance;
+// _dist = call SYG_getViewDistance;
+SYG_getViewDistance = {
+    if ( isServer) exitWith {-1};
+    d_viewdistance
 };

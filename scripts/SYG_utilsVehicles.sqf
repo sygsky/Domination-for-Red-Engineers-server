@@ -1,5 +1,4 @@
 private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_startPos", "_procWP", "_wpIndex", "_unittype", "_stopBoat" ];
-
 //#define __DEBUG_INTEL_MAP_MARKERS__
 
 #include "x_setup.sqf"
@@ -16,9 +15,11 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 
 #define DEFAULT_INTEL_MAP_MARKERS_PREFIX "IMM_"
 
+#define ADD_1CARGO_TO_TRUCKS_AND_HMMW
+
 if ( !isNil "SYG_utilsVehicles_INIT" )exitWith { hint "SYG_utilsVehicles already initialized"};
 SYG_utilsVehicles_INIT = false;
-hint "INIT of SYG_utilsVehicles";
+hint localize "INIT of SYG_utilsVehicles";
 
 //
 // call: _veh_type call SYG_getVehicleType;
@@ -367,7 +368,7 @@ SYG_handlePlayerDammage = {
 			case "legs": {"STR_HIT_LEGS"};
 			case "hands": {"STR_HIT_HANDS"};
 			case "head": {"STR_HIT_HEAD"};
-			case "head_hit": {"STR_HIT_HEAD_HIT"};
+			case "head_hit": {"STR_HIT_HEAD_HIT_NUM" call SYG_getRandomText};
 			case "body" : {"STR_HIT_BODY"};
 			default {"STR_HIT_UNKNOWN"};
 		};
@@ -382,7 +383,221 @@ SYG_handlePlayerDammage = {
 		hint localize "*** SYG_handlePlayerDammage: player is unconscious";
 	};
 	titleText[ localize _msg_id, "PLAIN DOWN" ];
-	titleFadeOut 2;
+	titleFadeOut 3;
+};
+
+// call: _turretNumber = _unit call SYG_turretNumber;
+SYG_turretNumber = {
+	count (configFile >> "CfgVehicles" >> typeof _this >> "turrets")
+};
+
+//
+// call: _turretList = _vehicle call SYG_turretsList;
+// get list of vehicle positions
+// { moveInTurret [_vehicle, _x]} forEach _turretList;
+// populate all turrets of vehicle
+//
+SYG_turretsList = {
+	private [ "_cfg", "_out", "_mtc", "_mti", "_mt", "_st", "_stc", "_sti" ];
+	_out =  [];
+	_cfg = configFile >> "CfgVehicles" >> typeof _this >> "turrets";
+	_mtc = (count _cfg); // number of main turrets
+	if ( _mtc > 0 ) then
+	{
+		for "_mti" from 0 to _mtc-1 do {
+			_out = _out + [[_mti]]; // + main turret
+			_mt = (_cfg select _mti);
+			_st = _mt >> "turrets";
+			_stc = count _st; // sub-turrets in current main one count
+			if ( _stc > 0 ) then
+			{
+				for "_sti" from 0 to _stc-1 do {
+					_out = _out + [[_mti, _sti]]; // + sub-turret
+				};
+			};
+		};
+	};
+	//player globalChat format["Turret list: %1", _out];
+	_out // returns list of ready positions in vehicle turrets
+};
+
+/**
+ * call: _res_list = [_single_turr_descr, _veh_turr_arr] call SYG_removeFromTurretList;
+ */
+SYG_removeFromTurretList =
+{
+	private ["_i", "_j", "_arr", "_role_arr", "_tlist", "_rarr_cnt", "_diff"];
+	_role_arr = arg(0);
+	if ( typeName _role_arr != "ARRAY" )  exitWith {player globalChat "SYG_removeFromTurretList: 1st param not ARRAY";};
+	_rarr_cnt = count _role_arr;
+	if (_rarr_cnt == 0 ) exitWith {player globalChat "SYG_removeFromTurretList: 1st array is of zero length!";};
+	_tlist = arg(1);
+	if ( count _tlist > 0 ) then
+	{
+		for "_i" from 0 to ((count _tlist)-1) do
+		{ // find unit position in vehicle turret list and remove it from list
+			_diff = 0;
+			_arr = _tlist select _i; // current turret description array
+			if ( count _arr == _rarr_cnt ) then
+			{
+				for "_j" from 0 to (_rarr_cnt - 1) do
+				{
+					if (( _arr select _j) != (_role_arr select _j) ) exitWith { _diff = 1};
+				};
+				if ( _diff == 0 ) exitWith { _tlist set [_i, "RM_ITEM_NOW"]};
+			};
+		};
+	};
+	_tlist = _tlist -  ["RM_ITEM_NOW"];
+	sleep 0.01;
+	_tlist
+};
+
+/**
+ * Version 2.0 Populates without creation any excessive units
+ * Populates any totally empty vehicle (air, land or marine one) will full battle vehicle crew including all turret seats.
+ * Note: cargo crew is not populated in this function
+ *
+ * call as: _grp = [_veh, _grp, _utype<, _skill<, _randomSkillPart>>] call SYG_populateVehicle;
+ *  where:
+ *			_vehicle - vehicle to populate (Striker, Abrams etc)
+ *			_grp - group for vehicle, all needed crew is added to this group
+ *			_utype - "SoldierWCrew" etc to fill any positions in vehicle
+ * 			_skill - <optional> skill for group, default is 0.5
+ *         _randomSkillPart - <optional> additional random part default 0.5
+ * return: group of team member for vehicle created or grpNull on error
+ *
+ * Function tryes to first populate commander, then driver and only after  all other available turret gunners
+ * No man added to the vehicle cargo
+ */
+SYG_populateVehicle ={
+	private [ "_veh", "_utype", "_grpskill", "_grprndskill", "_grprndskill", "_pos", "_tlist", "_role_arr", "_unit",
+	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh"];
+
+	_veh   = arg(0);
+	_grp   = arg(1);
+	_utype = arg(2);
+
+	if ( count _this > 3 ) then {_grpskill = _this select 3}
+	else {_grpskill = 0.5};
+
+	if ( count _this > 4 ) then {_grprndskill = (_this select 4) min (1.0 - _grpskill)}
+	else {_grprndskill = 0;};
+
+	_pos = getPos _veh;
+
+	_tlist = _veh call SYG_turretsList;
+#ifdef NOT_POPULATE_LOADER_TO_TANK
+	if ( _veh isKindOf "Tank" ) then
+	{
+		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
+	};
+#endif
+
+#ifdef NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT
+	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then
+	{
+		_tlist = [[1], _tlist] call SYG_removeFromTurretList;
+		_tlist = [[2], _tlist] call SYG_removeFromTurretList;
+	};
+#endif
+
+	_isAirVeh = _veh isKindOf "Air";
+//	player globalChat format["Turrs %1", _tlist ];
+	// first try to put commander (according to role of name)
+	if (_veh emptyPositions "Commander" > 0) then
+	{
+		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
+		_unit setSkill _grpskill + random (_grprndskill );
+		[_unit] joinSilent _grp;
+		if ( _isAirVeh ) then {_unit call SYG_armPilot};
+		_unit assignAsCommander _veh;
+		_unit moveInCommander _veh;
+		sleep 0.01;
+		_role_arr = assignedVehicleRole _unit;
+		if (count _role_arr > 0 ) then
+		{
+			if ( _role_arr select 0 == "Turret" ) then
+			{
+				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
+			};
+		};
+	};
+
+	// second try to put driver (no turrets be occupied)
+	if ( isNull driver _veh ) then  // add driver if he is not already assigned as commander
+	{
+		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
+		_unit setSkill _grpskill + random (_grprndskill );
+		[_unit] joinSilent _grp;
+		if ( _isAirVeh ) then {_unit call SYG_armPilot};
+		_unit assignAsDriver _veh;
+		_unit moveInDriver _veh;
+		sleep 0.01;
+		_role_arr = assignedVehicleRole _unit;
+		if (count _role_arr > 0 ) then
+		{
+			if ( _role_arr select 0 == "Turret" ) then
+			{
+				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
+			};
+		};
+	};
+
+	// now populate remaining turrets
+	{	// create one more unit and try to fit it to current turret
+		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
+		_unit setSkill _grpskill + random (_grprndskill );
+		[_unit] joinSilent _grp;
+		if ( _isAirVeh ) then {_unit call SYG_armPilot};
+		_unit moveInTurret [_veh, _x];
+		sleep 0.02;
+	} forEach _tlist;
+
+	// never populate small mguns of HMMWV_GVT
+	// well, lets look if we should fill some cargo places in trucks and canons, may be in M113, MG strikes, AT humwee
+
+#ifdef ADD_1CARGO_TO_TRUCKS_AND_HMMW
+// for WEST enemy only
+	if ( (_veh isKindOf "Truck") OR (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
+	{
+        // add "ACE_SoldierWMAT_A" as a passenger
+        _emptypos = _veh emptyPositions "Cargo";
+        if ( _emptypos > 0 ) then
+        {
+            _unit=_grp createUnit ["ACE_SoldierWMAT_A", _pos, [], 0, "FORM"];
+            _unit setSkill _grpskill + random (_grprndskill );
+            [_unit] joinSilent _grp;
+            _unit moveInCargo _veh;
+            sleep 0.02;
+        };
+	};
+#endif
+	_grp
+};
+
+//
+// _isCivic = _vehicle call SYG_isCivicMGCar;
+//
+SYG_isCivicMGCar = {
+	[_this,  ["DATSUN_PK1", "HILUX_PK1","LandroverMG"] ] call SYG_isKindOfList
+};
+
+// is Mg car civic or militry one
+// _isCivic = _vehicle call SYG_isCivicMGCar;
+//
+SYG_isMGCar = {
+	_this call isCivicMGCar or _this isKindOf "UAZMG" or _this isKindOf "HMMWV50"
+};
+
+//
+// _fuelCapacity = _vehicle call SYG_fuelCapacity;
+// or
+// _fuelCapacity = (typeOf _vehicle) call SYG_fuelCapacity;
+//
+SYG_fuelCapacity = {
+	if ((typeName _this)=="OBJECT")then{_this=(typeOf _this)};
+	getNumber(configFile >> "CfgVehicles" >> _this >> "fuelCapacity")
 };
 
 // call:
@@ -477,7 +692,7 @@ SYG_sideStaticWeapons = {
 	_side = _side call SYG_getSide;
 	if ( (typeName _side) == "STRING") exitWith 
 	{
-		hint localize format["--- call to SYG_sideStaticWeapons failed %1 -> ",_side];
+		hint localize format["--- call to SYG_sideStaticWeapons failed -> %1",_side];
 		EMPTY_RETURN_ARRAY
 	};
 
@@ -831,21 +1046,21 @@ SYG_removeIntelLegend = {
 };
 
 //
-// set handler for "hit" event if vehicle has a smoke grenade weapon in inventory
+// set handler for "hit" event if vehicle has a smoke magazines in inventory
 //
 // Call: _isAssingedToSmoke = _vec call SYG_assignVecToSmokeOnHit;
 //
 SYG_assignVecToSmokeOnHit =
 {
-    if ( typeName _this != "OBJECT") exitWith {false};
     if (!d_smoke) exitWith {false}; // not allowed in setup
-    if (!_this isKindOf "LandVehicle") exitWith{false}; // only for land vehicles
+    if ( (typeName _this) != "OBJECT") exitWith {false};
+    if (!(_this isKindOf "LandVehicle")) exitWith{false}; // only for land vehicles
     // check if vehicle support smoke magazines in common list of magazines
     private ["_magazines"];
-    _magazines = getArray(configFile >> "CfgVehicles" >> typeOf _this >> "magazines");
-    if (!("ACE_LVOSS_Magazine" in _magazines)) exitWith { false }; // not smoking weapons
-    _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; // insert handler
-    true
+    _magazines = getArray (configFile >> "CfgVehicles" >> _type >> "Turrets" >> "MainTurret" >> "magazines");
+        //_magazines = getArray(_config >> "magazines");
+    if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith { _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true }; // add smoking protection
+    false
 };
 
 
@@ -854,52 +1069,67 @@ SYG_assignVecToSmokeOnHit =
 #ifdef __REARM_SU34__
 SYG_su34_RearmTables =
 [
- ["ACE_Su34","ACE_Su34B"], // plane names
+ ["ACE_Su34B","ACE_Su34"], // plane names
  [	// plane params
 	 [ // 1st plane params
-		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_Kh29LLauncher", "ACE_FAB500M62BombLauncher" ],
-		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_6Rnd_Kh29L", "ACE_6Rnd_Kh29L", "ACE_12Rnd_FAB500M62", "ACE_12Rnd_FAB500M62"]
+		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_Kh29LLauncher", "ACE_FAB500M62BombLauncher", "ACE_FFARPOD2" ],
+		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_6Rnd_Kh29L", "ACE_6Rnd_Kh29L", "ACE_12Rnd_FAB500M62", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
 	 ],
 	 [ // 2nd plane params
-		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher", "ACE_FAB500M62BombLauncher" ],
-		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_120Rnd_S8T", "ACE_12Rnd_FAB500M62", "ACE_12Rnd_FAB500M62"]
+		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher","ACE_FFARPOD2", "ACE_FAB500M62BombLauncher" ],
+		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_120Rnd_S8T", "ACE_70mm_FL_FFAR_38","ACE_70mm_FL_FFAR_38", "ACE_12Rnd_FAB500M62"/*, "ACE_12Rnd_FAB500M62"*/]
 	 ]
  ]
 ];
 
 SYG_heliRearmTable =
 [
- ["ACE_Mi24D","ACE_Mi24V",/*"ACE_Mi24P",*/"ACE_Ka50","ACE_Ka50N"], // heli names
- [	// heli params
+    // heli names, Mi24 can't be rearmed, doesnt try to do it
+ ["ACE_Mi24D","ACE_Mi24V","ACE_Ka50","ACE_Ka50_N","ACE_Mi17_MG", "ACE_Mi17"],
+ 	// heli params
+ [
  	 [ // 1st heli params
- 	 	["ACE_M134_HI", "ACE_9M17PLauncher", "ACE_57mm_FFAR"],
-     	["ACE_M134_4000", "ACE_4Rnd_9M17P","ACE_128Rnd_57mm"]
+ 	 	["M197", "ACE_9M17PLauncher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+     	["750Rnd_M197_AH1", "ACE_4Rnd_9M17P"/*,"ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
  	 ],
  	 [ // 2nd heli params
- 	 	["M197", "ACE_9M114Launcher", "ACE_57mm_FFAR", "80mmLauncher"],
-	    ["750Rnd_M197_AH1", "ACE_4Rnd_9K114", "96Rnd_57mm", "40Rnd_80mm"]
+ 	 	["ACE_M230", "ACE_9M114Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+	    ["ACE_M789_1200", "ACE_8Rnd_9K114"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
  	 ],
-/*
  	 [ // 3rd heli params
- 	 	["ACE_GSh302", "80mmLauncher","VikhrLauncher"],
-	    ["ACE_750Rnd_30mm_GSh302", "40Rnd_80mm", "12Rnd_Vikhr_KA50"]
- 	 ],
-*/
- 	 [ // 4th heli params
- 	 	["ACE_GSh302", "80mmLauncher", "VikhrLauncher"],
-	    ["ACE_750Rnd_30mm_GSh302", "40Rnd_80mm", "12Rnd_Vikhr_KA50"]
+ 	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
+	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"]
  	 ],
  	 [ // 4th heli params
- 	 	["ACE_GSh302", "80mmLauncher", "VikhrLauncher"],
-	    ["ACE_750Rnd_30mm_GSh302", "40Rnd_80mm", "12Rnd_Vikhr_KA50"]
+ 	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
+	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"]
+ 	 ],
+     [ // 5th heli params
+        ["ACE_YakB"],
+        ["ACE_1470Rnd_127x108_YakB"]
+     ],
+     [ // 6th heli params
+        ["ACE_57mm_FFAR", "ACE_FFARPOD2"],
+        ["ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
+     ]
+ ]
+];
+
+SYG_carRearmTable =
+[
+ ["ACE_UAZ_MG"], // car  names
+ [	// heli params
+ 	 [ // 1st heli params
+ 	 	["ACE_YakB"],
+     	["ACE_1470Rnd_127x108_YakB","ACE_1470Rnd_127x108_YakB"]
  	 ]
  ]
 ];
 
 SYG_vehiclesRearmTables =
 [
- argp(SYG_su34_RearmTables,0) + argp(SYG_heliRearmTable,0),
- argp(SYG_su34_RearmTables,1) + argp(SYG_heliRearmTable,1)
+ argp(SYG_su34_RearmTables,0) + argp(SYG_heliRearmTable,0) + argp(SYG_carRearmTable,0),
+ argp(SYG_su34_RearmTables,1) + argp(SYG_heliRearmTable,1) + argp(SYG_carRearmTable,1)
 ];
 
 // call: _vtbl = _su34_type call SYG_getVehicleTable;
@@ -994,8 +1224,7 @@ SYG_rearmVehicle =
 };
 
 // call:      _res = _this call SYG_rearmVehicleA;
-SYG_rearmVehicleA =
-{
+SYG_rearmVehicleA = {
     private ["_list"];
     _list = _this call SYG_getVehicleTable;
     if ( count _list == 0) exitWith {false};
@@ -1025,9 +1254,55 @@ SYG_rearmAnyHeli =
 };
 #endif
 
+// generates report about damaged parts of vehicle
+// Call as: _dmg_report_str = _unit call SYG_ACEDamageReportStr;
+//
+// Returned: _dmg_report_str = "Turret, Hull, Engine, Tracks"
+//
+SYG_ACEDamageReportStr = {
+    if ( (typeName _this) != "OBJECT" ) exitWith {""};
+    if ( !(_this isKindOf "Tank")) exitWith {""};
+    private ["_varTurret","_varEngine","_varHull","_varTracks","_ret"];
+    _ret = "";
+    _varTurret = _veh getVariable "ACE_TurretHit";
+    if ( !isNil _varTurret) then
+    {
+        if (_varTurret == "1") then {_ret = "башня"};
+    };
+    _varEngine = _veh getVariable "ACE_EngineHit";
+    if ( !isNil _varEngine) then
+    {
+        if (_varEngine == "1") then {_ret = _ret + " двигатель"};
+    };
+    _varHull = _veh getVariable "ACE_HullHit";
+    if ( !isNil _varHull) then
+    {
+        if (_varHull == "1") then {_ret = _ret + " корпус"};
+    };
+    _varTracks = _veh getVariable "ACE_TracksHit";
+    if ( !isNil _varTracks) then
+    {
+        if (_varTracks == "1") then {_ret = _ret + " гусениц[а|ы]"};
+    };
+    //hint localize format["ACE_TurretHit=%1, ACE_EngineHit=%2, ACE_HullHit=%3, ACE_TracksHit=%4",_varTurret,_varEngine,_varHull,_varTracks ];
+    _ret
+
+};
+
+/*
+ * Creates one group on enemy side, return created group:
+ * _enemy_grp = call SYG_createEnemyGroup;
+ */
+SYG_createEnemyGroup =
+{
+    while {!can_create_group} do {sleep 0.1 + random (0.2)};//__WaitForGroup
+    [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
+};
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 SYG_utilsVehicles_INIT = true;
+hint localize "INIT of SYG_utilsVehicles completed";
 if ( true ) exitWith {};
+
 

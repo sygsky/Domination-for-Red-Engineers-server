@@ -1,8 +1,10 @@
-﻿// by Xeno
+﻿// by Xeno, x_scripts/x_target_clear_client.sqf
 private ["_current_target_name","_target_array2"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+
+#define OBJECT_ID (_target_array2 select 3)
 
 if (!X_Client) exitWith {};
 
@@ -12,16 +14,12 @@ _current_target_name setMarkerColorLocal "ColorGreen";
 
 client_target_counter = client_target_counter + 1;
 
-call compile format ["""%1"" ObjStatus ""DONE"";", current_target_index + 2];
+call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID];
 
 if (client_target_counter < number_targets) then {
 	_type_name = mt_bonus_vehicle_array select extra_bonus_number;
 
 	_bonus_vehicle = [_type_name, 0] call XfGetDisplayName;
-#ifdef __REARM_SU34__
-	_bonus_vehicle call SYG_rearmAnySu34;
-#endif	
-
 
 	_bonus_pos = localize "STR_SYS_309";//"на базе.";
 

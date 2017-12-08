@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_scripts/x_recapture.sqf
 private ["_x_can_recapture", "_num_p", "_recap_index", "_loop_running", "_ran", "_target_array", "_target_pos", "_checktrigger", "_checktrigger2", "_target_name", "_radius", "_helih","_allready_recaptured","_arr"];
 if (!isServer) exitWith {};
 
@@ -10,12 +10,13 @@ sleep 1200 + random 1200;
 _x_can_recapture = {
 	private ["_ret"];
 	_ret = false;
-	if (d_max_recaptures != -1) then {
-		if (count d_recapture_indices < d_max_recaptures) then {
-			_ret = true
+	if (d_max_recaptures > 0) then {
+		if (count d_recapture_indices < d_max_recaptures) then
+		{
+			_ret = true;
 		}
 	} else {
-		_ret = true
+		_ret = true;
 	};
 	_ret
 };
@@ -25,7 +26,7 @@ _allready_recaptured = [];
 while {true} do {
 	// do recapture only if there are human players
 	if (X_MP) then {
-		waitUntil {sleep (11.012 + random 1);(call XPlayersNumber) > 0};
+		waitUntil {sleep (21.012 + random 1);(call XPlayersNumber) > 0};
 	};
 	__DEBUG_NET("x_recapture.sqf",(call XPlayersNumber))
 	

@@ -20,6 +20,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_518";// "Враг заканчивает строительство ангара в Trelobada. Предположительно, там планируется развертывание производства нелегального оружия для повстанческой армии. Ваша задача уничтожение ангара."
 	current_mission_resolved_text = localize "STR_SYS_519"; //"Задание выполнено! Ангар уничтожен."

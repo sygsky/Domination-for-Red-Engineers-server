@@ -13,6 +13,8 @@ x_sm_type = "normal"; // "convoy"
 if (true) exitWith {};
 #endif
 
+if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+
 if (X_Client) then {
 	// "Недалеко от %1 расположен вражеский пост. Ваша задача: уничтожение радио башни на нём."
 	current_mission_text = format[localize "STR_SYS_211", "Passo Paradiso"];

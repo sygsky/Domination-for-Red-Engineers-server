@@ -16,10 +16,10 @@ scopeName "unload_static_scope";
 
 #ifndef __ACE__
 _str_p = format ["%1", _engineer];
-if (!(_str_p in d_is_engineer)) then {hint "Выгружать орудия может только инженер!";breakOut "unload_static_scope";};
+if (!(_str_p in d_is_engineer)) then {hint (localize "STR_SYS_530"); breakOut "unload_static_scope";}; // "Only engineers can place static weapons"
 #endif
 
-if (driver _vehicle == _engineer) exitWith {hint "Для выгрузки орудия вам необходимо выйти из грузовика!"};
+if (driver _vehicle == _engineer) exitWith {hint (localize "STR_SYS_531")}; // "You have to get out before you can place the static weapon!"
 
 switch (_vehicle) do {
 	case TR7: {
@@ -41,7 +41,7 @@ switch (_vehicle) do {
 };
 
 if (_do_exit) exitWith {
-	hint "Орудие не погружено...";
+	hint (localize "STR_SYS_532"); // "No static weapon loaded..."
 };
 
 waitUntil {cargo_selected_index != -1 || !dialog || !alive player};
@@ -50,13 +50,13 @@ if (!alive player) exitWith {
 	closeDialog 11099;
 };
 
-if (cargo_selected_index == -1) exitWith {"Unload canceled" call XfGlobalChat};
+if (cargo_selected_index == -1) exitWith {(localize "STR_SYS_533") call XfGlobalChat}; // "Unload canceled"
 
 call compile format ["
 	if ((cargo_selected_index + 1) > count truck%1_cargo_array) exitWith {
-		hint ""Этот грузовик уже кто-то разгружает. Попробуйте еще раз."";
+		hint (localize ""STR_SYS_534"");
 	};
-", current_truck_cargo_array];
+", current_truck_cargo_array]; // STR_SYS_534,"Someone else unloaded already an item. Try again."
 
 call compile format ["
 	_cargo = truck%1_cargo_array select cargo_selected_index;
@@ -70,25 +70,25 @@ call compile format ["
 	[""truck%1_cargo_array"",truck%1_cargo_array] call XSendNetVarAll;
 ", current_truck_cargo_array];
 
-_pos_to_set = _engineer modeltoworld [0,5,0];
+_pos_to_set = _engineer modelToWorld [0,5,0];
 _static = _cargo createVehicleLocal _pos_to_set;
 _static lock true;
-_dir_to_set = getdir _engineer;
+_dir_to_set = getDir _engineer;
 
 _place_error = false;
-"Укажите место размещения орудия (не ближе 20 метров от грузовика)!" call XfGlobalChat;
+(localize "STR_SYS_535") call XfGlobalChat; // "Static placement preview mode. Press Place Static to place the object.
 e_placing_running = 0; // 0 = running, 1 = placed, 2 = placing canceled
-e_placing_id1 = player addAction ["Cancel Placing Static", "x_scripts\x_cancelplacestatic.sqf"];
-e_placing_id2 = player addAction ["Place Static", "x_scripts\x_placestatic.sqf",[], 0];
+e_placing_id1 = player addAction [localize "STR_SYS_536", "x_scripts\x_cancelplacestatic.sqf"]; // "Cancel Placing Static"
+e_placing_id2 = player addAction [localize "STR_SYS_537", "x_scripts\x_placestatic.sqf",[], 0]; // "Place Static"
 while {e_placing_running == 0} do {
-	_pos_to_set = _engineer modeltoworld [0,5,0];
-	_dir_to_set = getdir _engineer;
+	_pos_to_set = _engineer modelToWorld [0,5,0];
+	_dir_to_set = getDir _engineer;
 
-	_static setdir _dir_to_set;
+	_static setDir _dir_to_set;
 	_static setPos [_pos_to_set select 0, _pos_to_set select 1, 0];
 	sleep 0.211;
 	if (_vehicle distance _engineer > 20) exitWith {
-		"Вы далеко от грузовика! Подойдите ближе к нему и повторите!" call XfGlobalChat;
+		(localize "STR_SYS_538") call XfGlobalChat; // "You are too far away from the Salvage truck to place the static vehicle, placing canceled!"
 		_place_error = true;
 	};
 	if (!alive _engineer) exitWith {
@@ -114,7 +114,7 @@ if (_place_error) exitWith {
 };
 
 if (e_placing_running == 2) exitWith {
-	"Выгрузка отменена..." call XfGlobalChat;
+	(localize "STR_SYS_539") call XfGlobalChat; // "Static placement canceled..."
 	call compile format ["
 		truck%1_cargo_array = truck%1_cargo_array + [_cargo];
 		[""truck%1_cargo_array"",truck%1_cargo_array] call XSendNetVarAll;
@@ -128,9 +128,9 @@ _type_name = [_cargo,0] call XfGetDisplayName;
 //	sleep 1;
 //};
 
-_static = _cargo createvehicle _pos_to_set;
-_static setdir _dir_to_set;
+_static = _cargo createVehicle _pos_to_set;
+_static setDir _dir_to_set;
 _static setPos [_pos_to_set select 0, _pos_to_set select 1, 0];
 
-hint format ["%1 placed!", _type_name];
-format ["%1 placed!", _type_name] call XfGlobalChat;
+hint format [localize "STR_SYS_540", _type_name]; // "%1 placed!"
+format [localize "STR_SYS_540", _type_name] call XfGlobalChat;

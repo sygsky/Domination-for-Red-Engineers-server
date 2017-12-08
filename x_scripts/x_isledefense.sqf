@@ -3,10 +3,10 @@
 //
 private ["_i", "_j", "_ret", "_make_isle_grp", "_replace_grp", "_remove_grp",
         "_getFeetmen","_firstGoodVehicle","_aliveVehCount","_utilizeFeetmen",
-		"_igrpa", "_igrp", "_make_new", "_units","_posigrp", "_leader",
+		"_igrpa", "_igrp", "_make_new", "_units","_igrppos", "_leader",
 		"_unit","_veh", "_count","_feetmen","_invalid_men","_str","_vtype",
 		"_grp_array","_cnt","_cnt1","_delay","_goal_grp","_locname","_loc","_dir","_dist","_pos1","_pos2",
-		"_show_absence"];
+		"_show_absence","_patrol_cnt"];
 		
 if (!isServer) exitWith {};
 
@@ -22,8 +22,6 @@ if (!isServer) exitWith {};
 
 //#define __SYG_PRINT_ACTIVITY__
 
-#define argp(param,x) ((param)select(x))
-#define arg(x) (_this select(x))
 #define arrset(ARR,POS,VAL) ((ARR)set[(POS),(VAL)])
 
 #ifdef __DEBUG__
@@ -39,7 +37,7 @@ if (!isServer) exitWith {};
 #define DELAY_BEFORE_SCRIPT_START (1200 + random 120)
 #define DELAY_ON_PATROL_INIT 600
 #define DELAY_RESPAWN_STOPPED 600
-#define DELAY_RESPAWN_KILLED 1200
+#define DELAY_RESPAWN_KILLED 1800
 #define DELAY_REMOVE_DEAD 240
 #define DELAY_REMOVE_STOPPED 180
 #define DELAY_REMOVE_STUCKED 60
@@ -64,8 +62,9 @@ if (!isServer) exitWith {};
 #define STATUS_NORMAL 0
 #define STATUS_DEAD 1
 #define STATUS_STOPPED 2
-#define STATUS_WAIT_RESTORE 3
-#define STATUS_WAIT_RESTORE_AFTER_DEATH 4
+#define STATUS_STOPPED1 3
+#define STATUS_WAIT_RESTORE 4
+#define STATUS_WAIT_RESTORE_AFTER_DEATH 5
 
 #define DISTANCE_TO_BE_STOPPED 5
 
@@ -204,10 +203,11 @@ _remove_grp = {
 		{ // forEach _vecs;
 			if ( !isNull _x ) then 
 			{
-				if ( alive _x && 
+			    _xside =  format["%1", side _x];
+				if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
 				    (
-					 ((side _x) == east ) && 
-					 ( (side _x != west) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && (getDammage _x < 0.000001) )
+					 (_xside == d_own_side ) ||
+					 ( (_xside != d_enemy_side) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && ((getDammage _x) < 0.000001) )
 				    ) 
 				   )  then // vehicle was captured by player
 				{
@@ -321,10 +321,23 @@ _firstGoodVehicle = {
 	private ["_veh", "_crew_not_east_or_zero"];
 	_veh = objNull;
 	{
-		_crew_not_east_or_zero = if (!isNull _x) then { if ( (count (crew _x)) > 0 ) then { (side _x) != east } else {true} } else {true};
-		if ( (!isNull _x && alive _x) && (count crew _x > 0) && _crew_not_east_or_zero && (!isNull driver _x ) && (canMove driver _x) ) exitWith {_veh = _x;};
+		_crew_not_east_or_zero = if (!isNull _x) then { if ( ({alive _x} count (crew _x)) > 0 ) then { (side _x) != east } else {true} } else {true};
+		if ( (!isNull _x && alive _x) && ({alive _x} count (crew _x) > 0) && _crew_not_east_or_zero && (!isNull driver _x ) && (canMove driver _x) ) exitWith {_veh = _x;};
 	} forEach _this;
 	_veh
+};
+
+
+//
+// call: _vehCnt = [_veh1,_veh2 ...] call _countNonEmptyVehicles;
+//
+_countNonEmptyVehicles = {
+	private ["_cnt"];
+	_cnt = 0;
+	{
+		if ( ({alive _x} count (crew _x)) > 0 ) then {_cnt  = _cnt + 1; } ;
+	} forEach _this;
+	_cnt
 };
 
 /*
@@ -409,7 +422,7 @@ SYG_patrolGroupNumber = {
 
 // if this is rerun of script, count already existing patrol groups
 _patrol_cnt = d_with_isledefense select 4;
-_patrol_cnt = (_patrol_cnt - (count SYG_isle_grps)) max 0;
+_patrol_cnt = (_patrol_cnt - (count SYG_isle_grps)) max 0; // how many patrol to add to normal count
 if ( _patrol_cnt > 0) then
 {
     for "_i" from 1 to _patrol_cnt do
@@ -422,6 +435,7 @@ if ( _patrol_cnt > 0) then
 };
 _dead_patrols = 0; // how many patrols are currently dead
 _show_absence = false; // disable patrol absence message
+//_patrol_cnt = 0; // active patrol counter
 //
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
 //
@@ -448,7 +462,7 @@ while {true} do {
 		};	
 		_stat          = argp(_igrpa, PARAM_STATUS); // status of patrol group
 		_timestamp     = argp(_igrpa, PARAM_TIMESTAMP); // time to wait before create new patrol
-		_posigrp       = argp(_igrpa, PARAM_LAST_POS); // last stored position of the group
+		_igrppos       = argp(_igrpa, PARAM_LAST_POS); // last stored position of the group
 		for "_j" from 0 to 0 do // dummy cycle only for main scope creation
 		{
 
@@ -458,6 +472,7 @@ while {true} do {
 				if (time > _timestamp) then 
 				{
 					_i call  _replace_grp;
+					//_dead_cnt = _dead_cnt - 1; // one more patrol added
 					
 					_igrpa = argp(SYG_isle_grps, _i); // get this group
 					{
@@ -510,7 +525,7 @@ while {true} do {
 			}
 			else
 			{
-				if ( (_igrp call XfGetAliveUnits) == 0 ) then 
+				if ( ((_igrp call XfGetHealthyUnits) == 0) && (_vecs call _countNonEmptyVehicles) == 0 ) then
 				{
 					_dead = true; 
 				}
@@ -523,7 +538,7 @@ while {true} do {
 					};
 				};
 			};
-			
+			//_dead_cnt = _dead_cnt + 1; // one more patrol is dead
 			if ( _dead ) then // set new status dead && loop next patrol
 			{
 				// the more dead the larger interval to restore
@@ -566,11 +581,38 @@ while {true} do {
 			// ====== NO ENEMY NEAR THIS PATROL AND THERE ARE SOME BATTLEWORTHY VEHICLES ======
 			//
 			
-			if ( _stat == STATUS_STOPPED ) then
+			if ( _stat == STATUS_STOPPED  || _stat == STATUS_STOPPED1) then
 			{
-				if ( time > _timestamp ) then // check current distance from last point
+				if ( time > _timestamp ) then // patrol is near same point during long period of time, check around now
 				{
-					if ( _posigrp distance (leader _igrp) > DISTANCE_TO_BE_STOPPED ) then // clear stopped state as patrol move far enough from stop point
+				    if ( _stat == STATUS_STOPPED) then // patrol is stopped, but may be in chasm
+				    {
+                        // check patrol leader to be in chasm
+                        _pos = getPos (leader _igrp);
+                        _exitWP =  _pos call SYG_chasmExitWP;
+                        if ( (count _exitWP) == 3 ) then // yes we are in chasm, try to find way out
+                        {
+#ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
+                            hint localize format[ "+++ %1 x_groupsm.sqf: group %2 in chasm at %3, finding exit", call SYG_nowTimeToStr, _grp, _pos call SYG_nearestLocationName ];
+#endif
+                            // redirect patrol to exit from chasm
+                            _grp_array set [4, _exitWP];
+                            _grp_array set [5, time];
+                            _grp_array set [7, _pos];
+                            _grp_array set [2, 2];
+                            if ((_grp_array select 6) == 0) then {
+                                [_igrp,_grp_array select 9] call XNormalPatrol;
+                            } else {
+                                _igrp call XCombatPatrol;
+                            };
+                            (units _igrp) doMove _exitWP;
+
+               				_igrpa set [ PARAM_STATUS, STATUS_STOPPED1 ];
+	    					_igrpa set [ PARAM_TIMESTAMP, time + DELAY_REMOVE_STOPPED ];
+    						breakTo "main_loop";
+                        };
+				    };
+					if ( (_igrppos distance (leader _igrp)) > DISTANCE_TO_BE_STOPPED ) then // clear stopped state as patrol move far enough from stop point
 					{
 						// stop status is broken by good movement
 						_igrpa call _setStateNormal;
@@ -602,7 +644,7 @@ while {true} do {
 
 		if ( _stat == STATUS_NORMAL ) then
 		{
-			if ( ((leader _igrp) distance _posigrp) < DISTANCE_TO_BE_STOPPED ) then
+			if ( ((leader _igrp) distance _igrppos) < DISTANCE_TO_BE_STOPPED ) then
 			{
 				_igrpa set [PARAM_STATUS, STATUS_STOPPED];
 				if ( _may_be_stucked ) then
@@ -747,7 +789,19 @@ while {true} do {
 	};
 	if ( _cnt > 0) then
 	{
-		hint localize format[ "+++ %1 +++", _str ];
+#ifdef __SHOW_PATROL_CHANGE_INFO__
+	    if ( _cnt != _patrol_cnt ) then
+	    {
+	        _patrol_cnt = _cnt;
+	        if ( random 2 < 1) then
+	        {
+	            // show message about some patrol activity
+                // "The guerrillas said some of the changes in the number of patrols"
+                ["msg_to_user","",[["STR_SYS_1145"]],4,4 + round(random 4)] call XSendNetStartScriptClient;
+	        };
+	    };
+#endif
+    hint localize format[ "+++ %1 +++", _str ];
 	}
 	else // send info about patrol absence
 	{

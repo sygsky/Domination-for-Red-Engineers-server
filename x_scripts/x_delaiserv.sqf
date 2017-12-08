@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_delaiserv.sqf. Удаление всех ИИ если нет игроков в группе
 private ["_grp", "_units"];
 if (!isServer) exitWith {};
 
@@ -9,7 +9,7 @@ while {true} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	__DEBUG_NET("AI playercheck",(call XPlayersNumber))
+	//__DEBUG_NET("AI playercheck",(call XPlayersNumber))
 	{
 		call compile format ["
 			if (!(isPlayer %1)) then {

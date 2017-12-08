@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_playerspawn.sqf
 private ["_magazines","_p","_weapons","_muzzles","_primw"];
 if (!X_Client) exitWith {};
 
@@ -8,8 +8,8 @@ if (!X_Client) exitWith {};
 _weapons = [];
 _magazines = [];
 
-if (isNil "x_weapon_array") then {x_weapon_array = []};
-if (isNil "wp_weapon_array") then {wp_weapon_array = []};
+if (isNil "x_weapon_array") then {x_weapon_array = [];};
+if (isNil "wp_weapon_array") then {wp_weapon_array = [];};
 
 while {true} do {
 	waitUntil {!alive player};

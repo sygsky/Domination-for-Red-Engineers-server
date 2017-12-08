@@ -41,9 +41,9 @@ d_side_player = playerSide;
 d_flag_vec = objNull;
 
 if (X_InstalledECS) then {
-	ECS_local set[2, false];            //Camera NVG turned off since it interferes with intro
+	ECS_local set[2, false];            // Camera NVG turned off since it interferes with intro
 	ECS_local set[4, 2];				// Maximum number of fired objects the object tracker will track simultaneously. Default 5 (may overload CPU) 
-	ECS_local set[6, false];            //Dynamic viewdistance OFF, use Domination menu instead
+	ECS_local set[6, false];            // Dynamic viewdistance OFF, use Domination menu instead
 	ECS_local set[11, false];			// Birds Dynamic birds anim (sound) 
 	ECS_local set[12, false];			// Bugs Dynamic bugs anim (sound) 
 	ECS_local set[15, false];			// Dogs Dogs anim 
@@ -85,10 +85,11 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 [] spawn {
 	private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant","_crew","_pistol","_equip"];
 	// ask the server for the client score etc
-	sleep random 1;
+	sleep random 0.5;
 	_endtime = time + 60;
 	_equip = "";
-	["d_p_a",name player] call XSendNetStartScriptServer;
+	// initial information on player connected
+	["d_p_a",name player,missionStart] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
     _equip = "";
 #ifdef __DEBUG__
@@ -188,9 +189,26 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             {
                                 case 0;
                                 case 1: {["P", "ACE_Bizon", "ACE_64Rnd_9x18_B_Bizon", 10]};
-                                case 2:  {["P", "ACE_Val", "ACE_20Rnd_9x39_B_VAL", 10]};
-                                case 3: {["P", "ACE_AKMS_PBS1", "ACE_30Rnd_762x39_SD_AK", 10]};
-                                default {["P", "ACE_Val_Cobra", "ACE_20Rnd_9x39_B_VAL", 10]};
+                                case 2;
+                                case 3:
+                                {
+                                    switch floor (random 4) do
+                                    {
+										case 0: {["P", "ACE_Val", "ACE_20Rnd_9x39_B_VAL", 10]};
+										case 1: {["P", "ACE_Bizon_SD", "ACE_64Rnd_9x18_B_Bizon", 10] };
+										case 2: {["P", "ACE_AKMS_PBS1", "ACE_30Rnd_762x39_SD_AK", 10] };
+										case 3: {["P", "ACE_AKS74USD", "ACE_45Rnd_545x39_BT_AK", 10] }; 
+                                    };
+                                };
+                                default 
+								{
+                                    switch floor (random 3) do
+                                    {
+										case 0: {["P", "ACE_Val_Cobra", "ACE_20Rnd_9x39_B_VAL", 10]};
+										case 1: {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10] };
+										case 2: {["P", "ACE_AKS74USD_Cobra", "ACE_45Rnd_545x39_BT_AK", 10] }; 
+                                    };
+								};
                             };
 
                             _crew  = [];
@@ -263,7 +281,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                         //+++ Sygsky: add largest ACE rucksack and fill it with mags
                         _p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
                         _p setVariable ["ACE_Ruckmagazines", _magp];
-                        hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3", _old_rank, _weapp, _magp, score player];
+                        hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %4", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
                         //--- Sygsky
 
                     }
@@ -334,12 +352,15 @@ if (d_with_ace_map) then { "ACE_Map_Logic" createVehicleLocal [0,0,0]; };
 
 if ( count resolved_targets > 0) then
 {
+hint localize "+++ count resolved_targets > 0 +++";
 #ifndef __TT__
     for "_i" from 0 to (count resolved_targets - 1) do {
         _res = resolved_targets select _i;
         _target_array = target_names select _res;
         _current_target_pos = _target_array select 0;
         _target_name = _target_array select 1;
+        _obj_id = _target_array select 3;
+        //hint localize format["+++ x_scripts/x_setupplayer.sqf: obj id %1",_obj_id];
         _rad = (_target_array select 2) max 300;
         _no = _current_target_pos nearestObject "HeliHEmpty";
         _color = "ColorGreen";
@@ -356,7 +377,7 @@ if ( count resolved_targets > 0) then
             [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
         };
         // if no resolved targets, "OBJ_1" objStatus "VISIBLE" executed
-        call compile format ["""%1"" ObjStatus ""VISIBLE"";""%1"" ObjStatus ""%2"";", _res + 2,_objstatus];
+        call compile format ["""%1"" objStatus ""%2"";", _obj_id, _objstatus];
     };
 #endif
 #ifdef __TT__
@@ -387,7 +408,7 @@ if ( count resolved_targets > 0) then
         } else {
             [_target_name, _current_target_pos,"ELLIPSE",_color,[300,300]] call XfCreateMarkerLocal;
         };
-        call compile format ["""%1"" ObjStatus ""VISIBLE"";""%1"" ObjStatus ""%2"";", _res + 2,_objstatus];
+        call compile format ["""%1"" objStatus ""VISIBLE"";""%1"" objStatus ""%2"";", _target_array select 3,_objstatus];
     };
 #endif
 };
@@ -401,7 +422,8 @@ if (current_target_index != -1 && !target_clear) then {
 	[_current_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
 	"dummy_marker" setMarkerPosLocal _current_target_pos;
 	"1" objStatus "DONE";
-	call compile format ["""%1"" ObjStatus ""VISIBLE"";", current_target_index + 2];
+	call compile format ["""%1"" objStatus ""VISIBLE"";", _target_array2 select 3];
+//	hint localize format["+++""%1"" objStatus ""VISIBLE"";", _target_array2 select 3]
 };
 
 {
@@ -503,15 +525,23 @@ if (daytime > 19.75 || daytime < 4.25) then {
 #endif
 
 if (__ReviveVer || __AIVer || !d_with_respawn_dialog_after_death) then {
-	_p addEventHandler ["killed", {[_this select 0, _this select 1] execVM "x_scripts\x_checkkill.sqf";}];
+    if (_string_player in d_can_use_artillery ) then // Only resque can't select resurrect place, but can hear music
+    {
+	    _p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "scripts\deathSound.sqf";}];
+    }
+    else
+    {
+    	_p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "dlg\open.sqf";}];
+    };
+
 } else {
 #ifndef __TT__
-	_p addEventHandler ["killed", {[_this select 0, _this select 1] execVM "x_scripts\x_checkkill.sqf";[_this select 0] execVM "dlg\open.sqf";}];
+	_p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "dlg\open.sqf";}];
 #else
 	if (playerSide == west) then {
-		_p addEventHandler ["killed", {[_this select 0, _this select 1] execVM "x_scripts\x_checkkillwest.sqf";[_this select 0] execVM "dlg\open.sqf";}];
+		_p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkillwest.sqf";_this execVM "dlg\open.sqf";}];
 	} else {
-		_p addEventHandler ["killed", {[_this select 0, _this select 1] execVM "x_scripts\x_checkkillracs.sqf";[_this select 0] execVM "dlg\open.sqf";}];
+		_p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkillracs.sqf";_this execVM "dlg\open.sqf";}];
 	};
 #endif
 };
@@ -906,31 +936,56 @@ if (count d_ammo_boxes > 0) then {
 player_can_call_drop = false;
 player_can_call_arti = false;
 #ifdef __AI__
-if (!(isNil "AI_HUT")) then {
+if ( !(isNil "AI_HUT") && (_string_player in d_can_use_artillery) ) then {
 	ADD_HIT_EH(AI_HUT)
 	ADD_DAM_EH(AI_HUT)
 	if (!(__ACEVer)) then {
-		AI_HUT addAction["Recruit Soldier","x_scripts\x_addsoldier.sqf","Soldier%1B"];
-		AI_HUT addAction["Recruit AT Soldier","x_scripts\x_addsoldier.sqf","Soldier%1AT"];
-		AI_HUT addAction["Recruit Medic","x_scripts\x_addsoldier.sqf","Soldier%1Medic"];
-		AI_HUT addAction["Recruit MG Gunner","x_scripts\x_addsoldier.sqf","Soldier%1MG"];
-		AI_HUT addAction["Recruit Sniper","x_scripts\x_addsoldier.sqf","Soldier%1Sniper"];
-		AI_HUT addAction["Recruit AA Soldier","x_scripts\x_addsoldier.sqf","Soldier%1AA"];
-		AI_HUT addAction["Recruit Specop","x_scripts\x_addsoldier.sqf","Specop"];
-		AI_HUT addAction["Dismiss AI","x_scripts\x_dismissai.sqf"];
+		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","Soldier%1B"]; //"Recruit Soldier"
+		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf","Soldier%1AT"]; // "Recruit AT Soldier"
+		AI_HUT addAction[localize "STR_AI_3","x_scripts\x_addsoldier.sqf","Soldier%1Medic"]; // "Recruit Medic",
+		AI_HUT addAction[localize "STR_AI_4","x_scripts\x_addsoldier.sqf","Soldier%1MG"]; // "Recruit MG Gunner"
+		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","Soldier%1Sniper"]; // "Recruit Sniper"
+		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","Soldier%1AA"];  // "Recruit AA Soldier"
+		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"]; // "Recruit Specop"
+		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
 	} else {
-		AI_HUT addAction["Recruit Soldier","x_scripts\x_addsoldier.sqf","ACE_Soldier%1B"];
-		AI_HUT addAction["Recruit AT Soldier","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AT"];
-		AI_HUT addAction["Recruit Medic","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Medic"];
-		AI_HUT addAction["Recruit MG Gunner","x_scripts\x_addsoldier.sqf","ACE_Soldier%1MG"];
-		AI_HUT addAction["Recruit Sniper","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Sniper"];
-		AI_HUT addAction["Recruit AA Soldier","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AA"];
-		AI_HUT addAction["Recruit Specop","x_scripts\x_addsoldier.sqf","Specop"];
-		AI_HUT addAction["Dismiss AI","x_scripts\x_dismissai.sqf"];
+		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1B"];
+		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AT"];
+		AI_HUT addAction[localize "STR_AI_3","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Medic"];
+		AI_HUT addAction[localize "STR_AI_4","x_scripts\x_addsoldier.sqf","ACE_Soldier%1MG"];
+		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Sniper"];
+		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AA"];
+		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"];
+		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"];
 	};
 	_marker_name = "Recruit_x";
-	[_marker_name, position AI_HUT,"ICON","ColorYellow",[0.5,0.5],"Recruit Barracks",0,"DOT"] call XfCreateMarkerLocal;
+	[_marker_name, position AI_HUT,"ICON","ColorYellow",[0.5,0.5],localize "STR_SYS_1171",0,"DOT"] call XfCreateMarkerLocal; // "Recruit Barracks"
+}
+else
+{
+    if ( isNil "AI_HUT" ) then
+    {
+        [] spawn
+        {
+            sleep 45;
+            (localize "STR_SYS_1176") call XfHQChat; // "The barracks is destroyed, the military draft is cancelled"
+        };
+    }
+    else
+    {
+        if ( !(_string_player in d_can_use_artillery) ) then
+        {
+            [] spawn
+            {
+                sleep 45;
+                (localize "STR_SYS_1177") call XfHQChat; // "To call on the service can only observer-rescue"
+            };
+            AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"];
+        };
+    };
+
 };
+
 
 if (!(__ACEVer)) then {
 	ari1 = -8877;
@@ -1143,7 +1198,7 @@ XBaseEnemies = {
 _trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 _trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
 _trigger setTriggerActivation [d_enemy_side, "PRESENT", true];
-_trigger setTriggerStatements["'Man' countType thislist > 0", "if (player distance FLAG_BASE < 500) then {playSound 'Alarm'};[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+_trigger setTriggerStatements["{((_x isKindOf 'Man')||(_x isKindOf 'Car')) && ((name  _x) != 'Error: No unit') } count thislist > 0", "if (player distance FLAG_BASE < 700) then {playSound 'Alarm'};[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
 #endif
 
 if (d_weather) then {execVM "scripts\weather\weatherrec2.sqf";};
@@ -1512,7 +1567,6 @@ if (d_player_air_autokick > 0) then {
 		sleep 3 + random 3;
 		if (_oldscore != score player) then {
 			_oldscore = score player;
-			// TODO: send weapon info here
 			["d_ad_sc", name player, _oldscore] call XSendNetStartScriptServer;
 		};
 	};
@@ -1521,7 +1575,7 @@ if (d_player_air_autokick > 0) then {
 #ifdef __AI__
 d_heli_taxi_available = true;
 _trigger = createTrigger ["EmptyDetector", _pos];
-_trigger setTriggerText "Call in Air Taxi";
+_trigger setTriggerText (localize "STR_AI_0"); // "Call in Air Taxi"
 _trigger setTriggerActivation ["HOTEL", "PRESENT", true];
 _trigger setTriggerStatements ["this", "xhandle = [] execVM ""x_scripts\x_airtaxi.sqf""",""];
 #endif
@@ -1648,12 +1702,11 @@ player call SYG_handlePlayerDammage; // handle hit events
 //hint localize format["x_setupplayer.sqf: time BEFORE date setting %1", call SYG_nowTimeToStr];
 waitUntil {time > 0};
 SYG_mission_start = missionStart;
-hint localize format["x_setupplayer.sqf: missionStart at end of player setup is %1", SYG_mission_start call SYG_dateToStr];
 //["set_mission_start", missionStart] call XSendNetStartScriptServer;
 #endif
 
 #ifdef __DEBUG__
-player addScore (1000 - (player score ));
+player addScore (1000 - (score player));
 #endif
 
 if (true) exitWith {};

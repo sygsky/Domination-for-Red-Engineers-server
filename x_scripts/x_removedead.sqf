@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_removedead.sqf. Removes all dead object (men + vehicles) from the map one by one
 private ["_element","_max_non_delete","_remove_dead_list","_tmp_array"];
 
 #include "x_macros.sqf"
@@ -12,7 +12,7 @@ _max_non_delete = 30;
 while {true} do {
 	// add to the new units list
 	if (X_MP) then {
-		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+		waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0};
 	};
 	__DEBUG_NET("x_removedead.sqf",(call XPlayersNumber))
 	if (count dead_list > 0) then {

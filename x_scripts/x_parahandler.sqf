@@ -38,7 +38,7 @@ while {!mt_radio_down} do {
 			_start_pos = [982.0,24545.0,0]; // in sea on NW from Mataredo
 		};
  */		
-		if ( (_dummy select 1 ) in  d_mountine_towns/* ["Pacamac", "Hunapu"] */ ) then  // fly at higher height to prevent collision with mountine slopes
+		if ( (_dummy select 1 ) in  d_mountine_towns/* ["Pacamac", "Hunapu", "Masbete"] */ ) then  // fly at higher height to prevent collision with mountine slopes
 		{
 			_fly_height = 250;
 		};

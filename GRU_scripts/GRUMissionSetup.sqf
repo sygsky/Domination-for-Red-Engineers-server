@@ -92,9 +92,23 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 		{
 			if ( (call XPlayersNumber) == 0 ) then
 			{
-			 // as players are absent, clear participants list
+    			 // as players are absent, clear participants list
 			    GRU_CLEAR_MAIN_TASK_USER_LIST;
 			};
+
+			_task = GRU_MAIN_TASK call GRU_getTask;
+
+			// check if agents were present but now are null
+   			_agent_list = argpopt(_task, GRU_MAIN_LIST,[]);
+   			if ( (count _agent_list > 0) &&( ( { alive _x } count _agent_list) <= 0) ) exitWith
+   			{
+   			    // as no agents are alive
+			    GRU_CLEAR_MAIN_TASK_USER_LIST;
+			    hint localize format["--- GRU_scripts/GRUMissionSetup.sqf: all agents are null---"];
+   			};
+
+   			// check for all agents alive
+
 			// checks task to be invalid
 			if ( _task call GRU_mainTaskNotValid ) exitWith 
 			{

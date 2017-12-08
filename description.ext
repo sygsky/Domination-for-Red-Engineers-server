@@ -121,12 +121,6 @@ class CfgMusic
 		sound[] =  {\sounds\snovymgodom.ogg, db+20, 1.0};
 	};
 
-	class upsidedown
-	{
-	    name="";
-	    sound[]=   {\sounds\upside_down.ogg,db+0,1.0};
-    };
-
 	class patrol
 	{
 	    name="";
@@ -157,16 +151,27 @@ class CfgMusic
 	    sound[]=   {\sounds\fear.ogg,db-1,1.0};
     };
 
+	class bestie{ name="";  sound[]= {\sounds\bestie.ogg,db-1,1.0}; };
+
+	class gamlet { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; };
+
+
+    class thetrembler
+    {
+        name="";
+        sound[]=   {\sounds\thetrembler.ogg,db-1,1.0};
+    };
+
+    class thefuture
+    {
+        name="";
+        sound[]=   {\sounds\thefuture.ogg,db-1,1.0};
+    };
+
 	class stavka_bolshe_chem
 	{
 	    name="";
 	    sound[]=   {\sounds\stavka_bolshe_chem.ogg,db-1,1.0};
-    };
-
-	class vam_bileter
-	{
-	    name="";
-	    sound[]=   {\sounds\vam_bileter.ogg,db-1,1.0};
     };
 
 	class burnash
@@ -211,12 +216,82 @@ class CfgMusic
         sound[]=   {\sounds\bond.ogg,db-1,1.0};
     };
 
+    class adjutant
+    {
+        name="";
+        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};
+    };
+
+    class red_alert_soviet_march
+    {
+        name="";
+        sound[]=   {\sounds\red_alert_soviet_march.ogg,db-1,1.0};
+    };
+
+    class ahead_friends // intro
+    {
+        name="";
+        sound[]=   {\sounds\ahead_friends.ogg,db-1,1.0};
+    };
+
+    class mission_impossible    // intro
+    {
+        name="";
+        sound[]=   {\sounds\mission_impossible.ogg,db-1,1.0};
+    };
+
+    class no_more_waiting // very short sound (observer killed?)
+    {
+        name="";
+        sound[]=   {\sounds\no_more_waiting.ogg,db-1,1.0};
+    };
+
+    class lastdime // intro
+    {
+        name="";
+        sound[]=   {\sounds\lastdime.ogg,db-1,1.0};
+    };
+
+    class requiem // intro
+    {
+        name="";
+        sound[]=   {\sounds\requiem.ogg,db-1,1.0};
+    };
+
+
+    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; };
+
+    class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
+
+    class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; };
+
+    class aztecs { name=""; sound[] = {\sounds\aztecs.ogg,db-1,1.0}; };
+    class aztecs2 { name=""; sound[] = {\sounds\aztecs2.ogg,db-1,1.0}; };
+    class aztecs3 { name=""; sound[] = {\sounds\aztecs3.ogg,db-1,1.0}; };
+    class aztecs4 { name=""; sound[] = {\sounds\aztecs4.ogg,db-1,1.0}; };
+    class aztecs5 { name=""; sound[] = {\sounds\aztecs5.ogg,db-1,1.0}; };
+    class aztecs6 { name=""; sound[] = {\sounds\aztecs6.ogg,db-1,1.0}; };
+    class betrayed { name=""; sound[] = {\sounds\betrayed.ogg,db-1,1.0}; };
+    class bolero { name=""; sound[] = {\sounds\bolero.ogg,db-1,1.0}; };
+
+    class tezcatlipoca { name=""; sound[] = {\sounds\tezcatlipoca.ogg,db-1,1.0}; };
+    class yma_sumac { name=""; sound[] = {\sounds\yma_sumac.ogg,db-1,1.0}; };
+    class yma_sumac_2 { name=""; sound[] = {\sounds\yma_sumac_2.ogg,db-1,1.0}; };
+    class village_ruins { name=""; sound[] = {\sounds\village_ruins.ogg,db-1,1.0}; };
+
+    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // still not used
+
+    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
+
+    class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
+
 };
 
 class CfgSounds
 {
 	sounds[] = {
-		Funk,Ari,odinakovo,slavianskiy,highvoltage
+		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse_neighs,Tank_GetIn,APC_GetIn,
+		gamlet
 #ifdef __REVIVE__
 		,DBrian_Im_hit, DBrian_Im_bleeding,DBrian_Medic,DBrian_Bastards,DBrian_Shit_Man_down,DBrian_Oh_no,
 		DBrian_Fuck,DBrian_Fuck_it,DBrian_Shit,DBrian_Need_help,DBrian_A_little_help_here
@@ -232,9 +307,15 @@ class CfgSounds
 
 	class Funk {name="Funk";sound[]={\sounds\funk.ogg,db+20,1.0};titles[] = {};};
 	class Ari {name="Ari";sound[]={\sounds\ari.ogg,db+30,1.0};titles[] = {};};
-	class odinakovo {name="odinakovo";sound[]={"\sounds\odinakovo.ogg",db+0,1.0};titles[] = {};};
-	class slavianskiy {name="slavianskiy";sound[]={"\sounds\slavianskiy.ogg",db+0,1.0};titles[] = {};};
-	class highvoltage {name="highvoltage";sound[]={"\sounds\highvoltage.ogg",db+0,1.0};titles[] = {};};
+	class odinakovo {name="odinakovo";sound[]={\sounds\odinakovo.ogg,db+0,1.0};titles[] = {};};
+	class slavianskiy {name="slavianskiy";sound[]={\sounds\slavianskiy.ogg,db+0,1.0};titles[] = {};};
+    class vam_bileter {name="vam_bileter";sound[]={\sounds\vam_bileter.ogg,db+0,1.0};titles[] = {};};
+	class highvoltage {name="highvoltage";sound[]={\sounds\highvoltage.ogg,db+0,1.0};titles[] = {};};
+	class upsidedown {name="upsidedown";sound[]={\sounds\upside_down.ogg,db+0,1.0};titles[] = {};};
+	class horse {name="horse";sound[]={\sounds\horse.ogg,db+0,1.0};titles[] = {};};
+	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
+	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
+	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

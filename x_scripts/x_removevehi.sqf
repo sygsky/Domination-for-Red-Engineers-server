@@ -1,14 +1,14 @@
-// by Xeno
+// by Xeno, x_scripts/x_removevehi.sqf
 // Creates copy of deleted vehicle on the same place. And puts vehicle to the common dead list
-// Used for town patrolling air vehicles only. To increase reality of the game atmosphere
+// Used for town patrolling vehicles only. To increase reality of the game atmosphere
 #include "x_setup.sqf"
 
-#ifndef __ACE__
-private ["_aunit","_direction","_dummyvehicle","_position","_type","_velocity","_grp"];
-#endif
+private [
+         "_aunit","_direction","_dummyvehicle","_position","_type","_velocity","_grp"
 #ifdef __ACE__
-private ["_aunit","_direction","_dummyvehicle","_position","_type","_velocity","_grp","_ace_th","_ace_eh","_ace_hh","_ace_trh"];
+         ,"_ace_th","_ace_eh","_ace_hh","_ace_trh"
 #endif
+];
 
 if (!isServer) exitWith{};
 

@@ -4,11 +4,23 @@
 
 XAddDead = {if (!((_this select 0) in dead_list)) then {dead_list = dead_list + [_this select 0];}};
 
+// Adds vehicle to the dead vehicles list
 XAddCheckDead = {if (!((_this select 0) in check_vec_list)) then {check_vec_list = check_vec_list + [_this select 0];}};
 
 #ifdef __TT__
 XAddKills = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {kill_points_west = kill_points_west + _points;};case resistance: {kill_points_racs = kill_points_racs + _points;};};};
 XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {points_west = points_west + _points;};case resistance: {points_racs = points_racs + _points;};};};
+#else
+
+// add score for observer kill
+SAddObserverKillScores = {
+    // hint localize format["+++ Observer killed by %1, side = %2, isPlayer = %s", arg(1), side arg(1), isPlayer arg(1)];
+    if (isPlayer arg(1)) then
+    {
+        hint localize format["Observer killed by %1", name arg(1)];
+        ["syg_observer_kill", arg(1)] call XSendNetStartScriptClient;
+    };
+};
 #endif
 
 #ifdef __AI__
@@ -16,7 +28,9 @@ if (__RankedVer) then {
 	XAddKillsAI = {
 		private ["_points","_killer"];
 		_points = _this select 0;_killer = _this select 1;
-		if (!isPlayer _killer && side _killer != d_side_enemy) then {["d_ai_kill",_killer,_points] call XSendNetStartScriptClient}
+		if (isNull _killer) exitWith {};
+		_killer = vehicle _killer;
+		if (!isPlayer _killer && side _killer != d_side_enemy) then {["d_ai_kill",_killer,_points] call XSendNetStartScriptClient;}
 	};
 };
 #endif
@@ -136,13 +150,13 @@ x_getmixedliste = {
 	_ret_list
 };
 
-//
+// TODO: test and use everywhere
 // Add all needed events to a newly created standard vehicle (for main/side mission action)
 //
 // call as: [_vehiсle, _do_points] call SYG_addEvents;
 SYG_addEvents = {
     private ["_vehicle", "_do_points", "_static"];
-    _vehicle   = _this select 0;
+    _vehicle   = arg(0);
     _static =  _vehicle isKindOf "Static";
 
     if (_vehicle isKindOf "Tank") then
@@ -158,13 +172,13 @@ SYG_addEvents = {
             [_vehicle] call XAddCheckDead;
     };
 #ifdef __TT__
-    _do_points = _this select 1;
-    if (_do_points) then {_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKills}]};
+    _do_points = arg(1);
+    if (_do_points) then {_vehicle addEventHandler ["killed", {[5,arg(1)] call XAddKills}]};
 #endif
 
 #ifdef __AI__
     if (__RankedVer) then {
-        _vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKillsAI}];
+        _vehicle addEventHandler ["killed", {[5,arg(1)] call XAddKillsAI}];
     };
 #endif
 };
@@ -228,7 +242,8 @@ x_makevgroup = {
 			if (!(_vehiclename in x_heli_wreck_lift_types)) then {
 				_vehicle addEventHandler ["killed", {_this spawn x_removevehi}];
 				if (d_smoke) then {
-					_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
+					//_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
+					_ret = _vehicle call SYG_assignVecToSmokeOnHit;
 				};
 				#ifdef __TT__
 				if (_do_points) then {_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKills}]};
@@ -241,7 +256,9 @@ x_makevgroup = {
 				[_vehicle] call XAddCheckDead;
 			} else { // if (!(_vehiclename in x_heli_wreck_lift_types))
 				if (d_smoke) then {
-					_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
+//					_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
+					_vehicle call SYG_assignVecToSmokeOnHit;
+
 				};
 				#ifdef __TT__
 				if (_do_points) then {_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKills}]};
@@ -259,14 +276,20 @@ x_makevgroup = {
 				if (_vehicle isKindOf "StrykerBase" || _vehicle isKindOf "BRDM2") then {_vehicle setVariable ["D_SMOKE_SHELLS",2]};
 			};
 */
-			if (!(_vehiclename in x_heli_wreck_lift_types)) then {
-				if ((_vehicle isKindOf "StrykerBase") or (_vehicle isKindOf "BRDM2")) then {
-				} else {
-					if (d_smoke) then {
-						_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
+			if ( !( _vehiclename in x_heli_wreck_lift_types ) ) then
+			{
+				if ((_vehicle isKindOf "StrykerBase") || (_vehicle isKindOf "BRDM2")) then
+				{
+				}
+				else
+				{
+				    if (d_smoke) then
+				    {
+//						_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
+    					_vehicle call SYG_assignVecToSmokeOnHit;
 					};
 				};
-					__addRemoveVehi(_vehicle)
+				__addRemoveVehi(_vehicle)
 				[_vehicle] call XAddCheckDead;
 			};
 			#ifdef __TT__
@@ -308,7 +331,7 @@ x_makevgroup = {
 	_the_vehicles
 };
 
-// Makes men group
+// Makes group of enemy men
 // Params:
 // position, unitlist, group, do_points (for TT mode)
 x_makemgroup = {
@@ -338,6 +361,7 @@ x_makemgroup = {
 	_ret
 };
 
+// Creates group of infantry for side mission. All bodies will be automatically removed after SM finsih
 XCreateInf = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_pos_center", "_radius", "_do_patrol", "_side", "_gwp_formations", "_ret_grps", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_units", "_leader", "_grp_array"];
 	_type1 = _this select 0;
@@ -347,7 +371,7 @@ XCreateInf = {
 	_pos_center = _this select 4;
 	_radius = _this select 5;
 	_do_patrol = (if (count _this == 7) then {_this select 6} else {false});
-	if (_radius < 50) then {_do_patrol = false};
+	if (_radius < 50) then {_do_patrol = false;};
 	_side = d_enemy_side;
 	
 	//_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","DIAMOND"];
@@ -394,7 +418,8 @@ XCreateInf = {
 	_ret_grps
 };
 
- XCreateArmor = {
+// Creates group of vehicles for side mission. All vehicles will be automatically removed after SM finsih
+XCreateArmor = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_type3", "_numbergroups3", "_pos_center", "_numvehicles", "_radius", "_do_patrol", "_ret_grps", "_side", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_vehicles", "_leader", "_grp_array"];
 	_type1 = _this select 0;
 	_numbergroups1 = _this select 1;
@@ -406,7 +431,7 @@ XCreateInf = {
 	_numvehicles = _this select 7;
 	_radius = _this select 8;
 	_do_patrol = (if (count _this == 10) then {_this select 9} else {false});
-	if (_radius < 50) then {_do_patrol = false};
+	if (_radius < 50) then {_do_patrol = false;};
 	_ret_grps = [];
 	
 	_side = d_enemy_side;
@@ -464,7 +489,7 @@ if (d_smoke) then {
 	GetSmokePos = {
 		private ["_pp","_pe","_dis","_px","_py","_ex","_ey","_angle","_a","_b","_reta","_smokex","_smokey"];
 		_pp = _this select 0;_pe = _this select 1;_dis = _pp distance _pe;_px = _pp select 0;_py = _pp select 1;_ex = _pe select 0;_ey = _pe select 1;_angle = 0; _a = (_px - _ex);_b = (_py - _ey);
-		if (_a != 0 || _b != 0) then {_angle = _a atan2 _b}; if ( _angle < 0 ) then {_angle = _angle + 360};_reta = [];
+		if (_a != 0 || _b != 0) then {_angle = _a atan2 _b;}; if ( _angle < 0 ) then {_angle = _angle + 360;};_reta = [];
 		for "_i" from -6 to 6 step 3 do {_smokex = _px - ((_dis - 10) * sin (_angle + _i));_smokey = _py - ((_dis - 10) * cos (_angle + _i));_reta = _reta + [[_smokex,_smokey,5]];};
 		_reta
 	};
@@ -548,13 +573,14 @@ XAddPlayerScore = {
 	};
 };
 
+// Sends info about player score etc if found it in server cache
 XGetPlayerPoints = {
 	private ["_name", "_index", "_score"];
 	_name = _this;_index = d_player_array_names find _name;
-	__DEBUG_NET("XGetPlayerPoints",_name)
-	__DEBUG_NET("XGetPlayerPoints",_index)
-	_score = if (_index != -1) then { d_player_array_misc select _index } else { 0 };
-	["d_player_stuff", _score] call XSendNetStartScriptClient;
+	//__DEBUG_NET("XGetPlayerPoints",_name)
+	//__DEBUG_NET("XGetPlayerPoints",_index)
+	_score = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
+	["d_player_stuff", _score, SYG_dateStart] call XSendNetStartScriptClient;
 	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client +++", _score];
 };
 
@@ -585,10 +611,45 @@ x_get_nenemy = {
 			};
 		};
 		_ret = if (count _pos_nearest > 0) then {[_nearest_enemy,_pos_nearest,_leader knowsAbout _nearest_enemy]} else {[]};
-	} else {
-		_ret = [];
 	};
 	_ret
+};
+
+// calls as follow: _near_enemy_arr = [_grp, _dist] call x_get_nenemy
+//              or: _near_enemy_arr = [_unit,_dist] call x_get_nenemy
+// returns: known nearest enemy units array [_nearest_enemy,_pos_nearest,_leader knowsAbout _nearest_enemy]
+//or empty array []  if no enemy known to the designated unit
+grp_getnenemy = {
+	private ["_grp", "_leader", "_nearest_enemy", "_ret", "_pos_nearest", "_near_targets","_dist"];
+	if ( typeName _this != "ARRAY" ) exitWith{[]};
+	if ( count _this < 2 ) exitWith{[]};
+	_grp = _this select 0;
+	if ( typeName _grp == "OBJECT" ) then {_grp = group _grp;};
+	if ( typeName _grp != "GROUP") exitWith {[]};
+	if (isNull _grp || ({alive _x} count units _grp) == 0) exitWith {[]};
+	_dist = _this select 1;
+	_leader = leader _grp;
+	if ((isNull _leader) || ((_leader distance _nearest_enemy) <_dist)) exitWith{[]};
+	_nearest_enemy = _leader findNearestEnemy (position _leader);
+	_ret = [];
+	if (!isNull _nearest_enemy) then
+	{
+		_pos_nearest = [];
+        if (_leader knowsAbout _nearest_enemy > 0.2) then {
+            _near_targets = _leader nearTargets ((_leader distance _nearest_enemy) + 10);
+            if (count _near_targets > 0) then {
+                {
+                    if ((_x select 4) == _nearest_enemy) exitWith {
+                        _pos_nearest = _x select 0;
+                    };
+                    sleep 0.01;
+                } forEach _near_targets;
+            };
+        };
+		_ret = if (count _pos_nearest > 0) then {[_nearest_enemy,_pos_nearest,_leader knowsAbout _nearest_enemy]} else {[]};
+	};
+	_ret
+
 };
 
 // return true if nearest enemy exists, false if no enemy or enemy at distance more than 70 meters from original enemy position
@@ -596,7 +657,7 @@ x_get_nenemy2 = {
 	private ["_epos", "_leader", "_ret", "_nearest_enemy"];
 	_epos = _this select 0;_leader = _this select 1;_ret = false;
 	_nearest_enemy = _leader findNearestEnemy _epos;
-	if (!isNull _nearest_enemy) then {if (_nearest_enemy distance _epos < 70) then {_ret = true};};
+	if (!isNull _nearest_enemy) then {if (_nearest_enemy distance _epos < 70) then {_ret = true;};};
 	_ret
 };
 

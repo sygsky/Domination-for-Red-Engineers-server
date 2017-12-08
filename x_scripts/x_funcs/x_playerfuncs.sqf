@@ -102,7 +102,7 @@ Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
 	if (player distance _target_pos < 50) then {
-	    playMusic("fear");
+	    playMusic(["fear","bestie","gamlet"] call XfRandomArrayVal);
 		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "Внимание! Вы были обнаружены вражескими корректировщиками..."
 	};
 };
@@ -162,7 +162,7 @@ XRecapturedUpdate = {
 		case 0: {
 			_target_name setMarkerColorLocal "ColorRed";
 			_target_name setMarkerBrushLocal "FDiagonal";
-			call compile format ["""%1"" ObjStatus ""%2"";", _index + 2,"FAILED"];
+			call compile format ["""%1"" objStatus ""%2"";", _target_array select 3, "FAILED"];
 			hint composeText[
 				parseText("<t color='#f0ff0000' size='2'>" + localize "STR_SYS_104"/* "Внимание:" */ + "</t>"), lineBreak,
 				parseText("<t size='1'>" + format [localize "STR_SYS_105"/* "В %1 обнаружено вражеское присутствие! Зачистить!" */, _target_name] + "</t>")
@@ -191,7 +191,7 @@ XRecapturedUpdate = {
 			_target_name setMarkerColorLocal _color;
 			#endif
 			_target_name setMarkerBrushLocal "Solid";
-			call compile format ["""%1"" ObjStatus ""%2"";", _index + 2,"DONE"];
+			call compile format ["""%1"" objStatus ""%2"";", _target_array select 3, "DONE"];
 			hint composeText[
 				parseText("<t color='#f00000ff' size='2'>" + (localize "STR_SYS_106")/* "Отлично!" */ + "</t>"), lineBreak,
 				parseText("<t size='1'>" + format [localize "STR_SYS_107"/* "Вы зачистили %1. */, _target_name] + "</t>")
@@ -260,8 +260,21 @@ XPlayerRank = {
 				d_player_pseudo_rank = _prev_rank; // e.g. from COL to G-M or from COL to G-M
 				if ( !player_already_in_super_rank ) then
 				{
-				    // TODO:sent message to everybody about new super rank player
+				    // TODO: sent message to everybody about new super rank player
 				    // TODO: addAction to get moto/etc from bus stops
+				    // TODO: check if no players in the same group with the same or higher rank
+				    _grp = group player;
+				    _units = (units _grp) - [player]; // group units minus player itself
+				    _rankIndex = _score call XGetRankIndexFromScore;
+				    _highest_ranked_player = objNull;
+				    {
+                         if  ( ( (score _x) call XGetRankIndexFromScore ) >= _rankIndex ) exitWith {_highest_ranked_player = _x;}
+				    } forEach _units;
+                    if ( isNull _highest_ranked_player  ) then
+                    {
+                        // TODO: set player leader
+                        hint localize format["Player with rank %1 (%2) has max rank in the group (count = %3)", _score, _score call XGetRankFromScoreExt, count (units (group player))];
+                    }
 				};
 
 				breakTo "exit";
@@ -269,9 +282,9 @@ XPlayerRank = {
 			_prev_rank = _new_rank;
 		};
 		
-		if ( _notDone && (d_player_pseudo_rank != _prev_rank) ) then // check for generalissimus
+		if ( _notDone && (d_player_pseudo_rank != _prev_rank) ) then // Player is generalissimus!!!
 		{	
-			(format [ localize "STR_SYS_45", d_player_pseudo_rank, _new_rank ]) call XfHQChat; // "Вы достигли невероятного уровня! Со звания %1 до %2! Так не бывает! Немедленно домой! Ведь Родина в опасности!!!"
+			(format [ localize "STR_SYS_45", d_player_pseudo_rank, _new_rank ]) call XfHQChat; // "You have reached an incredible level! From the title %1 to the %2! It doesn't happen! Go home immediately! After all, the Motherland is in danger!!!"
 			d_player_pseudo_rank = _new_rank;
 			_notDone = false;
 		};
@@ -284,7 +297,7 @@ XPlayerRank = {
 	};
 #endif	
 	//---
-	
+	// standard ranks system of Arma
 	if (_score < (d_points_needed select 0) && d_player_old_rank != "PRIVATE") exitWith {
 		if (d_player_old_score >= (d_points_needed select 0)) then {
 			(format [localize "STR_SYS_66" /* "Вы разжалованы со звания %1 до звания %2" */,d_player_old_rank call XGetRankStringLocalized, localize "STR_TSD9_26"]) call XfHQChat; // Рядового
@@ -374,6 +387,10 @@ XGetRankIndex = {
 // call: _rank_localized = _rank_str call XGetRankStringLocalized;
 //
 XGetRankStringLocalized = {
+    if ( typeName _this == "OBJECT") then
+    {
+        if (isPlayer _this) then { _this = _this call XGetRankFromScore;};
+    };
 	switch (toUpper(_this)) do {
 		case "PRIVATE":    {localize "STR_TSD9_26"};
 		case "CORPORAL":   {localize "STR_TSD9_27"};
@@ -382,16 +399,80 @@ XGetRankStringLocalized = {
 		case "CAPTAIN":    {localize "STR_TSD9_30"};
 		case "MAJOR":      {localize "STR_TSD9_31"};
 		case "COLONEL":    {localize "STR_TSD9_32"};
-	}
+	};
 };
 
 XGetRankFromScore = {
+    if ( typeName _this == "OBJECT") then
+    {
+        if (isPlayer _this) then { _this = score _this;};
+    };
 	if (_this < (d_points_needed select 0)) exitWith {"Private"};
 	if (_this < (d_points_needed select 1)) exitWith {"Corporal"};
 	if (_this < (d_points_needed select 2)) exitWith {"Sergeant"};
 	if (_this < (d_points_needed select 3)) exitWith {"Lieutenant"};
 	if (_this < (d_points_needed select 4)) exitWith {"Captain"};
-	if (_this < (d_points_needed select 5)) then {"Major"} else {"Colonel"}
+	if (_this < (d_points_needed select 5)) then {"Major"} else {"Colonel"};
+};
+
+#ifdef __SUPER_RANKING__
+XIsRankFromScoreExtended =  {
+    if (isPlayer _this) then { _this = score _this;};
+    _this > argp(d_points_needed,0)
+};
+
+//
+// returns rank overall name, from "Private" to "Generalissimus"
+//
+// call as follow: _rank = (score player) call XGetRankFromScoreExt
+//
+XGetRankFromScoreExt = {
+    private ["_rank"];
+    if ( typeName _this == "OBJECT") then
+    {
+        if (isPlayer _this) then { _this = score _this;};
+    };
+    _rank = _this call XGetRankFromScore;
+    if ( _rank == "Colonel") then // check for higher ranks
+    {
+        _index = 0;
+        {
+            if ( _this < _x ) exitWith {};
+            _rank = argp(d_pseudo_rank_names, _index);
+            _index = _index + 1;
+        } forEach d_pseudo_ranks;
+    };
+    _rank
+};
+
+XGetRankIndexFromScoreExt = {
+    private ["_index"];
+    if ( typeName _this == "OBJECT") then
+    {
+        if (isPlayer _this) then { _this = score _this;};
+    };
+    _index = -1;
+    {
+        if ( _this < _x ) exitWith {};
+        _index = _index + 1;
+    } forEach d_pseudo_ranks;
+    _index
+};
+
+#endif
+
+XGetRankIndexFromScore = {
+    private ["_index"];
+    if ( typeName _this == "OBJECT") then
+    {
+        if (isPlayer _this) then { _this = score _this;};
+    };
+    _index = 0;
+    {
+        if (  _this  < _x) exitWith {};
+        _index = _index +  1;
+    } forEach d_points_needed;
+    _index
 };
 
 XGetRankPic = {

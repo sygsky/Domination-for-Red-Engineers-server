@@ -155,7 +155,7 @@ x_weapon_respawn = false;
 #endif
 
 #ifdef __AI__
-max_ai = 8;
+max_ai = 5; // 8;
 #endif
 
 #ifdef __MANDO__
@@ -196,20 +196,21 @@ d_pseudo_rank_names =
 	[localize "STR_SYS_1000",localize "STR_SYS_1001",localize "STR_SYS_1002",localize "STR_SYS_1003",localize "STR_SYS_1004",localize "STR_SYS_1005"];
 
 #ifdef __RANKED__
+// Array with all predefined score for many achievments
 d_ranked_a = [
 	10, 		// 0 очков необходимо инженеру для ремонта
 	[4,3,2,1], 	// 1 очков начисляется инженеру за ремонт авиа, танки, машины, другое
 	2, 			// 2 очков вычитается за 1 залп
-	0, 		    // 3 points in the AI version for recruiting one soldier
+	0,		    // 3 points in the AI version for recruiting one soldier
 	1, 			// 4 очков вычитается за AAHALO parajump
 	2, 			// 5 очков вычитается за создание техники из MHQ
-	40, 		// 6 очков необходимо для создания техники из MHQ
+	(d_points_needed select 0), // 6 очков необходимо игроку иметь для создания техники из MHQ (ефрейтор?)
 	2, 			// 7 очков начисляется медику за лечение игроков в его палатке
 	["Sergeant","Lieutenant","Captain","Major"], // 8  ранги необходимые для управления различной техникой: легкая броня, танки, боевые верты, самолеты
-	20, 		// 9 очков начисляется за взятие города
-	400, 		//10 дистанция на которой ещё начисляются очки за взятие города
+	40, 		// 9 очков начисляется за взятие города
+	500, 		//10 дистанция на которой ещё начисляются очки за взятие города
 	20, 		//11 очков за дополнительную миссию
-	250, 		//12 дистанция находясь в которой начисляются очки за допку
+	250, 		//12 дистанция за которую начисляются очки за допку
 	5,  		//13 очков требуется для починки разрушенных сервисов на базе
 	10, 		//14 очков необходимо для развертывания пулеметного гнезда
 	5, 	        //15 points needed in AI Ranked to call in an airtaxi
@@ -221,21 +222,22 @@ d_ranked_a = [
 	10,			//21 очков вычитается за развертывание пулеметного гнезда
 	20,			//22 очков вычитается за вызов снабжения
 	1,			//23 очков добавляется за посещение неизвестной до того палатки
-	10,			//24 очка вычитают за провал задания ГРУ по доставке секретной карты...
+	5,			//24 очка вычитают за провал задания ГРУ по доставке секретной карты...
 	10,         //25 очков вычисляется за выполнение второстепенного задания в городе
-	"Corporal"  //26 rank to use resurrect functionality
+	"Corporal", //26 rank to resurrect internal objects on server map (vegetation, fences etc)
+	10          //27 scores added for observer kill
 ];
 
 // distance a player has to transport others to get points
-d_transport_distance = 1500;
+d_transport_distance = 2000; // 1500;
 
 // rank needed to fly the wreck lift chopper
 d_wreck_lift_rank = "Lieutenant"; //+++Sygsky: was "Major" and "Colonel"
 #endif
 
-d_viewdistance = 1500;
-d_graslayer_index = 0;
-d_playermarker_index = 1;
+d_viewdistance = 1500; // default view distance diameter
+d_graslayer_index = 0; // default graas level (no grass at all)
+d_playermarker_index = 1; // default player marker: marker with name
 
 #ifdef __ACE__
 // set d_with_ace_map to true if you want to use ACE_Map

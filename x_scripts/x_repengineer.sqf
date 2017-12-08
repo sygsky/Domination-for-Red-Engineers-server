@@ -118,6 +118,7 @@ _breaked_out = false;
 _breaked_out2 = false;
 _rep_action = player addAction[localize "STR_SYS_77","x_scripts\x_cancelrep.sqf"]; // "Отменить обслуживание"
 
+_addscore = 0; // how many repair steps were done
 for "_wc" from 1 to _coef do {
 	if (!alive player || d_cancelrep) exitWith {player removeAction _rep_action;};
 	localize "STR_SYS_152" call XfGlobalChat; // "В процессе..."
@@ -140,6 +141,7 @@ for "_wc" from 1 to _coef do {
 	{
 		_damage = _damage - _rep_count;
 		if (_damage <= 0.01) then {_damage = 0;_damage_ok = true;};
+		_addscore = _addscore + 1;
 	};
 	_lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
 	hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
@@ -154,6 +156,9 @@ d_eng_can_repfuel = false;
 player removeAction _rep_action;
 if (!alive player) exitWith {player removeAction _rep_action};
 #ifdef __RANKED__
+
+// count score by steps, not vehicle size and class
+/*
 _parray = d_ranked_a select 1;
 _addscore = (
 	if (objectID2 isKindOf "Air") then {
@@ -170,6 +175,7 @@ _addscore = (
 		}
 	}
 );
+*/
 if (_addscore > 0) then {
 	player addScore _addscore;
 	(format [localize "STR_SYS_137", _addscore]) call XfHQChat; //"Добавлено очков за обслуживание техники: %1 ..."

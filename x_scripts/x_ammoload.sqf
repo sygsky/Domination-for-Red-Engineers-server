@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_ammoload.sqf
 if (!XClient) exitWith {};
 
 #include "x_setup.sqf"
@@ -26,18 +26,18 @@ if (d_own_side == "WEST") then {
 				};
 				if (_vec != _old_vec) then {
 					if (_thebox) then {
-						[_vec, "Ящик уже загружен..."] call XfVehicleChat;
+						[_vec, localize "STR_SYS_406"] call XfVehicleChat; // "This vehicle already has an ammobox loaded"
 						_old_vec = _vec;
 					} else {
 						if (ammo_boxes >= max_number_ammoboxes) then {
-							[_vec, format ["Достигнуто максимальное кол-во ящиков на карте (%1)... Соберите ранее выгруженные, чтобы выгружать новые...", max_number_ammoboxes]] call XfVehicleChat;
+							[_vec, format [ localize "STR_SYS_406_1", max_number_ammoboxes]] call XfVehicleChat; // "Maximum number ammo boxes (%1) already loaded... Please pick up a dropped box..."
 							_old_vec = _vec;
 						} else {
-							[_vec, "Загрузка... подождите..."] call XfVehicleChat;
+							[_vec, localize "STR_SYS_406_2"] call XfVehicleChat; // "Loading ammobox... please wait..."
 							sleep 5;
 							_vec setVariable ["d_ammobox", true];
 							_old_vec = _vec;
-							[_vec, "Загрузка завершена..."] call XfVehicleChat;
+							[_vec, localize "STR_SYS_406_3"] call XfVehicleChat; // "Ammo box loaded... ready !!!"
 							["d_ammo_load", _vec, true] call XSendNetStartScriptAll;
 							ammo_boxes = ammo_boxes + 1;
 						};
@@ -70,19 +70,19 @@ if (d_own_side == "WEST") then {
 				};
 				if (_vec != _old_vec) then {
 					if (_thebox) then {
-						[_vec, "Ящик уже загружен..."] call XfVehicleChat;
+						[_vec, localize "STR_SYS_406"] call XfVehicleChat;
 						_old_vec = _vec;
 					} else {
 						if (ammo_boxes >= max_number_ammoboxes) then {
-							[_vec, format ["Достигнуто максимальное кол-во ящиков снабжения (%1)... Соберите ранее разгруженные ящики, чтобы разгрузить новые...", max_number_ammoboxes]] call XfVehicleChat;
+							[_vec, format [localize "STR_SYS_406_1", max_number_ammoboxes]] call XfVehicleChat;
 							_old_vec = _vec;
 						} else {
-							[_vec, "Загрузка... подождите..."] call XfVehicleChat;
+							[_vec,  localize "STR_SYS_406_2"] call XfVehicleChat;
 							sleep 5;
 							_vec setVariable ["d_ammobox", true];
 							["d_ammo_load", _vec, true] call XSendNetStartScriptAll;
 							_old_vec = _vec;
-							[_vec, "Загрузка завершена..."] call XfVehicleChat;
+							[_vec,  localize "STR_SYS_406_3"] call XfVehicleChat;
 							ammo_boxes = ammo_boxes + 1;
 						};
 					};

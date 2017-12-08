@@ -75,6 +75,7 @@ sleep 0.5;
 if (current_counter < number_targets) then {
 	execVM "x_scripts\x_gettargetbonus.sqf";
 } else {
+    // no bonus vehicle after last target town was cleared
 	target_clear = true;
 	["target_clear",target_clear, -1] call XSendNetStartScriptClient;
 };
@@ -101,6 +102,7 @@ if (d_do_delete_empty_main_target_vecs) then {
 
 d_run_illum = false;
 
+// now decide what to do next
 if (current_counter < number_targets) then {
 	sleep 15;
 #ifdef __TT__

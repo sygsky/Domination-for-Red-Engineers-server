@@ -23,6 +23,7 @@ _sidestr = (
 	}
 );
 
+
 __WaitForGroup
 _grp = [_sidestr] call x_creategroup;
 _vehicle = createVehicle [x_drop_aircraft, position X_Drop_Start_Pos, [], 300, "FLY"];
@@ -31,28 +32,25 @@ _unit = _grp createUnit [_crew_member, position _vehicle, [], 0, "FORM"];
 __addDead(_unit)
 __addRemoveVehi(_vehicle)
 
-[_vehicle, [position _player], 100, true] execVM "scripts\mando_heliroute_arma.sqf";
+_cleanOnFinish = {
+	["d_ataxi", _this,_player] call XSendNetStartScriptClient;
+	sleep 120;
+	{deleteVehicle _x} forEach [_vehicle] + crew _vehicle;
+	sleep 1;
+	if (!isNull _unit) then {deleteVehicle _unit;};
+};
+
+[_vehicle, [position _player], 300, true] execVM "scripts\mando_heliroute_arma.sqf";
 
 sleep 10;
 
-if (!alive _player) exitWith {
-	["d_ataxi", 1,_player] call XSendNetStartScriptClient;
-	sleep 120;
-	{deleteVehicle _x} forEach [_vehicle] + crew _vehicle;
-	if (!isNull _unit) then {deleteVehicle _unit;};
-};
+if (!alive _player) exitWith { call _cleanOnFinish; };
 
 ["d_ataxi", 0,_player] call XSendNetStartScriptClient;
 
 while {_vehicle getVariable "mando_heliroute" == "busy"} do {sleep 2.012};
 
-if (_vehicle getVariable "mando_heliroute" == "damaged") exitWith {
-	["d_ataxi", 2,_player] call XSendNetStartScriptClient;
-	
-	sleep 120;
-	{deleteVehicle _x} forEach [_vehicle] + crew _vehicle;
-	if (!isNull _unit) then {deleteVehicle _unit;};
-};
+if (_vehicle getVariable "mando_heliroute" == "damaged") exitWith { 2 call _cleanOnFinish; };
 
 if (_vehicle getVariable "mando_heliroute" == "waiting") then {
 	while {alive _player && !(_player in crew _vehicle)} do {sleep 1.012};
@@ -63,30 +61,23 @@ if (_vehicle getVariable "mando_heliroute" == "waiting") then {
 		[_vehicle, [position AISPAWN], 100, true] execVM "scripts\mando_heliroute_arma.sqf";
 		sleep 5;
 		while {_vehicle getVariable "mando_heliroute" == "busy"} do {sleep 2.012};
-		if (_vehicle getVariable "mando_heliroute" == "damaged") exitWith {
-			["d_ataxi", 2,_player] call XSendNetStartScriptClient;
-			sleep 120;
-			{if (!isPlayer _x) then {deleteVehicle _x}} forEach [_vehicle] + crew _vehicle;
-			if (!isNull _unit) then {deleteVehicle _unit;};
-		};
+		if (_vehicle getVariable "mando_heliroute" == "damaged") exitWith { 2 call _cleanOnFinish; };
 		if (_vehicle getVariable "mando_heliroute" == "waiting") then {
 			while {_player in crew _vehicle} do {sleep 3.012};
 			sleep 10;
 			["d_ataxi", 4,_player] call XSendNetStartScriptClient;
-			
+
 			[_vehicle, [position X_Drop_Start_Pos], 100, false] execVM "scripts\mando_heliroute_arma.sqf";
 			while {_vehicle getVariable "mando_heliroute" == "busy"} do {sleep 2.012};
 			sleep 120;
 			{deleteVehicle _x} forEach [_vehicle] + crew _vehicle;
 			if (!isNull _unit) then {deleteVehicle _unit;};
 		};
-	} else {
-		["d_ataxi", 1,_player] call XSendNetStartScriptClient;
-		
-		sleep 120;
-		{deleteVehicle _x} forEach [_vehicle] + crew _vehicle;
-		if (!isNull _unit) then {deleteVehicle _unit;};
-	};
+	}
+	else
+	{
+	    1 call _cleanOnFinish;
+    };
 };
 
 if (true) exitWith {};

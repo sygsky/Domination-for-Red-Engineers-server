@@ -80,6 +80,7 @@ for "_check" from 0 to 0 do
 	_dist         = arg(1); // dist to pc
 	_score_plus   = arg(2);
 	_score_minus  = arg(3);
+	if ( _score_minus > 0 ) then { _score_minus = -_score_minus; };
 
 	_score = 0; // score to add to user on exit
 	_wpnHolders = [];
@@ -130,7 +131,22 @@ for "_check" from 0 to 0 do
 				breakTo "main";
 			};
 			// real gru-portal jump, do all we need for it
-			[_target_town,[/* 50,100, */150],4] call SYG_teleportToTown;
+			_ret = [_target_town,[/* 50,100, */150],4] call SYG_teleportToTown;
+			switch _ret do
+			{
+			    // bad params
+			    case 0:
+			    {
+                    (localize "STR_GRU_28_1") call GRU_msg2player;
+    				breakTo "main";
+			    };
+			    // no good house found
+			    case -1:
+			    {
+                    (localize "STR_GRU_28_2") call GRU_msg2player;
+    				breakTo "main";
+			    };
+			};
 			player_is_on_town_raid = [argp(_target_town,1),_score_plus,_score_minus,time]; // town name, score+, score-,start time
 		}
 		else 
@@ -181,7 +197,6 @@ for "_check" from 0 to 0 do
 		    // get random password speaking
 		    playSound (["slavianskiy","odinakovo","vam_bileter"] call XfRandomArrayVal);
             sleep (5 + (random 3));
-		    "STR_CAMP_TEAM_NUM" call SYG_getRandomText
 			(call _rnd_port_msg) call GRU_msg2player;
 		};
 

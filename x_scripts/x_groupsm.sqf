@@ -33,18 +33,6 @@ if (!isServer) exitWith {};
 #define REJOIN_DISTANCE 1000
 #define __DEBUG__
 
-
-/*
-if ( isNil "SYG_grpList" ) then  // initialize group list under control
-{
-	// new functionality to add in the future:
-	// a) inter-group enemy reveal
-	// b) combining very small groups together
-	SYG_grpList = [];
-	SYG_grpListEditing = false;
-};
-*/
-
 _grp_array = _this;
 
 _grp = _grp_array select 0;
@@ -55,20 +43,14 @@ _rejoin_time     = 0; // time for next re-join
 _debug_print     = false;
 _skip_islets     = false;
 _hills_seek_dist = 0;
-if ( count _grp_array > 10 AND (typeNAME (_grp_array select 10) == "ARRAY") ) then 
+if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) then
 {
 	_wp_array = _grp_array select 10;
-	if ( count _wp_array > 0) then {    _rejoin_num  = _wp_array select 0};
-	if ( count _wp_array > 1) then {    _debug_print = _wp_array select 1};
-	if ( count _wp_array > 2) then {    _skip_islets = _wp_array select 2};
-	if ( count _wp_array > 3) then {_hills_seek_dist = _wp_array select 3};
+	if ( count _wp_array > 0) then {    _rejoin_num  = _wp_array select 0;};
+	if ( count _wp_array > 1) then {    _debug_print = _wp_array select 1;};
+	if ( count _wp_array > 2) then {    _skip_islets = _wp_array select 2;};
+	if ( count _wp_array > 3) then {_hills_seek_dist = _wp_array select 3;};
 };
-/*
-waitUntil {!SYG_grpListEditing};
-SYG_grpListEditing = true;
-if ( !(_grp in SYG_grpList) ) then { SYG_grpList = SYG_grpList + [_grp] };
-SYG_grpListEditing = false;
-*/
 
 _enemy_array = [];
 _reached_wp = true;

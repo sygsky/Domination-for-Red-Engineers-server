@@ -10,9 +10,9 @@ if (isNil "x_ranked_weapons") then {
 	x_ranked_weapons = [
 
 [
-//¿¬“ŒÃ¿“»◊≈— Œ≈ Œ–”∆»≈
+//–ê–í–¢–û–ú–ê–¢–ò–ß–ï–°–ö–û–ï –û–†–£–ñ–ò–ï
 //################################################################################
-				// –ﬂƒŒ¬Œ…
+				// –†–Ø–î–û–í–û–ô
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -20,7 +20,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Dummy_RIFLE",3],["ACE_AK74",10],["ACE_AKS74U",10],["ACE_Bizon",10],["ACE_AKM",10],["ACE_AKMS",10],["ACE_AK47",10],["ACE_AKS47",10],["ACE_AKS47nobutt",10]
 				#endif
 			],
-				// ≈‘–≈…“Œ–
+				// –ï–§–†–ï–ô–¢–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -28,7 +28,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AK74GL",10],["ACE_AKMGL",10],["ACE_AKMSGL",10],["ACE_AK47GL",10]
 				#endif
 			],
-				// —≈–∆¿Õ“
+				// –°–ï–†–ñ–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -36,7 +36,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AKS74USD",10],["ACE_Bizon_SD",10],["ACE_AKMS_PBS1",10],["ACE_Val",10]
 				#endif
 			],
-				// À≈…“≈Õ¿Õ“
+				// –õ–ï–ô–¢–ï–ù–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -44,7 +44,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AKS74U_Cobra",10],["ACE_Bizon_Cobra",10],["ACE_AKM_Cobra",10],["ACE_AKMGL_Cobra",10],["ACE_AKMS_Cobra",10]
 				#endif
 			],
-				//  ¿œ»“¿Õ
+				// –ö–ê–ü–ò–¢–ê–ù
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -52,7 +52,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Val_Cobra",10],["ACE_AKS74USD_Cobra",10],["ACE_Bizon_SD_Cobra",10]
 				#endif
 			],
-				// Ã¿…Œ–
+				// –ú–ê–ô–û–†
 			[
 			    #ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -60,7 +60,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AKMS_PBS1_Cobra",10]
 				#endif
 			],
-				// œŒÀ Œ¬Õ» 
+				// –ü–û–õ–ö–û–í–ù–ò–ö
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
@@ -69,16 +69,16 @@ if (isNil "x_ranked_weapons") then {
 			]
 ],
 [
-//—Õ¿…œ≈–— »≈ ¬»Õ“Œ¬ »
+//–°–ù–ê–ô–ü–ï–†–°–ö–ò–ï –í–ò–ù–¢–û–í–ö–ò
 //################################################################################
-				// –ﬂƒŒ¬Œ…
+				// –†–Ø–î–û–í–û–ô
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
 				#else
 				#endif
 			],
-				// ≈‘–≈…“Œ–
+				// –ï–§–†–ï–ô–¢–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
@@ -86,7 +86,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Dummy_SNIPER",3],["ACE_AKS74PSO",10]
 				#endif
 			],
-				// —≈–∆¿Õ“
+				// –°–ï–†–ñ–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
@@ -94,7 +94,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_SVD",10]
 				#endif
 			],
-				// À≈…“≈Õ¿Õ“
+				// –õ–ï–ô–¢–ï–ù–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
@@ -102,7 +102,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_VSS",10]
 				#endif
 			],
-				//  ¿œ»“¿Õ
+				// –ö–ê–ü–ò–¢–ê–ù
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
@@ -110,7 +110,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_KSVK",10]
 				#endif
 			],
-				// Ã¿…Œ–
+				// –ú–ê–ô–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
@@ -118,7 +118,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_SV98",10]
 				#endif
 			],
-				// œŒÀ Œ¬Õ» 
+				// –ü–û–õ–ö–û–í–ù–ò–ö
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
@@ -128,9 +128,9 @@ if (isNil "x_ranked_weapons") then {
 			]
 ],
 [
-//œ”À≈Ã≈“€
+//–ü–£–õ–ï–ú–ï–¢–´
 //################################################################################
-				// –ﬂƒŒ¬Œ…
+				// –†–Ø–î–û–í–û–ô
             [
             	#ifdef __OWN_SIDE_WEST__
             	["ACE_Dummy_MG",3]
@@ -138,7 +138,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Dummy_MG",3],["ACE_RPK47",10]
 				#endif
             ],
-				// ≈‘–≈…“Œ–
+				// –ï–§–†–ï–ô–¢–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_MG",3]
@@ -146,7 +146,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_RPK74",10],["ACE_RPK74M",10]
 				#endif
 			],
-				// —≈–∆¿Õ“
+				// –°–ï–†–ñ–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_MG",3]
@@ -154,7 +154,7 @@ if (isNil "x_ranked_weapons") then {
                 ["ACE_PK",10],["ACE_RPK74M_1P29",10],["ACE_NSVProxy",10],["ACE_6T7TripodProxy",10]
 				#endif
 			],
-				// À≈…“≈Õ¿Õ“
+				// –õ–ï–ô–¢–ï–ù–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_MG",3]
@@ -162,7 +162,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Pecheneg",10]
 				#endif
 			],
-				//  ¿œ»“¿Õ
+				// –ö–ê–ü–ò–¢–ê–ù
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_MG",3]
@@ -170,14 +170,14 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Pecheneg_1P29",10]
 				#endif
 			],
-				// Ã¿…Œ–
+				// –ú–ê–ô–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_MG",3]
 				#else
 				#endif
 			],
-				// œŒÀ Œ¬Õ» 
+				// –ü–û–õ–ö–û–í–ù–ò–ö
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_MG",3]
@@ -186,24 +186,25 @@ if (isNil "x_ranked_weapons") then {
 			]
 ],
 [
-//√–¿Õ¿“ŒÃ≈“€
+//–ì–†–ê–ù–ê–¢–û–ú–ï–¢–´
 //################################################################################
-				// –ﬂƒŒ¬Œ…
+				// –†–Ø–î–û–í–û–ô
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_LAUNCHER",3]
 				#else
-				["ACE_Dummy_LAUNCHER",3],["ACE_RPG7_PGO7",10],["ACE_Strela",10],["ACE_RPG22",10]
+				["ACE_Dummy_LAUNCHER",3],["ACE_RPG7_PGO7",10],["ACE_Strela",10]
 				#endif
 			],
-				// ≈‘–≈…“Œ–
+				// –ï–§–†–ï–ô–¢–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_LAUNCHER",3]
 				#else
+                ["ACE_RPG22",10]
 				#endif
 			],
-				// —≈–∆¿Õ“
+				// –°–ï–†–ñ–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_LAUNCHER",3]
@@ -211,7 +212,7 @@ if (isNil "x_ranked_weapons") then {
                 ["ACE_RPG27",10],["ACE_RPO",10]
 				#endif
 			],
-				// À≈…“≈Õ¿Õ“
+				// –õ–ï–ô–¢–ï–ù–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_LAUNCHER",3]
@@ -219,7 +220,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_AGS30Proxy",10],["ACE_AGS30TripodProxy",10]
 				#endif
 			],
-				//  ¿œ»“¿Õ
+				// –ö–ê–ü–ò–¢–ê–ù
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_LAUNCHER",3]
@@ -227,14 +228,14 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_RPG29",10]
 				#endif
 			],
-				// Ã¿…Œ–
+				// –ú–ê–ô–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_LAUNCHER",3]
 				#else
 				#endif
 			],
-				// œŒÀ Œ¬Õ» 
+				// –ü–û–õ–ö–û–í–ù–ò–ö
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_LAUNCHER",3]
@@ -243,9 +244,9 @@ if (isNil "x_ranked_weapons") then {
 			]
 ],
 [
-//œ»—“ŒÀ≈“€
+//–ü–ò–°–¢–û–õ–ï–¢–´
 //################################################################################
-				// –ﬂƒŒ¬Œ…
+				// –†–Ø–î–û–í–û–ô
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_PISTOL",3]
@@ -253,15 +254,7 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_Dummy_PISTOL",3],["ACE_Makarov",10],["ACE_FlareGun",10],["ACE_MK13",10]
 				#endif
 			],
-				// ≈‘–≈…“Œ–
-			[
-				#ifdef __OWN_SIDE_WEST__
-				["ACE_Dummy_PISTOL",3]
-				#else
-				["ACE_MakarovSD",10]
-				#endif
-			],
-				// —≈–∆¿Õ“
+				// –ï–§–†–ï–ô–¢–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_PISTOL",3]
@@ -269,32 +262,40 @@ if (isNil "x_ranked_weapons") then {
 				["ACE_TT",10]
 				#endif
 			],
-				// À≈…“≈Õ¿Õ“
+				// –°–ï–†–ñ–ê–ù–¢
 			[
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_PISTOL",3]
 				#else
+				["ACE_MakarovSD",10]
+				#endif
+			],
+				// –õ–ï–ô–¢–ï–ù–ê–ù–¢
+			[
+				#ifdef __OWN_SIDE_WEST__
+				["ACE_Dummy_PISTOL",3]
+				#else
+				#endif
+			],
+				// –ö–ê–ü–ò–¢–ê–ù
+			[
+				#ifdef __OWN_SIDE_WEST__
+				["ACE_Dummy_RIFLE",3]
+				#else
 				["ACE_Scorpion",10]
 				#endif
 			],
-				//  ¿œ»“¿Õ
+				// –ú–ê–ô–û–†
 			[
 				#ifdef __OWN_SIDE_WEST__
-				["ACE_Dummy_RIFLE",3]
-				#else
-				#endif
-			],
-				// Ã¿…Œ–
-			[
-				#ifdef __OWN_SIDE_WEST__
-  				["ACE_Dummy_RIFLE",3]
+  				["ACE_Dummy_PISTOL",3]
 				#else
 				#endif
   			],
-				// œŒÀ Œ¬Õ» 
+				// –ü–û–õ–ö–û–í–ù–ò–ö
 			[
 				#ifdef __OWN_SIDE_WEST__
-				["ACE_Dummy_RIFLE",3]
+				["ACE_Dummy_PISTOL",3]
 				#else
 				#endif
 			]
@@ -318,7 +319,8 @@ _ve spawn {
 				_ve addweaponcargo ["Binocular",5];
 				_ve addweaponcargo ["LaserDesignator",5];
 				_ve addweaponcargo ["ACE_ANPRC77_Alice",5];
-				_ve addweaponcargo ["ACE_ParachutePack",5];
+				_ve addweaponcargo ["ACE_ParachutePack",5]; // western planning new styled shute
+				_ve addweaponcargo ["ACE_ParachuteRoundPack",5]; // Ordinal round old style shute
 
 				// ranked stuff
 				{

@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_glselchanged.sqf - grass level settings
 private ["_selection", "_control", "_selectedIndex", "_real_list", "_vlist"];
 _selection = _this select 0;
 
@@ -13,7 +13,7 @@ if (d_graslayer_index != _selectedIndex) then {
 	d_graslayer_index = _selectedIndex;
 	setTerrainGrid (_real_list select d_graslayer_index);
 
-	(format [localize "STR_SYS_01"/*"Настройки отображения травы: %1"*/ , localize (vlist select d_graslayer_index)]) call XfGlobalChat;
+	(format [localize "STR_SYS_01"/* "Grass layer set to: %1" */ , localize (_vlist select d_graslayer_index)]) call XfGlobalChat;
 };
 
 if (true) exitWith {};

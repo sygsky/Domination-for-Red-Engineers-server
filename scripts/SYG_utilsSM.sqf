@@ -1,4 +1,4 @@
-// SYG_utilsSM.sqf : utis for Side Missions
+// SYG_utilsSM.sqf : utils for Side Missions
 private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_startPos", "_procWP", "_wpIndex", "_unittype", "_stopBoat" ];
 
 #include "x_setup.sqf"
@@ -78,7 +78,10 @@ SYG_createStaticWeaponGroup = {
 			sleep  _create_delay; // sleep some time before next vehicle 
 		};
 	} forEach _posarr;
-	
+
+	_grp setCombatMode "RED";
+	_grp setBehaviour "AWARE";
+
 	_grp
 };
 
@@ -100,3 +103,43 @@ SYG_findEnemyAt = {
 	} forEach _arr;
 	objNull
 };
+
+//
+// Finds all SM near to the designated point
+// call as: _near_sm_arr = [_sm_array, _point, _dist] call SYG_findNearSM;
+// where: _sm_array = sm id array, _point = [x,y,z] as search center, _dist = search radious around the _point
+// returns: array of SM id, near to the point. If case of bad parameters, always [] is returned
+//
+SYG_findNearSMIdsArray = {
+    if ( typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_findNearSM: expected argument is array, found %1", typeName _this];[]};
+    if ( count _this < 3) exitWith {hint localize format["--- SYG_findNearSM: expected number of arguments >= 3, found %1", count _this]; []};
+    _sm_id_arr   = arg(0);
+    _center      = arg(1);
+    _search_dist = arg(2);
+    _ret_id_arr  = [];
+    {
+        _sm_pos = call compile format ["""SM_POS_REQUEST"" call compile preprocessFileLineNumbers ""x_missions\m\%1%2.sqf"";",d_mission_filename, _x];
+        _dist = _search_dist distance _sm_pos;
+        if (_dist < _search_dist ) then { _ret_id_arr = _ret_id_arr + [_x]; };
+    } forEach _sm_id_arr;
+    _ret_id_arr
+};
+
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+//
+// Detects if main target is able to be executed/started. Works ons erver and on client
+//
+// call:    [] call SYG_isMainTargetAllowed;
+// returns: __mainAllowed = call SYG_isMainTargetAllowed
+//
+SYG_isMainTargetAllowed = 
+{
+    // Here important formula to calculate main target allowence is  executed
+    _target_counter = if (isServer) then {current_counter} else {client_target_counter}; // main target counter
+    if ( _target_counter <= 0 ) exitWith {true}; // Lets start in any way at the mission beginning
+    if (current_mission_counter == 0) exitWith {true};
+    if ( ( (current_mission_counter - 1) * __SIDE_MISSION_PER_MAIN_TARGET_COUNT__) >= (_target_counter -1) ) exitWith {true}; // 1 side mission for 2 main targets must be finished!!!
+    // hint localize format["false SYG_isMainTargetAllowed: _target_counter %1, current_mission_counter %2", _target_counter, current_mission_counter];
+    false
+};
+#endif
