@@ -18,8 +18,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SYS_512"; //"Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. (Завершить миссию может только игрок в роли спасателя)";
-	current_mission_resolved_text = localize "STR_SYS_513"; //"Задание выполнено! Офицера в ГРУ, грибы на кухню.";
+	current_mission_text = localize "STR_SM_42"; //"Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. (Завершить миссию может только игрок в роли спасателя)";
+	current_mission_resolved_text = localize "STR_SM_042"; //"Задание выполнено! Офицера в ГРУ, грибы на кухню.";
 };
 
 if (isServer) then {

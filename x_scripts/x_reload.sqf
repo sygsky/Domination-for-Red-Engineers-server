@@ -2,59 +2,56 @@
 //
 //
 // new input params format is: [thislist,"vehicle_type"]
-private ["_config","_count","_i","_magazines","_object","_type","_type_name","_pos","_su34","_speed"];
+private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-_object = objNull;
+_vehicle = objNull;
 
 _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
 {
     if ( _x isKindOf _type) then
     {
-        if (isNull _object ) then
+        if (isNull _vehicle ) then
         {
-            _object = _x;
+            _vehicle = _x;
         }
         else
         {
-            if (!(_object isKindOf "ParachuteBase")) then
+            if (!(_vehicle isKindOf "ParachuteBase")) then
             {
-                if ( ((velocity _x) distance [0,0,0]) > ((velocity _object) distance [0,0,0]) ) then
+                if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then
                 {
-                    _object = _x;
+                    _vehicle = _x;
                 };
             };
         };
     };
 } forEach arg(0); // for each thislist item do
 
-if ( isNull _object) exitWith{};
+if ( isNull _vehicle) exitWith{};
 
-if (!alive _object) exitWith {};
+if (!alive _vehicle) exitWith {};
 
-// Special check for helicopters
-_exit = false;
-if ( _object isKindOf "Helicopter") then
+// Mainly check for helicopters, others are not so exposed to double reloading efforts
+_already_loading = false;
+_already_loading = _vehicle getVariable "already_on_load";
+if (format ["%1", _already_loading] == "<null>") then { _already_loading = false;  }; // no var means not loading
+if ( _already_loading ) exitWith
 {
-    _already_loading = _object getVariable "already_on_load";
-    if (format ["%1", _already_loading] == "<null>") exitWith { _exit = true;  };
-    _object setVariable ["already_on_load", true];
+    _vehicle setVariable ["already_on_load", nil];
+    [_vehicle, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
 };
-if ( _exit) exitWith
-{
-    _object setVariable ["already_on_load", nil];
-    [_object, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
-};
+_vehicle setVariable ["already_on_load", true]; // mark starting reload
 
 _magazines = [];
 
-_type = typeOf _object;
+_type = typeOf _vehicle;
 
 #ifdef __REARM_SU34__
-//_su34 = _object call SYG_rearmAnySu34;
-_su34 = _object call SYG_rearmVehicleA;
+//_su34 = _vehicle call SYG_rearmAnySu34;
+_su34 = _vehicle call SYG_rearmVehicleA;
 if ( _su34 ) then // Su34 is rearmed
 {
     //_magazines = argp((_type call SYG_getSu34Table),1); // get magazines list to reload each time
@@ -65,18 +62,18 @@ if ( _su34 ) then // Su34 is rearmed
 
 if (isNil "x_reload_time_factor") then {x_reload_time_factor = 1;};
 
-//if (!local _object) exitWith {};
+//if (!local _vehicle) exitWith {};
 
 if (d_reload_engineoff) then {
-	_object action ["engineOff", _object];
+	_vehicle action ["engineOff", _vehicle];
 };
 
-_object setFuel 0;
-_object setVehicleAmmo 1;	// Reload turrets / drivers magazine
+_vehicle setFuel 0;
+_vehicle setVehicleAmmo 1;	// Reload turrets / drivers magazine
 
 _type_name = [_type,0] call XfGetDisplayName;
 
-[_object,format [localize "STR_SYS_255", _type_name]] call XfVehicleChat; // "Обслуживание: %1... Ожидайте..."
+[_vehicle,format [localize "STR_SYS_255", _type_name]] call XfVehicleChat; // "Обслуживание: %1... Ожидайте..."
 
 #ifdef __REARM_SU34__
 if (! _su34 ) then // not filled with Su34 rearm code
@@ -91,15 +88,15 @@ if (count _magazines > 0) then {
 	_removed = [];
 	{
 		if (!(_x in _removed)) then {
-			_object removeMagazines _x;
+			_vehicle removeMagazines _x;
 			_removed = _removed + [_x];
 		};
 	} forEach _magazines;
 	{
-		[_object, format [localize "STR_SYS_256", _x]] call XfVehicleChat; // "Перезарядка: %1"
+		[_vehicle, format [localize "STR_SYS_256", _x]] call XfVehicleChat; // "Перезарядка: %1"
 		sleep x_reload_time_factor;
-		if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
-		_object addMagazine _x;
+		if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
+		_vehicle addMagazine _x;
 	} forEach _magazines;
 };
 
@@ -121,18 +118,18 @@ if (_count > 0) then {
 		_removed = [];
 		{
 			if (!(_x in _removed)) then {
-				_object removeMagazines _x;
+				_vehicle removeMagazines _x;
 				_removed = _removed + [_x];
 			};
 		} forEach _magazines;
 		{
 			_mag_disp_name = [_x,2] call XfGetDisplayName;
-			[_object,format [localize "STR_SYS_256", _mag_disp_name]] call XfVehicleChat; // "Перезарядка: %1"
+			[_vehicle,format [localize "STR_SYS_256", _mag_disp_name]] call XfVehicleChat; // "Перезарядка: %1"
 			sleep x_reload_time_factor;
-			if (!alive _object) then {breakOut "xx_reload2_xx"};
-			_object addMagazine _x;
+			if (!alive _vehicle) then {breakOut "xx_reload2_xx"};
+			_vehicle addMagazine _x;
 			sleep x_reload_time_factor;
-			if (!alive _object) then {breakOut "xx_reload2_xx"};
+			if (!alive _vehicle) then {breakOut "xx_reload2_xx"};
 		} forEach _magazines;
 		// check if the main turret has other turrets
 		_count_other = count (_config >> "Turrets");
@@ -145,18 +142,18 @@ if (_count > 0) then {
 				_removed = [];
 				{
 					if (!(_x in _removed)) then {
-						_object removeMagazines _x;
+						_vehicle removeMagazines _x;
 						_removed = _removed + [_x];
 					};
 				} forEach _magazines;
 				{
 					_mag_disp_name = [_x,2] call XfGetDisplayName;
-					[_object, format [localize "STR_SYS_256", _mag_disp_name]] call XfVehicleChat; // "Перезарядка: %1"
+					[_vehicle, format [localize "STR_SYS_256", _mag_disp_name]] call XfVehicleChat; // "Перезарядка: %1"
 					sleep x_reload_time_factor;
-					if (!alive _object) then {breakOut "xx_reload2_xx"};
-					_object addMagazine _x;
+					if (!alive _vehicle) then {breakOut "xx_reload2_xx"};
+					_vehicle addMagazine _x;
 					sleep x_reload_time_factor;
-					if (!alive _object) then {breakOut "xx_reload2_xx"};
+					if (!alive _vehicle) then {breakOut "xx_reload2_xx"};
 				} forEach _magazines;
 			};
 		};
@@ -164,39 +161,39 @@ if (_count > 0) then {
 };
 
 // set cargo fuel and repair for any vehicles that support it
-_object setFuelCargo 1;
-_object setRepairCargo 1;
+_vehicle setFuelCargo 1;
+_vehicle setRepairCargo 1;
 
 #ifdef __ACE__
-_object call SYG_reammoTruck; // call just in case of vehicle type "Truck5tReammo"
+_vehicle call SYG_reammoTruck; // call just in case of vehicle type "Truck5tReammo"
 #endif
 
-_object setVehicleAmmo 1;	// Reload turrets / drivers magazine
+_vehicle setVehicleAmmo 1;	// Reload turrets / drivers magazine
 
 if (__MandoVer) then {
-	if (_object isKindOf "Air") then {
-		_fcleft = _object getVariable "mando_flaresleft";
-		_maxfc = _object getVariable "mando_maxflares";
+	if (_vehicle isKindOf "Air") then {
+		_fcleft = _vehicle getVariable "mando_flaresleft";
+		_maxfc = _vehicle getVariable "mando_maxflares";
 		if (format ["%1", _fcleft] != "<null>" && format ["%1", _maxfc] != "<null>") then {
-			_object setVariable ["mando_flaresleft", _maxfc];
+			_vehicle setVariable ["mando_flaresleft", _maxfc];
 		};
 	};
 };
 sleep x_reload_time_factor;
-if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
-[_object, localize "STR_SYS_258"] call XfVehicleChat; // "Починка..."
-_object setDamage 0;
+if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
+[_vehicle, localize "STR_SYS_258"] call XfVehicleChat; // "Починка..."
+_vehicle setDamage 0;
 sleep x_reload_time_factor;
-if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
-[_object, localize "STR_SYS_257"] call XfVehicleChat; //"Заправка..."
-while {fuel _object < 0.99} do {
-	_object setFuel (((fuel _object) + 0.1) min 1);
-	//_object setFuel 1;
+if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
+[_vehicle, localize "STR_SYS_257"] call XfVehicleChat; //"Заправка..."
+while {fuel _vehicle < 0.99} do {
+	_vehicle setFuel (((fuel _vehicle) + 0.1) min 1);
+	//_vehicle setFuel 1;
 	sleep 0.3;
 };
 sleep x_reload_time_factor;
-if (!alive _object) exitWith {_object setVariable ["already_on_load", nil];};
-[_object, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
+if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
+[_vehicle, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
 
 
-if (true) exitWith {_object setVariable ["already_on_load", nil];};
+if (true) exitWith {_vehicle setVariable ["already_on_load", nil];};
