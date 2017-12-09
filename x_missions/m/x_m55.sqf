@@ -35,12 +35,14 @@ if (isServer) then {
 	_hideobject = _sm_vehicle findCover [_pos, _pos, 50, 20];
     if (!isNull _hideobject) then {
     	_sm_vehicle doMove (position _hideobject);
+        hint localize format["SM 55: cover found at pos %1 dist %2", position _hideobject, _pos distance _hideobject];
     	sleep 120;
     	_sm_vehicle setBehaviour "STEALTH";
     	_sm_vehicle disableAI "MOVE";
         _sm_vehicle setDamage 0.5;
         _sm_vehicle setUnitPos "DOWN";
-    };
+    }
+    else{hint localize format["SM 55: cover not found, pos %1", getPos _sm_vehicle];};
 
 	removeAllWeapons _sm_vehicle;
 	sleep 2.123;
