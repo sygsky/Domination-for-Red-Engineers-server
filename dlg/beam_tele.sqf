@@ -69,11 +69,13 @@ switch (beam_target) do {
 beam_target = -1;
 if (_typepos == 1) then {  //  teleport to some of our MHQ
 
+/* Don't work, have to investigate why so?
     if ( (_global_pos select 2) > 1) then // MHQ is hanging in air (strange but possible e.g. user disconnect during lifting)
     {
         _global_pos set [2,0];
         _veh setPos _global_pos;
     };
+*/
     // TODO: send command to the server
     (group player) addVehicle _veh;
 };
