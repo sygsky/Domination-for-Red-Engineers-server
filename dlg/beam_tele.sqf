@@ -22,6 +22,7 @@ _global_pos = [];
 _global_dir = 180;
 _typepos = 0;
 _veh = objNull;
+
 switch (beam_target) do {
 	case 0: { // teleport to the base
 #ifndef __REVIVE__
@@ -34,8 +35,6 @@ switch (beam_target) do {
 	case 1: { // teleport to the MHQ1
 #ifndef __TT__
         _veh = MRR1;
-		_global_pos = _veh modelToWorld [0,-5,0];
-		_global_dir = direction _veh;
 #endif
 #ifdef __TT__
         if (playerSide == west) then {
@@ -43,16 +42,12 @@ switch (beam_target) do {
         } else {
         _veh = MRRR1;
         };
-		_global_pos = _veh modelToWorld [0,-5,0];
-		_global_dir = direction _veh;
 #endif
 		_typepos = 1;
 	};
 	case 2: { // teleport to the MHQ2
 #ifndef __TT__
         _veh = MRR2;
-		_global_pos = _veh modelToWorld [0,-5,0];
-		_global_dir = direction _veh;
 #endif
 #ifdef __TT__
         if (playerSide == west) then {
@@ -60,13 +55,15 @@ switch (beam_target) do {
         } else {
             _veh = MRRR2;
         };
-		_global_pos = _veh modelToWorld [0,-5,0];
-		_global_dir = direction _veh;
 #endif
 		_typepos = 1;
 	};
 };
+_global_pos = _veh modelToWorld [0,-5,0];
+_global_dir = direction _veh;
+
 beam_target = -1;
+
 if (_typepos == 1) then {  //  teleport to some of our MHQ
 
 /* Don't work, have to investigate why so?
@@ -79,6 +76,7 @@ if (_typepos == 1) then {  //  teleport to some of our MHQ
     // TODO: send command to the server
     (group player) addVehicle _veh;
 };
+_global_pos set [2, 0];  // always port to the ground
 player setPos _global_pos;
 player setDir _global_dir;
 sleep 2;
