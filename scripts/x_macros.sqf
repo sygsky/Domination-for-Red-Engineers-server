@@ -50,8 +50,6 @@
 
 #define COMPUTER_ACTION_ID_NAME "GRU_comp_action_id"
 
-#define __SetGVar(gvar_def,gvar_val) (global_vars set[(gvar_def),(gvar_val)]);publicVariable "global_vars"
-
-#define __GetGVar(gvar_def) (global_vars select(gvar_def))
-
-#define __HasGVar(gvar_def) (if(isNil "global_vars")then{false}else{(count global_vars)>gvar_def})
+#define __SetGVar(gvar_def,gvar_val)(if(true)then{global_vars set[(gvar_def),(gvar_val)];publicVariable "global_vars";gvar_val})
+#define __GetGVar(gvar_def)(global_vars select(gvar_def))
+#define __HasGVar(gvar_def)(if(isNil "global_vars")then{false}else{(count global_vars)>(gvar_def)})

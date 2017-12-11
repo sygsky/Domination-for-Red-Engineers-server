@@ -40,7 +40,7 @@ _wp2 setWaypointType "MOVE";
 _chopper flyInHeight 100; // fly on height about 100 meters
 
 // store time of the last infiltration on base
-__SetGVar(INFILTRATION_TIME, date);
+//__SetGVar(INFILTRATION_TIME, date);
 #ifdef __DEBUG_PRINT__
 hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено, установка переменной даёт %1",
                       __HasGVar(INFILTRATION_TIME)];

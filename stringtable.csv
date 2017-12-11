@@ -37,6 +37,11 @@ STR_SYG_11,"Unload Static",""Entladen Statischer","Разгрузить оруд
 STR_SYG_12,"%1 to Backpack","%1 in den Rucksack","%1 в рюкзак"
 
 //-----------------------------------------------------------------------------
+// Server.cfg strings:
+//-----------------------------------------------------------------------------
+STR_SERVER_MOTD0,"The islanders are happy to welcome you in your native language!","Die Inselbewohner sind glücklich, Sie zu begrüßen, in Ihrer Muttersprache!","Островитяне рады приветствовать вас на родном языке!"
+
+//-----------------------------------------------------------------------------
 // SYS scripts strings:
 //-----------------------------------------------------------------------------
 

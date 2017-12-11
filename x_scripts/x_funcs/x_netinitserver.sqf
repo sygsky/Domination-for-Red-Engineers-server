@@ -138,7 +138,7 @@ XHandleNetStartScriptServer = {
 				_parray set [4, arg(2)]; // set player role to the named entry
 			};
 
-			// Prepare messages for the new player
+			// Prepare 1st message for the new player
 
 			if (isNil "d_connection_number") then
 			{
@@ -150,6 +150,9 @@ XHandleNetStartScriptServer = {
 			    d_connection_number = d_connection_number + 1;
     			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the 1% of the warrior-internationalist in their troubled land"
 			};
+
+            // add more messages if possible
+			_msg_arr set [ count _msg_arr, ["STR_SERVER_MOTD0"] ]; // "Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty"
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then // first time entry after half of game
 			{

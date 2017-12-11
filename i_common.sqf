@@ -873,7 +873,7 @@ d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE",
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Array of all global variables, see "global_vars.sqf" for each variable offset defines
 //
-SYG_global_vars = [0];
+global_vars = [];
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 hint localize format["i_common.date = %1", date];

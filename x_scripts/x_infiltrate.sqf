@@ -8,7 +8,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __PRINT__
+#define __PRINT__
 
 // to debug sabotages with short intervals between infiltrations
 //#define __DEBUG__
@@ -223,7 +223,10 @@ while { true } do {
 	sleep 0.1;
 	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
 	__SetGVar(INFILTRATION_TIME, date);
-	
+#ifdef __PRINT__
+	hint localize format["x_infiltrate.sqf: __SetGVar(INFILTRATION_TIME, %1), __GetGVar = %2", date, __GetGVar(INFILTRATION_TIME)];
+#endif
+
 #ifdef __DEBUG__
 	sleep 1200; // 20 mins to kill them all or be down himself
 #else
