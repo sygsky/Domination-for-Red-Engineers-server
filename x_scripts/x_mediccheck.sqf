@@ -13,8 +13,9 @@ _nearestbase = (
 	}
 );
 _healerslist = [];
+_medic = false;
 // how many to add on healing
-_score_to_add = if (format ["%1",player] in d_is_medic) then {d_ranked_a select 17} else {1};
+_score_to_add = if (format ["%1",player] in d_is_medic) then {_medic = true; argp(d_ranked_a,17)} else {1};
 
 while {true} do {
 	_objs = [];
@@ -23,7 +24,9 @@ while {true} do {
 		_objs = nearestObjects [player, [_nearestbase], 3];
         if (count _objs > 0) then {
             {
-                if (!(_x in _healerslist) && (_x != player)) then {
+                if (!(_x in _healerslist) && ((_x != player) || (!_medic))) then {
+                // AmovPpneMstpSrasWrflDnon_healed - подняться из положения лёжа
+                // AinvPknlMstpSlayWrflDnon_healed - сидя под лечением
                     if (animationState _x in ["ainvpknlmstpslaywrfldnon_healed","amovppnemstpsraswrfldnon_healed"]) then {
                         playSound "healing";
                         _points = _points + _score_to_add;

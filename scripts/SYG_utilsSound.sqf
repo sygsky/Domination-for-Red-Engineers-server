@@ -58,14 +58,16 @@ SYG_musicTrackCount = {
 
 SYG_defeatTracks =
 [
+    ["Delerium_Wisdom","pimbompimbom","vendetta","thefuture"],
+    ["mountains","Gandalf_Simades","whold","end"],
     ["ATrack9","ATrack10","ATrack14","ATrack15"],
-    ["ATrack16","ATrack17","ATrack18","ATrack19","vendetta"],
-    ["ATrack20","ATrack21","ATrack22","thetrembler","thefuture"],
+    ["ATrack16","ATrack17","ATrack18","ATrack19"],
+    ["ATrack20","ATrack21","ATrack22","thetrembler"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]]
 ];
 
-SYG_playPartialTrack = {playMusic [arg(0),arg(1)];sleep (arg(2)-1);1 fadeMusic 0;sleep 1;playMusic ""; 0 fadeMusic 1;};
+SYG_playPartialTrack = {playMusic [arg(0),arg(1)];sleep (arg(2)-1);1 fadeMusic 0;sleep 0.1;playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -79,7 +81,7 @@ SYG_northDefeatTracks =
 ];
 
 SYG_baseDefeatTracks =
-    ["tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6","betrayed","aztecs4"];
+    ["tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6","betrayed","aztecs4","mountains","Gandalf_Simades","whold","end"];
 
 
 SYG_southDefeatTracks =

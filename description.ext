@@ -284,6 +284,16 @@ class CfgMusic
     class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
 
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
+    class pimbompimbom { name=""; sound[] = {\sounds\pimbompimbom.ogg,db-1,1.0};} // defeat music
+    class Delerium_Wisdom { name=""; sound[] = {\sounds\Delerium_Wisdom.ogg,db-1,1.0};} // defeat music
+    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
+    class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
+    class mountains { name=""; sound[] = {\sounds\mountains.ogg,db-1,1.0};} // defeat music
+    class Gandalf_Simades { name=""; sound[] = {\sounds\Gandalf_Simades.ogg,db-1,1.0};} // defeat music
+
+    class end { name=""; sound[] = {\sounds\end.ogg,db-1,1.0};} // defeat music
+    class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
+
 
 };
 

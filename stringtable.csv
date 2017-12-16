@@ -726,7 +726,7 @@ STR_RESTORE_DLG_8,%1 item[s] on dist to %2 m.,%1 item[s] bis zum %2 m.,объе�
 STR_RESTORE_DLG_9,list is empty,Liste ist leer,список пуст
 STR_RESTORE_DLG_10,"required rank is ""%1""","benötigt Rang ""%1""","требуется звание не ниже ""%1"""
 
-STR_INTRO_MUSIC,"""johnny"",""Art_Of_Noise_mono"",""mission_impossible""",   """druzba"",""dem_morgenrot_entgegen""",  """podolinam"",""ahead_friends"""
+STR_INTRO_MUSIC,"""johnny""",   """druzba"",""dem_morgenrot_entgegen""",  """podolinam"",""ahead_friends"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"

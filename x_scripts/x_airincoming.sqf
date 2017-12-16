@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_airincoming.sqf not for ACE
 private ["_get_air"];
 
 _get_air = compile "_result = false;if (vehicle player != player) then {if (vehicle player isKindOf ""Air"" && !(vehicle player isKindOf ""ParachuteBase"")) then {_result = true} else {_result = false;};};_result";

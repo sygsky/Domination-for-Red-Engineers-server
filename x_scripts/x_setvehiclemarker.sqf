@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_setvehiclemarker.sqf : for clients only
 private ["_ap","_as","_i","_marker","_p_marker_color"];
 if (!X_Client) exitWith {};
 

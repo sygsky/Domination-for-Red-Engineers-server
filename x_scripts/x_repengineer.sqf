@@ -39,7 +39,7 @@ if (score player < (d_ranked_a select 0)) exitWith {
 };
 if (player in (list d_engineer_trigger) && d_last_base_repair != -1) exitWith {
 	_coef = ceil((d_last_base_repair - time)/60);
-	// "Вы недавно отремонтировали что-то на базе. Теперь придётся либо ждать около %1 мин., либо воспользоваться ремонтным грузовиком..."
+	// "Wait some time to restore repairing ability..."
 	(format[localize "STR_SYS_17",_coef]) call XfHQChat;
 };
 if (player in (list d_engineer_trigger)) then {d_last_base_repair = time + 300;};
