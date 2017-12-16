@@ -20,7 +20,7 @@ if ( isNil "SYG_repTruckNamesArr" ) then
 };
 
 _str_p = format ["%1", player];
-if (_str_p in d_is_engineer || __AIVer) then {
+if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 
 #ifdef __ACE__
 	x_sfunc = {

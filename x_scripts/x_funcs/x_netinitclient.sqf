@@ -331,7 +331,7 @@ XHandleNetStartScriptClient = {
 				// "Был уничтожен сервис по обслуживанию самолетов. Просите инженеров отремонтировать его ..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_220"] call XfHQChat;
 				_str_p = format ["%1", player];
-				if (_str_p in d_is_engineer || __AIVer) then {
+				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 					[0] spawn XFacAction;
 				};
 			} else {
@@ -345,7 +345,7 @@ XHandleNetStartScriptClient = {
 				//"Был уничтожен сервис по обслуживанию вертолетов. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_221"] call XfHQChat;
 				_str_p = format ["%1", player];
-				if (_str_p in d_is_engineer || __AIVer) then {
+				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 					[1] spawn XFacAction;
 				};
 			} else {
@@ -359,7 +359,7 @@ XHandleNetStartScriptClient = {
 				//"Был уничтожен сервис по восстановлению техники. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_222"] call XfHQChat;
 				_str_p = format ["%1", player];
-				if (_str_p in d_is_engineer || __AIVer) then {
+				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 					[2] spawn XFacAction;
 				};
 			} else {

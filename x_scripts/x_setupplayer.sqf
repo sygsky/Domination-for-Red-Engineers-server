@@ -752,7 +752,7 @@ for "_xx" from 1 to 2 do { // 'Меню MHQ'
 #endif
 
 #ifndef __TT__
-_addStat = __AIVer || (_string_player in d_is_engineer);
+_addStat = /*__AIVer || */(_string_player in d_is_engineer);
 for "_xx" from 7 to 8 do { // 'Загрузить орудие', 'Разгрузить орудие'
 	call compile format ["
 		if (!(isNil 'TR%1')) then {
@@ -1131,7 +1131,7 @@ switch (d_own_side) do {
 // special triggers for engineers, in AI version everybody can repair and flip vehicles |
 //------------------------------------------------------------------------------------+
 
-if (_string_player in d_is_engineer || __AIVer) then {
+if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	d_eng_can_repfuel = true;
 	
 	#ifndef __TT__
@@ -1436,7 +1436,7 @@ XFacAction = {
 	};
 };
 
-if (_string_player in d_is_engineer || __AIVer) then {
+if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	if (!isNull d_jet_service_fac && !d_jet_service_fac_rebuilding) then {
 		[0] spawn XFacAction;
 	};

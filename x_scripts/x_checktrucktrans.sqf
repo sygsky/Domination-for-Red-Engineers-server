@@ -30,12 +30,12 @@ if (_exit_it) exitWith {
 };
 #endif
 
-#ifndef __AI__
+//#ifndef __AI__
 if (!(str(_enterer) in d_is_engineer) && local _enterer) then {
 	(localize "STR_SYG_01") call XfHQChat; // "Only engineers can enter the Salvage trucks..." 
 	_enterer action ["eject",_vehicle];
 	if (!_was_engineon && isEngineOn _vehicle) then {_vehicle engineOn false};
 };
-#endif
+//#endif
 
 if (true) exitWith {};

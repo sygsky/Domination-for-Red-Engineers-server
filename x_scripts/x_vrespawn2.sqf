@@ -205,7 +205,7 @@ while {true} do {
 					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 				#endif
 					if (X_SPE) then {
-						if (__AIVer || str(player) in d_is_engineer) then {
+						if (/*__AIVer ||*/ str(player) in d_is_engineer) then {
 #ifdef __PRINT__				
 							hint localize format["x_vrespawn2.sqf: TTR vec %1, player %2, load static actions", _vehicle, str(player)];
 #endif					
@@ -221,7 +221,7 @@ while {true} do {
 					_vehicle setAmmoCargo 0;
 					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 					if (X_SPE) then {
-						if (__AIVer || str(player) in d_is_engineer) then {
+						if (/*__AIVer ||*/ str(player) in d_is_engineer) then {
 							_vehicle addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузка орудия"
 							_vehicle addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; //"Выгрузка орудия"
 						};
