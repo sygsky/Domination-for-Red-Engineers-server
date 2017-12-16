@@ -18,8 +18,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SYS_514";// "В долине около Benoma, у врага расположен небольшой аванпост. Ваша задача захватить офицера и доставить его на базу. (Завершить миссию может только игрок в роли спасателя).";
-	current_mission_resolved_text = localize "STR_SYS_515"; //"Задание выполнено! Вражеский офицер доставлен на базу.";
+	current_mission_text = localize "STR_SM_49";// "В долине около Benoma, у врага расположен небольшой аванпост. Ваша задача захватить офицера и доставить его на базу. (Завершить миссию может только игрок в роли спасателя).";
+	current_mission_resolved_text = localize "STR_SM_049"; //"Задание выполнено! Вражеский офицер доставлен на базу.";
 };
 
 if (isServer) then {

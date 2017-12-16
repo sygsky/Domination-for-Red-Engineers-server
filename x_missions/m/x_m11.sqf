@@ -16,8 +16,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = "На острове Isla del Zorra враг установил на маяк радиолокатор. Задача - уничтожить здание маяка. Авиаторы будут вам благодарны.";
-	current_mission_resolved_text = "Задание выполнено! Маяк уничтожен.";
+	current_mission_text = localize "STR_SM_11"; //"На острове Isla del Zorra враг установил на маяк радиолокатор. Задача - уничтожить здание маяка. Авиаторы будут вам благодарны.";
+	current_mission_resolved_text = localize "STR_SM_011"; //"Задание выполнено! Маяк уничтожен.";
 };
 
 if (isServer) then {

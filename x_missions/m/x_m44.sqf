@@ -16,8 +16,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = "Враг получил в распоряжение новый вертолет. Отправляйтесь в San Thomas захватите его и доставьте на базу.";
-	current_mission_resolved_text = "Задание выполнено! Вы получили в распоряжение ударный вертолет противника.";
+	current_mission_text = localize "STR_SM_44";//  "The enemy began testing the new helicopter. Move to San Tomas, capture this vehicle and transport it to the base."
+	current_mission_resolved_text = localize "STR_SM_044";// "The order is executed! You've got the enemy attack helicopters to explore!"
 };
 
 if (isServer) then {

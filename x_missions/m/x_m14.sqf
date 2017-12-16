@@ -18,6 +18,9 @@ if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for p
 if (X_Client) then {
 	current_mission_text = "На вершине горы Monte Liberacion построена телебашня. Враг разместил на ней своё радиопередающее оборудование. Задача: уничтожить источник дезинформации.";
 	current_mission_resolved_text = "Задание выполнено! Вражеская телеигла уничтожена. На очереди - Останкинская...";
+    current_mission_text = format[localize "STR_SYS_8", "Monte Liberacion"]; //"На вершине горы Pico de Revolucion находится ТельаВизионная башня. Враг использует её для зомбирования общества. Простая задача, уничтожьте телебашню.";
+    current_mission_resolved_text = localize "STR_SYS_08"; //"Отличная работа! Местные жители больше не увидят ни Ксении Собчак, ни любимца её папаши.";
+
 };
 
 if (isServer) then {

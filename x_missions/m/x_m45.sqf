@@ -16,8 +16,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = "Стало известно что представители местных наркокартелей хранят свои сбережения в национальном банке Сахрани расположенном в городе Bagango. Ваша задача полное уничтожении банковского здания.";
-	current_mission_resolved_text = "Задание выполнено! Здание банка уничтожено.";
+	current_mission_text = localize "STR_SM_45"; //"Стало известно что представители местных наркокартелей хранят свои сбережения в национальном банке Сахрани расположенном в городе Bagango. Ваша задача - полное уничтожении банковского здания.";
+	current_mission_resolved_text = localize "STR_SM_045"; //"Задание выполнено! Здание банка уничтожено.";
 };
 
 if (isServer) then {

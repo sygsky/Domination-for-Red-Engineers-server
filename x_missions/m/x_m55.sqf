@@ -18,7 +18,7 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SM_55"; // "An enemy officer is on a walk in the forrest Selva de Caza. ... ... ..."
+	current_mission_text = localize "STR_SM_55"; // "An enemy officer is on a walk in the forest Selva de Caza. ... ... ..."
 	current_mission_resolved_text = localize "STR_SM_042"; // "Good job! Officer to the GRU, the mushrooms to the kitchen!"
 };
 
