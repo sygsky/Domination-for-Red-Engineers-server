@@ -148,7 +148,7 @@ XHandleNetStartScriptServer = {
 			else
 			{
 			    d_connection_number = d_connection_number + 1;
-    			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the 1% of the warrior-internationalist in their troubled land"
+    			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the %1 of the warrior-internationalist in their troubled land"
 			};
 
             // add more messages if possible

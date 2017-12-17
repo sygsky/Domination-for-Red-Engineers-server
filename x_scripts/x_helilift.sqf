@@ -5,7 +5,7 @@ if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
 
-_vehicle = _this select 0;
+_vehicle = _this select 0; // heli to lift with
 
 Vehicle_Attached = false;
 Vehicle_Released = false;
@@ -97,7 +97,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 					// ++ Sygsky: checking again legal type of vehicle to lift here
 				  
 					if (((typeof _nearest) in _possible_types) OR (_nearest isKindOf "StaticWeapon")) then {
-				
+                        //hint localize format["+++ x_helilift.sqf: vehicle %1 lifted", typeOf _nearest];
 						_release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
 						[_vehicle, localize "STR_SYS_37"] call XfVehicleChat; //"Техника поднята вертолётом..."
 						Attached_Vec = _nearest;

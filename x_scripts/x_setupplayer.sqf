@@ -1068,6 +1068,7 @@ if (player_can_call_drop) then {
 
 #ifndef __REVIVE__
 _respawn_marker = "";
+//hint localize format["+++ d_own_side=%1",d_own_side];
 switch (d_own_side) do {
 	case "RACS": {
 		_respawn_marker = "respawn_guerrila";
