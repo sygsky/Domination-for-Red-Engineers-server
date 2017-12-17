@@ -26,6 +26,7 @@ _veh = objNull;
 switch (beam_target) do {
 	case 0: { // teleport to the base
 #ifndef __REVIVE__
+        //hint localize format["+++ d_side_player_str=%1, markerpos ""respawn_east""=%2",d_side_player_str, markerpos "respawn_east"];
 		call compile format ["_global_pos = markerpos ""respawn_%1"";", d_side_player_str];
 #endif
 #ifdef __REVIVE__
@@ -59,23 +60,17 @@ switch (beam_target) do {
 		_typepos = 1;
 	};
 };
-_global_pos = _veh modelToWorld [0,-5,0];
-_global_dir = direction _veh;
 
 beam_target = -1;
 
 if (_typepos == 1) then {  //  teleport to some of our MHQ
+    _global_pos = _veh modelToWorld [0,-5,0];
+    _global_dir = direction _veh;
 
-/* Don't work, have to investigate why so?
-    if ( (_global_pos select 2) > 1) then // MHQ is hanging in air (strange but possible e.g. user disconnect during lifting)
-    {
-        _global_pos set [2,0];
-        _veh setPos _global_pos;
-    };
-*/
     // TODO: send command to the server
     (group player) addVehicle _veh;
 };
+
 _global_pos set [2, 0];  // always port to the ground
 player setPos _global_pos;
 player setDir _global_dir;
