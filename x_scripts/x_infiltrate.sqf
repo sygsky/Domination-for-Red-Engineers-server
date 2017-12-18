@@ -7,6 +7,7 @@ if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+#include "global_vars.sqf"
 
 #define __PRINT__
 

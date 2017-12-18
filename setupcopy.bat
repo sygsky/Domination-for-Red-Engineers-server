@@ -1,4 +1,4 @@
-rem run once to copy x_setup.sqf and x_macros.sqf to all directories that need it
+rem run once to copy x_setup.sqf and x_macros.sqf and global_vars.sqf to all directories that need it
 
 copy x_setup.sqf x_scripts /Y
 copy x_setup.sqf x_scripts\x_funcs /Y
@@ -35,8 +35,6 @@ copy global_vars.sqf x_dlg /Y
 copy global_vars.sqf x_missions /Y
 copy global_vars.sqf x_missions\m /Y
 copy global_vars.sqf x_missions\common /Y
-
-
 
 copy GRU_Scripts\GRU_Setup.sqf scripts /Y
 copy GRU_Scripts\GRU_Setup.sqf x_scripts /Y

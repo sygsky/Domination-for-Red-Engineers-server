@@ -41,7 +41,7 @@ procWP = {
 			sleep BOAT_CHECK_PERIOD;
 			player globalChat format["procWP:sleeped %1 sec", BOAT_CHECK_PERIOD];
 			_cupPos = position _boat;
-			if ( ( (_curPos distance _lastPos) < 3) or (!( canMove _boat)) or (!( canMove driver _boat)) ) exitWith { stopBoat = true;};
+			if ( ( (_curPos distance _lastPos) < 3) or (!( canMove _boat)) or (!( alive driver _boat)) ) exitWith { stopBoat = true;};
 			if ( (_curPos distance _wpPos)  < 30 ) exitWith { hint "WP reached"}; // move to next point
 			_lastPos = _curPos;
 		};
