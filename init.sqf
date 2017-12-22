@@ -52,6 +52,7 @@ SYG_firesAreCreated  = false; // are fires on airbase created
 
 current_mission_counter = 0;    // side missions counter (init on server and client)
 
+global_vars = []; // initiate global vars
 
 if (isNil "x_funcs1_compiled") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions1.sqf";
