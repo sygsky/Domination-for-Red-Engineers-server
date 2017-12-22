@@ -1,4 +1,4 @@
-// by Xeno: x_repwreck.sqf
+// by Xeno: x_repwreck.sqf, rebuild wreck vehicle
 private ["_rep_station","_name","_types","_wreck","_type","_dpos","_ddir","_new_vec"];
 if (!isServer) exitWith {};
 
@@ -32,11 +32,11 @@ while {true} do {
 	_new_vec = _type createVehicle _dpos;
 	_new_vec setDir _ddir;
 	_new_vec setPos _dpos;
+	sleep 0.3;
 	_new_vec lock true;
 	_type_name = [_type,0] call XfGetDisplayName;
 	x_wreck_repair = [_type_name, _name, 0];
 	["x_wreck_repair", x_wreck_repair] call XSendNetStartScriptClient;
-    _new_vec say "horse"; //  whi-i-i-i-nn-y-i-i
 
 	_sleep_time = 120;
 	if (_new_vec isKindOf "Plane") then {
@@ -46,13 +46,16 @@ while {true} do {
 			_sleep_time = 240;
 		};
 	};
+	sleep 1 + random(1);
+    //_new_vec say "horse"; //  whi-i-i-i-nn-y-i-i
+    ["say_sound", _new_vec, "horse"] call XSendNetStartScriptClient;
+
 	sleep _sleep_time + (random 10);
 	_new_vec lock false;
 	x_wreck_repair = [_type_name, _name, 1];
 	["x_wreck_repair",x_wreck_repair] call XSendNetStartScriptClient;
 	_new_vec execVM "x_scripts\x_wreckmarker.sqf";
 #ifdef __REARM_SU34__
-//	_new_vec call SYG_rearmAnySu34; // try to rearm as Su-34
 	_new_vec call SYG_rearmVehicleA; // try to rearm  upgraded vehicle
 #endif
 };
