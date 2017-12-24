@@ -6,6 +6,7 @@ private ["_ok", "_XD_display", "_ctrl", "_rarray", "_vdindex", "_i", "_index", "
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+#include "global_vars.sqf"
 
 #define __DEBUG__
 
@@ -517,9 +518,9 @@ _ctrl ctrlSetText _str;
  *
  */
  
- #define RUMOR_WIDTH (_counter/4)
+#define RUMOR_WIDTH (_counter/4)
  
- _ctrl = _XD_display displayCtrl GRU_DIALOG_ID; // Intel info (GRU)
+_ctrl = _XD_display displayCtrl GRU_DIALOG_ID; // Intel info (GRU)
 if ( isNil "player_is_on_town_raid" ) then
 {
 	_str = localize "STR_SYS_55" + "\n";
@@ -539,20 +540,38 @@ if ( isNil "player_is_on_town_raid" ) then
 	        _str = _str + localize "STR_GRU_47" + "\n";
 	    };
 	};
-	_str = _str + localize "STR_SYS_56" + "\n"; // GRU agent ...
+	_str = _str + localize "STR_SYS_56" + "\n"; // "Just a rumor:"
 }
 else
 {
 	_str = format[localize "STR_SYS_606",argp(player_is_on_town_raid,0),argp(player_is_on_town_raid,1),argp(player_is_on_town_raid,2),[time, argp(player_is_on_town_raid,3)] call SYG_timeDiffToStr] +  "\n\n" + localize "STR_SYS_56_1" + "\n"""; // GRU mission etc ...;
 };
 
-// check for patrol number
-_counter = (__GetGVar(PATROL_COUNT) max 0) min 5;
-if ( _counter > 0 ) then
+// Check for last infiltation time
+if (__HasGVar(INFILTRATION_TIME)) then
 {
-	_str = _str + format["STR_GRU_50", _counter] + "\n";
+    _date = __GetGVar(INFILTRATION_TIME);
+    _str = _str + format[localize "STR_GRU_51", _date call SYG_dateToStr] + "\n";
+}
+else
+{
+    _str = _str + format[localize "STR_GRU_52"] + "\n";
 };
-
+#ifdef __DEBUG__
+hint localize format["__HasGVar(INFILTRATION_TIME)=%1:__GetGVar(INFILTRATION_TIME)=%2,",__HasGVar(INFILTRATION_TIME), __GetGVar(INFILTRATION_TIME) ];
+#endif
+// check for patrol number
+if (__HasGVar(PATROL_COUNT)) then
+{
+    _counter = __GetGVar(PATROL_COUNT);
+    if ( _counter > 0 ) then
+    {
+        _str = _str + format[localize "STR_GRU_50", _counter] + "\n";
+    };
+};
+#ifdef __DEBUG__
+    hint localize format["__HasGVar(PATROL_COUNT)=%1:__GetGVar(PATROL_COUNT)=%2,",__HasGVar(PATROL_COUNT), __GetGVar(PATROL_COUNT) ];
+#endif
 _daytime = daytime;
 if ( _daytime <= SYG_shortNightEnd || _daytime > SYG_shortNightStart ) then {_str1 = localize "STR_RUM_NIGHT";}
 else

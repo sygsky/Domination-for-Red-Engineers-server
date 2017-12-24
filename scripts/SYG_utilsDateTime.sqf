@@ -121,7 +121,7 @@ SYG_missionDayToNum = {
 /**
  * Returns mission time info in format "dd.mm.yyyy hh:mm:ss/md"
  * where 'md' is number of days mission is running (from 1 to ...)
- * call: _str = call SYG_missionTimeInfoStr);
+ * call: _str = call SYG_missionTimeInfoStr;
  */
 SYG_missionTimeInfoStr = 
 {
@@ -141,7 +141,7 @@ SYG_daytimeToStr = {
 };
 
 /**
- * Returns human date localized format: e.g: "1 August 1985"/ "1 августа 1985"
+ * Returns human date localized format: e.g: "1 August 1985"/"1 августа 1985"
  *
  * call: _str = date call SYG_humanDateStr;
  *

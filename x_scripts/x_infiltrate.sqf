@@ -223,7 +223,6 @@ while { true } do {
 	
 	sleep 0.1;
 	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
-	__SetGVar(INFILTRATION_TIME, date);
 #ifdef __PRINT__
 	hint localize format["x_infiltrate.sqf: __SetGVar(INFILTRATION_TIME, %1), __GetGVar = %2", date, __GetGVar(INFILTRATION_TIME)];
 #endif

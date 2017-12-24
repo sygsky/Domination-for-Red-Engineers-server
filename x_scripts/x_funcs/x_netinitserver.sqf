@@ -207,7 +207,7 @@ XHandleNetStartScriptServer = {
                 };
             };
 
-            hint localize format["+++ __HasGVar(INFILTRATION_TIME) = %1",__HasGVar(INFILTRATION_TIME)];
+            //hint localize format["+++ __HasGVar(INFILTRATION_TIME) = %1",__HasGVar(INFILTRATION_TIME)];
 			if (__HasGVar(INFILTRATION_TIME)) then
 			{
 			    _date = __GetGVar(INFILTRATION_TIME);
@@ -215,6 +215,7 @@ XHandleNetStartScriptServer = {
 			    {
                     _msg_arr set [ count _msg_arr, ["STR_SYS_617", _date call SYG_dateToStr] ]; // "Last assault was at dd.MM.yyyy hh:mm:ss"
 			    };
+			    __SetGVar(INFILTRATION_TIME,_date); // send info to this client too
 			};
 
 			// TODO: add here more messages for the 1st greeting to user

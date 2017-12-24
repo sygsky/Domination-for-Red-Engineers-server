@@ -39,13 +39,6 @@ _wp2 setWaypointType "MOVE";
 
 _chopper flyInHeight 100; // fly on height about 100 meters
 
-// store time of the last infiltration on base
-__SetGVar(INFILTRATION_TIME, date);
-#ifdef __DEBUG_PRINT__
-hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено, установка переменной даёт %1",
-                      __HasGVar(INFILTRATION_TIME)];
-#endif
-
 _parachute_type = (
 	switch (d_enemy_side) do {
 		case "EAST": {"ParachuteEast"};
@@ -120,6 +113,12 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 		    hint localize format["%1 x_createpara2.sqf: chopper damaged %2, saboteur creation stopped", call SYG_missionTimeInfoStr, damage _chopper];
 		};
 	};
+	// store time of the last infiltration on base
+    __SetGVar(INFILTRATION_TIME, date);
+    #ifdef __DEBUG_PRINT__
+    hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено, установка переменной даёт %1",
+                          __HasGVar(INFILTRATION_TIME)];
+    #endif
 	// fly on height about 200 meters after paradrop completion (prevent collision with mountain slopes)
 	_chopper flyinheight 200;
 
