@@ -644,7 +644,7 @@ XHandleNetStartScriptClient = {
 			    {
 			        _cnt = __GetGVar(PATROL_COUNT);
         			//hint localize format["Patrol count is %1", _cnt ];
-				}
+				};
                 _this set[0, "GRU_msg"];
 			};
 			_this call GRU_procClientMsg;

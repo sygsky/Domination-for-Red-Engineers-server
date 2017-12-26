@@ -8,7 +8,7 @@ private ["_ok", "_XD_display", "_ctrl", "_rarray", "_vdindex", "_i", "_index", "
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-#define __DEBUG__
+//#define __DEBUG__
 
 #define GRU_DIALOG_ID 2011
  
