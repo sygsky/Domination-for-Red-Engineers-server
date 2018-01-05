@@ -19,7 +19,7 @@ _heli_array = [];
 	#endif
 	#ifdef __TT__
 	_is_west_chopper = false;
-	{if (_number_v == (_x select 0)) exitWith {_is_west_chopper = true}} forEach d_choppers_west;
+	{if (_number_v == (_x select 0)) exitWith {_is_west_chopper = true;}} forEach d_choppers_west;
 	if (!_is_west_chopper) then {
 		call compile format ["
 			%1 =_vehicle;
