@@ -24,13 +24,13 @@ _heli_array = [];
 		call compile format ["
 			%1 =_vehicle;
 			publicVariable ""%1"";
-			%1 addeventhandler [""killed"", {_this execVM ""x_scripts\x_checkveckillracs.sqf""}];
+			%1 addEventHandler [""killed"", {_this execVM ""x_scripts\x_checkveckillracs.sqf""}];
 		", _number_v];
 	} else {
 		call compile format ["
 			%1 =_vehicle;
 			publicVariable ""%1"";
-			%1 addeventhandler [""killed"", {_this execVM ""x_scripts\x_checkveckillwest.sqf""}];
+			%1 addEventHandler [""killed"", {_this execVM ""x_scripts\x_checkveckillwest.sqf""}];
 		", _number_v];
 	};
 	#endif
@@ -86,7 +86,7 @@ while {true} do {
 			if (!_ifdamage) then {_vec_a set [3,0]};
 			sleep 0.5;
 			_vehicle = objNull;
-			_vehicle = (_vec_a select 6) createvehicle (_vec_a select 4);
+			_vehicle = (_vec_a select 6) createVehicle (_vec_a select 4);
 			_vehicle setPos (_vec_a select 4);
 			_vehicle setdir (_vec_a select 5);
 			_vec_a set [0,_vehicle];
@@ -104,17 +104,17 @@ while {true} do {
 					switch (_dchop_v select 1) do {
 						case 0: {
 							_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-							_vehicle addeventhandler ["getin", {[_this,0] execVM "x_scripts\x_checkhelipilot.sqf";}];
-							_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
+							_vehicle addEventHandler ["getin", {[_this,0] execVM "x_scripts\x_checkhelipilot.sqf";}];
+							_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
 						};
 						case 1: {
 							_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-							_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkhelipilot_wreck.sqf";}];
-							_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
+							_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkhelipilot_wreck.sqf";}];
+							_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
 						};
 						case 2: {
 							_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-							_vehicle addeventhandler ["getout", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf";}];
+							_vehicle addEventHandler ["getout", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf";}];
 						};
 					};
 				};
@@ -124,7 +124,7 @@ while {true} do {
 				call compile format ["
 					%1=_vehicle;
 					publicVariable ""%1"";
-					%1 addeventhandler [""killed"", {_this execVM ""x_scripts\x_checkveckillracs.sqf"";}];
+					%1 addEventHandler [""killed"", {_this execVM ""x_scripts\x_checkveckillracs.sqf"";}];
 				", _number_v];
 				if (X_SPE) then {
 					_dchop_v = [];
@@ -137,20 +137,20 @@ while {true} do {
 						switch (_dchop_v select 1) do {
 							case 0: {
 								_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-								_vehicle addeventhandler ["getin", {[_this,0] execVM "x_scripts\x_checkhelipilot.sqf";}];
-								_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
-								_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+								_vehicle addEventHandler ["getin", {[_this,0] execVM "x_scripts\x_checkhelipilot.sqf";}];
+								_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
+								_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 							};
 							case 1: {
 								_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-								_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkhelipilot_wreck.sqf";}];
-								_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
-								_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+								_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkhelipilot_wreck.sqf";}];
+								_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf";}];
+								_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 							};
 							case 2: {
 								_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-								_vehicle addeventhandler ["getin", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf";}];
-								_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+								_vehicle addEventHandler ["getin", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf";}];
+								_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 							};
 						};
 					};
@@ -159,7 +159,7 @@ while {true} do {
 				call compile format ["
 					%1=_vehicle;
 					publicVariable ""%1"";
-					%1 addeventhandler [""killed"", {_this execVM ""x_scripts\x_checkveckillwest.sqf""}];
+					%1 addEventHandler [""killed"", {_this execVM ""x_scripts\x_checkveckillwest.sqf""}];
 				", _number_v];
 				if (X_SPE) then {
 					_dchop_v = [];
@@ -172,20 +172,20 @@ while {true} do {
 						switch (_dchop_v select 1) do {
 							case 0: {
 								_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-								_vehicle addeventhandler ["getin", {[_this,0] execVM "x_scripts\x_checkhelipilot.sqf"}];
-								_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
-								_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
+								_vehicle addEventHandler ["getin", {[_this,0] execVM "x_scripts\x_checkhelipilot.sqf"}];
+								_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
+								_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
 							};
 							case 1: {
 								_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false];// "Меню вертолета"
-								_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkhelipilot_wreck.sqf"}];
-								_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
-								_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
+								_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkhelipilot_wreck.sqf"}];
+								_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
+								_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
 							};
 							case 2: {
 								_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false];// "Меню вертолета"
-								_vehicle addeventhandler ["getin", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf"}];
-								_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
+								_vehicle addEventHandler ["getin", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf"}];
+								_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
 							};
 						};
 					};

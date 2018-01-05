@@ -21,13 +21,13 @@ _vec_array = [];
 			_var = format["MRR%1",_number_v];
 			call compile format ["%1=_vehicle;publicVariable ""%1"";", _var];
 	#ifdef __TT__
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 	#endif
 		};
 	#ifdef __TT__
 		case "MRR": {
 			call compile format ["MRRR%1=_vehicle;publicVariable ""MRRR%1"";", _number_v];
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 		};
 	#endif
 		case "TTR";
@@ -36,40 +36,40 @@ _vec_array = [];
 			call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 			_vehicle setAmmoCargo 0;
 	#ifdef __TT__
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 	#endif
 		};
 	#ifdef __TT__
 		case "TRR": {
 			call compile format ["TRR%1=_vehicle;publicVariable ""TRR%1"";", _number_v];
 			_vehicle setAmmoCargo 0;
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 		};
 	#endif
     #ifdef __TT__
 		case "TTRR": {
 			call compile format ["TRR%1=_vehicle;publicVariable ""TRR%1"";", _number_v];
 			_vehicle setAmmoCargo 0;
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 		};
 	#endif
 	#ifdef __TT__
 		case "TRAR": {
 			call compile format ["TRR%1=_vehicle;publicVariable ""TRR%1"";", _number_v];
 			_vehicle setAmmoCargo 0;
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 		};
 	#endif
 		case "MV": {
 			MEDVEC = _vehicle; publicVariable "MEDVEC";
 	#ifdef __TT__
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 	#endif
 		};
 	#ifdef __TT__
 		case "MVR": {
 			MEDVECR = _vehicle; publicVariable "MEDVECR";
-			_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 		};
 	#endif
 	};
@@ -160,11 +160,11 @@ while {true} do {
 
 					if (X_SPE) then {
 						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
-						_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
+						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};
 				#ifdef __TT__
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 				#endif
 				};
 			#ifdef __TT__
@@ -172,19 +172,19 @@ while {true} do {
 					call compile format ["MRRR%1=_vehicle;publicVariable ""MRRR%1"";", _number_v];
 					if (X_SPE) then {
 						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
-						_vehicle addeventhandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
+						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 				};
 			#endif
 				case "TR": {
 					call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
 				#ifdef __TT__
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 					if (X_SPE) then {
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
 					};
 				#endif
 				};
@@ -192,9 +192,9 @@ while {true} do {
 				case "TRR": {
 					call compile format ["TRR%1=_vehicle;publicVariable ""TRR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 					if (X_SPE) then {
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
 					};
 				};
 			#endif
@@ -202,7 +202,7 @@ while {true} do {
 					call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
 				#ifdef __TT__
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 				#endif
 					if (X_SPE) then {
 						if (/*__AIVer ||*/ str(player) in d_is_engineer) then {
@@ -212,20 +212,20 @@ while {true} do {
 							_vehicle addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузка орудия"
 							_vehicle addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Выгрузка орудия"
 						};
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
 					};
 				};
 			#ifdef __TT__
 				case "TTRR": {
 					call compile format ["TRR%1=_vehicle;publicVariable ""TRR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 					if (X_SPE) then {
 						if (/*__AIVer ||*/ str(player) in d_is_engineer) then {
 							_vehicle addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузка орудия"
 							_vehicle addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; //"Выгрузка орудия"
 						};
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
 					};
 				};
 			#endif
@@ -233,9 +233,9 @@ while {true} do {
 					call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
 				#ifdef __TT__
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 					if (X_SPE) then {
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
 					};
 				#endif
 				};
@@ -243,27 +243,27 @@ while {true} do {
 				case "TRAR": {
 					call compile format ["TRR%1=_vehicle;publicVariable ""TRR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 					if (X_SPE) then {
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
 					};
 				};
 			#endif
 				case "MV": {
 					MEDVEC = _vehicle; publicVariable "MEDVEC";
 				#ifdef __TT__
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 					if (X_SPE) then {
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
 					};
 				#endif
 				};
 			#ifdef __TT__
 				case "MVR": {
 					MEDVECR = _vehicle; publicVariable "MEDVECR";
-					_vehicle addeventhandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
+					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 					if (X_SPE) then {
-						_vehicle addeventhandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
 					};
 				};
 			#endif
