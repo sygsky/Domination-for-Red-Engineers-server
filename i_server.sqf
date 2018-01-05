@@ -637,7 +637,7 @@ d_airki_attack_plane = (
 // САМОЛЕТЫ НАД ГОРОДОМ
 //##############################################################################
 //--- Sygsky: remove useless planes  ["ACE_A10_AGM_FFAR","ACE_A10_MK82","ACE_AV8B_AGM65","ACE_A10_MK82HD","ACE_AV8B_AG_AGM65","ACE_AV8B_AA","ACE_AV8B_GBU12","ACE_AV8B_AA_GBU12","ACE_AV8B_MK82","ACE_AV8B_AA_MK82","ACE_AV8B_AG_MK82_MK83","ACE_AV8B_MK83"]
-[ "ACE_A10_AGM_FFAR","ACE_A10_MK82","ACE_A10_MK82HD","ACE_AV8B_AG_MK82_MK83","ACE_AV8B_AG_AGM65","ACE_AV8B_AA_MK82","ACE_AV8B_AA_GBU12" ]
+[ "ACE_A10_AGM_FFAR"/*,"ACE_A10_MK82"*/,"ACE_A10_MK82HD"/*,"ACE_AV8B_AG_MK82_MK83"*/,"ACE_AV8B_AG_AGM65","ACE_AV8B_AGM65"/*,"ACE_AV8B_AA_MK82"*/,"ACE_AV8B_AA_GBU12" ]
 	}
 );
 #endif
