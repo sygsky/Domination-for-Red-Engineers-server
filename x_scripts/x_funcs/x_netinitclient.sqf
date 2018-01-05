@@ -295,14 +295,22 @@ XHandleNetStartScriptClient = {
                         else
                         {
                             // inform about new hero
-                            _msg = format["(+%1)! %2", _name, _msg ];
+                            if (_name == "") then
+                            {
+                                _msg = format["(%1)! %2", localize "STR_MAIN_COMPLETED_BY_UNKNOWN", _msg ];
+                            }
+                            else
+                            {
+                                _msg = format["(%1)! %2", _name, _msg ];
+                            };
                         };
                     };
                 };
                 #endif
 //				call compile format["_ind = floor (random %1);", localize "STR_MAIN_COMPLETED_NUM"];
 //				call compile format["_msg = localize ""STR_MAIN_COMPLETED_%1"";", _ind];
-				deleteMarkerLocal "main_target_radiotower";[ format[localize "STR_SYS_311", _msg], "HQ"] call XHintChatMsg; //"Радиовышка уничтожена... %1"
+				deleteMarkerLocal "main_target_radiotower";
+				[ format[localize "STR_SYS_311", _msg], "HQ"] call XHintChatMsg; //"Радиовышка уничтожена... %1"
 			};
 		};
 		case "mt_radio": {

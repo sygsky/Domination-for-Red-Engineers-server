@@ -62,7 +62,7 @@ SYG_defeatTracks =
     ["mountains","Gandalf_Simades","whold","end"],
     ["ATrack9","ATrack10","ATrack14","ATrack15"],
     ["ATrack16","ATrack17","ATrack18","ATrack19"],
-    ["ATrack20","ATrack21","ATrack22","thetrembler"],
+    ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]]
 ];
@@ -91,7 +91,7 @@ SYG_southDefeatTracks =
     ["ATrack8",[51.715,7.287],[59.002,8.563],[67.565,7.704]],
     ["ATrack8",[75.269,8.823],[84.092,9.734],[95.986,6.246]],
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.988,-1]],
-    ["ATrack11","ATrack12","ATrack13"]
+    ["ATrack11","ATrack12","ATrack13","arroyo"]
 ];
 
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
