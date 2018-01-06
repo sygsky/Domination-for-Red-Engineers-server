@@ -150,7 +150,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 			
 	SYG_HK417_WPN_SET_STD = ["ACE_HK417C","ACE_HK417C_EOTECH","ACE_HK417L","ACE_HK417L_EOTECH","ACE_HK417L_M68"];
 	SYG_HK417_WPN_SET_STD_OPTICS = ["ACE_HK417C_ACOG","ACE_HK417L_ACOG"];
-	SYG_HK417_WPN_SET_STD_SD = ["ACE_HK417C_SD", "ACE_HK417C_EOTECH_SD","ACE_HK417L_SD","ACE_HK417L_EOTECH_SD","ACE_HK417L_M68_SD"];
+	//SYG_HK417_WPN_SET_STD_SD = ["ACE_HK417C_SD", "ACE_HK417C_EOTECH_SD","ACE_HK417L_SD","ACE_HK417L_EOTECH_SD","ACE_HK417L_M68_SD"];
 	//SYG_HK417_WPN_SET_STD_SD_OPTICS = ["ACE_HK417C_ACOG_SD","ACE_HK417L_ACOG_SD"];
 	SYG_HK417_WPN_SET_SNIPER = ["ACE_HK417L_Leu"];
 	//SYG_HK417_WPN_SET_SNIPER_SD = ["ACE_HK417L_Leu_SD"];
@@ -515,7 +515,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP",2]]; // average launcher + high penetration rocket
 				if ( _adv_rearm ) then 
 				{
-					_wpn = RAR(SYG_HK417_WPN_SET_STD_SD);
+					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				}
 				else
 				{
@@ -801,11 +801,11 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				_equip = SYG_MEDIC_SET + [["ACE_SmokeGrenade_Red",2]];
 				if ( _adv_rearm ) then 
 				{
-					_wpn = RAR(SYG_HK417_WPN_SET_STD_SD);
+					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				}
 				else
 				{
-					_wpn = RAR(SYG_HK417_WPN_SET_STD);
+					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 8]]; 
 				//player globalChat format["Medic equipped: %1", _equip];
