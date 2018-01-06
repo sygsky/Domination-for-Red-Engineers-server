@@ -499,6 +499,7 @@ STR_MAIN_COMPLETED_4,"Finally a LOT of scrap metal for our pioneers...","Schlie�
 STR_MAIN_COMPLETED_5,"Finally, it is easier to live without ZombiVision...","Schließlich ist es einfacher zu Leben, ohne ZombiVision...","Наконец-то, стало легче жить без зомбоящиков..."
 STR_MAIN_COMPLETED_6,"Broke this, next may be Ostankino TV tower...","Gebrochen zu haben, diese dann in der Zukunft brechen und Ostankino Fernsehturm...","Заломал эту, заломаешь и Останкинскую... в следующий раз"
 STR_MAIN_COMPLETED_BY_YOU,by You,Durch Sie,Вами
+STR_MAIN_COMPLETED_BY_UNKNOWN,by unknown hero,durch einen unbekannten Helden,неизвестным героем
 STR_SEC_COMPLETED_BY_YOU,with your help,mit Ihrer Hilfe,с вашей помощью
 
 STR_SYS_300,"You are too far away from the selected region (%1 m), the required distance <= %2 m","Sie sind zu weit von der gewählten Bereich (%1 m) muss der Abstand <= %2 m","Вы слишком далеко от выбранной области (%1 м.), требуется дистанция <= %2 м."
@@ -720,7 +721,7 @@ STR_SYS_1145,The guerrillas said some of the changes in the number of patrols,Di
 
 STR_SYS_1150,Fix Headbug,Fix Headbug,Исправить хэд-баг
 STR_SYS_1151,"Finish SM(# %1)","Fertig SM(# %1)","Завершите доп(# %1)!"
-STR_SYS_1151_1,"The Resistance of Sahrani asks you you to complete the next side mission (# %1)","Guerilla Сахрани bitten abzuschließen SM (# %1)!","Партизаны Сахрани просят вас завершить доп. миссию (# %1)!"
+STR_SYS_1151_1,"The Resistance of Sahrani asks you to complete the next side mission (# %1)","Guerilla Сахрани bitten abzuschließen SM (# %1)!","Партизаны Сахрани просят вас завершить доп. миссию (# %1)!"
 STR_SYS_1152,"The people of Sahrani thank you for your liberation mission!","Die Leute von Sahrani danke für Sie Befreiung mission!","Сопротивление Сахрани благодарит Вас за выполнение освободительной миссии!"
 
 STR_SYS_1160,T'was a spotter!,Es war ein spotter!,Это был корректировщик!

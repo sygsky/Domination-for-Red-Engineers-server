@@ -5,6 +5,13 @@ if (!XClient) exitWith {};
 
 _which = _this select 0;
 
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+if (_which == 1) then
+{
+    if (!call isSYG_isMainTargetAllowed) then { _which = 0;  }; // show side mission except of main one
+};
+#endif
+
 if ((_which == 1 && ((current_target_index == -1)) || (client_target_counter >= number_targets))) exitWith {};
 
 //if (_which == 0 && (current_mission_text == "Все миссии выполнены!!!" || current_mission_text == "Новых дополнительных заданий не определено..." || current_mission_text == "В настоящие время дополнительное задание не определено...")) exitWith {};
@@ -32,13 +39,6 @@ _start_pos = (
 #endif
 _end_pos = [];
 _exit_it = false;
-
-#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-if (_which == 1) then
-{
-    if (!call isSYG_isMainTargetAllowed) then { _which = 0;  }; // show side mission except of main one
-};
-#endif
 
 switch (_which) do {
 	case 0: {

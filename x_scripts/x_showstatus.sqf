@@ -15,10 +15,17 @@ _XD_display = findDisplay 11001;
 _target_array2 = [];
 _current_target_name = "";
 
-if (current_target_index == -1) then // before 1st town
+if (current_target_index == -1) then // before 1st town or side mission request
 {
-    _target_array2 = d_base_array;
-    _current_target_name = localize "STR_SYS_215"; //"Airbase";
+    if ( SYG_isMainTargetAllowed ) then
+    {
+        _target_array2 = d_base_array;
+        _current_target_name = localize "STR_SYS_215"; //"Airbase";
+    }
+    else
+    {
+        _current_target_name = [ "localize", "STR_SYS_1151_1", current_mission_counter + 1 ]; // "Finish SM(%1)"
+    };
 }
 else // next target town ready
 {
