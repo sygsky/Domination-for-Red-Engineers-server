@@ -12,7 +12,7 @@
 #define arg(x) (_this select(x))
 #define argp(param,x) ((param)select(x))
 #define argopt(num,val) (if(count _this<=(num))then{val}else{arg(num)})
-#define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random (count ARR))))
+#define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random(count ARR))))
 #define RANDOM_FROM_PARTS_ARR(ARR) (ARR select((floor(random((count ARR)-1)))+1))
 
 #define NEW_DEATH_SOUND_ON_BASE_DISTANCE 2000
@@ -76,7 +76,7 @@ SYG_playRandomDefeatTrack = {
 SYG_northDefeatTracks =
 [
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
-    ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.079,-1]],
+    ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
     ["ATrack9","ATrack10","ATrack19","bolero"]
 ];
 
@@ -90,7 +90,7 @@ SYG_southDefeatTracks =
     ["ATrack8",[29.332,7.392],[36.723,7.492],[44.219,7.496]],
     ["ATrack8",[51.715,7.287],[59.002,8.563],[67.565,7.704]],
     ["ATrack8",[75.269,8.823],[84.092,9.734],[95.986,6.246]],
-    ["ATrack8",[103.377,7.157],[141.480,11.66],[153.988,-1]],
+    ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
     ["ATrack11","ATrack12","ATrack13","arroyo"]
 ];
 
@@ -181,7 +181,7 @@ SYG_RahmadiDefeatTracks = ["ATrack23b",[0,9.619],[9.619,10.218],[19.358,9.092],[
 //
 SYG_playRandomTrack = {
     //hint localize format["+++ scripts/SYG_utilsSound.sqf: input %1 +++",_this];
-    if (typeName _this == "STRING") exitWith
+    if (typeName _this == "STRING") exitWith // 3. _arr = "ATrack24"; // play full track
     {
 #ifdef __DEBUG__
         hint localize format["""%1"" call SYG_playRandomTrack;",_this];
@@ -190,14 +190,14 @@ SYG_playRandomTrack = {
     }; // full track
     if ( typeName _this != "ARRAY") exitWith
     {
-        hint localize format["scripts/SYG_utilsSound.sqf: unknown params %1",_this];
+        hint localize format["SYG_playRandomTrack: unknown params %1",_this];
     };
     // if here it is some ARRAY
     if (count _this == 0) exitWith
     {
-        hint localize "scripts/SYG_utilsSound.sqf/SYG_playRandomTrack : empty input array";
+        hint localize "SYG_playRandomTrack : empty input array";
     };
-    if ( (count _this == 1) && ((typeName arg(0)) == "STRING")) exitWith
+    if ( (count _this == 1) && ((typeName arg(0)) == "STRING")) exitWith // 4. _arr = ["ATrack24"]; // play full track
     {
 #ifdef __DEBUG__
         hint localize format["[""%1""] call SYG_playRandomTrack;",_this];
@@ -207,11 +207,11 @@ SYG_playRandomTrack = {
     // count >= 1
     if ( (typeName arg(0)) == "ARRAY" ) exitWith // array of array
     {
-        RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random one and try to play from it
+        RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random array and try to play from it
     };
     if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be
     {
-        if ((typeName arg(1)) == "STRING") exitWith
+        if ((typeName arg(1)) == "STRING") exitWith // 1. _arr = ["ATrack9","ATrack10" ...]; // play full random track
         {
             _item = RANDOM_ARR_ITEM(_this);
 #ifdef __DEBUG__
@@ -219,13 +219,24 @@ SYG_playRandomTrack = {
 #endif
             playMusic _item;
         }; // list of tracks, play any selected
-        // first is track name, others are part descriptors
+        // first is track name (STRING), others are part descriptors [start, length], ...
         if ((typeName arg(1)) == "ARRAY") exitWith  // list of track parts
         {
             private ["_trk"];
+
+            // in rare random case (1 time from 100 attempts) play whole track
+            if ( (random 100) < 1) exitWith
+            {
+#ifdef __DEBUG__
+                hint localize format["SYG_playPartialTrack: play whole track %1 now !!!",arg(0)];
+#endif
+                playMusic arg(0)
+            };
+
+            // play partial random sub-track
             _trk = floor(random ((count _this)-1)) + 1;
-            _trk = arg(_trk); // get any random item, excluding 1st (sound name)
-            if ( argp(_trk,1) > 0) then
+            _trk = arg(_trk); // get any random partial item, excluding 1st (sound name)
+            if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
             {
 #ifdef __DEBUG__
                 hint localize format["SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
@@ -235,14 +246,14 @@ SYG_playRandomTrack = {
             else
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playPartialTrack: %1",[arg(0),argp(_trk,0)]];
+                hint localize format["SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
 #endif
                 playMusic [arg(0),argp(_trk,0)];
             };
 
         };
     };
-    hint localize format["scripts/SYG_utilsSound.sqf/SYG_playRandomTrack: can't parse input %1", _this];
+    hint localize format["SYG_playRandomTrack: can't parse input %1", _this];
 };
 
 //
