@@ -824,7 +824,7 @@ STR_HIT_UNCONSCIOUS,"You are unconscious...","Sie verlieren das Bewusstsein...",
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,67,67,67
+STR_RUM_NUM,68,68,68
 STR_RUM_NIGHT,"They are sleeping in %3","Alle schlafen in %3","В %3 все спят, однако"
 STR_RUM_0,"Rumors are absent! It's weird...","Gerüchte sind nicht vorhanden! Es ist seltsam...","Слухи отсутствуют! Что странно..."
 STR_RUM_1,"Enemy refuel truck will help only if your vehicle engine is on","Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf","Вражеский бензовоз заправляет при включенном двигателе техники"
@@ -893,6 +893,7 @@ STR_RUM_63,"Technical services for aircraft and helicopters built in the Norther
 STR_RUN_64,Antigua now has a parajump flag,Auf Antigua gibt es jetzt Fallschirmspringen Flagge auf Antigua,на Антигуа есть флаг
 STR_RUN_65,Engineers now get points for the duration of the vehicle repair,Ingenieure erhalten nun Punkte für die Dauer der Reparatur,Инженер теперь получает очки за время ремонта
 STR_RUN_66,"Sometime islanders would ask you to complete next side mission. Please don't reject this!","Gelegentlich Inselbewohner wird Sie bitten, zu vervollständigen Nebenmissionen. Bitte nicht ablehnen!","Иногда островитяне будет просить Вас сделать дополнительную миссию. Не отказывайте ему!"
+STR_RUN_67,"Local guru now reports the time of the last landing of commandos at the airbase","Local guru meldet jetzt die Zeit der letzten Landung von Kommandos bei der airbase","Местный гуру подпитывает слухи о времени последнего десанта на базу"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
