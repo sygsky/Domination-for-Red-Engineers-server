@@ -2,7 +2,7 @@
 //
 // x_createpara2.sqf
 //
-// Creates paratroopers for base invasion, eject them and check heli up to the final moment
+// Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
 //private ["_assigned","_helifirstpoint","_chopper","_paragrp","_leader","_pos_end","_u","_unit_array","_vgrp","_wp","_xx","_heliendpoint","_wp2","_attack_pos", "_i", "_grp_array","_parachute_type"];
 private ["_assigned", "_helifirstpoint", "_chopper", "_paragrp", "_leader", "_u", "_vgrp", "_wp", "_xx", 
@@ -38,6 +38,12 @@ _wp2 setWaypointSpeed "NORMAL";
 _wp2 setWaypointType "MOVE";
 
 _chopper flyInHeight 100; // fly on height about 100 meters
+
+// store time of the start of last infiltration on base
+__SetGVar(INFILTRATION_TIME, date);
+#ifdef __DEBUG_PRINT__
+hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено на %1", date];
+#endif
 
 _parachute_type = (
 	switch (d_enemy_side) do {
@@ -113,12 +119,6 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 		    hint localize format["%1 x_createpara2.sqf: chopper damaged %2, saboteur creation stopped", call SYG_missionTimeInfoStr, damage _chopper];
 		};
 	};
-	// store time of the last infiltration on base
-    __SetGVar(INFILTRATION_TIME, date);
-    #ifdef __DEBUG_PRINT__
-    hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено, установка переменной даёт %1",
-                          __HasGVar(INFILTRATION_TIME)];
-    #endif
 	// fly on height about 200 meters after paradrop completion (prevent collision with mountain slopes)
 	_chopper flyinheight 200;
 
@@ -199,9 +199,9 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 			{
 				_grp = d_on_base_groups select _i;
                 _cnt = _grp call XfGetAliveUnits;
-                if ( _cnt <= 1) then
+                if ( _cnt <= 2) then
                 {
-                    if ( _cnt == 1) then // join last member to this group
+                    if ( _cnt > 0 1) then // join last member to this group
                     {
 #ifdef	__DEBUG_PRINT__
                         hint localize format["x_createpara2.sqf: prev. group id %1 (of 1 saboteur) joined to this one", _i];
