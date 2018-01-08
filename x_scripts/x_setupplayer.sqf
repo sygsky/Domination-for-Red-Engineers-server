@@ -1128,11 +1128,13 @@ switch (d_own_side) do {
 };
 #endif
 
-//------------------------------------------------------------------------------------+
-// special triggers for engineers, in AI version everybody can repair and flip vehicles |
-//------------------------------------------------------------------------------------+
+//--------------------------------------------------------------------------------------------------------------+
+// special triggers for engineers, before December of 2017 in AI version everybody can repair and flip vehicles |
+//--------------------------------------------------------------------------------------------------------------+
 
+#ifndef __NON_ENGINEER_REPAIR_RENALTY__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
+#endif
 	d_eng_can_repfuel = true;
 	
 	#ifndef __TT__
@@ -1173,7 +1175,11 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	#ifdef __ENGINEER_OLD__
 	_trigger setTriggerStatements["call x_sfunc", "actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer_old.sqf',[],-1,false]", "player removeAction actionID2"]; //'Починить/заправить технику'
 	#endif
+
+#ifndef __NON_ENGINEER_REPAIR_RENALTY__
 };
+#endif
+
 
 #ifndef __TT__
 // Enemy at base

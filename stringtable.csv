@@ -97,6 +97,7 @@ STR_SYS_15,"%1/%2 l.","%1/%2 l.","%1/%2 л."
 STR_SYS_16,Status of vehicle:\n---------------------\n Fuel: %1\nDamage: %2","Status des Fahrzeugs:\n---------------------\nKraftstoff: %1\nSchaden: %2","Статус техники:\n---------------------\n Топливо: %1\n Повреждение: %2"
 STR_SYS_17,"You recently repaired something on the base. Now have to either wait for about of %1 min. or use a repair truck...","Haben Sie vor kurzem repariert etwas an der Basis. Jetzt muss man entweder warten, bis etwa %1 min, oder Sie können dem LKW...","Вы недавно отремонтировали что-то на базе. Теперь придётся либо ждать около %1 мин., либо воспользоваться ремонтным грузовиком..."
 STR_SYS_18,"Please restore the ability to repair and refueling equipment on the base...","Bitte Wiederherstellung der Fähigkeit zur Reparatur und Betankung Ausrüstung auf der Basis...","Восстановите способность ремонта и заправки техники на базе..."
+STR_SYS_18_1,"No any vehicle nearby that is in need of repair...","Nein, jedes Fahrzeug in der Nähe, dass ist in der Notwendigkeit der Reparatur...","Поблизости нет машин для ремонта и заправки..."
 STR_SYS_19,"Repair, refuel: %1... wait...","Reparatur, Tankstellen: %1... warten Sie...","Ремонт, заправка: %1... ожидайте..."
 
 STR_SYS_20,"Select respawn place","Select respawn place","Выбор места возрождения"
