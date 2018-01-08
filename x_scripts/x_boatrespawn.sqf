@@ -1,4 +1,5 @@
-// by Xeno
+// by Xeno, x_scripts/x_boatrespawn.sqf.
+// modified by EngineerACE to work correctly
 private ["_boats_a", "_i", "_one_boat", "_boat_a", "_boat", "_empty", "_disabled"];
 
 #include "x_macros.sqf"
@@ -23,7 +24,7 @@ hint localize format["x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHECK_DE
 #define DIST_TO_OWN_TO_PLAYER 20
 
 _boats_a = [];
-for "_i" from 1 to 30 do {
+for "_i" from 1 to 35 do {
 	call compile format ["
 	if (!isNil ""boat%1"") then
 	{

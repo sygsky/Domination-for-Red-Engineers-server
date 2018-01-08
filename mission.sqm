@@ -692,7 +692,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=215;
+		items=220;
 		class Item0
 		{
 			position[]={9657.131836,139.994995,9987.144531};
@@ -1267,7 +1267,7 @@ class Mission
 		};
 		class Item57
 		{
-			position[]={17837.892578,0.323755,4712.937988};
+			position[]={17836.111328,0.357632,4713.261719};
 			azimut=533.901978;
 			id=87;
 			side="EMPTY";
@@ -1278,7 +1278,7 @@ class Mission
 		};
 		class Item58
 		{
-			position[]={17827.031250,0.460899,4711.453125};
+			position[]={17828.605469,0.456394,4712.059570};
 			azimut=533.523010;
 			id=88;
 			side="EMPTY";
@@ -2841,6 +2841,61 @@ class Mission
 			side="EMPTY";
 			vehicle="Heli_H_civil";
 			skill=0.600000;
+		};
+		class Item215
+		{
+			position[]={17832.039063,0.421256,4712.755859};
+			azimut=533.523010;
+			id=255;
+			side="EMPTY";
+			vehicle="PBX";
+			leader=1;
+			skill=0.600000;
+			text="boat31";
+		};
+		class Item216
+		{
+			position[]={17839.849609,0.313852,4713.657715};
+			azimut=533.523010;
+			id=256;
+			side="EMPTY";
+			vehicle="PBX";
+			leader=1;
+			skill=0.600000;
+			text="boat32";
+		};
+		class Item217
+		{
+			position[]={17843.175781,0.309933,4714.118652};
+			azimut=533.523010;
+			id=257;
+			side="EMPTY";
+			vehicle="PBX";
+			leader=1;
+			skill=0.600000;
+			text="boat33";
+		};
+		class Item218
+		{
+			position[]={17847.019531,0.354853,4714.061035};
+			azimut=533.523010;
+			id=258;
+			side="EMPTY";
+			vehicle="PBX";
+			leader=1;
+			skill=0.600000;
+			text="boat34";
+		};
+		class Item219
+		{
+			position[]={17850.332031,0.428305,4714.134277};
+			azimut=533.523010;
+			id=259;
+			side="EMPTY";
+			vehicle="PBX";
+			leader=1;
+			skill=0.600000;
+			text="boat35";
 		};
 	};
 	class Markers
