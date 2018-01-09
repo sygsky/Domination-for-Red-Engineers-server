@@ -9,6 +9,10 @@
 
 private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_val","_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres"];
 
+#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+_is_engineer = format ["%1", player] in d_is_engineer;
+#endif
+
 _caller = _this select 1;
 _aid = _this select 2;
 
@@ -24,8 +28,12 @@ if (player distance TR7 < 21 || player distance TR8 < 21) then {
 		if ( alive _x ) exitWith { _truck_near = true; };
 	} forEach _trArr;
 #endif
-if (!d_eng_can_repfuel && !_truck_near) exitWith {
-	hint (localize "STR_SYS_18");//"Следует восстановить способность ремонта и заправки техники на базе...";
+if (!d_eng_can_repfuel) exitWith {
+	hint (localize "STR_SYS_18"); //"Please restore the ability to repair and refueling equipment on the base..."
+};
+
+if (!_truck_near) exitWith {
+	hint (localize "STR_SYS_18_1"); // "No any vehicle nearby that is in need of repair..."
 };
 
 #ifdef __RANKED__
