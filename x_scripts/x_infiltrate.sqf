@@ -71,8 +71,8 @@ _pilot = (
 _time_to_clean = time;
 _items_to_clean = [];
 _base_center = d_base_array select 0; //[[9821.47,9971.04,0], 600, 200, 0]
-_dx = (d_base_array select 1) + 150; // half of rect width
-_dy = (d_base_array select 2) + 150; // half of rect height
+_dx = (d_base_array select 1)/* + 150*/; // half of rect width
+_dy = (d_base_array select 2) /*+ 150*/; // half of rect height
 _search_radious = sqrt( _dx * _dx + _dy * _dy) + 10;
 
 while { true } do {
@@ -124,39 +124,39 @@ while { true } do {
             for "_i" from 0 to count _arr - 1 do
             {
                 _vehicle = _arr select _i;
-                if ( !isNull _vehicle ) then
+                if ( [getPos _vehicle, d_base_array] call SYG_pointInRect ) then // in rect of base
                 {
-                    _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
-                    if (!_found) then
+                    if ( !isNull _vehicle ) then
                     {
-                        if ( _vehicle isKindOf "CaManBase") then
-                        { // check if dead man not player
-                            _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
-                            // check for zombies found
-                            if ( !_found ) then
-                            {
-                                if ( isNull (group _vehicle) && (name _vehicle == "Error: No unit")) then
-								{
-									// Yesss, he is ZOMBIiiiii..... try to remove him in any way
-									hint localize format["+++ x_infiltrate.sqf: zombi detected in clean proc, try to remove it away from the base"];
-									_vehicle setPos [ 0, 0, 0 ];
-									sleep 0.1;
-									_vehicle setDamage 1.1;
-									sleep 0.1;
-									_found = true;
-								};
-                            };
-                        }
-                        else
-                        { // check if holder is on the ground or is hanging in air (some Arma bug)
-                            _found = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
-                        };
-                    };
-                    if ( _found ) then
-                    {
-                        if (!(_vehicle in _items_to_clean)) then
+                        _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
+                        if (!_found) then
                         {
-                            if ( [getPos _vehicle, d_base_array] call SYG_pointInRect ) then
+                            if ( _vehicle isKindOf "CaManBase") then
+                            { // check if dead man not player
+                                _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
+                                // check for zombies found
+                                if ( !_found ) then
+                                {
+                                    if ( isNull (group _vehicle) && (name _vehicle == "Error: No unit")) then
+                                    {
+                                        // Yesss, he is ZOMBIiiiii..... try to remove him in any way
+                                        hint localize format["+++ x_infiltrate.sqf: zombi detected in clean proc, try to remove it away from the base"];
+                                        _vehicle setPos [ 0, 0, 0 ];
+                                        sleep 0.1;
+                                        _vehicle setDamage 1.1;
+                                        sleep 0.1;
+                                        _found = true;
+                                    };
+                                };
+                            }
+                            else
+                            { // check if holder is on the ground or is hanging in air (some Arma bug)
+                                _found = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
+                            };
+                        };
+                        if ( _found ) then
+                        {
+                            if (!(_vehicle in _items_to_clean)) then
                             {
                                 _items_to_clean = _items_to_clean + [_vehicle];
                             };
