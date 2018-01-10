@@ -145,15 +145,12 @@ class CfgMusic
 	    sound[]=   {\sounds\invasion.ogg,db-1,1.0};
     };
 
-	class fear
-	{
-	    name="";
-	    sound[]=   {\sounds\fear.ogg,db-1,1.0};
-    };
-
+    // Fear music
+	class fear { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; };
 	class bestie{ name="";  sound[]= {\sounds\bestie.ogg,db-1,1.0}; };
-
 	class gamlet { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; };
+	class fear3 { name=""; sound[]=   {\sounds\fear3.ogg,db-1,1.0}; };
+	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; };
 
 
     class thetrembler
@@ -284,10 +281,16 @@ class CfgMusic
     class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
 
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
-    class pimbompimbom { name=""; sound[] = {\sounds\pimbompimbom.ogg,db-1,1.0};} // defeat music
-    class Delerium_Wisdom { name=""; sound[] = {\sounds\Delerium_Wisdom.ogg,db-1,1.0};} // defeat music
+
+    class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0};} // used in  intro
+    class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0};} // used in  intro
+    class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0};} // used in  intro
+
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
     class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
+
+    class pimbompimbom { name=""; sound[] = {\sounds\pimbompimbom.ogg,db-1,1.0};} // defeat music
+    class Delerium_Wisdom { name=""; sound[] = {\sounds\Delerium_Wisdom.ogg,db-1,1.0};} // defeat music
     class mountains { name=""; sound[] = {\sounds\mountains.ogg,db-1,1.0};} // defeat music
     class Gandalf_Simades { name=""; sound[] = {\sounds\Gandalf_Simades.ogg,db-1,1.0};} // defeat music
 
@@ -295,14 +298,16 @@ class CfgMusic
     class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
     class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
 
+    class vozdushnye_potoki { name=""; sound[] = {\sounds\vozdushnye_potoki.ogg,db-1,1.0};} // Your parachute is opened!!!
+    class vozdushnye_potoki_2 { name=""; sound[] = {\sounds\vozdushnye_potoki_2.ogg,db-1,1.0};} // TODO: add to jump from a plane at mision start
 
 };
 
 class CfgSounds
 {
 	sounds[] = {
-		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse_neighs,Tank_GetIn,APC_GetIn,
-		gamlet
+		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse_neighs,Tank_GetIn,APC_GetIn
+
 #ifdef __REVIVE__
 		,DBrian_Im_hit, DBrian_Im_bleeding,DBrian_Medic,DBrian_Bastards,DBrian_Shit_Man_down,DBrian_Oh_no,
 		DBrian_Fuck,DBrian_Fuck_it,DBrian_Shit,DBrian_Need_help,DBrian_A_little_help_here
