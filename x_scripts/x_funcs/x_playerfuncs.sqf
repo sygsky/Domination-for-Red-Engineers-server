@@ -102,7 +102,7 @@ Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
 	if (player distance _target_pos < 50) then {
-	    playMusic(["fear","bestie","gamlet"] call XfRandomArrayVal);
+	    playMusic(["fear","bestie","gamlet","fear3","heartbeat"] call XfRandomArrayVal);
 		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "Внимание! Вы были обнаружены вражескими корректировщиками..."
 	};
 };
