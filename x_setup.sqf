@@ -64,8 +64,11 @@
 // if true then the old engineer (faster) script gets used
 //#define __ENGINEER_OLD__
 
+// comment to enable only engineers to repair and refuel, else anybody can repair with a defined penalty for each +1 engineer score but can't refuel
+#define __NON_ENGINEER_REPAIR_RENALTY__ -5
+
 // if you are still running 1.14 comment the following line
-//#define __NO_PARABUG_FIX__
+#define __NO_PARABUG_FIX__
 
 // comment if you don't want that super cool radio tower effect from Spooner and Loki
 //#define __WITH_SCALAR__
