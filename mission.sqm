@@ -692,7 +692,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=220;
+		items=221;
 		class Item0
 		{
 			position[]={9657.131836,139.994995,9987.144531};
@@ -2896,6 +2896,16 @@ class Mission
 			leader=1;
 			skill=0.600000;
 			text="boat35";
+		};
+		class Item220
+		{
+			position[]={9535.187500,139.994995,9838.061523};
+			special="NONE";
+			id=260;
+			side="EMPTY";
+			vehicle="TT650C";
+			skill=1.000000;
+			text="moto6";
 		};
 	};
 	class Markers

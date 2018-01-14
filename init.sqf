@@ -149,7 +149,7 @@ if (isServer) then {
 #endif	
 
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
-	[moto1,moto2,moto3,moto4,moto5] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add 4 travelling motocycles at base
+	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 
 	if (d_weather) then {execVM "scripts\weather\weathergen2.sqf";};
 
@@ -351,13 +351,13 @@ if (isServer) then {
 	// OnPlayer Connected DB
 	if (isNil "ace_sys_network_OPCB") then {ace_sys_network_OPCB = []};
 	ace_sys_network_OPCB = ace_sys_network_OPCB + [{[_this select 0] execVM "x_scripts\x_serverOPC.sqf"}];
-	hint localize format["ACE:ace_sys_network_OPCB[%1] = %2",count ace_sys_network_OPCB,ace_sys_network_OPCB];
-	hint localize format["ACE:ace_sys_network_OPC[%1] = %2",count ace_sys_network_OPC,ace_sys_network_OPC];
+	hint localize format["ACE:ace_sys_network_OPCB = %1", ace_sys_network_OPCB];
+	hint localize format["ACE:ace_sys_network_OPC = %1", ace_sys_network_OPC];
 
 	// On Player Disconnect
 	if (isNil "ace_sys_network_OPD") then {ace_sys_network_OPD = []};
 	ace_sys_network_OPD = ace_sys_network_OPD + [{[_this select 0] execVM "x_scripts\x_serverOPD.sqf"}];
-	hint localize format["ACE:ace_sys_network_OPD[%1] = %2",count ace_sys_network_OPD,ace_sys_network_OPD];
+	hint localize format["ACE:ace_sys_network_OPD = %1", ace_sys_network_OPD];
 
 #else
 	onPlayerConnected "xhandle = [_name] execVM ""x_scripts\x_serverOPC.sqf""";
