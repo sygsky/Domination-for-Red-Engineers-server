@@ -248,7 +248,7 @@ SYG_isNewYear = {
 };
 
 //
-// returns true if day is in a new year range (from 21.12 to 10.01)
+// returns true if day is in a new year range (from 26-DEC to 06-JAN)
 //
 //	
 // call as follow: 
@@ -260,7 +260,7 @@ SYG_isNewYear0 = {
 	if ( arg(0) < 1985) exitWith { [0,0,0,0,0,0] }; // illegal or suspicious  time received from server
 	_mon = arg(1);
 	_day = arg(2);
-	( ((_mon == 12) && (_day > 20)) || ((_mon == 1) && ( _day < 11)))
+	( ((_mon == 12) && (_day > 25)) || ((_mon == 1) && ( _day < 7)))
 };
 
 SYG_monLength  = [31,28,31,30,31,30,31,31,30,31,30,31]; // months length
