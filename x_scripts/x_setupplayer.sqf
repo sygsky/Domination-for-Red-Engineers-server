@@ -963,27 +963,34 @@ if ( !(isNil "AI_HUT") && (_string_player in d_can_use_artillery) ) then {
 }
 else
 {
+    _local_msg_arr = [];
     if ( isNil "AI_HUT" ) then
     {
-        [] spawn
-        {
-            sleep 45;
-            (localize "STR_SYS_1176") call XfHQChat; // "The barracks is destroyed, the military draft is cancelled"
-        };
+        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1176"]; // "The barracks is destroyed, the military draft is cancelled"
     }
     else
     {
         if ( !(_string_player in d_can_use_artillery) ) then
         {
-            [] spawn
-            {
-                sleep 45;
-                (localize "STR_SYS_1177") call XfHQChat; // "To call on the service can only observer-rescue"
-            };
-            AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"];
+            _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1177"]; // "To call on the military service can only observer-rescue"
+            AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"]; // "Inspect"
         };
     };
 
+#ifdef __NON_ENGINEER_REPAIR_RENALTY__
+    if (!(_string_player in d_is_engineer) ) then {
+        _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_RENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
+    };
+#endif
+
+    _local_msg_arr spawn {
+        if (count _this == 0) exitWith{};
+        sleep 45;
+        {
+             sleep 4;
+             _x call XfGlobalChat;
+        } forEach _this;
+    };
 };
 
 
@@ -1132,8 +1139,11 @@ switch (d_own_side) do {
 // special triggers for engineers, before December of 2017 in AI version everybody can repair and flip vehicles |
 //--------------------------------------------------------------------------------------------------------------+
 
+//hint localize  format["__NON_ENGINEER_REPAIR_RENALTY__ = %1",__NON_ENGINEER_REPAIR_RENALTY__];
 #ifndef __NON_ENGINEER_REPAIR_RENALTY__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
+#else
+hint localize "__NON_ENGINEER_REPAIR_RENALTY__: everybody can repair with scores sudtraction";
 #endif
 	d_eng_can_repfuel = true;
 	
@@ -1161,10 +1171,12 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	d_last_base_repair = -1;
 	#endif
 
-	_trigger = createTrigger["EmptyDetector" ,_pos];
-	_trigger setTriggerArea [0, 0, 0, false];
-	_trigger setTriggerActivation ["NONE", "PRESENT", true];
-	_trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
+    if (_string_player in d_is_engineer) then { // only for engineers!!!
+        _trigger = createTrigger["EmptyDetector" ,_pos];
+        _trigger setTriggerArea [0, 0, 0, false];
+        _trigger setTriggerActivation ["NONE", "PRESENT", true];
+        _trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
+    };
 
 	_trigger = createTrigger["EmptyDetector" ,_pos];
 	_trigger setTriggerArea [0, 0, 0, true];
