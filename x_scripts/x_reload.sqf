@@ -181,21 +181,33 @@ if (__MandoVer) then {
 };
 sleep x_reload_time_factor;
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
-[_vehicle, localize "STR_SYS_258"] call XfVehicleChat; // "Починка..."
-_vehicle setDamage 0;
-sleep x_reload_time_factor;
-if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
+
+//++++++++++++ Repairing
+if ((getDammage _vehicle) > 0) then
+{
+    [_vehicle, localize "STR_SYS_258"] call XfVehicleChat; // "Repairing..."
+    _vehicle setDamage 0;
+    sleep x_reload_time_factor;
+}
+else
+{
+    [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx to engineers!"
+};
 
 //+++++ Refuelling
+if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 _pos = getPos _vehicle; // original position on service
 [_vehicle, localize "STR_SYS_257"] call XfVehicleChat; // "Refuel..."
 while {fuel _vehicle < 0.99} do {
-	if ( (_pos distance _vehicle) > 0.5) exitWith // behicle moved from service, so stop refuelling
+
+    _pos1 = getPos _vehicle;
+	if ( (_pos distance _pos1) > 0.5) exitWith // vehicle moved from service, so stop refuelling
 	{
+	    hint localize format["x_reload.sqf: refuelling aborted, fuel %1, (pos_orig %2) distance (pos_now %3) = %4", fuel _vehicle, _pos, getPos _vehicle, _pos distance _vehicle];
         [_vehicle, format [localize "STR_SYS_257_1", _type_name]] call XfVehicleChat; // "Refueling is interrupted, the hose came off"
 	};
 	sleep 0.3;
-	_vehicle setFuel (((fuel _vehicle) + 0.1) min 1);
+	_vehicle setFuel (((fuel _vehicle) + 0.5) min 1);
 };
 //_vehicle setFuel 1;
 sleep x_reload_time_factor;
