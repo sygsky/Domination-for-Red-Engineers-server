@@ -465,6 +465,7 @@ STR_SYS_256_A_2,"You sad to think that fun here will not work!","Sie traurig zu 
 STR_SYS_256_A_3,"You regret, but accept the fact that you have to fight for real now!","Sie bedauern, aber akzeptieren Sie die Tatsache, dass Sie haben zu kämpfen für real!","Вы с сожалением, но принимаете факт, что воевать придётся по настоящему!"
 
 STR_SYS_257,"Refuelling...","Tanken...","Заправка..."
+STR_SYS_257_1,"Refueling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","Заправка %1 прервана, шланг оторвался"
 STR_SYS_258,"Repairing...","Reparieren...","Починка..."
 STR_SYS_259,"%1: service completed","%1: Service abgeschlossen","%1: обслуживание завершено"
 

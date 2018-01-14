@@ -185,12 +185,19 @@ if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 _vehicle setDamage 0;
 sleep x_reload_time_factor;
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
-[_vehicle, localize "STR_SYS_257"] call XfVehicleChat; //"Заправка..."
+
+//+++++ Refuelling
+_pos = getPos _vehicle; // original position on service
+[_vehicle, localize "STR_SYS_257"] call XfVehicleChat; // "Refuel..."
 while {fuel _vehicle < 0.99} do {
-	_vehicle setFuel (((fuel _vehicle) + 0.1) min 1);
-	//_vehicle setFuel 1;
+	if ( (_pos distance _vehicle) > 0.5) exitWith // behicle moved from service, so stop refuelling
+	{
+        [_vehicle, format [localize "STR_SYS_257_1", _type_name]] call XfVehicleChat; // "Refueling is interrupted, the hose came off"
+	};
 	sleep 0.3;
+	_vehicle setFuel (((fuel _vehicle) + 0.1) min 1);
 };
+//_vehicle setFuel 1;
 sleep x_reload_time_factor;
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 [_vehicle, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
