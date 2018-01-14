@@ -143,7 +143,7 @@ XHandleNetStartScriptServer = {
 			if (isNil "d_connection_number") then
 			{
 			    d_connection_number = 1;
-    			_msg_arr = [["STR_SYS_604_0"]]; // 'You are the first [English speaking] warrior in this dangerous mission to liberate Sahrani!"
+    			_msg_arr = [["STR_SYS_604_0"]]; // "You are the first [English speaking] warrior in this dangerous mission to liberate Sahrani!"
 			}
 			else
 			{
@@ -152,7 +152,20 @@ XHandleNetStartScriptServer = {
 			};
 
             // add more messages if possible
-			_msg_arr set [ count _msg_arr, ["STR_SERVER_MOTD0"] ]; // "Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty"
+            _msg = "STR_SERVER_MOTD0"; // "The islanders are happy to welcome you in your native language!"
+            if ( _name == "Aron") then // Slovak
+            {
+    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!";
+            }
+            else
+            {
+                if (_name == "Petigp") then // Hungarian
+                {
+        			_msg = "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+                };
+            };
+
+  			_msg_arr set [ count _msg_arr, [_msg] ];
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then // first time entry after half of game
 			{

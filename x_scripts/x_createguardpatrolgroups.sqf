@@ -221,7 +221,7 @@ sleep 2.124;
 
 if (!no_more_observers) then {
 	// artillery observers
-	nr_observers = 2 + (floor random 2); // 2 or 3
+	nr_observers = (2 + (floor random 2)) max 2; // 2 or 3
 	Observer1 = objNull;
 	Observer2 = objNull;
 	Observer3 = objNull;
