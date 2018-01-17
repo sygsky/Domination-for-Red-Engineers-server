@@ -11,7 +11,7 @@ bonus_number = sm_bonus_vehicle_array call XfRandomFloorArray;
 // ensure that next bonus isn't the same
 if (!isNil "last_sm_bonus_vehicle_number") then
 {
-    hint format["+++ x_scripts/x_getbonus.sqf(1): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
+    hint localize format["+++ x_scripts/x_getbonus.sqf(1): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
     // try to get vehicle different to the last received one
      while {bonus_number == last_sm_bonus_vehicle_number} do
      {
@@ -19,7 +19,7 @@ if (!isNil "last_sm_bonus_vehicle_number") then
      };
 };
 last_sm_bonus_vehicle_number = bonus_number;
-hint format["+++ x_scripts/x_getbonus.sqf(2): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
+hint localize format["+++ x_scripts/x_getbonus.sqf(2): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
 
 sleep 1.012;
 
