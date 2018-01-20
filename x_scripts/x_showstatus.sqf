@@ -17,7 +17,7 @@ _current_target_name = "";
 
 if (current_target_index == -1) then // before 1st town or side mission request
 {
-    if ( SYG_isMainTargetAllowed ) then
+    if ( call SYG_isMainTargetAllowed ) then
     {
         _target_array2 = d_base_array;
         _current_target_name = localize "STR_SYS_215"; //"Airbase";
