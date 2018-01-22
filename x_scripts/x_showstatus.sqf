@@ -24,7 +24,7 @@ if (current_target_index == -1) then // before 1st town or side mission request
     }
     else
     {
-        _current_target_name = [ "localize", "STR_SYS_1151_1", current_mission_counter + 1 ]; // "Finish SM(%1)"
+        _current_target_name = format[localize "STR_SYS_1151_1", current_mission_counter + 1 ]; // "Finish SM(%1)"
     };
 }
 else // next target town ready
