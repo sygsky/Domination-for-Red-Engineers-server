@@ -2,7 +2,7 @@
 //
 //
 // new input params format is: [thislist,"vehicle_type"]
-private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed"];
+private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -34,16 +34,36 @@ if ( isNull _vehicle) exitWith{};
 
 if (!alive _vehicle) exitWith {};
 
+_nemaster = false;
+//hint localize format["_nemaster = %1", _nemaster];
+
+_driver = driver _vehicle;
+if ( isPlayer _driver) then
+{
+    if ((name _driver) == "HE_MACTEP") then
+    {
+        _nemaster = true;
+    };
+};
 // Mainly check for helicopters, others are not so exposed to double reloading efforts
 _already_loading = false;
 _already_loading = _vehicle getVariable "already_on_load";
 if (format ["%1", _already_loading] == "<null>") then { _already_loading = false;  }; // no var means not loading
-if ( _already_loading ) exitWith
+
+//hint localize format["_nemaster = %1, _already_loading = %2", _nemaster, _already_loading];
+if ((!_nemaster) && _already_loading ) exitWith
 {
     _vehicle setVariable ["already_on_load", nil];
     [_vehicle, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
 };
-_vehicle setVariable ["already_on_load", true]; // mark starting reload
+
+if (_nemaster && _already_loading ) then
+{
+    hint localize ">>> HE_MACTEP на вертолётном сервисе <<<";
+    [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
+};
+
+_vehicle setVariable ["already_on_load", true]; // mark already in reloading phase
 
 _magazines = [];
 
