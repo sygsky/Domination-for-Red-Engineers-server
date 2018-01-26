@@ -245,10 +245,10 @@ SYG_nearestZoneOfInterest = {
 	if ( count _opts > 0 ) then
 	{
 		if ( typeName _pos != "ARRAY" ) then { _pos = position _pos;};
-		_part = _pos call SYG_whatPartOfIsland; // island part (upper, lower) for designated point
+		_part = _pos call SYG_whatPartOfIsland; // island part (upper/lower) for designated point
 		if ( _same_part ) then // check need for the same part
 		{
-			if ( _part == "CENTER" ) then {_same_part = false;}; // doesn't matter where is situated tested point according to base one
+			if ( _part == "CENTER" ) then {_same_part = false;}; // doesn't matter where is situated tested point according to the Corazol city
 		};
 		
 		_min_dist = 9999999.9;
@@ -342,7 +342,7 @@ SYG_nearestZoneOfInterest = {
 					};
 				};
 			};
-			if ( _dist < _wanted_dist AND _dist < _min_dist  AND _dist >= 0) then {_min_dist = _dist; _ind = _i;};
+			if ( (_dist < _wanted_dist) && (_dist < _min_dist)  && (_dist >= 0) ) then {_min_dist = _dist; _ind = _i;};
 			_reta set [_i, _pos1];
 		};
 	};
@@ -592,6 +592,8 @@ SYG_getMainTaskTargetPos = { (call SYG_getTargetTown) select 0 };
 
 #define __DEBUG_COMP__
 //
+// TODO: replcae with more universal procedure
+//
 // Updates GRU house equipment. Call only from server if MP
 // 1. Check for the computer house presence,
 // 2. Check for computer presence if not present, create all equipment
@@ -697,6 +699,7 @@ SYG_updateIntelBuilding = {
 	};
 };
 
+// Moves map position in some map dialogs
 //
 // call as follow:
 // [_display_id, _ctrl_id, _end_pos] call SYG_setMapPosToMainTarget;

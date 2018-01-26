@@ -15,7 +15,9 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 
 #define DEFAULT_INTEL_MAP_MARKERS_PREFIX "IMM_"
 
-#define ADD_1CARGO_TO_TRUCKS_AND_HMMW
+#define __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
+#define __NOT_POPULATE_LOADER_TO_TANK__
+#define __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
 
 if ( !isNil "SYG_utilsVehicles_INIT" )exitWith { hint "SYG_utilsVehicles already initialized"};
 SYG_utilsVehicles_INIT = false;
@@ -487,14 +489,14 @@ SYG_populateVehicle ={
 	_pos = getPos _veh;
 
 	_tlist = _veh call SYG_turretsList;
-#ifdef NOT_POPULATE_LOADER_TO_TANK
+#ifdef __NOT_POPULATE_LOADER_TO_TANK__
 	if ( _veh isKindOf "Tank" ) then
 	{
 		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
 	};
 #endif
 
-#ifdef NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT
+#ifdef __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
 	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then
 	{
 		_tlist = [[1], _tlist] call SYG_removeFromTurretList;
@@ -557,9 +559,9 @@ SYG_populateVehicle ={
 	// never populate small mguns of HMMWV_GVT
 	// well, lets look if we should fill some cargo places in trucks and canons, may be in M113, MG strikes, AT humwee
 
-#ifdef ADD_1CARGO_TO_TRUCKS_AND_HMMW
+#ifdef __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
 // for WEST enemy only
-	if ( (_veh isKindOf "Truck") OR (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
+	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
 	{
         // add "ACE_SoldierWMAT_A" as a passenger
         _emptypos = _veh emptyPositions "Cargo";
@@ -600,6 +602,7 @@ SYG_fuelCapacity = {
 	getNumber(configFile >> "CfgVehicles" >> _this >> "fuelCapacity")
 };
 
+// TODO: use anywhere
 // call:
 //      _town = [[10550,9375,0],"Paraiso", 405];
 //      _params = [_town select 0,_town select 1, _town select 1, 0]; // for rectangle

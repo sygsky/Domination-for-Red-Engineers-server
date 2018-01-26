@@ -17,8 +17,7 @@
 #define DEFAULT_MAX_DISTANCE_TO_TARGET 1500
 #define DEFAULT_MIN_GROUP_SIZE 5
 #define MIN_POSSIBLE_GROUP_SIZE 2
-#define NOT_POPULATE_LOADER_TO_TANK
-#define NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT
+
 // ACE_Binocular, ACE_LaserDesignator, ACE_LaserDesignatorMag, ACE_Laserbatteries
 
 if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
@@ -108,19 +107,6 @@ SYG_findNearestSideGroup = {
 		} forEach nearestObjects [_pos, _types, _dist]; //_nearArr;
 	};
 	_grp
-};
-
-SYG_readSlots = {
-
-private ["_readSlots"];
-_readSlots = { getNumber ( configFile >> "CfgVehicles" >> _this >> "weaponSlots" ) };
-_slotPrimary     = { (_this call _readSlots) % 2 };
-_slotHandGun     = { floor((_this call _readSlots) / WeaponSlotHandGun ) % 2 };
-_slotSecondary   = { floor((_this call _readSlots) / WeaponSlotSecondary ) % 4 };
-_slotHandGunMag  = { floor((_this call _readSlots) / WeaponSlotHandGunMag ) % 16 };
-_slotMag         = { floor((_this call _readSlots) / WeaponSlotMag ) % 16 };
-_slotGoggle      = { floor((_this call _readSlots) / WeaponSlotGoggle ) % 8 };
-_hardMounted     = { floor((_this call _readSlots) / WeaponHardMounted ) % 2 };
 };
 
 /**

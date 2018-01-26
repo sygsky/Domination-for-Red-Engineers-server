@@ -375,6 +375,22 @@ SYG_isRifle = { (_this call SYG_readWeaponType) == 1};
 SYG_isPistol = { (_this call SYG_readWeaponType) == 2};
 SYG_isLauncher = { (_this call SYG_readWeaponType) == 4};
 
+/*
+SYG_readSlots = {
+
+private ["_readSlots"];
+_readSlots = { getNumber ( configFile >> "CfgVehicles" >> _this >> "weaponSlots" ) };
+_slotPrimary     = { (_this call _readSlots) % 2 };
+_slotHandGun     = { floor((_this call _readSlots) / WeaponSlotHandGun ) % 2 };
+_slotSecondary   = { floor((_this call _readSlots) / WeaponSlotSecondary ) % 4 };
+_slotHandGunMag  = { floor((_this call _readSlots) / WeaponSlotHandGunMag ) % 16 };
+_slotMag         = { floor((_this call _readSlots) / WeaponSlotMag ) % 16 };
+_slotGoggle      = { floor((_this call _readSlots) / WeaponSlotGoggle ) % 8 };
+_hardMounted     = { floor((_this call _readSlots) / WeaponHardMounted ) % 2 };
+};
+*/
+
+
 /**
  * Reads only weapons type (not equipment) list from unitPos
  * call: _list = _unit call SYG_readUnitWeapons;
