@@ -11,15 +11,15 @@ bonus_number = sm_bonus_vehicle_array call XfRandomFloorArray;
 // ensure that next bonus isn't the same
 if (!isNil "last_sm_bonus_vehicle_number") then
 {
-    hint localize format["+++ x_scripts/x_getbonus.sqf(1): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
     // try to get vehicle different to the last received one
      while {bonus_number == last_sm_bonus_vehicle_number} do
      {
+        hint localize format["+++ x_scripts/x_getbonus.sqf(1): hit with last_sm_bonus_vehicle_number=%1", last_sm_bonus_vehicle_number];
         bonus_number = sm_bonus_vehicle_array call XfRandomFloorArray; // Note: we have to get random index, not bonus vehicle type
      };
 };
 last_sm_bonus_vehicle_number = bonus_number;
-hint localize format["+++ x_scripts/x_getbonus.sqf(2): last_sm_bonus_vehicle_number=%1, bonus_number=%2", last_sm_bonus_vehicle_number, bonus_number];
+hint localize format["+++ x_scripts/x_getbonus.sqf(2): bonus_number=%1", bonus_number];
 
 sleep 1.012;
 
@@ -35,7 +35,11 @@ _pos = [];
 
 
 #ifndef __TT__
-_posa = sm_bonus_positions select bonus_number; _pos = _posa select 0;_dir = _posa select 1;
+_pos_a = sm_bonus_positions select (bonus_number % (count sm_bonus_positions));
+_pos = _posa select 0;
+_dir = _posa select 1;
+//	_vec_type = sm_bonus_vehicle_array select (_i % (count sm_bonus_vehicle_array));
+
 #endif
 
 #ifdef __TT__
