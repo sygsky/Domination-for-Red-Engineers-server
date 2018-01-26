@@ -1298,6 +1298,37 @@ SYG_createEnemyGroup =
     while {!can_create_group} do {sleep 0.1 + random (0.2)};//__WaitForGroup
     [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
 };
+
+/*
+ * Set parachutes cargo in heli to predefined number (e.g. to have place for RGP in the heli during flight)
+ * call: [_heli, 2, "ACE_ParachutePack" or "ACE_ParachuteRoundPack"] call SYG_setHeliParaCargo;
+ * where 2 is new parachutes number
+ * "ACE_ParachutePack" - new parachute type
+ */
+SYG_setHeliParaCargo = {
+    //hint localize format["<<< SYG_setHeliParaCargo %1 >>>",_this]; // log start
+    if (typeName _this == "OBJECT") then {_this = [_this];};
+    if ( typeName _this != "ARRAY") exitWith {false};
+
+    _heli = _this select 0;
+
+    if (! (_heli isKindOf "Helicopter")) exitWith {false};
+
+    clearWeaponCargo _heli; // remove all default parachutes number (for Mi17 is 3)
+
+    _num = 1;
+    if ((count _this) > 1 ) then { _num = _this select 1;};
+
+    _paraType = "ACE_ParachuteRoundPack"; //default parachute
+    if ((count _this) > 2 ) then { _paraType = _this select 1;};
+
+    _heli addWeaponCargo [_paraType, _num];
+};
+
+
+
+
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
