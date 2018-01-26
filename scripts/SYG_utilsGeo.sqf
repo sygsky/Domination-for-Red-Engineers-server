@@ -377,6 +377,26 @@ SYG_whatPartOfIsland = {
 };
 
 /**
+ * Decides if point is in desert region or no
+ * call:
+ *    _part = _getPos player call SYG_isDesert; // TRUE or FALSE
+ */
+SYG_isDesert = {
+	private ["_pos","_str","_res"];
+	_pos = [];
+	switch toUpper(typeName _this) do
+	{
+		case "OBJECT": {_pos = getPos _this;};
+		case "LOCATION": {_pos = locationPosition _this;};
+		case "GROUP": {_pos = getPos (leader _this);};
+		case "ARRAY": {_pos = _this;};
+	};
+	_str = "<ERROR DETECTED>";
+	if ( (count _pos) == 0 ) exitWith {false};
+	argp(_pos,1) < 8080 // this is a max Y coordinate of desert region on Sahrani (by my estimation)
+};
+
+/**
  * Detects if point is on any of small islet, not on main Island Sahrani
  * call:
  *    _bool = (getPos player) call SYG_pointOnIslet; // true or false is returned
