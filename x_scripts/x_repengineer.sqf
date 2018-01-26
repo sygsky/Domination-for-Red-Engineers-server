@@ -185,7 +185,7 @@ _addscore = (
 if (_addscore > 0) then {
 #ifdef __NON_ENGINEER_REPAIR_RENALTY__
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
-    if (!_is_engineer) exitWith
+    if (!_is_engineer) then
     {
         _addscore = _addscore * __NON_ENGINEER_REPAIR_RENALTY__;
         _str = "STR_SYS_137_1"; //"Вычтено очков за обслуживание техники: %1 ..."
