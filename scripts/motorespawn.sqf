@@ -22,7 +22,7 @@ if (!isServer) exitWith{};
 #define RESTORE_DELAY_SHORT 30
 #define CYCLE_DELAY 15
 #define TIMEOUT_ZERO 0
-#define MOTO_ON_PLACE_DIST 2
+#define MOTO_ON_PLACE_DIST 3.5
 #define DRIVER_NEAR_DIST 10
 #define FUEL_MIN_VOLUME 0.2
 // offsets for vehicle status array items
@@ -37,13 +37,21 @@ if (!isServer) exitWith{};
 _motoarr = []; // create array of vehicles to return to original position after some delay
 sleep 2;
 
+// read all vehicles and store their inintial positon and angles
 {
 //	_motoarr = _motoarr + [[_x, getPos _x, direction _x, TIMEOUT_ZERO]];
 	_pos = getPos _x;
 	_pos set[2,0]; // zero Z coordinate
 	_x setPos _pos;
-	sleep 0.5;
-	_motoarr = _motoarr + [[_x, getPos _x, getDir _x, TIMEOUT_ZERO]];
+	sleep 0.2;
+	_pos1 = getPos _x;
+	_pos1 set [2,0];
+	sleep 0.2;
+	_motoarr = _motoarr + [[_x, _pos1, getDir _x, TIMEOUT_ZERO]];
+#ifdef __DEBUG__
+    hint localize format["%1: initPos %2, setPos %3", _x, _pos, _pos1];
+#endif
+
 } forEach _this; // list all motocyrcles/automobiles
 
 sleep CYCLE_DELAY;
@@ -70,13 +78,12 @@ while {true} do {
 
 	//  forEach _motoarr;
 	{
-		_moto = _x select MOTO_ITSELF;
-		_timeout = _x select MOTO_TIMEOUT;
-		_pos = _x select MOTO_ORIG_POS;
-		_pos set [2,0];
+		_moto    = argp(_x, MOTO_ITSELF);
+		_timeout = argp(_x, MOTO_TIMEOUT);
+		_pos     = argp(_x, MOTO_ORIG_POS); // base pos (where it must be!)
 
-		_pos1 = getPos _moto;
-		if ( _timeout == TIMEOUT_ZERO ) then
+		_pos1 = getPos _moto; // real pos
+		if ( _timeout == TIMEOUT_ZERO ) then // check conditonsm for moto restoring
 		{
 			_pos1 set [2,0]; // zero Z coordinate
 			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( ( _pos1 distance _pos) > MOTO_ON_PLACE_DIST)  ) then
@@ -101,7 +108,7 @@ while {true} do {
 				    _pos2 = getPos _nobj;
         			_pos2 set [2,0]; // zero Z coordinate
                     _driver_near = ((side _nobj) == east) && ((_pos2 distance _pos1) < DRIVER_NEAR_DIST);
-                    if ( !( ( ( count (crew _moto)) > 0 ) || _driver_near) ) then // if empty and no man nearby (10 metres circle)
+                    if ( !( ( ( count (crew _moto)) == 0 ) || _driver_near) ) then // if empty and no man nearby (10 metres circle)
                     {
                         if ( !alive _moto ) then // recreate vehicle
                         {
