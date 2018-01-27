@@ -23,6 +23,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 	SYG_Sahrani_p0 = [13231.3,8890.26,0]; // City Corazol center
 	SYG_Sahrani_p1 = [14878.6,7736.74,0]; // Vector dividing island to 2 parts (North and South) begininig, point p1
 	SYG_Sahrani_p2 = [5264.39,16398.1,0]; // Vector dividing island to 2 parts (North and South) end, point p2
+	SYG_Sahrani_desert_max_Y = 8080; // max Y coordinates for desert region of sahrani
 
 	SYG_SahraniIsletCircles = 
 	[
@@ -379,7 +380,7 @@ SYG_whatPartOfIsland = {
 /**
  * Decides if point is in desert region or no
  * call:
- *    _part = _getPos player call SYG_isDesert; // TRUE or FALSE
+ *    _amIInDesert = _getPos player call SYG_isDesert; // TRUE or FALSE
  */
 SYG_isDesert = {
 	private ["_pos","_str","_res"];
@@ -392,8 +393,9 @@ SYG_isDesert = {
 		case "ARRAY": {_pos = _this;};
 	};
 	_str = "<ERROR DETECTED>";
-	if ( (count _pos) == 0 ) exitWith {false};
-	argp(_pos,1) < 8080 // this is a max Y coordinate of desert region on Sahrani (by my estimation)
+	if ( (count _pos) < 2 ) exitWith {false};
+	// this is a max Y coordinate of desert region on Sahrani (by my estimation)
+	argp(_pos,1) < SYG_Sahrani_desert_max_Y
 };
 
 /**
@@ -805,6 +807,44 @@ SYG_MsgOnPosE = {
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
 	format[ _msg , _dist, _dir, _locname ]
+};
+
+/*
+ * Apppoximated distance to the base by feet in meters
+
+  calls:
+        _dist = player call SYG_distToBase;
+        _dist = (getPos player) call SYG_distToBase;
+ */
+SYG_distToBase = {
+
+};
+
+/*
+ * Distance from 1 point to second by land. To make it distance by car multiply result by 1.4.
+
+  Calls:
+        _dist = [player, FLAG_BASE] call SYG_distByCar;
+        _dist = [_pos1, _pos2] call SYG_distByCar;
+  Note:
+        both points must be on mainland, not in water or on any of islets
+  Returns -1 if parameters are invalid, distance between point by car/feet on the land
+ */
+SYG_geoDist = {
+    if (typeName _this != "ARRAY") exitWith {-1};
+    if (count _this != 2) exitWith{-1};
+    _pos1 = arg(0);
+    _pos2 = arg(1);
+    if (typeName _pn1 == "OBJECT") then {_pos1 = getPos _pos1;};
+    if (typeName _pn1 != "ARRAY") then {-1};
+    if (typeName _pn2 == "OBJECT") then {_pos2 = getPos _pos2;};
+    if (typeName _pn2 != "ARRAY") then {-1};
+    // "NORTH", "SOUTH", "CENTER"
+    _part1 = _pos1 call SYG_whatPartOfIsland;
+    _part2 = _pos2 call SYG_whatPartOfIsland;
+    _onSamePart = (_part1 == "CENTER" || _part2 == "CENTER");
+    if ((_part1 == _part2 || _onSamePart) exitWith {_pos1 distance _pos1};
+    (_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0)
 };
 
 if (true) exitWith {};
