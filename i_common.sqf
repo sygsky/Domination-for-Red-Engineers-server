@@ -415,7 +415,7 @@ sm_bonus_vehicle_array = (
 			} else {
 				if (__ACEVer) then {
 [
-"ACE_BRDM2_ATGM",	// 0-12 (13 vehicles total)
+"ACE_BRDM2_ATGM",	// 0-13 (14 vehicles total)
 "ACE_BRDM2",	    // 1
 "ACE_T64_BV",	    // 2
 "ACE_UAZ_MG",       // 3
@@ -427,8 +427,8 @@ sm_bonus_vehicle_array = (
 "ACE_BRDM2_SA9",    // 9
 "ACE_BMP1_D",       // 10
 "ACE_BMD1p",        // 11
-"ACE_T80_U",
-"ACE_T72_BM"         // 12
+"ACE_T80_U",        // 12
+"ACE_T72_BM"        // 13
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -821,9 +821,11 @@ d_base_patrol_array =
 [
 	[[9502,9871.2,0],290,150,0],       // court of airbase, main area
 	[[9956,9771,0],175,250,0],         // middle south of airfield + hangars + forest to Paraiso
-	[[10304,9954,0],240,250,-25], // airbase part near Paraiso (hill and air-field buildings on east)
+	[[10304,9954,0],240,250,-25],      // airbase part near Paraiso (hill and air-field buildings on east)
 	[[9780.1,10332.6,0],650,170,0],    // north of airfield (forest-bush
-	[[9149.29,10079,0],125,100,0]     // west of airfield (pit on west of air-field)
+	[[9149.29,10079,0],125,200,0],     // west of airfield (pit on west of air-field)
+	[[9582,9377,0],100,300,100],       // south to base (granary area)
+	[[10518,10061,0],150,350,0]        // east from base between butt end of airfield and the big hill
 ];
 
 d_base_patrol_fires_array = 
