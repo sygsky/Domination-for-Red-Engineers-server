@@ -43,20 +43,21 @@ sm_bonus_positions =
 	];
 #endif
 #ifdef __DEFAULT__
-	[                                   // strictly 13 postions
-		[[9559.23,9874.15,0], 270], 	// Stryker_ICV_M2/BMP2 Position and direction
-		[[9559.23,9859.23,0], 270], 	// Stryker_ICV_MK19/BRDM2 Position and direction
-		[[9559.23,9859.23,0], 270], 	// Stryker_ICV_MK19/BRDM2 Position and direction
-		[[9559.23,9859.23,0], 270], 	// Stryker_ICV_MK19/BRDM2 Position and direction
-		[[9559.23,9859.23,0], 270], 	// Stryker_ICV_MK19/BRDM2 Position and direction
-		[[9513.53,9841.47,0], 90], 		// HMMWV50/UAZMG Position and direction
-		[[9513.53,9856.57,0], 90], 		// HMMWVMK/UAZ_AGS30 Position and direction
-		[[9513.53,9856.57,0], 90], 		// HMMWVTOW/BRDM2_ATGM Position and direction
-		[[9513.53,9856.57,0], 90], 		// HMMWVTOW/BRDM2_ATGM Position and direction
-		[[9559.23,9874.15,0], 270], 	// Stryker_TOW/BMP2 Position and direction
-		[[9513.53,9841.47,0], 90], 		// M113/BRDM2 Position and direction
-		[[9513.53,9841.47,0], 90], 		// M113/BRDM2 Position and direction
-		[[9513.53,9841.47,0], 90] 		// M113/BRDM2 Position and direction
+	[                           // any number of positions
+		[[9560,9890,0], 270], 	// position and direction
+		[[9550,9890,0], 270], 	// position and direction
+		[[9560,9875,0], 270], 	// position and direction
+		[[9550,9875,0], 270], 	// position and direction
+		[[9560,9860,0], 270], 	// position and direction
+		[[9550,9860,0], 270], 	// position and direction
+		[[9560,9850,0], 270], 	// position and direction
+		[[9550,9850,0], 270], 	// position and direction
+		[[9513,9895,0], 90], 	// position and direction
+		[[9513,9885,0], 90], 	// position and direction
+		[[9513,9875,0], 90], 	// position and direction
+		[[9513,9865,0], 90], 	// position and direction
+		[[9513,9855,0], 90], 	// position and direction
+		[[9513,9845,0], 90] 	// position and direction
 	];
 #endif
 #ifdef __TT__
@@ -322,6 +323,7 @@ d_allmen_W = (
 		if (__ACEVer) then {
 // ПЕХОТА В ГОРОДЕ
 //##############################################################################
+// any group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 
 ["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A","ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierWB_A","ACE_SoldierW_HMGAB"]
 
@@ -355,6 +357,7 @@ d_specops_W = (
 
 // СПЕЦГРУППА
 //##############################################################################
+// Group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 ["ACE_SoldierWSniper2_A","ACE_USMC8541A1A","ACE_SoldierWMAT_USSF_ST_BDUL","ACE_SoldierWAA","ACE_SoldierWB_USSF_ST_BDUL","ACE_SoldierW_Spotter_A","ACE_SoldierWMedic_A","ACE_SoldierWAT2_A"]
 
 	} else {
@@ -375,6 +378,7 @@ d_sabotage_W = (
 
 // ДЕСАНТ НА БАЗУ
 //##############################################################################
+// Group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 ["ACE_SquadLeaderW_A","ACE_SoldierWDemo_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAA","ACE_SoldierWDemo_USSF_LRSD","ACE_SoldierWDemo_USSF_ST"]
 //["ACE_SquadLeaderW_A","ACE_SoldierWMAT_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAA","ACE_SoldierWMAT_A", "ACE_SoldierW_TACP_USAF_LRSD"] // no pipebomb equipment
 
