@@ -317,7 +317,7 @@ if (isServer) then {
     	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
     	while {isNil "SYG_mission_start"} do {sleep 1}; // wait for 1st user connection and receiving real server time from him (this is Arma!!!)
 
-    	if ( (argp(SYG_mission_start,1) < 12) || (argp(SYG_mission_start,1) > 1) ) exitWith {false}; // new year expected if only december or january is current month
+    	if ( (argp(SYG_mission_start,1) > 1) && (argp(SYG_mission_start,1) < 12) ) exitWith {false}; // new year expected if only december or january is current month
 
     	if ( (argp(SYG_mission_start,1) == 12) || ( (argp(SYG_mission_start,1) == 1) && (argp(SYG_mission_start,1) < 10) ) ) then
     	{
