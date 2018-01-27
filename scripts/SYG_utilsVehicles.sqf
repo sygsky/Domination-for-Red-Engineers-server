@@ -1049,7 +1049,7 @@ SYG_removeIntelLegend = {
 };
 
 //
-// set handler for "hit" event if vehicle has a smoke magazines in inventory
+// set smoke throwed to the shooter side for "hit" event if vehicle has a smoke magazines in base inventory
 //
 // Call: _isAssingedToSmoke = _vec call SYG_assignVecToSmokeOnHit;
 //
@@ -1058,9 +1058,10 @@ SYG_assignVecToSmokeOnHit =
     if (!d_smoke) exitWith {false}; // not allowed in setup
     if ( (typeName _this) != "OBJECT") exitWith {false};
     if (!(_this isKindOf "LandVehicle")) exitWith{false}; // only for land vehicles
+    if (_this isKindOf "Static") exitWith{false}; // not for static
     // check if vehicle support smoke magazines in common list of magazines
     private ["_magazines"];
-    _magazines = getArray (configFile >> "CfgVehicles" >> _type >> "Turrets" >> "MainTurret" >> "magazines");
+    _magazines = getArray (configFile >> "CfgVehicles" >> (typeOf _this) >> "Turrets" >> "MainTurret" >> "magazines");
         //_magazines = getArray(_config >> "magazines");
     if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith { _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true }; // add smoking protection
     false
