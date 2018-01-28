@@ -1,7 +1,7 @@
 _StartLocation = _this select 0;
 _paratype      = _this select 1;
 
-hint localize format["para type %1", _paratype];
+//hint localize format["para type %1", _paratype];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"

@@ -576,10 +576,14 @@ if ( sec_kind == 3) then
 };
 
 #ifdef __ACE__
-// store rucksack position (not move automatically it to the secondary gear slot)
-ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
-// improve available magazines description
-ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+if ( !isServer ) then // use only on client
+{
+    // store rucksack position (not move automatically it to the secondary gear slot)
+    ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
+    // improve available magazines description
+    ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+    f_ChuteSteer = compile preprocessFileLineNumbers "scripts\f_ChuteSteer.sqf";
+};
 #endif
 
 if (true) exitWith {};

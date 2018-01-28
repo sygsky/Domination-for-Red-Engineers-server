@@ -1067,7 +1067,6 @@ SYG_assignVecToSmokeOnHit =
     false
 };
 
-
 //------------------------------------------------------------- Rearm vehicles methods
 
 #ifdef __REARM_SU34__
@@ -1310,23 +1309,21 @@ SYG_createEnemyGroup =
  * "ACE_ParachutePack" - new parachute type
  */
 SYG_setHeliParaCargo = {
-    //hint localize format["<<< SYG_setHeliParaCargo %1 >>>",_this]; // log start
+    private ["_heli","_num","_paraType"];
     if (typeName _this == "OBJECT") then {_this = [_this];};
     if ( typeName _this != "ARRAY") exitWith {false};
 
-    _heli = _this select 0;
+    _heli = arg(0);
 
     if (! (_heli isKindOf "Helicopter")) exitWith {false};
 
     clearWeaponCargo _heli; // remove all default parachutes number (for Mi17 is 3)
-
-    _num = 1;
-    if ((count _this) > 1 ) then { _num = _this select 1;};
-
-    _paraType = "ACE_ParachuteRoundPack"; //default parachute
-    if ((count _this) > 2 ) then { _paraType = _this select 1;};
+    //sleep 0.1; // sleep usage is strictly prohibited in setVehicleInit (as if in init fields of editor objects)
+    _num = argopt(1,1);
+    _paraType = argopt(2,"ACE_ParachuteRoundPack");//default parachute
 
     _heli addWeaponCargo [_paraType, _num];
+    hint localize format[ "<<< SYG_setHeliParaCargo [%1,%2] >>>", _paraType, _num ]; // log start
 };
 
 

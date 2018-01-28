@@ -26,7 +26,6 @@ _heli_array = [];
         _vehicle setVehicleInit "[this, 2] call SYG_setHeliParaCargo;";
         _cnt = _cnt + 1;
     };
-    if ( _cnt > 0 ) then { processInitCommands; };
 
 #ifndef __TT__
 	call compile format ["%1 =_vehicle;publicVariable ""%1"";", _number_v];
@@ -51,6 +50,9 @@ _heli_array = [];
 #endif
 
 } forEach _this;
+
+if ( _cnt > 0 ) then { processInitCommands; };
+
 
 _this = nil;
 

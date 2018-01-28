@@ -228,7 +228,7 @@ SYG_playRandomTrack = {
             if ( (random 100) < 1) exitWith
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playPartialTrack: play whole track %1 now !!!",arg(0)];
+                hint localize format["SYG_playRandomTrack: play whole track %1 now !!!",arg(0)];
 #endif
                 playMusic arg(0)
             };

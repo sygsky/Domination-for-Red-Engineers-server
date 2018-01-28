@@ -39,7 +39,7 @@ STR_SYG_12,"%1 to Backpack","%1 in den Rucksack","%1 в рюкзак"
 //-----------------------------------------------------------------------------
 // Server.cfg strings:
 //-----------------------------------------------------------------------------
-STR_SERVER_MOTD0,"The islanders are happy to welcome you in your native language!","Die Inselbewohner sind glücklich, Sie zu begrüßen, in Ihrer Muttersprache!","Островитяне рады приветствовать вас на родном языке!"
+STR_SERVER_MOTD0,"The islanders are happy to welcome you in your native language!","Die Inselbewohner sind glücklich, Sie zu begrüßen, in Ihrer Muttersprache!","Островитяне рады приветствовать Вас на вашем родном языке!"
 
 //-----------------------------------------------------------------------------
 // SYS scripts strings:
@@ -659,7 +659,7 @@ STR_SYS_604_0,"You are the first [English speaking] warrior in this dangerous mi
 STR_SYS_605,"%1 killed %2 and looses %3 scores","%1 getötet %2. %1 verliert %3 erzielt","%1 убил %2 и теряет очков: %3!"
 STR_SYS_606,"During %4 you are on GRU duty in %1 [+%2/%3]","During %4 you are on GRU duty in %1 [+%2/%3]","В течении %4 Вы выполняете задание ГРУ в %1 [+%2/%3]!"
 
-STR_SYS_607,"You need %2 points for parajump. Your current score is %1","Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1","Для прыжка необходимо очков %2. Сейчас у вас: %1"
+STR_SYS_607,"You need %2 point[s] for parajump. Your current score is %1","Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1","Для прыжка необходимо очков: %2. Сейчас у вас: %1"
 STR_SYS_608,"You can't jump. You have to wait %1 minutes for your next jump!!!","Sie können nicht springen. Sie müssen warten, %1 Minuten für Ihren nächsten springen!!!","Прыжок запрещён. След. прыжок разрешён через %1 мин.!"
 STR_SYS_609,"!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!","!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!","!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!"
 STR_SYS_610,"[Record weapons]","[Datensatz Waffen]","[Запомнить оружие]"
@@ -776,6 +776,14 @@ STR_RESTORE_DLG_7,Scores subtracted %1,Subtrahiert score %1,На восстан�
 STR_RESTORE_DLG_8,%1 item[s] on dist to %2 m.,%1 item[s] bis zum %2 m.,объектов %1 на расст. %2 м.
 STR_RESTORE_DLG_9,list is empty,Liste ist leer,список пуст
 STR_RESTORE_DLG_10,"required rank is ""%1""","benötigt Rang ""%1""","требуется звание не ниже ""%1"""
+
+STR_AAHALO_0,"Altitude (A.G.L.):","Altitude (A.G.L.):","Высота отн. земли:"
+STR_AAHALO_1,"Heading:","Heading:","Курс:"
+STR_AAHALO_2," degrees, "," degrees, "," гр., "
+STR_AAHALO_3,"Ground Speed:","Ground Speed:","Горизонт. скорость:"
+STR_AAHALO_4," m/s"," m/s"," м/с"
+STR_AAHALO_5,"Descent Rate:","Descent Rate:","Ск. падения:"
+STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
 STR_INTRO_MUSIC,"""johnny"",""requiem"",""Art_Of_Noise_mono"",""mission_impossible""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"""
 
@@ -1141,8 +1149,8 @@ STR_GRU_49,"Enemies have here a good trophy","Feinde haben hier eine gute Troph�
 STR_GRU_49_1,"The enemies here have a nice booty","Die Feinde haben eine schöne Beute","У врагов здесь можно разжиться несколькими трофеями"
 
 STR_GRU_50,"The guerrillas reported: enemy patrols noticed on the island, %1 PCs.","Die Guerilla berichtet: feindliche Patrouillen bemerkt, auf der Insel, %1 Stck.","Сопротивление информирует: на острове замечены патрули, %1 шт."
-STR_GRU_51,"The last desant on the base was noted in %1","Der Letzte Angriff auf die Basis wurde darauf hingewiesen, in %1","Последний десант на базе замечен в %1"
-STR_GRU_52,"At the airbase desants still have not yet been seen","Auf der airbase desants noch noch nicht gesehen","Десантов на базе пока не было"
+STR_GRU_51,"The last desant on the base was noted at %1.","Der Letzte Angriff auf die Basis wurde darauf hingewiesen, in %1.","Последний десант на базе замечен в %1."
+STR_GRU_52,"At the airbase desants still have not yet been seen.","Auf der airbase desants noch noch nicht gesehen.","Десантов на базе пока не было."
 
 STR_GRU_TELE_NUM,4,4,4
 STR_GRU_TELE_0,"Well GRU-portal they invented","Gut GRU-portal, die Sie erfanden","Ну и ГРУ-портал..."

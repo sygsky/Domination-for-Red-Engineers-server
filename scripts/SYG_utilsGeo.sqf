@@ -843,7 +843,7 @@ SYG_geoDist = {
     _part1 = _pos1 call SYG_whatPartOfIsland;
     _part2 = _pos2 call SYG_whatPartOfIsland;
     _onSamePart = (_part1 == "CENTER" || _part2 == "CENTER");
-    if ((_part1 == _part2 || _onSamePart) exitWith {_pos1 distance _pos1};
+    if ((_part1 == _part2) || _onSamePart) exitWith {_pos1 distance _pos1};
     (_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0)
 };
 

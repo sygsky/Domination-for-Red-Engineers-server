@@ -2,6 +2,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+// add
 XAddDead = {if (!((_this select 0) in dead_list)) then {dead_list = dead_list + [_this select 0];}};
 
 // Adds vehicle to the dead vehicles list
@@ -27,8 +28,9 @@ SAddObserverKillScores = {
 if (__RankedVer) then {
 	XAddKillsAI = {
 		private ["_points","_killer"];
-		_points = _this select 0;_killer = _this select 1;
+		_killer = _this select 1;
 		if (isNull _killer) exitWith {};
+		_points = _this select 0;
 		_killer = vehicle _killer;
 		if (!isPlayer _killer && side _killer != d_side_enemy) then {["d_ai_kill",_killer,_points] call XSendNetStartScriptClient;}
 	};
@@ -168,7 +170,7 @@ SYG_addEvents = {
 
     if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then
     {
-            __addRemoveVehi(_vehicle)
+            _vehicle addEventHandler ["killed", {_this spawn x_removevehi}];
             [_vehicle] call XAddCheckDead;
     };
 #ifdef __TT__
@@ -235,75 +237,40 @@ x_makevgroup = {
 			sleep 0.331;
 		} forEach crew _vehicle;
 
-#ifndef __NEW__
-		if (_vehicle isKindOf "Tank") then {
-			if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked};
-//			if (d_smoke) then {_vehicle setVariable ["D_SMOKE_SHELLS",2];}; // todo: remove it after debig of ACE LVOSS systems
-			if (!(_vehiclename in x_heli_wreck_lift_types)) then {
-				_vehicle addEventHandler ["killed", {_this spawn x_removevehi}];
-				if (d_smoke) then {
-					//_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
-					_ret = _vehicle call SYG_assignVecToSmokeOnHit;
-				};
-				#ifdef __TT__
-				if (_do_points) then {_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKills}]};
-				#endif
-				#ifdef __AI__
-				if (__RankedVer) then {
-					_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKillsAI}];
-				};
-				#endif
-				[_vehicle] call XAddCheckDead;
-			} else { // if (!(_vehiclename in x_heli_wreck_lift_types))
-				if (d_smoke) then {
-//					_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
-					_vehicle call SYG_assignVecToSmokeOnHit;
-
-				};
-				#ifdef __TT__
-				if (_do_points) then {_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKills}]};
-				#endif
-				#ifdef __AI__
-				if (__RankedVer) then {
-					_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKillsAI}];
-				};
-				#endif
-			}
-	//  if (_vehicle isKindOf "Tank") then { ...
-		} else {
-/*
-			if (d_smoke) then {
-				if (_vehicle isKindOf "StrykerBase" || _vehicle isKindOf "BRDM2") then {_vehicle setVariable ["D_SMOKE_SHELLS",2]};
-			};
-*/
-			if ( !( _vehiclename in x_heli_wreck_lift_types ) ) then
-			{
-				if ((_vehicle isKindOf "StrykerBase") || (_vehicle isKindOf "BRDM2")) then
-				{
-				}
-				else
-				{
-				    if (d_smoke) then
-				    {
-//						_vehicle addEventHandler ["hit", {_this spawn x_dosmoke2}];
-    					_vehicle call SYG_assignVecToSmokeOnHit;
-					};
-				};
-				__addRemoveVehi(_vehicle)
-				[_vehicle] call XAddCheckDead;
-			};
-			#ifdef __TT__
-			if (_do_points) then {_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddKills}]};
-			#endif
-			#ifdef __AI__
+//#ifndef __NEW__
+        if (d_smoke) then { _vehicle call SYG_assignVecToSmokeOnHit; };
+        if (!(_vehiclename in x_heli_wreck_lift_types)) then //  this is not resurrectable vehicle, so remove it from the game if dead
+        {
+            _vehicle addEventHandler ["killed", { _this spawn x_removevehi;} ];
+            [_vehicle] call XAddCheckDead;
+        };
+		if ( _vehicle isKindOf "Tank" ) then
+		{
+			if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked; };
+    #ifdef __TT__
+            if (_do_points) then {_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKills;}]};
+    #endif
+    #ifdef __AI__
+            if (__RankedVer) then {
+                _vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKillsAI;}];
+            };
+    #endif
+        //  if (_vehicle isKindOf "Tank") then { ...
+		}
+		else
+		{
+	#ifdef __TT__
+			if (_do_points) then {_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddKills;}]};
+	#endif
+	#ifdef __AI__
 			if (__RankedVer) then {
-				_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddKillsAI}];
+				_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddKillsAI;}];
 			};
-			#endif
+	#endif
 		};
-#else
-        [_vehicle, _do_points] call SYG_addEvents;
-#endif
+//#else
+//        [_vehicle, _do_points] call SYG_addEvents;
+//#endif
 		
 		if (_vehicle isKindOf "Tank") then {
 			if (d_lock_ai_armor) then {_vehicle lock true}

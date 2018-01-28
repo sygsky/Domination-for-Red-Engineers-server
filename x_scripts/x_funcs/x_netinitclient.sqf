@@ -488,7 +488,7 @@ XHandleNetStartScriptClient = {
 				};
 			};
 		};
-		case "d_ai_kill": {
+		case "d_ai_kill": { // TODO: check killer to be vehicle
 			if ((_this select 1) in (units (group player))) then {
 				if (player == leader (group player)) then {
 					player addScore (_this select 2);

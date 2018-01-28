@@ -1255,8 +1255,23 @@ SYG_rearmPistolero = {
 	else {false};
 };
 
-SYG_spec1 = ["ACE_20RND_762X51_B_M14","ACE_20RND_762X51_B_SCAR","ACE_20Rnd_762x51_B_HK417"];
-SYG_spec2 = ["ACE_20RND_762X51_SB_M14","ACE_20RND_762X51_SB_SCAR","ACE_20Rnd_762x51_SB_HK417"];
+SYG_spec1 = ["ACE_20Rnd_762X51_B_M14","ACE_20Rnd_762x51_B_SCAR","ACE_20Rnd_762x51_B_HK417"];
+SYG_spec2 = ["ACE_20Rnd_762X51_SB_M14","ACE_20Rnd_762x51_SB_SCAR","ACE_20Rnd_762x51_SB_HK417"];
+
+/*
+ * Small fountine to fine static string in array of string from config file!!!
+ *
+ */
+SYG_find = {
+    _find = -1;
+    _arr = arg(0);
+    _val = arg(1);
+    for "_i" from 0 to (count _arr) - 1 do
+    {
+        if (_val == argp(_arr, _i)) exitWith {_find = _i;};
+    };
+    _find
+};
 
 /**
  * Returns default magazine type for the designated weapon. ACE magazines are preferrable
@@ -1265,14 +1280,16 @@ SYG_spec2 = ["ACE_20RND_762X51_SB_M14","ACE_20RND_762X51_SB_SCAR","ACE_20Rnd_762
  * Where: _wpnType  - class name for the weapon ("ACE_MP5SD" etc)
  */
 SYG_defaultMagazine = {
-	_arr = getArray( configFile >> "CfgWeapons" >> _this >> "magazines" );
-	_arr1 = _arr call SYG_filterACEMagazines;
+    private ["_arr"];
+	_arr = [];
+	_arr1 = _this call SYG_defaultMagazinesACE;
 	if ( count _arr1 > 0 ) then // ACE magazines found
 	{
 		_arr  = _arr1;
-	};
-	_mag = _arr select 0;
-	_pos = SYG_spec1 find _mag;
+	}
+	else {_arr = getArray( configFile >> "CfgWeapons" >> _this >> "magazines" );};
+	_mag = format["%1",_arr select 0];
+	_pos = [SYG_spec1, _mag] call SYG_find;
 	if ( _pos >= 0) then { _mag = argp(SYG_spec2,_pos);};
     _mag
 };
