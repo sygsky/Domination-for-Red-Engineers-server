@@ -672,6 +672,26 @@ XHandleNetStartScriptClient = {
 		{
 		    arg(1) say arg(2); // do this on clients only
 		};
+		// somebody requested GRU score
+		// ["GRU_event_scorаes", _score, _id, ""] call XSendNetStartScriptClient;
+
+		case "GRU_event_scores":
+		{
+            _id = argopt(1, -1);
+            if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
+            _score = argopt(2,0);
+            if ( _score != 0 ) then
+            {
+                _playerName = argopt(3, "" );
+                if ( _playerName == (name player)) then
+                {
+                    player addScore _score;
+                    format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
+                    playMusic "no_more_waiting";
+                };
+            };
+            GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure
+		};
 
 	}; //switch (_this select 0) do {
 }; // XHandleNetStartScriptClient = {

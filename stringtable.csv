@@ -982,9 +982,11 @@ STR_MAP_2,vigilantly,wachsam,зорко
 STR_MAP_3,with irritation,mit irritation,с раздражением
 STR_MAP_4,thoroughly,aufmerksam,внимательно
 STR_MAP_5,stupidly,dumm,тупо
-STR_MAP_6,wrinkling your forehead,und verzog seine Stirn,морща лоб
+STR_MAP_6,wrinkling your forehead and,und verzog seine Stirn,морща лоб и
 STR_MAP_7,with a sudden understanding,mit einem plötzlichen Verständnis,с внезапным пониманием
 STR_MAP_8,with disgust,mit Ekel,с отвращением
+
+STR_MAP_PRIZE,"You get the prize for curiosity (+%1)","Sie erhalten den Preis für die Neugier (+%1)","Вы получаете приз за любопытство (+%1)"
 
 STR_MAP_10,"%1 looking at the map, you shout: 'BA-Ah, Yes it is %2!'","%1 Blick auf die Karte, Sie Schreien: 'BA-Ah, ja, es ist %2!'","%1 всматриваясь в карту, вы воcклицаете: 'Да это-же %2!'"
 
@@ -1171,6 +1173,8 @@ STR_FIRELIT_NUM,2,2,2
 STR_FIRELIT_0,"Our people are not bred such fires","Unsere Leute solche Brände sind nicht gezüchtet","Похоже, что костёр разжигали не наши люди"
 STR_FIRELIT_1,"In this way the bonfires are lit only scouts in the West","Auf diese Weise wird das Feuer entzündet nur Kundschafter im Westen","Так костры разводят скауты на Западе"
 
+STR_LIT_PRIZE,"You get the prize for the Observation (+%1)","Du hast den Preis für die Beobachtung (+%1)","Вы получаете приз за наблюдательность (+%1)"
+
 STR_FIRE_NUM,3,3,3
 STR_FIRE_0,"The fire is still hot","Das Feuer ist noch heiß","Костёр ещё горячий"
 STR_FIRE_1,"On the fire fried beans - this is exactly the Americans!","Auf dem Feuer gebratenen Bohnen - genau das ist den Amerikanern!","На костре жарили бобы - это точно амеры!"
@@ -1183,11 +1187,11 @@ STR_FIRE_UNKNOWN,"You can't understand what it is","Ich kann nicht verstehen, wa
 STR_LIB_ACE_MAP,"A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it","Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen","Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"
 STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,"Good but short and rather weak western rifle with excellent optics","Gut, aber kurz und eher schwach western Gewehr mit hervorragender Optik","Крутая, но короткая и слабенькая автоматическая западная винтовка с лучшим из прицелов. Если бы не слабое воздействие на цель..."
 
-STR_ACE_VDN_SU34B,"Su-34B FAB500,R73,Kh29L","Su-34B FAB500,R73,Kh29L","Су-34Б ФАБ-500,Р-73,Х-29Л"
-STR_ACE_VDN_SU34,"Su-34 FAB500,R73,S-8T","Su-34 FAB500,R73,S-8T","Су-34 ФАБ-500,Р-73,C-8Т"
-STR_ACE_EJECT0,"<t color='#FF0000'>Eject</t>","<t color='#FF0000'>Abspringen</t>","<t color='#FF0000'>Катапультироваться</t>"
-STR_ACE_EJECT1,"<t color='#FF0000'>Jump Out</t>","<t color='#FF0000'>Abspringen</t>","<t color='#FF0000'>Выпрыгнуть</t>"
-STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
+//STR_ACE_VDN_SU34B,"Su-34B FAB500,R73,Kh29L","Su-34B FAB500,R73,Kh29L","Су-34Б ФАБ-500,Р-73,Х-29Л"
+//STR_ACE_VDN_SU34,"Su-34 FAB500,R73,S-8T","Su-34 FAB500,R73,S-8T","Су-34 ФАБ-500,Р-73,C-8Т"
+STR_ACE_EJECT0,"<t color='#FF0000'>Eject</t>","<t color='#FF0000'>Auswerfen</t>","<t color='#FF0000'>Катапультироваться</t>"
+STR_ACE_EJECT1,"<t color='#FF0000'>Jump Out</t>","<t color='#FF0000'>Springen</t>","<t color='#FF0000'>Выпрыгнуть</t>"
+//STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
 STR_WEST,Enemies,Feinde,Враги
 STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны

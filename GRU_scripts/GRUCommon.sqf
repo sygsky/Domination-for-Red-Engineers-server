@@ -28,7 +28,8 @@ if ( isNil "GRU_tasks" ) then
 	];
 
 	// scores for successfull survey of fire object(0), map (1) etc
-	GRU_specialBonusArr = [1,1];
+	GRU_specialBonusArr    = [              5,               3];
+	GRU_specialBonusStrArr = ["STR_LIT_PRIZE", "STR_MAP_PRIZE"];
 };
 // call: _task = _task_id call GRU_getTask;
 GRU_getTask = {
@@ -118,9 +119,11 @@ GRU_specialScores = {
         {
             if ( argp(GRU_specialBonusArr, _this) > 0) then
             {
-                // todo: send info to user about scores for investigations
-                hint format[ "Client-> In future you'll got %1 score", argp(GRU_specialBonusArr,GRU_SPECIAL_SCORE_ON_MAP_INFO) ];
-                GRU_specialBonusArr set [_this, 0]; // no more scores available
+                // todo: send info to user about scores for investigations etc
+                //hint format[ "Client-> In future you'll got %1 score", argp(GRU_specialBonusArr,_this) ];
+                // GRU_specialBonusArr set [_this, 0]; // no more scores available
+                // send request to the server for score prize if not already used
+                 ["GRU_event_scores", _this, name player] call XSendNetStartScriptServer;
             };
         };
     };
