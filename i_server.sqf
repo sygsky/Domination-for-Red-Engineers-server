@@ -920,7 +920,7 @@ d_with_recapture = true;
 // position and direction of the AI HUT
 d_pos_ai_hut =
 #ifdef __DEFAULT__
-	[[9695.9,9961.0,0],-90];
+	[[9695.9,9961.0,-0.3],-90];
 #endif
 #ifdef __SCHMALFELDEN__
 	[[2521.1,97.7894,0],67];
