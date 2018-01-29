@@ -121,6 +121,7 @@ class CfgMusic
 		sound[] =  {\sounds\snovymgodom.ogg, db+20, 1.0};
 	};
 
+/*
 	class patrol
 	{
 	    name="";
@@ -144,6 +145,7 @@ class CfgMusic
 	    name="";
 	    sound[]=   {\sounds\invasion.ogg,db-1,1.0};
     };
+*/
 
     // Fear music
 	class fear { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; };
@@ -332,6 +334,12 @@ class CfgSounds
 	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
+
+	class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db+0,1.0}; titles[] = {}; };
+	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; };
+	class kwai { name="kwai"; sound[]={\sounds\kwai.ogg,db+0,1.0}; titles[] = {}; };
+	class invasion { name="invasion"; sound[]={\sounds\invasion.ogg,db+0,1.0}; titles[] = {}; };
+
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};
