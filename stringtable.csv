@@ -669,7 +669,7 @@ STR_SYS_613,Your recorded equipment wiped,Ihr Aufnahme-equipment gewischt,Ваш
 STR_SYS_614,A record of the equipment not found,Eine Aufzeichnung der Ausstattung nicht gefunden,Запись о снаряжении не найдена
 STR_SYS_615,"!!!!! ATTENTION !!!!! Incoming Missile !!!!!","!!!!! AUFMERKSAMKEIT !!!!! Eingehende Rakete !!!!!","!!! Опасность !!! Угроза попадания ракеты !!!"
 STR_SYS_616,"Height","Höhe","Высота"
-STR_SYS_617,"The last assault on base was seen in %1","Der Letzte Angriff auf die Basis war bereits bei %1","Последний десант был замечен на базе в %1"
+STR_SYS_617,"GRU: the enemy landing party was sent from helicopter carrier in %1","GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1","ГРУ: взлёт десант с вертолётоносца был в %1"
 STR_SYS_618,"Viewdistance restore to %1 m.","Viewdistance Durchmesser restauriert wurde: %1 m.","Диаметр зоны обзора восстановлен: %1 м."
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
@@ -1151,7 +1151,6 @@ STR_GRU_49,"Enemies have here a good trophy","Feinde haben hier eine gute Troph�
 STR_GRU_49_1,"The enemies here have a nice booty","Die Feinde haben eine schöne Beute","У врагов здесь можно разжиться несколькими трофеями"
 
 STR_GRU_50,"The guerrillas reported: enemy patrols noticed on the island, %1 PCs.","Die Guerilla berichtet: feindliche Patrouillen bemerkt, auf der Insel, %1 Stck.","Сопротивление информирует: на острове замечены патрули, %1 шт."
-STR_GRU_51,"The last desant on the base was noted at %1.","Der Letzte Angriff auf die Basis wurde darauf hingewiesen, in %1.","Последний десант на базе замечен в %1."
 STR_GRU_52,"At the airbase desants still have not yet been seen.","Auf der airbase desants noch noch nicht gesehen.","Десантов на базе пока не было."
 
 STR_GRU_TELE_NUM,4,4,4
