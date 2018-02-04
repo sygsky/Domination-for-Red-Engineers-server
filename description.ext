@@ -203,12 +203,6 @@ class CfgMusic
         sound[]=   {\sounds\druzba.ogg,db-1,1.0};
     };
 
-    class starwars
-    {
-        name="";
-        sound[]=   {\sounds\starwars.ogg,db-1,1.0};
-    };
-
     class bond
     {
         name="";
@@ -308,7 +302,7 @@ class CfgMusic
 class CfgSounds
 {
 	sounds[] = {
-		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse_neighs,Tank_GetIn,APC_GetIn
+		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse,Tank_GetIn,APC_GetIn
 
 #ifdef __REVIVE__
 		,DBrian_Im_hit, DBrian_Im_bleeding,DBrian_Medic,DBrian_Bastards,DBrian_Shit_Man_down,DBrian_Oh_no,
@@ -339,6 +333,7 @@ class CfgSounds
 	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; };
 	class kwai { name="kwai"; sound[]={\sounds\kwai.ogg,db+0,1.0}; titles[] = {}; };
 	class invasion { name="invasion"; sound[]={\sounds\invasion.ogg,db+0,1.0}; titles[] = {}; };
+    class starwars { name=""; sound[]= {\sounds\starwars.ogg,db-1,1.0}; titles[] = {};};
 
 
 #ifdef __WITH_SCALAR__
