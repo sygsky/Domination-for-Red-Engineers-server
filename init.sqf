@@ -582,7 +582,6 @@ if ( !isServer ) then // use only on client
     ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
     // improve available magazines description
     ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
-    f_ChuteSteer = compile preprocessFileLineNumbers "scripts\f_ChuteSteer.sqf";
 };
 #endif
 
