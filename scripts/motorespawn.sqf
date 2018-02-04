@@ -88,7 +88,7 @@ while {true} do {
 			_pos1 set [2,0]; // zero Z coordinate
 			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( ( _pos1 distance _pos) > MOTO_ON_PLACE_DIST)  ) then
 			{
-				if ((count (crew _moto)) == 0) then // empty
+				if ( ( {alive _x} count (crew _moto)) == 0) then // empty
 				{
 					if ( (canMove _moto) && ((fuel _moto) > FUEL_MIN_VOLUME) ) then  {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_NORMAL)]} // restore after normal delay
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened dealy
@@ -103,45 +103,55 @@ while {true} do {
 			if ( time > _timeout) then
 			{
 				_nobj = nearestObject [ _pos1, "CAManBase" ];
-				if ( isNull _nobj ) then // no any man near motocycle
+				_driver_near = !(isNull _nobj);
+				if ( !_driver_near ) then // no any man near motocycle
 				{
 				    _pos2 = getPos _nobj;
         			_pos2 set [2,0]; // zero Z coordinate
-                    _driver_near = ((side _nobj) == east) && ((_pos2 distance _pos1) < DRIVER_NEAR_DIST);
-                    if ( !( ( ( count (crew _moto)) == 0 ) || _driver_near) ) then // if empty and no man nearby (10 metres circle)
+                    _driver_near = (alive _nobj) && ((side _nobj) == east) && ((_pos2 distance _pos1) < DRIVER_NEAR_DIST);
+                }
+                else
+                { hint localize format["%1 detected at dist %1", typeOf _nobj, (getPos _nobj) distance _pos1]; };
+
+                if (! _driver_near ) then
+                {
+    				_driver_near = ( {alive _x} count (crew _moto) ) > 0; // is some man in moto crew?
+                }
+                else {  hint localize format["alive crew count %1", {alive _x} count (crew _moto)]; };
+
+                if ( ! _driver_near) then // if empty and no man nearby (10 meters circle)
+                {
+                    if ( !alive _moto ) then // recreate vehicle
                     {
-                        if ( !alive _moto ) then // recreate vehicle
-                        {
-                            _type = typeOf _moto;
-                            deleteVehicle _moto;
-                            _moto = objNull;
-                            sleep 1.375;
-                            _moto = _type createVehicle [0,0,0];
-                            _x set[MOTO_ITSELF, _moto];
+                        _type = typeOf _moto;
+                        deleteVehicle _moto;
+                        _moto = objNull;
+                        sleep 1.375;
+                        _moto = _type createVehicle [0,0,0];
+                        _x set[MOTO_ITSELF, _moto];
 #ifdef __DEBUG__
-                            hint localize format["motorespawn.sqf: %1 (%2) recreated after breakdown", _moto, _type];
+                        hint localize format["motorespawn.sqf: %1 (%2) recreated after breakdown", _moto, _type];
 #endif
-                        }
-                        else	// use current vehicle item
-                        {
+                    }
+                    else	// use current vehicle item
+                    {
 #ifdef __DEBUG__
-                            hint localize format["motorespawn.sqf: %1 moved back alive", _moto];
+                        hint localize format["motorespawn.sqf: %1 moved back alive", _moto];
 #endif
-                            _moto setDammage 0.0;
-                            _moto setFuel 1.0;
-                        };
-                        sleep 1.11;
-                        _moto setPos (_pos);
-                        sleep 0.25;
-                        //_x set [MOTO_ORIG_POS, getPos _moto];
-                        _moto setDir (_x select MOTO_ORIG_DIR);
-                        sleep 0.5 + random 0.5;
-                        if ( isEngineOn _moto) then { _moto engineOn false; };
-                        sleep 0.234;
-#ifdef __DEBUG__
-                        hint localize format[ "motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
-#endif
+                        _moto setDammage 0.0;
+                        _moto setFuel 1.0;
                     };
+                    sleep 1.11;
+                    _moto setPos (_pos);
+                    sleep 0.25;
+                    //_x set [MOTO_ORIG_POS, getPos _moto];
+                    _moto setDir (argp(_x,MOTO_ORIG_DIR));
+                    sleep 0.5 + random 0.5;
+                    if ( isEngineOn _moto) then { _moto engineOn false; };
+                    sleep 0.234;
+#ifdef __DEBUG__
+                    hint localize format[ "motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
+#endif
 				};
 				_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop
 			};
