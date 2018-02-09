@@ -222,83 +222,144 @@ SYG_nearestEnemy = {
 //
 // Parameters in input array:
 // _unit: unit to find groups for. Groups can be crew in any vehicles (Man, Land, Air, Ship)
-// _dist (optional): radious to find groups, default value is 500 m. Set to 0 or negative to use default
+// _dist (optional): radius to find groups, default value is 500 m. Set to 0 or negative to use default
 // _pos (optional): search center, if set to [], _unit pos is used
 //
 // Returns: array of groups found or [] if not found
 //
 // Usage:
-// _grps = [_unit, _dist] call SYG_nearestGroups; // search around _unit at 500 m., return empty array [] if no group found
-// _grps = [_unit, _dist, _pos] call SYG_nearestGroups; // search around _pos, return empty array [] if no group found
+// _grps = [_unit] call SYG_nearestSoldierGroups; // search around _unit at 500 m., return empty array [] if no group found
+// _grps = [_unit, _dist, _pos] call SYG_nearestSoldierGroups; // search around _pos, return empty array [] if no group found
+// _grps = [_unit, _dist, _pos, _grp_size] call SYG_nearestSoldierGroups; // search groups of designated size as if (_grp_size >= ({canStand _x} count _grp))..
 //
-SYG_nearestGroups = {
+SYG_nearestSoldierGroups = {
 	private ["_unit", "_dist", "_side", "_nearArr", "_grps", "_types" ];
 	_unit = _this select 0;
 	if ( isNull _unit || !alive _unit ) exitWith {[]};
 	_grps = [];
-	if ( !isNull _unit ) then
-	{	
-		_dist = 0;
-		if ( (count _this ) > 1 ) then { _dist = _this select 1;};
-		if (_dist <= 0) then { _dist = 500;};
-		
-		_pos = _unit;
-		if ( (count _this ) > 2 ) then { _pos = _this select 2;};
-		if ( typeName _pos == "ARRAY" ) then // use position array, check to be empty 
-		{ 
-			if ((count _pos) == 0) then {_pos = getPos _unit;};
-		};
-		
-		_side = side _unit;
-		_types = switch _side do
+	_dist = 0;
+	if ( (count _this ) > 1 ) then { _dist = _this select 1;};
+	if (_dist <= 0) then { _dist = 500;};
+	
+	_pos = _unit;
+	if ( (count _this ) > 2 ) then { _pos = _this select 2;};
+	if ( typeName _pos == "ARRAY" ) then // use position array, check to be empty 
+	{ 
+		if ((count _pos) == 0) then {_pos = getPos _unit;};
+	};
+	
+	_side = side _unit;
+	_types = switch _side do
+	{
+		case east : {["SoldierEB","LandVehicle","Air","Ship"]};
+		case west : {["SoldierWB","LandVehicle","Air","Ship"]};
+		case civilian: {["Civilian","LandVehicle","Air","Ship"]};
+		case resistance: {["SoldierGB","LandVehicle","Air","Ship"]};
+		case default {["CAManBase","LandVehicle","Air","Ship"]};
+	};
+	_nearArr = nearestObjects [_pos, _types, _dist];
+	{
+		// find good, healthy, fast and aggressive group for our man :o)
+		if ( _x isKindOf "CAManBase") then
 		{
-			case east : {["SoldierEB","LandVehicle","Air","Ship"]};
-			case west : {["SoldierWB","LandVehicle","Air","Ship"]};
-			case civilian: {["Civilian","LandVehicle","Air","Ship"]};
-			case resistance: {["SoldierGB","LandVehicle","Air","Ship"]};
-			case default {["CAManBase","LandVehicle","Air","Ship"]};
-		};
-		_nearArr = nearestObjects [_pos, _types, _dist];
-		{
-			// find good, healhy, fast and agressive group for our man :o)
-			if ( _x isKindOf "CAManBase") then
+			if (canStand _x && ((side _x) == _side)) then
 			{
-				if (alive _x && ((side _x) == _side)) then
+				if (!(group _x in _grps)) then 
 				{
-					if (!(group _x in _grps)) then 
-					{
-						_grps = _grps + [group _x];
-						sleep 0.01;
-					};
+					_grps = _grps + [group _x];
+					sleep 0.01;
 				};
-			}
-			else // not a man, check for crew
+			};
+		}
+		else // not a man, check for a crew
+		{
+			if ( canStand _x) then
 			{
-				if ( alive _x) then
+				if (( {canStand _x} count crew _x) > 0 && (side _x == _side) ) then
 				{
-					if (( {alive _x} count crew _x) > 0 && (side _x == _side) ) then
+					_unit = objNull;
+					{	
+						if ( { canStand _x } ) exitWith {_unit = _x;};
+					} forEach (crew _x);
+					
+					if ( !isNull _unit) then 
 					{
-						_unit = objNull;
-						{	
-							if ( { alive _x } ) exitWith {_unit = _x;};
-						} forEach (crew _x);
-						
-						if ( !isNull _unit) then 
+						if (!(group _unit in _grps)) then 
 						{
-							if (!(group _unit in _grps)) then 
-							{
-								_grps = _grps + [group _unit];
-								sleep 0.01;
-							};
+							_grps = _grps + [group _unit];
+							sleep 0.01;
 						};
 					};
 				};
 			};
-		} forEach _nearArr;
-	};
+		};
+	} forEach _nearArr;
 	_grps
 };
 
+//
+// Parameters in input array:
+// _unit: unit to find groups for. Groups can be crew in any vehicles (Man, Land, Air, Ship)
+// _dist (optional): radius to find groups, default value is 500 m. Set to 0 or negative to use default
+// _pos (optional): search center, if set to [], _unit pos is used
+//
+// Returns: array of groups found or [] if not found
+//
+// Usage:
+// _cargo = [_side, _pos] call SYG_nearestCargo; // search around _unit at 500 m., return empty array [] if no cargo found
+// _cargo = [_side, _pos, _dist] call SYG_nearestCargo; // search around _pos, return empty array [] if no group found
+// _cargo = [_side, _pos, _dist, _cargo_size] call SYG_nearestCargo; // search vehicles of designated free cargo size
+//
+SYG_nearestCargo = {
+	_side = argopt( 0, "CIV" );
+	if ( typeName _side != "STRING") exitWith { objNull };
+	if (! (_side in ["WEST", "EAST", "GUER", "CIV"])) exitWith {objNull}; // unknown side
+
+    _pos = argopt( 1, []);
+    if ( typeName _pos != "ARRAY") exitWith { objNull };
+    if ( count  _pos < 2 ) exitWith { objNull };
+
+	_dist = argopt(1,500);
+	if ( typeName _dist != "SCALAR") exitWith { objNull };
+
+	_vecs = [_side, _dist, "LandVehicles" ] call SYG_findNearestVehicles;
+	if ( count _vecs == 0 ) exitWith { objNull };
+
+    _size = aropt(3, 0);
+    if ( _size <= 0 ) exitWith { objNull };
+
+	{
+        if ( alive _x) then
+        {
+            if ( ({canStand _x} count (crew _x)) == 0 ) exitWith{};  // empty
+            if ( !(canStand (driver _x)) ) exitWith{};
+            if ( format["%1",side _x] != _side ) exitWith {};
+            if ( (fuel _x) < 0.05 ) exitWith {};
+            if ( (_x emptyPositions "Cargo") >= _size ) then
+            {
+                _vecs = _vecs + _x;
+                sleep 0.01;
+            };
+        };
+	} forEach _vecs;
+	_nearArr = nil;
+	_vecs
+};
+
+// _vecs_arr = [_unit || _pos, 500, ["LandVehicles"]] call Syg_findNearestVehicles;
+Syg_findNearestVehicles = {
+	_unit = arg(_this);
+	if ( typeName _unit == "ARRAY" ) then {
+	    if (count _unit < 2) exitWith {_unit == objNull;}; // can't be pos with empty array
+	};
+	if ( isNull _unit ) exitWith {[]};
+	_dist = argopt(1, 500);
+
+    _types = argopt(2,["LandVehicles"]);
+	if ( typeName _types != "ARRAY" ) exitWith {-1};then // use position array, check to be empty
+
+	nearestObjects [_unit, _types, _dist]
+};
 //
 // call: _cnt = [[_zavora1, ... _zavoraN], _act] call SYG_openAllBarriers;
 //
@@ -604,15 +665,14 @@ SYG_fuelCapacity = {
 
 // TODO: use anywhere
 // call:
-//      _town = [[10550,9375,0],"Paraiso", 405];
-//      _params = [_town select 0,_town select 1, _town select 1, 0]; // for rectangle
+//      _town = [[10550,9375,0],"Paraiso", 405] select 0;
+//      _params = [_town select 0,_town select 1, _town select 2, 0]; // for rectangle
 //      _params = [_town select 0,_town select 1]; // for circle
-//       _grp =  _params call SYG_makePatrolGroup;
+//      _grp =  _params call SYG_makePatrolGroup;
 SYG_makePatrolGroup = {
-    if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_makePatrolGroup: expected parameter in not ARRAY (%1)", _this] ;grpNull };
+    if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_makePatrolGroup: expected parameter is not ARRAY (%1)", _this] ;grpNull };
     private ["_agrp","_elist","_rand","_leader"];
-	__WaitForGroup
-	__GetEGrp(_agrp)
+	_agrp = call SYG_createGroup;
 	_elist = [d_enemy_side] call x_getmixedliste;
 	{
 	    _rand = floor random 3;
@@ -1326,7 +1386,14 @@ SYG_setHeliParaCargo = {
     hint localize format[ "<<< SYG_setHeliParaCargo [%1,%2] >>>", _paraType, _num ]; // log start
 };
 
-
+//
+// Creates and return new enemy group.
+// Call: _newgrp = call SYG_createGroup;
+//
+SYG_createGroup = {
+    while {!can_create_group} do {sleep 0.1 + random (0.2)};
+    [d_enemy_side] call x_creategroup
+};
 
 
 

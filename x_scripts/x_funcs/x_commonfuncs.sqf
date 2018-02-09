@@ -41,10 +41,13 @@ if (isServer) then {
 	};
 };
 #else
-d_found_gdtmodtracked = true;
+d_found_gdtmodtracked = true; // skip GDTModTracked as totally useless
 d_use_mod_tracked = false;
 XGDTTracked = {};
 #endif
+
+SYG_found_GL3 = "GL3" in _search_array;
+hint localize format["SYG_found_GL3 is %1", SYG_found_GL3];
 
 #ifndef __ACE__
 d_found_DMSmokeGrenadeVB = (if ("DMSmokeGrenadeVB" in _search_array) then {true} else {false});

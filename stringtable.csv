@@ -40,6 +40,7 @@ STR_SYG_12,"%1 to Backpack","%1 in den Rucksack","%1 в рюкзак"
 // Server.cfg strings:
 //-----------------------------------------------------------------------------
 STR_SERVER_MOTD0,"The islanders are happy to welcome you in your native language!","Die Inselbewohner sind glücklich, Sie zu begrüßen, in Ihrer Muttersprache!","Островитяне рады приветствовать Вас на вашем родном языке!"
+STR_SERVER_1,"Shooting at allies from any weapon under any pretext is strictly prohibited!","Schießen Verbündete aus jeder Waffe unter irgendeinem Vorwand ist streng verboten!","Стрельба по союзникам из любого оружия под любым предлогом строго запрещена!"
 
 //-----------------------------------------------------------------------------
 // SYS scripts strings:
@@ -582,6 +583,7 @@ STR_SYS_358,"Points a player gets if he is %1 m away from a sidemission when it 
 STR_SYS_359,"Transport distance to get points: ","Transport-Distanz um Punkte zu bekommen: ","Дистанция транспортировки, за которую получают очки, в м.: "
 STR_SYS_360,"For unit transportation +%1 scores","Für die unit Transport +%1 erzielt","За перевозку 1-го бойца +%1 очков"
 STR_SYS_361,"Engine gets shut off on service point: ","Motor wird abgestellt auf service-point: ","Отключение двигателей в пункте перезарядки: "
+
 STR_SYS_362,"AAHALO jump enabled: ","AAHALO parajump aktiviert: ","Десантирование активно: "
 STR_SYS_363,"AAHALO jump available at flag at base: ","AAHALO parajump verfügbar unter der Flagge an Ihrer Basis: ","Да, доступно на базе: "
 STR_SYS_364,"Time between two AAHALO jumps from base flag: %1 secs","Die Zeit zwischen zwei AAHALO parajumps von base flag: %1 secs","Периодичность десантирования от флага на базе: %1 сек."
@@ -968,7 +970,7 @@ STR_COMP_0,"press any key to exit from screen","drücken Sie eine beliebige Tast
 STR_COMP_1,"After some hacking of GRU PC, you see:","Nach einigen Manipulationen mit dem PC GRU Sie sehen:","После некоторых манипуляций с ПЭВМ ГРУ вы видите:"
 STR_COMP_2,"Intelligence mission are not yet available, please be patient","Nachrichtendienstliche Aufgaben noch fehlt, geduldig zu sein","Разведывательные задания отсутствуют, наберитесь терпения"
 STR_COMP_3,"Get rid of any surplus weapons! And try again...","Loszuwerden überschüssige Waffen! Und nochmal versuchen...","Уберите всё избыточное оружие. И возвращайтесь..."
-STR_COMP_4,"After some hacking of GRU PC, you see that hands are still too short. ""May be try from the front""?","Nach ein paar hacken von GRU PC, sehen Sie, dass die Hände immer noch zu kurz. ""Vielleicht versuchen, von der front""?","После нескольких пассов над ПЭВМ ГРУ вы понимаете, что руки пока ещё коротковаты. И думаетe: ""может, попробовать спереди""?"
+STR_COMP_4,"After some hacking of GRU PC, you see that hands are still too short. ""May be try from the front side""?","Nach ein paar hacken von GRU PC, sehen Sie, dass die Hände immer noch zu kurz. ""Vielleicht versuchen, von der front""?","После нескольких пассов над ПЭВМ ГРУ вы понимаете, что руки пока ещё коротковаты. И думаетe: ""может, попробовать спереди""?"
 STR_COMP_5,"No connection with a headquater, please wait...","Keine Kommunikation mit Einsatz","Нет связи со ставкой, ждите..."
 STR_COMP_6,"This option is under development","This option is under development","Это только тест, расслабьтесь"
 
@@ -1185,6 +1187,7 @@ STR_FIRE_UNKNOWN,"You can't understand what it is","Ich kann nicht verstehen, wa
 
 STR_LIB_ACE_MAP,"A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it","Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen","Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"
 STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,"Good but short and rather weak western rifle with excellent optics","Gut, aber kurz und eher schwach western Gewehr mit hervorragender Optik","Крутая, но короткая и слабенькая автоматическая западная винтовка с лучшим из прицелов. Если бы не слабое воздействие на цель..."
+STR_ACE_WDN_M240_VEH,"7.62mm M240C Coax","7.62 mm M240C Koaxial","7.62mm M240C спаренный"
 
 //STR_ACE_VDN_SU34B,"Su-34B FAB500,R73,Kh29L","Su-34B FAB500,R73,Kh29L","Су-34Б ФАБ-500,Р-73,Х-29Л"
 //STR_ACE_VDN_SU34,"Su-34 FAB500,R73,S-8T","Su-34 FAB500,R73,S-8T","Су-34 ФАБ-500,Р-73,C-8Т"

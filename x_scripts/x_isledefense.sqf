@@ -44,6 +44,9 @@ if (!isServer) exitWith {};
 #define DELAY_VERY_LONG_STOPPED 3600
 #endif
 
+// show absence with designated probability
+#define SHOW_ABSENCE_PROBABILITY 0.5
+
 #define DELAY_BETWEEN_EACH_PATROL_CHECK (5 + random 5)
 #define DELAY_AFTER_ALL_PATROLS (25 + random 25)
  
@@ -127,8 +130,9 @@ _make_isle_grp = {
 #endif							
 
 	_agrp = grpNull;
-	__WaitForGroup
-	__GetEGrp(_agrp)
+
+    _agrp = call SYG_createGroup;
+
 	_elist = [d_enemy_side] call x_getmixedliste;
 	_vecs = [];
 
@@ -807,7 +811,10 @@ while {true} do {
 	{
 	    if ( _show_absence) then
 	    {
-            ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
+	        if ((random 1) >= SHOW_ABSENCE_PROBABILITY ) then // inform users about patrol absence
+	        {
+                ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
+	        };
             _show_absence = false; // disable patrol absence message
 	    };
 	};

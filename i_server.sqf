@@ -870,6 +870,7 @@ d_with_isledefense =
 #endif
 #ifdef __DEFAULT__
 	[[12422.8,11518.5,0], 6850, 6850, 0, 5];
+d_preferred_isledefence_spawn_points = [];
 #endif
 #ifdef __TT__
 	[[12422.8,11518.5,0], 6850, 6850, 0, 4];

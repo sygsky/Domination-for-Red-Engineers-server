@@ -61,7 +61,7 @@ class Mission
 	class Intel
 	{
 		briefingName="co@10 Domination!ACE East [4.0+] RA";
-		briefingDescription="by Xeno/Fitz/Engi/Dupa";
+		briefingDescription="by Xeno/Fitz/Engineer";
 		startWeather=0.000000;
 		forecastWeather=0.000000;
 		year=1985;
@@ -109,7 +109,7 @@ class Mission
 					skill=0.466667;
 					text="alpha_1";
 					init="this setGroupid [""Alpha""];";
-					description="комвзвода мотострелков (Team Alpha Leader)";
+					description="Team Alpha Leader (комвзвода мотострелков)";
 				};
 				class Item1
 				{
@@ -122,7 +122,7 @@ class Mission
 					skill=0.333333;
 					text="alpha_2";
 					init="this setGroupid [""Alpha""]";
-					description="снайпер (Sniper)";
+					description="Sniper (снайпер)";
 				};
 				class Item2
 				{
@@ -135,7 +135,7 @@ class Mission
 					skill=0.333333;
 					text="alpha_3";
 					init="this setGroupid [""Alpha""]";
-					description="медик (Medic)";
+					description="Medic (медик)";
 				};
 				class Item3
 				{
@@ -148,7 +148,7 @@ class Mission
 					skill=0.333333;
 					text="alpha_4";
 					init="this setGroupid [""Alpha""]";
-					description="замкомвзвода (Group Leader)";
+					description="Group Leader (замкомвзвода)";
 				};
 				class Item4
 				{
@@ -161,7 +161,7 @@ class Mission
 					skill=0.333333;
 					text="alpha_5";
 					init="this setGroupid [""Alpha""]";
-					description="пулемётчик (MG Gunner)";
+					description="MG Gunner (пулемётчик)";
 				};
 				class Item5
 				{
@@ -174,7 +174,7 @@ class Mission
 					skill=0.333333;
 					text="alpha_6";
 					init="this setGroupid [""Alpha""]";
-					description="РПГ-специалист (AT Soldier)";
+					description="AT Soldier (РПГ-специалист)";
 				};
 				class Item6
 				{
@@ -187,7 +187,7 @@ class Mission
 					skill=0.200000;
 					text="alpha_7";
 					init="this setGroupid [""Alpha""]";
-					description="пулемётчик (MG Gunner)";
+					description="MG Gunner (пулемётчик)";
 				};
 				class Item7
 				{
@@ -200,7 +200,7 @@ class Mission
 					skill=0.200000;
 					text="alpha_8";
 					init="this setGroupid [""Alpha""]";
-					description="боец с подствольником (GL Soldier)";
+					description="GL Soldier (боец с подствольником)";
 				};
 			};
 		};
@@ -279,7 +279,7 @@ class Mission
 					skill=0.466667;
 					text="bravo_1";
 					init="this setGroupid [""Bravo""]";
-					description="комвзвода спецназа (Team Bravo Leader)";
+					description="Team Bravo Leader (комвзвода спецназа)";
 				};
 				class Item1
 				{
@@ -293,7 +293,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_3";
 					init="this setGroupid [""Bravo""]";
-					description="замкомвзвода (Assistance Squad Leader)";
+					description="Assistance Squad Leader (замкомвзвода)";
 				};
 				class Item2
 				{
@@ -307,7 +307,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_4";
 					init="this setGroupid [""Bravo""]";
-					description="снайпер (Sniper)";
+					description="Sniper (снайпер)";
 				};
 				class Item3
 				{
@@ -321,7 +321,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_5";
 					init="this setGroupid [""Bravo""]";
-					description="оператор-разведчик (Operator)";
+					description="Operator (оператор-разведчик)";
 				};
 				class Item4
 				{
@@ -335,7 +335,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_6";
 					init="this setGroupid [""Bravo""]";
-					description="разведчик (Recon)";
+					description="Recon (разведчик) ";
 				};
 				class Item5
 				{
@@ -349,7 +349,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_7";
 					init="this setGroupid [""Bravo""]";
-					description="медик (Medic)";
+					description="Medic (медик)";
 				};
 				class Item6
 				{
@@ -363,7 +363,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_8";
 					init="this setGroupid [""Bravo""]";
-					description="разведчик (Recon)";
+					description="Recon (разведчик)";
 				};
 				class Item7
 				{
@@ -377,7 +377,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_2";
 					init="this setGroupid [""Bravo""]";
-					description="разведчик-корректировшик (Spotter)";
+					description="Spotter (разведчик-корректировшик)";
 				};
 			};
 		};
@@ -399,7 +399,7 @@ class Mission
 					skill=0.466667;
 					text="charlie_1";
 					init="this setGroupid [""Charlie""]";
-					description="комвзвода ВДВ (Squad Leader ""Charlie"")";
+					description="Squad Leader ""Charlie"" (комвзвода ВДВ)";
 				};
 				class Item1
 				{
@@ -412,7 +412,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_2";
 					init="this setGroupid [""Charlie""]";
-					description="Снайпер (Sniper)";
+					description="Sniper (Снайпер)";
 				};
 				class Item2
 				{
@@ -425,7 +425,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_3";
 					init="this setGroupid [""Charlie""]";
-					description="медик (Medic)";
+					description="Medic (медик)";
 				};
 				class Item3
 				{
@@ -438,7 +438,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_4";
 					init="this setGroupid [""Charlie""]";
-					description="замкомвзвода ВДВ (Assistant Squad Leader)";
+					description="Assistant Squad Leader (замкомвзвода ВДВ)";
 				};
 				class Item4
 				{
@@ -451,7 +451,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_5";
 					init="this setGroupid [""Charlie""]";
-					description="пулемётчик (MG Gunner)";
+					description="MG Gunner (пулемётчик)";
 				};
 				class Item5
 				{
@@ -464,7 +464,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_6";
 					init="this setGroupid [""Charlie""]";
-					description="РПГ-специалист (AT Soldier)";
+					description="AT Soldier (РПГ-специалист)";
 				};
 				class Item6
 				{
@@ -477,7 +477,7 @@ class Mission
 					skill=0.200000;
 					text="charlie_7";
 					init="this setGroupid [""Charlie""]";
-					description="боец с подствольником (GL Soldier)";
+					description="GL Soldier (боец с подствольником)";
 				};
 				class Item7
 				{
@@ -490,7 +490,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_8";
 					init="this setGroupid [""Charlie""]";
-					description="РПГ-специалист (AT Soldier)";
+					description="AT Soldier (РПГ-специалист)";
 				};
 				class Item8
 				{
@@ -503,7 +503,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_9";
 					init="this setGroupid [""Charlie""]";
-					description="медик Ирина (Medic Irina)";
+					description="Medic Irina (медик Ирина)";
 				};
 			};
 		};
@@ -525,7 +525,7 @@ class Mission
 					skill=0.333333;
 					text="delta_1";
 					init="this setGroupid [""Delta""];";
-					description="комвзвода инженеров (Team Delta Engineer Leader)";
+					description="Team Delta Engineer Leader (комвзвода инженеров)";
 				};
 				class Item1
 				{
@@ -538,7 +538,7 @@ class Mission
 					skill=0.200000;
 					text="delta_2";
 					init="this setGroupid [""Delta""];";
-					description="инженер (Engineer)";
+					description="Engineer (инженер)";
 				};
 				class Item2
 				{
@@ -551,7 +551,7 @@ class Mission
 					skill=0.200000;
 					text="delta_3";
 					init="this setGroupid [""Delta""];";
-					description="инженер (Engineer)";
+					description="Engineer (инженер)";
 				};
 				class Item3
 				{
@@ -564,7 +564,7 @@ class Mission
 					skill=0.333333;
 					text="delta_4";
 					init="this setGroupid [""Delta""];";
-					description="инженер (Engineer)";
+					description="Engineer (инженер)";
 				};
 			};
 		};
@@ -587,7 +587,7 @@ class Mission
 					skill=0.600000;
 					text="RESCUE";
 					init="this setGroupid [""Artillery 1""];";
-					description="1-й оператор-спасатель (1st Artillery Operator and Rescue)";
+					description="1st Artillery Operator and Rescue (1-й оператор-спасатель)";
 				};
 			};
 		};
@@ -609,7 +609,7 @@ class Mission
 					skill=0.600000;
 					text="RESCUE2";
 					init="this setGroupid [""Artillery 2""];";
-					description="2-й оператор-спасатель (2dn Artillery Operator and Rescue)";
+					description="2dn Artillery Operator and Rescue (2-й оператор-спасатель)";
 				};
 			};
 		};

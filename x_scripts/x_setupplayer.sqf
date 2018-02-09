@@ -230,14 +230,14 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             if ( _p isKindOf "SoldierEAT" ) exitWith
                             {
                                 _rpg set [2, "ACE_RPG7_PG7VR"];
-                                _rifle set [3, 9]; // 9th magazines
+                                _rifle set [3, 9]; // 9 magazines
                                 _weapp =  [_rpg, _rifle ,_pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VR_PDM",1]];
                             };
 
                             if ( _p isKindOf "SoldierEAA" ) exitWith
                             {
-                                _rifle set [3,6]; // 6th magazines
+                                _rifle set [3,6]; // 6 magazines
                                 _weapp =  [["P","ACE_Strela","ACE_Strela",1],_rifle,_pistol,["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_Strela_PDM",1]];
                             };

@@ -573,7 +573,7 @@ SYG_intelHouseIds = [82124,220,354,356,360];
 SYG_intelObjects =
 [
 	[[9709.46,9960.43,1.4], 155, "Computer", "GRU_scripts\computer.sqf", "STR_COMP_ENTER"],
-	[[9712.41,9960,0.6], 90, "Wallmap", ""]
+	[[9712.41,9960,0.6], 90, "Wallmap", "GRU_scripts\mapAction.sqf","STR_CHECK_ITEM"]
 	// GRUBox position[]={9707.685547,143.645111,9963.350586};	azimut=90.000000;
 ];
 
@@ -595,6 +595,7 @@ SYG_getGRUCompPos = {
 SYG_getGRUComp = {
 	private ["_comp_arr","_pos"];
 	_compArr = argp(SYG_intelObjects, 0);
+	_compType = call SYG_getGRUCompType;
 	nearestObject [ argp(_compArr, 0), argp(_compArr, 2) ]
 };
 
@@ -608,6 +609,14 @@ SYG_getGRUCompType = {
 
 SYG_getGRUCompScript = {
 	argp( argp(SYG_intelObjects, 0), 3 )
+};
+
+SYG_getGRUMapActionTextId = {
+	argp( argp(SYG_intelObjects, 1), 4 )
+};
+
+SYG_getGRUMapScript = {
+	argp( argp(SYG_intelObjects, 1), 3 )
 };
 
 SYG_getMainTaskTargetPos = { (call SYG_getTargetTown) select 0 };
