@@ -60,7 +60,7 @@ while {nr_observers > 0} do {
 								{
 									_near_targets = nearestObjects [_pos_nearest, _man_type, 35];
 								};	
-								_type = if (( {alive _x} count _near_targets) == 0) then { 1 } else { 2 };
+								_type = if (( {canStand _x} count _near_targets) == 0) then { 1 } else { 2 };
 								_nextaritime = time + d_arti_available_time + random 120;
 								[_pos_nearest,_type] spawn x_shootari;
 								_enemy_ari_available = false;
