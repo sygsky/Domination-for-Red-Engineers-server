@@ -325,7 +325,7 @@ SYG_nearestCargo = {
 	_vecs = [_side, _dist, "LandVehicles" ] call SYG_findNearestVehicles;
 	if ( count _vecs == 0 ) exitWith { objNull };
 
-    _size = aropt(3, 0);
+    _size = argopt(3, 0);
     if ( _size <= 0 ) exitWith { objNull };
 
 	{
@@ -347,6 +347,7 @@ SYG_nearestCargo = {
 };
 
 // _vecs_arr = [_unit || _pos, 500, ["LandVehicles"]] call Syg_findNearestVehicles;
+// may retun [] if no vehicles found
 Syg_findNearestVehicles = {
 	_unit = arg(_this);
 	if ( typeName _unit == "ARRAY" ) then {
@@ -356,7 +357,7 @@ Syg_findNearestVehicles = {
 	_dist = argopt(1, 500);
 
     _types = argopt(2,["LandVehicles"]);
-	if ( typeName _types != "ARRAY" ) exitWith {-1};then // use position array, check to be empty
+	if ( typeName _types != "ARRAY" ) exitWith {[]}; // use position array, check to be empty
 
 	nearestObjects [_unit, _types, _dist]
 };

@@ -452,12 +452,20 @@ XfSendMessage = {
 	["xmsg",_this] call XNTSendNetStartScriptClient;
 };
 
-// count all alive units in units or group
+// count all alive units in units or group {alive _x}
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetAliveUnits = {
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
 	({alive _x} count _this)
+};
+
+// count all units in units or group that can stand {canStand _x}
+// call: _cnt = units _grp call XfGetAliveUnits;
+// or call: _cnt = _grp call XfGetAliveUnits
+XfGetStandUnits = {
+	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
+	({canStand _x} count _this)
 };
 
 // count all alive and fully health units in units or group
@@ -467,7 +475,6 @@ XfGetHealthyUnits = {
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
 	({alive _x && (damage _x == 0)} count _this)
 };
-
 
 // count all group alive units  not in vehicles
 // call: _cnt = units _grp call XfGetAliveUnits;
@@ -479,11 +486,6 @@ XfGetUnitsOnFeet = {
 
 // call: _cnt = _grp call XfGetAliveUnits; // count all alive units in group
 XfGetAliveUnitsGrp =  XfGetAliveUnits;
-/*
-{
-	({alive _x} count (units _this)) 
-};
-*/
 
 x_funcs2_compiled = true;
 

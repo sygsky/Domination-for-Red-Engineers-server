@@ -185,7 +185,7 @@ SYG_addEvents = {
 #endif
 };
 
-// Makes vehicles group
+// Makes enemy vehicles group
 x_makevgroup = {
 	private ["_numbervehicles", "_pos", "_crewmember", "_vehiclename", "_grp", "_radius", "_direction", "_do_points",
 	"_the_vehicles", "_d_crewman", "_d_crewman2", "_no_crew", "_side_char", "_grpskill", "_n", "_vehicle", "_dir",
@@ -298,7 +298,7 @@ x_makevgroup = {
 	_the_vehicles
 };
 
-// Makes group of enemy men
+// Makes infantry enemy group
 // Params:
 // position, unitlist, group, do_points (for TT mode)
 x_makemgroup = {

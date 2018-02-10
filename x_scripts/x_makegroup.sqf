@@ -43,13 +43,13 @@ if ( _grptype in ["AGS","DSHKM","D30"]) then {
 };
 _unit_array = nil;
 _fran = (floor random 3) + 1;
-_grp allowFleeing (_fran / 10); // fleeing possibility from 0.1 to 0.4
+_grp allowFleeing (_fran / 10); // fleeing possibility from 0.1 to 0.3
 
 if (d_suppression) then {[_grp] execVM "scripts\ROMM_IA.sqf";};
 
 switch (_type) do {
 	case "patrol": {
-		_grp_array = [_grp, _pos, 0,_center_rad,[],-1,0,[],300 + (random 50),0];
+		_grp_array = [_grp, _pos, 0,_center_rad,[],-1,0,[],300 + (random 50),0,[2]];
 		_grp_array execVM "x_scripts\x_groupsm.sqf";
 	};
 	case "guard": {

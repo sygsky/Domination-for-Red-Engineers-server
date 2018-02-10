@@ -13,7 +13,7 @@
 // at 9: can be -1 (for guard static) ->"no patrol", 0 and +1 -> "patrol"; XNormalPatrol: if ((_this select 1) == 0) then {["COLUMN","STAG COLUMN","FILE"]} else {["COLUMN"]}; 1
 //
 // at 10: [] with some additional parameters by Sygsky, optional
-// at 10.0: number of alive units to try rejoin them. Optional. Set 0 or negative value to disable rejoin. Default 0
+// at 10.0: number of stand units to try rejoin them. Optional. Set 0 or negative value to disable rejoin. Default 0
 // at 10.1: debug print any new waypoints if TRUE and not if FALSE. Optional. Default FALSE
 // at 10.2: prevent new wp be on islet (TRUE) or not (FALSE). Optional.  Default FALSE, i.e. not prevent WP be on Islet
 // at 10.3: distance to detect hill near new wp. Optional.  Default 0, i.e. not seek for hills near WP
@@ -70,13 +70,19 @@ _start_pos =  _grp_array select 4;
 if (count _start_pos < 3 ) then {_grp_array set[4, position (leader _grp)]};
 
 while {true} do {
+
+	// check group to be empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize "x_groupsm.sqf: group is dead";}; // exit if group is empty or dead
+
 	if (X_MP) then {
 		//hint localize format["x_groupsm.sqf: call XPlayersNumber == %1",(call XPlayersNumber)];
 		sleep (1.012 + random 1);
 		if ((call XPlayersNumber) == 0) then {
-            waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+            waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
+			_units = units _grp;
+			// refuel all vehicles after player wait periods
             {
-                if (!isNull _x and (alive _x)) then
+                if (alive _x) then
                 {
                     if (vehicle _x != _x) then
                     {
@@ -87,6 +93,7 @@ while {true} do {
             } forEach _units;
 		};
 	};
+	_units = units _grp;
 	__DEBUG_NET("x_groupsm.sqf",(call XPlayersNumber))
 	// state is in _grp_array select 2
 	switch (_grp_array select 2) do {
@@ -296,22 +303,21 @@ while {true} do {
 			_grp_array set [2,8];
 		};
 	}; // switch (_grp_array select 2)
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith {}; // exit if group is empty or dead
+	
+	// check group to be empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize "x_groupsm.sqf: group is dead";}; // exit if group is empty or dead
 	
 	sleep 4 + random 4;
 	//+++ Sygsky: OPTIMIZE small groups utilizing with time to time trying to rejoin with bigger ones
 	if ( (_rejoin_num > 0) and (_rejoin_time <= time) ) then
 	{
 	    _rejoin_time = time + REJOIN_RERIOD;    // prepare next time to re-join attempt
-		_counter = _grp call XfGetAliveUnitsGrp;
+		_counter = _grp call XfGetStandUnits;	// how many units can stand
 		if ( (_counter <= _rejoin_num) AND (_counter > 0) ) then // try to join other group
 		{
-#ifdef __DEBUG__			
-			hint localize format["%1 x_groupsm.sqf: Try to re-join grp %2(of %3[%4])",call SYG_missionTimeInfoStr, _grp, count units _grp, _rejoin_num ];
-#endif				
-			_counter = _counter + _counter; // size for bigger group to be re-joinable
+			_counter = _counter + 1; // size for bigger group to be rejoinable
 			_leader = leader _grp;
-			if ( (!isNull _leader) AND (vehicle _leader == _leader)) then // try re-join only for feetman
+			if ( (!isNull _leader) AND (vehicle _leader == _leader)) then // try re-join only for feet man group
 			{
 				_side = side _leader;
 				_joingrp = grpNull;
@@ -324,53 +330,54 @@ while {true} do {
 #else
 				_all_grp_list = + groups_east;
 #endif
+				// find nearest good group  to rejoin
+				_min_dist = REJOIN_DISTANCE;
 				{
                     if (typeName _x == "ARRAY") then
                     {
                         _grp1 = _x select 0;
-                        if ((count (units _grp1) > _counter ) ) then
+						if (isNull _grp1) exitWith{}; // dead group detected, skip it
+                        if ( (_grp1 call XfGetStandUnits) > _counter ) then
                         {
                             _leader1 = leader _grp1;
                             if ( alive _leader1 ) then
                             {
-                                if ((vehicle _leader1 == _leader1) AND ((_leader distance _leader1) < REJOIN_DISTANCE) AND (_grp != _grp1) AND (({alive _x} count units _grp1) > _counter) AND (_side == side _grp1)) then
+                                if ((vehicle _leader1 == _leader1) &&  (_grp != _grp1)  && (_side == side _grp1)) then
                                 {
-                                    _joingrp = _grp1;
-                                    breakTo "join";
+									_dist = _leader distance _leader1;
+									if ( _dist < _min_dist) then
+									{
+										_joingrp = _grp1;
+										_min_dist = _dist;
+									};
                                 };
-                                sleep 0.05;
+                                sleep 0.01;
                             };
                         };
                     };
 				} forEach _all_grp_list;
+#ifdef __DEBUG__			
+				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4])",call SYG_missionTimeInfoStr, _grp, count units _grp, _rejoin_num ];
+#endif				
 
 				if ( !isNull _joingrp ) then 
 				{
 #ifdef __DEBUG__			
-					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4)",_grp, count units _grp, _joingrp, count units _joingrp,call SYG_missionTimeInfoStr];
+					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4)", _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr];
 #endif				
 					if ( rank _leader != "PRIVATE" ) then {_leader setRank "PRIVATE"};
 					(units _grp) join _joingrp; sleep 1.111;
 				};
+				
 			}; // if ( vehicle _leader == _leader) then // try re-join only for feetman
+			
 		}; // if ( (_counter <= _rejoin_num) AND (_counter > 0) ) then
+		
 	}; // if ( _rejoin_num > 0 ) then
+	
 	//--- Sygsky
 }; // while {true}
 
 _grp_array = nil;
-
-/*
-waitUntil { !SYG_grpListEditing };
-SYG_grpListEditing = true;
-// remove all null groups from our list
-for "_i" from 0 to count SYG_grpList - 1 do
-{
-	_grp = SYG_grpList select _i;
-	if (isNull _grp || (_grp call XfGetAliveUnitsGrp) == 0) then { SYG_grpList set [_i, "RM_ME"] };
-};
-SYG_grpList = SYG_grpList - ["RM_ME"];
-SYG_grpListEditing = false;
-*/
 
 if (true) exitWith {};
