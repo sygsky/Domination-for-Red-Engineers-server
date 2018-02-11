@@ -664,14 +664,14 @@ STR_SYS_606,"During %4 you are on GRU duty in %1 [+%2/%3]","During %4 you are on
 STR_SYS_607,"You need %2 point[s] for parajump. Your current score is %1","Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1","Для прыжка необходимо очков: %2. Сейчас у вас: %1"
 STR_SYS_608,"You can't jump. You have to wait %1 minutes for your next jump!!!","Sie können nicht springen. Sie müssen warten, %1 Minuten für Ihren nächsten springen!!!","Прыжок запрещён. След. прыжок разрешён через %1 мин.!"
 STR_SYS_609,"!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!","!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!","!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!"
-STR_SYS_610,"[Record weapons]","[Datensatz Waffen]","[Запомнить оружие]"
+STR_SYS_610,"[Record equipment]","[Datensatz Waffen]","[Запомнить снаряжение]"
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Ваше снаряжение записано и будет выдано в следующий раз
 STR_SYS_612,"You've got the equipment recorded the last time","Sie haben die Ausrüstung, erfasst der letzten Zeit","Вам выдано снаряжение с прошлого раза"
 STR_SYS_613,Your recorded equipment wiped,Ihr Aufnahme-equipment gewischt,Ваша запись снаряжения стёрта
 STR_SYS_614,A record of the equipment not found,Eine Aufzeichnung der Ausstattung nicht gefunden,Запись о снаряжении не найдена
 STR_SYS_615,"!!!!! ATTENTION !!!!! Incoming Missile !!!!!","!!!!! AUFMERKSAMKEIT !!!!! Eingehende Rakete !!!!!","!!! Опасность !!! Угроза попадания ракеты !!!"
 STR_SYS_616,"Height","Höhe","Высота"
-STR_SYS_617,"GRU: the enemy landing party was sent from helicopter carrier in %1","GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1","ГРУ: взлёт десант с вертолётоносца был в %1"
+STR_SYS_617,"GRU: the enemy landing party was sent from helicopter carrier in %1","GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1","ГРУ: вылет десант с вертолётоносца отмечен в %1"
 STR_SYS_618,"Viewdistance restore to %1 m.","Viewdistance Durchmesser restauriert wurde: %1 m.","Диаметр зоны обзора восстановлен: %1 м."
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
