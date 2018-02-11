@@ -162,6 +162,13 @@ XHandleNetStartScriptServer = {
                 if (_name == "Petigp") then // Hungarian
                 {
         			_msg = "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+                }
+                else
+                {
+                    if ( _name == "Marco") then // vec. killer
+                    {
+                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message!"
+                    };
                 };
             };
 
