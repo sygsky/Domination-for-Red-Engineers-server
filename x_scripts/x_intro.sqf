@@ -204,8 +204,8 @@ else
 };
 
 _lobj = (
-    ["LODy_test", "Barrels", /*"ACamp",*/ "Land_kulna","misc01", "Land_helfenburk","FireLit",
-    "Land_majak2","Land_zastavka_jih","Land_ryb_domek","Land_aut_zast"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
+    ["LODy_test", "Barrels", "Land_kulna","misc01", "Land_helfenburk","FireLit",
+    "Land_majak2","Land_zastavka_jih","Land_ryb_domek","Land_aut_zast","Land_telek1"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
 sleep 0.1;
 _lobj  setVectorUp [0,0,1]; // make object be upright
 switch typeOf _lobj do
