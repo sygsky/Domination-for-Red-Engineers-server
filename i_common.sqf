@@ -491,15 +491,14 @@ mt_bonus_vehicle_array = (
 "ACE_Mi24P",	        //16
 "ACE_Su27S", 			//17
 "ACE_Su30Mk_R27_R73",	//18
+"ACE_Su34",     	    //19
+"ACE_Su34B",            //20
 
-"ACE_Ka50", 		    //19 - first big bonus vehicle (heli + plane)
-"ACE_Ka50_N", 	        //20
-"ACE_Su34",     	    //21
-"ACE_Su34B",            //22
+"ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane)
+"ACE_Ka50_N", 	        //22
 
-"ACE_Su34B",             //23 - first vehicles of good jets
-"ACE_Su30Mk_Kh29T",     //24
-"ACE_Su30Mk_KAB500KR"   //25
+"ACE_Su30Mk_Kh29T",     //23
+"ACE_Su30Mk_KAB500KR"   //24
 ]
 				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
