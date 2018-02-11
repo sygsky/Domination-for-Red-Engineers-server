@@ -111,7 +111,7 @@ while {true} do {
                     _driver_near = (alive _nobj) && ((side _nobj) == east) && ((_pos2 distance _pos1) < DRIVER_NEAR_DIST);
                 }
                 else
-                { hint localize format["%1 detected at dist %1", typeOf _nobj, (getPos _nobj) distance _pos1]; };
+                { hint localize format["%1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
 
                 if (! _driver_near ) then
                 {
