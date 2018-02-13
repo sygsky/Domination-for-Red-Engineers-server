@@ -60,7 +60,7 @@ _next_wp_time = 0;
 _units = units _grp;
 if ( count _units == 0) exitWith {};
 
-sleep 20 + random 20;
+sleep (20 + random 20);
 
 _grp_array set [2,0];
 _checktime = 0;
@@ -94,7 +94,7 @@ while {true} do {
 		};
 	};
 	_units = units _grp;
-	__DEBUG_NET("x_groupsm.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_groupsm.sqf",(call XPlayersNumber))
 	// state is in _grp_array select 2
 	switch (_grp_array select 2) do {
 		case 0: { // quiet initial state, nothing unusual
@@ -255,15 +255,16 @@ while {true} do {
 			_units doMove (_flank_pos_a select 0);
 			_grp_array set [2,4];
 		};
-		case 4: { // check flanking pos on X less than 20 meters to enemy
-			if ((leader _grp) distance (_flank_pos_a select 0) < 20 || time > _checktime) then {
+		case 4:
+		{ // check flanking pos on X less than 20 meters to enemy
+			if ((leader _grp) distance (_flank_pos_a select 0) < 20 || (time > _checktime)) then {
 				_units doMove (_flank_pos_a select 1);
 				_grp_array set [2,5];
 				_checktime = time + 300 + random 10;
 			};
 		};
 		case 5: {  // check flanking pos from _flankarray = [position player, position _enemy1]. On enemy close switch to case 6
-			if ((leader _grp) distance (_flank_pos_a select 1) < 20 || time > _checktime) then {
+			if ((leader _grp) distance (_flank_pos_a select 1) < 20 || (time > _checktime)) then {
 				if (!isNull (_enemy_array select 0) && (leader _grp) knowsAbout (_enemy_array select 0) >= 1.5) then {
 					_enemy_array set [1, position (_enemy_array select 0)];
 				};
@@ -273,7 +274,7 @@ while {true} do {
 			};
 		};
 		case 6: { // if enemy closer than 20 meters, do case 7
-			if ((leader _grp) distance (_enemy_array select 1) < 20 || time > _checktime) then {
+			if ((leader _grp) distance (_enemy_array select 1) < 20 || (time > _checktime)) then {
 				_checktime = time + 60 + random 10;
 				_grp_array set [2,7];
 			};
@@ -307,7 +308,7 @@ while {true} do {
 	// check group to be empty or dead
 	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize "x_groupsm.sqf: group is dead";}; // exit if group is empty or dead
 	
-	sleep 4 + random 4;
+	sleep (4 + random 4);
 	//+++ Sygsky: OPTIMIZE small groups utilizing with time to time trying to rejoin with bigger ones
 	if ( (_rejoin_num > 0) and (_rejoin_time <= time) ) then
 	{
@@ -357,7 +358,7 @@ while {true} do {
                     };
 				} forEach _all_grp_list;
 #ifdef __DEBUG__			
-				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4])",call SYG_missionTimeInfoStr, _grp, count units _grp, _rejoin_num ];
+				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4]) at %5, pos %6, leader %7",call SYG_missionTimeInfoStr, _grp, count units _grp, _rejoin_num, (getPos (leader _grp)) call SYG_nearestLocationName,  getPos (leader _grp), typeOf (leader _grp)];
 #endif				
 
 				if ( !isNull _joingrp ) then 
