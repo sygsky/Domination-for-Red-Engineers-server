@@ -140,9 +140,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 							_nearest setVelocity [0,0,0];
 							sleep 0.001;
 						};
-						_nearest setVelocity (velocity _vehicle);  //+++ Sygsky - let vehicle to inertially fly ahead some distance
-	  
 						_nearest engineOn false;
+						_nearest setVelocity (velocity _vehicle);  //+++ Sygsky - let vehicle to inertially fly ahead some distance
+                        hint localize format["+++ x_helilift.sqf: velocity on drop %1 was %2 m/s", typeOf _nearest, (velocity _vehicle) distance [0,0,0]];
 						Vehicle_Attached = false;
 						Vehicle_Released = false;
 	  
