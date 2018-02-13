@@ -67,7 +67,7 @@ if (!isServer) exitWith {};
 #define STATUS_STOPPED 2
 #define STATUS_STOPPED1 3
 #define STATUS_WAIT_RESTORE 4
-#define STATUS_WAIT_RESTORE_AFTER_DEATH 5
+#define STATUS_DEAD_WAIT_RESTORE 5
 
 #define DISTANCE_TO_BE_STOPPED 5
 
@@ -439,6 +439,11 @@ if ( _patrol_cnt > 0) then
 };
 _dead_patrols = 0; // how many patrols are currently dead
 _show_absence = false; // disable patrol absence message
+
+// send info about first patrol on island
+["msg_to_user","",[["STR_SYS_1146"]],0,0] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
+
+
 //_patrol_cnt = 0; // active patrol counter
 //
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
@@ -471,7 +476,7 @@ while {true} do {
 		{
 
             // replace group waiting for restore with new one if wait time is out
-			if ( _stat == STATUS_WAIT_RESTORE  || _stat == STATUS_WAIT_RESTORE_AFTER_DEATH) then
+			if ( _stat == STATUS_WAIT_RESTORE  || _stat == STATUS_DEAD_WAIT_RESTORE) then
 			{
 				if (time > _timestamp) then 
 				{
@@ -494,7 +499,7 @@ while {true} do {
 #endif
 					    };
 					} forEach argp(_igrpa, PARAM_VEHICLES); // find first alive vehicle
-    				if (_stat == STATUS_WAIT_RESTORE_AFTER_DEATH) then {_dead_patrols = (_dead_patrols -1) max 0;};
+    				if (_stat == STATUS_DEAD_WAIT_RESTORE) then {_dead_patrols = (_dead_patrols -1) max 0;};
 				};
 
 				breakTo "main_loop";
@@ -505,7 +510,7 @@ while {true} do {
 				if (time > _timestamp) then // set dynamical restore delay
 				{
 					_igrpa call  _remove_grp; // they disappeared, but patrol be restored later, after designated delay
-					_igrpa set [PARAM_STATUS, STATUS_WAIT_RESTORE_AFTER_DEATH];
+					_igrpa set [PARAM_STATUS, STATUS_DEAD_WAIT_RESTORE];
 					_dead_cnt =  ((_dead_patrols max 1) min (_patrol_cnt - 1));
 					_delay = DELAY_RESPAWN_KILLED * _dead_cnt; // delay multiplied by 1..4
 #ifdef	__SYG_ISLEDEFENCE_PRINT_SHORT__
@@ -748,7 +753,9 @@ while {true} do {
 		_igrp  = argp(_igrpa,PARAM_GROUP); 
 		if ( isNull _igrp ) then
 		{
-			_str = _str + "<EMPTY>; ";
+    		_stat = argp( _igrpa, PARAM_STATUS ); // status of patrol group
+            if ( (_stat  == STATUS_DEAD) || (_stat  == STATUS_DEAD_WAIT_RESTORE)) then {_str  = _str + "<DEAD>; ";}
+            else {_str  = _str + "<EMPTY>; ";}; // group/vehicles not exist more
 		}
 		else
 		{
@@ -765,7 +772,7 @@ while {true} do {
     		_stat = argp( _igrpa, PARAM_STATUS ); // status of patrol group
 			if ( _veccnta == 0 ) then
 			{
-	    		if ( (_stat  == STATUS_DEAD) || (_stat  == STATUS_WAIT_RESTORE_AFTER_DEATH)) then {_str  = _str + "<DEAD>; ";}
+	    		if ( (_stat  == STATUS_DEAD) || (_stat  == STATUS_DEAD_WAIT_RESTORE)) then {_str  = _str + "<DEAD>; ";}
 	    		else {_str  = _str + "<EMPTY>; ";}; // group/vehicles not exist more
 			}
 			else
@@ -805,7 +812,7 @@ while {true} do {
 	        };
 	    };
 #endif
-    hint localize format[ "+++ %1 +++", _str ];
+        hint localize format[ "+++ %1 +++", _str ];
 	}
 	else // send info about patrol absence
 	{
