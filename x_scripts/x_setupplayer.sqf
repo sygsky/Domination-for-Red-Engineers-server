@@ -73,6 +73,11 @@ if (X_InstalledECS) then {
 	ECS_local set[133, 10 /* 15 */];	// ECS fires effect, Max fire Max number of fires runing simultaneous (Prevents CPU overload) 
 };
 
+if (SYG_found_GL3) then
+{
+    hint localize format["+++ GL3_Local[0]=",argp(GL3_Local,0)];
+};
+
 if (isNil "x_funcs2_compiled") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions2.sqf";
 };
@@ -83,7 +88,7 @@ if (isNil "x_commonfuncs_compiled") then {
 call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 
 [] spawn {
-	private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant","_crew","_pistol","_equip"];
+	private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant","_pistol","_equip"];
 	// ask the server for the client score etc
 	sleep random 0.5;
 	_endtime = time + 60;
@@ -211,8 +216,6 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 								};
                             };
 
-                            _crew  = [];
-
                             _pistol= switch _index do
                             {
                                 case 0: {["S", "ACE_Makarov", "ACE_8Rnd_9x18_B_Makarov", 4]};
@@ -258,12 +261,12 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             if ( _p isKindOf "SoldierECrew") exitWith
                             {
                                 _weapp =  [_rpg, _rifle, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
-                                _magp = [/* ["ACE_40Rnd_762x39_BT_AK_PDM",6], */["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
+                                _magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
                             if ( _p isKindOf "SoldierEMiner") exitWith
                             {
-                                _weapp =  [_rpg, _diversant, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
+                                _weapp =  [_rpg, _rifle, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
@@ -982,6 +985,8 @@ else
         _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_RENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
     };
 #endif
+
+    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
 
     _local_msg_arr spawn {
         if (count _this == 0) exitWith{};

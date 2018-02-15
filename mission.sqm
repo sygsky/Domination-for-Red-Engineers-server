@@ -519,7 +519,7 @@ class Mission
 					special="NONE";
 					id=14;
 					side="EAST";
-					vehicle="ACE_SoldierECrew";
+					vehicle="ACE_SoldierEMiner_VDV";
 					player="PLAY CDG";
 					leader=1;
 					skill=0.333333;
@@ -533,7 +533,7 @@ class Mission
 					special="NONE";
 					id=44;
 					side="EAST";
-					vehicle="ACE_SoldierECrew";
+					vehicle="ACE_SoldierEMiner_VDV";
 					player="PLAY CDG";
 					skill=0.200000;
 					text="delta_2";
@@ -546,7 +546,7 @@ class Mission
 					special="NONE";
 					id=11;
 					side="EAST";
-					vehicle="ACE_SoldierECrew";
+					vehicle="ACE_SoldierEMiner_VDV";
 					player="PLAY CDG";
 					skill=0.200000;
 					text="delta_3";
@@ -559,7 +559,7 @@ class Mission
 					special="NONE";
 					id=39;
 					side="EAST";
-					vehicle="ACE_SoldierECrew";
+					vehicle="ACE_SoldierEMiner_VDV";
 					player="PLAY CDG";
 					skill=0.333333;
 					text="delta_4";

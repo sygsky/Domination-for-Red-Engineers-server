@@ -47,8 +47,12 @@ XGDTTracked = {};
 #endif
 
 SYG_found_GL3 = "GL3" in _search_array;
-hint localize format["SYG_found_GL3 is %1", SYG_found_GL3];
-
+hint localize format["+++ GL3 = %1", SYG_found_GL3];
+if (d_enemy_side == "WEST" && (__ACEVer) && isServer) then
+{
+    hint localize format["+++ Server: GL3_Global[65] = %1", argp(GL3_Global,65)];
+    GL3_Server set[64, [d_crewman_W,d_creman2_W,d_pilot_W]]; // set crew men who never unmount vehicles during reinforcement
+};
 #ifndef __ACE__
 d_found_DMSmokeGrenadeVB = (if ("DMSmokeGrenadeVB" in _search_array) then {true} else {false});
 __DEBUG_SERVER("x_commonfuncs.sqf",d_found_DMSmokeGrenadeVB)

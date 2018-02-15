@@ -325,7 +325,7 @@ d_allmen_W = (
 //##############################################################################
 // any group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 
-["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A","ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierWB_A","ACE_SoldierW_HMGAB"]
+["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A","ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierW_LightMortarDummy_A","ACE_SoldierW_HMGAB"]
 
 
 		} else {
@@ -676,7 +676,11 @@ d_airki_attack_chopper = (
 
 // ВЕРТОЛЕТЫ НАД ГОРОДОМ
 //##############################################################################
-["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F","ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM",*/"ACE_AH64_AGM_HE","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/]
+//    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",
+//     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM",*/"ACE_AH64_AGM_HE",
+//     "ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
+SYG_HELI_BIG_LIST_ACE_W
+
 	}
 );
 #endif
@@ -742,7 +746,8 @@ d_light_attack_chopper = (
 
 // МАЛЕНЬКИЙ ВЕРТОЛЕТ НАД ГОРОДОМ
 //##############################################################################
-["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_AH6_AGM"]
+//["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_AH6_AGM"]
+SYG_HELI_BIG_LIST_ACE_W
 	}
 );
 #endif

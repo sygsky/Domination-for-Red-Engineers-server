@@ -9,27 +9,39 @@ _bmp_list =
 			["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"]; // bmp
 
 if (X_Client) then {
+
 #ifdef __OWN_SIDE_EAST__
 _armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {
     _bmp_list + ["ACE_M113","ACE_M113_A1","ACE_M113_A3","ACE_M2A1","ACE_M2A3","ACE_PIVADS","ACE_Vulcan","ACE_M6A1"]
 } else {["Stryker_ICV_M2","Stryker_ICV_MK19","Vulcan","Stryker_TOW"]}} else {[]});
 _car = (if (!d_lock_ai_car) then {if (__ACEVer) then {["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t","ACE_Truck5t_MG","ACE_HMMWV_GMV","ACE_HMMWV_GMV2"]} else {["HMMWV50","HMMWVMK","HMMWVTOW"]}} else {[]});
+
+_enymy_heli_list =
+    ( if ((!d_lock_ai_air) && (__ACEVer))
+        then
+        {
+            SYG_HELI_BIG_LIST_ACE_W + SYG_HELI_LITTLE_LIST_ACE_W
+        }
+        else {[]});
 #endif
+
 #ifdef __OWN_SIDE_WEST__
 _armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {["ACE_BMD1","ACE_BMD1p","ACE_BMP2_D","ACE_BMP2","ACE_BMP2_K","ACE_BRDM2_ATGM"]} else {["BMP2","BRDM2","BRDM2_ATGM"]}} else {[]});
 _car = (if (!d_lock_ai_car) then {if (__ACEVer) then {["ACE_UAZ_AGS30","ACE_UAZ_MG","D30"]} else {["UAZ_AGS30","D30","UAZMG"]}} else {[]});
 #endif
+
 #ifdef __OWN_SIDE_RACS__
 _armor = (if (!d_lock_ai_armor) then {["BMP2","BRDM2","BRDM2_ATGM"]} else {[]});
 _car = (if (!d_lock_ai_car) then {["UAZ_AGS30","D30","UAZMG"]} else {[]});
 #endif
+
 #ifdef __TT__
 _armor = (if (!d_lock_ai_armor) then {["BMP2","BRDM2","BRDM2_ATGM"]} else {[]});
 _car = (if (!d_lock_ai_car) then {["UAZ_AGS30","D30","UAZMG"]} else {[]});
 #endif
 
 d_helilift1_types =
-	#ifdef __OWN_SIDE_EAST__
+#ifdef __OWN_SIDE_EAST__
 	if (__CSLAVer) then {
 		["CSLAWarfareEastMobileHQ","CSLAWarfareEastSalvageTruck","CSLA_BVP2","CSLA_BVP1","CSLA_OT64C","CSLA_BRDM2","CSLA_9P148","CSLA_OZ90","CSLA_DTP90","CSLA_T815Ammo8","CSLA_T815CAP6","CSLA_UAZ","CSLA_T813o","WarfareEastSalvageTruck","UralRepair","UralRefuel","UralReammo","UralOpen","BMP2","UAZ_AGS30","M119","D30","UAZMG","BRDM2","BRDM2_ATGM","BMP2_MHQ","BMP2Ambul"] + _armor + _car
 	} else {
@@ -40,20 +52,20 @@ d_helilift1_types =
 			["BMP2_MHQ","BMP2Ambul","WarfareEastSalvageTruck","UralRepair","UralRefuel","UralReammo","UralOpen","BMP2","UAZ_AGS30","M119","D30","UAZMG","BRDM2","BRDM2_ATGM"] + _armor + _car
 		}
 	};
-	#endif
-	#ifdef __OWN_SIDE_WEST__
+#endif
+#ifdef __OWN_SIDE_WEST__
 	if (__ACEVer) then {
 		["M113_MHQ","ACE_M113_Ambul","ACE_M2A2","ACE_M2A1","ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT",/*"ACE_Stryker_RV",*/"ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","ACE_HMMWV_GAU19","ACE_M113_A3","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t"] + _armor + _car
 	} else {
 		["M113_MHQ","M113Ambul","M113AmbulRacs","WarfareWestSalvageTruck","Truck5tRepair","Truck5tRefuel","Truck5tReammo","Truck5tOpen","Truck5tMG","Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","Stryker_TOW","HMMWVTOW","M113_RACS","Vulcan_RACS","Vulcan"] + _armor + _car
 	};
-	#endif
-	#ifdef __OWN_SIDE_RACS__
+#endif
+#ifdef __OWN_SIDE_RACS__
 	["M113_MHQ","M113Ambul","M113AmbulRacs","WarfareWestSalvageTruck","Truck5tRepair","Truck5tRefuel","Truck5tReammo","Truck5tOpen","Truck5tMG","Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","Stryker_TOW","HMMWVTOW","M113_RACS","Vulcan_RACS","Vulcan"] + _armor + _car;
-	#endif
-	#ifdef __TT__
+#endif
+#ifdef __TT__
 	["M113_MHQ","M113Ambul","WarfareWestSalvageTruck","Truck5tRepair","Truck5tRefuel","Truck5tReammo","Truck5tOpen","Truck5tMG","Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","Stryker_TOW","HMMWVTOW","M113_RACS","Vulcan_RACS","Vulcan"] + _armor + _car;
-	#endif
+#endif
 
 #ifdef __TT__
 for "_i" from 0 to (count d_choppers_west - 1) do {

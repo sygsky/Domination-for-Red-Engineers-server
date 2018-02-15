@@ -21,17 +21,6 @@ if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for p
 #define __DEBUG__
 #define DELAY_BEFORE_NEXT_CREATION 120
 
-#ifdef __SUPER_AA_DEFENSE__
-//_Stinger_Pod_arr1 = [[4898.79,15460.7,6.87017],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
-_Stinger_Pod_arr1 = [[4898.79,15460.7,6.9],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
-
-//_Stinger_Pod_arr2 = [[4520.49,15279.3,5.84021],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
-_Stinger_Pod_arr2 = [[4520.49,15279.3,5.9],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
-
-_M2HD_mini_TriPod_arr = [[4359.98,15937,0.0],[4341.64,15541.9,0.0]]; // Isla da Vassal
-
-#endif
-
 
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_508"; //"Стало известно, что виновный в развязывании войны офицер, возглавивший агрессию на Сахрани, прячется на одном из этих островов Isla del Vasal или Isla del Vida. Ликвидируйте негодяя!";
@@ -121,6 +110,15 @@ if (isServer) then {
 	// Add super-defence for this Side Mission immediately
 	// TODO: change this adding so that number of AA Pods (not MG) depends on players count 
 	// up to the maximum limited count after some period
+
+    //_Stinger_Pod_arr1 = [[4898.79,15460.7,6.87017],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
+    _Stinger_Pod_arr1 = [[4898.79,15460.7,6.9],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
+
+    //_Stinger_Pod_arr2 = [[4520.49,15279.3,5.84021],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
+    _Stinger_Pod_arr2 = [[4520.49,15279.3,5.9],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
+
+    _M2HD_mini_TriPod_arr = [[4359.98,15937,0.0],[4341.64,15541.9,0.0]]; // Isla da Vassal
+
 	_utype = if (d_enemy_side == "EAST") then {d_crewman2_E} else {d_crewman2_W};
 	_stingertype = ["ACE_ZU23M"] + [if (d_enemy_side == "EAST") then {"Stinger_Pod_East"} else {"Stinger_Pod"}];
 
