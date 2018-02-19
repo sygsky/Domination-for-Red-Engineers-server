@@ -7,6 +7,22 @@ private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+#define __DOUBLE_AMMUNITION__
+#ifdef __DOUBLE_AMMUNITION__
+
+if (isNil "SYG_DA_Names") then // men allowed to load double ammunition on this service
+{
+    SYG_DA_NAMES = ["HE_MACTEP"];
+};
+#define DA_PLAYER ((isPlayer (driver _this)) && ((name (driver _this)) in SYG_DA_NAMES))
+
+#else
+
+#define DA_PLAYER false
+
+#endif
+
+
 _vehicle = objNull;
 
 _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
@@ -34,17 +50,8 @@ if ( isNull _vehicle) exitWith{};
 
 if (!alive _vehicle) exitWith {};
 
-_nemaster = false;
-//hint localize format["_nemaster = %1", _nemaster];
+_nemaster = PLAYER_DA;
 
-_driver = driver _vehicle;
-if ( isPlayer _driver) then
-{
-    if ((name _driver) == "HE_MACTEP") then
-    {
-        _nemaster = true;
-    };
-};
 // Mainly check for helicopters, others are not so exposed to double reloading efforts
 _already_loading = false;
 _already_loading = _vehicle getVariable "already_on_load";
@@ -59,8 +66,8 @@ if ((!_nemaster) && _already_loading ) exitWith
 
 if (_nemaster && _already_loading ) then
 {
-    hint localize ">>> HE_MACTEP на вертолётном сервисе <<<";
-    [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
+    hint localize format[">>> x_scripts/x_reload.sqf: %1 на вертолётном сервисе с двойным БК !!! <<<",name player];
+    [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "A six-pack, being fetched to maintenance man, magically turns into double set of ammo!"
 };
 
 _vehicle setVariable ["already_on_load", true]; // mark already in reloading phase
@@ -194,7 +201,7 @@ if (__MandoVer) then {
 	if (_vehicle isKindOf "Air") then {
 		_fcleft = _vehicle getVariable "mando_flaresleft";
 		_maxfc = _vehicle getVariable "mando_maxflares";
-		if (format ["%1", _fcleft] != "<null>" && format ["%1", _maxfc] != "<null>") then {
+		if ( (format ["%1", _fcleft] != "<null>") && (format["%1", _maxfc] != "<null>")) then {
 			_vehicle setVariable ["mando_flaresleft", _maxfc];
 		};
 	};
