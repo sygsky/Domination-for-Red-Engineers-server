@@ -980,13 +980,17 @@ else
         };
     };
 
+    if (_string_player in d_is_engineer) then // only for engineers
+    {
+        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
+    }
+    else // for NOT engineers
+    {
 #ifdef __NON_ENGINEER_REPAIR_RENALTY__
-    if (!(_string_player in d_is_engineer) ) then {
         _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_RENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
-    };
 #endif
+    };
 
-    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
 
     _local_msg_arr spawn {
         if (count _this == 0) exitWith{};
