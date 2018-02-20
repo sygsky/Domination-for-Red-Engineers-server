@@ -461,8 +461,8 @@ STR_SYS_255,"Servicing: %1... Please wait...","Service: %1... Bitte warten...","
 STR_SYS_256,"Rearming: %1","Wiederbewaffnung: %1","Перезарядка: %1"
 
 STR_SYS_256_A_NUM,4,4,4
-STR_SYS_256_A_0,"You understand that lost your magical ability to reload double ammunition!","Sie mit schaudern verloren Ihre magischen Fähigkeiten, um neu zu laden Doppel-Munition!","Вы с содроганием осознаёте, что потеряли свою магическую способность загружать двойной боекомплект!"
-STR_SYS_256_A_1,"You realize that  lost your magical ability to reload double ammunition!","Sie erkennen, dass verloren Ihre Magische Fähigkeit, reload Doppel-Munition!","Вы с горечью понимаете, что вертолётная халява на острове уже отсутствует!"
+STR_SYS_256_A_0,"You understand that lost your magical ability to load double ammunition!","Sie mit schaudern verloren Ihre magischen Fähigkeiten, um neu zu laden Doppel-Munition!","Вы с содроганием осознаёте, что потеряли свою магическую способность загружать двойной боекомплект!"
+STR_SYS_256_A_1,"You realize that  lost your magical ability to load double ammunition!","Sie erkennen, dass verloren Ihre Magische Fähigkeit, reload Doppel-Munition!","Вы с горечью понимаете, что вертолётная халява на острове уже отсутствует!"
 STR_SYS_256_A_2,"You sad to think that fun here will not work!","Sie traurig zu denken, dass der Spaß hier nicht arbeiten!","Вы с грустью думате, что повеселиться тут нынче не получится!"
 STR_SYS_256_A_3,"You regret, but accept the fact that you have to fight for real now!","Sie bedauern, aber akzeptieren Sie die Tatsache, dass Sie haben zu kämpfen für real!","Вы с сожалением, но принимаете факт, что воевать придётся по настоящему!"
 
@@ -475,7 +475,7 @@ STR_SYS_256_HM_3,"As soon as  technical stuff saw WHO has arrived at the helipad
 STR_SYS_257,"Refuelling...","Tanken...","Заправка..."
 STR_SYS_257_1,"Refueling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","Заправка %1 прервана, шланг оторвался"
 STR_SYS_258,"Repairing...","Reparieren...","Починка..."
-STR_SYS_258_1,"Vehicle is fully functional, thx to engineers!","Das Fahrzeug ist voll funktionsfähig, Dank Ingenieure!" , "Транспорт исправен, спасибо техникам!"
+STR_SYS_258_1,"Engineers thank You for fully functional vehicles!","Ingenieure vielen Dank für die voll funktionsfähigen Fahrzeuge!","Инженеры благодарят Вас за полностью исправный транспорт!"
 STR_SYS_258_2,"You're not an engineer and can repair vehicle just with a loss of %1 point[s]","Du bist kein Ingenieur und kann Reparatur Fahrzeug nur mit einem Verlust der %1 Punkte","Вы не инженер и можете чинить только с вычетом очков (%1)"
 STR_SYS_258_3,"The engineer can locate and deactivate the mines","Der Ingenieur kann suchen Sie und deaktivieren Sie die Minen","Теперь инженер может работать с минами"
 STR_SYS_259,"%1: service completed","%1: Service abgeschlossen","%1: обслуживание завершено"

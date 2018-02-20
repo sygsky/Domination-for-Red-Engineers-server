@@ -14,7 +14,7 @@ setViewDistance d_viewdistance;
 // set time here as date_str is already synchonized with server (in init.sqf before call to x_jip.sqf)
 setDate date_str;
 // missionStart means real time start of the local computer session. But this works only on client computer in MP mode.
-// On server is doen't work at all :o(
+// On server is doesn't work at all :o(
 SYG_mission_start = missionStart;
 hint localize format["x_jip.sqf: client date %1, missionStart %2", call SYG_nowTimeToStr, SYG_mission_start call SYG_dateToStr];
 #endif
