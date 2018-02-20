@@ -639,6 +639,14 @@ XHandleNetStartScriptClient = {
 			};
 		}; // case "msg_to_user"
 
+		case "play_misic": {
+		    switch (_this select 1) do
+		    {
+		        case "OFP";
+		        default { call SYG_playRandomOFPTrack};
+		    };
+		}; // case "play_misic"
+
 //		case "GRU_msg_patrol_killed":
 //		{
 //			__SetGVar(PATROL_COUNT, __GetGVar(PATROL_COUNT)-1 max 0);
