@@ -173,7 +173,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
+    _first_array = [5];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
 	__DEBUG_SERVER("init.sqf", maintargets_list)
@@ -394,7 +394,7 @@ if (isServer) then {
 		} forEach [ 
 			[[9532.405273,9760.648438,0.3],270], // at outer gate (to mainland)
 			[[9524.4,9925.8,0.3],90],            // at inner gate (to airfield)
-			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraico
+			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraiso
 				  ];
         sleep 1.0;
         // set island hotels to be more undestructible as usual

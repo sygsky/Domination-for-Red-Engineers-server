@@ -14,7 +14,7 @@ for "_i" from 0 to (count (configFile >> "cfgPatches") - 1) do {
 if (isServer) then {
 	if (d_use_mod_tracked) then {
 		d_found_gdtmodtracked = (if ("GDTModTracked" in _search_array) then {true} else {false});
-		__DEBUG_SERVER("x_commonfuncs.sqf",d_found_gdtmodtracked)
+		//__DEBUG_SERVER("x_commonfuncs.sqf",d_found_gdtmodtracked)
 
 		if (!(d_found_gdtmodtracked)) then {
 			// from GDTModTracked made by Hein Blud
@@ -51,11 +51,13 @@ hint localize format["+++ GL3 = %1", SYG_found_GL3];
 if (d_enemy_side == "WEST" && (__ACEVer) && isServer) then
 {
     hint localize format["+++ Server: GL3_Global[65] = %1", argp(GL3_Global,65)];
-    GL3_Server set[64, [d_crewman_W,d_creman2_W,d_pilot_W]]; // set crew men who never unmount vehicles during reinforcement
+    hint localize format["+++ Server: GL3_Server[64] = %1", argp(GL3_Server,64)];
+    GL3_Server set[64, [d_crewman_W, d_crewman2_W, d_pilot_W]]; // set crew men who never unmount vehicles during reinforcement
+    hint localize format["+++ Server: GL3_Server[64] = %1", argp(GL3_Server,64)];
 };
 #ifndef __ACE__
 d_found_DMSmokeGrenadeVB = (if ("DMSmokeGrenadeVB" in _search_array) then {true} else {false});
-__DEBUG_SERVER("x_commonfuncs.sqf",d_found_DMSmokeGrenadeVB)
+//__DEBUG_SERVER("x_commonfuncs.sqf",d_found_DMSmokeGrenadeVB)
 
 if ("six_sys_suppression" in _search_array) then {d_suppression = false;};
 
