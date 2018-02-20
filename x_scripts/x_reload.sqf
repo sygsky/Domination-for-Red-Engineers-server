@@ -2,7 +2,7 @@
 //
 //
 // new input params format is: [thislist,"vehicle_type"]
-private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver"];
+private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver","_already_loading"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -14,11 +14,11 @@ if (isNil "SYG_DA_Names") then // men allowed to load double ammunition on this 
 {
     SYG_DA_NAMES = ["HE_MACTEP"];
 };
-#define DA_PLAYER ((isPlayer (driver _this)) && ((name (driver _this)) in SYG_DA_NAMES))
+#define PLAYER_CAN_LOAD_DOUBLE_AMMO ((isPlayer (driver _vehicle)) && ((name (driver _vehicle)) in SYG_DA_NAMES))
 
 #else
 
-#define DA_PLAYER false
+#define PLAYER_CAN_LOAD_DOUBLE_AMMO false
 
 #endif
 
@@ -50,12 +50,16 @@ if ( isNull _vehicle) exitWith{};
 
 if (!alive _vehicle) exitWith {};
 
-_nemaster = PLAYER_DA;
+_nemaster = PLAYER_CAN_LOAD_DOUBLE_AMMO;
 
 // Mainly check for helicopters, others are not so exposed to double reloading efforts
 _already_loading = false;
 _already_loading = _vehicle getVariable "already_on_load";
-if (format ["%1", _already_loading] == "<null>") then { _already_loading = false;  }; // no var means not loading
+//if (format ["%1", _already_loading] == "<null>") then { _already_loading = false;  }; // no var means not loading
+if (isNil "_already_loading") then {_already_loading = false;};
+
+//((isPlayer (driver _this)) && ((name (driver _this)) in SYG_DA_NAMES))
+//hint localize format["+++ x_reload.sqf: player %1 (%2), in DA list == %3, already loading %4", isPlayer (driver _vehicle), name player, (name player) in SYG_DA_NAMES, _already_loading];
 
 //hint localize format["_nemaster = %1, _already_loading = %2", _nemaster, _already_loading];
 if ((!_nemaster) && _already_loading ) exitWith
@@ -66,7 +70,7 @@ if ((!_nemaster) && _already_loading ) exitWith
 
 if (_nemaster && _already_loading ) then
 {
-    hint localize format[">>> x_scripts/x_reload.sqf: %1 на вертолётном сервисе с двойным БК !!! <<<",name player];
+    hint localize format[">>> x_reload.sqf: %1 on heli service with double ammunitions !!! <<<",name player];
     [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "A six-pack, being fetched to maintenance man, magically turns into double set of ammo!"
 };
 
