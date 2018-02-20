@@ -65,7 +65,7 @@ else // music normally played on intro
             "bond","grant","stavka_bolshe_chem","red_alert_soviet_march",
             "burnash","adjutant","lastdime","english_murder","requiem",
             "Art_Of_Noise_mono","mission_impossible","from_russia_with_love",
-            "prince_negaafellaga","strelok"
+            "prince_negaafellaga","strelok","bloody","total_recall_mountain"
         ] call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;
@@ -116,22 +116,30 @@ d_intro_color = (
 );
 
 _SYG_selectIntroPath = {
-	if (true) exitWith { _this call _XfRandomArrayVal};
+	if (true) exitWith { _this call _XfRandomArrayVal }; // TODO: do something not only exit!
 	private ["_tt","_pnt","_pos","_i","_min","_path","_ind"];
 	_tt = call SYG_getTargetTown;
 #ifdef __DEBUG__	
 	hint localize format["x_intro.sqf: target town detected %1", _tt];
 #endif	
 
-	_pos = +(_tt select 0); // center of town
 	if ( count _tt == 0) exitWith { _this call _XfRandomArrayVal };
+	_pos = + (_tt select 0); // center of town
 	_ind = -1; // index of nearest entry
+	_posInd = -1; // index of point in nearest path
 	//find nearest entry point to the target
 	_min = 1000000;
-	for "_i" from 0 to (count _this - 1) do 
+	for "_i" from 0 to (count _this - 1) do // for each paths in available array
 	{
-		_path = _this select _i;
-		if ( ((_path select 0) distance _pos) < _min) then {_min = (_path select 0) distance _pos; _ind = _i;};
+		_path = _this select _i; // whole array of path point + possible last index for object
+		for "_j" from 0 to (count _path - 1) do
+		{
+		    _x = argp(_path, j); // point [x,y,z] of the path
+            if ( (typeName _x) == "ARRAY") then // may be not point but scalar index (last in array)
+            {
+                if ( (_x distance _pos) < _min ) then {_min = _x distance _pos; _ind = _i; _posInd = j};
+            };
+		};
 	};
 	
 	// we found the nearest intro path to the target town, assigned to _ind variable

@@ -67,7 +67,7 @@ SYG_defeatTracks =
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]]
 ];
 
-SYG_playPartialTrack = {playMusic [arg(0),arg(1)];sleep (arg(2)-1);1 fadeMusic 0;sleep 0.1;playMusic ""; 0 fadeMusic 1;};
+SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -81,7 +81,10 @@ SYG_northDefeatTracks =
 ];
 
 SYG_baseDefeatTracks =
-    ["tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6","betrayed","aztecs4","mountains","Gandalf_Simades","whold","end"];
+    [
+    "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
+    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom"
+    ];
 
 
 SYG_southDefeatTracks =
@@ -104,9 +107,9 @@ SYG_playRandomDefeatTrackByPos = {
 	}
 	else
 	{
-	    if (( count _this == 2) && (arg(1) isKindOf "Helicopter")) then // called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
+	    if (( count _this >= 2) && ((_this select 1) isKindOf "Helicopter")) then // called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
 	    {
-	        if (side arg(1) == d_enemy_side) then
+	        if (side (_this select 1) == d_enemy_side) then
 	        {
     	        playMusic "helicopter_fly_over";
     	        _done = true;
@@ -114,7 +117,7 @@ SYG_playRandomDefeatTrackByPos = {
 	    };
 	};
 	if ( _done ) exitWith {true};
-	// detect if killed near base (3 km from FLAG_BASE)
+	// detect if killed near base (2 km from FLAG_BASE)
 	_flag = objNull;
 	#ifndef __TT__
 	_flag = FLAG_BASE;
