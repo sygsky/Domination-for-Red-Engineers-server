@@ -1095,7 +1095,7 @@ SYG_prefixExists = {
 
 // returns -1 if no such prefix else return number of markers with such prefix (0 .. N)
 SYG_prefixCount = {
-if (call SYG_prefixExists) then {SYG_markerPrefixCounts select (SYG_markerPrefixNames find _this)} else {-1}
+    if (call SYG_prefixExists) then {SYG_markerPrefixCounts select (SYG_markerPrefixNames find _this)} else {-1}
 };
 
 // call: call SYG_buildIntelLegend;
@@ -1318,7 +1318,7 @@ SYG_rearmAnyHeli =
 };
 #endif
 
-// generates report about damaged parts of vehicle
+// generates report about damaged parts of vehicle. May work only where vehicles are local (so on server for MP)
 // Call as: _dmg_report_str = _unit call SYG_ACEDamageReportStr;
 //
 // Returned: _dmg_report_str = "Turret, Hull, Engine, Tracks"

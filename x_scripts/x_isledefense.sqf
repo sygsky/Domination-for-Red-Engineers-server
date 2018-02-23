@@ -449,7 +449,16 @@ _show_absence = false; // disable patrol absence message
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
 //
 while {true} do {
+    _time = time; // mark time just in case
 	if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
+	if ( (time - _time) >= DELAY_RESPAWN_STOPPED ) then // mission returned after first player waiting
+	{
+	    _delta = time - _time;
+	    {
+	        _timestamp = argp(_x, PARAM_TIMESTAMP) - _delta;
+            _x set [PARAM_TIMESTAMP, (_timestamp - _time_delta) max 0]; // set timestamp >= 0 as it was before player waiting loop
+	    } forEach SYG_isle_grps;
+	};
 	__DEBUG_NET("x_isledefense.sqf",(call XPlayersNumber))
 	//
 	// ===================== MAIN LOOP ON EACH PATROL ===========================

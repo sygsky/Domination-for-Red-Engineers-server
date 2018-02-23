@@ -777,7 +777,7 @@ SYG_MsgOnPos = {
 };
 
 //
-// Creates localized message based on user format string with 3 params %1, %2, %3 in follow order:
+// Creates message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location direction_to_location
 //
 // call as: _msg_localized = [_obj, _format_msg] call SYG_MsgOnPosA;
