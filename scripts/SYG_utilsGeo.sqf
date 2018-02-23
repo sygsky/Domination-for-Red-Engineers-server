@@ -246,7 +246,7 @@ SYG_nearestZoneOfInterest = {
 	if ( count _opts > 0 ) then
 	{
 		if ( typeName _pos != "ARRAY" ) then { _pos = position _pos;};
-		_part = _pos call SYG_whatPartOfIsland; // island part (upper/lower) for designated point
+		_part = _pos call SYG_whatPartOfIsland; // island part (upper/lower or Nothern/Southern) for designated point
 		if ( _same_part ) then // check need for the same part
 		{
 			if ( _part == "CENTER" ) then {_same_part = false;}; // doesn't matter where is situated tested point according to the Corazol city
@@ -370,8 +370,8 @@ SYG_whatPartOfIsland = {
 		_res = _pos distance SYG_Sahrani_p0;
 		if ( _res < 500 ) then {_str = "CENTER";} else
 		{
-			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel;
-			_str = if (_res > 0) then {"NORTH"} else {if (_res < 0) then {"SOUTH"} else {"CENTER"}};
+			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel; // vector comes approximately from S-E to N-W through Corazol
+			_str = if (_res <= 0) then {"NORTH"} else {"SOUTH"};
 		};
 	};
 	_str
@@ -819,14 +819,14 @@ SYG_MsgOnPosE = {
 };
 
 /*
- * Apppoximated distance to the base by feet in meters
+ * Apppoximated distance to the base by feet in meters approximatelly
 
   calls:
         _dist = player call SYG_distToBase;
         _dist = (getPos player) call SYG_distToBase;
  */
-SYG_distToBase = {
-
+SYG_distByCar = {
+    (_this call SYG_geoDist) * 1.4
 };
 
 /*
@@ -853,7 +853,7 @@ SYG_geoDist = {
     _part2 = _pos2 call SYG_whatPartOfIsland;
     _onSamePart = (_part1 == "CENTER" || _part2 == "CENTER");
     if ((_part1 == _part2) || _onSamePart) exitWith {_pos1 distance _pos1};
-    (_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0)
+    ((_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0))
 };
 
 if (true) exitWith {};
