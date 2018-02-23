@@ -111,7 +111,7 @@ SYG_playRandomDefeatTrackByPos = {
 	    {
 	        if (side (_this select 1) == d_enemy_side) then
 	        {
-    	        playMusic "helicopter_fly_over";
+    	        playSound "helicopter_fly_over";
     	        _done = true;
 	        };
 	    };
