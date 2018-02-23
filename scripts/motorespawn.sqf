@@ -104,20 +104,18 @@ while {true} do {
 			{
 				_nobj = nearestObject [ _pos1, "CAManBase" ];
 				_driver_near = !(isNull _nobj);
-				if ( !_driver_near ) then // no any man near motocycle
+				if ( _driver_near ) then // some man near motocycle, check him thoroughly
 				{
 				    _pos2 = getPos _nobj;
         			_pos2 set [2,0]; // zero Z coordinate
                     _driver_near = (alive _nobj) && ((side _nobj) == east) && ((_pos2 distance _pos1) < DRIVER_NEAR_DIST);
-                }
-                else
-                { hint localize format["%1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
+                };
 
                 if (! _driver_near ) then
                 {
     				_driver_near = ( {alive _x} count (crew _moto) ) > 0; // is some man in moto crew?
                 }
-                else {  hint localize format["alive crew count %1", {alive _x} count (crew _moto)]; };
+                else {  hint localize format["motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
 
                 if ( ! _driver_near) then // if empty and no man nearby (10 meters circle)
                 {
@@ -152,6 +150,10 @@ while {true} do {
 #ifdef __DEBUG__
                     hint localize format[ "motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
 #endif
+				}
+				else
+				{
+				    hint localize format["motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
 				};
 				_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop
 			};
