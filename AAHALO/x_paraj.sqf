@@ -71,7 +71,7 @@ sleep 0.512;
 onMapSingleClick "";
 
 sleep 2.56;
-playMusic "vozdushnye_potoki_2"; //para opened
+playSound "vozdushnye_potoki_2"; //para opened
 //hint localize format["new_paratype == %1", new_paratype];
 if ( new_paratype == "ACE_ParachuteRoundPack" ) then {
 //    hint localize format["vehicle player == %1", vehicle player];
