@@ -142,6 +142,9 @@ if (!d_old_ammobox_handling) then {
 	execVM "x_scripts\x_boxhandling_old.sqf";
 };
 
+/*
+ * Set target unvulnerable while any own side vehicle not in 20 meters distance. After it tower became vulnerable again!
+ */
 XCheckSMHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
 	_vehicle = _this select 0;
@@ -196,6 +199,9 @@ XCheckSMHardTarget = {
 	clearVehicleInit _vehicle;
 };
 
+/*
+ * Set target unvulnerable while any own side vehicle not in 20 meters distance. After it tower became vulnerable again!
+ */
 XCheckMTHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
 	_vehicle = _this select 0;
@@ -211,7 +217,7 @@ XCheckMTHardTarget = {
 	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
 	_trigger setTriggerArea [20, 20, 0, false];
 	#ifndef __TT__
-	_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", false];
+	_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", false]; // trigger on "EAST PRESENT" for Red Engineers server
 	#else
 	_trigger setTriggerActivation ["WEST", "PRESENT", false];
 	#endif
