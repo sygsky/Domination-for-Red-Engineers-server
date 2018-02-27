@@ -1445,6 +1445,8 @@ SYG_generatePatrolList = {
     , 0] call SYG_buildVecList;
 };
 
+// don't call it directly, instead call to SYG_generatePatrolList {@link SYG_generatePatrolList}
+// _vec_arr = [_list_to_fill, _vec_arr,_next_id]
 // _vec_list = _vec_arr call SYG_buildVecList;
 SYG_buildVecList = {
     private ["_i", "_id", "_to","_itemType","_next_arr"];
@@ -1490,6 +1492,19 @@ SYG_buildVecList = {
  };
 
 #endif
+
+// Removes and delete all the crew of the vehicle correctly
+// call: _veh call SYG_deleteVehicleCrew;
+//
+SYG_deleteVehicleCrew = {
+    if ( (typeName _this) != "OBJECT") exitWith {};
+    {
+        unassignVehicle _x;
+        //_x setPos [0,0,0];
+        //sleep 0.01;
+        deleteVehicle _x;
+    }forEach (crew _this);
+};
 
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

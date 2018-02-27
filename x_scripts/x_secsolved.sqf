@@ -46,7 +46,7 @@ if (_is_solved) then
 {
     if ( (count _this) > 2 ) then
     {
-        if (! isNull ( _this select 2)) then
+        if (typeName ( _this select 2) == "STRING") then
         {
             if (( _this select 2) == (name player)) then
             {

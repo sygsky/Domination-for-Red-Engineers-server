@@ -141,11 +141,15 @@ while { true } do {
                                     {
                                         // Yesss, he is ZOMBIiiiii..... try to remove him in any way
                                         hint localize format["+++ x_infiltrate.sqf: zombi detected in clean proc, try to remove it away from the base"];
-                                        _vehicle setPos [ 0, 0, 0 ];
-                                        sleep 0.1;
+                                        //_vehicle setPos [ 0, 0, 0 ];
                                         _vehicle setDamage 1.1;
+                                        _name = name _vehicle;
                                         sleep 0.1;
-                                        _found = true;
+                                        hideBody _vehicle;
+                                        sleep 5.0;
+//                                        deleteVehicle _vehicle;
+                                        hint localize format["+++ x_infiltrate.sqf: zombi %1 detected in clean proc, after hideBody %2", _name, name _vehicle];
+                                        _found = !isNull _vehicle;
                                     };
                                 };
                             }

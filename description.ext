@@ -246,7 +246,7 @@ class CfgMusic
     class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0};} // intro music from "Bloody diamond" movie
     class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};} // intro music from "Total recall" movie (The Mountain)
 
-    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; };
+    // class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
     class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
 
@@ -310,7 +310,7 @@ class CfgSounds
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
-	class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; };
+	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; };
 	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; };
 	class kwai { name="kwai"; sound[]={\sounds\kwai.ogg,db+0,1.0}; titles[] = {}; };
 	class invasion { name="invasion"; sound[]={\sounds\invasion.ogg,db+0,1.0}; titles[] = {}; };
