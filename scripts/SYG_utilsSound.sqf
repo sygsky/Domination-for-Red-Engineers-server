@@ -222,7 +222,7 @@ SYG_playRandomTrack = {
         {
             _item = RANDOM_ARR_ITEM(_this);
 #ifdef __DEBUG__
-            hint localize format["SYG_playRandomTrack: call selected ""%1""", _item];
+            hint localize format["[""%1""], item selected %2 call SYG_playRandomTrack;",_this, _item];
 #endif
             playMusic _item;
         }; // list of tracks, play any selected

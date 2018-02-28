@@ -75,8 +75,16 @@ if (X_InstalledECS) then {
 
 if (SYG_found_GL3) then
 {
+    // TODO: tune local settings of GL3 addon here
     hint localize format["+++ GL3_Local[0]=",argp(GL3_Local,0)];
 };
+if ( SYG_found_ai_spotting) then
+{
+    _sensitivity1  = getNumber(configFile >> "CfgVehicles" >> (typeOf player) >> "sensitivity");
+    _sensitivity2  = getNumber(configFile >> "CfgVehicles" >> "SoldierWSniper" >> "sensitivity");
+    hint localize format["+++ ai_spotting found, sensitivity: %1 = %2; %3  %4",(typeOf player),  _sensitivity1, "SoldierWSniper", _sensitivity2];
+};
+
 
 if (isNil "x_funcs2_compiled") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions2.sqf";
