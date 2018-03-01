@@ -57,6 +57,12 @@ if ((d_enemy_side == "WEST")  && isServer && SYG_found_GL3) then
     GL3_Server set[64, [d_crewman_W, d_crewman2_W, d_pilot_W]]; // set crew men who never unmount vehicles during reinforcement
     hint localize format["+++ Server: GL3_Server[64] = %1", argp(GL3_Server,64)];
 };
+if ( SYG_found_ai_spotting) then
+{
+    _sensitivity1  = getNumber(configFile >> "CfgVehicles" >> "SoldierWG" >> "sensitivity");
+    _sensitivity2  = getNumber(configFile >> "CfgVehicles" >> "SoldierWSniper" >> "sensitivity");
+    hint localize format["+++ ai_spotting found, sensitivity: %1 = %2; %3  %4","SoldierWG",  _sensitivity1, "SoldierWSniper", _sensitivity2];
+};
 #endif
 
 #ifndef __ACE__
