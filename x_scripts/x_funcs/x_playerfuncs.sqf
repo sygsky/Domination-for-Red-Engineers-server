@@ -21,7 +21,7 @@ if ( isNil "SYG_repTruckNamesArr" ) then
 
 _str_p = format ["%1", player];
 
-#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #endif
 
@@ -38,7 +38,7 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #endif
 
 
-#ifdef __NON_ENGINEER_REPAIR_RENALTY__
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
 if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #endif
     // Only for engineers
@@ -66,11 +66,11 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 		} 
 		else {false};
 	};
-#ifdef __NON_ENGINEER_REPAIR_RENALTY__
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     };
 #endif
 
-#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
 #endif
 

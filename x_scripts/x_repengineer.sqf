@@ -9,7 +9,7 @@
 
 private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_val","_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres"];
 
-#ifdef __NON_ENGINEER_REPAIR_RENALTY__
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
 _is_engineer = format ["%1", player] in d_is_engineer;
 // hint localize format["_is_engineer = %1", _is_engineer];
 #endif
@@ -183,11 +183,11 @@ _addscore = (
 );
 */
 if (_addscore > 0) then {
-#ifdef __NON_ENGINEER_REPAIR_RENALTY__
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
     if (!_is_engineer) then
     {
-        _addscore = _addscore * __NON_ENGINEER_REPAIR_RENALTY__;
+        _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__;
         _str = "STR_SYS_137_1"; //"Вычтено очков за обслуживание техники: %1 ..."
     };
 #endif
