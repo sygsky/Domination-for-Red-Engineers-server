@@ -1,16 +1,16 @@
 // by Xeno, x_sec_solved.sqf, called on client with params:
 // ["sec_solved", kind_solved,killer_name]
-private ["_sec_solved","_is_solved"];
+private ["_sec_solved_kind","_is_solved"];
 if (!X_Client) exitWith {};
 
-_sec_solved = _this select 0;
+_sec_solved_kind = _this select 1;
 
 sec_kind = 0;
 
 _is_solved = true;
 _msg = "STR_SYS_248";
 
-switch (_sec_solved) do {
+switch (_sec_solved_kind) do {
 	case "gov_dead": {
 		_msg = "STR_SYS_240"; // "Ваша команда ликвидировала губернатора..."
 	};
@@ -46,7 +46,7 @@ if (_is_solved) then
 {
     if ( (count _this) > 2 ) then
     {
-        if (! isNull ( _this select 2)) then
+        if (typeName ( _this select 2) == "STRING") then
         {
             if (( _this select 2) == (name player)) then
             {
@@ -55,6 +55,7 @@ if (_is_solved) then
             };
         };
     };
+    hint localize format["+++ sec_solved: %1", _this];
 };
 _msg call XfHQChat; // "Губернатор позорно сбежал из города..."
 

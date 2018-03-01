@@ -241,7 +241,7 @@ SYG_calcRelArr = {
  */
 SYG_pointInCircle =
 {
-	( (_this select 1)  distance (_this select 1) ) <= arg(2)
+	( (_this select 0)  distance (_this select 1) ) <= (_this select 2)
 };
 
 // =======================================

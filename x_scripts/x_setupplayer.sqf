@@ -75,8 +75,16 @@ if (X_InstalledECS) then {
 
 if (SYG_found_GL3) then
 {
+    // TODO: tune local settings of GL3 addon here
     hint localize format["+++ GL3_Local[0]=",argp(GL3_Local,0)];
 };
+if ( SYG_found_ai_spotting) then
+{
+    _sensitivity1  = getNumber(configFile >> "CfgVehicles" >> (typeOf player) >> "sensitivity");
+    _sensitivity2  = getNumber(configFile >> "CfgVehicles" >> "SoldierWSniper" >> "sensitivity");
+    hint localize format["+++ ai_spotting found, sensitivity: %1 = %2; %3  %4",(typeOf player),  _sensitivity1, "SoldierWSniper", _sensitivity2];
+};
+
 
 if (isNil "x_funcs2_compiled") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions2.sqf";
@@ -986,8 +994,8 @@ else
     }
     else // for NOT engineers
     {
-#ifdef __NON_ENGINEER_REPAIR_RENALTY__
-        _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_RENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+        _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_PENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
 #endif
     };
 
@@ -1148,11 +1156,11 @@ switch (d_own_side) do {
 // special triggers for engineers, before December of 2017 in AI version everybody can repair and flip vehicles |
 //--------------------------------------------------------------------------------------------------------------+
 
-//hint localize  format["__NON_ENGINEER_REPAIR_RENALTY__ = %1",__NON_ENGINEER_REPAIR_RENALTY__];
-#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+//hint localize  format["__NON_ENGINEER_REPAIR_PENALTY__ = %1",__NON_ENGINEER_REPAIR_PENALTY__];
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 #else
-hint localize "__NON_ENGINEER_REPAIR_RENALTY__: everybody can repair with scores subtraction";
+hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores subtraction";
 #endif
 	d_eng_can_repfuel = true;
 	
@@ -1197,7 +1205,7 @@ hint localize "__NON_ENGINEER_REPAIR_RENALTY__: everybody can repair with scores
 	_trigger setTriggerStatements["call x_sfunc", "actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer_old.sqf',[],-1,false]", "player removeAction actionID2"]; //'Починить/заправить технику'
 	#endif
 
-#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
 #endif
 

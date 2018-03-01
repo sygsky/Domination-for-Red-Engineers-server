@@ -212,7 +212,7 @@ XHandleNetStartScriptClient = {
 			execVM "x_scripts\x_showsecondary.sqf";
 		};
 		case "sec_solved": {
-			[_this select 1] execVM "x_scripts\x_secsolved.sqf";
+			_this execVM "x_scripts\x_secsolved.sqf";
 		};
 		// last target town cleared, no more target remained !!!
 		case "target_clear": {
@@ -382,7 +382,7 @@ XHandleNetStartScriptClient = {
 		};
 		#endif
 		#ifndef __TT__
-		case "unit_killer": {
+		case "unit_killer": { // TODO: lower rank of thee killer in the future
 			[format [localize "STR_SYS_605"/* "%1 убил %2. %1 наказан на %3 очков!" */, (_this select 1) select 0, (_this select 1) select 1,d_sub_tk_points], "GLOBAL"] call XHintChatMsg;
 			if (player == ((_this select 1) select 2)) then {player addScore (d_sub_tk_points * -1)};
 		};

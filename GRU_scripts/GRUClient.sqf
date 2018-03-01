@@ -252,7 +252,7 @@ GRU_procClientMsg = {
 		    {
 		        case GRU_MSG_INFO_KIND_PATROL_DETECTED: // patrol detected by locals somewhere
 		        {
-		            playSound "patrol";
+		            //playSound "patrol"; // removed by Yeti request
                     _arr = arg(3); // array: [_alias,_pos,_size]
                     _rank = (rank player) call XGetRankIndex;
                     //_rank = 6; // debug
