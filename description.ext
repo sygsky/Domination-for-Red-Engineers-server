@@ -147,13 +147,6 @@ class CfgMusic
     };
 */
 
-    // Fear music
-	class fear { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; };
-	class bestie{ name="";  sound[]= {\sounds\bestie.ogg,db-1,1.0}; };
-	class gamlet { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; };
-	class fear3 { name=""; sound[]=   {\sounds\fear3.ogg,db-1,1.0}; };
-	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; };
-
 
     class thetrembler
     {
@@ -233,12 +226,6 @@ class CfgMusic
         sound[]=   {\sounds\mission_impossible.ogg,db-1,1.0};
     };
 
-    class no_more_waiting // very short sound (observer killed?)
-    {
-        name="";
-        sound[]=   {\sounds\no_more_waiting.ogg,db-1,1.0};
-    };
-
     class lastdime // intro
     {
         name="";
@@ -262,8 +249,6 @@ class CfgMusic
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; };
 
     class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
-
-    class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; };
 
     class aztecs { name=""; sound[] = {\sounds\aztecs.ogg,db-1,1.0}; };
     class aztecs2 { name=""; sound[] = {\sounds\aztecs2.ogg,db-1,1.0}; };
@@ -292,10 +277,6 @@ class CfgMusic
     class end { name=""; sound[] = {\sounds\end.ogg,db-1,1.0};} // defeat music
     class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
     class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
-
-    class vozdushnye_potoki { name=""; sound[] = {\sounds\vozdushnye_potoki.ogg,db-1,1.0};} // Your parachute is opened!!!
-    class vozdushnye_potoki_2 { name=""; sound[] = {\sounds\vozdushnye_potoki_2.ogg,db-1,1.0};} // TODO: add to jump from a plane at mision start
-
 
 };
 
@@ -334,6 +315,19 @@ class CfgSounds
 	class kwai { name="kwai"; sound[]={\sounds\kwai.ogg,db+0,1.0}; titles[] = {}; };
 	class invasion { name="invasion"; sound[]={\sounds\invasion.ogg,db+0,1.0}; titles[] = {}; };
     class starwars { name=""; sound[]= {\sounds\starwars.ogg,db-1,1.0}; titles[] = {};};
+    class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
+
+    class vozdushnye_potoki { name=""; sound[] = {\sounds\vozdushnye_potoki.ogg,db-1,1.0}; titles[] = {};} // Your parachute is opened!!!
+    class vozdushnye_potoki_2 { name=""; sound[] = {\sounds\vozdushnye_potoki_2.ogg,db-1,1.0}; titles[] = {};} // TODO: add to jump from a plane at mision start
+
+    class huh1 { name=""; sound[] = {\sounds\huh1.ogg,db-1,1.0}; titles[] = {};} // Self killing
+    class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; titles[] = {};};
+    // Fear sound
+	class fear { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; titles[] = {}; };
+	class bestie{ name="";  sound[]= {\sounds\bestie.ogg,db-1,1.0}; titles[] = {}; };
+	class gamlet { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; titles[] = {}; };
+	class fear3 { name=""; sound[]=   {\sounds\fear3.ogg,db-1,1.0}; titles[] = {}; };
+	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; titles[] = {}; };
 
 
 #ifdef __WITH_SCALAR__

@@ -15,7 +15,7 @@ if ( _unit != _killer) then
 {
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) then
     {
-        playMusic "helicopter_fly_over"; // play sound of heli fly over your poor remnants
+        playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
     }
     else
     {
@@ -24,5 +24,5 @@ if ( _unit != _killer) then
 }
 else
 {
-    playMusic "losing_patience"; // short melody on unknown case
+    playSound "huh1"; // short melody on unknown case
 };

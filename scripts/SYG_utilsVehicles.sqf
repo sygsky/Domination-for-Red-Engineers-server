@@ -1095,7 +1095,7 @@ SYG_prefixExists = {
 
 // returns -1 if no such prefix else return number of markers with such prefix (0 .. N)
 SYG_prefixCount = {
-if (call SYG_prefixExists) then {SYG_markerPrefixCounts select (SYG_markerPrefixNames find _this)} else {-1}
+    if (call SYG_prefixExists) then {SYG_markerPrefixCounts select (SYG_markerPrefixNames find _this)} else {-1}
 };
 
 // call: call SYG_buildIntelLegend;
@@ -1318,7 +1318,7 @@ SYG_rearmAnyHeli =
 };
 #endif
 
-// generates report about damaged parts of vehicle
+// generates report about damaged parts of vehicle. May work only where vehicles are local (so on server for MP)
 // Call as: _dmg_report_str = _unit call SYG_ACEDamageReportStr;
 //
 // Returned: _dmg_report_str = "Turret, Hull, Engine, Tracks"
@@ -1397,6 +1397,99 @@ SYG_createGroup = {
 };
 
 
+//============================================ Vehicle groups
+//============================================ Vehicle groups
+#ifdef __OWN_SIDE_EAST__
+
+ABRAMS_LIST = ["ACE_M1A2","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_TUSK","ACE_M1A2_SEP_TUSK"];
+LINEBAKER = ["ACE_M6A1"];
+ABRAMS_PATROL = [2,4,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
+
+BREADLEY_LIST = ["ACE_M2A1","ACE_M2A2","ACE_M2A3"];
+AA_PATROL     = [2,3,[ [1,1,BREADLEY_LIST],[1,1,LINEBAKER] ] ];
+
+VULKAN_LIST = ["ACE_Vulcan","ACE_PIVADS"];
+M113_LIST = ["ACE_M113","ACE_M113_A1","ACE_M113_A2","ACE_M113_A3"];
+VULKAN_PATROL = [ 2,3, [ [1,1,M113_LIST], [1,1,VULKAN_LIST] ] ];
+
+STRIKER_CANON_LIST = ["ACE_Stryker_MGS_SLAT","ACE_Stryker_MGS"];
+STRIKER_PATROl = [ 2,2, [ [1,1,STRIKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,1,["ACE_Stryker_MK19"]] ] ];
+
+CARS_LIST = ["ACE_HMMWV_50", "ACE_HMMWV_GAU19", "ACE_HMMWV_GL", "ACE_HMMWV_TOW"];
+LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GL"]], [1,1,["ACE_HMMWV_GMV2"]] ] ];
+
+/**
+ * Creates patrol of designated type.
+ * Types are from follow options:
+ * "HP" - Heavy Patrol
+ * "AP" - AA Patrol
+ * "FP" - Floating Patrol
+ * "SP" - Speed Patrol
+ * "LP" - Light patrol
+ * _patrol_vec_arr = "HP" call SYG_generatePatrolList;
+ *
+ * or _vec_type_list = _patrol_vec_arr call SYG_generatePatrolList;
+ */
+SYG_generatePatrolList = {
+    if (typeName _this != "STRING") exitWith {hint localize format["SYG_generatePatrolList: param not STRING",_this]};
+
+    [[],switch (_this) do
+        {
+            case "HP": {ABRAMS_PATROL};
+            case "AP": {AA_PATROL};
+            default {hint localize format["--- SYG_generatePatrolList: parameter unknown: ""%1""", _this]; [] };
+            case "FP": {VULKAN_PATROL};
+            case "SP": {STRIKER_PATROl};
+            case "LP": {LIGHT_PATROL};
+        }
+    , 0] call SYG_buildVecList;
+};
+
+// _vec_list = _vec_arr call SYG_buildVecList;
+SYG_buildVecList = {
+    private ["_i", "_id", "_to","_itemType","_next_arr"];
+    // description arrays is designated
+    if (typeName _this != "ARRAY") exitWith {[]};
+    if (count _this == 0) exitWith {[]};
+
+    _list     = _this select 0; // list to fill with vehicle types
+    _arr      = _this select 1;
+    _id       = _this select 2;
+    _from     = _arr select 0;
+    _to       = _arr select 1;
+    _next_arr = _arr select 2;
+
+    if ( typeName _next_arr == "STRING") then {_next_arr = [_next_arr];};
+    _to = floor(random (_from - _to + 1)) + _to;
+    _itemType = typeName (_next_arr select 0);
+
+    //_str = format["SYG_buildVecList enter: id %1, %2, from 1 to %3, %4", _id, _this, _to, _itemType];
+    //player groupChat _str;
+    //hint localize _str;
+    for "_i" from 1 to _to do
+    {
+        //check type of items in array
+        //hint localize format["loop %1, item type %2", _i, _itemType];
+        if ( _itemType == "ARRAY") then
+        {
+            {
+                [_list, _x, _id + 1] call SYG_buildVecList;
+            }forEach _next_arr;
+        }
+        else
+        {
+            if ( _itemType == "STRING") then // list of vehicle types to randomly select one of them
+            {
+                _list = _list + [_next_arr call XfRandomArrayVal];
+            };
+        };
+    };
+    //_str = format["SYG_buildVecList return: id %1,cnt %2, %3", _id, _to, _list];
+    //hint localize _str;
+    _list
+ };
+
+#endif
 
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

@@ -38,23 +38,31 @@ SYG_vectorSub = {
  * =======================================================
  * Detect distance of point to vector on the predefined plane of X,Y coordinates (2-D)
  * call:
- *      _pos = [p1,p2,p3] call SYG_pointOnVector;
+ *      _pos = [p0,p1,p2] call SYG_pointOnVector;
  * where:
- *      p1 and p2 are point to form the vector
- *      p3 is tested point
+ *      p0 and p1 are point to form the vector _v = _p1-_p0
+ *      p2 is tested point
  * returns:
- *       -dist if point p3 is on left side of vector [p1,p2]
- *       +dist if point p3 is on right side of vector [p1,p2]
- *        0 if point is on the vector [p1,p2]
+ *       -dist if point p2 is on left side of vector [p0,p1]
+ *       +dist if point p3 is on right side of vector [p0,p1]
+ *        0 if point is on the vector [p0,p1]
  */
 SYG_distPoint2Vector1 = {
-	private ["_p1","_p2","_p3","_a","_b"];
-	_p1 = arg(0);
-	_p2 = arg(1);
-	_p3 = arg(2);
-	_a = [_p2,_p1] call SYG_vectorSub;
-	_b = [_p3,_p1] call SYG_vectorSub;
-	argp(_a,X_POS)*argp(_b,Y_POS) - argp(_b,X_POS)*argp(_a,Y_POS)
+	private ["_p0","_p1","_p2","_a","_b","_cross","_sqrlen"];
+	_p0 = arg(0);
+	_p1 = arg(1);
+	_p2 = arg(2);
+//    _a = (argp(_p0,Y_POS) - argp(_p1,Y_POS)) * argp(_p2,X_POS) +
+//         (argp(_p1,X_POS) - argp(_p0,X_POS)) * argp(_p2,Y_POS) +
+//         argp(_p0,X_POS) * argp(_p1,Y_POS) - argp(_p1,X_POS)*argp(_p0,Y_POS);
+//    _b = sqrt( [_p0,_p1] call SYG_distance2D);
+//    _a / _b
+	_a = [_p1,_p0] call SYG_vectorSub;
+	_b = [_p2,_p0] call SYG_vectorSub;
+	_cross = argp(_a,X_POS)*argp(_b,Y_POS) - argp(_a,Y_POS)*argp(_b,X_POS);
+	_len = [_p0,_p1] call SYG_distance2D;
+	player groupChat format["a %1, b %2, cross %3, sqrlen %4",_a,_b,_cross,_sqrlen];
+	_cross / _len
 };
 
 /**
@@ -74,19 +82,19 @@ SYG_distPoint2Vector = {
 };
 
 /**
- * Calculates dot product between 2 vectors with 3 points:
+ * Calculates dot product between 2 vectors [_p1,_p2] and [_p1,_p3] defined by 3 points:
  * _dot = [_p1,_p2,_p3] call SYG_dotProduct;
  * Where: _p1 is start point for vectors [_p1,_p2] and [_p1,_p3]
  *
  */
 SYG_3pntDotProduct={
-    _v1 = [arg(0),arg(1)] call SYG_vectorSub;
-    _v2 = [arg(0),arg(2)] call SYG_vectorSub;
+    _v1 = [arg(1),arg(0)] call SYG_vectorSub;
+    _v2 = [arg(2),arg(0)] call SYG_vectorSub;
     argp(_v1,X_POS) * argp(_v2,X_POS) +  argp(_v1,Y_POS) * argp(_v2,Y_POS)
 };
 
 /**
- * Calculates dot product between 2 vectors
+ * Calculates dot product between 2 vectors in 2D dimention
  * _dot = [_v1,_v2] call SYG_dotProduct;
  * Where: _p1 is start point for vectors [_p1,_p2] and [_p1,_p3]
  *
@@ -102,7 +110,8 @@ SYG_vectorDotProduct={
  */
 SYG_multiplyPoint = {
     _pnt = arg(0);
-    [argp(_pnt,X_POS) * coeff, argp(_pnt,X_POS) * coeff, 0]
+    _coeff = arg(1);
+    [argp(_pnt,X_POS) * _coeff, argp(_pnt,Y_POS) * _coeff, 0]
 };
 /**
     https://nic-gamedev.blogspot.ru/2011/11/using-vector-mathematics-and-bit-of_08.html
@@ -129,15 +138,18 @@ SYG_multiplyPoint = {
  */
 SYG_closestPointOnLineSegment = {
 
-    _v1 = [arg(0),arg(1)] call SYG_vectorSub; // main vector
-    _v2 = [arg(0),arg(2)] call SYG_vectorSub; // vector from point B p1
+    _v1 = [arg(1),arg(0)] call SYG_vectorSub; // main vector
+    _v2 = [arg(2),arg(0)] call SYG_vectorSub; // vector from point B p1
     _dot = [_v1, _v2] call SYG_vectorDotProduct;
     _sqr = _v1 distance [0,0,0];
     _sqr = _sqr * _sqr;
     _percAlongLine = _dot / _sqr;
-    if ( _percAlongLine < 0 ) exitWith {arg(0)};
-    if ( _percAlongLine > 1 ) exitWith {arg(1)};
-    [arg(0), [_v1, _percAlongLine ] call SYG_multiplyPoint] call SYG_vectorAdd;
+    // _str = format["p1 %6, p2 %7, p3 %8; v1 %4, v2 %5; dot %1, sqr %2, perc %3 ",_dot, _sqr, _percAlongLine, _v1, _v2, arg(0),arg(1),arg(2)];
+    // player groupChat _str;
+    // hint localize _str;
+    if ( _percAlongLine <= 0 ) exitWith {arg(0)};
+    if ( _percAlongLine >= 1 ) exitWith {arg(1)};
+    [arg(0), [_v1, _percAlongLine ] call SYG_multiplyPoint] call SYG_vectorAdd
 };
 /**
  * =======================================================
@@ -148,8 +160,8 @@ SYG_closestPointOnLineSegment = {
  *      p1 and p2 are point to form the vector
  *      p3 is tested point
  * returns:
- *       -1 if point p3 is on left side of vector [p1,p2]
- *       +1 if point p3 is on right side of vector [p1,p2]
+ *       -1 if point p3 is on left side of vector [p1,p2] (for Sahrani S-W)
+ *       +1 if point p3 is on right side of vector [p1,p2] (for Sahrani N-E)
  *        0 if point is on the vector [p1,p2]
  */
 SYG_pointToVectorRel = {
@@ -363,6 +375,16 @@ SYG_anyRoot = {
 SYG_cubeRoot = {
 	exp(ln(_this)/3)
 };
+
+// _dist = [_p1,_p2] call SYG_distance2D;
+SYG_distance2D =
+{
+    _p1 = + arg(0);
+    _p2 = + arg(1);
+    _p1 set [Z_POS,0];
+    _p2 set [Z_POS,0];
+    _p1 distance _p2
+}
 
 #ifdef __FUTURE__
 /**

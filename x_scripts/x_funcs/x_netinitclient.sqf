@@ -503,7 +503,7 @@ XHandleNetStartScriptClient = {
                 // add scores
                 player addScore argp( d_ranked_a, 27 );
                 // play music
-                playMusic "no_more_waiting";
+                playSound "no_more_waiting";
                 // show message
                 (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
             };
@@ -695,7 +695,7 @@ XHandleNetStartScriptClient = {
                 {
                     player addScore _score;
                     format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
-                    playMusic "no_more_waiting";
+                    playSound "no_more_waiting";
                 };
             };
             GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure

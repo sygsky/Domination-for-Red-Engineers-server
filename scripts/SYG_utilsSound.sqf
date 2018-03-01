@@ -111,7 +111,7 @@ SYG_playRandomDefeatTrackByPos = {
 	    {
 	        if (side (_this select 1) == d_enemy_side) then
 	        {
-    	        playMusic "helicopter_fly_over";
+    	        playSound "helicopter_fly_over";
     	        _done = true;
 	        };
 	    };
@@ -168,7 +168,11 @@ SYG_playRandomOFPTrack = {
 
 // Any isle defeat music
 SYG_islandDefeatTracks =
-        ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.086],[32.059,4.014],[36.053,-1]];
+        [
+            ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
+            ["ATrack24",[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]],
+            ["ATrack25",[0,11.978],[13.573,10.142],[105.974,9.508],[138.443,-1]]
+        ];
 
 SYG_RahmadiDefeatTracks = ["ATrack23b",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 

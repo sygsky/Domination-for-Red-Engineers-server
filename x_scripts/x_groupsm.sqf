@@ -364,7 +364,7 @@ while {true} do {
 				if ( !isNull _joingrp ) then 
 				{
 #ifdef __DEBUG__			
-					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %5, dist %6", _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr, typeOf (leader _joingrp), round((leader _joingrp) distance (leader _grp))];
+					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %5, dist %6; %7", _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr, typeOf (leader _joingrp), round((leader _joingrp) distance (leader _grp)), [(leader _joingrp),"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
 #endif				
 					if ( rank _leader != "PRIVATE" ) then {_leader setRank "PRIVATE"};
 					(units _grp) join _joingrp; sleep 1.111;
