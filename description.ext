@@ -121,6 +121,7 @@ class CfgMusic
 		sound[] =  {\sounds\snovymgodom.ogg, db+20, 1.0};
 	};
 
+/*
 	class patrol
 	{
 	    name="";
@@ -144,13 +145,7 @@ class CfgMusic
 	    name="";
 	    sound[]=   {\sounds\invasion.ogg,db-1,1.0};
     };
-
-    // Fear music
-	class fear { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; };
-	class bestie{ name="";  sound[]= {\sounds\bestie.ogg,db-1,1.0}; };
-	class gamlet { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; };
-	class fear3 { name=""; sound[]=   {\sounds\fear3.ogg,db-1,1.0}; };
-	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; };
+*/
 
 
     class thetrembler
@@ -201,12 +196,6 @@ class CfgMusic
         sound[]=   {\sounds\druzba.ogg,db-1,1.0};
     };
 
-    class starwars
-    {
-        name="";
-        sound[]=   {\sounds\starwars.ogg,db-1,1.0};
-    };
-
     class bond
     {
         name="";
@@ -237,12 +226,6 @@ class CfgMusic
         sound[]=   {\sounds\mission_impossible.ogg,db-1,1.0};
     };
 
-    class no_more_waiting // very short sound (observer killed?)
-    {
-        name="";
-        sound[]=   {\sounds\no_more_waiting.ogg,db-1,1.0};
-    };
-
     class lastdime // intro
     {
         name="";
@@ -255,12 +238,17 @@ class CfgMusic
         sound[]=   {\sounds\requiem.ogg,db-1,1.0};
     };
 
+    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
+    class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
+    class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0};} // used in  intro
+    class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0};} // used in  intro
+    class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0};} // used in  intro
+    class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0};} // intro music from "Bloody diamond" movie
+    class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};} // intro music from "Total recall" movie (The Mountain)
 
-    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; };
+    // class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
     class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
-
-    class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; };
 
     class aztecs { name=""; sound[] = {\sounds\aztecs.ogg,db-1,1.0}; };
     class aztecs2 { name=""; sound[] = {\sounds\aztecs2.ogg,db-1,1.0}; };
@@ -276,15 +264,7 @@ class CfgMusic
     class yma_sumac_2 { name=""; sound[] = {\sounds\yma_sumac_2.ogg,db-1,1.0}; };
     class village_ruins { name=""; sound[] = {\sounds\village_ruins.ogg,db-1,1.0}; };
 
-    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // still not used
-
-    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
-
-    class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
-
-    class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0};} // used in  intro
-    class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0};} // used in  intro
-    class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0};} // used in  intro
+    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
 
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
     class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
@@ -298,15 +278,12 @@ class CfgMusic
     class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
     class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
 
-    class vozdushnye_potoki { name=""; sound[] = {\sounds\vozdushnye_potoki.ogg,db-1,1.0};} // Your parachute is opened!!!
-    class vozdushnye_potoki_2 { name=""; sound[] = {\sounds\vozdushnye_potoki_2.ogg,db-1,1.0};} // TODO: add to jump from a plane at mision start
-
 };
 
 class CfgSounds
 {
 	sounds[] = {
-		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse_neighs,Tank_GetIn,APC_GetIn
+		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse,Tank_GetIn,APC_GetIn
 
 #ifdef __REVIVE__
 		,DBrian_Im_hit, DBrian_Im_bleeding,DBrian_Medic,DBrian_Bastards,DBrian_Shit_Man_down,DBrian_Oh_no,
@@ -332,6 +309,26 @@ class CfgSounds
 	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
+
+	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; };
+	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; };
+	class kwai { name="kwai"; sound[]={\sounds\kwai.ogg,db+0,1.0}; titles[] = {}; };
+	class invasion { name="invasion"; sound[]={\sounds\invasion.ogg,db+0,1.0}; titles[] = {}; };
+    class starwars { name=""; sound[]= {\sounds\starwars.ogg,db-1,1.0}; titles[] = {};};
+    class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
+
+    class vozdushnye_potoki { name=""; sound[] = {\sounds\vozdushnye_potoki.ogg,db-1,1.0}; titles[] = {};} // Your parachute is opened!!!
+    class vozdushnye_potoki_2 { name=""; sound[] = {\sounds\vozdushnye_potoki_2.ogg,db-1,1.0}; titles[] = {};} // TODO: add to jump from a plane at mision start
+
+    class huh1 { name=""; sound[] = {\sounds\huh1.ogg,db-1,1.0}; titles[] = {};} // Self killing
+    class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; titles[] = {};};
+    // Fear sound
+	class fear { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; titles[] = {}; };
+	class bestie{ name="";  sound[]= {\sounds\bestie.ogg,db-1,1.0}; titles[] = {}; };
+	class gamlet { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; titles[] = {}; };
+	class fear3 { name=""; sound[]=   {\sounds\fear3.ogg,db-1,1.0}; titles[] = {}; };
+	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; titles[] = {}; };
+
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

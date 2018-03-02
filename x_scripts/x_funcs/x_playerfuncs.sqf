@@ -20,7 +20,10 @@ if ( isNil "SYG_repTruckNamesArr" ) then
 };
 
 _str_p = format ["%1", player];
+
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
 
 #ifdef __ACE__
 	x_sfunc = {
@@ -34,6 +37,11 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 	};
 #endif
 
+
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
+    // Only for engineers
 	x_ffunc = {
 		private ["_l","_vUp","_angle", "_pos", "_tr", "_trArr", "_dist"];
 		if ((vehicle player) == player) then 
@@ -58,7 +66,13 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 		} 
 		else {false};
 	};
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+    };
+#endif
+
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
+#endif
 
 #ifndef __MANDO__
 if (!(__ACEVer)) then {
@@ -102,7 +116,7 @@ Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
 	if (player distance _target_pos < 50) then {
-	    playMusic(["fear","bestie","gamlet","fear3","heartbeat"] call XfRandomArrayVal);
+	    playSound(["fear","bestie","gamlet","fear3","heartbeat"] call XfRandomArrayVal);
 		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "Внимание! Вы были обнаружены вражескими корректировщиками..."
 	};
 };

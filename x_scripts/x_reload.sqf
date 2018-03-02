@@ -2,10 +2,26 @@
 //
 //
 // new input params format is: [thislist,"vehicle_type"]
-private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed"];
+private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver","_already_loading"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+
+#define __DOUBLE_AMMUNITION__
+#ifdef __DOUBLE_AMMUNITION__
+
+if (isNil "SYG_DA_Names") then // men allowed to load double ammunition on this service
+{
+    SYG_DA_NAMES = ["HE_MACTEP"];
+};
+#define PLAYER_CAN_LOAD_DOUBLE_AMMO ((isPlayer (driver _vehicle)) && ((name (driver _vehicle)) in SYG_DA_NAMES))
+
+#else
+
+#define PLAYER_CAN_LOAD_DOUBLE_AMMO false
+
+#endif
+
 
 _vehicle = objNull;
 
@@ -34,16 +50,31 @@ if ( isNull _vehicle) exitWith{};
 
 if (!alive _vehicle) exitWith {};
 
+_nemaster = PLAYER_CAN_LOAD_DOUBLE_AMMO;
+
 // Mainly check for helicopters, others are not so exposed to double reloading efforts
 _already_loading = false;
 _already_loading = _vehicle getVariable "already_on_load";
-if (format ["%1", _already_loading] == "<null>") then { _already_loading = false;  }; // no var means not loading
-if ( _already_loading ) exitWith
+//if (format ["%1", _already_loading] == "<null>") then { _already_loading = false;  }; // no var means not loading
+if (isNil "_already_loading") then {_already_loading = false;};
+
+//((isPlayer (driver _this)) && ((name (driver _this)) in SYG_DA_NAMES))
+//hint localize format["+++ x_reload.sqf: player %1 (%2), in DA list == %3, already loading %4", isPlayer (driver _vehicle), name player, (name player) in SYG_DA_NAMES, _already_loading];
+
+//hint localize format["_nemaster = %1, _already_loading = %2", _nemaster, _already_loading];
+if ((!_nemaster) && _already_loading ) exitWith
 {
     _vehicle setVariable ["already_on_load", nil];
     [_vehicle, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
 };
-_vehicle setVariable ["already_on_load", true]; // mark starting reload
+
+if (_nemaster && _already_loading ) then
+{
+    hint localize format[">>> x_reload.sqf: %1 on heli service with double ammunitions !!! <<<",name player];
+    [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "A six-pack, being fetched to maintenance man, magically turns into double set of ammo!"
+};
+
+_vehicle setVariable ["already_on_load", true]; // mark already in reloading phase
 
 _magazines = [];
 
@@ -174,23 +205,42 @@ if (__MandoVer) then {
 	if (_vehicle isKindOf "Air") then {
 		_fcleft = _vehicle getVariable "mando_flaresleft";
 		_maxfc = _vehicle getVariable "mando_maxflares";
-		if (format ["%1", _fcleft] != "<null>" && format ["%1", _maxfc] != "<null>") then {
+		if ( (format ["%1", _fcleft] != "<null>") && (format["%1", _maxfc] != "<null>")) then {
 			_vehicle setVariable ["mando_flaresleft", _maxfc];
 		};
 	};
 };
 sleep x_reload_time_factor;
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
-[_vehicle, localize "STR_SYS_258"] call XfVehicleChat; // "Починка..."
-_vehicle setDamage 0;
-sleep x_reload_time_factor;
-if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
-[_vehicle, localize "STR_SYS_257"] call XfVehicleChat; //"Заправка..."
-while {fuel _vehicle < 0.99} do {
-	_vehicle setFuel (((fuel _vehicle) + 0.1) min 1);
-	//_vehicle setFuel 1;
-	sleep 0.3;
+
+//++++++++++++ Repairing
+if ((getDammage _vehicle) > 0) then
+{
+    [_vehicle, localize "STR_SYS_258"] call XfVehicleChat; // "Repairing..."
+    _vehicle setDamage 0;
+    sleep x_reload_time_factor;
+}
+else
+{
+    [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx to engineers!"
 };
+
+//+++++ Refuelling
+if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
+_pos = getPos _vehicle; // original position on service
+[_vehicle, localize "STR_SYS_257"] call XfVehicleChat; // "Refuel..."
+while {fuel _vehicle < 0.99} do {
+
+    _pos1 = getPos _vehicle;
+	if ( (_pos distance _pos1) > 0.5) exitWith // vehicle moved from service, so stop refuelling
+	{
+	    hint localize format["x_reload.sqf: refuelling aborted, fuel %1, (pos_orig %2) distance (pos_now %3) = %4", fuel _vehicle, _pos, getPos _vehicle, _pos distance _vehicle];
+        [_vehicle, format [localize "STR_SYS_257_1", _type_name]] call XfVehicleChat; // "Refueling is interrupted, the hose came off"
+	};
+	sleep 0.3;
+	_vehicle setFuel (((fuel _vehicle) + 0.5) min 1);
+};
+//_vehicle setFuel 1;
 sleep x_reload_time_factor;
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 [_vehicle, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."

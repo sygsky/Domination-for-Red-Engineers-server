@@ -221,7 +221,7 @@ sleep 2.124;
 
 if (!no_more_observers) then {
 	// artillery observers
-	nr_observers = 2 + (floor random 2); // 2 or 3
+	nr_observers = (2 + (floor random 2)) max 2; // 2 or 3
 	Observer1 = objNull;
 	Observer2 = objNull;
 	Observer3 = objNull;
@@ -265,7 +265,7 @@ if (!no_more_observers) then {
 	sleep 2.214;
 };
 
-[_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a)+ medic BMP b)+super-reammo  + с) TV-tower etc
+[_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a)medic BMP  or b)super-reammo or с)radio-tower etc
 
 d_run_illum = true;
 [_trg_center, _radius] execVM "x_scripts\x_illum.sqf";

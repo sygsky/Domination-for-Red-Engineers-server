@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_airtaxiserver.sqf, air taxi script on server
 private ["_player", "_sidep", "_crew_member", "_sidestr", "_grp", "_vehicle", "_unit"];
 if (!isServer) exitWith {};
 #include "x_setup.sqf"
@@ -24,8 +24,11 @@ _sidestr = (
 );
 
 
+_grp = call SYG_createGroup;
+/*
 __WaitForGroup
 _grp = [_sidestr] call x_creategroup;
+*/
 _vehicle = createVehicle [x_drop_aircraft, position X_Drop_Start_Pos, [], 300, "FLY"];
 _unit = _grp createUnit [_crew_member, position _vehicle, [], 0, "FORM"];
 [_unit] join _grp;_unit setSkill 1;_unit assignAsDriver _vehicle;_unit moveInDriver _vehicle;
@@ -33,7 +36,7 @@ __addDead(_unit)
 __addRemoveVehi(_vehicle)
 
 _cleanOnFinish = {
-	["d_ataxi", _this,_player] call XSendNetStartScriptClient;
+	["d_ataxi", _this, _player] call XSendNetStartScriptClient;
 	sleep 120;
 	{deleteVehicle _x} forEach [_vehicle] + crew _vehicle;
 	sleep 1;

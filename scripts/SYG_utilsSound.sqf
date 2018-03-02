@@ -67,7 +67,7 @@ SYG_defeatTracks =
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]]
 ];
 
-SYG_playPartialTrack = {playMusic [arg(0),arg(1)];sleep (arg(2)-1);1 fadeMusic 0;sleep 0.1;playMusic ""; 0 fadeMusic 1;};
+SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -81,7 +81,10 @@ SYG_northDefeatTracks =
 ];
 
 SYG_baseDefeatTracks =
-    ["tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6","betrayed","aztecs4","mountains","Gandalf_Simades","whold","end"];
+    [
+    "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
+    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom"
+    ];
 
 
 SYG_southDefeatTracks =
@@ -104,17 +107,17 @@ SYG_playRandomDefeatTrackByPos = {
 	}
 	else
 	{
-	    if (( count _this == 2) && (arg(1) isKindOf "Helicopter")) then // called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
+	    if (( count _this >= 2) && ((_this select 1) isKindOf "Helicopter")) then // called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
 	    {
-	        if (side arg(1) == d_enemy_side) then
+	        if (side (_this select 1) == d_enemy_side) then
 	        {
-    	        playMusic "helicopter_fly_over";
+    	        playSound "helicopter_fly_over";
     	        _done = true;
 	        };
 	    };
 	};
 	if ( _done ) exitWith {true};
-	// detect if killed near base (3 km from FLAG_BASE)
+	// detect if killed near base (2 km from FLAG_BASE)
 	_flag = objNull;
 	#ifndef __TT__
 	_flag = FLAG_BASE;
@@ -165,7 +168,11 @@ SYG_playRandomOFPTrack = {
 
 // Any isle defeat music
 SYG_islandDefeatTracks =
-        ["ATrack26",[8.086,6.274],[24.014,8.086],[32.059,-1]];
+        [
+            ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
+            ["ATrack24",[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]],
+            ["ATrack25",[0,11.978],[13.573,10.142],[105.974,9.508],[138.443,-1]]
+        ];
 
 SYG_RahmadiDefeatTracks = ["ATrack23b",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
@@ -228,7 +235,7 @@ SYG_playRandomTrack = {
             if ( (random 100) < 1) exitWith
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playPartialTrack: play whole track %1 now !!!",arg(0)];
+                hint localize format["SYG_playRandomTrack: play whole track %1 now !!!",arg(0)];
 #endif
                 playMusic arg(0)
             };

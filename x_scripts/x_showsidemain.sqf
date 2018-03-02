@@ -8,7 +8,7 @@ _which = _this select 0;
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 if (_which == 1) then
 {
-    if (!call isSYG_isMainTargetAllowed) then { _which = 0;  }; // show side mission except of main one
+    if (!call SYG_isMainTargetAllowed) then { _which = 0; }; // show side mission except of main one
 };
 #endif
 

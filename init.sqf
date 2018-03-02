@@ -149,7 +149,7 @@ if (isServer) then {
 #endif	
 
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
-	[moto1,moto2,moto3,moto4,moto5] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add 4 travelling motocycles at base
+	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 
 	if (d_weather) then {execVM "scripts\weather\weathergen2.sqf";};
 
@@ -173,7 +173,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
+    _first_array = [5];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
 	__DEBUG_SERVER("init.sqf", maintargets_list)
@@ -316,13 +316,15 @@ if (isServer) then {
 
     	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
     	while {isNil "SYG_mission_start"} do {sleep 1}; // wait for 1st user connection and receiving real server time from him (this is Arma!!!)
-    	if ( (argp(SYG_mission_start,1) == 12) || ((argp(SYG_mission_start,1)) == 1 && (argp(SYG_mission_start,1) < 10))) then
+
+    	if ( (argp(SYG_mission_start,1) > 1) && (argp(SYG_mission_start,1) < 12) ) exitWith {false}; // new year expected if only december or january is current month
+
+    	if ( (argp(SYG_mission_start,1) == 12) || ( (argp(SYG_mission_start,1) == 1) && (argp(SYG_mission_start,1) < 10) ) ) then
     	{
             while {true} do
             {
                 // now check NewYear period
-                _srvDate = call SYG_getServerDate;
-                if ( _srvDate call SYG_isNewYear0 ) exitWith
+                if ( call SYG_isNewYear ) exitWith
                 { // make gift for a player on a New Year event
                     hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", _srvDate call SYG_humanDateStr];
                     private ["_vec","_snd"];
@@ -351,13 +353,13 @@ if (isServer) then {
 	// OnPlayer Connected DB
 	if (isNil "ace_sys_network_OPCB") then {ace_sys_network_OPCB = []};
 	ace_sys_network_OPCB = ace_sys_network_OPCB + [{[_this select 0] execVM "x_scripts\x_serverOPC.sqf"}];
-	hint localize format["ACE:ace_sys_network_OPCB[%1] = %2",count ace_sys_network_OPCB,ace_sys_network_OPCB];
-	hint localize format["ACE:ace_sys_network_OPC[%1] = %2",count ace_sys_network_OPC,ace_sys_network_OPC];
+	hint localize format["ACE:ace_sys_network_OPCB = %1", ace_sys_network_OPCB];
+	hint localize format["ACE:ace_sys_network_OPC = %1", ace_sys_network_OPC];
 
 	// On Player Disconnect
 	if (isNil "ace_sys_network_OPD") then {ace_sys_network_OPD = []};
 	ace_sys_network_OPD = ace_sys_network_OPD + [{[_this select 0] execVM "x_scripts\x_serverOPD.sqf"}];
-	hint localize format["ACE:ace_sys_network_OPD[%1] = %2",count ace_sys_network_OPD,ace_sys_network_OPD];
+	hint localize format["ACE:ace_sys_network_OPD = %1", ace_sys_network_OPD];
 
 #else
 	onPlayerConnected "xhandle = [_name] execVM ""x_scripts\x_serverOPC.sqf""";
@@ -392,7 +394,7 @@ if (isServer) then {
 		} forEach [ 
 			[[9532.405273,9760.648438,0.3],270], // at outer gate (to mainland)
 			[[9524.4,9925.8,0.3],90],            // at inner gate (to airfield)
-			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraico
+			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraiso
 				  ];
         sleep 1.0;
         // set island hotels to be more undestructible as usual
@@ -574,10 +576,13 @@ if ( sec_kind == 3) then
 };
 
 #ifdef __ACE__
-// store rucksack position (not move automatically it to the secondary gear slot)
-ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
-// improve available magazines description
-ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+if ( !isServer ) then // use only on client
+{
+    // store rucksack position (not move automatically it to the secondary gear slot)
+    ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
+    // improve available magazines description
+    ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+};
 #endif
 
 if (true) exitWith {};

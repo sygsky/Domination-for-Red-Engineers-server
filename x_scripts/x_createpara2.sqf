@@ -201,7 +201,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
                 _cnt = _grp call XfGetAliveUnits;
                 if ( _cnt <= 2) then
                 {
-                    if ( _cnt > 0 1) then // join last member to this group
+                    if ( _cnt > 0) then // join last member to this group
                     {
 #ifdef	__DEBUG_PRINT__
                         hint localize format["x_createpara2.sqf: prev. group id %1 (of 1 saboteur) joined to this one", _i];

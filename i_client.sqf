@@ -181,9 +181,9 @@ d_points_needed = [
 	800 // Полковник
 #else	
 	40, // Ефрейтор
-	60, // Сержант
-	100, // Лейтенант
-	150, // Капитан
+	80, // Сержант
+	120, // Лейтенант
+	180, // Капитан
 	300, // Майор
 	800 // Полковник
 #endif	
@@ -225,7 +225,7 @@ d_ranked_a = [
 	5,			//24 очка вычитают за провал задания ГРУ по доставке секретной карты...
 	10,         //25 очков вычисляется за выполнение второстепенного задания в городе
 	"Corporal", //26 rank to resurrect internal objects on server map (vegetation, fences etc)
-	10          //27 scores added for observer kill
+	9           //27 scores added for observer kill +1 for ordinal frag
 ];
 
 // distance a player has to transport others to get points

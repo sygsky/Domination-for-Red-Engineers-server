@@ -73,6 +73,19 @@ if (X_InstalledECS) then {
 	ECS_local set[133, 10 /* 15 */];	// ECS fires effect, Max fire Max number of fires runing simultaneous (Prevents CPU overload) 
 };
 
+if (SYG_found_GL3) then
+{
+    // TODO: tune local settings of GL3 addon here
+    hint localize format["+++ GL3_Local[0]=",argp(GL3_Local,0)];
+};
+if ( SYG_found_ai_spotting) then
+{
+    _sensitivity1  = getNumber(configFile >> "CfgVehicles" >> (typeOf player) >> "sensitivity");
+    _sensitivity2  = getNumber(configFile >> "CfgVehicles" >> "SoldierWSniper" >> "sensitivity");
+    hint localize format["+++ ai_spotting found, sensitivity: %1 = %2; %3  %4",(typeOf player),  _sensitivity1, "SoldierWSniper", _sensitivity2];
+};
+
+
 if (isNil "x_funcs2_compiled") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions2.sqf";
 };
@@ -83,7 +96,7 @@ if (isNil "x_commonfuncs_compiled") then {
 call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 
 [] spawn {
-	private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant","_crew","_pistol","_equip"];
+	private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant","_pistol","_equip"];
 	// ask the server for the client score etc
 	sleep random 0.5;
 	_endtime = time + 60;
@@ -211,8 +224,6 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 								};
                             };
 
-                            _crew  = [];
-
                             _pistol= switch _index do
                             {
                                 case 0: {["S", "ACE_Makarov", "ACE_8Rnd_9x18_B_Makarov", 4]};
@@ -230,14 +241,14 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             if ( _p isKindOf "SoldierEAT" ) exitWith
                             {
                                 _rpg set [2, "ACE_RPG7_PG7VR"];
-                                _rifle set [3, 9]; // 9th magazines
+                                _rifle set [3, 9]; // 9 magazines
                                 _weapp =  [_rpg, _rifle ,_pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VR_PDM",1]];
                             };
 
                             if ( _p isKindOf "SoldierEAA" ) exitWith
                             {
-                                _rifle set [3,6]; // 6th magazines
+                                _rifle set [3,6]; // 6 magazines
                                 _weapp =  [["P","ACE_Strela","ACE_Strela",1],_rifle,_pistol,["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_Strela_PDM",1]];
                             };
@@ -258,12 +269,12 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             if ( _p isKindOf "SoldierECrew") exitWith
                             {
                                 _weapp =  [_rpg, _rifle, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
-                                _magp = [/* ["ACE_40Rnd_762x39_BT_AK_PDM",6], */["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
+                                _magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
                             if ( _p isKindOf "SoldierEMiner") exitWith
                             {
-                                _weapp =  [_rpg, _diversant, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
+                                _weapp =  [_rpg, _rifle, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
@@ -963,27 +974,40 @@ if ( !(isNil "AI_HUT") && (_string_player in d_can_use_artillery) ) then {
 }
 else
 {
+    _local_msg_arr = [];
     if ( isNil "AI_HUT" ) then
     {
-        [] spawn
-        {
-            sleep 45;
-            (localize "STR_SYS_1176") call XfHQChat; // "The barracks is destroyed, the military draft is cancelled"
-        };
+        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1176"]; // "The barracks is destroyed, the military draft is cancelled"
     }
     else
     {
         if ( !(_string_player in d_can_use_artillery) ) then
         {
-            [] spawn
-            {
-                sleep 45;
-                (localize "STR_SYS_1177") call XfHQChat; // "To call on the service can only observer-rescue"
-            };
-            AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"];
+            _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1177"]; // "To call on the military service can only observer-rescue"
+            AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"]; // "Inspect"
         };
     };
 
+    if (_string_player in d_is_engineer) then // only for engineers
+    {
+        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
+    }
+    else // for NOT engineers
+    {
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+        _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_PENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
+#endif
+    };
+
+
+    _local_msg_arr spawn {
+        if (count _this == 0) exitWith{};
+        sleep 45;
+        {
+             sleep 4;
+             _x call XfGlobalChat;
+        } forEach _this;
+    };
 };
 
 
@@ -1132,8 +1156,11 @@ switch (d_own_side) do {
 // special triggers for engineers, before December of 2017 in AI version everybody can repair and flip vehicles |
 //--------------------------------------------------------------------------------------------------------------+
 
-#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+//hint localize  format["__NON_ENGINEER_REPAIR_PENALTY__ = %1",__NON_ENGINEER_REPAIR_PENALTY__];
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
+#else
+hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores subtraction";
 #endif
 	d_eng_can_repfuel = true;
 	
@@ -1161,10 +1188,12 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	d_last_base_repair = -1;
 	#endif
 
-	_trigger = createTrigger["EmptyDetector" ,_pos];
-	_trigger setTriggerArea [0, 0, 0, false];
-	_trigger setTriggerActivation ["NONE", "PRESENT", true];
-	_trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
+    if (_string_player in d_is_engineer) then { // only for engineers!!!
+        _trigger = createTrigger["EmptyDetector" ,_pos];
+        _trigger setTriggerArea [0, 0, 0, false];
+        _trigger setTriggerActivation ["NONE", "PRESENT", true];
+        _trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
+    };
 
 	_trigger = createTrigger["EmptyDetector" ,_pos];
 	_trigger setTriggerArea [0, 0, 0, true];
@@ -1176,7 +1205,7 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	_trigger setTriggerStatements["call x_sfunc", "actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer_old.sqf',[],-1,false]", "player removeAction actionID2"]; //'Починить/заправить технику'
 	#endif
 
-#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
 #endif
 

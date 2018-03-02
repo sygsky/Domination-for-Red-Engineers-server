@@ -143,7 +143,7 @@ XHandleNetStartScriptServer = {
 			if (isNil "d_connection_number") then
 			{
 			    d_connection_number = 1;
-    			_msg_arr = [["STR_SYS_604_0"]]; // 'You are the first [English speaking] warrior in this dangerous mission to liberate Sahrani!"
+    			_msg_arr = [["STR_SYS_604_0"]]; // "You are the first [English speaking] warrior in this dangerous mission to liberate Sahrani!"
 			}
 			else
 			{
@@ -152,7 +152,27 @@ XHandleNetStartScriptServer = {
 			};
 
             // add more messages if possible
-			_msg_arr set [ count _msg_arr, ["STR_SERVER_MOTD0"] ]; // "Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty"
+            _msg = "STR_SERVER_MOTD0"; // "The islanders are happy to welcome you in your native language!"
+            if ( _name == "Aron") then // Slovak
+            {
+    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!";
+            }
+            else
+            {
+                if (_name == "Petigp") then // Hungarian
+                {
+        			_msg = "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+                }
+                else
+                {
+                    if ( _name == "Marco") then // vec. killer
+                    {
+                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message!"
+                    };
+                };
+            };
+
+  			_msg_arr set [ count _msg_arr, [_msg] ];
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then // first time entry after half of game
 			{
@@ -248,10 +268,23 @@ XHandleNetStartScriptServer = {
 		    _this call XSendNetStartScriptClient; // resend to all clients
 //		    _vehicle say _sound; // do this on clients only
 		};
-		// ["add_vehicle",_player_name] call XSendNetStartScriptServer;
-		case "add_vehicle":
+		// ["GRU_event_scores",_score_id, name player] call XSendNetStartScriptServer;
+		case "GRU_event_scores":
 		{
-
+            _id = argopt(1, -1);
+            if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
+            _playerName = argopt(2, "" );
+            if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: no player name"};
+            _score = argpopt( GRU_specialBonusArr, _id, 0 ); // check for score available
+            if( _score > 0 ) then // this event score is available, clear it now
+            {
+                GRU_specialBonusArr set [ _id, 0 ]; // use it now
+                ["GRU_event_scores", _id, _score, _playerName] call XSendNetStartScriptClient;
+            }
+            else
+            {
+                ["GRU_event_scores", _id, _score, ""] call XSendNetStartScriptClient;
+            };
 		};
 
 

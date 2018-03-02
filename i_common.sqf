@@ -415,7 +415,7 @@ sm_bonus_vehicle_array = (
 			} else {
 				if (__ACEVer) then {
 [
-"ACE_BRDM2_ATGM",	// 0-12 (13 vehicles total)
+"ACE_BRDM2_ATGM",	// 0-13 (14 vehicles total)
 "ACE_BRDM2",	    // 1
 "ACE_T64_BV",	    // 2
 "ACE_UAZ_MG",       // 3
@@ -427,8 +427,8 @@ sm_bonus_vehicle_array = (
 "ACE_BRDM2_SA9",    // 9
 "ACE_BMP1_D",       // 10
 "ACE_BMD1p",        // 11
-"ACE_T80_U",
-"ACE_T72_BM"         // 12
+"ACE_T80_U",        // 12
+"ACE_T72_BM"        // 13
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -491,15 +491,14 @@ mt_bonus_vehicle_array = (
 "ACE_Mi24P",	        //16
 "ACE_Su27S", 			//17
 "ACE_Su30Mk_R27_R73",	//18
+"ACE_Su34",     	    //19
+"ACE_Su34B",            //20
 
-"ACE_Ka50", 		    //19 - first big bonus vehicle (heli + plane)
-"ACE_Ka50_N", 	        //20
-"ACE_Su34",     	    //21
-"ACE_Su34B",            //22
+"ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane)
+"ACE_Ka50_N", 	        //22
 
-"ACE_Su34B",             //23 - first vehicles of good jets
-"ACE_Su30Mk_Kh29T",     //24
-"ACE_Su30Mk_KAB500KR"   //25
+"ACE_Su30Mk_Kh29T",     //23
+"ACE_Su30Mk_KAB500KR"   //24
 ]
 				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
@@ -821,9 +820,11 @@ d_base_patrol_array =
 [
 	[[9502,9871.2,0],290,150,0],       // court of airbase, main area
 	[[9956,9771,0],175,250,0],         // middle south of airfield + hangars + forest to Paraiso
-	[[10304,9954,0],240,250,-25], // airbase part near Paraiso (hill and air-field buildings on east)
+	[[10304,9954,0],240,250,-25],      // airbase part near Paraiso (hill and air-field buildings on east)
 	[[9780.1,10332.6,0],650,170,0],    // north of airfield (forest-bush
-	[[9149.29,10079,0],125,100,0]     // west of airfield (pit on west of air-field)
+	[[9149.29,10079,0],125,200,0],     // west of airfield (pit on west of air-field)
+	[[9582,9377,0],100,300,100],       // south to base (granary area)
+	[[10518,10061,0],150,350,0]        // east from base between butt end of airfield and the big hill
 ];
 
 d_base_patrol_fires_array = 
@@ -866,6 +867,15 @@ ClearMagazineCargo MEDIC_TENT2;
 #ifdef __ACE__
 //+++ Sygsky: added on heli wind effect. Set to false if wind effect is not desired
 d_with_wind_effect = true;
+
+// list of big heli for WEST with ACE
+SYG_HELI_BIG_LIST_ACE_W =
+    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",
+     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM",*/"ACE_AH64_AGM_HE",
+     "ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
+// list of big heli for WEST with ACE
+SYG_HELI_LITTLE_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_AH6_AGM"];
+
 #endif
 
 d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","DIAMOND"];

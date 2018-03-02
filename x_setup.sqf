@@ -118,7 +118,7 @@
 
 //+++ uncomment to create Su34 on the base,
 // add 1000 score to allow get in,
-// add some Vehciles and ammoBoxes near Corazol and on base
+// add some Vehiсles and ammoBoxes near Corazol and on base
 //#define __DEBUG_ADD_VEHICLES__
 
 #define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2

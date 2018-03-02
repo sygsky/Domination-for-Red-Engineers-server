@@ -25,7 +25,7 @@ if ( (_t_array select 2) >= big_town_radious) then { _current_target_name = form
 //hint localize format ["x_createnexttargetclient.sqf: %1, radious %2 m", format[localize "STR_SYS_271", _current_target_name], _radious];
 hint format[localize "STR_SYS_271", _current_target_name];
 
-playMusic (["invasion","kwai","baraban","starwars"] call XfRandomArrayVal);
+playSound (["invasion","kwai","baraban","starwars"] call XfRandomArrayVal);
 
 target_clear = false; // set town state as occupied
 

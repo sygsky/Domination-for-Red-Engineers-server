@@ -11,7 +11,7 @@ _remove_from_list = [];
 
 while {true} do {
 	if (X_MP) then {
-		waitUntil {sleep (4012 + random 1);(call XPlayersNumber) > 0};
+		waitUntil {sleep (20 + random 1);(call XPlayersNumber) > 0};
 	};
 	__DEBUG_NET("x_checklocalvec.sqf",(call XPlayersNumber))
 	// add to the new units list

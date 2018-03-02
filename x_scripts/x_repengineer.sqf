@@ -9,8 +9,9 @@
 
 private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_val","_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres"];
 
-#ifndef __NON_ENGINEER_REPAIR_RENALTY__
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
 _is_engineer = format ["%1", player] in d_is_engineer;
+// hint localize format["_is_engineer = %1", _is_engineer];
 #endif
 
 _caller = _this select 1;
@@ -22,18 +23,15 @@ if (player distance TR7 < 21 || player distance TR8 < 21) then {
 	_truck_near = true;
 };
 #else
-	_trArr =  nearestObjects [ position player, SYG_repTruckNamesArr, 21]; // find nearest truck in radius 20 meters
+	_trArr =  nearestObjects [ position player, SYG_repTruckNamesArr, 21]; // find nearest repair vehicle in radius 20 meters
 	_truck_near = false;
 	{
 		if ( alive _x ) exitWith { _truck_near = true; };
 	} forEach _trArr;
 #endif
-if (!d_eng_can_repfuel) exitWith {
-	hint (localize "STR_SYS_18"); //"Please restore the ability to repair and refueling equipment on the base..."
-};
 
-if (!_truck_near) exitWith {
-	hint (localize "STR_SYS_18_1"); // "No any vehicle nearby that is in need of repair..."
+if (!d_eng_can_repfuel && !_truck_near) exitWith {
+	hint (localize "STR_SYS_18");//"Следует восстановить способность ремонта и заправки техники на базе...";
 };
 
 #ifdef __RANKED__
@@ -185,8 +183,16 @@ _addscore = (
 );
 */
 if (_addscore > 0) then {
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+    _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
+    if (!_is_engineer) then
+    {
+        _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__;
+        _str = "STR_SYS_137_1"; //"Вычтено очков за обслуживание техники: %1 ..."
+    };
+#endif
 	player addScore _addscore;
-	(format [localize "STR_SYS_137", _addscore]) call XfHQChat; //"Добавлено очков за обслуживание техники: %1 ..."
+	(format [localize _str, _addscore]) call XfHQChat;
 };
 #endif
 rep_array = _rep_array;

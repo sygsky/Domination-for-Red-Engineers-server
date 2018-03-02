@@ -8,7 +8,11 @@ private ["_vehicle"];
 
 #define ISLAS_SEPARATE_VERTICAL_LINE_X 4730
 
-x_sm_pos = [[4726.85,15689,0],[4385.75,15825.4,0],[4415.64,15790.9,0],[4375.74,15790.8,0],[4392.87,15521.3,0],[4532.88,15304.8,0],[4585.08,15287.2,0],[4978.4,15466.1,0],[4855.92,15535.1,0],[4930.69,15514.1,0],[4956.34,15760.8,0],[4949.85,15827.9,0],[4964.33,16067,0],[4987.25,15717.1,0],[4395.8,15350.6,0],   [4574.74,15374.2,0],[4368.82,15737,0],[5044.83,15799.3,0],[4860.15,15679.2,0]]; // index: 25,   enemy officer on Isla del Vasal or Isla del Vida
+x_sm_pos = [
+    // officer positions
+    [4726.85,15689,0],[4385.75,15825.4,0],[4415.64,15790.9,0],[4375.74,15790.8,0],[4392.87,15521.3,0],[4532.88,15304.8,0],[4585.08,15287.2,0],[4978.4,15466.1,0],[4855.92,15535.1,0],[4930.69,15514.1,0],[4956.34,15760.8,0],[4949.85,15827.9,0],[4964.33,16067,0],[4987.25,15717.1,0],[4395.8,15350.6,0],
+    // defence group positions (start at #16)
+   [4574.74,15374.2,0],[4368.82,15737,0],[5044.83,15799.3,0],[4860.15,15679.2,0]]; // index: 25,   enemy officer on Isla del Vasal or Isla del Vida
 x_sm_type = "normal"; // "convoy"
 
 #ifdef __SMMISSIONS_MARKER__
@@ -20,17 +24,6 @@ if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for p
 #define __SUPER_AA_DEFENSE__
 #define __DEBUG__
 #define DELAY_BEFORE_NEXT_CREATION 120
-
-#ifdef __SUPER_AA_DEFENSE__
-//_Stinger_Pod_arr1 = [[4898.79,15460.7,6.87017],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
-_Stinger_Pod_arr1 = [[4898.79,15460.7,6.9],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
-
-//_Stinger_Pod_arr2 = [[4520.49,15279.3,5.84021],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
-_Stinger_Pod_arr2 = [[4520.49,15279.3,5.9],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
-
-_M2HD_mini_TriPod_arr = [[4359.98,15937,0.0],[4341.64,15541.9,0.0]]; // Isla da Vassal
-
-#endif
 
 
 if (X_Client) then {
@@ -121,6 +114,15 @@ if (isServer) then {
 	// Add super-defence for this Side Mission immediately
 	// TODO: change this adding so that number of AA Pods (not MG) depends on players count 
 	// up to the maximum limited count after some period
+
+    //_Stinger_Pod_arr1 = [[4898.79,15460.7,6.87017],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
+    _Stinger_Pod_arr1 = [[4898.79,15460.7,6.9],[5033.33,16123.4,0.0],[5155.62,15877.1,0.0]]; // Isla da Vida
+
+    //_Stinger_Pod_arr2 = [[4520.49,15279.3,5.84021],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
+    _Stinger_Pod_arr2 = [[4520.49,15279.3,5.9],[4372.36,15264.6,0.0],[4348.18,15932.5,0.0]]; // Isla da Vassal
+
+    _M2HD_mini_TriPod_arr = [[4359.98,15937,0.0],[4341.64,15541.9,0.0]]; // Isla da Vassal
+
 	_utype = if (d_enemy_side == "EAST") then {d_crewman2_E} else {d_crewman2_W};
 	_stingertype = ["ACE_ZU23M"] + [if (d_enemy_side == "EAST") then {"Stinger_Pod_East"} else {"Stinger_Pod"}];
 

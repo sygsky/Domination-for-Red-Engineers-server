@@ -55,8 +55,9 @@ if (local king) then
 	player groupChat format["king_escape.sqf: king teleported to building %1 at pos %2", typeOf _house, _pos]
 };
 king spawn {
-    sleep 60 + random 60;
-    call SYG_playRandomOFPTrack; // for more fun
+    sleep (60 + random 60);
+    ["play_music","OFP"] call XSendNetStartScriptClient;
+    //call SYG_playRandomOFPTrack; // for more fun
     if (alive king) then
     {
         /* inform players about king escape and his new position */

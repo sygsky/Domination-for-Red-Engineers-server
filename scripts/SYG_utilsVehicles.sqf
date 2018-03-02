@@ -15,7 +15,9 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 
 #define DEFAULT_INTEL_MAP_MARKERS_PREFIX "IMM_"
 
-#define ADD_1CARGO_TO_TRUCKS_AND_HMMW
+#define __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
+#define __NOT_POPULATE_LOADER_TO_TANK__
+#define __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
 
 if ( !isNil "SYG_utilsVehicles_INIT" )exitWith { hint "SYG_utilsVehicles already initialized"};
 SYG_utilsVehicles_INIT = false;
@@ -220,83 +222,145 @@ SYG_nearestEnemy = {
 //
 // Parameters in input array:
 // _unit: unit to find groups for. Groups can be crew in any vehicles (Man, Land, Air, Ship)
-// _dist (optional): radious to find groups, default value is 500 m. Set to 0 or negative to use default
+// _dist (optional): radius to find groups, default value is 500 m. Set to 0 or negative to use default
 // _pos (optional): search center, if set to [], _unit pos is used
 //
 // Returns: array of groups found or [] if not found
 //
 // Usage:
-// _grps = [_unit, _dist] call SYG_nearestGroups; // search around _unit at 500 m., return empty array [] if no group found
-// _grps = [_unit, _dist, _pos] call SYG_nearestGroups; // search around _pos, return empty array [] if no group found
+// _grps = [_unit] call SYG_nearestSoldierGroups; // search around _unit at 500 m., return empty array [] if no group found
+// _grps = [_unit, _dist, _pos] call SYG_nearestSoldierGroups; // search around _pos, return empty array [] if no group found
+// _grps = [_unit, _dist, _pos, _grp_size] call SYG_nearestSoldierGroups; // search groups of designated size as if (_grp_size >= ({canStand _x} count _grp))..
 //
-SYG_nearestGroups = {
+SYG_nearestSoldierGroups = {
 	private ["_unit", "_dist", "_side", "_nearArr", "_grps", "_types" ];
 	_unit = _this select 0;
 	if ( isNull _unit || !alive _unit ) exitWith {[]};
 	_grps = [];
-	if ( !isNull _unit ) then
-	{	
-		_dist = 0;
-		if ( (count _this ) > 1 ) then { _dist = _this select 1;};
-		if (_dist <= 0) then { _dist = 500;};
-		
-		_pos = _unit;
-		if ( (count _this ) > 2 ) then { _pos = _this select 2;};
-		if ( typeName _pos == "ARRAY" ) then // use position array, check to be empty 
-		{ 
-			if ((count _pos) == 0) then {_pos = getPos _unit;};
-		};
-		
-		_side = side _unit;
-		_types = switch _side do
+	_dist = 0;
+	if ( (count _this ) > 1 ) then { _dist = _this select 1;};
+	if (_dist <= 0) then { _dist = 500;};
+	
+	_pos = _unit;
+	if ( (count _this ) > 2 ) then { _pos = _this select 2;};
+	if ( typeName _pos == "ARRAY" ) then // use position array, check to be empty 
+	{ 
+		if ((count _pos) == 0) then {_pos = getPos _unit;};
+	};
+	
+	_side = side _unit;
+	_types = switch _side do
+	{
+		case east : {["SoldierEB","LandVehicle","Air","Ship"]};
+		case west : {["SoldierWB","LandVehicle","Air","Ship"]};
+		case civilian: {["Civilian","LandVehicle","Air","Ship"]};
+		case resistance: {["SoldierGB","LandVehicle","Air","Ship"]};
+		case default {["CAManBase","LandVehicle","Air","Ship"]};
+	};
+	_nearArr = nearestObjects [_pos, _types, _dist];
+	{
+		// find good, healthy, fast and aggressive group for our man :o)
+		if ( _x isKindOf "CAManBase") then
 		{
-			case east : {["SoldierEB","LandVehicle","Air","Ship"]};
-			case west : {["SoldierWB","LandVehicle","Air","Ship"]};
-			case civilian: {["Civilian","LandVehicle","Air","Ship"]};
-			case resistance: {["SoldierGB","LandVehicle","Air","Ship"]};
-			case default {["CAManBase","LandVehicle","Air","Ship"]};
-		};
-		_nearArr = nearestObjects [_pos, _types, _dist];
-		{
-			// find good, healhy, fast and agressive group for our man :o)
-			if ( _x isKindOf "CAManBase") then
+			if (canStand _x && ((side _x) == _side)) then
 			{
-				if (alive _x && ((side _x) == _side)) then
+				if (!(group _x in _grps)) then 
 				{
-					if (!(group _x in _grps)) then 
-					{
-						_grps = _grps + [group _x];
-						sleep 0.01;
-					};
+					_grps = _grps + [group _x];
+					sleep 0.01;
 				};
-			}
-			else // not a man, check for crew
+			};
+		}
+		else // not a man, check for a crew
+		{
+			if ( canStand _x) then
 			{
-				if ( alive _x) then
+				if (( {canStand _x} count crew _x) > 0 && (side _x == _side) ) then
 				{
-					if (( {alive _x} count crew _x) > 0 && (side _x == _side) ) then
+					_unit = objNull;
+					{	
+						if ( { canStand _x } ) exitWith {_unit = _x;};
+					} forEach (crew _x);
+					
+					if ( !isNull _unit) then 
 					{
-						_unit = objNull;
-						{	
-							if ( { alive _x } ) exitWith {_unit = _x;};
-						} forEach (crew _x);
-						
-						if ( !isNull _unit) then 
+						if (!(group _unit in _grps)) then 
 						{
-							if (!(group _unit in _grps)) then 
-							{
-								_grps = _grps + [group _unit];
-								sleep 0.01;
-							};
+							_grps = _grps + [group _unit];
+							sleep 0.01;
 						};
 					};
 				};
 			};
-		} forEach _nearArr;
-	};
+		};
+	} forEach _nearArr;
 	_grps
 };
 
+//
+// Parameters in input array:
+// _unit: unit to find groups for. Groups can be crew in any vehicles (Man, Land, Air, Ship)
+// _dist (optional): radius to find groups, default value is 500 m. Set to 0 or negative to use default
+// _pos (optional): search center, if set to [], _unit pos is used
+//
+// Returns: array of groups found or [] if not found
+//
+// Usage:
+// _cargo = [_side, _pos] call SYG_nearestCargo; // search around _unit at 500 m., return empty array [] if no cargo found
+// _cargo = [_side, _pos, _dist] call SYG_nearestCargo; // search around _pos, return empty array [] if no group found
+// _cargo = [_side, _pos, _dist, _cargo_size] call SYG_nearestCargo; // search vehicles of designated free cargo size
+//
+SYG_nearestCargo = {
+	_side = argopt( 0, "CIV" );
+	if ( typeName _side != "STRING") exitWith { objNull };
+	if (! (_side in ["WEST", "EAST", "GUER", "CIV"])) exitWith {objNull}; // unknown side
+
+    _pos = argopt( 1, []);
+    if ( typeName _pos != "ARRAY") exitWith { objNull };
+    if ( count  _pos < 2 ) exitWith { objNull };
+
+	_dist = argopt(1,500);
+	if ( typeName _dist != "SCALAR") exitWith { objNull };
+
+	_vecs = [_side, _dist, "LandVehicles" ] call SYG_findNearestVehicles;
+	if ( count _vecs == 0 ) exitWith { objNull };
+
+    _size = argopt(3, 0);
+    if ( _size <= 0 ) exitWith { objNull };
+
+	{
+        if ( alive _x) then
+        {
+            if ( ({canStand _x} count (crew _x)) == 0 ) exitWith{};  // empty
+            if ( !(canStand (driver _x)) ) exitWith{};
+            if ( format["%1",side _x] != _side ) exitWith {};
+            if ( (fuel _x) < 0.05 ) exitWith {};
+            if ( (_x emptyPositions "Cargo") >= _size ) then
+            {
+                _vecs = _vecs + _x;
+                sleep 0.01;
+            };
+        };
+	} forEach _vecs;
+	_nearArr = nil;
+	_vecs
+};
+
+// _vecs_arr = [_unit || _pos, 500, ["LandVehicles"]] call Syg_findNearestVehicles;
+// may retun [] if no vehicles found
+Syg_findNearestVehicles = {
+	_unit = arg(_this);
+	if ( typeName _unit == "ARRAY" ) then {
+	    if (count _unit < 2) exitWith {_unit == objNull;}; // can't be pos with empty array
+	};
+	if ( isNull _unit ) exitWith {[]};
+	_dist = argopt(1, 500);
+
+    _types = argopt(2,["LandVehicles"]);
+	if ( typeName _types != "ARRAY" ) exitWith {[]}; // use position array, check to be empty
+
+	nearestObjects [_unit, _types, _dist]
+};
 //
 // call: _cnt = [[_zavora1, ... _zavoraN], _act] call SYG_openAllBarriers;
 //
@@ -487,14 +551,14 @@ SYG_populateVehicle ={
 	_pos = getPos _veh;
 
 	_tlist = _veh call SYG_turretsList;
-#ifdef NOT_POPULATE_LOADER_TO_TANK
+#ifdef __NOT_POPULATE_LOADER_TO_TANK__
 	if ( _veh isKindOf "Tank" ) then
 	{
 		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
 	};
 #endif
 
-#ifdef NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT
+#ifdef __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
 	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then
 	{
 		_tlist = [[1], _tlist] call SYG_removeFromTurretList;
@@ -557,9 +621,9 @@ SYG_populateVehicle ={
 	// never populate small mguns of HMMWV_GVT
 	// well, lets look if we should fill some cargo places in trucks and canons, may be in M113, MG strikes, AT humwee
 
-#ifdef ADD_1CARGO_TO_TRUCKS_AND_HMMW
+#ifdef __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
 // for WEST enemy only
-	if ( (_veh isKindOf "Truck") OR (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
+	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
 	{
         // add "ACE_SoldierWMAT_A" as a passenger
         _emptypos = _veh emptyPositions "Cargo";
@@ -600,16 +664,16 @@ SYG_fuelCapacity = {
 	getNumber(configFile >> "CfgVehicles" >> _this >> "fuelCapacity")
 };
 
+// TODO: use anywhere
 // call:
-//      _town = [[10550,9375,0],"Paraiso", 405];
-//      _params = [_town select 0,_town select 1, _town select 1, 0]; // for rectangle
+//      _town = [[10550,9375,0],"Paraiso", 405] select 0;
+//      _params = [_town select 0,_town select 1, _town select 2, 0]; // for rectangle
 //      _params = [_town select 0,_town select 1]; // for circle
-//       _grp =  _params call SYG_makePatrolGroup;
+//      _grp =  _params call SYG_makePatrolGroup;
 SYG_makePatrolGroup = {
-    if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_makePatrolGroup: expected parameter in not ARRAY (%1)", _this] ;grpNull };
+    if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_makePatrolGroup: expected parameter is not ARRAY (%1)", _this] ;grpNull };
     private ["_agrp","_elist","_rand","_leader"];
-	__WaitForGroup
-	__GetEGrp(_agrp)
+	_agrp = call SYG_createGroup;
 	_elist = [d_enemy_side] call x_getmixedliste;
 	{
 	    _rand = floor random 3;
@@ -1031,7 +1095,7 @@ SYG_prefixExists = {
 
 // returns -1 if no such prefix else return number of markers with such prefix (0 .. N)
 SYG_prefixCount = {
-if (call SYG_prefixExists) then {SYG_markerPrefixCounts select (SYG_markerPrefixNames find _this)} else {-1}
+    if (call SYG_prefixExists) then {SYG_markerPrefixCounts select (SYG_markerPrefixNames find _this)} else {-1}
 };
 
 // call: call SYG_buildIntelLegend;
@@ -1046,7 +1110,7 @@ SYG_removeIntelLegend = {
 };
 
 //
-// set handler for "hit" event if vehicle has a smoke magazines in inventory
+// set smoke throwed to the shooter side for "hit" event if vehicle has a smoke magazines in base inventory
 //
 // Call: _isAssingedToSmoke = _vec call SYG_assignVecToSmokeOnHit;
 //
@@ -1055,14 +1119,14 @@ SYG_assignVecToSmokeOnHit =
     if (!d_smoke) exitWith {false}; // not allowed in setup
     if ( (typeName _this) != "OBJECT") exitWith {false};
     if (!(_this isKindOf "LandVehicle")) exitWith{false}; // only for land vehicles
+    if (_this isKindOf "Static") exitWith{false}; // not for static
     // check if vehicle support smoke magazines in common list of magazines
     private ["_magazines"];
-    _magazines = getArray (configFile >> "CfgVehicles" >> _type >> "Turrets" >> "MainTurret" >> "magazines");
+    _magazines = getArray (configFile >> "CfgVehicles" >> (typeOf _this) >> "Turrets" >> "MainTurret" >> "magazines");
         //_magazines = getArray(_config >> "magazines");
     if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith { _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true }; // add smoking protection
     false
 };
-
 
 //------------------------------------------------------------- Rearm vehicles methods
 
@@ -1254,7 +1318,7 @@ SYG_rearmAnyHeli =
 };
 #endif
 
-// generates report about damaged parts of vehicle
+// generates report about damaged parts of vehicle. May work only where vehicles are local (so on server for MP)
 // Call as: _dmg_report_str = _unit call SYG_ACEDamageReportStr;
 //
 // Returned: _dmg_report_str = "Turret, Hull, Engine, Tracks"
@@ -1298,6 +1362,150 @@ SYG_createEnemyGroup =
     while {!can_create_group} do {sleep 0.1 + random (0.2)};//__WaitForGroup
     [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
 };
+
+/*
+ * Set parachutes cargo in heli to predefined number (e.g. to have place for RGP in the heli during flight)
+ * call: [_heli, 2, "ACE_ParachutePack" or "ACE_ParachuteRoundPack"] call SYG_setHeliParaCargo;
+ * where 2 is new parachutes number
+ * "ACE_ParachutePack" - new parachute type
+ */
+SYG_setHeliParaCargo = {
+    private ["_heli","_num","_paraType"];
+    if (typeName _this == "OBJECT") then {_this = [_this];};
+    if ( typeName _this != "ARRAY") exitWith {false};
+
+    _heli = arg(0);
+
+    if (! (_heli isKindOf "Helicopter")) exitWith {false};
+
+    clearWeaponCargo _heli; // remove all default parachutes number (for Mi17 is 3)
+    //sleep 0.1; // sleep usage is strictly prohibited in setVehicleInit (as if in init fields of editor objects)
+    _num = argopt(1,1);
+    _paraType = argopt(2,"ACE_ParachuteRoundPack");//default parachute
+
+    _heli addWeaponCargo [_paraType, _num];
+    hint localize format[ "<<< SYG_setHeliParaCargo [%1,%2] >>>", _paraType, _num ]; // log start
+};
+
+//
+// Creates and return new enemy group.
+// Call: _newgrp = call SYG_createGroup;
+//
+SYG_createGroup = {
+    while {!can_create_group} do {sleep 0.1 + random (0.2)};
+    [d_enemy_side] call x_creategroup
+};
+
+
+//============================================ Vehicle groups
+//============================================ Vehicle groups
+#ifdef __OWN_SIDE_EAST__
+
+ABRAMS_LIST = ["ACE_M1A2","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_TUSK","ACE_M1A2_SEP_TUSK"];
+LINEBAKER = ["ACE_M6A1"];
+ABRAMS_PATROL = [2,4,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
+
+BREADLEY_LIST = ["ACE_M2A1","ACE_M2A2","ACE_M2A3"];
+AA_PATROL     = [2,3,[ [1,1,BREADLEY_LIST],[1,1,LINEBAKER] ] ];
+
+VULKAN_LIST = ["ACE_Vulcan","ACE_PIVADS"];
+M113_LIST = ["ACE_M113","ACE_M113_A1","ACE_M113_A2","ACE_M113_A3"];
+VULKAN_PATROL = [ 2,3, [ [1,1,M113_LIST], [1,1,VULKAN_LIST] ] ];
+
+STRIKER_CANON_LIST = ["ACE_Stryker_MGS_SLAT","ACE_Stryker_MGS"];
+STRIKER_PATROl = [ 2,2, [ [1,1,STRIKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,1,["ACE_Stryker_MK19"]] ] ];
+
+CARS_LIST = ["ACE_HMMWV_50", "ACE_HMMWV_GAU19", "ACE_HMMWV_GL", "ACE_HMMWV_TOW"];
+LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GL"]], [1,1,["ACE_HMMWV_GMV2"]] ] ];
+
+/**
+ * Creates patrol of designated type.
+ * Types are from follow options:
+ * "HP" - Heavy Patrol
+ * "AP" - AA Patrol
+ * "FP" - Floating Patrol
+ * "SP" - Speed Patrol
+ * "LP" - Light patrol
+ * _patrol_vec_arr = "HP" call SYG_generatePatrolList;
+ *
+ * or _vec_type_list = _patrol_vec_arr call SYG_generatePatrolList;
+ */
+SYG_generatePatrolList = {
+    if (typeName _this != "STRING") exitWith {hint localize format["SYG_generatePatrolList: param not STRING",_this]};
+
+    [[],switch (_this) do
+        {
+            case "HP": {ABRAMS_PATROL};
+            case "AP": {AA_PATROL};
+            default {hint localize format["--- SYG_generatePatrolList: parameter unknown: ""%1""", _this]; [] };
+            case "FP": {VULKAN_PATROL};
+            case "SP": {STRIKER_PATROl};
+            case "LP": {LIGHT_PATROL};
+        }
+    , 0] call SYG_buildVecList;
+};
+
+// don't call it directly, instead call to SYG_generatePatrolList {@link SYG_generatePatrolList}
+// _vec_arr = [_list_to_fill, _vec_arr,_next_id]
+// _vec_list = _vec_arr call SYG_buildVecList;
+SYG_buildVecList = {
+    private ["_i", "_id", "_to","_itemType","_next_arr"];
+    // description arrays is designated
+    if (typeName _this != "ARRAY") exitWith {[]};
+    if (count _this == 0) exitWith {[]};
+
+    _list     = _this select 0; // list to fill with vehicle types
+    _arr      = _this select 1;
+    _id       = _this select 2;
+    _from     = _arr select 0;
+    _to       = _arr select 1;
+    _next_arr = _arr select 2;
+
+    if ( typeName _next_arr == "STRING") then {_next_arr = [_next_arr];};
+    _to = floor(random (_from - _to + 1)) + _to;
+    _itemType = typeName (_next_arr select 0);
+
+    //_str = format["SYG_buildVecList enter: id %1, %2, from 1 to %3, %4", _id, _this, _to, _itemType];
+    //player groupChat _str;
+    //hint localize _str;
+    for "_i" from 1 to _to do
+    {
+        //check type of items in array
+        //hint localize format["loop %1, item type %2", _i, _itemType];
+        if ( _itemType == "ARRAY") then
+        {
+            {
+                [_list, _x, _id + 1] call SYG_buildVecList;
+            }forEach _next_arr;
+        }
+        else
+        {
+            if ( _itemType == "STRING") then // list of vehicle types to randomly select one of them
+            {
+                _list = _list + [_next_arr call XfRandomArrayVal];
+            };
+        };
+    };
+    //_str = format["SYG_buildVecList return: id %1,cnt %2, %3", _id, _to, _list];
+    //hint localize _str;
+    _list
+ };
+
+#endif
+
+// Removes and delete all the crew of the vehicle correctly
+// call: _veh call SYG_deleteVehicleCrew;
+//
+SYG_deleteVehicleCrew = {
+    if ( (typeName _this) != "OBJECT") exitWith {};
+    {
+        unassignVehicle _x;
+        //_x setPos [0,0,0];
+        //sleep 0.01;
+        deleteVehicle _x;
+    }forEach (crew _this);
+};
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

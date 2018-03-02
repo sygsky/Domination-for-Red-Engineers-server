@@ -1,23 +1,37 @@
 // by Xeno: x_helirespawn2.sqf
-private ["_heli_array", "_vec_a", "_vehicle", "_number_v", "_is_west_chopper", "_i", "_tt", "_ifdamage", "_empty", "_disabled", "_empty_respawn", "_startpos", "_hasbox"];
 if (!isServer) exitWith{};
+
+private ["_heli_array", "_vec_a", "_vehicle", "_number_v", "_is_west_chopper", "_i", "_tt", "_ifdamage", "_empty",
+        "_disabled", "_empty_respawn", "_startpos", "_hasbox", "_min_dist", "_cnt"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
 // [[ch1,"HR1",true],[ch2,"HR2",true],[ch3,"HR3",false,1500],[ch4,"HR4",false,1500]] execVM "x_scripts\x_helirespawn2.sqf";
 
+_cnt = 0;
 _heli_array = [];
 {
-	_vec_a = _x;
-	_vehicle = _vec_a select 0;
-	_number_v = _vec_a select 1;
-	_ifdamage = _vec_a select 2;
-	_heli_array = _heli_array + [[_vehicle,_number_v,_ifdamage,0, position _vehicle,direction _vehicle,typeOf _vehicle,(if (_ifdamage) then {0} else{ _vec_a select 3})]];
-	#ifndef __TT__
+	_vec_a    = _x;
+	_vehicle  = argp(_vec_a,0);
+	_number_v = argp(_vec_a,1); // vehicle name ("ch1" etc)
+	_ifdamage = argp(_vec_a,2);
+	_min_dist = argpopt(_vec,3,0); // min dist to return
+	// offset in veh array:              0,        1,        2,  3,                 4,                 5,              6,        7
+	_heli_array = _heli_array + [[_vehicle,_number_v,_ifdamage,  0, position _vehicle,direction _vehicle,typeOf _vehicle,_min_dist]];
+
+	// change cargo for Mi-17 only (USSR version). FIXME: do the same for non USSR version heli
+    if ((typeOf _vehicle) == "ACE_Mi17_MG") then
+    {
+        _vehicle setVehicleInit "[this, 2] call SYG_setHeliParaCargo;";
+        _cnt = _cnt + 1;
+    };
+
+#ifndef __TT__
 	call compile format ["%1 =_vehicle;publicVariable ""%1"";", _number_v];
-	#endif
-	#ifdef __TT__
+#endif
+
+#ifdef __TT__
 	_is_west_chopper = false;
 	{if (_number_v == (_x select 0)) exitWith {_is_west_chopper = true;}} forEach d_choppers_west;
 	if (!_is_west_chopper) then {
@@ -33,8 +47,13 @@ _heli_array = [];
 			%1 addEventHandler [""killed"", {_this execVM ""x_scripts\x_checkveckillwest.sqf""}];
 		", _number_v];
 	};
-	#endif
+#endif
+
 } forEach _this;
+
+if ( _cnt > 0 ) then { processInitCommands; };
+
+
 _this = nil;
 
 while {true} do {
@@ -72,7 +91,7 @@ while {true} do {
 		if (damage _vehicle > 0.9) then {_disabled = true;};
 
 //		if ((_disabled && _empty) || (_empty && !(alive _vehicle))) then {
-		if ( _empty AND (_disabled OR !(alive _vehicle)) ) then {
+		if ( _empty && (_disabled || !(alive _vehicle)) ) then {
 			_hasbox = _vehicle getVariable "d_ammobox";
 			if (format["%1",_hasbox] == "<null>") then {
 				_hasbox = false;
@@ -82,7 +101,7 @@ while {true} do {
 				["ammo_boxes",ammo_boxes] call XSendNetVarClient;
 			};
 			sleep 0.1;
-			deletevehicle _vehicle;
+			deleteVehicle _vehicle;
 			if (!_ifdamage) then {_vec_a set [3,0]};
 			sleep 0.5;
 			_vehicle = objNull;
@@ -91,7 +110,14 @@ while {true} do {
 			_vehicle setdir (_vec_a select 5);
 			_vec_a set [0,_vehicle];
 			_number_v = _vec_a select 1;
-			#ifndef __TT__
+            // change cargo for Mi-17 only (USSR version). FIXME: do the same for non USSR version heli
+            if ((typeOf _vehicle) == "ACE_Mi17_MG") then
+            {
+                _vehicle setVehicleInit "[this, 2] call SYG_setHeliParaCargo;";
+                processInitCommands;
+            };
+
+#ifndef __TT__
 			call compile format ["%1 =_vehicle;publicVariable ""%1"";", _number_v];
 			if (X_SPE) then {
 				_dchop_v = [];
@@ -119,7 +145,7 @@ while {true} do {
 					};
 				};
 			};
-			#else
+#else
 			if (!_is_west_chopper) then {
 				call compile format ["
 					%1=_vehicle;
@@ -191,7 +217,7 @@ while {true} do {
 					};
 				};
 			};
-			#endif
+#endif
 		}; // if ((_disabled && _empty) || (_empty && !(alive _vehicle))) then
 	}; // for "_i" from 0 to (count _heli_array - 1) do
 	sleep 20 + random 5;

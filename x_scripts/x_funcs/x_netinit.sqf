@@ -30,6 +30,7 @@ XHandleNetStartScriptAll = {
 			[(_this select 1) select 0] spawn x_repall;
 #endif			
 		};
+		// deletes ruins nearest to the designated position
 		case "d_del_ruin": {
 			_ruin = nearestObject [(_this select 1), "Ruins"];
 			if (!isNull _ruin) then {deleteVehicle _ruin};

@@ -12,7 +12,7 @@ XfDirToObj = {
 	if ( typeName _o1 != "ARRAY" ) then { _o1 = position _o1;};
 	if ( typeName _o2 != "ARRAY" ) then { _o2 = position _o2;};
 	_deg = ((_o2 select 0) - (_o1 select 0)) atan2 ((_o2 select 1) - (_o1 select 1));
-	if (_deg < 0) then {_deg = _deg + 360};
+	if (_deg < 0) then {_deg = _deg + 360;};
 	_deg
 };
  
@@ -365,8 +365,8 @@ XfGetFlankPos = {
 	private ["_pp", "_pe", "_dis", "_px", "_py", "_ex", "_ey", "_angle", "_a", "_b", "_flank_ret", "_i", "_xp", "_yp", "_ret", "_rand"];
 	_pp = _this select 0;_pe = _this select 1;_dis = _pp distance _pe;_px = _pp select 0;_py = _pp select 1;_ex = _pe select 0;_ey = _pe select 1;
 	_angle = 0; _a = (_px - _ex);_b = (_py - _ey);
-	if (_a != 0 || _b != 0) then {_angle = _a atan2 _b}; 
-	if (_angle < 0) then {_angle = _angle + 360};
+	if (_a != 0 || _b != 0) then {_angle = _a atan2 _b;};
+	if (_angle < 0) then {_angle = _angle + 360;};
 	_rand = random 100;_flank_ret = [];_i = if (_rand > 49) then {-85} else {85};
 	_xp = _px - ((_dis * 0.5) * sin (_angle + _i));_yp = _py - ((_dis * 0.5) * cos (_angle + _i));_ret = [_xp,_yp,0];_flank_ret = _flank_ret + [_ret];
 	sleep 0.001;_i = if (_rand > 49) then {-35} else {35};
@@ -452,12 +452,20 @@ XfSendMessage = {
 	["xmsg",_this] call XNTSendNetStartScriptClient;
 };
 
-// count all alive units in units or group
+// count all alive units in units or group {alive _x}
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetAliveUnits = {
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
 	({alive _x} count _this)
+};
+
+// count all units in units or group that can stand {canStand _x}
+// call: _cnt = units _grp call XfGetAliveUnits;
+// or call: _cnt = _grp call XfGetAliveUnits
+XfGetStandUnits = {
+	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
+	({canStand _x} count _this)
 };
 
 // count all alive and fully health units in units or group
@@ -467,7 +475,6 @@ XfGetHealthyUnits = {
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
 	({alive _x && (damage _x == 0)} count _this)
 };
-
 
 // count all group alive units  not in vehicles
 // call: _cnt = units _grp call XfGetAliveUnits;
@@ -479,11 +486,6 @@ XfGetUnitsOnFeet = {
 
 // call: _cnt = _grp call XfGetAliveUnits; // count all alive units in group
 XfGetAliveUnitsGrp =  XfGetAliveUnits;
-/*
-{
-	({alive _x} count (units _this)) 
-};
-*/
 
 x_funcs2_compiled = true;
 

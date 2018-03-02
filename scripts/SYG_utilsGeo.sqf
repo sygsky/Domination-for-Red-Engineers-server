@@ -23,6 +23,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 	SYG_Sahrani_p0 = [13231.3,8890.26,0]; // City Corazol center
 	SYG_Sahrani_p1 = [14878.6,7736.74,0]; // Vector dividing island to 2 parts (North and South) begininig, point p1
 	SYG_Sahrani_p2 = [5264.39,16398.1,0]; // Vector dividing island to 2 parts (North and South) end, point p2
+	SYG_Sahrani_desert_max_Y = 8080; // max Y coordinates for desert region of sahrani
 
 	SYG_SahraniIsletCircles = 
 	[
@@ -245,10 +246,10 @@ SYG_nearestZoneOfInterest = {
 	if ( count _opts > 0 ) then
 	{
 		if ( typeName _pos != "ARRAY" ) then { _pos = position _pos;};
-		_part = _pos call SYG_whatPartOfIsland; // island part (upper, lower) for designated point
+		_part = _pos call SYG_whatPartOfIsland; // island part (upper/lower or Nothern/Southern) for designated point
 		if ( _same_part ) then // check need for the same part
 		{
-			if ( _part == "CENTER" ) then {_same_part = false;}; // doesn't matter where is situated tested point according to base one
+			if ( _part == "CENTER" ) then {_same_part = false;}; // doesn't matter where is situated tested point according to the Corazol city
 		};
 		
 		_min_dist = 9999999.9;
@@ -342,7 +343,7 @@ SYG_nearestZoneOfInterest = {
 					};
 				};
 			};
-			if ( _dist < _wanted_dist AND _dist < _min_dist  AND _dist >= 0) then {_min_dist = _dist; _ind = _i;};
+			if ( (_dist < _wanted_dist) && (_dist < _min_dist)  && (_dist >= 0) ) then {_min_dist = _dist; _ind = _i;};
 			_reta set [_i, _pos1];
 		};
 	};
@@ -369,11 +370,32 @@ SYG_whatPartOfIsland = {
 		_res = _pos distance SYG_Sahrani_p0;
 		if ( _res < 500 ) then {_str = "CENTER";} else
 		{
-			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel;
-			_str = if (_res > 0) then {"NORTH"} else {if (_res < 0) then {"SOUTH"} else {"CENTER"}};
+			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel; // vector comes approximately from S-E to N-W through Corazol
+			_str = if (_res <= 0) then {"NORTH"} else {"SOUTH"};
 		};
 	};
 	_str
+};
+
+/**
+ * Decides if point is in desert region or no
+ * call:
+ *    _amIInDesert = _getPos player call SYG_isDesert; // TRUE or FALSE
+ */
+SYG_isDesert = {
+	private ["_pos","_str","_res"];
+	_pos = [];
+	switch toUpper(typeName _this) do
+	{
+		case "OBJECT": {_pos = getPos _this;};
+		case "LOCATION": {_pos = locationPosition _this;};
+		case "GROUP": {_pos = getPos (leader _this);};
+		case "ARRAY": {_pos = _this;};
+	};
+	_str = "<ERROR DETECTED>";
+	if ( (count _pos) < 2 ) exitWith {false};
+	// this is a max Y coordinate of desert region on Sahrani (by my estimation)
+	argp(_pos,1) < SYG_Sahrani_desert_max_Y
 };
 
 /**
@@ -551,7 +573,7 @@ SYG_intelHouseIds = [82124,220,354,356,360];
 SYG_intelObjects =
 [
 	[[9709.46,9960.43,1.4], 155, "Computer", "GRU_scripts\computer.sqf", "STR_COMP_ENTER"],
-	[[9712.41,9960,0.6], 90, "Wallmap", ""]
+	[[9712.41,9960,0.6], 90, "Wallmap", "GRU_scripts\mapAction.sqf","STR_CHECK_ITEM"]
 	// GRUBox position[]={9707.685547,143.645111,9963.350586};	azimut=90.000000;
 ];
 
@@ -573,6 +595,7 @@ SYG_getGRUCompPos = {
 SYG_getGRUComp = {
 	private ["_comp_arr","_pos"];
 	_compArr = argp(SYG_intelObjects, 0);
+	_compType = call SYG_getGRUCompType;
 	nearestObject [ argp(_compArr, 0), argp(_compArr, 2) ]
 };
 
@@ -588,9 +611,19 @@ SYG_getGRUCompScript = {
 	argp( argp(SYG_intelObjects, 0), 3 )
 };
 
+SYG_getGRUMapActionTextId = {
+	argp( argp(SYG_intelObjects, 1), 4 )
+};
+
+SYG_getGRUMapScript = {
+	argp( argp(SYG_intelObjects, 1), 3 )
+};
+
 SYG_getMainTaskTargetPos = { (call SYG_getTargetTown) select 0 };
 
 #define __DEBUG_COMP__
+//
+// TODO: replcae with more universal procedure
 //
 // Updates GRU house equipment. Call only from server if MP
 // 1. Check for the computer house presence,
@@ -697,6 +730,7 @@ SYG_updateIntelBuilding = {
 	};
 };
 
+// Moves map position in some map dialogs
 //
 // call as follow:
 // [_display_id, _ctrl_id, _end_pos] call SYG_setMapPosToMainTarget;
@@ -743,7 +777,7 @@ SYG_MsgOnPos = {
 };
 
 //
-// Creates localized message based on user format string with 3 params %1, %2, %3 in follow order:
+// Creates message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location direction_to_location
 //
 // call as: _msg_localized = [_obj, _format_msg] call SYG_MsgOnPosA;
@@ -782,6 +816,44 @@ SYG_MsgOnPosE = {
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
 	format[ _msg , _dist, _dir, _locname ]
+};
+
+/*
+ * Apppoximated distance to the base by feet in meters approximatelly
+
+  calls:
+        _dist = player call SYG_distToBase;
+        _dist = (getPos player) call SYG_distToBase;
+ */
+SYG_distByCar = {
+    (_this call SYG_geoDist) * 1.4
+};
+
+/*
+ * Distance from 1 point to second by land. To make it distance by car multiply result by 1.4.
+
+  Calls:
+        _dist = [player, FLAG_BASE] call SYG_distByCar;
+        _dist = [_pos1, _pos2] call SYG_distByCar;
+  Note:
+        both points must be on mainland, not in water or on any of islets
+  Returns -1 if parameters are invalid, distance between point by car/feet on the land
+ */
+SYG_geoDist = {
+    if (typeName _this != "ARRAY") exitWith {-1};
+    if (count _this != 2) exitWith{-1};
+    _pos1 = arg(0);
+    _pos2 = arg(1);
+    if (typeName _pn1 == "OBJECT") then {_pos1 = getPos _pos1;};
+    if (typeName _pn1 != "ARRAY") then {-1};
+    if (typeName _pn2 == "OBJECT") then {_pos2 = getPos _pos2;};
+    if (typeName _pn2 != "ARRAY") then {-1};
+    // "NORTH", "SOUTH", "CENTER"
+    _part1 = _pos1 call SYG_whatPartOfIsland;
+    _part2 = _pos2 call SYG_whatPartOfIsland;
+    _onSamePart = (_part1 == "CENTER" || _part2 == "CENTER");
+    if ((_part1 == _part2) || _onSamePart) exitWith {_pos1 distance _pos1};
+    ((_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0))
 };
 
 if (true) exitWith {};

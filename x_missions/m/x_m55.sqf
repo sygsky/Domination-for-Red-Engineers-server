@@ -27,22 +27,26 @@ if (isServer) then {
 	__PossAndOther
 	__WaitForGroup
 	__GetEGrp(_ogroup)
-	_sm_vehicle = _ogroup createUnit [_officer, _poss, [], 0, "FORM"]; // set him in the circle with radious 100 m. around center
+	_sm_vehicle = _ogroup createUnit [_officer, _poss, [], 0, "FORM"]; // TODO: set him in the circle with radious 100 m. around center
 	[_sm_vehicle] join _ogroup;
 	_sm_vehicle addEventHandler ["killed", {_this call XKilledSMTarget500}];
 
-	_pos = position _sm_vehicle;
+	_pos = position _sm_vehicle; // start officer pos
 	_hideobject = _sm_vehicle findCover [_pos, _pos, 50, 20];
     if (!isNull _hideobject) then {
-    	_sm_vehicle doMove (position _hideobject);
-        hint localize format["SM 55: cover found at pos %1 dist %2", position _hideobject, _pos distance _hideobject];
-    	sleep 120;
+        [_sm_vehicle, _hideobject, _pos] spawn {
+            arg(0) doMove (position arg(1)); // order officer to move
+            sleep 120; // wait enoght until officer reaches his cover
+            hint localize format["SM 55: cover (%4) found at pos %1 on initial dist %2, after 120 secs officer was on dist %3 to cover place", getPos arg(1), arg(2) distance arg(1), arg(1) distance arg(0), typeOf arg(1)];
+        };
+/*
     	_sm_vehicle setBehaviour "STEALTH";
     	_sm_vehicle disableAI "MOVE";
         _sm_vehicle setDamage 0.5;
         _sm_vehicle setUnitPos "DOWN";
+*/
     }
-    else{hint localize format["SM 55: cover not found, pos %1", getPos _sm_vehicle];};
+    else{hint localize format["SM 55: cover not found, officer pos %1", getPos _sm_vehicle];};
 
 	removeAllWeapons _sm_vehicle;
 	sleep 2.123;
@@ -57,7 +61,7 @@ if (isServer) then {
 			_grp_ret = _this call XCreateInf;
 			_cnt = (_grp_ret select 0) call SYG_rearmSpecopsGroup;
 #ifdef __DEBUG__		
-			hint localize format["%1 x_m42.sqf: %2 of %3 specops rearmed", call SYG_nowTimeToStr, _cnt, count units (_grp_ret select 0)];
+			hint localize format["%1 x_m55.sqf: %2 of %3 specops rearmed", call SYG_nowTimeToStr, _cnt, count units (_grp_ret select 0)];
 #endif
 		};
 		["specopsbig", 0, "basic", 2, _pos, 200, true] call XCreateInf; // groups to control forest

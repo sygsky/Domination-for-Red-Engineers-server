@@ -138,7 +138,7 @@ _make_jump = {
 			_paragrp setCombatMode "YELLOW";
 			_paragrp setBehaviour "AWARE";
 			
-			_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[_current_target_pos,200],[],-1,0,[],300 + (random 50),0];
+			_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[_current_target_pos,200],[],-1,0,[],300 + (random 50),0,[2]]; // rejoin in 2 units in group
 			_grp_array execVM "x_scripts\x_groupsm.sqf";
 			
 			d_c_attacking_grps = d_c_attacking_grps + [_paragrp];

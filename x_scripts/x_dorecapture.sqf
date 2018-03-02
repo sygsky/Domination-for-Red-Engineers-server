@@ -40,7 +40,7 @@ _infcnt = 0; // infantry cnt
 		sleep 0.01;
 	} forEach _vecs;
 	sleep 0.01;
-	_grp_array = [_grp, _posran, 0,[_target_center,_radius],[],-1,0,[], (_radius max 300) + (random 50),-1];
+	_grp_array = [_grp, _posran, 0,[_target_center,_radius],[],-1,0,[], (_radius max 300) + (random 50),-1,[3]]; // rejoin after 2 units remains in group
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 	sleep 0.512;
 } forEach ["tank","bmp"];
@@ -60,11 +60,10 @@ for "_i" from 0 to 1 do {
 	_infcnt = _infcnt + 1;
 	_unitslist = _unitslist + _units;
 	sleep 0.01;
-	_grp_array = [_grp, _posran, 0,[_target_center,_radius],[],-1,0,[],(_radius max 300) + (random 50),-1];
+	_grp_array = [_grp, _posran, 0,[_target_center,_radius],[],-1,0,[],(_radius max 300) + (random 50),-1,[2]];
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 	sleep 0.512;
 };
-
 
 hint localize format["+++ Town recaptured (center %1, radius %2) with %3 vehicles and %4 infantry groups", _target_center, _radius, _veccnt, _infcnt];
 sleep 10;

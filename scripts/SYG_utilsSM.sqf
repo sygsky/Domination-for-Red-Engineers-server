@@ -56,6 +56,7 @@ SYG_createStaticWeaponGroup = {
 		_veh = createVehicle [_vt, _pos, [], 0, "CAN_COLLIDE"];
 		sleep 0.01;
 		_veh setPos _x;
+		_veh setVectorUp [0,0,1];
 
 		extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_veh];
 		

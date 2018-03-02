@@ -4,29 +4,35 @@
 
 
 #ifdef __RANKED__
+
 if (score player < (d_ranked_a select 4)) exitWith
 {
-	(format [localize "STR_SYS_607"/*"Для прыжка необходимо очков %2. Сейчас у вас: %1"*/, score player,d_ranked_a select 4]) call XfHQChat;
+	(format [localize "STR_SYS_607", score player,d_ranked_a select 4]) call XfHQChat;
 };
+
 #endif
+
 
 _do_exit = false;
 if (d_para_timer_base > 0) then {
-	#ifndef __TT__
+#ifndef __TT__
 	if (position player distance FLAG_BASE < 15) then {
-	#else
+#else
 	if (position player distance RFLAG_BASE < 15 || position player distance WFLAG_BASE < 15) then {
-	#endif
+#endif
+
 		if (d_next_jump_time > time) then {
 			_do_exit = true;
-			(format [localize "STR_SYS_608"/*"Прыжок запрещён. След. прыжок разрешён через %1 мин.!"*/, ceil ((d_next_jump_time - time)/60)]) call XfHQChat;
+			(format [localize "STR_SYS_608", ceil ((d_next_jump_time - time)/60)]) call XfHQChat;
 		};
+
 	};
 };
 if (_do_exit) exitWith {};
 
 //hint localize format["x_paraj.sqf: weapons are %1", weapons player];
 new_paratype = "";
+
 #ifdef __ACE__
 {
 	if (_x  in ["ACE_ParachutePack","ACE_ParachuteRoundPack"]) exitWith
@@ -64,18 +70,14 @@ waitUntil {!dialog};
 sleep 0.512;
 onMapSingleClick "";
 
-
-
 sleep 2.56;
-playMusic "vozdushnye_potoki_2"; //para opened
+playSound "vozdushnye_potoki_2"; //para opened
 //hint localize format["new_paratype == %1", new_paratype];
 if ( new_paratype == "ACE_ParachuteRoundPack" ) then {
 //    hint localize format["vehicle player == %1", vehicle player];
-    waitUntil {sleep 0.532; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 10)};
-    sleep 0.3;
+    waitUntil {sleep 0.132; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 10)};
+    sleep 0.02;
     player removeWeapon new_paratype;
 };
-
-
 
 if (true) exitWith {true};

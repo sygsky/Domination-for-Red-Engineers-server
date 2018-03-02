@@ -212,7 +212,7 @@ XHandleNetStartScriptClient = {
 			execVM "x_scripts\x_showsecondary.sqf";
 		};
 		case "sec_solved": {
-			[_this select 1] execVM "x_scripts\x_secsolved.sqf";
+			_this execVM "x_scripts\x_secsolved.sqf";
 		};
 		// last target town cleared, no more target remained !!!
 		case "target_clear": {
@@ -382,7 +382,7 @@ XHandleNetStartScriptClient = {
 		};
 		#endif
 		#ifndef __TT__
-		case "unit_killer": {
+		case "unit_killer": { // TODO: lower rank of thee killer in the future
 			[format [localize "STR_SYS_605"/* "%1 убил %2. %1 наказан на %3 очков!" */, (_this select 1) select 0, (_this select 1) select 1,d_sub_tk_points], "GLOBAL"] call XHintChatMsg;
 			if (player == ((_this select 1) select 2)) then {player addScore (d_sub_tk_points * -1)};
 		};
@@ -488,7 +488,7 @@ XHandleNetStartScriptClient = {
 				};
 			};
 		};
-		case "d_ai_kill": {
+		case "d_ai_kill": { // TODO: check killer to be vehicle
 			if ((_this select 1) in (units (group player))) then {
 				if (player == leader (group player)) then {
 					player addScore (_this select 2);
@@ -503,7 +503,7 @@ XHandleNetStartScriptClient = {
                 // add scores
                 player addScore argp( d_ranked_a, 27 );
                 // play music
-                playMusic "no_more_waiting";
+                playSound "no_more_waiting";
                 // show message
                 (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
             };
@@ -639,20 +639,28 @@ XHandleNetStartScriptClient = {
 			};
 		}; // case "msg_to_user"
 
-		case "GRU_msg_patrol_killed":
-		{
-			__SetGVar(PATROL_COUNT, __GetGVar(PATROL_COUNT)-1 max 0);
-		}; // TODO: message about patrol killed
-		case "GRU_msg_patrol_detected"; // TODO: check new patrol in them future, now simply inform player about
+		case "play_misic": {
+		    switch (_this select 1) do
+		    {
+		        case "OFP";
+		        default { call SYG_playRandomOFPTrack};
+		    };
+		}; // case "play_misic"
+
+//		case "GRU_msg_patrol_killed":
+//		{
+//			__SetGVar(PATROL_COUNT, __GetGVar(PATROL_COUNT)-1 max 0);
+//		}; // TODO: message about patrol killed
+		case "GRU_msg_patrol_detected"; // TODO: check new patrol in the future, now simply inform player about
 		case "GRU_msg": {
 			hint localize format["x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
 			if (arg(0) == "GRU_msg_patrol_detected") then
 			{
-			    if ( __HasGVar(PATROL_COUNT) ) then
-			    {
-			        _cnt = __GetGVar(PATROL_COUNT);
-        			//hint localize format["Patrol count is %1", _cnt ];
-				};
+//			    if ( __HasGVar(PATROL_COUNT) ) then
+//			    {
+//			        _cnt = __GetGVar(PATROL_COUNT);
+//        			//hint localize format["Patrol count is %1", _cnt ];
+//				};
                 _this set[0, "GRU_msg"];
 			};
 			_this call GRU_procClientMsg;
@@ -671,6 +679,26 @@ XHandleNetStartScriptClient = {
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
 		    arg(1) say arg(2); // do this on clients only
+		};
+		// somebody requested GRU score
+		// ["GRU_event_scorаes", _score, _id, ""] call XSendNetStartScriptClient;
+
+		case "GRU_event_scores":
+		{
+            _id = argopt(1, -1);
+            if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
+            _score = argopt(2,0);
+            if ( _score != 0 ) then
+            {
+                _playerName = argopt(3, "" );
+                if ( _playerName == (name player)) then
+                {
+                    player addScore _score;
+                    format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
+                    playSound "no_more_waiting";
+                };
+            };
+            GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure
 		};
 
 	}; //switch (_this select 0) do {
