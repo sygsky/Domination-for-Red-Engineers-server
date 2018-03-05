@@ -8,6 +8,7 @@ sleep 1;
 #include "x_macros.sqf"
 
 //#define __DEBUG__
+//#define __DEBUG_BONUS__
 #define __MISSION_START__
 
 _p = player;
@@ -1527,6 +1528,11 @@ if (__AIVer || d_para_at_base) then {
 	FLAG_BASE addaction [localize "STR_SYS_76","AAHALO\x_paraj.sqf"];  /*"(Выбор места десантирования)"*/
 };
 #endif
+
+#ifdef __DEBUG_BONUS__
+FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
+#endif
+
 #ifdef __TT__
 if (d_own_side == "WEST") then {
 	WFLAG_BASE addAction [localize "STR_SYS_34"/* "Телепорт" */,"dlg\teleport.sqf"];

@@ -310,7 +310,7 @@ class CfgSounds
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
-	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; };
+	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; }; // remove as non needed
 	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; };
 	class kwai { name="kwai"; sound[]={\sounds\kwai.ogg,db+0,1.0}; titles[] = {}; };
 	class invasion { name="invasion"; sound[]={\sounds\invasion.ogg,db+0,1.0}; titles[] = {}; };

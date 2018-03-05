@@ -2,7 +2,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-#define __DEBUG__
+//#define __DEBUG_BONUS__
 
 "d_nv_serv" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
@@ -12,6 +12,13 @@ XHandleNetStartScriptServer = {
 	private ["_this"];
 	__DEBUG_NET("x_netinitserver.sqf XHandleNetStartScriptServer _this",_this)
 	switch (_this select 0) do {
+#ifdef __DEBUG_BONUS__
+	    case "getbonus": {
+	        hint localize "+++ x_netinitserver.sqf: [] execVM ""x_scripts\x_getbonus.sqf""";
+	        side_mission_winner = 1;
+			[] execVM "x_scripts\x_getbonus.sqf";
+	    };
+#endif
 		case "ari_type": {
 			__compile_to_var
 			ari_salvos = (_this select 2);

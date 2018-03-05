@@ -441,7 +441,7 @@ sm_bonus_vehicle_array = (
 	["A10","AH1W","AH6","AV8B","AV8B2","UH60","Vulcan"]
 #endif
 );
-
+//hint localize format["sm_bonus_vehicle_array=%1", sm_bonus_vehicle_array];
 mt_bonus_vehicle_array = (
 #ifdef __SCHMALFELDEN__
 	switch (d_own_side) do {

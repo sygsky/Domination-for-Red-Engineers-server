@@ -851,7 +851,7 @@ STR_RUM_NUM,69,69,69
 STR_RUM_NIGHT,"They are sleeping in %3","Alle schlafen in %3","В %3 все спят, однако"
 STR_RUM_0,"Rumors are absent! It's weird...","Gerüchte sind nicht vorhanden! Es ist seltsam...","Слухи отсутствуют! Что странно..."
 STR_RUM_1,"Enemy refuel truck will help only if your vehicle engine is on","Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf","Вражеский бензовоз заправляет при включенном двигателе техники"
-STR_RUM_2,"GRU can warn of enemy lair troopers in 5 minutes","GRU kann Sie warnen, wenn einem der Kette der Evolution auf der Basis von 5 Minuten","ГРУшник может предупреждать о десанте на базу за 5 минут"
+STR_RUM_2,"GRU can warn of enemy lair troopers in 5 minutes","GRU kann Sie warnen, wenn einem der Kette der Evolution auf der Basis von 5 Minuten","ГРУшник может предупредить о десанте на базу за 5 минут"
 STR_RUM_3,"They say alcohol will be delivered to the store near %2","Sie sagen, dass der Alkohol wird eingeführt in der Nähe von %2","В магазин неподалёку от %2 завезут спирт"
 STR_RUM_4,"The fog on main island again only from evening to morning","Der Nebel auf unserer Insel wieder nur vom Abend bis zum morgen","Туманы на главном острове снова только с вечера по утро"
 STR_RUM_5,"Scout also warns counterattack","Späher auch warnt Konter","ГРУшник сможет предупредить о контратаке"

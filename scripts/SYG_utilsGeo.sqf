@@ -371,7 +371,7 @@ SYG_whatPartOfIsland = {
 		if ( _res < 500 ) then {_str = "CENTER";} else
 		{
 			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel; // vector comes approximately from S-E to N-W through Corazol
-			_str = if (_res <= 0) then {"NORTH"} else {"SOUTH"};
+			_str = if (_res >= 0) then {"NORTH"} else {"SOUTH"};
 		};
 	};
 	_str

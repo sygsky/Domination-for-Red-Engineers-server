@@ -61,7 +61,7 @@ SYG_distPoint2Vector1 = {
 	_b = [_p2,_p0] call SYG_vectorSub;
 	_cross = argp(_a,X_POS)*argp(_b,Y_POS) - argp(_a,Y_POS)*argp(_b,X_POS);
 	_len = [_p0,_p1] call SYG_distance2D;
-	player groupChat format["a %1, b %2, cross %3, sqrlen %4",_a,_b,_cross,_sqrlen];
+	//player groupChat format["a %1, b %2, cross %3, len %4, dist %5",_a,_b,_cross,_len, _cross / _len];
 	_cross / _len
 };
 

@@ -6,6 +6,14 @@ if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 
+//#define __DEBUG__
+
+#ifdef __DEBUG__
+hint localize "+++ x_getbonus.sqf called +++";
+#define __NO_ETERNAL_BONUS__
+side_mission_winner = 1;
+#endif
+
 bonus_number = sm_bonus_vehicle_array call XfRandomFloorArray;
 
 // ensure that next bonus isn't the same
@@ -35,11 +43,10 @@ _pos = [];
 
 
 #ifndef __TT__
-_pos_a = sm_bonus_positions select (bonus_number % (count sm_bonus_positions));
+_posa = sm_bonus_positions select (bonus_number % (count sm_bonus_positions));
 _pos = _posa select 0;
 _dir = _posa select 1;
 //	_vec_type = sm_bonus_vehicle_array select (_i % (count sm_bonus_vehicle_array));
-
 #endif
 
 #ifdef __TT__
@@ -69,6 +76,7 @@ _vec_type = sm_bonus_vehicle_array select bonus_number;
 _vehicle = (_vec_type) createVehicle (_pos);
 
 _vehicle setDir _dir;
+hint localize format["+++ x_scripts/x_getbonus.sqf(3): bonus_position=%1, veh=%2, type=%3", _pos, typeOf _vehicle, _vec_type];
 
 _pos = nil;
 _posa = nil;

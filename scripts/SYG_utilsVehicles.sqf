@@ -1398,7 +1398,6 @@ SYG_createGroup = {
 
 
 //============================================ Vehicle groups
-//============================================ Vehicle groups
 #ifdef __OWN_SIDE_EAST__
 
 ABRAMS_LIST = ["ACE_M1A2","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_TUSK","ACE_M1A2_SEP_TUSK"];

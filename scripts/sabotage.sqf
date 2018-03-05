@@ -25,6 +25,7 @@ if (!isServer) exitWith {};
 #define FIRE_CHOKE_DELAY 1800
 #define FIRE_DISTANCE_TO_LIT 100
 #define SEARCH_OTHER_GROUP_DIST 1500
+#define OBJ_SEARCH_DISTANCE 1400
 
 _replaceFire = {
 	private ["_nextType","_pos"];
@@ -117,7 +118,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 {
 	_leader = leader _grp;
 	
-	_no = nearestObjects [_leader, _objTypesArr, 800];
+	_no = nearestObjects [_leader, _objTypesArr, OBJ_SEARCH_DISTANCE];
 	_obj_pos =  -1; /*(floor random (count _no))*/
 	_obj = objNull;
 	
