@@ -1191,6 +1191,7 @@ STR_FIRE_UNKNOWN,"You can't understand what it is","Ich kann nicht verstehen, wa
 STR_LIB_ACE_MAP,"A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it","Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen","Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"
 STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,"Good but short and rather weak western rifle with excellent optics","Gut, aber kurz und eher schwach western Gewehr mit hervorragender Optik","Крутая, но короткая и слабенькая автоматическая западная винтовка с лучшим из прицелов. Если бы не слабое воздействие на цель..."
 STR_ACE_WDN_M240_VEH,"7.62mm M240C Coax","7.62 mm M240C Koaxial","7.62mm M240C спаренный"
+STR_ACE_VDN_ACE_AH1Z_AGM_HE_F,"AH-1Z AGM114/HEx38","AH-1Z AGM114/HEx38","AH-1Z AGM114/HАРх38"
 
 //STR_ACE_VDN_SU34B,"Su-34B FAB500,R73,Kh29L","Su-34B FAB500,R73,Kh29L","Су-34Б ФАБ-500,Р-73,Х-29Л"
 //STR_ACE_VDN_SU34,"Su-34 FAB500,R73,S-8T","Su-34 FAB500,R73,S-8T","Су-34 ФАБ-500,Р-73,C-8Т"
