@@ -16,9 +16,14 @@ _name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
 
 if ( _vec == _shooter) exitWith{/* collision, not hit by enemy weapon */
     #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: vec %1 is collided with dmg %2 by ""%3""", typeOf _vec, _damage, _name];
+	hint localize format["x_dosmoke2.sqf: vec %1 is collided with dmg %2 by ""%3"", not smoking", typeOf _vec, _damage, _name];
     #endif
 };
+
+// TODO: check attacker be in air vehicle. If so, not smoke against air enemy
+
+// TODO: if attacker is a man, and damaged is load HE to the cannon and shoot it to bastard.
+// TODO: If attacker is alive after HE shoot, shoot it again and change ammo to sabot again
 
 _dead = true;
 _crew = crew _vec;
@@ -59,7 +64,7 @@ if (side _shooter == side _vec) exitWith
 
 if (!("ACE_LVOSS_Magazine" in (magazines _vec))) exitWith {
 #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: vec %1 smoke shells are already shot out!!!", typeOf _vec];
+	hint localize format["x_dosmoke2.sqf: veh %1 has no more smoke shells!!!", typeOf _vec];
 #endif
 };
 
@@ -77,6 +82,9 @@ if (_issmoking) exitWith
 
 _vec setVariable ["D_IS_SMOKING",true]; // we are smoking!!!
 
+//
+//smoke procedure
+//
 _wpns = weapons _vec;
 _muzzle = _wpns select (count _wpns - 1); // get last weapon (it should be a smoke launcher!)
 _vec selectWeapon _muzzle;
@@ -87,6 +95,8 @@ _vec fire _muzzle;
 #ifdef __PRINT__
 	hint localize format["x_dosmoke2.sqf: vec %1 fires smoke curtain against ""%2""", typeOf _vec, _name];
 #endif
+
+// TODO: If attacker is a tank and damaged is a tank shoot to the attacker smoke first and sabot second
 
 sleep 0.27;
 _vec doWatch objNull; // stop watching
