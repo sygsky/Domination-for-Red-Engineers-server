@@ -477,17 +477,17 @@ _show_absence = false; // disable patrol absence message
 //
 while {true} do {
 
-/*    _time = time; // mark time just in case
+    _time = time; // mark time just in case
 	if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
 	if ( (time - _time) >= DELAY_RESPAWN_STOPPED ) then // mission returned after first player waiting
 	{
-	    _delta = time - _time;
+	    _delta = time - _time;  // how many time mission was sleeping without movement
 	    {
-	        _timestamp = argp(_x, PARAM_TIMESTAMP) - _delta;
-            _x set [PARAM_TIMESTAMP, (_timestamp - _time_delta) max 0]; // set timestamp >= 0 as it was before player waiting loop
+	        _new_timestamp = argp(_x, PARAM_TIMESTAMP) + _delta;
+            _x set [PARAM_TIMESTAMP, _new_timestamp]; // increment timestamp to continue same behaviur as before sleep
 	    } forEach SYG_isle_grps;
 	};
-*/
+
 	__DEBUG_NET("x_isledefense.sqf",(call XPlayersNumber))
 #ifdef __DEBUG__
     hint localize "+++ x_isledefense.sqf: loop start";

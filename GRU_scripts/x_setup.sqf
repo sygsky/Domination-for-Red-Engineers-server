@@ -65,7 +65,7 @@
 //#define __ENGINEER_OLD__
 
 // comment to enable only engineers to repair and refuel, else anybody can repair with a defined penalty for each +1 engineer score but can't refuel
-#define __NON_ENGINEER_REPAIR_RENALTY__ -5
+#define __NON_ENGINEER_REPAIR_PENALTY__ -5
 
 // if you are still running 1.14 comment the following line
 #define __NO_PARABUG_FIX__
@@ -122,3 +122,6 @@
 //#define __DEBUG_ADD_VEHICLES__
 
 #define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2
+
+// uncomment follow line if you want teleport available only if all services on base are valid
+#define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__

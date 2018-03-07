@@ -152,6 +152,9 @@ _ruin = pos_ nearestObject "land_budova2_ruin";
 if ( isNull _ruin) then
 {
     hint localize "--- x_scripts/x_createnexttarget.sqf: try to repair, but no land_budova2_ruin found near";
+}
+else
+{
     deleteVehicle _ruin;
     sleep 0.05;
 };

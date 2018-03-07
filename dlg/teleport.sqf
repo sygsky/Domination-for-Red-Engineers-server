@@ -22,6 +22,18 @@ if (_is_swimmer) exitWith {
 	localize "STR_SYS_75"/* "Телепортирование при плавании недоступно!!!" */ call XfGlobalChat;
 };
 
+#ifdef __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
+if (!isNull d_jet_service_fac) exitwith {
+	format[localize  "STR_SYS_75_1", localize "STR_SYS_220"] call XfGlobalChat;
+};
+if (!isNull d_chopper_service_fac) exitwith {
+	format[localize  "STR_SYS_75_1", localize "STR_SYS_221"] call XfGlobalChat;
+};
+if (!isNull d_wreck_repair_fac) exitwith {
+	format[localize  "STR_SYS_75_1", localize "STR_SYS_222"] call XfGlobalChat;
+};
+#endif
+
 if (dialog) then {closeDialog 0};
 
 beam_target = -1;

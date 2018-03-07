@@ -1,5 +1,5 @@
 // by Xeno
-// called if NON ACE version (really both loads are equal)
+// called if ACE non RANKED version (really both loads are equal)
 private ["_ve"];
 
 #include "x_setup.sqf"
