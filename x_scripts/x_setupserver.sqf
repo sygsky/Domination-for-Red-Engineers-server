@@ -257,7 +257,11 @@ XFacRebuild = {
 	for "_i" from 0 to (count d_aircraft_facs - 1) do {
 		_element = d_aircraft_facs select _i;
 		_apos = _element select 0;
-		if (_apos distance _pos < 20) exitWith { // todo: не понятно, зачем это вычисляется!!!
+		if (_apos distance _pos < 20) exitWith {
+		    // todo: не понятно, зачем это вычисляется!!!
+		    // fixme: теперь понятно. Если расстояние от сервиса до позиции где он создавался, более 20 метров, то
+		    // fixme: это означает, что он разрушен и помещён на большую глубину, где его не видно игрокам.
+		    // fixme: Такая вот "гениальная" придумка у разрабов случаилась
 			_index = _i;
 			_buildpos = _apos;
 			_dir = _element select 1;

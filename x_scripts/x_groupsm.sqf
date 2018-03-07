@@ -358,13 +358,20 @@ while {true} do {
                     };
 				} forEach _all_grp_list;
 #ifdef __DEBUG__			
-				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4]) at %5, pos %6, leader %7",call SYG_missionTimeInfoStr, _grp, count units _grp, _rejoin_num, (getPos (leader _grp)) call SYG_nearestLocationName,  getPos (leader _grp), typeOf (leader _grp)];
+				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4]) at %5, pos %6, leader %7",
+				    call SYG_missionTimeInfoStr,
+				    _grp,
+				    count units _grp,
+				    _rejoin_num,
+				    (getPos (leader _grp)) call SYG_nearestLocationName,
+				    getPos (leader _grp),
+				    typeOf (leader _grp)];
 #endif				
 
 				if ( !isNull _joingrp ) then 
 				{
 #ifdef __DEBUG__			
-					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %5, dist %6; %7", _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr, typeOf (leader _joingrp), round((leader _joingrp) distance (leader _grp)), [(leader _joingrp),"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %6, dist %7; %8", _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr, typeOf (leader _joingrp), round((leader _joingrp) distance (leader _grp)), [(leader _joingrp),"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
 #endif				
 					if ( rank _leader != "PRIVATE" ) then {_leader setRank "PRIVATE"};
 					(units _grp) join _joingrp; sleep 1.111;
