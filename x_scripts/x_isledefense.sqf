@@ -99,26 +99,17 @@ _get_leader = {
 //
 //
 _make_isle_grp = {
-#ifdef __DEBUG__
-    hint localize format["+++ x_isledefense.sqf: group make isle group 1"];
-#endif
 
 	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vecs", "_veh", "_rand", "_leader", "_grp_array","_params"];
 	_params = [d_with_isledefense select 0,d_with_isledefense select 1,d_with_isledefense select 2,d_with_isledefense select 3];
-#ifdef __DEBUG__
-    hint localize format["+++ x_isledefense.sqf: group make isle group 2"];
-#endif
 	_start_point = []; //_params call XfGetRanPointSquare;
-#ifdef __DEBUG__
-    hint localize format["+++ x_isledefense.sqf: group make isle group 3"];
-#endif
 	while {(count _start_point) == 0} do {
 		_start_point = _params call XfGetRanPointSquare;
 		if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];}; // try next, skip islet point
 		sleep 0.4;
 	};
 #ifdef __DEBUG__
-    hint localize format["+++ x_isledefense.sqf: group make isle group 4, start point %1", _start_point];
+    hint localize format["+++ x_isledefense.sqf: make isle groupб start point %1", _start_point];
 #endif
 #ifdef __TT__
 	sleep 0.753;
@@ -138,10 +129,6 @@ _make_isle_grp = {
 	};
 #endif
 
-#ifdef __DEBUG__
-    hint localize format["+++ x_isledefense.sqf: group make isle group 5, start point %1", _start_point];
-#endif
-
 #ifdef __SYG_PRINT_ACTIVITY__
 	if ( count _start_point == 0) then
 	{
@@ -152,8 +139,32 @@ _make_isle_grp = {
 	_agrp = grpNull;
     _agrp = call SYG_createGroup;
 
-	_elist = [d_enemy_side] call x_getmixedliste;
 	_vecs = [];
+
+#ifdef __OWN_SIDE_EAST__
+//                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
+    _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP"];
+    _crew_types   = [d_crewman_W, d_crewman_W, d_crewman_W, d_crewman2_W, d_crewman2_W]; // crew man type name
+
+    _type_id      = _patrol_types call XfRandomFloorArray;
+    _patrol_type  = _patrol_types select _type_id; // random patrol type selection
+    _crew_type    = _crew_types select _type_id;    //
+
+    _elist        = _patrol_type call SYG_generatePatrolList; // last of vehicle type names
+
+#ifdef __DEBUG__
+    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
+#endif
+
+    {
+        _veh = createVehicle [_x, _start_point, [], 10, "NONE"];
+    //  [_veh, _grp, _unit_type<, _skill<, _randomSkillPart>>] call SYG_populateVehicle;
+        [_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
+        _vecs = _vecs + [_veh];
+    } forEach _elist;
+
+#else
+	_elist = [d_enemy_side] call x_getmixedliste;
 
 	{
 		_rand = floor random 3; // 0..2 vehicles to create
@@ -165,8 +176,14 @@ _make_isle_grp = {
 			_vecs = _vecs + _veh;
 		};
 	} forEach _elist;
+#endif
+
 #ifdef __DEBUG__
+    #ifdef __OWN_SIDE_EAST__
+    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2", count _vecs, _patrol_type];
+    #else
     hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
+    #endif
 #endif
 
 	_elist = nil;
@@ -514,7 +531,7 @@ while {true} do {
 		_timestamp     = argp(_igrpa, PARAM_TIMESTAMP); // time to wait before create new patrol
 		_igrppos       = argp(_igrpa, PARAM_LAST_POS); // last stored position of the group
 #ifdef __DEBUG__
-        hint localize format["+++ x_isledefense.sqf: loop id %1, grp %2, stat %3, timestamp %4, pos %5 ", _i, _igrp, _stat, _timestamp, _pos];
+        hint localize format["+++ x_isledefense.sqf: loop id %1, grp %2, stat %3, timestamp %4, pos %5 ", _i, _igrp, _stat, _timestamp, _igrppos];
 #endif
 
 		for "_j" from 0 to 0 do // dummy cycle only for main scope creation

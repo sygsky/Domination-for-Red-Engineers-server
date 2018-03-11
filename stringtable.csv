@@ -155,7 +155,7 @@ STR_SYS_67,"You were promoted to %1, congratulations !!!","Sie wurden gefördert
 STR_SYS_68,"This is the maximum grade for the island, but will rank higher!","Dies ist der höchste Rang für die Insel, aber Sie werden mit Titel und höher!","Это максимальный ранг для острова, но будут звания и повыше!"
 
 STR_SYS_69,"Select Teleport Destination","Wählen Sie Teleportieren Ziel","Выбор места телепортирования"
-STR_SYS_70,"Domination!","Domination!","Доминация!"
+//STR_SYS_70,"Domination!","Domination!","Доминация!"
 STR_SYS_71,"MHQ One","MHQ One","Моб. респаун 1"
 STR_SYS_72,"MHQ Two","MHQ Two","Моб. респаун 2"
 STR_SYS_73,"Teleport not available in a vehicle !!!","Teleport nicht in einem Fahrzeug !!!","Телепорт недоступен из техники!!!"

@@ -141,42 +141,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1)completed +++", _dummy sele
 };
 
 #ifdef __AI__
-
-// check for the AI_HUT to be alive
-if (isNil "AI_HUT") exitWith {hint localize "--- x_scripts/x_createnexttarget.sqf: no AI_HUT detected"}; // no hut
-if ( damage AI_HUT == 0) exitWith{};
-if (damage AI_HUT < 1 ) exitWith {AI_HUT setDamage 0};
-
-// AI_HUT is destroyed, lets restore it
-_ruin = pos_ nearestObject "land_budova2_ruin";
-if ( isNull _ruin) then
-{
-    hint localize "--- x_scripts/x_createnexttarget.sqf: try to repair, but no land_budova2_ruin found near";
-}
-else
-{
-    deleteVehicle _ruin;
-    sleep 0.05;
-};
-
-AI_HUT setDamage 0;
-AI_HUT setDir (d_pos_ai_hut select 1);
-AI_HUT setPos (d_pos_ai_hut select 0);
-sleep 0.1;
-AI_HUT say "fanfare";
-AI_HUT removeAllEventHandlers "hit";
-AI_HUT removeAllEventHandlers "damage";
-sleep 0.1;
-
-AI_HUT addEventHandler ["hit", {(_this select 0) setDamage 0}];
-AI_HUT addEventHandler ["damage", {(_this select 0) setDamage 0}];
-
-// ADD_HIT_EH(AI_HUT)
-// ADD_DAM_EH(AI_HUT)
-
-publicVariable "AI_HUT";
-hint localize "--- x_scripts/x_createnexttarget.sqf: AI_HUT resurrected";
-
+execVM "scripts\restore_barracks.sqf";
 #endif
 
 if (true) exitWith {};

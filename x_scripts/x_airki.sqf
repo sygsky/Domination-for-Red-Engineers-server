@@ -280,7 +280,7 @@ while { true } do {
 	_pos = d_airki_start_positions select _randxx;
 	
 #ifdef __ACE__
-	_grpskill = 0.3 + (random 0.3);
+	_grpskill = 0.6 + (random 0.3);
 #else
 	_grpskill = 0.6 + (random 0.3);
 #endif

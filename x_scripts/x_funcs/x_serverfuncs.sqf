@@ -170,8 +170,8 @@ SYG_addEvents = {
 
     if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then
     {
-            _vehicle addEventHandler ["killed", {_this spawn x_removevehi}];
-            [_vehicle] call XAddCheckDead;
+            _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
+            [_vehicle] call XAddCheckDead; // insert to dead vehicles list for follow handling and removing
     };
 #ifdef __TT__
     _do_points = arg(1);

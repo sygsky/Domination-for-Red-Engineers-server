@@ -522,11 +522,11 @@ SYG_removeFromTurretList =
  * Populates any totally empty vehicle (air, land or marine one) will full battle vehicle crew including all turret seats.
  * Note: cargo crew is not populated in this function
  *
- * call as: _grp = [_veh, _grp, _utype<, _skill<, _randomSkillPart>>] call SYG_populateVehicle;
+ * call as: _grp = [_veh, _grp, _unit_type<, _skill<, _randomSkillPart>>] call SYG_populateVehicle;
  *  where:
  *			_vehicle - vehicle to populate (Striker, Abrams etc)
  *			_grp - group for vehicle, all needed crew is added to this group
- *			_utype - "SoldierWCrew" etc to fill any positions in vehicle
+ *			_unit_type - "SoldierWCrew" etc to fill any positions in vehicle
  * 			_skill - <optional> skill for group, default is 0.5
  *         _randomSkillPart - <optional> additional random part default 0.5
  * return: group of team member for vehicle created or grpNull on error
@@ -1402,17 +1402,17 @@ SYG_createGroup = {
 
 ABRAMS_LIST = ["ACE_M1A2","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_TUSK","ACE_M1A2_SEP_TUSK"];
 LINEBAKER = ["ACE_M6A1"];
-ABRAMS_PATROL = [2,4,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
+ABRAMS_PATROL = [2,3,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
 
 BREADLEY_LIST = ["ACE_M2A1","ACE_M2A2","ACE_M2A3"];
 AA_PATROL     = [2,3,[ [1,1,BREADLEY_LIST],[1,1,LINEBAKER] ] ];
 
 VULKAN_LIST = ["ACE_Vulcan","ACE_PIVADS"];
 M113_LIST = ["ACE_M113","ACE_M113_A1","ACE_M113_A2","ACE_M113_A3"];
-VULKAN_PATROL = [ 2,3, [ [1,1,M113_LIST], [1,1,VULKAN_LIST] ] ];
+VULKAN_PATROL = [ 1,2, [ [1,1,M113_LIST], [1,2,VULKAN_LIST] ] ];
 
-STRIKER_CANON_LIST = ["ACE_Stryker_MGS_SLAT","ACE_Stryker_MGS"];
-STRIKER_PATROl = [ 2,2, [ [1,1,STRIKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,1,["ACE_Stryker_MK19"]] ] ];
+STRYKER_CANON_LIST = ["ACE_Stryker_MGS_SLAT","ACE_Stryker_MGS"];
+STRYKER_PATROl = [ 1,1, [ [1,1,STRYKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,1,["ACE_Stryker_MK19"]] ] ];
 
 CARS_LIST = ["ACE_HMMWV_50", "ACE_HMMWV_GAU19", "ACE_HMMWV_GL", "ACE_HMMWV_TOW"];
 LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GL"]], [1,1,["ACE_HMMWV_GMV2"]] ] ];
@@ -1438,7 +1438,7 @@ SYG_generatePatrolList = {
             case "AP": {AA_PATROL};
             default {hint localize format["--- SYG_generatePatrolList: parameter unknown: ""%1""", _this]; [] };
             case "FP": {VULKAN_PATROL};
-            case "SP": {STRIKER_PATROl};
+            case "SP": {STRYKER_PATROl};
             case "LP": {LIGHT_PATROL};
         }
     , 0] call SYG_buildVecList;
@@ -1461,7 +1461,7 @@ SYG_buildVecList = {
     _next_arr = _arr select 2;
 
     if ( typeName _next_arr == "STRING") then {_next_arr = [_next_arr];};
-    _to = floor(random (_from - _to + 1)) + _to;
+    _to = floor(random (_to - _from + 1)) + _from;
     _itemType = typeName (_next_arr select 0);
 
     //_str = format["SYG_buildVecList enter: id %1, %2, from 1 to %3, %4", _id, _this, _to, _itemType];
@@ -1494,7 +1494,7 @@ SYG_buildVecList = {
 
 // Removes and delete all the crew of the vehicle correctly
 // call: _veh call SYG_deleteVehicleCrew;
-//
+// *** not used
 SYG_deleteVehicleCrew = {
     if ( (typeName _this) != "OBJECT") exitWith {};
     {
