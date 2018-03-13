@@ -19,15 +19,17 @@ if ( damage AI_HUT == 0) exitWith{}; // All is well
 if (damage AI_HUT < 1 ) exitWith { hint localize format["--- restore_barracks.sqf: AI_HUT repaired damage %1",damage AI_HUT]; AI_HUT setDamage 0;};
 
 // AI_HUT is destroyed (damage 1), lets restore it
-_ruin = pos_ nearestObject "Land_budova2_ruins"; // ruins name for Barracks
+_ruin = nearestObject [d_pos_ai_hut select 0,"Land_budova2_ruins"]; // ruins name for Barracks
 if ( isNull _ruin) then
 {
     hint localize "--- restore_barracks.sqf: try to repair, but no land_budova2_ruin found near";
 }
 else
 {
+    _ruin setVelocity [0,0,-0.5];
+    sleep 3;
     deleteVehicle _ruin;
-    sleep 0.5;
+    sleep 0.1;
 };
 
 // TODO: remove events and delete AI_HUT, create new one and assign the same envirinment as for previous AI_HUT
@@ -43,8 +45,12 @@ sleep 0.1;
 if ( isNull AI_HUT ) then { hint localize "+++ restore_barracks.sqf: Hidden AI_HUT deleted!";}
 else {hint localize  "--- restore_barracks.sqf: Unable to delete hiddden AI_HUT";};
 
+_pos = (d_pos_ai_hut select 0);
+_pos set [2,-3];
 AI_HUT = "WarfareBBarracks" createVehicle (d_pos_ai_hut select 0);
 AI_HUT setDir (d_pos_ai_hut select 1);
+AI_HIU setVelocity [0,0,-1];
+sleep 3;
 AI_HUT setPos (d_pos_ai_hut select 0);
 AI_HUT addEventHandler ["hit", {(_this select 0) setDamage 0}];
 AI_HUT addEventHandler ["damage", {(_this select 0) setDamage 0}];
