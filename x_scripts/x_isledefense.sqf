@@ -142,8 +142,9 @@ _make_isle_grp = {
 	_vecs = [];
 
 #ifdef __OWN_SIDE_EAST__
+// some patrol types are more frequently generated
 //                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
-    _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP"];
+    _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",    "HP", "AP", "HP", "AP", "FP"];
     _crew_types   = [d_crewman_W, d_crewman_W, d_crewman_W, d_crewman2_W, d_crewman2_W]; // crew man type name
 
     _type_id      = _patrol_types call XfRandomFloorArray;
