@@ -22,7 +22,7 @@ if (damage AI_HUT < 1 ) exitWith { hint localize format["--- restore_barracks.sq
 _ruin = nearestObject [d_pos_ai_hut select 0,"Land_budova2_ruins"]; // ruins name for Barracks
 if ( isNull _ruin) then
 {
-    hint localize "--- restore_barracks.sqf: try to repair, but no land_budova2_ruin found near";
+    hint localize "--- restore_barracks.sqf: try to repair, but no land_budova2_ruins found near";
 }
 else
 {
@@ -32,7 +32,7 @@ else
     sleep 0.1;
 };
 
-// TODO: remove events and delete AI_HUT, create new one and assign the same envirinment as for previous AI_HUT
+// TODO: remove events and delete AI_HUT, create new one and assign the same environment as for previous AI_HUT
 
 // 1. try to delete old building, hidden far under the ground
 { AI_HUT removeAction _x } forEach [0,1,2]; // just in case
@@ -46,22 +46,29 @@ if ( isNull AI_HUT ) then { hint localize "+++ restore_barracks.sqf: Hidden AI_H
 else {hint localize  "--- restore_barracks.sqf: Unable to delete hiddden AI_HUT";};
 
 _pos = (d_pos_ai_hut select 0);
-_pos set [2,-3];
+_pos set [2,-5];
 AI_HUT = "WarfareBBarracks" createVehicle (d_pos_ai_hut select 0);
+publicVariable "AI_HUT";
+sleep 0.5;
+
+["add_barracks_actions", AI_HUT, "AlarmBell"] call XSendNetStartScriptServer;
+
 AI_HUT setDir (d_pos_ai_hut select 1);
-AI_HIU setVelocity [0,0,-1];
-sleep 3;
+for "_z" from -5 to 0 step 0.1 do
+{
+    _pos set [2, _z];
+    AI_HUT setPos _pos;
+    sleep 0.05;
+};
+
 AI_HUT setPos (d_pos_ai_hut select 0);
+
 AI_HUT addEventHandler ["hit", {(_this select 0) setDamage 0}];
 AI_HUT addEventHandler ["damage", {(_this select 0) setDamage 0}];
-publicVariable "AI_HUT";
 
 if ( !isNull AI_HUT ) then { hint localize "--- restore_barracks.sqf: AI_HUT restored";}
 else { hint localize  "--- restore_barracks.sqf: unable  to restore AI_HUT"; };
 
-publicVariable "AI_HUT";
-
-["say_sound", AI_HUT, "fanfare"] call XSendNetStartScriptServer;
 
 sleep 0.1;
 

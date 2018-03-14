@@ -639,14 +639,6 @@ XHandleNetStartScriptClient = {
 			};
 		}; // case "msg_to_user"
 
-		case "play_misic": {
-		    switch (_this select 1) do
-		    {
-		        case "OFP";
-		        default { call SYG_playRandomOFPTrack};
-		    };
-		}; // case "play_misic"
-
 //		case "GRU_msg_patrol_killed":
 //		{
 //			__SetGVar(PATROL_COUNT, __GetGVar(PATROL_COUNT)-1 max 0);
@@ -665,6 +657,7 @@ XHandleNetStartScriptClient = {
 			};
 			_this call GRU_procClientMsg;
 		};
+
 		case "syg_plants_restored": { // message about restore result to subtract corresponding scores from user
 		// params are: ["syg_plants_restored", _name, _pos, _radious, _score] call XSendNetStartScriptClient;
             _score = [arg(2),arg(3)] call SYG_restoreIslandItems; // restore items on all client to show result for players
@@ -676,10 +669,27 @@ XHandleNetStartScriptClient = {
                 format[localize "STR_RESTORE_DLG_7", _score] call XfGlobalChat; // "scores subtracted %1"
 			};
 		};
+
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
 		    arg(1) say arg(2); // do this on clients only
 		};
+
+		case "play_music": { // FIXME: is it called anywhere?
+		    switch (_this select 1) do
+		    {
+		        case "OFP";
+		        default { call SYG_playRandomOFPTrack};
+		    };
+		}; // case "play_misic"
+
+
+		// ["add_barracks_actions", AI_HUT, "AlarmBell"] call XSendNetStartScriptServer;
+        case "add_barracks_actions": // adds all user actions on barracks created
+		{
+		    [arg(2)] execVM "scripts\barracks_add_actions.sqf"; // do this on clients only
+		};
+
 		// somebody requested GRU score
 		// ["GRU_event_scorаes", _score, _id, ""] call XSendNetStartScriptClient;
 

@@ -153,9 +153,9 @@ _make_isle_grp = {
 
     _elist        = _patrol_type call SYG_generatePatrolList; // last of vehicle type names
 
-#ifdef __DEBUG__
-    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
-#endif
+//#ifdef __DEBUG__
+//    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
+//#endif
 
     {
         _veh = createVehicle [_x, _start_point, [], 10, "NONE"];
@@ -179,12 +179,10 @@ _make_isle_grp = {
 	} forEach _elist;
 #endif
 
-#ifdef __DEBUG__
-    #ifdef __OWN_SIDE_EAST__
-    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2", count _vecs, _patrol_type];
-    #else
-    hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
-    #endif
+#ifdef __OWN_SIDE_EAST__
+hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2", count _vecs, _patrol_type];
+#else
+hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
 #endif
 
 	_elist = nil;
@@ -493,7 +491,7 @@ _show_absence = false; // disable patrol absence message
 //
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
 //
-while {true} do {
+while { true } do {
 
     _time = time; // mark time just in case
 	if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
@@ -852,7 +850,7 @@ while {true} do {
 					_pos_msg = [_leader,"%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 				};
 				_grp_array    = argp(_igrpa,PARAM_GRP_ARRAY);
-				_enemy_near  = if (argp(_grp_array,2) in [0,2]) then {""} else { if (argp(_grp_array,2) == 9) then {"!"} else {"*"}};
+				_enemy_near  = if ((_grp_array select 2) in [0,2]) then {""} else { if ((_grp_array select 2) == 9) then {"!"} else {"*"}};
 				_str = _str + format["(%1) %2/%3%4%5; ", _pos_msg, _veccnt, _veccnta,  _enemy_near, _men_info];
 				_cnt = _cnt + 1;
 			};

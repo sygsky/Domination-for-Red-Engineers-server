@@ -947,68 +947,45 @@ if (count d_ammo_boxes > 0) then {
 
 player_can_call_drop = false;
 player_can_call_arti = false;
+
 #ifdef __AI__
-if ( !(isNil "AI_HUT") && (_string_player in d_can_use_artillery) ) then {
-	ADD_HIT_EH(AI_HUT)
-	ADD_DAM_EH(AI_HUT)
-	if (!(__ACEVer)) then {
-		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","Soldier%1B"]; //"Recruit Soldier"
-		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf","Soldier%1AT"]; // "Recruit AT Soldier"
-		AI_HUT addAction[localize "STR_AI_3","x_scripts\x_addsoldier.sqf","Soldier%1Medic"]; // "Recruit Medic",
-		AI_HUT addAction[localize "STR_AI_4","x_scripts\x_addsoldier.sqf","Soldier%1MG"]; // "Recruit MG Gunner"
-		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","Soldier%1Sniper"]; // "Recruit Sniper"
-		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","Soldier%1AA"];  // "Recruit AA Soldier"
-		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"]; // "Recruit Specop"
-		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
-	} else {
-		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1B"];
-		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AT"];
-		AI_HUT addAction[localize "STR_AI_3","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Medic"];
-		AI_HUT addAction[localize "STR_AI_4","x_scripts\x_addsoldier.sqf","ACE_Soldier%1MG"];
-		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Sniper"];
-		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AA"];
-		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"];
-		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"];
-	};
-	_marker_name = "Recruit_x";
-	[_marker_name, position AI_HUT,"ICON","ColorYellow",[0.5,0.5],localize "STR_SYS_1171",0,"DOT"] call XfCreateMarkerLocal; // "Recruit Barracks"
+
+// add all user actions now
+_handle  = ["add_barracks_actions", AI_HUT, "AlarmBell"] execVM "scripts\barracks_add_actions.sqf";
+waitUntil { scriptDone _handle };
+
+_local_msg_arr = [];
+if ( isNil "AI_HUT" ) then
+{
+    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1176"]; // "The barracks is destroyed, the military draft is cancelled"
 }
 else
 {
-    _local_msg_arr = [];
-    if ( isNil "AI_HUT" ) then
+    if ( !(_string_player in d_can_use_artillery) ) then
     {
-        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1176"]; // "The barracks is destroyed, the military draft is cancelled"
-    }
-    else
-    {
-        if ( !(_string_player in d_can_use_artillery) ) then
-        {
-            _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1177"]; // "To call on the military service can only observer-rescue"
-            AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"]; // "Inspect"
-        };
+        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1177"]; // "To call on the military service can only observer-rescue"
     };
+};
 
-    if (_string_player in d_is_engineer) then // only for engineers
-    {
-        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
-    }
-    else // for NOT engineers
-    {
+if (_string_player in d_is_engineer) then // only for engineers
+{
+    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
+}
+else // for NOT engineers
+{
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
         _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_PENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
 #endif
-    };
+};
 
-
-    _local_msg_arr spawn {
-        if (count _this == 0) exitWith{};
-        sleep 45;
-        {
-             sleep 4;
-             _x call XfGlobalChat;
-        } forEach _this;
-    };
+// show all specific  messages for the player type
+_local_msg_arr spawn {
+    if (count _this == 0) exitWith{};
+    sleep 55;
+    {
+         sleep 4;
+         _x call XfGlobalChat;
+    } forEach _this;
 };
 
 
