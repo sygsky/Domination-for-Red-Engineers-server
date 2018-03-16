@@ -747,7 +747,7 @@ d_light_attack_chopper = (
 // МАЛЕНЬКИЙ ВЕРТОЛЕТ НАД ГОРОДОМ
 //##############################################################################
 //["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_AH6_AGM"]
-SYG_HELI_BIG_LIST_ACE_W
+SYG_HELI_LITTLE_LIST_ACE_W
 	}
 );
 #endif

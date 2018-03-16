@@ -73,7 +73,7 @@ class TeleportModule
 		h = 0.1;
 		sizeEx = 0.03;
 		colorText[] = { 0, 0, 1, 0.5 };
-		text = $STR_SYS_70; //"Доминация!"
+		text = $STR_SYS_280; //"Освобождение!"
 	};
 	class maprespawn : RscMapControl
 	{

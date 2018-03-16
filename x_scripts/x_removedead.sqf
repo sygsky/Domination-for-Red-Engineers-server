@@ -14,10 +14,14 @@ while {true} do {
 	if (X_MP) then {
 		waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	__DEBUG_NET("x_removedead.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_removedead.sqf",(call XPlayersNumber))
 	if (count dead_list > 0) then {
-		_tmp_array = _tmp_array + dead_list;
-		dead_list = [];
+	    // echange array with empty one
+	    _tmp_array1 = dead_list;
+		dead_list = []; // empty dead list
+		sleep 2; // now dead_list is guarantied to be switched to empty one
+		_tmp_array = _tmp_array + _tmp_array1;
+		_tmp_array1 = nil;
 		if (count _tmp_array > _max_non_delete) then {
 			_how_many = (count _tmp_array) - _max_non_delete;
 			for "_oo" from 0 to (_how_many - 1) do {
@@ -32,12 +36,12 @@ while {true} do {
 			sleep 10.723;
 			{
 				if !(isNull _x) then {
-						_x removealleventhandlers "killed";
-						_x removealleventhandlers "hit";
-						_x removealleventhandlers "damage"; //+++ Sygsky: just in case
-						_x removealleventhandlers "getin"; //+++ Sygsky: just in case
-						_x removealleventhandlers "getout"; //+++ Sygsky: just in case
-						deletevehicle _x;
+						_x removeAllEventHandlers "killed";
+						_x removeAllEventHandlers "hit";
+						_x removeAllEventHandlers "damage"; //+++ Sygsky: just in case
+						_x removeAllEventHandlers "getin"; //+++ Sygsky: just in case
+						_x removeAllEventHandlers "getout"; //+++ Sygsky: just in case
+						deleteVehicle _x;
 				};
 				sleep 2.622;
 			} foreach _remove_dead_list;

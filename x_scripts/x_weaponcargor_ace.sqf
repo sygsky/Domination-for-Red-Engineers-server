@@ -1,5 +1,5 @@
 // by Xeno
-// called only for __ACE__ defined version
+// called only for __ACE__ + __RANKED__ defined version
 private ["_ve", "_shotgun"];
 
 #include "x_setup.sqf"

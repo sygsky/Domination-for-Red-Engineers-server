@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_checkhelipilot_wreck.sqf
 private ["_vehicle","_position","_enterer","_was_engineon"];
 
 #include "x_setup.sqf"

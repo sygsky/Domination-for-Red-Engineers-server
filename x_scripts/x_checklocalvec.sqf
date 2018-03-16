@@ -13,11 +13,13 @@ while {true} do {
 	if (X_MP) then {
 		waitUntil {sleep (20 + random 1);(call XPlayersNumber) > 0};
 	};
-	__DEBUG_NET("x_checklocalvec.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_checklocalvec.sqf",(call XPlayersNumber))
 	// add to the new units list
 	if (count check_vec_list > 0) then {
-		_check_vec_list = _check_vec_list + check_vec_list;
+	    _check_vec_list1 = check_vec_list;
 		check_vec_list = [];
+		sleep 2;
+		_check_vec_list = _check_vec_list + _check_vec_list1;
 	};
 	sleep 10.723;
 	if ( count _check_vec_list > 0 ) then
@@ -34,7 +36,13 @@ while {true} do {
 						};
 					};
 				} else {
-					if (!alive _dead) then {[_dead] call XAddDead;_check_vec_list set [_zz, "X_RM_ME"];};
+					if (!alive _dead) then
+					{
+					    {
+					       deleteVehicle _x; // remove unit immediately from dead vehicle
+					    } forEach crew _dead;
+					    [_dead] call XAddDead;_check_vec_list set [_zz, "X_RM_ME"];
+					};
 				};
 			};
 			sleep 3.422;

@@ -122,3 +122,6 @@
 //#define __DEBUG_ADD_VEHICLES__
 
 #define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2
+
+// uncomment follow line if you want teleport available only if all services on base are valid
+#define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__

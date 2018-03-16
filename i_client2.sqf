@@ -6,7 +6,7 @@ _bmp_list =
 #else
 			["ACE_Stryker_TOW"] +
 #endif
-			["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"]; // bmp
+			["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"]; // bmp+
 
 if (X_Client) then {
 
@@ -16,7 +16,7 @@ _armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {
 } else {["Stryker_ICV_M2","Stryker_ICV_MK19","Vulcan","Stryker_TOW"]}} else {[]});
 _car = (if (!d_lock_ai_car) then {if (__ACEVer) then {["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t","ACE_Truck5t_MG","ACE_HMMWV_GMV","ACE_HMMWV_GMV2"]} else {["HMMWV50","HMMWVMK","HMMWVTOW"]}} else {[]});
 
-_enymy_heli_list =
+_enemy_heli_list =
     ( if ((!d_lock_ai_air) && (__ACEVer))
         then
         {

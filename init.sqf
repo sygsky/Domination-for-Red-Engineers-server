@@ -173,7 +173,8 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
+    //_first_array = [5];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
+    _first_array = [];
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
 	__DEBUG_SERVER("init.sqf", maintargets_list)

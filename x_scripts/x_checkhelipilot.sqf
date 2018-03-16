@@ -39,7 +39,7 @@ if (local _enterer && _position == "driver") then {
 		_type_enterer = typeOf _enterer;
 		if (!(_type_enterer in d_only_pilots_can_fly)) then {
 			_may_fly = false;
-			hint localize "STR_SYS_79_3"; // "You're not allowed to fly!"
+			[localize "STR_SYS_79_3", "SIDE"] call XHintChatMsg; // "You're not allowed to fly!"
 			driver _vehicle action["Eject",_vehicle];
 			if (!_was_engineon && isEngineOn _vehicle) then {_vehicle engineOn false};
 		};
