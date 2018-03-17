@@ -18,7 +18,7 @@ _mr2text ctrlSetText "";
 if (playerSide == west) then {
 #endif
 if (mr1_in_air) then {
-	_mr1text ctrlSetText localize "STR_SYS_21";// "Мобильный респаун 1 подготовлен для транспортировки по воздуху...";
+	_mr1text ctrlSetText localize "STR_SYS_21";// "Мобильный респаун 1 в воздухе...";
 	_mr1_available = false;
 } else {
 	if (speed MRR1 > 4) then {
@@ -32,7 +32,7 @@ if (mr1_in_air) then {
 	};
 };
 if (mr2_in_air) then {
-	_mr2text ctrlSetText localize "STR_SYS_22";  //"Мобильный респаун 2 подготовлен для транспортировки по воздуху...";
+	_mr2text ctrlSetText localize "STR_SYS_22";  //"Мобильный респаун 2 в воздухе...";
 	_mr2_available = false;
 } else {
 	if (speed MRR2 > 4) then {
@@ -48,7 +48,7 @@ if (mr2_in_air) then {
 #ifdef __TT__
 } else {
 	if (mrr1_in_air) then {
-		_mr1text ctrlSetText localize "STR_SYS_21"; // "Мобильный респаун 1 подготовлен для транспортировки по воздуху...";
+		_mr1text ctrlSetText localize "STR_SYS_21"; // "Мобильный респаун 1 в воздухе...";
 		_mr1_available = false;
 	} else {
 		if (speed MRRR1 > 4) then {
@@ -62,7 +62,7 @@ if (mr2_in_air) then {
 		};
 	};
 	if (mrr2_in_air) then {
-		_mr2text ctrlSetText localize "STR_SYS_22";  //"Мобильный респаун 2 подготовлен для транспортировки по воздуху...";
+		_mr2text ctrlSetText localize "STR_SYS_22";  //"Мобильный респаун 2 в воздухе...";
 		_mr2_available = false;
 	} else {
 		if (speed MRRR2 > 4) then {

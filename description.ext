@@ -328,6 +328,7 @@ class CfgSounds
 	class gamlet { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; titles[] = {}; };
 	class fear3 { name=""; sound[]=   {\sounds\fear3.ogg,db-1,1.0}; titles[] = {}; };
 	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; titles[] = {}; };
+	class teleport { name=""; sound[]=   {\sounds\teleport.ogg,db-1,1.0}; titles[] = {}; };
 
 
 #ifdef __WITH_SCALAR__

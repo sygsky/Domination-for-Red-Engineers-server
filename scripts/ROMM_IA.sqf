@@ -101,6 +101,7 @@ _fD = {
 
 	_u = _this select 0;
 
+// TODO: check array os ACE sniper weapon names (create of use available)
 #ifdef __ACE__	
 	if (primaryWeapon _u in ["M24", "M107", "SVD","KSVK", "ACE_M14"]) exitWith {}; // exit if sniper
 #else
@@ -116,7 +117,7 @@ _fD = {
 
 	_i = 0;
 
-	while {(alive _u) AND (_i < 14)} do {
+	while {(alive _u) && (_i < 14)} do {
    		_u commandWatch position _f;
 		sleep (random 7.0);
 		_v = (((getPos _u select 0) - (getPos _f select 0)) atan2 ((getPos _u select 1) - (getPos _f select 1))) +360 % 360;
@@ -139,7 +140,7 @@ _c = -1;
 
 while {_i > 0} do {
 	if (isNull _g) exitWith {};
-	if (_i > {alive _x} count units _g) then {
+	if (_i > ({alive _x} count units _g)) then {
 		{if (alive _x) then {[_x, _k] spawn _fC}} forEach units _g;
 		_c = _t + 143;
 
@@ -157,7 +158,7 @@ while {_i > 0} do {
 
 		if (!(isNull _o)) exitWith {
 			_od = getDir _o - 180; // where bullet is from
-			if ((_od < _d + 109 AND _od > _d - 109) OR (_od > _d + 109 AND _od < _d - 109)) then { // possible logic error: value under IF is always true!!!
+			if ((_od < _d + 109 && _od > _d - 109) || (_od > _d + 109 && _od < _d - 109)) then { // TODO possible logic error: value under IF is always true!!!
 				[_g, _od] call _splitByMG;
 				_c = _t + 143;
 			};

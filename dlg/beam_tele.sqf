@@ -10,9 +10,6 @@ if (x_loop_end) exitWith {};
 
 x_loop_end = true;
 
-// TODO: after wait for 10 seconds start some random track to stop it with fade as if only user select teleporter
-// TODO: fade music if playing
-
 if (vehicle player != player) then {
 	unassignVehicle player;
 };
@@ -64,6 +61,7 @@ switch (beam_target) do {
 beam_target = -1;
 
 if (_typepos == 1) then {  //  teleport to some of our MHQ
+    playSound "teleport"; // some mistical sound
     _global_pos = _veh modelToWorld [0,-5,0];
     _global_dir = direction _veh;
 
