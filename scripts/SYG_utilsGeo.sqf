@@ -96,13 +96,14 @@ SYG_chasmExitWP = {
  *      location : nearest location of designated settlement types
  * to get position of location, call _pos = position _loc;
  * to get text of location call _text = text  _loc;
- * if no such location found, returns objNull
+ * if no such location found, returns locationNull
  */
 SYG_nearestLocationD = {
+    if ( (count _this) < 3 ) exitWith {locationNull};
 	private ["_loc"];
-	_loc = [arg(0),arg(1)] call nearestLocationA;
-	if ( ((position _loc) distance arg(0)) > arg(2)) then {_loc = objNull;};
-	_loc
+	_loc = [arg(0),arg(1)] call SYG_nearestLocationA;
+	if ( ( (position _loc) distance (_this select 0)) <= (_this select 2) )  exitWith { _loc };
+	locationNull
 };
 
 /**
@@ -114,7 +115,7 @@ SYG_nearestLocationD = {
  *     _ret = [_location, _locTypeList] call SYG_nearestLocationA;
  * returns:
  *      location : nearest location with designated in _locTypeList names or
- *      objNull if bad or  empty list is designated
+ *      locationNull if bad or  empty list is designated
  *
  * to get position of location, call: _pos = position _loc;
  * to text of location call: _text = text  _loc;
@@ -139,7 +140,7 @@ SYG_nearestLocationA = {
 	};
 	
 	_dist = 9999999.9;
-	_nearloc = objNull; // default value
+	_nearloc = locationNull; // default value
 	{
 		_loc = nearestLocation [_pos, _x];
 		_ploc = locationPosition _loc;
@@ -377,6 +378,23 @@ SYG_whatPartOfIsland = {
 	_str
 };
 
+/**
+ * Detects group position. Returns position as getPos do
+ * Call: _pos = _grp call SYG_getGroupPos;
+ * returns [0,0,0] in case of (9non-group and non-object) or (grpNull)) as argument
+ */
+SYG_getGroupPos = {
+    if ( typeName _this != "GROUP" ) exitWith {
+        if (typeName _this == "OBJECT" ) exitWith { getPos _this };
+        [0,0,0] // not group and not object
+    };
+    _man = objNull;
+    {
+        if (!isNull _x) exitWith {_man = _x;};
+    } forEach units _this;
+    if ( isNull _man) exitWith {[0,0,0]};
+    getPos _man
+}
 /**
  * Decides if point is in desert region or no
  * call:
