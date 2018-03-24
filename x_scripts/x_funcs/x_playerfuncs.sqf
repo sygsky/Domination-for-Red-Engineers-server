@@ -28,7 +28,7 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #ifdef __ACE__
 	x_sfunc = {
 		private ["_objs"];
-		if ((vehicle player) == player && player call ACE_Sys_Ruck_HasRucksack)then{_objs = nearestObjects [player,["LandVehicle","Air","Ship"],5];if (count _objs > 0) then {objectID2 = _objs select 0;if (alive objectID2) then {if(damage objectID2 > 0.0000001 || fuel objectID2<0.3333)then{true}else{false};}else{false};};}else{false};
+		if ((vehicle player) == player && (player call ACE_Sys_Ruck_HasRucksack))then{_objs = nearestObjects [player,["LandVehicle","Air","Ship"],5];if (count _objs > 0) then {objectID2 = _objs select 0;if (alive objectID2) then {if(damage objectID2 > 0.0000001 || fuel objectID2<0.3333)then{true}else{false};}else{false};};}else{false};
 	};
 #else
 	x_sfunc = {
@@ -47,7 +47,7 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 		if ((vehicle player) == player) then 
 		{
 			objectID1=(position player nearestObject "LandVehicle");
-			if (!alive objectID1 || player distance objectID1 > 8) then {false}
+			if ( !(alive objectID1) || (player distance objectID1) > 8) then {false}
 			else
 			{
 				// check presence of ANY repair truck in vicinity of 20 meters
@@ -282,12 +282,12 @@ XPlayerRank = {
 				    _rankIndex = _score call XGetRankIndexFromScore;
 				    _highest_ranked_player = objNull;
 				    {
-                         if  ( ( (score _x) call XGetRankIndexFromScore ) >= _rankIndex ) exitWith {_highest_ranked_player = _x;}
+				        if ( (isPlayer _x) &&  (( (score _x) call XGetRankIndexFromScore ) > _rankIndex) ) exitWith {_highest_ranked_player = _x;};
 				    } forEach _units;
                     if ( isNull _highest_ranked_player  ) then
                     {
                         // TODO: set player leader
-                        hint localize format["Player with rank %1 (%2) has max rank in the group (count = %3)", _score, _score call XGetRankFromScoreExt, count (units (group player))];
+                        hint localize format["This player with score %1 (%2) has max rank in the group (count %3)", _score, _new_rank, count (units _grp)];
                     }
 				};
 

@@ -268,4 +268,22 @@ SYG_teleportToHouse = {
 	_hpos
 };
 
+/**
+ * move object to relative pos in house space
+ *
+ * call: _unit_pos = [_house, _obj, _rel_arr] call SYG_setObjectInHousePos;
+ * where _rel_arr = [[_dx,_dy,_dz], _angle]; // _angle is object angle in house model space
+ * Returns: new position of the uint
+ */
+SYG_setObjectInHousePos = {
+    _house   = arg(0);
+    _obj     = arg(1);
+    _rel_arr = arg(2);
+    _angle   = ( ( _rel_arr select 1) + (getDir _house) +360) mod 360;
+    _obj setDir _angle;
+    _pos = _house modelToWorld (_rel_arr select 0);
+    _obj setPos (_pos);
+    _pos
+};
+
 if (true) exitWith {};

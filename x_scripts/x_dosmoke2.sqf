@@ -20,12 +20,10 @@ if ( _vec == _shooter) exitWith{/* collision, not hit by enemy weapon */
     #endif
 };
 
-// TODO: check attacker be in air vehicle. If so, not smoke against air enemy.
-// It will work only against non-self guided missiles. E.g. Ka50 shoot with Vikhr, Su shoot with X29 etc.
-//All these missiles are self-guided in Arma, but not in life (Vikhr at least)
+// TODO: check attacker be in air vehicle. If so, not smoke against air enemy
 
-// TODO: if attacker is a man, and is damaged us, load HE to the cannon and shoot it to bastard.
-// TODO: If attacker is alive after we shoot HE to him, shoot it again and change ammo to sabot again
+// TODO: if attacker is a man, and damaged is load HE to the cannon and shoot it to bastard.
+// TODO: If attacker is alive after HE shoot, shoot it again and change ammo to sabot again
 
 _dead = true;
 _crew = crew _vec;

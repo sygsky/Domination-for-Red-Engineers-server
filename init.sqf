@@ -411,7 +411,7 @@ if (isServer) then {
 //                        private [ "_str" ];
 //                        _str = format["Hotel damaged with %1, dmg = %2",_this select 2,getDammage (_this select 0)];
 //                        hint _str;
-                        (_this select 0) setDammage -1;
+                        (_this select 0) setDammage 0;
                     }];
                 };
             };

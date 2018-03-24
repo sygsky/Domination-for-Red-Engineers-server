@@ -1,6 +1,7 @@
 Language,English,German,Russian
 
 STR_LANG,ENGISH,GERMAN,RUSSIAN
+STR_LANGUAGE,ENGISH,GERMAN,RUSSIAN
 
 // #include "x_scripts\stringtable.csv"
 //-----------------------------------------------------------------------------
@@ -1187,9 +1188,13 @@ STR_FIRE_0,"The fire is still hot","Das Feuer ist noch heiß","Костёр ещ
 STR_FIRE_1,"On the fire fried beans - this is exactly the Americans!","Auf dem Feuer gebratenen Bohnen - genau das ist den Amerikanern!","На костре жарили бобы - это точно амеры!"
 STR_FIRE_2,"You think: why is there a fire?","Sie denken: - wo ist hier das Feuer?","Вы думаете: - откуда здесь костёр?"
 
-STR_CHECK_ITEM,Inspect,Überprüfen,Изучить
-
 STR_FIRE_UNKNOWN,"You can't understand what it is","Ich kann nicht verstehen, was es ist","Непонятно, что это такое"
+
+STR_JAIL_1,"Hint: You have been punished for having a negitive score and soviet army discipline disturbance","Hinweis: Sie wurden bestraft für eine negitive-score und der sowjetischen Armee Disziplin Störung","Вы были наказаны за нарушение дисциплины советской армии"
+STR_JAIL_2,"You will regain control after you have served your sentence of %1 seconds","Sie werden die Kontrolle zurückzugewinnen, nachdem Sie gedient haben Ihren Satz von %1 Sekunden","После отбывания наказания в течении %1 сек. контроль будет возвращён"
+STR_JAIL_3,"Or you can press  Alt + F4 to exit","Oder Sie drücken Alt + F4 zu beenden","Также, Вы можете завершить пребывание на нашем острове, использовав Alt + F4"
+
+STR_CHECK_ITEM,Inspect,Überprüfen,Изучить
 
 STR_LIB_ACE_MAP,"A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it","Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen","Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"
 STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,"Good but short and rather weak western rifle with excellent optics","Gut, aber kurz und eher schwach western Gewehr mit hervorragender Optik","Крутая, но короткая и слабенькая автоматическая западная винтовка с лучшим из прицелов. Если бы не слабое воздействие на цель..."

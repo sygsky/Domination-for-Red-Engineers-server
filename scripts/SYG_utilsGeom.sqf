@@ -138,8 +138,8 @@ SYG_multiplyPoint = {
  */
 SYG_closestPointOnLineSegment = {
 
-    _v1 = [arg(1),arg(0)] call SYG_vectorSub; // main vector
-    _v2 = [arg(2),arg(0)] call SYG_vectorSub; // vector from point B p1
+    _v1 = [arg(1),arg(0)] call SYG_vectorSub; // main vector (p0,p1)
+    _v2 = [arg(2),arg(0)] call SYG_vectorSub; // vector from point (p0,p2)
     _dot = [_v1, _v2] call SYG_vectorDotProduct;
     _sqr = _v1 distance [0,0,0];
     _sqr = _sqr * _sqr;
@@ -231,6 +231,30 @@ SYG_calcRelArr = {
     _thingPos = [_house modelToWorld [0,0,0], ([[0,0,0], _thingRelPos, -_houseDir] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
     _thingDir = _thingAng + _houseDir;
     [_thingPos, _thingDir]
+};
+
+/**
+ * Creates array with info to store object position according to house
+ *
+ * call: _rel_arr = [_house, _unit] call SYG_worldObjectToModel;
+ * where _rel_arr = [[_dx,_dy,_dz], _angle]; // _angle is object angle in house model space
+ */
+SYG_worldObjectToModel = {
+    //player groupChat format["SYG_worldObjectToModel: %1", _this];
+    _house = _this select 0;
+    _unit  = _this select 1;
+    _pos   = _unit modelToWorld [0,0,0];
+    [_house worldToModel _pos, (getDir _unit) - (getDir _house), _house modelToWorld [0,0,0]]
+};
+
+/**
+ * Calculates point from house and relative offset to it
+ *
+ * call: _pnt = [_house, _off_arr] call SYG_modelObjectToWorld;
+ * where _rel_arr = [_dx,_dy,_dz]
+ */
+SYG_modelObjectToWorld = {
+    (_this select 0) modelToWorld (_this select 1)
 };
 
 /**

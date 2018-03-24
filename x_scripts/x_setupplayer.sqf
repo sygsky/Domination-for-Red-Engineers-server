@@ -9,6 +9,8 @@ sleep 1;
 
 //#define __DEBUG__
 //#define __DEBUG_BONUS__
+#define __DEBUG_JAIL__
+
 #define __MISSION_START__
 
 _p = player;
@@ -349,6 +351,8 @@ d_player_old_score = 0;
 d_player_old_rank = "PRIVATE";
 d_player_pseudo_rank = d_player_old_rank;
 d_rank_pic = d_player_old_rank call XGetRankPic;
+/*
+// FIXED: XPlayerRank now called from cycle for score changed only (see at end of file)
 [] spawn {
 	waitUntil {!d_still_in_intro};
 	sleep 2;
@@ -357,7 +361,7 @@ d_rank_pic = d_player_old_rank call XGetRankPic;
 		sleep 5.0123;
 	};
 };
-
+*/
 #ifdef __ACE__
 if (d_with_ace_map) then { "ACE_Map_Logic" createVehicleLocal [0,0,0]; };
 #endif
@@ -1498,11 +1502,11 @@ if (d_no_para_at_all) then {
 };
 
 #ifndef __TT__
-FLAG_BASE addAction [localize "STR_SYS_34"/* "Телепорт" */,"dlg\teleport.sqf"];
+FLAG_BASE addAction [localize "STR_SYS_34","dlg\teleport.sqf"];
 //FLAG_BASE addAction ["За допку","test.sqf"];
 //FLAG_BASE addAction ["За город","test2.sqf"];
 if (__AIVer || d_para_at_base) then {
-	FLAG_BASE addaction [localize "STR_SYS_76","AAHALO\x_paraj.sqf"];  /*"(Выбор места десантирования)"*/
+	FLAG_BASE addaction [localize "STR_SYS_76","AAHALO\x_paraj.sqf"];
 };
 #endif
 
@@ -1512,9 +1516,9 @@ FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
 
 #ifdef __TT__
 if (d_own_side == "WEST") then {
-	WFLAG_BASE addAction [localize "STR_SYS_34"/* "Телепорт" */,"dlg\teleport.sqf"];
+	WFLAG_BASE addAction [localize "STR_SYS_34","dlg\teleport.sqf"];
 } else {
-	RFLAG_BASE addAction [localize "STR_SYS_34"/* "Телепорт" */,"dlg\teleport.sqf"];
+	RFLAG_BASE addAction [localize "STR_SYS_34","dlg\teleport.sqf"];
 };
 #endif
 
@@ -1524,13 +1528,13 @@ if (d_own_side == "WEST") then {
 // find all bargates
 _arr = nearestObjects[[9621,9874,0],["ZavoraAnim"],300];
 hint localize format["x_setupplayer.sqf: found bar gates on base %1", count _arr];
-FLAG_BASE addAction [localize "STR_SYS_183"/* "Закрыть мех.двор" */,"scripts\controlgates.sqf", [0, _arr]];
-FLAG_BASE addAction [localize "STR_SYS_184"/* "Закрыть мех.двор" */,"scripts\controlgates.sqf", [1, _arr]];
+FLAG_BASE addAction [localize "STR_SYS_183"/* "Open gates" */,"scripts\controlgates.sqf", [0, _arr]];
+FLAG_BASE addAction [localize "STR_SYS_184"/* "Close gates" */,"scripts\controlgates.sqf", [1, _arr]];
 
 #endif
 
 #ifdef __STORE_EQUIPMENT__
-FLAG_BASE addAction [localize "STR_SYS_610" /*Записать снаряжение*/,"scripts\storeequipment.sqf","S"];
+FLAG_BASE addAction [localize "STR_SYS_610" /* "Store equipment" */,"scripts\storeequipment.sqf","S"];
 #endif
 
 //--- Sygsky
@@ -1580,13 +1584,27 @@ if (d_player_air_autokick > 0) then {
 #endif
 
 [] spawn {
-	private ["_oldscore"];
+	waitUntil {!d_still_in_intro};
+	private ["_oldscore","_newscore"];
 	_oldscore = 0;
+#ifdef __JAIL_MAX_SCORE__
+	_jailscore = abs(floor(__JAIL_MAX_SCORE__ / 2));
+#endif
 	while {true} do {
 		sleep 3 + random 3;
-		if (_oldscore != score player) then {
-			_oldscore = score player;
-			["d_ad_sc", name player, _oldscore] call XSendNetStartScriptServer;
+		_newscore = score player;
+		if (_oldscore != _newscore) then {
+			["d_ad_sc", name player, _newscore] call XSendNetStartScriptServer;
+			[] spawn XPlayerRank; // detect if new rank is reached and inform player about
+
+#ifdef __JAIL_MAX_SCORE__
+			// Jail is assigned if socore are negative and lowered by more then -1 value (not personal death occured)
+			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore + 1)) ) then
+			{
+			    [_newscore] execVM "scripts\jail.sqf"; // send him to jail for (_newscore + 60) seconds
+			};
+#endif
+			_oldscore = _newscore;
 		};
 	};
 };
@@ -1726,6 +1744,13 @@ SYG_mission_start = missionStart;
 
 #ifdef __DEBUG__
 player addScore (1000 - (score player));
+#endif
+
+#ifdef __DEBUG_JAIL__
+if (localize "STR_LANGUAGE" == "RUSSIAN") then
+{
+    FLAG_BASE addAction ["В тюрьму!", "scripts\jail.sqf", "TEST" ];
+};
 #endif
 
 if (true) exitWith {};
