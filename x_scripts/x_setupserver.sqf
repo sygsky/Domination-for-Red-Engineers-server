@@ -372,7 +372,7 @@ if (!d_no_sabotage) then {execVM "x_scripts\x_infiltrate.sqf";};
 //+++ Sygsky: added on heli wind effect for server only as all heli are created on host (server) computer
 if ( d_with_wind_effect ) then
 {
-	"ACE_HeliWind" createVehicleLocal [0,0,0]; ACE_Wind_Modifier_Vehicles = 0.75;
+	"ACE_HeliWind" createVehicle [0,0,0]; ACE_Wind_Modifier_Vehicles = 0.75;
  };
 #endif
 

@@ -16,7 +16,10 @@
 if ( isServer ) exitWith {"--- jail called on server, exit!"};
 
 #define JAIL_START_PERIOD 60
-#define SOUND_NAME "USSR"
+#define SOUND_NAME "countdown10"
+
+#define FADE_OUT_DURATION 0.3
+#define FADE_IN_DURATION 6
 
 scopeName "main";
 
@@ -99,7 +102,6 @@ if (!_test) then
     removeAllWeapons player; // TODO: remove ACE backpack too
 };
 
-//_orig_pos = getPos player;
 _new_pos = [_hotel, _jailArr select 0 ] call SYG_modelObjectToWorld;
 _cam = "camera" camCreate getPos player;
 player switchCamera "INTERNAL";
@@ -109,7 +111,22 @@ showCinemaBorder true;
 
 //preloadCamera _new_pos;// prepare environment for player first glance
 
+//======================================= PLAY WITH VISIBILITY AND AUDIBILITY ============================
+playSound "FlashbangRing";
+FADE_OUT_DURATION fadeSound (0.2); // stun him
+
 _pos = [_hotel, player, _jailArr] call SYG_setObjectInHousePos; // player position in the jail
+
+cutText["","WHITE OUT",FADE_OUT_DURATION];  // blind him fast
+sleep FADE_OUT_DURATION; // wait until blindness on
+
+FADE_IN_DURATION fadeSound 1; // smoothly restore hearing
+
+//(call _rnd_port_msg) spawn {sleep 1; _this call GRU_msg2player;}; // self-feeling rnd message
+sleep (FADE_IN_DURATION/2);
+cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
+
+
 _weaponHolderPos = player modelToWorld [0, 2.5, 0.2]; // weapon holers before the players
 
 player globalChat format["holder %1", _weaponHolderPos];
@@ -159,13 +176,14 @@ for "_i" from 1 to _score do
     titleText [format ["%1",_i - _score],"PLAIN DOWN"];
 
 	{
-	    sleep 0.5;
+	    sleep 0.25;
         if (isNull _sound) then
         {
             player say SOUND_NAME;
-            _sound = (getPos player) nearestObject "#soundonvehicle";
+
+            waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
         };
-	} forEach [1,2];
+	} forEach [1,2,3,4];
 };
 
 titleText ["", "PLAIN DOWN"];

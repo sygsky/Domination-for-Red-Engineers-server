@@ -473,7 +473,7 @@ mt_bonus_vehicle_array = (
 			} else {
 				if (__ACEVer) then {
 [
-"ACE_T90A", 		    // 1 - ordinal vehicles list
+"ACE_BMP3_M", 		    // 1 - ordinal vehicles list
 "ACE_T80_UM",     		// 2
 "ACE_ZSU",   			// 3
 "ACE_T90A", 			// 4
@@ -498,7 +498,8 @@ mt_bonus_vehicle_array = (
 "ACE_Ka50_N", 	        //22
 
 "ACE_Su30Mk_Kh29T",     //23
-"ACE_Su30Mk_KAB500KR"   //24
+"ACE_Su30Mk_KAB500KR",  //24
+"ACE_T90A"             //25
 ]
 				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]

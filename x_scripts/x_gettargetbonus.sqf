@@ -52,7 +52,7 @@ if ( extra_bonus_number < 0 ) then
 sleep 1.012;
 
 #ifndef __TT__
-_posa = mt_bonus_positions select extra_bonus_number; _pos = _posa select 0;_dir = _posa select 1;
+_posa = mt_bonus_positions select (extra_bonus_number mod (count mt_bonus_positions)); _pos = _posa select 0;_dir = _posa select 1;
 #endif
 
 #ifdef __TT__

@@ -11,7 +11,7 @@
 
 if (typeName _this != "ARRAY") then { _this = [_this];};
 
-//hint localize format["fireRange.sqf: input params are %1", _this];
+hint localize format["fireRange.sqf: %1 input params detected", count _this];
 
 {
 	//hint localize format["fireRange.sqf: addEventHandler to ""%1""", typeOf _x];

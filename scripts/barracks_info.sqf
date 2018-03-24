@@ -1,4 +1,4 @@
-// by Xeno, scripts/barracks_info.sqf.sqf to inform player about barracks
+// by Sygsky, scripts/barracks_info.sqf.sqf to inform player about barracks
 //
 //  Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]
 //    target (_this select 0): Object - the object which the action is assigned to

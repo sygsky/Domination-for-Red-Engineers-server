@@ -1663,18 +1663,28 @@ player call SYG_handlePlayerDammage; // handle hit events
 
 //+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc. 
 //            Bar gates are processed somewhere in upper lines
-	_targets = [];
-	{
-		_pos = _x select 0; // position
-		_target = "TargetEpopup" createVehicleLocal _pos; // create target at pos
-		if ( count _x > 1) then { _target setDir (_x select 1);}; // set target direction if designated
-		if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
-		_targets = _targets + [_target];
-	} forEach [ [[9660.31, 9898.2, 0], 180],[[9651.7, 9829.25, 4],180 ],[[9700.05,10190.07,0]],[[10397.581,10003.883, 0], 90]];
-	//
-//	[_trg1,_trg2,_trg3, _trg4] execVM "scripts\fireRange.sqf";
-	_targets execVM "scripts\fireRange.sqf";
-	
+[] spawn {
+    sleep 5;
+    _targets = [];
+    {
+        _pos = _x select 0; // position
+        _target = "TargetEpopup" createVehicleLocal _pos; // create target at pos
+        if ( count _x > 1) then { _target setDir (_x select 1);}; // set target direction if designated
+        if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
+        _targets = _targets + [_target];
+    }forEach [[
+        [9663, 9898.2, 0], 180],[[9651.7, 9829.25, 4],180 ],[[9663, 9962, 0], 180], // south from flag between airstrip and courtyard
+        [[9700.05,10190.07,0]], // north form flag on other side of airstrip
+        [[10397.581,10003.883, 0], 90] // east from flag on the edge of airstrip
+    ];
+    /*
+    _str =  format["%1 targets detected", count _targets];
+    player groupChat _str;
+    hint localize _str;
+    */
+    _targets execVM "scripts\fireRange.sqf";
+};
+
  //+++ Sygsky: GRU computer handling - add action if found
 	_comp = call SYG_getGRUComp;
 #ifdef __DEBUG__

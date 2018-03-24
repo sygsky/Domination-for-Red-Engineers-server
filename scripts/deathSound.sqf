@@ -24,5 +24,9 @@ if ( _unit != _killer) then
 }
 else
 {
-    playSound "huh1"; // short melody on unknown case
+    // short melody on unknown case
+    // check if woman is killed
+    if (typeOf _unit == "ACE_SoldierEMedicWoman_VDV")
+    then { }
+    else { playSound "huh1" };
 };
