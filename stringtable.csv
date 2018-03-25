@@ -560,7 +560,7 @@ STR_SYS_330,"You cannot unload %1, while in other vehicle...","Sie können nicht
 STR_SYS_331,"Unloading is available only once after the respawn...","Entladen ist nur einmal, nach dem Respawn...","Выгрузка доступна только один раз, после респауна..."
 STR_SYS_332,"Unload completed... it will be available Again in %1 min.","Unload abgeschlossen ist... es wird Wieder verfügbar in %1 Min.","Выгрузка уже произведена... вновь она будет доступна через %1 мин."
 STR_SYS_333,"Unloading %1.. please wait...","Entladen %1.. bitte warten...","Выгружается %1, ожидайте..."
-STR_SYS_334,"Dst %1, dmg %2","Entfernung: %1, Schaden: %2","Дист. %1, повр. %2"
+STR_SYS_334,"Dist %1, dmg %2","Dist %1, dmg %2","Дист. %1, повр. %2"
 STR_SYS_335,"Drop Ammo","Drop Ammo","Ящик снабжения"
 STR_SYS_336,"Drop Artillery","Drop Artillery","Пушка D30"
 STR_SYS_337,"Drop BRDM","Drop BRDM","БРДМ"

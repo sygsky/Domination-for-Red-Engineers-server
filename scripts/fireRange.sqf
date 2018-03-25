@@ -35,7 +35,7 @@ hint localize format["fireRange.sqf: %1 input params detected", count _this];
 					};
 				};
 				_dmg = (round((_this select 2) *1000))/10;
-				(format[localize "STR_SYS_334", _dist, _dmg]) call XfHQChat; //"����.: %1, ����.: %2"
+				(format[localize "STR_SYS_334", _dist, _dmg]) call XfHQChat; // "Dst %1, dmg %2"
 			}
 		]; 
 	}

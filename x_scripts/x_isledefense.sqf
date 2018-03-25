@@ -144,12 +144,12 @@ _make_isle_grp = {
 #ifdef __OWN_SIDE_EAST__
 // some patrol types are more frequently generated
 //                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
-    _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",    "HP", "AP", "HP", "AP", "FP"];
-    _crew_types   = [d_crewman_W, d_crewman_W, d_crewman_W, d_crewman2_W, d_crewman2_W]; // crew man type name
+    _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
+    _crew_types   = [d_crewman_W, d_crewman_W, d_crewman_W, d_crewman2_W, d_crewman2_W, d_crewman_W, d_crewman_W, d_crewman_W, d_crewman_W, d_crewman2_W]; // crew man type name
 
     _type_id      = _patrol_types call XfRandomFloorArray;
     _patrol_type  = _patrol_types select _type_id; // random patrol type selection
-    _crew_type    = _crew_types select _type_id;    //
+    _crew_type    = _patrol_type call SYG_crewTypeByPatrolW; // = _crew_types select _type_id;    //
 
     _elist        = _patrol_type call SYG_generatePatrolList; // last of vehicle type names
 

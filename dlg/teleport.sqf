@@ -3,23 +3,28 @@ private ["_caller","_ok","_vehicle"];
 
 #include "x_setup.sqf"
 
-_caller = _this select 1;
+player groupChat format["--- teleport.sqf: %1", _this];
+
+_caller == objNull;
+if ( count _this  > 0)
+    then { _caller = _this select 1; }
+    else { _caller = player; };
 
 if (vehicle _caller != _caller) exitWith {
-	localize "STR_SYS_73" /* "Телепорт недоступен из техники !!!" */ call XfGlobalChat;
+	localize "STR_SYS_73" call XfGlobalChat; // "Teleport not available in a vehicle !!!"
 };
 
 if (!isNull (flag _caller)) exitWith {
-	localize "STR_SYS_74"/*  "Вы несете флаг. Телепорт недоступен!!!" */ call XfGlobalChat;
+	localize "STR_SYS_74" call XfGlobalChat; // "You are carrying the flag. Teleport is not possible !!!"
 };
 
 if ( !isNil "player_is_on_town_raid" ) exitWith {
-	localize "STR_GRU_39"/*  "Телепорт недоступен во время задания ГРУ" */ call XfGlobalChat;
+	localize "STR_GRU_39" call XfGlobalChat; // "Teleport isn't allowed during GRU task"
 };
 
 _is_swimmer = (if ((animationState player) in ["aswmpercmstpsnonwnondnon","aswmpercmstpsnonwnondnon_aswmpercmrunsnonwnondf","aswmpercmrunsnonwnondf_aswmpercmstpsnonwnondnon","aswmpercmrunsnonwnondf","aswmpercmsprsnonwnondf","aswmpercmwlksnonwnondf"]) then {true} else {false});
 if (_is_swimmer) exitWith {
-	localize "STR_SYS_75"/* "Телепортирование при плавании недоступно!!!" */ call XfGlobalChat;
+	localize "STR_SYS_75" call XfGlobalChat; // Teleporting not possible while swimming !!!"
 };
 
 #ifdef __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__

@@ -1489,6 +1489,21 @@ SYG_buildVecList = {
     //hint localize _str;
     _list
  };
+/*
+ * Find crew type by patrol type
+ * call: _crewType = "AP" call SYG_crewTypeByPatrol; // return "ACE_SoldierWCrew_WDL" or  "ACE_SoldierWB_A"
+ */
+SYG_crewTypeByPatrolW = {
+    switch (toUpper _this) do
+    {
+        case "HP";
+        case "AP";
+        case "FP";
+        default  {d_crewman_W};
+        case "SP";
+        case "LP": {d_crewman2_W};
+    }
+};
 
 #endif
 
