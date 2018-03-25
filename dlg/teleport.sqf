@@ -3,7 +3,7 @@ private ["_caller","_ok","_vehicle"];
 
 #include "x_setup.sqf"
 
-player groupChat format["--- teleport.sqf: %1", _this];
+//player groupChat format["--- teleport.sqf: %1", _this];
 
 _caller == objNull;
 if ( count _this  > 0)
