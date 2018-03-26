@@ -144,7 +144,12 @@ SYG_playRandomDefeatTrackByPos = {
     {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
-
+    // check if we near church
+    _churchArr = nearestObjects [ _this, ["Church"],100];
+    if ( _churchArr > 0 ) exitWith
+    {
+        SYG_chorusDefeatTracks call SYG_playRandomTrack;
+    };
     switch (_this call SYG_whatPartOfIsland) do
     {
         case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack};
@@ -166,10 +171,11 @@ SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;
 };
 
+SYG_chorusDefeatTracks = ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]];
 // Any isle defeat music
 SYG_islandDefeatTracks =
         [
-            ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
+            SYG_chorusTrack,
             ["ATrack24",[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]],
             ["ATrack25",[0,11.978],[13.573,10.142],[105.974,9.508],[138.443,-1]]
         ];
