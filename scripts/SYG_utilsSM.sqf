@@ -128,7 +128,7 @@ SYG_findNearSMIdsArray = {
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 //
-// Detects if main target is able to be executed/started. Works ons erver and on client
+// Detects if main target is able to be executed/started. Works on server and on client
 //
 // call:    [] call SYG_isMainTargetAllowed;
 // returns: __mainAllowed = call SYG_isMainTargetAllowed
