@@ -16,7 +16,6 @@
 if ( isServer ) exitWith {"--- jail called on server, exit!"};
 
 #define JAIL_START_PERIOD 60
-#define SOUND_NAME "countdown10"
 
 #define FADE_OUT_DURATION 0.3
 #define FADE_IN_DURATION 6
@@ -129,7 +128,7 @@ cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
 
 _weaponHolderPos = player modelToWorld [0, 2.5, 0.2]; // weapon holers before the players
 
-player globalChat format["holder %1", _weaponHolderPos];
+//player globalChat format["holder %1", _weaponHolderPos];
 
 _weaponHolder = "WeaponHolder" createVehicleLocal [0,0,0];
 _weaponHolder setPos _weaponHolderPos;// [_weaponHolderPos, [], 0, "CAN_COLLIDE"];
@@ -160,9 +159,15 @@ _msg_arr = [
    localize "STR_JAIL_3"//"Or you can press  Alt + F4 to exit"
 ];
 
-player say SOUND_NAME;
+//================================= select sound for this day
+
+_soundName = ["countdown","countdown10","countdown_alarm"] select ((date select 2) mod (count _sound_arr));
+hint localize format[ "jail.sqf: %1 sound selected at %2", _sound_name, date ];
+
+player say _soundName;
 _sound = nearestObject [player, "#soundonvehicle"];
-if (isNull _sound) then {hint localize "--- jail.sqf: No initial sound object detected!"};
+waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
+//if (isNull _sound) then {hint localize "--- jail.sqf: No initial sound object detected!"};
 
 for "_i" from 1 to _score do
 {
@@ -179,7 +184,7 @@ for "_i" from 1 to _score do
 	    sleep 0.25;
         if (isNull _sound) then
         {
-            player say SOUND_NAME;
+            player say _soundName;
 
             waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
         };
