@@ -13,6 +13,7 @@ d_mission_filename = "x_m";
 //sm_array = [49];
 sm_array = [44,53,54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0];
 ranked_sm_array = [ 5, [3,44,2,53] ]; //+++ Sygsky: [_lowest_allowed_index, [tank, heli, air, air]] - steal missions, run them after lowranked sm
+nonstatic_sm_array = [20,21,22,51,52,54]; // indexes for no static mission objectives (konvoy, pilots etc)
 #endif
 
 #ifdef __EASY_SM_GO_FIRST__
