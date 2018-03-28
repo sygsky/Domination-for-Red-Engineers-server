@@ -327,10 +327,10 @@ SYG_nearestZoneOfInterest = {
 				{
 					if (!all_sm_res AND !side_mission_resolved AND (current_mission_index >= 0)) then
 					{
-						if ( !(current_mission_index in [51,52,20,21,22]) ) then // don't use non-static sidemissions (convoys, pilots etc)
+						if ( !(current_mission_index in nonstatic_sm_array) ) then // don't use non-static sidemissions (convoys, pilots etc)
 						{
 							_pos1 = x_sm_pos select 0;
-							if (!(_pos1 call SYG_pointOnIslet) || (_pos1 call SYG_pointOnRahmadi)) then // filter out any islet missions
+							if (!((_pos1 call SYG_pointOnIslet) || (_pos1 call SYG_pointOnRahmadi))) then // filter out any islet missions
 							{
 								_part1 = _pos1 call SYG_whatPartOfIsland;
 								if ((!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then // it is possible to reach from designated point
@@ -428,6 +428,7 @@ SYG_pointOnRahmadi = {
  *   _reta =  call SYG_getTargetTown;
  * Where:
  *   _reta is _target_array (e.g. [[9348.73,5893.4,0],"Cayo", 210] ) or empty array ([]) if target not available
+ * if call: _reta = "NO_DEBUG" call SYG_getTargetTown; // then no info about target town absence is printed to arma.rpt file
  */
 SYG_getTargetTown = {
 	private [ "_ret","_cur_cnt" ];
@@ -440,7 +441,14 @@ SYG_getTargetTown = {
 	}
 	else
 	{
-		hint localize format["--- error in SYG_getTargetTown: time=%3,c_c=%1,c_c2=%5,t_c=%2,c_t_i=%4",_cur_cnt, target_clear, call SYG_nowTimeToStr,current_target_index,current_counter];
+	    _print = false;
+	    if ( format["%1",this] == "<null>") then { _print = true};
+	    if (!_print ) then {if (typeName _this != "STRING") then {_print = true}};
+	    if (!_print ) then {if (_this != "NO_DEBUG") then {_print = true}};
+	    if ( _print) then
+	    {
+    		hint localize format["--- error in SYG_getTargetTown: time=%3,c_c=%1,c_c2=%5,t_c=%2,c_t_i=%4",_cur_cnt, target_clear, call SYG_nowTimeToStr,current_target_index,current_counter];
+	    };
 	};
 	_ret
 };
@@ -452,7 +460,7 @@ SYG_getTargetTown = {
 //
 SYG_getTargetTownName = {
 	private [ "_ret" ];
-	_ret = call SYG_getTargetTown;
+	_ret = "NO_DEBUG" call SYG_getTargetTown;
 	if (count _ret == 0 ) then {"<not defined>"} else { _ret select 1};
 };
 
