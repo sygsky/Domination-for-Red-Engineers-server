@@ -66,12 +66,12 @@ if (_typepos == 1) then {  //  teleport to some of our MHQ
     if ( [_global_pos, d_base_array] call SYG_pointInRect ) then // remove in any case if on base
     {
         player groupChat "tropelet";
-        playSound "tropelet"; // some mistical sound
+        playSound "tropelet"; // some mistical sound to in base rect
     }
     else
     {
         player groupChat "teleport";
-        playSound "teleport"; // some mistical sound
+        playSound "teleport"; // some mistical sound to out of base
     };
     _global_dir = direction _veh;
 
