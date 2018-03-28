@@ -96,7 +96,7 @@ _objTypesArr = [ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory"]; 
 #ifdef __DEBUG__
 sleep 30; // wait approximately 30 secs before sabotage start
 #else
-sleep 250 + random 100; // wait approximately 5 minutes before sabotage start
+sleep (250 + random 100); // wait approximately 5 minutes before sabotage start
 #endif
 
 _grp setBehaviour "AWARE";
@@ -416,7 +416,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	};
 	if ( !_continue) exitWith { _no = nil;};
 
-	sleep 120 + (random 60); // interval to attack other  factories
+	sleep (120 + (random 60)); // interval to attack other  factories
 	if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
 }; // while { (({ (alive _x) and ( canMove _x	)} count units _grp) > 0) && _continue }
 

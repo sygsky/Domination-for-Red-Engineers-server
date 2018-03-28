@@ -177,7 +177,7 @@ SYG_detectedEnemy = {
 	            };
 	            if ( !(isNull _target)) then
 	            {
-    	            if ( _cost < argp(_x,3)) then {_cost = argp(_x,3); _enemy = argp(_x,4);};
+    	            if ( _cost < _x select 3) then {_cost = _x select 3; _enemy = _x select 4};
     	        };
     	    };
 	    };
@@ -279,7 +279,7 @@ SYG_nearestSoldierGroups = {
 				{
 					_unit = objNull;
 					{	
-						if ( { canStand _x } ) exitWith {_unit = _x;};
+						if ( canStand _x ) exitWith {_unit = _x;};
 					} forEach (crew _x);
 					
 					if ( !isNull _unit) then 
@@ -427,7 +427,7 @@ SYG_handlePlayerDammage = {
 	_unit = arg(0);
 	if ( !(_unit call SYG_ACEUnitUnconscious) ) then 
 	{
-		_msg_id = switch (arg(1)) do
+		_msg_id = switch ( _this select 1) do
 		{
 			case "legs": {"STR_HIT_LEGS"};
 			case "hands": {"STR_HIT_HANDS"};
@@ -452,7 +452,7 @@ SYG_handlePlayerDammage = {
 
 // call: _turretNumber = _unit call SYG_turretNumber;
 SYG_turretNumber = {
-	count (configFile >> "CfgVehicles" >> typeof _this >> "turrets")
+	count (configFile >> "CfgVehicles" >> typeOf _this >> "turrets")
 };
 
 //
@@ -464,7 +464,7 @@ SYG_turretNumber = {
 SYG_turretsList = {
 	private [ "_cfg", "_out", "_mtc", "_mti", "_mt", "_st", "_stc", "_sti" ];
 	_out =  [];
-	_cfg = configFile >> "CfgVehicles" >> typeof _this >> "turrets";
+	_cfg = configFile >> "CfgVehicles" >> typeOf _this >> "turrets";
 	_mtc = (count _cfg); // number of main turrets
 	if ( _mtc > 0 ) then
 	{
@@ -742,7 +742,7 @@ SYG_sideStaticWeapons = {
 
 #define EMPTY_RETURN_ARRAY [[],[],[],[],[],objNull]
 
-	private ["_mgs","_aas","_ats","_gls","_cns"/* ,"_wpa", */"_ret","_unk","_side","_pos","_dist","_arr","_vec","_type","_found","_i"];
+	private ["_mgs","_aas","_ats","_gls","_cns",/* "_wpa", */"_ret","_unk","_side","_pos","_dist","_arr","_vec","_type","_found","_i"];
 
 /* 	_mgs = ["M2StaticMG","M2HD_mini_TriPod","DSHKM","DSHkM_Mini_TriPod","WarfareBEastMGNest_PK"];
 	_aas = ["Stinger_Pod","Stinger_Pod_East","ACE_ZU23M","ACE_ZU23"];
@@ -850,7 +850,7 @@ SYG_sideStat = {
 					} 
 					else 
 					{
-						if ( _x isKindOf "D30" OR _x isKindOf "M119" ) then 
+						if ( _x isKindOf "D30" || _x isKindOf "M119" ) then
 						{
 							_canons = _canons + 1;
 						}
@@ -860,12 +860,12 @@ SYG_sideStat = {
 				else {
 					if ( _x isKindOf "Tank") then 
 					{
-						if ( _x isKindOf "T72" OR _x isKindOf "M1Abrams") then {_tanks = _tanks+1;}
+						if ( _x isKindOf "T72" || _x isKindOf "M1Abrams") then {_tanks = _tanks+1;}
 						else { _bmps = _bmps +1; };
 					} else {
 						if ( _x isKindOf "Car") then 
 						{
-							if ( _x isKindOf "StrykerBase"  OR _x isKindOf "BRDM2") then 
+							if ( _x isKindOf "StrykerBase"  || _x isKindOf "BRDM2") then
 							{ 
 								if ( ! ((typeOf _x) in ["BMP2_MHQ","BMP2_MHQ_unfolded","M113_MHQ","M113_MHQ_unfolded"]) ) then {_bmps = _bmps +1;};
 							} else {_cars = _cars+1;};
@@ -915,7 +915,7 @@ SYG_getScore4IntelTask = {
 	_arr = _town_center nearObjects ["BMP2_MHQ",_dist+100];
 	
 	// count as follow: result score is divided by MHQ count and subtracted by friends score multiplied by 2
-	_resultScore = (argp(_stat,1)/((count _arr)+1)-argp(_stat1,1)*2) max 0;
+	_resultScore = ( (_stat select 1)/((count _arr)+1) - (_stat1 select 1)*2) max 0;
 	_resultScore = if ( _resultScore > 0) then { round(_resultScore/10)*10} else {0};
 	
 	// also take into account distance from base to targetsAggregate
@@ -1354,16 +1354,6 @@ SYG_ACEDamageReportStr = {
 };
 
 /*
- * Creates one group on enemy side, return created group:
- * _enemy_grp = call SYG_createEnemyGroup;
- */
-SYG_createEnemyGroup =
-{
-    while {!can_create_group} do {sleep 0.1 + random (0.2)};//__WaitForGroup
-    [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
-};
-
-/*
  * Set parachutes cargo in heli to predefined number (e.g. to have place for RGP in the heli during flight)
  * call: [_heli, 2, "ACE_ParachutePack" or "ACE_ParachuteRoundPack"] call SYG_setHeliParaCargo;
  * where 2 is new parachutes number
@@ -1391,11 +1381,17 @@ SYG_setHeliParaCargo = {
 // Creates and return new enemy group.
 // Call: _newgrp = call SYG_createGroup;
 //
-SYG_createGroup = {
-    while {!can_create_group} do {sleep 0.1 + random (0.2)};
-    [d_enemy_side] call x_creategroup
-};
+SYG_createGroup = SYG_createEnemyGroup;
 
+/*
+ * Creates one group on enemy side, return created group:
+ * _enemy_grp = call SYG_createEnemyGroup;
+ */
+SYG_createEnemyGroup =
+{
+    while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
+    [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
+};
 
 //============================================ Vehicle groups
 #ifdef __OWN_SIDE_EAST__
@@ -1404,8 +1400,8 @@ ABRAMS_LIST = ["ACE_M1A2","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_TUSK
 LINEBAKER = ["ACE_M6A1"];
 ABRAMS_PATROL = [2,3,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
 
-BREADLEY_LIST = ["ACE_M2A1","ACE_M2A2","ACE_M2A3"];
-AA_PATROL     = [2,3,[ [1,1,BREADLEY_LIST],[1,1,LINEBAKER] ] ];
+BRADLEY_LIST = ["ACE_M2A1","ACE_M2A2","ACE_M2A3"];
+AA_PATROL     = [2,3,[ [1,1,BRADLEY_LIST],[1,1,LINEBAKER] ] ];
 
 VULKAN_LIST = ["ACE_Vulcan","ACE_PIVADS"];
 M113_LIST = ["ACE_M113","ACE_M113_A1","ACE_M113_A2","ACE_M113_A3"];
@@ -1425,14 +1421,15 @@ LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["AC
  * "FP" - Floating Patrol
  * "SP" - Speed Patrol
  * "LP" - Light patrol
- * _patrol_vec_arr = "HP" call SYG_generatePatrolList;
- *
- * or _vec_type_list = _patrol_vec_arr call SYG_generatePatrolList;
+ * cal as follow:
+ *      _patrol_vec_arr = "HP" call SYG_generatePatrolList;
+ * or
+ *      _vec_name_list = _patrol_vec_arr call SYG_generatePatrolList;
  */
 SYG_generatePatrolList = {
     if (typeName _this != "STRING") exitWith {hint localize format["SYG_generatePatrolList: param not STRING",_this]};
 
-    [[],switch (_this) do
+    [[],switch (toUpper(_this)) do
         {
             case "HP": {ABRAMS_PATROL};
             case "AP": {AA_PATROL};

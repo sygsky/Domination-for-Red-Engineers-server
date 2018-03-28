@@ -379,7 +379,7 @@ if ( d_with_wind_effect ) then
 //hint localize format["x_setupserver.sqf: d_with_wind_effect == %1",d_with_wind_effect];
 
 //
-// Detect is it request for Side Mission position or call for Sm execution, for konvoy return finish point, for all other - 1st point in array
+// Detect is it request for Side Mission position or call for SM execution, for konvoy return finish point, for all other - 1st point in array
 //
 SYG_isSMPosRequest = {
     private ["_ret"];
