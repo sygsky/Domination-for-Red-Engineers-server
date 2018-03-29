@@ -1377,12 +1377,6 @@ SYG_setHeliParaCargo = {
     hint localize format[ "<<< SYG_setHeliParaCargo [%1,%2] >>>", _paraType, _num ]; // log start
 };
 
-//
-// Creates and return new enemy group.
-// Call: _newgrp = call SYG_createGroup;
-//
-SYG_createGroup = SYG_createEnemyGroup;
-
 /*
  * Creates one group on enemy side, return created group:
  * _enemy_grp = call SYG_createEnemyGroup;
@@ -1392,6 +1386,8 @@ SYG_createEnemyGroup =
     while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
     [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
 };
+
+SYG_createGroup = SYG_createEnemyGroup;
 
 //============================================ Vehicle groups
 #ifdef __OWN_SIDE_EAST__
@@ -1495,7 +1491,7 @@ SYG_crewTypeByPatrolW = {
     {
         case "HP";
         case "AP";
-        case "FP";
+        case "FP" : {d_crewman_W};
         default  {d_crewman_W};
         case "SP";
         case "LP": {d_crewman2_W};

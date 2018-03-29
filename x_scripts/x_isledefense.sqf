@@ -14,7 +14,7 @@ if (!isServer) exitWith {};
 #include "GRU_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG__
+#define __DEBUG__
 
 //#define __SYG_ISLEDEFENCE_PRINT_LONG__
 
@@ -61,6 +61,8 @@ if (!isServer) exitWith {};
 #define PARAM_TIMESTAMP 4
 #define PARAM_STATUS 5
 #define PARAM_GRP_ARRAY 6
+// type of patrol "HP", "AP" etc
+#define PARAM_TYPE 7
 
 #define STATUS_NORMAL 0
 #define STATUS_DEAD 1
@@ -109,7 +111,7 @@ _make_isle_grp = {
 		sleep 0.4;
 	};
 #ifdef __DEBUG__
-    hint localize format["+++ x_isledefense.sqf: make isle groupб start point %1", _start_point];
+    hint localize format["+++ x_isledefense.sqf: make isle group, start point %1", _start_point];
 #endif
 #ifdef __TT__
 	sleep 0.753;
@@ -145,12 +147,10 @@ _make_isle_grp = {
 // some patrol types are more frequently generated
 //                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
     _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
-    _crew_types   = [d_crewman_W, d_crewman_W, d_crewman_W, d_crewman2_W, d_crewman2_W, d_crewman_W, d_crewman_W, d_crewman_W, d_crewman_W, d_crewman2_W]; // crew man type name
 
     _type_id      = _patrol_types call XfRandomFloorArray;
     _patrol_type  = _patrol_types select _type_id; // random patrol type selection
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW; // = _crew_types select _type_id;    //
-
     _elist        = _patrol_type call SYG_generatePatrolList; // last of vehicle type names
 
 //#ifdef __DEBUG__
@@ -201,7 +201,7 @@ hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
 	};
 	_grp_array = [_agrp, _start_point, 0,_params,[],-1,0,[],400 + (random 100),1, [0,false,true]]; // param 10: [no rejoin,no debug print,prevent wp on islet generation]
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
-	[_agrp, _units, [0,0,0], _vecs, DELAY_NOT_SET, STATUS_NORMAL, _grp_array]
+	[_agrp, _units, [0,0,0], _vecs, DELAY_NOT_SET, STATUS_NORMAL, _grp_array, _patrol_type]
 }; // _make_isle_grp = {...};
 
 /**
@@ -849,9 +849,10 @@ while { true } do {
 					_men_info = format["{%1/%2/%3}",_units call XfGetAliveUnits, _units call SYG_getAllConsciousUnits, _units call XfGetUnitsOnFeet ];
 					_pos_msg = [_leader,"%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 				};
-				_grp_array    = argp(_igrpa,PARAM_GRP_ARRAY);
+				_grp_array   = argp(_igrpa,PARAM_GRP_ARRAY);
 				_enemy_near  = if ((_grp_array select 2) in [0,2]) then {""} else { if ((_grp_array select 2) == 9) then {"!"} else {"*"}};
-				_str = _str + format["(%1) %2/%3%4%5; ", _pos_msg, _veccnt, _veccnta,  _enemy_near, _men_info];
+				_patrol_type = argp(_igrpa,PARAM_TYPE);
+				_str = _str + format["(%1) %6/%2/%3%4%5; ", _pos_msg, _veccnt, _veccnta,  _enemy_near, _men_info, _patrol_type];
 				_cnt = _cnt + 1;
 			};
 		};
