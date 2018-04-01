@@ -146,7 +146,7 @@ SYG_playRandomDefeatTrackByPos = {
     };
     // check if we near church
     _churchArr = nearestObjects [ _this, ["Church"],100];
-    if ( _churchArr > 0 ) exitWith
+    if ( count _churchArr > 0 ) exitWith
     {
         SYG_chorusDefeatTracks call SYG_playRandomTrack;
     };
