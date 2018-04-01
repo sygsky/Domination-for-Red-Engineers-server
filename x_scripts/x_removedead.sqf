@@ -1,5 +1,5 @@
 // by Xeno, x_scripts/x_removedead.sqf. Removes all dead object (men + vehicles) from the map one by one
-private ["_element","_max_non_delete","_remove_dead_list","_tmp_array"];
+private ["_element","_max_non_delete","_remove_dead_list","_tmp_array","_tmp_array1"];
 
 #include "x_macros.sqf"
 
@@ -17,9 +17,9 @@ while {true} do {
 	//__DEBUG_NET("x_removedead.sqf",(call XPlayersNumber))
 	if (count dead_list > 0) then {
 	    // echange array with empty one
-	    _tmp_array1 = dead_list;
+	    _tmp_array1 = dead_list;    // fast remove deads from one array to other
 		dead_list = []; // empty dead list
-		sleep 2; // now dead_list is guarantied to be switched to empty one
+		sleep 0.1; // now dead_list is guarantied to be switched to empty one
 		_tmp_array = _tmp_array + _tmp_array1;
 		_tmp_array1 = nil;
 		if (count _tmp_array > _max_non_delete) then {

@@ -394,6 +394,7 @@ SYG_isSMPosRequest = {
             };
         };
     };
+    _ret
 };
 
 if (true) exitWith {};

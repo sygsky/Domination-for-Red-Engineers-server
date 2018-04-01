@@ -18,8 +18,9 @@ while {true} do {
 	if (count check_vec_list > 0) then {
 	    _check_vec_list1 = check_vec_list;
 		check_vec_list = [];
-		sleep 2;
+		sleep 0.1;
 		_check_vec_list = _check_vec_list + _check_vec_list1;
+		_check_vec_list1 = nil;
 	};
 	sleep 10.723;
 	if ( count _check_vec_list > 0 ) then
