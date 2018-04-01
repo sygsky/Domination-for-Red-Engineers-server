@@ -145,10 +145,10 @@ while { true } do {
                                         _vehicle setDamage 1.1;
                                         _name = name _vehicle;
                                         sleep 0.1;
-                                        hideBody _vehicle;
-                                        sleep 5.0;
-//                                        deleteVehicle _vehicle;
-                                        hint localize format["+++ x_infiltrate.sqf: zombi %1 detected in clean proc, after hideBody %2", _name, name _vehicle];
+                                        //hideBody _vehicle;
+                                        deleteVehicle _vehicle;
+                                        sleep 0.5;
+                                        hint localize format["+++ x_infiltrate.sqf: zombi ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
                                         _found = !isNull _vehicle;
                                     };
                                 };
@@ -203,10 +203,11 @@ while { true } do {
 			waitUntil { sleep (10.0123 + random 1);(call XPlayersNumber) > 0 };
 		};
 	};
-	__DEBUG_NET("x_infiltrate.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_infiltrate.sqf",(call XPlayersNumber))
 	
-	__WaitForGroup
-	__GetEGrp(_grp)
+	//__WaitForGroup
+	//__GetEGrp(_grp)
+	_grp = call SYG_createEnemyGroup;
 	_chopper = d_transport_chopper call XfRandomArrayVal;
 	_vehicle = createVehicle [_chopper, d_airki_start_positions select 0, [], 100, "FLY"];
 	[ _vehicle, _grp, _pilot, 1.0 ] call SYG_populateVehicle;

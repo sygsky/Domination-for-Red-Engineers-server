@@ -114,9 +114,12 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 		_para setDir ((direction _chopper) + 135 + (random 90)); //+++ Sygsky: set random direction for each paratrooper with direction to chopper back
 		_one_unit moveInDriver _para;
 		sleep (0.85 + (random 0.25));
-		if (!alive _chopper OR isNull _chopper OR ! canMove _chopper OR (!alive (driver _chopper))) exitWith
+		if ((!alive _chopper) || (isNull _chopper) || (!canMove _chopper) ||(!alive (driver _chopper))) exitWith
 		{
-		    hint localize format["%1 x_createpara2.sqf: chopper damaged %2, saboteur creation stopped", call SYG_missionTimeInfoStr, damage _chopper];
+		    hint localize format[
+		        "%1 x_createpara2.sqf: chopper dmg %2, pilot dmg %3, saboteurs created %4, creation stopped",
+		        call SYG_missionTimeInfoStr, damage _chopper, damage driver _chopper, count units _paragrp
+		        ];
 		};
 	};
 	// fly on height about 200 meters after paradrop completion (prevent collision with mountain slopes)

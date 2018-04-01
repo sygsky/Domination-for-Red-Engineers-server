@@ -14,7 +14,7 @@ if (!isServer) exitWith {};
 #include "GRU_setup.sqf"
 #include "x_macros.sqf"
 
-#define __DEBUG__
+//#define __DEBUG__
 
 //#define __SYG_ISLEDEFENCE_PRINT_LONG__
 

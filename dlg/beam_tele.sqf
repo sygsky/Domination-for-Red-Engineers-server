@@ -63,6 +63,7 @@ beam_target = -1;
 if (_typepos == 1) then {  //  teleport to some of our MHQ
 
     _global_pos = _veh modelToWorld [0,-5,0];
+/*
     if ( [_global_pos, d_base_array] call SYG_pointInRect ) then // remove in any case if on base
     {
         player groupChat "tropelet";
@@ -73,6 +74,7 @@ if (_typepos == 1) then {  //  teleport to some of our MHQ
         player groupChat "teleport";
         playSound "teleport"; // some mistical sound to out of base
     };
+*/
     _global_dir = direction _veh;
 
     // TODO: send command to the server, not do it here

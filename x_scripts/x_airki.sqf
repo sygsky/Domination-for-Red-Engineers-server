@@ -21,6 +21,11 @@ if (!isServer) exitWith {};
 #define KA_MIMG_ARRIVAL_DELAY 300
 #define REFUEL_INTERVAL 600
 
+// how many player is not detected near target in seconds
+#define PLAYER_NOT_AT_TARGET_LIMIT 1200
+// how far from point of interest а player is checked
+#define PLAYER__AT_TARGET_CHECK_RADIOUS 1000
+
 _type = _this select 0; // vehicle type (KA, MIMG, SU: attack heli, light heli, airjet)
 
 _pos = d_airki_start_positions select 0; // from where to fly to goal
@@ -70,7 +75,8 @@ _addToClean = {
 	private ["_heli_type","_vehicle"];
 	_heli_type = _this select 0; _vehicle = _this select 1;
 	if (!(_heli_type in x_heli_wreck_lift_types)) then {
-		__addRemoveVehi(_vehicle)
+		//__addRemoveVehi(_vehicle)
+		_vehicle addEventHandler ["killed", {_this spawn x_removevehi;}];
 		if (!d_lock_ai_air) then {[_vehicle] call XAddCheckDead;}; // add vehicle to the list units, checked to be killed (see in x_setupserver.sqf)
 	};
 	#ifdef __TT__
@@ -206,7 +212,7 @@ while { true } do {
     #ifdef __PRINT__
 	hint localize format["x_airki.sqf[%1]: +++ Enter wait <while { mt_radio_down || (!mt_spotted) }> loop",_type];
     #endif
-	while { mt_radio_down || (!mt_spotted)} do {sleep 23.23 + random 1.115}; // don't start next flight while radio tower is dead or enemy not detected
+	while { mt_radio_down || (!mt_spotted)} do {sleep (23.23 + random 1.115)}; // don't start next flight while radio tower is dead or enemy not detected
     #ifdef __PRINT__
 	hint localize format["x_airki.sqf[%1]: --- Exit wait <while { mt_radio_down || (!mt_spotted) }> loop",_type];
     #endif
@@ -255,14 +261,14 @@ while { true } do {
 		sleep 10;
 #else	
 		hint localize format["x_airki.sqf[%1]: sleep 800 secs", _type];
-		sleep 400 + (random 800);
+		sleep (400 + (random 800));
 #endif		
 	} else {
 		if (_num_p < 10) then {
-			sleep 200 + (random 400);
+			sleep (200 + (random 400));
 		} else {
 			if (_num_p < 20) then {
-				sleep 100 + (random 200);
+				sleep (100 + (random 200));
 			}
 		}
 	};
@@ -274,7 +280,7 @@ while { true } do {
 			if (_initial_type == "KA" ) then { sleep (random KA_MIMG_ARRIVAL_DELAY); }; // to prevent arriving at near time
 		};
 	};
-	__DEBUG_NET("x_airki.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_airki.sqf",(call XPlayersNumber))
 	while {mt_radio_down} do {sleep 21.123};
 	_randxx = floor (random count (d_airki_start_positions));
 	_pos = d_airki_start_positions select _randxx;
@@ -288,17 +294,22 @@ while { true } do {
     _heli_type = "";
 
 	// possibility for SU creation is about 33%
-	if (_initial_type == "SU") then {_type = (if ((random 100) > 33) then {"MIMG"} else {"SU"});}; 
-	__WaitForGroup
-	__GetEGrp(_grp)
+	if (_initial_type == "SU") then {_type = (if ((random 100) > 33) then {"MIMG"} else {"SU"});};
+
+	//__WaitForGroup
+	//__GetEGrp(_grp)
+	_grp = call SYG_createEnemyGroup;
 	_vec_cnt = 1;
 	_heli_arr = d_light_attack_chopper;
+	_flight_height = 200;
+	_flyby_height  = 300;
 	switch (_type) do {
 		case "KA": 
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_airki_attack_chopper;
 			_flight_height = 115;
+        	_flyby_height  = 500;
 			_flight_random = 5;
 			_min_dist_between_wp = 100;
 		};
@@ -307,6 +318,7 @@ while { true } do {
 			_vec_cnt = d_number_attack_planes;
 			_heli_arr = d_airki_attack_plane;
 			_flight_height = 300;
+        	_flyby_height  = 1000;
 			_flight_random = 20;
 			_min_dist_between_wp = 500;
 		};
@@ -316,6 +328,7 @@ while { true } do {
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_light_attack_chopper;
 			_flight_height = 90;
+        	//_flyby_height  = 300;
 			_flight_random = 20;
 			_min_dist_between_wp = 100;
 		};
@@ -336,7 +349,8 @@ while { true } do {
 		[_vehicle, _grp, _crew_member, _grpskill] call SYG_populateVehicle;
 
 		{ // support each crew member
-			__addDead(_x)
+			//__addDead(_x)
+			_x addEventHandler ["killed", {[_this select 0] call XAddDead;}];
 			#ifdef __TT__
 			_x addEventHandler ["killed", {[1,_this select 1] call XAddKills;}];
 			#endif
@@ -365,9 +379,9 @@ while { true } do {
 	
 	_current_target_pos = _dummy select 0;
 	if ((_vehicles select 0) distance _current_target_pos > (_vehicles select 0) distance d_island_center) then {
-		_wp = _grp addWayPoint [d_island_center, 0];
+		_wp = _grp addWaypoint [d_island_center, 100];
 	};
-	_wp = _grp addWayPoint [_current_target_pos, 0];
+	_wp = _grp addWaypoint [_current_target_pos, 50];
 	_wp setWaypointType "SAD";
 	_pat_pos = _current_target_pos;
 	[_grp, 1] setWaypointStatements ["never", ""];
@@ -381,11 +395,23 @@ while { true } do {
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	while {_loop_do} do {
-		// TODO: allow target be not only town but side misison, base or occupied town too
+		// TODO: allow target be not only town but sometimes side misison base or occupied town too
+#ifdef __FUTURE__
+		// find all zones of interest
+        // if players not near town during some time
+        if ( _type in ["SU","KA"]) then // check for other goal, not only main target
+        {
+            if ((random 100) < 10) then // 1 of 10 times try it
+            {
+                _res_arr = [getPos player, true,["OCCUPIED","AIRBASE","SIDEMISSION","LOCATION","SETTLEMENT"],15000] call SYG_nearestZoneOfInterest;
+            };
+        };
+#else
 		_dummy = target_names select current_target_index;
 		_current_target_pos = _dummy select 0;
-		_radius = _dummy select 2; // town border radius
-#ifdef __DEFAULT__		
+		_radius = (_dummy select 2) + 100; // increase target border radius by 100 m
+#endif
+#ifdef __DEFAULT__
 		if ( (_dummy select 1) in d_mountine_towns ) then // mountine  town ["Hunapu","Pacamac"]
 		{
 			switch _type do
@@ -443,7 +469,7 @@ while { true } do {
 			[_grp, 1] setWaypointPosition [_pat_pos, 0];
 			_grp setSpeedMode "LIMITED";
 			_grp setBehaviour _wp_behave;
-			sleep 120 + random 120;
+			sleep (120 + random 120);
 			// reload weapon for SU after delay
 			_vehicles call SYG_fastReload; // reload SU just in case
 		};
@@ -451,7 +477,7 @@ while { true } do {
 		if (X_MP) then {
 			waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
 		};
-		__DEBUG_NET("x_airki_2.sqf",(call XPlayersNumber))
+		//__DEBUG_NET("x_airki_2.sqf",(call XPlayersNumber))
 		if (count _vehicles > 0) then {
 			for "_i" from 0 to ((count _vehicles) - 1) do {
 				_vecx = _vehicles select _i;
