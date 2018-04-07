@@ -46,7 +46,14 @@ SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_shortNightEnd;
 SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
 hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
 
+#ifdef __FUTURE__
+SYG_nightSkipFrom  = 21.0;
+SYG_nightSkipTo    = 3.0;
+//       Night start,         night end,         skip from,         skip to
+[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+#else
 [SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
+#endif
 
 SYG_firesAreCreated  = false; // are fires on airbase created
 
