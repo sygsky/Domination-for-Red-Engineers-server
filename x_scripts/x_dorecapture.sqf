@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_dorecapture.sqf
 
 private ["_target_center", "_radius", "_recap_index", "_helih", "_unitslist", "_ulist", "_posran", "_grp", "_vecs", "_grp_array", "_i", "_units", "_vec","_veclist", "_arr"];
 
@@ -65,7 +65,9 @@ for "_i" from 0 to 1 do {
 	sleep 0.512;
 };
 
-hint localize format["+++ Town recaptured (center %1, radius %2) with %3 vehicles and %4 infantry groups", _target_center, _radius, _veccnt, _infcnt];
+_loc = _target_center call SYG_nearestSettlement;
+_locname = text _loc;
+hint localize format["+++ Town %1 recaptured (rad. %2 м.), %3 vehicles and %4 infantry groups", _locname, _radius, _veccnt, _infcnt];
 sleep 10;
 
 while {({alive _x} count (_unitslist + _veclist)) > 5} do {sleep 10.312};
