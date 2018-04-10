@@ -104,6 +104,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1)completed +++", _dummy sele
     _target_radius = _dummy select 2;
     // find all dead bodies assuming than they always are long time dead
     _list = _target_pos nearObjects ["CAManBase", _target_radius + 50];
+    _man_cnt = count _list;
     sleep 300; // wait for a while to remove old dead corpses
     _cnt = 0;
      {
@@ -130,11 +131,11 @@ hint localize format["+++ x_createnexttarget.sqf (%1)completed +++", _dummy sele
         {
             deleteVehicle _x;
             sleep 0.01;
-                _cnt1 = _cnt1 + 1;
+            _cnt1 = _cnt1 + 1;
         };
      } forEach _list;
 #ifdef __DEBUG__
-    hint localize format["x_createnexttarget.sqf: Old dead bodies cleaned in %3: found men %1, clean dead %2, in water weapon holders %4", count _list, _cnt, _dummy select 1, _cnt1];
+    hint localize format["x_createnexttarget.sqf: Old dead bodies cleaned in %1: found men %2, clean dead %3, holders %4, in water %5", _dummy select 1, _man_cnt, _cnt, count _list, _cnt1];
 #endif
      _list = nil;
      sleep 2.56;
