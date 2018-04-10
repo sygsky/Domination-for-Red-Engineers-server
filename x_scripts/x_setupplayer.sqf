@@ -1587,9 +1587,6 @@ if (d_player_air_autokick > 0) then {
 	waitUntil {!d_still_in_intro};
 	private ["_oldscore","_newscore"];
 	_oldscore = 0;
-#ifdef __JAIL_MAX_SCORE__
-	_jailscore = abs(floor(__JAIL_MAX_SCORE__ / 2));
-#endif
 	while {true} do {
 		sleep 3 + random 3;
 		_newscore = score player;
