@@ -551,6 +551,7 @@ if (X_SPE) then {
 } else {
 	sleep 0.01;
 };
+
 execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 
 #ifdef __DEFAULT__
