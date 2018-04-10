@@ -119,6 +119,8 @@ while { true } do {
 		sleep 0.5;
 		_arr = _arr + (_base_center nearObjects ["Land_MAP_AH64_Wreck",_search_radious]);
 		sleep 0.5;
+		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]);
+		sleep 0.5;
 		if (count _arr > 0) then
 		{
             for "_i" from 0 to count _arr - 1 do
@@ -131,7 +133,7 @@ while { true } do {
                         _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
                         if (!_found) then
                         {
-                            if ( _vehicle isKindOf "CaManBase") then
+                            if ( _vehicle isKindOf "CaManBase") exitWith
                             { // check if dead man not player
                                 _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
                                 // check for zombies found
@@ -152,11 +154,14 @@ while { true } do {
                                         _found = !isNull _vehicle;
                                     };
                                 };
-                            }
-                            else
-                            { // check if holder is on the ground or is hanging in air (some Arma bug)
-                                _found = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
                             };
+                            if ( _vehicle isKindOf "Car") exitWith
+                            {
+                                _found = !(alive _vehicle);
+                            };
+
+                            // check if holder is on the ground or is hanging in air (some Arma bug)
+                            _found = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
                         };
                         if ( _found ) then
                         {
