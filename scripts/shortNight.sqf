@@ -69,6 +69,7 @@ _dayPeriod = {
 };
 #endif
 
+// TODO: add some sound effects (morning sounds, day insects, evening belss, night cries etc)
 _titleTime = {
     sleep  (random 60);
     _str = localize (format["STR_TIME_%1",_this]);
@@ -106,45 +107,44 @@ while {true } do
 {
     if (daytime < _nightSkipTo) then // we are in real night after 00:00, simply wiaght up to the morning twilight
     {
+#ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo, skip to it",daytime];
-        player groupChat _str;
+        // player groupChat _str;
         hint localize _str;
+#endif
         skipTime (( _nightSkipTo - daytime + 24 ) % 24);
     };
     if (daytime < _morningTwilightStart) then // we are in real night after 24:00, let wait
     {
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)< _morningTwilightStart, sleep to it",daytime];
-        player groupChat _str;
+        //player groupChat _str;
         hint localize _str;
 #endif
         sleep ((_morningTwilightStart - daytime) *3600);
     };
     if (daytime < _dayStart) then // we are in morning twilight
     {
-        // TODO: inform about morning start
         2 spawn _titleTime;
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)< _dayStart, sleep to it",daytime];
-        player groupChat _str;
+        //player groupChat _str;
         hint localize _str;
 #endif
         sleep ((_dayStart - daytime) *3600);
     };
     if (daytime < _eveningTwilightStart) then // we are in day time
     {
-        // TODO: inform about day start
         1 spawn _titleTime;
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)< _eveningTwilightStart, sleep to it",daytime];
-        player groupChat _str;
+        //player groupChat _str;
         hint localize _str;
 #endif
         sleep ((_eveningTwilightStart - daytime) * 3600);
     };
     if (daytime < _realNightStart) then // we are in evening twiligth period
     {
-        // TODO: inform about evening start
         3 spawn _titleTime;
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)<  _realNightStart, sleep to it",daytime];
@@ -155,11 +155,10 @@ while {true } do
     };
     if (daytime < _nightSkipFrom) then // we are in evening twiligth period
     {
-        // TODO: inform about night start
         0 spawn _titleTime;
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)< _nightSkipFrom, sleep to it",daytime];
-        player groupChat _str;
+        //player groupChat _str;
         hint localize _str;
 #endif
         sleep ((_nightSkipFrom - daytime) * 3600);
@@ -167,7 +166,7 @@ while {true } do
     // it is time to skip dark night period
 #ifdef __DEBUG__
     _str = format["SHORTNIGHT: daytime (%1) < 24:00, skip to _nightSkipTo",daytime];
-    player groupChat _str;
+    //player groupChat _str;
     hint localize _str;
 #endif
     skipTime (( _nightSkipTo - daytime + 24 ) % 24);
