@@ -193,11 +193,12 @@ _min_dist_between_wp = 100;
 
 while { true } do {
 
-#ifdef __DEBUG__
-	hint localize format["x_airki.sqf: enter loop 'if (!mt_radio_down) then {...}'; mt_radio_down is %1, mt_spotted is %2",mt_radio_down,mt_spotted];
-#endif
+    // possibility for SU creation is about 33%
+    if (_initial_type == "SU") then {_type = (if ((random 100) > 33) then {"MIMG"} else {"SU"});};
 
-#ifdef __OLD__
+#ifdef __PRINT__
+	hint localize format["x_airki.sqf[%1]: +++ Enter wait loop",_type];
+#endif
  	if (!mt_radio_down) then { // while tower stands
 		while {!mt_spotted} do {sleep 23.32}; // wait until player is spotted
 	} else { // tower is down
@@ -208,22 +209,14 @@ while { true } do {
 	};
 #endif
 
-#ifndef __OLD__
-    #ifdef __PRINT__
-	hint localize format["x_airki.sqf[%1]: +++ Enter wait <while { mt_radio_down || (!mt_spotted) }> loop",_type];
-    #endif
-	while { mt_radio_down || (!mt_spotted)} do {sleep (23.23 + random 1.115)}; // don't start next flight while radio tower is dead or enemy not detected
-    #ifdef __PRINT__
-	hint localize format["x_airki.sqf[%1]: --- Exit wait <while { mt_radio_down || (!mt_spotted) }> loop",_type];
-    #endif
+#ifdef __PRINT__
+	hint localize format["x_airki.sqf[%1]: --- Exit wait loop",_type];
 #endif
 
-#ifdef __DEBUG__
-	hint localize "x_airki.sqf: EXIT loop 'if (!mt_radio_down)";
-#endif
+// "GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1"
+["msg_to_user","",[["STR_GRU_53",format["STR_GRU_53_%1",_initial_type]]],4,4 + round(random 4)] call XSendNetStartScriptClient;
 
-//+++Sygsky: TODO send to user message after some small delay about heli started from enemy carrier. 
-// If GRU is active on, send also info about heli type
+// If GRU is active on, print also info about heli type
 
 	_grp = objNull;
 	_vehicle = objNull;
@@ -292,9 +285,6 @@ while { true } do {
 #endif
 
     _heli_type = "";
-
-	// possibility for SU creation is about 33%
-	if (_initial_type == "SU") then {_type = (if ((random 100) > 33) then {"MIMG"} else {"SU"});};
 
 	//__WaitForGroup
 	//__GetEGrp(_grp)

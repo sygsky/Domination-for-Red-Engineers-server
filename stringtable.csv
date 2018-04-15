@@ -1162,6 +1162,11 @@ STR_GRU_49_1,"The enemies here have a nice booty","Die Feinde haben eine schöne
 STR_GRU_50,"The guerrillas reported: enemy patrols noticed on the island, %1 PCs.","Die Guerilla berichtet: feindliche Patrouillen bemerkt, auf der Insel, %1 Stck.","Сопротивление информирует: на острове замечены патрули, %1 шт."
 STR_GRU_52,"At the airbase desants still have not yet been seen.","Auf der airbase desants noch noch nicht gesehen.","Десантов на базе пока не было."
 
+STR_GRU_53,"GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1","GRU berichtet, dass das feindliche Flugzeug startete eine Träger-flight-Verfahren über %1","ГРУ собщает, что на вражеском авианосце начали готовить к вылету какой-то %1"
+STR_GRU_53_MIMG,helicopter,Helikopter,вертолёт
+STR_GRU_53_KA,helicopter,Helikopter,вертолёт
+STR_GRU_53_SU,jet,jet,самолёт
+
 STR_GRU_TELE_NUM,4,4,4
 STR_GRU_TELE_0,"Well GRU-portal they invented","Gut GRU-portal, die Sie erfanden","Ну и ГРУ-портал..."
 STR_GRU_TELE_1,"What the stuff is...","Was das Zeug...","Что за дурь..."
