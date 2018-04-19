@@ -154,17 +154,16 @@ XCheckSMHardTarget = {
 	#ifndef __TT__
 	_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true;}];
 	#endif
-	#ifdef __WITH_SCALAR__
+
 	_vec_init = "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
+	#ifdef __WITH_SCALAR__
 	if (typeOf _vehicle == "Land_telek1") then {
 		_vec_init = _vec_init + "xhandle = [this] execVM ""scripts\scalar.sqf"";";
 	};
+	#endif
 	_vehicle setVehicleInit  _vec_init;
-	#endif
-	#ifndef __WITH_SCALAR__
-	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
-	#endif
 	processInitCommands;
+
 	extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_vehicle];
 	friendly_near_sm_target = false;
 	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
