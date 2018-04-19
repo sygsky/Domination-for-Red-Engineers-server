@@ -22,7 +22,7 @@ if (X_Client) then {
 
 if (isServer) then {
 #ifdef __ACE__
-	_xchopper = (if (d_enemy_side == "EAST") then {"ACE_KA50"} else {"ACE_AH1Z_AGM"});
+	_xchopper = (if (d_enemy_side == "EAST") then {"ACE_KA50"} else {"ACE_AH1Z_TOW"});
 #else
 	_xchopper = (if (d_enemy_side == "EAST") then {"KA50"} else {"AH1W"});
 #endif
