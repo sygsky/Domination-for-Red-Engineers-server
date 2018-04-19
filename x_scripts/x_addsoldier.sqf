@@ -12,7 +12,7 @@ _units = units d_grp_caller;
 
 #ifdef __RANKED__
 _rank = rank player;
-_rankIndex = player call XGetRankIndexFromScore;
+_rankIndex = player call XGetRankIndexFromScoreExt;
 if (_rankIndex < 3) exitWith {
 	(format [localize "STR_SYS_1174", _rank call XGetRankStringLocalized, "LIEUTENANT" call XGetRankStringLocalized]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]!"
 };
@@ -22,7 +22,7 @@ if (score player < ((d_points_needed select 0) + (d_ranked_a select 3))) exitWit
 };
 
 _max_rank_ai = (
-	switch (_rank) do {
+	switch (toUpper(_rank)) do {
 
 /*
 		case "CORPORAL": {3};
@@ -36,7 +36,7 @@ _max_rank_ai = (
 		case "CAPTAIN": {2};
 		case "MAJOR": {3};
 		case "COLONEL": {4};
-        default {max_ai};
+        default { max_ai + (_rankIndex - 7 ) }; // from 5 to 10
 	}
 );
 _ai_counter = 0;
