@@ -11,10 +11,9 @@ sleep 1.123;
 deleteVehicle current_trigger;
 sleep 0.01;
 
-if ( count _this > 0 ) exitWith // airbase taken by our army, nothing to clear
+if ( count _this > 0 ) exitWith // input param array not empty only for airbase taken by our army, nothing really to clear
 {
-    ["airbase_clear"] call XSendNetStartScriptClient;
-    (-1) execVM "x_scripts\x_deleteunits.sqf";
+    ["airbase_clear"] call XSendNetStartScriptClient; // inform about this event and exit
 };
 
 counterattack = false;
