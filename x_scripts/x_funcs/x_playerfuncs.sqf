@@ -406,13 +406,20 @@ XGetRankStringLocalized = {
         if (isPlayer _this) then { _this = _this call XGetRankFromScore;};
     };
 	switch (toUpper(_this)) do {
-		case "PRIVATE":    {localize "STR_TSD9_26"};
-		case "CORPORAL":   {localize "STR_TSD9_27"};
-		case "SERGEANT":   {localize "STR_TSD9_28"};
-		case "LIEUTENANT": {localize "STR_TSD9_29"};
-		case "CAPTAIN":    {localize "STR_TSD9_30"};
-		case "MAJOR":      {localize "STR_TSD9_31"};
-		case "COLONEL":    {localize "STR_TSD9_32"};
+		case "PRIVATE":    {localize "STR_TSD9_26"}; // 0
+		case "CORPORAL":   {localize "STR_TSD9_27"}; // 1
+		case "SERGEANT":   {localize "STR_TSD9_28"}; // 2
+		case "LIEUTENANT": {localize "STR_TSD9_29"}; // 3
+		case "CAPTAIN":    {localize "STR_TSD9_30"}; // 4
+		case "MAJOR":      {localize "STR_TSD9_31"}; // 5
+		case "COLONEL":    {localize "STR_TSD9_32"}; // 6
+
+		case "Brigadier-General": {localize "STR_SYS_1000"};  // 7
+        case "Lieutenant-General": {localize "STR_SYS_1001"}; // 8
+        case "Colonel-General": {localize "STR_SYS_1002,"};
+        case "General-of-the-Army": {localize "STR_SYS_1003"};
+        case "Marshal": {localize "STR_SYS_1004"};
+        case "Generalissimo": {localize "STR_SYS_1005"};    // 12
 	};
 };
 
@@ -430,9 +437,10 @@ XGetRankFromScore = {
 };
 
 #ifdef __SUPER_RANKING__
+
 XIsRankFromScoreExtended =  {
     if (isPlayer _this) then { _this = score _this;};
-    _this > argp(d_points_needed,0)
+    _this >= argp(d_pseudo_ranks,0)
 };
 
 //
@@ -446,17 +454,16 @@ XGetRankFromScoreExt = {
     {
         if (isPlayer _this) then { _this = score _this;};
     };
-    _rank = _this call XGetRankFromScore;
-    if ( _rank == "Colonel") then // check for higher ranks
+    if (!(_this call XIsRankFromScoreExtended)) exitWith
     {
-        _index = 0;
-        {
-            if ( _this < _x ) exitWith {};
-            _rank = argp(d_pseudo_rank_names, _index);
-            _index = _index + 1;
-        } forEach d_pseudo_ranks;
+        _this call XGetRankFromScore; // returns from "Private"(0) to "Colonel" (6)
     };
-    _rank
+    _index = -1; // Colonel
+    {
+        if ( _this < _x ) exitWith { "Colonel" };
+        _index = _index + 1;
+    } forEach d_pseudo_ranks;
+    (d_pseudo_ranks select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
 };
 
 XGetRankIndexFromScoreExt = {
@@ -465,12 +472,16 @@ XGetRankIndexFromScoreExt = {
     {
         if (isPlayer _this) then { _this = score _this;};
     };
-    _index = -1;
+    if (!(_this call XIsRankFromScoreExtended)) exitWith
+    {
+        _this call XGetRankIndexFromScore // returns from 0 ("Private") to 6 ("Colonel")
+    };
+    _index = 6; // Colonel
     {
         if ( _this < _x ) exitWith {};
         _index = _index + 1;
     } forEach d_pseudo_ranks;
-    _index
+    _index // returns from 7("Brigadier-General") to 12("Generalissimo")
 };
 
 #endif
@@ -497,7 +508,7 @@ XGetRankPic = {
 		case "LIEUTENANT": {"\warfare\Images\rank_lieutenant.paa"};
 		case "CAPTAIN": {"\warfare\Images\rank_captain.paa"};
 		case "MAJOR": {"\warfare\Images\rank_major.paa"};
-		case "COLONEL": {"\warfare\Images\rank_colonel.paa"};
+		default {"\warfare\Images\rank_colonel.paa"};
 	}
 };
 
