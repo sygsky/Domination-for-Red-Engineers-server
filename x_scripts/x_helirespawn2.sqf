@@ -21,12 +21,13 @@ _heli_array = [];
 	_heli_array = _heli_array + [[_vehicle,_number_v,_ifdamage,  0, position _vehicle,direction _vehicle,typeOf _vehicle,_min_dist]];
 
 	// change cargo for Mi-17 only (USSR version). FIXME: do the same for non USSR version heli
+/*
     if ((typeOf _vehicle) == "ACE_Mi17_MG") then
     {
         _vehicle setVehicleInit "[this, 2] call SYG_setHeliParaCargo;";
         _cnt = _cnt + 1;
     };
-
+*/
 #ifndef __TT__
 	call compile format ["%1 =_vehicle;publicVariable ""%1"";", _number_v];
 #endif
@@ -51,7 +52,7 @@ _heli_array = [];
 
 } forEach _this;
 
-if ( _cnt > 0 ) then { processInitCommands; };
+// if ( _cnt > 0 ) then { processInitCommands; };
 
 
 _this = nil;

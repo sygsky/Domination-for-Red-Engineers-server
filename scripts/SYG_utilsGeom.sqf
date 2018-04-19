@@ -35,6 +35,20 @@ SYG_vectorSub = {
 };
 
 /**
+ * Calculates in 3-D dimension
+ * =====================================================
+ * call:
+ *      pnt3 = [pnt1,pnt2] call SYG_vectorSub;
+ *
+ *
+ */
+SYG_vectorSub3D = {
+	_pnt1 = arg(0);
+	_pnt2 = arg(1);
+	[argp(_pnt1,X_POS) - argp(_pnt2,X_POS), argp(_pnt1,Y_POS) - argp(_pnt2,Y_POS), argp(_pnt1,Z_POS) - argp(_pnt2,Z_POS)]
+};
+
+/**
  * =======================================================
  * Detect distance of point to vector on the predefined plane of X,Y coordinates (2-D)
  * call:
