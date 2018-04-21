@@ -207,7 +207,6 @@ while { true } do {
 			while {!mt_spotted} do {sleep 23.32}; // wait until player spotted
 		};
 	};
-#endif
 
 #ifdef __PRINT__
 	hint localize format["x_airki.sqf[%1]: --- Exit wait loop",_type];
