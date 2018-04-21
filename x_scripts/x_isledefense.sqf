@@ -92,7 +92,7 @@ _get_leader = {
 	_leader = leader _this;
 	if ( !isNull _leader ) exitWith {_leader};
 	{
-		if ( (!isNull _x) && (alive _x) ) exitWith {_leader};
+		if ( (!isNull _x) && (canStand _x) ) exitWith {_leader = _x };
 	} forEach units _this;
 	_leader
 };
@@ -144,6 +144,7 @@ _make_isle_grp = {
 	_vecs = [];
 
 #ifdef __OWN_SIDE_EAST__
+// TODO: the closer to the mission finish, the heavier must be patrols
 // some patrol types are more frequently generated
 //                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
     _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
