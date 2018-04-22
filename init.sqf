@@ -29,6 +29,7 @@ if (isServer) then {
 	};
 };
 
+hint localize format["+++ init.sqf: isServer = %1, X_Server = %2, X_Client = %3, X_JIP = %4, X_SPE = %5, X_MP = %6, X_INIT = %7", isServer, X_Server, X_Client, X_JIP, X_SPE, X_MP, X_INIT];
 
 //+++ Sygsky
 // Run short night script on both server and client machines
@@ -44,11 +45,11 @@ SYG_nightDuration    = 0.5;
 SYG_twilightDuration = 0.5;
 SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_shortNightEnd;
 SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
-hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
 
 #ifdef __OLD__
 
 [SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
 
 #else
 
@@ -56,6 +57,8 @@ SYG_nightSkipFrom  = 21.0;
 SYG_nightSkipTo    = 3.0;
 //       Night start,         night end,         skip from,         skip to
 [SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4",
+    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd ];
 
 #endif
 
@@ -109,6 +112,8 @@ execVM "mando_missiles\mando_missileinit.sqf";
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
 
+    setViewDistance 6000; // try to use this command. What if it could make a splash?
+
 	SYG_updateWeather = {
 		// weather parameters
 		//  fRainLess = random 0.34; //linear random
@@ -141,16 +146,23 @@ if (isServer) then {
 #ifdef __DEBUG_ADD_VEHICLES__
 	// create vehicle to help isle defence activity debugging
 
- 	createVehicle ["ACE_HMMWV_GL", [14531.194336,9927.394531,0], [], 0, "NONE"] setDir -75;
-	createVehicle ["ACE_HMMWV_GAU19", [14536.480469,9930.232422,0], [], 0, "NONE"] setDir -75;
-	createVehicle ["ACE_Truck5t_Reammo", [14539.819336,9925.484375,0], [], 0, "NONE"] setDir -75;
-	createVehicle ["ACE_Truck5t_Repair", [14544.724609,9927.985352,0], [], 0, "NONE"] setDir -75;
-	createVehicle ["ACE_WeaponBox", [14539.072266,9921.990234,0], [], 0, "NONE"] setDir -75;
-	createVehicle ["ACE_WeaponBox", [9672.142578,9991.166992,0], [], 0, "NONE"] setDir 270;
-
+    {
+        _vec = createVehicle [_x select 0, _x select 1, [], 0, "NONE"];
+        _vec setDir (_x select 2);
+        _vec setPos (_x select 1);
+    } forEach[
+        ["ACE_HMMWV_GL", [14531,9927,0], -75],
+        ["ACE_HMMWV_GAU19", [14536,9930,0], -75],
+        ["ACE_HMMWV_TOW", [14526,9930,0], -75],
+        ["ACE_Truck5t_Reammo", [14539,9925,0], -75],
+        ["ACE_Truck5t_Repair", [14545,9928,0], -75],
+        ["ACE_WeaponBox", [14539,9922,0], -75],
+        ["ACE_WeaponBox", [9672,9991,0], 270]
+    ];
 	_vec = createVehicle ["ACE_Su34B", [9658.247070,10020.545898,0], [], 0, "NONE"];
 	_vec setDir 90;
-	_vec call SYG_rearmAnySu34;
+	if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
+	else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
 
     _medic_tent = createVehicle ["MASH", [9359.855469, 10047.625000,0], [], 0, "NONE"];
     _medic_tent setDir 189;

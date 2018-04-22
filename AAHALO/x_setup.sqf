@@ -88,6 +88,9 @@
 //+++ Sygsky: uncomment to debug isledefence activity
 //#define __SYG_ISLEDEFENCE_DEBUG__
 
+// add some debug vehicles on hill near Corazol
+//#define __DEBUG_ADD_VEHICLES__
+
 //+++ Sygsky: uncomment to debug new base pipebombing
 //#define __SYG_PIPEBOMB_DEBUG__
 
