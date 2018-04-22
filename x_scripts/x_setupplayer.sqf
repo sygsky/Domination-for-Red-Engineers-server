@@ -1754,10 +1754,6 @@ SYG_mission_start = missionStart;
 //["set_mission_start", missionStart] call XSendNetStartScriptServer;
 #endif
 
-#ifdef __DEBUG__
-player addScore (1000 - (score player));
-#endif
-
 #ifdef __DEBUG_JAIL__
 if (localize "STR_LANGUAGE" == "RUSSIAN") then
 {
@@ -1765,4 +1761,9 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 };
 #endif
 
+#ifdef __DEBUG_ADD_VEHICLES__
+// teleport player to the hills above Bagango valley
+player setPos [14531,9930,0];
+player addScore (1000 - (score player));
+#endif
 if (true) exitWith {};

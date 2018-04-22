@@ -14,13 +14,18 @@ if (!isServer) exitWith {};
 #include "GRU_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG__
+#ifdef __SYG_ISLEDEFENCE_DEBUG__
+
+#define __DEBUG__
+#define __SYG_PRINT_ACTIVITY__
+
+#endif
 
 //#define __SYG_ISLEDEFENCE_PRINT_LONG__
 
 #define __SYG_ISLEDEFENCE_PRINT_SHORT__
 
-//#define __SYG_PRINT_ACTIVITY__
+
 
 #define arrset(ARR,POS,VAL) ((ARR)set[(POS),(VAL)])
 
@@ -164,6 +169,7 @@ _make_isle_grp = {
         [_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
         _vecs = _vecs + [_veh];
     } forEach _elist;
+    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2, group %3", count _vecs, _patrol_type, _agrp];
 
 #else
 	_elist = [d_enemy_side] call x_getmixedliste;
@@ -178,12 +184,7 @@ _make_isle_grp = {
 			_vecs = _vecs + _veh;
 		};
 	} forEach _elist;
-#endif
-
-#ifdef __OWN_SIDE_EAST__
-hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2", count _vecs, _patrol_type];
-#else
-hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
+    hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
 #endif
 
 	_elist = nil;
@@ -244,10 +245,14 @@ _remove_grp = {
 		_vecs  = argp(_igrpa,PARAM_VEHICLES);
 		_units = argp(_igrpa, PARAM_UNITS);
 #ifdef __SYG_PRINT_ACTIVITY__
-		hint localize format["%1 x_isledefense.sqf: remove patrol group %2", call SYG_missionTimeInfoStr, _igrp];
+		hint localize format["%1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
 #endif						
 		
 		// clean vehicles
+#ifdef __SYG_PRINT_ACTIVITY__
+		_vec_removed_cnt = 0;
+		_crew_removed_cnt  = 0;
+#endif
 		{ // forEach _vecs;
 			if ( !isNull _x ) then 
 			{
@@ -261,12 +266,12 @@ _remove_grp = {
 				{
 					// re-assign vehicle to be ordinal ones
 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
-					hint localize format["x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, dammage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, getDammage _x];
+					hint localize format["x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
 #endif
 					// put vehicle under system control
 					[_x] call XAddCheckDead;
 				}
-				else
+				else // remove all units in vehicles
 				{
 					{
 						_x action["Eject", vehicle _x]; 
@@ -274,16 +279,30 @@ _remove_grp = {
 						_x setDammage 1.1; 
 						sleep 0.1;
 						deleteVehicle _x;
+#ifdef __SYG_PRINT_ACTIVITY__
+						_crew_removed_cnt = _crew_removed_cnt + 1;
+#endif
 					} forEach crew _x;
 					deleteVehicle _x;
+#ifdef __SYG_PRINT_ACTIVITY__
+					_vec_removed_cnt = _vec_removed_cnt + 1;
+#endif
 				};
 			};
 			sleep 0.1;
 		} forEach _vecs;
 		_vecs = nil;
 		sleep 1.06;
-		
+#ifdef __SYG_PRINT_ACTIVITY__
+        _str = "isNull";
+        if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
+		hint localize format["x_isledefense: remove group: vecs %1, crew %2; grp %3", _vec_removed_cnt, _crew_removed_cnt, _str];
+#endif
 		// clean units
+#ifdef __SYG_PRINT_ACTIVITY__
+		_units_removed_cnt     = 0;
+		_grp_untis_removed_cnt = 0;
+#endif
 		{ // forEach _units;
 			if (!isNull _x) then 
 			{
@@ -530,9 +549,9 @@ while { true } do {
 		_stat          = argp(_igrpa, PARAM_STATUS); // status of patrol group
 		_timestamp     = argp(_igrpa, PARAM_TIMESTAMP); // time to wait before create new patrol
 		_igrppos       = argp(_igrpa, PARAM_LAST_POS); // last stored position of the group
-#ifdef __DEBUG__
-        hint localize format["+++ x_isledefense.sqf: loop id %1, grp %2, stat %3, timestamp %4, pos %5 ", _i, _igrp, _stat, _timestamp, _igrppos];
-#endif
+//#ifdef __DEBUG__
+//        hint localize format["+++ x_isledefense.sqf: loop id %1, grp %2, stat %3, timestamp %4, pos %5 ", _i, _igrp, _stat, _timestamp, _igrppos];
+//#endif
 
 		for "_j" from 0 to 0 do // dummy cycle only for main scope creation
 		{
@@ -781,7 +800,7 @@ while { true } do {
 			} forEach _vecs;
 			_dist =  round(argp(_igrpa,PARAM_LAST_POS) distance (leader _igrp));
 			_locname =  "";
-			_leader = leader _igrp;
+ 		    _leader = _igrp call _get_leader;
 			if ( isNull _leader) then 
 			{
 				_locname = "<>";
@@ -820,7 +839,7 @@ while { true } do {
 		{
 			_vecs = argp(_igrpa, PARAM_VEHICLES); // vehicles
 			_veccnt = count _vecs;
-			_veccnta = 0;
+			_veccnta = 0; // count of alive vehicles with some crew on board
 			{
 				if (!isNull _x) then
 				{
@@ -837,7 +856,7 @@ while { true } do {
 			else
 			{
 				_locname = "";
-				_leader = leader _igrp;
+	 		    _leader = _igrp call _get_leader;
 				_men_info = "";
 				_pos_msg = "";
 				if ( isNull _leader) then 
@@ -847,13 +866,14 @@ while { true } do {
 				else 
 				{
 					_units = units _igrp;
+					// initial  units, conscious units, out of vehicles alive
 					_men_info = format["{%1/%2/%3}",_units call XfGetAliveUnits, _units call SYG_getAllConsciousUnits, _units call XfGetUnitsOnFeet ];
 					_pos_msg = [_leader,"%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 				};
 				_grp_array   = argp(_igrpa,PARAM_GRP_ARRAY);
 				_enemy_near  = if ((_grp_array select 2) in [0,2]) then {""} else { if ((_grp_array select 2) == 9) then {"!"} else {"*"}};
 				_patrol_type = argp(_igrpa,PARAM_TYPE);
-				_str = _str + format["(%1) %6/%2/%3%4%5; ", _pos_msg, _veccnt, _veccnta,  _enemy_near, _men_info, _patrol_type];
+				_str = _str + format["(%1) %2/%3/%4%5%6; ", _pos_msg, _patrol_type, _veccnt, _veccnta,  _enemy_near, _men_info];
 				_cnt = _cnt + 1;
 			};
 		};

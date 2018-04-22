@@ -60,7 +60,7 @@ call compile format ["
 #endif
 
 sleep 7.012;
-["update_mission", current_mission_index, current_mission_counter, _poss] call XSendNetStartScriptClient;
+["update_mission", current_mission_index, current_mission_counter, x_sm_pos select 0] call XSendNetStartScriptClient;
 
 side_mission_resolved = false;
 side_mission_winner = 0;

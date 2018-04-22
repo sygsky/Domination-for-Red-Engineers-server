@@ -252,7 +252,7 @@ XHandleNetStartScriptClient = {
 			{
 				current_mission_counter = _this select 2;
 			};
-			if ( count _this > 3 ) then
+			if ( count _this > 3 ) then // if first point coordinates were changed with some purpose
 			{
 				x_sm_pos set [0, _this select 3];
 			};

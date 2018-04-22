@@ -296,7 +296,7 @@ SYG_setGrassLevel = {
 
 SYG_viewDistanceArray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
 
-// Call only on client
+// Call only on client. Or it may be useful on server also?
 //
 // Sets view distance. Call as:
 // _dist = 0 call SYG_setViewDistance;
@@ -306,7 +306,7 @@ SYG_viewDistanceArray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8
 //
 SYG_setViewDistance = {
     //hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2+++++", _this, isServer ];
-    if ( isServer ) exitWith {false};
+    //if ( isServer ) exitWith {-1};
     private ["_selectedIndex"];
     _selectedIndex = _this;
     if ( typeName _this == "ARRAY") then {_selectedIndex = arg(0);};
