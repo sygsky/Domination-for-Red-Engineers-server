@@ -336,6 +336,8 @@ class CfgSounds
     class countdown {name = ""; sound[] = {\sounds\countdown.ogg, db+10, 1.0}; titles[] = {}; }; // Rammstein
     class countdown_alarm {name = ""; sound[] = {\sounds\countdown_alarm.ogg, db+10, 1.0}; titles[] = {}; };
 
+    class return {name = ""; sound[] = {\sounds\return.ogg, db+10, 1.0}; titles[] = {}; };
+    class steal {name = ""; sound[] = {\sounds\steal.ogg, db+10, 1.0}; titles[] = {}; };
 
 
 #ifdef __WITH_SCALAR__
