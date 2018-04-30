@@ -46,7 +46,7 @@ while {true} do {
 			_sleep_time = 240;
 		};
 	};
-	sleep 1 + random(1);
+	sleep (1 + random 1);
     //_new_vec say "horse"; //  whi-i-i-i-nn-y-i-i
     ["say_sound", _new_vec, "horse"] call XSendNetStartScriptClient;
 

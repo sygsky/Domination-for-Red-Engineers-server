@@ -100,7 +100,7 @@ _morningTwilightStart = _dayStart - SYG_twilightDuration;
 
 _str = format["+++ SHORTNIGHT: nightSkipTo %1, morningTwilightStart %2, dayStart %3, eveningTwilightStart %4, realNightStart %5, nightSkipFrom %6",
         _nightSkipTo,_morningTwilightStart,_dayStart,_eveningTwilightStart,_realNightStart,_nightSkipFrom];
-player groupChat _str;
+//player groupChat _str;
 hint localize _str;
 
 while {true } do

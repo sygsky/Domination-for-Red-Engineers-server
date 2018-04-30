@@ -254,6 +254,7 @@ _chopper flyinheight 200;
 #ifdef	__DEBUG_PRINT__
                         hint localize format["x_createpara2.sqf: prev. group id %1 (of 1 saboteur) joined to this one", _i];
 #endif
+
                         (units _grp) join _paragrp;
                         sleep 1.04;
                     };
@@ -283,7 +284,14 @@ _chopper flyinheight 200;
 #endif		
 	};
 };
-
+// heal all the men in current para group
+_paragrp spawn {
+    sleep 15; // wait for all to be on the earth
+    // heal whole group for fun and just in case
+    {
+        if ( alive _x) then {sleep random 3; _x setDamage 0};
+    } forEach (units _paragrp);
+};
 if ( !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
 	[driver _chopper, _chopper] spawn {
 		private ["_driver_veh","_vehicle"];

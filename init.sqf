@@ -607,6 +607,12 @@ if ( !isServer ) then // use only on client
     ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
     // improve available magazines description
     ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+
+#ifdef __JAVELIN__
+    // Disable Javelin to rucksack load
+    ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\CanPackMagToDummyMag.sqf";
+#endif
+
 };
 #endif
 

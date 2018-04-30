@@ -789,7 +789,23 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]] + [["ACE_SmokeGrenade_White",2]];
 			};
-			
+
+#ifdef __JAVELIN__
+			case "ACE_SoldierWHAT_A": // Javelin specialist
+			{
+				_equip = _equip + [["P", "ACE_Javelin", "ACE_Javelin"]]; // AT missile launcher
+				if ( _adv_rearm ) then
+				{
+					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
+				}
+				else
+				{
+					_wpn = RAR(SYG_HK417_WPN_SET_STD);
+				};
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [["ACE_SmokeGrenade_White",1]];
+			};
+#endif
+
 			case "ACE_SoldierWMAT_USSF_ST_BDUL":
 			{
 				if ( _adv_rearm ) then 
@@ -986,6 +1002,25 @@ SYG_rearmBasic = {
 				_ret = true;
 				breakTo "main";
 			};
+
+#ifdef __JAVELIN__
+			if ( (typeOf _unit) == "ACE_SoldierWHAT_A" ) then  // Javelin
+			{
+				_equip = _equip + [["P", "ACE_Javelin", "ACE_Javelin"]]; // AT missile launcher
+				if ( _adv_rearm ) then
+				{
+					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
+				}
+				else
+				{
+					_wpn = RAR(SYG_HK416_WPN_SET_STD);
+				};
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [["ACE_SmokeGrenade_White",1]];
+				_ret = true;
+				breakTo "main";
+			};
+#endif
+
 		};
 		if ( _ret )  then
 		{
@@ -2731,7 +2766,11 @@ SYG_isRucksack = {
 // returns array [ [weapons names], [magazines names]<, rucksack_name<,[mags_in_rucksack_names]>> ]
 SYG_getPlayerEquiptArr = {
     private ["_wpn", "_ruck", "_ruckMags"];
+#ifdef __JAVELIN__
+    _wpn = (weapons _this) - ["ACE_Javelin"];
+#else
     _wpn = weapons _this;
+#endif
 
 #ifdef __ACE__
 	_ruck = _this getVariable "ACE_weapononback";
@@ -2745,7 +2784,11 @@ SYG_getPlayerEquiptArr = {
 	_ruckMags = [];
 #endif
 
+#ifdef __JAVELIN__
+    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance]
+#else
     [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance]
+#endif
 
 };
 
