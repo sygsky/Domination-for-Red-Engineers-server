@@ -24,6 +24,7 @@ if (!isServer) exitWith{};
 #define TIMEOUT_ZERO 0
 #define MOTO_ON_PLACE_DIST 3.5
 #define DRIVER_NEAR_DIST 10
+#define SOUND_SAY_DIST 50
 #define FUEL_MIN_VOLUME 0.2
 // offsets for vehicle status array items
 #define MOTO_ITSELF 0
@@ -119,6 +120,9 @@ while {true} do {
 
                 if ( ! _driver_near) then // if empty and no man nearby (10 meters circle)
                 {
+                    _say = (_pos2 distance _pos1) >= SOUND_SAY_DIST;
+                    if ( _say) then { ["say_sound", _moto, "steal"] call XSendNetStartScriptClient; _pos1 set [2,-5]; _moto setPos _pos1;  };
+
                     if ( !alive _moto ) then // recreate vehicle
                     {
                         _type = typeOf _moto;
@@ -141,6 +145,8 @@ while {true} do {
                     };
                     sleep 1.11;
                     _moto setPos (_pos);
+                    if ( _say) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClient };
+
                     sleep 0.25;
                     //_x set [MOTO_ORIG_POS, getPos _moto];
                     _moto setDir (argp(_x,MOTO_ORIG_DIR));
