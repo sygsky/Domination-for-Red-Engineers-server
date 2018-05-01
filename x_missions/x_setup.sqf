@@ -88,9 +88,6 @@
 //+++ Sygsky: uncomment to debug isledefence activity
 //#define __SYG_ISLEDEFENCE_DEBUG__
 
-// add some debug vehicles on hill near Corazol
-//#define __DEBUG_ADD_VEHICLES__
-
 //+++ Sygsky: uncomment to debug new base pipebombing
 //#define __SYG_PIPEBOMB_DEBUG__
 
@@ -108,7 +105,7 @@
 
 #ifdef __ACE__
 
-//+++ uncomment to rearm Su-34 kind planes to carry 2x816 FAB500M62 freefall bombs
+//+++ uncomment to rearm Su-34 kind planes to carry 12 FAB500M62 freefall bombs
 //#define __REARM_SU34__
 
 //+++ uncomment to replace ACE_Stryker_TOW with ACE_M60 and ACE_M60A3
@@ -121,7 +118,7 @@
 
 //+++ uncomment to create Su34 on the base,
 // add 1000 score to allow get in,
-// add some Vehiсles and ammoBoxes near Corazol and on base
+// add some Vehiсles and ammoBoxes on hills near Corazol and on base
 //#define __DEBUG_ADD_VEHICLES__
 
 #define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2
@@ -131,3 +128,6 @@
 
 // uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value
 #define __JAIL_MAX_SCORE__ -15
+
+// uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
+#define __JAVELIN__
