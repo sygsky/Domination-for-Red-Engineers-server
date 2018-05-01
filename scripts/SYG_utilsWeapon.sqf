@@ -1511,7 +1511,7 @@ SYG_armUnit = {
 	
 	if ( (typeName _arr) != "ARRAY" ) exitWith 
 	{
-		hint format["SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
+		hint format["--- SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
 	};
 	_itemCnt = count _arr;
 	removeAllWeapons _unit;
@@ -1526,7 +1526,7 @@ SYG_armUnit = {
 			_args = _arr select _i; // get _i-th array with item definition (<wpn_type, wpn_name,> mag_name <, mag_count>) to add to unti
 			if ( (typeName _args) != "ARRAY" ) exitWith 
 			{
-				hint format["SYG_armUnit: Item at pos %1 must be ARRAY, found %2 (%3)", _i, typeName _args, _args];
+				hint localize format["SYG_armUnit: Item at pos %1 must be ARRAY, found %2 (%3)", _i, typeName _args, _args];
 			};
 	//		player globalChat format["SYG_armUnit: add %1-th array[%2] = %3", _i, count _args, _args ];
 			_pos = 1;
@@ -1569,7 +1569,7 @@ SYG_armUnit = {
 			}
 			else
 			{
-				hint format["SYG_armUnit: 1st pos must be STRING, found '%1', skipped",  typeName (_args select  0) ];
+				hint localize format["--- SYG_armUnit: 1st pos must be STRING, found '%1', skipped",  typeName (_args select  0) ];
 			};
 		};
 	}; // if ( _itemCnt > 0 )
@@ -2766,11 +2766,7 @@ SYG_isRucksack = {
 // returns array [ [weapons names], [magazines names]<, rucksack_name<,[mags_in_rucksack_names]>> ]
 SYG_getPlayerEquiptArr = {
     private ["_wpn", "_ruck", "_ruckMags"];
-#ifdef __JAVELIN__
-    _wpn = (weapons _this) - ["ACE_Javelin"];
-#else
     _wpn = weapons _this;
-#endif
 
 #ifdef __ACE__
 	_ruck = _this getVariable "ACE_weapononback";
