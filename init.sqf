@@ -159,7 +159,7 @@ if (isServer) then {
         ["ACE_WeaponBox", [14539,9922,0], -75],
         ["ACE_WeaponBox", [9672,9991,0], 270]
     ];
-	_vec = createVehicle ["ACE_Su34B", [9658.247070,10020.545898,0], [], 0, "NONE"];
+	_vec = createVehicle ["ACE_Su30Mk_Kh29T", [9658.247070,10020.545898,0], [], 0, "NONE"];
 	_vec setDir 90;
 	if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
 	else {hint localize "--- ACE_Su34B NOT rearmed !!!"};

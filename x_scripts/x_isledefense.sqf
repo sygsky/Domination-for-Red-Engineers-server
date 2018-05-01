@@ -156,20 +156,20 @@ _make_isle_grp = {
 
     _type_id      = _patrol_types call XfRandomFloorArray;
     _patrol_type  = _patrol_types select _type_id; // random patrol type selection
-    _crew_type    = _patrol_type call SYG_crewTypeByPatrolW; // = _crew_types select _type_id;    //
-    _elist        = _patrol_type call SYG_generatePatrolList; // last of vehicle type names
+    _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
+    _elist        = _patrol_type call SYG_generatePatrolList; // list of vehicle type names
 
 //#ifdef __DEBUG__
 //    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
 //#endif
 
     {
-        _veh = createVehicle [_x, _start_point, [], 10, "NONE"];
-    //  [_veh, _grp, _unit_type<, _skill<, _randomSkillPart>>] call SYG_populateVehicle;
-        [_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
-        _vecs = _vecs + [_veh];
+        _veh = [1, _start_point, _crew_type, _x, _agrp, 0, -1.111] call x_makevgroup;
+        sleep 0.73; // Magic)))
+        //_veh = createVehicle [_x, _start_point, [], 10, "NONE"];
+        //[_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
+        _vecs = _vecs + _veh;
     } forEach _elist;
-    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2, group %3", count _vecs, _patrol_type, _agrp];
 
 #else
 	_elist = [d_enemy_side] call x_getmixedliste;
@@ -189,8 +189,11 @@ _make_isle_grp = {
 
 	_elist = nil;
 	sleep 0.31;
-	_units = [];
-	{ _units = _units + (crew _x); } forEach _vecs;
+//	_units = [];
+//	{ _units = _units + (crew _x); } forEach _vecs;
+	_units = units _agrp;
+    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2, group %3, men %4", count _vecs, _patrol_type, _agrp, count _units];
+
 	if ( !(isNull (leader _agrp))) then
 	{
         _leader = leader _agrp;
@@ -240,8 +243,8 @@ _remove_grp = {
 	private ["_igrpa","_vecs","_igrp","_units","_crew"];
 	_igrpa = _this;
 	_igrp  = argp(_igrpa,PARAM_GROUP);
-	if ( !isNull _igrp ) then
-	{
+//	if ( !isNull _igrp ) then
+//	{
 		_vecs  = argp(_igrpa,PARAM_VEHICLES);
 		_units = argp(_igrpa, PARAM_UNITS);
 #ifdef __SYG_PRINT_ACTIVITY__
@@ -275,14 +278,15 @@ _remove_grp = {
 				{
 					{
 						_x action["Eject", vehicle _x]; 
-						sleep 0.33; 
-						_x setDammage 1.1; 
-						sleep 0.1;
-						deleteVehicle _x;
-#ifdef __SYG_PRINT_ACTIVITY__
-						_crew_removed_cnt = _crew_removed_cnt + 1;
-#endif
+//						sleep 0.33;
+//						_x setDammage 1.1;
+//						sleep 0.1;
+//						deleteVehicle _x;
+//#ifdef __SYG_PRINT_ACTIVITY__
+//						_crew_removed_cnt = _crew_removed_cnt + 1;
+//#endif
 					} forEach crew _x;
+					sleep 0.1;
 					deleteVehicle _x;
 #ifdef __SYG_PRINT_ACTIVITY__
 					_vec_removed_cnt = _vec_removed_cnt + 1;
@@ -296,12 +300,13 @@ _remove_grp = {
 #ifdef __SYG_PRINT_ACTIVITY__
         _str = "isNull";
         if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
-		hint localize format["x_isledefense: remove group: vecs %1, crew %2; grp %3", _vec_removed_cnt, _crew_removed_cnt, _str];
+		hint localize format["x_isledefense: start remove group: vecs %1, crew %2, _units %3, grp %4", _vec_removed_cnt, _crew_removed_cnt, count _units, _str];
+		hint localize format["x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
 #endif
 		// clean units
 #ifdef __SYG_PRINT_ACTIVITY__
 		_units_removed_cnt     = 0;
-		_grp_untis_removed_cnt = 0;
+		_grp_units_removed_cnt = 0;
 #endif
 		{ // forEach _units;
 			if (!isNull _x) then 
@@ -310,6 +315,9 @@ _remove_grp = {
 				deleteVehicle _x;
 	//			[_x] call XAddDead;
 				sleep 0.1;
+#ifdef __SYG_PRINT_ACTIVITY__
+                _units_removed_cnt = _units_removed_cnt + 1;
+#endif
 			};
 		} forEach _units;
 		sleep 1.04;
@@ -323,12 +331,20 @@ _remove_grp = {
 				deleteVehicle _x;
 	//			[_x] call XAddDead;
 				sleep 0.1;
+#ifdef __SYG_PRINT_ACTIVITY__
+                _grp_units_removed_cnt = _grp_units_removed_cnt + 1;
+#endif
+
 			};
 		}forEach units _igrp;
 		sleep 0.1;
+#ifdef __SYG_PRINT_ACTIVITY__
+        hint localize format["x_isledefense: stop remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
+#endif
+
 		_igrp = nil;
 		_igrpa set [PARAM_GROUP, grpNull]; // mark it removed
-	};
+//	};
 };
 
 /*
@@ -525,9 +541,9 @@ while { true } do {
 	};
 
 	__DEBUG_NET("x_isledefense.sqf",(call XPlayersNumber))
-#ifdef __DEBUG__
-    hint localize "+++ x_isledefense.sqf: loop start";
-#endif
+//#ifdef __DEBUG__
+//    hint localize "+++ x_isledefense.sqf: loop start";
+//#endif
 	//
 	// ===================== MAIN LOOP ON EACH PATROL ===========================
 	//
@@ -907,4 +923,4 @@ while { true } do {
 	};
 #endif
 		
-}; // while {true} do...
+}; // while 

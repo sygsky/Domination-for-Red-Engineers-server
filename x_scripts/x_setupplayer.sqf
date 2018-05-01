@@ -140,11 +140,11 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
             switch (d_own_side) do {
                 case "WEST": {
                     if (__ACEVer) then {
-                        _weapp = "ACE_M16A4";
-                        _magp = "ACE_30Rnd_556x45_B_Stanag";
+                        _weapp = ["P", "ACE_M16A4","ACE_30Rnd_556x45_B_Stanag",12];
+                        _magp = ["ACE_30Rnd_556x45_B_Stanag",6];
                     } else {
-                        _weapp = "M16A4";
-                        _magp = "30Rnd_556x45_Stanag";
+                        _weapp = ["P", "M16A4","30Rnd_556x45_Stanag",12];
+                        _magp = ["30Rnd_556x45_Stanag",6];
                     };
                 };
                 case "EAST": {
@@ -162,7 +162,13 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 case 1;
                                 case 2:
                                 {
-                                    if ((random 1) > 0.5) then {["P", "ACE_AK74", "ACE_45Rnd_545x39_BT_AK", 10]} else {["P", "ACE_AKM", "ACE_75Rnd_762x39_BT_AK", 5]}
+                                    if ((random 1) < 0.33) then {
+                                        ["P", "ACE_AK74", "ACE_45Rnd_545x39_BT_AK", 10]
+                                    }
+                                    else {
+                                        if ((random 1) < 0.66) then {["P", "ACE_AKM", "ACE_75Rnd_762x39_BT_AK", 5]}
+                                        else  {["P", "ACE_RPK47", "ACE_75Rnd_762x39_BT_AK", 5]}
+                                    }
                                 };
                                 case 3: {["P", "ACE_AKM_Cobra", "ACE_75Rnd_762x39_BT_AK", 5]}; // Lieutenant
                                 default
@@ -173,7 +179,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 
                             _mg    = switch _index do
                             {
-                                case 0: {["P", "ACE_RPK47", "ACE_40Rnd_762x39_BT_AK", 10]};
+                                case 0: {["P", "ACE_RPK47", "ACE_75Rnd_762x39_BT_AK", 5]};
                                 case 1: {["P", "ACE_RPK74", "ACE_45Rnd_545x39_BT_AK", 10]};
                                 case 2:
                                 {
@@ -195,7 +201,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             {
                                 case 0;
                                 case 1: {["P", "ACE_AKS74U", "ACE_45Rnd_545x39_BT_AK", 10]};
-                                case 2; //{["P", "ACE_AKS74USD", "ACE_45Rnd_545x39_BT_AK", 10]};
+                                case 2;
                                 case 3: {["P", "ACE_AKS74U_Cobra", "ACE_45Rnd_545x39_BT_AK", 10]};
                                 default {["P", "ACE_AKS74USD_Cobra", "ACE_45Rnd_545x39_BT_AK", 10]};
     //							default {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10]};
@@ -287,15 +293,17 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VL_PDM",1]];
                             };
                         };
+
                         if (toLower (name player) == "yeti") then
                         {
                             _magp = [];
                         };
+
                         [_p, _weapp] call SYG_armUnit;
                         //+++ Sygsky: add largest ACE rucksack and fill it with mags
                         _p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
                         _p setVariable ["ACE_Ruckmagazines", _magp];
-                        hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %4", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
+                        hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %5", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
                         //--- Sygsky
 
                     }
