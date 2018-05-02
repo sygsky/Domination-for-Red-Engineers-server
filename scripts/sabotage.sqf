@@ -362,9 +362,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 			else // no unit with bomb found, so exit now
 			{
 			    // TODO: try to find bomb on dead bodies or somewhere else (MHQ, ammotrack, ammo boxes, rucksack[s] etc)
-				if (_debug ) then { player globalChat "--sabotage.sqf: Group has no more bombs, exiting"; };
+				if (_debug ) then { player globalChat format["--sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp]; };
 #ifdef __PRINT__
-				hint localize "--sabotage.sqf: Group has no more bombs, exiting";
+				hint localize format["--sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp];
 #endif	
 				_continue = false; // exit as no more bombs/men found
 			};

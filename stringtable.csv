@@ -393,6 +393,7 @@ STR_SYS_212,"Very good job, boys! Radio tower destroyed.","Auftrag ausgeführt! 
 STR_SYS_213,"You need %2 points to rebuild a factory, your current score is: %1!","Sie müssen %2 Punkte, um den Wiederaufbau einer Fabrik, Ihre aktuelle Punktzahl beträgt: %1!","Для ремонта здания необходимо очков: %2, вы имеете: %1!"
 STR_SYS_214,"Restore support building. This will take some time and score...","Wiederherstellen Unterstützung bauen. Dies wird einige Zeit dauern und Partitur...",Производится ремонт сервиса. Это потребует времени и убавит счёт..."
 STR_SYS_215,Airbase,Airbase,Авиабаза
+STR_SYS_216,occupied city,besetzte Stadt,оккупированный
 
 STR_SYS_220,"for aircrafts maintenance","für die Wartung der Flugzeuge","по обслуживанию самолетов"
 STR_SYS_221,"for helicopters maintenance","für die Wartung der Hubschrauber","по обслуживанию вертолётов"
