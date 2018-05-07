@@ -336,10 +336,10 @@ d_allmen_W = (
 
 		} else {
 			if (__CSLAVer) then {
-				["CSLA_USsgt","CSLA_USgnd","CSLA_USgnd","CSLA_USat","CSLA_USat","CSLA_USrfl","CSLA_USrfl","CSLA_USsaw","CSLA_USsaw","CSLA_USsniper","CSLA_USmedi"],
+				["CSLA_USsgt","CSLA_USgnd","CSLA_USgnd","CSLA_USat","CSLA_USat","CSLA_USrfl","CSLA_USrfl","CSLA_USsaw","CSLA_USsaw","CSLA_USsniper","CSLA_USmedi"] +
 				["CSLA_USsgt","CSLA_USgnd","CSLA_USgnd","CSLA_USgnd","CSLA_USat","CSLA_USat","CSLA_USat","CSLA_USrfl","CSLA_USrfl","CSLA_USrfl","CSLA_USmg","CSLA_USmg","CSLA_USmg","CSLA_USmedi"]
 			} else {
-				["SquadleaderW","TeamLeaderW","SoldierWG","SoldierWAR","SoldierWAT","TeamLeaderW","SoldierWG","SoldierWAR","SoldierWSniper","SoldierWMedic"],
+				["SquadleaderW","TeamLeaderW","SoldierWG","SoldierWAR","SoldierWAT","TeamLeaderW","SoldierWG","SoldierWAR","SoldierWSniper","SoldierWMedic"] +
 				["SquadleaderW","SoldierWMG","SoldierWB","SoldierWB","SoldierWMG","SoldierWB","SoldierWB","SoldierWMedic"]
 			}
 		}
@@ -347,7 +347,7 @@ d_allmen_W = (
 );
 d_allmen_G =
 	[
-		["SquadLeaderG","TeamLeaderG","SoldierGMG","SoldierGG","SoldierGAT","SoldierGMG","SoldierGB","SoldierGB","SoldierGB","SoldierGMedic"],
+		["SquadLeaderG","TeamLeaderG","SoldierGMG","SoldierGG","SoldierGAT","SoldierGMG","SoldierGB","SoldierGB","SoldierGB","SoldierGMedic"]+
 		["SquadleaderG","SoldierGMG","SoldierGAA","SoldierGAT","SoldierGAT","SoldierGB","SoldierGMedic"]
 	];
 

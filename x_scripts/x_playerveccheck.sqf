@@ -59,8 +59,8 @@ while {true} do {
 			_indexheli = (toUpper (_vrs select 2)) call XGetRankIndex; // heli
 			_indexplane = (toUpper (_vrs select 3)) call XGetRankIndex; // plane
 			if (_vec isKindOf "LandVehicle") then {
-				if ( _vec isKindOf "BMP2" || _vec isKindOf "M113" || _vec isKindOf "Vulcan" OR _vec isKindOf "StrykerBase") then {
-				    if (!(_vec isKindOf "StrykerBase")) then // play light armour entering sound
+				if ( _vec isKindOf "BMP2" || _vec isKindOf "M113" || _vec isKindOf "Vulcan" || _vec isKindOf "StrykerBase" || _vec isKindOf "BRDM2") then {
+				    if (!(_vec isKindOf "StrykerBase" || _vec isKindOf "BRDM2")) then // play light tracked armour entering sound
 				    {
     				    _vec say "APC_GetIn";
 				    };
