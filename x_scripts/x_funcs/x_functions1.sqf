@@ -37,6 +37,30 @@ XfRandomIndexArray = {
 	_ran_array
 };
 
+/**
+ * Creates an array with count random indexes so then some imdexes are mandatory and some are optional, designated through predefined array
+ * Params:  _inds = [ _out_cnt, _cnt, _pre_arr ] call XfRandomIndexArrayWithPredefVals;
+ * where: _pre_arr - array with predefined indexes may be excluded in resulting array,
+ * e.g. to work with target_names(defined in i_common.sqf) so that exclude som small towns,
+ * use [count target_names, 22, [18,21,22,23,24,25,26,27]] call  XfRandomIndexArrayWithPredefVals to return 22 town indexes
+ * excluding some of array [18,21,22,23,24,25,26,27]
+ * Returns: array with _cnt indexes in range [0.._ind_max] excluding some of indexes stored in _pre_arr. Of course
+ * named array must contain also indexes in range [0..(_cnt-1)]
+ */
+XfIndexArrayWithPredefVals = {
+    private ["_preArr","_cnt","_outCnt","_arrIn"];
+    _preArr    = +(_this select 2); // predefined array copy with weak indexes allowed to be removed if needed
+    _cnt       = _this select 1; // sequenced indexes length
+    _outCnt    = _this select 0; // number of indexes in resulting array
+    _arrIn = [];
+    for "_i" from 0 to _cnt -1 do {_arrIn = _arrIn + [_i]};
+    _arrIn = _arrIn - _preArr; // remove predefined indexes to allow use not all of them later
+    _preArr = _preArr call XfRandomArray;
+    _preArr resize (_cnt - _outCnt); // remove some inds to result in designated inds count
+    _arrIn = _arrIn + _preArr;
+    _arrIn call XfRandomArray
+};
+
 // #########################################
 
 // converts a bit array to an integer number

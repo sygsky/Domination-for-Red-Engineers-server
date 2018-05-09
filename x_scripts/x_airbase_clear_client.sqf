@@ -6,7 +6,7 @@ private ["_current_target_name","_target_array2"];
 
 if (!X_Client) exitWith {};
 
-"1" objStatus "DONE";
+"1" objStatus "DONE"; // airport at Paraiso
 
 if (client_target_counter < number_targets) then {
 	_type_name = mt_bonus_vehicle_array select extra_bonus_number;

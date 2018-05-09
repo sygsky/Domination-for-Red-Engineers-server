@@ -432,7 +432,7 @@ hint localize "+++ count resolved_targets > 0 +++";
         } else {
             [_target_name, _current_target_pos,"ELLIPSE",_color,[300,300]] call XfCreateMarkerLocal;
         };
-        call compile format ["""%1"" objStatus ""VISIBLE"";""%1"" objStatus ""%2"";", _target_array select 3,_objstatus];
+        call compile format ["""%1"" objStatus ""VISIBLE"";""%1"" objStatus ""%2"";", _target_array select 3,_objstatus]; // FIXME: replace "VISIBLE" with "ACTVE" may be?
     };
 #endif
 };
@@ -445,8 +445,8 @@ if (current_target_index != -1 && !target_clear) then {
 	_color = (if (current_target_index in resolved_targets) then {"ColorGreen"} else {"ColorRed"});
 	[_current_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
 	"dummy_marker" setMarkerPosLocal _current_target_pos;
-	"1" objStatus "DONE";
-	call compile format ["""%1"" objStatus ""VISIBLE"";", _target_array2 select 3];
+	"1" objStatus "DONE"; // airport at Paraiso
+	call compile format ["""%1"" objStatus ""VISIBLE"";", _target_array2 select 3]; // FIXME: replace "VISIBLE" with "ACTVE" may be?
 //	hint localize format["+++""%1"" objStatus ""VISIBLE"";", _target_array2 select 3]
 };
 

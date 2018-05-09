@@ -440,9 +440,9 @@ Syg_ensureOfficerInGroup = {
     if ( typeName _officer == "OBJECT") exitWith { _officer }; // found in group and selected as leader
 
     // add absent officer to the group now
-    _officer = _grp createUnit [_officer, getPos (leader _grp), [], 10, "NONE"];
+    _officer = _grp createUnit [_officer, getPos (leader _grp), [], 10, "FORM"];
     [_officer] join _grp;
-    sleep 0.3;
+    sleep 0.1;
     (leader _grp) setRank "PRIVATE";
      _grp selectLeader _officer;
     _officer setRank "LIEUTENANT";

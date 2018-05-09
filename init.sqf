@@ -186,7 +186,9 @@ if (isServer) then {
 			case 60: {maintargets_list = [8,10,16,17];};
 			case 70: {maintargets_list = [8,9,11,19,14,18];};
 			case 80: {maintargets_list = [8,15,9,11,12,13];};
-			case 90: {maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];}; // 22
+			case 90: { // 22 towns (maximum number) fill them from whole list. All big towns should be included too
+			    maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];
+			}; // 22
 		};
 	};
 #else

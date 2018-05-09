@@ -13,7 +13,7 @@ _radious = (_t_array select 2) max 300;
 [_current_target_name, _current_target_pos,"ELLIPSE","ColorRed",[_radious,_radious]] call XfCreateMarkerLocal;
 "dummy_marker" setMarkerPosLocal _current_target_pos;
 
-"1" objStatus "DONE";
+"1" objStatus "DONE"; // Paraiso airport (future goal, under development)
 call compile format ["""%1"" objStatus ""ACTIVE"";", OBJECT_ID];
 //hint localize format ["""%1"" objStatus ""ACTIVE"";", OBJECT_ID];
 

@@ -142,7 +142,7 @@ while { true } do {
 			if ( !isNull _unit && alive _unit ) then
 			{
 				_unc = (damage _unit) >= 0.7;
-				if (format["%1",_unit getVariable "ACE_unconscious"] != "<null>") then { _unc = _unit getVariable "ACE_unconscious"; };
+				if ( _unit call ACE_unconsciousformat["%1",_unit getVariable "ACE_unconscious"] != "<null>") then { _unc = _unit getVariable "ACE_unconscious"; };
 				if ( _unc ) then
 				{
 					[ getPos _unit, 20 * (damage _unit), 150, "Red"/* "F_40mm_Red" */ ] spawn _illumination;
