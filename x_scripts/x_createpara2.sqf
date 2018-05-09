@@ -42,7 +42,7 @@ _chopper flyInHeight 100; // fly on height about 100 meters
 // store time of the start of last infiltration on base
 __SetGVar(INFILTRATION_TIME, date);
 #ifdef __DEBUG_PRINT__
-hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено на %1", date];
+hint localize format["x_scripts/x_createpara2.sqf: Десант стартовал, время установлено на %1", date];
 #endif
 
 _parachute_type = (

@@ -35,6 +35,8 @@
 
 #define __FUTURE__
 
+#define __DEBUG__
+
 #define STAT_NIGHT 0
 #define STAT_DAY 1
 #define STAT_MORNING 2
@@ -98,14 +100,14 @@ _morningTwilightStart = _dayStart - SYG_twilightDuration;
 
 #ifdef __FUTURE__
 
-_str = format["+++ SHORTNIGHT: nightSkipTo %1, morningTwilightStart %2, dayStart %3, eveningTwilightStart %4, realNightStart %5, nightSkipFrom %6",
-        _nightSkipTo,_morningTwilightStart,_dayStart,_eveningTwilightStart,_realNightStart,_nightSkipFrom];
+_str = format[ "+++ SHORTNIGHT: nightSkipTo %1, morningTwilightStart %2, dayStart %3, eveningTwilightStart %4, realNightStart %5, nightSkipFrom %6, daytime %7",
+        _nightSkipTo,_morningTwilightStart,_dayStart,_eveningTwilightStart,_realNightStart,_nightSkipFrom, daytime ];
 //player groupChat _str;
 hint localize _str;
 
 while {true } do
 {
-    if (daytime < _nightSkipTo) then // we are in real night after 00:00, simply wiaght up to the morning twilight
+    if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 00:00, simply wiaght up to the morning twilight
     {
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo, skip to it",daytime];
@@ -164,12 +166,11 @@ while {true } do
         sleep ((_nightSkipFrom - daytime) * 3600);
     };
     // it is time to skip dark night period
-#ifdef __DEBUG__
-    _str = format["SHORTNIGHT: daytime (%1) < 24:00, skip to _nightSkipTo",daytime];
-    //player groupChat _str;
-    hint localize _str;
-#endif
-    skipTime (( _nightSkipTo - daytime + 24 ) % 24);
+//#ifdef __DEBUG__
+//    _str = format["SHORTNIGHT: daytime (%1) < 24:00, skip to _nightSkipTo",daytime];
+//    hint localize _str;
+//#endif
+//    skipTime (( _nightSkipTo - daytime + 24 ) % 24);
 };
 
 #else
