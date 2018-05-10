@@ -56,7 +56,7 @@ XfIndexArrayWithPredefVals = {
     for "_i" from 0 to _cnt -1 do {_arrIn = _arrIn + [_i]};
     _arrIn = _arrIn - _preArr; // remove predefined indexes to allow use not all of them later
     _preArr = _preArr call XfRandomArray;
-    _preArr resize (_cnt - _outCnt); // remove some inds to result in designated inds count
+    _preArr resize ((count _preArr) - (_cnt - _outCnt)); // remove some inds to result in designated inds count
     _arrIn = _arrIn + _preArr;
     _arrIn call XfRandomArray
 };
