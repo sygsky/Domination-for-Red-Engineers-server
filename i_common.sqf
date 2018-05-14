@@ -24,7 +24,7 @@ if (number_targets >= 50) then {
 	);
 	number_targets = _h;
 };
-
+hint localize format["+++ number_targets %1", number_targets];
 #ifndef __WITH_GRASS_AT_START__
 setTerrainGrid 50;
 #endif
@@ -162,34 +162,34 @@ target_names =
 	#endif
 	#ifdef __DEFAULT__
 	[
-		[[9349,5893,0],"Cayo", 210, 2],        //  0
-		[[10693,4973,0],"Iguana", 270, 3],     //  1
-		[[7613,6424,0],"Arcadia", 235, 4],     //  2
-		[[8262,9017,0],"Chantico", 180, 5],    //  3
-		[[9170,8309,0],"Somato", 230, 6],      //  4
-		[[10550,9375,0],"Paraiso", 405, 7],    //  5 *
-		[[12399,7141,0],"Ortego",280, 8],      //  6 *
-		[[11450,6026,0],"Dolores",350, 9],     //  7 *
-		[[13302,8937,0],"Corazol",450, 10],    //  8 *
-		[[14470,10774,0],"Obregan",240, 11],   //  9
-		[[13172,11320,0],"Mercalillo",210, 12],// 10
-		[[14233,12545,0],"Bagango",350, 13],   // 11 *
-		[[17271,14193,0],"Masbete",180, 14],   // 12
-		[[18984,13764,0],"Pita",250, 15],      // 13
-		[[12508,15004,0],"Eponia",270, 16],    // 14
-		[[16596,9358,0],"Everon",200, 17],     // 15
-		[[9773,14436,0],"Pacamac",150, 18],    // 16
-		[[7722,15802,0],"Hunapu",150, 19],     // 17
-//		[[10593,16194,0],"Mataredo",150, 20],  // 18 -
-		[[12387,13388,0],"Carmen",200, 21],    // 19
-		[[2826,2891,0],"Rahmadi",180, 22],     // 20
-//		[[14444,8554,0],"Gaula",180, 23],      // 21 -
-		[[6850,8069,0],"Estrella",200, 24],    // 22 -
-		[[15404,13829,0],"Benoma",279, 25]     // 23 -
-//		[[9321,5275,0],"Tiberia",279, 26],       // 24 -
-//      [14351,9461,0],"Modesta",279,27],         // 25 -
-//		[[11502.5,9152,0],"Corinto",200,28],     // 26 -
-//		[[8868,7907,0],"Gulan",220,29]          // 27 -
+		[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
+		[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
+		[[7613,6424,0],   "Arcadia"   ,235, 4],  //  2
+		[[8262,9017,0],   "Chantico"  ,180, 5],  //  3
+		[[9170,8309,0],   "Somato"    ,230, 6],  //  4
+		[[10550,9375,0],  "Paraiso"   ,405, 7],  //  5 * for big town
+		[[12399,7141,0],  "Ortego"    ,280, 8],  //  6 *
+		[[11450,6026,0],  "Dolores"   ,350, 9],  //  7 *
+		[[13302,8937,0],  "Corazol"   ,450, 10], //  8 *
+		[[14470,10774,0], "Obregan"   ,240, 11], //  9
+		[[13172,11320,0], "Mercalillo",210, 12], // 10
+		[[14233,12545,0], "Bagango"   ,350, 13], // 11 *
+		[[17271,14193,0], "Masbete"   ,180, 14], // 12
+		[[18984,13764,0], "Pita"      ,250, 15], // 13
+		[[12508,15004,0], "Eponia"    ,270, 16], // 14
+		[[16596,9358,0],  "Everon"    ,200, 17], // 15
+		[[9773,14436,0],  "Pacamac"   ,150, 18], // 16
+		[[7722,15802,0],  "Hunapu"    ,150, 19], // 17
+		[[10593,16194,0], "Mataredo"  ,150, 20], // 18 - for small town
+		[[12387,13388,0], "Carmen"    ,200, 21], // 19
+		[[2826,2891,0],   "Rahmadi"   ,180, 22], // 20
+		[[14444,8554,0],  "Gaula"     ,180, 23], // 21 -
+		[[6850,8069,0],   "Estrella"  ,200, 24], // 22 -
+		[[15404,13829,0], "Benoma"    ,279, 25], // 23 -
+		[[9321,5275,0],   "Tiberia"   ,279, 26], // 24 -
+        [[14351,9461,0],  "Modesta"   ,279, 27], // 25 -
+		[[11502.5,9152,0],"Corinto"   ,200, 28], // 26 -
+		[[8868,7907,0],   "Gulan"     ,220, 29]  // 27 -
 
 	];
 	#endif
@@ -200,7 +200,10 @@ big_town_radious = 280; // if town radious >= this number, town is considered as
 
 d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma" ];
 
-// Small towns indexes. Can be remoeved form list when  playing maximum number of towns
+// Small towns indexes. Can be absent from list when playing not maximum number of towns
+d_big_towns_inds = [5,6,7,8,11];
+
+// Small towns indexes. Can be absent from list when playing not maximum number of towns
 d_small_towns_inds = [18,21,22,23,24,25,26,27];
 
 #endif

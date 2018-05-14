@@ -443,7 +443,10 @@ XGetRankFromScore = {
 #ifdef __SUPER_RANKING__
 
 XIsRankFromScoreExtended =  {
-    if (isPlayer _this) then { _this = score _this;};
+    if ( typeName _this == "OBJECT") then
+    {
+        if (isPlayer _this) then { _this = score _this;};
+    };
     _this >= argp(d_pseudo_ranks,0)
 };
 

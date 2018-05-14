@@ -131,3 +131,6 @@
 
 // uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
 #define __JAVELIN__
+
+// uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
+#define __NO_RPG_CLONING__

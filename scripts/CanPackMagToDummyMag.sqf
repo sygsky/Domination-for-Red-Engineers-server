@@ -1,4 +1,4 @@
-// Replacer of ACE internal module to disable Javelin loding to the rucksack
+// Replacer of ACE internal module to disable Javelin loading to the rucksack
 
 if (isNil "_this") exitWith { false };
 if (_this == "ACE_Javelin") exitWith { false }; // No Javelins in client rucksack

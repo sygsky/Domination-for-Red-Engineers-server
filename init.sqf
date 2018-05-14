@@ -178,17 +178,30 @@ if (isServer) then {
 
 	// create random list of targets
 #ifdef __DEFAULT__
-	if (_number_targets_h < 50) then {
-		maintargets_list = (count target_names) call XfRandomIndexArray;
+	if (_number_targets_h < 50) then { // random number of towns is already defined in number_targets
+        // As many as possible big towns should be included into resulting array
+        // And some small ones also may be randomly preselected or be totally absent if output count is too low (< 9)
+        // created cnt, shole number, important indexes, unimportant indexes
+        _params = [_number_targets_h, count target_names, d_big_towns_inds, d_small_towns_inds]; //
+        _str = format["+++ init target town params: %1",_params ];
+        hint localize _str;
+        _arr = _params call XfIndexArrayWithPredefVals;
+        maintargets_list = _arr;
+		// maintargets_list = (count target_names) call XfRandomIndexArray;
 	} else {
 		switch (_number_targets_h) do {
 			case 50: {maintargets_list = [3,4,2,0,1,7,6];};
 			case 60: {maintargets_list = [8,10,16,17];};
 			case 70: {maintargets_list = [8,9,11,19,14,18];};
 			case 80: {maintargets_list = [8,15,9,11,12,13];};
-			case 90: { // 22 towns (maximum number) fill them from whole list. All big towns should be included too
+			case 90: {
+			    // 22 towns (maximum number) fill them from whole list.
+			    // Paraiso/Chantico/Somato/Arkadia/Estrella/Cayo etc
 			    maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];
 			}; // 22
+			case 91: { // 8 smallest random target towns
+			    maintargets_list = d_small_towns_inds call  XfRandomArray;
+			};
 		};
 	};
 #else
@@ -201,6 +214,9 @@ if (isServer) then {
     //_first_array = [5];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
     _first_array = [];
     maintargets_list = _first_array + (maintargets_list - _first_array);
+
+    _str = format["+++ generated maintargets_list: %1",maintargets_list ];
+    hint localize _str;
 
 	__DEBUG_SERVER("init.sqf", maintargets_list)
 	// create random list of side missions
@@ -615,7 +631,13 @@ if ( !isServer ) then // use only on client
     ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\CanPackMagToDummyMag.sqf";
 #endif
 
+#ifdef __NO_RPG_CLONING__
+    // disables AT etc missiles cloning through rucksacks
+ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\PackInventoryMagToDummyMag.sqf";
+#endif
 };
 #endif
+
+
 
 if (true) exitWith {};

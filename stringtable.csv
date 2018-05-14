@@ -189,6 +189,8 @@ STR_SYS_92,"Random 14","Random 14","Случайно 14"
 STR_SYS_93,"Random 16","Random 16","Случайно 16"
 STR_SYS_94,"Random 18","Random 18","Случайно 18"
 STR_SYS_95,"Random 22","Random 22","Случайно 22 (все)"
+STR_SYS_95_1,"Smallest random 8","Die kleinste zufällige Städte 8","Случайно мелкие 8"
+
 STR_SYS_96,"Time of day:","Uhrzeit:","Время:"
 
 STR_SYS_97,"STATUS","STATUS","СТАТУС"

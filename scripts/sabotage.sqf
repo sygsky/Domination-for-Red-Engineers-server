@@ -439,7 +439,7 @@ if ( !isNil "d_on_base_groups") then
 
 if ( _debug ) then
 	{player globalChat "sabotage.sqf: --- Exiting sabotage group script ---";};
-#ifdef __PRINT_FIRE__
+#ifdef __PRINT__
 	hint localize "sabotage.sqf: --- Exiting sabotage group script ---";
 #endif	
 
