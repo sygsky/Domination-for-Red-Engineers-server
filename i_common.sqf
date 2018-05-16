@@ -483,23 +483,23 @@ mt_bonus_vehicle_array = (
 [
 "ACE_BMP3_M", 		    // 1 - ordinal vehicles list
 "ACE_T80_UM",     		// 2
-"ACE_ZSU",   			// 3
-"ACE_T90A", 			// 4
+"ACE_T80_B",   			// 3
+"ACE_T90_K", 			// 4
 "ACE_ZSU",  			// 5
 "ACE_KA52",  			// 6
 "ACE_BMP3_M",   		// 7
 "ACE_BRDM2_SA9", 		// 8
 "ACE_BMP3_M",   		// 9
-"ACE_Tunguska",			//10
+"ACE_T64_BV",			//10
 "ACE_Tunguska",			//11
 "ACE_BRDM2_SA9",   		//12 - last bonus land vehicle
 "ACE_ZSU",          	//13 - first bonus air vehicle
-"ACE_Mi24V", 			//14
+"ACE_T72_BM", 			//14
 "ACE_Mi17", 		    //15
 "ACE_Mi24P",	        //16
-"ACE_Su27S", 			//17
+"ACE_T90_K", 			//17
 "ACE_Su30Mk_R27_R73",	//18
-"ACE_Su34",     	    //19
+"ACE_Mi24V",     	    //19
 "ACE_Su34B",            //20
 
 "ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane)
