@@ -540,7 +540,7 @@ while { true } do {
 	    } forEach SYG_isle_grps;
 	};
 
-	__DEBUG_NET("x_isledefense.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_isledefense.sqf",(call XPlayersNumber))
 //#ifdef __DEBUG__
 //    hint localize "+++ x_isledefense.sqf: loop start";
 //#endif

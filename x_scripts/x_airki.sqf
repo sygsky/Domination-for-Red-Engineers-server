@@ -463,7 +463,8 @@ while { true } do {
 			_vehicles call SYG_fastReload; // reload SU just in case
 		};
 		
-		if (X_MP) then {
+		if (X_MP && ()(call XPlayersNumber) == 0) then {
+		    hint localize "x_airki.sqf: no players, wait for next one";
 			waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
 		};
 		//__DEBUG_NET("x_airki_2.sqf",(call XPlayersNumber))
