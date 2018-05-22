@@ -35,6 +35,7 @@ if (isServer) then {
 	_bpos = _nbuilding buildingPos _pos_id; // pos coordinate
 
 	king = _newgroup createUnit ["King", _bpos, [], 0, "FORM"];
+	king setPos _bpos;
     hint localize format["+++ king is at hotel pos %1", _pos_id];
 	[king] join _newgroup;
 
