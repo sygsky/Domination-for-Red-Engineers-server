@@ -411,7 +411,7 @@ XGetRankIndex = {
 XGetRankStringLocalized = {
     if ( typeName _this == "OBJECT") then
     {
-        if (isPlayer _this) then { _this = _this call XGetRankFromScore;};
+        if (isPlayer _this) then { _this = _this call XGetRankFromScoreExt;};
     };
 	switch (toUpper(_this)) do {
 		case "PRIVATE":    {localize "STR_TSD9_26"}; // 0
@@ -424,13 +424,14 @@ XGetRankStringLocalized = {
 
 		case "Brigadier-General": {localize "STR_SYS_1000"};  // 7
         case "Lieutenant-General": {localize "STR_SYS_1001"}; // 8
-        case "Colonel-General": {localize "STR_SYS_1002,"};
-        case "General-of-the-Army": {localize "STR_SYS_1003"};
-        case "Marshal": {localize "STR_SYS_1004"};
-        case "Generalissimo": {localize "STR_SYS_1005"};    // 12
+        case "Colonel-General": {localize "STR_SYS_1002,"};   // 9
+        case "General-of-the-Army": {localize "STR_SYS_1003"};// 10
+        case "Marshal": {localize "STR_SYS_1004"};            // 11
+        case "Generalissimo": {localize "STR_SYS_1005"};      // 12
 	};
 };
 
+// returns namee for the ordinal Arma rank
 XGetRankFromScore = {
     if ( typeName _this == "OBJECT") then
     {
@@ -474,7 +475,7 @@ XGetRankFromScoreExt = {
         if ( _this < _x ) exitWith { "Colonel" };
         _index = _index + 1;
     } forEach d_pseudo_ranks;
-    (d_pseudo_ranks select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
+    (d_pseudo_rank_names select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
 };
 
 XGetRankIndexFromScoreExt = {
