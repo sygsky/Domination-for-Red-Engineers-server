@@ -20,7 +20,7 @@ if (({alive _x} count _units_player) > 0) then {
 		};
 	} forEach _units_player;
 	if (_has_ai) then {
-		"All AI soldiers dismissed !!!!" call XfHQChat;
+		(localize "STR_AI_9") call XfHQChat; // "All AI soldiers dismissed !!!!"
 	};
 };
 

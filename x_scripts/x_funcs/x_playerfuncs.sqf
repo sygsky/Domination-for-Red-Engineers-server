@@ -283,7 +283,7 @@ XPlayerRank = {
 				if ( !player_already_in_super_rank ) then
 				{
 				    // TODO: sent message to everybody about new super rank player
-				    // TODO: addAction to get moto/etc from bus stops
+				    // TODO: addAction to get moto/etc from bus stops (but is it impossible?)
 				    // TODO: check if no players in the same group with the same or higher rank
 				    _grp = group player;
 				    _units = (units _grp) - [player]; // group units minus player itself
@@ -296,6 +296,13 @@ XPlayerRank = {
                     {
                         // TODO: set player leader
                         hint localize format["This player with score %1 (%2) has max rank in the group (count %3)", _score, _new_rank, count (units _grp)];
+                    }
+                    else
+                    {
+                        hint localize format["Player %1 has higher rank (%2) than you (%3)",
+                        name _highest_ranked_player,
+                        _highest_ranked_player call XGetRankFromScoreExt,
+                        _score call XGetRankFromScoreExt];
                     }
 				};
 
