@@ -5,7 +5,7 @@ private ["_type_soldier","_units","_ai_counter","_ai_side_char","_ai_side_unit"]
 _type_soldier = _this select 3;
 
 d_grp_caller = group player;
-if (player != leader d_group_caller) exitWith {
+if (player != leader d_grp_caller) exitWith {
 	localize "STR_SYS_1172" call XfHQChat; // "You are currently not a group leader, no AI available. Create a new group"
 };
 _units = units d_grp_caller;
@@ -33,7 +33,14 @@ if (_ai_counter > _max_rank_ai) exitWith {
 
 #ifdef __RANKED__
 // each AI soldier costs score points
-player addScore (d_ranked_a select 3) * -1;
+_price = d_ranked_a select 3;
+if (_price != 0) then
+{
+    playSound "steal";
+    player addScore (d_ranked_a select 3) * -1;
+    (format[localize "STR_AI_11", _price]) call XfHQChat; // "You paid %1 for one AI, points will be returned when he is fired"
+};
+
 #endif
 
 _ai_side_char = (

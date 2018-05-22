@@ -201,7 +201,7 @@ d_ranked_a = [
 	10, 		// 0 очков необходимо инженеру для ремонта
 	[4,3,2,1], 	// 1 очков начисляется инженеру за ремонт авиа, танки, машины, другое
 	2, 			// 2 очков вычитается за 1 залп
-	0,		    // 3 points in the AI version for recruiting one soldier
+	3,          // 3 points in the AI version for recruiting one soldier
 	1, 			// 4 очков вычитается за AAHALO parajump
 	2, 			// 5 очков вычитается за создание техники из MHQ
 	(d_points_needed select 0), // 6 очков необходимо игроку иметь для создания техники из MHQ (ефрейтор?)

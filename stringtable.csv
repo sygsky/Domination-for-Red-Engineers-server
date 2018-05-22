@@ -776,8 +776,9 @@ STR_AI_5,"Recruit Sniper","Rekrutieren Sniper","Призвать снайпер�
 STR_AI_6,"Recruit AA Soldier","Rekrutieren AA-Soldat","Призвать оператора ПВО"
 STR_AI_7,"Recruit Specop","Rekrutieren Specop","Призвать в спецназ"
 STR_AI_8,"Dismiss AI","Entlassen AI","Демобилизовать всех"
-STR_AI_9,"All AI soldiers dismissed !!!","all die KI-Soldaten sind demobilised !!!","Все местные бойцы демобилизованы !!!"
+STR_AI_9,"All AI soldiers dismissed !!! Points returned %1",Alle KI-Soldaten entlassen !!! Punkte returned %1","Все местные бойцы демобилизованы !!! Возвращено очков: %1"
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
+STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für AI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
 
 STR_RESTORE_DLG_1,To restore,Wiederherstellen,Восстановить
 STR_RESTORE_DLG_2,Select from list,Wählen Sie aus der Liste aus,Выбрать из списка
