@@ -1769,9 +1769,11 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 };
 #endif
 
+#define __DEBUG_ADD_VEHICLES__
+
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley
-player setPos [14531,9930,0];
-player addScore (1000 - (score player));
+// player setPos [14531,9930,0];
+player addScore (1500 - (score player));
 #endif
 if (true) exitWith {};
