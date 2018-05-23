@@ -226,7 +226,10 @@ while { true } do {
 	
 	_grp setCombatMode "RED";
 	sleep 1.123;
-	_attack_pos = [position FLAG_BASE,600] call XfGetRanPointCircle;
+	// select LZ
+	_rect = [[[9536,9134,0],450,300,25],[[10027,10573,0],700,200,10]] call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
+	//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
+	_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
 	
 //	_attack_pos  = position FLAG_BASE;
 //	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
