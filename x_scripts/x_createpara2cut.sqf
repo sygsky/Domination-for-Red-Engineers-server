@@ -18,6 +18,8 @@ if (!isServer) exitWith {};
 //#define __USE_KRONSKY_SCRIPT__
 #define __DEBUG_PRINT__
 
+#define HEIGHT_TO_EJECT 80
+
 _vgrp = _this select 0;
 _chopper = _this select 1;
 _helifirstpoint = _this select 2;
@@ -55,10 +57,11 @@ _parachute_type = (
 
 if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _chopper) ) then // Create sabotage group and arrange it in chopper cargo 
 {
-	__GetEGrp(_paragrp)
+	_paragrp = call SYG_createEnemyGroup;
 	_unit_array = ["sabotage", d_enemy_side] call x_getunitliste;
 	_real_units = _unit_array select 0;
-	_cnt_uni = count _real_units;
+	_cnt_uni = (count _real_units) min (_chopper emptyPositions "Cargo"); // heli may be small one
+	_cnt_uni = _cnt_uni min _cnt_cargo;
 	_unit_array = [];
 	sleep 0.1;
 	for "_i" from 0 to (_cnt_uni - 1) do 
@@ -81,7 +84,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 	};
 };
 
- _testgun = "ACE_ZSU" createVehicle position player;
+ //_testgun = "ACE_ZSU" createVehicle position player;
 // player addScore 500;
 //[_paragrp, _helifirstpoint, _heliendpoint, _vgrp, _chopper] execVM "x_scripts\x_player.sqf";
 
@@ -92,11 +95,11 @@ _main_polling_interval = 2.123;
 
 while {_helifirstpoint distance (leader _vgrp) > 250 || !canMove _chopper} do 
 { 
-	if (!alive _chopper) exitWith {_ejected = true; [player,"Chopper destroyed"] call XfSideChat;};
+	if (!alive _chopper) exitWith {_ejected = true; /*[player,"Chopper destroyed"] call XfSideChat;*/};
 	
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
-        while {alive _chopper && alive driver _chopper && position _chopper select 2 >= 80 && _next_to_eject < _cnt_uni} do
+        while {alive _chopper && alive driver _chopper && position _chopper select 2 >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
 			_cur_uni = _unit_array select _next_to_eject;
 			if (!isNull _cur_uni && alive _cur_uni ) then
@@ -112,18 +115,19 @@ while {_helifirstpoint distance (leader _vgrp) > 250 || !canMove _chopper} do
 
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
-        while {alive _chopper && alive driver _chopper && position _chopper select 2 < 80 && _next_to_eject < _cnt_uni} do
+        while {alive _chopper && alive driver _chopper && position _chopper select 2 < HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
 			sleep 0.15;
-			if (position _chopper select 2 < 1) exitWith
+			if (position _chopper select 2 < 2) exitWith
 			{
+    			hint localize format["--- Chopper on the ground, ejecting % unit[s]", {canStand _x} count _unit_array ];
 				while {_next_to_eject < _cnt_uni} do
 				{
 					_cur_uni = _unit_array select _next_to_eject;
 					if (!isNull _cur_uni && alive _cur_uni ) then
 					{
 						_cur_uni action ["Eject",_chopper];
-						[player, format["Unit %1 ejected as chopper touched ground", _next_to_eject]] call XfSideChat;
+						//[player, format["Unit %1 ejected as chopper touched ground", _next_to_eject]] call XfSideChat;
 						unassignVehicle _cur_uni;
 					};
 					_next_to_eject = _next_to_eject + 1;
