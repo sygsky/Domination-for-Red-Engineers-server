@@ -150,7 +150,7 @@ while {true } do
         3 spawn _titleTime;
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: daytime (%1)<  _realNightStart, sleep to it",daytime];
-        player groupChat _str;
+        //player groupChat _str;
         hint localize _str;
 #endif
         sleep ((_realNightStart - daytime) * 3600);
