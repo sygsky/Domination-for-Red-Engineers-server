@@ -181,7 +181,7 @@ if (isServer) then {
 	if (_number_targets_h < 50) then { // random number of towns is already defined in number_targets
         // As many as possible big towns should be included into resulting array
         // And some small ones also may be randomly preselected or be totally absent if output count is too low (< 9)
-        // created cnt, shole number, important indexes, unimportant indexes
+        // created cnt, whole number, important indexes, unimportant indexes
         _params = [_number_targets_h, count target_names, d_big_towns_inds, d_small_towns_inds]; //
         _str = format["+++ init target town params: %1",_params ];
         hint localize _str;
@@ -216,6 +216,7 @@ if (isServer) then {
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
+    number_targets = count maintargets_list; // most correct definition of target towns is here!
     hint localize _str;
 
 	__DEBUG_SERVER("init.sqf", maintargets_list)

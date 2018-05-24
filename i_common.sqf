@@ -19,6 +19,7 @@ if (number_targets >= 50) then {
 			case 70: {6};
 			case 80: {6};
 			case 90: {22};
+			case 91: {8};
 			default {22};
 		}
 	);
