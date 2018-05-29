@@ -133,4 +133,4 @@
 #define __JAVELIN__
 
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
-#define __NO_RPG_CLONING__
+//#define __NO_RPG_CLONING__
