@@ -774,6 +774,18 @@ SYG_distance2D = {
 	[argp(_pos1,0), argp(_pos1,1)] distance [argp(_pos2,0),argp(_pos2,1)]
 };
 
+// Old varian: _dist = [_p1,_p2] call SYG_distance2D;
+/*
+SYG_distance2D =
+{
+    _p1 = + arg(0);
+    _p2 = + arg(1);
+    _p1 set [Z_POS,0];
+    _p2 set [Z_POS,0];
+    _p1 distance _p2
+}
+*/
+
 //
 // Creates message with any object distance and direction according to the nearest location
 // Input: _msg = player call SYG_MsgOnPos;

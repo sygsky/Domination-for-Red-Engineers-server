@@ -55,22 +55,21 @@ _parachute_type = (
 );
 
 
-if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _chopper) ) then // Create sabotage group and arrange it in chopper cargo 
+if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Create sabotage group and arrange it in chopper cargo
 {
 	_paragrp = call SYG_createEnemyGroup;
 	_unit_array = ["sabotage", d_enemy_side] call x_getunitliste;
 	_real_units = _unit_array select 0;
 	_cnt_uni = (count _real_units) min (_chopper emptyPositions "Cargo"); // heli may be small one
-	_cnt_uni = _cnt_uni min _cnt_cargo;
 #ifdef __DEBUG_PRINT__
-    hint localize format["x_scripts/x_createpara2.sqf: Десант численностью %1 чел. ", _cnt_uni];
+    hint localize format["x_scripts/x_createpara2.sqf: %1 / десант из %2 чел., щграничен до %3", typeOf _chopper, _cnt_uni, count _real_units];
 #endif
 	_unit_array = [];
 	sleep 0.1;
 	for "_i" from 0 to (_cnt_uni - 1) do 
 	{
 		_type = _real_units select _i;
-		_one_unit = _paragrp createunit [_type, [0,0,0], [], 300,"NONE"];
+		_one_unit = _paragrp createUnit [_type, [0,0,0], [], 300,"NONE"];
 		_one_unit moveInCargo _chopper;
 		[_one_unit] join _paragrp;
 		_unit_array = _unit_array + [_one_unit];
@@ -96,16 +95,16 @@ _ejected = false;
 _next_to_eject = 0;
 _main_polling_interval = 2.123;
 
-while {_helifirstpoint distance (leader _vgrp) > 250 || !canMove _chopper} do 
+while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _chopper} do
 { 
 	if (!alive _chopper) exitWith {_ejected = true; /*[player,"Chopper destroyed"] call XfSideChat;*/};
 	
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
-        while {alive _chopper && alive driver _chopper && position _chopper select 2 >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
+        while {alive _chopper && alive driver _chopper && (position _chopper select 2) >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
 			_cur_uni = _unit_array select _next_to_eject;
-			if (!isNull _cur_uni && alive _cur_uni ) then
+			if (alive _cur_uni ) then
 			{
 				_cur_uni action ["Eject",_chopper];
 				//[player, format["Unit %1 ejected as HI altitude", _next_to_eject]] call XfSideChat;
@@ -118,7 +117,7 @@ while {_helifirstpoint distance (leader _vgrp) > 250 || !canMove _chopper} do
 
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
-        while {alive _chopper && alive driver _chopper && position _chopper select 2 < HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
+        while {alive _chopper && alive driver _chopper && (position _chopper select 2) < HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
 			sleep 0.15;
 			if (position _chopper select 2 < 2) exitWith
@@ -334,7 +333,7 @@ while {(_heliendpoint distance (leader _vgrp) > 300)} do {
 			private ["_driver_veh","_vehicle"];
 			_driver_veh = _this select 0;
 			_vehicle = _this select 1;
-			sleep 240 + random 100;
+			sleep (240 + (random 100));
 			if (!isNull _driver_veh) then {
 				_driver_veh setDamage 1.1;
 			};
