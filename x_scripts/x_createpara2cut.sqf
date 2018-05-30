@@ -44,7 +44,7 @@ _chopper flyInHeight 100; // fly on height about 100 meters
 // store time of the start of last infiltration on base
 __SetGVar(INFILTRATION_TIME, date);
 #ifdef __DEBUG_PRINT__
-hint localize format["x_scripts/x_createpara2.sqf: Десант выброшен, время установлено на %1", date];
+hint localize format["x_scripts/x_createpara2.sqf: Десант сформирован, местное время %1", date];
 #endif
 
 _parachute_type = (
@@ -62,6 +62,9 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 	_real_units = _unit_array select 0;
 	_cnt_uni = (count _real_units) min (_chopper emptyPositions "Cargo"); // heli may be small one
 	_cnt_uni = _cnt_uni min _cnt_cargo;
+#ifdef __DEBUG_PRINT__
+    hint localize format["x_scripts/x_createpara2.sqf: Десант численностью %1 чел. ", _cnt_uni];
+#endif
 	_unit_array = [];
 	sleep 0.1;
 	for "_i" from 0 to (_cnt_uni - 1) do 
