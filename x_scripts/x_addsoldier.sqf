@@ -20,7 +20,7 @@ if (_rankIndex < ("LIEUTENANT" call XGetRankIndex)) exitWith {
 if (score player < ((d_points_needed select 0) + (d_ranked_a select 3))) exitWith {
 	(format [localize "STR_SYS_1175", score player, d_ranked_a select 3, "PRIVATE" call XGetRankStringLocalized]) call XfHQChat; // "You can't recruit an AI soldier, costs %2 points, your current score (%1) will drop below %2!"
 };
-_max_rank_ai = _rankIndex - 2; // 1 - Lieutenant... 10 - Generalissimus
+_max_rank_ai = _rankIndex - 1; // 2 - Lieutenant... 11 - Generalissimus
 #endif
 
 _ai_counter = 0;
