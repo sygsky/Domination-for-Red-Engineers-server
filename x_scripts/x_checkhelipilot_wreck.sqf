@@ -32,16 +32,24 @@ if (_exit_it) exitWith {
 #endif
 
 if (local _enterer && _position == "driver") then {
-	#ifdef __RANKED__
+
+#ifdef __RANKED__
+
 	_index = (toUpper (d_wreck_lift_rank)) call XGetRankIndex;
 	_indexp = (rank player) call XGetRankIndex;
+	if ( (_index == 0) && (score player < (d_ranked_a select 0))) exitWith // Private can start fly but 10 point needed
+	{
+        (format [localize "STR_SYS_139_1", score player,(d_ranked_a select 0)]) call XfHQChat; // "To pilot this heli you need %2 point(s). You have only %1 ..."
+	};
 	if (_indexp < _index) exitWith {
 		// "Ваше звание: %1 не позволяет использовать этот вертолет (Wreck). Требуется звание: %2."
-		(format [localize "STR_SYS_250", rank player,toLower((toUpper (d_wreck_lift_rank)) call XGetRankStringLocalized)]) call XfHQChat;
+		(format [localize "STR_SYS_250", rank player, toLower((toUpper (d_wreck_lift_rank)) call XGetRankStringLocalized)]) call XfHQChat;
 		driver _vehicle action["Eject",_vehicle];
 		if (!_was_engineon && isEngineOn _vehicle) then {_vehicle engineOn false};
 	};
-	#endif
+
+#endif
+
 	_may_fly = true;
 	if (count d_only_pilots_can_fly > 0) then {
 		_type_enterer = typeOf _enterer;

@@ -254,6 +254,7 @@ STR_SYS_137,"Added points for maintenance: +%1 ...","Addierte Punkte für die Be
 STR_SYS_137_1,"Subtracted points for maintenance: %1 ...","Abgezogen Punkte für die Pflege: %1 ...","Вычтено очков за обслуживание техники: %1 ..."
 STR_SYS_138,The maintenance of a %1 is finished...","Wartung beendet: %1 ...","Обслуживание %1 закончено..."
 STR_SYS_139,"For repair and refueling you need %2 point(s). You have only %1 ...","Für die Reparatur und Betankung der Maschinen müssen Punkte: %2. Sie haben nur den %1 ...","Для ремонта и заправки техники необходимо иметь очков: %2. У Вас только %1 ..."
+STR_SYS_139_1,"To pilot this heli you need %2 point(s). You have only %1 ...","Der pilot dieser Hubschrauber müssen Sie %2 Punkt (E). Sie haben nur noch %1 ...","Для пилотирования данного вертолета нужно баллов: %2. У вас есть только %1" 
 STR_SYS_140,"The Prime Minister of Takistan arrived in Pesto. Punish him!","Der Premierminister Takistan kam ein Besuch in Pesto. Bestrafen Sie ihn!","Премьер-министр Такистана прибыл с визитом в н.п. Pesto. Накажите его!"
 STR_SYS_141,"Good job! Prime Minister punished.","Auftrag ausgeführt! Premierminister bestraft.","Задание выполнено! Премьер-министр наказан."
 STR_SYS_142,"The service is cancelled...","Zimmerservice abgebrochen...","Обслуживание отменено..."
