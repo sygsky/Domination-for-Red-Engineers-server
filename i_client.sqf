@@ -232,7 +232,7 @@ d_ranked_a = [
 d_transport_distance = 2000; // 1500;
 
 // rank needed to fly the wreck lift chopper
-d_wreck_lift_rank = "Lieutenant"; //+++Sygsky: was "Major" and "Colonel"
+d_wreck_lift_rank = "Private"; //+++Sygsky: was "Lieutenant", "Major" , "Colonel"
 #endif
 
 d_viewdistance = 1500; // default view distance diameter
