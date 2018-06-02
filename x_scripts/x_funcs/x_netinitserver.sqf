@@ -293,6 +293,25 @@ XHandleNetStartScriptServer = {
                 ["GRU_event_scores", _id, _score, ""] call XSendNetStartScriptClient;
             };
 		};
+		// Handle engineering fund. E.g. to be used by non-engineers for service repair
+		// call parameters: ["engineering_fund", "+"|"-"|"=", scores|"", name player]
+		case "engineering_fund" :
+		{
+		    _command = _this select 1; // command to handle this fund
+		    _score   = _this select 2; // score to add to the fund
+		    _pname   = _this select 3; // score to add to the fund
+            hint localize format["+++ engineering_fund request %1, %2, %3",_command, _score, _pname];
+		    switch _command do {
+                case "+": {
+
+                };  // adds some scores to the fund
+                case "-": {
+
+                };  // subtracts designated scores
+                case "=": {
+                }; // returns available score number
+		    };
+		};
 
 
 	}; // switch (_this select 0) do
