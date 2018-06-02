@@ -99,18 +99,7 @@ _rep_array     = [objectID2];
 //hint localize "x_repengineer.sqf: No __LIMITED_REFUELLING__ defined";
 #endif
 
-_coef = (
-	if (_fuel_val == _damage_val) then {
-		_damage_val
-	} else {
-		if (_fuel_val > _damage_val) then {
-			_fuel_val
-		} else {
-			_damage_val
-		}
-	}
-);
-_coef = ceil _coef;
+_coef = ceil (_fuel_val min _damage_val);
 
 _lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
 hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
@@ -189,6 +178,7 @@ if (_addscore > 0) then {
     {
         _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__;
         _str = "STR_SYS_137_1"; //"Вычтено очков за обслуживание техники: %1 ..."
+        // TODO: send scores to the engineers fund
     };
 #endif
 	player addScore _addscore;
