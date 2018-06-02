@@ -98,12 +98,14 @@ if (isServer) then {
 	_newgroup setBehaviour "AWARE";
 
 	// play with trigger to allow king escaping
-    SYG_sm_trigger = objNull;
-    SYG_sm_trigger = createTrigger["EmptyDetector",[10270.306641,7384.357422,69.139999]];
-    SYG_sm_trigger setTriggerArea [21.0, 20.5, -1, true];
-    SYG_sm_trigger setTriggerActivation ["EAST", "WEST D", false];
-    SYG_sm_trigger setTriggerStatements["this", "king execVM ""GRU_scripts\king_escape.sqf""; hint localize format[""king trigger (%1) deleted"", SYG_sm_trigger]; deleteVehicle SYG_sm_trigger;", ""];
-
+	if ( random 100 < 50) then // chance to escape is 50%
+	{
+        SYG_sm_trigger = objNull;
+        SYG_sm_trigger = createTrigger["EmptyDetector",[10270.306641,7384.357422,69.139999]];
+        SYG_sm_trigger setTriggerArea [21.0, 20.5, -1, true];
+        SYG_sm_trigger setTriggerActivation ["EAST", "WEST D", false];
+        SYG_sm_trigger setTriggerStatements["this", "king execVM ""GRU_scripts\king_escape.sqf""; hint localize format[""king trigger (%1) deleted"", SYG_sm_trigger]; deleteVehicle SYG_sm_trigger;", ""];
+    };
 };
 
 if (true) exitWith {};

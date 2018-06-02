@@ -680,6 +680,7 @@ XHandleNetStartScriptClient = {
 		    {
 		        case "OFP";
 		        default { call SYG_playRandomOFPTrack};
+		        hint localize "+++ king escape music played";
 		    };
 		}; // case "play_misic"
 
