@@ -110,7 +110,7 @@ while {true } do
     if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 00:00, simply wiaght up to the morning twilight
     {
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo, skip to it",daytime];
+        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3  skip to it",daytime, _nightSkipTo, _nightSkipFrom];
         // player groupChat _str;
         hint localize _str;
 #endif
