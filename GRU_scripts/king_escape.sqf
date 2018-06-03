@@ -49,10 +49,10 @@ sleep 0.1;
 ["d_sm_p_pos", position king] call XSendNetVarClient;
 #endif
 
-hint localize format["king_escape.sqf: king teleported to building %1 at pos %2", typeOf _house, _pos];
+hint localize format["king_escape.sqf: king teleported to building %1 at pos %2/%3", typeOf _house, _pos, position king];
 if (local king) then
 {
-	player groupChat format["king_escape.sqf: king teleported to building %1 at pos %2", typeOf _house, _pos]
+	player groupChat format["king_escape.sqf: king teleported to building %1 at pos %2/%3", typeOf _house, _pos, position king];
 };
 king spawn {
     sleep (60 + random 60);
@@ -60,9 +60,8 @@ king spawn {
     //call SYG_playRandomOFPTrack; // for more fun
     if (alive king) then
     {
-        /* inform players about king escape and his new position */
+        /* inform players about king escape and his new approximate position */
         _dist = king distance _old_pos;
-        // "Местные %1 сообщают, что король покинул здание и нашёл другое убежище, не далее %2 м."
         _mgs = ["STR_GRU_48",call SYG_getLocalMenRandomName, (round(_dist /100) max 1)* 100];
          ["msg_to_user","",[_msg]] call XSendNetStartScriptClient;
          hint localize "+++ king_escape.sqf: message sent to user about new king position";
