@@ -26,8 +26,9 @@ while {d_run_illum} do {
 	_flare = objNull;
 	if (daytime > 19.75 || daytime < 4.25) then {
 		_angle = floor (random 360);
-		_x1 = _center_x - ((random _radius) * sin _angle);
-		_y1 = _center_y - ((random _radius) * cos _angle);
+		_randrad = _radius call XfRndRadious; // corect randomly distributed radious
+		_x1 = _center_x - (_randrad * sin _angle);
+		_y1 = _center_y - (_randrad * cos _angle);
 		_flare = if (mt_radio_down ) then {"F_40mm_Red"}
 		else
 		{

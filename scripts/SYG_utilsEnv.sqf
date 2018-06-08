@@ -113,7 +113,7 @@ SYG_showTeleport = {
 SYG_firesService = {
     private ["_cnt","_fires"];
     hint localize format["scripts/SYG_utilsEnv.sqf => SYG_firesService, isServer %1, isNil ""SYG_firesAreServed"" %2", isServer, isNil "SYG_firesAreServed"];
-    if (isServer) exitWith{0};
+    if ( ! X_Client ) exitWith{0};
     if (!isNil "SYG_firesAreServed") exitWith {SYG_firesAreServed};
     SYG_firesAreServed = 0;
     private ["_cnt","_fire"];
@@ -306,7 +306,7 @@ SYG_viewDistanceArray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8
 //
 SYG_setViewDistance = {
     //hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2+++++", _this, isServer ];
-    //if ( isServer ) exitWith {-1};
+    if ( ! X_Client ) exitWith {-1};
     private ["_selectedIndex"];
     _selectedIndex = _this;
     if ( typeName _this == "ARRAY") then {_selectedIndex = arg(0);};
@@ -326,6 +326,6 @@ SYG_setViewDistance = {
 // _dist = call SYG_getViewDistance;
 // _dist = call SYG_getViewDistance;
 SYG_getViewDistance = {
-    if ( isServer) exitWith {-1};
+    if ( ! X_Client ) exitWith {-1};
     d_viewdistance
 };

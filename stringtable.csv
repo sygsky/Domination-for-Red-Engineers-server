@@ -730,10 +730,10 @@ STR_SYS_1131,one volley,eine Salve,одним залпом
 STR_SYS_1132,two volleys,zwei Salven,двумя залпами
 STR_SYS_1133,three volleys,drei Salven,тремя залпами
 STR_SYS_1134,Salvos: 1,Salven: 1,Залпов: 1
-STR_SYS_1135,Fire Smoke,Feuer-Rauch,Дымовыми
-STR_SYS_1136,Fire Flare,,Осветительными
-STR_SYS_1137,Fire HE,Feuer ER,Фугасными
-STR_SYS_1138,Fire DPICM,Feuer DPICM,Многоцелевыми
+STR_SYS_1135,Fire Smoke,Rauchbombe,Дымовыми
+STR_SYS_1136,Fire Flare,Signalrakete starten,Осветительными
+STR_SYS_1137,Fire HE,Flatternde Geschosse,Фугасными
+STR_SYS_1138,Fire DPICM,Mehrzweck Projektile,Многоцелевыми
 STR_SYS_1139,Select artillery target by map click:,Wählen Sie Artillerie den Gegner durch die map klicken:,Выбор координат для удара (клик на карте):
 
 STR_SYS_1140,Viewdistance set to: %1,Viewdistance: %1,Установлена дистанция обзора: %1 метров.

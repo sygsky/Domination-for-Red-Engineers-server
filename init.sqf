@@ -138,8 +138,17 @@ if (isServer) then {
     ADD_HIT_EH(_medic_tent)
     ADD_DAM_EH(_medic_tent)
 
-#endif	
-
+#endif
+#ifdef __ADITIONAL_BASE_VEHICLES__
+    {
+        _veh = createVehicle [_x select 1, [0,0,0], [], 0, "NONE"];
+        [_veh] call SYG_addEvents;
+        _veh setDir (_x select 2);
+        _veh setDamage 0.8;
+        _veh setPos (_x select 0);
+        _veh setVectorUp (_x select 3);
+    } forEach [ [[9439.2,9800.7,0],"ACE_BRDM2", 180,[0,0,-1]], [[10254.87,10062,0],"ACE_BMD1p",180,[0,0,-1]] ];
+#endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 
@@ -444,39 +453,6 @@ if (isServer) then {
 
 }; // if (isServer)
 
-
-//+++ Sygsky
-// Run short night script on both server and client machines
-// Night is assumed to start from 19:45 evening and end at 04:36 morning.
-// You can variate in future night start/end time and wanted night span.
-// Now it is 30 mins (first param eq 0.5), that means night run 17.7 times faster than real time in life.
-// Longitivity of morning and evening is set to 30 minutes (last param eq 0.5)
-SYG_shortNightStart  = 19.75;
-SYG_eveningStart     = 18.30;
-SYG_shortNightEnd    = 4.6;
-SYG_morningEnd       = 7.0;
-SYG_nightDuration    = 0.5;
-SYG_twilightDuration = 0.5;
-SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_shortNightEnd;
-SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
-
-#ifdef __OLD__
-
-[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
-hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
-
-#else
-
-SYG_nightSkipFrom  = 21.0;
-SYG_nightSkipTo    = 3.0;
-//       Night start,         night end,         skip from,         skip to
-[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
-hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4",
-    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd ];
-
-#endif
-
-
 #ifdef __ACE__
 ace_sys_network_WeatherSync_Disabled = true;
 ace_sys_network_TimeSync_Disabled = true;
@@ -589,6 +565,37 @@ if (X_SPE) then {
 };
 
 execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
+
+//+++ Sygsky
+// Run short night script on both server and client machines
+// Night is assumed to start from 19:45 evening and end at 04:36 morning.
+// You can variate in future night start/end time and wanted night span.
+// Now it is 30 mins (first param eq 0.5), that means night run 17.7 times faster than real time in life.
+// Longitivity of morning and evening is set to 30 minutes (last param eq 0.5)
+SYG_shortNightStart  = 19.75;
+SYG_eveningStart     = 18.30;
+SYG_shortNightEnd    = 4.6;
+SYG_morningEnd       = 7.0;
+SYG_nightDuration    = 0.5;
+SYG_twilightDuration = 0.5;
+SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_shortNightEnd;
+SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
+
+#ifdef __OLD__
+
+[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
+
+#else
+
+SYG_nightSkipFrom  = 21.0;
+SYG_nightSkipTo    = 3.0;
+//       Night start,         night end,         skip from,         skip to
+[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4",
+    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd ];
+
+#endif
 
 #ifdef __DEFAULT__
 // hide default bargates on base on all client computers etc

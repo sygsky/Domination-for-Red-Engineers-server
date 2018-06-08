@@ -5,7 +5,7 @@
 //
 
 #define __DEBUG__
-if (isServer) exitWith {};
+if (! X_Client) exitWith {};
 private ["_ok","_XD_display","_ctrl","_index","_max_num","_rad_step","_score","_item"];
 
 //

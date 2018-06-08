@@ -347,11 +347,11 @@ SYG_nearestCargo = {
 };
 
 // _vecs_arr = [_unit || _pos, 500, ["LandVehicles"]] call Syg_findNearestVehicles;
-// may retun [] if no vehicles found
+// may return [] if no vehicles found
 Syg_findNearestVehicles = {
-	_unit = arg(_this);
+	_unit = arg(0);
 	if ( typeName _unit == "ARRAY" ) then {
-	    if (count _unit < 2) exitWith {_unit == objNull;}; // can't be pos with empty array
+	    if (count _unit < 2) exitWith {[]}; // can't be pos with empty array
 	};
 	if ( isNull _unit ) exitWith {[]};
 	_dist = argopt(1, 500);
@@ -386,7 +386,7 @@ SYG_getSide = {
     if ( typeName _this == "OBJECT") exitWith { side _this };
     if ( typeName _this == "GROUP") exitWith { side _this };
     if ( typeName _this == "SIDE") exitWith { _this };
-    if ( (typeName _side) == "STRING") exitWith
+    if ( typeName _this == "STRING") exitWith
     {
         switch (toUpper(_this)) do
         {

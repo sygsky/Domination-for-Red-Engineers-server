@@ -322,6 +322,7 @@ while {true} do {
 			{
 				_side = side _leader;
 				_joingrp = grpNull;
+				_any_grp = grpNull;
 				// forEach SYG_grpList;
 				scopeName "join";
 				//waitUntil { !SYG_grpListEditing };
@@ -333,23 +334,31 @@ while {true} do {
 #endif
 				// find nearest good group  to rejoin
 				_min_dist = REJOIN_DISTANCE;
+
 				{
                     if (typeName _x == "ARRAY") then
                     {
                         _grp1 = _x select 0;
 						if (isNull _grp1) exitWith{}; // dead group detected, skip it
-                        if ( (_grp1 call XfGetStandUnits) > _counter ) then
+                        if ( (_grp1 call XfGetStandUnits) > 0 ) then
                         {
                             _leader1 = leader _grp1;
                             if ( alive _leader1 ) then
                             {
-                                if ((vehicle _leader1 == _leader1) &&  (_grp != _grp1)  && (_side == side _grp1)) then
+                                if ( (vehicle _leader1 == _leader1) &&  (_grp != _grp1)  && (_side == side _grp1) ) then
                                 {
 									_dist = _leader distance _leader1;
 									if ( _dist < _min_dist) then
 									{
-										_joingrp = _grp1;
-										_min_dist = _dist;
+									    if ((_grp1 call XfGetStandUnits) >= _rejoin_num ) then
+									    {
+                                            _joingrp = _grp1;
+                                            _min_dist = _dist;
+                                        }
+                                        else
+                                        {
+                                            _any_grp = _grp1;
+                                        };
 									};
                                 };
                                 sleep 0.01;
@@ -367,6 +376,10 @@ while {true} do {
 				    getPos (leader _grp),
 				    typeOf (leader _grp)];
 #endif				
+                if ( (isNull _joingrp) && (!isNull _any_grp) ) then // use bad group if no good one found
+                {
+                    _joingrp = _any_grp;
+                };
 
 				if ( !isNull _joingrp ) then 
 				{
