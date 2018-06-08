@@ -71,6 +71,7 @@ _dayPeriod = {
 };
 #endif
 
+waitUntil {time > 0};
 // TODO: add some sound effects (morning sounds, day insects, evening belss, night cries etc)
 _titleTime = {
     sleep  (random 60);
