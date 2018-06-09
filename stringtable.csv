@@ -252,7 +252,7 @@ STR_SYS_135,"Side Mission marker is absent from map!!!",Seite Mission marker ist
 STR_SYS_136,"The service is cancelled...","Zimmerservice abgebrochen...","Сервис отменен..."
 STR_SYS_137,"Added points for maintenance: +%1 ...","Addierte Punkte für die Bedienung der Technik: %1 ...","Добавлено очков за обслуживание техники: +%1 ..."
 STR_SYS_137_1,"Subtracted points for maintenance: %1 ...","Abgezogen Punkte für die Pflege: %1 ...","Вычтено очков за обслуживание техники: %1 ..."
-STR_SYS_138,The maintenance of a %1 is finished...","Wartung beendet: %1 ...","Обслуживание %1 закончено..."
+STR_SYS_138,"The maintenance of a %1 is finished...","Wartung beendet: %1 ...","Обслуживание %1 закончено..."
 STR_SYS_139,"For repair and refueling you need %2 point(s). You have only %1 ...","Für die Reparatur und Betankung der Maschinen müssen Punkte: %2. Sie haben nur den %1 ...","Для ремонта и заправки техники необходимо иметь очков: %2. У Вас только %1 ..."
 STR_SYS_139_1,"To pilot this heli you need %2 point(s). You have only %1 ...","Der pilot dieser Hubschrauber müssen Sie %2 Punkt (E). Sie haben nur noch %1 ...","Для пилотирования данного вертолета нужно баллов: %2. У вас есть только %1" 
 STR_SYS_140,"The Prime Minister of Takistan arrived in Pesto. Punish him!","Der Premierminister Takistan kam ein Besuch in Pesto. Bestrafen Sie ihn!","Премьер-министр Такистана прибыл с визитом в н.п. Pesto. Накажите его!"
@@ -302,7 +302,7 @@ STR_SM_010,"Good job. The artillery cannon is destroyed.","Gute Arbeit!. Die Art
 STR_SM_11,"On the island Isla del Zorra enemy established radar on the lighthouse. Task - to destroy the building of the lighthouse. Pilots will thank you.","Auf der Insel Isla del Zorra Feind etabliert radar auf dem Leuchtturm. Aufgabe - zu zerstören das Gebäude des Leuchtturms. Piloten werden es Ihnen danken.","На острове Isla del Zorra враг установил на маяк радиолокатор. Задача - уничтожить здание маяка. Авиаторы будут вам благодарны."
 STR_SM_011,"The job is done! The devil lighthouse destroyed.","Der job ist getan! Der Leuchtturm zerstört.","Задание выполнено! Маяк уничтожен."
 
-STR_SM_14,""A TV tower was built on the top of Monte Liberation. The enemy has placed on their wireless devices. Objective: to destroy the source of disinformation.","Ein TV-Turm war gebaut auf dem Gipfel des Monte Liberation. Der Feind hat auf Ihren drahtlosen Geräten. Ziel: zerstören Sie die Quelle der Desinformation.","На вершине горы Monte Liberacion построена телебашня. Враг разместил на ней своё радиопередающее оборудование. Задача: уничтожить источник дезинформации."
+STR_SM_14,"A TV tower was built on the top of Monte Liberation. The enemy has placed on their wireless devices. Objective: to destroy the source of disinformation.","Ein TV-Turm war gebaut auf dem Gipfel des Monte Liberation. Der Feind hat auf Ihren drahtlosen Geräten. Ziel: zerstören Sie die Quelle der Desinformation.","На вершине горы Monte Liberacion построена телебашня. Враг разместил на ней своё радиопередающее оборудование. Задача: уничтожить источник дезинформации."
 STR_SM_014,"Great job! Local residents will nor longer see any of American Presidents","Gute Arbeit! Die einheimischen nicht mehr sehen, weder Kanzler, noch seine Hunde","Отличная работа! Местные жители больше не увидят ни Ксении Собчак, ни любимца её папаши"
 
 STR_SM_17,"A high enemy officer arrives today in Valor. He is responsible for the production of biological and chemical weapons. Eliminate him !","Eine hohe feindlichen Offizier kommt heute in Tapferkeit. Er ist verantwortlich für die Produktion von biologischen und chemischen Waffen. Beseitigen Sie ihn !","Сегодня в Valor прибыл вражеский офицер. Ваша задача ликвидация офицера!"
@@ -334,7 +334,7 @@ STR_SM_039,"Good work! The locals never see any prostitutes journalists nor thei
 STR_SM_42,"An enemy officer is on a walk in the forest Selva de Caza. This is a good chance to arrest him and bring him to your base (only a rescue operator or group leader can do that)","Einer der Offiziere ging Pilze im Wald Selva de Caza. Ihre Aufgabe abzunehmen Pilze, die Verhaftung Offizier und liefern es an der Basis. (Eine Mission zu erfüllen, kann nur der Spieler in die Rolle der Retter)","Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. Внимание! Местные трапперы на хребте неподалёку были обстреляны из зенитной установки! (Завершить миссию может только игрок в роли спасателя или лидер группы)"
 STR_SM_042_,"Good job! Officer to the GRU, the mushrooms to the kitchen!","Auftrag ausgeführt! Offizier in der GRU, die Pilze in die Küche.","Задание выполнено! Офицера в ГРУ, грибы на кухню."
 
-STR_SM_43,"The enemy has mastered the route of delivery of equipment passing through Dolores. You must destroy the city's road infrastructure. It's enough to blow up bridges.","Der Feind beherrscht die route der Lieferung von Geräten, die Weitergabe durch Dolores. Sie müssen zerstören die Stadt die Straßeninfrastruktur. Es ist genug, um die Brücken sprengen.","Враг освоил маршрут поставки снаряжений, проходящий через Dolores. Вам надлежит разрушить дорожную инфраструктуру города. Для этого достаточно взорвать мосты."
+STR_SM_43,"The enemy has mastered the route of delivery of equipment passing through Dolores. You must destroy the city's road infrastructure. It's enough to blow up bridges.","Der Feind beherrscht die route der Lieferung von Geräten, die Weitergabe durch Dolores. Sie müssen zerstören die Stadt die Straßeninfrastruktur. Es ist genug, um die Brücken sprengen.","Мосты Долорес!\nВраг освоил маршрут поставки снаряжений, проходящий через Dolores. Вам надлежит разрушить дорожную инфраструктуру города. Для этого достаточно взорвать мосты."
 STR_SM_043,"Commander's order was fulfilled! Bridges destroyed.","Commander' s Auftrag wurde erfüllt! Brücken zerstört.","Задание выполнено! Мосты уничтожены."
 
 STR_SM_44,"The enemy began testing the new helicopter. Move to San Tomas, capture this vehicle and transport it to the base.","Der Feind begann der Test der neuen Hubschrauber. Gehen Sie zu San Tomas, erfassen das Fahrzeug und transportieren es an der Basis.","Враг испытывает новый вертолет. Отправляйтесь в San Thomas, захватите машину и доставьте на базу."
@@ -1096,7 +1096,7 @@ STR_MIS_15,"Ammo Point","Munition Punkt","Пункт м/т снаб."
 STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
 STR_MIS_18,%1 wreck,%1 Wrack,обл. %1
-STR_MIS_19,"Arti Two Target","Arti" Zwei Gegner","Арт. цель 2"
+STR_MIS_19,"Arti Two Target","Arti Zwei Gegner","Арт. цель 2"
 
 STR_SET_1,"Version","Version","Версия"
 STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ"

@@ -139,7 +139,7 @@ if (isServer) then {
     ADD_DAM_EH(_medic_tent)
 
 #endif
-#ifdef __ADITIONAL_BASE_VEHICLES__
+#ifdef __ADDITIONAL_BASE_VEHICLES__
     {
         _veh = createVehicle [_x select 1, [0,0,0], [], 0, "NONE"];
         [_veh] call SYG_addEvents;

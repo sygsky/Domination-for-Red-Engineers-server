@@ -21,7 +21,7 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-	__Poss
+	x_sm_pos select 0;//_Poss
 	[_poss] execVM "x_missions\common\x_sidecora.sqf";
 };
 

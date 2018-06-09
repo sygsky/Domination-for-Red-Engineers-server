@@ -122,7 +122,7 @@
 //#define __DEBUG_ADD_VEHICLES__
 
 // uncomment next line to add dome vehicles on the base
-#define __ADITIONAL_BASE_VEHICLES__
+#define __ADDITIONAL_BASE_VEHICLES__
 
 #define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2
 
