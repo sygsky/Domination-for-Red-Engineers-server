@@ -497,7 +497,7 @@ _utilizeFeetmen = {
 	};
 };
 
-SYG_isle_grps = [];
+SYG_isle_grps = []; // array for isledefence groups
 
 SYG_patrolGroupNumber = {
 	{!isNull (_x select PARAM_GROUP)} count SYG_isle_grps;

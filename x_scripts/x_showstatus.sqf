@@ -19,7 +19,6 @@ if (current_target_index == -1) then // before 1st town or current tonw cleared
 {
     if (client_target_counter < number_targets ) then
     {
-        _target_array2 = target_names select current_target_index;_current_target_name = _target_array2 select 1;
         _current_target_name = localize "STR_SYS_208"; // "No target"
     };
 

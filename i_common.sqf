@@ -485,7 +485,7 @@ mt_bonus_vehicle_array = (
 "ACE_BMP3_M", 		    // 1 - ordinal vehicles list
 "ACE_T80_UM",     		// 2
 "ACE_T80_B",   			// 3
-"ACE_T90_K", 			// 4
+"ACE_Mi24D", 			// 4
 "ACE_ZSU",  			// 5
 "ACE_KA52",  			// 6
 "ACE_BMP3_M",   		// 7
@@ -493,22 +493,22 @@ mt_bonus_vehicle_array = (
 "ACE_BMP3_M",   		// 9
 "ACE_T64_BV",			//10
 "ACE_Tunguska",			//11
-"ACE_BRDM2_SA9",   		//12 - last bonus land vehicle
-"ACE_ZSU",          	//13 - first bonus air vehicle
+"ACE_BRDM2_SA9",   		//12
+"ACE_ZSU",          	//13
 "ACE_T72_BM", 			//14
 "ACE_Mi17", 		    //15
 "ACE_Mi24P",	        //16
-"ACE_T90_K", 			//17
+"ACE_T80_UM", 			//17
 "ACE_Su30Mk_R27_R73",	//18
 "ACE_Mi24V",     	    //19
 "ACE_Su34B",            //20
 
-"ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane)
+"ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane + big tank)
 "ACE_Ka50_N", 	        //22
-
 "ACE_Su30Mk_Kh29T",     //23
 "ACE_Su30Mk_KAB500KR",  //24
-"ACE_T90A"             //25
+"ACE_T90_K", 			//25
+"ACE_T90A"              //26
 ]
 				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
@@ -523,7 +523,7 @@ mt_bonus_vehicle_array = (
 );
 
 #ifdef __DEFAULT__
-big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good air vehicle (helis + jets)
+big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle
 #endif
 

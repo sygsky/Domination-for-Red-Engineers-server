@@ -186,7 +186,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 	_cnt = 0;
 	_res = 0;
 	// TODO: if GRU is on, add secret report to the officer
-	_officer = [ d_sleader_W, _paragrp ] call Syg_ensureOfficerInGroup;
+	_officer = [ d_sleader_W, _paragrp ] call SYG_ensureOfficerInGroup;
 	_cnt = (units  _paragrp) call SYG_rearmSabotageGroup;
 #ifdef	__DEBUG_PRINT__
 	hint localize format["x_createpara2.sqf: sabotage.sqf started with squad of %1 units", _cnt];

@@ -84,7 +84,7 @@ while { true } do {
 		{ 
 			if ( !isNull _x ) then
 			{
-			    _man = _x isKindOf "CaManBase";
+			    _man = _x isKindOf "CAManBase";
 			    _alive = alive _x;
 			    if ( ! _man ) then
 				{
@@ -133,7 +133,7 @@ while { true } do {
                         _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
                         if (!_found) then
                         {
-                            if ( _vehicle isKindOf "CaManBase") exitWith
+                            if ( _vehicle isKindOf "CAManBase") exitWith
                             { // check if dead man not player
                                 _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
                                 // check for zombies found

@@ -406,14 +406,14 @@ SYG_getAllConsciousUnits = {
 };
 
 // Make officer to be the leader of this units group
-// call: _officer = ["SquareLeaderW", _grp|_unit] call Syg_ensureOfficerInGroup;
+// call: _officer = ["SquareLeaderW", _grp|_unit] call SYG_ensureOfficerInGroup;
 //
-Syg_ensureOfficerInGroup = {
+SYG_ensureOfficerInGroup = {
     private ["_officer","_grp"];
     _grp     = grpNull;
     _officer = arg(0);
-    if ( typeName _officer != "STRING") exitWith {hint localize format["--- Syg_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not string type: %1", _this];};
-    if ( !(_officer isKindOf "Man")) exitWith { hint localize format["--- Syg_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not kind of ""Man"": %1", _this];};
+    if ( typeName _officer != "STRING") exitWith {hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not string type: %1", _this];};
+    if ( !(_officer isKindOf "Man")) exitWith { hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not kind of ""Man"": %1", _this];};
 
     _grp     = arg(1);
     switch (typeName _grp) do
@@ -423,7 +423,7 @@ Syg_ensureOfficerInGroup = {
         default {_grp = grpNull;};
     };
 
-    if (isNull _grp) exitWith {hint localize format["--- Syg_ensureOfficerInGroup -> Expected argument [..., _grp] is illegal: %1", _this];};
+    if (isNull _grp) exitWith {hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [..., _grp] is illegal: %1", _this];};
     _units = units _grp;
     // 1. check if leader is already officer
     if (leader _grp isKindOf _officer ) exitWith { leader _grp }; // found as leader
@@ -449,5 +449,33 @@ Syg_ensureOfficerInGroup = {
     _officer
 };
 
+/**
+  * Detects if desigmated group belongs tp patrol or convoy group
+  * call: _isPatrolGrp = _grp call SYG_isPatrolGroup;
+ */
+SYG_isPatrolGroup = {
+    if ( typeName _this ==  "OBJECT") then
+    {
+        if ( _this isKindOf "Man") exitWith { _this = group _this };
+        if ( _this isKindOf "AllVehicles" ) exitWith {
+            {
+                if ( alive _x) exitWith { _this = group _x };
+            }forEach crew _this;
+        };
+    };
+
+    if (typeOf _this != "GROUP") exitWith { false };
+
+    // check to be any of active patrol group
+    scopeName "main";
+    _ret = false;
+    {
+        _grp = _x select 0; // group has offset 0 in patrol array
+        if ( !isNull _grp) then {
+            if ( _this == _grp) then {_ret = true; breakTo "main"};
+        }
+    } forEach SYG_isle_grps;
+    _ret
+};
 
 if (true) exitWith {};
