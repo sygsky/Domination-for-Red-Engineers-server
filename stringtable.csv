@@ -4,9 +4,9 @@ STR_LANG,ENGISH,GERMAN,RUSSIAN
 STR_LANGUAGE,ENGISH,GERMAN,RUSSIAN
 
 // #include "x_scripts\stringtable.csv"
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------
 // X Scripts strings:
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------------
 STR_XCP_01,"Saboteur sent to targer","Saboteur sent to target","Подрывник получил задание"
 STR_XCP_02,"DEBUG: Restoring behaviour to %1. Moving to drop pos %2","DEBUG: Restoring behaviour to %1. Moving to drop pos %2","DEBUG: задан режим %1. Двигаться на позицию %2"
 STR_XCP_03,"DEBUG: Move done by unitReady via exitWith","DEBUG: Move done by unitReady via exitWith","DEBUG: Перемещение завершено через unitReady и exitWith"
@@ -19,11 +19,11 @@ STR_XCP_09,"DEBUG: Start x_sabotage.sqf","DEBUG: Start x_sabotage.sqf","DEBUG: �
 STR_XCP_10,"x_sabotage.sqf: script starts","x_sabotage.sqf: script starts","x_sabotage.sqf: запуск скрипта диверсии"
 STR_XCP_11,"x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible","x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible","x_sabotage.sqf: Бомбы у бойцов не найдены, cдаёмся КГБ"
 STR_XCP_12,"x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started","x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started","x_sabotage.sqf: В отряде есть бомба! Начинаем диверсию..."
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // SYG scripts strings:
-//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------
 STR_SYG_01,"Only engineers can enter the Salvage trucks...","Only engineers can enter the Salvage trucks...","Только инженер может водить транспортный грузовик"
 STR_SYG_02,"Only engineers can load static weapons","Only engineers can load static weapons","Только инженеры могу грузить станковое оружие"
 STR_SYG_03,"Already %1 items loaded. Not possible to load more", "Already %1 items loaded. Not possible to load more", "Мест загружено: %1. Это максимум"
@@ -37,15 +37,15 @@ STR_SYG_10,"Load Static","Last Statische","Загрузить орудие"
 STR_SYG_11,"Unload Static","Entladen Statischer","Разгрузить орудие"
 STR_SYG_12,"%1 to Backpack","%1 in den Rucksack","%1 в рюкзак"
 
-//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 // Server.cfg strings:
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 STR_SERVER_MOTD0,"The islanders are happy to welcome you in your native language!","Die Inselbewohner sind glücklich, Sie zu begrüßen, in Ihrer Muttersprache!","Островитяне рады приветствовать Вас на вашем родном языке!"
 STR_SERVER_1,"Shooting at allies from any weapon under any pretext is strictly prohibited!","Schießen Verbündete aus jeder Waffe unter irgendeinem Vorwand ist streng verboten!","Стрельба по союзникам из любого оружия под любым предлогом строго запрещена!"
 
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 // SYS scripts strings:
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------------------
 
 STR_SYS_00,"Your mash was destroyed","Ihre Maische wurde zerstört","Ваша мед. палатка была уничтожена."
 STR_SYS_01,"Grass layer set to: %1","Die gras-Ebene festgelegt werden: %1","Настройки отображения травы: %1"
@@ -925,7 +925,7 @@ STR_RUM_62,"You can restore and flip vehicles with Support Humvee too","Sie kön
 STR_RUM_63,"Technical services for aircraft and helicopters built in the Northern part of the island of Antigua","Technische Dienstleistungen für Flugzeuge und Hubschrauber gebaut im nördlichen Teil der Insel Antigua","Технические пункты обслуживания для самолётов и вертолётов построены на севере о-ва Антигуа"
 STR_RUN_64,Antigua now has a parajump flag,Auf Antigua gibt es jetzt Fallschirmspringen Flagge,на Антигуа есть флаг
 STR_RUN_65,Engineers now get points for the duration of the vehicle repair,Ingenieure erhalten nun Punkte für die Dauer der Reparatur,"Инженер теперь получает очки за время ремонта, не за тип техники"
-STR_RUN_66,"Sometime islanders would ask you to complete next side mission. Please don't reject this!","Gelegentlich Inselbewohner wird Sie bitten, zu vervollständigen Nebenmissionen. Bitte nicht ablehnen!","Иногда островитяне будет просить Вас сделать дополнительную миссию. Не отказывайте ему!"
+STR_RUN_66,"Sometime islanders would ask you to complete next side mission. Please don't reject this!","Gelegentlich Inselbewohner wird Sie bitten, zu vervollständigen Nebenmissionen. Bitte nicht ablehnen!","Иногда островитяне будет просить Вас сделать дополнительную миссию. Не отказывайте им!"
 STR_RUN_67,"Local guru now reports the time of the last landing of commandos at the airbase","Local guru meldet jetzt die Zeit der letzten Landung von Kommandos bei der airbase","Местный гуру подпитывает слухи о времени последнего десанта на базу"
 STR_RUN_68,"Soviet military engineers demining U.S. minefields","Die sowjetische Militär-Ingenieure Minenräumung US-Armee Minenfelder","Советские военные инженеры разминируют американские минные поля"
 
@@ -1102,6 +1102,15 @@ STR_SET_1,"Version","Version","Версия"
 STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ"
 STR_SET_3,"Ranked","Ranked","Ранговая"
 STR_SET_4,"With revive","Mit revive","С возможность оживлять"
+STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Использование ""Джавелин"""
+STR_SET_6,"Simple side missions at the beginning","Einfache Nebenmissionen am Anfang","Простые дополнительные задания в начале"
+STR_SET_7,"Given light armored vehicles at the base in the start","Leichte Gepanzerte Fahrzeuge, die an der Basis in den Anfang","Наличие своей лёгкой техники на базе при старте"
+STR_SET_8,"Mandatory side missions","Obligatorischen Nebenmissionen","Обязательные сторонние миссии"
+STR_SET_8_1,", towns per mission: %1","Städte pro mission: %1",", городов на одну миссию: %1"
+STR_SET_9,"Teleport works only when all services on the base are available","Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind","Телепорт действует только при всех исправных сервисах на базе"
+STR_SET_10,"Jail","Gefängnis","Гауптвахта"
+STR_SET_10_1," when score lower than %1"," wenn der score niedriger ist als %1"," если число очков ниже %1"
+STR_SET_11,"Cloning RPG-missiles","Klon-RPG-Rakete","Клонирование РПГ-ракет"
 
 STR_GRU_1,"GRU","GRU","ГРУ"
 STR_GRU_2,"deliver the map","liefern Sie die Karte","доставить карту"
