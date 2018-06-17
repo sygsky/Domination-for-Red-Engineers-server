@@ -150,7 +150,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 #endif	
 		
 		// wait until target destroyed and while group alive and there is any bomberman in it
-		while { ( ((position _obj) select 2) > -10.0) and (!(isNull _grp)) and  _continue } do 
+		while { ( ((position _obj) select 2) > -10.0) and (!(isNull _grp)) and  _continue } do
 		{
 			if ( ( {(alive _x) && (canStand _x)} count units _grp) == 0) exitWith
 			{ 
@@ -230,7 +230,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				if (_debug ) then { player globalChat (format["sabotage.sqf: Run bombing script with  unit %1", name _unit]); };
 
 				 // last boolean is (true) to put bombs to the center or (false) not 
-
+                _obj_prev_dmg = damage _obj; // current damage of targeted service
 #ifdef __DEBUG__
 				_bombScript = [_shell_unit, [ _obj ], _retreat_pos, true, m_PIPEBOMBNAME, "", false ] spawn FuncUnitDropPipeBomb;
 #else				
@@ -266,6 +266,10 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 					hint localize format["sabotage.sqf: DropScrip terminated after %1 seconds waiting", round(_timeout - _time) ];
 #endif	
 				};
+                if ( damage _obj > _obj_prev_dmg ) then
+                {
+                        [ "msg_to_user", "*", ["STR_SYS_SERVICE_DMG_1"], 0, random 5 ] call  XSendNetStartScriptClient; // "One of the services of the base was damaged by saboteurs!"
+                };
 				//==============================================
 				//======== unit returning to the duty ==========
 				//==============================================

@@ -339,6 +339,12 @@ class CfgSounds
     class return {name = ""; sound[] = {\sounds\return.ogg, db+10, 1.0}; titles[] = {}; };
     class steal {name = ""; sound[] = {\sounds\steal.ogg, db+10, 1.0}; titles[] = {}; };
 
+// woman killed
+    class female_shout_of_pain_1 {name = ""; sound[] = {\sounds\female_shout_of_pain_1.ogg, db+10, 1.0}; titles[] = {}; };
+    class female_shout_of_pain_2 {name = ""; sound[] = {\sounds\female_shout_of_pain_2.ogg, db+10, 1.0}; titles[] = {}; };
+    class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\female_shout_of_pain_3.ogg, db+10, 1.0}; titles[] = {}; };
+    class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\female_shout_of_pain_4.ogg, db+10, 1.0}; titles[] = {}; };
+
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

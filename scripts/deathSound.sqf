@@ -27,6 +27,6 @@ else
     // short melody on unknown case
     // check if woman is killed
     if (typeOf _unit == "ACE_SoldierEMedicWoman_VDV")
-    then { }
-    else { playSound "huh1" };
+    then { playSound ("female_shout_of_pain_" + str(1 + floor(random 4))); }
+    else { playSound "huh1"; };
 };

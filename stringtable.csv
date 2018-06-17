@@ -167,9 +167,9 @@ STR_SYS_75_chopper,"Teleporting not possible while swimming !!!","Teleportieren 
 STR_SYS_75_wreck,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_76,"(Choose Parachute location)","(Wählen Sie die Fallschirm-Lage)","(Выбор места десантирования)"
 STR_SYS_77,"Cancel service","Rückgängig Service","Отменить обслуживание"
-STR_SYS_78,"Lift %1","Hubschrauber %1","Трансп. вертолет %1"
+STR_SYS_78,"Lift %1","Hubschrauber %1","Трансп. вертолёт %1"
 STR_SYS_79,"Wreck Lift","Wrack heben","Трансп. обломков"
-STR_SYS_79_1,"Chopper Menu","Chopper-Menü","Меню вертолета"
+STR_SYS_79_1,"Chopper Menu","Chopper-Menü","Меню вертолёта"
 STR_SYS_79_2,"MHQ Menu","MHQ Menu","Меню MHQ"
 STR_SYS_79_3,"You're not allowed to fly!","Sie sind nicht erlaubt zu Fliegen!","Рождённый ползать летать не может!"
 
@@ -254,7 +254,7 @@ STR_SYS_137,"Added points for maintenance: +%1 ...","Addierte Punkte für die Be
 STR_SYS_137_1,"Subtracted points for maintenance: %1 ...","Abgezogen Punkte für die Pflege: %1 ...","Вычтено очков за обслуживание техники: %1 ..."
 STR_SYS_138,"The maintenance of a %1 is finished...","Wartung beendet: %1 ...","Обслуживание %1 закончено..."
 STR_SYS_139,"For repair and refueling you need %2 point(s). You have only %1 ...","Für die Reparatur und Betankung der Maschinen müssen Punkte: %2. Sie haben nur den %1 ...","Для ремонта и заправки техники необходимо иметь очков: %2. У Вас только %1 ..."
-STR_SYS_139_1,"To pilot this heli you need %2 point(s). You have only %1 ...","Der pilot dieser Hubschrauber müssen Sie %2 Punkt (E). Sie haben nur noch %1 ...","Для пилотирования данного вертолета нужно баллов: %2. У вас есть только %1" 
+STR_SYS_139_1,"To pilot this heli you need %2 point(s). You have only %1 ...","Der pilot dieser Hubschrauber müssen Sie %2 Punkt (E). Sie haben nur noch %1 ...","Для пилотирования данного вертолёта нужно баллов: %2. У вас есть только %1" 
 STR_SYS_140,"The Prime Minister of Takistan arrived in Pesto. Punish him!","Der Premierminister Takistan kam ein Besuch in Pesto. Bestrafen Sie ihn!","Премьер-министр Такистана прибыл с визитом в н.п. Pesto. Накажите его!"
 STR_SYS_141,"Good job! Prime Minister punished.","Auftrag ausgeführt! Premierminister bestraft.","Задание выполнено! Премьер-министр наказан."
 STR_SYS_142,"The service is cancelled...","Zimmerservice abgebrochen...","Обслуживание отменено..."
@@ -293,7 +293,7 @@ STR_SM_07,"The order is completed! Building for debauchery officers destroyed.",
 STR_SM_8,"On top of the mountain %1 the Tel-aVision tower is built. The enemy uses it to zombify islanders. A simple task, destroy the tower","Auf dem Gipfel des Berges %1 ist Tel-aVision Turm. Der Feind nutzt Sie, um zombify Inselbewohner. Eine einfache Aufgabe, Zerstöre den Fernsehturm","На вершине горы %1 находится ТельаВизионная башня. Враг использует её для зомбирования островитян. Простая задача, уничтожьте телебашню"
 STR_SM_08,"Great job! The enemy's television needle is destroyed. In next turn-Ostankino...","Gute Arbeit! Der Feind Fernsehen Nadel ist das  zerstört wird. In der nächsten Runde-Ostankino...","Задание выполнено! Вражеская телеигла уничтожена. На очереди - Останкинская..."
 
-STR_SM_9,"At the airport Pita undergoing flight tests of the new helicopter. Task - to destroy it!","Am Flughafen Pita Unterziehen Flug-tests des neuen Hubschraubers. Aufgabe - um ihn zu zerstören!","В аэропорту Pita проходят летные испытания нового вертолета. Задача - уничтожить его!"
+STR_SM_9,"At the airport Pita undergoing flight tests of the new helicopter. Task - to destroy it!","Am Flughafen Pita Unterziehen Flug-tests des neuen Hubschraubers. Aufgabe - um ihn zu zerstören!","В аэропорту Pita проходят летные испытания нового вертолёта. Задача - уничтожить его!"
 STR_SM_09,"It's done! The helicopter was destroyed.","Es ist vollbracht! Der Hubschrauber wurde zerstört.","Задание выполнено! Вертолёт уничтожен."
 
 STR_SM_10,"On top of mount San Esteban located the enemy artillery. Mission: destroy all guns.","Auf dem Gipfel des mount San Esteban befindet sich die feindliche Artillerie. Mission: vernichten Sie alle Geschütze.","На вершине горы San Esteban расположилась вражеская артиллерия. Задача: уничтожить всю технику."
@@ -337,8 +337,8 @@ STR_SM_042_,"Good job! Officer to the GRU, the mushrooms to the kitchen!","Auftr
 STR_SM_43,"The enemy has mastered the route of delivery of equipment passing through Dolores. You must destroy the city's road infrastructure. It's enough to blow up bridges.","Der Feind beherrscht die route der Lieferung von Geräten, die Weitergabe durch Dolores. Sie müssen zerstören die Stadt die Straßeninfrastruktur. Es ist genug, um die Brücken sprengen.","Мосты Долорес!\nВраг освоил маршрут поставки снаряжений, проходящий через Dolores. Вам надлежит разрушить дорожную инфраструктуру города. Для этого достаточно взорвать мосты."
 STR_SM_043,"Commander's order was fulfilled! Bridges destroyed.","Commander' s Auftrag wurde erfüllt! Brücken zerstört.","Задание выполнено! Мосты уничтожены."
 
-STR_SM_44,"The enemy began testing the new helicopter. Move to San Tomas, capture this vehicle and transport it to the base.","Der Feind begann der Test der neuen Hubschrauber. Gehen Sie zu San Tomas, erfassen das Fahrzeug und transportieren es an der Basis.","Враг испытывает новый вертолет. Отправляйтесь в San Thomas, захватите машину и доставьте на базу."
-STR_SM_044,"The order is executed! You've got the enemy attack helicopters to explore!","Der Auftrag ist ausgeführt! Du hast den feindlichen Angriff Hubschrauber zu erkunden!","Задание выполнено! Вы получили ударный вертолет противника для изучения!"
+STR_SM_44,"The enemy began testing the new helicopter. Move to San Tomas, capture this vehicle and transport it to the base.","Der Feind begann der Test der neuen Hubschrauber. Gehen Sie zu San Tomas, erfassen das Fahrzeug und transportieren es an der Basis.","Враг испытывает новый вертолёт. Отправляйтесь в San Thomas, захватите машину и доставьте на базу."
+STR_SM_044,"The order is executed! You've got the enemy attack helicopters to explore!","Der Auftrag ist ausgeführt! Du hast den feindlichen Angriff Hubschrauber zu erkunden!","Задание выполнено! Вы получили ударный вертолёт противника для изучения!"
 
 STR_SM_45,"It became known that the representatives of the local drug cartels keep their savings in the Department BoNY in Bagango. Your task-the complete destruction of the Bank building.","Es wurde bekannt, dass die Vertreter der örtlichen Drogenkartelle halten Ihre Ersparnisse in die Abteilung BoNY in Baganga. Ihre Aufgabe-die vollständige Zerstörung der Bank.","Стало известно что представители местных наркокартелей хранят свои сбережения в национальном банке Сахрани расположенном в городе Bagango. Ваша задача - полное уничтожении банковского здания."
 STR_SM_045,"The job is done! The Bank building was destroyed.","Der job ist getan! Das Bankgebäude war zerstört.","Задание выполнено! Здание банка уничтожено."
@@ -452,7 +452,7 @@ STR_SYS_247,"Your team has destroyed a large plant for the production of heroin.
 STR_SYS_248,"Secondary objective achieved...","Das sekundäre Ziel erreicht...","Второстепенное задание завершено..."
 STR_SYS_249,"Wreck Repair Point","Wrack-Reparatur-Punkt","Сервис восстановления"
 
-STR_SYS_250,"Your rank: %1 does not allow to use this helicopter (Wreck-repair). Required rank: %2.","Ihr Rang: %1 ist nicht erlaubt die Verwendung dieser Hubschrauber (Wrack). Erforderlich Rang: %2.","Ваше звание, %1, не позволяет использовать этот вертолет (восстановление-Wreck). Требуемое звание: %2."
+STR_SYS_250,"Your rank: %1 does not allow to use this helicopter (Wreck-repair). Required rank: %2.","Ihr Rang: %1 ist nicht erlaubt die Verwendung dieser Hubschrauber (Wrack). Erforderlich Rang: %2.","Ваше звание, %1, не позволяет использовать этот вертолёт (восстановление-Wreck). Требуемое звание: %2."
 STR_SYS_251,"There is no access to the flights!","Es gibt keine Zulassung zum Fliegen!","Отсутствует допуск к полётам!"
 STR_SYS_252,"Your rank: %1. You are not allowed to use %3.\n\nRank required is: %2.","Ihr Rang: %1. Sie nicht verwenden dürfen, %3.\n\nErforderliche dienstgrad: %2.","Ваше звание, %1, не позволяет использовать %3.\n\nТребуемое звание: %2."
 STR_SYS_252_BULKY,"When you try to enter into the doorway you're stuck (%1?)! %2","Wenn Sie versuchen, geben Sie in die Tür, Sie stecken (%1?)! %2","При попытке проникнуть в проём вы застряли (%1?)! %2"
@@ -624,8 +624,8 @@ STR_SYS_500_2,"All the vehicles in the convoy lost crew!","Alle Autos, die im Ko
 STR_SYS_501,"Task completed! Convoy is destroyed","Auftrag ausgeführt! Der Konvoi gebrochen","Задание выполнено! Конвой уничтожен"
 STR_SYS_502,"Senior officers settled in the city of Corazol. Your task is to blow up five transformer substations at the South-West of the city, leaving the bastards without electricity","Ein höherer Offiziere in der Stadt nieder Corazol. Überschreitet die Aufgabe sprengen fünf Trafostationen im Süd-Westen der Stadt, verlassen Bastarde ohne Strom","Высший офицерский состав обосновался в городе Corazol. Выша задача взорвать пять трансформаторных подстанций на юго-западе города, оставив гадов без электричества"
 STR_SYS_503,"The target is completed! Transformer substations are destroyed","Auftrag ausgeführt! Umspannwerk zerstört.","Задание выполнено! Трансформаторные подстанции уничтожены"
-STR_SYS_504,"Our helicopter was shot down near %1. Your task to move forward as quickly as possible and search of the crew of the helicopter. The enemy troops also sent their forces in the area of the crash. You have approximately %2 minutes before their arrival. (The mission can be accomplished only by a player in the role of rescuer)","Unsere Hubschrauber wurde abgeschossen in der Nähe von %1. Ihre Aufgabe zu bewegen, so schnell wie möglich vorwärts und der Suche nach der Besatzung des Hubschraubers. Die feindlichen Truppen schickte auch Ihre Kräfte im Bereich der Absturz. Sie haben ungefähr %2 Minuten vor Ihrer Ankunft. (Die mission kann nur erreicht werden, indem ein Spieler in die Rolle des Retters)","Возле %1 был сбит наш вертолет. Ваша задача - как можно быстрее выдвинуться на поиски экипажа вертолета. Вражеские силы так-же высланы в зону крушения. У вас примерно %2 минут до их прибытия. (Завершить миссию может только игрок в роли спасателя или лидер группы)"
-STR_SYS_505,"Good job! The rescue of helicopter crew was successful","Gute Arbeit! Die Rettung der Hubschrauber-crew erfolgreich war","Задание выполнено! Операция по спасению экипажа вертолета прошла успешно"
+STR_SYS_504,"Our helicopter was shot down near %1. Your task to move forward as quickly as possible and search of the crew of the helicopter. The enemy troops also sent their forces in the area of the crash. You have approximately %2 minutes before their arrival. (The mission can be accomplished only by a player in the role of rescuer)","Unsere Hubschrauber wurde abgeschossen in der Nähe von %1. Ihre Aufgabe zu bewegen, so schnell wie möglich vorwärts und der Suche nach der Besatzung des Hubschraubers. Die feindlichen Truppen schickte auch Ihre Kräfte im Bereich der Absturz. Sie haben ungefähr %2 Minuten vor Ihrer Ankunft. (Die mission kann nur erreicht werden, indem ein Spieler in die Rolle des Retters)","Возле %1 был сбит наш вертолёт. Ваша задача - как можно быстрее выдвинуться на поиски экипажа вертолёта. Вражеские силы так-же высланы в зону крушения. У вас примерно %2 минут до их прибытия. (Завершить миссию может только игрок в роли спасателя или лидер группы)"
+STR_SYS_505,"Good job! The rescue of helicopter crew was successful","Gute Arbeit! Die Rettung der Hubschrauber-crew erfolgreich war","Задание выполнено! Операция по спасению экипажа вертолёта прошла успешно"
 STR_SYS_506,"The enemy took the settlement %1. You must steal the flag of their regiment and deliver it to our base.","Der Feind eingenommen Ort %1. Das sollten Sie zu stehlen Ihre fahne des Regiments und liefern es an uns, an der Basis.","Враг занял населённый пункт %1. Вам надлежит выкрасть знамя их полка и доставить его к нам, на базу."
 STR_SYS_507,"Good job! The regiment without the banner as the hole without a donut. They hide eyes and lick ice cream.","Auftrag ausgeführt! Das REGIMENT ohne Fahnen dass das Loch ohne Brezel. Sie verstecken die Augen und lecken Eis.","Задание выполнено! Полк без знамени что дырка без бублика. Они прячут глаза и лижут мороженое."
 STR_SYS_508,"It became known that the culprit in the outbreak of the war, an officer who led aggression on Sahrani, hiding on one of the Islands Isla del Vasal or Isla del Vida. Crush the wretch! Addendum: local fishermen report that the Islands do air defenses in large amounts","Es wurde bekannt, dass der Täter in den Ausbruch des Krieges Offizier, leitete die Aggression auf Sahrani, die sich auf einer der Inseln Isla del Vasal oder Isla del Vida. Entsorgen Sie den Bösewicht! Ergänzung: die lokalen Fischer berichtet, dass auf der Insel stammen die Mittel der Luftverteidigung in großen Mengen","Стало известно, что виновный в развязывании войны офицер, возглавивший агрессию на Сахрани, прячется на одном из островов Isla del Vasal или Isla del Vida.  Ликвидируйте негодяя! Дополнение: местные рыбаки сообщают, что на острова завозятся средства ПВО в больших кол-вах!"
@@ -720,7 +720,7 @@ STR_SYS_1122,Drop Item 2,Drop-item 2,Сбросить объект 2
 STR_SYS_1123,Drop Item 3,Drop-item 3,Сбросить объект 3
 STR_SYS_1124,Select drop zone by map click:,Wählen Sie die drop-point mit Karte klicken Sie:,Выбрать точку сброса снаряжения (клик мышкой):
 
-STR_SYS_1125,Transport chopper in the air... Drop not available!,Transport-chopper in der Luft... Drop nicht verfügbar!,Транспортный вертолет в пути... Вызов снабжения недоступен!
+STR_SYS_1125,Transport chopper in the air... Drop not available!,Transport-chopper in der Luft... Drop nicht verfügbar!,Транспортный вертолёт в пути... Вызов снабжения недоступен!
 STR_SYS_1126,"You don't have enough points to call in an air drop. You need %2 points for an air drop, your current score is %1","Sie haben nicht genug Punkte zu nennen, die in einem air-drop. Müssen Sie %2 Punkte für einen air drop, Ihre aktuelle Punktzahl ist %1","Вызов снабжения недоступен... Требуется очков: %2. У вас: %1"
 STR_SYS_1127,"You are to far away from the drop point, no line of sight !!! Get closer (<%1 m).","Sie sind zu weit Weg von der drop-point, keine Sichtlinie !!! Näher (<%1 m).","Вы далеко от точки сброса! Следует приблизиться (<%1 м)"
 STR_SYS_1128,"Calling in %1 air drop","Berufung in %1 air drop","Снабжение %1 вызвано!"
@@ -767,6 +767,9 @@ STR_SYS_1183,"Air taxi canceled, you've died !!!","Luft-taxi abgesagt, du bist g
 STR_SYS_1184,"Air taxi damaged or destroyed !!!","Luft-taxi beschädigt oder zerstört !!!","Спасательный вертолёт повреждён или уничтожен !!!"
 STR_SYS_1185,"Air taxi heading to base in a few seconds !!!","Luft-taxi Richtung base in ein paar Sekunden !!!","Спасательный вертолёт отправится на базу через несколько секунд !!!"
 STR_SYS_1186,"Air taxi leaving now, have a nice day !!!","Luft-taxi jetzt verlassen, haben einen schönen Tag !!!","Спасательный вертолёт покидает базу, удачи !!!"
+
+STR_SYS_SERVICE_DMG,"Service %1 is damaged","Service %1 beschädigt","Сервис %1 повреждён!"
+STR_SYS_SERVICE_DMG_1,"One of the services of the base was damaged by saboteurs!","Eine der Dienstleistungen der Basis beschädigt von saboteurs!","Один из сервисов на базе был повреждён диверсантами!"
 
 STR_AI_0,"Call in Air Taxi","Rufen Sie in Luft-Taxi","Вызвать вертолёт"
 STR_AI_1,"Recruit Soldier","Rekrut, Soldat","Призвать в пехоту"

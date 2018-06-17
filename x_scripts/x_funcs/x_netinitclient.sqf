@@ -548,7 +548,7 @@ XHandleNetStartScriptClient = {
 			(_this select 1) execVM "scripts\emulateFlareFiredLocal.sqf";
 		};
 
-		 // some message to user, params: ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay>>]
+		 // some message to user, params: ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay>>]
 		 // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
 		 // msg is displayed using titleText ["...", "PLAIN DOWN"];
 		case "msg_to_user":	{
@@ -626,7 +626,6 @@ XHandleNetStartScriptClient = {
 							else
 							{
 								_msg_res set [count _msg_res, _x]; // not localize this format item
-
 							};
 						};
 					} forEach _x; // for each format item
