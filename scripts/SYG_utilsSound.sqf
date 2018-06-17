@@ -56,6 +56,8 @@ SYG_musicTrackCount = {
 	count (configFile >> "CfgMusic" )
 };
 
+
+// Corazol (center of island) sounds
 SYG_defeatTracks =
 [
     ["Delerium_Wisdom","pimbompimbom","vendetta","thefuture"],
@@ -77,15 +79,9 @@ SYG_northDefeatTracks =
 [
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
-    ["ATrack9","ATrack10","ATrack19","bolero"]
+    ["ATrack9","ATrack10","ATrack19","bolero"],
+    ["metel","gayane1","gayane2","gayane3"]
 ];
-
-SYG_baseDefeatTracks =
-    [
-    "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
-    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom"
-    ];
-
 
 SYG_southDefeatTracks =
 [
@@ -96,6 +92,13 @@ SYG_southDefeatTracks =
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
     ["ATrack11","ATrack12","ATrack13","arroyo"]
 ];
+
+
+SYG_baseDefeatTracks =
+    [
+    "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
+    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom","gamlet_hunt"
+    ];
 
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
