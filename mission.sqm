@@ -217,7 +217,7 @@ class Mission
 					special="NONE";
 					id=16;
 					side="EAST";
-					vehicle="SoldierEB";
+					vehicle="ACE_SoldierEB";
 					leader=1;
 					skill=0.600000;
 				};
