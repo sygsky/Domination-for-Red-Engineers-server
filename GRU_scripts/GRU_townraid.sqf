@@ -224,18 +224,17 @@ for "_check" from 0 to 0 do
 			{
 				if ( GRU_docState > 0 ) then
 				{
-					call SYG_playRandomDefeatTrack;
 					[ localize "STR_GRU_12"] call GRU_msg2player; // "Вы погибли и враг прочтёт доверенное Вам разведдонесение. За это - штраф!"
 					[ "GRU_msg", GRU_MSG_TASK_FAILED, GRU_MAIN_TASK, name player ] call XSendNetStartScriptServer;
 					_score = _score_minus;
 				}
 				else
 				{
-					call SYG_playRandomOFPTrack;
 					[localize "STR_GRU_13"] call GRU_msg2player; // "Вы погибли при исполнении задания ГРУ, но не допустили утечки информации. Сахранийцы не забудут героя!"
 					["GRU_msg", GRU_MSG_TASK_SKIPPED, GRU_MAIN_TASK, name player] call XSendNetStartScriptServer; 
 					sleep 1;
 				};
+				call SYG_playRandomOFPTrack;
 			};
 			
 			if ( !TASK_ID_IS_ACTIVE(GRU_MAIN_TASK) ) exitWith
