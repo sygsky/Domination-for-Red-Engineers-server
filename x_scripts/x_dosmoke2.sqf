@@ -93,7 +93,7 @@ _vec doWatch _shooter;
 sleep 3.634;
 _vec fire _muzzle;
 #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: vec %1 fires smoke curtain against ""%2""", typeOf _vec, _name];
+	hint localize format["x_dosmoke2.sqf: vec ""%1"" fires smoke curtain against ""%2""", typeOf _vec, _name];
 #endif
 
 // TODO: If attacker is a tank and damaged is a tank shoot to the attacker smoke first and sabot second

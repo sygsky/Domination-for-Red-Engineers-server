@@ -348,7 +348,7 @@ SYG_countDaysInMonth = {
 //
 // Example: _diff = [[2016,5,17,15,45],[2016,4,26,9,5]] call SYG_getDateDiff;
 //
-// returns integer number between two dates in days. Use JDN calculatuions from: https://en.wikipedia.org/wiki/Julian_day
+// always returns positive integer difference between two dates in days. Use JDN calculatuions from: https://en.wikipedia.org/wiki/Julian_day
 /*
 All division is integer division, operator % is modulus.
 Given integer y, m, d, calculate day number g as:
@@ -399,7 +399,7 @@ SYG_runHolidayMusic =
     _date = date;
     _year = argp(_date,0);
     _curr_mon = argp(_date,1);
-    if (_this == 1) exitWith // check only ofr new  year
+    if (_this == 1) exitWith // check only for new  year
     {
         _dateNY = [_year, 1, 1];
         if (_curr_mon == 12) then {_dateNY set [0,_year +1];};

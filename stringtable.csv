@@ -482,8 +482,13 @@ STR_SYS_256_HM_2,"Wanna this miracle to happen again? Bring six-pack to admin's 
 STR_SYS_256_HM_3,"As soon as  technical stuff saw WHO has arrived at the helipad, spreading with damnations and kicking empty ammo boxes on the way, they instantly rushed for the second ammo set","Zu sehen, WER kam in der service-station, technisches Personal verflucht, aber ging für die zweite Munition","Увидев, КТО прилетел к ним на обслуживание, техники выматерились и побрели за вторым БК."
 
 STR_SYS_257,"Refuelling...","Tanken...","Заправка..."
-STR_SYS_257_1,"Refueling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","Заправка %1 прервана, шланг оторвался"
+STR_SYS_257_1,"Refuelling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","Заправка %1 прервана, шланг оторвался"
 STR_SYS_258,"Repairing...","Reparieren...","Починка..."
+
+STR_SYS_RELOAD_REPAIR,"Loading of repair equipment","Das laden von reparaturgeräten","Загрузка ремонтного инвентаря"
+STR_SYS_RELOAD_REAMMO,Ammunition reloading,Munition nachladen,Перезарядка боезапаса
+STR_SYS_RELOAD_REFUEL,Filling of the fuel tank,Tankfüllung,Заправка цистерны
+
 STR_SYS_258_1,"Engineers thank You for fully functional vehicles!","Ingenieure vielen Dank für die voll funktionsfähigen Fahrzeuge!","Инженеры благодарят Вас за полностью исправный транспорт!"
 STR_SYS_258_2,"You're not an engineer and can repair vehicle just with a loss of %1 point[s] per cycle","Du bist kein Ingenieur und kann Reparatur Fahrzeug nur mit einem Verlust von %1 pro Zyklus","Вы не инженер и можете чинить только с вычетом очков (%1 за цикл)"
 STR_SYS_258_3,"The engineer can locate and deactivate the mines","Der Ingenieur kann suchen Sie und deaktivieren Sie die Minen","Теперь инженер может работать с минами"
@@ -803,7 +808,7 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Ск. падения:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""requiem"",""Art_Of_Noise_mono"",""mission_impossible""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"

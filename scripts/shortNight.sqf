@@ -72,7 +72,7 @@ _dayPeriod = {
 #endif
 
 waitUntil {time > 0}; // wait time synchronization
-// TODO: add some sound effects (morning sounds, day insects, evening belss, night cries etc)
+// TODO: add some sound effects (morning sounds, day insects, evening bells, night cries etc)
 _titleTime = {
     sleep  (random 60);
     _str = localize (format["STR_TIME_%1",_this]);
