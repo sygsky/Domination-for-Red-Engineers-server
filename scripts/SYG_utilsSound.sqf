@@ -97,7 +97,7 @@ SYG_southDefeatTracks =
 SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
-    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom","gamlet_hunt"
+    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom","gamlet_hunt","treasure_island"
     ];
 
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or

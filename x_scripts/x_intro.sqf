@@ -63,9 +63,9 @@ else // music normally played on intro
         _music = ((call compile format["[%1]", (localize "STR_INTRO_MUSIC")]) +
         [
             "bond","grant","stavka_bolshe_chem","red_alert_soviet_march",
-            "burnash","adjutant","lastdime","english_murder","requiem",
+            "burnash","adjutant","lastdime","english_murder",//"requiem",
             "Art_Of_Noise_mono","mission_impossible","from_russia_with_love",
-            "prince_negaafellaga","strelok","total_recall_mountain","ost_fort_boyard"
+            "prince_negaafellaga","strelok","total_recall_mountain"//,"ost_fort_boyard"
         ]) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;
