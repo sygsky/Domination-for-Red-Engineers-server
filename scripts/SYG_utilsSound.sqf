@@ -97,7 +97,7 @@ SYG_southDefeatTracks =
 SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
-    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom","gamlet_hunt","treasure_island"
+    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom","gamlet_hunt"
     ];
 
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
@@ -174,9 +174,10 @@ SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;
 };
 
-SYG_chorusDefeatTracks = ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]];
+SYG_chorusDefeatTracks =["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]];
+
 // Any isle defeat music
-SYG_islandDefeatTracks = [ SYG_chorusTrack ] + SYG_OFPTracks;
+SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island"];
 
 SYG_RahmadiDefeatTracks = ["ATrack23b",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
@@ -220,7 +221,7 @@ SYG_playRandomTrack = {
     {
         RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random array and try to play from it
     };
-    if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be
+    if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be,  mandatory with size > 1
     {
         if ((typeName arg(1)) == "STRING") exitWith // 1. _arr = ["ATrack9","ATrack10" ...]; // play full random track
         {
