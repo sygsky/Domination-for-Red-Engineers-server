@@ -63,7 +63,7 @@ king spawn {
         /* inform players about king escape and his new approximate position */
         _dist = king distance _old_pos;
         _mgs = ["STR_GRU_48",call SYG_getLocalMenRandomName, (round(_dist /100) max 1)* 100];
-         ["msg_to_user","",[_msg]] call XSendNetStartScriptClient;
+         ["msg_to_user","",[_msg]] call XSendNetStartScriptClient; // send msg to all clients
          hint localize "+++ king_escape.sqf: message sent to user about new king position";
     };
 };

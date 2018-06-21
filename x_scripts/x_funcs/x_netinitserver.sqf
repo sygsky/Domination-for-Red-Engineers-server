@@ -252,7 +252,7 @@ XHandleNetStartScriptServer = {
 			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
 			// log info  about logging
-			hint localize format["x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1),arg(2), call SYG_missionTimeInfoStr ];
+			hint localize format["x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
 		};
 		case "GRU_msg": {
 			_this call GRU_procServerMsg;
@@ -293,27 +293,18 @@ XHandleNetStartScriptServer = {
                 ["GRU_event_scores", _id, _score, ""] call XSendNetStartScriptClient;
             };
 		};
-		// Handle engineering fund. E.g. to be used by non-engineers for service repair
+
+		// Handle engineering fund on server.  Normally is send by non-engineers on  airbase services repair activity
 		// call parameters: ["engineering_fund", "+"|"-"|"=", scores|"", name player]
 		case "engineering_fund" :
 		{
-		    _command = _this select 1; // command to handle this fund
-		    _score   = _this select 2; // score to add to the fund
-		    _pname   = _this select 3; // score to add to the fund
-            hint localize format["+++ engineering_fund request %1, %2, %3",_command, _score, _pname];
-		    switch _command do {
-                case "+": {
-
-                };  // adds some scores to the fund
-                case "-": {
-
-                };  // subtracts designated scores
-                case "=": {
-                }; // returns available score number
-		    };
+    		_this execVM "scripts\engineeringFundServer.sqf";
 		};
 
-
+        default
+        {
+            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
+        };
 	}; // switch (_this select 0) do
 }; // XHandleNetStartScriptServer = {
  

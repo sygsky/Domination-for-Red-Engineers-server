@@ -41,7 +41,7 @@ _sleep_delay = (24 - (SYG_shortNightStart + SYG_shortNightEnd) + 0.5) * 3600.0; 
 #ifndef __DEFAULT__
 
 //+++ Sygsky: Paraiso airfield coordinates and its boundary rectangle box (semi-axis sizes)
-d_base_array        = [[9821.47,9971.04,0], 600, 200,0];
+d_base_array        = [[9821.47,9971.04,0], 600, 200, 0];
 SYG_shortNightStart = 19.75;
 SYG_shortNightEnd   = 4.6;
 

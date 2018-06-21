@@ -212,6 +212,9 @@ while { true } do {
 	hint localize format["x_airki.sqf[%1]: --- Exit wait loop",_type];
 #endif
 
+// sleep small random period before sent airkillers from enemy carrier
+sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on the mission
+
 // "GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1"
 ["msg_to_user","",[["STR_GRU_53",format["STR_GRU_53_%1",_initial_type]]],4,4 + round(random 4)] call XSendNetStartScriptClient;
 

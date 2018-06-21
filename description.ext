@@ -248,7 +248,7 @@ class CfgMusic
     class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};} // intro music from "Total recall" movie (The Mountain)
     //class ost_fort_boyard { name=""; sound[] = {\sounds\ost_fort_boyard.ogg,db-1,1.0};} // intro music from "Fort Boyard" French TV adventure
 
-    // class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
+    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
     class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
 
@@ -355,6 +355,8 @@ class CfgSounds
     class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\female_shout_of_pain_3.ogg, db+10, 1.0}; titles[] = {}; };
     class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\female_shout_of_pain_4.ogg, db+10, 1.0}; titles[] = {}; };
 
+    class gong {name = ""; sound[] = {\sounds\gong.ogg, db+10, 1.0}; titles[] = {}; };
+    class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

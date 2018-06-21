@@ -14,7 +14,8 @@ _tmp = position _nil;
 //playMusic "upsidedown";
 _vec setPos _tmp;
 // send message to all clients through server
-["say_sound", _vec, "upsidedown"] call XSendNetStartScriptServer;
+["say_sound", _vec, "upsidedown"] call XSendNetStartScriptClient; // send directly to clients except yourself (if !X_SPE), no need to send to server
+if (!X_SPE) then {_vec say "upsidedown"}; // if non-dedicated server, play sound on your owned computer
 sleep 0.01;
 sleep 0.01;
 deleteVehicle _nil;

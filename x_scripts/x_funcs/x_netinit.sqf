@@ -94,7 +94,7 @@ XSendNetStartScriptServer = {
 	private ["_this"];
 	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptServer",_this)
 	d_ns_serv = _this;publicVariable "d_ns_serv";
-	if (X_SPE) then {_this spawn XHandleNetStartScriptServer};
+	if (X_SPE) then {_this spawn XHandleNetStartScriptServer}; // if Server on Player is Executed (not dedicated)
 };
 
 XSendNetVarServer = {
@@ -109,7 +109,7 @@ XSendNetStartScriptClient = {
 	private ["_this"];
 	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClient",_this)
 	d_ns_client = _this;publicVariable "d_ns_client";
-	if (X_SPE) then {_this spawn XHandleNetStartScriptClient};
+	if (X_SPE) then {_this spawn XHandleNetStartScriptClient}; // if Server on Player is Executed (not dedicated)
 };
 
 XSendNetVarClient = {

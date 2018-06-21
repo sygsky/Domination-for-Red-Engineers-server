@@ -548,9 +548,11 @@ XHandleNetStartScriptClient = {
 			(_this select 1) execVM "scripts\emulateFlareFiredLocal.sqf";
 		};
 
-		 // some message to user, params: ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay>>]
-		 // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
-		 // msg is displayed using titleText ["...", "PLAIN DOWN"];
+
+        // this command is received and processed ONLY on clients, just if started on client too
+        // some message to user, params: ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay>>]
+        // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
+        // msg is displayed using titleText ["...", "PLAIN DOWN"];
 		case "msg_to_user":	{
 			private [ "_msg_arr","_msg_res","_name","_delay","_localize" ];
 /*
@@ -710,6 +712,14 @@ XHandleNetStartScriptClient = {
             };
             GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure
 		};
+
+        // Handle engineering fund info on clients. Normally is send by non-engineers on airbase services repair activity
+        // call parameters: ["engineering_fund", "+"|"-"|"=", scores|"", name player]
+        case "engineering_fund" :
+        {
+            _this execVM "scripts\engineeringFundClient.sqf";
+        };
+
 
 	}; //switch (_this select 0) do {
 }; // XHandleNetStartScriptClient = {
