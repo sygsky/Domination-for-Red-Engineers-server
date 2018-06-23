@@ -338,10 +338,15 @@ XHandleNetStartScriptClient = {
 			if (!isNull (_this select 1)) then {
 				// "Был уничтожен сервис по обслуживанию самолетов. Просите инженеров отремонтировать его ..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_220"] call XfHQChat;
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
 					[0] spawn XFacAction;
+					hint localize "+++ XFacAction d_jet_service_fac";
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				};
+#endif
 			} else {
 				//"Сервис по обслуживанию самолетов доступен" call XfHQChat;
 				format[localize "STR_SYS_224",localize "STR_SYS_220"] call XfHQChat;
@@ -352,10 +357,15 @@ XHandleNetStartScriptClient = {
 			if (!isNull (_this select 1)) then {
 				//"Был уничтожен сервис по обслуживанию вертолетов. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_221"] call XfHQChat;
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
 					[1] spawn XFacAction;
+					hint localize "+++ XFacAction d_chopper_service_fac";
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				};
+#endif
 			} else {
 				//"Сервис по обслуживанию вертолетов доступен" call XfHQChat;
 				format[localize "STR_SYS_224",localize "STR_SYS_221"] call XfHQChat;
@@ -366,10 +376,15 @@ XHandleNetStartScriptClient = {
 			if (!isNull (_this select 1)) then {
 				//"Был уничтожен сервис по восстановлению техники. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_222"] call XfHQChat;
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
 					[2] spawn XFacAction;
+					hint localize "+++ XFacAction d_wreck_repair_fac";
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				};
+#endif
 			} else {
 				//"Сервис по восстановлению техники доступен" call XfHQChat;
 				format[localize "STR_SYS_224",localize "STR_SYS_222"] call XfHQChat;
@@ -713,11 +728,11 @@ XHandleNetStartScriptClient = {
             GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure
 		};
 
-        // Handle engineering fund info on clients. Normally is send by non-engineers on airbase services repair activity
-        // call parameters: ["engineering_fund", "+"|"-"|"=", scores|"", name player]
-        case "engineering_fund" :
+//========================================================================================================== END OF CASES
+
+        default
         {
-            _this execVM "scripts\engineeringFundClient.sqf";
+            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
         };
 
 

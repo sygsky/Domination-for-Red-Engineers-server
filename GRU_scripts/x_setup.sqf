@@ -100,7 +100,7 @@
 //+++ enable player command menu to base flag for bargate animation
 //#define __BARGATE_ANIM__
 
-//+++ enable your eauipment (weapn, magazines, ammo etc) to save on server by base flag menu new command
+//+++ enable your equipment (weapn, magazines, ammo etc) to save on server by base flag menu new command
 #define __STORE_EQUIPMENT__
 
 #ifdef __ACE__
@@ -110,6 +110,9 @@
 
 //+++ uncomment to replace ACE_Stryker_TOW with ACE_M60 and ACE_M60A3
 #define __USE_M60__
+
+// uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
+#define __JAVELIN__
 
 #endif
 
@@ -132,8 +135,8 @@
 // uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value
 #define __JAIL_MAX_SCORE__ -15
 
-// uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
-#define __JAVELIN__
-
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
 //#define __NO_RPG_CLONING__
+
+// uncomment follow line to allow non-engineers use engineering fund
+#define __REP_SERVICE_FROM_ENGINEERING_FUND__

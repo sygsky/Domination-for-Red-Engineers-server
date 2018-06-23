@@ -177,12 +177,18 @@ if (_addscore > 0) then {
     if (!_is_engineer) then
     {
         _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__;
-        _str = "STR_SYS_137_1"; //"Вычтено очков за обслуживание техники: %1 ..."
-        // TODO: send scores to the engineers fund
+        SYG_engineering_fund = SYG_engineering_fund - _addscore;
+        publicVariable "SYG_engineering_fund"; // send spent scores to the fund
+    #ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+        _str = "STR_SYS_137_2"; // "Maintenance score (%1) is reallocated to the Engineering Fund (%2)"
+    #endif
+    #ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
+        _str = "STR_SYS_137_1"; //"Subtracted points for maintenance: %1 ..."
+    #endif
     };
 #endif
 	player addScore _addscore;
-	(format [localize _str, _addscore]) call XfHQChat;
+	(format [localize _str, _addscore, SYG_engineering_fund]) call XfHQChat;
 };
 #endif
 rep_array = _rep_array;

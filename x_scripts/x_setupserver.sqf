@@ -327,6 +327,7 @@ execVM "x_scripts\x_delaiserv.sqf";
 #endif	
 };
 
+//++++++++++++++++++++++ Start of sidemission processings
 [] spawn {
 
 	private ["_waittime","_num_p"];

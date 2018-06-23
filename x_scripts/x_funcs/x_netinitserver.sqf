@@ -294,12 +294,7 @@ XHandleNetStartScriptServer = {
             };
 		};
 
-		// Handle engineering fund on server.  Normally is send by non-engineers on  airbase services repair activity
-		// call parameters: ["engineering_fund", "+"|"-"|"=", scores|"", name player]
-		case "engineering_fund" :
-		{
-    		_this execVM "scripts\engineeringFundServer.sqf";
-		};
+//========================================================================================================== END OF CASES
 
         default
         {

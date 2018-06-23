@@ -73,12 +73,12 @@ _ctrl ctrlSetText str(d_points_needed select 5);
 
 _ctrl = _XD_display displayCtrl 2007;
 
-_str = format[localize "STR_SYS_254", d_own_side,d_enemy_side,getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
-
-_strYes = localize "STR_SYS_400"; // "Yes\n"
-_strYes1 = localize "STR_SYS_400_1"; // "Yes"
+_strYes = localize "STR_SYS_400";   // "Yes\n"
+_strYes1 = localize "STR_SYS_400_1";// "Yes"
 _strNo = localize "STR_SYS_401";    // "No\n"
 _strNo1 = localize "STR_SYS_401_1"; // "No"
+
+_str = format[localize "STR_SYS_254", d_own_side,d_enemy_side,getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
 
 if (__ACEVer || __CSLAVer) then {
 	if (__ACEVer) then {
@@ -124,6 +124,15 @@ _str = _str + _strYes;
 #else
 _str = _str + _strNo;
 #endif
+
+// Engineering Fund
+_str = _str + (localize "STR_SYS_137_5") + ": "; // "Light vehicle[s] at the base in the beginning"
+#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+_str = _str + SYG_engineering_fund + " \n";
+#else
+_str = _str + _strNo;
+#endif
+
 
 _str = _str + (localize "STR_SET_8") ; // "Mandatory side missions"
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
