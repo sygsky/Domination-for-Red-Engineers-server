@@ -137,3 +137,6 @@
 
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
 //#define __NO_RPG_CLONING__
+
+// uncomment follow line to allow non-engineers use engineering fund
+#define __REP_SERVICE_FROM_ENGINEERING_FUND__

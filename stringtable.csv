@@ -65,7 +65,7 @@ STR_SYS_03,"Your MG nest was destroyed", "Ihre  Maschinengewehr-Nest zerstört w
 STR_MG_1,"You must be kidding...","Sie müssen Spaß machen...","Пошутил, да..."
 STR_MG_2,"You have already build a mg nest. You have to remove it to build a new one.","Sie haben bereits bauen ein mg-nest. Sie haben, um es zu entfernen, um ein neues bauen.","Сверните старое пулемётное гнездо, что установить новое."
 STR_MG_3,"It is not possible to place a mg nest into water.","Es ist nicht möglich, ein mg-nest ins Wasser.","Пулеметы под водой пока не работают..."
-STR_MG_4,"You need %2 points to build a mg nest. Your current score is: %1","Sie müssen %2 Punkte, um zu bauen ein mg-nest. Ihre aktuelle Punktzahl beträgt: %1","Чтобы создать пулемет Вам необходимы очки: %2. У Вас их %1"
+STR_MG_4,"You need %2 points to build a mg nest. Your current scores: %1","Sie müssen %2 Punkte, um zu bauen ein mg-nest. Ihre aktuelle Punktzahl beträgt: %1","Чтобы создать пулемет Вам необходимы очки: %2. У Вас их %1"
 STR_MG_5,"Place not valid. Try another location.","Ist nicht gültig. Versuchen Sie einen anderen Ort.","Попробуйте в другом месте..."
 STR_MG_6,"You died before your MG nest was ready.","Sie starb vor Ihrem MG-nest fertig war.","Умер до того, как развернул пулеметное гнездо..."
 STR_MG_7,"MG Nest ready.","MG-Nest fertig.","Пулемётное гнездо готово"
@@ -87,7 +87,7 @@ STR_SYS_05,"Engineer refuelling not limited: yes\n","Ingenieur tanken nicht begr
 STR_SYS_06,"Engineer refuelling is limited to (litres): %1\n","Ingenieur tanken ist beschränkt (Liter): %1\n", "Инженер при ремонте заливает горючего (литры): %1\n"
 STR_SYS_07,Vehicle status",Status des Fahrzeugs,Статус техники
 
-STR_SYS_10,"Additional death score penalty after rank: %1\n","Zusätzliche Tod Strafe Partitur nach Rang: %1\n", "Доп. вычитание очков за смерть, после очередного звания: %1\n"
+STR_SYS_10,"Additional death scores penalty after rank: %1\n","Zusätzliche Tod Strafe Partitur nach Rang: %1\n", "Доп. вычитание очков за смерть, после очередного звания: %1\n"
 
 STR_SYS_11,"Your health is %1","Ihre Gesundheit: %1","Здоровье: %1"
 STR_SYS_11_1,"Fatigue %1","Ermüdung %1","Усталость: %1"
@@ -250,8 +250,14 @@ STR_SYS_133,"Side Mission point","Side Mission punkt","точки задания
 STR_SYS_134,"The officer was not detected neither at Side Mission point nor near Your Glonass-Position","Der Offizier wurde nicht erkannt, weder in Side Mission punkt noch in Ihre Glonass-Position","Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
 STR_SYS_135,"Side Mission marker is absent from map!!!",Seite Mission marker ist nicht in der Karte!!!,"Маркер доп. задания не найден на карте!!!"
 STR_SYS_136,"The service is cancelled...","Zimmerservice abgebrochen...","Сервис отменен..."
+
 STR_SYS_137,"Added points for maintenance: +%1 ...","Addierte Punkte für die Bedienung der Technik: %1 ...","Добавлено очков за обслуживание техники: +%1 ..."
-STR_SYS_137_1,"Subtracted points for maintenance: %1 ...","Abgezogen Punkte für die Pflege: %1 ...","Вычтено очков за обслуживание техники: %1 ..."
+STR_SYS_137_1,"Scores spent for maintenance: %1 ...","Abgezogen Punkte für die Pflege: %1 ...","Вычтено очков за обслуживание техники: %1 ..."
+STR_SYS_137_2,"Maintenance scores (%1) are reallocated from you to the Engineering Fund (%2)","Wartungs-scores (%1) ist reserviert, um engineering-Fonds (%2)","Ваши очки за обслуживание техники (%1) направлены в инженерный фонд (%2)"
+STR_SYS_137_3,"Engineering Fund scores: available %1, required for repair of building %2","Die engineering-Fonds Punkten: er hat eine %1, erforderlich für die Reparatur von Gebäuden %2","Очки в инженерном фонде: в наличии %1, требуется для ремонта здания %2"
+STR_SYS_137_4,"The Engineering Fund's expenses for restoration of service %1 scores, %2 will remain","Die Aufwendungen des Engineering-Fonds für die Wiederherstellung von service %1 Punkte, %2 bleiben","Затраты инженерного фонда на восстановление сервиса %1, останется %2"
+STR_SYS_137_5,"The Engineering Fund's expenses for restoration of service %1 scores, %2 will remain","Die Aufwendungen des Engineering-Fonds für die Wiederherstellung von service %1 Punkte, %2 bleiben","Затраты инженерного фонда на восстановление сервиса %1, останется %2"
+
 STR_SYS_138,"The maintenance of a %1 is finished...","Wartung beendet: %1 ...","Обслуживание %1 закончено..."
 STR_SYS_139,"For repair and refueling you need %2 point(s). You have only %1 ...","Für die Reparatur und Betankung der Maschinen müssen Punkte: %2. Sie haben nur den %1 ...","Для ремонта и заправки техники необходимо иметь очков: %2. У Вас только %1 ..."
 STR_SYS_139_1,"To pilot this heli you need %2 point(s). You have only %1 ...","Der pilot dieser Hubschrauber müssen Sie %2 Punkt (E). Sie haben nur noch %1 ...","Для пилотирования данного вертолёта нужно баллов: %2. У вас есть только %1" 
@@ -393,8 +399,8 @@ STR_SYS_209,"No secondary main target mission available...","Keine zweite Hauptz
 STR_SYS_210,"Secondary target: ","Die sekundäre Aufgabe: ","Второстепенное задание: "
 STR_SYS_211,"Close %1 is located enemy post. Your task: destroy the radio tower on it.","In der Nähe von %1 befindet sich das feindliche posten. Ihre Aufgabe: die Zerstörung der Radio-Turm.","Недалеко от %1 расположен вражеский пост. Ваша задача: уничтожение радиобашни на нём."
 STR_SYS_212,"Very good job, boys! Radio tower destroyed.","Auftrag ausgeführt! Radio Turm zerstört.","Задание выполнено! Радио башня уничтожена."
-STR_SYS_213,"You need %2 points to rebuild a factory, your current score is: %1!","Sie müssen %2 Punkte, um den Wiederaufbau einer Fabrik, Ihre aktuelle Punktzahl beträgt: %1!","Для ремонта здания необходимо очков: %2, вы имеете: %1!"
-STR_SYS_214,"Restore support building. This will take some time and score...","Wiederherstellen Unterstützung bauen. Dies wird einige Zeit dauern und Partitur...",Производится ремонт сервиса. Это потребует времени и убавит счёт..."
+STR_SYS_213,"You need %2 scores to rebuild a factory, your current scores are: %1!","Sie müssen %2 Punkte, um den Wiederaufbau einer Fabrik, Ihre aktuelle Punktzahl beträgt: %1!","Для ремонта здания необходимо очков: %2, вы имеете: %1!"
+STR_SYS_214,"Restore support building. This will take some time and scores...","Wiederherstellen Unterstützung bauen. Dies wird einige Zeit dauern und Partitur...",Производится ремонт сервиса. Это потребует времени и убавит счёт..."
 STR_SYS_215,Airbase,Airbase,Авиабаза
 STR_SYS_216,occupied city,besetzte Stadt,оккупированный
 
@@ -662,7 +668,7 @@ STR_SYS_541,"It seems that the enemy doesn't want to give up %1 and starts a cou
 STR_SYS_541_1,"The counterattack starts. Hold the current target. Good luck and god help us all...","Der Gegenangriff beginnt. Halten Sie das aktuelle Ziel. Viel Glück und Gott uns allen helfen...","Контратака началась!!! Удержите текущий город. Удачи... ... ..."
 STR_SYS_541_2,"Good job. The counterattack was defeated.",,"Задача выполнена! Контратака отбита..."
 
-STR_SYS_600,"You were killed by %1. %1 looses %2 score points!,"Sie wurden getötet, von %1. %1 verliert %2 Punkte!","Вас убил %1. Он отштрафован на -%2 оч.!"
+STR_SYS_600,"You were killed by %1. %1 looses %2 scores!,"Sie wurden getötet, von %1. %1 verliert %2 Punkte!","Вас убил %1. Он отштрафован на -%2 оч.!"
 
 STR_SYS_601,"Respawn at Base",Respawn an der Basis,"Возрождение на базе"
 STR_SYS_602,"Teleport to Mobile Resp %1","Teleport auf Mobile Resp %1","Телепорт на мобильный респ %1"
@@ -676,7 +682,7 @@ STR_SYS_604_0,"You are the first [English speaking] warrior in this dangerous mi
 STR_SYS_605,"%1 killed %2 and looses %3 scores","%1 getötet %2. %1 verliert %3 erzielt","%1 убил %2 и теряет очков: %3!"
 STR_SYS_606,"During %4 you are on GRU duty in %1 [+%2/%3]","During %4 you are on GRU duty in %1 [+%2/%3]","В течении %4 Вы выполняете задание ГРУ в %1 [+%2/%3]!"
 
-STR_SYS_607,"You need %2 point[s] for parajump. Your current score is %1","Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1","Для прыжка необходимо очков: %2. Сейчас у вас: %1"
+STR_SYS_607,"You need %2 point[s] for parajump. Your current scores are %1","Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1","Для прыжка необходимо очков: %2. Сейчас у вас: %1"
 STR_SYS_608,"You can't jump. You have to wait %1 minutes for your next jump!!!","Sie können nicht springen. Sie müssen warten, %1 Minuten für Ihren nächsten springen!!!","Прыжок запрещён. След. прыжок через %1 мин.!"
 STR_SYS_609,"!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!","!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!","!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!"
 STR_SYS_610,"[Record equipment]","[Datensatz Waffen]","[Запомнить снаряжение]"
@@ -726,7 +732,7 @@ STR_SYS_1123,Drop Item 3,Drop-item 3,Сбросить объект 3
 STR_SYS_1124,Select drop zone by map click:,Wählen Sie die drop-point mit Karte klicken Sie:,Выбрать точку сброса снаряжения (клик мышкой):
 
 STR_SYS_1125,Transport chopper in the air... Drop not available!,Transport-chopper in der Luft... Drop nicht verfügbar!,Транспортный вертолёт в пути... Вызов снабжения недоступен!
-STR_SYS_1126,"You don't have enough points to call in an air drop. You need %2 points for an air drop, your current score is %1","Sie haben nicht genug Punkte zu nennen, die in einem air-drop. Müssen Sie %2 Punkte für einen air drop, Ihre aktuelle Punktzahl ist %1","Вызов снабжения недоступен... Требуется очков: %2. У вас: %1"
+STR_SYS_1126,"You don't have enough scores to call in an air drop. You need %2 scores for an air drop, your current scores are %1","Sie haben nicht genug Punkte zu nennen, die in einem air-drop. Müssen Sie %2 Punkte für einen air drop, Ihre aktuelle Punktzahl ist %1","Вызов снабжения недоступен... Требуется очков: %2. У вас: %1"
 STR_SYS_1127,"You are to far away from the drop point, no line of sight !!! Get closer (<%1 m).","Sie sind zu weit Weg von der drop-point, keine Sichtlinie !!! Näher (<%1 m).","Вы далеко от точки сброса! Следует приблизиться (<%1 м)"
 STR_SYS_1128,"Calling in %1 air drop","Berufung in %1 air drop","Снабжение %1 вызвано!"
 STR_SYS_1129,"Air drop canceled","Air drop canceled","Вызов отменён..."
@@ -760,12 +766,12 @@ STR_SYS_1171,Recruit Barracks,Einberufungsstelle,Призывной пункт
 STR_SYS_1172,You are currently not a group leader, no AI available. Create a new group,Sie sind derzeit nicht ein Gruppenleiter, keine KI vorhanden. Erstellen Sie eine neue Gruppe,Только лидер группы может призывать солдат
 STR_SYS_1173,"You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank...","Du hast bereits %1 KI-Soldaten unter Ihrer Kontrolle, ist es nicht möglich zu rekrutieren, die mit Ihren aktuellen Rang...","У вас в подчинении уже %1 ИИ и это максимум для вашего звания"
 STR_SYS_1174,"You current rank is %1. You need to be %2 to recruit soldier[s]!","Sie Aktueller rank ist %1. Sie müssen %2 zu rekrutieren Soldat[en]!","Ваш ранг %1. Минимальное звание, дающее право призыва - %2"
-STR_SYS_1175,"You can't recruit an AI soldier, costs %2 points, your current score (%1) and rank will drop below %2!","Das kannst du nicht rekrutieren ein KI-Soldat, Kosten %2 Punkte, Ihre aktuelle Punktzahl (%1), Ihren Rang fallen Sie unter 10!","Вы не можете призвать ИИ (стоимость %1!), ваше звание упадёт до '%2'"
+STR_SYS_1175,"You can't recruit an AI soldier, costs %2 points, your current scores (%1) and rank will drop below %2!","Das kannst du nicht rekrutieren ein KI-Soldat, Kosten %2 Punkte, Ihre aktuelle Punktzahl (%1), Ihren Rang fallen Sie unter 10!","Вы не можете призвать ИИ (стоимость %1!), ваше звание упадёт до '%2'"
 STR_SYS_1176,"The barracks is destroyed, the military draft is cancelled","Die Kaserne zerstört wird, die Wehrpflicht ist aufgehoben","Военкомат разрушен, призыв закончен"
 STR_SYS_1177,"To call on the military service can only observer-rescue","Zum Aufruf auf den Wehrdienst kann nur Beobachter-Rettung","Призывать на службу могут лишь ГРУ-артиллеристы"
 STR_SYS_1178,"An air taxi is allready on the way to your position!","Ein Luft-taxi ist schon auf dem Weg zu eurer position!","Спасательный вертолёт уже на пути к вам!"
 STR_SYS_1179,"You are less than 1000 m away from the base, no air taxi for you!","Sie sind weniger als 1000 m Entfernung von der Basis, keine Luft-taxi für Sie!","До базы меньше 1 км. И так добежишь."
-STR_SYS_1180,"You can't call an air taxi. You need %2 points for that, your score is %1!","Man kann nicht rufen Sie ein Luft-taxi. Müssen Sie %2 Punkte für deine score %1!","Невозможно вызвать спасательный вертолёт, нужны очки (%2), у Вас только %1"\
+STR_SYS_1180,"You can't call an air taxi. You need %2 points for that, your scores %1!","Man kann nicht rufen Sie ein Luft-taxi. Müssen Sie %2 Punkte für deine scores %1!","Невозможно вызвать спасательный вертолёт, нужны очки (%2), у Вас только %1"\
 STR_SYS_1181,"Air taxi will start in a few seconds, stand by. Stay at your position!","Luft-taxi startet in wenigen Sekunden, stand-by. Bleiben Sie an Ihrer position!","Вертолёт за Вами вылетет через несколько секунд. Не меняйте своей позиции!"   
 STR_SYS_1182,"Air taxi is on the way... hold your position!!!","Luft-taxi ist auf dem Weg... und halten Sie Ihre position!!!","Вертолёт в пути... не покидайте позицию!!!"
 STR_SYS_1183,"Air taxi canceled, you've died !!!","Luft-taxi abgesagt, du bist gestorben !!!","Вылет вертолёта отменён, Вы погибли !!!"
@@ -795,7 +801,7 @@ STR_RESTORE_DLG_3,Execute,Ausführen,Выполнить
 STR_RESTORE_DLG_4,The restore of plants and fences nearby,Das wiederherstellen von Pflanzen und Zäunen in der Nähe,Восстановление растительности и оград поблизости
 STR_RESTORE_DLG_5,click text to select from %1 options,klicken Sie auf text auswählen von %1 Optionen,кликните по тексту для выбора из %1 вариантов
 STR_RESTORE_DLG_6,"nothing :o(","nichts :o(","нечего o:("
-STR_RESTORE_DLG_7,Scores subtracted %1,Subtrahiert score %1,На восстановление растительности/заборов снято очков: %1
+STR_RESTORE_DLG_7,Scores subtracted %1,Subtrahiert scores %1,На восстановление растительности/заборов снято очков: %1
 STR_RESTORE_DLG_8,%1 item[s] on dist to %2 m.,%1 item[s] bis zum %2 m.,объектов %1 на расст. %2 м.
 STR_RESTORE_DLG_9,list is empty,Liste ist leer,список пуст
 STR_RESTORE_DLG_10,"required rank is ""%1""","benötigt Rang ""%1""","требуется звание не ниже ""%1"""
@@ -914,7 +920,7 @@ STR_RUM_43,"Any backpack is suitable for any types of vehicles. RPG-22/M72 is go
 STR_RUM_44,"Any static technique can be lifted by helicopter","Jede statische Technik Hubschrauber hochgezogen werden","Любая статическая техника может быть поднята вертолётом"
 STR_RUM_45,"New NATO rifles (yellow, HK-417 etc) often have a sight for close combat. Switching between the sights through Ctrl-F","Neue NATO-Gewehre (gelb, HK417 usw.) haben oft eine Sicht für den Nahkampf. Das Umschalten zwischen den Sehenswürdigkeiten durch Ctrl-F","Новые амерские винтовки часто имеют прицел и для ближнего боя. Переключения между прицелами через Ctrl-F"
 STR_RUM_46,"Trophy rifle M21, M24, M40 and M100 have similar properties, differing sometimes with scope only","Die erbeuteten Gewehre M21, M24, M40 und M100 haben über die gleichen Eigenschaften und unterscheiden sich manchmal nur Sehenswürdigkeiten","Трофейные винтовки M21, M24, M40 и M100 имеют примерно одинаковые свойства, отличаясь иногда лишь прицелом"
-STR_RUM_47,"Some score subtracted for parajump from any flag","Einige Gäste abgezogen, für parajump from any flag","За прыжок с любого флага вычитают очки"
+STR_RUM_47,"Some scores subtracted for parajump from any flag","Einige Gäste abgezogen, für parajump from any flag","За прыжок с любого флага вычитают очки"
 STR_RUM_48,"Enemy is planning something in Tiberia","Der Feind plant, etwas in Tiberia","В Tiberia враг что-то задумал"
 STR_RUM_49,"On Rahmadi the enemy is busy with aircrafts","Auf Rahmadi der Feind ist beschäftigt mit Flugzeugen","На Рахмади враг возится с авиатехникой"
 STR_RUM_50,"It seems that we soon will have to capture the airport before the start of the campaign","Es scheint, dass wir bald haben werden, zu erfassen, den Flughafen vor dem start der ganzen Kampagne","Похоже, скоро придётся отбивать аэродром перед началом кампании"
@@ -1117,7 +1123,7 @@ STR_SET_8,"Mandatory side missions","Obligatorischen Nebenmissionen","Обяза
 STR_SET_8_1,", towns per mission: %1","Städte pro mission: %1",", городов за одну миссию: %1"
 STR_SET_9,"Teleport works only when all services on the base are available","Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind","Телепорт действует только при всех исправных сервисах на базе"
 STR_SET_10,"Jail","Gefängnis","Гауптвахта"
-STR_SET_10_1," when score lower than %1"," wenn der score niedriger ist als %1",", если число очков ниже %1"
+STR_SET_10_1," when scores lower than %1"," wenn der scores niedriger ist als %1",", если число очков ниже %1"
 STR_SET_11,"Cloning RPG-missiles","Klon-RPG-Rakete","Клонирование РПГ-ракет"
 
 STR_GRU_1,"GRU","GRU","ГРУ"

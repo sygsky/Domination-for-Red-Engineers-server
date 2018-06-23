@@ -9,7 +9,7 @@ _index = -1;
 for "_i" from 0 to (count d_aircraft_facs - 1) do {
 	_element = d_aircraft_facs select _i;
 	_apos = _element select 0;
-	if (_apos distance _pos < 10) exitWith {
+	if (_apos distance _pos < 10) exitWith { // this factory is deep underground now (so Arma kills building)
 		_index = _i;
 	};
 };

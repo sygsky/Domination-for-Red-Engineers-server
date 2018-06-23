@@ -896,4 +896,8 @@ d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE",
 global_vars = [];
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Sprecial fund to accumulate non-engineers score subracted when repairing damaged vehicles
+SYG_engineering_fund = 0;
+
+
 hint localize format["i_common.date = %1", date];
