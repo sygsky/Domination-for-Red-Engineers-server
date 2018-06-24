@@ -402,7 +402,7 @@ if (isServer) then {
 #endif
 
 #ifdef __DEFAULT__
-	//+++ Sygsky: remove map Zavora objects 
+	//+++ Sygsky: remove map Zavora objects etc
 	[] spawn {
         private ["_obj"];
 		// Create new Zavoras on server ONLY
@@ -417,26 +417,28 @@ if (isServer) then {
 			[[9524.4,9925.8,0.3],90],            // at inner gate (to airfield)
 			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraiso
 				  ];
+/**
         sleep 1.0;
+        // TODO: remove event handlers as non-workable on embedded map objects
         // set island hotels to be more undestructible as usual
         {
             _obj = [10000,10000,0] nearestObject _x;
             if ( !isNull _obj ) then
             {
-//                player groupChat "Hotel event handled to ""HIT""";
                 if ( typeOf _obj == "Land_Hotel" ) then
                 {
                     _obj addEventHandler ["hit",
                     {
-//                        private [ "_str" ];
-//                        _str = format["Hotel damaged with %1, dmg = %2",_this select 2,getDammage (_this select 0)];
-//                        hint _str;
                         (_this select 0) setDammage 0;
                     }];
                 };
             };
         } forEach [172902,64642,555078];
-
+        sleep 0.5;
+*/
+        // build flag on Antigua (by Yeti request)
+        sleep 60; // wait 1 minute to ensure user to build flag on map
+        [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
@@ -462,6 +464,7 @@ ACE_Sys_Ruck_SpawnRuckItemsOnDeath = false;
 #endif
 
 if (!X_Client) exitWith {};
+//============================================== CLIENT COMPUTER EXECUTION ONLY ======================================
 waitUntil {X_Init};
 
 #include "i_client2.sqf"
@@ -611,10 +614,6 @@ hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after sk
 			sleep 0.1;
 		};
 	}forEach [353,355,362/* ,367 */];
-    sleep 0.5;
-	// build flag on Antigua (just in case)
-	[17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
-
 };
 #endif
 

@@ -30,7 +30,7 @@ if (_addscore < SYG_engineering_fund) exitWith
 };
 // enough scores in fund
 SYG_engineering_fund = SYG_engineering_fund - _addscore;
-publicVariable SYG_engineering_fund;
+publicVariable "SYG_engineering_fund";
 (format [localize "STR_SYS_137_4", (d_ranked_a select 20), SYG_engineering_fund]) call XfHQChat;
 
     #endif

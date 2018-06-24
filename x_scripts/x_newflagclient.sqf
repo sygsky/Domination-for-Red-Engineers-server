@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_newflagclient.sqf - executed on client comp only
 private ["_marker","_marker_name"];
 if (!X_Client) exitWith {};
 

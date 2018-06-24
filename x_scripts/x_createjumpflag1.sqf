@@ -1,4 +1,4 @@
-// by Xeno, x_scripts/x_createjumpflag1.sqf - creates jump flag at designated point
+// by Xeno, x_scripts/x_createjumpflag1.sqf - creates jump flag at designated point on designated coordinates
 //
 // call as: _flag = _pos execVM "x_scripts/x_createjumpflag1.sqf";
 //
@@ -22,6 +22,6 @@ if (d_own_side == "EAST") then //+++Sygsky: add more fun with the flag
 {
     _flag setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag
 };
-//["new_jump_flag",_flag] call XSendNetStartScriptClient;
+["new_jump_flag",_flag] call XSendNetStartScriptClient;
 
 if (true) exitWith {_flag};

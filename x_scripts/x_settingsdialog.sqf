@@ -126,9 +126,9 @@ _str = _str + _strNo;
 #endif
 
 // Engineering Fund
-_str = _str + (localize "STR_SYS_137_5") + ": "; // "Light vehicle[s] at the base in the beginning"
+_str = _str + (localize "STR_SYS_137_5") + ": "; // "The Engineering Fund"
 #ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
-_str = _str + SYG_engineering_fund + " \n";
+_str = _str + format["%1",SYG_engineering_fund] + "\n";
 #else
 _str = _str + _strNo;
 #endif

@@ -256,7 +256,7 @@ STR_SYS_137_1,"Scores spent for maintenance: %1 ...","Abgezogen Punkte für die 
 STR_SYS_137_2,"Maintenance scores (%1) are reallocated from you to the Engineering Fund (%2)","Wartungs-scores (%1) ist reserviert, um engineering-Fonds (%2)","Ваши очки за обслуживание техники (%1) направлены в инженерный фонд (%2)"
 STR_SYS_137_3,"Engineering Fund scores: available %1, required for repair of building %2","Die engineering-Fonds Punkten: er hat eine %1, erforderlich für die Reparatur von Gebäuden %2","Очки в инженерном фонде: в наличии %1, требуется для ремонта здания %2"
 STR_SYS_137_4,"The Engineering Fund's expenses for restoration of service %1 scores, %2 will remain","Die Aufwendungen des Engineering-Fonds für die Wiederherstellung von service %1 Punkte, %2 bleiben","Затраты инженерного фонда на восстановление сервиса %1, останется %2"
-STR_SYS_137_5,"The Engineering Fund's expenses for restoration of service %1 scores, %2 will remain","Die Aufwendungen des Engineering-Fonds für die Wiederherstellung von service %1 Punkte, %2 bleiben","Затраты инженерного фонда на восстановление сервиса %1, останется %2"
+STR_SYS_137_5,"The Engineering Fund","Die Technischen Mittel","Инженерный фонд"
 
 STR_SYS_138,"The maintenance of a %1 is finished...","Wartung beendet: %1 ...","Обслуживание %1 закончено..."
 STR_SYS_139,"For repair and refueling you need %2 point(s). You have only %1 ...","Für die Reparatur und Betankung der Maschinen müssen Punkte: %2. Sie haben nur den %1 ...","Для ремонта и заправки техники необходимо иметь очков: %2. У Вас только %1 ..."
