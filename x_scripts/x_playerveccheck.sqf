@@ -16,7 +16,7 @@ if (!XClient) exitWith {};
 #include "x_setup.sqf"
 
 #define __CHK_WPN_ON_VEC__
-//#define __DEBUG_PRINT__
+#define __DEBUG_PRINT__
 
 private ["_vec", "_not_allowed", "_needed_rank", "_index"];
 

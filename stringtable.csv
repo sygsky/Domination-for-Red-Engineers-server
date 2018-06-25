@@ -400,7 +400,8 @@ STR_SYS_210,"Secondary target: ","Die sekundäre Aufgabe: ","Второстеп�
 STR_SYS_211,"Close %1 is located enemy post. Your task: destroy the radio tower on it.","In der Nähe von %1 befindet sich das feindliche posten. Ihre Aufgabe: die Zerstörung der Radio-Turm.","Недалеко от %1 расположен вражеский пост. Ваша задача: уничтожение радиобашни на нём."
 STR_SYS_212,"Very good job, boys! Radio tower destroyed.","Auftrag ausgeführt! Radio Turm zerstört.","Задание выполнено! Радио башня уничтожена."
 STR_SYS_213,"You need %2 scores to rebuild a factory, your current scores are: %1!","Sie müssen %2 Punkte, um den Wiederaufbau einer Fabrik, Ihre aktuelle Punktzahl beträgt: %1!","Для ремонта здания необходимо очков: %2, вы имеете: %1!"
-STR_SYS_214,"Restore support building. This will take some time and scores...","Wiederherstellen Unterstützung bauen. Dies wird einige Zeit dauern und Partitur...",Производится ремонт сервиса. Это потребует времени и убавит счёт..."
+STR_SYS_214,"Restore support building. This will take some time and scores...","Wiederherstellen Unterstützung bauen. Dies wird einige Zeit dauern und Partitur...","Производится ремонт сервиса. Это потребует времени и убавит счёт..."
+STR_SYS_214_1,"The service is being repaired at the expense of the engineering Fund...","Der Service wird auf Kosten des engineering Fund repariert...","Производится ремонт сервиса на средства инженерного фонда..."
 STR_SYS_215,Airbase,Airbase,Авиабаза
 STR_SYS_216,occupied city,besetzte Stadt,оккупированный
 
