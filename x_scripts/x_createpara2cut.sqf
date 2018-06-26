@@ -62,7 +62,7 @@ if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Crea
 	_real_units = _unit_array select 0;
 	_cnt_uni = (count _real_units) min (_chopper emptyPositions "Cargo"); // heli may be small one
 #ifdef __DEBUG_PRINT__
-    hint localize format["x_scripts/x_createpara2.sqf: %1 / десант из %2 чел., щграничен до %3", typeOf _chopper, _cnt_uni, count _real_units];
+    hint localize format["x_scripts/x_createpara2.sqf: %1 / десант из %2 чел., лимит был установлен на %3", typeOf _chopper, _cnt_uni, count _real_units];
 #endif
 	_unit_array = [];
 	sleep 0.1;

@@ -209,12 +209,24 @@ while { true } do {
 		};
 	};
 	//__DEBUG_NET("x_infiltrate.sqf",(call XPlayersNumber))
-	
+
+	// select LZ
+	_ind = floor random 2; // 0 or 1 is used
+	_rect = [[[9536,9134,0],450,300,25],[[10027,10573,0],700,200,10]] select _ind; // call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
+	_delta = [-3000, 3000] select _ind; // start point offset to south or north
+	//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
+	_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
+//	_attack_pos  = position FLAG_BASE;
+//	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
+
 	//__WaitForGroup
 	//__GetEGrp(_grp)
 	_grp = call SYG_createEnemyGroup;
 	_chopper = d_transport_chopper call XfRandomArrayVal;
-	_vehicle = createVehicle [_chopper, d_airki_start_positions select 0, [], 100, "FLY"];
+	_start_pos = d_airki_start_positions select 0;
+	_start_pos set [1, random _delta];
+
+	_vehicle = createVehicle [_chopper, _start_pos, [], 100, "FLY"];
 	[ _vehicle, _grp, _pilot, 1.0 ] call SYG_populateVehicle;
 	// forEach crew _vehicle;
 	{ // support each crew member
@@ -226,14 +238,8 @@ while { true } do {
 	
 	_grp setCombatMode "RED";
 	sleep 1.123;
-	// select LZ
-	_rect = [[[9536,9134,0],450,300,25],[[10027,10573,0],700,200,10]] call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
-	//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
-	_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
-	
-//	_attack_pos  = position FLAG_BASE;
-//	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
-	
+
+
 	sleep 0.1;
 	//[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
 	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2cut.sqf";

@@ -9,7 +9,7 @@
 // at 5: current time when wp assigned;-1
 // at 6: if ((_grp_array select 6) == 0) then {[_grp,_grp_array select 9] call XNormalPatrol;} else {_grp call XCombatPatrol;}; ;1
 // at 7: start position before assigning wp; []
-// at 8: some distance to react for enemy found (may be 300 meters); 300
+// at 8: some distance to react for enemy found (may be 300 meters); 300 // TODO: not used, may be remove it?
 // at 9: can be -1 (for guard static) ->"no patrol", 0 and +1 -> "patrol"; XNormalPatrol: if ((_this select 1) == 0) then {["COLUMN","STAG COLUMN","FILE"]} else {["COLUMN"]}; 1
 //
 // at 10: [] with some additional parameters by Sygsky, optional
@@ -205,7 +205,7 @@ while {true} do {
 							};
 						} else
 						{
-							hint localize format[ "--- x_groupsm: expected _wp_array not ARRAy => %1", _grp_array];
+							hint localize format[ "--- x_groupsm: expected _wp_array not ARRAY => %1", _grp_array];
 						}
 					};
 				};
@@ -214,7 +214,7 @@ while {true} do {
 #ifdef __DEBUG__			
 				if ( count (_grp_array select 4) != 3 ) then
 				{
-					hint localize format["%1 x_groupsm.sqf: grp %2, count (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
+					hint localize format["%1 x_groupsm.sqf: grp %2, count of next wp coords (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
 				};
 #endif				
 				
@@ -350,14 +350,15 @@ while {true} do {
 									_dist = _leader distance _leader1;
 									if ( _dist < _min_dist) then
 									{
-									    if ((_grp1 call XfGetStandUnits) >= _rejoin_num ) then
+									    _stand_cnt = _grp1 call XfGetStandUnits;
+									    if (_stand_cnt >= _rejoin_num ) then
 									    {
                                             _joingrp = _grp1;
                                             _min_dist = _dist;
                                         }
                                         else
                                         {
-                                            _any_grp = _grp1;
+                                            if ( _stand_cnt > 1) then {_any_grp = _grp1;};
                                         };
 									};
                                 };
