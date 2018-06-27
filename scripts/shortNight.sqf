@@ -71,6 +71,8 @@ _dayPeriod = {
 };
 #endif
 
+if (!isServer ) then {sleep 10;}; // wait 10 seconds on client computer with dedicated server run
+
 waitUntil {time > 0}; // wait time synchronization
 // TODO: add some sound effects (morning sounds, day insects, evening bells, night cries etc)
 _titleTime = {
@@ -110,12 +112,13 @@ while {true } do
 {
     if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 00:00, simply wiaght up to the morning twilight
     {
+        _skip = (( _nightSkipTo - daytime + 24 ) % 24);
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3  skip to it",daytime, _nightSkipTo, _nightSkipFrom];
+        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3, skip hours = %3",daytime, _nightSkipTo, _nightSkipFrom, _skip];
         // player groupChat _str;
         hint localize _str;
 #endif
-        skipTime (( _nightSkipTo - daytime + 24 ) % 24);
+        skipTime _skip;
     };
     if (daytime < _morningTwilightStart) then // we are in real night after 24:00, let wait
     {

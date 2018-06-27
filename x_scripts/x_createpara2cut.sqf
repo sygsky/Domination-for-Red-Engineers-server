@@ -101,6 +101,8 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 	
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
+	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+		hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
         while {alive _chopper && alive driver _chopper && (position _chopper select 2) >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
 			_cur_uni = _unit_array select _next_to_eject;
@@ -113,6 +115,8 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 			_next_to_eject = _next_to_eject + 1;
 			sleep 0.82;
 		};
+	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+		hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting completed, pos %1", _msg ];
 	};
 
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
@@ -122,11 +126,12 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 			sleep 0.15;
 			if (position _chopper select 2 < 2) exitWith
 			{
-    			hint localize format["--- Chopper on the ground, ejecting % unit[s]", {canStand _x} count _unit_array ];
+        	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+        		hint localize format["--- x_createpara2cut.sqf: Chopper on the ground, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
 				while {_next_to_eject < _cnt_uni} do
 				{
 					_cur_uni = _unit_array select _next_to_eject;
-					if (!isNull _cur_uni && alive _cur_uni ) then
+					if ( alive _cur_uni ) then
 					{
 						_cur_uni action ["Eject",_chopper];
 						//[player, format["Unit %1 ejected as chopper touched ground", _next_to_eject]] call XfSideChat;
@@ -136,6 +141,8 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 					sleep 0.81;
 					_ejected = true;
 				};
+        	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+        		hint localize format["--- x_createpara2cut.sqf: Chopper on the ground, ejecting completed, pos %1",  _msg ];
 			};
 		};
 	};
@@ -162,12 +169,16 @@ _unit_array = nil;
 if (!_ejected && alive _chopper) then 
 {
 	//[player,"Scheduled drop started"] call XfSideChat;
-	{   
+    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+    hint localize format["--- x_createpara2cut.sqf: Emergency sbotears saboteurs, %1 unit[s], pos %2", count _unit_array, _msg ];
+	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;
 		_ejected = true;
 		sleep (0.85 + (random 0.25));
 	} forEach units _paragrp;
+    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+    hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection completed, pos %1", _msg ];
 	//[player,"Scheduled drop finished"] call XfSideChat;
 };
 
@@ -193,13 +204,16 @@ _chopper flyinheight 200;
 	_paragrp setFormation "VEE";
 	sleep 0.113;
 	/*
-	d_base_patrol_array = [
-		[[9502,9871.2,0],290,150,0],       // court of airbase
-		[[10239.6,9901.48,0],160,200,-25], // airbase part near Paraiso
-		[[9956,9771,0],175,250,0],         // middle south of airfield + hangars
-		[[9780.1,10332.6,0],650,170,0],    // north of airfield
-		[[9149.29,10079,0],125,100,0]     // west of airfield
-	];
+    d_base_patrol_array =
+    [
+        [[9502,9871.2,0],290,150,0],       // court of airbase, main area
+        [[9956,9771,0],175,250,0],         // middle south of airfield + hangars + forest to Paraiso
+        [[10304,9954,0],240,250,-25],      // airbase part near Paraiso (hill and air-field buildings on east)
+        [[9780.1,10332.6,0],650,170,0],    // north of airfield (forest-bush
+        [[9149.29,10079,0],125,200,0],     // west of airfield (pit on west of air-field)
+        [[9582,9377,0],100,300,100],       // south to base (granary area)
+        [[10518,10061,0],150,350,0]        // east from base between butt end of airfield and the big hill
+    ];
 	*/
 	
 #ifdef __USE_KRONSKY_SCRIPT__	
@@ -312,7 +326,6 @@ if ( !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
 		};
 	};
 };
-
 
 
 // REVEAL known to flying chopper enemies to the landed saboteurs
