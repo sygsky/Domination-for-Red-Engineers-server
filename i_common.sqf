@@ -486,31 +486,25 @@ mt_bonus_vehicle_array = (
 "ACE_T80_UM",     		// 2
 "ACE_T80_B",   			// 3
 "ACE_Mi24D", 			// 4
-"ACE_ZSU",  			// 5
-"ACE_KA52",  			// 6
-"ACE_BMP3_M",   		// 7
-"ACE_BRDM2_SA9", 		// 8
-"ACE_BMP3_M",   		// 9
-"ACE_T64_BV",			//10
-"ACE_Tunguska",			//11
-"ACE_BRDM2_SA9",   		//12
-"ACE_ZSU",          	//13
-"ACE_T72_BM", 			//14
-"ACE_Mi17", 		    //15
-"ACE_Mi24P",	        //16
-"ACE_T80_UM", 			//17
-"ACE_Su30Mk_R27_R73",	//18
-"ACE_Mi24V",     	    //19
-"ACE_Su34B",            //20
+"ACE_KA52",  			// 5
+"ACE_BRDM2_SA9", 		// 6
+"ACE_T64_BV",			// 7
+"ACE_Tunguska",			// 8
+"ACE_ZSU",          	// 9
+"ACE_T72_BM", 			//10
+"ACE_Mi17", 		    //11
+"ACE_Mi24P",	        //12
+"ACE_Su30Mk_R27_R73",	//13
+"ACE_Mi24V",     	    //14
+"ACE_Su34B",            //15
 
-"ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane + big tank)
-"ACE_Ka50_N", 	        //22
-"ACE_Su30Mk_Kh29T",     //23
-"ACE_Su30Mk_KAB500KR",  //24
-"ACE_T90_K", 			//25
-"ACE_T90A"              //26
-]
-				} else {
+"ACE_Ka50", 		    // 1 - first big bonus vehicle (heli + plane + big tank)
+"ACE_Ka50_N", 	        // 2
+"ACE_Su30Mk_Kh29T",     // 3
+"ACE_Su30Mk_KAB500KR",  // 4
+"ACE_T90_K", 			// 5
+"ACE_T90A"              // 6
+];				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
 				}
 			}
@@ -523,6 +517,7 @@ mt_bonus_vehicle_array = (
 );
 
 #ifdef __DEFAULT__
+mt_bonus_received_vehicle_array = []; // temp permament array for smart bonus selection
 big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle
 #endif
@@ -839,8 +834,8 @@ d_base_patrol_array =
 
 d_base_patrol_fires_array = 
 [
- [9624,10293,0],[10081,10261,0], // nother fires (slope to shore)
- [9084,10006,0], // weatern fire at a pit
+ [9624,10293,0],[10081,10261,0], // northe fires (slope to shore)
+ [9084,10006,0], // west fire at a pit
  [9453,9868,0],  // main yard fire
  [9899,9697,0],	// east to yard fire
  [10231,9910,0] // nearest to Paraiso fire
@@ -893,11 +888,10 @@ d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE",
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Array of all global variables, see "global_vars.sqf" for each variable offset defines
 //
-global_vars = [];
+if ( isNil "global_vars" ) then { global_vars = []; };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-// Sprecial fund to accumulate non-engineers score subracted when repairing damaged vehicles
-SYG_engineering_fund = 0;
-
-
+// Special fund to accumulate non-engineers score subracted when repairing damaged vehicles
+if ( isNil "SYG_engineering_fund") then { SYG_engineering_fund = 0;};
+x
 hint localize format["i_common.date = %1", date];

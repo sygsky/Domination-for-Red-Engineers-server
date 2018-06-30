@@ -15,6 +15,7 @@ extra_bonus_number = -1;
 _town = call SYG_getTargetTown; // town def array
 if ( count _town > 0 ) then // town is defined
 {
+#ifdef __OLD__
 	if ( (_town select 2) >= big_town_radious ) then // select from best jets and helis (big bonus)
 	{
 		extra_bonus_number = [big_bonus_vec_index, count mt_bonus_vehicle_array] call XfGetRandomRangeInt;
@@ -38,6 +39,20 @@ if ( count _town > 0 ) then // town is defined
         };
 	};
 	last_mt_bonus_vehicle_number = extra_bonus_number;
+#else
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    // new feature to select target (and  SM) bonus indexes
+	if ( (_town select 2) >= big_town_radious ) then // select from best vehicles (big bonus)
+	{
+	    extra_bonus_number = [mt_bonus_vehicle_array, big_bonus_vec_index, (count mt_bonus_vehicle_array) - big_bonus_vec_index, mt_bonus_received_vehicle_array] call SYG_findTargetBonusIndex;
+	}
+	else {
+	    extra_bonus_number = [mt_bonus_vehicle_array,                   0,                                  big_bonus_vec_index, mt_bonus_received_vehicle_array] call SYG_findTargetBonusIndex;
+	};
+
+//---------------------------------------------------------------
+#endif
 }
 else
 {
@@ -98,6 +113,7 @@ _vehicle call SYG_rearmVehicleA; // rearm if bonus vehicle is marked to rearm
 
 #ifdef __NO_ETERNAL_BONUS__
 
+[_vehicle ]call SYG_addEvents; // add events to this vehicle, no points, no smoke
 
 #else
 

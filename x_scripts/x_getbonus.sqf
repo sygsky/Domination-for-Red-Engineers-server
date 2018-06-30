@@ -63,7 +63,15 @@ if (side_mission_winner == 2) then {
 			_posa = _west select bonus_number; _pos = _posa select 0; _dir = _posa select 1;
 			_vehicle2 = (sm_bonus_vehicle_array select bonus_number) createVehicle (_pos);
 			_vehicle2 setDir _dir;
-			if ( _resurrect) then {	_vehicle2 execVM "x_scripts\x_wreckmarker.sqf"; };
+
+			if ( _resurrect) then {
+			    _vehicle2 execVM "x_scripts\x_wreckmarker.sqf";
+			}
+			else
+			{
+			    [_vehicle2] call SYG_addEvents;
+			};
+
 			_racs = sm_bonus_positions select 1;
 			_posa = _racs select bonus_number; _pos = _posa select 0; _dir = _posa select 1;
 		};

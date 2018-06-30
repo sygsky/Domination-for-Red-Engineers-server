@@ -1513,6 +1513,43 @@ SYG_deleteVehicleCrew = {
     }forEach (crew _this);
 };
 
+/**
+ * Finds random but still not used (if available) bonus type from:
+ *
+ *    vehicle types lists
+ *
+ * _bonus = [_available_list, _start_index, _count, _received_list ] call SYG_findTargetBonus;
+ */
+SYG_findTargetBonus = {
+    private ["_received_list"];
+    _available_list = _this select 0;
+    _start_index    = _this select 1;
+    _count          = _this select 2;
+    _received_list  = _this select 3;
+    _list = []; // temp array to collect not-used vehicle types
+    for "_i" from _start_index to (_start_index + _count - 1) do
+    {
+        _list set [count _list, _available_list select _i];
+    };
+    _list1 = + _list;
+    _list = _list - _received_list; // clean the list from already received bonuses
+    if ( count _list == 0 ) then // reset sequence as all types already received
+    {
+        _received_list resize 0;
+        _list = _list1;
+    };
+    _bonus = _list call XfRandomArrayVal;
+    if ( ! (_bonus in _received_list) ) then {
+        _received_list set [count _received_list,_bonus];
+        //_received_list = _received_list + [_bonus];
+    };
+    _bonus
+};
+
+SYG_findTargetBonusIndex = {
+    (_this select 0) find (_this call SYG_findTargetBonus) // find index in whole array
+};
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
