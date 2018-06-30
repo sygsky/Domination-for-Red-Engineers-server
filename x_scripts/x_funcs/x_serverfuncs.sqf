@@ -155,7 +155,7 @@ x_getmixedliste = {
 // TODO: test and use everywhere
 // Add all needed events to a newly created standard vehicle (for main/side mission action)
 //
-// call as: [_vehiсle, _do_points] call SYG_addEvents;
+// call as: [_vehiсle<, _do_points<,_smoke>>] call SYG_addEvents;
 SYG_addEvents = {
     private ["_vehicle", "_do_points", "_static"];
     _vehicle   = arg(0);
@@ -166,7 +166,9 @@ SYG_addEvents = {
         if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked};
     };
 
-    if (d_smoke) then  {_vehicle call SYG_assignVecToSmokeOnHit;};
+    _smoke_veh = false;
+    if ( count _this > 2) then { _smoke_veh = _this select 2};
+    if (d_smoke && _smoke_veh) then  {_vehicle call SYG_assignVecToSmokeOnHit;};
 
     if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then
     {

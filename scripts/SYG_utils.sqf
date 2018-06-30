@@ -380,7 +380,7 @@ SYG_vehIsUpsideDown = {
 			{
 				_angle=(_vUp select 2) atan2 _l;
 				if( _angle < 30 ) then {true} else{false};
-			} else {false}; // standing in good posiition
+			} else {false}; // standing in good position
 		};
 	}
 	else{false};

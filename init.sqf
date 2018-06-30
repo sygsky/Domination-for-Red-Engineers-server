@@ -147,7 +147,7 @@ if (isServer) then {
         _veh setDamage 0.8;
         _veh setPos (_x select 0);
         _veh setVectorUp (_x select 3);
-    } forEach [ [[9439.2,9800.7,0],"ACE_BRDM2", 180,[0,0,-1]], [[10254.87,10062,0],"ACE_BMD1p",180,[0,0,-1]] ];
+    } forEach [ [[9439.2,9800.7,0],"ACE_BRDM2", 180,[0,0,-1]], [[10254.87,10062,0],"ACE_BMP1_D",180,[0,0,-1]] ];
 #endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
