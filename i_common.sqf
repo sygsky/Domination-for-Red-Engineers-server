@@ -393,6 +393,7 @@ if (d_with_mgnest) then {
 	#endif
 };
 
+sm_bonus_received_vehicle_array = []; // helper array to select possibly only unique bonuses
 sm_bonus_vehicle_array = (
 #ifdef __SCHMALFELDEN__
 	switch (d_own_side) do {
@@ -517,7 +518,8 @@ mt_bonus_vehicle_array = (
 );
 
 #ifdef __DEFAULT__
-mt_bonus_received_vehicle_array = []; // temp permament array for smart bonus selection
+mt_bonus_received_vehicle_array_1 = []; // temp permament array for smart bonus selection on small towns
+mt_bonus_received_vehicle_array_2 = []; // temp permament array for smart bonus selection on big towns
 big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle
 #endif

@@ -380,7 +380,7 @@ STR_GRASS_2,"Medium Grass","Medium Gras","Средняя"
 STR_GRASS_3,"Full Grass","Voll Gras","Полная"
 
 
-STR_SYS_180,"According to the reports of the weather Bureau...","Nach den berichten der weather Bureau...","По сводкам гидрометеоцентра..."
+STR_SYS_180,"According to the reports of the weather Bureau of USSR...","Nach berichten des wetterbüros der UdSSR...","По сводкам Гидрометеоцентра СССР..."
 STR_SYS_181,"New order:","Die neue Aufgabe:","Новое задание:"
 STR_SYS_182,"The enemy troops will be at place in less than %1 minutes","Die feindlichen Truppen werden am Ort in weniger als %1 Minuten","Вражеские войска будут на месте крушения менее чем через %1 минут[ы]"
 STR_SYS_183,"Open gates","Das Tor zu öffnen","Открыть мех.двор"

@@ -12,6 +12,7 @@ _shooter = _this select 1;
 _damage = _this select 2;
 
 if ( _damage >= 1) exitWith {}; // End Of Life
+if (!local _vec) exitWith {}; // It is player commanded vehicle, don't handle it
 _name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
 
 if ( _vec == _shooter) exitWith{/* collision, not hit by enemy weapon */

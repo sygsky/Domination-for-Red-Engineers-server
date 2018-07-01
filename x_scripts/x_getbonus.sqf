@@ -14,6 +14,9 @@ hint localize "+++ x_getbonus.sqf called +++";
 side_mission_winner = 1;
 #endif
 
+
+#ifdef __OLD__
+
 bonus_number = sm_bonus_vehicle_array call XfRandomFloorArray;
 
 // ensure that next bonus isn't the same
@@ -28,6 +31,12 @@ if (!isNil "last_sm_bonus_vehicle_number") then
 };
 last_sm_bonus_vehicle_number = bonus_number;
 hint localize format["+++ x_scripts/x_getbonus.sqf(2): bonus_number=%1", bonus_number];
+
+#else
+
+bonus_number = [sm_bonus_vehicle_array, 0, (count sm_bonus_vehicle_array), sm_bonus_received_vehicle_array] call SYG_findTargetBonusIndex;
+
+#endif
 
 sleep 1.012;
 
@@ -84,7 +93,8 @@ _vec_type = sm_bonus_vehicle_array select bonus_number;
 _vehicle = (_vec_type) createVehicle (_pos);
 
 _vehicle setDir _dir;
-hint localize format["+++ x_scripts/x_getbonus.sqf(3): bonus_position=%1, veh=%2, type=%3", _pos, typeOf _vehicle, _vec_type];
+hint localize format["+++ x_scripts/x_getbonus.sqf(3): bonus_position=%1, veh=%2", _pos, typeOf _vehicle];
+hint localize format["+++ x_scripts/x_getbonus.sqf(3): bonus_position=%1, veh=%2", _pos, typeOf _vehicle];
 
 _pos = nil;
 _posa = nil;
