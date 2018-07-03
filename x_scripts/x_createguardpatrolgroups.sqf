@@ -1,8 +1,10 @@
-// x_createguardpatrolgroups.sqf: create/spawn guard and patrol groups
+// x_createguardpatrolgroups.sqf: create/spawn guard and patrol groups for main target (town)
 // by Xeno
 private ["_selectit", "_array", "_num", "_a_vng", "_num_ret", "_type_list_guard", "_type_list_guard_static", "_type_list_patrol", "_type_list_guard_static2", "_trgobj", "_radius", "_selectitmen", "_a_vng2", "_number_basic_guard", "_number_specops_guard", "_selectitvec", "_number_tank_guard", "_number_bmp_guard", "_number_brdm_guard", "_number_uaz_mg_guard", "_number_uaz_grenade_guard", "_number_basic_patrol", "_number_specops_patrol", "_number_tank_patrol", "_number_bmp_patrol", "_number_brdm_patrol", "_number_uaz_mg_patrol", "_number_uaz_grenade_patrol", "_number_basic_guardstatic", "_number_specops_guardstatic", "_number_tank_guardstatic", "_number_bmp_guardstatic", "_number_shilka_guardstatic", "_number_D30_guardstatic", "_number_DSHKM_guardstatic", "_number_AGS_guardstatic", "_trg_center", "_wp_array", "_xx", "_typeidx", "_number_", "_xxx", "_wp_ran", "_point", "_agrp", "_xx_ran", "_xpos", "_unit_array", "_units", "_grp_array", "_ammotruck", "_fueltruck","_grp"];
 
 if (!isServer ) exitWith{};
+
+#define __DEBUG_PRINT__
 
 #include "x_macros.sqf"
 
@@ -15,7 +17,15 @@ _selectit = {
 	_num_ret
 };
 
-_trgobj  = _this select 0;
+_trgobj  = _this select 0; // main target town description
+_trg_center = _trgobj; // center of target town
+_isInDesert = _trg_center call SYG_isDesert; // is town in desert region
+_tankName = if (_isInDesert) then {"tank_desert"} else {"tank"};  // define protective painting of the tank
+
+#ifdef __DEBUG_PRINT__
+hint localize format["x_createguardpatrolgroups.sqf: point %1, tankName is ""%2""",_trg_center, _tankName];
+#endif
+
 _radius  = _this select 1;
 _addnum   = if (_radius >= 300) then {1} else {0}; // how many to add to groups for big town
 
@@ -104,7 +114,6 @@ sleep 0.01;
 _selectitmen = nil;
 _selectitvec = nil;
 
-_trg_center = _trgobj;
 _wp_array = [_trg_center, _radius] call x_getwparray;
 
 sleep 0.112;

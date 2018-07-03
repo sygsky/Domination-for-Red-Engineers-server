@@ -23,7 +23,30 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 	SYG_Sahrani_p0 = [13231.3,8890.26,0]; // City Corazol center
 	SYG_Sahrani_p1 = [14878.6,7736.74,0]; // Vector dividing island to 2 parts (North and South) begininig, point p1
 	SYG_Sahrani_p2 = [5264.39,16398.1,0]; // Vector dividing island to 2 parts (North and South) end, point p2
-	SYG_Sahrani_desert_max_Y = 8080; // max Y coordinates for desert region of sahrani
+	SYG_Sahrani_desert_max_Y = 7890; // max Y coordinates for desert region of Sahrani
+	SYG_Sahrani_desert_rects = // rectangles containing all desert lands
+	[
+	    [   [9529,  4390,0], 10000, 3500,  0 ],
+	    [   [17551,18732,0],  1200, 1200,  0 ],
+	    [   [7873,  9107,0],  2000,  500,-45 ]
+    ];
+/*
+			position[]={9529.110352,0.540940,4389.480469};
+			name="desert_rect";
+			a=10000.000000;
+			b=3500.000000;
+			angle=0;
+
+			position[]={17550.677734,0.516296,18731.679688};
+			name="desert_rect_2";
+			a=1200.000000;
+			b=1200.000000;
+
+			position[]={7872.850586,4.995000,9106.516602};
+			name="desert_rect_3";
+			a=2000.000000;
+			b=500.000000;
+*/
 
 	SYG_SahraniIsletCircles = 
 	[
@@ -396,7 +419,10 @@ SYG_isDesert = {
 	_str = "<ERROR DETECTED>";
 	if ( (count _pos) < 2 ) exitWith {false};
 	// this is a max Y coordinate of desert region on Sahrani (by my estimation)
-	argp(_pos,1) < SYG_Sahrani_desert_max_Y
+	//argp(_pos,1) < SYG_Sahrani_desert_max_Y
+	_ret = false;
+    { if ([_pos,_x] call SYG_pointInRect) exitWith {_ret = true};  } forEach SYG_Sahrani_desert_rects;
+    _ret
 };
 
 /**

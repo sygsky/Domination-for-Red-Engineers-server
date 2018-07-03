@@ -494,7 +494,7 @@ d_veh_a_W = (
 	}
 );
 
-d_veh_a_W_desert = ABRAMS_LIST_DESERT; // tanks in desert towns
+d_veh_a_W_desert = ABRAMS_DESERT_LIST; // tanks in desert towns
 
 d_veh_a_G = [
 	["M1Abrams"],
