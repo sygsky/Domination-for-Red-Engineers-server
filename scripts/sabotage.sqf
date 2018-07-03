@@ -113,7 +113,7 @@ if ( _debug ) then { player globalChat format["sabotage.sqf: Start, group units 
 	hint localize format["sabotage.sqf: Start, units in group %1, canStand %2, bombs in inventory %3", count units _grp, _cnt1, _cnt];
 #endif	
 
-// do up to last man
+// do up to the last man
 while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } do
 {
 	_leader = leader _grp;
@@ -126,21 +126,29 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	// seek factories  +
 	//++++++++++++++++++
 	if ( _debug ) then 	{ player globalChat format["sabotage.sqf: Factories[s] found %1", count _no]; };
+#ifdef __PRINT__
+    hint localize format["sabotage.sqf: Factories[s] found %1", count _no];
+#endif
 
 	//--------------
 	// find alive factory
 	_i = 0;
+	for "_i" from 0 to (count _no) -1 do
 	{
-		_obj = _x;
+		_x = _no select _i;
 		_objClassType = typeOf _x;
 		_pos  = position _x;
-		if ( (_pos select 2) > -10) exitWith 
-		{ 
-			_obj_pos = _i;	
+		if ( (_pos select 2) < -10) exitWith
+		{
+		    _no set [_i, "RM_ME"];
 		};
-		_i = _i + 1;
-	} forEach _no;
-	
+	}; // forEach _no;
+    _no = _no - ["RM_ME"];
+
+    if ( count _no > 0 ) then // select random target to blast
+    {
+        _obj_pos = _no call XfRandomFloorArray;
+    };
 	 // if some alive factory found
 	if ( _obj_pos >= 0 ) then 
 	{
@@ -200,7 +208,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 					hint localize "sabotage.sqf: shell unit ejected from vehicle";
 #endif	
 				};
-				_leader = leader _grp;
+				_leader = _grp call XfGetLeader;
 				if ( !( isNull _leader ) ) then // show good bye animation
 				{
 					if ( _leader != _shell_unit ) then
@@ -209,6 +217,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 						_leader doWatch _shell_unit;
 						sleep 0.5; // salute 1 second
 						_shell_unit action ["salute", _leader]; // salute to commander for order
+						_leader action ["salute", _shell_unit]; // salute to shell unit with order
 						sleep 1.0; // salute 1 second
 						_shell_unit doWatch objNull;
 						_leader doWatch objNull;
@@ -216,9 +225,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				}
 				else
 				{
-					if (_debug ) then { player globalChat format["sabotage.sqf: No leader in grp, units count is %1", count units _grp]; };
+					if (_debug ) then { player globalChat format["sabotage.sqf: No leader in grp, units count is %1", {alive _x} count units _grp]; };
 #ifdef __PRINT__
-					hint localize format["sabotage.sqf: No leader in grp, units count is %1", count units _grp];
+					hint localize format["sabotage.sqf: No leader in grp, units count is %1", {alive _x} count units _grp];
 #endif	
 				};
 				
@@ -306,7 +315,14 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 							// TODO: send unit to the roof of any suitable building (towers, hangars, air terminal, some houses etc)
 							// find enemy to hide from
 							_obj = _shell_unit findNearestEnemy (position _shell_unit);
-							if ( isNull _obj ) then // no enemies found
+							if ( !isNull _obj ) then // no enemies found
+							{
+							    _obj_pos = position _obj;
+#ifdef __PRINT__
+    							hint localize format ["sabotage.sqf: found enemy %1(%2) at pos %3", name _obj, typeOf _obj, _obj_pos];
+#endif
+							}
+							else
 							{
 								if ( !isNil "FLAG_BASE" ) then
 								{
@@ -316,15 +332,15 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 								{
 									_obj_pos = position _shell_unit;
 								};
-							}
-							else
-							{
-								_obj_pos = position _obj;
 							};
-							
-							_obj = _shell_unit findCover [ position _shell_unit, _obj_pos, 200, 50, _obj_pos ];
+
+							_obj = _shell_unit findCover [ position _shell_unit, _obj_pos, 400, 100, _obj_pos ];
 							if ( isNull _obj ) then
 							{
+                                // todo: find any building and hide to it
+                                // find house to hide wшер min 3 pos in it and not closer then 150 meters
+                                // _ngb = [position _shell_unit,3,150] call SYG_nearestGoodHouse;
+                                buildingPos _ngb;
 #ifdef __PRINT__
     							hint localize "sabotage.sqf: cover not found, use FLAG/factory for it";
 #endif

@@ -45,10 +45,10 @@ if ( count _town > 0 ) then // town is defined
     // new feature to select target (and  SM) bonus indexes
 	if ( (_town select 2) >= big_town_radious ) then // select from best vehicles (big bonus)
 	{
-	    extra_bonus_number = [mt_bonus_vehicle_array, big_bonus_vec_index, (count mt_bonus_vehicle_array) - big_bonus_vec_index, mt_bonus_received_vehicle_array_1] call SYG_findTargetBonusIndex;
+	    extra_bonus_number = mt_big_bonus_params call SYG_findTargetBonusIndex;
 	}
 	else {
-	    extra_bonus_number = [mt_bonus_vehicle_array,                   0,                                  big_bonus_vec_index, mt_bonus_received_vehicle_array_2] call SYG_findTargetBonusIndex;
+	    extra_bonus_number = mt_bonus_params call SYG_findTargetBonusIndex;
 	};
 
 //---------------------------------------------------------------

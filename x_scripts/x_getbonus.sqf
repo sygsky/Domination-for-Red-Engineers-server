@@ -34,7 +34,7 @@ hint localize format["+++ x_scripts/x_getbonus.sqf(2): bonus_number=%1", bonus_n
 
 #else
 
-bonus_number = [sm_bonus_vehicle_array, 0, (count sm_bonus_vehicle_array), sm_bonus_received_vehicle_array] call SYG_findTargetBonusIndex;
+bonus_number = sm_bonus_params call SYG_findTargetBonusIndex;
 
 #endif
 

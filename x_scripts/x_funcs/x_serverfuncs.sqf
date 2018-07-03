@@ -115,6 +115,7 @@ x_getunitliste = {
 		case "artiobserver": {_unitliste = [call compile format["d_arti_observer_%1",_side_char]];};
 		case "heli": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list call XfRandomArrayVal);};
 		case "tank": {call compile format ["_varray = (d_veh_a_%1 select 0);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
+		case "tank_desert": {call compile format ["_varray = (d_veh_a_%1_desert);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "bmp": {call compile format ["_varray = (d_veh_a_%1 select 1);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "brdm": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 2);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "shilka": {call compile format ["_varray = (d_veh_a_%1 select 3);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
@@ -155,7 +156,7 @@ x_getmixedliste = {
 // TODO: test and use everywhere
 // Add all needed events to a newly created standard vehicle (for main/side mission action)
 //
-// call as: [_vehiсle<, _do_points<,_smoke>>] call SYG_addEvents;
+// call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
 SYG_addEvents = {
     private ["_vehicle", "_do_points", "_static"];
     _vehicle   = arg(0);
@@ -170,13 +171,17 @@ SYG_addEvents = {
     if ( count _this > 2) then { _smoke_veh = _this select 2};
     if (d_smoke && _smoke_veh) then  {_vehicle call SYG_assignVecToSmokeOnHit;};
 
+    // add wreckage restore option
     if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then
     {
             _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
             [_vehicle] call XAddCheckDead; // insert to dead vehicles list for follow handling and removing
     };
+
 #ifdef __TT__
-    _do_points = arg(1);
+    if (count _this > 1) then {_do_points = _this select 1}
+    else {_do_points = false};
+
     if (_do_points) then {_vehicle addEventHandler ["killed", {[5,arg(1)] call XAddKills}]};
 #endif
 
@@ -186,6 +191,23 @@ SYG_addEvents = {
     };
 #endif
 };
+
+// TODO: test and use everywhere
+// Add all needed events to a newly created standard vehicle (for main/side mission action)
+//
+// call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
+SYG_addEventsAndDispose = {
+    _this call SYG_addEvents;
+
+    // add dispose event
+    if ( (typeOf _vehicle) in x_heli_wreck_lift_types ) then // in any case add dispose option
+    {
+            _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
+            [_vehicle] call XAddCheckDead; // insert to dead vehicles list for follow handling and removing
+    };
+
+};
+
 
 // Makes enemy vehicles group
 x_makevgroup = {

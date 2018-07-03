@@ -125,7 +125,7 @@ XfGetDisplayName = {
 };
 
 //+++ Added by Sygsky at 24-OCT-2014
-// Gets randomized radious. Usefull for spatially correctly distributed random points density in the circle. See source: http://mathworld.wolfram.com/DiskPointPicking.html
+// Gets randomized radious. Useful for correct spatially distributed random points density in the circle. See source: http://mathworld.wolfram.com/DiskPointPicking.html
 // Parameters: radious of circle to insert random point (no brackets)
 // Example: _randrad = 500 call XfRndRadious; // correctly distributed among disk square random value in range of 0..500
 XfRndRadious = {
@@ -458,6 +458,27 @@ XfSendMessage = {
 XfGetAliveUnits = {
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
 	({alive _x} count _this)
+};
+
+/***********************************************
+ * Finds real leader or first found alive team member
+ * call: _leader = _grp call XfGetLeader;
+ * or _leader    = _unit call XfGetLeader
+ */
+XfGetLeader = {
+	private ["_leader"];
+	if (isNull _this) exitWith { objNull };
+	if (typeName _this == "OBJECT") then
+	{
+		_this = group _this;
+	};
+	if (isNull _this) exitWith { objNull };
+	_leader = leader _this;
+	if ( !isNull _leader ) exitWith {_leader};
+	{
+		if ( alive _x ) exitWith {_leader = _x };
+	} forEach units _this;
+	_leader
 };
 
 // count all units in units or group that can stand {canStand _x}

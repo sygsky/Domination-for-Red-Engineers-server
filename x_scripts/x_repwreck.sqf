@@ -17,7 +17,7 @@ while {true} do {
 		if (X_MP) then {
 			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 		};
-		__DEBUG_NET("x_repwreck.sqf",(call XPlayersNumber))
+		//__DEBUG_NET("x_repwreck.sqf",(call XPlayersNumber))
 		sleep 2.432;
 		if (isNull d_wreck_repair_fac) then {
 			_wreck = [_rep_station,_types] call XGetWreck;

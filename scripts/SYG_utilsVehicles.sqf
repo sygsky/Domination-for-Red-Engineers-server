@@ -1392,7 +1392,8 @@ SYG_createGroup = SYG_createEnemyGroup;
 //============================================ Vehicle groups
 #ifdef __OWN_SIDE_EAST__
 
-ABRAMS_LIST = ["ACE_M1A2","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_TUSK","ACE_M1A2_SEP_TUSK"];
+ABRAMS_LIST =        ["ACE_M1Abrams",       "ACE_M1A1_HA",       "ACE_M1A2",       "ACE_M1A2_SEP",       "ACE_M1A2_TUSK",       "ACE_M1A2_SEP_TUSK"];
+ABRAMS_DESERT_LIST = ["ACE_M1Abrams_Desert","ACE_M1A1_HA_Desert","ACE_M1A2_Desert","ACE_M1A2_SEP_Desert","ACE_M1A2_TUSK_Desert","ACE_M1A2_SEP_TUSK_Desert"];
 LINEBAKER = ["ACE_M6A1"];
 ABRAMS_PATROL = [2,3,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
 
@@ -1517,37 +1518,19 @@ SYG_deleteVehicleCrew = {
  * Finds random but still not used (if available) bonus type from:
  *
  *    vehicle types lists
- *
- * _bonus = [_available_list, _start_index, _count, _received_list ] call SYG_findTargetBonus;
+ * params = [_initial_list, _currentList ];
+ * _bonusIndex =  params call SYG_findTargetBonusIndex;
  */
-SYG_findTargetBonus = {
-    private ["_received_list"];
-    _available_list = _this select 0;
-    _start_index    = _this select 1;
-    _count          = _this select 2;
-    _received_list  = _this select 3;
-    _list = []; // temp array to collect not-used vehicle types
-    for "_i" from _start_index to (_start_index + _count - 1) do
-    {
-        _list set [count _list, _available_list select _i];
-    };
-    _list1 = + _list;
-    _list = _list - _received_list; // clean the list from already received bonuses
-    if ( count _list == 0 ) then // reset sequence as all types already received
-    {
-        _received_list resize 0;
-        _list = _list1;
-    };
-    _bonus = _list call XfRandomArrayVal;
-    if ( ! (_bonus in _received_list) ) then {
-        _received_list set [count _received_list,_bonus];
-        //_received_list = _received_list + [_bonus];
-    };
-    _bonus
-};
-
 SYG_findTargetBonusIndex = {
-    (_this select 0) find (_this call SYG_findTargetBonus) // find index in whole array
+    _initialList = _this select 0;  // initial read-only list
+    _currentList = _this select 1;  // real list
+    if ( (count _currentList) == 0 )  then { _currentList = + _initialList}; // reset real list
+    _bonusInd = _currentList call XfRandomFloorArray; // find next bonus index
+    _bonus = _currentList select _bonusInd;
+    _currentList set [_bonusInd, "RM_ME"];
+    _currentList = _currentList - ["RM_ME"]; // remove bonus from real list
+    _this set [1, _currentList];            // update real list for outer world
+    _initialList find _bonus    // find and return index of found bonus
 };
 
 //------------------------------------------------------------- END OF INIT
