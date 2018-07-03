@@ -877,8 +877,8 @@ d_with_wind_effect = true;
 
 // list of big heli for WEST with ACE
 SYG_HELI_BIG_LIST_ACE_W =
-    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",
-     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM",*/"ACE_AH64_AGM_HE",
+    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I",/*"ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",*/
+     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM","ACE_AH64_AGM_HE",*/
      "ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
 // list of big heli for WEST with ACE
 SYG_HELI_LITTLE_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_AH6_AGM"];
@@ -895,5 +895,4 @@ if ( isNil "global_vars" ) then { global_vars = []; };
 
 // Special fund to accumulate non-engineers score subracted when repairing damaged vehicles
 if ( isNil "SYG_engineering_fund") then { SYG_engineering_fund = 0;};
-x
 hint localize format["i_common.date = %1", date];
