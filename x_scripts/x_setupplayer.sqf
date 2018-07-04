@@ -105,7 +105,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	_endtime = time + 60;
 	_equip = "";
 	// initial information on player connected
-	["d_p_a",name player,missionStart] call XSendNetStartScriptServer;
+	["d_p_a",name player,missionStart, localize "STR_LANG"] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
     _equip = "";
 #ifdef __DEBUG__
@@ -1663,7 +1663,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	private ["_name"/* , "_identity" */, "_pos", "_target", "_targets","_var","_comp","_cnt"];
 	sleep random 2;
 	_name = name player;
-	["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
+	["d_p_varname",_name,str(player), localize "STR_LANG"] call XSendNetStartScriptServer;
 	
 /*
 	// try to set russian identity

@@ -122,11 +122,11 @@ XHandleNetStartScriptServer = {
 			    if (isNil "SYG_mission_start") then// 1st player connected/server started
 			    {
 			        SYG_mission_start = arg(2);
-			        hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", %1, %2", arg(1), arg(2)];
+			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1, %2", arg(1), arg(2),(3)];
 			    }
 			    else
 			    {
-			        hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", %1", arg(1)];
+			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1", arg(1),arg(3))];
 			    };
 			};
 		};
