@@ -979,7 +979,7 @@ for "_i" from 0 to (count d_aircraft_facs - 1) do {
 	_dir = _element select 1;
 	_fac = _wairfac createVehicle _pos ;
 	_fac setDir _dir;
-	_fac addEventHandler ["killed", {[_this select 0] execVM "x_scripts\x_fackilled.sqf";}];
+	_fac addEventHandler ["killed", {_this execVM "x_scripts\x_fackilled.sqf";}];
 };
 #endif
 

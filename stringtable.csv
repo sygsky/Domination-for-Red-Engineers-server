@@ -1232,6 +1232,11 @@ STR_JAIL_3,"Or you can press  Alt + F4 to exit","Oder Sie drücken Alt + F4 zu b
 STR_ENG_FUND_1,The Engineering Fund rises to %1,Das Der technische Fonds steigt auf %1,Инженерный Фонд вырос до %1
 STR_ENG_FUND_2,The Engineering Fund reduced to 1%,Der Engineering-Fonds wurde auf %1 reduziert,Инженерный фонд уменьшился до %1
 
+STR_FAC_OWN_VEH,"The Factory was destroyed by our projectile from %1 (%2)","Die Fabrik wurde durch unser Projektil von %1 (%2) zerstört)","Сервис уничтожен своим снарядом из %1(%2)"
+STR_FAC_OWN_MAN,"The Factory was destroyed by our soldier %2","Die Anlage wurde von unserem Soldaten %2 zerstört.","Сервис уничтожен своим бойцом %2"
+STR_FAC_ENEMY_VEH,"The Factory was destroyed by enemy projectile from %1(%2)","Die Fabrik wurde von einem gegnerischen Projektil von %1(%2) zerstört)","Сервис уничтожен вражеским снарядом из %1(%2)"
+STR_FAC_ENEMY_MAN,"The factory was destroyed by an enemy saboteur %2","Die Fabrik wurde von einem feindlichen saboteur zerstört %2","Сервис уничтожен вражеским диверсантом %2"
+
 STR_CHECK_ITEM,Inspect,Überprüfen,Изучить
 
 STR_LIB_ACE_MAP,"A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it","Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen","Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"

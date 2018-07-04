@@ -728,6 +728,17 @@ XHandleNetStartScriptClient = {
             GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure
 		};
 
+        // [ "sub_fac_score", _str, _param1, _param2 ]
+        case "sub_fac_score":
+        {
+            [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call XHandleNetStartScriptClient;
+            if (name player == _this select 3) then
+            {
+                _score = (d_ranked_a select 20);
+                if ( _score > 0 ) then { _score = - _score };
+                player addScore _score;
+            };
+        };
 //========================================================================================================== END OF CASES
 
         default
