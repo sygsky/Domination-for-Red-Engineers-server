@@ -277,7 +277,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				};
                 if ( damage _obj > _obj_prev_dmg ) then
                 {
-                        [ "msg_to_user", "*", ["STR_SYS_SERVICE_DMG_1"], 0, random 5 ] call  XSendNetStartScriptClient; // "One of the services of the base was damaged by saboteurs!"
+                        [ "msg_to_user", "*", [["STR_SYS_SERVICE_DMG_1"]], 0, random 5 ] call  XSendNetStartScriptClient; // "One of the services of the base was damaged by saboteurs!"
                 };
 				//==============================================
 				//======== unit returning to the duty ==========
