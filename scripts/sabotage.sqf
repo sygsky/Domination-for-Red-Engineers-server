@@ -340,7 +340,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
                                 // todo: find any building and hide to it
                                 // find house to hide wшер min 3 pos in it and not closer then 150 meters
                                 // _ngb = [position _shell_unit,3,150] call SYG_nearestGoodHouse;
-                                buildingPos _ngb;
+                                // ... buildingPos _ngb;
 #ifdef __PRINT__
     							hint localize "sabotage.sqf: cover not found, use FLAG/factory for it";
 #endif
