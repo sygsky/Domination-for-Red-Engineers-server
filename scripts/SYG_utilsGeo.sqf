@@ -825,7 +825,7 @@ SYG_MsgOnPos = {
 
 //
 // Creates message based on user format string with 3 params %1, %2, %3 in follow order:
-// distance_to_location direction_to_location
+// distance_to_location, direction_to_location, location_name
 //
 // call as: _msg_localized = [_obj, _format_msg] call SYG_MsgOnPosA;
 //
@@ -836,7 +836,11 @@ SYG_MsgOnPosA = {
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = position _loc;
 	_pos1 set [2,0];
-	_pos2 = position _obj;
+	_pos2 = _obj;
+	if ( typeName _pos2 != "ARRAY") then
+	{
+    	_pos2 = position _obj;
+	};
 	_pos2 set [2,0];
 	_dist = (round ((_pos1 distance _pos2)/100)) * 100;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirName;
@@ -857,7 +861,11 @@ SYG_MsgOnPosE = {
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = position _loc;
 	_pos1 set [2,0];
-	_pos2 = position _obj;
+	_pos2 = _obj;
+	if ( typeName _pos2 != "ARRAY") then
+	{
+    	_pos2 = position _obj;
+	};
 	_pos2 set [2,0];
 	_dist = (round ((_pos1 distance _pos2)/100)) * 100;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;

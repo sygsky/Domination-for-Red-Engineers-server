@@ -101,7 +101,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 	
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
-	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 		hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
         while {alive _chopper && alive driver _chopper && (position _chopper select 2) >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
@@ -115,7 +115,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 			_next_to_eject = _next_to_eject + 1;
 			sleep 0.82;
 		};
-	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 		hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting completed, pos %1", _msg ];
 	};
 
@@ -126,7 +126,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 			sleep 0.15;
 			if (position _chopper select 2 < 2) exitWith
 			{
-        	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+        	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
         		hint localize format["--- x_createpara2cut.sqf: Chopper on the ground, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
 				while {_next_to_eject < _cnt_uni} do
 				{
@@ -141,7 +141,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 					sleep 0.81;
 					_ejected = true;
 				};
-        	    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+        	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
         		hint localize format["--- x_createpara2cut.sqf: Chopper on the ground, ejecting completed, pos %1",  _msg ];
 			};
 		};
@@ -169,7 +169,7 @@ _unit_array = nil;
 if (!_ejected && alive _chopper) then 
 {
 	//[player,"Scheduled drop started"] call XfSideChat;
-    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
     hint localize format["--- x_createpara2cut.sqf: Emergency sbotears saboteurs, %1 unit[s], pos %2", count _unit_array, _msg ];
 	{
 		_x action ["Eject",_chopper];
@@ -177,7 +177,7 @@ if (!_ejected && alive _chopper) then
 		_ejected = true;
 		sleep (0.85 + (random 0.25));
 	} forEach units _paragrp;
-    _msg = [getPos _chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
     hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection completed, pos %1", _msg ];
 	//[player,"Scheduled drop finished"] call XfSideChat;
 };
