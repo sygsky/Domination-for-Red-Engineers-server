@@ -29,15 +29,15 @@ hint localize format["x_createguardpatrolgroups.sqf: point %1, tankName is ""%2"
 _radius  = _this select 1;
 _addnum   = if (_radius >= 300) then {1} else {0}; // how many to add to groups for big town
 
-_type_list_guard = [["basic",0],["specops",0],["tank",[d_vehicle_numbers_guard, 0] call _selectit],["bmp",[d_vehicle_numbers_guard, 1] call _selectit],["brdm",[d_vehicle_numbers_guard, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_guard, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_guard, 4] call _selectit]];
+_type_list_guard = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_guard, 0] call _selectit],["bmp",[d_vehicle_numbers_guard, 1] call _selectit],["brdm",[d_vehicle_numbers_guard, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_guard, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_guard, 4] call _selectit]];
 
 sleep 0.01;
 
-_type_list_guard_static = [["basic",0],["specops",0],["tank",[d_vehicle_numbers_guard_static, 0] call _selectit],["bmp",[d_vehicle_numbers_guard_static, 1] call _selectit],["shilka",[d_vehicle_numbers_guard_static, 2] call _selectit]];
+_type_list_guard_static = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_guard_static, 0] call _selectit],["bmp",[d_vehicle_numbers_guard_static, 1] call _selectit],["shilka",[d_vehicle_numbers_guard_static, 2] call _selectit]];
 
 sleep 0.01;
 
-_type_list_patrol = [["basic",0],["specops",0],["tank",[d_vehicle_numbers_patrol, 0] call _selectit],["bmp",[d_vehicle_numbers_patrol, 1] call _selectit],["brdm",[d_vehicle_numbers_patrol, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_patrol, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_patrol, 4] call _selectit]];
+_type_list_patrol = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_patrol, 0] call _selectit],["bmp",[d_vehicle_numbers_patrol, 1] call _selectit],["brdm",[d_vehicle_numbers_patrol, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_patrol, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_patrol, 4] call _selectit]];
 _type_list_guard_static2 = [["D30",ceil (random 5)],["DSHKM",(ceil (random 2)) + _addnum],["AGS",(ceil (random 2)) + _addnum]];
 
 sleep 0.01;
