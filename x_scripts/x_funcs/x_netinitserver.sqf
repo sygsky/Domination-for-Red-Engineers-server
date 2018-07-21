@@ -166,7 +166,7 @@ XHandleNetStartScriptServer = {
             }
             else
             {
-                if (_name == "Petigp") then // Hungarian
+                if (_name == "Petigp" || _name == "gyuri") then // Hungarian
                 {
         			_msg = "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
                 }
