@@ -247,7 +247,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 #endif
 
 				_time = time;
-				_timeout = (_shell_unit distance _obj) + 60;
+				_timeout = ([_shell_unit, _obj] call SYG_distance2D) + 60;
 #ifdef __PRINT__
 				hint localize format["sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (group _shell_unit) call XfGetAliveUnits, round(_timeout)];
 #endif
@@ -286,19 +286,19 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				{
 					if ( (isNull _grp) || (({ alive _x } count units _grp) == 0)) then // try to find other active group
 					{
-						if (_debug ) then {player globalChat "sabotage.sqf: bomberman group is dissapeared, try to assing bomberman into near friendly group"};
+						if (_debug ) then {player globalChat "sabotage.sqf: bomberman group is dissapeared, try to assign bomberman into near friendly group"};
 #ifdef __PRINT__
-						hint localize "sabotage.sqf: bomberman group is disappeared, try to assing bomberman into near friendly group";
+						hint localize "sabotage.sqf: bomberman group is disappeared, try to assign bomberman into near friendly group";
 #endif	
 						_grp = [_shell_unit, SEARCH_OTHER_GROUP_DIST] call SYG_findNearestSideGroup; // find nearest friendly group in radious of 1000 meters
 						_continue = false;
 					};
-					if ( ! isNull _grp ) then // group found, assign unit to some group, may be not original one
+					if ( (! isNull _grp)  && ( ( {alive _x} count units _grp) > 0) ) then // group found, assign unit to some group, may be not original one
 					{
 						[_shell_unit] join _grp;
-						if (_debug ) then { player globalChat "sabotage.sqf: bomberman joined to a near group of his side" };
+						if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to the nearest group (%1 men) of his side ", {alive _x} count units _grp] };
 #ifdef __PRINT__
-						hint localize "sabotage.sqf: bomberman joined to another group of the same side";
+						hint localize "sabotage.sqf: bomberman joined to nearest group of the same side";
 #endif	
 						sleep 0.3;
 					}					
