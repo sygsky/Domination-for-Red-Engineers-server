@@ -81,7 +81,7 @@ execVM "mando_missiles\mando_missileinit.sqf";
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
 
-    setViewDistance 6000; // try to use this command. What if it could make a splash?
+    setViewDistance 8000; // try to use this command. What if it could make a furor?
 
 	SYG_updateWeather = {
 		// weather parameters
