@@ -15,7 +15,7 @@ extra_bonus_number = -1;
 _town = call SYG_getTargetTown; // town def array
 if ( count _town > 0 ) then // town is defined
 {
-#ifdef __OLD__
+/*
 	if ( (_town select 2) >= big_town_radious ) then // select from best jets and helis (big bonus)
 	{
 		extra_bonus_number = [big_bonus_vec_index, count mt_bonus_vehicle_array] call XfGetRandomRangeInt;
@@ -39,10 +39,11 @@ if ( count _town > 0 ) then // town is defined
         };
 	};
 	last_mt_bonus_vehicle_number = extra_bonus_number;
-#else
+*/
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    // new feature to select target (and  SM) bonus indexes
+    hint localize format["+++ find bonus vehicle for town %1. big_town_radious = %2", _town,big_town_radious];
+    // new feature to select main target bonus indexes
 	if ( (_town select 2) >= big_town_radious ) then // select from best vehicles (big bonus)
 	{
 	    extra_bonus_number = mt_big_bonus_params call SYG_findTargetBonusIndex;
@@ -52,7 +53,7 @@ if ( count _town > 0 ) then // town is defined
 	};
 
 //---------------------------------------------------------------
-#endif
+
 }
 else
 {
@@ -62,6 +63,7 @@ else
 
 if ( extra_bonus_number < 0 ) then
 {
+	hint localize "--- extra_bonus_number find error: get vehicle from small array only";
 	extra_bonus_number = mt_bonus_vehicle_array call XfRandomFloorArray; // случайное число в диапазоне длины массива
 };
 sleep 1.012;
