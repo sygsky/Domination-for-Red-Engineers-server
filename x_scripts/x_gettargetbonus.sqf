@@ -115,7 +115,7 @@ _vehicle call SYG_rearmVehicleA; // rearm if bonus vehicle is marked to rearm
 
 #ifdef __NO_ETERNAL_BONUS__
 
-[_vehicle ]call SYG_addEvents; // add events to this vehicle, no points, no smoke
+[_vehicle ]call SYG_addEventsAndDispose; // add events to this vehicle, no points, no smoke
 
 #else
 

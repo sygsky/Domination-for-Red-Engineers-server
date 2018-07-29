@@ -209,6 +209,7 @@ SYG_addEventsAndDispose = {
 };
 
 
+
 // Makes enemy vehicles group
 x_makevgroup = {
 	private ["_numbervehicles", "_pos", "_crewmember", "_vehiclename", "_grp", "_radius", "_direction", "_do_points",

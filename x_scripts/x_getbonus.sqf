@@ -78,7 +78,7 @@ if (side_mission_winner == 2) then {
 			}
 			else
 			{
-			    [_vehicle2] call SYG_addEvents;
+			    [_vehicle2] call SYG_addEventsAndDispose; // ???
 			};
 
 			_racs = sm_bonus_positions select 1;

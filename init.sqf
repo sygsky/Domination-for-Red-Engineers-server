@@ -142,10 +142,12 @@ if (isServer) then {
 #ifdef __ADDITIONAL_BASE_VEHICLES__
     {
         _veh = createVehicle [_x select 1, [0,0,0], [], 0, "NONE"];
-        [_veh] call SYG_addEvents;
+        [_veh] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and points
         _veh setDir (_x select 2);
-        _veh setDamage 0.8;
         _veh setPos (_x select 0);
+        _veh setDamage 0.8;
+        _veh setFuel 0;
+        {_veh removeMagazine _x} forEach magazines _veh;
         _veh setVectorUp (_x select 3);
     } forEach [ [[9439.2,9800.7,0],"ACE_BRDM2", 180,[0,0,-1]], [[10254.87,10062,0],"ACE_BMP1_D",180,[0,0,-1]] ];
 #endif

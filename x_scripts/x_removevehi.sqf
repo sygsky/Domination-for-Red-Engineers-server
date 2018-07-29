@@ -61,7 +61,7 @@ if ( !isNull _eunit && _aunit != _eunit) then {
 
     _vehs =  [_aunit , 1000, ["LandVehicles"]] call Syg_findNearestVehicles;
     {
-        if (!alive driver _x) then {
+        if (alive driver _x) then {
             (driver _x) reveal _eunit;
         };
     }forEach _vehs;
