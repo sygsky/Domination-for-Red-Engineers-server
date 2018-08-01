@@ -140,3 +140,6 @@
 
 // uncomment follow line to allow non-engineers use engineering fund
 #define __REP_SERVICE_FROM_ENGINEERING_FUND__
+
+// uncomment to allow add predefined scores (now 3) for factory supports, not subtract as was designated by Xeno
+#define __ADD_SCORE_FOR_FACTORY_SUPPORT__ 3

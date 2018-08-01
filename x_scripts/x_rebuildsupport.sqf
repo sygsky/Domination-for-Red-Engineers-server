@@ -12,13 +12,20 @@ _fac = _this select 3;
 hint localize format["+++ x_rebuildsupport.sqf: %1", _this];
 _is_engineer = format ["%1", player] in d_is_engineer;
 
+_addscore = (d_ranked_a select 20); // how many scores needed to rebild service
+
+#ifdef __ADD_SCORE_FOR_FACTORY_SUPPORT__
+_engineer_profit = __ADD_SCORE_FOR_FACTORY_SUPPORT__; // add score to engineer for support
+#else
+_engineer_profit = - _addscore;   // subtract score from engineer for support
+#endif
+
 #ifdef __RANKED__
 
 if (score player < (d_ranked_a select 13)) exitWith {
 	(format [localize "STR_SYS_213" , score player,(d_ranked_a select 13)]) call XfHQChat; // "You need %2 scores to rebuild a factory, your current scores are: %1!"
 };
 
-_addscore = (d_ranked_a select 20); // how many scores needed to rebild service
 
 // non-engineer is here only if __REP_SERVICE_FROM_ENGINEERING_FUND__ is defined in x_setup.sqf
 
@@ -32,13 +39,13 @@ if (!_is_engineer) then
         _exit = true;
     };
     // enough scores in fund
-    SYG_engineering_fund = SYG_engineering_fund - _addscore;
+    SYG_engineering_fund = SYG_engineering_fund - _addscore; // subtract non-engineer support price
     publicVariable "SYG_engineering_fund";
     (format [localize "STR_SYS_137_4", (d_ranked_a select 20), SYG_engineering_fund]) call XfHQChat;
 }
 else
 {
-    player addScore _addscore * -1;
+    player addScore _engineer_profit; // subtract (if normal flow) or add if is defined __ADD_SCORE_FOR_FACTORY_SUPPORT__
 };
 if (_exit ) exitWith {false};
 
