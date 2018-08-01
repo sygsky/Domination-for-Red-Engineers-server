@@ -115,7 +115,7 @@ x_getunitliste = {
 		case "artiobserver": {_unitliste = [call compile format["d_arti_observer_%1",_side_char]];};
 		case "heli": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list call XfRandomArrayVal);};
 		case "tank": {call compile format ["_varray = (d_veh_a_%1 select 0);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
-		case "tank_desert": {call compile format ["_varray = (d_veh_a_%1_desert);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
+		case "tank_desert": {call compile format ["_varray = d_veh_a_%1_desert;",_side_char];_vehiclename = _varray call XfRandomArrayVal; hint localize format["+++ _varray %1, _vehiclename %2", _varray,_vehiclename];};
 		case "bmp": {call compile format ["_varray = (d_veh_a_%1 select 1);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "brdm": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 2);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "shilka": {call compile format ["_varray = (d_veh_a_%1 select 3);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};

@@ -20,16 +20,22 @@ _selectit = {
 _trgobj  = _this select 0; // main target town description
 _trg_center = _trgobj; // center of target town
 _isInDesert = _trg_center call SYG_isDesert; // is town in desert region
-_tankName = if (_isInDesert) then {"tank_desert"} else {"tank"};  // define protective painting of the tank
+//_tankName = if (_isInDesert) then {"tank_desert"} else {"tank"};  // define protective painting of the tank
+_tankName = "tank";  // define protective painting of the tank
 
 #ifdef __DEBUG_PRINT__
-hint localize format["x_createguardpatrolgroups.sqf: point %1, tankName is ""%2""",_trg_center, _tankName];
+//hint localize format["+++ x_createguardpatrolgroups.sqf: point %1, _tankName ""%2"", tank list %3",_trg_center, _tankName, ABRAMS_DESERT_LIST];
 #endif
 
 _radius  = _this select 1;
 _addnum   = if (_radius >= 300) then {1} else {0}; // how many to add to groups for big town
 
 _type_list_guard = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_guard, 0] call _selectit],["bmp",[d_vehicle_numbers_guard, 1] call _selectit],["brdm",[d_vehicle_numbers_guard, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_guard, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_guard, 4] call _selectit]];
+
+#ifdef __DEBUG_PRINT__
+//hint localize format["+++ x_createguardpatrolgroups.sqf: _type_list_guard %1", _type_list_guard];
+#endif
+
 
 sleep 0.01;
 
@@ -120,6 +126,7 @@ sleep 0.112;
 
 for "_xx" from 0 to (count _type_list_guard - 1) do {
 	_typeidx = _type_list_guard select _xx;
+    //if (_tankName == "tank_desert") then {hint localize format["+++ desert tank created %1", _typeidx]};
 	call compile format["if (_number_%1_guard > 0) then {for ""_xxx"" from 1 to _number_%1_guard do {_wp_ran = (count _wp_array) call XfRandomFloor;[_typeidx select 0, [_wp_array select _wp_ran], _trg_center, _typeidx select 1, ""guard"",d_enemy_side,0,-1.111] execVM ""x_scripts\x_makegroup.sqf"";_wp_array set [_wp_ran, ""X_RM_ME""];_wp_array = _wp_array - [""X_RM_ME""];sleep 1.123;};};",_typeidx select 0];
 };
 

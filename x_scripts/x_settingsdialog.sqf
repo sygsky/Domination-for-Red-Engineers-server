@@ -88,7 +88,7 @@ if (__ACEVer || __CSLAVer) then {
 	};
 };
 
-_str = _str + (localize "STR_SET_2")/* "С АИ" */ + ": ";
+_str = _str + ". " + (localize "STR_SET_2")/* "С АИ" */ + ": ";
 #ifdef __AI__
 _str = _str + _strYes1; //"Да"
 #else

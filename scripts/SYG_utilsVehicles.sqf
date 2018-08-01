@@ -1535,9 +1535,9 @@ SYG_findTargetBonusIndex = {
 
 // call as: _new_type = [_type, _pos] call SYG_camouflageTank;
 SYG_camouflageTank = {
-    if ( (_this select 0) != "tank" ) exitWith {_this select 0}; // not tabk has no desert camouflage
-    if ( (_this select 0) call SYG_isDesert ) exitWith {"tank_desert"}; // set desert camouflage to the desert tanks
-    "tank" // tank not i desert so has no camouflage
+    if ( (_this select 0) != "tank" ) exitWith {_this select 0}; // not tank has no desert camouflage
+    if ( (_this select 1) call SYG_isDesert ) exitWith {"tank_desert"}; // set desert camouflage to the desert tanks
+    "tank" // tank not in desert area so has no camouflage
 };
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
