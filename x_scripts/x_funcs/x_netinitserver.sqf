@@ -166,15 +166,15 @@ XHandleNetStartScriptServer = {
             }
             else
             {
-                if (_name == "Petigp" || _name == "gyuri") then // Hungarian
+                if ( _name == "Petigp" || _name == "gyuri") then // Hungarian
                 {
-        			_msg = "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+        			_msg = "Üdvözöljük az alap a 'Vörös mérnökök'!";// "Üdvözöl a Red Engineers csapat!"; // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
                 }
                 else
                 {
                     if ( _name == "Marco") then // vec. killer
                     {
-                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message!"
+                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)"
                     };
                 };
             };
