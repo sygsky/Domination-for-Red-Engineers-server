@@ -44,12 +44,15 @@ if ( count _town > 0 ) then // town is defined
 
     hint localize format["+++ find bonus vehicle for town %1. big_town_radious = %2", _town,big_town_radious];
     // new feature to select main target bonus indexes
+    _bonus_arr = [];
 	if ( (_town select 2) >= big_town_radious ) then // select from best vehicles (big bonus)
 	{
 	    extra_bonus_number = mt_big_bonus_params call SYG_findTargetBonusIndex;
+	    _bonus_arr = mt_big_bonus_params;
 	}
 	else {
 	    extra_bonus_number = mt_bonus_params call SYG_findTargetBonusIndex;
+	    _bonus_arr = mt_bonus_params;
 	};
 
 //---------------------------------------------------------------
@@ -102,7 +105,7 @@ if (mt_winner == 1) then {
 target_clear=true; // town is liberated, no any occupied towns from now
 ["target_clear",target_clear, extra_bonus_number] call XSendNetStartScriptClient;
 
-_vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
+_vehicle = (_bonus_arr select extra_bonus_number) createVehicle (_pos);
 
 hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created %1", typeOf _vehicle];
 
