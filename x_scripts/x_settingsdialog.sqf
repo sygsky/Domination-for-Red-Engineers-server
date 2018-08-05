@@ -133,6 +133,13 @@ _str = _str + format["%1",SYG_engineering_fund] + "\n";
 _str = _str + _strNo;
 #endif
 
+_str = _str +
+#ifdef __ADD_SCORE_FOR_FACTORY_SUPPORT__
+format[localize "STR_SET_12",__ADD_SCORE_FOR_FACTORY_SUPPORT__ ]  // "Score added for service support "
+#else
+format[localize "STR_SET_12_1",d_ranked_a select 20] // "Score subrtracted for service support"
+#endif
+ + "\n";
 
 _str = _str + (localize "STR_SET_8") ; // "Mandatory side missions"
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
@@ -161,6 +168,7 @@ _str = _str + _strYes;
 #else
 _str = _str + ": " + _strNo;
 #endif
+
 //---
 
 _str = _str + (localize "STR_SET_4")/* "С возможность оживлять" */+": ";

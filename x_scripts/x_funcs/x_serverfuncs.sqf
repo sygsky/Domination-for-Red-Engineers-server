@@ -107,6 +107,7 @@ x_getunitliste = {
 	_grptype = _this select 0;_side = _this select 1;_unitliste = [];_vehiclename = "";_varray = [];
 	_side_char = (switch (_side) do {case "EAST": {"E"};case "WEST": {"W"};case "RACS": {"G"};case "CIV": {"W"};});
 	_crewmember = call compile format["d_crewman_%1",_side_char];
+
 	switch (_grptype) do {
 		case "basic": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list select (_list call XfRandomFloorArray));};
 		case "specops": {_how_many = 2 + ceil random 3; _list = call compile format ["d_specops_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
@@ -115,7 +116,7 @@ x_getunitliste = {
 		case "artiobserver": {_unitliste = [call compile format["d_arti_observer_%1",_side_char]];};
 		case "heli": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list call XfRandomArrayVal);};
 		case "tank": {call compile format ["_varray = (d_veh_a_%1 select 0);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
-		case "tank_desert": {call compile format ["_varray = d_veh_a_%1_desert;",_side_char];_vehiclename = _varray call XfRandomArrayVal; hint localize format["+++ _varray %1, _vehiclename %2", _varray,_vehiclename];};
+		case "tank_desert": {call compile format ["_varray = d_veh_a_%1_desert;",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "bmp": {call compile format ["_varray = (d_veh_a_%1 select 1);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "brdm": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 2);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "shilka": {call compile format ["_varray = (d_veh_a_%1 select 3);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
@@ -136,6 +137,12 @@ x_getunitliste = {
 		case "airteam1": {_how_many = 6 + ceil random 6; _list = call compile format ["airbaseteam_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
 		case "airteam2": {_how_many = 1 + ceil random 3; _list = call compile format ["airbaseteam_pilots_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
 	};
+/*
+    if ( _grptype == "tank_desert") then
+    {
+        hint localize format["+++ x_getunitliste %1 return %2",_this, [_unitliste, _vehiclename, _crewmember]];
+    };
+*/
 	[_unitliste, _vehiclename, _crewmember]
 };
 

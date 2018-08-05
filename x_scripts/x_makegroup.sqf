@@ -24,6 +24,8 @@ _pos = (if (count _wp_array > 1) then {_wp_array select ((count _wp_array) call 
 
 _unit_array = [_grptype, _side] call x_getunitliste;
 
+//hint localize format["+++ x_scripts/x_makegroup.sqf _grptype %1, _numbervehicles %2, _unit_array %3, _type %4", _grptype, _numbervehicles, _unit_array, _type];
+
 if (_numbervehicles > 0) then {
 	_vehicles = [_numbervehicles, _pos, (_unit_array select 2), (_unit_array select 1), _grp, 0,_vec_dir,true] call x_makevgroup;
 	_grp setSpeedMode _grpspeed;

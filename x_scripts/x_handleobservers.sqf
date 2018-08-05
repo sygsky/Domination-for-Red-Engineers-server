@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_handleobservers.sqf
 private ["_enemy_ari_available","_nextaritime","_type","_man_type"];
 if (!isServer) exitWith {};
 

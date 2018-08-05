@@ -1127,6 +1127,8 @@ STR_SET_9,"Teleport works only when all services on the base are available","Tel
 STR_SET_10,"Jail","Gefängnis","Гауптвахта"
 STR_SET_10_1," when scores lower than %1"," wenn der scores niedriger ist als %1",", если число очков ниже %1"
 STR_SET_11,"Cloning RPG-missiles","Klon-RPG-Rakete","Клонирование РПГ-ракет"
+STR_SET_12,"Points will be added when the service is restored (%1)","Punkte werden Hinzugefügt, wenn der Dienst wiederhergestellt wird (-%1)","За ремонт сервисов дают очки (%1)"
+STR_SET_12_1,"When repairing the service, points are deducted (-%1)","Punkte werden bei der Reparatur abgezogen (-%1)","За ремонт сервисов вычитают очки (-%1)"
 
 STR_GRU_1,"GRU","GRU","ГРУ"
 STR_GRU_2,"deliver the map","liefern Sie die Karte","доставить карту"

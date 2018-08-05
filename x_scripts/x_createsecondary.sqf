@@ -251,7 +251,7 @@ switch (sec_kind) do {
 		//---Sygsky: add one more medical BMP here
 		
 	};
-	case 5: { // MHQ unfolded
+	case 5: { // todo: MHQ folded/unfolded
 		_poss = [_target_array2 select 0, _target_array2 select 2] call XfGetRanPointCircleBig;
 		while {count _poss == 0} do {
 			_poss = [_target_array2 select 0, _target_array2 select 2] call XfGetRanPointCircleBig;
