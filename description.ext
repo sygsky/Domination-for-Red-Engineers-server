@@ -247,7 +247,7 @@ class CfgMusic
     class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0};} // intro music from "Bloody diamond" movie
     class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};} // intro music from "Total recall" movie (The Mountain)
     //class ost_fort_boyard { name=""; sound[] = {\sounds\ost_fort_boyard.ogg,db-1,1.0};} // intro music from "Fort Boyard" French TV adventure
-    class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db-1,1.0};} // intro music from Soviet song "Comrade mine"
+    class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
