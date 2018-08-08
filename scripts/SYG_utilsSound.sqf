@@ -66,7 +66,8 @@ SYG_defeatTracks =
     ["ATrack16","ATrack17","ATrack18","ATrack19"],
     ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
-    ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]]
+    ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
+    ["i_new_a_guy","decisions","treasure_island","gong"]
 ];
 
 SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
@@ -97,7 +98,8 @@ SYG_southDefeatTracks =
 SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
-    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom","gamlet_hunt","treasure_island"
+    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
+    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1"
     ];
 
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or

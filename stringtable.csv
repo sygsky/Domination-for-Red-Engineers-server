@@ -54,10 +54,10 @@ STR_SYS_012,Medium Grass,Medium Gras,обычная трава
 STR_SYS_013,Full Grass,Voll Gras,высокая трава
 
 STR_DANGER_NUM,4,4,4
-STR_DANGER_0,"Suddenly, your back flowed a trickle of cold sweat...","Plötzlich, Ihren Rücken floss ein Rinnsal von kaltem Schweiß...","Внезапно по вашей спине потекли струйки холодного пота..."
-STR_DANGER_1,"You suddenly became terribly...","Sie wurde plötzlich schrecklich...","Вдруг вам стало жутко..."
-STR_DANGER_2,"Suddenly you think, what is it - your last thought...","Plötzlich dachten Sie, dass dies Ihr letzter Gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
-STR_DANGER_3,"Alarm! It seems that you are in a great danger...","Alarm! Sie wurden entdeckt, die feindlichen Spotter...","Вам показалось, что за вами следит злобный холодный взгляд..."
+STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plötzlich, Ihren Rücken floss ein Rinnsal von kaltem Schweiß...","Внезапно по вашей спине потекли струйки холодного пота..."
+STR_DANGER_1,"Suddenly you felt terrible ...,"Sie wurde plötzlich schrecklich ...","Вдруг вам стало жутко..."
+STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plötzlich dachten Sie, dass dies Ihr letzter Gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
+STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Alarm! Sie wurden entdeckt, die feindlichen Spotter...","Вам показалось, что за вами следит злобный холодный взгляд..."
 
 STR_SYS_2,"MG nest","MG-Nest","Пул.гнездо"
 STR_SYS_02,"MG %1", "MG %1", "Пул. %1"
@@ -816,7 +816,7 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Ск. падения:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"",""comrade_my"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"

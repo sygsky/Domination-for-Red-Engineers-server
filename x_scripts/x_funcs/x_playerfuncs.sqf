@@ -49,6 +49,10 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 		        {
 		            false
 		        };
+		    }
+		    else
+		    {
+		        false
 		    };
 		}
 		else
@@ -143,8 +147,8 @@ Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
 	if (player distance _target_pos < 50) then {
-	    playSound(["fear","bestie","gamlet","fear3","heartbeat"] call XfRandomArrayVal);
-		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "Внимание! Вы были обнаружены вражескими корректировщиками..."
+	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap"] call XfRandomArrayVal);
+		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
 	};
 };
 

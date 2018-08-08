@@ -9,8 +9,8 @@ _unit = _this select 0; // player
 
 //hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
 
-if (!(local _unit)) exitWith {};
-if (!(isPlayer _unit)) exitWith {};
+if (!(local _unit)) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};
+if (!(isPlayer _unit)) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
 if ( _unit != _killer) then
 {
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) then
@@ -24,9 +24,21 @@ if ( _unit != _killer) then
 }
 else
 {
-    // short melody on unknown case
-    // check if woman is killed
+    // short melody on unknown death case, anybody within some range can hear this
+    _sound = "male_scream_0"; // default value
+    // check if a woman is killed
     if (typeOf _unit == "ACE_SoldierEMedicWoman_VDV")
-    then { playSound ("female_shout_of_pain_" + str(1 + floor(random 4))); }
-    else { playSound "huh1"; };
+    then { _sound = "female_shout_of_pain_" + str(1 + floor(random 4)); } // 1-4
+    else { _sound = "male_scream_" + str(floor(random 6)); }; // 0-5
+
+    // todo: add different sound for man also
+    if ( !isNull player) then
+    {
+        player say _sound;
+    }
+    else
+    {
+        playSound _sound;
+    };
+
 };
