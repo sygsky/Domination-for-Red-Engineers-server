@@ -32,7 +32,7 @@ else
     else { _sound = "male_scream_" + str(floor(random 6)); }; // 0-5
 
     // todo: add different sound for man also
-    hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
+    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
     if ( !isNull player) then
     {
         _nil = "Logic" createVehicle position player;
