@@ -475,7 +475,7 @@ sm_bonus_vehicle_array = (
 	["A10","AH1W","AH6","AV8B","AV8B2","UH60","Vulcan"]
 #endif
 );
-sm_bonus_params = [sm_bonus_vehicle_array, sm_bonus_received_vehicle_array];
+sm_bonus_params = [sm_bonus_vehicle_array, sm_bonus_received_vehicle_array, sm_bonus_vehicle_array];
 
 //hint localize format["sm_bonus_vehicle_array=%1", sm_bonus_vehicle_array];
 mt_bonus_vehicle_array = (
@@ -545,6 +545,7 @@ mt_bonus_vehicle_array = (
 
 #ifdef __DEFAULT__
 
+mt_small_bonus_vehicle_array = + mt_bonus_vehicle_array;
 mt_big_bonus_vehicle_array = [
 "ACE_Ka50", 		    // 0 - first big bonus vehicle (heli + plane + big tank)
 "ACE_Ka50_N", 	        // 1
@@ -553,14 +554,16 @@ mt_big_bonus_vehicle_array = [
 "ACE_T90_K", 			// 4
 "ACE_T90A"              // 5
 ];
-mt_bonus_received_vehicle_array = []; // temp permament array for bonus smart selection on small towns
+
+mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
+
+mt_small_bonus_received_vehicle_array = []; // temp permament array for bonus smart selection on small towns
 mt_big_bonus_received_vehicle_array = []; // temp permament array for big bonuss mart selection on big towns
 
-mt_bonus_params = [mt_bonus_vehicle_array, mt_bonus_received_vehicle_array];
-mt_big_bonus_params = [mt_big_bonus_vehicle_array, mt_big_bonus_received_vehicle_array];
+mt_small_bonus_params     = [mt_small_bonus_vehicle_array, mt_small_bonus_received_vehicle_array, mt_bonus_vehicle_array];
+mt_big_bonus_params = [mt_big_bonus_vehicle_array, mt_big_bonus_received_vehicle_array, mt_bonus_vehicle_array];
 
-
-big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
+//big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle
 #endif
 

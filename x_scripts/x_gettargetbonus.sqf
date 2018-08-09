@@ -12,47 +12,20 @@ private ["_dir","_pos","_posa","_vehicle","_town"];
 
 extra_bonus_number = -1;
 #ifdef __DEFAULT__
+
 _town = call SYG_getTargetTown; // town def array
 if ( count _town > 0 ) then // town is defined
 {
-/*
-	if ( (_town select 2) >= big_town_radious ) then // select from best jets and helis (big bonus)
-	{
-		extra_bonus_number = [big_bonus_vec_index, count mt_bonus_vehicle_array] call XfGetRandomRangeInt;
-	}
-	else
-	{
-		extra_bonus_number = floor (random (big_bonus_vec_index)); // select any except Ka-50 and jets
-	};
-	if ( !(isNil "last_mt_bonus_vehicle_number") ) then
-	{
-        while {extra_bonus_number == last_mt_bonus_vehicle_number} do
-        {
-            if ( (_town select 2) >= big_town_radious ) then // select from best jets and helis (big bonus)
-            {
-                extra_bonus_number = [big_bonus_vec_index, count mt_bonus_vehicle_array] call XfGetRandomRangeInt;
-            }
-            else
-            {
-                extra_bonus_number = floor (random (big_bonus_vec_index)); // select any except Ka-50 and jets
-            };
-        };
-	};
-	last_mt_bonus_vehicle_number = extra_bonus_number;
-*/
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     hint localize format["+++ find bonus vehicle for town %1. big_town_radious = %2", _town,big_town_radious];
     // new feature to select main target bonus indexes
-    _bonus_arr = [];
 	if ( (_town select 2) >= big_town_radious ) then // select from best vehicles (big bonus)
 	{
 	    extra_bonus_number = mt_big_bonus_params call SYG_findTargetBonusIndex;
-	    _bonus_arr = mt_big_bonus_params;
 	}
-	else {
-	    extra_bonus_number = mt_bonus_params call SYG_findTargetBonusIndex;
-	    _bonus_arr = mt_bonus_params;
+	else
+	{
+	    extra_bonus_number = mt_small_bonus_params call SYG_findTargetBonusIndex;
 	};
 
 //---------------------------------------------------------------
@@ -62,6 +35,7 @@ else
 {
 	hint localize "--- error in x_gettargetbonus.sqf: a newly captured city not defined!!!";
 };
+
 #endif
 
 if ( extra_bonus_number < 0 ) then
@@ -102,7 +76,7 @@ if (mt_winner == 1) then {
 };
 #endif
 
-target_clear=true; // town is liberated, no any occupied towns from now
+target_clear = true; // town is liberated, no any occupied towns from now
 ["target_clear",target_clear, extra_bonus_number] call XSendNetStartScriptClient;
 
 _vehicle = (_bonus_arr select extra_bonus_number) createVehicle (_pos);

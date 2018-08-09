@@ -1524,13 +1524,14 @@ SYG_deleteVehicleCrew = {
 SYG_findTargetBonusIndex = {
     _initialList = _this select 0;  // initial read-only list
     _currentList = _this select 1;  // real list
+    _fullList    = _this select 2;  // full list
     if ( (count _currentList) == 0 )  then { _currentList = + _initialList}; // reset real list
     _bonusInd = _currentList call XfRandomFloorArray; // find next bonus index
     _bonus = _currentList select _bonusInd;
     _currentList set [_bonusInd, "RM_ME"];
     _currentList = _currentList - ["RM_ME"]; // remove bonus from real list
     _this set [1, _currentList];            // update real list for outer world
-    _initialList find _bonus    // find and return index of found bonus
+    _fullList find _bonus    // find and return index of found bonus
 };
 
 // call as: _new_type = [_type, _pos] call SYG_camouflageTank;
