@@ -17,7 +17,7 @@ _town = call SYG_getTargetTown; // town def array
 if ( count _town > 0 ) then // town is defined
 {
 
-    hint localize format["+++ find bonus vehicle for town %1. big_town_radious = %2", _town,big_town_radious];
+    hint localize format["+++ find bonus vehicle for town %1 (big_town_radious = %2)", _town, big_town_radious];
     // new feature to select main target bonus indexes
 	if ( (_town select 2) >= big_town_radious ) then // select from best vehicles (big bonus)
 	{
