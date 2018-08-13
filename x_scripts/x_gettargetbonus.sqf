@@ -66,9 +66,9 @@ if (mt_winner == 1) then {
 			_posa = _west select extra_bonus_number; _pos = _posa select 0;_dir = _posa select 1;
 			_vehicle2 = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 			_vehicle2 setDir _dir;
-			
+
 			_vehicle2 execVM "x_scripts\x_wreckmarker.sqf";
-			
+
 			_racs = mt_bonus_positions select 1;
 			_posa = _racs select extra_bonus_number; _pos = _posa select 0;_dir = _posa select 1;
 		};
@@ -79,9 +79,9 @@ if (mt_winner == 1) then {
 target_clear = true; // town is liberated, no any occupied towns from now
 ["target_clear",target_clear, extra_bonus_number] call XSendNetStartScriptClient;
 
-_vehicle = (_bonus_arr select extra_bonus_number) createVehicle (_pos);
+_vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 
-hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created %1", typeOf _vehicle];
+hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created ""%1""", typeOf _vehicle];
 
 _vehicle setDir _dir;
 
