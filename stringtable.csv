@@ -458,6 +458,12 @@ STR_SYS_245,"Your team has destroyed the command post of the enemy...","Ihr Team
 STR_SYS_246,"Your team has destroyed a heroid factory...","Ihr Team zerstörte Fabrik für die Herstellung von Heroin...","Ваш отряд уничтожил завод по производству героина..."
 STR_SYS_247,"Your team has destroyed a large plant for the production of heroin...","Ihr team zerstört hat eine große Anlage für die Herstellung von heroin...","Ваш отряд уничтожил большой завод по производству героина..."
 STR_SYS_248,"Secondary objective achieved...","Das sekundäre Ziel erreicht...","Второстепенное задание завершено..."
+
+STR_SYS_248_NUM,3,3,3
+STR_SYS_248_0," perhaps, by guerrillas..."," vielleicht, von Guerillas..."" возможно, партизанами..."
+STR_SYS_248_1," by force of circumstances..."," durch die Kraft der Umstände..."," силой обстоятельств..."
+STR_SYS_248_2," by disappointed enemies?"," von enttäuschten Feinden?"," разочарованными врагами?"
+
 STR_SYS_249,"Wreck Repair Point","Wrack-Reparatur-Punkt","Сервис восстановления"
 
 STR_SYS_250,"Your rank: %1 does not allow to use this helicopter (Wreck-repair). Required rank: %2.","Ihr Rang: %1 ist nicht erlaubt die Verwendung dieser Hubschrauber (Wrack). Erforderlich Rang: %2.","Ваше звание, %1, не позволяет использовать этот вертолёт (восстановление-Wreck). Требуемое звание: %2."

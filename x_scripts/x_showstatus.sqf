@@ -290,7 +290,7 @@ if (current_target_index != -1) then {
 
 			private ["_center","_list", "_unit","_str","_searchDist"];
 			_center = _target_array2 select 0; // center of curent town
-			_searchDist = 2000;
+			_searchDist = 4000;
 			_list = _center nearObjects ["ACE_OfficerW",_searchDist];
 			if ( count _list == 0 )	then 
 			{

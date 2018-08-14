@@ -38,6 +38,7 @@ switch (_sec_solved_kind) do {
 	};
 	case "sec_over": {
 		_msg = "STR_SYS_248"; // "Secondary objective achieved..."
+		// "STR_FIRE_NUM" call SYG_getRandomText
 		_is_solved = false;
 	};
 };
@@ -56,6 +57,13 @@ if (_is_solved) then
         };
     };
     hint localize format["+++ sec_solved: %1", _this];
+}
+else
+{
+    if ( _sec_solved_kind == "sec_over") then // add some random rumor
+    {
+        _msg = format["%1%2", _msg, "STR_SYS_248_NUM"  call SYG_getLocalizedRandomText];
+    };
 };
 _msg call XfHQChat; // "Губернатор позорно сбежал из города..."
 
