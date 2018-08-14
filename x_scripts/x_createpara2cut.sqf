@@ -44,7 +44,7 @@ _chopper flyInHeight 100; // fly on height about 100 meters
 // store time of the start of last infiltration on base
 __SetGVar(INFILTRATION_TIME, date);
 #ifdef __DEBUG_PRINT__
-hint localize format["x_scripts/x_createpara2.sqf: Десант сформирован, местное время %1", date];
+hint localize format["x_scripts/x_createpara2.sqf: Десант на базу запущен, местное время %1", date];
 #endif
 
 _parachute_type = (
@@ -55,7 +55,7 @@ _parachute_type = (
 );
 
 
-if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Create sabotage group and arrange it in chopper cargo
+if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Create sabotage group and arrange it as chopper cargo
 {
 	_paragrp = call SYG_createEnemyGroup;
 	_unit_array = ["sabotage", d_enemy_side] call x_getunitliste;

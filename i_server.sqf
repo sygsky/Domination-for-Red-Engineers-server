@@ -726,7 +726,7 @@ d_transport_chopper = (
 	if (d_enemy_side == "EAST") then {
 		["ACE_Mi17"]
 	} else {
-		["ACE_CH47D","ACE_UH60MG_M134","ACE_MH6"]
+		["ACE_CH47D","ACE_UH60MG_M134","ACE_UH60MG_M2","ACE_MH6"]
 	}
 );
 #endif
