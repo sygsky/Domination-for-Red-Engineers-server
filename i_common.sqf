@@ -440,27 +440,27 @@ sm_bonus_vehicle_array = (
 "ACE_BMP2_D",       // 9
 "ACE_BMP2_K",       // 10
 
-"ACE_BMD1",         // 11
-"ACE_BMD1p",        // 12
+//"ACE_BMD1",         // 11
+//"ACE_BMD1p",        // 12
 
-"ACE_T55_A",        // 13
-"ACE_T55_AM",       // 14
+"ACE_T55_A",        // 11
+"ACE_T55_AM",       // 12
 
-"ACE_T62_MK",       // 15
-"ACE_T62_MV",       // 16
+"ACE_T62_MK",       // 13
+"ACE_T62_MV",       // 14
 
-"ACE_T64_B",        // 17
-"ACE_T64_BK",       // 18
+"ACE_T64_B",        // 15
+"ACE_T64_BK",       // 16
 
-"ACE_T72_B",        // 19
-"ACE_T72_BK",       // 20
+"ACE_T72_B",        // 17
+"ACE_T72_BK",       // 18
 
-"ACE_T80_B",        // 21
-"ACE_T80_BK",       // 22
-"ACE_T80_BV",       // 23
-"ACE_T80_BVK",      // 24
-"ACE_T80_U",        // 25
-"ACE_BMP2_K"        // 26
+"ACE_T80_B",        // 19
+"ACE_T80_BK",       // 20
+"ACE_T80_BV",       // 21
+"ACE_T80_BVK",      // 22
+"ACE_T80_U",        // 23
+"ACE_BMP2_K"        // 24
 
 ]
 				} else {

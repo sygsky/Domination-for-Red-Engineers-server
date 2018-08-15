@@ -402,7 +402,7 @@ d_veh_a_E = (
 	if (__ACEVer) then {
 		[
 			["ACE_T72","ACE_T90","ACE_T90_K"],
-			["ACE_BMP2","ACE_BMD1","ACE_BMP2_D","ACE_BMP2_K"],
+			["ACE_BMP2",/*"ACE_BMD1",*/"ACE_BMP2_D","ACE_BMP2_K"],
 			["BRDM2","ACE_BRDM2_ATGM"],
 			["ACE_ZSU","ACE_BRDM2_SA9"],
 			["ACE_UAZ_MG"],

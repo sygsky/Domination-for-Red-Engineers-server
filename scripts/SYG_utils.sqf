@@ -299,7 +299,7 @@ SYG_findAndAssignAsCargo = {
 		for "_i" from 0 to count _vecs - 1 do
 		{
 			_x = _vecs select _i;
-			if ( !canMove _x OR isNull driver _x ) then {_vecs set [_i, "RM_ME"]};
+			if ( !(canMove _x) || (isNull driver _x) || ((_x emptyPositions "Cargo") <= 0) )  then {_vecs set [_i, "RM_ME"]};
 		};
 		_vecs = _vecs - ["RM_ME"];
 		if ( count _vecs > 0 ) then
@@ -311,7 +311,7 @@ SYG_findAndAssignAsCargo = {
 				if ( !alive _x ) then { _feetmen1 set [_i, "RM_ME"] }
 				else
 				{ 
-					if ( (_x call SYG_ACEUnitUnconscious) OR (!isNull assignedVehicle _x) ) then { _feetmen1 set [_i, "RM_ME"] }; 
+					if ( (_x call SYG_ACEUnitUnconscious) || (!isNull assignedVehicle _x) ) then { _feetmen1 set [_i, "RM_ME"] };
 				};
 			};
 			_feetmen1 = _feetmen1 - ["RM_ME"];
@@ -321,7 +321,7 @@ SYG_findAndAssignAsCargo = {
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
 				hint localize format["%1 SYG_findAndAssignAsCargo: reassigning to cargo %2 men with patrol vecs %3",call SYG_nowToStr,_feetmen1, _vecs];
 #endif								
-				while { (count _vecs > 0) AND (count _feetmen1) > 0 } do
+				while { (count _vecs > 0) || (count _feetmen1) > 0 } do
 				{
 					// find suitable vehicle with free cargo space,
 					_reta = [_feetmen1 select 0, _vecs, DEFAULT_GROUP_SEARCH_RADIUS] call SYG_findVehWithFreeCargo;
@@ -349,7 +349,7 @@ SYG_findAndAssignAsCargo = {
 					hint localize format["%4 SYG_findAndAssignAsCargo: %1 assignedToCargo %2 (%3) dist %5",_assigned, typeOf _veh, _veh, call SYG_nowToStr, _veh distance (_assigned select 0)];
 #endif
 
-				}; // while { (count _vecs > 0) AND (count _feetmen1) > 0 } do
+				}; // while { (count _vecs > 0) || (count _feetmen1) > 0 } do
 			}; // if ( count _feetmen1 > 0 ) then
 		}; // if ( count _vecs > 0 ) then 
 	};
