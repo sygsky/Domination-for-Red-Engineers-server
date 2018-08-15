@@ -914,13 +914,14 @@ ClearMagazineCargo MEDIC_TENT2;
 //+++ Sygsky: added on heli wind effect. Set to false if wind effect is not desired
 d_with_wind_effect = true;
 
-// list of big heli for WEST with ACE
+// list of strong heli for WEST with ACE
 SYG_HELI_BIG_LIST_ACE_W =
     ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I",/*"ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",*/
      "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE",
      "ACE_AH64_HE_F","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
-// list of big heli for WEST with ACE
-SYG_HELI_LITTLE_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_UH60MG_M2","ACE_AH6_AGM"];
+// list of weak heli for WEST with ACE
+SYG_SMALL_HELI_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_AH6_AGM"];
+SYG_HELI_LITTLE_LIST_ACE_W = SYG_SMALL_HELI_LIST_ACE_W + ["ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_UH60MG_M2"];
 
 #endif
 
