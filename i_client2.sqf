@@ -47,7 +47,7 @@ d_helilift1_types =
 	} else {
 		if (__ACEVer) then {
 //			["BMP2_MHQ","ACE_BMP2_Ambul","WarfareEastSalvageTruck","ACE_Ural_Repair","ACE_Ural_Reammo","ACE_Ural_Refuel","ACE_Ural","ACE_BMP2","ACE_BMD1","ACE_BMP2_D","ACE_BMP2_K","ACE_BMD1p","BRDM2","ACE_BRDM2_ATGM","ACE_UAZ_MG","ACE_UAZ_AGS30","ACE_UAZ","M119","D30","ACE_ZSU"] + _armor + _car
-			[ "BMP2_MHQ","ACE_BMP2_Ambul","ACE_M113_Ambul","WarfareEastSalvageTruck","ACE_Ural_Repair","ACE_Ural_Reammo","ACE_Ural_Refuel","ACE_Ural","ACE_UAZ_MG","ACE_UAZ_AGS30","ACE_UAZ","M119","D30","ACE_ZU23M" ] + _car //+++ Sygsky to prevent lift heavy vec
+			[ "BMP2_MHQ","ACE_BMP2_Ambul","ACE_M113_Ambul","WarfareEastSalvageTruck","ACE_Ural_Repair","ACE_Ural_Reammo","ACE_Ural_Refuel","ACE_Ural","ACE_UAZ_MG","ACE_UAZ_AGS30","ACE_UAZ","M119","D30","ACE_ZU23M" ] + _car + SYG_SMALL_HELI_LIST_ACE_W //+++ Sygsky to prevent lift heavy vec
 		} else {
 			["BMP2_MHQ","BMP2Ambul","WarfareEastSalvageTruck","UralRepair","UralRefuel","UralReammo","UralOpen","BMP2","UAZ_AGS30","M119","D30","UAZMG","BRDM2","BRDM2_ATGM"] + _armor + _car
 		}
