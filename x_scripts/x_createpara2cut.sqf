@@ -20,7 +20,7 @@ if (!isServer) exitWith {};
 
 #define HEIGHT_TO_EJECT 80
 
-_vgrp = _this select 0;
+_vgrp = _this select 0; // chopper crew group
 _chopper = _this select 1;
 _helifirstpoint = _this select 2;
 _heliendpoint = _this select 3;
@@ -170,7 +170,7 @@ if (!_ejected && alive _chopper) then
 {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-    hint localize format["--- x_createpara2cut.sqf: Emergency sbotears saboteurs, %1 unit[s], pos %2", count _unit_array, _msg ];
+    hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection started, %1 unit[s], pos %2", count crew _chopper, _msg ];
 	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;
@@ -178,7 +178,7 @@ if (!_ejected && alive _chopper) then
 		sleep (0.85 + (random 0.25));
 	} forEach units _paragrp;
     _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-    hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection completed, pos %1", _msg ];
+    // hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection completed, pos %1", _msg ];
 	//[player,"Scheduled drop finished"] call XfSideChat;
 };
 
@@ -272,7 +272,7 @@ _chopper flyinheight 200;
                     if ( _cnt > 0) then // join last member to this group
                     {
 #ifdef	__DEBUG_PRINT__
-                        hint localize format["x_createpara2.sqf: prev. group id %1 (of 1 saboteur) joined to this one", _i];
+                        hint localize format["x_createpara2.sqf: prev. group id %1 (of %2 saboteur[s]) joined to this one", _i, _cnt];
 #endif
 
                         (units _grp) join _paragrp;
@@ -304,6 +304,7 @@ _chopper flyinheight 200;
 #endif		
 	};
 };
+
 // heal all the men in current para group
 _paragrp spawn {
     sleep 15; // wait for all to be on the earth
@@ -317,7 +318,7 @@ if ( !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
 		private ["_driver_veh","_vehicle"];
 		_driver_veh = _this select 0;
 		_vehicle = _this select 1;
-		sleep 240 + random 100;
+		sleep (240 + (random 100));
 		if (!isNull _driver_veh) then {
 			_driver_veh setDamage 1.1;
 		};
@@ -327,18 +328,15 @@ if ( !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
 	};
 };
 
-
 // REVEAL known to flying chopper enemies to the landed saboteurs
 _nenemy = (driver _chopper) call SYG_nearestEnemy;
 if ( !isNull _nenemy) then
 {
     _grp reveal _nenemy;
 #ifdef __DEBUG_PRINT__
-    hint localize format["x_scripts/x_createpara2.sqf: %1 (knowledge %2) revealed to paratroopers", typeOf _nenemy, (driver _chopper) knowsAbout _nenemy];
+    hint localize format["x_scripts/x_createpara2.sqf: %1 (knowledge %2) revealed to paratroopers at dist. %2 m", typeOf _nenemy, (driver _chopper) knowsAbout _nenemy, round(_chopper distance _nenemy)];
 #endif
 };
-
-
 
 while {(_heliendpoint distance (leader _vgrp) > 300)} do {
 	if (!alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
@@ -359,8 +357,6 @@ while {(_heliendpoint distance (leader _vgrp) > 300)} do {
 };
 
 {if (!isNull _x) then {_x removeAllEventHandlers "killed";deleteVehicle _x}} forEach ([_chopper] + crew _chopper);
-
-
 
 if (true) exitWith {};
 
