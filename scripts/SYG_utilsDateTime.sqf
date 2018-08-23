@@ -30,7 +30,7 @@ if ( !isNil "SYG_timeStart" ) exitWith {};
 // set some internal info
 SYG_timeStart = time;
 SYG_dateStart = date;
-hint localize format["SYG_utilsDateTime.sqf: init with SYG_timeStart = %1, SYG_dateStart = %2", SYG_timeStart, SYG_dateStart];
+hint localize format["SYG_utilsDateTime.sqf: init with SYG_timeStart = %1, SYG_dateStart = %2, daytime = %3", SYG_timeStart, SYG_dateStart, daytime ];
 
 // creates 1 digit number as 2 symbol string, adding zero before dogit
 SYG_twoDigsNumber0 = {

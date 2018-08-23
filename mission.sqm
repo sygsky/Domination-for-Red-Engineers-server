@@ -901,7 +901,7 @@ class Mission
 			azimut=270.000000;
 			id=51;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -911,7 +911,7 @@ class Mission
 			azimut=270.000000;
 			id=52;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -921,7 +921,7 @@ class Mission
 			azimut=270.000000;
 			id=53;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -931,7 +931,7 @@ class Mission
 			azimut=270.000000;
 			id=54;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -941,7 +941,7 @@ class Mission
 			azimut=270.000000;
 			id=55;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -951,7 +951,7 @@ class Mission
 			azimut=270.000000;
 			id=56;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -961,7 +961,7 @@ class Mission
 			azimut=270.000000;
 			id=57;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -971,7 +971,7 @@ class Mission
 			azimut=270.000000;
 			id=58;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -981,7 +981,7 @@ class Mission
 			azimut=270.000000;
 			id=59;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -991,7 +991,7 @@ class Mission
 			azimut=270.000000;
 			id=60;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1001,7 +1001,7 @@ class Mission
 			azimut=270.000000;
 			id=61;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1011,7 +1011,7 @@ class Mission
 			azimut=270.000000;
 			id=62;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1021,7 +1021,7 @@ class Mission
 			azimut=270.000000;
 			id=63;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1031,7 +1031,7 @@ class Mission
 			azimut=270.000000;
 			id=64;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1041,7 +1041,7 @@ class Mission
 			azimut=270.000000;
 			id=65;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1051,7 +1051,7 @@ class Mission
 			azimut=270.000000;
 			id=66;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1061,7 +1061,7 @@ class Mission
 			azimut=270.000000;
 			id=67;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1071,7 +1071,7 @@ class Mission
 			azimut=270.000000;
 			id=68;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1081,7 +1081,7 @@ class Mission
 			azimut=270.000000;
 			id=69;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1091,7 +1091,7 @@ class Mission
 			azimut=270.000000;
 			id=70;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1101,7 +1101,7 @@ class Mission
 			azimut=270.000000;
 			id=71;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1111,7 +1111,7 @@ class Mission
 			azimut=270.000000;
 			id=72;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1121,7 +1121,7 @@ class Mission
 			azimut=270.000000;
 			id=73;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1131,7 +1131,7 @@ class Mission
 			azimut=270.000000;
 			id=74;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1141,7 +1141,7 @@ class Mission
 			azimut=270.000000;
 			id=75;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -1151,7 +1151,7 @@ class Mission
 			azimut=270.000000;
 			id=76;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2569,7 +2569,7 @@ class Mission
 			azimut=348.301239;
 			id=227;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2579,7 +2579,7 @@ class Mission
 			azimut=348.301239;
 			id=228;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2589,7 +2589,7 @@ class Mission
 			azimut=348.301239;
 			id=229;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2599,7 +2599,7 @@ class Mission
 			azimut=348.301239;
 			id=230;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2609,7 +2609,7 @@ class Mission
 			azimut=348.301239;
 			id=231;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2619,7 +2619,7 @@ class Mission
 			azimut=348.301239;
 			id=232;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2629,7 +2629,7 @@ class Mission
 			azimut=348.301239;
 			id=233;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2639,7 +2639,7 @@ class Mission
 			azimut=348.301239;
 			id=234;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2649,7 +2649,7 @@ class Mission
 			azimut=348.301239;
 			id=235;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2659,7 +2659,7 @@ class Mission
 			azimut=348.301239;
 			id=236;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2669,7 +2669,7 @@ class Mission
 			azimut=348.301239;
 			id=237;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2679,7 +2679,7 @@ class Mission
 			azimut=348.301239;
 			id=238;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2689,7 +2689,7 @@ class Mission
 			azimut=348.301239;
 			id=239;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2699,7 +2699,7 @@ class Mission
 			azimut=348.301239;
 			id=240;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2709,7 +2709,7 @@ class Mission
 			azimut=348.301239;
 			id=241;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2719,7 +2719,7 @@ class Mission
 			azimut=348.301239;
 			id=242;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2729,7 +2729,7 @@ class Mission
 			azimut=348.301239;
 			id=243;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2739,7 +2739,7 @@ class Mission
 			azimut=348.301239;
 			id=244;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2749,7 +2749,7 @@ class Mission
 			azimut=348.301239;
 			id=245;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2759,7 +2759,7 @@ class Mission
 			azimut=348.301239;
 			id=246;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2769,7 +2769,7 @@ class Mission
 			azimut=348.301239;
 			id=247;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2779,7 +2779,7 @@ class Mission
 			azimut=348.301239;
 			id=248;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2789,7 +2789,7 @@ class Mission
 			azimut=348.301239;
 			id=249;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2799,7 +2799,7 @@ class Mission
 			azimut=348.301239;
 			id=250;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2809,7 +2809,7 @@ class Mission
 			azimut=348.301239;
 			id=251;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2819,7 +2819,7 @@ class Mission
 			azimut=348.301239;
 			id=252;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2913,7 +2913,7 @@ class Mission
 			azimut=270.000000;
 			id=261;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2923,7 +2923,7 @@ class Mission
 			azimut=270.000000;
 			id=262;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2933,7 +2933,7 @@ class Mission
 			azimut=270.000000;
 			id=263;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2943,7 +2943,7 @@ class Mission
 			azimut=270.000000;
 			id=264;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2953,7 +2953,7 @@ class Mission
 			azimut=270.000000;
 			id=265;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2963,7 +2963,7 @@ class Mission
 			azimut=270.000000;
 			id=266;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2973,7 +2973,7 @@ class Mission
 			azimut=270.000000;
 			id=267;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2983,7 +2983,7 @@ class Mission
 			azimut=270.000000;
 			id=268;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -2993,7 +2993,7 @@ class Mission
 			azimut=270.000000;
 			id=269;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3003,7 +3003,7 @@ class Mission
 			azimut=270.000000;
 			id=270;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3013,7 +3013,7 @@ class Mission
 			azimut=270.000000;
 			id=271;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3023,7 +3023,7 @@ class Mission
 			azimut=270.000000;
 			id=272;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3033,7 +3033,7 @@ class Mission
 			azimut=270.000000;
 			id=273;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3043,7 +3043,7 @@ class Mission
 			azimut=270.000000;
 			id=274;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3053,7 +3053,7 @@ class Mission
 			azimut=270.000000;
 			id=275;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3063,7 +3063,7 @@ class Mission
 			azimut=270.000000;
 			id=276;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3073,7 +3073,7 @@ class Mission
 			azimut=270.000000;
 			id=277;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3083,7 +3083,7 @@ class Mission
 			azimut=270.000000;
 			id=278;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3093,7 +3093,7 @@ class Mission
 			azimut=270.000000;
 			id=279;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3103,7 +3103,7 @@ class Mission
 			azimut=270.000000;
 			id=280;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3113,7 +3113,7 @@ class Mission
 			azimut=270.000000;
 			id=281;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3123,7 +3123,7 @@ class Mission
 			azimut=270.000000;
 			id=282;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3133,7 +3133,7 @@ class Mission
 			azimut=270.000000;
 			id=283;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3143,7 +3143,7 @@ class Mission
 			azimut=270.000000;
 			id=284;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3153,7 +3153,7 @@ class Mission
 			azimut=270.000000;
 			id=285;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
@@ -3163,7 +3163,7 @@ class Mission
 			azimut=270.000000;
 			id=286;
 			side="EMPTY";
-			vehicle="FenceWood";
+			vehicle="FenceWoodPalet";
 			leader=1;
 			skill=0.600000;
 		};
