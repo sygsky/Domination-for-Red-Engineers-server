@@ -1028,7 +1028,7 @@ class Mission
 		class Item34
 		{
 			position[]={9385.307617,139.994995,10044.080078};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=64;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1038,7 +1038,7 @@ class Mission
 		class Item35
 		{
 			position[]={9387.547852,139.994995,10044.080078};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=65;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1048,7 +1048,7 @@ class Mission
 		class Item36
 		{
 			position[]={9389.803711,139.994995,10044.064453};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=66;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1058,7 +1058,7 @@ class Mission
 		class Item37
 		{
 			position[]={9392.059570,139.994995,10044.048828};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=67;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1068,7 +1068,7 @@ class Mission
 		class Item38
 		{
 			position[]={9376.301758,139.994995,10044.108398};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=68;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1078,7 +1078,7 @@ class Mission
 		class Item39
 		{
 			position[]={9378.541992,139.994995,10044.108398};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=69;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1088,7 +1088,7 @@ class Mission
 		class Item40
 		{
 			position[]={9380.797852,139.994995,10044.092773};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=70;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1098,7 +1098,7 @@ class Mission
 		class Item41
 		{
 			position[]={9383.053711,139.994995,10044.077148};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=71;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1108,7 +1108,7 @@ class Mission
 		class Item42
 		{
 			position[]={9367.304688,139.994995,10044.138672};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=72;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1118,7 +1118,7 @@ class Mission
 		class Item43
 		{
 			position[]={9369.544922,139.994995,10044.138672};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=73;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1128,7 +1128,7 @@ class Mission
 		class Item44
 		{
 			position[]={9371.800781,139.994995,10044.123047};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=74;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1138,7 +1138,7 @@ class Mission
 		class Item45
 		{
 			position[]={9374.056641,139.994995,10044.107422};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=75;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -1148,7 +1148,7 @@ class Mission
 		class Item46
 		{
 			position[]={9365.050781,139.994995,10044.135742};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=76;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3040,7 +3040,7 @@ class Mission
 		class Item234
 		{
 			position[]={10320.086914,139.994995,10164.114258};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=274;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3050,7 +3050,7 @@ class Mission
 		class Item235
 		{
 			position[]={10322.327148,139.994995,10164.114258};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=275;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3060,7 +3060,7 @@ class Mission
 		class Item236
 		{
 			position[]={10324.583008,139.994995,10164.098633};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=276;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3070,7 +3070,7 @@ class Mission
 		class Item237
 		{
 			position[]={10326.838867,139.994995,10164.083008};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=277;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3080,7 +3080,7 @@ class Mission
 		class Item238
 		{
 			position[]={10311.081055,139.994995,10164.142578};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=278;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3090,7 +3090,7 @@ class Mission
 		class Item239
 		{
 			position[]={10313.321289,139.994995,10164.142578};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=279;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3100,7 +3100,7 @@ class Mission
 		class Item240
 		{
 			position[]={10315.577148,139.994995,10164.126953};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=280;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3110,7 +3110,7 @@ class Mission
 		class Item241
 		{
 			position[]={10317.833008,139.994995,10164.111328};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=281;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3120,7 +3120,7 @@ class Mission
 		class Item242
 		{
 			position[]={10302.083984,139.994995,10164.172852};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=282;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3130,7 +3130,7 @@ class Mission
 		class Item243
 		{
 			position[]={10304.324219,139.994995,10164.172852};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=283;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3140,7 +3140,7 @@ class Mission
 		class Item244
 		{
 			position[]={10306.580078,139.994995,10164.157227};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=284;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3150,7 +3150,7 @@ class Mission
 		class Item245
 		{
 			position[]={10308.835938,139.994995,10164.141602};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=285;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
@@ -3160,7 +3160,7 @@ class Mission
 		class Item246
 		{
 			position[]={10299.830078,139.994995,10164.169922};
-			azimut=270.000000;
+			azimut=90.000000;
 			id=286;
 			side="EMPTY";
 			vehicle="FenceWoodPalet";
