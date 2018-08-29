@@ -236,7 +236,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				sleep 0.2;
 
 				// bombing unit, position to bomb, return position (now current), debug on, user bomb name
-				if (_debug ) then { player globalChat (format["sabotage.sqf: Run bombing script with  unit %1", name _unit]); };
+				if (_debug ) then { player globalChat (format["sabotage.sqf: Run bombing script with  unit %1 for obj at pos %2 on distance %3", name _unit, getPos _obj, _obj distance _shell_unit]); };
 
 				 // last boolean is (true) to put bombs to the center or (false) not 
                 _obj_prev_dmg = damage _obj; // current damage of targeted service
@@ -278,6 +278,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
                 if ( damage _obj > _obj_prev_dmg ) then
                 {
                         [ "msg_to_user", "*", [["STR_SYS_SERVICE_DMG_1"]], 0, random 5 ] call  XSendNetStartScriptClient; // "One of the services of the base was damaged by saboteurs!"
+#ifdef __PRINT__
+					    hint localize "sabotage.sqf: One of the services of the base was damaged by saboteurs!";
+#endif
                 };
 				//==============================================
 				//======== unit returning to the duty ==========
