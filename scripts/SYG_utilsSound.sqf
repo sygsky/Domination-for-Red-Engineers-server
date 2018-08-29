@@ -271,7 +271,7 @@ SYG_playRandomTrack = {
 };
 
 //
-// Changes positon for sound created with call to createSoundSource function
+// Changes position for sound created with call to createSoundSource function
 //
 // Example:
 // _sndArr = [_sound];

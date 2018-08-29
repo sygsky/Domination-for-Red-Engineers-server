@@ -110,7 +110,7 @@ hint localize _str;
 
 while {true } do
 {
-    if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 00:00, simply wiaght up to the morning twilight
+    if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 21:00, simply skip time up to the morning twilight
     {
         _skip = (( _nightSkipTo - daytime + 24 ) % 24);
 #ifdef __DEBUG__

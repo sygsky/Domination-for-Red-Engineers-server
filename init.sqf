@@ -491,8 +491,8 @@ SYG_nightSkipFrom  = 21.0;
 SYG_nightSkipTo    = 3.0;
 //       Night start,         night end,         skip from,         skip to
 [SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
-hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4",
-    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd ];
+hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4, daytime is %5",
+    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd, daytime ];
 
 #endif
 
