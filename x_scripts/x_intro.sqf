@@ -78,7 +78,7 @@ if ((daytime > (SYG_shortNightStart + 0.5)) || (daytime < (SYG_shortNightEnd - 0
 };
 
 #ifdef __DEBUG__
-hint localize format["x_intro.sqf: time is %1, nowtime is %2, missionStart is %3",time, call SYG_nowTimeToStr, SYG_mission_start call SYG_dateToStr];
+hint localize format["x_intro.sqf: time is %1, daytime is %2, nowtime is %3, missionStart is %4",time, daytime, call SYG_nowTimeToStr, SYG_mission_start call SYG_dateToStr];
 #endif
 
 #ifdef __DEFAULT__

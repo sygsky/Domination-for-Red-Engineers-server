@@ -71,7 +71,12 @@ _dayPeriod = {
 };
 #endif
 
-if (!isServer ) then {sleep 10;}; // wait 10 seconds on client computer with dedicated server run
+if (!isServer ) then
+{
+    hint localize format[ "+++ SHORTNIGHT: daytime %1, now %2, sleep 10", daytime, call SYG_nowTimeToStr, time];
+    sleep 10;
+    hint localize format[ "+++ SHORTNIGHT: daytime %1, now %2, after sleep", daytime, call SYG_nowTimeToStr];
+}; // wait 10 seconds on client computer with dedicated server run
 
 waitUntil {time > 0}; // wait time synchronization
 // TODO: add some sound effects (morning sounds, day insects, evening bells, night cries etc)

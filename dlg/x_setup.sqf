@@ -130,7 +130,7 @@
 #define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2
 
 // uncomment follow line if you want teleport available only if all services on base are valid
-#define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
+// #define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
 
 // uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value
 #define __JAIL_MAX_SCORE__ -15
@@ -140,3 +140,6 @@
 
 // uncomment follow line to allow non-engineers use engineering fund
 #define __REP_SERVICE_FROM_ENGINEERING_FUND__
+
+// uncomment to allow add predefined scores (now 3) for factory supports, not subtract as was designated by Xeno
+#define __ADD_SCORE_FOR_FACTORY_SUPPORT__ 3

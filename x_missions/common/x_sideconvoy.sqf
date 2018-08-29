@@ -28,7 +28,7 @@ _clearFeetmen = {
 			{	
 				_x setDammage 1.1; sleep 0.01; [_x] call XAddDead;
 			};
-		}forEach units _this;
+		}forEach _this;
 	};
 };
 
