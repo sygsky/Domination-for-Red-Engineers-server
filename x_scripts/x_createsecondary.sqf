@@ -245,7 +245,7 @@ switch (sec_kind) do {
 				};
 			};
 #else
-			[_vehicle] call SYG_addEvents;
+			[_vehicle] call SYG_addEventsAndDispose;
 #endif
 		};
 		//---Sygsky: add one more medical BMP here
