@@ -121,7 +121,7 @@
 
 //+++ uncomment to create Su34 on the base,
 // add 1000 score to allow get in,
-// add some Vehiсles and ammoBoxes on hills near Corazol and on base
+// add some Vehicles and ammoBoxes on hills near Corazol and on base
 //#define __DEBUG_ADD_VEHICLES__
 
 // uncomment next line to add dome vehicles on the base
