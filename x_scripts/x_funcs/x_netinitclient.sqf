@@ -338,10 +338,15 @@ XHandleNetStartScriptClient = {
 			if (!isNull (_this select 1)) then {
 				// "Был уничтожен сервис по обслуживанию самолетов. Просите инженеров отремонтировать его ..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_220"] call XfHQChat;
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
 					[0] spawn XFacAction;
+					hint localize "+++ XFacAction d_jet_service_fac";
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				};
+#endif
 			} else {
 				//"Сервис по обслуживанию самолетов доступен" call XfHQChat;
 				format[localize "STR_SYS_224",localize "STR_SYS_220"] call XfHQChat;
@@ -352,10 +357,15 @@ XHandleNetStartScriptClient = {
 			if (!isNull (_this select 1)) then {
 				//"Был уничтожен сервис по обслуживанию вертолетов. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_221"] call XfHQChat;
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
 					[1] spawn XFacAction;
+					hint localize "+++ XFacAction d_chopper_service_fac";
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				};
+#endif
 			} else {
 				//"Сервис по обслуживанию вертолетов доступен" call XfHQChat;
 				format[localize "STR_SYS_224",localize "STR_SYS_221"] call XfHQChat;
@@ -366,10 +376,15 @@ XHandleNetStartScriptClient = {
 			if (!isNull (_this select 1)) then {
 				//"Был уничтожен сервис по восстановлению техники. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_222"] call XfHQChat;
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
+#endif
 					[2] spawn XFacAction;
+					hint localize "+++ XFacAction d_wreck_repair_fac";
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 				};
+#endif
 			} else {
 				//"Сервис по восстановлению техники доступен" call XfHQChat;
 				format[localize "STR_SYS_224",localize "STR_SYS_222"] call XfHQChat;
@@ -548,9 +563,11 @@ XHandleNetStartScriptClient = {
 			(_this select 1) execVM "scripts\emulateFlareFiredLocal.sqf";
 		};
 
-		 // some message to user, params: ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay>>]
-		 // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
-		 // msg is displayed using titleText ["...", "PLAIN DOWN"];
+
+        // this command is received and processed ONLY on clients, just if started on client too
+        // some message to user, params: ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay>>]
+        // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
+        // msg is displayed using titleText ["...", "PLAIN DOWN"];
 		case "msg_to_user":	{
 			private [ "_msg_arr","_msg_res","_name","_delay","_localize" ];
 /*
@@ -626,7 +643,6 @@ XHandleNetStartScriptClient = {
 							else
 							{
 								_msg_res set [count _msg_res, _x]; // not localize this format item
-
 							};
 						};
 					} forEach _x; // for each format item
@@ -711,6 +727,25 @@ XHandleNetStartScriptClient = {
             };
             GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure
 		};
+
+        // [ "sub_fac_score", _str, _param1, _param2 ]
+        case "sub_fac_score":
+        {
+            [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call XHandleNetStartScriptClient;
+            if (name player == _this select 3) then
+            {
+                _score = (d_ranked_a select 20);
+                if ( _score > 0 ) then { _score = - _score };
+                player addScore _score;
+            };
+        };
+//========================================================================================================== END OF CASES
+
+        default
+        {
+            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
+        };
+
 
 	}; //switch (_this select 0) do {
 }; // XHandleNetStartScriptClient = {

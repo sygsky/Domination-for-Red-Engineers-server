@@ -100,7 +100,7 @@
 //+++ enable player command menu to base flag for bargate animation
 //#define __BARGATE_ANIM__
 
-//+++ enable your eauipment (weapn, magazines, ammo etc) to save on server by base flag menu new command
+//+++ enable your equipment (weapn, magazines, ammo etc) to save on server by base flag menu new command
 #define __STORE_EQUIPMENT__
 
 #ifdef __ACE__
@@ -111,6 +111,9 @@
 //+++ uncomment to replace ACE_Stryker_TOW with ACE_M60 and ACE_M60A3
 #define __USE_M60__
 
+// uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
+#define __JAVELIN__
+
 #endif
 
 //+++ uncomment to run easiest side missions first, before all other
@@ -118,19 +121,25 @@
 
 //+++ uncomment to create Su34 on the base,
 // add 1000 score to allow get in,
-// add some Vehiсles and ammoBoxes on hills near Corazol and on base
+// add some Vehicles and ammoBoxes on hills near Corazol and on base
 //#define __DEBUG_ADD_VEHICLES__
+
+// uncomment next line to add dome vehicles on the base
+#define __ADDITIONAL_BASE_VEHICLES__
 
 #define __SIDE_MISSION_PER_MAIN_TARGET_COUNT__ 2
 
 // uncomment follow line if you want teleport available only if all services on base are valid
-#define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
+// #define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
 
 // uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value
 #define __JAIL_MAX_SCORE__ -15
 
-// uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
-#define __JAVELIN__
-
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
 //#define __NO_RPG_CLONING__
+
+// uncomment follow line to allow non-engineers use engineering fund
+#define __REP_SERVICE_FROM_ENGINEERING_FUND__
+
+// uncomment to allow add predefined scores (now 3) for factory supports, not subtract as was designated by Xeno
+#define __ADD_SCORE_FOR_FACTORY_SUPPORT__ 3

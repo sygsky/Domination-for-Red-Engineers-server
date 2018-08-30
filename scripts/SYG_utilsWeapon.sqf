@@ -1499,7 +1499,7 @@ SYG_armPilotFull = {
  * Example: [_unit, [ ["P", "ACE_MP5A5", "ACE_30Rnd_9x19_B_MP5", 6], ["S", "ACE_Glock18", "ACE_33Rnd_9x19_G18", 4], ["M", "ACE_Bandage", 2], ["M", "ACE_Morphine",2], ["M", "ACE_MON100",2] ] ] call SYG_armUnit
  */
 SYG_armUnit = {
-	private [ "_itemCnt", "_itemType", "_pos", "_i", "_j", "_unit", "_args", "_primWpn", "_wpn", "_magCnt", "_scndWpn",
+	private [ "_itemCnt", "_itemType", "_pos", "_i", "_j", "_unit", "_args", "_primWpn", "_wpn", "_magCnt", "_secondWpn",
 	"_equipList", "_arr", "_bsetWeapon","_muzzles", "_mag" ];
 	if ( typeName _this != "ARRAY" ) exitWith {false};
 	_itemCnt = count _this;
@@ -1516,7 +1516,7 @@ SYG_armUnit = {
 	_itemCnt = count _arr;
 	removeAllWeapons _unit;
 	_primWpn = "";
-	_scndWpn = "";
+	_secondWpn = "";
 	_equipList = [];
 	//_wpnList = [];
 	if ( _itemCnt > 0 ) then
@@ -1544,14 +1544,17 @@ SYG_armUnit = {
 					
 					case "S": // Secondary weapon, magazines + its optional count  (default 1)
 					{ 
-						if ( _scndWpn != "" ) then { _unit addWeapon _scndWpn;}; // add previous weapon
-						_scndWpn = _args select _pos; _pos = _pos + 1;
+						if ( _secondWpn != "" ) then { _unit addWeapon _secondWpn;}; // add previous weapon
+						_secondWpn = _args select _pos; _pos = _pos + 1;
 					};
 
 					case "M"; // Magazine[s], simply skip this character
 					{};
-					case "E": // spEcial equipment, binocular etc
-					{ if ( count _args > 1) then {_equipList = _equipList + [_args select _pos]; _pos = _pos + 1;}; };
+
+					case "E": // special Equipment, binocular etc
+					{
+					    for "_i" from 1 to (count _args - 1) do { _equipList = _equipList + [_args select _i]; _pos = _pos + 1;};
+					};
 					
 					default { _pos = 0; };
 				};
@@ -1581,10 +1584,10 @@ SYG_armUnit = {
 	} forEach _equipList;
 
 	// add secondary weapon is exists
-	if ( _scndWpn != "" ) then
+	if ( _secondWpn != "" ) then
 	{
-		_bsetWeapon = _scndWpn;
-		_unit addWeapon _scndWpn;
+		_bsetWeapon = _secondWpn;
+		_unit addWeapon _secondWpn;
 	};
 	// add primary weapon is exists after secondary
 	if ( _primWpn != "" ) then

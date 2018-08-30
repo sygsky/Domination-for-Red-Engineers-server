@@ -347,11 +347,11 @@ SYG_nearestCargo = {
 };
 
 // _vecs_arr = [_unit || _pos, 500, ["LandVehicles"]] call Syg_findNearestVehicles;
-// may retun [] if no vehicles found
+// may return [] if no vehicles found
 Syg_findNearestVehicles = {
-	_unit = arg(_this);
+	_unit = arg(0);
 	if ( typeName _unit == "ARRAY" ) then {
-	    if (count _unit < 2) exitWith {_unit == objNull;}; // can't be pos with empty array
+	    if (count _unit < 2) exitWith {[]}; // can't be pos with empty array
 	};
 	if ( isNull _unit ) exitWith {[]};
 	_dist = argopt(1, 500);
@@ -386,7 +386,7 @@ SYG_getSide = {
     if ( typeName _this == "OBJECT") exitWith { side _this };
     if ( typeName _this == "GROUP") exitWith { side _this };
     if ( typeName _this == "SIDE") exitWith { _this };
-    if ( (typeName _side) == "STRING") exitWith
+    if ( typeName _this == "STRING") exitWith
     {
         switch (toUpper(_this)) do
         {
@@ -1392,7 +1392,8 @@ SYG_createGroup = SYG_createEnemyGroup;
 //============================================ Vehicle groups
 #ifdef __OWN_SIDE_EAST__
 
-ABRAMS_LIST = ["ACE_M1A2","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_TUSK","ACE_M1A2_SEP_TUSK"];
+ABRAMS_LIST =        ["ACE_M1Abrams",       "ACE_M1A1_HA",       "ACE_M1A2",       "ACE_M1A2_SEP",       "ACE_M1A2_TUSK",       "ACE_M1A2_SEP_TUSK"];
+ABRAMS_DESERT_LIST = ["ACE_M1Abrams_Desert","ACE_M1A1_HA_Desert","ACE_M1A2_Desert","ACE_M1A2_SEP_Desert","ACE_M1A2_TUSK_Desert","ACE_M1A2_SEP_TUSK_Desert"];
 LINEBAKER = ["ACE_M6A1"];
 ABRAMS_PATROL = [2,3,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
 
@@ -1513,6 +1514,32 @@ SYG_deleteVehicleCrew = {
     }forEach (crew _this);
 };
 
+/**
+ * Finds random but still not used (if available) bonus type from:
+ *
+ *    vehicle types lists
+ * params = [_initial_list, _currentList ];
+ * _bonusIndex =  params call SYG_findTargetBonusIndex;
+ */
+SYG_findTargetBonusIndex = {
+    _initialList = _this select 0;  // initial read-only list
+    _currentList = _this select 1;  // real list
+    _fullList    = _this select 2;  // full list
+    if ( (count _currentList) == 0 )  then { _currentList = + _initialList}; // reset real list
+    _bonusInd = _currentList call XfRandomFloorArray; // find next bonus index
+    _bonus = _currentList select _bonusInd;
+    _currentList set [_bonusInd, "RM_ME"];
+    _currentList = _currentList - ["RM_ME"]; // remove bonus from real list
+    _this set [1, _currentList];            // update real list for outer world
+    _fullList find _bonus    // find and return index of found bonus
+};
+
+// call as: _new_type = [_type, _pos] call SYG_camouflageTank;
+SYG_camouflageTank = {
+    if ( (_this select 0) != "tank" ) exitWith {_this select 0}; // not tank has no desert camouflage
+    if ( (_this select 1) call SYG_isDesert ) exitWith {"tank_desert"}; // set desert camouflage to the desert tanks
+    "tank" // tank not in desert area so has no camouflage
+};
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

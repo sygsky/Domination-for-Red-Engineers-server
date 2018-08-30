@@ -84,7 +84,7 @@ while { true } do {
 		{ 
 			if ( !isNull _x ) then
 			{
-			    _man = _x isKindOf "CaManBase";
+			    _man = _x isKindOf "CAManBase";
 			    _alive = alive _x;
 			    if ( ! _man ) then
 				{
@@ -133,7 +133,7 @@ while { true } do {
                         _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
                         if (!_found) then
                         {
-                            if ( _vehicle isKindOf "CaManBase") exitWith
+                            if ( _vehicle isKindOf "CAManBase") exitWith
                             { // check if dead man not player
                                 _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
                                 // check for zombies found
@@ -209,12 +209,37 @@ while { true } do {
 		};
 	};
 	//__DEBUG_NET("x_infiltrate.sqf",(call XPlayersNumber))
-	
+
+	// select LZ
+	_ind = floor random 2; // 0 or 1 is used
+	/*
+			class Item87
+    		{
+    			position[]={10033.973633,107.050949,10484.583984};
+    			name="eject2";
+    			markerType="RECTANGLE";
+    			type="Flag";
+    			a=700.000000;
+    			b=200.000000;
+    			angle=8.522486;
+    		};
+	*/
+	_rect = [ [ [ 9536, 9134, 0 ], 450, 300, 25],[ [ 10034, 10485, 0 ], 700, 200, 8.5 ] ] select _ind; // call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
+	_delta = [-2000, 2000] select _ind; // start point offset to south or north
+	//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
+	_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
+	_msg = [_attack_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+//	_attack_pos  = position FLAG_BASE;
+//	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
+
 	//__WaitForGroup
 	//__GetEGrp(_grp)
 	_grp = call SYG_createEnemyGroup;
 	_chopper = d_transport_chopper call XfRandomArrayVal;
-	_vehicle = createVehicle [_chopper, d_airki_start_positions select 0, [], 100, "FLY"];
+	_start_pos = d_airki_start_positions select 0;
+	_start_pos set [1, random _delta];
+
+	_vehicle = createVehicle [_chopper, _start_pos, [], 100, "FLY"];
 	[ _vehicle, _grp, _pilot, 1.0 ] call SYG_populateVehicle;
 	// forEach crew _vehicle;
 	{ // support each crew member
@@ -226,19 +251,13 @@ while { true } do {
 	
 	_grp setCombatMode "RED";
 	sleep 1.123;
-	// select LZ
-	_rect = [[[9536,9134,0],450,300,25],[[10027,10573,0],700,200,10]] call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
-	//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
-	_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
-	
-//	_attack_pos  = position FLAG_BASE;
-//	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
-	
+
+
 	sleep 0.1;
 	//[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
 	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2cut.sqf";
 #ifdef __PRINT__
-	hint localize format["x_infiltrate.sqf: __SetGVar(INFILTRATION_TIME, %1), __GetGVar = %2", date, __GetGVar(INFILTRATION_TIME)];
+	hint localize format["x_infiltrate.sqf: ejected at %1, on point %2", date, _msg ];
 #endif
 
 #ifdef __DEBUG__

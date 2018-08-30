@@ -71,7 +71,15 @@ _dayPeriod = {
 };
 #endif
 
-// TODO: add some sound effects (morning sounds, day insects, evening belss, night cries etc)
+if (!isServer ) then
+{
+    hint localize format[ "+++ SHORTNIGHT: daytime %1, now %2, sleep 10", daytime, call SYG_nowTimeToStr, time];
+    sleep 10;
+    hint localize format[ "+++ SHORTNIGHT: daytime %1, now %2, after sleep", daytime, call SYG_nowTimeToStr];
+}; // wait 10 seconds on client computer with dedicated server run
+
+waitUntil {time > 0}; // wait time synchronization
+// TODO: add some sound effects (morning sounds, day insects, evening bells, night cries etc)
 _titleTime = {
     sleep  (random 60);
     _str = localize (format["STR_TIME_%1",_this]);
@@ -107,14 +115,15 @@ hint localize _str;
 
 while {true } do
 {
-    if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 00:00, simply wiaght up to the morning twilight
+    if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 21:00, simply skip time up to the morning twilight
     {
+        _skip = (( _nightSkipTo - daytime + 24 ) % 24);
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo, skip to it",daytime];
+        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3, skip hours = %3",daytime, _nightSkipTo, _nightSkipFrom, _skip];
         // player groupChat _str;
         hint localize _str;
 #endif
-        skipTime (( _nightSkipTo - daytime + 24 ) % 24);
+        skipTime _skip;
     };
     if (daytime < _morningTwilightStart) then // we are in real night after 24:00, let wait
     {

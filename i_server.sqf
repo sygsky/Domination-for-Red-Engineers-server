@@ -402,7 +402,7 @@ d_veh_a_E = (
 	if (__ACEVer) then {
 		[
 			["ACE_T72","ACE_T90","ACE_T90_K"],
-			["ACE_BMP2","ACE_BMD1","ACE_BMP2_D","ACE_BMP2_K"],
+			["ACE_BMP2",/*"ACE_BMD1",*/"ACE_BMP2_D","ACE_BMP2_K"],
 			["BRDM2","ACE_BRDM2_ATGM"],
 			["ACE_ZSU","ACE_BRDM2_SA9"],
 			["ACE_UAZ_MG"],
@@ -445,10 +445,11 @@ d_veh_a_W = (
 		[
 // ТЕХНИКА В ГОРОДЕ
 //##############################################################################
-			["ACE_M1Abrams","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_SEP_TUSK","ACE_M1A2_TUSK"], // tank
+			ABRAMS_LIST,    // tank
+			//["ACE_M1Abrams","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_SEP_TUSK","ACE_M1A2_TUSK"], // tank
             _bmp_list, // bmp
 			["ACE_M113_A3","ACE_M2A3"], // brdm
-			["ACE_PIVADS","ACE_Vulcan","ACE_M6A1"], // shilka
+			["ACE_PIVADS","ACE_Vulcan","ACE_M6A1","ACE_M6A1"], // shilka
 			["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_Truck5t_MG","ACE_HMMWV_GMV", "ACE_HMMWV_GMV2"], // uaz_mg
 			["ACE_HMMWV_GL","ACE_HMMWV_TOW"], // uaz_grenade
 			["M2StaticMG","M2HD_mini_TriPod"], // DSHKM
@@ -492,6 +493,9 @@ d_veh_a_W = (
 		}
 	}
 );
+
+d_veh_a_W_desert = ABRAMS_DESERT_LIST; // tanks in desert towns
+
 d_veh_a_G = [
 	["M1Abrams"],
 	["M113_RACS"],
@@ -722,7 +726,7 @@ d_transport_chopper = (
 	if (d_enemy_side == "EAST") then {
 		["ACE_Mi17"]
 	} else {
-		["ACE_CH47D","ACE_UH60MG_M134","ACE_MH6"]
+		["ACE_CH47D","ACE_UH60MG_M134","ACE_UH60MG_M2","ACE_MH6"]
 	}
 );
 #endif
@@ -975,7 +979,7 @@ for "_i" from 0 to (count d_aircraft_facs - 1) do {
 	_dir = _element select 1;
 	_fac = _wairfac createVehicle _pos ;
 	_fac setDir _dir;
-	_fac addEventHandler ["killed", {[_this select 0] execVM "x_scripts\x_fackilled.sqf";}];
+	_fac addEventHandler ["killed", {_this execVM "x_scripts\x_fackilled.sqf";}];
 };
 #endif
 

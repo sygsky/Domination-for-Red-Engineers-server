@@ -424,20 +424,44 @@ sm_bonus_vehicle_array = (
 			} else {
 				if (__ACEVer) then {
 [
-"ACE_BRDM2_ATGM",	// 0-13 (14 vehicles total)
-"ACE_BRDM2",	    // 1
-"ACE_T64_BV",	    // 2
-"ACE_UAZ_MG",       // 3
-"ACE_UAZ_AGS30",    // 4
-"ACE_BMP2_D",       // 5
-"ACE_T55_AMV",      // 6
-"ACE_BRDM2_ATGM",	// 7
-"ACE_BMP3_M",       // 8
-"ACE_BRDM2_SA9",    // 9
-"ACE_BMP1_D",       // 10
-"ACE_BMD1p",        // 11
-"ACE_T80_U",        // 12
-"ACE_T72_BM"        // 13
+"ACE_UAZ_MG",       // 0
+"ACE_UAZ_MG",       // 1
+"ACE_UAZ_AGS30",    // 2
+
+"ACE_BRDM2",	    // 3
+"ACE_BRDM2_ATGM",	// 4 (vehicles total)
+"ACE_BRDM2_ATGM",	// 5
+"ACE_BRDM2_SA9",    // 6
+
+"ACE_BMP1",         // 7
+"ACE_BMP1_D",       // 8
+"ACE_BMP1_P",
+
+"ACE_BMP2_D",       // 9
+"ACE_BMP2_K",       // 10
+
+//"ACE_BMD1",         // 11
+//"ACE_BMD1p",        // 12
+
+"ACE_T55_A",        // 11
+"ACE_T55_AM",       // 12
+
+"ACE_T62_MK",       // 13
+"ACE_T62_MV",       // 14
+
+"ACE_T64_B",        // 15
+"ACE_T64_BK",       // 16
+
+"ACE_T72_B",        // 17
+"ACE_T72_BK",       // 18
+
+"ACE_T80_B",        // 19
+"ACE_T80_BK",       // 20
+"ACE_T80_BV",       // 21
+"ACE_T80_BVK",      // 22
+"ACE_T80_U",        // 23
+"ACE_BMP2_K"        // 24
+
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -450,6 +474,8 @@ sm_bonus_vehicle_array = (
 	["A10","AH1W","AH6","AV8B","AV8B2","UH60","Vulcan"]
 #endif
 );
+sm_bonus_params = [sm_bonus_vehicle_array, [], sm_bonus_vehicle_array];
+
 //hint localize format["sm_bonus_vehicle_array=%1", sm_bonus_vehicle_array];
 mt_bonus_vehicle_array = (
 #ifdef __SCHMALFELDEN__
@@ -482,35 +508,29 @@ mt_bonus_vehicle_array = (
 			} else {
 				if (__ACEVer) then {
 [
-"ACE_BMP3_M", 		    // 1 - ordinal vehicles list
-"ACE_T80_UM",     		// 2
-"ACE_T80_B",   			// 3
-"ACE_T90_K", 			// 4
-"ACE_ZSU",  			// 5
-"ACE_KA52",  			// 6
-"ACE_BMP3_M",   		// 7
-"ACE_BRDM2_SA9", 		// 8
-"ACE_BMP3_M",   		// 9
-"ACE_T64_BV",			//10
-"ACE_Tunguska",			//11
-"ACE_BRDM2_SA9",   		//12 - last bonus land vehicle
-"ACE_ZSU",          	//13 - first bonus air vehicle
-"ACE_T72_BM", 			//14
-"ACE_Mi17", 		    //15
-"ACE_Mi24P",	        //16
-"ACE_T90_K", 			//17
-"ACE_Su30Mk_R27_R73",	//18
-"ACE_Mi24V",     	    //19
-"ACE_Su34B",            //20
+"ACE_BRDM2_SA9", 		 // 0
+"ACE_BRDM2_ATGM",        // 1
 
-"ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane)
-"ACE_Ka50_N", 	        //22
+"ACE_BMP3",
+"ACE_BMP3_M", 		    // 2 - ordinal vehicles list
 
-"ACE_Su30Mk_Kh29T",     //23
-"ACE_Su30Mk_KAB500KR",  //24
-"ACE_T90A"             //25
-]
-				} else {
+"ACE_ZSU",          	// 3
+"ACE_Tunguska",			// 4
+
+"ACE_T55_AMV",          // 5
+"ACE_T64_BV",			// 6
+"ACE_T72_BM", 			// 7
+"ACE_T80_UM",     		// 8
+"ACE_T80_B",   			// 9
+
+"ACE_Mi24D", 			//10
+"ACE_Mi24V",     	    //11
+"ACE_Mi24P",	        //12
+"ACE_KA52",  			//13
+"ACE_Mi17", 		    //14
+"ACE_Su30Mk_R27_R73",	//15
+"ACE_Su34B"             //16
+];				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
 				}
 			}
@@ -523,7 +543,23 @@ mt_bonus_vehicle_array = (
 );
 
 #ifdef __DEFAULT__
-big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good air vehicle (helis + jets)
+
+mt_small_bonus_vehicle_array = + mt_bonus_vehicle_array;
+mt_big_bonus_vehicle_array = [
+"ACE_Ka50", 		    // 0 - first big bonus vehicle (heli + plane + big tank)
+"ACE_Ka50_N", 	        // 1
+"ACE_Su30Mk_Kh29T",     // 2
+"ACE_Su30Mk_KAB500KR",  // 3
+"ACE_T90_K", 			// 4
+"ACE_T90A"              // 5
+];
+
+mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
+
+mt_small_bonus_params     = [mt_small_bonus_vehicle_array, [], mt_bonus_vehicle_array];
+mt_big_bonus_params = [mt_big_bonus_vehicle_array, [], mt_bonus_vehicle_array];
+
+//big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle
 #endif
 
@@ -839,8 +875,8 @@ d_base_patrol_array =
 
 d_base_patrol_fires_array = 
 [
- [9624,10293,0],[10081,10261,0], // nother fires (slope to shore)
- [9084,10006,0], // weatern fire at a pit
+ [9624,10293,0],[10081,10261,0], // northe fires (slope to shore)
+ [9084,10006,0], // west fire at a pit
  [9453,9868,0],  // main yard fire
  [9899,9697,0],	// east to yard fire
  [10231,9910,0] // nearest to Paraiso fire
@@ -878,13 +914,14 @@ ClearMagazineCargo MEDIC_TENT2;
 //+++ Sygsky: added on heli wind effect. Set to false if wind effect is not desired
 d_with_wind_effect = true;
 
-// list of big heli for WEST with ACE
+// list of strong heli for WEST with ACE
 SYG_HELI_BIG_LIST_ACE_W =
-    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",
-     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM",*/"ACE_AH64_AGM_HE",
-     "ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
-// list of big heli for WEST with ACE
-SYG_HELI_LITTLE_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_AH6_AGM"];
+    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I",/*"ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",*/
+     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE",
+     "ACE_AH64_HE_F","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
+// list of weak heli for WEST with ACE
+SYG_SMALL_HELI_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_AH6_AGM"];
+SYG_HELI_LITTLE_LIST_ACE_W = SYG_SMALL_HELI_LIST_ACE_W + ["ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_UH60MG_M2"];
 
 #endif
 
@@ -893,7 +930,9 @@ d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE",
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Array of all global variables, see "global_vars.sqf" for each variable offset defines
 //
-global_vars = [];
+if ( isNil "global_vars" ) then { global_vars = []; };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Special fund to accumulate non-engineers score subracted when repairing damaged vehicles
+if ( isNil "SYG_engineering_fund") then { SYG_engineering_fund = 0;};
 hint localize format["i_common.date = %1", date];

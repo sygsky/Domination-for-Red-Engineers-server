@@ -62,15 +62,14 @@ else // music normally played on intro
     {
         _music = ((call compile format["[%1]", (localize "STR_INTRO_MUSIC")]) +
         [
-            "bond","grant","stavka_bolshe_chem","red_alert_soviet_march",
-            "burnash","adjutant","lastdime","english_murder","requiem",
-            "Art_Of_Noise_mono","mission_impossible","from_russia_with_love",
-            "prince_negaafellaga","strelok","total_recall_mountain","ost_fort_boyard"
+            "bond","grant","stavka_bolshe_chem","red_alert_soviet_march","burnash","adjutant","lastdime",//"english_murder",
+            "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","prince_negaafellaga","strelok",
+            "total_recall_mountain","comrade_my"
         ]) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;
         playMusic _music;
-        //playMusic "ATrack25";
+        //playMusic "ATrack25"; // oldest value by Xeno
 	 };
 };
 
@@ -79,7 +78,7 @@ if ((daytime > (SYG_shortNightStart + 0.5)) || (daytime < (SYG_shortNightEnd - 0
 };
 
 #ifdef __DEBUG__
-hint localize format["x_intro.sqf: time is %1, nowtime is %2, missionStart is %3",time, call SYG_nowTimeToStr, SYG_mission_start call SYG_dateToStr];
+hint localize format["x_intro.sqf: time is %1, daytime is %2, nowtime is %3, missionStart is %4",time, daytime, call SYG_nowTimeToStr, SYG_mission_start call SYG_dateToStr];
 #endif
 
 #ifdef __DEFAULT__

@@ -31,37 +31,6 @@ if (isServer) then {
 
 hint localize format["+++ init.sqf: isServer = %1, X_Server = %2, X_Client = %3, X_JIP = %4, X_SPE = %5, X_MP = %6, X_INIT = %7", isServer, X_Server, X_Client, X_JIP, X_SPE, X_MP, X_INIT];
 
-//+++ Sygsky
-// Run short night script on both server and client machines
-// Night is assumed to start from 19:45 evening and end at 04:36 morning. 
-// You can variate in future night start/end time and wanted night span. 
-// Now it is 30 mins (first param eq 0.5), that means night run 17.7 times faster than real time in life. 
-// Longitivity of morning and evening is set to 30 minutes (last param eq 0.5)
-SYG_shortNightStart  = 19.75;
-SYG_eveningStart     = 18.30;
-SYG_shortNightEnd    = 4.6;
-SYG_morningEnd       = 7.0;
-SYG_nightDuration    = 0.5;
-SYG_twilightDuration = 0.5;
-SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_shortNightEnd;
-SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
-
-#ifdef __OLD__
-
-[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
-hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
-
-#else
-
-SYG_nightSkipFrom  = 21.0;
-SYG_nightSkipTo    = 3.0;
-//       Night start,         night end,         skip from,         skip to
-[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
-hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4",
-    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd ];
-
-#endif
-
 SYG_firesAreCreated  = false; // are fires on airbase created
 
 current_mission_counter = 0;    // side missions counter (init on server and client)
@@ -112,7 +81,7 @@ execVM "mando_missiles\mando_missileinit.sqf";
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
 
-    setViewDistance 6000; // try to use this command. What if it could make a splash?
+    setViewDistance 8000; // try to use this command. What if it could make a furor?
 
 	SYG_updateWeather = {
 		// weather parameters
@@ -169,8 +138,19 @@ if (isServer) then {
     ADD_HIT_EH(_medic_tent)
     ADD_DAM_EH(_medic_tent)
 
-#endif	
-
+#endif
+#ifdef __ADDITIONAL_BASE_VEHICLES__
+    {
+        _veh = createVehicle [_x select 1, [0,0,0], [], 0, "NONE"];
+        [_veh] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and points
+        _veh setDir (_x select 2);
+        _veh setPos (_x select 0);
+        _veh setDamage 0.8;
+        _veh setFuel 0;
+        {_veh removeMagazine _x} forEach magazines _veh;
+        _veh setVectorUp (_x select 3);
+    } forEach [ [[9439.2,9800.7,0],"ACE_BRDM2", 180,[0,0,-1]], [[10254.87,10062,0],"ACE_BMP1_D",180,[0,0,-1]] ];
+#endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 
@@ -211,8 +191,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    //_first_array = [5];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
-    _first_array = [];
+    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
@@ -424,7 +403,7 @@ if (isServer) then {
 #endif
 
 #ifdef __DEFAULT__
-	//+++ Sygsky: remove map Zavora objects 
+	//+++ Sygsky: remove map Zavora objects etc
 	[] spawn {
         private ["_obj"];
 		// Create new Zavoras on server ONLY
@@ -439,26 +418,28 @@ if (isServer) then {
 			[[9524.4,9925.8,0.3],90],            // at inner gate (to airfield)
 			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraiso
 				  ];
+/**
         sleep 1.0;
+        // TODO: remove event handlers as non-workable on embedded map objects
         // set island hotels to be more undestructible as usual
         {
             _obj = [10000,10000,0] nearestObject _x;
             if ( !isNull _obj ) then
             {
-//                player groupChat "Hotel event handled to ""HIT""";
                 if ( typeOf _obj == "Land_Hotel" ) then
                 {
                     _obj addEventHandler ["hit",
                     {
-//                        private [ "_str" ];
-//                        _str = format["Hotel damaged with %1, dmg = %2",_this select 2,getDammage (_this select 0)];
-//                        hint _str;
                         (_this select 0) setDammage 0;
                     }];
                 };
             };
         } forEach [172902,64642,555078];
-
+        sleep 0.5;
+*/
+        // build flag on Antigua (by Yeti request)
+        sleep 60; // wait 1 minute to ensure user to build flag on map
+        [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
@@ -475,7 +456,6 @@ if (isServer) then {
 
 }; // if (isServer)
 
-
 #ifdef __ACE__
 ace_sys_network_WeatherSync_Disabled = true;
 ace_sys_network_TimeSync_Disabled = true;
@@ -484,7 +464,41 @@ ACE_Sys_Ruck_SpawnRuckItemsOnDeath = false;
 
 #endif
 
+
+//+++ Sygsky
+// Run short night script on both server and client machines
+// Night is assumed to start from 19:45 evening and end at 04:36 morning.
+// You can variate in future night start/end time and wanted night span.
+// Now it is 30 mins (first param eq 0.5), that means night run 17.7 times faster than real time in life.
+// Longitivity of morning and evening is set to 30 minutes (last param eq 0.5)
+SYG_shortNightStart  = 19.75;
+SYG_eveningStart     = 18.30;
+SYG_shortNightEnd    = 4.6;
+SYG_morningEnd       = 7.0;
+SYG_nightDuration    = 0.5;
+SYG_twilightDuration = 0.5;
+SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_shortNightEnd;
+SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
+
+#ifdef __OLD__
+
+[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
+
+#else
+
+SYG_nightSkipFrom  = 21.0;
+SYG_nightSkipTo    = 3.0;
+//       Night start,         night end,         skip from,         skip to
+[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4, daytime is %5",
+    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd, daytime ];
+
+#endif
+
+
 if (!X_Client) exitWith {};
+//============================================== CLIENT COMPUTER EXECUTION ONLY ======================================
 waitUntil {X_Init};
 
 #include "i_client2.sqf"
@@ -603,10 +617,6 @@ execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 			sleep 0.1;
 		};
 	}forEach [353,355,362/* ,367 */];
-    sleep 0.5;
-	// build flag on Antigua (just in case)
-	[17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
-
 };
 #endif
 

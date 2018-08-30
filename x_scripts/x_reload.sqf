@@ -37,7 +37,7 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
         {
             if (!(_vehicle isKindOf "ParachuteBase")) then
             {
-                if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then
+                if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then // find fastest of vehicles available
                 {
                     _vehicle = _x;
                 };
@@ -191,16 +191,6 @@ if (_count > 0) then {
 	};
 };
 
-// set cargo fuel and repair for any vehicles that support it
-_vehicle setFuelCargo 1;
-_vehicle setRepairCargo 1;
-
-#ifdef __ACE__
-_vehicle call SYG_reammoTruck; // call just in case of vehicle type "Truck5tReammo"
-#endif
-
-_vehicle setVehicleAmmo 1;	// Reload turrets / drivers magazine
-
 if (__MandoVer) then {
 	if (_vehicle isKindOf "Air") then {
 		_fcleft = _vehicle getVariable "mando_flaresleft";
@@ -222,7 +212,7 @@ if ((getDammage _vehicle) > 0) then
 }
 else
 {
-    [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx to engineers!"
+    [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx from engineers!"
 };
 
 //+++++ Refuelling
@@ -242,8 +232,35 @@ while {fuel _vehicle < 0.99} do {
 };
 //_vehicle setFuel 1;
 sleep x_reload_time_factor;
-if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
-[_vehicle, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
 
+#ifdef __ACE__
+if ( alive _vehicle) then
+{
+    // add fuel/repair/ammo cargo for any vehicles that support it
+    _msg = "";
+    switch (typeOf _vehicle) do {
+        case "ACE_Truck5t_Repair": { _vehicle setRepairCargo     1; _msg = "STR_SYS_RELOAD_REPAIR"; };
+        case "ACE_Truck5t_Reammo": { _vehicle call SYG_reammoTruck; _msg = "STR_SYS_RELOAD_REAMMO";};
+        case "ACE_Truck5t_Refuel": { _vehicle setFuelCargo       1; _msg = "STR_SYS_RELOAD_REFUEL";};
+        default {};
+    };
+    if (_mgs != "") then
+    {
+        [_vehicle, localize _msg] call XfVehicleChat; // "Reloading cargo..."
+        sleep x_reload_time_factor;
+    };
+};
+#endif
+
+
+if (!alive _vehicle) exitWith
+{
+    if ( !isNull _vehicle) then
+    {
+        _vehicle setVariable ["already_on_load", nil];
+    };
+    // TODO: print "Vehicle is destroyed"
+};
+[_vehicle, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
 
 if (true) exitWith {_vehicle setVariable ["already_on_load", nil];};

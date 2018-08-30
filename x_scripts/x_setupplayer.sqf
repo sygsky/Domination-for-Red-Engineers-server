@@ -105,7 +105,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	_endtime = time + 60;
 	_equip = "";
 	// initial information on player connected
-	["d_p_a",name player,missionStart] call XSendNetStartScriptServer;
+	["d_p_a",name player,missionStart, localize "STR_LANG"] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
     _equip = "";
 #ifdef __DEBUG__
@@ -1154,12 +1154,12 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 #endif
 	d_eng_can_repfuel = true;
 	
-	#ifndef __TT__
+#ifndef __TT__
 	d_engineer_trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
-	d_engineer_trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
-	#endif
+	d_engineer_trigger setTriggerArea [d_base_array select 1, d_base_array select 2, d_base_array select 3, true];
+#endif
 	
-	#ifdef __TT__
+#ifdef __TT__
 	_dbase_a = (
 		if (playerSide == west) then {
 			d_base_array select 0
@@ -1169,31 +1169,35 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 	);
 	d_engineer_trigger = createTrigger["EmptyDetector" ,_dbase_a select 0];
 	d_engineer_trigger setTriggerArea [_dbase_a select 1, _dbase_a select 2, 0, false];
-	#endif
+#endif
 	
 	d_engineer_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", true];
-	d_engineer_trigger setTriggerStatements["!d_eng_can_repfuel && player in thislist", "d_eng_can_repfuel = true;(localize 'STR_SYS_229') call XfGlobalChat;", ""]; // 'Способность ремонтировать, заправлять технику восстановлена...'
+	d_engineer_trigger setTriggerStatements["!d_eng_can_repfuel && player in thislist", "d_eng_can_repfuel = true;(localize 'STR_SYS_229') call XfGlobalChat;", ""]; // "Engineer repair/refuel capability restored..."
 
-	#ifdef __RANKED__
+#ifdef __RANKED__
 	d_last_base_repair = -1;
-	#endif
+#endif
 
-    if (_string_player in d_is_engineer) then { // only for engineers!!!
-        _trigger = createTrigger["EmptyDetector" ,_pos];
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+    if (_string_player in d_is_engineer) then  // only for engineers in any case !!!
+    {
+#endif        _trigger = createTrigger["EmptyDetector" ,_pos];
         _trigger setTriggerArea [0, 0, 0, false];
         _trigger setTriggerActivation ["NONE", "PRESENT", true];
         _trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     };
+#endif
 
 	_trigger = createTrigger["EmptyDetector" ,_pos];
 	_trigger setTriggerArea [0, 0, 0, true];
 	_trigger setTriggerActivation ["NONE", "PRESENT", true];
-	#ifndef __ENGINEER_OLD__
+#ifndef __ENGINEER_OLD__
 	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_SYS_226', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"]; // 'Осмотреть технику', 'Починить/заправить технику' 
-	#endif
-	#ifdef __ENGINEER_OLD__
+#endif
+#ifdef __ENGINEER_OLD__
 	_trigger setTriggerStatements["call x_sfunc", "actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer_old.sqf',[],-1,false]", "player removeAction actionID2"]; //'Починить/заправить технику'
-	#endif
+#endif
 
 #ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
@@ -1462,7 +1466,9 @@ XFacAction = {
 	};
 };
 
+#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
+#endif
 	if (!isNull d_jet_service_fac && !d_jet_service_fac_rebuilding) then {
 		[0] spawn XFacAction;
 	};
@@ -1472,7 +1478,9 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	if (!isNull d_wreck_repair_fac && !d_wreck_repair_fac_rebuilding) then {
 		[2] spawn XFacAction;
 	};
+#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
 };
+#endif
 
 if (!isNull d_jet_service_fac && !d_jet_service_fac_rebuilding) then {
 	_element = d_aircraft_facs select 0;
@@ -1655,7 +1663,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	private ["_name"/* , "_identity" */, "_pos", "_target", "_targets","_var","_comp","_cnt"];
 	sleep random 2;
 	_name = name player;
-	["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
+	["d_p_varname",_name,str(player), localize "STR_LANG"] call XSendNetStartScriptServer;
 	
 /*
 	// try to set russian identity
@@ -1773,7 +1781,12 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley
-player setPos [14531,9930,0];
-player addScore (1500 - (score player));
+hint localize "__DEBUG_ADD_VEHICLES__";
+//player setPos [14531,9930,0];
+if ( score player < 1500 ) then
+{
+    player addScore (1500 - (score player));
+};
 #endif
+
 if (true) exitWith {};

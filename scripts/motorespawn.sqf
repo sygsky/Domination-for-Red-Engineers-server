@@ -1,4 +1,4 @@
-// by Sygsky
+// by Sygsky, works only on server
 // script to restore vehicles from designated list
 // independently of their type and position
 // restore delay may be user-defined too.
@@ -121,7 +121,10 @@ while {true} do {
                 if ( ! _driver_near) then // if empty and no man nearby (10 meters circle)
                 {
                     _say = (_pos2 distance _pos1) >= SOUND_SAY_DIST;
-                    if ( _say) then { ["say_sound", _moto, "steal"] call XSendNetStartScriptClient; _pos1 set [2,-5]; _moto setPos _pos1;  };
+                    if ( _say) then
+                    {
+                        ["say_sound", _moto, "steal"] call XSendNetStartScriptClient; _pos1 set [2,-5]; _moto setPos _pos1;
+                    };
 
                     if ( !alive _moto ) then // recreate vehicle
                     {

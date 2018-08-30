@@ -204,10 +204,9 @@ XCheckSMHardTarget = {
 XCheckMTHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
 	_vehicle = _this select 0;
-//	_vehicle addEventHandler ["killed", {mt_radio_down = true;["mt_radio_down",mt_radio_down,if (!isNull (_this select 1)) then { name (_this select 1) } else {""}] call XSendNetStartScriptClient;_this spawn x_removevehiextra;}];
 	_vehicle addEventHandler ["killed", {mt_spotted = false;mt_radio_down = true;["mt_radio_down",mt_radio_down,if (!isNull (_this select 1)) then { name (_this select 1) } else {""}] call XSendNetStartScriptClient;_this spawn x_removevehiextra;}];
+
 	#ifdef __TT__
-//	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);mt_spotted = false;["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
 	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
 	#endif
 	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
@@ -285,7 +284,7 @@ XFacRebuild = {
 	);
 	_fac = _wairfac createVehicle _buildpos;
 	_fac setDir _dir;
-	_fac addEventHandler ["killed", {[_this select 0] execVM "x_scripts\x_fackilled.sqf";}];
+	_fac addEventHandler ["killed", {_this execVM "x_scripts\x_fackilled.sqf";}];
 
 	if (!isNull _oldfac) then {deleteVehicle _oldfac;};
 
@@ -327,6 +326,7 @@ execVM "x_scripts\x_delaiserv.sqf";
 #endif	
 };
 
+//++++++++++++++++++++++ Start of sidemission processings
 [] spawn {
 
 	private ["_waittime","_num_p"];

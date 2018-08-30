@@ -23,10 +23,10 @@ _direction = direction _aunit;
 _position = position _aunit;
 _velocity = velocity _aunit;
 #ifdef __ACE__
-_ace_th = _aunit getVariable "ACE_TurretHit";
-_ace_eh = _aunit getVariable "ACE_EngineHit";
-_ace_hh = _aunit getVariable "ACE_HullHit";
-_ace_trh = _aunit getVariable "ACE_TracksHit";
+    _ace_th = _aunit getVariable "ACE_TurretHit";
+    _ace_eh = _aunit getVariable "ACE_EngineHit";
+    _ace_hh = _aunit getVariable "ACE_HullHit";
+    _ace_trh = _aunit getVariable "ACE_TracksHit";
 #endif
 {
 	_x removeAllEventHandlers "killed";
@@ -52,5 +52,21 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 };
 #endif
 [_dummyvehicle] call XAddDead; // *************** PUT TO THE LIST OF DEAD ********************
+
+// TODO: inform group itself about killer
+_eunit = _this select 1; // killer unit
+if ( !isNull _eunit && _aunit != _eunit) then {
+
+    (group _aunit) reveal _eunit;
+
+    _vehs =  [_aunit , 1000, ["LandVehicles"]] call Syg_findNearestVehicles;
+    {
+        if (alive driver _x) then {
+            (driver _x) reveal _eunit;
+        };
+    }forEach _vehs;
+
+};
+
 
 if (true) exitWith {};

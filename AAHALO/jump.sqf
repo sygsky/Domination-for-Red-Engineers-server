@@ -30,7 +30,7 @@ titleText ["","Plain"];
 uh60p = createVehicle [_jump_helo, _StartLocation, [], 0, "FLY"];
 _halo_height = d_halo_height;
 #ifdef __ACE__
-if (_paratype  == "ACE_ParachutePack") then {_halo_height = d_halo_height * 2;} else {_halo_height = d_halo_height / 4;};
+if (_paratype  == "ACE_ParachutePack") then {_halo_height = d_halo_height * 2;} else {_halo_height = d_halo_height / 6;};
 #endif
 
 uh60p setPos [_StartLocation select 0,_StartLocation select 1, _halo_height];

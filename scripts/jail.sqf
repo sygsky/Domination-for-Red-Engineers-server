@@ -1,5 +1,5 @@
 // By sygsky: Remastered jail from Evolution
-// no specail input parameters execpt ["TEST"] for testing only.
+// no specail input parameters except ["TEST"] for testing only.
 // Call on client only,
 /*
 	author: Sygsky
@@ -28,14 +28,22 @@ if ( !alive player ) then
     waitUntil 
     {
         sleep 0.05;
-        if  (isNull player) then  {  breakOut "main"; };
+        if  (isNull player) then  {  breakOut "main"; }; // if not alive, go out
+        if (dialog) then {breakOut "main"}; // if in dialog, go out
         alive player
     };
 };
 
 #include "x_macros.sqf"
 
-_test = (typeName (_this select 3) == "STRING") && ((_this select 3) == "TEST");
+_test = false;
+if ( typeName _this == "ARRAY") then
+{
+    if ( count _test > 3) then // caalled on action from flag
+    {
+        _test = (typeName (_this select 3) == "STRING") && ((_this select 3) == "TEST");
+    };
+};
 _playerPos = getPos player;
 
 //============================================ INIT JAIL PLACES ===========================
@@ -69,11 +77,11 @@ if (isNil "jail_places") then
 _hotel = objNull;
 _hotelP = [];
 for "_i" from 0 to count jail_buildings -1 do {
-    _id = jail_buildings call  XfRandomFloorArray;
-    _hotelP = jail_buildings select _id;
+    //_id = jail_buildings call  XfRandomFloorArray;
+    _hotelP = jail_buildings select _i;
     _hotel = _hotelP nearestObject "Land_Hotel";
     if (  !isNull _hotel) exitWith {};
-    jail_buildings set [_id, "RM_ME"];
+    jail_buildings set [_i, "RM_ME"];
 };
 
 jail_buildings = jail_buildings - ["RM_ME"];

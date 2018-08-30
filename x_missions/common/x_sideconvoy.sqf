@@ -20,28 +20,17 @@ private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_newgr
 _clearFeetmen = {
 	if ( !isNull _this ) then
 	{
+	    if (typeName _this == "GROUP") then {_this = units _this};
+	    if (typeName _this != "ARRAY") exitWith {false};
+
 		{
-			if ( !isNull _x && alive _x && vehicle _x == _x ) then
+			if ( alive _x && (vehicle _x == _x) ) then
 			{	
 				_x setDammage 1.1; sleep 0.01; [_x] call XAddDead;
 			};
-		}forEach units _this;
+		}forEach _this;
 	};
 };
-
-// call: [_unit1, _unit2 ...] call _killFeetmen;
-_killFeetmen = {
-	if ( !isNull _this ) then
-	{
-		{
-			if ( !isNull _x && alive _x && vehicle _x == _x ) then
-			{	
-				_x setDammage 1.1; sleep 0.01;
-			};
-		}forEach units _this;
-	};
-};
-
 
 _pos_start = _this select 0;
 _pos_end = _this select 1;

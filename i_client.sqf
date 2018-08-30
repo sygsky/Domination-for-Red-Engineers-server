@@ -155,7 +155,7 @@ x_weapon_respawn = false;
 #endif
 
 #ifdef __AI__
-max_ai = 5; // 8;
+max_ai = 11; // 8;
 #endif
 
 #ifdef __MANDO__

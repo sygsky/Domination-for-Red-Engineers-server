@@ -56,6 +56,8 @@ SYG_musicTrackCount = {
 	count (configFile >> "CfgMusic" )
 };
 
+
+// Corazol (center of island with radious 500 m) sounds
 SYG_defeatTracks =
 [
     ["Delerium_Wisdom","pimbompimbom","vendetta","thefuture"],
@@ -64,7 +66,8 @@ SYG_defeatTracks =
     ["ATrack16","ATrack17","ATrack18","ATrack19"],
     ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
-    ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]]
+    ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
+    ["i_new_a_guy","decisions","treasure_island","gong"]
 ];
 
 SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
@@ -77,15 +80,9 @@ SYG_northDefeatTracks =
 [
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
-    ["ATrack9","ATrack10","ATrack19","bolero"]
+    ["ATrack9","ATrack10","ATrack19","bolero"],
+    ["metel","gayane1","gayane2","gayane3"]
 ];
-
-SYG_baseDefeatTracks =
-    [
-    "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
-    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom"
-    ];
-
 
 SYG_southDefeatTracks =
 [
@@ -96,6 +93,14 @@ SYG_southDefeatTracks =
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
     ["ATrack11","ATrack12","ATrack13","arroyo"]
 ];
+
+
+SYG_baseDefeatTracks =
+    [
+    "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
+    "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
+    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1"
+    ];
 
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
@@ -171,14 +176,10 @@ SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;
 };
 
-SYG_chorusDefeatTracks = ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]];
+SYG_chorusDefeatTracks =["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]];
+
 // Any isle defeat music
-SYG_islandDefeatTracks =
-        [
-            SYG_chorusTrack,
-            ["ATrack24",[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]],
-            ["ATrack25",[0,11.978],[13.573,10.142],[105.974,9.508],[138.443,-1]]
-        ];
+SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island"];
 
 SYG_RahmadiDefeatTracks = ["ATrack23b",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
@@ -222,7 +223,7 @@ SYG_playRandomTrack = {
     {
         RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random array and try to play from it
     };
-    if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be
+    if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be,  mandatory with size > 1
     {
         if ((typeName arg(1)) == "STRING") exitWith // 1. _arr = ["ATrack9","ATrack10" ...]; // play full random track
         {
@@ -270,7 +271,7 @@ SYG_playRandomTrack = {
 };
 
 //
-// Changes positon for sound created with call to createSoundSource function
+// Changes position for sound created with call to createSoundSource function
 //
 // Example:
 // _sndArr = [_sound];

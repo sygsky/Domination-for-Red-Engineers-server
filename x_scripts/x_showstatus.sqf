@@ -19,7 +19,6 @@ if (current_target_index == -1) then // before 1st town or current tonw cleared
 {
     if (client_target_counter < number_targets ) then
     {
-        _target_array2 = target_names select current_target_index;_current_target_name = _target_array2 select 1;
         _current_target_name = localize "STR_SYS_208"; // "No target"
     };
 
@@ -291,7 +290,7 @@ if (current_target_index != -1) then {
 
 			private ["_center","_list", "_unit","_str","_searchDist"];
 			_center = _target_array2 select 0; // center of curent town
-			_searchDist = 2000;
+			_searchDist = 4000;
 			_list = _center nearObjects ["ACE_OfficerW",_searchDist];
 			if ( count _list == 0 )	then 
 			{
