@@ -73,7 +73,7 @@ else
 
 _unit	 	 = _this select 0;
 
-if ( isNull _unit  OR !alive _unit OR !canMove _unit) exitWith
+if ( !(alive _unit && canStand _unit0) ) exitWith
 {
 #ifdef __DEBUG__
 	hint localize format["DropScript: unit is bad (%1), exiting",_unit];
@@ -237,14 +237,14 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
         // ------
         // Basic move controlling (fail check)
 
-		if ( !canMove _unit ) exitWith 
+		if ( !canStand _unit ) exitWith 
 		{
             if (_debug) then 
 			{
-				player sideChat "DropScript: unit !canMove :o(";
+				player sideChat "DropScript: unit !canStand :o(";
 			};
 #ifdef __DEBUG__
-			hint localize format["DropScript (%1): unit !canMove :o(",ELAPSED_TIME];
+			hint localize format["DropScript (%1): unit !canStand :o(",ELAPSED_TIME];
 #endif		
 			_error = true;
 			breakTo "main";
@@ -331,10 +331,10 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 	_timeout = time + 20;
 	while { time < _timeout} do 
 	{ 
-		if ( !canMove _unit) then
+		if ( !canStand _unit) then
 		{ 
 #ifdef __DEBUG__
-			hint localize format["DropScript (%1): Failure: unit !canMove while dropping boms, exit",ELAPSED_TIME];
+			hint localize format["DropScript (%1): Failure: unit !canStand while dropping boms, exit",ELAPSED_TIME];
 #endif		
 			breakTo "main";
 		};
@@ -443,7 +443,7 @@ if (!_error) then
 			_unit setBehaviour _prevBehaviour;
 			_prevBehaviour = "NONE";
 		};
-		if ( ! canMove _unit) then {_error = true;};
+		if ( ! canStand _unit) then {_error = true;};
 	}
 	else
 	{
@@ -467,7 +467,7 @@ _cnt = 0;
 // try to move out at distance >= SAFE_DIST_TO_BOMB meters in 20 second. Bomb will blast in 30 seconds
 while { ( ( (getPos _unit) distance _dropRealPos) < SAFE_DIST_TO_BOMB ) AND !( _error )  AND ( _cnt < 20 ) } do
 {
-	if ( !canMove _unit ) exitWith {_error = true};
+	if ( !canStand _unit ) exitWith {_error = true};
 	
     sleep 1;
 
