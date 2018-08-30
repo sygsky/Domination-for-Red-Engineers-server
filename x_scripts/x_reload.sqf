@@ -37,7 +37,7 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
         {
             if (!(_vehicle isKindOf "ParachuteBase")) then
             {
-                if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then
+                if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then // find fastest of vehicles available
                 {
                     _vehicle = _x;
                 };
@@ -212,7 +212,7 @@ if ((getDammage _vehicle) > 0) then
 }
 else
 {
-    [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx to engineers!"
+    [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx from engineers!"
 };
 
 //+++++ Refuelling
@@ -253,7 +253,14 @@ if ( alive _vehicle) then
 #endif
 
 
-if (!alive _vehicle && !isNull _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
+if (!alive _vehicle) exitWith
+{
+    if ( !isNull _vehicle) then
+    {
+        _vehicle setVariable ["already_on_load", nil];
+    };
+    // TODO: print "Vehicle is destroyed"
+};
 [_vehicle, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
 
 if (true) exitWith {_vehicle setVariable ["already_on_load", nil];};
