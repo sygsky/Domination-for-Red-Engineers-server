@@ -1149,33 +1149,33 @@ SYG_su34_RearmTables =
 SYG_heliRearmTable =
 [
     // heli names, Mi24 can't be rearmed, doesnt try to do it
- ["ACE_Mi24D","ACE_Mi24V","ACE_Ka50","ACE_Ka50_N","ACE_Mi17_MG", "ACE_Mi17"],
+ ["ACE_Mi24D","ACE_Mi24V"/*,"ACE_Ka50","ACE_Ka50_N"*/,"ACE_Mi17_MG"/*, "ACE_Mi17"*/],
  	// heli params
  [
  	 [ // 1st heli params
- 	 	["M197", "ACE_9M17PLauncher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-     	["750Rnd_M197_AH1", "ACE_4Rnd_9M17P"/*,"ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
+ 	 	["M197", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+     	["750Rnd_M197_AH1", "ACE_8Rnd_9K114","ACE_128Rnd_57mm"/*"ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
  	 ],
  	 [ // 2nd heli params
- 	 	["ACE_M230", "ACE_9M114Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-	    ["ACE_M789_1200", "ACE_8Rnd_9K114"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
+ 	 	["ACE_M230", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+	    ["ACE_M789_1200", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_80Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
  	 ],
- 	 [ // 3rd heli params
+/* 	 [ // 3rd heli params
  	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
 	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"]
  	 ],
  	 [ // 4th heli params
  	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
 	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"]
- 	 ],
+ 	 ],*/
      [ // 5th heli params
         ["ACE_YakB"],
         ["ACE_1470Rnd_127x108_YakB"]
-     ],
+     ]/*,
      [ // 6th heli params
         ["ACE_57mm_FFAR", "ACE_FFARPOD2"],
         ["ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
-     ]
+     ]*/
  ]
 ];
 

@@ -205,12 +205,13 @@ SYG_addEvents = {
 // call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
 SYG_addEventsAndDispose = {
     _this call SYG_addEvents;
-
+    _vehicle = arg(0);
     // add dispose event
     if ( (typeOf _vehicle) in x_heli_wreck_lift_types ) then // in any case add dispose option
     {
-            _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
-            [_vehicle] call XAddCheckDead; // insert to dead vehicles list for follow handling and removing
+        hint localize format["+++SYG_addEventsAndDispose: %1", typeOf _vehicle];
+        _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
+        [_vehicle] call XAddCheckDead; // prepare to insert to dead vehicles list for follow handling and removing
     };
 
 };

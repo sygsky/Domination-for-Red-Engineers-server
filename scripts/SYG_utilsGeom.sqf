@@ -333,7 +333,7 @@ SYG_pointInRect = {
 	{
 		if ( argp(_rect,3) != 0) then
 		{
-			_pnt = [_rpnt,_pnt,-argp(_rect,3)] call SYG_rotatePointAroundPoint;
+			_pnt = [_rpnt,_pnt,argp(_rect,3)] call SYG_rotatePointAroundPoint;
 		};
 	};
 	//player groupChat format["SYG_pointInRect: rect %1, pnt %2", _rect,_pnt];

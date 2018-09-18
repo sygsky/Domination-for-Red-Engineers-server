@@ -1781,7 +1781,12 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley
-player setPos [14531,9930,0];
-player addScore (1500 - (score player));
+hint localize "__DEBUG_ADD_VEHICLES__";
+//player setPos [14531,9930,0];
+if ( score player < 1500 ) then
+{
+    player addScore (1500 - (score player));
+};
 #endif
+
 if (true) exitWith {};
