@@ -177,7 +177,12 @@ SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;
 };
 
-SYG_chorusDefeatTracks =["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]];
+SYG_chorusDefeatTracks =
+    [
+        ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
+        ["church_organ_1"]
+    ];
+
 
 // Any isle defeat music
 SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island"];
