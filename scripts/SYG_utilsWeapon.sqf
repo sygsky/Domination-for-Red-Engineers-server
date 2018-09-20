@@ -523,7 +523,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 					};
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4] + [["ACE_SmokeGrenade_White"],["ACE_SmokeGrenade_White"]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [["ACE_SmokeGrenade_White"],["ACE_SmokeGrenade_White"]];
 			};
 			case "ACE_SoldierWDemo_USSF_LRSD": // TODO: add ACE rucksack with 1 "ACE_PipeBomb"
 			{
