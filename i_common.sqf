@@ -446,21 +446,24 @@ sm_bonus_vehicle_array = (
 "ACE_T55_A",        // 11
 "ACE_T55_AM",       // 12
 
-"ACE_T62_MK",       // 13
-"ACE_T62_MV",       // 14
+"ACE_T62_M",        // 13
+"ACE_T62_MK",       // 14
+"ACE_T62_MV",       // 15
 
-"ACE_T64_B",        // 15
-"ACE_T64_BK",       // 16
+"ACE_T64_B",        // 16
+"ACE_T64_BK",       // 17
 
-"ACE_T72_B",        // 17
-"ACE_T72_BK",       // 18
+"ACE_T72",          // 18
+"ACE_T72_B",        // 19
+"ACE_T72_BK",       // 20
 
-"ACE_T80_B",        // 19
-"ACE_T80_BK",       // 20
-"ACE_T80_BV",       // 21
-"ACE_T80_BVK",      // 22
-"ACE_T80_U",        // 23
-"ACE_BMP2_K"        // 24
+"ACE_T80_B",        // 21
+"ACE_T80_BK",       // 22
+"ACE_T80_BV",       // 23
+"ACE_T80_BVK",      // 24
+"ACE_T80_U",        // 25
+"ACE_BMP2_K",        // 26
+"ACE_T90",          // 27
 
 ]
 				} else {
@@ -520,16 +523,15 @@ mt_bonus_vehicle_array = (
 "ACE_T55_AMV",          // 5
 "ACE_T64_BV",			// 6
 "ACE_T72_BM", 			// 7
-"ACE_T80_UM",     		// 8
-"ACE_T80_B",   			// 9
+"ACE_T80_UM1",     		// 8
 
-"ACE_Mi24D", 			//10
-"ACE_Mi24V",     	    //11
-"ACE_Mi24P",	        //12
-"ACE_KA52",  			//13
-"ACE_Mi17", 		    //14
-"ACE_Su30Mk_R27_R73",	//15
-"ACE_Su34B"             //16
+"ACE_Mi24D", 			//00
+"ACE_Mi24V",     	    //10
+"ACE_Mi24P",	        //11
+"ACE_KA52",  			//12
+"ACE_Mi17", 		    //13
+"ACE_Su30Mk_R27_R73",	//14
+"ACE_Su34B"             //15
 ];				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
 				}
@@ -550,8 +552,7 @@ mt_big_bonus_vehicle_array = [
 "ACE_Ka50_N", 	        // 1
 "ACE_Su30Mk_Kh29T",     // 2
 "ACE_Su30Mk_KAB500KR",  // 3
-"ACE_T90_K", 			// 4
-"ACE_T90A"              // 5
+"ACE_T90A"              // 4
 ];
 
 mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
