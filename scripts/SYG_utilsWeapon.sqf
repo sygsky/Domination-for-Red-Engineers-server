@@ -417,7 +417,6 @@ SYG_hasAnyMine = {
 
 
 /**
- * TODO: rearm in main with silenced weapon as true specops
  * Rearms unit if he is known to function
  * Returns: true if success, else false. F.e. if unit not known to function
  * call: _res = [_unit<,_rearm_probability<,_advanced_probability>] call SYG_rearmSabotage;
@@ -482,7 +481,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 					};
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 5]]+ [["ACE_SmokeGrenade_White"]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],["ACE_SmokeGrenade_White"]];
 			};
 			case "ACE_SoldierWMAT_A": // TODO: TODO: add WOB with 2 "ACE_AT4_HP"
 			{
@@ -524,7 +523,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 					};
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 6]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [["ACE_SmokeGrenade_White"],["ACE_SmokeGrenade_White"]];
 			};
 			case "ACE_SoldierWDemo_USSF_LRSD": // TODO: add ACE rucksack with 1 "ACE_PipeBomb"
 			{
@@ -538,14 +537,14 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 //					_wpn = RAR(SYG_HK416_WPN_SET_STD_SD);
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] +	[["ACE_Claymore_M"], ["ACE_PipeBomb"]]; // special mine
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] +	[["ACE_SmokeGrenade_White"],["ACE_Claymore_M"], ["ACE_PipeBomb"]]; // special mine
 			};
 			case "ACE_SoldierWDemo_USSF_ST": // TODO: add ACE rucksack with 2 "ACE_PipeBomb"
 			{
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket
 //				_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 5]] + [["ACE_PipeBomb"],["ACE_SmokeGrenade_White"]]; // special equipment
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [["ACE_PipeBomb"],["ACE_SmokeGrenade_White"],["ACE_SmokeGrenade_White"]]; // special equipment
 			};
 			default { /* player globalChat format["unit %1 not detected", _unit_type]; */ _ret = false; };
 		};
@@ -630,7 +629,7 @@ SYG_rearmSabotageGroup = {
 		case "ARRAY": { { if (_x call SYG_rearmSabotage) then {_cnt = _cnt + 1; } } forEach _this };
 		case "GROUP": { { if (_x call SYG_rearmSabotage) then {_cnt = _cnt + 1; } } forEach units _this };
 		case "OBJECT": { if (_x call SYG_rearmSabotage) then {_cnt = _cnt + 1; } };
-		default {hint localize format["SYG_rearmSabotageGroup: Expected _this (%1) is illegal",typeName _this]};
+		default {hint localize format["--- SYG_rearmSabotageGroup: Expected _this (%1) is illegal",typeName _this]};
 	};
 	_cnt
 };

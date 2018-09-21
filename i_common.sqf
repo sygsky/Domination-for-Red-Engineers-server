@@ -205,7 +205,7 @@ d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma" ];
 d_big_towns_inds = [5,6,7,8,11];
 
 // Small towns indexes. Can be absent from list when playing not maximum number of towns
-d_small_towns_inds = [18,21,22,23,24,25,26,27];
+d_small_towns_inds = [16,18,21,22,23,24,25,26,27];
 
 #endif
 
