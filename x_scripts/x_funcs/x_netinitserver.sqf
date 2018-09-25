@@ -122,11 +122,11 @@ XHandleNetStartScriptServer = {
 			    if (isNil "SYG_mission_start") then// 1st player connected/server started
 			    {
 			        SYG_mission_start = arg(2);
-			        hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", %1, %2", arg(1), arg(2)];
+			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1, %2", arg(1), arg(2), argopt(3,"NO_LANG")];
 			    }
 			    else
 			    {
-			        hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", %1", arg(1)];
+			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1", arg(1),argopt(3,"NO_LANG")];
 			    };
 			};
 		};
@@ -166,15 +166,20 @@ XHandleNetStartScriptServer = {
             }
             else
             {
-                if (_name == "Petigp") then // Hungarian
+                if ( _name == "Petigp" || _name == "gyuri") then // Hungarian
                 {
-        			_msg = "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+        			_msg = "Üdvözöljük az alap a 'Vörös mérnökök'!";// "Üdvözöl a Red Engineers csapat!"; // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
                 }
                 else
                 {
                     if ( _name == "Marco") then // vec. killer
                     {
-                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message!"
+                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)"
+                    }else {
+                        if (_name == "Shelter") then // Poland
+                        {
+                            _msg = "Nasz oddział spełnia polskiego brata!"
+                        };
                     };
                 };
             };
@@ -252,7 +257,7 @@ XHandleNetStartScriptServer = {
 			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
 			// log info  about logging
-			hint localize format["x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1),arg(2), call SYG_missionTimeInfoStr ];
+			hint localize format["x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
 		};
 		case "GRU_msg": {
 			_this call GRU_procServerMsg;
@@ -294,7 +299,12 @@ XHandleNetStartScriptServer = {
             };
 		};
 
+//========================================================================================================== END OF CASES
 
+        default
+        {
+            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
+        };
 	}; // switch (_this select 0) do
 }; // XHandleNetStartScriptServer = {
  

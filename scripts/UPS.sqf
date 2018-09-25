@@ -60,15 +60,41 @@ sleep 2;
 if (isNil("KRON_UPS_INIT")) then {
 	KRON_UPS_INIT=0;
 
-	// Postioning
+	// Positioning
 	KRON_randomPos = {private["_cx","_cy","_rx","_ry","_cd","_sd","_ad","_tx","_ty","_xout","_yout"];_cx=_this select 0; _cy=_this select 1; _rx=_this select 2; _ry=_this select 3; _cd=_this select 4; _sd=_this select 5; _ad=_this select 6; _tx=random (_rx*2)-_rx; _ty=random (_ry*2)-_ry; _xout=if (_ad!=0) then {_cx+ (_cd*_tx - _sd*_ty)} else {_cx+_tx}; _yout=if (_ad!=0) then {_cy+ (_sd*_tx + _cd*_ty)} else {_cy+_ty}; [_xout,_yout]};
 	KRON_PosInfo = {private["_pos","_lst","_bld","_bldpos"];_pos=_this select 0; _lst=_pos nearObjects ["House",12]; if (count _lst==0) then {_bld=0;_bldpos=0} else {_bld=_lst select 0; _bldpos=[_bld] call KRON_BldPos}; [_bld,_bldpos]};
-	KRON_BldPos = {private ["_bld","_bldpos","_posZ","_maxZ"];_bld=_this select 0;_maxZ=0;_bi=0;_bldpos=0;while {_bi>=0} do {if (((_bld buildingPos _bi) select 0)==0) then {_bi=-99} else {_bz=((_bld buildingPos _bi) select 2); if (((_bz)>4) && ((_bz>_maxZ) || ((_bz==_maxZ) && (random 1>.8)))) then {_maxZ=_bz; _bldpos=_bi}};_bi=_bi+1};_bldpos};
+	KRON_BldPos = {
+	    private ["_bld","_bldpos","_posZ","_maxZ"];
+	    _bld=_this select 0;
+	    _maxZ=0;
+	    _bi=0;
+	    _bldpos=0;
+        while {_bi>=0} do {
+            if (((_bld buildingPos _bi) select 0)==0) then {_bi=-99} else {_bz=((_bld buildingPos _bi) select 2);
+            if (((_bz)>4) && ((_bz>_maxZ) || ((_bz==_maxZ) && (random 1>.8)))) then {_maxZ=_bz; _bldpos=_bi}};
+            _bi=_bi+1
+        };
+	    _bldpos
+    };
 	KRON_OnRoad = {private["_p","_w","_i","_lst"];_p=_this select 0; _w=_this select 1; _i=_this select 2; _lst=_p nearObjects ["House",12]; if ((count _lst==0) && (_w || !(surfaceIsWater _p))) then {_i=99}; (_i+1)};
 	KRON_getDirPos = {private["_a","_b","_from","_to","_return"]; _from = _this select 0; _to = _this select 1; _return = 0; _a = ((_to select 0) - (_from select 0)); _b = ((_to select 1) - (_from select 1)); if (_a != 0 || _b != 0) then {_return = _a atan2 _b}; if ( _return < 0 ) then { _return = _return + 360 }; _return};
 	KRON_distancePosSqr = {(((_this select 0) select 0)-((_this select 1) select 0))^2 + (((_this select 0) select 1)-((_this select 1) select 1))^2};
 	KRON_relPos = {private["_p","_d","_a","_x","_y","_xout","_yout"];_p=_this select 0; _x=_p select 0; _y=_p select 1; _d=_this select 1; _a=_this select 2; _xout=_x + sin(_a)*_d; _yout=_y + cos(_a)*_d;[_xout,_yout,0]};
-	KRON_rotpoint = {private["_cp","_a","_tx","_ty","_cd","_sd","_cx","_cy","_xout","_yout"];_cp=_this select 0; _cx=_cp select 0; _cy=_cp select 1; _a=_this select 1; _cd=cos(_a*-1); _sd=sin(_a*-1); _tx=_this select 2; _ty=_this select 3; _xout=if (_a!=0) then {_cx+ (_cd*_tx - _sd*_ty)} else {_cx+_tx}; _yout=if (_a!=0) then {_cy+ (_sd*_tx + _cd*_ty)} else {_cy+_ty}; [_xout,_yout,0]};
+	KRON_rotpoint = {
+	    private["_cp","_a","_tx","_ty","_cd","_sd","_cx","_cy","_xout","_yout"];
+	    _cp=_this select 0;
+	    _cx=_cp select 0;
+	    _cy=_cp select 1;
+	    _a=_this select 1;
+	    _cd=cos(_a*-1);
+	    _sd=sin(_a*-1);
+	    _tx=_this select 2;
+	    _ty=_this select 3;
+	    _xout=if (_a!=0) then {_cx+ (_cd*_tx - _sd*_ty)} else {_cx+_tx};
+	    _yout=if (_a!=0) then {_cy+ (_sd*_tx + _cd*_ty)} else {_cy+_ty};
+	    [_xout,_yout,0]
+	};
+
 	KRON_stayInside = {
 		private["_np","_nx","_ny","_cp","_cx","_cy","_rx","_ry","_d","_tp","_tx","_ty","_fx","_fy"];
 		_np=_this select 0;	_nx=_np select 0;	_ny=_np select 1;

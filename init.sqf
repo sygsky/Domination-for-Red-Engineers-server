@@ -111,9 +111,7 @@ execVM "mando_missiles\mando_missileinit.sqf";
 // Weather tuning and settings
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
-
-    setViewDistance 6000; // try to use this command. What if it could make a splash?
-
+  setViewDistance 8000; // try to use this command. What if it could make a furor?
 	SYG_updateWeather = {
 		// weather parameters
 		//  fRainLess = random 0.34; //linear random
@@ -169,8 +167,19 @@ if (isServer) then {
     ADD_HIT_EH(_medic_tent)
     ADD_DAM_EH(_medic_tent)
 
-#endif	
-
+#endif
+#ifdef __ADDITIONAL_BASE_VEHICLES__
+    {
+        _veh = createVehicle [_x select 1, [0,0,0], [], 0, "NONE"];
+        [_veh] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and points
+        _veh setDir (_x select 2);
+        _veh setPos (_x select 0);
+        _veh setDamage 0.8;
+        _veh setFuel 0;
+        {_veh removeMagazine _x} forEach magazines _veh;
+        _veh setVectorUp (_x select 3);
+    } forEach [ [[9439.2,9800.7,0],"ACE_BRDM2", 180,[0,0,-1]], [[10254.87,10062,0],"ACE_BMP1_D",180,[0,0,-1]] ];
+#endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 
@@ -178,15 +187,30 @@ if (isServer) then {
 
 	// create random list of targets
 #ifdef __DEFAULT__
-	if (_number_targets_h < 50) then {
-		maintargets_list = (count target_names) call XfRandomIndexArray;
+	if (_number_targets_h < 50) then { // random number of towns is already defined in number_targets
+        // As many as possible big towns should be included into resulting array
+        // And some small ones also may be randomly preselected or be totally absent if output count is too low (< 9)
+        // created cnt, whole number, important indexes, unimportant indexes
+        _params = [_number_targets_h, count target_names, d_big_towns_inds, d_small_towns_inds]; //
+        _str = format["+++ init target town params: %1",_params ];
+        hint localize _str;
+        _arr = _params call XfIndexArrayWithPredefVals;
+        maintargets_list = _arr;
+		// maintargets_list = (count target_names) call XfRandomIndexArray;
 	} else {
 		switch (_number_targets_h) do {
 			case 50: {maintargets_list = [3,4,2,0,1,7,6];};
 			case 60: {maintargets_list = [8,10,16,17];};
 			case 70: {maintargets_list = [8,9,11,19,14,18];};
 			case 80: {maintargets_list = [8,15,9,11,12,13];};
-			case 90: {maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];}; // 22
+			case 90: {
+			    // 22 towns (maximum number) fill them from whole list.
+			    // Paraiso/Chantico/Somato/Arkadia/Estrella/Cayo etc
+			    maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];
+			}; // 22
+			case 91: { // 8 smallest random target towns
+			    maintargets_list = d_small_towns_inds call  XfRandomArray;
+			};
 		};
 	};
 #else
@@ -196,9 +220,12 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    //_first_array = [5];   // 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
-    _first_array = [];
+    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
     maintargets_list = _first_array + (maintargets_list - _first_array);
+
+    _str = format["+++ generated maintargets_list: %1",maintargets_list ];
+    number_targets = count maintargets_list; // most correct definition of target towns is here!
+    hint localize _str;
 
 	__DEBUG_SERVER("init.sqf", maintargets_list)
 	// create random list of side missions
@@ -405,7 +432,7 @@ if (isServer) then {
 #endif
 
 #ifdef __DEFAULT__
-	//+++ Sygsky: remove map Zavora objects 
+	//+++ Sygsky: remove map Zavora objects etc
 	[] spawn {
         private ["_obj"];
 		// Create new Zavoras on server ONLY
@@ -420,26 +447,28 @@ if (isServer) then {
 			[[9524.4,9925.8,0.3],90],            // at inner gate (to airfield)
 			[[9759.660156,9801.615234,0.3]]      // at forest and hill above Paraiso
 				  ];
+/**
         sleep 1.0;
+        // TODO: remove event handlers as non-workable on embedded map objects
         // set island hotels to be more undestructible as usual
         {
             _obj = [10000,10000,0] nearestObject _x;
             if ( !isNull _obj ) then
             {
-//                player groupChat "Hotel event handled to ""HIT""";
                 if ( typeOf _obj == "Land_Hotel" ) then
                 {
                     _obj addEventHandler ["hit",
                     {
-//                        private [ "_str" ];
-//                        _str = format["Hotel damaged with %1, dmg = %2",_this select 2,getDammage (_this select 0)];
-//                        hint _str;
                         (_this select 0) setDammage 0;
                     }];
                 };
             };
         } forEach [172902,64642,555078];
-
+        sleep 0.5;
+*/
+        // build flag on Antigua (by Yeti request)
+        sleep 60; // wait 1 minute to ensure user to build flag on map
+        [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
@@ -456,7 +485,6 @@ if (isServer) then {
 
 }; // if (isServer)
 
-
 #ifdef __ACE__
 ace_sys_network_WeatherSync_Disabled = true;
 ace_sys_network_TimeSync_Disabled = true;
@@ -465,7 +493,41 @@ ACE_Sys_Ruck_SpawnRuckItemsOnDeath = false;
 
 #endif
 
+
+//+++ Sygsky
+// Run short night script on both server and client machines
+// Night is assumed to start from 19:45 evening and end at 04:36 morning.
+// You can variate in future night start/end time and wanted night span.
+// Now it is 30 mins (first param eq 0.5), that means night run 17.7 times faster than real time in life.
+// Longitivity of morning and evening is set to 30 minutes (last param eq 0.5)
+SYG_shortNightStart  = 19.75;
+SYG_eveningStart     = 18.30;
+SYG_shortNightEnd    = 4.6;
+SYG_morningEnd       = 7.0;
+SYG_nightDuration    = 0.5;
+SYG_twilightDuration = 0.5;
+SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_shortNightEnd;
+SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
+
+#ifdef __OLD__
+
+[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf:shortNight.sqf: night start at %1, twilight span %2, morning start at %3, span %4, speed %5, night duration %6", SYG_shortNightStart,SYG_twilightDuration, SYG_shortNightEnd, SYG_nightLength, SYG_nightSpeed, SYG_nightDuration ];
+
+#else
+
+SYG_nightSkipFrom  = 21.0;
+SYG_nightSkipTo    = 3.0;
+//       Night start,         night end,         skip from,         skip to
+[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4, daytime is %5",
+    SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd, daytime ];
+
+#endif
+
+
 if (!X_Client) exitWith {};
+//============================================== CLIENT COMPUTER EXECUTION ONLY ======================================
 waitUntil {X_Init};
 
 #include "i_client2.sqf"
@@ -584,10 +646,6 @@ execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 			sleep 0.1;
 		};
 	}forEach [353,355,362/* ,367 */];
-    sleep 0.5;
-	// build flag on Antigua (just in case)
-	[17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
-
 };
 #endif
 
@@ -607,7 +665,21 @@ if ( !isServer ) then // use only on client
     ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
     // improve available magazines description
     ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+
+#ifdef __JAVELIN__
+    #ifndef __NO_RPG_CLONING__
+    // Disable Javelin to rucksack load
+    ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\CanPackMagToDummyMag.sqf";
+    #endif
+#endif
+
+#ifdef __NO_RPG_CLONING__
+    // disables AT etc missiles cloning through rucksacks
+ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\PackInventoryMagToDummyMag.sqf";
+#endif
 };
 #endif
+
+
 
 if (true) exitWith {};

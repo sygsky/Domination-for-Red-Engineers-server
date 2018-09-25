@@ -1,8 +1,10 @@
-// x_createguardpatrolgroups.sqf: create/spawn guard and patrol groups
+// x_createguardpatrolgroups.sqf: create/spawn guard and patrol groups for main target (town)
 // by Xeno
 private ["_selectit", "_array", "_num", "_a_vng", "_num_ret", "_type_list_guard", "_type_list_guard_static", "_type_list_patrol", "_type_list_guard_static2", "_trgobj", "_radius", "_selectitmen", "_a_vng2", "_number_basic_guard", "_number_specops_guard", "_selectitvec", "_number_tank_guard", "_number_bmp_guard", "_number_brdm_guard", "_number_uaz_mg_guard", "_number_uaz_grenade_guard", "_number_basic_patrol", "_number_specops_patrol", "_number_tank_patrol", "_number_bmp_patrol", "_number_brdm_patrol", "_number_uaz_mg_patrol", "_number_uaz_grenade_patrol", "_number_basic_guardstatic", "_number_specops_guardstatic", "_number_tank_guardstatic", "_number_bmp_guardstatic", "_number_shilka_guardstatic", "_number_D30_guardstatic", "_number_DSHKM_guardstatic", "_number_AGS_guardstatic", "_trg_center", "_wp_array", "_xx", "_typeidx", "_number_", "_xxx", "_wp_ran", "_point", "_agrp", "_xx_ran", "_xpos", "_unit_array", "_units", "_grp_array", "_ammotruck", "_fueltruck","_grp"];
 
 if (!isServer ) exitWith{};
+
+#define __DEBUG_PRINT__
 
 #include "x_macros.sqf"
 
@@ -15,19 +17,30 @@ _selectit = {
 	_num_ret
 };
 
-_trgobj  = _this select 0;
+_trgobj  = _this select 0; // main target town description
+_trg_center = _trgobj; // center of target town
+_isInDesert = _trg_center call SYG_isDesert; // is town in desert region
+_tankName = if (_isInDesert) then {"tank_desert"} else {"tank"};  // define protective painting of the tank
+//_tankName = "tank";  // define protective painting of the tank
+
+#ifdef __DEBUG_PRINT__
+hint localize format["+++ x_createguardpatrolgroups.sqf: point %1, _tankName ""%2"", tank list %3",_trg_center, _tankName, ABRAMS_DESERT_LIST];
+#endif
+
 _radius  = _this select 1;
 _addnum   = if (_radius >= 300) then {1} else {0}; // how many to add to groups for big town
 
-_type_list_guard = [["basic",0],["specops",0],["tank",[d_vehicle_numbers_guard, 0] call _selectit],["bmp",[d_vehicle_numbers_guard, 1] call _selectit],["brdm",[d_vehicle_numbers_guard, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_guard, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_guard, 4] call _selectit]];
+_type_list_guard = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_guard, 0] call _selectit],["bmp",[d_vehicle_numbers_guard, 1] call _selectit],["brdm",[d_vehicle_numbers_guard, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_guard, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_guard, 4] call _selectit]];
 
 sleep 0.01;
 
-_type_list_guard_static = [["basic",0],["specops",0],["tank",[d_vehicle_numbers_guard_static, 0] call _selectit],["bmp",[d_vehicle_numbers_guard_static, 1] call _selectit],["shilka",[d_vehicle_numbers_guard_static, 2] call _selectit]];
+_type_list_guard_static = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_guard_static, 0] call _selectit],["bmp",[d_vehicle_numbers_guard_static, 1] call _selectit],["shilka",[d_vehicle_numbers_guard_static, 2] call _selectit]];
+
 
 sleep 0.01;
 
-_type_list_patrol = [["basic",0],["specops",0],["tank",[d_vehicle_numbers_patrol, 0] call _selectit],["bmp",[d_vehicle_numbers_patrol, 1] call _selectit],["brdm",[d_vehicle_numbers_patrol, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_patrol, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_patrol, 4] call _selectit]];
+_type_list_patrol = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_patrol, 0] call _selectit],["bmp",[d_vehicle_numbers_patrol, 1] call _selectit],["brdm",[d_vehicle_numbers_patrol, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_patrol, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_patrol, 4] call _selectit]];
+
 _type_list_guard_static2 = [["D30",ceil (random 5)],["DSHKM",(ceil (random 2)) + _addnum],["AGS",(ceil (random 2)) + _addnum]];
 
 sleep 0.01;
@@ -59,6 +72,7 @@ _selectitvec = {
 	_num_ret
 };
 _number_tank_guard = [d_vehicle_numbers_guard,0] call _selectitvec;
+_number_tank_desert_guard = _number_tank_guard;
 sleep 0.01;
 _number_bmp_guard = [d_vehicle_numbers_guard,1] call _selectitvec;
 sleep 0.01;
@@ -74,6 +88,7 @@ sleep 0.01;
 _number_specops_patrol = _addnum + ([d_footunits_patrol, 1] call _selectitmen);
 sleep 0.01;
 _number_tank_patrol = _addnum + ([d_vehicle_numbers_patrol,0] call _selectitvec);
+_number_tank_desert_patrol = _number_tank_patrol;
 sleep 0.01;
 _number_bmp_patrol = [d_vehicle_numbers_patrol,1] call _selectitvec;
 sleep 0.01;
@@ -89,6 +104,7 @@ sleep 0.01;
 _number_specops_guardstatic = [d_footunits_guard_static, 1] call _selectitmen;
 sleep 0.01;
 _number_tank_guardstatic = [d_vehicle_numbers_guard_static,0] call _selectitvec;
+_number_tank_desert_guardstatic = _number_tank_guardstatic;
 sleep 0.01;
 _number_bmp_guardstatic = [d_vehicle_numbers_guard_static,1] call _selectitvec;
 sleep 0.01;
@@ -104,7 +120,6 @@ sleep 0.01;
 _selectitmen = nil;
 _selectitvec = nil;
 
-_trg_center = _trgobj;
 _wp_array = [_trg_center, _radius] call x_getwparray;
 
 sleep 0.112;
@@ -123,7 +138,6 @@ for "_xx" from 0 to (count _type_list_guard_static - 1) do {
 	_typeidx = _type_list_guard_static select _xx;
 	call compile format["if (_number_%1_guardstatic > 0) then {for ""_xxx"" from 1 to _number_%1_guardstatic do {_wp_ran = (count _wp_array) call XfRandomFloor;[_typeidx select 0, [_wp_array select _wp_ran], _trg_center, _typeidx select 1, ""guardstatic"",d_enemy_side,_agrp,-1.111] execVM ""x_scripts\x_makegroup.sqf"";_wp_array set [_wp_ran, ""X_RM_ME""];_wp_array = _wp_array - [""X_RM_ME""];sleep 1.123;};};",_typeidx select 0];
 };
-
 
 // create common group of static weapons: mg, at, aa, canons etc
 //while {!can_create_group} do {sleep 0.1 + random (0.2)}; //__WaitForGroup
@@ -175,7 +189,7 @@ _array_veh = _trg_center nearObjects ["StaticWeapon", _radius + 50];
 	_array_veh set[ _i, typeOf (_array_veh select _i) ];
 };
  */
-hint localize format[ "x_createguardpatrolgroups.sqf: StaticWeapon men %1, drivers %5, vecs analized %2, vecs found %3, job list %4", count units _grp, count _array, count _array_veh, _type_list_guard_static2, _driver_cnt ];
+hint localize format[ "+++ x_createguardpatrolgroups.sqf: StaticWeapon men %1, drivers %5, vecs analized %2, vecs found %3, job list %4", count units _grp, count _array, count _array_veh, _type_list_guard_static2, _driver_cnt ];
 _array = [];
 #endif
 

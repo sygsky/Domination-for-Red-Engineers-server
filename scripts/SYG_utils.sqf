@@ -299,7 +299,7 @@ SYG_findAndAssignAsCargo = {
 		for "_i" from 0 to count _vecs - 1 do
 		{
 			_x = _vecs select _i;
-			if ( !canMove _x OR isNull driver _x ) then {_vecs set [_i, "RM_ME"]};
+			if ( !(canMove _x) || (isNull driver _x) || ((_x emptyPositions "Cargo") <= 0) )  then {_vecs set [_i, "RM_ME"]};
 		};
 		_vecs = _vecs - ["RM_ME"];
 		if ( count _vecs > 0 ) then
@@ -311,7 +311,7 @@ SYG_findAndAssignAsCargo = {
 				if ( !alive _x ) then { _feetmen1 set [_i, "RM_ME"] }
 				else
 				{ 
-					if ( (_x call SYG_ACEUnitUnconscious) OR (!isNull assignedVehicle _x) ) then { _feetmen1 set [_i, "RM_ME"] }; 
+					if ( (_x call SYG_ACEUnitUnconscious) || (!isNull assignedVehicle _x) ) then { _feetmen1 set [_i, "RM_ME"] };
 				};
 			};
 			_feetmen1 = _feetmen1 - ["RM_ME"];
@@ -321,7 +321,7 @@ SYG_findAndAssignAsCargo = {
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
 				hint localize format["%1 SYG_findAndAssignAsCargo: reassigning to cargo %2 men with patrol vecs %3",call SYG_nowToStr,_feetmen1, _vecs];
 #endif								
-				while { (count _vecs > 0) AND (count _feetmen1) > 0 } do
+				while { (count _vecs > 0) || (count _feetmen1) > 0 } do
 				{
 					// find suitable vehicle with free cargo space,
 					_reta = [_feetmen1 select 0, _vecs, DEFAULT_GROUP_SEARCH_RADIUS] call SYG_findVehWithFreeCargo;
@@ -349,7 +349,7 @@ SYG_findAndAssignAsCargo = {
 					hint localize format["%4 SYG_findAndAssignAsCargo: %1 assignedToCargo %2 (%3) dist %5",_assigned, typeOf _veh, _veh, call SYG_nowToStr, _veh distance (_assigned select 0)];
 #endif
 
-				}; // while { (count _vecs > 0) AND (count _feetmen1) > 0 } do
+				}; // while { (count _vecs > 0) || (count _feetmen1) > 0 } do
 			}; // if ( count _feetmen1 > 0 ) then
 		}; // if ( count _vecs > 0 ) then 
 	};
@@ -380,7 +380,7 @@ SYG_vehIsUpsideDown = {
 			{
 				_angle=(_vUp select 2) atan2 _l;
 				if( _angle < 30 ) then {true} else{false};
-			} else {false}; // standing in good posiition
+			} else {false}; // standing in good position
 		};
 	}
 	else{false};
@@ -406,14 +406,14 @@ SYG_getAllConsciousUnits = {
 };
 
 // Make officer to be the leader of this units group
-// call: _officer = ["SquareLeaderW", _grp|_unit] call Syg_ensureOfficerInGroup;
+// call: _officer = ["SquareLeaderW", _grp|_unit] call SYG_ensureOfficerInGroup;
 //
-Syg_ensureOfficerInGroup = {
+SYG_ensureOfficerInGroup = {
     private ["_officer","_grp"];
     _grp     = grpNull;
     _officer = arg(0);
-    if ( typeName _officer != "STRING") exitWith {hint localize format["--- Syg_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not string type: %1", _this];};
-    if ( !(_officer isKindOf "Man")) exitWith { hint localize format["--- Syg_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not kind of ""Man"": %1", _this];};
+    if ( typeName _officer != "STRING") exitWith {hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not string type: %1", _this];};
+    if ( !(_officer isKindOf "Man")) exitWith { hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not kind of ""Man"": %1", _this];};
 
     _grp     = arg(1);
     switch (typeName _grp) do
@@ -423,7 +423,7 @@ Syg_ensureOfficerInGroup = {
         default {_grp = grpNull;};
     };
 
-    if (isNull _grp) exitWith {hint localize format["--- Syg_ensureOfficerInGroup -> Expected argument [..., _grp] is illegal: %1", _this];};
+    if (isNull _grp) exitWith {hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [..., _grp] is illegal: %1", _this];};
     _units = units _grp;
     // 1. check if leader is already officer
     if (leader _grp isKindOf _officer ) exitWith { leader _grp }; // found as leader
@@ -440,14 +440,42 @@ Syg_ensureOfficerInGroup = {
     if ( typeName _officer == "OBJECT") exitWith { _officer }; // found in group and selected as leader
 
     // add absent officer to the group now
-    _officer = _grp createUnit [_officer, getPos (leader _grp), [], 10, "NONE"];
+    _officer = _grp createUnit [_officer, getPos (leader _grp), [], 10, "FORM"];
     [_officer] join _grp;
-    sleep 0.3;
+    sleep 0.1;
     (leader _grp) setRank "PRIVATE";
      _grp selectLeader _officer;
     _officer setRank "LIEUTENANT";
     _officer
 };
 
+/**
+  * Detects if desigmated group belongs tp patrol or convoy group
+  * call: _isPatrolGrp = _grp call SYG_isPatrolGroup;
+ */
+SYG_isPatrolGroup = {
+    if ( typeName _this ==  "OBJECT") then
+    {
+        if ( _this isKindOf "Man") exitWith { _this = group _this };
+        if ( _this isKindOf "AllVehicles" ) exitWith {
+            {
+                if ( alive _x) exitWith { _this = group _x };
+            }forEach crew _this;
+        };
+    };
+
+    if (typeOf _this != "GROUP") exitWith { false };
+
+    // check to be any of active patrol group
+    scopeName "main";
+    _ret = false;
+    {
+        _grp = _x select 0; // group has offset 0 in patrol array
+        if ( !isNull _grp) then {
+            if ( _this == _grp) then {_ret = true; breakTo "main"};
+        }
+    } forEach SYG_isle_grps;
+    _ret
+};
 
 if (true) exitWith {};

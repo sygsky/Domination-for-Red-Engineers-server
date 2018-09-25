@@ -37,6 +37,38 @@ XfRandomIndexArray = {
 	_ran_array
 };
 
+/**
+ * Creates an array with count random indexes so then some imdexes are mandatory and some are optional, designated through predefined array
+ * Params:  _inds = [ _out_cnt, _cnt, _important_arr, _unimportant_arr ] call XfRandomIndexArrayWithPredefVals;
+ * where: _pre_arr - array with predefined indexes may be excluded in resulting array,
+ * e.g. to work with target_names(defined in i_common.sqf) so that exclude som small towns,
+ * use [count target_names, 22, [18,21,22,23,24,25,26,27]] call  XfRandomIndexArrayWithPredefVals to return 22 town indexes
+ * excluding some of array [18,21,22,23,24,25,26,27]
+ * Returns: array with _cnt indexes in range [0.._ind_max] excluding some (or all) of indexes stored in _pre_arr. Of course
+ * input named arrays must contain only indexes in range [0..(_cnt-1)]
+ */
+XfIndexArrayWithPredefVals = {
+    private ["_unimportantArr","_cnt","_outCnt","_arrIn"];
+    _unimportantArr    = _this select 3; // unimportant town indexes, may be skipped from result list
+    _importantArr      = _this select 2; // importan town indexe, must present in result
+    _cnt               = _this select 1; // sequenced indexes length
+    _outCnt            = _this select 0; // number of indexes in resulting array
+
+    _arrIn = [];
+
+    for "_i" from 0 to _cnt - 1 do { _arrIn = _arrIn + [_i]};
+
+    _arrIn = _arrIn - _importantArr -_unimportantArr; // remove predefined indexes to create imntermediate list
+
+    _importantArr  = _importantArr call XfRandomArray;
+    _arrIn = _arrIn call XfRandomArray;
+    _unimportantArr = _unimportantArr call XfRandomArray;
+
+    _arrIn = _importantArr + _arrIn + _unimportantArr ;
+    _arrIn resize _outCnt;
+    _arrIn call XfRandomArray
+};
+
 // #########################################
 
 // converts a bit array to an integer number

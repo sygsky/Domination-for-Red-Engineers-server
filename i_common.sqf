@@ -19,12 +19,13 @@ if (number_targets >= 50) then {
 			case 70: {6};
 			case 80: {6};
 			case 90: {22};
+			case 91: {8};
 			default {22};
 		}
 	);
 	number_targets = _h;
 };
-
+hint localize format["+++ number_targets %1", number_targets];
 #ifndef __WITH_GRASS_AT_START__
 setTerrainGrid 50;
 #endif
@@ -162,50 +163,58 @@ target_names =
 	#endif
 	#ifdef __DEFAULT__
 	[
-		[[9349,5893,0],"Cayo", 210, 2],        // 0
-		[[10693,4973,0],"Iguana", 270, 3],     // 1
-		[[7613,6424,0],"Arcadia", 235, 4],     // 2
-		[[8262,9017,0],"Chantico", 180, 5],    // 3
-		[[9170,8309,0],"Somato", 230, 6],      // 4
-//		[[10580.1,9430.44,0],"Paraiso", 300, 7],
-		[[10550,9375,0],"Paraiso", 405, 7],    // 5
-		[[12399,7141,0],"Ortego",280, 8],      // 6 *
-//		[[11452,6075.97,0],"Dolores",300, 9],
-		[[11450,6026,0],"Dolores",350, 9],     // 7
-//		[[13351.8,8937.45,0],"Corazol",300, 10], // 8
-		[[13302,8937,0],"Corazol",450, 10],    // 8
-		[[14470,10774,0],"Obregan",240, 11],   // 9
-		[[13172,11320,0],"Mercalillo",210, 12],// 10
-//		[[14232.7,12525,0],"Bagango",230,  13],
-		[[14233,12545,0],"Bagango",350, 13],   // 11
-		[[17271,14193,0],"Masbete",180, 14],   // 12
-		[[18984,13764,0],"Pita",250, 15],      // 13
-		[[12508,15004,0],"Eponia",270, 16],    // 14
-		[[16596,9358,0],"Everon",200, 17],     // 15
-		[[9773,14436,0],"Pacamac",150, 18],    // 16
-		[[7722,15802,0],"Hunapu",150, 19],     // 17
-//		[[10593,16194,0],"Mataredo",150, 20],  // 18
-		[[12387,13388,0],"Carmen",200, 21],    // 19
-		[[2826,2891,0],"Rahmadi",180, 22],     // 20
-//		[[14444,8554,0],"Gaula",180, 23],      // 22
-		[[6850,8069,0],"Estrella",200, 24],    // 23
-		[[15404,13829,0],"Benoma",279, 25]     // 24
-//		[[9321,5275,0],"Tiberia",300, 26]       // 25
+		[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
+		[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
+		[[7613,6424,0],   "Arcadia"   ,235, 4],  //  2
+		[[8262,9017,0],   "Chantico"  ,180, 5],  //  3
+		[[9170,8309,0],   "Somato"    ,230, 6],  //  4
+		[[10550,9375,0],  "Paraiso"   ,405, 7],  //  5 * for big town
+		[[12399,7141,0],  "Ortego"    ,280, 8],  //  6 *
+		[[11450,6026,0],  "Dolores"   ,350, 9],  //  7 *
+		[[13302,8937,0],  "Corazol"   ,450, 10], //  8 *
+		[[14470,10774,0], "Obregan"   ,240, 11], //  9
+		[[13172,11320,0], "Mercalillo",210, 12], // 10
+		[[14233,12545,0], "Bagango"   ,350, 13], // 11 *
+		[[17271,14193,0], "Masbete"   ,180, 14], // 12
+		[[18984,13764,0], "Pita"      ,250, 15], // 13
+		[[12508,15004,0], "Eponia"    ,270, 16], // 14
+		[[16596,9358,0],  "Everon"    ,200, 17], // 15
+		[[9773,14436,0],  "Pacamac"   ,150, 18], // 16
+		[[7722,15802,0],  "Hunapu"    ,150, 19], // 17
+		[[10593,16194,0], "Mataredo"  ,150, 20], // 18 - for small town
+		[[12387,13388,0], "Carmen"    ,200, 21], // 19
+		[[2826,2891,0],   "Rahmadi"   ,180, 22], // 20
+		[[14444,8554,0],  "Gaula"     ,180, 23], // 21 -
+		[[6850,8069,0],   "Estrella"  ,200, 24], // 22 -
+		[[15404,13829,0], "Benoma"    ,279, 25], // 23 -
+		[[9321,5275,0],   "Tiberia"   ,279, 26], // 24 -
+        [[14351,9461,0],  "Modesta"   ,279, 27], // 25 -
+		[[11502.5,9152,0],"Corinto"   ,200, 28], // 26 -
+		[[8868,7907,0],   "Gulan"     ,220, 29]  // 27 -
+
 	];
 	#endif
 
-#ifdef __DEFAULT__
-d_mountine_towns = ["Hunapu","Pacamac","Masbete","Benoma"];
-#endif
-	
 big_town_radious = 280; // if town radious >= this number, town is considered as big one, else as small
-	
+
+#ifdef __DEFAULT__
+
+d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma" ];
+
+// Small towns indexes. Can be absent from list when playing not maximum number of towns
+d_big_towns_inds = [5,6,7,8,11];
+
+// Small towns indexes. Can be absent from list when playing not maximum number of towns
+d_small_towns_inds = [18,21,22,23,24,25,26,27];
+
+#endif
+
 //for "_xxxxx" from 2 to ((count target_names) + 1) do { // hide all town markers from the map
 // FIXME: hidden all [unresoved] items
 //_list = [];
 
-// hide all possible town markers from the map
-for "_xxxxx" from ((target_names select 0) select 3) to 30 /*((target_names select ((count target_names) - 1)) select 3)*/ do {
+// hide all available [town] markers from the map. Max set to 30, if your marker count exceeds 30, increase max above 30
+for "_xxxxx" from ((target_names select 0) select 3) to 35 /*((target_names select ((count target_names) - 1)) select 3)*/ do {
 //	call compile format ["""%1"" objStatus ""HIDDEN"";", (target_names select _xxxxx) select 3];
 //	_list = _list + [(target_names select _xxxxx) select 3];
     (str _xxxxx) objStatus "HIDDEN";
@@ -415,20 +424,44 @@ sm_bonus_vehicle_array = (
 			} else {
 				if (__ACEVer) then {
 [
-"ACE_BRDM2_ATGM",	// 0-13 (14 vehicles total)
-"ACE_BRDM2",	    // 1
-"ACE_T64_BV",	    // 2
-"ACE_UAZ_MG",       // 3
-"ACE_UAZ_AGS30",    // 4
-"ACE_BMP2_D",       // 5
-"ACE_T55_AMV",      // 6
-"ACE_BRDM2_ATGM",	// 7
-"ACE_BMP3_M",       // 8
-"ACE_BRDM2_SA9",    // 9
-"ACE_BMP1_D",       // 10
-"ACE_BMD1p",        // 11
-"ACE_T80_U",        // 12
-"ACE_T72_BM"        // 13
+"ACE_UAZ_MG",       // 0
+"ACE_UAZ_MG",       // 1
+"ACE_UAZ_AGS30",    // 2
+
+"ACE_BRDM2",	    // 3
+"ACE_BRDM2_ATGM",	// 4 (vehicles total)
+"ACE_BRDM2_ATGM",	// 5
+"ACE_BRDM2_SA9",    // 6
+
+"ACE_BMP1",         // 7
+"ACE_BMP1_D",       // 8
+"ACE_BMP1_P",
+
+"ACE_BMP2_D",       // 9
+"ACE_BMP2_K",       // 10
+
+//"ACE_BMD1",         // 11
+//"ACE_BMD1p",        // 12
+
+"ACE_T55_A",        // 11
+"ACE_T55_AM",       // 12
+
+"ACE_T62_MK",       // 13
+"ACE_T62_MV",       // 14
+
+"ACE_T64_B",        // 15
+"ACE_T64_BK",       // 16
+
+"ACE_T72_B",        // 17
+"ACE_T72_BK",       // 18
+
+"ACE_T80_B",        // 19
+"ACE_T80_BK",       // 20
+"ACE_T80_BV",       // 21
+"ACE_T80_BVK",      // 22
+"ACE_T80_U",        // 23
+"ACE_BMP2_K"        // 24
+
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -441,6 +474,8 @@ sm_bonus_vehicle_array = (
 	["A10","AH1W","AH6","AV8B","AV8B2","UH60","Vulcan"]
 #endif
 );
+sm_bonus_params = [sm_bonus_vehicle_array, [], sm_bonus_vehicle_array];
+
 //hint localize format["sm_bonus_vehicle_array=%1", sm_bonus_vehicle_array];
 mt_bonus_vehicle_array = (
 #ifdef __SCHMALFELDEN__
@@ -473,35 +508,29 @@ mt_bonus_vehicle_array = (
 			} else {
 				if (__ACEVer) then {
 [
-"ACE_BMP3_M", 		    // 1 - ordinal vehicles list
-"ACE_T80_UM",     		// 2
-"ACE_ZSU",   			// 3
-"ACE_T90A", 			// 4
-"ACE_ZSU",  			// 5
-"ACE_KA52",  			// 6
-"ACE_BMP3_M",   		// 7
-"ACE_BRDM2_SA9", 		// 8
-"ACE_BMP3_M",   		// 9
-"ACE_Tunguska",			//10
-"ACE_Tunguska",			//11
-"ACE_BRDM2_SA9",   		//12 - last bonus land vehicle
-"ACE_ZSU",          	//13 - first bonus air vehicle
-"ACE_Mi24V", 			//14
-"ACE_Mi17", 		    //15
-"ACE_Mi24P",	        //16
-"ACE_Su27S", 			//17
-"ACE_Su30Mk_R27_R73",	//18
-"ACE_Su34",     	    //19
-"ACE_Su34B",            //20
+"ACE_BRDM2_SA9", 		 // 0
+"ACE_BRDM2_ATGM",        // 1
 
-"ACE_Ka50", 		    //21 - first big bonus vehicle (heli + plane)
-"ACE_Ka50_N", 	        //22
+"ACE_BMP3",
+"ACE_BMP3_M", 		    // 2 - ordinal vehicles list
 
-"ACE_Su30Mk_Kh29T",     //23
-"ACE_Su30Mk_KAB500KR",  //24
-"ACE_T90A"             //25
-]
-				} else {
+"ACE_ZSU",          	// 3
+"ACE_Tunguska",			// 4
+
+"ACE_T55_AMV",          // 5
+"ACE_T64_BV",			// 6
+"ACE_T72_BM", 			// 7
+"ACE_T80_UM",     		// 8
+"ACE_T80_B",   			// 9
+
+"ACE_Mi24D", 			//10
+"ACE_Mi24V",     	    //11
+"ACE_Mi24P",	        //12
+"ACE_KA52",  			//13
+"ACE_Mi17", 		    //14
+"ACE_Su30Mk_R27_R73",	//15
+"ACE_Su34B"             //16
+];				} else {
 					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
 				}
 			}
@@ -514,7 +543,23 @@ mt_bonus_vehicle_array = (
 );
 
 #ifdef __DEFAULT__
-big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good air vehicle (helis + jets)
+
+mt_small_bonus_vehicle_array = + mt_bonus_vehicle_array;
+mt_big_bonus_vehicle_array = [
+"ACE_Ka50", 		    // 0 - first big bonus vehicle (heli + plane + big tank)
+"ACE_Ka50_N", 	        // 1
+"ACE_Su30Mk_Kh29T",     // 2
+"ACE_Su30Mk_KAB500KR",  // 3
+"ACE_T90_K", 			// 4
+"ACE_T90A"              // 5
+];
+
+mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
+
+mt_small_bonus_params     = [mt_small_bonus_vehicle_array, [], mt_bonus_vehicle_array];
+mt_big_bonus_params = [mt_big_bonus_vehicle_array, [], mt_bonus_vehicle_array];
+
+//big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle
 #endif
 
@@ -830,8 +875,8 @@ d_base_patrol_array =
 
 d_base_patrol_fires_array = 
 [
- [9624,10293,0],[10081,10261,0], // nother fires (slope to shore)
- [9084,10006,0], // weatern fire at a pit
+ [9624,10293,0],[10081,10261,0], // northe fires (slope to shore)
+ [9084,10006,0], // west fire at a pit
  [9453,9868,0],  // main yard fire
  [9899,9697,0],	// east to yard fire
  [10231,9910,0] // nearest to Paraiso fire
@@ -869,13 +914,14 @@ ClearMagazineCargo MEDIC_TENT2;
 //+++ Sygsky: added on heli wind effect. Set to false if wind effect is not desired
 d_with_wind_effect = true;
 
-// list of big heli for WEST with ACE
+// list of strong heli for WEST with ACE
 SYG_HELI_BIG_LIST_ACE_W =
-    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I","ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",
-     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE","ACE_AH64_HE_F",/*"ACE_AH64_AGM_AIM",*/"ACE_AH64_AGM_HE",
-     "ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
-// list of big heli for WEST with ACE
-SYG_HELI_LITTLE_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_AH6_AGM"];
+    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I",/*"ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",*/
+     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE",
+     "ACE_AH64_HE_F","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
+// list of weak heli for WEST with ACE
+SYG_SMALL_HELI_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_AH6_AGM"];
+SYG_HELI_LITTLE_LIST_ACE_W = SYG_SMALL_HELI_LIST_ACE_W + ["ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_UH60MG_M2"];
 
 #endif
 
@@ -884,7 +930,9 @@ d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE",
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Array of all global variables, see "global_vars.sqf" for each variable offset defines
 //
-global_vars = [];
+if ( isNil "global_vars" ) then { global_vars = []; };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Special fund to accumulate non-engineers score subracted when repairing damaged vehicles
+if ( isNil "SYG_engineering_fund") then { SYG_engineering_fund = 0;};
 hint localize format["i_common.date = %1", date];

@@ -73,12 +73,12 @@ _ctrl ctrlSetText str(d_points_needed select 5);
 
 _ctrl = _XD_display displayCtrl 2007;
 
-_str = format[localize "STR_SYS_254", d_own_side,d_enemy_side,getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
+_strYes = localize "STR_SYS_400";   // "Yes\n"
+_strYes1 = localize "STR_SYS_400_1";// "Yes"
+_strNo = localize "STR_SYS_401";    // "No\n"
+_strNo1 = localize "STR_SYS_401_1"; // "No"
 
-_strYes = localize "STR_SYS_400";
-_strYes1 = localize "STR_SYS_400_1";
-_strNo = localize "STR_SYS_401";
-_strNo1 = localize "STR_SYS_401_1";
+_str = format[localize "STR_SYS_254", d_own_side,d_enemy_side,getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
 
 if (__ACEVer || __CSLAVer) then {
 	if (__ACEVer) then {
@@ -88,7 +88,7 @@ if (__ACEVer || __CSLAVer) then {
 	};
 };
 
-_str = _str + (localize "STR_SET_2")/* "С АИ" */ + ": ";
+_str = _str + ". " + (localize "STR_SET_2")/* "С АИ" */ + ": ";
 #ifdef __AI__
 _str = _str + _strYes1; //"Да"
 #else
@@ -101,6 +101,75 @@ _str = _str + _strYes;
 #else
 _str = _str + _strNo;
 #endif
+
+//+++ 11-JUN-2018
+_str = _str + (localize "STR_SET_5")/* Javelin" */ + ": ";
+#ifdef __JAVELIN__
+_str = _str + _strYes;
+#else
+_str = _str + _strNo;
+#endif
+
+
+_str = _str + (localize "STR_SET_6") + ": "; // "Simple side missions at the beginning"
+#ifdef __EASY_SM_GO_FIRST__
+_str = _str + _strYes;
+#else
+_str = _str + _strNo;
+#endif
+
+_str = _str + (localize "STR_SET_7") + ": "; // "Light vehicle[s] at the base in the beginning"
+#ifdef __ADDITIONAL_BASE_VEHICLES__
+_str = _str + _strYes;
+#else
+_str = _str + _strNo;
+#endif
+
+// Engineering Fund
+_str = _str + (localize "STR_SYS_137_5") + ": "; // "The Engineering Fund"
+#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+_str = _str + format["%1",SYG_engineering_fund] + "\n";
+#else
+_str = _str + _strNo;
+#endif
+
+_str = _str +
+#ifdef __ADD_SCORE_FOR_FACTORY_SUPPORT__
+format[localize "STR_SET_12",__ADD_SCORE_FOR_FACTORY_SUPPORT__ ]  // "Score added for service support "
+#else
+format[localize "STR_SET_12_1",d_ranked_a select 20] // "Score subrtracted for service support"
+#endif
+ + "\n";
+
+_str = _str + (localize "STR_SET_8") ; // "Mandatory side missions"
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
+_str = _str +  format[localize "STR_SET_8_1", __SIDE_MISSION_PER_MAIN_TARGET_COUNT__] + "\n";
+#else
+_str = _str + ": " + _strNo;
+#endif
+
+_str = _str + (localize "STR_SET_9") + ": "; // "Teleport works only when all services on the base are available"
+#ifdef __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
+_str = _str + _strYes;
+#else
+_str = _str + _strNo;
+#endif
+
+_str = _str + (localize "STR_SET_10") ; // "Jail"
+#ifdef __JAIL_MAX_SCORE__
+_str = _str + format[localize "STR_SET_10_1",__JAIL_MAX_SCORE__] + "\n";
+#else
+_str = _str + ": " + _strNo;
+#endif
+
+_str = _str + (localize "STR_SET_11") + ": "; // "Clone RPG missiles"
+#ifndef __NO_RPG_CLONING__
+_str = _str + _strYes;
+#else
+_str = _str + ": " + _strNo;
+#endif
+
+//---
 
 _str = _str + (localize "STR_SET_4")/* "С возможность оживлять" */+": ";
 #ifdef __REVIVE__

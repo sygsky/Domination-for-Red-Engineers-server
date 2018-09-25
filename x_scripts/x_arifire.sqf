@@ -19,8 +19,13 @@ ari_available = false;
 switch (ari_type) do {
 	case "flare": {
 		_number_shells = 18;
+#ifdef __ACE__
+        _height = 450;
+        _type = "ACE_Flare_Arty_White";
+#else
         _height = 350;
         _type = "F_40mm_White";
+#endif
         _radius = 300;
         _arix = getPos AriTarget select 0;
         _ariy = getPos AriTarget select 1;
@@ -54,7 +59,7 @@ switch (ari_type) do {
 	};
 };
 
-sleep 12.25 + (random 7);
+sleep (12.25 + (random 7));
 
 if (ari_type != "flare") then {
     _center_x = getPos AriTarget select 0;
@@ -78,15 +83,16 @@ for "_series" from 1 to ari_salvos do {
 	while {count _wp_array < _number_shells} do {	
 		if (ari_type == "flare") then {
 			{
-				_x1 = (_x select 0) - 20 + random 40; //No need for circular randomness
+				_x1 = (_x select 0) - 20 + random 40; // No need for circular randomness
 				_y1 = (_x select 1) - 20 + random 40;
 				_wp_array = _wp_array + [[_x1, _y1, _height + random 10]];
 				sleep 0.0153;
 			} forEach [_posf, _posb, _posl, _posr];
 		} else {
 			_angle = floor random 360;
-			_x1 = _center_x - ((random _radius) * sin _angle);
-			_y1 = _center_y - ((random _radius) * cos _angle);
+			_randrad = _radius call XfRndRadious; // correct random distribution
+			_x1 = _center_x - (_randrad * sin _angle);
+			_y1 = _center_y - (_randrad * cos _angle);
 			_wp_array = _wp_array + [[_x1, _y1, (if (ari_type == "he") then {_height + random 50} else {_height})]];
 			sleep 0.0153; // 0.2
 		};
@@ -100,13 +106,13 @@ for "_series" from 1 to ari_salvos do {
 	switch (ari_type) do {
 		case "flare": {
 			sleep 1;
-			_strenght = 8; //Use this until we get flares with proper arty brightness. Maybe ACE can provide such flares for this use?
+			_strenght = 8; // Use this until we get flares with proper arty brightness. Maybe ACE can provide such flares for this use?
 			for "_i" from 0 to (_number_shells-1) do {
 				for "_j" from 0 to (_strenght-1) do {
 					_type createVehicle [(_wp_array select _i) select 0, (_wp_array select _i) select 1, ((_wp_array select _i) select 2)-_j/100];
 					sleep 0.002;
 				};
-				if (((_i+1) % 4 == 0) && (_i > 1)) then {sleep 18 + (ceil random 5)} else {sleep 0.5 + random 1.5};
+				if (((_i+1) % 4 == 0) && (_i > 1)) then {sleep (18 + (ceil random 5))} else {sleep (0.5 + (random 1.5))};
 			};
 		};
 		case "he": {
@@ -122,7 +128,7 @@ for "_series" from 1 to ari_salvos do {
 			_enemy_units = _enemy_units - ["X_RM_ME"];
 			for "_i" from 0 to (_number_shells - 1) do {
 				_type createVehicle (_wp_array select _i);
-				sleep 0.923 + (random 2);
+				sleep (0.923 + (random 2));
 			};
 		};
 		case "smoke": {
@@ -137,7 +143,7 @@ for "_series" from 1 to ari_salvos do {
 				};
 				#endif
 				_xo = ceil random 10;
-				sleep 0.923 + (_xo / 10);
+				sleep (0.923 + (_xo / 10));
 			};
 		};
 		case "dpicm": {
@@ -160,7 +166,7 @@ for "_series" from 1 to ari_salvos do {
 			for "_i" from 0 to (_number_shells - 1) do {
 				_type createVehicle (_wp_array select _i);
 				_xo = ceil random 10;
-				sleep 0.223 + (_xo / 10);
+				sleep (0.223 + (_xo / 10));
 			};
 			sleep 2.132;
 			deleteVehicle _pod;

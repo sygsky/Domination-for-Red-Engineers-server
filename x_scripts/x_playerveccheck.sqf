@@ -16,7 +16,7 @@ if (!XClient) exitWith {};
 #include "x_setup.sqf"
 
 #define __CHK_WPN_ON_VEC__
-//#define __DEBUG_PRINT__
+#define __DEBUG_PRINT__
 
 private ["_vec", "_not_allowed", "_needed_rank", "_index"];
 
@@ -30,6 +30,7 @@ while {true} do {
 	_needed_rank = "";
 	_cargo = false;
 	_role = "";
+	_index = 0;
 	
 	//+++ Sygsky:
 	_role_arr = assignedVehicleRole player;
@@ -47,7 +48,7 @@ while {true} do {
 	if ( _player_not_GRU ) then
 	{
 		#ifndef __TT__
-		if (!((_vec in [HR1,HR2,HR3,HR4,MRR1,MRR2]) OR _cargo) ) then
+		if (!((_vec in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo) ) then
 		#else
 		if (!(_vec in [HR1,HR2,HR3,HR4,MRR1,MRR2,HRR1,HRR2,HRR3,HRR4,MRRR1,MRRR2])) then
 		#endif
@@ -59,8 +60,8 @@ while {true} do {
 			_indexheli = (toUpper (_vrs select 2)) call XGetRankIndex; // heli
 			_indexplane = (toUpper (_vrs select 3)) call XGetRankIndex; // plane
 			if (_vec isKindOf "LandVehicle") then {
-				if ( _vec isKindOf "BMP2" || _vec isKindOf "M113" || _vec isKindOf "Vulcan" OR _vec isKindOf "StrykerBase") then {
-				    if (!(_vec isKindOf "StrykerBase")) then // play light armour entering sound
+				if ( _vec isKindOf "BMP2" || _vec isKindOf "M113" || _vec isKindOf "Vulcan" || _vec isKindOf "StrykerBase" || _vec isKindOf "BRDM2") then {
+				    if (!(_vec isKindOf "StrykerBase" || _vec isKindOf "BRDM2")) then // play light tracked armour entering sound
 				    {
     				    _vec say "APC_GetIn";
 				    };
@@ -92,7 +93,7 @@ while {true} do {
 							};
 						};
 					} else {
-						if (_vec isKindOf "Plane" AND (typeOf _vec != "RAS_Parachute")) then {
+						if (_vec isKindOf "Plane" && (typeOf _vec != "RAS_Parachute")) then {
 							if (_index < _indexplane) then {
 								_not_allowed = true;
 								_needed_rank = (_vrs select 3);
@@ -117,7 +118,7 @@ while {true} do {
 			hint localize format["x_playerveccheck.sqf: bulky weapon is ""%1""",_bulky_weapon];
 		};
 #endif
-		while { (_cargo OR ((!_not_allowed) AND (_bulky_weapon == "") ) ) AND (vehicle player != player) } do 
+		while { _cargo || ((((!_not_allowed) && (_bulky_weapon == "") ) ) && (vehicle player != player)) } do
 		{	
 			sleep 0.666; 
 			_role_arr = assignedVehicleRole player; 
@@ -133,10 +134,10 @@ while {true} do {
 	else // player is the GRU agent, check his options
 	{
 		// check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
-		_not_allowed =  !(_vec isKindOf "Motorcycle" OR _vec isKindOf "ACE_ATV_HondaR" OR _vec isKindOf "Truck5t" OR _vec isKindOf "Ural" OR _vec isKindOf "Zodiac");
+		_not_allowed =  !(_vec isKindOf "Motorcycle" || _vec isKindOf "ACE_ATV_HondaR" || _vec isKindOf "Truck5t" || _vec isKindOf "Ural" || _vec isKindOf "Zodiac");
 	};
 	
-	if ( _not_allowed OR (_bulky_weapon != "") ) then 
+	if ( _not_allowed || (_bulky_weapon != "") ) then 
 	{
 		player action[ "Eject",_vec ];
 		_attempts_count = _attempts_count + 1;
@@ -150,6 +151,7 @@ while {true} do {
 			{
 				// "Ваше звание: %1. Вам не позволено использовать %3.\n\nТребуемое звание: %2."
 				[format [localize "STR_SYS_252", toLower(((rank player) call XGetRankStringLocalized)), _needed_rank call XGetRankStringLocalized,[typeOf _vec,0] call XfGetDisplayName], "HQ"] call XHintChatMsg;
+				hint localize format["--- player with rank index %1 ejected from %2", _index, typeOf _vec];
 			}
 			else // bulky weapon
 			{

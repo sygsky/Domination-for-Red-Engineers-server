@@ -107,6 +107,7 @@ x_getunitliste = {
 	_grptype = _this select 0;_side = _this select 1;_unitliste = [];_vehiclename = "";_varray = [];
 	_side_char = (switch (_side) do {case "EAST": {"E"};case "WEST": {"W"};case "RACS": {"G"};case "CIV": {"W"};});
 	_crewmember = call compile format["d_crewman_%1",_side_char];
+
 	switch (_grptype) do {
 		case "basic": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list select (_list call XfRandomFloorArray));};
 		case "specops": {_how_many = 2 + ceil random 3; _list = call compile format ["d_specops_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
@@ -115,6 +116,7 @@ x_getunitliste = {
 		case "artiobserver": {_unitliste = [call compile format["d_arti_observer_%1",_side_char]];};
 		case "heli": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list call XfRandomArrayVal);};
 		case "tank": {call compile format ["_varray = (d_veh_a_%1 select 0);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
+		case "tank_desert": {call compile format ["_varray = d_veh_a_%1_desert;",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "bmp": {call compile format ["_varray = (d_veh_a_%1 select 1);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "brdm": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 2);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "shilka": {call compile format ["_varray = (d_veh_a_%1 select 3);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
@@ -135,6 +137,12 @@ x_getunitliste = {
 		case "airteam1": {_how_many = 6 + ceil random 6; _list = call compile format ["airbaseteam_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
 		case "airteam2": {_how_many = 1 + ceil random 3; _list = call compile format ["airbaseteam_pilots_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
 	};
+/*
+    if ( _grptype == "tank_desert") then
+    {
+        hint localize format["+++ x_getunitliste %1 return %2",_this, [_unitliste, _vehiclename, _crewmember]];
+    };
+*/
 	[_unitliste, _vehiclename, _crewmember]
 };
 
@@ -155,7 +163,7 @@ x_getmixedliste = {
 // TODO: test and use everywhere
 // Add all needed events to a newly created standard vehicle (for main/side mission action)
 //
-// call as: [_vehiсle, _do_points] call SYG_addEvents;
+// call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
 SYG_addEvents = {
     private ["_vehicle", "_do_points", "_static"];
     _vehicle   = arg(0);
@@ -166,15 +174,21 @@ SYG_addEvents = {
         if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked};
     };
 
-    if (d_smoke) then  {_vehicle call SYG_assignVecToSmokeOnHit;};
+    _smoke_veh = false;
+    if ( count _this > 2) then { _smoke_veh = _this select 2};
+    if (d_smoke && _smoke_veh) then  {_vehicle call SYG_assignVecToSmokeOnHit;};
 
+    // add wreckage restore option
     if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then
     {
             _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
             [_vehicle] call XAddCheckDead; // insert to dead vehicles list for follow handling and removing
     };
+
 #ifdef __TT__
-    _do_points = arg(1);
+    if (count _this > 1) then {_do_points = _this select 1}
+    else {_do_points = false};
+
     if (_do_points) then {_vehicle addEventHandler ["killed", {[5,arg(1)] call XAddKills}]};
 #endif
 
@@ -184,6 +198,25 @@ SYG_addEvents = {
     };
 #endif
 };
+
+// TODO: test and use everywhere
+// Add all needed events to a newly created standard vehicle (for main/side mission action)
+//
+// call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
+SYG_addEventsAndDispose = {
+    _this call SYG_addEvents;
+    _vehicle = arg(0);
+    // add dispose event
+    if ( (typeOf _vehicle) in x_heli_wreck_lift_types ) then // in any case add dispose option
+    {
+        hint localize format["+++SYG_addEventsAndDispose: %1", typeOf _vehicle];
+        _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
+        [_vehicle] call XAddCheckDead; // prepare to insert to dead vehicles list for follow handling and removing
+    };
+
+};
+
+
 
 // Makes enemy vehicles group
 x_makevgroup = {
@@ -389,12 +422,16 @@ XCreateInf = {
 XCreateArmor = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_type3", "_numbergroups3", "_pos_center", "_numvehicles", "_radius", "_do_patrol", "_ret_grps", "_side", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_vehicles", "_leader", "_grp_array"];
 	_type1 = _this select 0;
-	_numbergroups1 = _this select 1;
+ 	_numbergroups1 = _this select 1;
 	_type2 = _this select 2;
 	_numbergroups2 = _this select 3;
 	_type3 = _this select 4;
 	_numbergroups3 = _this select 5;
 	_pos_center = _this select 6;
+	_type1 = [_type1, _pos_center] call SYG_camouflageTank;
+	_type2 = [_type2, _pos_center] call SYG_camouflageTank;
+	_type3 = [_type3, _pos_center] call SYG_camouflageTank;
+
 	_numvehicles = _this select 7;
 	_radius = _this select 8;
 	_do_patrol = (if (count _this == 10) then {_this select 9} else {false});

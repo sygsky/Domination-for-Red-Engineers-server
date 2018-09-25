@@ -109,8 +109,8 @@ SYG_housePosCount = {
 // Where:
 //		_pos is a center position of search 
 //      _house_list is resulting array of buildings after call to nearestObjects [...,["House"],...]. No search will be produced, only filtering of this list
-//		_minPosCnt - minimal house positions number to take house into accounts, default 5
-//		_minSearchDist - minimal distance from center, default 100
+//		_minPosCnt - minimal house positions count to take house into accounts, default 3
+//		_minSearchDist - maximum distance from search point, default 100
 //		_spec_list - list of strings with prohibited house types filtered out (never used as result), default []
 //		_spec_list - list of _id of Arma map objects, used as params to call to _pos nearestObject _id, to be used except of call to nearestObjects, default []
 // returns: filtered in nearest house or objNull if no such one

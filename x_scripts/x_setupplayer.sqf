@@ -105,7 +105,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	_endtime = time + 60;
 	_equip = "";
 	// initial information on player connected
-	["d_p_a",name player,missionStart] call XSendNetStartScriptServer;
+	["d_p_a",name player,missionStart, localize "STR_LANG"] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
     _equip = "";
 #ifdef __DEBUG__
@@ -140,11 +140,11 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
             switch (d_own_side) do {
                 case "WEST": {
                     if (__ACEVer) then {
-                        _weapp = "ACE_M16A4";
-                        _magp = "ACE_30Rnd_556x45_B_Stanag";
+                        _weapp = ["P", "ACE_M16A4","ACE_30Rnd_556x45_B_Stanag",12];
+                        _magp = ["ACE_30Rnd_556x45_B_Stanag",6];
                     } else {
-                        _weapp = "M16A4";
-                        _magp = "30Rnd_556x45_Stanag";
+                        _weapp = ["P", "M16A4","30Rnd_556x45_Stanag",12];
+                        _magp = ["30Rnd_556x45_Stanag",6];
                     };
                 };
                 case "EAST": {
@@ -162,7 +162,13 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 case 1;
                                 case 2:
                                 {
-                                    if ((random 1) > 0.5) then {["P", "ACE_AK74", "ACE_45Rnd_545x39_BT_AK", 10]} else {["P", "ACE_AKM", "ACE_75Rnd_762x39_BT_AK", 5]}
+                                    if ((random 1) < 0.33) then {
+                                        ["P", "ACE_AK74", "ACE_45Rnd_545x39_BT_AK", 10]
+                                    }
+                                    else {
+                                        if ((random 1) < 0.66) then {["P", "ACE_AKM", "ACE_75Rnd_762x39_BT_AK", 5]}
+                                        else  {["P", "ACE_RPK47", "ACE_75Rnd_762x39_BT_AK", 5]}
+                                    }
                                 };
                                 case 3: {["P", "ACE_AKM_Cobra", "ACE_75Rnd_762x39_BT_AK", 5]}; // Lieutenant
                                 default
@@ -173,7 +179,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 
                             _mg    = switch _index do
                             {
-                                case 0: {["P", "ACE_RPK47", "ACE_40Rnd_762x39_BT_AK", 10]};
+                                case 0: {["P", "ACE_RPK47", "ACE_75Rnd_762x39_BT_AK", 5]};
                                 case 1: {["P", "ACE_RPK74", "ACE_45Rnd_545x39_BT_AK", 10]};
                                 case 2:
                                 {
@@ -195,7 +201,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             {
                                 case 0;
                                 case 1: {["P", "ACE_AKS74U", "ACE_45Rnd_545x39_BT_AK", 10]};
-                                case 2; //{["P", "ACE_AKS74USD", "ACE_45Rnd_545x39_BT_AK", 10]};
+                                case 2;
                                 case 3: {["P", "ACE_AKS74U_Cobra", "ACE_45Rnd_545x39_BT_AK", 10]};
                                 default {["P", "ACE_AKS74USD_Cobra", "ACE_45Rnd_545x39_BT_AK", 10]};
     //							default {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10]};
@@ -287,15 +293,17 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VL_PDM",1]];
                             };
                         };
+
                         if (toLower (name player) == "yeti") then
                         {
                             _magp = [];
                         };
+
                         [_p, _weapp] call SYG_armUnit;
                         //+++ Sygsky: add largest ACE rucksack and fill it with mags
                         _p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
                         _p setVariable ["ACE_Ruckmagazines", _magp];
-                        hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %4", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
+                        hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %5", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
                         //--- Sygsky
 
                     }
@@ -424,7 +432,7 @@ hint localize "+++ count resolved_targets > 0 +++";
         } else {
             [_target_name, _current_target_pos,"ELLIPSE",_color,[300,300]] call XfCreateMarkerLocal;
         };
-        call compile format ["""%1"" objStatus ""VISIBLE"";""%1"" objStatus ""%2"";", _target_array select 3,_objstatus];
+        call compile format ["""%1"" objStatus ""VISIBLE"";""%1"" objStatus ""%2"";", _target_array select 3,_objstatus]; // FIXME: replace "VISIBLE" with "ACTVE" may be?
     };
 #endif
 };
@@ -437,8 +445,8 @@ if (current_target_index != -1 && !target_clear) then {
 	_color = (if (current_target_index in resolved_targets) then {"ColorGreen"} else {"ColorRed"});
 	[_current_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
 	"dummy_marker" setMarkerPosLocal _current_target_pos;
-	"1" objStatus "DONE";
-	call compile format ["""%1"" objStatus ""VISIBLE"";", _target_array2 select 3];
+	"1" objStatus "DONE"; // airport at Paraiso
+	call compile format ["""%1"" objStatus ""VISIBLE"";", _target_array2 select 3]; // FIXME: replace "VISIBLE" with "ACTVE" may be?
 //	hint localize format["+++""%1"" objStatus ""VISIBLE"";", _target_array2 select 3]
 };
 
@@ -1146,12 +1154,12 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 #endif
 	d_eng_can_repfuel = true;
 	
-	#ifndef __TT__
+#ifndef __TT__
 	d_engineer_trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
-	d_engineer_trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
-	#endif
+	d_engineer_trigger setTriggerArea [d_base_array select 1, d_base_array select 2, d_base_array select 3, true];
+#endif
 	
-	#ifdef __TT__
+#ifdef __TT__
 	_dbase_a = (
 		if (playerSide == west) then {
 			d_base_array select 0
@@ -1161,31 +1169,35 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 	);
 	d_engineer_trigger = createTrigger["EmptyDetector" ,_dbase_a select 0];
 	d_engineer_trigger setTriggerArea [_dbase_a select 1, _dbase_a select 2, 0, false];
-	#endif
+#endif
 	
 	d_engineer_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", true];
-	d_engineer_trigger setTriggerStatements["!d_eng_can_repfuel && player in thislist", "d_eng_can_repfuel = true;(localize 'STR_SYS_229') call XfGlobalChat;", ""]; // 'Способность ремонтировать, заправлять технику восстановлена...'
+	d_engineer_trigger setTriggerStatements["!d_eng_can_repfuel && player in thislist", "d_eng_can_repfuel = true;(localize 'STR_SYS_229') call XfGlobalChat;", ""]; // "Engineer repair/refuel capability restored..."
 
-	#ifdef __RANKED__
+#ifdef __RANKED__
 	d_last_base_repair = -1;
-	#endif
+#endif
 
-    if (_string_player in d_is_engineer) then { // only for engineers!!!
-        _trigger = createTrigger["EmptyDetector" ,_pos];
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+    if (_string_player in d_is_engineer) then  // only for engineers in any case !!!
+    {
+#endif        _trigger = createTrigger["EmptyDetector" ,_pos];
         _trigger setTriggerArea [0, 0, 0, false];
         _trigger setTriggerActivation ["NONE", "PRESENT", true];
         _trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     };
+#endif
 
 	_trigger = createTrigger["EmptyDetector" ,_pos];
 	_trigger setTriggerArea [0, 0, 0, true];
 	_trigger setTriggerActivation ["NONE", "PRESENT", true];
-	#ifndef __ENGINEER_OLD__
+#ifndef __ENGINEER_OLD__
 	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_SYS_226', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"]; // 'Осмотреть технику', 'Починить/заправить технику' 
-	#endif
-	#ifdef __ENGINEER_OLD__
+#endif
+#ifdef __ENGINEER_OLD__
 	_trigger setTriggerStatements["call x_sfunc", "actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer_old.sqf',[],-1,false]", "player removeAction actionID2"]; //'Починить/заправить технику'
-	#endif
+#endif
 
 #ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
@@ -1454,7 +1466,9 @@ XFacAction = {
 	};
 };
 
+#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
+#endif
 	if (!isNull d_jet_service_fac && !d_jet_service_fac_rebuilding) then {
 		[0] spawn XFacAction;
 	};
@@ -1464,7 +1478,9 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	if (!isNull d_wreck_repair_fac && !d_wreck_repair_fac_rebuilding) then {
 		[2] spawn XFacAction;
 	};
+#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
 };
+#endif
 
 if (!isNull d_jet_service_fac && !d_jet_service_fac_rebuilding) then {
 	_element = d_aircraft_facs select 0;
@@ -1647,7 +1663,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	private ["_name"/* , "_identity" */, "_pos", "_target", "_targets","_var","_comp","_cnt"];
 	sleep random 2;
 	_name = name player;
-	["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
+	["d_p_varname",_name,str(player), localize "STR_LANG"] call XSendNetStartScriptServer;
 	
 /*
 	// try to set russian identity
@@ -1761,9 +1777,16 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 };
 #endif
 
+// #define __DEBUG_ADD_VEHICLES__
+
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley
-player setPos [14531,9930,0];
-player addScore (1000 - (score player));
+hint localize "__DEBUG_ADD_VEHICLES__";
+//player setPos [14531,9930,0];
+if ( score player < 1500 ) then
+{
+    player addScore (1500 - (score player));
+};
 #endif
+
 if (true) exitWith {};

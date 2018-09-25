@@ -1,4 +1,4 @@
-// by Xeno: x_repwreck.sqf, rebuild wreck vehicle
+// by Xeno: x_repwreck.sqf, rebuilds wreck vehicle, work only on server
 private ["_rep_station","_name","_types","_wreck","_type","_dpos","_ddir","_new_vec"];
 if (!isServer) exitWith {};
 
@@ -17,7 +17,7 @@ while {true} do {
 		if (X_MP) then {
 			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 		};
-		__DEBUG_NET("x_repwreck.sqf",(call XPlayersNumber))
+		//__DEBUG_NET("x_repwreck.sqf",(call XPlayersNumber))
 		sleep 2.432;
 		if (isNull d_wreck_repair_fac) then {
 			_wreck = [_rep_station,_types] call XGetWreck;
@@ -46,9 +46,9 @@ while {true} do {
 			_sleep_time = 240;
 		};
 	};
-	sleep 1 + random(1);
+	sleep (1 + random 1);
     //_new_vec say "horse"; //  whi-i-i-i-nn-y-i-i
-    ["say_sound", _new_vec, "horse"] call XSendNetStartScriptClient;
+    ["say_sound", _new_vec, "horse"] call XSendNetStartScriptClient; // set to all clients
 
 	sleep _sleep_time + (random 10);
 	_new_vec lock false;

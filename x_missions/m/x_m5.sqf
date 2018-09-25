@@ -9,7 +9,7 @@ private ["_vehicle"];
 x_sm_pos = [[10269.6,7353.71,0], [10268.4,7313.75,0]];  // index: 5,   King of Sedia at hotel in Vallejo
 x_sm_type = "normal"; // not "convoy"
 
-_new_pos_arr = [[10412.7,7732.9,0],[10329.0,7621.2],[10513.5,7834.5,0]];
+_new_pos_arr = [[10412.7,7732.9,0],[10329.0,7621.2,0],[10513.5,7834.5,0]];
 
 #ifdef __SMMISSIONS_MARKER__
 if (true) exitWith {};
@@ -28,12 +28,14 @@ if (isServer) then {
 	__WaitForGroup
 	__GetEGrp(_newgroup)
 
-	_nbuilding = nearestBuilding _poss; // hotel
+    hint localize format["+++ king hotel _poss %1", _poss];
+	_nbuilding = _poss nearestObject 172902; // hotel at vallejo
 	_king_id = [55,57,58,59,60,67,69,70,71,80,81,82,94,96,98,118,120,129,131,142,144,158,160,180,182,184,191,195,204,206,218,220,221,224]; // good pos for king
 	_pos_id = _king_id call XfRandomArrayVal; // pos id in hotel
 	_bpos = _nbuilding buildingPos _pos_id; // pos coordinate
 
 	king = _newgroup createUnit ["King", _bpos, [], 0, "FORM"];
+	king setPos _bpos;
     hint localize format["+++ king is at hotel pos %1", _pos_id];
 	[king] join _newgroup;
 
@@ -59,7 +61,6 @@ if (isServer) then {
 	_nbuilding = nearestBuilding king;
 	// these are hotel positions in rooms with no door !!!!
 	//_no_list = [86,87,88,89,148,149,150,151,177,178,179,188,189,190];//,200,201,202];//,210,211,212,213,215,216,217];//230,231,232,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,262,263,264,265];
-	//_no_list = [86,87,88,89,148,149,150,151,210,211,212,213,262,263,264,265];
 	_no_list = [86,87,88,89,148,149,150,151,210,211,212,213,262,263,264,265]; // no door positions
 
     // create hut at random position somewhere higher along hotel canyon
@@ -97,12 +98,14 @@ if (isServer) then {
 	_newgroup setBehaviour "AWARE";
 
 	// play with trigger to allow king escaping
-    SYG_sm_trigger = objNull;
-    SYG_sm_trigger = createTrigger["EmptyDetector",[10270.306641,7384.357422,69.139999]];
-    SYG_sm_trigger setTriggerArea [21.0, 20.5, -1, true];
-    SYG_sm_trigger setTriggerActivation ["EAST", "WEST D", false];
-    SYG_sm_trigger setTriggerStatements["this", "king execVM ""GRU_scripts\king_escape.sqf""; hint localize format[""king trigger (%1) deleted"", SYG_sm_trigger]; deleteVehicle SYG_sm_trigger;", ""];
-
+	if ( random 100 < 50) then // chance to escape is 50%
+	{
+        SYG_sm_trigger = objNull;
+        SYG_sm_trigger = createTrigger["EmptyDetector",[10270.306641,7384.357422,69.139999]];
+        SYG_sm_trigger setTriggerArea [21.0, 20.5, -1, true];
+        SYG_sm_trigger setTriggerActivation ["EAST", "WEST D", false];
+        SYG_sm_trigger setTriggerStatements["this", "king execVM ""GRU_scripts\king_escape.sqf""; hint localize format[""king trigger (%1) deleted"", SYG_sm_trigger]; deleteVehicle SYG_sm_trigger;", ""];
+    };
 };
 
 if (true) exitWith {};

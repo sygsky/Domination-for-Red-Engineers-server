@@ -789,7 +789,23 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]] + [["ACE_SmokeGrenade_White",2]];
 			};
-			
+
+#ifdef __JAVELIN__
+			case "ACE_SoldierWHAT_A": // Javelin specialist
+			{
+				_equip = _equip + [["P", "ACE_Javelin", "ACE_Javelin"]]; // AT missile launcher
+				if ( _adv_rearm ) then
+				{
+					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
+				}
+				else
+				{
+					_wpn = RAR(SYG_HK417_WPN_SET_STD);
+				};
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [["ACE_SmokeGrenade_White",1]];
+			};
+#endif
+
 			case "ACE_SoldierWMAT_USSF_ST_BDUL":
 			{
 				if ( _adv_rearm ) then 
@@ -986,6 +1002,25 @@ SYG_rearmBasic = {
 				_ret = true;
 				breakTo "main";
 			};
+
+#ifdef __JAVELIN__
+			if ( (typeOf _unit) == "ACE_SoldierWHAT_A" ) then  // Javelin
+			{
+				_equip = _equip + [["P", "ACE_Javelin", "ACE_Javelin"]]; // AT missile launcher
+				if ( _adv_rearm ) then
+				{
+					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
+				}
+				else
+				{
+					_wpn = RAR(SYG_HK416_WPN_SET_STD);
+				};
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [["ACE_SmokeGrenade_White",1]];
+				_ret = true;
+				breakTo "main";
+			};
+#endif
+
 		};
 		if ( _ret )  then
 		{
@@ -1464,7 +1499,7 @@ SYG_armPilotFull = {
  * Example: [_unit, [ ["P", "ACE_MP5A5", "ACE_30Rnd_9x19_B_MP5", 6], ["S", "ACE_Glock18", "ACE_33Rnd_9x19_G18", 4], ["M", "ACE_Bandage", 2], ["M", "ACE_Morphine",2], ["M", "ACE_MON100",2] ] ] call SYG_armUnit
  */
 SYG_armUnit = {
-	private [ "_itemCnt", "_itemType", "_pos", "_i", "_j", "_unit", "_args", "_primWpn", "_wpn", "_magCnt", "_scndWpn",
+	private [ "_itemCnt", "_itemType", "_pos", "_i", "_j", "_unit", "_args", "_primWpn", "_wpn", "_magCnt", "_secondWpn",
 	"_equipList", "_arr", "_bsetWeapon","_muzzles", "_mag" ];
 	if ( typeName _this != "ARRAY" ) exitWith {false};
 	_itemCnt = count _this;
@@ -1476,12 +1511,12 @@ SYG_armUnit = {
 	
 	if ( (typeName _arr) != "ARRAY" ) exitWith 
 	{
-		hint format["SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
+		hint format["--- SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
 	};
 	_itemCnt = count _arr;
 	removeAllWeapons _unit;
 	_primWpn = "";
-	_scndWpn = "";
+	_secondWpn = "";
 	_equipList = [];
 	//_wpnList = [];
 	if ( _itemCnt > 0 ) then
@@ -1491,7 +1526,7 @@ SYG_armUnit = {
 			_args = _arr select _i; // get _i-th array with item definition (<wpn_type, wpn_name,> mag_name <, mag_count>) to add to unti
 			if ( (typeName _args) != "ARRAY" ) exitWith 
 			{
-				hint format["SYG_armUnit: Item at pos %1 must be ARRAY, found %2 (%3)", _i, typeName _args, _args];
+				hint localize format["SYG_armUnit: Item at pos %1 must be ARRAY, found %2 (%3)", _i, typeName _args, _args];
 			};
 	//		player globalChat format["SYG_armUnit: add %1-th array[%2] = %3", _i, count _args, _args ];
 			_pos = 1;
@@ -1509,14 +1544,17 @@ SYG_armUnit = {
 					
 					case "S": // Secondary weapon, magazines + its optional count  (default 1)
 					{ 
-						if ( _scndWpn != "" ) then { _unit addWeapon _scndWpn;}; // add previous weapon
-						_scndWpn = _args select _pos; _pos = _pos + 1;
+						if ( _secondWpn != "" ) then { _unit addWeapon _secondWpn;}; // add previous weapon
+						_secondWpn = _args select _pos; _pos = _pos + 1;
 					};
 
 					case "M"; // Magazine[s], simply skip this character
 					{};
-					case "E": // spEcial equipment, binocular etc
-					{ if ( count _args > 1) then {_equipList = _equipList + [_args select _pos]; _pos = _pos + 1;}; };
+
+					case "E": // special Equipment, binocular etc
+					{
+					    for "_i" from 1 to (count _args - 1) do { _equipList = _equipList + [_args select _i]; _pos = _pos + 1;};
+					};
 					
 					default { _pos = 0; };
 				};
@@ -1534,7 +1572,7 @@ SYG_armUnit = {
 			}
 			else
 			{
-				hint format["SYG_armUnit: 1st pos must be STRING, found '%1', skipped",  typeName (_args select  0) ];
+				hint localize format["--- SYG_armUnit: 1st pos must be STRING, found '%1', skipped",  typeName (_args select  0) ];
 			};
 		};
 	}; // if ( _itemCnt > 0 )
@@ -1546,10 +1584,10 @@ SYG_armUnit = {
 	} forEach _equipList;
 
 	// add secondary weapon is exists
-	if ( _scndWpn != "" ) then
+	if ( _secondWpn != "" ) then
 	{
-		_bsetWeapon = _scndWpn;
-		_unit addWeapon _scndWpn;
+		_bsetWeapon = _secondWpn;
+		_unit addWeapon _secondWpn;
 	};
 	// add primary weapon is exists after secondary
 	if ( _primWpn != "" ) then
@@ -2745,7 +2783,11 @@ SYG_getPlayerEquiptArr = {
 	_ruckMags = [];
 #endif
 
+#ifdef __JAVELIN__
+    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance]
+#else
     [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance]
+#endif
 
 };
 

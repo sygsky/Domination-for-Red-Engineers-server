@@ -9,7 +9,7 @@
 // at 5: current time when wp assigned;-1
 // at 6: if ((_grp_array select 6) == 0) then {[_grp,_grp_array select 9] call XNormalPatrol;} else {_grp call XCombatPatrol;}; ;1
 // at 7: start position before assigning wp; []
-// at 8: some distance to react for enemy found (may be 300 meters); 300
+// at 8: some distance to react for enemy found (may be 300 meters); 300 // TODO: not used, may be remove it?
 // at 9: can be -1 (for guard static) ->"no patrol", 0 and +1 -> "patrol"; XNormalPatrol: if ((_this select 1) == 0) then {["COLUMN","STAG COLUMN","FILE"]} else {["COLUMN"]}; 1
 //
 // at 10: [] with some additional parameters by Sygsky, optional
@@ -205,7 +205,7 @@ while {true} do {
 							};
 						} else
 						{
-							hint localize format[ "--- x_groupsm: expected _wp_array not ARRAy => %1", _grp_array];
+							hint localize format[ "--- x_groupsm: expected _wp_array not ARRAY => %1", _grp_array];
 						}
 					};
 				};
@@ -214,7 +214,7 @@ while {true} do {
 #ifdef __DEBUG__			
 				if ( count (_grp_array select 4) != 3 ) then
 				{
-					hint localize format["%1 x_groupsm.sqf: grp %2, count (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
+					hint localize format["%1 x_groupsm.sqf: grp %2, count of next wp coords (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
 				};
 #endif				
 				
@@ -322,6 +322,7 @@ while {true} do {
 			{
 				_side = side _leader;
 				_joingrp = grpNull;
+				_any_grp = grpNull;
 				// forEach SYG_grpList;
 				scopeName "join";
 				//waitUntil { !SYG_grpListEditing };
@@ -333,23 +334,32 @@ while {true} do {
 #endif
 				// find nearest good group  to rejoin
 				_min_dist = REJOIN_DISTANCE;
+
 				{
                     if (typeName _x == "ARRAY") then
                     {
                         _grp1 = _x select 0;
 						if (isNull _grp1) exitWith{}; // dead group detected, skip it
-                        if ( (_grp1 call XfGetStandUnits) > _counter ) then
+                        if ( (_grp1 call XfGetStandUnits) > 0 ) then
                         {
                             _leader1 = leader _grp1;
                             if ( alive _leader1 ) then
                             {
-                                if ((vehicle _leader1 == _leader1) &&  (_grp != _grp1)  && (_side == side _grp1)) then
+                                if ( (vehicle _leader1 == _leader1) &&  (_grp != _grp1)  && (_side == side _grp1) ) then
                                 {
 									_dist = _leader distance _leader1;
 									if ( _dist < _min_dist) then
 									{
-										_joingrp = _grp1;
-										_min_dist = _dist;
+									    _stand_cnt = _grp1 call XfGetStandUnits;
+									    if (_stand_cnt >= _rejoin_num ) then
+									    {
+                                            _joingrp = _grp1;
+                                            _min_dist = _dist;
+                                        }
+                                        else
+                                        {
+                                            if ( _stand_cnt > 1) then {_any_grp = _grp1;};
+                                        };
 									};
                                 };
                                 sleep 0.01;
@@ -367,6 +377,10 @@ while {true} do {
 				    getPos (leader _grp),
 				    typeOf (leader _grp)];
 #endif				
+                if ( (isNull _joingrp) && (!isNull _any_grp) ) then // use bad group if no good one found
+                {
+                    _joingrp = _any_grp;
+                };
 
 				if ( !isNull _joingrp ) then 
 				{

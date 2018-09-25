@@ -212,6 +212,9 @@ while { true } do {
 	hint localize format["x_airki.sqf[%1]: --- Exit wait loop",_type];
 #endif
 
+// sleep small random period before sent airkillers from enemy carrier
+sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on the mission
+
 // "GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1"
 ["msg_to_user","",[["STR_GRU_53",format["STR_GRU_53_%1",_initial_type]]],4,4 + round(random 4)] call XSendNetStartScriptClient;
 
@@ -463,7 +466,8 @@ while { true } do {
 			_vehicles call SYG_fastReload; // reload SU just in case
 		};
 		
-		if (X_MP) then {
+		if (X_MP && (call XPlayersNumber) == 0) then {
+		    hint localize "x_airki.sqf: no players, wait for next one";
 			waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
 		};
 		//__DEBUG_NET("x_airki_2.sqf",(call XPlayersNumber))

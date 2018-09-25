@@ -155,7 +155,7 @@ x_weapon_respawn = false;
 #endif
 
 #ifdef __AI__
-max_ai = 5; // 8;
+max_ai = 11; // 8;
 #endif
 
 #ifdef __MANDO__
@@ -201,7 +201,7 @@ d_ranked_a = [
 	10, 		// 0 очков необходимо инженеру для ремонта
 	[4,3,2,1], 	// 1 очков начисляется инженеру за ремонт авиа, танки, машины, другое
 	2, 			// 2 очков вычитается за 1 залп
-	0,		    // 3 points in the AI version for recruiting one soldier
+	3,          // 3 points in the AI version for recruiting one soldier
 	1, 			// 4 очков вычитается за AAHALO parajump
 	2, 			// 5 очков вычитается за создание техники из MHQ
 	(d_points_needed select 0), // 6 очков необходимо игроку иметь для создания техники из MHQ (ефрейтор?)
@@ -232,7 +232,7 @@ d_ranked_a = [
 d_transport_distance = 2000; // 1500;
 
 // rank needed to fly the wreck lift chopper
-d_wreck_lift_rank = "Lieutenant"; //+++Sygsky: was "Major" and "Colonel"
+d_wreck_lift_rank = "Private"; //+++Sygsky: was "Lieutenant", "Major" , "Colonel"
 #endif
 
 d_viewdistance = 1500; // default view distance diameter

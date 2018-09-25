@@ -415,6 +415,7 @@ SYG_cubeRoot = {
 };
 
 // _dist = [_p1,_p2] call SYG_distance2D;
+/*
 SYG_distance2D =
 {
     _p1 = + arg(0);
@@ -423,7 +424,7 @@ SYG_distance2D =
     _p2 set [Z_POS,0];
     _p1 distance _p2
 }
-
+*/
 #ifdef __FUTURE__
 /**
  * Input: [width,height] - full width and height of designated rectangle to overlap with cirlces

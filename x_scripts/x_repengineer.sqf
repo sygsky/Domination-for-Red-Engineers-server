@@ -99,18 +99,7 @@ _rep_array     = [objectID2];
 //hint localize "x_repengineer.sqf: No __LIMITED_REFUELLING__ defined";
 #endif
 
-_coef = (
-	if (_fuel_val == _damage_val) then {
-		_damage_val
-	} else {
-		if (_fuel_val > _damage_val) then {
-			_fuel_val
-		} else {
-			_damage_val
-		}
-	}
-);
-_coef = ceil _coef;
+_coef = ceil (_fuel_val max _damage_val);
 
 _lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
 hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
@@ -188,11 +177,18 @@ if (_addscore > 0) then {
     if (!_is_engineer) then
     {
         _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__;
-        _str = "STR_SYS_137_1"; //"Вычтено очков за обслуживание техники: %1 ..."
+        SYG_engineering_fund = SYG_engineering_fund - _addscore;
+        publicVariable "SYG_engineering_fund"; // send spent scores to the fund
+    #ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+        _str = "STR_SYS_137_2"; // "Maintenance score (%1) is reallocated to the Engineering Fund (%2)"
+    #endif
+    #ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
+        _str = "STR_SYS_137_1"; //"Subtracted points for maintenance: %1 ..."
+    #endif
     };
 #endif
 	player addScore _addscore;
-	(format [localize _str, _addscore]) call XfHQChat;
+	(format [localize _str, _addscore, SYG_engineering_fund]) call XfHQChat;
 };
 #endif
 rep_array = _rep_array;

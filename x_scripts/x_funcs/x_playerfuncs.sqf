@@ -28,7 +28,38 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #ifdef __ACE__
 	x_sfunc = {
 		private ["_objs"];
-		if ((vehicle player) == player && (player call ACE_Sys_Ruck_HasRucksack))then{_objs = nearestObjects [player,["LandVehicle","Air","Ship"],5];if (count _objs > 0) then {objectID2 = _objs select 0;if (alive objectID2) then {if(damage objectID2 > 0.0000001 || fuel objectID2<0.3333)then{true}else{false};}else{false};};}else{false};
+		if ((vehicle player) == player && (player call ACE_Sys_Ruck_HasRucksack))then
+		{
+		    _objs = nearestObjects [player,["LandVehicle","Air","Ship"],5];
+		    if (count _objs > 0) then
+		    {
+		        objectID2 = _objs select 0;
+		        if (alive objectID2) then
+		        {
+		            if(damage objectID2 > 0.0000001 || fuel objectID2<0.3333)then
+		            {
+		                true
+		            }
+		            else
+		            {
+		                false
+		            };
+		        }
+		        else
+		        {
+		            false
+		        };
+		    }
+		    else
+		    {
+		        false
+		    };
+		}
+		else
+		{
+		    false
+		};
+
 	};
 #else
 	x_sfunc = {
@@ -116,8 +147,8 @@ Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
 	if (player distance _target_pos < 50) then {
-	    playSound(["fear","bestie","gamlet","fear3","heartbeat"] call XfRandomArrayVal);
-		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "Внимание! Вы были обнаружены вражескими корректировщиками..."
+	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap"] call XfRandomArrayVal);
+		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
 	};
 };
 
@@ -166,6 +197,9 @@ if (_str_p in d_can_use_mgnests) then {
 	};
 };
 
+//
+// Update client info for recaptured town[s]
+//
 XRecapturedUpdate = {
 	private ["_index","_target_array", "_target_name", "_targetName","_state"];
 	_index = _this select 0;
@@ -248,7 +282,11 @@ XPlayerRank = {
 	// if you are colonel and have >= 1200 scores
 	if ( _score >= (d_pseudo_ranks select 0) ) exitWith
 	{
-	    if ( d_player_old_rank == "PRIVATE" ) then { d_player_old_rank = "COLONEL" }; // It is the first time this function is called
+    if ( d_player_old_rank == "PRIVATE" ) then
+    {
+       d_player_old_rank = "COLONEL";
+       player setRank d_player_old_rank;
+    }; // It is the first time this function is called
 		scopeName "exit";
 		_notDone     = true;
 		_prev_rank   = d_player_old_rank; // rank with score lower than in array pointed to
@@ -276,7 +314,7 @@ XPlayerRank = {
 				if ( !player_already_in_super_rank ) then
 				{
 				    // TODO: sent message to everybody about new super rank player
-				    // TODO: addAction to get moto/etc from bus stops
+				    // TODO: addAction to get moto/etc from bus stops (but is it impossible?)
 				    // TODO: check if no players in the same group with the same or higher rank
 				    _grp = group player;
 				    _units = (units _grp) - [player]; // group units minus player itself
@@ -289,6 +327,13 @@ XPlayerRank = {
                     {
                         // TODO: set player leader
                         hint localize format["This player with score %1 (%2) has max rank in the group (count %3)", _score, _new_rank, count (units _grp)];
+                    }
+                    else
+                    {
+                        hint localize format["Player %1 has higher rank (%2) than you (%3)",
+                        name _highest_ranked_player,
+                        _highest_ranked_player call XGetRankFromScoreExt,
+                        _score call XGetRankFromScoreExt];
                     }
 				};
 
@@ -404,7 +449,7 @@ XGetRankIndex = {
 XGetRankStringLocalized = {
     if ( typeName _this == "OBJECT") then
     {
-        if (isPlayer _this) then { _this = _this call XGetRankFromScore;};
+        if (isPlayer _this) then { _this = _this call XGetRankFromScoreExt;};
     };
 	switch (toUpper(_this)) do {
 		case "PRIVATE":    {localize "STR_TSD9_26"}; // 0
@@ -417,13 +462,14 @@ XGetRankStringLocalized = {
 
 		case "Brigadier-General": {localize "STR_SYS_1000"};  // 7
         case "Lieutenant-General": {localize "STR_SYS_1001"}; // 8
-        case "Colonel-General": {localize "STR_SYS_1002,"};
-        case "General-of-the-Army": {localize "STR_SYS_1003"};
-        case "Marshal": {localize "STR_SYS_1004"};
-        case "Generalissimo": {localize "STR_SYS_1005"};    // 12
+        case "Colonel-General": {localize "STR_SYS_1002,"};   // 9
+        case "General-of-the-Army": {localize "STR_SYS_1003"};// 10
+        case "Marshal": {localize "STR_SYS_1004"};            // 11
+        case "Generalissimo": {localize "STR_SYS_1005"};      // 12
 	};
 };
 
+// returns namee for the ordinal Arma rank
 XGetRankFromScore = {
     if ( typeName _this == "OBJECT") then
     {
@@ -440,7 +486,10 @@ XGetRankFromScore = {
 #ifdef __SUPER_RANKING__
 
 XIsRankFromScoreExtended =  {
-    if (isPlayer _this) then { _this = score _this;};
+    if ( typeName _this == "OBJECT") then
+    {
+        if (isPlayer _this) then { _this = score _this;};
+    };
     _this >= argp(d_pseudo_ranks,0)
 };
 
@@ -464,7 +513,7 @@ XGetRankFromScoreExt = {
         if ( _this < _x ) exitWith { "Colonel" };
         _index = _index + 1;
     } forEach d_pseudo_ranks;
-    (d_pseudo_ranks select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
+    (d_pseudo_rank_names select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
 };
 
 XGetRankIndexFromScoreExt = {

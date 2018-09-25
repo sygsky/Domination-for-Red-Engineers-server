@@ -14,7 +14,7 @@ _current_target_name setMarkerColorLocal "ColorGreen";
 
 client_target_counter = client_target_counter + 1;
 
-call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID];
+call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID]; // mark just libarated town with correcponding marker in the diary
 
 if (client_target_counter < number_targets) then {
 	_type_name = mt_bonus_vehicle_array select extra_bonus_number;

@@ -1,4 +1,5 @@
-// by Xeno
+// by Xeno, x_scripts\x_markercheck.sqf
+// removes all placed objects, e.g. mash, MG_nest etc
 private ["_pvar_name", "_i", "_ar", "_obj_name", "_obj_type", "_mkr_name", "_objs"];
 if (!isServer) exitWith {};
 
