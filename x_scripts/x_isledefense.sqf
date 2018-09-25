@@ -82,6 +82,26 @@ if (!isServer) exitWith {};
 
 sleep DELAY_BEFORE_SCRIPT_START;
 
+// ========================================================
+/**
+ * call: _leader = _grp call _get_leader;
+ */
+_get_leader = {
+	private ["_leader"];
+	if (isNull _this) exitWith { objNull };
+	if (typeName _this == "OBJECT") then 
+	{
+		_this = group _this;
+	};
+	if (isNull _this) exitWith { objNull };
+	_leader = leader _this;
+	if ( !isNull _leader ) exitWith {_leader};
+	{
+		if ( (!isNull _x) && (canStand _x) ) exitWith {_leader = _x };
+	} forEach units _this;
+	_leader
+};
+
 //
 //
 //
@@ -150,6 +170,7 @@ _make_isle_grp = {
         //[_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
         _vecs = _vecs + _veh;
     } forEach _elist;
+    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2, group %3", count _vecs, _patrol_type, _agrp];
 
 #else
 	_elist = [d_enemy_side] call x_getmixedliste;
@@ -278,9 +299,8 @@ _remove_grp = {
 		_vecs = nil;
 		sleep 1.06;
 #ifdef __SYG_PRINT_ACTIVITY__
-        _str = "isNull";
-        if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
-		hint localize format["x_isledefense: start remove group: vecs %1, crew %2, _units %3, grp %4", _vec_removed_cnt, _crew_removed_cnt, count _units, _str];
+    _str = "isNull";
+    if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
 		hint localize format["x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
 #endif
 		// clean units
@@ -796,7 +816,7 @@ while { true } do {
 			} forEach _vecs;
 			_dist =  round(argp(_igrpa,PARAM_LAST_POS) distance (leader _igrp));
 			_locname =  "";
- 		    _leader = _igrp call XfGetLeader;
+ 		    _leader = _igrp call _get_leader;
 			if ( isNull _leader) then 
 			{
 				_locname = "<>";
@@ -852,7 +872,7 @@ while { true } do {
 			else
 			{
 				_locname = "";
-	 		    _leader = _igrp call XfGetLeader;
+	 		  _leader = _igrp call _get_leader;
 				_men_info = "";
 				_pos_msg = "";
 				if ( isNull _leader) then 

@@ -306,7 +306,7 @@ SYG_viewDistanceArray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8
 //
 SYG_setViewDistance = {
     //hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2+++++", _this, isServer ];
-    if ( ! X_Client ) exitWith {-1};
+    //if ( isServer ) exitWith {-1};
     private ["_selectedIndex"];
     _selectedIndex = _this;
     if ( typeName _this == "ARRAY") then {_selectedIndex = arg(0);};
