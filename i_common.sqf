@@ -525,7 +525,7 @@ mt_bonus_vehicle_array = (
 "ACE_T72_BM", 			// 7
 "ACE_T80_UM1",     		// 8
 
-"ACE_Mi24D", 			//00
+"ACE_Mi24D", 			// 9
 "ACE_Mi24V",     	    //10
 "ACE_Mi24P",	        //11
 "ACE_KA52",  			//12
