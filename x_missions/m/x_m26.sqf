@@ -1,4 +1,5 @@
 // by Xeno
+// TODO: set static AA Stingers, M2, ZSU-2M, not Shilka/Vulkan etc. It will enforce the defence
 private ["_vehicle"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"

@@ -446,6 +446,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 	};
 	_ret = false;
 	_rnd = random 1.0;
+	_smoke_grenade = "ACE_SmokeGrenade_Violet";
 	if ( _rnd < _prob ) then  // do rearming
 	{
 		_super_rearm = _rnd < (_adv_rearm / 3.0); // do super rearming  (true) or not (false)
@@ -481,7 +482,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 					};
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],["ACE_SmokeGrenade_White"]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
 			case "ACE_SoldierWMAT_A": // TODO: TODO: add WOB with 2 "ACE_AT4_HP"
 			{
@@ -495,14 +496,14 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 //					_wpn = RAR(SYG_HK416_WPN_SET_STD);
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],["ACE_SmokeGrenade_White"]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
 			case "ACE_SoldierWDemo_A": // TODO: add WOB with 2 "ACE_PipeBomb"
 			{
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher+ high penetration rocket
 //				_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],["ACE_SmokeGrenade_White"]]; // special mine
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],[_smoke_grenade]]; // special mine
 			};
 			case "ACE_SoldierWAA": // TODO: add ACE rucksack with 1 "ACE_Stinger"
 			{
@@ -523,7 +524,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 					};
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [["ACE_SmokeGrenade_White"],["ACE_SmokeGrenade_White"]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [[_smoke_grenade,2]];
 			};
 			case "ACE_SoldierWDemo_USSF_LRSD": // TODO: add ACE rucksack with 1 "ACE_PipeBomb"
 			{
@@ -537,14 +538,14 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 //					_wpn = RAR(SYG_HK416_WPN_SET_STD_SD);
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] +	[["ACE_SmokeGrenade_White"],["ACE_Claymore_M"], ["ACE_PipeBomb"]]; // special mine
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] +	[[_smoke_grenade],["ACE_Claymore_M"], ["ACE_PipeBomb"]]; // special mine
 			};
 			case "ACE_SoldierWDemo_USSF_ST": // TODO: add ACE rucksack with 2 "ACE_PipeBomb"
 			{
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket
 //				_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [["ACE_PipeBomb"],["ACE_SmokeGrenade_White"],["ACE_SmokeGrenade_White"]]; // special equipment
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [["ACE_PipeBomb"],[_smoke_grenade,2]]; // special equipment
 			};
 			default { /* player globalChat format["unit %1 not detected", _unit_type]; */ _ret = false; };
 		};
@@ -611,8 +612,8 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 		_ret = true;
 		//	player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, NOT rearmed", _unit_type, _prob, _adv_rearm, _rnd]
     	// remove useless binocular from inventory
-		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	};
+    if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"}; // remove this bad device
 	_ret
 };
 
@@ -667,6 +668,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 	};
 	_ret = false;
 	_rnd = random 1.0;
+	_smoke_grenade = "ACE_SmokeGrenade_Green";
 	if ( _rnd < _prob) then  // do ordinal rearming
 	{
 		_super_rearm = _rnd < (_adv_rearm / 2.0);
@@ -687,7 +689,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 					_wpn = RAR(SYG_M21_WPN_SET);
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]]; 
-				_equip = _equip + [["ACE_SmokeGrenade_White"],["ACE_HandGrenadeTimed",2]];
+				_equip = _equip + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			};
 			
 			case "ACE_USMC8541A1A": // M40A3
@@ -702,7 +704,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 					_wpn = RAR(SYG_M24_WPN_SET); 
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]]; 
-				_equip = _equip + [["ACE_SmokeGrenade_White"],["ACE_HandGrenadeTimed",2]];
+				_equip = _equip + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			};
 			
 			case "ACE_SoldierW_Spotter_A":
@@ -741,7 +743,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 					};
 				}
 				else { _wpn = RAR(SYG_HK417_WPN_SET_STD_OPTICS); };
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [["ACE_SmokeGrenade_White",2],["LaserBatteries"]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [[_smoke_grenade,2],["LaserBatteries"]];
 			};
 			
 		    case "ACE_TeamLeaderW_USSF_ST_DCUL"; // leader, arms as a lower soldier
@@ -758,7 +760,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 7]];
-				_equip = _equip + [["ACE_SmokeGrenade_White",1],["ACE_HandGrenadeTimed",2]];
+				_equip = _equip + [[_smoke_grenade,1],["ACE_HandGrenadeTimed",2]];
 			};
 			
 			case "ACE_SoldierWAA":
@@ -786,7 +788,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				{
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				};
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]] + [["ACE_SmokeGrenade_White",2]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]] + [[_smoke_grenade,2]];
 			};
 
 #ifdef __JAVELIN__
@@ -801,7 +803,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				{
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				};
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [["ACE_SmokeGrenade_White",1]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [[_smoke_grenade,1]];
 			};
 #endif
 
@@ -829,7 +831,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 			
 			case "ACE_SoldierWMedic_A":
 			{
-				_equip = SYG_MEDIC_SET + [["ACE_SmokeGrenade_Red",2]];
+				_equip = SYG_MEDIC_SET + [[_smoke_grenade,2]];
 				if ( _adv_rearm ) then 
 				{
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
@@ -852,12 +854,9 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 			if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
 			//if (!(_unit hasWeapon "Binocular")) then {	_unit addWeapon "Binocular"; };
 		};
-	}
-	else
-	{
-	    // remove useless binocular from inventory
-		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	};
+	// remove useless binocular from inventory
+    if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	_ret
 };
 
@@ -931,6 +930,7 @@ SYG_rearmBasic = {
 	};
 	_ret = false;
 	_rnd = random 1.0;
+	_smoke_grenade= "ACE_SmokeGrenade_White";
 	//_probArr = _probArr + [format["%1%2:%3;",typeOf _unit, (typeOf _unit) isKindOf "SoldierWMG",  round(_rnd * 100) / 100]];
 	if ( _rnd < _prob ) then
 	{
@@ -944,7 +944,7 @@ SYG_rearmBasic = {
 			{ 	// rearm with some special kind of M240
 				_wpn = if ( _adv_rearm ) then  {"ACE_M240G_M145"} else {"ACE_M240G"};
 				//_probArr = _probArr + [format["%1:%2:%3;",typeOf _unit, round(_rnd * 100) / 100, _wpn]];
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 3]] + [["ACE_SmokeGrenade_Green"],["ACE_HandGrenadeTimed",2]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 3]] + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 				_ret = true;
 				breakTo "main";
 			}; // "SoldierWMG"
@@ -953,7 +953,7 @@ SYG_rearmBasic = {
 			{	// rearm with some special kind of M249
 				_wpn = if ( _adv_rearm ) then {"ACE_M249Para_M145"} else {"ACE_M249Para"};
 				//_probArr = _probArr + [format["%1:%2:%3;",typeOf _unit, round(_rnd * 100) / 100, _wpn]];
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 3]] + [["ACE_SmokeGrenade_Green"],["ACE_HandGrenadeTimed",2]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 3]] + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 				_ret = true;
 				breakTo "main";
 			}; // "SoldierWAR"
@@ -963,7 +963,7 @@ SYG_rearmBasic = {
 				_magnum = 9;
 				if ( _adv_rearm ) then  { _wpn = SYG_M110_WPN_SET/* + SYG_M110_WPN_SET_SD*/; _wpn = RAR(_wpn); } else { _wpn = RAR(SYG_M24_WPN_SET);};
 				//_probArr = _probArr + [format["%1:%2:%3;",typeOf _unit, round(_rnd * 100) / 100, _wpn]];
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [["ACE_SmokeGrenade_Green"],["ACE_HandGrenadeTimed",2]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 				_ret = true;
 				breakTo "main";
 			}; //"ACE_SoldierWSniper_A"
@@ -997,7 +997,7 @@ SYG_rearmBasic = {
 				{
 					_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				};
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 7]] + [["ACE_SmokeGrenade_Green"]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 7]] + [[_smoke_grenade]];
 				_ret = true;
 				breakTo "main";
 			};
@@ -1023,7 +1023,7 @@ SYG_rearmBasic = {
 		};
 		if ( _ret )  then
 		{
-//			_equip = _equip + [["P",_wpn, _wpn call SYG_defaultMagazine,_magnum],["ACE_SmokeGrenade_Green"],["ACE_HandGrenadeTimed",2]];
+//			_equip = _equip + [["P",_wpn, _wpn call SYG_defaultMagazine,_magnum],[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			[_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
 			//if (!(_unit hasWeapon "Binocular")) then {_unit addWeapon "Binocular"};
@@ -1099,7 +1099,7 @@ SYG_rearmSpotter = {
 			};
 		}
 		else { _wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS); };
-		_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [["ACE_SmokeGrenade_Violet",2],["LaserBatteries"]];
+		_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [["ACE_SmokeGrenade_Yellow",2],["LaserBatteries"]];
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
 		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
@@ -1818,16 +1818,16 @@ SYG_isMG = {
 };
 
 //
-// call: _isRadio = (secondaryWeapon player) isRadio;
+// call: _isRadio = (secondaryWeapon player) call isRadio;
 //
 SYG_isRadio =
 {
-    _wpn = secondaryWeapon _unit;
+    //_wpn = secondaryWeapon _unit;
     _this in SYG_RADIO_SET;
 };
 
 //
-// call: _isRadio = player hasRadio;
+// call: _isRadio = player call asRadio;
 //
 SYG_hasRadio =
 {
@@ -1835,7 +1835,7 @@ SYG_hasRadio =
     _ret = false;
     _wpn = weapons _this;
     _ruck = _this call ACE_Sys_Ruck_FindRuck;
-    if (_ruck != "" ) then { _wpn = _wpn + _ruck; };
+    if (_ruck != "" ) then { _wpn = _wpn + [_ruck]; };
 
     {
         if  (_x in SYG_RADIO_SET) exitWith {_ret = true;}
