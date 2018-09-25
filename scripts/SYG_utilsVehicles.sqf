@@ -1154,7 +1154,7 @@ SYG_heliRearmTable =
  [
  	 [ // 1st heli params
  	 	["M197", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-     	["750Rnd_M197_AH1", "ACE_8Rnd_9K114","ACE_128Rnd_57mm"/*"ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
+     	["750Rnd_M197_AH1", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
  	 ],
  	 [ // 2nd heli params
  	 	["ACE_M230", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
