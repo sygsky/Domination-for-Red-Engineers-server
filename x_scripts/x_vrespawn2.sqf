@@ -32,9 +32,11 @@ _vec_array = [];
 	#endif
 		case "TTR";
 		case "TRA";
-		case "TR": {
+		case "TR": // truck (supply, ammo, fuel, open etc)
+		{
 			call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 			_vehicle setAmmoCargo 0;
+			_vehicle call SYG_addHorn;
 	#ifdef __TT__
 			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 	#endif
@@ -83,11 +85,11 @@ _truck_rep = d_own_trucks select 2;
 sleep 65;
 
 while {true} do {
-	sleep 8 + random 5;
+	sleep (8 + (random 5));
 	if (X_MP) then {
 		waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	__DEBUG_NET("x_vrespawn2.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_vrespawn2.sqf",(call XPlayersNumber))
 	for "_i" from 0 to (count _vec_array - 1) do {
 		_vec_a = _vec_array select _i;
 		_vehicle = _vec_a select 0;
@@ -127,7 +129,7 @@ while {true} do {
 		sleep 0.01;
 		_empty = (if (({alive _x} count (crew _vehicle)) > 0) then {false} else {true});
 
-		if ((_disabled && _empty) || (_empty && !(alive _vehicle))) then {
+		if ( _empty && (_disabled  || (!(alive _vehicle))) ) then {
 			_hasbox = _vehicle getVariable "d_ammobox";
 			if (format["%1",_hasbox] == "<null>") then {
 				_hasbox = false;
@@ -178,9 +180,11 @@ while {true} do {
 					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
 				};
 			#endif
+			    case "TRA";
 				case "TR": {
 					call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
+    				_vehicle call SYG_addHorn;
 				#ifdef __TT__
 					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 					if (X_SPE) then {
@@ -229,6 +233,7 @@ while {true} do {
 					};
 				};
 			#endif
+/*
 				case "TRA": {
 					call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
@@ -239,6 +244,7 @@ while {true} do {
 					};
 				#endif
 				};
+*/
 			#ifdef __TT__
 				case "TRAR": {
 					call compile format ["TRR%1=_vehicle;publicVariable ""TRR%1"";", _number_v];

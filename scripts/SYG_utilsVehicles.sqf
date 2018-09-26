@@ -1540,6 +1540,15 @@ SYG_camouflageTank = {
     if ( (_this select 1) call SYG_isDesert ) exitWith {"tank_desert"}; // set desert camouflage to the desert tanks
     "tank" // tank not in desert area so has no camouflage
 };
+
+// call: _horn_added = _this call SYG_addHorn;
+SYG_addHorn = {
+    if ( !(_this isKindOf "Truck")) exitWith {false};
+    if ((count weapons _this) > 0) exitWith {false};
+    _this addWeapon "TruckHorn";
+    true
+};
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
