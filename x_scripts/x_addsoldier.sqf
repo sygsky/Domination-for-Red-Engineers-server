@@ -13,7 +13,7 @@ _units = units d_grp_caller;
 #ifdef __RANKED__
 _rank = rank player;
 _rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel return 6)
-if (_rankIndex < ("LIEUTENANT" call XGetRankIndex)) exitWith {
+if (_rankIndex < ("SERGEANT" call XGetRankIndex)) exitWith {
 	(format [localize "STR_SYS_1174", _rank call XGetRankStringLocalized, "LIEUTENANT" call XGetRankStringLocalized]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]!"
 };
 

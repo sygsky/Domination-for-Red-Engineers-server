@@ -18,8 +18,9 @@ _delete_chop = {
 	private ["_unit","_chopper"];
 	_unit = _this select 0;
 	_chopper = _this select 1;
-	para_available = true;["para_available",para_available] call XSendNetVarClient;
-	sleep 180 + random 100;
+	para_available = true;
+	["para_available",para_available] call XSendNetVarClient;
+	sleep (180 + random 100);
 	deleteVehicle _chopper;deleteVehicle _unit;
 };
 
