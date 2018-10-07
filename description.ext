@@ -249,6 +249,7 @@ class CfgMusic
     //class ost_fort_boyard { name=""; sound[] = {\sounds\ost_fort_boyard.ogg,db-1,1.0};} // intro music from "Fort Boyard" French TV adventure
     class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
     class capricorn1title { name=""; sound[] = {\sounds\capricorn1title.ogg,db+20,1.0};} // intro music from great american movie "Capricorn-1"
+    class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg.ogg,db+20,1.0};} // intro music from Soviet great song (1950)
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 

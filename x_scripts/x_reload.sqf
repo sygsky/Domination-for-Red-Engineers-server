@@ -213,6 +213,7 @@ if ((getDammage _vehicle) > 0) then
 else
 {
     [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx from engineers!"
+    player addScore 1;
 };
 
 //+++++ Refuelling
