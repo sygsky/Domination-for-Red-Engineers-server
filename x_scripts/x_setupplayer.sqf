@@ -1228,7 +1228,7 @@ XBaseEnemies = {
 _trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 _trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
 _trigger setTriggerActivation [d_enemy_side, "PRESENT", true];
-_trigger setTriggerStatements["{((_x isKindOf 'Man')||(_x isKindOf 'Car')) && ((name  _x) != 'Error: No unit') } count thislist > 0", "if (player distance FLAG_BASE < 700) then {playSound 'Alarm'};[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+_trigger setTriggerStatements["{((_x isKindOf 'Man')||(_x isKindOf 'Car')) && ((name  _x) != 'Error: No unit') } count thislist > 0", "FLAG_BASE say 'Alarm';[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
 #endif
 
 if (d_weather) then {execVM "scripts\weather\weatherrec2.sqf";};

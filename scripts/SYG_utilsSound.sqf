@@ -151,9 +151,10 @@ SYG_playRandomDefeatTrackByPos = {
     };
     // check if we near church
     _churchArr = nearestObjects [ _this, ["Church","Land_kostelik","Land_kostel_trosky"],100];
-    if ( count _churchArr > 0 ) exitWith
+
+    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
     {
-        SYG_chorusDefeatTracks call SYG_playRandomTrack;
+        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 1 time from 5
     };
     switch (_this call SYG_whatPartOfIsland) do
     {
@@ -176,7 +177,12 @@ SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;
 };
 
-SYG_chorusDefeatTracks =["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]];
+SYG_chorusDefeatTracks =
+    [
+        ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
+        ["church_organ_1"]
+    ];
+
 
 // Any isle defeat music
 SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island"];

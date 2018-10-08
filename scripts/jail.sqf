@@ -190,7 +190,7 @@ for "_i" from 1 to _score do
 
 	{
 	    sleep 0.25;
-        if (isNull _sound) then
+        if ((isNull _sound) && (alive player)) then
         {
             player say _soundName;
 

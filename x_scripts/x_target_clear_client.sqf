@@ -76,9 +76,9 @@ if (client_target_counter < number_targets) then {
 	};
 #endif
 
-	(format ["%1 %2", format[localize "STR_SYS_1100", _current_target_name], localize "STR_SYS_1101" /*Ожидайте следующего приказа...*/]) call XfHQChat;
+	(format ["%1 %2", format[localize "STR_SYS_1100", _current_target_name], localize "STR_SYS_1101" ]) call XfHQChat; // "%1 has been cleared!!!"
 } else {
-	_mt_str = format [localize "STR_SYS_1100"/* " н.п. %1 освобождён!!!" */, _current_target_name];
+	_mt_str = format ["%1 %2",format[localize "STR_SYS_1100", _current_target_name], localize "STR_SYS_1101_1"];
 	
 #ifndef __TT__
 	hint  composeText[

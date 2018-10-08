@@ -26,9 +26,9 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 	SYG_Sahrani_desert_max_Y = 7890; // max Y coordinates for desert region of Sahrani
 	SYG_Sahrani_desert_rects = // rectangles containing all desert lands
 	[
-	    [   [9529,  4390,0], 10000, 3500,  0 ],
-	    [   [17551,18732,0],  1200, 1200,  0 ],
-	    [   [7873,  9107,0],  2000,  500,-45 ]
+	    [   [9529,  4390,0], 10000, 3500,   0 ], // South from Somato
+	    [   [17551,18732,0],  1200, 1200,   0 ], // Antigua area
+	    [   [7873,  9107,0],  2000,  500, 315 ] // Ambergris (on coast west from Chantico)
     ];
 /*
 			position[]={9529.110352,0.540940,4389.480469};
@@ -50,17 +50,17 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 
 	SYG_SahraniIsletCircles = 
 	[
-		["isle1",[12281.7,10650.4,0],600, "острова в заливе Abra de Boca"],
-		["isle2",[14019.2,8010.04,0],220, "Islas Gatunas"],
-		["isle3",[17497.5,4029.05,0],1500,"Antigua Isles group"],
-		["isle4",[17462.2,18669.0,0],1500,"Юго-восточные острова"],
-		["isle5",[7821.18,14328.8,0],400, "Trelobada"],
-		["isle6",[5159.06,15475.9,0],1000,"Isla de Vassal"],
-		["isle7",[2115.56,17959.3,0],1100,"Most western islets"],
-		["isle8",[10755.2,16742.6,0],200, "Isla des Compadres"],
-		["isle9",[9533.61,3497.75,0],500, "San Tomas"],
-		["isle10",[11630.9,16940.8,0],50, "полуостров в заливе Porto de Perolas"],
-		["isle11",[11801.7,11435.4,0],200,"островки на юго-западном побережье Северного Сахрани, залив Абра да Бока"]
+		["isle1",[12281.7,10650.4,0],600, "острова в заливе Abra de Boca"],         // 0
+        ["isle2",[14019.2,8010.04,0],220, "Islas Gatunas"],                         // 1
+		["isle3",[17497.5,4029.05,0],1500,"Antigua Isles group"],                   // 2
+		["isle4",[17462.2,18669.0,0],1500,"Юго-восточные острова/Monte Asharan"],   // 3
+		["isle5",[7821.18,14328.8,0],400, "Trelobada"],                             // 4
+        ["isle6",[5159.06,15475.9,0],1000,"Isla de Vassal"],                        // 5
+		["isle7",[2115.56,17959.3,0],1100,"Most western islets"],                   // 6
+		["isle8",[10755.2,16742.6,0],200, "Isla des Compadres"],                    // 7
+		["isle9",[9533.61,3497.75,0],500, "San Tomas"],                             // 8
+		["isle10",[11630.9,16940.8,0],50, "полуостров в заливе Porto de Perolas"],  // 9
+		["isle11",[11801.7,11435.4,0],200,"островки на юго-западном побережье Северного Сахрани, залив Абра да Бока"] // 10
 	];
 
 	SYG_RahmadiIslet = ["isle12",[2537.55,2538.37,0],1500,"Rahmadi"];
@@ -407,7 +407,7 @@ SYG_whatPartOfIsland = {
  *    _amIInDesert = _getPos player call SYG_isDesert; // TRUE or FALSE
  */
 SYG_isDesert = {
-	private ["_pos","_str","_res"];
+	private ["_pos","_ret"];
 	_pos = [];
 	switch toUpper(typeName _this) do
 	{
@@ -416,7 +416,6 @@ SYG_isDesert = {
 		case "GROUP": {_pos = getPos (leader _this);};
 		case "ARRAY": {_pos = _this;};
 	};
-	_str = "<ERROR DETECTED>";
 	if ( (count _pos) < 2 ) exitWith {false};
 	// this is a max Y coordinate of desert region on Sahrani (by my estimation)
 	//argp(_pos,1) < SYG_Sahrani_desert_max_Y

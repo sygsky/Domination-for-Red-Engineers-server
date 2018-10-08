@@ -282,11 +282,11 @@ XPlayerRank = {
 	// if you are colonel and have >= 1200 scores
 	if ( _score >= (d_pseudo_ranks select 0) ) exitWith
 	{
-    if ( d_player_old_rank == "PRIVATE" ) then
-    {
-       d_player_old_rank = "COLONEL";
-       player setRank d_player_old_rank;
-    }; // It is the first time this function is called
+        if ( d_player_old_rank == "PRIVATE" ) then // It is the first time this function is called
+        {
+           d_player_old_rank = "COLONEL";
+           player setRank d_player_old_rank;
+        };
 		scopeName "exit";
 		_notDone     = true;
 		_prev_rank   = d_player_old_rank; // rank with score lower than in array pointed to
@@ -308,7 +308,7 @@ XPlayerRank = {
 					d_player_pseudo_rank = _prev_rank; // e.g. from G-L to G-M, or from G-M to COL
 					breakTo "exit";
 				};
-				// if here, then promoted as your rank now is not old one and not new too
+				// if here, then promoted due to fact that your rank now is not old one and not new too
 				(format [ localize "STR_SYS_44", d_player_pseudo_rank, _prev_rank ]) call XfHQChat; // "Вы повышены в звании с %1 до %2, которое будет присвоено на Родине!"
 				d_player_pseudo_rank = _prev_rank; // e.g. from COL to G-M or from COL to G-M
 				if ( !player_already_in_super_rank ) then
@@ -318,6 +318,7 @@ XPlayerRank = {
 				    // TODO: check if no players in the same group with the same or higher rank
 				    _grp = group player;
 				    _units = (units _grp) - [player]; // group units minus player itself
+				    hint localize format["+++ Ranking: grp %1, cnt %2", _grp, count _untis];
 				    _rankIndex = _score call XGetRankIndexFromScore;
 				    _highest_ranked_player = objNull;
 				    {
@@ -343,7 +344,8 @@ XPlayerRank = {
 		};
 		
 		if ( _notDone && (d_player_pseudo_rank != _prev_rank) ) then // Player is generalissimus!!!
-		{	
+		{
+		    player_already_in_super_rank = true;
 			(format [ localize "STR_SYS_45", d_player_pseudo_rank, _new_rank ]) call XfHQChat; // "You have reached an incredible level! From the title %1 to the %2! It doesn't happen! Go home immediately! After all, the Motherland is in danger!!!"
 			d_player_pseudo_rank = _new_rank;
 			_notDone = false;
@@ -354,7 +356,7 @@ XPlayerRank = {
 			hint localize format["x_playerfuncs.sqf: XPlayerRank params: %1, %2, %3", _score, d_player_old_rank,d_player_pseudo_rank];
 		};
  */	
-	};
+	}; // if ( _score >= (d_pseudo_ranks select 0) ) exitWith
 #endif	
 	//---
 	// standard ranks system of Arma

@@ -127,7 +127,7 @@ for "_check" from 0 to 0 do
 				_rnd_town = + _target_town;
 				while { argp(_rnd_town,1) == argp(_target_town,1)} do {_rnd_town = target_names call XfRandomArrayVal;};
 				[_rnd_town, argp(_rnd_town,2),4] call SYG_teleportToTown;
-				sleep 2; (localize "STR_GRU_25") call GRU_msg2player; // "ГРУ-портал сработал. Где это я? Не на Марсe! Уже приятно..."
+				sleep 2; (localize "STR_GRU_25") call GRU_msg2player; // "GRU-portal worked? But where I am? Surely not on the Mars... Already not so bad..."
 				breakTo "main";
 			};
 			// real gru-portal jump, do all we need for it

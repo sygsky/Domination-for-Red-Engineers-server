@@ -152,6 +152,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	 // if some alive factory found
 	if ( _obj_pos >= 0 ) then 
 	{
+	    _obj = _no select _obj_pos; // define target to bomb
 		if ( _debug ) then { player globalChat format["sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ]; };
 #ifdef __PRINT__
 		hint localize format["sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
@@ -247,9 +248,10 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 #endif
 
 				_time = time;
-				_timeout = ([_shell_unit, _obj] call SYG_distance2D) + 60;
+//				_timeout = ([_shell_unit, _obj] call SYG_distance2D) + 60;
+				_timeout = (_shell_unit distance _obj) + 60;
 #ifdef __PRINT__
-				hint localize format["sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (group _shell_unit) call XfGetAliveUnits, round(_timeout)];
+				hint localize format["sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (_grp call XfGetAliveUnits) + 1, round(_timeout)];
 #endif
                 _timeout = _time + _timeout;
 	

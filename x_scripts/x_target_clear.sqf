@@ -19,7 +19,7 @@ if ( count _this > 0 ) exitWith // input param array not empty only for airbase 
 counterattack = false;
 _start_real = false;
 #ifndef __TT__
-if (count target_names == 22 && current_target_index != 5) then { // if maximal mission and not Rahmadi
+if (number_targets == 22 && current_target_index != 5) then { // if maximal mission and not Rahmadi
 #endif
 	_rnd = random 100;
 	// _rnd > 94 means counterattack, aka 5 % chance for a counterattack

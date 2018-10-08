@@ -255,7 +255,7 @@ _remove_grp = {
 		// clean vehicles
 #ifdef __SYG_PRINT_ACTIVITY__
 		_vec_removed_cnt = 0;
-		_crew_removed_cnt  = 0;
+//		_crew_removed_cnt  = 0;
 #endif
 		{ // forEach _vecs;
 			if ( !isNull _x ) then 
