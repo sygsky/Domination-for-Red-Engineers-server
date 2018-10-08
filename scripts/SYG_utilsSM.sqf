@@ -135,11 +135,11 @@ SYG_findNearSMIdsArray = {
 //
 SYG_isMainTargetAllowed = 
 {
-    // Here important formula to calculate main target allowence is  executed
     _target_counter = if (isServer) then {current_counter} else {client_target_counter}; // main target counter
     if ( _target_counter <= 0 ) exitWith {true}; // Lets start in any way at the mission beginning
     if (current_mission_counter == 0) exitWith {true};
-    if ( ( (current_mission_counter - 1) * __SIDE_MISSION_PER_MAIN_TARGET_COUNT__) >= (_target_counter -1) ) exitWith {true}; // 1 side mission for 2 main targets must be finished!!!
+    // Here important formula to calculate main target allowance is  executed
+    if ( floor ( (current_mission_counter - 1) * __SIDE_MISSION_PER_MAIN_TARGET_COUNT__) >= (_target_counter -1) ) exitWith {true}; // 1 side mission for 2 main targets must be finished!!!
     // hint localize format["false SYG_isMainTargetAllowed: _target_counter %1, current_mission_counter %2", _target_counter, current_mission_counter];
     false
 };
