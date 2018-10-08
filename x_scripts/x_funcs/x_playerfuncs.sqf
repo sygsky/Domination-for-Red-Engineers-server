@@ -282,11 +282,11 @@ XPlayerRank = {
 	// if you are colonel and have >= 1200 scores
 	if ( _score >= (d_pseudo_ranks select 0) ) exitWith
 	{
-    if ( d_player_old_rank == "PRIVATE" ) then
-    {
-       d_player_old_rank = "COLONEL";
-       player setRank d_player_old_rank;
-    }; // It is the first time this function is called
+        if ( d_player_old_rank == "PRIVATE" ) then // It is the first time this function is called
+        {
+           d_player_old_rank = "COLONEL";
+           player setRank d_player_old_rank;
+        };
 		scopeName "exit";
 		_notDone     = true;
 		_prev_rank   = d_player_old_rank; // rank with score lower than in array pointed to
@@ -356,7 +356,7 @@ XPlayerRank = {
 			hint localize format["x_playerfuncs.sqf: XPlayerRank params: %1, %2, %3", _score, d_player_old_rank,d_player_pseudo_rank];
 		};
  */	
-	};
+	}; // if ( _score >= (d_pseudo_ranks select 0) ) exitWith
 #endif	
 	//---
 	// standard ranks system of Arma
