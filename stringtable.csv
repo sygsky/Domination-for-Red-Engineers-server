@@ -69,7 +69,7 @@ STR_MG_4,"You need %2 points to build a mg nest. Your current scores: %1","Sie m
 STR_MG_5,"Place not valid. Try another location.","Ist nicht gültig. Versuchen Sie einen anderen Ort.","Попробуйте в другом месте..."
 STR_MG_6,"You died before your MG nest was ready.","Sie starb vor Ihrem MG-nest fertig war.","Умер до того, как развернул пулеметное гнездо..."
 STR_MG_7,"MG Nest ready.","MG-Nest fertig.","Пулемётное гнездо готово"
-STR_MG_8,"Remove MG Nest","Entfernen MG-Nest","Убрать пул.  гнездо"
+STR_MG_8,"Remove MG Nest","Entfernen MG-Nest","Убрать пул. гнездо"
 
 STR_MED_01,"Mash","Med.Zelt","Мед.палатка"
 STR_MED_1,"You have already build a mash. You have to remove it to build a new one.","Sie haben schon bauen einen Brei. Sie haben, um es zu entfernen, um ein neues bauen.","У вас уже есть мед.палатка. Cверните её перед тем, как устанавливать новую."
@@ -714,7 +714,8 @@ STR_SYS_1100,"%1 has been cleared!!!","%1 wurde gelöscht!!!","Н.п. %1 осв�
 STR_SYS_1100_0,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
 STR_SYS_1101,"Waiting for new orders...","Warten auf neue Aufträge...","Ожидайте дальнейших распоряжений..."
 STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг, наконец, бежал. Вам остаётся только зачистить последний оккупированный город!"
-STR_SYS_1102,"For the liberation of the settlement you get points ( %1 ) and %2 !","Für die Befreiung der Stadt, die Sie erhalten Punkte ( %1 ) und %2!","За освобождение города вы получаете очки ( %1 ) и %2!"
+STR_SYS_1102,"For the liberation of the settlement you get %1%2 !","Für die Befreiung der Stadt, die Sie erhalten %1%2!","За освобождение города вы получаете %1%2!"
+STR_SYS_1102_1,"points ( %1 ) and ","Punkte ( %1 ) und ","очки ( %1 ) и "
 
 STR_SYS_1103,"Can't drop box near Ammo Point.","Sie können nicht entladen Kiste in der Nähe des Lagerhauses der Versorgung.","Вы не можете выгрузить ящик возле склада снабжения."
 STR_SYS_1104,"Too high to drop an ammocrate, please land!","Zu hoch, um drop eine ammocrate, bitte landen!","Слишком высоко! Опуститесь ниже..."
@@ -823,7 +824,7 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Ск. падения:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"",""comrade_my"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"
@@ -1202,7 +1203,7 @@ STR_GRU_49_1,"The enemies here have a nice booty","Die Feinde haben eine schöne
 STR_GRU_50,"The guerrillas reported: enemy patrols noticed on the island, %1 PCs.","Die Guerilla berichtet: feindliche Patrouillen bemerkt, auf der Insel, %1 Stck.","Сопротивление информирует: на острове замечены патрули, %1 шт."
 STR_GRU_52,"At the airbase desants still have not yet been seen.","Auf der airbase desants noch noch nicht gesehen.","Десантов на базе пока не было."
 
-STR_GRU_53,"GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1","GRU berichtet, dass das feindliche Flugzeug startete eine Träger-flight-Verfahren über %1","ГРУ собщает, что на вражеском авианосце начали готовить к вылету какой-то %1"
+STR_GRU_53,"GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1","GRU berichtet, dass das feindliche Flugzeug startete eine Träger-flight-Verfahren über %1","ГРУ сообщает, что на вражеском авианосце начали готовить к вылету какой-то %1"
 STR_GRU_53_MIMG,helicopter,Helikopter,вертолёт
 STR_GRU_53_KA,helicopter,Helikopter,вертолёт
 STR_GRU_53_SU,jet,jet,самолёт
@@ -1246,6 +1247,8 @@ STR_FAC_OWN_VEH,"The Factory was destroyed by our projectile from %1 (%2)","Die 
 STR_FAC_OWN_MAN,"The Factory was destroyed by our soldier %2","Die Anlage wurde von unserem Soldaten %2 zerstört.","Сервис уничтожен своим бойцом %2"
 STR_FAC_ENEMY_VEH,"The Factory was destroyed by enemy projectile from %1(%2)","Die Fabrik wurde von einem gegnerischen Projektil von %1(%2) zerstört)","Сервис уничтожен вражеским снарядом из %1(%2)"
 STR_FAC_ENEMY_MAN,"The factory was destroyed by an enemy saboteur %2","Die Fabrik wurde von einem feindlichen saboteur zerstört %2","Сервис уничтожен вражеским диверсантом %2"
+STR_HUD_ON,"Turn HUD On","HUD einschalten","Вкл. дисплей"
+STR_HUD_OFF,"Turn HUD off","HUD ausschalten","Откл. дисплей"
 
 STR_CHECK_ITEM,Inspect,Überprüfen,Изучить
 

@@ -13,14 +13,14 @@ _units = units d_grp_caller;
 #ifdef __RANKED__
 _rank = rank player;
 _rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel return 6)
-if (_rankIndex < ("LIEUTENANT" call XGetRankIndex)) exitWith {
+if (_rankIndex < ("SERGEANT" call XGetRankIndex)) exitWith {
 	(format [localize "STR_SYS_1174", _rank call XGetRankStringLocalized, "LIEUTENANT" call XGetRankStringLocalized]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]!"
 };
 
 if (score player < ((d_points_needed select 0) + (d_ranked_a select 3))) exitWith {
 	(format [localize "STR_SYS_1175", score player, d_ranked_a select 3, "PRIVATE" call XGetRankStringLocalized]) call XfHQChat; // "You can't recruit an AI soldier, costs %2 points, your current score (%1) will drop below %2!"
 };
-_max_rank_ai = _rankIndex - 1; // 2 - Lieutenant... 11 - Generalissimus
+_max_rank_ai = (_rankIndex - 1) max 1; // 1 - Sergeant, 2 - Lieutenant... 11 - Generalissimus
 #endif
 
 _ai_counter = 0;

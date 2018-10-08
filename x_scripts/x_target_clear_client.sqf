@@ -29,18 +29,23 @@ if (client_target_counter < number_targets) then {
 #ifndef __TT__
 	_bonus_string = format[localize "STR_SYS_126", _bonus_vehicle, _bonus_pos]; //"Ваша команда получает %1. Искать здесь: %2"
 
-	hint  composeText[
+	hint  composeText
+	[
 		parseText("<t color='#f02b11ed' size='1'>" + _mt_str + "</t>"), lineBreak,lineBreak,
 		localize "STR_SYS_128" /* "Поздравления..." */, lineBreak,lineBreak,
 		_bonus_string, lineBreak,lineBreak,
 		localize "STR_SYS_1101"/* "Ожидайте дальнейших распоряжений..." */
 	];
-	if (__RankedVer) then {
+	if (__RankedVer) then
+	{
 		_current_target_pos = _target_array2 select 0;
-		if (player distance _current_target_pos < (d_ranked_a select 10)) then {
-			(format [localize "STR_SYS_1102"/* "За освобождение города вы получаете очки ( %1 ) и %2!" */,(d_ranked_a select 9), _bonus_vehicle]) call XfHQChat;
-			player addScore (d_ranked_a select 9);
+		_strBonus = "";
+		if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then
+		{
+		    _strBonus = format[ localize "STR_SYS_1102_1", d_ranked_a select 9 ];
+            player addScore (d_ranked_a select 9); // you get point only being in the town!
 		};
+        (format [localize "STR_SYS_1102"/* "For the liberation of the settlement you get %1%2 !" */,_str_Bonus, _bonus_vehicle]) call XfHQChat;
 	};
 #endif
 
