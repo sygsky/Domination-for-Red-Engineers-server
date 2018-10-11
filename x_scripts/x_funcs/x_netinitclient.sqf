@@ -739,6 +739,27 @@ XHandleNetStartScriptClient = {
                 player addScore _score;
             };
         };
+        // [ "shortnight", _command<, _param<s>_for_command> ]
+        case "shortnight":
+        {
+            switch (_this select 1) do {
+                case "skip": // skip some time
+                {
+                    _time2skip = (_this select 2);
+                    if ( typeName _time2skip ==  "ARRAY") then { _time2skip = _time2skip select 0};
+                    skipTime _time2skip;
+                };
+                case "info": // print info on day/night time
+                {
+                    _id = _this select 2; // message id to be printed about day time begin
+
+                    sleep  (random 60);
+                    _str = localize (format["STR_TIME_%1",_id]);
+                    titleText [ _str, "PLAIN"];
+                };
+            };
+        };
+
 //========================================================================================================== END OF CASES
 
         default

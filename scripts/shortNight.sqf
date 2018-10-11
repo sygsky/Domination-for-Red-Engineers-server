@@ -119,7 +119,7 @@ while {true } do
     {
         _skip = (( _nightSkipTo - daytime + 24 ) % 24);
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3, skip hours = %3",daytime, _nightSkipTo, _nightSkipFrom, _skip];
+        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3, skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
         // player groupChat _str;
         hint localize _str;
 #endif
