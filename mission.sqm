@@ -2477,7 +2477,7 @@ class Mission
 			special="NONE";
 			id=218;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto2";
 		};
@@ -2488,7 +2488,7 @@ class Mission
 			special="NONE";
 			id=219;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto3";
 		};
@@ -2499,7 +2499,7 @@ class Mission
 			special="NONE";
 			id=220;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto4";
 		};
@@ -2830,7 +2830,7 @@ class Mission
 			special="NONE";
 			id=253;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto5";
 		};
@@ -2903,7 +2903,7 @@ class Mission
 			special="NONE";
 			id=260;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto6";
 		};

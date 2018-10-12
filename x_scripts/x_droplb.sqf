@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno; not used
 lbClear 44449;
 _XD_display = findDisplay 11002;
 _control = _XD_display displayCtrl 44449;
