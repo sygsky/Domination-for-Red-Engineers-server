@@ -1136,12 +1136,16 @@ SYG_su34_RearmTables =
  ["ACE_Su34B","ACE_Su34"], // plane names
  [	// plane params
 	 [ // 1st plane params
-		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_Kh29LLauncher", "ACE_FAB500M62BombLauncher", "ACE_FFARPOD2" ],
-		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_6Rnd_Kh29L", "ACE_6Rnd_Kh29L", "ACE_12Rnd_FAB500M62", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
+//		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_Kh29LLauncher", "ACE_FAB500M62BombLauncher", "ACE_FFARPOD2" ],
+//		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_6Rnd_Kh29L", "ACE_6Rnd_Kh29L", "ACE_12Rnd_FAB500M62", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
+		["ACE_Kh29LLauncher", "ACE_S8Launcher", "ACE_GSh302", "ACE_FAB500M62BombLauncher"],
+		["ACE_250Rnd_30mm_GSh302", "ACE_4Rnd_Kh29L", "ACE_40Rnd_S8T","ACE_12Rnd_FAB500M62"]
 	 ],
 	 [ // 2nd plane params
-		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher","ACE_FFARPOD2", "ACE_FAB500M62BombLauncher" ],
-		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_120Rnd_S8T", "ACE_70mm_FL_FFAR_38","ACE_70mm_FL_FFAR_38", "ACE_12Rnd_FAB500M62"/*, "ACE_12Rnd_FAB500M62"*/]
+//		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher","ACE_FFARPOD2", "ACE_FAB500M62BombLauncher" ],
+//		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_120Rnd_S8T", "ACE_70mm_FL_FFAR_38","ACE_70mm_FL_FFAR_38", "ACE_12Rnd_FAB500M62"/*, "ACE_12Rnd_FAB500M62"*/]
+		["ACE_Kh25MLLauncher",/*"ACE_R73Launcher",*/ "ACE_S8Launcher", "ACE_GSh302", "ACE_FAB500M62BombLauncher"],
+		["ACE_6Rnd_Kh25ML","ACE_250Rnd_30mm_GSh302", /*"ACE_4Rnd_R73",*/ "ACE_80Rnd_S8T","ACE_12Rnd_FAB500M62"]
 	 ]
  ]
 ];
@@ -1158,7 +1162,7 @@ SYG_heliRearmTable =
  	 ],
  	 [ // 2nd heli params
  	 	["ACE_M230", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-	    ["ACE_M789_1200", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_80Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
+	    ["ACE_M789_1200", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "40Rnd_80mm"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
  	 ],
 /* 	 [ // 3rd heli params
  	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],

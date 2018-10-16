@@ -30,7 +30,7 @@ if (client_target_counter < number_targets) then {
 	if (__RankedVer) then {
 		_current_target_pos = _target_array2 select 0;
 		if (player distance _current_target_pos < (d_ranked_a select 10)) then {
-			(format [localize "STR_SYS_1102"/* "За освобождение города вы получаете очки ( %1 ) и %2!" */,(d_ranked_a select 9), _bonus_vehicle]) call XfHQChat;
+			(format [localize "STR_SYS_1102"/* "For the liberation of the settlement you get %1%2 !"*/,(d_ranked_a select 9), _bonus_vehicle]) call XfHQChat;
 			player addScore (d_ranked_a select 9);
 		};
 	};
