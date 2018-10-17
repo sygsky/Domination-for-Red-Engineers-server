@@ -1138,14 +1138,14 @@ SYG_su34_RearmTables =
 	 [ // 1st plane params
 //		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_Kh29LLauncher", "ACE_FAB500M62BombLauncher", "ACE_FFARPOD2" ],
 //		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_6Rnd_Kh29L", "ACE_6Rnd_Kh29L", "ACE_12Rnd_FAB500M62", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
-		["ACE_Kh29LLauncher", "ACE_S8Launcher", "ACE_GSh302", "ACE_FAB500M62BombLauncher"],
-		["ACE_250Rnd_30mm_GSh302", "ACE_4Rnd_Kh29L", "ACE_40Rnd_S8T","ACE_12Rnd_FAB500M62"]
+		["ACE_Kh29LLauncher", "ACE_S13T_Launcher", "ACE_GSh302", "ACE_FAB500M62BombLauncher"],
+		["ACE_250Rnd_30mm_GSh302", "ACE_4Rnd_Kh29L", "ACE_30Rnd_S13T","ACE_12Rnd_FAB500M62"]
 	 ],
 	 [ // 2nd plane params
 //		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher","ACE_FFARPOD2", "ACE_FAB500M62BombLauncher" ],
 //		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_120Rnd_S8T", "ACE_70mm_FL_FFAR_38","ACE_70mm_FL_FFAR_38", "ACE_12Rnd_FAB500M62"/*, "ACE_12Rnd_FAB500M62"*/]
-		["ACE_Kh25MLLauncher",/*"ACE_R73Launcher",*/ "ACE_S8Launcher", "ACE_GSh302", "ACE_FAB500M62BombLauncher"],
-		["ACE_6Rnd_Kh25ML","ACE_250Rnd_30mm_GSh302", /*"ACE_4Rnd_R73",*/ "ACE_80Rnd_S8T","ACE_12Rnd_FAB500M62"]
+		["ACE_KAB500KRBombLauncher",/*"ACE_R73Launcher",*/ "ACE_S8Launcher", "ACE_GAU8", "ACE_FAB500M62BombLauncher"],
+		["ACE_2Rnd_KAB500KR","1350Rnd_30mmAP_A10", /*"ACE_4Rnd_R73",*/ "ACE_80Rnd_S8T","ACE_12Rnd_FAB500M62"]
 	 ]
  ]
 ];
