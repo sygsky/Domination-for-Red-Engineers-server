@@ -745,13 +745,16 @@ XHandleNetStartScriptClient = {
             switch (_this select 1) do {
                 case "skip": // skip some time
                 {
-                    _time2skip = (_this select 2);
+                    _time2skip = (_this select 2); // hours to skip
                     if ( typeName _time2skip ==  "ARRAY") then { _time2skip = _time2skip select 0};
+                    hint localize format["+++ daytime %1, skiptime %2, time %3, date %4;", daytime, _time2skip, time, date];
                     skipTime _time2skip;
+                    hint localize format["+++ after skip daytime %1, time %2, date %3;", daytime, time, date];
                 };
                 case "info": // print info on day/night time
                 {
                     _id = _this select 2; // message id to be printed about day time begin
+                    if ( typeName _id ==  "ARRAY") then { _id = _id select 0};
 
                     sleep  (random 60);
                     _str = localize (format["STR_TIME_%1",_id]);

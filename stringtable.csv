@@ -1258,11 +1258,11 @@ STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,"Good but short and rather weak western rifle 
 STR_ACE_WDN_M240_VEH,"7.62mm M240C Coax","7.62 mm M240C Koaxial","7.62mm M240C спаренный"
 STR_ACE_VDN_ACE_AH1Z_AGM_HE_F,"AH-1Z AGM114/HEx38","AH-1Z AGM114/HEx38","AH-1Z AGM114/HАРх38"
 
-//STR_ACE_VDN_SU34B,"Su-34B FAB500,R73,Kh29L","Su-34B FAB500,R73,Kh29L","Су-34Б ФАБ-500,Р-73,Х-29Л"
-//STR_ACE_VDN_SU34,"Su-34 FAB500,R73,S-8T","Su-34 FAB500,R73,S-8T","Су-34 ФАБ-500,Р-73,C-8Т"
+STR_ACE_VDN_SU34B,"Su-34B Kh29L,FAB500,S13","Su-34B Kh29L,FAB500,S13","Су-34Б Х-29Л,С-13,ФАБ-500,"
+STR_ACE_VDN_SU34,"Su-34 FAB500,KAB500,S8","Su-34 FAB500,KAB500,S8","Су-34 ФАБ-500,КАБ-500КР,C-8Т"
 STR_ACE_EJECT0,"<t color='#FF0000'>Eject</t>","<t color='#FF0000'>Auswerfen</t>","<t color='#FF0000'>Катапультироваться</t>"
 STR_ACE_EJECT1,"<t color='#FF0000'>Jump Out</t>","<t color='#FF0000'>Springen</t>","<t color='#FF0000'>Выпрыгнуть</t>"
-//STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
+STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
 STR_WEST,Enemies,Feinde,Враги
 STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны

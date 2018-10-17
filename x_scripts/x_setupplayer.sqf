@@ -492,7 +492,7 @@ if (!mt_radio_down) then {
 	};
 };
 
-setDate date_str;
+// setDate date_str;
 
 #ifdef __DEBUG__
 hint localize format["x_setupplayer.sqf: time AFTER date setting %1", call SYG_nowTimeToStr];
