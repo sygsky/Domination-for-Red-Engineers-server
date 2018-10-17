@@ -460,7 +460,7 @@ STR_SYS_247,"Your team has destroyed a large plant for the production of heroin.
 STR_SYS_248,"Secondary objective achieved...","Das sekundäre Ziel erreicht...","Второстепенное задание завершено..."
 
 STR_SYS_248_NUM,3,3,3
-STR_SYS_248_0," perhaps, by guerrillas..."," vielleicht, von Guerillas..."" возможно, партизанами..."
+STR_SYS_248_0," perhaps, by guerrillas..."," vielleicht, von Guerillas..."," возможно, партизанами..."
 STR_SYS_248_1," by force of circumstances..."," durch die Kraft der Umstände..."," силой обстоятельств..."
 STR_SYS_248_2," by disappointed enemies?"," von enttäuschten Feinden?"," разочарованными врагами?"
 
@@ -582,7 +582,7 @@ STR_SYS_329,"%2: unload requires rank %1.","%2: entfernen Sie erfordert Rang %1.
 STR_SYS_329_1,"Vehicles for unloading not provided.","Fahrzeuge, für das entladen nicht zur Verfügung.","Устройства для выгрузки не предусмотрены"
 STR_SYS_330,"You cannot unload %1, while in other vehicle...","Sie können nicht entladen %1, während das Fahrzeug...","Нельзя выгрузить %1, находяcь в транспортном средстве..."
 STR_SYS_331,"Unloading is available only once after the respawn...","Entladen ist nur einmal, nach dem Respawn...","Выгрузка доступна только один раз, после респауна..."
-STR_SYS_332,"Unload completed... it will be available Again in %1 min.","Unload abgeschlossen ist... es wird Wieder verfügbar in %1 Min.","Выгрузка уже произведена... вновь она будет доступна через %1 мин."
+STR_SYS_332,"Unload completed... it will be available Again in %1 min.","Unload abgeschlossen ist... es wird Wieder verfügbar in %1 Min.","Выгрузка была недавно... и будет вновь доступна через %1 мин."
 STR_SYS_333,"Unloading %1.. please wait...","Entladen %1.. bitte warten...","Выгружается %1, ожидайте..."
 STR_SYS_334,"Dist %1, dmg %2","Dist %1, dmg %2","Дист. %1, повр. %2"
 STR_SYS_335,"Drop Ammo","Drop Ammo","Ящик снабжения"
@@ -1104,11 +1104,12 @@ STR_TSD9_65,Expand all,Alle Details,Развернуть все
 
 STR_MIS_1,"Mobile Respawn","Mobile Respawn","Мобильный респаун"
 STR_MIS_2,"Chopper","Chopper","Вертолёты"
-STR_MIS_3,"R1","R1","Рем"
-STR_MIS_4,"F1","F1","Гор"
-STR_MIS_5,"A1","A1","Б/к"
+STR_MIS_3,"R1","R1","Рем."
+STR_MIS_4,"F1","F1","Гор."
+STR_MIS_5,"A1","A1","Б/К"
 STR_MIS_6,"Truck","LKW","Грузовик"
-STR_MIS_7,"Arti One Target","Arti Ein Ziel","Арт. цель 1"
+STR_MIS_6_1,"Pass.Tr.","Pass-LKW","Пас."
+STR_MIS_7,"Arti One Trg.","Arti One Trg.","Арт. цель 1"
 STR_MIS_8,"Bonus Vehicles","Bonus-Fahrzeuge","Новая техника"
 STR_MIS_9,"Bonus aircrafts","Bonus-Flugzeuge","Новая авиация"
 STR_MIS_10,"Chopper Service","Chopper-Service","СТО (верт.)"
@@ -1120,7 +1121,7 @@ STR_MIS_15,"Ammo Point","Munition Punkt","Пункт м/т снаб."
 STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
 STR_MIS_18,%1 wreck,%1 Wrack,обл. %1
-STR_MIS_19,"Arti Two Target","Arti Zwei Gegner","Арт. цель 2"
+STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 
 STR_SET_1,"Version","Version","Версия"
 STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ"
@@ -1257,11 +1258,11 @@ STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,"Good but short and rather weak western rifle 
 STR_ACE_WDN_M240_VEH,"7.62mm M240C Coax","7.62 mm M240C Koaxial","7.62mm M240C спаренный"
 STR_ACE_VDN_ACE_AH1Z_AGM_HE_F,"AH-1Z AGM114/HEx38","AH-1Z AGM114/HEx38","AH-1Z AGM114/HАРх38"
 
-//STR_ACE_VDN_SU34B,"Su-34B FAB500,R73,Kh29L","Su-34B FAB500,R73,Kh29L","Су-34Б ФАБ-500,Р-73,Х-29Л"
-//STR_ACE_VDN_SU34,"Su-34 FAB500,R73,S-8T","Su-34 FAB500,R73,S-8T","Су-34 ФАБ-500,Р-73,C-8Т"
+STR_ACE_VDN_SU34B,"Su-34B Kh29L,FAB500,S13","Su-34B Kh29L,FAB500,S13","Су-34Б Х-29Л,С-13,ФАБ-500,"
+STR_ACE_VDN_SU34,"Su-34 FAB500,KAB500,S8","Su-34 FAB500,KAB500,S8","Су-34 ФАБ-500,КАБ-500КР,C-8Т"
 STR_ACE_EJECT0,"<t color='#FF0000'>Eject</t>","<t color='#FF0000'>Auswerfen</t>","<t color='#FF0000'>Катапультироваться</t>"
 STR_ACE_EJECT1,"<t color='#FF0000'>Jump Out</t>","<t color='#FF0000'>Springen</t>","<t color='#FF0000'>Выпрыгнуть</t>"
-//STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
+STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
 STR_WEST,Enemies,Feinde,Враги
 STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны

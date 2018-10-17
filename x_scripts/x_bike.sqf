@@ -99,6 +99,12 @@ if (_b_mode == 1) then {
 	};
 } else {
 	d_flag_vec = _vehicle;
+/*
+	if ( _vehicle isKindOf "Motorcycle") then
+	{
+	    _vehicle addWeapon "CarHorn"; // add horn for motorcycle
+	};
+*/
 	d_vec_end_time = time + d_remove_mhq_vec_time + 60;
 	["d_flag_vec",d_flag_vec] call XSendNetStartScriptServer;
 	d_flag_vec addEventHandler ["killed", {(_this select 0) spawn {private ["_vec"];_vec = _this;sleep 10.123;while {true} do {if (isNull _vec) exitWith {};if (({alive _x} count (crew _vec)) == 0) exitWith {deleteVehicle _vec;};sleep 15.123;};d_flag_vec = objNull}}];

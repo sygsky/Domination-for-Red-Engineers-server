@@ -695,7 +695,7 @@ class Mission
 		items=236;
 		class Item0
 		{
-			position[]={9657.131836,139.994995,9987.144531};
+			position[]={9658,140.28,9986.16};
 			id=1;
 			side="EMPTY";
 			vehicle="FlagCarrierSouth";
@@ -2477,7 +2477,7 @@ class Mission
 			special="NONE";
 			id=218;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto2";
 		};
@@ -2488,7 +2488,7 @@ class Mission
 			special="NONE";
 			id=219;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto3";
 		};
@@ -2499,7 +2499,7 @@ class Mission
 			special="NONE";
 			id=220;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto4";
 		};
@@ -2830,7 +2830,7 @@ class Mission
 			special="NONE";
 			id=253;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto5";
 		};
@@ -2903,7 +2903,7 @@ class Mission
 			special="NONE";
 			id=260;
 			side="EMPTY";
-			vehicle="TT650C";
+			vehicle="TT650G";
 			skill=1.000000;
 			text="moto6";
 		};
@@ -3265,7 +3265,7 @@ class Mission
 		{
 			position[]={9555.043945,139.994995,9965.439453};
 			name="truck7";
-			text="Гру";
+			text="@STR_MIS_6";
 			type="ACE_Icon_TruckSupport";
 			colorName="ColorGreenAlpha";
 		};
@@ -3273,7 +3273,7 @@ class Mission
 		{
 			position[]={-6869.819336,0.578231,27900.498047};
 			name="arti_target2";
-			text="Арт. 2";
+			text="@STR_MIS_19";
 			type="Attack";
 			colorName="ColorRed";
 			a=0.500000;
@@ -3381,7 +3381,7 @@ class Mission
 		{
 			position[]={9541.721680,139.994995,9965.438477};
 			name="truck9";
-			text="Пас";
+			text="@STR_MIS_6_1";
 			type="ACE_Icon_Truck";
 			colorName="ColorGreenAlpha";
 		};

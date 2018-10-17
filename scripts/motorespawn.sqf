@@ -49,6 +49,7 @@ sleep 2;
 	_pos1 set [2,0];
 	sleep 0.2;
 	_motoarr = _motoarr + [[_x, _pos1, getDir _x, TIMEOUT_ZERO]];
+//	_x addWeapon "CarHorn";  // add horn for motorcycle: not work in MP
 #ifdef __DEBUG__
     hint localize format["%1: initPos %2, setPos %3", _x, _pos, _pos1];
 #endif
@@ -133,6 +134,7 @@ while {true} do {
                         _moto = objNull;
                         sleep 1.375;
                         _moto = _type createVehicle [0,0,0];
+                       	_moto addWeapon "CarHorn"; // add horn for motorcycle
                         _x set[MOTO_ITSELF, _moto];
 #ifdef __DEBUG__
                         hint localize format["motorespawn.sqf: %1 (%2) recreated after breakdown", _moto, _type];
@@ -147,6 +149,7 @@ while {true} do {
                         _moto setFuel 1.0;
                     };
                     sleep 1.11;
+
                     _moto setPos (_pos);
                     if ( _say) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClient };
 

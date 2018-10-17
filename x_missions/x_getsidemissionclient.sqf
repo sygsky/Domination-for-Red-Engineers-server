@@ -7,20 +7,22 @@ _do_hint = _this select 0;
 
 if (current_mission_index == -1) exitWith {};
 
-#ifdef __DEFAULT__
-_mis_fname = format ["x_missions\m\%2%1.sqf",current_mission_index,d_mission_filename];
-#endif
-#ifdef __TT__
-_mis_fname = format ["x_missions\m\%2%1.sqf",current_mission_index,d_mission_filename];
-#endif
-#ifdef __SCHMALFELDEN__
-_mis_fname = format ["x_missions\m_schmal\%2%1.sqf",current_mission_index,d_mission_filename];
-#endif
-#ifdef __UHAO__
-_mis_fname = format ["x_missions\m_uhao\%2%1.sqf",current_mission_index,d_mission_filename];
-#endif
 
 if (!X_SPE) then {
+
+#ifdef __DEFAULT__
+    _mis_fname = format ["x_missions\m\%2%1.sqf",current_mission_index,d_mission_filename];
+#endif
+#ifdef __TT__
+    _mis_fname = format ["x_missions\m\%2%1.sqf",current_mission_index,d_mission_filename];
+#endif
+#ifdef __SCHMALFELDEN__
+    _mis_fname = format ["x_missions\m_schmal\%2%1.sqf",current_mission_index,d_mission_filename];
+#endif
+#ifdef __UHAO__
+    _mis_fname = format ["x_missions\m_uhao\%2%1.sqf",current_mission_index,d_mission_filename];
+#endif
+
 	call compile preprocessFileLineNumbers _mis_fname;
 };
 

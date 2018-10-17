@@ -11,7 +11,7 @@
 // twilightDuration: optional (default 0) value for smoothed shift period before and after night (sun rise and sun down)
 // e.g. 0.5 means that real life twilight would be 0.5 hour long, in virtual time of short night it will be 0.5/speed_of_night
 //
-// [SYG_shortNightStart, SYG_shortNightEnd, SYG_nightDuration, SYG_twilightDuration] execVM "scripts\shortNight.sqf";
+// [SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
 //
 // +++++++++++++++++++++++++++++++++++++++++ NEW version comments block +++++++++++++++++++++++++++++
 //
@@ -119,7 +119,7 @@ while {true } do
     {
         _skip = (( _nightSkipTo - daytime + 24 ) % 24);
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3, skip hours = %3",daytime, _nightSkipTo, _nightSkipFrom, _skip];
+        _str = format["SHORTNIGHT: daytime (%1)< _nightSkipTo (%2) || daytime >= %3, skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
         // player groupChat _str;
         hint localize _str;
 #endif

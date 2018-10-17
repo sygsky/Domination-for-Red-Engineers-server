@@ -72,8 +72,9 @@ GRU_procServerMsg = {
 		case GRU_MSG_TASK_SOLVED: {
 			// stop corresponding task and send info back to all clients
 			_task_id call GRU_stopTask; // done!!!
-			_msg = ["STR_GRU_7","STR_GRU_4",  "STR_GRU_1",  _task_name_id, "STR_GRU_9", argopt(4,"???")]; // "задача ГРУ ""доставить развединфо из города"" выполнена (одним  из вас), очки +135"
-			//["msg_to_user","",[_msg],4,4] call XSendNetStartScriptClient;
+			_msg = ["STR_GRU_7","STR_GRU_4",  "STR_GRU_1",  _task_name_id, "STR_GRU_9", argopt(4,"???")]; // задача ГРУ доставить развединфо из города выполнена (одним  из вас), очки +135
+
+			// ["msg_to_user","",[_msg],4,4] call XSendNetStartScriptClient;
 			//sleep 0.5 + (random 0.5);
 			// send user msg and map markers update
 			["GRU_msg", GRU_MSG_TASK_SOLVED, [["msg_to_user","",[_msg],4,4],arg(5)] ] call XSendNetStartScriptClient;

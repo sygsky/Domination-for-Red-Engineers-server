@@ -88,9 +88,6 @@
 //+++ Sygsky: uncomment to debug isledefence activity
 //#define __SYG_ISLEDEFENCE_DEBUG__
 
-// add some debug vehicles on hill near Corazol
-//#define __DEBUG_ADD_VEHICLES__
-
 //+++ Sygsky: uncomment to debug new base pipebombing
 //#define __SYG_PIPEBOMB_DEBUG__
 
@@ -108,8 +105,8 @@
 
 #ifdef __ACE__
 
-//+++ uncomment to rearm Su-34 kind planes to carry 12 FAB500M62 freefall bombs
-//#define __REARM_SU34__
+//+++ uncomment to rearm some plains, heli, cars (e.g. Su-34B to carry 12 FAB500M62 freefall bombs)
+#define __REARM_SU34__
 
 //+++ uncomment to replace ACE_Stryker_TOW with ACE_M60 and ACE_M60A3
 #define __USE_M60__
