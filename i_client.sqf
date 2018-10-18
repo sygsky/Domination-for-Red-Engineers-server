@@ -20,11 +20,11 @@ d_use_backpack =
 // if set to false you will not see the names beside a player marker on the map
 d_show_player_marker_names = true;
 // if set to true player marker direction will be set to player direction
-d_p_marker_dirs = false;
+d_p_marker_dirs = false; // if  d_p_marker == "Vehicle" it is useless to draw direction as marker is the circle
 // if set to true vehicle marker direction will be set to vehicle direction
-d_v_marker_dirs = false;
+d_v_marker_dirs = true;
 // marker type used for players
-d_p_marker = "Dot";
+d_p_marker = "Vehicle";
 
 // choose false, if you don't want to use teamstatusdialog
 d_use_teamstatusdialog = true;

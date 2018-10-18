@@ -3307,7 +3307,7 @@ class Mission
 		{
 			position[]={9710.467773,139.994995,10146.132813};
 			name="Start";
-			text="Старт";
+			text="@STR_MIS_16";
 			type="Dot";
 			colorName="ColorYellow";
 		};

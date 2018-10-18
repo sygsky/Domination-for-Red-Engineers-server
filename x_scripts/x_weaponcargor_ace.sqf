@@ -17,7 +17,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
 				#else
-				["ACE_Dummy_RIFLE",3],["ACE_AK74",10],["ACE_AKS74U",10],["ACE_Bizon",10],["ACE_AKM",10],/* ["ACE_AKMS",10], */["ACE_AK47",10],["ACE_AKS47",10],["ACE_AKS47nobutt",10]
+				["ACE_Dummy_RIFLE",3],["ACE_AK74",10],["ACE_AKS74U",10],["ACE_Bizon",10],["ACE_AKM",10]/*, ["ACE_AKMS",10], ["ACE_AK47",10],["ACE_AKS47",10],["ACE_AKS47nobutt",10]*/
 //				,["ACE_M1014",10]
 				#endif
 			],
@@ -26,7 +26,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
 				#else
-				["ACE_AK74GL",10],["ACE_AKMGL",10],["ACE_AKMSGL",10],["ACE_AK47GL",10],["ACE_SPAS12",10]
+				["ACE_AK74GL",10],["ACE_AKMGL",10]/*,["ACE_AKMSGL",10]*/,["ACE_AK47GL",10],["ACE_SPAS12",10]
 //				,["ACE_M1014_Eotech", 10]
 				#endif
 			],
@@ -93,7 +93,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
 				#else
-				["ACE_SVD",10],["ACE_VSS",10]
+				["ACE_SVD",10]
 				#endif
 			],
 				// ЛЕЙТЕНАНТ
@@ -101,7 +101,8 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
 				#else
-								#endif
+				["ACE_VSS",10]
+				#endif
 			],
 				// КАПИТАН
 			[

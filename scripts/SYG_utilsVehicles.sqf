@@ -1157,12 +1157,12 @@ SYG_heliRearmTable =
  	// heli params
  [
  	 [ // 1st heli params
- 	 	["M197", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-     	["750Rnd_M197_AH1", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
+ 	 	["M197", "ACE_9M114Launcher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+     	["750Rnd_M197_AH1", "ACE_4Rnd_9K114", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
  	 ],
  	 [ // 2nd heli params
  	 	["ACE_M230", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-	    ["ACE_M789_1200", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "40Rnd_80mm"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
+	    ["ACE_M789_1200", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_40Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
  	 ],
 /* 	 [ // 3rd heli params
  	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
@@ -1396,8 +1396,8 @@ SYG_createGroup = SYG_createEnemyGroup;
 //============================================ Vehicle groups
 #ifdef __OWN_SIDE_EAST__
 
-ABRAMS_LIST =        ["ACE_M1Abrams",       "ACE_M1A1_HA",       "ACE_M1A2",       "ACE_M1A2_SEP",       "ACE_M1A2_TUSK",       "ACE_M1A2_SEP_TUSK"];
-ABRAMS_DESERT_LIST = ["ACE_M1Abrams_Desert","ACE_M1A1_HA_Desert","ACE_M1A2_Desert","ACE_M1A2_SEP_Desert","ACE_M1A2_TUSK_Desert","ACE_M1A2_SEP_TUSK_Desert"];
+ABRAMS_LIST =        ["ACE_M1Abrams",       "ACE_M1A1_HA",       "ACE_M1A2",       "ACE_M1A2_SEP",       "ACE_M1A2_TUSK"/*,       "ACE_M1A2_SEP_TUSK"*/];
+ABRAMS_DESERT_LIST = ["ACE_M1Abrams_Desert","ACE_M1A1_HA_Desert","ACE_M1A2_Desert","ACE_M1A2_SEP_Desert","ACE_M1A2_TUSK_Desert"/*,"ACE_M1A2_SEP_TUSK_Desert"*/];
 LINEBAKER = ["ACE_M6A1"];
 ABRAMS_PATROL = [2,3,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
 

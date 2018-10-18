@@ -208,7 +208,7 @@ if (d_p_marker_dirs) then {
 	_str = _str + _strNo;
 };
 
-_str = _str + (localize "STR_SYS_345")/* "Отображение маркеров техники: " */;
+_str = _str + (localize "STR_SYS_345")/* "Отображение напр. движения маркеров техники: " */;
 if (d_v_marker_dirs) then {
 	_str = _str + _strYes;
 } else {

@@ -30,32 +30,42 @@ X_XMarkerVehicles = {
 	sleep 0.11;
 };
 
+// prepare players variables to speed up marker drawing
+SYG_players_arr = [RESCUE,RESCUE2,alpha_1,alpha_2,alpha_3,alpha_4,alpha_5,alpha_6,alpha_7,alpha_8,bravo_1,bravo_2,bravo_3,bravo_4,bravo_5,bravo_6,bravo_7,bravo_8,charlie_1,charlie_2,charlie_3,charlie_4,charlie_5,charlie_6,charlie_7,charlie_8,charlie_9,delta_1,delta_2,delta_3,delta_4];
+
+// Draw all players markers on the client
 X_XMarkerPlayers = {
 	private ["_i"];
-	for "_i" from 0 to ((count d_player_entities) - 1) do {
-		call compile format ["
-			_ap = %1;
-			_as = ""%1"";
-			if (alive _ap && isPlayer _ap) then {
-				_as setMarkerPosLocal position _ap;
-				switch (d_show_player_marker) do {
-					case 1: {_as setMarkerTextLocal (name _ap) + "" [h"" + str(9 - round(9 * damage _ap)) + ""]""};
-					case 2: {_as setMarkerTextLocal """"};
-					case 3: {_as setMarkerTextLocal (d_player_roles select _i)};
-					case 4: {_as setMarkerTextLocal ""h "" + str(9 - round(9 * damage _ap))};
-				};
-				if (d_p_marker_dirs) then {
-					if (vehicle _ap == _ap) then {
-						_as setMarkerDirLocal (direction _ap);
-					} else {
-						_as setMarkerDirLocal (direction (vehicle _ap));
-					};
-				};
-			} else {
-				_as setMarkerPosLocal [0,0];
-				_as setMarkerTextLocal """";
-			};
-		", d_player_entities select _i];
+	for "_i" from 0 to ((count SYG_players_arr) - 1) do
+	{
+        _ap =   SYG_players_arr select _i;
+        _as = d_player_entities select _i;
+        if (alive _ap) then
+        {
+            if  (isPlayer _ap) then {
+
+                _as setMarkerPosLocal position _ap;
+
+                // 0 = player markers turned off
+                // 1 = player markers with player names and healthess
+                // 2 = player markers without player names
+                // 3 = player markers with roles but no name
+                // 4 = player markers with player health, no name
+
+                switch (d_show_player_marker) do {
+                    case 1: { _as setMarkerTextLocal format["%1/%2",name _ap, str((10 - round(10 * damage _ap)) mod 10)] };
+                    case 2: { _as setMarkerTextLocal "" };
+                    case 3: { _as setMarkerTextLocal _as };
+                    case 4: { _as setMarkerTextLocal format["h%1", str((10 - round(10 * damage _ap)) mod 10)] };
+                };
+                if (d_p_marker_dirs) then {
+                    _as setMarkerDirLocal (direction (vehicle _ap));
+                };
+            };
+        } else {
+            _as setMarkerPosLocal [0,0];
+            _as setMarkerTextLocal "";
+        };
 		sleep 0.0123;
 	};
 };
