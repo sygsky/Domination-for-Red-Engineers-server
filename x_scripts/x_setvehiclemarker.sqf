@@ -40,27 +40,24 @@ X_XMarkerPlayers = {
 	{
         _ap =   SYG_players_arr select _i;
         _as = d_player_entities select _i;
-        if (alive _ap) then
-        {
-            if  (isPlayer _ap) then {
+        if (alive _ap && isPlayer _ap) then {
 
-                _as setMarkerPosLocal position _ap;
+            _as setMarkerPosLocal position _ap;
 
-                // 0 = player markers turned off
-                // 1 = player markers with player names and healthess
-                // 2 = player markers without player names
-                // 3 = player markers with roles but no name
-                // 4 = player markers with player health, no name
+            // 0 = player markers turned off
+            // 1 = player markers with player names and healthess
+            // 2 = player markers without player names
+            // 3 = player markers with roles but no name
+            // 4 = player markers with player health, no name
 
-                switch (d_show_player_marker) do {
-                    case 1: { _as setMarkerTextLocal format["%1/%2",name _ap, str((10 - round(10 * damage _ap)) mod 10)] };
-                    case 2: { _as setMarkerTextLocal "" };
-                    case 3: { _as setMarkerTextLocal _as };
-                    case 4: { _as setMarkerTextLocal format["h%1", str((10 - round(10 * damage _ap)) mod 10)] };
-                };
-                if (d_p_marker_dirs) then {
-                    _as setMarkerDirLocal (direction (vehicle _ap));
-                };
+            switch (d_show_player_marker) do {
+                case 1: { _as setMarkerTextLocal format["%1/%2",name _ap, str((10 - round(10 * damage _ap)) mod 10)] };
+                case 2: { _as setMarkerTextLocal "" };
+                case 3: { _as setMarkerTextLocal _as };
+                case 4: { _as setMarkerTextLocal format["h%1", str((10 - round(10 * damage _ap)) mod 10)] };
+            };
+            if (d_p_marker_dirs) then {
+                _as setMarkerDirLocal (direction (vehicle _ap));
             };
         } else {
             _as setMarkerPosLocal [0,0];
