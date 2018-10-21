@@ -73,7 +73,7 @@ else // music normally played on intro
 	 };
 };
 
-if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMonring - 0.5))) then {
+if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMorning - 0.5))) then {
 	camUseNVG true;
 };
 

@@ -17,7 +17,7 @@
 //
 // Next version of pararameters:
 //         Night start,         night end,         skip from,         skip to
-//[SYG_startNight, SYG_startMonring, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+//[SYG_startNight, SYG_startMorning, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
 //
 // Now in mission there are follow time stamps, from midnight (24:00 MST, Middle Sahrani Time):
 //

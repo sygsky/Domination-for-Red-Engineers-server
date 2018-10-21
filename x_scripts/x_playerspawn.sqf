@@ -275,7 +275,7 @@ while {true} do {
 	};
 	bike_created = false;
 	if (_p hasWeapon "NVGoggles") then {
-		if ( daytime > SYG_startNight/*19.75*/ || daytime < SYG_startMonring /*4.25*/ ) then {
+		if ( daytime > SYG_startNight/*19.75*/ || daytime < SYG_startMorning /*4.25*/ ) then {
 			_p action ["NVGoggles",_p];
 		};
 	};

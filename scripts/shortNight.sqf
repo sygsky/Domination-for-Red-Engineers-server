@@ -11,13 +11,13 @@
 // twilightDuration: optional (default 0) value for smoothed shift period before and after night (sun rise and sun down)
 // e.g. 0.5 means that real life twilight would be 0.5 hour long, in virtual time of short night it will be 0.5/speed_of_night
 //
-// [SYG_shortNightStart, SYG_startMonring, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
+// [SYG_shortNightStart, SYG_startMorning, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
 //
 // +++++++++++++++++++++++++++++++++++++++++ NEW version comments block +++++++++++++++++++++++++++++
 //
 // Next version of pararameters:
 //         Night start,         night end,         skip from,         skip to
-//[SYG_shortNightStart, SYG_startMonring, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+//[SYG_shortNightStart, SYG_startMorning, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
 //
 // Now in mission there are follow time stamps, from midnight (24:00 MST, Middle Sahrani Time):
 //
@@ -52,18 +52,18 @@
 /*
 SYG_shortNightStart  = 19.75;
 SYG_eveningStart     = 18.30;
-SYG_startMonring    = 4.6;
+SYG_startMorning    = 4.6;
 SYG_morningEnd       = 7.0;
 SYG_nightDuration    = 0.5;
 SYG_twilightDuration = 0.5;
-SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_startMonring;
+SYG_nightLength      = (24 - SYG_shortNightStart) + SYG_startMorning;
 SYG_nightSpeed       = SYG_nightLength/SYG_nightDuration;
 */
 
 #ifndef __FUTURE__
 // returns 0 - for night, 1- for day, 2 - for morning, 3 - for evening
 _dayPeriod = {
-    if (_this < (SYG_startMonring - SYG_twilightDuration)) exitWith {STAT_NIGHT};
+    if (_this < (SYG_startMorning - SYG_twilightDuration)) exitWith {STAT_NIGHT};
     if (_this < (SYG_morningEnd)) exitWith {STAT_MORNING};
     if (_this < (SYG_eveningStart)) exitWith {STAT_DAY};
     if (_this < (SYG_shortNightStart + SYG_twilightDuration)) exitWith {STAT_EVENING};

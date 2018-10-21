@@ -344,7 +344,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
         };
 #endif
 	
-		if ( (daytime < SYG_startMonring) || (daytime > (SYG_startNight - 3)) || (toLower (name player) == "yeti")  ) then
+		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toLower (name player) == "yeti")  ) then
 		{
 		    _p call SYG_addNVGoggles;
 		};
