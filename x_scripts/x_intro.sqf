@@ -73,7 +73,7 @@ else // music normally played on intro
 	 };
 };
 
-if ((daytime > (SYG_shortNightStart + 0.5)) || (daytime < (SYG_shortNightEnd - 0.5))) then {
+if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMonring - 0.5))) then {
 	camUseNVG true;
 };
 
@@ -379,6 +379,8 @@ _start spawn {
 		sleep 4;
 	} forEach [ 4, 1, 2, 3 ];
 	// titleText[ "", "PLAIN DOWN" ]; // not needed
+	sleep 60;
+	titleText[call SYG_getMsgForCurrentDaytime, "PLAIN DOWN"];
 };
 
 

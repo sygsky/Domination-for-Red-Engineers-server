@@ -17,7 +17,7 @@
 //
 // Next version of pararameters:
 //         Night start,         night end,         skip from,         skip to
-//[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+//[SYG_startNight, SYG_startMonring, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
 //
 // Now in mission there are follow time stamps, from midnight (24:00 MST, Middle Sahrani Time):
 //
@@ -50,7 +50,7 @@ if ( !isServer) exitWith {false};
 #define TWILIGHT_SUBTRACTION (TWILIGHT_SLEEP_DURATION / STD_SLEEP_DURATION)
 
 waitUntil {time > 0}; // wait time synchronization
-if ( X_SPE ) then { sleep 60; };// wait 1 min just in case to pass all possible date changes
+if ( isServer ) then { sleep 300; };// wait 5 min just in case to pass all possible date changes to first user started the server
 // TODO: add some sound effects (morning sounds, day insects, evening bells, night cries etc)
 _titleTime = {
     sleep  (random 60);
@@ -83,8 +83,20 @@ while {true } do
         // player groupChat _str;
         hint localize _str;
     #endif
-        ["shortnight","skip", _skip] call XSendNetStartScriptClient;
-        0 call _titleTime;
+        ["shortnight","skip", _skip] call XSendNetStartScriptClient; // send skip command to all client
+        0 call _titleTime; // send msg on night for all client
+        if (!X_SPE) then // execure skip on dedicated server
+        {
+            // we are on dedicated server!!!
+            skipTime _skip;
+        }
+        else
+        {
+            // we are in Single on Player Execution mode (clent is running the server)
+            // player groupChat _str;
+            hint localize "XPE SHORTNIGHT: wait some time to complete the night skip!!!";
+            sleep 10; // wait intil skip time is completed
+        };
     };
 
     // NIGHT up to the TWILIGHT continues

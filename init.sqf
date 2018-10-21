@@ -463,19 +463,11 @@ if (isServer) then {
     SYG_shortNightStart  = 19.75;
 
     SYG_twilightDuration =  0.50; // morning/ evening twilight duration
-
-    SYG_startMorning     =  4.60;
-    SYG_startDay         =  7.00;
-    SYG_startEvening     = 18.30;
-    SYG_startNight       = 19.75;
-
-    SYG_nightSkipFrom    = 21.00 ;  // skip server/client time from
-    SYG_nightSkipTo      =  3.00;   // skip server/client time to
-
     //       Night start,      orning start,  night skip from,    night skip to
     [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
-    hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4, daytime is %5",
-        SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd, daytime ];
+
+    hint localize format["init.sqf; shortNight.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
+        SYG_startMorning,SYG_startDay,SYG_startEvening, SYG_startNight,SYG_nightSkipFrom, SYG_nightSkipTo];
 
     //-------------------------------
 

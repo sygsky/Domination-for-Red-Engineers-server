@@ -936,3 +936,13 @@ if ( isNil "global_vars" ) then { global_vars = []; };
 // Special fund to accumulate non-engineers score subracted when repairing damaged vehicles
 if ( isNil "SYG_engineering_fund") then { SYG_engineering_fund = 0;};
 hint localize format["i_common.date = %1", date];
+
+// Short night feature constants
+
+SYG_startMorning     =  4.60;
+SYG_startDay         =  7.00;
+SYG_startEvening     = 18.30;
+SYG_startNight       = 19.75;
+
+SYG_nightSkipFrom    = 21.00 ;  // skip server/client time from
+SYG_nightSkipTo      =  3.00;   // skip server/client time to

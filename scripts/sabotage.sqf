@@ -272,7 +272,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				if ( (!scriptDone _bombScript) && (alive _shell_unit)) then
 				{
 					terminate _bombScript;
-					sleep 0.3;
+					sleep 1;
 #ifdef __PRINT__
 					hint localize format["sabotage.sqf: DropScrip terminated after %1 seconds waiting", round(_timeout - _time) ];
 #endif	
@@ -303,7 +303,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 						[_shell_unit] join _grp;
 						if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to the nearest group (%1 men) of his side ", {alive _x} count units _grp] };
 #ifdef __PRINT__
-						hint localize "sabotage.sqf: bomberman joined to nearest group of the same side";
+						hint localize format["sabotage.sqf: bomberman joined to the nearest group (%1 men) of his side ", {alive _x} count units _grp];
 #endif	
 						sleep 0.3;
 					}					

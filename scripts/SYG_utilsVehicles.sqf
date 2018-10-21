@@ -1144,8 +1144,8 @@ SYG_su34_RearmTables =
 	 [ // 2nd plane params
 //		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher","ACE_FFARPOD2", "ACE_FAB500M62BombLauncher" ],
 //		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_120Rnd_S8T", "ACE_70mm_FL_FFAR_38","ACE_70mm_FL_FFAR_38", "ACE_12Rnd_FAB500M62"/*, "ACE_12Rnd_FAB500M62"*/]
-		["ACE_KAB500KRBombLauncher",/*"ACE_R73Launcher",*/ "ACE_S8Launcher", "ACE_GAU8", "ACE_FAB500M62BombLauncher"],
-		["ACE_2Rnd_KAB500KR","1350Rnd_30mmAP_A10", /*"ACE_4Rnd_R73",*/ "ACE_80Rnd_S8T","ACE_12Rnd_FAB500M62"]
+		["ACE_KAB500KRBombLauncher",/*"ACE_R73Launcher",*/ "ACE_S8Launcher", "ACE_GSh302"/*"ACE_GAU8"*/, "ACE_FAB500M62BombLauncher"],
+		["ACE_2Rnd_KAB500KR","ACE_750Rnd_30mm_GSh302"/*"1350Rnd_30mmAP_A10"*/, /*"ACE_4Rnd_R73",*/ "ACE_80Rnd_S8T","ACE_12Rnd_FAB500M62"]
 	 ]
  ]
 ];

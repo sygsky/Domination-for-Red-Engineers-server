@@ -443,3 +443,21 @@ SYG_runHolidayMusic =
       [ 7,11, 7, "Varshavianka"]  // 7th of November
     ];
 };
+
+// Return localized message text on the current daytime period: night, morning, day, evening
+SYG_getMsgForCurrentDaytime = {
+    _id = call SYG_getDayTimeId;
+    localize (format["STR_TIME_%1", _id])
+};
+
+// Returns 0 for night, 1 for day, 2 for morning and 3 for evening
+//
+SYG_getDayTimeId = {
+    _dt = daytime;
+    if ( _dt < SYG_startMorning ) exitWith {0};
+    if ( _dt <     SYG_startDay ) exitWith {2};
+    if ( _dt < SYG_startEvening ) exitWith {1};
+    if ( _dt <   SYG_startNight ) exitWith {3};
+    0
+};
+

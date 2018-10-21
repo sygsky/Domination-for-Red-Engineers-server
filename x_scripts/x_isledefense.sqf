@@ -170,7 +170,6 @@ _make_isle_grp = {
         //[_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
         _vecs = _vecs + _veh;
     } forEach _elist;
-    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2, group %3", count _vecs, _patrol_type, _agrp];
 
 #else
 	_elist = [d_enemy_side] call x_getmixedliste;

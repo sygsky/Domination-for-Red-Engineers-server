@@ -758,6 +758,7 @@ XHandleNetStartScriptClient = {
 
                     sleep  (random 60);
                     _str = localize (format["STR_TIME_%1",_id]);
+                    hint localize format["+++ [""shortnight"",""info""]:time %1, date %2, str %3;", time, date, _str ];
                     titleText [ _str, "PLAIN"];
                 };
             };
