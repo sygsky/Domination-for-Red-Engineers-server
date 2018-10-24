@@ -796,7 +796,7 @@ SYG_distance2D = {
 	if ( typeName _pos1 == "OBJECT") then { _pos1 = position _pos1;};
 	_pos2 = arg(1);
 	if ( typeName _pos2 == "OBJECT") then { _pos2 = position _pos2;};
-	[argp(_pos1,0), argp(_pos1,1)] distance [argp(_pos2,0),argp(_pos2,1)]
+	[argp(_pos1,0), argp(_pos1,1),0] distance [argp(_pos2,0),argp(_pos2,1),0]
 };
 
 // Old varian: _dist = [_p1,_p2] call SYG_distance2D;
