@@ -15,23 +15,23 @@ X_XMarkerVehicles = {
 	private ["_i","_mdir"];
 	
 	for "_i" from 1 to 2 do {
-		call compile format ["if (!(isNil ""MRR%1"") && !(isNull MRR%1)) then {if (d_v_marker_dirs) then {""mobilerespawn%1"" setMarkerDirLocal (direction MRR%1)};""mobilerespawn%1"" setMarkerPosLocal (position MRR%1);};",_i];
+		call compile format ["if (!(isNil ""MRR%1"") && !(isNull MRR%1)) then {if (d_v_marker_dirs) then {""mobilerespawn%1"" setMarkerDirLocal ((direction MRR%1)+90)};""mobilerespawn%1"" setMarkerPosLocal (position MRR%1);};",_i];
 		sleep 0.11;
 	};
 	{
-		call compile format["if (!(isNil ""%1"") && !(isNull %1)) then {""%2"" setMarkerPosLocal (position %1);if (d_v_marker_dirs) then {""%2"" setMarkerDirLocal (direction %1)};};",(_x select 0), (_x select 2)];
+		call compile format["if (!(isNil ""%1"") && !(isNull %1)) then {""%2"" setMarkerPosLocal (position %1);if (d_v_marker_dirs) then {""%2"" setMarkerDirLocal ((direction %1)+90)};};",(_x select 0), (_x select 2)];
 		sleep 0.11;
 	} forEach d_choppers;
 	for "_i" from 1 to 10 do {
-		call compile format["if (!(isNil ""TR%1"") && !(isNull TR%1)) then {""truck%1"" setMarkerPosLocal (position TR%1);if (d_v_marker_dirs) then {""truck%1"" setMarkerDirLocal (direction TR%1)};};",_i];
+		call compile format["if (!(isNil ""TR%1"") && !(isNull TR%1)) then {""truck%1"" setMarkerPosLocal (position TR%1);if (d_v_marker_dirs) then {""truck%1"" setMarkerDirLocal ((direction TR%1)+90)};};",_i];
 		sleep 0.11;
 	};
-	if (!(isNil "MEDVEC") && !(isNull MEDVEC)) then {"medvec" setMarkerPosLocal (position MEDVEC);if (d_v_marker_dirs) then {"medvec" setMarkerDirLocal (direction MEDVEC)};};
+	if (!(isNil "MEDVEC") && !(isNull MEDVEC)) then {"medvec" setMarkerPosLocal (position MEDVEC);if (d_v_marker_dirs) then {"medvec" setMarkerDirLocal ((direction MEDVEC)+90)};};
 	sleep 0.11;
 };
 
 // prepare players variables to speed up marker drawing
-//SYG_players_arr = [RESCUE,RESCUE2,alpha_1,alpha_2,alpha_3,alpha_4,alpha_5,alpha_6,alpha_7,alpha_8,bravo_1,bravo_2,bravo_3,bravo_4,bravo_5,bravo_6,bravo_7,bravo_8,charlie_1,charlie_2,charlie_3,charlie_4,charlie_5,charlie_6,charlie_7,charlie_8,charlie_9,delta_1,delta_2,delta_3,delta_4];
+SYG_players_arr = [{RESCUE},{RESCUE2},{alpha_1},{alpha_2},{alpha_3},{alpha_4},{alpha_5},{alpha_6},{alpha_7},{alpha_8},{bravo_1},{bravo_2},{bravo_3},{bravo_4},{bravo_5},{bravo_6},{bravo_7},{bravo_8},{charlie_1},{charlie_2},{charlie_3},{charlie_4},{charlie_5},{charlie_6},{charlie_7},{charlie_8},{charlie_9},{delta_1},{delta_2},{delta_3},{delta_4}];
 
 // Draw all players markers on the client
 X_XMarkerPlayers = {
@@ -39,7 +39,8 @@ X_XMarkerPlayers = {
 	for "_i" from 0 to ((count d_player_entities) - 1) do
 	{
         _as = d_player_entities select _i;
-        call compile format [ "_ap = %1;", _as ];
+        _ap = call (SYG_players_arr select _i);
+        //call compile format [ "_ap = %1;", _as ];
         if (alive _ap && isPlayer _ap) then {
             _as setMarkerPosLocal position _ap;
 
@@ -57,7 +58,7 @@ X_XMarkerPlayers = {
             };
             _as setMarkerTextLocal _text;
             if (d_p_marker_dirs) then {
-                _as setMarkerDirLocal (direction (vehicle _ap));
+                _as setMarkerDirLocal (direction ((vehicle _ap)+90));
             };
         } else {
             _as setMarkerPosLocal [0,0];
@@ -284,7 +285,7 @@ X_XAI_Markers = {
 					case 1: {(format[_mkname, _abcdef]) setMarkerTextLocal (str _abcdef)};
 					case 2: {(format[_mkname, _abcdef]) setMarkerTextLocal ""};
 					case 3: {(format[_mkname, _abcdef]) setMarkerTextLocal ""};
-					case 4: {(format[_mkname, _abcdef]) setMarkerTextLocal "Health: " + str(9 - round(9 * damage _unit))};
+					case 4: {(format[_mkname, _abcdef]) setMarkerTextLocal format["Health: %1", str(9 - round(9 * damage _unit)) ]};
 				};
 			} else {
 				(format[_mkname, _abcdef]) setMarkerPosLocal [0,0];
