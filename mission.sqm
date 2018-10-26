@@ -695,7 +695,7 @@ class Mission
 		items=236;
 		class Item0
 		{
-			position[]={9658,140.28,9986.16};
+			position[]={9657.131836,139.994995,9987.144531};
 			id=1;
 			side="EMPTY";
 			vehicle="FlagCarrierSouth";

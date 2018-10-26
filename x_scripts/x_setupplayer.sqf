@@ -9,7 +9,7 @@ sleep 1;
 
 //#define __DEBUG__
 //#define __DEBUG_BONUS__
-#define __DEBUG_JAIL__
+//#define __DEBUG_JAIL__
 
 #define __MISSION_START__
 
