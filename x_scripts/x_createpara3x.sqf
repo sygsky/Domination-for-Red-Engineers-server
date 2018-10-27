@@ -123,7 +123,7 @@ _make_jump = {
 				sleep (0.85 + (random 0.25));
 			};
 			// fly on height about 200 meters after paradrop completion (prevent collision with mountain slopes)
-			_vehicle flyinheight 200;
+			_vehicle flyInHeight 200;
 			
 #ifdef __ACE__	
 			// animate heli action - close ramp

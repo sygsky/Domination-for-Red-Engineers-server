@@ -4,6 +4,8 @@
 //
 // Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
+// TODO: allow pilots to patrol with saboteurs if landed
+//
 //private ["_assigned","_helifirstpoint","_chopper","_paragrp","_leader","_pos_end","_u","_vgrp","_wp","_xx","_heliendpoint","_wp2","_attack_pos", "_i", "_grp_array","_parachute_type"];
 private ["_assigned", "_helifirstpoint", "_chopper", "_paragrp", "_leader", "_u", "_vgrp", "_wp", "_xx", 
          "_heliendpoint", "_wp2", "_attack_pos", "_i", "_unti1", "_vehicle", "_type", "_para", "_units", 
@@ -22,6 +24,7 @@ if (!isServer) exitWith {};
 
 _vgrp = _this select 0; // chopper crew group
 _chopper = _this select 1;
+_chopper lock true;
 _helifirstpoint = _this select 2;
 _heliendpoint = _this select 3;
 
@@ -115,7 +118,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 			_next_to_eject = _next_to_eject + 1;
 			sleep 0.82;
 		};
-		_ejected = true;
+		_ejected = _next_to_eject >= _cnt_uni;
 	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 		//hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting completed, pos %1", _msg ];
 	};
@@ -141,7 +144,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 					_next_to_eject = _next_to_eject + 1;
 					sleep 0.81;
 				};
-				_ejected = true;
+        		_ejected = _next_to_eject >= _cnt_uni;
         	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 			};
 		};
@@ -186,7 +189,7 @@ if (!_ejected && alive _chopper) then
 if (_ejected) then // create sabotage group
 {
 //[player,"Saboteurs team onground setup block entered"] call XfSideChat;
-_chopper flyinheight 200;
+_chopper flyInHeight 200;
 
 #ifdef __ACE__	
 	// animate heli action
@@ -273,7 +276,7 @@ _chopper flyinheight 200;
                     if ( _cnt > 0) then // join last member to this group
                     {
 #ifdef	__DEBUG_PRINT__
-                        hint localize format["x_createpara2.sqf: prev. group id %1 (of %2 saboteur[s]) joined to this one", _i, _cnt];
+                        hint localize format["x_createpara2.sqf: prev. group id %1 (of %2 alive saboteur[s]) joined to this one", _i, _cnt];
 #endif
 
                         (units _grp) join _paragrp;

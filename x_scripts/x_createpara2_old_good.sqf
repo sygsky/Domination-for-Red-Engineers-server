@@ -36,7 +36,7 @@ _wp2 setWaypointBehaviour "CARELESS";
 _wp2 setWaypointSpeed "NORMAL";
 _wp2 setwaypointtype "MOVE";
 
-_chopper flyinheight 100; // fly on height about 100 meters
+_chopper flyInHeight 100; // fly on height about 100 meters
 
 _parachute_type = (
 	switch (d_enemy_side) do {
@@ -110,7 +110,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 		if (!alive _chopper OR isNull _chopper OR ! canMove _chopper OR (!alive (driver _chopper))) exitWith {};
 	};
 	// fly on height about 200 meters after paradrop completion (prevent collision with mountain slopes)
-	_chopper flyinheight 200;
+	_chopper flyInHeight 200;
 
 #ifdef __ACE__	
 	// animate heli action
