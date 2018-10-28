@@ -121,11 +121,8 @@ while {true} do {
 
                 if ( ! _driver_near) then // if empty and no man nearby (10 meters circle)
                 {
-                    _say = (_pos2 distance _pos1) >= SOUND_SAY_DIST;
-                    if ( _say) then
-                    {
-                        ["say_sound", _moto, "steal"] call XSendNetStartScriptClient; _pos1 set [2,-5]; _moto setPos _pos1;
-                    };
+                    //_say = (_pos2 distance _pos1) >= SOUND_SAY_DIST;
+                    ["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll; _pos1 set [2,-5]; _moto setPos _pos1;
 
                     if ( !alive _moto ) then // recreate vehicle
                     {
@@ -151,7 +148,7 @@ while {true} do {
                     sleep 1.11;
 
                     _moto setPos (_pos);
-                    if ( _say) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClient };
+                    if ( _say) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClientAll };
 
                     sleep 0.25;
                     //_x set [MOTO_ORIG_POS, getPos _moto];

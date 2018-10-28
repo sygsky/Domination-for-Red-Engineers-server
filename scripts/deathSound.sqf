@@ -35,8 +35,7 @@ else    // some kind of suicide? Say something about...
     _nil = "Logic" createVehicle position player;
     sleep 0.01;
     // let all to hear this sound, not only current player
-    //if ( !X_SPE) then { _nil say _sound };
-    ["say_sound", _nil, _sound] call XSendNetStartScriptClient;
+    ["say_sound", _nil, _sound] call XSendNetStartScriptClientAll;
     sleep 20; // sleep longer than known max sound length is possible
     deleteVehicle _nil;
 

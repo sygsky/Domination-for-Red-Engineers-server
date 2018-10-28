@@ -362,17 +362,17 @@ class CfgSounds
     class steal {name = ""; sound[] = {\sounds\steal.ogg, db+10, 1.0}; titles[] = {}; };
 
 // woman self-killed
-    class female_shout_of_pain_1 {name = ""; sound[] = {\sounds\female_shout_of_pain_1.ogg, db+10, 1.0}; titles[] = {}; };
-    class female_shout_of_pain_2 {name = ""; sound[] = {\sounds\female_shout_of_pain_2.ogg, db+10, 1.0}; titles[] = {}; };
-    class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\female_shout_of_pain_3.ogg, db+10, 1.0}; titles[] = {}; };
-    class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\female_shout_of_pain_4.ogg, db+10, 1.0}; titles[] = {}; };
+    class female_shout_of_pain_1 {name = ""; sound[] = {\sounds\female_shout_of_pain_1.ogg, db+0, 1.0}; titles[] = {}; };
+    class female_shout_of_pain_2 {name = ""; sound[] = {\sounds\female_shout_of_pain_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\female_shout_of_pain_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\female_shout_of_pain_4.ogg, db+0, 1.0}; titles[] = {}; };
 // man self-killed
-    class male_scream_0 {name = ""; sound[] = {\sounds\male_scream_0.ogg, db+10, 1.0}; titles[] = {}; };
-    class male_scream_1 {name = ""; sound[] = {\sounds\male_scream_1.ogg, db+10, 1.0}; titles[] = {}; };
-    class male_scream_2 {name = ""; sound[] = {\sounds\male_scream_2.ogg, db+10, 1.0}; titles[] = {}; };
-    class male_scream_3 {name = ""; sound[] = {\sounds\male_scream_3.ogg, db+10, 1.0}; titles[] = {}; };
-    class male_scream_4 {name = ""; sound[] = {\sounds\male_scream_4.ogg, db+20, 1.0}; titles[] = {}; };
-    class male_scream_5 {name = ""; sound[] = {\sounds\male_scream_5.ogg, db+10, 1.0}; titles[] = {}; };
+    class male_scream_0 {name = ""; sound[] = {\sounds\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_1 {name = ""; sound[] = {\sounds\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_2 {name = ""; sound[] = {\sounds\male_scream_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_3 {name = ""; sound[] = {\sounds\male_scream_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_4 {name = ""; sound[] = {\sounds\male_scream_4.ogg, db+10, 1.0}; titles[] = {}; };
+    class male_scream_5 {name = ""; sound[] = {\sounds\male_scream_5.ogg, db+0, 1.0}; titles[] = {}; };
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 

@@ -48,7 +48,7 @@ while {true} do {
 	};
     //sleep (1 + random 1);
     //_new_vec say "horse"; //  whi-i-i-i-nn-y-i-i
-    //["say_sound", _new_vec, "horse"] call XSendNetStartScriptClient; // set to all clients
+    //["say_sound", _new_vec, "horse"] call XSendNetStartScriptClientAll; // set to all clients
 
 	sleep _sleep_time + (random 10);
 	_new_vec lock false;

@@ -518,7 +518,8 @@ XHandleNetStartScriptClient = {
                 // add scores
                 player addScore argp( d_ranked_a, 27 );
                 // play music
-                playSound "no_more_waiting";
+                //playSound "no_more_waiting";
+                ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClientAll; // inform all about next observer death
                 // show message
                 (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
             };
