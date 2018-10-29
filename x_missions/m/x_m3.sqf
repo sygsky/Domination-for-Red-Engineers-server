@@ -34,7 +34,7 @@ if (isServer) then {
 	__PossAndOther
 	_pos_other2 = x_sm_pos select 2;
 	_vehicle = objNull;
-	_vehicle = _xtank createvehicle (_poss);
+	_vehicle = _xtank createVehicle (_poss);
 	#ifndef __TT__
 	sleep 2.123;
 	["specops", 2, "basic", 2, _pos_other,100,true] spawn XCreateInf;

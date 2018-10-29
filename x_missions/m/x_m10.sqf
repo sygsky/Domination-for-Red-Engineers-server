@@ -24,7 +24,7 @@ if (isServer) then {
 	_xarti = (if (d_enemy_side == "EAST") then {"D30"} else {"M119"});
 	__PossAndOther
 	_vehicle = objNull;
-	_vehicle = _xarti createvehicle (_poss);
+	_vehicle = _xarti createVehicle (_poss);
 	#ifndef __TT__
 	_vehicle addEventHandler ["killed", {_this call XKilledSMTargetNormal}];
 	#endif

@@ -22,7 +22,7 @@ if (X_Client) then {
 
 if (isServer) then {
 	__PossAndOther
-	_vehicle = "Land_trafostanica_velka" createvehicle (_poss);
+	_vehicle = "Land_trafostanica_velka" createVehicle (_poss);
 	[_vehicle] spawn XCheckSMHardTarget;
 	sleep 2.22;
 	["shilka", 1, "bmp", 1, "tank", 1, _pos_other,1,110,true] spawn XCreateArmor;

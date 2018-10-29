@@ -19,7 +19,7 @@ while {true} do {
 		deletevehicle _vehicle;
 		_vehicle = objNull;
 		sleep 0.5;
-		_vehicle = _type createvehicle _startpos;
+		_vehicle = _type createVehicle _startpos;
 		_vehicle setPos _startpos;
 		_vehicle setdir _startdir;
 	};

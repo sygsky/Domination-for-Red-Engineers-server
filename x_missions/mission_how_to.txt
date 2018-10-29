@@ -47,7 +47,7 @@ The buildup of the sidemission on the server. Units, vehicles, whatever you want
 Example:
 if (isServer) then {
 	__Poss
-	_vehicle = "Land_radar" createvehicle (_poss);
+	_vehicle = "Land_radar" createVehicle (_poss);
 	_vehicle setVectorUp [0,0,1];
 	[_vehicle] spawn XCheckSMHardTarget;
 	sleep 3.21;

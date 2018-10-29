@@ -27,12 +27,12 @@ if (isServer) then {
 	_xchopper = (if (d_enemy_side == "EAST") then {"KA50"} else {"AH1W"});
 #endif
 	__PossAndOther
-	_hangar = "Land_SS_hangar" createvehicle (_poss);
+	_hangar = "Land_SS_hangar" createVehicle (_poss);
 	_hangar setDir 90;
 	__AddToExtraVec(_hangar)
 	sleep 1.0123;
 	_vehicle = objNull;
-	_vehicle = _xchopper createvehicle (_poss);
+	_vehicle = _xchopper createVehicle (_poss);
 	_vehicle setDir 270;
 	sleep 2.123;
 	["specops", 1, "basic", 1, _poss,100,true] spawn XCreateInf;

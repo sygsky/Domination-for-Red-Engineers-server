@@ -22,7 +22,7 @@ if (X_Client) then {
 
 if (isServer) then {
 	__Poss
-	_vehicle = "Land_watertower1" createvehicle (_poss);
+	_vehicle = "Land_watertower1" createVehicle (_poss);
 	[_vehicle] spawn XCheckSMHardTarget;
 	sleep 2.123;
 	["specops", 1, "basic", 1, _poss,150,true] spawn XCreateInf;

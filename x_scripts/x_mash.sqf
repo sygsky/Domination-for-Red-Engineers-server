@@ -43,7 +43,7 @@ if (!(alive player)) exitWith {
 
 _dir_to_set = getdir player - 180;
 
-medic_tent = "Mash" createvehicle d_medtent;
+medic_tent = "Mash" createVehicle d_medtent;
 medic_tent setdir _dir_to_set;
 medic_tent setPos [position medic_tent select 0, position medic_tent select 1, 0];
 

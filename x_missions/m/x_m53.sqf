@@ -31,13 +31,13 @@ if (isServer) then {
 #endif
 	_xplane = _planes call XfRandomArrayVal; //+++ Sygsky: for more fun
 	__PossAndOther
-	_hangar = "Land_SS_hangar" createvehicle (_poss);
+	_hangar = "Land_SS_hangar" createVehicle (_poss);
 	_hangar setDir 180.000000;
 	__AddToExtraVec(_hangar)
 	sleep 1.0123;
 	
 	_vehicle = objNull;
-	_vehicle = _xplane createvehicle (_poss);
+	_vehicle = _xplane createVehicle (_poss);
 	_vehicle setDir 0;
 	sleep 2.123;
 	["specopsbig", 1, "basic", 3, _poss,200,true] spawn XCreateInf;
