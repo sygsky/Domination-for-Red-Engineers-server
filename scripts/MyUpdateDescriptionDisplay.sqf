@@ -100,7 +100,7 @@ if (!_isPDM) then
 				_magArray = getArray(_confMagazines);
 				_magCount = count _magArray;
 				if (_magCount > 0) then { _magazines = getText(_confMag >> (_magArray select 0) >> "displayName"); };
-				_magArr = [_magazines]; // array of already descibed mags
+				_magArr = [_magazines]; // array of already described mags
 				for "_x" from 1 to _magCount step 1 do
 				{
 				    _magDescr = getText(_confMag >> (_magArray select _x) >> "displayName");

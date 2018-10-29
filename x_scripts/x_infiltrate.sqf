@@ -12,7 +12,7 @@ if (!isServer) exitWith {};
 #define __PRINT__
 
 // to debug sabotages with short intervals between infiltrations
-//#define __DEBUG__
+#define __DEBUG__
 
 // to debug cleansing procedure (run it with short intervals)
 //#define __DEBUG_CLEAN__

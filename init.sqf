@@ -614,7 +614,7 @@ if ( sec_kind == 3) then
 };
 
 #ifdef __ACE__
-if ( !isServer ) then // use only on client
+if ( X_Client ) then // use only on client
 {
     // store rucksack position (not move automatically it to the secondary gear slot)
     ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";

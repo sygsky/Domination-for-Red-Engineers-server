@@ -5,7 +5,7 @@
 // Call this script on client computer only
 //
 
-if ( isServer ) exitWith { hint localize "scripts/advScoreSystem.sqf can't be call on server"};
+if ( isServer && (!X_SPE) ) exitWith { hint localize "scripts/advScoreSystem.sqf can't be call on server"};
 
 #define SCORES_PER_LIFE 10
 #define LIFE_CHECKED_COUNT 4

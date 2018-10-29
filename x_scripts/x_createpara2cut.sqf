@@ -258,7 +258,7 @@ _chopper flyInHeight 200;
 	_officer = [ d_sleader_W, _paragrp ] call SYG_ensureOfficerInGroup;
 	_cnt = (units  _paragrp) call SYG_rearmSabotageGroup;
 #ifdef	__DEBUG_PRINT__
-	hint localize format["x_createpara2.sqf: sabotage.sqf started with squad of %1 units", _cnt];
+	hint localize format["x_createpara2.sqf: sabotage.sqf started with squad of %1 units = %2 alive + %3 canStand", count (units  _paragrp), {alive _x} count (units  _paragrp),{canStand _x} count (units  _paragrp)];
 #endif
 	[_paragrp] execVM "scripts\sabotage.sqf"; // run sabotage logic (separate from patrol one)
 

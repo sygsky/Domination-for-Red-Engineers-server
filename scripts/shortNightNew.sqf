@@ -71,9 +71,11 @@ _str = format[ "+++ SHORTNIGHT: SYG_startMorning %1, SYG_startDay %2, SYG_startE
         _morningStart,_dayStart,_eveningStart,_nightStart,_nightSkipFrom, _nightSkipTo, daytime ];
 //player groupChat _str;
 hint localize _str;
+_skipped = false;
 
 while {true } do
 {
+    _skipped = false;
     // NIGHT begins
     if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 21:00, simply skip time up to the morning twilight
     {
@@ -89,6 +91,7 @@ while {true } do
         {
             // we are on dedicated server!!!
             skipTime _skip;
+            _skipped = true;
         }
         else
         {
@@ -98,7 +101,7 @@ while {true } do
             sleep 10; // wait intil skip time is completed
         };
     };
-
+    // TODO: execute one of upper or lower code, not one after one as now:
     // NIGHT up to the TWILIGHT continues
     if (daytime < _morningStart) then // we are in night from 03:00 to the morning, sleep to morning
     {
@@ -107,7 +110,10 @@ while {true } do
         //player groupChat _str;
         hint localize _str;
     #endif
-        0 call _titleTime;
+        if (!_skipped) then
+        {
+            0 call _titleTime;
+        };
         sleep ((_morningStart - daytime) *3600);
     };
 

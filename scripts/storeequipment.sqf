@@ -11,7 +11,7 @@
 //
 #include "x_macros.sqf"
 
-if (isServer) exitWith{};
+if (isServer && ! X_SPE) exitWith{false};  // isDedicated
 
 // comment next line to not create debug messages
 //#define __DEBUG__
@@ -31,7 +31,9 @@ if (isServer) exitWith{};
 // =======================================================================================
 //
 
-if ( ( typeName arg(3) ) != "STRING") exitWith
+// hint localize format["--- scripts/storeequipment.sqf: _this is %1", _this ];
+
+if ( ( typeName arg(3) ) != "STRING" ) exitWith
 {
     hint localize format["--- scripts/storeequipment.sqf: illegal argument ""%1"" found, expected ""S""[tore]", arg(3)];
 };
@@ -52,6 +54,7 @@ switch (toUpper arg(3)) do
                     then  { ["STR_SYS_613"]} // Record is wiped off
                     else {["STR_SYS_611"] }; // Record is stored
         ["msg_to_user", "", [_args]] call XHandleNetStartScriptClient; // message output
+//        hint localize format["--- scripts/storeequipment.sqf: msg is %1", args ];
 
     };
     case "L":

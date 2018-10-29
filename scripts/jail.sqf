@@ -13,7 +13,7 @@
 */
 
 
-if ( isServer ) exitWith {"--- jail called on server, exit!"};
+if ( isServer && !X_SPE ) exitWith {"--- jail called on server, exit!"};
 
 #define JAIL_START_PERIOD 60
 
