@@ -102,6 +102,11 @@ SYG_baseDefeatTracks =
     "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1"
     ];
 
+// for the death near TV-tower, independently in town/SM or ordinal on map one
+SYG_TVTowerDefeatTracks =
+    [
+    "clock_1x_gong", "gong_01", "gong_2","gong_3","gong_4","gong_5","gong_6","gong_7","gong_8","gong_9"
+    ];
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
@@ -135,9 +140,18 @@ SYG_playRandomDefeatTrackByPos = {
 		_flag = RFLAG_BASE;
 	};
     #endif
+
+    // check if we are base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
         SYG_baseDefeatTracks call SYG_playRandomTrack;
+    };
+
+    // check if we are near TV-Tower
+    _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
+    if ( (count _TVTowerArr) > 0 ) exitWith
+    {
+        SYG_TVTowerDefeatTracks call SYG_playRandomTrack;
     };
 
     if (_this call SYG_pointOnIslet) exitWith
@@ -149,6 +163,7 @@ SYG_playRandomDefeatTrackByPos = {
     {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
+
     // check if we near church
     _churchArr = nearestObjects [ _this, ["Church","Land_kostelik","Land_kostel_trosky"],100];
 
