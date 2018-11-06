@@ -4,6 +4,9 @@
 	description: spawn this file to play some short music while you are laying dead
 	returns: nothing
 */
+
+#include "x_setup.sqf"
+
 _killer = _this select 1;
 _unit = _this select 0; // player
 
@@ -28,8 +31,18 @@ else    // some kind of suicide? Say something about...
     _sound = "male_scream_0"; // default value
     // check if a woman is killed
     if (typeOf _unit == "ACE_SoldierEMedicWoman_VDV")
-    then { _sound = "female_shout_of_pain_" + str(1 + floor(random 4)); } // 1-4
-    else { _sound = "male_scream_" + str(floor(random 6)); }; // 0-5
+    then { _sound = "female_shout_of_pain_" + str(ceil (random 4)); } // 1-4
+    else
+    {
+#ifdef __ACE__
+// play 15 sounds from ACE collection for hard screams
+    _sound = format["ACE_BrutalScream%1", ceil(random 15)]; // 1-15
+
+    hint localize format["ACE sound is %1", _sound];
+#else
+    _sound = "male_scream_" + str(floor(random 6)); // 0-5
+#endif
+    };
 
     // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
     _nil = "Logic" createVehicle position player;

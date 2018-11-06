@@ -450,7 +450,7 @@ SYG_ensureOfficerInGroup = {
 };
 
 /**
-  * Detects if desigmated group belongs tp patrol or convoy group
+  * Detects if designated group belongs to patrol or convoy group
   * call: _isPatrolGrp = _grp call SYG_isPatrolGroup;
  */
 SYG_isPatrolGroup = {

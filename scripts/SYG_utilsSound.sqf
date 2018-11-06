@@ -149,9 +149,17 @@ SYG_playRandomDefeatTrackByPos = {
 
     // check if we are near TV-Tower
     _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
-    if ( (count _TVTowerArr) > 0 ) exitWith
+    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
     {
         SYG_TVTowerDefeatTracks call SYG_playRandomTrack;
+    };
+
+    // check if we near church
+    _churchArr = nearestObjects [ _this, ["Church","Land_kostelik","Land_kostel_trosky"],100];
+
+    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
+    {
+        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 1 time from 5
     };
 
     if (_this call SYG_pointOnIslet) exitWith
@@ -164,13 +172,6 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
 
-    // check if we near church
-    _churchArr = nearestObjects [ _this, ["Church","Land_kostelik","Land_kostel_trosky"],100];
-
-    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
-    {
-        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 1 time from 5
-    };
     switch (_this call SYG_whatPartOfIsland) do
     {
         case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack};

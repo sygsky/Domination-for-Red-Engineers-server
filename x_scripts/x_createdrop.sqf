@@ -1,4 +1,4 @@
-private ["_chopper","_doit","_drop_pos","_drop_type","_grp","_para","_the_chopper","_the_chute","_the_pilot","_unit","_vehicle","_wp","_starttime","_dist_to_drop","_exit_it","_wp2","_end_pos","_delete_chop","_may_exit"];
+private ["_chopper","_doit","_drop_pos","_drop_type","_grp","_para","_the_chopper","_the_chute_type","_the_pilot","_unit","_vehicle","_wp","_starttime","_dist_to_drop","_exit_it","_wp2","_end_pos","_delete_chop","_may_exit"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -28,23 +28,23 @@ __WaitForGroup
 _grp = ["CIV"] call x_creategroup;
 _the_chopper = x_drop_aircraft;
 _the_pilot = "";
-_the_chute = "";
+_the_chute_type = "";
 switch (X_Drop_Side) do {
 	case "WEST": {
 		_the_chopper = x_drop_aircraft;
 		_the_pilot = d_pilot_W;
-		_the_chute = "ParachuteWest";
+		_the_chute_type = "ParachuteWest";
 	};
 	case "EAST": {
 		_the_chopper = x_drop_aircraft;
 		_the_pilot = d_pilot_E;
-		_the_chute = "ParachuteEast";
+		_the_chute_type = "ParachuteEast";
 	};
 	case "RACS";
 	case "CIV": {
 		_the_chopper = x_drop_aircraft;
 		_the_pilot = "Civilian";
-		_the_chute = "ParachuteC";
+		_the_chute_type = "ParachuteC";
 	};
 };
 
@@ -92,9 +92,9 @@ while {_chopper distance _drop_pos > _dist_to_drop} do {
 };
 if (_may_exit) exitWith {};
 
-[_the_chute,_chopper,_drop_type,_drop_pos] spawn {
-	private ["_para","_the_chute","_chopper","_doit","_vehicle","_drop_type","_drop_posx"];
-	_the_chute = _this select 0;
+[_the_chute_type,_chopper,_drop_type,_drop_pos] spawn {
+	private ["_para","_the_chute_type","_chopper","_doit","_vehicle","_drop_type","_drop_posx"];
+	_the_chute_type = _this select 0;
 	_chopper = _this select 1;
 	_drop_type = _this select 2;
 	_drop_posx = _this select 3;
@@ -104,14 +104,15 @@ if (_may_exit) exitWith {};
 	_vehicle = objNull;
 	_is_ammo = false;
 	_para = objNull;
-	if (_drop_type in ["AmmoBoxWest","WeaponBoxWest","SpecialBoxWest","AmmoBoxEast","WeaponBoxEast","SpecialBoxEast","AmmoBoxGuer","WeaponBoxGuer","SpecialBoxGuer"]) then {
+	if (_drop_type in ["AmmoBoxWest","WeaponBoxWest","SpecialBoxWest","AmmoBoxEast","WeaponBoxEast","SpecialBoxEast","AmmoBoxGuer","WeaponBoxGuer","SpecialBoxGuer"]) then
+	{
 		_is_ammo = true;
-		_para = createVehicle [_the_chute, [(position _chopper) select 0,(position _chopper) select 1,((position _chopper) select 2)-10], [], 0, "FLY"];
+		_para = createVehicle [_the_chute_type, [(position _chopper) select 0,(position _chopper) select 1,((position _chopper) select 2)-10], [], 0, "FLY"];
 		_para setPos [(position _chopper) select 0,(position _chopper) select 1,((position _chopper) select 2) - 10];
 	} else {
 		_vehicle = createVehicle [_drop_type, [(position _chopper) select 0,(position _chopper) select 1,((position _chopper) select 2)-10], [], 0, "NONE"];
 		_vehicle setPos [(position _chopper) select 0,(position _chopper) select 1,((position _chopper) select 2) - 10];
-		_para = createVehicle [_the_chute, [0,0,0], [], 0, "FLY"];
+		_para = createVehicle [_the_chute_type, [0,0,0], [], 0, "FLY"];
 		_para setPos (_vehicle modelToWorld [0,0,2]);
 		[_vehicle] call XAddCheckDead;
 	};

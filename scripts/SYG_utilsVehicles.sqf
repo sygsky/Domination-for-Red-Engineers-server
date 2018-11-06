@@ -1158,7 +1158,7 @@ SYG_heliRearmTable =
  [
  	 [ // 1st heli params
  	 	["M197", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-     	["750Rnd_M197_AH1", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
+     	["750Rnd_M197_AH1", "ACE_4Rnd_9M17P", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
  	 ],
  	 [ // 2nd heli params
  	 	["ACE_M230", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
@@ -1394,10 +1394,12 @@ SYG_createEnemyGroup =
 SYG_createGroup = SYG_createEnemyGroup;
 
 //============================================ Vehicle groups
-#ifdef __OWN_SIDE_EAST__
 
 ABRAMS_LIST =        ["ACE_M1Abrams",       "ACE_M1A1_HA",       "ACE_M1A2",       "ACE_M1A2_SEP",       "ACE_M1A2_TUSK"/*,       "ACE_M1A2_SEP_TUSK"*/];
 ABRAMS_DESERT_LIST = ["ACE_M1Abrams_Desert","ACE_M1A1_HA_Desert","ACE_M1A2_Desert","ACE_M1A2_SEP_Desert","ACE_M1A2_TUSK_Desert"/*,"ACE_M1A2_SEP_TUSK_Desert"*/];
+
+#ifdef __OWN_SIDE_EAST__
+
 LINEBAKER = ["ACE_M6A1"];
 ABRAMS_PATROL = [2,3,[ [1,1,ABRAMS_LIST], [1,1,LINEBAKER] ] ];
 
@@ -1543,6 +1545,77 @@ SYG_camouflageTank = {
     if ( (_this select 0) != "tank" ) exitWith {_this select 0}; // not tank has no desert camouflage
     if ( (_this select 1) call SYG_isDesert ) exitWith {"tank_desert"}; // set desert camouflage to the desert tanks
     "tank" // tank not in desert area so has no camouflage
+};
+
+// change ordinal Abrams namews with corresponding desert one
+// call as:
+//          _new_names_arr = [_veh1_name, _veh2_name, ...] call SYG_makeDesertAbrams;
+//   or
+//          _new_name = _new_name call SYG_makeDesertAbrams;
+SYG_makeDesertAbrams = {
+    if ( typeName _this == "STRING") exitWith
+    {
+        _pos = ABRAMS_LIST find toUpper(_this);
+        if (_pos >= 0 ) exitWith {  ABRAMS_DESERT_LIST select _pos};
+        _this
+    };
+    if ( typeName _this != "ARRAY") exitWith {_this};
+
+    for "_i" from 0 to (count _this - 1) do
+    {
+        _pos = ABRAMS_LIST find (_this select _i);
+        if (_pos >= 0 ) then { _this set [_i, ABRAMS_DESERT_LIST select _pos];};
+    };
+    _this
+};
+// _man = createVehicle ...;
+// _man = _man call SYG_makeNegroMen;
+// ...
+// _negro_list = [_man1, _man2, ..., _manN] call SYG_makeNegroMen
+//
+WHITE_LIST = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,"R01"];
+NEGRO_LIST = [26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,"R02","R03","R04"];
+
+// call:
+//      _man = _man call SYG_makeNegroMen;
+// or
+//      _man_list = _man_list call SYG_makeNegroMen; // list items are not changed, only faces for men replaced with Negro ones
+//
+SYG_makeNegroMen = {
+    [NEGRO_LIST, _this] call SYG_makeColoredMen;
+};
+
+// call:
+//      _man = _man call SYG_makeWhiteMen;
+// or
+//      _man_list = _man_list call SYG_makeWhiteMen; // list items are not changed, only faces for men replaced with White ones
+//
+SYG_makeWhiteMen = {
+    [WHITE_LIST, _this] call SYG_makeColoredMen;
+};
+
+// call:
+//      _man = [_colorArr, _man] call SYG_makeColoredMen;
+// or
+//      _man_list = [_colorArr, _man_list] call SYG_makeColoredMen;
+//
+SYG_makeColoredMen = {
+    _list = _this select 0;
+    _men  = _this select 1;
+
+    if ( typeName _men == "OBJECT" && _men isKindOf "CAManBase") exitWith { _men setFace format["Face%1", _list call XfRandomArrayVal]; _men };
+
+    if ( typeName _men != "ARRAY") exitWith {_men};
+    {
+        if (typeName _x == "OBJECT") then
+        {
+            if (_x isKindOf "CAManBase") then
+            {
+                _x setFace format["Face%1",_list call XfRandomArrayVal] // black faces
+            };
+        };
+    } forEach _men;
+    _men
 };
 
 // call: _horn_added = _this call SYG_addHorn;

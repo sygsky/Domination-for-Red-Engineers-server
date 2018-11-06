@@ -159,6 +159,16 @@ _make_isle_grp = {
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
     _elist        = _patrol_type call SYG_generatePatrolList; // list of vehicle type names
 
+// if in desert region, replace  tanks with desert camouflage
+    if (_patrol_type == "HP") then{
+        if (_start_point call SYG_isDesert) then // in desert regions replace ordinal Abrams of patrol to desert ones
+        {
+            sleep 0.01;
+            _elist = _elist call SYG_makeDesertAbrams;
+            hint localize "+++ HP patrol created with desert camouflaged Abrams"
+        };
+    };
+
 //#ifdef __DEBUG__
 //    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
 //#endif
