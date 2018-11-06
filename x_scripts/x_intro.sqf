@@ -58,12 +58,12 @@ else // music normally played on intro
     if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then
     {
         // 7th November is a Day of Great October Socialist Revolution
-        playMusic  (["ahead_friends","Varshavianka"] call _XfRandomArrayVal);
+        playMusic  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
     }
     else
     {
 
-        _music = ((call compile format["[%1]", (localize "STR_INTRO_MUSIC")]) +
+        _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
         [
             "bond","grant","stavka_bolshe_chem","red_alert_soviet_march","burnash","adjutant","lastdime",
             "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","prince_negaafellaga","strelok",

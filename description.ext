@@ -103,11 +103,9 @@ class CfgMusic
 {
 	tracks[]={};
 
-	class Varshavianka
-	{
-		name = "";
-		sound[] =  {\sounds\Varshavianka.ogg, db+20, 1.0};
-	};
+	class Varshavianka { name = "";sound[] =  {\sounds\Varshavianka.ogg, db+20, 1.0};}; // russian
+	class Varshavianka_eng { name = "";sound[] =  {\sounds\Varshavianka_eng.ogg, db+20, 1.0};}; // english
+	class warschawyanka_german { name = "";sound[] =  {\sounds\warschawyanka_german.ogg, db+10, 1.0};}; // german
 
 	class grant
 	{
@@ -253,6 +251,9 @@ class CfgMusic
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
 
+    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
 
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
@@ -293,7 +294,7 @@ class CfgMusic
     class gayane1 { name=""; sound[] = {\sounds\gayane1.ogg,db+0,1.0};} // "Gayane" ballet
     class gayane2 { name=""; sound[] = {\sounds\gayane2.ogg,db+0,1.0};} // "Gayane" ballet
     class gayane3 { name=""; sound[] = {\sounds\gayane3.ogg,db+0,1.0};} // "Gayane" ballet
-    class gamlet_hunt { name=""; sound[] = {\sounds\gamlet_hunt.ogg,db+0,1.0};} // "Hamlet" USSR movie
+    class gamlet_hunt { name=""; sound[] = {\sounds\gamlet_hunt.ogg,db+0,1.0};} // "Hamlet" soviet movie
     class treasure_island { name=""; sound[] = {\sounds\treasure_island.ogg,db-1,1.0};} // "tresure island alarm theme" USSR movie
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
