@@ -251,11 +251,6 @@ class CfgMusic
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
 
-    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
-    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
-    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
-
-
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
     class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
