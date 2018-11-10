@@ -51,6 +51,25 @@ _replaceFire = {
 	};
 };
 
+// _grp call _killInWaterUnits;
+_delUnitsInWater = {
+    if ( typeName _this  == "GROUP") then
+    {
+        _this = units _this;
+    };
+    if (typeName _this != "ARRAY") exitWith {false;}
+    for "_i" from 0 to (_this) -1 do
+    {
+        _x = _this select _i;
+       if ( surfaceInWater _x ) then
+       {
+            _x removeAllEventHandlers "killed";
+            deleteVehicle _x;
+            sleep 0.2;
+       };
+    };
+};
+
 if ( typeName (_this select 0) == "OBJECT") then {
 	_this = _this select 3;
 };
@@ -443,6 +462,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 
 	sleep (120 + (random 60)); // interval to attack other  factories
 	if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
+
+    _grp call _delUnitsInWater; // just in case
+
 }; // while { (({ (alive _x) and ( canMove _x	)} count units _grp) > 0) && _continue }
 
 //group is dead, try to remove it from he list
