@@ -151,7 +151,8 @@ SYG_playRandomDefeatTrackByPos = {
     _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
     if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
     {
-        SYG_TVTowerDefeatTracks call SYG_playRandomTrack;
+        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        ["say_sound", _TVTowerArr, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
 
     // check if we near church

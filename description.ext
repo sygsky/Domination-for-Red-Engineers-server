@@ -113,12 +113,8 @@ class CfgMusic
 		sound[] =  {\sounds\grant.ogg, db+20, 1.0};
 	};
 
-	class snovymgodom
-	{
-		name = "";
-		sound[] =  {\sounds\snovymgodom.ogg, db+20, 1.0};
-	};
-
+	class snovymgodom {	name = ""; sound[] = {\sounds\snovymgodom.ogg, db+20, 1.0};};
+	class nutcracker {	name = ""; sound[] = {\sounds\NutCracker.ogg, db+20, 1.0};};
 /*
 	class patrol
 	{
@@ -158,11 +154,7 @@ class CfgMusic
         sound[]=   {\sounds\thefuture.ogg,db-1,1.0};
     };
 
-	class stavka_bolshe_chem
-	{
-	    name="";
-	    sound[]=   {\sounds\stavka_bolshe_chem.ogg,db-1,1.0};
-    };
+//	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
 	class burnash
 	{
@@ -250,6 +242,7 @@ class CfgMusic
     class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg,db+20,1.0};} // intro music from Soviet great song (1950)
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class morze { name=""; sound[] = {\sounds\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
