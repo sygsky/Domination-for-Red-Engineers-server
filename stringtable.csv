@@ -824,8 +824,8 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Ск. падения:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"""
-STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""", """druzba"",""dem_morgenrot_entgegen""", """ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"""
+STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """podolinam"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"
