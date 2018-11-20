@@ -393,7 +393,7 @@ hint localize "+++ count resolved_targets > 0 +++";
             if (direction _no > 355) then {
                 _objstatus = "FAILED";
                 _color = "ColorRed";
-                [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal;
+                [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad + 100,_rad + 100],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal; // Mark occupied town (red diagonal shading)
             } else {
                 [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
             };

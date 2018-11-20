@@ -5,7 +5,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-sleep 1200 + random 1200;
+sleep (1200 + random 1200);
 
 _x_can_recapture = {
 	private ["_ret"];
@@ -26,7 +26,7 @@ _allready_recaptured = [];
 while {true} do {
 	// do recapture only if there are human players
 	if (X_MP) then {
-		waitUntil {sleep (21.012 + random 1);(call XPlayersNumber) > 0};
+		waitUntil {sleep (61.012 + random 20);(call XPlayersNumber) > 0};
 	};
 	__DEBUG_NET("x_recapture.sqf",(call XPlayersNumber))
 	
@@ -35,6 +35,9 @@ while {true} do {
 	if (!the_end && (count resolved_targets > 1) && (count d_recapture_indices < count resolved_targets - 1) && call _x_can_recapture) then {
 		_recap_index = -1;
 		_loop_running = true;
+
+		// Main loop to check exit conditions
+
 		while {_loop_running} do {
 			if (X_MP) then {
 				waitUntil {sleep (8.012 + random 1);(call XPlayersNumber) > 0};
@@ -109,7 +112,7 @@ while {true} do {
 		// send to players
 		["recaptured",_recap_index,0] call XSendNetStartScriptClient;
 	};
-	sleep 1800 + random 600;
+	sleep (1800 + random 600);
 };
 
 if (true) exitWith {};
