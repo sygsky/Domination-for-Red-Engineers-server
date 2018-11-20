@@ -31,7 +31,14 @@ X_XMarkerVehicles = {
 };
 
 // prepare players variables to speed up marker drawing
-SYG_players_arr = [{RESCUE},{RESCUE2},{alpha_1},{alpha_2},{alpha_3},{alpha_4},{alpha_5},{alpha_6},{alpha_7},{alpha_8},{bravo_1},{bravo_2},{bravo_3},{bravo_4},{bravo_5},{bravo_6},{bravo_7},{bravo_8},{charlie_1},{charlie_2},{charlie_3},{charlie_4},{charlie_5},{charlie_6},{charlie_7},{charlie_8},{charlie_9},{delta_1},{delta_2},{delta_3},{delta_4}];
+SYG_players_arr =
+    [
+     {RESCUE},{RESCUE2},
+     {alpha_1},{alpha_2},{alpha_3},{alpha_4},{alpha_5},{alpha_6},{alpha_7},{alpha_8},
+     {bravo_1},{bravo_2},{bravo_3},{bravo_4},{bravo_5},{bravo_6},{bravo_7},{bravo_8},
+     {charlie_1},{charlie_2},{charlie_3},{charlie_4},{charlie_5},{charlie_6},{charlie_7},{charlie_8},{charlie_9},
+     {delta_1},{delta_2},{delta_3},{delta_4}
+    ];
 
 // Draw all players markers on the client
 X_XMarkerPlayers = {
@@ -41,7 +48,9 @@ X_XMarkerPlayers = {
         _as = d_player_entities select _i;
         _ap = call (SYG_players_arr select _i);
         //call compile format [ "_ap = %1;", _as ];
-        if (alive _ap && isPlayer _ap) then {
+        _show = false;
+        if ( isPlayer _ap && alive _ap) then
+        {
             _as setMarkerPosLocal position _ap;
 
             // 0 = player markers turned off
@@ -61,8 +70,12 @@ X_XMarkerPlayers = {
                 _as setMarkerDirLocal (direction ((vehicle _ap)+90));
             };
         } else {
+//#ifdef __ACE__
+//            _as setMarkerColorLocal "ACE_ColorTransparent"; // that's all for ACE
+//#else
             _as setMarkerPosLocal [0,0];
             _as setMarkerTextLocal "";
+//#endif
         };
 		sleep 0.0123;
 	};
@@ -74,7 +87,6 @@ _p_marker_color = "";
 if (!d_dont_show_player_markers_at_all) then {
 	_tmp_grpsm = [];
 	_mindex = 0;
-	_cindex = 0;
 	_colarray = ["ColorBlue","ColorGreen","ColorBlack","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorOrange", "ColorPink","ColorBrown", "ColorKhaki"];
 	
     for "_i" from 0 to ((count d_player_entities) - 1) do {

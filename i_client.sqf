@@ -26,6 +26,10 @@ d_v_marker_dirs = true;
 // marker type used for players
 d_p_marker = "Vehicle";
 
+#ifdef __ACE__
+d_p_dead_marker = "Vehicle";
+#endif
+
 // choose false, if you don't want to use teamstatusdialog
 d_use_teamstatusdialog = true;
 

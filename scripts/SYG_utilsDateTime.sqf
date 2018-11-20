@@ -440,7 +440,7 @@ SYG_runHolidayMusic =
       [ 1, 5, 3, "Varshavianka"], // 1st May
       [ 9, 5, 3], // 9th of May
       [22, 6, 3, "invasion"],
-      [ 7,11, 7, "Varshavianka"]  // 7th of November
+      [ 7,11, 7, ["Varshavianka","Varshavianka_eng","warschawyanka_german"]]  // 7th of November
     ];
 };
 

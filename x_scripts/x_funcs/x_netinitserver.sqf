@@ -115,6 +115,7 @@ XHandleNetStartScriptServer = {
 		};
 
 		// info from user about his name and missionStart value
+		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 		case "d_p_a": {
 			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance
 			if ( count _this > 2) then // missionStart received
@@ -122,11 +123,11 @@ XHandleNetStartScriptServer = {
 			    if (isNil "SYG_mission_start") then// 1st player connected/server started
 			    {
 			        SYG_mission_start = arg(2);
-			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1, %2", arg(1), arg(2), argopt(3,"NO_LANG")];
+			        hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"NO_LANG"), arg(1), arg(2)];
 			    }
 			    else
 			    {
-			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1", arg(1),argopt(3,"NO_LANG")];
+			        hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2", argopt(3,"NO_LANG"), arg(1)];
 			    };
 			};
 		};

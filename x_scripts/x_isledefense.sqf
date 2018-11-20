@@ -165,7 +165,7 @@ _make_isle_grp = {
         {
             sleep 0.01;
             _elist = _elist call SYG_makeDesertAbrams;
-            hint localize "+++ HP patrol created with desert camouflaged Abrams"
+            hint localize format["+++ HP patrol created with desert camouflaged Abrams at %1", [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
         };
     };
 
