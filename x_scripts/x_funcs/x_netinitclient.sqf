@@ -689,7 +689,31 @@ XHandleNetStartScriptClient = {
 
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
-		    arg(1) say arg(2); // do this on clients only
+		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
+		    _obj = arg(1);
+		    if ( (_obj isKindOf "CaManBase") && (!(alive _obj)) )then
+		    {
+                _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
+                sleep 0.01;
+                // let all to hear this sound, not only current player
+                _nil say arg(2);
+                sleep 0.01;
+    		    _sound = nearestObject [position _nil, "#soundonvehicle"];
+    		    if (isNull _sound) then
+    		    {
+                    sleep 20; // sleep longer than known max sound length
+                    deleteVehicle _nil;
+    		    }
+    		    else
+    		    {
+                    waitUntil {isNull _sound};
+                    deleteVehicle _nil;
+	            };
+		    }
+		    else
+		    {
+    		    _obj say arg(2); // do this on clients only
+		    };
 		};
 
 		case "play_music": { // FIXME: is it called anywhere?

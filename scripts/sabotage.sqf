@@ -58,7 +58,7 @@ _delUnitsInWater = {
         _this = units _this;
     };
     if (typeName _this != "ARRAY") exitWith {false;};
-    for "_i" from 0 to (_this) -1 do
+    for "_i" from 0 to (count _this) -1 do
     {
         _x = _this select _i;
        if ( surfaceInWater _x ) then

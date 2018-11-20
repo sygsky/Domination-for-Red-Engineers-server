@@ -278,7 +278,7 @@ XHandleNetStartScriptServer = {
 		    _sound   = argopt(2, "");        // sound to play
 		    if (    _sound == "" ) exitWith {hint localize "--- ""say_sound"" _vehicle sound is empty";};
 		    hint localize format["server ""play_sound"" (%1, %2)", typeOf _vehicle, _sound];
-		    _this call XSendNetStartScriptClient; // resend to all clients
+		    _this call XSendNetStartScriptClientAll; // resend to all clients
 //		    _vehicle say _sound; // do this on clients only
 		};
 		// ["GRU_event_scores",_score_id, name player] call XSendNetStartScriptServer;

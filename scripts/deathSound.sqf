@@ -44,12 +44,7 @@ else    // some kind of suicide? Say something about...
 #endif
     };
 
-    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
-    _nil = "Logic" createVehicle position player;
-    sleep 0.01;
     // let all to hear this sound, not only current player
-    ["say_sound", _nil, _sound] call XSendNetStartScriptClientAll;
-    sleep 20; // sleep longer than known max sound length is possible
-    deleteVehicle _nil;
+    ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll;
 
 };

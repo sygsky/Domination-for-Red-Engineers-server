@@ -141,7 +141,7 @@ SYG_playRandomDefeatTrackByPos = {
 	};
     #endif
 
-    // check if we are base flag
+    // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
         SYG_baseDefeatTracks call SYG_playRandomTrack;
@@ -155,7 +155,7 @@ SYG_playRandomDefeatTrackByPos = {
         ["say_sound", _TVTowerArr, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
 
-    // check if we near church
+    // check if we are near church
     _churchArr = nearestObjects [ _this, ["Church","Land_kostelik","Land_kostel_trosky"],100];
 
     if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
