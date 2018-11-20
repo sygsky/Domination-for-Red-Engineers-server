@@ -206,12 +206,12 @@ XRecapturedUpdate = {
 	_state = _this select 1;
 	_target_array = target_names select _index;
 	_target_name = _target_array select 1;
-	_targer_rad = (_target_array select 2) max 300; // visible radious of town
+	_target_rad = (_target_array select 2) max 300; // visible radious of town
 	switch (_state) do {
 		case 0: { // shade with red slash hatching brush
 			_target_name setMarkerColorLocal "ColorRed";
 			_target_name setMarkerBrushLocal "FDiagonal";
-			_target_name setMarkerSizeLocal [_targer_rad +100, _target_rad + 100];
+			_target_name setMarkerSizeLocal [_target_rad +100, _target_rad + 100];
 			call compile format ["""%1"" objStatus ""%2"";", _target_array select 3, "FAILED"];
 			hint composeText[
 				parseText("<t color='#f0ff0000' size='2'>" + localize "STR_SYS_104"/* "Внимание:" */ + "</t>"), lineBreak,
@@ -241,7 +241,7 @@ XRecapturedUpdate = {
 			_target_name setMarkerColorLocal _color;
 			#endif
 			_target_name setMarkerBrushLocal "Solid";
-			_target_name setMarkerSizeLocal [_targer_rad, _target_rad];
+			_target_name setMarkerSizeLocal [_target_rad, _target_rad];
 			call compile format ["""%1"" objStatus ""%2"";", _target_array select 3, "DONE"];
 			hint composeText[
 				parseText("<t color='#f00000ff' size='2'>" + (localize "STR_SYS_106")/* "Отлично!" */ + "</t>"), lineBreak,
