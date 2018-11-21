@@ -61,7 +61,7 @@ _delUnitsInWater = {
     for "_i" from 0 to (count _this) -1 do
     {
         _x = _this select _i;
-       if ( surfaceInWater _x ) then
+       if ( surfaceIsWater _x ) then
        {
             _x removeAllEventHandlers "killed";
             deleteVehicle _x;
