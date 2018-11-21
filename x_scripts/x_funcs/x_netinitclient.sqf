@@ -691,7 +691,7 @@ XHandleNetStartScriptClient = {
 		{
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
 		    _obj = arg(1);
-		    if ( (_obj isKindOf "CaManBase") && (!(alive _obj)) )then
+		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) )then
 		    {
                 _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
                 sleep 0.01;
