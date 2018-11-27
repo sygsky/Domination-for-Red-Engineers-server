@@ -484,7 +484,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
-			case "ACE_SoldierWMAT_A": // TODO: TODO: add WOB with 2 "ACE_AT4_HP"
+			case "ACE_SoldierWMAT_A":
 			{
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher + 2 high penetration rocket2
 				if ( _super_rearm ) then 
@@ -611,8 +611,8 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 //		[_unit, "ACE_PipeBomb", ["PipeBomb","TimeBomb","ACE_TimeBomb","ACE_Mine","ACE_Claymore_M"]/*, "ALL"*/] call SYG_handleMags; // replace only 1st found designated magazine type
 		_ret = true;
 		//	player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, NOT rearmed", _unit_type, _prob, _adv_rearm, _rnd]
-    	// remove useless binocular from inventory
 	};
+   	// remove useless binocular from inventory
     if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"}; // remove this bad device
 	_ret
 };
@@ -972,7 +972,7 @@ SYG_rearmBasic = {
 			{	// rearm with some special kind of m136/M72
 				if (_adv_rearm ) then
 				{
-					_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket ACE_AT4_HEAT
+					_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket ACE_AT4_HP
 //					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HP", 2]]; // small launcher+ high penetration rocket
 				}
 				else
@@ -981,7 +981,7 @@ SYG_rearmBasic = {
 //					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HEAT", 2]]; // small launcher
 				};
 				_wpn = RAR(SYG_HK416_WPN_SET_STD);
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 7]] + [["ACE_SmokeGrenade_Violet"]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 7]] + [[_smoke_grenade]];
 				_ret = true;
 				breakTo "main";
 			}; // "ACE_SoldierWMAT_A"
@@ -1014,7 +1014,7 @@ SYG_rearmBasic = {
 				{
 					_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				};
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [["ACE_SmokeGrenade_White",1]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [[_smoke_grenade]];
 				_ret = true;
 				breakTo "main";
 			};
@@ -1026,14 +1026,10 @@ SYG_rearmBasic = {
 //			_equip = _equip + [["P",_wpn, _wpn call SYG_defaultMagazine,_magnum],[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			[_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
-			//if (!(_unit hasWeapon "Binocular")) then {_unit addWeapon "Binocular"};
 		};
-	}
-	else
-     {
-         // remove useless binocular from inventory
-		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
-     };
+	};
+    // remove useless binocular from inventory
+    if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	_ret
 };
 
@@ -1071,6 +1067,8 @@ SYG_rearmSpotter = {
 		_adv_rearm = 0.333;
 	};
 	_rnd = random 1.0;
+    if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
+
 	if ( _rnd < _prob) then  // do ordinal rearming
 	{
 		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
@@ -1102,7 +1100,6 @@ SYG_rearmSpotter = {
 		_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [["ACE_SmokeGrenade_Yellow",2],["LaserBatteries"]];
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
-		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 		true
 	}
 	else {false};
@@ -1125,6 +1122,8 @@ SYG_rearmGovernor = {
 	};
 	_rnd = random 1.0;
 	_magnum = 10;
+    // remove useless binocular from inventory
+	if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	if ( _rnd < _prob ) then  // do ordinal rearming
 	{
 		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
@@ -1145,8 +1144,6 @@ SYG_rearmGovernor = {
 		_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, _magnum],["ACE_SmokeGrenade_Yellow",2]];
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
-         // remove useless binocular from inventory
-		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 		true
 	}
 	else {false};
@@ -1166,6 +1163,7 @@ SYG_rearmHeavySniper = {
 		_unit = _this;
 		_prob = 1.0;
 	};
+    if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	_rnd = random 1.0;
 	if ( _rnd < _prob ) then  // do ordinal rearming
 	{
@@ -1175,7 +1173,6 @@ SYG_rearmHeavySniper = {
 		_equip = SYG_STD_MEDICAL_SET + [RAR(SYG_PISTOL_WPN_SET_WEST_STD_SD),["P", _wpn,_mag, 8],["ACE_SmokeGrenade_Yellow",2],["ACE_HandGrenade",2]];
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
-		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 		true
 	}
 	else {false};
@@ -1550,7 +1547,7 @@ SYG_armUnit = {
 					case "M"; // Magazine[s], simply skip this character
 					{};
 
-					case "E": // special Equipment, binocular etc
+					case "E": // special Equipment, binocular etc as the list of equipment ["E", _eqipment_1, _equipment_2, ...]
 					{
 					    for "_i" from 1 to (count _args - 1) do { _equipList = _equipList + [_args select _i]; _pos = _pos + 1;};
 					};
@@ -1588,7 +1585,7 @@ SYG_armUnit = {
 		_bsetWeapon = _secondWpn;
 		_unit addWeapon _secondWpn;
 	};
-	// add primary weapon is exists after secondary
+	// add primary weapon (if exists) after secondary to allow it to autoload magazine in
 	if ( _primWpn != "" ) then
 	{
 		_bsetWeapon = _primWpn;
@@ -1602,6 +1599,10 @@ SYG_armUnit = {
 		_unit selectWeapon _bsetWeapon;
 		_muzzles = getArray( configFile>>"cfgWeapons" >> _bsetWeapon >> "muzzles" );
 		_unit selectWeapon ( _muzzles select 0 );
+	};
+	if (primaryWeapon _unit == "" ) then // was not armed, inform developer about it
+	{
+	    hint localize format["--- SYG_armUnit: %s can't be armed with %2", typeOf _unit, _arr];
 	};
 };
 
@@ -2423,7 +2424,7 @@ SYG_hasSupressed = {
 
 
 // Gets all compatible magazines for designated weapon
-// _compatibleMagazines = _weapon call SYG_fuelCapacity;
+// _compatibleMagazines = _weapon call SYG_getCompatibleMagazines;
 //
 SYG_getCompatibleMagazines = {
    private ["_weapon", "_mags"];
@@ -2825,9 +2826,9 @@ SYG_getParamFromSettingsArray = {
     // return requested value
     switch toUpper(_prm) do
     {
-        case "VD": {argp(_arr, 0)};
-        case "GI": {argp(_arr, 1)};
-        case "PI": {argp(_arr, 2)};
+        case "VD": {argp(_arr, 0)}; // ViewDistance
+        case "GI": {argp(_arr, 1)}; // GrassIndex
+        case "PI": {argp(_arr, 2)}; // Player marker Index
         default {-1};
     }
 };

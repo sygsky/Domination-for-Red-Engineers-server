@@ -107,7 +107,7 @@ while {true} do {
 		{
 			if (_vec in [MRR1,MRR2] ) then
 			{
-							    _vec say "APC_GetIn";
+				_vec say "APC_GetIn";
 			};
 		};
 		_bulky_weapon = player call SYG_getVecRoleBulkyWeapon;

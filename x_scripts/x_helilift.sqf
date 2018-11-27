@@ -96,7 +96,8 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 				
 					// ++ Sygsky: checking again legal type of vehicle to lift here
 				  
-					if ( (typeof _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon")) then {
+					if ( (typeof _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon")) then
+					{
 					    if ( isNull Attached_Vec ) then
 					    {
                             //hint localize format["+++ x_helilift.sqf: vehicle %1 lifted", typeOf _nearest];
@@ -172,18 +173,37 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                             Vehicle_Attached = false;
                             Vehicle_Released = false;
 
+                            if (!alive _vehicle) then {
+                                _vehicle removeAction _release_id;
+                            } else {
+                                [_vehicle, localize "STR_SYS_39"] call XfVehicleChat; //"Техника сброшена..."
+                            };
+
+                            // Wait until stop
+                            waitUntil { ((velocity _nearest) distance [0,0,0] < 0.1) };
+
+                            sleep 1.012;
+                            _npos = position _nearest;
+                            _nearest setPos [_npos select 0, _npos select 1, 0]; // TODO: allow to be upside down if dropping height was high
+                            _nearest setVelocity [0,0,0];
+                            if ( isEngineOn _nearest ) then { _nearest engineOn false; };
+                            Attached_Vec = objNull;
+
+                            // send information to all clients about new position of well known lifted vehicle
                             switch (_nearest) do {
                                 case MRR1: {
                                     mr1_in_air = false;
                                     ["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
                                     ["mr1_lift_chopper",objNull] call XSendNetStartScriptServer;
+                                    publicVariable "MRR1";
                                 };
                                 case MRR2: {
                                     mr2_in_air = false;
                                     ["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
                                     ["mr2_lift_chopper",objNull] call XSendNetStartScriptServer;
+                                    publicVariable "MRR2";
                                 };
-    #ifdef __TT__
+#ifdef __TT__
                                 case MRRR1: {
                                     mrr1_in_air = false;
                                     ["mrr1_in_air",mrr1_in_air] call XSendNetStartScriptAllDiff;
@@ -194,24 +214,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                                     ["mrr2_in_air",mrr2_in_air] call XSendNetStartScriptAllDiff;
                                     ["mrr2_lift_chopper",objNull] call XSendNetStartScriptServer;
                                 };
-    #endif
+#endif
                             };
 
-
-                            if (!alive _vehicle) then {
-                                _vehicle removeAction _release_id;
-                            } else {
-                                [_vehicle, localize "STR_SYS_39"] call XfVehicleChat; //"Техника сброшена..."
-                            };
-
-                            waitUntil { ((velocity _nearest) distance [0,0,0] < 0.1) };
-
-                            sleep 1.012;
-                            _npos = position _nearest;
-                            _nearest setPos [_npos select 0, _npos select 1, 0]; // TODO: allow to be upside down if dropping height was high
-                            _nearest setVelocity [0,0,0];
-                            if ( isEngineOn _nearest ) then { _nearest engineOn false; };
-                            Attached_Vec = objNull;
 						}
 					}
 					else // vehicle not in legal list

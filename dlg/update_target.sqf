@@ -13,35 +13,34 @@ _text = "";
 _end_pos = position player;
 #ifndef __TT__
 switch (_target) do {
-	case 0: {
+	case 0: { // respawn to base only after death, not by teleport!!!
 		if (tele_dialog == 0) then {
-			_text = localize "STR_SYS_601"; // "Респаун на базе"
+			_text = localize "STR_SYS_601"; // "Respawn at Base"
 			beam_target = 0;
 			_end_pos = position FLAG_BASE;
-		} else {
-			_text = format[localize "STR_SYS_602",1]; //"Телепорт на мобильный респаун 1"
+		} else { // it is not possible option
+			_text = format[localize "STR_SYS_602",1]; // "Teleport to Mobile Resp %1"
 			beam_target = 1;
 			_end_pos = position MRR1;
 		};
 	};
-	case 1: {
+	case 1: { // teleport to MHQ1
 		_text = (
 			if (tele_dialog == 0) then {
-				format[localize "STR_SYS_603",1] //"Респаун на мобильный респаун 1"
-				
+				format[localize "STR_SYS_603",1] //"Respawn at Mobile Resp %1"
 			} else {
-				format[localize  "STR_SYS_602",1] //"Телепорт на мобильный респаун 1"
+				format[localize  "STR_SYS_602",1] //"Teleport to Mobile Resp %1"
 			}
 		);
 		beam_target = 1;
 		_end_pos = position MRR1;
 	};
-	case 2: {
+	case 2: { // telport to MHQ2
 		_text = (
 			if (tele_dialog == 0) then {
-				format[localize "STR_SYS_603",2] //"Респаун на мобильный респаун 2"
+				format[localize "STR_SYS_603",2] //"Respawn at Mobile Resp %1"
 			} else {
-				format[localize "STR_SYS_602",2] //"Телепорт на мобильный респаун 2"
+				format[localize "STR_SYS_602",2] //"Teleport to Mobile Resp %1"
 			}
 		);
 		beam_target = 2;
@@ -53,7 +52,7 @@ switch (_target) do {
 switch (_target) do {
 	case 0: {
 		if (tele_dialog == 0) then {
-			_text = localize "STR_SYS_601"; // "Респаун на базе"
+			_text = localize "STR_SYS_601"; // ""Respawn at Base"
 			beam_target = 0;
 			_end_pos = (
 				if (playerSide == west) then {
@@ -63,7 +62,7 @@ switch (_target) do {
 				}
 			);
 		} else {
-			_text = localize format["STR_SYS_602",1]; //"Телепорт на мобильный респаун 1"
+			_text = localize format["STR_SYS_602",1]; //""Teleport to Mobile Resp %1"
 			beam_target = 1;
 			_end_pos = (
 				if (playerSide == west) then {
@@ -77,9 +76,9 @@ switch (_target) do {
 	case 1: {
 		_text = (
 			if (tele_dialog == 0) then {
-				localize format["STR_SYS_603",1] //"Респаун на мобильный респаун 1"
+				localize format["STR_SYS_603",1] //"Respawn at Mobile Resp %1"
 			} else {
-				localize format["STR_SYS_602",1] //"Телепорт на мобильный респаун 1"
+				localize format["STR_SYS_602",1] //"Teleport to Mobile Resp %1"
 			}
 		);
 		beam_target = 1;
@@ -94,9 +93,9 @@ switch (_target) do {
 	case 2: {
 		_text = (
 			if (tele_dialog == 0) then {
-				localize format["STR_SYS_603",2] //"Респаун на мобильный респаун 2"
+				localize format["STR_SYS_603",2] //"Respawn at Mobile Resp %1"
 			} else {
-				localize format["STR_SYS_602",2] //"Телепорт на мобильный респаун 2"
+				localize format["STR_SYS_602",2] //"Teleport to Mobile Resp %1"
 			}
 		);
 		beam_target = 2;
