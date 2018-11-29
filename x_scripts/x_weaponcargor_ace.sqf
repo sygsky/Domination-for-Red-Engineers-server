@@ -372,7 +372,7 @@ _ve spawn {
 //				_ve addMagazineCargo ["ACE_8Rnd_12Ga_Buck00",100];
 				_ve addMagazineCargo ["ACE_9Rnd_12Ga_Slug",100];
 				_ve addMagazineCargo ["ACE_9Rnd_12Ga_Buck00",100];
-			_ve addMagazineCargo ["ACE_Dummy_SNIPER",3];
+			    _ve addMagazineCargo ["ACE_Dummy_SNIPER",3];
 				_ve addMagazineCargo ["ACE_10Rnd_762x54_SB_SVD",100];
 				//_ve addMagazineCargo ["ACE_10Rnd_762x54_SB_SV98",100];
  				_ve addMagazineCargo ["ACE_10Rnd_9x39_SB_VSS",100];

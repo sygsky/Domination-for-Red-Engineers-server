@@ -460,7 +460,7 @@ execVM "x_scripts\x_vec_hud.sqf";
 
 if (d_show_chopper_hud) then {execVM "x_scripts\x_chop_hud.sqf";};
 
-execVM "x_scripts\x_playerammobox.sqf";
+execVM "x_scripts\x_playerammobox.sqf"; // personal player ammo box handling
 
 _counterxx = 0;
 {
@@ -1560,6 +1560,7 @@ if (!d_para_at_base) then {
 };
 
 #ifdef __ACE__
+// create additional boxes (rucksack, HuntIR etc)
 for "_i" from 0 to (count d_ace_boxes) - 1 do {
 	_element = d_ace_boxes select _i;
 	_box = (_element select 0) createVehicleLocal (_element select 1);
