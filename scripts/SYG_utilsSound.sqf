@@ -67,7 +67,8 @@ SYG_defeatTracks =
     ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
-    ["i_new_a_guy","decisions","treasure_island","gong"]
+    ["i_new_a_guy","decisions","treasure_island","gong"],
+    ["sorcerie","melody"]
 ];
 
 SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
@@ -160,24 +161,24 @@ SYG_playRandomDefeatTrackByPos = {
 
     if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
     {
-        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 1 time from 5
+        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
     };
 
-    if (_this call SYG_pointOnIslet) exitWith
+    if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
         SYG_islandDefeatTracks call SYG_playRandomTrack;
     };
 
-    if (_this call SYG_pointOnRahmadi) exitWith
+    if (_this call SYG_pointOnRahmadi) exitWith // always if on Rahmadi
     {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
 
     switch (_this call SYG_whatPartOfIsland) do
     {
-        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack};
-        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack};
-        default  // Corazol
+        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
+        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
+        default  // Corazol // central Sahrani
         {
             call SYG_playRandomDefeatTrack
         };
