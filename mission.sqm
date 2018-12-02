@@ -2980,7 +2980,7 @@ class Mission
 			azimut=270.000000;
 			id=268;
 			side="EMPTY";
-			vehicle="ACE_WeaponBox_East";
+			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box3";
 			init="this setPos [(getPos this) select 0,(getPos this) select 1,2.75];ClearWeaponCargo this; ClearMagazineCargo this;";
@@ -2991,7 +2991,7 @@ class Mission
 			azimut=90.000000;
 			id=269;
 			side="EMPTY";
-			vehicle="ACE_WeaponBox_East";
+			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box2";
 			init="this setPos [(getPos this) select 0,(getPos this) select 1, 0.25];ClearWeaponCargo this; ClearMagazineCargo this;";
@@ -3002,7 +3002,7 @@ class Mission
 			azimut=90.000000;
 			id=270;
 			side="EMPTY";
-			vehicle="ACE_WeaponBox_East";
+			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box1";
 			init="this setPos [(getPos this) select 0,(getPos this) select 1, 0.25];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage -900000000000}]; ammo_box_1_2 addEventHandler [""dammaged"", {ammo_box_1_2 setDammage -900000000000}];";

@@ -316,7 +316,7 @@ _ve spawn {
 			clearWeaponCargo _ve;
 			_old_rank = rank player;
 			_index = _old_rank call XGetRankIndex;
-            // weaponcargo that is allways in a box
+            // weaponcargo that is always in a box
             _ve addWeaponCargo ["NVGoggles",5];
             _ve addWeaponCargo ["Binocular",5];
             _ve addWeaponCargo ["LaserDesignator",5];
