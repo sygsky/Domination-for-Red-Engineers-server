@@ -832,7 +832,7 @@ SYG_MsgOnPosA = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
 	_obj = arg(0);
 	_msg = arg(1);
-	_roundTo = _argopt(2,100);
+	_roundTo = argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = position _loc;
 	_pos1 set [2,0];
@@ -858,7 +858,7 @@ SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
 	_obj = arg(0);
 	_msg = arg(1);
-	_roundTo = _argopt(2,100);
+	_roundTo = argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = position _loc;
 	_pos1 set [2,0];
