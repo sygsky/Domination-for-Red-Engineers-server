@@ -82,26 +82,6 @@ if (!isServer) exitWith {};
 
 sleep DELAY_BEFORE_SCRIPT_START;
 
-// ========================================================
-/**
- * call: _leader = _grp call _get_leader;
- */
-_get_leader = {
-	private ["_leader"];
-	if (isNull _this) exitWith { objNull };
-	if (typeName _this == "OBJECT") then 
-	{
-		_this = group _this;
-	};
-	if (isNull _this) exitWith { objNull };
-	_leader = leader _this;
-	if ( !isNull _leader ) exitWith {_leader};
-	{
-		if ( (!isNull _x) && (canStand _x) ) exitWith {_leader = _x };
-	} forEach units _this;
-	_leader
-};
-
 //
 //
 //
@@ -825,7 +805,7 @@ while { true } do {
 			} forEach _vecs;
 			_dist =  round(argp(_igrpa,PARAM_LAST_POS) distance (leader _igrp));
 			_locname =  "";
- 		    _leader = _igrp call _get_leader;
+ 		    _leader = _igrp call SYG_getLeader;
 			if ( isNull _leader) then 
 			{
 				_locname = "<>";
@@ -881,7 +861,7 @@ while { true } do {
 			else
 			{
 				_locname = "";
-	 		  _leader = _igrp call _get_leader;
+	 		  _leader = _igrp call SYG_getLeader;
 				_men_info = "";
 				_pos_msg = "";
 				if ( isNull _leader) then 

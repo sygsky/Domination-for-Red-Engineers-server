@@ -832,6 +832,7 @@ SYG_MsgOnPosA = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
 	_obj = arg(0);
 	_msg = arg(1);
+	_roundTo = _argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = position _loc;
 	_pos1 set [2,0];
@@ -841,7 +842,7 @@ SYG_MsgOnPosA = {
     	_pos2 = position _obj;
 	};
 	_pos2 set [2,0];
-	_dist = (round ((_pos1 distance _pos2)/100)) * 100;
+	_dist = (round ((_pos1 distance _pos2)/_roundTo)) * _roundTo;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirName;
 	_locname = text _loc;
 	format[ _msg, _dist, _dir, _locname ]
@@ -857,6 +858,7 @@ SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
 	_obj = arg(0);
 	_msg = arg(1);
+	_roundTo = _argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = position _loc;
 	_pos1 set [2,0];
@@ -866,14 +868,14 @@ SYG_MsgOnPosE = {
     	_pos2 = position _obj;
 	};
 	_pos2 set [2,0];
-	_dist = (round ((_pos1 distance _pos2)/100)) * 100;
+	_dist = (round ((_pos1 distance _pos2)/_roundTo)) * _roundTo;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
 	format[ _msg , _dist, _dir, _locname ]
 };
 
 /*
- * Apppoximated distance to the base by feet in meters approximatelly
+ * Approximated distance to the base by feet in meters approximatelly
 
   calls:
         _dist = player call SYG_distToBase;

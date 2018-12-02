@@ -1626,6 +1626,26 @@ SYG_addHorn = {
     true
 };
 
+/**
+Find leader for goup, if leader is null, return first alive from units of gorup
+ * call: _leader = _grp call _get_leader;
+ */
+SYG_getLeader = {
+	private ["_leader"];
+	if (isNull _this) exitWith { objNull };
+	if (typeName _this == "OBJECT") then
+	{
+		_this = group _this;
+	};
+	if (isNull _this) exitWith { objNull };
+	if (typeName _this != "GROUP" )  exitWith { objNull };
+	_leader = leader _this;
+	if ( !isNull _leader ) exitWith {_leader};
+	{
+		if ( (!isNull _x) && (alive _x) ) exitWith {_leader = _x };
+	} forEach units _this;
+	_leader
+};
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

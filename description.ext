@@ -101,17 +101,14 @@ class CfgIdentities
 
 class CfgMusic
 {
+
 	tracks[]={};
 
 	class Varshavianka { name = "";sound[] =  {\sounds\Varshavianka.ogg, db+20, 1.0};}; // russian
 	class Varshavianka_eng { name = "";sound[] =  {\sounds\Varshavianka_eng.ogg, db+20, 1.0};}; // english
 	class warschawyanka_german { name = "";sound[] =  {\sounds\warschawyanka_german.ogg, db+10, 1.0};}; // german
 
-	class grant
-	{
-		name = "";
-		sound[] =  {\sounds\grant.ogg, db+20, 1.0};
-	};
+	class grant { name = ""; sound[] =  {\sounds\grant.ogg, db+20, 1.0}; };
 
 	class snovymgodom {	name = ""; sound[] = {\sounds\snovymgodom.ogg, db+20, 1.0};};
 	class nutcracker {	name = ""; sound[] = {\sounds\NutCracker.ogg, db+20, 1.0};};
@@ -141,86 +138,19 @@ class CfgMusic
     };
 */
 
-
-    class thetrembler
-    {
-        name="";
-        sound[]=   {\sounds\thetrembler.ogg,db-1,1.0};
-    };
-
-    class thefuture
-    {
-        name="";
-        sound[]=   {\sounds\thefuture.ogg,db-1,1.0};
-    };
-
 //	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
-	class burnash
-	{
-	    name="";
-	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};
-    };
-
-    class grig
-    {
-        name="";
-        sound[]=   {\sounds\grig.ogg,db-1,1.0};
-    };
-
-    class podolinam
-    {
-        name="";
-        sound[]=   {\sounds\podolinam.ogg,db-1,1.0};
-    };
-
-    class johnny
-    {
-        name="";
-        sound[]=   {\sounds\johnny.ogg,db-1,1.0};
-    };
-
-    class druzba
-    {
-        name="";
-        sound[]=   {\sounds\druzba.ogg,db-1,1.0};
-    };
-
-    class bond
-    {
-        name="";
-        sound[]=   {\sounds\bond.ogg,db-1,1.0};
-    };
-
-    class adjutant
-    {
-        name="";
-        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};
-    };
-
-    class red_alert_soviet_march
-    {
-        name="";
-        sound[]=   {\sounds\red_alert_soviet_march.ogg,db-1,1.0};
-    };
-
-    class ahead_friends // intro
-    {
-        name="";
-        sound[]=   {\sounds\ahead_friends.ogg,db-1,1.0};
-    };
-
-    class mission_impossible    // intro
-    {
-        name="";
-        sound[]=   {\sounds\mission_impossible.ogg,db-1,1.0};
-    };
-
-    class lastdime // intro
-    {
-        name="";
-        sound[]=   {\sounds\lastdime.ogg,db-1,1.0};
-    };
+	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
+    class grig    {        name="";        sound[]=   {\sounds\grig.ogg,db-1,1.0};    };
+    class podolinam    {        name="";        sound[]=   {\sounds\podolinam.ogg,db-1,1.0};    };
+    class johnny    {        name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};    };
+    class druzba    {        name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};    };
+    class bond    {        name="";        sound[]=   {\sounds\bond.ogg,db-1,1.0};    };
+    class adjutant    {        name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};    };
+    class red_alert_soviet_march { name=""; sound[]= {\sounds\red_alert_soviet_march.ogg,db-1,1.0}; };
+    class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };
+    class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
+    class               lastdime { name=""; sound[]= {\sounds\lastdime.ogg,db-1,1.0};    };
 
 /*
     class requiem // intro
@@ -246,6 +176,16 @@ class CfgMusic
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
+
+//    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
+
+    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
+    class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
+
+//+++++++++++++++++++++++ Defeat music track list
+
+    class thetrembler { name=""; sound[]=   {\sounds\thetrembler.ogg,db-1,1.0}; };
+    class thefuture { name=""; sound[]=   {\sounds\thefuture.ogg,db-1,1.0}; };
     class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
 
     class aztecs { name=""; sound[] = {\sounds\aztecs.ogg,db-1,1.0}; };
@@ -262,11 +202,6 @@ class CfgMusic
     class yma_sumac { name=""; sound[] = {\sounds\yma_sumac.ogg,db-1,1.0}; };
     class yma_sumac_2 { name=""; sound[] = {\sounds\yma_sumac_2.ogg,db-1,1.0}; };
     class village_ruins { name=""; sound[] = {\sounds\village_ruins.ogg,db-1,1.0}; };
-
-//    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
-
-    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
-    class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
 
     class pimbompimbom { name=""; sound[] = {\sounds\pimbompimbom.ogg,db-1,1.0};} // defeat music
     class Delerium_Wisdom { name=""; sound[] = {\sounds\Delerium_Wisdom.ogg,db-1,1.0};} // defeat music
@@ -288,8 +223,8 @@ class CfgMusic
     class decisions { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
     class gong {name = ""; sound[] = {\sounds\gong.ogg, db+10, 1.0}; titles[] = {}; };
     class church_organ_1 {name = ""; sound[] = {\sounds\church_organ_1.ogg, db+10, 1.0}; titles[] = {}; };
-
-
+    class sorcerie {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0}; titles[] = {}; };
+    class melody {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0}; titles[] = {}; };
 
 };
 

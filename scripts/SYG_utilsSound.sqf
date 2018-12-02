@@ -99,7 +99,7 @@ SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
-    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1"
+    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1","sorcerie","melody"
     ];
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one

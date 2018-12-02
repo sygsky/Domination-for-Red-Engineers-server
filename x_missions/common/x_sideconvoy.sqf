@@ -130,9 +130,9 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 #ifdef __DEBUG_PRINT__							
 		if ( _time2print <= time ) then
 		{
-			if (!isNull leader _newgroup) then
+			if (!isNull (_newGroup call SYG_getLeader)) then
 			{
-				_loc = (leader _newgroup) call SYG_nearestLocation;
+				_loc = (_newGroup call SYG_getLeader) call SYG_nearestLocation;
 				_pos1 = position _loc;
 				_pos1 set [2,0];
 				_pos2 = position _leader;
