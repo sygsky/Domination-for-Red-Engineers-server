@@ -537,9 +537,9 @@ XHandleNetStartScriptClient = {
 			private ["_msg"];
 			_msg = (
 				switch (_this select 1) do {
-					case 0: {format [localize "STR_SYS_182", 10]}; //"Вражеские войска будут на месте крушения менее чем через %1 минут"
-					case 1: {format [localize "STR_SYS_182", 5]}; //"Вражеские войска будут на месте крушения менее чем через %1 минут"
-					case 2:  {format [localize "STR_SYS_182", 2]}; //"Вражеские войска будут на месте крушения менее чем через %1 минуты"
+					case 0: {format [localize "STR_SYS_182", 10]}; //"The enemy troops will be at place in less than %1 minutes"
+					case 1: {format [localize "STR_SYS_182", 5]};
+					case 2:  {format [localize "STR_SYS_182", 2]};
 				}
 			);
 			_msg call XfHQChat;

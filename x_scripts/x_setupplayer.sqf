@@ -1181,7 +1181,8 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (_string_player in d_is_engineer) then  // only for engineers in any case !!!
     {
-#endif        _trigger = createTrigger["EmptyDetector" ,_pos];
+#endif
+        _trigger = createTrigger["EmptyDetector" ,_pos];
         _trigger setTriggerArea [0, 0, 0, false];
         _trigger setTriggerActivation ["NONE", "PRESENT", true];
         _trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
@@ -1431,7 +1432,7 @@ XFacAction = {
 			case 2: {d_wreck_repair_fac};
 		}
 	);
-	waitUntil {(sleep 0.521 + (random 0.3));!isNull _thefac};
+	waitUntil {(sleep 1.521 + (random 0.3));!isNull _thefac};
 	_element = d_aircraft_facs select _num;
 	_posf = _element select 0;
 	sleep 0.543;

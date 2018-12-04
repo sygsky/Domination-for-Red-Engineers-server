@@ -64,9 +64,6 @@
 // if true then the old engineer (faster) script gets used
 //#define __ENGINEER_OLD__
 
-// comment to enable only engineers to repair and refuel, else anybody can repair with a defined penalty for each +1 engineer score but can't refuel
-#define __NON_ENGINEER_REPAIR_PENALTY__ -5
-
 // if you are still running 1.14 comment the following line
 #define __NO_PARABUG_FIX__
 
@@ -137,6 +134,9 @@
 
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
 //#define __NO_RPG_CLONING__
+
+// comment to enable only engineers to repair and refuel, else anybody can repair with a defined penalty for each +1 engineer score but can't refuel
+#define __NON_ENGINEER_REPAIR_PENALTY__ -5
 
 // uncomment follow line to allow non-engineers use engineering fund
 #define __REP_SERVICE_FROM_ENGINEERING_FUND__
