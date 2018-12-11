@@ -712,38 +712,10 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				_equip =  _equip + [["P","ACE_ANPRC77_Alice"], ["P","LaserDesignator"]] ;
 				if ( _adv_rearm ) then 
 				{
-					switch ( floor(random 6)) do
-					{
-						case 0:
-						{
-							_wpn = RAR(SYG_SCARH_WPN_SET_STD_OPTICS);
-						};
-						case 1:
-						{
-							_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
-						};
-						case 2:
-						{
-							_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
-						};
-						case 4:
-						{
-							_wpn = RAR(SYG_SCARH_WPN_SET_STD);
-						};
-						case 5:
-						{
-							_wpn = RAR(SYG_G36_WPN_SET_STD);
-						};
-/*
-						case 6:
-						{
-							_wpn = RAR(SYG_HK417_WPN_SET_STD_SD_OPTICS);
-						};
-*/
-					};
+				    _wpn = ([SYG_SCARH_WPN_SET_STD_OPTICS, SYG_SCARL_WPN_SET_STD_OPTICS, SYG_SCARL_WPN_SET_STD_OPTICS, SYG_SCARH_WPN_SET_STD, SYG_G36_WPN_SET_STD] call XfRandomArrayVal) call XfRandomArrayVal;
 				}
 				else { _wpn = RAR(SYG_HK417_WPN_SET_STD_OPTICS); };
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 9]] + [[_smoke_grenade,2],["LaserBatteries"]];
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]] + [[_smoke_grenade,2],["LaserBatteries"]];
 			};
 			
 		    case "ACE_TeamLeaderW_USSF_ST_DCUL"; // leader, arms as a lower soldier
@@ -1602,7 +1574,7 @@ SYG_armUnit = {
 	};
 	if (primaryWeapon _unit == "" ) then // was not armed, inform developer about it
 	{
-	    hint localize format["--- SYG_armUnit: %s can't be armed with %2", typeOf _unit, _arr];
+	    hint localize format["--- SYG_armUnit: %1 can't be armed with %2", typeOf _unit, _arr];
 	};
 };
 
