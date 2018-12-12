@@ -692,10 +692,10 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=239;
+		items=243;
 		class Item0
 		{
-			position[]={9662.174805,139.994995,9992.677734};
+			position[]={9660.000000,139.994995,9992.799805};
 			id=1;
 			side="EMPTY";
 			vehicle="FlagCarrierSouth";
@@ -1622,7 +1622,8 @@ class Mission
 		};
 		class Item90
 		{
-			position[]={9649.256836,139.994995,9974.498047};
+			position[]={9656.599609,139.994995,9986.900391};
+			azimut=90.000000;
 			id=121;
 			side="EMPTY";
 			vehicle="MASH";
@@ -3034,14 +3035,13 @@ class Mission
 		class Item233
 		{
 			presenceCondition="false";
-			position[]={9668.794922,142.730530,9997.892578};
+			position[]={9668.794922,145.68,9997.892578};
 			azimut=270.000000;
 			id=273;
 			side="EMPTY";
 			vehicle="Paleta1";
 			skill=0.600000;
 			text="pal1";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1,2.9]";
 		};
 		class Item234
 		{
@@ -3058,14 +3058,13 @@ class Mission
 		class Item235
 		{
 			presenceCondition="false";
-			position[]={9678.999023,143.986877,9987.595703};
+			position[]={9678.999023,145.68,9987.595703};
 			azimut=270.000000;
 			id=275;
 			side="EMPTY";
 			vehicle="Paleta1";
 			skill=0.600000;
 			text="pal2";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1,2.7]";
 		};
 		class Item236
 		{
@@ -3099,6 +3098,50 @@ class Mission
 			vehicle="TT650G";
 			leader=1;
 			skill=0.600000;
+		};
+		class Item239
+		{
+			position[]={9662.299805,141.384857,9999.000000};
+			azimut=90.000000;
+			special="NONE";
+			id=279;
+			side="EMPTY";
+			vehicle="WarfareBHesco5x";
+			skill=0.600000;
+			text="WALL1";
+		};
+		class Item240
+		{
+			position[]={9683.500000,139.994995,9998.000000};
+			azimut=90.000000;
+			special="NONE";
+			id=280;
+			side="EMPTY";
+			vehicle="WarfareBHesco5x";
+			skill=0.600000;
+			text="WALL2";
+		};
+		class Item241
+		{
+			position[]={9662.299805,139.994995,9989.000000};
+			azimut=90.000000;
+			special="NONE";
+			id=281;
+			side="EMPTY";
+			vehicle="WarfareBHesco5x";
+			skill=0.600000;
+			text="WALL3";
+		};
+		class Item242
+		{
+			position[]={9683.500000,139.994995,9988.000000};
+			azimut=90.000000;
+			special="NONE";
+			id=282;
+			side="EMPTY";
+			vehicle="WarfareBHesco5x";
+			skill=0.600000;
+			text="WALL4";
 		};
 	};
 	class Markers

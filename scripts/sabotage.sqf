@@ -51,7 +51,8 @@ _replaceFire = {
 	};
 };
 
-// _grp call _killInWaterUnits;
+// _grp call _delUnitsInWater;
+// (units _grp) call _delUnitsInWater;
 _delUnitsInWater = {
     if ( typeName _this  == "GROUP") then
     {
@@ -61,7 +62,7 @@ _delUnitsInWater = {
     for "_i" from 0 to (count _this) -1 do
     {
         _x = _this select _i;
-       if ( surfaceIsWater _x ) then
+       if ( surfaceIsWater position _x ) then
        {
             _x removeAllEventHandlers "killed";
             deleteVehicle _x;

@@ -553,7 +553,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 
 		if ( _ret ) then 
 		{
-			[_unit,_equip] call SYG_armUnit;
+			_ret = [_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
 			//if (!(_unit hasWeapon "Binocular")) then {	_unit addWeapon "Binocular"; };
 		};
@@ -712,7 +712,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				_equip =  _equip + [["P","ACE_ANPRC77_Alice"], ["P","LaserDesignator"]] ;
 				if ( _adv_rearm ) then 
 				{
-				    _wpn = ([SYG_SCARH_WPN_SET_STD_OPTICS, SYG_SCARL_WPN_SET_STD_OPTICS, SYG_SCARL_WPN_SET_STD_OPTICS, SYG_SCARH_WPN_SET_STD, SYG_G36_WPN_SET_STD] call XfRandomArrayVal) call XfRandomArrayVal;
+				    _wpn = ([SYG_SCARH_WPN_SET_STD_OPTICS, SYG_SCARL_WPN_SET_STD_OPTICS, SYG_SCARH_WPN_SET_STD, SYG_G36_WPN_SET_STD] call XfRandomArrayVal) call XfRandomArrayVal;
 				}
 				else { _wpn = RAR(SYG_HK417_WPN_SET_STD_OPTICS); };
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]] + [[_smoke_grenade,2],["LaserBatteries"]];
@@ -822,9 +822,8 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 
 		if ( _ret ) then 
 		{
-			[_unit,_equip] call SYG_armUnit;
+			_ret = [_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
-			//if (!(_unit hasWeapon "Binocular")) then {	_unit addWeapon "Binocular"; };
 		};
 	};
 	// remove useless binocular from inventory
@@ -996,7 +995,7 @@ SYG_rearmBasic = {
 		if ( _ret )  then
 		{
 //			_equip = _equip + [["P",_wpn, _wpn call SYG_defaultMagazine,_magnum],[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
-			[_unit,_equip] call SYG_armUnit;
+			_ret [_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
 		};
 	};
@@ -1107,9 +1106,8 @@ SYG_rearmGovernor = {
 				case 0; //{_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS)};
 				case 1: {_wpn = RAR(SYG_SCARH_WPN_SET_STD_OPTICS);};
 				case 2: {_wpn = RAR(SYG_M21_WPN_SET);};
-				case 3; // {_wpn = RAR(SYG_SCARL_WPN_SET_SNIPER)};
-				case 4: {_wpn = RAR(SYG_M14_WPN_SET_STD_OPTICS);};
-				case 5: {_wpn = "ACE_MG36"; _magnum = 5;};
+				case 3; {_wpn = RAR(SYG_M14_WPN_SET_STD_OPTICS);};
+				case 4: {_wpn = "ACE_MG36"; _magnum = 5;};
 			};
 		}
 		else { _wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS); };
@@ -1262,7 +1260,7 @@ SYG_spec1 = ["ACE_20Rnd_762X51_B_M14","ACE_20Rnd_762x51_B_SCAR","ACE_20Rnd_762x5
 SYG_spec2 = ["ACE_20Rnd_762X51_SB_M14","ACE_20Rnd_762x51_SB_SCAR","ACE_20Rnd_762x51_SB_HK417"];
 
 /*
- * Small fountine to fine static string in array of string from config file!!!
+ * Small routine to find static string in array of string from config file!!!
  *
  */
 SYG_find = {
@@ -1474,12 +1472,13 @@ SYG_armUnit = {
 	if ( _itemCnt < 1 ) exitWith { hint format["SYG_armUnit: Expected number of args >= 1, found %1", _itemCnt]; false };
 	
 	_unit = arg(0);
-	if ( typeName _unit != "OBJECT") exitWith {hint localize format["--- SYG_armUnit: _this == %1", _this];};
+	if ( typeName _unit != "OBJECT") exitWith {hint localize format["--- SYG_armUnit: _this == %1", _this]; false};
 	_arr = arg(1); // main array
 	
 	if ( (typeName _arr) != "ARRAY" ) exitWith 
 	{
 		hint format["--- SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
+		false
 	};
 	_itemCnt = count _arr;
 	removeAllWeapons _unit;
@@ -1572,10 +1571,12 @@ SYG_armUnit = {
 		_muzzles = getArray( configFile>>"cfgWeapons" >> _bsetWeapon >> "muzzles" );
 		_unit selectWeapon ( _muzzles select 0 );
 	};
-	if (primaryWeapon _unit == "" ) then // was not armed, inform developer about it
+	if ( ( count (weapons _unit) == 0 ) && ( count(magazines _unit) == 0 )) exitWith // was not armed, inform developer about it
 	{
 	    hint localize format["--- SYG_armUnit: %1 can't be armed with %2", typeOf _unit, _arr];
+	    false
 	};
+	true
 };
 
 #define  __REARM_FULL__
