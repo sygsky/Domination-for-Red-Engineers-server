@@ -326,8 +326,7 @@ d_allmen_W = (
 // any group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 
     ["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A",
-        "ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierW_LightMortarDummy_A",
-        "ACE_SoldierW_HMGAB"
+        "ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierW_HMGAB"
 #ifdef __JAVELIN__
 , "ACE_SoldierWHAT_A"
 #endif

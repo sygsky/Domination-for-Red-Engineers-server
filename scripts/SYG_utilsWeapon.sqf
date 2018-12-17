@@ -877,8 +877,8 @@ SYG_rearmSpecopsGroupA = {
  *
  * Rearms basic unit so that only mashingunners and snipers are concerned
  * Returns: true if success, else false. F.e. if unit not known to function
- * call: _res = [_unit<,_rearm_probability<,_advanced_probability>] call SYG_rearmSabotage;
- * or:   _res = _unit call SYG_rearmSabotage;
+ * call: _res = [_unit<,_rearm_probability<,_advanced_probability>] call SYG_rearmBasic;
+ * or:   _res = _unit call SYG_rearmBasic;
  * params:
  *   _unit: unit to rearm with new weapon
  *   _rearm_probability: probabilty to reard unit. Optional. Default 0.5. Range 0.0 <-> 1.0
