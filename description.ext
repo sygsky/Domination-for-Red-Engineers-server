@@ -304,16 +304,16 @@ class CfgSounds
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 
-    class clock_1x_gong {name = ""; sound[] = {\sounds\gong\clock-1x-gong.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_01       {name = ""; sound[] = {\sounds\gong\gong-01.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_02       {name = ""; sound[] = {\sounds\gong\gong-02.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_03       {name = ""; sound[] = {\sounds\gong\gong-03.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_04       {name = ""; sound[] = {\sounds\gong\gong-04.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_05       {name = ""; sound[] = {\sounds\gong\gong-05.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_06       {name = ""; sound[] = {\sounds\gong\gong-06.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_07       {name = ""; sound[] = {\sounds\gong\gong-07.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_08       {name = ""; sound[] = {\sounds\gong\gong-08.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_09       {name = ""; sound[] = {\sounds\gong\gong-09.ogg, db+10, 1.0}; titles[] = {}; };
+    class clock_1x_gong {name = ""; sound[] = {\sounds\gong\clock-1x-gong.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_01       {name = ""; sound[] = {\sounds\gong\gong-01.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_02       {name = ""; sound[] = {\sounds\gong\gong-02.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_03       {name = ""; sound[] = {\sounds\gong\gong-03.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_04       {name = ""; sound[] = {\sounds\gong\gong-04.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_05       {name = ""; sound[] = {\sounds\gong\gong-05.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_06       {name = ""; sound[] = {\sounds\gong\gong-06.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_07       {name = ""; sound[] = {\sounds\gong\gong-07.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_08       {name = ""; sound[] = {\sounds\gong\gong-08.ogg, db+20, 1.0}; titles[] = {}; };
+    class gong_09       {name = ""; sound[] = {\sounds\gong\gong-09.ogg, db+20, 1.0}; titles[] = {}; };
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};
