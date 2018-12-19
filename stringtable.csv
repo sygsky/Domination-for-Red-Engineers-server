@@ -137,7 +137,7 @@ STR_SYS_54,"GRU intel","Intelligenz der GRU","Информация ГРУ"
 STR_SYS_55,"The intelligence agent will arrive in the next version. He will inform you where to deliver him.","Der Agent wird in den folgenden Versionen. Er wird sagen, wohin liefern.","Разведчик-нелегал прибудет в следущей версии. Он скажет, куда его доставить."
 STR_SYS_56,"Just a rumor:","Nur Gerüchte:","А пока только слухи:"
 STR_SYS_56_1,"And a rumor:","Auch neue Gerüchte:","Также слухи:"
-STR_SYS_57,"Settings","Einstellungen","Настройки"
+STR_SYS_57,"Settings","Einstellung","Настройки"
 STR_SYS_58,"Side mission:","Side mission:","Дополнительное задание:"
 STR_SYS_58_1,"Secondary Main Target Mission:","Sekundäre Ziel Der Mission:","Дополнительный приказ:"
 STR_SYS_59,"Main target:","Ziel:","Главная цель:"
@@ -1040,7 +1040,7 @@ STR_ACE_VDN_SOLDIERECREW,"Engineer","Ingenieur","инженер"
 //-----------------------------------------------------------------------------
 // Team Status Dialog strings:
 //-----------------------------------------------------------------------------
-STR_TSD9_01,Team Status,Team Status,Статус команды
+STR_TSD9_01,Team Status,STATUS GRUPPE,Статус команды
 STR_TSD9_02,Close,Schliessen,Закрыть
 STR_TSD9_03,My team,Mein Team,Моя команда
 STR_TSD9_04,My group,Meine Gruppe,Моя группа
