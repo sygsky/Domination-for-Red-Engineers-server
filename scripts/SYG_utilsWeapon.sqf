@@ -995,7 +995,7 @@ SYG_rearmBasic = {
 		if ( _ret )  then
 		{
 //			_equip = _equip + [["P",_wpn, _wpn call SYG_defaultMagazine,_magnum],[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
-			_ret [_unit,_equip] call SYG_armUnit;
+			_ret = [_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
 		};
 	};

@@ -3252,7 +3252,7 @@ class Mission
 		class Item13
 		{
 			position[]={9662.855469,139.994995,9994.380859};
-			name="@STR_SYS_34";
+			name="teleporter";
 			text="@STR_SYS_42";
 			type="Flag1";
 			colorName="ColorYellow";
