@@ -460,4 +460,11 @@ SYG_getDayTimeId = {
     if ( _dt <   SYG_startNight ) exitWith {3};
     0
 };
+//
+// _new_date = [_date, _hours_to_bump] call SYG_bumpDateByHours;
+SYG_bumpDateByHours = {
+    _date = + arg(0);
+    _hour = arg(1);
+    if ( _hour == 0) exitWith {_date};
 
+};

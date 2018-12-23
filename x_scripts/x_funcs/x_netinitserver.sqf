@@ -8,6 +8,9 @@
 	(_this select 1) call XHandleNetVar;
 };
 
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti", "Rokse [LT]"];
+SYG_localZones = [0,0,0,-4,+1];
+
 XHandleNetStartScriptServer = {
 	private ["_this"];
 	__DEBUG_NET("x_netinitserver.sqf XHandleNetStartScriptServer _this",_this)
@@ -117,18 +120,21 @@ XHandleNetStartScriptServer = {
 		// info from user about his name and missionStart value
 		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 		case "d_p_a": {
+
 			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance
 			if ( count _this > 2) then // missionStart received
 			{
-			    if (isNil "SYG_mission_start") then// 1st player connected/server started
+			    _userLogin = arg(1);
+			    _ind = SYG_userNames find _userLogin;
+			    if (_ind >= 0 ) then
 			    {
-			        SYG_mission_start = arg(2);
-			        hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"NO_LANG"), arg(1), arg(2)];
-			    }
-			    else
-			    {
-			        hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2", argopt(3,"NO_LANG"), arg(1)];
+			        _date = arg(2);
+
+			        // store real time or the server (MSK must be guarantied)
+			        //and local time to help know rela time all the mission
+			        SYG_realTime = [ arg(2), time ]; // use it to calculate most correct time available!
 			    };
+			    hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"NO_LANG"), _userLogin, arg(2), ];
 			};
 		};
 		/*

@@ -1688,7 +1688,7 @@ player call SYG_handlePlayerDammage; // handle hit events
         if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
         _targets = _targets + [_target];
     }forEach [[
-        [9663, 9898.2, 0], 180],[[9651.7, 9829.25, 4],180 ],[[9663, 9962, 0], 180], // south from flag between airstrip and courtyard
+        [9663, 9894.2, 0], 180],[[9651.7, 9829.25, 4],180 ],[[9663, 9962, 0], 180], // south from flag between airstrip and courtyard
         [[9700.05,10190.07,0]], // north form flag on other side of airstrip
         [[10397.581,10003.883, 0], 90] // east from flag on the edge of airstrip
     ];
