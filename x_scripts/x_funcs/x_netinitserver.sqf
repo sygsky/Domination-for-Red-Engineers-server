@@ -134,7 +134,7 @@ XHandleNetStartScriptServer = {
 			        //and local time to help know rela time all the mission
 			        SYG_realTime = [ arg(2), time ]; // use it to calculate most correct time available!
 			    };
-			    hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"NO_LANG"), _userLogin, arg(2), ];
+			    hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"NO_LANG"), _userLogin, arg(2) ];
 			};
 		};
 		/*

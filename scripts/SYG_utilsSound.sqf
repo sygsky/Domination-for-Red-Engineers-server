@@ -108,6 +108,8 @@ SYG_TVTowerDefeatTracks =
     [
     "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09"
     ];
+
+SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
@@ -157,7 +159,7 @@ SYG_playRandomDefeatTrackByPos = {
     };
 
     // check if we are near church
-    _churchArr = nearestObjects [ _this, ["Church","Land_kostelik","Land_kostel_trosky"],100];
+    _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
 
     if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
     {
@@ -200,6 +202,9 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
         ["church_organ_1"]
     ];
+
+// if you suicided near (50 meters) church
+SYG_liturgyDefeatTracks = [  "liturgy_1","liturgy_2","liturgy_3","liturgy_4" ];
 
 
 // Any isle defeat music

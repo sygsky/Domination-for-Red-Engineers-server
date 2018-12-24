@@ -1157,12 +1157,12 @@ SYG_heliRearmTable =
  	// heli params
  [
  	 [ // 1st heli params
- 	 	["M197", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-     	["750Rnd_M197_AH1", "ACE_4Rnd_9M17P", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
+ 	 	["ACE_M230", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+     	["ACE_M789_1200", "ACE_4Rnd_9M17P", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
  	 ],
  	 [ // 2nd heli params
- 	 	["ACE_M230", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-	    ["ACE_M789_1200", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_40Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
+ 	 	["M197", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+	    ["750Rnd_M197_AH1", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_40Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
  	 ],
 /* 	 [ // 3rd heli params
  	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
@@ -1411,7 +1411,7 @@ M113_LIST = ["ACE_M113","ACE_M113_A1","ACE_M113_A2","ACE_M113_A3"];
 VULKAN_PATROL = [ 1,2, [ [1,1,M113_LIST], [1,2,VULKAN_LIST] ] ];
 
 STRYKER_CANON_LIST = ["ACE_Stryker_MGS_SLAT","ACE_Stryker_MGS"];
-STRYKER_PATROl = [ 1,1, [ [1,1,STRYKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,1,["ACE_Stryker_MK19"]] ] ];
+STRYKER_PATROl = [ 1,1, [ [1,2,STRYKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,2,["ACE_Stryker_MK19"]] ] ];
 
 CARS_LIST = ["ACE_HMMWV_50", "ACE_HMMWV_GAU19", "ACE_HMMWV_GL", "ACE_HMMWV_TOW"];
 LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GL"]], [1,1,["ACE_HMMWV_GMV2"]] ] ];
