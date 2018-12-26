@@ -8,8 +8,8 @@
 	(_this select 1) call XHandleNetVar;
 };
 
-SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti", "Rokse [LT]"];
-SYG_localZones = [0,0,0,-4,+1];
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri"];
+SYG_localZones = [           0,           0,        0,    -4,          +1,        +2,        +2,     +2];
 
 XHandleNetStartScriptServer = {
 	private ["_this"];
@@ -128,13 +128,31 @@ XHandleNetStartScriptServer = {
 			    _ind = SYG_userNames find _userLogin;
 			    if (_ind >= 0 ) then
 			    {
-			        _date = arg(2);
+			        _localDate  = arg(2);
+			        _timeOffset = SYG_localZones select _ind;
 
 			        // store real time or the server (MSK must be guarantied)
 			        //and local time to help know rela time all the mission
-			        SYG_realTime = [ arg(2), time ]; // use it to calculate most correct time available!
+			        // TODO: надо как то 
+                    SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
+                    SYG_server_time  = time;       // current server time at the synchonizaton moment
+                    hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",_timeOffset];
+			    }
+			    else
+			    {
+			        if ( isNil "SYG_client_start") then
+			        {
+                        // unknown client started server, let get time from it in any case
+                        SYG_client_start = _localDate; // current time on first and unknown connected client
+                        SYG_server_time  = time;       // current server time at the synchonizaton moment
+                        hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client started server without known timezone was accepted !!!";
+			        }
+			        else
+			        {
+                        hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client with unknown timezone wasn't accepted !!!";
+			        };
 			    };
-			    hint localize format["+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"NO_LANG"), _userLogin, arg(2) ];
+			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"<NO_LANG>"), _userLogin, arg(2) ];
 			};
 		};
 		/*

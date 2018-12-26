@@ -50,7 +50,7 @@ if (isNil "x_funcs1_compiled") then {
 //+++ Sygsky: useful functions for client and server usage
 call compile preprocessFileLineNumbers "scripts\SYG_utils.sqf";
 
-//hint localize format["init.sqf: SYG_start_mission is %1", SYG_mission_start call SYG_dateToStr];
+//hint localize format["init.sqf: SYG_start_mission is %1", SYG_client_start call SYG_dateToStr];
 
 m_PIPEBOMBNAME = "ACE_PipeBomb"; // reset global/local bomb name
 
@@ -108,7 +108,7 @@ if (isServer) then {
 // Function missionStart in multi-player (dedi or host server) must ( really?) show server computer REAL time
 // but shows 1970-0-0-3
 //
-//SYG_mission_start = missionStart;
+//SYG_client_start = missionStart;
 
 #ifdef __DEBUG_ADD_VEHICLES__
 	// create vehicle to help isle defence activity debugging
@@ -313,7 +313,7 @@ if (isServer) then {
 	d_placed_objs = [];
 	
 	[] spawn {
-		private ["_hnd","_srvDate"];
+		//private ["_hnd","_srvDate"];
 		/*
 			script "srvtime.sqf" should be situated in Arma.exe root directory when started on server.
 			I automatically create it with follow batch file used to start my server "Red-Engineers":
@@ -326,7 +326,7 @@ if (isServer) then {
 			set tm=%time%
 			rem example: 12:53:33.21
 
-			echo SYG_mission_start = [%dt:~6,4%,%dt:~3,2%,%dt:~0,2%,%tm:~0,2%,%tm:~3,2%,%tm:~6,2%]; > "C:\Program Files\ArmA\srvtime.sqf"
+			echo SYG_client_start = [%dt:~6,4%,%dt:~3,2%,%dt:~0,2%,%tm:~0,2%,%tm:~3,2%,%tm:~6,2%]; > "C:\Program Files\ArmA\srvtime.sqf"
 
 			start "" "C:\Program Files\ArmA\arma_server.exe -config=server.cfg -mod=@ACE;@SIX_Pack3 -name=server -pid=pids.log"
 			--------------- end of srvtime.bat
@@ -335,18 +335,19 @@ if (isServer) then {
 		//waitUntil {scriptDone _hnd};
 
     	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
-    	while {isNil "SYG_mission_start"} do {sleep 1}; // wait for 1st user connection and receiving real server time from him (this is Arma!!!)
+    	while {isNil "SYG_client_start"} do {sleep 600}; // wait for 1st user connection with known time and receiving real server time from him (this is Arma!!!)
+        hint localize "init.sqf: New Year procedure, ""SYG_client_start"" detected";
 
-    	if ( (argp(SYG_mission_start,1) > 1) && (argp(SYG_mission_start,1) < 12) ) exitWith {false}; // new year expected if only december or january is current month
+    	if ( (argp(SYG_client_start,1) > 1) && (argp(SYG_client_start,1) < 12) ) exitWith {false}; // new year expected if only december or january is current month
 
-    	if ( (argp(SYG_mission_start,1) == 12) || ( (argp(SYG_mission_start,1) == 1) && (argp(SYG_mission_start,1) < 10) ) ) then
+    	if ( (argp(SYG_client_start,1) == 12) || ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,1) < 10) ) ) then
     	{
             while {true} do
             {
                 // now check NewYear period
-                if ( call SYG_isNewYear ) exitWith
-                { // make gift for a player on a New Year event
-                    hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", _srvDate call SYG_humanDateStr];
+                if ( call SYG_isNewYear ) exitWith // make gift for a player on a New Year event
+                {
+                    hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
                     private ["_vec","_snd"];
                     _vec = "Radio" createVehicle [0, 0, 0];
                      // set radio on top of the table
@@ -360,6 +361,7 @@ if (isServer) then {
                     _vec setVariable ["SoundSource", _snd];
                     _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
                 };
+                hint localize format["init.sqf: %1 -> New Year still not detected, next check in an hour", (call SYG_getServerDate) call SYG_humanDateStr];
                 sleep 3600; // wait 1 hour to check new year next hour
             };
 		};

@@ -37,14 +37,14 @@ i = 0;
 
 /*
 #ifdef __DEBUG__
-SYG_mission_start = [2015,12,25,8,0,0 ];
-hint localize format["x_intro.sqf: time %1, for debugging purposes missionStart set to %2", time, SYG_mission_start call SYG_dateToStr];
+SYG_client_start = [2015,12,25,8,0,0 ];
+hint localize format["x_intro.sqf: time %1, for debugging purposes missionStart set to %2", time, SYG_client_start call SYG_dateToStr];
 #endif
 */
 
-_year = SYG_mission_start select 0;
-_mon  = SYG_mission_start select 1;
-_day  = SYG_mission_start select 2;
+_year = SYG_client_start select 0;
+_mon  = SYG_client_start select 1;
+_day  = SYG_client_start select 2;
 _newyear = false;
 
 if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
@@ -83,7 +83,7 @@ if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMorning - 0.5))) 
 };
 
 #ifdef __DEBUG__
-hint localize format["x_intro.sqf: time is %1, daytime is %2, nowtime is %3, missionStart is %4",time, daytime, call SYG_nowTimeToStr, SYG_mission_start call SYG_dateToStr];
+hint localize format["x_intro.sqf: time is %1, daytime is %2, nowtime is %3, missionStart is %4",time, daytime, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
 #endif
 
 #ifdef __DEFAULT__

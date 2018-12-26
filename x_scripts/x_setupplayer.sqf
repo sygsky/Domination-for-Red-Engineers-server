@@ -1768,7 +1768,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 #ifdef __MISSION_START__
 //hint localize format["x_setupplayer.sqf: time BEFORE date setting %1", call SYG_nowTimeToStr];
 waitUntil {time > 0};
-SYG_mission_start = missionStart;
+SYG_client_start = missionStart;
 //["set_mission_start", missionStart] call XSendNetStartScriptServer;
 #endif
 
