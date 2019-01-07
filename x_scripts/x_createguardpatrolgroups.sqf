@@ -4,7 +4,7 @@ private ["_selectit", "_array", "_num", "_a_vng", "_num_ret", "_type_list_guard"
 
 if (!isServer ) exitWith{};
 
-#define __DEBUG_PRINT__
+//#define __DEBUG_PRINT__
 
 #include "x_macros.sqf"
 
@@ -24,7 +24,7 @@ _tankName = if (_isInDesert) then {"tank_desert"} else {"tank"};  // define prot
 //_tankName = "tank";  // define protective painting of the tank
 
 #ifdef __DEBUG_PRINT__
-hint localize format["+++ x_createguardpatrolgroups.sqf: point %1, _tankName ""%2"", tank list %3",_trg_center, _tankName, ABRAMS_DESERT_LIST];
+hint localize format["+++ x_createguardpatrolgroups.sqf: point %1, _tankName ""%2""",_trg_center, _tankName];
 #endif
 
 _radius  = _this select 1;
