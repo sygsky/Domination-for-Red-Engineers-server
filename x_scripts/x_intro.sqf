@@ -49,7 +49,7 @@ _newyear = false;
 
 if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
 {
-	playMusic (["snovymgodom","grig","tovarich_moy","zastolnaya","nutcracker"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
+	playMusic (["snovymgodom","grig","tovarich_moy","zastolnaya","nutcracker","home_alone"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
 	_newyear = true;
 }
 else // music normally played on intro

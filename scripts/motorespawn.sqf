@@ -140,7 +140,7 @@ while {true} do {
                     else	// use current vehicle item
                     {
 #ifdef __DEBUG__
-                        hint localize format["motorespawn.sqf: %1 moved back alive", _moto];
+                        hint localize format["motorespawn.sqf: %1 moved back alive", typeOf _moto];
 #endif
                         _moto setDammage 0.0;
                         _moto setFuel 1.0;

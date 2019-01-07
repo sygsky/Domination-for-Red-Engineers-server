@@ -70,7 +70,7 @@ if ((!_nemaster) && _already_loading ) exitWith
 
 if (_nemaster && _already_loading ) then
 {
-    hint localize format[">>> x_reload.sqf: %1 on heli service with double ammunitions !!! <<<",name player];
+    hint localize format[">>> x_reload.sqf: ""%1"" on heli service with double ammunitions !!! <<<",name player];
     [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "A six-pack, being fetched to maintenance man, magically turns into double set of ammo!"
 };
 

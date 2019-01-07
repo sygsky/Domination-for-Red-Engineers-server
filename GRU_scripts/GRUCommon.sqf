@@ -33,7 +33,7 @@ if ( isNil "GRU_tasks" ) then
 };
 // call: _task = _task_id call GRU_getTask;
 GRU_getTask = {
-	if ( TASK_ID_NOT_VALID(_this)) exitWith {/* hint localize "GRUCommon.sqf.GRU_getTask:TASK_ID_NOT_VALID(_this) == true";  */[]};
+	if ( TASK_ID_NOT_VALID(_this)) exitWith {[]}; // /* hint localize "GRUCommon.sqf.GRU_getTask:TASK_ID_NOT_VALID(_this) == true";  */
 	argp(GRU_tasks,_this)
 };
 

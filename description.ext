@@ -104,39 +104,17 @@ class CfgMusic
 
 	tracks[]={};
 
+// Revolution day intro music
 	class Varshavianka { name = "";sound[] =  {\sounds\Varshavianka.ogg, db+20, 1.0};}; // russian
 	class Varshavianka_eng { name = "";sound[] =  {\sounds\Varshavianka_eng.ogg, db+20, 1.0};}; // english
 	class warschawyanka_german { name = "";sound[] =  {\sounds\warschawyanka_german.ogg, db+10, 1.0};}; // german
 
 	class grant { name = ""; sound[] =  {\sounds\grant.ogg, db+20, 1.0}; };
 
+// New year intro musics
 	class snovymgodom {	name = ""; sound[] = {\sounds\snovymgodom.ogg, db+20, 1.0};};
 	class nutcracker {	name = ""; sound[] = {\sounds\NutCracker.ogg, db+20, 1.0};};
-/*
-	class patrol
-	{
-	    name="";
-	    sound[]=   {\sounds\patrol.ogg,db+0,1.0};
-    };
-
-	class baraban
-	{
-	    name="";
-	    sound[]=   {\sounds\baraban.ogg,db-1,1.0};
-    };
-
-	class kwai
-	{
-	    name="";
-	    sound[]=   {\sounds\kwai.ogg,db-1,1.0};
-    };
-
-	class invasion
-	{
-	    name="";
-	    sound[]=   {\sounds\invasion.ogg,db-1,1.0};
-    };
-*/
+    class home_alone { name=""; sound[] = {\sounds\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
 
 //	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 

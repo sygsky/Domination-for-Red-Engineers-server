@@ -30,7 +30,7 @@
 #define DT_MIN_OFF 4
 
 // only for missionStart output parameter
-#define DT_SEC_OFF 1
+#define DT_SEC_OFF 5
 
 //MONTH_LEN_ARR = [31,28,31,30,31,30,31,31,30,31,30,31];
 
