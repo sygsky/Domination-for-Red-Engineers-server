@@ -54,10 +54,10 @@ STR_SYS_012,Medium Grass,Medium Gras,обычная трава
 STR_SYS_013,Full Grass,Voll Gras,высокая трава
 
 STR_DANGER_NUM,4,4,4
-STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plötzlich, Ihren Rücken floss ein Rinnsal von kaltem Schweiß...","Внезапно по вашей спине потекли струйки холодного пота..."
-STR_DANGER_1,"Suddenly you felt terrible ...,"Sie wurde plötzlich schrecklich ...","Вдруг вам стало жутко..."
-STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plötzlich dachten Sie, dass dies Ihr letzter Gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
-STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Alarm! Sie wurden entdeckt, die feindlichen Spotter...","Вам показалось, что за вами следит злобный холодный взгляд..."
+STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plotzlich lauft Ihnen am Rucken ein kalter schweis runter...","Внезапно по вашей спине потекли струйки холодного пота..."
+STR_DANGER_1,"Suddenly you felt terrible ...","Plotzlich und unerwartet spuren Sie ein angst gefuhl...","Вдруг вам стало жутко..."
+STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plotzlich verstehen Sie das es Ihr letzter gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
+STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вам чувствуете, что за вами следит холодный злобный взгляд..."
 
 STR_SYS_2,"MG nest","MG-Nest","Пул.гнездо"
 STR_SYS_02,"MG %1", "MG %1", "Пул. %1"
@@ -711,10 +711,10 @@ STR_SYS_1004,"Marshal","Feldmarschall","Маршал"
 STR_SYS_1005,"Generalissimo","Generalissimus","Генералиссимус"
 
 STR_SYS_1100,"%1 has been cleared!!!","%1 wurde gelöscht!!!","Н.п. %1 освобождён!!!"
-STR_SYS_1100_0,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
+STR_SYS_1100_1,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
 STR_SYS_1101,"Waiting for new orders...","Warten auf neue Aufträge...","Ожидайте дальнейших распоряжений..."
 STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг, наконец, бежал. Вам остаётся только зачистить последний оккупированный город!"
-STR_SYS_1102,"For the liberation of the settlement you get %1%2 !","Für die Befreiung der Stadt, die Sie erhalten %1%2!","За освобождение города вы получаете %1%2!"
+STR_SYS_1102,"For the liberation of the settlement your group gets %1%2 !","Für die Befreiung der Siedlung bekommt Ihre Gruppe %1%2 !","За освобождение города ваша группа получает %1%2 !"
 STR_SYS_1102_1,"points ( %1 ) and ","Punkte ( %1 ) und ","очки ( %1 ) и "
 
 STR_SYS_1103,"Can't drop box near Ammo Point.","Sie können nicht entladen Kiste in der Nähe des Lagerhauses der Versorgung.","Вы не можете выгрузить ящик возле склада снабжения."
@@ -724,8 +724,8 @@ STR_SYS_1106,"Maximum number (%1) of ammo crates reached!","Maximale Anzahl (%1)
 STR_SYS_1107,"Pick up a dropped box...","Aufheben eines fallengelassenen box...","Загрузка ящика снабжения..."
 STR_SYS_1108,"No ammobox loaded into this vehicle !!!","Keine ammobox geladen in dieses Fahrzeug !!!","Ящик не загружен..."
 STR_SYS_1109,"You have to wait %1 seconds before you can drop a box from this vehicle again !!!","Sie müssen warten Sie %1 Sekunden vor dem drop können Sie eine box aus diesem Fahrzeug wieder !!!","Не доступно! Ожидайте %1 сек..."
-STR_SYS_1110,"Dropping ammo box... stand by...","Drop ammo box... stand by...","Ящик выгружен рядом с транспортом..."
-STR_SYS_1111,"Ammobox dropped !!!","Аммобокс hier !!!","Ящик выгружен..."
+STR_SYS_1110,"Dropping ammo box... stand by...","Fallen Munition box... bereithalten...","Ящик выгружен рядом с транспортом..."
+STR_SYS_1111,"Ammobox dropped !!!","Ammobox hier !!!","Ящик выгружен..."
 
 STR_SYS_1112,"Player markers with player names available","Spieler-Marker mit den Namen der Spieler verfügbar","Маркеры игроков с именем"
 STR_SYS_1113,"Player markers only (without names) available","Spieler-Marker nur (ohne Namen) verfügbar","Только маркеры игроков"
