@@ -285,11 +285,11 @@ d_run_illum = true;
 [_trg_center, _radius] execVM "x_scripts\x_illum.sqf";
 
 //+++ Sygsky: todo add here statistics test code
-#define __DEBUG_STAT_SERVICE__
+//#define __DEBUG_STAT_SERVICE__
 #ifdef __DEBUG_STAT_SERVICE__
 
 waitUntil { sleep 10; main_target_ready };
-//_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get score on current town
+_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get score on current town
 
 #endif
 

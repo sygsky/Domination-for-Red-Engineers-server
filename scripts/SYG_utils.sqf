@@ -208,7 +208,6 @@ SYG_findVehWithFreeCargo = {
 	_reta
 };
 
-
 /**
  * finds big enough group at nearest mission war zones (main target town, air-base with sabotages, re-cuptured towns etc)
  * call:
@@ -243,12 +242,14 @@ SYG_findGroupAtTargets = {
 	_pos_arr = argp(_pos_arr,0); // array of positions
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
+/*
 	_str = "";
 	{
 		if ( count _x == 0 ) then {_str = _str + " <>";} else {_str = _str + format[" %1", round (_x distance _unit)];};
 	} forEach _pos_arr;
 	
-	//hint localize format["SYG_utils.sqf.SYG_findGroupAtTargets: pos near ""%3"" [MSOA/ret] = [%1/%2]", _str, _ret, text (_pos call SYG_nearestLocation) ];
+	hint localize format["SYG_utils.sqf.SYG_findGroupAtTargets: pos near ""%3"" [MSOA/ret] = [%1/%2]", _str, _ret, text (_pos call SYG_nearestLocation) ];
+*/
 #endif								
 
 	if ( _ret >= 0 ) then // some war zone enough near found 
@@ -276,6 +277,7 @@ SYG_findGroupAtTargets = {
 	_goal_grp
 };
  
+#define __SYG_ISLEDEFENCE_DEBUG__
 
 /**
  * call: _feetmen = [[_unit1...,_unitN],[_veh1,_veh2,...,_vehN]] call SYG_findAndAssignAsCargo;
@@ -346,7 +348,7 @@ SYG_findAndAssignAsCargo = {
 					sleep 1.01;
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-					hint localize format["%4 SYG_findAndAssignAsCargo: %1 assignedToCargo %2 (%3) dist %5",_assigned, typeOf _veh, _veh, call SYG_nowToStr, _veh distance (_assigned select 0)];
+					hint localize format["%1 SYG_findAndAssignAsCargo: %2 assignedToCargo %3 dist %4", call SYG_nowToStr, _assigned, typeOf _veh, _veh distance (_assigned select 0)];
 #endif
 
 				}; // while { (count _vecs > 0) || (count _feetmen1) > 0 } do

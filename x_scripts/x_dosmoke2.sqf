@@ -7,8 +7,18 @@ if (!isServer) exitWith {};
 #define __PRINT__
 //#define __FULL_PRINT__
 
+#ifdef __PRINT__
+hint localize format["x_dosmoke2.sqf: spawn with _this = %1", _this];
+#endif
+
 _vec = _this select 0;
 _shooter = _this select 1;
+if (isNull _shooter) exitWith
+{
+#ifdef __PRINT__
+	hint localize "x_dosmoke2.sqf: shooter is null, exit";
+#endif
+};
 _damage = _this select 2;
 
 if ( _damage >= 1) exitWith {}; // End Of Life
@@ -94,7 +104,7 @@ _vec doWatch _shooter;
 sleep 3.634;
 _vec fire _muzzle;
 #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: vec ""%1"" fires smoke curtain against ""%2""", typeOf _vec, _name];
+	hint localize format["x_dosmoke2.sqf: vec ""%1"" fires smoke curtain against ""%2"" (%3 m)", typeOf _vec, _name, round( _shooter distance _vec )];
 #endif
 
 // TODO: If attacker is a tank and damaged is a tank shoot to the attacker smoke first and sabot second

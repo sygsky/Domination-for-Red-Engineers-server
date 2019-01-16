@@ -81,9 +81,10 @@ if (client_target_counter < number_targets) then {
 	};
 #endif
 
-	(format ["%1 %2", format[localize "STR_SYS_1100", _current_target_name], localize "STR_SYS_1101" ]) call XfHQChat; // "%1 has been cleared!!!"
+	(format ["%1 %2", format[localize "STR_SYS_1100", _current_target_name], localize "STR_SYS_1101" ]) call XfHQChat; // "%1 has been cleared!!! Waiting for new orders..."
 } else {
-	_mt_str = format ["%1 %2",format[localize "STR_SYS_1100", _current_target_name], localize "STR_SYS_1101_1"];
+    hint localize "+++ last town is cleared ++=+";
+	_mt_str = format ["%1 %2",format[localize "STR_SYS_1100_1", _current_target_name], localize "STR_SYS_1101_1"]; // "Last settlement %1 has been cleared!!! The enemy has finally fled. You just have to clean up the last occupied city!"
 	
 #ifndef __TT__
 	hint  composeText[

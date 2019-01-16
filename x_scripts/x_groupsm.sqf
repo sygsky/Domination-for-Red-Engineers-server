@@ -279,7 +279,7 @@ while {true} do {
 				_grp_array set [2,7];
 			};
 		};
-		case 7: { // return to the start state after designated period (60+-10 secs)
+		case 7: { // return to the start state after designated period (60-70 secs)
 			if (time > _checktime) then {
 				_grp_array set [2,0];
 				_grp_array call xx_make_normal;

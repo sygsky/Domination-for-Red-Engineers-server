@@ -303,7 +303,7 @@ SYG_nearestSoldierGroups = {
 // _dist (optional): radius to find groups, default value is 500 m. Set to 0 or negative to use default
 // _pos (optional): search center, if set to [], _unit pos is used
 //
-// Returns: array of groups found or [] if not found
+// Returns: array of vehicles found or [] if not found
 //
 // Usage:
 // _cargo = [_side, _pos] call SYG_nearestCargo; // search around _unit at 500 m., return empty array [] if no cargo found
@@ -532,7 +532,7 @@ SYG_removeFromTurretList =
  * return: group of team member for vehicle created or grpNull on error
  *
  * Function tryes to first populate commander, then driver and only after  all other available turret gunners
- * No man added to the vehicle cargo
+ * Not populates any cargo!!!
  */
 SYG_populateVehicle ={
 	private [ "_veh", "_utype", "_grpskill", "_grprndskill", "_grprndskill", "_pos", "_tlist", "_role_arr", "_unit",
@@ -541,6 +541,130 @@ SYG_populateVehicle ={
 	_veh   = arg(0);
 	_grp   = arg(1);
 	_utype = arg(2);
+
+	if ( count _this > 3 ) then {_grpskill = _this select 3}
+	else {_grpskill = 0.5};
+
+	if ( count _this > 4 ) then {_grprndskill = (_this select 4) min (1.0 - _grpskill)}
+	else {_grprndskill = 0;};
+
+	_pos = getPos _veh;
+
+	_tlist = _veh call SYG_turretsList;
+#ifdef __NOT_POPULATE_LOADER_TO_TANK__
+	if ( _veh isKindOf "Tank" ) then
+	{
+		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
+	};
+#endif
+
+#ifdef __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
+	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then
+	{
+		_tlist = [[1], _tlist] call SYG_removeFromTurretList;
+		_tlist = [[2], _tlist] call SYG_removeFromTurretList;
+	};
+#endif
+
+	_isAirVeh = _veh isKindOf "Air";
+//	player globalChat format["Turrs %1", _tlist ];
+	// first try to put commander (according to role of name)
+	if (_veh emptyPositions "Commander" > 0) then
+	{
+		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
+		_unit setSkill _grpskill + random (_grprndskill );
+		[_unit] joinSilent _grp;
+		if ( _isAirVeh ) then {_unit call SYG_armPilot};
+		_unit assignAsCommander _veh;
+		_unit moveInCommander _veh;
+		sleep 0.01;
+		_role_arr = assignedVehicleRole _unit;
+		if (count _role_arr > 0 ) then
+		{
+			if ( _role_arr select 0 == "Turret" ) then
+			{
+				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
+			};
+		};
+	};
+
+	// second try to put driver (no turrets be occupied)
+	if ( isNull driver _veh ) then  // add driver if he is not already assigned as commander
+	{
+		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
+		_unit setSkill _grpskill + random (_grprndskill );
+		[_unit] joinSilent _grp;
+		if ( _isAirVeh ) then {_unit call SYG_armPilot};
+		_unit assignAsDriver _veh;
+		_unit moveInDriver _veh;
+		sleep 0.01;
+		_role_arr = assignedVehicleRole _unit;
+		if (count _role_arr > 0 ) then
+		{
+			if ( _role_arr select 0 == "Turret" ) then
+			{
+				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
+			};
+		};
+	};
+
+	// now populate remaining turrets
+	{	// create one more unit and try to fit it to current turret
+		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
+		_unit setSkill _grpskill + random (_grprndskill );
+		[_unit] joinSilent _grp;
+		if ( _isAirVeh ) then {_unit call SYG_armPilot};
+		_unit moveInTurret [_veh, _x];
+		sleep 0.02;
+	} forEach _tlist;
+
+	// never populate small mguns of HMMWV_GVT
+	// well, lets look if we should fill some cargo places in trucks and canons, may be in M113, MG strikes, AT humwee
+
+#ifdef __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
+// for WEST enemy only
+	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
+	{
+        // add "ACE_SoldierWMAT_A" as a passenger
+        _emptypos = _veh emptyPositions "Cargo";
+        if ( _emptypos > 0 ) then
+        {
+            _unit=_grp createUnit ["ACE_SoldierWMAT_A", _pos, [], 0, "FORM"];
+            _unit setSkill _grpskill + random (_grprndskill );
+            [_unit] joinSilent _grp;
+            _unit moveInCargo _veh;
+            sleep 0.02;
+        };
+	};
+#endif
+	_grp
+};
+
+
+/**
+ * Version 1.0 Populates vehicle from array of units
+ * Try to populate any totally empty vehicle (air, land or marine one) will full battle vehicle crew including all turret seats.
+ * Note: cargo crew also may be populated if designated
+ *
+ * call as: _grp = [_veh, _units_array, _fill_partially] call SYG_populateVehicle;
+ *  where:
+ *			_vehicle - vehicle to populate (Striker, Abrams etc)
+ *			_units_arr - array of units to fit into vehicles
+ *          _fill_cargo - if <= 0 no cargo populated, if > 0 only cargo is pupulated
+ *          _fill_partially - true if partial filling enabled, that is for short array not full vehicle. Cargo is not calculated to partial or not
+ * return: remained untis from array
+ *
+ * Function tries to first populate commander, then driver and only after  all other available turret gunners
+ * Not populates any cargo!!!
+ */
+SYG_populateVehicleWithUnits = {
+	private [ "_veh", "_utype", "_grpskill", "_grprndskill", "_grprndskill", "_pos", "_tlist", "_role_arr", "_unit",
+	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh"];
+
+	_veh    = arg(0);
+	_units  = arg(1);
+	_fill_cargo = argopt(2, -1);
+	_fill_partially = argopt(3, false);
 
 	if ( count _this > 3 ) then {_grpskill = _this select 3}
 	else {_grpskill = 0.5};
