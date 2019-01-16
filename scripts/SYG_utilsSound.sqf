@@ -193,13 +193,34 @@ SYG_OFPTracks =
 		["ATrack25",[0,11.978],[13.573,10.142],[105.974,9.508],[138.443,-1]]
 	];
 
+/*
+    Music for town counter attacks
+*/
+SYG_counterAttackTracks =
+    [
+        ["ATrack24",[0,70.7]],
+        ["ATrack24",[70.7,31.68]],
+        ["ATrack24",[62.37,-1]],
+
+        ["ATrack25",[0,90.094]],
+        ["ATrack25",[90.094,43.460]],
+        ["ATrack25",[133.554,-1]],
+
+        "ATrack1","ATrack23"
+    ];
+
 SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;
 };
 
 SYG_chorusDefeatTracks =
     [
-        ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
+        ["ATrack26",[0,8]],
+        ["ATrack26",[8.086,8]],
+        ["ATrack26",[16.092,6.318]],
+        ["ATrack26",[24.014,8.097]],
+        ["ATrack26",[32.059,4.0]],
+        ["ATrack26",[36.053,-1]],
         ["church_organ_1"]
     ];
 
@@ -210,10 +231,11 @@ SYG_liturgyDefeatTracks = [  "liturgy_1","liturgy_2","liturgy_3","liturgy_4" ];
 // Any isle defeat music
 SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island"];
 
-SYG_RahmadiDefeatTracks = ["ATrack23b",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
+SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
 //
 // Plays random track or track part depends on input array kind (see below)
+// This procedure use only playMusic operator and playe items from CfgMisic section
 //
 // call: _arr call SYG_playRandomTrack;
 // where _arr may be:
