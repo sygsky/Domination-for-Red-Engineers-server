@@ -32,6 +32,9 @@
 // only for missionStart output parameter
 #define DT_SEC_OFF 5
 
+#define NEW_YEAR_FIRST_DAY 25
+#define NEW_YEAR_LAST_DAY 10
+
 //MONTH_LEN_ARR = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 if ( !isNil "SYG_timeStart" ) exitWith {};
@@ -252,7 +255,7 @@ SYG_isNewYear = {
 };
 
 //
-// returns true if day is in a new year range (from 26-DEC to 06-JAN)
+// returns true if day is in a new year range (from 20-DEC to 10-JAN)
 //
 //
 // call as follow:
@@ -264,7 +267,7 @@ SYG_isNewYear0 = {
 	if ( arg(0) < 1985) exitWith { [0,0,0,0,0,0] }; // illegal or suspicious  time received from server
 	_mon = arg(1);
 	_day = arg(2);
-	( ((_mon == 12) && (_day > 25)) || ((_mon == 1) && ( _day < 7)))
+	( ((_mon == 12) && (_day >= NEW_YEAR_FIRST_DAY)) || ((_mon == 1) && ( _day <= NEW_YEAR_LAST_DAY)))
 };
 
 SYG_monLength  = [31,28,31,30,31,30,31,31,30,31,30,31]; // months length
