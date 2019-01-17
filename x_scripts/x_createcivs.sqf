@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_createcivs.sqf - create civilian near player
 private ["_target_nr","_list","_target","_target_center","_ran_bus","_ran_car","_ran_ped","_radius"];
 if (!isServer) exitWith {};
 

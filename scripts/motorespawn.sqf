@@ -96,7 +96,7 @@ while {true} do {
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened dealy
 				};
 #ifdef __DEBUG__
-				hint localize format["motorespawn.sqf: %1 marked for respawn, canMove %2, shift %3, pos %4", _moto, canMove _moto, ( _pos1 distance _pos), _pos1];
+				hint localize format["motorespawn.sqf: %1 marked for respawn, canMove %2, shift %3, pos %4", _moto, canMove _moto, round( _pos1 distance _pos), _pos1];
 #endif
 			};
 		}

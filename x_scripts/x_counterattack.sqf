@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_counterattack.sqf
 private ["_current_target_pos","_current_target_radius","_dummy","_number_basic","_number_bmp","_number_specops","_number_tank","_start_array","_type_list_attack","_typeidx","_xx","_numbervecs","_vecs_counter_attack"];
 if (!isServer) exitWith {};
 

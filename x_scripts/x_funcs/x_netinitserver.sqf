@@ -39,33 +39,33 @@ XHandleNetStartScriptServer = {
 				[_this select 1, _this select 2] spawn XCreateDroppedBox;
 			};
 		};
-		#ifndef __TT__
+#ifndef __TT__
 		case "d_fac_ruins_pos": {
 			[(_this select 1) select 0,(_this select 1) select 1] spawn XFacRebuild;
 		};
-		#endif
-		#ifdef __TT__
+#endif
+#ifdef __TT__
 		case "add_kills_racs": {
 			kill_points_racs = kill_points_racs + (_this select 1);
 		};
 		case "add_kills_west": {
 			kill_points_west = kill_points_west + (_this select 1);
 		};
-		#endif
+#endif
 		case "mr1_in_air": {
 			__compile_to_var
 		};
 		case "mr2_in_air": {
 			__compile_to_var
 		};
-		#ifdef __TT__
+#ifdef __TT__
 		case "mrr1_in_air": {
 			__compile_to_var
 		};
 		case "mrr2_in_air": {
 			__compile_to_var
 		};
-		#endif
+#endif
 		case "mr1_lift_chopper": {
 			__compile_to_var
 			if (!isNull mr1_lift_chopper) then {[mr1_lift_chopper] spawn x_checktransport;};
@@ -187,7 +187,7 @@ XHandleNetStartScriptServer = {
             _msg = "STR_SERVER_MOTD0"; // "The islanders are happy to welcome you in your native language!"
             if ( _name == "Aron") then // Slovak
             {
-    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!";
+    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!"; // Slovak
             }
             else
             {

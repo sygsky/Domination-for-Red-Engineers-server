@@ -916,8 +916,6 @@ d_airki_respawntime = 300;
 d_airki_respawntime = 120;
 #endif
 */
-// add more civilian cars if you want
-d_civ_cars = ["Skoda","SkodaBlue","SkodaRed","SkodaGreen","car_hatchback","car_sedan"];
 
 side_missions_random = [];
 
