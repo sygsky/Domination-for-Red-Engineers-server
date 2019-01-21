@@ -41,6 +41,7 @@ else    // some kind of suicide? Say something about...
     then { _sound = "female_shout_of_pain_" + str(ceil (random 4)); } // 1-4
     else
     {
+#undef __ACE__ // test new screams
 #ifdef __ACE__
         // play 15 sounds from ACE collection for hard screams
         _sound = format["ACE_BrutalScream%1", ceil(random 15)]; // 1-15

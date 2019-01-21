@@ -1,4 +1,4 @@
-// SYG sabotage
+// SYG sabotage, scripts\sabotage.sqf
 //
 // Sabotage functionality: try to blast factories
 // Parameters:

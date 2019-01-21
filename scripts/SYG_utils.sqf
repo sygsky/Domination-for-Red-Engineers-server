@@ -459,11 +459,9 @@ SYG_isPatrolGroup = {
     if ( typeName _this ==  "OBJECT") then
     {
         if ( _this isKindOf "Man") exitWith { _this = group _this };
-        if ( _this isKindOf "AllVehicles" ) exitWith {
-            {
-                if ( alive _x) exitWith { _this = group _x };
-            }forEach crew _this;
-        };
+        {
+            if ( alive _x) exitWith { _this = group _x };
+        } forEach crew _this;
     };
 
     if (typeOf _this != "GROUP") exitWith { false };
@@ -478,6 +476,12 @@ SYG_isPatrolGroup = {
         }
     } forEach SYG_isle_grps;
     _ret
+};
+//
+// Hadnler for "GetOut" event for enemy vehicles
+//
+SYG_hanldeGetOut = {
+
 };
 
 if (true) exitWith {};

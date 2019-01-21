@@ -700,7 +700,7 @@ STR_SYS_613,Your recorded equipment wiped,Ihr Aufnahme-equipment gewischt,Ваш
 STR_SYS_614,A record of the equipment not found,Eine Aufzeichnung der Ausstattung nicht gefunden,Запись о снаряжении не найдена
 STR_SYS_615,"!!!!! ATTENTION !!!!! Incoming Missile !!!!!","!!!!! AUFMERKSAMKEIT !!!!! Eingehende Rakete !!!!!","!!! Опасность !!! Угроза попадания ракеты !!!"
 STR_SYS_616,"Height","Höhe","Высота"
-STR_SYS_617,"GRU: the enemy landing party was sent from helicopter carrier in %1","GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1","ГРУ: вылет десант с вертолётоносца отмечен в %1"
+STR_SYS_617,"GRU: the enemy landing party was sent from helicopter carrier in %1","GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1","ГРУ: вылет десант с вертолётоносца отмечен %1"
 STR_SYS_618,"Viewdistance restore to %1 m.","Viewdistance Durchmesser restauriert wurde: %1 m.","Диаметр зоны обзора восстановлен: %1 м."
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
@@ -1069,8 +1069,8 @@ STR_TSD9_30,Cpt,Cpt,Капитан
 STR_TSD9_31,Mjr,Mjr,Майор
 STR_TSD9_32,Col,Col,Полковник
 STR_TSD9_33,A.I.,K.I.,И.И.
-STR_TSD9_34,Dead,Tot,Мертвый
-STR_TSD9_35,Name unknown,Unbekannt,Неизвестный
+STR_TSD9_34,Dead,Tot,Мёртв
+STR_TSD9_35,Name unknown,Unbekannt,Безымянный
 STR_TSD9_36,some,some,несколько
 STR_TSD9_37,TL,GF,лидер команды
 STR_TSD9_38,(My group),(Meine Gruppe),(Моя Группа)
@@ -1078,13 +1078,13 @@ STR_TSD9_39,Vacant Seats,Freie Sitze,Места
 STR_TSD9_40,has left your group,hat deine Gruppe verlassen,покинул вашу группу
 STR_TSD9_41,has joined your group,ist deiner Gruppe beigetreten,присоединился к вашей группе
 STR_TSD9_42,Your new Team Leader is,Dein neuer GF ist,Новый лидер команды
-STR_TSD9_43,has resigned,hat aufgegeben,отказался
+STR_TSD9_43,has resigned,hat aufgegeben,ушел в отставку
 STR_TSD9_44,Player,Spieler,Игрок
 STR_TSD9_45,was kicked from the group,wurde aus der Gruppe entfernt,был удален из группы
 STR_TSD9_46,soldier was removed from group,Soldat wurde aus der Gruppe entfernt,солдат был удален из группы
 STR_TSD9_47,+,+,+
 STR_TSD9_48,You are the new Team Leader,Du bist jetzt GF,Вы теперь новый лидер команды
-STR_TSD9_49,has been demoted,wurde abgesetzt,было удалено
+STR_TSD9_49,has been demoted,wurde abgesetzt,был понижен в должности
 STR_TSD9_50,The Team Leader is no longer an AI player,Der GF ist keine KI mehr,Лидер команды больше не ИИ
 STR_TSD9_51,New group,Neue Gruppe,Новая группа
 STR_TSD9_52,Join group,Beitreten,Присоединиться к группе

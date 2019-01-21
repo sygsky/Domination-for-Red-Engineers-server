@@ -492,7 +492,11 @@ SYG_getDayTimeId = {
 SYG_bumpDateByHours = {
     _dt    = + (_this select 0);
     _addhr =    _this select 1;
-    if ( _addhr == 0) exitWith {_dt};
+    if ( _addhr == 0) exitWith
+    {
+        hint localize "+++ SYG_bumpDateByHours: called with 0 hour change, exit";
+        _dt
+    };
 
     _min  = _dt select DT_MIN_OFF;
     _hour = _dt select DT_HOUR_OFF;
@@ -503,7 +507,7 @@ SYG_bumpDateByHours = {
     // MINUTES
 
     _new  = _min + round((_addhr mod 1) * 60);
-    hint localize format["SYG_bumpDateByHours: new minutes = %1", _new];
+    // hint localize format["SYG_bumpDateByHours: new minutes = %1", _new];
     if (_new > 59 ) then
     {
         _dt set [DT_MIN_OFF, _new - 60];
@@ -526,7 +530,7 @@ SYG_bumpDateByHours = {
     // HOURS
 
     _new = _hour + _addhr; // new hour value
-    hint localize format["SYG_bumpDateByHours: new hours = %1", _new];
+    // hint localize format["SYG_bumpDateByHours: new hours = %1", _new];
     if ( _new > 23 ) then {
         _dt set [DT_HOUR_OFF, _new % 24];
     }
@@ -547,7 +551,7 @@ SYG_bumpDateByHours = {
     _monlen = [_year, _mon] call SYG_monthLength;
 
     _new = _new + _day; // new day value
-    hint localize format["SYG_bumpDateByHours: new days = %1", _new];
+    // hint localize format["SYG_bumpDateByHours: new days = %1", _new];
     if ( _new > _monlen) then
     {
         if ( _mon == 12 ) then { _mon = 1; _year = _year + 1 } // December => January
@@ -564,10 +568,13 @@ SYG_bumpDateByHours = {
             _new = _monlen + _new;
         };
     };
-    hint localize format["SYG_bumpDateByHours: new month = %1", _mon];
-    hint localize format["SYG_bumpDateByHours: new year  = %1", _year];
+    // hint localize format["SYG_bumpDateByHours: new month = %1", _mon];
+    // hint localize format["SYG_bumpDateByHours: new year  = %1", _year];
     _dt set [ DT_DAY_OFF   , _new  ]; // set new day
     _dt set [ DT_MONTH_OFF , _mon  ]; // set new month
     _dt set [ DT_YEAR_OFF  , _year ]; // set new month
+    // now print old and new datetime values
+    hint localize format["+++ SYG_bumpDateByHours: old date %1, new date %2", _this select 0, _dt];
+
     _dt
 };

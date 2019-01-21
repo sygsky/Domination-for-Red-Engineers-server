@@ -363,7 +363,7 @@ _ve spawn {
 				_ve addMagazineCargo ["ACE_30Rnd_545x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_545x39_SD_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_RPK",100];
-				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_AK",100];
+//				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_AK",100]; // removeв as prev is suitable for AK-47 too and is better
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_SD_AK",100];
 				_ve addMagazineCargo ["ACE_64Rnd_9x18_B_Bizon",100];
@@ -380,10 +380,10 @@ _ve spawn {
 				_ve addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",100];
 				//_ve addMagazineCargo ["ACE_5Rnd_127x108_SB_OSV96",100];
 			_ve addMagazineCargo ["ACE_Dummy_MG",3];
-				_ve addMagazineCargo ["ACE_40Rnd_762x39_B_AK",100];
-				_ve addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_45Rnd_545x39_B_AK",100];
 				_ve addMagazineCargo ["ACE_45Rnd_545x39_BT_AK",100];
+				_ve addMagazineCargo ["ACE_40Rnd_762x39_B_AK",100];
+				_ve addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_75Rnd_762x39_B_AK",100];
 				_ve addMagazineCargo ["ACE_75Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_100Rnd_762x54_B_PK",100];
@@ -392,8 +392,8 @@ _ve spawn {
 			_ve addMagazineCargo ["ACE_Dummy_LAUNCHER",3];
 				_ve addMagazineCargo ["ACE_Strela",100];
 				_ve addMagazineCargo ["ACE_RPG7_PG7V",100];
-				_ve addMagazineCargo ["ACE_RPG7_PG7VR",100];
 				_ve addMagazineCargo ["ACE_RPG7_PG7VL",100];
+				_ve addMagazineCargo ["ACE_RPG7_PG7VR",100];
 				_ve addMagazineCargo ["ACE_RPG7_OG7V",100];
 				_ve addMagazineCargo ["ACE_RPG7_TBG7V",100];
 				_ve addMagazineCargo ["ACE_RPG22",100];

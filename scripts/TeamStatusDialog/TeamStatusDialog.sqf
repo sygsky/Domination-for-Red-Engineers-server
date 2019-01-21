@@ -1112,28 +1112,9 @@ TSD9_HideRow = {
 
 	_idc = [_row] call TSD9_GetRowIdc;
 
-	// TODO: change to for loop   // for "_i" from 0 to (_seatCount - 1) do {
-	[_idc+01, 01] call TSD9_HideCtrl;
-	[_idc+02, 02] call TSD9_HideCtrl;
-	[_idc+03, 03] call TSD9_HideCtrl;
-	[_idc+04, 04] call TSD9_HideCtrl;
-	[_idc+05, 05] call TSD9_HideCtrl;
-	//[_idc+06, 06] call TSD9_HideCtrl;
-	[_idc+07, 07] call TSD9_HideCtrl;
-	[_idc+08, 08] call TSD9_HideCtrl;
-	/*
-	[_idc+09, 09] call TSD9_HideCtrl;
-	[_idc+10, 10] call TSD9_HideCtrl;
-	[_idc+11, 11] call TSD9_HideCtrl;
-	[_idc+12, 12] call TSD9_HideCtrl;
-	*/
-	[_idc+13, 13] call TSD9_HideCtrl;
-	[_idc+14, 14] call TSD9_HideCtrl;
-	[_idc+15, 15] call TSD9_HideCtrl;
-	//[_idc+16, 16] call TSD9_HideCtrl;
-	[_idc+17, 17] call TSD9_HideCtrl;
-	[_idc+18, 18] call TSD9_HideCtrl;
-	[_idc+19, 19] call TSD9_HideCtrl;
+	{
+	    [_idc+_x, _x] call TSD9_HideCtrl;
+	} forEach [/* 00, */ 01, 02, 03, 04, 05, /* 06, */ 07, 08, /* 09, 10, 11, 12, */ 13, 14, 15, /* 16, */ 17, 18, 19];
 	buttonSetAction [_idc+01, ""];
 	buttonSetAction [_idc+19, ""];
 };

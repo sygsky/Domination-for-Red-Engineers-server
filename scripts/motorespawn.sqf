@@ -24,7 +24,7 @@ if (!isServer) exitWith{};
 #define TIMEOUT_ZERO 0
 #define MOTO_ON_PLACE_DIST 3.5
 #define DRIVER_NEAR_DIST 10
-#define SOUND_SAY_DIST 50
+#define SOUND_MIN_DIST_TO_SAY 5 // Min shift inmeters to play sound on moto teleport
 #define FUEL_MIN_VOLUME 0.2
 // offsets for vehicle status array items
 #define MOTO_ITSELF 0
@@ -121,8 +121,8 @@ while {true} do {
 
                 if ( ! _driver_near) then // if empty and no man nearby (10 meters circle)
                 {
-                    //_say = (_pos2 distance _pos1) >= SOUND_SAY_DIST;
-                    ["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll; _pos1 set [2,-5]; _moto setPos _pos1;
+                    _say = (_pos1 distance _pos) >= SOUND_MIN_DIST_TO_SAY; // sound only if long dist teleport
+                    if (_say ) then {["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll; _pos1 set [2,-5]; _moto setPos _pos1;};
 
                     if ( !alive _moto ) then // recreate vehicle
                     {

@@ -603,7 +603,7 @@ class X_RscAnimatedLetters
 			idc=66666;
 			style="16+2+512";
 			lineSpacing=0.950000;
-			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2018 by Engineer ACE\n          for Red-Engineers.ucoz.ru";
+			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2019 by Engineer ACE\n          for Red-Engineers.ucoz.ru";
 			x=0.39000000;
 			y=0.8100000;
 			w=0.900000;
