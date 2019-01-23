@@ -8,11 +8,11 @@
 
     Global.
 
-    Passed array: [vehicle, position, unit]
+    Passed array: [vehicle, role, unit]
 
     vehicle: Object - Vehicle the event handler is assigned to
-    position: String - Can be either "driver", "gunner", "commander" or "cargo"
-    unit: Object - Unit that exit the vehicle
+    role:    String - Can be either "driver", "gunner", "commander" or "cargo"
+    unit:    Object - Unit that exit the vehicle
 */
 if (X_MP && (call (XPlayersNumber) > 0) ) exitWith {false}; // only work in absence of any player 
 
@@ -22,7 +22,7 @@ if (X_MP && (call (XPlayersNumber) > 0) ) exitWith {false}; // only work in abse
 if (true) exitWith {false};
 #end
 
-_veh  = _his select 0;
+_veh  = _this select 0;
 
 _index = _veh getVariable "GetOutIndex";
 
@@ -32,6 +32,7 @@ _veh removeEventHandler ["GetOut", _index]; // prevent multiple event firing
 
 if ( (_veh isKindOf "Air") || (_veh isKindOf "Ship")) exitWith
 { 
+    hint localize format["--- eventGetOut: call on invalid vehicle type %1, exit", typeOf _veh];
 };
 
 // still only for land vehicles
@@ -39,24 +40,15 @@ if ( (_veh isKindOf "Air") || (_veh isKindOf "Ship")) exitWith
 _role = _his select 1;
 _man = _his select 2;
 
-#ifdef __OWN_SIDE_EAST__
-if ( side _man == east ) exitWith {false};
-_crewtype = "SoldierWB";
-#endif
-
-#ifdef __OWN_SIDE_WEST__
-if ( side _man == west ) exitWith {false};
-_crewtype = "SoldierEB";
-#endif
+_crewtype = typeOf _man; //"SoldierWB";
 
 if ( !alive _veh ) exitWith {false}; // vehicle is dead, nothing to do with him
 _crew = crew _veh; // store whole crew
-// Some AI jumped out and let find the cause
+// Allow all AI jumped out and let find the cause
 sleep 5;
 if ( !alive _veh ) exitWith {false}; // vehicle is dead, nothing to do with him
 
-
-_veh setDamage 0; // remove any damage
+_veh setDamage 0; // remove any vehicle damage
 
 if ( {alive _x} count (crew _veh) > 0 ) exitWith
 {
@@ -64,15 +56,15 @@ if ( {alive _x} count (crew _veh) > 0 ) exitWith
     hint localize format["eventGetOut: vehicle %1 possible with cyclic in/out events detected, repaired and not process it more", typeOf _veh];
     _index = _veh addEventHandler ["GetOut", {_this execVM "scripts\eventGetOut.sqf";}]; //
     _veh setVariable  ["GetOut", _index]; // prepare new processing
-    true;
+    true
 };
 
 // check if vehicle is upsidedown
 _udState = _veh call SYG_vehIsUpsideDown;
 
-_pos = position _vec;
+_pos = position _veh;
 _nil = "Logic" createVehicle _pos;
-_vec setPos (position _nil);
+_veh setPos (position _nil);
 
 if (_udState) then { hint localize format["eventGetOut: Upsidedown vehicle %1 of %2 crew returned back", typeOf _veh, count crew _veh] };
 
@@ -94,28 +86,23 @@ if ( _role != "cargo") then {
     if ( (alive _x) && (canStand _x) && ( vehicle _x == _x) && (_man distance _x < 50) && !(_x in _crew) ) then {_crew = _crew + [_x];};
 } forEach units group _man;
 
-_grp     = group _man;
-_nearmen = nearestObjects [_man, [_crewtype], 50];
-
 {
     if ( count _roles == 0) exitWith{};
-    if ( group _x == _grp ) then
+    if ( alive _x && canStand _x && vehicle _x == _x ) then
     {
-        if (canStand _x && vehicle _x == _x) then
+        unassignVehicle _x;
+        _x setDamage 0;
+        _newrole = _roles select 0;
+        _roles  = _roles - [_newrole];
+        switch (_newrole ) do
         {
-            unassignVehicle _x;
-            _newrole = _roles select 0;
-            _roles = _roles - [_newrole];
-            switch (_newrole ) do
-            {
-                case "driver":    { _x assignAsDriver    _veh; _x moveInDriver    _veh };
-                case "gunner":    { _x assignAsGunner    _veh; _x moveInGunner    _veh };
-                case "commander": { _x assignAsCommander _veh; _x moveInCommander _veh};
-                case "cargo":     { _x assignAsCargo     _veh; _x moveInCargo     _veh};
-            };
+            case "driver":    { _x assignAsDriver    _veh; _x moveInDriver    _veh };
+            case "gunner":    { _x assignAsGunner    _veh; _x moveInGunner    _veh };
+            case "commander": { _x assignAsCommander _veh; _x moveInCommander _veh};
+            case "cargo":     { _x assignAsCargo     _veh; _x moveInCargo     _veh};
         };
     };
-} forEach _nearmen;
+} forEach _crew;
 
 hint localize format["eventGetOut: vehicle %1 populated with %2 of crew", typeOf _veh, count crew _veh];
 _index = _veh addEventHandler ["GetOut", {_this execVM "scripts\eventGetOut.sqf";}]; //
