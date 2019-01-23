@@ -40,7 +40,7 @@ _newgroup allowFleeing 0;
 sleep 2.333;
 ["specops", 2, "basic", 2, _pos, if (_patrol_dist > 0) then {_patrol_dist} else {200},true] spawn XCreateInf;
 sleep 2.333;
-["shilka", 1, "bmp", 1, "tank", 1, _pos,1,if (_patrol_dist > 0) then {_patrol_dist} else {170},true] spawn XCreateArmor;
+["shilka", 2, "bmp", 1, "tank", 1, _pos,1,if (_patrol_dist > 0) then {_patrol_dist} else {170},true] spawn XCreateArmor;
 
 sleep 32.123;
 
@@ -130,38 +130,37 @@ while {!_hostages_reached_dest && !_all_dead} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	if (({alive _x} count _units) == 0) then {
-		_all_dead = true;
-	} else {
-		_leader = leader _newgroup;
-		if (!_rescued) then {
-			_nobjs = nearestObjects [_leader, ["Man"], 20];
-			if (count _nobjs > 0) then {
-				{
-					if (isPlayer _x) exitWith {
-						_rescued = true;
-						_retter = _x;
-					};
-					sleep 0.01;
-				} forEach _nobjs;
-				if (_rescued && !isNull _retter) then {
-					{
-						if (!(isNull _x) && alive _x) then {
-							_x setCaptive false;
-							_x enableAI "MOVE";
-						};
-					} forEach _units;
-					_units join (leader _retter);
-				};
-			};
-		} else {
-			{
-				if (!(isNull _x) && (alive _x) && _x distance FLAG_BASE < 20) exitWith {
-					_hostages_reached_dest = true;
-				};
-			} forEach _units;
-		};
-	};
+	if (({alive _x} count _units) == 0) exitWith { _all_dead = true; };
+
+    _leader = leader _newgroup;
+    if (!_rescued) then {
+        _nobjs = nearestObjects [_leader, ["Man"], 20];
+        if (count _nobjs > 0) then {
+            {
+                if (isPlayer _x) exitWith {
+                    _rescued = true;
+                    _retter = _x;
+                };
+                sleep 0.01;
+            } forEach _nobjs;
+            if (_rescued && !isNull _retter) then {
+                {
+                    if ( alive _x ) then {
+                        _x setCaptive false;
+                        _x enableAI "MOVE";
+                    };
+                } forEach _units;
+                _units join (leader _retter);
+            };
+        };
+    } else {
+        {
+            if ( (alive _x) && (_x distance FLAG_BASE < 20) ) exitWith {
+                _hostages_reached_dest = true;
+            };
+            sleep 0.01;
+        } forEach _units;
+    };
 	if (__RankedVer) then {
 		if (_hostages_reached_dest) then {
 			["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;

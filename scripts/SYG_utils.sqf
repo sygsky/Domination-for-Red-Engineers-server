@@ -321,7 +321,7 @@ SYG_findAndAssignAsCargo = {
 			{
 				_feetmen1 allowGetIn true;
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-				hint localize format["%1 SYG_findAndAssignAsCargo: reassigning to cargo %2 men with patrol vecs %3",call SYG_nowToStr,_feetmen1, _vecs];
+				hint localize format["%1 SYG_findAndAssignAsCargo: reassigning to cargo %2 men with patrol %3 vecs", call SYG_nowToStr, count _feetmen1, count _vecs];
 #endif								
 				while { (count _vecs > 0) || (count _feetmen1) > 0 } do
 				{
@@ -348,7 +348,7 @@ SYG_findAndAssignAsCargo = {
 					sleep 1.01;
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-					hint localize format["%1 SYG_findAndAssignAsCargo: %2 assignedToCargo %3 dist %4", call SYG_nowToStr, _assigned, typeOf _veh, _veh distance (_assigned select 0)];
+					hint localize format["%1 SYG_findAndAssignAsCargo: %2 assignedToCargo %3 dist %4", call SYG_nowToStr, count _assigned, typeOf _veh, _veh distance (_assigned select 0)];
 #endif
 
 				}; // while { (count _vecs > 0) || (count _feetmen1) > 0 } do
@@ -356,7 +356,7 @@ SYG_findAndAssignAsCargo = {
 		}; // if ( count _vecs > 0 ) then 
 	};
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-	hint localize format[ "%1 SYG_findAndAssignAsCargo: free feetmen remained %2", call SYG_nowToStr, _feetmen];
+	hint localize format[ "%1 SYG_findAndAssignAsCargo: %2 free feetmen remained", call SYG_nowToStr, count _feetmen];
 #endif
 	_feetmen
 };

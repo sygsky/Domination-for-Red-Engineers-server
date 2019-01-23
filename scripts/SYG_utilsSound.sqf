@@ -144,6 +144,14 @@ SYG_playRandomDefeatTrackByPos = {
 	};
     #endif
 
+    // check if we are near church
+    _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
+
+    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
+    {
+        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
+    };
+
     // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
@@ -156,14 +164,6 @@ SYG_playRandomDefeatTrackByPos = {
     {
         _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
-    };
-
-    // check if we are near church
-    _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
-
-    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
-    {
-        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
     };
 
     if (_this call SYG_pointOnIslet) exitWith // always if on a small island

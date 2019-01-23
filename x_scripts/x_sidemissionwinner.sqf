@@ -1,4 +1,5 @@
-﻿// by Xeno, x_scripts/x_sidemissionwinner.sqf. Called from x_getbonus.sqf
+﻿// by Xeno, x_scripts/x_sidemissionwinner.sqf. Called from x_scripts\x_funcs\x_netinitclient.sqf on "sm_res_client" event
+// sent from call to XSideMissionResolved on server
 private ["_bonus_pos","_bonus_string","_bonus_vehicle","_s"];
 
 if (!X_Client) exitWith {};
@@ -27,7 +28,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 	_get_points = false;
 	if (isNil "d_sm_p_pos") then
 	{
-	    hint localize format["x_scripts\x_sidemissionwinner.sqf:d_sm_p_pos is nil, x_sm_pos %1 ", x_sm_pos];
+	    hint localize format["x_sidemissionwinner.sqf:d_sm_p_pos is nil, x_sm_pos %1 ", x_sm_pos];
 		_posi_array = x_sm_pos;
 		_posione = _posi_array select 0;
 		if (player distance _posione < (d_ranked_a select 12)) then {
@@ -52,7 +53,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 		};
 	};
 	if (_get_points) then {
-		(format [localize "STR_SYS_125"/* "За участие в выполнении дополнительного задания вы получаете очки: +%1 !!!" */,(d_ranked_a select 11),_bonus_vehicle]) call XfHQChat;
+		(format [localize "STR_SYS_125"/* "Participating in the side mission execution you get points: +%1 and %2 !!!" */,(d_ranked_a select 11),_bonus_vehicle]) call XfHQChat;
 		player addScore (d_ranked_a select 11);
 	};
 	d_sm_p_pos = nil;
@@ -78,7 +79,10 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 		_bonus_string
 	];
 	hint  _s;
-	(format ["%1! %2",localize "STR_SYS_127", _bonus_string]) call XfHQChat; //"Дополнительное задание выполнено"
+	_s = format ["%1! %2",localize "STR_SYS_127", _bonus_string];
+	_s call XfHQChat; // "Side mission accomplished"
+    hint localize ("+++ SideMission: " + _s);
+
 } // if (side_mission_winner != 0 && bonus_number != -1) then
 else
 {
@@ -98,15 +102,17 @@ else
 
 	if (_s != "") then
 	{
-        _penalty = d_ranked_a select 11;
+        _penalty = d_ranked_a select 11; // todo: lower all players in rank on such bad event!!!
         player addScore (-_penalty);
 		hint composeText[ 
-			parseText("<t color='#f0ff00ff' size='1'>" + localize "STR_SYS_129"/* "Дополнительное задание провалено!!!" */ + "</t>"), 
+			parseText("<t color='#f0ff00ff' size='1'>" + localize "STR_SYS_129"/* "Side mission failed!!!" */ + "</t>"),
 			lineBreak,
 			lineBreak,
 			_s
 			];
-		(format [localize "STR_SYS_130"/* "За невыполнение задания Вы лично понесли ответственность. Вычтенo %1 баллов. Так будет с каждым!" */, _penalty]) call XfHQChat;
+		_s = format [localize "STR_SYS_130"/* ""For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!" */, _penalty];
+		_s call XfHQChat;
+		hint localize ("--- SideMission: " + (localize "STR_SYS_129"));
 	};
 };
 
