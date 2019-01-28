@@ -24,16 +24,22 @@ while {d_run_illum} do {
 	};
 	__DEBUG_NET("x_illum.sqf",(call XPlayersNumber))
 	_flare = objNull;
-	if (daytime > 19.75 || daytime < 4.25) then {
+	/*
+	    SYG_shortNightEnd    =  4.60;
+        SYG_morningEnd       =  7.00;
+        SYG_eveningStart     = 18.30;
+        SYG_shortNightStart  = 19.75;
+
+	*/
+	if (daytime > SYG_shortNightStart || daytime < SYG_shortNightEnd) then
+	{
 		_angle = floor (random 360);
 		_randrad = _radius call XfRndRadious; // correct randomly distributed radious
 		_x1 = _center_x - (_randrad * sin _angle);
 		_y1 = _center_y - (_randrad * cos _angle);
-		_flare = if (mt_radio_down ) then {"F_40mm_Red"}
-		else
-		{
-            _flares select (( floor random 10 ) min 3);
-		};
+
+		_flare = if (mt_radio_down ) then {"F_40mm_Red"} else { _flares select (( floor random 10 ) min 3); }; // while color is mostly flared
+
 		_flare =  _flare createVehicle [_x1, _y1, 250];
 #ifdef __FULL_LIGHT__
         while {true} do

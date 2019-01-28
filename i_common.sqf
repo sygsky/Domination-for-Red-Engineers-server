@@ -951,5 +951,10 @@ SYG_startDay         =  7.00;
 SYG_startEvening     = 18.30;
 SYG_startNight       = 19.75;
 
+SYG_shortNightEnd    =  4.60;
+SYG_morningEnd       =  7.00;
+SYG_eveningStart     = 18.30;
+SYG_shortNightStart  = 19.75;
+
 SYG_nightSkipFrom    = 21.00 ;  // skip server/client time from
 SYG_nightSkipTo      =  3.00;   // skip server/client time to

@@ -342,7 +342,7 @@ SYG_pointInRect = {
 
 /**
  * call: [_pnt1, _pnt2, dist] call SYG_elongate2;
- * returns end point of vector [_pnt1, _pnt2] elongated with dist from _pnt2
+ * returns end point of 2D vector [_pnt1, _pnt2] elongated with dist from _pnt2
  * _pnt1: initial point of vector, may be some object/marker etc
  * _pnt2: ending point of vector, may be some object/marker etc
  * dist in meters, may be negative
@@ -365,7 +365,7 @@ SYG_elongate2 = {
 
 /**
  * call: [_pnt1, _pnt2, dist] call SYG_elongate2Z;
- * returns end point of vector [_pnt1, _pnt2] elongated with dist from _pnt2
+ * returns end point of 3D vector [_pnt1, _pnt2] elongated with dist from _pnt2
  * _pnt1: initial point of vector, may be some object/marker etc
  * _pnt2: ending point of vector, may be some object/marker etc
  * dist in meters, may be negative

@@ -454,16 +454,12 @@ if (isServer) then {
 
     //+++++++++++++++++++++++++++++++ SHORT NIGHT DEFINITIONS AND CODE SPAWN
 
+    //       Night start,      morning start,  night skip from,    night skip to
+
     // Run short night script only on server, all info will be send to clients
     // Night is assumed to start from 19:45 (evening) and end at 04:36 (morning).
     // You can variate in future night start/end time and wanted night span.
-    SYG_shortNightEnd    =  4.60;
-    SYG_morningEnd       =  7.00;
-    SYG_eveningStart     = 18.30;
-    SYG_shortNightStart  = 19.75;
 
-    SYG_twilightDuration =  0.50; // morning/ evening twilight duration
-    //       Night start,      orning start,  night skip from,    night skip to
     [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
 
     hint localize format["init.sqf; shortNight.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
