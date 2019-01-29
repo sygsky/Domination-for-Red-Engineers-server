@@ -188,6 +188,11 @@ class CfgMusic
     class end { name=""; sound[] = {\sounds\end.ogg,db-1,1.0};} // defeat music
     class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
     class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
+
+    class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg.ogg,db+10,1.0};} // defeat sound
+    class medieval_defeat { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // defeat sound
+
+
     // defeats
 
     class metel { name=""; sound[] = {\sounds\metel.ogg,db+0,1.0};} // defeat music from "Metel" of Pushkin novel
@@ -200,6 +205,9 @@ class CfgMusic
     class decisions { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
     class gong {name = ""; sound[] = {\sounds\gong.ogg, db+10, 1.0}; titles[] = {}; };
     class church_organ_1 {name = ""; sound[] = {\sounds\church_organ_1.ogg, db+10, 1.0}; titles[] = {}; };
+    class church_voice {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0}; titles[] = {}; };
+
+
     class sorcerie {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0}; titles[] = {}; };
     class melody {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0}; titles[] = {}; };
 
@@ -279,6 +287,7 @@ class CfgSounds
     class male_scream_3 {name = ""; sound[] = {\sounds\male_scream_3.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_4 {name = ""; sound[] = {\sounds\male_scream_4.ogg, db+10, 1.0}; titles[] = {}; };
     class male_scream_5 {name = ""; sound[] = {\sounds\male_scream_5.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_6 {name = ""; sound[] = {\sounds\male_scream_6.ogg, db+0, 1.0}; titles[] = {}; };
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 

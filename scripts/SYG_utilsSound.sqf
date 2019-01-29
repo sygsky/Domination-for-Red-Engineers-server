@@ -100,7 +100,8 @@ SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
-    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1","sorcerie","melody"
+    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1","sorcerie",
+    "melody","medieval_defeat","defeat2"
     ];
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
@@ -221,7 +222,9 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[24.014,8.097]],
         ["ATrack26",[32.059,4.0]],
         ["ATrack26",[36.053,-1]],
-        ["church_organ_1"]
+        ["church_organ_1"],
+        ["church_voice"]
+
     ];
 
 // if you suicided near (50 meters) church
