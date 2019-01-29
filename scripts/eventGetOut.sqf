@@ -14,7 +14,7 @@
     role:    String - Can be either "driver", "gunner", "commander" or "cargo"
     unit:    Object - Unit that exit the vehicle
 */
-//#define __DEBUG__
+#define __DEBUG__
 #ifdef __DEBUG__
 
 X_MP = true;
@@ -46,7 +46,15 @@ hint localize format["--- eventGetOut: params %1, %2, %3", typeOf _veh, _role, t
 
 _crewtype = typeOf _man; //"SoldierWB";
 
-if ( !alive _veh ) exitWith {false}; // vehicle is dead, nothing to do with him
+_dmgstr = "";
+
+if ( !alive _veh ) exitWith {false}; // vehicle is dead, nothing to do with it
+
+#ifdef __DEBUG__
+if (damage _veh != 0 ) then {hint localize format["%1 has damage %2", typeOf _veh, damage _veh]};
+#endif
+
+_veh setDamage 0; // remove any vehicle damage
 
 _getNextRole = {
     if (_this emptyPositions "driver" > 0) exitWith { "driver"};
@@ -54,6 +62,7 @@ _getNextRole = {
     if (_this emptyPositions "commander" > 0) exitWith { "commander"};
     if (_this emptyPositions "cargo" > 0) exitWith { "cargo"};
     "" // no more roles
+
 };
 _crew = crew _veh; // crew still in vehicle
 
@@ -61,8 +70,14 @@ _crew = crew _veh; // crew still in vehicle
 hint localize format["eventGetOut: vehicle crew has %1 men, wait vehicle to be empty", count crew _veh];
 #endif
 
-// Allow all AI jumped out and let find the cause
-sleep 10;
+// Wait while all AI are jumped out
+for "_i" from 1 to 15 do
+{
+    if ( !alive _veh ) exitWith {};
+    if ( {alive _x} count (crew _veh) == 0) exitWith {};
+    sleep 1;
+};
+
 if ( !alive _veh ) exitWith
 {
 #ifdef __DEBUG__
@@ -71,36 +86,38 @@ if ( !alive _veh ) exitWith
     false
 }; // vehicle is dead, nothing to do with him
 
-_veh setDamage 0; // remove any vehicle damage
-
-if ( {alive _x} count (crew _veh) > 0 ) exitWith
+if ( count (crew _veh) > 0 ) then
 {
-    // cyclic jump-in jump-out, try simply to repair this vehicle and exit
+    {
+        _x action["Eject", _veh];
+    } forEach crew _veh;
+    // probable cyclic jump-in jump-out, try empty and repair this vehicle
     sleep 0.2;
 #ifdef __DEBUG__
-    hint localize format["eventGetOut: %1 vehicle  has cyclic in/out events detected, repaired and exit", typeOf _veh];
+    hint localize format["eventGetOut: %1 vehicle probably has cyclic in/out events detected, repaired and repopulate it", typeOf _veh];
 #endif
-    _index = _veh addEventHandler ["GetOut", {_this execVM "scripts\eventGetOut.sqf";}]; //
-    true
+//    _index = _veh addEventHandler ["GetOut", {_this execVM "scripts\eventGetOut.sqf";}]; //
+//    true
 };
 
 // check if vehicle is upsidedown
 _udState = _veh call SYG_vehIsUpsideDown;
 
 if (_udState) then {
-
+    sleep 0.1;
     _pos = position _veh;
     _nil = "Logic" createVehicle _pos;
     _veh setPos (position _nil);
+#ifdef __DEBUG__
+    hint localize format["eventGetOut: Upsidedown vehicle %1 of %2 crew returned back, dist from orig pos %3 m.", typeOf _veh, count crew _veh, round (_nil distance _veh)];
+#endif
     sleep 0.01;
     deleteVehicle _nil;
-
-    hint localize format["eventGetOut: Upsidedown vehicle %1 of %2 crew returned back", typeOf _veh, count crew _veh]
 };
 
 if ( vehicle _man == _veh) exitWith { hint localize format["--- eventGetOut: jumped out man already moved inside %1, exit", typeOf _veh] };
 
-_roles = [ "driver", "gunner", "commander"];
+_roles = [ "driver", "gunner", "commander"]; // main roles
 
 // vehicle is empty, try to populate it again with nearest group members
 
@@ -113,17 +130,19 @@ if ( _role != "cargo") then
     switch (_role ) do
     {
         case "driver":    { _man assignAsDriver    _veh; _man moveInDriver    _veh };
-        case "gunner":    { _man assignAsGunner    _veh; _man moveInGunner    _veh };
+        case "gunner":    { _man assignAsGunner    _veh; _man moveInGunner    _veh; };
         case "commander": { _man assignAsCommander _veh; _man moveInCommander _veh};
 //        case "cargo":     { _man assignAsCargo     _veh; _man moveInCargo     _veh};
     };
     _roles = _roles - [_role]; // remove already populated role
+    _dmgstr = format["%3%1%2", if ( _dmgstr != "") then {","} else {""} ,round ((damage _man) *10)/10, _dmgstr];
+    _man setDamage 0;
 }
 else
 {
 
 #ifdef __DEBUG__
-    hint localize format["eventGetOut: %1 added to list", _role];
+    hint localize format["eventGetOut: %1 added to crew", _role];
 #endif
     _crew = _crew + [_man]
 };
@@ -144,7 +163,10 @@ _cnt = count _crew;
 
 {
     _newrole = _veh call _getNextRole;
+
     if ( _newrole == "") exitWith { true };
+    _dmgstr = format["%3%1%2", if ( _dmgstr != "") then {","} else {""} ,round ((damage _x) *10)/10, _dmgstr];
+    _x setDamage 0;
 
     #ifdef __DEBUG__
     hint localize format["eventGetOut: move %1 in vehicle", _newrole];
@@ -165,11 +187,13 @@ _cnt = count _crew;
             _x assignAsCargo    _veh; _x moveInCargo    _veh ;
         };
     };
+    _roles = _roles - [_newrole];
     sleep 0.1;
+
 } forEach _crew;
 
 #ifdef __DEBUG__
-hint localize format["eventGetOut: vehicle %1 populated with %2 of crew, outer crew size now %3, not poped roles %4", typeOf _veh, count crew _veh, (count _crew) - (count crew _veh), _roles];
+hint localize format["eventGetOut: vehicle %1 populated with %2 of crew (orig dmg %5), outer crew size now %3, not poped roles %4", typeOf _veh, count crew _veh, (count _crew) - (count crew _veh), _roles, _dmgstr];
 #endif
 
 _index = _veh addEventHandler ["GetOut", {_this execVM "scripts\eventGetOut.sqf";}]; //
