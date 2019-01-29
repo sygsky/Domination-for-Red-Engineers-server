@@ -1113,7 +1113,7 @@ if (__TTVer) then {
 #endif
 
 ass = -8879;
-ass = _p addAction [localize "STR_SYS_97"/*"СТАТУС"*/, "x_scripts\x_showstatus.sqf",[],-1,false];
+ass = _p addAction [localize "STR_SYS_97"/*"СТАТУС"*/, "x_scripts\x_showstatus.sqf",[],-1.1,false];
 
 pbp_id = -9999;
 if (d_use_backpack) then {

@@ -615,19 +615,29 @@ if ( X_Client ) then // use only on client
     // store rucksack position (not move automatically it to the secondary gear slot)
     ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
     // improve available magazines description
-    ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+    ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\ACE\MyUpdateDescriptionDisplay.sqf";
 
 #ifdef __JAVELIN__
     #ifndef __NO_RPG_CLONING__
     // Disable Javelin to rucksack load
-    ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\CanPackMagToDummyMag.sqf";
+    ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\CanPackMagToDummyMag.sqf";
     #endif
 #endif
 
 #ifdef __NO_RPG_CLONING__
     // disables AT etc missiles cloning through rucksacks
-ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\PackInventoryMagToDummyMag.sqf";
+ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\PackInventoryMagToDummyMag.sqf";
 #endif
+
+#ifdef __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
+
+ace_sys_eject_ace_getin_eject   = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_eject.sqf";
+ace_sys_eject_ace_init_eject    = compile preprocessFileLineNumbers "scripts\ACE\ace_init_eject.sqf";
+ace_sys_eject_ace_getin_jumpout = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_jumpout.sqf";
+ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE\ace_init_jumpout.sqf";
+
+#endif
+
 };
 #endif
 
