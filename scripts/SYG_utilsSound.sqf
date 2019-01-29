@@ -61,13 +61,13 @@ SYG_musicTrackCount = {
 SYG_defeatTracks =
 [
     ["Delerium_Wisdom","pimbompimbom","vendetta","thefuture"],
-    ["mountains","Gandalf_Simades","whold","end"],
+    ["Gandalf_Simades","whold","end"],
     ["ATrack9","ATrack10","ATrack14","ATrack15"],
     ["ATrack16","ATrack17","ATrack18","ATrack19"],
     ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
-    ["i_new_a_guy","decisions","treasure_island","gong"],
+    ["i_new_a_guy","decisions","treasure_island"],
     ["sorcerie","melody"]
 ];
 
@@ -82,7 +82,7 @@ SYG_northDefeatTracks =
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
     ["ATrack9","ATrack10","ATrack19","bolero"],
-    ["metel","gayane1","gayane2","gayane3"]
+    ["metel","gayane1","gayane2","gayane3", "mountains"]
 ];
 
 SYG_southDefeatTracks =
@@ -100,7 +100,7 @@ SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
-    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1","sorcerie",
+    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie", // "gong",
     "melody","medieval_defeat","defeat2"
     ];
 
@@ -223,7 +223,9 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[32.059,4.0]],
         ["ATrack26",[36.053,-1]],
         ["church_organ_1"],
-        ["church_voice"]
+        ["church_voice"],
+        [],
+        []
 
     ];
 

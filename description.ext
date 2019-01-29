@@ -203,9 +203,14 @@ class CfgMusic
     class treasure_island { name=""; sound[] = {\sounds\treasure_island.ogg,db-1,1.0};} // "tresure island alarm theme" USSR movie
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
-    class gong {name = ""; sound[] = {\sounds\gong.ogg, db+10, 1.0}; titles[] = {}; };
-    class church_organ_1 {name = ""; sound[] = {\sounds\church_organ_1.ogg, db+10, 1.0}; titles[] = {}; };
+//    class gong {name = ""; sound[] = {\sounds\gong.ogg, db+10, 1.0}; titles[] = {}; }; // ???
+
+    class church_organ_1 {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0}; titles[] = {}; };
     class church_voice {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0}; titles[] = {}; };
+    class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0}; titles[] = {}; };
+    class haunted_organ_2 {name = ""; sound[] = {\sounds\organ\haunted_organ_2.ogg, db+10, 1.0}; titles[] = {}; };
+
+    haunted_organ_1
 
 
     class sorcerie {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0}; titles[] = {}; };
