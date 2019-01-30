@@ -274,7 +274,7 @@ if (!d_use_teamstatusdialog) then {
 	_ctrl ctrlShow false;
 } else {
 	if (vehicle player == player) then {
-		_ctrl ctrlSetText localize "STR_TSD9_01"; //"Статус команды";
+		_ctrl ctrlSetText localize "STR_TSD9_01"; //"Vehicle status";
 	} else {
 		_ctrl ctrlSetText localize "STR_SYS_07"; //"Статус ТС";
 	};

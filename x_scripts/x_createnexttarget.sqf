@@ -91,7 +91,7 @@ if (call SYG_getTargetTownName == "Rahmadi") then
 };
 
 #ifdef __DEBUG__
-hint localize format["+++ x_createnexttarget.sqf (%1)completed +++", _dummy select 1];
+hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy select 1, current_counter];
 #endif
 
 [] spawn {

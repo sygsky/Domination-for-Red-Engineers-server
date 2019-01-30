@@ -1612,8 +1612,13 @@ if (d_player_air_autokick > 0) then {
 			["d_ad_sc", name player, _newscore] call XSendNetStartScriptServer;
 			[] spawn XPlayerRank; // detect if new rank is reached and inform player about
 
+			if ( rating player < 0  ) then // prevent player from being enemy to AI
+			{
+			    player addRating (100 -(rating player));
+			};
+
 #ifdef __JAIL_MAX_SCORE__
-			// Jail is assigned if socore are negative and lowered by more then -1 value (not personal death occured)
+			// Jail is assigned if score are negative and lowered by more then -1 value (not personal death occured)
 			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore + 1)) ) then
 			{
 			    [_newscore] execVM "scripts\jail.sqf"; // send him to jail for (_newscore + 60) seconds
