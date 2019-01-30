@@ -64,7 +64,15 @@ else // music normally played on intro
     }
     else
     {
-
+        // add some personilized songs for well known players
+        _players = [ ["Ceres-de","CERES de"] , ["Rokse [LT]"]];
+        _sounds  = [ ["amigohome_ernst_bush","amigohome_ernst_bush","amigohome_ernst_bush"], ["morze","morze","morze"]];
+        _name    = name player;
+        _personalSounds = [];
+        {
+            _pos = _x find _name;
+            if ( _pos >= 0 ) exitWith { _personalSounds = _sounds select _pos};
+        } forEach _players;
         _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
         [
             "bond","grant","red_alert_soviet_march","burnash","adjutant","lastdime",
@@ -72,7 +80,7 @@ else // music normally played on intro
             "total_recall_mountain","comrade_my","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
             "ruffian","morze"
 
-        ]) call _XfRandomArrayVal;
+        ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;
         playMusic _music;

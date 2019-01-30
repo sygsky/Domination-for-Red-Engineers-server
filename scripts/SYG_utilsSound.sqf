@@ -224,8 +224,8 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[36.053,-1]],
         ["church_organ_1"],
         ["church_voice"],
-        [],
-        []
+        ["haunted_organ_1"],
+        ["haunted_organ_2"]
 
     ];
 
