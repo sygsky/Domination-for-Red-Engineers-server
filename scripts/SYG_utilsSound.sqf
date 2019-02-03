@@ -110,7 +110,9 @@ SYG_TVTowerDefeatTracks =
     "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09"
     ];
 
+// All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
+
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
@@ -153,6 +155,7 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
     };
 
+    // TODO: check for castel near and play medieval music/sounds
     // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
@@ -199,13 +202,12 @@ SYG_OFPTracks =
 */
 SYG_counterAttackTracks =
     [
-        ["ATrack24",[0,70.7]],
-        ["ATrack24",[70.7,31.68]],
-        ["ATrack24",[62.37,-1]],
+        ["ATrack24",[0,59.76]],
+        ["ATrack24",[60,73]],
+        ["ATrack24",[134,-1]],
 
-        ["ATrack25",[0,90.094]],
-        ["ATrack25",[90.094,43.460]],
-        ["ATrack25",[133.554,-1]],
+        ["ATrack25",[0,71]],
+        ["ATrack25",[71,-1]],
 
         "ATrack1","ATrack23"
     ];
