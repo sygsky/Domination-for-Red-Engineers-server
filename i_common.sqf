@@ -458,12 +458,12 @@ sm_bonus_vehicle_array = (
 "ACE_T72_BK",       // 20
 
 "ACE_T80_B",        // 21
-"ACE_T80_BK",       // 22
-"ACE_T80_BV",       // 23
-"ACE_T80_BVK",      // 24
-"ACE_T80_U",        // 25
-"ACE_BMP2_K",        // 26
-"ACE_T90"          // 27
+//"ACE_T80_BK",       // 22
+"ACE_T80_BV",       // 22
+"ACE_T80_BVK",      // 23
+"ACE_T80_U",        // 24
+"ACE_BMP2_K",       // 25
+"ACE_T90"           // 26
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]

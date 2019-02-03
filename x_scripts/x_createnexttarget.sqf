@@ -67,7 +67,7 @@ _current_target_radius = _dummy select 2;
 check_trigger=createTrigger["EmptyDetector",_current_target_pos];
 check_trigger setTriggerArea [(_current_target_radius max 300) + 20, (_current_target_radius max 300) + 20, 0, false];
 check_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
-check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""];
+check_trigger setTriggerStatements["(((""Man"" countType thislist) + (""Static"" countType thislist)) >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""];
 
 [_current_target_pos, _current_target_radius] execVM "x_scripts\x_createguardpatrolgroups.sqf";
 

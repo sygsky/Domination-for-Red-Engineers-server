@@ -324,7 +324,6 @@ mt_radio_pos = _poss;
 createGuardedPoint[d_side_enemy,position _vehicle, -1, _vehicle];
 
 mt_spotted = false; // set player status  as 'not spotted'
-hint localize "+++ x_scripts/x_createsecondary.sqf: mt_spotted = false; +++";
 
 // add guard group n tower
 

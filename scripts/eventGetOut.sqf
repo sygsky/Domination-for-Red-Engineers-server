@@ -14,15 +14,6 @@
     role:    String - Can be either "driver", "gunner", "commander" or "cargo"
     unit:    Object - Unit that exit the vehicle
 */
-#define __DEBUG__
-#ifdef __DEBUG__
-
-X_MP = true;
-XPlayersNumber = {0};
-
-#endif
-
-if (X_MP && (call (XPlayersNumber) > 0) ) exitWith {false}; // only work in absence of any player
 
 #include "x_setup.sqf"
 
@@ -30,12 +21,43 @@ if (X_MP && (call (XPlayersNumber) > 0) ) exitWith {false}; // only work in abse
 if (true) exitWith {false};
 #endif
 
+#include "x_macros.sqf"
+
+#define __DEBUG__
+#ifdef __DEBUG__
+
+// X_MP = true;
+// XPlayersNumber = {0};
+
+//hint localize format["+++ eventGetOut.sqf: %1", _this];
+
+#endif
+
+#ifdef __OWN_SIDE_WEST__
+_unwantedUnitType = "SoldierWB";
+#endif
+#ifdef __OWN_SIDE_EAST__
+_unwantedUnitType = "SoldierEB";
+#endif
+
 _veh  = _this select 0;
+
+_coll = nearestObjects [_veh, [_unwantedUnitType], 500];
+if ( ({alive _x && (isPlayer _x)} count _coll) > 0 ) exitWith
+{
+#ifdef __DEBUG__
+    hint localize format["--- eventGetOut: Player %1 detected at %2, legal is 1000", name (_coll select 0), round(_veh distance (_coll select 0)) ];
+#endif
+    false
+}; // only work in absence of any player
+
+
+// TODO: use method not removin all "getout" event handlers
 _veh removeAllEventHandlers "GetOut"; // prevent multiple event firing
 
 if ( (_veh isKindOf "Air") || (_veh isKindOf "Ship")) exitWith
 {
-    hint localize format["--- eventGetOut: call on invalid vehicle type %1, exit", typeOf _veh];
+    hint localize format["--- eventGetOut: call on invalid vehicle type %1, exit", typeOf _veh]; false
 };
 
 // still only for land vehicles
@@ -48,10 +70,16 @@ _crewtype = typeOf _man; //"SoldierWB";
 
 _dmgstr = "";
 
-if ( !alive _veh ) exitWith {false}; // vehicle is dead, nothing to do with it
+if ( !alive _veh ) exitWith
+{
+#ifdef __DEBUG__
+    hint localize format["--- eventGetOut: vehicle %1 is dead, exit", typeOf _veh];
+#endif
+    false
+}; // vehicle is dead, nothing to do with it
 
 #ifdef __DEBUG__
-if (damage _veh != 0 ) then {hint localize format["%1 has damage %2", typeOf _veh, damage _veh]};
+if (damage _veh != 0 ) then {hint localize format["eventGetOut: %1 has damage %2", typeOf _veh, damage _veh]};
 #endif
 
 _veh setDamage 0; // remove any vehicle damage
@@ -106,16 +134,24 @@ _udState = _veh call SYG_vehIsUpsideDown;
 if (_udState) then {
     sleep 0.1;
     _pos = position _veh;
-    _nil = "Logic" createVehicle _pos;
-    _veh setPos (position _nil);
+
+    _random_point = [position trigger1, 20] call XfGetRanPointCircle; // use std Domination method// use std Domination method
+    if ( count _random_point == 0 ) then // it not work use Arma simple method
+    {
+        _nil = "Logic" createVehicleLocal _pos;
+        sleep 0.01;
+        _random_point = position _nil;
+        deleteVehicle _nil;
+    };
+    _veh setPos _random_point;
+
 #ifdef __DEBUG__
-    hint localize format["eventGetOut: Upsidedown vehicle %1 of %2 crew returned back, dist from orig pos %3 m.", typeOf _veh, count crew _veh, round (_nil distance _veh)];
+    hint localize format["eventGetOut: Upsidedown vehicle %1 of %2 crew turned back, dist from orig pos %3 m.", typeOf _veh, count crew _veh, round (_nil distance _veh)];
 #endif
     sleep 0.01;
-    deleteVehicle _nil;
 };
 
-if ( vehicle _man == _veh) exitWith { hint localize format["--- eventGetOut: jumped out man already moved inside %1, exit", typeOf _veh] };
+if ( vehicle _man == _veh) exitWith { hint localize format["--- eventGetOut: jumped out man already moved inside %1, exit", typeOf _veh]; false };
 
 _roles = [ "driver", "gunner", "commander"]; // main roles
 

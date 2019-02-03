@@ -9,7 +9,7 @@ _aid = _this select 2;
 _objs = _this select 3;
 _vec = _objs select 0;
 _pos = position _vec;
-_nil = "Logic" createVehicle _pos;
+_nil = "Logic" createVehicleLocal _pos;
 _tmp = position _nil;
 //playMusic "upsidedown";
 _vec setPos _tmp;
