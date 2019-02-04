@@ -53,6 +53,10 @@ if (_is_solved) then
             {
                 _msg = format["%1 %2 (+%3)!", _msg, localize "STR_SEC_COMPLETED_BY_YOU", d_ranked_a select 25];
                 player addScore (d_ranked_a select 25);
+            }
+            else
+            {
+                _msg = format["%1 [%2 +%3]!", _msg, ( _this select 2), d_ranked_a select 25];
             };
         };
     };
