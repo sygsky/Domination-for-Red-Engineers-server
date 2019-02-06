@@ -1,5 +1,5 @@
 // by Xeno: [_poss, _pos_other, 0] execVM "x_sideconvoy.sqf"
-private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_newgroup",
+private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_convoyGroup",
          "_nr_convoy","_pos_end","_pos_start","_side","_side1","_vehicles","_wp","_wps",
          "_selector", "_veh_arr","_footmen_check_time","_str","_pos1","_pos2","_dist","_dir","_vecnum"];
 
@@ -16,8 +16,8 @@ private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_newgr
 //#define __SYG_OPTIMIZATION__
 #define CHECK_DELAY 120
 
-// call: _grp call _clearFeetmen;
-_clearFeetmen = {
+// call: _grp call _clearFootmen;
+_clearFootmen = {
 	if ( !isNull _this ) then
 	{
 	    if (typeName _this == "GROUP") then {_this = units _this};
@@ -30,6 +30,101 @@ _clearFeetmen = {
 			};
 		}forEach _this;
 	};
+};
+
+// _footmen = [_footmen, _vehicles] call _checkOverturnedVehicles;
+_checkOverturnedVehicles = {
+    _footmen  = + _this select 0;
+    _vehicles =  + _this select 1;
+    if (count _footmen == 0) exitWith
+    {
+        hint localize "+++ Convoy checkOverturnedVehicles called with empty footmen array";
+        []
+    };
+
+    if (count _vehicles == 0) exitWith
+    {
+        hint localize "+++ Convoy checkOverturnedVehicles called with empty vehicles array";
+        _this select 0
+    };
+    hint localize format["+++ Convoy checkOverturnedVehicles: footmen %1, vehs %2", count _footmen, count _vehicles];
+    _populateVehCnt = 0;
+    _pos      = (count _footmen) - 1;
+    {
+        _initPos = _pos;
+        if ( _pos < 0 ) exitWith { _footmen = []};
+        if (alive _x && (_x call SYG_vehIsUpsideDown) && ( (_x distance (_footmen select _pos) ) < 100) ) then // near overturned vehicle
+        {
+            hint localize format["+++ Convoy checkOverturnedVehicles: found overturned %1, dmg %2, fuel %3, dist %4", typeOf _x, damage _x, fuel _x, _x distance (_footmen select _pos)];
+            // repair, refuel , overturned
+            _x setFuel 1;
+            _x setDamage 0;
+            _x setVectorUp [0,0,1];
+
+            // first always assign driver
+            if (_x emptyPositions "Driver" > 0) then
+            {
+                _man = _footmen select _pos;
+                _man assignAsDriver _x;
+                [_man] orderGetIn true;
+                _pos = _pos - 1;
+            };
+            if ( _pos < 0 ) exitWith { _footmen = []};
+
+            // secondary try to assign gunner
+            if (_x emptyPositions "Gunner" > 0) then
+            {
+                _man = _footmen select _pos;
+                _man assignAsGunner _x;
+                [_man] orderGetIn true;
+                _pos = _pos - 1;
+            };
+            if ( _pos < 0 ) exitWith { _footmen = []};
+
+            // last try fit commander
+            if (_x emptyPositions "Commander"  > 0) then
+            {
+                _man = _footmen select _pos;
+                _man assignAsCommander _x;
+                [_man] orderGetIn true;
+                _pos = _pos - 1;
+            };
+            if ( _pos < 0 ) exitWith { _footmen = []};
+
+            // and some cargo too
+            _cargoCnt = (_x emptyPositions "Cargo") min ( _pos + 1);
+            if (_cargoCnt  > 0) then
+            {
+                for "_i" from 0 to _cargoCnt - 1 do
+                {
+                    _man = _footmen select _i;
+                    _man assignAsCargo _x;
+                    [_man] orderGetIn true;
+                    _pos = _pos - 1;
+                };
+            };
+            if ( _pos != _initPos) then
+            {
+                hint localize format["+++ Convoy checkOverturnedVehicles: vehicle %1 populated with %2 men of %3", typeOf _x, _initPos - _pos, count _footMan];
+                _populateVehCnt = _populateVehCnt + 1;
+            };
+            sleep 1;
+        };
+    } forEach _vehicles;
+    if ( _pos < 0) exitWith
+    {
+        hint localize format["+++ Convoy checkOverturnedVehicles: all footmen are populated among %1 vehicles", _populateVehCnt];
+        []
+    }
+    else
+    {
+        if ( (_pos + 1) != (count _footmen) ) then
+        {
+            hint localize format["+++ Convoy checkOverturnedVehicles: %1 footmen are populated among %1 vehicles", (count _footmen) - _pos - 1, _populateVehCnt];
+            _footmen resize (_pos + 1);
+        };
+    };
+    _footmen
 };
 
 _pos_start = _this select 0;
@@ -47,30 +142,30 @@ sm_points_racs = 0;
 d_sm_p_pos = nil;
 #endif
 
-_c_array = d_sm_convoy select _nr_convoy;
+_c_array = d_sm_convoy select _nr_convoy; // convoy waypoints
 
 _side = d_enemy_side;
 _side1 = if ( d_enemy_side == "WEST" ) then {west} else {east};
-__WaitForGroup
-_newgroup = [_side] call x_creategroup;
+_convoyGroup = call SYG_createEnemyGroup;
+
 //[d_sm_convoy_vehicles select 0, _side] call x_getunitliste;
-_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select 0), _newgroup, 0, _c_array select 1] call x_makevgroup;
+_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select 0), _convoyGroup, 0, _c_array select 1] call x_makevgroup; // vehicle type
 (_vehicles select 0) lock true;
 _veh_arr = [_vehicles select 0];
 #ifdef __TT__
 (_vehicles select 0) addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
 extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _vehicles;
-_leader = leader _newgroup;
+_leader = leader _convoyGroup;
 _leader setRank "LIEUTENANT";
-_newgroup allowFleeing 0;
-_newgroup setCombatMode "GREEN";
-_newgroup setFormation "COLUMN";
-_newgroup setSpeedMode "LIMITED";
+_convoyGroup allowFleeing 0;
+_convoyGroup setCombatMode "GREEN";
+_convoyGroup setFormation "COLUMN";
+_convoyGroup setSpeedMode "LIMITED";
 sleep 0.933;
 _vehicles = nil;
 for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
-	_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select _i), _newgroup, 0, _c_array select 1] call x_makevgroup;
+	_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select _i), _convoyGroup, 0, _c_array select 1] call x_makevgroup;
 	(_vehicles select 0) lock true;
 	_veh_arr = _veh_arr + [_vehicles select 0];
 #ifdef __TT__
@@ -90,7 +185,7 @@ _vecnum = 0;
 			if ( _str != "" ) then {_str = _str + format[", %1", typeOf _x];} else {_str = _str + format["%1", typeOf _x];};
 		};
 	}forEach _veh_arr;
-	hint localize format["x_sideconvoy.sqf: Конвой стартовал из %1, %2", text ((leader _newgroup) call SYG_nearestLocation), _str];
+	hint localize format["x_sideconvoy.sqf: Convoy moves from %1 to %2, %3", text (_pos_start call SYG_nearestSettlement), text (_pos_end call SYG_nearestSettlement), _str];
 #endif							
 
 //#ifdef __SYG_OPTIMIZATION__
@@ -100,7 +195,7 @@ _selector = (if ((floor random 100) > 49) then {2} else {3});
 //#endif
 _wps = _c_array select _selector;
 {
-	_wp=_newgroup addWaypoint[_x, 0];
+	_wp=_convoyGroup addWaypoint[_x, 0];
 	_wp setWaypointBehaviour "SAFE";
 	_wp setWaypointSpeed "NORMAL";
 	_wp setwaypointtype "MOVE";
@@ -123,16 +218,40 @@ _time2print = time + PRINT_DELAY;
 #endif
 while {!_convoy_reached_dest && !_convoy_destroyed} do {
 	if (X_MP) then {
-		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+		waitUntil 
+		{
+            if ( _time2print <= time ) then
+            {
+                if (!isNull (_convoyGroup call SYG_getLeader)) then
+                {
+                    _loc = (_convoyGroup call SYG_getLeader) call SYG_nearestLocation;
+                    _pos1 = position _loc;
+                    _pos1 set [2,0];
+                    _pos2 = position _leader;
+                    _pos2 set [2,0];
+                    _dist = (round ((_pos1 distance _pos2)/100)) * 100;
+                    _dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
+                    hint localize format["%6 x_sideconvoy.sqf: alive vecs %1/%5(%7), pos. %3 m to %4 from %2", {alive _x} count _veh_arr, text _loc, (round (_dist/50))*50, _dir, count _veh_arr, call SYG_nowTimeToStr, typeOf (vehicle _leader) ];
+                }
+                else
+                {
+                    hint localize "x_sideconvoy.sqf: no leader exists";
+                };
+                // TODO: check for any overturned vehicles and turn it on while no players on island
+                _time2print = time + PRINT_DELAY;
+            };
+		    sleep (10.012 + random 1);
+		    (call XPlayersNumber) > 0
+		};
 	};
 	if ( true ) then
 	{
 #ifdef __DEBUG_PRINT__							
 		if ( _time2print <= time ) then
 		{
-			if (!isNull leader _newgroup) then
+			if (!isNull (_convoyGroup call SYG_getLeader)) then
 			{
-				_loc = (leader _newgroup) call SYG_nearestLocation;
+				_loc = (_convoyGroup call SYG_getLeader) call SYG_nearestLocation;
 				_pos1 = position _loc;
 				_pos1 set [2,0];
 				_pos2 = position _leader;
@@ -169,11 +288,11 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 		if ( ({ !isNull _x && alive _x } count _veh_arr) == 0 ) then
 		{
 			_convoy_destroyed = true;
-			//_newgroup call _clearFeetmen;
+			//_convoyGroup call _clearFeetmen;
 		} 
 		else 
 		{
-			_leader = leader _newgroup;
+			_leader = leader _convoyGroup;
 			if ((position _leader) distance _pos_end < 20) then {
 				_convoy_reached_dest = true;
 			}
@@ -182,11 +301,11 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 				if ( time > _footmen_check_time ) then
 				{
 					_footmen = [];
-					{ //  forEach units _newgroup;
-						if ( (!isNull _x) AND (vehicle _x == _x)) then // unit on feet
+					{ //  forEach units _convoyGroup;
+						if ( (alive _x) && (vehicle _x == _x)) then // unit on feet
 						{
 							if ( !(_x call SYG_ACEUnitUnconscious ) ) then { _footmen = _footmen + [_x]; }; // unit is conscious
-							if ( _x == leader _newgroup ) then
+							if ( _x == leader _convoyGroup ) then
 							{
 								// select other leader in a good vehicle
 								_veh = objNull;
@@ -195,14 +314,14 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 								{	
 									_x setRank "PRIVATE";
 									sleep 0.01;
-									_leader = _newgroup selectLeader (effectiveCommander _veh);
+									_leader = _convoyGroup selectLeader (effectiveCommander _veh);
 									if (!isNull _leader AND alive _leader ) then
 									{
 										sleep 0.01;
 										_leader setRank "LIEUTENANT";
 										sleep 0.01;
 #ifdef __DEBUG_PRINT__							
-										hint localize format["x_sideconvoy.sqf: Re-assign leadership from feetman %1 to a crewmen %2 from %3", _x, _leader, typeOf _veh];
+										hint localize format["x_sideconvoy.sqf: Re-assign leadership from feetman %1 to a crewmen %2 [%3]", _x, _leader, typeOf _veh];
 #endif							
 									};
 								};
@@ -213,22 +332,32 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 //							hint localize format["x_sideconvoy.sqf: feetman unit %1 is deleted",_unit];
 #endif
 						};
-					} forEach units _newgroup;
+					} forEach units _convoyGroup;
 					
 					if ( count _footmen > 0 ) then // try to assign as cargo in other moveable vehicle
 					{
 #ifdef __DEBUG_PRINT__
     					_cnt = count _footmen;
 #endif
-						_footmen = [_footmen, _vehicles] call SYG_findAndAssignAsCargo;
+						_footmen = [_footmen, _veh_arr] call SYG_findAndAssignAsCargo;
 #ifdef __DEBUG_PRINT__
-						if ( count _footmen > 0 ) then // TODO: kill remained may be?
+						if ( count _footmen > 0 ) then
 						{
                             if ( (count _footmen) < _cnt ) then
                             {
                                 hint localize format["x_sideconvoy.sqf: %1 walking units were reassigned to other vehicles",_cnt - (count _footmen)];
                             };
-  							hint localize format["x_sideconvoy.sqf: %1 units still walking by feet", count _footmen];
+/*
+                            // TODO: check the overturned cars and try to put them on the wheels
+                            _footmen = [_footmen, _veh_arr] call _checkOverturnedVehicles;
+                            // TODO: kill remained may be?
+
+                            if (count _footmen > 0) then
+                            {
+      							hint localize format["x_sideconvoy.sqf: %1 units still walking by feet", count _footmen];
+                            }
+                            else {hint localize"x_sideconvoy.sqf: no more units walking by feet";};
+*/
 						}
 						else
 						{
@@ -243,10 +372,10 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 	};
 /* 	else // old version
 	{
-		if (isNull _newgroup || ({alive _x} count (units _newgroup)) == 0) then {
+		if (isNull _convoyGroup || ({alive _x} count (units _convoyGroup)) == 0) then {
 			_convoy_destroyed = true;
 		} else {
-			_leader = leader _newgroup;
+			_leader = leader _convoyGroup;
 			if ((position _leader) distance _pos_end < 20) then {
 				_convoy_reached_dest = true;
 			};
@@ -298,6 +427,6 @@ side_mission_resolved = true;
 
 // remove all footmen
 sleep 120;
-_newgroup call _clearFeetmen;
+_convoyGroup call _clearFootmen;
 
 if (true) exitWith {};

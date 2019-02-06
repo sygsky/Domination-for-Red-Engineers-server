@@ -54,10 +54,10 @@ STR_SYS_012,Medium Grass,Medium Gras,обычная трава
 STR_SYS_013,Full Grass,Voll Gras,высокая трава
 
 STR_DANGER_NUM,4,4,4
-STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plötzlich, Ihren Rücken floss ein Rinnsal von kaltem Schweiß...","Внезапно по вашей спине потекли струйки холодного пота..."
-STR_DANGER_1,"Suddenly you felt terrible ...,"Sie wurde plötzlich schrecklich ...","Вдруг вам стало жутко..."
-STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plötzlich dachten Sie, dass dies Ihr letzter Gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
-STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Alarm! Sie wurden entdeckt, die feindlichen Spotter...","Вам показалось, что за вами следит злобный холодный взгляд..."
+STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plotzlich lauft Ihnen am Rucken ein kalter schweis runter...","Внезапно по вашей спине потекли струйки холодного пота..."
+STR_DANGER_1,"Suddenly you felt terrible ...","Plotzlich und unerwartet spuren Sie ein angst gefuhl...","Вдруг вам стало жутко..."
+STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plotzlich verstehen Sie das es Ihr letzter gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
+STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вам чувствуете, что за вами следит холодный злобный взгляд..."
 
 STR_SYS_2,"MG nest","MG-Nest","Пул.гнездо"
 STR_SYS_02,"MG %1", "MG %1", "Пул. %1"
@@ -85,7 +85,7 @@ STR_MED_8,"You get %1 points for healing other units!","Erhalten Sie %1 Punkte f
 STR_SYS_04,"Engineer scores for vehicles repair: air +%1, armored +%2, transport +%3, others +%4\n","Ingenieur erreicht souverän für Fahrzeuge reparieren: Luft +%1, Gepanzerte +%2 -, transport - +%3, andere +%4\n","Очки инженера за ремонт: авиатехники +%1, бронетехники +%2, транспорта +%3, прочего +%4\n"
 STR_SYS_05,"Engineer refuelling not limited: yes\n","Ingenieur tanken nicht begrenzt: ja\n","Инженер заливает полный бак при ремонте: Да\n"
 STR_SYS_06,"Engineer refuelling is limited to (litres): %1\n","Ingenieur tanken ist beschränkt (Liter): %1\n", "Инженер при ремонте заливает горючего (литры): %1\n"
-STR_SYS_07,Vehicle status",Status des Fahrzeugs,Статус техники
+STR_SYS_07,Vehicle status,Status des Fahrzeugs,Статус машины
 
 STR_SYS_10,"Additional death scores penalty after rank: %1\n","Zusätzliche Tod Strafe Partitur nach Rang: %1\n", "Доп. вычитание очков за смерть, после очередного звания: %1\n"
 
@@ -137,7 +137,7 @@ STR_SYS_54,"GRU intel","Intelligenz der GRU","Информация ГРУ"
 STR_SYS_55,"The intelligence agent will arrive in the next version. He will inform you where to deliver him.","Der Agent wird in den folgenden Versionen. Er wird sagen, wohin liefern.","Разведчик-нелегал прибудет в следущей версии. Он скажет, куда его доставить."
 STR_SYS_56,"Just a rumor:","Nur Gerüchte:","А пока только слухи:"
 STR_SYS_56_1,"And a rumor:","Auch neue Gerüchte:","Также слухи:"
-STR_SYS_57,"Settings","Einstellungen","Настройки"
+STR_SYS_57,"Settings","Einstellung","Настройки"
 STR_SYS_58,"Side mission:","Side mission:","Дополнительное задание:"
 STR_SYS_58_1,"Secondary Main Target Mission:","Sekundäre Ziel Der Mission:","Дополнительный приказ:"
 STR_SYS_59,"Main target:","Ziel:","Главная цель:"
@@ -229,7 +229,7 @@ STR_SYS_121,"All secondary missions resolved!","Alle sekundären Missionen gelö
 STR_SYS_122,"No hostages detected","Die Geiseln wurden nicht gefunden","Заложники не обнаружены"
 STR_SYS_123,"The leader is not detected","Der Führer nicht erkannt","Лидер не обнаружен"
 STR_SYS_124,"Their leader at distance of about %1 m","Der Führer in einem Abstand von etwa %1 m","Лидер на расстоянии примерно %1 м"
-STR_SYS_125,"Participating in the execution of a side mission you get points: +%1 and %2 !!!","Für die Beteiligung an der Ausführung der zusätzlichen Arbeit, die Sie erhalten Punkte: +%1 und %2!!!","За участие в выполнении дополнительного задания вы получаете очки: +%1 и %2!!!"
+STR_SYS_125,"Participating in the side mission execution you get points: +%1 and %2 !!!","Für die Beteiligung an der Ausführung der zusätzlichen Arbeit, die Sie erhalten Punkte: +%1 und %2!!!","За участие в выполнении дополнительного задания вы получаете очки: +%1 и %2!!!"
 STR_SYS_126,"Your team gets %1. Search: %2","Ihr Team bekommt von %1. Suchen: %2","Ваш отряд получает %1. Искать: %2"
 STR_SYS_127,"Side mission accomplished","Die zusätzliche Aufgabe erfüllt","Дополнительное задание выполнено"
 STR_SYS_128,"Congratulations...","Herzlichen Glückwunsch...","Поздравления..."
@@ -700,7 +700,7 @@ STR_SYS_613,Your recorded equipment wiped,Ihr Aufnahme-equipment gewischt,Ваш
 STR_SYS_614,A record of the equipment not found,Eine Aufzeichnung der Ausstattung nicht gefunden,Запись о снаряжении не найдена
 STR_SYS_615,"!!!!! ATTENTION !!!!! Incoming Missile !!!!!","!!!!! AUFMERKSAMKEIT !!!!! Eingehende Rakete !!!!!","!!! Опасность !!! Угроза попадания ракеты !!!"
 STR_SYS_616,"Height","Höhe","Высота"
-STR_SYS_617,"GRU: the enemy landing party was sent from helicopter carrier in %1","GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1","ГРУ: вылет десант с вертолётоносца отмечен в %1"
+STR_SYS_617,"GRU: the enemy landing party was sent from helicopter carrier in %1","GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1","ГРУ: вылет десант с вертолётоносца отмечен %1"
 STR_SYS_618,"Viewdistance restore to %1 m.","Viewdistance Durchmesser restauriert wurde: %1 m.","Диаметр зоны обзора восстановлен: %1 м."
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
@@ -711,10 +711,10 @@ STR_SYS_1004,"Marshal","Feldmarschall","Маршал"
 STR_SYS_1005,"Generalissimo","Generalissimus","Генералиссимус"
 
 STR_SYS_1100,"%1 has been cleared!!!","%1 wurde gelöscht!!!","Н.п. %1 освобождён!!!"
-STR_SYS_1100_0,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
+STR_SYS_1100_1,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
 STR_SYS_1101,"Waiting for new orders...","Warten auf neue Aufträge...","Ожидайте дальнейших распоряжений..."
 STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг, наконец, бежал. Вам остаётся только зачистить последний оккупированный город!"
-STR_SYS_1102,"For the liberation of the settlement you get %1%2 !","Für die Befreiung der Stadt, die Sie erhalten %1%2!","За освобождение города вы получаете %1%2!"
+STR_SYS_1102,"For the liberation of the settlement your group gets %1%2 !","Für die Befreiung der Siedlung bekommt Ihre Gruppe %1%2 !","За освобождение города ваша группа получает %1%2 !"
 STR_SYS_1102_1,"points ( %1 ) and ","Punkte ( %1 ) und ","очки ( %1 ) и "
 
 STR_SYS_1103,"Can't drop box near Ammo Point.","Sie können nicht entladen Kiste in der Nähe des Lagerhauses der Versorgung.","Вы не можете выгрузить ящик возле склада снабжения."
@@ -724,8 +724,8 @@ STR_SYS_1106,"Maximum number (%1) of ammo crates reached!","Maximale Anzahl (%1)
 STR_SYS_1107,"Pick up a dropped box...","Aufheben eines fallengelassenen box...","Загрузка ящика снабжения..."
 STR_SYS_1108,"No ammobox loaded into this vehicle !!!","Keine ammobox geladen in dieses Fahrzeug !!!","Ящик не загружен..."
 STR_SYS_1109,"You have to wait %1 seconds before you can drop a box from this vehicle again !!!","Sie müssen warten Sie %1 Sekunden vor dem drop können Sie eine box aus diesem Fahrzeug wieder !!!","Не доступно! Ожидайте %1 сек..."
-STR_SYS_1110,"Dropping ammo box... stand by...","Drop ammo box... stand by...","Ящик выгружен рядом с транспортом..."
-STR_SYS_1111,"Ammobox dropped !!!","Аммобокс hier !!!","Ящик выгружен..."
+STR_SYS_1110,"Dropping ammo box... stand by...","Fallen Munition box... bereithalten...","Ящик выгружен рядом с транспортом..."
+STR_SYS_1111,"Ammobox dropped !!!","Ammobox hier !!!","Ящик выгружен..."
 
 STR_SYS_1112,"Player markers with player names available","Spieler-Marker mit den Namen der Spieler verfügbar","Маркеры игроков с именем"
 STR_SYS_1113,"Player markers only (without names) available","Spieler-Marker nur (ohne Namen) verfügbar","Только маркеры игроков"
@@ -824,7 +824,8 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Ск. падения:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""", """druzba"",""dem_morgenrot_entgegen""", """podolinam"",""ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""", """ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"""
+STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """podolinam"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"
@@ -1039,7 +1040,7 @@ STR_ACE_VDN_SOLDIERECREW,"Engineer","Ingenieur","инженер"
 //-----------------------------------------------------------------------------
 // Team Status Dialog strings:
 //-----------------------------------------------------------------------------
-STR_TSD9_01,Team Status,Team Status,Статус команды
+STR_TSD9_01,Team Status,STATUS GRUPPE,Статус команды
 STR_TSD9_02,Close,Schliessen,Закрыть
 STR_TSD9_03,My team,Mein Team,Моя команда
 STR_TSD9_04,My group,Meine Gruppe,Моя группа
@@ -1068,8 +1069,8 @@ STR_TSD9_30,Cpt,Cpt,Капитан
 STR_TSD9_31,Mjr,Mjr,Майор
 STR_TSD9_32,Col,Col,Полковник
 STR_TSD9_33,A.I.,K.I.,И.И.
-STR_TSD9_34,Dead,Tot,Мертвый
-STR_TSD9_35,Name unknown,Unbekannt,Неизвестный
+STR_TSD9_34,Dead,Tot,Мёртв
+STR_TSD9_35,Name unknown,Unbekannt,Безымянный
 STR_TSD9_36,some,some,несколько
 STR_TSD9_37,TL,GF,лидер команды
 STR_TSD9_38,(My group),(Meine Gruppe),(Моя Группа)
@@ -1077,13 +1078,13 @@ STR_TSD9_39,Vacant Seats,Freie Sitze,Места
 STR_TSD9_40,has left your group,hat deine Gruppe verlassen,покинул вашу группу
 STR_TSD9_41,has joined your group,ist deiner Gruppe beigetreten,присоединился к вашей группе
 STR_TSD9_42,Your new Team Leader is,Dein neuer GF ist,Новый лидер команды
-STR_TSD9_43,has resigned,hat aufgegeben,отказался
+STR_TSD9_43,has resigned,hat aufgegeben,ушел в отставку
 STR_TSD9_44,Player,Spieler,Игрок
 STR_TSD9_45,was kicked from the group,wurde aus der Gruppe entfernt,был удален из группы
 STR_TSD9_46,soldier was removed from group,Soldat wurde aus der Gruppe entfernt,солдат был удален из группы
 STR_TSD9_47,+,+,+
 STR_TSD9_48,You are the new Team Leader,Du bist jetzt GF,Вы теперь новый лидер команды
-STR_TSD9_49,has been demoted,wurde abgesetzt,было удалено
+STR_TSD9_49,has been demoted,wurde abgesetzt,был понижен в должности
 STR_TSD9_50,The Team Leader is no longer an AI player,Der GF ist keine KI mehr,Лидер команды больше не ИИ
 STR_TSD9_51,New group,Neue Gruppe,Новая группа
 STR_TSD9_52,Join group,Beitreten,Присоединиться к группе
@@ -1110,8 +1111,8 @@ STR_MIS_5,"A1","A1","Б/К"
 STR_MIS_6,"Truck","LKW","Грузовик"
 STR_MIS_6_1,"Pass.Tr.","Pass-LKW","Пас."
 STR_MIS_7,"Arti One Trg.","Arti One Trg.","Арт. цель 1"
-STR_MIS_8,"Bonus Vehicles","Bonus-Fahrzeuge","Новая техника"
-STR_MIS_9,"Bonus aircrafts","Bonus-Flugzeuge","Новая авиация"
+STR_MIS_8,"Bonus Vehicles","Bonus-Fahrzeuge","Призовая техника"
+STR_MIS_9,"Bonus aircrafts","Bonus-Flugzeuge","Призовая авиация"
 STR_MIS_10,"Chopper Service","Chopper-Service","СТО (верт.)"
 STR_MIS_11,"Jet Service","Jet Service","СТО (авиа)"
 STR_MIS_12,"Vehicle Service","KFZ-Service","СТО (техника)"
@@ -1267,3 +1268,4 @@ STR_WEST,Enemies,Feinde,Враги
 STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
+STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"

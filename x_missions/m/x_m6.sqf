@@ -23,7 +23,7 @@ if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for p
 if (isServer) then {
 	__PossAndOther
 	_pos_other2 = x_sm_pos select 2;
-	_vehicle = "Land_SS_hangar" createvehicle (_poss);
+	_vehicle = "Land_SS_hangar" createVehicle (_poss);
 	[_vehicle] spawn XCheckSMHardTarget;
 	_vehicle setDir 41.8;
 	sleep 2.123;

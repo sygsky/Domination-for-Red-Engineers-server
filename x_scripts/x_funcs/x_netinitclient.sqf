@@ -518,7 +518,8 @@ XHandleNetStartScriptClient = {
                 // add scores
                 player addScore argp( d_ranked_a, 27 );
                 // play music
-                playSound "no_more_waiting";
+                //playSound "no_more_waiting";
+                ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClientAll; // inform all about next observer death
                 // show message
                 (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
             };
@@ -536,9 +537,9 @@ XHandleNetStartScriptClient = {
 			private ["_msg"];
 			_msg = (
 				switch (_this select 1) do {
-					case 0: {format [localize "STR_SYS_182", 10]}; //"Вражеские войска будут на месте крушения менее чем через %1 минут"
-					case 1: {format [localize "STR_SYS_182", 5]}; //"Вражеские войска будут на месте крушения менее чем через %1 минут"
-					case 2:  {format [localize "STR_SYS_182", 2]}; //"Вражеские войска будут на месте крушения менее чем через %1 минуты"
+					case 0: {format [localize "STR_SYS_182", 10]}; //"The enemy troops will be at place in less than %1 minutes"
+					case 1: {format [localize "STR_SYS_182", 5]};
+					case 2:  {format [localize "STR_SYS_182", 2]};
 				}
 			);
 			_msg call XfHQChat;
@@ -688,7 +689,31 @@ XHandleNetStartScriptClient = {
 
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
-		    arg(1) say arg(2); // do this on clients only
+		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
+		    _obj = arg(1);
+		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) )then
+		    {
+                _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
+                sleep 0.01;
+                // let all to hear this sound, not only current player
+                _nil say arg(2);
+                sleep 0.01;
+    		    _sound = nearestObject [position _nil, "#soundonvehicle"];
+    		    if (isNull _sound) then
+    		    {
+                    sleep 20; // sleep longer than known max sound length
+                    deleteVehicle _nil;
+    		    }
+    		    else
+    		    {
+                    waitUntil {isNull _sound};
+                    deleteVehicle _nil;
+	            };
+		    }
+		    else
+		    {
+    		    _obj say arg(2); // do this on clients only
+		    };
 		};
 
 		case "play_music": { // FIXME: is it called anywhere?
@@ -758,6 +783,7 @@ XHandleNetStartScriptClient = {
 
                     sleep  (random 60);
                     _str = localize (format["STR_TIME_%1",_id]);
+                    hint localize format["+++ [""shortnight"",""info""]:time %1, date %2, str %3;", time, date, _str ];
                     titleText [ _str, "PLAIN"];
                 };
             };

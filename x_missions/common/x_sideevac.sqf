@@ -63,11 +63,19 @@ _winner = 0;
 _time_over = 3;
 _enemy_created = false;
 
+_soldier = (
+	switch (d_own_side) do {
+		case "EAST": {"SoldierEB"};
+		case "WEST": {"SoldierWB"};
+		case "RACS": {"SoldierGB"};
+	}
+);
+
 while {!_pilots_at_base && !_is_dead} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	#ifndef __AI__
+
 	if (!alive _pilot1 && !alive _pilot2) then {
 		_is_dead = true;
 	} else {
@@ -79,7 +87,7 @@ while {!_pilots_at_base && !_is_dead} do {
 			{
 				if ( alive _x) then
 				{
-					_nobjs = nearestObjects [_x, ["Man"], 20];
+					_nobjs = nearestObjects [_x, [_soldier], 20];
 					_pilot = _x;
 					{
 						if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
@@ -111,83 +119,43 @@ while {!_pilots_at_base && !_is_dead} do {
 			};
                   ////////////////////////////////////////////
 		} else {
+
+//++++++++++++++++++++++++ __TTVer
+
 			if (!(__TTVer)) then {
-				if (alive _pilot1 && alive _pilot2) then {
-					if (_pilot1 distance FLAG_BASE < 20 && _pilot2 distance FLAG_BASE < 20) then {
-						_pilots_at_base = true;
-					};
-				} else {
-					if (_pilot1 distance FLAG_BASE < 20 || _pilot2 distance FLAG_BASE < 20) then {
-						_pilots_at_base = true;
-					};
+
+				if (alive _pilot1 ) then {
+					if (_pilot1 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
 				};
+				if (alive _pilot2 ) then {
+					if (_pilot2 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
+				};
+//++++++++++++++++++++++ !__TTVer
 			} else {
-				if (alive _pilot1 && alive _pilot2) then {
-					if (_pilot1 distance WFLAG_BASE < 20 && _pilot2 distance WFLAG_BASE < 20) then {
+
+				if (alive _pilot1) then {
+					if (_pilot1 distance WFLAG_BASE < 20) then {
 						_pilots_at_base = true;
 						_winner = 2;
-					} else {
-						if (_pilot1 distance RFLAG_BASE < 20 && _pilot2 distance RFLAG_BASE < 20) then {
-							_pilots_at_base = true;
-							_winner = 1;
-						};
-					};
-				} else {
-					if (_pilot1 distance WFLAG_BASE < 20 || _pilot2 distance WFLAG_BASE < 20) then {
+					}else if (_pilot1 distance RFLAG_BASE < 20) then {
 						_pilots_at_base = true;
-						_winner = 2;
-					} else {
-						if (_pilot1 distance RFLAG_BASE < 20 || _pilot2 distance RFLAG_BASE < 20) then {
-							_pilots_at_base = true;
-							_winner = 1;
-						};
+						_winner = 1;
 					};
-				};
-			};
-		};
-	};
-	#else
-	if (!alive _pilot1 && !alive _pilot2) then {
-		_is_dead = true;
-	} else {
-		if (!_rescued) then
-		{
-			_nobjs = [];
-			if (alive _pilot1) then {
-				_nobjs = _nobjs + nearestObjects [_pilot1, ["Man"], 20];
-			};
-			if (alive _pilot2) then {
-				_nobjs = _nobjs + nearestObjects [_pilot2, ["Man"], 20];
-			};
-            {
-                if ( isPlayer _x ) exitWith {
-                    _rescued = true;
-                    _leader = (leader _x);
-                    {
-                        if (alive _x) then {
-                            _x setUnitPos "AUTO";
-                            _x enableAI "MOVE";
-                            [_x] join grpNull;
-                            sleep 0.1;
-                            [_x] join _leader;
-                        };
-                    } forEach [_pilot1,_pilot2];
                 };
-                sleep 0.01;
-            } forEach _nobjs;
-		} else {
-			if (alive _pilot1 && alive _pilot2) then {
-				if (_pilot1 distance FLAG_BASE < 20 && _pilot2 distance FLAG_BASE < 20) then {
-					_pilots_at_base = true;
-				};
-			} else {
-				if (_pilot1 distance FLAG_BASE < 20 || _pilot2 distance FLAG_BASE < 20) then {
-					_pilots_at_base = true;
-				};
+
+				if (alive _pilot2) then {
+					if (_pilot2 distance WFLAG_BASE < 20) then {
+						_pilots_at_base = true;
+						_winner = 2;
+					}else if (_pilot2 distance RFLAG_BASE < 20) then {
+						_pilots_at_base = true;
+						_winner = 1;
+					};
+                };
 			};
 		};
 	};
-	#endif
+
 	sleep 5.621;
 	if (_time_over > 0) then {
 		if (_time_over == 3) then {

@@ -8,7 +8,7 @@
 // 02-dec-2016 new rules:
 // 1. All weapons are allowed for land vehicles
 // 2. Only launchers are not allowed in helis
-// 3. Only short rifles ar allowed in aiplanes
+// 3. Only short rifles are allowed in aiplanes
 //
 //
 if (!XClient) exitWith {};
@@ -107,7 +107,7 @@ while {true} do {
 		{
 			if (_vec in [MRR1,MRR2] ) then
 			{
-							    _vec say "APC_GetIn";
+				_vec say "APC_GetIn";
 			};
 		};
 		_bulky_weapon = player call SYG_getVecRoleBulkyWeapon;

@@ -458,12 +458,12 @@ sm_bonus_vehicle_array = (
 "ACE_T72_BK",       // 20
 
 "ACE_T80_B",        // 21
-"ACE_T80_BK",       // 22
-"ACE_T80_BV",       // 23
-"ACE_T80_BVK",      // 24
-"ACE_T80_U",        // 25
-"ACE_BMP2_K",        // 26
-"ACE_T90"          // 27
+//"ACE_T80_BK",       // 22
+"ACE_T80_BV",       // 22
+"ACE_T80_BVK",      // 23
+"ACE_T80_U",        // 24
+"ACE_BMP2_K",       // 25
+"ACE_T90"           // 26
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -724,6 +724,7 @@ ADD_DAM_EH(AMMOBUILDING)
 ADD_HIT_EH(MEDIC_TENT2)
 ADD_DAM_EH(MEDIC_TENT2)
 #endif
+
 #ifndef __TT__
 ADD_HIT_EH(WALL1)
 ADD_DAM_EH(WALL1)
@@ -731,7 +732,13 @@ ADD_HIT_EH(WALL2)
 ADD_DAM_EH(WALL2)
 ADD_HIT_EH(WALL3)
 ADD_DAM_EH(WALL3)
+ADD_HIT_EH(WALL4)
+ADD_DAM_EH(WALL4)
 #endif
+
+ADD_HIT_EH(depot)
+ADD_DAM_EH(depot)
+
 #ifdef __TT__
 ADD_HIT_EH(AMMOBUILDING2)
 ADD_DAM_EH(AMMOBUILDING2)
@@ -936,3 +943,18 @@ if ( isNil "global_vars" ) then { global_vars = []; };
 // Special fund to accumulate non-engineers score subracted when repairing damaged vehicles
 if ( isNil "SYG_engineering_fund") then { SYG_engineering_fund = 0;};
 hint localize format["i_common.date = %1", date];
+
+// Short night feature constants
+
+SYG_startMorning     =  4.60;
+SYG_startDay         =  7.00;
+SYG_startEvening     = 18.30;
+SYG_startNight       = 19.75;
+
+SYG_shortNightEnd    =  4.60;
+SYG_morningEnd       =  7.00;
+SYG_eveningStart     = 18.30;
+SYG_shortNightStart  = 19.75;
+
+SYG_nightSkipFrom    = 21.00 ;  // skip server/client time from
+SYG_nightSkipTo      =  3.00;   // skip server/client time to

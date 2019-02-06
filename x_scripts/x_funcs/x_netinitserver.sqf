@@ -8,6 +8,9 @@
 	(_this select 1) call XHandleNetVar;
 };
 
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri"];
+SYG_localZones = [           0,           0,        0,    -4,          +1,        +2,        +2,     +2];
+
 XHandleNetStartScriptServer = {
 	private ["_this"];
 	__DEBUG_NET("x_netinitserver.sqf XHandleNetStartScriptServer _this",_this)
@@ -36,33 +39,33 @@ XHandleNetStartScriptServer = {
 				[_this select 1, _this select 2] spawn XCreateDroppedBox;
 			};
 		};
-		#ifndef __TT__
+#ifndef __TT__
 		case "d_fac_ruins_pos": {
 			[(_this select 1) select 0,(_this select 1) select 1] spawn XFacRebuild;
 		};
-		#endif
-		#ifdef __TT__
+#endif
+#ifdef __TT__
 		case "add_kills_racs": {
 			kill_points_racs = kill_points_racs + (_this select 1);
 		};
 		case "add_kills_west": {
 			kill_points_west = kill_points_west + (_this select 1);
 		};
-		#endif
+#endif
 		case "mr1_in_air": {
 			__compile_to_var
 		};
 		case "mr2_in_air": {
 			__compile_to_var
 		};
-		#ifdef __TT__
+#ifdef __TT__
 		case "mrr1_in_air": {
 			__compile_to_var
 		};
 		case "mrr2_in_air": {
 			__compile_to_var
 		};
-		#endif
+#endif
 		case "mr1_lift_chopper": {
 			__compile_to_var
 			if (!isNull mr1_lift_chopper) then {[mr1_lift_chopper] spawn x_checktransport;};
@@ -115,19 +118,41 @@ XHandleNetStartScriptServer = {
 		};
 
 		// info from user about his name and missionStart value
+		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 		case "d_p_a": {
+
 			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance
 			if ( count _this > 2) then // missionStart received
 			{
-			    if (isNil "SYG_mission_start") then// 1st player connected/server started
+			    _userLogin = arg(1);
+			    _ind = SYG_userNames find _userLogin;
+			    if (_ind >= 0 ) then
 			    {
-			        SYG_mission_start = arg(2);
-			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1, %2", arg(1), arg(2), argopt(3,"NO_LANG")];
+			        _localDate  = arg(2);
+			        _timeOffset = SYG_localZones select _ind;
+
+			        // store real time or the server (MSK must be guarantied)
+			        //and local time to help know rela time all the mission
+			        // TODO: надо как то 
+                    SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
+                    SYG_server_time  = time;       // current server time at the synchonizaton moment
+                    hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",_timeOffset];
 			    }
 			    else
 			    {
-			        hint localize format["+++ x_netinitserver.sqf: %3 ""d_p_a"", %1", arg(1),argopt(3,"NO_LANG")];
+			        if ( isNil "SYG_client_start") then
+			        {
+                        // unknown client started server, let get time from it in any case
+                        SYG_client_start = _localDate; // current time on first and unknown connected client
+                        SYG_server_time  = time;       // current server time at the synchonizaton moment
+                        hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client started server without known timezone was accepted !!!";
+			        }
+			        else
+			        {
+                        hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client with unknown timezone wasn't accepted !!!";
+			        };
 			    };
+			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"<NO_LANG>"), _userLogin, arg(2) ];
 			};
 		};
 		/*
@@ -162,7 +187,7 @@ XHandleNetStartScriptServer = {
             _msg = "STR_SERVER_MOTD0"; // "The islanders are happy to welcome you in your native language!"
             if ( _name == "Aron") then // Slovak
             {
-    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!";
+    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!"; // Slovak
             }
             else
             {
@@ -277,7 +302,7 @@ XHandleNetStartScriptServer = {
 		    _sound   = argopt(2, "");        // sound to play
 		    if (    _sound == "" ) exitWith {hint localize "--- ""say_sound"" _vehicle sound is empty";};
 		    hint localize format["server ""play_sound"" (%1, %2)", typeOf _vehicle, _sound];
-		    _this call XSendNetStartScriptClient; // resend to all clients
+		    _this call XSendNetStartScriptClientAll; // resend to all clients
 //		    _vehicle say _sound; // do this on clients only
 		};
 		// ["GRU_event_scores",_score_id, name player] call XSendNetStartScriptServer;

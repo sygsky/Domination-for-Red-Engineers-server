@@ -45,7 +45,7 @@ sm_points_racs = 0;
 
 for "_i" from 0 to (_count_arti - 1) do {
 	_arti_pos_dir = _pos_array select _i;
-	_arti = _arti_type createvehicle (_arti_pos_dir select 0);
+	_arti = _arti_type createVehicle (_arti_pos_dir select 0);
 	_arti setDir (_arti_pos_dir select 1);
 	_arti addEventHandler ["killed", {dead_arti = dead_arti + 1;_this spawn x_removevehi;}];
 	#ifdef __TT__
@@ -60,7 +60,7 @@ for "_i" from 0 to (_count_arti - 1) do {
 _pos_array = nil;
 
 for "_i" from 1 to 3 do {
-	_truck = _trucks createvehicle _poss;
+	_truck = _trucks createVehicle _poss;
 	_truck lock true;
 	sleep 0.523;
 };

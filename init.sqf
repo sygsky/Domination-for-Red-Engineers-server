@@ -50,7 +50,7 @@ if (isNil "x_funcs1_compiled") then {
 //+++ Sygsky: useful functions for client and server usage
 call compile preprocessFileLineNumbers "scripts\SYG_utils.sqf";
 
-//hint localize format["init.sqf: SYG_start_mission is %1", SYG_mission_start call SYG_dateToStr];
+//hint localize format["init.sqf: SYG_start_mission is %1", SYG_client_start call SYG_dateToStr];
 
 m_PIPEBOMBNAME = "ACE_PipeBomb"; // reset global/local bomb name
 
@@ -108,7 +108,7 @@ if (isServer) then {
 // Function missionStart in multi-player (dedi or host server) must ( really?) show server computer REAL time
 // but shows 1970-0-0-3
 //
-//SYG_mission_start = missionStart;
+//SYG_client_start = missionStart;
 
 #ifdef __DEBUG_ADD_VEHICLES__
 	// create vehicle to help isle defence activity debugging
@@ -313,7 +313,7 @@ if (isServer) then {
 	d_placed_objs = [];
 	
 	[] spawn {
-		private ["_hnd","_srvDate"];
+		//private ["_hnd","_srvDate"];
 		/*
 			script "srvtime.sqf" should be situated in Arma.exe root directory when started on server.
 			I automatically create it with follow batch file used to start my server "Red-Engineers":
@@ -326,7 +326,7 @@ if (isServer) then {
 			set tm=%time%
 			rem example: 12:53:33.21
 
-			echo SYG_mission_start = [%dt:~6,4%,%dt:~3,2%,%dt:~0,2%,%tm:~0,2%,%tm:~3,2%,%tm:~6,2%]; > "C:\Program Files\ArmA\srvtime.sqf"
+			echo SYG_client_start = [%dt:~6,4%,%dt:~3,2%,%dt:~0,2%,%tm:~0,2%,%tm:~3,2%,%tm:~6,2%]; > "C:\Program Files\ArmA\srvtime.sqf"
 
 			start "" "C:\Program Files\ArmA\arma_server.exe -config=server.cfg -mod=@ACE;@SIX_Pack3 -name=server -pid=pids.log"
 			--------------- end of srvtime.bat
@@ -335,34 +335,34 @@ if (isServer) then {
 		//waitUntil {scriptDone _hnd};
 
     	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
-    	while {isNil "SYG_mission_start"} do {sleep 1}; // wait for 1st user connection and receiving real server time from him (this is Arma!!!)
+    	while {isNil "SYG_client_start"} do {sleep 60}; // wait for 1st user connection with known time and receiving real server time from him (this is Arma!!!)
+        hint localize "init.sqf: New Year procedure, ""SYG_client_start"" detected";
 
-    	if ( (argp(SYG_mission_start,1) > 1) && (argp(SYG_mission_start,1) < 12) ) exitWith {false}; // new year expected if only december or january is current month
-
-    	if ( (argp(SYG_mission_start,1) == 12) || ( (argp(SYG_mission_start,1) == 1) && (argp(SYG_mission_start,1) < 10) ) ) then
-    	{
-            while {true} do
+    	if ( (argp(SYG_client_start,1) > 1) && (argp(SYG_client_start,1) < 12) ) exitWith {false}; // new year expected if only december or january is current month
+    	if ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,2) > 10) ) exitWith {false}; // out of January NE days
+        while {true} do
+        {
+            // now check NewYear period
+            if ( call SYG_isNewYear ) exitWith // make gift for a player on a New Year event
             {
-                // now check NewYear period
-                if ( call SYG_isNewYear ) exitWith
-                { // make gift for a player on a New Year event
-                    hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", _srvDate call SYG_humanDateStr];
-                    private ["_vec","_snd"];
-                    _vec = "Radio" createVehicle [0, 0, 0];
-                     // set radio on top of the table
-                    _vec setPos [ 9384.3, 9972.8, 1.5];
-                    _vec setDir 90;
-                    sleep 30.512;	// wait until dropped to ground
-                    _snd = createSoundSource ["Music", (getpos _vec), [], 0];// only one source on the server should be created
+                hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
+                private ["_vec","_snd"];
+                _vec = "Radio" createVehicle [0, 0, 0];
+                 // set radio on top of the table
+                _vec setPos [ 9384.3, 9972.8, 1.5];
+                _vec setDir 90;
+                sleep 30.512;	// wait until dropped to ground
+                _snd = createSoundSource ["Music", (getpos _vec), [], 0];// only one source on the server should be created
 
-                //	hint localize format["SoundSource created: %1, typeOf %2", _snd, typeOf _snd];
+            //	hint localize format["SoundSource created: %1, typeOf %2", _snd, typeOf _snd];
 
-                    _vec setVariable ["SoundSource", _snd];
-                    _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
-                };
-                sleep 3600; // wait 1 hour to check new year next hour
+                _vec setVariable ["SoundSource", _snd];
+                _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
             };
-		};
+            hint localize format["init.sqf: %1 -> New Year still not detected, next check in an hour", (call SYG_getServerDate) call SYG_humanDateStr];
+            sleep 43200; // wait 12 hours to check new year next hour
+        };
+        hint localize "init.sqf: New Year procedure completed";
 	};
 	
 #ifdef __ACE__
@@ -454,28 +454,16 @@ if (isServer) then {
 
     //+++++++++++++++++++++++++++++++ SHORT NIGHT DEFINITIONS AND CODE SPAWN
 
+    //       Night start,      morning start,  night skip from,    night skip to
+
     // Run short night script only on server, all info will be send to clients
     // Night is assumed to start from 19:45 (evening) and end at 04:36 (morning).
     // You can variate in future night start/end time and wanted night span.
-    SYG_shortNightEnd    =  4.60;
-    SYG_morningEnd       =  7.00;
-    SYG_eveningStart     = 18.30;
-    SYG_shortNightStart  = 19.75;
 
-    SYG_twilightDuration =  0.50; // morning/ evening twilight duration
-
-    SYG_startMorning     =  4.60;
-    SYG_startDay         =  7.00;
-    SYG_startEvening     = 18.30;
-    SYG_startNight       = 19.75;
-
-    SYG_nightSkipFrom    = 21.00 ;  // skip server/client time from
-    SYG_nightSkipTo      =  3.00;   // skip server/client time to
-
-    //       Night start,      orning start,  night skip from,    night skip to
     [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
-    hint localize format["init.sqf; shortNight.sqf: evening at %1 up to %2, after skip to %3 and morning at% 4, daytime is %5",
-        SYG_eveningStart, SYG_nightSkipFrom, SYG_nightSkipTo, SYG_shortNightEnd, daytime ];
+
+    hint localize format["init.sqf; shortNight.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
+        SYG_startMorning,SYG_startDay,SYG_startEvening, SYG_startNight,SYG_nightSkipFrom, SYG_nightSkipTo];
 
     //-------------------------------
 
@@ -622,24 +610,34 @@ if ( sec_kind == 3) then
 };
 
 #ifdef __ACE__
-if ( !isServer ) then // use only on client
+if ( X_Client ) then // use only on client
 {
     // store rucksack position (not move automatically it to the secondary gear slot)
     ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
     // improve available magazines description
-    ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\MyUpdateDescriptionDisplay.sqf";
+    ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\ACE\MyUpdateDescriptionDisplay.sqf";
 
 #ifdef __JAVELIN__
     #ifndef __NO_RPG_CLONING__
     // Disable Javelin to rucksack load
-    ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\CanPackMagToDummyMag.sqf";
+    ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\CanPackMagToDummyMag.sqf";
     #endif
 #endif
 
 #ifdef __NO_RPG_CLONING__
     // disables AT etc missiles cloning through rucksacks
-ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\PackInventoryMagToDummyMag.sqf";
+ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\PackInventoryMagToDummyMag.sqf";
 #endif
+
+#ifdef __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
+
+ace_sys_eject_ace_getin_eject   = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_eject.sqf";
+ace_sys_eject_ace_init_eject    = compile preprocessFileLineNumbers "scripts\ACE\ace_init_eject.sqf";
+ace_sys_eject_ace_getin_jumpout = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_jumpout.sqf";
+ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE\ace_init_jumpout.sqf";
+
+#endif
+
 };
 #endif
 

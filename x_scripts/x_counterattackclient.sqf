@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_counterattackclient.sqf: counter attack execution
 private ["_reason"];
 
 if (!X_Client) exitWith {};
@@ -11,6 +11,10 @@ switch (_reason) do {
 	case "start" : {
 		__TargetInfo
 		_s = format [localize "STR_SYS_541", _current_target_name]; // "It seems that the enemy doesn't want to give up %1 and starts a counterattack. Search defensive positions, the attack will start in a few minutes..."
+
+    	// Play relevant music
+    	SYG_counterAttackTracks call SYG_playRandomTrack;
+
 		[_s, "HQ"] call XHintChatMsg;
 	};
 	case "start_real": {

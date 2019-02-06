@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_playerammobox.sqf - player personal ammo box handling
 private ["_box","_box_array"];
 
 #include "x_setup.sqf"

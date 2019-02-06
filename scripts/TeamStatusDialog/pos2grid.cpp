@@ -1,3 +1,5 @@
+// scripts\TeamStatusDialog\pos2grid.cpp
+
 private ["_x","_y","_cfg","_offsetX","_offsetY","_stepX","_stepY","_el","_smallZoom"];
 _cfg    =configFile>>"CfgWorlds">>worldName>>"Grid";
 

@@ -17,7 +17,7 @@
 //
 // Next version of pararameters:
 //         Night start,         night end,         skip from,         skip to
-//[SYG_shortNightStart, SYG_shortNightEnd, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
+//[SYG_startNight, SYG_startMorning, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNight.sqf";
 //
 // Now in mission there are follow time stamps, from midnight (24:00 MST, Middle Sahrani Time):
 //
@@ -29,7 +29,7 @@
 //        night skip from: night darkest period skip from time
 //
 // ----------------------------------------- NEW version comments block -----------------------------
-// Call it only on server side!
+// Call it only on server (X_SPE too) side!
 //
 
 if ( !isServer) exitWith {false};
@@ -50,7 +50,7 @@ if ( !isServer) exitWith {false};
 #define TWILIGHT_SUBTRACTION (TWILIGHT_SLEEP_DURATION / STD_SLEEP_DURATION)
 
 waitUntil {time > 0}; // wait time synchronization
-if ( X_SPE ) then { sleep 60; };// wait 1 min just in case to pass all possible date changes
+if ( isServer ) then { sleep 300; };// wait 5 min just in case to pass all possible date changes to first user started the server
 // TODO: add some sound effects (morning sounds, day insects, evening bells, night cries etc)
 _titleTime = {
     sleep  (random 60);
@@ -71,31 +71,50 @@ _str = format[ "+++ SHORTNIGHT: SYG_startMorning %1, SYG_startDay %2, SYG_startE
         _morningStart,_dayStart,_eveningStart,_nightStart,_nightSkipFrom, _nightSkipTo, daytime ];
 //player groupChat _str;
 hint localize _str;
+_skipped = false;
 
 while {true } do
 {
+    _skipped = false;
     // NIGHT begins
     if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then // we are in real night after 21:00, simply skip time up to the morning twilight
     {
         _skip = (( _nightSkipTo - daytime + 24 ) % 24);
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: night detected: daytime (%1)< _nightSkipTo (%2) || daytime >= %3, skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
+        _str = format["SHORTNIGHT: night detected: daytime (%1)< _nightSkipTo (%2) || daytime >= _nightSkipFrom (%3), skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
         // player groupChat _str;
         hint localize _str;
     #endif
-        ["shortnight","skip", _skip] call XSendNetStartScriptClient;
-        0 call _titleTime;
+        ["shortnight","skip", _skip] call XSendNetStartScriptClient; // send skip command to all client
+        0 call _titleTime; // send msg on night for all client
+        if (!X_SPE) then // execute skip on dedicated server only
+        {
+            // we are on dedicated server!!!
+            skipTime _skip;
+            _skipped = true;
+        }
+        else
+        {
+            // we are in Single on Player Execution mode (clent is running the server)
+            // so simply wait until skip is completed after XSendNetStartScriptClient executed skip command
+            // player groupChat _str;
+            hint localize "XPE SHORTNIGHT: wait some time to complete the night skip!!!";
+            sleep 10; // wait intil skip time is completed
+        };
     };
 
     // NIGHT up to the TWILIGHT continues
     if (daytime < _morningStart) then // we are in night from 03:00 to the morning, sleep to morning
     {
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: night after 03:00: daytime (%1)< _morningStart, sleep to it",daytime];
+        _str = format["SHORTNIGHT: night after 03:00: daytime (%1)< _morningStart (%2), sleep to it", daytime, _morningStart];
         //player groupChat _str;
         hint localize _str;
     #endif
-        0 call _titleTime;
+        if (!_skipped) then
+        {
+            0 call _titleTime;
+        };
         sleep ((_morningStart - daytime) *3600);
     };
 
@@ -141,7 +160,7 @@ while {true } do
         0 call _titleTime;
         _state = 0;
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: night: daytime (%1)< _nightSkipFrom, sleep to it",daytime];
+        _str = format["SHORTNIGHT: night before skip: daytime (%1)< _nightSkipFrom (%2), sleep to it",daytime, _nightSkipFrom];
         //player groupChat _str;
         hint localize _str;
 #endif

@@ -23,7 +23,7 @@ if (X_Client) then {
 
 if (isServer) then {
 	__PossAndOther
-	_vehicle = "Land_telek1" createvehicle (_poss);
+	_vehicle = "Land_telek1" createVehicle (_poss);
 	_vehicle setVectorUp [0,0,1];
 	[_vehicle] spawn XCheckSMHardTarget;
 	sleep 2.22;

@@ -25,7 +25,7 @@ sm_points_west = 0;
 sm_points_racs = 0;
 #endif
 
-_boat1 = _boat_type createvehicle (_poss);
+_boat1 = _boat_type createVehicle (_poss);
 _boat1 setDir 32;
 _boat1 addEventHandler ["killed", {dead_boats = dead_boats + 1;_this spawn x_removevehiextra;}];
 #ifdef __TT__
@@ -33,7 +33,7 @@ _boat1 addEventHandler ["killed", {switch (side (_this select 1)) do {case west:
 #endif
 _boat1 lock true;
 sleep 0.512;
-_boat2 = _boat_type createvehicle (_poss2);
+_boat2 = _boat_type createVehicle (_poss2);
 _boat2 setDir 336.274;
 _boat2 addEventHandler ["killed", {dead_boats = dead_boats + 1;_this spawn x_removevehiextra;}];
 #ifdef __TT__
@@ -41,7 +41,7 @@ _boat2 addEventHandler ["killed", {switch (side (_this select 1)) do {case west:
 #endif
 _boat2 lock true;
 sleep 0.512;
-_boat3 = _boat_type createvehicle (_poss3);
+_boat3 = _boat_type createVehicle (_poss3);
 _boat3 setDir 73.0341;
 _boat3 addEventHandler ["killed", {dead_boats = dead_boats + 1;_this spawn x_removevehiextra;}];
 #ifdef __TT__
@@ -49,7 +49,7 @@ _boat3 addEventHandler ["killed", {switch (side (_this select 1)) do {case west:
 #endif
 _boat3 lock true;
 sleep 0.512;
-_boat4 = _boat_type createvehicle (_poss4);
+_boat4 = _boat_type createVehicle (_poss4);
 _boat4 setDir 96.5422;
 _boat4 addEventHandler ["killed", {dead_boats = dead_boats + 1;_this spawn x_removevehiextra;}];
 #ifdef __TT__

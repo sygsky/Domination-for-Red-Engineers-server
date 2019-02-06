@@ -82,26 +82,6 @@ if (!isServer) exitWith {};
 
 sleep DELAY_BEFORE_SCRIPT_START;
 
-// ========================================================
-/**
- * call: _leader = _grp call _get_leader;
- */
-_get_leader = {
-	private ["_leader"];
-	if (isNull _this) exitWith { objNull };
-	if (typeName _this == "OBJECT") then 
-	{
-		_this = group _this;
-	};
-	if (isNull _this) exitWith { objNull };
-	_leader = leader _this;
-	if ( !isNull _leader ) exitWith {_leader};
-	{
-		if ( (!isNull _x) && (canStand _x) ) exitWith {_leader = _x };
-	} forEach units _this;
-	_leader
-};
-
 //
 //
 //
@@ -159,6 +139,16 @@ _make_isle_grp = {
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
     _elist        = _patrol_type call SYG_generatePatrolList; // list of vehicle type names
 
+// if in desert region, replace  tanks with desert camouflage
+    if (_patrol_type == "HP") then{
+        if (_start_point call SYG_isDesert) then // in desert regions replace ordinal Abrams of patrol to desert ones
+        {
+            sleep 0.01;
+            _elist = _elist call SYG_makeDesertAbrams;
+            hint localize format["+++ HP patrol created with desert camouflaged Abrams at %1", [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+        };
+    };
+
 //#ifdef __DEBUG__
 //    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
 //#endif
@@ -170,7 +160,6 @@ _make_isle_grp = {
         //[_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
         _vecs = _vecs + _veh;
     } forEach _elist;
-    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type %2, group %3", count _vecs, _patrol_type, _agrp];
 
 #else
 	_elist = [d_enemy_side] call x_getmixedliste;
@@ -816,7 +805,7 @@ while { true } do {
 			} forEach _vecs;
 			_dist =  round(argp(_igrpa,PARAM_LAST_POS) distance (leader _igrp));
 			_locname =  "";
- 		    _leader = _igrp call _get_leader;
+ 		    _leader = _igrp call SYG_getLeader;
 			if ( isNull _leader) then 
 			{
 				_locname = "<>";
@@ -872,7 +861,7 @@ while { true } do {
 			else
 			{
 				_locname = "";
-	 		  _leader = _igrp call _get_leader;
+	 		  _leader = _igrp call SYG_getLeader;
 				_men_info = "";
 				_pos_msg = "";
 				if ( isNull _leader) then 

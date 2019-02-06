@@ -4,7 +4,7 @@ private ["_selectit", "_array", "_num", "_a_vng", "_num_ret", "_type_list_guard"
 
 if (!isServer ) exitWith{};
 
-#define __DEBUG_PRINT__
+//#define __DEBUG_PRINT__
 
 #include "x_macros.sqf"
 
@@ -24,7 +24,7 @@ _tankName = if (_isInDesert) then {"tank_desert"} else {"tank"};  // define prot
 //_tankName = "tank";  // define protective painting of the tank
 
 #ifdef __DEBUG_PRINT__
-hint localize format["+++ x_createguardpatrolgroups.sqf: point %1, _tankName ""%2"", tank list %3",_trg_center, _tankName, ABRAMS_DESERT_LIST];
+hint localize format["+++ x_createguardpatrolgroups.sqf: point %1, _tankName ""%2""",_trg_center, _tankName];
 #endif
 
 _radius  = _this select 1;
@@ -285,11 +285,11 @@ d_run_illum = true;
 [_trg_center, _radius] execVM "x_scripts\x_illum.sqf";
 
 //+++ Sygsky: todo add here statistics test code
-#define __DEBUG_STAT_SERVICE__
+//#define __DEBUG_STAT_SERVICE__
 #ifdef __DEBUG_STAT_SERVICE__
 
 waitUntil { sleep 10; main_target_ready };
-//_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get score on current town
+_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get score on current town
 
 #endif
 

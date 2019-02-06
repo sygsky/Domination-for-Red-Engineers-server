@@ -23,6 +23,18 @@
 #define ONLY_MINS(secs) (floor((secs)%HOUR_SECS))
 #define ONLY_DAYS(secs) (floor((secs)%DAY_SECS))
 
+#define DT_YEAR_OFF 0
+#define DT_MONTH_OFF 1
+#define DT_DAY_OFF 2
+#define DT_HOUR_OFF 3
+#define DT_MIN_OFF 4
+
+// only for missionStart output parameter
+#define DT_SEC_OFF 5
+
+#define NEW_YEAR_FIRST_DAY 25
+#define NEW_YEAR_LAST_DAY 10
+
 //MONTH_LEN_ARR = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 if ( !isNil "SYG_timeStart" ) exitWith {};
@@ -43,13 +55,13 @@ SYG_twoDigsNumberSpace = {
 };
 
 /**
- * Date format  is [year, month, day, hour, minute<,second>] 
- * call: 
+ * Date format  is [year, month, day, hour, minute<,second>]
+ * call:
  *     _datestr = date call SYG_dateToStr; // 31.05.2015 14:33:03
  *
  */
 SYG_dateToStr = {
-	if ( typeName _this == "ARRAY" && count _this  >= 5 ) then 
+	if ( typeName _this == "ARRAY" && count _this  >= 5 ) then
 	{
 		private ["_str"];
 		if (count _this > 5) then { _str = (_this select 5) call SYG_twoDigsNumber0;} else { _str = "00";};
@@ -78,12 +90,12 @@ SYG_timeDiffToStr = {
 };
 
 /**
- * Date format  is [year, month, day...] 
+ * Date format  is [year, month, day...]
  * call: _datestr = call SYG_dateOnlyToStr; // 31.05.2015
  *
  */
 SYG_dateOnlyToStr = {
-	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then 
+	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then
 	{
 		format["%1.%2.%3",(_this select 2) call SYG_twoDigsNumber0,(_this select 1) call SYG_twoDigsNumber0, _this select 0]
 	}
@@ -123,7 +135,7 @@ SYG_missionDayToNum = {
  * where 'md' is number of days mission is running (from 1 to ...)
  * call: _str = call SYG_missionTimeInfoStr;
  */
-SYG_missionTimeInfoStr = 
+SYG_missionTimeInfoStr =
 {
 	format["%1/%2",call SYG_nowTimeToStr, (ceil(call SYG_missionDayToNum)) call SYG_twoDigsNumber0]
 };
@@ -146,9 +158,9 @@ SYG_daytimeToStr = {
  * call: _str = date call SYG_humanDateStr;
  *
  */
-SYG_humanDateStr = 
+SYG_humanDateStr =
 {
-	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then 
+	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then
 	{
 		format["%1 %2 %3", _this select 2, localize (format["STR_MON_%1",_this select 1]), _this select 0]
 	}
@@ -159,7 +171,7 @@ SYG_humanDateStr =
 };
 
 //
-// returns day of week for the designated date. For Monday returns 0, for Sunday 6. Returns -1 on input error 
+// returns day of week for the designated date. For Monday returns 0, for Sunday 6. Returns -1 on input error
 // Uses Zeller formula: https://en.wikipedia.org/wiki/Zeller's_congruence
 //
 SYG_weekDay = { // by Zeller formulae
@@ -222,7 +234,7 @@ SYG_weekDayLocalName = {
 		case 6: {localize "STR_SUNDAY"};
 		default {format["expected value in range 0..6, detected %1", _this]};
 	}
-}; 
+};
 
 // returns string in format "HH:MM" e.g. "15:34"
 // calls: _hh_mm_str  = call SYG_nowHourMinToStr;
@@ -243,10 +255,10 @@ SYG_isNewYear = {
 };
 
 //
-// returns true if day is in a new year range (from 26-DEC to 06-JAN)
+// returns true if day is in a new year range (from 20-DEC to 10-JAN)
 //
-//	
-// call as follow: 
+//
+// call as follow:
 //                _srvDate = call SYG_getServerDate;
 //                _isNewYear = _srvDate call SYG_isNewYear0;
 //
@@ -255,7 +267,7 @@ SYG_isNewYear0 = {
 	if ( arg(0) < 1985) exitWith { [0,0,0,0,0,0] }; // illegal or suspicious  time received from server
 	_mon = arg(1);
 	_day = arg(2);
-	( ((_mon == 12) && (_day > 25)) || ((_mon == 1) && ( _day < 7)))
+	( ((_mon == 12) && (_day >= NEW_YEAR_FIRST_DAY)) || ((_mon == 1) && ( _day <= NEW_YEAR_LAST_DAY)))
 };
 
 SYG_monLength  = [31,28,31,30,31,30,31,31,30,31,30,31]; // months length
@@ -264,26 +276,35 @@ SYG_leapYear = {
 	( ( (_this%4) + (_this%400) ) == 0 ) && ( (_this%100) > 0)
 };
 
+// returns deignated month length
+// call:
+//  _monlen = [2018,12] call SYG_monthLength; // returns 31
 //
-// returns real time (from real world) server date, based on variable SYG_mission_start (filled with missionStart info from user on "d_p_a" message ),
+SYG_monthLength = {
+    _year = _this select 0;
+    _mon  = _this select 1;
+    if ( _mon == 2 ) then { if (_year call SYG_leapYear) then { 29} else {28}} else { SYG_monLength select (_mon-1)};
+};
+//
+// returns real time (from real world) server date, based on variable SYG_client_start (filled with missionStart info from user on "d_p_a" message ),
 // SYG_mission_time  and current server time
 //
 SYG_getServerDate = {
 	private ["_time", "_adddays","_addsecs","_ssecs","_ssecsreminder","_ret","_year","_mon","_day","_hour","_min","_sec","_monlen","_newday"];
-	
+
 	// synchronize server start time and value of function 'time'
-	_time  = time - SYG_timeStart;
-	//_time = _this - SYG_timeStart; 
+	_time  = time - SYG_server_time; // difference between current time and synchonized one
+	_ret   = + SYG_client_start;     // copy server time here
+	//_time = _this - SYG_timeStart;
 	//hint localize format["_this type is %1", typeName _this];
-	
+
 	_adddays = floor(_time/DAY_SECS); // how many days to add to server date
 	_addsecs = _time % DAY_SECS; // how many seconds to add to new server date from current time
-	_ssecs = DAY_SECONDS(SYG_mission_start); // how many seconds for old server day
+	_ssecs = DAY_SECONDS(SYG_client_start); // how many seconds for old server day
 	_ssecsreminder = DAY_SECS - _ssecs; // how many seconds to add to bump to the new server day
-	
+
 	//hint localize format["SYG_getServerDate(1): _this %6, _time %5, _adddays %1, _addsecs %2, _ssecs %3, _ssecsreminder %4", _adddays, _addsecs, _ssecs, _ssecsreminder, _time, _this];
-	
-	_ret = + SYG_mission_start; // copy server time here
+
 	if ( _addsecs >= _ssecsreminder ) then
 	{
 		_adddays = _adddays + 1; // bump next server day
@@ -291,12 +312,12 @@ SYG_getServerDate = {
 		//hint localize format["SYG_getServerDate(2): day added by seconds, _adddays %1, _addsecs %2", _adddays, _addsecs];
 	}
 	else { _addsecs = _ssecs + _addsecs;};
-	
+
 	if ( _adddays > 0 ) then // bump days
 	{
-		_year = argp(SYG_mission_start,0); // server year
-		_mon  = argp(SYG_mission_start,1); // server month (1..12)
-		_day  = argp(SYG_mission_start,2); // server month day (1..31)
+		_year = argp(SYG_client_start,0); // server year
+		_mon  = argp(SYG_client_start,1); // server month (1..12)
+		_day  = argp(SYG_client_start,2); // server month day (1..31)
 		while { _adddays > 0 } do
 		{
 			_monlen = if ( _mon == 2 ) then { if (_year call SYG_leapYear) then { 29} else {28}} else {argp(SYG_monLength,_mon-1)};
@@ -304,7 +325,7 @@ SYG_getServerDate = {
 			if ( _newday > _monlen) then // bump month as days  are out of range
 			{
 				_newday  = _monlen;
-				if ( _mon == 11 ) then // December, so bump year too
+				if ( _mon == 12 ) then // December, so bump year too
 				{
 					_year = _year + 1;
 					_ret set [0, _year];
@@ -343,7 +364,7 @@ SYG_countDaysInMonth = {
 };
 
 // call: _diff =  [_date1, _date2] call SYG_getDateDiff;
-// 
+//
 // _data1 and _data2 may be in any relations each to other, the difference be calculated correctly
 //
 // Example: _diff = [[2016,5,17,15,45],[2016,4,26,9,5]] call SYG_getDateDiff;
@@ -440,6 +461,120 @@ SYG_runHolidayMusic =
       [ 1, 5, 3, "Varshavianka"], // 1st May
       [ 9, 5, 3], // 9th of May
       [22, 6, 3, "invasion"],
-      [ 7,11, 7, "Varshavianka"]  // 7th of November
+      [ 7,11, 7, ["Varshavianka","Varshavianka_eng","warschawyanka_german"]]  // 7th of November
     ];
+};
+
+// Return localized message text on the current daytime period: night, morning, day, evening
+SYG_getMsgForCurrentDaytime = {
+    _id = call SYG_getDayTimeId;
+    localize (format["STR_TIME_%1", _id])
+};
+
+// Returns 0 for night, 1 for day, 2 for morning and 3 for evening
+//
+SYG_getDayTimeId = {
+    _dt = daytime;
+    if ( _dt < SYG_startMorning ) exitWith {0};
+    if ( _dt <     SYG_startDay ) exitWith {2};
+    if ( _dt < SYG_startEvening ) exitWith {1};
+    if ( _dt <   SYG_startNight ) exitWith {3};
+    0
+};
+
+//
+//++++++++++++++++++++++++++++++++++++++++++++++++++
+// Updates date with designated hours
+// _oldDT = [ 1985, 8, 1, 12, 25]; // 01-AUG-1985 12:25:00
+// _newDT = [_oldDT, +12.2] call  SYG_updateDTByHours; // [ 1985, 8, 2, 0, 37] // 02-AUG-1985 00:37:00
+//  hour value to add can't be more than 28*24 hours
+//--------------------------------------------------
+SYG_bumpDateByHours = {
+    _dt    = + (_this select 0);
+    _addhr =    _this select 1;
+    if ( _addhr == 0) exitWith
+    {
+        hint localize "+++ SYG_bumpDateByHours: called with 0 hour change, exit";
+        _dt
+    };
+
+    _min  = _dt select DT_MIN_OFF;
+    _hour = _dt select DT_HOUR_OFF;
+    _day  = _dt select DT_DAY_OFF;
+    _mon  = _dt select DT_MONTH_OFF;
+    _year = _dt select DT_YEAR_OFF;
+
+    // MINUTES
+
+    _new  = _min + round((_addhr mod 1) * 60);
+    // hint localize format["SYG_bumpDateByHours: new minutes = %1", _new];
+    if (_new > 59 ) then
+    {
+        _dt set [DT_MIN_OFF, _new - 60];
+        _addhr = ceil(_addhr);
+    }
+    else
+    {
+        if (_new < 0) then
+        {
+            _dt set [DT_MIN_OFF, 60 + _new];
+            _addhr = floor(_addhr);
+        }
+        else
+        {
+            _dt set [DT_MIN_OFF, _new];
+            _addhr = _addhr - (_addhr mod 1);
+        };
+    };
+
+    // HOURS
+
+    _new = _hour + _addhr; // new hour value
+    // hint localize format["SYG_bumpDateByHours: new hours = %1", _new];
+    if ( _new > 23 ) then {
+        _dt set [DT_HOUR_OFF, _new % 24];
+    }
+    else {
+        if (_new < 0) then
+        {
+            _dt set [DT_HOUR_OFF, 24 + (_new % 24)];
+        }
+        else
+        {
+            _dt set [DT_HOUR_OFF, _new];
+        };
+    };
+
+    // MONTH and YEAR
+
+    _new = floor(_new / 24); // how many new whole days created (+ or -)
+    _monlen = [_year, _mon] call SYG_monthLength;
+
+    _new = _new + _day; // new day value
+    // hint localize format["SYG_bumpDateByHours: new days = %1", _new];
+    if ( _new > _monlen) then
+    {
+        if ( _mon == 12 ) then { _mon = 1; _year = _year + 1 } // December => January
+        else { _mon = _mon + 1 };
+        _new = _new - _monlen;
+    }
+    else
+    {
+        if ( _new < 1 ) then
+        {
+            if ( _mon == 1 ) then { _mon = 12; _year = _year - 1 } // January => December
+            else { _mon = _mon - 1 };
+            _monlen = [_year, _mon] call SYG_monthLength; // new month may change day number
+            _new = _monlen + _new;
+        };
+    };
+    // hint localize format["SYG_bumpDateByHours: new month = %1", _mon];
+    // hint localize format["SYG_bumpDateByHours: new year  = %1", _year];
+    _dt set [ DT_DAY_OFF   , _new  ]; // set new day
+    _dt set [ DT_MONTH_OFF , _mon  ]; // set new month
+    _dt set [ DT_YEAR_OFF  , _year ]; // set new month
+    // now print old and new datetime values
+    hint localize format["+++ SYG_bumpDateByHours: old date %1, new date %2", _this select 0, _dt];
+
+    _dt
 };

@@ -36,14 +36,14 @@ _heli_dead_list = []; // dead heli at the base list
 pilots_in_action = [];
 
 // first let go to the night period in any case
-_sleep_delay = (24 - (SYG_shortNightStart + SYG_shortNightEnd) + 0.5) * 3600.0; // how long is whole day at Sahrani
+_sleep_delay = (24 - (SYG_startNight + SYG_startMorning) + 0.5) * 3600.0; // how long is whole day at Sahrani
 
 #ifndef __DEFAULT__
 
 //+++ Sygsky: Paraiso airfield coordinates and its boundary rectangle box (semi-axis sizes)
 d_base_array        = [[9821.47,9971.04,0], 600, 200, 0];
-SYG_shortNightStart = 19.75;
-SYG_shortNightEnd   = 4.6;
+SYG_startNight = 19.75;
+SYG_startMorning   = 4.6;
 
 d_pilot_W = "ACE_SoldierWPilot_WDL";
 X_MP = true;
@@ -62,11 +62,11 @@ _hijackHeli = {
 	// TODO: remove heli and robbering pilots from the game
 };
 
-_time_to_wakeUp = SYG_shortNightStart + 0.05;
+_time_to_wakeUp = SYG_startNight + 0.05;
  
 while {true} do
 {
-	if ( (daytime < _time_to_wakeUp) &&  (daytime > SYG_shortNightEnd) ) then
+	if ( (daytime < _time_to_wakeUp) &&  (daytime > SYG_startMorning) ) then
 	{
 		sleep (_time_to_wakeUp - daytime); // wake up at the night beginning
 	};
@@ -78,7 +78,7 @@ while {true} do
 #endif	
 		for "_i" from 0 to count _heli_down_list - 1 do
 		{
-			if (daytime > SYG_shortNightStart) &&  (daytime > SYG_shortNightStart) exitWith {}; // end of night cycle
+			if (daytime > SYG_startNight) &&  (daytime > SYG_startNight) exitWith {}; // end of night cycle
 			scopeName "main_loop";
 			for "_temp" from 0 to 0 do
 			{

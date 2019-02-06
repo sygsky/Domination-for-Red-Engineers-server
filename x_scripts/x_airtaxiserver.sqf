@@ -7,6 +7,7 @@ if (!isServer) exitWith {};
 _player = _this;
 _sidep = side _player;
 
+hint localize format["+++ AirTaxi called by %1 at %2", name _player, [getPos player, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
 _crew_member = (
 	switch (_sidep) do {
 		case east: {d_pilot_E};

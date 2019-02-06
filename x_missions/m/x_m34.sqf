@@ -22,7 +22,7 @@ if (X_Client) then {
 
 if (isServer) then {
 	__Poss
-	_vehicle = "Land_trafostanica_velka" createvehicle (_poss);
+	_vehicle = "Land_trafostanica_velka" createVehicle (_poss);
 	_vehicle setDir 273.398;
 	[_vehicle] spawn XCheckSMHardTarget;
 	sleep 2.22;

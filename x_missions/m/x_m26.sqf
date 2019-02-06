@@ -35,7 +35,7 @@ if (isServer) then {
 	_pos_other3 = x_sm_pos select 3; // cone 4 (in the forest)
 	_pos_other4 = x_sm_pos select 4; // AA pos (on highest hill top)
 	_pos_other5 = x_sm_pos select 5; // AA pos (on western slope sharp-point)
-	_vehicle = "Land_SS_hangar" createvehicle (_poss);
+	_vehicle = "Land_SS_hangar" createVehicle (_poss);
 	[_vehicle] spawn XCheckSMHardTarget;
 	_vehicle setDir 354;
 	sleep 2.123;

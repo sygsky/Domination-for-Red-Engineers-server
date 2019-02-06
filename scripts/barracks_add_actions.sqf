@@ -8,7 +8,7 @@
 	returns: nothing
 */
 
-if (isServer ) exitWith {};
+if (isServer && ! X_SPE) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"

@@ -225,7 +225,7 @@ if ( current_target_index >= 0 && (client_target_counter < number_targets)) then
 else{
     if ( client_target_counter >= number_targets) then // all towns are done!
     {
-        _s = localize "STR_SYS_216"; // "occupied town"
+        _s = localize "STR_SYS_216"; // "occupied town" TODO: click should move to occupied town
     };
 };
 
@@ -274,7 +274,7 @@ if (!d_use_teamstatusdialog) then {
 	_ctrl ctrlShow false;
 } else {
 	if (vehicle player == player) then {
-		_ctrl ctrlSetText localize "STR_TSD9_01"; //"Статус команды";
+		_ctrl ctrlSetText localize "STR_TSD9_01"; //"Vehicle status";
 	} else {
 		_ctrl ctrlSetText localize "STR_SYS_07"; //"Статус ТС";
 	};

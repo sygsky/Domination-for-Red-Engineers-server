@@ -128,7 +128,7 @@ switch (sec_kind) do {
 			_poss = [_target_array2 select 0, _target_array2 select 2] call XfGetRanPointCircleBig;
 			sleep 0.04;
 		};
-		_vehicle = "Land_vysilac_FM2" createvehicle (_poss);
+		_vehicle = "Land_vysilac_FM2" createVehicle (_poss);
 		_vehicle setVectorUp [0,0,1];
 		_ACE =
 #ifdef __ACE__
@@ -178,7 +178,7 @@ switch (sec_kind) do {
 	};
 	case 3: { // ammo truck
 		_truck = (if (d_enemy_side == "EAST") then {"UralReammo"} else {"Truck5tReammo"});
-		_vehicle = _truck createvehicle (_poss);
+		_vehicle = _truck createVehicle (_poss);
 		_vehicle setDir (floor random 360);
 		_vehicle lock true;
 		#ifndef __TT__
@@ -191,7 +191,7 @@ switch (sec_kind) do {
 	};
 	case 4: {
 		_truck = (if (d_enemy_side == "EAST") then {"ACE_BMP2_Ambul"} else {"ACE_M113_Ambul"});
-		_vehicle = _truck createvehicle (_poss);
+		_vehicle = _truck createVehicle (_poss);
 		_vehicle setDir (floor random 360);
 		_vehicle lock true;
 		
@@ -258,7 +258,7 @@ switch (sec_kind) do {
 			sleep 0.04;
 		};
 		_truck = (if (d_enemy_side == "EAST") then {"BMP2_MHQ_unfolded"} else {"M113_MHQ_unfolded"});
-		_vehicle = _truck createvehicle (_poss);
+		_vehicle = _truck createVehicle (_poss);
 		_vehicle setDir (floor random 360);
 		_vehicle lock true;
 		#ifndef __TT__
@@ -275,7 +275,7 @@ switch (sec_kind) do {
 			_poss = [_target_array2 select 0, _target_array2 select 2] call XfGetRanPointCircleBig;
 			sleep 0.04;
 		};
-		_vehicle = "WarfareBLightFactory" createvehicle (_poss);
+		_vehicle = "WarfareBLightFactory" createVehicle (_poss);
 		_vehicle setDir (floor random 360);
 		#ifndef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "light_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
@@ -291,7 +291,7 @@ switch (sec_kind) do {
 			_poss = [_target_array2 select 0, _target_array2 select 2] call XfGetRanPointCircleBig;
 			sleep 0.04;
 		};
-		_vehicle = "WarfareBHeavyFactory" createvehicle (_poss);
+		_vehicle = "WarfareBHeavyFactory" createVehicle (_poss);
 		_vehicle setDir (floor random 360);
 		#ifndef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "heavy_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
@@ -315,7 +315,7 @@ while {count _poss == 0} do {
 	_poss = [_current_target_pos, _tower_build_radius] call XfGetRanPointCircleBig;
 	sleep 0.04;
 };
-_vehicle = "Land_telek1" createvehicle (_poss);
+_vehicle = "Land_telek1" createVehicle (_poss);
 _vehicle setVectorUp [0,0,1];
 [_vehicle] spawn XCheckMTHardTarget;
 mt_radio_down = false; // set radio tower to alive status
@@ -324,7 +324,6 @@ mt_radio_pos = _poss;
 createGuardedPoint[d_side_enemy,position _vehicle, -1, _vehicle];
 
 mt_spotted = false; // set player status  as 'not spotted'
-hint localize "+++ x_scripts/x_createsecondary.sqf: mt_spotted = false; +++";
 
 // add guard group n tower
 
@@ -390,7 +389,7 @@ _current_target_radius = _dummy select 2;
 _act2 = d_enemy_side + " D";
 d_f_check_trigger2 = objNull;
 d_f_check_trigger = createTrigger["EmptyDetector",_current_target_pos];
-d_f_check_trigger setTriggerArea [_current_target_radius + 500, _current_target_radius + 500, 0, false]; // increased by 200 m. from 300
+d_f_check_trigger setTriggerArea [_current_target_radius + 700, _current_target_radius + 700, 0, false]; // increased by 200 m. from 300
 d_f_check_trigger setTriggerActivation [d_own_side_trigger, _act2, false];
 d_f_check_trigger setTriggerStatements["this", "xhandle = [] spawn {if (!create_new_paras) then {create_new_paras = true;[] execVM ""x_scripts\x_parahandler.sqf"";};mt_spotted = true;[""mt_spotted""] call XSendNetStartScriptClient;sleep 5;deleteVehicle d_f_check_trigger;if (!isNull d_f_check_trigger2) then {deleteVehicle d_f_check_trigger2}}", ""];
 

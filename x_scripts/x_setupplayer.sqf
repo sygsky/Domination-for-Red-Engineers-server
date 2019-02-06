@@ -9,7 +9,7 @@ sleep 1;
 
 //#define __DEBUG__
 //#define __DEBUG_BONUS__
-#define __DEBUG_JAIL__
+//#define __DEBUG_JAIL__
 
 #define __MISSION_START__
 
@@ -344,7 +344,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
         };
 #endif
 	
-		if ( (daytime < SYG_shortNightEnd) || (daytime > (SYG_shortNightStart - 3)) || (toLower (name player) == "yeti")  ) then
+		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toLower (name player) == "yeti")  ) then
 		{
 		    _p call SYG_addNVGoggles;
 		};
@@ -393,7 +393,7 @@ hint localize "+++ count resolved_targets > 0 +++";
             if (direction _no > 355) then {
                 _objstatus = "FAILED";
                 _color = "ColorRed";
-                [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal;
+                [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad + 100,_rad + 100],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal; // Mark occupied town (red diagonal shading)
             } else {
                 [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
             };
@@ -460,7 +460,7 @@ execVM "x_scripts\x_vec_hud.sqf";
 
 if (d_show_chopper_hud) then {execVM "x_scripts\x_chop_hud.sqf";};
 
-execVM "x_scripts\x_playerammobox.sqf";
+execVM "x_scripts\x_playerammobox.sqf"; // personal player ammo box handling
 
 _counterxx = 0;
 {
@@ -1113,7 +1113,7 @@ if (__TTVer) then {
 #endif
 
 ass = -8879;
-ass = _p addAction [localize "STR_SYS_97"/*"СТАТУС"*/, "x_scripts\x_showstatus.sqf",[],-1,false];
+ass = _p addAction [localize "STR_SYS_97"/*"СТАТУС"*/, "x_scripts\x_showstatus.sqf",[],-1.1,false];
 
 pbp_id = -9999;
 if (d_use_backpack) then {
@@ -1181,7 +1181,8 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (_string_player in d_is_engineer) then  // only for engineers in any case !!!
     {
-#endif        _trigger = createTrigger["EmptyDetector" ,_pos];
+#endif
+        _trigger = createTrigger["EmptyDetector" ,_pos];
         _trigger setTriggerArea [0, 0, 0, false];
         _trigger setTriggerActivation ["NONE", "PRESENT", true];
         _trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
@@ -1228,7 +1229,7 @@ XBaseEnemies = {
 _trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 _trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
 _trigger setTriggerActivation [d_enemy_side, "PRESENT", true];
-_trigger setTriggerStatements["{((_x isKindOf 'Man')||(_x isKindOf 'Car')) && ((name  _x) != 'Error: No unit') } count thislist > 0", "FLAG_BASE say 'Alarm';[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+_trigger setTriggerStatements["{((_x isKindOf 'Man')||(_x isKindOf 'LandVehicle')) && ((name  _x) != 'Error: No unit') } count thislist > 0", "FLAG_BASE say 'Alarm';[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
 #endif
 
 if (d_weather) then {execVM "scripts\weather\weatherrec2.sqf";};
@@ -1431,7 +1432,7 @@ XFacAction = {
 			case 2: {d_wreck_repair_fac};
 		}
 	);
-	waitUntil {(sleep 0.521 + (random 0.3));!isNull _thefac};
+	waitUntil {(sleep 1.521 + (random 0.3));!isNull _thefac};
 	_element = d_aircraft_facs select _num;
 	_posf = _element select 0;
 	sleep 0.543;
@@ -1560,6 +1561,7 @@ if (!d_para_at_base) then {
 };
 
 #ifdef __ACE__
+// create additional boxes (rucksack, HuntIR etc)
 for "_i" from 0 to (count d_ace_boxes) - 1 do {
 	_element = d_ace_boxes select _i;
 	_box = (_element select 0) createVehicleLocal (_element select 1);
@@ -1610,8 +1612,13 @@ if (d_player_air_autokick > 0) then {
 			["d_ad_sc", name player, _newscore] call XSendNetStartScriptServer;
 			[] spawn XPlayerRank; // detect if new rank is reached and inform player about
 
+			if ( rating player < 0  ) then // prevent player from being enemy to AI
+			{
+			    player addRating (100 -(rating player));
+			};
+
 #ifdef __JAIL_MAX_SCORE__
-			// Jail is assigned if socore are negative and lowered by more then -1 value (not personal death occured)
+			// Jail is assigned if score are negative and lowered by more then -1 value (not personal death occured)
 			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore + 1)) ) then
 			{
 			    [_newscore] execVM "scripts\jail.sqf"; // send him to jail for (_newscore + 60) seconds
@@ -1686,7 +1693,7 @@ player call SYG_handlePlayerDammage; // handle hit events
         if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
         _targets = _targets + [_target];
     }forEach [[
-        [9663, 9898.2, 0], 180],[[9651.7, 9829.25, 4],180 ],[[9663, 9962, 0], 180], // south from flag between airstrip and courtyard
+        [9663, 9894.2, 0], 180],[[9651.7, 9829.25, 4],180 ],[[9663, 9962, 0], 180], // south from flag between airstrip and courtyard
         [[9700.05,10190.07,0]], // north form flag on other side of airstrip
         [[10397.581,10003.883, 0], 90] // east from flag on the edge of airstrip
     ];
@@ -1766,7 +1773,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 #ifdef __MISSION_START__
 //hint localize format["x_setupplayer.sqf: time BEFORE date setting %1", call SYG_nowTimeToStr];
 waitUntil {time > 0};
-SYG_mission_start = missionStart;
+SYG_client_start = missionStart;
 //["set_mission_start", missionStart] call XSendNetStartScriptServer;
 #endif
 

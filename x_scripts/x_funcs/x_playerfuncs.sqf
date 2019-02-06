@@ -147,7 +147,7 @@ Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
 	if (player distance _target_pos < 50) then {
-	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap"] call XfRandomArrayVal);
+	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei"] call XfRandomArrayVal);
 		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
 	};
 };
@@ -206,10 +206,12 @@ XRecapturedUpdate = {
 	_state = _this select 1;
 	_target_array = target_names select _index;
 	_target_name = _target_array select 1;
+	_target_rad = (_target_array select 2) max 300; // visible radious of town
 	switch (_state) do {
-		case 0: {
+		case 0: { // shade with red slash hatching brush
 			_target_name setMarkerColorLocal "ColorRed";
 			_target_name setMarkerBrushLocal "FDiagonal";
+			_target_name setMarkerSizeLocal [_target_rad +100, _target_rad + 100];
 			call compile format ["""%1"" objStatus ""%2"";", _target_array select 3, "FAILED"];
 			hint composeText[
 				parseText("<t color='#f0ff0000' size='2'>" + localize "STR_SYS_104"/* "Внимание:" */ + "</t>"), lineBreak,
@@ -217,7 +219,7 @@ XRecapturedUpdate = {
 			];
 			format [localize "STR_SYS_105", _target_name] call XfHQChat; // "В %1 обнаружено вражеское присутствие! Зачистить!"
 		};
-		case 1: {
+		case 1: {  // fill with green solid brush
 			#ifndef __TT__
 			_target_name setMarkerColorLocal "ColorGreen";
 			#endif
@@ -239,6 +241,7 @@ XRecapturedUpdate = {
 			_target_name setMarkerColorLocal _color;
 			#endif
 			_target_name setMarkerBrushLocal "Solid";
+			_target_name setMarkerSizeLocal [_target_rad, _target_rad];
 			call compile format ["""%1"" objStatus ""%2"";", _target_array select 3, "DONE"];
 			hint composeText[
 				parseText("<t color='#f00000ff' size='2'>" + (localize "STR_SYS_106")/* "Отлично!" */ + "</t>"), lineBreak,
@@ -251,7 +254,7 @@ XRecapturedUpdate = {
 			if (__RankedVer) then 
 			{
 				_current_target_pos = _target_array select 0;
-				if (player distance _current_target_pos < (d_ranked_a select 10)) then 
+				if ((player distance _current_target_pos) < (d_ranked_a select 10)) then
 				{
 					(format [localize "STR_SYS_109",(d_ranked_a select 9)]) call XfHQChat; // "За зачистку города вы получаете очки ( +%1 ) !"
 					player addScore (d_ranked_a select 9);
@@ -310,20 +313,20 @@ XPlayerRank = {
 				};
 				// if here, then promoted due to fact that your rank now is not old one and not new too
 				(format [ localize "STR_SYS_44", d_player_pseudo_rank, _prev_rank ]) call XfHQChat; // "Вы повышены в звании с %1 до %2, которое будет присвоено на Родине!"
-				d_player_pseudo_rank = _prev_rank; // e.g. from COL to G-M or from COL to G-M
-				if ( !player_already_in_super_rank ) then
-				{
-				    // TODO: sent message to everybody about new super rank player
-				    // TODO: addAction to get moto/etc from bus stops (but is it impossible?)
-				    // TODO: check if no players in the same group with the same or higher rank
-				    _grp = group player;
-				    _units = (units _grp) - [player]; // group units minus player itself
-				    hint localize format["+++ Ranking: grp %1, cnt %2", _grp, count _untis];
-				    _rankIndex = _score call XGetRankIndexFromScore;
-				    _highest_ranked_player = objNull;
-				    {
-				        if ( (isPlayer _x) &&  (( (score _x) call XGetRankIndexFromScore ) > _rankIndex) ) exitWith {_highest_ranked_player = _x;};
-				    } forEach _units;
+				d_player_pseudo_rank = _prev_rank; // e.g. from COL to G-M or from COL to G-M etc
+                // TODO: sent message to everybody about new super rank player
+                // TODO: addAction to get moto/etc from bus stops (but is it impossible?)
+                // TODO: check if no players in the same group with the same or higher rank
+                _grp = group player;
+                _units = (units _grp) - [player]; // group units minus player itself
+                if( count _units > 0) then
+                {
+                    hint localize format["+++ Ranking: grp %1, cnt %2", _grp, count units _grp];
+                    _rankIndex = _score call XGetRankIndexFromScore;
+                    _highest_ranked_player = objNull;
+                    {
+                        if ( (isPlayer _x) &&  (( (score _x) call XGetRankIndexFromScore ) > _rankIndex) ) exitWith {_highest_ranked_player = _x;};
+                    } forEach _units;
                     if ( isNull _highest_ranked_player  ) then
                     {
                         // TODO: set player leader
@@ -335,8 +338,8 @@ XPlayerRank = {
                         name _highest_ranked_player,
                         _highest_ranked_player call XGetRankFromScoreExt,
                         _score call XGetRankFromScoreExt];
-                    }
-				};
+                    };
+                };
 
 				breakTo "exit";
 			};

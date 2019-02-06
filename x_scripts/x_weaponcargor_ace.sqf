@@ -17,7 +17,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
 				#else
-				["ACE_Dummy_RIFLE",3],["ACE_AK74",10],["ACE_AKS74U",10],["ACE_Bizon",10],["ACE_AKM",10],/* ["ACE_AKMS",10], */["ACE_AK47",10],["ACE_AKS47",10],["ACE_AKS47nobutt",10]
+				["ACE_Dummy_RIFLE",3],["ACE_AK74",10],["ACE_AKS74U",10],["ACE_Bizon",10],["ACE_AKM",10]/*, ["ACE_AKMS",10], ["ACE_AK47",10],["ACE_AKS47",10],["ACE_AKS47nobutt",10]*/
 //				,["ACE_M1014",10]
 				#endif
 			],
@@ -26,7 +26,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_RIFLE",3]
 				#else
-				["ACE_AK74GL",10],["ACE_AKMGL",10],["ACE_AKMSGL",10],["ACE_AK47GL",10],["ACE_SPAS12",10]
+				["ACE_AK74GL",10],["ACE_AKMGL",10]/*,["ACE_AKMSGL",10]*/,["ACE_AK47GL",10],["ACE_SPAS12",10]
 //				,["ACE_M1014_Eotech", 10]
 				#endif
 			],
@@ -93,7 +93,7 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
 				#else
-				["ACE_SVD",10],["ACE_VSS",10]
+				["ACE_SVD",10]
 				#endif
 			],
 				// ЛЕЙТЕНАНТ
@@ -101,7 +101,8 @@ if (isNil "x_ranked_weapons") then {
 				#ifdef __OWN_SIDE_WEST__
 				["ACE_Dummy_SNIPER",3]
 				#else
-								#endif
+				["ACE_VSS",10]
+				#endif
 			],
 				// КАПИТАН
 			[
@@ -315,7 +316,7 @@ _ve spawn {
 			clearWeaponCargo _ve;
 			_old_rank = rank player;
 			_index = _old_rank call XGetRankIndex;
-            // weaponcargo that is allways in a box
+            // weaponcargo that is always in a box
             _ve addWeaponCargo ["NVGoggles",5];
             _ve addWeaponCargo ["Binocular",5];
             _ve addWeaponCargo ["LaserDesignator",5];
@@ -362,7 +363,7 @@ _ve spawn {
 				_ve addMagazineCargo ["ACE_30Rnd_545x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_545x39_SD_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_RPK",100];
-				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_AK",100];
+//				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_AK",100]; // removeв as prev is suitable for AK-47 too and is better
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_SD_AK",100];
 				_ve addMagazineCargo ["ACE_64Rnd_9x18_B_Bizon",100];
@@ -371,7 +372,7 @@ _ve spawn {
 //				_ve addMagazineCargo ["ACE_8Rnd_12Ga_Buck00",100];
 				_ve addMagazineCargo ["ACE_9Rnd_12Ga_Slug",100];
 				_ve addMagazineCargo ["ACE_9Rnd_12Ga_Buck00",100];
-			_ve addMagazineCargo ["ACE_Dummy_SNIPER",3];
+			    _ve addMagazineCargo ["ACE_Dummy_SNIPER",3];
 				_ve addMagazineCargo ["ACE_10Rnd_762x54_SB_SVD",100];
 				//_ve addMagazineCargo ["ACE_10Rnd_762x54_SB_SV98",100];
  				_ve addMagazineCargo ["ACE_10Rnd_9x39_SB_VSS",100];
@@ -379,10 +380,10 @@ _ve spawn {
 				_ve addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",100];
 				//_ve addMagazineCargo ["ACE_5Rnd_127x108_SB_OSV96",100];
 			_ve addMagazineCargo ["ACE_Dummy_MG",3];
-				_ve addMagazineCargo ["ACE_40Rnd_762x39_B_AK",100];
-				_ve addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_45Rnd_545x39_B_AK",100];
 				_ve addMagazineCargo ["ACE_45Rnd_545x39_BT_AK",100];
+				_ve addMagazineCargo ["ACE_40Rnd_762x39_B_AK",100];
+				_ve addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_75Rnd_762x39_B_AK",100];
 				_ve addMagazineCargo ["ACE_75Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_100Rnd_762x54_B_PK",100];
@@ -391,8 +392,8 @@ _ve spawn {
 			_ve addMagazineCargo ["ACE_Dummy_LAUNCHER",3];
 				_ve addMagazineCargo ["ACE_Strela",100];
 				_ve addMagazineCargo ["ACE_RPG7_PG7V",100];
-				_ve addMagazineCargo ["ACE_RPG7_PG7VR",100];
 				_ve addMagazineCargo ["ACE_RPG7_PG7VL",100];
+				_ve addMagazineCargo ["ACE_RPG7_PG7VR",100];
 				_ve addMagazineCargo ["ACE_RPG7_OG7V",100];
 				_ve addMagazineCargo ["ACE_RPG7_TBG7V",100];
 				_ve addMagazineCargo ["ACE_RPG22",100];

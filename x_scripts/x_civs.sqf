@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_civs.sqf - to create civilians service
 
 if (!isServer) exitWith {};
 

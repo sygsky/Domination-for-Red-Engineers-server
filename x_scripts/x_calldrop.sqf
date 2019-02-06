@@ -1,3 +1,4 @@
+// Xeno, x_scripts/x_calldrop.sqf, called and worked on client ONLY
 if (!X_Client) exitWith {};
 
 private ["_array","_control","_display","_ok","_oldpos"];

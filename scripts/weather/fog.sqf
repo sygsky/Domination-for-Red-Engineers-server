@@ -20,6 +20,9 @@ while {true} do {
 		sleep 0.321;
 	};
 	#endif
+
+	// we are entering foggy zone
+
 	if ((speed vehicle player) > 100) then {
 		10 setFog fFogMore;
 	} else {
@@ -49,9 +52,12 @@ while {true} do {
 		sleep 0.221;
 	};
 	#endif
+	// we exiting foggy zone
 	if (not alive player) then {
 		10 setFog fFogLess;
 	} else {
+	    _speed = (((speed vehicle player) max 25) min 100);
+	    _tmo   = (_speed - 25) / 100 * 20 + 10; // TODO: time to use for the foggy to change max
 		if ((speed vehicle player) > 100 or not alive player) then {
 			10 setFog fFogLess;
 		} else {

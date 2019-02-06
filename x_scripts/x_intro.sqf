@@ -2,7 +2,7 @@
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_Sahrani_island","_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
 		 "_year","_mon","_day","_newyear"];
-if (!X_Client) exitWith {hint localize "--- x_intro run not in client!!!";};
+if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
 
@@ -10,6 +10,8 @@ d_still_in_intro = true;
 #include "x_macros.sqf"
 
 #define __DEBUG__
+
+#define RANDOM_POS_OFFSET 5 // 5 meters to offset any point except last one
 
 // get a random number, floored, from count array
 // parameters: array
@@ -37,35 +39,48 @@ i = 0;
 
 /*
 #ifdef __DEBUG__
-SYG_mission_start = [2015,12,25,8,0,0 ];
-hint localize format["x_intro.sqf: time %1, for debugging purposes missionStart set to %2", time, SYG_mission_start call SYG_dateToStr];
+SYG_client_start = [2015,12,25,8,0,0 ];
+hint localize format["x_intro.sqf: time %1, for debugging purposes missionStart set to %2", time, SYG_client_start call SYG_dateToStr];
 #endif
 */
 
-_year = SYG_mission_start select 0;
-_mon  = SYG_mission_start select 1;
-_day  = SYG_mission_start select 2;
+_year = SYG_client_start select 0;
+_mon  = SYG_client_start select 1;
+_day  = SYG_client_start select 2;
 _newyear = false;
 
 if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
 {
-	playMusic (["snovymgodom","grig","tovarich_moy","zastolnaya"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
+	playMusic (["snovymgodom","grig","tovarich_moy","zastolnaya","nutcracker","home_alone"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
 	_newyear = true;
 }
 else // music normally played on intro
 {
+
     if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then
     {
-        playMusic "Varshavianka"; // 7th November is a Day of Great October Socialist Revolution
+        // 7th November is a Day of Great October Socialist Revolution
+        playMusic  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
     }
     else
     {
-        _music = ((call compile format["[%1]", (localize "STR_INTRO_MUSIC")]) +
+        // add some personilized songs for well known players
+        _players = [ ["Ceres-de","CERES de"] , ["Rokse [LT]"]];
+        _sounds  = [ ["amigohome_ernst_bush","amigohome_ernst_bush","amigohome_ernst_bush"], ["morze","morze","morze"]];
+        _name    = name player;
+        _personalSounds = [];
+        {
+            _pos = _x find _name;
+            if ( _pos >= 0 ) exitWith { _personalSounds = _sounds select _pos};
+        } forEach _players;
+        _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
         [
-            "bond","grant","stavka_bolshe_chem","red_alert_soviet_march","burnash","adjutant","lastdime",//"english_murder",
+            "bond","grant","red_alert_soviet_march","burnash","adjutant","lastdime",
             "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","prince_negaafellaga","strelok",
-            "total_recall_mountain","comrade_my","capricorn1title","Letyat_perelyotnye_pticy_2nd"
-        ]) call _XfRandomArrayVal;
+            "total_recall_mountain","comrade_my","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
+            "ruffian","morze"
+
+        ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;
         playMusic _music;
@@ -73,12 +88,12 @@ else // music normally played on intro
 	 };
 };
 
-if ((daytime > (SYG_shortNightStart + 0.5)) || (daytime < (SYG_shortNightEnd - 0.5))) then {
+if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMorning - 0.5))) then {
 	camUseNVG true;
 };
 
 #ifdef __DEBUG__
-hint localize format["x_intro.sqf: time is %1, daytime is %2, nowtime is %3, missionStart is %4",time, daytime, call SYG_nowTimeToStr, SYG_mission_start call SYG_dateToStr];
+hint localize format["x_intro.sqf: time is %1, daytime is %2, nowtime is %3, missionStart is %4",time, daytime, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
 #endif
 
 #ifdef __DEFAULT__
@@ -181,7 +196,8 @@ if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !side_missi
 	"dummy_marker" setMarkerPosLocal _current_target_pos;
 	"1" objStatus "DONE";
 	call compile format ["""%1"" objStatus ""VISIBLE"";", current_target_index + 2];
- */};
+ */
+ };
  //--- Sygsky
 
 _pos = [];
@@ -191,13 +207,13 @@ if (_Sahrani_island ) then // 7703.5,7483.2, 0
 	// array of camera turn points. Last point is for illusion object creation point.If it is NUMBER in range {0..last_turn_point_index-1>} designated index turn point is used for illusion
   _camstart = 
   [
-    [[1947.0,19059.0,1.0],[2260.0,18839.0,10.0],[4979.0,15480.0,40.0],[8982.5,10777.0,150.0],1], // Island Parvulo
-    [[18361.0,18490.0,1.0],[14260.0,15170.0,30.0],[11141.0,13340.0,50.0],[18127,18337,0]], // Isle Antigua (2)
-    [[19684.6,14128.7,25.0],[17681.2,13076.8,40.0],[15397.763672,11924.510742,50.0],[11420.0,8570.0,20.0],[10869,9172,40.0],[19356,14018,0]], // Pita (3)
-    [[1224.0,1391.0,1.0],[1580.0,1711.0,20.0],[8971,8170,70],1], // Rahmadi (4)
-    [[18534.0,2730.0,1.0],[18259.0,2978.0,10.0],[11420.0,8570.0,20.0],[10628.0,9328.0,40.0],1], // vulcano Asharan (5)
-	[[12113.0,5833.0,1.0],[11820.0,6059.0,6.0],[11717.1,6068.6,9.0],[11642.0,6336.0,9.0],[11480.0,6658.0,10.0],[11147.0,7138.0,11.0],[10992.0,7749.0,21.0],[11014.0,7990.0,31.0],[11121.0,8155.0,51.0],[11420.0,8570.0,46.0],[10869,9172,41.0],[12025,6082,0]], // Dolores (6)
-	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777.0,150.0],[11930,14526,0]] // Cabo Valiente (7)
+    [[1947,19059,1],[2260,18839,10],[4979,15480,40],[8982.5,10777,150],1], // Island Parvulo
+    [[18361,18490,1],[14260,15170,30],[11141,13340,50],[18127,18337,0]], // Isle Antigua (2)
+    [[19684.6,14128.7,25],[17681.2,13076.8,40],[15397.763672,11924.510742,50],[11420,8570,20],[10869,9172,40],[19356,14018,0]], // Pita (3)
+    [[1224,1391,1],[1580,1711,20],[8971,8170,70],1], // Rahmadi (4)
+    [[18534,2730,1],[18259,2978,10],[11420,8570,20],[10628,9328,40],1], // vulcano Asharan (5)
+	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,9],[11642,6336,9],[11480,6658,10],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0]], // Dolores (6)
+	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777,150],[11930,14526,0]] // Cabo Valiente (7)
   ] call _SYG_selectIntroPath;
   _pos = _camstart select 1;
   // last pos is illusion object one. If number it means index of point to use as pos, else it means pos3D to build illusion
@@ -379,6 +395,8 @@ _start spawn {
 		sleep 4;
 	} forEach [ 4, 1, 2, 3 ];
 	// titleText[ "", "PLAIN DOWN" ]; // not needed
+	sleep 60;
+	titleText[call SYG_getMsgForCurrentDaytime, "PLAIN DOWN"];
 };
 
 
@@ -400,6 +418,12 @@ _start spawn {
 		}
 		else
 		{
+		    // TODO: shift X and Y coordinates slightly, for more native behaviour
+		    if ( _x < (_cnt-1)) then
+		    {
+		        _pos set [0, (_pos select 0) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along X
+		        _pos set [1, (_pos select 1) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along Y
+		    };
 			_tgt = [_start, _pos, 30000.0] call SYG_elongate2Z;
 		};
 

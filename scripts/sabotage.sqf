@@ -1,4 +1,4 @@
-// SYG sabotage
+// SYG sabotage, scripts\sabotage.sqf
 //
 // Sabotage functionality: try to blast factories
 // Parameters:
@@ -49,6 +49,26 @@ _replaceFire = {
 #endif			
 		};
 	};
+};
+
+// _grp call _delUnitsInWater;
+// (units _grp) call _delUnitsInWater;
+_delUnitsInWater = {
+    if ( typeName _this  == "GROUP") then
+    {
+        _this = units _this;
+    };
+    if (typeName _this != "ARRAY") exitWith {false;};
+    for "_i" from 0 to (count _this) -1 do
+    {
+        _x = _this select _i;
+       if ( surfaceIsWater position _x ) then
+       {
+            _x removeAllEventHandlers "killed";
+            deleteVehicle _x;
+            sleep 0.2;
+       };
+    };
 };
 
 if ( typeName (_this select 0) == "OBJECT") then {
@@ -272,7 +292,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				if ( (!scriptDone _bombScript) && (alive _shell_unit)) then
 				{
 					terminate _bombScript;
-					sleep 0.3;
+					sleep 1;
 #ifdef __PRINT__
 					hint localize format["sabotage.sqf: DropScrip terminated after %1 seconds waiting", round(_timeout - _time) ];
 #endif	
@@ -303,7 +323,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 						[_shell_unit] join _grp;
 						if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to the nearest group (%1 men) of his side ", {alive _x} count units _grp] };
 #ifdef __PRINT__
-						hint localize "sabotage.sqf: bomberman joined to nearest group of the same side";
+						hint localize format["sabotage.sqf: bomberman joined to the nearest group (%1 men) of his side ", {alive _x} count units _grp];
 #endif	
 						sleep 0.3;
 					}					
@@ -443,6 +463,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 
 	sleep (120 + (random 60)); // interval to attack other  factories
 	if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
+
+    _grp call _delUnitsInWater; // just in case
+
 }; // while { (({ (alive _x) and ( canMove _x	)} count units _grp) > 0) && _continue }
 
 //group is dead, try to remove it from he list

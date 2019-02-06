@@ -199,7 +199,7 @@ XCheckSMHardTarget = {
 };
 
 /*
- * Set target unvulnerable while any own side vehicle not in 20 meters distance. After it tower became vulnerable again!
+ * Set target unvulnerable while any own side vehicle not in circle 20 meters and less than 20 m. height. After it tower became vulnerable again!
  */
 XCheckMTHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
@@ -259,7 +259,7 @@ XFacRebuild = {
 		    // todo: не понятно, зачем это вычисляется!!!
 		    // fixme: теперь понятно. Если расстояние от сервиса до позиции где он создавался, более 20 метров, то
 		    // fixme: это означает, что он разрушен и помещён на большую глубину, где его не видно игрокам.
-		    // fixme: Такая вот "гениальная" придумка у разрабов случаилась
+		    // fixme: Такая вот "гениальная" придумка у разрабов случилась
 			_index = _i;
 			_buildpos = _apos;
 			_dir = _element select 1;

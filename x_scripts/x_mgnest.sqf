@@ -52,7 +52,7 @@ if (!(alive player)) exitWith {
 
 _dir_to_set = getdir player;
 
-mg_nest = d_mg_nest createvehicle d_mgnest_pos;
+mg_nest = d_mg_nest createVehicle d_mgnest_pos;
 mg_nest setdir _dir_to_set;
 mg_nest setPos [position mg_nest select 0, position mg_nest select 1, 0];
 

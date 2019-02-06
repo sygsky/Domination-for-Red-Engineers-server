@@ -205,7 +205,7 @@ while {true} do {
 	};
 	if (rating _p < 20000) then {_p addRating 20000};
 	#endif
-	ass = _p addAction [localize "STR_SYS_97"/* "СТАТУС" */, "x_scripts\x_showstatus.sqf",[],-1,false];
+	ass = _p addAction [localize "STR_SYS_97"/* "СТАТУС" */, "x_scripts\x_showstatus.sqf",[],-1.1,false];
 	if (d_use_backpack) then {
 		if (count player_backpack == 0) then {
 			if (primaryWeapon _p != "" && primaryWeapon _p != " ") then {
@@ -275,7 +275,7 @@ while {true} do {
 	};
 	bike_created = false;
 	if (_p hasWeapon "NVGoggles") then {
-		if ( daytime > SYG_shortNightStart/*19.75*/ || daytime < SYG_shortNightEnd /*4.25*/ ) then {
+		if ( daytime > SYG_startNight/*19.75*/ || daytime < SYG_startMorning /*4.25*/ ) then {
 			_p action ["NVGoggles",_p];
 		};
 	};

@@ -208,7 +208,6 @@ SYG_findVehWithFreeCargo = {
 	_reta
 };
 
-
 /**
  * finds big enough group at nearest mission war zones (main target town, air-base with sabotages, re-cuptured towns etc)
  * call:
@@ -243,12 +242,14 @@ SYG_findGroupAtTargets = {
 	_pos_arr = argp(_pos_arr,0); // array of positions
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
+/*
 	_str = "";
 	{
 		if ( count _x == 0 ) then {_str = _str + " <>";} else {_str = _str + format[" %1", round (_x distance _unit)];};
 	} forEach _pos_arr;
 	
-	//hint localize format["SYG_utils.sqf.SYG_findGroupAtTargets: pos near ""%3"" [MSOA/ret] = [%1/%2]", _str, _ret, text (_pos call SYG_nearestLocation) ];
+	hint localize format["SYG_utils.sqf.SYG_findGroupAtTargets: pos near ""%3"" [MSOA/ret] = [%1/%2]", _str, _ret, text (_pos call SYG_nearestLocation) ];
+*/
 #endif								
 
 	if ( _ret >= 0 ) then // some war zone enough near found 
@@ -276,6 +277,7 @@ SYG_findGroupAtTargets = {
 	_goal_grp
 };
  
+#define __SYG_ISLEDEFENCE_DEBUG__
 
 /**
  * call: _feetmen = [[_unit1...,_unitN],[_veh1,_veh2,...,_vehN]] call SYG_findAndAssignAsCargo;
@@ -319,7 +321,7 @@ SYG_findAndAssignAsCargo = {
 			{
 				_feetmen1 allowGetIn true;
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-				hint localize format["%1 SYG_findAndAssignAsCargo: reassigning to cargo %2 men with patrol vecs %3",call SYG_nowToStr,_feetmen1, _vecs];
+				hint localize format["%1 SYG_findAndAssignAsCargo: reassigning to cargo %2 men with patrol %3 vecs", call SYG_nowToStr, count _feetmen1, count _vecs];
 #endif								
 				while { (count _vecs > 0) || (count _feetmen1) > 0 } do
 				{
@@ -346,7 +348,7 @@ SYG_findAndAssignAsCargo = {
 					sleep 1.01;
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-					hint localize format["%4 SYG_findAndAssignAsCargo: %1 assignedToCargo %2 (%3) dist %5",_assigned, typeOf _veh, _veh, call SYG_nowToStr, _veh distance (_assigned select 0)];
+					hint localize format["%1 SYG_findAndAssignAsCargo: %2 assignedToCargo %3 dist %4", call SYG_nowToStr, count _assigned, typeOf _veh, _veh distance (_assigned select 0)];
 #endif
 
 				}; // while { (count _vecs > 0) || (count _feetmen1) > 0 } do
@@ -354,7 +356,7 @@ SYG_findAndAssignAsCargo = {
 		}; // if ( count _vecs > 0 ) then 
 	};
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-	hint localize format[ "%1 SYG_findAndAssignAsCargo: free feetmen remained %2", call SYG_nowToStr, _feetmen];
+	hint localize format[ "%1 SYG_findAndAssignAsCargo: %2 free feetmen remained", call SYG_nowToStr, count _feetmen];
 #endif
 	_feetmen
 };
@@ -450,18 +452,16 @@ SYG_ensureOfficerInGroup = {
 };
 
 /**
-  * Detects if desigmated group belongs tp patrol or convoy group
+  * Detects if designated group belongs to patrol or convoy group
   * call: _isPatrolGrp = _grp call SYG_isPatrolGroup;
  */
 SYG_isPatrolGroup = {
     if ( typeName _this ==  "OBJECT") then
     {
         if ( _this isKindOf "Man") exitWith { _this = group _this };
-        if ( _this isKindOf "AllVehicles" ) exitWith {
-            {
-                if ( alive _x) exitWith { _this = group _x };
-            }forEach crew _this;
-        };
+        {
+            if ( alive _x) exitWith { _this = group _x };
+        } forEach crew _this;
     };
 
     if (typeOf _this != "GROUP") exitWith { false };
@@ -476,6 +476,12 @@ SYG_isPatrolGroup = {
         }
     } forEach SYG_isle_grps;
     _ret
+};
+//
+// Hadnler for "GetOut" event for enemy vehicles
+//
+SYG_hanldeGetOut = {
+
 };
 
 if (true) exitWith {};

@@ -9,13 +9,13 @@ _aid = _this select 2;
 _objs = _this select 3;
 _vec = _objs select 0;
 _pos = position _vec;
-_nil = "Logic" createVehicle _pos;
+_nil = "Logic" createVehicleLocal _pos;
 _tmp = position _nil;
 //playMusic "upsidedown";
 _vec setPos _tmp;
 // send message to all clients through server
-[ "say_sound", _vec, "upsidedown" ] call XSendNetStartScriptClient; // send directly to clients except yourself (if !X_SPE), no need to send to server
-if (!X_SPE) then {_vec say "upsidedown"}; // if non-dedicated server, play sound on your owned computer
+[ "say_sound", _vec, "upsidedown" ] call XSendNetStartScriptClientAll; // send directly to clients except yourself (if !X_SPE), no need to send to server
+//if (!X_SPE) then {_vec say "upsidedown"}; // if non-dedicated server, play sound on your owned computer
 sleep 0.02;
 deleteVehicle _nil;
 player removeAction _aid;

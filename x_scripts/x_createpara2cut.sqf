@@ -4,6 +4,8 @@
 //
 // Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
+// TODO: allow pilots to patrol with saboteurs if landed
+//
 //private ["_assigned","_helifirstpoint","_chopper","_paragrp","_leader","_pos_end","_u","_vgrp","_wp","_xx","_heliendpoint","_wp2","_attack_pos", "_i", "_grp_array","_parachute_type"];
 private ["_assigned", "_helifirstpoint", "_chopper", "_paragrp", "_leader", "_u", "_vgrp", "_wp", "_xx", 
          "_heliendpoint", "_wp2", "_attack_pos", "_i", "_unti1", "_vehicle", "_type", "_para", "_units", 
@@ -22,6 +24,7 @@ if (!isServer) exitWith {};
 
 _vgrp = _this select 0; // chopper crew group
 _chopper = _this select 1;
+_chopper lock true;
 _helifirstpoint = _this select 2;
 _heliendpoint = _this select 3;
 
@@ -102,7 +105,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
 	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-		hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
+		//hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
         while {alive _chopper && alive driver _chopper && (position _chopper select 2) >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
 			_cur_uni = _unit_array select _next_to_eject;
@@ -115,8 +118,9 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 			_next_to_eject = _next_to_eject + 1;
 			sleep 0.82;
 		};
+		_ejected = _next_to_eject >= _cnt_uni;
 	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-		hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting completed, pos %1", _msg ];
+		//hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting completed, pos %1", _msg ];
 	};
 
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
@@ -139,12 +143,12 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 					};
 					_next_to_eject = _next_to_eject + 1;
 					sleep 0.81;
-					_ejected = true;
 				};
+        		_ejected = _next_to_eject >= _cnt_uni;
         	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-        		hint localize format["--- x_createpara2cut.sqf: Chopper on the ground, ejecting completed, pos %1",  _msg ];
 			};
 		};
+   		hint localize format["--- x_createpara2cut.sqf: Chopper on the ground, ejecting completed, pos %1",  _msg ];
 	};
 	
 	if (!canMove _chopper) then {_main_polling_interval = 0.1;};
@@ -174,9 +178,9 @@ if (!_ejected && alive _chopper) then
 	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;
-		_ejected = true;
 		sleep (0.85 + (random 0.25));
 	} forEach units _paragrp;
+	_ejected = true;
     _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
     // hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection completed, pos %1", _msg ];
 	//[player,"Scheduled drop finished"] call XfSideChat;
@@ -185,7 +189,7 @@ if (!_ejected && alive _chopper) then
 if (_ejected) then // create sabotage group
 {
 //[player,"Saboteurs team onground setup block entered"] call XfSideChat;
-_chopper flyinheight 200;
+_chopper flyInHeight 200;
 
 #ifdef __ACE__	
 	// animate heli action
@@ -211,7 +215,7 @@ _chopper flyinheight 200;
         [[10304,9954,0],240,250,-25],      // airbase part near Paraiso (hill and air-field buildings on east)
         [[9780.1,10332.6,0],650,170,0],    // north of airfield (forest-bush
         [[9149.29,10079,0],125,200,0],     // west of airfield (pit on west of air-field)
-        [[9582,9377,0],100,300,100],       // south to base (granary area)
+        [[9582,9377,0],100,300,100],       // far to south from base (granary area)
         [[10518,10061,0],150,350,0]        // east from base between butt end of airfield and the big hill
     ];
 	*/
@@ -254,7 +258,7 @@ _chopper flyinheight 200;
 	_officer = [ d_sleader_W, _paragrp ] call SYG_ensureOfficerInGroup;
 	_cnt = (units  _paragrp) call SYG_rearmSabotageGroup;
 #ifdef	__DEBUG_PRINT__
-	hint localize format["x_createpara2.sqf: sabotage.sqf started with squad of %1 units", _cnt];
+	hint localize format["x_createpara2.sqf: sabotage.sqf started with squad of %1 units = %2 alive, %3 canStand", count (units  _paragrp), {alive _x} count (units  _paragrp),{canStand _x} count (units  _paragrp)];
 #endif
 	[_paragrp] execVM "scripts\sabotage.sqf"; // run sabotage logic (separate from patrol one)
 
@@ -272,7 +276,7 @@ _chopper flyinheight 200;
                     if ( _cnt > 0) then // join last member to this group
                     {
 #ifdef	__DEBUG_PRINT__
-                        hint localize format["x_createpara2.sqf: prev. group id %1 (of %2 saboteur[s]) joined to this one", _i, _cnt];
+                        hint localize format["x_createpara2.sqf: prev. group id %1 (of %2 alive saboteur[s]) joined to this one", _i, _cnt];
 #endif
 
                         (units _grp) join _paragrp;

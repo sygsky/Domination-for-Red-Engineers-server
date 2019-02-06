@@ -27,7 +27,7 @@ if (isServer) then {
 	if (_randomv == 1) then {_poss = x_sm_pos select 3;};
 	_pos_other2  = x_sm_pos select 2;
 	_vehicle = objNull;
-	_vehicle = _xchopper createvehicle (_poss);
+	_vehicle = _xchopper createVehicle (_poss);
 	#ifndef __TT__
 	_vehicle addEventHandler ["killed", {_this call XKilledSMTargetNormal}];
 	#endif

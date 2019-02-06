@@ -142,7 +142,7 @@ while {true} do {
 			deletevehicle _vehicle;
 			sleep 0.5;
 			_vehicle = objNull;
-			_vehicle = _type createvehicle (_vec_a select 3);
+			_vehicle = _type createVehicle (_vec_a select 3);
 			_vehicle setPos (_vec_a select 3);
 			_vehicle setdir (_vec_a select 4);
 

@@ -61,13 +61,14 @@ SYG_musicTrackCount = {
 SYG_defeatTracks =
 [
     ["Delerium_Wisdom","pimbompimbom","vendetta","thefuture"],
-    ["mountains","Gandalf_Simades","whold","end"],
+    ["Gandalf_Simades","whold","end"],
     ["ATrack9","ATrack10","ATrack14","ATrack15"],
     ["ATrack16","ATrack17","ATrack18","ATrack19"],
     ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
-    ["i_new_a_guy","decisions","treasure_island","gong"]
+    ["i_new_a_guy","decisions","treasure_island"],
+    ["sorcerie","melody"]
 ];
 
 SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
@@ -81,7 +82,7 @@ SYG_northDefeatTracks =
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
     ["ATrack9","ATrack10","ATrack19","bolero"],
-    ["metel","gayane1","gayane2","gayane3"]
+    ["metel","gayane1","gayane2","gayane3", "mountains"]
 ];
 
 SYG_southDefeatTracks =
@@ -99,8 +100,18 @@ SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
-    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","gong","church_organ_1"
+    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie", // "gong",
+    "melody","medieval_defeat","defeat2"
     ];
+
+// for the death near TV-tower, independently in town/SM or ordinal on map one
+SYG_TVTowerDefeatTracks =
+    [
+    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09"
+    ];
+
+// All available curche types in the Arma (I think so)
+SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
 // call: _unit call SYG_playRandomDefeatTrackByPos; // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
@@ -135,32 +146,45 @@ SYG_playRandomDefeatTrackByPos = {
 		_flag = RFLAG_BASE;
 	};
     #endif
+
+    // check if we are near church
+    _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
+
+    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
+    {
+        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
+    };
+
+    // TODO: check for castel near and play medieval music/sounds
+    // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
         SYG_baseDefeatTracks call SYG_playRandomTrack;
     };
 
-    if (_this call SYG_pointOnIslet) exitWith
+    // check if we are near TV-Tower
+    _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
+    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
+    {
+        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
+    };
+
+    if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
         SYG_islandDefeatTracks call SYG_playRandomTrack;
     };
 
-    if (_this call SYG_pointOnRahmadi) exitWith
+    if (_this call SYG_pointOnRahmadi) exitWith // always if on Rahmadi
     {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
-    // check if we near church
-    _churchArr = nearestObjects [ _this, ["Church","Land_kostelik","Land_kostel_trosky"],100];
 
-    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
-    {
-        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 1 time from 5
-    };
     switch (_this call SYG_whatPartOfIsland) do
     {
-        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack};
-        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack};
-        default  // Corazol
+        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
+        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
+        default  // Corazol // central Sahrani
         {
             call SYG_playRandomDefeatTrack
         };
@@ -173,24 +197,52 @@ SYG_OFPTracks =
 		["ATrack25",[0,11.978],[13.573,10.142],[105.974,9.508],[138.443,-1]]
 	];
 
+/*
+    Music for town counter attacks
+*/
+SYG_counterAttackTracks =
+    [
+        ["ATrack24",[0,59.76]],
+        ["ATrack24",[60,73]],
+        ["ATrack24",[134,-1]],
+
+        ["ATrack25",[0,71]],
+        ["ATrack25",[71,-1]],
+
+        "ATrack1","ATrack23"
+    ];
+
 SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;
 };
 
 SYG_chorusDefeatTracks =
     [
-        ["ATrack26",[0,8],[8.086,8],[16.092,6.318],[24.014,8.097],[32.059,4.0],[36.053,-1]],
-        ["church_organ_1"]
+        ["ATrack26",[0,8]],
+        ["ATrack26",[8.086,8]],
+        ["ATrack26",[16.092,6.318]],
+        ["ATrack26",[24.014,8.097]],
+        ["ATrack26",[32.059,4.0]],
+        ["ATrack26",[36.053,-1]],
+        ["church_organ_1"],
+        ["church_voice"],
+        ["haunted_organ_1"],
+        ["haunted_organ_2"]
+
     ];
+
+// if you suicided near (50 meters) church
+SYG_liturgyDefeatTracks = [  "liturgy_1","liturgy_2","liturgy_3","liturgy_4" ];
 
 
 // Any isle defeat music
 SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island"];
 
-SYG_RahmadiDefeatTracks = ["ATrack23b",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
+SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
 //
 // Plays random track or track part depends on input array kind (see below)
+// This procedure use only playMusic operator and playe items from CfgMisic section
 //
 // call: _arr call SYG_playRandomTrack;
 // where _arr may be:

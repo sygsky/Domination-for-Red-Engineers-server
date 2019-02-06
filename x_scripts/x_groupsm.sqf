@@ -279,7 +279,7 @@ while {true} do {
 				_grp_array set [2,7];
 			};
 		};
-		case 7: { // return to the start state after designated period (60+-10 secs)
+		case 7: { // return to the start state after designated period (60-70 secs)
 			if (time > _checktime) then {
 				_grp_array set [2,0];
 				_grp_array call xx_make_normal;
@@ -368,13 +368,13 @@ while {true} do {
                     };
 				} forEach _all_grp_list;
 #ifdef __DEBUG__			
-				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4]) at %5, pos %6, leader %7",
+				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4]) at %5, leader %6",
 				    call SYG_missionTimeInfoStr,
 				    _grp,
 				    count units _grp,
 				    _rejoin_num,
-				    (getPos (leader _grp)) call SYG_nearestLocationName,
-				    getPos (leader _grp),
+//				    (getPos (leader _grp)) call SYG_nearestLocationName,
+				    [leader _grp, "%1 m. to %2 from %3"] call SYG_MsgOnPosE,
 				    typeOf (leader _grp)];
 #endif				
                 if ( (isNull _joingrp) && (!isNull _any_grp) ) then // use bad group if no good one found

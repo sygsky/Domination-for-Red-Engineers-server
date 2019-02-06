@@ -1,7 +1,9 @@
 // x_reload.sqf, by Xeno, called from SQM
 //
-//
 // new input params format is: [thislist,"vehicle_type"]
+//
+if (isServer && (!X_SPE)) exitWith{ hint localize format["--- x_reload.sqf for %1 with %2 called on dedicated server, exit", _this select 1, typeOf ((_this select 0) select 0)] };
+
 private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver","_already_loading"];
 
 #include "x_setup.sqf"
@@ -10,9 +12,9 @@ private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_
 #define __DOUBLE_AMMUNITION__
 #ifdef __DOUBLE_AMMUNITION__
 
-if (isNil "SYG_DA_Names") then // men allowed to load double ammunition on this service
+if (isNil "SYG_DA_NAMES") then // men allowed to load double ammunition on this service
 {
-    SYG_DA_NAMES = ["HE_MACTEP"];
+    SYG_DA_NAMES = ["HE_MACTEP","Rokse [LT]"];
 };
 #define PLAYER_CAN_LOAD_DOUBLE_AMMO ((isPlayer (driver _vehicle)) && ((name (driver _vehicle)) in SYG_DA_NAMES))
 
@@ -50,6 +52,8 @@ if ( isNull _vehicle) exitWith{};
 
 if (!alive _vehicle) exitWith {};
 
+#ifdef __DOUBLE_AMMUNITION__
+
 _nemaster = PLAYER_CAN_LOAD_DOUBLE_AMMO;
 
 // Mainly check for helicopters, others are not so exposed to double reloading efforts
@@ -70,11 +74,13 @@ if ((!_nemaster) && _already_loading ) exitWith
 
 if (_nemaster && _already_loading ) then
 {
-    hint localize format[">>> x_reload.sqf: %1 on heli service with double ammunitions !!! <<<",name player];
+    hint localize format[">>> x_reload.sqf: ""%1"" on heli service with double ammunitions !!! <<<",name (driver _vehicle)];
     [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "A six-pack, being fetched to maintenance man, magically turns into double set of ammo!"
 };
 
 _vehicle setVariable ["already_on_load", true]; // mark already in reloading phase
+
+#endif
 
 _magazines = [];
 
@@ -264,4 +270,6 @@ if (!alive _vehicle) exitWith
 };
 [_vehicle, format [localize "STR_SYS_259", _type_name]] call XfVehicleChat; // "%1: обслуживание завершено..."
 
+#ifdef __DOUBLE_AMMUNITION__
 if (true) exitWith {_vehicle setVariable ["already_on_load", nil];};
+#endif

@@ -208,7 +208,7 @@ if (d_p_marker_dirs) then {
 	_str = _str + _strNo;
 };
 
-_str = _str + (localize "STR_SYS_345")/* "Отображение маркеров техники: " */;
+_str = _str + (localize "STR_SYS_345")/* "Отображение напр. движения маркеров техники: " */;
 if (d_v_marker_dirs) then {
 	_str = _str + _strYes;
 } else {
@@ -642,7 +642,7 @@ if (__HasGVar(PATROL_COUNT)) then
     hint localize format["__HasGVar(PATROL_COUNT)=%1:__GetGVar(PATROL_COUNT)=%2,",__HasGVar(PATROL_COUNT), __GetGVar(PATROL_COUNT) ];
 #endif
 _daytime = daytime;
-if ( _daytime <= SYG_shortNightEnd || _daytime > SYG_shortNightStart ) then {_str1 = localize "STR_RUM_NIGHT";}
+if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then {_str1 = localize "STR_RUM_NIGHT";}
 else
 {
 	call compile format["_counter=%1;", localize "STR_RUM_NUM"];

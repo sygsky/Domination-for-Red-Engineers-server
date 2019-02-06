@@ -176,8 +176,8 @@ if (_addscore > 0) then {
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
     if (!_is_engineer) then
     {
-        _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__;
-        SYG_engineering_fund = SYG_engineering_fund - _addscore;
+        _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__; // must be negative value!
+        SYG_engineering_fund = SYG_engineering_fund - _addscore; // add to enginering fund, not subtract!!!
         publicVariable "SYG_engineering_fund"; // send spent scores to the fund
     #ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
         _str = "STR_SYS_137_2"; // "Maintenance score (%1) is reallocated to the Engineering Fund (%2)"
