@@ -638,6 +638,9 @@ ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE
 
 #endif
 
+ACE_Sys_Wound_Net_fSetUnc       = compile preProcessFileLineNumbers "scripts\ACE\setUnc.sqf"; // stop setCaptive for unconsciones player
+
+
 };
 #endif
 
