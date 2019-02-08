@@ -625,7 +625,7 @@ if ( X_Client ) then // use only on client
 #endif
 
 #ifdef __NO_RPG_CLONING__
-    // disables AT etc missiles cloning through rucksacks
+// disables AT etc missiles cloning through rucksacks
 ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\PackInventoryMagToDummyMag.sqf";
 #endif
 
