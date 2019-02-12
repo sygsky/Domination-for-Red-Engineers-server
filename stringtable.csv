@@ -789,6 +789,9 @@ STR_SYS_1184,"Air taxi damaged or destroyed !!!","Luft-taxi beschädigt oder zer
 STR_SYS_1185,"Air taxi heading to base in a few seconds !!!","Luft-taxi Richtung base in ein paar Sekunden !!!","Спасательный вертолёт отправится на базу через несколько секунд !!!"
 STR_SYS_1186,"Air taxi leaving now, have a nice day !!!","Luft-taxi jetzt verlassen, haben einen schönen Tag !!!","Спасательный вертолёт покидает базу, удачи !!!"
 
+STR_SYS_1200,"Respawn with same weapons after death: ",Respawn mit gleichen Waffen nach dem Tod: ","Респаун с тем же оружием: "
+STR_SYS_1201,"Maximum number of AI that can get recruited: ","Maximale Anzahl von KI, die rekrutiert werden kann : ","Максимальное кол-во АИ: "
+
 STR_SYS_SERVICE_DMG,"Service %1 is damaged","Service %1 beschädigt","Сервис %1 повреждён!"
 STR_SYS_SERVICE_DMG_1,"One of the services of the base was damaged by saboteurs!","Eine der Dienstleistungen der Basis beschädigt von saboteurs!","Один из сервисов на базе был повреждён диверсантами!"
 
