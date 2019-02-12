@@ -362,7 +362,8 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 		for "_i" from 0 to ( (count _arr) - 1) do
 		{
 			_obj = _arr select _i;
-			if ( !((typeOf _obj) in ["PipeBomb","ACE_PipeBomb"]) )  then { _arr set [_i, "RM_ME"] };
+//			if ( !((typeOf _obj) in ["PipeBomb","ACE_PipeBomb"]) )  then { _arr set [_i, "RM_ME"] };
+			if ( !(_obj isKindOf "PipeBomb") )  then { _arr set [_i, "RM_ME"] };
 		};
 		_arr = _arr - ["RM_ME"]; // remove all non-bomb objects
 		sleep 0.01;
@@ -372,7 +373,7 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 	{
 		_error = true;
 #ifdef __DEBUG__
-		hint localize format["DropScript (%1): Failure: no one bomb from %2 found objects found around goal. Exiting script",ELAPSED_TIME], _cnt;
+		hint localize format["DropScript (%1): Failure: no one bomb from %2 found objects found around goal. Exiting script",ELAPSED_TIME, _cnt];
 #endif		
 	};
 
@@ -411,7 +412,7 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 // ---------------------------------------
 // All bombs dropped/skipped. Return to original position retreatPos
 
-if (!_error || ((alive _unit) && (!(canStand _unit)) ) then
+if ( alive _unit ) then
 {
     _moveRetryCount	= 0;
 
@@ -448,10 +449,9 @@ if (!_error || ((alive _unit) && (!(canStand _unit)) ) then
 			player sideChat "DropScript: Timer NOT started as unit is dead";
 		};
 #ifdef __DEBUG__
-		hint localize format["DropScript (%1): Timer NOT started as unit is dead",ELAPSED_TIME];
+		hint localize format[ "DropScript (%1): Timer NOT started as unit is dead", ELAPSED_TIME ];
 #endif		
 	};
-
 };
 
 // Restore behaviour
