@@ -574,7 +574,7 @@ SYG_bumpDateByHours = {
     _dt set [ DT_MONTH_OFF , _mon  ]; // set new month
     _dt set [ DT_YEAR_OFF  , _year ]; // set new month
     // now print old and new datetime values
-    hint localize format["+++ SYG_bumpDateByHours: old date %1, new date %2", _this select 0, _dt];
+    hint localize format["+++ SYG_bumpDateByHours: date initial %1, corrected %2", _this select 0, _dt];
 
     _dt
 };

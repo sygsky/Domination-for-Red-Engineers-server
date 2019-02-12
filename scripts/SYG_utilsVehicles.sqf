@@ -166,7 +166,7 @@ SYG_detectedEnemy = {
 	    if ( _side == _eside) then
 	    {
 	        _target = argp(_x,4);
-	        if ( _target isKindOf "LandVehicle" && ((_unit knowsAbout _target) > 0.5)) then
+	        if ( _target isKindOf "LandVehicle" && ((_unit knowsAbout _target) >= 1.5)) then
 	        {
 	            if ( !(_target isKindOf "Man")) then // check vehicle to has crew
 	            {
@@ -1766,7 +1766,7 @@ SYG_getLeader = {
 	_leader = leader _this;
 	if ( !isNull _leader ) exitWith {_leader};
 	{
-		if ( (!isNull _x) && (alive _x) ) exitWith {_leader = _x };
+		if ( alive _x ) exitWith {_leader = _x };
 	} forEach units _this;
 	_leader
 };

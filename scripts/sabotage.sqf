@@ -136,7 +136,14 @@ if ( _debug ) then { player globalChat format["sabotage.sqf: Start, group units 
 // do up to the last man
 while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } do
 {
-	_leader = leader _grp;
+    _leader = _grp call SYG_getLeader;
+    if ( isNull _leader ) then { sleep 1; _leader = _grp call SYG_getLeader };
+    if (isNull _leader) exitWith
+    {
+#ifdef __PRINT__
+        hint localize format["sabotage.sqf: leader is empty, grp units count %1, exit!", {alive _x}count units _grp];
+#endif
+    };
 	
 	_no = nearestObjects [_leader, _objTypesArr, OBJ_SEARCH_DISTANCE];
 	_obj_pos =  -1; /*(floor random (count _no))*/
@@ -169,9 +176,31 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
     {
         _obj_pos = _no call XfRandomFloorArray;
     };
+
 	 // if some alive factory found
 	if ( _obj_pos >= 0 ) then 
 	{
+
+	    // TODO: check if enemy detected at the base
+        _skip_sabotage = true;
+        if (!alive _leader) then
+        {
+    	    _leader = _grp call SYG_getLeader;
+        };
+	    _enemy = objNull;
+	    if ( alive _leader ) then
+	    {
+            _enemy = [_leader, floor(d_viewdistance / 2 ) ] call SYG_detectedEnemy;
+            _skip_sabotage =  !isNull _enemy;
+	    };
+
+        if( _skip_sabotage ) exitWith
+        {
+#ifdef __PRINT__
+			hint localize format["sabotage.sqf: Enemy %1 found at dist %2 m., factory sabotage skipped", typeOf _enemy, _enemy distance _leader];
+#endif
+        };
+
 	    _obj = _no select _obj_pos; // define target to bomb
 		if ( _debug ) then { player globalChat format["sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ]; };
 #ifdef __PRINT__
@@ -439,7 +468,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
     //
 	// check fire state near leader
 	//
-	_leader = leader _grp;
+	_leader = _grp call SYG_getLeader;
 	if ( alive _leader ) then
 	{
           _no = nearestObjects [_leader, ["Fire","FireLit"], FIRE_DISTANCE_TO_LIT];

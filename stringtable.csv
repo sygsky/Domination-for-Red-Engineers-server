@@ -1,7 +1,7 @@
 Language,English,German,Russian
 
-STR_LANG,ENGISH,GERMAN,RUSSIAN
-STR_LANGUAGE,ENGISH,GERMAN,RUSSIAN
+STR_LANG,ENGLISH,GERMAN,RUSSIAN
+STR_LANGUAGE,ENGLISH,GERMAN,RUSSIAN
 
 // #include "x_scripts\stringtable.csv"
 //---------------------------------------------------------------------
@@ -260,7 +260,7 @@ STR_SYS_137_5,"The Engineering Fund","Die Technischen Mittel","Инженерн�
 
 STR_SYS_138,"The maintenance of a %1 is finished...","Wartung beendet: %1 ...","Обслуживание %1 закончено..."
 STR_SYS_139,"For repair and refueling you need %2 point(s). You have only %1 ...","Für die Reparatur und Betankung der Maschinen müssen Punkte: %2. Sie haben nur den %1 ...","Для ремонта и заправки техники необходимо иметь очков: %2. У Вас только %1 ..."
-STR_SYS_139_1,"To pilot this heli you need %2 point(s). You have only %1 ...","Der pilot dieser Hubschrauber müssen Sie %2 Punkt (E). Sie haben nur noch %1 ...","Для пилотирования данного вертолёта нужно баллов: %2. У вас есть только %1" 
+STR_SYS_139_1,"To pilot this heli you need %2 point(s). You have only %1 ...","Der pilot dieser Hubschrauber müssen Sie %2 Punkt (E). Sie haben nur noch %1 ...","Для пилотирования данного вертолёта нужно баллов: %2. У вас есть только %1"
 STR_SYS_140,"The Prime Minister of Takistan arrived in Pesto. Punish him!","Der Premierminister Takistan kam ein Besuch in Pesto. Bestrafen Sie ihn!","Премьер-министр Такистана прибыл с визитом в н.п. Pesto. Накажите его!"
 STR_SYS_141,"Good job! Prime Minister punished.","Auftrag ausgeführt! Premierminister bestraft.","Задание выполнено! Премьер-министр наказан."
 STR_SYS_142,"The service is cancelled...","Zimmerservice abgebrochen...","Обслуживание отменено..."
@@ -781,8 +781,8 @@ STR_SYS_1176,"The barracks is destroyed, the military draft is cancelled","Die K
 STR_SYS_1177,"To call on the military service can only observer-rescue","Zum Aufruf auf den Wehrdienst kann nur Beobachter-Rettung","Призывать на службу могут лишь ГРУ-артиллеристы"
 STR_SYS_1178,"An air taxi is allready on the way to your position!","Ein Luft-taxi ist schon auf dem Weg zu eurer position!","Спасательный вертолёт уже на пути к вам!"
 STR_SYS_1179,"You are less than 1000 m away from the base, no air taxi for you!","Sie sind weniger als 1000 m Entfernung von der Basis, keine Luft-taxi für Sie!","До базы меньше 1 км. И так добежишь."
-STR_SYS_1180,"You can't call an air taxi. You need %2 points for that, your scores %1!","Man kann nicht rufen Sie ein Luft-taxi. Müssen Sie %2 Punkte für deine scores %1!","Невозможно вызвать спасательный вертолёт, нужны очки (%2), у Вас только %1"\
-STR_SYS_1181,"Air taxi will start in a few seconds, stand by. Stay at your position!","Luft-taxi startet in wenigen Sekunden, stand-by. Bleiben Sie an Ihrer position!","Вертолёт за Вами вылетет через несколько секунд. Не меняйте своей позиции!"   
+STR_SYS_1180,"You can't call an air taxi. You need %2 points for that, your scores %1!","Man kann nicht rufen Sie ein Luft-taxi. Müssen Sie %2 Punkte für deine scores %1!","Невозможно вызвать спасательный вертолёт, нужны очки (%2), у Вас только %1"
+STR_SYS_1181,"Air taxi will start in a few seconds, stand by. Stay at your position!","Luft-taxi startet in wenigen Sekunden, stand-by. Bleiben Sie an Ihrer position!","Вертолёт за Вами вылетет через несколько секунд. Не меняйте своей позиции!"
 STR_SYS_1182,"Air taxi is on the way... hold your position!!!","Luft-taxi ist auf dem Weg... und halten Sie Ihre position!!!","Вертолёт в пути... не покидайте позицию!!!"
 STR_SYS_1183,"Air taxi canceled, you've died !!!","Luft-taxi abgesagt, du bist gestorben !!!","Вылет вертолёта отменён, Вы погибли !!!"
 STR_SYS_1184,"Air taxi damaged or destroyed !!!","Luft-taxi beschädigt oder zerstört !!!","Спасательный вертолёт повреждён или уничтожен !!!"
