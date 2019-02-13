@@ -361,7 +361,7 @@ x_makemgroup = {
 	_ret
 };
 
-// Creates group of infantry for side mission. All bodies will be automatically removed after SM finsih
+// Creates group of infantry for side mission. All bodies will be automatically removed after SM finish
 XCreateInf = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_pos_center", "_radius", "_do_patrol", "_side", "_gwp_formations", "_ret_grps", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_units", "_leader", "_grp_array"];
 	_type1 = _this select 0;

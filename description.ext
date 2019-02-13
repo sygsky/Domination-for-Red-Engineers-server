@@ -152,6 +152,7 @@ class CfgMusic
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class morze { name=""; sound[] = {\sounds\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
     class amigohome_ernst_bush { name=""; sound[] = {\sounds\amigohome_ernst_bush.ogg,db+0,1.0};}; // Ami go home by Ernsh Busch, DDR communust and great singer!
+    class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
@@ -201,7 +202,7 @@ class CfgMusic
     class gayane2 { name=""; sound[] = {\sounds\gayane2.ogg,db+0,1.0};} // "Gayane" ballet
     class gayane3 { name=""; sound[] = {\sounds\gayane3.ogg,db+0,1.0};} // "Gayane" ballet
     class gamlet_hunt { name=""; sound[] = {\sounds\gamlet_hunt.ogg,db+0,1.0};} // "Hamlet" soviet movie
-    class treasure_island { name=""; sound[] = {\sounds\treasure_island.ogg,db-1,1.0};} // "tresure island alarm theme" USSR movie
+    class treasure_island_defeat { name=""; sound[] = {\sounds\treasure_island_defeat.ogg,db-1,1.0};} // "tresure island alarm theme" USSR movie of 1971 year
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
 //    class gong {name = ""; sound[] = {\sounds\gong.ogg, db+10, 1.0}; titles[] = {}; }; // ???
