@@ -1502,7 +1502,7 @@ SYG_setHeliParaCargo = {
     _paraType = argopt(2,"ACE_ParachuteRoundPack");//default parachute
 
     _heli addWeaponCargo [_paraType, _num];
-    hint localize format[ "<<< SYG_setHeliParaCargo [%1,%2] for %3 >>>", _paraType, _num, _heli ]; // log start
+    hint localize format[ "<<< SYG_setHeliParaCargo [%1,%2] for %3 >>>", _paraType, _num, name _heli ]; // log start
 };
 
 /*

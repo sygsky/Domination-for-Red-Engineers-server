@@ -73,11 +73,10 @@ onMapSingleClick "";
 sleep 2.56;
 playSound "vozdushnye_potoki_2"; // parajump made
 //hint localize format["new_paratype == %1", new_paratype];
-if ( new_paratype == "ACE_ParachuteRoundPack" ) then {
 //    hint localize format["vehicle player == %1", vehicle player];
-    waitUntil {sleep 0.132; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 10)};
-    sleep 0.02;
-    player removeWeapon new_paratype;
-};
+
+waitUntil {sleep 0.132; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 10)};
+sleep 0.02;
+player removeWeapon new_paratype;
 
 if (true) exitWith {true};
