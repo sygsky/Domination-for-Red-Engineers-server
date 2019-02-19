@@ -14,10 +14,14 @@ _killer = _this select 1;
 _grp_killed = group _killed;
 
 #ifndef __DEBUG__
-if ( side _killer == side _killed || side _killer == civilian || isNull _grp_killed ) exitWith {}; // Last man in group
+if ( side _killer == side _killed || side _killer == civilian || isNull _killer || isNull _grp_killed ) exitWith {}; // Last man in group
 //if ( _killer isKindOf "Air" && (((getPos _killer) select 2) > 5) ) exitWith {}; // Heli in air is killer
 #endif
 
+if ( vehicle _killed != _killed ) exitWith
+{
+    [vehicle _killed, _killer, damage vehicle _killed] call x_smoke2;
+};
 _has_smoke = false;
 
 if (_grp_killed in smoke_groups) exitWith
