@@ -2,7 +2,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-// add
+// add dead object(vehicle, unit) to the common dead list
 XAddDead = {if (!((_this select 0) in dead_list)) then {dead_list = dead_list + [_this select 0];}};
 
 // Adds vehicle to the dead vehicles list
