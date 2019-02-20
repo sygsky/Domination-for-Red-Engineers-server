@@ -1281,6 +1281,22 @@ SYG_find = {
  * Where: _wpnType  - class name for the weapon ("ACE_MP5SD" etc)
  */
 SYG_defaultMagazine = {
+    /*
+     * Small routine to find static string in array of string from config file!!!
+     * std 'find' Arma method not work here!
+     *
+     */
+    _findSpec = {
+        _find = -1;
+        _arr = arg(0);
+        _val = arg(1);
+        for "_i" from 0 to (count _arr) - 1 do
+        {
+            if (_val == argp(_arr, _i)) exitWith {_find = _i;};
+        };
+        _find
+    };
+
     private ["_arr"];
 	_arr = [];
 	_arr1 = _this call SYG_defaultMagazinesACE;
@@ -1290,7 +1306,7 @@ SYG_defaultMagazine = {
 	}
 	else {_arr = getArray( configFile >> "CfgWeapons" >> _this >> "magazines" );};
 	_mag = format["%1",_arr select 0];
-	_pos = [SYG_spec1, _mag] call SYG_find;
+	_pos = [SYG_spec1, _mag] call _findSpec;
 	if ( _pos >= 0) then { _mag = argp(SYG_spec2,_pos);};
     _mag
 };
