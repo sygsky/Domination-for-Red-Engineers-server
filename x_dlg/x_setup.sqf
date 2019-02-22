@@ -1,5 +1,7 @@
 // edit this file and then run setupcopy.bat
 
+#define __RED_ENGINEERS_SERVER__
+
 // uncomment to show markers for sidemissions, main targets, etc.
 //#define __DEBUG__
 
