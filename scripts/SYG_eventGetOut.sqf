@@ -68,6 +68,9 @@ SYG_getOutEvent =
         false
     };
 
+    // only enemy is allowed for auto revert back
+    if ( str(side (_this select 2)) != d_enemy_side ) exitwith {false};
+
     _veh  = _this select 0;
     _veh setVariable [EVENT_ID_VAR_NAME, nil]; // remove event number to prevent other processing
     _crew = crew _veh; // crew still in vehicle
@@ -80,6 +83,7 @@ SYG_getOutEvent =
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
     };
+
 
     // continue here only for land vehicles
 
@@ -163,7 +167,6 @@ SYG_getOutEvent =
 
     ///////////////////////////////////////////////////////////////////// PROCS end
 
-
 #ifdef __DEBUG_PRINT__
     hint localize format["+++ SYG_getOutEvent: vehicle crew of %1 has %2 alive men, wait for vehicle to be empty", count crew _veh, {alive _x} count crew _veh];
 #endif
@@ -202,7 +205,7 @@ SYG_getOutEvent =
     //
     if ( !_udState && vehicle _first_man_out == _veh ) exitWith
     {
-        hint localize format["<<< SYG_getOutEvent: jumped out man already moved inside %1(%2), repair vehicle damage (%3) and exit >>>", typeOf _veh, _veh, damage _veh];
+        hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", typeOf _veh, _veh, damage _veh];
         _veh setDamage 0;
         _veh setVariable [EVENT_ID_VAR_NAME, _GetOutEventInd]; // restore event handling
         true
@@ -213,7 +216,7 @@ SYG_getOutEvent =
     {
         // not overturned, exit
         _veh setVariable [EVENT_ID_VAR_NAME, _GetOutEventInd]; // restore event handling
-        hint localize format["<<< SYG_getOutEvent: vehicle %1(%2) not overturned, leave it as is, crew %3, exit >>>", typeOf _veh, _veh, count crew _veh];
+        hint localize format["<<< SYG_getOutEvent: vehicle %1(%2) not over, dmg %3, crew %4, exit >>>", typeOf _veh, _veh, damage _veh, count crew _veh];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         true
     };
@@ -429,14 +432,16 @@ SYG_getOutEvent =
     {
         _tlist set [count _tlist, assignedVehicleRole _x];
     } forEach crew _veh;
-    hint localize format["]]] SYG_getOutEvent: end of script for %1(%2), roles assigned %3, crew %4 (alive %5), %6 [[[",
+    SYG_TrueGetOutsCnt = SYG_TrueGetOutsCnt + 1;
+    hint localize format["]]] SYG_getOutEvent: EOS for %1(%2), roles in %3,crew %4/alive %5,gd/bd call %6/%7. %8 [[[",
         typeOf _veh,
         _veh,
         _tlist,
         count crew _veh,
         {alive _x} count crew _veh,
+        SYG_TrueGetOutsCnt,
+        SYG_FalseGetOutsCnt,
         [_veh,"at %1 m. to %2 from %3"] call SYG_MsgOnPosE
         ];
-    SYG_TrueGetOutsCnt = SYG_TrueGetOutsCnt + 1;
     true
 };
