@@ -201,7 +201,7 @@ XHandleNetStartScriptServer = {
                     {
                         _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)"
                     }else {
-                        if (_name == "Shelter") then // Poland
+                        if (_name == "Shelter" || _name == "Marcin") then // Poland
                         {
                             _msg = "Nasz oddział spełnia polskiego brata!"
                         };

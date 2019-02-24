@@ -160,7 +160,7 @@ _unit_array = nil;
 //[player,"Enclosing part finished"] call XfSideChat;
 
 // try to anumate ramp opening
-#ifdef __ACE__	
+#ifdef __ACE__
 	// animate heli action
 	if ( alive _chopper  && _chopper isKindOf "ACE_CH47D" ) then
 	{
@@ -174,14 +174,14 @@ if (!_ejected && alive _chopper) then
 {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-    hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection started, %1 unit[s], pos %2", count crew _chopper, _msg ];
+    hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection started, %1 unit[s], h %2, pos %2", count crew _chopper, round(getPos (_chopper select 2)), _msg ];
 	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;
 		sleep (0.85 + (random 0.25));
 	} forEach units _paragrp;
 	_ejected = true;
-    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+    //_msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
     // hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection completed, pos %1", _msg ];
 	//[player,"Scheduled drop finished"] call XfSideChat;
 };
@@ -190,15 +190,6 @@ if (_ejected) then // create sabotage group
 {
 //[player,"Saboteurs team onground setup block entered"] call XfSideChat;
 _chopper flyInHeight 200;
-
-#ifdef __ACE__	
-	// animate heli action
-	if ( _chopper isKindOf "ACE_CH47D" ) then
-	{
-		_chopper animate ["ramp", 0]; // close ramp
-		//hint localize "x_createpara2.sqf: _chopper animate [""ramp"", 0] executed";
-	};
-#endif	
 
 	_leader = leader _paragrp;
 	_leader setRank "LIEUTENANT";
