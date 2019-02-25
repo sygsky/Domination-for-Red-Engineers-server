@@ -1614,6 +1614,7 @@ if (d_player_air_autokick > 0) then {
 
 			if ( rating player < 0  ) then // prevent player from being enemy to AI
 			{
+			    hint localize format["--- Your rating is below zero (%1), up it now", rating player];
 			    player addRating (100 -(rating player));
 			};
 
