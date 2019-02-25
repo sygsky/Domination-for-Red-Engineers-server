@@ -55,7 +55,9 @@ if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith
 	}; // ACE_Para - main kind of parachute in game
 } forEach weapons player;
 
+#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
 if ( new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
+#endif
 
 #endif
 
@@ -72,6 +74,11 @@ onMapSingleClick "";
 
 sleep 2.56;
 playSound "vozdushnye_potoki_2"; // parajump made
+
+#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+if ( new_paratype == "" ) then { (localize "STR_SYS_609_1") call XfHQChat};
+#endif
+
 //hint localize format["new_paratype == %1", new_paratype];
 //    hint localize format["vehicle player == %1", vehicle player];
 

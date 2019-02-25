@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, dlg\teleport.sqf - papajump from base flag pole!
 private ["_caller","_ok","_vehicle"];
 
 #include "x_setup.sqf"
