@@ -1274,3 +1274,4 @@ STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
+STR_NUM_MAGAZINES,"%s (%d pcs.)","%s (%d Stk.)","%s (%d шт.)"
