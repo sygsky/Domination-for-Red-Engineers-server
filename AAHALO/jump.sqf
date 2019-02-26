@@ -40,9 +40,10 @@ _obj_jump = player;
 if(vehicle player == player)exitWith {};
 
 #ifdef __ACE__
-[uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf";
+[uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf"; // Go to ACE code to complete jump
 
 sleep 3;
+if ( _paratype == "") then { localize "STR_SYS_609_1"};
 deleteVehicle uh60p;
 if (__AIVer) then {
 	if (alive player) then {

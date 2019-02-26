@@ -1,5 +1,7 @@
 // edit this file and then run setupcopy.bat
 
+#define __RED_ENGINEERS_SERVER__
+
 // uncomment to show markers for sidemissions, main targets, etc.
 //#define __DEBUG__
 
@@ -146,3 +148,6 @@
 
 // uncomment lower line to move air vehicle command "Eject" and "Лump out" to the command list bottom
 #define __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
+
+//comment to disable jump from base flag pole without parachute pack, to be more serious :o)
+// #define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
