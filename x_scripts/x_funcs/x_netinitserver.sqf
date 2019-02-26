@@ -204,6 +204,12 @@ XHandleNetStartScriptServer = {
                         if (_name == "Shelter" || _name == "Marcin") then // Poland
                         {
                             _msg = "Nasz oddział spełnia polskiego brata!"
+                        } else
+                        {
+                            if (_name == "GTX460") then // Русский
+                            {
+                                _msg = "Привет, наш человек с Запада! Тут тебе не там!";
+                            }
                         };
                     };
                 };
