@@ -1124,7 +1124,7 @@ STR_MIS_14,"Air Drop Zone","Air Drop-Zone","Точка сброса"
 STR_MIS_15,"Ammo Point","Munition Punkt","Пункт м/т снаб."
 STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
-STR_MIS_18,%1 wreck,%1 Wrack,обл. %1
+STR_MIS_18,"%1 wreck","%1 Wrack","обл. %1"
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 
 STR_SET_1,"Version","Version","Версия"
