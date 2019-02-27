@@ -94,8 +94,8 @@ SYG_getOutEvent =
     #ifdef __DEBUG_PRINT__
     hint localize "[[[                                                       ]]]";
     #endif
-    hint localize format["[[[ * SYG_getOutEvent: ""%1"" event id %2, crew %3, vehicle %4 tlist %5,  params %6, good / empty calls %7/%8 * ]]]",
-                         EVENT_ID_VAR_NAME, _GetOutEventInd, count _whole_crew, typeOf _veh, _tlist, _this, SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt ];
+    hint localize format["[[[ * SYG_getOutEvent: ""%1"" event id %2, crew %3, vehicle %4 (dmg %5) tlist %6,  params %7, good / empty calls %8/%9 * ]]]",
+                         EVENT_ID_VAR_NAME, _GetOutEventInd, count _whole_crew, typeOf _veh, damage _veh, _tlist, _this, SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt ];
 
     _role = toLower (_this select 1);
     _first_man_out = _this select 2; // first man got out of vehicle
