@@ -243,6 +243,8 @@ if (!no_more_observers) then {
 	update_observers = -1;
 
 	_unit_array = ["artiobserver", d_enemy_side] call x_getunitliste;
+	hint localize format["x_scripts\x_createguardpatrolgroups.sqf: observers cnt %1, type %2", nr_observers, _unit_array select 0];
+	_cnt = 0;
 	for "_xx" from 1 to nr_observers do {
 		//__WaitForGroup
 		//__GetEGrp(_agrp)
@@ -261,7 +263,7 @@ if (!no_more_observers) then {
 		//+++ Sygsky: rearm spotter[s]
 		{ [_x, 1.0, 0.99] call SYG_rearmSpotter } forEach units _agrp;
 		//--- Sygsky
-		
+		_cnt = _cnt + count units _agrp;
 		_grp_array execVM "x_scripts\x_groupsm.sqf";
 		call compile format ["
 			Observer%1 = _units select 0;
@@ -269,6 +271,8 @@ if (!no_more_observers) then {
 		",_xx];
 		sleep 1.231;
 	};
+	hint localize format["x_scripts\x_createguardpatrolgroups.sqf: observers to create %1, type %2, created %3", nr_observers, _unit_array select 0, _cnt];
+
 	_unit_array = nil;
 
 	update_observers = nr_observers;
@@ -277,6 +281,9 @@ if (!no_more_observers) then {
 	execVM "x_scripts\x_handleobservers.sqf";
 
 	sleep 2.214;
+}
+else {
+	hint localize "x_scripts\x_createguardpatrolgroups.sqf: no_more_observers = true";
 };
 
 [_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a)medic BMP  or b)super-reammo or с)radio-tower etc
