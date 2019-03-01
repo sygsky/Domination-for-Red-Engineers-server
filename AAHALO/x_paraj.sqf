@@ -82,8 +82,14 @@ if ( new_paratype == "" ) then { (localize "STR_SYS_609_1") call XfHQChat};
 //hint localize format["new_paratype == %1", new_paratype];
 //    hint localize format["vehicle player == %1", vehicle player];
 
-waitUntil {sleep 0.132; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 10)};
-sleep 0.02;
-player removeWeapon new_paratype;
+// detect for parachute to be open and remove it from magazines
+waitUntil {sleep 0.132; (!alive player) || (vehicle player != player)  || (((getPos player) select 2)< 5)};
+if ( ( vehicle player ) isKindOf "ParachuteBase" ) then
+{
+    waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 5) };
+    player removeWeapon new_paratype;
+};
+//hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
+
 
 if (true) exitWith {true};
