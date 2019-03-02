@@ -566,7 +566,7 @@ XHandleNetStartScriptClient = {
 
 
         // this command is received and processed ONLY on clients, just if started on client too
-        // some message to user, params: ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay>>]
+        // some message to user, params: ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg>>>]
         // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
         // msg is displayed using titleText ["...", "PLAIN DOWN"];
 		case "msg_to_user":	{
@@ -647,7 +647,10 @@ XHandleNetStartScriptClient = {
 							};
 						};
 					} forEach _x; // for each format item
-					titleText[ format _msg_res, "PLAIN DOWN" ];
+					if ( (count _this) < 5) then // no title text disable parameter
+                    {
+    					titleText[ format _msg_res, "PLAIN DOWN" ];
+                    };
 					((format _msg_res) call XfRemoveLineBreak) call XfGlobalChat;
 
 //					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_res, format _msg_res];
