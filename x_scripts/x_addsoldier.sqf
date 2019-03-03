@@ -72,14 +72,21 @@ _ai_side_unit = (
 			case "EAST": {"ACE_SoldierEDemo_SNR"};
 		}
 	} else {
-		format [_type_soldier, _ai_side_char]
+    	if (_type_soldier == "ACE_Soldier%1Medic" && d_own_side == "EAST") then
+    	{
+            "ACE_SoldierEMedicWoman_VDV" // woman for russian that he was noble
+    	}
+    	else
+    	{
+    		format [_type_soldier, _ai_side_char]
+    	}
 	}
 );
 #endif
 
 _unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"];
 [_unit] join d_grp_caller;
-_unit setSkill 1;
+_unit setSkill 0.1;
 _unit setRank "CORPORAL"; // Why???
 _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x_deleteai.sqf";}];
 
