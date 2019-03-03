@@ -455,7 +455,7 @@ if ( alive _unit ) then
 };
 
 // Restore behaviour
-if ( alive _unit && _prevBehaviour != "NONE") then
+if ( (alive _unit) && (_prevBehaviour != "NONE") ) then
 {
     _unit setBehaviour _prevBehaviour;
     _prevBehaviour = "NONE";
