@@ -91,12 +91,15 @@ _unit setRank "CORPORAL"; // Why???
 _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x_deleteai.sqf";}];
 
 #ifdef __ACE__
-if (d_own_side == "WEST") then
+if (d_own_side == "EAST") then
 {
-    _identity =  format["Rus%1", (floor (random 5)) + 1];
-    _unit setIdentity _identity; // there are only 5 russina voice in the ACE
-    // TODO: test if russian voice ir hear on clients. May be it is possible to setIdentity only to local units
-    hint localize format["+++ AI setIdentity %1", _identity];
+    if (_ai_side_unit != "ACE_SoldierEMedicWoman_VDV") then
+    {
+        _identity =  format["Rus%1", (floor (random 5)) + 1];
+        _unit setIdentity _identity; // there are only 5 russina voice in the ACE
+        // TODO: test if russian voice ir hear on clients. May be it is possible to setIdentity only to local units
+        hint localize format["+++ AI setIdentity %1", _identity];
+    }
 }
 #endif
 
