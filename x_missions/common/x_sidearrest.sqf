@@ -66,6 +66,7 @@ while {!_offz_at_base && !_is_dead} do {
 							sleep 0.01;
 						};
 						_officer setCaptive false;
+						_officer addRating (2500 - (rating _officer)); // set high rating to prevent officer being killed by friendly AI
 						_rescued = false;
 						sleep 0.01;
 					};
