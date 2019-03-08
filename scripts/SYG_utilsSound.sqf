@@ -67,7 +67,7 @@ SYG_defeatTracks =
     ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
-    ["i_new_a_guy","decisions","treasure_island"],
+    ["i_new_a_guy","decisions","treasure_island_defeat"],
     ["sorcerie","melody"]
 ];
 
@@ -100,7 +100,7 @@ SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
-    "gamlet_hunt","treasure_island","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie", // "gong",
+    "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie", // "gong",
     "melody","medieval_defeat","defeat2"
     ];
 
@@ -236,7 +236,7 @@ SYG_liturgyDefeatTracks = [  "liturgy_1","liturgy_2","liturgy_3","liturgy_4" ];
 
 
 // Any isle defeat music
-SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island"];
+SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure_island_defeat"];
 
 SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 

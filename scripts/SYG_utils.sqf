@@ -34,6 +34,8 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";		// Text functions
+	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";		// anti-overturn method
+
 	//hint localize "--- SYG_utils initialization finished";
 };
 

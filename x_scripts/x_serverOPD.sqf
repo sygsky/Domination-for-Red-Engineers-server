@@ -25,7 +25,10 @@ if (_index >= 0) then {
         _newwtime = _oldwtime - _newwtime;
     };
     _parray set [0, _newwtime];
-    (_parray select 4) execVM "x_scripts\x_markercheck.sqf";
+    (_parray select 4) execVM "x_scripts\x_markercheck.sqf"; // remove all player created markers
+
+    // TODO: try to disconnect all AI of disconnecting player
+
 #ifdef __DEBUG_PRINT__
     hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", array %2", _name, _parray ];
 #endif

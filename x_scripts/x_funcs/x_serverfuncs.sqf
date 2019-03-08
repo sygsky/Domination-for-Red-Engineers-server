@@ -2,7 +2,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-// add
+// add dead object(vehicle, unit) to the common dead list
 XAddDead = {if (!((_this select 0) in dead_list)) then {dead_list = dead_list + [_this select 0];}};
 
 // Adds vehicle to the dead vehicles list
@@ -361,7 +361,7 @@ x_makemgroup = {
 	_ret
 };
 
-// Creates group of infantry for side mission. All bodies will be automatically removed after SM finsih
+// Creates group of infantry for side mission. All bodies will be automatically removed after SM finish
 XCreateInf = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_pos_center", "_radius", "_do_patrol", "_side", "_gwp_formations", "_ret_grps", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_units", "_leader", "_grp_array"];
 	_type1 = _this select 0;

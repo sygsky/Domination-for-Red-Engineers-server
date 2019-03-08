@@ -67,7 +67,8 @@ _current_target_radius = _dummy select 2;
 check_trigger=createTrigger["EmptyDetector",_current_target_pos];
 check_trigger setTriggerArea [(_current_target_radius max 300) + 20, (_current_target_radius max 300) + 20, 0, false];
 check_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
-check_trigger setTriggerStatements["(((""Man"" countType thislist) + (""Static"" countType thislist)) >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""];
+// Static objects not used in lower condition (""Static"" countType thislist >= d_static_count_for_target_clear)
+check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""];
 
 [_current_target_pos, _current_target_radius] execVM "x_scripts\x_createguardpatrolgroups.sqf";
 
@@ -75,7 +76,7 @@ while {!update_target} do {sleep 2.123};
 current_trigger = createTrigger["EmptyDetector",_current_target_pos];
 current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
 current_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
-current_trigger setTriggerStatements["mt_radio_down && side_main_done && (""Car"" countType thislist <= d_car_count_for_target_clear) && (""Tank"" countType thislist <= d_tank_count_for_target_clear) && (""Man"" countType thislist <= d_man_count_for_target_clear)", "xhandle = [] execVM ""x_scripts\x_target_clear.sqf""", ""];
+current_trigger setTriggerStatements["mt_radio_down && side_main_done && (""Car"" countType thislist <= d_car_count_for_target_clear) && (""Tank"" countType thislist <= d_tank_count_for_target_clear) && (""Man"" countType thislist <= d_man_count_for_target_clear) && (""Static"" countType thislist <= d_static_count_for_target_clear)", "xhandle = [] execVM ""x_scripts\x_target_clear.sqf""", ""];
 
 _emptyH = "HeliHEmpty" createVehicle _current_target_pos;
 _emptyH setPos _current_target_pos;

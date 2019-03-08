@@ -143,7 +143,7 @@ switch (sec_kind) do {
 		_cnt = floor (random (3 min _posCnt));    // add guard[s] on the top of radar
 		if (_cnt > 0) then
 		{
-		    hint localize format["x_scripts/x_createsecondary.sqf: %1 unit[s] guards secondary target", _cnt];
+//		    hint localize format["x_scripts/x_createsecondary.sqf: %1 unit[s] guards secondary target", _cnt];
             _types =
             if ( _ACE) then
             {
@@ -161,7 +161,7 @@ switch (sec_kind) do {
                 _unit = _newgroup createUnit [ _type, _poss, [], 0, "FORM"];
                 [_unit] join _newgroup;
                 _pos = _vehicle buildingPos _i;
-                hint localize format["x_createsecondary.sqf: guard %5 (grp %6) on top of tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit, _newgroup];
+                hint localize format["x_createsecondary.sqf: creating guard %5 (grp %6) on top of tower, %1 at pos %2(%3) of max %4", _type, _pos, _i, _cnt, _unit, _newgroup];
                 _unit disableAI "MOVE";
                 _unit setBehaviour "SAFE";
                 _unit setPos _pos;
@@ -307,7 +307,7 @@ switch (sec_kind) do {
 
 sleep 11.0123;
 //+++ Sygsky: try to build tower not very close to the edge of town circle, but near to center
-_tower_build_radius = (_current_target_radius / 3) * 2;
+_tower_build_radius = (_current_target_radius / 2);
 //_poss = [_target_array2 select 0, _target_array2 select 2] call XfGetRanPointCircleBig;
 _poss = [];
 

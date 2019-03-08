@@ -80,7 +80,7 @@ execVM "mando_missiles\mando_missileinit.sqf";
 // Weather tuning and settings
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
-  setViewDistance 8000; // try to use this command. What if it could make a furor?
+    setViewDistance 8000; // try to use this command. What if it could make a furor?
 	SYG_updateWeather = {
 		// weather parameters
 		//  fRainLess = random 0.34; //linear random
@@ -137,6 +137,7 @@ if (isServer) then {
     ADD_DAM_EH(_medic_tent)
 
 #endif
+
 #ifdef __ADDITIONAL_BASE_VEHICLES__
     {
         _veh = createVehicle [_x select 1, [0,0,0], [], 0, "NONE"];
@@ -625,7 +626,7 @@ if ( X_Client ) then // use only on client
 #endif
 
 #ifdef __NO_RPG_CLONING__
-    // disables AT etc missiles cloning through rucksacks
+// disables AT etc missiles cloning through rucksacks
 ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\PackInventoryMagToDummyMag.sqf";
 #endif
 
@@ -637,6 +638,9 @@ ace_sys_eject_ace_getin_jumpout = compile preprocessFileLineNumbers "scripts\ACE
 ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE\ace_init_jumpout.sqf";
 
 #endif
+
+ACE_Sys_Wound_Net_fSetUnc       = compile preProcessFileLineNumbers "scripts\ACE\setUnc.sqf"; // stop setCaptive for unconsciones player
+
 
 };
 #endif

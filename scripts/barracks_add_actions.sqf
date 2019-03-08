@@ -17,7 +17,7 @@ if (isServer && ! X_SPE) exitWith {};
 
 // check for the AI_HUT to be alive
 if (isNil "AI_HUT") exitWith {hint localize "--- barracks_add_actions.sqf: no AI_HUT detected"}; // no hut
-hint localize "+++ barracks_add_actions.sqf starting...";
+hint localize format["+++ %1 barracks_add_actions.sqf starting...", _this];
 if (typeName _this == "ARRAY") then
 {
     if ( count _this > 0) then

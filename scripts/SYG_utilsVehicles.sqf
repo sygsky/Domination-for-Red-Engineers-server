@@ -166,7 +166,7 @@ SYG_detectedEnemy = {
 	    if ( _side == _eside) then
 	    {
 	        _target = argp(_x,4);
-	        if ( _target isKindOf "LandVehicle" && ((_unit knowsAbout _target) > 0.5)) then
+	        if ( _target isKindOf "LandVehicle" && ((_unit knowsAbout _target) >= 1.5)) then
 	        {
 	            if ( !(_target isKindOf "Man")) then // check vehicle to has crew
 	            {
@@ -554,7 +554,10 @@ SYG_populateVehicle ={
 #ifdef __NOT_POPULATE_LOADER_TO_TANK__
 	if ( _veh isKindOf "Tank" ) then
 	{
-		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
+	    if ( (count _tlist) == 4) then
+	    {
+    		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
+	    };
 	};
 #endif
 
@@ -637,6 +640,7 @@ SYG_populateVehicle ={
         };
 	};
 #endif
+    _veh call SYG_preventTurnOut; // add anti-overturn proc
 	_grp
 };
 
@@ -1482,9 +1486,9 @@ SYG_ACEDamageReportStr = {
 };
 
 /*
- * Set parachutes cargo in heli to predefined number (e.g. to have place for RGP in the heli during flight)
+ * Set parachutes cargo in heli to predefined number (e.g. to free space for RPG weapons in the heli during flight)
  * call: [_heli, 2, "ACE_ParachutePack" or "ACE_ParachuteRoundPack"] call SYG_setHeliParaCargo;
- * where 2 is new parachutes number
+ * where 2 is the new parachutes count
  * "ACE_ParachutePack" - new parachute type
  */
 SYG_setHeliParaCargo = {
@@ -1502,7 +1506,7 @@ SYG_setHeliParaCargo = {
     _paraType = argopt(2,"ACE_ParachuteRoundPack");//default parachute
 
     _heli addWeaponCargo [_paraType, _num];
-    hint localize format[ "<<< SYG_setHeliParaCargo [%1,%2] for %3 >>>", _paraType, _num, _heli ]; // log start
+    hint localize format[ "+++ SYG_setHeliParaCargo [%1,%2] for %3  >>>", _paraType, _num, _heli ]; // log start
 };
 
 /*
@@ -1766,7 +1770,7 @@ SYG_getLeader = {
 	_leader = leader _this;
 	if ( !isNull _leader ) exitWith {_leader};
 	{
-		if ( (!isNull _x) && (alive _x) ) exitWith {_leader = _x };
+		if ( alive _x ) exitWith {_leader = _x };
 	} forEach units _this;
 	_leader
 };

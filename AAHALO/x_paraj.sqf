@@ -55,8 +55,8 @@ if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith
 	}; // ACE_Para - main kind of parachute in game
 } forEach weapons player;
 
+#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
 if ( new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
-
 #endif
 
 #ifdef __RANKED__
@@ -71,13 +71,18 @@ sleep 0.512;
 onMapSingleClick "";
 
 sleep 2.56;
-playSound "vozdushnye_potoki_2"; // parajump made
+
 //hint localize format["new_paratype == %1", new_paratype];
-if ( new_paratype == "ACE_ParachuteRoundPack" ) then {
 //    hint localize format["vehicle player == %1", vehicle player];
-    waitUntil {sleep 0.132; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 10)};
-    sleep 0.02;
+
+// detect for parachute to be open and remove it from magazines
+waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 )< 5 )};
+if ( ( vehicle player ) isKindOf "ParachuteBase" ) then
+{
+    waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
     player removeWeapon new_paratype;
 };
+//hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
+
 
 if (true) exitWith {true};

@@ -299,7 +299,7 @@ if (d_with_mgnest) then {
 };
 
 #ifndef __REVIVE__
-_str = _str + "Респаун с тем же оружием: ";
+_str = _str + (localize "STR_SYS_1200"); // "Respawn with same weapons after death: "
 if (x_weapon_respawn) then {
 	_str = _str + _strYes;
 } else {
@@ -308,28 +308,28 @@ if (x_weapon_respawn) then {
 #endif
 
 #ifdef __AI__
-_str = _str + "Максимальное кол-во АИ: " + str(max_ai) + "\n";
+_str = _str + (localize "STR_SYS_1201") + str(max_ai) + "\n"; // "Maximum number of AI that can get recruited: "
 #endif
 
-_str = _str + localize"STR_SYS_350"/* "Очков штрафа за дружественный огонь : " */ + str(d_sub_tk_points) + "\n";
+_str = _str + localize"STR_SYS_350" + str(d_sub_tk_points) + "\n"; // "Points a player looses for teamkill: "
 
 #ifdef __RANKED__
-_str = _str + "Очков вычитается за смерть: " + str(abs(d_sub_kill_points)) + "\n";
-_str = _str + "Очков необходимо инженеру для обслуживания техники: " + str(d_ranked_a select 0) + "\n";
-_str = _str + "Инженер получает очков за ремонт:\n";
-_str = _str + "Авиатехника: " + str((d_ranked_a select 1) select 0) + ", бронетехника: " + str((d_ranked_a select 1) select 1) + ", транспорт: " + str((d_ranked_a select 1) select 2) + "\n";
-_str = _str + "Инженер получает очков за ремонт (прочее): " + str((d_ranked_a select 1) select 3) + "\n";
-_str = _str + "Очков списывается с инженера за ремонт сервисов на базе: " + str(d_ranked_a select 13) + "\n";
-_str = _str + "Очков списывается за вызов одного залпа артиллерии: " + str(d_ranked_a select 2) + "\n";
+_str = _str + "Очков вычитается за смерть: " + str(abs(d_sub_kill_points)) + "\n"; // "Player points that get subtracted after death: "
+_str = _str + "Очков необходимо инженеру для обслуживания техники: " + str(d_ranked_a select 0) + "\n"; // "Points an engineer needs to service a vehicle: "
+_str = _str + "Инженер получает очков за ремонт:\n";                                                    // "Points an engineer gets for servicing: "
+_str = _str + "Авиатехника: " + str((d_ranked_a select 1) select 0) + ", бронетехника: " + str((d_ranked_a select 1) select 1) + ", транспорт: " + str((d_ranked_a select 1) select 2) + "\n"; // (air vec), (tank), (car)
+_str = _str + "Инженер получает очков за ремонт (прочее): " + str((d_ranked_a select 1) select 3) + "\n"; // (other)
+_str = _str + "Очков списывается с инженера за ремонт сервисов на базе: " + str(d_ranked_a select 13) + "\n";   // "Points an engineer needs to rebuild the support buildings at base: "
+_str = _str + "Очков списывается за вызов одного залпа артиллерии: " + str(d_ranked_a select 2) + "\n";         // "Points an artillery operator needs for a strike: "
 if (__AIVer) then {
-	_str = _str + "Очков за найм одного АИ: " + str(d_ranked_a select 3) + "\n";
-	_str = _str + "Очков за вызов вертолётного такси: " + str(d_ranked_a select 15) + "\n";
+	_str = _str + "Очков за найм одного АИ: " + str(d_ranked_a select 3) + "\n";            // "Points needed to recuruit one AI soldier: "
+	_str = _str + "Очков за вызов вертолётного такси: " + str(d_ranked_a select 15) + "\n"; // "Points needed to call in an air taxi: "
 };
-_str = _str + "Очков необходимо для десантирования: " + str(d_ranked_a select 4) + "\n";
-_str = _str + "очков необходимо для выгрузки техники из мобильного респауна: " + str(d_ranked_a select 6) + "\n";
-_str = _str + "Очков вычитается за выгрузку техники из мобильного респауна: " + str(d_ranked_a select 5) + "\n";
-_str = _str + (localize "STR_SYS_351")/* "Очков получает медик за лечение других игроков в палатке: " */ + str(d_ranked_a select 7) + "\n";
-_str = _str + (localize "STR_SYS_352")/* "Очков получает медик за лечение других игроков: " */ + str(d_ranked_a select 17) + "\n";
+_str = _str + "Очков необходимо для десантирования: " + str(d_ranked_a select 4) + "\n";    // "Points needed for AAHALO parajump: "
+_str = _str + "очков необходимо для выгрузки техники из мобильного респауна: " + str(d_ranked_a select 6) + "\n"; // "Points needed to create a vehicle at a MHQ: "
+_str = _str + "Очков вычитается за выгрузку техники из мобильного респауна: " + str(d_ranked_a select 5) + "\n";  // "Points that get subtracted for creating a vehicle at a MHQ: "
+_str = _str + (localize "STR_SYS_351") + str(d_ranked_a select 7) + "\n"; // "Points a medic gets if someone heals at his Mash: "
+_str = _str + (localize "STR_SYS_352") + str(d_ranked_a select 17) + "\n";          // "Points a medic gets if he heals another unit: "
 
 _ar = d_ranked_a select 8;
 _str = _str + (localize "STR_SYS_353")/* "Требуемое звание для управления лёгкой бронетехникой: " */ + ((_ar select 0) call XGetRankStringLocalized) + "\n";
@@ -341,25 +341,25 @@ _str = _str + (localize "STR_SYS_356")/* "Требуемое звание для
 _str = _str + format [localize "STR_SYS_357"/* "Очков за выполнение основной задачи, игрок в радиусе %1 м. от центра города: " */,d_ranked_a select 10] + str(d_ranked_a select 9) + "\n";
 _str = _str + format [localize "STR_SYS_358"/* "Очков за выполнение дополнительной задачи, игрок в радиусе %1 м. от места операции: " */,d_ranked_a select 12] + str(d_ranked_a select 11) + "\n";
 
-_str = _str + "Очков необходимо для развёртывания пулемётного гнезда: " + str(d_ranked_a select 14) + "\n";
-_str = _str + "Очков необходимо для вызова снабжения: " + str(d_ranked_a select 16) + "\n";
-_str = _str + "Очков за транспортировку игроков: " + str(d_ranked_a select 18) + "\n";
-_str = _str + (localize "STR_SYS_359")/* "Расстояние, на котором игрок в транспорте получает очки за взятие городов: " */ + str(d_transport_distance) + "\n";
-_str = _str + "Звание, разрешающее пилотирование вертолёта для переноски подбитой техники: " + (d_wreck_lift_rank call XGetRankStringLocalized) + "\n";
+_str = _str + "Очков необходимо для развёртывания пулемётного гнезда: " + str(d_ranked_a select 14) + "\n"; // "Points needed to build a mg nest: "
+_str = _str + "Очков необходимо для вызова снабжения: " + str(d_ranked_a select 16) + "\n";                 // "Points needed to call in an air drop: "
+_str = _str + "Очков за транспортировку игроков: " + str(d_ranked_a select 18) + "\n";                      // "Points for transporting other players: "
+_str = _str + (localize "STR_SYS_359") + str(d_transport_distance) + "\n"; // "Transport distance to get points: "
+_str = _str + "Звание, разрешающее пилотирование вертолёта для переноски подбитой техники: " + (d_wreck_lift_rank call XGetRankStringLocalized) + "\n"; //"Rank needed to fly the wreck lift chopper: "
 #endif
 
-_str = _str + "Лимит вооружения: ";
+_str = _str + "Лимит вооружения: "; // "Weapons limited: "
 if (d_limit_weapons) then {
 	_str = _str + _strYes;
 } else {
 	_str = _str + _strNo;
 };
 
-_str = _str + "Радиус сброса снабжения (0 = точная позиция): " + str(d_drop_radius) + " м.\n";
+_str = _str + "Радиус сброса снабжения (0 = точная позиция): " + str(d_drop_radius) + " м.\n";           // "Air drop radius (0 = exact position): "
 
-_str = _str + "Время 1-го цикла перезарядки/заправки/ремонта: " + str(x_reload_time_factor) + " сек.\n";
+_str = _str + "Время 1-го цикла перезарядки/заправки/ремонта: " + str(x_reload_time_factor) + " сек.\n"; // "Reload/refuel/repair time factor: "
 
-_str = _str + (localize "STR_SYS_361") /* "Отключение двигателей в пункте перезарядки: " */;
+_str = _str + (localize "STR_SYS_361") ;            // "Engine gets shut off on service point: "
 if (d_reload_engineoff) then {
 	_str = _str + _strYes;
 } else {

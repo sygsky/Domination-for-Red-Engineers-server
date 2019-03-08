@@ -86,8 +86,9 @@ if (isServer) then {
 		sleep 0.01;
 	} forEach _grps;
 	_cnt = (_grps select 0) call SYG_rearmSpecopsGroup;
-#ifdef __DEBUG__		
-	hint localize format["%1 x_m5.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grps select 0)];
+	_cnt = _cnt + ((_grps select 1) call SYG_rearmSpecopsGroup);
+#ifdef __DEBUG__
+	hint localize format["%1 x_m5.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, (count units (_grps select 0)) + (count units (_grps select 1))];
 #endif
 
 	sleep 2.222;

@@ -11,12 +11,6 @@
 //
 // Does not affect human players!!
 //
-//
-// !!!!!!!!!!UNIT MUST HAVE A NAME!!!!!!!!!!!!!
-//
-//
-//
-//
 // V 2.1.4 changes: Behaviour becomes altered near bomb place and restored if far away
 // V 2.1.5 changes: NEW optional Debug-Param
 //                  Bugfix -> moveToCompleted not working
@@ -312,11 +306,13 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
         };
     }; // while { _distToBombPlace > 3 } do
 
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // If we are near to bombing position (while breakout):
-	
 	_unit groupChat format["Dropping bomb %1 out of %2...", (_dropItemPosIdx + 1), _dropArrCount];
 	_unit fire ["pipebombmuzzle", "pipebombmuzzle", _pbname];
-	_unit groupChat "Place Charge";
+	_unit groupChat "Place Charge"; // TODO: say bomb dropped!
+	_dropRealPos = getPos _unit;
+	//-----------------------------------------------------------------------------------------------------------------
 
 	if (_debug) then 
 	{
@@ -326,46 +322,48 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 	// Count up how many bombs we have dropped:
 	_dropItemPosIdx = _dropItemPosIdx + 1;
 
-	// Wait 10 seconds (20 step by 0.5. sec) until bomb is dropped:
+	// Wait 5 seconds (10 step by 0.5. sec) until bomb is dropped:
 	_error = true;
-	_timeout = time + 20;
-	while { time < _timeout} do 
+	for "_i" from 1 to 10 do
 	{ 
-		if ( !canStand _unit) then
+		if ( !alive _unit) then
 		{ 
 #ifdef __DEBUG__
-			hint localize format["DropScript (%1): Failure: unit !canStand while dropping boms, exit",ELAPSED_TIME];
+			hint localize format["DropScript (%1): Failure: unit !alive while dropping boms, exit",ELAPSED_TIME];
 #endif		
 			breakTo "main";
 		};
 		
 		if ( unitReady _unit) exitWith
 		{
-#ifdef __DEBUG__
+//#ifdef __DEBUG__ // let check is this occures or not at all
 			hint localize format["DropScript (%1): Success: unit ready after bomb drop",ELAPSED_TIME];
-#endif		
+//#endif
 			_error = false;
 		};
 		sleep 0.5; 
 	};
 	
 #ifdef __DEBUG__
-	if _error exitWith // unit not ready
+	if _error exitWith // unit not ready or dead
 	{
 		hint localize format["DropScript (%1): Failure: unit time-out while dropping bomb!!! Exit from main loop",ELAPSED_TIME];
 	};
 #endif		
 	
 	// V 2.1.6 new: magically move the bomb to its exact desired location:
-	sleep 2;	// SLEEP IS IMPORTANT TO FIND THE BOMB!
-	_arr = nearestObjects [ _unit, [], 15];
+	sleep 2;
+	// SLEEP IS IMPORTANT TO FIND THE BOMB!\
+	// But is it really work? Not sure!
+	_arr = nearestObjects [ _unit, [], 25];
 	_cnt = count _arr;
 	if ( _cnt > 0 ) then
 	{
 		for "_i" from 0 to ( (count _arr) - 1) do
 		{
 			_obj = _arr select _i;
-			if ( !((typeOf _obj) in ["PipeBomb","ACE_PipeBomb"]) )  then { _arr set [_i, "RM_ME"] };
+//			if ( !((typeOf _obj) in ["PipeBomb","ACE_PipeBomb"]) )  then { _arr set [_i, "RM_ME"] };
+			if ( !(_obj isKindOf "PipeBomb") )  then { _arr set [_i, "RM_ME"] };
 		};
 		_arr = _arr - ["RM_ME"]; // remove all non-bomb objects
 		sleep 0.01;
@@ -373,39 +371,38 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 
 	if ( (count _arr == 0)  ) exitWith 
 	{
-		_error = false;
+		_error = true;
 #ifdef __DEBUG__
-		hint localize format["DropScript (%1): Failure: no one bomb from %2 found objects found around goal. Exiting script",ELAPSED_TIME], _cnt;
+		hint localize format["DropScript (%1): Failure: no one bomb from %2 found objects found around goal. Exiting script",ELAPSED_TIME, _cnt];
 #endif		
 	};
 
-#ifdef __DEBUG__
-	_str = "";
-	{ _str = _str + format["%1,", typeOf _x]; } forEach _arr;
-	hint localize format["DropScript (%2): array of bombs found: <%1>", _str, ELAPSED_TIME];
-#endif		
+//#ifdef __DEBUG__
+//	_str = "";
+//	{ _str = _str + format["%1,", typeOf _x]; } forEach _arr;
+	hint localize format["DropScript (%2): array of %1 bombs found", count _arr, ELAPSED_TIME]; // have to understand it works or not
+//#endif
 	
 	if ( _bomb2center ) then 
 	{
 		_pipeBombCount = count _arr;
-		if (_debug) then 
+		if (_debug) then
 		{
-			player sideChat (format["DropScript: %1 pipeBombs are placed to center", _pipeBombCount ]);
+			player sideChat (format["DropScript: %1 pipeBombs are placed to center", _pipeBombCount ]); // have to understand it works or not
 		};
 		
 		{
 			_x setPos _dropItemPos;
 		} forEach _arr;
 		_dropRealPos = _dropItemPos;
-#ifdef __DEBUG__
-			hint localize format["DropScript (%2): %1 pipeBombs are placed to center", _pipeBombCount,ELAPSED_TIME ];
-#endif		
+//#ifdef __DEBUG__
+			hint localize format["DropScript (%2): %1 pipeBombs are placed to center", _pipeBombCount, ELAPSED_TIME ]; // have to understand it works or not
+//#endif
 	}
 	else 
 	{	
-		_dropRealPos = getPos _unit; 
 #ifdef __DEBUG__
-		hint localize format["DropScript (%2): PipeBomb placed at dist %1 m. from tangeted point", _dropRealPos distance _dropItemPos,ELAPSED_TIME ];
+		hint localize format["DropScript (%2): PipeBomb placed at dist %1 m. from targeted point", _dropRealPos distance _dropItemPos, ELAPSED_TIME ];
 #endif		
 	};
 	sleep 0.3;
@@ -415,35 +412,34 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 // ---------------------------------------
 // All bombs dropped/skipped. Return to original position retreatPos
 
-if (!_error) then
+if ( alive _unit ) then
 {
-    _moveRetryCount		= 0;
+    _moveRetryCount	= 0;
 
 	//+++ Sygsky: added Set Timer action to blast in any case as unit can be killed after bomb dropping
-	if ((alive _unit)) then
+	if (alive _unit) then
 	{
-		{ _unit action["StartTimer", _unit, _x]; } forEach _arr; 
+
+	    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		{ _unit action["StartTimer", _unit, _x]; } forEach _arr;
+		//--------------------------------------------------------------------------------------------------------------
+
 #ifdef __DEBUG__
 			hint localize format["DropScript (%2): Timer is started for %1 bomb[s] near targeted point. Returning unit to the home",count _arr, ELAPSED_TIME];
 #endif		
 		if (_debug) then  {	player sideChat format["DropScript: Timer is started for %1 bomb[s]",count _arr] };
 		// Move him out
-		_unit doMove /*position*/ _pos2Retreat;
-		if (_debug) then 
-		{
-			player sideChat "DropScript: Unit is returning to original pos";
-		};
+		if (!canStand _unit) exitWith {_error = false};
+
+        _unit doMove /*position*/ _pos2Retreat;
+        if (_debug) then
+        {
+            player sideChat "DropScript: Unit is returning to original pos";
+        };
 
 		// Let unit walk a bit in careless mode:
 		Sleep 2; // was 3 
 
-		// Restore behaviour
-		if (_prevBehaviour != "NONE") then 
-		{
-			_unit setBehaviour _prevBehaviour;
-			_prevBehaviour = "NONE";
-		};
-		if ( ! canStand _unit) then {_error = true;};
 	}
 	else
 	{
@@ -453,10 +449,16 @@ if (!_error) then
 			player sideChat "DropScript: Timer NOT started as unit is dead";
 		};
 #ifdef __DEBUG__
-		hint localize format["DropScript (%1): Timer NOT started as unit is dead",ELAPSED_TIME];
+		hint localize format[ "DropScript (%1): Timer NOT started as unit is dead", ELAPSED_TIME ];
 #endif		
 	};
+};
 
+// Restore behaviour
+if ( (alive _unit) && (_prevBehaviour != "NONE") ) then
+{
+    _unit setBehaviour _prevBehaviour;
+    _prevBehaviour = "NONE";
 };
 
 _distToRetreatPlace 	= 999;
@@ -465,7 +467,7 @@ _cnt = 0;
 //while { (_distToRetreatPlace > 3) and !(_error) } do
 
 // try to move out at distance >= SAFE_DIST_TO_BOMB meters in 20 second. Bomb will blast in 30 seconds
-while { ( ( (getPos _unit) distance _dropRealPos) < SAFE_DIST_TO_BOMB ) AND !( _error )  AND ( _cnt < 20 ) } do
+while { ( ( (getPos _unit) distance _dropRealPos) < SAFE_DIST_TO_BOMB ) && ! _error   && ( _cnt < 20 ) } do
 {
 	if ( !canStand _unit ) exitWith {_error = true};
 	
