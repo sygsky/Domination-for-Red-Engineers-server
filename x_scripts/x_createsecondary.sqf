@@ -70,7 +70,7 @@ switch (sec_kind) do {
 			__TargetInfo
 			_center = _target_array2 select 0; // center of curent town
 #ifdef __DEBUG_PRINT__
-            hint localize format["+++ x_createsecondry.sqf->spawn: target center %1, man %2", _center, _man];
+            hint localize format["+++ x_createsecondry.sqf->spawn: target center %1, governor %2", _center, _man];
 #endif
 			if ( count _this > 2) then {_pos = _this select 2} else { _pos = _center};
 			waitUntil { sleep 5.174; mt_radio_down }; // wint until radio tower is down

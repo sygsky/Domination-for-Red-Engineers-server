@@ -826,7 +826,7 @@ SYG_MsgOnPos = {
 // Creates message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location, direction_to_location, location_name
 //
-// call as: _msg_localized = [_obj, _format_msg] call SYG_MsgOnPosA;
+// call as: _msg_localized = [_obj, _localized_format_msg<,roundTo>] call SYG_MsgOnPosA;
 //
 SYG_MsgOnPosA = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
@@ -852,7 +852,7 @@ SYG_MsgOnPosA = {
 // Creates english message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location, direction_to_location, location_name
 //
-// call as: _msg_eng = [_obj, _format_msg] call SYG_MsgOnPosE;
+// call as: _msg_eng = [_obj, _localized_format_msg<,roundTo> ] call SYG_MsgOnPosE;
 //
 SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
