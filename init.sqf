@@ -80,7 +80,7 @@ execVM "mando_missiles\mando_missileinit.sqf";
 // Weather tuning and settings
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
-  setViewDistance 8000; // try to use this command. What if it could make a furor?
+    setViewDistance 8000; // try to use this command. What if it could make a furor?
 	SYG_updateWeather = {
 		// weather parameters
 		//  fRainLess = random 0.34; //linear random
@@ -137,6 +137,7 @@ if (isServer) then {
     ADD_DAM_EH(_medic_tent)
 
 #endif
+
 #ifdef __ADDITIONAL_BASE_VEHICLES__
     {
         _veh = createVehicle [_x select 1, [0,0,0], [], 0, "NONE"];

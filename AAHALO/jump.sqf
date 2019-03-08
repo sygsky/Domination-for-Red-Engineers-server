@@ -43,7 +43,13 @@ if(vehicle player == player)exitWith {};
 [uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf"; // Go to ACE code to complete jump
 
 sleep 3;
-if ( _paratype == "") then { localize "STR_SYS_609_1"};
+
+playSound (["vozdushnye_potoki", "vozdushnye_potoki_2"] call XfRandomArrayVal); // parajump made sound
+
+#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+if ( _paratype == "" ) then { (localize "STR_SYS_609_1") call XfHQChat};
+#endif
+
 deleteVehicle uh60p;
 if (__AIVer) then {
 	if (alive player) then {

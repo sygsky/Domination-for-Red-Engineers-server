@@ -5,6 +5,7 @@ if (!X_Client) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+#define PLAYER_MARKERS_REFRESH_INTERVAL 10 // interval between player markers refresh
 if (isNil "d_show_player_marker") then {d_show_player_marker = 0;};
 sleep 1.012;
 
@@ -40,15 +41,65 @@ SYG_players_arr =
      {delta_1},{delta_2},{delta_3},{delta_4}
     ];
 
-// Draw all players markers on the client
+SYG_markerRefreshTime = time;   // time to refresh player markers
+SYG_activeMarkers = [];         // marker active during predefined interval
+/**
+ *
+ * Draws all alive players markers on the client computer
+ */
 X_XMarkerPlayers = {
 	private [ "_i", "_ap", "_as", "_text" ];
+	if (time < SYG_markerRefreshTime) exitWith // use existing markers, simply change their position
+	{
+	    _markers_changed = false;
+	    {
+            _as = d_player_entities select _x; // marker name
+            _ap = call (SYG_players_arr select _x); // object
+            if ( isPlayer _ap) then
+            {
+                if ( alive _ap ) then
+                {
+                    _as setMarkerPosLocal position _ap;
+                    if (d_p_marker_dirs) then {
+                        _as setMarkerDirLocal (direction ((vehicle _ap)+90));
+                    };
+                }
+                else
+                {
+                    // this marker is dead
+#ifdef __ACE__
+                    _as setMarkerTypeLocal  "ACE_Icon_SoldierDead"; // mark dead player as skull
+#else
+                    _as setMarkerTypeLocal "DestroyedVehicle";  // mark to be abstractly dead
+#endif
+                    SYG_activeMarkers set [SYG_activeMarkers find _x, "RM_ME"];
+                    _markers_changed = true;
+                };
+            }
+            else
+            {
+                _as setMarkerTypeLocal d_p_marker;
+                _as setMarkerPosLocal [0,0];
+                _as setMarkerTextLocal "";
+                SYG_activeMarkers set [SYG_activeMarkers find _x, "RM_ME"];
+                _markers_changed = true;
+            };
+       		sleep 0.0123;
+        }  forEach SYG_activeMarkers;
+
+        // remove dead markers, new ones will draw after next predefined interval
+        if ( _markers_changed ) then
+        {
+            SYG_activeMarkers = SYG_activeMarkers - ["RM_ME"];
+        };
+	};
+
+	// it is time to refresh all players marker
+	SYG_activeMarkers = []; // load new alive markers
 	for "_i" from 0 to ((count d_player_entities) - 1) do
 	{
-        _as = d_player_entities select _i;
-        _ap = call (SYG_players_arr select _i);
-        //call compile format [ "_ap = %1;", _as ];
-        _show = false;
+        _as = d_player_entities select _i; // name
+        _ap = call (SYG_players_arr select _i); // object
         if ( isPlayer _ap && alive _ap) then
         {
             _as setMarkerPosLocal position _ap;
@@ -66,19 +117,24 @@ X_XMarkerPlayers = {
                 case 4: { _text = format["h%1", str((10 - round(10 * damage _ap)) mod 10)] };
             };
             _as setMarkerTextLocal _text;
+            _as setMarkerTypeLocal d_p_marker;
             if (d_p_marker_dirs) then {
                 _as setMarkerDirLocal (direction ((vehicle _ap)+90));
             };
+            SYG_activeMarkers set [count SYG_activeMarkers, _i ];
         } else {
 //#ifdef __ACE__
 //            _as setMarkerColorLocal "ACE_ColorTransparent"; // that's all for ACE
 //#else
+            _as setMarkerTypeLocal d_p_marker;
             _as setMarkerPosLocal [0,0];
             _as setMarkerTextLocal "";
 //#endif
         };
 		sleep 0.0123;
 	};
+//    hint localize format["+++ Active player markers: %1, time %2", SYG_activeMarkers, time];
+    SYG_markerRefreshTime = time + PLAYER_MARKERS_REFRESH_INTERVAL; // next time to refresh
 };
 
 _p_marker_color = "";
@@ -105,11 +161,23 @@ if (!d_dont_show_player_markers_at_all) then {
 	_colarray = nil;
 	_mindex = nil;
 */
+/**
+ * Markers for player creation
+ *
+ */
 if (!d_dont_show_player_markers_at_all) then {
 	_tmp_grpsm = [];
 	_mindex = 0;
 	_colarray = ["ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen"];
 	for "_i" from 0 to ((count d_player_entities) - 1) do {
+	    _as = d_player_entities select _i; // name of a player
+	    _ap = call (SYG_players_arr select _i);   // player itself
+        _grpm = group _ap;
+        if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm = _tmp_grpsm + [_grpm];};
+        _mindex = _tmp_grpsm find _grpm;
+        [_as, [0,0],"ICON",(_colarray select _mindex),[0.4,0.4],"",0,d_p_marker] call XfCreateMarkerLocal;
+        if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
+/*
 		call compile format ["
 			_grpm = group %1;
 			if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm = _tmp_grpsm + [_grpm];};
@@ -117,6 +185,7 @@ if (!d_dont_show_player_markers_at_all) then {
 			[""%1"", [0,0],""ICON"",(_colarray select _mindex),[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
 			if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
 		", d_player_entities select _i];
+*/
 		sleep 0.01;
 	};
 

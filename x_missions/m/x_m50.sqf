@@ -16,8 +16,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SYS_315"; //"По данным разведки стало известно расположение основных сил вражеской артиллерии. Ваша задача уничтожить все артиллерийские орудия.";
-	current_mission_resolved_text = localize "STR_SYS_316"; //"Задание выполнено! Все артиллерийские орудия уничтожены.";
+	current_mission_text = localize "STR_SYS_315"; //"Finally we've found the enemy artillery base. If you can destroy all artillery guns the artillery observers at main targets have nothing to call in artillery strikes anymore."
+	current_mission_resolved_text = localize "STR_SYS_316"; //"Good job. All artillery guns are down. No artillery observers will appear at main targets anymore."
 };
 
 if (isServer) then {

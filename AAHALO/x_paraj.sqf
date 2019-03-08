@@ -59,8 +59,6 @@ if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith
 if ( new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
 #endif
 
-#endif
-
 #ifdef __RANKED__
 player addScore (d_ranked_a select 4) * -1; // subtract score for parajump
 #endif
@@ -73,17 +71,18 @@ sleep 0.512;
 onMapSingleClick "";
 
 sleep 2.56;
-playSound "vozdushnye_potoki_2"; // parajump made
-
-#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
-if ( new_paratype == "" ) then { (localize "STR_SYS_609_1") call XfHQChat};
-#endif
 
 //hint localize format["new_paratype == %1", new_paratype];
 //    hint localize format["vehicle player == %1", vehicle player];
 
-waitUntil {sleep 0.132; (!alive player) || (vehicle player == player)  || (((getPos player) select 2)< 10)};
-sleep 0.02;
-player removeWeapon new_paratype;
+// detect for parachute to be open and remove it from magazines
+waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 )< 5 )};
+if ( ( vehicle player ) isKindOf "ParachuteBase" ) then
+{
+    waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
+    player removeWeapon new_paratype;
+};
+//hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
+
 
 if (true) exitWith {true};
