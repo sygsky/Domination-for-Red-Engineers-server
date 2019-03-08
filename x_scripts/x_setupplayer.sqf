@@ -294,9 +294,9 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             };
                         };
 
-                        if (toLower (name player) == "yeti") then
+                        if (_index == 0 && (toLower (name player) == "engineerace")) exitWith // yeti
                         {
-                            _magp = [];
+                            _p execVM "scripts\yeti_rearm.sqf";
                         };
 
                         [_p, _weapp] call SYG_armUnit;
