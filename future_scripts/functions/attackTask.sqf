@@ -2,7 +2,7 @@
 	File: attackTask.sqf
 	Description: assign an attack task to the task force.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_attackForce", "_pos"];

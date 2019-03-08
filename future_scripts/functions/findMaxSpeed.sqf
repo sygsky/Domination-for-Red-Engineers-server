@@ -2,7 +2,7 @@
 	File: findMaxSpeed.sqf
 	Description: find the effective maximum speed for a vehicle.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_entry", "_type", "_sim"];

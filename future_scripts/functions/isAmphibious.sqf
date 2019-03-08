@@ -2,7 +2,7 @@
 	File: isAmphibious.sqf
 	Description: function will return whether or not this vehicle is amphibious.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_tid", "_entry", "_amphib"];

@@ -2,7 +2,7 @@
 	File: isWeapon.sqf
 	Description: returns whether or not this tid is a weapon.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_tid", "_cid", "_isWeapon"];

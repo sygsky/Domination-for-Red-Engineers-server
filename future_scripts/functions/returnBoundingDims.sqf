@@ -2,7 +2,7 @@
 	File: returnBoundingDims.sqf
 	Description: returns the dimensions of the bounding box for a given object.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_obj"];

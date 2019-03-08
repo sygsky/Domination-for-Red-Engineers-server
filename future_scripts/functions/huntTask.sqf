@@ -2,7 +2,7 @@
 	File: huntTask.sqf
 	Description: assign a hunt task to the task force.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_attackForce", "_prey"];

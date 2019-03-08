@@ -2,7 +2,7 @@
 	File: relativeDirection.sqf
 	Description: returns the direction of one position towards another direction.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_pos1", "_pos2"];

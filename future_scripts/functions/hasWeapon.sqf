@@ -2,7 +2,7 @@
 	File: hasWeapon.sqf
 	Description: function determining this entry has a weapon or is a weapon.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 //ToDo: does not fully explore turrets, only 1 layer?

@@ -2,7 +2,7 @@
 	File: hasTransport.sqf
 	Description: function determining this entry has transport capabilities.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_tid", "_entry", "_hasTransport"];

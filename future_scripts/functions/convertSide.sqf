@@ -2,7 +2,7 @@
 	File: convertSide.sqf
 	Description: function which accepts either a side of integer representing a side and will return an appropriate side conversion.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_side", "_return"];

@@ -2,7 +2,7 @@
 	File: convertTime.sqf
 	Description: function to convert an amount of seconds to a good clock string.
 	
-	Copyright © Bohemia Interactive Studio. All rights reserved.
+	Copyright Â© Bohemia Interactive Studio. All rights reserved.
 */
 
 private ["_input", "_clock"];
