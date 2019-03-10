@@ -191,7 +191,7 @@ SYG_getOutEvent =
 
     if ( !alive _veh ) exitWith
     {
-        hint localize format["<<< SYG_getOutEvent:  vehicle %1(%2)is dead, exit >>>", typeof _veh, _veh];
+        hint localize format["<<< SYG_getOutEvent:  veh %1(%2) is dead, exit >>>", typeof _veh, _veh];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         _veh removeEventHandler [EVENT_NAME, _GetOutEventInd]; // remove event at all
         false
