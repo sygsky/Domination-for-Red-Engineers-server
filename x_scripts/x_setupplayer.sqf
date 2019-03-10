@@ -376,7 +376,7 @@ if (d_with_ace_map) then { "ACE_Map_Logic" createVehicleLocal [0,0,0]; };
 
 if ( count resolved_targets > 0) then
 {
-hint localize "+++ count resolved_targets > 0 +++";
+hint localize format["+++ count resolved_targets %1 +++", resolved_targets];
 #ifndef __TT__
     for "_i" from 0 to (count resolved_targets - 1) do {
         _res = resolved_targets select _i;
