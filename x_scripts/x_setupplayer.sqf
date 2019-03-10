@@ -294,7 +294,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             };
                         };
 
-                        if (_index == 0 && (toLower (name player) == "engineerace")) exitWith // yeti
+                        if (_index == 0 && (toLower (name player) == "yeti")) exitWith // yeti
                         {
                             _p execVM "scripts\yeti_rearm.sqf";
                         };
