@@ -24,6 +24,7 @@ if (({alive _x} count _units_player) > 0) then {
 		_veloc = _this select 1;
 		_dir = _this select 2;
 		_parachute = (
+
 			switch (d_own_side) do {
 				case "RACS": {"ParachuteG"};
 				case "WEST": {"ParachuteWest"};
