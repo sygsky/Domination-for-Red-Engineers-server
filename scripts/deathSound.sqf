@@ -34,6 +34,14 @@ else    // some kind of suicide? Say something about...
         ["say_sound", _churchArr select 0, RANDOM_ARR_ITEM(SYG_liturgyDefeatTracks)] call XSendNetStartScriptClientAll;
     };
 
+    // check if we are near TV-Tower
+    _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
+    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
+    {
+        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
+    };
+
     // short melody on unknown death case, anybody within some range can hear this
     _sound = "male_scream_0"; // default value
     // check if a woman is killed
@@ -47,7 +55,7 @@ else    // some kind of suicide? Say something about...
         _sound = format["ACE_BrutalScream%1", ceil(random 15)]; // 1-15
 //        hint localize format["ACE sound is %1", _sound];
 #else
-        if (isNil "SYG_selfKillingSound") then {SYG_selfKillingSound = "male_scream_" + str(floor(random 7))};  // 0-6
+        if (isNil "SYG_selfKillingSound") then {SYG_selfKillingSound = "male_scream_" + str(floor(random 8))};  // 0-7
         _sound = SYG_selfKillingSound;
 #endif
     };

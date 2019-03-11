@@ -107,7 +107,7 @@ SYG_baseDefeatTracks =
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_TVTowerDefeatTracks =
     [
-    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09"
+    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10"
     ];
 
 // All available curche types in the Arma (I think so)
