@@ -259,7 +259,7 @@ GRU_procClientMsg = {
                     // create base message text
                     _alias = argp(_arr, 0); // name of the observer
                     _args = ["STR_GRU_46",_alias,"","","",""]; // simple message visible for any rank
-                    _pos = argp(_arr, 1);
+                    _pos = argp(_arr, 1);   // spawn position
                     _loc = (_pos call SYG_nearestLocation);
                     if ( _rank > 1) then // sergeant, location name
                     {
@@ -276,10 +276,16 @@ GRU_procClientMsg = {
            				_dir = ([position _loc, _pos] call XfDirToObj) call SYG_getDirName;
                         _args set[4, format[localize "STR_GRU_46_3", _dir]];
                     };
-                    _num = argp(_arr, 2);
-                    if ( _rank > 5) then // colonel, patrol numbering
+                    if ( _rank > 4) then // major, patrol vehicle numbering
                     {
+                        _num = argp(_arr, 2);
                         _args set[5, format[localize "STR_GRU_46_4", _num]];
+                    };
+                    if ( _rank > 5) then // colonel, patrol type
+                    {
+                        _pattype = argp(_arr, 3);
+                        _pattype = localize ("STR_PATROL_TYPE_" + toUpper(_pattype));
+                        _args set[6, format[localize "STR_GRU_46_5", _pattype]];
                     };
 
                     // send GRU_msg to users about new patrol "Высадка вражеского патруля замечена %2 близ ""%1""" + playMusic
