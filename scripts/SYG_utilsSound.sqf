@@ -92,16 +92,16 @@ SYG_southDefeatTracks =
     ["ATrack8",[51.715,7.287],[59.002,8.563],[67.565,7.704]],
     ["ATrack8",[75.269,8.823],[84.092,9.734],[95.986,6.246]],
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
-    ["ATrack11","ATrack12","ATrack13","arroyo"]
+    ["ATrack11","ATrack12","ATrack13"],
+    ["arroyo","arabian_death"]
 ];
-
 
 SYG_baseDefeatTracks =
     [
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie", // "gong",
-    "melody","medieval_defeat","defeat2"
+    "melody","medieval_defeat","defeat2","arabian_death"
     ];
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one

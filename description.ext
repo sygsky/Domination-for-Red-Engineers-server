@@ -193,6 +193,8 @@ class CfgMusic
 
     class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg.ogg,db+10,1.0};} // defeat sound
     class medieval_defeat { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // defeat sound
+    class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
+
 
 
     // defeats
