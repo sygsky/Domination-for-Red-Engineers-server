@@ -736,7 +736,7 @@ XHandleNetStartScriptClient = {
 		};
 
 		// somebody requested GRU score
-		// ["GRU_event_scorаes", _score, _id, ""] call XSendNetStartScriptClient;
+		// ["GRU_event_scores", _score, _id, ""] call XSendNetStartScriptClient;
 
 		case "GRU_event_scores":
 		{

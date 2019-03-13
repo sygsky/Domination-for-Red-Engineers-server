@@ -327,6 +327,7 @@ d_allmen_W = (
 
     ["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A",
         "ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierW_HMGAB"
+        ,"ACE_SoldierWG_A"  // grenade launcher to test grenade fix addon
 #ifdef __JAVELIN__
 , "ACE_SoldierWHAT_A"
 #endif
@@ -364,6 +365,7 @@ d_specops_W = (
 //##############################################################################
 // Group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 ["ACE_SoldierWSniper2_A","ACE_USMC8541A1A","ACE_SoldierWMAT_USSF_ST_BDUL","ACE_SoldierWAA","ACE_SoldierWB_USSF_ST_BDUL","ACE_SoldierW_Spotter_A","ACE_SoldierWMedic_A","ACE_SoldierWAT2_A"
+    ,"ACE_SoldierWG_R" // grenade launcher to test grenade fix addon
 #ifdef __JAVELIN__
 , "ACE_SoldierWHAT_A"
 #endif

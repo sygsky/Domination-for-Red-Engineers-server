@@ -582,7 +582,7 @@ while { true } do {
                                 ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_DETECTED, [_witness, _pos, _size, _pattype]] call XSendNetStartScriptClient;
                             };
                         } forEach argp(_igrpa, PARAM_VEHICLES); // find first alive vehicle
-					}
+					};
     				if (_stat == STATUS_DEAD_WAIT_RESTORE) then {_dead_patrols = (_dead_patrols -1) max 0;};
 				};
 

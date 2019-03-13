@@ -317,7 +317,7 @@ XHandleNetStartScriptServer = {
             _id = argopt(1, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
             _playerName = argopt(2, "" );
-            if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: no player name"};
+            if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: empty or absent player name"};
             _score = argpopt( GRU_specialBonusArr, _id, 0 ); // check for score available
             if( _score > 0 ) then // this event score is available, clear it now
             {
