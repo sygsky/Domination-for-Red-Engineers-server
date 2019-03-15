@@ -35,7 +35,7 @@ else    // some kind of suicide? Say something about...
     };
 
     // check if we are near TV-Tower
-    _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
+    _TVTowerArr = _unit nearObjects [ "Land_telek1", 50];
     if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);

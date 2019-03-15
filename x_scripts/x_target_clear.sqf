@@ -11,11 +11,12 @@ sleep 1.123;
 deleteVehicle current_trigger;
 sleep 0.01;
 
+/* TODO: for airbase initial mission, still not realized
 if ( count _this > 0 ) exitWith // input param array not empty only for airbase taken by our army, nothing really to clear
 {
     ["airbase_clear"] call XSendNetStartScriptClient; // inform about this event and exit
 };
-
+*/
 counterattack = false;
 _start_real = false;
 #ifndef __TT__

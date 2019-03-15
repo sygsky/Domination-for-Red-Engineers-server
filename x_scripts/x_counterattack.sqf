@@ -35,7 +35,7 @@ sleep 301.122;
 current_trigger = createTrigger["EmptyDetector",_current_target_pos];
 current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
 current_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
-current_trigger setTriggerStatements["(""Tank"" countType thislist  < 2) && (""Man"" countType thislist < 6)", "counterattack = false;deleteVehicle current_trigger", ""];
+current_trigger setTriggerStatements["(""Tank"" countType thislist  <= 0) && (""Man"" countType thislist < 4)", "counterattack = false;deleteVehicle current_trigger", ""];
 
 _current_target_pos = nil;
 

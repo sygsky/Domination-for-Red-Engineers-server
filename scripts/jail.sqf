@@ -134,7 +134,7 @@ sleep (FADE_IN_DURATION/2);
 cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
 
 
-_weaponHolderPos = player modelToWorld [0, 2.5, 0.2]; // weapon holers before the players
+_weaponHolderPos = player modelToWorld [0, 2.5, 0.2]; // put weapon holder before the players
 
 //player globalChat format["holder %1", _weaponHolderPos];
 
