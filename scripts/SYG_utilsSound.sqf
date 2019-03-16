@@ -110,6 +110,13 @@ SYG_TVTowerDefeatTracks =
     "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10"
     ];
 
+// for the death near medieval castles (2 items on island)
+SYG_MedievalDefeatTracks =
+    [
+    "medieval_defeat", "medieval_defeat1", "medieval_defeat2","medieval_defeat3","medieval_defeat4","medieval_defeat5"
+    ];
+
+
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 

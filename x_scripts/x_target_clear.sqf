@@ -11,12 +11,20 @@ sleep 1.123;
 deleteVehicle current_trigger;
 sleep 0.01;
 
-/* TODO: for airbase initial mission, still not realized
-if ( count _this > 0 ) exitWith // input param array not empty only for airbase taken by our army, nothing really to clear
+// TODO: for airbase initial mission, still not realized
+_stop = false;
+if ( (count _this > 0) ) exitWith // input param array not empty only for airbase taken by our army, nothing really to clear
 {
-    ["airbase_clear"] call XSendNetStartScriptClient; // inform about this event and exit
+    if ( typeName (_this select 0) == "SCALAR" ) then // [-1] execVM "x_target_clear.sqf"
+    {
+        ["airbase_clear"] call XSendNetStartScriptClient; // inform about this event and exit
+        _stop = true;
+    };
+    // это должно быть так: [thislist]  execVM "x_target_clear.sqf"
 };
-*/
+
+if ( _stop ) exitWith {true};
+
 counterattack = false;
 _start_real = false;
 #ifndef __TT__

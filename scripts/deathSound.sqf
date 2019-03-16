@@ -42,6 +42,14 @@ else    // some kind of suicide? Say something about...
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
 
+    // check if we are near castle
+    _castleArr = _unit nearObjects [ "Land_helfenburk", 500];
+    if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith
+    {
+        _sound =  RANDOM_ARR_ITEM(SYG_MedievalDefeatTracks);
+        ["say_sound", _castleArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
+    };
+
     // short melody on unknown death case, anybody within some range can hear this
     _sound = "male_scream_0"; // default value
     // check if a woman is killed
