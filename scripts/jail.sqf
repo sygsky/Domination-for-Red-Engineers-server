@@ -12,6 +12,9 @@
 	returns: nothing
 */
 
+#define __JAIL_DEBUG__
+
+hint localize "+++ JAIL SCRIPT called +++";
 
 if ( isServer && !X_SPE ) exitWith {"--- jail called on server, exit!"};
 
@@ -34,17 +37,19 @@ if ( !alive player ) then
     };
 };
 
+#include "x_setup.sqf"
 #include "x_macros.sqf"
 
-_test = false;
+_test = false; // defines if this is test call or real one
 if ( typeName _this == "ARRAY") then
 {
-    if ( count _test > 3) then // caalled on action from flag
+    if ( count _this > 3) then // test call from test action at flag
     {
         _test = (typeName (_this select 3) == "STRING") && ((_this select 3) == "TEST");
     };
 };
 _playerPos = getPos player;
+_playerDir = getDir player;
 
 //============================================ INIT JAIL PLACES ===========================
 if (isNil "jail_places") then
@@ -87,7 +92,9 @@ for "_i" from 0 to count jail_buildings -1 do {
 jail_buildings = jail_buildings - ["RM_ME"];
 
 if (isNull _hotel) exitWith {
+#ifdef __JAIL_DEBUG__
     hint localize format["--- jail.sqf: No jail buildings %2 exists for (%1)", name player, jail_buildings];
+#endif
 };
 
 //hint localize format[ "jail: %1", _jailArr ];
@@ -100,39 +107,41 @@ _jailArr set [2, _hotelP]; // set hotel position
 disableUserInput true;
 player setDamage 0;
 player setVelocity [0,0,0];
-player playMove "AmovPercMstpSnonWnonDnon";
+player playMove "AmovPercMstpSnonWnonDnon"; // stand up!
 
 _wpn = weapons player;
 _mags = magazines player;
 if (!_test) then
 {
     removeAllWeapons player; // TODO: remove ACE backpack too
+#ifdef __ACE__
+    player setVariable ["ACE_weapononback",nil];
+    player setVariable ["ACE_Ruckmagazines", nil];
+#endif
 };
-
-_new_pos = [_hotel, _jailArr select 0 ] call SYG_modelObjectToWorld;
-_cam = "camera" camCreate getPos player;
-player switchCamera "INTERNAL";
-_can camPreload 0;
-waitUntil {camPreloaded _cam};
-showCinemaBorder true;
-
-//preloadCamera _new_pos;// prepare environment for player first glance
 
 //======================================= PLAY WITH VISIBILITY AND AUDIBILITY ============================
 playSound "FlashbangRing";
 FADE_OUT_DURATION fadeSound (0.2); // stun him
-
-_pos = [_hotel, player, _jailArr] call SYG_setObjectInHousePos; // player position in the jail
 
 cutText["","WHITE OUT",FADE_OUT_DURATION];  // blind him fast
 sleep FADE_OUT_DURATION; // wait until blindness on
 
 FADE_IN_DURATION fadeSound 1; // smoothly restore hearing
 
+_pos = [_hotel, player, _jailArr] call SYG_setObjectInHousePos; // move player to the position in the jail
+_new_pos = [_hotel, _jailArr select 0 ] call SYG_modelObjectToWorld;
+_cam = "camera" camCreate getPos player;
+player switchCamera "INTERNAL";
+_cam camPreload 0;
+waitUntil {camPreloaded _cam};
+showCinemaBorder true;
+
+//preloadCamera _new_pos;// prepare environment for player first glance
+
 //(call _rnd_port_msg) spawn {sleep 1; _this call GRU_msg2player;}; // self-feeling rnd message
 sleep (FADE_IN_DURATION/2);
 cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
-
 
 _weaponHolderPos = player modelToWorld [0, 2.5, 0.2]; // put weapon holder before the players
 
@@ -152,10 +161,13 @@ sleep 0.05;
 _cam camSetTarget _weaponHolder;
 _cam camCommit 0.5;
 waitUntil { camCommitted _cam };
+player doWatch _weaponHolder;
 
+#ifdef __JAIL_DEBUG__
 _str = format["+++jail.sqf: pos %1, hld %2, model %3", getPos player, getPos _weaponHolder, player worldToModel (getPos _weaponHolder)];
 //player groupChat _str;
 hint localize _str;
+#endif
 
 //if (bancount > 2) exitWith {hint "press Alt + F4 to exit"};
 
@@ -169,15 +181,18 @@ _msg_arr = [
 
 //================================= select sound for this day
 
-_soundName = ["countdown","countdown10","countdown_alarm"] select ((date select 2) mod (count _sound_arr));
-hint localize format[ "jail.sqf: %1 sound selected at %2", _sound_name, date ];
+_sound_arr = ["countdown","countdown10","countdown_alarm"];
+_soundName =  _sound_arr select ((date select 2) mod (count _sound_arr));
+#ifdef __JAIL_DEBUG__
+hint localize format[ "jail.sqf: %1 sound selected at %2, in jail count %3", _soundName, date, _score ];
+#endif
 
 player say _soundName;
 _sound = nearestObject [player, "#soundonvehicle"];
 waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
 //if (isNull _sound) then {hint localize "--- jail.sqf: No initial sound object detected!"};
 
-for "_i" from 1 to _score do
+for "_i" from 0 to (_score - 1) do
 {
     if ( (_i mod 10) == 0 ) then
     {
@@ -202,13 +217,18 @@ for "_i" from 1 to _score do
 titleText ["", "PLAIN DOWN"];
 cutText ["", "PLAIN"];
 
-if (!_test) then { player setDamage 1;};
+//if (!_test) then { player addScore 1; player setDamage 1;};
 
 if (!isNull _sound) then  {deleteVehicle _sound;};
 showCinemaBorder false;
 camDestroy _cam;
 
-if (_test) then { player setPos _playerPos };
+player doWatch objNull;
+player setDir _playerDir;
+player setPos _playerPos;
 
 disableUserInput false;
+disableUserInput true;
+disableUserInput false;
+
 deleteVehicle _weaponHolder;

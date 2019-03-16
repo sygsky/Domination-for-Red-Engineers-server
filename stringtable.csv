@@ -1252,9 +1252,9 @@ STR_FIRE_2,"You think: why is there a fire?","Sie denken: - wo ist hier das Feue
 
 STR_FIRE_UNKNOWN,"You can't understand what it is","Ich kann nicht verstehen, was es ist","Непонятно, что это такое"
 
-STR_JAIL_1,"Hint: You are subject to disciplinary action for violation of the Charter of the Soviet army","Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der sowjetischen Armee","На вас наложено дисциплинарное взыскание  за нарушение устава советской армии"
+STR_JAIL_1,"Hint: You are subject to disciplinary action for violation of the Charter of the Soviet army","Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der Sowjetischen Armee","На вас наложено дисциплинарное взыскание  за нарушение устава Советской Армии"
 STR_JAIL_2,"You will regain control after you have served your sentence of %1 seconds","Sie werden die Kontrolle zurückzugewinnen, nachdem Sie gedient haben Ihren Satz von %1 Sekunden","После отбывания наказания в течении %1 сек. контроль будет возвращён"
-STR_JAIL_3,"Or you can press  Alt + F4 to exit","Oder Sie drücken Alt + F4 zu beenden","Также, Вы можете завершить пребывание на нашем острове, использовав Alt + F4"
+STR_JAIL_3,"Or you can press  Alt + F4 to exit","Oder Sie drücken Alt + F4 zu beenden","Чтобы покинуть остров, используйте Alt + F4"
 
 STR_ENG_FUND_1,The Engineering Fund rises to %1,Das Der technische Fonds steigt auf %1,Инженерный Фонд вырос до %1
 STR_ENG_FUND_2,The Engineering Fund reduced to 1%,Der Engineering-Fonds wurde auf %1 reduziert,Инженерный фонд уменьшился до %1
