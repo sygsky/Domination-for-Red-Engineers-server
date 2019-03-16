@@ -12,7 +12,7 @@
 	returns: nothing
 */
 
-#define __JAIL_DEBUG__
+//#define __JAIL_DEBUG__
 
 hint localize "+++ JAIL SCRIPT called +++";
 
