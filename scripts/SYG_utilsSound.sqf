@@ -60,15 +60,17 @@ SYG_musicTrackCount = {
 // Corazol (center of island with radious 500 m) sounds
 SYG_defeatTracks =
 [
-    ["Delerium_Wisdom","pimbompimbom","vendetta","thefuture"],
+    ["Delerium_Wisdom","pimbompimbom","vendetta"],
     ["Gandalf_Simades","whold","end"],
-    ["ATrack9","ATrack10","ATrack14","ATrack15"],
-    ["ATrack16","ATrack17","ATrack18","ATrack19"],
-    ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
+    ["ATrack9","ATrack10","ATrack14"],
+    ["ATrack16","ATrack17","ATrack18"],
+    ["ATrack20","ATrack21","ATrack22","thetrembler"],
+    ["arroyo","ATrack15","ATrack19"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat"],
-    ["sorcerie","melody"]
+    ["sorcerie","melody","thefuture"],
+    ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]]
 ];
 
 SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};

@@ -78,7 +78,7 @@ else // music normally played on intro
             "bond","grant","red_alert_soviet_march","burnash","adjutant","lastdime",
             "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","prince_negaafellaga","strelok",
             "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
-            "ruffian","morze", "treasure_island_intro"
+            "ruffian","morze", "treasure_island_intro","fear2"
 
         ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];

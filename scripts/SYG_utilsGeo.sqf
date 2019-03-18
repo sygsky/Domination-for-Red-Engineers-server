@@ -849,6 +849,24 @@ SYG_MsgOnPosA = {
 };
 
 //
+// Creates message based on user format string with 2 params %1, %2 in follow order:
+// distance from A to B, direction from A to B
+// e.g. [player_1, player_2, "%1 m. to %2 from player_1 to player_2", 50]  call SYG_MsgOnPosA2B; // "150 m. to SW from playerOne to playerTwo"
+//
+// call as: _msg_localized = [_obj1, _obj2, _localized_format_msg<, roundTo>] call SYG_MsgOnPosA2B;
+//
+SYG_MsgOnPosA2B = {
+	_obj1 = arg(0);
+	_obj2 = arg(1);
+  	_msg  = arg(2);
+  	_roundTo = argopt(3,100);
+
+	_dir  = ([_obj1, _obj2] call XfDirToObj) call SYG_getDirName;
+	_dist = (round (([_obj1, _obj2] call SYG_distance2D)/_roundTo)) * _roundTo;
+	format[ _msg, _dist, _dir ]
+};
+
+//
 // Creates english message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location, direction_to_location, location_name
 //

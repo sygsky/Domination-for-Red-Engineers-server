@@ -8,8 +8,8 @@
 	(_this select 1) call XHandleNetVar;
 };
 
-SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri"];
-SYG_localZones = [           0,           0,        0,    -4,          +1,        +2,        +2,     +2];
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri", "Frosty"];
+SYG_localZones = [           0,           0,        0,    -4,          +1,        +2,        +2,     +2,       +2];
 
 XHandleNetStartScriptServer = {
 	private ["_this"];
@@ -191,7 +191,7 @@ XHandleNetStartScriptServer = {
             }
             else
             {
-                if ( _name == "Petigp" || _name == "gyuri") then // Hungarian
+                if ( _name in ["Petigp", "gyuri", "Frosty"] ) then // Hungarian
                 {
         			_msg = "Üdvözöljük az alap a 'Vörös mérnökök'!";// "Üdvözöl a Red Engineers csapat!"; // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
                 }
@@ -201,7 +201,7 @@ XHandleNetStartScriptServer = {
                     {
                         _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)"
                     }else {
-                        if (_name == "Shelter" || _name == "Marcin") then // Poland
+                        if (_name in ["Shelter", "Marcin"] ) then // Poland
                         {
                             _msg = "Nasz oddział spełnia polskiego brata!"
                         } else
