@@ -98,9 +98,14 @@ if (d_own_side == "EAST") then
         _identity =  format["Rus%1", (floor (random 5)) + 1];
         _unit setIdentity _identity; // there are only 5 russina voice in the ACE
         // TODO: test if russian voice ir hear on clients. May be it is possible to setIdentity only to local units
-        hint localize format["+++ AI setIdentity %1", _identity];
+        hint localize format["+++ AI setIdentity ""%1""", _identity];
     }
-}
+    else
+    {
+        _unit setIdentity "Irina";
+        hint localize format["+++ AI setIdentity ""Inrina""", _identity];
+    };
+};
 #endif
 
 if (true) exitWith {};
