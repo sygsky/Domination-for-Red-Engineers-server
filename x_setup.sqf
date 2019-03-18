@@ -118,11 +118,6 @@
 //+++ uncomment to run easiest side missions first, before all other
 //#define __EASY_SM_GO_FIRST__
 
-//+++ uncomment to create Su34 on the base,
-// add 1000 score to allow get in,
-// add some Vehicles and ammoBoxes on hills near Corazol and on base
-//#define __DEBUG_ADD_VEHICLES__
-
 // uncomment next line to add dome vehicles on the base
 #define __ADDITIONAL_BASE_VEHICLES__
 
@@ -151,3 +146,9 @@
 
 //comment to disable jump from base flag pole without parachute pack, to be more serious :o)
 // #define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+
+//+++ uncomment to create Su34 on the base,
+// add 1500 score to allow get in,
+// add some Vehicles and ammoBoxes on hills near Corazol and on base
+//#define __DEBUG_ADD_VEHICLES__
+
