@@ -66,7 +66,7 @@ else // music normally played on intro
     {
         // add some personilized songs for well known players
         _players = [ ["Ceres-de","CERES de"] , ["Rokse [LT]"]];
-        _sounds  = [ ["amigohome_ernst_bush","amigohome_ernst_bush","amigohome_ernst_bush"], ["morze","morze","morze"]];
+        _sounds  = [ ["amigohome_ernst_bush","amigohome_ernst_bush","amigohome_ernst_bush"], ["morze","morze","morze","morze2","morze2","morze2"]];
         _name    = name player;
         _personalSounds = [];
         {
@@ -78,7 +78,7 @@ else // music normally played on intro
             "bond","grant","red_alert_soviet_march","burnash","adjutant","lastdime",
             "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","prince_negaafellaga","strelok",
             "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
-            "ruffian","morze", "treasure_island_intro","fear2"
+            "ruffian","morze", "treasure_island_intro","fear2","chapaev"
 
         ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
