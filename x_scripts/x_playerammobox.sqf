@@ -11,11 +11,17 @@ _boxname = (
 	switch (d_own_side) do {
 		case "RACS": {"AmmoBoxGuer"};
 		case "WEST": {"AmmoBoxWest"};
+	#ifdef __ACE__
+		case "EAST": {"ACE_WeaponBox_East"};
+	#end
+	#ifndef __ACE__
 		case "EAST": {"AmmoBoxEast"};
+	#end
 	}
 );
 _box_array = d_player_ammobox_pos;
 #endif
+
 #ifdef __TT__
 _boxname = (
 	if (playerSide == west) then {
@@ -69,7 +75,6 @@ _box_script = (
 );
 #endif
 [_box] execVM _box_script;
-
 d_player_ammobox_pos = nil;
 
 [_box,_boxname,_box_array] spawn {
@@ -78,7 +83,7 @@ d_player_ammobox_pos = nil;
 	_boxname = _this select 1;
 	_box_array = _this select 2;
 	while {true} do {
-		sleep 1500 + random 500;
+		sleep (1500 + random 500);
 		if (!isNull _box) then {deleteVehicle _box;};
 		_box = _boxname createVehicleLocal (_box_array select 0);
 		_box setDir (_box_array select 1);

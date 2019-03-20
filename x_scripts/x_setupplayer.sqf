@@ -1582,7 +1582,7 @@ for "_i" from 0 to (count d_ace_boxes) - 1 do {
 		};
 	};
 };
-d_pos_ace_boxes = nil;
+d_ace_boxes = nil;
 #endif
 
 if (!d_old_ammobox_handling) then {

@@ -143,7 +143,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
         };
      } forEach _list;
 #ifdef __DEBUG__
-    hint localize format[ "x_createnexttarget.sqf: Old dead bodies cleaned in %1: men %2 (alive %3, east %4), cleaned dead %5, holders %6, in water %7", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
+    hint localize format[ "x_createnexttarget.sqf: Old bodies cleaned in %1: men %2 (alive %3, east %4, dead %5), holders %6, in water %7", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
 #endif
      _list = nil;
      sleep 2.56;

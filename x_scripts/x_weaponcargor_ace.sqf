@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts/x_weaponcargor_ace.sqf
 // called only for __ACE__ + __RANKED__ defined version
 private ["_ve", "_shotgun"];
 
