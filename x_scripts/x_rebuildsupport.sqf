@@ -67,7 +67,7 @@ if (!_is_engineer) then
 else
 {
 #ifdef __ADD_SCORE_FOR_FACTORY_SUPPORT__
-   (localize "STR_SYS_214_2") call XfHQChat; // "Restore support building. This will take some time and scores..."
+   (localize "STR_SYS_214_2") call XfHQChat; // "Restore support building. This will take some time and add more scores..."
 #else
    (localize "STR_SYS_214") call XfHQChat; // "Restore support building. This will take some time and scores..."
 #endif
