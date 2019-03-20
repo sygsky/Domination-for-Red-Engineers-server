@@ -40,7 +40,7 @@ XfRandomIndexArray = {
 /**
  * Creates an array with count random indexes so then some imdexes are mandatory and some are optional, designated through predefined array
  * Params:  _inds = [ _out_cnt, _cnt, _important_arr, _unimportant_arr ] call XfRandomIndexArrayWithPredefVals;
- * where: _pre_arr - array with predefined indexes may be excluded in resulting array,
+ * where: _unimportant_arr - array with predefined indexes that may be excluded in resulting array,
  * e.g. to work with target_names(defined in i_common.sqf) so that exclude some small towns,
  * use [count target_names, 22, [18,21,22,23,24,25,26,27]] call  XfRandomIndexArrayWithPredefVals to return 22 town indexes
  * excluding some of array [18,21,22,23,24,25,26,27]
