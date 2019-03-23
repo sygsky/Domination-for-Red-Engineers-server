@@ -223,7 +223,7 @@ SYG_counterAttackTracks =
         ["ATrack25",[0,71]],
         ["ATrack25",[71,-1]],
 
-        "ATrack1","ATrack23"
+        "ATrack1","ATrack23","fear2","ruffian","mission_impossible"
     ];
 
 SYG_playRandomOFPTrack = {

@@ -155,8 +155,9 @@ class CfgMusic
     class amigohome_ernst_bush { name=""; sound[] = {\sounds\amigohome_ernst_bush.ogg,db+0,1.0};}; // Ami go home by Ernsh Busch, DDR communust and great singer!
     class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
     class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some feat music
-    class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0};}; // Some feat music
-    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Some feat music
+    class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0};}; // USSRFilm Chapaev
+    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
+    class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
 
 //------------------------------------- END if Intro musio list --------------------------------------------------
 
