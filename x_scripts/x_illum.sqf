@@ -15,6 +15,8 @@ if (!isServer) exitWith {};
 
 //#define __DEBUG__
 
+#define FLASH_RANDOM_OFFSET 20
+
 _trg_center = _this select 0;
 _radius     = _this select 1;
 _center_x   = _trg_center select 0;_center_y = _trg_center select 1;
@@ -100,8 +102,8 @@ while {d_run_illum} do {
             d_run_illum = false;
         };
         _man = _manArr call XfRandomArrayVal;
-        _x1 = (getPos _man select 0) + (-5 + (random 10));
-        _y1 = (getPos _man select 1) + (-5 + (random 10));
+        _x1 = (getPos _man select 0) + (-FLASH_RANDOM_OFFSET + (random (FLASH_RANDOM_OFFSET*2)));
+        _y1 = (getPos _man select 1) + (-FLASH_RANDOM_OFFSET + (random (FLASH_RANDOM_OFFSET*2)));
         if ( _man isKindOf "OfficerW" || _man isKindOf "SquadLeaderW" || _man isKindOf "TeamLeaderW" ) then
         {
              _flare = "F_40mm_Green"; // Officer's flares are always green

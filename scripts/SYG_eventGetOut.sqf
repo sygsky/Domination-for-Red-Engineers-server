@@ -221,8 +221,8 @@ SYG_getOutEvent =
 
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
 
-        hint localize format["<<< SYG_getOutEvent: veh %1(%2) not overturned, dmg %3, role %4, crew %5 -> %6, evnts %7/%8, %9 >>>",
-                            typeOf _veh, _veh, _start_dmg, _role, _whole_crew, count crew _veh,
+        hint localize format["<<< SYG_getOutEvent: veh %1(%2) not overturned (%3), dmg %4, role %5, crew %6 -> %7, evnts %8/%9, %10 >>>",
+                            typeOf _veh, _veh, round(_veh call SYG_vehUpAngle), _start_dmg, _role, _whole_crew, count crew _veh,
                             SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt,
                             [_veh, "at %1 m. to %2 from %3",50] call SYG_MsgOnPosA ];
         true

@@ -414,6 +414,19 @@ SYG_cubeRoot = {
 	exp(ln(_this)/3)
 };
 
+// Angle in degrees
+// call as: _angle = [_vec1, _vec2] call SYG_angleBetween2Vectors3D;
+SYG_angleBetweenVectors3D = {
+    _v1 = _this select 0;
+    _v2 = _this select 1;
+    _sc = _this call SYG_vectorDotProduct;
+    _L1 = _v1 distance [0,0,0];
+    _L2 = _v2 distance [0,0,0];
+    _tmp = _L1 * _L2;
+    if ( _tmp == 0) exitWith {0};
+    _cos = _sc / (_tmp);
+    acos _cos
+};
 // _dist = [_p1,_p2] call SYG_distance2D;
 /*
 SYG_distance2D =

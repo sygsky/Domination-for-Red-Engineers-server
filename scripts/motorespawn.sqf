@@ -10,7 +10,7 @@
 //
 #include "x_macros.sqf"
 
-private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", "_nobj", "_driver_near"];
+private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", "_nobj", "_driver_near","_driverType"];
 
 if (!isServer) exitWith{};
 
@@ -24,7 +24,7 @@ if (!isServer) exitWith{};
 #define TIMEOUT_ZERO 0
 #define MOTO_ON_PLACE_DIST 3.5
 #define DRIVER_NEAR_DIST 10
-#define SOUND_MIN_DIST_TO_SAY 5 // Min shift inmeters to play sound on moto teleport
+#define SOUND_MIN_DIST_TO_SAY 5 // Min shift in meters to play sound on moto teleport
 #define FUEL_MIN_VOLUME 0.2
 // offsets for vehicle status array items
 #define MOTO_ITSELF 0
@@ -68,6 +68,23 @@ sleep CYCLE_DELAY;
 	} forEach _motoarr;
 #endif
 
+// Driver type to be checked near before teleport moto back to base positioo
+_driverType = switch playerSide do {
+    case east:
+    {
+        "SoldierEB"
+    };
+    case resistance:
+    {
+        "SoldierGB"
+    };
+    case west:
+    {
+        "SoldierWB"
+    };
+    default {"SoldierEB"};
+};
+
 //_mainCnt = 1;
 while {true} do {
 
@@ -104,18 +121,21 @@ while {true} do {
 		{
 			if ( time > _timeout) then
 			{
-				_nobj = nearestObject [ _pos1, "CAManBase" ];
-				_driver_near = !(isNull _nobj);
-				if ( _driver_near ) then // some man near motocycle, check him thoroughly
+			    _objNearArr = _pos1 nearObjects [_driverType, DRIVER_NEAR_DIST];
+
+				_nobj = objNull; //nearestObject [ _pos1, "CAManBase" ];
 				{
-				    _pos2 = getPos _nobj;
-        			_pos2 set [2,0]; // zero Z coordinate
-                    _driver_near = (alive _nobj) && ((side _nobj) == east) && ((_pos2 distance _pos1) < DRIVER_NEAR_DIST);
-                };
+				    if (alive _x && isPlayer _x) exitWith {_nobj = _x};
+				} forEach _objNearArr;
+				_driver_near = !isNull _nobj;
 
                 if (! _driver_near ) then
                 {
     				_driver_near = ( {alive _x} count (crew _moto) ) > 0; // is some man in moto crew?
+    				if (_driver_near) then
+                    {
+                        hint localize format["motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
+                    };
                 }
                 else {  hint localize format["motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
 
@@ -159,10 +179,6 @@ while {true} do {
 #ifdef __DEBUG__
                     hint localize format[ "motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
 #endif
-				}
-				else
-				{
-				    hint localize format["motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
 				};
 				_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop
 			};

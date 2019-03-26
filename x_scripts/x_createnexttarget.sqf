@@ -76,7 +76,7 @@ while {!update_target} do {sleep 2.123};
 current_trigger = createTrigger["EmptyDetector",_current_target_pos];
 current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
 current_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
-current_trigger setTriggerStatements["mt_radio_down && side_main_done && (""Car"" countType thislist <= d_car_count_for_target_clear) && (""Tank"" countType thislist <= d_tank_count_for_target_clear) && (""Man"" countType thislist <= d_man_count_for_target_clear) && (""StaticWeapon"" countType thislist <= d_static_count_for_target_clear)", "xhandle = [thislist] execVM ""x_scripts\x_target_clear.sqf""", ""];
+current_trigger setTriggerStatements["mt_radio_down && side_main_done && (""Car"" countType thislist <= d_car_count_for_target_clear) && (""Tank"" countType thislist <= d_tank_count_for_target_clear) && (""Man"" countType thislist <= d_man_count_for_target_clear) && (""StaticWeapon"" countType thislist <= d_static_count_for_target_clear)", "xhandle = [] execVM ""x_scripts\x_target_clear.sqf""", ""];
 
 _emptyH = "HeliHEmpty" createVehicle _current_target_pos;
 _emptyH setPos _current_target_pos;
