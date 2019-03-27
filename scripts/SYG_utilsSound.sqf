@@ -7,7 +7,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __DEBUG__
+//#define __DEBUG__
 
 #define arg(x) (_this select(x))
 #define argp(param,x) ((param)select(x))
@@ -269,42 +269,51 @@ SYG_playRandomTrack = {
     if (typeName _this == "STRING") exitWith // 3. _arr = "ATrack24"; // play full track
     {
 #ifdef __DEBUG__
-        hint localize format["""%1"" call SYG_playRandomTrack;",_this];
+        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this];
 #endif
         playMusic _this
     }; // full track
-    if ( typeName _this != "ARRAY") exitWith
+
+    if ( typeName _this != "ARRAY") exitWith // must be array or string
     {
-        hint localize format["SYG_playRandomTrack: unknown params %1",_this];
+        hint localize format["--- SYG_playRandomTrack: unknown params %1",_this];
     };
-    // if here it is some ARRAY
+
+    // if we are here, it is ARRAY
     if (count _this == 0) exitWith
     {
-        hint localize "SYG_playRandomTrack : empty input array";
+        hint localize "--- SYG_playRandomTrack : empty input array";
     };
-    if ( (count _this == 1) && ((typeName arg(0)) == "STRING")) exitWith // 4. _arr = ["ATrack24"]; // play full track
-    {
-#ifdef __DEBUG__
-        hint localize format["[""%1""] call SYG_playRandomTrack;",_this];
-#endif
-        playMusic arg(0);
-    };
+
     // count >= 1
     if ( (typeName arg(0)) == "ARRAY" ) exitWith // array of array
     {
         RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random array and try to play from it
     };
+
+    //
+    // if here it is some ARRAY
+    //
+    if (count _this == 1) exitWith
+    {
+        if (  typeName arg(0) == "STRING") exitWith
+        {
+            playMusic arg(0);
+        };
+        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
+    };
+
+    // Check to be array of size > 1 and with special items sequence ["cosmos",[0, 10]]
     if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be,  mandatory with size > 1
     {
-        if ((typeName arg(1)) == "STRING") exitWith // 1. _arr = ["ATrack9","ATrack10" ...]; // play full random track
+        if ((typeName arg(1)) == "STRING") exitWith // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
         {
-            _item = RANDOM_ARR_ITEM(_this);
-#ifdef __DEBUG__
-            hint localize format["""%1"" call SYG_playRandomTrack;",_item];
-#endif
-            playMusic _item;
+            _item = RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack;
         }; // list of tracks, play any selected
+        //
+        // ["ATrack12,[10,10]<,[20,15]>]
         // first is track name (STRING), others are part descriptors [start, length], ...
+        //
         if ((typeName arg(1)) == "ARRAY") exitWith  // list of track parts
         {
             private ["_trk"];
@@ -313,7 +322,7 @@ SYG_playRandomTrack = {
             if ( (random 100) < 1) exitWith
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playRandomTrack: play whole track %1 now !!!",arg(0)];
+                hint localize format[ "SYG_playRandomTrack: play whole track %1 now !!!", arg(0)];
 #endif
                 playMusic arg(0)
             };
@@ -337,8 +346,9 @@ SYG_playRandomTrack = {
             };
 
         };
+        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
     };
-    hint localize format["SYG_playRandomTrack: can't parse input %1", _this];
+    hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
 };
 
 //
