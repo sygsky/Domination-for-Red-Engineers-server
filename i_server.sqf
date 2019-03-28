@@ -877,7 +877,7 @@ d_tank_count_for_target_clear = 0;
 // max cars for main target clear
 d_car_count_for_target_clear = 1;
 // max static for main target clear
-d_static_count_for_target_clear = 0;
+d_static_count_for_target_clear = 1;
 
 // add some random patrols on the island
 // if the array is empty, no patrols

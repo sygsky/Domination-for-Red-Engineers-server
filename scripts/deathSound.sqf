@@ -14,9 +14,9 @@ _unit = _this select 0; // player
 
 //hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
 
-if (!(local _unit)) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};
-if (!(isPlayer _unit)) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
-if ( _unit != _killer) then // KIA
+if ( !( local _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};
+if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
+if ( _unit != _killer ) then // KIA
 {
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
     {
@@ -68,6 +68,7 @@ else    // some kind of suicide? Say something about...
 #endif
     };
 
+    hint localize format["deathSound: killer unknown, dmg %1", damage _unit ];
     // let all to hear this sound, not only current player
     ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll;
 
