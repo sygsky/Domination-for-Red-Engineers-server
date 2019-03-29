@@ -117,10 +117,12 @@ SYG_TVTowerDefeatTracks =
     "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10"
     ];
 
-// for the death near medieval castles (2 items on island)
+// for the death near medieval castles (2 buildings on whole island)
 SYG_MedievalDefeatTracks =
     [
-    "medieval_defeat", "medieval_defeat1", "medieval_defeat2","medieval_defeat3","medieval_defeat4","medieval_defeat5"
+      "medieval_defeat",  "medieval_defeat1",  "medieval_defeat2",  "medieval_defeat3",  "medieval_defeat4",  "medieval_defeat5",
+     "medieval_defeat6",  "medieval_defeat7",  "medieval_defeat8",  "medieval_defeat9", "medieval_defeat10", "medieval_defeat11",
+    "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17"
     ];
 
 
@@ -161,15 +163,13 @@ SYG_playRandomDefeatTrackByPos = {
 	};
     #endif
 
-    // check if we are near church
+    // check if we are near some church
     _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
-
-    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
+    if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith
     {
         SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
     };
 
-    // TODO: check for castel near and play medieval music/sounds
     // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
@@ -178,11 +178,30 @@ SYG_playRandomDefeatTrackByPos = {
 
     // check if we are near TV-Tower
     _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
-    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
+    if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
+
+    // check if we are near castle
+    _castleArr = _this nearObjects [ "Land_helfenburk", 500];
+    if ( ((count _castleArr) > 0) && ((random 10) > 1)) exitWith
+    {
+        SYG_MedievalDefeatTracks call SYG_playRandomTrack;
+    };
+
+    _found = true;
+    switch (_this call SYG_whatPartOfIsland) do
+    {
+        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
+        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
+        default  // Corazol // central Sahrani
+        {
+            _found = false;
+        };
+    };
+    if ( _found ) exitWith {};
 
     if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
@@ -194,15 +213,8 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
 
-    switch (_this call SYG_whatPartOfIsland) do
-    {
-        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
-        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
-        default  // Corazol // central Sahrani
-        {
-            call SYG_playRandomDefeatTrack
-        };
-    };
+    // no special conditions found, play std music now
+    call SYG_playRandomDefeatTrack;
 };
 
 SYG_OFPTracks =
