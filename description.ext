@@ -260,7 +260,7 @@ class CfgSounds
 #ifdef __MANDO__
 #include "mando_missiles\mando_sounds.h"
 #endif
-
+    class USSR {name = ""; sound[] = {\sounds\USSR.ogg, db+10, 1.0};};
 	class Funk {name="Funk";sound[]={\sounds\funk.ogg,db+20,1.0};titles[] = {};};
 	class Ari {name="Ari";sound[]={\sounds\ari.ogg,db+30,1.0};titles[] = {};};
 	class odinakovo {name="odinakovo";sound[]={\sounds\odinakovo.ogg,db+0,1.0};titles[] = {};};
@@ -297,7 +297,6 @@ class CfgSounds
 	class teleport { name=""; sound[]=   {\sounds\teleport.ogg,db-1,1.0}; titles[] = {}; };
 	class tropelet { name=""; sound[]=   {\sounds\tropelet.ogg,db-1,1.0}; titles[] = {}; };
 
-    //class USSR {name = ""; sound[] = {\sounds\USSR.ogg, db+10, 1.0}; titles[] = {}; };
     class countdown10 {name = ""; sound[] = {\sounds\countdown10.ogg, db+10, 1.0}; titles[] = {}; };
     class countdown {name = ""; sound[] = {\sounds\countdown.ogg, db+10, 1.0}; titles[] = {}; }; // Rammstein
     class countdown_alarm {name = ""; sound[] = {\sounds\countdown_alarm.ogg, db+10, 1.0}; titles[] = {}; };
