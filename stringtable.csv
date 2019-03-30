@@ -119,7 +119,7 @@ STR_SYS_37,"Vehicle is lifted...","Fahrzeug wird angehoben...","Техника �
 STR_SYS_38,"Overwhelming vehicle...","Sehr schwere Maschine...","Техника неподъёмна..."
 STR_SYS_39,"Vehicle was dropped...","Fahrzeug ist gelöscht...","Техника сброшена..."
 
-STR_SYS_40,"Warning! The city discovered the presence of enemy spotters, in total %1 men.","Achtung! Die Stadt entdeckt die Anwesenheit von feindlichen Aufklärer, nur %1 Menschen.","Внимание! В городе обнаружено присутствие вражеских корректировщиков, %1 чел."
+STR_SYS_40,"Warning! In the %1 discovered the presence of enemy spotters, in total %2 men.",""Warnung! In %1 wurde die Anwesenheit feindlicher Spotter entdeckt, insgesamt %2 Männer.","Внимание! В %1 обнаружено присутствие вражеских корректировщиков, %2 чел."
 STR_SYS_41,"All enemy spotters are killed...","Alle feindlichen Aufklärer zerstört ...","Все вражеские корректировщики уничтожены..."
 STR_SYS_42,"Teleport/Parajump","Teleport/Parajump","Телепорт/Парашют"
 

@@ -325,9 +325,9 @@ XHandleNetStartScriptClient = {
 		case "update_observers": {
 			__compile_to_var
 			if (update_observers != -1) then {
-				[format [localize "STR_SYS_40"/* "Внимание! В городе обнаружено присутствие вражеских корректировщиков, всего %1 чел." */,(_this select 1)], "HQ"] call XHintChatMsg;
+				[format [localize "STR_SYS_40"/* "Warning! In the %1 discovered the presence of enemy spotters, in total %2 men." */,call SYG_getTargetTownName, (_this select 1)], "HQ"] call XHintChatMsg;
 			} else {
-				hint localize "STR_SYS_41"/* "Все вражеские корректировщики уничтожены..." */;
+				hint localize "STR_SYS_41"/* "All enemy spotters are killed..." */;
 			};
 		};
 		case "o_arti": {
