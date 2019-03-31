@@ -86,12 +86,12 @@ while {d_run_illum} do {
         for "_i" from 0 to (count _manArr) - 1 do
         {
             _x = _manArr select _i;
-            if ( !alive _x ) then { _manArr set [i, "RM_ME"];}
+            if ( !alive _x ) then { _manArr set [_i, "RM_ME"];}
             else
             {
                 if (_arrIsOld ) then
                 {
-                    if ( (_x distance _trg_center) > _radius) then { _manArr set [i, "RM_ME"]; };
+                    if ( (_x distance _trg_center) > _radius) then { _manArr set [_i, "RM_ME"]; };
                 }
             };
         };
