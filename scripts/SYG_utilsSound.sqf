@@ -330,8 +330,8 @@ SYG_playRandomTrack = {
         {
             private ["_trk"];
 
-            // in rare random case (1 time from 100 attempts) play whole track
-            if ( (random 100) < 1) exitWith
+            // in rare random case (1 time from 50 attempts) play whole track
+            if ( (random 50) < 1) exitWith
             {
 #ifdef __DEBUG__
                 hint localize format[ "SYG_playRandomTrack: play whole track %1 now !!!", arg(0)];
