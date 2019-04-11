@@ -298,7 +298,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 
 				_time = time;
 //				_timeout = ([_shell_unit, _obj] call SYG_distance2D) + 60;
-				_timeout = (_shell_unit distance _obj) + 60;
+				_timeout = (round (_shell_unit distance _obj)) + 60;
 #ifdef __PRINT__
 				hint localize format["sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (_grp call XfGetAliveUnits) + 1, round(_timeout)];
 #endif

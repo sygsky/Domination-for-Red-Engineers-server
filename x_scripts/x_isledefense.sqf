@@ -328,7 +328,7 @@ _remove_grp = {
 		}forEach units _igrp;
 		sleep 0.1;
 #ifdef __SYG_PRINT_ACTIVITY__
-        hint localize format["x_isledefense: stop remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
+        hint localize format["x_isledefense: finish remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
 #endif
 
 		_igrp = nil;

@@ -88,7 +88,6 @@ SYG_getOutEvent =
         false
     };
 
-
     // continue here only for land vehicles
 
     _whole_crew = [_first_man_out] + _crew; // whole crew including dead (if any)\
@@ -191,7 +190,7 @@ SYG_getOutEvent =
 
     if ( !alive _veh ) exitWith
     {
-        hint localize format["<<< SYG_getOutEvent:  veh %1(%2) is dead, exit >>>", typeof _veh, _veh];
+        hint localize format["<<< SYG_getOutEvent:  veh ""%1""(%2) is dead in %3, exit >>>", typeOf _veh, _veh, (round((time - _start_time) *10))/10];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         _veh removeEventHandler [EVENT_NAME, _GetOutEventInd]; // remove event at all
         false
@@ -214,17 +213,18 @@ SYG_getOutEvent =
     };
 
 
-    if (!_udState) exitWith // Vehicle stands on feet, exit mow
+    if (!_udState) exitWith // Vehicle stands on wheels, exit mow
     {
         // not overturned, exit
         _veh setVariable [EVENT_ID_VAR_NAME, _GetOutEventInd]; // restore event handling
 
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
-
+    #ifdef __DEBUG_PRINT__
         hint localize format["<<< SYG_getOutEvent: veh %1(%2) not overturned (%3), dmg %4, role %5, crew %6 -> %7, evnts %8/%9, %10 >>>",
                             typeOf _veh, _veh, round(_veh call SYG_vehUpAngle), _start_dmg, _role, _whole_crew, count crew _veh,
                             SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt,
                             [_veh, "at %1 m. to %2 from %3",50] call SYG_MsgOnPosA ];
+    #endif
         true
     };
 
@@ -234,15 +234,15 @@ SYG_getOutEvent =
             if (!alive _x) then
             {
                 _x setPos [(getPos _x select 0) + 3 + (random 3),(getPos _x select 1) + 3 + (random 3), 0];
-                #ifdef __DEBUG_PRINT__
+            #ifdef __DEBUG_PRINT__
                 hint localize format["+++ SYG_getOutEvent: ejecting detected dead (role %1) from %2", assignedVehicleRole _x, typeOf _veh];
-                #endif
+            #endif
             }
             else
             {
-                #ifdef __DEBUG_PRINT__
+            #ifdef __DEBUG_PRINT__
                 hint localize format["+++ SYG_getOutEvent: ejecting next crew (role %1) from %2", assignedVehicleRole _x, typeOf _veh];
-                #endif
+            #endif
             };
             unassignVehicle _x;
             _x action ["GetOut", _veh ];
