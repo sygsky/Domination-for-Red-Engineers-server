@@ -706,13 +706,12 @@ XHandleNetStartScriptClient = {
     		    if (isNull _sound) then
     		    {
                     sleep 20; // sleep longer than known max sound length
-                    deleteVehicle _nil;
     		    }
     		    else
     		    {
                     waitUntil {isNull _sound};
-                    deleteVehicle _nil;
 	            };
+                deleteVehicle _nil;
 		    }
 		    else
 		    {
