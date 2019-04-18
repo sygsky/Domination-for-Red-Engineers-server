@@ -1467,7 +1467,7 @@ XFacAction = {
 	};
 };
 
-#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 #endif
 	if (!isNull d_jet_service_fac && !d_jet_service_fac_rebuilding) then {
@@ -1479,7 +1479,7 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	if (!isNull d_wreck_repair_fac && !d_wreck_repair_fac_rebuilding) then {
 		[2] spawn XFacAction;
 	};
-#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 };
 #endif
 
