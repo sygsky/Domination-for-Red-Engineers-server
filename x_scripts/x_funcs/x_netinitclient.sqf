@@ -491,6 +491,13 @@ XHandleNetStartScriptClient = {
 		};
 		case "mt_spotted": {
 			localize "STR_SYS_65" /* "Враг обнаружил вас..." */ call XfHQChat;
+
+            if ( (call SYG_getTargetTownName) == "Arcadia") then
+            {
+                sleep (random 5);
+                playMusic "detected_Arcadia";
+            };
+
 		};
 		#ifdef __AI__
 		case "d_ataxi": {

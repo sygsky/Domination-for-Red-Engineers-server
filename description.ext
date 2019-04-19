@@ -168,6 +168,10 @@ class CfgMusic
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
     class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
 
+//+++++++++++++++++++++++ Detect music
+
+    class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
+
 //+++++++++++++++++++++++ Defeat music track list
 
     class thetrembler { name=""; sound[]=   {\sounds\thetrembler.ogg,db-1,1.0}; };
