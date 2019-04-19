@@ -361,7 +361,7 @@ x_makemgroup = {
 	_ret
 };
 
-// Creates group of infantry for side mission. All bodies will be automatically removed after SM finish
+// Creates group of infantry for side mission. All bodies will be automatically removed after SM is finished
 XCreateInf = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_pos_center", "_radius", "_do_patrol", "_side", "_gwp_formations", "_ret_grps", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_units", "_leader", "_grp_array"];
 	_type1 = _this select 0;
@@ -370,7 +370,7 @@ XCreateInf = {
 	_numbergroups2 = _this select 3;
 	_pos_center = _this select 4;
 	_radius = _this select 5;
-	_do_patrol = (if (count _this == 7) then {_this select 6} else {false});
+	_do_patrol = (if (count _this > 6) then {_this select 6} else {false});
 	if (_radius < 50) then {_do_patrol = false;};
 	_side = d_enemy_side;
 	
@@ -418,7 +418,7 @@ XCreateInf = {
 	_ret_grps
 };
 
-// Creates group of vehicles for side mission. All vehicles will be automatically removed after SM finsih
+// Creates group of vehicles for side mission. All vehicles will be automatically removed after SM is finished
 XCreateArmor = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_type3", "_numbergroups3", "_pos_center", "_numvehicles", "_radius", "_do_patrol", "_ret_grps", "_side", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_vehicles", "_leader", "_grp_array"];
 	_type1 = _this select 0;

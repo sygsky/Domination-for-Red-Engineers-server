@@ -53,7 +53,8 @@ for "_i" from 0 to (_count_arti - 1) do {
 	#endif
 	_arti lock true;
 	_unit = _grp createUnit [_crewman, (_arti_pos_dir select 0), [], 0, "NONE"];[_unit] join _grp;_unit setSkill 1;_unit assignAsGunner _arti;_unit moveInGunner _arti;
-	__addDead(_unit)
+	extra_mission_remover_array = extra_mission_remover_array + _unit;
+	//__addDead(_unit)
 	sleep 0.5321;
 };
 
@@ -66,9 +67,9 @@ for "_i" from 1 to 3 do {
 };
 
 sleep 2.123;
-["specops", 1, "basic", 2, _poss, 150,true] spawn XCreateInf;
+["specops", 2, "basic", 2, _poss, 250,true] spawn XCreateInf;
 sleep 4.123;
-["shilka", 1, "bmp", 2, "tank", 1, _poss,1,200,true] spawn XCreateArmor;
+["shilka", 2, "bmp", 2, "tank", 2, _poss,1,250,true] spawn XCreateArmor;
 
 while {dead_arti != _count_arti} do {
 	sleep 4.631;
