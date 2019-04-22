@@ -53,7 +53,7 @@ for "_i" from 0 to (_count_arti - 1) do {
 	#endif
 	_arti lock true;
 	_unit = _grp createUnit [_crewman, (_arti_pos_dir select 0), [], 0, "NONE"];[_unit] join _grp;_unit setSkill 1;_unit assignAsGunner _arti;_unit moveInGunner _arti;
-	extra_mission_remover_array = extra_mission_remover_array + _unit;
+	extra_mission_remover_array = extra_mission_remover_array + [_unit];
 	//__addDead(_unit)
 	sleep 0.5321;
 };
