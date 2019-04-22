@@ -63,8 +63,8 @@ else    // some kind of suicide? Say something about...
         _sound = format["ACE_BrutalScream%1", ceil(random 15)]; // 1-15
 //        hint localize format["ACE sound is %1", _sound];
 #else
-        if (isNil "SYG_selfKillingSound") then {SYG_selfKillingSound = "male_scream_" + str(floor(random 8))};  // 0-7
-        _sound = SYG_selfKillingSound;
+        if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 9))};  // 0-9
+        _sound = SYG_suicideScreamSound;
 #endif
     };
 
