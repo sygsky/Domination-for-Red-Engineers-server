@@ -81,13 +81,17 @@ SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
 };
 
+SYG_rammsteinDefeatTracks1 = ["rammstein_1","rammstein_2","rammstein_3","rammstein_4"];
+SYG_rammsteinDefeatTracks2 = ["rammstein_5","rammstein_6","rammstein_7","rammstein_8","rammstein_9"];
+SYG_rammsteinDefeatTracks =  [ SYG_rammsteinDefeatTracks1,   SYG_rammsteinDefeatTracks2 ];
+
 SYG_northDefeatTracks =
 [
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
     ["ATrack9","ATrack10","ATrack19","bolero"],
     ["metel","gayane1","gayane2","gayane3", "mountains"]
-];
+] + SYG_rammsteinDefeatTracks;
 
 SYG_southDefeatTracks =
 [
@@ -101,15 +105,15 @@ SYG_southDefeatTracks =
 ];
 
 SYG_baseDefeatTracks =
-    [
+[
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
-    "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie", // "gong",
+    "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
     "melody","medieval_defeat","defeat2","arabian_death",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ]
-    ];
+] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_TVTowerDefeatTracks =
