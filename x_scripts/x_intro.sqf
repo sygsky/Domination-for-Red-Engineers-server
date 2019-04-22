@@ -64,9 +64,19 @@ else // music normally played on intro
     }
     else
     {
-        // add some personilized songs for well known players
-        _players = [ ["Ceres-de","CERES de"] , ["Rokse [LT]"]];
-        _sounds  = [ ["amigohome_ernst_bush","amigohome_ernst_bush","amigohome_ernst_bush"], ["morze","morze","morze","morze2","morze2","morze2"]];
+        // add some personalized songs for well known players
+        _players =
+        [
+            ["Ceres-de","CERES de"] ,
+            ["Rokse [LT]"],
+            ["Shelter", "Marcin"]
+        ];
+        _sounds  =
+        [
+            ["amigohome_ernst_bush","amigohome_ernst_bush","amigohome_ernst_bush"],
+            ["morze","morze","morze","morze2","morze2","morze2"],
+            ["stavka_bolshe_chem","stavka_bolshe_chem","stavka_bolshe_chem","stavka_bolshe_chem"]
+        ];
         _name    = name player;
         _personalSounds = [];
         {

@@ -148,7 +148,7 @@ STR_SYS_61,"Enemy troops in your base.","Feindliche Soldaten auf dem Luftwaffens
 STR_SYS_62,"CLEAR:","Entwarnung","ОТБОЙ:"
 STR_SYS_63,"No more enemies in your base.","Die Anwesenheit von feindlichen Truppen auf unserer Militärbasis eliminiert","Враги исчезли с территории базы"
 STR_SYS_64,"Your transport is refurbished by technical service...","Ihr Transport renoviert technischen Service...","Ваш транспорт отремонтирован техсервисом..."
-STR_SYS_65,"The enemy revealed you...","Der Feind öffnete Sie...","Враг обнаружил нас..."
+STR_SYS_65,"The enemy revealed us...","Der Feind öffnete Sie...","Враг обнаружил нас..."
 
 STR_SYS_66,"You were demoted from %1 to %2 !!!","Sie wurden abgebaut von %1, %2 !!!","Вы разжалованы со звания %1 до звания %2"
 STR_SYS_67,"You were promoted to %1, congratulations !!!","Sie wurden gefördert %1, herzlichen Glückwunsch !!!","Поздравляем с присвоением внеочередного звания %1"

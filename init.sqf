@@ -190,7 +190,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
+    _first_array = [2];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
@@ -217,6 +217,12 @@ if (isServer) then {
         side_missions_random = easy_sm_array + side_missions_random;
         hint localize format["SM goes first: %1", side_missions_random];
 #endif
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // insert special missiona at the list head
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    _first_array = [10];   // 10 - arti above base (SanSebastian)
+    side_missions_random = _first_array + (side_missions_random - _first_array);
 
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__

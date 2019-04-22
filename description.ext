@@ -116,7 +116,7 @@ class CfgMusic
 	class nutcracker {	name = ""; sound[] = {\sounds\NutCracker.ogg, db+20, 1.0};};
     class home_alone { name=""; sound[] = {\sounds\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
 
-//	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
+	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
 	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
     class grig    {        name="";        sound[]=   {\sounds\grig.ogg,db-1,1.0};    };

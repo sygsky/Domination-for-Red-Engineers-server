@@ -470,8 +470,8 @@ XHandleNetStartScriptClient = {
 		case "mrr2_in_air": {
 			__compile_to_var
 			__isRacs
-				if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,2]) call XfHQChat;}; //"%1 мобильный респаун 2 транспортируется по воздуху"
-				if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,2]) call XfHQChat;}; //"%1 мобильный респаун 2 доступен"
+				if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,2]) call XfHQChat;};  //"%1 Respawn %2 is transported by airlift"
+				if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,2]) call XfHQChat;}; // "%1 Respawn %2 is available"
 			};
 		};
 		#endif
@@ -479,10 +479,10 @@ XHandleNetStartScriptClient = {
 			__compile_to_var
 			switch (x_wreck_repair select 2) do {
 				case 0: {
-					(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%2, восстанавливается %1. Это потребует времени..."
+					(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "Restoring %1 at %2, this will take some time..."
 				};
 				case 1: {
-					(format [localize "STR_SYS_270", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%2 завершил работу над  %1"
+					(format [localize "STR_SYS_270", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%1 ready at %2"
 				};
 			};
 		};
@@ -490,12 +490,20 @@ XHandleNetStartScriptClient = {
 			[(_this select 1),(_this select 2)] spawn XRecapturedUpdate;
 		};
 		case "mt_spotted": {
-			localize "STR_SYS_65" /* "Враг обнаружил вас..." */ call XfHQChat;
+			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
 
             if ( (call SYG_getTargetTownName) == "Arcadia") then
             {
-                sleep (random 5);
-                playMusic "detected_Arcadia";
+                _ret = "NO_DEBUG" call SYG_getTargetTown;
+            	if (count _ret > 0 ) then
+            	{
+            	    // player can hear by town specified music only in vicinity of 3 km
+            	    if ( (player distance (_ret select 0)) <= 3000) then
+            	    {
+                        sleep (random 5);
+                        playMusic "detected_Arcadia";
+            	    }
+            	};
             };
 
 		};
