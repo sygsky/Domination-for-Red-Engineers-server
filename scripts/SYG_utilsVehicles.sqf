@@ -640,7 +640,9 @@ SYG_populateVehicle ={
         };
 	};
 #endif
+#ifdef __PREVENT_OEVRTURN__
     _veh call SYG_preventTurnOut; // add anti-overturn proc
+#endif
 	_grp
 };
 

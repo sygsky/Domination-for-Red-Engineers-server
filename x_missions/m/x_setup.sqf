@@ -152,3 +152,5 @@
 // add some Vehicles and ammoBoxes on hills near Corazol and on base
 //#define __DEBUG_ADD_VEHICLES__
 
+// uncomment next line to prevent land vehicle overturning
+#define __PREVENT_OEVRTURN__
