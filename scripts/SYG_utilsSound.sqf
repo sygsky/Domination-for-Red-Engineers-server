@@ -101,7 +101,7 @@ SYG_southDefeatTracks =
     ["ATrack8",[75.269,8.823],[84.092,9.734],[95.986,6.246]],
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
     ["ATrack11","ATrack12","ATrack13"],
-    ["arroyo","arabian_death"]
+    ["arroyo","arabian_death","the_complex"]
 ];
 
 SYG_baseDefeatTracks =
@@ -124,9 +124,10 @@ SYG_TVTowerDefeatTracks =
 // for the death near medieval castles (2 buildings on whole island)
 SYG_MedievalDefeatTracks =
     [
-      "medieval_defeat",  "medieval_defeat1",  "medieval_defeat2",  "medieval_defeat3",  "medieval_defeat4",  "medieval_defeat5",
+     "medieval_defeat",  "medieval_defeat1",  "medieval_defeat2",  "medieval_defeat3",  "medieval_defeat4",  "medieval_defeat5",
      "medieval_defeat6",  "medieval_defeat7",  "medieval_defeat8",  "medieval_defeat9", "medieval_defeat10", "medieval_defeat11",
-    "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17"
+     "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17",
+     "village_consort"
     ];
 
 
