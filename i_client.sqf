@@ -186,7 +186,7 @@ d_sub_tk_points = 20;
 // points needed to get a specific rank
 // gets even used in the unranked versions, though it's just cosmetic there
 d_points_needed = [
-#ifdef __OLD__
+#ifdef __OLD_SCORES__
 	40, // Ефрейтор
 	80, // Сержант
 	150, // Лейтенант

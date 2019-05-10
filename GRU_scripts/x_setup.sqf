@@ -157,3 +157,6 @@
 
 //+++ uncomment to enable the appearance of an unconscious player to enemies
 #define __DISABLE_HIDE_UNCONSCIOUS__
+
+// comment it out to use the new score system, with lower values per rank
+#define __OLD_SCORES__
