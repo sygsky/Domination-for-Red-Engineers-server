@@ -47,7 +47,7 @@ else    // some kind of suicide? Say something about...
     if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_MedievalDefeatTracks);
-        ["say_sound", _castleArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
+        ["say_sound", _castleArr select 0, _sound] call XSendNetStartScriptClientAll; // music from castle
     };
 
     // short melody on unknown death case, anybody within some range can hear this

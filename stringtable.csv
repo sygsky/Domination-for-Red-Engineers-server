@@ -1265,6 +1265,8 @@ STR_FAC_OWN_VEH,"The Factory was destroyed by our projectile from %1 (%2)","Die 
 STR_FAC_OWN_MAN,"The Factory was destroyed by our soldier %2","Die Anlage wurde von unserem Soldaten %2 zerstört.","Сервис уничтожен своим бойцом %2"
 STR_FAC_ENEMY_VEH,"The Factory was destroyed by enemy projectile from %1(%2)","Die Fabrik wurde von einem gegnerischen Projektil von %1(%2) zerstört)","Сервис уничтожен вражеским снарядом из %1(%2)"
 STR_FAC_ENEMY_MAN,"The factory was destroyed by an enemy saboteur %2","Die Fabrik wurde von einem feindlichen saboteur zerstört %2","Сервис уничтожен вражеским диверсантом %2"
+STR_FAC_UNKNOWN_VEH,"The Factory was destroyed by unknown means","Die Fabrik wurde mit unbekannten Mitteln zerstört","Сервис уничтожен неизвестным образом"
+STR_FAC_UNKNOWN_MAN,"The factory was destroyed by unknown means","Die Fabrik wurde mit unbekannten Mitteln zerstört","Сервис уничтожен неизвестным образом"
 STR_HUD_ON,"Turn HUD On","HUD einschalten","Вкл. дисплей"
 STR_HUD_OFF,"Turn HUD off","HUD ausschalten","Откл. дисплей"
 

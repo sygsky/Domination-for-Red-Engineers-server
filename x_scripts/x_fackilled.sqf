@@ -37,12 +37,16 @@ if (_index != -1) then {
 };
 
 _killer = _this select 1;
-if ( isNull _killer  || _fac == _killer ) exitWith { hint localize format[ "x_fackilled.sqf: killer = %1", _killer ]; };
+if ( isNull _killer  || _fac == _killer ) exitWith
+{
+    hint localize format[ "x_fackilled.sqf: killer = %1", _killer ];
+    [ "sub_fac_score", "STR_FAC_UNKNOWN_VEH", "", "" ] call XSendNetStartScriptClient;
+};
 
 // Some agent killed factory, send message
 
 _man    = if ( _killer isKindOf "CaManBase" ) then { "MAN" } else { "VEH" };
-_side   = if ( side _killer == d_side_enemy ) then { "ENEMY" } else { "OWN" };
+_side   = if ( side _killer == d_side_enemy ) then { "ENEMY" } else { if (side _killer == d_side_player ) then {"OWN"} else {"UNKNOWN"} };
 
 _param1 = typeOf _killer;
 _param2 = if ( _killer isKindOf "CaManBase" ) then { name _killer } else { name ( gunner _killer ) };

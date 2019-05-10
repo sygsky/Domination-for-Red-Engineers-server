@@ -154,3 +154,6 @@
 
 // uncomment next line to prevent land vehicle overturning
 #define __PREVENT_OEVRTURN__
+
+//+++ uncomment to enable the appearance of an unconscious player to enemies
+#define __DISABLE_HIDE_UNCONSCIOUS__
