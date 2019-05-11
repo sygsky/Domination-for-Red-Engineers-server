@@ -33,6 +33,13 @@ if (_do_exit) exitWith {};
 //hint localize format["x_paraj.sqf: weapons are %1", weapons player];
 new_paratype = "";
 
+#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+    _disableFreeDropping = true;
+#else
+    _disableFreeDropping = false;
+#endif
+
+hint localize "";
 #ifdef __ACE__
 {
 	if (_x  in ["ACE_ParachutePack","ACE_ParachuteRoundPack"]) exitWith
@@ -41,7 +48,7 @@ new_paratype = "";
 	}; // ACE_Para - main kind of parachute in game
 } forEach weapons player;
 
-if ( new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
+if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
 
 if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith
 {
@@ -55,8 +62,8 @@ if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith
 	}; // ACE_Para - main kind of parachute in game
 } forEach weapons player;
 
-#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
-if ( new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
+if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
+
 #endif
 
 #ifdef __RANKED__
@@ -77,8 +84,11 @@ sleep 2.56;
 
 // detect for parachute to be open and remove it from magazines
 waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 )< 5 )};
-if ( ( vehicle player ) isKindOf "ParachuteBase" ) then
+
+if ( (vehicle player) != player ) then // parashute was on!
 {
+    // the parachute was just opened, so remove it from slot after landing/death
+    // TODO play corresponding sound
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
     player removeWeapon new_paratype;
 };

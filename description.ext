@@ -288,8 +288,20 @@ class CfgSounds
     class starwars { name=""; sound[]= {\sounds\starwars.ogg,db-1,1.0}; titles[] = {};};
     class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
 
-    class vozdushnye_potoki { name=""; sound[] = {\sounds\vozdushnye_potoki.ogg,db-1,1.0}; titles[] = {};} // Your parachute is opened!!!
-    class vozdushnye_potoki_2 { name=""; sound[] = {\sounds\vozdushnye_potoki_2.ogg,db-1,1.0}; titles[] = {};} // TODO: add to jump from a plane at mision start
+    class parajump1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump1.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 1
+    class parajump2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump2.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 2
+
+    class freefall1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_1.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 1
+    class freefall2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_2.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall3 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_1.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall4 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_2.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall5 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_3.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall6 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_4.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall7 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_5.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall300m { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_300_m.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+
+    class rippara { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+
 
     class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; titles[] = {};};
 

@@ -144,13 +144,13 @@
 // uncomment lower line to move air vehicle command "Eject" and "Лump out" to the command list bottom
 #define __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
 
-//comment to disable jump from base flag pole without parachute pack, to be more serious :o)
-// #define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+//uncomment to disable jump from base flag pole without parachute pack, to be more serious :o)
+//#define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
 
 //+++ uncomment to create Su34 on the base,
 // add 1500 score to allow get in,
 // add some Vehicles and ammoBoxes on hills near Corazol and on base
-//#define __DEBUG_ADD_VEHICLES__
+#define __DEBUG_ADD_VEHICLES__
 
 // uncomment next line to prevent land vehicle overturning
 #define __PREVENT_OEVRTURN__

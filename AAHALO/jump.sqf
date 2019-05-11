@@ -1,3 +1,4 @@
+// AAHALO\jump.sqf: Parachute jump pre/post processing
 _StartLocation = _this select 0;
 _paratype      = _this select 1;
 
@@ -30,7 +31,12 @@ titleText ["","Plain"];
 uh60p = createVehicle [_jump_helo, _StartLocation, [], 0, "FLY"];
 _halo_height = d_halo_height;
 #ifdef __ACE__
-if (_paratype  == "ACE_ParachutePack") then {_halo_height = d_halo_height * 2;} else {_halo_height = d_halo_height / 7;};
+switch _paratype do
+{
+    case "ACE_ParachuteRoundPack": {_halo_height = d_halo_height / 7};
+    case "ACE_ParachutePack";
+    default {_halo_height = d_halo_height * 2};
+};
 #endif
 
 uh60p setPos [_StartLocation select 0,_StartLocation select 1, _halo_height];
@@ -44,7 +50,8 @@ if(vehicle player == player)exitWith {};
 
 sleep 3;
 
-playSound (["vozdushnye_potoki", "vozdushnye_potoki_2"] call XfRandomArrayVal); // parajump made sound
+playSound (["parajump1", "parajump2"] call XfRandomArrayVal); // Start of parajump event (and corresponding sound of 20 seconds length max)
+_startTime = time;
 
 #ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
 if ( _paratype == "" ) then { (localize "STR_SYS_609_1") call XfHQChat};
@@ -56,6 +63,46 @@ if (__AIVer) then {
 		[position player, velocity player, direction player] execVM "x_scripts\x_moveai.sqf";
 	};
 };
+
+// TODO: watch the progress of the parajump and play corresponding sounds
+// there are 3 possible states of alive jumper:
+// 1. free fall
+waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (vehicle player) != player || (time - _startTime) >= 20};
+
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, getPos player select 2] }; // can't play sound
+
+if ( (time - _startTime) >= 20) then
+{
+    if ( (vehicle player) == player ) then
+    {
+        if ( (getPos player select 2) > 300) then
+        {
+            hint localize format["+++ jump.sqf: Player still in free fall, height AGL >= 300 (%1) m.", getPos player select 2];
+            playSound (["freefall1", "freefall2", "freefall3", "freefall4", "freefall5", "freefall6", "freefall7"] call XfRandomArrayVal); // Start of parajump event (and corresponding sound of 20 seconds length max)
+        }
+        else
+        {
+            hint localize format["+++ jump.sqf: Player in free fall, height AGL < 300 (%1) m.", getPos player select 2];
+            playSound "freefall300m"; // Start of free fall on height < 300 m (and corresponding sound of 16-20 seconds length max)
+        };
+        _startTime = time;
+    };
+};
+
+waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (((time - _startTime) >= 20) && (vehicle player !=  player)) };
+
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, getPos player select 2] }; // can't play sound
+
+// 2. para opening
+if ( (vehicle player) != player ) then
+{
+    hint localize format["+++ jump.sqf: Player in parachut now, height AGL %1!", getPos player select 2];
+    playSound "rippara";
+};
+
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, getPos player select 2] }; // can't play sound
+
+hint localize format["+++ jump.sqf: Exit from script, alive %1, height AGL %2", alive player, getPos player select 2];
 if (true) exitWith {}; // ++++++++++++++++ end of script
 #endif
 
