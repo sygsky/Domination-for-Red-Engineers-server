@@ -190,7 +190,7 @@ SYG_playRandomDefeatTrackByPos = {
     };
 
     // check if we are near castle
-    _castleArr = _this nearObjects [ "Land_helfenburk", 500];
+    _castleArr = _this nearObjects [ "Land_helfenburk", 800]; // This radious includes Mercallilo and Benoma wholly!
     if ( ((count _castleArr) > 0) && ((random 10) > 1)) exitWith
     {
         SYG_MedievalDefeatTracks call SYG_playRandomTrack;
