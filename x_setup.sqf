@@ -1,5 +1,6 @@
 // edit this file and then run setupcopy.bat
 
+// Mark this code to be run under "Red Engineer" full mission, not debug one
 #define __RED_ENGINEERS_SERVER__
 
 // uncomment to show markers for sidemissions, main targets, etc.
