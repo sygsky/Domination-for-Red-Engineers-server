@@ -7,7 +7,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __DEBUG__
+//#define __DEBUG__
 
 #define arg(x) (_this select(x))
 #define argp(param,x) ((param)select(x))
@@ -60,15 +60,19 @@ SYG_musicTrackCount = {
 // Corazol (center of island with radious 500 m) sounds
 SYG_defeatTracks =
 [
-    ["Delerium_Wisdom","pimbompimbom","vendetta","thefuture"],
+    ["Delerium_Wisdom","pimbompimbom","vendetta"],
     ["Gandalf_Simades","whold","end"],
-    ["ATrack9","ATrack10","ATrack14","ATrack15"],
-    ["ATrack16","ATrack17","ATrack18","ATrack19"],
-    ["ATrack20","ATrack21","ATrack22","thetrembler","arroyo"],
+    ["ATrack9","ATrack10","ATrack14"],
+    ["ATrack16","ATrack17","ATrack18"],
+    ["ATrack20","ATrack21","ATrack22","thetrembler"],
+    ["arroyo","ATrack15","ATrack19"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat"],
-    ["sorcerie","melody"]
+    ["sorcerie","melody","thefuture"],
+    ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]],
+    ["cosmos",[0,8.281],[14.25,9.25],[28.8,-1]]
+
 ];
 
 SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
@@ -77,13 +81,17 @@ SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
 };
 
+SYG_rammsteinDefeatTracks1 = ["rammstein_1","rammstein_2","rammstein_3","rammstein_4"];
+SYG_rammsteinDefeatTracks2 = ["rammstein_5","rammstein_6","rammstein_7","rammstein_8","rammstein_9"];
+SYG_rammsteinDefeatTracks =  [ SYG_rammsteinDefeatTracks1,   SYG_rammsteinDefeatTracks2 ];
+
 SYG_northDefeatTracks =
 [
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
     ["ATrack9","ATrack10","ATrack19","bolero"],
     ["metel","gayane1","gayane2","gayane3", "mountains"]
-];
+] + SYG_rammsteinDefeatTracks;
 
 SYG_southDefeatTracks =
 [
@@ -92,23 +100,36 @@ SYG_southDefeatTracks =
     ["ATrack8",[51.715,7.287],[59.002,8.563],[67.565,7.704]],
     ["ATrack8",[75.269,8.823],[84.092,9.734],[95.986,6.246]],
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
-    ["ATrack11","ATrack12","ATrack13","arroyo"]
+    ["ATrack11","ATrack12","ATrack13"],
+    ["arroyo","arabian_death","the_complex"]
 ];
 
-
 SYG_baseDefeatTracks =
-    [
+[
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
-    "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie", // "gong",
-    "melody","medieval_defeat","defeat2"
-    ];
+    "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
+    "melody","medieval_defeat","defeat2","arabian_death", "village_consort",
+    ["cosmos", [0,8.281] ],
+    ["cosmos", [14.25,9.25] ],
+    ["cosmos", [28.8,-1] ]
+] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_TVTowerDefeatTracks =
     [
-    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09"
+    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10"
     ];
+
+// for the death near medieval castles (2 buildings on whole island)
+SYG_MedievalDefeatTracks =
+    [
+     "medieval_defeat",  "medieval_defeat1",  "medieval_defeat2",  "medieval_defeat3",  "medieval_defeat4",  "medieval_defeat5",
+     "medieval_defeat6",  "medieval_defeat7",  "medieval_defeat8",  "medieval_defeat9", "medieval_defeat10", "medieval_defeat11",
+     "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17",
+     "village_consort"
+    ];
+
 
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
@@ -147,15 +168,13 @@ SYG_playRandomDefeatTrackByPos = {
 	};
     #endif
 
-    // check if we are near church
+    // check if we are near some church
     _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
-
-    if ( (count _churchArr > 0) && ((random 5) > 1)) exitWith
+    if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith
     {
         SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
     };
 
-    // TODO: check for castel near and play medieval music/sounds
     // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
@@ -164,11 +183,30 @@ SYG_playRandomDefeatTrackByPos = {
 
     // check if we are near TV-Tower
     _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
-    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
+    if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
+
+    // check if we are near castle
+    _castleArr = _this nearObjects [ "Land_helfenburk", 800]; // This radious includes Mercallilo and Benoma wholly!
+    if ( ((count _castleArr) > 0) && ((random 10) > 1)) exitWith
+    {
+        SYG_MedievalDefeatTracks call SYG_playRandomTrack;
+    };
+
+    _found = true;
+    switch (_this call SYG_whatPartOfIsland) do
+    {
+        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
+        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
+        default  // Corazol // central Sahrani
+        {
+            _found = false;
+        };
+    };
+    if ( _found ) exitWith {};
 
     if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
@@ -180,15 +218,8 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
 
-    switch (_this call SYG_whatPartOfIsland) do
-    {
-        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
-        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
-        default  // Corazol // central Sahrani
-        {
-            call SYG_playRandomDefeatTrack
-        };
-    };
+    // no special conditions found, play std music now
+    call SYG_playRandomDefeatTrack;
 };
 
 SYG_OFPTracks =
@@ -209,7 +240,7 @@ SYG_counterAttackTracks =
         ["ATrack25",[0,71]],
         ["ATrack25",[71,-1]],
 
-        "ATrack1","ATrack23"
+        "ATrack1","ATrack23","fear2","ruffian","mission_impossible"
     ];
 
 SYG_playRandomOFPTrack = {
@@ -222,8 +253,7 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[8.086,8]],
         ["ATrack26",[16.092,6.318]],
         ["ATrack26",[24.014,8.097]],
-        ["ATrack26",[32.059,4.0]],
-        ["ATrack26",[36.053,-1]],
+        ["ATrack26",[32.06,-1]],
         ["church_organ_1"],
         ["church_voice"],
         ["haunted_organ_1"],
@@ -256,51 +286,60 @@ SYG_playRandomTrack = {
     if (typeName _this == "STRING") exitWith // 3. _arr = "ATrack24"; // play full track
     {
 #ifdef __DEBUG__
-        hint localize format["""%1"" call SYG_playRandomTrack;",_this];
+        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this];
 #endif
         playMusic _this
     }; // full track
-    if ( typeName _this != "ARRAY") exitWith
+
+    if ( typeName _this != "ARRAY") exitWith // must be array or string
     {
-        hint localize format["SYG_playRandomTrack: unknown params %1",_this];
+        hint localize format["--- SYG_playRandomTrack: unknown params %1",_this];
     };
-    // if here it is some ARRAY
+
+    // if we are here, it is ARRAY
     if (count _this == 0) exitWith
     {
-        hint localize "SYG_playRandomTrack : empty input array";
+        hint localize "--- SYG_playRandomTrack : empty input array";
     };
-    if ( (count _this == 1) && ((typeName arg(0)) == "STRING")) exitWith // 4. _arr = ["ATrack24"]; // play full track
-    {
-#ifdef __DEBUG__
-        hint localize format["[""%1""] call SYG_playRandomTrack;",_this];
-#endif
-        playMusic arg(0);
-    };
+
     // count >= 1
     if ( (typeName arg(0)) == "ARRAY" ) exitWith // array of array
     {
         RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random array and try to play from it
     };
+
+    //
+    // if here it is some ARRAY
+    //
+    if (count _this == 1) exitWith
+    {
+        if (  typeName arg(0) == "STRING") exitWith
+        {
+            playMusic arg(0);
+        };
+        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
+    };
+
+    // Check to be array of size > 1 and with special items sequence ["cosmos",[0, 10]]
     if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be,  mandatory with size > 1
     {
-        if ((typeName arg(1)) == "STRING") exitWith // 1. _arr = ["ATrack9","ATrack10" ...]; // play full random track
+        if ((typeName arg(1)) == "STRING") exitWith // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
         {
-            _item = RANDOM_ARR_ITEM(_this);
-#ifdef __DEBUG__
-            hint localize format["""%1"" call SYG_playRandomTrack;",_item];
-#endif
-            playMusic _item;
+            _item = RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack;
         }; // list of tracks, play any selected
+        //
+        // ["ATrack12,[10,10]<,[20,15]>]
         // first is track name (STRING), others are part descriptors [start, length], ...
+        //
         if ((typeName arg(1)) == "ARRAY") exitWith  // list of track parts
         {
             private ["_trk"];
 
-            // in rare random case (1 time from 100 attempts) play whole track
-            if ( (random 100) < 1) exitWith
+            // in rare random case (1 time from 50 attempts) play whole track
+            if ( (random 50) < 1) exitWith
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playRandomTrack: play whole track %1 now !!!",arg(0)];
+                hint localize format[ "SYG_playRandomTrack: play whole track %1 now !!!", arg(0)];
 #endif
                 playMusic arg(0)
             };
@@ -324,8 +363,9 @@ SYG_playRandomTrack = {
             };
 
         };
+        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
     };
-    hint localize format["SYG_playRandomTrack: can't parse input %1", _this];
+    hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
 };
 
 //

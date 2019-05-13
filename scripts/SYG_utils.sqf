@@ -34,7 +34,9 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";		// Text functions
+#ifdef __PREVENT_OEVRTURN__
 	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";		// anti-overturn method
+#endif
 
 	//hint localize "--- SYG_utils initialization finished";
 };
@@ -373,7 +375,7 @@ SYG_findAndAssignAsCargo = {
  */
 SYG_vehIsUpsideDown = {
 	private ["_l","_vUp","_angle"];
-	if ( (!(isNull _this)) && (alive _this) && (_this isKindOf "LandVehicle")) then
+	if ( (alive _this) && (_this isKindOf "LandVehicle") ) then
 	{
 		_vUp = vectorUp _this;	// vector up for the goal
 		if((_vUp select 2) < 0 )then {true}
@@ -388,6 +390,14 @@ SYG_vehIsUpsideDown = {
 		};
 	}
 	else{false};
+};
+
+SYG_vehUpAngle = {
+	if ( isNull _this ) exitWith { -1000 };
+    _vUp = vectorUp _this;	// vector up for the goal
+    _L2 = [_vUp,[ 0, 0, 0 ]] call SYG_distance2D;
+    if ( _L2 == 0 ) exitWith { 0 };
+    ( _vUp select 2 ) atan2 _L2
 };
 
 /**

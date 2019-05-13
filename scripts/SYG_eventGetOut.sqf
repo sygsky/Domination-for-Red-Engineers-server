@@ -67,12 +67,16 @@ SYG_getOutEvent =
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
     };
+    _start_time = time; // remember start time of the event processing
 
     // only enemy is allowed for auto revert back
     if ( str(side (_this select 2)) != d_enemy_side ) exitwith {false};
 
     _veh  = _this select 0;
     _veh setVariable [EVENT_ID_VAR_NAME, nil]; // remove event number to prevent other processing
+
+    _start_dmg  = damage _veh; // remember inital damage
+
     _crew = crew _veh; // crew still in vehicle
     _first_man_out = _this select 2;
 
@@ -84,7 +88,6 @@ SYG_getOutEvent =
         false
     };
 
-
     // continue here only for land vehicles
 
     _whole_crew = [_first_man_out] + _crew; // whole crew including dead (if any)\
@@ -94,8 +97,6 @@ SYG_getOutEvent =
     #ifdef __DEBUG_PRINT__
     hint localize "[[[                                                       ]]]";
     #endif
-    hint localize format["[[[ * SYG_getOutEvent: ""%1"" event id %2, crew %3, vehicle %4 (dmg %5) tlist %6,  params %7, good / empty calls %8/%9 * ]]]",
-                         EVENT_ID_VAR_NAME, _GetOutEventInd, count _whole_crew, typeOf _veh, damage _veh, _tlist, _this, SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt ];
 
     _role = toLower (_this select 1);
     _first_man_out = _this select 2; // first man got out of vehicle
@@ -189,7 +190,7 @@ SYG_getOutEvent =
 
     if ( !alive _veh ) exitWith
     {
-        hint localize format["<<< SYG_getOutEvent:  vehicle %1(%2)is down, exit >>>", typeof _veh, _veh];
+        hint localize format["<<< SYG_getOutEvent:  veh ""%1""(%2) is dead in %3, exit >>>", typeOf _veh, _veh, (round((time - _start_time) *10))/10];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         _veh removeEventHandler [EVENT_NAME, _GetOutEventInd]; // remove event at all
         false
@@ -212,12 +213,18 @@ SYG_getOutEvent =
     };
 
 
-    if (!_udState) exitWith // Vehicle stands on feet, exit mow
+    if (!_udState) exitWith // Vehicle stands on wheels, exit mow
     {
         // not overturned, exit
         _veh setVariable [EVENT_ID_VAR_NAME, _GetOutEventInd]; // restore event handling
-        hint localize format["<<< SYG_getOutEvent: vehicle %1(%2) not over, dmg %3, crew %4, exit >>>", typeOf _veh, _veh, damage _veh, count crew _veh];
+
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
+    #ifdef __DEBUG_PRINT__
+        hint localize format["<<< SYG_getOutEvent: veh %1(%2) not overturned (%3), dmg %4, role %5, crew %6 -> %7, evnts %8/%9, %10 >>>",
+                            typeOf _veh, _veh, round(_veh call SYG_vehUpAngle), _start_dmg, _role, _whole_crew, count crew _veh,
+                            SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt,
+                            [_veh, "at %1 m. to %2 from %3",50] call SYG_MsgOnPosA ];
+    #endif
         true
     };
 
@@ -227,15 +234,15 @@ SYG_getOutEvent =
             if (!alive _x) then
             {
                 _x setPos [(getPos _x select 0) + 3 + (random 3),(getPos _x select 1) + 3 + (random 3), 0];
-                #ifdef __DEBUG_PRINT__
+            #ifdef __DEBUG_PRINT__
                 hint localize format["+++ SYG_getOutEvent: ejecting detected dead (role %1) from %2", assignedVehicleRole _x, typeOf _veh];
-                #endif
+            #endif
             }
             else
             {
-                #ifdef __DEBUG_PRINT__
+            #ifdef __DEBUG_PRINT__
                 hint localize format["+++ SYG_getOutEvent: ejecting next crew (role %1) from %2", assignedVehicleRole _x, typeOf _veh];
-                #endif
+            #endif
             };
             unassignVehicle _x;
             _x action ["GetOut", _veh ];
@@ -433,15 +440,18 @@ SYG_getOutEvent =
         _tlist set [count _tlist, assignedVehicleRole _x];
     } forEach crew _veh;
     SYG_TrueGetOutsCnt = SYG_TrueGetOutsCnt + 1;
-    hint localize format["]]] SYG_getOutEvent: EOS for %1(%2), roles in %3,crew %4/alive %5,gd/bd call %6/%7. %8 [[[",
+
+    hint localize format["[[[ SYG_getOutEvent: turned back %1(%2) in %3, ini dmg %4, roles %5, crew %6/alive %7, calls %8/%9, %10 ]]]",
         typeOf _veh,
         _veh,
+        (round((time - _start_time) *10))/10,
+        _start_dmg,
         _tlist,
         count crew _veh,
         {alive _x} count crew _veh,
         SYG_TrueGetOutsCnt,
         SYG_FalseGetOutsCnt,
-        [_veh,"at %1 m. to %2 from %3"] call SYG_MsgOnPosE
+        [_veh,"at %1 m. to %2 from %3", 50] call SYG_MsgOnPosA
         ];
     true
 };

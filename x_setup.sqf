@@ -118,11 +118,6 @@
 //+++ uncomment to run easiest side missions first, before all other
 //#define __EASY_SM_GO_FIRST__
 
-//+++ uncomment to create Su34 on the base,
-// add 1000 score to allow get in,
-// add some Vehicles and ammoBoxes on hills near Corazol and on base
-//#define __DEBUG_ADD_VEHICLES__
-
 // uncomment next line to add dome vehicles on the base
 #define __ADDITIONAL_BASE_VEHICLES__
 
@@ -144,10 +139,24 @@
 #define __REP_SERVICE_FROM_ENGINEERING_FUND__
 
 // uncomment to allow add predefined scores (now 3) for factory supports, not subtract as was designated by Xeno
-#define __ADD_SCORE_FOR_FACTORY_SUPPORT__ 3
+//#define __ADD_SCORE_FOR_FACTORY_SUPPORT__ 3
 
 // uncomment lower line to move air vehicle command "Eject" and "Лump out" to the command list bottom
 #define __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
 
-//comment to disable jump from base flag pole without parachute pack, to be more serious :o)
-// #define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+//uncomment to disable jump from base flag pole without parachute pack, to be more serious :o)
+//#define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+
+//+++ uncomment to create Su34 on the base,
+// add 1500 score to allow get in,
+// add some Vehicles and ammoBoxes on hills near Corazol and on base
+//#define __DEBUG_ADD_VEHICLES__
+
+// uncomment next line to prevent land vehicle overturning
+#define __PREVENT_OEVRTURN__
+
+//+++ uncomment to enable the appearance of an unconscious player to enemies
+#define __DISABLE_HIDE_UNCONSCIOUS__
+
+// comment it out to use the new score system, with lower values per rank
+#define __OLD_SCORES__

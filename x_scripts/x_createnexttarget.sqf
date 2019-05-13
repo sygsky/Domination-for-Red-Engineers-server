@@ -76,7 +76,7 @@ while {!update_target} do {sleep 2.123};
 current_trigger = createTrigger["EmptyDetector",_current_target_pos];
 current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
 current_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
-current_trigger setTriggerStatements["mt_radio_down && side_main_done && (""Car"" countType thislist <= d_car_count_for_target_clear) && (""Tank"" countType thislist <= d_tank_count_for_target_clear) && (""Man"" countType thislist <= d_man_count_for_target_clear) && (""Static"" countType thislist <= d_static_count_for_target_clear)", "xhandle = [] execVM ""x_scripts\x_target_clear.sqf""", ""];
+current_trigger setTriggerStatements["mt_radio_down && side_main_done && (""Car"" countType thislist <= d_car_count_for_target_clear) && (""Tank"" countType thislist <= d_tank_count_for_target_clear) && (""Man"" countType thislist <= d_man_count_for_target_clear)", "xhandle = [] execVM ""x_scripts\x_target_clear.sqf""", ""];
 
 _emptyH = "HeliHEmpty" createVehicle _current_target_pos;
 _emptyH setPos _current_target_pos;
@@ -108,7 +108,9 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
     _man_cnt = count _list;
     sleep 300; // wait for a while to remove old dead corpses
     _cnt = 0;
-     {
+    _acnt = 0;
+    _ecnt  = 0;
+    {
         if ( !alive _x) then
         {
             if (!isNull _x) then
@@ -116,14 +118,19 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
                 _x removeAllEventHandlers "killed";
                 _x removeAllEventHandlers "hit";
                 _x removeAllEventHandlers "damage"; //+++ Sygsky: just in case
-                _x removeAllEventHandlers "getin"; //+++ Sygsky: just in case
+                _x removeAllEventHandlers "getin";  //+++ Sygsky: just in case
                 _x removeAllEventHandlers "getout"; //+++ Sygsky: just in case
                 deleteVehicle _x;
                 sleep 0.01;
                 _cnt = _cnt + 1;
             };
+        }
+        else
+        {
+            _acnt = _acnt + 1;
+            if ( side _x == east) then {_ecnt = _ecnt + 1;}
         };
-     } forEach _list;
+    } forEach _list;
      // remove underwater weapon holders
     _list = _target_pos nearObjects ["WeaponHolder", _target_radius + 50];
     _cnt1 = 0;
@@ -136,7 +143,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
         };
      } forEach _list;
 #ifdef __DEBUG__
-    hint localize format["x_createnexttarget.sqf: Old dead bodies cleaned in %1: found men %2, clean dead %3, holders %4, in water %5", _dummy select 1, _man_cnt, _cnt, count _list, _cnt1];
+    hint localize format[ "x_createnexttarget.sqf: Old bodies cleaned in %1: men %2 (alive %3, east %4, dead %5), holders %6, in water %7", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
 #endif
      _list = nil;
      sleep 2.56;

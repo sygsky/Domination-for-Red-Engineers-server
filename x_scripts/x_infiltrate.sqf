@@ -98,6 +98,7 @@ while { true } do {
 				    }
 				    else // alive man
 				    {
+				        // todo: call delete procedure on server, may be it could do it
                         if ( isNull (group _x) && (name _x == "Error: No unit")) then // zombi - arghhhhhh!!!
                         {
                             hint localize format["+++ x_infiltrate.sqf: try to delete zombi %1 pos %2 from base in clean proc", _x, getPos _x];
@@ -119,7 +120,7 @@ while { true } do {
 		sleep 0.5;
 		_arr = _arr + (_base_center nearObjects ["Land_MAP_AH64_Wreck",_search_radious]);
 		sleep 0.5;
-		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]);
+		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]); // why this is added? Don't know :o(
 		sleep 0.5;
 		if (count _arr > 0) then
 		{
@@ -178,7 +179,7 @@ while { true } do {
 		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2));
 		_time_to_clean = time + _delay;
 #ifdef __DEBUG_CLEAN_PRINT__
-		hint localize format["x_infiltrate.sqf: %3 base cleaning proc: %1 items cleaned, %2 items added to the clean queue, next clean after %4 secs", _cnt1, count _items_to_clean, call SYG_missionTimeInfoStr, _delay ];
+		hint localize format["x_infiltrate.sqf: %3 base cleaning proc: %1 items cleaned, %2 items added to the clean queue, next clean after %4 secs", _cnt1, count _items_to_clean, call SYG_missionTimeInfoStr, round(_delay) ];
 		if ((count _items_to_clean) > 0) then
 		{
 			_arr = [];

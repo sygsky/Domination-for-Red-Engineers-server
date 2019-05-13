@@ -36,14 +36,21 @@ d_use_teamstatusdialog = true;
 // position of the player ammobox at base (created only on the players computer, re-filled every 20 minutes)
 d_player_ammobox_pos =
 #ifdef __SCHMALFELDEN__
+
 	[[2504.62,120.872,0],145.764];
+
 #endif
 #ifdef __UHAO__
+
 	[[2248.13,4572.81,0],272];
+
 #endif
 #ifdef __DEFAULT__
 	//[[9654.24,9993,0],270]; // [[9654.24,9993.49,0],270] box pos for orginal Xeno base building (Camp of Warfire)
-	[[9672.535,9993.026, 0.25],180]; // box pos for the depot as base building (Depot of Warfire)
+	//[
+	    [[9672.535,9993.026, 0.25],180]; // box pos for the depot as base building (Depot of Warfire)
+    //    [[9667.043945,9993.524414,2.75],270] // box on 2nd floor of depot
+	//];
 #endif
 #ifdef __TT__
 	[
@@ -54,9 +61,11 @@ d_player_ammobox_pos =
 
 #ifdef __ACE__
 d_ace_boxes = [
+    #ifdef __DEFAULT__
 	["ACE_RuckBox",[9670.771,9998.445,0.69],0], 	// [9659.13,9982.11,0],0]
 	//["ACE_MedicBox",[9659.12,9980.25,0],0], // [9664.12,9979.25,0],0]
 	["ACE_HuntIRBox",[9667.064,9995.478,0.7],270] // [9659.16,9978.42,0],0]
+	#endif
 ];
 #endif
 
@@ -177,7 +186,7 @@ d_sub_tk_points = 20;
 // points needed to get a specific rank
 // gets even used in the unranked versions, though it's just cosmetic there
 d_points_needed = [
-#ifdef __OLD__
+#ifdef __OLD_SCORES__
 	40, // Ефрейтор
 	80, // Сержант
 	150, // Лейтенант

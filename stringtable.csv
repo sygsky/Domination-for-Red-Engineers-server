@@ -119,7 +119,7 @@ STR_SYS_37,"Vehicle is lifted...","Fahrzeug wird angehoben...","Техника �
 STR_SYS_38,"Overwhelming vehicle...","Sehr schwere Maschine...","Техника неподъёмна..."
 STR_SYS_39,"Vehicle was dropped...","Fahrzeug ist gelöscht...","Техника сброшена..."
 
-STR_SYS_40,"Warning! The city discovered the presence of enemy spotters, in total %1 men.","Achtung! Die Stadt entdeckt die Anwesenheit von feindlichen Aufklärer, nur %1 Menschen.","Внимание! В городе обнаружено присутствие вражеских корректировщиков, %1 чел."
+STR_SYS_40,"Warning! In the %1 discovered the presence of enemy spotters, in total %2 men.","Warnung! In %1 wurde die Anwesenheit feindlicher Spotter entdeckt, insgesamt %2 Männer.","Внимание! В %1 обнаружено присутствие вражеских корректировщиков, %2 чел."
 STR_SYS_41,"All enemy spotters are killed...","Alle feindlichen Aufklärer zerstört ...","Все вражеские корректировщики уничтожены..."
 STR_SYS_42,"Teleport/Parajump","Teleport/Parajump","Телепорт/Парашют"
 
@@ -139,6 +139,7 @@ STR_SYS_56_1,"And a rumor:","Auch neue Gerüchte:","Также слухи:"
 STR_SYS_57,"Settings","Einstellung","Настройки"
 STR_SYS_58,"Side mission:","Side mission:","Дополнительное задание:"
 STR_SYS_58_1,"Secondary Main Target Mission:","Sekundäre Ziel Der Mission:","Дополнительный приказ:"
+STR_SYS_58_2,"Wait for further instructions...","Warten Sie auf weitere Anweisungen...","Ожидайте дополнительно приказа..."
 STR_SYS_59,"Main target:","Ziel:","Главная цель:"
 STR_SYS_59_1,"large","groß","крупный"
 STR_SYS_59_2,"last","letzte","посл."
@@ -148,7 +149,7 @@ STR_SYS_61,"Enemy troops in your base.","Feindliche Soldaten auf dem Luftwaffens
 STR_SYS_62,"CLEAR:","Entwarnung","ОТБОЙ:"
 STR_SYS_63,"No more enemies in your base.","Die Anwesenheit von feindlichen Truppen auf unserer Militärbasis eliminiert","Враги исчезли с территории базы"
 STR_SYS_64,"Your transport is refurbished by technical service...","Ihr Transport renoviert technischen Service...","Ваш транспорт отремонтирован техсервисом..."
-STR_SYS_65,"The enemy revealed you...","Der Feind öffnete Sie...","Враг обнаружил нас..."
+STR_SYS_65,"The enemy revealed us...","Der Feind öffnete Sie...","Враг обнаружил нас..."
 
 STR_SYS_66,"You were demoted from %1 to %2 !!!","Sie wurden abgebaut von %1, %2 !!!","Вы разжалованы со звания %1 до звания %2"
 STR_SYS_67,"You were promoted to %1, congratulations !!!","Sie wurden gefördert %1, herzlichen Glückwunsch !!!","Поздравляем с присвоением внеочередного звания %1"
@@ -252,7 +253,7 @@ STR_SYS_136,"The service is cancelled...","Zimmerservice abgebrochen...","Сер
 
 STR_SYS_137,"Added points for maintenance: +%1 ...","Addierte Punkte für die Bedienung der Technik: %1 ...","Добавлено очков за обслуживание техники: +%1 ..."
 STR_SYS_137_1,"Scores spent for maintenance: %1 ...","Abgezogen Punkte für die Pflege: %1 ...","Вычтено очков за обслуживание техники: %1 ..."
-STR_SYS_137_2,"Maintenance scores (%1) are reallocated from you to the Engineering Fund (%2)","Wartungs-scores (%1) ist reserviert, um engineering-Fonds (%2)","Ваши очки за обслуживание техники (%1) направлены в инженерный фонд (%2)"
+STR_SYS_137_2,"Maintenance scores (+%1) are reallocated from you to the Engineering Fund (=%2)","Wartungs-scores (+%1) ist reserviert, um engineering-Fonds (=%2)","Ваши очки за обслуживание техники (+%1) направлены в инженерный фонд (=%2)"
 STR_SYS_137_3,"Engineering Fund scores: available %1, required for repair of building %2","Die engineering-Fonds Punkten: er hat eine %1, erforderlich für die Reparatur von Gebäuden %2","Очки в инженерном фонде: в наличии %1, требуется для ремонта здания %2"
 STR_SYS_137_4,"The Engineering Fund's expenses for restoration of service %1 scores, %2 will remain","Die Aufwendungen des Engineering-Fonds für die Wiederherstellung von service %1 Punkte, %2 bleiben","Затраты инженерного фонда на восстановление сервиса %1, останется %2"
 STR_SYS_137_5,"The Engineering Fund","Die Technischen Mittel","Инженерный фонд"
@@ -356,6 +357,9 @@ STR_SM_047,"Great job! Plant operations have ceased.","Great job! Pflanze Operat
 
 STR_SM_49,"In Search of the captain Grant. The enemy has a small outpost in a valley near Benoma. Their commander captain Grant decided to switch sides and talk about the plans of the enemy. Bring him back to the flag at your base to get some vital informations.","Auf der Suche nach dem Kapitän Grant. Der Feind hat einen kleinen Außenposten in einem Tal in der Nähe von Benoma. Ihr Kommandant Kapitän Grant beschlossen, die Seiten zu wechseln und sprechen über die Pläne des Feindes. Bringen Sie ihn zurück, um die Flagge zu Ihrer Basis zu erhalten einige wichtige Informationen.","Враг разместил недалеко от н.п. Benoma небольшой аванпост. Его командир, капитан Грант, хочет перейти на нашу сторону, рассказав о происках ФРС на острове. Доставьте его на базу! (Завершить миссию может только игрок в роли спасателя или лидер группы)."
 STR_SM_049,"The job is done! Captain Grant delivered to the base, to specialists of the GRU.","Es ist vollbracht! Kapitän Grant geliefert, um die Basis, den Spezialisten der GRU","Задание выполнено! Капитан Грант доставлен на базу, к специалистам ГРУ."
+
+STR_SM_50,"Finally we've found the enemy artillery base. If you can destroy all artillery guns the artillery observers at main targets have nothing to call in artillery strikes anymore.","Nach Angaben der Intelligenz bekannt wurde die Lage der wichtigsten Kräfte der feindlichen Artillerie. Ihre Aufgabe ist es, zu zerstören alle Geschütze.","По данным разведки стало известно расположение основных сил вражеской артиллерии. Ваша задача уничтожить все артиллерийские орудия. И тогда корректоры перестанут нас донимать!"
+STR_SM_050,"Good job. All artillery guns are down. No artillery observers will appear at main targets anymore!!!","Gute Arbeit. Alle Geschütze sind down. Keine Artillerie-Beobachter erscheint am wichtigsten Ziele mehr!!!","Задание выполнено! Все артиллерийские орудия уничтожены. Корректировщики исчезли!!!"
 
 STR_SM_55,"An enemy officer is on a walk in the forest Selva de Caza. This is a good chance to arrest him and bring him to your base (only a rescue operator or group leader can do that). Note: he can be found at 50 meters of center point! Beware of local AA!","Einer der Offiziere ging Pilze im Wald Selva de Caza. Ihre Aufgabe abzunehmen Pilze, die Verhaftung Offizier und liefern es an der Basis. (Eine Mission zu erfüllen, kann nur der Spieler in die Rolle der Retter). Hinweis: er kann gefunden werden, an 50 Metern der Mittelpunkt! Hüten Sie sich vor der lokalen AA!","Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. Внимание! Офицер может находиться на расстоянии 50 метров от центра района, а местные трапперы на хребте неподалёку были обстреляны из зенитной установки! (Завершить миссию может только игрок в роли спасателя или лидер группы)"
 
@@ -557,11 +561,10 @@ STR_SYS_311,"TV-tower destroyed... %1","Fernsehturm zerstört... %1", "Теле�
 STR_SYS_312,"On the East Side Bagango two antenna are detected. One is used by the enemy for military data transfer. Your task: destroy correct radio antenna.","Auf der Ostseite Bagango zwei Antennen erkannt werden. Man wird verwendet, um die feindlichen für militärische Daten übertragen. Ihre Aufgabe: Zerstöre richtige radio Antenne","На востоке от Bagango расположены две радиомачты. Одна из них используется врагом для передачи данных. Ваша задача: уничтожить нужную радиомачту."
 STR_SYS_313,"Good job! Radio antenna destroyed.","Auftrag ausgeführt! Radio Antenne zerstört.","Задание выполнено! Радиомачта уничтожена."
 STR_SYS_314,"There is a radio tower in a farm west of Bagango (south from Carmen). This is one of the many radio towers that the enemy uses to communicate with its troops. Simple task, destroy it.","Es ist ein Funkturm in einer farm westlich von Bagango. Dies ist einer der vielen Radiosendern, dass der Feind verwendet, um die Kommunikation mit seinen Truppen. Einfache Aufgabe, es zu zerstören.","На ферме к западу от Bagango, и к югу от Carmen, находится радиовышка. Враг использует ее для связи с силами коллаборационистов. Уничтожьте ее."
-STR_SYS_315,"Finally we've found the enemy artillery base. If you can destroy all artillery guns the artillery observers at main targets have nothing to call in artillery strikes anymore.","Nach Angaben der Intelligenz bekannt wurde die Lage der wichtigsten Kräfte der feindlichen Artillerie. Ihre Aufgabe ist es, zu zerstören alle Geschütze.","По данным разведки стало известно расположение основных сил вражеской артиллерии. Ваша задача уничтожить все артиллерийские орудия. И тогда корректоры перестанут вас донимать!"
-STR_SYS_316,"Good job. All artillery guns are down. No artillery observers will appear at main targets anymore.","Gute Arbeit. Alle Geschütze sind down. Keine Artillerie-Beobachter erscheint am wichtigsten Ziele mehr.","Задание выполнено! Все артиллерийские орудия уничтожены. Корректировщики исчезли!"
+
 STR_SYS_316_1,"All artillery guns are down. No artillery observers will appear anymore.","Alle Artilleriegeschütze sind unten. Es werden keine artilleriebeobachter mehr erscheinen.","Все артиллерийские орудия уничтожены. Корректировщики исчезли!"
 STR_SYS_317,"Radiotower","Funkturm","Телемачта"
-STR_SYS_318,"There is a transformer station in Tlaloc. The enemy uses it to for some experiments in a laboratory in Bagango. Simple task, destroy it.","Es ist eine Trafo-station im Tlaloc. Der Feind verwendet es für einige Experimente in einem Labor in Bagango. Einfache Aufgabe, es zu zerstören.","По данным разведки, где-то в Bagango расположена вражеская секретная научная лаборатория. Выша задача уничтожить трансформаторную подстанцию в Tlaloc, тем самым саботировать работу лаборатории."
+STR_SYS_318,"There is a transformer station in Tlaloc. The enemy uses it to for some experiments in a laboratory in Carmen. Simple task, destroy it.","Es ist eine Trafo-station im Tlaloc. Der Feind verwendet es für einige Experimente in einem Labor in Carmen. Einfache Aufgabe, es zu zerstören.","По данным разведки, где-то в Carmen расположена вражеская секретная научная лаборатория. Выша задача уничтожить трансформаторную подстанцию в Tlaloc, тем самым саботировать работу лаборатории."
 STR_SYS_318_1,"Good job. The transformer station is down.","Gute Arbeit. Die Trafo-station ist ausgefallen.","Задание выполнено! Трансформаторная подстанция уничтожена."
 
 STR_SYS_320,"Says the first art.battery. Roger, over.","Sagt die erste Art.die Batterie. Sie verstanden habe, ist der Empfang.","Говорит первая арт.батарея. Вас понял, прием."
@@ -811,6 +814,14 @@ STR_AI_9,"All AI soldiers dismissed !!! Points returned %1","Alle KI-Soldaten en
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
 STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für AI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
 
+//HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
+
+STR_PATROL_TYPE_HP="heavy patrol","schwere Patrouille","тяжёлый патруль"
+STR_PATROL_TYPE_AP="АА patrol","AA Patrouille","патруль ПВО"
+STR_PATROL_TYPE_FP="floating patrol","schwimmende Patrouille","плавающий патруль"
+STR_PATROL_TYPE_SP="speedy patrol","schnelle Patrouille","скоростной патруль"
+STR_PATROL_TYPE_LP="light patrol","leichte Patrouille","лёгкий	патруль"
+
 STR_RESTORE_DLG_1,To restore,Wiederherstellen,Восстановить
 STR_RESTORE_DLG_2,Select from list,Wählen Sie aus der Liste aus,Выбрать из списка
 STR_RESTORE_DLG_3,Execute,Ausführen,Выполнить
@@ -830,7 +841,7 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Ск. падения:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""", """ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title"",""comrade_my""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen"",""comrade_my""", """ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"",""comrade_my"""
 STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """podolinam"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
@@ -1195,12 +1206,13 @@ STR_GRU_44,"GRU already uses D-installation and control PC.","GRU nutzt bereits 
 STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2, nt %3, tc %4","Melden Sie Ihrem commander zu D-Einheit Fehler! Telemetrie: %1, cc %2, nt %3, tc %4","Сообщите командованию, что Д-установка не работает! Телеметрия: %1, cc %2, nt %3, tc %4"
 
 
-STR_GRU_46,"The landing of the enemy patrol spotted by %1%2%3%4%5","Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5","Местный %1 наблюдал высадку вражеского патруля%2%3%4%5"
+STR_GRU_46,"The landing of the enemy patrol spotted by %1%2%3%4%5","Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5","Местный %1 наблюдал высадку вражеского патруля%2%3%4%5%6"
 STR_GRU_46_0,"Sahrani inhabitants inform: Enemy patrols disappeared!","Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!","Вражеские патрули исчезли, сообщают жители!"
 STR_GRU_46_1," near ""%1"""," in der Nähe von ""%1"""," близ ""%1"""
 STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," на дист. примерно %1 м."
 STR_GRU_46_3," bearing %1"," Richtung %1",", азимут %1"
 STR_GRU_46_4," numbering %1 unit[s]"," die Nummerierung %1 Fahrzeug[s]",", численностью %1 ед."
+STR_GRU_46_5," type is %1"," Typ ist %1",", тип - %1."
 
 STR_GRU_47,"Enemy activity detected near the base","Feindliche Aktivitäten erkannt in der Nähe der Basis","Вражеская активность обнаружена неподалёку от базы"
 STR_GRU_48,"Local %1 report that the king has left the building and found another asylum, not further than %2 m. from hotel","Lokale %1 berichten, dass der king hat das Gebäude verlassen und fand eine andere Asyl, nicht weiter als %2 m. vom hotel","Местные %1 сообщают, что король покинул здание и нашёл другое убежище, не далее %2 м. от отеля"
@@ -1243,9 +1255,9 @@ STR_FIRE_2,"You think: why is there a fire?","Sie denken: - wo ist hier das Feue
 
 STR_FIRE_UNKNOWN,"You can't understand what it is","Ich kann nicht verstehen, was es ist","Непонятно, что это такое"
 
-STR_JAIL_1,"Hint: You are subject to disciplinary action for violation of the Charter of the Soviet army","Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der sowjetischen Armee","На вас наложено дисциплинарное взыскание  за нарушение устава советской армии"
+STR_JAIL_1,"Hint: You are subject to disciplinary action for violation of the Charter of the Soviet army","Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der Sowjetischen Armee","На вас наложено дисциплинарное взыскание  за нарушение устава Советской Армии"
 STR_JAIL_2,"You will regain control after you have served your sentence of %1 seconds","Sie werden die Kontrolle zurückzugewinnen, nachdem Sie gedient haben Ihren Satz von %1 Sekunden","После отбывания наказания в течении %1 сек. контроль будет возвращён"
-STR_JAIL_3,"Or you can press  Alt + F4 to exit","Oder Sie drücken Alt + F4 zu beenden","Также, Вы можете завершить пребывание на нашем острове, использовав Alt + F4"
+STR_JAIL_3,"Or you can press  Alt + F4 to exit","Oder Sie drücken Alt + F4 zu beenden","Чтобы покинуть остров, используйте Alt + F4"
 
 STR_ENG_FUND_1,The Engineering Fund rises to %1,Das Der technische Fonds steigt auf %1,Инженерный Фонд вырос до %1
 STR_ENG_FUND_2,The Engineering Fund reduced to 1%,Der Engineering-Fonds wurde auf %1 reduziert,Инженерный фонд уменьшился до %1
@@ -1254,6 +1266,8 @@ STR_FAC_OWN_VEH,"The Factory was destroyed by our projectile from %1 (%2)","Die 
 STR_FAC_OWN_MAN,"The Factory was destroyed by our soldier %2","Die Anlage wurde von unserem Soldaten %2 zerstört.","Сервис уничтожен своим бойцом %2"
 STR_FAC_ENEMY_VEH,"The Factory was destroyed by enemy projectile from %1(%2)","Die Fabrik wurde von einem gegnerischen Projektil von %1(%2) zerstört)","Сервис уничтожен вражеским снарядом из %1(%2)"
 STR_FAC_ENEMY_MAN,"The factory was destroyed by an enemy saboteur %2","Die Fabrik wurde von einem feindlichen saboteur zerstört %2","Сервис уничтожен вражеским диверсантом %2"
+STR_FAC_UNKNOWN_VEH,"The Factory was destroyed by unknown means","Die Fabrik wurde mit unbekannten Mitteln zerstört","Сервис уничтожен неизвестным образом"
+STR_FAC_UNKNOWN_MAN,"The factory was destroyed by unknown means","Die Fabrik wurde mit unbekannten Mitteln zerstört","Сервис уничтожен неизвестным образом"
 STR_HUD_ON,"Turn HUD On","HUD einschalten","Вкл. дисплей"
 STR_HUD_OFF,"Turn HUD off","HUD ausschalten","Откл. дисплей"
 

@@ -2,7 +2,7 @@
 //
 // new input params format is: [thislist,"vehicle_type"]
 //
-if (isServer && (!X_SPE)) exitWith{ hint localize format["--- x_reload.sqf for %1 with %2 called on dedicated server, exit", _this select 1, typeOf ((_this select 0) select 0)] };
+// if (isServer && (!X_SPE)) exitWith{ hint localize format["--- x_reload.sqf for %1 with %2 called on dedicated server, exit", _this select 1, typeOf ((_this select 0) select 0)] };
 
 private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver","_already_loading"];
 

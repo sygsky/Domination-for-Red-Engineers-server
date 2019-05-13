@@ -328,7 +328,7 @@ _remove_grp = {
 		}forEach units _igrp;
 		sleep 0.1;
 #ifdef __SYG_PRINT_ACTIVITY__
-        hint localize format["x_isledefense: stop remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
+        hint localize format["x_isledefense: finish remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
 #endif
 
 		_igrp = nil;
@@ -509,7 +509,7 @@ _dead_patrols = 0; // how many patrols are currently dead
 _show_absence = false; // disable patrol absence message
 
 // send info about first patrol on island
-["msg_to_user","",[["STR_SYS_1146"]],0,0] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
+["msg_to_user","",[["STR_SYS_1146"]],0, 10 + random 10] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
 
 
 //_patrol_cnt = 0; // active patrol counter
@@ -568,20 +568,21 @@ while { true } do {
 				{
 					_i call  _replace_grp;
 					//_dead_cnt = _dead_cnt - 1; // one more patrol added
-					
-					_igrpa = argp(SYG_isle_grps, _i); // get this group
+					if ((random 10) > 3) then // inform user about new patrol with probability 0.7
 					{
-					    if ( (!isNull _x) && (alive _x)) exitWith
-					    {
-					        _witness = call SYG_getLocalManRandomName;
-					        _pos     = position _x;
-					        _size    = count argp(_igrpa, PARAM_VEHICLES);
+                        _igrpa = argp(SYG_isle_grps, _i); // get this group
+                        {
+                            if ( (!isNull _x) && (alive _x)) exitWith
+                            {
+                                _witness = call SYG_getLocalManRandomName;
+                                _pos     = position _x;
+                                _size    = count argp(_igrpa, PARAM_VEHICLES);
+                                _pattype = argp(_igrpa, PARAM_TYPE); // get patrol type for colonel
 
-	                        ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_DETECTED, [_witness, _pos, _size]] call XSendNetStartScriptClient;
-
-                            //	["msg_to_user", "", _msg_arr, 0, 0] call XSendNetStartScriptClient; // send to all
-					    };
-					} forEach argp(_igrpa, PARAM_VEHICLES); // find first alive vehicle
+                                ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_DETECTED, [_witness, _pos, _size, _pattype]] call XSendNetStartScriptClient;
+                            };
+                        } forEach argp(_igrpa, PARAM_VEHICLES); // find first alive vehicle
+					};
     				if (_stat == STATUS_DEAD_WAIT_RESTORE) then {_dead_patrols = (_dead_patrols -1) max 0;};
 				};
 
@@ -885,6 +886,7 @@ while { true } do {
 	};  // while {true} do
 	if ( _cnt > 0) then
 	{
+	// __SHOW_PATROL_CHANGE_INFO__ not defined anywhere
 #ifdef __SHOW_PATROL_CHANGE_INFO__
 	    if ( _cnt != _patrol_cnt ) then
 	    {

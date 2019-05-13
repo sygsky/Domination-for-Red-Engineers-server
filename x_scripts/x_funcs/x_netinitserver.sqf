@@ -8,8 +8,8 @@
 	(_this select 1) call XHandleNetVar;
 };
 
-SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri"];
-SYG_localZones = [           0,           0,        0,    -4,          +1,        +2,        +2,     +2];
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri", "Frosty", "Aron"];
+SYG_localZones = [           0,           0,        0,    -4,          +1,        +2,        +2,     +2,       +2,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this"];
@@ -191,7 +191,7 @@ XHandleNetStartScriptServer = {
             }
             else
             {
-                if ( _name == "Petigp" || _name == "gyuri") then // Hungarian
+                if ( _name in ["Petigp", "gyuri", "Frosty"] ) then // Hungarian
                 {
         			_msg = "Üdvözöljük az alap a 'Vörös mérnökök'!";// "Üdvözöl a Red Engineers csapat!"; // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
                 }
@@ -201,7 +201,7 @@ XHandleNetStartScriptServer = {
                     {
                         _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)"
                     }else {
-                        if (_name == "Shelter" || _name == "Marcin") then // Poland
+                        if (_name in ["Shelter", "Marcin"] ) then // Poland
                         {
                             _msg = "Nasz oddział spełnia polskiego brata!"
                         } else
@@ -306,8 +306,8 @@ XHandleNetStartScriptServer = {
 		    _vehicle = argopt(1, objNull);   // vehicle to play sound on it
 		    if ( isNull _vehicle ) exitWith {hint localize "--- ""say_sound"" _vehicle is null";};
 		    _sound   = argopt(2, "");        // sound to play
-		    if (    _sound == "" ) exitWith {hint localize "--- ""say_sound"" _vehicle sound is empty";};
-		    hint localize format["server ""play_sound"" (%1, %2)", typeOf _vehicle, _sound];
+		    if ( _sound == "" ) exitWith {hint localize "--- ""say_sound"" _vehicle sound is empty";};
+		    hint localize format["server ""say_sound"" (%1, %2)", typeOf _vehicle, _sound];
 		    _this call XSendNetStartScriptClientAll; // resend to all clients
 //		    _vehicle say _sound; // do this on clients only
 		};
@@ -317,7 +317,7 @@ XHandleNetStartScriptServer = {
             _id = argopt(1, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
             _playerName = argopt(2, "" );
-            if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: no player name"};
+            if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: empty or absent player name"};
             _score = argpopt( GRU_specialBonusArr, _id, 0 ); // check for score available
             if( _score > 0 ) then // this event score is available, clear it now
             {

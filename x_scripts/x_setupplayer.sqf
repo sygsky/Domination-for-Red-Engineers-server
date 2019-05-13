@@ -294,9 +294,9 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             };
                         };
 
-                        if (toLower (name player) == "yeti") then
+                        if (_index == 0 && (toLower (name player) == "yeti")) exitWith // yeti
                         {
-                            _magp = [];
+                            _p execVM "scripts\yeti_rearm.sqf";
                         };
 
                         [_p, _weapp] call SYG_armUnit;
@@ -376,7 +376,7 @@ if (d_with_ace_map) then { "ACE_Map_Logic" createVehicleLocal [0,0,0]; };
 
 if ( count resolved_targets > 0) then
 {
-hint localize "+++ count resolved_targets > 0 +++";
+hint localize format["+++ count resolved_targets %1 +++", resolved_targets];
 #ifndef __TT__
     for "_i" from 0 to (count resolved_targets - 1) do {
         _res = resolved_targets select _i;
@@ -1229,7 +1229,7 @@ XBaseEnemies = {
 _trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 _trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
 _trigger setTriggerActivation [d_enemy_side, "PRESENT", true];
-_trigger setTriggerStatements["{((_x isKindOf 'Man')||(_x isKindOf 'LandVehicle')) && ((name  _x) != 'Error: No unit') } count thislist > 0", "FLAG_BASE say 'Alarm';[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+_trigger setTriggerStatements["{ _x isKindOf 'LandVehicle' || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "FLAG_BASE say 'Alarm';[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
 #endif
 
 if (d_weather) then {execVM "scripts\weather\weatherrec2.sqf";};
@@ -1467,7 +1467,7 @@ XFacAction = {
 	};
 };
 
-#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 #endif
 	if (!isNull d_jet_service_fac && !d_jet_service_fac_rebuilding) then {
@@ -1479,7 +1479,7 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 	if (!isNull d_wreck_repair_fac && !d_wreck_repair_fac_rebuilding) then {
 		[2] spawn XFacAction;
 	};
-#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
 };
 #endif
 
@@ -1582,7 +1582,7 @@ for "_i" from 0 to (count d_ace_boxes) - 1 do {
 		};
 	};
 };
-d_pos_ace_boxes = nil;
+d_ace_boxes = nil;
 #endif
 
 if (!d_old_ammobox_handling) then {
@@ -1619,8 +1619,9 @@ if (d_player_air_autokick > 0) then {
 			};
 
 #ifdef __JAIL_MAX_SCORE__
+//    	    hint localize format[ "--- oldscore %1, newscore %2", _oldscore, _newscore ];
 			// Jail is assigned if score are negative and lowered by more then -1 value (not personal death occured)
-			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore + 1)) ) then
+			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore - 1)) ) then
 			{
 			    [_newscore] execVM "scripts\jail.sqf"; // send him to jail for (_newscore + 60) seconds
 			};
@@ -1783,6 +1784,7 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 {
     FLAG_BASE addAction ["В тюрьму!", "scripts\jail.sqf", "TEST" ];
 };
+player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
 // #define __DEBUG_ADD_VEHICLES__

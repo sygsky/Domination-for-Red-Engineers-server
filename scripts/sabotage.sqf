@@ -291,14 +291,14 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				 // last boolean is (true) to put bombs to the center or (false) not 
                 _obj_prev_dmg = damage _obj; // current damage of targeted service
 #ifdef __DEBUG__
-				_bombScript = [_shell_unit, [ _obj ], _retreat_pos, true, m_PIPEBOMBNAME, "", false ] spawn FuncUnitDropPipeBomb;
+				_bombScript = [_shell_unit, [ _obj ], _retreat_pos, true, m_PIPEBOMBNAME, "", true ] spawn FuncUnitDropPipeBomb;
 #else				
-				_bombScript = [_shell_unit, [ _obj ], _retreat_pos, _debug1, m_PIPEBOMBNAME, "", false ] spawn FuncUnitDropPipeBomb;
+				_bombScript = [_shell_unit, [ _obj ], _retreat_pos, _debug1, m_PIPEBOMBNAME, "", true ] spawn FuncUnitDropPipeBomb;
 #endif
 
 				_time = time;
 //				_timeout = ([_shell_unit, _obj] call SYG_distance2D) + 60;
-				_timeout = (_shell_unit distance _obj) + 60;
+				_timeout = (round (_shell_unit distance _obj)) + 60;
 #ifdef __PRINT__
 				hint localize format["sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (_grp call XfGetAliveUnits) + 1, round(_timeout)];
 #endif

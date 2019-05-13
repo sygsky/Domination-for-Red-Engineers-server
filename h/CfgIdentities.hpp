@@ -1,7 +1,14 @@
 // ACE MOD - ACE FX Voices Russian - by ACE MOD team (/*ToDo*/ Mail-Addy)
 
 // CfgIdentities.hpp
-
+class Irina
+{
+	name="Ирина";
+	//face="Face1";
+	glasses="None";
+	speaker="Amy";
+	pitch=1;
+};
 class Rus1
 {
 	name="Timofei Produnov";

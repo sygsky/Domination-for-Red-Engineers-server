@@ -216,7 +216,7 @@ XHandleNetStartScriptClient = {
 		};
 		// last target town cleared, no more target remained !!!
 		case "target_clear": {
-			playSound "fanfare";
+			playSound "USSR"; // playSound "fanfare";
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2);
 			execVM "x_scripts\x_target_clear_client.sqf";
@@ -225,6 +225,7 @@ XHandleNetStartScriptClient = {
 		//+++ Sygsky: added for airbase take mission (before any towns)
 		case "airbase_clear": { // signal about airbase taken
 		    // TODO: enable fanfares after airbase realization, now it is commented
+		    hint "airbase clear after initial battle on it";
 			//playSound "fanfare";
 			//execVM "x_scripts\x_target_clear_client.sqf";
 		}; // "airbase_clear"
@@ -324,9 +325,9 @@ XHandleNetStartScriptClient = {
 		case "update_observers": {
 			__compile_to_var
 			if (update_observers != -1) then {
-				[format [localize "STR_SYS_40"/* "Внимание! В городе обнаружено присутствие вражеских корректировщиков, всего %1 чел." */,(_this select 1)], "HQ"] call XHintChatMsg;
+				[format [localize "STR_SYS_40"/* "Warning! In the %1 discovered the presence of enemy spotters, in total %2 men." */,call SYG_getTargetTownName, (_this select 1)], "HQ"] call XHintChatMsg;
 			} else {
-				hint localize "STR_SYS_41"/* "Все вражеские корректировщики уничтожены..." */;
+				hint localize "STR_SYS_41"/* "All enemy spotters are killed..." */;
 			};
 		};
 		case "o_arti": {
@@ -469,8 +470,8 @@ XHandleNetStartScriptClient = {
 		case "mrr2_in_air": {
 			__compile_to_var
 			__isRacs
-				if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,2]) call XfHQChat;}; //"%1 мобильный респаун 2 транспортируется по воздуху"
-				if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,2]) call XfHQChat;}; //"%1 мобильный респаун 2 доступен"
+				if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,2]) call XfHQChat;};  //"%1 Respawn %2 is transported by airlift"
+				if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,2]) call XfHQChat;}; // "%1 Respawn %2 is available"
 			};
 		};
 		#endif
@@ -478,10 +479,10 @@ XHandleNetStartScriptClient = {
 			__compile_to_var
 			switch (x_wreck_repair select 2) do {
 				case 0: {
-					(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%2, восстанавливается %1. Это потребует времени..."
+					(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "Restoring %1 at %2, this will take some time..."
 				};
 				case 1: {
-					(format [localize "STR_SYS_270", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%2 завершил работу над  %1"
+					(format [localize "STR_SYS_270", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%1 ready at %2"
 				};
 			};
 		};
@@ -489,7 +490,22 @@ XHandleNetStartScriptClient = {
 			[(_this select 1),(_this select 2)] spawn XRecapturedUpdate;
 		};
 		case "mt_spotted": {
-			localize "STR_SYS_65" /* "Враг обнаружил вас..." */ call XfHQChat;
+			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
+
+            if ( (call SYG_getTargetTownName) == "Arcadia") then
+            {
+                _ret = "NO_DEBUG" call SYG_getTargetTown;
+            	if (count _ret > 0 ) then
+            	{
+            	    // player can hear by town specified music only in vicinity of 3 km
+            	    if ( (player distance (_ret select 0)) <= 3000) then
+            	    {
+                        sleep (random 5);
+                        playMusic "detected_Arcadia";
+            	    }
+            	};
+            };
+
 		};
 		#ifdef __AI__
 		case "d_ataxi": {
@@ -705,13 +721,12 @@ XHandleNetStartScriptClient = {
     		    if (isNull _sound) then
     		    {
                     sleep 20; // sleep longer than known max sound length
-                    deleteVehicle _nil;
     		    }
     		    else
     		    {
                     waitUntil {isNull _sound};
-                    deleteVehicle _nil;
 	            };
+                deleteVehicle _nil;
 		    }
 		    else
 		    {
@@ -736,7 +751,7 @@ XHandleNetStartScriptClient = {
 		};
 
 		// somebody requested GRU score
-		// ["GRU_event_scorаes", _score, _id, ""] call XSendNetStartScriptClient;
+		// ["GRU_event_scores", _score, _id, ""] call XSendNetStartScriptClient;
 
 		case "GRU_event_scores":
 		{

@@ -355,7 +355,7 @@ class XD_StatusDialog
 		y = 0.13;
 		w = 0.45;
 		h = 0.15;
-		text = "Ждите дополнительно приказа...";
+		text = "$STR_SYS_58_2";
 	};
 
 	class XD_SecondaryCaption : XC_RscText
@@ -382,7 +382,7 @@ class XD_StatusDialog
 		y = 0.31;
 		w = 0.45;
 		h = 0.09;
-		text = "Ждите дополнительно приказа...";
+		text = "$STR_SYS_58_2";
 	};
 
 	class XD_WeatherInfoCaption : XC_RscText

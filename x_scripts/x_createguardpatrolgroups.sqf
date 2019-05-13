@@ -263,7 +263,7 @@ if (!no_more_observers) then {
 		//+++ Sygsky: rearm spotter[s]
 		{ [_x, 1.0, 0.99] call SYG_rearmSpotter } forEach units _agrp;
 		//--- Sygsky
-		_cnt = _cnt + count units _agrp;
+		// _cnt = _cnt + count units _agrp;
 		_grp_array execVM "x_scripts\x_groupsm.sqf";
 		call compile format ["
 			Observer%1 = _units select 0;

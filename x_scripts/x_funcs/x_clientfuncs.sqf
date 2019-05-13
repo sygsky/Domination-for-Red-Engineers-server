@@ -90,8 +90,8 @@ XHintChatMsg = {
 XfHandleMessage = {
 	private ["_msg","_receiver_type","_receiver","_type"];
 	_msg = _this select 0;
-	_receiver_type = _this select 1; // "unit", "grp", "all","vec"
-	_receiver = _this select 2; // only needed for "unit", "grp", "vec", otherwise objNull
+	_receiver_type = toLower(_this select 1); // "unit", "grp", "all","vec"
+	_receiver = toLower(_this select 2); // only needed for "unit", "grp", "vec", otherwise objNull
 	_type = _this select 3; // "global", "vehicle", "side", "group", "hint", "hq"
 	switch (_type) do {
 		case "global": {

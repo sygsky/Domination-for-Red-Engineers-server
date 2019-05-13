@@ -101,7 +101,7 @@ _main_polling_interval = 2.123;
 while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _chopper} do
 { 
 	if (!alive _chopper) exitWith {_ejected = true; /*[player,"Chopper destroyed"] call XfSideChat;*/};
-	
+	_msg = "unknown";
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
 	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
@@ -125,9 +125,10 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
 	{
+  	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+
         while {alive _chopper && alive driver _chopper && (position _chopper select 2) < HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
 		{
-			sleep 0.15;
 			if (position _chopper select 2 < 2) exitWith
 			{
         	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;

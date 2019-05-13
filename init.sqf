@@ -218,6 +218,12 @@ if (isServer) then {
         hint localize format["SM goes first: %1", side_missions_random];
 #endif
 
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // insert special missiona at the list head
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    _first_array = [];   // 10 - arti above base (SanSebastian)
+    side_missions_random = _first_array + (side_missions_random - _first_array);
+
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
@@ -339,8 +345,14 @@ if (isServer) then {
     	while {isNil "SYG_client_start"} do {sleep 60}; // wait for 1st user connection with known time and receiving real server time from him (this is Arma!!!)
         hint localize "init.sqf: New Year procedure, ""SYG_client_start"" detected";
 
-    	if ( (argp(SYG_client_start,1) > 1) && (argp(SYG_client_start,1) < 12) ) exitWith {false}; // new year expected if only december or january is current month
-    	if ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,2) > 10) ) exitWith {false}; // out of January NE days
+    	if ( (argp(SYG_client_start,1) > 1) || (argp(SYG_client_start,1) < 12) ) exitWith {
+    	    hint localize "init.sqf: New Year procedure completed, month not DEC or JAN";
+    	    false
+    	}; // new year expected if only december or january is current month
+    	if ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,2) > 10) ) exitWith {
+            hint localize "init.sqf: New Year procedure completed, JAN more then 10 is out of range";
+            false
+    	}; // out of January NE days
         while {true} do
         {
             // now check NewYear period
@@ -361,7 +373,7 @@ if (isServer) then {
                 _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
             };
             hint localize format["init.sqf: %1 -> New Year still not detected, next check in an hour", (call SYG_getServerDate) call SYG_humanDateStr];
-            sleep 43200; // wait 12 hours to check new year next hour
+            sleep 43200; // wait 12 hours to check new year next half of day
         };
         hint localize "init.sqf: New Year procedure completed";
 	};
@@ -639,8 +651,11 @@ ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE
 
 #endif
 
+#ifdef __DISABLE_HIDE_UNCONSCIOUS__
+
 ACE_Sys_Wound_Net_fSetUnc       = compile preProcessFileLineNumbers "scripts\ACE\setUnc.sqf"; // stop setCaptive for unconsciones player
 
+#endif
 
 };
 #endif

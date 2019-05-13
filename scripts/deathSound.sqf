@@ -14,9 +14,9 @@ _unit = _this select 0; // player
 
 //hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
 
-if (!(local _unit)) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};
-if (!(isPlayer _unit)) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
-if ( _unit != _killer) then // KIA
+if ( !( local _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};
+if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
+if ( _unit != _killer ) then // KIA
 {
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
     {
@@ -34,6 +34,22 @@ else    // some kind of suicide? Say something about...
         ["say_sound", _churchArr select 0, RANDOM_ARR_ITEM(SYG_liturgyDefeatTracks)] call XSendNetStartScriptClientAll;
     };
 
+    // check if we are near TV-Tower
+    _TVTowerArr = _unit nearObjects [ "Land_telek1", 50];
+    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
+    {
+        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
+    };
+
+    // check if we are near castle
+    _castleArr = _unit nearObjects [ "Land_helfenburk", 500];
+    if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith
+    {
+        _sound =  RANDOM_ARR_ITEM(SYG_MedievalDefeatTracks);
+        ["say_sound", _castleArr select 0, _sound] call XSendNetStartScriptClientAll; // music from castle
+    };
+
     // short melody on unknown death case, anybody within some range can hear this
     _sound = "male_scream_0"; // default value
     // check if a woman is killed
@@ -47,11 +63,12 @@ else    // some kind of suicide? Say something about...
         _sound = format["ACE_BrutalScream%1", ceil(random 15)]; // 1-15
 //        hint localize format["ACE sound is %1", _sound];
 #else
-        if (isNil "SYG_selfKillingSound") then {SYG_selfKillingSound = "male_scream_" + str(floor(random 7))};  // 0-6
-        _sound = SYG_selfKillingSound;
+        if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 9))};  // 0-9
+        _sound = SYG_suicideScreamSound;
 #endif
     };
 
+    hint localize format["deathSound: killer unknown, dmg %1", damage _unit ];
     // let all to hear this sound, not only current player
     ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll;
 

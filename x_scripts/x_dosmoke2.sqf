@@ -51,9 +51,9 @@ if (isNull _shooter) exitWith
 };
 _damage = _this select 2;
 
-if ( _damage >= 1) exitWith { hint localize format["x_dosmoke2.sqf: attacked vec %1 is killed", typeOf _vec]; }; // End Of Life
-if (!local _vec) exitWith {  hint localize format["x_dosmoke2.sqf: attacked vec %1 is commanded by player", typeOf _vec]; }; // It is player commanded vehicle, don't handle it
 _name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
+if ( _damage >= 1) exitWith { hint localize format["x_dosmoke2.sqf: attacked vec %1 is killed by %2", typeOf _vec, _name]; }; // End Of Life
+if (!local _vec) exitWith {  hint localize format["x_dosmoke2.sqf: attacked vec %1 is commanded by player %2", typeOf _vec, _name]; }; // It is player commanded vehicle, don't handle it
 
 if ( _vec == _shooter) exitWith{/* collision, not hit by enemy weapon */
     #ifdef __PRINT__
@@ -63,7 +63,7 @@ if ( _vec == _shooter) exitWith{/* collision, not hit by enemy weapon */
 
 // TODO: check attacker be in air vehicle. If so, not smoke against air enemy
 
-// TODO: if attacker is a man, and damaged is load HE to the cannon and shoot it to bastard.
+// TODO: if attacker is a man, and veh is damaged, then load with HE and then shoot it to bastard.
 // TODO: If attacker is alive after HE shoot, shoot it again and change ammo to sabot again
 
 _dead = true;

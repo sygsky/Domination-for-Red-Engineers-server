@@ -1604,8 +1604,9 @@ SYG_armUnit = {
 // 2nd array is names of magazines
 // 3rd optional array is rucksack name
 // 4th optional array is names of rucksack items
+// 5th is optional value for player stored view distance, default value is 1500
 //
-//  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]>>] ] call SYG_rearmUnit;
+//  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]><, view_distance>>] ] call SYG_rearmUnit;
 //
 //  or
 //

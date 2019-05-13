@@ -314,8 +314,11 @@ XPlayerRank = {
 				// if here, then promoted due to fact that your rank now is not old one and not new too
 				(format [ localize "STR_SYS_44", d_player_pseudo_rank, _prev_rank ]) call XfHQChat; // "Вы повышены в звании с %1 до %2, которое будет присвоено на Родине!"
 				d_player_pseudo_rank = _prev_rank; // e.g. from COL to G-M or from COL to G-M etc
-                // TODO: sent message to everybody about new super rank player
+
+                // FIXME: sent message to everybody about new super rank player
+				["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
                 // TODO: addAction to get moto/etc from bus stops (but is it impossible?)
+
                 // TODO: check if no players in the same group with the same or higher rank
                 _grp = group player;
                 _units = (units _grp) - [player]; // group units minus player itself
@@ -375,7 +378,8 @@ XPlayerRank = {
 	if (_score < (d_points_needed select 1) && _score >= (d_points_needed select 0) && d_player_old_rank != "CORPORAL") exitWith {
 		if (d_player_old_score < (d_points_needed select 1)) then {
 			format[ localize "STR_SYS_67"/*  "Поздравляем с присвоением внеочередного звания %1" */,localize "STR_TSD9_27"] call XfHQChat; // Ефрейтора
-			playSound "fanfare";
+			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+//			playSound "fanfare";
 		} else {
 			(format [localize "STR_SYS_66"/* "Вы разжалованы со звания %1 до %2" */,d_player_old_rank call XGetRankStringLocalized, localize "STR_TSD9_27"]) call XfHQChat; //Ефрейтора
 		};
@@ -387,7 +391,8 @@ XPlayerRank = {
 	if (_score < (d_points_needed select 2) && _score >= (d_points_needed select 1) && d_player_old_rank != "SERGEANT") exitWith {
 		if (d_player_old_score < (d_points_needed select 2)) then {
 			format[localize "STR_SYS_67"/* "Поздравляем с присвоением внеочередного звания %1" */, localize "STR_TSD9_28"] call XfHQChat; // Сержанта
-			playSound "fanfare";
+			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+//			playSound "fanfare";
 		} else {
 			(format [localize "STR_SYS_66"/* "Вы разжалованы со звания %1 до звания %2" */, d_player_old_rank call XGetRankStringLocalized, localize "STR_TSD9_28"]) call XfHQChat; // Сержанта
 		};
@@ -399,7 +404,8 @@ XPlayerRank = {
 	if (_score < (d_points_needed select 3) && _score >= (d_points_needed select 2) && d_player_old_rank != "LIEUTENANT") exitWith {
 		if (d_player_old_score < (d_points_needed select 3)) then {
 			format[localize "STR_SYS_67"/* "Поздравляем с присвоением внеочередного звания %1" */, localize "STR_TSD9_29"] call XfHQChat; //Лейтенанта
-			playSound "fanfare";
+			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+//			playSound "fanfare";
 		} else {
 			(format [localize "STR_SYS_66"/* "Вы разжалованы со звания %1 до звания %2" */, d_player_old_rank call XGetRankStringLocalized,localize "STR_TSD9_29"]) call XfHQChat;
 		};
@@ -411,7 +417,8 @@ XPlayerRank = {
 	if (_score < (d_points_needed select 4) && _score >= (d_points_needed select 3) && d_player_old_rank != "CAPTAIN") exitWith {
 		if (d_player_old_score < (d_points_needed select 4)) then {
 			format[localize "STR_SYS_67"/* "Поздравляем с присвоением внеочередного звания Капитана" */,localize "STR_TSD9_30"] call XfHQChat;
-			playSound "fanfare";
+			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+//			playSound "fanfare";
 		} else {
 			(format [localize "STR_SYS_66"/* "Вы разжалованы со звания %1 до Капитана" */,d_player_old_rank call XGetRankStringLocalized,localize "STR_TSD9_30"]) call XfHQChat;
 		};
@@ -423,7 +430,8 @@ XPlayerRank = {
 	if (_score < (d_points_needed select 5) && _score >= (d_points_needed select 4) && d_player_old_rank != "MAJOR") exitWith {
 		if (d_player_old_score < (d_points_needed select 4)) then {
 			format[localize "STR_SYS_67"/* "Поздравляем с присвоением внеочередного звания Майора" */,localize "STR_TSD9_31"] call XfHQChat;
-			playSound "fanfare";
+			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+//			playSound "fanfare";
 		} else {
 			(format [localize "STR_SYS_66"/* "Вы разжалованы со звания %1 до Майора" */,d_player_old_rank call XGetRankStringLocalized,localize "STR_TSD9_31"]) call XfHQChat;
 		};
@@ -438,7 +446,8 @@ XPlayerRank = {
 		player setRank d_player_old_rank;
 		format["%1. %2",format[localize "STR_SYS_67",localize "STR_TSD9_32"], localize "STR_SYS_68"] call XfHQChat;
 		d_player_pseudo_rank = d_player_old_rank;
-		playSound "fanfare";
+    	["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+//		playSound "fanfare";
 		d_player_old_score = _score;
 	};
 };

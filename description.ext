@@ -116,7 +116,7 @@ class CfgMusic
 	class nutcracker {	name = ""; sound[] = {\sounds\NutCracker.ogg, db+20, 1.0};};
     class home_alone { name=""; sound[] = {\sounds\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
 
-//	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
+	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
 	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
     class grig    {        name="";        sound[]=   {\sounds\grig.ogg,db-1,1.0};    };
@@ -130,13 +130,6 @@ class CfgMusic
     class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
     class               lastdime { name=""; sound[]= {\sounds\lastdime.ogg,db-1,1.0};    };
 
-/*
-    class requiem // intro
-    {
-        name="";
-        sound[]=   {\sounds\requiem.ogg,db-1,1.0};
-    };
-*/
     class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
     class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0};} // used in  intro
@@ -144,15 +137,21 @@ class CfgMusic
     class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0};} // used in  intro
     class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0};} // intro music from "Bloody diamond" movie
     class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};} // intro music from "Total recall" movie (The Mountain)
-    //class ost_fort_boyard { name=""; sound[] = {\sounds\ost_fort_boyard.ogg,db-1,1.0};} // intro music from "Fort Boyard" French TV adventure
     class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
     class capricorn1title { name=""; sound[] = {\sounds\capricorn1title.ogg,db+20,1.0};} // intro music from great american movie "Capricorn-1"
     class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg,db+20,1.0};} // intro music from Soviet great song (1950)
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class morze { name=""; sound[] = {\sounds\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
+    class morze2 { name=""; sound[] = {\sounds\morze2.ogg,db+0,1.0};}; // Morze real message (Canada)
     class amigohome_ernst_bush { name=""; sound[] = {\sounds\amigohome_ernst_bush.ogg,db+0,1.0};}; // Ami go home by Ernsh Busch, DDR communust and great singer!
     class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
+    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some feat music
+    class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0};}; // USSR film Chapaev
+    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
+    class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
+
+//------------------------------------- END if Intro musio list --------------------------------------------------
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 
@@ -160,6 +159,10 @@ class CfgMusic
 
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
     class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
+
+//+++++++++++++++++++++++ Detect music
+
+    class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
 
 //+++++++++++++++++++++++ Defeat music track list
 
@@ -192,11 +195,42 @@ class CfgMusic
     class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
 
     class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg.ogg,db+10,1.0};} // defeat sound
-    class medieval_defeat { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // defeat sound
+    class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
+    class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0};} // defeat sound by Kevin MacLeod
 
+//+++++++++++++++++++++++ medieval defeats (death near castles)
+    class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat1 { name=""; sound[] = {\sounds\medieval\bard-melody.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat2 { name=""; sound[] = {\sounds\medieval\dark-magic.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat3 { name=""; sound[] = {\sounds\medieval\logo.ogg,db+10,1.0};} // medievaldefeat sound
+    class medieval_defeat4 { name=""; sound[] = {\sounds\medieval\medieval-introduction-2.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat5 { name=""; sound[] = {\sounds\medieval\medieval-introduction-3.ogg,db+10,1.0};} // medieval defeat sound
+
+    class medieval_defeat6  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_11.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat7  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_1.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat8  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_2.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat9  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_3.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat10 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_15_1.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat11 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_15_2.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat12 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_3.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat13 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_4.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat14 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_5_1.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat15 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_5_2.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat16 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_6_1.ogg,db+10,1.0};} // medieval defeat sound
+    class medieval_defeat17 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_6_2.ogg,db+10,1.0};} // medieval defeat sound
+    class village_consort { name=""; sound[] = {\sounds\medieval\village_consort.ogg,db+10,1.0};}       // medieval defeat sound by Kevin MacLeod
+
+    class rammstein_1 { name=""; sound[] = {\sounds\ramm\rammstein_1.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_2 { name=""; sound[] = {\sounds\ramm\rammstein_2.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_3 { name=""; sound[] = {\sounds\ramm\rammstein_3.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_4 { name=""; sound[] = {\sounds\ramm\rammstein_4.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_5 { name=""; sound[] = {\sounds\ramm\rammstein_5.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_6 { name=""; sound[] = {\sounds\ramm\rammstein_6.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_7 { name=""; sound[] = {\sounds\ramm\rammstein_7.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_8 { name=""; sound[] = {\sounds\ramm\rammstein_8.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
+    class rammstein_9 { name=""; sound[] = {\sounds\ramm\rammstein_9.ogg,db+10,1.0};} // From "Rammstein" defeat sounds
 
     // defeats
-
     class metel { name=""; sound[] = {\sounds\metel.ogg,db+0,1.0};} // defeat music from "Metel" of Pushkin novel
     class gayane1 { name=""; sound[] = {\sounds\gayane1.ogg,db+0,1.0};} // "Gayane" ballet
     class gayane2 { name=""; sound[] = {\sounds\gayane2.ogg,db+0,1.0};} // "Gayane" ballet
@@ -207,13 +241,13 @@ class CfgMusic
     class decisions { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
 //    class gong {name = ""; sound[] = {\sounds\gong.ogg, db+10, 1.0}; titles[] = {}; }; // ???
 
-    class church_voice {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0}; titles[] = {}; };
-    class church_organ_1 {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0}; titles[] = {}; };
-    class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0}; titles[] = {}; };
-    class haunted_organ_2 {name = ""; sound[] = {\sounds\organ\haunted_organ_2.ogg, db+10, 1.0}; titles[] = {}; };
+    class church_voice {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0};};
+    class church_organ_1 {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0};};
+    class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0};};
+    class haunted_organ_2 {name = ""; sound[] = {\sounds\organ\haunted_organ_2.ogg, db+10, 1.0};};
 
-    class sorcerie {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0}; titles[] = {}; };
-    class melody {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0}; titles[] = {}; };
+    class sorcerie {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0};};
+    class melody {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0};};
 
 };
 
@@ -234,7 +268,7 @@ class CfgSounds
 #ifdef __MANDO__
 #include "mando_missiles\mando_sounds.h"
 #endif
-
+    class USSR {name = ""; sound[] = {\sounds\USSR.ogg, db+10, 1.0};titles[] = {};};
 	class Funk {name="Funk";sound[]={\sounds\funk.ogg,db+20,1.0};titles[] = {};};
 	class Ari {name="Ari";sound[]={\sounds\ari.ogg,db+30,1.0};titles[] = {};};
 	class odinakovo {name="odinakovo";sound[]={\sounds\odinakovo.ogg,db+0,1.0};titles[] = {};};
@@ -254,8 +288,20 @@ class CfgSounds
     class starwars { name=""; sound[]= {\sounds\starwars.ogg,db-1,1.0}; titles[] = {};};
     class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
 
-    class vozdushnye_potoki { name=""; sound[] = {\sounds\vozdushnye_potoki.ogg,db-1,1.0}; titles[] = {};} // Your parachute is opened!!!
-    class vozdushnye_potoki_2 { name=""; sound[] = {\sounds\vozdushnye_potoki_2.ogg,db-1,1.0}; titles[] = {};} // TODO: add to jump from a plane at mision start
+    class parajump1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump1.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 1
+    class parajump2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump2.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 2
+
+    class freefall1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_1.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 1
+    class freefall2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_2.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall3 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_1.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall4 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_2.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall5 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_3.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall6 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_4.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall7 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_5.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+    class freefall300m { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_300_m.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+
+    class rippara { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
+
 
     class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; titles[] = {};};
 
@@ -271,13 +317,14 @@ class CfgSounds
 	class teleport { name=""; sound[]=   {\sounds\teleport.ogg,db-1,1.0}; titles[] = {}; };
 	class tropelet { name=""; sound[]=   {\sounds\tropelet.ogg,db-1,1.0}; titles[] = {}; };
 
-    //class USSR {name = ""; sound[] = {\sounds\USSR.ogg, db+10, 1.0}; titles[] = {}; };
     class countdown10 {name = ""; sound[] = {\sounds\countdown10.ogg, db+10, 1.0}; titles[] = {}; };
     class countdown {name = ""; sound[] = {\sounds\countdown.ogg, db+10, 1.0}; titles[] = {}; }; // Rammstein
     class countdown_alarm {name = ""; sound[] = {\sounds\countdown_alarm.ogg, db+10, 1.0}; titles[] = {}; };
 
     class return {name = ""; sound[] = {\sounds\return.ogg, db+10, 1.0}; titles[] = {}; };
     class steal {name = ""; sound[] = {\sounds\steal.ogg, db+10, 1.0}; titles[] = {}; };
+    class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0}; titles[] = {};} // defeat sound
+    class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0}; titles[] = {};} // defeat sound by Kevin MacLeod
 
 // woman self-killed
     class female_shout_of_pain_1 {name = ""; sound[] = {\sounds\female_shout_of_pain_1.ogg, db+0, 1.0}; titles[] = {}; };
@@ -292,6 +339,8 @@ class CfgSounds
     class male_scream_4 {name = ""; sound[] = {\sounds\male_scream_4.ogg, db+10, 1.0}; titles[] = {}; };
     class male_scream_5 {name = ""; sound[] = {\sounds\male_scream_5.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_6 {name = ""; sound[] = {\sounds\male_scream_6.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_7 {name = ""; sound[] = {\sounds\male_scream_7.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_8 {name = ""; sound[] = {\sounds\male_scream_8.ogg, db+0, 1.0}; titles[] = {}; };
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 
@@ -305,11 +354,44 @@ class CfgSounds
     class gong_07       {name = ""; sound[] = {\sounds\gong\gong-07.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_08       {name = ""; sound[] = {\sounds\gong\gong-08.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_09       {name = ""; sound[] = {\sounds\gong\gong-09.ogg, db+10, 1.0}; titles[] = {}; };
+    class gong_10       {name = ""; sound[] = {\sounds\gong\magic-string-spell.ogg, db+10, 1.0}; titles[] = {}; };
 
     class liturgy_1     {name = ""; sound[] = {\sounds\liturgy\diamon_hand.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_2     {name = ""; sound[] = {\sounds\liturgy\gospodu_pomolimsa.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_3     {name = ""; sound[] = {\sounds\liturgy\ortodox_liturgy.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_4     {name = ""; sound[] = {\sounds\liturgy\valaam_liturgy.ogg, db+10, 1.0}; titles[] = {}; };
+
+    // medieval defeats (death near castles)
+    class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat1 { name=""; sound[] = {\sounds\medieval\bard-melody.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat2 { name=""; sound[] = {\sounds\medieval\dark-magic.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat3 { name=""; sound[] = {\sounds\medieval\logo.ogg,db+10,1.0}; titles[] = {}; } // medievaldefeat sound
+    class medieval_defeat4 { name=""; sound[] = {\sounds\medieval\medieval-introduction-2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat5 { name=""; sound[] = {\sounds\medieval\medieval-introduction-3.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+
+    class medieval_defeat6  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_11.ogg,db+10,1.0};   titles[] = {}; } // medieval defeat sound
+    class medieval_defeat7  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_1.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat8  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat9  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_3.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat10 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_15_1.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat11 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_15_2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat12 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_3.ogg,db+10,1.0};    titles[] = {}; } // medieval defeat sound
+    class medieval_defeat13 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_4.ogg,db+10,1.0};    titles[] = {}; } // medieval defeat sound
+    class medieval_defeat14 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_5_1.ogg,db+10,1.0};  titles[] = {}; } // medieval defeat sound
+    class medieval_defeat15 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_5_2.ogg,db+10,1.0};  titles[] = {}; } // medieval defeat sound
+    class medieval_defeat16 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_6_1.ogg,db+10,1.0};  titles[] = {}; } // medieval defeat sound
+    class medieval_defeat17 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_6_2.ogg,db+10,1.0};  titles[] = {}; } // medieval defeat sound
+    class village_consort   { name=""; sound[] = {\sounds\medieval\village_consort.ogg,db+10,1.0};     titles[] = {};}       // medieval defeat sound by Kevin MacLeod
+
+    class rammstein_1 { name=""; sound[] = {\sounds\ramm\rammstein_1.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_2 { name=""; sound[] = {\sounds\ramm\rammstein_2.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_3 { name=""; sound[] = {\sounds\ramm\rammstein_3.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_4 { name=""; sound[] = {\sounds\ramm\rammstein_4.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_5 { name=""; sound[] = {\sounds\ramm\rammstein_5.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_6 { name=""; sound[] = {\sounds\ramm\rammstein_6.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_7 { name=""; sound[] = {\sounds\ramm\rammstein_7.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_8 { name=""; sound[] = {\sounds\ramm\rammstein_8.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+    class rammstein_9 { name=""; sound[] = {\sounds\ramm\rammstein_9.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

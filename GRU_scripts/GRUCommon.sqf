@@ -31,9 +31,11 @@ if ( isNil "GRU_tasks" ) then
 	GRU_specialBonusArr    = [              5,               3];
 	GRU_specialBonusStrArr = ["STR_LIT_PRIZE", "STR_MAP_PRIZE"];
 };
+
 // call: _task = _task_id call GRU_getTask;
 GRU_getTask = {
-	if ( TASK_ID_NOT_VALID(_this)) exitWith {[]}; // /* hint localize "GRUCommon.sqf.GRU_getTask:TASK_ID_NOT_VALID(_this) == true";  */
+	if ( TASK_ID_NOT_VALID(_this)) exitWith {[]};
+	// hint localize "GRUCommon.sqf.GRU_getTask:TASK_ID_NOT_VALID(_this) == true";
 	argp(GRU_tasks,_this)
 };
 
@@ -103,17 +105,16 @@ GRU_mainTaskDescription = {
 /*
     Scores for investigations of some special objects (fire, map, enemy plans paper etc).
     If called from client computer, message if sent to server
-    if called on serveк computer, scores are checked and if available information is sent ot user
+    if called on serveк computer, scores are checked and available information sent ot user
 */
 GRU_specialScores = {
-    if (isServer) then
+    if (!X_CLIENT) then
     {
         // todo: check for scores
         hint localize format["Server-> GRU_specialScores: input %1", _this];
     }
     else
     {
-        // todo: send command to the server about possible score as prize for curiousity
         hint localize format["Client-> GRU_specialScores: input %1", _this];
         if ( _this >= 0 && _this < (count GRU_specialBonusArr)) then
         {

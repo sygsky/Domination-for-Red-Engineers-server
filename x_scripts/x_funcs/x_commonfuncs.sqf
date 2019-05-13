@@ -48,7 +48,9 @@ XGDTTracked = {};
 
 SYG_found_GL3 = "GL3" in _search_array;
 SYG_found_ai_spotting = "ai_spotting" in _search_array;
-hint localize format["+++ GL3 = %1, ai_spotting = %2 ", SYG_found_GL3, SYG_found_ai_spotting];
+SYG_found_TCN_GrenadeFix = "TCN_GrenadeFix" in _search_array;
+
+hint localize format["+++ GL3 = %1, ai_spotting = %2, Grenade fix = %3 ", SYG_found_GL3, SYG_found_ai_spotting, SYG_found_TCN_GrenadeFix];
 #ifdef __ACE__
 if ((d_enemy_side == "WEST")  && isServer && SYG_found_GL3) then
 {
