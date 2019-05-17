@@ -51,8 +51,8 @@ while {nr_observers > 0} do {
 //	__DEBUG_NET("x_handleobservers.sqf",(call XPlayersNumber))
 
 	for "_i" from 0 to (count _observers) - 1 do {
-	    _observer = call (_observers select _i); // current observer
-        if (!alive _objserver) then
+	    _observer = call compile (_observers select _i); // current observer
+        if (!alive _observer) then
         {
             _observers set[_i, "RM_ME"];
         }
@@ -79,6 +79,8 @@ while {nr_observers > 0} do {
                             _near_targets = _pos_nearest nearObjects [_man_type, 35];
                             _vecs         = _pos_nearest nearObjects [_land_veh_type, 35];
                             _cnt          =  ({alive _x && canStand _x} count _near_targets) + ({alive _x && (side _x == _side)} count _vecs);
+                            hint localize format["+++ x_handleobservers.sqf: observer detected enemy %1, in range friendly count %2", _enemy, _cnt];
+
 #else
                             _near_targets = nearestObjects [_pos_nearest, _man_type, 35];
                             _cnt          =  {alive _x && canStand _x} count _near_targets;
@@ -97,7 +99,7 @@ while {nr_observers > 0} do {
             };
             sleep 3.321;
         };
-	} forEach _observers;
+	};
 	_observers = _observers - ["RM_ME"]; // remove killed observers[s]
 	sleep 5.123;
 	if (!_enemy_ari_available) then 
