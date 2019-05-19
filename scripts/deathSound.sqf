@@ -36,7 +36,7 @@ else    // some kind of suicide? Say something about...
 
     // check if we are near TV-Tower
     _TVTowerArr = _unit nearObjects [ "Land_telek1", 50];
-    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
+    if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
