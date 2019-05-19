@@ -54,7 +54,7 @@ for "_i" from 0 to (_number_shells - 1) do {
 		#endif
 	};
 	_xo = ceil random 10;
-	 sleep 0.923 + (_xo / 10);
+	 sleep (0.923 + (_xo / 10));
 };
 
 _wp_array = nil;

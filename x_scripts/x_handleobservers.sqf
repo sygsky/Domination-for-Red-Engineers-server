@@ -44,7 +44,7 @@ _observers set [0, {Observer1}];
 _observers set [1, {Observer2}];
 _observers set [2, {Observer3}];
 
-while {nr_observers > 0} do {
+while { nr_observers > 0 && !target_clear } do {
 	if (X_MP) then {
 	if ((call XPlayersNumber) == 0) then { waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0}; };
 	};
@@ -66,7 +66,7 @@ while {nr_observers > 0} do {
                     if (count _near_targets > 0) then {
                         _pos_nearest = [];
                         {
-                            if ((_x select 4) == _enemy) exitWith {
+                            if ( (_x select 4) == _enemy ) exitWith {
                                 _pos_nearest = _x select 0;
                             };
                             sleep 0.001;
@@ -74,22 +74,28 @@ while {nr_observers > 0} do {
                         _near_targets = [];
                         _vecs = [];
                         _cnt = 0;
-                        if (count _pos_nearest > 0) then {
+                        if ( count _pos_nearest > 0 ) then {
 #ifndef  __TT__
                             _near_targets = _pos_nearest nearObjects [_man_type, 35];
                             _vecs         = _pos_nearest nearObjects [_land_veh_type, 35];
                             _cnt          =  ({alive _x && canStand _x} count _near_targets) + ({alive _x && (side _x == _side)} count _vecs);
-                            hint localize format["+++ x_handleobservers.sqf: observer detected enemy %1 (knows %2) at %3 m., in range friendly count %3",
-                                _enemy,
-                                _observer knowsAbout _enemy,
-                                _observer distance _enemy,
-                                _cnt];
 #else
                             _near_targets = nearestObjects [_pos_nearest, _man_type, 35];
                             _cnt          =  {alive _x && canStand _x} count _near_targets;
 #endif
                             _type                = if ( _cnt > 0) then { 1 } else { 2 }; // strike (1) or smoke (2)
-                            _nextaritime         = time + d_arti_available_time + random 120;
+                            hint localize format
+                            [
+                                "+++ x_handleobservers.sqf: %1 attacks %2 with %3 (knows %4) dist %5 m., friendly count %6, %7",
+                                _observer,
+                                name _enemy,
+                                if (_type == 1) then {"warheads"} else {"smokes"},
+                                _observer knowsAbout _enemy,
+                                _observer distance _enemy,
+                                _cnt,
+                                [_enemy, localize "STR_SYS_151", 10] call SYG_MsgOnPosE
+                            ];
+                            _nextaritime         = time + d_arti_reload_time + (random 20);
                             [_pos_nearest,_type] spawn x_shootari;
                             _enemy_ari_available = false;
                             _near_targets        = nil;
@@ -110,6 +116,12 @@ while {nr_observers > 0} do {
 		if ( time >= _nextaritime ) then { _enemy_ari_available = true; };
 	};
 };
-hint localize "+++ x_handleobservers.sqf: no more observers detected";
+/**
+if ( target_clear ) then
+{
+    // kill remaining observers
+};
+*/
+hint localize format["+++ x_handleobservers.sqf: exit, observers %1, target_clear = %2", nr_observers, target_clear ];
 
 if (true) exitWith {};

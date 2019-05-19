@@ -496,7 +496,7 @@ SYG_getTargetTownName = {
  *      _smindex = call SYG_getSideMissionIndex;
  */
 SYG_getSideMissionIndex = {
-	if (!all_sm_res AND !side_mission_resolved AND (current_mission_index >= 0)) then {current_mission_index} else {-1};
+	if (!all_sm_res && !side_mission_resolved && (current_mission_index >= 0)) then {current_mission_index} else {-1};
 };
 
 //==================================
