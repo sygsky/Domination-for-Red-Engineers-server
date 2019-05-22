@@ -80,6 +80,13 @@ _posa = nil;
 
 side_mission_winner = 0;
 
-if ( _resurrect) then {	_vehicle execVM "x_scripts\x_wreckmarker.sqf"; };
+if ( _resurrect) then
+{
+	_vehicle execVM "x_scripts\x_wreckmarker.sqf";
+}
+else
+{
+    _vehicle call SYG_addEventsAndDispose;
+};
 
 if (true) exitWith {};

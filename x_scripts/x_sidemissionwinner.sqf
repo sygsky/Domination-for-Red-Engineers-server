@@ -96,7 +96,8 @@ else
         case -500 : {"STR_SYS_129_5"/*"Вражеский офицер спятил и застрелился..."*/};
         case -600 : {"STR_SYS_129_6"/*"Образец захваченной у врага техники развалился до того, как попал в руки ГРУ на базе..."*/};
         case -700 : {"STR_SYS_129_7"/*"Пилоты скончались от столбняка до прибытия на базу..."*/};
-        default {"STR_SYS_129_8"};
+        case -701 : {"STR_SYS_129_8"/*"Bus is destroyed or all civilans are dead"*/}; // the future SM type - "Safely deliver a group of civilians by bus to their destination!"
+        default {"STR_SYS_129_100"};
     };
 	_s = localize _s;
 
