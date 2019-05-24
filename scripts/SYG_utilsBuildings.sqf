@@ -50,6 +50,10 @@ SYG_teleportToTown = {
 		case "Rahmadi": {[483108,486014]};
 		case "Corazol": {[3196,3528,429748,429434]};
 		case "Dolores": {[1117,562403]};
+		case "Geraldo": {[10881,554947]};
+		case "Corinto": {[62,66,171519,171520]};
+		case "Estrella": {[406184,406180,616895]};
+		case "Gulan": {[410198,410199]};
 
 		default {SYG_illegalHouseList};
 	};

@@ -162,7 +162,7 @@ target_names =
 	];
 	#endif
 	#ifdef __DEFAULT__
-	[
+	[                                            // Indexes, not identifiers
 		[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
 		[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
 		[[7613,6424,0],   "Arcadia"   ,235, 4],  //  2
@@ -179,7 +179,7 @@ target_names =
 		[[18984,13764,0], "Pita"      ,250, 15], // 13
 		[[12508,15004,0], "Eponia"    ,270, 16], // 14
 		[[16596,9358,0],  "Everon"    ,200, 17], // 15
-		[[9773,14436,0],  "Pacamac"   ,150, 18], // 16
+		[[9773,14436,0],  "Pacamac"   ,150, 18], // 16 -
 		[[7722,15802,0],  "Hunapu"    ,150, 19], // 17
 		[[10593,16194,0], "Mataredo"  ,150, 20], // 18 - for small town
 		[[12387,13388,0], "Carmen"    ,200, 21], // 19
@@ -190,7 +190,8 @@ target_names =
 		[[9321,5275,0],   "Tiberia"   ,279, 26], // 24 -
         [[14351,9461,0],  "Modesta"   ,279, 27], // 25 -
 		[[11502.5,9152,0],"Corinto"   ,200, 28], // 26 -
-		[[8868,7907,0],   "Gulan"     ,220, 29]  // 27 -
+		[[8868,7907,0],   "Gulan"     ,220, 29], // 27 -
+		[[13183,6921,0],  "Geraldo"   ,240, 30]  // 28 -
 
 	];
 	#endif
@@ -204,8 +205,8 @@ d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma" ];
 // Big town indexes. Should be present in list when play with not maximum number of towns
 d_big_towns_inds = [5,6,7,8,11];
 
-// Small towns indexes. Can be absent from list when playing not maximum number of towns
-d_small_towns_inds = [16,18,21,22,23,24,25,26,27];
+// Small towns indexes. Can be absent from list when playing mnot minimum number of towns
+d_small_towns_inds = [16,18,21,22,23,24,25,26,27,28];
 
 #endif
 
@@ -213,13 +214,15 @@ d_small_towns_inds = [16,18,21,22,23,24,25,26,27];
 // FIXME: hidden all [unresoved] items
 //_list = [];
 
-// hide all available [town] markers from the map. Max set to 30, if your marker count exceeds 30, increase max above 30
-for "_xxxxx" from ((target_names select 0) select 3) to 35 /*((target_names select ((count target_names) - 1)) select 3)*/ do {
-//	call compile format ["""%1"" objStatus ""HIDDEN"";", (target_names select _xxxxx) select 3];
-//	_list = _list + [(target_names select _xxxxx) select 3];
+// hide all available [town] markers from the map. Max set to 35, if your marker count exceeds 35, increase max above 35
+/*
+for "_xxxxx" from ((target_names select 0) select 3) to 35  do {
     (str _xxxxx) objStatus "HIDDEN";
 };
-
+*/
+{
+    (str (_x select 3)) objStatus "HIDDEN";
+} forEach target_names;
 //hint localize format["+++ objects HIDDEN: %1 +++",_list ];
 //"0" objStatus "HIDDEN"; // TODO: for future airbase init seizing mission
 

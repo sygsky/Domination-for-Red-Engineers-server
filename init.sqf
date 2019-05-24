@@ -175,7 +175,7 @@ if (isServer) then {
 			case 80: {maintargets_list = [8,15,9,11,12,13];};
 			case 90: {
 			    // 22 towns (maximum number) fill them from whole list.
-			    // Paraiso/Chantico/Somato/Arkadia/Estrella/Cayo etc
+			    // Paraiso/Chantico/Somato/Arcadia/Estrella/Cayo etc
 			    maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];
 			}; // 22
 			case 91: { // 8 smallest random target towns
@@ -190,7 +190,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula|Estrella
+    _first_array = [28];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
