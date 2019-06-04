@@ -17,6 +17,19 @@
 
 #define NEW_DEATH_SOUND_ON_BASE_DISTANCE 2000
 
+SYG_lastPlayedSoundItem = ""; // last played music/sound item
+
+SYG_checkLastSoundRepeated= {
+    _item = RANDOM_ARR_ITEM(_this);
+    _cnt = count _this;
+    if ( _cnt > 1) then
+    {
+        while { (str(_item) == SYG_lastPlayedSoundItem) && _cnt > 0} do {_item = RANDOM_ARR_ITEM(_this); _cnt = _cnt -1;};
+        SYG_lastPlayedSoundItem = str(_item);
+    };
+    _item
+};
+
 //
 // call as: 
 //  _musicName = _music_index call SYG_musicTrackName; // index from 0 to ((call SYG_musicTrackCount) - 1)
@@ -305,7 +318,8 @@ SYG_playRandomTrack = {
     // count >= 1
     if ( (typeName arg(0)) == "ARRAY" ) exitWith // array of array
     {
-        RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random array and try to play from it
+        _item = _this call SYG_checkLastSoundRepeated;
+        _item call SYG_playRandomTrack; // find random array and try to play from it
     };
 
     //
@@ -325,7 +339,8 @@ SYG_playRandomTrack = {
     {
         if ((typeName arg(1)) == "STRING") exitWith // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
         {
-            _item = RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack;
+            _item = _this call SYG_checkLastSoundRepeated;
+            _item call SYG_playRandomTrack;
         }; // list of tracks, play any selected
         //
         // ["ATrack12,[10,10]<,[20,15]>]
@@ -347,6 +362,7 @@ SYG_playRandomTrack = {
             // play partial random sub-track
             _trk = floor(random ((count _this)-1)) + 1;
             _trk = arg(_trk); // get any random partial item, excluding 1st (sound name)
+            // TODO: not allow the same partial track
             if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
             {
 #ifdef __DEBUG__

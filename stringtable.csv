@@ -1213,13 +1213,13 @@ STR_GRU_44,"GRU already uses D-installation and control PC.","GRU nutzt bereits 
 STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2, nt %3, tc %4","Melden Sie Ihrem commander zu D-Einheit Fehler! Telemetrie: %1, cc %2, nt %3, tc %4","Сообщите командованию, что Д-установка не работает! Телеметрия: %1, cc %2, nt %3, tc %4"
 
 
-STR_GRU_46,"The landing of the enemy patrol spotted by %1%2%3%4%5","Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5","Местный %1 наблюдал высадку вражеского патруля%2%3%4%5%6"
+STR_GRU_46,"The landing of the enemy patrol spotted by %1%2%3%4%5%6","Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6","Местный %1 наблюдал высадку вражеского патруля%2%3%4%5%6"
 STR_GRU_46_0,"Sahrani inhabitants inform: Enemy patrols disappeared!","Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!","Вражеские патрули исчезли, сообщают жители!"
 STR_GRU_46_1," near ""%1"""," in der Nähe von ""%1"""," близ ""%1"""
 STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," на дист. примерно %1 м."
 STR_GRU_46_3," bearing %1"," Richtung %1",", азимут %1"
 STR_GRU_46_4," numbering %1 unit[s]"," die Nummerierung %1 Fahrzeug[s]",", численностью %1 ед."
-STR_GRU_46_5," type is %1"," Typ ist %1",", тип - %1."
+STR_GRU_46_5," type is %1"," Typ ist %1",", тип - %1"
 
 STR_GRU_47,"Enemy activity detected near the base","Feindliche Aktivitäten erkannt in der Nähe der Basis","Вражеская активность обнаружена неподалёку от базы"
 STR_GRU_48,"Local %1 report that the king has left the building and found another asylum, not further than %2 m. from hotel","Lokale %1 berichten, dass der king hat das Gebäude verlassen und fand eine andere Asyl, nicht weiter als %2 m. vom hotel","Местные %1 сообщают, что король покинул здание и нашёл другое убежище, не далее %2 м. от отеля"

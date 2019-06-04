@@ -253,12 +253,12 @@ GRU_procClientMsg = {
 		        case GRU_MSG_INFO_KIND_PATROL_DETECTED: // patrol detected by locals somewhere
 		        {
 		            //playSound "patrol"; // removed by Yeti request
-                    _arr = arg(3); // array: [_alias,_pos,_size]
+                    _arr = arg(3); // array: [ _alias,_pos,_size,_patrol_type ]
                     _rank = (rank player) call XGetRankIndex;
                     //_rank = 6; // debug
                     // create base message text
                     _alias = argp(_arr, 0); // name of the observer
-                    _args = ["STR_GRU_46",_alias,"","","",""]; // simple message visible for any rank
+                    _args = ["STR_GRU_46",_alias,"","","","","?"]; // message visible for any rank
                     _pos = argp(_arr, 1);   // spawn position
                     _loc = (_pos call SYG_nearestLocation);
                     if ( _rank > 1) then // sergeant, location name
