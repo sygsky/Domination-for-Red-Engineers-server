@@ -16,7 +16,7 @@ _man_type = (
 		case "RACS": {"SoldierGB"};
 	}
 );
-_side = (
+_enemySize = (
     switch (d_enemy_side) do {
         case "WEST": {west};
         case "EAST": {east};
@@ -75,15 +75,11 @@ while { nr_observers > 0 && !target_clear } do {
                         _vecs = [];
                         _cnt = 0;
                         if ( count _pos_nearest > 0 ) then {
-#ifndef  __TT__
                             _near_targets = _pos_nearest nearObjects [_man_type, 35];
                             _vecs         = _pos_nearest nearObjects [_land_veh_type, 35];
-                            _cnt          =  ({alive _x && canStand _x} count _near_targets) + ({alive _x && (side _x == _side)} count _vecs);
-#else
-                            _near_targets = nearestObjects [_pos_nearest, _man_type, 35];
-                            _cnt          =  {alive _x && canStand _x} count _near_targets;
-#endif
-                            _type                = if ( _cnt > 0) then { 1 } else { 2 }; // strike (1) or smoke (2)
+                            // find near units to prevent from attacking with warheads
+                            _cnt          =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
+                            _type         = if ( _cnt > 0) then { 2 } else { 1 }; // strike (1) or smoke (2)
                             hint localize format
                             [
                                 "+++ x_handleobservers.sqf: %1 attacks %2 with %3 (knows %4) dist %5 m., friendly count %6, %7",
@@ -95,7 +91,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 _cnt,
                                 [_enemy, localize "STR_SYS_151", 10] call SYG_MsgOnPosE
                             ];
-                            _nextaritime         = time + d_arti_reload_time + (random 20);
+                            _nextaritime  = time + d_arti_reload_time + (random 20);
                             [_pos_nearest,_type] spawn x_shootari;
                             _enemy_ari_available = false;
                             _near_targets        = nil;
