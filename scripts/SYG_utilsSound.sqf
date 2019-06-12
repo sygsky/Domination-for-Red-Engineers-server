@@ -125,7 +125,8 @@ SYG_baseDefeatTracks =
     "melody","medieval_defeat","defeat2","arabian_death", "village_consort",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
-    ["cosmos", [28.8,-1] ]
+    ["cosmos", [28.8,-1] ],
+    ["ruffian",[0,10.27]]
 ] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
