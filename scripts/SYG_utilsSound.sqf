@@ -36,7 +36,7 @@ SYG_checkLastSoundRepeated= {
 //  playMusic ( floor( random (call SYG_musicTrackCount) ) call SYG_musicTrackName);
 //
 SYG_musicTrackName = {
-	if ( _this < 0 or _this >= (call SYG_musicCount) ) exitWith { "" }; // no such track
+	if ( _this < 0 or _this >= (call SYG_musicTrackCount) ) exitWith { "" }; // no such track
 	configName((configFile >> "CfgMusic") select _this)
 };
 
@@ -46,7 +46,7 @@ SYG_musicTrackName = {
  */
 SYG_playMusicTrack = {
 	private ["_name"];
-	if ( _this < 0 or _this >= (call SYG_musicCount) ) exitWith { "" }; // no such track
+	if ( _this < 0 or _this >= (call SYG_musicTrackCount) ) exitWith { "" }; // no such track
 	_name = _this call SYG_musicTrackName;
 	playMusic ( _name);
 	_name
@@ -412,6 +412,49 @@ SYG_moveSoundSource = {
 		_arr set [ _pos, _snd];
 		_caller globalChat format["Movesnd: snd pos: %2, new pos is %1", getPosASL _caller, getPosASL _snd];
 	};
+};
+
+/**
+  gets name of the sound class
+  call as:
+    _sound_name = _sound_class_name call SYG_getSoundName;
+    returns empty string if no name found, or string with name property in sound class (also may be empty)
+ */
+SYG_getSoundName = {
+
+    private ["_name","_type"];
+
+    _name = _this;
+    _isText = isText(configFile >> "CfgSounds" >> _name >> "name" );
+    _name = getText(configFile >> "CfgSounds" >> _this >> "name");
+    _type = typeName _name;
+    _str = format["+++ typeName ""%1"" is ""%2"", isText %3", _name, _type, _isText];
+    hint localize _str;
+    player groupChat _str;
+    if (_isText) exitWith {_name};
+    ""
+};
+
+/**
+  gets name of the music class
+  call as:
+    _music_name = _music_class_name call SYG_getMusicdName;
+    returns empty string if no name found, or string with name property in music class (also may be empty)
+ */
+SYG_getMusicName = {
+    if ( typeName _this != "STRING" ) exitWith {""};
+    private ["_name","_type"];
+
+    _config = configFile >> "CfgMusic" >> _this >> "name";
+    player groupChat format["+++ Config %1", _config];
+    _name = getText(configFile >> "CfgMusic" >> _this >> "name" );
+    _isText = isText(configFile >> "CfgMusic" >> _this >> "name" );
+    _isNumber = isNumber(configFile >> "CfgMusic" >> _this >> "name" );
+    _str = format["+++ music ""%1"", name ""%2"", typeName %3, isText %4", _this, _name, typeName _name, _isText];
+    hint localize _str;
+    player groupChat _str;
+    if (_isText) exitWith {_name};
+    ""
 };
 
 if (true) exitWith {};

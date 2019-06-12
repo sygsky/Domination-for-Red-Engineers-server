@@ -190,7 +190,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [28];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo
+    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
@@ -657,6 +657,16 @@ ACE_Sys_Wound_Net_fSetUnc       = compile preProcessFileLineNumbers "scripts\ACE
 
 #endif
 
+#ifdef __MANDO_MISSILES_UPDATE__
+
+ace_sys_missiles_incomingMissile = compile (preprocessFileLineNumbers ("scripts\ACE\ace_mando_replacemissile.sqf"));
+hint localize "+++ mando_missile_replaced replaced by custom version";
+
+#endif
+
+}
+else // use on server
+{
 };
 #endif
 

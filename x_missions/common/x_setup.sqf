@@ -1,5 +1,6 @@
 // edit this file and then run setupcopy.bat
 
+// Mark this code to be run under "Red Engineer" full mission, not debug one
 #define __RED_ENGINEERS_SERVER__
 
 // uncomment to show markers for sidemissions, main targets, etc.
@@ -153,10 +154,13 @@
 //#define __DEBUG_ADD_VEHICLES__
 
 // uncomment next line to prevent land vehicle overturning
-#define __PREVENT_OEVRTURN__
+#define __PREVENT_OVERTURN__
 
 //+++ uncomment to enable the appearance of an unconscious player to enemies
 #define __DISABLE_HIDE_UNCONSCIOUS__
 
 // comment it out to use the new score system, with lower values per rank
 #define __OLD_SCORES__
+
+// comment it out to disable mando missiles long hand
+#define __MANDO_MISSILES_UPDATE__
