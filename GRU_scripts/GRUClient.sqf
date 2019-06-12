@@ -258,7 +258,7 @@ GRU_procClientMsg = {
                     //_rank = 6; // debug
                     // create base message text
                     _alias = argp(_arr, 0); // name of the observer
-                    _args = ["STR_GRU_46",_alias,"","","","","?"]; // message visible for any rank
+                    _args = ["STR_GRU_46",_alias,"","","","","?"]; // message visible for any rank: "The landing of the enemy patrol spotted by %1%2%3%4%5%6"
                     _pos = argp(_arr, 1);   // spawn position
                     _loc = (_pos call SYG_nearestLocation);
                     if ( _rank > 1) then // sergeant, location name

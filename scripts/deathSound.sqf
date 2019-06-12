@@ -43,11 +43,11 @@ else    // some kind of suicide? Say something about...
     };
 
     // check if we are near castle
-    _castleArr = _unit nearObjects [ "Land_helfenburk", 500];
+    _castleArr = _unit nearObjects [ "Land_helfenburk", 800];
     if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_MedievalDefeatTracks);
-        ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // music from castle
+        ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // medieval music if suicide near castle
     };
 
     // short melody on unknown death case, anybody within some range can hear this
