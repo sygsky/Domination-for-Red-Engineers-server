@@ -74,10 +74,10 @@ SYG_getOutEvent =
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
     };
-    _start_time = time; // remember start time of the event processing
-
     // only enemy is allowed for auto revert back
     if ( str(side (_this select 2)) != d_enemy_side ) exitwith {false};
+
+    _start_time = time; // remember start time of the event processing
 
     _veh  = _this select 0;
     _veh setVariable [EVENT_ID_VAR_NAME, nil]; // remove event number to prevent other processing
@@ -328,7 +328,7 @@ SYG_getOutEvent =
 
     _crew = [];
 
-    // accumulate all nearest pedestrians beelonging to the same group
+    // accumulate all nearest pedestrians belonging to the same group
     {
         if ( (alive _x) && ( vehicle _x == _x) && (_veh distance _x < 100) && !(_x in _crew) ) then {_crew = _crew + [_x];};
     } forEach units group _first_man_out;

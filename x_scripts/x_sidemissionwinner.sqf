@@ -10,6 +10,7 @@ if (!X_Client) exitWith {};
 
 sleep 1;
 
+// clear finished side mission markers
 call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
 if (x_sm_type == "convoy") then {
 	call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];

@@ -200,13 +200,13 @@ big_town_radious = 280; // if town radious >= this number, town is considered as
 
 #ifdef __DEFAULT__
 
-d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma" ];
+d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma", "Eponia" ];
 
 // Big town indexes. Should be present in list when play with not maximum number of towns
 d_big_towns_inds = [5,6,7,8,11];
 
-// Small towns indexes. Can be absent from list when playing mnot minimum number of towns
-d_small_towns_inds = [16,18,21,22,23,24,25,26,27,28];
+// Small towns indexes. Can be absent from list when playing not minimum number of towns
+d_small_towns_inds = [13,15,16,17,18,19,21,22,23,24,25,26,27,28];
 
 #endif
 
