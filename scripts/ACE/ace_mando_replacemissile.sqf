@@ -201,13 +201,13 @@ _rocketDefault =
 
 _rocketNamesArr  = [
     "M_Javelin_AT","ACE_Missile_Javelin",
-    "M_Stinger_AA","ACE_Missile_Stinger",
+    "M_Stinger_AA","ACE_Missile_Stinger","ACE_FIM92round"
     "M_Strela_AA","ACE_Missile_Strela"
     ];
 _rocketParamsArr = [
     _rocketJavelin, _rocketJavelin,
-    _rocketStinger, _rocketStinger,
-    _rocketStrela, _rocketStrela
+    _rocketStinger, _rocketStinger, _rocketStinger,
+     _rocketStrela,  _rocketStrela
     ];
 
 _target  = _this select 0;
@@ -215,7 +215,7 @@ _type    = _this select 1;
 _shooter = _this select 2;
 _replaced = false;
 
-hint localize format["+++ ACE_MANDO_REPLACE_MISSILE: %1", _this];
+//hint localize format["+++ ACE_MANDO_REPLACE_MISSILE: %1", _this];
 
 if ( local _shooter ) then
 {
@@ -257,7 +257,7 @@ if ( local _shooter ) then
    };
 };
 //      hint format["M:%1 %2", _this, _missile];
-if (!_replaced) exitWith { hint localize "+++ MANDO_ROCKET NOT REPLACED, exit"};
+if (!_replaced) exitWith { hint localize format["+++ MANDO_ROCKET NOT REPLACED: %1 -> %2, exit", _type, typeOf _target]};
 
 _missile SetPos [ 0,0,(getPos _missile select 2) + 5000];
 deleteVehicle _missile;
@@ -296,5 +296,5 @@ _ra select 24,
 _ra select 25,
 _ra select 26
 ];
-hint localize format[ "+++ MANDO replace ARR %1", _arr ];
+hint localize format[ "+++ MANDO dist to tgt %1, misl ARR %2", _target distance _shooter, _arr ];
 _arr call mando_missile_handler;
