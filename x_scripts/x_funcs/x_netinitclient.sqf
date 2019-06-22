@@ -528,17 +528,17 @@ XHandleNetStartScriptClient = {
 		};
 		#endif
 		case "syg_observer_kill" : {
-            if (str(arg(1)) == str(player)) then
+            if (str(arg(1)) == str(player)) then // code only for killer
             {
                 hint localize format["x_netinitclient.sqf: Observer killed by %1", name player];
                 // add scores
                 player addScore argp( d_ranked_a, 27 );
-                // play music
-                //playSound "no_more_waiting";
-                ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClientAll; // inform all about next observer death
-                // show message
                 (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
             };
+            // common code
+            //playSound "no_more_waiting";
+            ["say_sound", arg(1), "no_more_waiting"] call XHandleNetStartScriptClient; // inform me/all about next observer death
+            // show message
 		};
 		// to inform player about his server stored data
 		case "d_player_stuff": {

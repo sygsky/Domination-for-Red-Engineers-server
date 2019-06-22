@@ -5,6 +5,8 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+#define HIT_RADIOUS 45
+
 _enemy_ari_available = true;
 _nextaritime = 0;
 
@@ -16,7 +18,7 @@ _man_type = (
 		case "RACS": {"SoldierGB"};
 	}
 );
-_enemySize = (
+_enemySide = (
     switch (d_enemy_side) do {
         case "WEST": {west};
         case "EAST": {east};
@@ -60,7 +62,7 @@ while { nr_observers > 0 && !target_clear } do {
         {
             if (_enemy_ari_available) then {
                 _enemy = _observer findNearestEnemy _observer;
-                if (!(isNull _enemy) && ((_observer knowsAbout _enemy) >= 1.5) && ((vehicle _enemy) isKindOf "Land") ) then {
+                if (!(isNull _enemy) && ((_observer knowsAbout _enemy) > 1.5) && ((vehicle _enemy) isKindOf "Land") ) then {
                     _distance = _observer distance _enemy;
                     _near_targets = _observer nearTargets (_distance + 10);
                     if (count _near_targets > 0) then {
@@ -75,8 +77,8 @@ while { nr_observers > 0 && !target_clear } do {
                         _vecs = [];
                         _cnt = 0;
                         if ( count _pos_nearest > 0 ) then {
-                            _near_targets = _pos_nearest nearObjects [_man_type, 35];
-                            _vecs         = _pos_nearest nearObjects [_land_veh_type, 35];
+                            _near_targets = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
+                            _vecs         = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
                             // find near units to prevent from attacking with warheads
                             _cnt          =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
                             _type         = if ( _cnt > 0) then { 2 } else { 1 }; // strike (1) or smoke (2)

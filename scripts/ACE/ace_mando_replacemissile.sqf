@@ -201,7 +201,7 @@ _rocketDefault =
 
 _rocketNamesArr  = [
     "M_Javelin_AT","ACE_Missile_Javelin",
-    "M_Stinger_AA","ACE_Missile_Stinger","ACE_FIM92round"
+    "M_Stinger_AA","ACE_Missile_Stinger","ACE_FIM92round",
     "M_Strela_AA","ACE_Missile_Strela"
     ];
 _rocketParamsArr = [
