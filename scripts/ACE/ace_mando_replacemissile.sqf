@@ -6,7 +6,7 @@ DO NOT EXECUTE THIS SCRIPT MANUALLY
 
 You may add here more missile types to be replaced by mando ones, as well as change the parameters of already replaced ArmA missile types.
 
-+++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased twcie for Javelins and Stringers
++++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased twice for Javelins and Stringers
 
 */
 
@@ -207,7 +207,7 @@ _rocketNamesArr  = [
 _rocketParamsArr = [
     _rocketJavelin, _rocketJavelin,
     _rocketStinger, _rocketStinger, _rocketStinger,
-     _rocketStrela,  _rocketStrela
+    _rocketStrela,  _rocketStrela
     ];
 
 _target  = _this select 0;
@@ -220,20 +220,21 @@ _replaced = false;
 if ( local _shooter ) then
 {
  // hint format["M:%1", _this];
-   _replaced = true;
    _missile = nearestObject [_shooter, _type];
-   Sleep 0.4;
+   sleep 0.4;
    _posfire = _shooter worldToModel (getPos _missile);
    _vdir = vectorDir _missile;
    _dir = (_vdir select 0) atan2 (_vdir select 1);
    _ind = _rocketNamesArr find _type;
    if (_ind >= 0) then
    {
+       _replaced = true;
         _ra = _rocketParamsArr select _ind;
         switch (_ind) do {
             case 0;
             case 1: {
                 _mode = _shooter getVariable "mando_javelin_mode";
+                if (isNil "_mode") then { _mode = 0; };
                 hint localize format["+++ MANDO Javelin mode %1", _mode];
                 if (_mode == 0) then {_ra call _applyJavelin0;}
                 else {_ra call _applyJavelin1;};
@@ -257,7 +258,7 @@ if ( local _shooter ) then
    };
 };
 //      hint format["M:%1 %2", _this, _missile];
-if (!_replaced) exitWith { hint localize format["+++ MANDO_ROCKET NOT REPLACED: %1 -> %2, exit", _type, typeOf _target]};
+if (!_replaced) exitWith { hint localize format["+++ MANDO Missile not replaced: %1 -> %2 (%3), exit", _type, typeOf _target, _target distance _shooter]};
 
 _missile SetPos [ 0,0,(getPos _missile select 2) + 5000];
 deleteVehicle _missile;
@@ -296,5 +297,5 @@ _ra select 24,
 _ra select 25,
 _ra select 26
 ];
-hint localize format[ "+++ MANDO dist to tgt %1, misl ARR %2", _target distance _shooter, _arr ];
+hint localize format[ "+++ MANDO Missile: %1 -> %2, h. %3 d. %4, fire", _type, typeOf _target, (getPos _target) select 2, _target distance _shooter ];
 _arr call mando_missile_handler;

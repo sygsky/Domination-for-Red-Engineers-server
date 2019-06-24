@@ -491,31 +491,26 @@ XHandleNetStartScriptClient = {
 		};
 		case "mt_spotted": {
 			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
-
-            if ( (call SYG_getTargetTownName) == "Arcadia") then
+            _townArr  = "NO_DEBUG" call SYG_getTargetTown;
+            if (count _townArr == 0) exitWith{};
+            _townName = _townArr select 1;
+            _musicClassName = "";
+            _musicClassName = switch (_townName) do
             {
-                _ret = "NO_DEBUG" call SYG_getTargetTown;
-            	if (count _ret > 0 ) then
-            	{
-            	    // player can hear by town specified music only in vicinity of 3 km
-            	    if ( (player distance (_ret select 0)) <= 3000) then
-            	    {
-                        sleep (random 5);
-                        playMusic "detected_Arcadia";
-            	    }
-            	};
+                case "Arcadia" : {"detected_Arcadia"};
+                case "Paraiso" : {"detected_Paraiso"};
             };
-
+            if (_musicClassName != "" ) then {playMusic _musicClassName};
 		};
 		#ifdef __AI__
 		case "d_ataxi": {
 			if (player == (_this select 2)) then {
 				switch (_this select 1) do {
 					case 0: {(localize "STR_SYS_1182") call XfHQChat}; // "Air taxi is on the way... hold your position!!!"
-					case 1: {(localize "STR_SYS_1183") call XfHQChat;d_heli_taxi_available = true}; // "Air taxi canceled, you've died !!!"
-					case 2: {(localize "STR_SYS_1184") call XfHQChat;d_heli_taxi_available = true}; // "Air taxi damaged or destroyed !!!"
+					case 1: {(localize "STR_SYS_1183") call XfHQChat; d_heli_taxi_available = true}; // "Air taxi canceled, you've died !!!"
+					case 2: {(localize "STR_SYS_1184") call XfHQChat; d_heli_taxi_available = true}; // "Air taxi damaged or destroyed !!!"
 					case 3: { (localize "STR_SYS_1185") call XfHQChat}; // "Air taxi heading to base in a few seconds !!!"
-					case 4: {(localize "STR_SYS_1186") call XfHQChat;d_heli_taxi_available = true}; // "Air taxi leaving now, have a nice day !!!"
+					case 4: {(localize "STR_SYS_1186") call XfHQChat; d_heli_taxi_available = true}; // "Air taxi leaving now, have a nice day !!!"
 				};
 			};
 		};

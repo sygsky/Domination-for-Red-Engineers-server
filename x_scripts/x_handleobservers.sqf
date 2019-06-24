@@ -84,14 +84,15 @@ while { nr_observers > 0 && !target_clear } do {
                             _type         = if ( _cnt > 0) then { 2 } else { 1 }; // strike (1) or smoke (2)
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: %1 attacks %2 with %3 (knows %4) dist %5 m., friendly count %6, %7",
+                                "+++ x_handleobservers.sqf: %1 attacks %2 with %3 (knows %4) dist %5 m., friendly count %6, %7, missed %8 m.",
                                 _observer,
                                 name _enemy,
                                 if (_type == 1) then {"warheads"} else {"smokes"},
                                 _observer knowsAbout _enemy,
-                                _observer distance _enemy,
+                                round(_observer distance _enemy),
                                 _cnt,
-                                [_enemy, localize "STR_SYS_151", 10] call SYG_MsgOnPosE
+                                [_enemy, localize "STR_SYS_151", 10] call SYG_MsgOnPosE,
+                                round(_pos_nearest distance _enemy)
                             ];
                             _nextaritime  = time + d_arti_reload_time + (random 20);
                             [_pos_nearest,_type] spawn x_shootari;
