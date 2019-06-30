@@ -499,6 +499,7 @@ XHandleNetStartScriptClient = {
             {
                 case "Arcadia" : {"detected_Arcadia"};
                 case "Paraiso" : {"detected_Paraiso"};
+                case  "Carmen" : {"detected_Carmen"};
             };
             if (_musicClassName != "" ) then {playMusic _musicClassName};
 		};

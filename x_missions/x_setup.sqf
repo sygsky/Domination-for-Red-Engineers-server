@@ -114,6 +114,12 @@
 // uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
 #define __JAVELIN__
 
+//+++ uncomment to enable the appearance of an unconscious player to enemies
+#define __DISABLE_HIDE_UNCONSCIOUS__
+
+// comment it out to disable mando missiles long hand
+#define __MANDO_MISSILES_UPDATE__
+
 #endif
 
 //+++ uncomment to run easiest side missions first, before all other
@@ -156,11 +162,5 @@
 // uncomment next line to prevent land vehicle overturning
 #define __PREVENT_OVERTURN__
 
-//+++ uncomment to enable the appearance of an unconscious player to enemies
-#define __DISABLE_HIDE_UNCONSCIOUS__
-
 // comment it out to use the new score system, with lower values per rank
 #define __OLD_SCORES__
-
-// comment it out to disable mando missiles long hand
-#define __MANDO_MISSILES_UPDATE__

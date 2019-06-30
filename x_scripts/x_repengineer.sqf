@@ -7,7 +7,7 @@
 
 #include "x_setup.sqf"
 
-private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_val","_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres"];
+private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_steps","_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres"];
 
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
 _is_engineer = format ["%1", player] in d_is_engineer;
@@ -73,39 +73,41 @@ _damage_val    = (_damage / _rep_count); // how many undamage steps for reparing
 _fuel_capacity_in_litres = objectID2 call SYG_fuelCapacity; // litres of fuel in vehicle fuel tanks
 #ifdef __LIMITED_REFUELLING__
 _refuel_add = 0;
+_refuel_volume = d_refuel_volume + d_refuel_per_rank * (_caller call XGetRankIndexFromScoreExt); // how many liters to refuel
+
 if (_fuel_capacity_in_litres > 0) then
 {
-   _refuel_add = d_refuel_volume/_fuel_capacity_in_litres;  // max part of volume he could refuel, not in litres
+   _refuel_add = _refuel_volume/_fuel_capacity_in_litres;  // max part of volume he could refuel, (value in Arma config not in litres)
 };
 _fuel_add      = _refuel_add min (1 - _fuel);     // how many he will up to the fuel tank limit
 _refuel_limit  = ( _fuel + _fuel_add ) min 1.0;   // limit value he can refuel up to the capacity of the vehicle fuel tank
 
-_fuel_val = 0;
+_fuel_steps = 0;
 if (_refuel_add > 0) then
 {
-	_fuel_val = d_refuel_volume * (_fuel_add / _refuel_add) / 20; // how many animations are need to complete refuelling
+	_fuel_steps = _refuel_volume * (_fuel_add / _refuel_add) / 20; // how many animations are need to complete refuelling
 };
 
-_fuel_count    = 0; // default is "already refuelled"
-if ( abs(_fuel_val) > 0.0000001) then {_fuel_count = _fuel_add /_fuel_val;}; // how many refuel at one step
-//hint localize format["x_repengineer.sqf: %1, _fuel %8, _fuel_capacity_in_litres %2, _refuel_add %3, _fuel_add %4, _refuel_limit %5, _fuel_val %6, _fuel_count %7, damage %9, _damage_val %10", typeOf objectID2,_fuel_capacity_in_litres,_refuel_add,_fuel_add,_refuel_limit,_fuel_val,_fuel_count,_fuel,_damage,_damage_val];
+_fuel_vol_on_step    = 0; // default is "already refuelled"
+if ( abs(_fuel_steps) > 0.0000001) then {_fuel_vol_on_step = _fuel_add /_fuel_steps;}; // how many refuel at one step
+//hint localize format["x_repengineer.sqf: %1, _fuel %8, _fuel_capacity_in_litres %2, _refuel_add %3, _fuel_add %4, _refuel_limit %5, _fuel_steps %6, _fuel_vol_on_step %7, damage %9, _damage_val %10", typeOf objectID2,_fuel_capacity_in_litres,_refuel_add,_fuel_add,_refuel_limit,_fuel_steps,_fuel_vol_on_step,_fuel,_damage,_damage_val];
 
 _rep_array = [objectID2,_refuel_limit];
 #else
 _refuel_limit  = 1.0;
-_fuel_val      = ((_refuel_limit - _fuel) / _rep_count); // how many refuel steps for refuelling
-_fuel_count    = _rep_count; // how may refuel at one step
+_fuel_steps      = ((_refuel_limit - _fuel) / _rep_count); // how many refuel steps for refuelling
+_fuel_vol_on_step    = _rep_count; // how may refuel at one step
 _rep_array     = [objectID2];
 //hint localize "x_repengineer.sqf: No __LIMITED_REFUELLING__ defined";
 #endif
 
-_coef = ceil (_fuel_val max _damage_val);
+_coef = ceil (_fuel_steps max _damage_val);
 
 _lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
 hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
 
 _type_name = [typeOf (objectID2),0] call XfGetDisplayName;
-(format [localize "STR_SYS_19", _type_name]) call XfGlobalChat; // "Ремонт, заправка: %1... ожидайте..."
+(format [localize "STR_SYS_19", round(_damage *100), "%", round(_refuel_volume), _type_name]) call XfGlobalChat; // "Repair %1%2, refuel %3 L.: %4... wait..."
 _damage_ok = false;
 _fuel_ok = false;
 d_cancelrep = false;
@@ -129,7 +131,7 @@ for "_wc" from 1 to _coef do {
 	};
 	if (!_fuel_ok) then 
 	{
-		_fuel = _fuel + _fuel_count;
+		_fuel = _fuel + _fuel_vol_on_step;
 		if (_fuel >= _refuel_limit) then {_fuel = _refuel_limit; _fuel_ok = true;};
 	};
 	if (!_damage_ok) then 
