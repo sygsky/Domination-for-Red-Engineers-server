@@ -204,7 +204,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	    _obj = _no select _obj_pos; // define target to bomb
 		if ( _debug ) then { player globalChat format["sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ]; };
 #ifdef __PRINT__
-		hint localize format["sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
+		hint localize format["sabotage.sqf: units %1, tgt cnt %2, sel %3, type %4, z = %5", {alive _x} count (units _grp), count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
 #endif	
 		
 		// wait until target destroyed and while group alive and there is any bomberman in it
