@@ -150,7 +150,7 @@ SYG_nearestLocationA = {
 	{
 		case "OBJECT": {_pos = position _pos;};
 		case "LOCATION": {_pos = locationPosition _pos;};
-		case "ARRAY": {/* correct */};
+		case "ARRAY": {/* already correct format */};
 		case "GROUP": { _pos = if ( isNull leader _pos) then {[0,0,0]} else {position leader _pos};};
 		default {/* error */};
 	};
