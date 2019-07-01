@@ -37,8 +37,8 @@ _rocketJavelin  =
     "",    // soundrsc
     29,    // sounddur
     16, //8,     // endurance 14th
-    false, // terrainavoidance
-    1,     // updatefreq
+    false, // 9 terrainavoidance
+    1,     // 10 updatefreq
     0,     // delayinit
     0,     // controltime
     false, // detectable
@@ -200,9 +200,9 @@ _rocketDefault =
 ];
 
 _rocketNamesArr  = [
-    "M_Javelin_AT","ACE_Missile_Javelin",
-    "M_Stinger_AA","ACE_Missile_Stinger","ACE_FIM92round",
-    "M_Strela_AA","ACE_Missile_Strela"
+    "M_Javelin_AT", "ACE_Missile_Javelin",
+    "M_Stinger_AA", "ACE_Missile_Stinger", "ACE_FIM92round",
+     "M_Strela_AA",  "ACE_Missile_Strela"
     ];
 _rocketParamsArr = [
     _rocketJavelin, _rocketJavelin,
@@ -219,16 +219,16 @@ _replaced = false;
 
 if ( local _shooter ) then
 {
- // hint format["M:%1", _this];
-   _missile = nearestObject [_shooter, _type];
-   sleep 0.4;
-   _posfire = _shooter worldToModel (getPos _missile);
-   _vdir = vectorDir _missile;
-   _dir = (_vdir select 0) atan2 (_vdir select 1);
-   _ind = _rocketNamesArr find _type;
-   if (_ind >= 0) then
-   {
-       _replaced = true;
+// hint format["M:%1", _this];
+    _missile = nearestObject [_shooter, _type];
+    sleep 0.4;
+    _posfire = _shooter worldToModel (getPos _missile);
+    _vdir = vectorDir _missile;
+    _dir = (_vdir select 0) atan2 (_vdir select 1);
+    _ind = _rocketNamesArr find _type;
+    if (_ind >= 0) then
+    {
+        _replaced = true;
         _ra = _rocketParamsArr select _ind;
         switch (_ind) do {
             case 0;
@@ -240,25 +240,27 @@ if ( local _shooter ) then
                 else {_ra call _applyJavelin1;};
             };
             case 2;
-            case 3: {
+            case 3;
+            case 4: {
                 _ra call _applyStingerParams;
             };
-            case 4: {
+            case 5: {
                 _ra call _applyStrelaParams0;
             };
-            case 5: {
+            case 6: {
                 _ra call _applyStrelaParams1;
             };
         };
-   }
+    }
    else
    {
         if (!mando_replace_all_missiles) exitWith {_replaced = false;};
+        _replaced = true;
         _ra = _rocketDefault;
    };
 };
 //      hint format["M:%1 %2", _this, _missile];
-if (!_replaced) exitWith { hint localize format["+++ MANDO Missile not replaced: %1 -> %2 (%3), exit", _type, typeOf _target, _target distance _shooter]};
+if (!_replaced) exitWith { hint localize format["+++ MANDO Missile not replaced: %1 -> %2 (%3), exit", _type, typeOf _target, round(_target distance _shooter)]};
 
 _missile SetPos [ 0,0,(getPos _missile select 2) + 5000];
 deleteVehicle _missile;
@@ -297,5 +299,6 @@ _ra select 24,
 _ra select 25,
 _ra select 26
 ];
-hint localize format[ "+++ MANDO Missile: %1 -> %2, h. %3 d. %4, fire", _type, typeOf _target, (getPos _target) select 2, _target distance _shooter ];
-_arr call mando_missile_handler;
+hint localize format[ "+++ MANDO Missile: %1 -> %2, h. %3 d. %4, fire near %5", _type, typeOf _target, round((getPos _target) select 2), round(_target distance _shooter),
+text( _target call SYG_nearestLocation)];
+_arr call mando_missile_han
