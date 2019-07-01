@@ -99,7 +99,7 @@ STR_SYS_16,"Status of vehicle:\n---------------------\n Fuel: %1\nDamage: %2","S
 STR_SYS_17,"You recently repaired something on the base. Now have to either wait for about of %1 min. or use a repair truck...","Haben Sie vor kurzem repariert etwas an der Basis. Jetzt muss man entweder warten, bis etwa %1 min, oder Sie können dem LKW...","Вы недавно отремонтировали что-то на базе. Теперь придётся либо ждать около %1 мин., либо воспользоваться ремонтным грузовиком..."
 STR_SYS_18,"Please restore the ability to repair and refueling equipment on the base...","Bitte Wiederherstellung der Fähigkeit zur Reparatur und Betankung Ausrüstung auf der Basis...","Восстановите способность ремонта и заправки техники на базе..."
 STR_SYS_18_1,"No any vehicle nearby that is in need of repair...","Nein, jedes Fahrzeug in der Nähe, dass ist in der Notwendigkeit der Reparatur...","Машин, нуждающихся в ремонте и/или заправке, не обнаружено..."
-STR_SYS_19,"Repair, refuel: %1... wait...","Reparatur, Tankstellen: %1... warten Sie...","Ремонт, заправка: %1... ожидайте..."
+STR_SYS_19,"Repair %1%2, refuel %3 L.: %4... wait...","Reparatur %1%2, Tankstellen %3 L.: %4... warten Sie...","Ремонт %1%2, заправка %3 л.: %4... ожидайте..."
 
 STR_SYS_20,"Select respawn place","Select respawn place","Выбор места возрождения"
 STR_SYS_21,"Mobile respawn one gets transported by airlift...","Mobile respawn bekommt man transportiert mit der Luftbrücke...","Мобильный респаун 1 в воздухе..."
@@ -491,7 +491,7 @@ STR_SYS_256_A_NUM,4,4,4
 STR_SYS_256_A_0,"You understand that lost your magical ability to load double ammunition!","Sie mit schaudern verloren Ihre magischen Fähigkeiten, um neu zu laden Doppel-Munition!","Вы с содроганием осознаёте, что потеряли свою магическую способность загружать двойной боекомплект!"
 STR_SYS_256_A_1,"You realize that  lost your magical ability to load double ammunition!","Sie erkennen, dass verloren Ihre Magische Fähigkeit, reload Doppel-Munition!","Вы с горечью понимаете, что вертолётная халява на острове уже отсутствует!"
 STR_SYS_256_A_2,"You sad to think that fun here will not work!","Sie traurig zu denken, dass der Spaß hier nicht arbeiten!","Вы с грустью думате, что повеселиться тут нынче не получится!"
-STR_SYS_256_A_3,"You regret, but accept the fact that you have to fight for real now!","Sie bedauern, aber akzeptieren Sie die Tatsache, dass Sie haben zu kämpfen für real!","Вы с сожалением, но принимаете факт, что воевать придётся по настоящему!"
+STR_SYS_256_A_3,"You regret, but accept the fact that you have to fight for real now!","Sie bedauern, aber akzeptieren Sie die Tatsache, dass Sie haben zu kämpfen für real!","Вы с сожалением соглашаетесь с тем, что воевать придётся по настоящему!"
 
 STR_SYS_256_HM_NUM,4,4,4
 STR_SYS_256_HM_0,"Trying to postpone your next visit as long as possible, staff supplied your chopper with double ammo!","Versucht zu verschieben, Ihren nächsten Besuch so lange wie möglich Personal versorgt Ihre chopper mit double-Munition!","Чтобы видеть вас на сервисе как можно реже, техники загрузят еще один БК!"
