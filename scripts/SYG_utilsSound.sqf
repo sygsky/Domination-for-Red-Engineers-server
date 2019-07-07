@@ -18,6 +18,7 @@
 #define NEW_DEATH_SOUND_ON_BASE_DISTANCE 2000
 
 SYG_lastPlayedSoundItem = ""; // last played music/sound item
+SYG_deathCountCnt = 0;
 
 SYG_checkLastSoundRepeated= {
     _item = RANDOM_ARR_ITEM(_this);
@@ -132,7 +133,7 @@ SYG_baseDefeatTracks =
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_TVTowerDefeatTracks =
     [
-    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10"
+    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10", "gong_11"
     ];
 
 // for the death near medieval castles (2 buildings on whole island)
@@ -152,6 +153,8 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
+    SYG_deathCountCnt = SYG_deathCountCnt + 1;
+
 	if (typeName _this != "ARRAY") then // called as: _unit call  SYG_playRandomDefeatTrackByPos;
 	{
 	    _this = position _this;
@@ -346,17 +349,19 @@ SYG_playRandomTrack = {
         //
         if ((typeName arg(1)) == "ARRAY") exitWith  // list of track parts
         {
-            private ["_trk"];
 
-            // in rare random case (1 time from 50 attempts) play whole track
-            if ( (random 50) < 1) exitWith
+            // check if death count is too big
+            if (SYG_deathCountCnt > 25) exitWith
             {
-#ifdef __DEBUG__
-                hint localize format[ "SYG_playRandomTrack: play whole track %1 now !!!", arg(0)];
-#endif
-                playMusic arg(0)
+                // in rare case (more then 25 death in one session) play whole track
+    #ifdef __DEBUG__
+                hint localize format[ "SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
+    #endif
+                SYG_deathCountCnt = 0;
+                playMusic arg(0);
             };
 
+            private ["_trk"];
             // play partial random sub-track
             _trk = floor(random ((count _this)-1)) + 1;
             _trk = arg(_trk); // get any random partial item, excluding 1st (sound name)
