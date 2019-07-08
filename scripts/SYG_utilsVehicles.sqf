@@ -640,7 +640,7 @@ SYG_populateVehicle ={
         };
 	};
 #endif
-#ifdef __PREVENT_OEVRTURN__
+#ifdef __PREVENT_OVERTURN__
     _veh call SYG_preventTurnOut; // add anti-overturn proc
 #endif
 	_grp
@@ -1538,13 +1538,13 @@ AA_PATROL     = [ 2,2,[ [1,1,BRADLEY_LIST],[2,2,LINEBAKER_LIST] ] ];
 
 VULKAN_LIST   = ["ACE_Vulcan","ACE_PIVADS"];
 M113_LIST     = [/*"ACE_M113","ACE_M113_A1","ACE_M113_A2",*/"ACE_M113_A3"];
-VULKAN_PATROL = [ 1,2, [ [1,1,M113_LIST], [2,2,VULKAN_LIST] ] ];
+VULKAN_PATROL = [ 1,2, [ /*[1,1,M113_LIST],*/ [2,3,VULKAN_LIST] ] ];
 
 STRYKER_CANON_LIST = ["ACE_Stryker_MGS_SLAT","ACE_Stryker_MGS"];
 STRYKER_PATROl     = [ 1,1, [ [1,2,STRYKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,2,["ACE_Stryker_MK19"]] ] ];
 
 CARS_LIST = ["ACE_HMMWV_50", "ACE_HMMWV_GAU19", "ACE_HMMWV_GL", "ACE_HMMWV_TOW"];
-LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GAU19"]], [1,1,["ACE_HMMWV_GL"]], [1,1,["ACE_HMMWV_GMV2"]] ] ];
+LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_GAU19"]], [1,2,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["ACE_HMMWV_GL"]], [1,1,["ACE_HMMWV_GMV2"]], [1,1,["ACE_HMMWV_GAU19"]] ] ];
 
 /**
  * Creates patrol of designated type.

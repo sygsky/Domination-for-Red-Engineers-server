@@ -168,7 +168,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	// sniper weapon
 	SYG_SCARL_WPN_SET_SNIPER =  ["ACE_SCAR_L_Marksman", "ACE_SCAR_L_Marksman_ACOG","ACE_SCAR_L_Marksman_Leu"];
 	// sniper weapon silenced
-	//SYG_SCARL_WPN_SET_SNIPER_SD =  ["ACE_SCAR_L_Marksman_SD","ACE_SCAR_L_Marksman_Leu_SD" ];
+	SYG_SCARL_WPN_SET_SNIPER_SD =  ["ACE_SCAR_L_Marksman_SD","ACE_SCAR_L_Marksman_Leu_SD" ];
 	SYG_SCARL_MAGS = ["ACE_30Rnd_556x45_B_Stanag", "ACE_20Rnd_556x45_SB_Stanag", "ACE_30Rnd_556x45_SD_Stanag", "ACE_20Rnd_556x45_SB_Stanag","ACE_30Rnd_556x45_BT_Stanag"];
 
 	// ---------------------------------------------------------------------------------			
@@ -682,11 +682,11 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_SD)] + SYG_STD_MEDICAL_SET;
 				if ( _adv_rearm ) then 
 				{
-					_wpn = RAR(SYG_SCARH_WPN_SET_SNIPER); //SYG_M21_WPN_SET select 0;
+					_wpn = RAR(SYG_SCARH_WPN_SET_SNIPER);
 				}
 				else
 				{
-					_wpn = RAR(SYG_M21_WPN_SET);
+					_wpn = RAR(SYG_M21_WPN_SET + SYG_SCARL_WPN_SET_SNIPER + SYG_SCARL_WPN_SET_SNIPER_SD);
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]]; 
 				_equip = _equip + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];

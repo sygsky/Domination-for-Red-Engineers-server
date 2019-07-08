@@ -407,25 +407,25 @@ if (!d_no_para_at_all) then {
 	};
 };
  */
-_str = _str + "Предотвращение переворачивания гусеничной техники: ";
+_str = _str + localize "STR_SYS_370"; // "Use GDT Mod Tracked routine to prevent tanks falling on their back: "
 if (d_use_mod_tracked) then {
-	_str = _str + "Включено\n";
+	_str = _str + localize "STR_SYS_400";
 } else {
-	_str = _str + "Отключено\n";
+	_str = _str + localize "STR_SYS_400_1";
 };
 
 _str = _str + format[localize "STR_SYS_367" /* "Максимальная дистанция между оператором и точкой нанесения артудара: %1 м." */,d_arti_operator_max_dist] + "\n";
 _str = _str + format[localize "STR_SYS_368" /* "Время перезарядки  между двумя артиллерийскими залпами: %1 сек." */,d_arti_reload_time] + "\n";
-_str = _str + format ["Артиллерия вновь доступна после 1, 2, 3 залпа(ов): %1, %2, %3", d_arti_available_time, d_arti_available_time + 200, d_arti_available_time + 400] + " сек.\n";
-_str = _str + "Проверять на наличие союзников зону поражения артиллерии: ";
+_str = _str + format [localize "STR_SYS_371", d_arti_available_time, d_arti_available_time + 200, d_arti_available_time + 400] + " сек.\n"; // "Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs"
+_str = _str + localize "STR_SYS_371"; // "Check for allied units in the vicinity of artillery target: "
 if (d_arti_check_for_friendlies) then {
 	_str = _str + _strYes;
 } else {
 	_str = _str + _strNo;
 };
-_str = _str + "Максимальное расстояние между игроком и точкой сброса снабжения: " + str(d_drop_max_dist) + " м.\n";
+_str = _str + localize "STR_SYS_373" + str(d_drop_max_dist) + localize "STR_SYS_373_1";
 
-_str = _str + "Время после авто-выброса из авиатехники: " + str(d_player_air_autokick) + " сек.\n";
+_str = _str + localize "STR_SYS_374" + str(d_player_air_autokick) + " сек.\n"; // "Player autokick time (kicked out of tanks, planes, choppers for the first seconds): "
 
 #ifdef __REVIVE__
 //_str = _str + "Player starts with the following number of lives (Revive): " + str(d_NORRN_max_respawns) + "\n";

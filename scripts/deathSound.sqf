@@ -16,7 +16,7 @@ _unit = _this select 0; // player
 
 if ( !( local _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};
 if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
-if ( _unit != _killer ) then // KIA
+if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play ordinal sound if KIA or alone
 {
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
     {
@@ -36,18 +36,18 @@ else    // some kind of suicide? Say something about...
 
     // check if we are near TV-Tower
     _TVTowerArr = _unit nearObjects [ "Land_telek1", 50];
-    if ( ((count _TVTowerArr) > 0) && ((random 5) > 1)) exitWith
+    if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
 
     // check if we are near castle
-    _castleArr = _unit nearObjects [ "Land_helfenburk", 500];
+    _castleArr = _unit nearObjects [ "Land_helfenburk", 800];
     if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith
     {
         _sound =  RANDOM_ARR_ITEM(SYG_MedievalDefeatTracks);
-        ["say_sound", _castleArr select 0, _sound] call XSendNetStartScriptClientAll; // music from castle
+        ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // medieval music if suicide near castle
     };
 
     // short melody on unknown death case, anybody within some range can hear this

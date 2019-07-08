@@ -24,7 +24,7 @@ if (isServer) then {
 	_planes = if (d_enemy_side == "EAST") then
 #ifdef __ACE__
 	{["ACE_Su30Mk_KAB500KR","ACE_Su30Mk_Kh29T","ACE_Su34B"]}
-	else { ["ACE_AV8B_MK83", "ACE_AV8B_AGM65", "ACE_AV8B_AA_MK82","ACE_AV8B_MK83"] }; //+++ Sygsky: for more fun
+	else { SYG_AV8B_TYPES }; //+++ Sygsky: for more fun, defined at i_server.sqf top lines
 #else
 	{["SU34","Su34B"]}
 	else { ["AV8", "AV8B2"] }; //+++ Sygsky: for more fun

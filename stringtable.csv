@@ -99,7 +99,7 @@ STR_SYS_16,"Status of vehicle:\n---------------------\n Fuel: %1\nDamage: %2","S
 STR_SYS_17,"You recently repaired something on the base. Now have to either wait for about of %1 min. or use a repair truck...","Haben Sie vor kurzem repariert etwas an der Basis. Jetzt muss man entweder warten, bis etwa %1 min, oder Sie können dem LKW...","Вы недавно отремонтировали что-то на базе. Теперь придётся либо ждать около %1 мин., либо воспользоваться ремонтным грузовиком..."
 STR_SYS_18,"Please restore the ability to repair and refueling equipment on the base...","Bitte Wiederherstellung der Fähigkeit zur Reparatur und Betankung Ausrüstung auf der Basis...","Восстановите способность ремонта и заправки техники на базе..."
 STR_SYS_18_1,"No any vehicle nearby that is in need of repair...","Nein, jedes Fahrzeug in der Nähe, dass ist in der Notwendigkeit der Reparatur...","Машин, нуждающихся в ремонте и/или заправке, не обнаружено..."
-STR_SYS_19,"Repair, refuel: %1... wait...","Reparatur, Tankstellen: %1... warten Sie...","Ремонт, заправка: %1... ожидайте..."
+STR_SYS_19,"Repair %1%2, refuel %3 L.: %4... wait...","Reparatur %1%2, Tankstellen %3 L.: %4... warten Sie...","Ремонт %1%2, заправка %3 л.: %4... ожидайте..."
 
 STR_SYS_20,"Select respawn place","Select respawn place","Выбор места возрождения"
 STR_SYS_21,"Mobile respawn one gets transported by airlift...","Mobile respawn bekommt man transportiert mit der Luftbrücke...","Мобильный респаун 1 в воздухе..."
@@ -153,7 +153,7 @@ STR_SYS_65,"The enemy revealed us...","Der Feind öffnete Sie...","Враг об
 
 STR_SYS_66,"You were demoted from %1 to %2 !!!","Sie wurden abgebaut von %1, %2 !!!","Вы разжалованы со звания %1 до звания %2"
 STR_SYS_67,"You were promoted to %1, congratulations !!!","Sie wurden gefördert %1, herzlichen Glückwunsch !!!","Поздравляем с присвоением внеочередного звания %1"
-STR_SYS_68,"This is the maximum grade for the island, but will rank higher!","Dies ist der höchste Rang für die Insel, aber Sie werden mit Titel und höher!","Это максимальный ранг для острова, но будут звания и повыше!"
+STR_SYS_68,"This is the maximum std grade for the island, but will rank higher!","Dies ist der höchste std Rang für die Insel, aber Sie werden mit Titel und höher!","Это максимальный стандартный ранг для острова, но будут звания и повыше!"
 
 STR_SYS_69,"Select Teleport Destination","Wählen Sie Teleportieren Ziel","Выбор места телепортирования"
 //STR_SYS_70,"Domination!","Domination!","Доминация!"
@@ -241,7 +241,8 @@ STR_SYS_129_4,"None or less than 8 prisoners made it back to base...","Keine ode
 STR_SYS_129_5,"The enemy officer was killed...","Der feindliche Offizier getötet wurde...","Вражеский офицер спятил и застрелился..."
 STR_SYS_129_6,"The prototype was destroyed before it reached your base...","Der Prototyp wurde zerstört, bevor es erreicht Ihre Basis...","Образец трофейной техники развалился до того, как попал в руки ГРУ на базе..."
 STR_SYS_129_7,"The pilots where killed before they reached the base...","Die Piloten, wo Sie getötet, bevor Sie erreicht die Basis...","Пилоты скончались от столбняка до прибытия на базу..."
-STR_SYS_129_8,"You lost a fortune...","Sie verlor ein Vermögen...","Удача от Вас отвернулась..."
+STR_SYS_129_8,"Bus is destroyed or all civilians are dead!","Bus ist zerstört oder alle Zivilisten sind tot!","Автобус уничтожен или все гражданские погибли. Это позор!"
+STR_SYS_129_100,"You lost a fortune...","Sie verlor ein Vermögen...","Удача от Вас отвернулась..."
 
 STR_SYS_130,"For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!","Für die Nichterfüllung der Aufgaben, die Sie persönlich trugen die Verantwortung. Abgezogen %1 Punkte. So wird es mit jedem!","За невыполнение задания Вы лично понесли ответственность. Вычтенo %1 баллов. Так будет с каждым!"
 STR_SYS_131,"Officer is at dist of about %1 m. from %3 and at Azimut of about %2 deg. from it","Officer ist bei einem Abstand von über %1 m. von %3 und in Azimut von etwa %2 Grad. ","Офицер примерно в %1 м. от %3, азимут поиска %2 гр."
@@ -320,7 +321,7 @@ STR_SM_018,"The government member is dead. Good job.","Die Regierung Mitglied is
 STR_SM_29,"There is an enemy depot in a base south of Cabo Juventudo. Destroy all tanks there to weaken the enemy troops.","Es ist ein Feind depot in einer Basis südlich von Cabo Juventudo. Zerstöre alle Panzer, es zu Schwächen der feindlichen Truppen.","К югу от Cabo Juventudo расположена вражеская база. По данным разведки на базе находится на ремонте от одного до двух танковых взводов. Задача - уничтожить все танки."
 STR_SM_029,"Good job. All tanks are down.","Gute Arbeit. Alle Panzer sind unten.","Задание выполнено! Все танки уничтожены."
 
-STR_SM_30,"An enemy scientist is experimenting with volcano technology on Monte Asharah. We don't know yet what it's all about but it is better that he doesn't progress. Eliminate him ! Attention! Target has a reinforced Air Defense.","Ein Feind Wissenschaftler Experimentieren mit Vulkan-Technologie auf dem Monte Asharah. Wir wissen noch nicht, worum es geht, aber es ist besser, dass er nicht weiter. Beseitigen Sie ihn. Achtung! Ziel ist die verstärkte Luftverteidigung.","Противник проводит эксперименты в кратере вулкана на острове Asharah. Ваша задача - ликвидировать ученого-космополита. Внимание! С островов были обстреляны из зенитных орудий рыбаки!"
+STR_SM_30,"An enemy scientist is experimenting with volcano technology on Monte Asharah. We don't know yet what it's all about but it is better that he doesn't progress. Eliminate him ! Attention! Target has a reinforced Air Defense.","Ein Feind Wissenschaftler Experimentieren mit Vulkan-Technologie auf dem Monte Asharah. Wir wissen noch nicht, worum es geht, aber es ist besser, dass er nicht weiter. Beseitigen Sie ihn. Achtung! Ziel ist die verstärkte Luftverteidigung.","Противник проводит эксперименты в кратере вулкана на острове Asharah. Ваша задача - ликвидировать ученого-космополита. Внимание! С островов были обстреляны, из зенитных орудий, рыбаки!"
 STR_SM_030,"The enemy scientist is dead. Good job.","Der Feind Wissenschaftler ist tot. Gute Arbeit.","Задание выполнено! Ученый ликвидирован."
 
 STR_SM_31,"There is an enemy depot in a base east of Everon. Destroy all tanks there to weaken the enemy troops.","Es ist ein Feind depot in einem base-östlich von Everon. Zerstöre alle Panzer, es zu Schwächen der feindlichen Truppen.","По данным разведки, в районе города Everon, есть старая, заброшенная база. Враг использует её как склад для бронетехники. Отыщите этот склад и уничтожьте бронетехнику врага."
@@ -490,7 +491,7 @@ STR_SYS_256_A_NUM,4,4,4
 STR_SYS_256_A_0,"You understand that lost your magical ability to load double ammunition!","Sie mit schaudern verloren Ihre magischen Fähigkeiten, um neu zu laden Doppel-Munition!","Вы с содроганием осознаёте, что потеряли свою магическую способность загружать двойной боекомплект!"
 STR_SYS_256_A_1,"You realize that  lost your magical ability to load double ammunition!","Sie erkennen, dass verloren Ihre Magische Fähigkeit, reload Doppel-Munition!","Вы с горечью понимаете, что вертолётная халява на острове уже отсутствует!"
 STR_SYS_256_A_2,"You sad to think that fun here will not work!","Sie traurig zu denken, dass der Spaß hier nicht arbeiten!","Вы с грустью думате, что повеселиться тут нынче не получится!"
-STR_SYS_256_A_3,"You regret, but accept the fact that you have to fight for real now!","Sie bedauern, aber akzeptieren Sie die Tatsache, dass Sie haben zu kämpfen für real!","Вы с сожалением, но принимаете факт, что воевать придётся по настоящему!"
+STR_SYS_256_A_3,"You regret, but accept the fact that you have to fight for real now!","Sie bedauern, aber akzeptieren Sie die Tatsache, dass Sie haben zu kämpfen für real!","Вы с сожалением соглашаетесь с тем, что воевать придётся по настоящему!"
 
 STR_SYS_256_HM_NUM,4,4,4
 STR_SYS_256_HM_0,"Trying to postpone your next visit as long as possible, staff supplied your chopper with double ammo!","Versucht zu verschieben, Ihren nächsten Besuch so lange wie möglich Personal versorgt Ihre chopper mit double-Munition!","Чтобы видеть вас на сервисе как можно реже, техники загрузят еще один БК!"
@@ -617,13 +618,19 @@ STR_SYS_360,"For unit transportation +%1 scores","Für die unit Transport +%1 er
 STR_SYS_361,"Engine gets shut off on service point: ","Motor wird abgestellt auf service-point: ","Отключение двигателей в пункте перезарядки: "
 
 STR_SYS_362,"AAHALO jump enabled: ","AAHALO parajump aktiviert: ","Десантирование активно: "
-STR_SYS_363,"AAHALO jump available at flag at base: ","AAHALO parajump verfügbar unter der Flagge an Ihrer Basis: ","Да, доступно на базе: "
+STR_SYS_363,"AAHALO jump available at flag at base: ","AAHALO parajump verfügbar unter der Flagge an Ihrer Basis: ","Десантирование доступно на базе: "
 STR_SYS_364,"Time between two AAHALO jumps from base flag: %1 secs","Die Zeit zwischen zwei AAHALO parajumps von base flag: %1 secs","Периодичность десантирования от флага на базе: %1 сек."
 STR_SYS_365,"AAHALO jump start base height: %1m","AAHALO jump start Höhe: %1m","Базовая высота десантирования: %1 м."
 STR_SYS_366,"Create the following vehicle at jump flag instead parajump: %1","Erstellen Sie das folgende Fahrzeug zu springen, stattdessen parajump: %1","Создание транспорта у флага в городе вместо прыжка: %1"
 STR_SYS_367,"Maximum distance artillery operator to arti strike point: %1m","Maximale Distanz Artillerie-Betreiber zu arti-strike point: %1m","Максимальная дистанция между оператором и точкой нанесения артудара: %1 м."
 STR_SYS_368,"Artillery reload time between two salvoes: %1 secs","Artillerie reload-Zeit zwischen zwei Salven: %1 Sekunden","Время перезарядки  между двумя артиллерийскими залпами: %1 сек."
 STR_SYS_369,"With ACE Map: ","Mit ACE-Karte: ","С картой АСЕ: "
+STR_SYS_370,"Use GDT Mod Tracked routine to prevent tanks falling on their back: ","Mit GDT Mod Verfolgt mod Panzer von drehen auf dem Rücken zu verhindern:","Предотвращение переворачивания гусеничной техники: "
+STR_SYS_371,"Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs","Artillerie wieder verfügbar nach 1, 2, 3 Salven: %1, % 2, % 3 Sek.","Время доступа к артиллерии после  1, 2, 3 залпа(ов): %1, %2, %3 сек."
+STR_SYS_372,"Check for friendly units near artillery target: ","Überprüfen Sie für Verbündete Einheiten in der Nähe der Artillerie Ziel: ","Проверять на наличие союзников зону поражения артиллерии: "
+STR_SYS_373,"Maximum distance player to airdrop point to call in an airdrop: ","Maximale Entfernung von Spielern zu airdrop Punkt in einem airdrop anrufen: ","Максимальное расстояние между игроком и точкой сброса снабжения: "
+STR_SYS_373_1," m.\n"," m.\n"," м.\n"
+STR_SYS_374,"Player autokick time (kicked out of tanks, planes, choppers for the first seconds): ",,"Время авто-выброса из техники при соединении с игрой: "
 
 STR_SYS_400,"Yes\n","Ja\n","Да\n"
 STR_SYS_400_1,"Yes","Ja","Да"
@@ -899,7 +906,7 @@ STR_HIT_UNCONSCIOUS,"You are unconscious...","Sie verlieren das Bewusstsein...",
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,69,69,69
+STR_RUM_NUM,71,71,71
 STR_RUM_NIGHT,"They are sleeping in %3","Alle schlafen in %3","В %3 все спят, однако"
 STR_RUM_0,"Rumors are absent! It's weird...","Gerüchte sind nicht vorhanden! Es ist seltsam...","Слухи отсутствуют! Что странно..."
 STR_RUM_1,"Enemy refuel truck will help only if your vehicle engine is on","Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf","Вражеский бензовоз заправляет при включенном двигателе техники"
@@ -970,6 +977,8 @@ STR_RUN_65,Engineers now get points for the duration of the vehicle repair,Ingen
 STR_RUN_66,"Sometime islanders would ask you to complete next side mission. Please don't reject this!","Gelegentlich Inselbewohner wird Sie bitten, zu vervollständigen Nebenmissionen. Bitte nicht ablehnen!","Иногда островитяне будет просить Вас сделать дополнительную миссию. Не отказывайте им!"
 STR_RUN_67,"Local guru now reports the time of the last landing of commandos at the airbase","Local guru meldet jetzt die Zeit der letzten Landung von Kommandos bei der airbase","Местный гуру подпитывает слухи о времени последнего десанта на базу"
 STR_RUN_68,"Soviet military engineers demining U.S. minefields","Die sowjetische Militär-Ingenieure Minenräumung US-Armee Minenfelder","Советские военные инженеры разминируют американские минные поля"
+STR_RUN_69,"Enemies plan to increase AA missiles range","Feinde planen, die Reichweite der AA-Raketen zu erhöhen","Враги планируют увеличить радиус действия своей ПВО"
+STR_RUN_70,"At the moment of death you will hear the music of heaven","Während des Todes wirst du die Musik des Himmels hören","В момент смерти ты услышишь небесную музыку"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
@@ -1206,13 +1215,13 @@ STR_GRU_44,"GRU already uses D-installation and control PC.","GRU nutzt bereits 
 STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2, nt %3, tc %4","Melden Sie Ihrem commander zu D-Einheit Fehler! Telemetrie: %1, cc %2, nt %3, tc %4","Сообщите командованию, что Д-установка не работает! Телеметрия: %1, cc %2, nt %3, tc %4"
 
 
-STR_GRU_46,"The landing of the enemy patrol spotted by %1%2%3%4%5","Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5","Местный %1 наблюдал высадку вражеского патруля%2%3%4%5%6"
+STR_GRU_46,"The landing of the enemy patrol spotted by %1%2%3%4%5%6","Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6","Местный %1 наблюдал высадку вражеского патруля%2%3%4%5%6"
 STR_GRU_46_0,"Sahrani inhabitants inform: Enemy patrols disappeared!","Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!","Вражеские патрули исчезли, сообщают жители!"
 STR_GRU_46_1," near ""%1"""," in der Nähe von ""%1"""," близ ""%1"""
 STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," на дист. примерно %1 м."
 STR_GRU_46_3," bearing %1"," Richtung %1",", азимут %1"
 STR_GRU_46_4," numbering %1 unit[s]"," die Nummerierung %1 Fahrzeug[s]",", численностью %1 ед."
-STR_GRU_46_5," type is %1"," Typ ist %1",", тип - %1."
+STR_GRU_46_5," type is %1"," Typ ist %1",", тип - %1"
 
 STR_GRU_47,"Enemy activity detected near the base","Feindliche Aktivitäten erkannt in der Nähe der Basis","Вражеская активность обнаружена неподалёку от базы"
 STR_GRU_48,"Local %1 report that the king has left the building and found another asylum, not further than %2 m. from hotel","Lokale %1 berichten, dass der king hat das Gebäude verlassen und fand eine andere Asyl, nicht weiter als %2 m. vom hotel","Местные %1 сообщают, что король покинул здание и нашёл другое убежище, не далее %2 м. от отеля"

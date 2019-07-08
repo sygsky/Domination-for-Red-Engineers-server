@@ -1,4 +1,6 @@
 /*
+    scripts/SYG_eventGetOut.sqf, 17-JAN-2019
+
 	author: Sygsky
 	description: none
 	returns: nothing
@@ -14,6 +16,7 @@
     role:    String - Can be either "driver", "gunner", "commander" or "cargo"
     unit:    Object - Unit that exit the vehicle
 */
+
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -32,6 +35,8 @@ x_dosmoke = {};
 
 #endif
 
+
+
 SYG_FalseGetOutsCnt = 0; // number of false "GetOut" events (vehicle is not overturned)
 SYG_TrueGetOutsCnt = 0; // number of false "GetOut" events (vehicle is not overturned)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++ SYG_preventTurnOut
@@ -41,8 +46,8 @@ SYG_preventTurnOut = {
     if ( !alive _this ) exitWith { false };
     if ( !( (_this isKindOf "Tank") || (_this isKindOf "Car") ) ) exitWith { false };
 
-    _GetOutEventInd = _this getVariable EVENT_ID_VAR_NAME;
-    if (! isNil "_GetOutEventInd") exitWith { false };
+    _getOutEventInd = _this getVariable EVENT_ID_VAR_NAME;
+    if (! isNil "_getOutEventInd") exitWith { false };
 
     _id = _this addEventHandler ["GetOut", {_this spawn SYG_getOutEvent}];
     _this setVariable [EVENT_ID_VAR_NAME, _id];
@@ -54,8 +59,10 @@ SYG_preventTurnOut = {
 // Event handler to prevent vehicles turn out
 SYG_getOutEvent =
 {
-    _GetOutEventInd = (_this select 0) getVariable EVENT_ID_VAR_NAME;
-    if ( isNil "_GetOutEventInd" ) exitWith
+    private ["_getOutEventInd"];
+
+    _getOutEventInd = (_this select 0) getVariable EVENT_ID_VAR_NAME;
+    if ( isNil "_getOutEventInd" ) exitWith
     {
         #ifdef __DEBUG_PRINT__
         hint localize format["<<< SYG_getOutEvent: no ""%1"" event id found for %2 (on %3 got out), exiting >>>",
@@ -67,10 +74,10 @@ SYG_getOutEvent =
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
     };
-    _start_time = time; // remember start time of the event processing
-
     // only enemy is allowed for auto revert back
     if ( str(side (_this select 2)) != d_enemy_side ) exitwith {false};
+
+    _start_time = time; // remember start time of the event processing
 
     _veh  = _this select 0;
     _veh setVariable [EVENT_ID_VAR_NAME, nil]; // remove event number to prevent other processing
@@ -82,7 +89,7 @@ SYG_getOutEvent =
 
     if ( (_veh isKindOf "Air") /*|| (_veh isKindOf "Ship")*/) exitWith
     {
-        _veh removeEventHandler [EVENT_NAME, _GetOutEventInd]; // prevent event on air vehicles
+        _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // prevent event on air vehicles
         hint localize format["--- SYG_getOutEvent: REMOVE GetOut EVENT on invalid vehicle %1, exit", _veh];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
@@ -107,7 +114,7 @@ SYG_getOutEvent =
 
     if ( !alive _veh ) exitWith // vehicle is dead, nothing to do with it
     {
-        _veh removeEventHandler [EVENT_NAME, _GetOutEventInd]; // prevent event on dead vehicles
+        _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // prevent event on dead vehicles
         hint localize format["--- SYG_getOutEvent: REMOVE EVENT vehicle %1(%2) is dead, exit", typeOf _veh, _veh];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
@@ -192,7 +199,7 @@ SYG_getOutEvent =
     {
         hint localize format["<<< SYG_getOutEvent:  veh ""%1""(%2) is dead in %3, exit >>>", typeOf _veh, _veh, (round((time - _start_time) *10))/10];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
-        _veh removeEventHandler [EVENT_NAME, _GetOutEventInd]; // remove event at all
+        _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // remove event at all
         false
     }; // vehicle is dead, nothing to do with him
 
@@ -208,7 +215,7 @@ SYG_getOutEvent =
     {
         hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", typeOf _veh, _veh, damage _veh];
         _veh setDamage 0;
-        _veh setVariable [EVENT_ID_VAR_NAME, _GetOutEventInd]; // restore event handling
+        _veh setVariable [EVENT_ID_VAR_NAME, _getOutEventInd]; // restore event handling
         true
     };
 
@@ -216,7 +223,7 @@ SYG_getOutEvent =
     if (!_udState) exitWith // Vehicle stands on wheels, exit mow
     {
         // not overturned, exit
-        _veh setVariable [EVENT_ID_VAR_NAME, _GetOutEventInd]; // restore event handling
+        _veh setVariable [EVENT_ID_VAR_NAME, _getOutEventInd]; // restore event handling
 
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
     #ifdef __DEBUG_PRINT__
@@ -321,7 +328,7 @@ SYG_getOutEvent =
 
     _crew = [];
 
-    // accumulate all nearest pedestrians beelonging to the same group
+    // accumulate all nearest pedestrians belonging to the same group
     {
         if ( (alive _x) && ( vehicle _x == _x) && (_veh distance _x < 100) && !(_x in _crew) ) then {_crew = _crew + [_x];};
     } forEach units group _first_man_out;
@@ -432,7 +439,7 @@ SYG_getOutEvent =
         } forEach _crew;
     };
 
-    _veh setVariable [EVENT_ID_VAR_NAME, _GetOutEventInd]; // restore event handling
+    _veh setVariable [EVENT_ID_VAR_NAME, _getOutEventInd]; // restore event handling
     _rem_roles = _veh call _getVehicleMainRoles;
     if (_veh emptyPositions "cargo" > 0) then { _rem_roles set [count _rem_roles, format["cargo(%1)",_veh  emptyPositions "cargo"]]; };
     _tlist = [];

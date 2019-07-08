@@ -1,4 +1,4 @@
-// by Xeno: x_scripts/x_recapture.sqf
+// by Xeno: x_scripts/x_recapture.sqf, server call only
 private ["_x_can_recapture", "_num_p", "_recap_index", "_loop_running", "_ran", "_target_array", "_target_pos", "_checktrigger", "_checktrigger2", "_target_name", "_radius", "_helih","_allready_recaptured","_arr"];
 if (!isServer) exitWith {};
 
@@ -28,7 +28,7 @@ while {true} do {
 	if (X_MP) then {
 		waitUntil {sleep (61.012 + random 20);(call XPlayersNumber) > 0};
 	};
-	__DEBUG_NET("x_recapture.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("x_recapture.sqf",(call XPlayersNumber))
 	
 	while {!main_target_ready} do {sleep 10.321};
 	

@@ -49,7 +49,12 @@ switch (toUpper arg(3)) do
                     {
                         player call SYG_getPlayerEquipAsStr
                     };
+		// TODO: send armory sound to all
+		_sound = "armory2";
+		if ( (random 10) < 5) then {_sound = "armory1"};
+		["say_sound", player, _sound] call XSendNetStartScriptClientAll;
         ["d_ad_wp", name player, _equip] call XSendNetStartScriptServer;
+
         _args = if ( _equip == "" )
                     then  { ["STR_SYS_613"]} // Record is wiped off
                     else {["STR_SYS_611"] }; // Record is stored

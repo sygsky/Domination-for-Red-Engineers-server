@@ -251,7 +251,7 @@ SYG_calcRelArr = {
  * Creates array with info to store object position according to house
  *
  * call: _rel_arr = [_house, _unit] call SYG_worldObjectToModel;
- * where _rel_arr = [[_dx,_dy,_dz], _angle]; // _angle is object angle in house model space
+ * where _rel_arr = [[_dx,_dy,_dz], _angle, _house_center_world_pos]; // _angle is object angle in house model space
  */
 SYG_worldObjectToModel = {
     //player groupChat format["SYG_worldObjectToModel: %1", _this];
@@ -264,7 +264,7 @@ SYG_worldObjectToModel = {
 /**
  * Calculates point from house and relative offset to it
  *
- * call: _pnt = [_house, _off_arr] call SYG_modelObjectToWorld;
+ * call: _rel_arr = [_house, _off_arr] call SYG_modelObjectToWorld;
  * where _rel_arr = [_dx,_dy,_dz]
  */
 SYG_modelObjectToWorld = {

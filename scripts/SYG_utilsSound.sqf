@@ -17,13 +17,27 @@
 
 #define NEW_DEATH_SOUND_ON_BASE_DISTANCE 2000
 
+SYG_lastPlayedSoundItem = ""; // last played music/sound item
+SYG_deathCountCnt = 0;
+
+SYG_checkLastSoundRepeated= {
+    _item = RANDOM_ARR_ITEM(_this);
+    _cnt = count _this;
+    if ( _cnt > 1) then
+    {
+        while { (str(_item) == SYG_lastPlayedSoundItem) && _cnt > 0} do {_item = RANDOM_ARR_ITEM(_this); _cnt = _cnt -1;};
+        SYG_lastPlayedSoundItem = str(_item);
+    };
+    _item
+};
+
 //
 // call as: 
 //  _musicName = _music_index call SYG_musicTrackName; // index from 0 to ((call SYG_musicTrackCount) - 1)
 //  playMusic ( floor( random (call SYG_musicTrackCount) ) call SYG_musicTrackName);
 //
 SYG_musicTrackName = {
-	if ( _this < 0 or _this >= (call SYG_musicCount) ) exitWith { "" }; // no such track
+	if ( _this < 0 or _this >= (call SYG_musicTrackCount) ) exitWith { "" }; // no such track
 	configName((configFile >> "CfgMusic") select _this)
 };
 
@@ -33,7 +47,7 @@ SYG_musicTrackName = {
  */
 SYG_playMusicTrack = {
 	private ["_name"];
-	if ( _this < 0 or _this >= (call SYG_musicCount) ) exitWith { "" }; // no such track
+	if ( _this < 0 or _this >= (call SYG_musicTrackCount) ) exitWith { "" }; // no such track
 	_name = _this call SYG_musicTrackName;
 	playMusic ( _name);
 	_name
@@ -112,13 +126,14 @@ SYG_baseDefeatTracks =
     "melody","medieval_defeat","defeat2","arabian_death", "village_consort",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
-    ["cosmos", [28.8,-1] ]
+    ["cosmos", [28.8,-1] ],
+    ["ruffian",[0,10.27]]
 ] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_TVTowerDefeatTracks =
     [
-    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10"
+    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10", "gong_11"
     ];
 
 // for the death near medieval castles (2 buildings on whole island)
@@ -138,6 +153,8 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
+    SYG_deathCountCnt = SYG_deathCountCnt + 1;
+
 	if (typeName _this != "ARRAY") then // called as: _unit call  SYG_playRandomDefeatTrackByPos;
 	{
 	    _this = position _this;
@@ -254,10 +271,7 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[16.092,6.318]],
         ["ATrack26",[24.014,8.097]],
         ["ATrack26",[32.06,-1]],
-        ["church_organ_1"],
-        ["church_voice"],
-        ["haunted_organ_1"],
-        ["haunted_organ_2"]
+        "church_organ_1", "church_voice", "haunted_organ_1", "haunted_organ_2"
 
     ];
 
@@ -305,7 +319,8 @@ SYG_playRandomTrack = {
     // count >= 1
     if ( (typeName arg(0)) == "ARRAY" ) exitWith // array of array
     {
-        RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack; // find random array and try to play from it
+        _item = _this call SYG_checkLastSoundRepeated;
+        _item call SYG_playRandomTrack; // find random array and try to play from it
     };
 
     //
@@ -325,7 +340,8 @@ SYG_playRandomTrack = {
     {
         if ((typeName arg(1)) == "STRING") exitWith // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
         {
-            _item = RANDOM_ARR_ITEM(_this) call SYG_playRandomTrack;
+            _item = _this call SYG_checkLastSoundRepeated;
+            _item call SYG_playRandomTrack;
         }; // list of tracks, play any selected
         //
         // ["ATrack12,[10,10]<,[20,15]>]
@@ -333,20 +349,23 @@ SYG_playRandomTrack = {
         //
         if ((typeName arg(1)) == "ARRAY") exitWith  // list of track parts
         {
-            private ["_trk"];
 
-            // in rare random case (1 time from 50 attempts) play whole track
-            if ( (random 50) < 1) exitWith
+            // check if death count is too big
+            if (SYG_deathCountCnt > 25) exitWith
             {
-#ifdef __DEBUG__
-                hint localize format[ "SYG_playRandomTrack: play whole track %1 now !!!", arg(0)];
-#endif
-                playMusic arg(0)
+                // in rare case (more then 25 death in one session) play whole track
+    #ifdef __DEBUG__
+                hint localize format[ "SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
+    #endif
+                SYG_deathCountCnt = 0;
+                playMusic arg(0);
             };
 
+            private ["_trk"];
             // play partial random sub-track
             _trk = floor(random ((count _this)-1)) + 1;
             _trk = arg(_trk); // get any random partial item, excluding 1st (sound name)
+            // TODO: not allow the same partial track
             if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
             {
 #ifdef __DEBUG__
@@ -395,6 +414,49 @@ SYG_moveSoundSource = {
 		_arr set [ _pos, _snd];
 		_caller globalChat format["Movesnd: snd pos: %2, new pos is %1", getPosASL _caller, getPosASL _snd];
 	};
+};
+
+/**
+  gets name of the sound class
+  call as:
+    _sound_name = _sound_class_name call SYG_getSoundName;
+    returns empty string if no name found, or string with name property in sound class (also may be empty)
+ */
+SYG_getSoundName = {
+
+    private ["_name","_type"];
+
+    _name = _this;
+    _isText = isText(configFile >> "CfgSounds" >> _name >> "name" );
+    _name = getText(configFile >> "CfgSounds" >> _this >> "name");
+    _type = typeName _name;
+    _str = format["+++ typeName ""%1"" is ""%2"", isText %3", _name, _type, _isText];
+    hint localize _str;
+    player groupChat _str;
+    if (_isText) exitWith {_name};
+    ""
+};
+
+/**
+  gets name of the music class
+  call as:
+    _music_name = _music_class_name call SYG_getMusicdName;
+    returns empty string if no name found, or string with name property in music class (also may be empty)
+ */
+SYG_getMusicName = {
+    if ( typeName _this != "STRING" ) exitWith {""};
+    private ["_name","_type"];
+
+    _config = configFile >> "CfgMusic" >> _this >> "name";
+    player groupChat format["+++ Config %1", _config];
+    _name = getText(configFile >> "CfgMusic" >> _this >> "name" );
+    _isText = isText(configFile >> "CfgMusic" >> _this >> "name" );
+    _isNumber = isNumber(configFile >> "CfgMusic" >> _this >> "name" );
+    _str = format["+++ music ""%1"", name ""%2"", typeName %3, isText %4", _this, _name, typeName _name, _isText];
+    hint localize _str;
+    player groupChat _str;
+    if (_isText) exitWith {_name};
+    ""
 };
 
 if (true) exitWith {};

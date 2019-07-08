@@ -163,6 +163,8 @@ class CfgMusic
 //+++++++++++++++++++++++ Detect music
 
     class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
+    class detected_Paraiso { name=""; sound[] = {\sounds\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
+    class detected_Carmen { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Paraiso)
 
 //+++++++++++++++++++++++ Defeat music track list
 
@@ -355,6 +357,7 @@ class CfgSounds
     class gong_08       {name = ""; sound[] = {\sounds\gong\gong-08.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_09       {name = ""; sound[] = {\sounds\gong\gong-09.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_10       {name = ""; sound[] = {\sounds\gong\magic-string-spell.ogg, db+10, 1.0}; titles[] = {}; };
+    class gong_11       {name = ""; sound[] = {\sounds\gong\gong-11.ogg, db+10, 1.0}; titles[] = {}; };
 
     class liturgy_1     {name = ""; sound[] = {\sounds\liturgy\diamon_hand.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_2     {name = ""; sound[] = {\sounds\liturgy\gospodu_pomolimsa.ogg, db+10, 1.0}; titles[] = {}; };
@@ -392,6 +395,9 @@ class CfgSounds
     class rammstein_7 { name=""; sound[] = {\sounds\ramm\rammstein_7.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
     class rammstein_8 { name=""; sound[] = {\sounds\ramm\rammstein_8.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
     class rammstein_9 { name=""; sound[] = {\sounds\ramm\rammstein_9.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
+
+    class armory1  { name=""; sound[] = {\sounds\armory1.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 1
+    class armory2  { name=""; sound[] = {\sounds\armory2.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 2
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};
@@ -698,7 +704,7 @@ class X_RscAnimatedLetters
 			idc=66666;
 			style="16+2+512";
 			lineSpacing=0.950000;
-			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2019 by Engineer ACE\n          for Red-Engineers.ucoz.ru";
+			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2019 by EngineerACE\n          for Red-Engineers.ucoz.ru";
 			x=0.39000000;
 			y=0.8100000;
 			w=0.900000;

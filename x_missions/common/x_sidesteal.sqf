@@ -37,6 +37,20 @@ while {alive _vehicle && !_reached_base} do {
 };
 
 if (alive _vehicle && _reached_base) then {
+
+#ifdef __RANKED__
+// send info about winners score prize added on the base flag vicinity
+    if (!(__TTVer)) then {
+        ["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
+    } else {
+        if (_winner == 1) then {
+            ["d_sm_p_pos", position RFLAG_BASE] call XSendNetVarClient;
+        } else {
+            ["d_sm_p_pos", position WFLAG_BASE] call XSendNetVarClient;
+        }
+    };
+#endif
+
 #ifndef __TT__
 	side_mission_winner = 2;
 #endif

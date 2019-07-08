@@ -12,7 +12,9 @@
 x_sm_pos = [[18239,2943.84,0],[18186.4,3081.09,0]]; // index: 30,   scientist on Monte Asharah
 x_sm_type = "normal"; // "convoy"
 
+#ifdef __ACE__
 #define __AA_DEFENCE_ON_ASHARAN__
+#endif
 
 #ifdef __SMMISSIONS_MARKER__
 if (true) exitWith {};
@@ -99,12 +101,13 @@ if (isServer) then {
 	__GetEGrp(_newgroup)
 	_aa_types = [if (d_enemy_side == "EAST") then {"Stinger_Pod_East"} else {"Stinger_Pod"},"ACE_ZU23M"];
 	_utype = if (d_enemy_side == "EAST") then {d_crewman2_E} else {d_crewman2_W};
-	_pntarr = [[18266.2,2966.5,0],[18212.8,2960.9,0],[18240.4,2902.3,0],[17894.4,3406.75,0]];
+	_pntarr = [ [18266.2,2966.5,0], [18212.8,2960.9,0], [18240.4,2902.3,0], [17894.4,3406.75,0] ];
 	[_newgroup, _aa_types, _utype, _pntarr] call SYG_createStaticWeaponGroup;
+	[ _newgroup, ["ACE_ZU23M"], _utype, [ [17964.3,4022.6,0], [16839.09,5070.03,0] ] ] call SYG_createStaticWeaponGroup; // put ZSU-2 onto small desert islets
 
 	_newgroup allowFleeing 0;
-	_newgroup setCombatMode "YELLOW";
-	_newgroup setFormDir (floor random 360);
+	//_newgroup setCombatMode "YELLOW"; // is set in SYG_createStaticWeaponGroup
+	{ _x setDir (floor random 360) } forEach units _newgroup;
 	_newgroup setSpeedMode "NORMAL";
 	_grp_array = [_newgroup, _pos, 0, [], [], -1, 0, [], 100, -1];
 	_grp_array execVM "x_scripts\x_groupsm.sqf";

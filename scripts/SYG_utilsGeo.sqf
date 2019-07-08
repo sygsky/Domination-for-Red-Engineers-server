@@ -60,7 +60,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 		["isle8",[10755.2,16742.6,0],200, "Isla des Compadres"],                    // 7
 		["isle9",[9533.61,3497.75,0],500, "San Tomas"],                             // 8
 		["isle10",[11630.9,16940.8,0],50, "полуостров в заливе Porto de Perolas"],  // 9
-		["isle11",[11801.7,11435.4,0],200,"островки на юго-западном побережье Северного Сахрани, залив Абра да Бока"] // 10
+		["isle11",[11784,11422.8,0]  ,200,"два островка на юго-западном побережье Северного Сахрани, залив Абра да Бока"] // 10
 	];
 
 	SYG_RahmadiIslet = ["isle12",[2537.55,2538.37,0],1500,"Rahmadi"];
@@ -150,7 +150,7 @@ SYG_nearestLocationA = {
 	{
 		case "OBJECT": {_pos = position _pos;};
 		case "LOCATION": {_pos = locationPosition _pos;};
-		case "ARRAY": {/* correct */};
+		case "ARRAY": {/* already correct format */};
 		case "GROUP": { _pos = if ( isNull leader _pos) then {[0,0,0]} else {position leader _pos};};
 		default {/* error */};
 	};
@@ -496,7 +496,7 @@ SYG_getTargetTownName = {
  *      _smindex = call SYG_getSideMissionIndex;
  */
 SYG_getSideMissionIndex = {
-	if (!all_sm_res AND !side_mission_resolved AND (current_mission_index >= 0)) then {current_mission_index} else {-1};
+	if (!all_sm_res && !side_mission_resolved && (current_mission_index >= 0)) then {current_mission_index} else {-1};
 };
 
 //==================================

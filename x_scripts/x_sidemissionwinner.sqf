@@ -10,6 +10,7 @@ if (!X_Client) exitWith {};
 
 sleep 1;
 
+// clear finished side mission markers
 call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
 if (x_sm_type == "convoy") then {
 	call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];
@@ -96,7 +97,8 @@ else
         case -500 : {"STR_SYS_129_5"/*"Вражеский офицер спятил и застрелился..."*/};
         case -600 : {"STR_SYS_129_6"/*"Образец захваченной у врага техники развалился до того, как попал в руки ГРУ на базе..."*/};
         case -700 : {"STR_SYS_129_7"/*"Пилоты скончались от столбняка до прибытия на базу..."*/};
-        default {"STR_SYS_129_8"};
+        case -701 : {"STR_SYS_129_8"/*"Bus is destroyed or all civilans are dead"*/}; // the future SM type - "Safely deliver a group of civilians by bus to their destination!"
+        default {"STR_SYS_129_100"};
     };
 	_s = localize _s;
 

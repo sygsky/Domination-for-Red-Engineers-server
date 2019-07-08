@@ -33,8 +33,8 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsVehicles.sqf";	// Vehicles
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
-	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";		// Text functions
-#ifdef __PREVENT_OEVRTURN__
+	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";	// Sound/music functions
+#ifdef __PREVENT_OVERTURN__
 	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";		// anti-overturn method
 #endif
 
