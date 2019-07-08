@@ -1,4 +1,4 @@
-// by Xeno, x_scripts\x_dorecapture.sqf
+// by Xeno, x_scripts\x_dorecapture.sqf, server call only
 
 private ["_target_center", "_radius", "_recap_index", "_helih", "_unitslist", "_ulist", "_posran", "_grp", "_vecs", "_grp_array", "_i", "_units", "_vec","_veclist", "_arr"];
 
@@ -40,7 +40,7 @@ _infcnt = 0; // infantry cnt
 		sleep 0.01;
 	} forEach _vecs;
 	sleep 0.01;
-	_grp_array = [_grp, _posran, 0,[_target_center,_radius],[],-1,0,[], (_radius max 300) + (random 50),-1,[3]]; // rejoin after 2 units remains in group
+	_grp_array = [_grp, _posran, 0,[_target_center, _radius], [], -1, 0, [], _radius - random 50, -1];
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 	sleep 0.512;
 } forEach ["tank","bmp"];
@@ -60,17 +60,17 @@ for "_i" from 0 to 1 do {
 	_infcnt = _infcnt + 1;
 	_unitslist = _unitslist + _units;
 	sleep 0.01;
-	_grp_array = [_grp, _posran, 0,[_target_center,_radius],[],-1,0,[],(_radius max 300) + (random 50),-1,[2]];
+	_grp_array = [_grp, _posran, 0,[_target_center, _radius], [], -1, 0, [], _radius - random 50, -1];
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 	sleep 0.512;
 };
 
 _loc = _target_center call SYG_nearestSettlement;
 _locname = text _loc;
-hint localize format["+++ Town %1 recaptured (rad. %2 м.), %3 vehicles and %4 infantry groups", _locname, _radius, _veccnt, _infcnt];
+hint localize format["+++ Town %1 recaptured (rad. %2 м.), %3 vehicles and %4 infantry groups (%5 men)", _locname, _radius, _veccnt, _infcnt, count _unitslist];
 sleep 10;
 
-while {({alive _x} count (_unitslist + _veclist)) > 5} do {sleep 10.312};
+while { _arr = nearObjects ["Land", _radius]; ({(alive _x) && (side _x) == d_side_enemy } count _arr) > 5 } do {sleep 10.312};
 
 sleep 5;
 
