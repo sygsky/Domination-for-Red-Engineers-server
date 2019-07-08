@@ -55,13 +55,11 @@ if ( isNil "s_down_heli_arr" ) then
  */
 _killUnits = {
 	private ["_arr"];
-	if ( typeName _this != "ARRAY") then // single unit designated
+	if ( typeName _this == "GROUP") then { _this = units _this };
+	if ( typeName _this == "OBJECT") then { _arr = [_this] }; // single unit designated
+	if ( typeName _this != "ARRAY") exitWith {false};
 	{
-		_arr = [_this];
-	};
-	
-	{
-		if (!isNull _x ) then 
+		if (!isNull _x ) then
 		{
 			_x setDammage 1.1;
 			sleep 0.3;
@@ -118,17 +116,17 @@ _rejoinPilots =
                 _unit = _badunits select _i;
                 if ( !alive _unit) then
                 {
-                    _goodunits set [_i, "RM_ME"];
+                    _goodunits set [_i, "RM_ME"]; // remove dead from good list
                 }
                 else
                 {
                     if ( _unit  call SYG_ACEUnitUnconscious ) then
                     {
-                        _goodunits set [_i, "RM_ME"];
+                        _goodunits set [_i, "RM_ME"];   // remove unc from good list
                     }
                     else
                     {
-                        _badunits set [_i, "RM_ME"];
+                        _badunits set [_i, "RM_ME"]; // remove alive from bad list
                         _unit setRank "PRIVATE";
                         _pilot = _unit;
                     };
@@ -172,7 +170,13 @@ _rejoinPilots =
             _badunits = nil;
             _goodunits = nil;
 		}
-		else { _ret = false; };
+		else
+		{
+#ifdef __PRINT__
+                hint localize "x_airki.sqf: Count of alive group units == 0, exit";
+#endif
+		    _ret = false;
+		};
 	}
 	else
 	{
@@ -515,12 +519,13 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_loop_do = false;
 			sleep 5.654321;
 #ifdef __PRINT__
-			_cnt = units _grp;
+			_cnt = count units _grp;
 #endif			
 			_ret = _grp call _rejoinPilots;
 #ifdef __PRINT__
 			hint localize format[ "x_airki.sqf[%1]: all vehicle[s] are down, rejoin %2 pilot[s], rejoined %3", _type, _cnt, _ret ];
 #endif
+            if ( !_ret ) then { _grp call _killUnits }; // just in case
 		};
 #ifdef __FUTURE__		
 		//+++ Sygsky: try to reveal info on known enemies for near friendly units
