@@ -73,7 +73,9 @@ _damage_val    = (_damage / _rep_count); // how many undamage steps for reparing
 _fuel_capacity_in_litres = objectID2 call SYG_fuelCapacity; // litres of fuel in vehicle fuel tanks
 #ifdef __LIMITED_REFUELLING__
 _refuel_add = 0;
-_refuel_volume = d_refuel_volume + d_refuel_per_rank * (_caller call XGetRankIndexFromScoreExt); // how many liters to refuel
+
+_rankIndex = _caller call XGetRankIndexFromScoreExt;
+_refuel_volume = d_refuel_volume + d_refuel_per_rank * _rankIndex; // how many liters to refuel
 
 if (_fuel_capacity_in_litres > 0) then
 {
