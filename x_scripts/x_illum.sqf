@@ -65,48 +65,56 @@ while {d_run_illum} do {
         SYG_shortNightStart  = 19.75;
 
 	*/
-	_arrIsOld = true;
 	if ((daytime > SYG_shortNightStart) || (daytime < SYG_shortNightEnd)) then
 	{
 
 #ifdef __ILLUM_BY_ALIVE__
+    	_arrIsOld = true;
         if ( count _manArr < 10 ) then
         {
-            _manArr = _trg_center nearObjects [_manType, _radius];
+            _manArr = _trg_center nearObjects [_manType, _radius]; // array of men found in the town boundaries
             _arrIsOld = false;
             if ( count _manArr == 0 ) exitWith
             {
-                hint localize format["--- Illumination loop for current town exited as no one %1 found in town radious %2 m.!", _manType, _radius];
-                d_run_illum = false;
+                hint localize format["--- x_illum: loop for current town sleeps for 30 secs as no more alive %1 found in town radious %2 m.!", _manType, _radius];
+                sleep 30; // wait for the new man entering the town red zone
+                //d_run_illum = false;
             };
         };
     #ifdef __DEBUG__
         hint localize format["+++ x_illum: found %1 of %2 +++", count _manArr, _manType];
     #endif
+
+        //if (!d_run_illum) exitWith { false };
+        if ( count _manArr == 0 ) exitWith { false };
+
         for "_i" from 0 to (count _manArr) - 1 do
         {
             _x = _manArr select _i;
             if ( !alive _x ) then { _manArr set [_i, "RM_ME"];}
             else
             {
-                if (_arrIsOld ) then
+                if (_arrIsOld ) then // check a man to be in town radious as he can go out of boundaries
                 {
-                    if ( (_x distance _trg_center) > _radius) then { _manArr set [_i, "RM_ME"]; };
+                    if ( ( _x distance _trg_center ) > _radius ) then { _manArr set [_i, "RM_ME"]; };
                 }
             };
         };
         _manArr = _manArr - ["RM_ME"];
         if ( count _manArr == 0 ) exitWith
         {
-            hint localize format["--- Illumination loop for current town exited as all %1 are dead in town radious %2 m.!", _manType, _radius];
-            d_run_illum = false;
+            hint localize format["--- x_illum: loop for current town skipped as no alive %1 counted in man check array!", _manType];
         };
         _man = _manArr call XfRandomArrayVal;
-        _x1 = (getPos _man select 0) + (-FLASH_RANDOM_OFFSET + (random (FLASH_RANDOM_OFFSET*2)));
-        _y1 = (getPos _man select 1) + (-FLASH_RANDOM_OFFSET + (random (FLASH_RANDOM_OFFSET*2)));
+
+		_angle = floor (random 360);
+		_randrad = FLASH_RANDOM_OFFSET call XfRndRadious; // correct randomly distributed radious
+		_x1 = (getPos _man select 0) - (_randrad * sin _angle);
+		_y1 = (getPos _man select 1) - (_randrad * cos _angle);
+
         if ( _man isKindOf "OfficerW" || _man isKindOf "SquadLeaderW" || _man isKindOf "TeamLeaderW" ) then
         {
-             _flare = "F_40mm_Green"; // Officer's flares are always green
+             _flare = "F_40mm_Green"; // Officer's flares are green
         };
 #else
 		_angle = floor (random 360);
@@ -134,7 +142,7 @@ while {d_run_illum} do {
 #endif
 	    if (!isNull _flare) then {deleteVehicle _flare};
 	}
-	else {sleep 120}; // check night come every 2 minutes
+	else {sleep 300}; // check night come every 5 minutes
 };
 
 #ifdef __ILLUM_BY_ALIVE__
