@@ -485,6 +485,7 @@ if (isServer) then {
     #ifdef __MANDO_MISSILES_UPDATE__
 ace_sys_missiles_incomingMissile = compile (preprocessFileLineNumbers ("scripts\ACE\ace_mando_replacemissile.sqf")); // replace mando guidance missile range
 mando_scorefunc                  = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
+//mando_missile_handler            = compile (preprocessFileLineNumbers ("scripts\ACE\mando_missile.sqf"));
 hint localize "+++ mando_missile_replaced replaced by custom version";
     #endif
 

@@ -301,4 +301,4 @@ _ra select 26
 ];
 hint localize format[ "+++ MANDO Missile: %1 -> %2, h. %3 d. %4, fire near %5", _type, typeOf _target, round((getPos _target) select 2), round(_target distance _shooter),
 text( _target call SYG_nearestLocation)];
-_arr call mando_missile_han
+_arr call mando_missile_handler;
