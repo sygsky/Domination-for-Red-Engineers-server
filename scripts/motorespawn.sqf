@@ -167,15 +167,13 @@ while {true} do {
                     };
                     sleep 1.11;
 
+                    _moto setDir (argp(_x,MOTO_ORIG_DIR));
                     _moto setPos (_pos);
+                    if ( isEngineOn _moto) then { _moto engineOn false; };
                     if ( _say) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClientAll };
 
-                    sleep 0.25;
                     //_x set [MOTO_ORIG_POS, getPos _moto];
-                    _moto setDir (argp(_x,MOTO_ORIG_DIR));
                     sleep 0.5 + random 0.5;
-                    if ( isEngineOn _moto) then { _moto engineOn false; };
-                    sleep 0.234;
 #ifdef __DEBUG__
                     hint localize format[ "motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
 #endif

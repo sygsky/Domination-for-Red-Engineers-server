@@ -1164,6 +1164,10 @@ STR_SET_10_1," when scores lower than %1"," wenn der scores niedriger ist als %1
 STR_SET_11,"Cloning RPG-missiles","Klon-RPG-Rakete","Клонирование РПГ-ракет"
 STR_SET_12,"Points will be added when the service is restored (%1)","Punkte werden Hinzugefügt, wenn der Dienst wiederhergestellt wird (-%1)","За ремонт сервисов дают очки (%1)"
 STR_SET_12_1,"When repairing the service, points are deducted (-%1)","Punkte werden bei der Reparatur abgezogen (-%1)","За ремонт сервисов вычитают очки (-%1)"
+STR_SET_13,"Mando missiles pack: ","Mando missiles pack: ","Пак Mando missiles: "
+STR_SET_14,"Built-in ruksack: ","Eingebauter ruksack: ","Встроенный рюкзак: "
+STR_SET_15,"Enemy armored vehicles blocked: ","Feindliche Gepanzerte Fahrzeuge blockiert: ","Вражеская бронетехника блокирована: "
+STR_SET_16,"Enemy cars blocked: ","Feindliche Autos blockiert: ","Вражеский транспорт заблокирован: "
 
 STR_GRU_1,"GRU","GRU","ГРУ"
 STR_GRU_2,"deliver the map","liefern Sie die Karte","доставить карту"
@@ -1297,4 +1301,3 @@ STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
-STR_NUM_MAGAZINES,"%s (%d pcs.)","%s (%d Stk.)","%s (%d шт.)"

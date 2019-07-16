@@ -178,7 +178,7 @@ _str = _str + _strYes1 +". ";
 _str = _str + _strNo1 + ". ";
 #endif
 
-_str = _str + "Пак Mando missiles: ";
+_str = _str + (localize "STR_SET_13");// "Mando missiles pack: "
 #ifdef __MANDO__
 _str = _str + _strYes1 +". ";
 #else
@@ -187,7 +187,7 @@ _str = _str + _strNo1 + ". ";
 
 // _str = _str + "Версия: " + d_version_string + "\n";
 
-_str = _str + "Встроенный рюкзак: ";
+_str = _str + (localize "STR_SET_14");//"Built-in ruksack: ";
 if (d_use_backpack) then {
 	_str = _str + _strYes;
 } else {
@@ -435,14 +435,14 @@ _str = _str + localize "STR_SYS_374" + str(d_player_air_autokick) + " сек.\n"
 //_str = _str + "With Queens Gambit animations: " + str(d_with_qg_anims) + "\n";
 #endif
 
-_str = _str + "Вражеская бронетехника блокирована: ";
+_str = _str + (localize "STR_SET_15"); // "Enemy vehicles are locked: "
 if (d_lock_ai_armor) then {
 	_str = _str + _strYes;
 } else {
 	_str = _str + _strNo;
 };
 
-_str = _str + "Вражеский транспорт блокирован: ";
+_str = _str + (localize "STR_SET_16"); // "Enemy cars blocked: "
 if (d_lock_ai_car) then {
 	_str = _str + _strYes;
 } else {

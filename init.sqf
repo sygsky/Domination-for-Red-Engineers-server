@@ -451,6 +451,13 @@ if (isServer) then {
         // build flag on Antigua (by Yeti request)
         sleep 60; // wait 1 minute to ensure user to build flag on map
         [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
+        // create outdoor toilet ("Land_KBud")
+
+		_obj = createVehicle ["Land_KBud", [0,0,0],[],0, "CAN_COLLIDE"];
+		_obj setDir 270;
+		_obj setPos [9438.9,9858.4,0];
+		// add some action to toilet on client computer
+
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
