@@ -75,11 +75,8 @@ while {d_run_illum && (_current_counter == current_counter) } do {
                 hint localize format["--- x_illum: loop for current town sleeps for 1 min as no %1 found in town radious %2 m.!", _manType, _radius];
                 sleep 60; // wait for the new man entering the town red zone
                 //d_run_illum = false;
-            }
-            else
-            {
-                hint localize format["+++ x_illum: new town men list filled with %1/%2 %3", {alive _x} count _manArr, count _manArr, _manType];
             };
+            hint localize format["+++ x_illum: new town men list filled with %1/%2 %3", {alive _x} count _manArr, count _manArr, _manType];
         };
         //if (!d_run_illum) exitWith { false };
         if ( count _manArr == 0 ) exitWith { sleep 10; };
