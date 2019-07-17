@@ -1,5 +1,5 @@
 // x_scripts/x_illum.sqf, by Xeno
-private ["_trg_center","_radius","_center_x","_center_y", "_flare"];
+private ["_tgt_center","_radius","_center_x","_center_y", "_flare","_flareCnt","_current_counter"];
 
 if (!isServer) exitWith {};
 
@@ -17,13 +17,14 @@ if (!isServer) exitWith {};
 
 #define FLASH_RANDOM_OFFSET 20
 
-_trg_center = _this select 0;
+_tgt_center = _this select 0;
 _radius     = _this select 1;
-_center_x   = _trg_center select 0;_center_y = _trg_center select 1;
+_center_x   = _tgt_center select 0;
+_center_y = _tgt_center select 1;
+_flareCnt = 0;
+_current_counter = current_counter; // current main target index to illuminate
 
-#ifdef __DEBUG__
 hint localize format["%1 execVM ""x_scripts/x_illum.sqf"", d_run_illum = %2",_this, d_run_illum];
-#endif
 
 while {!mt_spotted} do {sleep 7.75};
 
@@ -48,21 +49,18 @@ hint localize format["+++ x_illum: manType %1", _manType];
 _manArr = [];
 
 #endif
+hint localize format["+++ x_illum: start in %1+++", _this select 2];
 
-while {d_run_illum} do {
+while {d_run_illum && (_current_counter == current_counter) } do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
-    hint localize "+++ x_illum: start procedure +++";
 	//__DEBUG_NET("x_illum.sqf",(call XPlayersNumber))
 	_flare = objNull;
-	/*
-	    SYG_shortNightEnd    =  4.60;
+	/*  SYG_shortNightEnd    =  4.60;
         SYG_morningEnd       =  7.00;
         SYG_eveningStart     = 18.30;
-        SYG_shortNightStart  = 19.75;
-
-	*/
+        SYG_shortNightStart  = 19.75;	*/
 	if ((daytime > SYG_shortNightStart) || (daytime < SYG_shortNightEnd)) then
 	{
 
@@ -70,17 +68,17 @@ while {d_run_illum} do {
     	_arrIsOld = true;
         if ( count _manArr < 10 ) then
         {
-            _manArr = _trg_center nearObjects [_manType, _radius]; // array of men found in the town boundaries
-            _arrIsOld = false;
+            _manArr = _tgt_center nearObjects [_manType, _radius]; // array of men found in the town boundaries
+            _arrIsOld = false; // array is refreshed
             if ( count _manArr == 0 ) exitWith
             {
-                hint localize format["--- x_illum: loop for current town sleeps for 30 secs as no more alive %1 found in town radious %2 m.!", _manType, _radius];
-                sleep 30; // wait for the new man entering the town red zone
+                hint localize format["--- x_illum: loop for current town sleeps for 1 min as no %1 found in town radious %2 m.!", _manType, _radius];
+                sleep 60; // wait for the new man entering the town red zone
                 //d_run_illum = false;
             }
             else
             {
-                hint localize format["+++ x_illum: new men array filled with %1/%2 %3", {alive _x}count _manArr, count _manArr, _manType];
+                hint localize format["+++ x_illum: new town men list filled with %1/%2 %3", {alive _x} count _manArr, count _manArr, _manType];
             };
         };
         //if (!d_run_illum) exitWith { false };
@@ -94,15 +92,18 @@ while {d_run_illum} do {
             {
                 if (_arrIsOld ) then // check a man to be in town radious as he can go out of boundaries
                 {
-                    if ( ( _x distance _trg_center ) > _radius ) then { _manArr set [_i, "RM_ME"]; };
+                    if ( ( _x distance _tgt_center ) > _radius ) then { _manArr set [_i, "RM_ME"]; };
                 }
             };
         };
         _manArr = _manArr - ["RM_ME"];
         if ( count _manArr == 0 ) exitWith
         {
-            hint localize format["--- x_illum: loop skipped as no alive %1 found in check array!", _manType];
-            sleep 10;
+            hint localize format["--- x_illum: loop skipped as no alive %1 counted in town men list!", _manType];
+            if (!_arrIsOld) then // no men in town at all as new list is empty
+            {
+                sleep (random 30);
+            };
         };
         _man = _manArr call XfRandomArrayVal;
 
@@ -126,6 +127,7 @@ while {d_run_illum} do {
     		_flare = if (mt_radio_down ) then {"F_40mm_Red"} else { _flares select (( floor random 10 ) min 2); }; // while color is mostly flared
         };
 		_flare =  _flare createVehicle [_x1, _y1, 250];
+		_flareCnt = _flareCnt + 1;
 #ifdef __DEBUG__
         hint localize format["+++ x_illum: flare created at x %1, y %2 +++", _x1, _y1];
 #endif
@@ -134,22 +136,20 @@ while {d_run_illum} do {
         {
             if ( isNull _flare) exitWith {};
             if ( (getPos _flare) select 2 < MIN_FLARE_HEIGHT) exitWith{};
-            sleep 1.123;
+            sleep 0.523;
         };
 #else
     	sleep (25 + random 30);
 #endif
 	    if (!isNull _flare) then {deleteVehicle _flare};
 	}
-	else {sleep 300}; // check night come every 5 minutes
+	else {sleep 300}; // check night come every 300 seconds to not skip it during main target change
 };
 
 #ifdef __ILLUM_BY_ALIVE__
 _manArr = nil;
 #endif
 
-#ifdef __DEBUG__
-hint localize "+++ x_illum: exit +++";
-#endif
+hint localize format["+++ x_illum: exit %1, %2 flares created +++", _this select 2, _flareCnt];
 
 if (true) exitWith {};
