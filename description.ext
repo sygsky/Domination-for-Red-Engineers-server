@@ -363,6 +363,7 @@ class CfgSounds
     class liturgy_2     {name = ""; sound[] = {\sounds\liturgy\gospodu_pomolimsa.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_3     {name = ""; sound[] = {\sounds\liturgy\ortodox_liturgy.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_4     {name = ""; sound[] = {\sounds\liturgy\valaam_liturgy.ogg, db+10, 1.0}; titles[] = {}; };
+    class liturgy_5     {name = ""; sound[] = {\sounds\liturgy\mon_nevskogo.ogg, db+10, 1.0}; titles[] = {}; };
 
     // medieval defeats (death near castles)
     class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound

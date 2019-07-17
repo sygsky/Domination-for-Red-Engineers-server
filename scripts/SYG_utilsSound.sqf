@@ -276,7 +276,7 @@ SYG_chorusDefeatTracks =
     ];
 
 // if you suicided near (50 meters) church
-SYG_liturgyDefeatTracks = [  "liturgy_1","liturgy_2","liturgy_3","liturgy_4" ];
+SYG_liturgyDefeatTracks = [  "liturgy_1","liturgy_2","liturgy_3","liturgy_4","liturgy_5" ];
 
 
 // Any isle defeat music
