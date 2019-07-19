@@ -63,7 +63,8 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	
 	SYG_PILOT_GRENADE_SET = [["ACE_SmokeGrenade_Red"], ["ACE_SmokeGrenade_Green"], ["ACE_SmokeGrenade_Violet"], 
 	                         ["ACE_SmokeGrenade_White"], ["ACE_SmokeGrenade_Yellow"], ["ACE_HandGrenade"]];
-	
+	SYG_GL_SET = [["ACE_40mm_HEDP_M203",4]];
+
 	SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK = [ 
 				 ["S", "ACE_M1911", "ACE_7Rnd_1143x23_B_M1911", 4], 
 				 ["S", "ACE_M9", "ACE_15Rnd_9x19_B_M9", 4]
@@ -141,10 +142,10 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_ORDINAL_WPNSET_SD =	[
         "ACE_M4A1AimPointSD",
         "ACE_SCAR_L_CQB_SD","ACE_SCAR_L_CQB_Aim_SD",
-        "ACE_HK416_SD","ACE_HK416_aim_SD","ACE_HK416_gl_SD","ACE_HK416_aim_gl_SD",
-        "ACE_HK416_eotech_SD","ACE_HK416_eotech_gl_SD"
+        "ACE_HK416_SD","ACE_HK416_aim_SD"
 	];
-	// ---------------------------------------------------------------------------------			
+	SYG_ORDINAL_WPNSET_SD_GL =	["ACE_HK416_gl_SD","ACE_HK416_aim_gl_SD","ACE_HK416_eotech_SD","ACE_HK416_eotech_gl_SD"];
+	// ---------------------------------------------------------------------------------
  	// HK417 weapon arrays
 	// std weapon
 			
@@ -447,11 +448,13 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 	_ret = false;
 	_rnd = random 1.0;
 	_smoke_grenade = "ACE_SmokeGrenade_Violet";
+	_glMuzzle = false;
 	if ( _rnd < _prob ) then  // do rearming
 	{
 		_super_rearm = _rnd < (_adv_rearm / 3.0); // do super rearming  (true) or not (false)
 		_adv_rearm   = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] + SYG_STD_MEDICAL_SET;
+
 		_ret = true;
 		switch (_unit_type) do
 		{
@@ -482,6 +485,10 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 					};
 				};
+				// check for GL muzzle for primary weapon
+				_muzzles  = getArray(configFile>>"cfgWeapons" >> _wpn >> "muzzles");
+				_glMuzzle = (_muzzles  find "ACE_M203Muzzle") >= 0; // GL found
+				if (_glMuzzle) then {_equip set [0, SYG_GL_SET]};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
 			case "ACE_SoldierWMAT_A":
