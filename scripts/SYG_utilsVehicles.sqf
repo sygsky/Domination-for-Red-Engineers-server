@@ -1324,10 +1324,20 @@ SYG_carRearmTable =
  ]
 ];
 
+SYG_boatRearmTable =
+[
+    ["RHIB2Turret"], // boat names
+    [ // boat params
+        [
+            ["ACE_M230"],//["ACE_VulcanMgun20"], // weapon(s)
+            ["ACE_M789_1200","ACE_M789_1200"]//["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+        ]
+    ]
+];
 SYG_vehiclesRearmTables =
 [
- argp(SYG_su34_RearmTables,0) + argp(SYG_heliRearmTable,0) + argp(SYG_carRearmTable,0),
- argp(SYG_su34_RearmTables,1) + argp(SYG_heliRearmTable,1) + argp(SYG_carRearmTable,1)
+ argp(SYG_su34_RearmTables,0) + argp(SYG_heliRearmTable,0) + argp(SYG_carRearmTable,0) + argp(SYG_boatRearmTable,0),
+ argp(SYG_su34_RearmTables,1) + argp(SYG_heliRearmTable,1) + argp(SYG_carRearmTable,1) + argp(SYG_boatRearmTable,1)
 ];
 
 // call: _vtbl = _su34_type call SYG_getVehicleTable;
