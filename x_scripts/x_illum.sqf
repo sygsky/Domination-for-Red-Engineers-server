@@ -72,11 +72,11 @@ while {d_run_illum && (_current_counter == current_counter) } do {
             _arrIsOld = false; // array is refreshed
             if ( count _manArr == 0 ) exitWith
             {
-                hint localize format["--- x_illum: loop for current town sleeps for 1 min as no %1 found in town radious %2 m.!", _manType, _radius];
+                hint localize format["--- x_illum: %1, loop for current town sleeps for 1 min as no %2 found in town radious %3 m.!",call SYG_nowTimeToStr, _manType, _radius];
                 sleep 60; // wait for the new man entering the town red zone
                 //d_run_illum = false;
             };
-            hint localize format["+++ x_illum: new town men list filled with %1/%2 %3", {alive _x} count _manArr, count _manArr, _manType];
+            hint localize format["+++ x_illum: %1, new town men list filled with %2/%3 %4", call SYG_nowTimeToStr, {alive _x} count _manArr, count _manArr, _manType];
         };
         //if (!d_run_illum) exitWith { false };
         if ( count _manArr == 0 ) exitWith { sleep 10; };
@@ -96,7 +96,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
         _manArr = _manArr - ["RM_ME"];
         if ( count _manArr == 0 ) exitWith
         {
-            hint localize format["--- x_illum: loop skipped as no alive %1 counted in town men list!", _manType];
+            hint localize format["--- x_illum: %1 loop skipped as no alive %2 counted in town men list!", call SYG_nowTimeToStr, _manType];
             if (!_arrIsOld) then // no men in town at all as new list is empty
             {
                 sleep (random 30);
@@ -126,7 +126,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
 		_flare =  _flare createVehicle [_x1, _y1, 250];
 		_flareCnt = _flareCnt + 1;
 #ifdef __DEBUG__
-        hint localize format["+++ x_illum: flare created at x %1, y %2 +++", _x1, _y1];
+        hint localize format["+++ x_illum: %1 flare created at x %2, y %3 +++", call SYG_nowTimeToStr, _x1, _y1];
 #endif
 #ifdef __FULL_LIGHT__
         while {true} do
@@ -147,6 +147,6 @@ while {d_run_illum && (_current_counter == current_counter) } do {
 _manArr = nil;
 #endif
 
-hint localize format["+++ x_illum: exit %1, %2 flares created +++", _this select 2, _flareCnt];
+hint localize format["+++ x_illum: %1, exit %2, %3 flares created +++", call SYG_nowTimeToStr, _this select 2, _flareCnt];
 
 if (true) exitWith {};
