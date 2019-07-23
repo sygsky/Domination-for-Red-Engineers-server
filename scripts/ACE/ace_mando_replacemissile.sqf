@@ -260,7 +260,10 @@ if ( local _shooter ) then
    };
 };
 //      hint format["M:%1 %2", _this, _missile];
-if (!_replaced) exitWith { hint localize format["+++ MANDO Missile not replaced: %1 -> %2(dmg %3) (dst %4 vm.), exit", _type, typeOf _target, (round((damage _target)*100))/100,round(_target distance _shooter)] };
+if (!_replaced) exitWith {
+    hint localize format["+++ MANDO Missile not replaced: from %1, %2 -> %3(dmg %4) (dst %5 vm.), near %6, exit",
+        name _shooter, _type, typeOf _target, (round((damage _target)*100))/100, round(_target distance _shooter), text( _target call SYG_nearestLocation)];
+};
 
 _missile SetPos [ 0,0,(getPos _missile select 2) + 5000];
 deleteVehicle _missile;
@@ -299,6 +302,8 @@ _ra select 24,
 _ra select 25,
 _ra select 26
 ];
-hint localize format[ "+++ MANDO Missile: %1 -> %2 dmg %3, h %4 d %5, fire at %6", _type, typeOf _target,  (round((damage _target)*100))/100,round((getPos _target) select 2), round(_target distance _shooter),
-text( _target call SYG_nearestLocation)];
+hint localize format[ "+++ MANDO Missile: from %1, %2 -> %3 dmg %4, h %5 d %6, near %7",
+    name _shooter, _type, typeOf _target,  (round((damage _target)*100))/100, round((getPos _target) select 2), round(_target distance _shooter),
+    text( _target call SYG_nearestLocation)
+    ];
 _arr call mando_missile_handler;

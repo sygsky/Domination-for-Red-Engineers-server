@@ -80,7 +80,7 @@ execVM "mando_missiles\mando_missileinit.sqf";
 // Weather tuning and settings
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
-    setViewDistance 8000; // try to use this command. What if it could make a furor?
+    setViewDistance 10000; // try to use this command. What if it could make a furor?
 	SYG_updateWeather = {
 		// weather parameters
 		//  fRainLess = random 0.34; //linear random
@@ -178,7 +178,7 @@ if (isServer) then {
 			    // Paraiso/Chantico/Somato/Arcadia/Estrella/Cayo etc
 			    maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];
 			}; // 22
-			case 91: { // 8 smallest random target towns
+			case 91: { // all smallest random target towns
 			    maintargets_list = d_small_towns_inds call  XfRandomArray;
 			};
 		};

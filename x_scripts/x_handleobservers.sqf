@@ -91,7 +91,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
                                 _cnt,
-                                [_enemy, localize "STR_SYS_151", 10] call SYG_MsgOnPosE,
+                                [_enemy, "from %1 %2 m. to %3", 10] call SYG_MsgOnPosE,
                                 round(_pos_nearest distance _enemy)
                             ];
                             _nextaritime  = time + d_arti_reload_time + (random 20);
