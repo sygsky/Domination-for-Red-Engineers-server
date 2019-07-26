@@ -16,6 +16,7 @@
 #define RANDOM_FROM_PARTS_ARR(ARR) (ARR select((floor(random((count ARR)-1)))+1))
 
 #define NEW_DEATH_SOUND_ON_BASE_DISTANCE 2000
+#define DEATH_COUNT_TO_PLAY_MUSIC 30
 
 SYG_lastPlayedSoundItem = ""; // last played music/sound item
 SYG_deathCountCnt = 0;
@@ -75,7 +76,7 @@ SYG_musicTrackCount = {
 SYG_defeatTracks =
 [
     ["Delerium_Wisdom","pimbompimbom","vendetta"],
-    ["Gandalf_Simades","whold","end"],
+    ["Gandalf_Simades","whold","end","radionanny"],
     ["ATrack9","ATrack10","ATrack14"],
     ["ATrack16","ATrack17","ATrack18"],
     ["ATrack20","ATrack21","ATrack22","thetrembler"],
@@ -123,7 +124,7 @@ SYG_baseDefeatTracks =
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
-    "melody","medieval_defeat","defeat2","arabian_death", "village_consort",
+    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
@@ -317,7 +318,7 @@ SYG_playRandomTrack = {
     };
 
     // count >= 1
-    if ( (typeName arg(0)) == "ARRAY" ) exitWith // array of array
+    if ( (typeName (_this select 0)) == "ARRAY" ) exitWith // array of array
     {
         _item = _this call SYG_checkLastSoundRepeated;
         _item call SYG_playRandomTrack; // find random array and try to play from it
@@ -328,7 +329,7 @@ SYG_playRandomTrack = {
     //
     if (count _this == 1) exitWith
     {
-        if (  typeName arg(0) == "STRING") exitWith
+        if (  typeName (_this select 0) == "STRING") exitWith
         {
             playMusic arg(0);
         };
@@ -336,9 +337,9 @@ SYG_playRandomTrack = {
     };
 
     // Check to be array of size > 1 and with special items sequence ["cosmos",[0, 10]]
-    if ( (typeName arg(0)) == "STRING") exitWith // ordinal array may be,  mandatory with size > 1
+    if ( (typeName (_this select 0)) == "STRING") exitWith // ordinal array may be,  mandatory with size > 1
     {
-        if ((typeName arg(1)) == "STRING") exitWith // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
+        if ((typeName (_this select 1)) == "STRING") exitWith // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
         {
             _item = _this call SYG_checkLastSoundRepeated;
             _item call SYG_playRandomTrack;
@@ -347,13 +348,13 @@ SYG_playRandomTrack = {
         // ["ATrack12,[10,10]<,[20,15]>]
         // first is track name (STRING), others are part descriptors [start, length], ...
         //
-        if ((typeName arg(1)) == "ARRAY") exitWith  // list of track parts
+        if ((typeName (_this select 1)) == "ARRAY") exitWith  // list of track parts
         {
 
             // check if death count is too big
-            if (SYG_deathCountCnt > 25) exitWith
+            if (SYG_deathCountCnt > DEATH_COUNT_TO_PLAY_MUSIC) exitWith
             {
-                // in rare case (more then 25 death in one session) play whole track
+                // in rare case (more then 30-40 death in one session) play whole track
     #ifdef __DEBUG__
                 hint localize format[ "SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
     #endif

@@ -201,6 +201,8 @@ class CfgMusic
     class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg.ogg,db+10,1.0};} // defeat sound
     class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
     class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0};} // defeat sound by Kevin MacLeod
+    class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0};} // defeat sound from Radio-nanny sign call
+
 
 //+++++++++++++++++++++++ medieval defeats (death near castles)
     class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // medieval defeat sound
@@ -345,6 +347,10 @@ class CfgSounds
     class male_scream_6 {name = ""; sound[] = {\sounds\male_scream_6.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_7 {name = ""; sound[] = {\sounds\male_scream_7.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_8 {name = ""; sound[] = {\sounds\male_scream_8.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_9 {name = ""; sound[] = {\sounds\male_scream_9.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_10 {name = ""; sound[] = {\sounds\male_scream_10.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_11 {name = ""; sound[] = {\sounds\male_scream_11.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_12 {name = ""; sound[] = {\sounds\male_scream_12.ogg, db+0, 1.0}; titles[] = {}; };
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 
