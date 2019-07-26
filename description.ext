@@ -105,21 +105,24 @@ class CfgMusic
 	tracks[]={};
 
 // Revolution day intro music
-	class Varshavianka { name = "";sound[] =  {\sounds\Varshavianka.ogg, db+20, 1.0};}; // russian
+	class Varshavianka { name = "";sound[] = {\sounds\Varshavianka.ogg, db+20, 1.0};}; // russian
 	class Varshavianka_eng { name = "";sound[] =  {\sounds\Varshavianka_eng.ogg, db+20, 1.0};}; // english
 	class warschawyanka_german { name = "";sound[] =  {\sounds\warschawyanka_german.ogg, db+10, 1.0};}; // german
 
 	class grant { name = ""; sound[] =  {\sounds\grant.ogg, db+20, 1.0}; };
 
 // New year intro musics
-	class snovymgodom {	name = ""; sound[] = {\sounds\snovymgodom.ogg, db+20, 1.0};};
-	class nutcracker {	name = ""; sound[] = {\sounds\NutCracker.ogg, db+20, 1.0};};
-    class home_alone { name=""; sound[] = {\sounds\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
+	class snovymgodom {	name = ""; sound[] = {\sounds\newyear\snovymgodom.ogg, db+20, 1.0};};
+	class nutcracker {	name = ""; sound[] = {\sounds\newyear\NutCracker.ogg, db+20, 1.0};};
+    class home_alone { name=""; sound[] = {\sounds\newyear\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
+    class mountain_king { name=""; sound[] = {\sounds\newyear\mountain_king.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
+    class zastolnaya { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0};}; // intro New Year music
+    class grig    {        name="";        sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0};    };
+
 
 	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
 	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
-    class grig    {        name="";        sound[]=   {\sounds\grig.ogg,db-1,1.0};    };
     class podolinam    {        name="";        sound[]=   {\sounds\podolinam.ogg,db-1,1.0};    };
     class johnny    {        name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};    };
     class druzba    {        name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};    };
@@ -158,7 +161,6 @@ class CfgMusic
 //    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
 
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
-    class zastolnaya { name=""; sound[] = {\sounds\zastolnaya.ogg,db-1,1.0};} // intro New Year music
 
 //+++++++++++++++++++++++ Detect music
 
