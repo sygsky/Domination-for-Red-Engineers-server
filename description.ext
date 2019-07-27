@@ -351,6 +351,7 @@ class CfgSounds
     class male_scream_10 {name = ""; sound[] = {\sounds\male_scream_10.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_11 {name = ""; sound[] = {\sounds\male_scream_11.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_12 {name = ""; sound[] = {\sounds\male_scream_12.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti {name = ""; sound[] = {\sounds\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 
