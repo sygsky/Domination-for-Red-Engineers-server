@@ -1060,6 +1060,10 @@ STR_MAP_10,"%1 looking at the map, you shout: 'BA-Ah, Yes it is %2!'","%1 Blick 
 
 STR_ACE_VDN_SOLDIERECREW,"Engineer","Ingenieur","инженер"
 
+STR_ACE_HIT,%1 hit %2;,%1 Treffer %2;,%1 попадание %2;
+STR_ACE_INDIRECT_HIT,%1 indir. hit %2;,%1 indir. Treffer %2;,%1 косв. попадание %2;
+STR_ACE_INDIRECT_HIT_RANGE,%1 indir. hit range %2;,%1 indir.Treffer Reichweite %2;,%1 радиус косв. попадания %2;
+
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
@@ -1301,3 +1305,11 @@ STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
+
+LANGUAGE,"English","Czech","German","Polish","Russian","French","Spanish","Italian"
+
+STR_ACE_SYS_RUCK_KILOGRAMS,"kg","kg","кг"
+STR_ACE_SYS_RUCK_CUBICCENTIMETERS,"ccm","ccm","см. куб."
+STR_ACE_SYS_RUCK_WEIGHT,"Weight:","Gewicht:","Вес:"
+STR_ACE_SYS_RUCK_SIZE,"Capacity:","Kapazitat:","Ёмкость:"
+STR_ACE_SYS_RUCK_PACKSIZE,"Pack size:","Pack size:","Объём упак.:"
