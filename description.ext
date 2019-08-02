@@ -112,13 +112,13 @@ class CfgMusic
 	class grant { name = ""; sound[] =  {\sounds\grant.ogg, db+20, 1.0}; };
 
 // New year intro musics
-	class snovymgodom {	name = ""; sound[] = {\sounds\newyear\snovymgodom.ogg, db+20, 1.0};};
-	class nutcracker {	name = ""; sound[] = {\sounds\newyear\NutCracker.ogg, db+20, 1.0};};
-    class home_alone { name=""; sound[] = {\sounds\newyear\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
+	class snovymgodom   {	name = ""; sound[] = {\sounds\newyear\snovymgodom.ogg, db+20, 1.0};};
+	class nutcracker    {	name = ""; sound[] = {\sounds\newyear\NutCracker.ogg, db+20, 1.0};};
+    class home_alone    { name=""; sound[] = {\sounds\newyear\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
     class mountain_king { name=""; sound[] = {\sounds\newyear\mountain_king.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
-    class zastolnaya { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0};}; // intro New Year music
-    class grig    {        name="";        sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0};    };
-
+    class zastolnaya    { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0};}; // intro New Year music
+    class grig          {        name="";        sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0};    };
+    class merry_xmas    {        name="";        sound[]=   {\sounds\newyear\merry_xmas.ogg,db-1,1.0};    };
 
 	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
@@ -153,6 +153,7 @@ class CfgMusic
     class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0};}; // USSR film Chapaev
     class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
+    class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0};}; // Well known meloвн from the Soviet movie (1981 year) "The Hound of Baskervill"
 
 //------------------------------------- END if Intro musio list --------------------------------------------------
 
