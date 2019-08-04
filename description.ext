@@ -118,7 +118,7 @@ class CfgMusic
     class mountain_king { name=""; sound[] = {\sounds\newyear\mountain_king.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
     class zastolnaya { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0};}; // intro New Year music
     class grig    {        name="";        sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0};    };
-
+    class merry_xmas { name=""; sound[] = {\sounds\merry_xmas.ogg,db+0,1.0};}; // Merry Xmas melody by Kevin Macleod
 
 	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
@@ -156,8 +156,6 @@ class CfgMusic
     class ipanoram { name=""; sound[] = {\sounds\ipanoram.ogg,db+0,1.0};}; // Soviet political review Telecast "International panoram"
     class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0};}; // Dean Reed song Rider
     class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0};}; // USSR famous film "Hound of Baskervill hall"
-
-
 
 //------------------------------------- END if Intro musio list --------------------------------------------------
 
