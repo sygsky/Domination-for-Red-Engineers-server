@@ -208,7 +208,7 @@ _replace_grp =
 	private ["_igrpa","_i"];
 	_i = _this;
 #ifdef __SYG_PRINT_ACTIVITY__
-	hint localize format["%1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
+	hint localize format["+++ %1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
 #endif							
 	_igrpa = argp(SYG_isle_grps, _i);
 	_igrpa call _remove_grp;
@@ -237,7 +237,7 @@ _remove_grp = {
 		_vecs  = argp(_igrpa,PARAM_VEHICLES);
 		_units = argp(_igrpa, PARAM_UNITS);
 #ifdef __SYG_PRINT_ACTIVITY__
-		hint localize format["%1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
+		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
 #endif						
 		
 		// clean vehicles
@@ -258,7 +258,7 @@ _remove_grp = {
 				{
 					// re-assign vehicle to be ordinal ones
 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
-					hint localize format["x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
+					hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
 #endif
 					// put vehicle under system control
 					[_x] call XAddCheckDead;
@@ -289,7 +289,7 @@ _remove_grp = {
 #ifdef __SYG_PRINT_ACTIVITY__
     _str = "isNull";
     if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
-		hint localize format["x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
+		hint localize format["+++ x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
 #endif
 		// clean units
 #ifdef __SYG_PRINT_ACTIVITY__
@@ -327,7 +327,7 @@ _remove_grp = {
 		}forEach units _igrp;
 		sleep 0.1;
 #ifdef __SYG_PRINT_ACTIVITY__
-        hint localize format["x_isledefense: finish remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
+        hint localize format["+++ x_isledefense: finish remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
 #endif
 
 		_igrp = nil;
@@ -371,7 +371,7 @@ _getFeetmen = {
 					_leader setRank "LIEUTENANT";
 					sleep 0.01;
 #ifdef __SYG_PRINT_ACTIVITY__
-					hint localize format["%4 x_isledefense.sqf: Move leadership from feetman %1 to the crewman %2 (%3)", _x, _leader, typeOf _veh, call SYG_missionTimeInfoStr];
+					hint localize format["+++ %4 x_isledefense.sqf: Move leadership from feetman %1 to the crewman %2 (%3)", _x, _leader, typeOf _veh, call SYG_missionTimeInfoStr];
 #endif									
 				};
 			};
@@ -437,7 +437,7 @@ _utilizeFeetmen = {
 	if ( count _invalid_men > 0 ) then
 	{
 #ifdef __SYG_PRINT_ACTIVITY__
-		hint localize format["%1 x_isledefense.sqf: invalid %2 are killed", call SYG_missionTimeInfoStr, _invalid_men];
+		hint localize format["%+++ 1 x_isledefense.sqf: invalid %2 are killed", call SYG_missionTimeInfoStr, _invalid_men];
 #endif								
 		{ 
 			if ( !isNull _x ) then 
@@ -458,7 +458,7 @@ _utilizeFeetmen = {
 		if ( !isNull _goal_grp ) then // assign all feetmen to this group
 		{
 #ifdef __SYG_PRINT_ACTIVITY__
-			hint localize format["%1 x_isledefense.sqf: %2 joined to a target group %3 (%4 men) at dist %5", call SYG_missionTimeInfoStr, _feetmen, _goal_grp, count units _goal_grp, (_feetmen select 0) distance (leader _goal_grp)];
+			hint localize format["+++ %1 x_isledefense.sqf: %2 joined to a target group %3 (%4 men) at dist %5", call SYG_missionTimeInfoStr, _feetmen, _goal_grp, count units _goal_grp, (_feetmen select 0) distance (leader _goal_grp)];
 #endif								
 			_feetmen join _goal_grp;
 			sleep 0.203;
@@ -473,7 +473,7 @@ _utilizeFeetmen = {
 	if ( count _feetmen > 0) then // kill surplus men on feet
 	{
 #ifdef __SYG_PRINT_ACTIVITY__
-		hint localize format["%1 x_isledefense.sqf: surplus feetmen %2 are killed", call SYG_missionTimeInfoStr,_feetmen];
+		hint localize format["+++ %1 x_isledefense.sqf: surplus feetmen %2 are killed", call SYG_missionTimeInfoStr,_feetmen];
 #endif								
 		{
 			if ( !isNull _x && alive _x ) then { _x setDammage 1.1; sleep 1.1 }; 
