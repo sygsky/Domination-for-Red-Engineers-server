@@ -24,7 +24,7 @@ _center_y = _tgt_center select 1;
 _flareCnt = 0;
 _current_counter = current_counter; // current main target index to illuminate
 
-hint localize format["%1 execVM ""x_scripts/x_illum.sqf"", d_run_illum = %2",_this, d_run_illum];
+hint localize format["+++%1 execVM ""x_scripts/x_illum.sqf"", d_run_illum = %2",_this, d_run_illum];
 
 while {!mt_spotted} do {sleep 7.75};
 
