@@ -70,7 +70,13 @@ _locname = text _loc;
 hint localize format["+++ Town %1 recaptured (rad. %2 м.), %3 vehicles and %4 infantry groups (%5 men)", _locname, _radius, _veccnt, _infcnt, count _unitslist];
 sleep 10;
 
-while { _arr = nearObjects ["Land", _radius]; ({(alive _x) && (side _x) == d_side_enemy } count _arr) > 5 } do {sleep 10.312};
+while { ( {(alive _x) && (side _x) == d_side_enemy } count ( _target_center nearObjects ["Land", _radius] ) ) > 5 } do {sleep 10.312};
+
+hint localize format["+++ Recaptured town %1 is free, remained %2 vehs and %3 men",
+    _locname,
+    {alive _x && side _x == d_side_enemy} count ( (_target_center nearObjects ["Tank", _radius]) + (_target_center nearObjects ["Car", _radius])),
+    {alive _x&& side _x == d_side_enemy} count (_target_center nearObjects ["CAManBase", _radius])
+];
 
 sleep 5;
 

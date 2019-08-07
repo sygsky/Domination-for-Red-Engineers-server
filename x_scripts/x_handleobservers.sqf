@@ -62,7 +62,7 @@ while { nr_observers > 0 && !target_clear } do {
         {
             if (_enemy_ari_available) then {
                 _enemy = _observer findNearestEnemy _observer;
-                if (!(isNull _enemy) && ((_observer knowsAbout _enemy) > 1.5) && ((vehicle _enemy) isKindOf "Land") ) then {
+                if ((alive _enemy) && ((_observer knowsAbout _enemy) > 1.5) && ((vehicle _enemy) isKindOf "Land") ) then {
                     _distance = _observer distance _enemy;
                     _near_targets = _observer nearTargets (_distance + 10);
                     if (count _near_targets > 0) then {
@@ -91,7 +91,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
                                 _cnt,
-                                [_enemy, localize "STR_SYS_151", 10] call SYG_MsgOnPosE,
+                                [_enemy, "from %1 %2 m. to %3", 10] call SYG_MsgOnPosE,
                                 round(_pos_nearest distance _enemy)
                             ];
                             _nextaritime  = time + d_arti_reload_time + (random 20);

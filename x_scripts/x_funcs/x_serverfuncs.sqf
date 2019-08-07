@@ -15,10 +15,9 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 
 // add score for observer kill
 SAddObserverKillScores = {
-    // hint localize format["+++ Observer killed by %1, side = %2, isPlayer = %s", arg(1), side arg(1), isPlayer arg(1)];
     if (isPlayer (_this select 1) ) then
     {
-        hint localize format["Observer (%1) killed by %2", primaryWeapon (_this select 0) , name (_this select 1)];
+        hint localize format["Observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "from %1 %2 m. to %3", 10] call SYG_MsgOnPosE];
         ["syg_observer_kill",(_this select 1)] call XSendNetStartScriptClient;
     };
 };

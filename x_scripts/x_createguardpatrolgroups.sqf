@@ -291,7 +291,8 @@ else {
 [_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a)medic BMP  or b)super-reammo or с)radio-tower etc
 
 d_run_illum = true;
-[_trg_center, _radius] execVM "x_scripts\x_illum.sqf";
+hint localize format["+++ x_createguardpatrolgroups.sqf: new x_illum.sqf executed for %1", _this select 2 ];
+[_trg_center, _radius, _this select 2] execVM "x_scripts\x_illum.sqf";
 
 //+++ Sygsky: todo add here statistics test code
 //#define __DEBUG_STAT_SERVICE__

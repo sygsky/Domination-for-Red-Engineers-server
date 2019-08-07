@@ -340,6 +340,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				{
 					if ( (isNull _grp) || (({ alive _x } count units _grp) == 0)) then // try to find other active group
 					{
+					    _origGrp = _grp; // save current group to check where bomberman returned after script end
 						if (_debug ) then {player globalChat "sabotage.sqf: bomberman group is dissapeared, try to assign bomberman into near friendly group"};
 #ifdef __PRINT__
 						hint localize "sabotage.sqf: bomberman group is disappeared, try to assign bomberman into near friendly group";
@@ -350,10 +351,21 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 					if ( (! isNull _grp)  && ( ( {alive _x} count units _grp) > 0) ) then // group found, assign unit to some group, may be not original one
 					{
 						[_shell_unit] join _grp;
-						if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to the nearest group (%1 men) of his side ", {alive _x} count units _grp] };
+						if (_origGrp != _grp) then
+						{
+
+			    			if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to the same group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0))] };
 #ifdef __PRINT__
-						hint localize format["sabotage.sqf: bomberman joined to the nearest group (%1 men) of his side ", {alive _x} count units _grp];
+		    				hint localize format["sabotage.sqf: bomberman joined to the same group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0))];
 #endif	
+						}
+						else {
+    						if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to other group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0)) ] };
+#ifdef __PRINT__
+	    					hint localize format["sabotage.sqf: bomberman joined to other group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0)) ];
+#endif
+
+						};
 						sleep 0.3;
 					}					
 					else // no other group found so put him to his fate.

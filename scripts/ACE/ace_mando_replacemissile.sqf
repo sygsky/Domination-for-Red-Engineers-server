@@ -260,7 +260,25 @@ if ( local _shooter ) then
    };
 };
 //      hint format["M:%1 %2", _this, _missile];
-if (!_replaced) exitWith { hint localize format["+++ MANDO Missile not replaced: %1 -> %2 (%3), exit", _type, typeOf _target, round(_target distance _shooter)]};
+if (!_replaced) exitWith {
+    _name = "";
+    if ( _shooter isKindOf "CAManBase" )
+    then {
+        if ( isPlayer _shooter) then {_name = name _shooter }
+        else { _name = typeOf _shooter; };
+    }
+    else
+    {
+        _name = typeOf _shooter;
+        if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
+    };
+    hint localize format["+++ MANDO Missile not replaced: from %1, %2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
+        _name,
+        _type, typeOf _target, (round((damage _target)*100))/100,
+        round(_target distance _shooter),
+        round(speed _target),
+        text( _target call SYG_nearestLocation)];
+};
 
 _missile SetPos [ 0,0,(getPos _missile select 2) + 5000];
 deleteVehicle _missile;
@@ -299,6 +317,23 @@ _ra select 24,
 _ra select 25,
 _ra select 26
 ];
-hint localize format[ "+++ MANDO Missile: %1 -> %2, h. %3 d. %4, fire near %5", _type, typeOf _target, round((getPos _target) select 2), round(_target distance _shooter),
-text( _target call SYG_nearestLocation)];
-_arr call mando_missile_han
+
+_name = "";
+if ( _shooter isKindOf "CAManBase" )
+then {
+    if ( isPlayer _shooter) then {_name = name _shooter }
+    else { _name = typeOf _shooter; };
+}
+else
+{
+    _name = typeOf _shooter;
+    if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
+};
+
+hint localize format[ "+++ MANDO Missile: from %1, %2 -> %3 dmg %4, h %5 d %6 v %7, near %8",
+    _name, _type, typeOf _target,  (round((damage _target)*100))/100, round((getPos _target) select 2),
+    round(_target distance _shooter),
+    round(speed _target),
+    text( _target call SYG_nearestLocation)
+    ];
+_arr call mando_missile_handler;

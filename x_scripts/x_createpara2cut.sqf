@@ -160,7 +160,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 _unit_array = nil;
 //[player,"Enclosing part finished"] call XfSideChat;
 
-// try to anumate ramp opening
+// try to animate ramp opening
 #ifdef __ACE__
 	// animate heli action
 	if ( alive _chopper  && _chopper isKindOf "ACE_CH47D" ) then

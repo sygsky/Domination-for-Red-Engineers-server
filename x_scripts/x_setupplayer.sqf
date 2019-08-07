@@ -296,10 +296,15 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 
                         if (_index == 0 && (toLower (name player) == "yeti")) exitWith // yeti
                         {
+                            SYG_suicideScreamSound = "suicide_yeti"; // personal suicide sound for yeti
                             _p execVM "scripts\yeti_rearm.sqf";
+                            hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %5", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
                         };
 
+                        // TODO: add more personal setting here (as for "Yeti" done)
+
                         [_p, _weapp] call SYG_armUnit;
+
                         //+++ Sygsky: add largest ACE rucksack and fill it with mags
                         _p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
                         _p setVariable ["ACE_Ruckmagazines", _magp];

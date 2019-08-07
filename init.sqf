@@ -80,7 +80,7 @@ execVM "mando_missiles\mando_missileinit.sqf";
 // Weather tuning and settings
 if (isServer) then {
 	call compile preprocessFileLineNumbers "x_scripts\x_initx.sqf";
-    setViewDistance 8000; // try to use this command. What if it could make a furor?
+    setViewDistance 10000; // try to use this command. What if it could make a furor?
 	SYG_updateWeather = {
 		// weather parameters
 		//  fRainLess = random 0.34; //linear random
@@ -178,7 +178,7 @@ if (isServer) then {
 			    // Paraiso/Chantico/Somato/Arcadia/Estrella/Cayo etc
 			    maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];
 			}; // 22
-			case 91: { // 8 smallest random target towns
+			case 91: { // all smallest random target towns
 			    maintargets_list = d_small_towns_inds call  XfRandomArray;
 			};
 		};
@@ -451,6 +451,13 @@ if (isServer) then {
         // build flag on Antigua (by Yeti request)
         sleep 60; // wait 1 minute to ensure user to build flag on map
         [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
+        // create outdoor toilet ("Land_KBud")
+
+		_obj = createVehicle ["Land_KBud", [0,0,0],[],0, "CAN_COLLIDE"];
+		_obj setDir 270;
+		_obj setPos [9438.9,9858.4,0];
+		// add some action to toilet on client computer
+
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
@@ -485,6 +492,7 @@ if (isServer) then {
     #ifdef __MANDO_MISSILES_UPDATE__
 ace_sys_missiles_incomingMissile = compile (preprocessFileLineNumbers ("scripts\ACE\ace_mando_replacemissile.sqf")); // replace mando guidance missile range
 mando_scorefunc                  = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
+//mando_missile_handler            = compile (preprocessFileLineNumbers ("scripts\ACE\mando_missile.sqf"));
 hint localize "+++ mando_missile_replaced replaced by custom version";
     #endif
 

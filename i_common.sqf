@@ -11,21 +11,33 @@ if (isNil "Param1") then {
 _number_targets_h = number_targets;
 #endif
 
+#ifdef __DEFAULT__
+
+d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma", "Eponia" ];
+
+// Big town indexes. Should be present in list when play with not maximum number of towns
+d_big_towns_inds = [5,6,7,8,11];
+
+// Small towns indexes. Can be absent from list when playing not minimum number of towns
+d_small_towns_inds = [13,15,16,17,18,19,21,22,23,24,25,26,27,28];
+
+#endif
+
 if (number_targets >= 50) then {
 	_h = (
 		switch (number_targets) do {
-			case 50: {7};
-			case 60: {4};
-			case 70: {6};
-			case 80: {6};
-			case 90: {22};
-			case 91: {8};
-			default {22};
+			case 50: {7};   // "South Route"
+			case 60: {4};   // "North West Route"
+			case 70: {6};   // "North Middle Route"
+			case 80: {6};   // "North East Route"
+			case 90: {22}; // "Complete, ordered"
+			case 91: {count d_small_towns_inds}; // "All smalles"
+			default {22};   // "Max num random"
 		}
 	);
 	number_targets = _h;
 };
-hint localize format["+++ number_targets %1", number_targets];
+hint localize format["+++ Param1 %1, number_targets %2", Param1, number_targets];
 #ifndef __WITH_GRASS_AT_START__
 setTerrainGrid 50;
 #endif
@@ -197,18 +209,6 @@ target_names =
 	#endif
 
 big_town_radious = 280; // if town radious >= this number, town is considered as big one, else as small
-
-#ifdef __DEFAULT__
-
-d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma", "Eponia" ];
-
-// Big town indexes. Should be present in list when play with not maximum number of towns
-d_big_towns_inds = [5,6,7,8,11];
-
-// Small towns indexes. Can be absent from list when playing not minimum number of towns
-d_small_towns_inds = [13,15,16,17,18,19,21,22,23,24,25,26,27,28];
-
-#endif
 
 //for "_xxxxx" from 2 to ((count target_names) + 1) do { // hide all town markers from the map
 // FIXME: hidden all [unresoved] items
