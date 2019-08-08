@@ -50,8 +50,7 @@ switch (toUpper arg(3)) do
                         player call SYG_getPlayerEquipAsStr
                     };
 		// TODO: send armory sound to all
-		_sound = "armory2";
-		if ( (random 10) < 5) then {_sound = "armory1"};
+		_sound = format["armory%1", 1 + floor(random 3)];
 		["say_sound", player, _sound] call XSendNetStartScriptClientAll;
         ["d_ad_wp", name player, _equip] call XSendNetStartScriptServer;
 
