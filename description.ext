@@ -112,13 +112,13 @@ class CfgMusic
 	class grant { name = ""; sound[] =  {\sounds\grant.ogg, db+20, 1.0}; };
 
 // New year intro musics
-	class snovymgodom {	name = ""; sound[] = {\sounds\newyear\snovymgodom.ogg, db+20, 1.0};};
-	class nutcracker {	name = ""; sound[] = {\sounds\newyear\NutCracker.ogg, db+20, 1.0};};
-    class home_alone { name=""; sound[] = {\sounds\newyear\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
+	class snovymgodom   {	name = ""; sound[] = {\sounds\newyear\snovymgodom.ogg, db+20, 1.0};};
+	class nutcracker    {	name = ""; sound[] = {\sounds\newyear\NutCracker.ogg, db+20, 1.0};};
+    class home_alone    { name=""; sound[] = {\sounds\newyear\home_alone.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
     class mountain_king { name=""; sound[] = {\sounds\newyear\mountain_king.ogg,db+10,1.0};}; // From "Home alone" american movie 1990
-    class zastolnaya { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0};}; // intro New Year music
-    class grig    {        name="";        sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0};    };
-    class merry_xmas { name=""; sound[] = {\sounds\merry_xmas.ogg,db+0,1.0};}; // Merry Xmas melody by Kevin Macleod
+    class zastolnaya    { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0};}; // intro New Year music
+    class grig          {        name="";        sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0};    };
+    class merry_xmas    { name=""; sound[] = {\sounds\merry_xmas.ogg,db+0,1.0};}; // Merry Xmas melody by Kevin Macleod
 
 	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
@@ -370,6 +370,8 @@ class CfgSounds
     class gong_09       {name = ""; sound[] = {\sounds\gong\gong-09.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_10       {name = ""; sound[] = {\sounds\gong\magic-string-spell.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_11       {name = ""; sound[] = {\sounds\gong\gong-11.ogg, db+10, 1.0}; titles[] = {}; };
+    class gong_12       {name = ""; sound[] = {\sounds\gong\soapdramgong.ogg, db+10, 1.0}; titles[] = {}; };
+    class gong_13       {name = ""; sound[] = {\sounds\gong\Startlet.ogg, db+10, 1.0}; titles[] = {}; };
 
     class liturgy_1     {name = ""; sound[] = {\sounds\liturgy\diamon_hand.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_2     {name = ""; sound[] = {\sounds\liturgy\gospodu_pomolimsa.ogg, db+10, 1.0}; titles[] = {}; };
@@ -411,6 +413,7 @@ class CfgSounds
 
     class armory1  { name=""; sound[] = {\sounds\armory1.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 1
     class armory2  { name=""; sound[] = {\sounds\armory2.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 2
+    class armory3  { name=""; sound[] = {\sounds\armory3.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 3
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

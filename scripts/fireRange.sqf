@@ -1,4 +1,4 @@
-// fireRange.fsq: by sygsky, serve fire range targets. 06-NOV-2015
+// fireRange.sqf: by sygsky, serve fire range targets. 06-NOV-2015
 // XfGlobalChat
 
 //
