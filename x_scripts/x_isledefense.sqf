@@ -522,7 +522,7 @@ while { true } do {
 	if ( (time - _time) >= DELAY_RESPAWN_STOPPED ) then // mission returned after first player waiting
 	{
 	    _delta = time - _time;  // how many time mission was sleeping without movement
-	    hint localize format["+++ x_isledefence: after first player respawm patrols timeouts increased by %1 sec.", round(_delta)];
+	    hint localize format["+++ x_isledefence: after first player respawn patrols timeouts increased by %1 sec.", round(_delta)];
 	    {
 	        _new_timestamp = argp(_x, PARAM_TIMESTAMP) + _delta;
             _x set [PARAM_TIMESTAMP, _new_timestamp]; // increment timestamp to continue same behaviur as before sleep
