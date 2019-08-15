@@ -21,6 +21,31 @@ private [
         "_ra"
         ];
 
+_makeNameShooter = {
+    _name = "";
+    if ( _shooter isKindOf "CAManBase" ) exitWith
+    {
+        if ( isPlayer _shooter) then {_name = name _shooter }
+        else { _name = typeOf _shooter; };
+    };
+    _name = typeOf _shooter;
+    if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
+    _name
+};
+
+_makeNameTarget = {
+    _name = "";
+    if ( _target isKindOf "CAManBase" ) exitWith
+    {
+        if ( isPlayer _target) then {_name = name _target }
+        else { _name = typeOf _target; };
+        _name
+    };
+    _name = typeOf _target;
+    if (isPlayer (effectiveCommander _target)) then {_name = format["%1(%2)",name (effectiveCommander _target), _name] };
+    _name
+};
+
 _rocketJavelin  =
 [           // M_Javelin_AT
     0,
@@ -261,20 +286,12 @@ if ( local _shooter ) then
 };
 //      hint format["M:%1 %2", _this, _missile];
 if (!_replaced) exitWith {
-    _name = "";
-    if ( _shooter isKindOf "CAManBase" )
-    then {
-        if ( isPlayer _shooter) then {_name = name _shooter }
-        else { _name = typeOf _shooter; };
-    }
-    else
-    {
-        _name = typeOf _shooter;
-        if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
-    };
+    _name  =  call _makeNameShooter;
+    _name1 =  call _makeNameTarget;
+
     hint localize format["+++ MANDO Missile not replaced: from %1, %2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
         _name,
-        _type, typeOf _target, (round((damage _target)*100))/100,
+        _type, _name1, (round((damage _target)*100))/100,
         round(_target distance _shooter),
         round(speed _target),
         text( _target call SYG_nearestLocation)];
@@ -318,20 +335,11 @@ _ra select 25,
 _ra select 26
 ];
 
-_name = "";
-if ( _shooter isKindOf "CAManBase" )
-then {
-    if ( isPlayer _shooter) then {_name = name _shooter }
-    else { _name = typeOf _shooter; };
-}
-else
-{
-    _name = typeOf _shooter;
-    if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
-};
+_name  = call _makeNameShooter;
+_name1 = call _makeNameTarget;
 
-hint localize format[ "+++ MANDO Missile: from %1, %2 -> %3 dmg %4, h %5 d %6 v %7, near %8",
-    _name, _type, typeOf _target,  (round((damage _target)*100))/100, round((getPos _target) select 2),
+hint localize format[ "+++ MANDO Missile: from %1, %2 -> %3 dmg %4, h %5 d %6 spd %7, near %8",
+    _name, _type, _name1,  (round((damage _target)*100))/100, round((getPos _target) select 2),
     round(_target distance _shooter),
     round(speed _target),
     text( _target call SYG_nearestLocation)

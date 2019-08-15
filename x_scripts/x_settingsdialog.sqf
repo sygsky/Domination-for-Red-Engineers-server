@@ -78,7 +78,7 @@ _strYes1 = localize "STR_SYS_400_1";// "Yes"
 _strNo = localize "STR_SYS_401";    // "No\n"
 _strNo1 = localize "STR_SYS_401_1"; // "No"
 
-_str = format[localize "STR_SYS_254", d_own_side,d_enemy_side,getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
+_str = format[localize "STR_SYS_254", d_own_side, d_enemy_side, getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
 
 if (__ACEVer || __CSLAVer) then {
 	if (__ACEVer) then {
@@ -326,7 +326,7 @@ if (__AIVer) then {
 	_str = _str + "Очков за вызов вертолётного такси: " + str(d_ranked_a select 15) + "\n"; // "Points needed to call in an air taxi: "
 };
 _str = _str + "Очков необходимо для десантирования: " + str(d_ranked_a select 4) + "\n";    // "Points needed for AAHALO parajump: "
-_str = _str + "очков необходимо для выгрузки техники из мобильного респауна: " + str(d_ranked_a select 6) + "\n"; // "Points needed to create a vehicle at a MHQ: "
+_str = _str + "Очков необходимо для выгрузки техники из мобильного респауна: " + str(d_ranked_a select 6) + "\n"; // "Points needed to create a vehicle at a MHQ: "
 _str = _str + "Очков вычитается за выгрузку техники из мобильного респауна: " + str(d_ranked_a select 5) + "\n";  // "Points that get subtracted for creating a vehicle at a MHQ: "
 _str = _str + (localize "STR_SYS_351") + str(d_ranked_a select 7) + "\n"; // "Points a medic gets if someone heals at his Mash: "
 _str = _str + (localize "STR_SYS_352") + str(d_ranked_a select 17) + "\n";          // "Points a medic gets if he heals another unit: "
@@ -413,11 +413,12 @@ if (d_use_mod_tracked) then {
 } else {
 	_str = _str + localize "STR_SYS_400_1";
 };
+_str =_str + "\n";
 
 _str = _str + format[localize "STR_SYS_367" /* "Максимальная дистанция между оператором и точкой нанесения артудара: %1 м." */,d_arti_operator_max_dist] + "\n";
 _str = _str + format[localize "STR_SYS_368" /* "Время перезарядки  между двумя артиллерийскими залпами: %1 сек." */,d_arti_reload_time] + "\n";
 _str = _str + format [localize "STR_SYS_371", d_arti_available_time, d_arti_available_time + 200, d_arti_available_time + 400] + " сек.\n"; // "Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs"
-_str = _str + localize "STR_SYS_371"; // "Check for allied units in the vicinity of artillery target: "
+_str = _str + localize "STR_SYS_372"; // "Check for allied units in the vicinity of artillery target: "
 if (d_arti_check_for_friendlies) then {
 	_str = _str + _strYes;
 } else {
