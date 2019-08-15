@@ -320,7 +320,7 @@ x_makevgroup = {
 		if ((typeOf _vehicle) in d_enemy_aa_vehicle) then {
 			if ((random 100) < 33) then {
 				[_vehicle] spawn {
-					sleep 1 + random 3;
+					sleep (1 + (random 3));
 					[(_this select 0), 1, ["Air"], 24, 500, 2000, 12, [0,0,0,3], 360, 0, [WEST, sideEnemy], true, false, true, true, 45]exec"mando_missiles\units\attackers\mando_patriot.sqs";
 				};
 			};
@@ -356,7 +356,7 @@ x_makemgroup = {
         _one_unit setUnitAbility ((d_skill_array select 0) + (random (d_skill_array select 1)));
         _ret = _ret + [_one_unit];
         sleep 0.012
-	} foreach _unitliste;
+	} forEach _unitliste;
 	_ret
 };
 
@@ -433,7 +433,7 @@ XCreateArmor = {
 
 	_arr = [ [ _this select 1, _this select 0 ],[ _this select 3, _this select 2 ],[ _this select 5, _this select 4 ] ];
 
-	_pos_center = _this select 6;   // circle (couint 2) or rectangle (count 4)
+	_pos_center = _this select 6;   // circle (count 2) or rectangle (count 4)
     _patrol_area = + _pos_center;
 	if ( count _pos_center == 4 ) then // rectangle
 	{
@@ -482,7 +482,7 @@ XCreateArmor = {
                     {
                         extra_mission_remover_array = extra_mission_remover_array + [_x];
                         sleep 0.01;
-                    } foreach (crew _x);
+                    } forEach (crew _x);
                 } forEach _vehicles;
                 sleep 2.011;
                 _vehicles = nil;
@@ -587,9 +587,9 @@ XAttackWP = {
 	private ["_ggrp","_gtarget_pos","_gwp"];
 	_ggrp = _this select 0;
 	_gtarget_pos = _this select 1;
-	_ggrp setbehaviour "AWARE";
+	_ggrp setBehaviour "AWARE";
 	_gwp = _ggrp addWaypoint [_gtarget_pos,30];
-	_gwp setwaypointtype "SAD";
+	_gwp setWaypointType "SAD";
 	_gwp setWaypointCombatMode "YELLOW";
 	_gwp setWaypointSpeed "FULL";
 };

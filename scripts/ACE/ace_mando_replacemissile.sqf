@@ -22,11 +22,12 @@ private [
         ];
 
 _makeNameShooter = {
-    _name = "";
+    _name = "<shooter>";
     if ( _shooter isKindOf "CAManBase" ) exitWith
     {
-        if ( isPlayer _shooter) then {_name = name _shooter }
+        if ( isPlayer _shooter) then {_name = name _shooter; }
         else { _name = typeOf _shooter; };
+         _name
     };
     _name = typeOf _shooter;
     if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
@@ -34,7 +35,7 @@ _makeNameShooter = {
 };
 
 _makeNameTarget = {
-    _name = "";
+    _name = "<target>";
     if ( _target isKindOf "CAManBase" ) exitWith
     {
         if ( isPlayer _target) then {_name = name _target }
@@ -297,7 +298,7 @@ if (!_replaced) exitWith {
         text( _target call SYG_nearestLocation)];
 };
 
-_missile SetPos [ 0,0,(getPos _missile select 2) + 5000];
+_missile setPos [ 0,0,(getPos _missile select 2) + 5000];
 deleteVehicle _missile;
 
 //[_launcher, _missilebody, _posfire, _dir, _vangle, _speedini, _speedmax, _acceleration, _target, _boomrange, _activerange, _modeinit, _cruisealt, _boomscript, _smokescript, _soundrsc, _sounddur, _endurance, _terrainavoidance, _updatefreq, _delayinit, _controltime, _detectable, _debug, _launchscript, _hagility, _vagility, _accuracy, _intercept, _scanarch, _scanarcv] call mando_missile_handler;
