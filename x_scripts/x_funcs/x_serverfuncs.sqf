@@ -579,7 +579,7 @@ XGovernorWP = {
 	_ggrp setCombatMode "YELLOW";
 	_ggrp setFormation ("DIAMOND");
 	_ggrp setFormDir (floor random 360);
-	_ggrp setSpeedMode "NORMAL";
+	_ggrp setSpeedMode "LIMITED";
 	_ggrp setBehaviour "STEALTH";
 };
 

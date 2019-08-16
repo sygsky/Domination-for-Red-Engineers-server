@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_groupsm.sqf
 // 	example: _grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[d_base_array select 0,d_base_array select 1,d_base_array select 2,0],[],-1,1,[],300,1];
 // Parameters indexes (max index 10, from 0 to 10):
 // at 0: group to rule; _paragrp

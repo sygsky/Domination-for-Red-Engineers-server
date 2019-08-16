@@ -6,14 +6,14 @@ private ["_grptype", "_wp_array", "_target_pos", "_numbervehicles", "_type", "_s
 
 if !(isServer) exitWith{};
 
-_grptype = _this select 0;
-_wp_array = _this select 1;
-_target_pos = _this select 2;
+_grptype = _this select 0; // "basic", "specops" etc
+_wp_array = _this select 1; // start positions array of point [[x1,y1,z1],[x2,y2,z2]...]
+_target_pos = _this select 2; // attack position array [x1,y1,z1]
 _numbervehicles = _this select 3; // > 0 only for tanks/cars/static etx, else 0 for a man group
-_type = _this select 4;
-_side = _this select 5;
-_grp_in = _this select 6;
-_vec_dir = _this select 7;
+_type = _this select 4; // "patrol", "guard" etc
+_side = _this select 5; // side of group if create group
+_grp_in = _this select 6; // group to assign to, not group (e.g. 0) if create first
+_vec_dir = _this select 7; // vehicles start direction if vehicles group
 _center_rad = (if (count _this > 8) then {_this select 8} else {[]});
 _grpspeed = "LIMITED";
 _vehicles = [];
@@ -30,7 +30,7 @@ if (_numbervehicles > 0) then {
 	_vehicles = [_numbervehicles, _pos, (_unit_array select 2), (_unit_array select 1), _grp, 0,_vec_dir,true] call x_makevgroup;
 	_grp setSpeedMode _grpspeed;
 } else {
-	[_pos, (_unit_array select 0), _grp,true] call x_makemgroup;
+	[_pos, (_unit_array select 0), _grp, true] call x_makemgroup;
 };
 
 sleep 1.011;
@@ -59,6 +59,11 @@ switch (_type) do {
 		_grp call XGuardWP;
 		_grp_array = [_grp, _pos, 0,[],[],-1,0,[],300 + (random 50),-1];
 		_grp_array execVM "x_scripts\x_groupsm.sqf";
+	};
+	case "guardvehicle": {
+		_grp call XGuardWP;
+		_wp = _grp addWaypoint [_pos, 10];
+        _wp setWaypointType "GUARD";
 	};
 	case "guardstatic": {
 		sleep 0.0123;

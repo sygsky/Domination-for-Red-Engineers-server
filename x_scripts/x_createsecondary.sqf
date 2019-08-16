@@ -321,14 +321,18 @@ _vehicle setVectorUp [0,0,1];
 mt_radio_down = false; // set radio tower to alive status
 mt_radio_pos = _poss;
 ["mt_radio",mt_radio_down,mt_radio_pos] call XSendNetStartScriptClient;
+
 createGuardedPoint[d_side_enemy,position _vehicle, -1, _vehicle];
+// TODO: set some waypoints for any group[s] with "GUARD" waypoint type:
+// TODO: _wp = _grp addWaypoint [_pos, 10];
+// TODO: _wp setWaypointType "GUARD";
 
 mt_spotted = false; // set player status  as 'not spotted'
 
-// add guard group n tower
+// add guard group for tower position
 
 _posCnt = _vehicle call SYG_housePosCount;
-_cnt = floor (random (3 min _posCnt));    // add guard[s] on the top of radar
+_cnt = floor (random (3 min _posCnt));    // add max 3 guard[s] on the top of radar
 if (_cnt > 0) then
 {
     __WaitForGroup
@@ -355,7 +359,7 @@ if (_cnt > 0) then
 #endif
                 _unit setPos _pos;
                 _unit setSkill 1.0;
-                _unit setBehaviour "SAFE";
+                //_unit setBehaviour "SAFE";
                 _unit disableAI "MOVE";
                 _unit addEventHandler ["killed", {[_this select 0] call XAddDead;}];
             }
@@ -363,7 +367,14 @@ if (_cnt > 0) then
             {
                 hint localize format["--- x_createsecondary.sqf: guard of type %1 created (group %2) on top of a main tower is NULL", _type, _newgroup];
             };
+            _newgroup call XGuardWP;
         };
+
+        // TODO: add more units to the group to guard the tower
+#ifdef __FUTURE__
+    [ "basic", [getPos _vehicle], getPos _vehicle, 0, "guardvehicle", d_enemy_side, _newgroup, -1.111 /*, [_trg_center, _radius] */] execVM "x_scripts\x_makegroup.sqf";
+    hint localize format["x_createsecondary.sqf: tower guard group of %1 men (%2) created", count _newgroup, "basic" ];
+#endif
 
     }
     else
