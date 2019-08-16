@@ -431,8 +431,6 @@ XCreateArmor = {
 	_type3         = _this select 4;
 	_numbergroups3 = _this select 5;
 
-	_arr = [ [ _this select 1, _this select 0 ],[ _this select 3, _this select 2 ],[ _this select 5, _this select 4 ] ];
-
 	_pos_center = _this select 6;   // circle (count 2) or rectangle (count 4)
     _patrol_area = + _pos_center;
 	if ( count _pos_center == 4 ) then // rectangle
@@ -446,6 +444,10 @@ XCreateArmor = {
 	_type1 = [_type1, _pos_center] call SYG_camouflageTank;
 	_type2 = [_type2, _pos_center] call SYG_camouflageTank;
 	_type3 = [_type3, _pos_center] call SYG_camouflageTank;
+
+    // main array of vehicle types and numbers of
+	_arr = [ [ _numbergroups1, _type1 ],[ _numbergroups2, _type2 ],[_numbergroups3, _type3 ] ];
+//	_arr = [ [ _this select 1, _this select 0 ],[ _this select 3, _this select 2 ],[ _this select 5, _this select 4 ] ];
 
 	_numvehicles = _this select 7;
 	_radius      = _this select 8;
