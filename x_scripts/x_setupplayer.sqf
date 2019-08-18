@@ -957,7 +957,7 @@ if (count d_ammo_boxes > 0) then {
 			);
 			#endif
 			[_boxnew] execVM _boxscript;
-			_boxnew addEventHandler ["killed",{["d_rem_box",position _this select 0] call XSendNetStartScriptServer;deleteVehicle (_this select 0)}];
+			_boxnew addEventHandler ["killed",{["d_rem_box",position (_this select 0)] call XSendNetStartScriptServer;deleteVehicle (_this select 0)}];
 		};
 	} forEach d_ammo_boxes;
 };

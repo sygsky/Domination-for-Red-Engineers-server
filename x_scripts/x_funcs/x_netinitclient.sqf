@@ -152,7 +152,7 @@ XHandleNetStartScriptClient = {
 			);
 			#endif
 			[_box] execVM _boxscript;
-			_box addEventHandler ["killed",{["d_rem_box",position _this select 0] call XSendNetStartScriptServer;deleteVehicle (_this select 0)}];
+			_box addEventHandler ["killed",{["d_rem_box", position (_this select 0)] call XSendNetStartScriptServer;deleteVehicle (_this select 0)}];
 		};
 		case "d_rem_box": {
 			private ["_the_box", "_nobjs", "_box"];
