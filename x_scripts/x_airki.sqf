@@ -297,8 +297,9 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_grp = call SYG_createEnemyGroup;
 	_vec_cnt = 1;
 	_heli_arr = d_light_attack_chopper;
-	_flight_height = 200;
-	_flyby_height  = 300;
+	_flight_height = 200;   // battle height
+	_flyby_height  = 300;   // transport stage height
+	_flight_random = 100;   // random part of heigth
 	switch (_type) do {
 		case "KA": 
 		{
@@ -306,7 +307,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_heli_arr = d_airki_attack_chopper;
 			_flight_height = 115;
         	_flyby_height  = 500;
-			_flight_random = 5;
+			_flight_random = 50;
 			_min_dist_between_wp = 100;
 		};
 		case "SU": 
@@ -315,7 +316,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_heli_arr = d_airki_attack_plane;
 			_flight_height = 300;
         	_flyby_height  = 1000;
-			_flight_random = 20;
+			_flight_random = 100;
 			_min_dist_between_wp = 500;
 		};
 		case "MIMG"; 
@@ -356,7 +357,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			sleep 0.01;
 		} forEach crew _vehicle;
 		[_heli_type, _vehicle] call _addToClean;
-		_vehicle flyInHeight (_flight_height + (random _flight_random));
+		_vehicle flyInHeight (_flyby_height + (random _flyby_height));
 #ifdef __PRINT__	
 	hint localize format["x_airki.sqf[%3]: %1 created to patrol town %2 at pos %4",_heli_type, _dummy select 1, _type, _pos];
 #endif	
@@ -412,26 +413,12 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		_radius = (_dummy select 2) + 100; // increase target border radius by 100 m
 #endif
 #ifdef __DEFAULT__
-		if ( (_dummy select 1) in d_mountine_towns ) then // mountine  town ["Hunapu","Pacamac"]
+		if ( (_dummy select 1) in d_mountine_towns ) then // raise the height of the flight for mщuntain towns ("Hunapu","Pacamac" etc)
 		{
-			switch _type do
-			{
-				case "KA";
-				case "MIMG":
-				{
-					// forEach _vehicles;
-					{
-						_x flyInHeight (160 + random 20);
-					} forEach _vehicles;
-				};
-				case "SU":
-				{
-					// forEach _vehicles;
-					{
-						_x flyInHeight (450 + random 20);
-					} forEach _vehicles;
-				};
-			};
+            // forEach _vehicles;
+            {
+                _x flyInHeight ( _flight_height * 1.5 + random ( _flight_random * 1.5 ) );
+            } forEach _vehicles;
 		};
 #endif		
 		

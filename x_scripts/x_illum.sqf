@@ -137,7 +137,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
         };
 #else
     	sleep (25 + random 30);
-#endifa
+#endif
 	    if (!isNull _flare) then {deleteVehicle _flare};
 	}
 	else {sleep 300}; // check night come every 300 seconds to not skip it during main target change
