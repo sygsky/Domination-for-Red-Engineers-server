@@ -290,33 +290,41 @@ if (current_target_index != -1) then {
 
 			private ["_center","_list", "_unit","_str","_searchDist"];
 			_center = _target_array2 select 0; // center of curent town
-			_searchDist = 4000;
-			_list = _center nearObjects ["ACE_OfficerW",_searchDist];
+			_searchDist = 5000;
+			_list = nearestObjects [ _center, ["ACE_OfficerW"], _searchDist];
 			if ( count _list == 0 )	then 
 			{
 				_s = _s + format[localize "STR_SYS_113", "ACE_OfficerW", _searchDist]; //"Губернатор (%1) не обнаружен в радиусе %2м.!"
-			} else
+			}
+			else
 			{
-				_unit = _list select 0;
-				if ( !alive _unit ) then 
-				{ 
-					_str =  format["%1 %2", name _unit, localize "STR_SYS_115"]; 
-				}  // "мёртв"
+			    _ind = 0;
+				_unit = _list select _ind;
+				if (!alive _unit) then
+				{
+       				_s = _s + format[ localize "STR_SYS_115_4", (ceil((_center distance _unit)/10))*10, (ceil(([_center,_unit] call XfDirToObj)/5))*5]; // "Some corpse in the uniform of the Governor is lying in %1 m from the center of the red zone. Direction %2 gr."
+				}
 				else
 				{
-					if ((damage _unit) > 0.3) then 
-					{_str = "STR_SYS_115_3";}
-					else 
-					{ 
-						if ((damage _unit) > 0.1) then 
-						{_str = "STR_SYS_115_2";}
-						else 
-						{_str = "STR_SYS_115_1";}
-					};
-					_str = format ["%1 %2 %3", name _unit, localize "STR_SYS_114", localize _str]; // "Juan/Julio/etc жив и здоров/и здоров/но ранен/но тяжело ранен"
+                    if ( !alive _unit ) then
+                    {
+                        _str =  format["%1 %2", name _unit, localize "STR_SYS_115"];
+                    }  // "dead"
+                    else
+                    {
+                        _str = if ((damage _unit) > 0.3) then
+                        {"STR_SYS_115_3";}
+                        else
+                        {
+                            if ((damage _unit) > 0.1) then
+                            {"STR_SYS_115_2";}
+                            else
+                            {"STR_SYS_115_1";}
+                        };
+                        _str = format ["%1 %2 %3", name _unit, localize "STR_SYS_114", localize _str]; // "Juan/Julio/etc alive/but wounded/but seriously wounded"
+                    };
+    				_s = _s + format[ localize "STR_SYS_116", _str, (ceil((_center distance _unit)/10))*10, (ceil(([_center,_unit] call XfDirToObj)/5))*5]; //"Partisans inform: Governor %1, dist. %2 m., dir. %3 deg. from the centre of the red zone"
 				};
-				
-				_s = _s + format[ localize "STR_SYS_116", _str, (ceil((_center distance _unit)/10))*10, (ceil(([_center,_unit] call XfDirToObj)/5))*5]; //Губернатор %1, дист. %2 м., напр. %3 гр. от центра красной зоны"
 			};
 #endif	
 		}; 
