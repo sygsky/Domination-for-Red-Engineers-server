@@ -291,7 +291,7 @@ if (current_target_index != -1) then {
 			private ["_center","_list", "_unit","_str","_searchDist"];
 			_center = _target_array2 select 0; // center of curent town
 			_searchDist = 5000;
-			_list = nearestObjects [ _center, ["ACE_OfficerW"], _searchDist];
+			_list = _center nearObjects [ "ACE_OfficerW", _searchDist]; // search any officer (may be not nearest!) unit around
 			if ( count _list == 0 )	then 
 			{
 				_s = _s + format[localize "STR_SYS_113", "ACE_OfficerW", _searchDist]; //"Губернатор (%1) не обнаружен в радиусе %2м.!"
@@ -300,30 +300,41 @@ if (current_target_index != -1) then {
 			{
 			    _ind = 0;
 				_unit = _list select _ind;
+                _dist = [_center distance _unit, 25] call SYG_roundTo;
+                _dir  = [[_center,_unit] call XfDirToObj,5] call SYG_roundTo;
 				if (!alive _unit) then
 				{
-       				_s = _s + format[ localize "STR_SYS_115_4", (ceil((_center distance _unit)/10))*10, (ceil(([_center,_unit] call XfDirToObj)/5))*5]; // "Some corpse in the uniform of the Governor is lying in %1 m from the center of the red zone. Direction %2 gr."
+				    if (_dist > 0)
+				    then
+				    {
+				        _s = _s + format[ localize "STR_SYS_115", _dist, _dir]; // "Some corpse in the uniform of the Governor is lying in %1 m from the center of the red zone. Direction %2 gr."
+				    }
+				    else
+				    {
+           				_s = _s + localize "STR_SYS_115_0"; // "Some corpse in the uniform of the Governor is found at the center of the red zone"
+				    };
 				}
 				else
 				{
-                    if ( !alive _unit ) then
-                    {
-                        _str =  format["%1 %2", name _unit, localize "STR_SYS_115"];
-                    }  // "dead"
+                    _str = if ((damage _unit) > 0.3) then
+                    {"STR_SYS_115_3";}
                     else
                     {
-                        _str = if ((damage _unit) > 0.3) then
-                        {"STR_SYS_115_3";}
+                        if ((damage _unit) > 0.1) then
+                        {"STR_SYS_115_2";}
                         else
-                        {
-                            if ((damage _unit) > 0.1) then
-                            {"STR_SYS_115_2";}
-                            else
-                            {"STR_SYS_115_1";}
-                        };
-                        _str = format ["%1 %2 %3", name _unit, localize "STR_SYS_114", localize _str]; // "Juan/Julio/etc alive/but wounded/but seriously wounded"
+                        {"STR_SYS_115_1";}
                     };
-    				_s = _s + format[ localize "STR_SYS_116", _str, (ceil((_center distance _unit)/10))*10, (ceil(([_center,_unit] call XfDirToObj)/5))*5]; //"Partisans inform: Governor %1, dist. %2 m., dir. %3 deg. from the centre of the red zone"
+                    _str = format ["%1 %2 %3", name _unit, localize "STR_SYS_114", localize _str]; // "Juan/Julio/etc alive/but wounded/but seriously wounded"
+				    if (_dist == 0)
+				    then
+				    {
+    				    _s = _s + format[ localize "STR_SYS_116_0", _str]; //"Partisans inform: Governor %1, at center of red zone"
+    				}
+    				else
+    				{
+    				    _s = _s + format[ localize "STR_SYS_116", _str, _dist, _dir]; //"Partisans inform: Governor %1, dist. %2 m., dir. %3 deg. from the centre of the red zone"
+    				}
 				};
 			};
 #endif	

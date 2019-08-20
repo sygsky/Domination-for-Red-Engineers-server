@@ -490,10 +490,24 @@ SYG_isPatrolGroup = {
     _ret
 };
 //
-// Hadnler for "GetOut" event for enemy vehicles
+// Handler for enemy vehicle "GetOut" event (under development)
 //
 SYG_hanldeGetOut = {
 
+};
+
+/**
+ * Rounds number to the nearest boundary of designated value
+ * call as: _roundedValue = [_value, BOUNDARY] call SYG_roundTo;
+ * e.g. [12.49, 5] call SYG_SYG_roundTo =  10
+ *      [12.51, 5] call SYG_SYG_roundTo =  15
+ *      [15.7,  5] call SYG_SYG_roundTo =  15
+ *      [17.51, 5] call SYG_SYG_roundTo =  20
+ */
+SYG_roundTo = {
+    private ["_bound"];
+    _bound = _this select 1;
+    (round((_this select 0)/_bound)) * _bound
 };
 
 if (true) exitWith {};
