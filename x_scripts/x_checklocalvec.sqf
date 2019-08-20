@@ -40,9 +40,10 @@ while {true} do {
 					if (!alive _dead) then
 					{
 					    {
-					       deleteVehicle _x; // remove unit immediately from dead vehicle
+					       deleteVehicle _x; // remove unit immediately from vehicle crew group
 					    } forEach crew _dead;
-					    [_dead] call XAddDead;_check_vec_list set [_zz, "X_RM_ME"];
+					    [_dead] call XAddDead;
+					    _check_vec_list set [_zz, "X_RM_ME"];
 					};
 				};
 			};

@@ -81,6 +81,15 @@ if (!isServer) exitWith {};
 
 sleep DELAY_BEFORE_SCRIPT_START;
 
+#ifdef __OWN_SIDE_EAST__
+
+// TODO: the closer to the mission finish, the heavier must be patrols
+// some patrol types are more frequently generated
+//                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
+_patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
+
+#endif
+
 //
 //
 //
@@ -128,11 +137,6 @@ _make_isle_grp = {
 	_vecs = [];
 
 #ifdef __OWN_SIDE_EAST__
-// TODO: the closer to the mission finish, the heavier must be patrols
-// some patrol types are more frequently generated
-//                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
-    _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
-
     _type_id      = _patrol_types call XfRandomFloorArray;
     _patrol_type  = _patrol_types select _type_id; // random patrol type selection
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
@@ -212,8 +216,13 @@ _replace_grp =
 #endif							
 	_igrpa = argp(SYG_isle_grps, _i);
 	_igrpa call _remove_grp;
+    _igrpa = call _make_isle_grp;
+	SYG_isle_grps set [_i, _igrpa];
 
-	SYG_isle_grps set [_i, call _make_isle_grp];
+	// TODO: mark each vehicle with its patrol group id
+	_vecs  = argp(_igrpa,PARAM_VEHICLES);
+
+	{_x setVariable ["PATROL_ITEM", _i]} forEach _vecs;
 
 #ifdef __DEBUG__
     hint localize format["+++ x_isledefense.sqf: group created"];
@@ -262,6 +271,8 @@ _remove_grp = {
 #endif
 					// put vehicle under system control
 					[_x] call XAddCheckDead;
+					// clean vehicle variables
+					_x setVariable ["PATROL_ITEM", nil];
 				}
 				else // remove all units in vehicles
 				{
@@ -498,8 +509,6 @@ if ( _patrol_cnt > 0) then
 {
     for "_i" from 1 to _patrol_cnt do
     {
-        //_ret = call _make_isle_grp;
-        //SYG_isle_grps = SYG_isle_grps + [_ret];
         SYG_isle_grps = SYG_isle_grps + [[ grpNull, [], [0,0,0], [], time + DELAY_ON_PATROL_INIT * _i, STATUS_WAIT_RESTORE, [] ]]; // initiate new patrols creation after some sequential time-out
         sleep 3.012;
     };
