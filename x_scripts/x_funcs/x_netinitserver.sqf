@@ -9,7 +9,7 @@
 };
 
 SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri", "Frosty", "Aron"];
-SYG_localZones = [           0,           0,        0,    -4,          +1,        +2,        +2,     +2,       +2,     +1];
+SYG_localZones = [           0,           0,        0,    -4,           0,        +2,        +2,     +2,       +2,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this"];
