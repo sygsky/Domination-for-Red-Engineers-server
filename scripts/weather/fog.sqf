@@ -57,7 +57,7 @@ while {true} do {
 		10 setFog fFogLess;
 	} else {
 	    _speed = (((speed vehicle player) max 25) min 100);
-	    _tmo   = (_speed - 25) / 100 * 20 + 10; // TODO: time to use for the foggy to change max
+	    //_tmo   = (_speed - 25) / 100 * 20 + 10; // TODO: time to use for the foggy to change max
 		if ((speed vehicle player) > 100 or not alive player) then {
 			10 setFog fFogLess;
 		} else {

@@ -88,9 +88,9 @@ waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( (
 if ( (vehicle player) != player ) then // parashute was on!
 {
     // the parachute was just opened, so remove it from slot after landing/death
-    // TODO play corresponding sound
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
     player removeWeapon new_paratype;
+    playSound "steal";
 };
 //hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
 

@@ -1,6 +1,6 @@
 //
 // advScoreSystem.sqf created by Sygsky at 29-FEB-2016
-// counts score player received during last 4 lifes. If score > 10 per life, +40 scores addded as prize
+// counts score player received during last 4 lifes. If score > 10 per life, +40 scores added as prize
 //
 // Call this script on client computer only
 //

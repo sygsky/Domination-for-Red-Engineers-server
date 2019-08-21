@@ -74,7 +74,7 @@ XHandleNetStartScriptServer = {
 			__compile_to_var
 			if (!isNull mr2_lift_chopper) then {[mr2_lift_chopper] spawn x_checktransport;};
 		};
-		#ifdef __TT__
+#ifdef __TT__
 		case "mrr1_lift_chopper": {
 			__compile_to_var
 			if (!isNull mrr1_lift_chopper) then {[mrr1_lift_chopper] spawn x_checktransport2;};
@@ -83,7 +83,7 @@ XHandleNetStartScriptServer = {
 			__compile_to_var
 			if (!isNull mrr2_lift_chopper) then {[mrr2_lift_chopper] spawn x_checktransport2;};
 		};
-		#endif
+#endif
 		case "x_drop_type": {
 			[(_this select 1),(_this select 2)] execVM "x_scripts\x_createdrop.sqf";
 		};
@@ -328,6 +328,10 @@ XHandleNetStartScriptServer = {
             {
                 ["GRU_event_scores", _id, _score, ""] call XSendNetStartScriptClient;
             };
+		};
+		case "addVehicle":
+		{
+		    (_this select 1) addVehicle (_this select 2); // (group player) addVehicle _veh;
 		};
 
 //========================================================================================================== END OF CASES

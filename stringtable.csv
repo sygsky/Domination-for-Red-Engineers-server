@@ -728,7 +728,7 @@ STR_SYS_1005,"Generalissimo","Generalissimus","Генералиссимус"
 STR_SYS_1100,"%1 has been cleared!!!","%1 wurde gelöscht!!!","Н.п. %1 освобождён!!!"
 STR_SYS_1100_1,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
 STR_SYS_1101,"Waiting for new orders...","Warten auf neue Aufträge...","Ожидайте дальнейших распоряжений..."
-STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг, наконец, бежал. Вам остаётся только зачистить последний оккупированный город!"
+STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг покидает остров. Вам остаётся только зачистить последний оккупированный город!"
 STR_SYS_1102,"For the liberation of the settlement your group gets %1%2 !","Für die Befreiung der Siedlung bekommt Ihre Gruppe %1%2 !","За освобождение города ваша группа получает %1%2 !"
 STR_SYS_1102_1,"points ( %1 ) and ","Punkte ( %1 ) und ","очки ( %1 ) и "
 
