@@ -30,7 +30,14 @@ _makeNameShooter = {
          _name
     };
     _name = typeOf _shooter;
-    if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
+    if ( (count crew _shooter) == 1) then
+    {
+        if ( isPlayer((crew _shooter) select 0)) exitWith {_name = format["%1(%2)",name ((crew _shooter) select 0), _name]};
+    }
+    else
+    {
+        if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
+    };
     _name
 };
 
@@ -43,7 +50,15 @@ _makeNameTarget = {
         _name
     };
     _name = typeOf _target;
-    if (isPlayer (effectiveCommander _target)) then {_name = format["%1(%2)",name (effectiveCommander _target), _name] };
+
+    if ( (count crew _target) == 1) then
+    {
+        if ( isPlayer((crew _target) select 0) ) exitWith {_name = format["%1(%2)",name ((crew _target) select 0), _name]};
+    }
+    else
+    {
+        if (isPlayer (effectiveCommander _target)) then {_name = format["%1(%2)",name (effectiveCommander _target), _name] };
+    };
     _name
 };
 
@@ -339,7 +354,7 @@ _ra select 26
 _name  = call _makeNameShooter;
 _name1 = call _makeNameTarget;
 
-hint localize format[ "+++ MANDO Missile: from %1, %2 -> %3 dmg %4, h %5 d %6 spd %7, near %8",
+hint localize format[ "+++ MANDO Missile: from %1.%2 -> %3 dmg %4, h %5 d %6 spd %7, near %8",
     _name, _type, _name1,  (round((damage _target)*100))/100, round((getPos _target) select 2),
     round(_target distance _shooter),
     round(speed _target),
