@@ -10,7 +10,6 @@
 // 2. Only launchers are not allowed in helis
 // 3. Only short rifles are allowed in aiplanes
 //
-//
 if (!XClient) exitWith {};
 
 #include "x_setup.sqf"
@@ -81,7 +80,7 @@ while {true} do {
 			} else {
 				if (_vec isKindOf "Air") then {
 					if (_vec isKindOf "Helicopter" && !(_vec isKindOf "ParachuteBase")) then {
-						if (_vec isKindOf "AH6") then {
+						if (_vec isKindOf "AH6" || _vec isKindOf "ACE_Mi17" ) then {
 							if (_index < _indexta) then {
 								_not_allowed = true;
 								_needed_rank = (_vrs select 1);

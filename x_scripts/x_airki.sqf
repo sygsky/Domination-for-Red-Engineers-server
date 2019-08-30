@@ -381,7 +381,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_wp = _grp addWaypoint [_current_target_pos, 50];
 	_wp setWaypointType "SAD";
 	_pat_pos = _current_target_pos;
-	[_grp, 1] setWaypointStatements ["never", ""];
+	_wp setWaypointStatements ["never", ""];
 #ifdef __PRINT__
    	hint localize format["x_airki.sqf[%3]: heli %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
 #endif

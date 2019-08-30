@@ -137,9 +137,28 @@ while { true } do {
                             if ( _vehicle isKindOf "CAManBase") exitWith
                             { // check if dead man not player
                                 _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
-                                // check for zombies found
-                                if ( !_found ) then
+
+                                if ( !_found ) then // check for zombies found (not player and alive)
                                 {
+                                    if ( primaryWeapon _vehicle == "") then // may be zombi or AI at rearming in progress
+                                    {
+                                        if (name _vehicle == "Error: No unit") then
+                                        {
+                                            hint localize "+++ x_infiltrate.sqf: zombi (no prim weapon) in clean proc, remove it away from the base";
+                                            // Yesss, he is ZOMBIiiiii..... try to remove him in any way
+                                            hint localize format["+++ x_infiltrate.sqf: zombi detected in clean proc, try to remove it away from the base"];
+                                            //_vehicle setPos [ 0, 0, 0 ];
+                                            _vehicle setDamage 1.1;
+                                            _name = name _vehicle;
+                                            sleep 0.1;
+                                            //hideBody _vehicle;
+                                            deleteVehicle _vehicle;
+                                            sleep 0.5;
+                                            hint localize format["+++ x_infiltrate.sqf: zombi ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
+                                            _found = !isNull _vehicle;
+                                        };
+                                    };
+                                    /**
                                     if ( isNull (group _vehicle) && (name _vehicle == "Error: No unit")) then
                                     {
                                         // Yesss, he is ZOMBIiiiii..... try to remove him in any way
@@ -154,6 +173,7 @@ while { true } do {
                                         hint localize format["+++ x_infiltrate.sqf: zombi ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
                                         _found = !isNull _vehicle;
                                     };
+                                    */
                                 };
                             };
                             if ( _vehicle isKindOf "Car") exitWith

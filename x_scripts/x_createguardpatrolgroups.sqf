@@ -233,6 +233,7 @@ _xpos = nil;
 
 sleep 2.124;
 
+// create observers in the town
 if (!no_more_observers) then {
 	// artillery observers
 	nr_observers = (2 + (floor random 2)) max 2; // 2 or 3
@@ -255,7 +256,7 @@ if (!no_more_observers) then {
 		_wp_array = _wp_array - ["X_RM_ME"];
 		_units = [_xpos, (_unit_array select 0), _agrp,true] call x_makemgroup;
 		_agrp setFormation "COLUMN";
-		_agrp setSpeedMode "LIMITED";
+		_agrp setSpeedMode "FULL"; // twas "LIMITED"
 		_agrp setBehaviour "SAFE";
 		_agrp setCombatMode "YELLOW";
 		_grp_array = [_agrp, _xpos, 0,[_trg_center, _radius],[],-1,0,[],50,0];

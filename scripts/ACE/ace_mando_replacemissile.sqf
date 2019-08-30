@@ -6,10 +6,9 @@ DO NOT EXECUTE THIS SCRIPT MANUALLY
 
 You may add here more missile types to be replaced by mando ones, as well as change the parameters of already replaced ArmA missile types.
 
-+++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased twice for Javelins and Stringers
++++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased twice for Javelins (500 m) and Stringers (5000 m)
 
 */
-
 
 private [
         "_target", "_type", "_shooter", "_missile", "_vel", "_dir", "_up", "_launcher", "_missilebody", 
@@ -22,42 +21,30 @@ private [
         ];
 
 _makeNameShooter = {
-    _name = "<shooter>";
-    if ( _shooter isKindOf "CAManBase" ) exitWith
-    {
-        if ( isPlayer _shooter) then {_name = name _shooter; }
-        else { _name = typeOf _shooter; };
-         _name
-    };
-    _name = typeOf _shooter;
-    if ( (count crew _shooter) == 1) then
-    {
-        if ( isPlayer((crew _shooter) select 0)) exitWith {_name = format["%1(%2)",name ((crew _shooter) select 0), _name]};
-    }
-    else
-    {
-        if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
-    };
-    _name
+    _shooter call _makeNameObject
 };
 
 _makeNameTarget = {
-    _name = "<target>";
-    if ( _target isKindOf "CAManBase" ) exitWith
+    _target call _makeNameObject
+};
+
+_makeNameObject = {
+    _name = "<object>";
+    if ( _this isKindOf "CAManBase" ) exitWith
     {
-        if ( isPlayer _target) then {_name = name _target }
-        else { _name = typeOf _target; };
+        if ( isPlayer _this) then {_name = name _this }
+        else { _name = typeOf _this; };
         _name
     };
-    _name = typeOf _target;
 
-    if ( (count crew _target) == 1) then
+    _name = typeOf _this;
+    if ( (count crew _this) == 1) then
     {
-        if ( isPlayer((crew _target) select 0) ) exitWith {_name = format["%1(%2)",name ((crew _target) select 0), _name]};
+        if ( isPlayer((crew _this) select 0) ) then {_name = format["%1(%2)",name ((crew _this) select 0), _name]};
     }
     else
     {
-        if (isPlayer (effectiveCommander _target)) then {_name = format["%1(%2)",name (effectiveCommander _target), _name] };
+        if (isPlayer (effectiveCommander _this)) then {_name = format["%1(%2)",name (effectiveCommander _this), _name] };
     };
     _name
 };
@@ -115,7 +102,7 @@ _rocketStinger =
      680,
      175,
      3,
-     3000,
+     5000,
      2,
      50,
      "s\warheads\ace_mando_warhead_stinger.sqf",
@@ -163,7 +150,7 @@ _rocketStrela =
      680,
      175,
      3,
-     3000,
+     5000,
      2,
      50,
      "s\warheads\ace_mando_warhead_strela.sqf",
@@ -305,7 +292,7 @@ if (!_replaced) exitWith {
     _name  =  call _makeNameShooter;
     _name1 =  call _makeNameTarget;
 
-    hint localize format["+++ MANDO Missile not replaced: from %1, %2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
+    hint localize format["+++ MANDO Missile not replaced: from %1.%2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
         _name,
         _type, _name1, (round((damage _target)*100))/100,
         round(_target distance _shooter),
