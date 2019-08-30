@@ -15,8 +15,8 @@ if (!isServer) exitWith {};
 // Top Y bound for sandstorms
 #define SANDSTORM_TOP_Y 7500
 
-#define FOG_ON_ISLAND_MIN_TIME 5
-#define FOG_ON_ISLAND_MAX_TIME 19
+#define FOG_ON_ISLAND_MIN_TIME 5    // hours to be out fog
+#define FOG_ON_ISLAND_MAX_TIME 19   // hours to be in fog
 #define CLOUDY_X_STEP_SIZE 20
 #define CLOUDY_Y_STEP_SIZE (-10 + (floor random 21))
 #define FOG_X_STEP_SIZE 2

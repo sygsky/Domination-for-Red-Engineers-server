@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_missions\common\x_sidearti.sqf - no more observers after end of this mission
 private ["_angle","_angle_plus","_arti","_arti_pos_dir","_arti_type","_center_x","_center_y","_count_arti","_crewman","_grp","_i","_pos_array","_poss","_radius","_this","_truck","_trucks","_unit","_x1","_y1"];
 if (!isServer) exitWith {};
 
