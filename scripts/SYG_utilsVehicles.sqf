@@ -1283,7 +1283,7 @@ SYG_su34_RearmTables =
 SYG_heliRearmTable =
 [
     // heli names, Mi24 can't be rearmed, doesnt try to do it
- ["ACE_Mi24D","ACE_Mi24V"/*,"ACE_Ka50","ACE_Ka50_N"*/,"ACE_Mi17_MG"/*, "ACE_Mi17"*/],
+ ["ACE_Mi24D","ACE_Mi24V"/*,"ACE_Ka50","ACE_Ka50_N"*/,"ACE_Mi17_MG", "ACE_Mi17"],
  	// heli params
  [
  	 [ // 1st heli params
@@ -1305,11 +1305,11 @@ SYG_heliRearmTable =
      [ // 5th heli params
         ["ACE_YakB"],
         ["ACE_1470Rnd_127x108_YakB"]
-     ]/*,
+     ],
      [ // 6th heli params
         ["ACE_57mm_FFAR", "ACE_FFARPOD2"],
         ["ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
-     ]*/
+     ]
  ]
 ];
 
