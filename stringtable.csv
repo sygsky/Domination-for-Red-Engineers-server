@@ -1136,6 +1136,7 @@ STR_TSD9_62,soldier was recruited into group,Soldat wurde aufgenommen,солда
 STR_TSD9_63,you have been invited to join group,du wurdest eingeladen,вы были приглашены в группу
 STR_TSD9_64,Collapse all,Keine Details,Свернуть все
 STR_TSD9_65,Expand all,Alle Details,Развернуть все
+STR_TSD9_66, The choice of dialogue , Dialog auswählen ," Выбор диалога "
 //-----------------------------------------------------------------------------
 
 STR_MIS_1,"Mobile Respawn","Mobile Respawn","Мобильный респаун"

@@ -213,7 +213,7 @@ class TSD9_FullBackgroundFrame: TSD9_RscFrame
 	w = 1.0;
 	h = 1.0;
 
-	text = " Выбор диалога ";
+	text = $STR_TSD9_66;
 };
 //-------------------------------------
 class TSD9_Caption: TSD9_RscText
