@@ -23,6 +23,7 @@ current_mission_index = side_missions_random select current_mission_counter;
 // mission execured counter, at the start == 0
 current_mission_counter = current_mission_counter + 1;
 
+// Arrays for SM units and vehicles
 extra_mission_remover_array = [];
 extra_mission_vehicle_remover_array = [];
 

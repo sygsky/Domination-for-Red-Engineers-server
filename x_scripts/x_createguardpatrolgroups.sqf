@@ -287,6 +287,7 @@ else {
 //  inform about observer absence
 //	hint localize "x_scripts\x_createguardpatrolgroups.sqf: no_more_observers = true";
 	["msg_to_user", "*", [["STR_SYS_316_1"]], 0, 30, 0] call XSendNetStartScriptClient; // not print message as title text, only as chat
+	no_more_observers = false; // skip observers only for one town
 };
 
 [_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a)medic BMP  or b)super-reammo or с)radio-tower etc

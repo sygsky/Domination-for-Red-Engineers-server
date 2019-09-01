@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_missions\common\x_sidecora.sqf
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"

@@ -25,7 +25,7 @@ _position = position _aunit;
 
 _isruin = (if (_aunit isKindOf "House") then {true} else {false});
 
-sleep (30 + (random 20)); // remove ruines after 40 seconds timeout
+sleep (60 + (random 20)); // remove ruines after 70 seconds timeout
 
 if (_isruin) then {
 	_ruin = nearestObject [_position, "Ruins"];
