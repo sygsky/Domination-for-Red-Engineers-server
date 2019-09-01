@@ -21,6 +21,8 @@ _aunit removeAllEventHandlers "damage";
 _aunit removeAllEventHandlers "getin";
 _aunit removeAllEventHandlers "getout";
 _aunit removeAllEventHandlers "killed";
+_aunit removeAllEventHandlers "hit";
+
 _position = position _aunit;
 
 _isruin = (if (_aunit isKindOf "House") then {true} else {false});
