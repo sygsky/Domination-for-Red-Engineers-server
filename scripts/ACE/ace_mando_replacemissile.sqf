@@ -64,7 +64,7 @@ _rocketJavelin  =
     "",    // smokescript
     "",    // soundrsc
     29,    // sounddur
-    16, //8,     // endurance 14th
+    16,    //8,     // endurance 14th
     false, // 9 terrainavoidance
     1,     // 10 updatefreq
     0,     // delayinit
