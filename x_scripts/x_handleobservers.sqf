@@ -97,7 +97,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
                                 _cnt,
-                                [_enemy, "from %1 %2 m. to %3", 10] call SYG_MsgOnPosE,
+                                [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist
                             ];
 
