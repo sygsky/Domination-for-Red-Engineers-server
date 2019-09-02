@@ -29,7 +29,8 @@ _makeNameTarget = {
 };
 
 _makeNameObject = {
-    _name = "<object>";
+    private ["_name"];
+    _name = "<obj>"; // default value
     if ( _this isKindOf "CAManBase" ) exitWith
     {
         if ( isPlayer _this) then {_name = name _this }
@@ -263,7 +264,7 @@ if ( local _shooter ) then
             case 1: {
                 _mode = _shooter getVariable "mando_javelin_mode";
                 if (isNil "_mode") then { _mode = 0; };
-                hint localize format["+++ MANDO Javelin mode %1", _mode];
+                // hint localize format["+++ MANDO Javelin mode %1", _mode];
                 if (_mode == 0) then {_ra call _applyJavelin0;}
                 else {_ra call _applyJavelin1;};
             };
@@ -340,7 +341,7 @@ _ra select 26
 
 _name  = call _makeNameShooter;
 _name1 = call _makeNameTarget;
-
+//  2019/09/03,  0:44:32 String +++ MANDO Missile: from Rokse [LT](ACE_Mi17_MG).ACE_FIM92round -> Rokse [LT](ACE_Mi17_MG) dmg 0.86, h 130 d 1425 spd -47, near Terra Marismo not found
 hint localize format[ "+++ MANDO Missile: from %1.%2 -> %3 dmg %4, h %5 d %6 spd %7, near %8",
     _name, _type, _name1,  (round((damage _target)*100))/100, round((getPos _target) select 2),
     round(_target distance _shooter),

@@ -357,9 +357,10 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			sleep 0.01;
 		} forEach crew _vehicle;
 		[_heli_type, _vehicle] call _addToClean;
-		_vehicle flyInHeight (_flyby_height + (random _flyby_height));
+		_flyHeight = _flight_height + (random _flight_random);
+		_vehicle flyInHeight _flyHeight;
 #ifdef __PRINT__	
-	hint localize format["x_airki.sqf[%3]: %1 created to patrol town %2 at pos %4",_heli_type, _dummy select 1, _type, _pos];
+	hint localize format["x_airki.sqf[%3]: %1 created to patrol town %2 at pos %4 h %5",_heli_type, _dummy select 1, _type, _pos, _flyHeight ];
 #endif	
 		sleep 0.01;
 	};
