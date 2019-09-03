@@ -56,7 +56,7 @@ STR_DANGER_NUM,4,4,4
 STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plotzlich lauft Ihnen am Rucken ein kalter schweis runter...","Внезапно по вашей спине потекли струйки холодного пота..."
 STR_DANGER_1,"Suddenly you felt terrible ...","Plotzlich und unerwartet spuren Sie ein angst gefuhl...","Вдруг вам стало жутко..."
 STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plotzlich verstehen Sie das es Ihr letzter gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
-STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вам чувствуете, что за вами следит холодный злобный взгляд..."
+STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вдруг Вы осознаёте, что за вами следит холодный злобный взгляд..."
 
 STR_SYS_2,"MG nest","MG-Nest","Пул.гнездо"
 STR_SYS_02,"MG %1", "MG %1", "Пул. %1"
