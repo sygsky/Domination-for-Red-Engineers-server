@@ -64,13 +64,23 @@ while {true} do {
 				    {
     				    _vec say "APC_GetIn";
 				    };
+                    if ( _vec isKindOf "M113" || _vec isKindOf "Vulcan" || _vec isKindOf "StrykerBase" ) then
+                    {
+                        _indexsb = _indexsb - 1; // Entering enemy vehicle requires a lower rank
+                    };
 					if (_index < _indexsb) then {
 						_not_allowed = true;
 						_needed_rank = (_vrs select 0);
 					};
 				} else {
 					if (_vec isKindOf "Tank") then {
+#ifdef __ACE__
 					    _vec say "Tank_GetIn";
+#endif
+                        if (_veh isKindOf "M1Abrams" || _veh isKindOf "ACE_M60" || _veh isKindOf "ACE_M2A1") then
+                        {
+                            _indexta = _indexta - 1; // Entering enemy vehicle requires a lower rank
+                        };
 						if (_index < _indexta) then {
 							_not_allowed = true;
 							_needed_rank = (_vrs select 1);
@@ -80,16 +90,22 @@ while {true} do {
 			} else {
 				if (_vec isKindOf "Air") then {
 					if (_vec isKindOf "Helicopter" && !(_vec isKindOf "ParachuteBase")) then {
-						if (_vec isKindOf "AH6" || _vec isKindOf "ACE_Mi17" ) then {
-							if (_index < _indexta) then {
-								_not_allowed = true;
-								_needed_rank = (_vrs select 1);
+						if (_vec isKindOf "AH6" || _vec isKindOf "ACE_Mi17" || _veh isKindOf "UH60MG") then {
+    						if (_vec isKindOf "ACE_Mi17" && (_index < _indexta)) then { // always allowed to enter into "AH6" descendants
+                                _not_allowed = true;
+                                _needed_rank = (_vrs select 1);
 							};
 						} else {
-							if (_index < _indexheli) then {
-								_not_allowed = true;
-								_needed_rank = (_vrs select 2);
-							};
+						    //big heli are here
+	                        // Western heli allowed to enter for any rank drivers
+	                        if ( !(_vec isKindof "AH1W" || _veh isKindOf "ACE_AH64_AGM_HE" || _veh isKindOf "UH60MG") || (_role != "Driver") ) then
+	                        { // follow check for not western helicopter only
+                                if (_index < _indexheli) then
+                                {
+                                    _not_allowed = true;
+                                    _needed_rank = (_vrs select 2);
+                                };
+	                        };
 						};
 					} else {
 						if (_vec isKindOf "Plane" && (typeOf _vec != "RAS_Parachute")) then {
