@@ -56,7 +56,7 @@ STR_DANGER_NUM,4,4,4
 STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plotzlich lauft Ihnen am Rucken ein kalter schweis runter...","Внезапно по вашей спине потекли струйки холодного пота..."
 STR_DANGER_1,"Suddenly you felt terrible ...","Plotzlich und unerwartet spuren Sie ein angst gefuhl...","Вдруг вам стало жутко..."
 STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plotzlich verstehen Sie das es Ihr letzter gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
-STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вам чувствуете, что за вами следит холодный злобный взгляд..."
+STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вдруг Вы осознаёте, что за вами следит холодный злобный взгляд..."
 
 STR_SYS_2,"MG nest","MG-Nest","Пул.гнездо"
 STR_SYS_02,"MG %1", "MG %1", "Пул. %1"
@@ -566,7 +566,7 @@ STR_SYS_312,"On the East Side Bagango two antenna are detected. One is used by t
 STR_SYS_313,"Good job! Radio antenna destroyed.","Auftrag ausgeführt! Radio Antenne zerstört.","Задание выполнено! Радиомачта уничтожена."
 STR_SYS_314,"There is a radio tower in a farm west of Bagango (south from Carmen). This is one of the many radio towers that the enemy uses to communicate with its troops. Simple task, destroy it.","Es ist ein Funkturm in einer farm westlich von Bagango. Dies ist einer der vielen Radiosendern, dass der Feind verwendet, um die Kommunikation mit seinen Truppen. Einfache Aufgabe, es zu zerstören.","На ферме к западу от Bagango, и к югу от Carmen, находится радиовышка. Враг использует ее для связи с силами коллаборационистов. Уничтожьте ее."
 
-STR_SYS_316_1,"All artillery guns are down. No artillery observers will appear anymore.","Alle Artilleriegeschütze sind unten. Es werden keine artilleriebeobachter mehr erscheinen.","Все артиллерийские орудия уничтожены. Корректировщики исчезли!"
+STR_SYS_316_1,"All artillery guns are down. No artillery observers will appear now. But they can appear later","Alle Artilleriegeschütze sind unten. Keine artilleriebeobachter werden jetzt erscheinen. Aber Sie können später wieder auftauchen","Все артиллерийские орудия уничтожены. Корректировщики исчезли! Но они могут вернуться!"
 STR_SYS_317,"Radiotower","Funkturm","Телемачта"
 STR_SYS_318,"There is a transformer station in Tlaloc. The enemy uses it to for some experiments in a laboratory in Carmen. Simple task, destroy it.","Es ist eine Trafo-station im Tlaloc. Der Feind verwendet es für einige Experimente in einem Labor in Carmen. Einfache Aufgabe, es zu zerstören.","По данным разведки, где-то в Carmen расположена вражеская секретная научная лаборатория. Выша задача уничтожить трансформаторную подстанцию в Tlaloc, тем самым саботировать работу лаборатории."
 STR_SYS_318_1,"Good job. The transformer station is down.","Gute Arbeit. Die Trafo-station ist ausgefallen.","Задание выполнено! Трансформаторная подстанция уничтожена."
@@ -819,10 +819,10 @@ STR_AI_5,"Recruit Sniper","Rekrutieren Sniper","Призвать снайпер�
 STR_AI_6,"Recruit AA Soldier","Rekrutieren AA-Soldat","Призвать оператора ПВО"
 STR_AI_7,"Recruit Specop","Rekrutieren Specop","Призвать в спецназ"
 // STR_AI_7_1,"Recruit The Mil. Nurse","Rekrutieren Sie eine militarkrankenschwester","Призвать санитарку"
-STR_AI_8,"Dismiss AI","Entlassen AI","Демобилизовать всех"
+STR_AI_8,"Dismiss AI","Entlassen KI","Демобилизовать всех"
 STR_AI_9,"All AI soldiers dismissed !!! Points returned %1","Alle KI-Soldaten entlassen !!! Punkte returned %1","Все местные бойцы демобилизованы !!! Возвращено очков: %1"
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
-STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für AI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
+STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für KI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
@@ -1136,6 +1136,7 @@ STR_TSD9_62,soldier was recruited into group,Soldat wurde aufgenommen,солда
 STR_TSD9_63,you have been invited to join group,du wurdest eingeladen,вы были приглашены в группу
 STR_TSD9_64,Collapse all,Keine Details,Свернуть все
 STR_TSD9_65,Expand all,Alle Details,Развернуть все
+STR_TSD9_66, The choice of dialogue , Dialog auswählen ," Выбор диалога "
 //-----------------------------------------------------------------------------
 
 STR_MIS_1,"Mobile Respawn","Mobile Respawn","Мобильный респаун"

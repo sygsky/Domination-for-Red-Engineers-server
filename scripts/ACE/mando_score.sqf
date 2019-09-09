@@ -1,4 +1,4 @@
-// Air 5, Car 2, Tank 3, Boat 3, Static 3
+// Air 5, Car 2, Tank 3, Boat 1, Static 1
 
 
 // Code that is executed by missile warhead scripts to add score to players firing missiles.
@@ -29,7 +29,7 @@ if (damage _target > 0.9) then
       {
          if (_classtarget isKindOf "Tank") then
          {
-            _score = 1;
+            _score = 3;
          }
          else
          {
@@ -85,20 +85,14 @@ if (damage _target > 0.9) then
 //   titleText[format["T:%1, S:%2, L:%3, C:%4, S:%5",_target, _side, _launcher, _cost, _score], "PLAIN"];
 
 
-   for [{_i=0},{_i < (count _crew)},{_i=_i+1}] do
-   {
-      _unit = _crew select _i;
-      if (alive _unit) then
+    {
+      if (alive _x) then
       {
-         if (isPlayer _unit) then 
+         if (isPlayer _x) then
          {
-            _unit addScore _score;
-         };
-  
-         if ((local _unit) && (isPlayer _unit)) then
-         {
-            _unit addRating _rating;
+            _x addScore _score;
+             if (local _x) then  { _x addRating _rating; };
          };
       };
-   };
+    } forEach _crew;
 };

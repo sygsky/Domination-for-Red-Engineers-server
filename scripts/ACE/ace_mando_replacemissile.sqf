@@ -6,10 +6,9 @@ DO NOT EXECUTE THIS SCRIPT MANUALLY
 
 You may add here more missile types to be replaced by mando ones, as well as change the parameters of already replaced ArmA missile types.
 
-+++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased twice for Javelins and Stringers
++++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased twice for Javelins (500 m) and Stringers (5000 m)
 
 */
-
 
 private [
         "_target", "_type", "_shooter", "_missile", "_vel", "_dir", "_up", "_launcher", "_missilebody", 
@@ -22,42 +21,31 @@ private [
         ];
 
 _makeNameShooter = {
-    _name = "<shooter>";
-    if ( _shooter isKindOf "CAManBase" ) exitWith
-    {
-        if ( isPlayer _shooter) then {_name = name _shooter; }
-        else { _name = typeOf _shooter; };
-         _name
-    };
-    _name = typeOf _shooter;
-    if ( (count crew _shooter) == 1) then
-    {
-        if ( isPlayer((crew _shooter) select 0)) exitWith {_name = format["%1(%2)",name ((crew _shooter) select 0), _name]};
-    }
-    else
-    {
-        if (isPlayer (effectiveCommander _shooter)) then {_name = format["%1(%2)",name (effectiveCommander _shooter), _name] };
-    };
-    _name
+    _shooter call _makeNameObject
 };
 
 _makeNameTarget = {
-    _name = "<target>";
-    if ( _target isKindOf "CAManBase" ) exitWith
+    _target call _makeNameObject
+};
+
+_makeNameObject = {
+    private ["_name"];
+    _name = "<obj>"; // default value
+    if ( _this isKindOf "CAManBase" ) exitWith
     {
-        if ( isPlayer _target) then {_name = name _target }
-        else { _name = typeOf _target; };
+        if ( isPlayer _this) then {_name = name _this }
+        else { _name = typeOf _this; };
         _name
     };
-    _name = typeOf _target;
 
-    if ( (count crew _target) == 1) then
+    _name = typeOf _this;
+    if ( (count crew _this) == 1) then
     {
-        if ( isPlayer((crew _target) select 0) ) exitWith {_name = format["%1(%2)",name ((crew _target) select 0), _name]};
+        if ( isPlayer((crew _this) select 0) ) then {_name = format["%1(%2)",name ((crew _this) select 0), _name]};
     }
     else
     {
-        if (isPlayer (effectiveCommander _target)) then {_name = format["%1(%2)",name (effectiveCommander _target), _name] };
+        if (isPlayer (effectiveCommander _this)) then {_name = format["%1(%2)",name (effectiveCommander _this), _name] };
     };
     _name
 };
@@ -77,7 +65,7 @@ _rocketJavelin  =
     "",    // smokescript
     "",    // soundrsc
     29,    // sounddur
-    16, //8,     // endurance 14th
+    16,    //8,     // endurance 14th
     false, // 9 terrainavoidance
     1,     // 10 updatefreq
     0,     // delayinit
@@ -115,7 +103,7 @@ _rocketStinger =
      680,
      175,
      3,
-     3000,
+     5000,
      2,
      50,
      "s\warheads\ace_mando_warhead_stinger.sqf",
@@ -163,7 +151,7 @@ _rocketStrela =
      680,
      175,
      3,
-     3000,
+     5000,
      2,
      50,
      "s\warheads\ace_mando_warhead_strela.sqf",
@@ -276,7 +264,7 @@ if ( local _shooter ) then
             case 1: {
                 _mode = _shooter getVariable "mando_javelin_mode";
                 if (isNil "_mode") then { _mode = 0; };
-                hint localize format["+++ MANDO Javelin mode %1", _mode];
+                // hint localize format["+++ MANDO Javelin mode %1", _mode];
                 if (_mode == 0) then {_ra call _applyJavelin0;}
                 else {_ra call _applyJavelin1;};
             };
@@ -305,7 +293,7 @@ if (!_replaced) exitWith {
     _name  =  call _makeNameShooter;
     _name1 =  call _makeNameTarget;
 
-    hint localize format["+++ MANDO Missile not replaced: from %1, %2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
+    hint localize format["+++ MANDO Missile not replaced: from %1.%2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
         _name,
         _type, _name1, (round((damage _target)*100))/100,
         round(_target distance _shooter),
@@ -353,7 +341,7 @@ _ra select 26
 
 _name  = call _makeNameShooter;
 _name1 = call _makeNameTarget;
-
+//  2019/09/03,  0:44:32 String +++ MANDO Missile: from Rokse [LT](ACE_Mi17_MG).ACE_FIM92round -> Rokse [LT](ACE_Mi17_MG) dmg 0.86, h 130 d 1425 spd -47, near Terra Marismo not found
 hint localize format[ "+++ MANDO Missile: from %1.%2 -> %3 dmg %4, h %5 d %6 spd %7, near %8",
     _name, _type, _name1,  (round((damage _target)*100))/100, round((getPos _target) select 2),
     round(_target distance _shooter),

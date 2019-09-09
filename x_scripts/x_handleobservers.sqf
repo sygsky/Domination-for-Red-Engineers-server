@@ -6,6 +6,7 @@ if (!isServer) exitWith {};
 #include "x_macros.sqf"
 
 #define HIT_RADIOUS 45
+#define MIN_FRIENDLY_COUNT_TO_STRIKE 2
 
 _enemy_ari_available = true;
 _nextaritime = 0;
@@ -45,10 +46,10 @@ _observers = [];
 _observers set [0, {Observer1}];
 _observers set [1, {Observer2}];
 _observers set [2, {Observer3}];
-
+hint localize format["+++ x_handleobservers start: nr_observers = %1", nr_observers];
 while { nr_observers > 0 && !target_clear } do {
 	if (X_MP) then {
-	if ((call XPlayersNumber) == 0) then { waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0}; };
+	    if ((call XPlayersNumber) == 0) then { waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0}; };
 	};
 //	__DEBUG_NET("x_handleobservers.sqf",(call XPlayersNumber))
 
@@ -76,24 +77,30 @@ while { nr_observers > 0 && !target_clear } do {
                         _near_targets = [];
                         _vecs = [];
                         _cnt = 0;
-                        if ( count _pos_nearest > 0 ) then {
+                        if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
                             _near_targets = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
                             _vecs         = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
                             // find near units to prevent from attacking with warheads
                             _cnt          =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
-                            _type         = if ( _cnt > 0) then { 2 } else { 1 }; // strike (1) or smoke (2)
+                            _type         = if ( _cnt > MIN_FRIENDLY_COUNT_TO_STRIKE) then { 2 } else { 1 }; // strike (1) or smoke (2)
+
+                            // If enemy is too far no need to strike, do smoking except
+                            _dist = round(_pos_nearest distance _enemy);
+                            if ( (_dist > (HIT_RADIOUS * 2)) && (_type == 1) ) then { _type = 2 }; // smoke except strike
+
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: %1 attacks %2 with %3 (knows %4) dist %5 m., friendly count %6, %7, missed %8 m.",
+                                "+++ x_handleobservers.sqf: %1 attacks ""%2"" with %3 (knows %4) d. %5 m., friendly cnt %6, %7, missed %8 m.",
                                 _observer,
                                 name _enemy,
                                 if (_type == 1) then {"warheads"} else {"smokes"},
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
                                 _cnt,
-                                [_enemy, "from %1 %2 m. to %3", 10] call SYG_MsgOnPosE,
-                                round(_pos_nearest distance _enemy)
+                                [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
+                                _dist
                             ];
+
                             _nextaritime  = time + d_arti_reload_time + (random 20);
                             [_pos_nearest,_type] spawn x_shootari;
                             _enemy_ari_available = false;

@@ -17,7 +17,7 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 SAddObserverKillScores = {
     if (isPlayer (_this select 1) ) then
     {
-        hint localize format["Observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "from %1 %2 m. to %3", 10] call SYG_MsgOnPosE];
+        hint localize format["Observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE];
         ["syg_observer_kill",(_this select 1)] call XSendNetStartScriptClient;
     };
 };
@@ -376,44 +376,47 @@ XCreateInf = {
 	//_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","DIAMOND"];
 	_ret_grps = [];
 	_pos = [];
-	
-	for "_nr" from 1 to 2 do {
-		call compile format ["
-			if (_numbergroups%1 > 0) then {
-				for ""_i"" from 1 to _numbergroups%1 do {
-					while {!can_create_group} do {sleep 0.1 + random (0.2)};
-					_newgroup = [_side] call x_creategroup;
-					_unit_array = [_type%1, _side] call x_getunitliste;
-					if (_radius > 0) then {
-						_pos = [_pos_center, _radius] call XfGetRanPointCircle;
-						while {count _pos == 0} do {
-							_pos = [_pos_center, _radius] call XfGetRanPointCircle;
-							sleep 0.04;
-						};
-					} else {
-						_pos = _pos_center;
-					};
-					_units = [_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
-					sleep 2.045;
-					_leader = leader _newgroup;
-					_leader setRank ""LIEUTENANT"";
-					_newgroup allowFleeing 0;
-					if (!_do_patrol) then {
-						_newgroup setCombatMode ""YELLOW"";
-						_newgroup setFormation (d_gwp_formations call XfRandomArrayVal);
-						_newgroup setFormDir (floor random 360);
-						_newgroup setSpeedMode ""NORMAL"";
-					};
-					_ret_grps = _ret_grps + [_newgroup];
-					_grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0,[_pos_center,_radius],[],-1,0,[],50 + (random 100),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
-					_grp_array execVM ""x_scripts\x_groupsm.sqf"";
-					{extra_mission_remover_array = extra_mission_remover_array + [_x]} foreach _units;
-					sleep 2.011;
-				};
-			};
-		",_nr];
+
+    // main array of vehicle types and numbers of
+    _arr = [ [ _numbergroups1, _type1 ], [ _numbergroups2, _type2 ]];
+	{
+        _grpArr = _x; // group description array
+        // (_grpArr select 0) is number of vehicles in group
+        // (_grpArr select 1) is type of units in group (basic, specops etc)
+        if ((_grpArr select 0) > 0) then {
+            for "_i" from 1 to (_grpArr select 0) do {
+                while {!can_create_group} do {sleep (0.1 + (random 0.2))};
+                _newgroup = [_side] call x_creategroup;
+                _unit_array = [(_grpArr select 1), _side] call x_getunitliste;
+                if (_radius > 0) then {
+                    _pos = [_pos_center, _radius] call XfGetRanPointCircle;
+                    while {count _pos == 0} do {
+                        _pos = [_pos_center, _radius] call XfGetRanPointCircle;
+                        sleep 0.04;
+                    };
+                } else {
+                    _pos = _pos_center;
+                };
+                _units = [_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
+                sleep 2.045;
+                _leader = leader _newgroup;
+                _leader setRank "LIEUTENANT";
+                _newgroup allowFleeing 0;
+                if (!_do_patrol) then {
+                    _newgroup setCombatMode "YELLOW";
+                    _newgroup setFormation (d_gwp_formations call XfRandomArrayVal);
+                    _newgroup setFormDir (floor random 360);
+                    _newgroup setSpeedMode "NORMAL";
+                };
+                _ret_grps = _ret_grps + [_newgroup];
+                _grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0,[_pos_center,_radius],[],-1,0,[],50 + (random 100),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
+                _grp_array execVM "x_scripts\x_groupsm.sqf";
+                {extra_mission_remover_array = extra_mission_remover_array + [_x]} foreach _units;
+                sleep 2.011;
+            };
+        };
 		sleep 2.123;
-	};
+	} forEach _arr;
 	_ret_grps
 };
 
@@ -449,7 +452,7 @@ XCreateArmor = {
 	_arr = [ [ _numbergroups1, _type1 ],[ _numbergroups2, _type2 ],[_numbergroups3, _type3 ] ];
 //	_arr = [ [ _this select 1, _this select 0 ],[ _this select 3, _this select 2 ],[ _this select 5, _this select 4 ] ];
 
-	_numvehicles = _this select 7;
+	_numvehicles = _this select 7; // number of vehicles in separatу group
 	_radius      = _this select 8;
 	_do_patrol   = (if (count _this == 10) then {_this select 9} else {false});
 	if (_radius < 50) then {_do_patrol = false;};
@@ -477,7 +480,7 @@ XCreateArmor = {
                 } else {
                     _pos = _pos_center;
                 };
-                _unit_array = [(_grpArr select 1), _side] call x_getunitliste; // (_grpArr select 0) is type of vehicle
+                _unit_array = [(_grpArr select 1), _side] call x_getunitliste; // (_grpArr select 1) is type of vehicle
                 _vehicles = [_numvehicles, _pos, (_unit_array select 2), (_unit_array select 1), _newgroup, 0,-1.111] call x_makevgroup;
                 extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _vehicles;
                 {

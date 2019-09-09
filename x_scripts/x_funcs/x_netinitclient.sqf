@@ -329,6 +329,7 @@ XHandleNetStartScriptClient = {
 			} else {
 				hint localize "STR_SYS_41"/* "All enemy spotters are killed..." */;
 			};
+			playSound "no_more_waiting";
 		};
 		case "o_arti": {
 			(_this select 1) spawn Xoartimsg;
@@ -761,6 +762,7 @@ XHandleNetStartScriptClient = {
                 {
                     player addScore _score;
                     format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
+                    ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptServer;
                     playSound "no_more_waiting";
                 };
             };

@@ -2606,7 +2606,7 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_64Rnd_9x18_B_Bizon", 10];
 		_this addMagazineCargo ["ACE_10Rnd_9x39_SB_VSS",  10];
  */
-		_this addMagazineCargo ["ACE_45Rnd_545x39_BT_AK",  5];
+		_this addMagazineCargo ["ACE_45Rnd_545x39_BT_AK",  15];
 		_this addMagazineCargo ["ACE_100Rnd_762x54_BT_PK", 3];
 		_this addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",  5];
 		_this addMagazineCargo ["ACE_20Rnd_9x39_B_VAL",    5];
