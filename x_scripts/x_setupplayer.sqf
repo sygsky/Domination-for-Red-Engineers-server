@@ -1771,11 +1771,13 @@ player call SYG_handlePlayerDammage; // handle hit events
         hint localize format["x_setupserver.sqf:  GRU map object not detected near pos %1", _pos];
     };
     // make the load on the Mi-17 less
+    _cnt = 0;
     {
         [_x,2] call SYG_setHeliParaCargo; // TODO
         sleep 0.05;
-    }    forEach [	ch1, ch2, ch3, ch4];
-    //hint localize format["+++ SYG_setHeliParaCargo called for all 4 Mi-17 at base"];
+        _cnt = _cnt + 1;
+    }    forEach [	HR1, HR2, HR3, HR4];
+    hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
 };
 
 #ifdef __MISSION_START__
