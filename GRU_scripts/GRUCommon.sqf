@@ -107,7 +107,7 @@ GRU_mainTaskDescription = {
     If called from client computer, message if sent to server
     if called on serveк computer, scores are checked and available information sent ot user
 */
-GRU_specialScores = {
+GRU_SpecialScores = {
     if (!X_CLIENT) then
     {
         // todo: check for scores

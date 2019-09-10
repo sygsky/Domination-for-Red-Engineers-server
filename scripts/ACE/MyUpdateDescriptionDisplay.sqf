@@ -3,7 +3,7 @@
 // Now any magazine with same name is displayed once in the whole list
 //
 #include "\ace_sys_ruck\h\script_RscDisplayGear_Defines.hpp"
-private["_disp","_ctrl","_conf","_typeNum","_confPDM","_confEUM","_confEUW","_isPDM","_isWeapon","_isMagazine","_displayName","_magazines","_packSize","_count","_velocity","_weight","_size"];
+private["_disp","_ctrl","_conf","_typeNum","_confPDM","_confEUM","_confEUW","_isPDM","_confMag","_isWeapon","_isMagazine","_displayName","_magazines","_packSize","_count","_velocity","_weight","_size","_magArr"];
 _disp = _this select 0;
 _conf = _this select 1;
 _ctrl = _disp displayCtrl ACE_DESCRIPTION_IDC;
@@ -81,6 +81,8 @@ if (isText(_confDescription)) then
 
 _packSize = "";
 _magazines = "";
+_confMag = configFile >> "CfgMagazines";
+_magArr = []; // array of unique magaizine description
 if (!_isPDM) then
 {
 	private["_confPackSize"];
@@ -92,15 +94,16 @@ if (!_isPDM) then
 		if (_typeNum != 4096) then
 		{
 			private["_confMagazines"];
-			_confMagazines = _confEUW >> "magazines";
+			_confMagazines = _confEUW >> "magazines"; // process magazines placed in the weapon class itself
 			if (isArray(_confMagazines)) then
 			{
-				private["_magArray","_magCount","_confMag", "_magDescr", "_magArr"];
-				_confMag = configFile >> "CfgMagazines";
+				private["_magArray","_magCount", "_magDescr"];
+				//_confMag = configFile >> "CfgMagazines";
 				_magArray = getArray(_confMagazines);
 				_magCount = count _magArray;
+			    //hint localize format["--- Weapon %1: mag count %2", _displayName, _magCount];
 				if (_magCount > 0) then { _magazines = getText(_confMag >> (_magArray select 0) >> "displayName"); };
-				_magArr = [_magazines]; // array of already described mags
+				_magArr = [_magazines]; // // store 1st known magazine display name
 				for "_x" from 1 to _magCount step 1 do
 				{
 				    _magDescr = getText(_confMag >> (_magArray select _x) >> "displayName");
@@ -110,10 +113,51 @@ if (!_isPDM) then
     				    _magArr = _magArr + [_magDescr];
 				    };
 				};
-				_magazines = format["<t size = '1.35'><br/>%1<br/></t><t size = '1'>%2<br/></t>",localize "STR_LIB_INFO_MAGAZINE",_magazines];
-			}
-		}
-	}
+			};
+			// process magazines from muzzles of weapon class if available
+			_muzzles = _confEUW >> "muzzles";
+			if (isArray(_muzzles)) then
+			{
+			    _muzzleArray = getArray(_muzzles);
+			    _muzzleCount = count _muzzleArray;
+			    // hint localize format["--- Weapon %1: muzzleCount = %2", _displayName, _muzzleCount];
+			    for "_i" from 0 to _muzzleCount - 1 do
+			    {
+                    // read found muzzle class if present and try to find magazines in it
+      			    _confMagazines = _confEUW >> (_muzzleArray select _i) >> "magazines";
+                    if (isArray(_confMagazines)) then
+                    {
+                        private["_magArray","_magCount","_magDescr"];
+                        _magArray = getArray(_confMagazines);
+                        _magCount = count _magArray;
+                        if (_magCount > 0) then // still no one magazine is in unique array
+                        {
+                            _magDescr = getText(_confMag >> (_magArray select 0) >> "displayName");
+                            if ( _magazines != "") then
+                            {
+                                _magazines = format["%1, %2",_magazines, _magDescr];
+                            }
+                            else
+                            {
+                                _magazines = _magDescr;
+                            };
+                            _magArr = _magArr + [_magDescr]; // remember 1st known magazine display name
+                        };
+                        for "_x" from 1 to _magCount step 1 do
+                        {
+                            _magDescr = getText(_confMag >> (_magArray select _x) >> "displayName");
+                            if ( !(_magDescr in _magArr) ) then
+                            {
+                                _magazines = format["%1, %2",_magazines, _magDescr];
+                                _magArr = _magArr + [_magDescr];
+                            };
+                        };
+                    };
+			    };
+			};
+    		_magazines = format["<t size = '1.35'><br/>%1<br/></t><t size = '1'>%2<br/></t>",localize "STR_LIB_INFO_MAGAZINE",_magazines];
+		}//else {hint localize "--- Weapon Display: _typeNum == 4096"}
+	};
 };
 
 _count = "";
@@ -140,4 +184,32 @@ if (isNumber(_confSize)) then { _size = format["%1 %2 %3<br/>",localize "STR_ACE
 _statistics = format["%1%2%3%4%5",_velocity,_count,_packSize,_weight,_size];
 if (_statistics != "") then { _statistics = format["<t size = '1.35'><br/><br/>%1<br/></t><t size = '1'>%2</t>",localize "STR_LIB_LABEL_STATISTICS",_statistics]; };
 
-_ctrl ctrlSetStructuredText parseText format["<t color = '#ffffff'><t font = 'Zeppelin32'><t size = '1.35'><t align = 'center'>%1</t><br/><br/>%2<br/></t><t size = '1'>%3</t></t>%4%5</t></t>",_displayName,localize "STR_LIB_LABEL_DESCRIPTION",_description,_statistics,_magazines];
+_params = "";
+if ( _isMagazine ) then
+{
+    _params = ">";
+    // add more info on magazine
+    _confParam = _conf >> "ammo";
+    if (isText(_confParam)) then
+    {
+        _confAmmo = getText(_confParam);
+        _param = format["> "];
+        _confParam = configFile >> "CfgAmmo" >> _confAmmo >> "hit";
+        if (isNumber(_confParam) &&  getNumber(_confParam) >= 0.1) then // if less - it is dummy magazine (bandage etc)
+        {
+            if (isNumber(_confParam) ) then { _params = format[ localize "STR_ACE_HIT", _params,  getNumber(_confParam) ]; };
+            _confParam = configFile >> "CfgAmmo" >> _confAmmo >> "indirectHit";
+            if (isNumber(_confParam) && getNumber(_confParam) > 0) then { _params = format[  localize "STR_ACE_INDIRECT_HIT", _params, getNumber(_confParam) ]; };
+            _confParam = configFile >> "CfgAmmo" >> _confAmmo >> "indirectHitRange";
+            if (isNumber(_confParam) && getNumber(_confParam) > 0) then { _params = format[ localize "STR_ACE_INDIRECT_HIT_RANGE", _params, getNumber(_confParam) ]; };
+        }
+    };
+};
+
+_ctrl ctrlSetStructuredText parseText format["<t color = '#ffffff'><t font = 'Zeppelin32'><t size = '1.35'><t align = 'center'>%1</t><br/><br/>%2<br/></t><t size = '1'>%3</t></t>%4%5%6</t></t>",
+_displayName,
+localize "STR_LIB_LABEL_DESCRIPTION",
+_description,
+_statistics,
+_magazines,
+_params];

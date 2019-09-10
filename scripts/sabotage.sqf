@@ -286,7 +286,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				sleep 0.2;
 
 				// bombing unit, position to bomb, return position (now current), debug on, user bomb name
-				if (_debug ) then { player globalChat (format["sabotage.sqf: Run bombing script with  unit %1 for obj at pos %2 on distance %3", name _unit, getPos _obj, _obj distance _shell_unit]); };
+				if (_debug ) then { player globalChat (format["sabotage.sqf: Run bombing script with  unit %1 for obj at pos %2 on distance %3", name _unit, getPos _obj, round(_obj distance _shell_unit)]); };
 
 				 // last boolean is (true) to put bombs to the center or (false) not 
                 _obj_prev_dmg = damage _obj; // current damage of targeted service
@@ -323,7 +323,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 					terminate _bombScript;
 					sleep 1;
 #ifdef __PRINT__
-					hint localize format["sabotage.sqf: DropScrip terminated after %1 seconds waiting", round(_timeout - _time) ];
+					hint localize format["sabotage.sqf: DropScrip terminated after %1 seconds waiting, shell_unit dist %2", round(_timeout - _time), round(_shell_unit distance  _obj)];
 #endif	
 				};
                 if ( damage _obj > _obj_prev_dmg ) then

@@ -17,7 +17,7 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 SAddObserverKillScores = {
     if (isPlayer (_this select 1) ) then
     {
-        hint localize format["Observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "from %1 %2 m. to %3", 10] call SYG_MsgOnPosE];
+        hint localize format["Observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE];
         ["syg_observer_kill",(_this select 1)] call XSendNetStartScriptClient;
     };
 };
@@ -320,7 +320,7 @@ x_makevgroup = {
 		if ((typeOf _vehicle) in d_enemy_aa_vehicle) then {
 			if ((random 100) < 33) then {
 				[_vehicle] spawn {
-					sleep 1 + random 3;
+					sleep (1 + (random 3));
 					[(_this select 0), 1, ["Air"], 24, 500, 2000, 12, [0,0,0,3], 360, 0, [WEST, sideEnemy], true, false, true, true, 45]exec"mando_missiles\units\attackers\mando_patriot.sqs";
 				};
 			};
@@ -356,7 +356,7 @@ x_makemgroup = {
         _one_unit setUnitAbility ((d_skill_array select 0) + (random (d_skill_array select 1)));
         _ret = _ret + [_one_unit];
         sleep 0.012
-	} foreach _unitliste;
+	} forEach _unitliste;
 	_ret
 };
 
@@ -376,71 +376,140 @@ XCreateInf = {
 	//_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","DIAMOND"];
 	_ret_grps = [];
 	_pos = [];
-	
-	for "_nr" from 1 to 2 do {
-		call compile format ["
-			if (_numbergroups%1 > 0) then {
-				for ""_i"" from 1 to _numbergroups%1 do {
-					while {!can_create_group} do {sleep 0.1 + random (0.2)};
-					_newgroup = [_side] call x_creategroup;
-					_unit_array = [_type%1, _side] call x_getunitliste;
-					if (_radius > 0) then {
-						_pos = [_pos_center, _radius] call XfGetRanPointCircle;
-						while {count _pos == 0} do {
-							_pos = [_pos_center, _radius] call XfGetRanPointCircle;
-							sleep 0.04;
-						};
-					} else {
-						_pos = _pos_center;
-					};
-					_units = [_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
-					sleep 2.045;
-					_leader = leader _newgroup;
-					_leader setRank ""LIEUTENANT"";
-					_newgroup allowFleeing 0;
-					if (!_do_patrol) then {
-						_newgroup setCombatMode ""YELLOW"";
-						_newgroup setFormation (d_gwp_formations call XfRandomArrayVal);
-						_newgroup setFormDir (floor random 360);
-						_newgroup setSpeedMode ""NORMAL"";
-					};
-					_ret_grps = _ret_grps + [_newgroup];
-					_grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0,[_pos_center,_radius],[],-1,0,[],50 + (random 100),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
-					_grp_array execVM ""x_scripts\x_groupsm.sqf"";
-					{extra_mission_remover_array = extra_mission_remover_array + [_x]} foreach _units;
-					sleep 2.011;
-				};
-			};
-		",_nr];
+
+    // main array of vehicle types and numbers of
+    _arr = [ [ _numbergroups1, _type1 ], [ _numbergroups2, _type2 ]];
+	{
+        _grpArr = _x; // group description array
+        // (_grpArr select 0) is number of vehicles in group
+        // (_grpArr select 1) is type of units in group (basic, specops etc)
+        if ((_grpArr select 0) > 0) then {
+            for "_i" from 1 to (_grpArr select 0) do {
+                while {!can_create_group} do {sleep (0.1 + (random 0.2))};
+                _newgroup = [_side] call x_creategroup;
+                _unit_array = [(_grpArr select 1), _side] call x_getunitliste;
+                if (_radius > 0) then {
+                    _pos = [_pos_center, _radius] call XfGetRanPointCircle;
+                    while {count _pos == 0} do {
+                        _pos = [_pos_center, _radius] call XfGetRanPointCircle;
+                        sleep 0.04;
+                    };
+                } else {
+                    _pos = _pos_center;
+                };
+                _units = [_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
+                sleep 2.045;
+                _leader = leader _newgroup;
+                _leader setRank "LIEUTENANT";
+                _newgroup allowFleeing 0;
+                if (!_do_patrol) then {
+                    _newgroup setCombatMode "YELLOW";
+                    _newgroup setFormation (d_gwp_formations call XfRandomArrayVal);
+                    _newgroup setFormDir (floor random 360);
+                    _newgroup setSpeedMode "NORMAL";
+                };
+                _ret_grps = _ret_grps + [_newgroup];
+                _grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0,[_pos_center,_radius],[],-1,0,[],50 + (random 100),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
+                _grp_array execVM "x_scripts\x_groupsm.sqf";
+                {extra_mission_remover_array = extra_mission_remover_array + [_x]} foreach _units;
+                sleep 2.011;
+            };
+        };
 		sleep 2.123;
-	};
+	} forEach _arr;
 	_ret_grps
 };
 
 // Creates group of vehicles for side mission. All vehicles will be automatically removed after SM is finished
+// call as follow: ["shilka", 1, "bmp", 2, "tank", 0, _poss, 1, 200, true] spawn XCreateArmor;
 XCreateArmor = {
-	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_type3", "_numbergroups3", "_pos_center", "_numvehicles", "_radius", "_do_patrol", "_ret_grps", "_side", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_vehicles", "_leader", "_grp_array"];
-	_type1 = _this select 0;
+	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_type3", "_numbergroups3", "_pos_center",
+	"_patrol_area", "_numvehicles", "_radius", "_do_patrol", "_ret_grps", "_side", "_pos", "_nr", "_numbergroups", "_i",
+	 "_newgroup", "_unit_array", "_type", "_vehicles", "_leader", "_grp_array"];
+
+	_type1         = _this select 0;
  	_numbergroups1 = _this select 1;
-	_type2 = _this select 2;
+	_type2         = _this select 2;
 	_numbergroups2 = _this select 3;
-	_type3 = _this select 4;
+	_type3         = _this select 4;
 	_numbergroups3 = _this select 5;
-	_pos_center = _this select 6;
+
+	_pos_center = _this select 6;   // circle (count 2) or rectangle (count 4)
+    _patrol_area = + _pos_center;
+	if ( count _pos_center == 4 ) then // rectangle
+	{
+	    _pos_center = _patrol_area select 0; // select center point as first item in array
+	}
+	else // circle
+	{
+	    _patrol_area = [ _patrol_area, _radius ]; // set patrol area as [ _center_point_pos_arr, _radius ]
+	};
 	_type1 = [_type1, _pos_center] call SYG_camouflageTank;
 	_type2 = [_type2, _pos_center] call SYG_camouflageTank;
 	_type3 = [_type3, _pos_center] call SYG_camouflageTank;
 
-	_numvehicles = _this select 7;
-	_radius = _this select 8;
-	_do_patrol = (if (count _this == 10) then {_this select 9} else {false});
+    // main array of vehicle types and numbers of
+	_arr = [ [ _numbergroups1, _type1 ],[ _numbergroups2, _type2 ],[_numbergroups3, _type3 ] ];
+//	_arr = [ [ _this select 1, _this select 0 ],[ _this select 3, _this select 2 ],[ _this select 5, _this select 4 ] ];
+
+	_numvehicles = _this select 7; // number of vehicles in separatу group
+	_radius      = _this select 8;
+	_do_patrol   = (if (count _this == 10) then {_this select 9} else {false});
 	if (_radius < 50) then {_do_patrol = false;};
 	_ret_grps = [];
 	
 	_side = d_enemy_side;
 	_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","DIAMOND"];
 	_pos = [];
-	
+	//
+	//+++++++++++++++++++++ main loop
+	//
+    {
+        _grpArr = _x; // group description array
+        // (_grpArr select 0) is number of vehicles in group
+        if ((_grpArr select 0) > 0) then {
+            for "_i" from 1 to (_grpArr select 0) do {
+                while {!can_create_group} do {sleep (0.1 + (random (0.2))) };
+                _newgroup = [_side] call x_creategroup;
+                if (_radius > 0) then {
+                    _pos = [_pos_center, _radius] call XfGetRanPointCircle;
+                    while {count _pos == 0} do {
+                        _pos = [_pos_center, _radius] call XfGetRanPointCircle;
+                        sleep 0.04;
+                    };
+                } else {
+                    _pos = _pos_center;
+                };
+                _unit_array = [(_grpArr select 1), _side] call x_getunitliste; // (_grpArr select 1) is type of vehicle
+                _vehicles = [_numvehicles, _pos, (_unit_array select 2), (_unit_array select 1), _newgroup, 0,-1.111] call x_makevgroup;
+                extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _vehicles;
+                {
+                    {
+                        extra_mission_remover_array = extra_mission_remover_array + [_x];
+                        sleep 0.01;
+                    } forEach (crew _x);
+                } forEach _vehicles;
+                sleep 2.011;
+                _vehicles = nil;
+                _leader = leader _newgroup;
+                _leader setRank "LIEUTENANT";
+                _newgroup allowFleeing 0;
+                if (!_do_patrol) then {
+                    _newgroup setCombatMode "YELLOW";
+                    _newgroup setFormation (d_gwp_formations call XfRandomArrayVal);
+                    _newgroup setFormDir (floor random 360);
+                    _newgroup setSpeedMode "NORMAL";
+                };
+                _ret_grps = _ret_grps + [_newgroup];
+                _grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0, _patrol_area, [], -1, 0, [], 300 + (random 50),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
+                _grp_array execVM "x_scripts\x_groupsm.sqf";
+                sleep 2.011;
+            };
+        };
+        sleep 2.123;
+    } forEach _arr; // for each vehicle group create and run patrol procedure on it
+
+/* *
 	for "_nr" from 1 to 3 do {
 		call compile format ["
 			if (_numbergroups%1 > 0) then {
@@ -485,6 +554,7 @@ XCreateArmor = {
 		", _nr];
 		sleep 2.123;
 	};
+* */
 	_ret_grps
 };
 
@@ -514,7 +584,7 @@ XGovernorWP = {
 	_ggrp setCombatMode "YELLOW";
 	_ggrp setFormation ("DIAMOND");
 	_ggrp setFormDir (floor random 360);
-	_ggrp setSpeedMode "NORMAL";
+	_ggrp setSpeedMode "LIMITED";
 	_ggrp setBehaviour "STEALTH";
 };
 
@@ -522,9 +592,9 @@ XAttackWP = {
 	private ["_ggrp","_gtarget_pos","_gwp"];
 	_ggrp = _this select 0;
 	_gtarget_pos = _this select 1;
-	_ggrp setbehaviour "AWARE";
+	_ggrp setBehaviour "AWARE";
 	_gwp = _ggrp addWaypoint [_gtarget_pos,30];
-	_gwp setwaypointtype "SAD";
+	_gwp setWaypointType "SAD";
 	_gwp setWaypointCombatMode "YELLOW";
 	_gwp setWaypointSpeed "FULL";
 };

@@ -116,8 +116,9 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_G36_WPN_SET_SNIPER = ["ACE_G36"];
 	SYG_G36_WPN_SET_SNIPER_SD = [];
 	SYG_G36_MAGS = ["ACE_30Rnd_556x45_B_G36","ACE_30Rnd_556x45_B_G36","ACE_30Rnd_556x45_B_G36","ACE_30Rnd_556x45_B_G36","ACE_30Rnd_556x45_BT_G36", "ACE_100Rnd_556x45_BT_G36", "ACE_100Rnd_556x45_B_G36"];
-	
 	SYG_MG36_WPN_SET = ["ACE_MG36"];
+
+	SYG_G36_WHOLE = SYG_G36_WPN_SET_STD + SYG_G36_WPN_SET_SNIPER;
 	// ---------------------------------------------------------------------------------			
  	// HK416 weapon arrays
 	// std weapon
@@ -193,14 +194,14 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_M14_WPN_SET_STD = ["ACE_M14","ACE_M14_reflex","ACE_M14_nam","ACE_M14_sop","ACE_M14_sop_aim","ACE_M14_sop_cmore", "ACE_M14_sop_eotech"];
 	SYG_M14_WPN_SET_STD_OPTICS = ["ACE_M14_sop_acog_cqb","ACE_M14_wdl_acog_cqb","ACE_M14_sop_elcan_cqb"];
 	// silenced weapon
-	//SYG_M14_WPN_SET_STD_SD =  ["ACE_M14_sopS","ACE_M14_sop_eotechS","ACE_M14_sop_aimS","ACE_M14_sop_cmoreS"];
-	//SYG_M14_WPN_SET_STD_SD_OPTICS =  ["ACE_M14_sop_acogS_cqb","ACE_M14_sop_elcanS_cqb"];
+	SYG_M14_WPN_SET_STD_SD =  ["ACE_M14_sopS","ACE_M14_sop_eotechS","ACE_M14_sop_aimS","ACE_M14_sop_cmoreS"];
+	SYG_M14_WPN_SET_STD_SD_OPTICS =  ["ACE_M14_sop_acogS_cqb","ACE_M14_sop_elcanS_cqb"];
 	// sniper weapon
 	SYG_M14_WPN_SET_SNIPER =  ["ACE_M14_sop_dmr"];
 	// sniper weapon silenced
-	//SYG_M14_WPN_SET_SNIPER_SD =  ["ACE_M14_sop_dmrS"];
+	SYG_M14_WPN_SET_SNIPER_SD =  ["ACE_M14_sop_dmrS"];
 	
-	SYG_M14_WPN_SET_WHOLE = SYG_M14_WPN_SET_STD+SYG_M14_WPN_SET_STD_OPTICS/*+SYG_M14_WPN_SET_STD_SD+SYG_M14_WPN_SET_STD_SD_OPTICS*/+SYG_M14_WPN_SET_SNIPER/*+SYG_M14_WPN_SET_SNIPER_SD*/;
+	SYG_M14_WPN_SET_WHOLE = SYG_M14_WPN_SET_STD+SYG_M14_WPN_SET_STD_OPTICS+SYG_M14_WPN_SET_STD_SD+SYG_M14_WPN_SET_STD_SD_OPTICS+SYG_M14_WPN_SET_SNIPER+SYG_M14_WPN_SET_SNIPER_SD;
 	
 	// mags: ordinal, sniper, silenced, sniper silenced, tracers
 	SYG_M14_MAGS = ["ACE_20Rnd_762x51_B_M14","ACE_20Rnd_762x51_SB_M14", "ACE_20Rnd_762x51_B_M14","ACE_20Rnd_762x51_SB_M14","ACE_20Rnd_762x51_B_M14"];
@@ -1104,20 +1105,15 @@ SYG_rearmGovernor = {
 	if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	if ( _rnd < _prob ) then  // do ordinal rearming
 	{
-		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
+//		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_GLOCK)] + SYG_STD_MEDICAL_SET;
-		if ( _adv_rearm ) then 
-		{
-			switch (floor (random 5)) do
-			{
-				case 0; //{_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS)};
-				case 1: {_wpn = RAR(SYG_SCARH_WPN_SET_STD_OPTICS);};
-				case 2: {_wpn = RAR(SYG_M21_WPN_SET);};
-				case 3; {_wpn = RAR(SYG_M14_WPN_SET_STD_OPTICS);};
-				case 4: {_wpn = "ACE_MG36"; _magnum = 5;};
-			};
-		}
-		else { _wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS); };
+        switch (floor (random 4)) do
+        {
+            case 0;
+            case 1: {_wpn = RAR(SYG_M14_WPN_SET_WHOLE);};
+            case 2: {_wpn = RAR(SYG_G36_WHOLE);};
+            case 3: {"ACE_MG36"; _magnum = 5;};
+        };
 		_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, _magnum],["ACE_SmokeGrenade_Yellow",2]];
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
@@ -2610,7 +2606,7 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_64Rnd_9x18_B_Bizon", 10];
 		_this addMagazineCargo ["ACE_10Rnd_9x39_SB_VSS",  10];
  */
-		_this addMagazineCargo ["ACE_45Rnd_545x39_BT_AK",  5];
+		_this addMagazineCargo ["ACE_45Rnd_545x39_BT_AK",  15];
 		_this addMagazineCargo ["ACE_100Rnd_762x54_BT_PK", 3];
 		_this addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",  5];
 		_this addMagazineCargo ["ACE_20Rnd_9x39_B_VAL",    5];

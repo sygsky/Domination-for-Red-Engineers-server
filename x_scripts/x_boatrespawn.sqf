@@ -24,7 +24,7 @@ hint localize format["x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHECK_DE
 #define DIST_TO_OWN_TO_PLAYER 20
 
 _boats_a = [];
-for "_i" from 1 to 35 do {
+for "_i" from 1 to 40 do { // set max counter to value more or equal max boat index
 	call compile format ["
 	if (!isNil ""boat%1"") then
 	{
@@ -70,8 +70,8 @@ _restore_boat = {
 	_boat = objNull;
 	sleep 0.5;
 	_boat = _type createVehicle [0,0,0];
-	_boat setPos (GET_BOAT_POS(_this));
 	_boat setdir (GET_BOAT_DIR(_this));
+	_boat setPos (GET_BOAT_POS(_this));
 	SET_NEW_BOAT(_this,_boat);
 	CLEAR_CHANGE(_descr);
 #ifdef __DEBUG__

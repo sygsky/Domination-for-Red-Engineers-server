@@ -55,18 +55,13 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 
 // TODO: inform group itself about killer
 _eunit = _this select 1; // killer unit
-if ( !isNull _eunit && _aunit != _eunit) then {
-
-    (group _aunit) reveal _eunit;
-
-    _vehs =  [_aunit , 1000, ["LandVehicles"]] call Syg_findNearestVehicles;
-    {
-        if (alive driver _x) then {
-            (driver _x) reveal _eunit;
-        };
-    }forEach _vehs;
-
-};
+if ( !alive  _eunit ) exitWith{};
+if ( _aunit == _eunit) exitWith {};
+_aunit reveal _eunit;
+_vehs =  [_aunit , 2000, ["LandVehicle","Static"]] call Syg_findNearestVehicles;
+{
+    _x reveal _eunit;
+} forEach _vehs;
 
 
 if (true) exitWith {};

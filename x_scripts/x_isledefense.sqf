@@ -43,44 +43,52 @@ if (!isServer) exitWith {};
 #define DELAY_ON_PATROL_INIT 600
 #define DELAY_RESPAWN_STOPPED 600
 #define DELAY_RESPAWN_KILLED 1800
-#define DELAY_REMOVE_DEAD 240
-#define DELAY_REMOVE_STOPPED 180
-#define DELAY_REMOVE_STUCKED 60
-#define DELAY_VERY_LONG_STOPPED 3600
+#define DELAY_REMOVE_DEAD 240           // delay to remove on dead (all vehicles are empty)
+#define DELAY_REMOVE_STOPPED 180        // delay to be removed
+#define DELAY_REMOVE_STUCKED 60         // delay to check for status stacked
+#define DELAY_VERY_LONG_STOPPED 3600    // delay for check stacked status if enemy is near
 #endif
 
 // show absence with designated probability
 #define SHOW_ABSENCE_PROBABILITY 0.5
 
 #define DELAY_BETWEEN_EACH_PATROL_CHECK (5 + random 5)
-#define DELAY_AFTER_ALL_PATROLS (25 + random 25)
+#define DELAY_BETWEEN_CHECK_LOOP (25 + random 25)
  
 //#define DELAY_FEETMEN_CHECK 120
 #define DELAY_NOT_SET 0
 
 //	[_agrp, _units, _last_pos, _vecs, time, _stat, _grp_array]
-#define PARAM_GROUP 0
-#define PARAM_UNITS 1
-#define PARAM_LAST_POS 2
-#define PARAM_VEHICLES 3
-#define PARAM_TIMESTAMP 4
-#define PARAM_STATUS 5
-#define PARAM_GRP_ARRAY 6
-// type of patrol "HP", "AP" etc
-#define PARAM_TYPE 7
+#define PARAM_GROUP 0       // group itself
+#define PARAM_UNITS 1       // units of group
+#define PARAM_LAST_POS 2    // last position of patrol leader
+#define PARAM_VEHICLES 3    // vehicle of group
+#define PARAM_TIMESTAMP 4   // last timestamp to check about
+#define PARAM_STATUS 5      // state of patrol (normal, stacked, stopped, dead, wait to restore)
+#define PARAM_GRP_ARRAY 6   // group array used by x_groupsm.sqf
+#define PARAM_TYPE 7        // type of patrol "HP", "AP" etc
 
-#define STATUS_NORMAL 0
-#define STATUS_DEAD 1
-#define STATUS_STOPPED 2
-#define STATUS_STOPPED1 3
-#define STATUS_WAIT_RESTORE 4
-#define STATUS_DEAD_WAIT_RESTORE 5
+#define STATUS_NORMAL 0             // normal patrol state
+#define STATUS_DEAD 1               // patrol is dead (killed) after being stoped
+#define STATUS_STOPPED 2            // patrol is stopped
+#define STATUS_STOPPED1 3           // patrol is stopped in chasm
+#define STATUS_WAIT_RESTORE 4       // patrol waits for restore
+#define STATUS_DEAD_WAIT_RESTORE 5  // patrol waits for restore after being killed from player[s]
 
-#define DISTANCE_TO_BE_STOPPED 5
+#define DISTANCE_TO_BE_STOPPED 5    // if patrol not moved atfor this distance during check period, it marked as probably STOPPED
 
 //====================== delay before initial patrol creation ==================
 
 sleep DELAY_BEFORE_SCRIPT_START;
+
+#ifdef __OWN_SIDE_EAST__
+
+// TODO: the closer to the mission finish, the heavier must be patrols
+// some patrol types are more frequently generated
+//                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
+_patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
+
+#endif
 
 //
 //
@@ -119,7 +127,7 @@ _make_isle_grp = {
 #ifdef __SYG_PRINT_ACTIVITY__
 	if ( count _start_point == 0) then
 	{
-		hint localize format["%1 x_isledefense.sqf: _start_point %2 is empty []", call SYG_missionTimeInfoStr, _i + 1];
+		hint localize format["+++ %1 x_isledefense.sqf: _start_point %2 is empty []", call SYG_missionTimeInfoStr, _i + 1];
 	};
 #endif							
 
@@ -129,11 +137,6 @@ _make_isle_grp = {
 	_vecs = [];
 
 #ifdef __OWN_SIDE_EAST__
-// TODO: the closer to the mission finish, the heavier must be patrols
-// some patrol types are more frequently generated
-//                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
-    _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
-
     _type_id      = _patrol_types call XfRandomFloorArray;
     _patrol_type  = _patrol_types select _type_id; // random patrol type selection
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
@@ -209,12 +212,17 @@ _replace_grp =
 	private ["_igrpa","_i"];
 	_i = _this;
 #ifdef __SYG_PRINT_ACTIVITY__
-	hint localize format["%1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
+	hint localize format["+++ %1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
 #endif							
 	_igrpa = argp(SYG_isle_grps, _i);
 	_igrpa call _remove_grp;
+    _igrpa = call _make_isle_grp;
+	SYG_isle_grps set [_i, _igrpa];
 
-	SYG_isle_grps set [_i, call _make_isle_grp];
+	// TODO: mark each vehicle with its patrol group id
+	_vecs  = argp(_igrpa,PARAM_VEHICLES);
+
+	{_x setVariable ["PATROL_ITEM", _i]} forEach _vecs;
 
 #ifdef __DEBUG__
     hint localize format["+++ x_isledefense.sqf: group created"];
@@ -238,7 +246,7 @@ _remove_grp = {
 		_vecs  = argp(_igrpa,PARAM_VEHICLES);
 		_units = argp(_igrpa, PARAM_UNITS);
 #ifdef __SYG_PRINT_ACTIVITY__
-		hint localize format["%1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
+		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
 #endif						
 		
 		// clean vehicles
@@ -259,10 +267,12 @@ _remove_grp = {
 				{
 					// re-assign vehicle to be ordinal ones
 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
-					hint localize format["x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
+					hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
 #endif
 					// put vehicle under system control
 					[_x] call XAddCheckDead;
+					// clean vehicle variables
+					_x setVariable ["PATROL_ITEM", nil];
 				}
 				else // remove all units in vehicles
 				{
@@ -290,7 +300,7 @@ _remove_grp = {
 #ifdef __SYG_PRINT_ACTIVITY__
     _str = "isNull";
     if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
-		hint localize format["x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
+		hint localize format["+++ x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
 #endif
 		// clean units
 #ifdef __SYG_PRINT_ACTIVITY__
@@ -328,7 +338,7 @@ _remove_grp = {
 		}forEach units _igrp;
 		sleep 0.1;
 #ifdef __SYG_PRINT_ACTIVITY__
-        hint localize format["x_isledefense: finish remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
+        hint localize format["+++ x_isledefense: finish remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
 #endif
 
 		_igrp = nil;
@@ -372,7 +382,7 @@ _getFeetmen = {
 					_leader setRank "LIEUTENANT";
 					sleep 0.01;
 #ifdef __SYG_PRINT_ACTIVITY__
-					hint localize format["%4 x_isledefense.sqf: Move leadership from feetman %1 to the crewman %2 (%3)", _x, _leader, typeOf _veh, call SYG_missionTimeInfoStr];
+					hint localize format["+++ %4 x_isledefense.sqf: Move leadership from feetman %1 to the crewman %2 (%3)", _x, _leader, typeOf _veh, call SYG_missionTimeInfoStr];
 #endif									
 				};
 			};
@@ -438,7 +448,7 @@ _utilizeFeetmen = {
 	if ( count _invalid_men > 0 ) then
 	{
 #ifdef __SYG_PRINT_ACTIVITY__
-		hint localize format["%1 x_isledefense.sqf: invalid %2 are killed", call SYG_missionTimeInfoStr, _invalid_men];
+		hint localize format["%+++ 1 x_isledefense.sqf: invalid %2 are killed", call SYG_missionTimeInfoStr, _invalid_men];
 #endif								
 		{ 
 			if ( !isNull _x ) then 
@@ -459,7 +469,7 @@ _utilizeFeetmen = {
 		if ( !isNull _goal_grp ) then // assign all feetmen to this group
 		{
 #ifdef __SYG_PRINT_ACTIVITY__
-			hint localize format["%1 x_isledefense.sqf: %2 joined to a target group %3 (%4 men) at dist %5", call SYG_missionTimeInfoStr, _feetmen, _goal_grp, count units _goal_grp, (_feetmen select 0) distance (leader _goal_grp)];
+			hint localize format["+++ %1 x_isledefense.sqf: %2 joined to a target group %3 (%4 men) at dist %5", call SYG_missionTimeInfoStr, _feetmen, _goal_grp, count units _goal_grp, (_feetmen select 0) distance (leader _goal_grp)];
 #endif								
 			_feetmen join _goal_grp;
 			sleep 0.203;
@@ -474,7 +484,7 @@ _utilizeFeetmen = {
 	if ( count _feetmen > 0) then // kill surplus men on feet
 	{
 #ifdef __SYG_PRINT_ACTIVITY__
-		hint localize format["%1 x_isledefense.sqf: surplus feetmen %2 are killed", call SYG_missionTimeInfoStr,_feetmen];
+		hint localize format["+++ %1 x_isledefense.sqf: surplus feetmen %2 are killed", call SYG_missionTimeInfoStr,_feetmen];
 #endif								
 		{
 			if ( !isNull _x && alive _x ) then { _x setDammage 1.1; sleep 1.1 }; 
@@ -499,14 +509,12 @@ if ( _patrol_cnt > 0) then
 {
     for "_i" from 1 to _patrol_cnt do
     {
-        //_ret = call _make_isle_grp;
-        //SYG_isle_grps = SYG_isle_grps + [_ret];
         SYG_isle_grps = SYG_isle_grps + [[ grpNull, [], [0,0,0], [], time + DELAY_ON_PATROL_INIT * _i, STATUS_WAIT_RESTORE, [] ]]; // initiate new patrols creation after some sequential time-out
         sleep 3.012;
     };
 };
 _dead_patrols = 0; // how many patrols are currently dead
-_show_absence = false; // disable patrol absence message
+_show_absence = false; // disable patrol absence message at start as patrol are still absent
 
 // send info about first patrol on island
 ["msg_to_user","",[["STR_SYS_1146"]],0, 10 + random 10] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
@@ -523,6 +531,7 @@ while { true } do {
 	if ( (time - _time) >= DELAY_RESPAWN_STOPPED ) then // mission returned after first player waiting
 	{
 	    _delta = time - _time;  // how many time mission was sleeping without movement
+	    hint localize format["+++ x_isledefence: after first player respawn patrols timeouts increased by %1 sec.", round(_delta)];
 	    {
 	        _new_timestamp = argp(_x, PARAM_TIMESTAMP) + _delta;
             _x set [PARAM_TIMESTAMP, _new_timestamp]; // increment timestamp to continue same behaviur as before sleep
@@ -598,7 +607,7 @@ while { true } do {
 					_dead_cnt =  ((_dead_patrols max 1) min (_patrol_cnt - 1));
 					_delay = DELAY_RESPAWN_KILLED * _dead_cnt; // delay multiplied by 1..4
 #ifdef	__SYG_ISLEDEFENCE_PRINT_SHORT__
-					hint localize format["x_isledefense.sqf: DEAD GROUP restore delay %1 * %2 = %3", DELAY_RESPAWN_KILLED, _dead_cnt, _delay];
+					hint localize format["+++ x_isledefense.sqf: DEAD GROUP restore delay %1 * %2 = %3", DELAY_RESPAWN_KILLED, _dead_cnt, _delay];
 #endif
 					_igrpa set [PARAM_TIMESTAMP, time + _delay];
 				};
@@ -758,20 +767,20 @@ while { true } do {
 		sleep DELAY_BETWEEN_EACH_PATROL_CHECK;
 	}; // for "_i" from 0 to (count SYG_isle_grps - 1) do
 
-	sleep DELAY_AFTER_ALL_PATROLS;
+	sleep DELAY_BETWEEN_CHECK_LOOP;
 
 	// ==================================== END OF LOOP ON PATROLS ======================================
 		
 #ifdef __SYG_ISLEDEFENCE_PRINT_LONG__
 	// igrpa: [_agrp, _units, [0,0,0], _vecs]
-	hint localize format["x_isledefense.sqf: %1, target town  ""%2"", whole count of x_groupsm %3", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, count groups_west ];
+	hint localize format["+++ x_isledefense.sqf: %1, target town  ""%2"", whole count of x_groupsm %3", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, count groups_west ];
 	for "_i" from 0 to (count SYG_isle_grps - 1) do
 	{
 		_igrpa = SYG_isle_grps select _i; // patrolling group
 		_igrp  = argp(_igrpa,PARAM_GROUP); 
 		if ( isNull _igrp ) then
 		{
-			hint localize format["x_isledefense.sqf:  grp #%1 <EMPTY>", _i + 1];
+			hint localize format["+++ x_isledefense.sqf:  grp #%1 <EMPTY>", _i + 1];
 		}
 		else
 		{
@@ -817,7 +826,7 @@ while { true } do {
 			};
 			_grp_array    = argp(_igrpa,PARAM_GRP_ARRAY);
 			_enemy_near  = if (argp(_grp_array,2) in [0,2]) then {" "} else {"*"};
-			hint localize format[ "x_isledefense.sqf: %11grp#%1/%12(%2/%3i/%4g/%5c); %6/%7 vecs [%8]; moved %9 m, near %10", 
+			hint localize format[ "+++ x_isledefense.sqf: %11grp#%1/%12(%2/%3i/%4g/%5c); %6/%7 vecs [%8]; moved %9 m, near %10",
 				_i + 1, _igrp, (count argp(_igrpa,PARAM_UNITS)) call SYG_twoDigsNumberSpace, 
 				_mcanmove  call SYG_twoDigsNumberSpace, _crewnum call SYG_twoDigsNumberSpace, 
 				_vehcnt, _vcanmove,  _str, _dist, _locname, _enemy_near, argp(_grp_array,2)];
@@ -828,7 +837,7 @@ while { true } do {
 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
 	// igrpa: [_agrp, _units, [0,0,0], _vecs]
 
-	hint localize format["x_isledefense.sqf: %1, target ""%2"" (%3), groups on isle count %4", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, current_counter, count groups_west ];
+	hint localize format["+++ x_isledefense.sqf: %1, target ""%2"" (%3), groups on isle count %4", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, current_counter, count groups_west ];
 	_str = "";
 	_cnt = 0; // number of active patrols
 	for "_i" from 0 to (count SYG_isle_grps - 1) do

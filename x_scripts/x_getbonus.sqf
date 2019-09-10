@@ -86,7 +86,7 @@ if ( _resurrect) then
 }
 else
 {
-    _vehicle call SYG_addEventsAndDispose;
+    [_vehicle] call SYG_addEventsAndDispose;
 };
 
 if (true) exitWith {};

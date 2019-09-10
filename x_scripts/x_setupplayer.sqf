@@ -45,17 +45,17 @@ d_flag_vec = objNull;
 
 if (X_InstalledECS) then {
 	ECS_local set[2, false];            // Camera NVG turned off since it interferes with intro
-	ECS_local set[4, 2];				// Maximum number of fired objects the object tracker will track simultaneously. Default 5 (may overload CPU) 
+	ECS_local set[4, 2];				// Maximum number of fired objects the object tracker will track simultaneously. Default 5 (may overload CPU)
 	ECS_local set[6, false];            // Dynamic viewdistance OFF, use Domination menu instead
-	ECS_local set[11, false];			// Birds Dynamic birds anim (sound) 
-	ECS_local set[12, false];			// Bugs Dynamic bugs anim (sound) 
-	ECS_local set[15, false];			// Dogs Dogs anim 
-	ECS_local set[17, false];			// Bistros Bistros anim 
-	ECS_local set[19, false];			// Transformers Transformers anim 
+	ECS_local set[11, false];			// Birds Dynamic birds anim (sound)
+	ECS_local set[12, false];			// Bugs Dynamic bugs anim (sound)
+	ECS_local set[15, false];			// Dogs Dogs anim
+	ECS_local set[17, false];			// Bistros Bistros anim
+	ECS_local set[19, false];			// Transformers Transformers anim
 	ECS_local set[21, false];			// Urbans Urbans anim
-	ECS_local set[23, false];			// Farms Farms anim 
-	ECS_local set[27, false];			// Trashbin flies Trashbin flies anim 	
-	ECS_local set[29, true];			// BoatStations Boatstations anim 
+	ECS_local set[23, false];			// Farms Farms anim
+	ECS_local set[27, false];			// Trashbin flies Trashbin flies anim
+	ECS_local set[29, true];			// BoatStations Boatstations anim
 	ECS_local set[51, [""]];            //Turns off our radiochatter. Enemy still has it though
 	ECS_local set[63, [""]];            //Also prevent radiochatter from "undercover" vehicles borrowed from RACS
 	ECS_local set[98, 120];             //AI Smokeshell timeout. Number of seconds before reuse
@@ -72,8 +72,8 @@ if (X_InstalledECS) then {
 	ECS_local set[101, 35];             //Supressive fire timeout
 	ECS_local set[108, true];           //Can AI panic
 	ECS_local set[109, 0.85];           //Chance of AI panicking
-	ECS_local set[132,500 /* 800 */];	// ECS effect (general) Max distance Max view distance of observed effects (Prevents CPU overload) 
-	ECS_local set[133, 10 /* 15 */];	// ECS fires effect, Max fire Max number of fires runing simultaneous (Prevents CPU overload) 
+	ECS_local set[132,500 /* 800 */];	// ECS effect (general) Max distance Max view distance of observed effects (Prevents CPU overload)
+	ECS_local set[133, 10 /* 15 */];	// ECS fires effect, Max fire Max number of fires runing simultaneous (Prevents CPU overload)
 };
 
 if (SYG_found_GL3) then
@@ -219,16 +219,16 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 										case 0: {["P", "ACE_Val", "ACE_20Rnd_9x39_B_VAL", 10]};
 										case 1: {["P", "ACE_Bizon_SD", "ACE_64Rnd_9x18_B_Bizon", 10] };
 										case 2: {["P", "ACE_AKMS_PBS1", "ACE_30Rnd_762x39_SD_AK", 10] };
-										case 3: {["P", "ACE_AKS74USD", "ACE_45Rnd_545x39_BT_AK", 10] }; 
+										case 3: {["P", "ACE_AKS74USD", "ACE_45Rnd_545x39_BT_AK", 10] };
                                     };
                                 };
-                                default 
+                                default
 								{
                                     switch floor (random 3) do
                                     {
 										case 0: {["P", "ACE_Val_Cobra", "ACE_20Rnd_9x39_B_VAL", 10]};
 										case 1: {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10] };
-										case 2: {["P", "ACE_AKS74USD_Cobra", "ACE_45Rnd_545x39_BT_AK", 10] }; 
+										case 2: {["P", "ACE_AKS74USD_Cobra", "ACE_45Rnd_545x39_BT_AK", 10] };
                                     };
 								};
                             };
@@ -348,7 +348,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
             [player, _equip] call SYG_rearmUnit;
         };
 #endif
-	
+
 		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toLower (name player) == "yeti")  ) then
 		{
 		    _p call SYG_addNVGoggles;
@@ -512,7 +512,7 @@ if (fRainLess >= 0.0625 && fRainLess < 0.075) then {clouds1 = localize "STR_WET_
 if (fRainLess >= 0.075 && fRainLess < 0.100) then {clouds1 = localize "STR_WET_6"}; // "облачно"
 if (fRainLess >= 0.100 && fRainLess < 0.175) then {clouds1 = localize "STR_WET_7"}; //
 
-/* 
+/*
 if (fRainMore >= 0.175 && fRainMore < 0.225) then {clouds2 = "пасмурно"};
 if (fRainMore >= 0.225 && fRainMore < 0.275) then {clouds2 = "пасмурно"};
 if (fRainMore >= 0.275 && fRainMore < 0.320) then {clouds2 = "пасмурно и вероятность небольшого дождя"};
@@ -957,7 +957,7 @@ if (count d_ammo_boxes > 0) then {
 			);
 			#endif
 			[_boxnew] execVM _boxscript;
-			_boxnew addEventHandler ["killed",{["d_rem_box",position _this select 0] call XSendNetStartScriptServer;deleteVehicle (_this select 0)}];
+			_boxnew addEventHandler ["killed",{["d_rem_box",position (_this select 0)] call XSendNetStartScriptServer;deleteVehicle (_this select 0)}];
 		};
 	} forEach d_ammo_boxes;
 };
@@ -1158,12 +1158,12 @@ if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores subtraction";
 #endif
 	d_eng_can_repfuel = true;
-	
+
 #ifndef __TT__
 	d_engineer_trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 	d_engineer_trigger setTriggerArea [d_base_array select 1, d_base_array select 2, d_base_array select 3, true];
 #endif
-	
+
 #ifdef __TT__
 	_dbase_a = (
 		if (playerSide == west) then {
@@ -1175,7 +1175,7 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 	d_engineer_trigger = createTrigger["EmptyDetector" ,_dbase_a select 0];
 	d_engineer_trigger setTriggerArea [_dbase_a select 1, _dbase_a select 2, 0, false];
 #endif
-	
+
 	d_engineer_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", true];
 	d_engineer_trigger setTriggerStatements["!d_eng_can_repfuel && player in thislist", "d_eng_can_repfuel = true;(localize 'STR_SYS_229') call XfGlobalChat;", ""]; // "Engineer repair/refuel capability restored..."
 
@@ -1199,7 +1199,7 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 	_trigger setTriggerArea [0, 0, 0, true];
 	_trigger setTriggerActivation ["NONE", "PRESENT", true];
 #ifndef __ENGINEER_OLD__
-	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_SYS_226', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"]; // 'Осмотреть технику', 'Починить/заправить технику' 
+	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_SYS_226', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"]; // 'Осмотреть технику', 'Починить/заправить технику'
 #endif
 #ifdef __ENGINEER_OLD__
 	_trigger setTriggerStatements["call x_sfunc", "actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer_old.sqf',[],-1,false]", "player removeAction actionID2"]; //'Починить/заправить технику'
@@ -1218,8 +1218,8 @@ XBaseEnemies = {
 	switch (_status) do {
 		case 0: {
 			hint composeText[
-				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "ВНИМАНИЕ:" */ + "</t>"), lineBreak, 
-				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Вражеский десант на базе" */ + "</t>") 
+				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "ВНИМАНИЕ:" */ + "</t>"), lineBreak,
+				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Вражеский десант на базе" */ + "</t>")
 			];
 		};
 		case 1: {
@@ -1678,7 +1678,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	sleep random 2;
 	_name = name player;
 	["d_p_varname",_name,str(player), localize "STR_LANG"] call XSendNetStartScriptServer;
-	
+
 /*
 	// try to set russian identity
 	if ( localize "STR_LANG" == "RUSSIAN") then
@@ -1688,7 +1688,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	};
 */
 
-//+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc. 
+//+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc.
 //            Bar gates are processed somewhere in upper lines
 [] spawn {
     sleep 5;
@@ -1699,10 +1699,11 @@ player call SYG_handlePlayerDammage; // handle hit events
         if ( count _x > 1) then { _target setDir (_x select 1);}; // set target direction if designated
         if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
         _targets = _targets + [_target];
-    }forEach [[
-        [9663, 9894.2, 0], 180],[[9651.7, 9829.25, 4],180 ],[[9663, 9962, 0], 180], // south from flag between airstrip and courtyard
-        [[9700.05,10190.07,0]], // north form flag on other side of airstrip
-        [[10397.581,10003.883, 0], 90] // east from flag on the edge of airstrip
+    }forEach [
+        // south from flag between airstrip and courtyard
+        [[9663, 9958, 0], 180] /* nearest to flag*/,[[9663, 9894.2, 0], 180]/*middle*/,[[9651.7, 9829.25, 4],180 ]/* fathest from flag to south on the roof of courtyard house */,
+        [[9700.05,10190.07,0]], // north from flag on other side of airstrip
+        [[10397.581,10003.883, 0], 90] // east from flag at the end of airstrip
     ];
     /*
     _str =  format["%1 targets detected", count _targets];
@@ -1716,7 +1717,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	_comp = call SYG_getGRUComp;
 #ifdef __DEBUG__
 	hint localize format["x_setupplayer.sqf: GRU PC == %1",_comp];
-#endif	
+#endif
 
 	if ( !isNull _comp ) then
 	{
@@ -1736,7 +1737,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 		{
 			hint localize "x_setupplayer.sqf: Action on GRU PC is set already!!!";
 		}
-#endif	
+#endif
 		;
 	}
 #ifdef __DEBUG__
@@ -1744,7 +1745,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	{
 		hint localize "x_setupplayer.sqf: GRU PC isNull";
 	}
-#endif	
+#endif
 	;
 	// Play about all fires
 	sleep 5;

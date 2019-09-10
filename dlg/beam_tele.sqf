@@ -77,8 +77,8 @@ if (_typepos == 1) then {  //  teleport to some of our MHQ
 */
     _global_dir = direction _veh;
 
-    // TODO: send command to the server, not do it here
-    (group player) addVehicle _veh;
+    ["addVehicle", (group player), _veh] call XSendNetStartScriptServer;
+    //(group player) addVehicle _veh;
 };
 
 _global_pos set [2, 0];  // always port to the ground

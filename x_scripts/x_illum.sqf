@@ -24,7 +24,7 @@ _center_y = _tgt_center select 1;
 _flareCnt = 0;
 _current_counter = current_counter; // current main target index to illuminate
 
-hint localize format["%1 execVM ""x_scripts/x_illum.sqf"", d_run_illum = %2",_this, d_run_illum];
+hint localize format["+++%1 execVM ""x_scripts/x_illum.sqf"", d_run_illum = %2",_this, d_run_illum];
 
 while {!mt_spotted} do {sleep 7.75};
 
@@ -56,7 +56,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
 	//__DEBUG_NET("x_illum.sqf",(call XPlayersNumber))
-	_flare = objNull;
+	_flare = "";
 	/*  SYG_shortNightEnd    =  4.60;
         SYG_morningEnd       =  7.00;
         SYG_eveningStart     = 18.30;
@@ -119,7 +119,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
 		_x1 = _center_x - (_randrad * sin _angle);
 		_y1 = _center_y - (_randrad * cos _angle);
 #endif
-        if (isNull _flare) then
+        if (_flare == "") then
         {
     		_flare = if (mt_radio_down ) then {"F_40mm_Red"} else { _flares select (( floor random 10 ) min 2); }; // while color is mostly flared
         };

@@ -56,7 +56,7 @@ STR_DANGER_NUM,4,4,4
 STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plotzlich lauft Ihnen am Rucken ein kalter schweis runter...","Внезапно по вашей спине потекли струйки холодного пота..."
 STR_DANGER_1,"Suddenly you felt terrible ...","Plotzlich und unerwartet spuren Sie ein angst gefuhl...","Вдруг вам стало жутко..."
 STR_DANGER_2,"Suddenly you realize that this is your last thought ...","Plotzlich verstehen Sie das es Ihr letzter gedanke...","Внезапно вы понимаете, что это - ваша последняя мысль..."
-STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вам чувствуете, что за вами следит холодный злобный взгляд..."
+STR_DANGER_3,"Alarm! It seemed to you that the evil cold look follows you ...","Sie denken das ein kalter boser Blick sie anschaut...","Вдруг Вы осознаёте, что за вами следит холодный злобный взгляд..."
 
 STR_SYS_2,"MG nest","MG-Nest","Пул.гнездо"
 STR_SYS_02,"MG %1", "MG %1", "Пул. %1"
@@ -214,11 +214,14 @@ STR_SYS_111,"No rescue rangers logged in...","Rettungskräfte fehlen...","Игр
 STR_SYS_112,"No combat engineers logged in...","Die Spieler in die Rolle von Militär-Ingenieur fehlen...","Игроки в роли военного инженера отсутствуют..."
 STR_SYS_113,"Governor (%1) is not detected within a radius of %2m!","Der Gouverneur (%1) nicht erkannt im Umkreis von %2m!","Губернатор (%1) либо мёртв, либо позорно сбежал (нет в радиусе %2м.)!"
 STR_SYS_114,"alive","lebendig","жив"
-STR_SYS_115,"dead","ist tot","мёртв"
+STR_SYS_115,"Some corpse in the uniform of the Governor is found in %1 m from the red zone center. Direction %2 gr.","Einige Leiche in der uniform des Gouverneurs wird in %1 m vom Zentrum der roten zone gefunden. Richtung %2 gr.","Какой-то труп в форме губернатора валяется в %1 м. от центра красной зоны. Напр. %2 гр."
+STR_SYS_115_0,"Some corpse in the uniform of the Governor is found at center of the red zone center","Einige Leiche in der uniform des Gouverneurs wird im Zentrum der roten zone Mitte gefunden","Какой-то труп в форме губернатора валяется в самом центре красной зоны"
 STR_SYS_115_1,"and healthy","und gesund","и здоров"
 STR_SYS_115_2,"but wounded","aber verwundet","но ранен"
 STR_SYS_115_3,"but seriously wounded","aber ernsthaft verletzt","но серьёзно ранен"
 STR_SYS_116,"Partisans inform: Governor %1, dist. %2 m., dir. %3 deg. from the centre of the red zone","Die Partisanen berichten: Der Gouverneur %1, Dist. %2 m, Richtung %3 Gr. vom Zentrum der roten Zone","Партизаны сообщают: губернатор %1, дист. %2 м., напр. %3 гр. от центра красной зоны"
+STR_SYS_116_0,"Partisans report about the Governor: %1, spotted near the center of the red zone","Partisanen berichten über den Gouverneur: %1, in der Nähe der Mitte der roten zone entdeckt","Партизаны сообщают о губернаторе: %1, замечен у центра красной зоны"
+
 STR_SYS_117,"The Hostages (alive %1 of %2) are within a %3 m radius from the center of side mission. %4","Die Geiseln (lebendig %1 von %2) sind innerhalb von %3 m Radius von der Mitte der Seite Mission. %4","Заложники (в живых %1 из %2) находятся в примерном радиусе %3 м от точки задания. %4"
 STR_SYS_118,"%1 now is the camp where our civilians are illegally held and subjected to torture. Your task: liberate the civilians and bring them to the base. To perform the job at least one hostage has to get to the base alive. (The mission can be completed only by a player in the role of rescuer).","In %1 befindet sich das Lager, wo illegal festgehalten und gequält Zivilbevölkerung. Ihre Aufgabe: lösen Sie die Zivil-und liefern Sie an die Basis. Für die Ausführung des Auftrags mindestens eine Geisel muss erreichen der lebenden. (Eine Mission zu erfüllen, kann nur der Spieler in die Rolle der Retter).","В %1 расположен лагерь, где незаконно удерживается и подвергается пыткам гражданское население. Ваша задача: освободить гражданских и доставить их на базу. Для выполнения задания хотя бы один заложник должен добраться до базы живым. (Завершить миссию может только игрок в роли спасателя или лидер группы). Внимание! Местный колдун сообщил, что враг завозит туда какие-то станковые установки!"
 STR_SYS_119,"Combat mission accomplished! Prisoners released.","Combat Mission erfüllt! Die Gefangenen befreit.","Боевая задача выполнена! Пленные спасены."
@@ -563,7 +566,7 @@ STR_SYS_312,"On the East Side Bagango two antenna are detected. One is used by t
 STR_SYS_313,"Good job! Radio antenna destroyed.","Auftrag ausgeführt! Radio Antenne zerstört.","Задание выполнено! Радиомачта уничтожена."
 STR_SYS_314,"There is a radio tower in a farm west of Bagango (south from Carmen). This is one of the many radio towers that the enemy uses to communicate with its troops. Simple task, destroy it.","Es ist ein Funkturm in einer farm westlich von Bagango. Dies ist einer der vielen Radiosendern, dass der Feind verwendet, um die Kommunikation mit seinen Truppen. Einfache Aufgabe, es zu zerstören.","На ферме к западу от Bagango, и к югу от Carmen, находится радиовышка. Враг использует ее для связи с силами коллаборационистов. Уничтожьте ее."
 
-STR_SYS_316_1,"All artillery guns are down. No artillery observers will appear anymore.","Alle Artilleriegeschütze sind unten. Es werden keine artilleriebeobachter mehr erscheinen.","Все артиллерийские орудия уничтожены. Корректировщики исчезли!"
+STR_SYS_316_1,"All artillery guns are down. No artillery observers will appear now. But they can appear later","Alle Artilleriegeschütze sind unten. Keine artilleriebeobachter werden jetzt erscheinen. Aber Sie können später wieder auftauchen","Все артиллерийские орудия уничтожены. Корректировщики исчезли! Но они могут вернуться!"
 STR_SYS_317,"Radiotower","Funkturm","Телемачта"
 STR_SYS_318,"There is a transformer station in Tlaloc. The enemy uses it to for some experiments in a laboratory in Carmen. Simple task, destroy it.","Es ist eine Trafo-station im Tlaloc. Der Feind verwendet es für einige Experimente in einem Labor in Carmen. Einfache Aufgabe, es zu zerstören.","По данным разведки, где-то в Carmen расположена вражеская секретная научная лаборатория. Выша задача уничтожить трансформаторную подстанцию в Tlaloc, тем самым саботировать работу лаборатории."
 STR_SYS_318_1,"Good job. The transformer station is down.","Gute Arbeit. Die Trafo-station ist ausgefallen.","Задание выполнено! Трансформаторная подстанция уничтожена."
@@ -725,7 +728,7 @@ STR_SYS_1005,"Generalissimo","Generalissimus","Генералиссимус"
 STR_SYS_1100,"%1 has been cleared!!!","%1 wurde gelöscht!!!","Н.п. %1 освобождён!!!"
 STR_SYS_1100_1,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
 STR_SYS_1101,"Waiting for new orders...","Warten auf neue Aufträge...","Ожидайте дальнейших распоряжений..."
-STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг, наконец, бежал. Вам остаётся только зачистить последний оккупированный город!"
+STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг покидает остров. Вам остаётся только зачистить последний оккупированный город!"
 STR_SYS_1102,"For the liberation of the settlement your group gets %1%2 !","Für die Befreiung der Siedlung bekommt Ihre Gruppe %1%2 !","За освобождение города ваша группа получает %1%2 !"
 STR_SYS_1102_1,"points ( %1 ) and ","Punkte ( %1 ) und ","очки ( %1 ) и "
 
@@ -816,10 +819,10 @@ STR_AI_5,"Recruit Sniper","Rekrutieren Sniper","Призвать снайпер�
 STR_AI_6,"Recruit AA Soldier","Rekrutieren AA-Soldat","Призвать оператора ПВО"
 STR_AI_7,"Recruit Specop","Rekrutieren Specop","Призвать в спецназ"
 // STR_AI_7_1,"Recruit The Mil. Nurse","Rekrutieren Sie eine militarkrankenschwester","Призвать санитарку"
-STR_AI_8,"Dismiss AI","Entlassen AI","Демобилизовать всех"
+STR_AI_8,"Dismiss AI","Entlassen KI","Демобилизовать всех"
 STR_AI_9,"All AI soldiers dismissed !!! Points returned %1","Alle KI-Soldaten entlassen !!! Punkte returned %1","Все местные бойцы демобилизованы !!! Возвращено очков: %1"
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
-STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für AI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
+STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für KI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
@@ -906,7 +909,7 @@ STR_HIT_UNCONSCIOUS,"You are unconscious...","Sie verlieren das Bewusstsein...",
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,71,71,71
+STR_RUM_NUM,73,73,73
 STR_RUM_NIGHT,"They are sleeping in %3","Alle schlafen in %3","В %3 все спят, однако"
 STR_RUM_0,"Rumors are absent! It's weird...","Gerüchte sind nicht vorhanden! Es ist seltsam...","Слухи отсутствуют! Что странно..."
 STR_RUM_1,"Enemy refuel truck will help only if your vehicle engine is on","Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf","Вражеский бензовоз заправляет при включенном двигателе техники"
@@ -979,6 +982,9 @@ STR_RUN_67,"Local guru now reports the time of the last landing of commandos at 
 STR_RUN_68,"Soviet military engineers demining U.S. minefields","Die sowjetische Militär-Ingenieure Minenräumung US-Armee Minenfelder","Советские военные инженеры разминируют американские минные поля"
 STR_RUN_69,"Enemies plan to increase AA missiles range","Feinde planen, die Reichweite der AA-Raketen zu erhöhen","Враги планируют увеличить радиус действия своей ПВО"
 STR_RUN_70,"At the moment of death you will hear the music of heaven","Während des Todes wirst du die Musik des Himmels hören","В момент смерти ты услышишь небесную музыку"
+STR_RUN_71,"Green flares over towns are fired by the group commanders","Green lightning Raketen über Städte werden von gruppenkommandanten abgefeuert","Ракеты зелёного цвета в городах запускают командиры групп"
+STR_RUN_72,"Red rockets over cities usually mean the destruction of important infrastructure","Rote Raketen über Städte bedeuten normalerweise die Zerstörung wichtiger Infrastruktur","Красные ракеты над городами означают обычно уничтожение важной инфраструктуры"
+
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
@@ -1060,6 +1066,10 @@ STR_MAP_10,"%1 looking at the map, you shout: 'BA-Ah, Yes it is %2!'","%1 Blick 
 
 STR_ACE_VDN_SOLDIERECREW,"Engineer","Ingenieur","инженер"
 
+STR_ACE_HIT,%1 hit %2;,%1 Treffer %2;,%1 попадание %2;
+STR_ACE_INDIRECT_HIT,%1 indir. hit %2;,%1 indir. Treffer %2;,%1 косв. попадание %2;
+STR_ACE_INDIRECT_HIT_RANGE,%1 indir. hit range %2;,%1 indir.Treffer Reichweite %2;,%1 радиус косв. попадания %2;
+
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
@@ -1126,6 +1136,7 @@ STR_TSD9_62,soldier was recruited into group,Soldat wurde aufgenommen,солда
 STR_TSD9_63,you have been invited to join group,du wurdest eingeladen,вы были приглашены в группу
 STR_TSD9_64,Collapse all,Keine Details,Свернуть все
 STR_TSD9_65,Expand all,Alle Details,Развернуть все
+STR_TSD9_66, The choice of dialogue , Dialog auswählen ," Выбор диалога "
 //-----------------------------------------------------------------------------
 
 STR_MIS_1,"Mobile Respawn","Mobile Respawn","Мобильный респаун"
@@ -1301,3 +1312,11 @@ STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
+
+LANGUAGE,"English","Czech","German","Polish","Russian","French","Spanish","Italian"
+
+STR_ACE_SYS_RUCK_KILOGRAMS,"kg","kg","кг"
+STR_ACE_SYS_RUCK_CUBICCENTIMETERS,"ccm","ccm","см. куб."
+STR_ACE_SYS_RUCK_WEIGHT,"Weight:","Gewicht:","Вес:"
+STR_ACE_SYS_RUCK_SIZE,"Capacity:","Kapazitat:","Ёмкость:"
+STR_ACE_SYS_RUCK_PACKSIZE,"Pack size:","Pack size:","Объём упак.:"

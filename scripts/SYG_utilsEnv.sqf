@@ -178,7 +178,7 @@ SYG_findRestorableObjects = {
     _dist = arg(1);
     hint localize format["+++ SYG_findRestorableObjects %1",[_pos, _dist]];
     _list = nearestObjects [ _pos, [], _dist ];
-    hint localize format["+++ SYG_findRestorableObjects found %1 any items",count _list];
+    hint localize format["+++ SYG_findRestorableObjects found %1 items",count _list];
     for "_i" from 0 to ((count _list) - 1) do
     {
         _x = argp(_list, _i);

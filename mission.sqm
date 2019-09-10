@@ -60,7 +60,7 @@ class Mission
 	randomSeed=507395;
 	class Intel
 	{
-		briefingName="co@10 Domination!ACE East [4.1+] RA";
+		briefingName="co@10 Domination!ACE East [4.5+] RA";
 		briefingDescription="by Xeno/Agent/Rokse/Engi";
 		startWeather=0.000000;
 		forecastWeather=0.000000;

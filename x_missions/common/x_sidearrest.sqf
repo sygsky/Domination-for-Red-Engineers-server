@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_missions\common\x_sidearrest.sqf
 private ["_is_dead","_leader","_nobjs","_officer","_offz_at_base","_rescued","_winner","_rescue"];
 if (!isServer) exitWith {};
 
@@ -33,18 +33,20 @@ while {!_offz_at_base && !_is_dead} do {
 		{
 
 			////////////////////////////////////////////++ Dupa by Engineer's request
-			_nobjs = nearestObjects [_officer, ["Man"], 20];
-			if (count _nobjs > 0) then {
-				{
-					if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
-						_rescued = true;
-                        [_officer] join _x;
-                        _officer setCaptive true;
-                        ["make_ai_captive",_officer] call XSendNetStartScriptClient;
-					};
-					sleep 0.01;
-				} forEach _nobjs;
-			};
+			_nobjs = nearestObjects [_officer, ["CAManBase"], 20];
+            {
+                if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || ((leader _x) == _x) ) ) exitWith {
+                    _rescued = true;
+                    _officer setCaptive true;
+                    sleep 0.1;
+                    [_officer] join grpNull; // stronger (possibly) remove action, as ordinal work good not all times
+                    sleep 0.1;
+                    [_officer] join (group _x);
+                    ["make_ai_captive",_officer] call XSendNetStartScriptClient;
+                    hint localize format["+++ x_sidearrest.sqf: nearest to officer EAST man is %1(%2), is leader = %3", _x, name _x, (leader _x) == _x];
+                };
+                sleep 0.01;
+            } forEach _nobjs;
 			////////////////////////////////////////////
 
 		} 

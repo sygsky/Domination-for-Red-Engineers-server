@@ -1,10 +1,10 @@
-// by Xeno
+// by Xeno, x_scripts\x_groupsm.sqf
 // 	example: _grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[d_base_array select 0,d_base_array select 1,d_base_array select 2,0],[],-1,1,[],300,1];
 // Parameters indexes (max index 10, from 0 to 10):
 // at 0: group to rule; _paragrp
 // at 1: [] some initial position before script calling; [position _leader select 0, position _leader select 1, 0]
 // at 2: initial mode of group, will be changed in progress of group engaging; 0
-// at 3: patrol rectangle [center pos, rx, ry, dir]; [d_base_array select 0,d_base_array select 1,d_base_array select 2,0]
+// at 3: patrol rectangle [_center_pos, rx, ry, dir] or circle [_center_pos, radius]; [d_base_array select 0,d_base_array select 1,d_base_array select 2,0]
 // at 4: current assigned wp;[]
 // at 5: current time when wp assigned;-1
 // at 6: if ((_grp_array select 6) == 0) then {[_grp,_grp_array select 9] call XNormalPatrol;} else {_grp call XCombatPatrol;}; ;1

@@ -83,7 +83,7 @@ SYG_defeatTracks =
     ["arroyo","ATrack15","ATrack19"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
-    ["i_new_a_guy","decisions","treasure_island_defeat"],
+    ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
     ["sorcerie","melody","thefuture"],
     ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]],
     ["cosmos",[0,8.281],[14.25,9.25],[28.8,-1]]
@@ -124,7 +124,7 @@ SYG_baseDefeatTracks =
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
-    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny",
+    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
@@ -134,7 +134,8 @@ SYG_baseDefeatTracks =
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_TVTowerDefeatTracks =
     [
-    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10", "gong_11"
+    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10",
+    "gong_11","gong_12","gong_13"
     ];
 
 // for the death near medieval castles (2 buildings on whole island)

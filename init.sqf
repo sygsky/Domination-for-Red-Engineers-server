@@ -487,13 +487,13 @@ if (isServer) then {
 
     //-------------------------------
 
-#ifdef __ACE__ // execute code if on server aif ACE is defined
+#ifdef __ACE__ // execute code if on server and ACE is defined
 
     #ifdef __MANDO_MISSILES_UPDATE__
-ace_sys_missiles_incomingMissile = compile (preprocessFileLineNumbers ("scripts\ACE\ace_mando_replacemissile.sqf")); // replace mando guidance missile range
-mando_scorefunc                  = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
-//mando_missile_handler            = compile (preprocessFileLineNumbers ("scripts\ACE\mando_missile.sqf"));
-hint localize "+++ mando_missile_replaced replaced by custom version";
+    ace_sys_missiles_incomingMissile = compile (preprocessFileLineNumbers ("scripts\ACE\ace_mando_replacemissile.sqf")); // replace mando guidance missile range
+    mando_scorefunc                  = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
+    //mando_missile_handler            = compile (preprocessFileLineNumbers ("scripts\ACE\mando_missile.sqf"));
+    hint localize "+++ mando_missile_replaced replaced by custom version";
     #endif
 
 #endif
@@ -657,29 +657,29 @@ if ( X_Client ) then {// runs only on client
     #endif
 
     #ifdef __NO_RPG_CLONING__
-// disables AT etc missiles cloning through rucksacks
-ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\PackInventoryMagToDummyMag.sqf";
+    // disables AT etc missiles cloning through rucksacks
+    ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\PackInventoryMagToDummyMag.sqf";
     #endif
 
     #ifdef __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
 
-ace_sys_eject_ace_getin_eject   = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_eject.sqf";
-ace_sys_eject_ace_init_eject    = compile preprocessFileLineNumbers "scripts\ACE\ace_init_eject.sqf";
-ace_sys_eject_ace_getin_jumpout = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_jumpout.sqf";
-ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE\ace_init_jumpout.sqf";
+    ace_sys_eject_ace_getin_eject   = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_eject.sqf";
+    ace_sys_eject_ace_init_eject    = compile preprocessFileLineNumbers "scripts\ACE\ace_init_eject.sqf";
+    ace_sys_eject_ace_getin_jumpout = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_jumpout.sqf";
+    ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE\ace_init_jumpout.sqf";
 
     #endif
 
     #ifdef __DISABLE_HIDE_UNCONSCIOUS__
 
-ACE_Sys_Wound_Net_fSetUnc       = compile preProcessFileLineNumbers "scripts\ACE\setUnc.sqf"; // stop setCaptive for unconsciones player
+    ACE_Sys_Wound_Net_fSetUnc       = compile preProcessFileLineNumbers "scripts\ACE\setUnc.sqf"; // stop setCaptive for unconsciones player
 
     #endif
 
-    #ifdef __MANDO_MISSILES_UPDATE__
+    #ifdef __MANDO_MISSILES_UPDATE__  // execute code if on client and ACE is defined
 
-mando_scorefunc                  = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
-hint localize "+++ mando_missile_replaced replaced by custom version";
+    mando_scorefunc                 = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
+    hint localize "+++ mando_score replaced by custom version";
 
     #endif
 
