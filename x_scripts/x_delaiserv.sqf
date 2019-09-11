@@ -11,7 +11,7 @@ while {true} do {
 	};
 	//__DEBUG_NET("AI playercheck",(call XPlayersNumber))
 	{
-        _ap = call _x; // player
+        _ap = compile _x; // player
         if (!(isPlayer _ap)) then {
             _grp = group _ap;
             _units = units _grp;
