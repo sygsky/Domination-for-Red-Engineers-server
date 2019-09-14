@@ -58,7 +58,7 @@ _eunit = _this select 1; // killer unit
 if ( !alive  _eunit ) exitWith{};
 if ( _aunit == _eunit) exitWith {};
 _aunit reveal _eunit;
-_vehs =  [_aunit , 2000, ["LandVehicle","Static"]] call Syg_findNearestVehicles;
+_vehs =  [_aunit , 4000, ["LandVehicle","Static"]] call Syg_findNearestVehicles;
 {
     _x reveal _eunit;
 } forEach _vehs;
