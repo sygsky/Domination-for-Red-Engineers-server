@@ -2,7 +2,7 @@
 if (!isServer) exitWith{};
 
 private ["_heli_array", "_vec_a", "_vehicle", "_number_v", "_is_west_chopper", "_i", "_tt", "_ifdamage", "_empty",
-        "_disabled", "_empty_respawn", "_startpos", "_hasbox", "_min_dist", "_cnt"];
+        "_disabled", "_empty_respawn", "_startpos", "_hasbox", "_empty_respawn", "_cnt"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -15,12 +15,12 @@ _heli_array = [];
     //  vehicle name is "ch1" etc
 	_vec_a    = _x;
 
-	_vehicle  = argp(_vec_a,0);
-	_number_v = argp(_vec_a,1);
-    _ifdamage = argp(_vec_a,2);
-	_min_dist = argpopt(_vec,3,0); // min dist to return
+	_vehicle       = argp(_vec_a,0);
+	_number_v      = argp(_vec_a,1);
+    _ifdamage      = argp(_vec_a,2);
+	_empty_respawn = argpopt(_vec,3,0); // min dist to return
 	// offset in veh array:              0,        1,        2,  3,                 4,                 5,              6,        7
-	_heli_array = _heli_array + [[_vehicle,_number_v,_ifdamage,  0, position _vehicle,direction _vehicle,typeOf _vehicle,_min_dist]];
+	_heli_array = _heli_array + [[_vehicle,_number_v,_ifdamage,  0, position _vehicle,direction _vehicle,typeOf _vehicle,_empty_respawn]];
 
 	// change cargo for Mi-17 only (USSR version). FIXME: do the same for non USSR version heli
 /*
@@ -74,7 +74,7 @@ while {true} do {
 		_vehicle = _vec_a select 0;
 		_ifdamage = _vec_a select 2;
 
-		_empty = (if (({alive _x} count (crew _vehicle)) > 0) then {false} else {true});
+		_empty = {alive _x} count (crew _vehicle) == 0;
 
 		_disabled = false;
 		if (!_ifdamage) then {
