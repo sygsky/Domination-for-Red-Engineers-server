@@ -442,6 +442,7 @@ class CfgSounds
     class sorcerie {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0};};
     class melody {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0};};
     class hound_chase {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0};}; // chase from "Hound of Baskerville" Soviet film
+    class ipanoramDefeat {name = ""; sound[] = {\sounds\ipanoramDefeat.ogg, db+10, 1.0};}; // movie Hamlet (USSR) music
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};
