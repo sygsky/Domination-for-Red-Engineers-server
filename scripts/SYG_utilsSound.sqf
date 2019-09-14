@@ -241,6 +241,7 @@ SYG_playRandomDefeatTrackByPos = {
     call SYG_playRandomDefeatTrack;
 };
 
+// OFP music only
 SYG_OFPTracks =
     [
 	    ["ATrack24",[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]],

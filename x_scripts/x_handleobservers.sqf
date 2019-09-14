@@ -63,7 +63,7 @@ while { nr_observers > 0 && !target_clear } do {
         else
         {
             if (_enemy_ari_available) then {
-                if (_enemyToReveal != objNull) then
+                if (alive _enemyToReveal) then
                 {
                     _observer reveal _enemyToReveal;
                     sleep 0.1;

@@ -329,7 +329,7 @@ XHandleNetStartScriptServer = {
                 ["GRU_event_scores", _id, _score, ""] call XSendNetStartScriptClient;
             };
 		};
-		case "addVehicle":
+		case "addVehicle": // add vehicle to the group
 		{
 		    (_this select 1) addVehicle (_this select 2); // (group player) addVehicle _veh;
 		};
