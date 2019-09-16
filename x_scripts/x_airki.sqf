@@ -20,6 +20,7 @@ if (!isServer) exitWith {};
 // arrival time delay between KA and MIMG
 #define KA_MIMG_ARRIVAL_DELAY 300
 #define REFUEL_INTERVAL 600
+#define PRINT_PERIOD 600 // period to inform about heli position
 
 // how many player is not detected near target in seconds
 #define PLAYER_NOT_AT_TARGET_LIMIT 1200
@@ -194,7 +195,7 @@ _min_dist_between_wp = 100;
 // ***************************************
 // *       Main loop of the script       *
 // ***************************************
-
+_old_target_name = "";
 while { true } do {
 
     // possibility for SU creation is about 33%
@@ -336,6 +337,10 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	while {current_target_index < 0} do {sleep 5;}; // wait until new town ready
 
 	_dummy = target_names select current_target_index; // current town info array
+    _current_target_pos = _dummy select 0;
+    _radius = (_dummy select 2) + 100; // increase target border radius by 100 m
+
+	_old_target_name = _dummy select 1;
 
 	for "_xxx" from 1 to _vec_cnt do {
 		_heli_type = _heli_arr call XfRandomArrayVal;
@@ -364,8 +369,15 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
     #endif
 		sleep 0.01;
 	};
-	
+
 	sleep 1.011;
+
+#ifdef __DEFAULT__
+    if ( (_dummy select 1) in d_mountine_towns ) then // raise the height of the flight for mountain towns ("Hunapu","Pacamac" etc)
+    {
+        _flight_height = _flight_height * 1.5;
+    };
+#endif
 
 	_leader = leader _grp;
 	_leader setRank "LIEUTENANT";
@@ -375,9 +387,11 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_current_target_pos = _dummy select 0;
 
 	if ((_vehicles select 0) distance _current_target_pos > (_vehicles select 0) distance d_island_center) then {
-		_wp = _grp addWaypoint [d_island_center, 100];
+		_wp = _grp addWaypoint [d_island_center, 100]; // additional waypoint to island center
+    	_wp setWaypointType "MOVE";
 	};
 	_wp = _grp addWaypoint [_current_target_pos, 50];
+	_old_pat_pos = _current_target_pos; // initial old patrol positon
 	_wp setWaypointType "SAD";
 	_pat_pos = _current_target_pos;
 	_wp setWaypointStatements ["never", ""];
@@ -388,6 +402,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 
 #ifdef __PRINT__
 	_lastDamage = 0;
+	_timeToPrint = time - PRINT_PERIOD + 60; // print after 60 seconds
 #endif
 
 
@@ -419,13 +434,6 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
             _radius = (_dummy select 2) + 100; // increase target border radius by 100 m
         };
 #endif
-#ifdef __DEFAULT__
-		if ( (_dummy select 1) in d_mountine_towns ) then // raise the height of the flight for mountain towns ("Hunapu","Pacamac" etc)
-		{
-            _flight_height = _flight_height * 1.5 + random ( _flight_random * 1.5 );
-		};
-#endif
-
 		sleep 0.5754;
 
 		switch (_type) do {
@@ -435,30 +443,32 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		};
 
 		_angle = floor (random 360);
-		_dist = (sqrt((random _radius)/_radius)) * _radius;
+		_dist = _radius call XfRndRadious; // (sqrt((random _radius)/_radius)) * _radius;
 		_x1 = (_current_target_pos select 0) - ( _dist * cos _angle);
 		_y1 = (_current_target_pos select 1) - ( _dist * sin _angle);
-		_pat_pos = [_x1, _y1,(_current_target_pos select 2)];
+		_pat_pos = [_x1, _y1,(_current_target_pos select 2)]; // next patrol position
 		if ( _type in ["KA","MIMG"] ) then {
-			_old_pat_pos = _pat_pos;
 			// prepare  new patrol position
 			// ensure new position distance more than 100 meters from current one
 			while {(_pat_pos distance _old_pat_pos) < _min_dist_between_wp} do {
 				_angle = random 360;
-				_dist = (sqrt((random _radius)/_radius)) * _radius;
+				_dist = _radius call XfRndRadious; //(sqrt((random _radius)/_radius)) * _radius;
 				_x1 = (_current_target_pos select 0) - ( _dist * cos _angle);
 				_y1 = (_current_target_pos select 1) - ( _dist * sin _angle);
 				_pat_pos = [_x1, _y1,(_current_target_pos select 2)];
 				sleep 0.01;
 			};
-			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+//			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+    		_old_pat_pos = _pat_pos; // prepare next position to compare with
+			_wp setWaypointPosition [_pat_pos, 0];
 			_grp setSpeedMode "NORMAL";
 			_grp setBehaviour _wp_behave;
 
 			// wait until near WP
 			sleep 15.821;
 		} else { // SU type
-			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+//			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+			_wp setWaypointPosition [_pat_pos, 0];
 			_grp setSpeedMode "LIMITED";
 			_grp setBehaviour _wp_behave;
 
@@ -466,9 +476,17 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			// reload weapon for SU after delay
 			_vehicles call SYG_fastReload; // reload SU just in case
 		};
-	    // reset flight height again after each new WP, just in case
+	    // reset flight height for each new WP, as task can change here
    		{
-   		    _x flyInHeight (_flight_height + random _flight_random);
+   		    if (_old_target_name != (_dummy select 1)) then // target changed, move heli to other target
+   		    {
+   		        _old_target_name = _dummy select 1;
+   		        _x flyInHeight (_flyby_height + random _flight_random);
+   		    }
+   		    else
+   		    {
+   		        _x flyInHeight (_flight_height + random _flight_random);
+   		    };
    		} forEach _vehicles;
 
 		if (X_MP && (call XPlayersNumber) == 0) then {
@@ -535,7 +553,17 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		_pos set [2, 0];
 		_enemy_arr = nearestObjects [ _pos, ["SoldierEB","Tank"], 300];
 		//+++ Sygsky: TODO add info exchange between air-air, air-land, air-ship units
-#endif		
+#endif
+#ifdef __PRINT__
+	if ( (time - _timeToPrint) >= PRINT_PERIOD) then
+	{
+	    _heli = _vehicles select 0;
+	    _loc = _heli call SYG_nearestSettlement;
+	    hint localize format["+++ x_airki: %1 at %2 in %3 m, dmg %4", typeOf _heli, text _loc, round((locationPosition _loc) distance _heli), damage _heli ];
+	    _timeToPrint = time;
+	};
+
+#endif
 	}; // while {_loop_do} do
 	
 	_ret = d_airki_respawntime + _re_random + random (_re_random);

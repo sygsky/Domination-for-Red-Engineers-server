@@ -762,7 +762,7 @@ XHandleNetStartScriptClient = {
                 {
                     player addScore _score;
                     format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
-                    ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptServer;
+                    ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClient;
                     playSound "no_more_waiting";
                 };
             };

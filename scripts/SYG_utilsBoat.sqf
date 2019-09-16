@@ -80,7 +80,7 @@ _boat = createVehicle  ["RHIB", _startPos, [], 0, "FORM"];
 _unittype = "ACE_SoldierWB_A";
 
 // create boat teamMember
-_grp = [west] call x_creategroup
+_grp = [west] call x_creategroup;
 _grp = [_boat, _grp, _unittype] call SYG_populateVehicle;
 (leader _grp) setRank "LIEUTENANT";
 

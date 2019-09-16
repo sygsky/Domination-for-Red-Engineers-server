@@ -44,6 +44,7 @@ while {true} do {
 	//--- Sygsky;
 	
 	_player_not_GRU = isNil "player_is_on_town_raid";
+	_enemy_vec = false; // if vehicle is enemy ope
 	if ( _player_not_GRU ) then
 	{
 		#ifndef __TT__
@@ -67,6 +68,7 @@ while {true} do {
                     if ( _vec isKindOf "M113" || _vec isKindOf "Vulcan" || _vec isKindOf "StrykerBase" ) then
                     {
                         _indexsb = _indexsb - 1; // Entering enemy vehicle requires a lower rank
+                        _enemy_vec = true;
                     };
 					if (_index < _indexsb) then {
 						_not_allowed = true;
@@ -80,6 +82,7 @@ while {true} do {
                         if (_veh isKindOf "M1Abrams" || _veh isKindOf "ACE_M60" || _veh isKindOf "ACE_M2A1") then
                         {
                             _indexta = _indexta - 1; // Entering enemy vehicle requires a lower rank
+                            _enemy_vec = true;
                         };
 						if (_index < _indexta) then {
 							_not_allowed = true;
