@@ -58,10 +58,26 @@ _eunit = _this select 1; // killer unit
 if ( !alive  _eunit ) exitWith{};
 if ( _aunit == _eunit) exitWith {};
 _aunit reveal _eunit;
-_vehs =  [_aunit , 4000, ["LandVehicle","Static"]] call Syg_findNearestVehicles;
-{
-    _x reveal _eunit;
-} forEach _vehs;
+_vehs =  [_aunit , 4000, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
+_watch_arr = [];
+{
+    if ((side _x) == d_side_enemy) then // inform only enemy vehicles about
+    {
+        _x reveal _eunit;
+        sleep 0.3;
+        if (((commander _x) knowsAbout _eunit) < 1.5 ) then
+        {
+            (commander _x) doWatch _eunit;
+            _watch_arr = _watch_arr + [commander _x];
+        };
+    };
+} forEach _vehs;
+sleep 2.5;
+{
+    _x doWatch objNull;
+} forEach _watch_arr;
+_watch_arr = nil;
+_vehs = nil;
 
 if (true) exitWith {};

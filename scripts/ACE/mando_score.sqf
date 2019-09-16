@@ -57,7 +57,7 @@ if (damage _target > 0.9) then
                      }
                      else
                      {
-                        if (_classtarget isKindOf "Static") then
+                        if (_classtarget isKindOf "StaticWeapon") then
                         {
                            _score = 1;
                         }
