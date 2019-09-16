@@ -158,7 +158,7 @@ class CfgMusic
     class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0};}; // USSR famous film "Hound of Baskervill hall"
     class condor { name=""; sound[] = {\sounds\condor.ogg,db+0,1.0};}; // El-Condor-Pasa by Leo Rojas
     class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
-
+    class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
 
 //------------------------------------- END of Intro music list --------------------------------------------------
 
@@ -172,7 +172,8 @@ class CfgMusic
 
     class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
     class detected_Paraiso { name=""; sound[] = {\sounds\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
-    class detected_Carmen { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Paraiso)
+    class detected_Carmen { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
+    class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; } // town detected music (Rahmadi)
 
 //+++++++++++++++++++++++ Defeat music track list
 

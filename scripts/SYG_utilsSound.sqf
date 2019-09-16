@@ -128,7 +128,8 @@ SYG_baseDefeatTracks =
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
-    ["ruffian",[0,10.27]]
+    ["ruffian",[0,10.27]],
+    ["Vremia_vpered_Sviridov",[0.479,9.778]]
 ] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
