@@ -498,8 +498,6 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
    		    {
    		        _x flyInHeight (_flight_height + random _flight_random);
    		    };
-        #ifdef __PRINT__
-        #endif
    		} forEach _vehicles;
 
 		if (X_MP && (call XPlayersNumber) == 0) then {
