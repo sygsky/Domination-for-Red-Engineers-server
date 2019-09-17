@@ -144,7 +144,12 @@ _rejoinPilots =
                 if ( !isNull _newgrp ) then
                 {
 #ifdef __PRINT__
-                    hint localize format["x_airki.sqf: Rejoin good pilots (%1) to group %2 (%3 men), and removing invalid pilots %4",_goodunits, _newgrp, count units _newgrp, _badunits];
+                    hint localize format["x_airki.sqf: Rejoin good pilots (%1) to group %2 (%3 men) dist %4, and removing invalid pilots %5",
+                        _goodunits,
+                        _newgrp,
+                        count units _newgrp,
+                        round((leader _goodunits) distance (leader _newgrp)),
+                        _badunits];
 #endif
                     _goodunits join _newgrp;
                     sleep 0.25;
@@ -480,8 +485,14 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
    		{
    		    if (_old_target_name != (_dummy select 1)) then // target changed, move heli to other target
    		    {
-   		        _old_target_name = _dummy select 1;
    		        _x flyInHeight (_flyby_height + random _flight_random);
+                hint localize format["+++ airki.sqf: %1 redirected from %2 to %3, flyby height ~ %4",
+                   typeOf  _x,
+                   _old_target_name,
+                   (_dummy select 1),
+                   _flyby_height
+                   ];
+   		        _old_target_name = _dummy select 1;
    		    }
    		    else
    		    {
@@ -559,7 +570,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	{
 	    _heli = _vehicles select 0;
 	    _loc = _heli call SYG_nearestSettlement;
-	    hint localize format["+++ x_airki: %1 at %2 in %3 m, dmg %4", typeOf _heli, text _loc, round((locationPosition _loc) distance _heli), damage _heli ];
+	    hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, dmg %5", typeOf _heli, text _loc, round((locationPosition _loc) distance _heli), round((getPos _heli) select 0),damage _heli ];
 	    _timeToPrint = time;
 	};
 

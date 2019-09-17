@@ -166,7 +166,7 @@ x_getmixedliste = {
 SYG_addEvents = {
     private ["_vehicle", "_do_points", "_static"];
     _vehicle   = arg(0);
-    _static =  _vehicle isKindOf "Static";
+    _static =  _vehicle isKindOf "StaticWeapon";
 
     if (_vehicle isKindOf "Tank") then
     {

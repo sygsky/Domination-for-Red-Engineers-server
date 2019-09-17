@@ -24,7 +24,7 @@ if ( (count _this > 0) && ( typeName (_this select 0) == "SCALAR" ) ) exitWith /
 if ( count _this > 0 && ( typeName (_this select 0) == "ARRAY" )) then
 {
     hint localize format[ "call to x_scripts\x_target_clear.sqf with remained enemy men %1, tanks %2, cars %3, statics %4",
-        "Man" countType _this, "Tank" countType _this, "Car" countType _this, "Static" countType _this];
+        "Man" countType _this, "Tank" countType _this, "Car" countType _this, "StaticWeapon" countType _this];
 };
 
 if ( _stop ) exitWith {true};
