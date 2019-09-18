@@ -1,43 +1,45 @@
 ﻿// Xeno, AAHALO/x_paraj.sqf - flag pole action "parajump"
 
-private ["_do_exit"];
+private ["_do_exit","_wait_score","_jump_score","_full_score"];
 
 #include "x_setup.sqf"
 
 #ifdef __RANKED__
-
-_jump_score = d_ranked_a select 4;
+_jump_score = d_ranked_a select 4; // score to jump in ranked version
+_wait_score = 0;
 if ( score player < _jump_score ) exitWith
 {
 	(format [localize "STR_SYS_607", score player,_jump_score]) call XfHQChat; // "You need %2 point[s] for parajump. Your current scores are %1"
 };
-
 #endif
 
 _do_exit = false;
-if ( d_para_timer_base > 0 ) then {
+_wait_score = 0;
+_full_score = 0;
+if ( d_para_timer_base > 0 ) then { // pass time interval to jump
 #ifndef __TT__
 	if (position player distance FLAG_BASE < 15)
 #else
 	if (position player distance RFLAG_BASE < 15 || position player distance WFLAG_BASE < 15)
 #endif
- then {
-        _miss_mins = (d_next_jum_timep - time)/60; // how many mins before next jump
-        if ( _miss_mins > 0) then // paid for missed mins
+    then
+    {
+        _miss_mins = (d_next_jump_time - time)/60; // how many mins before next jump
+        if ( _miss_mins > 0) then // paid for munutes to wait fror next free jump
         {
             _miss_mins = ceil _miss_mins;
-            _score = 0;
-            for "_i" from 1 to _miss_mins do
+            for "_i" from 1 to _miss_mins do { _wait_score = _i + _wait_score;  };
+            if ( score player  < (_jump_score  + _wait_score)) exitWith {};
             {
-                _score = _i + _score;
-            };
-            if (d_next_jump_time > time) then
-            {
+                // For this jump you lost %1 points (%2 per jump and %2 per waiting munutes).
+                (format [localize "STR_SYS_608", _miss_mins, _wait_score, _jump_score, score player]) call XfHQChat; 
                 _do_exit = true;
-                (format [localize "STR_SYS_608", ceil ((d_next_jump_time - time)/60)]) call XfHQChat; //"You can't jump. You have to wait %1 minutes for your next jump!!!"
             };
-		};
-	};
+            _full_score = _jump_score + _wait_score;
+            // STR_SYS_608_1,"You spent points on this jump: %1, %2 for jump and %3 for impatience to free jump (%4 min.)"
+            (format [localize "STR_SYS_608_1", _full_score, _jump_score, _wait_score, _miss_mins]) call XfHQChat;
+        };
+    };
 };
 if (_do_exit) exitWith {};
 
@@ -78,7 +80,8 @@ if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_6
 #endif
 
 #ifdef __RANKED__
-player addScore (-_jump_score); // subtract score for parajump
+hint localize format["+++ x_paraj.sqf: subtract %1 scores for the jump (%2 + %3)", _full_score, _jump_score, _wait_score];
+player addScore (-_full_score); // subtract score for parajump
 #endif
 
 _ok = createDialog "XD_ParajumpDialog";
