@@ -53,9 +53,10 @@ sleep 3;
 playSound (["parajump1", "parajump2"] call XfRandomArrayVal); // Start of parajump event (and corresponding sound of 20 seconds length max)
 _startTime = time;
 
-#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
-if ( _paratype == "" ) then { (localize "STR_SYS_609_1") call XfHQChat};
-#endif
+if ( _paratype == "" ) then
+{
+    (localize "STR_SYS_609_1") call XfHQChat; // "You finally realize that skydiving requires a parachute ! But it's late...\nYour last question: - How about paid for jump points?"
+};
 
 deleteVehicle uh60p;
 if (__AIVer) then {
@@ -69,7 +70,13 @@ if (__AIVer) then {
 // 1. free fall
 waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (vehicle player) != player || (time - _startTime) >= 20};
 
-if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, getPos player select 2] }; // can't play sound
+// ## 312
+if ( _paratype == "" ) then
+{
+    (localize "STR_SYS_609_2") call XfHQChat; // "You got your points back for this stupid episode."
+};
+
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
 
 if ( (time - _startTime) >= 20) then
 {
@@ -82,7 +89,7 @@ if ( (time - _startTime) >= 20) then
         }
         else
         {
-            hint localize format["+++ jump.sqf: Player in free fall, height AGL < 300 (%1) m.", getPos player select 2];
+            hint localize format["+++ jump.sqf: Player in free fall, height AGL < 300 (%1) m.", round(getPos player select 2)];
             playSound "freefall300m"; // Start of free fall on height < 300 m (and corresponding sound of 16-20 seconds length max)
         };
         _startTime = time;
@@ -91,7 +98,7 @@ if ( (time - _startTime) >= 20) then
 
 waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (((time - _startTime) >= 20) && (vehicle player !=  player)) };
 
-if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, getPos player select 2] }; // can't play sound
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
 
 // 2. para opening
 if ( (vehicle player) != player ) then
@@ -100,9 +107,9 @@ if ( (vehicle player) != player ) then
     playSound "rippara";
 };
 
-if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, getPos player select 2] }; // can't play sound
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
 
-hint localize format["+++ jump.sqf: Exit from script, alive %1, height AGL %2", alive player, getPos player select 2];
+hint localize format["+++ jump.sqf: Exit from script, alive %1, height AGL %2", alive player, round(getPos player select 2)];
 if (true) exitWith {}; // ++++++++++++++++ end of script
 #endif
 

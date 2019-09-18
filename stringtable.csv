@@ -699,14 +699,14 @@ STR_SYS_604,"Sahrani People welcome the %1 of the warrior-internationalist in th
 STR_SYS_604_1,"Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty, and welcomes the %1 warrior-the internationalist at this long-suffering land:\n""Deliver us from the boot of The Federal reserve agents, soldier!""","Fast die Hälfte von Sahrani veröffentlicht, aber die Bevölkerung Sahrani froh, dass alle Verteidiger des wahren Freiheit, und begrüßt die %1 Krieger-die Internationalistische an diesem leidgeprüften land:\n""Erlöse uns von dem boot Der Federal reserve Agenten, Soldaten!""","Уже половина Сахрани освобождена, но население Сахрани радо любому защитнику свободы без обмана и  приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""
 STR_SYS_604_0,"You are the first [English speaking] warrior in this dangerous mission on Sahrani liberation!\n Be worthy of Your great goal!","Sie sind der erste [deutschsprachiger] Krieger in dieser gefährlichen Mission zur Befreiung der Сахрани!\n Seien Sie würdig seiner großen Aufgabe!","Вы - первый [советский] воин в этой опасной миссии по освобождению Сахрани!\nБудьте достойны своей важнейшей миссии!"
 
-
 STR_SYS_605,"%1 killed %2 and looses %3 scores","%1 getötet %2. %1 verliert %3 erzielt","%1 убил %2 и теряет очков: %3!"
 STR_SYS_606,"During %4 you are on GRU duty in %1 [+%2/%3]","During %4 you are on GRU duty in %1 [+%2/%3]","В течении %4 Вы выполняете задание ГРУ в %1 [+%2/%3]!"
 
 STR_SYS_607,"You need %2 point[s] for parajump. Your current scores are %1","Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1","Для прыжка необходимо очков: %2. Сейчас у вас: %1"
 STR_SYS_608,"You can't jump. You have to wait %1 minutes for your next jump!!!","Sie können nicht springen. Sie müssen warten, %1 Minuten für Ihren nächsten springen!!!","Прыжок запрещён. След. прыжок через %1 мин.!"
 STR_SYS_609,"!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!","!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!","!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!"
-STR_SYS_609_1,"You finally realize that skydiving requires a parachute ! But it's late...","Sie endlich erkennen, dass Fallschirmspringen erfordert einen Fallschirm! Aber es ist spät...","Вы понимаете, что для прыжка был нужен парашют! Но уже поздно..."
+STR_SYS_609_1,"You finally realize that skydiving requires a parachute ! But it's late...\nYour last question: - How about paid for jump points?","Man merkt endlich, dass Fallschirmspringen einen Fallschirm erfordert ! Aber es ist spät...\nLetzte Frage: - warum habe ich für diesen Sprung bezahlt?","Вы понимаете, что для прыжка был нужен парашют! Но уже поздно...\nВаша последняя мысль: - Вернут ли очки?"
+STR_SYS_609_2,"You've got your points back for this stupid episode.","Du hast deine Punkte für diese dumme episode zurückbekommen.","Вам возвратили очки за этот дурацкий эпизод."
 
 STR_SYS_610,"[Record equipment]","[Datensatz Waffen]","[Запомнить снаряжение]"
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Ваше снаряжение записано и будет выдано в следующий раз
