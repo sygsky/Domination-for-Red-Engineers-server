@@ -38,12 +38,19 @@ _ini_str = nil;
 
 sleep 15.111;
 
+_flagIsOwned = false;
 while {true} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
 	_owner = flagOwner _flag;
 	#ifndef __TT__
+	if ( (!(isNull _owner)) != _flagIsOwned) then
+	{
+	    _flagIsOwned = !isNull _owner;
+	    _msg = if (_flagIsOwned) then {["STR_SYS_FLAG_OWNED", name _owner]} else {["STR_SYS_FLAG_EMPTY"]};
+        ["msg_to_user","",[_msg]] call XSendNetStartScriptClientAll; // inform about flag state change
+	};
 	if ((!isNull _owner) && (_owner distance FLAG_BASE < 20)) exitWith {
 		if (__RankedVer) then {
 			["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
