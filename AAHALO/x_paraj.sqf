@@ -25,10 +25,10 @@ if ( d_para_timer_base > 0 ) then { // pass time interval to jump
     then
     {
         _miss_mins = (d_next_jump_time - time)/60; // how many mins before next jump
-        if ( _miss_mins > 0) then // paid for munutes to wait fror next free jump
+        if ( _miss_mins > 0 ) then // paid for all (and partial) munutes to wait from next free jump
         {
             _miss_mins = ceil _miss_mins;
-            for "_i" from 1 to _miss_mins do { _wait_score = _i + _wait_score;  };
+            _wait_score = (_miss_mins*(_miss_mins + 1)) / 2 ; //  Natural series 1,2,3,4,5 of an arithmetic progression is {\displaystyle \sum _{i=1}^{n}i=1+2+3+\ldots +n={\frac {n(n+1)}{2}}}
             if ( score player  < (_jump_score  + _wait_score)) exitWith {};
             {
                 // For this jump you lost %1 points (%2 per jump and %2 per waiting munutes).
