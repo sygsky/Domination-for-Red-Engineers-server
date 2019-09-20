@@ -1,0 +1,280 @@
+;mando3dwrite.sqs
+;by Mandoble
+;
+;Write 3D text in the space
+;
+;Arguments:
+;Initial pos, from where the text will be written
+;Displacement angle of the text when moves (0-359, 0=N,180=S).
+;Initial altitude of the base of the text.
+;Horizontal speed of the text in m/s, 0 if still text (text will follow indicated disp. angle).
+;Vertical speed of the text in m/s, negative if descending, 0 if still text.
+;Angle of the text as it is written starting from initial pos (0-359, 0=N,180=S).
+;Text array to be written, each member a character between "" (A-Z, 0-9, period, comma and space supported).
+;Size array, each element in meters: 
+;            [character width,character height,space between characters,size of each character particle]
+;Shape for particles, either 2D shape (cl_fire,cl_water,cl_clasic,obrysove svetlo,koulesvetlo) or 3d object  
+;If above type is spaceobject or not (true for 3d objects, false for 2D shapes)
+;Color array, each menber is a [R,G,B,A] array, you may add as many members as desired.
+;Duration of the text in seconds, 9999 for a forever present text.
+;Rotations per second of character particles
+;
+;
+;Example step by step:
+;
+; 1 - Place the player near the coast heading East to the sea
+; 2 - Place a gamelogic named lg_pos1 200m East of the player, at the sea
+; 3 - Set time of day aroud 5:00 in summer.
+; 4 - Execute the following line:
+;[getPos lg_pos1,270,10,15,0,180,["H","E","L","L","O"],[10,10,5,5],"koulesvetlo",false,[[0,0,0,0],[0,1,0,1],[0,0,1,1],[0,0,0,0]],20,0]exec"mando3dwrite.sqs"
+;
+; Text will be displayed East of player, written from N to S and moving West at 15m/s. 
+; Fonts are 10x10m, spacing between fonts is 5m. Each font particle is 5m wide.
+; The text will change from green to yellow as it advances towards the player
+;
+
+_posini = _this select 0
+_angmov = _this select 1
+_altini = _this select 2
+_spdx   = _this select 3
+_spdy   = _this select 4
+_ang    = _this select 5
+_texto  = _this select 6
+_sizes  = _this select 7
+_shape  = _this select 8
+_space  = _this select 9
+_color  = _this select 10
+_dur    = _this select 11
+_rots   = _this select 12
+
+_pos    = [_posini select 0, _posini select 1, _altini]
+_wf     = _sizes select 0
+_dsx    = _wf/5.0
+_hf     = _sizes select 1
+_dsy    = _hf/5.0
+_sp     = _sizes select 2
+_sized = [_sizes select 3]
+_rad = 0.0
+_type = "Billboard"
+?_space: _type = "SpaceObject"
+
+_vel = [_spdx*sin(_angmov),_spdx*cos(_angmov),_spdy]
+
+_errorcmd = "Unsupported commands - "
+_errorfonts = "Unsupported characters - "
+
+_nfonts = count _texto
+_nfont  = 0
+#write
+_font = _texto select _nfont
+?_font == "A":goto "write_a"
+?_font == "B":goto "write_b"
+?_font == "C":goto "write_c"
+?_font == "D":goto "write_d"
+?_font == "E":goto "write_e"
+?_font == "F":goto "write_f"
+?_font == "G":goto "write_g"
+?_font == "H":goto "write_h"
+?_font == "I":goto "write_i"
+?_font == "J":goto "write_j"
+?_font == "K":goto "write_k"
+?_font == "L":goto "write_l"
+?_font == "M":goto "write_m"
+?_font == "N":goto "write_n"
+?_font == "Ñ":goto "write_ny"
+?_font == "O":goto "write_o"
+?_font == "P":goto "write_p"
+?_font == "Q":goto "write_q"
+?_font == "R":goto "write_r"
+?_font == "S":goto "write_s"
+?_font == "T":goto "write_t"
+?_font == "U":goto "write_u"
+?_font == "V":goto "write_v"
+?_font == "W":goto "write_w"
+?_font == "X":goto "write_x"
+?_font == "Y":goto "write_y"
+?_font == "Z":goto "write_z"
+?_font == " ":goto "write_spc"
+?_font == ".":goto "write_pto"
+?_font == ",":goto "write_cma"
+?_font == "0":goto "write_0"
+?_font == "1":goto "write_1"
+?_font == "2":goto "write_2"
+?_font == "3":goto "write_3"
+?_font == "4":goto "write_4"
+?_font == "5":goto "write_5"
+?_font == "6":goto "write_6"
+?_font == "7":goto "write_7"
+?_font == "8":goto "write_8"
+?_font == "9":goto "write_9"
+_errorfonts = _errorfonts + format["%1",_font]
+
+#nextfont
+_rad = _rad + _sp
+_pos = [(_posini select 0)+_rad*sin(_ang), (_posini select 1)+_rad*cos(_ang), (_pos select 2)]
+_nfont = _nfont + 1
+?_nfont < _nfonts: goto "write"
+_error = false
+? (_errorfonts != "Unsupported characters - "):_error = true
+? (_errorcmd != "Unsupported commands - "):_error = true
+?!_error:exit
+
+hint format["%1\n\n%2",_errorfonts, _errorcmd]
+exit
+
+#write_a
+_command = ["U","U","UR","UR","DR","DR","D","D","UL","L","L","L","JDR","JR","JR","JR","JR"]
+goto "writefont"
+#write_b
+_command = ["U","U","U","U","R","R","R","DR","DL","L","R","JDR","DL","L","L","L","JR","JR","JR","JR","JR"]
+goto "writefont"
+#write_c
+_command = ["JU","U","U","UR","R","R","R","D","JD","JD","JD","L","L","L","UL","JDR","JR","JR","JR","JR"]
+goto "writefont"
+#write_d
+_command = ["U","U","U","U","R","R","R","DR","DR","DL","DL","L","L","L","JR","JR","JR","JR","JR","JR"]
+goto "writefont"
+#write_e
+_command = ["U","U","U","U","R","R","R","R","DL","JDL","L","L","JD","JD","JR","R","R","R","R"]
+goto "writefont"
+#write_f
+_command = ["U","U","U","U","R","R","R","R","DL","JDL","L","L","JD","JD","JR","JR","JR","JR","JR"]
+goto "writefont"
+#write_g
+_command = ["JU","U","U","UR","R","R","R","D","JDL","R","D","DL","L","L","R","JR","JR","JR"]
+goto "writefont"
+#write_h
+_command = ["U","U","U","U","D","JDR","R","R","R","U","U","D","JD","JD","D","R"]
+goto "writefont"
+#write_i
+_command = ["R","R","U","U","U","U","L","L","R","JR","JR","R","DL","JD","JD","JD","R","R"]
+goto "writefont"
+#write_j
+_command = ["JU","DR","R","U","U","U","U","L","L","R","JR","JR","R","R","JD","JD","JD","JD"]
+goto "writefont"
+#write_k
+_command = ["U","U","U","U","DR","JD","R","UR","UR","D","JD","JDL","DR","R"]
+goto "writefont"
+#write_l
+_command = ["U","U","U","U","D","JD","JD","JDR","R","R","R","R"]
+goto "writefont"
+#write_m
+_command = ["U","U","U","U","DR","DR","UR","UR","D","D","D","D","R"]
+goto "writefont"
+#write_n
+_command = ["U","U","U","U","DR","DR","DR","DR","U","U","U","U","D","JDR","JD","JD"]
+goto "writefont"
+#write_ny
+_command = ["U","U","U","U","DR","DR","DR","DR","U","U","U","U","UL","JU","L","L","DR","JDR","JDR","JDR","JD","JD"]
+goto "writefont"
+#write_o
+_command = ["JU","U","U","UR","R","R","DR","D","D","DL","L","L","UL","JDR","JR","JR","JR","JR"]
+goto "writefont"
+#write_p
+_command = ["U","U","U","U","R","R","R","DR","DL","L","L","DR","JDR","JR"]
+goto "writefont"
+#write_q
+_command = ["JU","U","U","UR","R","R","DR","D","D","DL","L","L","UL","JDR","JDR","DR","U","JUR","JR"]
+goto "writefont"
+#write_r
+_command = ["U","U","U","U","R","R","DR","DL","L","R","JDR","DR","R"]
+goto "writefont"
+#write_s
+_command = ["R","R","R","UR","UL","L","L","UL","UR","R","R","R","D","JD","JD","JD"]
+goto "writefont"
+#write_t
+_command = ["JR","JR","U","U","U","U","L","L","R","JR","JR","R","DL","JD","JD","JD","JR","JR"]
+goto "writefont"
+#write_u
+_command = ["JU","U","U","U","R","JR","JR","JR","D","D","D","DL","L","L","R","JR","JR","JR"]
+goto "writefont"
+#write_v
+_command = ["JU","JU","U","U","DR","JD","JD","DR","UR","UR","U","U","D","JD","JD","JDR"]
+goto "writefont"
+#write_w
+_command = ["U","U","U","U","DR","JD","JD","UR","DR","DR","U","U","U","U","DR","JD","JD","JD"]
+goto "writefont"
+#write_x
+_command = ["UR","UR","UR","UR","L","JL","JL","JL","DR","DR","JDR","DR","R"]
+goto "writefont"
+#write_y
+_command = ["JU","JU","JU","JU","DR","DR","D","D","U","JU","JUR","UR","UR","JD","JD","JD","JD","JD"]
+goto "writefont"
+#write_z
+_command = ["R","R","R","R","UL","UL","UL","UL","R","R","R","R","R","JD","JD","JD","JD"]
+goto "writefont"
+#write_spc
+_command = ["JR","JR","JR","JR","JR"]
+goto "writefont"
+#write_pto
+_command = ["U","R","D","R","JR","JR","JR"]
+goto "writefont"
+#write_cma
+_command = ["JD","UR","U","R","D","R","JR","JR","JR"]
+goto "writefont"
+#write_0
+_command = ["JU","U","U","UR","R","R","DR","D","D","DL","L","L","UL","JDR","JR","JR","JR","JR"]
+goto "writefont"
+#write_1
+_command = ["JR","R","U","U","U","U","DL","DL","JR","JD","JD","JR","JR","R","JR"]
+goto "writefont"
+#write_2
+_command = ["UR","UR","UR","UL","L","DL","D","JD","JDR","R","R","R"]
+goto "writefont"
+#write_3
+_command = ["R","R","UR","UL","L","R","JUR","UL","L","L","R","JDR","JDR","JDR","JD"]
+goto "writefont"
+#write_4
+_command = ["JU","JU","U","U","U","JDR","JD","JD","R","U","U","D","JD","JD","D","UR","JU","D","JDR"]
+goto "writefont"
+#write_5
+_command = ["R","R","UR","UL","L","L","U","U","R","R","R","R","JD","JD","JD","JD"]
+goto "writefont"
+#write_6
+_command = ["JU","JUR","R","DR","DL","L","UL","U","U","UR","R","R","JDR","JD","JD","JD"]
+goto "writefont"
+#write_7
+_command = ["JU","JU","JU","JU","R","R","R","DL","DL","D","D","R","JR","JR"]
+goto "writefont"
+#write_8
+_command = ["JU","UR","R","UR","UL","L","DL","DR","JD","JD","R","UR","DR"]
+goto "writefont"
+#write_9
+_command = ["JR","R","UR","U","U","UL","L","DL","DR","R","DR","JD"]
+goto "writefont"
+
+
+#writefont
+_cmds = count _command
+_ncmd = 0
+#writeseg
+_cmd = _command select _ncmd
+_cmdok = false
+?_cmd == "JDR":_dx=_dsx;_dy=-_dsy;_write=false;_cmdok = true
+?_cmd == "JDL":_dx=-_dsx;_dy=-_dsy;_write=false;_cmdok = true
+?_cmd == "JUR":_dx=_dsx;_dy=_dsy;_write=false;_cmdok = true
+?_cmd == "JUL":_dx=-_dsx;_dy=_dsy;_write=false;_cmdok = true
+?_cmd == "JU":_dx=0.0;_dy=_dsy;_write=false;_cmdok = true
+?_cmd == "JD":_dx=0.0;_dy=-_dsy;_write=false;_cmdok = true
+?_cmd == "JL":_dx=-_dsx;_dy=0.0;_write=false;_cmdok = true
+?_cmd == "JR":_dx=_dsx;_dy=0.0;_write=false;_cmdok = true
+?_cmd == "DR":_dx=_dsx;_dy=-_dsy;_write=true;_cmdok = true
+?_cmd == "DL":_dx=-_dsx;_dy=-_dsy;_write=true;_cmdok = true
+?_cmd == "UR":_dx=_dsx;_dy=_dsy;_write=true;_cmdok = true
+?_cmd == "UL":_dx=-_dsx;_dy=_dsy;_write=true;_cmdok = true
+?_cmd == "U":_dx=0.0;_dy=_dsy;_write=true;_cmdok = true
+?_cmd == "D":_dx=0.0;_dy=-_dsy;_write=true;_cmdok = true
+?_cmd == "L":_dx=-_dsx;_dy=0.0;_write=true;_cmdok = true
+?_cmd == "R":_dx=_dsx;_dy=0.0;_write=true;_cmdok = true
+?!_cmdok: goto "errorcmd"
+?_write:drop[_shape,"",_type,100,_dur,_pos,_vel,_rots,25.50,20,0,_sized,_color,[0],0,0,"","",""]
+_rad = _rad + _dx
+_pos = [(_posini select 0)+_rad*sin(_ang), (_posini select 1)+_rad*cos(_ang), (_pos select 2)+_dy]
+#continuarcmd
+_ncmd = _ncmd + 1
+?_ncmd < _cmds:goto "writeseg"
+goto "nextfont"
+
+#errorcmd
+_errorcmd = _errorcmd + format["%1 ",_cmd]
+goto "continuarcmd"
