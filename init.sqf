@@ -685,12 +685,15 @@ if ( X_Client ) then {// runs only on client
 
 
 };
-// No option to run any scriot on server as this code executed only on clients.
+// No option to run any script on server as this code executed only on clients.
 // See exit condition in upper lines: if (!X_Client) exitWith {};
 
-// runs on both client and server
 #endif
 
+// play (true) or not play (false) reborn music to player
+SYG_playDeathSounds = {
+	d_rebornmusic_index == 0
+};
 
 
 if (true) exitWith {};

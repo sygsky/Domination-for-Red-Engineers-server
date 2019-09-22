@@ -23,16 +23,16 @@ STR_XCP_12,"x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started","x_sabot
 //-----------------------------------------------------------------------
 // SYG scripts strings:
 //----------------------------------------------------------------------
-STR_SYG_01,"Only engineers can enter the Salvage trucks...","Only engineers can enter the Salvage trucks...","Только инженер может водить транспортный грузовик"
-STR_SYG_02,"Only engineers can load static weapons","Only engineers can load static weapons","Только инженеры могу грузить станковое оружие"
-STR_SYG_03,"Already %1 items loaded. Not possible to load more", "Already %1 items loaded. Not possible to load more", "Мест загружено: %1. Это максимум"
-STR_SYG_04,"No static weapon in range", "No static weapon in range", "Нет станкового оружия для погрузки"
-STR_SYG_05,"You're too far from %1, max. dist. %2m!","You're too far from %1, max. dist. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
-STR_SYG_06,"You are already loading an item. Wait until it is finished","You are already loading an item. Wait until it is finished","Вы в процессе загрузки. Дождитесь конца процедуры"
-STR_SYG_07,"%1 will be loaded in %2 sec.", "%1 will be loaded in %2 sec.", "%1 будет загружено через %2 сек."
+STR_SYG_01,"Only engineers can enter the Salvage trucks...","Nur Ingenieure können die Bergungsfahrzeuge betreten...","Только инженер может водить транспортный грузовик"
+STR_SYG_02,"Only engineers can load stationary weapons","Nur Ingenieure können stationäre Waffen laden","Только инженеры могу грузить станковое оружие"
+STR_SYG_03,"Already loaded %1 items. Unable to load more", "Bereits %1-Elemente geladen. Kann nicht mehr laden", "Мест загружено: %1. Это максимум"
+STR_SYG_04,"No stationary weapon in range", "Keine stationäre Waffe in Reichweite", "Нет станкового оружия для погрузки"
+STR_SYG_05,"You're too far from %1, max. dist. %2m!","Du bist zu weit von %1 entfernt, max. dist. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
+STR_SYG_06,"You're in the process of downloading. Wait for the end of the procedure","Du bist gerade dabei, dich herunterzuladen. Warten Sie auf das Ende des Verfahrens","Вы в процессе загрузки. Дождитесь конца процедуры"
+STR_SYG_07,"%1 will be loaded in %2 sec.", "%1 wird in %2 Sek. geladen.", "%1 будет загружено через %2 сек."
 STR_SYG_08, "%1 loaded and attached!", "%1 loaded and attached!", "%1 загрузили и закрепили!"
-STR_SYG_09,"You can't load a %1 into a %2!", "You can't load a %1 into a %2!", "Вы не можете загрузить %1 в %2!"
-STR_SYG_10,"Load Static","Last Statische","Загрузить орудие"
+STR_SYG_09,"You can't load a %1 into a %2!", "Du kannst kein %1 in %2 laden!", "Вы не можете загрузить %1 в %2!"
+STR_SYG_10,"Load Stationary","Last Statische","Загрузить орудие"
 STR_SYG_11,"Unload Static","Entladen Statischer","Разгрузить орудие"
 STR_SYG_12,"%1 to Backpack","%1 in den Rucksack","%1 в рюкзак"
 
@@ -48,9 +48,6 @@ STR_SERVER_1,"Shooting at allies from any weapon under any pretext is strictly p
 
 STR_SYS_00,"Your mash was destroyed","Ihre Maische wurde zerstört","Ваша мед. палатка была уничтожена."
 STR_SYS_01,"Grass layer set to: %1","Die gras-Ebene festgelegt werden: %1","Настройки отображения травы: %1"
-STR_SYS_011,No Grass,Kein Gras,без травы
-STR_SYS_012,Medium Grass,Medium Gras,обычная трава
-STR_SYS_013,Full Grass,Voll Gras,высокая трава
 
 STR_DANGER_NUM,4,4,4
 STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plotzlich lauft Ihnen am Rucken ein kalter schweis runter...","Внезапно по вашей спине потекли струйки холодного пота..."
@@ -375,6 +372,9 @@ STR_SYS_164,"Points needed for","Punkte benötigt","Необходимо очк�
 STR_SYS_165,"different ranks:","für verschiedene Ränge:","получения звания:"
 STR_SYS_166,"General mission settings","Allgemeine Missions-Einstellungen","Общие параметры миссии"
 STR_SYS_167,"All times are in seconds. Click on the textbox and use up and down cursor to browse.","Alle Zeiten sind in Sekunden. Klicken Sie auf den text und oben und unten zu durchsuchen.","Время в секундах. Для навигации в тексте используйте стрелки вверх/вниз."
+STR_SYS_168,Respawn music,respawn-Musik,Музыка воскрешения
+STR_REBORN_1,On,Auf,Вкл.
+STR_REBORN_0,Off,Off,Выкл.
 
 STR_SYS_170,"Off","Off","Без маркеров"
 STR_SYS_171,"With Names","Mit Namen","С именем"
@@ -383,7 +383,7 @@ STR_SYS_173,"Role Only","Rolle Nur","С ролью"
 STR_SYS_174,"Health","Gesundheit","С отображением здоровья"
 
 STR_GRASS_1,"No Grass","Kein Gras","Без травы"
-STR_GRASS_2,"Medium Grass","Medium Gras","Средняя"
+STR_GRASS_2,"Medium Grass","Mittleres Gras","Средняя"
 STR_GRASS_3,"Full Grass","Voll Gras","Полная"
 
 

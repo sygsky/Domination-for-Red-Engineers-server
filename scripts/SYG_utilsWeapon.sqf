@@ -1714,10 +1714,18 @@ SYG_rearmUnit =
             _unit setVariable [ "ACE_Ruckmagazines", _ruck_items ];
         };
 	};
-	// FIXME: argopt(4) is value for player stored view distance
+	// argopt(4) is value for player stored view distance
 	_vdist = argopt(4, 1500);
 	//hint localize format["++++++ SYG_rearmUnit: _vdist = %1 +++++++", _vdist];
 	_vdist call SYG_setViewDistance;
+
+	// argopt(5) is value for player reborn music play/not play
+	_vdist = argopt(5, 0);
+	if ( (typeName _vdist == "SCALAR") && (_vdist != d_rebornmusic_index) && (_vdist in [0,1]) ) then {
+        d_rebornmusic_index = _vdist;
+        _msg = ["STR_REBORN_1","STR_REBORN_0"] select _vdist; // "On", "Off"
+        ( format [ "%1 -> %2", localize "STR_SYS_168", localize _msg ] ) call XfGlobalChat;
+	};
 
 	true
 };
@@ -2777,9 +2785,9 @@ SYG_getPlayerEquiptArr = {
 #endif
 
 #ifdef __JAVELIN__
-    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance]
+    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
 #else
-    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance]
+    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
 #endif
 
 };
@@ -2805,6 +2813,7 @@ SYG_unpackEquipmentFromStr =
 //  d_viewdistance = 1500;
 //  d_graslayer_index = 0;
 //  d_playermarker_index = 1;
+//  d_rebornmusic_index = 0;
 //
 // if any error, -1 always returned
 //
@@ -2822,6 +2831,7 @@ SYG_getParamFromSettingsArray = {
         case "VD": {argp(_arr, 0)}; // ViewDistance
         case "GI": {argp(_arr, 1)}; // GrassIndex
         case "PI": {argp(_arr, 2)}; // Player marker Index
+        case "RM": {argp(_arr, 3)}; // Reborn music play index
         default {-1};
     }
 };

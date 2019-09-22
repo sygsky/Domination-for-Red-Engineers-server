@@ -294,13 +294,16 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             };
                         };
 
-                        if (_index == 0 && (toLower (name player) == "yeti")) exitWith // yeti
+                        if (toLower (name player) == "yeti") then // yeti
                         {
+                            d_rebornmusic_index = 1; // no play death sound
                             SYG_suicideScreamSound = "suicide_yeti"; // personal suicide sound for yeti
-                            _p execVM "scripts\yeti_rearm.sqf";
+                            if (_index == 0) exitWith // yeti
+                            {
+                                _p execVM "scripts\yeti_rearm.sqf";
+                            };
                             hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %5", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
                         };
-
                         // TODO: add more personal setting here (as for "Yeti" done)
 
                         [_p, _weapp] call SYG_armUnit;

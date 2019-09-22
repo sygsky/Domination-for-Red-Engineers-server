@@ -252,6 +252,7 @@ d_wreck_lift_rank = "Private"; //+++Sygsky: was "Lieutenant", "Major" , "Colonel
 d_viewdistance = 1500; // default view distance diameter
 d_graslayer_index = 0; // default graas level (no grass at all)
 d_playermarker_index = 1; // default player marker: marker with name
+d_rebornmusic_index = 0; // default reborn music: play
 
 #ifdef __ACE__
 // set d_with_ace_map to true if you want to use ACE_Map

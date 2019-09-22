@@ -492,6 +492,7 @@ XHandleNetStartScriptClient = {
 		};
 		case "mt_spotted": {
 			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
+			if ( !(call SYG_playDeathSounds) ) exitWith{};
             _townArr  = "NO_DEBUG" call SYG_getTargetTown;
             if (count _townArr == 0) exitWith{};
             _townName = _townArr select 1;
