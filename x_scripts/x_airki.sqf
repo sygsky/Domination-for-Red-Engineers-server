@@ -33,6 +33,12 @@ _pos = d_airki_start_positions select 0; // from where to fly to goal
 
 _wp_behave = "AWARE";
 
+if (isNil "SYG_owner_active_air_vehicles_arr") then
+{
+    SYG_owner_active_air_vehicles_arr = []; // array of active owner air vehicles
+};
+
+
 _crew_member = (
 	switch (d_enemy_side) do {
 		case "EAST": {d_pilot_E};
@@ -496,7 +502,34 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
    		    }
    		    else
    		    {
-   		        _x flyInHeight (_flight_height + random _flight_random);
+   		        // check what height we should set
+   		        // if enemy air vehicles detected, set height according enemy vehicle one
+   		        _height_not_set = true;
+                _veh = _x;
+                for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
+                {
+                    if ( !alive _x ) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
+                    else
+                    {
+                        _pos = getPos _x;
+                        if ( (_veh distance _pos)  < 3000 ) then
+                        {
+                            if ( ( _pos select 2) > _flight_height ) then
+                            {
+                                    _veh flyInHeight ((_pos select 2)+50);
+                                    hint localize format["+++ x_airki: enemy air vehicle detected, height set to %1", ((_pos select 2)+50)];
+                                    _height_not_set = false;
+                            };
+                            _veh reveal _x;
+                        }
+                        else { SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"]};
+                    };
+                } forEach SYG_owner_active_air_vehicles_arr;
+                SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
+                if (_height_not_set) then
+                {
+       		        _veh flyInHeight (_flight_height + (random _flight_random));
+                };
    		    };
    		} forEach _vehicles;
 
@@ -570,7 +603,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	{
 	    _heli = _vehicles select 0;
 	    _loc = _heli call SYG_nearestSettlement;
-	    hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, dmg %5", typeOf _heli, text _loc, round((locationPosition _loc) distance _heli), round((getPos _heli) select 0),damage _heli ];
+	    hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, dmg %5", typeOf _heli, text _loc, round((locationPosition _loc) distance _heli), round((getPos _heli) select 2),damage _heli ];
 	    _timeToPrint = time;
 	};
 
