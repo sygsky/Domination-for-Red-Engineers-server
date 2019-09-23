@@ -201,7 +201,7 @@ while {true} do {
 	    if ( _air_battle && !_cargo) then // periiodically send info to server about player battle air vehicle activity
 	    {
    	        [ _veh, "on" ] call _sendInfoOnAirVehToServer; // add info about to server
-       	    hint localize format["+++ x_playerveccheck: stop activity report on %1", typeOf _veh];
+       	    hint localize format["+++ x_playerveccheck: start activity report on %1", typeOf _veh];
 	    };
 	};
 	//hint localize format["x_playerveccheck.sqf: player is not assigned %1", _role_arr];
