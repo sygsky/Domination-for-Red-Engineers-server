@@ -690,8 +690,8 @@ if ( X_Client ) then {// runs only on client
 
 #endif
 
-// play (true) or not play (false) reborn music to player
-SYG_playDeathSounds = {
+// play (true) or not play (false) some extra sounds, incleding reborn and multiple deaths music to player
+SYG_playExtraSounds = {
 	d_rebornmusic_index == 0
 };
 
