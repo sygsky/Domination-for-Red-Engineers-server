@@ -38,20 +38,21 @@ _ini_str = nil;
 
 sleep 15.111;
 
-_flagIsOwned = false;
+_owned = false;
 while {true} do {
 	if (X_MP) then {
-		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+		waitUntil {sleep (1.012 + random 1);( call XPlayersNumber) > 0 };
 	};
 	_owner = flagOwner _flag;
 	#ifndef __TT__
-	if ( (!(isNull _owner)) != _flagIsOwned) then
+	_alive = alive _owner;  // (alive owner) is the same as (flag owned)
+	if ( ( _alive || _owned ) && !( _alive && _owned ) ) // state changed and if alive, flag is owned
 	{
-	    _flagIsOwned = !isNull _owner;
-	    _msg = if (_flagIsOwned) then {["STR_SYS_FLAG_OWNED", name _owner]} else {["STR_SYS_FLAG_EMPTY"]};
-        ["msg_to_user","",[_msg]] call XSendNetStartScriptClientAll; // inform about flag state change
+	    _owned = _alive;
+	    _msg = if ( _owned ) then { [ "STR_SYS_FLAG_OWNED", name _owner ] } else { [ "STR_SYS_FLAG_EMPTY" ] };
+        [ "msg_to_user", "", [ _msg ] ] call XSendNetStartScriptClientAll; // inform about flag state change
 	};
-	if ((!isNull _owner) && (_owner distance FLAG_BASE < 20)) exitWith {
+	if ((_alive) && (_owner distance FLAG_BASE < 20)) exitWith {
 		if (__RankedVer) then {
 			["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
 		};
@@ -62,7 +63,7 @@ while {true} do {
 		side_mission_resolved = true;
 	};
 	#else
-	if ((!isNull _owner) && (_owner distance RFLAG_BASE < 20)) exitWith {
+	if ((alive _owner) && (_owner distance RFLAG_BASE < 20)) exitWith {
 		if (__RankedVer) then {
 			["d_sm_p_pos", position RFLAG_BASE] call XSendNetVarClient;
 		};
@@ -72,7 +73,7 @@ while {true} do {
 		side_mission_winner = 1;
 		side_mission_resolved = true;
 	};
-	if ((!isNull _owner) && (_owner distance WFLAG_BASE < 20)) exitWith {
+	if ((alive _owner) && (_owner distance WFLAG_BASE < 20)) exitWith {
 		if (__RankedVer) then {
 			["d_sm_p_pos", position WFLAG_BASE] call XSendNetVarClient;
 		};
