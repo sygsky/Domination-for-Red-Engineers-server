@@ -284,7 +284,7 @@ SYG_makeRestoreArray = {
 SYG_setGrassLevel = {
     private ["_real_list","_vlist"];
     _real_list = [50, 25, 12.5];
-    _vlist = ["STR_SYS_011","STR_SYS_012","STR_SYS_013"]; // "No Grass", "Medium Grass", "Full Grass"
+    _vlist = ["STR_GRASS_1","STR_GRASS_2","STR_GRASS_3"]; // "No Grass", "Medium Grass", "Full Grass"
     _this = (_this max 0) min ((count _real_list) - 1);
     if (d_graslayer_index != _this) then {
         d_graslayer_index = _this;
@@ -299,10 +299,10 @@ SYG_viewDistanceArray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8
 // Call only on client. Or it may be useful on server also?
 //
 // Sets view distance. Call as:
-// _dist = 0 call SYG_setViewDistance;
-// _dist = [0] call SYG_setViewDistance;
-// _dist = 1200 call SYG_setViewDistance;
-// _dist = [10000] call SYG_setViewDistance;
+// _dist = 0 call SYG_setViewDistance; // equivalent to: (SYG_viewDistance select 0) call SYG_setViewDistance
+// _dist = [0] call SYG_setViewDistance; // equivalent to: (SYG_viewDistance select 0) call SYG_setViewDistance
+// _dist = 1200 call SYG_setViewDistance; // equivalent to: (SYG_viewDistance select 0) call SYG_setViewDistance; // due to designated value not found in SYG_viewDistanceArray
+// _dist = [10000] call SYG_setViewDistance; // equivalent to: (SYG_viewDistanceArray select 10) call SYG_setViewDistance; // due to designated value found in SYG_viewDistanceArray
 //
 SYG_setViewDistance = {
     //hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2+++++", _this, isServer ];

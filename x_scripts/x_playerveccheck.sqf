@@ -14,12 +14,18 @@ if (!XClient) exitWith {};
 
 #include "x_setup.sqf"
 
-#define __CHK_WPN_ON_VEC__
 #define __DEBUG_PRINT__
 
-private ["_vec", "_not_allowed", "_needed_rank", "_index"];
+#define INFORM_PERIOD 15 // seconds between sending inform on air battle vehicle status to the server
+
+_sendInfoOnAirVehToServer = {
+    ["veh_info", _this ] call XSendNetStartScriptServer; // inform server about battle vehicle activity
+};
+
+private ["_vec", "_not_allowed", "_needed_rank", "_index", "_last_send"];
 
 _attempts_count = 0;
+_last_send = time;
 
 while {true} do {
 	waitUntil {sleep 0.1; vehicle player != player};
@@ -30,6 +36,7 @@ while {true} do {
 	_cargo = false;
 	_role = "";
 	_index = 0;
+	_air_battle = false; // Is vehicle Battle Air one?
 	
 	//+++ Sygsky:
 	_role_arr = assignedVehicleRole player;
@@ -44,7 +51,7 @@ while {true} do {
 	//--- Sygsky;
 	
 	_player_not_GRU = isNil "player_is_on_town_raid";
-	_enemy_vec = false; // if vehicle is enemy ope
+	_enemy_vec = false; // if vehicle is enemy trophy one
 	if ( _player_not_GRU ) then
 	{
 		#ifndef __TT__
@@ -100,6 +107,7 @@ while {true} do {
 							};
 						} else {
 						    //big heli are here
+						    _air_battle = true;
 	                        // Western heli allowed to enter for any rank drivers
 	                        if ( !(_vec isKindof "AH1W" || _veh isKindOf "ACE_AH64_AGM_HE" || _veh isKindOf "UH60MG") || (_role != "Driver") ) then
 	                        { // follow check for not western helicopter only
@@ -112,6 +120,7 @@ while {true} do {
 						};
 					} else {
 						if (_vec isKindOf "Plane" && (typeOf _vec != "RAS_Parachute")) then {
+						    _air_battle = true;
 							if (_index < _indexplane) then {
 								_not_allowed = true;
 								_needed_rank = (_vrs select 3);
@@ -184,11 +193,24 @@ while {true} do {
 		}
 		else
 		{
-			(localize "STR_GRU_38") call XfGlobalChat;
+			(localize "STR_GRU_38") call XfGlobalChat; // "No, no! I can't disobey orders about not using such vehicle during GRU task!"
 		};
+	}
+	else // player allowed to be in vehicle
+	{
+	    if ( _air_battle && !_cargo) then // periiodically send info to server about player battle air vehicle activity
+	    {
+   	        [ _veh, "on" ] call _sendInfoOnAirVehToServer; // add info about to server
+       	    hint localize format["+++ x_playerveccheck: start activity report on %1", typeOf _veh];
+	    };
 	};
 	//hint localize format["x_playerveccheck.sqf: player is not assigned %1", _role_arr];
-	waitUntil {sleep 0.1; vehicle player == player};
+	waitUntil {sleep 0.2; vehicle player == player};
+    if ( _air_battle && !_cargo &&  !_not_allowed || _bulky_weapon == "") then // drop info
+    {
+        [ _veh, "off" ] call _sendInfoOnAirVehToServer; // drop info about this vehicle
+        hint localize format["+++ x_playerveccheck: stop activity report on %1", typeOf _veh];
+    };
 };
 
 if (true) exitWith {};

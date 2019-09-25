@@ -8,8 +8,8 @@
 	(_this select 1) call XHandleNetVar;
 };
 
-SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri", "Frosty", "Aron"];
-SYG_localZones = [           0,           0,        0,    -4,           0,        +2,        +2,     +2,       +2,     +1];
+SYG_userNames  = ["EngineerACE",/*"HE_MACTEP",*/"Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri", "Frosty", "Aron"];
+SYG_localZones = [            0,/*          0,*/        0,    -4,           0,        +2,        +2,     +2,       +2,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this"];
@@ -333,6 +333,24 @@ XHandleNetStartScriptServer = {
 		{
 		    (_this select 1) addVehicle (_this select 2); // (group player) addVehicle _veh;
 		};
+
+		case "veh_info": // information about battle air vehicle activity
+		{
+		    _params = (_this select 1); // parameters of the command
+		    _veh    = _params select 0; // vehicle
+		    _cmd    = _params select 1; // "on"/"off"
+		    switch (toLower _cmd) do
+		    {
+		        case "on"  :
+		        {
+		            if (_veh in SYG_owner_active_air_vehicles_arr) exitWith {};  // already in
+		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr + [ _veh ]; // add new vehicle
+		        };
+		        case "off" : {SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ] }; // remove vehicle
+		        default {hint localize format["--- ""veh_info"": illegal params %1", _params]};
+		    }
+		};
+
 
 //========================================================================================================== END OF CASES
 

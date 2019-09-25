@@ -16,7 +16,7 @@
 #define RANDOM_FROM_PARTS_ARR(ARR) (ARR select((floor(random((count ARR)-1)))+1))
 
 #define NEW_DEATH_SOUND_ON_BASE_DISTANCE 2000
-#define DEATH_COUNT_TO_PLAY_MUSIC 30
+#define DEATH_COUNT_TO_PLAY_MUSIC 50
 
 SYG_lastPlayedSoundItem = ""; // last played music/sound item
 SYG_deathCountCnt = 0;
@@ -362,7 +362,7 @@ SYG_playRandomTrack = {
                 hint localize format[ "SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
     #endif
                 SYG_deathCountCnt = 0;
-                playMusic arg(0);
+                if (call SYG_playExtraSounds) then { playMusic arg(0); };
             };
 
             private ["_trk"];
@@ -391,7 +391,7 @@ SYG_playRandomTrack = {
     hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
 };
 
-//
+// NOT IN USE AT ALL
 // Changes position for sound created with call to createSoundSource function
 //
 // Example:
