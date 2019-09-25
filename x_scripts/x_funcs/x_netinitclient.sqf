@@ -580,9 +580,16 @@ XHandleNetStartScriptClient = {
 
 
         // this command is received and processed ONLY on clients, just if started on client too
-        // some message to user, params: ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg>>>]
+        // some message to user, params:
+        // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
         // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
-        // msg is displayed using titleText ["...", "PLAIN DOWN"];
+        // _delay_between_messages is seconds number to sleep between multiple messages
+        // _initial_delay is seconds before first message show
+        // no_title_msg if true - no title shown, else shown if false or "" empty string
+        // sound_name is the name of the sound to play with first message show on 'say' command
+        // msg is displayed using titleText ["...", "PLAIN DOWN"] and common chat
+        // msg additionally displayed as title in the middle of the screen
+
 		case "msg_to_user":	{
 			private [ "_msg_arr","_msg_res","_name","_delay","_localize" ];
 /*
@@ -612,9 +619,19 @@ XHandleNetStartScriptClient = {
 			if ((_name == name player) || (_name == "") || (_name == "*")) then // msg to this player || any
 			{
 				// check for initial delay
+
 				if ( (count _this) > 4) then
 				{
-					if ((_this select 4) > 0) then {sleep (_this select 4);};
+					if ((_this select 4) > 0) then
+					{
+					    sleep (_this select 4);
+					};
+                    // try to say sound on 1st text showing
+                    if ( (count _this) > 5) then
+                    {
+                        _sound = _this select 5;
+                        if ( typeName _sound == "STRING") then {playSound _sound;};
+                    };
 				};
 				_delay = 4; // default delay between messages is 4 seconds
 				if ( count _this > 3) then
