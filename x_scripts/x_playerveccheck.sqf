@@ -37,7 +37,7 @@ while { true } do {
 	_role = "";
 	_index = 0;
 	_air_battle = false; // Is vehicle Battle Air one?
-	if (_vec != "ACE_Bicycle") then
+	if ((typeOf _vec) != "ACE_Bicycle") then
 	{
 
         //+++ Sygsky:
