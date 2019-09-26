@@ -121,7 +121,7 @@ _rejoinPilots =
             for "_i" from 0 to _counter - 1 do
             {
                 _unit = _badunits select _i;
-                if ( !alive _unit) then
+                if ( !canMove _unit) then
                 {
                     _goodunits set [_i, "RM_ME"]; // remove dead from good list
                 }
@@ -154,7 +154,7 @@ _rejoinPilots =
                         _goodunits,
                         _newgrp,
                         count units _newgrp,
-                        round((leader _goodunits) distance (leader _newgrp)),
+                        round((_goodunits select 0) distance (leader _newgrp)),
                         _badunits];
 #endif
                     _goodunits join _newgrp;

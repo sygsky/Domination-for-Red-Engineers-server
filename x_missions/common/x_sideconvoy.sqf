@@ -53,7 +53,7 @@ _checkOverturnedVehicles = {
     {
         _initPos = _pos;
         if ( _pos < 0 ) exitWith { _footmen = []};
-        if (alive _x && (_x call SYG_vehIsUpsideDown) && ( (_x distance (_footmen select _pos) ) < 100) ) then // near overturned vehicle
+        if ( (alive _x) && (side _x == d_side_enemy) && (_x call SYG_vehIsUpsideDown) && ( (_x distance (_footmen select _pos) ) < 100) ) then // near overturned vehicle
         {
             hint localize format["+++ Convoy checkOverturnedVehicles: found overturned %1, dmg %2, fuel %3, dist %4", typeOf _x, damage _x, fuel _x, _x distance (_footmen select _pos)];
             // repair, refuel , overturned
