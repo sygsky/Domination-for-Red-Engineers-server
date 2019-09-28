@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_artillery.sqf
 private ["_ok","_oldpos","_pos1","_pos2","_dist"];
 
 #include "x_setup.sqf"

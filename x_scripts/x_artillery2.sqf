@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_artillery2.sqf
 private ["_ok","_oldpos","_pos1","_pos2","_dist"];
 
 #include "x_setup.sqf"
@@ -132,7 +132,7 @@ if (ari_type2 != "") then {
 	["ari2msg", 6, ari_type2, ari_salvos2] call XSendNetStartScriptClient;
 	["ari_type2",ari_type2,ari_salvos2,str(player)] call XSendNetStartScriptServer;
 } else {
-	deleteMarkerLocal "arti1_marker_1";
+	deleteMarkerLocal "arti2_marker_1";
 	(localize "STR_SYS_103") call XfHQChat; // "Отмена..."
 	AriTarget2 setPos _oldpos;
 	"arti_target2" setMarkerPos _oldpos;

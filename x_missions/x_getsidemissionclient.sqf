@@ -49,7 +49,7 @@ if (current_mission_index != -1) then {
 						d_was_at_sm = true;
 						d_sm_running = false;
 					};
-					sleep 3.012 + random 3;
+					sleep (3.012 + (random 3));
 				};
 			};
 		#endif

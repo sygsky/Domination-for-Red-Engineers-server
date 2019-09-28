@@ -309,13 +309,13 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 							{
 								// select other leader in a good vehicle
 								_veh = objNull;
-								{  if ( !isNull _x AND canMove _x AND !isNull driver _x)  exitWith {_veh = _x} } forEach _veh_arr;
+								{  if ( !isNull _x && canMove _x && !isNull driver _x)  exitWith {_veh = _x} } forEach _veh_arr;
 								if (!isNull _veh) then
 								{	
 									_x setRank "PRIVATE";
 									sleep 0.01;
 									_leader = _convoyGroup selectLeader (effectiveCommander _veh);
-									if (!isNull _leader AND alive _leader ) then
+									if (!isNull _leader && alive _leader ) then
 									{
 										sleep 0.01;
 										_leader setRank "LIEUTENANT";
