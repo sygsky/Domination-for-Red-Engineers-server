@@ -4,7 +4,7 @@
 #include "x_setup.sqf"
 
 private [
-         "_aunit","_direction","_dummyvehicle","_position","_type","_velocity","_grp"
+         "_aunit","_direction","_dummyvehicle","_position","_type","_velocity","_grp", "_reveal_cnt"
 #ifdef __ACE__
          ,"_ace_th","_ace_eh","_ace_hh","_ace_trh"
 #endif
@@ -58,9 +58,11 @@ _eunit = _this select 1; // killer unit
 if ( !alive  _eunit ) exitWith{};
 if ( _aunit == _eunit) exitWith {};
 _aunit reveal _eunit;
-_vehs =  [_aunit , 4000, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
+_vehs =  [_position , 4000, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
-_watch_arr = [];
+if (count _vehs == 0) exitWith {};
+_watch_arr  = [];
+_reveal_cnt = 0;
 {
     if ((side _x) == d_side_enemy) then // inform only enemy vehicles about
     {
@@ -70,10 +72,12 @@ _watch_arr = [];
         {
             (commander _x) doWatch _eunit;
             _watch_arr = _watch_arr + [commander _x];
-        };
+        }
+        else { _reveal_cnt = _reveal_cnt + 1 };
     };
 } forEach _vehs;
-sleep 2.5;
+hint localize format["+++ x_removevehi.sqf: airkiller %1, watched %2 and revealed %3 enemy vehicles", count _watch_arr, typeOf _eunit, _reveal_cnt];
+sleep 4.5;
 {
     _x doWatch objNull;
 } forEach _watch_arr;
