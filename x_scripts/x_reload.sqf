@@ -91,7 +91,6 @@ _type = typeOf _vehicle;
 _su34 = _vehicle call SYG_rearmVehicleA;
 if ( _su34 ) then // Su34 is rearmed
 {
-    //_magazines = argp((_type call SYG_getSu34Table),1); // get magazines list to reload each time
     _magazines = argp((_type call SYG_getVehicleTable),1); // get magazines list to reload each time
 };
 #endif
