@@ -295,12 +295,15 @@ if (!_replaced) exitWith {
     _name  =  call _makeNameShooter;
     _name1 =  call _makeNameTarget;
 
-    hint localize format["+++ MANDO Missile not replaced: from %1.%2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
-        _name,_type,
-        _name1, (round((damage _target)*100))/100,
-        round(_target distance _shooter),
+    hint localize format["+++ MANDO Missile not replaced: from %1.%2 -> %3, dmg %4, dst %5 m., h %6, spd %7, near %8, exit",
+        _name,
+        _type,
+        _name1,
+        (round((damage _target)*100))/100,
+        round(_target distance _shooter), // distance forom shooter to target
+        round((getPos _target) select 2), // height
         round(speed _target),
-        text( _target call SYG_nearestLocation)];
+        text( _target call SYG_nearestLocation)]; // distance from target to location
 };
 
 _missile setPos [ 0,0,(getPos _missile select 2) + 5000];
