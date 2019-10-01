@@ -36,14 +36,15 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 	}
 	else
 	{ // not is nil
-		if ( d_was_at_sm ) then
+		_get_points =  d_was_at_sm;
+		if (!_get_points) then
 		{
+    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player was visit SM", d_sm_p_pos];
 			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12));
 		}
 		else
 		{
-    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1", d_sm_p_pos];
-    		_get_points = player distance d_sm_p_pos < (d_ranked_a select 12);
+    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player visited SM", d_sm_p_pos];
 		};
 	};
 	if (_get_points) then {
