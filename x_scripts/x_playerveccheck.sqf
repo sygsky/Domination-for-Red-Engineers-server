@@ -111,7 +111,7 @@ while { true } do {
                                 //big heli are here
                                 _air_battle = true;
                                 // Western heli allowed to enter for any rank drivers
-                                if ( !(_vec isKindof "AH1W" || _veh isKindOf "ACE_AH64_AGM_HE" || _veh isKindOf "UH60MG") || (_role != "Driver") ) then
+                                if ( !((_vec isKindof "AH1W" || _veh isKindOf "ACE_AH64_AGM_HE") && (_role == "Driver")) ) then
                                 { // follow check for not western helicopter only
                                     if (_index < _indexheli) then
                                     {
