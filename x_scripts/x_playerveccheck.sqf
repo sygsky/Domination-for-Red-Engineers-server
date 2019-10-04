@@ -22,14 +22,14 @@ _sendInfoOnAirVehToServer = {
     ["veh_info", _this ] call XSendNetStartScriptServer; // inform server about battle vehicle activity
 };
 
-private ["_vec", "_not_allowed", "_needed_rank", "_index", "_last_send"];
+``private ["_veh", "_not_allowed", "_needed_rank", "_index", "_last_send"];
 
 _attempts_count = 0;
 _last_send = time;
 
 while { true } do {
 	waitUntil {sleep 0.1; vehicle player != player};
-	_vec = vehicle player;
+	_veh = vehicle player;
 	_not_allowed = false;
 	_bulky_weapon = "";
 	_needed_rank = "";
@@ -37,13 +37,13 @@ while { true } do {
 	_role = "";
 	_index = 0;
 	_air_battle = false; // Is vehicle Battle Air one?
-	if ((typeOf _vec) != "ACE_Bicycle") then
+	if ((typeOf _veh) != "ACE_Bicycle") then
 	{
 
         //+++ Sygsky:
         _role_arr = assignedVehicleRole player;
     #ifdef __DEBUG_PRINT__
-        hint localize format["x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _vec];
+        hint localize format["x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _veh];
     #endif
         if ( count _role_arr > 0 ) then
         {
@@ -57,9 +57,9 @@ while { true } do {
         if ( _player_not_GRU ) then
         {
             #ifndef __TT__
-            if (!((_vec in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo) ) then
+            if (!((_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo) ) then
             #else
-            if (!(_vec in [HR1,HR2,HR3,HR4,MRR1,MRR2,HRR1,HRR2,HRR3,HRR4,MRRR1,MRRR2])) then
+            if (!(_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2,HRR1,HRR2,HRR3,HRR4,MRRR1,MRRR2])) then
             #endif
             {
                 _index = (rank player) call XGetRankIndex;
@@ -68,13 +68,13 @@ while { true } do {
                 _indexta = (toUpper (_vrs select 1)) call XGetRankIndex; // tank
                 _indexheli = (toUpper (_vrs select 2)) call XGetRankIndex; // heli
                 _indexplane = (toUpper (_vrs select 3)) call XGetRankIndex; // plane
-                if (_vec isKindOf "LandVehicle") then {
-                    if ( _vec isKindOf "BMP2" || _vec isKindOf "M113" || _vec isKindOf "Vulcan" || _vec isKindOf "StrykerBase" || _vec isKindOf "BRDM2") then {
-                        if (!(_vec isKindOf "StrykerBase" || _vec isKindOf "BRDM2")) then // play light tracked armour entering sound
+                if (_veh isKindOf "LandVehicle") then {
+                    if ( _veh isKindOf "BMP2" || _veh isKindOf "M113" || _veh isKindOf "Vulcan" || _veh isKindOf "StrykerBase" || _veh isKindOf "BRDM2") then {
+                        if (!(_veh isKindOf "StrykerBase" || _veh isKindOf "BRDM2")) then // play light tracked armour entering sound
                         {
-                            _vec say "APC_GetIn";
+                            _veh say "APC_GetIn";
                         };
-                        if ( _vec isKindOf "M113" || _vec isKindOf "Vulcan" || _vec isKindOf "StrykerBase" ) then
+                        if ( _veh isKindOf "M113" || _veh isKindOf "Vulcan" || _veh isKindOf "StrykerBase" ) then
                         {
                             _indexsb = _indexsb - 1; // Entering enemy vehicle requires a lower rank
                             _enemy_vec = true;
@@ -84,9 +84,9 @@ while { true } do {
                             _needed_rank = (_vrs select 0);
                         };
                     } else {
-                        if (_vec isKindOf "Tank") then {
+                        if (_veh isKindOf "Tank") then {
     #ifdef __ACE__
-                            _vec say "Tank_GetIn";
+                            _veh say "Tank_GetIn";
     #endif
                             if (_veh isKindOf "M1Abrams" || _veh isKindOf "ACE_M60" || _veh isKindOf "ACE_M2A1") then
                             {
@@ -100,28 +100,35 @@ while { true } do {
                         };
                     };
                 } else {
-                    if (_vec isKindOf "Air") then {
-                        if (_vec isKindOf "Helicopter" && !(_vec isKindOf "ParachuteBase")) then {
-                            if (_vec isKindOf "AH6" || _vec isKindOf "ACE_Mi17" || _veh isKindOf "UH60MG") then {
-                                if (_vec isKindOf "ACE_Mi17" && (_index < _indexta)) then { // always allowed to enter into "AH6" descendants
+                    if (_veh isKindOf "Air") then {
+                        if (_veh isKindOf "Helicopter" && !(_veh isKindOf "ParachuteBase")) then {
+                            hint localize "+++ playerVecCheck: into helicopter";
+                            if (_veh isKindOf "AH6" || _veh isKindOf "ACE_Mi17" || _veh isKindOf "UH60MG") then {
+                                hint localize "+++ playerVecCheck: helicopter AH6";
+                                if (_veh isKindOf "ACE_Mi17" && (_index < _indexta)) then { // always allowed to enter into "AH6" descendants
+                                    hint localize "+++ playerVecCheck: helicopter Mi17";
                                     _not_allowed = true;
                                     _needed_rank = (_vrs select 1);
                                 };
                             } else {
                                 //big heli are here
                                 _air_battle = true;
+                                hint localize "+++ playerVecCheck: helicopter is battle one";
                                 // Western heli allowed to enter for any rank drivers
-                                if ( !((_vec isKindof "AH1W" || _veh isKindOf "ACE_AH64_AGM_HE") && (_role == "Driver")) ) then
+                                if ( !((_veh isKindof "AH1W" || _veh isKindOf "ACE_AH64_AGM_HE") && (_role == "Driver")) ) then
                                 { // follow check for not western helicopter only
+                                    hint localize "+++ playerVecCheck: not american battle";
                                     if (_index < _indexheli) then
                                     {
                                         _not_allowed = true;
                                         _needed_rank = (_vrs select 2);
                                     };
-                                };
+                                }
+                                else {hint localize "+++ playerVecCheck: is american battle";};
                             };
+                            hint localize "+++ playerVecCheck: into helicopter exit";
                         } else {
-                            if (_vec isKindOf "Plane" && (typeOf _vec != "RAS_Parachute")) then {
+                            if (_veh isKindOf "Plane" && (typeOf _veh != "RAS_Parachute")) then {
                                 _air_battle = true;
                                 if (_index < _indexplane) then {
                                     _not_allowed = true;
@@ -134,9 +141,9 @@ while { true } do {
             }
             else
             {
-                if (_vec in [MRR1,MRR2] ) then
+                if (_veh in [MRR1,MRR2] ) then
                 {
-                    _vec say "APC_GetIn";
+                    _veh say "APC_GetIn";
                 };
             };
             _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
@@ -163,24 +170,24 @@ while { true } do {
         else // player is the GRU agent, check his options
         {
             // check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
-            _not_allowed =  !(_vec isKindOf "Motorcycle" || _vec isKindOf "ACE_ATV_HondaR" || _vec isKindOf "Truck5t" || _vec isKindOf "Ural" || _vec isKindOf "Zodiac");
+            _not_allowed =  !(_veh isKindOf "Motorcycle" || _veh isKindOf "ACE_ATV_HondaR" || _veh isKindOf "Truck5t" || _veh isKindOf "Ural" || _veh isKindOf "Zodiac");
         };
 
         if ( _not_allowed || (_bulky_weapon != "") ) then
         {
-            player action[ "Eject",_vec ];
+            player action[ "Eject",_veh ];
             _attempts_count = _attempts_count + 1;
             if ( _role == "Driver" ) then
             {
-                if (isEngineOn _vec) then { _vec engineOn false; };
+                if (isEngineOn _veh) then { _veh engineOn false; };
             };
             if ( _player_not_GRU ) then
             {
                 if (_not_allowed) then
                 {
                     // "Ваше звание: %1. Вам не позволено использовать %3.\n\nТребуемое звание: %2."
-                    [format [localize "STR_SYS_252", toLower(((rank player) call XGetRankStringLocalized)), _needed_rank call XGetRankStringLocalized,[typeOf _vec,0] call XfGetDisplayName], "HQ"] call XHintChatMsg;
-                    hint localize format["--- player with rank index %1 ejected from %2", _index, typeOf _vec];
+                    [format [localize "STR_SYS_252", toLower(((rank player) call XGetRankStringLocalized)), _needed_rank call XGetRankStringLocalized,[typeOf _veh,0] call XfGetDisplayName], "HQ"] call XHintChatMsg;
+                    hint localize format["--- player with rank index %1 ejected from %2", _index, typeOf _veh];
                 }
                 else // bulky weapon
                 {
@@ -209,7 +216,7 @@ while { true } do {
 	}
 	else // ACE_Bicycle
 	{
-        _vec say "bicycle";
+        _veh say "bicycle";
 	};
 	//hint localize format["x_playerveccheck.sqf: player is not assigned %1", _role_arr];
 	waitUntil {sleep 0.2; vehicle player == player};

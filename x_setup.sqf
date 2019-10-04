@@ -91,9 +91,6 @@
 //+++ Sygsky: uncomment to debug new base pipebombing
 //#define __SYG_PIPEBOMB_DEBUG__
 
-//+++ Sygsky: play New Year music on base
-//#define __SYG_NEW_YEAR_GIFT__
-
 //+++ Sygsky: show some info about governor state
 #define __SYG_GOVERNOR_INFO__
 

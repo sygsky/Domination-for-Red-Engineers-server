@@ -135,7 +135,10 @@ if (isServer) then {
     _medic_tent setDir 189;
     ADD_HIT_EH(_medic_tent)
     ADD_DAM_EH(_medic_tent)
-
+#else
+	_vec = createVehicle ["ACE_AH1W_AGM_HE", [9658.247070,10020.545898,0], [], 0, "NONE"];
+	_vec = createVehicle ["ACE_Mi24D", [9678.247070,10020.545898,0], [], 0, "NONE"];
+	_vec setDir 90;
 #endif
 
 #ifdef __ADDITIONAL_BASE_VEHICLES__
