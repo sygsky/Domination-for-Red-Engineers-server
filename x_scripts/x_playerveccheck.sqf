@@ -102,31 +102,24 @@ while { true } do {
                 } else {
                     if (_veh isKindOf "Air") then {
                         if (_veh isKindOf "Helicopter" && !(_veh isKindOf "ParachuteBase")) then {
-                            hint localize "+++ playerVecCheck: into helicopter";
                             if (_veh isKindOf "AH6" || _veh isKindOf "ACE_Mi17" || _veh isKindOf "UH60MG") then {
-                                hint localize "+++ playerVecCheck: helicopter AH6";
                                 if (_veh isKindOf "ACE_Mi17" && (_index < _indexta)) then { // always allowed to enter into "AH6" descendants
-                                    hint localize "+++ playerVecCheck: helicopter Mi17";
                                     _not_allowed = true;
                                     _needed_rank = (_vrs select 1);
                                 };
                             } else {
                                 //big heli are here
                                 _air_battle = true;
-                                hint localize "+++ playerVecCheck: helicopter is battle one";
                                 // Western heli allowed to enter for any rank drivers
                                 if ( !((_veh isKindof "AH1W" || _veh isKindOf "ACE_AH64_AGM_HE") && (_role == "Driver")) ) then
                                 { // follow check for not western helicopter only
-                                    hint localize "+++ playerVecCheck: not american battle";
                                     if (_index < _indexheli) then
                                     {
                                         _not_allowed = true;
                                         _needed_rank = (_vrs select 2);
                                     };
-                                }
-                                else {hint localize "+++ playerVecCheck: is american battle";};
+                                };
                             };
-                            hint localize "+++ playerVecCheck: into helicopter exit";
                         } else {
                             if (_veh isKindOf "Plane" && (typeOf _veh != "RAS_Parachute")) then {
                                 _air_battle = true;
