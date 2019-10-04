@@ -161,6 +161,7 @@ class CfgMusic
     class condor { name=""; sound[] = {\sounds\condor.ogg,db+0,1.0};}; // El-Condor-Pasa by Leo Rojas
     class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
     class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
+    class melody_by_voice_short { name=""; sound[] = {\sounds\melody_by_voice_short.ogg,db+0,1.0};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
 
 //------------------------------------- END of Intro music list --------------------------------------------------
 
@@ -274,7 +275,7 @@ class CfgMusic
 class CfgSounds
 {
 	sounds[] = {
-		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse,Tank_GetIn,APC_GetIn
+		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,Tank_GetIn,APC_GetIn
 
 #ifdef __REVIVE__
 		,DBrian_Im_hit, DBrian_Im_bleeding,DBrian_Medic,DBrian_Bastards,DBrian_Shit_Man_down,DBrian_Oh_no,
@@ -296,7 +297,7 @@ class CfgSounds
     class vam_bileter {name="vam_bileter";sound[]={\sounds\vam_bileter.ogg,db+0,1.0};titles[] = {};};
 	class highvoltage {name="highvoltage";sound[]={\sounds\highvoltage.ogg,db+0,1.0};titles[] = {};};
 	class upsidedown {name="upsidedown";sound[]={\sounds\upside_down.ogg,db+0,1.0};titles[] = {};};
-	class horse {name="horse";sound[]={\sounds\horse.ogg,db+0,1.0};titles[] = {};};
+	//class horse {name="horse";sound[]={\sounds\horse.ogg,db+0,1.0};titles[] = {};};
 	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class bicycle {name="bicycle";sound[]={\sounds\bicycle.ogg,db+0,1.0};titles[] = {};};
