@@ -22,7 +22,7 @@ _sendInfoOnAirVehToServer = {
     ["veh_info", _this ] call XSendNetStartScriptServer; // inform server about battle vehicle activity
 };
 
-``private ["_veh", "_not_allowed", "_needed_rank", "_index", "_last_send"];
+private ["_veh", "_not_allowed", "_needed_rank", "_index", "_last_send"];
 
 _attempts_count = 0;
 _last_send = time;

@@ -91,6 +91,9 @@
 //+++ Sygsky: uncomment to debug new base pipebombing
 //#define __SYG_PIPEBOMB_DEBUG__
 
+//+++ Sygsky: play New Year music on base
+//#define __SYG_NEW_YEAR_GIFT__
+
 //+++ Sygsky: show some info about governor state
 #define __SYG_GOVERNOR_INFO__
 
@@ -159,11 +162,5 @@
 // uncomment next line to prevent land vehicle overturning
 #define __PREVENT_OVERTURN__
 
-//+++ uncomment to enable the appearance of an unconscious player to enemies
-#define __DISABLE_HIDE_UNCONSCIOUS__
-
 // comment it out to use the new score system, with lower values per rank
 #define __OLD_SCORES__
-
-// comment it out to disable mando missiles long hand
-#define __MANDO_MISSILES_UPDATE__
