@@ -297,67 +297,27 @@ SYG_nearestSoldierGroups = {
 	_grps
 };
 
-//
-// Parameters in input array:
-// _unit: unit to find groups for. Groups can be crew in any vehicles (Man, Land, Air, Ship)
-// _dist (optional): radius to find groups, default value is 500 m. Set to 0 or negative to use default
-// _pos (optional): search center, if set to [], _unit pos is used
-//
-// Returns: array of vehicles found or [] if not found
-//
-// Usage:
-// _cargo = [_side, _pos] call SYG_nearestCargo; // search around _unit at 500 m., return empty array [] if no cargo found
-// _cargo = [_side, _pos, _dist] call SYG_nearestCargo; // search around _pos, return empty array [] if no group found
-// _cargo = [_side, _pos, _dist, _cargo_size] call SYG_nearestCargo; // search vehicles of designated free cargo size
-//
-SYG_nearestCargo = {
-	_side = argopt( 0, "CIV" );
-	if ( typeName _side != "STRING") exitWith { objNull };
-	if (! (_side in ["WEST", "EAST", "GUER", "CIV"])) exitWith {objNull}; // unknown side
-
-    _pos = argopt( 1, []);
-    if ( typeName _pos != "ARRAY") exitWith { objNull };
-    if ( count  _pos < 2 ) exitWith { objNull };
-
-	_dist = argopt(1,500);
-	if ( typeName _dist != "SCALAR") exitWith { objNull };
-
-	_vecs = [_side, _dist, "LandVehicle" ] call SYG_findNearestVehicles;
-	if ( count _vecs == 0 ) exitWith { objNull };
-
-    _size = argopt(3, 0);
-    if ( _size <= 0 ) exitWith { objNull };
-
-	{
-        if ( alive _x) then
-        {
-            if ( ({canStand _x} count (crew _x)) == 0 ) exitWith{};  // empty
-            if ( !(canStand (driver _x)) ) exitWith{};
-            if ( format["%1",side _x] != _side ) exitWith {};
-            if ( (fuel _x) < 0.05 ) exitWith {};
-            if ( (_x emptyPositions "Cargo") >= _size ) then
-            {
-                _vecs = _vecs + _x;
-                sleep 0.01;
-            };
-        };
-	} forEach _vecs;
-	_nearArr = nil;
-	_vecs
-};
-
 // _vecs_arr = [_unit || _pos, 500, ["LandVehicle"]] call Syg_findNearestVehicles;
 // may return [] if no vehicles found
 Syg_findNearestVehicles = {
-	_unit = arg(0);
-	if ( typeName _unit == "ARRAY" ) then {
-	    if (count _unit < 2) exitWith {[]}; // can't be pos with empty array
-	};
-	if ( isNull _unit ) exitWith {[]};
-	_dist = argopt(1, 500);
+    private ["_unit","_dist","_types","_ret"];
 
+	_unit = arg(0);
+	_bad = false;
+	if ( typeName _unit == "ARRAY" ) then {
+	    if (count _unit < 2) exitWith {_bad = true}; // can't be pos with empty array
+	};
+	if ( _bad ) exitWith {[]};
+	if ( typeName _unit == "OBJECT") then
+	{
+    	if ( isNull _unit ) exitWith {_bad = true};
+	};
+	if (_bad) exitWith {[]};
+
+	_dist = argopt(1, 500);
     _types = argopt(2,["LandVehicle"]);
-	if ( typeName _types != "ARRAY" ) exitWith {[]}; // use vehicle types array, checked not to be empty
+    if ( typeName _types == "STRING" ) then {_types = [_types]}; // it may be single vehicle type
+	if ( typeName _types != "ARRAY"  ) exitWith {[]}; // use vehicle types array, checked not to be empty
 
 	nearestObjects [_unit, _types, _dist]
 };
