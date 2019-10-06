@@ -46,7 +46,7 @@ while {true} do {
 	_owner = flagOwner _flag;
 	#ifndef __TT__
 	_alive = alive _owner;  // (alive owner) is the same as (flag owned)
-	if ( ( _alive || _owned ) && !( _alive && _owned ) ) // state changed and if alive, flag is owned
+	if ( ( _alive || _owned ) && !( _alive && _owned ) ) then // state changed and if alive, flag is owned
 	{
 	    _owned = _alive;
 	    _msg = if ( _owned ) then { [ "STR_SYS_FLAG_OWNED", name _owner ] } else { [ "STR_SYS_FLAG_EMPTY" ] };
