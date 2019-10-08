@@ -116,7 +116,7 @@ SYG_southDefeatTracks =
     ["ATrack8",[75.269,8.823],[84.092,9.734],[95.986,6.246]],
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
     ["ATrack11","ATrack12","ATrack13"],
-    ["arroyo","arabian_death","the_complex"]
+    ["arroyo","arabian_death","the_complex","sinbad_baghdad"]
 ];
 
 SYG_baseDefeatTracks =

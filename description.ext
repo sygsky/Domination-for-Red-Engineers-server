@@ -162,14 +162,11 @@ class CfgMusic
     class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
     class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
     class melody_by_voice_short { name=""; sound[] = {\sounds\melody_by_voice_short.ogg,db+0,1.0};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
-
+    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
+//    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
+    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro music, Soviet song about comrade
 //------------------------------------- END of Intro music list --------------------------------------------------
 
-    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
-
-//    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
-
-    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
 
 //+++++++++++++++++++++++ Detect music
 
@@ -212,7 +209,7 @@ class CfgMusic
     class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
     class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0};} // defeat sound by Kevin MacLeod
     class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0};} // defeat sound from Radio-nanny sign call
-
+    class sinbad_baghdad { name=""; sound[] = {\sounds\defeat\sinbad_baghdad.ogg,db+10,1.0};} // defeat sound from film "7th voyage of Sinbad "
 
 //+++++++++++++++++++++++ medieval defeats (death near castles)
     class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // medieval defeat sound
@@ -335,6 +332,7 @@ class CfgSounds
 	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; titles[] = {}; };
 	class the_trap { name=""; sound[]=   {\sounds\the_trap.ogg,db-1,1.0}; titles[] = {}; };
 	class koschei { name=""; sound[]=   {\sounds\koschei.ogg,db-1,1.0}; titles[] = {}; }; // from Soviet multfilm "The princess Frog"
+	class sinbad_sckeleton { name=""; sound[]=   {\sounds\fear\sinbad_sckeleton.ogg,db-1,1.0}; titles[] = {}; }; // from "7th voyage of Sinbad "
 
 	class teleport { name=""; sound[]=   {\sounds\teleport.ogg,db-1,1.0}; titles[] = {}; };
 	class tropelet { name=""; sound[]=   {\sounds\tropelet.ogg,db-1,1.0}; titles[] = {}; };
