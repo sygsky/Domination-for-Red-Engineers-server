@@ -1221,6 +1221,22 @@ SYG_assignVecToSmokeOnHit =
 //------------------------------------------------------------- Rearm vehicles methods
 
 #ifdef __REARM_SU34__
+/*
+ Params are as follow:
+   ["VEHICLE_NAME_1",...,"VEHICLE_NAME_N"],
+   [
+        [VEHICLE_NAME_1_WPN_1,...,VEHICLE_NAME_1_WPN_N],
+        [VEHICLE_NAME_1_AMM_1,...,VEHICLE_NAME_1_AMM_M],
+        [[] <always_rearm> || ["VEHICLE_TYPE_WITH_DESIGNATED_WPN" <vehicles_with_weapon>]
+   ],
+   ...,
+   [
+        [VEHICLE_NAME_N_WPN_1,...,VEHICLE_NAME_N_WPN_M],
+        [VEHICLE_NAME_1_AMM_1,...,VEHICLE_NAME_1_AMM_M],
+        [[] <always_rearm> || ["VEHICLE_TYPE_WITH_DESIGNATED_WPN" <vehicles_to_remove_weapon>]
+   ]
+ ]
+*/
 SYG_su34_RearmTables =
 [
  ["ACE_Su34B","ACE_Su34"], // plane names
@@ -1230,6 +1246,7 @@ SYG_su34_RearmTables =
 //		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_6Rnd_Kh29L", "ACE_6Rnd_Kh29L", "ACE_12Rnd_FAB500M62", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
 		["ACE_Kh29LLauncher", "ACE_S13T_Launcher", "ACE_GSh302", "ACE_FAB500M62BombLauncher"],
 		["ACE_250Rnd_30mm_GSh302", "ACE_4Rnd_Kh29L", "ACE_30Rnd_S13T","ACE_12Rnd_FAB500M62"]
+
 	 ],
 	 [ // 2nd plane params
 //		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher","ACE_FFARPOD2", "ACE_FAB500M62BombLauncher" ],
@@ -1248,19 +1265,27 @@ SYG_heliRearmTable =
  [
  	 [ // 1st heli params
  	 	["ACE_M230", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-     	["ACE_M789_1200", "ACE_4Rnd_9M17P", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/]
+     	["ACE_M789_1200", "ACE_4Rnd_9M17P", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/],
+        // the required type of machine to transfer weapons from it to the current machine
+        [ "ACE_AH64_AGM_HE" ] // use if( _veh isKindOf  "ACE_AH64_AGM_HE") then { CHECK for WEAPON existance in vehicle}
  	 ],
  	 [ // 2nd heli params
  	 	["M197", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
-	    ["750Rnd_M197_AH1", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_40Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/]
+	    ["750Rnd_M197_AH1", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_40Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/],
+        // Corresponding heli with designated weapons/armament
+        [ "AH1W" ] // use if( _veh isKindOf  "AH1W") then { CHECK for WEAPON existance in vehicle}
  	 ],
 /* 	 [ // 3rd heli params
  	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
 	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"]
+	    ,["*"]
+
  	 ],
  	 [ // 4th heli params
  	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
-	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"]
+	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"],
+	    ["*"]
+
  	 ],*/
      [ // 5th heli params
         ["ACE_YakB"],
@@ -1268,7 +1293,9 @@ SYG_heliRearmTable =
      ],
      [ // 6th heli params
         ["ACE_57mm_FFAR", "ACE_FFARPOD2"],
-        ["ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
+        ["ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"],
+        // Corresponding heli with designated weapons/armament
+        [ [],["ACE_AH1W_TOW2","ACE_AH1W_TOW_HE_F_S_I","ACE_AH1Z_HE_F","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_TOW2","ACE_AH1Z_TOW_HE_F_S_I","","ACE_AH64_AGM_HE_F","ACE_AH64_HE_F","ACE_AH64_AGM_HE_F_S_I","ACE_UH60RKT_HE_F","ACE_AH6_HE_F"] ] // use if( _veh isKindOf  "AH1W" ...) then { CHECK for WEAPON existance in vehicle}
      ]
  ]
 ];
@@ -1290,7 +1317,7 @@ SYG_boatRearmTable =
     [ // boat params
         [
             ["ACE_M230"],//["ACE_VulcanMgun20"], // weapon(s)
-            ["ACE_M789_1200","ACE_M789_1200"]//["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+            ["ACE_M789_1200","ACE_M789_1200"] //["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
         ]
     ]
 ];
@@ -1383,7 +1410,8 @@ SYG_rearmVehicle =
     {_vec removeMagazines _x} forEach magazines _vec;
     {_vec removeWeapon _x} forEach weapons _vec;
 	{
-		_vec addMagazine _x;
+	    if (typeName _x == "STRING") then {_x = [_x]}; // convert single string to an array with single string item
+	    {_vec addMagazine _x} forEach _x;
 	} forEach arg(2); // magazines
 	{
 		_vec addWeapon _x;
@@ -1422,7 +1450,7 @@ SYG_rearmAnyHeli =
 };
 #endif
 
-// generates report about damaged parts of vehicle. May work only where vehicles are local (so on server for MP)
+// generates report about damaged parts of vehicle. May work only where vehicles are local (so on server for MP and some units)
 // Call as: _dmg_report_str = _unit call SYG_ACEDamageReportStr;
 //
 // Returned: _dmg_report_str = "Turret, Hull, Engine, Tracks"
@@ -1593,6 +1621,7 @@ SYG_buildVecList = {
  * Find crew type by patrol type
  * call: _crewType = "AP" call SYG_crewTypeByPatrol; // return "ACE_SoldierWCrew_WDL" or  "ACE_SoldierWB_A"
  */
+#ifdef __OWN_SIDE_EAST__
 SYG_crewTypeByPatrolW = {
     switch (toUpper _this) do
     {
@@ -1604,6 +1633,20 @@ SYG_crewTypeByPatrolW = {
         case "LP": {d_crewman2_W};
     }
 };
+#endif
+#ifdef __OWN_SIDE_WEST__
+SYG_crewTypeByPatrolE = {
+    switch (toUpper _this) do
+    {
+        case "HP";
+        case "AP";
+        case "FP" : {d_crewman_E};
+        default  {d_crewman_E};
+        case "SP";
+        case "LP": {d_crewman2_E};
+    }
+};
+#endif
 
 #endif
 
@@ -1624,7 +1667,7 @@ SYG_deleteVehicleCrew = {
  * Finds random but still not used (if available) bonus type from:
  *
  *    vehicle types lists
- * params = [_initial_list, _currentList ];
+ * params = [_initial_list, _currentList, _fullList ];
  * _bonusIndex =  params call SYG_findTargetBonusIndex;
  */
 SYG_findTargetBonusIndex = {
@@ -1647,7 +1690,7 @@ SYG_camouflageTank = {
     "tank" // tank not in desert area so has no camouflage
 };
 
-// change ordinal Abrams namews with corresponding desert one
+// change ordinal Abrams names with corresponding desert one
 // call as:
 //          _new_names_arr = [_veh1_name, _veh2_name, ...] call SYG_makeDesertAbrams;
 //   or
