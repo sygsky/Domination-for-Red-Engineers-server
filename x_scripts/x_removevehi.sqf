@@ -61,27 +61,38 @@ _aunit reveal _eunit;
 _vehs =  [_position , 4000, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
 if (count _vehs == 0) exitWith {};
-_watch_arr  = [];
+_watch_cnt  = 0;
 _reveal_cnt = 0;
 {
-    if ((side _x) == d_side_enemy) then // inform only enemy vehicles about
+    if ( (alive _x) && ((side _x) == d_side_enemy) )then // inform only enemy vehicles about
     {
         _x reveal _eunit;
-        sleep 0.3;
-        if (((commander _x) knowsAbout _eunit) < 1.5 ) then
-        {
-            (commander _x) doWatch _eunit;
-            _watch_arr = _watch_arr + [commander _x];
-        }
-        else { _reveal_cnt = _reveal_cnt + 1 };
+        sleep 0.1;
+        (commander _x) doWatch _eunit;
+        if ( ( (commander _x) knowsAbout _eunit) < 1.5 )
+            then { _watch_cnt = _watch_cnt + 1; }
+            else { _reveal_cnt = _reveal_cnt + 1 };
     };
 } forEach _vehs;
-hint localize format["+++ x_removevehi.sqf: airkiller %1, watched %2 and revealed %3 enemy vehicles", count _watch_arr, typeOf _eunit, _reveal_cnt];
-sleep 4.5;
+
+sleep 3.5;
+
+_watch_cnt2 = 0;
+_reveal_cnt2 = 0;
 {
-    _x doWatch objNull;
-} forEach _watch_arr;
-_watch_arr = nil;
+    if ( ( alive _x ) && ( ( side _x ) == d_side_enemy ) ) then // inform only alive enemy vehicles about
+    {
+        _x doWatch objNull;
+        if ( ( ( commander _x ) knowsAbout _eunit ) < 1.5 )
+        then {
+            _watch_cnt = _watch_cnt + 1;
+        }
+        else { _reveal_cnt2 = _reveal_cnt2 + 1 };
+    };
+} forEach _vehs;
+hint localize format["+++ x_removevehi.sqf (%1): killer %2, before/after watched %3/%5,  revealed %4/%6 by enemy vehicles",
+    typeOf _aunit, typeOf _eunit, _watch_cnt, _reveal_cnt, _watch_cnt2, _reveal_cnt2 ];
+
 _vehs = nil;
 
 if (true) exitWith {};
