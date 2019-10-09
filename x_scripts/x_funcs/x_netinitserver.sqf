@@ -336,7 +336,7 @@ XHandleNetStartScriptServer = {
 
 		case "veh_info": // information about battle air vehicle activity
 		{
-		    _params = (_this select 1); // parameters of the command
+		    _params = (_this select 1); // parameters array of this command
 		    _veh    = _params select 0; // vehicle
 		    _cmd    = _params select 1; // "on"/"off"
 		    switch (toLower _cmd) do
@@ -345,6 +345,7 @@ XHandleNetStartScriptServer = {
 		        {
 		            if (_veh in SYG_owner_active_air_vehicles_arr) exitWith {};  // already in
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr + [ _veh ]; // add new vehicle
+		            hint localize format["--- ""veh_info"": %1 added to list", _veh]
 		        };
 		        case "off" : {SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ] }; // remove vehicle
 		        default {hint localize format["--- ""veh_info"": illegal params %1", _params]};

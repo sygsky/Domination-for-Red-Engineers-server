@@ -2,9 +2,10 @@
 // works for single air killer
 //
 private ["_type", "_pos", "_wp_behave", "_crew_member", "_addToClean", "_heli_type", "_vehicle", "_initial_type", "_grp",
- "_vehicles", "_bad_units","_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_unit2", "_leader",
+ "_vehicles", "_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_leader",
  "_old_target", "_loop_do", "_dummy", "_current_target_pos", "_wp", "_pat_pos", "_radius", "_dist", "_old_pat_pos", "_angle",
-  "_x1", "_y1", "_i", "_vecx","_new_group","_pilot","_good_units", "_counter","_rejoinPilots", "_ret", "_lastDamage"];
+  "_x1", "_y1", "_i", "_vecx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage",
+  "_flyHeight"];
 
 if (!isServer) exitWith {};
 
