@@ -135,7 +135,11 @@ if (isServer) then {
     _medic_tent setDir 189;
     ADD_HIT_EH(_medic_tent)
     ADD_DAM_EH(_medic_tent)
-
+//#else
+//	_vec = createVehicle ["ACE_AH1W_AGM_HE", [9658.247070,10020.545898,0], [], 0, "NONE"];
+//	_vec setDir 90;
+//	_vec = createVehicle ["ACE_Mi24D", [9678.247070,10020.545898,0], [], 0, "NONE"];
+//	_vec setDir 90;
 #endif
 
 #ifdef __ADDITIONAL_BASE_VEHICLES__
@@ -221,7 +225,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missiona at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 10 - arti above base (SanSebastian)
+    _first_array = [];   // 10 - arti above base (SanSebastian), 32 - flag in Parato
     side_missions_random = _first_array + (side_missions_random - _first_array);
 
 //+++ Sygsky: move ranked player missions out of the list beginning
@@ -685,12 +689,15 @@ if ( X_Client ) then {// runs only on client
 
 
 };
-// No option to run any scriot on server as this code executed only on clients.
+// No option to run any script on server as this code executed only on clients.
 // See exit condition in upper lines: if (!X_Client) exitWith {};
 
-// runs on both client and server
 #endif
 
+// play (true) or not play (false) some extra sounds, incleding reborn and multiple deaths music to player
+SYG_playExtraSounds = {
+	d_rebornmusic_index == 0
+};
 
 
 if (true) exitWith {};

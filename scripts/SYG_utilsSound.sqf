@@ -16,7 +16,7 @@
 #define RANDOM_FROM_PARTS_ARR(ARR) (ARR select((floor(random((count ARR)-1)))+1))
 
 #define NEW_DEATH_SOUND_ON_BASE_DISTANCE 2000
-#define DEATH_COUNT_TO_PLAY_MUSIC 30
+#define DEATH_COUNT_TO_PLAY_MUSIC 50
 
 SYG_lastPlayedSoundItem = ""; // last played music/sound item
 SYG_deathCountCnt = 0;
@@ -116,7 +116,7 @@ SYG_southDefeatTracks =
     ["ATrack8",[75.269,8.823],[84.092,9.734],[95.986,6.246]],
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
     ["ATrack11","ATrack12","ATrack13"],
-    ["arroyo","arabian_death","the_complex"]
+    ["arroyo","arabian_death","the_complex","sinbad_baghdad"]
 ];
 
 SYG_baseDefeatTracks =
@@ -128,7 +128,8 @@ SYG_baseDefeatTracks =
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
-    ["ruffian",[0,10.27]]
+    ["ruffian",[0,10.27]],
+    ["Vremia_vpered_Sviridov",[0.479,9.778]]
 ] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
@@ -241,6 +242,7 @@ SYG_playRandomDefeatTrackByPos = {
     call SYG_playRandomDefeatTrack;
 };
 
+// OFP music only
 SYG_OFPTracks =
     [
 	    ["ATrack24",[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]],
@@ -360,7 +362,7 @@ SYG_playRandomTrack = {
                 hint localize format[ "SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
     #endif
                 SYG_deathCountCnt = 0;
-                playMusic arg(0);
+                if (call SYG_playExtraSounds) then { playMusic arg(0); };
             };
 
             private ["_trk"];
@@ -389,7 +391,7 @@ SYG_playRandomTrack = {
     hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
 };
 
-//
+// NOT IN USE AT ALL
 // Changes position for sound created with call to createSoundSource function
 //
 // Example:
@@ -459,6 +461,11 @@ SYG_getMusicName = {
     player groupChat _str;
     if (_isText) exitWith {_name};
     ""
+};
+
+SYG_getSuicideScreamSound  = {
+    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 13))};  // 0-12
+    SYG_suicideScreamSound
 };
 
 if (true) exitWith {};

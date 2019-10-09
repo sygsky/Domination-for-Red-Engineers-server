@@ -146,8 +146,8 @@ if (!(__ACEVer)) then {
 Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
-	if (player distance _target_pos < 50) then {
-	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei"] call XfRandomArrayVal);
+	if ((player distance _target_pos < 50) && ((random 10) > 1) ) then { // 9 of 10 times inform about the death approaching
+	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton"] call XfRandomArrayVal);
 		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
 	};
 };

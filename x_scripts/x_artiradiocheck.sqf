@@ -5,8 +5,8 @@ _ari1 = -8881;
 _vec_id = -8882;
 _vec = objNull;
 while {true} do {
-	waitUntil {alive player};
-	waitUntil {sleep 0.312; (player hasWeapon "ACE_ANPRC77_Alice" || player hasWeapon "ACE_ANPRC77_Raid" || player hasWeapon "ACE_P159_RD90" || player hasWeapon "ACE_P159_RD54" || player hasWeapon "ACE_P159_RD99")};
+	waitUntil {sleep 0.212; alive player};
+	waitUntil {sleep 0.312; (player hasWeapon "ACE_ANPRC77_Alice") || (player hasWeapon "ACE_ANPRC77_Raid") || (player hasWeapon "ACE_P159_RD90") || (player hasWeapon "ACE_P159_RD54") || (player hasWeapon "ACE_P159_RD99")};
 	switch (_artinum) do {
 		case 1: {
 			_ari1 = player addAction [localize "STR_SYS_98", "x_scripts\x_artillery.sqf",[],-1,false]; // "Вызвать артиллерию"
@@ -15,7 +15,7 @@ while {true} do {
 			_ari1 = player addAction [localize "STR_SYS_98", "x_scripts\x_artillery2.sqf",[],-1,false]; // "Вызвать артиллерию"
 		};
 	};
-	while {player hasWeapon "ACE_ANPRC77_Alice" || player hasWeapon "ACE_ANPRC77_Raid" || player hasWeapon "ACE_P159_RD90" || player hasWeapon "ACE_P159_RD54" || player hasWeapon "ACE_P159_RD99"} do {
+	while {(player hasWeapon "ACE_ANPRC77_Alice") || (player hasWeapon "ACE_ANPRC77_Raid") || (player hasWeapon "ACE_P159_RD90") || (player hasWeapon "ACE_P159_RD54") || (player hasWeapon "ACE_P159_RD99")} do {
 		sleep 0.52;
 		if (!alive player) exitWith {
 			if (_ari1 != -8881) then {

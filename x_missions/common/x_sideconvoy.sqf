@@ -53,7 +53,7 @@ _checkOverturnedVehicles = {
     {
         _initPos = _pos;
         if ( _pos < 0 ) exitWith { _footmen = []};
-        if (alive _x && (_x call SYG_vehIsUpsideDown) && ( (_x distance (_footmen select _pos) ) < 100) ) then // near overturned vehicle
+        if ( (alive _x) && (side _x == d_side_enemy) && (_x call SYG_vehIsUpsideDown) && ( (_x distance (_footmen select _pos) ) < 100) ) then // near overturned vehicle
         {
             hint localize format["+++ Convoy checkOverturnedVehicles: found overturned %1, dmg %2, fuel %3, dist %4", typeOf _x, damage _x, fuel _x, _x distance (_footmen select _pos)];
             // repair, refuel , overturned
@@ -309,13 +309,13 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 							{
 								// select other leader in a good vehicle
 								_veh = objNull;
-								{  if ( !isNull _x AND canMove _x AND !isNull driver _x)  exitWith {_veh = _x} } forEach _veh_arr;
+								{  if ( !isNull _x && canMove _x && !isNull driver _x)  exitWith {_veh = _x} } forEach _veh_arr;
 								if (!isNull _veh) then
 								{	
 									_x setRank "PRIVATE";
 									sleep 0.01;
 									_leader = _convoyGroup selectLeader (effectiveCommander _veh);
-									if (!isNull _leader AND alive _leader ) then
+									if (!isNull _leader && alive _leader ) then
 									{
 										sleep 0.01;
 										_leader setRank "LIEUTENANT";

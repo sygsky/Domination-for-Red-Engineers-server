@@ -1,7 +1,7 @@
 //
 // by Xeno. x_scripts/x_settingsdialog.sqf, runs only on client computer
 //
-private ["_ok", "_XD_display", "_ctrl", "_rarray", "_vdindex", "_i", "_index", "_glindex", "_str","_str1", "_strYes","_strNo","_ar", "_counter",
+private ["_ok", "_XD_display", "_ctrl", "_rarray", "_vdindex", "_i", "_index", "_glindex", "_mindex", "_str","_str1", "_strYes","_strNo","_ar", "_counter",
 		  "_name1", "_name2", "_name3"];
 
 #include "x_setup.sqf"
@@ -17,28 +17,21 @@ _ok = createDialog "XD_SettingsDialog";
 _XD_display = findDisplay 11251;
 
 _ctrl = _XD_display displayCtrl 1000;
-
 //_rarray = [900, 1000, 1200, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 10000];
 _rarray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
-
 _vdindex = -1;
-
 for "_i" from 0 to (count _rarray - 1) do {
 	call compile format ["_index = _ctrl lbAdd ""%1"";if (d_viewdistance == %1) then {_vdindex = _index};",_rarray select _i];
 };
-
 _ctrl lbSetCurSel _vdindex;
 
 _ctrl = _XD_display displayCtrl 1001;
 // Трава "Без травы"  "Средняя" "Полная"
 _rarray = ["STR_GRASS_1", "STR_GRASS_2", "STR_GRASS_3"];
-
 _glindex = -1;
-
 for "_i" from 0 to (count _rarray - 1) do {
 	call compile format ["_index = _ctrl lbAdd ""%1"";if (d_graslayer_index == _index) then {_glindex = _index};",localize (_rarray select _i)];
 };
-
 _ctrl lbSetCurSel _glindex;
 
 
@@ -57,6 +50,18 @@ if (!(__ReviveVer) && !d_dont_show_player_markers_at_all) then {
 	_ctrl = _XD_display displayCtrl 1501;
 	_ctrl ctrlShow false;
 };
+
+// Reborn music sound/not sound
+_ctrl = _XD_display displayCtrl 1003;
+// Reborn music "Listen"  "Don't listen"
+_rarray = ["STR_REBORN_1", "STR_REBORN_0"];
+_carray = [[0,1,0,1], [1,0,0,1]];
+_mindex = -1;
+for "_i" from 0 to (count _rarray - 1) do {
+	call compile format ["_index = _ctrl lbAdd ""%1"";_ctrl lbSetColor [%2,%3];if (d_rebornmusic_index == _index) then {_mindex = _index};",localize (_rarray select _i), _i, _carray select _i];
+};
+_ctrl lbSetCurSel _mindex;
+
 
 _ctrl = _XD_display displayCtrl 2001;
 _ctrl ctrlSetText str(d_points_needed select 0);

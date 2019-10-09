@@ -11,7 +11,7 @@ while {true} do {
 	};
 	//__DEBUG_NET("AI playercheck",(call XPlayersNumber))
 	{
-        _ap = compile _x; // player
+        _ap = call _x; // player entity
         if (!(isPlayer _ap)) then {
             _grp = group _ap;
             _units = units _grp;
@@ -30,6 +30,6 @@ while {true} do {
             };
             sleep 0.05;
         };
-	} forEach d_player_entities; // for each available player
+	} forEach SYG_players_arr; // for each available player
 	sleep 5.321;
 };

@@ -88,8 +88,9 @@ else // music normally played on intro
             "bond","grant","red_alert_soviet_march","burnash","adjutant","lastdime",
             "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","prince_negaafellaga","strelok",
             "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
-            "ruffian","morze", "treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
-            "tovarich_moy","ipanoram","rider","hound_baskervill", "condor", "way_to_dock"
+            "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
+            "tovarich_moy","ipanoram","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
+            "Letyat_perelyotnye_pticy_end","melody_by_voice_short"
         ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;
@@ -238,7 +239,8 @@ else
 
 _lobj = (
     ["LODy_test", "Barrels", "Land_kulna","misc01", "Land_helfenburk","FireLit",
-    "Land_majak2","Land_zastavka_jih","Land_ryb_domek","Land_aut_zast","Land_telek1"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
+    "Land_majak2","Land_zastavka_jih","Land_ryb_domek","Land_aut_zast","Land_telek1",
+    "Land_water_tank2","Land_R_Minaret","Land_vez","Land_strazni_vez"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
 sleep 0.1;
 _lobj  setVectorUp [0,0,1]; // make object be upright
 switch typeOf _lobj do

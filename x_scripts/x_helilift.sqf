@@ -141,7 +141,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                                 _fheight = _height + (2.5 min (_vehicle modelToWorld [0,-1-_voffset,-_height] select 2));
                                 _nearest_pos = _vehicle modelToWorld [0,-1-_voffset,-_fheight];
                                 _nearest setPos _nearest_pos;
-                                _nearest setVectorDir _vdir;
+                                _nearest setVectorDir _vdir; // TODO: use setVectorDirAndUp
                                 _nearest setVectorUp  _vup;
                                 _nearest setVelocity (velocity _vehicle);  //+++ Sygsky - let vehicle to inertially fly ahead some distance
                                 _nearest engineOn false;

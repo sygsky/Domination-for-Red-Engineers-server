@@ -6,7 +6,8 @@ DO NOT EXECUTE THIS SCRIPT MANUALLY
 
 You may add here more missile types to be replaced by mando ones, as well as change the parameters of already replaced ArmA missile types.
 
-+++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased twice for Javelins (500 m) and Stringers (5000 m)
++++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased for Javelins and Stringers
++++ 14-SEP-2019, Sygsky: added reveal shooter procedure
 
 */
 
@@ -290,15 +291,19 @@ if ( local _shooter ) then
 };
 //      hint format["M:%1 %2", _this, _missile];
 if (!_replaced) exitWith {
+    _target reveal _shooter;
     _name  =  call _makeNameShooter;
     _name1 =  call _makeNameTarget;
 
-    hint localize format["+++ MANDO Missile not replaced: from %1.%2 -> %3, dmg %4, dst %5 m., spd %6, near %7, exit",
+    hint localize format["+++ MANDO Missile not replaced: from %1.%2 -> %3, dmg %4, dst %5 m., h %6, spd %7, near %8, exit",
         _name,
-        _type, _name1, (round((damage _target)*100))/100,
-        round(_target distance _shooter),
+        _type,
+        _name1,
+        (round((damage _target)*100))/100,
+        round(_target distance _shooter), // distance forom shooter to target
+        round((getPos _target) select 2), // height
         round(speed _target),
-        text( _target call SYG_nearestLocation)];
+        text( _target call SYG_nearestLocation)]; // distance from target to location
 };
 
 _missile setPos [ 0,0,(getPos _missile select 2) + 5000];
@@ -338,6 +343,8 @@ _ra select 24,
 _ra select 25,
 _ra select 26
 ];
+
+_target reveal _shooter;
 
 _name  = call _makeNameShooter;
 _name1 = call _makeNameTarget;

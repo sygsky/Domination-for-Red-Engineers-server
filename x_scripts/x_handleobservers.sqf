@@ -43,10 +43,11 @@ sleep 10.123;
 
 // prepare observers
 _observers = [];
-_observers set [0, {Observer1}];
-_observers set [1, {Observer2}];
-_observers set [2, {Observer3}];
+_observers set [0, Observer1];
+_observers set [1, Observer2];
+_observers set [2, Observer3];
 hint localize format["+++ x_handleobservers start: nr_observers = %1", nr_observers];
+_enemyToReveal = objNull;
 while { nr_observers > 0 && !target_clear } do {
 	if (X_MP) then {
 	    if ((call XPlayersNumber) == 0) then { waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0}; };
@@ -54,7 +55,7 @@ while { nr_observers > 0 && !target_clear } do {
 //	__DEBUG_NET("x_handleobservers.sqf",(call XPlayersNumber))
 
 	for "_i" from 0 to (count _observers) - 1 do {
-	    _observer = call (_observers select _i); // current observer
+	    _observer = _observers select _i; // current observer
         if (!alive _observer) then
         {
             _observers set[_i, "RM_ME"];
@@ -62,6 +63,11 @@ while { nr_observers > 0 && !target_clear } do {
         else
         {
             if (_enemy_ari_available) then {
+                if (alive _enemyToReveal) then
+                {
+                    _observer reveal _enemyToReveal;
+                    sleep 0.1;
+                };
                 _enemy = _observer findNearestEnemy _observer;
                 if ((alive _enemy) && ((_observer knowsAbout _enemy) > 1.5) && ((vehicle _enemy) isKindOf "Land") ) then {
                     _distance = _observer distance _enemy;
@@ -84,9 +90,15 @@ while { nr_observers > 0 && !target_clear } do {
                             _cnt          =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
                             _type         = if ( _cnt > MIN_FRIENDLY_COUNT_TO_STRIKE) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
-                            // If enemy is too far no need to strike, do smoking except
-                            _dist = round(_pos_nearest distance _enemy);
-                            if ( (_dist > (HIT_RADIOUS * 2)) && (_type == 1) ) then { _type = 2 }; // smoke except strike
+                            // If enemy is too far from strike point, do smoking attack only
+                            _dist = round( _pos_nearest distance _enemy );
+                            if ( ( _dist > (HIT_RADIOUS * 2) ) && ( _type == 1 ) ) then { _type = 2 }; // smoke except strike
+
+                            if ( _dist < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is high
+                            else
+                            {
+                                if ( _enemyToReveal == _enemy ) then { _enemyToReveal = objNull }; //// knowledge is low
+                            };
 
                             hint localize format
                             [

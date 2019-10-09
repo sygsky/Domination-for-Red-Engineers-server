@@ -40,7 +40,7 @@ while {!mt_radio_down} do {
  */		
 		if ( (_dummy select 1 ) in  d_mountine_towns/* ["Pacamac", "Hunapu", "Masbete"] */ ) then  // fly at higher height to prevent collision with mountine slopes
 		{
-			_fly_height = 250;
+			_fly_height = 350;
 		};
 #endif		
 		_num_p = (call XPlayersNumber);

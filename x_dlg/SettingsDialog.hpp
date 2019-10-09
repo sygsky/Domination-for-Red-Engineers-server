@@ -50,6 +50,9 @@ class XD_SettingsDialog
 		XD_PlayermarkerCaption,
 		XD_PlayermarkerHint,
 		PlayermarkerCombo,
+		XD_DeathmusicCaption,
+		XD_DeathmusicHint,
+		DeathmusicCombo,
 		XD_PointsCaption,
 		XD_PointsCaption2,
 		XD_CorporalPic,
@@ -196,37 +199,41 @@ class XD_SettingsDialog
 		onLBSelChanged = "_handle = [_this] execVM ""x_scripts\x_pmselchanged.sqf""";
 	};
 
-	class XD_CloseButton
+
+	class XD_DeathmusicCaption : XC_RscText
 	{
-		idc = -1;
-		type = CT_BUTTON;
-		style = ST_CENTER;
-		default = true;
-		font = FontM;
-		colorText[] = { 0, 0, 0, 1 };
-		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
-		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
-		colorBackground[] = { 1, 1, 1, 0.5 };
-		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
-		colorBackgroundActive[] = { 1, 1, 1, 0.7 }; // background color for active state
-		offsetX = 0.003;
-		offsetY = 0.003;
-		offsetPressedX = 0.002;
-		offsetPressedY = 0.002;
-		colorShadow[] = { 0, 0, 0, 0.5 };
-		colorBorder[] = { 0, 0, 0, 1 };
-		borderSize = 0;
-		soundEnter[] = { "", 0, 1 }; // no sound
-		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
-		soundClick[] = { "", 0, 1 }; // no sound
-		soundEscape[] = { "", 0, 1 }; // no sound
-		x = 0.77;
-		y = 0.86; // y = 0.83;
-		w = 0.1;
+		idc = 1502;
+		x = 0.12;
+		y = 0.45;
+		w = 0.25;
+		h = 0.1;
+		sizeEx = 0.025;
+		colorBackground[] = {1, 1, 1, 0.0};
+		colorText[] = { 1, 1, 1, 1 };
+		text = $STR_SYS_168; //"Listen reborn music";
+	};
+
+	class XD_DeathmusicHint : XC_RscText
+	{
+		idc = 1503;
+		x = 0.12;
+		y = 0.468;
+		w = 0.25;
+		h = 0.1;
+		sizeEx = 0.010;
+		colorBackground[] = {1, 1, 1, 0.0};
+		colorText[] = {0.5, 0.5, 0.5, 0.8};
+		text = $STR_SYS_161; // "Select from list";
+	};
+
+	class DeathmusicCombo:UIComboBox
+	{
+		idc = 1003;
+		x = 0.125;
+		y = 0.526;
+		w = 0.17;
 		h = 0.03;
-		sizeEx = 0.018;
-		text =  $STR_SYS_53; //"Закрыть";
-		action = "closeDialog 0;";
+		onLBSelChanged = "_handle = [_this] execVM ""x_scripts\x_rmselchanged.sqf""";
 	};
 
 	class XD_MainCaption : XC_RscText
@@ -244,7 +251,7 @@ class XD_SettingsDialog
 	class XD_PointsCaption : XC_RscText
 	{
 		x = 0.12;
-		y = 0.48;
+		y = 0.58;
 		w = 0.25;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -256,7 +263,7 @@ class XD_SettingsDialog
 	class XD_PointsCaption2 : XC_RscText
 	{
 		x = 0.12;
-		y = 0.505;
+		y = 0.605;
 		w = 0.25;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -267,7 +274,7 @@ class XD_SettingsDialog
 
 	class XD_CorporalPic : RscPicture
 	{
-		x=0.13; y=0.582; w=0.02; h=0.025;
+		x=0.13; y=0.682; w=0.02; h=0.025;
 		text = "\warfare\Images\rank_corporal.paa";
 		sizeEx = 256;
 		colorText[] = { 0, 0, 0, 1 };
@@ -276,7 +283,7 @@ class XD_SettingsDialog
 	class XD_CorporalString : XC_RscText
 	{
 		x = 0.16;
-		y = 0.545;
+		y = 0.645;
 		w = 0.25;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -289,7 +296,7 @@ class XD_SettingsDialog
 	{
 		idc = 2001;
 		x = 0.25;
-		y = 0.545;
+		y = 0.645;
 		w= 0.06;
 		h = 0.1;
 		style = ST_RIGHT;
@@ -301,7 +308,7 @@ class XD_SettingsDialog
 
 	class XD_SergeantPic : RscPicture
 	{
-		x=0.13; y=0.612; w=0.02; h=0.025;
+		x=0.13; y=0.712; w=0.02; h=0.025;
 		text = "\warfare\Images\rank_sergeant.paa";
 		sizeEx = 256;
 		colorText[] = { 0, 0, 0, 1 };
@@ -310,7 +317,7 @@ class XD_SettingsDialog
 	class XD_SergeantString : XC_RscText
 	{
 		x = 0.16;
-		y = 0.575;
+		y = 0.675;
 		w = 0.25;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -323,7 +330,7 @@ class XD_SettingsDialog
 	{
 		idc = 2002;
 		x = 0.25;
-		y = 0.575;
+		y = 0.675;
 		w= 0.06;
 		h = 0.1;
 		style = ST_RIGHT;
@@ -335,7 +342,7 @@ class XD_SettingsDialog
 
 	class XD_LieutenantPic : RscPicture
 	{
-		x=0.13; y=0.642; w=0.02; h=0.025;
+		x=0.13; y=0.742; w=0.02; h=0.025;
 		text = "\warfare\Images\rank_lieutenant.paa";
 		sizeEx = 256;
 		colorText[] = { 0, 0, 0, 1 };
@@ -344,7 +351,7 @@ class XD_SettingsDialog
 	class XD_LieutenantString : XC_RscText
 	{
 		x = 0.16;
-		y = 0.605;
+		y = 0.705;
 		w = 0.25;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -357,7 +364,7 @@ class XD_SettingsDialog
 	{
 		idc = 2003;
 		x = 0.25;
-		y = 0.605;
+		y = 0.705;
 		w= 0.06;
 		h = 0.1;
 		style = ST_RIGHT;
@@ -369,7 +376,7 @@ class XD_SettingsDialog
 
 	class XD_CaptainPic : RscPicture
 	{
-		x=0.13; y=0.672; w=0.02; h=0.025;
+		x=0.13; y=0.772; w=0.02; h=0.025;
 		text = "\warfare\Images\rank_captain.paa";
 		sizeEx = 256;
 		colorText[] = { 0, 0, 0, 1 };
@@ -378,7 +385,7 @@ class XD_SettingsDialog
 	class XD_CaptainString : XC_RscText
 	{
 		x = 0.16;
-		y = 0.635;
+		y = 0.735;
 		w = 0.25;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -391,7 +398,7 @@ class XD_SettingsDialog
 	{
 		idc = 2004;
 		x = 0.25;
-		y = 0.635;
+		y = 0.735;
 		w = 0.06;
 		h = 0.1;
 		style = ST_RIGHT;
@@ -403,7 +410,7 @@ class XD_SettingsDialog
 
 	class XD_MajorPic : RscPicture
 	{
-		x=0.13; y=0.702; w=0.02; h=0.025;
+		x=0.13; y=0.802; w=0.02; h=0.025;
 		text = "\warfare\Images\rank_major.paa";
 		sizeEx = 256;
 		colorText[] = { 0, 0, 0, 1 };
@@ -412,7 +419,7 @@ class XD_SettingsDialog
 	class XD_MajorString : XC_RscText
 	{
 		x = 0.16;
-		y = 0.665;
+		y = 0.765;
 		w = 0.25;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -425,7 +432,7 @@ class XD_SettingsDialog
 	{
 		idc = 2005;
 		x = 0.25;
-		y = 0.665;
+		y = 0.765;
 		w = 0.06;
 		h = 0.1;
 		style = ST_RIGHT;
@@ -437,7 +444,7 @@ class XD_SettingsDialog
 
 	class XD_ColonelPic : RscPicture
 	{
-		x=0.13; y=0.732; w=0.02; h=0.025;
+		x=0.13; y=0.832; w=0.02; h=0.025;
 		text = "\warfare\Images\rank_colonel.paa";
 		sizeEx = 256;
 		colorText[] = { 0, 0, 0, 1 };
@@ -446,7 +453,7 @@ class XD_SettingsDialog
 	class XD_ColonelString : XC_RscText
 	{
 		x = 0.16;
-		y = 0.695;
+		y = 0.795;
 		w = 0.125;
 		h = 0.1;
 		sizeEx = 0.025;
@@ -459,7 +466,7 @@ class XD_SettingsDialog
 	{
 		idc = 2006;
 		x = 0.25;
-		y = 0.695;
+		y = 0.795;
 		w = 0.06;
 		h = 0.1;
 		style = ST_RIGHT;
@@ -609,6 +616,39 @@ class XD_SettingsDialog
 		h = 0.11;
 		sizeEx = 0.018;
 		text = $STR_SYS_55; // "Разведчик прибудет в следущей версии. Вы поможете ему добраться до места назначения"
+	};
+
+	class XD_CloseButton
+	{
+		idc = -1;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = true;
+		font = FontM;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.5 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.7 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.77;
+		y = 0.86; // y = 0.83;
+		w = 0.1;
+		h = 0.03;
+		sizeEx = 0.018;
+		text =  $STR_SYS_53; //"Закрыть";
+		action = "closeDialog 0;";
 	};
 
 };

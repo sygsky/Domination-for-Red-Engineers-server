@@ -23,16 +23,16 @@ STR_XCP_12,"x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started","x_sabot
 //-----------------------------------------------------------------------
 // SYG scripts strings:
 //----------------------------------------------------------------------
-STR_SYG_01,"Only engineers can enter the Salvage trucks...","Only engineers can enter the Salvage trucks...","Только инженер может водить транспортный грузовик"
-STR_SYG_02,"Only engineers can load static weapons","Only engineers can load static weapons","Только инженеры могу грузить станковое оружие"
-STR_SYG_03,"Already %1 items loaded. Not possible to load more", "Already %1 items loaded. Not possible to load more", "Мест загружено: %1. Это максимум"
-STR_SYG_04,"No static weapon in range", "No static weapon in range", "Нет станкового оружия для погрузки"
-STR_SYG_05,"You're too far from %1, max. dist. %2m!","You're too far from %1, max. dist. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
-STR_SYG_06,"You are already loading an item. Wait until it is finished","You are already loading an item. Wait until it is finished","Вы в процессе загрузки. Дождитесь конца процедуры"
-STR_SYG_07,"%1 will be loaded in %2 sec.", "%1 will be loaded in %2 sec.", "%1 будет загружено через %2 сек."
+STR_SYG_01,"Only engineers can enter the Salvage trucks...","Nur Ingenieure können die Bergungsfahrzeuge betreten...","Только инженер может водить транспортный грузовик"
+STR_SYG_02,"Only engineers can load stationary weapons","Nur Ingenieure können stationäre Waffen laden","Только инженеры могу грузить станковое оружие"
+STR_SYG_03,"Already loaded %1 items. Unable to load more", "Bereits %1-Elemente geladen. Kann nicht mehr laden", "Мест загружено: %1. Это максимум"
+STR_SYG_04,"No stationary weapon in range", "Keine stationäre Waffe in Reichweite", "Нет станкового оружия для погрузки"
+STR_SYG_05,"You're too far from %1, max. dist. %2m!","Du bist zu weit von %1 entfernt, max. dist. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
+STR_SYG_06,"You're in the process of downloading. Wait for the end of the procedure","Du bist gerade dabei, dich herunterzuladen. Warten Sie auf das Ende des Verfahrens","Вы в процессе загрузки. Дождитесь конца процедуры"
+STR_SYG_07,"%1 will be loaded in %2 sec.", "%1 wird in %2 Sek. geladen.", "%1 будет загружено через %2 сек."
 STR_SYG_08, "%1 loaded and attached!", "%1 loaded and attached!", "%1 загрузили и закрепили!"
-STR_SYG_09,"You can't load a %1 into a %2!", "You can't load a %1 into a %2!", "Вы не можете загрузить %1 в %2!"
-STR_SYG_10,"Load Static","Last Statische","Загрузить орудие"
+STR_SYG_09,"You can't load a %1 into a %2!", "Du kannst kein %1 in %2 laden!", "Вы не можете загрузить %1 в %2!"
+STR_SYG_10,"Load Stationary","Last Statische","Загрузить орудие"
 STR_SYG_11,"Unload Static","Entladen Statischer","Разгрузить орудие"
 STR_SYG_12,"%1 to Backpack","%1 in den Rucksack","%1 в рюкзак"
 
@@ -48,9 +48,6 @@ STR_SERVER_1,"Shooting at allies from any weapon under any pretext is strictly p
 
 STR_SYS_00,"Your mash was destroyed","Ihre Maische wurde zerstört","Ваша мед. палатка была уничтожена."
 STR_SYS_01,"Grass layer set to: %1","Die gras-Ebene festgelegt werden: %1","Настройки отображения травы: %1"
-STR_SYS_011,No Grass,Kein Gras,без травы
-STR_SYS_012,Medium Grass,Medium Gras,обычная трава
-STR_SYS_013,Full Grass,Voll Gras,высокая трава
 
 STR_DANGER_NUM,4,4,4
 STR_DANGER_0,"Suddenly, streams of cold sweat began to flow down your spine ...","Plotzlich lauft Ihnen am Rucken ein kalter schweis runter...","Внезапно по вашей спине потекли струйки холодного пота..."
@@ -375,6 +372,9 @@ STR_SYS_164,"Points needed for","Punkte benötigt","Необходимо очк�
 STR_SYS_165,"different ranks:","für verschiedene Ränge:","получения звания:"
 STR_SYS_166,"General mission settings","Allgemeine Missions-Einstellungen","Общие параметры миссии"
 STR_SYS_167,"All times are in seconds. Click on the textbox and use up and down cursor to browse.","Alle Zeiten sind in Sekunden. Klicken Sie auf den text und oben und unten zu durchsuchen.","Время в секундах. Для навигации в тексте используйте стрелки вверх/вниз."
+STR_SYS_168,Respawn music,respawn-Musik,Музыка воскрешения
+STR_REBORN_1,On,Auf,Вкл.
+STR_REBORN_0,Off,Off,Выкл.
 
 STR_SYS_170,"Off","Off","Без маркеров"
 STR_SYS_171,"With Names","Mit Namen","С именем"
@@ -383,7 +383,7 @@ STR_SYS_173,"Role Only","Rolle Nur","С ролью"
 STR_SYS_174,"Health","Gesundheit","С отображением здоровья"
 
 STR_GRASS_1,"No Grass","Kein Gras","Без травы"
-STR_GRASS_2,"Medium Grass","Medium Gras","Средняя"
+STR_GRASS_2,"Medium Grass","Mittleres Gras","Средняя"
 STR_GRASS_3,"Full Grass","Voll Gras","Полная"
 
 
@@ -659,6 +659,8 @@ STR_SYS_503,"The target is completed! Transformer substations are destroyed","Au
 STR_SYS_504,"Our helicopter was shot down near %1. Your task to move forward as quickly as possible and search of the crew of the helicopter. The enemy troops also sent their forces in the area of the crash. You have approximately %2 minutes before their arrival. (The mission can be accomplished only by a player in the role of rescuer)","Unsere Hubschrauber wurde abgeschossen in der Nähe von %1. Ihre Aufgabe zu bewegen, so schnell wie möglich vorwärts und der Suche nach der Besatzung des Hubschraubers. Die feindlichen Truppen schickte auch Ihre Kräfte im Bereich der Absturz. Sie haben ungefähr %2 Minuten vor Ihrer Ankunft. (Die mission kann nur erreicht werden, indem ein Spieler in die Rolle des Retters)","Возле %1 был сбит наш вертолёт. Ваша задача - как можно быстрее выдвинуться на поиски экипажа вертолёта. Вражеские силы так-же высланы в зону крушения. У вас примерно %2 минут до их прибытия. (Завершить миссию может только игрок в роли спасателя или лидер группы)"
 STR_SYS_505,"Good job! The rescue of helicopter crew was successful","Gute Arbeit! Die Rettung der Hubschrauber-crew erfolgreich war","Задание выполнено! Операция по спасению экипажа вертолёта прошла успешно"
 STR_SYS_506,"The enemy took the settlement %1. You must steal the flag of their regiment and deliver it to our base.","Der Feind eingenommen Ort %1. Das sollten Sie zu stehlen Ihre fahne des Regiments und liefern es an uns, an der Basis.","Враг занял населённый пункт %1. Вам надлежит выкрасть знамя их полка и доставить его к нам, на базу."
+STR_SYS_FLAG_OWNED,%1 carries the flag,%1 trägt die Flagge!!!,"Флаг несёт %1"
+STR_SYS_FLAG_EMPTY,"GRU reports that the flag is back","GRU berichtet, dass die Flagge zurück ist","ГРУ сообщает, что флаг вернулся обратно"
 STR_SYS_507,"Good job! The regiment without the banner as the hole without a donut. They hide eyes and lick ice cream.","Auftrag ausgeführt! Das REGIMENT ohne Fahnen dass das Loch ohne Brezel. Sie verstecken die Augen und lecken Eis.","Задание выполнено! Полк без знамени что дырка без бублика. Они прячут глаза и лижут мороженое."
 STR_SYS_508,"It became known that the culprit in the outbreak of the war, an officer who led aggression on Sahrani, hiding on one of the Islands Isla del Vasal or Isla del Vida. Crush the wretch! Addendum: local fishermen report that the Islands do air defenses in large amounts","Es wurde bekannt, dass der Täter in den Ausbruch des Krieges Offizier, leitete die Aggression auf Sahrani, die sich auf einer der Inseln Isla del Vasal oder Isla del Vida. Entsorgen Sie den Bösewicht! Ergänzung: die lokalen Fischer berichtet, dass auf der Insel stammen die Mittel der Luftverteidigung in großen Mengen","Стало известно, что виновный в развязывании войны офицер, возглавивший агрессию на Сахрани, прячется на одном из островов Isla del Vasal или Isla del Vida.  Ликвидируйте негодяя! Дополнение: местные рыбаки сообщают, что на острова завозятся средства ПВО в больших кол-вах!"
 STR_SYS_509,"Good job! The officer destroyed","Auftrag ausgeführt! Der Offizier zerstört","Задание выполнено! Офицер уничтожен"
@@ -699,14 +701,15 @@ STR_SYS_604,"Sahrani People welcome the %1 of the warrior-internationalist in th
 STR_SYS_604_1,"Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty, and welcomes the %1 warrior-the internationalist at this long-suffering land:\n""Deliver us from the boot of The Federal reserve agents, soldier!""","Fast die Hälfte von Sahrani veröffentlicht, aber die Bevölkerung Sahrani froh, dass alle Verteidiger des wahren Freiheit, und begrüßt die %1 Krieger-die Internationalistische an diesem leidgeprüften land:\n""Erlöse uns von dem boot Der Federal reserve Agenten, Soldaten!""","Уже половина Сахрани освобождена, но население Сахрани радо любому защитнику свободы без обмана и  приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""
 STR_SYS_604_0,"You are the first [English speaking] warrior in this dangerous mission on Sahrani liberation!\n Be worthy of Your great goal!","Sie sind der erste [deutschsprachiger] Krieger in dieser gefährlichen Mission zur Befreiung der Сахрани!\n Seien Sie würdig seiner großen Aufgabe!","Вы - первый [советский] воин в этой опасной миссии по освобождению Сахрани!\nБудьте достойны своей важнейшей миссии!"
 
-
 STR_SYS_605,"%1 killed %2 and looses %3 scores","%1 getötet %2. %1 verliert %3 erzielt","%1 убил %2 и теряет очков: %3!"
 STR_SYS_606,"During %4 you are on GRU duty in %1 [+%2/%3]","During %4 you are on GRU duty in %1 [+%2/%3]","В течении %4 Вы выполняете задание ГРУ в %1 [+%2/%3]!"
 
 STR_SYS_607,"You need %2 point[s] for parajump. Your current scores are %1","Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1","Для прыжка необходимо очков: %2. Сейчас у вас: %1"
-STR_SYS_608,"You can't jump. You have to wait %1 minutes for your next jump!!!","Sie können nicht springen. Sie müssen warten, %1 Minuten für Ihren nächsten springen!!!","Прыжок запрещён. След. прыжок через %1 мин.!"
+STR_SYS_608,"You need more points, now wait %1 minutes for a free jump (or %2 points), the jump itself requires another %3 points. You only have %4","Sie haben nur wenige Punkte, Sie müssen auf %1 Minuten für einen freien Sprung warten (oder %2 Punkte ausgeben), der Sprung selbst kostet %3 Punkte. Sie haben nur %4","У вас мало очков, Вы должны подождать %1 мин для свободного прыжка (или потратить %2 балла), на прыжок нужны ещё %3 балла. Вы имеет только %4"
+STR_SYS_608_1,"You spent points on this jump: %1, %2 for jump and %3 for impatience to free jump (%4 min.)","Du hast Punkte für diesen Sprung ausgegeben: %1, %2 für Sprung und %3 für Ungeduld zum freien Sprung (%4 min.)","На этот прыжок вы потратили очков: %1, %2 за прыжок и %3 за нетерпение до свободного прыжка(%4 мин.)"
 STR_SYS_609,"!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!","!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!","!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!"
-STR_SYS_609_1,"You finally realize that skydiving requires a parachute ! But it's late...","Sie endlich erkennen, dass Fallschirmspringen erfordert einen Fallschirm! Aber es ist spät...","Вы понимаете, что для прыжка был нужен парашют! Но уже поздно..."
+STR_SYS_609_1,"You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?","Man merkt endlich, dass Fallschirmspringen einen Fallschirm erfordert ! Aber es ist spät... Frage: - warum habe ich für diesen Sprung bezahlt?","Вы понимаете, что для прыжка был нужен парашют! Но уже поздно... Последняя мысль: - Вернут ли очки?"
+STR_SYS_609_2,"You've got your jump points (%1) back for this stupid episode.","Du hast deine Punkte für jump (%1) zurück in dieser dummen episode.","Вам возвратили очки за прыжок (%1) в этом дурацком эпизоде."
 
 STR_SYS_610,"[Record equipment]","[Datensatz Waffen]","[Запомнить снаряжение]"
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Ваше снаряжение записано и будет выдано в следующий раз
@@ -909,7 +912,7 @@ STR_HIT_UNCONSCIOUS,"You are unconscious...","Sie verlieren das Bewusstsein...",
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,73,73,73
+STR_RUM_NUM,74,74,74
 STR_RUM_NIGHT,"They are sleeping in %3","Alle schlafen in %3","В %3 все спят, однако"
 STR_RUM_0,"Rumors are absent! It's weird...","Gerüchte sind nicht vorhanden! Es ist seltsam...","Слухи отсутствуют! Что странно..."
 STR_RUM_1,"Enemy refuel truck will help only if your vehicle engine is on","Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf","Вражеский бензовоз заправляет при включенном двигателе техники"
@@ -984,6 +987,7 @@ STR_RUN_69,"Enemies plan to increase AA missiles range","Feinde planen, die Reic
 STR_RUN_70,"At the moment of death you will hear the music of heaven","Während des Todes wirst du die Musik des Himmels hören","В момент смерти ты услышишь небесную музыку"
 STR_RUN_71,"Green flares over towns are fired by the group commanders","Green lightning Raketen über Städte werden von gruppenkommandanten abgefeuert","Ракеты зелёного цвета в городах запускают командиры групп"
 STR_RUN_72,"Red rockets over cities usually mean the destruction of important infrastructure","Rote Raketen über Städte bedeuten normalerweise die Zerstörung wichtiger Infrastruktur","Красные ракеты над городами означают обычно уничтожение важной инфраструктуры"
+STR_RUN_73,"In the inventory, you can compare ammunition by selecting and reading the information","Im Inventar können Sie Munition vergleichen, indem Sie Informationen auswählen und Lesen","В инвенторе можно сравнивать боеприпасы, тыкая на них и просматривая информацию"
 
 
 //------------------------------------ CAMP common strings ------------------------------------

@@ -18,6 +18,7 @@ if ( !( local _unit ) ) exitWith {hint localize format["--- scripts/deathSound.s
 if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
 if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play ordinal sound if KIA or alone
 {
+    if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doen't like such sounds
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
     {
         playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
@@ -63,8 +64,7 @@ else    // some kind of suicide? Say something about...
         _sound = format["ACE_BrutalScream%1", ceil(random 15)]; // 1-15
 //        hint localize format["ACE sound is %1", _sound];
 #else
-        if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 13))};  // 0-12
-        _sound = SYG_suicideScreamSound;
+        _sound = call SYG_getSuicideScreamSound;
 #endif
     };
 

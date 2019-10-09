@@ -21,7 +21,7 @@ current_mission_text = localize "STR_SYS_120"; // "Дополнительное 
 if (side_mission_winner != 0 && bonus_number != -1) then
 {
 
-	_bonus_pos = localize "STR_SYS_309";//"на базе.";
+	_bonus_pos = localize "STR_SYS_309";//"on the base.";
 	_type_name = sm_bonus_vehicle_array select bonus_number;
 	_bonus_vehicle = [_type_name,0] call XfGetDisplayName;
 
@@ -32,25 +32,19 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 	    hint localize format["x_sidemissionwinner.sqf:d_sm_p_pos is nil, x_sm_pos %1 ", x_sm_pos];
 		_posi_array = x_sm_pos;
 		_posione = _posi_array select 0;
-		if (player distance _posione < (d_ranked_a select 12)) then {
-			_get_points = true;
-		};
+		_get_points = (player distance _posione < (d_ranked_a select 12));
 	}
 	else
 	{ // not is nil
-		if ( d_was_at_sm && x_sm_type != "convoy") then
+		_get_points =  d_was_at_sm;
+		if (!_get_points) then
 		{
-			if (player distance d_sm_p_pos < (d_ranked_a select 12)) then
-			{
-				_get_points = true;
-			};
+    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player was visit SM", d_sm_p_pos];
+			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12));
 		}
 		else
 		{
-			if (player distance d_sm_p_pos < (d_ranked_a select 12)) then
-			{
-					_get_points = true;
-			};
+    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player visited SM", d_sm_p_pos];
 		};
 	};
 	if (_get_points) then {

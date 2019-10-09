@@ -1,4 +1,4 @@
-// x_helilift.sqf, by Xeno. Called on client computer only for BH type
+// x_helilift.sqf, by Xeno. Called on client computer only for BH heli lift type
 #ifdef __TT__
     if (true) exitWith{false};
 #endif

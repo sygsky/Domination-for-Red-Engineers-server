@@ -2,9 +2,10 @@
 // works for single air killer
 //
 private ["_type", "_pos", "_wp_behave", "_crew_member", "_addToClean", "_heli_type", "_vehicle", "_initial_type", "_grp",
- "_vehicles", "_bad_units","_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_unit2", "_leader",
+ "_vehicles", "_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_leader",
  "_old_target", "_loop_do", "_dummy", "_current_target_pos", "_wp", "_pat_pos", "_radius", "_dist", "_old_pat_pos", "_angle",
-  "_x1", "_y1", "_i", "_vecx","_new_group","_pilot","_good_units", "_counter","_rejoinPilots", "_ret", "_lastDamage"];
+  "_x1", "_y1", "_i", "_vecx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage",
+  "_flyHeight"];
 
 if (!isServer) exitWith {};
 
@@ -20,6 +21,7 @@ if (!isServer) exitWith {};
 // arrival time delay between KA and MIMG
 #define KA_MIMG_ARRIVAL_DELAY 300
 #define REFUEL_INTERVAL 600
+#define PRINT_PERIOD 600 // period to inform about heli position
 
 // how many player is not detected near target in seconds
 #define PLAYER_NOT_AT_TARGET_LIMIT 1200
@@ -31,6 +33,12 @@ _type = _this select 0; // vehicle type (KA, MIMG, SU: attack heli, light heli, 
 _pos = d_airki_start_positions select 0; // from where to fly to goal
 
 _wp_behave = "AWARE";
+
+if (isNil "SYG_owner_active_air_vehicles_arr") then
+{
+    SYG_owner_active_air_vehicles_arr = []; // array of active owner air vehicles
+};
+
 
 _crew_member = (
 	switch (d_enemy_side) do {
@@ -114,7 +122,7 @@ _rejoinPilots =
             for "_i" from 0 to _counter - 1 do
             {
                 _unit = _badunits select _i;
-                if ( !alive _unit) then
+                if ( !canMove _unit) then
                 {
                     _goodunits set [_i, "RM_ME"]; // remove dead from good list
                 }
@@ -143,7 +151,12 @@ _rejoinPilots =
                 if ( !isNull _newgrp ) then
                 {
 #ifdef __PRINT__
-                    hint localize format["x_airki.sqf: Rejoin good pilots (%1) to group %2 (%3 men), and removing invalid pilots %4",_goodunits, _newgrp, count units _newgrp, _badunits];
+                    hint localize format["x_airki.sqf: Rejoin good pilots (%1) to group %2 (%3 men) dist %4, and removing invalid pilots %5",
+                        _goodunits,
+                        _newgrp,
+                        count units _newgrp,
+                        round((_goodunits select 0) distance (leader _newgrp)),
+                        _badunits];
 #endif
                     _goodunits join _newgrp;
                     sleep 0.25;
@@ -194,7 +207,7 @@ _min_dist_between_wp = 100;
 // ***************************************
 // *       Main loop of the script       *
 // ***************************************
-
+_old_target_name = "";
 while { true } do {
 
     // possibility for SU creation is about 33%
@@ -207,9 +220,7 @@ while { true } do {
 		while {!mt_spotted} do {sleep 23.32}; // wait until player is spotted
 	} else { // tower is down
 		while {mt_radio_down} do {sleep 21.123}; // wait for next tower standing
-		if (!mt_spotted) then { //if player not spotted
-			while {!mt_spotted} do {sleep 23.32}; // wait until player spotted
-		};
+		while {!mt_spotted} do {sleep 23.36}; // wait until player spotted
 	};
 
 #ifdef __PRINT__
@@ -258,9 +269,10 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 #ifdef __SYG_AIRKI_DEBUG__
 		hint localize format["x_airki.sqf[%1]: sleep 10 secs", _type];
 		sleep 10;
-#else	
-		hint localize format["x_airki.sqf[%1]: sleep 800 secs", _type];
-		sleep (400 + (random 800));
+#else
+        _sleepTime = 400 + (random 800);
+		hint localize format["x_airki.sqf[%1]: sleep %2 secs", _type, round(_sleepTime)];
+		sleep _sleepTime;
 #endif		
 	} else {
 		if (_num_p < 10) then {
@@ -298,7 +310,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_vec_cnt = 1;
 	_heli_arr = d_light_attack_chopper;
 	_flight_height = 200;   // battle height
-	_flyby_height  = 300;   // transport stage height
+	_flyby_height  = 500;   // transport stage height
 	_flight_random = 100;   // random part of heigth
 	switch (_type) do {
 		case "KA": 
@@ -306,7 +318,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_airki_attack_chopper;
 			_flight_height = 115;
-        	_flyby_height  = 500;
+        	//_flyby_height  = 500;
 			_flight_random = 50;
 			_min_dist_between_wp = 100;
 		};
@@ -325,7 +337,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_light_attack_chopper;
 			_flight_height = 90;
-        	//_flyby_height  = 300;
+        	//_flyby_height  = 500;
 			_flight_random = 20;
 			_min_dist_between_wp = 100;
 		};
@@ -334,14 +346,19 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	//==========================
 	//= creation of vehicle[s] =
 	//==========================
-	_dummy = target_names select current_target_index;
+	while {current_target_index < 0} do {sleep 5;}; // wait until new town ready
+
+	_dummy = target_names select current_target_index; // current town info array
+    _current_target_pos = _dummy select 0;
+    _radius = (_dummy select 2) + 100; // increase target border radius by 100 m
+
+	_old_target_name = _dummy select 1;
 
 	for "_xxx" from 1 to _vec_cnt do {
 		_heli_type = _heli_arr call XfRandomArrayVal;
 		_vehicle = createVehicle [_heli_type, _pos, [], 100, "FLY"];
 		_vehicle setVariable ["damage",0];
-		
-		
+
 		_vehicles = _vehicles + [_vehicle];
 		[_vehicle, _grp, _crew_member, _grpskill] call SYG_populateVehicle;
 
@@ -357,48 +374,60 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			sleep 0.01;
 		} forEach crew _vehicle;
 		[_heli_type, _vehicle] call _addToClean;
-		_flyHeight = _flight_height + (random _flight_random);
+		_flyHeight = round(_flyby_height + (random _flight_random)); // set fly by height from birth point to the town
 		_vehicle flyInHeight _flyHeight;
-#ifdef __PRINT__	
-	hint localize format["x_airki.sqf[%3]: %1 created to patrol town %2 at pos %4 h %5",_heli_type, _dummy select 1, _type, _pos, _flyHeight ];
-#endif	
+    #ifdef __PRINT__
+        hint localize format["x_airki.sqf[%3]: %1 created to patrol town %2 at pos %4, flyby_height %5",_heli_type, _dummy select 1, _type, _pos, _flyHeight ];
+    #endif
 		sleep 0.01;
 	};
-	
+
 	sleep 1.011;
+
+#ifdef __DEFAULT__
+    if ( (_dummy select 1) in d_mountine_towns ) then // raise the height of the flight for mountain towns ("Hunapu","Pacamac" etc)
+    {
+        _flight_height = _flight_height * 1.5;
+    };
+#endif
 
 	_leader = leader _grp;
 	_leader setRank "LIEUTENANT";
 	_grp allowFleeing 0;
 	
-	_old_target = [0,0,0];
-	_loop_do = true;
-	_dummy = target_names select current_target_index;
-	
+	//_old_target = [0,0,0];
 	_current_target_pos = _dummy select 0;
+
 	if ((_vehicles select 0) distance _current_target_pos > (_vehicles select 0) distance d_island_center) then {
-		_wp = _grp addWaypoint [d_island_center, 100];
+		_wp = _grp addWaypoint [d_island_center, 100]; // additional waypoint to island center
+    	_wp setWaypointType "MOVE";
 	};
 	_wp = _grp addWaypoint [_current_target_pos, 50];
+	_old_pat_pos = _current_target_pos; // initial old patrol positon
 	_wp setWaypointType "SAD";
 	_pat_pos = _current_target_pos;
 	_wp setWaypointStatements ["never", ""];
 #ifdef __PRINT__
-   	hint localize format["x_airki.sqf[%3]: heli %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
+   	hint localize format["x_airki.sqf[%3]: veh %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
 #endif
 
 
 #ifdef __PRINT__
 	_lastDamage = 0;
+	_timeToPrint = time - PRINT_PERIOD + 60; // print after 60 seconds
 #endif
 
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//+ loop for vehicle patrol itself, while they are alive +
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-	while {_loop_do} do {
-		// TODO: allow target be not only town but sometimes side misison base or occupied town too
+	_loop_do = true;
+
+    //
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//+ main loop for vehicle patrol itself, while they are alive +
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//
+	while { _loop_do } do {
 #ifdef __FUTURE__
+		// TODO: allow target be not only town but sometimes side mission base or occupied town too
 		// find all zones of interest
         // if players not near town during some time
         if ( _type in ["SU","KA"]) then // check for other goal, not only main target
@@ -409,20 +438,14 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
             };
         };
 #else
-		_dummy = target_names select current_target_index;
-		_current_target_pos = _dummy select 0;
-		_radius = (_dummy select 2) + 100; // increase target border radius by 100 m
+        // if main target town defined, use it as goal, else use previous one
+        if ( current_target_index >= 0 ) then
+        {
+            _dummy = target_names select current_target_index;
+            _current_target_pos = _dummy select 0;
+            _radius = (_dummy select 2) + 100; // increase target border radius by 100 m
+        };
 #endif
-#ifdef __DEFAULT__
-		if ( (_dummy select 1) in d_mountine_towns ) then // raise the height of the flight for mщuntain towns ("Hunapu","Pacamac" etc)
-		{
-            // forEach _vehicles;
-            {
-                _x flyInHeight ( _flight_height * 1.5 + random ( _flight_random * 1.5 ) );
-            } forEach _vehicles;
-		};
-#endif		
-		
 		sleep 0.5754;
 
 		switch (_type) do {
@@ -432,36 +455,85 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		};
 
 		_angle = floor (random 360);
-		_dist = (sqrt((random _radius)/_radius)) * _radius;
+		_dist = _radius call XfRndRadious; // (sqrt((random _radius)/_radius)) * _radius;
 		_x1 = (_current_target_pos select 0) - ( _dist * cos _angle);
 		_y1 = (_current_target_pos select 1) - ( _dist * sin _angle);
-		_pat_pos = [_x1, _y1,(_current_target_pos select 2)];
+		_pat_pos = [_x1, _y1,(_current_target_pos select 2)]; // next patrol position
 		if ( _type in ["KA","MIMG"] ) then {
-			_old_pat_pos = _pat_pos;
 			// prepare  new patrol position
 			// ensure new position distance more than 100 meters from current one
 			while {(_pat_pos distance _old_pat_pos) < _min_dist_between_wp} do {
 				_angle = random 360;
-				_dist = (sqrt((random _radius)/_radius)) * _radius;
+				_dist = _radius call XfRndRadious; //(sqrt((random _radius)/_radius)) * _radius;
 				_x1 = (_current_target_pos select 0) - ( _dist * cos _angle);
 				_y1 = (_current_target_pos select 1) - ( _dist * sin _angle);
 				_pat_pos = [_x1, _y1,(_current_target_pos select 2)];
 				sleep 0.01;
 			};
-			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+//			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+    		_old_pat_pos = _pat_pos; // prepare next position to compare with
+			_wp setWaypointPosition [_pat_pos, 0];
 			_grp setSpeedMode "NORMAL";
 			_grp setBehaviour _wp_behave;
+
 			// wait until near WP
 			sleep 15.821;
 		} else { // SU type
-			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+//			[_grp, 1] setWaypointPosition [_pat_pos, 0];
+			_wp setWaypointPosition [_pat_pos, 0];
 			_grp setSpeedMode "LIMITED";
 			_grp setBehaviour _wp_behave;
+
 			sleep (120 + random 120);
 			// reload weapon for SU after delay
 			_vehicles call SYG_fastReload; // reload SU just in case
 		};
-		
+	    // reset flight height for each new WP, as task can change here
+   		{
+   		    if (_old_target_name != (_dummy select 1)) then // target changed, move heli to other target
+   		    {
+   		        _x flyInHeight (_flyby_height + random _flight_random);
+                hint localize format["+++ airki.sqf: %1 redirected from %2 to %3, flyby height ~ %4",
+                   typeOf  _x,
+                   _old_target_name,
+                   (_dummy select 1),
+                   _flyby_height
+                   ];
+   		        _old_target_name = _dummy select 1;
+   		    }
+   		    else
+   		    {
+   		        // check what height we should set
+   		        // if enemy air vehicles detected, set height according enemy vehicle one
+   		        _height_not_set = true;
+                _veh = _x;
+                for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
+                {
+                    if ( !alive _x ) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
+                    else
+                    {
+                        _pos = getPos _x;
+                        if ( (_veh distance _pos)  < 3000 ) then
+                        {
+                            if ( ( _pos select 2) > _flight_height ) then
+                            {
+                                    _veh flyInHeight ((_pos select 2)+50);
+                                    hint localize format["+++ x_airki: enemy air vehicle detected, height set to %1", ((_pos select 2)+50)];
+                                    _height_not_set = false;
+                            };
+                            _veh reveal _x;
+                        }
+                        else { SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"]};
+                    };
+                } forEach SYG_owner_active_air_vehicles_arr;
+                SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
+                if (_height_not_set) then
+                {
+       		        _veh flyInHeight (_flight_height + (random _flight_random));
+                };
+   		    };
+   		} forEach _vehicles;
+
 		if (X_MP && (call XPlayersNumber) == 0) then {
 		    hint localize "x_airki.sqf: no players, wait for next one";
 			waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
@@ -485,7 +557,8 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 							s_down_heli_arr = s_down_heli_arr + [_vecx];
 							_vehicles set [_i, "X_RM_ME"];
 						};
-					} else 
+					}
+					else
 					{
 #ifdef __PRINT__
 						if ( count _vehicles == 1) then
@@ -525,13 +598,23 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		_pos set [2, 0];
 		_enemy_arr = nearestObjects [ _pos, ["SoldierEB","Tank"], 300];
 		//+++ Sygsky: TODO add info exchange between air-air, air-land, air-ship units
-#endif		
+#endif
+#ifdef __PRINT__
+	if ( (time - _timeToPrint) >= PRINT_PERIOD) then
+	{
+	    _heli = _vehicles select 0;
+	    _loc = _heli call SYG_nearestSettlement;
+	    hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, dmg %5", typeOf _heli, text _loc, round((locationPosition _loc) distance _heli), round((getPos _heli) select 2),damage _heli ];
+	    _timeToPrint = time;
+	};
+
+#endif
 	}; // while {_loop_do} do
 	
 	_ret = d_airki_respawntime + _re_random + random (_re_random);
 	
 #ifdef __PRINT__
-	hint localize format[ "x_airki.sqf[%3]: internal main loop finished, sleep for %1 secs; s_down_heli_arr[%2]", round(_ret), count s_down_heli_arr, _type];
+	hint localize format[ "x_airki.sqf[%1]: internal main loop finished, sleep for %2 secs; s_down_heli_arr[%3]",  _type, round(_ret), count s_down_heli_arr];
 #endif			
 
 	sleep _ret;

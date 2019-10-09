@@ -116,7 +116,7 @@ XSendNetStartScriptClient = {
 XSendNetStartScriptClientAll = {
 	private ["_this"];
 	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClientAll",_this)
-	d_ns_client = _this;publicVariable "d_ns_client";
+	d_ns_client = _this; publicVariable "d_ns_client";
 	if (X_Client) then {_this spawn XHandleNetStartScriptClient}; // if sent from client, it should receive it too
 };
 

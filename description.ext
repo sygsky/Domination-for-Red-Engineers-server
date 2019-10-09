@@ -143,6 +143,8 @@ class CfgMusic
     class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
     class capricorn1title { name=""; sound[] = {\sounds\capricorn1title.ogg,db+20,1.0};} // intro music from great american movie "Capricorn-1"
     class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg,db+20,1.0};} // intro music from Soviet great song (1950)
+    class Letyat_perelyotnye_pticy_end { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_end.ogg,db+20,1.0};} // intro music #2 (final verse) from the same Soviet great song (1950)
+
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class morze { name=""; sound[] = {\sounds\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
@@ -158,21 +160,20 @@ class CfgMusic
     class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0};}; // USSR famous film "Hound of Baskervill hall"
     class condor { name=""; sound[] = {\sounds\condor.ogg,db+0,1.0};}; // El-Condor-Pasa by Leo Rojas
     class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
-
-
+    class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
+    class melody_by_voice_short { name=""; sound[] = {\sounds\melody_by_voice_short.ogg,db+0,1.0};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
+    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
+//    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
+    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro music, Soviet song about comrade
 //------------------------------------- END of Intro music list --------------------------------------------------
 
-    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
-
-//    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
-
-    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro New Year music
 
 //+++++++++++++++++++++++ Detect music
 
     class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
     class detected_Paraiso { name=""; sound[] = {\sounds\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
-    class detected_Carmen { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Paraiso)
+    class detected_Carmen { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
+    class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; } // town detected music (Rahmadi)
 
 //+++++++++++++++++++++++ Defeat music track list
 
@@ -208,7 +209,7 @@ class CfgMusic
     class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
     class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0};} // defeat sound by Kevin MacLeod
     class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0};} // defeat sound from Radio-nanny sign call
-
+    class sinbad_baghdad { name=""; sound[] = {\sounds\defeat\sinbad_baghdad.ogg,db+10,1.0};} // defeat sound from film "7th voyage of Sinbad "
 
 //+++++++++++++++++++++++ medieval defeats (death near castles)
     class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // medieval defeat sound
@@ -271,7 +272,7 @@ class CfgMusic
 class CfgSounds
 {
 	sounds[] = {
-		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,horse,Tank_GetIn,APC_GetIn
+		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,Tank_GetIn,APC_GetIn
 
 #ifdef __REVIVE__
 		,DBrian_Im_hit, DBrian_Im_bleeding,DBrian_Medic,DBrian_Bastards,DBrian_Shit_Man_down,DBrian_Oh_no,
@@ -293,9 +294,10 @@ class CfgSounds
     class vam_bileter {name="vam_bileter";sound[]={\sounds\vam_bileter.ogg,db+0,1.0};titles[] = {};};
 	class highvoltage {name="highvoltage";sound[]={\sounds\highvoltage.ogg,db+0,1.0};titles[] = {};};
 	class upsidedown {name="upsidedown";sound[]={\sounds\upside_down.ogg,db+0,1.0};titles[] = {};};
-	class horse {name="horse";sound[]={\sounds\horse.ogg,db+0,1.0};titles[] = {};};
+	//class horse {name="horse";sound[]={\sounds\horse.ogg,db+0,1.0};titles[] = {};};
 	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
+	class bicycle {name="bicycle";sound[]={\sounds\bicycle.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
 	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; }; // remove as non needed
@@ -330,6 +332,7 @@ class CfgSounds
 	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; titles[] = {}; };
 	class the_trap { name=""; sound[]=   {\sounds\the_trap.ogg,db-1,1.0}; titles[] = {}; };
 	class koschei { name=""; sound[]=   {\sounds\koschei.ogg,db-1,1.0}; titles[] = {}; }; // from Soviet multfilm "The princess Frog"
+	class sinbad_sckeleton { name=""; sound[]=   {\sounds\fear\sinbad_sckeleton.ogg,db-1,1.0}; titles[] = {}; }; // from "7th voyage of Sinbad "
 
 	class teleport { name=""; sound[]=   {\sounds\teleport.ogg,db-1,1.0}; titles[] = {}; };
 	class tropelet { name=""; sound[]=   {\sounds\tropelet.ogg,db-1,1.0}; titles[] = {}; };
@@ -442,6 +445,7 @@ class CfgSounds
     class sorcerie {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0};};
     class melody {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0};};
     class hound_chase {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0};}; // chase from "Hound of Baskerville" Soviet film
+    class ipanoramDefeat {name = ""; sound[] = {\sounds\ipanoramDefeat.ogg, db+10, 1.0};}; // movie Hamlet (USSR) music
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};
