@@ -1324,3 +1324,6 @@ STR_ACE_SYS_RUCK_CUBICCENTIMETERS,"ccm","ccm","см. куб."
 STR_ACE_SYS_RUCK_WEIGHT,"Weight:","Gewicht:","Вес:"
 STR_ACE_SYS_RUCK_SIZE,"Capacity:","Kapazitat:","Ёмкость:"
 STR_ACE_SYS_RUCK_PACKSIZE,"Pack size:","Pack size:","Объём упак.:"
+
+STR_AAHALO_3,"Ground Speed:","Ground Speed:","Горизонт. ск:"
+STR_AAHALO_5,"Descent Rate:","Descent Rate:","Верт. ск.:"
