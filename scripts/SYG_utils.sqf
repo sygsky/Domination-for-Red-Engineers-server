@@ -293,8 +293,10 @@ SYG_findGroupAtTargets = {
 SYG_findAndAssignAsCargo = {
 	private ["_feetmen","_feetmen1","_vecs","_reta","_veh","_i","_count","_unit","_assigned","_j", "_pos","_grp_pos","_goal_grp","_grp","_part1","_part2","_grp_on_islet"];
 	_feetmen = arg(0);
-	if ( typeName _feetmen == "GROUP" ) then { _feetmen = units _feetmen; };
-	if ( _feetmen isKindOf "CAManBase" ) then { _feetmen = [ _feetmen ]; };
+	if ( typeName _feetmen == "GROUP" ) then { _feetmen = units _feetmen; }
+	else { // may be single unit designated
+    	if ( typeName _feetman == "OBJECT") then { if ( _feetmen isKindOf "CAManBase" ) then { _feetmen = [ _feetmen ]; }};
+	};
     if ( typeName _feetmen != "ARRAY" ) exitWith {[]}; // illegal argument
     if ( count _feetman == 0 ) exitWith {[]};
 	_vecs = [] +  arg(1);
