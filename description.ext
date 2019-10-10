@@ -165,6 +165,7 @@ class CfgMusic
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 //    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro music, Soviet song about comrade
+    class sovest2 { name=""; sound[] = {\sounds\intro\sovest2.ogg,db-1,1.0};} // intro music, Soviet song about comrade
 //------------------------------------- END of Intro music list --------------------------------------------------
 
 
