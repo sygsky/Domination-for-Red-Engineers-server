@@ -17,7 +17,7 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 SAddObserverKillScores = {
     if (isPlayer (_this select 1) ) then
     {
-        hint localize format["+++ x_isledefense.sqf: observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE];
+        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE];
         ["syg_observer_kill",(_this select 1)] call XSendNetStartScriptClient;
     };
 };
