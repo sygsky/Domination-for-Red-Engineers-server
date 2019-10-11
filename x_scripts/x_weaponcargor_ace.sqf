@@ -390,9 +390,9 @@ _ve spawn {
 				_ve addMagazineCargo ["ACE_100Rnd_762x54_BT_PK",100];
 				_ve addMagazineCargo ["ACE_NSV_CSWDM",100];
 			_ve addMagazineCargo ["ACE_Dummy_LAUNCHER",3];
-				_ve addMagazineCargo ["ACE_Strela",100];
-				_ve addMagazineCargo ["ACE_RPG7_PG7V",100];
 				_ve addMagazineCargo ["ACE_RPG7_PG7VL",100];
+				_ve addMagazineCargo ["ACE_RPG7_PG7V",100];
+				_ve addMagazineCargo ["ACE_Strela",100];
 				_ve addMagazineCargo ["ACE_RPG7_PG7VR",100];
 				_ve addMagazineCargo ["ACE_RPG7_OG7V",100];
 				_ve addMagazineCargo ["ACE_RPG7_TBG7V",100];
