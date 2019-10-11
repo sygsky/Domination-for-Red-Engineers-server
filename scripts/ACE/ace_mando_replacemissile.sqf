@@ -295,9 +295,10 @@ if (!_replaced) exitWith {
     _name  =  call _makeNameShooter;
     _name1 =  call _makeNameTarget;
 
-    hint localize format["+++ MANDO Missile not replaced: from %1.%2 -> %3, dmg %4, dst %5 m., h %6, spd %7, near %8, exit",
+    hint localize format["+++ MANDO Missile not replaced: from %1.%2(s. %3) -> %4, dmg %5, dst %6 m., h %7, spd %8, near %9, exit",
         _name,
         _type,
+        round(speed _shooter),
         _name1,
         (round((damage _target)*100))/100,
         round(_target distance _shooter), // distance forom shooter to target
