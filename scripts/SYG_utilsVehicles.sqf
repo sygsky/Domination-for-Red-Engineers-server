@@ -1221,6 +1221,8 @@ SYG_assignVecToSmokeOnHit =
 //------------------------------------------------------------- Rearm vehicles methods
 
 #ifdef __REARM_SU34__
+
+#ifdef __FUTURE__ // for future modification
 /*
  Params are as follow:
    ["VEHICLE_NAME_1",...,"VEHICLE_NAME_N"],
@@ -1321,6 +1323,97 @@ SYG_boatRearmTable =
         ]
     ]
 ];
+#endif
+
+
+/*
+    Good old tables
+*/
+SYG_su34_RearmTables =
+[
+ ["ACE_Su34B","ACE_Su34"], // plane names
+ [	// plane params
+	 [ // 1st plane params
+//		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_Kh29LLauncher", "ACE_FAB500M62BombLauncher", "ACE_FFARPOD2" ],
+//		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_6Rnd_Kh29L", "ACE_6Rnd_Kh29L", "ACE_12Rnd_FAB500M62", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"]
+		["ACE_Kh29LLauncher", "ACE_S13T_Launcher", "ACE_GSh302", "ACE_FAB500M62BombLauncher"],
+		["ACE_250Rnd_30mm_GSh302", "ACE_4Rnd_Kh29L", "ACE_30Rnd_S13T","ACE_12Rnd_FAB500M62"]
+
+	 ],
+	 [ // 2nd plane params
+//		["ACE_TunguskaMgun30", "ACE_R73Launcher","ACE_S8Launcher","ACE_FFARPOD2", "ACE_FAB500M62BombLauncher" ],
+//		["ACE_3UOF8_1904", "ACE_6Rnd_R73", "ACE_120Rnd_S8T", "ACE_70mm_FL_FFAR_38","ACE_70mm_FL_FFAR_38", "ACE_12Rnd_FAB500M62"/*, "ACE_12Rnd_FAB500M62"*/]
+		["ACE_KAB500KRBombLauncher",/*"ACE_R73Launcher",*/ "ACE_S8Launcher", "ACE_GSh302"/*"ACE_GAU8"*/, "ACE_FAB500M62BombLauncher"],
+		["ACE_2Rnd_KAB500KR","ACE_750Rnd_30mm_GSh302"/*"1350Rnd_30mmAP_A10"*/, /*"ACE_4Rnd_R73",*/ "ACE_80Rnd_S8T","ACE_12Rnd_FAB500M62"]
+	 ]
+ ]
+];
+
+SYG_heliRearmTable =
+[
+    // heli names, Mi24 can't be rearmed, doesnt try to do it
+ ["ACE_Mi24D","ACE_Mi24V"/*,"ACE_Ka50","ACE_Ka50_N"*/,"ACE_Mi17_MG", "ACE_Mi17"],
+ 	// heli params
+ [
+ 	 [ // 1st heli params
+ 	 	["ACE_M230", "ACE_9M17PLauncher","ACE_57mm_FFAR"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+     	["ACE_M789_1200", "ACE_4Rnd_9M17P", "ACE_4Rnd_9M17P", "ACE_128Rnd_57mm"/*, "ACE_70mm_FL_FFAR_38"*/],
+        // the required type of machine to transfer weapons from it to the current machine
+        [ "ACE_AH64_AGM_HE" ] // use if( _veh isKindOf  "ACE_AH64_AGM_HE") then { CHECK for WEAPON existance in vehicle}
+ 	 ],
+ 	 [ // 2nd heli params
+ 	 	["M197", "ACE_9M114Launcher", "ACE_57mm_FFAR", "ACE_S8Launcher"/*, "ACE_57mm_FFAR", "ACE_FFARPOD2"*/],
+	    ["750Rnd_M197_AH1", "ACE_8Rnd_9K114", "ACE_64Rnd_57mm", "ACE_40Rnd_S8T"/*, "ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38"*/],
+        // Corresponding heli with designated weapons/armament
+        [ "AH1W" ] // use if( _veh isKindOf  "AH1W") then { CHECK for WEAPON existance in vehicle}
+ 	 ],
+/* 	 [ // 3rd heli params
+ 	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
+	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"]
+	    ,["*"]
+
+ 	 ],
+ 	 [ // 4th heli params
+ 	 	["ACE_GSh302", "ACE_FFARPOD2", "VikhrLauncher"],
+	    ["ACE_750Rnd_30mm_GSh302", "ACE_70mm_FL_FFAR_38", "12Rnd_Vikhr_KA50"],
+	    ["*"]
+
+ 	 ],*/
+     [ // 5th heli params
+        ["ACE_YakB"],
+        ["ACE_1470Rnd_127x108_YakB"]
+     ],
+     [ // 6th heli params
+        ["ACE_57mm_FFAR", "ACE_FFARPOD2"],
+        ["ACE_128Rnd_57mm", "ACE_70mm_FL_FFAR_38", "ACE_70mm_FL_FFAR_38"],
+        // Corresponding heli with designated weapons/armament
+        [ [],["ACE_AH1W_TOW2","ACE_AH1W_TOW_HE_F_S_I","ACE_AH1Z_HE_F","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_TOW2","ACE_AH1Z_TOW_HE_F_S_I","","ACE_AH64_AGM_HE_F","ACE_AH64_HE_F","ACE_AH64_AGM_HE_F_S_I","ACE_UH60RKT_HE_F","ACE_AH6_HE_F"] ] // use if( _veh isKindOf  "AH1W" ...) then { CHECK for WEAPON existance in vehicle}
+     ]
+ ]
+];
+
+SYG_carRearmTable =
+[
+ ["ACE_UAZ_MG"], // car  names
+ [	// heli params
+ 	 [ // 1st heli params
+ 	 	["ACE_YakB"],
+     	["ACE_1470Rnd_127x108_YakB","ACE_1470Rnd_127x108_YakB"]
+ 	 ]
+ ]
+];
+
+SYG_boatRearmTable =
+[
+    ["RHIB2Turret"], // boat names
+    [ // boat params
+        [
+            ["ACE_M230"],//["ACE_VulcanMgun20"], // weapon(s)
+            ["ACE_M789_1200","ACE_M789_1200"] //["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+        ]
+    ]
+];
+
 SYG_vehiclesRearmTables =
 [
  argp(SYG_su34_RearmTables,0) + argp(SYG_heliRearmTable,0) + argp(SYG_carRearmTable,0) + argp(SYG_boatRearmTable,0),
