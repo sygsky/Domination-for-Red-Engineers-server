@@ -13,6 +13,7 @@ private [
 if (!isServer) exitWith{};
 
 _aunit = _this select 0;
+_aunit reveal _eunit; // just in case
 _aunit removeAllEventHandlers "killed";
 _aunit removeAllEventHandlers "hit";
 _aunit removeAllEventHandlers "damage";
@@ -56,8 +57,6 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 // TODO: inform group itself about killer
 _eunit = _this select 1; // killer unit
 if ( !alive  _eunit ) exitWith{};
-if ( _aunit == _eunit) exitWith {};
-_aunit reveal _eunit;
 _vehs =  [_position , 4000, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
 if (count _vehs == 0) exitWith {};
@@ -85,13 +84,13 @@ _reveal_cnt2 = 0;
         _x doWatch objNull;
         if ( ( ( commander _x ) knowsAbout _eunit ) < 1.5 )
         then {
-            _watch_cnt = _watch_cnt + 1;
+            _watch_cnt2 = _watch_cnt2 + 1;
         }
         else { _reveal_cnt2 = _reveal_cnt2 + 1 };
     };
 } forEach _vehs;
-hint localize format["+++ x_removevehi.sqf (%1): killer %2, before/after watched %3/%5,  revealed %4/%6 by enemy vehicles",
-    typeOf _aunit, typeOf _eunit, _watch_cnt, _reveal_cnt, _watch_cnt2, _reveal_cnt2 ];
+hint localize format["+++ x_removevehi.sqf (%1): killer %2, before/after watched %3/%4,  revealed %5/%6 by enemy vehicles",
+    _type, typeOf _eunit, _watch_cnt, _watch_cnt2, _reveal_cnt, _reveal_cnt2 ];
 
 _vehs = nil;
 
