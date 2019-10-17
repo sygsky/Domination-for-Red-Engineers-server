@@ -829,11 +829,11 @@ STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Be
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
-STR_PATROL_TYPE_HP="heavy patrol","schwere Patrouille","тяжёлый патруль"
-STR_PATROL_TYPE_AP="АА patrol","AA Patrouille","патруль ПВО"
-STR_PATROL_TYPE_FP="floating patrol","schwimmende Patrouille","плавающий патруль"
-STR_PATROL_TYPE_SP="speedy patrol","schnelle Patrouille","скоростной патруль"
-STR_PATROL_TYPE_LP="light patrol","leichte Patrouille","лёгкий	патруль"
+STR_PATROL_TYPE_HP,"heavy patrol","schwere Patrouille","тяжёлый патруль"
+STR_PATROL_TYPE_AP,"АА patrol","AA Patrouille","патруль ПВО"
+STR_PATROL_TYPE_FP,"floating patrol","schwimmende Patrouille","плавающий патруль"
+STR_PATROL_TYPE_SP,"speedy patrol","schnelle Patrouille","скоростной патруль"
+STR_PATROL_TYPE_LP,"light patrol","leichte Patrouille","лёгкий	патруль"
 
 STR_RESTORE_DLG_1,To restore,Wiederherstellen,Восстановить
 STR_RESTORE_DLG_2,Select from list,Wählen Sie aus der Liste aus,Выбрать из списка
@@ -849,11 +849,10 @@ STR_RESTORE_DLG_10,"required rank is ""%1""","benötigt Rang ""%1""","требу
 STR_AAHALO_0,"Altitude (A.G.L.):","Höhe (A. G. L.):","Высота отн. земли:"
 STR_AAHALO_1,"Heading:","Überschrift:","Курс:"
 STR_AAHALO_2," degrees, "," degrees, "," гр., "
-STR_AAHALO_3,"Ground Speed:","Ground Speed:","Гориз. ск:"
+STR_AAHALO_3,"Ground Speed:","Ground Speed:","Гориз. ск.:"
 STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Верт. ск.:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
-
 
 STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title"",""comrade_my""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen"",""comrade_my""", """ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"",""comrade_my"""
 STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """podolinam"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
@@ -1317,8 +1316,6 @@ STR_EAST,Comrades,Kameraden,Товарищи
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
-
-LANGUAGE,"English","Czech","German","Polish","Russian","French","Spanish","Italian"
 
 STR_ACE_SYS_RUCK_KILOGRAMS,"kg","kg","кг"
 STR_ACE_SYS_RUCK_CUBICCENTIMETERS,"ccm","ccm","см. куб."
