@@ -156,8 +156,7 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
-    SYG_deathCountCnt = SYG_deathCountCnt + 1;
-
+`
 	if (typeName _this != "ARRAY") then // called as: _unit call  SYG_playRandomDefeatTrackByPos;
 	{
 	    _this = position _this;
@@ -354,7 +353,7 @@ SYG_playRandomTrack = {
         if ((typeName (_this select 1)) == "ARRAY") exitWith  // list of track parts
         {
 
-            // check if death count is too big
+            // check if death count is too big and play long-long music for this case
             if (SYG_deathCountCnt > DEATH_COUNT_TO_PLAY_MUSIC) exitWith
             {
                 // in rare case (more then 30-40 death in one session) play whole track

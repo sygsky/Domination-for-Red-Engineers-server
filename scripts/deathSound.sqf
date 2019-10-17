@@ -16,6 +16,9 @@ _unit = _this select 0; // player
 
 if ( !( local _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};
 if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound(!isPlayer): %1", _this]};
+
+SYG_deathCountCnt = SYG_deathCountCnt + 1; // total death count bump
+
 if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play ordinal sound if KIA or alone
 {
     if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doen't like such sounds
