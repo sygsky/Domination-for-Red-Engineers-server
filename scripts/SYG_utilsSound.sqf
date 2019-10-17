@@ -90,7 +90,7 @@ SYG_defeatTracks =
 
 ];
 
-SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
+SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -466,6 +466,13 @@ SYG_getMusicName = {
 SYG_getSuicideScreamSound  = {
     if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 13))};  // 0-12
     SYG_suicideScreamSound
+};
+
+/**
+    Plays mysic for weather forecast message
+ */
+SYG_playWeatherForecastMusic = {
+ ["manchester_et_liverpool", 0, 9.465] call SYG_playPartialTrack;
 };
 
 if (true) exitWith {};
