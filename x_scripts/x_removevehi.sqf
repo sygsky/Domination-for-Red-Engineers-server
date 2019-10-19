@@ -4,7 +4,7 @@
 #include "x_setup.sqf"
 
 private [
-         "_aunit","_direction","_dummyvehicle","_position","_type","_velocity","_grp", "_reveal_cnt"
+         "_aunit","_eunit","_itself","_direction","_dummyvehicle","_pos","_type","_velocity","_grp", "_reveal_cnt"
 #ifdef __ACE__
          ,"_ace_th","_ace_eh","_ace_hh","_ace_trh"
 #endif
@@ -12,7 +12,12 @@ private [
 
 if (!isServer) exitWith{};
 
+#define SEARCH_DIST SEARCH_DIST
+
 _aunit = _this select 0;
+_eunit = _this select 1; // killer unit
+_itself = _aunit == _eunit;
+
 _aunit reveal _eunit; // just in case
 _aunit removeAllEventHandlers "killed";
 _aunit removeAllEventHandlers "hit";
@@ -21,7 +26,7 @@ _aunit removeAllEventHandlers "getin";
 _aunit removeAllEventHandlers "getout";
 _type = typeOf _aunit;
 _direction = direction _aunit;
-_position = position _aunit;
+_pos = position _aunit;
 _velocity = velocity _aunit;
 #ifdef __ACE__
     _ace_th = _aunit getVariable "ACE_TurretHit";
@@ -37,9 +42,9 @@ _velocity = velocity _aunit;
 	_x removeAllEventHandlers "getout";
 	deleteVehicle _x
 } forEach ([_aunit] + crew _aunit);
-_dummyvehicle = _type createVehicle _position;
+_dummyvehicle = _type createVehicle _pos;
 _dummyvehicle setDir _direction;
-_dummyvehicle setPos _position;
+_dummyvehicle setPos _pos;
 _dummyvehicle setVelocity _velocity;
 _dummyvehicle setFuel 0.0;
 _dummyvehicle setDamage 1.1;
@@ -54,10 +59,11 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 #endif
 [_dummyvehicle] call XAddDead; // *************** PUT TO THE LIST OF DEAD ********************
 
-// TODO: inform group itself about killer
-_eunit = _this select 1; // killer unit
-if ( !alive  _eunit ) exitWith{};
-_vehs =  [_position , 4000, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
+// inform group itself about killer
+if ( !alive  _eunit ) exitWith{}; // killer is dead or absent
+if( _itself ) exitWith{}; // killed by itself
+
+_vehs =  [_pos , SEARCH_DIST, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
 if (count _vehs == 0) exitWith {};
 _watch_cnt  = 0;
