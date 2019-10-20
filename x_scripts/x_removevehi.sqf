@@ -62,6 +62,7 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 // inform group itself about killer
 if ( !alive  _eunit ) exitWith{}; // killer is dead or absent
 if( _itself ) exitWith{}; // killed by itself
+if ( _eunit isKindOf "CAManbase") exitWith{}; // killed by man, not interested for us now
 
 _vehs =  [_pos , SEARCH_DIST, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
@@ -95,8 +96,8 @@ _reveal_cnt2 = 0;
         else { _reveal_cnt2 = _reveal_cnt2 + 1 };
     };
 } forEach _vehs;
-hint localize format["+++ x_removevehi.sqf (%1): killer %2, before/after watched %3/%4,  revealed %5/%6 by enemy vehicles",
-    _type, typeOf _eunit, _watch_cnt, _watch_cnt2, _reveal_cnt, _reveal_cnt2 ];
+hint localize format["+++ x_removevehi.sqf (%1): killer %2 at dist %3 m, bef/aft watched %4/%5,  revealed %6/%7 by enemy vehicles",
+    _type, typeOf _eunit, round(_pos distance _eunit), _watch_cnt, _watch_cnt2, _reveal_cnt, _reveal_cnt2 ];
 
 _vehs = nil;
 
