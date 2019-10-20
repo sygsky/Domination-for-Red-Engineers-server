@@ -5,6 +5,8 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+#define WARN_INTERVAL (5 + (random 5))
+
 _pos_array = _this select 0;
 _poss = _pos_array select 0;
 _endtime = _this select 1;
@@ -71,6 +73,7 @@ _soldier = (
 	}
 );
 
+_last_warn_said = 0;
 while {!_pilots_at_base && !_is_dead} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
@@ -120,17 +123,56 @@ while {!_pilots_at_base && !_is_dead} do {
                   ////////////////////////////////////////////
 		} else {
 
-//++++++++++++++++++++++++ __TTVer
+//++++++++++++++++++++++++ !__TTVer
 
 			if (!(__TTVer)) then {
 
-				if (alive _pilot1 && (vehicle _pilot1 == _pilot1)) then {
-					if (_pilot1 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
+				if (alive _pilot1 ) then {
+				    if (vehicle _pilot1 != _pilot1) then
+				    {
+				        if (time - _last_warn_said > WARN_INTERVAL) then
+				        {
+				            // TODO: say info about complete condition
+				             [vehicle player, localize format["STR_SYS_504_1", name _pilot1]] call XfVehicleChat; // "%1: Drop off, commander!"
+				            _last_warn_said = time;
+				        };
+				    }
+				    else
+				    {
+					    if (_pilot1 distance FLAG_BASE < 20) then { _pilots_at_base = true; }
+					    else
+                        {
+                             if (time - _last_warn_said > WARN_INTERVAL) then
+                             {
+                                  [vehicle player, localize format["STR_SYS_504_1", name _pilot1]] call XfVehicleChat; // "%1: Drop off, commander!"
+                                 _last_warn_said = time;
+                             };
+                        };
+				    };
 				};
-				if (alive _pilot2  && (vehicle _pilot2 == _pilot2)) then {
-					if (_pilot2 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
+				if (alive _pilot2) then {
+				    if (  vehicle _pilot2 != _pilot2 )
+				    {
+				        if (time - _last_warn_said > WARN_INTERVAL) then
+				        {
+				             [vehicle player, localize format["STR_SYS_504_1", name _pilot2]] call XfVehicleChat; // "%1: Drop off, commander!"
+				            _last_warn_said = time;
+				        };
+				    }
+				    else
+				    {
+    					if (_pilot2 distance FLAG_BASE < 20) then { _pilots_at_base = true; }
+    					else
+    					{
+                            if (time - _last_warn_said > WARN_INTERVAL) then
+                            {
+                                 [vehicle player, localize format["STR_SYS_504_2", name _pilot2]] call XfVehicleChat; // "%1: Drop off, commander!"
+                                _last_warn_said = time;
+                            };
+    					};
+				    };
 				};
-//++++++++++++++++++++++ !__TTVer
+//++++++++++++++++++++++ __TTVer
 			} else {
 
 				if (alive _pilot1 && (vehicle _pilot1 == _pilot1)) then {
