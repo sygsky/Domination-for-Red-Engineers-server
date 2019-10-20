@@ -124,16 +124,16 @@ while {!_pilots_at_base && !_is_dead} do {
 
 			if (!(__TTVer)) then {
 
-				if (alive _pilot1 ) then {
+				if (alive _pilot1 && (vehicle _pilot1 == _pilot1)) then {
 					if (_pilot1 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
 				};
-				if (alive _pilot2 ) then {
+				if (alive _pilot2  && (vehicle _pilot2 == _pilot2)) then {
 					if (_pilot2 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
 				};
 //++++++++++++++++++++++ !__TTVer
 			} else {
 
-				if (alive _pilot1) then {
+				if (alive _pilot1 && (vehicle _pilot1 == _pilot1)) then {
 					if (_pilot1 distance WFLAG_BASE < 20) then {
 						_pilots_at_base = true;
 						_winner = 2;
@@ -143,7 +143,7 @@ while {!_pilots_at_base && !_is_dead} do {
 					};
                 };
 
-				if (alive _pilot2) then {
+				if (alive _pilot2 && (vehicle _pilot2 == _pilot2)) then {
 					if (_pilot2 distance WFLAG_BASE < 20) then {
 						_pilots_at_base = true;
 						_winner = 2;
