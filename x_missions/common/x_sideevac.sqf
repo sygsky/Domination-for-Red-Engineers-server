@@ -5,7 +5,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define WARN_INTERVAL (5 + (random 5))
+#define WARN_INTERVAL (15 + (random 5))
 
 _pos_array = _this select 0;
 _poss = _pos_array select 0;
@@ -124,34 +124,37 @@ while {!_pilots_at_base && !_is_dead} do {
 		} else {
 
 //++++++++++++++++++++++++ !__TTVer
-
-			if (!(__TTVer)) then {
-
-				if (alive _pilot1 ) then {
-				    if (vehicle _pilot1 != _pilot1) then
-				    {
-				        if (time - _last_warn_said > WARN_INTERVAL) then
-				        {
-				            // TODO: say info about complete condition
-				             [vehicle player, localize format["STR_SYS_504_1", name _pilot1]] call XfVehicleChat; // "%1: Drop off, commander!"
-				            _last_warn_said = time;
-				        };
-				    }
-				    else
-				    {
-					    if (_pilot1 distance FLAG_BASE < 20) then { _pilots_at_base = true; }
-					    else
+// if ( [_pos,d_base_array] call SYG_pointInRect ) then // remove in any case if on base
+			if (!(__TTVer)) then 
+			{
+                {
+                    if (alive _x ) then {
+                        if ( (vehicle _x != _x) && (_x distance FLAG_BASE < 100) ) then    // pilot in some vehicle and near flag
                         {
-                             if (time - _last_warn_said > WARN_INTERVAL) then
-                             {
-                                  [vehicle player, localize format["STR_SYS_504_1", name _pilot1]] call XfVehicleChat; // "%1: Drop off, commander!"
-                                 _last_warn_said = time;
-                             };
+                            if (time - _last_warn_said > WARN_INTERVAL) then
+                            {
+                                 [vehicle player, localize format["STR_SYS_504_1", name _x]] call XfVehicleChat; // "%1: Drop off, commander!"
+                                _last_warn_said = time;
+                            };
+                        }
+                        else // pilot not  in vehicle (on ground)
+                        {
+                            if (_x distance FLAG_BASE < 20) then { _pilots_at_base = true; } // pilot near flag
+                            else // not near flag
+                            {
+                                 if ( ([getPos _x,d_base_array] call SYG_pointInRect) && (time - _last_warn_said > WARN_INTERVAL)) then
+                                 {
+                                      [player, localize format["STR_SYS_504_2", name _x]] call XfGroupChat; // "%1: - Need to closer, commander!"
+                                     _last_warn_said = time;
+                                 };
+                            };
                         };
-				    };
-				};
+                    };
+                    if (_pilots_at_base) exitWith{};
+				} forEach [_pilot1, _pilot2];
+/*
 				if (alive _pilot2) then {
-				    if (  vehicle _pilot2 != _pilot2 )
+				    if ( (vehicle _pilot2 != _pilot2) && (_pilot2 distance FLAG_BASE < 100) ) then // pilot in some vehicle and near flag
 				    {
 				        if (time - _last_warn_said > WARN_INTERVAL) then
 				        {
@@ -159,32 +162,37 @@ while {!_pilots_at_base && !_is_dead} do {
 				            _last_warn_said = time;
 				        };
 				    }
-				    else
+				    else // pilot not  in vehicle (on ground)
 				    {
-    					if (_pilot2 distance FLAG_BASE < 20) then { _pilots_at_base = true; }
-    					else
+    					if (_pilot2 distance FLAG_BASE < 20) then { _pilots_at_base = true; } // pilot near flag
+    					else // not near flag
     					{
-                            if (time - _last_warn_said > WARN_INTERVAL) then
+                            if (  ([getPos _pilot2,d_base_array] call SYG_pointInRect) && (time - _last_warn_said > WARN_INTERVAL) ) then
                             {
-                                 [vehicle player, localize format["STR_SYS_504_2", name _pilot2]] call XfVehicleChat; // "%1: Drop off, commander!"
+                                 [player, localize format["STR_SYS_504_2", name _pilot2]] call XfGroupChat; // "%1: - Need to closer, commander!"
                                 _last_warn_said = time;
                             };
     					};
 				    };
 				};
+*/
 //++++++++++++++++++++++ __TTVer
-			} else {
-
-				if (alive _pilot1 && (vehicle _pilot1 == _pilot1)) then {
-					if (_pilot1 distance WFLAG_BASE < 20) then {
-						_pilots_at_base = true;
-						_winner = 2;
-					}else if (_pilot1 distance RFLAG_BASE < 20) then {
-						_pilots_at_base = true;
-						_winner = 1;
-					};
-                };
-
+			}
+			else
+			{
+                {
+                    if (alive _x && (vehicle _x == _x)) then {
+                        if (_x distance WFLAG_BASE < 20) then {
+                            _pilots_at_base = true;
+                            _winner = 2;
+                        }else if (_x distance RFLAG_BASE < 20) then {
+                            _pilots_at_base = true;
+                            _winner = 1;
+                        };
+                    };
+                    if (_pilots_at_base) exitWith{};
+                } forEach [_pilot1, _pilot2];
+/*
 				if (alive _pilot2 && (vehicle _pilot2 == _pilot2)) then {
 					if (_pilot2 distance WFLAG_BASE < 20) then {
 						_pilots_at_base = true;
@@ -194,6 +202,7 @@ while {!_pilots_at_base && !_is_dead} do {
 						_winner = 1;
 					};
                 };
+*/
 			};
 		};
 	};
