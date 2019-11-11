@@ -151,7 +151,7 @@ while {!_pilots_at_base && !_is_dead} do {
                     };
                     if ( vehicle _x != _x ) then    // pilot in some vehicle
                     {
-                        if (_x distance FLAG_BASE < 100 ) then // pilot  not so far from flag
+                        if ([getPos _x,d_base_array] call SYG_pointInRect ) then // pilot  not so far from flag
                         {
                             if (time - _last_warn_said > WARN_INTERVAL) then
                             {
