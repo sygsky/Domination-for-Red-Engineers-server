@@ -600,6 +600,8 @@ XHandleNetStartScriptClient = {
 			};
 */
 			_name = _this select 1;
+			_msg_target_found = false;
+			_vehicle_chat = false;
 			// hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
 			if  (typeName _name == "ARRAY") then
 			{
@@ -617,7 +619,16 @@ XHandleNetStartScriptClient = {
 			        };
 			    };
 			};
-			if ((_name == name player) || (_name == "") || (_name == "*")) then // msg to this player || any
+			if (typeName _name == "OBJECT") then // mag is sent to the vehicle team only
+			{
+                _msg_target_found = vehicle player == _name;
+                _vehicle_chat = _msg_target_found;
+			}
+			else
+			{
+                _msg_target_found = (_name == name player) || (_name == "") || (_name == "*");
+			};
+			if ( _msg_target_found ) then // msg to this player || any
 			{
 				// check for initial delay
 
@@ -683,7 +694,14 @@ XHandleNetStartScriptClient = {
                     {
     					titleText[ format _msg_res, "PLAIN DOWN" ];
                     };
-					((format _msg_res) call XfRemoveLineBreak) call XfGlobalChat;
+                    if (_vehicle_chat) then
+                    {
+    					((format _msg_res) call XfRemoveLineBreak) call XfVehicleChat;
+                    }
+                    else
+                    {
+    					((format _msg_res) call XfRemoveLineBreak) call XfGlobalChat;
+                    };
 
 //					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_res, format _msg_res];
 					if (_delay > 0) then { sleep _delay; };
