@@ -72,7 +72,7 @@ if (count _start_pos < 3 ) then {_grp_array set[4, position (leader _grp)]};
 while {true} do {
 
 	// check group to be empty or dead
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize "x_groupsm.sqf: group is dead";}; // exit if group is empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_wp_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
 
 	if (X_MP) then {
 		//hint localize format["x_groupsm.sqf: call XPlayersNumber == %1",(call XPlayersNumber)];
@@ -306,7 +306,7 @@ while {true} do {
 	}; // switch (_grp_array select 2)
 	
 	// check group to be empty or dead
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize "x_groupsm.sqf: group is dead";}; // exit if group is empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_wp_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
 	
 	sleep (4 + random 4);
 	//+++ Sygsky: OPTIMIZE small groups utilizing with time to time trying to rejoin with bigger ones
