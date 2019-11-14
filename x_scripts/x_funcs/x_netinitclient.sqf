@@ -11,7 +11,7 @@
 
 XHandleNetStartScriptClient = {
 	private ["_this"];
-	__DEBUG_NET("x_netinitclient.sqf XHandleNetStartScriptClient",_this)
+	//__DEBUG_NET("x_netinitclient.sqf XHandleNetStartScriptClient",_this)
 	switch (_this select 0) do {
 
 		case "ari1msg": {
@@ -237,7 +237,7 @@ XHandleNetStartScriptClient = {
 		//--- Sygsky: added for airbase take mission (before any towns)
 
         case "update_fires": {
-            hint localize "x_scripts/x_funcs/x_netinitclient.sqf: ""update_fires"" received on client";
+            hint localize "+++ x_netinitclient.sqf: ""update_fires"" received on client";
             call SYG_firesService;
         };
 		case "update_target": {
@@ -529,7 +529,7 @@ XHandleNetStartScriptClient = {
 		case "syg_observer_kill" : {
             if (str(arg(1)) == str(player)) then // code only for killer
             {
-                hint localize format["x_netinitclient.sqf: Observer killed by %1", name player];
+                hint localize format["+++ x_netinitclient.sqf: Observer killed by %1", name player];
                 // add scores
                 player addScore argp( d_ranked_a, 27 );
                 (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
@@ -653,7 +653,7 @@ XHandleNetStartScriptClient = {
 
 				_msg_arr = _this select 2;
 #ifdef __PRINT__
-				hint localize format["x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
+				hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
 #endif		
 				// all string are localized only if previous string is "localize" (is skipped from output)
 				{
@@ -696,7 +696,7 @@ XHandleNetStartScriptClient = {
                     };
                     if (_vehicle_chat) then
                     {
-    					((format _msg_res) call XfRemoveLineBreak) call XfVehicleChat;
+    					[_name, (format _msg_res) call XfRemoveLineBreak] call XfVehicleChat;
                     }
                     else
                     {
@@ -715,7 +715,7 @@ XHandleNetStartScriptClient = {
 //		}; // TODO: message about patrol killed
 		case "GRU_msg_patrol_detected"; // TODO: check new patrol in the future, now simply inform player about
 		case "GRU_msg": {
-			hint localize format["x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
+			hint localize format["+++ x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
 			if (arg(0) == "GRU_msg_patrol_detected") then
 			{
 //			    if ( __HasGVar(PATROL_COUNT) ) then
@@ -860,5 +860,4 @@ XHandleNetStartScriptClient = {
 }; // XHandleNetStartScriptClient = {
 
  "d_ns_client" addPublicVariableEventHandler {
-	(_this select 1) spawn XHandleNetStartScriptClient;
-};
+	(_this select 1) spawn XHandleNetStartScriptClie
