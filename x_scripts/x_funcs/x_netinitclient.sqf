@@ -860,4 +860,5 @@ XHandleNetStartScriptClient = {
 }; // XHandleNetStartScriptClient = {
 
  "d_ns_client" addPublicVariableEventHandler {
-	(_this select 1) spawn XHandleNetStartScriptClie
+	(_this select 1) spawn XHandleNetStartScriptClient;
+};

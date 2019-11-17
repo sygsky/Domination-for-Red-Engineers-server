@@ -223,7 +223,7 @@ if (isServer) then {
 #endif
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // insert special missiona at the list head
+    // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     _first_array = [];   // 10 - arti above base (SanSebastian), 32 - flag in Parato
     side_missions_random = _first_array + (side_missions_random - _first_array);
@@ -258,7 +258,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //+ fill _first_array with sm numbers to go first in any case +
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [51]; // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest
+    _first_array = []; // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest
     side_missions_random = _first_array + (side_missions_random - _first_array);
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
