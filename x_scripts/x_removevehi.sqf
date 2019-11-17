@@ -12,7 +12,7 @@ private [
 
 if (!isServer) exitWith{};
 
-#define SEARCH_DIST SEARCH_DIST
+#define SEARCH_DIST 4000
 
 _aunit = _this select 0;
 _eunit = _this select 1; // killer unit
