@@ -225,6 +225,7 @@ SYG_addDiff2Pos = {
 
 //
 // _newpos = [_basePos, _diffPos, _angle] call SYG_calcPosRotation;
+// where _diffPos is vectoк of difference between _basePos and second point
 //
 SYG_calcPosRotation = {
     [ arg(0), ([[0,0,0], arg(1), -arg(2)] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
@@ -290,29 +291,26 @@ SYG_pointInEllipse = {
 	private ["_pnt","_elli","_ellic","_dx","_dy","_a","_b","_ret"];
 	_elli = arg(1);
 	_ret = false;
-	if ( count _elli == 2 ) then  // it is circle
+	if ( count _elli == 2 ) exitWith  // it is circle
 	{
 		//player groupChat "SYG_pointInEllipse: call SYG_pointInCircle";
-		_ret = _this call SYG_pointInCircle;
-	}
-	else
-	{
-		_pnt = arg(0);
-		//player groupChat format["SYG_pointInEllipse: elli %1, pnt %2, rot %3", _elli,_pnt, argp(_elli,3)];
-		_ellic = argp(_elli,0);
-		if ( count _elli > 3) then // ellipse may be rotated
-		{
-			if ( argp(_elli,3) != 0 ) then // ellipse is rotated
-			{
-				_pnt = [ _ellic,_pnt, -argp(_elli,3)] call SYG_rotatePointAroundPoint;
-			};
-		};
-		_dx = argp(_ellic,0)- argp(_pnt,0);
-		_dy = argp(_ellic,1)- argp(_pnt,1);
-		_a = argp(_elli,1);
-		_b = argp(_elli,2);
-		_ret = (((_dx*_dx)/(_a*_a)+(_dy*_dy)/(_b*_b))<=1.0);
+		_this call SYG_pointInCircle
 	};
+    _pnt = arg(0);
+    //player groupChat format["SYG_pointInEllipse: elli %1, pnt %2, rot %3", _elli,_pnt, argp(_elli,3)];
+    _ellic = argp(_elli,0);
+    if ( count _elli > 3) then // ellipse may be rotated
+    {
+        if ( argp(_elli,3) != 0 ) then // ellipse is rotated
+        {
+            _pnt = [ _ellic,_pnt, argp(_elli,3)] call SYG_rotatePointAroundPoint;
+        };
+    };
+    _dx = argp(_ellic,0)- argp(_pnt,0);
+    _dy = argp(_ellic,1)- argp(_pnt,1);
+    _a = argp(_elli,1);
+    _b = argp(_elli,2);
+    _ret = (((_dx*_dx)/(_a*_a)+(_dy*_dy)/(_b*_b))<=1.0);
 	//player groupChat format["SYG_pointInEllipse = %1", _ret];
 	_ret
 };
@@ -438,59 +436,3 @@ SYG_distance2D =
     _p1 distance _p2
 }
 */
-#ifdef __FUTURE__
-/**
- * Input: [width,height] - full width and height of designated rectangle to overlap with cirlces
- 
- *   call: _ret_arr = [_w,_h] call SYG_getCirclesByRect;
- 
- * Output: [[rad,x,y] ... [rad,x,y]]- arrays for each circle to used to overlap rectanle totally. Offsets are according to the bottom-left rectangle corner
- */
-SYG_getCirclesByRect = {
-	private ["_w","_h","_moveOnX","_shortSide","_longSide","_rad","_len","_pos","_yoff","_xoff","_ret"];
-	_w = arg(0);
-	_h = arg(1);
-	_moveOnX = _w > _h;
-	_shortSide = if ( _moveOnX ) then { _h } else { _w };
-	_longSide  = if ( _moveOnX ) then { _w } else { _h } ;
-	_steps = floor(_longSide /_shortSide);
-	if ( _steps == 1 ) exitWith	{ [sqrt ( _longSide * _longSide + _shortSide * _shortSide ) / 2, _w / 2, _h / 2] };
-	_rad = sqrt( 2 * _shortSide * _shortSide ) / 2 ; // Circle radious
-	_len = _longSide;
-	_pos = 0;
-	_yoff = _shortSide / 2; 
-	_ret = [];
-	//hint localize format["SYG_getCirclesByRect: w %1, h %2, _moveOnX %3, _rad %4, full steps %5 ", _w, _h, _moveOnX, _rad, floor(_longSide /_shortSide)];
-	_xoff = 0;
-	_yoff = 0;
-	while { _len >= _shortSide } do
-	{
-		_xoff = _pos + _yoff;
-		if ( _moveOnX ) then
-		{
-			_ret set [ count _ret, [ _rad, _xoff, _yoff ]];
-		}
-		else
-		{
-			_ret set [ count _ret, [ _rad, _yoff, _xoff ]];
-		};
-		_len = _len - _shortSide;
-		_pos = _pos + _shortSide;
-		//hint localize format["SYG_getCirclesByRect step: _xoff %1, _yoff %2, _ret %3", _xoff, _yoff, _ret];
-	};
-	// process remainder of rectangle
-	if ( _len > ( _longSide / 33 ) ) then // if more than 3 % of total area remained
-	{
-		_rad =  sqrt ( _len * _len + _shortSide * _shortSide ) / 2;
-		if ( _moveOnX ) then
-		{
-			_ret set [ count _ret, [ _rad, _xoff + _len / 2, _yoff ] ];
-		}
-		else
-		{
-			_ret set [ count _ret, [ _rad, _yoff, _xoff + _len / 2 ] ];
-		};
-	};
-	_ret
-};
-#endif

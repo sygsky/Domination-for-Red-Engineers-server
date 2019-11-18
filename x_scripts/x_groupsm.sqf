@@ -68,6 +68,7 @@ _flank_pos_a = [];
 
 _start_pos =  _grp_array select 4;
 if (count _start_pos < 3 ) then {_grp_array set[4, position (leader _grp)]};
+_wp_pos = _start_pos;
 
 while {true} do {
 
