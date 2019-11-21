@@ -84,7 +84,7 @@ SYG_defeatTracks =
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
-    ["sorcerie","melody","thefuture"],
+    ["sorcerie","melody","thefuture","moon_stone"],
     ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]],
     ["cosmos",[0,8.281],[14.25,9.25],[28.8,-1]]
 
@@ -124,7 +124,7 @@ SYG_baseDefeatTracks =
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
-    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase",
+    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
