@@ -21,7 +21,8 @@
 
 private ["_grp_array", "_grp", "_enemy_array", "_reached_wp", "_time_at_wp", "_next_wp_time", "_units", 
          "_checktime", "_flank_pos_a",/*  "_make_normal",  */"_leader", "_start_pos", "_wp_array", "_wp_one", 
-		 "_wp_pos", "_counter", "_stime","_had_towait", "_side", "_joingrp","_leader1","_rejoin_num","_i","_debug_print","_skip_islets","_hills_seek_dist","_all_grp_list"];
+		 "_wp_pos", "_last_pos", "_counter", "_stime","_had_towait", "_side", "_joingrp","_leader1","_rejoin_num","_i",
+		 "_debug_print","_skip_islets","_hills_seek_dist","_all_grp_list"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -69,11 +70,12 @@ _flank_pos_a = [];
 _start_pos =  _grp_array select 4;
 if (count _start_pos < 3 ) then {_grp_array set[4, position (leader _grp)]};
 _wp_pos = _start_pos;
+_last_pos = _start_pos; // last known position of the group
 
 while {true} do {
 
 	// check group to be empty or dead
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_wp_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
 
 	if (X_MP) then {
 		//hint localize format["x_groupsm.sqf: call XPlayersNumber == %1",(call XPlayersNumber)];
@@ -94,6 +96,7 @@ while {true} do {
             } forEach _units;
 		};
 	};
+    _last_pos = getPos (leader _grp);
 	_units = units _grp;
 	//__DEBUG_NET("x_groupsm.sqf",(call XPlayersNumber))
 	// state is in _grp_array select 2
@@ -307,7 +310,7 @@ while {true} do {
 	}; // switch (_grp_array select 2)
 	
 	// check group to be empty or dead
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_wp_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
 	
 	sleep (4 + random 4);
 	//+++ Sygsky: OPTIMIZE small groups utilizing with time to time trying to rejoin with bigger ones
