@@ -604,7 +604,13 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	{
 	    _heli = _vehicles select 0;
 	    _loc = _heli call SYG_nearestSettlement;
-	    hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, dmg %5", typeOf _heli, text _loc, round((locationPosition _loc) distance _heli), round((getPos _heli) select 2),damage _heli ];
+            hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, s %5 dmg %6",
+            typeOf _heli,
+            text _loc,
+            round((locationPosition _loc) distance _heli),
+            round(speed _heli),
+            round((getPos _heli) select 2),damage _heli
+	    ];
 	    _timeToPrint = time;
 	};
 

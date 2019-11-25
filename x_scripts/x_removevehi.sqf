@@ -4,7 +4,7 @@
 #include "x_setup.sqf"
 
 private [
-         "_aunit","_direction","_dummyvehicle","_position","_type","_velocity","_grp", "_reveal_cnt"
+         "_aunit","_eunit","_itself","_direction","_dummyvehicle","_pos","_type","_velocity","_grp", "_reveal_cnt"
 #ifdef __ACE__
          ,"_ace_th","_ace_eh","_ace_hh","_ace_trh"
 #endif
@@ -12,7 +12,13 @@ private [
 
 if (!isServer) exitWith{};
 
+#define SEARCH_DIST 4000
+
 _aunit = _this select 0;
+_eunit = _this select 1; // killer unit
+_itself = _aunit == _eunit;
+
+_aunit reveal _eunit; // just in case
 _aunit removeAllEventHandlers "killed";
 _aunit removeAllEventHandlers "hit";
 _aunit removeAllEventHandlers "damage";
@@ -20,7 +26,7 @@ _aunit removeAllEventHandlers "getin";
 _aunit removeAllEventHandlers "getout";
 _type = typeOf _aunit;
 _direction = direction _aunit;
-_position = position _aunit;
+_pos = position _aunit;
 _velocity = velocity _aunit;
 #ifdef __ACE__
     _ace_th = _aunit getVariable "ACE_TurretHit";
@@ -36,9 +42,9 @@ _velocity = velocity _aunit;
 	_x removeAllEventHandlers "getout";
 	deleteVehicle _x
 } forEach ([_aunit] + crew _aunit);
-_dummyvehicle = _type createVehicle _position;
+_dummyvehicle = _type createVehicle _pos;
 _dummyvehicle setDir _direction;
-_dummyvehicle setPos _position;
+_dummyvehicle setPos _pos;
 _dummyvehicle setVelocity _velocity;
 _dummyvehicle setFuel 0.0;
 _dummyvehicle setDamage 1.1;
@@ -53,12 +59,12 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 #endif
 [_dummyvehicle] call XAddDead; // *************** PUT TO THE LIST OF DEAD ********************
 
-// TODO: inform group itself about killer
-_eunit = _this select 1; // killer unit
-if ( !alive  _eunit ) exitWith{};
-if ( _aunit == _eunit) exitWith {};
-_aunit reveal _eunit;
-_vehs =  [_position , 4000, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
+// inform group itself about killer
+if ( !alive  _eunit ) exitWith{}; // killer is dead or absent
+if( _itself ) exitWith{}; // killed by itself
+if ( _eunit isKindOf "CAManbase") exitWith{}; // killed by man, not interested for us now
+
+_vehs =  [_pos , SEARCH_DIST, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
 if (count _vehs == 0) exitWith {};
 _watch_cnt  = 0;
@@ -85,13 +91,13 @@ _reveal_cnt2 = 0;
         _x doWatch objNull;
         if ( ( ( commander _x ) knowsAbout _eunit ) < 1.5 )
         then {
-            _watch_cnt = _watch_cnt + 1;
+            _watch_cnt2 = _watch_cnt2 + 1;
         }
         else { _reveal_cnt2 = _reveal_cnt2 + 1 };
     };
 } forEach _vehs;
-hint localize format["+++ x_removevehi.sqf (%1): killer %2, before/after watched %3/%5,  revealed %4/%6 by enemy vehicles",
-    typeOf _aunit, typeOf _eunit, _watch_cnt, _reveal_cnt, _watch_cnt2, _reveal_cnt2 ];
+hint localize format["+++ x_removevehi.sqf (%1): killer %2 at dist %3 m, bef/aft watched %4/%5,  revealed %6/%7 by enemy vehicles",
+    _type, typeOf _eunit, round(_pos distance _eunit), _watch_cnt, _watch_cnt2, _reveal_cnt, _reveal_cnt2 ];
 
 _vehs = nil;
 

@@ -223,7 +223,7 @@ if (isServer) then {
 #endif
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // insert special missiona at the list head
+    // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     _first_array = [];   // 10 - arti above base (SanSebastian), 32 - flag in Parato
     side_missions_random = _first_array + (side_missions_random - _first_array);

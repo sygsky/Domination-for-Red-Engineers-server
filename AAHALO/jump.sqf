@@ -1,7 +1,7 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
 _StartLocation = _this select 0;
 _paratype      = _this select 1;
-_full_score    = If (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
+_full_score    = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
 
 hint localize format["+++ jump.sqf: _this = %1", _paratype];
 

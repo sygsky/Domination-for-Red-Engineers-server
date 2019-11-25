@@ -581,7 +581,7 @@ while { true } do {
 					{
                         _igrpa = argp(SYG_isle_grps, _i); // get this group
                         {
-                            if ( (!isNull _x) && (alive _x)) exitWith
+                            if ( alive _x ) exitWith
                             {
                                 _witness = call SYG_getLocalManRandomName;
                                 _pos     = position _x;
@@ -871,7 +871,7 @@ while { true } do {
 			else
 			{
 				_locname = "";
-	 		  _leader = _igrp call SYG_getLeader;
+	 		    _leader = _igrp call SYG_getLeader;
 				_men_info = "";
 				_pos_msg = "";
 				if ( isNull _leader) then 

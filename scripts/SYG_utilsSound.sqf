@@ -84,13 +84,13 @@ SYG_defeatTracks =
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
-    ["sorcerie","melody","thefuture"],
+    ["sorcerie","melody","thefuture","moon_stone"],
     ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]],
     ["cosmos",[0,8.281],[14.25,9.25],[28.8,-1]]
 
 ];
 
-SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 0.1; playMusic ""; 0 fadeMusic 1;};
+SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -124,7 +124,7 @@ SYG_baseDefeatTracks =
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
-    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase",
+    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
@@ -156,7 +156,6 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
-    SYG_deathCountCnt = SYG_deathCountCnt + 1;
 
 	if (typeName _this != "ARRAY") then // called as: _unit call  SYG_playRandomDefeatTrackByPos;
 	{
@@ -354,7 +353,7 @@ SYG_playRandomTrack = {
         if ((typeName (_this select 1)) == "ARRAY") exitWith  // list of track parts
         {
 
-            // check if death count is too big
+            // check if death count is too big and play long-long music for this case
             if (SYG_deathCountCnt > DEATH_COUNT_TO_PLAY_MUSIC) exitWith
             {
                 // in rare case (more then 30-40 death in one session) play whole track
@@ -466,6 +465,13 @@ SYG_getMusicName = {
 SYG_getSuicideScreamSound  = {
     if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 13))};  // 0-12
     SYG_suicideScreamSound
+};
+
+/**
+    Plays mysic for weather forecast message
+ */
+SYG_playWeatherForecastMusic = {
+ ["manchester_et_liverpool", 0, 9.465] call SYG_playPartialTrack;
 };
 
 if (true) exitWith {};

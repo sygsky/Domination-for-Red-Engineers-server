@@ -274,12 +274,12 @@ if (!no_more_observers) then {
 	};
 //	hint localize format["x_scripts\x_createguardpatrolgroups.sqf: observers to create %1, type %2, created %3", nr_observers, _unit_array select 0, _cnt];
 
-	_unit_array = nil;
 
 	update_observers = nr_observers;
 	["update_observers",update_observers] call XSendNetStartScriptClient;
 
-	execVM "x_scripts\x_handleobservers.sqf";
+	(_unit_array select 0) execVM "x_scripts\x_handleobservers.sqf";
+	_unit_array = nil;
 
 	sleep 2.214;
 }

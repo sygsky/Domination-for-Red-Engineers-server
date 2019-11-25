@@ -1,9 +1,14 @@
 // by Xeno, x_sideevac.sqf
-private ["_pos_array", "_poss", "_endtime", "_side_crew", "_pilottype", "_wrecktype", "_wreck", "_owngroup", "_pilot1", "_owngroup2", "_pilot2", "_hideobject", "_is_dead", "_pilots_at_base", "_rescued", "_winner", "_time_over", "_enemy_created", "_nobjs", "_estart_pos", "_unit_array", "_ran", "_i", "_newgroup", "_units", "_leader"];
+private ["_pos_array", "_poss", "_endtime", "_side_crew", "_pilottype", "_wrecktype", "_wreck", "_owngroup",
+         "_pilot1", "_owngroup2", "_pilot2", "_hideobject", "_is_dead", "_pilots_at_base", "_rescued", "_winner",
+         "_time_over", "_enemy_created", "_nobjs", "_estart_pos", "_unit_array", "_ran", "_i", "_newgroup", "_units", "_leader",
+         "_pilots"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+
+#define WARN_INTERVAL (15 + (random 5))
 
 _pos_array = _this select 0;
 _poss = _pos_array select 0;
@@ -71,90 +76,124 @@ _soldier = (
 	}
 );
 
+_last_warn_said = 0;
 while {!_pilots_at_base && !_is_dead} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
 
-	if (!alive _pilot1 && !alive _pilot2) then {
+	if (!alive _pilot1 && !alive _pilot2) exitWith {
 		_is_dead = true;
-	} else {
-		if (!_rescued) then 
-        {
-			////////////////////////////////////////////++ Dupa by Engineer's request
-			_rescue = objNull;
-			_dist = 999999;
-			{
-				if ( alive _x) then
-				{
-					_nobjs = nearestObjects [_x, [_soldier], 20];
-					_pilot = _x;
-					{
-						if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
-							if ((_x distance _pilot) < _dist) then
-							{
-								_rescue = _x;
-								_dist = _x distance _pilot;
-							};
-						};
-						sleep 0.01;
-					} forEach _nobjs;
-				};
-			} forEach [_pilot1, _pilot2];
-			////////////////////////////////////////////
-			
-			if (_dist < 20) then
-			{
-				_rescued = true;
-				{
-				  if (alive _x) then
-				  {
-					_x setUnitPos "AUTO";
-					_x enableAI "MOVE";
-					[_x] join objNull;
-					sleep 0.1;
-					[_x] join (leader _rescue);
-				  };
-				} forEach [_pilot1, _pilot2];
-			};
-                  ////////////////////////////////////////////
-		} else {
-
-//++++++++++++++++++++++++ __TTVer
-
-			if (!(__TTVer)) then {
-
-				if (alive _pilot1 ) then {
-					if (_pilot1 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
-				};
-				if (alive _pilot2 ) then {
-					if (_pilot2 distance FLAG_BASE < 20) then { _pilots_at_base = true; };
-				};
-//++++++++++++++++++++++ !__TTVer
-			} else {
-
-				if (alive _pilot1) then {
-					if (_pilot1 distance WFLAG_BASE < 20) then {
-						_pilots_at_base = true;
-						_winner = 2;
-					}else if (_pilot1 distance RFLAG_BASE < 20) then {
-						_pilots_at_base = true;
-						_winner = 1;
-					};
-                };
-
-				if (alive _pilot2) then {
-					if (_pilot2 distance WFLAG_BASE < 20) then {
-						_pilots_at_base = true;
-						_winner = 2;
-					}else if (_pilot2 distance RFLAG_BASE < 20) then {
-						_pilots_at_base = true;
-						_winner = 1;
-					};
-                };
-			};
-		};
 	};
+
+    if (!_rescued) then
+    {
+        ////////////////////////////////////////////++ Dupa by Engineer's request
+        _rescue = objNull;
+        _dist = 999999;
+        {
+            if ( alive _x) then
+            {
+                _nobjs = nearestObjects [_x, [_soldier], 20];
+                _pilot = _x;
+                {
+                    if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
+                        if ((_x distance _pilot) < _dist) then
+                        {
+                            _rescue = _x;
+                            _dist = _x distance _pilot;
+                        };
+                    };
+                    sleep 0.01;
+                } forEach _nobjs;
+            };
+        } forEach [_pilot1, _pilot2];
+        ////////////////////////////////////////////
+
+        if (_dist < 20) then
+        {
+            _rescued = true;
+            {
+              if (alive _x) then
+              {
+                _x setUnitPos "AUTO";
+                _x enableAI "MOVE";
+                [_x] join objNull;
+                sleep 0.1;
+                [_x] join (leader _rescue);
+              };
+            } forEach [_pilot1, _pilot2];
+            ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 2, 2] call XSendNetStartScriptClient;
+        };
+              ////////////////////////////////////////////
+    }
+    else
+    { // _rescued!!!
+
+//++++++++++++++++++++++++ !__TTVer
+        if (!(__TTVer)) then
+        {
+            {
+                if (alive _x ) then
+                {
+                    if ( _x == leader (group _x) ) exitWith // check if pilot already is leader of the group, so rescuer must be dead
+                    {
+                        _rescued = false;
+                        // again create separate group for our poor pilots
+                        _pilots = units group _x;
+                        _pilots = _pilots - [_pilot1, _pilot2]; // not pilots part of group
+                        _pilots = [_pilot1, _pilot2] - _pilots; // pilots part of group
+                        _owngroup = call SYG_createEnemyGroup;
+                        sleep 0.12345;
+                        _pilots join _owngroup;
+                        { _x disableAI "MOVE"; _x setUnitPos "DOWN" }forEach [_pilot1, _pilot2];
+                        // TODO: send info to all about lost control of pilots
+                    };
+                    if ( vehicle _x != _x ) then    // pilot in some vehicle
+                    {
+                        if ([getPos _x,d_base_array] call SYG_pointInRect ) then // pilot  not so far from flag
+                        {
+                            if (time - _last_warn_said > WARN_INTERVAL) then
+                            {
+                                ["msg_to_user",vehicle _x,[["STR_SYS_504_1", name _x]]] call XSendNetStartScriptClient;
+                                _last_warn_said = time;
+                            };
+                        };
+                    }
+                    else // pilot not  in vehicle (on ground)
+                    {
+                        if (_x distance FLAG_BASE < 20) then { _pilots_at_base = true; } // pilot near flag
+                        else // not near flag
+                        {
+                             if ( ([getPos _x,d_base_array] call SYG_pointInRect) && (time - _last_warn_said > WARN_INTERVAL)) then
+                             {
+                                [ "msg_to_user", name _rescue,[["STR_SYS_504_2", name _x]] ] call XSendNetStartScriptClient;
+                                 _last_warn_said = time;
+                             };
+                        };
+                    };
+                };
+                if (_pilots_at_base || (!_rescued) ) exitWith{};
+            } forEach [_pilot1, _pilot2];
+//++++++++++++++++++++++ __TTVer
+        }
+        else
+        {
+            {
+                if (alive _x && (vehicle _x == _x)) then {
+                    if (_x distance WFLAG_BASE < 20) then {
+                        _pilots_at_base = true;
+                        _winner = 2;
+                    }else if (_x distance RFLAG_BASE < 20) then {
+                        _pilots_at_base = true;
+                        _winner = 1;
+                    };
+                };
+                if (_pilots_at_base) exitWith{};
+            } forEach [_pilot1, _pilot2];
+        };
+
+    };
 
 	sleep 5.621;
 	if (_time_over > 0) then {

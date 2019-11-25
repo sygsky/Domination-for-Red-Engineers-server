@@ -176,14 +176,14 @@ GRU_procClientMsg = {
 		};
 		case GRU_MSG_START_TASK: {
 			titleText[ format[localize "STR_GRU_6", localize "STR_GRU_4",localize "STR_GRU_1", _task_name ],"PLAIN DOWN"]; // "Поступила новая задача ГРУ ""доставить карту"""
-			sleep 1 + random 1;
+			sleep (1 + random 1);
 			private ["_town","_comp","_pwr"];
 			_town = [];
 			for "_i" from 1 to 20 do
 			{
     			_town = call SYG_getTargetTown;
 				if ((count _town) > 0) exitWith {};
-			    sleep 3 + (random 4);
+			    sleep (3 + (random 4));
 			};
 			if ((count _town) ==0) exitWith
 			{
@@ -258,38 +258,42 @@ GRU_procClientMsg = {
                     //_rank = 6; // debug
                     // create base message text
                     _alias = argp(_arr, 0); // name of the observer
-                    _args = ["STR_GRU_46",_alias,"","","","","?"]; // message visible for any rank: "The landing of the enemy patrol spotted by %1%2%3%4%5%6"
+                    _args = ["STR_GRU_46",_alias,"","","","",""]; // message visible for any rank: "The landing of the enemy patrol spotted by %1%2%3%4%5%6"
                     _pos = argp(_arr, 1);   // spawn position
                     _loc = (_pos call SYG_nearestLocation);
                     if ( _rank > 1) then // sergeant, location name
                     {
                         _args set[2, format[localize "STR_GRU_46_1", text _loc]];
-                    };
-                    if ( _rank > 2) then // leutenant, distance
-                    {
-                        _dist = format[localize "STR_GRU_46_2", ( ceil(( (position _loc) distance _pos )/100) ) * 100];
-                        //hint localize format["GRUClient GRU_MSG_INFO_KIND_PATROL_DETECTED: _dist == %1", _dist];
-                        _args set[3, _dist];
-                    };
-                    if ( _rank > 3) then // captain, patrol direction from location
-                    {
-           				_dir = ([position _loc, _pos] call XfDirToObj) call SYG_getDirName;
-                        _args set[4, format[localize "STR_GRU_46_3", _dir]];
-                    };
-                    if ( _rank > 4) then // major, patrol vehicle numbering
-                    {
-                        _num = argp(_arr, 2);
-                        _args set[5, format[localize "STR_GRU_46_4", _num]];
-                    };
-                    if ( _rank > 5) then // colonel, patrol type
-                    {
-                        _pattype = argp(_arr, 3);
-                        _pattype = localize ("STR_PATROL_TYPE_" + toUpper(_pattype));
-                        _args set[6, format[localize "STR_GRU_46_5", _pattype]];
+
+                        if ( _rank > 2) then // leutenant, distance
+                        {
+                            _detail_scale = 1000 / ([500,250,200,100,50] select ( ( _rank min 6 ) - 2 ) ); // position accuracy depends on the rank of player
+                            _dist = format[localize "STR_GRU_46_2", ( ceil(( (position _loc) distance _pos )/_detail_scale) ) * _detail_scale];
+                            //hint localize format["GRUClient GRU_MSG_INFO_KIND_PATROL_DETECTED: _dist == %1", _dist];
+                            _args set[3, _dist];
+
+                            if ( _rank > 3) then // captain, patrol direction from location
+                            {
+                                _dir = ([position _loc, _pos] call XfDirToObj) call SYG_getDirName;
+                                _args set[4, format[localize "STR_GRU_46_3", _dir]];
+
+                                if ( _rank > 4) then // major, patrol vehicle numbering
+                                {
+                                    _num = argp(_arr, 2);
+                                    _args set[5, format[localize "STR_GRU_46_4", _num]];
+
+                                    if ( _rank > 5) then // colonel, patrol type
+                                    {
+                                        _pattype = argp(_arr, 3);
+                                        _pattype = localize ("STR_PATROL_TYPE_" + toUpper(_pattype));
+                                        _args set[6, format[localize "STR_GRU_46_5", _pattype]];
+                                    };
+                                };
+                            };
+                        };
                     };
 
-                    // send GRU_msg to users about new patrol "Высадка вражеского патруля замечена %2 близ ""%1""" + playMusic
-                    // "Местный %1 наблюдал высадку вражеского патруля близ ""%2"", на дист. примерно %3 м, в напр. на %4, численность %5 ед."
+                    // send GRU_msg to users about new patrol "The landing of the enemy patrol spotted by %1%2%3%4%5%6"
 		            // check rank of player and add more info
 		            ["msg_to_user", "", [_args]] call XHandleNetStartScriptClient; // message output
 		        };

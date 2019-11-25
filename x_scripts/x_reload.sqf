@@ -4,7 +4,7 @@
 //
 // if (isServer && (!X_SPE)) exitWith{ hint localize format["--- x_reload.sqf for %1 with %2 called on dedicated server, exit", _this select 1, typeOf ((_this select 0) select 0)] };
 
-private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver","_already_loading"];
+private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_pos","_su34","_speed","_nemaster","_driver","_already_loading","_done"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -68,15 +68,23 @@ if (isNil "_already_loading") then {_already_loading = false;};
 //hint localize format["_nemaster = %1, _already_loading = %2", _nemaster, _already_loading];
 if ((!_nemaster) && _already_loading ) exitWith
 {
-    _vehicle setVariable ["already_on_load", nil];
     [_vehicle, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
+    _vehicle setVariable ["already_on_load", nil];
 };
 
+_done = false;
 if (_nemaster && _already_loading ) then
 {
+    if ((random 5) < 1) exitWith // works 4 times out of 5
+    {
+        [_vehicle, "STR_SYS_256_STOP_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "It seems that there are no technicians, we will have to ship everything manually"
+        _done = true;
+    };
     hint localize format[">>> x_reload.sqf: ""%1"" on heli service with double ammunitions !!! <<<",name (driver _vehicle)];
     [_vehicle, "STR_SYS_256_HM_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "A six-pack, being fetched to maintenance man, magically turns into double set of ammo!"
 };
+
+if (_done) exitWith {};
 
 _vehicle setVariable ["already_on_load", true]; // mark already in reloading phase
 

@@ -33,8 +33,8 @@ if (X_Client) then {
 
 if (isServer) then {
 	_officer = if (d_enemy_side == "EAST") then {"OfficerE"} else {"ACE_USMC0302"};
-	_ranside = floor random 14;
-	_poss = x_sm_pos select (_ranside + 1);
+	_ranside = floor random 15; // 0-14 - officer positions
+	_poss = x_sm_pos select _ranside;
 	//_fortress = "Fortress2" createVehicle _poss;
 	//_fortress setDir 290.789;
 	//extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_fortress];

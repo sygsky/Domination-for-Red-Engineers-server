@@ -51,7 +51,7 @@ _newyear = false;
 
 if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
 {
-	playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
+	playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
 	_newyear = true;
 }
 else // music normally played on intro
@@ -90,7 +90,7 @@ else // music normally played on intro
             "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
             "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
             "tovarich_moy","ipanoram","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
-            "Letyat_perelyotnye_pticy_end","melody_by_voice_short"
+            "Letyat_perelyotnye_pticy_end","melody_by_voice_short","sovest2","sovest2"
         ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;

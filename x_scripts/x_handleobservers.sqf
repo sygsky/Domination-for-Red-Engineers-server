@@ -1,5 +1,5 @@
-// by Xeno, x_scripts/x_handleobservers.sqf
-private ["_enemy_ari_available","_nextaritime","_type","_man_type"];
+// by Xeno, x_scripts\x_handleobservers.sqf
+private ["_enemy_ari_available","_nextaritime","_type","_man_type","_observer_type"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -11,6 +11,14 @@ if (!isServer) exitWith {};
 _enemy_ari_available = true;
 _nextaritime = 0;
 
+if (typeName _this == "STRING") then
+{
+    _observer_type = _this;
+}
+else
+{
+    _observer_type = "-"; // unknown
+};
 #ifndef __TT__
 _man_type = (
 	switch (d_enemy_side) do {
@@ -84,11 +92,13 @@ while { nr_observers > 0 && !target_clear } do {
                         _vecs = [];
                         _cnt = 0;
                         if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
-                            _near_targets = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
-                            _vecs         = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
+                            _observers_arr = _pos_nearest nearObjects [_observer_type, HIT_RADIOUS];
+                            _observer_cnt  = {alive _x && canStand _x} count _observers_arr;
+                            _near_targets  = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
+                            _vecs          = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
                             // find near units to prevent from attacking with warheads
-                            _cnt          =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
-                            _type         = if ( _cnt > MIN_FRIENDLY_COUNT_TO_STRIKE) then { 2 } else { 1 }; // strike (1) or smoke (2)
+                            _cnt           =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
+                            _type          = if ( (_cnt > MIN_FRIENDLY_COUNT_TO_STRIKE)  && (_observer_cnt == 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                             // If enemy is too far from strike point, do smoking attack only
                             _dist = round( _pos_nearest distance _enemy );

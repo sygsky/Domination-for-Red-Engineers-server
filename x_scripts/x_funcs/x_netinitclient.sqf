@@ -11,7 +11,7 @@
 
 XHandleNetStartScriptClient = {
 	private ["_this"];
-	__DEBUG_NET("x_netinitclient.sqf XHandleNetStartScriptClient",_this)
+	//__DEBUG_NET("x_netinitclient.sqf XHandleNetStartScriptClient",_this)
 	switch (_this select 0) do {
 
 		case "ari1msg": {
@@ -237,7 +237,7 @@ XHandleNetStartScriptClient = {
 		//--- Sygsky: added for airbase take mission (before any towns)
 
         case "update_fires": {
-            hint localize "x_scripts/x_funcs/x_netinitclient.sqf: ""update_fires"" received on client";
+            hint localize "+++ x_netinitclient.sqf: ""update_fires"" received on client";
             call SYG_firesService;
         };
 		case "update_target": {
@@ -529,7 +529,7 @@ XHandleNetStartScriptClient = {
 		case "syg_observer_kill" : {
             if (str(arg(1)) == str(player)) then // code only for killer
             {
-                hint localize format["x_netinitclient.sqf: Observer killed by %1", name player];
+                hint localize format["+++ x_netinitclient.sqf: Observer killed by %1", name player];
                 // add scores
                 player addScore argp( d_ranked_a, 27 );
                 (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
@@ -600,6 +600,8 @@ XHandleNetStartScriptClient = {
 			};
 */
 			_name = _this select 1;
+			_msg_target_found = false;
+			_vehicle_chat = false;
 			// hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
 			if  (typeName _name == "ARRAY") then
 			{
@@ -617,7 +619,16 @@ XHandleNetStartScriptClient = {
 			        };
 			    };
 			};
-			if ((_name == name player) || (_name == "") || (_name == "*")) then // msg to this player || any
+			if (typeName _name == "OBJECT") then // mag is sent to the vehicle team only
+			{
+                _msg_target_found = vehicle player == _name;
+                _vehicle_chat = _msg_target_found;
+			}
+			else
+			{
+                _msg_target_found = (_name == name player) || (_name == "") || (_name == "*");
+			};
+			if ( _msg_target_found ) then // msg to this player || any
 			{
 				// check for initial delay
 
@@ -642,7 +653,7 @@ XHandleNetStartScriptClient = {
 
 				_msg_arr = _this select 2;
 #ifdef __PRINT__
-				hint localize format["x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
+				hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
 #endif		
 				// all string are localized only if previous string is "localize" (is skipped from output)
 				{
@@ -683,7 +694,14 @@ XHandleNetStartScriptClient = {
                     {
     					titleText[ format _msg_res, "PLAIN DOWN" ];
                     };
-					((format _msg_res) call XfRemoveLineBreak) call XfGlobalChat;
+                    if (_vehicle_chat) then
+                    {
+    					[_name, (format _msg_res) call XfRemoveLineBreak] call XfVehicleChat;
+                    }
+                    else
+                    {
+    					((format _msg_res) call XfRemoveLineBreak) call XfGlobalChat;
+                    };
 
 //					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_res, format _msg_res];
 					if (_delay > 0) then { sleep _delay; };
@@ -697,7 +715,7 @@ XHandleNetStartScriptClient = {
 //		}; // TODO: message about patrol killed
 		case "GRU_msg_patrol_detected"; // TODO: check new patrol in the future, now simply inform player about
 		case "GRU_msg": {
-			hint localize format["x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
+			hint localize format["+++ x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
 			if (arg(0) == "GRU_msg_patrol_detected") then
 			{
 //			    if ( __HasGVar(PATROL_COUNT) ) then

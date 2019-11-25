@@ -230,7 +230,7 @@ XfGetRanPointCircleOuter = {
 	_ret_val = [];_co = 0;
 	while {count _ret_val == 0 && _co < 50} do {
 		_angle = random 360;
-        _dist = (sqrt((random _radius)/ _radius )) * _radius;
+        _dist = _radius call XfRndRadious; // (sqrt((random _radius)/ _radius )) * _radius;
 		_x1 = _center_x - ( _dist * cos _angle);
 		_y1 = _center_y - ( _dist * sin _angle);
 		if (!(surfaceIsWater [_x1, _y1])) then {
@@ -251,7 +251,7 @@ XfGetRanPointCircleOuter = {
 	_ret_val
 };
 
-// get a random point inside a square
+// get a random point inside a square not on slope and not in water
 // parameters:
 // center position, a and b (like in triggers), angle
 // example: _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquare;
