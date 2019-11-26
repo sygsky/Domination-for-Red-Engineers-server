@@ -514,4 +514,27 @@ SYG_roundTo = {
     (round((_this select 0)/_bound)) * _bound
 };
 
+//
+// Call as: _isWoman = "WOMAN_CLASS_NAME" call SYG_isWoman;
+//     or : _isWoman = _man call SYG_isWoman;
+//
+SYG_isWoman = {
+		private [ "_entry" ];
+		if (typeName _this == "ARRAY") then {_this = _this select 0};
+		if (typeName _this == "OBJECT") then {_this = typeOf _this};
+		if (typeName _this != "STRING") exitWith {false};
+		_entry = configfile >> "CfgVehicles" >> _this;
+		if (isNumber _entry >> "woman") exitWith
+		{
+            if (getNumber(_entry >> "woman") > 0) exitWith { true };
+            false
+		};
+		if (isText _entry >> "woman") exitWith
+		{
+            if (toLower(getText(_entry >> "woman")) == "true") exitWith {true};
+            false;
+		};
+        false // unknown entry
+};
+
 if (true) exitWith {};

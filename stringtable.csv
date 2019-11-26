@@ -1329,3 +1329,17 @@ STR_ACE_SYS_RUCK_CUBICCENTIMETERS,"ccm","ccm","см. куб."
 STR_ACE_SYS_RUCK_WEIGHT,"Weight:","Gewicht:","Вес:"
 STR_ACE_SYS_RUCK_SIZE,"Capacity:","Kapazitat:","Ёмкость:"
 STR_ACE_SYS_RUCK_PACKSIZE,"Pack size:","Pack size:","Объём упак.:"
+
+STR_EAST,"OPFOR","OPFOR","Советы"
+STR_WEST,"BLUFOR","BLUFOR","Амеры"
+STR_GUERRILA,"Independent","Unabhängig","Партизаны"
+STR_NAME_BCROSS,"Border Crossing","Grenzübergang","Погран. переход"
+STR_NAME_ROCKAREA,"Rock Area","Felsengebiet","Скалы"
+STR_NAME_VEGB,"Vegetation Broadleaf","Vegetation Laub","Широколиственнsq лес"
+STR_NAME_VEGF,"Vegetation Fir","Vegetation Nadel","Хвойный лес"
+STR_GEAR_DROP,"Drop","Ablegen","Отложить"
+STR_NAME_MARINE,"Name Marine","Name Marine","Морской топоним"
+
+
+
+
