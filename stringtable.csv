@@ -504,7 +504,7 @@ STR_SYS_256_HM_3,"As soon as  technical stuff saw WHO has arrived at the helipad
 
 STR_SYS_256_STOP_NUM,2,2,2
 STR_SYS_256_STOP_0,"I'm sorry, but there are no technicians, they may be asleep","Es tut mir Leid, aber es gibt keine Techniker, Sie können schlafen","Увы, техников мало, и они спят"
-STR_SYS_256_STOP_0,"It seems that there are no technicians, we will have to ship everything manually","Es scheint, dass es keine Techniker gibt, müssen Sie alles manuell herunterladen","Похоже, техников не дождаться, придётся самому грузить ракеты"
+STR_SYS_256_STOP_1,"It seems that there are no technicians, we will have to ship everything manually","Es scheint, dass es keine Techniker gibt, müssen Sie alles manuell herunterladen","Похоже, техников не дождаться, придётся самому грузить ракеты"
 
 STR_SYS_257,"Refuelling...","Tanken...","Заправка..."
 STR_SYS_257_1,"Refuelling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","Заправка %1 прервана, шланг оторвался"
@@ -1330,9 +1330,6 @@ STR_ACE_SYS_RUCK_WEIGHT,"Weight:","Gewicht:","Вес:"
 STR_ACE_SYS_RUCK_SIZE,"Capacity:","Kapazitat:","Ёмкость:"
 STR_ACE_SYS_RUCK_PACKSIZE,"Pack size:","Pack size:","Объём упак.:"
 
-STR_EAST,"OPFOR","OPFOR","Советы"
-STR_WEST,"BLUFOR","BLUFOR","Амеры"
-STR_GUERRILA,"Independent","Unabhängig","Партизаны"
 STR_NAME_BCROSS,"Border Crossing","Grenzübergang","Погран. переход"
 STR_NAME_ROCKAREA,"Rock Area","Felsengebiet","Скалы"
 STR_NAME_VEGB,"Vegetation Broadleaf","Vegetation Laub","Широколиственнsq лес"

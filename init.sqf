@@ -144,6 +144,7 @@ if (isServer) then {
 
 #ifdef __ADDITIONAL_BASE_VEHICLES__
     {
+//      hint localize format["+++ vehicle add to base: _x %1", _x];
         // parameters:
         // 0: position or array of positions
         // 1: type or array of types
@@ -154,15 +155,21 @@ if (isServer) then {
         _prob = if (count _x > 3) then {_x select 4} else {1}; // probability to create
         if ( (random 1) < _prob ) then
         {
-            hint localize format["+++ %1", _x];
             _type = _x select 1;
-            if (typeName _type == "ARRAY") then {_type = _type select (floor random (count _type))}; // get random type if array
+            if ((typeName _type) == "ARRAY") then
+            {
+                _type = _type select (floor (random (count _type)))  // get random type if array
+            };
             _veh = createVehicle [_type, [0,0,0], [], 0, "NONE"];
             [_veh] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and points
 
             _pos = _x select 0;
             _ind = -1;
-            if (typeName _pos == "ARRAY"  && (typeName (_pos select 0) == "ARRAY")) then {_ind = floor random (count _pos))}; // get random index
+            if ((typeName (_pos select 0)) == "ARRAY") then
+            {
+//                hint localize format["+++ vehicle add to base: _pos array %1", _pos];
+                _ind = floor (random (count _pos));
+            };  // get random index
             if (_ind >= 0) then {_pos = _pos select _ind}; // select random pos if array
 
             // set dir
