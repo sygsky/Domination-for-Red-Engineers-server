@@ -169,6 +169,7 @@ class CfgMusic
     class sovest1 { name=""; sound[] = {\sounds\intro\sovest1.ogg,db-1,1.0};} // intro music, Soviet song from film "consciousness"
     class sovest2 { name=""; sound[] = {\sounds\intro\sovest2.ogg,db-1,1.0};} // intro music, Soviet song from film "consciousness"
     class morricone1 { name=""; sound[] = {\sounds\intro\morricone1.ogg,db-1,1.0};} // intro music, USA film "The Good, The Bad & The Ugly"
+    class bond1 { name=""; sound[] = {\sounds\intro\bond1.ogg,db-1,1.0};} // intro music, one of the James Bond film main theme (don't remember)
 
 //------------------------------------- END of Intro music list --------------------------------------------------
 
