@@ -90,7 +90,7 @@ else // music normally played on intro
             "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
             "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
             "tovarich_moy","ipanoram","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
-            "Letyat_perelyotnye_pticy_end","melody_by_voice_short","sovest2","sovest2"
+            "Letyat_perelyotnye_pticy_end","melody_by_voice_short","sovest2","sovest2","morricone1"
         ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
 //        _music = (call compile _music) call _XfRandomArrayVal;
