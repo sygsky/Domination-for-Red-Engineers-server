@@ -463,7 +463,7 @@ SYG_getMusicName = {
 };
 
 SYG_getSuicideScreamSound  = {
-    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 13))};  // 0-12
+    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 14))};  // 0-13
     SYG_suicideScreamSound
 };
 
