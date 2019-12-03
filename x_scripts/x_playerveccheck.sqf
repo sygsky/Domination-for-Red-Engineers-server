@@ -121,7 +121,7 @@ while { true } do {
                                 };
                             };
                         } else {
-                            if ( (_veh isKindOf "Plane") && (typeOf _veh != "RAS_Parachute") && (!_veh isKindOf "Camel")) then {
+                            if ( (_veh isKindOf "Plane") && (typeOf _veh != "RAS_Parachute") && !(_veh isKindOf "Camel")) then {
                                 _air_battle = true;
                                 if (_index < _indexplane) then {
                                     _not_allowed = true;
