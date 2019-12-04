@@ -41,11 +41,12 @@ _camelDirArr = [225, 0, 0, 180, 0, 0, 0]; // Camel directions
         };
         hint localize format["+++ vehicle %1 added to base at pos[%1] = %3", _type, _ind, _pos];
 
-        // get and set dir
+        //+++ get and set dir
         _dir = _x select 2;
         if (typeName _dir == "ARRAY") then
         {
-            _dir = _dir select _ind;   // get special direction for each separate position
+            if ( count _dir <= _ind) then { _dir = 0;}
+            else {_dir = _dir select _ind}; // get special direction for each separate position
             // remove selected direction
             _arr =  _x select 2;
             _arr set [_ind, "RM_ME"];
@@ -53,13 +54,13 @@ _camelDirArr = [225, 0, 0, 180, 0, 0, 0]; // Camel directions
         };
         _veh setDir (_dir);
 
-        // set position
+        //+++ set position
         _veh setPos (_pos);
 
-        // set damage
+        //+++ set damage
         _veh setDamage 0.8;
 
-        // get and set damage
+        //+++ get and set damage
         _fuel = if (count _x > 4) then {_x select 4} else {0};
         _veh setFuel _fuel;
 

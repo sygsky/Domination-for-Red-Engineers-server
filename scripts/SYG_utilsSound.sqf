@@ -22,13 +22,19 @@ SYG_lastPlayedSoundItem = ""; // last played music/sound item
 SYG_deathCountCnt = 0;
 
 SYG_checkLastSoundRepeated= {
-    _item = RANDOM_ARR_ITEM(_this);
-    _cnt = count _this;
-    if ( _cnt > 1) then
+    private ["_item","_ind","_ind0"];
+    _ind = floor(random(count _this));
+    _item = _this select _ind;
+    if ( count _this > 1 ) then
     {
-        while { (str(_item) == SYG_lastPlayedSoundItem) && _cnt > 0} do {_item = RANDOM_ARR_ITEM(_this); _cnt = _cnt -1;};
-        SYG_lastPlayedSoundItem = str(_item);
+        if ( str(_item) == SYG_lastPlayedSoundItem ) then
+        {
+            _ind0 = floor( random( ( count _this ) - 1 ) );
+            if ( _ind0 >= _ind ) then { _ind0  = _ind0 + 1 };
+            _item = _this select _ind0;
+        };
     };
+    SYG_lastPlayedSoundItem = str(_item); // store current sound
     _item
 };
 
@@ -147,12 +153,16 @@ SYG_MedievalDefeatTracks =
      "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17",
      "village_consort"
     ];
-
+SYG_waterDefeatTracks =
+    [
+        "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8"
+    ];
 
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
-// call: _unit call SYG_playRandomDefeatTrackByPos; // or
+// call: _unit call SYG_playRandomDefeatTrackByPos;
+// or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
@@ -215,18 +225,6 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_MedievalDefeatTracks call SYG_playRandomTrack;
     };
 
-    _found = true;
-    switch (_this call SYG_whatPartOfIsland) do
-    {
-        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
-        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
-        default  // Corazol // central Sahrani
-        {
-            _found = false;
-        };
-    };
-    if ( _found ) exitWith {};
-
     if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
         SYG_islandDefeatTracks call SYG_playRandomTrack;
@@ -237,8 +235,16 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
 
+    // death in water
+    if (surfaceIsWater _this) exitWith { SYG_waterDefeatTracks call SYG_playRandomTrack};
+
     // no special conditions found, play std music now
-    call SYG_playRandomDefeatTrack;
+    switch (_this call SYG_whatPartOfIsland) do
+    {
+        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
+        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
+        default  { call SYG_playRandomDefeatTrack; };                   // Corazol // central Sahrani
+    };
 };
 
 // OFP music only
@@ -468,7 +474,7 @@ SYG_getSuicideScreamSound  = {
 };
 
 /**
-    Plays mysic for weather forecast message
+    Plays mysic for the next weather forecast act
  */
 SYG_playWeatherForecastMusic = {
  ["manchester_et_liverpool", 0, 9.465] call SYG_playPartialTrack;
