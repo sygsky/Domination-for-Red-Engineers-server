@@ -930,4 +930,14 @@ SYG_geoDist = {
     ((_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0))
 };
 
+//
+// Get position for nany kind of object.
+// Call as: _pos = _obj call SYG_getPos;
+//
+SYG_getPos = {
+    if ( typeName _this ="OBJECT" } exitWith { getPos _this};
+    if ( typeName _this ="GROUP" } exitWith { getPos (_this call SYG_getLeader)};
+    if ( typeName _this ="LOCATION" } exitWith { locationPosition _this};
+    [0,0,0]
+};
 if (true) exitWith {};

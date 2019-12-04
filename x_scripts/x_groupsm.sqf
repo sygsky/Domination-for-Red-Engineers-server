@@ -75,7 +75,7 @@ _last_pos = _start_pos; // last known position of the group
 while {true} do {
 
 	// check group to be empty or dead
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["+++ x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
 
 	if (X_MP) then {
 		//hint localize format["x_groupsm.sqf: call XPlayersNumber == %1",(call XPlayersNumber)];
@@ -96,7 +96,7 @@ while {true} do {
             } forEach _units;
 		};
 	};
-    _last_pos = getPos (leader _grp);
+    _last_pos = _grp call SYG_getPos;
 	_units = units _grp;
 	//__DEBUG_NET("x_groupsm.sqf",(call XPlayersNumber))
 	// state is in _grp_array select 2
