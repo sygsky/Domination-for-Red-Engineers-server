@@ -222,7 +222,7 @@ if (d_v_marker_dirs) then {
 
 _str = _str + (localize "STR_SYS_346")/* "Тип маркера игрока: " */ + d_p_marker + "\n";
 
-_str = _str + "Меню статус включено: ";
+_str = _str + (localize  "STR_SET_22"); // "Teamstatus Dialog enabled: "
 if (d_use_teamstatusdialog) then {
 	_str = _str + _strYes;
 } else {
@@ -238,10 +238,10 @@ for "_i" from 0 to (count d_create_bike - 1) do {
 };
 _str = _str + "\n";
 
-_str = _str + "Время между выгрузками техники из мобильного респауна: " + str(d_remove_mhq_vec_time) + "\n";
+_str = _str + (localize "STR_SET_23") + str(d_remove_mhq_vec_time) + "\n"; //"Time a player has to wait until he can create a new vehicle at a MHQ: "
 
 if (count d_only_pilots_can_fly > 0) then {
-	_str = _str + "Возможность летать: ";
+	_str = _str + (localize "STR_SET_24");
 	for "_i" from 0 to (count d_only_pilots_can_fly - 1) do {
 		_str = _str + (d_only_pilots_can_fly select _i);
 		if (_i < (count d_only_pilots_can_fly - 1)) then {
@@ -251,14 +251,13 @@ if (count d_only_pilots_can_fly > 0) then {
 	_str = _str + "\n";
 };
 
-_str = _str + "Ящики снабжения: максимально " + str(max_number_ammoboxes) + ", активированы: " + str(ammo_boxes) + "\n";
+_str = _str +  (localize "STR_SET_25") + str(max_number_ammoboxes) + (localize "STR_SET_25_1") + str(ammo_boxes) + "\n"; // "Maximum number of ammoboxes: "
 
-_str = _str + "Время ожидания между загрузкой/выгрузкой ящиков: " + str(d_drop_ammobox_time) + "\n";
+_str = _str + (localize "STR_SET_25_2") + str(d_drop_ammobox_time) + "\n"; // "Time to wait until an ammobox can be dropped/loaded again: "
+_str = _str + (localize "STR_SET_26") + str(max_truck_cargo) + "\n"; // "Maximum number of statics per engineer truck: "
 
-_str = _str + "Максимальное кол-во статических объектов в грузовике военного инженера: " + str(max_truck_cargo) + "\n";
 
-
-_str = _str + "Транспорт, способный загружать ящики снабжения: ";
+_str = _str + (localize "STR_SET_27"); //"Vehicles able to load ammoboxes: "
 for "_i" from 0 to (count d_check_ammo_load_vecs - 1) do {
 	if (_i > 0) then { _str1 = ", '%1'";}
 	else {_str1 = "'%1'";};
@@ -266,10 +265,10 @@ for "_i" from 0 to (count d_check_ammo_load_vecs - 1) do {
 };
 _str = _str + "\n";
 
-_str = _str + "Время возрождения (в сек.): " + str(D_RESPAWN_DELAY) + "\n";
+_str = _str + (localize "STR_SET_28") + str(D_RESPAWN_DELAY) + "\n"; // "Player respawn delay (in seconds): "
 
 if (!isNil "d_with_respawn_dialog_after_death") then {
-	_str = _str + "Диалог выбора места возрождения после смерти: ";
+	_str = _str + (localize "STR_SET_28");
 	if (d_with_respawn_dialog_after_death) then {
 		_str = _str + _strYes;
 	} else {
@@ -319,20 +318,20 @@ _str = _str + (localize "STR_SYS_1201") + str(max_ai) + "\n"; // "Maximum number
 _str = _str + localize"STR_SYS_350" + str(d_sub_tk_points) + "\n"; // "Points a player looses for teamkill: "
 
 #ifdef __RANKED__
-_str = _str + "Очков вычитается за смерть: " + str(abs(d_sub_kill_points)) + "\n"; // "Player points that get subtracted after death: "
-_str = _str + "Очков необходимо инженеру для обслуживания техники: " + str(d_ranked_a select 0) + "\n"; // "Points an engineer needs to service a vehicle: "
-_str = _str + "Инженер получает очков за ремонт:\n";                                                    // "Points an engineer gets for servicing: "
-_str = _str + "Авиатехника: " + str((d_ranked_a select 1) select 0) + ", бронетехника: " + str((d_ranked_a select 1) select 1) + ", транспорт: " + str((d_ranked_a select 1) select 2) + "\n"; // (air vec), (tank), (car)
-_str = _str + "Инженер получает очков за ремонт (прочее): " + str((d_ranked_a select 1) select 3) + "\n"; // (other)
-_str = _str + "Очков списывается с инженера за ремонт сервисов на базе: " + str(d_ranked_a select 13) + "\n";   // "Points an engineer needs to rebuild the support buildings at base: "
-_str = _str + "Очков списывается за вызов одного залпа артиллерии: " + str(d_ranked_a select 2) + "\n";         // "Points an artillery operator needs for a strike: "
+_str = _str + (localize "STR_SYS_1202") + str(abs(d_sub_kill_points)) + "\n"; // "Player points that get subtracted after death: "
+_str = _str + (localize "STR_SYS_1203") + str(d_ranked_a select 0) + "\n"; // "Points an engineer needs to service a vehicle: "
+_str = _str + (localize "STR_SYS_1204");                                                    // "Points an engineer gets for servicing: "
+_str = _str + (localize "STR_SYS_1204_1") + str((d_ranked_a select 1) select 0) + (localize "STR_SYS_1204_2") + str((d_ranked_a select 1) select 1) + (localize "STR_SYS_1204_3") + str((d_ranked_a select 1) select 2) + "\n"; // (air vec), (tank), (car)
+_str = _str + (localize "STR_SYS_1204_4") + str((d_ranked_a select 1) select 3) + "\n"; // (other)
+_str = _str + (localize "STR_SYS_1204_5") + str(d_ranked_a select 13) + "\n";   // "Points an engineer needs to rebuild the support buildings at base: "
+_str = _str + (localize "STR_SYS_1205") + str(d_ranked_a select 2) + "\n";         // "Points an artillery operator needs for a strike: "
 if (__AIVer) then {
-	_str = _str + "Очков за найм одного АИ: " + str(d_ranked_a select 3) + "\n";            // "Points needed to recuruit one AI soldier: "
-	_str = _str + "Очков за вызов вертолётного такси: " + str(d_ranked_a select 15) + "\n"; // "Points needed to call in an air taxi: "
+	_str = _str + (localize "STR_SYS_1206") + str(d_ranked_a select 3) + "\n";            // "Points needed to recuruit one AI soldier: "
+	_str = _str + (localize "STR_SYS_1207") + str(d_ranked_a select 15) + "\n"; // "Points needed to call in an air taxi: "
 };
-_str = _str + "Очков необходимо для десантирования: " + str(d_ranked_a select 4) + "\n";    // "Points needed for AAHALO parajump: "
-_str = _str + "Очков необходимо для выгрузки техники из мобильного респауна: " + str(d_ranked_a select 6) + "\n"; // "Points needed to create a vehicle at a MHQ: "
-_str = _str + "Очков вычитается за выгрузку техники из мобильного респауна: " + str(d_ranked_a select 5) + "\n";  // "Points that get subtracted for creating a vehicle at a MHQ: "
+_str = _str + (localize "STR_SYS_1208") + str(d_ranked_a select 4) + "\n";    // "Points needed for AAHALO parajump: "
+_str = _str + (localize "STR_SYS_1209") + str(d_ranked_a select 6) + "\n"; // "Points needed to create a vehicle at a MHQ: "
+_str = _str + (localize "STR_SYS_1210") + str(d_ranked_a select 5) + "\n";  // "Points that get subtracted for creating a vehicle at a MHQ: "
 _str = _str + (localize "STR_SYS_351") + str(d_ranked_a select 7) + "\n"; // "Points a medic gets if someone heals at his Mash: "
 _str = _str + (localize "STR_SYS_352") + str(d_ranked_a select 17) + "\n";          // "Points a medic gets if he heals another unit: "
 
@@ -346,23 +345,23 @@ _str = _str + (localize "STR_SYS_356")/* "Требуемое звание для
 _str = _str + format [localize "STR_SYS_357"/* "Очков за выполнение основной задачи, игрок в радиусе %1 м. от центра города: " */,d_ranked_a select 10] + str(d_ranked_a select 9) + "\n";
 _str = _str + format [localize "STR_SYS_358"/* "Очков за выполнение дополнительной задачи, игрок в радиусе %1 м. от места операции: " */,d_ranked_a select 12] + str(d_ranked_a select 11) + "\n";
 
-_str = _str + "Очков необходимо для развёртывания пулемётного гнезда: " + str(d_ranked_a select 14) + "\n"; // "Points needed to build a mg nest: "
-_str = _str + "Очков необходимо для вызова снабжения: " + str(d_ranked_a select 16) + "\n";                 // "Points needed to call in an air drop: "
-_str = _str + "Очков за транспортировку игроков: " + str(d_ranked_a select 18) + "\n";                      // "Points for transporting other players: "
+_str = _str + (localize "STR_SYS_1211") + str(d_ranked_a select 14) + "\n"; // "Points needed to build a mg nest: "
+_str = _str + (localize "STR_SYS_1212") + str(d_ranked_a select 16) + "\n";                 // "Points needed to call in an air drop: "
+_str = _str + (localize "STR_SYS_1213") + str(d_ranked_a select 18) + "\n";                      // "Points for transporting other players: "
 _str = _str + (localize "STR_SYS_359") + str(d_transport_distance) + "\n"; // "Transport distance to get points: "
-_str = _str + "Звание, разрешающее пилотирование вертолёта для переноски подбитой техники: " + (d_wreck_lift_rank call XGetRankStringLocalized) + "\n"; //"Rank needed to fly the wreck lift chopper: "
+_str = _str + (localize "STR_SYS_1214") + (d_wreck_lift_rank call XGetRankStringLocalized) + "\n"; //"Rank needed to fly the wreck lift chopper: "
 #endif
 
-_str = _str + "Лимит вооружения: "; // "Weapons limited: "
+_str = _str + (localize "STR_SYS_1215"); // "Weapons limited: "
 if (d_limit_weapons) then {
 	_str = _str + _strYes;
 } else {
 	_str = _str + _strNo;
 };
 
-_str = _str + "Радиус сброса снабжения (0 = точная позиция): " + str(d_drop_radius) + " м.\n";           // "Air drop radius (0 = exact position): "
+_str = _str + (localize "STR_SYS_1216") + str(d_drop_radius) + " м.\n";           // "Air drop radius (0 = exact position): "
 
-_str = _str + "Время 1-го цикла перезарядки/заправки/ремонта: " + str(x_reload_time_factor) + " сек.\n"; // "Reload/refuel/repair time factor: "
+_str = _str + (localize "STR_SYS_1217") + str(x_reload_time_factor) + " сек.\n"; // "Reload/refuel/repair time factor: "
 
 _str = _str + (localize "STR_SYS_361") ;            // "Engine gets shut off on service point: "
 if (d_reload_engineoff) then {
@@ -396,22 +395,6 @@ if (!d_no_para_at_all) then {
 	_str = _str + _strNo;
 };
 
-/* if (!d_no_para_at_all) then {
-	_str = _str + "Десантирование доступно на базе: ";
-	if (d_para_at_base) then {
-		_str = _str + _strYes;
-	} else {
-		_str = _str + _strNo;
-	};
-	if (d_para_at_base) then {
-		_str = _str + "Периодичность десантирования от флага на базе: " + str(d_para_timer_base) + "\n";
-	};
-	_str = _str + "Начальная высота десантирования: " + str(d_halo_height) + "\n";
-	if (d_jumpflag_vec != "") then {
-		_str = _str + "Создание транспорта у флага в городе вместо прыжка: " + d_jumpflag_vec + "\n";
-	};
-};
- */
 _str = _str + localize "STR_SYS_370"; // "Use GDT Mod Tracked routine to prevent tanks falling on their back: "
 if (d_use_mod_tracked) then {
 	_str = _str + localize "STR_SYS_400";
@@ -455,7 +438,7 @@ if (d_lock_ai_car) then {
 	_str = _str + _strNo;
 };
 
-_str = _str + "Вражеская авиатехника блокирована: ";
+_str = _str + (localize "STR_SET_17");
 if (d_lock_ai_air) then {
 	_str = _str + _strYes;
 } else {
@@ -463,7 +446,7 @@ if (d_lock_ai_air) then {
 };
 
 if (d_show_chopper_hud) then {
-	_str = _str + "Проекционный дисплей в вертолётах: "; //"Head-Up Display в вертолётах: "
+	_str = _str + (localize "STR_SET_18"); //"Head-Up Display в вертолётах: "
 	if (d_chophud_on) then {
 		_str = _str + _strYes;
 	} else {
@@ -471,14 +454,14 @@ if (d_show_chopper_hud) then {
 	};
 };
 
-_str = _str + "Показывать приветствие в вертолётах: ";
+_str = _str + (localize "STR_SET_19");
 if (d_show_chopper_welcome) then {
 	_str = _str + _strYes;
 } else {
 	_str = _str + _strNo;
 };
 
-_str = _str + "Показывать приветствие в технике: ";
+_str = _str + (localize "STR_SET_20");
 if (d_show_vehicle_welcome) then {
 	_str = _str + _strYes;
 } else {
@@ -502,7 +485,7 @@ if (d_with_ace_map) then {
 	_str = _str + _strNo;
 };
 
-_str = _str + localize "STR_SYS_253"; // "Влияние ветра на вертолёты: "
+_str = _str + localize "STR_SYS_253"; // "Wind impact to heli: "
 if (d_with_wind_effect) then {
 	_str = _str + _strYes;
 } else {
@@ -510,7 +493,7 @@ if (d_with_wind_effect) then {
 };
 #endif
 
-_str = _str + "Наземные ремонтные станции работают: ";
+_str = _str + ; // "Island repair stations can repair vehicles: "
 if (d_with_repstations) then {
 	_str = _str + _strYes;
 } else {

@@ -817,6 +817,36 @@ STR_SYS_1186,"Air taxi leaving now, have a nice day !!!","Luft-taxi jetzt verlas
 STR_SYS_1200,"Respawn with same weapons after death: ","Respawn mit gleichen Waffen nach dem Tod: ","Респаун с тем же оружием: "
 STR_SYS_1201,"Maximum number of AI that can get recruited: ","Maximale Anzahl von KI, die rekrutiert werden kann : ","Максимальное кол-во АИ: "
 
+STR_SYS_1202,"Player points that get subtracted after death: ","Spielerpunkte, die nach dem Tod abgezogen werden: ","Очков вычитается за смерть: "
+
+STR_SYS_1203,"Points an engineer needs to service a vehicle: ","Punkte, die ein Ingenieur braucht, um ein Fahrzeug zu warten: ","Очков необходимо инженеру для обслуживания техники: "
+STR_SYS_1204,"Points an engineer gets for servicing:\n","Punkte, die ein Ingenieur für die Wartung bekommt:\n","Инженер получает очков за ремонт:\n"
+STR_SYS_1204_1,"Air vehicle :","Luftfahrttechnik: ","Авиатехника: "
+STR_SYS_1204_2,", armored vehicles: ",", Gepanzerte Fahrzeuge: ",", бронетехника: "
+STR_SYS_1204_3,", motor transport: ",", Kraftverkehr: ",", автотранспорт: "
+STR_SYS_1204_4,"Points an engineer gets for servicing other: ","Punkte, die ein Ingenieur für die Wartung anderer bekommt: ","Инженер получает очков за ремонт (прочее): "
+STR_SYS_1204_5,"Points an engineer needs to rebuild the support buildings at base: ","Punkte, die ein Ingenieur braucht, um die stützgebäude an der Basis wieder aufzubauen: ","Очков списывается с инженера за ремонт сервисов на базе: "
+
+STR_SYS_1205,"Points an artillery operator needs for a strike: ","Punkte, die ein Artillerie-operator für einen Streik braucht: ","Очков списывается за вызов одного артиллерийского залпа: "
+STR_SYS_1206,"Points needed to recuruit one AI soldier: ","Punkte benötigt, um einen KI-Soldaten recuruit: ","Очков за призыв одного АИ:"
+STR_SYS_1207,"Points needed to call in an air taxi: ","Punkte benötigt, um in einem Lufttaxi zu rufen: ","Очков за вызов воздушного такси: "
+
+STR_SYS_1208,"Points needed for AAHALO parajump: ","Punkte für AAHALO parajump benötigt: ","Очков необходимо для десантирования с базы: "
+STR_SYS_1209,"Points needed to create a vehicle at a MHQ: ","Punkte benötigt, um ein Fahrzeug an einem MHQ zu erstellen: ","Очков необходимо для выгрузки техники из мобильной базы: "
+STR_SYS_1210,"Points that get subtracted for creating a vehicle at a MHQ: ","Punkte, die subtrahiert werden, um ein Fahrzeug an einem MHQ zu erstellen: ","Очков вычитается за выгрузку техники из мобильного респауна: "
+
+STR_SYS_1211,"Points needed to build a NG nest: ","Punkte benötigt, um ein MG nest zu bauen: ","Очков необходимо для развёртывания пулемётного гнезда: "
+STR_SYS_1212,"Points needed to call in an air drop: ","Punkte, die benötigt werden, um einen Lufttropfen einzuholen: ","Очков необходимо для вызова снабжения: "
+STR_SYS_1213,"Points for transporting other players: ","Punkte für den Transport anderer Spieler: ","Очков за транспортировку игроков: "
+STR_SYS_1214,"Rank needed to fly the wreck lift chopper: ","Rang benötigt, um den Wracklift-Hubschrauber zu fliegen:","Звание, разрешающее пилотирование вертолёта для переноски подбитой техники: "
+
+STR_SYS_1215,"Weapons limited: ","Waffen limitiert: ","Ограничение вооружение: "
+
+STR_SYS_1216,"Air drop radius (0 = exact position): ","Lufttropfenradius (0 = genaue Position):","Радиус сброса снабжения (0 = точная позиция): "
+STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / Auftanken / Reparieren: ","Время цикла перезарядки/заправки/ремонта: "
+
+STR_SYS_1218,"Enemy air vehicles locked: ","Feindliche Luftfahrzeuge gesperrt:","Вражеская авиатехника блокирована: "
+
 STR_SYS_SERVICE_DMG,"Service %1 is damaged","Service %1 beschädigt","Сервис %1 повреждён!"
 STR_SYS_SERVICE_DMG_1,"One of the services of the base was damaged by saboteurs!","Eine der Dienstleistungen der Basis beschädigt von saboteurs!","Один из сервисов на базе был повреждён диверсантами!"
 
@@ -1190,6 +1220,22 @@ STR_SET_13,"Mando missiles pack: ","Mando missiles pack: ","Пак Mando missile
 STR_SET_14,"Built-in ruksack: ","Eingebauter ruksack: ","Встроенный рюкзак: "
 STR_SET_15,"Enemy armored vehicles blocked: ","Feindliche Gepanzerte Fahrzeuge blockiert: ","Вражеская бронетехника блокирована: "
 STR_SET_16,"Enemy cars blocked: ","Feindliche Autos blockiert: ","Вражеский транспорт заблокирован: "
+STR_SET_17,"Enemy air vehicles blocked: ","Feindliche Luftfahrzeuge gesperrt: ","Вражеская авиатехника блокирована: "
+STR_SET_18,"Chopper hud on: ","Head-Up-Display im Helikopter: ","Проекционный дисплей в вертолётах: "
+STR_SET_19,"Show chopper welcome message: ","Chopper-Begrüßungsnachricht anzeigen: ","Показывать приветствие в вертолётах: "
+STR_SET_20,"Show vehicle welcome message: ","Fahrzeug-Begrüßungsnachricht anzeigen:","Показывать приветствие в технике: "
+STR_SET_21,"Island repair stations can repair vehicles: ","Inselreparaturstationen können Fahrzeuge reparieren: ","Наземные ремонтные станции работают: "
+STR_SET_22,"Teamstatus Dialog enabled: ","Teamstatus-Dialog aktiviert: ","Меню статус включено: "
+STR_SET_23,"Time a player has to wait until he can create a new vehicle at a MHQ: ","Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet: ","Время между выгрузками техники из мобильного респауна: "
+STR_SET_24,"Able to fly: ","Able to fly: ","Им разрешено летать: "
+STR_SET_25,"Maximum number of ammoboxes: ","Maximale Anzahl von Ammoboxen: ","Ящики снабжения: максимум "
+STR_SET_25_1,", currently in use: ",", aktuell in Verwendung: ",", активированы: "
+STR_SET_25_2,"Time to wait until an ammobox can be dropped/loaded again: ","Wartezeit, bis eine Ammobox wieder geladen/werden kann: ","Время ожидания между загрузкой/выгрузкой ящиков: "
+STR_SET_26,"Maximum number of statics per engineer truck: ","Maximale Anzahl statischer Wepons pro Ingenieur-LKW: ","Максимальное кол-во статических объектов в грузовике военного инженера: "
+STR_SET_27,"Vehicles able to load ammoboxes: ","Fahrzeuge, die Ammoboxen laden können:","Транспорт, способный загружать ящики снабжения: "
+STR_SET_28,"Player respawn delay (in seconds): ","Verzögerung beim Respawn des Spielers (in Sekunden): ","Время возрождения (в сек.): "
+STR_SET_29,"Player respawn dialog after death: ","Spieler Respawn Dialog nach dem Tod: ","Диалог выбора места возрождения после смерти: "
+
 
 STR_GRU_1,"GRU","GRU","ГРУ"
 STR_GRU_2,"deliver the map","liefern Sie die Karte","доставить карту"
