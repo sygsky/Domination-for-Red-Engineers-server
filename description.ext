@@ -129,7 +129,7 @@ class CfgMusic
     class druzba    {        name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};    };
     class bond    {        name="";        sound[]=   {\sounds\bond.ogg,db-1,1.0};    };
     class adjutant    {        name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};    };
-    class red_alert_soviet_march { name=""; sound[]= {\sounds\red_alert_soviet_march.ogg,db-1,1.0}; };
+//    class red_alert_soviet_march { name=""; sound[]= {\sounds\red_alert_soviet_march.ogg,db-1,1.0}; };
     class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };
     class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
     class               lastdime { name=""; sound[]= {\sounds\lastdime.ogg,db-1,1.0};    };
@@ -141,7 +141,7 @@ class CfgMusic
     class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0};} // used in  intro
     class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0};} // intro music from "Bloody diamond" movie
     class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};} // intro music from "Total recall" movie (The Mountain)
-    class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
+//    class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
     class capricorn1title { name=""; sound[] = {\sounds\capricorn1title.ogg,db+20,1.0};} // intro music from great american movie "Capricorn-1"
     class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg,db+20,1.0};} // intro music from Soviet great song (1950)
     class Letyat_perelyotnye_pticy_end { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_end.ogg,db+20,1.0};} // intro music #2 (final verse) from the same Soviet great song (1950)
@@ -157,12 +157,12 @@ class CfgMusic
     class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
     class ipanoram { name=""; sound[] = {\sounds\ipanoram.ogg,db+0,1.0};}; // Soviet political review Telecast "International panoram"
-    class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0};}; // Dean Reed song Rider
+    class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0};}; // Dean Reed song "Rider"
     class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0};}; // USSR famous film "Hound of Baskervill hall"
     class condor { name=""; sound[] = {\sounds\condor.ogg,db+0,1.0};}; // El-Condor-Pasa by Leo Rojas
     class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
     class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
-    class melody_by_voice_short { name=""; sound[] = {\sounds\melody_by_voice_short.ogg,db+0,1.0};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
+    class melody_by_voice { name=""; sound[] = {\sounds\melody_by_voice.ogg,db+0,1.0};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
 //    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 //    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro music, Soviet song about comrade
