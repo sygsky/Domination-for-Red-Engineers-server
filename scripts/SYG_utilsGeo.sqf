@@ -935,9 +935,9 @@ SYG_geoDist = {
 // Call as: _pos = _obj call SYG_getPos;
 //
 SYG_getPos = {
-    if ( typeName _this ="OBJECT" } exitWith { getPos _this};
-    if ( typeName _this ="GROUP" } exitWith { getPos (_this call SYG_getLeader)};
-    if ( typeName _this ="LOCATION" } exitWith { locationPosition _this};
+    if ( typeName _this == "OBJECT" ) exitWith { getPos _this};
+    if ( typeName _this == "GROUP" ) exitWith { getPos (_this call SYG_getLeader)};
+    if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this};
     [0,0,0]
 };
 if (true) exitWith {};
