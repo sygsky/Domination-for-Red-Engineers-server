@@ -509,11 +509,12 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 _veh = _x;
                 for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
                 {
+                    _x = SYG_owner_active_air_vehicles_arr select _i;
                     if ( !alive _x ) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
                     else
                     {
                         _pos = getPos _x;
-                        if ( (_veh distance _pos)  < 3000 ) then
+                        if ( (_veh distance _pos)  < 3500 ) then
                         {
                             if ( ( _pos select 2) > _flight_height ) then
                             {
@@ -525,7 +526,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                         }
                         else { SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"]};
                     };
-                } forEach SYG_owner_active_air_vehicles_arr;
+                }; // forEach SYG_owner_active_air_vehicles_arr;
                 SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
                 if (_height_not_set) then
                 {
