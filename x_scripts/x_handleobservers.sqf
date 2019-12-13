@@ -6,7 +6,7 @@ if (!isServer) exitWith {};
 #include "x_macros.sqf"
 
 #define HIT_RADIOUS 45
-#define MIN_FRIENDLY_COUNT_TO_STRIKE 2
+#define MIN_FRIENDLY_COUNT_TO_STRIKE 3
 
 _enemy_ari_available = true;
 _nextaritime = 0;
@@ -112,13 +112,14 @@ while { nr_observers > 0 && !target_clear } do {
 
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: %1 attacks ""%2"" with %3 (knows %4) d. %5 m., friendly cnt %6, %7, missed %8 m.",
+                                "+++ x_handleobservers.sqf: %1 attacks ""%2"" with %3 (knows %4) on dist. %5 m., friendly cnt %6 (veh. %7), %8, missed %9 m.",
                                 _observer,
                                 name _enemy,
                                 if (_type == 1) then {"warheads"} else {"smokes"},
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
                                 _cnt,
+                                {alive _x && (side _x == _enemySide)} count _vecs,
                                 [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist
                             ];

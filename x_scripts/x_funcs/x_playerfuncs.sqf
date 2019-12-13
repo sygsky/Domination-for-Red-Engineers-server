@@ -147,7 +147,7 @@ Xoartimsg = {
 	private ["_target_pos"];
 	_target_pos = _this;
 	if ((player distance _target_pos < 50) && ((random 10) > 1) ) then { // 9 of 10 times inform about the death approaching
-	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4"] call XfRandomArrayVal);
+	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence"] call XfRandomArrayVal);
 		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
 	};
 };
