@@ -523,15 +523,16 @@ SYG_isWoman = {
 		if (typeName _this == "ARRAY") then {_this = _this select 0};
 		if (typeName _this == "OBJECT") then {_this = typeOf _this};
 		if (typeName _this != "STRING") exitWith {false};
-		_entry = configfile >> "CfgVehicles" >> _this;
-		if (isNumber _entry >> "woman") exitWith
+		if (_this isKIndOf "MarianQuandt") exitWith {true}; // She is not woman in Arma-1
+		_entry = configFile >> "CfgVehicles" >> _this;
+		if ( isNumber (_entry >> "woman") )  exitWith
 		{
-            if (getNumber(_entry >> "woman") > 0) exitWith { true };
+            if ( getNumber(_entry >> "woman")  > 0) exitWith { true };
             false
 		};
-		if (isText _entry >> "woman") exitWith
+		if ( isText (_entry >> "woman") ) exitWith
 		{
-            if (toLower(getText(_entry >> "woman")) == "true") exitWith {true};
+            if ( toLower(getText(_entry >> "woman")) == "true" ) exitWith {true};
             false;
 		};
         false // unknown entry

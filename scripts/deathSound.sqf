@@ -57,8 +57,10 @@ else    // some kind of suicide? Say something about...
     // short melody on unknown death case, anybody within some range can hear this
     _sound = "male_scream_0"; // default value
     // check if a woman is killed
-    if (typeOf _unit == "ACE_SoldierEMedicWoman_VDV")
-    then { _sound = "female_shout_of_pain_" + str(ceil (random 4)); } // 1-4
+    if ( _unit call SYG_isWoman ) then
+    {
+        _sound = "female_shout_of_pain_" + str(ceil (random 4));  // 1-4
+    }
     else
     {
 #undef __ACE__ // test new screams
