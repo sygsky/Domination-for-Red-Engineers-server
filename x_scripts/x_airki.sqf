@@ -506,23 +506,22 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
    		        // check what height we should set
    		        // if enemy air vehicles detected, set height according enemy vehicle one
    		        _height_not_set = true;
-                _veh = _x;
                 for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
                 {
-                    _x = SYG_owner_active_air_vehicles_arr select _i;
-                    if ( !alive _x ) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
+                    _enemy_heli = SYG_owner_active_air_vehicles_arr select _i;
+                    if ( !alive _enemy_heli ) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
                     else
                     {
-                        _pos = getPos _x;
+                        _pos = getPos _enemy_heli;
                         if ( (_veh distance _pos)  < 3500 ) then
                         {
                             if ( ( _pos select 2) > _flight_height ) then
                             {
                                     _veh flyInHeight ((_pos select 2)+50);
-                                    hint localize format["+++ x_airki: enemy air vehicle detected, height set to %1", ((_pos select 2)+50)];
+                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, height set to %2", typeOf _enemy_heli, ((_pos select 2)+50)];
                                     _height_not_set = false;
                             };
-                            _veh reveal _x;
+                            _x reveal _enemy_heli;
                         }
                         else { SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"]};
                     };
