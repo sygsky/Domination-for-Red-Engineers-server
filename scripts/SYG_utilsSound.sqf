@@ -86,7 +86,7 @@ SYG_defeatTracks =
     ["ATrack9","ATrack10","ATrack14"],
     ["ATrack16","ATrack17","ATrack18"],
     ["ATrack20","ATrack21","ATrack22","thetrembler"],
-    ["arroyo","ATrack15","ATrack19"],
+    ["arroyo","ATrack15","ATrack19","sinbad_baghdad"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
@@ -96,7 +96,10 @@ SYG_defeatTracks =
 
 ];
 
-SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
+// Play music form partial track (Arma-1 embed music and some long custom sounds may be)
+// call as:
+// [name, start, length (seconds)] call __SYG_playMusicPartialTrack;
+__SYG_playMusicPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -295,7 +298,7 @@ SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[2
 
 //
 // Plays random track or track part depends on input array kind (see below)
-// This procedure use only playMusic operator and playe items from CfgMisic section
+// NOTE: This procedure use only playMusic operator and player items from CfgMisic sections
 //
 // call: _arr call SYG_playRandomTrack;
 // where _arr may be:
@@ -378,9 +381,9 @@ SYG_playRandomTrack = {
             if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
+                hint localize format["__SYG_playMusicPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
 #endif
-                [arg(0),argp(_trk,0),argp(_trk,1)] spawn SYG_playPartialTrack;
+                [arg(0),argp(_trk,0),argp(_trk,1)] spawn __SYG_playMusicPartialTrack;
             }
             else
             {
@@ -477,7 +480,14 @@ SYG_getSuicideScreamSound  = {
     Plays mysic for the next weather forecast act
  */
 SYG_playWeatherForecastMusic = {
- ["manchester_et_liverpool", 0, 9.465] call SYG_playPartialTrack;
+ [
+    ["manchester_et_liverpool", 0, 9.465],
+    ["manchester_et_liverpool", 10.092, 9.182],
+    ["manchester_et_liverpool", 18.42, 8.01],
+    ["manchester_et_liverpool", 26.74, 7.27],
+    ["manchester_et_liverpool", 34.006, 11.215]
+    ["manchester_et_liverpool", 45.221, -1]
+ ] call SYG_playRandomTrack;
 };
 
 if (true) exitWith {};
