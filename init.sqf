@@ -342,7 +342,7 @@ if (isServer) then {
     	while {isNil "SYG_client_start"} do {sleep 60}; // wait for 1st user connection with known time and receiving real server time from him (this is Arma!!!)
         hint localize "init.sqf: New Year procedure, ""SYG_client_start"" detected";
 
-    	if ( (argp(SYG_client_start,1) > 1) || (argp(SYG_client_start,1) < 12) ) exitWith {
+    	if ( (argp(SYG_client_start,1) > 1) && (argp(SYG_client_start,1) < 12) ) exitWith {
     	    hint localize "init.sqf: New Year procedure completed, month not DEC or JAN";
     	    false
     	}; // new year expected if only december or january is current month
@@ -369,7 +369,7 @@ if (isServer) then {
                 _vec setVariable ["SoundSource", _snd];
                 _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
             };
-            hint localize format["init.sqf: %1 -> New Year still not detected, next check in an hour", (call SYG_getServerDate) call SYG_humanDateStr];
+            hint localize format["init.sqf: %1 -> New Year still not detected, next check after half of day", (call SYG_getServerDate) call SYG_humanDateStr];
             sleep 43200; // wait 12 hours to check new year next half of day
         };
         hint localize "init.sqf: New Year procedure completed";

@@ -251,7 +251,7 @@ SYG_nowHourMinToStr = {
 // returns true if day is in a new year range (from 21.12 to 10.01)
 //
 SYG_isNewYear = {
-	(call SYG_getServerDate) call SYG_isNewYear0
+	(call SYG_getServerDate) call _SYG_isNewYear0
 };
 
 //
@@ -262,9 +262,10 @@ SYG_isNewYear = {
 //                _srvDate = call SYG_getServerDate;
 //                _isNewYear = _srvDate call SYG_isNewYear0;
 //
-SYG_isNewYear0 = {
+_SYG_isNewYear0 = {
 	private ["_day","_mon"];
-	if ( arg(0) < 1985) exitWith { [0,0,0,0,0,0] }; // illegal or suspicious  time received from server
+	// must be array of at least 3 items [year, month, day]
+	if ( count _this  < 2) exitWith { false }; // illegal or suspicious  time received from server
 	_mon = arg(1);
 	_day = arg(2);
 	( ((_mon == 12) && (_day >= NEW_YEAR_FIRST_DAY)) || ((_mon == 1) && ( _day <= NEW_YEAR_LAST_DAY)))
