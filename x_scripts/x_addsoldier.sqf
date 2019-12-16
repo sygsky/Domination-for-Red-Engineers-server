@@ -96,6 +96,7 @@ if (d_own_side == "EAST") then
     if (_ai_side_unit call SYG_isWoman) then
     {
         _identity = "Irina";
+        _unit say (call SYG_getFemaleFuckSpeech);
     }
     else
     {
