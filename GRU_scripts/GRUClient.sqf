@@ -295,11 +295,11 @@ GRU_procClientMsg = {
 
                     // send GRU_msg to users about new patrol "The landing of the enemy patrol spotted by %1%2%3%4%5%6"
 		            // check rank of player and add more info
-		            ["msg_to_user", "", [_args]] call XHandleNetStartScriptClient; // message output
+		            ["msg_to_user", "", [_args]] call SYG_msgToUserParser; // message output
 		        };
 		        case GRU_MSG_INFO_KIND_PATROL_ABSENCE: // all patrols are absence
 		        {
-		            ["msg_to_user", "", [["STR_GRU_46_0"] ] ] call XHandleNetStartScriptClient; // message output
+		            ["msg_to_user", "", [["STR_GRU_46_0"] ] ] call SYG_msgToUserParser; // message output
 		            playSound "fanfare";
 		        };
    		        case GRU_MSG_INFO_KIND_MAP_CREATED: // GRU wallmap created  (Sahrani or Rahmadi)

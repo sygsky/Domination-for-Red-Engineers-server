@@ -477,7 +477,7 @@ SYG_getSuicideScreamSound  = {
 };
 
 /**
-    Plays mysic for the next weather forecast act
+ *  Plays mysic for the next weather forecast act
  */
 SYG_playWeatherForecastMusic = {
  [
@@ -485,7 +485,7 @@ SYG_playWeatherForecastMusic = {
     ["manchester_et_liverpool", 10.092, 9.182],
     ["manchester_et_liverpool", 18.42, 8.01],
     ["manchester_et_liverpool", 26.74, 7.27],
-    ["manchester_et_liverpool", 34.006, 11.215]
+    ["manchester_et_liverpool", 34.006, 11.215],
     ["manchester_et_liverpool", 45.221, -1]
  ] call SYG_playRandomTrack;
 };

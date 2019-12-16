@@ -19,9 +19,9 @@ _pos = [0,0,0]; // defining pos out of a closed statement.
 
 _trigger_side = format ["%1",playerSide];
 
-_rainy_height = floor (_y / 7);
+_rainy_height = floor (_y / 7); // the biggest rain area
 _rainy_width = floor (_x / 9);
-_rainy2_height = floor (_y / 9);
+_rainy2_height = floor (_y / 9); // and two smaller rain areas
 _rainy2_width = floor (_x / 21);
 _rainy3_height = _rainy2_height;
 _rainy3_width = _rainy2_width;

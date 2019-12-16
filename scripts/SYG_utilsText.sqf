@@ -46,7 +46,7 @@ SYG_getFemaleFuckSpeech = {
     {
         case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
     };
-	_arr call SYG_getRandomText
+	_arr call XfRandomArrayVal
 };
 
 

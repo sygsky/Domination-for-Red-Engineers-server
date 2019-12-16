@@ -9,7 +9,7 @@
 
 // "This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!"
 _args = [localize "STR_AI_10"];
-["msg_to_user", "", [_args]] call XHandleNetStartScriptClient; // message output
+["msg_to_user", "", [_args]] call SYG_msgToUserParser; // message output
 
 (_this select 0) removeAction (_this select 2); // Remove action
 if (true) exitWith {};

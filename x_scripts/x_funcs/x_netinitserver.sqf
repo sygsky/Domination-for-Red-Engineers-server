@@ -283,7 +283,7 @@ XHandleNetStartScriptServer = {
 
 			// TODO: add here more messages for the 1st greeting to user
 
-			["msg_to_user", arg(1), _msg_arr, 0, 30] call XSendNetStartScriptClient;
+			["msg_to_user", arg(1), _msg_arr, 5, 10] call XSendNetStartScriptClient;
 			sleep 1.0;
 			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
