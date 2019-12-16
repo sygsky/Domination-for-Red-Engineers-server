@@ -370,6 +370,14 @@ class CfgSounds
     class female_shout_of_pain_2 {name = ""; sound[] = {\sounds\female_shout_of_pain_2.ogg, db+0, 1.0}; titles[] = {}; };
     class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\female_shout_of_pain_3.ogg, db+0, 1.0}; titles[] = {}; };
     class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\female_shout_of_pain_4.ogg, db+0, 1.0}; titles[] = {}; };
+// woman fucking  speech
+    class woman_fuck {name = ""; sound[] = {\sounds\fuck\woman_fuck.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_fuck_2 {name = ""; sound[] = {\sounds\fuck\woman_fuck_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_kidding {name = ""; sound[] = {\sounds\fuck\woman_kidding.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_sob {name = ""; sound[] = {\sounds\fuck\woman_sob.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_motherfucker {name = ""; sound[] = {\sounds\fuck\woman_motherfucker.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_svoloch {name = ""; sound[] = {\sounds\fuck\woman_svoloch.ogg, db+0, 1.0}; titles[] = {}; };
+
 // man self-killed
     class male_scream_0 {name = ""; sound[] = {\sounds\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_1 {name = ""; sound[] = {\sounds\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };

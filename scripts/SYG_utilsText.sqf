@@ -39,6 +39,17 @@ SYG_getLocalManRandomName = {
 	"STR_CAMP_TEAM_A_NUM" call SYG_getRandomText
 };
 
+SYG_getFemaleFuckSpeech = {
+    private ["_arr"];
+	_arr = ["woman_fuck","woman_fuck_2","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch"];
+    switch localize "STR_LANG" do
+    {
+        case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
+    };
+	_arr call SYG_getRandomText
+};
+
+
 // Non-localized version of random text getting
 SYG_getRandomText = {
 	if (typeName _this != "STRING") exitWith { format["SYG_utilsText.sqf.SYG_getRandomText: Expected text list base id is not string (%1)", _this] };
