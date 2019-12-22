@@ -22,12 +22,12 @@ _sendInfoOnAirVehToServer = {
     ["veh_info", _this ] call XSendNetStartScriptServer; // inform server about battle vehicle activity
 };
 
-private ["_veh", "_not_allowed", "_needed_rank", "_index", "_last_send"];
+private ["_veh", "_not_allowed", "_needed_rank", "_index", "_activity_info_sent"];
 
 _attempts_count = 0;
-_last_send = time;
 
 while { true } do {
+    _activity_info_sent = false; // activity event not sent
 	waitUntil {sleep 0.1; vehicle player != player};
 	_veh = vehicle player;
 	_not_allowed = false;
@@ -40,11 +40,7 @@ while { true } do {
 
 	// play some special sound for woman
 	{
-	    if (isPlayer _x) then {}
-	    else
-	    {
-	        if ( _x call SYG_isWoman ) exitWith { _x say (call SYG_getFemaleFuckSpeech) };
-	    };
+	    if ( (_x != player)  && (_x call SYG_isWoman) ) exitWith { _x say (call SYG_getFemaleFuckSpeech) };
 	} forEach crew _veh;
 
 	if ((typeOf _veh) != "ACE_Bicycle") then
@@ -213,6 +209,7 @@ while { true } do {
             if ( _air_battle && !_cargo) then // periiodically send info to server about player battle air vehicle activity
             {
                 [ _veh, "on" ] call _sendInfoOnAirVehToServer; // add info about to server
+                _activity_info_sent = true;
                 hint localize format[ "+++ x_playerveccheck: start activity report on %1", typeOf _veh ];
             };
         };
@@ -223,7 +220,7 @@ while { true } do {
 	};
 	//hint localize format["x_playerveccheck.sqf: player is not assigned %1", _role_arr];
 	waitUntil {sleep 0.2; vehicle player == player};
-    if ( _air_battle && (!_cargo) &&  (!_not_allowed) && (_bulky_weapon == "") ) then // drop info
+    if ( _activity_info_sent ) then // stop activity
     {
         [ _veh, "off" ] call _sendInfoOnAirVehToServer; // drop info about this vehicle
         hint localize format["+++ x_playerveccheck: stop activity report on %1", typeOf _veh];

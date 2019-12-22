@@ -189,6 +189,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                             if ( isEngineOn _nearest ) then { _nearest engineOn false; };
                             Attached_Vec = objNull;
 
+                            // reveal to all players new position of MHQ. It can help!
+                            ["revealVehicle", _nearest] call XSendNetStartScriptClient;
+
                             // send information to all clients about new position of well known lifted vehicle
                             switch (_nearest) do {
                                 case MRR1: {

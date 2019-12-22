@@ -125,9 +125,14 @@ SYG_msgToUserParser =
                 };
             } forEach _x; // parse each format item
 
-            _print_title = (count _this) < 5; // no setting means - print title
-            if (_print_title) then { _print_title = !(_this select 5)}; // it may be boolean: true or false
-            if ( typeName _print_title == "SCALAR") then {_print_title = _print_title > 0}; // but may be number == 0 (false); numbmer > 0 (true)
+            _print_title = (count _this) < 6; // if no setting, let print title in screen middle, not only radio message at bottom
+            if (!_print_title) then  // value detected in param array, read and parse it
+            {
+                _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
+                if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
+                    then {_print_title = _print_title <= 0} // print only if value set to false
+                    else {_print_title = !_print_title}; // parse as boolean value, print if value == false
+            };
 
             _msg_formatted = format _msg_res; // whole message formatted
             if ( _print_title ) then // no title text disable parameter

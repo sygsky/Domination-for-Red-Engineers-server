@@ -493,7 +493,7 @@ if (d_with_wind_effect) then {
 };
 #endif
 
-_str = _str + ; // "Island repair stations can repair vehicles: "
+_str = _str + localize "STR_SET_21"; // "Island repair stations can repair vehicles: "
 if (d_with_repstations) then {
 	_str = _str + _strYes;
 } else {

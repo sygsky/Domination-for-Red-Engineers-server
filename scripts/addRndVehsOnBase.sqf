@@ -15,6 +15,7 @@ _camelDirArr = [225, 0, 0, 180, 0, 0, 0]; // Camel directions
     // 3: vector (for setVectorUp)
     // 4: probability to create
     // 5: fuel volume
+    // 6: remove magzines (true) or not remove (false)
     _prob = if (count _x > 3) then {_x select 4} else {1}; // probability to create
     if ( (random 1) < _prob ) then
     {
@@ -60,11 +61,13 @@ _camelDirArr = [225, 0, 0, 180, 0, 0, 0]; // Camel directions
         //+++ set damage
         _veh setDamage 0.8;
 
-        //+++ get and set damage
-        _fuel = if (count _x > 4) then {_x select 4} else {0};
+        //+++ get and set fuel
+        _fuel = if (count _x > 5) then {_x select 5} else {0};
         _veh setFuel _fuel;
 
-        {_veh removeMagazine _x} forEach magazines _veh;
+        //+++ remove magazines  or not
+        _no_mags = if (count _x > 6) then {_x select 6} else {true};
+        if (_no_mags) then { {_veh removeMagazine _x} forEach magazines _veh};
 
         // set vector up
         _veh setVectorUp (_x select 3);
@@ -77,5 +80,5 @@ _camelDirArr = [225, 0, 0, 180, 0, 0, 0]; // Camel directions
 } forEach [
             [[9439.2,9800.7,0],"ACE_BRDM2", 180,[0,0,-1], 1, 0],
             [[10254.87,10062,0],"ACE_BMP1_D",180,[0,0,-1], 1, 0],
-            [_camelPosArr, ["Camel2","Camel"], _camelDirArr, [0,0,1], 1, 0.1]
+            [_camelPosArr, ["Camel2","Camel"], _camelDirArr, [0,0,1], 1, 0.1, false]
           ];

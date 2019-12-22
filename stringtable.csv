@@ -1365,8 +1365,8 @@ STR_ACE_VDN_SU34,"Su-34 FAB500,KAB500,S8","Su-34 FAB500,KAB500,S8","Су-34 ФА
 STR_ACE_EJECT0,"<t color='#FF0000'>Eject</t>","<t color='#FF0000'>Auswerfen</t>","<t color='#FF0000'>Катапультироваться</t>"
 STR_ACE_EJECT1,"<t color='#FF0000'>Jump Out</t>","<t color='#FF0000'>Springen</t>","<t color='#FF0000'>Выпрыгнуть</t>"
 STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
-STR_WEST,Enemies,Feinde,Враги
-STR_EAST,Comrades,Kameraden,Товарищи
+STR_WEST,NATO,NATO,НАТО
+STR_EAST,Comrades,Kameraden,Наши
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
