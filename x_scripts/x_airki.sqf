@@ -399,7 +399,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_current_target_pos = _dummy select 0;
 
 	if ((_vehicles select 0) distance _current_target_pos > (_vehicles select 0) distance d_island_center) then {
-		_wp = _grp addWaypoint [d_island_center, 100]; // additional waypoint to island center
+		_wp = _grp addWaypoint [d_island_center, 200]; // additional waypoint to island center
     	_wp setWaypointType "MOVE";
 	};
 	_wp = _grp addWaypoint [_current_target_pos, 50];
@@ -510,28 +510,28 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
                 {
                     _enemy_heli = SYG_owner_active_air_vehicles_arr select _i;
-                    if ( (_enemy_heli select 2) < 3 && (velocity _enemy_heli) distance [0,0,0] < 0.0001 ) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
+                    if ( ({alive _x} count crew _enemy_heli) == 0) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
                     else
                     {
                         _pos = getPos _enemy_heli;
-                        if ( (_veh distance _pos)  < 3500 ) then
+                        if ( (_x distance _pos)  < 3500 ) then
                         {
                             if ( ( _pos select 2) > ((getPos _x) select 2) ) then
                             {
-                                _veh flyInHeight ((_pos select 2)+50);
-                                hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2", typeOf _enemy_heli, round( ( (_pos select 2) + 50 ) ) ];
+                                _flyHeight = ((_pos select 2)+50);
+                                _x flyInHeight _flyHeight;
+                                hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2", typeOf _enemy_heli, round( _flyHeight ) ];
                                 _height_not_set = false;
                             };
                             _x reveal _enemy_heli;
-                        }
-                        else { SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] };
+                        };
                     };
                 }; // forEach SYG_owner_active_air_vehicles_arr;
                 SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
                 if (_height_not_set) then
                 {
                     _flyHeight = (_flight_height + (random _flight_random));
-       		        _veh flyInHeight _flyHeight ;
+       		        _x flyInHeight _flyHeight ;
                     hint localize format["+++ x_airki: patrol fly height set to ~ %2", typeOf _enemy_heli, round(_flyHeight)];
                 };
    		    };
@@ -545,7 +545,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		if (count _vehicles > 0) then {
 			for "_i" from 0 to ((count _vehicles) - 1) do {
 				_vecx = _vehicles select _i;
-				if ( isNull _vecx ) then 
+				if ( ! alive _vecx ) then
 				{
 					_vehicles set [_i, "X_RM_ME"]; 
 #ifdef __PRINT__
@@ -554,12 +554,11 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 				}
 				else
 				{
-					if (!alive _vecx || !canMove _vecx) then {
-						sleep 1;
-						if ( ( {alive _x} count (crew _vecx) ) == 0 ) then {
-							s_down_heli_arr = s_down_heli_arr + [_vecx];
-							_vehicles set [_i, "X_RM_ME"];
-						};
+                    sleep 1;
+                    if ( ( {alive _x} count (crew _vecx) ) == 0 ) then
+                    {
+                        s_down_heli_arr = s_down_heli_arr + [_vecx];
+                        _vehicles set [_i, "X_RM_ME"];
 					}
 					else
 					{
