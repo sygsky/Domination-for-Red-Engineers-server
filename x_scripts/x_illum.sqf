@@ -76,7 +76,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
                 sleep 60; // wait for the new man entering the town red zone
                 //d_run_illum = false;
             };
-            hint localize format["+++ x_illum: %1, new town men list filled with %2/%3 %4", call SYG_nowTimeToStr, {alive _x} count _manArr, count _manArr, _manType];
+            hint localize format["+++ x_illum: %1, new town men list filled with %2/%3 of %4", call SYG_nowTimeToStr, {alive _x} count _manArr, count _manArr, _manType];
         };
         //if (!d_run_illum) exitWith { false };
         if ( count _manArr == 0 ) exitWith { sleep 10; };
