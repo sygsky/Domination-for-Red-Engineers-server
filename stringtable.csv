@@ -112,7 +112,7 @@ STR_SYS_33,"%1 Respawn %2 is available","%1 Respawn %2 verfügbar","%1 моби�
 STR_SYS_34,"Teleport","Teleport","Телепорт"
 STR_SYS_35,"Lift vehicle","Fahrzeug anheben","Поднять технику"
 STR_SYS_36,"Drop vehicle","Drop-fahrzeug","Сбросить технику"
-STR_SYS_37,"Vehicle is lifted...","Fahrzeug wird angehoben...","Техника поднята вертолётом..."
+STR_SYS_37,"Vehicle (%1) is lifted...","Fahrzeug (% 1) mit Hubschrauber gehoben ...","Техника (%1) поднята вертолётом..."
 STR_SYS_38,"Overwhelming vehicle...","Sehr schwere Maschine...","Техника неподъёмна..."
 STR_SYS_39,"Vehicle was dropped...","Fahrzeug ist gelöscht...","Техника сброшена..."
 

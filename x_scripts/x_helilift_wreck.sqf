@@ -63,7 +63,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 			} else {
 				if (Vehicle_Attached) then {
 					_release_id = _vehicle addAction [localize "STR_SYS_36"/* "СБРОСИТЬ ТЕХНИКУ" */, "x_scripts\x_heli_release.sqf",-1,100000];
-					[_vehicle, localize "STR_SYS_37"/* "Техника поднята вертолётом..." */] call XfVehicleChat;
+					[_vehicle, format[localize "STR_SYS_37",[typeOf (_vehicle),0] call XfGetDisplayName]] call XfVehicleChat;
 					Attached_Vec = _nearest;
 
 					_height = 15;
