@@ -4,7 +4,7 @@
 private ["_type", "_pos", "_wp_behave", "_crew_member", "_addToClean", "_heli_type", "_vehicle", "_initial_type", "_grp",
  "_vehicles", "_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_leader",
  "_old_target", "_loop_do", "_dummy", "_current_target_pos", "_wp", "_pat_pos", "_radius", "_dist", "_old_pat_pos", "_angle",
-  "_x1", "_y1", "_i", "_vecx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage",
+  "_x1", "_y1", "_i", "_vecx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage","_res_arr",
   "_flyHeight"];
 
 if (!isServer) exitWith {};
@@ -317,7 +317,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_airki_attack_chopper;
-			_flight_height = 300;
+			_flight_height = 350;
         	//_flyby_height  = 500;
 			_flight_random = 50;
 			_min_dist_between_wp = 100;
@@ -326,7 +326,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_planes;
 			_heli_arr = d_airki_attack_plane;
-			_flight_height = 400;
+			_flight_height = 600;
         	_flyby_height  = 1000;
 			_flight_random = 100;
 			_min_dist_between_wp = 500;
@@ -427,14 +427,20 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	//
 	while { _loop_do } do {
 #ifdef __FUTURE__
-		// TODO: allow target be not only town but sometimes side mission base or occupied town too
-		// find all zones of interest
-        // if players not near town during some time
+		// TODO: #328 allow target be not only town but sometimes side mission base or occupied town too
+		// find all zones of interest if players not near town during some time
+		// if player not detected some times redirect vehicle to other zone
+    	_last_player_detection_time = time;
         if ( _type in ["SU","KA"]) then // check for other goal, not only main target
         {
             if ((random 100) < 10) then // 1 of 10 times try it
             {
-                _res_arr = [getPos player, true,["OCCUPIED","AIRBASE","SIDEMISSION","LOCATION","SETTLEMENT"],15000] call SYG_nearestZoneOfInterest;
+                _res_arr = [getPos player, false,["OCCUPIED","AIRBASE","SIDEMISSION"]] call SYG_nearestZoneOfInterest;
+                if ( _res_arr select 1 >= 0 ) then // some zone of interest is detected
+                {
+                    _current_target_pos = (_res_arr select 0) select (_res_arr select 1);
+                    _radius = 300;
+                };
             };
         };
 #else
@@ -537,9 +543,14 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
    		    };
    		} forEach _vehicles;
 
+        // prevent execution until at least one player is connected
 		if (X_MP && (call XPlayersNumber) == 0) then {
-		    hint localize "x_airki.sqf: no players, wait for next one";
-			waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
+		    hint localize "+++ x_airki.sqf: no players, wait for the first player on line, refuelling alive vehicles during pause";
+		    while {call XPlayersNumber == 0} do
+		    {
+		        sleep 25.128;
+		        { if (alive _x) then { _x setFuel 1} } forEach _vehicles;
+		    };
 		};
 		//__DEBUG_NET("x_airki_2.sqf",(call XPlayersNumber))
 		if (count _vehicles > 0) then {

@@ -232,7 +232,7 @@ SYG_nearestForest = {
  * 4. Secondary target point
  * 5. Geographic location on map (village, town, city, some natural zone names etc)
  *
- * call: _pos_arr= [_pos,_same_island_part,_wanted_zones_list<,_min_dist>] call SYG_nearestZoneOfInterest;
+ * call: _pos_arr= [_pos,_same_island_part,_wanted_zones_list<,_max_dist>] call SYG_nearestZoneOfInterest;
  *
  * Where:
  *  _pos: position or object to search proximity for
@@ -244,13 +244,13 @@ SYG_nearestForest = {
  *                d) - sidemission target (if not on Rahmadi) "SIDEMISSION"
  *                e) - location "LOCATION", including "NameCity","NameCityCapital","NameVillage","NameLocal"
  *                f) - settlement "SETTLEMENT", including "NameCity","NameCityCapital","NameVillage"
- * _min_dist    : minimum distance to the designated position, optional, default is 999999.9 meters (all the Arma universe)
+ * _max_dist    : maximum distance to the designated position, optional, default is 999999.9 meters (all the Arma universe)
  *
  * E.g.: _res_arr = [getPos player, false,["MAIN","OCCUPIED","AIRBASE","SIDEMISSION","LOCATION","SETTLEMENT"],1000] call SYG_nearestZoneOfInterest;
  *
  * Returns: array of 
- *  [ [_posMain,_posOccupied,_posAirbase,_posSecondary, ...etc], _nearestIndex]
- *	with 1st array of same size as input one containing corresponding positions of zones found, where [] pos means of no value, 
+ *  [ [_posMain,_posOccupied,_posAirbase,_posLocation, ...etc], _nearestIndex]
+ *	with 1st array of same size as input one containing corresponding positions of zones found, where [] means of no value,
  *  and 2nd item (_nearestIndex) stand for index in original array with shortest distance to the closest zone type. 
  *  _nearestIndex -1 means NO any zone found. It is possible when you search only for ["MAIN"<,"SIDEMISSION"<,"OCCUPIED">>] at start
  *  or end of game or in very-very rare moments between main/secondary/occupied mission is finshed and still not started
@@ -258,10 +258,10 @@ SYG_nearestForest = {
 SYG_nearestZoneOfInterest = {
 	private ["_dist","_dist1","_min_dist","_wanted_dist","_reta","_pos","_pos1","_pos2","_ret","_part","_part1","_same_part","_opt","_opts"];
 	
-	_pos          = arg(0);
-	_same_part    = arg(1);
-	_opts         = arg(2);
-	_wanted_dist  = argopt(3,999999.9);
+	_pos          = arg(0); // unit/object/vehicle pos
+	_same_part    = arg(1); // find only on same part of island if true
+	_opts         = arg(2); // what kind of zones to search
+	_wanted_dist  = argopt(3,999999.9); // max distance to find for zone
 	_ind = -1;
 	_reta = [];
 	
@@ -349,7 +349,7 @@ SYG_nearestZoneOfInterest = {
 				};
 				case "SIDEMISSION": 
 				{
-					if (!all_sm_res AND !side_mission_resolved AND (current_mission_index >= 0)) then
+					if (!all_sm_res && !side_mission_resolved && (current_mission_index >= 0)) then
 					{
 						if ( !(current_mission_index in nonstatic_sm_array) ) then // don't use non-static sidemissions (convoys, pilots etc)
 						{
@@ -367,8 +367,11 @@ SYG_nearestZoneOfInterest = {
 					};
 				};
 			};
-			if ( (_dist < _wanted_dist) && (_dist < _min_dist)  && (_dist >= 0) ) then {_min_dist = _dist; _ind = _i;};
-			_reta set [_i, _pos1];
+			if ( _dist <= _wanted_dist ) then // found zone is in wanted range
+			{
+			    if ( (_dist < _min_dist)  && (_dist >= 0) ) then { _min_dist = _dist; _ind = _i }; // detect zone with minimum distance
+			};
+  			_reta set [_i, _pos1]; // always set position value, doesnt matter is it detected or not
 		};
 	};
 	[_reta,_ind]
