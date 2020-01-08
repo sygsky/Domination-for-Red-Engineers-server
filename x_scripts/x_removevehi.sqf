@@ -4,7 +4,8 @@
 #include "x_setup.sqf"
 
 private [
-         "_aunit","_eunit","_itself","_direction","_dummyvehicle","_pos","_type","_velocity","_grp", "_reveal_cnt"
+         "_aunit","_eunit","_itself","_direction","_dummyvehicle","_pos","_type","_velocity","_grp", "_reveal_cnt",
+         "_watch_cnt","_init_cnt","_vehs"
 #ifdef __ACE__
          ,"_ace_th","_ace_eh","_ace_hh","_ace_trh"
 #endif
@@ -64,12 +65,16 @@ if ( !alive  _eunit ) exitWith{}; // killer is dead or absent
 if( _itself ) exitWith{}; // killed by itself
 if ( _eunit isKindOf "CAManbase") exitWith{}; // killed by man, not interested for us now
 
+// create invisible observer near killer position
+
 _vehs =  [_pos , SEARCH_DIST, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
 if (count _vehs == 0) exitWith {};
 _watch_cnt  = 0;
 _reveal_cnt = 0;
-{
+_init_cnt = count _vehs;
+for "_i" from 0 to count _vehs -1 do {
+    _x = _vehs select _i;
     if ( (alive _x) && ((side _x) == d_side_enemy) )then // inform only enemy vehicles about
     {
         _x reveal _eunit;
@@ -78,15 +83,20 @@ _reveal_cnt = 0;
         if ( ( (commander _x) knowsAbout _eunit) < 1.5 )
             then { _watch_cnt = _watch_cnt + 1; }
             else { _reveal_cnt = _reveal_cnt + 1 };
+    }
+    else
+    {
+        _vehs set [_i, "RM_ME"];
     };
-} forEach _vehs;
+};
+_vehs = _vehs - ["RM_ME"];
 
 sleep 3.5;
 
 _watch_cnt2 = 0;
 _reveal_cnt2 = 0;
 {
-    if ( ( alive _x ) && ( ( side _x ) == d_side_enemy ) ) then // inform only alive enemy vehicles about
+    if ( alive _x) then // inform only alive enemy vehicles about
     {
         _x doWatch objNull;
         if ( ( ( commander _x ) knowsAbout _eunit ) < 1.5 )
@@ -96,7 +106,7 @@ _reveal_cnt2 = 0;
         else { _reveal_cnt2 = _reveal_cnt2 + 1 };
     };
 } forEach _vehs;
-hint localize format["+++ x_removevehi.sqf (%1): killer %2 at dist %3 m, bef/aft watched %4/%5,  revealed %6/%7 by enemy vehicles",
+hint localize format["+++ x_removevehi.sqf (%1): killer %2 at dist %3 m, bef/aft watched %4/%5,  known %6/%7 by enemy vehicles",
     _type, typeOf _eunit, round(_pos distance _eunit), _watch_cnt, _watch_cnt2, _reveal_cnt, _reveal_cnt2 ];
 
 _vehs = nil;
