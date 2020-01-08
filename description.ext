@@ -218,6 +218,7 @@ class CfgMusic
     class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0};} // defeat sound from Radio-nanny sign call
     class sinbad_baghdad { name=""; sound[] = {\sounds\defeat\sinbad_baghdad.ogg,db+10,1.0};} // defeat sound from film "7th voyage of Sinbad "
     class moon_stone {name = ""; sound[] = {\sounds\defeat\moon_stone.ogg, db+10, 1.0};}; // Famous Soviet singer Edvard Hill: "Moon stone" song
+    class hound_chase    {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0};}; // chase from "Hound of Baskerville" Soviet film
 
 //+++++++++++++++++++++++ medieval defeats (death near castles)
     class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // medieval defeat sound
