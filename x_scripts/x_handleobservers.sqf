@@ -102,7 +102,7 @@ while { nr_observers > 0 && !target_clear } do {
 
                             // If enemy is too far from strike point, do smoking attack only
                             _dist = round( _pos_nearest distance _enemy );
-                            if ( ( _dist > (HIT_RADIOUS * 2) ) && ( _type == 1 ) ) then { _type = 2 }; // smoke except strike
+                            if ( ( _dist > (HIT_RADIOUS * 1.5) ) && ( _type == 1 ) ) then { _type = 2 }; // smoke except strike
 
                             if ( _dist < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is high
                             else
@@ -112,7 +112,7 @@ while { nr_observers > 0 && !target_clear } do {
 
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: %1 attacks ""%2"" with %3 (knows %4) on dist. %5 m., friendly cnt %6 (veh. %7), %8, missed %9 m.",
+                                "+++ x_handleobservers.sqf: %1 attacks '%2' with %3 (knows %4) on dist. %5 m., friendly cnt %6 (veh. %7), %8, missed %9 m.",
                                 _observer,
                                 name _enemy,
                                 if (_type == 1) then {"warheads"} else {"smokes"},
