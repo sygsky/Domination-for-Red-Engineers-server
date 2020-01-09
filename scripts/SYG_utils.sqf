@@ -538,27 +538,4 @@ SYG_isWoman = {
         false // unknown entry
 };
 
-//
-// call as follow: _local_unit = ["SoldierWB", _group, _pos] call SYG_createLocalUnit;
-//
-SYG_createLocalUnit = {
-    private ["_grp", "_unit"];
-    _grp = _this select 1;
-    if (typeName _grp != "OBJECT") then
-    {
-        if (_grp isKindOf "AllVehicles") exitWith
-        {
-            if (count crew _grp > 0) exitWith
-            {
-                _grp = group _grp;
-            };
-        };
-        // no group in parameters, crete ne group
-        _grp = call SYG_createEnemyGroup;
-    };
-    _unit = (_this select 0) createVehicleLocal (_this select 2);
-    [_unit] join _grp;
-    _unit
-};
-
 if (true) exitWith {};
