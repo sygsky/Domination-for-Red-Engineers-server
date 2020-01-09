@@ -87,6 +87,9 @@ _ai_side_unit = (
 _unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"];
 [_unit] join d_grp_caller;
 _unit setSkill 0.1;
+// set AA unit aiming skill to expert to help base AA defence
+if ( (secondaryWeapon _unit) in ["M_Stinger_AA", "ACE_Missile_Stinger", "ACE_FIM92round", "M_Strela_AA",  "ACE_Missile_Strela"])
+    then { _unit setSkill 0.9; };
 _unit setRank "CORPORAL"; // Why???
 _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x_deleteai.sqf";}];
 
