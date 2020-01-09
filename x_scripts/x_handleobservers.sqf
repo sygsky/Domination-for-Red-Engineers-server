@@ -124,7 +124,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 _dist
                             ];
 
-                            _nextaritime  = time + d_arti_reload_time + (random 20);
+                            _nextaritime  = time + d_arti_reload_time + (random 40);
                             [_pos_nearest,_type] spawn x_shootari;
                             _enemy_ari_available = false;
                             _near_targets        = nil;
