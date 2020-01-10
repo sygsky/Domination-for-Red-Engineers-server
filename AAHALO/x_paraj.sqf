@@ -29,7 +29,7 @@ if ( d_para_timer_base > 0 ) then { // pass time interval to jump
         {
             _miss_mins = ceil _miss_mins;
             _wait_score = (_miss_mins*(_miss_mins + 1)) / 2 ; //  Natural series 1,2,3,4,5 of an arithmetic progression is { SUM_{i=1}^{n}i=1+2+3+...+n={Frac {n(n+1)}{2}}}
-            if ( score player  < (_jump_score  + _wait_score)) exitWith {};
+            if ( score player  < (_jump_score  + _wait_score)) exitWith
             {
                 // "You need more points, now wait %1 minutes for a free jump (or %2 points), the jump itself requires another %3 points. You only have %4"
                 (format [localize "STR_SYS_608", _miss_mins, _wait_score, _jump_score, score player]) call XfHQChat; 
