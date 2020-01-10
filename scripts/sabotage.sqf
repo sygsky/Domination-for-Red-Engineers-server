@@ -10,7 +10,7 @@
 // global variable m_PIPEBOMBNAME  redefines pipe-bomb name, e.g. to "ACE_PipeBomb". Default value used is Arma standard "PipeBomb" (name always case-sensitive!!!)
 
 private ["_units", "_unit", "_shell_unit","_grp", "_leader", "_mags", "_no", "_cnt", "_obj", "_obj_pos","_pos", "_continue",
-        "_bombScript", "_i", "_objClassType", "_objTypesArr", "_debug", "_debug1","_fire","_time", "_msg"];
+        "_bombScript", "_i", "_objClassType", "_objTypesArr", "_debug", "_debug1","_fire","_time", "_msgPrev","_msg1"];
 
 if (!isServer) exitWith {};
 
@@ -102,11 +102,11 @@ if (isNil "m_PIPEBOMBNAME") then
 	m_PIPEBOMBNAME = "PipeBomb";
 	if ( _debug ) then { player globalChat format["PipeBomb name is %1",m_PIPEBOMBNAME]; };
 #ifdef __PRINT__
-	hint localize format["PipeBomb name is set to %1",m_PIPEBOMBNAME];
+	hint localize format["+++ PipeBomb name is set to %1",m_PIPEBOMBNAME];
 #endif	
 };
 
-_msg = "";
+_msgPrev = "";
 _continue = true;
 
 _objClassType = ""; // type of current target object
@@ -122,7 +122,7 @@ sleep (250 + random 100); // wait approximately 5 minutes before sabotage start
 _grp setBehaviour "AWARE";
 _grp setCombatMode "YELLOW";
 
-if ( _debug ) then { player globalChat format["sabotage.sqf: Start, group units count: %1", count units _grp]; };
+if ( _debug ) then { player globalChat format["+++ sabotage.sqf: Start, group units count: %1", count units _grp]; };
 #ifdef __PRINT__
     _cnt = 0;
     _cnt1 = 0;
@@ -130,7 +130,7 @@ if ( _debug ) then { player globalChat format["sabotage.sqf: Start, group units 
         if (m_PIPEBOMBNAME in (magazines _x)) then {_cnt = _cnt + 1;};
         if ( canStand _x) then {_cnt1 = _cnt1 + 1;};
     } forEach units _grp;
-	hint localize format["sabotage.sqf: Start, units in group %1, canStand %2, bombs in inventory %3", count units _grp, _cnt1, _cnt];
+	hint localize format["+++ sabotage.sqf: Start, units in group %1, canStand %2, bombs in inventory %3", count units _grp, _cnt1, _cnt];
 #endif	
 
 // do up to the last man
@@ -141,7 +141,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
     if (isNull _leader) exitWith
     {
 #ifdef __PRINT__
-        hint localize format["sabotage.sqf: leader is empty, grp units count %1, exit!", {alive _x}count units _grp];
+        hint localize format["--- sabotage.sqf: leader is empty, grp units count %1, exit!", {alive _x}count units _grp];
 #endif
     };
 	
@@ -152,9 +152,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	//++++++++++++++++++
 	// seek factories  +
 	//++++++++++++++++++
-	if ( _debug ) then 	{ player globalChat format["sabotage.sqf: Factories[s] found %1", count _no]; };
+	if ( _debug ) then 	{ player globalChat format["+++ sabotage.sqf: Factories[s] found %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE]; };
 #ifdef __PRINT__
-    hint localize format["sabotage.sqf: Factories[s] found %1", count _no];
+    hint localize format["+++ sabotage.sqf: Factories[s] found %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
 #endif
 
 	//--------------
@@ -197,14 +197,14 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
         if( _skip_sabotage ) exitWith
         {
 #ifdef __PRINT__
-			hint localize format["sabotage.sqf: Enemy %1 found at dist %2 m., factory sabotage skipped", typeOf _enemy, _enemy distance _leader];
+			hint localize format["+++ sabotage.sqf: Enemy %1 found at dist %2 m., factory sabotage skipped", typeOf _enemy, _enemy distance _leader];
 #endif
         };
 
 	    _obj = _no select _obj_pos; // define target to bomb
-		if ( _debug ) then { player globalChat format["sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ]; };
+		if ( _debug ) then { player globalChat format["+++ sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ]; };
 #ifdef __PRINT__
-		hint localize format["sabotage.sqf: units %1, tgt cnt %2, sel %3, type %4, z = %5", {alive _x} count (units _grp), count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
+		hint localize format["+++ sabotage.sqf: units %1, tgt cnt %2, sel %3, type %4, z = %5", {alive _x} count (units _grp), count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
 #endif	
 		
 		// wait until target destroyed and while group alive and there is any bomberman in it
@@ -253,9 +253,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				{
 					_shell_unit action ["eject", vehicle _shell_unit];
 					sleep 1.0;
-					if (_debug ) then { player globalChat "sabotage.sqf: shell unit ejected from vehicle"; };
+					if (_debug ) then { player globalChat "+++ sabotage.sqf: shell unit ejected from vehicle"; };
 #ifdef __PRINT__
-					hint localize "sabotage.sqf: shell unit ejected from vehicle";
+					hint localize "+++ sabotage.sqf: shell unit ejected from vehicle";
 #endif	
 				};
 				_leader = _grp call XfGetLeader;
@@ -275,9 +275,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				}
 				else
 				{
-					if (_debug ) then { player globalChat format["sabotage.sqf: No leader in grp, units count is %1", {alive _x} count units _grp]; };
+					if (_debug ) then { player globalChat format["+++ sabotage.sqf: No leader in grp, units count is %1", {alive _x} count units _grp]; };
 #ifdef __PRINT__
-					hint localize format["sabotage.sqf: No leader in grp, units count is %1", {alive _x} count units _grp];
+					hint localize format["+++ sabotage.sqf: No leader in grp, units count is %1", {alive _x} count units _grp];
 #endif	
 				};
 				
@@ -286,7 +286,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				sleep 0.2;
 
 				// bombing unit, position to bomb, return position (now current), debug on, user bomb name
-				if (_debug ) then { player globalChat (format["sabotage.sqf: Run bombing script with  unit %1 for obj at pos %2 on distance %3", name _unit, getPos _obj, round(_obj distance _shell_unit)]); };
+				if (_debug ) then { player globalChat (format["+++ sabotage.sqf: Run bombing script with  unit %1 for obj at pos %2 on distance %3", name _unit, getPos _obj, round(_obj distance _shell_unit)]); };
 
 				 // last boolean is (true) to put bombs to the center or (false) not 
                 _obj_prev_dmg = damage _obj; // current damage of targeted service
@@ -300,7 +300,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 //				_timeout = ([_shell_unit, _obj] call SYG_distance2D) + 60;
 				_timeout = (round (_shell_unit distance _obj)) + 60;
 #ifdef __PRINT__
-				hint localize format["sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (_grp call XfGetAliveUnits) + 1, round(_timeout)];
+				hint localize format["+++ sabotage.sqf: Run bombing script for  unit from grp of %1 unit[s], at timeout %2", (_grp call XfGetAliveUnits) + 1, round(_timeout)];
 #endif
                 _timeout = _time + _timeout;
 	
@@ -311,11 +311,11 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				
 				if ( _debug ) then
 				{
-					player globalChat format["sabotage.sqf: Bombing script finished with %1 after %2 second[s]", scriptDone _bombScript, round(time-_time)];
+					player globalChat format["+++ sabotage.sqf: Bombing script finished with %1 after %2 second[s]", scriptDone _bombScript, round(time-_time)];
 				};
 				
 #ifdef __PRINT__
-				hint localize format["sabotage.sqf: Bombing script finished with %1 after %2 second[s]", scriptDone _bombScript, round(time-_time)];
+				hint localize format["+++ sabotage.sqf: Bombing script finished with %1 after %2 second[s]", scriptDone _bombScript, round(time-_time)];
 #endif	
 
 				if ( (!scriptDone _bombScript) && (alive _shell_unit)) then
@@ -323,14 +323,14 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 					terminate _bombScript;
 					sleep 1;
 #ifdef __PRINT__
-					hint localize format["sabotage.sqf: DropScrip terminated after %1 seconds waiting, shell_unit dist %2", round(_timeout - _time), round(_shell_unit distance  _obj)];
+					hint localize format["--- sabotage.sqf: DropScrip terminated after %1 seconds waiting, shell_unit dist %2", round(_timeout - _time), round(_shell_unit distance  _obj)];
 #endif	
 				};
                 if ( damage _obj > _obj_prev_dmg ) then
                 {
                         [ "msg_to_user", "*", [["STR_SYS_SERVICE_DMG_1"]], 0, random 5 ] call  XSendNetStartScriptClient; // "One of the services of the base was damaged by saboteurs!"
 #ifdef __PRINT__
-					    hint localize "sabotage.sqf: One of the services of the base was damaged by saboteurs!";
+					    hint localize "+++ sabotage.sqf: One of the services of the base was damaged by saboteurs!";
 #endif
                 };
 				//==============================================
@@ -341,9 +341,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 					if ( (isNull _grp) || (({ alive _x } count units _grp) == 0)) then // try to find other active group
 					{
 					    _origGrp = _grp; // save current group to check where bomberman returned after script end
-						if (_debug ) then {player globalChat "sabotage.sqf: bomberman group is dissapeared, try to assign bomberman into near friendly group"};
+						if (_debug ) then {player globalChat "+++ sabotage.sqf: bomberman group is dissapeared, try to assign bomberman into near friendly group"};
 #ifdef __PRINT__
-						hint localize "sabotage.sqf: bomberman group is disappeared, try to assign bomberman into near friendly group";
+						hint localize "+++ sabotage.sqf: bomberman group is disappeared, try to assign bomberman into near friendly group";
 #endif	
 						_grp = [_shell_unit, SEARCH_OTHER_GROUP_DIST] call SYG_findNearestSideGroup; // find nearest friendly group in radious of 1000 meters
 						_continue = false;
@@ -354,15 +354,15 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 						if (_origGrp != _grp) then
 						{
 
-			    			if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to the same group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0))] };
+			    			if (_debug ) then { player globalChat format["+++ sabotage.sqf: bomberman joined to the same group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0))] };
 #ifdef __PRINT__
-		    				hint localize format["sabotage.sqf: bomberman joined to the same group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0))];
+		    				hint localize format["+++ sabotage.sqf: bomberman joined to the same group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0))];
 #endif	
 						}
 						else {
-    						if (_debug ) then { player globalChat format["sabotage.sqf: bomberman joined to other group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0)) ] };
+    						if (_debug ) then { player globalChat format["+++ sabotage.sqf: bomberman joined to other group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0)) ] };
 #ifdef __PRINT__
-	    					hint localize format["sabotage.sqf: bomberman joined to other group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0)) ];
+	    					hint localize format["+++ sabotage.sqf: bomberman joined to other group (%1 men, %2 m.) of his side ", {alive _x} count units _grp, round(_shell_unit distance (units _grp_ select 0)) ];
 #endif
 
 						};
@@ -373,9 +373,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 						if ( !(_shell_unit call SYG_ACEUnitUnconscious) ) then // unit can move
 						{
 							// no group found so put unit to its own fate
-							if (_debug ) then {player globalChat "sabotage.sqf: no group found, find some cover for an alone bomberman"};
+							if (_debug ) then {player globalChat "+++ sabotage.sqf: no group found, find some cover for an alone bomberman"};
 #ifdef __PRINT__
-							hint localize "sabotage.sqf: no group found, find some cover for an alone bomberman";
+							hint localize "+++ sabotage.sqf: no group found, find some cover for an alone bomberman";
 #endif	
 							
 							// TODO: send unit to the roof of any suitable building (towers, hangars, air terminal, some houses etc)
@@ -385,7 +385,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 							{
 							    _obj_pos = position _obj;
 #ifdef __PRINT__
-    							hint localize format ["sabotage.sqf: found enemy %1(%2) at pos %3", name _obj, typeOf _obj, _obj_pos];
+    							hint localize format ["+++ sabotage.sqf: found enemy %1(%2) at pos %3", name _obj, typeOf _obj, _obj_pos];
 #endif
 							}
 							else
@@ -408,7 +408,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
                                 // _ngb = [position _shell_unit,3,150] call SYG_nearestGoodHouse;
                                 // ... buildingPos _ngb;
 #ifdef __PRINT__
-    							hint localize "sabotage.sqf: cover not found, use FLAG/factory for it";
+    							hint localize "+++ sabotage.sqf: cover not found, use FLAG/factory for it";
 #endif
 								if ( !isNil "FLAG_BASE" ) then
 								{
@@ -422,11 +422,11 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 							_shell_unit setSpeedMode "FULL";
 							_shell_unit moveTo position _obj;
 #ifdef __PRINT__
-							hint localize "sabotage.sqf: unit is moving to cover";
+							hint localize "+++ sabotage.sqf: unit is moving to cover";
 #endif
 							waitUntil {	sleep 1.111; (unitReady _shell_unit) or (moveToFailed _shell_unit) or (!canStand _shell_unit) or (!alive _shell_unit) };
 #ifdef __PRINT__
-							hint localize "sabotage.sqf: unit completed move to cover";
+							hint localize "+++ sabotage.sqf: unit completed move to cover";
 #endif
 							_shell_unit setBehaviour "STEALTH";
 							_shell_unit setCombatMode "YELLOW";
@@ -434,7 +434,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 						else 
 						{ // do nothing as unit is nearly death
 #ifdef __PRINT__
-							hint localize "sabotage.sqf: (!canStand unit AND isNull group) so exit script";
+							hint localize "+++ sabotage.sqf: (!canStand unit && isNull group) so exit script";
 #endif	
 						};
 						_continue = false; // exit script ASAP as this was last unit in group
@@ -448,9 +448,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 			else // no unit with bomb found, so exit now
 			{
 			    // TODO: try to find bomb on dead bodies or somewhere else (MHQ, ammotrack, ammo boxes, rucksack[s] etc)
-				if (_debug ) then { player globalChat format["--sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp]; };
+				if (_debug ) then { player globalChat format["--- sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp]; };
 #ifdef __PRINT__
-				hint localize format["--sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp];
+				hint localize format["--- sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp];
 #endif	
 				_continue = false; // exit as no more bombs/men found
 			};
@@ -459,20 +459,20 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	} // if ( _obj_pos >= 0 ) then
 	else
 	{
-		if ( _debug ) then {player globalChat "--sabotage.sqf: No factories found, script is sleeping for 2-3 minutes"};
+		if ( _debug ) then {player globalChat "--- sabotage.sqf: No factories found, script is sleeping for 2-3 minutes"};
 #ifdef __PRINT__
 		if (alive _leader ) then
 		{
 		    _msg1 = [_leader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-		    if ( _msg1 != _msg) then
+		    if ( _msg1 != _msgPrev) then
 		    {
-    			hint localize format["--sabotage.sqf: No factories found, <group[%2] is at %1>, script is sleeping for 2-3 minutes", _msg1, count units _grp];
-    			_msg = _msg1;
+    			hint localize format["--- sabotage.sqf: No factories found, <group[%2] is at %1>, script is sleeping for 2-3 minutes", _msg1, count units _grp];
+    			_msgPrev = _msg1;
 		    };
 		}
 		else
 		{
-			hint localize format["--sabotage.sqf: No factories found, <group[%1] leader is absent>, script is sleeping for 2-3 minutes",count units _grp];
+			hint localize format["--- sabotage.sqf: No factories found, <group(%1) leader is absent>, script is sleeping for 2-3 minutes",count units _grp];
 		};
 #endif	
 	};
@@ -494,7 +494,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
             else
             {
 #ifdef __PRINT_FIRE__
-                hint localize format["sabotage.sqf: Update FireLit at %1", getPos _no];
+                hint localize format["+++ sabotage.sqf: Update FireLit at %1", getPos _no];
 #endif
             };
             _no setVariable ["fire_choke_time", time + FIRE_CHOKE_DELAY];
@@ -527,9 +527,9 @@ if ( !isNil "d_on_base_groups") then
 };
 
 if ( _debug ) then
-	{player globalChat "sabotage.sqf: --- Exiting sabotage group script ---";};
+	{player globalChat "--- sabotage.sqf: --- Exiting sabotage group script ---";};
 #ifdef __PRINT__
-	hint localize "sabotage.sqf: --- Exiting sabotage group script ---";
+	hint localize "--- sabotage.sqf: --- Exiting sabotage group script ---";
 #endif	
 
 if (true) exitWith 
