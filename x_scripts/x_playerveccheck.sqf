@@ -40,8 +40,9 @@ while { true } do {
 
 	// play some special sound for woman
 	{
-	    if ( (_x != player)  && (_x call SYG_isWoman) ) exitWith { _x say (call SYG_getFemaleFuckSpeech) };
-	} forEach crew _veh;
+	    // 9 times from 10 any of woman in vehicle will fuck you
+	    if ( (_x call SYG_isWoman) && (random 10 > 1)) exitWith { _x say (call SYG_getFemaleFuckSpeech) };
+	} forEach ((crew _veh) - [player]);
 
 	if ((typeOf _veh) != "ACE_Bicycle") then
 	{
