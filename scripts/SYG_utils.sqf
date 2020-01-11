@@ -537,5 +537,18 @@ SYG_isWoman = {
 		};
         false // unknown entry
 };
+//
+// Reveal vehicle to all players
+//  call: _vehicle call SYG_revealAllPlayers;
+//
+SYG_revealToAllPlayers = {
+    private ["_player"];
+    if (typeName _this != "OBJECT") exitWith{}; //illegal parameter, exit
+    _side = side player;
+    {
+        _player = call (SYG_players_arr select _x); // object
+        if (!(isNull _player)) then { _player reveal _this };
+    } forEach SYG_players_arr;
+};
 
 if (true) exitWith {};

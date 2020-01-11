@@ -190,7 +190,8 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                             Attached_Vec = objNull;
 
                             // reveal to all players new position of MHQ. It can help!
-                            ["revealVehicle", _nearest] call XSendNetStartScriptClient;
+                            //["revealVehicle", _nearest] call XSendNetStartScriptClient;
+                            _nearest call SYG_revealToAllPlayers;
 
                             // send information to all clients about new position of well known lifted vehicle
                             switch (_nearest) do {

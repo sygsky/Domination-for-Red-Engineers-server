@@ -875,12 +875,13 @@ XHandleNetStartScriptClient = {
                 };
             };
         };
+/*
          // reveal vehicle (MHQ in main) to all players
         case "revealVehicle":
         {
             player reveal (_this select 1);
         };
-
+*/
 
 //========================================================================================================== END OF CASES
 
