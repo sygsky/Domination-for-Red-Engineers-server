@@ -539,7 +539,7 @@ SYG_isWoman = {
 };
 //
 // Reveal vehicle to all players
-//  call: _vehicle call SYG_revealAllPlayers;
+//  call: _vehicle call SYG_revealToAllPlayers;
 //
 SYG_revealToAllPlayers = {
     private ["_player"];
