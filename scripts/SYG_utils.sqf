@@ -544,7 +544,6 @@ SYG_isWoman = {
 SYG_revealToAllPlayers = {
     private ["_player"];
     if (typeName _this != "OBJECT") exitWith{}; //illegal parameter, exit
-    _side = side player;
     {
         _player = call (SYG_players_arr select _x); // object
         if (!(isNull _player)) then { _player reveal _this };
