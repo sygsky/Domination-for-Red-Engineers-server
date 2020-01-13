@@ -1309,6 +1309,9 @@ STR_GRU_53_MIMG,helicopter,Helikopter,вертолёт
 STR_GRU_53_KA,helicopter,Helikopter,вертолёт
 STR_GRU_53_SU,jet,jet,самолёт
 
+STR_GRU_54,"One or more enemy pilots have escaped and are on their way to join their troops","Ein oder mehrere feindliche Piloten sind entkommen und sind auf dem Weg, Ihre Truppen zu verbinden.","Один или более пилотов спаслись и следуют к своим."
+STR_GRU_54_1,"You can arrest them, and on resist You know what to do","Sie können Sie verhaften, und auf widerstehen Sie wissen, was zu tun ist","Их можно арестовать, а если будут сопротивляться, то Вы знаете, что делать"
+
 STR_GRU_TELE_NUM,4,4,4
 STR_GRU_TELE_0,"Well GRU-portal they invented","Gut GRU-portal, die Sie erfanden","Ну и ГРУ-портал..."
 STR_GRU_TELE_1,"What the stuff is...","Was das Zeug...","Что за дурь..."
