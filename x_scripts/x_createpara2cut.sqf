@@ -287,7 +287,7 @@ _chopper flyInHeight 200;
 #ifdef	__DEBUG_PRINT__
         _list = [];
         {
-            _list = _list + [count units _x];
+            _list = _list + [{alive _x} count units _x];
         } forEach d_on_base_groups;
 		hint localize format["x_createpara2.sqf: d_on_base_groups counts %1", _list];
 		_list = nil;

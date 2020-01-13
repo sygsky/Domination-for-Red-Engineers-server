@@ -523,18 +523,31 @@ SYG_isWoman = {
 		if (typeName _this == "ARRAY") then {_this = _this select 0};
 		if (typeName _this == "OBJECT") then {_this = typeOf _this};
 		if (typeName _this != "STRING") exitWith {false};
-		_entry = configfile >> "CfgVehicles" >> _this;
-		if (isNumber _entry >> "woman") exitWith
+		if (_this isKIndOf "MarianQuandt") exitWith {true}; // She is not woman in Arma-1
+		_entry = configFile >> "CfgVehicles" >> _this;
+		if ( isNumber (_entry >> "woman") )  exitWith
 		{
-            if (getNumber(_entry >> "woman") > 0) exitWith { true };
+            if ( getNumber(_entry >> "woman")  > 0) exitWith { true };
             false
 		};
-		if (isText _entry >> "woman") exitWith
+		if ( isText (_entry >> "woman") ) exitWith
 		{
-            if (toLower(getText(_entry >> "woman")) == "true") exitWith {true};
+            if ( toLower(getText(_entry >> "woman")) == "true" ) exitWith {true};
             false;
 		};
         false // unknown entry
+};
+//
+// Reveal vehicle to all players
+//  call: _vehicle call SYG_revealToAllPlayers;
+//
+SYG_revealToAllPlayers = {
+    private ["_player"];
+    if (typeName _this != "OBJECT") exitWith{}; //illegal parameter, exit
+    {
+        _player = call (SYG_players_arr select _i); // object
+        if (!(isNull _player)) then { _player reveal _this };
+    } forEach SYG_players_arr;
 };
 
 if (true) exitWith {};

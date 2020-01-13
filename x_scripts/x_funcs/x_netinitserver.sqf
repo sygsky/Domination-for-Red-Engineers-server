@@ -283,7 +283,7 @@ XHandleNetStartScriptServer = {
 
 			// TODO: add here more messages for the 1st greeting to user
 
-			["msg_to_user", arg(1), _msg_arr, 0, 30] call XSendNetStartScriptClient;
+			["msg_to_user", arg(1), _msg_arr, 5, 10] call XSendNetStartScriptClient;
 			sleep 1.0;
 			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
@@ -345,7 +345,7 @@ XHandleNetStartScriptServer = {
 		        {
 		            if (_veh in SYG_owner_active_air_vehicles_arr) exitWith {};  // already in
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr + [ _veh ]; // add new vehicle
-		            hint localize format["--- ""veh_info"": %1 added to list", _veh]
+		            hint localize format["+++ ""veh_info"": %1 added to list[%2]", typeOf _veh, count SYG_owner_active_air_vehicles_arr];
 		        };
 		        case "off" : {SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ] }; // remove vehicle
 		        default {hint localize format["--- ""veh_info"": illegal params %1", _params]};

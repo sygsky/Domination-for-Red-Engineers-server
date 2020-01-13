@@ -54,7 +54,7 @@ X_XMarkerPlayers = {
 	    _markers_changed = false;
 	    {
             _as = d_player_entities select _x; // marker name
-            _ap = call (SYG_players_arr select _x); // object
+            _ap = call (SYG_players_arr select _i); // object
             if ( isPlayer _ap) then
             {
                 if ( alive _ap ) then

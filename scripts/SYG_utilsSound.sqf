@@ -22,13 +22,19 @@ SYG_lastPlayedSoundItem = ""; // last played music/sound item
 SYG_deathCountCnt = 0;
 
 SYG_checkLastSoundRepeated= {
-    _item = RANDOM_ARR_ITEM(_this);
-    _cnt = count _this;
-    if ( _cnt > 1) then
+    private ["_item","_ind","_ind0"];
+    _ind = floor(random(count _this));
+    _item = _this select _ind;
+    if ( count _this > 1 ) then
     {
-        while { (str(_item) == SYG_lastPlayedSoundItem) && _cnt > 0} do {_item = RANDOM_ARR_ITEM(_this); _cnt = _cnt -1;};
-        SYG_lastPlayedSoundItem = str(_item);
+        if ( str(_item) == SYG_lastPlayedSoundItem ) then
+        {
+            _ind0 = floor( random( ( count _this ) - 1 ) );
+            if ( _ind0 >= _ind ) then { _ind0  = _ind0 + 1 };
+            _item = _this select _ind0;
+        };
     };
+    SYG_lastPlayedSoundItem = str(_item); // store current sound
     _item
 };
 
@@ -80,7 +86,7 @@ SYG_defeatTracks =
     ["ATrack9","ATrack10","ATrack14"],
     ["ATrack16","ATrack17","ATrack18"],
     ["ATrack20","ATrack21","ATrack22","thetrembler"],
-    ["arroyo","ATrack15","ATrack19"],
+    ["arroyo","ATrack15","ATrack19","sinbad_baghdad"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
@@ -90,7 +96,10 @@ SYG_defeatTracks =
 
 ];
 
-SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
+// Play music form partial track (Arma-1 embed music and some long custom sounds may be)
+// call as:
+// [name, start, length (seconds)] call __SYG_playMusicPartialTrack;
+__SYG_playMusicPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -147,12 +156,16 @@ SYG_MedievalDefeatTracks =
      "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17",
      "village_consort"
     ];
-
+SYG_waterDefeatTracks =
+    [
+        "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8"
+    ];
 
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
-// call: _unit call SYG_playRandomDefeatTrackByPos; // or
+// call: _unit call SYG_playRandomDefeatTrackByPos;
+// or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
@@ -215,18 +228,6 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_MedievalDefeatTracks call SYG_playRandomTrack;
     };
 
-    _found = true;
-    switch (_this call SYG_whatPartOfIsland) do
-    {
-        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
-        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
-        default  // Corazol // central Sahrani
-        {
-            _found = false;
-        };
-    };
-    if ( _found ) exitWith {};
-
     if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
         SYG_islandDefeatTracks call SYG_playRandomTrack;
@@ -237,8 +238,16 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
     };
 
+    // death in water
+    if (surfaceIsWater _this) exitWith { SYG_waterDefeatTracks call SYG_playRandomTrack};
+
     // no special conditions found, play std music now
-    call SYG_playRandomDefeatTrack;
+    switch (_this call SYG_whatPartOfIsland) do
+    {
+        case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
+        case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
+        default  { call SYG_playRandomDefeatTrack; };                   // Corazol // central Sahrani
+    };
 };
 
 // OFP music only
@@ -289,7 +298,7 @@ SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[2
 
 //
 // Plays random track or track part depends on input array kind (see below)
-// This procedure use only playMusic operator and playe items from CfgMisic section
+// NOTE: This procedure use only playMusic operator and player items from CfgMisic sections
 //
 // call: _arr call SYG_playRandomTrack;
 // where _arr may be:
@@ -372,9 +381,9 @@ SYG_playRandomTrack = {
             if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
+                hint localize format["__SYG_playMusicPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
 #endif
-                [arg(0),argp(_trk,0),argp(_trk,1)] spawn SYG_playPartialTrack;
+                [arg(0),argp(_trk,0),argp(_trk,1)] spawn __SYG_playMusicPartialTrack;
             }
             else
             {
@@ -463,15 +472,22 @@ SYG_getMusicName = {
 };
 
 SYG_getSuicideScreamSound  = {
-    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 13))};  // 0-12
+    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 14))};  // 0-13
     SYG_suicideScreamSound
 };
 
 /**
-    Plays mysic for weather forecast message
+ *  Plays mysic for the next weather forecast act
  */
 SYG_playWeatherForecastMusic = {
- ["manchester_et_liverpool", 0, 9.465] call SYG_playPartialTrack;
+ [
+    ["manchester_et_liverpool", 0, 9.465],
+    ["manchester_et_liverpool", 10.092, 9.182],
+    ["manchester_et_liverpool", 18.42, 8.01],
+    ["manchester_et_liverpool", 26.74, 7.27],
+    ["manchester_et_liverpool", 34.006, 11.215],
+    ["manchester_et_liverpool", 45.221, -1]
+ ] call SYG_playRandomTrack;
 };
 
 if (true) exitWith {};

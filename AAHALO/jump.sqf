@@ -1,7 +1,8 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
+private ["_StartLocation","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime"];
 _StartLocation = _this select 0;
 _paratype      = _this select 1;
-_full_score    = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
+_jump_score    = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
 
 hint localize format["+++ jump.sqf: _this = %1", _paratype];
 
@@ -72,10 +73,10 @@ if (__AIVer) then {
 waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (vehicle player) != player || (time - _startTime) >= 20};
 
 // ## 312
-if ( _paratype == "" && _full_score > 0) then
+if ( _paratype == "" && _jump_score > 0) then
 {
-    format[localize "STR_SYS_609_2",_full_score] call XfHQChat; // "You got your points for jump (%1) back for this stupid episode."
-    player addScore _full_score;
+    format[localize "STR_SYS_609_2",_jump_score] call XfHQChat; // "You got your points for jump (%1) back for this stupid episode."
+    player addScore _jump_score;
 };
 
 if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound

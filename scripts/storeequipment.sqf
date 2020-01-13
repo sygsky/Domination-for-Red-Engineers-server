@@ -57,7 +57,7 @@ switch (toUpper arg(3)) do
         _args = if ( _equip == "" )
                     then  { ["STR_SYS_613"]} // Record is wiped off
                     else {["STR_SYS_611"] }; // Record is stored
-        ["msg_to_user", "", [_args]] call XHandleNetStartScriptClient; // message output
+        ["msg_to_user", "", [_args]] call SYG_msgToUserParser; // message output
 //        hint localize format["--- scripts/storeequipment.sqf: msg is %1", args ];
 
     };

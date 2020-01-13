@@ -112,7 +112,7 @@ STR_SYS_33,"%1 Respawn %2 is available","%1 Respawn %2 verfügbar","%1 моби�
 STR_SYS_34,"Teleport","Teleport","Телепорт"
 STR_SYS_35,"Lift vehicle","Fahrzeug anheben","Поднять технику"
 STR_SYS_36,"Drop vehicle","Drop-fahrzeug","Сбросить технику"
-STR_SYS_37,"Vehicle is lifted...","Fahrzeug wird angehoben...","Техника поднята вертолётом..."
+STR_SYS_37,"Vehicle (%1) is lifted...","Fahrzeug (% 1) mit Hubschrauber gehoben ...","Техника (%1) поднята вертолётом..."
 STR_SYS_38,"Overwhelming vehicle...","Sehr schwere Maschine...","Техника неподъёмна..."
 STR_SYS_39,"Vehicle was dropped...","Fahrzeug ist gelöscht...","Техника сброшена..."
 
@@ -502,9 +502,10 @@ STR_SYS_256_HM_1,"A six-pack, being fetched to maintenance man, magically turns 
 STR_SYS_256_HM_2,"Wanna this miracle to happen again? Bring six-pack to admin's den!","Bringen Sie die Schachtel des Radiergummis in die Erdbeere des Verwalters!","Отнесите ящик тушёнки в землянку администратора!"
 STR_SYS_256_HM_3,"As soon as  technical stuff saw WHO has arrived at the helipad, spreading with damnations and kicking empty ammo boxes on the way, they instantly rushed for the second ammo set","Zu sehen, WER kam in der service-station, technisches Personal verflucht, aber ging für die zweite Munition","Увидев, КТО прилетел к ним на обслуживание, техники выматерились и побрели за вторым БК."
 
-STR_SYS_256_STOP_NUM,2,2,2
+STR_SYS_256_STOP_NUM,3,3,3
 STR_SYS_256_STOP_0,"I'm sorry, but there are no technicians, they may be asleep","Es tut mir Leid, aber es gibt keine Techniker, Sie können schlafen","Увы, техников мало, и они спят"
-STR_SYS_256_STOP_0,"It seems that there are no technicians, we will have to ship everything manually","Es scheint, dass es keine Techniker gibt, müssen Sie alles manuell herunterladen","Похоже, техников не дождаться, придётся самому грузить ракеты"
+STR_SYS_256_STOP_1,"It seems that there are no technicians, we will have to ship everything manually","Es scheint, dass es keine Techniker gibt, müssen Sie alles manuell herunterladen","Похоже, техников не дождаться, придётся самому грузить ракеты"
+STR_SYS_256_STOP_3,"Up your ass! Yeez! Rats! The political officer is coming!","In deinen Arsch! Yeez! Ratten! Der politische Offizier kommt!","Атас! Замполит идёт!"
 
 STR_SYS_257,"Refuelling...","Tanken...","Заправка..."
 STR_SYS_257_1,"Refuelling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","Заправка %1 прервана, шланг оторвался"
@@ -817,6 +818,36 @@ STR_SYS_1186,"Air taxi leaving now, have a nice day !!!","Luft-taxi jetzt verlas
 STR_SYS_1200,"Respawn with same weapons after death: ","Respawn mit gleichen Waffen nach dem Tod: ","Респаун с тем же оружием: "
 STR_SYS_1201,"Maximum number of AI that can get recruited: ","Maximale Anzahl von KI, die rekrutiert werden kann : ","Максимальное кол-во АИ: "
 
+STR_SYS_1202,"Player points that get subtracted after death: ","Spielerpunkte, die nach dem Tod abgezogen werden: ","Очков вычитается за смерть: "
+
+STR_SYS_1203,"Points an engineer needs to service a vehicle: ","Punkte, die ein Ingenieur braucht, um ein Fahrzeug zu warten: ","Очков необходимо инженеру для обслуживания техники: "
+STR_SYS_1204,"Points an engineer gets for servicing:\n","Punkte, die ein Ingenieur für die Wartung bekommt:\n","Инженер получает очков за ремонт:\n"
+STR_SYS_1204_1,"Air vehicle :","Luftfahrttechnik: ","Авиатехника: "
+STR_SYS_1204_2,", armored vehicles: ",", Gepanzerte Fahrzeuge: ",", бронетехника: "
+STR_SYS_1204_3,", motor transport: ",", Kraftverkehr: ",", автотранспорт: "
+STR_SYS_1204_4,"Points an engineer gets for servicing other: ","Punkte, die ein Ingenieur für die Wartung anderer bekommt: ","Инженер получает очков за ремонт (прочее): "
+STR_SYS_1204_5,"Points an engineer needs to rebuild the support buildings at base: ","Punkte, die ein Ingenieur braucht, um die stützgebäude an der Basis wieder aufzubauen: ","Очков списывается с инженера за ремонт сервисов на базе: "
+
+STR_SYS_1205,"Points an artillery operator needs for a strike: ","Punkte, die ein Artillerie-operator für einen Streik braucht: ","Очков списывается за вызов одного артиллерийского залпа: "
+STR_SYS_1206,"Points needed to recuruit one AI soldier: ","Punkte benötigt, um einen KI-Soldaten recuruit: ","Очков за призыв одного АИ:"
+STR_SYS_1207,"Points needed to call in an air taxi: ","Punkte benötigt, um in einem Lufttaxi zu rufen: ","Очков за вызов воздушного такси: "
+
+STR_SYS_1208,"Points needed for AAHALO parajump: ","Punkte für AAHALO parajump benötigt: ","Очков необходимо для десантирования с базы: "
+STR_SYS_1209,"Points needed to create a vehicle at a MHQ: ","Punkte benötigt, um ein Fahrzeug an einem MHQ zu erstellen: ","Очков необходимо для выгрузки техники из мобильной базы: "
+STR_SYS_1210,"Points that get subtracted for creating a vehicle at a MHQ: ","Punkte, die subtrahiert werden, um ein Fahrzeug an einem MHQ zu erstellen: ","Очков вычитается за выгрузку техники из мобильного респауна: "
+
+STR_SYS_1211,"Points needed to build a NG nest: ","Punkte benötigt, um ein MG nest zu bauen: ","Очков необходимо для развёртывания пулемётного гнезда: "
+STR_SYS_1212,"Points needed to call in an air drop: ","Punkte, die benötigt werden, um einen Lufttropfen einzuholen: ","Очков необходимо для вызова снабжения: "
+STR_SYS_1213,"Points for transporting other players: ","Punkte für den Transport anderer Spieler: ","Очков за транспортировку игроков: "
+STR_SYS_1214,"Rank needed to fly the wreck lift chopper: ","Rang benötigt, um den Wracklift-Hubschrauber zu fliegen:","Звание, разрешающее пилотирование вертолёта для переноски подбитой техники: "
+
+STR_SYS_1215,"Weapons limited: ","Waffen limitiert: ","Ограничение вооружение: "
+
+STR_SYS_1216,"Air drop radius (0 = exact position): ","Lufttropfenradius (0 = genaue Position):","Радиус сброса снабжения (0 = точная позиция): "
+STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / Auftanken / Reparieren: ","Время цикла перезарядки/заправки/ремонта: "
+
+STR_SYS_1218,"Enemy air vehicles locked: ","Feindliche Luftfahrzeuge gesperrt:","Вражеская авиатехника блокирована: "
+
 STR_SYS_SERVICE_DMG,"Service %1 is damaged","Service %1 beschädigt","Сервис %1 повреждён!"
 STR_SYS_SERVICE_DMG_1,"One of the services of the base was damaged by saboteurs!","Eine der Dienstleistungen der Basis beschädigt von saboteurs!","Один из сервисов на базе был повреждён диверсантами!"
 
@@ -861,7 +892,7 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Верт. ск.:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title"",""comrade_my""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen"",""comrade_my""", """ahead_friends"",""comrade_my"",""Letyat_perelyotnye_pticy_2nd"",""comrade_my"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title"",""tovarich_moy""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen"",""tovarich_moy""", """ahead_friends"",""tovarich_moy"",""Letyat_perelyotnye_pticy_2nd"",""tovarich_moy"""
 STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """podolinam"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
@@ -1190,6 +1221,22 @@ STR_SET_13,"Mando missiles pack: ","Mando missiles pack: ","Пак Mando missile
 STR_SET_14,"Built-in ruksack: ","Eingebauter ruksack: ","Встроенный рюкзак: "
 STR_SET_15,"Enemy armored vehicles blocked: ","Feindliche Gepanzerte Fahrzeuge blockiert: ","Вражеская бронетехника блокирована: "
 STR_SET_16,"Enemy cars blocked: ","Feindliche Autos blockiert: ","Вражеский транспорт заблокирован: "
+STR_SET_17,"Enemy air vehicles blocked: ","Feindliche Luftfahrzeuge gesperrt: ","Вражеская авиатехника блокирована: "
+STR_SET_18,"Chopper hud on: ","Head-Up-Display im Helikopter: ","Проекционный дисплей в вертолётах: "
+STR_SET_19,"Show chopper welcome message: ","Chopper-Begrüßungsnachricht anzeigen: ","Показывать приветствие в вертолётах: "
+STR_SET_20,"Show vehicle welcome message: ","Fahrzeug-Begrüßungsnachricht anzeigen:","Показывать приветствие в технике: "
+STR_SET_21,"Island repair stations can repair vehicles: ","Inselreparaturstationen können Fahrzeuge reparieren: ","Наземные ремонтные станции работают: "
+STR_SET_22,"Teamstatus Dialog enabled: ","Teamstatus-Dialog aktiviert: ","Меню статус включено: "
+STR_SET_23,"Time a player has to wait until he can create a new vehicle at a MHQ: ","Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet: ","Время между выгрузками техники из мобильного респауна: "
+STR_SET_24,"Able to fly: ","Able to fly: ","Им разрешено летать: "
+STR_SET_25,"Maximum number of ammoboxes: ","Maximale Anzahl von Ammoboxen: ","Ящики снабжения: максимум "
+STR_SET_25_1,", currently in use: ",", aktuell in Verwendung: ",", активированы: "
+STR_SET_25_2,"Time to wait until an ammobox can be dropped/loaded again: ","Wartezeit, bis eine Ammobox wieder geladen/werden kann: ","Время ожидания между загрузкой/выгрузкой ящиков: "
+STR_SET_26,"Maximum number of statics per engineer truck: ","Maximale Anzahl statischer Wepons pro Ingenieur-LKW: ","Максимальное кол-во статических объектов в грузовике военного инженера: "
+STR_SET_27,"Vehicles able to load ammoboxes: ","Fahrzeuge, die Ammoboxen laden können:","Транспорт, способный загружать ящики снабжения: "
+STR_SET_28,"Player respawn delay (in seconds): ","Verzögerung beim Respawn des Spielers (in Sekunden): ","Время возрождения (в сек.): "
+STR_SET_29,"Player respawn dialog after death: ","Spieler Respawn Dialog nach dem Tod: ","Диалог выбора места возрождения после смерти: "
+
 
 STR_GRU_1,"GRU","GRU","ГРУ"
 STR_GRU_2,"deliver the map","liefern Sie die Karte","доставить карту"
@@ -1262,6 +1309,9 @@ STR_GRU_53_MIMG,helicopter,Helikopter,вертолёт
 STR_GRU_53_KA,helicopter,Helikopter,вертолёт
 STR_GRU_53_SU,jet,jet,самолёт
 
+STR_GRU_54,"One or more enemy pilots have escaped and are on their way to join their troops","Ein oder mehrere feindliche Piloten sind entkommen und sind auf dem Weg, Ihre Truppen zu verbinden.","Один или более пилотов спаслись и следуют к своим."
+STR_GRU_54_1,"You can arrest them, and on resist You know what to do","Sie können Sie verhaften, und auf widerstehen Sie wissen, was zu tun ist","Их можно арестовать, а если будут сопротивляться, то Вы знаете, что делать"
+
 STR_GRU_TELE_NUM,4,4,4
 STR_GRU_TELE_0,"Well GRU-portal they invented","Gut GRU-portal, die Sie erfanden","Ну и ГРУ-портал..."
 STR_GRU_TELE_1,"What the stuff is...","Was das Zeug...","Что за дурь..."
@@ -1318,8 +1368,8 @@ STR_ACE_VDN_SU34,"Su-34 FAB500,KAB500,S8","Su-34 FAB500,KAB500,S8","Су-34 ФА
 STR_ACE_EJECT0,"<t color='#FF0000'>Eject</t>","<t color='#FF0000'>Auswerfen</t>","<t color='#FF0000'>Катапультироваться</t>"
 STR_ACE_EJECT1,"<t color='#FF0000'>Jump Out</t>","<t color='#FF0000'>Springen</t>","<t color='#FF0000'>Выпрыгнуть</t>"
 STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
-STR_WEST,Enemies,Feinde,Враги
-STR_EAST,Comrades,Kameraden,Товарищи
+STR_WEST,NATO,NATO,НАТО
+STR_EAST,Comrades,Kameraden,Наши
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
@@ -1330,9 +1380,6 @@ STR_ACE_SYS_RUCK_WEIGHT,"Weight:","Gewicht:","Вес:"
 STR_ACE_SYS_RUCK_SIZE,"Capacity:","Kapazitat:","Ёмкость:"
 STR_ACE_SYS_RUCK_PACKSIZE,"Pack size:","Pack size:","Объём упак.:"
 
-STR_EAST,"OPFOR","OPFOR","Советы"
-STR_WEST,"BLUFOR","BLUFOR","Амеры"
-STR_GUERRILA,"Independent","Unabhängig","Партизаны"
 STR_NAME_BCROSS,"Border Crossing","Grenzübergang","Погран. переход"
 STR_NAME_ROCKAREA,"Rock Area","Felsengebiet","Скалы"
 STR_NAME_VEGB,"Vegetation Broadleaf","Vegetation Laub","Широколиственнsq лес"

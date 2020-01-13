@@ -103,7 +103,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                             //hint localize format["+++ x_helilift.sqf: vehicle %1 lifted", typeOf _nearest];
                             Attached_Vec = _nearest;
                             _release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
-                            [_vehicle, localize "STR_SYS_37"] call XfVehicleChat; //"Техника поднята вертолётом..."
+        					[_vehicle, format[localize "STR_SYS_37",[typeOf (_vehicle),0] call XfGetDisplayName]] call XfVehicleChat;
 
                             switch (_nearest) do {
                                 case MRR1: {
@@ -188,6 +188,10 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                             _nearest setVelocity [0,0,0];
                             if ( isEngineOn _nearest ) then { _nearest engineOn false; };
                             Attached_Vec = objNull;
+
+                            // reveal to all players new position of MHQ. It can help!
+                            //["revealVehicle", _nearest] call XSendNetStartScriptClient;
+                            _nearest call SYG_revealToAllPlayers;
 
                             // send information to all clients about new position of well known lifted vehicle
                             switch (_nearest) do {

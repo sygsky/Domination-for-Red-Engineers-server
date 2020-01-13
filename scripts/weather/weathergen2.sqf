@@ -1,6 +1,8 @@
 // weathergen2.sqf - server cloud areas trajectory planner. 
 // TODO: add sandstorm on desert regions only (south part of Sahrani) with Y <= 7500
-private ["_world_center", "_y", "_x_max", "_x_start", "_y_start", "_y_ran", "_x_fog_start", "_x_fog_ran", "_y_fog_ran", "_rainy_helper", "_rainy2_helper", "_rainy3_helper", "_foggy_helper", "_counter", "_acc", "_randx", "_randy", "_fogdx","_fogdy"];
+private ["_world_center", "_y", "_x_max", "_x_start", "_y_start", "_y_ran", "_x_fog_start", "_x_fog_ran", "_y_fog_ran",
+"_rainy_helper", "_rainy2_helper", "_rainy3_helper", "_foggy_helper", "_counter", "_acc", "_randx", "_randy", "_fogdx",
+"_fogdy","_forecast_change"];
 
 #include "x_macros.sqf"
 
@@ -60,24 +62,31 @@ _acc = 0;
 _day = date select 2; // current day
 
 while {true} do {
+    _forecast_change = false;
 	if (X_MP) then {
 	    if ((call XPlayersNumber) == 0) then
 	    {
     		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	    };
 	};
-	__DEBUG_NET("weathergen2.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("weathergen2.sqf",(call XPlayersNumber))
 	if ((_rainy_helper select 0) > _x_max) then {
+	    // shift rightmost rain pos to leftmost one
+	    _forecast_change = true; // player can be interested in rain area restarted
 		_randx = _x_start;
 		_randy = _y_start+(random _y_ran);
 		_rainy_helper = [_randx,_randy,0];
 	};
 	if ((_rainy2_helper select 0) > _x_max) then {
+	    // shift rightmost rain pos to leftmost one
+	    _forecast_change = true;
 		_randx = _x_start;
 		_randy = _y_start+(random _y_ran);
 		_rainy2_helper = [_randx,_randy,0];
 	};
 	if ((_rainy3_helper select 0) > _x_max) then {
+	    // shift rightmost rain pos to leftmost one
+	    _forecast_change = true;
 		_randx = _x_start;
 		_randy = _y_start+(random _y_ran);
 		_rainy3_helper = [_randx,_randy,0];
@@ -122,6 +131,10 @@ while {true} do {
 		x_weather_array = [_rainy_helper,_rainy2_helper,_rainy3_helper];
 		if (d_weather_fog) then {x_weather_array = x_weather_array + [_foggy_helper];};
 		["x_weather_array",x_weather_array] call XSendNetVarClient;
+		if (_forecast_change) then
+		{
+		    // todo : send info to client to print info on forecast changed
+		};
 		_acc = 0;
 	};
 	

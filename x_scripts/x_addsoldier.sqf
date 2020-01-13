@@ -87,20 +87,23 @@ _ai_side_unit = (
 _unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"];
 [_unit] join d_grp_caller;
 _unit setSkill 0.1;
+// set AA unit aiming skill to expert to help base AA defence
+if ( (secondaryWeapon _unit) in ["M_Stinger_AA", "ACE_Missile_Stinger", "ACE_FIM92round", "M_Strela_AA",  "ACE_Missile_Strela"])
+    then { _unit setSkill 0.9; };
 _unit setRank "CORPORAL"; // Why???
 _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x_deleteai.sqf";}];
 
 #ifdef __ACE__
 if (d_own_side == "EAST") then
 {
-    if (_ai_side_unit != "ACE_SoldierEMedicWoman_VDV") then
+    if (_ai_side_unit call SYG_isWoman) then
     {
-        _identity =  format["Rus%1", (floor (random 5)) + 1];
+        _identity = "Irina";
+        _unit say (call SYG_getFemaleFuckSpeech);
     }
     else
     {
-        _identity = "Irina";
-        hint localize format["+++ AI setIdentity ""Irina""", _identity];
+        _identity =  format["Rus%1", (floor (random 5)) + 1];
     };
     _unit setIdentity _identity; // there are only 5 russina voice in the ACE
     // TODO: test if russian voice is heard on clients. May be it is possible to setIdentity only for local units

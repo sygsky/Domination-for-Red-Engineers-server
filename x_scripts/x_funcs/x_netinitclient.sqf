@@ -9,6 +9,152 @@
 	(_this select 1) call XHandleNetVar;
 };
 
+// this procedure parse and processs "msg_to_user" server command or compound client message
+// In any message to user, param numbers are:
+//              1,                      2,                 3,                       4,              5,            6,           7
+// ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
+//
+// Offset in command array are as follow:
+// 0:"msg_to_user": identifier for command, may be any
+// 1: player name or "" or "*" or vehicle to inform crew only, or group to inform units only. Must be present!
+// 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
+// 3: _delay_between_messages is seconds number to sleep between multiple messages;
+// 4: _initial_delay is seconds before first message show;
+// 5: no_title_msg if true - no title shown, else shown if false or "" empty string;
+// 6: sound_name is the name of the sound to play with first message show on 'say' command;
+//
+// msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
+// msg additionally displayed as title in the middle of the screen
+
+SYG_msgToUserParser =
+{
+    private [ "_msg_arr","_msg_res","_name","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
+     "_msg_target_found","_ind"];
+    _name = _this select 1;
+    _msg_target_found = false;
+    _vehicle_chat = false;
+
+    // hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
+    if  (typeName _name == "ARRAY") then
+    {
+        if ( count _name == 0) then {_name = "";}
+        else
+        {
+            _ind = _name find (name player);
+            if ( _ind >= 0) then
+            {
+                _name = name player;
+            }
+            else
+            {
+                _name = _name select 0;
+            };
+        };
+    };
+
+    if (typeName _name == "OBJECT") then // mag is sent to the vehicle team only
+    {
+        _msg_target_found = vehicle player == _name;
+        _vehicle_chat = _msg_target_found;
+    }
+    else
+    {
+        _msg_target_found = (_name == name player) || (_name == "") || (_name == "*");
+    };
+
+    if ( _msg_target_found ) then // msg to this player || any
+    {
+        // check for initial delay
+
+        if ( (count _this) > 4) then
+        {
+            if ( (_this select 4) > 0 ) then
+            {
+                sleep ( _this select 4 );
+            };
+            // try to say sound on 1st text showing
+            if ( (count _this) > 6 ) then
+            {
+                _sound = _this select 6;
+                if ( typeName _sound == "STRING" ) then { playSound _sound };
+            };
+        };
+        _delay = 4; // default delay between messages is 4 seconds
+        if ( count _this > 3 ) then
+        {
+            if ( (_this select 3) > 0 ) then { _delay = (_this select 4) min 4}; // minimum delay is 4 seconds
+        };
+
+        _msg_arr = _this select 2;
+#ifdef __PRINT__
+        hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
+#endif
+        // all string are localized only if previous string is "localize" (is skipped from output)
+        {
+            _localize = false;
+            _msg_res = [];
+            {
+                if ( _localize ) then
+                {
+                    _msg_res set [count _msg_res, localize (_x)]; // localize this format item
+                    _localize = false;
+                }
+                else
+                {
+                    if (typeName _x == "STRING" ) then
+                    {
+                        if ( toLower(_x) == "localize") then
+                        {_localize = true;}
+                        else
+                        {
+                            _str = toArray(toUpper(_x)); // e.g. [83,84,82,95,83,89,83,95,54,48,52] for  "STR_SYS_604"
+                            // [83,84,82]
+                            if ( count _str > 3) then
+                            {
+                                if ( (_str select 0 == 83) && (_str select 1 == 84) && (_str select 2 == 82) ) then
+                                { _msg_res set [count _msg_res, localize (_x)] }
+                                else
+                                { _msg_res set [count _msg_res, _x]; };
+                            } else {_msg_res set [count _msg_res, _x];};
+                        };
+                    }
+                    else
+                    {
+                        _msg_res set [count _msg_res, _x]; // not localize this format item
+                    };
+                };
+            } forEach _x; // parse each format item
+
+            _print_title = (count _this) < 6; // if no setting, let print title in screen middle, not only radio message at bottom
+            if (!_print_title) then  // value detected in param array, read and parse it
+            {
+                _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
+                if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
+                    then {_print_title = _print_title <= 0} // print only if value set to false
+                    else {_print_title = !_print_title}; // parse as boolean value, print if value == false
+            };
+
+            _msg_formatted = format _msg_res; // whole message formatted
+            if ( _print_title ) then // no title text disable parameter
+            {
+                titleText[ _msg_formatted, "PLAIN DOWN" ];
+            };
+
+            if (_vehicle_chat) then
+            {
+                [_name, _msg_formatted call XfRemoveLineBreak] call XfVehicleChat;
+            }
+            else
+            {
+                ( _msg_formatted call XfRemoveLineBreak) call XfGlobalChat;
+            };
+
+//					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_res, format _msg_res];
+            if ( (_delay > 0) && ((count _msg_arr) > 1 )) then { sleep _delay; };
+        } forEach _msg_arr; // for each messages: _x is format parameters array
+    };
+};
+
 XHandleNetStartScriptClient = {
 	private ["_this"];
 	//__DEBUG_NET("x_netinitclient.sqf XHandleNetStartScriptClient",_this)
@@ -582,131 +728,19 @@ XHandleNetStartScriptClient = {
 
         // this command is received and processed ONLY on clients, just if started on client too
         // some message to user, params:
+        //              1,                      2,                 3,                       4,              5,            6,           7
         // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
         // each _msg format is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];
         // _delay_between_messages is seconds number to sleep between multiple messages
         // _initial_delay is seconds before first message show
         // no_title_msg if true - no title shown, else shown if false or "" empty string
         // sound_name is the name of the sound to play with first message show on 'say' command
-        // msg is displayed using titleText ["...", "PLAIN DOWN"] and common chat
+        //
+        // msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
         // msg additionally displayed as title in the middle of the screen
 
 		case "msg_to_user":	{
-			private [ "_msg_arr","_msg_res","_name","_delay","_localize" ];
-/*
-			if ((_this select 0) == "msg_about_new_patrol") then
-			{
-				__SetGVar(PATROL_COUNT,(__GetGVar(PATROL_COUNT)+1) min 5);
-			};
-*/
-			_name = _this select 1;
-			_msg_target_found = false;
-			_vehicle_chat = false;
-			// hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
-			if  (typeName _name == "ARRAY") then
-			{
-			    if ( count _name == 0) then {_name = "";}
-			    else
-			    {
-			        _ind = _name find (name player);
-			        if ( _ind >= 0) then
-			        {
-			            _name = name player;
-			        }
-			        else
-			        {
-			            _name = _name select 0;
-			        };
-			    };
-			};
-			if (typeName _name == "OBJECT") then // mag is sent to the vehicle team only
-			{
-                _msg_target_found = vehicle player == _name;
-                _vehicle_chat = _msg_target_found;
-			}
-			else
-			{
-                _msg_target_found = (_name == name player) || (_name == "") || (_name == "*");
-			};
-			if ( _msg_target_found ) then // msg to this player || any
-			{
-				// check for initial delay
-
-				if ( (count _this) > 4) then
-				{
-					if ((_this select 4) > 0) then
-					{
-					    sleep (_this select 4);
-					};
-                    // try to say sound on 1st text showing
-                    if ( (count _this) > 5) then
-                    {
-                        _sound = _this select 5;
-                        if ( typeName _sound == "STRING") then {playSound _sound;};
-                    };
-				};
-				_delay = 4; // default delay between messages is 4 seconds
-				if ( count _this > 3) then
-				{
-					if ((_this select 3) > 0) then { _delay = (_this select 4);};
-				};
-
-				_msg_arr = _this select 2;
-#ifdef __PRINT__
-				hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
-#endif		
-				// all string are localized only if previous string is "localize" (is skipped from output)
-				{
-					_localize = false;
-					_msg_res = [];
-					{
-						if ( _localize ) then
-						{
-							_msg_res set [count _msg_res, localize (_x)]; // localize this format item
-							_localize = false;
-						}
-						else
-						{
-							if (typeName _x == "STRING" ) then 
-							{
-								if ( toLower(_x) == "localize") then
-								{_localize = true;}
-								else
-								{
-									_str = toArray(toUpper(_x)); // e.g. [83,84,82,95,83,89,83,95,54,48,52] for  "STR_SYS_604"
-                					// [83,84,82]
-                					if ( count _str > 3) then
-                					{
-                                        if ( (_str select 0 == 83) && (_str select 1 == 84) && (_str select 2 == 82) ) then
-                                        { _msg_res set [count _msg_res, localize (_x)] }
-                                        else
-                                        { _msg_res set [count _msg_res, _x]; };
-									} else {_msg_res set [count _msg_res, _x];};
-								};
-							} 
-							else
-							{
-								_msg_res set [count _msg_res, _x]; // not localize this format item
-							};
-						};
-					} forEach _x; // for each format item
-					if ( (count _this) < 5) then // no title text disable parameter
-                    {
-    					titleText[ format _msg_res, "PLAIN DOWN" ];
-                    };
-                    if (_vehicle_chat) then
-                    {
-    					[_name, (format _msg_res) call XfRemoveLineBreak] call XfVehicleChat;
-                    }
-                    else
-                    {
-    					((format _msg_res) call XfRemoveLineBreak) call XfGlobalChat;
-                    };
-
-//					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_res, format _msg_res];
-					if (_delay > 0) then { sleep _delay; };
-				} forEach _msg_arr; // for each messages: _x is format parameters array
-			};
+		    _this call SYG_msgToUserParser;
 		}; // case "msg_to_user"
 
 //		case "GRU_msg_patrol_killed":
@@ -809,7 +843,7 @@ XHandleNetStartScriptClient = {
         // [ "sub_fac_score", _str, _param1, _param2 ]
         case "sub_fac_score":
         {
-            [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call XHandleNetStartScriptClient;
+            [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call SYG_msgToUserParser;
             if (name player == _this select 3) then
             {
                 _score = (d_ranked_a select 20);
@@ -841,12 +875,13 @@ XHandleNetStartScriptClient = {
                 };
             };
         };
+/*
          // reveal vehicle (MHQ in main) to all players
         case "revealVehicle":
         {
             player reveal (_this select 1);
         };
-
+*/
 
 //========================================================================================================== END OF CASES
 

@@ -1264,15 +1264,17 @@ SYG_spec2 = ["ACE_20Rnd_762X51_SB_M14","ACE_20Rnd_762x51_SB_SCAR","ACE_20Rnd_762
 
 /*
  * Small routine to find static string in array of string from config file!!!
+ * std 'find' Arma method not work here!
  *
  */
 SYG_find = {
+    private ["_find","_arr","_val","_i"];
     _find = -1;
     _arr = arg(0);
     _val = arg(1);
     for "_i" from 0 to (count _arr) - 1 do
     {
-        if (_val == argp(_arr, _i)) exitWith {_find = _i;};
+        if (_val == _arr select _i) exitWith {_find = _i;};
     };
     _find
 };
@@ -1284,23 +1286,7 @@ SYG_find = {
  * Where: _wpnType  - class name for the weapon ("ACE_MP5SD" etc)
  */
 SYG_defaultMagazine = {
-    /*
-     * Small routine to find static string in array of string from config file!!!
-     * std 'find' Arma method not work here!
-     *
-     */
-    _findSpec = {
-        _find = -1;
-        _arr = arg(0);
-        _val = arg(1);
-        for "_i" from 0 to (count _arr) - 1 do
-        {
-            if (_val == argp(_arr, _i)) exitWith {_find = _i;};
-        };
-        _find
-    };
-
-    private ["_arr"];
+    private ["_arr","_arr1","_mag","_pos"];
 	_arr = [];
 	_arr1 = _this call SYG_defaultMagazinesACE;
 	if ( count _arr1 > 0 ) then // ACE magazines found
@@ -1309,7 +1295,8 @@ SYG_defaultMagazine = {
 	}
 	else {_arr = getArray( configFile >> "CfgWeapons" >> _this >> "magazines" );};
 	_mag = format["%1",_arr select 0];
-	_pos = [SYG_spec1, _mag] call _findSpec;
+	// substitute some types to other ones
+	_pos = [SYG_spec1, _mag] call SYG_find;
 	if ( _pos >= 0) then { _mag = argp(SYG_spec2,_pos);};
     _mag
 };
@@ -1329,7 +1316,6 @@ SYG_defaultMagazinesACE = {
 	{
 		for "_i" from 0 to (count _arr) - 1 do
 		{
-			
 			if ( (getNumber ( configFile >> "CfgMagazines" >> (_arr select _i) >> "ACE_HIDE" )) != 0 ) then
 			{
 				_arr set [_i, "RM_ME"];
@@ -1342,7 +1328,8 @@ SYG_defaultMagazinesACE = {
 };
 
 /**
- * Returns filtered array of magazines desgnated as input
+ * METOD NOT USED YET
+ * Returns filtered array of only ACE magazines from designated input
  * call: _mags = _mags call SYG_filterACEMagazines;
  *
  * Where: _mags  - array with magazines type names ["ACE_5Rnd_127x99_API_AS50", "ACE_64Rnd_9x18_B_Bizon","ACE_17Rnd_9x19_G17"] etc
@@ -1381,6 +1368,7 @@ SYG_pilotEquipmentEast = {
 	SYG_STD_PILOT_EQUIPMENT + [ RANDOM_ARR_ITEM(SYG_SMG_WPN_SET_EAST) ] + SYG_PILOT_HANDGUN_EAST
 };
 
+//--- METOD NOT USED YET
 // M240: Soldier Machine Gunner "SoldierWMG",
 // M249: Soldier Automatic Rifleman "SoldierWAR"
 SYG_replacePrimaryWeapon = {

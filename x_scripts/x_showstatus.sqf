@@ -15,22 +15,25 @@ _XD_display = findDisplay 11001;
 _target_array2 = [];
 _current_target_name = "";
 
-if (current_target_index == -1) then // before 1st town or current tonw cleared
+if (current_target_index == -1) then // before 1st town or current town cleared
 {
     if (client_target_counter < number_targets ) then
     {
         _current_target_name = localize "STR_SYS_208"; // "No target"
     };
-
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
     if ( call SYG_isMainTargetAllowed ) then
     {
+#endif
         _target_array2 = d_base_array;
         _current_target_name = localize "STR_SYS_215"; //"Airbase";
+#ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
     }
     else
     {
         _current_target_name = format[localize "STR_SYS_1151", current_mission_counter + 1 ]; // "Finish SM(%1)"
     };
+#endif
 }
 else // next target town ready
 {

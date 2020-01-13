@@ -79,7 +79,8 @@ if (_typepos == 1) then {  //  teleport to some of our MHQ
 
     ["addVehicle", (group player), _veh] call XSendNetStartScriptServer; // inform enemy about MHQ position
     sleep 1.0;
-    ["revealVehicle", _veh] call XSendNetStartScriptClient; // reveal new MHQ position to all active players
+    _veh call SYG_revealToAllPlayers;
+//    ["revealVehicle", _veh] call XSendNetStartScriptClient; // reveal new MHQ position to all active players
     //(group player) addVehicle _veh;
 };
 
