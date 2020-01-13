@@ -151,7 +151,8 @@ _rejoinPilots =
                 if ( !isNull _newgrp ) then
                 {
 #ifdef __PRINT__
-                    hint localize format["x_airki.sqf: Rejoin good pilots (%1) to group %2 (%3 men) dist %4, and removing invalid pilots %5",
+                    hint localize format["+++ x_airki.sqf[%1]: Rejoin good pilots (%2) to group %3 (%4 men) dist %5, and removing invalid pilots %6",
+                        _type,
                         _goodunits,
                         _newgrp,
                         count units _newgrp,
@@ -165,7 +166,7 @@ _rejoinPilots =
                 {
                     // no good group is found, let kill them all now
 #ifdef __PRINT__
-                    hint localize format["x_airki.sqf: Re-join is unavailble, kill air crew, as good (%1) as bad (%2)",_goodunits, _badunits];
+                    hint localize format["+++ x_airki.sqf[%1]: Re-join is unavailble, kill air crew, as good (%2) as bad (%3)",_type,_goodunits, _badunits];
 #endif
                     _goodunits call _killUnits; // TODO: first try to find and kill enemy that shot heli/plane
                     _ret = false;
@@ -175,7 +176,7 @@ _rejoinPilots =
             else
             {
 #ifdef __PRINT__
-                hint localize format["x_airki.sqf: No good pilots in grp %1 found, remove bad ones (%2)", _grp, _badunits];
+                hint localize format["+++ x_airki.sqf[%1]: No good pilots in grp %2 found, remove bad ones (%3)",_type, _grp, _badunits];
 #endif
                 _ret = false;
             };
@@ -186,7 +187,7 @@ _rejoinPilots =
 		else
 		{
 #ifdef __PRINT__
-                hint localize "x_airki.sqf: Count of alive group units == 0, exit";
+                hint localize format["++++ x_airki.sqf[%1]: Count of alive group units == 0, exit",_type];
 #endif
 		    _ret = false;
 		};
@@ -194,7 +195,7 @@ _rejoinPilots =
 	else
 	{
 #ifdef __PRINT__	
-		hint localize "x_airki.sqf: Grp is <NULL> or pilots are dead";
+		hint localize format["+++ x_airki.sqff[%1]: Grp is <NULL> or pilots are dead",_type];
 #endif		
 		_ret = false;
 	};
@@ -261,17 +262,17 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 #endif		
 
 #ifdef __DEBUG__
-	hint localize format[ "x_airki.sqf[%2]: _re_random %1", _re_random, _type ];
+	hint localize format[ "+++ x_airki.sqf[%2]: _re_random %1", _re_random, _type ];
 #endif
 
 	if (_num_p < 5) then {
 
 #ifdef __SYG_AIRKI_DEBUG__
-		hint localize format["x_airki.sqf[%1]: sleep 10 secs", _type];
+		hint localize format["+++ x_airki.sqf[%1]: sleep 10 secs", _type];
 		sleep 10;
 #else
         _sleepTime = 400 + (random 800);
-		hint localize format["x_airki.sqf[%1]: sleep %2 secs", _type, round(_sleepTime)];
+		hint localize format["+++ x_airki.sqf[%1]: sleep %2 secs", _type, round(_sleepTime)];
 		sleep _sleepTime;
 #endif		
 	} else {
@@ -377,7 +378,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		_flyHeight = round(_flyby_height + (random _flight_random)); // set fly by height from birth point to the town
 		_vehicle flyInHeight _flyHeight;
     #ifdef __PRINT__
-        hint localize format["x_airki.sqf[%3]: %1 created to patrol town %2 at pos %4, flyby_height %5",_heli_type, _dummy select 1, _type, _pos, _flyHeight ];
+        hint localize format["+++ x_airki.sqf[%3]: %1 created to patrol town %2 at pos %4, flyby_height %5",_heli_type, _dummy select 1, _type, _pos, _flyHeight ];
     #endif
 		sleep 0.01;
 	};
@@ -408,7 +409,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_pat_pos = _current_target_pos;
 	_wp setWaypointStatements ["never", ""];
 #ifdef __PRINT__
-   	hint localize format["x_airki.sqf[%3]: veh %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
+   	hint localize format["+++ x_airki.sqf[%3]: veh %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
 #endif
 
 
@@ -545,7 +546,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 
         // prevent execution until at least one player is connected
 		if (X_MP && (call XPlayersNumber) == 0) then {
-		    hint localize "+++ x_airki.sqf: no players, wait for the first player on line, refuelling alive vehicles during pause";
+		    hint localize format["+++ x_airki.sqf[%1]: no players, wait for the first player on line, refuelling alive vehicles during pause",_type];
 		    while {call XPlayersNumber == 0} do
 		    {
 		        sleep 25.128;
@@ -560,7 +561,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 				{
 					_vehicles set [_i, "X_RM_ME"]; 
 #ifdef __PRINT__
-					hint localize format[ "x_airki.sqf[%1]: airkiller is Null, remove from list",  _type];
+					hint localize format[ "+++ x_airki.sqf[%1]: airkiller is Null, remove from list",  _type];
 #endif			
 				}
 				else
@@ -578,7 +579,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 						{
 							if ( ((damage _vecx) > 0) && ((damage _vecx) != _lastDamage) ) then
 							{
-								hint localize format[ "x_airki.sqf[%3]: airkiller %1 received damage = %2", typeOf _vecx, damage _vecx, _type ];
+								hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 received damage = %2", typeOf _vecx, damage _vecx, _type ];
 								_lastDamage = damage _vecx;
 							};
 						};
@@ -601,7 +602,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 #endif			
 			_ret = _grp call _rejoinPilots;
 #ifdef __PRINT__
-			hint localize format[ "x_airki.sqf[%1]: all vehicle[s] are down, rejoin %2 pilot[s], rejoined %3", _type, _cnt, _ret ];
+			hint localize format[ "+++ x_airki.sqf[%1]: all vehicle[s] are down, rejoin %2 pilot[s], rejoined %3", _type, _cnt, _ret ];
 #endif
             if ( !_ret ) then { _grp call _killUnits }; // just in case
 		};
@@ -633,14 +634,14 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_ret = d_airki_respawntime + _re_random + random (_re_random);
 	
 #ifdef __PRINT__
-	hint localize format[ "x_airki.sqf[%1]: internal main loop finished, sleep for %2 secs; s_down_heli_arr[%3]",  _type, round(_ret), count s_down_heli_arr];
+	hint localize format[ "+++ x_airki.sqf[%1]: internal main loop finished, sleep for %2 secs; s_down_heli_arr[%3]",  _type, round(_ret), count s_down_heli_arr];
 #endif			
 
 	sleep _ret;
 }; // while {true} do
 
 #ifdef __PRINT__
-	hint localize format["x_airki.sqf[%1]: --- outer loop is exited, that is NONsense! ---", _type];
+	hint localize format["+++ x_airki.sqf[%1]: --- outer loop is exited, that is NONsense! ---", _type];
 #endif			
 
 if (true) exitWith {};

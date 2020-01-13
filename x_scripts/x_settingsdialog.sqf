@@ -268,7 +268,7 @@ _str = _str + "\n";
 _str = _str + (localize "STR_SET_28") + str(D_RESPAWN_DELAY) + "\n"; // "Player respawn delay (in seconds): "
 
 if (!isNil "d_with_respawn_dialog_after_death") then {
-	_str = _str + (localize "STR_SET_28");
+	_str = _str + ( localize "STR_SET_29" );
 	if (d_with_respawn_dialog_after_death) then {
 		_str = _str + _strYes;
 	} else {

@@ -545,7 +545,7 @@ SYG_revealToAllPlayers = {
     private ["_player"];
     if (typeName _this != "OBJECT") exitWith{}; //illegal parameter, exit
     {
-        _player = call (SYG_players_arr select _x); // object
+        _player = call (SYG_players_arr select _i); // object
         if (!(isNull _player)) then { _player reveal _this };
     } forEach SYG_players_arr;
 };
