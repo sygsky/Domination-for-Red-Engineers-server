@@ -605,7 +605,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			hint localize format[ "+++ x_airki.sqf[%1]: all vehicle[s] are down, rejoin %2 pilot[s], rejoined %3", _type, _cnt, _ret ];
 #endif
             if ( !_ret ) then { _grp call _killUnits } // just in case
-            else {["msg_to_user","",[["STR_GRU_54"],"STR_GRU_54_1"], 4, 10 + random 30,0] call XSendNetStartScriptClient;  }; // "One or more enemy pilots have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
+            else {["msg_to_user","",[["STR_GRU_54"],"STR_GRU_54_1"], 4, 10 + random 30] call XSendNetStartScriptClient;  }; // "One or more enemy pilots have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
 		};
 #ifdef __FUTURE__		
 		//+++ Sygsky: try to reveal info on known enemies for near friendly units
