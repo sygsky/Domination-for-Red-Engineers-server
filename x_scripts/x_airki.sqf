@@ -122,7 +122,7 @@ _rejoinPilots =
             for "_i" from 0 to _counter - 1 do
             {
                 _unit = _badunits select _i;
-                if ( !canMove _unit) then
+                if ( !canStand _unit) then
                 {
                     _goodunits set [_i, "RM_ME"]; // remove dead from good list
                 }
@@ -539,7 +539,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 {
                     _flyHeight = (_flight_height + (random _flight_random));
        		        _x flyInHeight _flyHeight ;
-                    hint localize format["+++ x_airki: patrol fly height set to ~ %2", typeOf _enemy_heli, round(_flyHeight)];
+                    //hint localize format["+++ x_airki: patrol fly height set to ~ %2", typeOf _enemy_heli, round(_flyHeight)];
                 };
    		    };
    		} forEach _vehicles;
