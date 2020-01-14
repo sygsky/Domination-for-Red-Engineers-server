@@ -1,5 +1,10 @@
 // by Xeno: x_setupplayer.sqf, called on client computer only
-private ["_p", "_pos", "_type", "_i", "_res", "_target_array", "_current_target_pos", "_target_name", "_no", "_color", "_objstatus", "_xres", "_winner", "_target_array2", "_current_target_name", "_counterxx", "_marker_name", "_text", "_box", "_xx", "_units", "_strp", "_artinum", "_vec", "_ari1", "_vec_id", "_dropaction", "_respawn_marker", "_s", "_trigger", "_dbase_a", "_status", "_bravo", "_is_climber", "_types", "_action", "_ar", "_mcctypeaascript", "_num", "_thefac", "_element", "_posf", "_facid", "_exit_it", "_boxname", "_dir", "_oldscore","_string_player","_repstations","_rad","_old_rank"];
+private ["_p", "_pos", "_type", "_i", "_res", "_target_array", "_current_target_pos", "_target_name", "_no", "_color",
+"_objstatus", "_xres", "_winner", "_target_array2", "_current_target_name", "_counterxx", "_marker_name", "_text",
+"_box", "_xx", "_units", "_strp", "_artinum", "_vec", "_ari1", "_respawn_marker", "_s",
+"_trigger", "_dbase_a", "_status", "_bravo", "_is_climber", "_types", "_action", "_ar", "_mcctypeaascript", "_num",
+"_thefac", "_element", "_posf", "_facid", "_exit_it", "_boxname", "_dir", "_oldscore","_string_player",
+"_rad","_old_rank"];
 if (!X_Client) exitWith {};
 
 sleep 1;
@@ -968,13 +973,14 @@ if (count d_ammo_boxes > 0) then {
 player_can_call_drop = false;
 player_can_call_arti = false;
 
+_local_msg_arr = [];
+
 #ifdef __AI__
 
 // add all user actions now
 _handle  = ["add_barracks_actions", AI_HUT, "AlarmBell"] execVM "scripts\barracks_add_actions.sqf";
 waitUntil { scriptDone _handle };
 
-_local_msg_arr = [];
 if ( isNil "AI_HUT" ) then
 {
     _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1176"]; // "The barracks is destroyed, the military draft is cancelled"
@@ -997,17 +1003,6 @@ else // for NOT engineers
         _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_PENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
 #endif
 };
-
-// show all specific  messages for the player type
-_local_msg_arr spawn {
-    if (count _this == 0) exitWith{};
-    sleep 55;
-    {
-         sleep 4;
-         _x call XfGlobalChat;
-    } forEach _this;
-};
-
 
 if (!(__ACEVer)) then {
 	ari1 = -8877;
@@ -1070,14 +1065,6 @@ if (_string_player in d_can_use_artillery) then {
 };
 _strp = format ["%1",_p];
 player_can_call_drop = _strp in d_can_call_drop;
-
-/*
-{
-	if (_strp == _x) exitWith {
-		player_can_call_drop = true;
-	};
-} forEach d_can_call_drop;
-*/
 if (player_can_call_drop) then {
 	if (!(__ACEVer)) then {
 		dropaction = -8878;
@@ -1087,6 +1074,23 @@ if (player_can_call_drop) then {
 	};
 };
 #endif
+
+// play with EditorUpdate_v102.pbo
+if ( SYG_found_EditorUpdate_v102 ) then {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_4"]}
+else {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_5"]};
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++
+//+ show all specific  messages for the player type +
+//+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+_local_msg_arr spawn {
+    if (count _this == 0) exitWith{};
+    sleep 55;
+    {
+         sleep 4;
+         _x call XfGlobalChat;
+    } forEach _this;
+};
 
 #ifndef __REVIVE__
 _respawn_marker = "";

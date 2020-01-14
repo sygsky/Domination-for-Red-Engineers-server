@@ -518,6 +518,9 @@ STR_SYS_RELOAD_REFUEL,Filling of the fuel tank,Tankfüllung,Заправка ц�
 STR_SYS_258_1,"Engineers thank You for fully functional vehicles!","Ingenieure vielen Dank für die voll funktionsfähigen Fahrzeuge!","Инженеры благодарят Вас за полностью исправный транспорт!"
 STR_SYS_258_2,"You're not an engineer and can repair vehicle just with a loss of %1 point[s] per cycle","Du bist kein Ingenieur und kann Reparatur Fahrzeug nur mit einem Verlust von %1 pro Zyklus","Вы не инженер и можете чинить только с вычетом очков (%1 за цикл)"
 STR_SYS_258_3,"The engineer can locate and deactivate the mines","Der Ingenieur kann suchen Sie und deaktivieren Sie die Minen","Теперь инженер может работать с минами"
+STR_SYS_258_4,"You must install the addon EditorUpdate_v102.PBO for a full-scale game","Sie müssen den Addon EditorUpdate_v102.pbo installieren für ein full-scale-Spiel","Вм необходимо установить аддон EditorUpdate_v102.pbo"
+STR_SYS_258_5,"The GRU curator thanks You for downloading the addon EditorUpdate_v102.pbo","Die GRU Kurator vielen Dank für den Download des addon EditorUpdate_v102.pbo","Куратор ГРУ благодарит Вас за загруженный аддон EditorUpdate_v102.pbo"
+
 STR_SYS_259,"%1: service completed","%1: Service abgeschlossen","%1: обслуживание завершено"
 
 STR_SYS_260,"%1 Artillery salvo %2 on the way...","%1 Artillerie salvo %2 auf dem Weg...","%1 арт.батарея... залпов выпущено: %2, ожидайте, прием."
