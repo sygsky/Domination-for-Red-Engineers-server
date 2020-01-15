@@ -164,6 +164,7 @@ SYG_waterDefeatTracks =
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
+// NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
 // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;

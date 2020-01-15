@@ -64,7 +64,7 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 if ( !alive  _eunit ) exitWith{}; // killer is dead or absent
 if( _itself ) exitWith{}; // killed by itself
 if ( _eunit isKindOf "CAManbase") exitWith{}; // killed by man, not interested for us now
-
+if ( (side _eunit) != d_side_player) exitWith{}; // killer is not player
 // create invisible observer near killer position
 
 _vehs =  [_pos , SEARCH_DIST, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
