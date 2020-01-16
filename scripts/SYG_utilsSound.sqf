@@ -491,4 +491,14 @@ SYG_playWeatherForecastMusic = {
  ] call SYG_playRandomTrack;
 };
 
+//
+// play random sound about death in tank
+// returns: true if player is russian and sound played
+//          or false if not russian and sound not played
+//
+SYG_playDeathInTankSound = {
+    if ( localize "LANGUAGE" == "RUSSIAN") exitWith { playSound RANDOM_ARR_ITEM(["chiz_tanki_1","chiz_tanki_2"]); true };
+    false
+};
+
 if (true) exitWith {};

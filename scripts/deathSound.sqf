@@ -5,6 +5,7 @@
 	returns: nothing
 */
 
+private ["_killer","_unit"];
 #include "x_setup.sqf"
 
 #define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random(count ARR))))
@@ -22,6 +23,13 @@ SYG_deathCountCnt = SYG_deathCountCnt + 1; // total death count bump
 if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play ordinal sound if KIA or alone
 {
     if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doen't like such sounds
+
+    // check for russian tank)))
+    _exit = false;
+    if ( ((vehicle _unit) isKindOf "Tank") && (call SYG_playExtraSounds)) then { _exit = call SYG_playDeathInTankSound };
+    if ( _exit) exitWith {};
+
+    // check for helicopter
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
     {
         playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
