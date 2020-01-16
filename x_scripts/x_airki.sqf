@@ -195,7 +195,7 @@ _rejoinPilots =
 	else
 	{
 #ifdef __PRINT__	
-		hint localize format["+++ x_airki.sqff[%1]: Grp is <NULL> or pilots are dead",_type];
+		hint localize format["+++ x_airki.sqf[%1]: Grp is <NULL> or pilots are dead",_type];
 #endif		
 		_ret = false;
 	};
