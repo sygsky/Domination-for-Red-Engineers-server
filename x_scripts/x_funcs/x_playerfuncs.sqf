@@ -256,7 +256,7 @@ XRecapturedUpdate = {
 				_current_target_pos = _target_array select 0;
 				if ((player distance _current_target_pos) < (d_ranked_a select 10)) then
 				{
-					(format [localize "STR_SYS_109",((d_ranked_a select 9)/2)]) call XfHQChat; // "За зачистку города вы получаете очки ( +%1 ) !"
+					(format [localize "STR_SYS_109",round( (d_ranked_a select 9)/2)] ) call XfHQChat; // "За зачистку города вы получаете очки ( +%1 ) !"
 					player addScore (d_ranked_a select 9);
 				};
 			};
