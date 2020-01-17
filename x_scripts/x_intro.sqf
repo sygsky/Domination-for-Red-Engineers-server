@@ -67,7 +67,7 @@ else // music normally played on intro
         // add some personalized songs for well known players
         _players =
         [
-            ["Ceres-de","CERES de"] ,
+            ["Ceres-de","CERES de","Ceres.","CERES"] ,
             ["Rokse [LT]"],
             ["Shelter", "Marcin"]
         ];
@@ -85,12 +85,12 @@ else // music normally played on intro
         } forEach _players;
         _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
         [
-            "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime",
-            "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","prince_negaafellaga","strelok",
+            "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime1","lastdime2","lastdime3","lastdime4",
+            "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
             "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
             "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
             "tovarich_moy","ipanoram","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
-            "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest2","sovest2","morricone1","bond1","toccata","smersh",
+            "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata","smersh",
             "del_vampiro1","del_vampiro2"
         ] + _personalSounds ) call _XfRandomArrayVal;
 //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];

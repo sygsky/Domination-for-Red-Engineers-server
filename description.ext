@@ -134,7 +134,13 @@ class CfgMusic
 //    class red_alert_soviet_march { name=""; sound[]= {\sounds\red_alert_soviet_march.ogg,db-1,1.0}; };
     class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };
     class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
-    class               lastdime { name=""; sound[]= {\sounds\lastdime.ogg,db-1,1.0};    };
+    class               lastdime { name=""; sound[]= {\sounds\intro\lastdime.ogg,db-1,1.0};    };
+    class              lastdime1 { name=""; sound[]= {\sounds\intro\lastdime1.ogg,db-1,1.0};    };
+    class              lastdime2 { name=""; sound[]= {\sounds\intro\lastdime2.ogg,db-1,1.0};    };
+    class              lastdime3 { name=""; sound[]= {\sounds\intro\lastdime3.ogg,db-1,1.0};    };
+    class              lastdime4 { name=""; sound[]= {\sounds\intro\lastdime4.ogg,db-1,1.0};    };
+    class      esli_ranili_druga { name=""; sound[]= {\sounds\intro\esli_ranili_druga.ogg,db-1,1.0};    };
+
 
     class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro

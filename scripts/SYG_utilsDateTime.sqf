@@ -458,7 +458,7 @@ SYG_runHolidayMusic =
     [
       [ 1, 1,10, ["snovymgodom","grig"]], // new year, 10 days in range
       [23, 2, 3, ["burnash","podolinam"]], // 23th of February
-      [ 8, 3, 2], // 8th of March
+      [ 8, 3, 2, ["esli_ranili_druga"]], // 8th of March
       [ 1, 5, 3, "Varshavianka"], // 1st May
       [ 9, 5, 3], // 9th of May
       [22, 6, 3, "invasion"],
