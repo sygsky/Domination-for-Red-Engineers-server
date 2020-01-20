@@ -77,7 +77,6 @@ STR_MED_6,"Remove Mash","Entfernen Sie die Med.Zelt","Убрать санчас�
 STR_MED_7,"You get %1 points because other units used your mash for healing!","Sie bekommen %1 Punkte, da andere Einheiten verwendet werden, Ihre Maische für die Heilung!","Sie bekommen %1 Punkte, da andere Einheiten verwendet werden, ist Ihre Med.Zelt für die Heilung!","Вы получаете %1 очк. за лечение бойцов в вашей палатке..."
 STR_MED_8,"You get %1 points for healing other units!","Erhalten Sie %1 Punkte für die Heilung von anderen Einheiten!","Вы получаете очки: +%1 за излечение другого бойца"
 
-
 STR_SYS_04,"Engineer scores for vehicles repair: air +%1, armored +%2, transport +%3, others +%4\n","Ingenieur erreicht souverän für Fahrzeuge reparieren: Luft +%1, Gepanzerte +%2 -, transport - +%3, andere +%4\n","Очки инженера за ремонт: авиатехники +%1, бронетехники +%2, транспорта +%3, прочего +%4\n"
 STR_SYS_05,"Engineer refuelling not limited: yes\n","Ingenieur tanken nicht begrenzt: ja\n","Инженер заливает полный бак при ремонте: Да\n"
 STR_SYS_06,"Engineer refuelling is limited to (litres): %1\n","Ingenieur tanken ist beschränkt (Liter): %1\n", "Инженер при ремонте заливает горючего (литры): %1\n"
@@ -1290,7 +1289,6 @@ STR_GRU_43,red-hot,weiß,раскалённый
 STR_GRU_44,"GRU already uses D-installation and control PC.","GRU nutzt bereits die D-Installation und Management-PC.","ГРУ уже задействовало Д-установку и управляющую ПЭВМ."
 STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2, nt %3, tc %4","Melden Sie Ihrem commander zu D-Einheit Fehler! Telemetrie: %1, cc %2, nt %3, tc %4","Сообщите командованию, что Д-установка не работает! Телеметрия: %1, cc %2, nt %3, tc %4"
 
-
 STR_GRU_46,"The landing of the enemy patrol spotted by %1%2%3%4%5%6","Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6","Местный %1 наблюдал высадку вражеского патруля%2%3%4%5%6"
 STR_GRU_46_0,"Sahrani inhabitants inform: Enemy patrols disappeared!","Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!","Вражеские патрули исчезли, сообщают жители!"
 STR_GRU_46_1," near ""%1"""," in der Nähe von ""%1"""," близ ""%1"""
@@ -1329,6 +1327,8 @@ STR_GRU_TASK_2,Perform the task!,Führen Sie die Aufgabe!,Выполнить з�
 STR_GRU_TASK_3,1. Shipping intelligence,1. Versand intelligence, Доставить развединформацию
 STR_GRU_TASK_4,2. A covert operation behind enemy lines,2. Eine verdeckte operation hinter den feindlichen Linien,2. Секретная операция в тылу противника
 STR_GRU_TASK_5,3. The investigation on the island,3. Die Untersuchung wird auf der Insel,3. Поиск на территории острова
+
+STR_GRU_DRIVE,"GRU specialists are not birds! And they can't fly!!!","GRU-Spezialisten sind keine Vögel! Und Sie können nicht Fliegen!!!","Спецы из ГРУ - не птицы! И летать не умеют!!!"
 
 STR_FIRELIT_NUM,2,2,2
 STR_FIRELIT_0,"Our people are not bred such fires","Unsere Leute solche Brände sind nicht gezüchtet","Похоже, что костёр разжигали не наши люди"
