@@ -8,8 +8,8 @@
 	(_this select 1) call XHandleNetVar;
 };
 
-SYG_userNames  = ["EngineerACE",/*"HE_MACTEP",*/"Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri", "Frosty", "Aron"];
-SYG_localZones = [            0,/*          0,*/        0,    -4,           0,        +2,        +2,     +2,       +2,     +1];
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron"];
+SYG_localZones = [            0,          0,        0,    -4,           0,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
@@ -120,6 +120,8 @@ XHandleNetStartScriptServer = {
 		// info from user about his name and missionStart value
 		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 		case "d_p_a": {
+            // store server time directly now for better accuracy
+            SYG_server_time  = time;       // current server time at the synchonizaton moment
 
 			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance
 			if ( count _this > 2) then // missionStart received
@@ -137,7 +139,6 @@ XHandleNetStartScriptServer = {
 			        //and local time to help know rela time all the mission
 			        // TODO: надо как то 
                     SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
-                    SYG_server_time  = time;       // current server time at the synchonizaton moment
                     hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",_timeOffset];
 			    }
 			    else
@@ -146,7 +147,6 @@ XHandleNetStartScriptServer = {
 			        {
                         // unknown client started server, let get time from it in any case
                         SYG_client_start = _localDate; // current time on first and unknown connected client
-                        SYG_server_time  = time;       // current server time at the synchonizaton moment
                         hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client started server without known timezone was accepted !!!";
 			        }
 			        else

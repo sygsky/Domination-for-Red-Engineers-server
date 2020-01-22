@@ -5,7 +5,7 @@ private ["_type", "_pos", "_wp_behave", "_crew_member", "_addToClean", "_heli_ty
  "_vehicles", "_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_leader",
  "_old_target", "_loop_do", "_dummy", "_current_target_pos", "_wp", "_pat_pos", "_radius", "_dist", "_old_pat_pos", "_angle",
   "_x1", "_y1", "_i", "_vecx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage","_res_arr",
-  "_flyHeight"];
+  "_flyHeight","_enemy_heli","_height_not_set","_old_target_name","_flight_height"];
 
 if (!isServer) exitWith {};
 
@@ -517,7 +517,11 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
                 {
                     _enemy_heli = SYG_owner_active_air_vehicles_arr select _i;
-                    if ( ({alive _x} count crew _enemy_heli) == 0) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
+                    if ( ({alive _x} count crew _enemy_heli) == 0) then
+                    {
+                        hint localize format["+++ x_airki: enemy air vehicle %1 empty, remove from array", typeOf _enemy_heli ];
+                        SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"];
+                    }
                     else
                     {
                         _pos = getPos _enemy_heli;

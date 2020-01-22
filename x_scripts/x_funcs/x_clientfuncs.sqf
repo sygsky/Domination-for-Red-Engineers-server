@@ -38,9 +38,10 @@ XfHQChat = {
 	[playerSide,"HQ"] sideChat _this;
 };
 
-// removes linebreaks from strings (\n or \N)
+// removes linebreaks from strings ("\n" amd "\N" replaced with space " ")
 // parameters: text
 // example: "My nice text\n\nHello World" call XfRemoveLineBreak;
+// returns: "My nice text  Hello World"
 XfRemoveLineBreak = {
 	private ["_msg", "_msg_chat_a", "_i", "_c"];
 	_msg = _this;
