@@ -501,4 +501,14 @@ SYG_playDeathInTankSound = {
     false
 };
 
+SYG_getFemaleFuckSpeech = {
+    private ["_arr"];
+	_arr = ["woman_fuck","woman_fuck_2","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch"];
+    switch localize "STR_LANG" do
+    {
+        case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
+    };
+	_arr call XfRandomArrayVal
+};
+
 if (true) exitWith {};
