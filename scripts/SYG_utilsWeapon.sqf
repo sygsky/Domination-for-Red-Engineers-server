@@ -264,6 +264,12 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
     [
         "ACE_ANPRC77_Alice", "ACE_ANPRC77_Raid", "ACE_P159_RD54", "ACE_P159_RD90", "ACE_P159_RD99"
     ];
+
+    // ShotGuns Set
+    SYG_SHOTGUN_SET =
+    [
+        "ACE_M1014", "ACE_M1014_Eotech", "ACE_SPAS12"
+    ];
 	
 	#define SYG_MAG_STD 0
 	#define SYG_MAG_SNIPER 1
@@ -659,7 +665,7 @@ SYG_rearmSabotageGroup = {
  *    Default 0.1. Range 0.0 <-> 1.0
  */
 SYG_rearmSpecops = {
-private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn"];
+private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_smoke_grenade"];
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
 	{
 		_unit = arg(0);
@@ -806,7 +812,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HEAT", 2]]; // small launcher ACE LAW
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
 				};
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 8]];
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 7]] + [[_smoke_grenade,1]];
 			};
 			
 			case "ACE_SoldierWMedic_A":
@@ -831,9 +837,32 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 		if ( _ret ) then 
 		{
 			_ret = [_unit,_equip] call SYG_armUnit;
-			if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
+		}
+		else
+		{
+		    private ["_mags"];
+		    switch (_unit_type) do
+		    {
+		        case "ACE_TeamLeaderW_USSF_ST_DCUL";
+		        case "ACE_SoldierWB_USSF_ST_BDUL";
+		        case "ACE_SoldierWMAT_USSF_ST_BDUL":
+		        {
+		            // average launcher + high penetration rocket
+    				_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] +
+    				SYG_STD_MEDICAL_SET + [[_smoke_grenade,1]] +
+    				[["P", "ACE_M136", "ACE_AT4_HP", 2]];
+		            _wpn = RAR(SYG_SHOTGUN_SET);
+		        };
+		        if ( _wpn == "ACE_SPAS12" ) then
+		            { _mags = RAR([ "ACE_9Rnd_12Ga_Slug", "ACE_9Rnd_12Ga_Buck00"]) }
+		        else
+		            { _mags = RAR([ "ACE_8Rnd_12Ga_Slug", "ACE_8Rnd_12Ga_Buck00"]) };
+   				_equip = _equip + [["P", _wpn, _mags, 7]];
+                _ret = [_unit,_equip] call SYG_armUnit;
+		    };
 		};
 	};
+    if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
 	// remove useless binocular from inventory
     if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	_ret
