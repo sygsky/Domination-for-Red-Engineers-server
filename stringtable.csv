@@ -926,6 +926,15 @@ STR_FRIDAY,Friday,Freitag,Пятница
 STR_SATURDAY,Saturday,Samstag,Суббота
 STR_SUNDAY,Sunday,Sonntag,Воскресение
 
+STR_HOLIDAY_1_JAN,"New year, day off","Neujahr, freier Tag","Новый Год, выходной"
+STR_HOLIDAY_23_FEB,"The day of Soviet army and Navy","Der Tag der sowjetischen Armee und Marine","День СА и ВМФ"
+STR_HOLIDAY_8_MAR,"International women's day, day off","Internationaler Frauentag, Wochenende","Международный женский день, выходной"
+STR_HOLIDAY_12_APR,"Cosmonautics day","Tag der Raumfahrt","День Космонавтики"
+STR_HOLIDAY_1_MAY,"International workers' solidarity day","Tag der internationalen Solidarität der Arbeitnehmer","День международной солидарности трудящихся"
+STR_HOLIDAY_9_MAY,"Victory Day, day off","Tag des Sieges, Wochenende","День Победы, выходной"
+STR_HOLIDAY_7_OCT,"Constitution day of the USSR, day off","Tag der Verfassung der UdSSR, Wochenende","День Конституции СССР, выходной"
+STR_HOLIDAY_7_NOV,"The day of the Great October Socialist Revolution, day off","Tag der großen Sozialistischen Oktoberrevolution, Wochenende","День Великой Октябрьской Социалистической Революции, выходной"
+
 STR_TIME_0,Night on Sahrani,Nacht auf Sahrani,на Сахрани  - ночь...
 STR_TIME_1,Day on Sahrani,Tag auf Sahrani,на Сахрани - день...
 STR_TIME_2,"Good morning dear Sahrani",Guten morgen Liebe Sahrani,"Доброе утро, Сахрани..."

@@ -381,6 +381,7 @@ return 365*y + y/4 - y/100 + y/400 + (m*306 + 5)/10 + ( d - 1 )
 Difference between two dates = g(y2,m2,d2) - g(y1,m1,d1)
 */
 SYG_getDateDiff = {
+    private ["_date1","_date2","_short_date","_ids"];
 	_date1 = arg(0);
 	_date2 = arg(1);
 	// check what date is younger
@@ -395,6 +396,7 @@ SYG_getDateDiff = {
 };
 
 SYG_JDN = {
+    private ["_m","_y"];
     _m = (arg(1) + 9) % 12;
     _y = arg(0) - floor(_m/10);
     365 * _y + floor(_y/4) - floor(_y/100) + floor(_y/400) + floor((_m*306 + 5)/10) + ( arg(2) - 1 )
@@ -412,13 +414,12 @@ SYG_holidayTable =
 ];
 
 // Runs music and return found holiday index, -1 if no holiday found
-// _ret = _mode call  SYG_runHolidayMusic;
+// _retArr = _server_date call  SYG_runHolidayMusic;
 // where:
-//   _mode == 0 intro mode runs music if holiday found, returns true if music played else false
-//   _mode = 1 return true if new year detected else false
+//   _retArr == [] (if today is ordinal day || ["Name for this holiday" || "", "corresponding music name" || ""]
 SYG_runHolidayMusic =
 {
-    _date = date;
+    _date = _this;
     _year = argp(_date,0);
     _curr_mon = argp(_date,1);
     if (_this == 1) exitWith // check only for new  year
@@ -456,13 +457,15 @@ SYG_runHolidayMusic =
         };
     } forEach
     [
-      [ 1, 1,10, ["snovymgodom","grig"]], // new year, 10 days in range
-      [23, 2, 3, ["burnash","podolinam"]], // 23th of February
-      [ 8, 3, 2, ["esli_ranili_druga"]], // 8th of March
-      [ 1, 5, 3, "Varshavianka"], // 1st May
-      [ 9, 5, 3], // 9th of May
-      [22, 6, 3, "invasion"],
-      [ 7,11, 7, ["Varshavianka","Varshavianka_eng","warschawyanka_german"]]  // 7th of November
+      [ 1,  1, ["snovymgodom","grig"], "STR_HOLIDAY_1_JAN"], // new year, 10 days in range
+      [23,  2, ["burnash","podolinam"],"STR_HOLIDAY_23_FEB"], // 23th of February
+      [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR"], // 8th of March
+      [12,  4, "","STR_HOLIDAY_12_APR"], // 8th of March
+      [ 1,  5, "Varshavianka", "STR_HOLIDAY_1_MAY"], // 1st May
+      [ 2,  5, "Varshavianka", "STR_HOLIDAY_1_MAY"], // 1st May
+      [ 9,  5, ["invasion"],"STR_HOLIDAY_9_MAY"], // 9th of May
+      [ 7, 10,"","STR_HOLIDAY_7_OCT"], // Day of USSR constitution
+      [ 7, 11, ["Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV"]  // 7th of November
     ];
 };
 
