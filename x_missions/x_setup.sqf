@@ -154,7 +154,7 @@
 //+++ uncomment to create Su34 on the base,
 // add 1500 score to allow get in,
 // add some Vehicles and ammoBoxes on hills near Corazol and on base
-//#define __DEBUG_ADD_VEHICLES__
+#define __DEBUG_ADD_VEHICLES__
 
 // uncomment next line to prevent land vehicle overturning
 #define __PREVENT_OVERTURN__
@@ -164,3 +164,6 @@
 
 // uncomment to disable GRU specalist to be pilot for battle air vehicles ( "SU", "Ka-50" etc), allow only "Mi-17 PKT" etc
 #define __DISABLE_GRU_BE_PILOTS__
+
+// uncomment to allow shotgun armed AI soldiers
+#define __ALLOW_SHOTGUNS__

@@ -850,6 +850,8 @@ STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / A
 
 STR_SYS_1218,"Enemy air vehicles locked: ","Feindliche Luftfahrzeuge gesperrt:","Вражеская авиатехника блокирована: "
 
+STR_SYS_1219,"GRU officers are unable to control the air vehicles","GRU-Offiziere sind nicht in der Lage, die Luftfahrzeuge zu Steuern","Сотрудники ГРУ не могут управлять летательными аппаратами"
+
 STR_SYS_SERVICE_DMG,"Service %1 is damaged","Service %1 beschädigt","Сервис %1 повреждён!"
 STR_SYS_SERVICE_DMG_1,"One of the services of the base was damaged by saboteurs!","Eine der Dienstleistungen der Basis beschädigt von saboteurs!","Один из сервисов на базе был повреждён диверсантами!"
 
@@ -1036,7 +1038,7 @@ STR_RUN_69,"Enemies plan to increase AA missiles range","Feinde planen, die Reic
 STR_RUN_70,"At the moment of death you will hear the music of heaven","Während des Todes wirst du die Musik des Himmels hören","В момент смерти ты услышишь небесную музыку"
 STR_RUN_71,"Green flares over towns are fired by the group commanders","Green lightning Raketen über Städte werden von gruppenkommandanten abgefeuert","Ракеты зелёного цвета в городах запускают командиры групп"
 STR_RUN_72,"Red rockets over cities usually mean the destruction of important infrastructure","Rote Raketen über Städte bedeuten normalerweise die Zerstörung wichtiger Infrastruktur","Красные ракеты над городами означают обычно уничтожение важной инфраструктуры"
-STR_RUN_73,"In the inventory, you can compare ammunition by selecting and reading the information","Im Inventar können Sie Munition vergleichen, indem Sie Informationen auswählen und Lesen","В инвенторе можно сравнивать боеприпасы, тыкая на них и просматривая информацию"
+STR_RUN_73,"In the inventory, you can compare ammunition by selecting and reading the information","Im Inventar können Sie Munition vergleichen, indem Sie Informationen auswählen und Lesen","В инвентаре можно сравнивать боеприпасы, тыкая на них и просматривая информацию"
 
 
 //------------------------------------ CAMP common strings ------------------------------------

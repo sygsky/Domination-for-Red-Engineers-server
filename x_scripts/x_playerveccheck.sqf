@@ -204,7 +204,7 @@ while { true } do {
             if ( !_player_not_in_GRU_mission ) exitWith
             {
                 (localize "STR_GRU_38") call XfGlobalChat; // "No, no! I can't disobey orders about not using such vehicle during GRU task!"
-                hint localize format["--- player is on GRU duty and no allowed into %1",typeOf _veh];
+                hint localize format["--- player is on GRU duty and not allowed into %1",typeOf _veh];
             };
     #ifdef __DISABLE_GRU_BE_PILOTS__
             if (_not_allowed && _player_is_GRU) exitWith

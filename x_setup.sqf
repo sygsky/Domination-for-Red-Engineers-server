@@ -164,3 +164,6 @@
 
 // uncomment to disable GRU specalist to be pilot for battle air vehicles ( "SU", "Ka-50" etc), allow only "Mi-17 PKT" etc
 #define __DISABLE_GRU_BE_PILOTS__
+
+// uncomment to allow shotgun armed AI soldiers
+#define __ALLOW_SHOTGUNS__

@@ -3,7 +3,7 @@ private ["_p", "_pos", "_type", "_i", "_res", "_target_array", "_current_target_
 "_objstatus", "_xres", "_winner", "_target_array2", "_current_target_name", "_counterxx", "_marker_name", "_text",
 "_box", "_xx", "_units", "_strp", "_artinum", "_vec", "_ari1", "_respawn_marker", "_s",
 "_trigger", "_dbase_a", "_status", "_bravo", "_is_climber", "_types", "_action", "_ar", "_mcctypeaascript", "_num",
-"_thefac", "_element", "_posf", "_facid", "_exit_it", "_boxname", "_dir", "_oldscore","_string_player",
+"_thefac", "_element", "_posf", "_facid", "_exit_it", "_boxname", "_dir", "_oldscore","_string_player","_local_msg_arr",
 "_rad","_old_rank"];
 if (!X_Client) exitWith {};
 
@@ -1073,6 +1073,10 @@ if (player_can_call_drop) then {
 		execVM "x_scripts\x_dropradiocheck.sqf";
 	};
 };
+#endif
+
+#ifdef __DISABLE_GRU_BE_PILOTS__
+if ( _string_player in d_can_use_artillery ) then {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_1219"]}; // "GRU officers are unable to control the air vehicles"
 #endif
 
 // play with EditorUpdate_v102.pbo
