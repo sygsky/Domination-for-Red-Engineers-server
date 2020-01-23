@@ -52,20 +52,20 @@ _makeNameObject = {
 };
 
 _rocketJavelin  =
-[           // M_Javelin_AT
-    0,
-    0,     //_missilebody   =  _type;
-    0,     //_speedini      =  (speed _missile)/3.6;
-    250,   // speedmax
-    100,   // acceleration
-    0,     // boomrange
-    280,   // activerange
-    0,     // modeinit
-    100,   // cruisealt
-    "s\warheads\ace_mando_warhead_javelin.sqf",
-    "",    // smokescript
-    "",    // soundrsc
-    29,    // sounddur
+[          // M_Javelin_AT
+    0,     // ?
+    0,     // 1: _missilebody   =  _type;
+    0,     // 2:_speedini      =  (speed _missile)/3.6;
+    250,   // 3:speedmax
+    100,   // 4:acceleration
+    0,     // 5:boomrange
+    280,   // 6:activerange
+    0,     // 7:modeinit
+    100,   // 8:cruisealt
+    "s\warheads\ace_mando_warhead_javelin.sqf", // 9
+    "",    // 10: smokescript
+    "",    // 11: soundrsc
+    29,    // 12: sounddur
     16,    //8,     // endurance 14th
     false, // 9 terrainavoidance
     1,     // 10 updatefreq
@@ -98,13 +98,13 @@ _applyJavelin1 = {
 
 _rocketStinger =
 [
-     0,
-     0,
-     2,
-     680,
-     175,
-     3,
-     5000,
+     0, //0
+     0, //1
+     2, //2
+     680, //3: maxspeed
+     175, //4: acceleration
+     3, //5: boomrange
+     7000, //6: activerange
      2,
      50,
      "s\warheads\ace_mando_warhead_stinger.sqf",
