@@ -525,9 +525,9 @@ if ( !isNil "d_on_base_groups") then
 };
 
 if ( _debug ) then
-	{player globalChat "--- sabotage.sqf: --- Exiting sabotage group script ---";};
+	{player globalChat format["--- sabotage.sqf: --- Exiting sabotage group script, d_on_base_groups %1 ---",d_on_base_groups]};
 #ifdef __PRINT__
-	hint localize "--- sabotage.sqf: --- Exiting sabotage group script ---";
+	hint localize format["--- sabotage.sqf: --- Exiting sabotage group script, d_on_base_groups %1 ---",d_on_base_groups];
 #endif	
 
 if (true) exitWith 

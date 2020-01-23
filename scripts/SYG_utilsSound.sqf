@@ -7,7 +7,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG__
+#define __DEBUG__
 
 #define arg(x) (_this select(x))
 #define argp(param,x) ((param)select(x))
@@ -98,8 +98,8 @@ SYG_defeatTracks =
 
 // Play music form partial track (Arma-1 embed music and some long custom sounds may be)
 // call as:
-// [name, start, length (seconds)] call __SYG_playMusicPartialTrack;
-__SYG_playMusicPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
+// [name, start, length (seconds)] call SYG_playPartialTrack;
+SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -170,7 +170,7 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
-
+    hint localize "+++ SYG_playRandomDefeatTrackByPos +++";
 	if (typeName _this != "ARRAY") then // called as: _unit call  SYG_playRandomDefeatTrackByPos;
 	{
 	    _this = position _this;
@@ -183,6 +183,7 @@ SYG_playRandomDefeatTrackByPos = {
 	        {
     	        playSound "helicopter_fly_over";
     	        _done = true;
+  	            hint localize "+++ SYG_playRandomDefeatTrackByPos: helicopter_fly_over, done";
 	        };
 	    };
 	};
@@ -206,12 +207,14 @@ SYG_playRandomDefeatTrackByPos = {
     if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith
     {
         SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_chorusDefeatTracks, done";
     };
 
     // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
         SYG_baseDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_baseDefeatTracks, done";
     };
 
     // check if we are near TV-Tower
@@ -220,6 +223,7 @@ SYG_playRandomDefeatTrackByPos = {
     {
         _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_TVTowerDefeatTracks, say_sound, done";
     };
 
     // check if we are near castle
@@ -227,16 +231,19 @@ SYG_playRandomDefeatTrackByPos = {
     if ( ((count _castleArr) > 0) && ((random 10) > 1)) exitWith
     {
         SYG_MedievalDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_MedievalDefeatTracks, done";
     };
 
     if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
         SYG_islandDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_islandDefeatTracks, done";
     };
 
     if (_this call SYG_pointOnRahmadi) exitWith // always if on Rahmadi
     {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_RahmadiDefeatTracks, done";
     };
 
     // death in water
@@ -368,7 +375,7 @@ SYG_playRandomTrack = {
             {
                 // in rare case (more then 30-40 death in one session) play whole track
     #ifdef __DEBUG__
-                hint localize format[ "SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
+                hint localize format[ "*** SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
     #endif
                 SYG_deathCountCnt = 0;
                 if (call SYG_playExtraSounds) then { playMusic arg(0); };
@@ -382,14 +389,14 @@ SYG_playRandomTrack = {
             if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
             {
 #ifdef __DEBUG__
-                hint localize format["__SYG_playMusicPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
+                hint localize format["*** SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
 #endif
-                [arg(0),argp(_trk,0),argp(_trk,1)] spawn __SYG_playMusicPartialTrack;
+                [arg(0),argp(_trk,0),argp(_trk,1)] spawn SYG_playPartialTrack;
             }
             else
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
+                hint localize format["*** SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
 #endif
                 playMusic [arg(0),argp(_trk,0)];
             };
