@@ -48,10 +48,16 @@ x_creategroup = {
 
 };
 
+// Gets array of 100 base point in circle of designated radious
+// call: _wp_arr = [_pnt, _radius <, _pnt_num>] call x_getwparray
 x_getwparray = {
-	private["_tc", "_radius","_wp_a","_point"];
-	_tc = _this select 0;_radius = _this select 1;_wp_a = [];
-	for "_i" from 1 to 100 do {
+	private["_tc", "_radius","_wp_a","_point","_pnt_num"];
+	_tc = _this select 0;
+	_radius = _this select 1;
+	_wp_a = [];
+	if ( (count _this) >= 3) then {_pnt_num = _this select 2} else {_pnt_num = 100};
+
+	for "_i" from 1 to _pnt_num do {
 		_point = [_tc, _radius] call XfGetRanPointCircle;
 		while {count _point == 0} do {
 			_point = [_pos_center, _radius] call XfGetRanPointCircle;
@@ -63,6 +69,8 @@ x_getwparray = {
 	_wp_a
 };
 
+// Gets array of 100 base point ion the circle of designated radious norder
+// call: _wp_arr = [_pnt, _radius] call x_getwparray2
 x_getwparray2 = {
 	private["_tc", "_radius","_wp_a","_point"];
 	_tc = _this select 0;_radius = _this select 1;_wp_a = [];
@@ -78,6 +86,8 @@ x_getwparray2 = {
 	_wp_a
 };
 
+// Gets array of 100 base point in rectangle of designated radious
+// call: _wp_arr = [_pnt, _radius] call x_getwparray3
 x_getwparray3 = {
 	private ["_pos","_a","_b","_angle","_wp_a","_point"];
 	_pos = _this select 0;_a = _this select 1;_b = _this select 2;_angle = _this select 3;_wp_a = [];

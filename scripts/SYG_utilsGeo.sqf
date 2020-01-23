@@ -934,7 +934,7 @@ SYG_geoDist = {
 };
 
 //
-// Get position for nany kind of object.
+// Get position for any kind of object.
 // Call as: _pos = _obj call SYG_getPos;
 //
 SYG_getPos = {
@@ -943,4 +943,14 @@ SYG_getPos = {
     if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this};
     [0,0,0]
 };
+
+//
+// Get random Wide Point in the 2-D tor (between 2 designated radius)
+// call as: [_center,_rad1,_rad2] call SYG_getWPointBetweenTwoRadius
+//
+SYG_getWPointBetweenTwoRadius = {
+    // TODO: realize this method to find place for bonus vehicle
+};
+
+
 if (true) exitWith {};
