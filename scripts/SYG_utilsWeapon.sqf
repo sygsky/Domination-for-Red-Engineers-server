@@ -45,16 +45,16 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SNIPER_WEAPON_LIST_EAST = ["KSVK", "SVD", "aks74pso", "ACE_VSS"];
 	SNIPER_WEAPON_LIST = SNIPER_WEAPON_LIST_WEST + SNIPER_WEAPON_LIST_EST;
 	
-	MG_WEAPON_LIST_WEST = ["M240", "M249", "ACE_MG36", "M60"];
+	MG_WEAPON_LIST_WEST = ["M240", "M249", "ACE_MG36"/*, "M60"*/]; // M60 is not good weapon
 	MG_WEAPON_LIST_EAST = ["PK", "ACE_RPK74", "ACE_RPK47"];
 	MG_WEAPON_LIST = MG_WEAPON_LIST_WEST + MG_WEAPON_LIST_EAST;
 
 	SMG_WEAPON_LIST = ["MP5SD", "ACE_MK13", "AKS74U"]; // All base classes for SMG/Short Muzzle Guns
 	
 	LAUNCHER_WEAPON_LIST = ["Launcher"];
-	LIGHT_LAUNCHER_WEAPON_LIST = ["ACE_RPG22","ACE_M72"];
+	LIGHT_LAUNCHER_WEAPON_LIST = [ "ACE_RPG22","ACE_M72" ];
 
-	LONG_MUZZLE_WEAPON_LIST = [ "KSVK", "SVD", "ACE_M14"] +SNIPER_WEAPON_LIST_WEST + MG_WEAPON_LIST;
+	LONG_MUZZLE_WEAPON_LIST = [ "KSVK", "SVD", "ACE_M14" ] + SNIPER_WEAPON_LIST_WEST + MG_WEAPON_LIST;
 	
 	//================================================
 	
@@ -124,7 +124,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	// std weapon
 	SYG_HK416_WPN_SET_STD = ["ACE_HK416","ACE_HK416_aim","ACE_HK416_eotech"];
 	SYG_HK416_WPN_SET_STD_OPTICS = ["ACE_HK416_ACOG"];
-	//SYG_HK416_WPN_SET_STD_SD = ["ACE_HK416_SD","ACE_HK416_aim_SD","ACE_HK416_eotech_SD"];
+	SYG_HK416_WPN_SET_STD_SD = ["ACE_HK416_SD","ACE_HK416_aim_SD","ACE_HK416_eotech_SD"];
 	//SYG_HK416_WPN_SET_STD_SD_OPTICS = ["ACE_HK416_ACOG_SD"];
 	SYG_HK416_WPN_SET_SNIPER = ["ACE_Mk12SPR","ACE_HK416_Leu"];
 	//SYG_HK416_WPN_SET_SNIPER_SD = ["ACE_Mk12SPR_SD","ACE_HK416_Leu_SD"];
@@ -140,12 +140,15 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 
 	SYG_M16_WPN_SET_ALL_OPTICS = SYG_M16_WPN_SET_STD_OPTICS + SYG_M16_WPN_SET_SNIPER /*+ SYG_M16_WPN_SET_SNIPER_SD*/;
 
-	SYG_ORDINAL_WPNSET_SD =	[
+	SYG_ORDINAL_WPNSET_SD = SYG_SCARL_WPN_SET_STD_SD + SYG_HK416_WPN_SET_STD_SD + ["ACE_M4A1AimPointSD"];
+/*
+	[
         "ACE_M4A1AimPointSD",
         "ACE_SCAR_L_CQB_SD","ACE_SCAR_L_CQB_Aim_SD",
-        "ACE_HK416_SD","ACE_HK416_aim_SD"
+        "ACE_HK416_SD","ACE_HK416_aim_SD","ACE_HK416_eotech_SD"
 	];
-	SYG_ORDINAL_WPNSET_SD_GL =	["ACE_HK416_gl_SD","ACE_HK416_aim_gl_SD","ACE_HK416_eotech_SD","ACE_HK416_eotech_gl_SD"];
+*/
+	SYG_ORDINAL_WPNSET_SD_GL =	["ACE_HK416_gl_SD","ACE_HK416_aim_gl_SD","ACE_HK416_eotech_gl_SD"]; // Not used anywhere
 	// ---------------------------------------------------------------------------------
  	// HK417 weapon arrays
 	// std weapon
@@ -165,7 +168,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_SCARL_WPN_SET_STD = ["ACE_SCAR_L","ACE_SCAR_L_CQB_EOtech","ACE_SCAR_L_CQB_Aim","ACE_SCAR_L_CQB_Docter"] ;
 	SYG_SCARL_WPN_SET_STD_OPTICS = ["ACE_SCAR_L_ACOG","ACE_SCAR_L_CQB_mk4","ACE_SCAR_L_Specter","ACE_SCAR_L_shortdot"] ;
 	// silenced weapon
-	//SYG_SCARL_WPN_SET_STD_SD = ["ACE_SCAR_L","ACE_SCAR_L_CQB_EOtech_SD","ACE_SCAR_L_CQB_Aim_SD","ACE_SCAR_L_CQB_Docter_SD"] ;
+	SYG_SCARL_WPN_SET_STD_SD = ["ACE_SCAR_L_CQB_SD","ACE_SCAR_L_CQB_EOtech_SD","ACE_SCAR_L_CQB_Aim_SD","ACE_SCAR_L_CQB_Docter_SD"] ;
 	//SYG_SCARL_WPN_SET_STD_SD_OPTICS = ["ACE_SCAR_L_ACOG_SD","ACE_SCAR_L_CQB_mk4_SD","ACE_SCAR_L_Specter_SD","ACE_SCAR_L_shortdot_SD"] ;
 	// sniper weapon
 	SYG_SCARL_WPN_SET_SNIPER =  ["ACE_SCAR_L_Marksman", "ACE_SCAR_L_Marksman_ACOG","ACE_SCAR_L_Marksman_Leu"];
@@ -437,13 +440,16 @@ SYG_hasAnyMine = {
 SYG_rearmSabotage = {
 // 	["ACE_SquadLeaderW_A","ACE_SoldierWDemo_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWDemo_USSF_LRSD","ACE_SoldierWDemo_USSF_ST"];
 
-private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_i"];
+    private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_i","_allow_shotgun","_smoke_grenade"];
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
 	{
 		_unit = arg(0);
 		_unit_type = typeOf _unit;
 		_prob = argopt(1, 0.7);
 		_adv_rearm = argopt(2, 0.1); // do advanced rearming  (true) or not (false)
+#ifdef __ALLOW_SHOTGUNS__
+        _allow_shotgun = argopt(3, true);
+#endif
 	}
 	else	// _this call
 	{
@@ -451,6 +457,9 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 		_unit_type = typeOf _unit;
 		_prob = 0.7;
 		_adv_rearm = 0.1;
+#ifdef __ALLOW_SHOTGUNS__
+        _allow_shotgun = true;
+#endif
 	};
 	_ret = false;
 	_rnd = random 1.0;
@@ -572,7 +581,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 			//if (!(_unit hasWeapon "Binocular")) then {	_unit addWeapon "Binocular"; };
 		};
 	}
-	else
+	else // AI is not rearmed (used standart equipment)
 	{
 		/* 
 			men to replace some weapons:
@@ -590,7 +599,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 		_addMags      = []; // add mags
 		switch (_unit_type) do
 		{
-			case "ACE_SquadLeaderW_A": {_addWpn = ["ACE_M136"]; _addMags = ["ACE_AT4_HP"];};
+			case "ACE_SquadLeaderW_A": {_removeMags = ["ACE_SmokeGrenade_White"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_AT4_HP",_smoke_grenade];}; // He has 2 empty slots!!!
 			case "ACE_SoldierWDemo_A":  {_removeMags = ["ACE_TimeBomb"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_PipeBomb", "ACE_AT4_HP"];};
 			case "ACE_SoldierWDemo_USSF_LRSD":  {_removeMags = ["ACE_Claymore_M"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_PipeBomb", "ACE_AT4_HP"];};
 			case "ACE_SoldierWDemo_USSF_ST":  {_removeMags = ["ACE_Claymore_M"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_PipeBomb", "ACE_AT4_HP"];};
@@ -621,8 +630,6 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
             _unit addWeapon _x;
         }forEach _addWpn;
 
-		// replace mines to ensure pipebombs ammunition
-//		[_unit, "ACE_PipeBomb", ["PipeBomb","TimeBomb","ACE_TimeBomb","ACE_Mine","ACE_Claymore_M"]/*, "ALL"*/] call SYG_handleMags; // replace only 1st found designated magazine type
 		_ret = true;
 		//	player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, NOT rearmed", _unit_type, _prob, _adv_rearm, _rnd]
 	};
@@ -840,6 +847,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 		}
 		else
 		{
+#ifdef __ALLOW_SHOTGUNS__
 		    private ["_mags"];
 		    switch (_unit_type) do
 		    {
@@ -860,6 +868,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
    				_equip = _equip + [["P", _wpn, _mags, 7]];
                 _ret = [_unit,_equip] call SYG_armUnit;
 		    };
+#endif
 		};
 	};
     if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
@@ -923,7 +932,7 @@ SYG_rearmSpecopsGroupA = {
  *    Default 0.1. Range 0.0 <-> 1.0
  */
 SYG_rearmBasic = {
-	private ["_unit","_prob","_adv_rearm","_super_rearm","_ret","_rnd","_wpn","_equip","_i"];
+	private ["_unit","_prob","_adv_rearm","_super_rearm","_ret","_rnd","_wpn","_equip","_i","_smoke_grenade","_magnum"];
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
 	{
 		_unit = arg(0);
@@ -1130,8 +1139,6 @@ SYG_rearmGovernor = {
 	};
 	_rnd = random 1.0;
 	_magnum = 10;
-    // remove useless binocular from inventory
-	if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	if ( _rnd < _prob ) then  // do ordinal rearming
 	{
 //		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
@@ -1146,9 +1153,17 @@ SYG_rearmGovernor = {
 		_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, _magnum],["ACE_SmokeGrenade_Yellow",2]];
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
+        // remove useless binocular from inventory
+        if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
+
 		true
 	}
-	else {false};
+	else
+	{
+        // remove useless binocular from inventory
+        if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
+        false
+	};
 };
 
 // Heavy sniper
