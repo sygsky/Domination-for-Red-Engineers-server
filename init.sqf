@@ -131,6 +131,9 @@ if (isServer) then {
 	if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
 	else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
 
+	_vec = createVehicle ["ACE_AH64_AGM_HE", [9688.247070,10020.545898,0], [], 0, "NONE"];
+	_vec setDir 90;
+
     _medic_tent = createVehicle ["MASH", [9359.855469, 10047.625000,0], [], 0, "NONE"];
     _medic_tent setDir 189;
     ADD_HIT_EH(_medic_tent)
