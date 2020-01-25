@@ -1,4 +1,4 @@
-// x_netinitclient.sqf, created by Xeno, run on server, receive client messages
+// c, created by Xeno, run on server, receive client messages
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 #include "global_vars.sqf"
@@ -28,8 +28,24 @@
 
 SYG_msgToUserParser =
 {
-    private [ "_msg_arr","_msg_res","_name","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
-     "_msg_target_found","_ind"];
+
+    private [ "_msg_arr","_msg_fmt","_name","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
+     "_msg_target_found","_ind","_SYG_processSingleStr","_str"];
+
+
+    //
+    // call as: _newStr = _str call _SYG_processSingleStr; // _str is localized or not localized depending on its value.
+    //  if _str start with "STR" (case sensitive) it is localized in any case!!!
+    //
+    _SYG_processSingleStr = {
+        private ["_str"];
+        _str = toArray(toUpper(_this)); // e.g. [83,84,82,95,83,89,83,95,54,48,52] for  "STR_SYS_604"
+        if ( count _str <= 4) exitWith {_this};
+        // [83,84,82]
+        if ( (_str select 0 == 83) && (_str select 1 == 84) && (_str select 2 == 82) ) exitWith {localize _this };
+        _this
+    };
+
     _name = _this select 1;
     _msg_target_found = false;
     _vehicle_chat = false;
@@ -62,97 +78,90 @@ SYG_msgToUserParser =
         _msg_target_found = (_name == name player) || (_name == "") || (_name == "*");
     };
 
-    if ( _msg_target_found ) then // msg to this player || any
+    if ( !_msg_target_found ) exitWith {}; // target for message not found
+
+    // check for initial delay
+
+    if ( (count _this) > 4) then
     {
-        // check for initial delay
-
-        if ( (count _this) > 4) then
+        if ( (_this select 4) > 0 ) then
         {
-            if ( (_this select 4) > 0 ) then
-            {
-                sleep ( _this select 4 );
-            };
-            // try to say sound on 1st text showing
-            if ( (count _this) > 6 ) then
-            {
-                _sound = _this select 6;
-                if ( typeName _sound == "STRING" ) then { playSound _sound };
-            };
+            sleep ( _this select 4 );
         };
-        _delay = 4; // default delay between messages is 4 seconds
-        if ( count _this > 3 ) then
+        // try to say sound on 1st text showing
+        if ( (count _this) > 6 ) then
         {
-            if ( (_this select 3) > 0 ) then { _delay = (_this select 4) min 4}; // minimum delay is 4 seconds
+            _sound = _this select 6;
+            if ( typeName _sound == "STRING" ) then { playSound _sound };
         };
+    };
+    _delay = 4; // default delay between messages is 4 seconds
+    if ( count _this > 3 ) then
+    {
+        if ( (_this select 3) > 0 ) then { _delay = (_this select 4) min 4}; // minimum delay is 4 seconds
+    };
 
-        _msg_arr = _this select 2;
+    _msg_arr = _this select 2;
 #ifdef __PRINT__
-        hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
+    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
 #endif
-        // all string are localized only if previous string is "localize" (is skipped from output)
+
+    {
+        if (typeName _x == "STRING") then // it is not array but single string, put it to array and process as usuall
         {
-            _localize = false;
-            _msg_res = [];
+            _x = [_x]; // emulate as array with single item
+        };
+        // all string are localized only if previous string is "localize" (is skipped from output) or is of format "STR..."
+        _localize = false;
+        _msg_fmt = [];
+        {
+            if ( _localize ) then
             {
-                if ( _localize ) then
-                {
-                    _msg_res set [count _msg_res, localize (_x)]; // localize this format item
-                    _localize = false;
-                }
-                else
-                {
-                    if (typeName _x == "STRING" ) then
-                    {
-                        if ( toLower(_x) == "localize") then
-                        {_localize = true;}
-                        else
-                        {
-                            _str = toArray(toUpper(_x)); // e.g. [83,84,82,95,83,89,83,95,54,48,52] for  "STR_SYS_604"
-                            // [83,84,82]
-                            if ( count _str > 3) then
-                            {
-                                if ( (_str select 0 == 83) && (_str select 1 == 84) && (_str select 2 == 82) ) then
-                                { _msg_res set [count _msg_res, localize (_x)] }
-                                else
-                                { _msg_res set [count _msg_res, _x]; };
-                            } else {_msg_res set [count _msg_res, _x];};
-                        };
-                    }
-                    else
-                    {
-                        _msg_res set [count _msg_res, _x]; // not localize this format item
-                    };
-                };
-            } forEach _x; // parse each format item
-
-            _print_title = (count _this) < 6; // if no setting, let print title in screen middle, not only radio message at bottom
-            if (!_print_title) then  // value detected in param array, read and parse it
-            {
-                _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
-                if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
-                    then {_print_title = _print_title <= 0} // print only if value set to false
-                    else {_print_title = !_print_title}; // parse as boolean value, print if value == false
-            };
-
-            _msg_formatted = format _msg_res; // whole message formatted
-            if ( _print_title ) then // no title text disable parameter
-            {
-                titleText[ _msg_formatted, "PLAIN DOWN" ];
-            };
-
-            if (_vehicle_chat) then
-            {
-                [_name, _msg_formatted call XfRemoveLineBreak] call XfVehicleChat;
+                _msg_fmt set [count _msg_fmt, localize (_x)]; // localize this format item
+                _localize = false;
             }
             else
             {
-                ( _msg_formatted call XfRemoveLineBreak) call XfGlobalChat;
+                if (typeName _x == "STRING" ) then
+                {
+                    if ( toLower(_x) == "localize") exitWith { _localize = true; }; // Let's localize next string if it will exists
+                    _str = _x call _SYG_processSingleStr;
+                    _msg_fmt set [ count _msg_fmt, _str ];
+                }
+                else
+                {
+                    _msg_fmt set [count _msg_fmt, _x]; // not localize this format item
+                };
             };
+        } forEach _x; // parse each format item. Any item MUST be an array (or single string without following parameters, or array with a single string, doesnt matter)
 
-//					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_res, format _msg_res];
-            if ( (_delay > 0) && ((count _msg_arr) > 1 )) then { sleep _delay; };
-        } forEach _msg_arr; // for each messages: _x is format parameters array
-    };
+        _print_title = (count _this) < 6; // if no setting, let print title in screen middle, not only radio message at bottom
+        if (!_print_title) then  // value detected in param array, read and parse it
+        {
+            _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
+            if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
+                then {_print_title = _print_title <= 0} // print only if value set to false
+                else {_print_title = !_print_title}; // parse as boolean value, print if value == false
+        };
+
+        _msg_formatted = format _msg_fmt; // whole message formatted
+        if ( _print_title ) then // no title text disable parameter
+        {
+            titleText[ _msg_formatted, "PLAIN DOWN" ];
+        };
+
+        if (_vehicle_chat) then
+        {
+            [_name, _msg_formatted call XfRemoveLineBreak] call XfVehicleChat;
+        }
+        else
+        {
+            ( _msg_formatted call XfRemoveLineBreak) call XfGlobalChat;
+        };
+
+//					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_fmt, format _msg_fmt];
+        if ( (_delay > 0) && ((count _msg_arr) > 1 )) then { sleep _delay; };
+    } forEach _msg_arr; // for each messages: _x is format parameters array
 };
 
 XHandleNetStartScriptClient = {
@@ -433,7 +442,8 @@ XHandleNetStartScriptClient = {
                     _name = arg(2);
                     if (typeName (arg(2)) == "STRING") then
                     {
-                        _score =  argp(d_ranked_a,9);
+                        private ["_score"];
+                        _score =  round(argp(d_ranked_a,9)/2); // lower the points for main target
                         if ( (name player) == _name) then
                         {
                             _msg = format["%1 (+%2)! %3",localize "STR_MAIN_COMPLETED_BY_YOU", _score, _msg ];
@@ -487,6 +497,7 @@ XHandleNetStartScriptClient = {
 				// "Был уничтожен сервис по обслуживанию самолетов. Просите инженеров отремонтировать его ..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_220"] call XfHQChat;
 #ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
+                private ["_str_p"];
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #endif
@@ -506,6 +517,7 @@ XHandleNetStartScriptClient = {
 				//"Был уничтожен сервис по обслуживанию вертолетов. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_221"] call XfHQChat;
 #ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
+                private ["_str_p"];
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #endif
@@ -525,6 +537,7 @@ XHandleNetStartScriptClient = {
 				//"Был уничтожен сервис по восстановлению техники. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_222"] call XfHQChat;
 #ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
+                private ["_str_p"];
 				_str_p = format ["%1", player];
 				if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #endif
@@ -637,6 +650,7 @@ XHandleNetStartScriptClient = {
 			[(_this select 1),(_this select 2)] spawn XRecapturedUpdate;
 		};
 		case "mt_spotted": {
+		    private ["_townArr","_musicClassName"];
 			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
 			if ( !(call SYG_playExtraSounds) ) exitWith{};
             _townArr  = "NO_DEBUG" call SYG_getTargetTown;
