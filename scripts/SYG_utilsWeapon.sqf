@@ -273,7 +273,10 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
     [
         "ACE_M1014", "ACE_M1014_Eotech", "ACE_SPAS12"
     ];
-	
+
+	SYG_SHOTGUN_AMMO9 = [ "ACE_9Rnd_12Ga_Slug", "ACE_9Rnd_12Ga_Buck00"];
+	SYG_SHOTGUN_AMMO9 = [ "ACE_8Rnd_12Ga_Slug", "ACE_8Rnd_12Ga_Buck00"];
+
 	#define SYG_MAG_STD 0
 	#define SYG_MAG_SNIPER 1
 	#define SYG_MAG_STD_SD 2
@@ -862,9 +865,9 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 		            _wpn = RAR(SYG_SHOTGUN_SET);
 		        };
 		        if ( _wpn == "ACE_SPAS12" ) then
-		            { _mags = RAR([ "ACE_9Rnd_12Ga_Slug", "ACE_9Rnd_12Ga_Buck00"]) }
+		            { _mags = RAR(SYG_SHOTGUN_AMMO9) }
 		        else
-		            { _mags = RAR([ "ACE_8Rnd_12Ga_Slug", "ACE_8Rnd_12Ga_Buck00"]) };
+		            { _mags = RAR(SYG_SHOTGUN_AMMO8) };
    				_equip = _equip + [["P", _wpn, _mags, 7]];
                 _ret = [_unit,_equip] call SYG_armUnit;
 		    };

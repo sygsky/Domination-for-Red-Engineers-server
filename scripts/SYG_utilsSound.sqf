@@ -96,7 +96,7 @@ SYG_defeatTracks =
 
 ];
 
-// Play music form partial track (Arma-1 embed music and some long custom sounds may be)
+// Play music from partial track (Arma-1 embed music and some long custom sounds may be)
 // call as:
 // [name, start, length (seconds)] call SYG_playPartialTrack;
 SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
@@ -316,6 +316,8 @@ SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[2
 // 4. _arr = ["ATrack24"]; // play full track
 //
 SYG_playRandomTrack = {
+    private ["_this","_item","_trk"];
+
     //hint localize format["+++ scripts/SYG_utilsSound.sqf: input %1 +++",_this];
     if (typeName _this == "STRING") exitWith // 3. _arr = "ATrack24"; // play full track
     {
@@ -415,7 +417,7 @@ SYG_playRandomTrack = {
 // [ _caller, _sndArr] call SYG_moveSoundSource; // 1st sound ar index 0 from _sndArr is changed place to the _caller position
 //
 SYG_moveSoundSource = {
-	private ["_caller", "_id", "_args", "_snd", "_pos"];
+	private ["_caller", "_id", "_args", "_snd", "_pos","_arr"];
 
 	_caller = _this select 0;
 	_args = _this select 1; // [ [snd1, snd2 ...], pos ]
@@ -444,7 +446,7 @@ SYG_moveSoundSource = {
  */
 SYG_getSoundName = {
 
-    private ["_name","_type"];
+    private ["_name","_type","_isText","_str"];
 
     _name = _this;
     _isText = isText(configFile >> "CfgSounds" >> _name >> "name" );
@@ -498,13 +500,15 @@ SYG_playWeatherForecastMusic = {
  ] call SYG_playRandomTrack;
 };
 
+
 //
 // play random sound about death in tank
 // returns: true if player is russian and sound played
 //          or false if not russian and sound not played
 //
+SYG_tanks_music = [ "chiz_tanki_1", "chiz_tanki_2" ];
 SYG_playDeathInTankSound = {
-    if ( localize "LANGUAGE" == "RUSSIAN") exitWith { playSound RANDOM_ARR_ITEM(["chiz_tanki_1","chiz_tanki_2"]); true };
+    if ( localize "LANGUAGE" == "RUSSIAN") exitWith { playSound RANDOM_ARR_ITEM(SYG_tanks_music); true };
     false
 };
 

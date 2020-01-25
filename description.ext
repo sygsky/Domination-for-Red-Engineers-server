@@ -187,7 +187,7 @@ class CfgMusic
 //------------------------------------- END of Intro music list --------------------------------------------------
 
 
-//+++++++++++++++++++++++ Detect music
+//+++++++++++++++++++++++ Detect town music, if added, seek and add to the 'case "mt_spotted":' code in the file "x_netinitclient.sqf"
 
     class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
     class detected_Paraiso { name=""; sound[] = {\sounds\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
