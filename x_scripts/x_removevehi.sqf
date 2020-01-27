@@ -69,6 +69,9 @@ if ( (side _eunit) != d_side_player) exitWith{}; // killer is not player
 
 _vehs =  [_pos , SEARCH_DIST, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
+{ _x reveal _eunit } forEach _vehs; // just in case
+
+#ifdef __OLD__
 if (count _vehs == 0) exitWith {};
 _watch_cnt  = 0;
 _reveal_cnt = 0;
@@ -108,7 +111,7 @@ _reveal_cnt2 = 0;
 } forEach _vehs;
 hint localize format["+++ x_removevehi.sqf (%1): killer %2 at dist %3 m, bef/aft watched %4/%5,  known %6/%7 by enemy vehicles",
     _type, typeOf _eunit, round(_pos distance _eunit), _watch_cnt, _watch_cnt2, _reveal_cnt, _reveal_cnt2 ];
-
+#endif
 _vehs = nil;
 
 if (true) exitWith {};
