@@ -22,14 +22,14 @@ procWP = {
 	_wplist = _this select 1;
 	_boat = _this select 2;
 
-	hint format[ "procWP: wp1=[%1], %2 WPs]", _wp, count _wplist];
+	hint localize format[ "procWP: wp1=[%1], %2 WPs]", _wp, count _wplist];
 	
 	player globalChat format["procWP, %1 WPs", count _wplist];
 
 	for "_wpIndex" from 0 to ((count _wplist) - 1) do
 	{
 		_wpPos = _wplist select _wpIndex; // next way point position
-		hint format[ "WP %1, dist %2", _wpIndex, _boat distance _wpPos ];
+		hint localize format[ "WP %1, dist %2", _wpIndex, _boat distance _wpPos ];
 		_wp setWaypointPosition [ _wpPos, 0 ];
 		_wp setWaypointBehaviour "STEALTH";
 		_wp setWaypointCombatMode "WHITE";

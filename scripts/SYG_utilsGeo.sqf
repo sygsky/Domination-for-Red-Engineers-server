@@ -779,9 +779,9 @@ SYG_updateIntelBuilding = {
 //
 SYG_setMapPosToMainTarget = {
 	private ["_display","_ctrlmap","_start_pos"];
-	if ( (count _this) < 3) exitWith {hint format["Expected number of params to call SYG_setMapPosToMainTarget is %1 (invalid, must be 3)", count _this];};
+	if ( (count _this) < 3) exitWith {hint localize format["--- Expected number of params to call SYG_setMapPosToMainTarget is %1 (invalid, must be 3)", count _this];};
 	_display = findDisplay arg(0);
-	if (isNull _display) exitWith {hint format["Expected display id in [%1,%2,%3] call  SYG_setMapPosToMainTarget is invalid",arg(0),arg(1),arg(2)];};
+	if (isNull _display) exitWith {hint localize format["--- Expected display id in [%1,%2,%3] call  SYG_setMapPosToMainTarget is invalid",arg(0),arg(1),arg(2)];};
 	_ctrlmap = _display displayCtrl arg(1);
 	ctrlMapAnimClear _ctrlmap;
 
