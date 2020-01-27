@@ -19,6 +19,9 @@
 #define MAG_TRC 4
 
 //#define __DEBUG__
+#ifdef __ALLOW_SHOTGUNS__
+hint localize "#define __ALLOW_SHOTGUNS__";
+#endif
 
 if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static information
 {
@@ -33,81 +36,81 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 // ДЕСАНТ НА БАЗУ
 //##############################################################################
 	//SYG_SABOTAGE_WEST = ["ACE_SquadLeaderW_A","ACE_SoldierWDemo_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWDemo_USSF_LRSD","ACE_SoldierWDemo_USSF_ST"];
-	
+
 
 // ПЕХОТА В ГОРОДЕ
 //##############################################################################
-	// SYG_BASIC_WEST = ["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A","ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierWB_A","ACE_SoldierW_HMGAB"];	
-	
+	// SYG_BASIC_WEST = ["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A","ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierWB_A","ACE_SoldierW_HMGAB"];
+
 	SYG_MINE_LIST = ["ACE_PipeBomb","ACE_TimeBomb","ACE_Mine","ACE_MineE","ACE_Claymore_M","PipeBomb","TimeBomb","Mine","MineE"];
-	
+
 	SNIPER_WEAPON_LIST_WEST = ["ACE_M21", "M24", "m107", "ACE_Mk12SPR", "ACE_HK416_Leu","ACE_HK416_Leu_SD","ACE_HK416_Leu_gl", "ACE_HK416_Leu_gl_SD", "ACE_SCAR_L_Marksman", "ACE_HK417L_Leu", "ACE_HK417L_Leu_SD",  "ACE_SCAR_H_Sniper"];
 	SNIPER_WEAPON_LIST_EAST = ["KSVK", "SVD", "aks74pso", "ACE_VSS"];
 	SNIPER_WEAPON_LIST = SNIPER_WEAPON_LIST_WEST + SNIPER_WEAPON_LIST_EST;
-	
+
 	MG_WEAPON_LIST_WEST = ["M240", "M249", "ACE_MG36"/*, "M60"*/]; // M60 is not good weapon
 	MG_WEAPON_LIST_EAST = ["PK", "ACE_RPK74", "ACE_RPK47"];
 	MG_WEAPON_LIST = MG_WEAPON_LIST_WEST + MG_WEAPON_LIST_EAST;
 
 	SMG_WEAPON_LIST = ["MP5SD", "ACE_MK13", "AKS74U"]; // All base classes for SMG/Short Muzzle Guns
-	
+
 	LAUNCHER_WEAPON_LIST = ["Launcher"];
 	LIGHT_LAUNCHER_WEAPON_LIST = [ "ACE_RPG22","ACE_M72" ];
 
 	LONG_MUZZLE_WEAPON_LIST = [ "KSVK", "SVD", "ACE_M14" ] + SNIPER_WEAPON_LIST_WEST + MG_WEAPON_LIST;
-	
+
 	//================================================
-	
+
 	SYG_STD_MEDICAL_SET = [ ["ACE_Bandage",2], ["ACE_Morphine"] , ["ACE_Epinephrine"] ];
 	SYG_MEDIC_SET = [ ["ACE_Bandage",4], ["ACE_Morphine",2], ["ACE_Epinephrine",2] ];
-	
-	SYG_PILOT_GRENADE_SET = [["ACE_SmokeGrenade_Red"], ["ACE_SmokeGrenade_Green"], ["ACE_SmokeGrenade_Violet"], 
+
+	SYG_PILOT_GRENADE_SET = [["ACE_SmokeGrenade_Red"], ["ACE_SmokeGrenade_Green"], ["ACE_SmokeGrenade_Violet"],
 	                         ["ACE_SmokeGrenade_White"], ["ACE_SmokeGrenade_Yellow"], ["ACE_HandGrenade"]];
 	SYG_GL_SET = [["ACE_40mm_HEDP_M203",4]];
 
-	SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK = [ 
-				 ["S", "ACE_M1911", "ACE_7Rnd_1143x23_B_M1911", 4], 
+	SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK = [
+				 ["S", "ACE_M1911", "ACE_7Rnd_1143x23_B_M1911", 4],
 				 ["S", "ACE_M9", "ACE_15Rnd_9x19_B_M9", 4]
 				];
-	SYG_PISTOL_WPN_SET_WEST_STD_GLOCK = [ 
+	SYG_PISTOL_WPN_SET_WEST_STD_GLOCK = [
 				 ["S", "ACE_Glock17", "ACE_17Rnd_9x19_G17", 4],
 				 ["S", "ACE_Glock18", "ACE_33Rnd_9x19_G18", 4]
 				];
-				
+
 	SYG_PISTOL_WPN_SET_WEST_STD = SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK + SYG_PISTOL_WPN_SET_WEST_STD_GLOCK;
 
-	SYG_PISTOL_WPN_SET_WEST_STD_SD = [ 
-				 ["S", "ACE_M1911SD", "ACE_7Rnd_1143x23_B_M1911", 4], 
+	SYG_PISTOL_WPN_SET_WEST_STD_SD = [
+				 ["S", "ACE_M1911SD", "ACE_7Rnd_1143x23_B_M1911", 4],
 				 ["S", "ACE_M9SD", "ACE_15Rnd_9x19_SD_M9", 4]
 				];
-				
+
 	SYG_PISTOL_WPN_SET_WEST = SYG_PISTOL_WPN_SET_WEST_STD + SYG_PISTOL_WPN_SET_WEST_STD_SD;
 
 	SYG_PILOT_HANDGUN_EAST = [["S", "ACE_Scorpion", "ACE_20Rnd_765x17_vz61", 4]];
-	
-	SYG_SMG_WPN_SET_WEST = [ 
-				["P", "ACE_MP5A5", "ACE_30Rnd_9x19_B_MP5", 6], 
+
+	SYG_SMG_WPN_SET_WEST = [
+				["P", "ACE_MP5A5", "ACE_30Rnd_9x19_B_MP5", 6],
 				["P", "ACE_MP5SD", "ACE_30Rnd_9x19_SD_MP5", 6],
-				["P", "ACE_MP5A4", "ACE_30Rnd_9x19_B_MP5", 6], 
+				["P", "ACE_MP5A4", "ACE_30Rnd_9x19_B_MP5", 6],
 				["P", "ACE_UMP45", "ACE_25Rnd_1143x23_B_UMP45", 6],
 				["P", "ACE_UMP45_SD", "ACE_25Rnd_1143x23_B_UMP45", 6 ]
 				];
 
-	SYG_SMG_WPN_SET_EAST = [ 
-				["P", "ACE_AKS74U", "ACE_30Rnd_545x39_B_AK", 6], 
-				["P", "ACE_AKS74U_Cobra", "ACE_30Rnd_545x39_B_AK", 6], 
+	SYG_SMG_WPN_SET_EAST = [
+				["P", "ACE_AKS74U", "ACE_30Rnd_545x39_B_AK", 6],
+				["P", "ACE_AKS74U_Cobra", "ACE_30Rnd_545x39_B_AK", 6],
 				["P", "ACE_AKS74USD","ACE_30Rnd_545x39_SD_AK",6],
-				["P", "ACE_AKS74USD_Cobra", "ACE_30Rnd_545x39_SD_AK", 6], 
-				["P", "ACE_Bizon", "ACE_64Rnd_9x18_B_Bizon", 6], 
-				["P", "ACE_Bizon_SD", "ACE_64Rnd_9x18_B_Bizon_S", 6], 
+				["P", "ACE_AKS74USD_Cobra", "ACE_30Rnd_545x39_SD_AK", 6],
+				["P", "ACE_Bizon", "ACE_64Rnd_9x18_B_Bizon", 6],
+				["P", "ACE_Bizon_SD", "ACE_64Rnd_9x18_B_Bizon_S", 6],
 				["P", "ACE_Bizon_Cobra", "ACE_64Rnd_9x18_B_Bizon", 6],
 				["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon_S", 6]
 			];
-			
+
 	//================================================= SPECIFIC ACE WEAPONS AND MAGAZINES ================================
 
 	// ---------------------------------------------------------------------------------
-	
+
 	// ---------------------------------------------------------------------------------
  	// G36 weapon arrays
 	// std weapon
@@ -119,7 +122,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_MG36_WPN_SET = ["ACE_MG36"];
 
 	SYG_G36_WHOLE = SYG_G36_WPN_SET_STD + SYG_G36_WPN_SET_SNIPER;
-	// ---------------------------------------------------------------------------------			
+	// ---------------------------------------------------------------------------------
  	// HK416 weapon arrays
 	// std weapon
 	SYG_HK416_WPN_SET_STD = ["ACE_HK416","ACE_HK416_aim","ACE_HK416_eotech"];
@@ -140,7 +143,6 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 
 	SYG_M16_WPN_SET_ALL_OPTICS = SYG_M16_WPN_SET_STD_OPTICS + SYG_M16_WPN_SET_SNIPER /*+ SYG_M16_WPN_SET_SNIPER_SD*/;
 
-	SYG_ORDINAL_WPNSET_SD = SYG_SCARL_WPN_SET_STD_SD + SYG_HK416_WPN_SET_STD_SD + ["ACE_M4A1AimPointSD"];
 /*
 	[
         "ACE_M4A1AimPointSD",
@@ -152,7 +154,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	// ---------------------------------------------------------------------------------
  	// HK417 weapon arrays
 	// std weapon
-			
+
 	SYG_HK417_WPN_SET_STD = ["ACE_HK417C","ACE_HK417C_EOTECH","ACE_HK417L","ACE_HK417L_EOTECH","ACE_HK417L_M68"];
 	SYG_HK417_WPN_SET_STD_OPTICS = ["ACE_HK417C_ACOG","ACE_HK417L_ACOG"];
 	//SYG_HK417_WPN_SET_STD_SD = ["ACE_HK417C_SD", "ACE_HK417C_EOTECH_SD","ACE_HK417L_SD","ACE_HK417L_EOTECH_SD","ACE_HK417L_M68_SD"];
@@ -162,7 +164,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_HK417_MAGS = ["ACE_20Rnd_762x51_B_HK417", "ACE_20Rnd_762x51_SB_HK417", "ACE_20Rnd_762x51_B_HK417", "ACE_20Rnd_762x51_SB_HK417", "ACE_20Rnd_762x51_B_HK417"];
 
 
-	// ---------------------------------------------------------------------------------			
+	// ---------------------------------------------------------------------------------
  	// SCAR-L weapon arrays
 	// std weapon
 	SYG_SCARL_WPN_SET_STD = ["ACE_SCAR_L","ACE_SCAR_L_CQB_EOtech","ACE_SCAR_L_CQB_Aim","ACE_SCAR_L_CQB_Docter"] ;
@@ -176,7 +178,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_SCARL_WPN_SET_SNIPER_SD =  ["ACE_SCAR_L_Marksman_SD","ACE_SCAR_L_Marksman_Leu_SD" ];
 	SYG_SCARL_MAGS = ["ACE_30Rnd_556x45_B_Stanag", "ACE_20Rnd_556x45_SB_Stanag", "ACE_30Rnd_556x45_SD_Stanag", "ACE_20Rnd_556x45_SB_Stanag","ACE_30Rnd_556x45_BT_Stanag"];
 
-	// ---------------------------------------------------------------------------------			
+	// ---------------------------------------------------------------------------------
  	// SCAR-H weapon arrays
 	// std weapon
 	SYG_SCARH_WPN_SET_STD = ["ACE_SCAR_H","ACE_SCAR_H_CQB","ACE_SCAR_H_CQB_EOtech","ACE_SCAR_H_CQB_Aim","ACE_SCAR_H_CQB_Docter"];
@@ -190,8 +192,8 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	//SYG_SCARH_WPN_SET_SNIPER_SD =  ["ACE_SCAR_H_Sniper_SD"];
 	// mags: ordinal, sniper, silenced, sniper silenced, tracers
 	SYG_SCARH_MAGS = ["ACE_20Rnd_762x51_B_SCAR", "ACE_20Rnd_762x51_SB_SCAR", "ACE_20Rnd_762x51_B_SCAR", "ACE_20Rnd_762x51_B_SCAR","ACE_20Rnd_762x51_B_SCAR"];
-	
-	// ---------------------------------------------------------------------------------			
+
+	// ---------------------------------------------------------------------------------
  	// M14 weapon arrays
 	// std weapon
 	SYG_M14_WPN_SET_STD = ["ACE_M14","ACE_M14_reflex","ACE_M14_nam","ACE_M14_sop","ACE_M14_sop_aim","ACE_M14_sop_cmore", "ACE_M14_sop_eotech"];
@@ -203,13 +205,13 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_M14_WPN_SET_SNIPER =  ["ACE_M14_sop_dmr"];
 	// sniper weapon silenced
 	SYG_M14_WPN_SET_SNIPER_SD =  ["ACE_M14_sop_dmrS"];
-	
+
 	SYG_M14_WPN_SET_WHOLE = SYG_M14_WPN_SET_STD+SYG_M14_WPN_SET_STD_OPTICS+SYG_M14_WPN_SET_STD_SD+SYG_M14_WPN_SET_STD_SD_OPTICS+SYG_M14_WPN_SET_SNIPER+SYG_M14_WPN_SET_SNIPER_SD;
-	
+
 	// mags: ordinal, sniper, silenced, sniper silenced, tracers
 	SYG_M14_MAGS = ["ACE_20Rnd_762x51_B_M14","ACE_20Rnd_762x51_SB_M14", "ACE_20Rnd_762x51_B_M14","ACE_20Rnd_762x51_SB_M14","ACE_20Rnd_762x51_B_M14"];
-	
-	// ---------------------------------------------------------------------------------			
+
+	// ---------------------------------------------------------------------------------
  	// M21 SNIPER weapon arrays
 	// sniper weapon
 	SYG_M21_WPN_SET =  ["ACE_M21","ACE_M21_dmr","ACE_M21_police","ACE_M21_wdl"];
@@ -217,16 +219,16 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	//SYG_M21_WPN_SET_SD =  ["ACE_M21_dmrS"];
 	// mags: sniper
 	SYG_M21_MAGS = ["ACE_20Rnd_762x51_SB_M14"];
-	
-	// ---------------------------------------------------------------------------------			
+
+	// ---------------------------------------------------------------------------------
  	// M24 SNIPER weapon arrays
 	// sniper weapon
 	SYG_M24_WPN_SET =  [ "ACE_M24","ACE_M40A3"];
 	// mags: sniper
 	SYG_M24_MAGS = ["ACE_5Rnd_762x51_SB"];
-	
 
-	// ---------------------------------------------------------------------------------			
+
+	// ---------------------------------------------------------------------------------
  	// M110 SNIPER weapon arrays, average sniper weapon
 	SYG_M110_WPN_SET =  ["ACE_M110"];
 	// sniper weapon silenced
@@ -234,28 +236,28 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	SYG_M110_WPN_SET_WHOLE =  SYG_M110_WPN_SET/* + SYG_M110_WPN_SET_SD*/;
 	// mags: sniper
 	SYG_M110_MAGS = ["ACE_20Rnd_762x51_SB_M110"];
-	
-	// ---------------------------------------------------------------------------------			
+
+	// ---------------------------------------------------------------------------------
  	// HEAVYSNIPER weapon arrays (12.7 mm caliber)
 	// heavy sniper weapon
 
-	SYG_HEAVYSNIPER_WPN_SET =  
+	SYG_HEAVYSNIPER_WPN_SET =
 	[
 		["ACE_M82A1",[ "ACE_10Rnd_127x99_API_Barrett", "ACE_10Rnd_127x99_SB_Barrett", "ACE_10Rnd_127x99_BT_Barrett"]],
 		["ACE_M109",["ACE_5Rnd_25x59_HEDP_Barrett"]],
 		["ACE_AS50",["ACE_5Rnd_127x99_API_AS50", "ACE_5Rnd_127x99_AS50", "ACE_5Rnd_127x99_SB_AS50", "ACE_5Rnd_127x99_BT_AS50"]]
 	];
-	
-	// ---------------------------------------------------------------------------------			
+
+	// ---------------------------------------------------------------------------------
  	// MG weapon arrays (7.62 mm caliber). ACE_M60 is not good here - units often use pistol except it on short distance
-	SYG_M240_MG_WPN_SET =  
+	SYG_M240_MG_WPN_SET =
 	[
 		["ACE_M240G",["ACE_100Rnd_762x51_B_M240", "ACE_100Rnd_762x51_BT_M240", "ACE_50Rnd_762x51_B_M240", "ACE_50Rnd_762x51_BT_M240", "100Rnd_762x51_M240"]],
 		["ACE_M240G_M145",["ACE_100Rnd_762x51_B_M240", "ACE_100Rnd_762x51_BT_M240", "ACE_50Rnd_762x51_B_M240", "ACE_50Rnd_762x51_BT_M240", "100Rnd_762x51_M240"]]
 	];
 
  	// MG weapon arrays (5.56 mm caliber)
-	SYG_M249_MG_WPN_SET =  
+	SYG_M249_MG_WPN_SET =
 	[
 		["ACE_M249",["ACE_200Rnd_556x45_B_M249", "ACE_200Rnd_556x45_BT_M249"]],
 		["ACE_M249Para",["ACE_200Rnd_556x45_B_M249", "ACE_200Rnd_556x45_BT_M249"]],
@@ -275,17 +277,19 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
     ];
 
 	SYG_SHOTGUN_AMMO9 = [ "ACE_9Rnd_12Ga_Slug", "ACE_9Rnd_12Ga_Buck00"];
-	SYG_SHOTGUN_AMMO9 = [ "ACE_8Rnd_12Ga_Slug", "ACE_8Rnd_12Ga_Buck00"];
+	SYG_SHOTGUN_AMMO8 = [ "ACE_8Rnd_12Ga_Slug", "ACE_8Rnd_12Ga_Buck00"];
+
+	SYG_ORDINAL_WPNSET_SD = SYG_SCARL_WPN_SET_STD_SD + SYG_HK416_WPN_SET_STD_SD + ["ACE_M4A1AimPointSD"];
 
 	#define SYG_MAG_STD 0
 	#define SYG_MAG_SNIPER 1
 	#define SYG_MAG_STD_SD 2
 	#define SYG_MAG_SNIPER_SD 3
 	#define SYG_MAG_STD_TRACER 4
-	// ---------------------------------------------------------------------------------			
-				
+	// ---------------------------------------------------------------------------------
+
 	SYG_STD_PILOT_EQUIPMENT = SYG_STD_MEDICAL_SET + SYG_PILOT_GRENADE_SET + [["E", "NVGoggles"]];
-	
+
 	#define WeaponNoSlot            0   // Dummy weapons
 	#define WeaponSlotPrimary       1   // Primary weapon
 	#define WeaponSlotHandGun       2   // Handgun slot
@@ -323,7 +327,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	#define DEFINE_FILL_AMMO_BOX_FUNC_SNIPER(NAME) SYG_fillAmmoBox##NAME##_Sniper = { \
 	{ _this addWeaponCargo [_x, 10] } forEach SYG_##NAME##_WPN_SET_SNIPER; \
 	{ _this addWeaponCargo [_x, 10] } forEach SYG_##NAME##_WPN_SET_SNIPER_SD;} \
-	
+
 	SYG_WHOLE_MAG_LIST = [];
 
 	{ if (!(_x in SYG_WHOLE_MAG_LIST) ) then { SYG_WHOLE_MAG_LIST = SYG_WHOLE_MAG_LIST + [_x]; } } forEach SYG_HK416_MAGS;
@@ -335,7 +339,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	{ if (!(_x in SYG_WHOLE_MAG_LIST) ) then { SYG_WHOLE_MAG_LIST = SYG_WHOLE_MAG_LIST + [_x]; } } forEach SYG_M21_MAGS;
 	{ if (!(_x in SYG_WHOLE_MAG_LIST) ) then { SYG_WHOLE_MAG_LIST = SYG_WHOLE_MAG_LIST + [_x]; } } forEach SYG_M24_MAGS;
 	{ if (!(_x in SYG_WHOLE_MAG_LIST) ) then { SYG_WHOLE_MAG_LIST = SYG_WHOLE_MAG_LIST + [_x]; } } forEach SYG_M110_MAGS;
-/*	
+/*
 	{ // for each weapon set
 		{ // for each subweapon array item kind
 			{ // each magasize
@@ -348,11 +352,11 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	{
 		{ if (!(_x in SYG_WHOLE_MAG_LIST) ) then { SYG_WHOLE_MAG_LIST = SYG_WHOLE_MAG_LIST + [_x]; };} forEach (_x select 1);
 	}forEach SYG_HEAVYSNIPER_WPN_SET;
-	
+
 	{
 		{ if (!(_x in SYG_WHOLE_MAG_LIST) ) then { SYG_WHOLE_MAG_LIST = SYG_WHOLE_MAG_LIST + [_x]; };} forEach (_x select 1);
 	}forEach SYG_M240_MG_WPN_SET;
-	
+
 	{
 		{ if (!(_x in SYG_WHOLE_MAG_LIST) ) then { SYG_WHOLE_MAG_LIST = SYG_WHOLE_MAG_LIST + [_x]; }; } forEach (_x select 1);
 	}forEach SYG_M249_MG_WPN_SET;
@@ -437,39 +441,36 @@ SYG_hasAnyMine = {
  * params:
  *   _unit: unit to rearm with new weapon
  *   _rearm_probability: probabilty to reard unit. Optional. Default 0.5. Range 0.0 <-> 1.0
- *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional. 
+ *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional.
  *    Default 0.1. Range 0.0 <-> 1.0
  */
+//#define __DEBUG_SYG_rearmSabotage__
 SYG_rearmSabotage = {
 // 	["ACE_SquadLeaderW_A","ACE_SoldierWDemo_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWDemo_USSF_LRSD","ACE_SoldierWDemo_USSF_ST"];
 
-    private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_i","_allow_shotgun","_smoke_grenade"];
+#ifdef __DEBUG_SYG_rearmSabotage__
+    hint localize format["+++ SYG_rearmSabotage: %1", _this];
+#endif
+    private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_i","_allow_shotgun",
+             "_smoke_grenade","_glMuzzle"];
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
 	{
 		_unit = arg(0);
-		_unit_type = typeOf _unit;
-		_prob = argopt(1, 0.7);
-		_adv_rearm = argopt(2, 0.1); // do advanced rearming  (true) or not (false)
-#ifdef __ALLOW_SHOTGUNS__
-        _allow_shotgun = argopt(3, true);
-#endif
-	}
-	else	// _this call
-	{
-		_unit = _this;
-		_unit_type = typeOf _unit;
-		_prob = 0.7;
-		_adv_rearm = 0.1;
-#ifdef __ALLOW_SHOTGUNS__
-        _allow_shotgun = true;
-#endif
 	};
+    _unit_type = typeOf _unit;
+    _prob = argopt(1, 0.7);
+    _adv_rearm = argopt(2, 0.1); // do advanced rearming  (true) or not (false)
+#ifdef __ALLOW_SHOTGUNS__
+    _allow_shotgun = argopt(3, true);
+#endif
 	_ret = false;
 	_rnd = random 1.0;
 	_smoke_grenade = "ACE_SmokeGrenade_Violet";
 	_glMuzzle = false;
-	if ( _rnd < _prob ) then  // do rearming
-	{
+	if ( _rnd < _prob ) then  { // do rearming
+#ifdef __DEBUG_SYG_rearmSabotage__
+	    hint localize format["+++ SYG_rearmSabotage do full rearming for %1", _unit_type];
+#endif
 		_super_rearm = _rnd < (_adv_rearm / 3.0); // do super rearming  (true) or not (false)
 		_adv_rearm   = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] + SYG_STD_MEDICAL_SET;
@@ -480,7 +481,7 @@ SYG_rearmSabotage = {
 			case "ACE_SquadLeaderW_A":
 			{
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher + high penetration rocket
-				if ( _super_rearm ) then 
+				if ( _super_rearm ) then
 				{
 					switch (floor (random 4)) do
 					{
@@ -494,7 +495,7 @@ SYG_rearmSabotage = {
 				}
 				else
 				{
-					if ( _adv_rearm ) then 
+					if ( _adv_rearm ) then
 					{
 						_wpn = RAR(SYG_HK417_WPN_SET_STD);
 					}
@@ -502,6 +503,9 @@ SYG_rearmSabotage = {
 					{
 //						_wpn = RAR(SYG_HK416_WPN_SET_STD);
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
+#ifdef __DEBUG_SYG_rearmSabotage__
+        				hint localize format["+++ SYG_rearmSabotage _wpn %1 (%2)", _wpn,SYG_ORDINAL_WPNSET_SD];
+#endif
 					};
 				};
 				// check for GL muzzle for primary weapon
@@ -513,7 +517,7 @@ SYG_rearmSabotage = {
 			case "ACE_SoldierWMAT_A":
 			{
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher + 2 high penetration rocket2
-				if ( _super_rearm ) then 
+				if ( _super_rearm ) then
 				{
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				}
@@ -521,6 +525,9 @@ SYG_rearmSabotage = {
 				{
 //					_wpn = RAR(SYG_HK416_WPN_SET_STD);
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
+#ifdef __DEBUG_SYG_rearmSabotage__
+    				hint localize format["+++ SYG_rearmSabotage _wpn %1 (%2)", _wpn, SYG_ORDINAL_WPNSET_SD];
+#endif
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
@@ -529,6 +536,9 @@ SYG_rearmSabotage = {
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher+ high penetration rocket
 //				_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
+#ifdef __DEBUG_SYG_rearmSabotage__
+   				hint localize format["+++ SYG_rearmSabotage _wpn %1 (%2)", _wpn,SYG_ORDINAL_WPNSET_SD];
+#endif
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],[_smoke_grenade]]; // special mine
 			};
 			case "ACE_SoldierWAA": // TODO: add ACE rucksack with 1 "ACE_Stinger"
@@ -548,6 +558,9 @@ SYG_rearmSabotage = {
 					{
 //						_wpn = RAR(SYG_HK416_WPN_SET_STD);
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
+#ifdef __DEBUG_SYG_rearmSabotage__
+        				hint localize format["+++ SYG_rearmSabotage _wpn %1 (%2)", _wpn,SYG_ORDINAL_WPNSET_SD];
+#endif
 					};
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [[_smoke_grenade,2]];
@@ -555,7 +568,7 @@ SYG_rearmSabotage = {
 			case "ACE_SoldierWDemo_USSF_LRSD": // TODO: add ACE rucksack with 1 "ACE_PipeBomb"
 			{
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP",2]]; // average launcher + high penetration rocket
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				}
@@ -563,6 +576,9 @@ SYG_rearmSabotage = {
 				{
 //					_wpn = RAR(SYG_HK416_WPN_SET_STD_SD);
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
+#ifdef __DEBUG_SYG_rearmSabotage__
+       				hint localize format["+++ SYG_rearmSabotage _wpn %1 (%2)", _wpn,SYG_ORDINAL_WPNSET_SD];
+#endif
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] +	[[_smoke_grenade],["ACE_Claymore_M"], ["ACE_PipeBomb"]]; // special mine
 			};
@@ -571,22 +587,28 @@ SYG_rearmSabotage = {
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket
 //				_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
+#ifdef __DEBUG_SYG_rearmSabotage__
+  				hint localize format["+++ SYG_rearmSabotage _wpn %1 (%2)", _wpn,SYG_ORDINAL_WPNSET_SD];
+#endif
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [["ACE_PipeBomb"],[_smoke_grenade,2]]; // special equipment
 			};
-			default { /* player globalChat format["unit %1 not detected", _unit_type]; */ _ret = false; };
+			default {
+			 /* player globalChat format["unit %1 not detected", _unit_type]; */
+			 _ret = false; };
 		};
 		//player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, equip %5", _unit_type, _prob, _adv_rearm, _rnd, _equip];
 
-		if ( _ret ) then 
+		if ( _ret ) then
 		{
 			_ret = [_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
 			//if (!(_unit hasWeapon "Binocular")) then {	_unit addWeapon "Binocular"; };
-		};
+		}
+		else{ hint localize format["+++ SYG_rearmSabotage full rearming falied due to unknown soldier type %1", _unit_type]; };
 	}
 	else // AI is not rearmed (used standart equipment)
 	{
-		/* 
+		/*
 			men to replace some weapons:
 			"ACE_SquadLeaderW_A": nothing to replace (leader has no bombs)
 			"ACE_SoldierWDemo_A": "ACE_Claymore_M", "ACE_TimeBomb"
@@ -595,6 +617,9 @@ SYG_rearmSabotage = {
 			"ACE_SoldierWDemo_USSF_LRSD": "ACE_Claymore_M", "ACE_Claymore_M"
 			"ACE_SoldierWDemo_USSF_ST": "ACE_Claymore_M", "ACE_Claymore_M"
 		*/
+#ifdef __DEBUG_SYG_rearmSabotage__
+	    hint localize format["+++ SYG_rearmSabotage do partial rearming"];
+#endif
 		private ["_removeMags","_removeWpn","_addWpn","_addMags"];
 		_removeMags   = []; // remove mags
 		_removeWpn    = ""; // remove weapon
@@ -613,6 +638,7 @@ SYG_rearmSabotage = {
 			    _addWpn = ["ACE_M136"];
 			    _addMags = ["ACE_AT4_HP", "ACE_AT4_HP", "ACE_AT4_HP"];
 			};
+			default {   hint localize format["+++ SYG_rearmSabotage partial rearming failed due unknown soldier type %1",_unit_type ];};
 		};
 
         {
@@ -662,26 +688,31 @@ SYG_rearmSabotageGroup = {
 
 /**
  * Rearms unit if he is known to this code
- * List of units, used in ACE Sahrani Domination and known to this function: 	
+ * List of units, used in ACE Sahrani Domination and known to this function:
  * ["ACE_SoldierWSniper2_A","ACE_USMC8541A1A","ACE_SoldierWMAT_USSF_ST_BDUL","ACE_SoldierWAA","ACE_SoldierWB_USSF_ST_BDUL","ACE_SoldierW_Spotter_A","ACE_SoldierWMedic_A","ACE_SoldierWAT2_A"]
  * Returns: true if success, else false. F.e. if unit not known to function
- * calls as: 
+ * calls as:
  *      _res = [_unit<,_rearm_probability<,_advanced_probability>] call SYG_rearmSpecops;
  *      _res = _unit call SYG_rearmSpecops;
  * params:
  *   _unit: unit to rearm with new weapon
  *   _rearm_probability: probabilty to reard unit. Optional. Default 0.5. Range 0.0 <-> 1.0
- *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional. 
+ *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional.
  *    Default 0.1. Range 0.0 <-> 1.0
  */
+//#define __SYG_rearmSpecops__
 SYG_rearmSpecops = {
-private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_smoke_grenade"];
+#ifdef __SYG_rearmSpecops__
+    hint localize format["+++ SYG_rearmSabotage: %1", _this];
+#endif
+
+    private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_smoke_grenade"];
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
 	{
 		_unit = arg(0);
 		_unit_type = typeOf _unit;
 		_prob = argopt(1, 0.5);
-		_adv_rearm = argopt(2, 0.1); // do advanced rearming 
+		_adv_rearm = argopt(2, 0.1); // do advanced rearming
 	}
 	else	// _this call
 	{
@@ -695,6 +726,10 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 	_smoke_grenade = "ACE_SmokeGrenade_Green";
 	if ( _rnd < _prob) then  // do ordinal rearming
 	{
+#ifdef __SYG_rearmSpecops__
+        hint localize format["+++ SYG_rearmSabotage: %1 full rearming", _unit_type];
+#endif
+
 		_super_rearm = _rnd < (_adv_rearm / 2.0);
 		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] + SYG_STD_MEDICAL_SET;
@@ -704,7 +739,7 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 			case "ACE_SoldierWSniper2_A": // M21
 			{
 				_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_SD)] + SYG_STD_MEDICAL_SET;
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_wpn = RAR(SYG_SCARH_WPN_SET_SNIPER);
 				}
@@ -712,40 +747,40 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				{
 					_wpn = RAR(SYG_M21_WPN_SET + SYG_SCARL_WPN_SET_SNIPER + SYG_SCARL_WPN_SET_SNIPER_SD);
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]]; 
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]];
 				_equip = _equip + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			};
-			
+
 			case "ACE_USMC8541A1A": // M40A3
 			{
 				_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_SD)] + SYG_STD_MEDICAL_SET;
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_wpn = RAR(SYG_M110_WPN_SET_WHOLE);
 				}
 				else
 				{
-					_wpn = RAR(SYG_M24_WPN_SET); 
+					_wpn = RAR(SYG_M24_WPN_SET);
 				};
-				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]]; 
+				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]];
 				_equip = _equip + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			};
-			
+
 			case "ACE_SoldierW_Spotter_A":
 			{
 				_equip =  _equip + [["P","ACE_ANPRC77_Alice"], ["P","LaserDesignator"]] ;
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 				    _wpn = ([SYG_SCARH_WPN_SET_STD_OPTICS, SYG_SCARL_WPN_SET_STD_OPTICS, SYG_SCARH_WPN_SET_STD, SYG_G36_WPN_SET_STD] call XfRandomArrayVal) call XfRandomArrayVal;
 				}
 				else { _wpn = RAR(SYG_HK417_WPN_SET_STD_OPTICS); };
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]] + [[_smoke_grenade,2],["LaserBatteries"]];
 			};
-			
+
 		    case "ACE_TeamLeaderW_USSF_ST_DCUL"; // leader, arms as a lower soldier
 			case "ACE_SoldierWB_USSF_ST_BDUL":
 			{
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HP", 1]]; // small launcher
 					_wpn = RAR(SYG_SCARH_WPN_SET_STD);
@@ -758,11 +793,11 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 7]];
 				_equip = _equip + [[_smoke_grenade,1],["ACE_HandGrenadeTimed",2]];
 			};
-			
+
 			case "ACE_SoldierWAA":
 			{
 				_equip = _equip + [["P", "ACE_FIM92A", "ACE_Stinger"]]; // AA missile launcher
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_wpn = RAR(SYG_SCARH_WPN_SET_STD);
 				}
@@ -770,13 +805,13 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				{
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
 				};
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]]; 
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]];
 			};
-			
+
 			case "ACE_SoldierWAT2_A":
 			{
 				_equip = _equip + [["P", "ACE_Dragon", "ACE_Dragon"]]; // AT missile launcher
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
 				}
@@ -805,13 +840,13 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 
 			case "ACE_SoldierWMAT_USSF_ST_BDUL":
 			{
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
-					if ( _super_rearm ) then 
+					if ( _super_rearm ) then
 					{
 						_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket
 					}
-					else 
+					else
 					{
 						_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HP", 2]]; // small launcher + high penetration rocket
 					};
@@ -824,11 +859,11 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 7]] + [[_smoke_grenade,1]];
 			};
-			
+
 			case "ACE_SoldierWMedic_A":
 			{
 				_equip = SYG_MEDIC_SET + [[_smoke_grenade,2]];
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				}
@@ -836,44 +871,58 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 				{
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 				};
-				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 8]]; 
+				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 8]];
 				//player globalChat format["Medic equipped: %1", _equip];
 			};
-			
-			default { /* player globalChat format["unit %1 not detected", _unit_type]; */ _ret = false; };
+
+			default {  hint localize format["--- SYG_rearmSpecops: unit %1 not detected", _unit_type];  _ret = false; };
 		};
 		//player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, equip %5", _unit_type, _prob, _adv_rearm, _rnd, _equip];
 
-		if ( _ret ) then 
+		if ( _ret ) then
 		{
-			_ret = [_unit,_equip] call SYG_armUnit;
-		}
-		else
-		{
-#ifdef __ALLOW_SHOTGUNS__
-		    private ["_mags"];
-		    switch (_unit_type) do
-		    {
-		        case "ACE_TeamLeaderW_USSF_ST_DCUL";
-		        case "ACE_SoldierWB_USSF_ST_BDUL";
-		        case "ACE_SoldierWMAT_USSF_ST_BDUL":
-		        {
-		            // average launcher + high penetration rocket
-    				_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] +
-    				SYG_STD_MEDICAL_SET + [[_smoke_grenade,1]] +
-    				[["P", "ACE_M136", "ACE_AT4_HP", 2]];
-		            _wpn = RAR(SYG_SHOTGUN_SET);
-		        };
-		        if ( _wpn == "ACE_SPAS12" ) then
-		            { _mags = RAR(SYG_SHOTGUN_AMMO9) }
-		        else
-		            { _mags = RAR(SYG_SHOTGUN_AMMO8) };
-   				_equip = _equip + [["P", _wpn, _mags, 7]];
-                _ret = [_unit,_equip] call SYG_armUnit;
-		    };
+#ifdef __SYG_rearmSpecops__
+            hint localize format[ "+++ SYG_rearmSpecops: %1 rearmed", _unit_type ];
 #endif
+			_ret = [_unit,_equip] call SYG_armUnit;
 		};
 	};
+    if (!_ret) then
+    {
+#ifdef __SYG_rearmSpecops__
+        hint localize format[ "*** SYG_rearmSpecops: %1 not rearmed, try to  supply him with a shotgun", _unit_type ];
+#endif
+#ifdef __ALLOW_SHOTGUNS__
+        private ["_mags"];
+        switch (_unit_type) do
+        {
+            case "ACE_TeamLeaderW_USSF_ST_DCUL";
+            case "ACE_SoldierWB_USSF_ST_BDUL";
+            case "ACE_SoldierWMAT_USSF_ST_BDUL":
+            {
+                // average launcher + high penetration rocket
+                _equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] +
+                SYG_STD_MEDICAL_SET + [[_smoke_grenade,1]] +
+                [["P", "ACE_M136", "ACE_AT4_HP", 2]];
+                _wpn = RAR(SYG_SHOTGUN_SET);
+    #ifdef __SYG_rearmSpecops__
+                hint localize format["*** rearr shotgun: %1", _wpn];
+    #endif
+                if ( _wpn == "ACE_SPAS12" ) then
+                    { _mags = RAR(SYG_SHOTGUN_AMMO9) }
+                else
+                    { _mags = RAR(SYG_SHOTGUN_AMMO8) };
+                _equip = _equip + [["P", _wpn, _mags, 7]];
+#ifdef __SYG_rearmSpecops__
+                hint localize format["+++ SYG_rearmSpecops: %1 rearmed with shotgun %2", _unit_type, _equip ];
+#endif
+                _ret = [_unit,_equip] call SYG_armUnit;
+            };
+            default {};
+        };
+#endif
+    };
+
     if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
 	// remove useless binocular from inventory
     if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
@@ -884,9 +933,9 @@ private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip
 // Rearms specops group with std probablity
 //
 // call: _res = [_unit1,... , _unitN] call SYG_rearmSpecopsGroup; // array of units from specops list (see in according source files)
-//   or 
+//   or
 // call: _res = _unit call SYG_rearmSpecopsGroup; // single unit
-//   or 
+//   or
 // call: _res = _group call SYG_rearmSpecopsGroup; // group to rearm
 //
 // returned value will be the same: number of rearmed units
@@ -922,7 +971,7 @@ SYG_rearmSpecopsGroupA = {
 };
 
 /**
- * SYG_BASIC_WEST = ["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A","ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierWB_A","ACE_SoldierW_HMGAB"];	
+ * SYG_BASIC_WEST = ["ACE_SoldierWMG_A","ACE_SoldierWAR_A","ACE_SoldierWSniper_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAT2_A","ACE_SoldierWMedic_A","ACE_SoldierWG","ACE_SoldierW_HMG","ACE_SoldierW_HMGAG","ACE_SoldierWMiner","ACE_SoldierWB_A","ACE_SoldierW_HMGAB"];
  *
  * Rearms basic unit so that only mashingunners and snipers are concerned
  * Returns: true if success, else false. F.e. if unit not known to function
@@ -931,7 +980,7 @@ SYG_rearmSpecopsGroupA = {
  * params:
  *   _unit: unit to rearm with new weapon
  *   _rearm_probability: probabilty to reard unit. Optional. Default 0.5. Range 0.0 <-> 1.0
- *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional. 
+ *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional.
  *    Default 0.1. Range 0.0 <-> 1.0
  */
 SYG_rearmBasic = {
@@ -940,7 +989,7 @@ SYG_rearmBasic = {
 	{
 		_unit = arg(0);
 		_prob = argopt(1, 0.5);
-		_adv_rearm = argopt(2, 0.1); // do advanced rearming 
+		_adv_rearm = argopt(2, 0.1); // do advanced rearming
 	}
 	else	// _this call
 	{
@@ -958,7 +1007,7 @@ SYG_rearmBasic = {
 		_adv_rearm = _rnd < _adv_rearm;
 		scopeName "main";
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] + SYG_STD_MEDICAL_SET;
-		for "_i" from 0 to 0 do 
+		for "_i" from 0 to 0 do
 		{
 			if ( (typeOf _unit) isKindOf "SoldierWMG" ) then // M240
 			{ 	// rearm with some special kind of M240
@@ -968,7 +1017,7 @@ SYG_rearmBasic = {
 				_ret = true;
 				breakTo "main";
 			}; // "SoldierWMG"
-			
+
 			if ( (typeOf _unit) isKindOf "SoldierWAR" ) then  // M249
 			{	// rearm with some special kind of M249
 				_wpn = if ( _adv_rearm ) then {"ACE_M249Para_M145"} else {"ACE_M249Para"};
@@ -977,7 +1026,7 @@ SYG_rearmBasic = {
 				_ret = true;
 				breakTo "main";
 			}; // "SoldierWAR"
-			
+
 			if ( (typeOf _unit) == "ACE_SoldierWSniper_A" ) then  // M24-M40
 			{	// rearm with some special kind of M24-M40
 				_magnum = 9;
@@ -987,7 +1036,7 @@ SYG_rearmBasic = {
 				_ret = true;
 				breakTo "main";
 			}; //"ACE_SoldierWSniper_A"
-			
+
 			if ( (typeOf _unit) == "ACE_SoldierWMAT_A" ) then  // M136
 			{	// rearm with some special kind of m136/M72
 				if (_adv_rearm ) then
@@ -1005,11 +1054,11 @@ SYG_rearmBasic = {
 				_ret = true;
 				breakTo "main";
 			}; // "ACE_SoldierWMAT_A"
-			
+
 			if ( (typeOf _unit) == "ACE_SoldierWAT2_A" ) then  // Dragon
 			{	// rearm with Dragon
 				_equip = _equip + [["P", "ACE_Dragon", "ACE_Dragon"]]; // AT missile launcher
-				if ( _adv_rearm ) then 
+				if ( _adv_rearm ) then
 				{
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
 				}
@@ -1078,7 +1127,7 @@ SYG_rearmSpotter = {
 	{
 		_unit = arg(0);
 		_prob = argopt(1,0.666);
-		_adv_rearm = argopt(2,0.333); // do advanced rearming 
+		_adv_rearm = argopt(2,0.333); // do advanced rearming
 	}
 	else	// _this call
 	{
@@ -1094,7 +1143,7 @@ SYG_rearmSpotter = {
 		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD)] + SYG_STD_MEDICAL_SET;
 		_equip =  _equip + [["P","ACE_ANPRC77_Alice"], ["P","LaserDesignator"]] ;
-		if ( _adv_rearm ) then 
+		if ( _adv_rearm ) then
 		{
 			switch ( floor(random 4)) do
 			{
@@ -1132,7 +1181,7 @@ SYG_rearmGovernor = {
 	{
 		_unit = arg(0);
 		_prob = argopt(1,1.0);
-		_adv_rearm = argopt(2,0.95); // do advanced rearming 
+		_adv_rearm = argopt(2,0.95); // do advanced rearming
 	}
 	else	// _this call
 	{
@@ -1207,7 +1256,7 @@ SYG_rearmHeavySniper = {
 //
 SYG_rearmAroundAsHeavySniper = {
     private ["_pos","_dist","_num","_cnt","_str"];
-	if ( typeName _this != "ARRAY") exitWith { hint format["--- SYG_rearmAsHeavySniper: expected _this != ARRAY (%1)",_this] ;-1};
+	if ( typeName _this != "ARRAY") exitWith { hint localize format["--- SYG_rearmAsHeavySniper: expected _this != ARRAY (%1)",_this] ;-1};
 	_pos  = arg(0);
 	_dist = argopt(1,200);
 	_dist = (_dist max 50) min 500;
@@ -1245,9 +1294,9 @@ SYG_rearmAroundAsHeavySniper = {
 //
 // Some officer with M14
 //
-// call: 
+// call:
 //        _ret = _unit call SYG_rearmM14;
-// or call: 
+// or call:
 //        _ret = [_unit<,prob<,weapon_list>> call SYG_rearmM14;
 //
 // Where: prob is probability to rearm (< 1.0). Optional, default is 1.0
@@ -1388,7 +1437,7 @@ SYG_filterACEMagazines = {
 	{
 		for "_i" from 0 to (count _this) - 1 do
 		{
-			
+
 			if ( (getNumber ( configFile >> "CfgMagazines" >> (_this select _i) >> "ACE_HIDE" )) != 0 ) then
 			{
 				_this set [_i, "RM_ME"];
@@ -1423,7 +1472,7 @@ SYG_replacePrimaryWeapon = {
 	_unit   = arg(0);
 	_newWpn = arg(1);
 	_mag    = arg(2);
-	
+
 	_wpn = primaryWeapon _unit;
 	if ( _wpn != "" ) then {
 		_this removeWeapon _wpn;
@@ -1431,16 +1480,16 @@ SYG_replacePrimaryWeapon = {
 		_mags = magazines _unit;
 		_magCnt = 0; // count how many primary magazines unit has
 		{
-			if ( _x in _cmags and _x != _mag) then 
+			if ( _x in _cmags and _x != _mag) then
 				{_magCnt = _magCnt + 1; _unit removeMagazine _x };
 		} forEach _mags;
 	}
-	else 
+	else
 	{
 		if ( count _this > 3 ) then { _magCnt = arg(3); };
 	};
 	//_magCnt = _magCnt max 1; // at last 1 magazine must be present
-	if ( _magCnt > 0 ) then 
+	if ( _magCnt > 0 ) then
 	{
 		for "_i" from 1 to _magCnt do { _unit addMagazine _mag }; // add new magazines
 	};
@@ -1482,7 +1531,7 @@ SYG_removeNVGoggles = {
 };
 
 /*
- * Arms pilot with full ammunition. Work only for real pilot units of WEST and EAST returning true. 
+ * Arms pilot with full ammunition. Work only for real pilot units of WEST and EAST returning true.
  * Other units are not armed and function returns false
  * Call: _res = _unit call SYG_armPilotFull;
  */
@@ -1518,20 +1567,24 @@ SYG_armPilotFull = {
  *
  * Example: [_unit, [ ["P", "ACE_MP5A5", "ACE_30Rnd_9x19_B_MP5", 6], ["S", "ACE_Glock18", "ACE_33Rnd_9x19_G18", 4], ["M", "ACE_Bandage", 2], ["M", "ACE_Morphine",2], ["M", "ACE_MON100",2] ] ] call SYG_armUnit
  */
+// #define __SYG_armUnit__
 SYG_armUnit = {
+#ifdef __SYG_armUnit__
+    hint localize format["+++ SYG_armUnit(main): %1", _this];
+#endif
 	private [ "_itemCnt", "_itemType", "_pos", "_i", "_j", "_unit", "_args", "_primWpn", "_wpn", "_magCnt", "_secondWpn",
 	"_equipList", "_arr", "_bsetWeapon","_muzzles", "_mag" ];
 	if ( typeName _this != "ARRAY" ) exitWith {false};
 	_itemCnt = count _this;
-	if ( _itemCnt < 1 ) exitWith { hint format["SYG_armUnit: Expected number of args >= 1, found %1", _itemCnt]; false };
-	
+	if ( _itemCnt < 1 ) exitWith { hint localize format["+++ SYG_armUnit: Expected number of args >= 1, found %1", _itemCnt]; false };
+
 	_unit = arg(0);
 	if ( typeName _unit != "OBJECT") exitWith {hint localize format["--- SYG_armUnit: _this == %1", _this]; false};
 	_arr = arg(1); // main array
-	
-	if ( (typeName _arr) != "ARRAY" ) exitWith 
+
+	if ( (typeName _arr) != "ARRAY" ) exitWith
 	{
-		hint format["--- SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
+		hint localize format["--- SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
 		false
 	};
 	_itemCnt = count _arr;
@@ -1543,63 +1596,60 @@ SYG_armUnit = {
 	if ( _itemCnt > 0 ) then
 	{
 		for "_i" from 0 to (_itemCnt - 1) do
-		{	
+		{
 			_args = _arr select _i; // get _i-th array with item definition (<wpn_type, wpn_name,> mag_name <, mag_count>) to add to unti
-			if ( (typeName _args) != "ARRAY" ) exitWith 
+			if ( (typeName _args) != "ARRAY" ) exitWith
 			{
-				hint localize format["SYG_armUnit: Item at pos %1 must be ARRAY, found %2 (%3)", _i, typeName _args, _args];
+				hint localize format["--- SYG_armUnit: Item at pos %1 must be ARRAY, found %2 (%3)", _i, typeName _args, _args];
 			};
 	//		player globalChat format["SYG_armUnit: add %1-th array[%2] = %3", _i, count _args, _args ];
 			_pos = 1;
 			_magCnt = 0;
 			// check 1st item of array, must be string in any case
-			if ( (typeName (_args select 0)) == "STRING" ) then
+			if ( (typeName (_args select 0)) != "STRING" ) exitWith
 			{
-				switch ( toUpper( _args select 0 ) ) do
-				{
-					case "P": // Primary weapon, magazines + its optional count  (default 1)
-					{
-						if ( _primWpn != "" ) then { _unit addWeapon _primWpn;}; // add previous weapon
-						_primWpn = _args select _pos; _pos = _pos + 1; // accept next weapon
-					};
-					
-					case "S": // Secondary weapon, magazines + its optional count  (default 1)
-					{ 
-						if ( _secondWpn != "" ) then { _unit addWeapon _secondWpn;}; // add previous weapon
-						_secondWpn = _args select _pos; _pos = _pos + 1;
-					};
-
-					case "M"; // Magazine[s], simply skip this character
-					{};
-
-					case "E": // special Equipment, binocular etc as the list of equipment ["E", _eqipment_1, _equipment_2, ...]
-					{
-					    for "_i" from 1 to (count _args - 1) do { _equipList = _equipList + [_args select _i]; _pos = _pos + 1;};
-					};
-					
-					default { _pos = 0; };
-				};
-				// it may be magazine sequence in follow form: [... "mag_name", mag_cnt]
-				if ( (count _args) > _pos ) then // read remaining items as magazine name and its count
-				{
-					_mag = _args select _pos; 
-					_pos = _pos + 1;
-					_magCnt = if ( (count _args) > _pos ) then { _args select _pos } else { 1 }; // get number of magazines
-					for "_j" from 1 to _magCnt do // adds all requested magazines directly now
-					{
-						_unit addMagazine _mag;
-					};
-				};
-			}
-			else
-			{
-				hint localize format["--- SYG_armUnit: 1st pos must be STRING, found '%1', skipped",  typeName (_args select  0) ];
+                hint localize format["--- SYG_armUnit: 1st pos must be STRING, found '%1', skipped",  typeName (_args select  0) ];
 			};
+            switch ( toUpper( _args select 0 ) ) do
+            {
+                case "P": // Primary weapon, magazines + its optional count  (default 1)
+                {
+                    if ( _primWpn != "" ) then { _unit addWeapon _primWpn;}; // add previous weapon
+                    _primWpn = _args select _pos; _pos = _pos + 1; // accept next weapon
+                };
+
+                case "S": // Secondary weapon, magazines + its optional count  (default 1)
+                {
+                    if ( _secondWpn != "" ) then { _unit addWeapon _secondWpn;}; // add previous weapon
+                    _secondWpn = _args select _pos; _pos = _pos + 1;
+                };
+
+                case "M"; // Magazine[s], simply skip this character
+                {};
+
+                case "E": // special Equipment, binocular etc as the list of equipment ["E", _eqipment_1, _equipment_2, ...]
+                {
+                    for "_i" from 1 to (count _args - 1) do { _equipList = _equipList + [_args select _i]; _pos = _pos + 1;};
+                };
+
+                default { _pos = 0; };
+            };
+            // it may be magazine sequence in follow form: [... "mag_name", mag_cnt]
+            if ( (count _args) > _pos ) then // read remaining items as magazine name and its count
+            {
+                _mag = _args select _pos;
+                _pos = _pos + 1;
+                _magCnt = if ( (count _args) > _pos ) then { _args select _pos } else { 1 }; // get number of magazines
+                for "_j" from 1 to _magCnt do // adds all requested magazines directly now
+                {
+                    _unit addMagazine _mag;
+                };
+            };
 		};
 	}; // if ( _itemCnt > 0 )
 	_bsetWeapon = ""; // weapon to select after adding
 	// add some special equipment
-	// load equipment 
+	// load equipment
 	{
 		_unit addWeapon _x;
 	} forEach _equipList;
@@ -1650,7 +1700,7 @@ SYG_armUnit = {
 //
 //  _success = [_unit, _str_arr] call SYG_rearmUnit;
 //
-// Example: 
+// Example:
 //
 SYG_rearmUnit =
 {
@@ -1671,9 +1721,9 @@ SYG_rearmUnit =
 	_list = arg(1); // read magazine list and add them to unit
 	{
 		// check if it is array: ["MAG_NAME", count]
-		if ( typeName _x == "ARRAY") then 
+		if ( typeName _x == "ARRAY") then
 		{
-			if ( count _x == 2) then 
+			if ( count _x == 2) then
 			{
 				_mag = argp(_x,0);
 				_cnt = argp(_x,1);
@@ -1685,13 +1735,13 @@ SYG_rearmUnit =
 		}
 		else // it is simple "MAG_NAME" item
 		{
-			if ( typeName _x == "STRING") then 
+			if ( typeName _x == "STRING") then
 			{
 				_unit addMagazine _x;
 			};
 		};
 	} forEach _list;
-	 
+
 	// read weapon list and select best in order of value: rifle, gun, pistol
 	_list = arg(0);
 	_rifle = ""; _sidearm = "";
@@ -1823,7 +1873,7 @@ SYG_isInList = {
 	_list = _this select 1;
 	_prev = "";
 	_retval = false;
-	while { true} do 
+	while { true} do
 	{
 		if (_name == "" ) exitWith {_retval = false;}; // not found rifle parent, it can be not weapon name
 		if ( _name == "rifle" ) exitWith { _retval = _prev in _list;}; // found rifle parent, prev must be MG kind or not
@@ -1838,7 +1888,7 @@ SYG_isInList = {
 // checks if unit (_this) has sniper rifle as primary weapon
 // Example: _unit call SYG_hasSniperRifle; // return true is unit has some kind of SVD, KSVK, M21, M24, M107 etc
 //
-SYG_hasSniperRifle = 
+SYG_hasSniperRifle =
 {
 	if (true) exitWith {(primaryWeapon _this) call SYG_isSniperRifle};
 //	player globalChat format["SYG_hasSniperRifle test on '%1'", primaryWeapon _this];
@@ -1885,7 +1935,7 @@ SYG_hasRadio =
 //
 // call: _wpnCls = "ACE_AKS74U" call SYG_weaponClass; // returns 1
 //
-// returns: 
+// returns:
 // -1 on illegal argument (not string, empty or not class)
 // 0 of not a weapon, may be gear (map, binocular etc)
 // 1 of rifle/gun
@@ -1898,7 +1948,7 @@ SYG_weaponClass = {
 	if ( (typeName _this) != "STRING") exitWith {-1};
 	if ( _this == "") exitWith {-1};
 	_class = configFile >> "CfgWeapons" >> _this;
-	
+
 //	hint localize format[ "SYG_weaponClass.sqf: %1 has class %2", _this, _class ];
 
 	if (isClass _class) then
@@ -1946,12 +1996,12 @@ SYG_hasOnlyPistol = {
 	if (format["%1",_this getVariable "ACE_weapononback"] != "<null>") then
 	{
 		_wob = _this getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then 
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
 		{
 			_weapons = _weapons + [_wob];
 		};
 	};
-	
+
 	{
 		switch (_x call SYG_weaponClass) do {
 			case 1; //: { if (_x != "ACE_MK13") then {_other_weapon = true} };
@@ -1972,12 +2022,12 @@ SYG_hasWeapon4GRUMainTask = {
 	if (format["%1",_this getVariable "ACE_weapononback"] != "<null>") then
 	{
 		_wob = _this getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then 
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
 		{
 			_weapons = _weapons + [_wob];
 		};
 	};
-	
+
 	{
 		switch (_x call SYG_weaponClass) do {
 			case 1: { if ( !([_x, GRU_allowedNonPistolList] call SYG_isInList) ) then {_other_weapon = true;} };
@@ -2001,12 +2051,12 @@ SYG_isBattleHeli = {
 
 // call as:
 // _allowed_only = [_unit, ["rks","rfl","smg","pst","rpg","lng"]] call SYG_unitHasOnlyAlloweWeapon;
-// where 
+// where
 //       lng for long-muzzle rifle, including sniper and mg
-//       rfl stands for normal rifle, 
-//       smg for submachine gun, 
-//       pst for pistol, 
-//       rpg for launcher, 
+//       rfl stands for normal rifle,
+//       smg for submachine gun,
+//       pst for pistol,
+//       rpg for launcher,
 //       rks for rucksack
 //
 // if unit has any weapon not in allowed litd, function retunds true and false if vice versa
@@ -2023,7 +2073,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 	if (format["%1",_unit getVariable "ACE_weapononback"] != "<null>") then
 	{
 		_wob = _unit getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then 
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
 		{
 			_weapons = _weapons + [_wob];
 		};
@@ -2031,12 +2081,12 @@ SYG_unitHasOnlyAllowedWeapon = {
 	if (count _weapons == 0) exitWith {true}; // no weapon - always returns true
 	if ( count _list == 0) exitWith {false}; // empty list and has any weapon - always returns false
 	hint localize format["SYG_unitHasOnlyAllowedWeapon: wpn %1, list %2", _weapons, _list];
-	
+
 	scopeName "main";
 	{
 		switch (_x call SYG_weaponClass) do {
 			case 1: 	// rifle
-			{ 
+			{
 				//detect if it is kind of: lng, rfl, smg
 				if ( !("lng" in _list) ) then  // no long muzzles in list so check for shorter ones
 				{
@@ -2047,7 +2097,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 						if (! (("smg" in _list) || ("rfl" in _list)) ) then
 						{
 							hint localize format[ "SYG_unitHasOnlyAllowedWeapon: SMG (%1) not allowed", _x ];
-							_other_weapon = true; breakTo "main"; 
+							_other_weapon = true; breakTo "main";
 						};
 					} else
 					{
@@ -2056,14 +2106,14 @@ SYG_unitHasOnlyAllowedWeapon = {
 						{
 							hint localize format["SYG_unitHasOnlyAllowedWeapon: LNG (%1) found",_x];
 							hint localize format[ "SYG_unitHasOnlyAllowedWeapon: LNG (%1) not allowed", _x ];
-							_other_weapon = true; breakTo "main"; 
+							_other_weapon = true; breakTo "main";
 						} else // ordinal rifle detected
 						{
 							hint localize format["SYG_unitHasOnlyAllowedWeapon: RFL (%1) found",_x];
-							if (! ("rfl" in _list) ) then 
+							if (! ("rfl" in _list) ) then
 							{
 								hint localize format[ "SYG_unitHasOnlyAllowedWeapon: RFL (%1) not allowed", _x ];
-								_other_weapon = true; breakTo "main"; 
+								_other_weapon = true; breakTo "main";
 							};
 						};
 					};
@@ -2071,31 +2121,31 @@ SYG_unitHasOnlyAllowedWeapon = {
 			};
 			case 2:	// Launcher
 			{
-				if (! ("rpg" in _list) ) then 
+				if (! ("rpg" in _list) ) then
 				{
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: LNC (%1) not allowed", _x ];
-					_other_weapon = true; breakTo "main"; 
+					_other_weapon = true; breakTo "main";
 				};
 			};
 			case 3:	// Pistol
 			{
-				if (! ("pst" in _list) ) then 
+				if (! ("pst" in _list) ) then
 				{
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: PST (%1) not allowed", _x ];
-					_other_weapon = true; breakTo "main"; 
+					_other_weapon = true; breakTo "main";
 				};
 			};
 			case 4:	// Rucksack
 			{
-				if (! ("rks" in _list) ) then 
+				if (! ("rks" in _list) ) then
 				{
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: RKS (%1) not allowed", _x ];
-					_other_weapon = true; breakTo "main"; 
+					_other_weapon = true; breakTo "main";
 				};
 			};
 		};
 	}forEach (_weapons);
-	
+
 	(!_other_weapon)
 };
 
@@ -2104,8 +2154,8 @@ SYG_unitHasOnlyAllowedWeapon = {
 // _excessive = [_unit, ["rks","rfl","smg","pst","rpg","lng"]] call SYG_unitHasOnlyAlloweWeapon;
 // where array of weapons is list of allowed weapons with means as follow:
 //       lng for long-muzzle rifle, including sniper and mg,
-//       rfl stands for normal rifle, 
-//       smg for submachine gun, 
+//       rfl stands for normal rifle,
+//       smg for submachine gun,
 //       pst for pistol, always allowed in any cases,
 //       rpg for launcher, always allowed in any cases,
 //       rpg1 for small launcher (RPG-22, M-72), always allowed in any cases,
@@ -2126,22 +2176,22 @@ SYG_findExcessiveWeapon = {
 	if (format["%1",_unit getVariable "ACE_weapononback"] != "<null>") then
 	{
 		_wob = _unit getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then 
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
 		{
 			_weapons = _weapons + [_wob];
 		};
 	};
 	if ((count _weapons) == 0) exitWith {""}; // no weapon - always returns ""
 	if ( (count _list == 0) ) exitWith { _weapons select 0 }; // empty list - always returns first weapon
-	
+
 	//hint localize format["SYG_findExcessiveWeapon: wpn %1, list %2", _weapons, _list];
-	
+
 	scopeName "main";
-	
+
 	{
 		switch (_x call SYG_weaponClass) do {
 			case 1: 	// rifle
-			{ 
+			{
 				//detect if it is kind of: lng, rfl, smg
 				if ( !("lng" in _list) ) then  // no long muzzles in list so check for shorter ones
 				{
@@ -2152,7 +2202,7 @@ SYG_findExcessiveWeapon = {
 						if (! (("smg" in _list) || ("rfl" in _list)) ) then
 						{
 							//hint localize format[ "SYG_findExcessiveWeapon: SMG (%1) not allowed", _x ];
-							_other_weapon = _x; breakTo "main"; 
+							_other_weapon = _x; breakTo "main";
 						};
 					} else
 					{
@@ -2161,14 +2211,14 @@ SYG_findExcessiveWeapon = {
 						{
 							//hint localize format["SYG_findExcessiveWeapon: LNG (%1) found",_x];
 							//hint localize format[ "SYG_findExcessiveWeapon: LNG (%1) not allowed", _x ];
-							_other_weapon = _x; breakTo "main"; 
+							_other_weapon = _x; breakTo "main";
 						} else // ordinal rifle detected
 						{
 							//hint localize format["SYG_findExcessiveWeapon: RFL (%1) found",_x];
-							if (! ("rfl" in _list) ) then 
+							if (! ("rfl" in _list) ) then
 							{
 								//hint localize format[ "SYG_findExcessiveWeapon: RFL (%1) not allowed", _x ];
-								_other_weapon = _x; breakTo "main"; 
+								_other_weapon = _x; breakTo "main";
 							};
 						};
 					};
@@ -2185,19 +2235,19 @@ SYG_findExcessiveWeapon = {
 					};
 				}else
 				{
-					if (!("rpg" in _list)) then 
+					if (!("rpg" in _list)) then
 					{
 						//hint localize format[ "SYG_findExcessiveWeapon: LNC (%1) not allowed in list %2", _x, _list ];
-						_other_weapon = _x; breakTo "main"; 
+						_other_weapon = _x; breakTo "main";
 					};
 				};
 			};
 			case 3:	// Pistol
 			{
-/* 				if (! ("pst" in _list) ) then 
+/* 				if (! ("pst" in _list) ) then
 				{
 					//hint localize format[ "SYG_findExcessiveWeapon: PST (%1) not allowed", _x ];
-					_other_weapon = _x; breakTo "main"; 
+					_other_weapon = _x; breakTo "main";
 				};
  */			};
 			case 4:	// Rucksack
@@ -2206,22 +2256,22 @@ SYG_findExcessiveWeapon = {
 				//hint localize format[ "SYG_findExcessiveWeapon: volume  == %1", _volume ];
 				if ( _volume < 15000) then
 				{
-					if (! (("rks" in _list) OR ("rks1" in _list))) then 
+					if (! (("rks" in _list) OR ("rks1" in _list))) then
 					{
 						//hint localize format[ "SYG_findExcessiveWeapon: volume  < 15000, no rks or rks1 in list", _x ];
-						_other_weapon = _x; breakTo "main"; 
+						_other_weapon = _x; breakTo "main";
 					};
 				}else
 				{
-					if (! ("rks" in _list)) then 
+					if (! ("rks" in _list)) then
 					{
-						_other_weapon = _x; breakTo "main"; 
+						_other_weapon = _x; breakTo "main";
 					};
 				};
  */			};
 		};
 	}forEach (_weapons);
-	
+
 	_other_weapon
 };
 
@@ -2244,15 +2294,15 @@ SYG_getVecRoleBulkyWeapon = {
 	_driver = false;
 	_turret = false;
 	//_cargo  = false;
-	if ( (_role_arr select 0) == "Driver" ) then  { _driver = true; } 
-	else { if ( (_role_arr select 0) == "Turret" ) then  { _turret = true; } }; 
+	if ( (_role_arr select 0) == "Driver" ) then  { _driver = true; }
+	else { if ( (_role_arr select 0) == "Turret" ) then  { _turret = true; } };
 	//else { if ( (_role_arr select 0) == "Cargo" ) then  { _cargo = true; };};};
-	
+
 	// if  (!(_driver || _turret || _cargo)) exitWith { hint localize format["--- SYG_getVecRoleBulkyWeapon: expected role array unknown %1",_role_arr]; "" };
-	
+
 	scopeName "main";
 	_bulky_weapon = [];
-	
+
 	while {true} do
 	{
 		// first add allowed weapon in bulky_weapon array
@@ -2277,9 +2327,9 @@ SYG_getVecRoleBulkyWeapon = {
 		};
 		if (true) exitWith {};
 	};
-#ifdef __DEBUG__	
+#ifdef __DEBUG__
 	hint localize format["SYG_getVecRoleBulkyWeapon: bulky weapon %1", _bulky_weapon];
-#endif	
+#endif
 	if ( (count _bulky_weapon) == 0 ) exitWith { "" }; // all is allowed
 	[player, _bulky_weapon] call SYG_findExcessiveWeapon;
 };
@@ -2290,46 +2340,46 @@ SYG_weaponType = {
 		private ["_type"];
 		_type = getNumber (configFile >> "CfgWeapons" >> _this >> "type");
 		// _class = configFile  >> _this;
-		
-		switch (_type) do 
+
+		switch (_type) do
 		{
 			//Rifles.
-			case 1: 
+			case 1:
 			{
 				6
 			};
-			
+
 			//Sidearms.
-			case 2: 
+			case 2:
 			{
 				8
 			};
-			
+
 			//Launchers.
-			case 4: 
+			case 4:
 			{
 				9
 			};
-			
+
 			//Machineguns.
-			case 5: 
+			case 5:
 			{
 				//Check autofire to see this is a machinegun.
-				if (getNumber(_entry >> "autoFire") == 1) then 
-				{				
+				if (getNumber(_entry >> "autoFire") == 1) then
+				{
 					7
-				} 
-				else 
+				}
+				else
 				{
 					//Probably a heavy sniper rifle.
 					6;
 				};
 			};
-			
-			default 
+
+			default
 			{
 				//Explosives?
-				if ((_type % 256) == 0) then 
+				if ((_type % 256) == 0) then
 				{
 					10
 				};
@@ -2341,7 +2391,7 @@ SYG_weaponType = {
 // checks if unit (_this) has MG as primary weapon
 // Example: _unit call SYG_hasMG; // return true is unit has some kind of M240, M249, PK, RPK47, RPK74
 //
-SYG_hasMG = 
+SYG_hasMG =
 {
 	if (true) exitWith {(primaryWeapon _this) call SYG_isMG};
 //	player globalChat format["hasMG test on '%1'", primaryWeapon _this];
@@ -2356,12 +2406,12 @@ SYG_isSMG = {
 	[_this, SMG_WEAPON_LIST] call SYG_isInList;
 };
 
-SYG_hasSMG = 
+SYG_hasSMG =
 {
 	if (true) exitWith { (primaryWeapon _this) call SYG_isSMG};
 };
 
-SYG_isLauncher = 
+SYG_isLauncher =
 {
 	[_this, LAUNCHER_WEAPON_LIST] call SYG_isInList;
 };
@@ -2369,7 +2419,7 @@ SYG_isLauncher =
 //
 // call: _hasLauncher = _unit call SYG_hasLauncher;
 //
-SYG_hasLauncher = 
+SYG_hasLauncher =
 {
 	private ["_res"];
 	_res = false;
@@ -2389,7 +2439,7 @@ SYG_isLongMizzle = {
 //
 // call: _hasLongMuzzle = _unit call SYG_hasLongMuzzle;
 //
-SYG_hasLongMuzzle = 
+SYG_hasLongMuzzle =
 {
 	private ["_res"];
 	_res = false;
@@ -2402,7 +2452,7 @@ SYG_hasLongMuzzle =
 //
 // _wpnParent  = _weapon call SYG_getParent; // Parent config class Name
 //
-SYG_getParent = { 
+SYG_getParent = {
 	configName (inheritsFrom (configFile >> "CfgWeapons" >> _this))
 };
 
@@ -2416,7 +2466,7 @@ SYG_getParent = {
 	private ["_unknownConfig", "_pistolConfig", "_isPistol"];
 	_unknownConfig = configFile >> "CfgWeapons" >> _this;
 	_pistolConfig = configFile >> "CfgWeapons" >> "PistolCore";
-	
+
 	_isPistol = false;
 	while {isClass _unknownConfig} do
 	{
@@ -2424,10 +2474,10 @@ SYG_getParent = {
 	    {
 	        _isPistol = true;
 	    };
-	
+
 	    _unknownConfig = inheritsFrom _unknownConfig;
 	};
-	
+
 	_isPistol; // Return.
 };
  */
@@ -2478,7 +2528,7 @@ SYG_getCompatibleMagazines = {
     _mags
 };
 
-// 
+//
 // call: _ret = _vehicle call SYG_reammoTruck;
 // returns: true is reammed or false is not reammed
 //
@@ -2486,72 +2536,72 @@ SYG_reammoTruck = {
 	if ( _this isKindOf "Truck5tReammo" ) then
 	{
 		hint localize format["SYG_reammoTruck: called for %1", typeOf _this];
-		
+
 		clearMagazineCargo _this;
 		clearWeaponCargo   _this;
-		
-		_this addWeaponCargo   ["ACE_FIM92A",1];
+
+		_this addWeaponCargo   ["ACE_FIM92A",2];
 		_this addMagazineCargo ["ACE_Stinger", 5];
-		
-		_this addWeaponCargo   ["ACE_M136",3];
+
+		_this addWeaponCargo   ["ACE_M136",2];
 		_this addMagazineCargo ["ACE_AT4_HEAT", 30];
 		_this addMagazineCargo ["ACE_AT4_HP", 30];
 		_this addMagazineCargo ["ACE_AT4_HEDP", 30];
-		
+
 		_this addWeaponCargo   ["ACE_CarlGustav", 5];
 		_this addMagazineCargo ["ACE_CarlGustav_HEAT", 30];
 		_this addMagazineCargo ["ACE_CarlGustav_HEAT_2", 30];
 		_this addMagazineCargo ["ACE_CarlGustav_HEDP", 30];
 		_this addMagazineCargo ["ACE_CarlGustav_HE", 30];
-		
+
 		_this addWeaponCargo   ["ACE_SMAW", 5];
 		_this addMagazineCargo ["ACE_SMAW_HEAA", 30];
 		_this addMagazineCargo ["ACE_SMAW_HEDP", 30];
 		_this addMagazineCargo ["ACE_SMAW_FTG", 30];
 		_this addMagazineCargo ["ACE_SMAW_Spotting", 30];
-		
+
 		_this addWeaponCargo   ["ACE_M72", 5];
 		_this addMagazineCargo ["ACE_LAW_HEAT", 30];
 		_this addMagazineCargo ["ACE_LAW_HP", 30];
 		_this addMagazineCargo ["ACE_LAW_HEF", 30];
-		
+
 		_this addMagazineCargo ["ACE_30Rnd_556x45_B_Stanag", 50];
 		_this addMagazineCargo ["ACE_30Rnd_556x45_BT_Stanag", 50];
 		_this addMagazineCargo ["ACE_30Rnd_556x45_SD_Stanag", 50];
 		_this addMagazineCargo ["ACE_20Rnd_556x45_SB_Stanag", 50];
-		
+
 		//_this addMagazineCargo ["ACE_20Rnd_762x51_B_SCAR", 50];
 		_this addMagazineCargo ["ACE_20Rnd_762x51_SB_SCAR", 50];
-		
+
 		//_this addMagazineCargo ["ACE_20Rnd_762x51_B_M14", 50];
 		_this addMagazineCargo ["ACE_20Rnd_762x51_SB_M14", 50];
-		
+
 		//_this addMagazineCargo ["ACE_20Rnd_762x51_B_HK417", 50];
 		_this addMagazineCargo ["ACE_20Rnd_762x51_SB_HK417", 50];
 		_this addMagazineCargo ["ACE_200Rnd_556x45_B_M249", 50];
 		_this addMagazineCargo ["ACE_200Rnd_556x45_BT_M249", 50];
-		
+
 		_this addMagazineCargo ["ACE_100Rnd_762x51_B_M240", 50];
 		_this addMagazineCargo ["ACE_100Rnd_762x51_BT_M240", 50];
-		
+
 		_this addMagazineCargo ["ACE_10Rnd_127x99_API_Barrett", 50];
 		_this addMagazineCargo ["10Rnd_127x99_m107", 50];
 		_this addMagazineCargo ["ACE_10Rnd_127x99_SB_Barrett", 50];
 		_this addMagazineCargo ["ACE_10Rnd_127x99_BT_Barrett", 50];
 		_this addMagazineCargo ["ACE_5Rnd_25x59_HEDP_Barrett", 50];
-		_this addMagazineCargo ["ACE_5Rnd_127x99_API_AS50", 50]; 
+		_this addMagazineCargo ["ACE_5Rnd_127x99_API_AS50", 50];
 		_this addMagazineCargo ["ACE_5Rnd_127x99_AS50", 50];
 		_this addMagazineCargo ["ACE_5Rnd_127x99_SB_AS50", 50];
 		_this addMagazineCargo ["ACE_5Rnd_127x99_BT_AS50", 50];
 		_this addMagazineCargo ["ACE_20Rnd_762x51_SB_M110", 50];
-		
+
 		_this addMagazineCargo ["ACE_5Rnd_762x51_SB", 50];
-		
+
 		_this addMagazineCargo ["ACE_30Rnd_556x45_B_G36",50];
 		_this addMagazineCargo ["ACE_30Rnd_556x45_BT_G36",50];
 		_this addMagazineCargo ["ACE_100Rnd_556x45_BT_G36",50];
 		_this addMagazineCargo ["ACE_100Rnd_556x45_B_G36",50];
-		
+
 		_this addMagazineCargo ["ACE_25Rnd_1143x23_B_UMP45", 50];
 		_this addMagazineCargo ["ACE_30Rnd_9x19_B_MP5", 50];
 		_this addMagazineCargo ["ACE_30Rnd_9x19_SD_MP5", 50];
@@ -2560,7 +2610,12 @@ SYG_reammoTruck = {
 		_this addMagazineCargo ["ACE_17Rnd_9x19_G17", 20];
 		_this addMagazineCargo ["ACE_33Rnd_9x19_G18", 20];
 		_this addMagazineCargo ["ACE_7Rnd_1143x23_B_M1911", 20];
-		
+
+		_this addMagazineCargo ["ACE_9Rnd_12Ga_Slug",20];
+		_this addMagazineCargo ["ACE_9Rnd_12Ga_Buck00",20];
+		_this addMagazineCargo ["ACE_8Rnd_12Ga_Slug"];
+		_this addMagazineCargo ["ACE_8Rnd_12Ga_Buck00"];
+
 		_this addMagazineCargo ["ACE_1Rnd_Flare_Red", 20];
 		_this addMagazineCargo ["ACE_1Rnd_Flare_Green", 20];
 		_this addMagazineCargo ["ACE_1Rnd_Flare_Yellow", 20];
@@ -2578,7 +2633,7 @@ SYG_reammoTruck = {
 		_this addMagazineCargo ["ACE_40mm_FlareYellow_M203", 20];
 		_this addMagazineCargo ["ACE_40mm_FlareIR_M203", 50];
 		_this addMagazineCargo ["ACE_HuntIR_M203", 10];
-		
+
 		_this addMagazineCargo ["ACE_PipeBomb", 10];
 
 		_this addMagazineCargo ["ACE_SmokeGrenade_Red", 10];
@@ -2586,14 +2641,14 @@ SYG_reammoTruck = {
 		_this addMagazineCargo ["ACE_SmokeGrenade_Yellow", 10];
 		_this addMagazineCargo ["ACE_SmokeGrenade_Violet", 10];
 		_this addMagazineCargo ["ACE_SmokeGrenade_White", 10];
-		
+
 		_this addMagazineCargo ["ACE_HandGrenadeTimed", 10];
 
         _this setAmmoCargo 1; // Ensure full reammo ability
-		
+
 		true
 	}
- 	else 
+ 	else
 	{
 		//hint localize format["SYG_reammoTruck: --- Expected input vehicle type Truck5tReammo, detected %1 ---", typeOf _this ];
 		false
@@ -2612,26 +2667,26 @@ SYG_reammoTruckAround = {
 	if (d_enemy_side == "WEST") then {
 		_center = _this select 0;
 		_dist = if ( count _this > 1 ) then {_this select 1} else {400};
-		{ 
-			if (!locked _x) then { _x call SYG_reammoTruck; _rearmed = _rearmed + 1; } 
+		{
+			if (!locked _x) then { _x call SYG_reammoTruck; _rearmed = _rearmed + 1; }
 		} forEach ( _center nearObjects ["Truck5tReammo", _dist] ); //position player nearObjects 50;
 	};
 	_rearmed
 };
 
-// 
+//
 // call: _ret = _vehicle call SYG_reammoMHQ;
 //
 SYG_reammoMHQ = {
 	if ( _this isKindOf "BMP2_MHQ" ) then
 	{
 		// hint localize format["SYG_reammoMHQ: entered with %1", _this];
-		
+
 		clearMagazineCargo _this;
 		clearWeaponCargo   _this;
-		
+
 		_this addMagazineCargo ["ACE_Strela", 2];
-		
+
 		//_this addWeaponCargo   ["ACE_RPG7_PGO7",  3];
 		_this addMagazineCargo ["ACE_RPG7_PG7VR", 3];
 		_this addMagazineCargo ["ACE_RPG7_PG7VL", 3];
@@ -2643,9 +2698,9 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_SmokeGrenade_Yellow", 1];
 		_this addMagazineCargo ["ACE_SmokeGrenade_Violet", 1];
 		_this addMagazineCargo ["ACE_SmokeGrenade_White",  1];
-		
+
 		_this addMagazineCargo ["ACE_HandGrenade", 2];
-/* 		
+/*
 		_this addMagazineCargo ["ACE_64Rnd_9x18_B_Bizon", 10];
 		_this addMagazineCargo ["ACE_10Rnd_9x39_SB_VSS",  10];
  */
@@ -2656,13 +2711,13 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_10Rnd_762x54_SB_SVD", 5];
 		_this addMagazineCargo ["ACE_5Rnd_127x108_SB_KSVK",5];
 		_this addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",5];
-		
+
 		_this addMagazineCargo ["ACE_Bandage",     3];
 		_this addMagazineCargo ["ACE_Morphine",    5];
 		_this addMagazineCargo ["ACE_Epinephrine", 1];
 		true
 	}
-	else 
+	else
 	{
 		hint localize format["--- SYG_reammoMHQ: --- Expected input vehicle type BMP2_MHQ, detected %1 ---", typeOf _this ];
 		false
@@ -2679,7 +2734,7 @@ SYG_reammoMHQ = {
 //
 SYG_fastReload = {
 	private ["_i","_type","_mags","_removed","_config","_count","_vec"];
-	
+
 	if ( (typeName _this) == "OBJECT" ) then { _this = [_this]; };
 	if ( ( typeName _this) != "ARRAY") exitWith { false};
 	_ret = count _this > 0;
