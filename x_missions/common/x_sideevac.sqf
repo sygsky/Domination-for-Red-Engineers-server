@@ -2,7 +2,7 @@
 private ["_pos_array", "_poss", "_endtime", "_side_crew", "_pilottype", "_wrecktype", "_wreck", "_owngroup",
          "_pilot1", "_owngroup2", "_pilot2", "_hideobject", "_is_dead", "_pilots_at_base", "_rescued", "_winner",
          "_time_over", "_enemy_created", "_nobjs", "_estart_pos", "_unit_array", "_ran", "_i", "_newgroup", "_units", "_leader",
-         "_pilots"];
+         "_pilots_arr"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -23,40 +23,51 @@ _wreck lock true;
 if (_wrecktype == "Mi17") then {_wreck setDamage 1.1}; // grrrr
 _wreck setDir (random 360);
 _wreck setPos _poss;
-__AddToExtraVec(_wreck)
+
+_wreck call SYG_addToExtraVec;
 _wrecktype = nil;
 
 sleep 2;
 
+/*
 __WaitForGroup
 _owngroup = [_side_crew] call x_creategroup;
+*/
+_owngroup = call SYG_createOwnGroup;
 _pilot1 = _owngroup createUnit [_pilottype, _poss, [], 30, "FORM"];
 [_pilot1] join _owngroup;
-
+_pilot1 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russina voice in the ACE
+sleep 0.5;
+/**
 __WaitForGroup
 _owngroup2 = [_side_crew] call x_creategroup;
+*/
+_owngroup2 = call SYG_createOwnGroup;
 _pilot2 = _owngroup2 createUnit [_pilottype, position _pilot1, [], 3, "FORM"];
 [_pilot2] join _owngroup2;
+_pilot2 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russina voice in the ACE
+sleep 0.1;
 
-_hideobject = _pilot1 findCover [position _pilot1, position _pilot1, 100];
-if (!isNull _hideobject) then {
-	_pilot1 doMove (position _hideobject);
-};
-_hideobject = _pilot2 findCover [position _pilot2, position _pilot2, 100];
-if (!isNull _hideobject) then {
-	_pilot2 doMove (position _hideobject);
-};
+_pilots_arr = [_pilot1,_pilot2];
+
+{
+    _hideobject = _x findCover [position _x, position _x, 100];
+    if (!isNull _hideobject) then {
+        _x doMove (position _hideobject);
+    };
+} forEach _pilots_arr;
 
 // enough time for the pilots to hide
 sleep 45;
-_side_crew = nil;
-_pilot1 disableAI "MOVE";
-_pilot1 setDamage 0.5;
-_pilot1 setUnitPos "DOWN";
-_pilot2 disableAI "MOVE";
-_pilot2 setDamage 0.5;
-_pilot2 setUnitPos "DOWN";
-[_pilot2] join _owngroup;
+
+{
+_x disableAI "MOVE";
+_x setDamage 0.5;
+_x setUnitPos "DOWN";
+_x join _owngroup;
+} forEach _pilots_arr;
+//[_pilot2] join _owngroup;
+
 sleep 0.5;
 deleteGroup _owngroup2;
 _owngroup2 = nil;
@@ -77,7 +88,7 @@ _soldier = (
 );
 
 _last_warn_said = 0;
-while {!_pilots_at_base && !_is_dead} do {
+while {(!_pilots_at_base) && (!_is_dead)} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
@@ -107,7 +118,7 @@ while {!_pilots_at_base && !_is_dead} do {
                     sleep 0.01;
                 } forEach _nobjs;
             };
-        } forEach [_pilot1, _pilot2];
+        } forEach _pilots_arr;
         ////////////////////////////////////////////
 
         if (_dist < 20) then
@@ -122,8 +133,8 @@ while {!_pilots_at_base && !_is_dead} do {
                 sleep 0.1;
                 [_x] join (leader _rescue);
               };
-            } forEach [_pilot1, _pilot2];
-            ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 2, 2] call XSendNetStartScriptClient;
+            } forEach _pilots_arr;
+            ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 2, 2] call XSendNetStartScriptClient; // "Good job! The rescue of helicopter crew was successful"
         };
               ////////////////////////////////////////////
     }
@@ -140,13 +151,16 @@ while {!_pilots_at_base && !_is_dead} do {
                     {
                         _rescued = false;
                         // again create separate group for our poor pilots
-                        _pilots = units group _x;
-                        _pilots = _pilots - [_pilot1, _pilot2]; // not pilots part of group
-                        _pilots = [_pilot1, _pilot2] - _pilots; // pilots part of group
-                        _owngroup = call SYG_createEnemyGroup;
+                        /**
+                        __WaitForGroup
+                        _owngroup = [_side_crew] call x_creategroup;
+                        */
+                        _owngroup = call SYG_createOwnGroup;
                         sleep 0.12345;
-                        _pilots join _owngroup;
-                        { _x disableAI "MOVE"; _x setUnitPos "DOWN" }forEach [_pilot1, _pilot2];
+                        _pilots_arr join _owngroup;
+                        { _x disableAI "MOVE"; _x setUnitPos "DOWN" }forEach _pilots_arr;
+                        hint localize format["--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, so pilots are moved to its own group at %2",
+                                             _x,  [_x, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
                         // TODO: send info to all about lost control of pilots
                     };
                     if ( vehicle _x != _x ) then    // pilot in some vehicle
@@ -155,7 +169,7 @@ while {!_pilots_at_base && !_is_dead} do {
                         {
                             if (time - _last_warn_said > WARN_INTERVAL) then
                             {
-                                ["msg_to_user",vehicle _x,[["STR_SYS_504_1", name _x]]] call XSendNetStartScriptClient;
+                                ["msg_to_user",vehicle _x,[["STR_SYS_504_1", name _x]]] call XSendNetStartScriptClient; // "% 1: - Get us out of the vehicle, commander!"
                                 _last_warn_said = time;
                             };
                         };
@@ -167,14 +181,14 @@ while {!_pilots_at_base && !_is_dead} do {
                         {
                              if ( ([getPos _x,d_base_array] call SYG_pointInRect) && (time - _last_warn_said > WARN_INTERVAL)) then
                              {
-                                [ "msg_to_user", name _rescue,[["STR_SYS_504_2", name _x]] ] call XSendNetStartScriptClient;
+                                [ "msg_to_user", name _rescue,[["STR_SYS_504_2", name _x]] ] call XSendNetStartScriptClient; // "%1: - Need be closer to the flag, commander!"
                                  _last_warn_said = time;
                              };
                         };
                     };
                 };
                 if (_pilots_at_base || (!_rescued) ) exitWith{};
-            } forEach [_pilot1, _pilot2];
+            } forEach _pilots_arr;
 //++++++++++++++++++++++ __TTVer
         }
         else
@@ -190,7 +204,7 @@ while {!_pilots_at_base && !_is_dead} do {
                     };
                 };
                 if (_pilots_at_base) exitWith{};
-            } forEach [_pilot1, _pilot2];
+            } forEach _pilots_arr;
         };
 
     };
@@ -224,8 +238,12 @@ while {!_pilots_at_base && !_is_dead} do {
 			_unit_array = ["basic", d_enemy_side] call x_getunitliste;
 			_ran = [3,5] call XfGetRandomRangeInt;
 			for "_i" from 1 to _ran do {
+			    /**
 				__WaitForGroup
 				_newgroup = [d_enemy_side] call x_creategroup;
+				*/
+                _newgroup = call SYG_createEnemyGroup;
+
 				_units = [_estart_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
 				sleep 1.045;
 				_leader = leader _newgroup;
@@ -260,21 +278,23 @@ if (_is_dead) then {
 		} else {
 			side_mission_winner = 2;
 		};
-		sleep 2.123;
-		{
-            if (alive _x) then {
-                if (vehicle _x != _x) then {
-                    _x action ["eject", vehicle _x];
-                    unassignVehicle _x;
-                    sleep 0.5;
-                    _x setPos [0,0,0];
-                };
-            };
-            sleep 0.5;
-            deleteVehicle _x;
-		} forEach [_pilot1,_pilot2];
 	};
 };
+
+sleep 2.123;
+
+{
+    if (alive _x) then {
+        if (vehicle _x != _x) then {
+            unassignVehicle _x;
+            _x action ["eject", vehicle _x];
+            sleep 0.5;
+            _x setPos [0,0,0];
+        };
+    };
+    sleep 0.1;
+    deleteVehicle _x;
+} forEach _pilots_arr;
 
 side_mission_resolved = true;
 
