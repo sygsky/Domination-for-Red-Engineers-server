@@ -5,7 +5,7 @@
 	returns: nothing
 */
 
-private ["_killer","_unit"];
+private ["_killer","_unit","_exit","_churchArr","_TVTowerArr","_castleArr","_sound"];
 #include "x_setup.sqf"
 
 #define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random(count ARR))))
@@ -35,6 +35,19 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
         playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
     };
     _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
+
+    if ((_killer isKindOf "SoldierWB") ) then
+    {
+        if (format["%1",side _killer] == d_enemy_side) then
+        {
+            if (random 10 <= 3) then
+            {
+                // try to play likiller laughter sound on all clients
+                _sound = call SYG_getLaughterSound;
+                ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
+            };
+        };
+    };
 }
 else    // some kind of suicide? Say something about...
 {

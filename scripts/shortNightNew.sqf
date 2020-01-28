@@ -113,7 +113,7 @@ while {true } do
     #endif
         if (!_skipped) then
         {
-            0 call _titleTime;
+            0 call _titleTime; // send msg on night for all client
         };
         sleep ((_morningStart - daytime) *3600);
     };
@@ -121,7 +121,7 @@ while {true } do
     // MORNING TWILIGHT started
     if (daytime < _dayStart) then // we are in morning twilight, sleep to day
     {
-        2 call _titleTime;
+        2 call _titleTime;// send msg on morning for all client
     #ifdef __DEBUG__
         _str = format["SHORTNIGHT: twilight: daytime (%1)< _dayStart, sleep to it",daytime];
         //player groupChat _str;
@@ -133,7 +133,7 @@ while {true } do
     // DAY started
     if (daytime < _eveningStart) then // we are in day time, sleep to evening
     {
-        1 call _titleTime;
+        1 call _titleTime; // send msg on day for all client
     #ifdef __DEBUG__
         _str = format["SHORTNIGHT: day: daytime (%1)< _eveningStart, sleep to it",daytime];
         //player groupChat _str;
@@ -145,7 +145,7 @@ while {true } do
     // EVENING TWILIGHT
     if (daytime < _nightStart) then // we are in evening twiligth period, sleep to night start
     {
-        3 call _titleTime;
+        3 call _titleTime; // send msg on evening for all client
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: evening twilight: daytime (%1)<  _nightStart, sleep to it",daytime];
         //player groupChat _str;

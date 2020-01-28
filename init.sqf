@@ -482,7 +482,7 @@ if (isServer) then {
 
     [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
 
-    hint localize format["init.sqf; shortNight.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
+    hint localize format["init.sqf; shortNightNew.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
         SYG_startMorning,SYG_startDay,SYG_startEvening, SYG_startNight,SYG_nightSkipFrom, SYG_nightSkipTo];
 
     //-------------------------------

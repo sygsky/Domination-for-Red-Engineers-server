@@ -142,6 +142,7 @@ SYG_baseDefeatTracks =
 ] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
+SYG_gongNextIndex = 0;
 SYG_TVTowerDefeatTracks =
     [
     "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10",
@@ -164,6 +165,11 @@ SYG_waterDefeatTracks =
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
+// returns random male laughter sound
+SYG_getLaughterSound =
+{
+    ["laughter_1","laughter_2","laughter_3"] call XfRandomArrayVal
+};
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
 // or
@@ -221,7 +227,9 @@ SYG_playRandomDefeatTrackByPos = {
     _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
     if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
-        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        // let gong play sequentially on one client (in MP it will be randomized)
+        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod (count SYG_TVTowerDefeatTracks);
+        _sound =  SYG_TVTowerDefeatTracks select SYG_gongNextIndex;
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_TVTowerDefeatTracks, say_sound, done";
     };

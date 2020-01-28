@@ -464,6 +464,16 @@ class CfgSounds
     class rammstein_8 { name=""; sound[] = {\sounds\ramm\rammstein_8.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
     class rammstein_9 { name=""; sound[] = {\sounds\ramm\rammstein_9.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
 
+    // laughter of enemy on your defeat
+    class laughter_1 { name="Laughter 1"; sound[] = {\sounds\defeat\laughter\1.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_2 { name="Laughter 2"; sound[] = {\sounds\defeat\laughter\2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_3 { name="Laughter 3"; sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+
+    // Period of the day sounds
+    class morning_1 { name="Morning: alarm-clock"; sound[] = {\sounds\timeofday\morning\alarm-clock.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
+    class morning_2 { name="Morning: USSR Morozko film, 1964"; sound[] = {\sounds\timeofday\morning\morozko.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
+    class morning_3 { name="Morning: the cry of a unnamed cock"; sound[] = {\sounds\timeofday\morning\rooster.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
+
     // ordinal defeats
 
     class armory1  { name=""; sound[] = {\sounds\armory1.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 1

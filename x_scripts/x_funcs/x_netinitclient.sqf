@@ -886,6 +886,20 @@ XHandleNetStartScriptClient = {
                     _str = localize (format["STR_TIME_%1",_id]);
                     hint localize format["+++ [""shortnight"",""info""]:time %1, date %2, str %3;", time, date, _str ];
                     titleText [ _str, "PLAIN"];
+
+                    //+++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    // say something on a next period of day coming
+                    switch (_id) do
+                    {
+                        case 0 : {};  // STAT_NIGHT
+                        case 1 : {};  // STAT_DAY
+                        case 2 :      // STAT_MORNING
+                        {
+                            say format["morning_%1", 1 + floor (random 3)]; // random sound of 3 available
+                        };
+                        case 3 : {};  // STAT_EVENING
+                    };
+                    //-------------------------------------------------------
                 };
             };
         };
