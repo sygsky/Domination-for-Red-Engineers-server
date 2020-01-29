@@ -191,8 +191,19 @@ class CfgMusic
 
     class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
     class detected_Paraiso { name=""; sound[] = {\sounds\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
-    class detected_Carmen { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
+    class detected_Carmen  { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
     class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; } // town detected music (Rahmadi)
+
+//+++++++++++++++++++++++ Holiday music
+
+    class cosmos_1 { name="Earth attraction";                           sound[] = {\sounds\intro\holidays\apr_12\Earth_attraction.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
+    class cosmos_2 { name="I trust, my friends";                        sound[] = {\sounds\intro\holidays\apr_12\I_trust_my_friends.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
+    class cosmos_3 { name="You know what kind of guy He was (Gagarin)"; sound[] = {\sounds\intro\holidays\apr_12\YouKnowWhatKindOfGuyHeWas.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
+
+    class hugging_the_sky { name="Hugging the sky..."; sound[] = {\sounds\intro\holidays\aug_17\hugging_the_sky.ogg,db-1,1.0}; } // Soviet air fleet day
+    class we_teach_planes_to_fly { name="We teach planes to fly..."; sound[] = {\sounds\intro\holidays\aug_17\we_teach_planes_to_fly.ogg,db-1,1.0}; } // Soviet air fleet day
+
+    class communism { name="We will live in communism..."; sound[] = {\sounds\intro\holidays\oct_7\communism.ogg,db-1,1.0}; } // Last Soviet Constitution day (1977)
 
 //+++++++++++++++++++++++ Defeat music track list
 
@@ -806,7 +817,7 @@ class X_RscAnimatedLetters
 			idc=66666;
 			style="16+2+512";
 			lineSpacing=0.950000;
-			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2019 by EngineerACE\n          for Red-Engineers.ucoz.ru";
+			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2020 by EngineerACE\n          for Red-Engineers.ucoz.ru";
 			x=0.39000000;
 			y=0.8100000;
 			w=0.900000;
