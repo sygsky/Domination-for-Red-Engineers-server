@@ -136,7 +136,7 @@ XHandleNetStartScriptServer = {
 			        _timeOffset = SYG_localZones select _ind;
 
 			        // store real time or the server (MSK must be guarantied)
-			        //and local time to help know rela time all the mission
+			        // and local time to help know real time through whole mission during being suspend/resume in virtual machines
 			        // TODO: надо как то 
                     SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
                     hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",_timeOffset];

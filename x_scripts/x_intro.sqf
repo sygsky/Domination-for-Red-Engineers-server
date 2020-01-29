@@ -1,7 +1,7 @@
 // x_intro.sqf, by Xeno
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_Sahrani_island","_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
-		 "_year","_mon","_day","_newyear"];
+		 "_year","_mon","_day","_newyear","_holiday"];
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
@@ -49,55 +49,63 @@ _mon  = SYG_client_start select 1;
 _day  = SYG_client_start select 2;
 _newyear = false;
 
-if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
-{
-	playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
-	_newyear = true;
+// ++++++++++++++++++++++ check if today is in soviet holiday list (in 1985)
+_holiday = SYG_client_start call SYG_getHoliday;
+if (count _holiday > 0 ) then {
+    // Soviet holiday detected, show its info to user
+    // TODO: show info about soviet holiday
 }
-else // music normally played on intro
-{
-
-    if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then
+else { // select random music for ordinal day
+    if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
     {
-        // 7th November is a Day of Great October Socialist Revolution
-        playMusic  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
+        playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
+        _newyear = true;
     }
-    else
+    else // music normally played on intro
     {
-        // add some personalized songs for well known players
-        _players =
-        [
-            ["Ceres-de","CERES de","Ceres.","CERES"] ,
-            ["Rokse [LT]"],
-            ["Shelter", "Marcin"]
-        ];
-        _sounds  =
-        [
-            ["amigohome_ernst_bush","amigohome_ernst_bush"],
-            ["morze","morze","morze2","morze2"],
-            ["stavka_bolshe_chem","stavka_bolshe_chem"]
-        ];
-        _name    = name player;
-        _personalSounds = [];
+
+        if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then
         {
-            _pos = _x find _name;
-            if ( _pos >= 0 ) exitWith { _personalSounds = _sounds select _pos};
-        } forEach _players;
-        _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
-        [
-            "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime1","lastdime2","lastdime3","lastdime4",
-            "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
-            "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
-            "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
-            "tovarich_moy","ipanoram","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
-            "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata","smersh",
-            "del_vampiro1","del_vampiro2"
-        ] + _personalSounds ) call _XfRandomArrayVal;
-//        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
-//        _music = (call compile _music) call _XfRandomArrayVal;
-        playMusic _music;
-        //playMusic "ATrack25"; // oldest value by Xeno
-	 };
+            // 7th November is a Day of Great October Socialist Revolution
+            playMusic  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
+        }
+        else
+        {
+            // add some personalized songs for well known players
+            _players =
+            [
+                ["Ceres-de","CERES de","Ceres.","CERES"] ,
+                ["Rokse [LT]"],
+                ["Shelter", "Marcin"]
+            ];
+            _sounds  =
+            [
+                ["amigohome_ernst_bush","amigohome_ernst_bush"],
+                ["morze","morze","morze2","morze2"],
+                ["stavka_bolshe_chem","stavka_bolshe_chem"]
+            ];
+            _name    = name player;
+            _personalSounds = [];
+            {
+                _pos = _x find _name;
+                if ( _pos >= 0 ) exitWith { _personalSounds = _sounds select _pos};
+            } forEach _players;
+            _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
+            [
+                "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime1","lastdime2","lastdime3","lastdime4",
+                "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
+                "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
+                "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
+                "tovarich_moy","ipanoram","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
+                "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata","smersh",
+                "del_vampiro1","del_vampiro2"
+            ] + _personalSounds ) call _XfRandomArrayVal;
+    //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
+    //        _music = (call compile _music) call _XfRandomArrayVal;
+            playMusic _music;
+            //playMusic "ATrack25"; // oldest value by Xeno
+         };
+    };
 };
 
 if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMorning - 0.5))) then {
