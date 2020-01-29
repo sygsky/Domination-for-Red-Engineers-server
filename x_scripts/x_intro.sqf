@@ -1,7 +1,7 @@
 // x_intro.sqf, by Xeno
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_Sahrani_island","_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
-		 "_year","_mon","_day","_newyear","_holiday"];
+		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt"];
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
@@ -81,7 +81,7 @@ else { // select random music for ordinal day
             _sounds  =
             [
                 ["amigohome_ernst_bush","amigohome_ernst_bush"],
-                ["morze","morze","morze2","morze2"],
+                ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
                 ["stavka_bolshe_chem","stavka_bolshe_chem"]
             ];
             _name    = name player;

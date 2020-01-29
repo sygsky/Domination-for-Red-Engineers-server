@@ -156,8 +156,6 @@ class CfgMusic
 
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
-    class morze { name=""; sound[] = {\sounds\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
-    class morze2 { name=""; sound[] = {\sounds\morze2.ogg,db+0,1.0};}; // Morze real message (Canada)
     class amigohome_ernst_bush { name=""; sound[] = {\sounds\amigohome_ernst_bush.ogg,db+0,1.0};}; // Ami go home by Ernsh Busch, DDR communust and great singer!
     class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
     class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some feat music
@@ -182,6 +180,17 @@ class CfgMusic
     class smersh { name="SMERSH game OST"; sound[] = {\sounds\intro\smersh.ogg,db-1,1.0};} // intro music, SMERSH game OST
     class del_vampiro1 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro1.ogg,db-1,1.0};} // intro music, Italian film "L'amante del Vampiro"
     class del_vampiro2 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro2.ogg,db-1,1.0};} // intro music, Italian film "L'amante del Vampiro"
+
+//+++++++++++++++++++++++++++++++++++++ MORZE for Rokse [LT] +++++++++++++++++++++++++++++++++++++++++++++++++++++
+    class morze   { name="Morze about Sahrani island"; sound[] = {\sounds\intro\morze\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
+    class morze2  { name="Real Morze (Canada)"; sound[] = {\sounds\intro\morze\morze2.ogg,db+0,1.0};}; // Morze real message (Canada)
+    class morze_0 { name="Morzyanka";   sound[] = {\sounds\intro\morze\Morzyanka.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_2 { name="Morzyanka 2"; sound[] = {\sounds\intro\morze\Morzyanka2.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_3 { name="Morzyanka 3"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_4 { name="Morzyanka 4"; sound[] = {\sounds\intro\morze\Morzyanka4.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_5 { name="Morzyanka 5"; sound[] = {\sounds\intro\morze\Morzyanka5.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_6 { name="Morzyanka 6"; sound[] = {\sounds\intro\morze\Morzyanka6.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_7 { name="Morzyanka 7"; sound[] = {\sounds\intro\morze\Morzyanka7.ogg.ogg,db+0,1.0};}; // Morze
 
 
 //------------------------------------- END of Intro music list --------------------------------------------------

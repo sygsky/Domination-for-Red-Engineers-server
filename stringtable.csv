@@ -896,7 +896,7 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Верт. ск.:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title"",""tovarich_moy""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen"",""tovarich_moy""", """ahead_friends"",""tovarich_moy"",""Letyat_perelyotnye_pticy_2nd"",""tovarich_moy"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""", """amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""", """ahead_friends"",""tovarich_moy"",""Letyat_perelyotnye_pticy_2nd"""
 STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """podolinam"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
