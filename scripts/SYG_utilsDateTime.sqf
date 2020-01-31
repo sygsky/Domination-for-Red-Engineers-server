@@ -424,7 +424,7 @@ SYG_holidayTable =
     [ 7,11, 5]  // 7th of November
 */
     [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"], "STR_HOLIDAY_1_JAN", 1], // new year, 10 days in range (not realized)
-    [23,  2, ["burnash","podolinam"],"STR_HOLIDAY_23_FEB",0], // 23th of February
+    [23,  2, ["burnash","chapaev1"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
     [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
@@ -432,7 +432,7 @@ SYG_holidayTable =
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
     [ 7, 10, "communism","STR_HOLIDAY_7_OCT",1], // Day of USSR constitution
-    [ 7, 11, ["podolinam","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
+    [ 7, 11, ["chapaev1","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
 
 ];
 
@@ -472,37 +472,43 @@ SYG_getHoliday = {
         if (count _ret > 0 ) exitWith {}; // A holday coincided with current day and its data returned to caller
     } forEach SYG_holidayTable;
     _ret
-/**
-    [
-      [ 1,  1, ["snovymgodom","grig"], "STR_HOLIDAY_1_JAN", 1], // new year, 10 days in range
-      [23,  2, ["burnash","podolinam"],"STR_HOLIDAY_23_FEB",0], // 23th of February
-      [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
-      [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
-      [ 1,  5, "Varshavianka", "STR_HOLIDAY_1_MAY",1], // 1st May
-      [ 2,  5, "Varshavianka", "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
-      [ 9,  5, ["invasion"],"STR_HOLIDAY_9_MAY",1], // 9th of May
-      [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
-      [ 7, 10,"","STR_HOLIDAY_7_OCT",1], // Day of USSR constitution
-      [ 7, 11, ["Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
-    ];
-*/
-};
-
-// Return localized message text on the current daytime period: night, morning, day, evening
-SYG_getMsgForCurrentDaytime = {
-    _id = call SYG_getDayTimeId;
-    localize (format["STR_TIME_%1", _id])
 };
 
 // Returns 0 for night, 1 for day, 2 for morning and 3 for evening
 //
 SYG_getDayTimeId = {
+    private ["_dt"];
     _dt = daytime;
     if ( _dt < SYG_startMorning ) exitWith {0};
     if ( _dt <     SYG_startDay ) exitWith {2};
     if ( _dt < SYG_startEvening ) exitWith {1};
     if ( _dt <   SYG_startNight ) exitWith {3};
-    0
+    1
+};
+
+// Return localized message text on the current daytime period: night, morning, day, evening
+SYG_getMsgForCurrentDayTime = {
+    private ["_id"];
+    _id = call SYG_getDayTimeId;
+    localize format["STR_TIME_%1", _id]
+};
+
+// call as follow:
+// _soundName = (call SYG_getDayTimeId) call SYG_getDayTimeIdRandomSound;
+// return empty string if no sound or illegal id not in [0..3] designated
+SYG_getDayTimeIdRandomSound = {
+    switch (_this) do
+    {
+        case 0 : { playSound format["night_%1", 1 + floor (random 5)]; };   // STAT_NIGHT
+        case 1 : {  ""  }; // STAT_DAY
+        case 2 : {  playSound format["morning_%1", 1 + floor (random 3)]; }; // STAT_MORNING
+        case 3 : {   format["evening_%1", 1 + floor (random 5)]; };// STAT_EVENING
+        default {""};
+    };
+};
+
+SYG_getCurrentDayTimeRandomSound = {
+    ([] call SYG_getDayTimeId) call SYG_getDayTimeIdRandomSound;
 };
 
 //
