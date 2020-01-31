@@ -431,6 +431,7 @@ XHandleNetStartScriptClient = {
 		// this message sent on main tower down. Params are: ["mt_radio_down", mt_radio_down (true or false),name_of_person_killed_tower]]
 		case "mt_radio_down": {
 			__compile_to_var
+			private ["_msg","_name"];
 			if (mt_radio_down && ( argp(mt_radio_pos,0) != 0)) then
 			{
 				private ["_msg","_ind"];
@@ -701,6 +702,7 @@ XHandleNetStartScriptClient = {
 		};
 		// to inform player about his server stored data
 		case "d_player_stuff": {
+		    private ["_pname"];
 		    _pname = argp(arg(1),2);
 			if (name player == _pname) then {
 				__compile_to_var
@@ -778,6 +780,7 @@ XHandleNetStartScriptClient = {
 
 		case "syg_plants_restored": { // message about restore result to subtract corresponding scores from user
 		// params are: ["syg_plants_restored", _name, _pos, _radious, _score] call XSendNetStartScriptClient;
+		    private ["_score"];
             _score = [arg(2),arg(3)] call SYG_restoreIslandItems; // restore items on all client to show result for players
 			if ( arg(1) == (name player)) then // this player name!!!
 			{
@@ -790,8 +793,10 @@ XHandleNetStartScriptClient = {
 
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
+		    private ["_nil","_obj","_sound"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
 		    _obj = arg(1);
+		    if ((_obj distance player) > 2000 ) exitWith{}; // too far from sound source
 		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) )then
 		    {
                 _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
@@ -837,6 +842,7 @@ XHandleNetStartScriptClient = {
 
 		case "GRU_event_scores":
 		{
+            private ["_id","_score","_playerName"];
             _id = argopt(1, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
             _score = argopt(2,0);
@@ -871,6 +877,7 @@ XHandleNetStartScriptClient = {
             switch (_this select 1) do {
                 case "skip": // skip some time
                 {
+                    private ["_time2skip"];
                     _time2skip = (_this select 2); // hours to skip
                     if ( typeName _time2skip ==  "ARRAY") then { _time2skip = _time2skip select 0};
                     hint localize format["+++ daytime %1, skiptime %2, time %3, date %4;", daytime, _time2skip, time, date];
@@ -879,6 +886,7 @@ XHandleNetStartScriptClient = {
                 };
                 case "info": // print info on day/night time
                 {
+                    private ["_id","_str"];
                     _id = _this select 2; // message id to be printed about day time begin
                     if ( typeName _id ==  "ARRAY") then { _id = _id select 0};
 
@@ -889,16 +897,8 @@ XHandleNetStartScriptClient = {
 
                     //+++++++++++++++++++++++++++++++++++++++++++++++++++++
                     // say something on a next period of day coming
-                    switch (_id) do
-                    {
-                        case 0 : {};  // STAT_NIGHT
-                        case 1 : {};  // STAT_DAY
-                        case 2 :      // STAT_MORNING
-                        {
-                            say format["morning_%1", 1 + floor (random 3)]; // random sound of 3 available
-                        };
-                        case 3 : {};  // STAT_EVENING
-                    };
+                    _str = _id call SYG_getDayTimeIdRandomSound;
+                    if ( _str != "" ) then {playSound _str};
                     //-------------------------------------------------------
                 };
             };

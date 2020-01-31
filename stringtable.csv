@@ -897,12 +897,15 @@ STR_AAHALO_5,"Descent Rate:","Descent Rate:","Верт. ск.:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
 STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""", """amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""", """ahead_friends"",""tovarich_moy"",""Letyat_perelyotnye_pticy_2nd"""
-STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """podolinam"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
+STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """chapaev"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"
 STR_INTRO_3,"%1. %2, %3, %4 mission day","%1. %2, %3, %4 mission Tag","%1. %2, %3, %4-й день миссии"
 STR_INTRO_4,"Sahrani island. Nearest settlement - %1","Insel Sahrani. Nächste Siedlung - %1","Остров Сахрани. Ближайшее поселение - %1"
+STR_INTRO_5,"Today in the USSR (1985) holiday: ""%1"" (%2)","Heute in der UdSSR (1985) Urlaub: ""%1"" (%2)","Сегодня в СССР (1985 г.) праздник: ""%1"" (%2)"
+STR_INTRO_5_0,working day,Arbeitstag,рабочий день
+STR_INTRO_5_1,holiday,arbeitsfreier Tag,выходной
 STR_INTRO_SIDE,"USSR","UdSSR","СССР"
 STR_INTRO_TEAM,"One team - ","One team - ","Сторона - "
 STR_INTRO_FULL,"Domination! One team - A.C.E. East","Domination! One team - A.C.E. East","Освобождение! Сторона - СССР (мод A.C.E.)"
@@ -928,15 +931,15 @@ STR_FRIDAY,Friday,Freitag,Пятница
 STR_SATURDAY,Saturday,Samstag,Суббота
 STR_SUNDAY,Sunday,Sonntag,Воскресение
 
-STR_HOLIDAY_1_JAN,"New year, day off","Neujahr, freier Tag","Новый Год, выходной"
-STR_HOLIDAY_23_FEB,"The day of Soviet army and Navy","Der Tag der sowjetischen Armee und Marine","День СА и ВМФ"
-STR_HOLIDAY_8_MAR,"International women's day, day off","Internationaler Frauentag, Wochenende","Международный женский день, выходной"
+STR_HOLIDAY_1_JAN,"New Year","Neujahr","Новый Год"
+STR_HOLIDAY_23_FEB,"The day of Soviet army and Navy","Der Tag der sowjetischen Armee und Marine","День Советской Армии и ВМФ"
+STR_HOLIDAY_8_MAR,"International women's day","Internationaler Frauentag","Международный женский день"
 STR_HOLIDAY_12_APR,"Cosmonautics day","Tag der Raumfahrt","День Космонавтики"
 STR_HOLIDAY_1_MAY,"International workers' solidarity day","Tag der internationalen Solidarität der Arbeitnehmer","День международной солидарности трудящихся"
-STR_HOLIDAY_9_MAY,"Victory Day, day off","Tag des Sieges, Wochenende","День Победы, выходной"
+STR_HOLIDAY_9_MAY,"Victory Day","Tag des Sieges","День Победы"
 STR_HOLIDAY_18_AUG,"Day of the USSR Air Fleet","Tag der Luftflotte der UdSSR","День Воздушного Флота СССР"
-STR_HOLIDAY_7_OCT,"Constitution day of the USSR, day off","Tag der Verfassung der UdSSR, Wochenende","День Конституции СССР, выходной"
-STR_HOLIDAY_7_NOV,"The day of the Great October Socialist Revolution, day off","Tag der großen Sozialistischen Oktoberrevolution, Wochenende","День Великой Октябрьской Социалистической Революции, выходной"
+STR_HOLIDAY_7_OCT,"Constitution day of the USSR","Tag der Verfassung der UdSSR","День Конституции СССР"
+STR_HOLIDAY_7_NOV,"The day of the Great October Socialist Revolution","Tag der großen Sozialistischen Oktoberrevolution","День Великой Октябрьской Социалистической Революции"
 
 STR_TIME_0,Night on Sahrani,Nacht auf Sahrani,на Сахрани  - ночь...
 STR_TIME_1,Day on Sahrani,Tag auf Sahrani,на Сахрани - день...

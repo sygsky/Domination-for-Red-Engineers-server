@@ -2921,7 +2921,7 @@ SYG_getParamFromSettingsArray = {
         case "VD": {argp(_arr, 0)}; // ViewDistance
         case "GI": {argp(_arr, 1)}; // GrassIndex
         case "PI": {argp(_arr, 2)}; // Player marker Index
-        case "RM": {argp(_arr, 3)}; // Reborn music play index
+        case "RM": {argp(_arr, 3)}; // Reset defeat Music on/o
         default {-1};
     }
 };
