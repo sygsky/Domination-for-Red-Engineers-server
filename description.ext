@@ -126,11 +126,11 @@ class CfgMusic
 	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
 
 	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
-    class podolinam    {        name="";        sound[]=   {\sounds\podolinam.ogg,db-1,1.0};    };
+    class chapaev1  {        name="";        sound[]=   {\sounds\intro\holidays\feb_23\chapaev1.ogg,db-1,1.0};    };
     class johnny    {        name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};    };
     class druzba    {        name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};    };
-    class bond    {        name="";        sound[]=   {\sounds\bond.ogg,db-1,1.0};    };
-    class adjutant    {        name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};    };
+    class bond      {        name="";        sound[]=   {\sounds\bond.ogg,db-1,1.0};    };
+    class adjutant  {        name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};    };
 //    class red_alert_soviet_march { name=""; sound[]= {\sounds\red_alert_soviet_march.ogg,db-1,1.0}; };
     class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };
     class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
@@ -138,7 +138,6 @@ class CfgMusic
     class              lastdime1 { name=""; sound[]= {\sounds\intro\lastdime1.ogg,db-1,1.0};    };
     class              lastdime2 { name=""; sound[]= {\sounds\intro\lastdime2.ogg,db-1,1.0};    };
     class              lastdime3 { name=""; sound[]= {\sounds\intro\lastdime3.ogg,db-1,1.0};    };
-    class              lastdime4 { name=""; sound[]= {\sounds\intro\lastdime4.ogg,db-1,1.0};    };
     class      esli_ranili_druga { name=""; sound[]= {\sounds\intro\esli_ranili_druga.ogg,db-1,1.0};    };
 
 
@@ -412,7 +411,7 @@ class CfgSounds
     class woman_motherfucker {name = ""; sound[] = {\sounds\fuck\woman_motherfucker.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_svoloch {name = ""; sound[] = {\sounds\fuck\woman_svoloch.ogg, db+0, 1.0}; titles[] = {}; };
 
-// man self-killed
+// man self-killed. If append next scream, don't forget to edit method SYG_getSuicideScreamSound() in file SYG_utilsSound.sqf (increase harcoded number of screams)
     class male_scream_0 {name = ""; sound[] = {\sounds\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_1 {name = ""; sound[] = {\sounds\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_2 {name = ""; sound[] = {\sounds\male_scream_2.ogg, db+0, 1.0}; titles[] = {}; };
@@ -427,7 +426,9 @@ class CfgSounds
     class male_scream_11 {name = ""; sound[] = {\sounds\male_scream_11.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_12 {name = ""; sound[] = {\sounds\male_scream_12.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_13 {name = ""; sound[] = {\sounds\suicide\scream1.ogg, db+0, 1.0}; titles[] = {}; };
-    class suicide_yeti {name = ""; sound[] = {\sounds\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_14 {name = "Demonic woman scream on suicide"; sound[] = {\sounds\suicide\demonic_woman_scream.ogg, db+0, 1.0}; titles[] = {}; }; // demonic scream
+
+    class suicide_yeti {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 
@@ -488,11 +489,25 @@ class CfgSounds
     class laughter_1 { name="Laughter 1"; sound[] = {\sounds\defeat\laughter\1.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_2 { name="Laughter 2"; sound[] = {\sounds\defeat\laughter\2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_3 { name="Laughter 3"; sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_4 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\4.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
 
     // Period of the day sounds
     class morning_1 { name="Morning: alarm-clock"; sound[] = {\sounds\timeofday\morning\alarm-clock.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
-    class morning_2 { name="Morning: USSR Morozko film, 1964"; sound[] = {\sounds\timeofday\morning\morozko.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
-    class morning_3 { name="Morning: the cry of a unnamed cock"; sound[] = {\sounds\timeofday\morning\rooster.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
+    class morning_2 { name="Morning: USSR Morozko film, 1964"; sound[] = {\sounds\timeofday\morning\morozko.ogg,db+10,1.0}; titles[] = {}; } // Morning: Morozko film
+    class morning_3 { name="Morning: the cry of a unnamed cock"; sound[] = {\sounds\timeofday\morning\rooster.ogg,db+10,1.0}; titles[] = {}; } // Morning: cook cry
+
+    class evening_1 { name="Evening: ""Moscow nights"""; sound[] = {\sounds\timeofday\evening\podmoskv.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (rus)
+    class evening_2 { name="Evening: ""Moscow nights""  in Chinese"; sound[] = {\sounds\timeofday\evening\podm_vech_china.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (chinese)
+    class evening_3 { name="Evening: ""Moscow nights"" in Japan, women's voices"; sound[] = {\sounds\timeofday\evening\podm_vech_jap.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (japan, women)
+    class evening_4 { name="Evening: ""Moscow nights"" in Japan, men's voices"; sound[] = {\sounds\timeofday\evening\podm_vech_jap2.ogg,db+10,1.0}; titles[] = {}; } // Evening (japan, men)
+    class evening_5 { name="Evening: ""The Evening bells"""; sound[] = {\sounds\timeofday\evening\vechernij_zvon.ogg,db+10,1.0}; titles[] = {}; } // The Evening bells (Nikolay Gedda)
+
+    class night_1 { name="Night: bird?"; sound[] = {\sounds\timeofday\night\amb2.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (rus)
+    class night_2 { name="Night: wolfs?"; sound[] = {\sounds\timeofday\night\amb3.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (chinese)
+    class night_3 { name="Night: Cool Vibes by Kevin MacLeod"; sound[] = {\sounds\timeofday\night\night.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (japan, women)
+    class night_4 { name="Night: real nightingail"; sound[] = {\sounds\timeofday\night\night_birds.ogg,db+10,1.0}; titles[] = {}; } // Evening (japan, men)
+    class night_5 { name="Night: Gavriil Popov, 1998, OST 'Okraina'"; sound[] = {\sounds\timeofday\night\night2.ogg,db+10,1.0}; titles[] = {}; } // The Evening bells (Nikolay Gedda)
 
     // ordinal defeats
 

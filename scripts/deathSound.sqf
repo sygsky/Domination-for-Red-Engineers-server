@@ -40,9 +40,9 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
     {
         if (format["%1",side _killer] == d_enemy_side) then
         {
-            if (random 10 <= 3) then
+            if (random 3 <= 1) then
             {
-                // try to play likiller laughter sound on all clients
+                // try to play killer laughter sound on all clients
                 _sound = call SYG_getLaughterSound;
                 ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
             };

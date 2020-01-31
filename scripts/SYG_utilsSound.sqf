@@ -165,10 +165,10 @@ SYG_waterDefeatTracks =
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
-// returns random male laughter sound
+// returns random male laughter sound on your defeate
 SYG_getLaughterSound =
 {
-    ["laughter_1","laughter_2","laughter_3"] call XfRandomArrayVal
+    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
@@ -490,12 +490,13 @@ SYG_getMusicName = {
 };
 
 SYG_getSuicideScreamSound  = {
-    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 14))};  // 0-13
+    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 15))};  // 0-13
     SYG_suicideScreamSound
 };
 
 /**
  *  Plays mysic for the next weather forecast act
+ * TODO: create weather forecast event system and sound it
  */
 SYG_playWeatherForecastMusic = {
  [

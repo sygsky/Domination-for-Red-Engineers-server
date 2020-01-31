@@ -1,7 +1,7 @@
 // x_intro.sqf, by Xeno
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_Sahrani_island","_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
-		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt"];
+		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date"];
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
@@ -10,6 +10,9 @@ d_still_in_intro = true;
 #include "x_macros.sqf"
 
 #define __DEBUG__
+
+// uncomment next line to test how 23-FEB-1985, 7-NOV-1985 etc are processed as Soviet holiday
+//#define __HOLIDAY_DEBUG__
 
 #define RANDOM_POS_OFFSET 5 // 5 meters to offset any point except last one
 
@@ -50,12 +53,22 @@ _day  = SYG_client_start select 2;
 _newyear = false;
 
 // ++++++++++++++++++++++ check if today is in soviet holiday list (in 1985)
+#ifdef __HOLIDAY_DEBUG__
+_date =  + SYG_client_start;
+_date set [1,11]; _date set [2, 7]; // 07-NOV-1985, 23-FEB-1985 etc
+_holiday = _date call SYG_getHoliday;
+#else
 _holiday = SYG_client_start call SYG_getHoliday;
+#endif
+
+_sound = "";
 if (count _holiday > 0 ) then {
     // Soviet holiday detected, show its info to user
-    // TODO: show info about soviet holiday
-}
-else { // select random music for ordinal day
+    // TODO: show info about soviet holiday and/or play corresponding sound
+    _sound = _holiday select 1;
+    if (_sound != "") then {playMusic _sound};
+};
+if (_sound == "") then { // select random music for ordinal day
     if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
     {
         playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
@@ -90,9 +103,14 @@ else { // select random music for ordinal day
                 _pos = _x find _name;
                 if ( _pos >= 0 ) exitWith { _personalSounds = _sounds select _pos};
             } forEach _players;
+            if (format["%1",player] in ["RESCUE","RESCUE2"]) then {
+                {
+                    _personalSounds = _personalSounds + ["from_russia_with_love","bond1","bond"];
+                } forEach [1,2,3];
+            }; // as you are some kind of spy
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
             [
-                "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime1","lastdime2","lastdime3","lastdime4",
+                "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime1","lastdime2","lastdime3",
                 "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
                 "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
@@ -384,7 +402,7 @@ else
 	_endtime = time + 10;
 	_r = 0;_a = 0.008;_sec = 0;
 	while {_endtime > time} do {
-		_control = _XD_display displayCtrl 66666;
+		//_control = _XD_display displayCtrl 66666;
 		_control ctrlSetTextColor [_r,_r,_r,_r];
 		_r = _r + _a;
 		if (_r >= 1) then {
@@ -397,12 +415,12 @@ else
 		};
 		sleep .01;
 	};
-	_control = _XD_display displayCtrl 66666;
+	//_control = _XD_display displayCtrl 66666;
 	_control ctrlShow false;
 };
 
 _start spawn {
-	private ["_txt"];
+	private ["_txt","_arr"];
 	//sleep 2;
 	{
 		_txt = switch _x do
@@ -411,13 +429,37 @@ _start spawn {
 			case 2: { localize "STR_INTRO_2" }; // North Atlantic
 			case 3: { format[localize "STR_INTRO_3", date call SYG_humanDateStr, (date call SYG_weekDay) call SYG_weekDayLocalName, call SYG_nowHourMinToStr, ceil(call SYG_missionDayToNum)] }; // landing time / week day 
 			case 4: { format[localize "STR_INTRO_4", text (_this call SYG_nearestSettlement)] }; // settlement
+			case 5: {  // message and sound for current day period (morning,day,evening,night), if available
+                [] spawn {
+                    sleep (60 + (random 20));
+                    private ["_str"];
+                    _str = [] call SYG_getMsgForCurrentDayTime;
+                    titleText[_str, "PLAIN DOWN"];
+                    _str = ([] call SYG_getCurrentDayTimeRandomSound);
+                    if (_sound != "") then { playSound _str; };
+                };
+                ""
+			};
+			case 6: { // print info per holiday if available
+            	private ["_holiday","_date"];
+            #ifdef __HOLIDAY_DEBUG__
+                _date =  + SYG_client_start;
+                _date set [1,11]; _date set [2, 7]; // 07-NOV-1985, 23-FEB-1985 etc
+                _holiday = _date call SYG_getHoliday;
+            #else
+                _holiday = SYG_client_start call SYG_getHoliday;
+            #endif
+                if ( (count _holiday) == 0 ) exitWith {""};
+                _str = if (_holiday select 0) then {"STR_INTRO_5_1"} else {"STR_INTRO_5_0"};
+                ["msg_to_user", "", [["STR_INTRO_5",_holiday select 2,_str]]] call SYG_msgToUserParser; // message output
+                "" // don't show anything more
+			};
 		};
-		titleText[ _txt, "PLAIN DOWN" ];
-		sleep 4;
-	} forEach [ 4, 1, 2, 3 ];
-	// titleText[ "", "PLAIN DOWN" ]; // not needed
-	sleep 60;
-	titleText[call SYG_getMsgForCurrentDaytime, "PLAIN DOWN"];
+		if (_txt != "") then {
+            titleText[ _txt, "PLAIN DOWN" ];
+            sleep 4.5;
+		};
+	} forEach [ 4, 1, 2, 3, 6, 5 ];
 };
 
 
