@@ -112,7 +112,7 @@ X_XMarkerPlayers = {
             // 4 = player markers with player health, no name
             _text = "?";
             switch (d_show_player_marker) do {
-                case 1: { _text = format["%1/%2",name _ap, str((10 - round(10 * damage _ap)) mod 10)] };
+                case 1: { _text = if (damage _ap <= 0.049 ) then { ""} else {format["/%1",str((10 - round(10 * damage _ap)) mod 10)]}; _text = format["%1%2",name _ap, _text] };
                 case 2: { _text =  "" };
                 case 3: { _text = _as };
                 case 4: { _text = format["h%1", str((10 - round(10 * damage _ap)) mod 10)] };
