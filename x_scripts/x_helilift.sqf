@@ -96,7 +96,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 				
 					// ++ Sygsky: checking again legal type of vehicle to lift here
 				  
-					if ( (typeof _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon")) exitWith 	{
+					if ( !((typeof _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon"))) exitWith 	{
                         // vehicle not in legal list
                         //++ Sygsky: found that vehicle ready to lift isn't in legal list! Clear possible activity and report user about
                         [_vehicle, format[localize "STR_SYS_38", typeOf _nearest]] call XfVehicleChat; // "Overwhelming vehicle (%1)..."
@@ -109,7 +109,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         //hint localize format["+++ x_helilift.sqf: vehicle %1 lifted", typeOf _nearest];
                         Attached_Vec = _nearest;
                         _release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
-                        [_vehicle, format[localize "STR_SYS_37",[typeOf (_vehicle),0] call XfGetDisplayName]] call XfVehicleChat;
+                        [_vehicle, format[localize "STR_SYS_37",[typeOf _nearest,0] call XfGetDisplayName]] call XfVehicleChat;
 
                         switch (_nearest) do {
                             case MRR1: {
