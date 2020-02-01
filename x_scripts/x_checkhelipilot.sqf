@@ -1,4 +1,4 @@
-// by Xeno: x_helilift.sqf
+// by Xeno: x_scripts\x_checkhelipilot.sqf, local call
 private ["_listin", "_no_lift", "_vehicle", "_position", "_enterer", "_exit_it", "_may_fly", "_type_enterer","_was_engineon"];
 
 #include "x_setup.sqf"
