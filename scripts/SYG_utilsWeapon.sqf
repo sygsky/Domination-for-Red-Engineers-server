@@ -456,13 +456,20 @@ SYG_rearmSabotage = {
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
 	{
 		_unit = arg(0);
+        _prob = argopt(1, 0.7);
+        _adv_rearm = argopt(2, 0.1); // do advanced rearming  (true) or not (false)
+#ifdef __ALLOW_SHOTGUNS__
+        _allow_shotgun = argopt(3, true);
+#endif
+	}else{
+		_unit = arg(0);
+		_prob = 0.7;
+        _adv_rearm = 0.1; // do advanced rearming  (true) or not (false)
+#ifdef __ALLOW_SHOTGUNS__
+        _allow_shotgun = true;
+#endif
 	};
     _unit_type = typeOf _unit;
-    _prob = argopt(1, 0.7);
-    _adv_rearm = argopt(2, 0.1); // do advanced rearming  (true) or not (false)
-#ifdef __ALLOW_SHOTGUNS__
-    _allow_shotgun = argopt(3, true);
-#endif
 	_ret = false;
 	_rnd = random 1.0;
 	_smoke_grenade = "ACE_SmokeGrenade_Violet";
@@ -641,23 +648,10 @@ SYG_rearmSabotage = {
 			default {   hint localize format["+++ SYG_rearmSabotage partial rearming failed due unknown soldier type %1",_unit_type ];};
 		};
 
-        {
-            _unit removeMagazine _x;
-        } forEach _removeMags;
-
-		if ( _removeWpn != "") then
-		{
-
-			_unit removeWeapon _removeWpn;
-		};
-
-        {
-            _unit addMagazine _x;
-        }forEach _addMags;
-
-        {
-            _unit addWeapon _x;
-        }forEach _addWpn;
+        { _unit removeMagazine _x; } forEach _removeMags;
+		if ( _removeWpn != "") then { _unit removeWeapon _removeWpn; };
+        { _unit addMagazine _x; } forEach _addMags;
+        { _unit addWeapon _x; } forEach _addWpn;
 
 		_ret = true;
 		//	player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, NOT rearmed", _unit_type, _prob, _adv_rearm, _rnd]
@@ -2275,8 +2269,9 @@ SYG_findExcessiveWeapon = {
 	_other_weapon
 };
 
-
-// _unit call SYG_getBulkyWeapon
+// call as:
+//         _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
+//
 SYG_getVecRoleBulkyWeapon = {
 	private ["_vec", "_role_arr", "_driver","_turret",/*"_cargo",*/"_bulky_weapon"];
 	_vec = vehicle _this;
