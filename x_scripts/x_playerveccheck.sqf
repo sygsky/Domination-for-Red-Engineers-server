@@ -26,7 +26,7 @@ private ["_veh", "_not_allowed", "_needed_rank", "_index", "_activity_info_sent"
          "_not_allowed","_bulky_weapon","_needed_rank","_cargo","_role","_new_role",
          "_index","_air_battle","_role_arr","_enemy_vec","_player_not_in_GRU_mission",
 #ifdef __DISABLE_GRU_BE_PILOTS__
-         "_player_is_GRU",
+         "_player_is_GRU","_battle_heli",
 #endif
          "_vrs","_indexsb","_indexta","_indexheli","_indexplane"
         ];
@@ -44,6 +44,7 @@ while { true } do {
 	_role = "";
 	_index = 0;
 	_air_battle = false; // Is vehicle Battle Air one?
+	_battle_heli = false;
 
 	// play some special sound for woman
 	{
@@ -51,8 +52,8 @@ while { true } do {
 	    if ( (_x call SYG_isWoman) && (random 10 > 1)) exitWith { _x say (call SYG_getFemaleFuckSpeech) };
 	} forEach ((crew _veh) - [player]);
 
-	if ((typeOf _veh) != "ACE_Bicycle") then
-	{
+	if ((typeOf _veh) != "ACE_Bicycle") then {
+//        hint localize "x_playerveccheck.sqf: (typeOf _veh) != ""ACE_Bicycle""";
 
         //+++ Sygsky:
         _role_arr = assignedVehicleRole player;
@@ -72,11 +73,13 @@ while { true } do {
         #endif
         _enemy_vec = false; // if vehicle is enemy trophy one
         if ( _player_not_in_GRU_mission ) then {
+//            hint localize "x_playerveccheck.sqf: _player_not_in_GRU_mission true";
             #ifndef __TT__
             if (!((_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo) ) then {
             #else
             if (!(_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2,HRR1,HRR2,HRR3,HRR4,MRRR1,MRRR2])) then {
             #endif
+//                hint localize "x_playerveccheck.sqf: !((_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo)";
                 _index = (rank player) call XGetRankIndex;
                 _vrs = d_ranked_a select 8;								 // ranks for:
                 _indexsb = (toUpper (_vrs select 0)) call XGetRankIndex; // strike-base/m113/bmp
@@ -118,6 +121,7 @@ while { true } do {
                     };
                 } else {
                     if (_veh isKindOf "Air") then {
+//                        hint localize "!((_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo)";
                         if (_veh isKindOf "Helicopter" && !(_veh isKindOf "ParachuteBase")) then {
                             if (_veh isKindOf "AH6" || _veh isKindOf "ACE_Mi17" || _veh isKindOf "UH60MG") then {
                                 if (_veh isKindOf "ACE_Mi17" && (_index < _indexta)) then { // always allowed to enter into "AH6" descendants
@@ -127,23 +131,20 @@ while { true } do {
                             } else {
                                 //big heli are here
                                 _air_battle = true;
+                                _battle_heli = true;
                                 // Western heli allowed to enter for any rank drivers
                                 if ( !((_veh isKindof "AH1W"
     #ifdef __ACE__
                                     || _veh isKindOf "ACE_AH64_AGM_HE")
     #endif
                                      && (_role == "Driver"))
-                                    ) then
-                                { // follow check for soviet helicopters only, any western ones are allowed
-                                    if (_index < _indexheli) then
-                                    {
-                                        _not_allowed = true;
-                                        _needed_rank = (_vrs select 2);
+                                    ) then { // follow check for soviet helicopters only, any western ones are allowed
+                                        if (_index < _indexheli) then
+                                        {
+                                            _not_allowed = true;
+                                            _needed_rank = (_vrs select 2);
+                                        };
                                     };
-                                };
-    #ifdef __DISABLE_GRU_BE_PILOTS__
-                                _not_allowed = _not_allowed || (_player_is_GRU && _role == "Driver");
-    #endif
                             };
                         } else {
                             if ( (_veh isKindOf "Plane") && (typeOf _veh != "RAS_Parachute") && !(_veh isKindOf "Camel")) then {
@@ -152,9 +153,6 @@ while { true } do {
                                     _not_allowed = true;
                                     _needed_rank = (_vrs select 3);
                                 };
-    #ifdef __DISABLE_GRU_BE_PILOTS__
-                                _not_allowed = _not_allowed || (_player_is_GRU && _role == "Driver");
-    #endif
                             };
                         };
                     };
@@ -175,6 +173,7 @@ while { true } do {
                 hint localize format["x_playerveccheck.sqf: bulky weapon is ""%1""",_bulky_weapon];
             };
     #endif
+    #ifdef __FUTURE__
             while { _cargo || ((((!_not_allowed) && (_bulky_weapon == "") ) ) && (vehicle player != player)) } do
             {
                 sleep 0.666;
@@ -187,12 +186,15 @@ while { true } do {
                     _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
                 };
             };
+    #endif
         } // not in native vehicle on base
         else // player is the executing GRU mission, check his options
         {
             // check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
             _not_allowed =  !(_veh isKindOf "Motorcycle" || _veh isKindOf "ACE_ATV_HondaR" || _veh isKindOf "Truck5t" || _veh isKindOf "Ural" || _veh isKindOf "Zodiac");
         };
+
+//        hint localize format[ "+++ x_playerveccheck: _not_allowed %1, _bulky_weapon %2", _not_allowed, _bulky_weapon ];
 
         if ( _not_allowed || (_bulky_weapon != "") ) then {
             player action[ "Eject",_veh ];
@@ -204,15 +206,15 @@ while { true } do {
             if ( !_player_not_in_GRU_mission ) exitWith
             {
                 (localize "STR_GRU_38") call XfGlobalChat; // "No, no! I can't disobey orders about not using such vehicle during GRU task!"
-                hint localize format["--- player is on GRU duty and not allowed into %1",typeOf _veh];
+//                hint localize format["--- player is on GRU duty and not allowed into %1",typeOf _veh];
             };
-    #ifdef __DISABLE_GRU_BE_PILOTS__
-            if (_not_allowed && _player_is_GRU) exitWith
-            {
-                (localize "STR_GRU_DRIVE") call XfGlobalChat; // "Men from the GRU are not pilots and can't fly."
-                hint localize format["--- GRU player not allowed to drive battle heli or plane %1",typeOf _veh];
-            };
-    #endif
+//    #ifdef __DISABLE_GRU_BE_PILOTS__
+//            if (_not_allowed && _player_is_GRU) exitWith
+//            {
+//                (localize "STR_GRU_DRIVE") call XfGlobalChat; // "Men from the GRU are not pilots and can't fly."
+//                hint localize format["--- GRU player not allowed to drive battle heli or plane %1",typeOf _veh];
+//            };
+//    #endif
             if ( _not_allowed ) exitWith
             {
                 // "Ваше звание: %1. Вам не позволено использовать %3.\n\nТребуемое звание: %2."
@@ -225,11 +227,16 @@ while { true } do {
         }
         else // player allowed to be in vehicle
         {
-            if ( _air_battle && !_cargo) then // periiodically send info to server about player battle air vehicle activity
+//            hint localize format[ "+++ x_playerveccheck: player allowed to be in vehicle %1, airbattle %2, cargo %3", typeOf _veh, _air_battle, _cargo ];
+            if ( _air_battle && !_cargo ) then // periodically send info to server about player battle air vehicle activity
             {
                 [ _veh, "on" ] call _sendInfoOnAirVehToServer; // add info about to server
                 _activity_info_sent = true;
                 hint localize format[ "+++ x_playerveccheck: start activity report on %1", typeOf _veh ];
+    #ifdef __DISABLE_GRU_BE_PILOTS__
+                // Let's control that GRU player is not in air vehicle together with any of his AI as "Gunner"
+                if (_player_is_GRU && (_role == "Driver") && _battle_heli) then { (vehicle player) execVM "scripts\checkAIEnterer.sqf"; }; // control for AI as gunner
+    #endif
             };
         };
 	} // if ( _player_not_in_GRU_mission ) then
