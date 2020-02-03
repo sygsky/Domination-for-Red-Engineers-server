@@ -96,14 +96,11 @@ _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x
 #ifdef __ACE__
 if (d_own_side == "EAST") then
 {
+    _identity =  format["Rus%1", (floor (random 5)) + 1];
     if (_ai_side_unit call SYG_isWoman) then
     {
         _identity = "Irina";
         _unit say (call SYG_getFemaleFuckSpeech);
-    }
-    else
-    {
-        _identity =  format["Rus%1", (floor (random 5)) + 1];
     };
     _unit setIdentity _identity; // there are only 5 russina voice in the ACE
     // TODO: test if russian voice is heard on clients. May be it is possible to setIdentity only for local units
