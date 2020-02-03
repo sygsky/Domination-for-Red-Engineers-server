@@ -6,19 +6,9 @@
 */
 
 private ["_role_arr","_sound"];
-//hint localize format["+++ checkAIEnterer.sqf: script with %1, alive _this %2, vehicle player != player %3", typeOf _this, alive _this, vehicle player != player];
 
 while {(alive _this) && ((vehicle player) != player)} do {
-    hint localize format["+++ checkAIEnterer.sqf: count crew _this %1", count crew _this];
     if ( count (crew _this) > 1 ) then {
-/**
-        hint localize format["+++ checkAIEnterer.sqf: count crew _this %1; alive _x %2, isPlayer _x %3, _roleArr %4",
-            count crew _this,
-            alive _x,
-            isPlayer _x,
-            _role_arr
-            ];
-*/
         // check if AI in vehicle is in role "Gunner"
         {
             if ( alive _x && !isPlayer _x ) then
@@ -43,10 +33,3 @@ while {(alive _this) && ((vehicle player) != player)} do {
     };
     sleep (1 + (random 2));
 };
-/**
-hint localize format["*** checkAIEnterer.sqf: _exit %1, alive _this %2, vehicle player != player %3, vehicle player == player %4",
-            _exit,
-            alive _this,
-            vehicle player != player,
-            vehicle player == player];
-*/
