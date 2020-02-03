@@ -411,6 +411,22 @@ class CfgSounds
     class woman_motherfucker {name = ""; sound[] = {\sounds\fuck\woman_motherfucker.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_svoloch {name = ""; sound[] = {\sounds\fuck\woman_svoloch.ogg, db+0, 1.0}; titles[] = {}; };
 
+// woman sorry etc
+    class sorry_0  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-0.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_1  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-1.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_2  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-2.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_3  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-3.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_4  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-4.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_5  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-5.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_6  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-6.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_7  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-7.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_8  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-8.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_9  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-9.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_10 {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-10.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_11 {name = "Female sexy";  sound[] = {\sounds\women\sorry\sexy-voice.ogg.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_12 {name = "Female kidding"; sound[] = {\sounds\women\sorry\ten-dollars-are-you-kidding-me.ogg, db+0, 1.0}; titles[] = {}; };
+
+
 // man self-killed. If append next scream, don't forget to edit method SYG_getSuicideScreamSound() in file SYG_utilsSound.sqf (increase harcoded number of screams)
     class male_scream_0 {name = ""; sound[] = {\sounds\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_1 {name = ""; sound[] = {\sounds\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };

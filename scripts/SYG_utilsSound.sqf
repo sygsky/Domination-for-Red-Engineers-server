@@ -523,7 +523,7 @@ SYG_playDeathInTankSound = {
 
 SYG_getFemaleFuckSpeech = {
     private ["_arr"];
-	_arr = ["woman_fuck","woman_fuck_2","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch"];
+	_arr = ["woman_fuck","woman_fuck_2","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11","sorry_12"];
     switch localize "STR_LANG" do
     {
         case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};

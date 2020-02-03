@@ -346,7 +346,7 @@ XHandleNetStartScriptServer = {
 
 		case "veh_info": // information about battle air vehicle activity
 		{
-		    private ["_veh","_cmd"];
+		    private ["_veh","_cmd","_cnt"];
 		    _params = (_this select 1); // parameters array of this command
 		    _veh    = _params select 0; // vehicle
 		    _cmd    = _params select 1; // "on"/"off"
@@ -356,12 +356,14 @@ XHandleNetStartScriptServer = {
 		        {
 		            if (_veh in SYG_owner_active_air_vehicles_arr) exitWith {};  // already in
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr + [ _veh ]; // add new vehicle
-		            hint localize format["+++ ""veh_info"": %1 added to list[%2]", typeOf _veh, count SYG_owner_active_air_vehicles_arr];
+		            _cnt = count SYG_owner_active_air_vehicles_arr;
+		            hint localize format["+++ ""veh_info"": %1 added to list[%2]", typeOf _veh, _cnt];
 		        };
 		        case "off" :    // remove vehicle
 		        {
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ];
-		            hint localize format["+++ ""veh_info"": %1 removed from list[%2]", typeOf _veh, count SYG_owner_active_air_vehicles_arr];
+		            _cnt = count SYG_owner_active_air_vehicles_arr;
+		            hint localize format["+++ ""veh_info"": %1 removed from list[%2]", typeOf _veh, _cnt];
 		        };
 		        default {hint localize format["--- ""veh_info"": illegal params %1", _params]};
 		    }

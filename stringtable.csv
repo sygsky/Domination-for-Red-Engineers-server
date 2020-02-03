@@ -870,6 +870,11 @@ STR_AI_9,"All AI soldiers dismissed !!! Points returned %1","Alle KI-Soldaten en
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
 STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für KI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
 
+STR_AI_12_0,"Chief! I'm afraid to go with You!","Chef! Ich habe Angst, mit Ihnen zu Fliegen!","Шеф! Опасаюсь лететь с Вами!"
+STR_AI_12_1,"Commander! I'm not allowed to fly with you!","Commander! Ich darf nicht mit dir Fliegen!","Командир! Мне запрещено летать с тобой!"
+STR_AI_12_2,"Commander! I'm sorry, I'm busy!","Commander! Tut mir Leid, ich habe zu tun!","Командир! Извини, у меня дела!"
+STR_AI_12_3,"Next time, chief, the Partorg forbade, you heard!","Das nächste mal, Chef, hat der Parteivorstand verboten, hast du gehört!","В следующий раз, шеф, парторг запретил, ты же слышал!"
+
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
 STR_PATROL_TYPE_HP,"heavy patrol","schwere Patrouille","тяжёлый патруль"
