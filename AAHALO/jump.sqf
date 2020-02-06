@@ -30,12 +30,17 @@ if (playerSide == east) then {
 #define JUMP_DISPERSION 1000        // max. dispersion due to wind in ocean
 #ifdef __SPECIAL_JUMP_OVER_SEA__
 
+_shift = JUMP_DISPERSION;
+#ifdef __ACE__
+if (_paratype == "ACE_ParachutePack") then { _shift = 6 * _shift }; // up to 6 times further
+#endif
+
 // detect if jump is over sea
 _water_count = 0;
 {
     _pos = + _StartLocation;
     _pos set [0, (_pos select 0) + (_x select 0)];
-    _pos set [2, (_pos select 1) + (_x select 1)];
+    _pos set [1, (_pos select 1) + (_x select 1)];
     if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
 } forEach [
         [-JUMP_DISPERSION,+JUMP_DISPERSION],[0,+JUMP_DISPERSION],[+JUMP_DISPERSION,+JUMP_DISPERSION],[+JUMP_DISPERSION,0],
@@ -44,7 +49,7 @@ _water_count = 0;
 if (_water_count > 1 ) then { // jump over sea surface, add strong wind effect
     _wind_arr = wind;
     _len = _wind_arr distance [0,0,0]; // scalar vector length
-    _shift = (random JUMP_DISPERSION);
+    _shift = (random _shift) min 3500; // not further then 3500 meters from the original start point
     _dx = ((_wind_arr select 0) / _len) * _shift;
     _dy = ((_wind_arr select 1) / _len) * _shift;
     _StartLocation set [0, (_StartLocation select 0) + _dx];
@@ -54,7 +59,7 @@ if (_water_count > 1 ) then { // jump over sea surface, add strong wind effect
         (localize "STR_SYS_76_1") call XfHQChat; // “A strong ocean wind blew the parachute off”
         player say (["wind1","wind2","wind3"] call XfRandomArrayVal);
     };
-    hint localize format["+++ jump.sqf: wind dispersion is %1 [%2,%3] m", _shift, _dx, _dy ];
+    hint localize format["+++ jump.sqf: wind %1, dispersion is %2 [%3,%4] m", _wind_arr, round(_shift), round(_dx), round(_dy) ];
 };
 #endif
 
