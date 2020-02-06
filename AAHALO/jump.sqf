@@ -47,9 +47,13 @@ if (_water_count > 1 ) then { // jump over sea surface, add strong wind effect
     _shift = (random JUMP_DISPERSION);
     _dx = ((_wind_arr select 0) / _len) * _shift;
     _dy = ((_wind_arr select 1) / _len) * _shift;
-    _StartLocation set [0, _dx];
-    _StartLocation set [1, _dx ];
-    (localize "STR_SYS_76_1") call XfHQChat; // "“A strong wind over the ocean carried the parachute to the side”
+    _StartLocation set [0, (_StartLocation select 0) + _dx];
+    _StartLocation set [1, (_StartLocation select 1) + _dx];
+    if (_shift > 50) then
+    {
+        (localize "STR_SYS_76_1") call XfHQChat; // “A strong ocean wind blew the parachute off”
+        player say (["wind1","wind2","wind3"] call XfRandomArrayVal);
+    };
     hint localize format["+++ jump.sqf: wind dispersion is %1 [%2,%3] m", _shift, _dx, _dy ];
 };
 #endif
