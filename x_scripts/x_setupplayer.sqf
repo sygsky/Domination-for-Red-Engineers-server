@@ -302,7 +302,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                         if (toLower (name player) == "yeti") then // yeti
                         {
                             d_rebornmusic_index = 1; // no play death sound
-                            SYG_suicideScreamSound = "suicide_yeti"; // personal suicide sound for yeti
+                            SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                             if (_index == 0) exitWith // yeti
                             {
                                 _p execVM "scripts\yeti_rearm.sqf";

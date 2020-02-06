@@ -98,7 +98,7 @@ while { nr_observers > 0 && !target_clear } do {
                             _vecs          = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
                             // find near units to prevent from attacking with warheads
                             _cnt           =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
-                            _type          = if ( (_cnt > MIN_FRIENDLY_COUNT_TO_STRIKE)  && (_observer_cnt == 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
+                            _type          = if ( (_cnt > MIN_FRIENDLY_COUNT_TO_STRIKE)  && (_observer_cnt > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                             // If enemy is too far from strike point, do smoking attack only
                             _dist = round( _pos_nearest distance _enemy );

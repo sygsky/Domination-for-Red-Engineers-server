@@ -163,6 +163,7 @@ STR_SYS_75_1,"Teleporting not possible while factory %1 is ruined !!!","Das tele
 STR_SYS_75_chopper,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_75_wreck,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_76,"(Choose Parachute location)","(Wählen Sie die Fallschirm-Lage)","(Выбор места десантирования)"
+STR_SYS_76_1,“A strong wind over the ocean carried the parachute to the side”,"Ein starker Wind über dem Ozean trug den Fallschirm zur Seite","Сильный ветер над океаном отнёс парашют в сторону"
 STR_SYS_77,"Cancel service","Rückgängig Service","Отменить обслуживание"
 STR_SYS_78,"Lift %1","Hubschrauber %1","Трансп. вертолёт %1"
 STR_SYS_79,"Wreck Lift","Wrack heben","Трансп. обломков"
@@ -851,7 +852,7 @@ STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / A
 
 STR_SYS_1218,"Enemy air vehicles locked: ","Feindliche Luftfahrzeuge gesperrt:","Вражеская авиатехника блокирована: "
 
-STR_SYS_1219,"GRU officers are unable to control the air vehicles","GRU-Offiziere sind nicht in der Lage, die Luftfahrzeuge zu Steuern","Сотрудники ГРУ не могут управлять летательными аппаратами"
+STR_SYS_1219,"AI soldires cant be a gunners in battle helis","KI-Soldaten können keine schützen in Kampfhubschraubern sein","Новобранцы из военкомата не могут быть стрелками в боевых вертолётах"
 
 STR_SYS_SERVICE_DMG,"Service %1 is damaged","Service %1 beschädigt","Сервис %1 повреждён!"
 STR_SYS_SERVICE_DMG_1,"One of the services of the base was damaged by saboteurs!","Eine der Dienstleistungen der Basis beschädigt von saboteurs!","Один из сервисов на базе был повреждён диверсантами!"
@@ -874,6 +875,7 @@ STR_AI_12_0,"Chief! I'm afraid to go with You!","Chef! Ich habe Angst, mit Ihnen
 STR_AI_12_1,"Commander! I'm not allowed to fly with you!","Commander! Ich darf nicht mit dir Fliegen!","Командир! Мне запрещено летать с тобой!"
 STR_AI_12_2,"Commander! I'm sorry, I'm busy!","Commander! Tut mir Leid, ich habe zu tun!","Командир! Извини, у меня дела!"
 STR_AI_12_3,"Next time, chief, the Partorg forbade, you heard!","Das nächste mal, Chef, hat der Parteivorstand verboten, hast du gehört!","В следующий раз, шеф, парторг запретил, ты же слышал!"
+STR_AI_12_4,"Next time, chief, the Partorg forbade, you heard!","Das nächste mal, Chef, hat der Parteivorstand verboten, hast du gehört!","Командир! Я же ж не умею!"
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 

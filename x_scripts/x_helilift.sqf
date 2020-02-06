@@ -108,55 +108,55 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                     if ( isNull Attached_Vec ) then {
                         //hint localize format["+++ x_helilift.sqf: vehicle %1 lifted", typeOf _nearest];
                         Attached_Vec = _nearest;
-                        _release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
-                        [_vehicle, format[localize "STR_SYS_37",[typeOf _nearest,0] call XfGetDisplayName]] call XfVehicleChat;
-
-                        switch (_nearest) do {
-                            case MRR1: {
-                                mr1_in_air=true;
-                                ["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
-                                ["mr1_lift_chopper",_vehicle] call XSendNetStartScriptServer;
-                            };
-                            case MRR2: {
-                                mr2_in_air=true;
-                                ["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
-                                ["mr2_lift_chopper",_vehicle] call XSendNetStartScriptServer;
-                            };
+						_release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
+                        [_vehicle, format[localize "STR_SYS_37",[typeOf (_vehicle),0] call XfGetDisplayName]] call XfVehicleChat;
+	  
+						switch (_nearest) do {
+							case MRR1: {
+								mr1_in_air=true;
+								["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
+								["mr1_lift_chopper",_vehicle] call XSendNetStartScriptServer;
+							};
+							case MRR2: {
+								mr2_in_air=true;
+								["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
+								["mr2_lift_chopper",_vehicle] call XSendNetStartScriptServer;
+							};
 #ifdef __TT__
-                            case MRRR1: {
-                                mrr1_in_air=true;
-                                ["mrr1_in_air",mrr1_in_air] call XSendNetStartScriptAllDiff;
-                                ["mrr1_lift_chopper",_vehicle] call XSendNetStartScriptServer;
-                            };
-                            case MRRR2: {
-                                mrr2_in_air=true;
-                                ["mrr2_in_air",mrr2_in_air] call XSendNetStartScriptAllDiff;
-                                ["mrr2_lift_chopper",_vehicle] call XSendNetStartScriptServer;
-                            };
+							case MRRR1: {
+								mrr1_in_air=true;
+								["mrr1_in_air",mrr1_in_air] call XSendNetStartScriptAllDiff;
+								["mrr1_lift_chopper",_vehicle] call XSendNetStartScriptServer;
+							};
+							case MRRR2: {
+								mrr2_in_air=true;
+								["mrr2_in_air",mrr2_in_air] call XSendNetStartScriptAllDiff;
+								["mrr2_lift_chopper",_vehicle] call XSendNetStartScriptServer;
+							};
 #endif
-                        };
-
-                        _height = 15;
+						};
+	  
+						_height = 15;
                         _fuel = fuel _nearest;
                         // hint localize format["+++ x_helilift.sqf: vehicle local=%1", local _vehicle]; // yes, it is really local
                         _nearest setFuel 0;
-                        while {alive _vehicle && player_is_driver && alive _nearest && alive player && !Vehicle_Released} do {
-                            _vup = vectorUp _vehicle;
-                            _vdir = vectorDir _vehicle;
-                            _voffset = (speed _vehicle min 50) / 3.57;
-                            _fheight = _height + (2.5 min (_vehicle modelToWorld [0,-1-_voffset,-_height] select 2));
-                            _nearest_pos = _vehicle modelToWorld [0,-1-_voffset,-_fheight];
-                            _nearest setPos _nearest_pos;
+						while {alive _vehicle && player_is_driver && alive _nearest && alive player && !Vehicle_Released} do {
+							_vup = vectorUp _vehicle;
+							_vdir = vectorDir _vehicle;
+							_voffset = (speed _vehicle min 50) / 3.57;
+							_fheight = _height + (2.5 min (_vehicle modelToWorld [0,-1-_voffset,-_height] select 2));
+							_nearest_pos = _vehicle modelToWorld [0,-1-_voffset,-_fheight];
+							_nearest setPos _nearest_pos;
                             _nearest setVectorDir _vdir; // TODO: use setVectorDirAndUp
-                            _nearest setVectorUp  _vup;
+							_nearest setVectorUp  _vup;
                             _nearest setVelocity (velocity _vehicle);  //+++ Sygsky - let vehicle to inertially fly ahead some distance
                             _nearest engineOn false;
                             //_nearest setVelocity [0,0,0];
-                            sleep 0.001;
-                        };
+							sleep 0.001;
+						};
                         _nearest setFuel _fuel;
-                        _nearest engineOn false;
-                        _nearest setVelocity (velocity _vehicle);  //+++ Sygsky - let vehicle to inertially fly ahead some distance
+						_nearest engineOn false;
+						_nearest setVelocity (velocity _vehicle);  //+++ Sygsky - let vehicle to inertially fly ahead some distance
 
                         // detect the ground bump speed of vehicle
 /*
@@ -176,9 +176,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                             hint localize format["--- x_helilift.sqf: end time %1, v %2, h  %3", (round(time * 100)) / 100 , velocity _this, (round(getPos _this select 2) *100)/100];
                         };
 */
-                        Vehicle_Attached = false;
-                        Vehicle_Released = false;
-
+						Vehicle_Attached = false;
+						Vehicle_Released = false;
+	  
                         if (!alive _vehicle) then {
                             _vehicle removeAction _release_id;
                         } else {
@@ -200,33 +200,33 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         _nearest call SYG_revealToAllPlayers;
 
                         // send information to all clients about new position of well known lifted vehicle
-                        switch (_nearest) do {
-                            case MRR1: {
-                                mr1_in_air = false;
-                                ["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
-                                ["mr1_lift_chopper",objNull] call XSendNetStartScriptServer;
+						switch (_nearest) do {
+							case MRR1: {
+								mr1_in_air = false;
+								["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
+								["mr1_lift_chopper",objNull] call XSendNetStartScriptServer;
                                 publicVariable "MRR1";
-                            };
-                            case MRR2: {
-                                mr2_in_air = false;
-                                ["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
-                                ["mr2_lift_chopper",objNull] call XSendNetStartScriptServer;
+							};
+							case MRR2: {
+								mr2_in_air = false;
+								["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
+								["mr2_lift_chopper",objNull] call XSendNetStartScriptServer;
                                 publicVariable "MRR2";
-                            };
+							};
 #ifdef __TT__
-                            case MRRR1: {
-                                mrr1_in_air = false;
-                                ["mrr1_in_air",mrr1_in_air] call XSendNetStartScriptAllDiff;
-                                ["mrr1_lift_chopper",objNull] call XSendNetStartScriptServer;
-                            };
-                            case MRRR2: {
-                                mrr2_in_air = false;
-                                ["mrr2_in_air",mrr2_in_air] call XSendNetStartScriptAllDiff;
-                                ["mrr2_lift_chopper",objNull] call XSendNetStartScriptServer;
-                            };
+							case MRRR1: {
+								mrr1_in_air = false;
+								["mrr1_in_air",mrr1_in_air] call XSendNetStartScriptAllDiff;
+								["mrr1_lift_chopper",objNull] call XSendNetStartScriptServer;
+							};
+							case MRRR2: {
+								mrr2_in_air = false;
+								["mrr2_in_air",mrr2_in_air] call XSendNetStartScriptAllDiff;
+								["mrr2_lift_chopper",objNull] call XSendNetStartScriptServer;
+							};
 #endif
-                        };
-                    };
+						};
+					};
 				};
 			};
 		};

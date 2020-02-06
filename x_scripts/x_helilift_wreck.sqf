@@ -100,16 +100,15 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         [_vehicle, localize "STR_SYS_39"/* "Техника сброшена..." */] call XfVehicleChat;
                     };
 
-                    if (!(_nearest isKindOf "StaticWeapon") && (position _nearest) select 2 < 200) then {
-                        waitUntil {(position _nearest) select 2 < 10};
-                    };
+					if ((position _nearest) select 2 > 20) then {
+    					while { (!(isNull _nearest)) && ( (position _nearest) select 2 < 10) } do {sleep 0.1};
+					};
 
-                    _npos = position _nearest;
-                    _nearest setPos [_npos select 0, _npos select 1, 0];
-                    _nearest setVelocity [0,0,0];
-
-                    sleep 1.012;
-                };
+					sleep 1.012;
+					_npos = position _nearest;
+					_nearest setPos [_npos select 0, _npos select 1, 0];
+					_nearest setVelocity [0,0,0];
+				};
 			};
 		};
 	};

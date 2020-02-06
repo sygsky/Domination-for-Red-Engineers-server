@@ -26,6 +26,32 @@ if (playerSide == east) then {
 };
 #endif
 
+#define __SPECIAL_JUMP_OVER_SEA__ // special condition of strong wind over sea surface
+
+#ifdef __SPECIAL_JUMP_OVER_SEA__
+
+// detect if jump is over sea
+_water_count = 0;
+{
+    _pos = + _StartLocation;
+    _pos set [0, (_pos select 0) + (_x select 0)];
+    _pos set [2, (_pos select 1) + (_x select 1)];
+    if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
+} forEach [[-1,+1],[0,+1],[+1,+1],[+1,0],[+1,-1],[0,-1],[-1,-1],[-1,0]];
+
+if (_water_count > 1 ) then { // jump over sea surface, add strong wind effect
+    _wind_arr = wind;
+    _len = _wind_arr distance [0,0,0]; // scalar vector length
+    _shift = (random 1000) + 500;
+    _dx = ((_wind_arr select 0) / _len) * _shift;
+    _dy = ((_wind_arr select 1) / _len) * _shift;
+    _StartLocation set [0, _dx];
+    _StartLocation set [1, _dx ];
+    (localize "STR_SYS_76_1") call XfHQChat; // "“A strong wind over the ocean carried the parachute to the side”
+    hint localize format["+++ jump.sqf: wind offset set to %1 [%2,%3] m", _shift, _dx, _dy ];
+};
+#endif
+
 #ifndef __ACE__
 enableRadio false;
 #endif
