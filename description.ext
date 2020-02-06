@@ -360,10 +360,6 @@ class CfgSounds
     class parajump1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump1.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 1
     class parajump2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump2.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 2
 
-    class wind1 { name="Jump over ocean 1"; sound[] = {\sounds\parajump\strong_wind_1.ogg,db-1,1.0}; titles[] = {};} // You jumped over ocean sound 1
-    class wind2 { name="Jump over ocean 2"; sound[] = {\sounds\parajump\strong_wind_2.ogg,db-1,1.0}; titles[] = {};} // You jumped over  ocean sound 2
-    class wind3 { name="Jump over ocean 3"; sound[] = {\sounds\parajump\strong_wind_3.ogg,db-1,1.0}; titles[] = {};} // You jumped over  ocean sound 3
-
     class freefall1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_1.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 1
     class freefall2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_2.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
     class freefall3 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_1.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 2
