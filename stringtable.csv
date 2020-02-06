@@ -163,7 +163,7 @@ STR_SYS_75_1,"Teleporting not possible while factory %1 is ruined !!!","Das tele
 STR_SYS_75_chopper,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_75_wreck,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_76,"(Choose Parachute location)","(Wählen Sie die Fallschirm-Lage)","(Выбор места десантирования)"
-STR_SYS_76_1,“A strong wind over the ocean carried the parachute to the side”,"Ein starker Wind über dem Ozean trug den Fallschirm zur Seite","Сильный ветер над океаном отнёс парашют в сторону"
+STR_SYS_76_1,“A strong ocean wind blew the parachute off”,"Ein starker Meereswind blies den Fallschirm ab","Сильный ветер над океаном отнёс парашют в сторону"
 STR_SYS_77,"Cancel service","Rückgängig Service","Отменить обслуживание"
 STR_SYS_78,"Lift %1","Hubschrauber %1","Трансп. вертолёт %1"
 STR_SYS_79,"Wreck Lift","Wrack heben","Трансп. обломков"
