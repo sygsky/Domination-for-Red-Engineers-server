@@ -688,12 +688,14 @@ XHandleNetStartScriptClient = {
 		};
 		#endif
 		case "syg_observer_kill" : {
-            if (str(arg(1)) == str(player)) then // code only for killer
+            if ( str(arg(1)) == str(player) ) then // code only for killer
             {
+                private ["_score"];
                 hint localize format["+++ x_netinitclient.sqf: Observer killed by %1", name player];
                 // add scores
-                player addScore argp( d_ranked_a, 27 );
-                (localize "STR_SYS_1160") call XfHQChat; // "Twas observer
+                _score = argp( d_ranked_a, 27 );
+                player addScore _score;
+                (format[localize "STR_SYS_1160", _score]) call XfHQChat; // "Twas a spotter
             };
             // common code
             //playSound "no_more_waiting";
