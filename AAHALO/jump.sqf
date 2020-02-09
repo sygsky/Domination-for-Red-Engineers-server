@@ -46,7 +46,7 @@ _water_count = 0;
         [-JUMP_DISPERSION,+JUMP_DISPERSION],[0,+JUMP_DISPERSION],[+JUMP_DISPERSION,+JUMP_DISPERSION],[+JUMP_DISPERSION,0],
         [+JUMP_DISPERSION,-JUMP_DISPERSION],[0,-JUMP_DISPERSION],[-JUMP_DISPERSION,-JUMP_DISPERSION],[-JUMP_DISPERSION,0]];
 
-if (_water_count > 1 ) then { // jump over sea surface, add strong wind effect
+if (_water_count >= 7 ) then { // player jumps over sea surface, add strong wind effect
     _wind_arr = wind;
     _len = _wind_arr distance [0,0,0]; // scalar vector length
     _shift = (random _shift) min 3500; // not further then 3500 meters from the original start point
