@@ -354,6 +354,10 @@ XHandleNetStartScriptServer = {
 		    {
 		        case "on"  :
 		        {
+		            if (!(_veh isKindOf "Air") ) exitWith {
+		                _cnt = count SYG_owner_active_air_vehicles_arr;
+		                hint localize format["--- ""veh_info"": attempt to add illegal param %1 to the list[%2]", typeOf _veh, _cnt];
+		            };
 		            if (_veh in SYG_owner_active_air_vehicles_arr) exitWith {};  // already in
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr + [ _veh ]; // add new vehicle
 		            _cnt = count SYG_owner_active_air_vehicles_arr;
