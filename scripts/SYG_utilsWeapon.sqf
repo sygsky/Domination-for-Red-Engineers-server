@@ -462,7 +462,7 @@ SYG_rearmSabotage = {
         _allow_shotgun = argopt(3, true);
 #endif
 	}else{
-		_unit = arg(0);
+		_unit = _this;
 		_prob = 0.7;
         _adv_rearm = 0.1; // do advanced rearming  (true) or not (false)
 #ifdef __ALLOW_SHOTGUNS__
