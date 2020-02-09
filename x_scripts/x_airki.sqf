@@ -517,25 +517,32 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
                 {
                     _enemy_heli = SYG_owner_active_air_vehicles_arr select _i;
-                    if ( ({alive _x} count crew _enemy_heli) == 0) then
+                    if (typeName _enemy_heli == "OBJECT") then
                     {
-                        hint localize format["+++ x_airki: enemy air vehicle %1 empty, remove from array", typeOf _enemy_heli ];
-                        SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"];
+                        if ( ({alive _x} count crew _enemy_heli) == 0) then
+                        {
+                            hint localize format["+++ x_airki: enemy air vehicle %1 empty, remove from array", typeOf _enemy_heli ];
+                            SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"];
+                        }
+                        else
+                        {
+                            _pos = getPos _enemy_heli;
+                            if ( (_x distance _pos)  < 3500 ) then
+                            {
+                                if ( ( _pos select 2) > ((getPos _x) select 2) ) then
+                                {
+                                    _flyHeight = ((_pos select 2)+50);
+                                    _x flyInHeight _flyHeight;
+                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2", typeOf _enemy_heli, round( _flyHeight ) ];
+                                    _height_not_set = false;
+                                };
+                                _x reveal _enemy_heli;
+                            };
+                        };
                     }
                     else
                     {
-                        _pos = getPos _enemy_heli;
-                        if ( (_x distance _pos)  < 3500 ) then
-                        {
-                            if ( ( _pos select 2) > ((getPos _x) select 2) ) then
-                            {
-                                _flyHeight = ((_pos select 2)+50);
-                                _x flyInHeight _flyHeight;
-                                hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2", typeOf _enemy_heli, round( _flyHeight ) ];
-                                _height_not_set = false;
-                            };
-                            _x reveal _enemy_heli;
-                        };
+                        hint localize format["+++ x_airki: bad item in enemy air vehicle array %1", _enemy_heli ];
                     };
                 }; // forEach SYG_owner_active_air_vehicles_arr;
                 SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
