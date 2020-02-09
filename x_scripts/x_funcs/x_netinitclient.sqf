@@ -180,13 +180,13 @@ XHandleNetStartScriptClient = {
 			_name = localize "STR_SYS_402";
 			_msg = (
 				switch (_this select 1) do {
-					case 0: {format [localize "STR_SYS_260", _name,_this select 2]}; // "%1 арт.батарея, залпов выпущено: %2, ожидайте, прием."
-					case 1: {format [localize "STR_SYS_261", _name, _this select 2]}; // "%1 арт.батарея, заряжаем %2, прием."
-					case 2: {format [localize "STR_SYS_262", _name]}; // "%1 арт.батарея, перезарядка орудий, прием."
-					case 3: {format [localize "STR_SYS_263", _name]}; //"%1 арт.батарея, обстрел закончили, прием."
-					case 4: {format [localize "STR_SYS_264", _this select 2,_this select 3, _this select 4, _this select 5]}; // "Запрашиваю арт.удар боеприпасами (%1), залпов: %2, по следующим координатам: %3 - %4."
+					case 0: {format[localize "STR_SYS_260", _name,_this select 2]}; // "%1 арт.батарея, залпов выпущено: %2, ожидайте, прием."
+					case 1: {format[localize "STR_SYS_261", _name, _this select 2]}; // "%1 арт.батарея, заряжаем %2, прием."
+					case 2: {format[localize "STR_SYS_262", _name]}; // "%1 арт.батарея, перезарядка орудий, прием."
+					case 3: {format[localize "STR_SYS_263", _name]}; //"%1 арт.батарея, обстрел закончили, прием."
+					case 4: {format[localize "STR_SYS_264", _this select 2,_this select 3, _this select 4, _this select 5]}; // "Запрашиваю арт.удар боеприпасами (%1), залпов: %2, по следующим координатам: %3 - %4."
 					case 5: {format[localize "STR_SYS_265", localize "STR_SYS_404"]}; // "Говорит %1 арт.батарея, вас понял, прием."
-					case 6: {format [localize "STR_SYS_266", _name, _this select 2,_this select 3]}; // "%1 арт.батарея, выполнили: боеприпасами %2, залпов: %3."
+					case 6: {format[localize "STR_SYS_266", _name, _this select 2,_this select 3]}; // "%1 арт.батарея, выполнили: боеприпасами %2, залпов: %3."
 				}
 			);
 			_msg call XfHQChat;
@@ -211,13 +211,13 @@ XHandleNetStartScriptClient = {
 			_name = localize "STR_SYS_403";
 			_msg = (
 				switch (_this select 1) do {
-					case 0: {format [localize "STR_SYS_260", _name,_this select 2]}; // "%1 арт.батарея, залпов выпущено: %2, ожидайте, прием."
-					case 1: {format [localize "STR_SYS_261", _name, _this select 2]}; // "%1 арт.батарея, заряжаем %2, прием."
-					case 2: {format [localize "STR_SYS_262", _name]}; // "%1 арт.батарея, перезарядка орудий, прием."
-					case 3: {format [localize "STR_SYS_263", _name]}; //"%1 арт.батарея, обстрел закончили, прием."
-					case 4: {format [localize "STR_SYS_264", _this select 2,_this select 3, _this select 4, _this select 5]}; // "Запрашиваю арт.удар боеприпасами (%1), залпов: %2, по следующим координатам: %3 - %4."
+					case 0: {format[localize "STR_SYS_260", _name,_this select 2]}; // "%1 арт.батарея, залпов выпущено: %2, ожидайте, прием."
+					case 1: {format[localize "STR_SYS_261", _name, _this select 2]}; // "%1 арт.батарея, заряжаем %2, прием."
+					case 2: {format[localize "STR_SYS_262", _name]}; // "%1 арт.батарея, перезарядка орудий, прием."
+					case 3: {format[localize "STR_SYS_263", _name]}; //"%1 арт.батарея, обстрел закончили, прием."
+					case 4: {format[localize "STR_SYS_264", _this select 2,_this select 3, _this select 4, _this select 5]}; // "Запрашиваю арт.удар боеприпасами (%1), залпов: %2, по следующим координатам: %3 - %4."
 					case 5: {format[localize "STR_SYS_265", localize "STR_SYS_405"]}; // "Говорит %1 арт.батарея, вас понял, прием."
-					case 6: {format [localize "STR_SYS_266", _name, _this select 2,_this select 3]}; // "%1 арт.батарея, выполнили: боеприпасами %2, залпов: %3."
+					case 6: {format[localize "STR_SYS_266", _name, _this select 2,_this select 3]}; // "%1 арт.батарея, выполнили: боеприпасами %2, залпов: %3."
 				}
 			);
 			_msg call XfHQChat;
