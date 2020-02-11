@@ -695,7 +695,7 @@ XHandleNetStartScriptClient = {
                 // add scores
                 _score = argp( d_ranked_a, 27 );
                 player addScore _score;
-                (format[localize "STR_SYS_1160", _score]) call XfHQChat; // "Twas a spotter
+                (format[localize "STR_SYS_1160", _score + 1]) call XfHQChat; // "Twas a spotter
             };
             // common code
             //playSound "no_more_waiting";

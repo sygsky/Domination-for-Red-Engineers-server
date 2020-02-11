@@ -694,11 +694,9 @@ SYG_rearmSabotageGroup = {
  *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional.
  *    Default 0.1. Range 0.0 <-> 1.0
  */
-//#define __SYG_rearmSpecops__
+#define __SYG_rearmSpecops_DEBUG__
+
 SYG_rearmSpecops = {
-#ifdef __SYG_rearmSpecops__
-    hint localize format["+++ SYG_rearmSabotage: %1", _this];
-#endif
 
     private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_smoke_grenade"];
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
@@ -720,7 +718,7 @@ SYG_rearmSpecops = {
 	_smoke_grenade = "ACE_SmokeGrenade_Green";
 	if ( _rnd < _prob) then  // do ordinal rearming
 	{
-#ifdef __SYG_rearmSpecops__
+#ifdef __SYG_rearmSpecops_DEBUG__
         hint localize format["+++ SYG_rearmSabotage: %1 full rearming", _unit_type];
 #endif
 
@@ -875,23 +873,18 @@ SYG_rearmSpecops = {
 
 		if ( _ret ) then
 		{
-#ifdef __SYG_rearmSpecops__
-            hint localize format[ "+++ SYG_rearmSpecops: %1 rearmed", _unit_type ];
-#endif
 			_ret = [_unit,_equip] call SYG_armUnit;
 		};
 	};
     if (!_ret) then
     {
-#ifdef __SYG_rearmSpecops__
-        hint localize format[ "*** SYG_rearmSpecops: %1 not rearmed, try to  supply him with a shotgun", _unit_type ];
-#endif
 #ifdef __ALLOW_SHOTGUNS__
         private ["_mags"];
         switch (_unit_type) do
         {
             case "ACE_TeamLeaderW_USSF_ST_DCUL";
             case "ACE_SoldierWB_USSF_ST_BDUL";
+            case "ACE_SoldierWG_R";
             case "ACE_SoldierWMAT_USSF_ST_BDUL":
             {
                 // average launcher + high penetration rocket
@@ -899,16 +892,13 @@ SYG_rearmSpecops = {
                 SYG_STD_MEDICAL_SET + [[_smoke_grenade,1]] +
                 [["P", "ACE_M136", "ACE_AT4_HP", 2]];
                 _wpn = RAR(SYG_SHOTGUN_SET);
-    #ifdef __SYG_rearmSpecops__
-                hint localize format["*** rearr shotgun: %1", _wpn];
-    #endif
                 if ( _wpn == "ACE_SPAS12" ) then
                     { _mags = RAR(SYG_SHOTGUN_AMMO9) }
                 else
                     { _mags = RAR(SYG_SHOTGUN_AMMO8) };
                 _equip = _equip + [["P", _wpn, _mags, 7]];
-#ifdef __SYG_rearmSpecops__
-                hint localize format["+++ SYG_rearmSpecops: %1 rearmed with shotgun %2", _unit_type, _equip ];
+#ifdef __SYG_rearmSpecops_DEBUG__
+                hint localize format["+++ SYG_rearmSpecops: %1 rearmed with shotgun %2", _unit_type, _wpn ];
 #endif
                 _ret = [_unit,_equip] call SYG_armUnit;
             };
