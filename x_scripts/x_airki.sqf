@@ -5,7 +5,7 @@ private ["_type", "_pos", "_wp_behave", "_crew_member", "_addToClean", "_heli_ty
  "_vehicles", "_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_leader",
  "_old_target", "_loop_do", "_dummy", "_current_target_pos", "_wp", "_pat_pos", "_radius", "_dist", "_old_pat_pos", "_angle",
   "_x1", "_y1", "_i", "_vecx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage","_res_arr",
-  "_flyHeight"];
+  "_flyHeight","_enemy_heli","_height_not_set","_old_target_name","_flight_height"];
 
 if (!isServer) exitWith {};
 
@@ -195,7 +195,7 @@ _rejoinPilots =
 	else
 	{
 #ifdef __PRINT__	
-		hint localize format["+++ x_airki.sqff[%1]: Grp is <NULL> or pilots are dead",_type];
+		hint localize format["+++ x_airki.sqf[%1]: Grp is <NULL> or pilots are dead",_type];
 #endif		
 		_ret = false;
 	};
@@ -517,21 +517,32 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
                 {
                     _enemy_heli = SYG_owner_active_air_vehicles_arr select _i;
-                    if ( ({alive _x} count crew _enemy_heli) == 0) then{ SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"] }
+                    if (typeName _enemy_heli == "OBJECT") then
+                    {
+                        if ( ({alive _x} count crew _enemy_heli) == 0) then
+                        {
+                            hint localize format["+++ x_airki: enemy air vehicle %1 empty, remove from array", typeOf _enemy_heli ];
+                            SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"];
+                        }
+                        else
+                        {
+                            _pos = getPos _enemy_heli;
+                            if ( (_x distance _pos)  < 3500 ) then
+                            {
+                                if ( ( _pos select 2) > ((getPos _x) select 2) ) then
+                                {
+                                    _flyHeight = ((_pos select 2)+50);
+                                    _x flyInHeight _flyHeight;
+                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2", typeOf _enemy_heli, round( _flyHeight ) ];
+                                    _height_not_set = false;
+                                };
+                                _x reveal _enemy_heli;
+                            };
+                        };
+                    }
                     else
                     {
-                        _pos = getPos _enemy_heli;
-                        if ( (_x distance _pos)  < 3500 ) then
-                        {
-                            if ( ( _pos select 2) > ((getPos _x) select 2) ) then
-                            {
-                                _flyHeight = ((_pos select 2)+50);
-                                _x flyInHeight _flyHeight;
-                                hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2", typeOf _enemy_heli, round( _flyHeight ) ];
-                                _height_not_set = false;
-                            };
-                            _x reveal _enemy_heli;
-                        };
+                        hint localize format["+++ x_airki: bad item in enemy air vehicle array %1", _enemy_heli ];
                     };
                 }; // forEach SYG_owner_active_air_vehicles_arr;
                 SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
@@ -605,7 +616,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			hint localize format[ "+++ x_airki.sqf[%1]: all vehicle[s] are down, rejoin %2 pilot[s], rejoined %3", _type, _cnt, _ret ];
 #endif
             if ( !_ret ) then { _grp call _killUnits } // just in case
-            else {["msg_to_user","",[["STR_GRU_54"],"STR_GRU_54_1"], 4, 10 + random 30] call XSendNetStartScriptClient;  }; // "One or more enemy pilots have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
+            else {["msg_to_user","",[["STR_GRU_54"],["STR_GRU_54_1"]], 4, 10 + random 30] call XSendNetStartScriptClient;  }; // "One or more enemy pilots have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
 		};
 #ifdef __FUTURE__		
 		//+++ Sygsky: try to reveal info on known enemies for near friendly units

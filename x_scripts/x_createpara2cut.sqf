@@ -175,7 +175,7 @@ if (!_ejected && alive _chopper) then
 {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
-    hint localize format["--- x_createpara2cut.sqf: Emergency saboteurs ejection started, %1 unit[s], h %2, %3", count crew _chopper, round((getPos _chopper) select 2), _msg ];
+    hint localize format["--- x_createpara2cut.sqf: Ordinal saboteurs ejection started, %1 unit[s], h %2, %3", count crew _chopper, round((getPos _chopper) select 2), _msg ];
 	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;

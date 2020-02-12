@@ -5,6 +5,7 @@
 	returns: nothing
 */
 
+private ["_killer","_unit","_exit","_churchArr","_TVTowerArr","_castleArr","_sound"];
 #include "x_setup.sqf"
 
 #define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random(count ARR))))
@@ -22,11 +23,31 @@ SYG_deathCountCnt = SYG_deathCountCnt + 1; // total death count bump
 if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play ordinal sound if KIA or alone
 {
     if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doen't like such sounds
+
+    // check for russian tank)))
+    _exit = false;
+    if ( ((vehicle _unit) isKindOf "Tank") && (call SYG_playExtraSounds)) then { _exit = call SYG_playDeathInTankSound };
+    if ( _exit) exitWith {};
+
+    // check for helicopter
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
     {
         playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
     };
     _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
+
+    if ((_killer isKindOf "SoldierWB") ) then
+    {
+        if (format["%1",side _killer] == d_enemy_side) then
+        {
+            if (random 3 <= 1) then
+            {
+                // try to play killer laughter sound on all clients
+                _sound = call SYG_getLaughterSound;
+                ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
+            };
+        };
+    };
 }
 else    // some kind of suicide? Say something about...
 {

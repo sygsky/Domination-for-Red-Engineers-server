@@ -8,11 +8,11 @@
 	(_this select 1) call XHandleNetVar;
 };
 
-SYG_userNames  = ["EngineerACE",/*"HE_MACTEP",*/"Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","gyuri", "Frosty", "Aron"];
-SYG_localZones = [            0,/*          0,*/        0,    -4,           0,        +2,        +2,     +2,       +2,     +1];
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron"];
+SYG_localZones = [            0,          0,        0,    -4,           0,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
 
 XHandleNetStartScriptServer = {
-	private ["_this"];
+	private ["_this","_params"];
 	__DEBUG_NET("x_netinitserver.sqf XHandleNetStartScriptServer _this",_this)
 	switch (_this select 0) do {
 #ifdef __DEBUG_BONUS__
@@ -120,22 +120,25 @@ XHandleNetStartScriptServer = {
 		// info from user about his name and missionStart value
 		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 		case "d_p_a": {
+            // store server time directly now for better accuracy
+            SYG_server_time  = time;       // current server time at the synchonizaton moment
 
 			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance
 			if ( count _this > 2) then // missionStart received
 			{
+			    private ["_userLogin", "_ind"];
 			    _userLogin = arg(1);
 			    _ind = SYG_userNames find _userLogin;
 			    if (_ind >= 0 ) then
 			    {
+    			    private ["_localDate", "_timeOffset"];
 			        _localDate  = arg(2);
 			        _timeOffset = SYG_localZones select _ind;
 
 			        // store real time or the server (MSK must be guarantied)
-			        //and local time to help know rela time all the mission
+			        // and local time to help know real time through whole mission during being suspend/resume in virtual machines
 			        // TODO: надо как то 
                     SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
-                    SYG_server_time  = time;       // current server time at the synchonizaton moment
                     hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",_timeOffset];
 			    }
 			    else
@@ -144,7 +147,6 @@ XHandleNetStartScriptServer = {
 			        {
                         // unknown client started server, let get time from it in any case
                         SYG_client_start = _localDate; // current time on first and unknown connected client
-                        SYG_server_time  = time;       // current server time at the synchonizaton moment
                         hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client started server without known timezone was accepted !!!";
 			        }
 			        else
@@ -161,7 +163,7 @@ XHandleNetStartScriptServer = {
 		 * ["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
 		 */
 		case "d_p_varname": {
-			private ["_index","_parray", "_msg_arr"];
+			private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr","_val","_date"];
 			_index = d_player_array_names find arg(1);
 			//hint localize format["***************** _index = %1 *********************", _index];
 			_parray = [];
@@ -208,8 +210,14 @@ XHandleNetStartScriptServer = {
                         {
                             if (_name == "GTX460") then // Русский
                             {
-                                _msg = "Привет, наш человек с Запада! Тут тебе не там!";
-                            }
+                                _msg = "Островитяне: привет советскому разведчику! Мы никому не расскажем о тебе!";
+                            } else
+                            {
+                                if (_name == "Klich") then // Русский
+                                {
+                                    _msg = "Островитяне рады приветствовать Вас на вашем родном языке!";
+                                };
+                            };
                         };
                     };
                 };
@@ -303,6 +311,7 @@ XHandleNetStartScriptServer = {
 		};
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
+		    private ["_vehicle","_sound"];
 		    _vehicle = argopt(1, objNull);   // vehicle to play sound on it
 		    if ( isNull _vehicle ) exitWith {hint localize "--- ""say_sound"" _vehicle is null";};
 		    _sound   = argopt(2, "");        // sound to play
@@ -314,6 +323,7 @@ XHandleNetStartScriptServer = {
 		// ["GRU_event_scores",_score_id, name player] call XSendNetStartScriptServer;
 		case "GRU_event_scores":
 		{
+		    private ["_id","_playerName","_score"];
             _id = argopt(1, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
             _playerName = argopt(2, "" );
@@ -336,6 +346,7 @@ XHandleNetStartScriptServer = {
 
 		case "veh_info": // information about battle air vehicle activity
 		{
+		    private ["_veh","_cmd","_cnt"];
 		    _params = (_this select 1); // parameters array of this command
 		    _veh    = _params select 0; // vehicle
 		    _cmd    = _params select 1; // "on"/"off"
@@ -343,11 +354,21 @@ XHandleNetStartScriptServer = {
 		    {
 		        case "on"  :
 		        {
+		            if (!(_veh isKindOf "Air") ) exitWith {
+		                _cnt = count SYG_owner_active_air_vehicles_arr;
+		                hint localize format["--- ""veh_info"": attempt to add illegal param %1 to the list[%2]", typeOf _veh, _cnt];
+		            };
 		            if (_veh in SYG_owner_active_air_vehicles_arr) exitWith {};  // already in
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr + [ _veh ]; // add new vehicle
-		            hint localize format["+++ ""veh_info"": %1 added to list[%2]", typeOf _veh, count SYG_owner_active_air_vehicles_arr];
+		            _cnt = count SYG_owner_active_air_vehicles_arr;
+		            hint localize format["+++ ""veh_info"": %1 added to list[%2]", typeOf _veh, _cnt];
 		        };
-		        case "off" : {SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ] }; // remove vehicle
+		        case "off" :    // remove vehicle
+		        {
+		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ];
+		            _cnt = count SYG_owner_active_air_vehicles_arr;
+		            hint localize format["+++ ""veh_info"": %1 removed from list[%2]", typeOf _veh, _cnt];
+		        };
 		        default {hint localize format["--- ""veh_info"": illegal params %1", _params]};
 		    }
 		};

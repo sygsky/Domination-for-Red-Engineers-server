@@ -125,14 +125,22 @@ XfGetDisplayName = {
 };
 
 //+++ Added by Sygsky at 24-OCT-2014
-// Gets randomized radious. Useful for correct spatially distributed random points density in the circle. See source: http://mathworld.wolfram.com/DiskPointPicking.html
+// Gets randomized radious. Useful for correct spatially distributed random points density in the circle.
+// See source: http://mathworld.wolfram.com/DiskPointPicking.html
 // Parameters: radious of circle to insert random point (no brackets)
 // Example: _randrad = 500 call XfRndRadious; // correctly distributed among disk square random value in range of 0..500
 XfRndRadious = {
 		(sqrt((random _this)/_this))*_this
 };
 
-// get a random point inside a circle
+// call as: _rad = [_rad1, _rad2] call XfRndRadious2;
+XfRndRadious2 = {
+        private [ "_size" ];
+        _size = ( _this select 1 ) - ( _this select 0 );
+		( sqrt( random 1 ) * _size ) + ( _this select 0 )
+};
+
+// get a random clear point inside a circle
 // parameters:
 // center position, radius of the circle
 // example: _random_point = [position trigger1, 200] call XfGetRanPointCircle;

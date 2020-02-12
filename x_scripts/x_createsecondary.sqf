@@ -161,7 +161,7 @@ switch (sec_kind) do {
                 _unit = _newgroup createUnit [ _type, _poss, [], 0, "FORM"];
                 [_unit] join _newgroup;
                 _pos = _vehicle buildingPos _i;
-                hint localize format["x_createsecondary.sqf: creating guard %5 (grp %6) on top of tower, %1 at pos %2(%3) of max %4", _type, _pos, _i, _cnt, _unit, _newgroup];
+                hint localize format["+++ x_createsecondary.sqf: creating guard %5 (grp %6) on top of tower, %1 at pos %2(%3) of max %4", _type, _pos, _i, _cnt, _unit, _newgroup];
                 _unit disableAI "MOVE";
                 _unit setBehaviour "SAFE";
                 _unit setPos _pos;
@@ -355,7 +355,7 @@ if (_cnt > 0) then
             {
                 [_unit] join _newgroup;
 #ifdef __DEBUG_PRINT__
-                hint localize format["x_createsecondary.sqf: guard %5 (group %6) on top of main tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit, _newgroup];
+                hint localize format["+++ x_createsecondary.sqf: guard %5 (group %6) on top of main tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit, _newgroup];
 #endif
                 _unit setPos _pos;
                 _unit setSkill 1.0;
@@ -373,7 +373,7 @@ if (_cnt > 0) then
         // TODO: add more units to the group to guard the tower
 #ifdef __FUTURE__
     [ "basic", [getPos _vehicle], getPos _vehicle, 0, "guardvehicle", d_enemy_side, _newgroup, -1.111 /*, [_trg_center, _radius] */] execVM "x_scripts\x_makegroup.sqf";
-    hint localize format["x_createsecondary.sqf: tower guard group of %1 men (%2) created", count _newgroup, "basic" ];
+    hint localize format["+++ x_createsecondary.sqf: tower guard group of %1 men (%2) created", count _newgroup, "basic" ];
 #endif
 
     }
@@ -385,7 +385,7 @@ if (_cnt > 0) then
 #ifdef __DEBUG_PRINT__
 else
 {
-    hint localize "x_createsecondary.sqf: no guard on top of the main tower were created";
+    hint localize "+++ x_createsecondary.sqf: no guard on top of the main tower was created";
 }
 #endif
 ;

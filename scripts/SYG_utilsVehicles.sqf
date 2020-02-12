@@ -153,11 +153,11 @@ SYG_getVehicleType = {
 //
 // Finds near enemy "Man" or "LandVehicle"
 //
-// call _nenemy = [_unit<,_dist>] call SYG_detectedEnemy;
+// call _nenemy = [ _unit<, _dist> ] call SYG_detectedEnemy;
 SYG_detectedEnemy = {
 	private ["_enemy","_near_targets","_side","_eside","_target","_cost"];
 	_unit = arg(0);
-	_near_targets = _unit nearTargets argopt(1,300);
+	_near_targets = _unit nearTargets argopt(1,1000);
 	_eside = if ((side _unit) == east) then  { west } else {east};
 	_cost = -1000000;
 	_enemy = objNull;
@@ -166,18 +166,18 @@ SYG_detectedEnemy = {
 	    if ( _side == _eside) then
 	    {
 	        _target = argp(_x,4);
-	        if ( _target isKindOf "LandVehicle" && ((_unit knowsAbout _target) >= 1.5)) then
+	        if ( (_target isKindOf "LandVehicle") && ((_unit knowsAbout _target) >= 1.5)) then
 	        {
-	            if ( !(_target isKindOf "Man")) then // check vehicle to has crew
+	            if ( vehicle  _target != _target ) then // check vehicle to has crew
 	            {
-	                if ( ((crew _target) call XfGetAliveUnits) == 0 ) then
+	                if ( ((crew (vehicle _target)) call XfGetAliveUnits) == 0 ) then
 	                {
         	            _target = objNull;
 	                };
 	            };
-	            if ( !(isNull _target)) then
+	            if ( alive _target ) then
 	            {
-    	            if ( _cost < _x select 3) then {_cost = _x select 3; _enemy = _x select 4};
+    	            if ( _cost < _x select 3) then {_cost = _x select 3; _enemy = _target}; // get maximum cost (danger)
     	        };
     	    };
 	    };
@@ -1610,6 +1610,21 @@ SYG_createEnemyGroup =
 {
     while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
     [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
+};
+
+SYG_createOwnGroup =
+{
+    while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
+    [d_own_side] call x_creategroup
+};
+
+SYG_addToExtraVec = {
+    if (typeName _this == "OBJECT") exitWith
+    {
+        extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_this];
+    };
+    if ( typeName _this != "ARRAY") exitWith {};
+    extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _this;
 };
 
 SYG_createGroup = SYG_createEnemyGroup;

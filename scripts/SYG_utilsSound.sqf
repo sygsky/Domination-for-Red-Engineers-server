@@ -7,7 +7,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG__
+#define __DEBUG__
 
 #define arg(x) (_this select(x))
 #define argp(param,x) ((param)select(x))
@@ -96,10 +96,10 @@ SYG_defeatTracks =
 
 ];
 
-// Play music form partial track (Arma-1 embed music and some long custom sounds may be)
+// Play music from partial track (Arma-1 embed music and some long custom sounds may be)
 // call as:
-// [name, start, length (seconds)] call __SYG_playMusicPartialTrack;
-__SYG_playMusicPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
+// [name, start, length (seconds)] call SYG_playPartialTrack;
+SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -142,6 +142,7 @@ SYG_baseDefeatTracks =
 ] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
+SYG_gongNextIndex = 0;
 SYG_TVTowerDefeatTracks =
     [
     "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10",
@@ -164,12 +165,18 @@ SYG_waterDefeatTracks =
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
+// returns random male laughter sound on your defeate
+SYG_getLaughterSound =
+{
+    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job"] call XfRandomArrayVal
+};
+// NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
 // or
 //       getPos _vehicle call SYG_playRandomDefeatTrackByPos;
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
-
+    hint localize "+++ SYG_playRandomDefeatTrackByPos +++";
 	if (typeName _this != "ARRAY") then // called as: _unit call  SYG_playRandomDefeatTrackByPos;
 	{
 	    _this = position _this;
@@ -182,6 +189,7 @@ SYG_playRandomDefeatTrackByPos = {
 	        {
     	        playSound "helicopter_fly_over";
     	        _done = true;
+  	            hint localize "+++ SYG_playRandomDefeatTrackByPos: helicopter_fly_over, done";
 	        };
 	    };
 	};
@@ -205,20 +213,25 @@ SYG_playRandomDefeatTrackByPos = {
     if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith
     {
         SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_chorusDefeatTracks, done";
     };
 
     // check if we are near base flag
     if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
     {
         SYG_baseDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_baseDefeatTracks, done";
     };
 
     // check if we are near TV-Tower
     _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
     if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
-        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        // let gong play sequentially on one client (in MP it will be randomized)
+        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod (count SYG_TVTowerDefeatTracks);
+        _sound =  SYG_TVTowerDefeatTracks select SYG_gongNextIndex;
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_TVTowerDefeatTracks, say_sound, done";
     };
 
     // check if we are near castle
@@ -226,16 +239,19 @@ SYG_playRandomDefeatTrackByPos = {
     if ( ((count _castleArr) > 0) && ((random 10) > 1)) exitWith
     {
         SYG_MedievalDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_MedievalDefeatTracks, done";
     };
 
     if (_this call SYG_pointOnIslet) exitWith // always if on a small island
     {
         SYG_islandDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_islandDefeatTracks, done";
     };
 
     if (_this call SYG_pointOnRahmadi) exitWith // always if on Rahmadi
     {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_RahmadiDefeatTracks, done";
     };
 
     // death in water
@@ -308,6 +324,8 @@ SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[2
 // 4. _arr = ["ATrack24"]; // play full track
 //
 SYG_playRandomTrack = {
+    private ["_this","_item","_trk"];
+
     //hint localize format["+++ scripts/SYG_utilsSound.sqf: input %1 +++",_this];
     if (typeName _this == "STRING") exitWith // 3. _arr = "ATrack24"; // play full track
     {
@@ -367,7 +385,7 @@ SYG_playRandomTrack = {
             {
                 // in rare case (more then 30-40 death in one session) play whole track
     #ifdef __DEBUG__
-                hint localize format[ "SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
+                hint localize format[ "*** SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
     #endif
                 SYG_deathCountCnt = 0;
                 if (call SYG_playExtraSounds) then { playMusic arg(0); };
@@ -381,14 +399,14 @@ SYG_playRandomTrack = {
             if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
             {
 #ifdef __DEBUG__
-                hint localize format["__SYG_playMusicPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
+                hint localize format["*** SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
 #endif
-                [arg(0),argp(_trk,0),argp(_trk,1)] spawn __SYG_playMusicPartialTrack;
+                [arg(0),argp(_trk,0),argp(_trk,1)] spawn SYG_playPartialTrack;
             }
             else
             {
 #ifdef __DEBUG__
-                hint localize format["SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
+                hint localize format["*** SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
 #endif
                 playMusic [arg(0),argp(_trk,0)];
             };
@@ -407,7 +425,7 @@ SYG_playRandomTrack = {
 // [ _caller, _sndArr] call SYG_moveSoundSource; // 1st sound ar index 0 from _sndArr is changed place to the _caller position
 //
 SYG_moveSoundSource = {
-	private ["_caller", "_id", "_args", "_snd", "_pos"];
+	private ["_caller", "_id", "_args", "_snd", "_pos","_arr"];
 
 	_caller = _this select 0;
 	_args = _this select 1; // [ [snd1, snd2 ...], pos ]
@@ -436,7 +454,7 @@ SYG_moveSoundSource = {
  */
 SYG_getSoundName = {
 
-    private ["_name","_type"];
+    private ["_name","_type","_isText","_str"];
 
     _name = _this;
     _isText = isText(configFile >> "CfgSounds" >> _name >> "name" );
@@ -472,12 +490,13 @@ SYG_getMusicName = {
 };
 
 SYG_getSuicideScreamSound  = {
-    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 14))};  // 0-13
+    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 15))};  // 0-13
     SYG_suicideScreamSound
 };
 
 /**
  *  Plays mysic for the next weather forecast act
+ * TODO: create weather forecast event system and sound it
  */
 SYG_playWeatherForecastMusic = {
  [
@@ -488,6 +507,28 @@ SYG_playWeatherForecastMusic = {
     ["manchester_et_liverpool", 34.006, 11.215],
     ["manchester_et_liverpool", 45.221, -1]
  ] call SYG_playRandomTrack;
+};
+
+
+//
+// play random sound about death in tank
+// returns: true if player is russian and sound played
+//          or false if not russian and sound not played
+//
+SYG_tanks_music = [ "chiz_tanki_1", "chiz_tanki_2" ];
+SYG_playDeathInTankSound = {
+    if ( localize "LANGUAGE" == "RUSSIAN") exitWith { playSound RANDOM_ARR_ITEM(SYG_tanks_music); true };
+    false
+};
+
+SYG_getFemaleFuckSpeech = {
+    private ["_arr"];
+	_arr = ["woman_fuck","woman_fuck_2","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11","sorry_12"];
+    switch localize "STR_LANG" do
+    {
+        case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
+    };
+	_arr call XfRandomArrayVal
 };
 
 if (true) exitWith {};

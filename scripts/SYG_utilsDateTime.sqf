@@ -82,7 +82,8 @@ SYG_dateToStr = {
 //
 SYG_timeDiffToStr = {
 	private ["_diff","_hours","_mins","_secs"];
-	_diff  = abs(arg(0) - arg(1));
+//	_diff  = abs(arg(0) - arg(1));
+	_diff  = abs((_this select 0) - (_this select 1));
 	_hours = floor(_diff/HOUR_SECS);
 	_mins  = floor((_diff - _hours * HOUR_SECS)/60);
 	_secs  = round(_diff - (_hours * HOUR_SECS + _mins *60));
@@ -316,9 +317,12 @@ SYG_getServerDate = {
 
 	if ( _adddays > 0 ) then // bump days
 	{
-		_year = argp(SYG_client_start,0); // server year
-		_mon  = argp(SYG_client_start,1); // server month (1..12)
-		_day  = argp(SYG_client_start,2); // server month day (1..31)
+	     // server year
+		_year = argp(SYG_client_start,0);
+		 // server month (1..12)
+		_mon  = argp(SYG_client_start,1);
+		// server month day (1..31)
+		_day  = argp(SYG_client_start,2);
 		while { _adddays > 0 } do
 		{
 			_monlen = if ( _mon == 2 ) then { if (_year call SYG_leapYear) then { 29} else {28}} else {argp(SYG_monLength,_mon-1)};
@@ -359,7 +363,7 @@ SYG_countDaysInMonth = {
 	_y  = arg(3);
 	for "_i" from _m1 to _m2 do
 	{
-		_cnt  = _cnt + (if (_i != 2) then { argp(SYG_monLength, _i) } else { if (_y call SYG_leapYear) then {29} else {28} } );
+		_cnt  = _cnt + (if (_i != 2) then { SYG_monLength select  _i } else { if (_y call SYG_leapYear) then {29} else {28} } );
 	};
 	_cnt;
 };
@@ -381,6 +385,7 @@ return 365*y + y/4 - y/100 + y/400 + (m*306 + 5)/10 + ( d - 1 )
 Difference between two dates = g(y2,m2,d2) - g(y1,m1,d1)
 */
 SYG_getDateDiff = {
+    private ["_date1","_date2","_short_date","_ids"];
 	_date1 = arg(0);
 	_date2 = arg(1);
 	// check what date is younger
@@ -388,99 +393,122 @@ SYG_getDateDiff = {
 	_ids = [0,1,2];
 	if ( !_short_date ) then {_ids = _ids + [3,4];};
 	{
-		if (argp(_date1, _x) > argp(_date2, _x)) exitWith { };
-		if (argp(_date1, _x) < argp(_date2, _x)) exitWith {	_date2 = arg(0);	_date1 = arg(1); };
+		if ((_date1 select _x) > (_date2 select _x)) exitWith { };
+		if ((_date1 select _x) < (_date2 select _x)) exitWith {	_date2 = arg(0);	_date1 = arg(1); };
 	} forEach _ids;
     (_date1 call SYG_JDN) - (_date2 call SYG_JDN)
 };
 
 SYG_JDN = {
-    _m = (arg(1) + 9) % 12;
-    _y = arg(0) - floor(_m/10);
-    365 * _y + floor(_y/4) - floor(_y/100) + floor(_y/400) + floor((_m*306 + 5)/10) + ( arg(2) - 1 )
+    private ["_m","_y"];
+    _m = ((_this select 1) + 9) % 12;
+    _y = (_this select 0) - floor(_m/10);
+    365 * _y + floor(_y/4) - floor(_y/100) + floor(_y/400) + floor((_m*306 + 5)/10) + ( (_this select 2) - 1 )
 };
+
+#define OFF_HOLIDAY_DAY 0 // day of month
+#define OFF_HOLIDAY_MON 1 // month
+#define OFF_HOLIDAY_SND 2 // music := empty string "" (no music still) || single string || array of strings
+#define OFF_HOLIDAY_TIT 3 // title for holiday
+#define OFF_HOLIDAY_HOL 4 // day off (1), work day (0)
 
 // [day,mon,range<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
 SYG_holidayTable =
 [
+/**
     [ 1, 1,10], // new year, 10 days in range
     [23, 2, 2], // 23th of February
     [ 8, 3, 2], // 8th of March
     [ 1, 5, 3], // 1st May
     [ 9, 5, 3], // 9th of May
     [ 7,11, 5]  // 7th of November
+*/
+    [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"], "STR_HOLIDAY_1_JAN", 1], // new year, 10 days in range (not realized)
+    [23,  2, ["burnash","chapaev1"],"STR_HOLIDAY_23_FEB",0], // 23th of February
+    [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
+    [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
+    [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
+    [ 2,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
+    [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
+    [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
+    [ 7, 10, "communism","STR_HOLIDAY_7_OCT",1], // Day of USSR constitution
+    [ 7, 11, ["chapaev1","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
+
 ];
 
-// Runs music and return found holiday index, -1 if no holiday found
-// _ret = _mode call  SYG_runHolidayMusic;
+// Checks current server date agains holiday list and return array of data if detected, or empty array [] if not
+// _retArr = _server_date call  SYG_getHoliday;
 // where:
-//   _mode == 0 intro mode runs music if holiday found, returns true if music played else false
-//   _mode = 1 return true if new year detected else false
-SYG_runHolidayMusic =
-{
-    _date = date;
-    _year = argp(_date,0);
-    _curr_mon = argp(_date,1);
-    if (_this == 1) exitWith // check only for new  year
-    {
-        _dateNY = [_year, 1, 1];
-        if (_curr_mon == 12) then {_dateNY set [0,_year +1];};
-        ([_dateNY, [argp(_date,0),argp(_date,1),argp(_date,2)]] call SYG_getDateDiff) <= 10
+//   _retArr is [false (ordinal day) || true (day off), "registered_sound_name" || "" (no sound),"Holiday_title"] || [] (not holiday)
+SYG_getHoliday = {
+    private ["_curr_mon","_cur_day","_ret","_music","_XfRandomFloorArray","_XfRandomArrayVal"];
+
+    // get a random number, floored, from count array
+    // parameters: array
+    // example: _randomarrayint = _myarray call XfRandomFloorArray;
+    _XfRandomFloorArray = {
+    	floor (random (count _this))
     };
 
-    _curr_day = argp(_date,2);
-    _date = [_year,argp(_date,1),argp(_date,2)];
+    // get a random item from an array
+    // parameters: array
+    // example: _randomval = _myarray call XfRandomArrayVal;
+    _XfRandomArrayVal = {
+    	_this select (_this call _XfRandomFloorArray);
+    };
+    _curr_mon = _this select 1;
+    _curr_day = _this select 2;
+    _ret = []; // default return not holiday
+    // seek current day&month in the holiday table, sorted my month and day
     {
-        _day = argp(_x,0);
-        _mon = argp(_x,1);
-        _holydate = [_year, _mon, _day];
-        if ( _mon == 1 && _curr_mon == 12) then { _holydate set[ 0, _year + 1];};
-        _diff = [_date, _holydate] call SYG_getDateDiff;
-        if ( _diff <= argp(_x,2) ) exitWith
-        {
-            if (count _x > 3 ) then // check music rules
-            {
-                _music = arg(3);
-                if ( typeName _music == "STRING" ) exitWith
-                {
-                    playMusic _music;
-                };
-                if ( typeName _music == "ARRAY" ) exitWith
-                {
-                    if ( count _music > 0) then
-                    {
-                        playMusic (_music select (floor (random (count _music))));
-                    };
-                };
+        if ( _curr_mon  < (_x select 1)) exitWith {}; // month in sorted table .GT. current one, it means current month not exists in the table
+        if ( _curr_mon == (_x select 1) ) then  {// month found, check days in table for coincidence with current one
+            if ( (_x select 0) == _curr_day ) then { // day also found, it's holyday!!!
+                _music = _x select OFF_HOLIDAY_SND;
+                if ( typeName _music == "ARRAY" ) then { _music = _music call _XfRandomArrayVal }; // not one music is set for this day, select random one
+                _ret = [(_x select OFF_HOLIDAY_HOL) > 0, _music, _x select OFF_HOLIDAY_TIT ];
             };
         };
-    } forEach
-    [
-      [ 1, 1,10, ["snovymgodom","grig"]], // new year, 10 days in range
-      [23, 2, 3, ["burnash","podolinam"]], // 23th of February
-      [ 8, 3, 2], // 8th of March
-      [ 1, 5, 3, "Varshavianka"], // 1st May
-      [ 9, 5, 3], // 9th of May
-      [22, 6, 3, "invasion"],
-      [ 7,11, 7, ["Varshavianka","Varshavianka_eng","warschawyanka_german"]]  // 7th of November
-    ];
-};
-
-// Return localized message text on the current daytime period: night, morning, day, evening
-SYG_getMsgForCurrentDaytime = {
-    _id = call SYG_getDayTimeId;
-    localize (format["STR_TIME_%1", _id])
+        if (count _ret > 0 ) exitWith {}; // A holday coincided with current day and its data returned to caller
+    } forEach SYG_holidayTable;
+    _ret
 };
 
 // Returns 0 for night, 1 for day, 2 for morning and 3 for evening
 //
 SYG_getDayTimeId = {
+    private ["_dt"];
     _dt = daytime;
     if ( _dt < SYG_startMorning ) exitWith {0};
     if ( _dt <     SYG_startDay ) exitWith {2};
     if ( _dt < SYG_startEvening ) exitWith {1};
     if ( _dt <   SYG_startNight ) exitWith {3};
-    0
+    1
+};
+
+// Return localized message text on the current daytime period: night, morning, day, evening
+SYG_getMsgForCurrentDayTime = {
+    private ["_id"];
+    _id = call SYG_getDayTimeId;
+    localize format["STR_TIME_%1", _id]
+};
+
+// call as follow:
+// _soundName = (call SYG_getDayTimeId) call SYG_getDayTimeIdRandomSound;
+// return empty string if no sound or illegal id not in [0..3] designated
+SYG_getDayTimeIdRandomSound = {
+    switch (_this) do
+    {
+        case 0 : { playSound format["night_%1", 1 + floor (random 5)]; };   // STAT_NIGHT
+        case 1 : {  ""  }; // STAT_DAY
+        case 2 : {  playSound format["morning_%1", 1 + floor (random 3)]; }; // STAT_MORNING
+        case 3 : {   format["evening_%1", 1 + floor (random 5)]; };// STAT_EVENING
+        default {""};
+    };
+};
+
+SYG_getCurrentDayTimeRandomSound = {
+    ([] call SYG_getDayTimeId) call SYG_getDayTimeIdRandomSound;
 };
 
 //

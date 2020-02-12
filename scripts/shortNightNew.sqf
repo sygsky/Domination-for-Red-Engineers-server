@@ -37,17 +37,12 @@ if ( !isServer) exitWith {false};
 
 #define __DEBUG__
 
-#define STAT_NIGHT 0
-#define STAT_DAY 1
-#define STAT_MORNING 2
-#define STAT_EVENING 3
-#define TIME_STATE (daytime call _dayPeriod)
-
 #define STD_SLEEP_DURATION 60
 #define TWILIGHT_SMOOTH_FACTOR 10
 #define TWILIGHT_SLEEP_DURATION (STD_SLEEP_DURATION/TWILIGHT_SMOOTH_FACTOR)
-#define STD_SUBTRACTION (STD_SLEEP_DURATION / STD_SLEEP_DURATION)
-#define TWILIGHT_SUBTRACTION (TWILIGHT_SLEEP_DURATION / STD_SLEEP_DURATION)
+
+private ["_titleTime","_morningStart","_dayStart","_eveningStart","_nightStart","_nightSkipFrom","_nightSkipTo","_str","_skipped"
+        ,"_skip"];
 
 waitUntil {time > 0}; // wait time synchronization
 if ( isServer ) then { sleep 300; };// wait 5 min just in case to pass all possible date changes to first user started the server
@@ -81,7 +76,7 @@ while {true } do
     {
         _skip = (( _nightSkipTo - daytime + 24 ) % 24);
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: night detected: daytime (%1)< _nightSkipTo (%2) || daytime >= _nightSkipFrom (%3), skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
+        _str = format["SHORTNIGHT: night detected; daytime (%1)< _nightSkipTo (%2) || daytime >= _nightSkipFrom (%3), skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
         // player groupChat _str;
         hint localize _str;
     #endif
@@ -113,7 +108,7 @@ while {true } do
     #endif
         if (!_skipped) then
         {
-            0 call _titleTime;
+            0 call _titleTime; // send msg on night for all client
         };
         sleep ((_morningStart - daytime) *3600);
     };
@@ -121,7 +116,7 @@ while {true } do
     // MORNING TWILIGHT started
     if (daytime < _dayStart) then // we are in morning twilight, sleep to day
     {
-        2 call _titleTime;
+        2 call _titleTime;// send msg on morning for all client
     #ifdef __DEBUG__
         _str = format["SHORTNIGHT: twilight: daytime (%1)< _dayStart, sleep to it",daytime];
         //player groupChat _str;
@@ -133,7 +128,7 @@ while {true } do
     // DAY started
     if (daytime < _eveningStart) then // we are in day time, sleep to evening
     {
-        1 call _titleTime;
+        1 call _titleTime; // send msg on day for all client
     #ifdef __DEBUG__
         _str = format["SHORTNIGHT: day: daytime (%1)< _eveningStart, sleep to it",daytime];
         //player groupChat _str;
@@ -145,7 +140,7 @@ while {true } do
     // EVENING TWILIGHT
     if (daytime < _nightStart) then // we are in evening twiligth period, sleep to night start
     {
-        3 call _titleTime;
+        3 call _titleTime; // send msg on evening for all client
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: evening twilight: daytime (%1)<  _nightStart, sleep to it",daytime];
         //player groupChat _str;
@@ -158,7 +153,6 @@ while {true } do
     if (daytime < _nightSkipFrom) then // we are in night, sleep to the skip moment
     {
         0 call _titleTime;
-        _state = 0;
 #ifdef __DEBUG__
         _str = format["SHORTNIGHT: night before skip: daytime (%1)< _nightSkipFrom (%2), sleep to it",daytime, _nightSkipFrom];
         //player groupChat _str;

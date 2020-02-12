@@ -131,6 +131,9 @@ if (isServer) then {
 	if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
 	else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
 
+	_vec = createVehicle ["ACE_AH64_AGM_HE", [9688.247070,10020.545898,0], [], 0, "NONE"];
+	_vec setDir 90;
+
     _medic_tent = createVehicle ["MASH", [9359.855469, 10047.625000,0], [], 0, "NONE"];
     _medic_tent setDir 189;
     ADD_HIT_EH(_medic_tent)
@@ -479,7 +482,7 @@ if (isServer) then {
 
     [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
 
-    hint localize format["init.sqf; shortNight.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
+    hint localize format["init.sqf; shortNightNew.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
         SYG_startMorning,SYG_startDay,SYG_startEvening, SYG_startNight,SYG_nightSkipFrom, SYG_nightSkipTo];
 
     //-------------------------------

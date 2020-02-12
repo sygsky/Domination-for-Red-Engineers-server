@@ -79,7 +79,7 @@
 
 //#define __SMMISSIONS_MARKER__
 
-//+++ Sygsky: uncomment to add limited refuelling ability for engineers. Still not realized
+//+++ Sygsky: uncomment to add limited refuelling ability for engineers
 #define __LIMITED_REFUELLING__
 
 //+++ Sygsky: uncomment to debug new airkillers. Only for debug purposes
@@ -90,9 +90,6 @@
 
 //+++ Sygsky: uncomment to debug new base pipebombing
 //#define __SYG_PIPEBOMB_DEBUG__
-
-//+++ Sygsky: play New Year music on base
-//#define __SYG_NEW_YEAR_GIFT__
 
 //+++ Sygsky: show some info about governor state
 #define __SYG_GOVERNOR_INFO__
@@ -164,3 +161,9 @@
 
 // comment it out to use the new score system, with lower values per rank
 #define __OLD_SCORES__
+
+// uncomment to disable GRU specalist to be pilot for battle air vehicles ( "SU", "Ka-50" etc), allow only "Mi-17 PKT" etc
+#define __DISABLE_GRU_BE_PILOTS__
+
+// uncomment to allow shotgun armed AI soldiers
+#define __ALLOW_SHOTGUNS__

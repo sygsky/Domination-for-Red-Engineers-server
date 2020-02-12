@@ -64,11 +64,14 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 if ( !alive  _eunit ) exitWith{}; // killer is dead or absent
 if( _itself ) exitWith{}; // killed by itself
 if ( _eunit isKindOf "CAManbase") exitWith{}; // killed by man, not interested for us now
-
+if ( (side _eunit) != d_side_player) exitWith{}; // killer is not player
 // create invisible observer near killer position
 
 _vehs =  [_pos , SEARCH_DIST, ["LandVehicle", "Air", "Ship"]] call Syg_findNearestVehicles;
 
+{ _x reveal _eunit } forEach _vehs; // just in case
+
+#ifdef __OLD__
 if (count _vehs == 0) exitWith {};
 _watch_cnt  = 0;
 _reveal_cnt = 0;
@@ -108,7 +111,7 @@ _reveal_cnt2 = 0;
 } forEach _vehs;
 hint localize format["+++ x_removevehi.sqf (%1): killer %2 at dist %3 m, bef/aft watched %4/%5,  known %6/%7 by enemy vehicles",
     _type, typeOf _eunit, round(_pos distance _eunit), _watch_cnt, _watch_cnt2, _reveal_cnt, _reveal_cnt2 ];
-
+#endif
 _vehs = nil;
 
 if (true) exitWith {};

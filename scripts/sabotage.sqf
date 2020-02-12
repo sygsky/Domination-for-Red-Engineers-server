@@ -62,12 +62,12 @@ _delUnitsInWater = {
     for "_i" from 0 to (count _this) -1 do
     {
         _x = _this select _i;
-       if ( surfaceIsWater position _x ) then
-       {
+        if ( surfaceIsWater position _x ) then
+        {
             _x removeAllEventHandlers "killed";
             deleteVehicle _x;
             sleep 0.2;
-       };
+        };
     };
 };
 
@@ -165,7 +165,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 		_x = _no select _i;
 		_objClassType = typeOf _x;
 		_pos  = position _x;
-		if ( (_pos select 2) < -10) exitWith
+		if ( (_pos select 2) < -10) then // factory is buried (destroyed) remove it from array
 		{
 		    _no set [_i, "RM_ME"];
 		};
@@ -182,7 +182,6 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	{
 
 	    // TODO: check if enemy detected at the base
-        _skip_sabotage = true;
         if (!alive _leader) then
         {
     	    _leader = _grp call SYG_getLeader;
@@ -191,24 +190,23 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	    if ( alive _leader ) then
 	    {
             _enemy = [_leader, floor(d_viewdistance / 2 ) ] call SYG_detectedEnemy;
-            _skip_sabotage =  !isNull _enemy;
 	    };
 
-        if( _skip_sabotage ) exitWith
+        if( !isNull _enemy ) exitWith
         {
 #ifdef __PRINT__
-			hint localize format["+++ sabotage.sqf: Enemy %1 found at dist %2 m., factory sabotage skipped", typeOf _enemy, _enemy distance _leader];
+			hint localize format["+++ sabotage.sqf: Enemy %1 (%2) found at dist %3 m., factory sabotage skipped", _enemy,typeOf _enemy, _enemy distance _leader];
 #endif
         };
 
 	    _obj = _no select _obj_pos; // define target to bomb
 		if ( _debug ) then { player globalChat format["+++ sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ]; };
 #ifdef __PRINT__
-		hint localize format["+++ sabotage.sqf: units %1, tgt cnt %2, sel %3, type %4, z = %5", {alive _x} count (units _grp), count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
+		hint localize format["+++ sabotage.sqf: units %1, factory cnt %2, ind %3, type %4, z %5 m", {alive _x} count (units _grp), count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
 #endif	
 		
 		// wait until target destroyed and while group alive and there is any bomberman in it
-		while { ( ((position _obj) select 2) > -10.0) and (!(isNull _grp)) and  _continue } do
+		while { ( ((position _obj) select 2) > -10.0) && (!(isNull _grp)) && _continue } do
 		{
 			if ( ( {(alive _x) && (canStand _x)} count units _grp) == 0) exitWith
 			{ 
@@ -527,9 +525,9 @@ if ( !isNil "d_on_base_groups") then
 };
 
 if ( _debug ) then
-	{player globalChat "--- sabotage.sqf: --- Exiting sabotage group script ---";};
+	{player globalChat format["--- sabotage.sqf: --- Exiting sabotage group script, d_on_base_groups %1 ---",d_on_base_groups]};
 #ifdef __PRINT__
-	hint localize "--- sabotage.sqf: --- Exiting sabotage group script ---";
+	hint localize format["--- sabotage.sqf: --- Exiting sabotage group script, d_on_base_groups %1 ---",d_on_base_groups];
 #endif	
 
 if (true) exitWith 

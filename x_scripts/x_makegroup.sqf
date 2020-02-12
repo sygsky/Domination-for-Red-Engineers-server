@@ -1,6 +1,7 @@
 //+++ Sygsky: create single patrol group for Rahmadi
 // x_scripts\x_makegroup.sqf copied from x_createguardpatrolgroups.sqf by Xeno
-private ["_grptype", "_wp_array", "_target_pos", "_numbervehicles", "_type", "_side", "_grp_in", "_vec_dir", "_center_rad", "_grpspeed", "_vehicles", "_grp", "_pos", "_unit_array", "_leader", "_fran", "_grp_array", "_one"];
+private ["_grptype", "_wp_array", "_target_pos", "_numbervehicles", "_type", "_side", "_grp_in", "_vec_dir",
+    "_center_rad", "_grpspeed", "_vehicles", "_grp", "_pos", "_unit_array", "_leader", "_fran", "_grp_array", "_one"];
 
 #include "x_macros.sqf"
 

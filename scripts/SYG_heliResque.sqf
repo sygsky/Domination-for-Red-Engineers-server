@@ -71,7 +71,7 @@ while {true} do
 		sleep (_time_to_wakeUp - daytime); // wake up at the night beginning
 	};
 	// process previously prepared down list
-	if ( (count _heli_down_list) > 0) ) then // play with lists of downed heli collected from last time (one full day e.g.)
+	if ( (count _heli_down_list) > 0 ) then // play with lists of downed heli collected from last time (one full day e.g.)
 	{
 #ifdef __DEBUG__
 	hint localize format["%1 SYG_heliresque.sqf: processing %2 downed heli", call SYG_missionTimeInfoStr, count _heli_down_list];

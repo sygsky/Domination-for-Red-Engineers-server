@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_heli_action.sqf, called client computer
 private ["_vehicle","_caller","_id"];
 
 _vehicle = _this select 0;

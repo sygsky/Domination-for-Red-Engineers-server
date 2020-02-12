@@ -1,4 +1,4 @@
-// Created by Dupa, modified by Sygsky
+// Created by Dupa, modified by Sygsky. Not used more!
 // syntax: _temp = [nightStart, nightEnd, nightSpan, twilightDuration] execVM shortNight.sqf
 // nightStart MUST BE GREATER than nightEnd e.g. [21,6,2].
 // Values such as [1,6,2] will lead to unexpected behavior.

@@ -779,9 +779,9 @@ SYG_updateIntelBuilding = {
 //
 SYG_setMapPosToMainTarget = {
 	private ["_display","_ctrlmap","_start_pos"];
-	if ( (count _this) < 3) exitWith {hint format["Expected number of params to call SYG_setMapPosToMainTarget is %1 (invalid, must be 3)", count _this];};
+	if ( (count _this) < 3) exitWith {hint localize format["--- Expected number of params to call SYG_setMapPosToMainTarget is %1 (invalid, must be 3)", count _this];};
 	_display = findDisplay arg(0);
-	if (isNull _display) exitWith {hint format["Expected display id in [%1,%2,%3] call  SYG_setMapPosToMainTarget is invalid",arg(0),arg(1),arg(2)];};
+	if (isNull _display) exitWith {hint localize format["--- Expected display id in [%1,%2,%3] call  SYG_setMapPosToMainTarget is invalid",arg(0),arg(1),arg(2)];};
 	_ctrlmap = _display displayCtrl arg(1);
 	ctrlMapAnimClear _ctrlmap;
 
@@ -934,7 +934,7 @@ SYG_geoDist = {
 };
 
 //
-// Get position for nany kind of object.
+// Get position for any kind of object.
 // Call as: _pos = _obj call SYG_getPos;
 //
 SYG_getPos = {
@@ -943,4 +943,14 @@ SYG_getPos = {
     if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this};
     [0,0,0]
 };
+
+//
+// Get random Wide Point in the 2-D tor (between 2 designated radius)
+// call as: [_center,_rad1,_rad2] call SYG_getWPointBetweenTwoRadius
+//
+SYG_getWPointBetweenTwoRadius = {
+    // TODO: realize this method to find place for bonus vehicle
+};
+
+
 if (true) exitWith {};

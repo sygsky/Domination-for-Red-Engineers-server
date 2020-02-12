@@ -62,48 +62,52 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 				Vehicle_Released = false;
 			} else {
 				if (Vehicle_Attached) then {
-					_release_id = _vehicle addAction [localize "STR_SYS_36"/* "СБРОСИТЬ ТЕХНИКУ" */, "x_scripts\x_heli_release.sqf",-1,100000];
-					[_vehicle, format[localize "STR_SYS_37",[typeOf (_vehicle),0] call XfGetDisplayName]] call XfVehicleChat;
-					Attached_Vec = _nearest;
 
-					_height = 15;
-					while {true} do {
-						_vup = vectorUp _vehicle;
-						_vdir = vectorDir _vehicle;
-						_voffset = (speed _vehicle min 50) / 3.57;
-						_fheight = _height + (2.5 min (_vehicle modelToWorld [0,-1-_voffset,-_height] select 2));
-						_nearest setPos (_vehicle modelToWorld [0,-1-_voffset,-_fheight]);
-						_nearest setVectorDir _vdir;
-						_nearest setVectorUp  _vup;
-						_nearest setVelocity [0,0,0];
-						if (!alive _vehicle) exitWith {};
-						if (!player_is_driver) exitWith {};
-						if (isNull _nearest) exitWith {};
-						if (!alive player) exitWith {};
-						if (Vehicle_Released) exitWith {};
-						sleep 0.001;
+				    if ( !( (typeof _nearest) in x_heli_wreck_lift_types ) ) exitWith {
+                    // vehicle not in legal list
+                        //++ Sygsky: found that vehicle ready to lift isn't in legal list! Clear possible activity and report user about
+                        [_vehicle, format[localize "STR_SYS_38_1",typeOf _nearest]] call XfVehicleChat; // "The vehicle (%1) can still be repaired, say the engineers..."
+                        Vehicle_Attached = false;
+                        Vehicle_Released = false;
+                        Attached_Vec = objNull;
+                    };
+
+                    _release_id = _vehicle addAction [localize "STR_SYS_36"/* "СБРОСИТЬ ТЕХНИКУ" */, "x_scripts\x_heli_release.sqf",-1,100000];
+                    [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName]] call XfVehicleChat;
+                    Attached_Vec = _nearest;
+
+                    _height = 15;
+                    while {alive _vehicle && player_is_driver && (!isNull _nearest) && alive player && !Vehicle_Released} do {
+                        _vup = vectorUp _vehicle;
+                        _vdir = vectorDir _vehicle;
+                        _voffset = (speed _vehicle min 50) / 3.57;
+                        _fheight = _height + (2.5 min (_vehicle modelToWorld [0,-1-_voffset,-_height] select 2));
+                        _nearest setPos (_vehicle modelToWorld [0,-1-_voffset,-_fheight]);
+                        _nearest setVectorDir _vdir;
+                        _nearest setVectorUp  _vup;
+                        _nearest setVelocity  (velocity _vehicle);//[0,0,0];
+                        sleep 0.001;
+                    };
+
+                    Vehicle_Attached = false;
+                    Vehicle_Released = false;
+
+                    Attached_Vec = objNull;
+
+                    if (!alive _nearest || !alive _vehicle) then {
+                        _vehicle removeAction _release_id;
+                    } else {
+                        [_vehicle, localize "STR_SYS_39"/* "Техника сброшена..." */] call XfVehicleChat;
+                    };
+
+					if ((position _nearest) select 2 > 20) then {
+    					while { (!(isNull _nearest)) && ( (position _nearest) select 2 < 10) } do {sleep 0.1};
 					};
 
-					Vehicle_Attached = false;
-					Vehicle_Released = false;
-
-					Attached_Vec = objNull;
-
-					if (!alive _nearest || !alive _vehicle) then {
-						_vehicle removeAction _release_id;
-					} else {
-						[_vehicle, localize "STR_SYS_39"/* "Техника сброшена..." */] call XfVehicleChat;
-					};
-
-					if (!(_nearest isKindOf "StaticWeapon") && (position _nearest) select 2 < 200) then {
-						waitUntil {(position _nearest) select 2 < 10};
-					};
-
+					sleep 1.012;
 					_npos = position _nearest;
 					_nearest setPos [_npos select 0, _npos select 1, 0];
 					_nearest setVelocity [0,0,0];
-
-					sleep 1.012;
 				};
 			};
 		};

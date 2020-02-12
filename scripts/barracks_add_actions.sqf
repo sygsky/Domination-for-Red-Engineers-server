@@ -1,4 +1,4 @@
-/*
+/* scripts\barracks_add_actions.sqf
 	author: Sygsky
 
 	description:

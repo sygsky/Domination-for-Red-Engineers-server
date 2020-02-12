@@ -4,7 +4,7 @@
 class Irina
 {
 	name="Ирина";
-	//face="Face1";
+	face="Face1";
 	glasses="None";
 	speaker="Amy";
 	pitch=1;
