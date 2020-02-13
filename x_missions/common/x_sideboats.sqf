@@ -59,7 +59,7 @@ _boat4 lock true;
 sleep 2.333;
 ["specops", 0, "basic", 1, _pos_other4,100,true] spawn XCreateInf;
 sleep 2.333;
-["specops", 1, "basic", 0, _pos_other,100,true] spawn XCreateInf;
+["specopsbig", 1, "basic", 0, _pos_other,100,true] spawn XCreateInf;
 sleep 2.333;
 ["specops", 0, "basic", 1, _pos_other2,100,true] spawn XCreateInf;
 sleep 2.333;

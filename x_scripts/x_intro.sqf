@@ -95,7 +95,7 @@ if (_sound == "") then { // select random music for ordinal day
             [
                 ["amigohome_ernst_bush","amigohome_ernst_bush"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
-                ["stavka_bolshe_chem","stavka_bolshe_chem"]
+                ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"]
             ];
             _name    = name player;
             _personalSounds = [];

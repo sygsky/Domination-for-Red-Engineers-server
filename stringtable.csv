@@ -1333,8 +1333,8 @@ STR_GRU_53_MIMG,helicopter,Helikopter,вертолёт
 STR_GRU_53_KA,helicopter,Helikopter,вертолёт
 STR_GRU_53_SU,jet,jet,самолёт
 
-STR_GRU_54,"One or more enemy pilots have escaped and are on their way to join their troops","Ein oder mehrere feindliche Piloten sind entkommen und sind auf dem Weg, Ihre Truppen zu verbinden.","Один или более пилотов спаслись и следуют к своим."
-STR_GRU_54_1,"You can arrest them, and on resist You know what to do","Sie können Sie verhaften, und auf widerstehen Sie wissen, was zu tun ist","Их можно арестовать, а если будут сопротивляться, то Вы знаете, что делать"
+STR_GRU_54,"GRU: One or more enemy pilots have escaped and are on their way to join their troops","GRU: Ein oder mehrere feindliche Piloten sind entkommen und sind auf dem Weg, Ihre Truppen zu verbinden.","ГРУ: Один или более пилотов спаслись и следуют к своим."
+STR_GRU_54_1,"GRU: You can arrest them, and on resist You know what to do","GRU: Sie können Sie verhaften, und auf widerstehen Sie wissen, was zu tun ist","ГРУ: Их можно арестовать, а если будут сопротивляться, то Вы знаете, что делать"
 
 STR_GRU_TELE_NUM,4,4,4
 STR_GRU_TELE_0,"Well GRU-portal they invented","Gut GRU-portal, die Sie erfanden","Ну и ГРУ-портал..."
@@ -1354,7 +1354,7 @@ STR_GRU_TASK_5,3. The investigation on the island,3. Die Untersuchung wird auf d
 STR_GRU_DRIVE,"GRU specialists are not birds! And they can't fly!!!","GRU-Spezialisten sind keine Vögel! Und Sie können nicht Fliegen!!!","Спецы из ГРУ - не птицы! И летать не умеют!!!"
 
 STR_FIRELIT_NUM,2,2,2
-STR_FIRELIT_0,"Our people are not bred such fires","Unsere Leute solche Brände sind nicht gezüchtet","Похоже, что костёр разжигали не наши люди"
+STR_FIRELIT_0,"Our people are not bured such fires","Unsere Leute solche Brände sind nicht gezüchtet","Похоже, что костёр разжигали не наши люди"
 STR_FIRELIT_1,"In this way the bonfires are lit only scouts in the West","Auf diese Weise wird das Feuer entzündet nur Kundschafter im Westen","Так костры разводят скауты на Западе"
 
 STR_LIT_PRIZE,"You get the prize for the Observation (+%1)","Du hast den Preis für die Beobachtung (+%1)","Вы получаете приз за наблюдательность (+%1)"

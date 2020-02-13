@@ -51,7 +51,7 @@ if (isServer) then {
 	//	["specops", 1, "basic", 1, _poss,20] spawn XCreateInf;
 	// as this group is near officer, rearm it with some special specops weapons
 	sleep 1.123;
-	["specops", 1, "basic", 0, _poss,30]  spawn 
+	["specops", 1, "basic", 1, _poss,50]  spawn
 	{
 		private ["_grps", "_cnt"];
 		_grps = _this call XCreateInf;
