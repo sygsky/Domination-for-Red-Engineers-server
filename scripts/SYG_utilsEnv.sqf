@@ -108,13 +108,13 @@ SYG_showTeleport = {
 };
 
 //
-// Adds inspect action on airbase fires. Wotks once only on client computer
+// Adds inspect action on airbase fires. Works once only on client computer
 //
 SYG_firesService = {
     private ["_cnt","_fires"];
     hint localize format["scripts/SYG_utilsEnv.sqf => SYG_firesService, isServer %1, isNil ""SYG_firesAreServed"" %2", isServer, isNil "SYG_firesAreServed"];
     if ( ! X_Client ) exitWith{0};
-    if (!isNil "SYG_firesAreServed") exitWith {SYG_firesAreServed};
+    if (!isNil "SYG_firesAreServed") exitWith {false};
     SYG_firesAreServed = 0;
     private ["_cnt","_fire"];
     // play with fires on base
