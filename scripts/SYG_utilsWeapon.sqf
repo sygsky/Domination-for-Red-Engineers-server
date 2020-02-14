@@ -1489,29 +1489,33 @@ SYG_replacePrimaryWeapon = {
 // adds binocular to unit
 //
 SYG_addBinocular = {
-    if (!(_this hasWeapon "Binocular")) then { _this addWeapon "Binocular"; }
+    if (_this hasWeapon "Binocular") exitWith {true};
+    _this addWeapon "Binocular"
 };
 
 //
 // remove binocular from unit
 //
 SYG_removeBinocular = {
-    if (_this hasWeapon "Binocular") then { _this removeWeapon "Binocular"; }
+    if (_this hasWeapon "Binocular") then { _this removeWeapon "Binocular"; };
+    !(_this hasWeapon "Binocular")
 };
 
 //
 // adds NVGoggles to unit
 //
 SYG_addNVGoggles = {
-    if (!(_this hasWeapon "NVGoggles")) then { _this addWeapon "NVGoggles"; }
-
+    if (_this hasWeapon "NVGoggles") exitWith {true};
+    _this addWeapon "NVGoggles";
+    _this hasWeapon "NVGoggles"
 };
 
 //
 // removes NVGoggles from unit
 //
 SYG_removeNVGoggles = {
-    if (_this hasWeapon "NVGoggles") then { _this removeWeapon "NVGoggles"; }
+    if (_this hasWeapon "NVGoggles") then { _this removeWeapon "NVGoggles"; };
+    !(_this hasWeapon "NVGoggles")
 };
 
 /*
