@@ -53,3 +53,41 @@ SYG_getRandomText = {
 	//hint localize format["SYG_getRandomText: _counter = %5; %1 ->%2 -> %3 -> %4", _this, _chars, _base, toString(_base), _counter];
 	format["%1%2", toString(_base), floor (random _counter)]
 };
+
+//#define __DEBUG__
+
+#define RUMOR_WIDTH (_counter/4) // how far serach from start index
+
+SYG_getRumourText = {
+    private ["_daytime","_counter","_index","_rnd","_name1","_name2","_name3","_str1"];
+    _daytime = daytime;
+    if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then {_str1 = localize "STR_RUM_NIGHT";}
+    else
+    {
+        //call compile format["_counter=%1;", localize "STR_RUM_NUM"];
+        _counter = parseNumber (localize "STR_RUM_NUM");
+
+        if ( isNil "SYG_rumor_index" ) then
+        {
+            SYG_rumor_index = floor (random _counter); // start index for current player connection
+            SYG_rumor_hour  = floor(daytime); // initial hour of connection
+        };
+
+        // find the value of the drifting index corresponding to the time elapsed since the connection started
+        _index = (floor(daytime) - SYG_rumor_hour + 24) mod 24; // current offset in hours  since connection
+        _index = _index * _counter / 24; // new offset according to rumor number
+        _index = round(((_index + SYG_rumor_index) + _counter) mod _counter); // found the value of the current index around which rumors will be created
+        _rnd   = (random 2.0) - 1.0; // random offset each time, from +1 to -1
+        _index = (_index + (floor((_rnd*_rnd*_rnd)*RUMOR_WIDTH)) + _counter) mod _counter ; // detected rumor index
+        _index = (_index min (_counter - 1)) max 0; // to limit index with size of list
+        _str1 = localize format["STR_RUM_%1",_index];
+    #ifdef __DEBUG__
+        hint localize format["+++ SYG_getRumourText: SYG_rumor_index %1, SYG_rumor_hour %2, _index %3, _rnd %4, _counter %5",
+                                 SYG_rumor_index,SYG_rumor_hour,_index,_rnd,_counter];
+    #endif
+    };
+    _name1 = (target_names call XfRandomArrayVal) select 1; // random main target name
+    _name2 = text (player call SYG_nearestLocation); // nearest location name
+    _name3 = text (player call SYG_nearestSettlement); // nearest settlement name
+    format[_str1, _name1, _name2, _name3]; // just in case of usage %1 %2 %3 in string
+};

@@ -21,8 +21,6 @@ if (!isServer) exitWith {};
 
 #endif
 
-//#define __SYG_ISLEDEFENCE_PRINT_LONG__
-
 #define __SYG_ISLEDEFENCE_PRINT_SHORT__
 
 
@@ -770,70 +768,6 @@ while { true } do {
 	sleep DELAY_BETWEEN_CHECK_LOOP;
 
 	// ==================================== END OF LOOP ON PATROLS ======================================
-		
-#ifdef __SYG_ISLEDEFENCE_PRINT_LONG__
-	// igrpa: [_agrp, _units, [0,0,0], _vecs]
-	hint localize format["+++ x_isledefense.sqf: %1, target town  ""%2"", whole count of x_groupsm %3", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, count groups_west ];
-	for "_i" from 0 to (count SYG_isle_grps - 1) do
-	{
-		_igrpa = SYG_isle_grps select _i; // patrolling group
-		_igrp  = argp(_igrpa,PARAM_GROUP); 
-		if ( isNull _igrp ) then
-		{
-			hint localize format["+++ x_isledefense.sqf:  grp #%1 <EMPTY>", _i + 1];
-		}
-		else
-		{
-			_vecs = _igrpa select 3; // vehicles
-			_crewnum = 0;
-			_vehcnt = count _vecs;
-			_str = "";
-			_vtype = "";
-			{	
-				if ( isNull _x ) then {_vtype = "<NULL>";}
-				else
-				{
-					if ( !alive _x ) then {_vtype = "DEAD";}
-					else 
-					{
-						_vtype = typeOf _x;
-					};
-				};
-				
-				if ( _str != "" ) then { _str = _str + format[",%1(%2+%3)",_vtype, count crew _x,_x emptyPositions "Cargo"];} else { _str = _str + format["%1(%2+%3)", _vtype, count crew _x, _x emptyPositions "Cargo"];};
-			} forEach _vecs;
-			_vcanmove = 0; //{!isNull _x && canMove _x && !isNull driver _x} count _vecs; // vehicles can move
-			_mcanmove = {alive _x && canStand _x} count units _igrp; // men can move
-			//_notempty = {count crew _x > 0} count _vecs;
-			_crewnum = 0;
-			{
-				if ( !isNull _x && canMove _x) then 
-				{
-					_vcanmove = _vcanmove + 1;
-					_crewnum = _crewnum + (count crew _x);
-				};
-			} forEach _vecs;
-			_dist =  round(argp(_igrpa,PARAM_LAST_POS) distance (leader _igrp));
-			_locname =  "";
- 		    _leader = _igrp call SYG_getLeader;
-			if ( isNull _leader) then 
-			{
-				_locname = "<>";
-			}
-			else 
-			{
-				_locname =  text (_leader call SYG_nearestLocation);
-			};
-			_grp_array    = argp(_igrpa,PARAM_GRP_ARRAY);
-			_enemy_near  = if (argp(_grp_array,2) in [0,2]) then {" "} else {"*"};
-			hint localize format[ "+++ x_isledefense.sqf: %11grp#%1/%12(%2/%3i/%4g/%5c); %6/%7 vecs [%8]; moved %9 m, near %10",
-				_i + 1, _igrp, (count argp(_igrpa,PARAM_UNITS)) call SYG_twoDigsNumberSpace, 
-				_mcanmove  call SYG_twoDigsNumberSpace, _crewnum call SYG_twoDigsNumberSpace, 
-				_vehcnt, _vcanmove,  _str, _dist, _locname, _enemy_near, argp(_grp_array,2)];
-		};
-	};
-#endif
-
 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
 	// igrpa: [_agrp, _units, [0,0,0], _vecs]
 
@@ -909,12 +843,13 @@ while { true } do {
 	    };
 #endif
         hint localize format[ "+++ %1 +++", _str ];
+        __SetGVar(PATROL_COUNT, _cnt);
 	}
 	else // send info about patrol absence
 	{
 	    if ( _show_absence) then
 	    {
-	        if ((random 1) >= SHOW_ABSENCE_PROBABILITY ) then // inform users about patrol absence
+	        if ((random 1) <= SHOW_ABSENCE_PROBABILITY ) then // inform users about patrol absence
 	        {
                 ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
 	        };

@@ -61,12 +61,14 @@ _pilots_arr = [_pilot1,_pilot2];
 sleep 45;
 
 {
-_x disableAI "MOVE";
-_x setDamage 0.5;
-_x setUnitPos "DOWN";
-_x join _owngroup;
+    if (alive _x) then
+    {
+        _x disableAI "MOVE";
+        _x setDamage 0.5;
+        _x setUnitPos "DOWN";
+        [_x] join _owngroup;
+    };
 } forEach _pilots_arr;
-//[_pilot2] join _owngroup;
 
 sleep 0.5;
 deleteGroup _owngroup2;
@@ -157,8 +159,17 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                         */
                         _owngroup = call SYG_createOwnGroup;
                         sleep 0.12345;
-                        _pilots_arr join _owngroup;
-                        { _x disableAI "MOVE"; _x setUnitPos "DOWN" }forEach _pilots_arr;
+                        {
+                          if (alive _x) then
+                          {
+                            [_x] join objNull;
+                            sleep 0.1;
+                            [_x] join (leader _rescue);
+                            _x disableAI "MOVE";
+                            _x setUnitPos "DOWN"
+                          };
+                        } forEach _pilots_arr;
+                        {  } forEach _pilots_arr;
                         hint localize format["--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, so pilots are moved to its own group at %2",
                                              _x,  [_x, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
                         // TODO: send info to all about lost control of pilots

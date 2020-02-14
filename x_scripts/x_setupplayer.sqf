@@ -137,8 +137,8 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
         {
             _equip = d_player_stuff select 5;
         };
-        if ( _equip == "" ) then // generate common weapon set
-		{
+        // generate common weapon set
+        if ( _equip == "" ) then {
             // give players a basic rifle/MG at start
             _weapp = "";
             _magp = "";
@@ -298,27 +298,33 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VL_PDM",1]];
                             };
                         };
-
-                        if (toLower (name player) == "yeti") then // yeti
+                        // try to rearm predefined players (Yeti, EngineerACE etc)
+                        _rearmed = false;
+                        switch (toUpper (name player)) do
                         {
-                            d_rebornmusic_index = 1; // no play death sound
-                            SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
-                            if (_index == 0) exitWith // yeti
+                            case "YETI":  // Yeti
                             {
-                                _p execVM "scripts\yeti_rearm.sqf";
+                                d_rebornmusic_index = 1; // no play death sound
+                                SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; _rearmed = true; };
                             };
-                            hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %5", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
+                            case "ENGINEERACE":  // EngineerACE
+                            {
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_EngineerACE.sqf";  _rearmed = true; };
+                            };
+                            // TODO: add more personal setting here (as for "Yeti" done)
+                            default {}; // all other players are rearmed by standart
                         };
-                        // TODO: add more personal setting here (as for "Yeti" done)
+                        if (!_rearmed ) then {
+                            [_p, _weapp] call SYG_armUnit;
 
-                        [_p, _weapp] call SYG_armUnit;
-
-                        //+++ Sygsky: add largest ACE rucksack and fill it with mags
-                        _p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
-                        _p setVariable ["ACE_Ruckmagazines", _magp];
-                        hint localize format["x_setupplayer.sqf: rank %1, score %4, weapon %2, rucksack %3, language %5", _old_rank, _weapp, _magp, score player, localize "STR_LANG"];
-                        //--- Sygsky
-
+                            //+++ Sygsky: add largest ACE rucksack and fill it with mags
+                            _p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
+                            _p setVariable ["ACE_Ruckmagazines", _magp];
+                            hint localize format["x_setupplayer.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
+                                    name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];
+                            //--- Sygsky
+                        };
                     }
                     else  // if (__ACEVer) then
                     {
@@ -356,15 +362,16 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
             [player, _equip] call SYG_rearmUnit;
         };
 #endif
-
-		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toLower (name player) == "yeti")  ) then
+		hint localize format["+++ rearm: before player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
+		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toUpper (name player) == "YETI")  ) then
 		{
-		    _p call SYG_addNVGoggles;
+		    player call SYG_addNVGoggles;
 		};
-		_p call SYG_addBinocular;
+		player call SYG_addBinocular;
+		hint localize format["+++ rearm: after player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
     	d_player_stuff = nil;
 	}; // spawn
-	__DEBUG_NET("x_setupplayer.sqf",d_player_stuff)
+	//__DEBUG_NET("x_setupplayer.sqf",d_player_stuff)
 	d_player_stuff = nil;
 };
 
@@ -484,11 +491,12 @@ _counterxx = 0;
 
 	_counterxx = _counterxx + 1;
 	if (d_jumpflag_vec == "") then {
-		_x addaction [localize "STR_SYS_327"/* "(Choose Parachute location)" */,"AAHALO\x_paraj.sqf"];
+		_x addaction [localize "STR_FLAG_6"/* "(Choose Parachute location)" */,"AAHALO\x_paraj.sqf"];
 	} else {
-		_text = format [localize "STR_SYS_328"/* "(Create %1)" */,d_jumpflag_vec];
+		_text = format [localize "STR_FLAG_7"/* "(Create %1)" */,d_jumpflag_vec];
 		_x addAction [_text,"x_scripts\x_bike.sqf",[d_jumpflag_vec,1]];
 	};
+	_x addaction [localize "STR_FLAG_5"/* "{Rumours}" */,"scripts\rumours.sqf",""];
 	#ifdef __ACE__
 	if (d_jumpflag_vec == "") then {
 		_box = "ACE_RuckBox" createVehicleLocal _pos;
@@ -1075,14 +1083,14 @@ if (player_can_call_drop) then {
 };
 #endif
 
-#ifdef __DISABLE_GRU_BE_PILOTS__
-if ( _string_player in d_can_use_artillery ) then {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_1219"]}; // "GRU officers are unable to control the air vehicles"
-#endif
-
 // play with EditorUpdate_v102.pbo
 if ( SYG_found_EditorUpdate_v102 ) then {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_4"]}
 else {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_5"]};
 
+if (random 10 < 7) then
+{
+    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_RUMORS"]
+};
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 //+ show all specific  messages for the player type +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1091,7 +1099,7 @@ _local_msg_arr spawn {
     if (count _this == 0) exitWith{};
     sleep 55;
     {
-         sleep 4;
+         sleep 6;
          _x call XfGlobalChat;
     } forEach _this;
 };
@@ -1535,11 +1543,11 @@ if (d_no_para_at_all) then {
 };
 
 #ifndef __TT__
-FLAG_BASE addAction [localize "STR_SYS_34","dlg\teleport.sqf"];
+FLAG_BASE addAction [localize "STR_FLAG_0","dlg\teleport.sqf"];
 //FLAG_BASE addAction ["За допку","test.sqf"];
 //FLAG_BASE addAction ["За город","test2.sqf"];
 if (__AIVer || d_para_at_base) then {
-	FLAG_BASE addaction [localize "STR_SYS_76","AAHALO\x_paraj.sqf"];
+	FLAG_BASE addaction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
 };
 #endif
 
@@ -1549,9 +1557,9 @@ FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
 
 #ifdef __TT__
 if (d_own_side == "WEST") then {
-	WFLAG_BASE addAction [localize "STR_SYS_34","dlg\teleport.sqf"];
+	WFLAG_BASE addAction [localize "STR_FLAG_0","dlg\teleport.sqf"];
 } else {
-	RFLAG_BASE addAction [localize "STR_SYS_34","dlg\teleport.sqf"];
+	RFLAG_BASE addAction [localize "STR_FLAG_0","dlg\teleport.sqf"];
 };
 #endif
 
@@ -1561,19 +1569,21 @@ if (d_own_side == "WEST") then {
 // find all bargates
 _arr = nearestObjects[[9621,9874,0],["ZavoraAnim"],300];
 hint localize format["x_setupplayer.sqf: found bar gates on base %1", count _arr];
-FLAG_BASE addAction [localize "STR_SYS_183"/* "Open gates" */,"scripts\controlgates.sqf", [0, _arr]];
-FLAG_BASE addAction [localize "STR_SYS_184"/* "Close gates" */,"scripts\controlgates.sqf", [1, _arr]];
+FLAG_BASE addAction [localize "STR_FLAG_3"/* "Open gates" */,"scripts\controlgates.sqf", [0, _arr]];
+FLAG_BASE addAction [localize "STR_FLAG_4"/* "Close gates" */,"scripts\controlgates.sqf", [1, _arr]];
 
 #endif
 
 #ifdef __STORE_EQUIPMENT__
-FLAG_BASE addAction [localize "STR_SYS_610" /* "Store equipment" */,"scripts\storeequipment.sqf","S"];
+FLAG_BASE addAction [localize "STR_FLAG_2" /* "Store equipment" */,"scripts\storeequipment.sqf","S"];
 #endif
+
+FLAG_BASE addAction [localize "STR_FLAG_5" /*"Rumours"*/,"scripts\rumours.sqf","",-1.2];
 
 //--- Sygsky
 
 if (!d_para_at_base) then {
-	"teleporter" setMarkerTextLocal (localize "STR_SYS_34"); //"Teleporter";
+	"teleporter" setMarkerTextLocal (localize "STR_FLAG_0"); //"Teleporter";
 };
 
 #ifdef __ACE__

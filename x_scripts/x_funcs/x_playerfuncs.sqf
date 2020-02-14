@@ -474,12 +474,12 @@ XGetRankStringLocalized = {
 		case "MAJOR":      {localize "STR_TSD9_31"}; // 5
 		case "COLONEL":    {localize "STR_TSD9_32"}; // 6
 
-		case "Brigadier-General": {localize "STR_SYS_1000"};  // 7
-        case "Lieutenant-General": {localize "STR_SYS_1001"}; // 8
-        case "Colonel-General": {localize "STR_SYS_1002,"};   // 9
-        case "General-of-the-Army": {localize "STR_SYS_1003"};// 10
-        case "Marshal": {localize "STR_SYS_1004"};            // 11
-        case "Generalissimo": {localize "STR_SYS_1005"};      // 12
+		case "BRIGADIER-GENERAL": {localize "STR_SYS_1000"};  // 7
+        case "LIEUTENANT-GENERAL": {localize "STR_SYS_1001"}; // 8
+        case "COLONEL-GENERAL": {localize "STR_SYS_1002,"};   // 9
+        case "GENERAL-OF-THE-ARMY": {localize "STR_SYS_1003"};// 10
+        case "MARSHAL": {localize "STR_SYS_1004"};            // 11
+        case "GENERALISSIMO": {localize "STR_SYS_1005"};      // 12
 	};
 };
 

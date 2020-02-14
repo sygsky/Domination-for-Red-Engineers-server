@@ -3325,7 +3325,7 @@ class Mission
 		{
 			position[]={6565.381348,0.354843,10805.966797};
 			name="fmarkerlegend";
-			text="@STR_SYS_34";
+			text="@STR_FLAG_0";
 			type="Flag1";
 			colorName="ColorYellow";
 			a=0.500000;
