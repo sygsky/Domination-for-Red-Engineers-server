@@ -32,7 +32,12 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-	_officer = if (d_enemy_side == "EAST") then {"OfficerE"} else {"ACE_USMC0302"};
+#ifdef __ACE__
+    _officer = (if (d_enemy_side == "EAST") then {"ACE_OfficerE"} else {"ACE_USMC8541A2"});
+#else
+    _officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
+#endif
+
 	_ranside = floor random 15; // 0-14 - officer positions
 	_poss = x_sm_pos select _ranside;
 	//_fortress = "Fortress2" createVehicle _poss;
