@@ -13,6 +13,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "GRU_setup.sqf"
 #include "x_macros.sqf"
+#include "global_vars.sqf"
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
 
@@ -22,8 +23,6 @@ if (!isServer) exitWith {};
 #endif
 
 #define __SYG_ISLEDEFENCE_PRINT_SHORT__
-
-
 
 #define arrset(ARR,POS,VAL) ((ARR)set[(POS),(VAL)])
 
