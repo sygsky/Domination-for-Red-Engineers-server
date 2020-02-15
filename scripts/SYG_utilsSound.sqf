@@ -168,7 +168,7 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 // returns random male laughter sound on your defeate
 SYG_getLaughterSound =
 {
-    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job"] call XfRandomArrayVal
+    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job","game_over","get_some"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;

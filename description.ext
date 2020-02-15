@@ -516,6 +516,8 @@ class CfgSounds
     class laughter_3 { name="Laughter 3"; sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_4 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\4.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
+    class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\game_job.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
+    class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
 
     // Period of the day sounds
     class morning_1 { name="Morning: alarm-clock"; sound[] = {\sounds\timeofday\morning\alarm-clock.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
