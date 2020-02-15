@@ -2674,10 +2674,10 @@ SYG_reammoMHQ = {
 		clearMagazineCargo _this;
 		clearWeaponCargo   _this;
 
-		_this addMagazineCargo ["ACE_Strela", 2];
+		_this addMagazineCargo ["ACE_Strela", 3];
 
 		//_this addWeaponCargo   ["ACE_RPG7_PGO7",  3];
-		_this addMagazineCargo ["ACE_RPG7_PG7VR", 3];
+		_this addMagazineCargo ["ACE_RPG7_PG7VR", 5];
 		_this addMagazineCargo ["ACE_RPG7_PG7VL", 3];
 
 		_this addMagazineCargo ["ACE_PipeBomb", 4];
@@ -2698,12 +2698,13 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",  5];
 		_this addMagazineCargo ["ACE_20Rnd_9x39_B_VAL",    5];
 		_this addMagazineCargo ["ACE_10Rnd_762x54_SB_SVD", 5];
-		_this addMagazineCargo ["ACE_5Rnd_127x108_SB_KSVK",5];
-		_this addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",5];
+//		_this addMagazineCargo ["ACE_5Rnd_127x108_SB_KSVK",5];
+		_this addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",10];
 
 		_this addMagazineCargo ["ACE_Bandage",     3];
 		_this addMagazineCargo ["ACE_Morphine",    5];
 		_this addMagazineCargo ["ACE_Epinephrine", 1];
+		_this addmagazinecargo ["ACE_MineE",       5];
 		true
 	}
 	else
