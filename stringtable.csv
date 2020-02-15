@@ -98,16 +98,16 @@ STR_SYS_18_1,"No any vehicle nearby that is in need of repair...","Nein, jedes F
 STR_SYS_19,"Repair %1%2, refuel %3 L.: %4... wait...","Reparatur %1%2, Tankstellen %3 L.: %4... warten Sie...","Ремонт %1%2, заправка %3 л.: %4... ожидайте..."
 
 STR_SYS_20,"Select respawn place","Select respawn place","Выбор места возрождения"
-STR_SYS_21,"Mobile respawn one gets transported by airlift...","Mobile respawn bekommt man transportiert mit der Luftbrücke...","Мобильный респаун 1 в воздухе..."
-STR_SYS_22,"Mobile respawn two gets transported by airlift...","Mobile respawn zwei wird transportiert durch die Luftbrücke...","Мобильный респаун 2 в воздухе..."
-STR_SYS_23,"Mobile respawn one currently driving...","Mobile respawn derzeit fahren...","Мобильный респаун 1 в движении..."
-STR_SYS_24,"Mobile respawn two currently driving...","Mobile respawn derzeit zwei fahren...","Мобильный респаун 2 в движении..."
+STR_SYS_21,"Mobile respawn one gets transported by airlift...","Mobile respawn bekommt man transportiert mit der Luftbrücke...","КШМ 1 в воздухе..."
+STR_SYS_22,"Mobile respawn two gets transported by airlift...","Mobile respawn zwei wird transportiert durch die Luftbrücke...","КШМ 2 в воздухе..."
+STR_SYS_23,"Mobile respawn one currently driving...","Mobile respawn derzeit fahren...","КШМ 1 в движении..."
+STR_SYS_24,"Mobile respawn two currently driving...","Mobile respawn derzeit zwei fahren...","КШМ 2 в движении..."
 STR_SYS_25,"MHQ 1 is in water...","MHQ 1 ist im Wasser...","КШМ 1 сейчас в воде..."
 STR_SYS_26,"MHQ 2 is in water...","MHQ 2 ist im Wasser...","КШМ 2 сейчас в воде..."
-STR_SYS_30,"Respawn","Respawn","Респаун"
+STR_SYS_30,"Respawn","Respawn","КШМ"
 STR_SYS_31," (last one)"," (die Letzte)"," (последний)"
-STR_SYS_32,"%1 Respawn %2 is transported by airlift","%1 Mobile kommandierenden Maschine %2 transportiert wird, die Luft","%1 мобильный респаун %2 транспортируется по воздуху"
-STR_SYS_33,"%1 Respawn %2 is available","%1 Respawn %2 verfügbar","%1 мобильный респаун %2 доступен"
+STR_SYS_32,"%1 MHQ %2 is transported by airlift","%1 Mobile kommandierenden Maschine %2 transportiert wird, die Luft","%1 КШМ %2 транспортируется по воздуху"
+STR_SYS_33,"%1 MHQ %2 is available","%1 Respawn %2 verfügbar","%1 КШМ %2 доступна"
 STR_SYS_35,"Lift vehicle","Fahrzeug anheben","Поднять технику"
 STR_SYS_36,"Drop vehicle","Drop-fahrzeug","Сбросить технику"
 STR_SYS_37,"Vehicle (%1) is lifted...","Fahrzeug (% 1) mit Hubschrauber gehoben ...","Техника (%1) поднята вертолётом..."
@@ -161,7 +161,7 @@ STR_SYS_75,"Teleporting not possible while swimming !!!","Teleportieren nicht m�
 STR_SYS_75_1,"Teleporting not possible while factory %1 is ruined !!!","Das teleportieren nicht möglich, während Fabrik %1 ist kaputt !!!","Телепортирование невозможно пока разрушен сервис %1!!!"
 STR_SYS_75_chopper,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_75_wreck,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
-STR_SYS_76,“A strong ocean wind blew the parachute off”,"Ein starker Meereswind blies den Fallschirm ab","Сильный ветер над океаном отнёс парашют в сторону"
+STR_SYS_76,“Due to the strong wind over the ocean, you jumped a little wrong”,"Aufgrund des starken Windes über dem Ozean sind Sie ein wenig falsch gesprungen","Из-за сильного ветра над океаном Вы прыгнули немного не туда"
 STR_SYS_77,"Cancel service","Rückgängig Service","Отменить обслуживание"
 STR_SYS_78,"Lift %1","Hubschrauber %1","Трансп. вертолёт %1"
 STR_SYS_79,"Wreck Lift","Wrack heben","Трансп. обломков"
@@ -586,12 +586,12 @@ STR_SYS_324_2,Fuel: %1,Kraftstoff: %1,Топливо: %1
 STR_SYS_324_3,Damage: %1,Störungen: %1,Повреждения: %1
 STR_SYS_324_4,Dir: %1 (%2),Richtung: %1 (%2),Напр: %1 (%2)
 
-STR_SYS_325,"This is a mobile respawn vehicle. You can drop an ammocrate, use it to respawn or teleport or create a vehicle.","Dies ist eine mobile respawn Fahrzeug. Drop können Sie eine ammocrate, es verwenden, um respawn oder teleport oder erstellen Sie ein Fahrzeug.","Это мобильный респаун. Используется для перевозки ящиков снабжения, респауна после смерти, телепортирования и выгрузки техники."
+STR_SYS_325,"This is a mobile respawn vehicle. You can drop an ammocrate, use it to respawn or teleport or create a vehicle.","Dies ist eine mobile respawn Fahrzeug. Drop können Sie eine ammocrate, es verwenden, um respawn oder teleport oder erstellen Sie ein Fahrzeug.","Это КШМ. Используется для перевозки ящиков снабжения, возрождения после смерти, телепортирования и выгрузки техники."
 STR_SYS_326,"This is an engineer salvage truck. You can load static weapons and unload them.","Dies ist ein Ingenieur-Bergung von LKW. Laden Sie statische Waffen-und entladen.","Это инженерный грузовик. Вы можете загружать/выгружать в него станковую технику"
 STR_SYS_329,"%2: unload requires rank %1.","%2: entfernen Sie erfordert Rang %1.","%2: для выгрузки требуется звание %1."
 STR_SYS_329_1,"Vehicles for unloading not provided.","Fahrzeuge, für das entladen nicht zur Verfügung.","Устройства для выгрузки не предусмотрены"
 STR_SYS_330,"You cannot unload %1, while in other vehicle...","Sie können nicht entladen %1, während das Fahrzeug...","Нельзя выгрузить %1, находяcь в транспортном средстве..."
-STR_SYS_331,"Unloading is available only once after the respawn...","Entladen ist nur einmal, nach dem Respawn...","Выгрузка доступна только один раз, после респауна..."
+STR_SYS_331,"Unloading is available only once after the respawn...","Entladen ist nur einmal, nach dem Respawn...","Выгрузка доступна только один раз, после возрожденияя..."
 STR_SYS_332,"Unload completed... it will be available Again in %1 min.","Unload abgeschlossen ist... es wird Wieder verfügbar in %1 Min.","Выгрузка была недавно... и будет вновь доступна через %1 мин."
 STR_SYS_333,"Unloading %1.. please wait...","Entladen %1.. bitte warten...","Выгружается %1, ожидайте..."
 STR_SYS_334,"Dist %1, dmg %2","Dist %1, dmg %2","Дист. %1, повр. %2"
@@ -699,8 +699,8 @@ STR_SYS_541_2,"Good job. The counterattack was defeated.",,"Задача вып�
 STR_SYS_600,"You were killed by %1. %1 looses %2 scores!","Sie wurden getötet, von %1. %1 verliert %2 Punkte!","Вас убил %1. Он отштрафован на -%2 оч.!"
 
 STR_SYS_601,"Respawn at Base",Respawn an der Basis,"Возрождение на базе"
-STR_SYS_602,"Teleport to Mobile Resp %1","Teleport auf Mobile Resp %1","Телепорт на мобильный респ %1"
-STR_SYS_603,"Respawn at Mobile Resp %1","Respawn bei Mobile Resp %1","Возрождение на мобильный респ %1"
+STR_SYS_602,"Teleport to Mobile Resp %1","Teleport auf Mobile Resp %1","Телепорт на КШМ %1"
+STR_SYS_603,"Respawn at Mobile Resp %1","Respawn bei Mobile Resp %1","Возрождение на КШМ %1"
 
 STR_SYS_604,"Sahrani People welcome the %1 of the warrior-internationalist in their troubled land: ""Liberate us from the boot of the occupier, a soldier!""","Sahrani Menschen begrüßen die %1 des Kriegers-internationalistischen in ihrem unruhigen Land: "" Befreien Sie ihn aus dem Boot der Besatzer, Soldat!""","Население Сахрани приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""
 STR_SYS_604_1,"Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty, and welcomes the %1 warrior-the internationalist at this long-suffering land:\n""Deliver us from the boot of The Federal reserve agents, soldier!""","Fast die Hälfte von Sahrani veröffentlicht, aber die Bevölkerung Sahrani froh, dass alle Verteidiger des wahren Freiheit, und begrüßt die %1 Krieger-die Internationalistische an diesem leidgeprüften land:\n""Erlöse uns von dem boot Der Federal reserve Agenten, Soldaten!""","Уже половина Сахрани освобождена, но население Сахрани радо любому защитнику свободы без обмана и  приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""
@@ -811,7 +811,7 @@ STR_SYS_1184,"Air taxi damaged or destroyed !!!","Luft-taxi beschädigt oder zer
 STR_SYS_1185,"Air taxi heading to base in a few seconds !!!","Luft-taxi Richtung base in ein paar Sekunden !!!","Спасательный вертолёт отправится на базу через несколько секунд !!!"
 STR_SYS_1186,"Air taxi leaving now, have a nice day !!!","Luft-taxi jetzt verlassen, haben einen schönen Tag !!!","Спасательный вертолёт покидает базу, удачи !!!"
 
-STR_SYS_1200,"Respawn with same weapons after death: ","Respawn mit gleichen Waffen nach dem Tod: ","Респаун с тем же оружием: "
+STR_SYS_1200,"Respawn with same weapons after death: ","Respawn mit gleichen Waffen nach dem Tod: ","Возрождение с тем же оружием: "
 STR_SYS_1201,"Maximum number of AI that can get recruited: ","Maximale Anzahl von KI, die rekrutiert werden kann : ","Максимальное кол-во АИ: "
 
 STR_SYS_1202,"Player points that get subtracted after death: ","Spielerpunkte, die nach dem Tod abgezogen werden: ","Очков вычитается за смерть: "
@@ -830,7 +830,7 @@ STR_SYS_1207,"Points needed to call in an air taxi: ","Punkte benötigt, um in e
 
 STR_SYS_1208,"Points needed for AAHALO parajump: ","Punkte für AAHALO parajump benötigt: ","Очков необходимо для десантирования с базы: "
 STR_SYS_1209,"Points needed to create a vehicle at a MHQ: ","Punkte benötigt, um ein Fahrzeug an einem MHQ zu erstellen: ","Очков необходимо для выгрузки техники из КШМ: "
-STR_SYS_1210,"Points that get subtracted for creating a vehicle at a MHQ: ","Punkte, die subtrahiert werden, um ein Fahrzeug an einem MHQ zu erstellen: ","Очков вычитается за выгрузку техники из мобильного респауна: "
+STR_SYS_1210,"Points that get subtracted for creating a vehicle at a MHQ: ","Punkte, die subtrahiert werden, um ein Fahrzeug an einem MHQ zu erstellen: ","Очков вычитается за выгрузку техники из КШМ: "
 
 STR_SYS_1211,"Points needed to build a NG nest: ","Punkte benötigt, um ein MG nest zu bauen: ","Очков необходимо для развёртывания пулемётного гнезда: "
 STR_SYS_1212,"Points needed to call in an air drop: ","Punkte, die benötigt werden, um einen Lufttropfen einzuholen: ","Очков необходимо для вызова снабжения: "
@@ -1209,7 +1209,7 @@ STR_TSD9_65,Expand all,Alle Details,Развернуть все
 STR_TSD9_66, The choice of dialogue , Dialog auswählen ," Выбор диалога "
 //-----------------------------------------------------------------------------
 
-STR_MIS_1,"Mobile Respawn","Mobile Respawn","Мобильный респаун"
+STR_MIS_1,"MHQ Respawn","MHQ Respawn","КШМ"
 STR_MIS_2,"Chopper","Chopper","Вертолёты"
 STR_MIS_3,"R1","R1","Рем."
 STR_MIS_4,"F1","F1","Гор."
@@ -1255,7 +1255,7 @@ STR_SET_19,"Show chopper welcome message: ","Chopper-Begrüßungsnachricht anzei
 STR_SET_20,"Show vehicle welcome message: ","Fahrzeug-Begrüßungsnachricht anzeigen:","Показывать приветствие в технике: "
 STR_SET_21,"Island repair stations can repair vehicles: ","Inselreparaturstationen können Fahrzeuge reparieren: ","Наземные ремонтные станции работают: "
 STR_SET_22,"Teamstatus Dialog enabled: ","Teamstatus-Dialog aktiviert: ","Меню статус включено: "
-STR_SET_23,"Time a player has to wait until he can create a new vehicle at a MHQ: ","Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet: ","Время между выгрузками техники из мобильного респауна: "
+STR_SET_23,"Time a player has to wait until he can create a new vehicle at a MHQ: ","Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet: ","Время между выгрузками техники из КШМ: "
 STR_SET_24,"Able to fly: ","Able to fly: ","Им разрешено летать: "
 STR_SET_25,"Maximum number of ammoboxes: ","Maximale Anzahl von Ammoboxen: ","Ящики снабжения: максимум "
 STR_SET_25_1,", currently in use: ",", aktuell in Verwendung: ",", активированы: "
