@@ -39,7 +39,7 @@ if (!isServer) exitWith {};
 #define DELAY_BEFORE_SCRIPT_START (1200 + random 120)
 #define DELAY_ON_PATROL_INIT 600
 #define DELAY_RESPAWN_STOPPED 600
-#define DELAY_RESPAWN_KILLED 1800
+#define DELAY_RESPAWN_KILLED 3600
 #define DELAY_REMOVE_DEAD 240           // delay to remove on dead (all vehicles are empty)
 #define DELAY_REMOVE_STOPPED 180        // delay to be removed
 #define DELAY_REMOVE_STUCKED 60         // delay to check for status stacked
