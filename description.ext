@@ -302,7 +302,8 @@ class CfgMusic
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
 
-    class church_voice    {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0};};
+    class church_voice    {name = ""; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
+
     class church_organ_1  {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_2 {name = ""; sound[] = {\sounds\organ\haunted_organ_2.ogg, db+10, 1.0};};
@@ -412,6 +413,8 @@ class CfgSounds
 // woman fucking  speech
     class woman_fuck {name = ""; sound[] = {\sounds\fuck\woman_fuck.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_fuck_2 {name = ""; sound[] = {\sounds\fuck\woman_fuck_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_fuck_3 {name = ""; sound[] = {\sounds\fuck\woman_fuck_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_fuck_4 {name = ""; sound[] = {\sounds\fuck\woman_fuck_4.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_kidding {name = ""; sound[] = {\sounds\fuck\woman_kidding.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_sob {name = ""; sound[] = {\sounds\fuck\woman_sob.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_motherfucker {name = ""; sound[] = {\sounds\fuck\woman_motherfucker.ogg, db+0, 1.0}; titles[] = {}; };
@@ -429,8 +432,11 @@ class CfgSounds
     class sorry_8  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-8.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_9  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-9.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_10 {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-10.ogg, db+0, 1.0}; titles[] = {}; };
-    class sorry_11 {name = "Female sexy";  sound[] = {\sounds\women\sorry\sexy-voice.ogg.ogg, db+0, 1.0}; titles[] = {}; };
-    class sorry_12 {name = "Female kidding"; sound[] = {\sounds\women\sorry\ten-dollars-are-you-kidding-me.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_11 {name = "Female kidding"; sound[] = {\sounds\women\sorry\are-you-kidding-me.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_12 {name = "Female sexy";  sound[] = {\sounds\women\sorry\sexy-voice.ogg.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_13 {name = "Female so sorry"; sound[] = {\sounds\women\sorry\female-my-fault.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_14 {name = "Female going to bed time"; sound[] = {\sounds\women\sorry\female-it-s-getting-close-to-bedtime.ogg, db+0, 1.0}; titles[] = {}; };
+
 
 
 // man self-killed. If append next scream, don't forget to edit method SYG_getSuicideScreamSound() in file SYG_utilsSound.sqf (increase harcoded number of screams)
@@ -551,10 +557,16 @@ class CfgSounds
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
 
-    class church_voice    {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0};};
+    class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
+    class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10, 1.0};};
+    class sorrow_2        {name = "sorrow_2"; sound[] = {\sounds\church\sorrow_2.ogg, db+10, 1.0};};
+    class sorrow_3        {name = "sorrow_3"; sound[] = {\sounds\church\sorrow_3.ogg, db+10, 1.0};};
+    class sorrow_4        {name = "sorrow_4"; sound[] = {\sounds\church\sorrow_4.ogg, db+10, 1.0};};
+
     class church_organ_1  {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_2 {name = ""; sound[] = {\sounds\organ\haunted_organ_2.ogg, db+10, 1.0};};
+
 
     class sorcerie       {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0};};
     class melody         {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0};};

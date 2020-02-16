@@ -299,7 +299,7 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[16.092,6.318]],
         ["ATrack26",[24.014,8.097]],
         ["ATrack26",[32.06,-1]],
-        "church_organ_1", "church_voice", "haunted_organ_1", "haunted_organ_2"
+        "church_organ_1", "church_voice", "haunted_organ_1", "haunted_organ_2", "sorrow_1", "sorrow_2", "sorrow_3", "sorrow_4"
 
     ];
 
@@ -523,7 +523,7 @@ SYG_playDeathInTankSound = {
 
 SYG_getFemaleFuckSpeech = {
     private ["_arr"];
-	_arr = ["woman_fuck","woman_fuck_2","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11","sorry_12"];
+	_arr = ["woman_fuck","woman_fuck_2","woman_fuck_3","woman_fuck_4""woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11"];
     switch localize "STR_LANG" do
     {
         case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
