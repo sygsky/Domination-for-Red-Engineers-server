@@ -114,7 +114,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "Art_Of_Noise_mono","mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
                 "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
-                "tovarich_moy","ipanoram","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
+                "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata","smersh",
                 "del_vampiro1","del_vampiro2"
             ] + _personalSounds ) call _XfRandomArrayVal;
@@ -317,6 +317,7 @@ _plpos = [(position player select 0),(position player select 1),1.5];
 if ( typeName _camstart == "ARRAY" ) then
 {
 	_camera = "camera" camCreate _start;
+	if (surfaceIsWater _start) then { _camera say "under_water_3" }; // gurgle if in water
 }
 else
 {
