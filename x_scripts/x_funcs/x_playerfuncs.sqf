@@ -13,7 +13,7 @@
 if ( isNil "SYG_repTruckNamesArr" ) then 
 {
 #ifdef __ACE__			
-	SYG_repTruckNamesArr = [ "ACE_Truck5t_Repair" , "ACE_Ural_Repair", "ACE_HMMWV_GMV2" ];
+	SYG_repTruckNamesArr = [ "UralRepair", "Truck5tRepair", "ACE_HMMWV_GMV2" ]; // "UralRepair","Truck5tRepair",
 #else				
 	SYG_repTruckNamesArr = [ "UralRepair", "Truck5tRepair" ];
 #endif		
@@ -307,12 +307,12 @@ XPlayerRank = {
 				if ( d_player_pseudo_rank == _prev_rank ) then { breakTo "exit"; }; // No changes in rank
 				if ( d_player_pseudo_rank == _new_rank ) then // demoted from the higher rank
 				{
-					(format [localize "STR_SYS_43",_new_rank, _prev_rank]) call XfHQChat; // "Вы разжалованы со звания %1 до %2! Увы, прощай высокое звание на Родине..."
+					(format [localize "STR_SYS_43",_new_rank call XGetRankStringLocalized, _prev_rank call XGetRankStringLocalized]) call XfHQChat; // "Вы разжалованы со звания %1 до %2! Увы, прощай высокое звание на Родине..."
 					d_player_pseudo_rank = _prev_rank; // e.g. from G-L to G-M, or from G-M to COL
 					breakTo "exit";
 				};
 				// if here, then promoted due to fact that your rank now is not old one and not new too
-				(format [ localize "STR_SYS_44", d_player_pseudo_rank, _prev_rank ]) call XfHQChat; // "Вы повышены в звании с %1 до %2, которое будет присвоено на Родине!"
+				(format [ localize "STR_SYS_44", d_player_pseudo_rank call XGetRankStringLocalized, _prev_rank call XGetRankStringLocalized]) call XfHQChat; // "Вы повышены в звании с %1 до %2, которое будет присвоено на Родине!"
 				d_player_pseudo_rank = _prev_rank; // e.g. from COL to G-M or from COL to G-M etc
 
                 // FIXME: sent message to everybody about new super rank player
@@ -456,10 +456,16 @@ XGetRankIndex = {
 	["PRIVATE","CORPORAL","SERGEANT","LIEUTENANT","CAPTAIN","MAJOR","COLONEL"] find (toUpper (_this));
 };
 
+
 //============================================
 //+++ Sygsky
 // call: _rank_localized = _rank_str call XGetRankStringLocalized;
 //
+
+XGetRankIndexEx = {
+	["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"] find (toUpper (_this));
+};
+
 XGetRankStringLocalized = {
     if ( typeName _this == "OBJECT") then
     {
@@ -524,7 +530,7 @@ XGetRankFromScoreExt = {
     };
     _index = -1; // Colonel
     {
-        if ( _this < _x ) exitWith { "Colonel" };
+        if ( _this < _x ) exitWith { };
         _index = _index + 1;
     } forEach d_pseudo_ranks;
     (d_pseudo_rank_names select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
@@ -562,6 +568,41 @@ XGetRankIndexFromScore = {
         _index = _index +  1;
     } forEach d_points_needed;
     _index
+};
+// Finds and return score needed for designated rank
+// call: _rankScore  = player call XGetScoreFromRank; // to get initial rank score for the player current rank
+//       _rankScore  = 1 call XGetScoreFromRank; // to get initial rank score for the  CORPORAL rank
+//       _rankScore  = "CORPORAL" call XGetScoreFromRank; // to get initial rank score for the  CORPORAL rank
+//
+XGetScoreFromRank = {
+    switch (typeName _this) do
+    {
+        case "OBJECT": { // player of unit designated, convert to score
+#ifdef __SUPER_RANKING__
+            _this = (score _this) call XGetRankIndexFromScoreExt; // convert to unit score rank
+#else
+            _this = (score _this) call XGetRankFromScore;   // convert to unit score rank
+#endif
+        };
+        case "SCALAR": { // rank index designated
+        };
+        case "STRING": { // rank name, e.g. "d"
+#ifdef __SUPER_RANKING__
+            _this = _this call XGetRankIndexFromScoreExt; // convert to unit score rank
+#else
+            _this = _this call XGetRankIndex;   // convert to unit score rank
+#endif
+
+        };
+        default { _this = 0; }; // unknown argument, so private default rank 0 used
+    };
+    if (this <= 0) exitWith {0};
+#ifdef __SUPER_RANKING__
+    if ( _this >= ((count d_score_needed) + (count d_score_needed))) exitWith { (d_pseudo_ranks select (count d_pseudo_ranks -1))}; // GENERALISSIMO
+    if ( _this >= ((count d_score_needed))) exitWith {d_pseudo_ranks select (count d_score_needed)};
+#endif
+    if ( _this >= ((count d_score_needed))) exitWith {d_score_needed select ((count d_score_needed) -1)};
+    d_points_needed select (_this -1)
 };
 
 XGetRankPic = {

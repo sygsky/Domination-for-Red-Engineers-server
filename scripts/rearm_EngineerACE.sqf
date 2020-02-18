@@ -4,7 +4,7 @@
 	returns: nothing
 */
 
-_p = _this;
+_p     = _this; // player itself
 
 removeAllWeapons _p;
 
@@ -47,5 +47,3 @@ _p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
 _p setVariable ["ACE_Ruckmagazines", _magp];
 
 //hint localize format["+++ rearmEngineerACE.sqf: player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
-// Viewdistance
-3500 call SYG_setViewDistance;

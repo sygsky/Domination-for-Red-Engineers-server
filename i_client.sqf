@@ -1,5 +1,5 @@
 ﻿// init include client
-if (X_Client) then {
+if (!X_Client) exitWith {false};
 // 0 = player markers turned off
 // 1 = player markers with player names and healthess
 // 2 = player markers without player names
@@ -207,7 +207,8 @@ d_points_needed = [
 d_pseudo_ranks = 
 	[1200,1500,2000,2500,3000,5000];
 d_pseudo_rank_names =	
-	[localize "STR_SYS_1000",localize "STR_SYS_1001",localize "STR_SYS_1002",localize "STR_SYS_1003",localize "STR_SYS_1004",localize "STR_SYS_1005"];
+	//[localize "STR_SYS_1000",localize "STR_SYS_1001",localize "STR_SYS_1002",localize "STR_SYS_1003",localize "STR_SYS_1004",localize "STR_SYS_1005"];
+	["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"];
 
 #ifdef __RANKED__
 // Array with all predefined score for many achievments
@@ -262,4 +263,3 @@ d_with_ace_map = false;
 // Set it to false if you have performance problems (short hickups) at mission start.
 // If false repair stations can not repair vehicles
 d_with_repstations = true;
-};

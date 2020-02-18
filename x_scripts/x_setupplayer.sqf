@@ -229,11 +229,12 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 };
                                 default
 								{
-                                    switch floor (random 3) do
+                                    switch floor (random 4) do
                                     {
 										case 0: {["P", "ACE_Val_Cobra", "ACE_20Rnd_9x39_B_VAL", 10]};
 										case 1: {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10] };
 										case 2: {["P", "ACE_AKS74USD_Cobra", "ACE_45Rnd_545x39_BT_AK", 10] };
+										case 3: {["P", "ACE_AKMS_PBS1_Cobra", "ACE_30Rnd_762x39_SD_AK", 10] };
                                     };
 								};
                             };
@@ -245,7 +246,15 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 case 2: {["S", "ACE_TT", "ACE_8Rnd_762x25_B_Tokarev", 4]};
                                 default {["S", "ACE_Scorpion", "ACE_20Rnd_765x17_vz61", 4]};
                             };
+                            hint localize format["+++ x_setupplayer: _string_player ""%1""",_string_player];
 
+                            if (_string_player in d_can_use_artillery) exitWith
+                            {
+                                _weapp =  [["P","ACE_RPG22","ACE_RPG22",2], _diversant, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
+                                _diversant set [3,8];
+                                _magp = [[format["%1_PDM",_diversant select 2],2],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
+
+                            };
                             if ( _p isKindOf "SoldierEMG") exitWith
                             {
                                 _weapp =  [["P","ACE_RPG22","ACE_RPG22",1],_mg, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
@@ -306,11 +315,14 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             {
                                 d_rebornmusic_index = 1; // no play death sound
                                 SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
+                                3000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; _rearmed = true; };
                             };
                             case "ENGINEERACE":  // EngineerACE
                             {
-                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_EngineerACE.sqf";  _rearmed = true; };
+                                // Viewdistance
+                                3500 call SYG_setViewDistance;
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf";  _rearmed = true; };
                             };
                             // TODO: add more personal setting here (as for "Yeti" done)
                             default {}; // all other players are rearmed by standart
@@ -564,7 +576,7 @@ if (all_sm_res) then {
 };
 
 #ifndef __ACE__
-if (daytime > 19.75 || daytime < 4.25) then {
+if ((daytime > 19.75) || (daytime < 4.25)) then {
 	_p action ["NVGoggles",_p];
 };
 #endif

@@ -35,4 +35,4 @@ if ( count _muzzles > 0) then
 // fill backpak
 _p setVariable ["ACE_weapononback","ACE_Rucksack_MOLLE_Green_Miner"];
 _p setVariable ["ACE_Ruckmagazines", []];
-3000 call SYG_setViewDistance;
+
