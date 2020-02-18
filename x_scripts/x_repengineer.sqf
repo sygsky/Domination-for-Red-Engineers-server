@@ -7,7 +7,8 @@
 
 #include "x_setup.sqf"
 
-private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_steps","_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres"];
+private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_steps",
+        "_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres","_addscore"];
 
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
 _is_engineer = format ["%1", player] in d_is_engineer;
@@ -18,17 +19,11 @@ _caller = _this select 1;
 _aid = _this select 2;
 
 _truck_near = false;
-#ifdef __OLD__
-if (player distance TR7 < 21 || player distance TR8 < 21) then {
-	_truck_near = true;
-};
-#else
-	_trArr =  nearestObjects [ position player, SYG_repTruckNamesArr, 21]; // find nearest repair vehicle in radius 20 meters
-	_truck_near = false;
-	{
-		if ( alive _x ) exitWith { _truck_near = true; };
-	} forEach _trArr;
-#endif
+_trArr =  nearestObjects [ position player, SYG_repTruckNamesArr, 21]; // find nearest repair vehicle in radius 20 meters
+_truck_near = false;
+{
+    if ( alive _x ) exitWith { _truck_near = true; };
+} forEach _trArr;
 
 if (!d_eng_can_repfuel && !_truck_near) exitWith {
 	hint (localize "STR_SYS_18");//"Следует восстановить способность ремонта и заправки техники на базе...";
@@ -120,7 +115,13 @@ _rep_action = player addAction[localize "STR_SYS_77","x_scripts\x_cancelrep.sqf"
 _addscore = 0; // how many repair steps were done
 for "_wc" from 1 to _coef do {
 	if (!alive player || d_cancelrep) exitWith {player removeAction _rep_action;};
-	localize "STR_SYS_152" call XfGlobalChat; // "В процессе..."
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+    if (_is_engineer) then {
+#endif
+	    (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat;
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+	} else {(format[localize "STR_SYS_152", -(_addscore + 1)]) call XfGlobalChat;};
+#endif
 	player playMove "AinvPknlMstpSlayWrflDnon_medic";
 	sleep 3.0;
 	waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"}; // this animation cycle duration is approximatelly 6 seconds
@@ -156,7 +157,7 @@ player removeAction _rep_action;
 if (!alive player) exitWith {player removeAction _rep_action};
 #ifdef __RANKED__
 
-// count score by steps, not vehicle size and class
+// now count score by steps, not vehicle size and class. Previous version is commented
 /*
 _parray = d_ranked_a select 1;
 _addscore = (
@@ -176,8 +177,8 @@ _addscore = (
 );
 */
 if (_addscore > 0) then {
-#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (!_is_engineer) then
     {
         _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__; // must be negative value!

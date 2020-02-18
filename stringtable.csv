@@ -28,7 +28,7 @@ STR_SYG_02,"Only engineers can load stationary weapons","Nur Ingenieure können 
 STR_SYG_03,"Already loaded %1 items. Unable to load more", "Bereits %1-Elemente geladen. Kann nicht mehr laden", "Мест загружено: %1. Это максимум"
 STR_SYG_04,"No stationary weapon in range", "Keine stationäre Waffe in Reichweite", "Нет станкового оружия для погрузки"
 STR_SYG_05,"You're too far from %1, max. dist. %2m!","Du bist zu weit von %1 entfernt, max. dist. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
-STR_SYG_06,"You're in the process of downloading. Wait for the end of the procedure","Du bist gerade dabei, dich herunterzuladen. Warten Sie auf das Ende des Verfahrens","Вы в процессе загрузки. Дождитесь конца процедуры"
+STR_SYG_06,"You're in the process of loading. Wait for the end of the procedure","Sie sind gerade beim laden. Warten Sie auf das Ende des Verfahrens","Вы в процессе погрузки. Дождитесь конца процедуры"
 STR_SYG_07,"%1 will be loaded in %2 sec.", "%1 wird in %2 Sek. geladen.", "%1 будет загружено через %2 сек."
 STR_SYG_08, "%1 loaded and attached!", "%1 loaded and attached!", "%1 загрузили и закрепили!"
 STR_SYG_09,"You can't load a %1 into a %2!", "Du kannst kein %1 in %2 laden!", "Вы не можете загрузить %1 в %2!"
@@ -275,7 +275,7 @@ STR_SYS_147,"The North prime minister visits some troops in Valle Azul. Eliminat
 STR_SYS_148,"Good job. The prime minister is dead.","Gute Arbeit. Der Ministerpräsident ist tot.","Задание выполнено! Премьер-министр уничтожен."
 
 STR_SYS_151,"from %1 %2 m. to %3","von %1, %2 Meter nach %3","от %1 %2 м. на %3"
-STR_SYS_152,Still working...,Noch arbeiten...,В процессе...
+STR_SYS_152,Still working (score %1)...,Im Prozess (punkte %1)...,Починка (очков %1)...
 
 STR_SYS_157,"Side mission","Side mission","Доп.задание"
 STR_SYS_158,"Start","Start","Начало маршрута"
