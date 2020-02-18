@@ -159,7 +159,7 @@ SYG_MedievalDefeatTracks =
     ];
 SYG_waterDefeatTracks =
     [
-        "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8"
+        "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8","under_water_9"
     ];
 
 // All available curche types in the Arma (I think so)
@@ -168,7 +168,7 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 // returns random male laughter sound on your defeate
 SYG_getLaughterSound =
 {
-    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job","game_over","get_some"] call XfRandomArrayVal
+    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job","game_over","get_some","go_go_go"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
