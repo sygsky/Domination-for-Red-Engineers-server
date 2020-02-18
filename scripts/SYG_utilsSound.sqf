@@ -84,7 +84,7 @@ SYG_defeatTracks =
     ["Delerium_Wisdom","pimbompimbom","vendetta"],
     ["Gandalf_Simades","whold","end","radionanny"],
     ["ATrack9","ATrack10","ATrack14"],
-    ["ATrack16","ATrack17","ATrack18"],
+    ["ATrack16","ATrack17","ATrack18","ipanoramDefeat"],
     ["ATrack20","ATrack21","ATrack22","thetrembler"],
     ["arroyo","ATrack15","ATrack19","sinbad_baghdad"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
@@ -500,10 +500,10 @@ SYG_getSuicideScreamSound  = {
  */
 SYG_playWeatherForecastMusic = {
  [
-    ["manchester_et_liverpool", 0, 9.465],
-    ["manchester_et_liverpool", 10.092, 9.182],
-    ["manchester_et_liverpool", 18.42, 8.01],
-    ["manchester_et_liverpool", 26.74, 7.27],
+    ["manchester_et_liverpool",  0,      9.465],
+    ["manchester_et_liverpool", 10.092,  9.182],
+    ["manchester_et_liverpool", 18.42,   8.01],
+    ["manchester_et_liverpool", 26.74,   7.27],
     ["manchester_et_liverpool", 34.006, 11.215],
     ["manchester_et_liverpool", 45.221, -1]
  ] call SYG_playRandomTrack;
@@ -523,12 +523,17 @@ SYG_playDeathInTankSound = {
 
 SYG_getFemaleFuckSpeech = {
     private ["_arr"];
-	_arr = ["woman_fuck","woman_fuck_2","woman_fuck_3","woman_fuck_4""woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11"];
+	_arr = ["woman_fuck","woman_fuck_2","woman_fuck_3","woman_fuck_4","woman_fuck_5","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11","woman_dont_trust"];
     switch localize "STR_LANG" do
     {
         case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
     };
 	_arr call XfRandomArrayVal
+};
+
+
+SYG_getFemaleExclamation = {
+    ["woman_excl1","woman_excl2","woman_excl3","woman_excl4","woman_excl5","woman_excl6","woman_excl7","woman_dont_trust"] call XfRandomArrayVal;
 };
 
 if (true) exitWith {};

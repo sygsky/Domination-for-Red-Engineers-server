@@ -100,7 +100,7 @@ if (d_own_side == "EAST") then
     if (_ai_side_unit call SYG_isWoman) then
     {
         _identity = "Irina";
-        _unit say (call SYG_getFemaleFuckSpeech);
+        _unit spawn { sleep 1.5; _this say (call SYG_getFemaleExclamation);}
     };
     _unit setIdentity _identity; // there are only 5 russina voice in the ACE
     // TODO: test if russian voice is heard on clients. May be it is possible to setIdentity only for local units
