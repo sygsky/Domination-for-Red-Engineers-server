@@ -809,7 +809,7 @@ SYG_makePatrolGroup = {
 
 WEAPONS_TYPE_ARR = [
 	["Stinger_Pod","Stinger_Pod_East","ACE_ZU23M"/*,"ACE_ZU23"*/], // AntiAircraft
-	["TOW_TriPod","TOW_TriPod_East","ACE_TOW","ACE_KonkursM"], // AntiTank
+	["TOW_TriPod","TOW_TriPod_East","ACE_TOW","ACE_KonkursM","ACE_SPG9"], // AntiTank static
 	["M2StaticMG","M2HD_mini_TriPod","DSHKM","DSHkM_Mini_TriPod","WarfareBEastMGNest_PK"], // MachineGun
 	["M119","D30"], // CaNon
 	["MK19_TriPod","AGS"] // GrenadeLauncher

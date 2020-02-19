@@ -2610,8 +2610,8 @@ SYG_reammoTruck = {
 		_this addMagazineCargo ["ACE_1Rnd_Flare_Yellow", 20];
 		_this addMagazineCargo ["ACE_1Rnd_Flare_White", 20];
 
-		_this addMagazineCargo ["ACE_6Rnd_40mm_M32", 20];
-		_this addMagazineCargo ["ACE_40mm_HEDP_M203", 20];
+		_this addMagazineCargo ["ACE_6Rnd_40mm_M32", 50];
+		_this addMagazineCargo ["ACE_40mm_HEDP_M203", 50];
 		_this addMagazineCargo ["ACE_40mm_SmokeWhite_M203", 20];
 		_this addMagazineCargo ["ACE_40mm_SmokeRed_M203", 20];
 		_this addMagazineCargo ["ACE_40mm_SmokeGreen_M203", 20];
