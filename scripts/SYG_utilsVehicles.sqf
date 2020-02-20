@@ -1897,6 +1897,25 @@ SYG_getLeader = {
 	} forEach units _this;
 	_leader
 };
+
+//
+// Removes from _heli array weapons first found item from array of string _weaponListToRemove
+// call: _removedFromVehicle = [_heli, _weaponListToRemove] call SYG_hasAnyWeapon;
+// returns true if some weapon is removed, else false (no designated weapons found on vehicle)
+//
+SYG_removeAnyWeapon = {
+    private [ "_sampleArr", "_heli", "_wpn" ];
+    if (typeName _this != "ARRAY") exitWith {""};
+    if (count _this < 2) exitWith {""};
+    _heli = _this select 0;
+    if ( typeName _heli != "OBJECT") exitWith {false};
+    _sampleArr = _this select 1;
+    if ((typeName (_this select 1)) == "STRING") then {_sampleArr = [_sampleArr];};
+    _wpn = [weapons _heli, _sampleArr] call SYG_findItemInArray;
+    if (_wpn != "") exitWith { _heli removeWeapon _wpn; true};
+    false
+};
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

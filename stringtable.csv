@@ -524,7 +524,7 @@ STR_SYS_260,"%1 Artillery salvo %2 on the way...","%1 Artillerie salvo %2 auf de
 STR_SYS_261,"%1 Artillery Splashdown, Salvo %2","%1 Artillerie Splashdown, Salvo %2","%1 арт.батарея: заряжаем %2, прием."
 STR_SYS_262,"%1 Artillery reloading...","%1 Artillerie nachladen...","%1 арт.батарея: перезаряжаем, прием."
 STR_SYS_263,"%1 Artillery fire series ended","%1 Artillerie-Feuer-Serie beendet!","%1 арт.батарея: стрельбу закончил, прием."
-STR_SYS_264,"Crossroad, requesting %1 strike. %2 salvoes at %3 North, %4 West!","Crossroad, ersuchenden %1 schlagen. %2 Salven in %3 Nord, %4 West!","Запрашиваю арт.налёт, боеприпасы %1, залпов: %2, по следующим координатам: %3 С - %4 З."
+STR_SYS_264,"Crossroad, requesting %1 strike. %2 salvoes at %3 North, %4 West!","Crossroad, ersuchenden %1 schlagen. %2 Salven in %3 Nord, %4 West!","Запрашиваю арт.удар, боеприпасы %1, залпов: %2, по следующим координатам: %3 С - %4 З."
 STR_SYS_265,"This is %1 artillery, roger.","Das ist das %1 Artillerie, roger.","Это %1 арт.батарея... принято... прием."
 STR_SYS_266,"%1 artillery executing %2 strike, salvoes %2","%1 Artillerie ausführen %1 strike, Salven %2","%1 арт.батарея, выполнили: боеприпасы %1, залпов: %2."
 STR_SYS_267,"%1 artillery available","%1 Artillerie zur Verfügung","%1 арт.батарея доступна!"

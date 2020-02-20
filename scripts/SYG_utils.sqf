@@ -550,4 +550,19 @@ SYG_revealToAllPlayers = {
     } forEach SYG_players_arr;
 };
 
+// finds in array _itemArr first item from array _sampleArr.
+// call as: _item = [["item1","itrm2"],_itemArr] call  SYG_findItemInArray;
+// Returns first item _itemArr in array or "" (empty String) if no any item in array
+//
+SYG_findItemInArray = {
+    private [ "_sampleArr", "_itemArr", "_pos" ];
+    if (typeName _this != "ARRAY") exitWith {""};
+    if (count _this < 2) exitWith {""};
+    _sampleArr = _this select 0;
+    _itemArr   = _this select 1;
+    {
+        if ( _x in _itemArr ) exitWith {_x};
+    } forEach _sampleArr;
+};
+
 if (true) exitWith {};
