@@ -1,10 +1,11 @@
 /*
-	author: Sygsky
+	author: Sygsky, scripts\rearm_EngineerACE.sqf
 	description: none
 	returns: nothing
 */
 
 _p     = _this; // player itself
+if (typeName _p == "ARRAY") then {_p = _p select 0}; // can be designated array [player, _rankIndex] for the future development
 
 removeAllWeapons _p;
 
