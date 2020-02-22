@@ -31,6 +31,8 @@ execVM "x_scripts\x_removedead.sqf";
 //x_groupsm = compile preprocessFileLineNumbers "x_scripts\x_groupsm.sqf";
 x_dosmoke = compile preprocessFileLineNumbers "x_scripts\x_dosmoke.sqf";
 x_dosmoke2 = compile preprocessFileLineNumbers "x_scripts\x_dosmoke2.sqf";
+SYG_eventOnDamage = compile preprocessFileLineNumbers "scripts\eventOnDamage.sqf";
+
 execVM "x_scripts\x_checklocalvec.sqf";
 
 if (count d_with_isledefense > 0) then {execVM "x_scripts\x_isledefense.sqf";};
