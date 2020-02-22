@@ -6,6 +6,7 @@ private ["_vehicle"];
 #define __Poss _poss = x_sm_pos select 0;
 #define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
 
+// TODO: change patrol area to rectangular instead  std round one
 x_sm_pos = [[13978.5,15741.7,0]]; // index: 38,   Biological weapons near Passo Epone
 x_sm_type = "normal"; // "convoy"
 
