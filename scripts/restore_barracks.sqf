@@ -16,7 +16,7 @@
 // check for the AI_HUT to be alive
 if (isNil "AI_HUT") exitWith {hint localize "--- restore_barracks.sqf: no AI_HUT detected"}; // no hut
 if ( damage AI_HUT == 0) exitWith{}; // All is well
-if (damage AI_HUT < 1 ) exitWith { hint localize format["--- restore_barracks.sqf: AI_HUT repaired damage %1",damage AI_HUT]; AI_HUT setDamage 0;};
+if (damage AI_HUT < 1 ) exitWith { hint localize format["+++ restore_barracks.sqf: AI_HUT repaired damage %1",damage AI_HUT]; AI_HUT setDamage 0;};
 
 // AI_HUT is destroyed (damage 1), lets restore it
 _ruin = nearestObject [d_pos_ai_hut select 0,"Land_budova2_ruins"]; // ruins name for Barracks
