@@ -710,7 +710,7 @@ XHandleNetStartScriptClient = {
 			if (name player == _pname) then {
 				__compile_to_var
 				SYG_dateStart = arg(2); // set server start date
-				hint localize format["d_player_stuff: SYG_dateStart = %1", SYG_dateStart];
+				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1", SYG_dateStart];
 			};
 		};
 		case "d_hq_sm_msg": {

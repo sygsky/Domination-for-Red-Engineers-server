@@ -23,6 +23,8 @@ _pos = position _p;
 _type = typeOf _p;
 _string_player = format ["%1",_p];
 
+//hint localize format["+++ x_setupplayer: _string_player ""%1"",  %2",_string_player, getPos AMMOLOAD];
+
 #ifdef __RANKED__
 d_sm_p_pos = nil;
 #endif
@@ -246,8 +248,6 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 case 2: {["S", "ACE_TT", "ACE_8Rnd_762x25_B_Tokarev", 4]};
                                 default {["S", "ACE_Scorpion", "ACE_20Rnd_765x17_vz61", 4]};
                             };
-                            hint localize format["+++ x_setupplayer: _string_player ""%1""",_string_player];
-
                             if (_string_player in d_can_use_artillery) exitWith
                             {
                                 _weapp =  [["P","ACE_RPG22","ACE_RPG22",2], _diversant, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
@@ -1612,7 +1612,7 @@ for "_i" from 0 to (count d_ace_boxes) - 1 do {
 		_dir = _this select 2;
 		_boxname = _this select 3;
 		while {true} do {
-			sleep 1500 + random 500;
+			sleep (1500 + (random 500));
 			if (!isNull _box) then {deleteVehicle _box};
 			_box = _boxname createVehicleLocal _pos;
 			_box setDir _dir;

@@ -1215,7 +1215,7 @@ SYG_assignVecToSmokeOnHit =
     _magazines = getArray (configFile >> "CfgVehicles" >> (typeOf _this) >> "Turrets" >> "MainTurret" >> "magazines");
         //_magazines = getArray(_config >> "magazines");
     if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith {
-        if (_this isKindOf "M1Abrams" || _this isKindOf "ACE_M60") then {
+        if ( (_this isKindOf "M1Abrams" || _this isKindOf "ACE_M60") && (!isNil "SYG_eventOnDamage")) then {
             _this addEventHandler ["dammage", {_this spawn SYG_eventOnDamage}]; true
         } else {
             _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true
