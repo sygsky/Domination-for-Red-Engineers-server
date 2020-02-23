@@ -109,7 +109,7 @@ class Mission
 					skill=0.466667;
 					text="alpha_1";
 					init="this setGroupid [""Alpha""];";
-					description="Team Alpha Leader (комвзвода мотострелков)";
+					description="Team Alpha Leader (ком.од. мотострелков)";
 				};
 				class Item1
 				{
@@ -148,7 +148,7 @@ class Mission
 					skill=0.333333;
 					text="alpha_4";
 					init="this setGroupid [""Alpha""]";
-					description="Group Leader (замкомвзвода)";
+					description="Group Leader (замком.од.)";
 				};
 				class Item4
 				{
@@ -279,7 +279,7 @@ class Mission
 					skill=0.466667;
 					text="bravo_1";
 					init="this setGroupid [""Bravo""]";
-					description="Team Bravo Leader (комвзвода спецназа)";
+					description="Team Bravo Leader (ком.од. спецназа)";
 				};
 				class Item1
 				{
@@ -293,7 +293,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_3";
 					init="this setGroupid [""Bravo""]";
-					description="Assistance Squad Leader (замкомвзвода)";
+					description="Assistance Squad Leader (замком.од.)";
 				};
 				class Item2
 				{
@@ -399,7 +399,7 @@ class Mission
 					skill=0.466667;
 					text="charlie_1";
 					init="this setGroupid [""Charlie""]";
-					description="Squad Leader ""Charlie"" (комвзвода ВДВ)";
+					description="Squad Leader ""Charlie"" (ком.од. ВДВ)";
 				};
 				class Item1
 				{
@@ -438,7 +438,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_4";
 					init="this setGroupid [""Charlie""]";
-					description="Assistant Squad Leader (замкомвзвода ВДВ)";
+					description="Assistant Squad Leader (замком.од. ВДВ)";
 				};
 				class Item4
 				{
@@ -525,7 +525,7 @@ class Mission
 					skill=0.333333;
 					text="delta_1";
 					init="this setGroupid [""Delta""];";
-					description="Team Delta Engineer Leader (комвзвода инженеров)";
+					description="Team Delta Engineer Leader (ком.од. инженеров)";
 				};
 				class Item1
 				{
@@ -587,7 +587,7 @@ class Mission
 					skill=0.600000;
 					text="RESCUE";
 					init="this setGroupid [""Artillery 1""];";
-					description="1st Artillery Operator and Rescue (1-й оператор-спасатель)";
+					description="1st Arti. Op. and Rescue (1-й спец. ГРУ)";
 				};
 			};
 		};
@@ -603,13 +603,13 @@ class Mission
 					special="NONE";
 					id=123;
 					side="EAST";
-					vehicle="ACE_SoldierE_FO_VDV";
+					vehicle="ACE_SoldierERadio_VDVR"; //"ACE_SoldierE_FO_VDV";
 					player="PLAY CDG";
 					leader=1;
 					skill=0.600000;
 					text="RESCUE2";
 					init="this setGroupid [""Artillery 2""];";
-					description="2dn Artillery Operator and Rescue (2-й оператор-спасатель)";
+					description="2dn Arti. Op. and Rescue (2-й спец. ГРУ)";
 				};
 			};
 		};
@@ -1684,7 +1684,7 @@ class Mission
 		};
 		class Item96
 		{
-			position[]={9701.535156,139.994995,9941.029297};
+			position[]={9696.6,134,9950}; // {9701.535156,139.994995,9941.029297};
 			special="NONE";
 			id=131;
 			side="EMPTY";
@@ -3325,7 +3325,7 @@ class Mission
 		{
 			position[]={6565.381348,0.354843,10805.966797};
 			name="fmarkerlegend";
-			text="@STR_SYS_34";
+			text="@STR_FLAG_0";
 			type="Flag1";
 			colorName="ColorYellow";
 			a=0.500000;

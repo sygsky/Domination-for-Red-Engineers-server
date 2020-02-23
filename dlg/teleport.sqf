@@ -48,7 +48,7 @@ _ok = createDialog "TeleportModule";
 
 _display = findDisplay 100001;
 _ctrl = _display displayCtrl 100102;
-_ctrl ctrlSetText localize "STR_SYS_34"/* "Телепорт" */;
+_ctrl ctrlSetText localize "STR_FLAG_0"/* "Телепорт" */;
 _ctrl = _display displayCtrl 100111;
 _ctrl ctrlSetText localize "STR_SYS_69"; //"Выбор направления телепортирования";
 _ctrl = _display displayCtrl 100107;

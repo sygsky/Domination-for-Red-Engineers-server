@@ -32,6 +32,7 @@ if (isServer) then {
 hint localize format["+++ init.sqf: isServer = %1, X_Server = %2, X_Client = %3, X_JIP = %4, X_SPE = %5, X_MP = %6, X_INIT = %7", isServer, X_Server, X_Client, X_JIP, X_SPE, X_MP, X_INIT];
 
 SYG_firesAreCreated  = false; // are fires on airbase created
+publicVariable "SYG_firesAreCreated";
 
 current_mission_counter = 0;    // side missions counter (init on server and client)
 
@@ -131,7 +132,7 @@ if (isServer) then {
 	if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
 	else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
 
-	_vec = createVehicle ["ACE_AH64_AGM_HE", [9688.247070,10020.545898,0], [], 0, "NONE"];
+	_vec = createVehicle ["ACE_Mi24P", [9688.247070,10020.545898,0], [], 0, "NONE"]; // ACE_Mi24P, ACE_AH64_AGM_HE
 	_vec setDir 90;
 
     _medic_tent = createVehicle ["MASH", [9359.855469, 10047.625000,0], [], 0, "NONE"];

@@ -87,17 +87,17 @@ _str = format[localize "STR_SYS_254", d_own_side, d_enemy_side, getText(configFi
 
 if (__ACEVer || __CSLAVer) then {
 	if (__ACEVer) then {
-		_str = _str + (localize "STR_SET_1")/* "Версия" */ + ": A.C.E.";
+		_str = _str + (localize "STR_SET_1")/* "Version" */ + ": A.C.E.";
 	} else {
-		_str = _str + (localize "STR_SET_1")/* "Версия" */ + ": CSLA. ";
+		_str = _str + (localize "STR_SET_1")/* "Version" */ + ": CSLA. ";
 	};
 };
 
 _str = _str + ". " + (localize "STR_SET_2")/* "С АИ" */ + ": ";
 #ifdef __AI__
-_str = _str + _strYes1; //"Да"
+_str = _str + _strYes1; //"Yes"
 #else
-_str = _str + _strNo1; // "Нет"
+_str = _str + _strNo1; // "No"
 #endif
 
 _str = _str + ". " + (localize "STR_SET_3")/* "Ранговая" */ + ": ";
@@ -576,8 +576,6 @@ _ctrl ctrlSetText _str;
  *
  */
  
-#define RUMOR_WIDTH (_counter/4)
- 
 _ctrl = _XD_display displayCtrl GRU_DIALOG_ID; // Intel info (GRU)
 if ( isNil "player_is_on_town_raid" ) then
 {
@@ -630,6 +628,7 @@ if (__HasGVar(PATROL_COUNT)) then
 #ifdef __DEBUG__
     hint localize format["__HasGVar(PATROL_COUNT)=%1:__GetGVar(PATROL_COUNT)=%2,",__HasGVar(PATROL_COUNT), __GetGVar(PATROL_COUNT) ];
 #endif
+/**
 _daytime = daytime;
 if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then {_str1 = localize "STR_RUM_NIGHT";}
 else
@@ -672,6 +671,8 @@ _name1 = (target_names call XfRandomArrayVal) select 1; // random main target na
 _name2 = text (player call SYG_nearestLocation); // nearest location name
 _name3 = text (player call SYG_nearestSettlement); // nearest settlement name
 _str1 = format[_str1, _name1, _name2, _name3]; // just in case of %1 %2 etc
+*/
+_str1 = call SYG_getRumourText;
 _str = _str + _str1;
 
 _ctrl ctrlSetText _str;

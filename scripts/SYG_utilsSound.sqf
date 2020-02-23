@@ -84,7 +84,7 @@ SYG_defeatTracks =
     ["Delerium_Wisdom","pimbompimbom","vendetta"],
     ["Gandalf_Simades","whold","end","radionanny"],
     ["ATrack9","ATrack10","ATrack14"],
-    ["ATrack16","ATrack17","ATrack18"],
+    ["ATrack16","ATrack17","ATrack18","ipanoramDefeat"],
     ["ATrack20","ATrack21","ATrack22","thetrembler"],
     ["arroyo","ATrack15","ATrack19","sinbad_baghdad"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
@@ -159,7 +159,7 @@ SYG_MedievalDefeatTracks =
     ];
 SYG_waterDefeatTracks =
     [
-        "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8"
+        "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8","under_water_9","fish_man_song"
     ];
 
 // All available curche types in the Arma (I think so)
@@ -168,7 +168,8 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 // returns random male laughter sound on your defeate
 SYG_getLaughterSound =
 {
-    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job"] call XfRandomArrayVal
+    ["laughter_1","laughter_2","laughter_3","laughter_4","good_job","game_over","get_some","go_go_go","cheater","busted",
+    "greatjob1","greatjob2","fight"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
@@ -299,7 +300,7 @@ SYG_chorusDefeatTracks =
         ["ATrack26",[16.092,6.318]],
         ["ATrack26",[24.014,8.097]],
         ["ATrack26",[32.06,-1]],
-        "church_organ_1", "church_voice", "haunted_organ_1", "haunted_organ_2"
+        "church_organ_1", "church_voice", "haunted_organ_1", "haunted_organ_2", "sorrow_1", "sorrow_2", "sorrow_3", "sorrow_4"
 
     ];
 
@@ -500,10 +501,10 @@ SYG_getSuicideScreamSound  = {
  */
 SYG_playWeatherForecastMusic = {
  [
-    ["manchester_et_liverpool", 0, 9.465],
-    ["manchester_et_liverpool", 10.092, 9.182],
-    ["manchester_et_liverpool", 18.42, 8.01],
-    ["manchester_et_liverpool", 26.74, 7.27],
+    ["manchester_et_liverpool",  0,      9.465],
+    ["manchester_et_liverpool", 10.092,  9.182],
+    ["manchester_et_liverpool", 18.42,   8.01],
+    ["manchester_et_liverpool", 26.74,   7.27],
     ["manchester_et_liverpool", 34.006, 11.215],
     ["manchester_et_liverpool", 45.221, -1]
  ] call SYG_playRandomTrack;
@@ -523,12 +524,17 @@ SYG_playDeathInTankSound = {
 
 SYG_getFemaleFuckSpeech = {
     private ["_arr"];
-	_arr = ["woman_fuck","woman_fuck_2","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11","sorry_12"];
+	_arr = ["woman_fuck","woman_fuck_2","woman_fuck_3","woman_fuck_4","woman_fuck_5","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11","woman_dont_trust"];
     switch localize "STR_LANG" do
     {
         case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
     };
 	_arr call XfRandomArrayVal
+};
+
+
+SYG_getFemaleExclamation = {
+    ["woman_excl1","woman_excl2","woman_excl3","woman_excl4","woman_excl5","woman_excl6","woman_excl7","woman_dont_trust"] call XfRandomArrayVal;
 };
 
 if (true) exitWith {};

@@ -124,6 +124,8 @@ class CfgMusic
     class vangelis    { name=""; sound[] = {\sounds\newyear\vangelis.ogg,db+0,1.0};}; // Vangelis - "La petite fille de la mer", 1973
 
 	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
+    class four_tankists { name="Czterej Pancerni i Pies, Polska Rzeczpospolita Ludowa film, 1960"; sound[] = {\sounds\intro\4tankists.ogg,db-1,1.0};} // from PRL film "4 tankists and dog"
+
 
 	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
     class chapaev1  {        name="";        sound[]=   {\sounds\intro\holidays\feb_23\chapaev1.ogg,db-1,1.0};    };
@@ -161,7 +163,7 @@ class CfgMusic
     class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0};}; // USSR film Chapaev
     class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
-    class ipanoram { name=""; sound[] = {\sounds\ipanoram.ogg,db+0,1.0};}; // Soviet political review Telecast "International panoram"
+//    class ipanoram { name=""; sound[] = {\sounds\ipanoram.ogg,db+0,1.0};}; // Soviet political review Telecast "International panoram"
     class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0};}; // Dean Reed song "Rider"
     class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0};}; // USSR famous film "Hound of Baskervill hall"
     class condor { name=""; sound[] = {\sounds\condor.ogg,db+0,1.0};}; // El-Condor-Pasa by Leo Rojas
@@ -180,6 +182,7 @@ class CfgMusic
     class del_vampiro1 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro1.ogg,db-1,1.0};} // intro music, Italian film "L'amante del Vampiro"
     class del_vampiro2 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro2.ogg,db-1,1.0};} // intro music, Italian film "L'amante del Vampiro"
 
+
 //+++++++++++++++++++++++++++++++++++++ MORZE for Rokse [LT] +++++++++++++++++++++++++++++++++++++++++++++++++++++
     class morze   { name="Morze about Sahrani island"; sound[] = {\sounds\intro\morze\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
     class morze2  { name="Real Morze (Canada)"; sound[] = {\sounds\intro\morze\morze2.ogg,db+0,1.0};}; // Morze real message (Canada)
@@ -197,10 +200,11 @@ class CfgMusic
 
 //+++++++++++++++++++++++ Detect town music, if added, seek and add to the 'case "mt_spotted":' code in the file "x_netinitclient.sqf"
 
-    class detected_Arcadia { name=""; sound[] = {\sounds\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
-    class detected_Paraiso { name=""; sound[] = {\sounds\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
-    class detected_Carmen  { name=""; sound[] = {\sounds\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
+    class detected_Arcadia { name=""; sound[] = {\sounds\locations\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
+    class detected_Paraiso { name=""; sound[] = {\sounds\locations\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
+    class detected_Carmen  { name=""; sound[] = {\sounds\locations\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
     class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; } // town detected music (Rahmadi)
+    class detected_Eponia  { name="Japanese Shinto traditional ceremony"; sound[] = {\sounds\locations\Eponia.ogg,db-1,1.0}; } // town detected music (Eponia)
 
 //+++++++++++++++++++++++ Holiday music
 
@@ -298,7 +302,8 @@ class CfgMusic
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
 
-    class church_voice    {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0};};
+    class church_voice    {name = ""; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
+
     class church_organ_1  {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_2 {name = ""; sound[] = {\sounds\organ\haunted_organ_2.ogg, db+10, 1.0};};
@@ -315,6 +320,9 @@ class CfgMusic
     class under_water_6   {name = ""; sound[] = {\sounds\defeat\water\under_water6.ogg, db+10, 1.0};};
     class under_water_7   {name = ""; sound[] = {\sounds\defeat\water\under_water7.ogg, db+10, 1.0};};
     class under_water_8   {name = ""; sound[] = {\sounds\defeat\water\under_water8.ogg, db+10, 1.0};};
+    class under_water_9   {name = ""; sound[] = {\sounds\defeat\water\under_water9.ogg, db+10, 1.0};};
+    class fish_man_song   {name = ""; sound[] = {\sounds\defeat\water\fish_man_song.ogg, db+10, 1.0};};
+
 
 
 };
@@ -351,10 +359,13 @@ class CfgSounds
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
 	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; }; // remove as non needed
-	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; };
-	class kwai { name="kwai"; sound[]={\sounds\kwai.ogg,db+0,1.0}; titles[] = {}; };
-	class invasion { name="invasion"; sound[]={\sounds\invasion.ogg,db+0,1.0}; titles[] = {}; };
-    class starwars { name=""; sound[]= {\sounds\starwars.ogg,db-1,1.0}; titles[] = {};};
+//	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; }; // removed as not interesting and ancient
+	class kwai     { name="kwai";                          sound[]={\sounds\kwai.ogg,db+0,1.0};          titles[] = {}; };
+	class invasion { name="invasion";                      sound[]={\sounds\invasion.ogg,db+0,1.0};      titles[] = {}; };
+    class starwars { name="Star wars march";               sound[]= {\sounds\starwars.ogg,db-1,1.0};     titles[] = {};};
+    class radmus   { name="radmus from old OFP campany";   sound[]= {\sounds\enemy\radmus.ogg,db-1,1.0}; titles[] = {};};
+    class enemy    { name="Hans Zimmer - Barbarian horde"; sound[]= {\sounds\enemy\enemy.ogg,db-1,1.0};  titles[] = {};};
+
     class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
 
     class parajump1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump1.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 1
@@ -406,10 +417,23 @@ class CfgSounds
 // woman fucking  speech
     class woman_fuck {name = ""; sound[] = {\sounds\fuck\woman_fuck.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_fuck_2 {name = ""; sound[] = {\sounds\fuck\woman_fuck_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_fuck_3 {name = ""; sound[] = {\sounds\fuck\woman_fuck_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_fuck_4 {name = ""; sound[] = {\sounds\fuck\woman_fuck_4.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_fuck_5 {name = ""; sound[] = {\sounds\fuck\woman-mother-shit.ogg, db+0, 1.0}; titles[] = {}; };
+
     class woman_kidding {name = ""; sound[] = {\sounds\fuck\woman_kidding.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_sob {name = ""; sound[] = {\sounds\fuck\woman_sob.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_motherfucker {name = ""; sound[] = {\sounds\fuck\woman_motherfucker.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_svoloch {name = ""; sound[] = {\sounds\fuck\woman_svoloch.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_dont_trust {name = ""; sound[] = {\sounds\fuck\female-dont-trust-him.ogg, db+0, 1.0}; titles[] = {}; };
+
+    class woman_excl1 {name = ""; sound[] = {\sounds\women\excl\woman_excl1.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_excl2 {name = ""; sound[] = {\sounds\women\excl\woman_excl2.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_excl3 {name = ""; sound[] = {\sounds\women\excl\woman_excl3.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_excl4 {name = ""; sound[] = {\sounds\women\excl\woman_excl4.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_excl5 {name = ""; sound[] = {\sounds\women\excl\woman_excl5.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_excl6 {name = ""; sound[] = {\sounds\women\excl\woman_excl6.ogg, db+0, 1.0}; titles[] = {}; };
+    class woman_excl7 {name = ""; sound[] = {\sounds\women\excl\woman_excl7.ogg, db+0, 1.0}; titles[] = {}; };
 
 // woman sorry etc
     class sorry_0  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-0.ogg, db+0, 1.0}; titles[] = {}; };
@@ -423,8 +447,11 @@ class CfgSounds
     class sorry_8  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-8.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_9  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-9.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_10 {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-10.ogg, db+0, 1.0}; titles[] = {}; };
-    class sorry_11 {name = "Female sexy";  sound[] = {\sounds\women\sorry\sexy-voice.ogg.ogg, db+0, 1.0}; titles[] = {}; };
-    class sorry_12 {name = "Female kidding"; sound[] = {\sounds\women\sorry\ten-dollars-are-you-kidding-me.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_11 {name = "Female kidding"; sound[] = {\sounds\women\sorry\are-you-kidding-me.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_12 {name = "Female sexy";  sound[] = {\sounds\women\sorry\sexy-voice.ogg.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_13 {name = "Female so sorry"; sound[] = {\sounds\women\sorry\female-my-fault.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_14 {name = "Female going to bed time"; sound[] = {\sounds\women\sorry\female-it-s-getting-close-to-bedtime.ogg, db+0, 1.0}; titles[] = {}; };
+
 
 
 // man self-killed. If append next scream, don't forget to edit method SYG_getSuicideScreamSound() in file SYG_utilsSound.sqf (increase harcoded number of screams)
@@ -444,10 +471,10 @@ class CfgSounds
     class male_scream_13 {name = ""; sound[] = {\sounds\suicide\scream1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_14 {name = "Demonic woman scream on suicide"; sound[] = {\sounds\suicide\demonic_woman_scream.ogg, db+0, 1.0}; titles[] = {}; }; // demonic scream
 
-    class suicide_yeti {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
-    class suicide_yeti_1 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide_yeti_1.ogg, db+0, 1.0}; titles[] = {}; };
-    class suicide_yeti_2 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide_yeti_2.ogg, db+0, 1.0}; titles[] = {}; };
-    class suicide_yeti_3 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide_yeti_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti {name = "Special Yeti's scream on suicide";   sound[] = {\sounds\suicide\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti_1 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_1.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti_2 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti_3 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_3.ogg, db+0, 1.0}; titles[] = {}; };
 
     class good_news {name = ""; sound[] = {\sounds\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 
@@ -510,7 +537,16 @@ class CfgSounds
     class laughter_3 { name="Laughter 3"; sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_4 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\4.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
+    class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\game_job.ogg,db+10,1.0}; titles[] = {}; } // War cry "game over"
+    class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "get some"
+    class go_go_go { name="Go-go-go";   sound[] = {\sounds\defeat\laughter\go_go_go.ogg,db+10,1.0}; titles[] = {}; } // War cry "go-go-gob"
+    class cheater { name="cheater";   sound[] = {\sounds\defeat\laughter\cheater.ogg,db+10,1.0}; titles[] = {}; } // say "cheater"
+    class busted { name="Busted";   sound[] = {\sounds\defeat\laughter\busted.ogg,db+10,1.0}; titles[] = {}; } // say "cheater"
+    class greatjob1 { name="Great job 1";   sound[] = {\sounds\defeat\laughter\great-job1.ogg,db+10,1.0}; titles[] = {}; } // say "Great job 1"
+    class greatjob2 { name="Great job 2";   sound[] = {\sounds\defeat\laughter\great-job1.ogg,db+10,1.0}; titles[] = {}; } // say "Great job"
+    class fight { name="fight";   sound[] = {\sounds\defeat\laughter\fight.ogg,db+10,1.0}; titles[] = {}; } // say "fight"
 
+    class under_water_3   {name = ""; sound[] = {\sounds\defeat\water\under_water3.ogg, db+10, 1.0}; titles[] = {};};
     // Period of the day sounds
     class morning_1 { name="Morning: alarm-clock"; sound[] = {\sounds\timeofday\morning\alarm-clock.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
     class morning_2 { name="Morning: USSR Morozko film, 1964"; sound[] = {\sounds\timeofday\morning\morozko.ogg,db+10,1.0}; titles[] = {}; } // Morning: Morozko film
@@ -543,10 +579,16 @@ class CfgSounds
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
 
-    class church_voice    {name = ""; sound[] = {\sounds\church_voice.ogg, db+10, 1.0};};
+    class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
+    class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10, 1.0};};
+    class sorrow_2        {name = "sorrow_2"; sound[] = {\sounds\church\sorrow_2.ogg, db+10, 1.0};};
+    class sorrow_3        {name = "sorrow_3"; sound[] = {\sounds\church\sorrow_3.ogg, db+10, 1.0};};
+    class sorrow_4        {name = "sorrow_4"; sound[] = {\sounds\church\sorrow_4.ogg, db+10, 1.0};};
+
     class church_organ_1  {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_2 {name = ""; sound[] = {\sounds\organ\haunted_organ_2.ogg, db+10, 1.0};};
+
 
     class sorcerie       {name = ""; sound[] = {\sounds\sorcerie.ogg, db+10, 1.0};};
     class melody         {name = ""; sound[] = {\sounds\melody.ogg, db+10, 1.0};};

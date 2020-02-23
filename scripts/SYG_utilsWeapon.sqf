@@ -1489,29 +1489,33 @@ SYG_replacePrimaryWeapon = {
 // adds binocular to unit
 //
 SYG_addBinocular = {
-    if (!(_this hasWeapon "Binocular")) then { _this addWeapon "Binocular"; }
+    if (_this hasWeapon "Binocular") exitWith {true};
+    _this addWeapon "Binocular"
 };
 
 //
 // remove binocular from unit
 //
 SYG_removeBinocular = {
-    if (_this hasWeapon "Binocular") then { _this removeWeapon "Binocular"; }
+    if (_this hasWeapon "Binocular") then { _this removeWeapon "Binocular"; };
+    !(_this hasWeapon "Binocular")
 };
 
 //
 // adds NVGoggles to unit
 //
 SYG_addNVGoggles = {
-    if (!(_this hasWeapon "NVGoggles")) then { _this addWeapon "NVGoggles"; }
-
+    if (_this hasWeapon "NVGoggles") exitWith {true};
+    _this addWeapon "NVGoggles";
+    _this hasWeapon "NVGoggles"
 };
 
 //
 // removes NVGoggles from unit
 //
 SYG_removeNVGoggles = {
-    if (_this hasWeapon "NVGoggles") then { _this removeWeapon "NVGoggles"; }
+    if (_this hasWeapon "NVGoggles") then { _this removeWeapon "NVGoggles"; };
+    !(_this hasWeapon "NVGoggles")
 };
 
 /*
@@ -2606,8 +2610,8 @@ SYG_reammoTruck = {
 		_this addMagazineCargo ["ACE_1Rnd_Flare_Yellow", 20];
 		_this addMagazineCargo ["ACE_1Rnd_Flare_White", 20];
 
-		_this addMagazineCargo ["ACE_6Rnd_40mm_M32", 20];
-		_this addMagazineCargo ["ACE_40mm_HEDP_M203", 20];
+		_this addMagazineCargo ["ACE_6Rnd_40mm_M32", 50];
+		_this addMagazineCargo ["ACE_40mm_HEDP_M203", 50];
 		_this addMagazineCargo ["ACE_40mm_SmokeWhite_M203", 20];
 		_this addMagazineCargo ["ACE_40mm_SmokeRed_M203", 20];
 		_this addMagazineCargo ["ACE_40mm_SmokeGreen_M203", 20];
@@ -2670,10 +2674,10 @@ SYG_reammoMHQ = {
 		clearMagazineCargo _this;
 		clearWeaponCargo   _this;
 
-		_this addMagazineCargo ["ACE_Strela", 2];
+		_this addMagazineCargo ["ACE_Strela", 3];
 
 		//_this addWeaponCargo   ["ACE_RPG7_PGO7",  3];
-		_this addMagazineCargo ["ACE_RPG7_PG7VR", 3];
+		_this addMagazineCargo ["ACE_RPG7_PG7VR", 5];
 		_this addMagazineCargo ["ACE_RPG7_PG7VL", 3];
 
 		_this addMagazineCargo ["ACE_PipeBomb", 4];
@@ -2694,12 +2698,13 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_40Rnd_762x39_BT_AK",  5];
 		_this addMagazineCargo ["ACE_20Rnd_9x39_B_VAL",    5];
 		_this addMagazineCargo ["ACE_10Rnd_762x54_SB_SVD", 5];
-		_this addMagazineCargo ["ACE_5Rnd_127x108_SB_KSVK",5];
-		_this addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",5];
+//		_this addMagazineCargo ["ACE_5Rnd_127x108_SB_KSVK",5];
+		_this addMagazineCargo ["ACE_5Rnd_127x108_BT_KSVK",10];
 
 		_this addMagazineCargo ["ACE_Bandage",     3];
 		_this addMagazineCargo ["ACE_Morphine",    5];
 		_this addMagazineCargo ["ACE_Epinephrine", 1];
+		_this addmagazinecargo ["ACE_MineE",       5];
 		true
 	}
 	else

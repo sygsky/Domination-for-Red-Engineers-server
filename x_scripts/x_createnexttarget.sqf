@@ -97,7 +97,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
 
 [] spawn {
     if ( (count resolved_targets) < COUNT_DELAY) exitWith {}; // start on Nth town to clean it
-    private ["_dummy","_target_pos","_target_radius","_list","_cnt", "_cnt1"];
+    private ["_dummy","_target_pos","_target_radius","_list","_man_cnt","_cnt","_acnt","_ecnt","_cnt1"];
     sleep random 30;
     _this = resolved_targets select (current_counter - COUNT_DELAY); // index of town to clean;
     _dummy = target_names select _this;
@@ -143,7 +143,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
         };
      } forEach _list;
 #ifdef __DEBUG__
-    hint localize format[ "x_createnexttarget.sqf: Bodies cleaned in %1: men %2 (found alive %3, east %4, cleaned dead %5), holders %6, in water %7", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
+    hint localize format[ "x_createnexttarget.sqf: Bodies cleaned in %1: men %2 (found alive %3, east %4, cleaned dead %5), holders %6(water %7)", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
 #endif
      _list = nil;
      sleep 2.56;

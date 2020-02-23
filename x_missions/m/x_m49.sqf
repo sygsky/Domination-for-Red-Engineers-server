@@ -23,7 +23,12 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-	_officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"ACE_USMC0302"});
+	#ifdef __ACE__
+        _officer = (if (d_enemy_side == "EAST") then {"ACE_OfficerE"} else {"ACE_USMC0302"});
+    #else
+        _officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
+    #endif
+
 	__Poss
 	sleep 2.111;
 	_fortress = "Fortress2" createVehicle _poss;

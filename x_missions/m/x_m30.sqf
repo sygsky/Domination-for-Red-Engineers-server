@@ -29,7 +29,7 @@ if (X_Client) then {
 
 if (isServer) then {
 	private ["_grps","_bpos","_sm_vehicle","_aa_types","_utype"];
-	_officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"Civilian19"});
+	_officer = "Civilian19";
 	__PossAndOther
 	_grps = ["shilka", 2, "bmp", 1, "tank", 0, _pos_other,1,100,true] spawn XCreateArmor;
 	sleep 2.123;
@@ -51,7 +51,7 @@ if (isServer) then {
 	//	["specops", 1, "basic", 1, _poss,20] spawn XCreateInf;
 	// as this group is near officer, rearm it with some special specops weapons
 	sleep 1.123;
-	["specops", 1, "basic", 0, _poss,30]  spawn 
+	["specops", 1, "basic", 1, _poss,50]  spawn
 	{
 		private ["_grps", "_cnt"];
 		_grps = _this call XCreateInf;

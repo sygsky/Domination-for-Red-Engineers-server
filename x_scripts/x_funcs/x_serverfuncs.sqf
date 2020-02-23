@@ -185,7 +185,7 @@ SYG_addEvents = {
 
     _smoke_veh = false;
     if ( count _this > 2) then { _smoke_veh = _this select 2};
-    if (d_smoke && _smoke_veh) then  {_vehicle call SYG_assignVecToSmokeOnHit;};
+    _vehicle call SYG_assignVecToSmokeOnHit;
 
     // add wreckage restore option
     if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then

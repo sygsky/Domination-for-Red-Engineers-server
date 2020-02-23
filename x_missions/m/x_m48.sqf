@@ -6,7 +6,7 @@ private ["_vehicle"];
 #define __Poss _poss = x_sm_pos select 0;
 #define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
 
-x_sm_pos = [[12956.3,8638.32,0]]; // index: 48,   Transformer station Corazol, attention, uses nearestObject ID
+x_sm_pos = [[12956.3,8638.32,0]]; // index: 48,   Transformer substation at Corazol, attention, uses nearestObject ID
 x_sm_type = "normal"; // "convoy"
 
 #ifdef __SMMISSIONS_MARKER__
@@ -22,7 +22,7 @@ if (X_Client) then {
 
 if (isServer) then {
 	x_sm_pos select 0;//_Poss
-	[_poss] execVM "x_missions\common\x_sidecora.sqf";
+	[_poss] execVM "x_missions\common\x_sidecora.sqf"; // TODO: check why is can completed automatically in1 minute
 };
 
 if (true) exitWith {};

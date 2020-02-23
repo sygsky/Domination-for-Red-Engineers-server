@@ -23,7 +23,13 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-	_officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"ACE_USMC0302"});
+#ifdef __ACE__
+    _officer = (if (d_enemy_side == "EAST") then {"ACE_OfficerE"} else {"ACE_USMC8541A2"});
+#else
+    _officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
+#endif
+
+
 	__PossAndOther
 	__WaitForGroup
 	__GetEGrp(_ogroup)
@@ -37,7 +43,7 @@ if (isServer) then {
         [_sm_vehicle, _hideobject, _pos] spawn {
             arg(0) doMove (position arg(1)); // order officer to move
             sleep 120; // wait enoght until officer reaches his cover
-            hint localize format["SM 55: cover (%4) found at pos %1 on initial dist %2, after 120 secs officer was on dist %3 to cover place", getPos arg(1), arg(2) distance arg(1), arg(1) distance arg(0), typeOf arg(1)];
+            hint localize format["+++ SM 55: cover (%4) found at pos %1 on initial dist %2, after 120 secs officer was on dist %3 to cover place", getPos arg(1), arg(2) distance arg(1), arg(1) distance arg(0), typeOf arg(1)];
         };
 /*
     	_sm_vehicle setBehaviour "STEALTH";
@@ -46,7 +52,7 @@ if (isServer) then {
         _sm_vehicle setUnitPos "DOWN";
 */
     }
-    else{hint localize format["SM 55: cover not found, officer pos %1", getPos _sm_vehicle];};
+    else{hint localize format["+++ SM 55: cover not found, officer pos %1", getPos _sm_vehicle];};
 
 	removeAllWeapons _sm_vehicle;
 	sleep 2.123;
@@ -61,7 +67,7 @@ if (isServer) then {
 			_grp_ret = _this call XCreateInf;
 			_cnt = (_grp_ret select 0) call SYG_rearmSpecopsGroup;
 #ifdef __DEBUG__		
-			hint localize format["%1 x_m55.sqf: %2 of %3 specops rearmed", call SYG_nowTimeToStr, _cnt, count units (_grp_ret select 0)];
+			hint localize format["+++ %1 x_m55.sqf: %2 of %3 specops rearmed", call SYG_nowTimeToStr, _cnt, count units (_grp_ret select 0)];
 #endif
 		};
 		["specopsbig", 0, "basic", 2, _pos, 200, true] call XCreateInf; // groups to control forest

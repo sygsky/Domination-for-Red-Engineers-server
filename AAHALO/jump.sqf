@@ -56,7 +56,7 @@ if (_water_count >= 7 ) then { // player jumps over sea surface, add strong wind
     _StartLocation set [1, (_StartLocation select 1) + _dx];
     if (_shift > 50) then
     {
-        (localize "STR_SYS_76_1") call XfHQChat; // “A strong ocean wind blew the parachute off”
+        (localize "STR_SYS_76") call XfHQChat; // “A strong ocean wind blew the parachute off”
     };
     hint localize format["+++ jump.sqf: wind %1, dispersion is %2 [%3,%4] m", _wind_arr, round(_shift), round(_dx), round(_dy) ];
 };
@@ -94,7 +94,15 @@ _startTime = time;
 if ( _paratype == "" ) then
 {
     (localize "STR_SYS_609_1") call XfHQChat; // "You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?"
-    player say (call SYG_getSuicideScreamSound);
+    if ( player call SYG_isWoman ) then
+    {
+        player say ("female_shout_of_pain_" + str(ceil (random 4)));  // 1-4
+    }
+    else
+    {
+        player say (call SYG_getSuicideScreamSound);
+    };
+
 };
 
 deleteVehicle uh60p;

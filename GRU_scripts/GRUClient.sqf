@@ -267,7 +267,7 @@ GRU_procClientMsg = {
 
                         if ( _rank > 2) then // leutenant, distance
                         {
-                            _detail_scale = 1000 / ([500,250,200,100,50] select ( ( _rank min 6 ) - 2 ) ); // position accuracy depends on the rank of player
+                            _detail_scale = ([500,250,200,100,50] select ( ( _rank min 6 ) - 2 ) ); // position accuracy depends on the rank of player
                             _dist = format[localize "STR_GRU_46_2", ( ceil(( (position _loc) distance _pos )/_detail_scale) ) * _detail_scale];
                             //hint localize format["GRUClient GRU_MSG_INFO_KIND_PATROL_DETECTED: _dist == %1", _dist];
                             _args set[3, _dist];

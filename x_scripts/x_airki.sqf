@@ -533,10 +533,12 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                                 {
                                     _flyHeight = ((_pos select 2)+50);
                                     _x flyInHeight _flyHeight;
-                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2", typeOf _enemy_heli, round( _flyHeight ) ];
+                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2 (h%3) m", typeOf _enemy_heli, round( _flyHeight ), (getPos _x) select 2 ];
                                     _height_not_set = false;
                                 };
                                 _x reveal _enemy_heli;
+                                sleep 0.1;
+                                if ( _x knowsAbout _enemy_heli > 1.4) then {_x doTarget _enemy_heli} else { _x doWatch objNull };
                             };
                         };
                     }

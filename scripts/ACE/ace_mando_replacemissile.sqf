@@ -6,7 +6,7 @@ DO NOT EXECUTE THIS SCRIPT MANUALLY
 
 You may add here more missile types to be replaced by mando ones, as well as change the parameters of already replaced ArmA missile types.
 
-+++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased for Javelins and Stringers
++++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased for Javelins and Stingers
 +++ 14-SEP-2019, Sygsky: added reveal shooter procedure
 
 */

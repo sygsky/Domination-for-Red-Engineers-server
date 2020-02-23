@@ -20,7 +20,11 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-	_officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"ACE_USMC8541A2"});
+#ifdef __ACE__
+	_officer = (if (d_enemy_side == "EAST") then {"ACE_OfficerE"} else {"ACE_USMC8541A2"});
+#else
+	_officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
+#endif
 	__PossAndOther
 	["shilka", 2, "", 0, "", 0, _pos_other,1,0,false] spawn XCreateArmor;
 	sleep 2.123;

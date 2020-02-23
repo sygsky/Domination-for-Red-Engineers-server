@@ -211,7 +211,7 @@ class XD_VecDialog
 		y = 0.52;
 		w = 0.15;
 		h = 0.04;
-		text = $STR_SYS_284; //"Выгрузить снаряжение";
+		text = $STR_SYS_284; //"Drop box"
 		action = "closeDialog 0;if (!d_old_ammobox_handling) then {_handle = [vehicle player, player] execVM ""x_scripts\x_dropammobox2.sqf""} else {_handle = [vehicle player, player] execVM ""x_scripts\x_dropammobox_old.sqf""}";
 	};
 	class XD_LoadAmmoButton
@@ -242,7 +242,7 @@ class XD_VecDialog
 		y = 0.60;
 		w = 0.15;
 		h = 0.04;
-		text = $STR_SYS_283; //"Загрузить снаряжение";
+		text = $STR_SYS_283; //"Load box"
 		action = "closeDialog 0;_handle = [vehicle player, player] execVM ""x_scripts\x_loaddropped.sqf""";
 	};
 	class XD_CreateVecCaption : XC_RscText
@@ -301,7 +301,7 @@ class XD_VecDialog
 		y = 0.62;
 		w = 0.15;
 		h = 0.04;
-		text = $STR_SYS_281; //"Выгрузить ТС";
+		text = $STR_SYS_281; //"Create Vehicle"
 		action = "_kk = 0 execVM ""x_scripts\x_create_vec.sqf""";
 	};
 	class dtext2 : RscText
@@ -342,7 +342,7 @@ class XD_VecDialog
 		y = 0.68;
 		w = 0.15;
 		h = 0.04;
-		text = $STR_SYS_34; // "Телепорт";
+		text = $STR_FLAG_0; // "Teleport";
 		action = "closeDialog 0;_handle = [] execVM ""dlg\teleport.sqf""";
 	};
 };

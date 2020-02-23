@@ -19,11 +19,12 @@ if (d_jumpflag_vec == "") then {
 #endif
 
 if (d_jumpflag_vec == "") then {
-	new_jump_flag addAction [localize "STR_SYS_76"/* "(Выбор места десантирования)" */,"AAHALO\x_paraj.sqf"];
+	new_jump_flag addAction [localize "STR_FLAG_1"/* "(Выбор места десантирования)" */,"AAHALO\x_paraj.sqf"];
 } else {
-	_text = format [localize "STR_SYS_342"/* "(Create %1)" */,d_jumpflag_vec];
+	_text = format [localize "STR_FLAG_7"/* "(Create %1)" */,d_jumpflag_vec];
 	new_jump_flag addAction [_text,"x_scripts\x_bike.sqf",[d_jumpflag_vec,1]];
 };
+_x addaction [localize "STR_FLAG_5"/* "{Rumours}" */,"scripts\rumours.sqf",""];
 
 #ifdef __ACE__
 if (d_jumpflag_vec == "") then {

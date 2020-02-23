@@ -809,7 +809,7 @@ SYG_makePatrolGroup = {
 
 WEAPONS_TYPE_ARR = [
 	["Stinger_Pod","Stinger_Pod_East","ACE_ZU23M"/*,"ACE_ZU23"*/], // AntiAircraft
-	["TOW_TriPod","TOW_TriPod_East","ACE_TOW","ACE_KonkursM"], // AntiTank
+	["TOW_TriPod","TOW_TriPod_East","ACE_TOW","ACE_KonkursM","ACE_SPG9"], // AntiTank static
 	["M2StaticMG","M2HD_mini_TriPod","DSHKM","DSHkM_Mini_TriPod","WarfareBEastMGNest_PK"], // MachineGun
 	["M119","D30"], // CaNon
 	["MK19_TriPod","AGS"] // GrenadeLauncher
@@ -1214,7 +1214,13 @@ SYG_assignVecToSmokeOnHit =
     private ["_magazines"];
     _magazines = getArray (configFile >> "CfgVehicles" >> (typeOf _this) >> "Turrets" >> "MainTurret" >> "magazines");
         //_magazines = getArray(_config >> "magazines");
-    if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith { _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true }; // add smoking protection
+    if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith {
+        if (_this isKindOf "M1Abrams" || _this isKindOf "ACE_M60") then {
+            _this addEventHandler ["dammage", {_this spawn SYG_eventOnDamage}]; true
+        } else {
+            _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true
+        };
+    }; // add smoking protection
     false
 };
 
@@ -1897,6 +1903,25 @@ SYG_getLeader = {
 	} forEach units _this;
 	_leader
 };
+
+//
+// Removes from _heli array weapons first found item from array of string _weaponListToRemove
+// call: _removedFromVehicle = [_heli, _weaponListToRemove] call SYG_hasAnyWeapon;
+// returns true if some weapon is removed, else false (no designated weapons found on vehicle)
+//
+SYG_removeAnyWeapon = {
+    private [ "_sampleArr", "_heli", "_wpn" ];
+    if (typeName _this != "ARRAY") exitWith {""};
+    if (count _this < 2) exitWith {""};
+    _heli = _this select 0;
+    if ( typeName _heli != "OBJECT") exitWith {false};
+    _sampleArr = _this select 1;
+    if ((typeName (_this select 1)) == "STRING") then {_sampleArr = [_sampleArr];};
+    _wpn = [weapons _heli, _sampleArr] call SYG_findItemInArray;
+    if (_wpn != "") exitWith { _heli removeWeapon _wpn; true};
+    false
+};
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
