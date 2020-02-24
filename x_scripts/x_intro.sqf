@@ -32,7 +32,7 @@ _XfRandomArrayVal = {
 
 enableRadio false;
 showCinemaBorder false;
-//_phiteh = player addEventHandler ["hit", {(_this select 0) setDamage 0}];_pdamageeh = player addEventHandler ["damage", {(_this select 0) setDamage 0}];
+//_phiteh = player addEventHandler ["hit", {(_this select 0) setDamage 0}];_pdamageeh = player addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
 _dlg = createDialog "X_RscAnimatedLetters";
 _XD_display = findDisplay 77043;
 _control = _XD_display displayCtrl 66666;
@@ -93,7 +93,7 @@ if (_sound == "") then { // select random music for ordinal day
             ];
             _sounds  =
             [
-                ["amigohome_ernst_bush","amigohome_ernst_bush"],
+                ["amigohome_ernst_bush","amigohome_ernst_bush","zaratustra"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"]
             ];
@@ -116,7 +116,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "ruffian","morze","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata","smersh",
-                "del_vampiro1","del_vampiro2"
+                "del_vampiro1","del_vampiro2", "zaratustra"
             ] + _personalSounds ) call _XfRandomArrayVal;
     //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
     //        _music = (call compile _music) call _XfRandomArrayVal;
@@ -542,7 +542,7 @@ deleteVehicle _PS1;
 
 enableRadio true;
 //player removeEventHandler ["hit", _phiteh];
-//player removeEventHandler ["damage", _pdamageeh];
+//player removeEventHandler ["dammaged", _pdamageeh];
 
 if ( !isNull _lobj ) then { deleteVehicle _lobj};
 
