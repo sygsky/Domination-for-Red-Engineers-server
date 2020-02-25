@@ -453,7 +453,7 @@ XHandleNetStartScriptClient = {
                         else
                         {
                             // inform about new hero
-                            if (_name == "") then
+                            if (_name == "" || _name == "Error: No unit") then
                             {
                                 _msg = format["(%1)! %2", localize "STR_MAIN_COMPLETED_BY_UNKNOWN", _msg ];
                             }
@@ -889,7 +889,7 @@ XHandleNetStartScriptClient = {
                 };
                 case "info": // print info on day/night time
                 {
-                    private ["_id","_str"];
+                    private ["_id","_str", "_playSound"];
                     _id = _this select 2; // message id to be printed about day time begin
                     if ( typeName _id ==  "ARRAY") then { _id = _id select 0};
 
@@ -899,9 +899,14 @@ XHandleNetStartScriptClient = {
                     titleText [ _str, "PLAIN"];
 
                     //+++++++++++++++++++++++++++++++++++++++++++++++++++++
-                    // say something on a next period of day coming
-                    _str = _id call SYG_getDayTimeIdRandomSound;
-                    if ( _str != "" ) then {playSound _str};
+                    // say something on a next period of day coming if player not in a vehicle with engine on (too noisy to listen music)
+                    _playSound = vehicle player == player;
+                    if (!_playSound) then {_playSound = ! (isEngineOn  (vehicle player) ) };
+
+                    if (_playSound ) then {
+                        _str = _id call SYG_getDayTimeIdRandomSound;
+                        if ( _str != "" ) then {playSound _str};
+                    };
                     //-------------------------------------------------------
                 };
             };
