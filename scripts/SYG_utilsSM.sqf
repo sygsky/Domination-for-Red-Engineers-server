@@ -144,3 +144,45 @@ SYG_isMainTargetAllowed =
     false
 };
 #endif
+
+SYG_lastTownsQueue   = [[],3]; // [array of last towns indexes], length of circular queue
+SYG_lastPlayersQueue = [[],3]; // [array of last players connected], length of circular queue
+
+// call: _queue = [_queue, _item] call SYG_queueItem;
+SYG_queueItem = {
+    private ["_arr"];
+//    hint localize format["+++ SYG_queueItem: %1", _this];
+    _arr = (_this select 0) select 0;
+    _arr = _arr - [_this select 1]; // remove duplicated entries
+    _arr set[count _arr, _this select 1];
+    if ( (count _arr) > ((_this select 0) select 1)) then // length overflow
+    {
+        _arr set [0, "RM_ME"];
+        _arr = _arr - ["RM_ME"];
+    };
+    (_this select 0) set [0, _arr];
+    +_arr
+};
+
+// call: _list= _queue call SYG_queueItem;
+SYG_getQueueList = {
+    +(_this select 0)
+};
+// call: _renewed_list = "Town_Name" call SYG_lastTownsAdd;
+SYG_lastTownsAdd = {
+    [SYG_lastTownsQueue, _this] call SYG_queueItem
+};
+
+// Returns array of last towns added to queue
+SYG_lastTownsGet = {
+    +(SYG_lastTownsQueue call SYG_getQueueList)
+};
+
+// call: _renewed_list = "Player_Name" call SYG_lastPlayersAdd;
+SYG_lastPlayersAdd = {
+    [SYG_lastPlayersQueue, _this] call SYG_queueItem
+};
+// Returns array of last towns added to queue
+SYG_lastPlayersGet = {
+    SYG_lastPlayersQueue call SYG_getQueueList
+};

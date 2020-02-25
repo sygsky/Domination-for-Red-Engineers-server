@@ -13,7 +13,7 @@ if (!isServer) exitWith{};
 #endif
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-private ["_time"];
+private ["_time","_msg"];
 
 hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 )", current_counter, current_mission_counter];
 
@@ -69,6 +69,8 @@ check_trigger setTriggerArea [(_current_target_radius max 300) + 20, (_current_t
 check_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
 // Static objects not used in lower condition (""Static"" countType thislist >= d_static_count_for_target_clear)
 check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""];
+
+(_dummy select 1) call SYG_lastTownsAdd; // add name to queue to inform in OPC event
 
 [_current_target_pos, _current_target_radius, _dummy select 1] execVM "x_scripts\x_createguardpatrolgroups.sqf";
 

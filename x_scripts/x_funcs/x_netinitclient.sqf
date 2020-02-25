@@ -68,7 +68,7 @@ SYG_msgToUserParser =
         };
     };
 
-    if (typeName _name == "OBJECT") then // mag is sent to the vehicle team only
+    if (typeName _name == "OBJECT") then // msg is sent to the vehicle team only
     {
         _msg_target_found = vehicle player == _name;
         _vehicle_chat = _msg_target_found;

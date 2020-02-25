@@ -163,7 +163,8 @@ XHandleNetStartScriptServer = {
 		 * ["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
 		 */
 		case "d_p_varname": {
-			private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr","_val","_date"];
+			private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr",
+			         "_val","_date","_arr1","_arr2","_arr","_str"];
 			_index = d_player_array_names find arg(1);
 			//hint localize format["***************** _index = %1 *********************", _index];
 			_parray = [];
@@ -184,7 +185,7 @@ XHandleNetStartScriptServer = {
 			    d_connection_number = d_connection_number + 1;
     			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the %1 of the warrior-internationalist in their troubled land"
 			};
-
+            _name = _this select 1;
             // add more messages if possible
             _msg = "STR_SERVER_MOTD0"; // "The islanders are happy to welcome you in your native language!"
             if ( _name == "Aron") then // Slovak
@@ -284,9 +285,29 @@ XHandleNetStartScriptServer = {
 			    _date = __GetGVar(INFILTRATION_TIME);
 			    if (typeName _date == "ARRAY") then
 			    {
-                    _msg_arr set [ count _msg_arr, ["STR_SYS_617", _date call SYG_dateToStr] ]; // "Last assault was at dd.MM.yyyy hh:mm:ss"
+                    _msg_arr set [ count _msg_arr, ["STR_GRU_55", _date call SYG_dateToStr] ]; // "Last assault was at dd.MM.yyyy hh:mm:ss"
 			    };
 			    __SetGVar(INFILTRATION_TIME,_date); // send info to this client too
+			};
+
+			_arr1 = call SYG_lastTownsGet;
+			_arr2 = call SYG_lastPlayersGet;
+			_name call SYG_lastPlayersAdd; // add player to linked list of entered ones
+			if (((count _arr1) + (count _arr2)) > 0) then // if any towns/players are countedinform user about them
+			{
+			    _arr = ["STR_GRU_56"]; // main part of the message
+		        _str = "";
+			    if ((count _arr1) > 0 ) then { // add info on towns
+			        {_str = format["%1 %2",_str, _x]} forEach _arr1;
+			    };
+                _arr = _arr + [_str];
+		        _str = "";
+			    if ((count _arr2) > 0 ) then { // add info on players
+			        {_str = format["%1 %2",_str, _x]} forEach _arr2;
+			    };
+                _arr = _arr + [_str];
+                hint localize format["+++ DEBUG line print: %1", _arr];
+                _msg_arr set [ count _msg_arr, _arr ]; // "GRU: last towns%1,  last soldiers%2"
 			};
 
 			// TODO: add here more messages for the 1st greeting to user

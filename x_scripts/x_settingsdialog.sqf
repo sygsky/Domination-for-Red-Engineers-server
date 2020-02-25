@@ -607,7 +607,7 @@ else
 if (__HasGVar(INFILTRATION_TIME)) then
 {
     _date = __GetGVar(INFILTRATION_TIME);
-    _str = _str + format[localize "STR_SYS_617", _date call SYG_dateToStr] + "\n";
+    _str = _str + format[localize "STR_GRU_55", _date call SYG_dateToStr] + "\n";
 }
 else
 {
