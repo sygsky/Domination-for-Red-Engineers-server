@@ -146,7 +146,7 @@ SYG_gongNextIndex = 0;
 SYG_TVTowerDefeatTracks =
     [
     "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10",
-    "gong_11","gong_12","gong_13"
+    "gong_11","gong_12","gong_13", "gong_14"
     ];
 
 // for the death near medieval castles (2 buildings on whole island)
@@ -521,6 +521,15 @@ SYG_playDeathInTankSound = {
     if ( localize "LANGUAGE" == "RUSSIAN") exitWith { playSound RANDOM_ARR_ITEM(SYG_tanks_music); true };
     false
 };
+
+//
+// play random sound about death from enemy tank
+// "Время вперёд", далее "Раммштейн 1-й и 5-й", gayane2, the_complex.ogg, betrayed.ogg
+SYG_enemy_tanks_music = [ ["Vremia_vpered_Sviridov",0.451, 9.795], "gayane2", "the_complex", "betrayed","rammstein_1","rammstein_5"];
+SYG_playDeathFromEnemyTankSound = {
+    SYG_enemy_tanks_music call SYG_playRandomTrack;
+};
+
 
 SYG_getFemaleFuckSpeech = {
     private ["_arr"];

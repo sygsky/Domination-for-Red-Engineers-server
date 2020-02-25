@@ -26,8 +26,13 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
 
     // check for russian tank)))
     _exit = false;
+
+    // if killed in tanl
     if ( ((vehicle _unit) isKindOf "Tank") && (call SYG_playExtraSounds)) then { _exit = call SYG_playDeathInTankSound };
     if ( _exit) exitWith {};
+
+    // if killed from enemy tank
+    if ((vehicle _killer) isKindof "Tank") exitWith { call SYG_playDeathFromEnemyTankSound };
 
     // check for helicopter
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
