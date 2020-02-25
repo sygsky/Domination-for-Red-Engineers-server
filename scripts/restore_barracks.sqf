@@ -38,7 +38,7 @@ else
 { AI_HUT removeAction _x } forEach [0,1,2]; // just in case
 
 AI_HUT removeAllEventHandlers "hit";
-AI_HUT removeAllEventHandlers "damage";
+AI_HUT removeAllEventHandlers "dammaged";
 deleteVehicle AI_HUT;
 sleep 0.1;
 
@@ -64,7 +64,7 @@ for "_z" from -5 to 0 step 0.1 do
 AI_HUT setPos (d_pos_ai_hut select 0);
 
 AI_HUT addEventHandler ["hit", {(_this select 0) setDamage 0}];
-AI_HUT addEventHandler ["damage", {(_this select 0) setDamage 0}];
+AI_HUT addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
 
 if ( !isNull AI_HUT ) then { hint localize "--- restore_barracks.sqf: AI_HUT restored";}
 else { hint localize  "--- restore_barracks.sqf: unable  to restore AI_HUT"; };

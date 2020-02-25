@@ -117,7 +117,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
             {
                 _x removeAllEventHandlers "killed";
                 _x removeAllEventHandlers "hit";
-                _x removeAllEventHandlers "damage"; //+++ Sygsky: just in case
+                _x removeAllEventHandlers "dammaged"; //+++ Sygsky: just in case
                 _x removeAllEventHandlers "getin";  //+++ Sygsky: just in case
                 _x removeAllEventHandlers "getout"; //+++ Sygsky: just in case
                 deleteVehicle _x;

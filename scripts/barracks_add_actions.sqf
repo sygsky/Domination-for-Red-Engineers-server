@@ -35,7 +35,7 @@ _string_player = format ["%1",player];
 if ( _string_player in d_can_use_artillery ) then {
 
     AI_HUT addEventHandler [   "hit", {AI_HUT setDamage 0}];
-    AI_HUT addEventHandler ["damage", {AI_HUT setDamage 0}];
+    AI_HUT addEventHandler ["dammaged", {AI_HUT setDamage 0}];
 
 	if (!(__ACEVer)) then {
 		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","Soldier%1B"]; //"Recruit Soldier"
