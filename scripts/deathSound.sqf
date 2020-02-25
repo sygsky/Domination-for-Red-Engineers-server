@@ -24,11 +24,9 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
 {
     if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doen't like such sounds
 
-    // check for russian tank)))
+    // if killed in tank
     _exit = false;
-
-    // if killed in tanl
-    if ( ((vehicle _unit) isKindOf "Tank") && (call SYG_playExtraSounds)) then { _exit = call SYG_playDeathInTankSound };
+    if ( (vehicle _unit) isKindOf "Tank" ) then { _exit = call SYG_playDeathInTankSound }; // play only for RUSSIAN language interface
     if ( _exit) exitWith {};
 
     // if killed from enemy tank
