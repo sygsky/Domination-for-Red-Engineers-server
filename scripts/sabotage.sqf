@@ -152,9 +152,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	//++++++++++++++++++
 	// seek factories  +
 	//++++++++++++++++++
-	if ( _debug ) then 	{ player globalChat format["+++ sabotage.sqf: Factories[s] found %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE]; };
+	if ( _debug ) then 	{ player globalChat format["+++ sabotage.sqf: WarfareBEastAircraftFactory %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE]; };
 #ifdef __PRINT__
-    hint localize format["+++ sabotage.sqf: Factories[s] found %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
+    hint localize format["+++ sabotage.sqf: WarfareBEastAircraftFactory %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
 #endif
 
 	//--------------
@@ -178,8 +178,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
     };
 
 	 // if some alive factory found
-	if ( _obj_pos >= 0 ) then 
-	{
+	if ( _obj_pos >= 0 ) then {
 
 	    // TODO: check if enemy detected at the base
         if (!alive _leader) then
@@ -457,20 +456,20 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	} // if ( _obj_pos >= 0 ) then
 	else
 	{
-		if ( _debug ) then {player globalChat "--- sabotage.sqf: No factories found, script is sleeping for 2-3 minutes"};
+		if ( _debug ) then {player globalChat "--- sabotage.sqf: No alive factories, script is sleeping for 2-3 minutes"};
 #ifdef __PRINT__
 		if (alive _leader ) then
 		{
 		    _msg1 = [_leader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 		    if ( _msg1 != _msgPrev) then
 		    {
-    			hint localize format["--- sabotage.sqf: No factories found, <group[%2] is at %1>, script is sleeping for 2-3 minutes", _msg1, count units _grp];
+    			hint localize format["--- sabotage.sqf: No alive factories, <group[%2] is at %1>, script is sleeping for 2-3 minutes", _msg1, count units _grp];
     			_msgPrev = _msg1;
 		    };
 		}
 		else
 		{
-			hint localize format["--- sabotage.sqf: No factories found, <group(%1) leader is absent>, script is sleeping for 2-3 minutes",count units _grp];
+			hint localize format["--- sabotage.sqf: No alive factories, <group(%1) leader is absent>, script is sleeping for 2-3 minutes",count units _grp];
 		};
 #endif	
 	};

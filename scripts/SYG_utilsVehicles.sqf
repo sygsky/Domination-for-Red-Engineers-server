@@ -162,10 +162,10 @@ SYG_detectedEnemy = {
 	_cost = -1000000;
 	_enemy = objNull;
 	{
-	    _side = argp(_x,2);
+	    _side = _x select 2;
 	    if ( _side == _eside) then
 	    {
-	        _target = argp(_x,4);
+	        _target = _x select 4;
 	        if ( (_target isKindOf "LandVehicle") && ((_unit knowsAbout _target) >= 1.5)) then
 	        {
 	            if ( vehicle  _target != _target ) then // check vehicle to has crew
