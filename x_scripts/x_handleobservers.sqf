@@ -112,7 +112,7 @@ while { nr_observers > 0 && !target_clear } do {
 
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: %1 attacks '%2' with %3 (knows %4) on dist. %5 m., friendly cnt %6 (veh. %7), %8, missed %9 m.",
+                                "+++ x_handleobservers.sqf: %1 attacks '%2' with %3 (knows %4) on dist. %5 m., friendly cnt %6 (veh %7, obs %8), %9, d%10 m.",
                                 _observer,
                                 name _enemy,
                                 if (_type == 1) then {"warheads"} else {"smokes"},
@@ -120,6 +120,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 round(_observer distance _enemy),
                                 _cnt,
                                 {alive _x && (side _x == _enemySide)} count _vecs,
+                                _observer_cnt,
                                 [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist
                             ];
