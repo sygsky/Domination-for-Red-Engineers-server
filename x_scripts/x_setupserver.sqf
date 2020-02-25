@@ -155,7 +155,7 @@ XCheckSMHardTarget = {
 	_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true;}];
 	#endif
 
-	_vec_init = "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
+	_vec_init = "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
 	#ifdef __WITH_SCALAR__
 	if (typeOf _vehicle == "Land_telek1") then {
 		_vec_init = _vec_init + "xhandle = [this] execVM ""scripts\scalar.sqf"";";
@@ -187,7 +187,7 @@ XCheckSMHardTarget = {
 		sleep (1.021 + random 1);
 	};
 	if (alive _vehicle) then {
-		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""damage"";";
+		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
 		processInitCommands;
 	};
 	deleteVehicle _trigger;
@@ -209,7 +209,7 @@ XCheckMTHardTarget = {
 	#ifdef __TT__
 	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
 	#endif
-	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
+	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
 	processInitCommands;
 	friendly_near_mt_target = false;
 	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
@@ -233,7 +233,7 @@ XCheckMTHardTarget = {
 		sleep (1.021 + random 1);
 	};
 	if (alive _vehicle) then {
-		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""damage"";";
+		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
 		processInitCommands;
 	};
 	deleteVehicle _trigger;
