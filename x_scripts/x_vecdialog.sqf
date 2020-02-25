@@ -34,7 +34,7 @@ _vec_name = (
 		case MRR2: { localize "STR_SYS_72"}; // "Мобильный респаун 2"
 		case HR1: { format [localize "STR_SYS_78", 1 ] }; // "Транспортный вертолет 1"
 		case HR2: { format [localize "STR_SYS_78", 2 ] }; // "Транспортный вертолет 2"
-		case HR3: { format [localize "STR_SYS_78", 2 ] }; // "Транспортный вертолет 3"
+		case HR3: { format [localize "STR_SYS_78", 3 ] }; // "Транспортный вертолет 3"
 		case HR4: { localize "STR_SYS_79"}; // "Вертолет для утилизации отходов"
 #endif
 #ifdef __TT__

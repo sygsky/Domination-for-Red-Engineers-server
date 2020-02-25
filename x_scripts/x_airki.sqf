@@ -358,7 +358,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	for "_xxx" from 1 to _vec_cnt do {
 		_heli_type = _heli_arr call XfRandomArrayVal;
 		_vehicle = createVehicle [_heli_type, _pos, [], 100, "FLY"];
-		_vehicle setVariable ["damage",0];
+		_vehicle setVariable ["damage",0]; // TODO: for future use
 
 		_vehicles = _vehicles + [_vehicle];
 		[_vehicle, _grp, _crew_member, _grpskill] call SYG_populateVehicle;
@@ -414,7 +414,6 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 
 
 #ifdef __PRINT__
-	_lastDamage = 0;
 	_timeToPrint = time - PRINT_PERIOD + 60; // print after 60 seconds
 #endif
 
@@ -587,16 +586,23 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 					}
 					else
 					{
+                        if ( damage _vecx > 0) then
+                        {
+                             _lastDamage = _vecx getVariable "damage";
+                            if ( (damage _vecx) >  _lastDamage ) then
+                            {
 #ifdef __PRINT__
-						if ( count _vehicles == 1) then
-						{
-							if ( ((damage _vecx) > 0) && ((damage _vecx) != _lastDamage) ) then
-							{
-								hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 received damage = %2", typeOf _vecx, damage _vecx, _type ];
-								_lastDamage = damage _vecx;
-							};
-						};
-#endif			
+                                hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 get damage = %2", typeOf _vecx, (damage _vecx) - _lastDamage, _type ];
+#endif
+                                _vecx setVariable ["damage", damage _vecx];
+                            };
+                            if (speedMode _vecx == "LIMITED") then { // accelerate in case of damage received
+                                _vecx setSpeedMode "NORMAL";
+#ifdef __PRINT__
+                                hint localize format[ "+++ x_airki.sqf[%1]: change airkiller %2 speed from LIMITED to NORMAL", _type, typeOf _vecx ];
+#endif
+                            };
+                        };
 						_vecx setFuel 1;
 					};
 					sleep 0.01;
