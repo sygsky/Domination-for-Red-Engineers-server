@@ -318,7 +318,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_airki_attack_chopper;
-			_flight_height = 350;
+			_flight_height = 450;
         	//_flyby_height  = 500;
 			_flight_random = 50;
 			_min_dist_between_wp = 100;
@@ -337,7 +337,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_light_attack_chopper;
-			_flight_height = 250;
+			_flight_height = 350;
         	//_flyby_height  = 500;
 			_flight_random = 20;
 			_min_dist_between_wp = 100;
