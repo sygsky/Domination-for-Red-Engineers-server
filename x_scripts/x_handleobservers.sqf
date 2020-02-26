@@ -92,13 +92,17 @@ while { nr_observers > 0 && !target_clear } do {
                         _vecs = [];
                         _cnt = 0;
                         if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
+
                             _observers_arr = _pos_nearest nearObjects [_observer_type, HIT_RADIOUS];
-                            _observer_cnt  = {alive _x && canStand _x} count _observers_arr;
-                            _near_targets  = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
-                            _vecs          = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
-                            // find near units to prevent from attacking with warheads
-                            _cnt           =  ({alive _x && canStand _x && (side _x == _enemySide) } count _near_targets) + ({alive _x && (side _x == _enemySide)} count _vecs);
-                            _type          = if ( (_cnt > MIN_FRIENDLY_COUNT_TO_STRIKE)  && (_observer_cnt > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
+                            _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr;                             // observers in kill zone
+
+                            _units_arr         = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
+                            _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // units in kill zone
+
+                            _vecs_arr      = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
+                            _veh_cnt       =  {canMove _x && (side _x == _enemySide)} count _vecs_arr;                         // friendly vehicles in kill zone
+
+                            _type          = if ( (_unit_cnt > MIN_FRIENDLY_COUNT_TO_STRIKE)  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                             // If enemy is too far from strike point, do smoking attack only
                             _dist = round( _pos_nearest distance _enemy );
@@ -112,14 +116,14 @@ while { nr_observers > 0 && !target_clear } do {
 
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: %1 attacks '%2' with %3 (knows %4) on dist. %5 m., friendly cnt %6 (veh %7, obs %8), %9, d%10 m.",
-                                _observer,
-                                name _enemy,
+                                "+++ x_handleobservers.sqf: Obs#%1 attacks %2 with %3 (knows %4) on dist. %5 m., [unit %6, veh %7, obs %8], %9, real/vrt pos dist %10 m.",
+                                _i,
+                                if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'.%2",name _enemy, typeOf (vehicle _enemy)]},
                                 if (_type == 1) then {"warheads"} else {"smokes"},
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
-                                _cnt,
-                                {alive _x && (side _x == _enemySide)} count _vecs,
+                                _unit_cnt,
+                                _veh_cnt,
                                 _observer_cnt,
                                 [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist

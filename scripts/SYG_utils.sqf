@@ -411,10 +411,27 @@ SYG_vehUpAngle = {
  * ...
  */
 SYG_ACEUnitUnconscious = {
-	if ( !alive _this ) exitWith {false};
-	if (format["%1",_this getVariable "ACE_unconscious"] == "<null>") then { false } else { _this getVariable "ACE_unconscious" };
+	if ( !alive _this ) exitWith {true};
+	if (!_this isKindof "CAManBase") exitWith {false};
+	if (format["%1",_this getVariable "ACE_unconscious"] == "<null>") then {
+	    !canStand _this
+	 } else { _this getVariable "ACE_unconscious" };
 };
-	
+// #ifdef __ACE__ answers the unit is conscious (true) or not
+/**
+ * Detectes if unit is conscious (return true), unconscious (return false) or in unknown state (false)
+ * ...
+ * call: _unc = _unit call SYG_ACEUnitConscious;
+ * ...
+ */
+SYG_ACEUnitConscious = {
+	if ( !alive _this ) exitWith {false};
+	if (!_this isKindof "CAManBase") exitWith {false};
+	if (format["%1",_this getVariable "ACE_unconscious"] == "<null>") then {
+	    canStand _this
+	} else { !(_this getVariable "ACE_unconscious") };
+};
+
 // count all alive units of group in consciousnesss
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
