@@ -24,16 +24,40 @@ _man_type = (
 	switch (d_enemy_side) do {
 		case "WEST": {"SoldierWB"};
 		case "EAST": {"SoldierEB"};
-		case "RACS": {"SoldierGB"};
 	}
 );
+
 _enemySide = (
     switch (d_enemy_side) do {
         case "WEST": {west};
         case "EAST": {east};
-        case "RACS": {resistance};
     }
 );
+
+_ownSide = (
+    switch (d_own_side) do {
+        case "WEST": {west};
+        case "EAST": {east};
+    }
+);
+_ussr = ["StrykerBase","M113","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded"];
+_usa  = ["BMP2","T72","D30","ZSU","UAZMG","Ural","BRDM2","BMP2_MHQ_unfolded"];
+
+_own_vehicles = (
+    switch (d_own_side) do {
+        case "WEST": {_usa};
+        case "EAST": {_ussr};
+        }
+);
+
+_enemy_vehicles = (
+    switch (d_enemy_side) do {
+        case "WEST": {_usa};
+        case "EAST": {_ussr};
+        }
+);
+
+
 _land_veh_type = "LandVehicle";
 _tt = false;
 #endif
@@ -93,20 +117,26 @@ while { nr_observers > 0 && !target_clear } do {
                         _cnt = 0;
                         if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
 
-                            _observers_arr = _pos_nearest nearObjects [_observer_type, HIT_RADIOUS];
-                            _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr;                             // observers in kill zone
+                            _own_arr      =  nearestObjects [_pos_nearest, _own_vehicles, HIT_RADIOUS]; // find owner vehilces in kill zone to kill them immediatelly
+                            _own_cnt      = {alive _x} count _own_arr;
 
-                            _units_arr         = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
+                            _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
                             _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // units in kill zone
 
-                            _vecs_arr      = _pos_nearest nearObjects [_land_veh_type, HIT_RADIOUS];
-                            _veh_cnt       =  {canMove _x && (side _x == _enemySide)} count _vecs_arr;                         // friendly vehicles in kill zone
+                            _observers_arr = _pos_nearest nearObjects [_observer_type, HIT_RADIOUS];
+                            _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr; // observers in kill zone
 
-                            _type          = if ( (_unit_cnt > MIN_FRIENDLY_COUNT_TO_STRIKE)  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
+                            _vecs_arr      =  nearestObjects [_pos_nearest, _enemy_vehicles, HIT_RADIOUS];
+                            _veh_cnt       =  {canMove _x} count _vecs_arr;                         // enemy  vehicles in kill zone
+
+                            _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE;
+                            if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * 2; };
+
+                            _type          = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                             // If enemy is too far from strike point, do smoking attack only
                             _dist = round( _pos_nearest distance _enemy );
-                            if ( ( _dist > (HIT_RADIOUS * 1.5) ) && ( _type == 1 ) ) then { _type = 2 }; // smoke except strike
+                            if ( ( _dist > (HIT_RADIOUS * 1.5) ) && ( _type == 1 ) ) then { _type = 2 }; // smoke except strike on teleport
 
                             if ( _dist < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is high
                             else
@@ -116,7 +146,7 @@ while { nr_observers > 0 && !target_clear } do {
 
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: Obs#%1 attacks %2 with %3 (knows %4) on dist. %5 m., [unit %6, veh %7, obs %8], %9, real/vrt pos dist %10 m.",
+                                "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4) on dist %5 m., [units %6, enmveh %7, obs %8, ownveh %9], %10, real<->vrt dist %11 m.",
                                 _i,
                                 if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'.%2",name _enemy, typeOf (vehicle _enemy)]},
                                 if (_type == 1) then {"warheads"} else {"smokes"},
@@ -125,6 +155,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 _unit_cnt,
                                 _veh_cnt,
                                 _observer_cnt,
+                                _own_cnt,
                                 [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist
                             ];
