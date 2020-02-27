@@ -117,7 +117,7 @@ while { nr_observers > 0 && !target_clear } do {
                         _cnt = 0;
                         if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
 
-                            _own_arr      =  nearestObjects [_pos_nearest, _own_vehicles, HIT_RADIOUS]; // find owner vehilces in kill zone to kill them immediatelly
+                            _own_arr      =  nearestObjects [_pos_nearest, _own_vehicles, HIT_RADIOUS]; // any alive owner vehicles in kill zone to kill them immediatelly
                             _own_cnt      = {alive _x} count _own_arr;
 
                             _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
@@ -127,7 +127,7 @@ while { nr_observers > 0 && !target_clear } do {
                             _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr; // observers in kill zone
 
                             _vecs_arr      =  nearestObjects [_pos_nearest, _enemy_vehicles, HIT_RADIOUS];
-                            _veh_cnt       =  {canMove _x} count _vecs_arr;                         // enemy  vehicles in kill zone
+                            _veh_cnt       =  {side _x == _enemySide} count _vecs_arr;    // enemy crew vehicles in kill zone
 
                             _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE;
                             if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * 2; };
