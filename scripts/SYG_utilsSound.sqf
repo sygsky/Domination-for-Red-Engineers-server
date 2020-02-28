@@ -143,11 +143,10 @@ SYG_baseDefeatTracks =
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_gongNextIndex = 0;
-SYG_TVTowerDefeatTracks =
-    [
-    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10",
-    "gong_11","gong_12","gong_13", "gong_14"
-    ];
+
+SYG_getTVTowerGong = {
+    format["gong_%1", floor(random 16)];
+};
 
 // for the death near medieval castles (2 buildings on whole island)
 SYG_MedievalDefeatTracks =
@@ -229,10 +228,10 @@ SYG_playRandomDefeatTrackByPos = {
     if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
         // let gong play sequentially on one client (in MP it will be randomized)
-        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod (count SYG_TVTowerDefeatTracks);
-        _sound =  SYG_TVTowerDefeatTracks select SYG_gongNextIndex;
+        _sound =  format["gong_%1", SYG_gongNextIndex];
+        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod 16; // number of gong sounds
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
-        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_TVTowerDefeatTracks, say_sound, done";
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: gong, say_sound, done";
     };
 
     // check if we are near castle
