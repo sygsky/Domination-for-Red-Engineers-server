@@ -117,10 +117,22 @@ for "_wc" from 1 to _coef do {
 	if (!alive player || d_cancelrep) exitWith {player removeAction _rep_action;};
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (_is_engineer) then {
+        if (!_damage_ok) then
+        {
 #endif
-	    (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat;
+	        (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat; // Repair ...
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
-	} else {(format[localize "STR_SYS_152", -(_addscore + 1)]) call XfGlobalChat;};
+        } else {
+            (localize "STR_SYS_257") call XfGlobalChat; // Refuel ...
+        };
+	} else {
+        if (!_damage_ok) then
+        {
+    	    (format[localize "STR_SYS_152", -(_addscore + 1)]) call XfGlobalChat;// Repair ...
+        } else {
+            (localize "STR_SYS_257") call XfGlobalChat; // Refuel ...
+        };
+	};
 #endif
 	player playMove "AinvPknlMstpSlayWrflDnon_medic";
 	sleep 3.0;
@@ -132,16 +144,17 @@ for "_wc" from 1 to _coef do {
 		_breaked_out2 = true;
 		hint localize "STR_SYS_142"/* "Обслуживание отменено..." */;
 	};
-	if (!_fuel_ok) then 
-	{
-		_fuel = _fuel + _fuel_vol_on_step;
-		if (_fuel >= _refuel_limit) then {_fuel = _refuel_limit; _fuel_ok = true;};
-	};
-	if (!_damage_ok) then 
+	if (!_damage_ok) then
 	{
 		_damage = _damage - _rep_count;
 		if (_damage <= 0.01) then {_damage = 0;_damage_ok = true;};
 		_addscore = _addscore + 1;
+	} else  {
+        if (!_fuel_ok) then
+        {
+            _fuel = _fuel + _fuel_vol_on_step;
+            if (_fuel >= _refuel_limit) then {_fuel = _refuel_limit; _fuel_ok = true;};
+        };
 	};
 	_lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
 	hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];

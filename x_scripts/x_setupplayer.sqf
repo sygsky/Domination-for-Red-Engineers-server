@@ -1683,7 +1683,7 @@ if (d_with_repstations) then {
 	[] spawn {
 		private ["_vec", "_nobs"];
 		while {true} do {
-			waitUntil {sleep 1 + random 0.2; vehicle player != player};
+			waitUntil {sleep (1 + (random 0.2)); vehicle player != player};
 			_vec = vehicle player;
 			while {vehicle player != player && alive player && alive _vec} do {
 				if (player == driver _vec) then {
@@ -1691,7 +1691,7 @@ if (d_with_repstations) then {
 					if (count _nobs > 0) then {
 						if (damage _vec > 0) then {
 							_vec setDamage 0;
-							_vec vehicleChat localize "STR_SYS_64";/* "Ваш транспорт отремонтирован техсервисом..."; */
+							_vec vehicleChat localize format["STR_SYS_64", typeOf _vec];/* "Ваш транспорт отремонтирован техсервисом..."; */
 						};
 					};
 				};
