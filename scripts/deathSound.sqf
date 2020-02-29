@@ -37,9 +37,10 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
     {
         playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
     };
+
     _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
 
-    if ((_killer isKindOf "SoldierWB") ) then
+    if ( (_killer isKindOf "SoldierWB") ) then
     {
         if (format["%1",side _killer] == d_enemy_side) then
         {
@@ -66,7 +67,7 @@ else    // some kind of suicide? Say something about...
     _TVTowerArr = _unit nearObjects [ "Land_telek1", 50];
     if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
-        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        _sound =  call SYG_getTVTowerGong;
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
 
