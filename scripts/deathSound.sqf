@@ -47,7 +47,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
         }
         else
         {
-            if (random 3 <= 1) then
+            if (random 2 <= 1) then
             {
                 // try to play killer laughter sound on all clients
                 _sound = call SYG_getLaughterSound;
