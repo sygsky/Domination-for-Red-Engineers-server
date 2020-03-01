@@ -39,16 +39,20 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
     };
 
     _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
-
-    if ( (_killer isKindOf "SoldierWB") ) then
+    if (side _killer == d_enemy_side) then
     {
-        if (format["%1",side _killer] == d_enemy_side) then
+        _sound = _killer getVariable "killer_sound";
+        if (!isNil "_sound") then { // AI already killed someone nad his sound is already known
+            ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
+        }
+        else
         {
             if (random 3 <= 1) then
             {
                 // try to play killer laughter sound on all clients
                 _sound = call SYG_getLaughterSound;
                 ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
+                _killer setVariable ["killer_sound", _sound]; // store killer sound to repaat next lucky time
             };
         };
     };
