@@ -528,11 +528,11 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                             _pos = getPos _enemy_heli;
                             if ( (_x distance _pos)  < 3500 ) then
                             {
-                                if ( ( _pos select 2) > ((getPos _x) select 2) ) then
+                                if ( (( _pos select 2) - 50) > ((getPos _x) select 2) ) then
                                 {
-                                    _flyHeight = ((_pos select 2)+50);
+                                    _flyHeight = ((_pos select 2)+100);
                                     _x flyInHeight _flyHeight;
-                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2 (h%3) m", typeOf _enemy_heli, round( _flyHeight ), (getPos _x) select 2 ];
+                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2 (h%3) m", typeOf _enemy_heli, round( _flyHeight ), round((getPos _x) select 2) ];
                                     _height_not_set = false;
                                 };
                                 _x reveal _enemy_heli;
@@ -546,7 +546,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                         hint localize format["+++ x_airki: bad item in enemy air vehicle array %1", _enemy_heli ];
                     };
                 }; // forEach SYG_owner_active_air_vehicles_arr;
-                SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
+                SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["RM_ME"];
                 if (_height_not_set) then
                 {
                     _flyHeight = (_flight_height + (random _flight_random));
