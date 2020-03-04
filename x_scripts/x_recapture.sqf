@@ -11,10 +11,7 @@ _x_can_recapture = {
 	private ["_ret"];
 	_ret = false;
 	if (d_max_recaptures > 0) then {
-		if (count d_recapture_indices < d_max_recaptures) then
-		{
-			_ret = true;
-		}
+		if (count d_recapture_indices < d_max_recaptures) then { _ret = true };
 	} else {
 		_ret = true;
 	};
@@ -30,9 +27,11 @@ while {true} do {
 	};
 	//__DEBUG_NET("x_recapture.sqf",(call XPlayersNumber))
 	
-	while {!main_target_ready} do {sleep 10.321};
+	while {!main_target_ready} do {sleep 20.321}; // don't recapture if tower is down
 	
-	if (!the_end && (count resolved_targets > 1) && (count d_recapture_indices < count resolved_targets - 1) && call _x_can_recapture) then {
+	if (the_end) exitWith {false}; // no more towns, end of game
+
+	 if( (count resolved_targets > 1) && (count d_recapture_indices < count resolved_targets - 1) && call _x_can_recapture) then {
 		_recap_index = -1;
 		_loop_running = true;
 
