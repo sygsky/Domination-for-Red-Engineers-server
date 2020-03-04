@@ -110,17 +110,15 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	// ask the server for the client score etc
 	sleep random 0.5;
 	_endtime = time + 60;
-	_equip = "";
 	// initial information on player connected
 	["d_p_a",name player,missionStart, localize "STR_LANG"] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
-    _equip = "";
 #ifdef __DEBUG__
     if (!(isNil "d_player_stuff")) then
     {
         if (count d_player_stuff >= 6) then { if ( (d_player_stuff select 5) != "" ) then {_equip = "has items";}; };
     };
-    hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1, equipment %2 +++", if (isNil "d_player_stuff") then { "isNil" } else { "not nil"}, _equip];
+    hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { format["has %1 item[s]", count d_player_stuff]}];
 #endif
 	if (isNil "d_player_stuff") exitWith {
 		player_autokick_time = d_player_air_autokick;
@@ -135,6 +133,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 		// execute player rearm procedure
         _p = player;
 #ifdef __RANKED__
+        _equip = "";
         if ( count d_player_stuff >= 6) then // equipment returned
         {
             _equip = d_player_stuff select 5;
