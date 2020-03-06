@@ -63,31 +63,19 @@ beam_target = -1;
 if (_typepos == 1) then {  //  teleport to some of our MHQ
 
     _global_pos = _veh modelToWorld [0,-5,0];
-/*
-    if ( [_global_pos, d_base_array] call SYG_pointInRect ) then // remove in any case if on base
-    {
-        player groupChat "tropelet";
-        playSound "tropelet"; // some mistical sound to in base rect
-    }
-    else
-    {
-        player groupChat "teleport";
-        playSound "teleport"; // some mistical sound to out of base
-    };
-*/
+    // TODO: if teleport point is in house, prevent teleport ("You can't teleport to non-empty space!!!")
     _global_dir = direction _veh;
 
     ["addVehicle", (group player), _veh] call XSendNetStartScriptServer; // inform enemy about MHQ position
     sleep 1.0;
-    _veh call SYG_revealToAllPlayers;
-//    ["revealVehicle", _veh] call XSendNetStartScriptClient; // reveal new MHQ position to all active players
-    //(group player) addVehicle _veh;
 };
 
 _global_pos set [2, 0];  // always port to the ground
 player setPos _global_pos;
 player setDir _global_dir;
 sleep 2;
+_veh call SYG_revealToAllPlayers;
+
 closeDialog 100001;
 
 titletext ["", "BLACK IN"];
