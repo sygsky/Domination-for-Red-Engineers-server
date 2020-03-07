@@ -411,11 +411,13 @@ SYG_vehUpAngle = {
  * ...
  */
 SYG_ACEUnitUnconscious = {
+    private ["_var"];
 	if ( !alive _this ) exitWith {true};
-	if (!_this isKindof "CAManBase") exitWith {false};
-	if (format["%1",_this getVariable "ACE_unconscious"] == "<null>") then {
+	if (!(_this isKindof "CAManBase") ) exitWith {false};
+	_var = _this getVariable "ACE_unconscious";
+	if ( isNil "_var" ) then {
 	    !canStand _this
-	 } else { _this getVariable "ACE_unconscious" };
+	} else { _this getVariable "ACE_unconscious" };
 };
 // #ifdef __ACE__ answers the unit is conscious (true) or not
 /**
@@ -425,9 +427,11 @@ SYG_ACEUnitUnconscious = {
  * ...
  */
 SYG_ACEUnitConscious = {
+    private ["_var"];
 	if ( !alive _this ) exitWith {false};
-	if (!_this isKindof "CAManBase") exitWith {false};
-	if (format["%1",_this getVariable "ACE_unconscious"] == "<null>") then {
+	if ( !(_this isKindof "CAManBase") ) exitWith {false};
+	_var = _this getVariable "ACE_unconscious";
+	if ( isNil "_var" ) then {
 	    canStand _this
 	} else { !(_this getVariable "ACE_unconscious") };
 };

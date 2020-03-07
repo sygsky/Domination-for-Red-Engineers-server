@@ -476,7 +476,7 @@ STR_SYS_252,"Your rank: %1. You are not allowed to use %3.\n\nRank required is: 
 STR_SYS_252_BULKY,"When you try to enter into the doorway you're stuck (%1?)! %2","Wenn Sie versuchen, geben Sie in die Tür, Sie stecken (%1?)! %2","При попытке проникнуть в проём вы застряли (%1?)! %2"
 
 STR_SYS_252_NUM,5,5,5
-STR_SYS_252_0,"You should get rid of inventory excess!","Es ist Zeit, um loszuwerden überschüssige Ladung!","Надо избавиться от избыточного снаряжения!"
+STR_SYS_252_0,"You need to get rid of this equipment!","Wir müssen diese Bewaffnung loswerden!","Надо избавиться от этого снаряжения!"
 STR_SYS_252_1,"Or is it stomach prevent me ?","Oder ist es der Magen verhindern mich ?","Или это живот мешает?"
 STR_SYS_252_2,"I'm tired of all these problems...","Ich bin müde von all diesen Problemen...","Что-то я уже устал от всех этих проблем..."
 STR_SYS_252_3,"Have to get something smaller...","Haben die etwas kleineren...","Надо взять что-то поменьше размером..."
@@ -967,7 +967,7 @@ STR_HIT_HEAD_HIT_4,Inappropriately...,Unpassend...,Некстати...
 STR_HIT_HEAD,Damn... and the helmet does not work,Verdammt... und der Helm hat nicht geholfen,Чёрт... и каска не помогла
 STR_HIT_BODY,Hit in the chest... and emptyness,Treffer in die Brust... und leere,Удар в грудь и ... темнота
 STR_HIT_UNKNOWN,"Hurt... bad time...","Verwundet... nicht in der Zeit.","Ранило... не вовремя-а-а-а..."
-STR_HIT_UNCONSCIOUS,"You are unconscious...","Sie verlieren das Bewusstsein...","Вы без сознания (чпок-чпок)..."
+STR_HIT_UNCONSCIOUS,"You are unconscious (bang-bang)...","Sie verlieren das Bewusstsein (Bam-bam)...","Вы без сознания (чпок-чпок)..."
 
 // Actions on base flag
 STR_FLAG_0,"Teleport","Teleport","Телепорт"
