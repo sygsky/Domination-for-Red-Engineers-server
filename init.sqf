@@ -2,11 +2,6 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG__
-
-// add some debug units
-//#define __DEBUG_ADD_VEHICLES__
-
 #include "i_common.sqf"
 
 X_INIT = false;
