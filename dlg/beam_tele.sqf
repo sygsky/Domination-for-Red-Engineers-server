@@ -1,4 +1,4 @@
-// Xeno, dlg/beam_tele.sqf
+// Xeno, dlg\beam_tele.sqf
 private ["_control","_index","_p","_pp","_global_pos","_typepos","_global_dir","_veh"];
 if (!X_Client) exitWith {};
 
