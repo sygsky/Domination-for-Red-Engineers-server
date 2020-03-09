@@ -22,6 +22,7 @@ if (!isServer) exitWith {};
 #define KA_MIMG_ARRIVAL_DELAY 300
 #define REFUEL_INTERVAL 600
 #define PRINT_PERIOD 600 // period to inform about heli position
+#define RELOAD_PERIOD 60 // TODO: use as period to reload ammo for plane
 
 // how many player is not detected near target in seconds
 #define PLAYER_NOT_AT_TARGET_LIMIT 1200
@@ -330,7 +331,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_flight_height = 600;
         	_flyby_height  = 1000;
 			_flight_random = 100;
-			_min_dist_between_wp = 500;
+			_min_dist_between_wp = 1000;
 		};
 		case "MIMG"; 
 		default 
@@ -409,14 +410,14 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_pat_pos = _current_target_pos;
 	_wp setWaypointStatements ["never", ""];
 #ifdef __PRINT__
-   	hint localize format["+++ x_airki.sqf[%3]: veh %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
+   	hint localize format["+++ x_airki.sqf[%3]: %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
 #endif
 
 
 #ifdef __PRINT__
-	_timeToPrint = time - PRINT_PERIOD + 60; // print after 60 seconds
+	_timeToPrint = time + PRINT_PERIOD + (random 60); // print after 60 seconds
 #endif
-
+    _timeToReload = time + RELOAD_PERIOD  + (random 60); // reload period
 
 	_loop_do = true;
 
@@ -569,19 +570,18 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		if (count _vehicles > 0) then {
 			for "_i" from 0 to ((count _vehicles) - 1) do {
 				_vecx = _vehicles select _i;
-				if ( ! alive _vecx ) then
-				{
+				if ( ! alive _vecx ) then {
 					_vehicles set [_i, "X_RM_ME"]; 
 #ifdef __PRINT__
 					hint localize format[ "+++ x_airki.sqf[%1]: airkiller is Null, remove from list",  _type];
 #endif			
 				}
-				else
-				{
+				else {
                     sleep 1;
                     if ( ( {alive _x} count (crew _vecx) ) == 0 ) then
                     {
                         s_down_heli_arr = s_down_heli_arr + [_vecx];
+                        _vecx setFuel 0;
                         _vehicles set [_i, "X_RM_ME"];
 					}
 					else
@@ -589,14 +589,14 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                         if ( damage _vecx > 0) then
                         {
                              _lastDamage = _vecx getVariable "damage";
-                            if ( (damage _vecx) >  _lastDamage ) then
+                            if ( (damage _vecx) != _lastDamage ) then
                             {
 #ifdef __PRINT__
                                 hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 get damage = %2", typeOf _vecx, (damage _vecx) - _lastDamage, _type ];
 #endif
                                 _vecx setVariable ["damage", damage _vecx];
                             };
-                            if (speedMode _vecx == "LIMITED") then { // accelerate in case of damage received
+                            if ( ((damage _vecx) > _lastDamage)  && (speedMode _vecx == "LIMITED")) then { // accelerate in case of damage received
                                 _vecx setSpeedMode "NORMAL";
 #ifdef __PRINT__
                                 hint localize format[ "+++ x_airki.sqf[%1]: change airkiller %2 speed from LIMITED to NORMAL", _type, typeOf _vecx ];
@@ -634,7 +634,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		//+++ Sygsky: TODO add info exchange between air-air, air-land, air-ship units
 #endif
 #ifdef __PRINT__
-        if ( (time - _timeToPrint) >= PRINT_PERIOD) then
+        if ( time >= PRINT_PERIOD) then
         {
             _heli = _vehicles select 0;
             _loc = _heli call SYG_nearestSettlement;
@@ -646,7 +646,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 round(speed _heli),
                 damage _heli
             ];
-            _timeToPrint = time;
+            _timeToPrint = time + PRINT_PERIOD;
         };
 #endif
 	}; // while {_loop_do} do
