@@ -730,13 +730,13 @@ XHandleNetStartScriptClient = {
 			{
 				call compile format ["%1 call SYG_reammoMHQ;", _this select 1 ];
 #ifdef __PRINT__
-				hint localize format["'MHQ_respawned' is called with var '%1'", _this select 1];
+				hint localize format["+++ 'MHQ_respawned' is called with var '%1'", _this select 1];
 #endif		
 			}
 			else
 			{
 #ifdef __PRINT__
-				hint localize format["'MHQ_respawned' called with NIL variable %1 ", _this select 1];
+				hint localize format["--- 'MHQ_respawned' called with NIL variable %1 ", _this select 1];
 #endif		
 			};	
 		};

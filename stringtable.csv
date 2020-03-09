@@ -169,7 +169,7 @@ STR_SYS_77,"Cancel service","Rückgängig Service","Отменить обслу�
 STR_SYS_78,"Lift %1","Hubschrauber %1","Трансп. вертолёт %1"
 STR_SYS_79,"Wreck Lift","Wrack heben","Трансп. обломков"
 STR_SYS_79_1,"Chopper Menu","Chopper-Menü","Меню вертолёта"
-STR_SYS_79_2,"MHQ Menu","MHQ Menu","Меню MHQ"
+STR_SYS_79_2,"MHQ Menu","MHQ Menu","Меню КШМ"
 STR_SYS_79_3,"You're not allowed to fly!","Sie sind nicht erlaubt zu Fliegen!","Рождённый ползать летать не может!"
 
 STR_SYS_80,"Main Targets","Hauptziele","Главные цели"
@@ -964,7 +964,7 @@ STR_HIT_HEAD_HIT_NUM,5,5,5
 STR_HIT_HEAD_HIT_0,"Finita...","Dies ist das Ende...","Это конец..."
 STR_HIT_HEAD_HIT_1,"Pity...","Schade...","Жаль..."
 STR_HIT_HEAD_HIT_2,"All is lost...","Alles ist verloren...","Не вышла... каменная... чаша..."
-STR_HIT_HEAD_HIT_3,Damn!,der Teufel!,Чёрт!
+STR_HIT_HEAD_HIT_3,Damn!,Der Teufel!,Чёрт!
 STR_HIT_HEAD_HIT_4,Inappropriately...,Unpassend...,Некстати...
 
 STR_HIT_HEAD,Damn... and the helmet does not work,Verdammt... und der Helm hat nicht geholfen,Чёрт... и каска не помогла
@@ -1260,7 +1260,7 @@ STR_SET_11,"Cloning RPG-missiles","Klon-RPG-Rakete","Клонирование Р
 STR_SET_12,"Points will be added when the service is restored (%1)","Punkte werden Hinzugefügt, wenn der Dienst wiederhergestellt wird (-%1)","За ремонт сервисов дают очки (%1)"
 STR_SET_12_1,"When repairing the service, points are deducted (-%1)","Punkte werden bei der Reparatur abgezogen (-%1)","За ремонт сервисов вычитают очки (-%1)"
 STR_SET_13,"Mando missiles pack: ","Mando missiles pack: ","Пак Mando missiles: "
-STR_SET_14,"Built-in ruksack: ","Eingebauter ruksack: ","Встроенный рюкзак: "
+STR_SET_14,"Built-in rucksack: ","Eingebauter rucksack: ","Встроенный рюкзак: "
 STR_SET_15,"Enemy armored vehicles blocked: ","Feindliche Gepanzerte Fahrzeuge blockiert: ","Вражеская бронетехника блокирована: "
 STR_SET_16,"Enemy cars blocked: ","Feindliche Autos blockiert: ","Вражеский транспорт заблокирован: "
 STR_SET_17,"Enemy air vehicles blocked: ","Feindliche Luftfahrzeuge gesperrt: ","Вражеская авиатехника блокирована: "

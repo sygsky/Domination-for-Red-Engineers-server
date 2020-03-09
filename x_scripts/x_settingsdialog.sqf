@@ -192,7 +192,7 @@ _str = _str + _strNo1 + ". ";
 
 // _str = _str + "Версия: " + d_version_string + "\n";
 
-_str = _str + (localize "STR_SET_14");//"Built-in ruksack: ";
+_str = _str + (localize "STR_SET_14");//"Built-in rucksack: ";
 if (d_use_backpack) then {
 	_str = _str + _strYes;
 } else {
