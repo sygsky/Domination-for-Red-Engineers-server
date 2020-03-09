@@ -295,18 +295,7 @@ XHandleNetStartScriptServer = {
 			_name call SYG_lastPlayersAdd; // add player to linked list of entered ones
 			if (((count _arr1) + (count _arr2)) > 0) then // if any towns/players are countedinform user about them
 			{
-			    _arr = ["STR_GRU_56"]; // main part of the message
-		        _str = "";
-			    if ((count _arr1) > 0 ) then { // add info on towns
-			        {_str = format["%1 %2",_str, _x]} forEach _arr1;
-			    };
-                _arr = _arr + [_str];
-		        _str = "";
-			    if ((count _arr2) > 0 ) then { // add info on players
-			        {_str = format["%1 %2",_str, _x]} forEach _arr2;
-			    };
-                _arr = _arr + [_str];
-                hint localize format["+++ DEBUG line print: %1", _arr];
+                _arr = ["STR_GRU_56"] + [[_arr1, ", "] call SYG_joinArr] + [[_arr2,", "] call SYG_joinArr];
                 _msg_arr set [ count _msg_arr, _arr ]; // "GRU: last towns%1,  last soldiers%2"
 			};
 

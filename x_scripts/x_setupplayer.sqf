@@ -755,7 +755,7 @@ d_chop_all = [];
 d_chop_all = d_chop_lift_list + d_chop_wreck_lift_list  + d_chop_normal_list;
 
 #ifndef __TT__
-for "_xx" from 1 to 2 do { // 'Меню MHQ'
+for "_xx" from 1 to 2 do { // 'Menu MHQ'
 	call compile format ["
 		if (!(isNil 'MRR%1')) then {
 			if (d_own_side == 'EAST') then { MRR%1 call SYG_reammoMHQ;};

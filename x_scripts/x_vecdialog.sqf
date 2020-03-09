@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_vecdialog.sqf - assigned in x_setupplayer.sqf
 private ["_vec", "_caller", "_ok", "_XD_display", "_control", "_the_box", "_vec_name", "_hasbox", "_ctrl_but_drop", "_ctrl_but_load", "_move_controls", "_pic", "_index", "_pos"];
 if (!X_Client) exitWith {};
 

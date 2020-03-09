@@ -98,13 +98,14 @@ STR_SYS_18_1,"No any vehicle nearby that is in need of repair...","Nein, jedes F
 STR_SYS_19,"Repair %1%2, refuel %3 L.: %4... wait...","Reparatur %1%2, Tankstellen %3 L.: %4... warten Sie...","Ремонт %1%2, заправка %3 л.: %4... ожидайте..."
 
 STR_SYS_20,"Select respawn place","Select respawn place","Выбор места возрождения"
-STR_SYS_21,"Mobile respawn one gets transported by airlift...","Mobile respawn bekommt man transportiert mit der Luftbrücke...","КШМ 1 в воздухе..."
-STR_SYS_22,"Mobile respawn two gets transported by airlift...","Mobile respawn zwei wird transportiert durch die Luftbrücke...","КШМ 2 в воздухе..."
-STR_SYS_23,"Mobile respawn one currently driving...","Mobile respawn derzeit fahren...","КШМ 1 в движении..."
-STR_SYS_24,"Mobile respawn two currently driving...","Mobile respawn derzeit zwei fahren...","КШМ 2 в движении..."
+STR_SYS_21,"Mobile respawn 1 gets transported by airlift...","Mobile respawn bekommt man transportiert mit der Luftbrücke...","КШМ 1 в воздухе..."
+STR_SYS_22,"Mobile respawn 2 gets transported by airlift...","Mobile respawn zwei wird transportiert durch die Luftbrücke...","КШМ 2 в воздухе..."
+STR_SYS_23,"Mobile respawn 1 currently driving...","Mobile Respawn 1 in Bewegung ...","КШМ 1 в движении..."
+STR_SYS_24,"Mobile respawn 1 currently driving...","Mobile Respawn 2 in Bewegung ...","КШМ 2 в движении..."
 STR_SYS_25,"MHQ 1 is in water...","MHQ 1 ist im Wasser...","КШМ 1 сейчас в воде..."
-STR_SYS_26,"MHQ 2 is in water...","MHQ 2 ist im Wasser...","КШМ 2 сейчас в воде..."
-STR_SYS_30,"Respawn","Respawn","КШМ"
+STR_SYS_25_1,"MHQ 1 teleport damaged (%1%2)...","MHQ 1 teleport beschädigt (%1%2)...","Телепорт КШМ 1 повреждён (%1%2)..."
+STR_SYS_25_2,"MHQ 2 teleport damaged (%1%2)e...","MHQ 2 teleport beschädigt (%1%2)...","Телепорт КШМ 2 повреждён (%1%2)..."
+STR_SYS_30,"Respawn","Respawn","Возрождение"
 STR_SYS_31," (last one)"," (die Letzte)"," (последний)"
 STR_SYS_32,"%1 MHQ %2 is transported by airlift","%1 Mobile kommandierenden Maschine %2 transportiert wird, die Luft","%1 КШМ %2 транспортируется по воздуху"
 STR_SYS_33,"%1 MHQ %2 is available","%1 Respawn %2 verfügbar","%1 КШМ %2 доступна"
@@ -159,6 +160,8 @@ STR_SYS_73,"Teleport not available in a vehicle !!!","Teleport nicht in einem Fa
 STR_SYS_74,"You are carrying the flag. Teleport is not possible !!!","Sie tragen die fahne. Teleport ist nicht möglich !!!","Вы несете флаг. Телепорт недоступен!!!"
 STR_SYS_75,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_75_1,"Teleporting not possible while factory %1 is ruined !!!","Das teleportieren nicht möglich, während Fabrik %1 ist kaputt !!!","Телепортирование невозможно пока разрушен сервис %1!!!"
+STR_SYS_75_2,"Teleporting not possible while MHQ has damage (%1%2)!!!","Teleportieren nicht möglich, während MHQ Schaden hat (%1%2)!!!","Телепортирование невозможно из-за повреждений КШМ (%1%2)!!!"
+
 STR_SYS_75_chopper,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_75_wreck,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
 STR_SYS_76,“Due to the strong wind over the ocean, you jumped a little wrong”,"Aufgrund des starken Windes über dem Ozean sind Sie ein wenig falsch gesprungen","Из-за сильного ветра над океаном Вы прыгнули немного не туда"
@@ -904,7 +907,7 @@ STR_AAHALO_4," m/s"," m/s"," м/с"
 STR_AAHALO_5,"Descent Rate:","Descent Rate:","Верт. ск.:"
 STR_AAHALO_6,"Brakes amount:","Brakes amount:","Торможение:"
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""Art_Of_Noise_mono"",""mission_impossible"",""capricorn1title""", """amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""", """ahead_friends"",""tovarich_moy"",""Letyat_perelyotnye_pticy_2nd"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""mission_impossible"",""capricorn1title""", """amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""", """ahead_friends"",""tovarich_moy"",""Letyat_perelyotnye_pticy_2nd"""
 STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""", """chapaev"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
 STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернативная реальность"
@@ -987,7 +990,7 @@ STR_FLAG_7,"(Create %1)","(Anlegen %1)","(Создать %1)"
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,76,76,76
+STR_RUM_NUM,77,77,77
 STR_RUM_NIGHT,"They are sleeping in %3","Alle schlafen in %3","В %3 все спят, однако"
 STR_RUM_0,"Rumors are absent! It's weird...","Gerüchte sind nicht vorhanden! Es ist seltsam...","Слухи отсутствуют! Что странно..."
 STR_RUM_1,"Enemy refuel truck will help only if your vehicle engine is on","Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf","Вражеский бензовоз заправляет при включенном двигателе техники"
@@ -1065,7 +1068,7 @@ STR_RUM_72,"Red rockets over cities usually mean the destruction of important in
 STR_RUM_73,"In the inventory, you can compare ammunition by selecting and reading the information","Im Inventar können Sie Munition vergleichen, indem Sie Informationen auswählen und Lesen","В инвентаре можно сравнивать боеприпасы, тыкая на них и просматривая информацию"
 STR_RUM_74,"Usually a strong wind blows over the ocean","Normalerweise weht ein starker wind über den Ozean","Над океаном обычно дует сильный ветер"
 STR_RUM_75,"Rumors depend on the time of day and length of stay","Gerüchte hängen von der Tageszeit und der Dauer des Aufenthalts ab","Слухи меняются от времени дня и длительности пребывания"
-
+STR_RUM_76,"If MHQ is damaged by more than 0.1, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.1 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","При повреждении КШМ более 0.1 телепорт на нём не сработает. Всегда чините КШМ!"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
