@@ -126,7 +126,6 @@ class CfgMusic
 	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
     class four_tankists { name="Czterej Pancerni i Pies, Polska Rzeczpospolita Ludowa film, 1960"; sound[] = {\sounds\intro\4tankists.ogg,db-1,1.0};} // from PRL film "4 tankists and dog"
 
-
 	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
     class chapaev1  {        name="";        sound[]=   {\sounds\intro\holidays\feb_23\chapaev1.ogg,db-1,1.0};    };
     class johnny    {        name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};    };
@@ -188,7 +187,7 @@ class CfgMusic
     class morze2  { name="Real Morze (Canada)"; sound[] = {\sounds\intro\morze\morze2.ogg,db+0,1.0};}; // Morze real message (Canada)
     class morze_0 { name="Morzyanka";   sound[] = {\sounds\intro\morze\Morzyanka.ogg.ogg,db+0,1.0};}; // Morze
     class morze_2 { name="Morzyanka 2"; sound[] = {\sounds\intro\morze\Morzyanka2.ogg.ogg,db+0,1.0};}; // Morze
-    class morze_3 { name="Morzyanka 3"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_3 { name="Morzyanka - USSR song"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg.ogg,db+0,1.0};}; // Morze
     class morze_4 { name="Morzyanka 4"; sound[] = {\sounds\intro\morze\Morzyanka4.ogg.ogg,db+0,1.0};}; // Morze
     class morze_5 { name="Morzyanka 5"; sound[] = {\sounds\intro\morze\Morzyanka5.ogg.ogg,db+0,1.0};}; // Morze
     class morze_6 { name="Morzyanka 6"; sound[] = {\sounds\intro\morze\Morzyanka6.ogg.ogg,db+0,1.0};}; // Morze
@@ -598,6 +597,13 @@ class CfgSounds
     class ipanoramDefeat {name = ""; sound[] = {\sounds\ipanoramDefeat.ogg, db+10, 1.0};}; // movie Hamlet (USSR) music
     class chiz_tanki_1   {name = "Чиж. 'По танку вдарила болванка'"; sound[] = {\sounds\defeat\chiz_tanki_1.ogg, db+10, 1.0};}; // "The tank was hit by a dummy" song of the ensemble " Chizh"
     class chiz_tanki_2   {name = "Чиж. 'По танку вдарила болванка'"; sound[] = {\sounds\defeat\chiz_tanki_2.ogg, db+10, 1.0};}; // "The tank was hit by a dummy" song of the ensemble " Chizh"
+
+    // Ranks messages
+    // for Russian language only
+    class colonel_rus_1   {name = "Полковнику никто не пишет, Би-2 (херня ансамбль)"; sound[] = {\sounds\intro\ranks\colonel-rus-1.ogg, db+10, 1.0};}; // "Nobody write to colonel" song of Bi-2 band
+    class colonel_rus_2   {name = "Полковника никто не ждёт, Би-2 (херня ансамбль)"; sound[] =  {\sounds\intro\ranks\colonel-rus-2.ogg, db+10, 1.0};}; // "Nobody waits for the colonel" song of Bi-2 band
+    class captain_rus_1   {name = "Captain please smile, USSR film 'Captain grant children'"; sound[] =  {\sounds\intro\ranks\captain-rus-1.ogg, db+10, 1.0};};
+    class captain_rus_2   {name = "Captain pull up!, USSR film 'Captain grant children'"; sound[] =  {\sounds\intro\ranks\captain-rus-2.ogg, db+10, 1.0};};
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

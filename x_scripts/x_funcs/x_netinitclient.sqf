@@ -794,12 +794,13 @@ XHandleNetStartScriptClient = {
 			};
 		};
 
-        case "say_sound": // say user sound from predefined vehicle/unit
+        case "say_sound": // say user sound from predefined vehicle/unit ["say_sound",_object,_sound, [,"-",_player_name]]
 		{
-		    private ["_nil","_obj","_sound"];
+		    private ["_nil","_obj","_sound","_exit"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
+		    if ( (argopt(3,"") == "-") && (argopt(4,"") == name player)) exitWith {false}; // Player disallowed to receipt this sound
 		    _obj = arg(1);
-		    if ((_obj distance player) > 2000 ) exitWith{}; // too far from sound source
+		    if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
 		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) )then
 		    {
                 _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
