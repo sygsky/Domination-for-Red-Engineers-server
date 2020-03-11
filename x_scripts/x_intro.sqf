@@ -87,9 +87,9 @@ if (_sound == "") then { // select random music for ordinal day
             // add some personalized songs for well known players
             _players =
             [
-                ["Ceres-de","CERES de","Ceres.","CERES"] ,
-                ["Rokse [LT]"],
-                ["Shelter", "Marcin"]
+                ["Ceres-de","CERES de","Ceres.","CERES"] , // Germany
+                ["Rokse [LT]"], // military radist
+                ["Shelter", "Marcin"] // polyaks
             ];
             _sounds  =
             [
@@ -116,7 +116,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata","smersh",
-                "del_vampiro1","del_vampiro2", "zaratustra"
+                "del_vampiro1","del_vampiro2", "zaratustra", "bolivar"
             ] + _personalSounds ) call _XfRandomArrayVal;
     //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
     //        _music = (call compile _music) call _XfRandomArrayVal;
