@@ -1690,7 +1690,7 @@ if (d_with_repstations) then {
 					if (count _nobs > 0) then {
 						if (damage _vec > 0) then {
 							_vec setDamage 0;
-							_vec vehicleChat localize format["STR_SYS_64", typeOf _vec];/* "Ваш транспорт отремонтирован техсервисом..."; */
+							_vec vehicleChat format[localize "STR_SYS_64", typeOf _vec]; // "Your transport (%1) is refurbished by technical service..."
 						};
 					};
 				};

@@ -96,15 +96,18 @@ _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x
 #ifdef __ACE__
 if (d_own_side == "EAST") then
 {
-    _identity =  format["Rus%1", (floor (random 5)) + 1];
+
+    _identity =  format["Rus%1", ceil (random 5)];
     if (_ai_side_unit call SYG_isWoman) then
     {
         _identity = "Irina";
         _unit spawn { sleep 1.5; _this say (call SYG_getFemaleExclamation);}
     };
     _unit setIdentity _identity; // there are only 5 russina voice in the ACE
-    // TODO: test if russian voice is heard on clients. May be it is possible to setIdentity only for local units
     hint localize format["+++ AI setIdentity ""%1""", _identity];
+    if (localize "STR_LANG" != "RUSSIAN") then {
+        ["msg_to_user", "", [["STR_SYS_1175_1", name _unit] ] ] call SYG_msgToUserParser; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
+    };
 };
 #endif
 
