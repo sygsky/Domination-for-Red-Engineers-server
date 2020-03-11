@@ -105,7 +105,7 @@ if (d_own_side == "EAST") then
     };
     _unit setIdentity _identity; // there are only 5 russina voice in the ACE
     hint localize format["+++ AI setIdentity ""%1""", _identity];
-    if (localize "STR_LANG" != "RUSSIAN") then {
+    if ( ! ((_identity == "Irina") || (localize "STR_LANG" == "RUSSIAN")) ) then {
         ["msg_to_user", "", [["STR_SYS_1175_1", name _unit] ] ] call SYG_msgToUserParser; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
     };
 };
