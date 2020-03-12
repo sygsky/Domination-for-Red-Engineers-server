@@ -388,7 +388,6 @@ STR_GRASS_1,"No Grass","Kein Gras","Без травы"
 STR_GRASS_2,"Medium Grass","Mittleres Gras","Средняя"
 STR_GRASS_3,"Full Grass","Voll Gras","Полная"
 
-
 STR_SYS_180,"According to the reports of the weather Bureau of USSR...","Nach berichten des wetterbüros der UdSSR...","По сводкам Гидрометеоцентра СССР..."
 STR_SYS_181,"New order:","Die neue Aufgabe:","Новое задание:"
 STR_SYS_182,"The enemy troops will be at place in less than %1 minutes","Die feindlichen Truppen werden am Ort in weniger als %1 Minuten","Вражеские войска будут на месте крушения менее чем через %1 минут[ы]"
@@ -1417,6 +1416,8 @@ STR_ACE_EJECT1,"<t color='#FF0000'>Jump Out</t>","<t color='#FF0000'>Springen</t
 STR_ACE_VDN_UAZ_MG,"UAZ-469 (Yak-B)","UAZ-469 (Yak-B)","УАЗ-469 Як-Б"
 STR_WEST,NATO,NATO,НАТО
 STR_EAST,Comrades,Kameraden,Наши
+STR_DISP_SRVSIDE_EAST,Comrades,Kameraden,Наши
+STR_DISP_INTEL_EAST_FRIENDLY,Comrades,Kameraden,Наши
 STR_GUERRILA,Partisans,Partisanen,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,зомби
 STR_ACE_WOUND_NONE,"Relax!","Ruh dich aus!","Расслабься!"
@@ -1429,7 +1430,7 @@ STR_ACE_SYS_RUCK_PACKSIZE,"Pack size:","Pack size:","Объём упак.:"
 
 STR_NAME_BCROSS,"Border Crossing","Grenzübergang","Погран. переход"
 STR_NAME_ROCKAREA,"Rock Area","Felsengebiet","Скалы"
-STR_NAME_VEGB,"Vegetation Broadleaf","Vegetation Laub","Широколиственнsq лес"
+STR_NAME_VEGB,"Vegetation Broadleaf","Vegetation Laub","Широколиственный лес"
 STR_NAME_VEGF,"Vegetation Fir","Vegetation Nadel","Хвойный лес"
 STR_GEAR_DROP,"Drop","Ablegen","Отложить"
 STR_NAME_MARINE,"Name Marine","Name Marine","Морской топоним"

@@ -1809,7 +1809,7 @@ player call SYG_handlePlayerDammage; // handle hit events
         sleep 0.05;
         _cnt = _cnt + 1;
     }    forEach [	HR1, HR2, HR3, HR4];
-    hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
+    //hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
 };
 
 #ifdef __MISSION_START__

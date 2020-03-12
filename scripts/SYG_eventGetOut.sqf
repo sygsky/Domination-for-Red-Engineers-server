@@ -42,7 +42,7 @@ SYG_TrueGetOutsCnt = 0; // number of false "GetOut" events (vehicle is not overt
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++ SYG_preventTurnOut
 // call: _success = _veh call SYG_preventTurnOut;
 SYG_preventTurnOut = {
-
+    private ["_id","_getOutEventInd"];
     if ( !alive _this ) exitWith { false };
     if ( !( (_this isKindOf "Tank") || (_this isKindOf "Car") ) ) exitWith { false };
 
