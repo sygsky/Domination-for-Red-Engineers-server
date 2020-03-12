@@ -105,7 +105,7 @@ if (_sound == "") then { // select random music for ordinal day
             } forEach _players;
             if (format["%1",player] in ["RESCUE","RESCUE2"]) then {
                 {
-                    _personalSounds = _personalSounds + ["from_russia_with_love","bond1","bond","smersh"];
+                    _personalSounds = _personalSounds + ["from_russia_with_love","bond1","bond"];
                 } forEach [1,2,3];
             }; // as you are some kind of spy
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
@@ -115,7 +115,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
-                "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata","smersh",
+                "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata",
                 "del_vampiro1","del_vampiro2", "zaratustra", "bolivar"
             ] + _personalSounds ) call _XfRandomArrayVal;
     //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
