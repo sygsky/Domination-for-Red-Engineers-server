@@ -40,8 +40,8 @@ _ownSide = (
         case "EAST": {east};
     }
 );
-_ussr = ["StrykerBase","M113","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded"];
-_usa  = ["BMP2","T72","D30","ZSU","UAZMG","Ural","BRDM2","BMP2_MHQ_unfolded"];
+_usa = ["StrykerBase","M113","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded"];
+_ussr  = ["BMP2","T72","D30","ZSU","UAZMG","Ural","BRDM2","BMP2_MHQ_unfolded"];
 
 _own_vehicles = (
     switch (d_own_side) do {
@@ -130,7 +130,7 @@ while { nr_observers > 0 && !target_clear } do {
                             _veh_cnt       =  {side _x == _enemySide} count _vecs_arr;    // enemy crew vehicles in kill zone
 
                             _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE;
-                            if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * 2; };
+                            if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1); };
 
                             _type          = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
@@ -146,7 +146,7 @@ while { nr_observers > 0 && !target_clear } do {
 
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4) on dist %5 m., [units %6, enmveh %7, obs %8, ownveh %9], %10, real<->vrt dist %11 m.",
+                                "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4) on dist %5 m., [enemy %6, enveh %7, obs %8/%9, ownveh %10], %11, real<->vrt dist %12 m.",
                                 _i,
                                 if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'.%2",name _enemy, typeOf (vehicle _enemy)]},
                                 if (_type == 1) then {"warheads"} else {"smokes"},
@@ -155,6 +155,7 @@ while { nr_observers > 0 && !target_clear } do {
                                 _unit_cnt,
                                 _veh_cnt,
                                 _observer_cnt,
+                                count _observers_arr,
                                 _own_cnt,
                                 [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist
