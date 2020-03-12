@@ -110,7 +110,7 @@ if (_sound == "") then { // select random music for ordinal day
             }; // as you are some kind of spy
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
             [
-                "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime1","lastdime2","lastdime3",
+                "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime2","lastdime3",
                 /*"Art_Of_Noise_mono",*/"mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
