@@ -44,5 +44,6 @@ if (_index >= 0) then {
         _str = [call ACE_Sys_Ruck_RuckMagazines,","] call SYG_joinArr;
         hint localize format[ "+++ x_scripts\x_serverOPD.sqf: unknown player rucksack ""%1""", _str ];
     };
+#endif
 };
 if (true) exitWith {};

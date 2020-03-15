@@ -548,4 +548,4 @@ if ( !isNull _lobj ) then { deleteVehicle _lobj};
 
 d_still_in_intro = false;
 
-if (true) exitWith {
+if (true) exitWith {};

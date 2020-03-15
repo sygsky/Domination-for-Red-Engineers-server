@@ -597,9 +597,9 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                                 _vecx setVariable ["damage", damage _vecx];
                             };
                             if ( ((damage _vecx) > _lastDamage)  && (speedMode _vecx == "LIMITED")) then { // accelerate in case of damage received
-                                _vecx setSpeedMode "NORMAL";
+                                _vecx setSpeedMode "FULL";
 #ifdef __PRINT__
-                                hint localize format[ "+++ x_airki.sqf[%1]: change airkiller %2 speed from LIMITED to NORMAL", _type, typeOf _vecx ];
+                                hint localize format[ "+++ x_airki.sqf[%1]: change airkiller %2 speed from LIMITED to FULL", _type, typeOf _vecx ];
 #endif
                             };
                         };
