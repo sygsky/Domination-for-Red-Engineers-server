@@ -9,7 +9,7 @@
 };
 
 SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron"];
-SYG_localZones = [            0,          0,        0,    -4,           0,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
+SYG_localZones = [            0,          0,        0,    -4,          +1,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
@@ -295,7 +295,10 @@ XHandleNetStartScriptServer = {
 			_name call SYG_lastPlayersAdd; // add player to linked list of entered ones
 			if (((count _arr1) + (count _arr2)) > 0) then // if any towns/players are countedinform user about them
 			{
-                _arr = ["STR_GRU_56"] + [[_arr1, ", "] call SYG_joinArr] + [[_arr2,", "] call SYG_joinArr];
+			    _str = [_arr1, ", "] call SYG_joinArr;
+			    _arr = ["STR_GRU_56"] + [_str];
+			    _str = [_arr2,", "] call SYG_joinArr;
+                _arr = _arr + [_str];
                 _msg_arr set [ count _msg_arr, _arr ]; // "GRU: last towns%1,  last soldiers%2"
 			};
 

@@ -160,6 +160,12 @@ _str = _str + _strYes;
 _str = _str + _strNo;
 #endif
 
+#ifdef __NO_TELEPORT_ON_DAMAGE__
+    _str = _str + (format[localize "STR_SET_9_2", __NO_TELEPORT_ON_DAMAGE__ ]) + "\n"; // "Teleport works until the destruction of MHQ"
+#else
+    _str = _str + (localize "STR_SET_9_1") + "\n"; // "Teleport shuts off when MHQ is damaged at %1 percents"
+#endif
+
 _str = _str + (localize "STR_SET_10") ; // "Jail"
 #ifdef __JAIL_MAX_SCORE__
 _str = _str + format[localize "STR_SET_10_1",__JAIL_MAX_SCORE__] + "\n";

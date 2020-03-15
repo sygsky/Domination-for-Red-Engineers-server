@@ -18,49 +18,53 @@ _mr2text ctrlSetText "";
 #ifdef __TT__
 if (playerSide == west) then {
 #endif
-    if (mr1_in_air) then {
-        _mr1text ctrlSetText localize "STR_SYS_21";//"Mobile respawn 1 gets transported by airlift..."
-        _mr1_available = false;
-    } else {
-        if (speed MRR1 > 4) then {
+    if ( true ) then { // check MHQ #1
+        if (mr1_in_air) exitWith {
+            _mr1text ctrlSetText localize "STR_SYS_21";//"Mobile respawn 1 gets transported by airlift..."
+            _mr1_available = false;
+        };
+        if (speed MRR1 > 4) exitWith {
             _mr1text ctrlSetText localize "STR_SYS_23"; //"Mobile respawn 1 currently driving..."
             _mr1_available = false;
-        } else
-        {
-            if (surfaceIsWater [(position MRR1) select 0,(position MRR1) select 1]) then {
-                _mr1text ctrlSetText localize "STR_SYS_25";// "MHQ 1 is in water..."
-                _mr1_available = false;
-#ifdef __NO_TELEPORT_ON_DAMAGE__
-            } else {
-                if (damage MRR1 > __NO_TELEPORT_ON_DAMAGE__) then {
-                    _mr1text ctrlSetText format[localize "STR_SYS_25_1", round((damage MRR1) * 100),"%"]; // "MHQ 1 damaged (%1) respawn not possible..."
-                    _mr1_available = false;
-                };
-#endif
-            };
         };
+        if (surfaceIsWater [(position MRR1) select 0,(position MRR1) select 1]) exitWith {
+            _mr1text ctrlSetText localize "STR_SYS_25";// "MHQ 1 is in water..."
+            _mr1_available = false;
+    #ifdef __NO_TELEPORT_ON_DAMAGE__
+        };
+        if (damage MRR1 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
+            _mr1text ctrlSetText format[localize "STR_SYS_25_1", round((damage MRR1) * 100),"%"]; // "MHQ 1 teleport damaged (%1%2)..." or "MHQ 1 damaged (%1) respawn not possible..."
+            _mr1_available = false;
+        };
+        if ( (damage MRR1) > (__NO_TELEPORT_ON_DAMAGE__ / 5)) exitWith {
+            _mr1text ctrlSetText format[localize "STR_SYS_26",1 , round((damage MRR1) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
+        };
+    #endif
     };
-    if (mr2_in_air) then {
-        _mr2text ctrlSetText localize "STR_SYS_22";  //"Mobile respawn 2 gets transported by airlift..."
-        _mr2_available = false;
-    } else {
-        if (speed MRR2 > 4) then {
+    if (true) then { // check MHQ #2
+        if (mr2_in_air) exitWith {
+            _mr2text ctrlSetText localize "STR_SYS_22";  //"Mobile respawn 2 gets transported by airlift..."
+            _mr2_available = false;
+        };
+        if (speed MRR2 > 4) exitWith {
             _mr2text ctrlSetText localize "STR_SYS_24"; //"Mobile respawn 2 currently driving..."
             _mr2_available = false;
-        } else {
-            if (surfaceIsWater [(position MRR2) select 0,(position MRR2) select 1]) then {
-                _mr2text ctrlSetText localize "STR_SYS_26"; // "MHQ 2 is in water..."
-                _mr2_available = false;
-#ifdef __NO_TELEPORT_ON_DAMAGE__
-            } else {
-                if (damage MRR2 > 0.1) then {
-                    _mr2text ctrlSetText format[localize "STR_SYS_25_2", round((damage MRR2) * 100),"%"]; // "MHQ 2 damaged (%1) respawn not possible..."
-                    _mr2_available = false;
-                };
-#endif
-            };
         };
+        if (surfaceIsWater [(position MRR2) select 0,(position MRR2) select 1]) exitWith {
+            _mr2text ctrlSetText localize "STR_SYS_26"; // "MHQ 2 is in water..."
+            _mr2_available = false;
+        };
+    #ifdef __NO_TELEPORT_ON_DAMAGE__
+        if (damage MRR2 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
+            _mr2text ctrlSetText format[localize "STR_SYS_25_2", round((damage MRR2) * 100),"%"]; // "MHQ 2 damaged (%1) respawn not possible..."
+            _mr2_available = false;
+        };
+        if ( (damage MRR2) > (__NO_TELEPORT_ON_DAMAGE__ / 5)) then {
+            _mr1text ctrlSetText format[localize "STR_SYS_26", 2, round((damage MRR2) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
+        };
+    #endif
     };
+
 #ifdef __TT__
 } else {
 	if (mrr1_in_air) then {

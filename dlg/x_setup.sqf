@@ -169,4 +169,4 @@
 #define __ALLOW_SHOTGUNS__
 
 // uncomment lower line to diable teleport on MHQ damaged more then designated in define
-#define __NO_TELEPORT_ON_DAMAGE__ 0.1 // MHQ damage limit to prevent its teleport functionality
+#define __NO_TELEPORT_ON_DAMAGE__ 0.5 // MHQ damage limit to prevent its teleport functionality

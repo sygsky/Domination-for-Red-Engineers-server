@@ -74,6 +74,7 @@ _global_pos set [2, 0];  // always port to the ground
 player setPos _global_pos;
 player setDir _global_dir;
 sleep 2;
+// TODO: try to set vehicle locally on each client computer
 _veh call SYG_revealToAllPlayers;
 
 closeDialog 100001;
