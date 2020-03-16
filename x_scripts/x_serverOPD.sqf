@@ -1,4 +1,4 @@
-// Xeno, x_scripts/x_serverOPD.sqf, OnPlayerDisconnected
+// Xeno, x_scripts\x_serverOPD.sqf, OnPlayerDisconnected
 if (!isServer) exitWith{};
 private ["_name", "_index", "_parray", "_oldwtime", "_connecttime", "_newwtime","_str"];
 
@@ -32,7 +32,7 @@ if (_index >= 0) then {
 
 #ifdef __DEBUG_PRINT__
     hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", array %2", _name, _parray ];
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: ammo ""%1"", array %2", weapons player ];
+    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: ammo ""%1""", weapons player ];
 #endif
 
     __DEBUG_NET("x_serverOPD player disconnected _parray",_parray)

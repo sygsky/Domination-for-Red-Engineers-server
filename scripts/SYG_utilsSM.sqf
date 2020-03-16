@@ -164,7 +164,7 @@ SYG_queueItem = {
     +_arr
 };
 
-// call: _list= _queue call SYG_queueItem;
+// call: _list = _queue call SYG_queueItem;
 SYG_getQueueList = {
     +(_this select 0)
 };

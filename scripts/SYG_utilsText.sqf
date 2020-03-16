@@ -107,6 +107,6 @@ SYG_joinArr = {
     _arr = _this select 0;
     _str = _arr select 0;
     if ( count _arr == 1) exitWith {_str};
-    for "_i" from 1 to (count _this) do{ _str = format[ "%1%2%3", _str, _sep, _arr select _i] };
+    for "_i" from 1 to ((count _this) - 1) do{ _str = format[ "%1%2%3", _str, _sep, _arr select _i] };
     _str
 };
