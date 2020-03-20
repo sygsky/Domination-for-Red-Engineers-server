@@ -1,4 +1,4 @@
-// x_scripts/x_arifire.sqf, by Xeno
+// x_scripts\x_arifire.sqf, by Xeno
 private ["_arti_operator", "_height", "_type", "_radius", "_number_shells", "_arix", "_ariy", "_ang", "_posf", "_posb", "_posl", "_posr", "_center_x", "_center_y", "_arti_distance", "_travel_time", "_first_run", "_enemy_units", "_points_p", "_series", "_wp_array", "_x1", "_y1", "_angle", "_strenght", "_i", "_j", "_soldier_type", "_uuu", "_shell", "_xo", "_pos", "_pod", "_helper_bomb", "_remove_them", "_ari_salvos"];
 if (!isServer) exitWith {};
 

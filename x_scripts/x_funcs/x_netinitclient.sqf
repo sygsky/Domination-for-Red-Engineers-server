@@ -805,7 +805,6 @@ XHandleNetStartScriptClient = {
 		    {
                 _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
                 sleep 0.01;
-                // let all to hear this sound, not only current player
                 _nil say arg(2);
                 sleep 0.01;
     		    _sound = nearestObject [position _nil, "#soundonvehicle"];

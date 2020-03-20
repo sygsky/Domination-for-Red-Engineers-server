@@ -546,11 +546,11 @@ SYG_getFemaleExclamation = {
     ["woman_excl1","woman_excl2","woman_excl3","woman_excl4","woman_excl5","woman_excl6","woman_excl7","woman_dont_trust"] call XfRandomArrayVal;
 };
 
-SYG_captainRank = {
+SYG_captainRankSound = {
     format["captain_rus_%1", ceil (random 2)]
 };
 
-SYG_colonelRank = {
+SYG_colonelRankSound = {
     format["colonel_rus_%1", ceil (random 2)]
 };
 

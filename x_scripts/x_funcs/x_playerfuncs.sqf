@@ -418,7 +418,7 @@ XPlayerRank = {
 		if (d_player_old_score < (d_points_needed select 4)) then {
 			format[localize "STR_SYS_67"/* "Поздравляем с присвоением внеочередного звания Капитана" */,localize "STR_TSD9_30"] call XfHQChat;
             if (localize "STR_LANGUAGE" == "RUSSIAN") then {
-                ["say_sound", player, call SYG_captainRank,"-", name player] call XSendNetStartScriptClientAll; // send to all except you
+                ["say_sound", player, call SYG_captainRankSound,"-", name player] call XSendNetStartScriptClientAll; // send to all except you
             } else {
                 ["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
             };
@@ -451,7 +451,7 @@ XPlayerRank = {
 		d_player_pseudo_rank = d_player_old_rank;
 
         if (localize "STR_LANGUAGE" == "RUSSIAN") then {
-            ["say_sound", player, call SYG_colonelRank,"-", name player] call XSendNetStartScriptClientAll; // send to all except you
+            ["say_sound", player, call SYG_colonelRankSound,"-", name player] call XSendNetStartScriptClientAll; // send to all except you
         } else {
 			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
         };
