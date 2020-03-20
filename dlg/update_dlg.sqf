@@ -30,7 +30,11 @@ if (playerSide == west) then {
         if (surfaceIsWater [(position MRR1) select 0,(position MRR1) select 1]) exitWith {
             _mr1text ctrlSetText localize "STR_SYS_25";// "MHQ 1 is in water..."
             _mr1_available = false;
+        };
     #ifdef __NO_TELEPORT_ON_DAMAGE__
+        if (!alive MRR1) exitWith {
+            _mr1text ctrlSetText format[localize "STR_SYS_25_3", 1]; // "MHQ %1 destroyed..."
+            _mr1_available = false;
         };
         if (damage MRR1 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
             _mr1text ctrlSetText format[localize "STR_SYS_25_1", round((damage MRR1) * 100),"%"]; // "MHQ 1 teleport damaged (%1%2)..." or "MHQ 1 damaged (%1) respawn not possible..."
@@ -55,6 +59,10 @@ if (playerSide == west) then {
             _mr2_available = false;
         };
     #ifdef __NO_TELEPORT_ON_DAMAGE__
+        if (!alive MRR2) exitWith {
+            _mr2text ctrlSetText format[localize "STR_SYS_25_3", 2]; // "MHQ %1 destroyed..."
+            _mr2_available = false;
+        };
         if (damage MRR2 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
             _mr2text ctrlSetText format[localize "STR_SYS_25_2", round((damage MRR2) * 100),"%"]; // "MHQ 2 damaged (%1) respawn not possible..."
             _mr2_available = false;

@@ -105,6 +105,7 @@ STR_SYS_24,"Mobile respawn 1 currently driving...","Mobile Respawn 2 in Bewegung
 STR_SYS_25,"MHQ 1 is in water...","MHQ 1 ist im Wasser...","КШМ 1 сейчас в воде..."
 STR_SYS_25_1,"MHQ 1 teleport damaged (%1%2)...","MHQ 1 teleport beschädigt (%1%2)...","Телепорт КШМ 1 повреждён (%1%2)..."
 STR_SYS_25_2,"MHQ 2 teleport damaged (%1%2)e...","MHQ 2 teleport beschädigt (%1%2)...","Телепорт КШМ 2 повреждён (%1%2)..."
+STR_SYS_25_3,"MHQ %1 & teleport destroyed...","Teleporter MHQ %1 wurde zerstört...","Телепорту и КШМ %1 конец..."
 STR_SYS_26,"MHQ %1 dmg %2%3, teleport in danger!","MHQ %1 dmg %2%3, teleportiere in Gefahr!","Повр. КШМ %1 %2%3, скоро отказ телепорта!"
 STR_SYS_30,"Respawn","Respawn","Возрождение"
 STR_SYS_31," (last one)"," (die Letzte)"," (последний)"
