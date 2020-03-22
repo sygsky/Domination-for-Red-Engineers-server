@@ -214,7 +214,7 @@ if (X_Client) then {
     // Array with all predefined score for many achievments
     d_ranked_a = [
         10, 		// 0 очков необходимо инженеру для ремонта
-        [4,3,2,1], 	// 1 очков начисляется инженеру за ремонт авиа, танки, машины, другое
+        [4,3,2,1], 	// 1 очков начисляется инженеру за ремонт авиа, танки, машины, другое. Now is deprected, score added for the number of repair steps, not vehicle type!!!
         2, 			// 2 очков вычитается за 1 залп
         3,          // 3 points in the AI version for recruiting one soldier
         1, 			// 4 очков вычитается за AAHALO parajump

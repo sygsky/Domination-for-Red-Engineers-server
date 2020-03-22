@@ -46,6 +46,7 @@ if (client_target_counter < number_targets) then {
             player addScore (d_ranked_a select 9); // you get point only being in the town!
 		};
         (format [localize "STR_SYS_1102"/* "For the liberation of the settlement you get %1%2 !" */,_strBonus, _bonus_vehicle]) call XfHQChat;
+        playSound "good_news";
 	};
 #endif
 
