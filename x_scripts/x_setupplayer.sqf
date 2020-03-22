@@ -1821,7 +1821,6 @@ player call SYG_handlePlayerDammage; // handle hit events
 #ifdef __ACE__
     _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
     _personal_boxes = nearestObjects [depot, _personal_boxes, 20];
-    hint localize format["+++ _personal_boxes found %1", count _personal_boxes];
     {
         _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];
     }   forEach _personal_boxes;
