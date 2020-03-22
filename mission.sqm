@@ -603,7 +603,7 @@ class Mission
 					special="NONE";
 					id=123;
 					side="EAST";
-					vehicle="ACE_SoldierERadio_VDVR"; //"ACE_SoldierE_FO_VDV";
+					vehicle="ACE_SoldierERadio_VDVR";
 					player="PLAY CDG";
 					leader=1;
 					skill=0.600000;
@@ -692,7 +692,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=243;
+		items=245;
 		class Item0
 		{
 			position[]={9660.000000,139.994995,9992.799805};
@@ -1684,7 +1684,7 @@ class Mission
 		};
 		class Item96
 		{
-			position[]={9696.6,134,9950}; // {9701.535156,139.994995,9941.029297};
+			position[]={9696.599609,134.000000,9950.000000};
 			special="NONE";
 			id=131;
 			side="EMPTY";
@@ -2460,7 +2460,7 @@ class Mission
 			vehicle="SpecialBoxGuer";
 			skill=0.600000;
 			text="grubox";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1,((getPos this) select 2)+2.24];clearWeaponCargo this; clearMagazineCargo this; grubox addEventHandler [""hit"", {grubox setDammage -900000000000}]; grubox addEventHandler [""dammaged"", {grubox setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1,((getPos this) select 2)+2.24];clearWeaponCargo this; clearMagazineCargo this; grubox addEventHandler [""hit"", {grubox setDammage -1000000}]; grubox addEventHandler [""dammaged"", {grubox setDammage -1000000}];";
 		};
 		class Item177
 		{
@@ -2977,7 +2977,6 @@ class Mission
 		};
 		class Item228
 		{
-    		//presence=0.000000;
 			position[]={9667.043945,142.730530,9993.524414};
 			azimut=270.000000;
 			id=268;
@@ -2989,7 +2988,7 @@ class Mission
 		};
 		class Item229
 		{
-			position[]={9670.927734,145.027328,9989.473633};
+			position[]={9671.0,145.027328,9989.473633};
 			azimut=90.000000;
 			id=269;
 			side="EMPTY";
@@ -3000,7 +2999,7 @@ class Mission
 		};
 		class Item230
 		{
-			position[]={9670.922852,142.730530,9991.619141};
+			position[]={9671.0,142.730530,9991.619141};
 			azimut=90.000000;
 			id=270;
 			side="EMPTY";
@@ -3036,7 +3035,7 @@ class Mission
 		class Item233
 		{
 			presenceCondition="false";
-			position[]={9668.794922,145.68,9997.892578};
+			position[]={9668.794922,145.679993,9997.892578};
 			azimut=270.000000;
 			id=273;
 			side="EMPTY";
@@ -3059,7 +3058,7 @@ class Mission
 		class Item235
 		{
 			presenceCondition="false";
-			position[]={9678.999023,145.68,9987.595703};
+			position[]={9678.999023,145.679993,9987.595703};
 			azimut=270.000000;
 			id=275;
 			side="EMPTY";
@@ -3143,6 +3142,28 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL4";
+		};
+		class Item243
+		{
+			position[]={9671.0,139.994995,9991.619141};
+			azimut=90.000000;
+			id=283;
+			side="EMPTY";
+			vehicle="ACE_WeaponBox";
+			skill=0.600000;
+			text="box4";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.25];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage -900000000000}]; box1 addEventHandler [""dammaged"", {box1 setDammage -900000000000}];";
+		};
+		class Item244
+		{
+			position[]={9671.0,139.994995,9989.473633};
+			azimut=90.000000;
+			id=284;
+			side="EMPTY";
+			vehicle="ACE_WeaponBox";
+			skill=0.600000;
+			text="box5";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.25];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage -900000000000}];box2 addEventHandler [""dammaged"", {box2 setDammage -900000000000}];";
 		};
 	};
 	class Markers

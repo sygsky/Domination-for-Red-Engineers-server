@@ -847,6 +847,16 @@ STR_SYS_1216,"Air drop radius (0 = exact position): ","Lufttropfenradius (0 = ge
 STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / Auftanken / Reparieren: ","Время цикла перезарядки/заправки/ремонта: "
 STR_SYS_1218,"Enemy air vehicles locked: ","Feindliche Luftfahrzeuge gesperrt:","Вражеская авиатехника блокирована: "
 
+STR_SYS_MAINBOX,"Your personal equipment box. No one but You can use it","Deine persönliche Waffenkiste. Niemand, aber Sie können es verwenden","Ваш личный ящик со снаряжением. Никто, кроме Вас, не может его использовать"
+STR_SYS_GRUBOX," The GRU's public weapon box. Keep weapons that are not used on secret missions here","Die öffentliche Waffenkiste der GRU. Bewahren Sie hier Waffen auf, die nicht für geheime Missionen verwendet werden","Общедоступный оружейный ящик ГРУ. Храните здесь оружие, не используемое на секретных заданиях"
+
+STR_SYS_BOX,"A weapon box available to everyone.","Eine Waffenkiste für jedermann","Оружейный ящик, доступный всем"
+STR_SYS_BOX1,"%1. Keep our weapons in it for passing on to lower ranked comrades","%1. Halten Sie unsere Waffen in ihm für die Weitergabe an Kameraden unteren Ranges","Оружейный ящик, доступный всем. Храните в нём наше оружие для передачи младшим по званию"
+STR_SYS_BOX2,"%1. Keep captured rifles in it","%1. Halten Sie Gefangene Gewehre drin","Оружейный ящик, доступный всем. Храните в нём трофейные виинтовки"
+STR_SYS_BOX3,"%1. Store here any weapons that can be used to defend the base","%1. Speichern Sie hier alle Waffen, die verwendet werden können, um die Basis zu verteidigen","Оружейный ящик, доступный всем. Ящик с оружием, доступный каждому. Храните здесь оружие, которое можно использовать для обороны базы"
+STR_SYS_BOX4,"%1. Store various captured AT/AA weapons in it","%1. Speichern Sie verschiedene Gefangene AT / AA Waffen darin","Оружейный ящик, доступный всем. Храните в нём различные трофейные РПГ/Стингеры"
+STR_SYS_BOX5,"%1. Store captured pistols, grenades, and other equipment in it","%1. Speichern Sie erfasste Pistolen, Granaten und andere Ausrüstung darin","Оружейный ящик, доступный всем. Храните в нём трофейные пистолеты, гранаты, прочее снаряжение"
+
 STR_SYS_RUMORS,"Use rumors, they often contain useful information","Verwenden Sie Gerüchte, Sie enthalten oft nützliche Informationen","Используйте слухи, они часто содержат полезную информацию"
 
 STR_SYS_SERVICE_DMG,"Service %1 is damaged","Service %1 beschädigt","Сервис %1 повреждён!"

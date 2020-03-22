@@ -67,7 +67,7 @@ if ( _string_player in d_can_use_artillery ) then {
 }
 else
 {
-    AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"]; // "Inspect"
+    AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\info_barracks.sqf"]; // "Inspect"
 };
 
 #endif

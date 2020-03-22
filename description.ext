@@ -169,7 +169,6 @@ class CfgMusic
     class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
     class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
     class melody_by_voice { name=""; sound[] = {\sounds\melody_by_voice.ogg,db+0,1.0};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
-//    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; }; // not used more
 //    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro music, Soviet song about comrade
     class sovest1 { name=""; sound[] = {\sounds\intro\sovest1.ogg,db-1,1.0};} // intro music, Soviet song from film "consciousness"
@@ -564,11 +563,13 @@ class CfgSounds
     // Ranks messages
     // for Russian language only
     class colonel_rus_1   {name = "Полковнику никто не пишет, Би-2 (херня ансамбль)"; sound[] = {\sounds\intro\ranks\colonel-rus-1.ogg, db+10, 1.0}; titles[] = {}; }; // "Nobody write to colonel" song of Bi-2 band
-    class colonel_rus_2   {name = "Полковника никто не ждёт, Би-2 (херня ансамбль)"; sound[] =  {\sounds\intro\ranks\colonel-rus-2.ogg, db+10, 1.0}; titles[] = {}; }; // "Nobody waits for the colonel" song of Bi-2 band
-    class captain_rus_1   {name = "Captain please smile, USSR film 'Captain grant children'"; sound[] =  {\sounds\intro\ranks\captain-rus-1.ogg, db+10, 1.0}; titles[] = {}; };
-    class captain_rus_2   {name = "Captain pull up!, USSR film 'Captain grant children'"; sound[] =  {\sounds\intro\ranks\captain-rus-2.ogg, db+10, 1.0}; titles[] = {}; };
-    class damaged         {name = "Damaged, by robot woman"; sound[] =  {\sounds\women\damaged.ogg, db+10, 1.0}; titles[] = {};};
-    class damaging        {name = "Damaging, by robot woman"; sound[] =  {\sounds\women\damaging.ogg, db+10, 1.0};  titles[] = {};};
+    class colonel_rus_2   {name = "Полковника никто не ждёт, Би-2 (херня ансамбль)";  sound[] = {\sounds\intro\ranks\colonel-rus-2.ogg, db+10, 1.0}; titles[] = {}; }; // "Nobody waits for the colonel" song of Bi-2 band
+    class captain_rus_1   {name = "Captain please smile, USSR film 'Captain grant children'"; sound[] = {\sounds\intro\ranks\captain-rus-1.ogg, db+10, 1.0}; titles[] = {}; };
+    class captain_rus_2   {name = "Captain pull up!, USSR film 'Captain grant children'"; sound[] = {\sounds\intro\ranks\captain-rus-2.ogg, db+10, 1.0}; titles[] = {}; };
+    class damaged         {name = "Damaged, by robot woman"; sound[]  = {\sounds\women\damaged.ogg, db+10, 1.0}; titles[] = {};};
+    class damaging        {name = "Damaging, by robot woman"; sound[] = {\sounds\women\damaging.ogg, db+10, 1.0}; titles[] = {};};
+
+    class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; titles[] = {};}; // not used more
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

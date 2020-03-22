@@ -1599,6 +1599,7 @@ if (!d_para_at_base) then {
 
 #ifdef __ACE__
 // create additional boxes (rucksack, HuntIR etc)
+hint localize format["+++ d_ace_boxes = %1",d_ace_boxes ];
 for "_i" from 0 to (count d_ace_boxes) - 1 do {
 	_element = d_ace_boxes select _i;
 	_box = (_element select 0) createVehicleLocal (_element select 1);
@@ -1805,11 +1806,26 @@ player call SYG_handlePlayerDammage; // handle hit events
     // make the load on the Mi-17 less
     _cnt = 0;
     {
-        [_x,2] call SYG_setHeliParaCargo; // TODO
+        [_x,2] call SYG_setHeliParaCargo;
         sleep 0.05;
         _cnt = _cnt + 1;
     }    forEach [	HR1, HR2, HR3, HR4];
     //hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
+    {
+        if ( !( (isNil str( _x ) ) || ( ! alive _x ) ) ) then {
+            _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", format[localize format["STR_SYS_%1", toUpper str(_x)], "STR_SYS_BOX" ]];
+        } else {
+            hint localize format["--- Error: variable ""%1"" not found/not alive", str(_x)];
+        };
+    }   forEach [box1, box2, box3, box4, box5, grubox];
+#ifdef __ACE__
+    _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
+    _personal_boxes = nearestObjects [depot, _personal_boxes, 20];
+    hint localize format["+++ _personal_boxes found %1", count _personal_boxes];
+    {
+        _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];
+    }   forEach _personal_boxes;
+#endif
 };
 
 #ifdef __MISSION_START__
