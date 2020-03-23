@@ -113,9 +113,9 @@ if (_sound == "") then { // select random music for ordinal day
                 "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime2","lastdime3",
                 /*"Art_Of_Noise_mono",*/"mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
-                "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","cosmos","manchester_et_liverpool",
+                "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","chapaev1","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
-                "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","morricone1","toccata",
+                "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2",/*"morricone1",*/"toccata",
                 "del_vampiro1","del_vampiro2", "zaratustra", "bolivar"
             ] + _personalSounds ) call _XfRandomArrayVal;
     //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
