@@ -927,7 +927,7 @@ STR_INTRO_1,"Alternative reality","Alternative Realität","Альтернати�
 STR_INTRO_2,"Somewhere in North Atlantics not far from USA","Irgendwo in North Atlantics nicht weit von USA","Северная Атлантика, 1000 км от побережья США"
 STR_INTRO_3,"%1. %2, %3, %4 mission day","%1. %2, %3, %4 mission Tag","%1. %2, %3, %4-й день миссии"
 STR_INTRO_4,"Sahrani island. Nearest settlement - %1","Insel Sahrani. Nächste Siedlung - %1","Остров Сахрани. Ближайшее поселение - %1"
-STR_INTRO_5,"Today in the USSR (1985) holiday: ""%1"" (%2)","Heute in der UdSSR (1985) Urlaub: ""%1"" (%2)","Сегодня в СССР (1985 г.) праздник: ""%1"" (%2)"
+STR_INTRO_5,"Today in the USSR (in 1985) holiday: ""%1"" (%2)","Heute in der UdSSR (1985) ist ein Feiertag: ""%1"" (%2)","Сегодня в СССР (в 1985 г.) праздник: ""%1"" (%2)"
 STR_INTRO_5_0,working day,Arbeitstag,рабочий день
 STR_INTRO_5_1,holiday,arbeitsfreier Tag,выходной
 STR_INTRO_SIDE,"USSR","UdSSR","СССР"
