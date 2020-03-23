@@ -168,7 +168,7 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 SYG_getLaughterSound =
 {
     ["laughter_1","laughter_2","laughter_3","laughter_4","good_job","game_over","get_some","go_go_go","cheater","busted",
-    "greatjob1","greatjob2","fight"] call XfRandomArrayVal
+    "greatjob1","greatjob2","fight","handsup"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
@@ -550,8 +550,18 @@ SYG_captainRankSound = {
     format["captain_rus_%1", ceil (random 2)]
 };
 
+SYG_corporalRankSound = {
+    "corporal_eng_1"
+};
+
+SYG_sergeantRankSound = {
+    "sergeant_eng_1"
+};
+
 SYG_colonelRankSound = {
     format["colonel_rus_%1", ceil (random 2)]
 };
+
+SYG_exclamationSound = { format["exclamation%1", ceil (random 6)] };
 
 if (true) exitWith {};

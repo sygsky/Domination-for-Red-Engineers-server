@@ -10,8 +10,6 @@
         returns: nothing
 */
 
-private ["_str"];
-
 SYG_lastAnimationType = _this select 1;
 
 //_str = format[ "+++ animChanged: %1 at %2", SYG_lastAnimationType, time ];

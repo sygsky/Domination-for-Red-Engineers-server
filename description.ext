@@ -451,7 +451,7 @@ class CfgSounds
     class male_scream_0 {name = ""; sound[] = {\sounds\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_1 {name = ""; sound[] = {\sounds\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_2 {name = ""; sound[] = {\sounds\male_scream_2.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_3 {name = ""; sound[] = {\sounds\male_scream_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_3 {name = ""; sound[] = {\sounds\male_scream_8.ogg, db+0, 1.0}; titles[] = {}; }; // 3rd was removed and replaced temporarily with 8th
     class male_scream_4 {name = ""; sound[] = {\sounds\male_scream_4.ogg, db+10, 1.0}; titles[] = {}; };
     class male_scream_5 {name = ""; sound[] = {\sounds\male_scream_5.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_6 {name = ""; sound[] = {\sounds\male_scream_6.ogg, db+0, 1.0}; titles[] = {}; };
@@ -526,6 +526,14 @@ class CfgSounds
     class greatjob1 { name="Great job 1";   sound[] = {\sounds\defeat\laughter\great-job1.ogg,db+10,1.0}; titles[] = {}; } // say "Great job 1"
     class greatjob2 { name="Great job 2";   sound[] = {\sounds\defeat\laughter\great-job1.ogg,db+10,1.0}; titles[] = {}; } // say "Great job"
     class fight { name="fight";   sound[] = {\sounds\defeat\laughter\fight.ogg,db+10,1.0}; titles[] = {}; } // say "fight"
+    class handsup { name="put your hands up";   sound[] = {\sounds\defeat\laughter\Put_Your_Hands_Up.ogg,db+10,1.0}; titles[] = {}; } // say "put your hand up"
+
+    class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\laughter\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\laughter\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation3 { name="eclamation";   sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation4 { name="eclamation";   sound[] = {\sounds\defeat\laughter\4.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation5 { name="eclamation";   sound[] = {\sounds\defeat\laughter\5.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation6 { name="eclamation";   sound[] = {\sounds\defeat\laughter\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
 
     class under_water_3   {name = ""; sound[] = {\sounds\defeat\water\under_water3.ogg, db+10, 1.0}; titles[] = {};};
     // Period of the day sounds
@@ -562,10 +570,14 @@ class CfgSounds
 
     // Ranks messages
     // for Russian language only
-    class colonel_rus_1   {name = "Полковнику никто не пишет, Би-2 (херня ансамбль)"; sound[] = {\sounds\intro\ranks\colonel-rus-1.ogg, db+10, 1.0}; titles[] = {}; }; // "Nobody write to colonel" song of Bi-2 band
-    class colonel_rus_2   {name = "Полковника никто не ждёт, Би-2 (херня ансамбль)";  sound[] = {\sounds\intro\ranks\colonel-rus-2.ogg, db+10, 1.0}; titles[] = {}; }; // "Nobody waits for the colonel" song of Bi-2 band
+    class seargent_eng_1   {name = "Yes Sergeant"; sound[] = {\sounds\intro\ranks\seargent-eng-1.ogg.ogg, db+10, 1.0}; titles[] = {}; };
+    class corporal_eng_1   {name = "Yes Corporal"; sound[] = {\sounds\intro\ranks\corporal-eng-1.ogg, db+10, 1.0}; titles[] = {}; };
+
     class captain_rus_1   {name = "Captain please smile, USSR film 'Captain grant children'"; sound[] = {\sounds\intro\ranks\captain-rus-1.ogg, db+10, 1.0}; titles[] = {}; };
     class captain_rus_2   {name = "Captain pull up!, USSR film 'Captain grant children'"; sound[] = {\sounds\intro\ranks\captain-rus-2.ogg, db+10, 1.0}; titles[] = {}; };
+    class colonel_rus_1   {name = "Полковнику никто не пишет, Би-2 (херня ансамбль)"; sound[] = {\sounds\intro\ranks\colonel-rus-1.ogg, db+10, 1.0}; titles[] = {}; }; // "Nobody write to colonel" song of Bi-2 band
+    class colonel_rus_2   {name = "Полковника никто не ждёт, Би-2 (херня ансамбль)";  sound[] = {\sounds\intro\ranks\colonel-rus-2.ogg, db+10, 1.0}; titles[] = {}; }; // "Nobody waits for the colonel" song of Bi-2 band
+
     class damaged         {name = "Damaged, by robot woman"; sound[]  = {\sounds\women\damaged.ogg, db+10, 1.0}; titles[] = {};};
     class damaging        {name = "Damaging, by robot woman"; sound[] = {\sounds\women\damaging.ogg, db+10, 1.0}; titles[] = {};};
 

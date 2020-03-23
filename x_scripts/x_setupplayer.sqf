@@ -601,6 +601,9 @@ if (__ReviveVer || __AIVer || !d_with_respawn_dialog_after_death) then {
 	};
 #endif
 };
+_p addEventHandler ["animChanged", { SYG_lastAnimationType = _this select 1 } ];
+SYG_healAnimDoneHandler = compile preprocessFileLineNumbers "scripts\healAnimDone.sqf";
+_p addEventHandler ["animDone", {_this spawn SYG_healAnimDoneHandler} ];
 
 d_chop_lift_list = [];
 d_chop_wreck_lift_list = [];

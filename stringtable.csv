@@ -101,10 +101,13 @@ STR_SYS_20,"Select respawn place","Wahl eines Revival-Ortes","Выбор мес�
 STR_SYS_21,"MHQ %1 gets transported by airlift...","MHQ %1 wird per Luftbrücke transportiert...","КШМ %1 в воздухе..."
 STR_SYS_22,"MHQ %1 currently driving...","MHQ %1 in Bewegung ...","КШМ %1 в движении..."
 
+STR_SYS_23,"% 1 has been destroyed and is queued for recovery","% 1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange","%1 уничтожен(а), и поставлена в очередь на на восстановление"
+
 STR_SYS_25,"MHQ %1 is in water...","MHQ %1 ist im Wasser...","КШМ %1 сейчас в воде..."
 STR_SYS_26,"Teleport on MHQ %1 is faulty (%2%3)...","Der TELEPORT auf MHQ %1 ist defekt (%2% 3)...","Телепорт на КШМ %1 неисправен (%2%3)..."
 STR_SYS_27,"MHQ %1 dmg %2%3, teleport in danger!","MHQ %1 dmg %2%3, teleportiere in Gefahr!","Повр. КШМ %1 %2%3, скоро отказ телепорта!"
 STR_SYS_28,"MHQ %1/teleport destroyed...","Teleporter/MHQ %1 wurde zerstört...","Телепорт/КШМ %1 уничтожены..."
+
 
 STR_SYS_30,"Respawn","Respawn","Возрождение"
 STR_SYS_31," (last one)"," (die Letzte)"," (последний)"
@@ -877,21 +880,23 @@ STR_AI_9,"All AI soldiers dismissed !!! Points returned %1","Alle KI-Soldaten en
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
 STR_AI_11,"You paid %1 for one AI, points will be returned when he is fired","Bezahlt Sie %1 für KI, die Punkte werden zurückgegeben, wenn er beschossen wird","Очков за одного ополченца: %1. Возврат при его демобилизации"
 
-STR_AI_12_NUM,5,5,5
+STR_AI_12_NUM,6,6,6
 STR_AI_12_0,"Chief! I'm afraid to go with You!","Chef! Ich habe Angst, mit Ihnen zu Fliegen!","Шеф! Опасаюсь лететь с Вами!"
 STR_AI_12_1,"Commander! I'm not allowed to fly with you!","Commander! Ich darf nicht mit dir Fliegen!","Командир! Мне запрещено летать с Вами!"
 STR_AI_12_2,"Commander! I'm sorry, I'm busy!","Commander! Tut mir Leid, ich habe zu tun!","Командир! Извини, у меня дела!"
 STR_AI_12_3,"Next time, chief, the Partorg forbade, you heard!","Das nächste mal, Chef, hat der Parteivorstand verboten, hast du gehört!","В следующий раз, шеф, парторг запретил, ты же слышал!"
 STR_AI_12_4,"Commander! I don’t know how!","Commander! Ich weiß nicht wie!","Командир! Я же ж не умею!"
+STR_AI_12_6,"Commander! I like to drive... cars! Not damned heli!","Commander! Ich fahre gerne... Autos! Nicht verdammt heli!","Командир! Я машину могу водить, но в верт не сяду!"
 
 STR_AI_13_NUM,5,5,5
 STR_AI_13_0,"And finally persuaded!","Und schließlich überredet!","И, наконец, уговорил!"
+STR_AI_13_1,"Okay, let's go!","Okay, Los!","Ладно, поехали!"
 STR_AI_13_1,"Okay, let's go!","Okay, Los!","Ладно, поехали!"
 STR_AI_13_2,"Well, I don't know... If only under Your responsibility?!","Nun, ich weiß es nicht... Wenn nur unter Ihrer Verantwortung?!","Ну, не знаю... Если только под Вашу ответственность?!"
 STR_AI_13_3,"Only... until... the political Manager does not see!","Nur... bis... der politische Manager nicht sieht!","Только... пока... парторг не видит!"
 STR_AI_13_4,"Commander! Do you know how to fly?","Commander! Kannst du selbst Fliegen?","Командир! А ты сам-то умеешь летать?"
 
-STR_AI_14,"Commander! Let's wait at least %1 sec. for decency","Commander! Warten wir mindestens %1 Sek. für Anstand","Командир! Давайте подождём %1 сек., для приличия"
+STR_AI_14,"Commander! Let's wait at least %1 sec. for decency","Commander! Warten wir mindestens %1 Sek. für Anstand","Командир! Давайте подождём %1 сек... для приличия"
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 

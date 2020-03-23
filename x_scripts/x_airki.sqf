@@ -24,6 +24,14 @@ if (!isServer) exitWith {};
 #define PRINT_PERIOD 600 // period to inform about heli position
 #define RELOAD_PERIOD 60 // TODO: use as period to reload ammo for plane
 
+#define FLIGHT_HEIGHT_KA 350 // 450
+#define FLIGHT_HEIGHT_MI 250 // 350
+#define FLIGHT_HEIGHT_SU 400 // 600
+
+#define FLYBY_HEIGHT_KA 600
+#define FLYBY_HEIGHT_MI 500
+#define FLYBY_HEIGHT_SU 1000
+
 // how many player is not detected near target in seconds
 #define PLAYER_NOT_AT_TARGET_LIMIT 1200
 // how far from point of interest а player is checked
@@ -319,8 +327,8 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_airki_attack_chopper;
-			_flight_height = 450;
-        	//_flyby_height  = 500;
+			_flight_height = FLIGHT_HEIGHT_KA;
+        	_flyby_height  = FLYBY_HEIGHT_KA;
 			_flight_random = 50;
 			_min_dist_between_wp = 100;
 		};
@@ -328,8 +336,8 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_planes;
 			_heli_arr = d_airki_attack_plane;
-			_flight_height = 600;
-        	_flyby_height  = 1000;
+			_flight_height = FLIGHT_HEIGHT_SU;
+        	_flyby_height  = FLYBY_HEIGHT_SU;
 			_flight_random = 100;
 			_min_dist_between_wp = 1000;
 		};
@@ -338,8 +346,8 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_light_attack_chopper;
-			_flight_height = 350;
-        	//_flyby_height  = 500;
+			_flight_height = FLIGHT_HEIGHT_MI;
+        	_flyby_height  = 500;
 			_flight_random = 20;
 			_min_dist_between_wp = 100;
 		};
@@ -521,7 +529,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                     {
                         if ( ({alive _x} count crew _enemy_heli) == 0) then
                         {
-                            hint localize format["+++ x_airki: enemy air vehicle %1 empty, remove from array", typeOf _enemy_heli ];
+                            hint localize format["+++ x_airki: [%1] enemy air vehicle %2 empty, remove from array", _type, typeOf _enemy_heli ];
                             SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"];
                         }
                         else
@@ -533,7 +541,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                                 {
                                     _flyHeight = ((_pos select 2)+100);
                                     _x flyInHeight _flyHeight;
-                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2 (h%3) m", typeOf _enemy_heli, round( _flyHeight ), round((getPos _x) select 2) ];
+                                    hint localize format["+++ x_airki: [%1] enemy air vehicle %2 detected, set fly height ~ %3 (h%4) m", _type, typeOf _enemy_heli, round( _flyHeight ), round((getPos _x) select 2) ];
                                     _height_not_set = false;
                                 };
                                 _x reveal _enemy_heli;
@@ -634,7 +642,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		//+++ Sygsky: TODO add info exchange between air-air, air-land, air-ship units
 #endif
 #ifdef __PRINT__
-        if ( time >= PRINT_PERIOD) then
+        if ( time >= _timeToPrint) then
         {
             _heli = _vehicles select 0;
             _loc = _heli call SYG_nearestSettlement;

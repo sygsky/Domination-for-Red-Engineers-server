@@ -18,7 +18,7 @@ SAddObserverKillScores = {
     if (isPlayer (_this select 1) ) then
     {
         hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE];
-        ["syg_observer_kill",(_this select 1)] call XSendNetStartScriptClient;
+        ["syg_observer_kill",(_this select 1),primaryWeapon (_this select 0)] call XSendNetStartScriptClient;
     };
 };
 #endif

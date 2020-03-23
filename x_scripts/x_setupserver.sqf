@@ -226,13 +226,11 @@ XCheckMTHardTarget = {
 	_trigger2 setTriggerActivation ["GUER", "PRESENT", false];
 	_trigger setTriggerStatements["this && ((getpos (thislist select 0)) select 2 < 20)", "friendly_near_mt_target = true", ""];
 	#endif
-	while {!friendly_near_mt_target && alive _vehicle} do {
-		if (X_MP) then {
-			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
-		};
+	while {(!friendly_near_mt_target) && (alive _vehicle)} do {
 		sleep (1.021 + random 1);
 	};
-	if (alive _vehicle) then {
+	if ( alive _vehicle ) then {
+	    hint localize "+++ friendly_near_mt_target is now true: remove HIT & DAMMAGE restore events";
 		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
 		processInitCommands;
 	};

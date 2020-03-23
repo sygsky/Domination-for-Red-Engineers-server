@@ -378,8 +378,12 @@ XPlayerRank = {
 	if (_score < (d_points_needed select 1) && _score >= (d_points_needed select 0) && d_player_old_rank != "CORPORAL") exitWith {
 		if (d_player_old_score < (d_points_needed select 1)) then {
 			format[ localize "STR_SYS_67"/*  "Поздравляем с присвоением внеочередного звания %1" */,localize "STR_TSD9_27"] call XfHQChat; // Ефрейтора
-			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
-//			playSound "fanfare";
+//			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+            if (localize "STR_LANGUAGE" == "ENGLISH") then {
+                ["say_sound", player, call SYG_corporalRankSound,"-", name player] call XSendNetStartScriptClientAll; // send to all except you
+            } else {
+                ["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+            };
 		} else {
 			(format [localize "STR_SYS_66"/* "Вы разжалованы со звания %1 до %2" */,d_player_old_rank call XGetRankStringLocalized, localize "STR_TSD9_27"]) call XfHQChat; //Ефрейтора
 		};
@@ -391,7 +395,13 @@ XPlayerRank = {
 	if (_score < (d_points_needed select 2) && _score >= (d_points_needed select 1) && d_player_old_rank != "SERGEANT") exitWith {
 		if (d_player_old_score < (d_points_needed select 2)) then {
 			format[localize "STR_SYS_67"/* "Поздравляем с присвоением внеочередного звания %1" */, localize "STR_TSD9_28"] call XfHQChat; // Сержанта
-			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+//			["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+            if (localize "STR_LANGUAGE" == "ENGLISH") then {
+                ["say_sound", player, call SYG_sergeantRankSound,"-", name player] call XSendNetStartScriptClientAll; // send to all except you
+            } else {
+                ["say_sound", player, "fanfare"] call XSendNetStartScriptClientAll;
+            };
+
 //			playSound "fanfare";
 		} else {
 			(format [localize "STR_SYS_66"/* "Вы разжалованы со звания %1 до звания %2" */, d_player_old_rank call XGetRankStringLocalized, localize "STR_TSD9_28"]) call XfHQChat; // Сержанта

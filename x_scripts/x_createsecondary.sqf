@@ -213,7 +213,7 @@ switch (sec_kind) do {
 
 			_vehicle = _truck createVehicle (_poss);
 			_vehicle setDir (floor random 360);
-#ifndef __NEW__
+#ifdef __OLD__
             //_this call SYG_assignVecToSmokeOnHit; // set smoking function on hit if smoke device is available
 			if (_vehicle isKindOf "Tank") then
 			{

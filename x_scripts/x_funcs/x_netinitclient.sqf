@@ -691,8 +691,9 @@ XHandleNetStartScriptClient = {
 		case "syg_observer_kill" : {
             if ( str(arg(1)) == str(player) ) then // code only for killer
             {
-                private ["_score"];
-                hint localize format["+++ x_netinitclient.sqf: Observer killed by %1", name player];
+                private ["_score", "_str"];
+                if (count _this > 2) then {_str = format[" (%1)", arg(1)]} else {_str = "";};
+                hint localize format["+++ x_netinitclient.sqf: Observer(%1) killed by you", _str];
                 // add scores
                 _score = argp( d_ranked_a, 27 );
                 player addScore _score;
