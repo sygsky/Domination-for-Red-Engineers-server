@@ -1,4 +1,4 @@
-// by Xeno, x_scripts\x_mediccheck.sqf
+// by Xeno, x_scripts\x_mediccheck.sqf, called only for medic role player
 private ["_nearestbase", "_healerslist", "_objs", "_points", "_nobs", "_i", "_h", "_anim_list", "_healedName"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -13,9 +13,10 @@ _nearestbase = (
 	}
 );
 _healerslist = [];
-_medic = false;
-// how many to add on healing
-_score_to_add = if (format ["%1",player] in d_is_medic) then {_medic = true; argp(d_ranked_a,17)} else {1};
+//_medic = false;
+
+// how many to add on healing: medic +5, para-medic +1
+_score_to_add = if (format ["%1",player] in d_is_medic) then {argp(d_ranked_a,17)} else {1};
 
 // AmovPpneMstpSrasWrflDnon_healed - подняться из положения лёжа
 // AinvPknlMstpSlayWrflDnon_healed - сидя под лечением
@@ -29,18 +30,25 @@ while {true} do {
 		_objs = nearestObjects [player, [_nearestbase], 3];
         if (count _objs > 0) then {
             {
-                if (!(_x in _healerslist) && ((_x != player) || (!_medic))) then {
-                    if (animationState _x in _anim_list) then {
-                        playSound "healing";
-                        _points = _points + _score_to_add;
+                if ( (!( _x in _healerslist )) && ( _x != player ) ) exitWith {
+                    if ( animationState _x in _anim_list ) then {
                         _healerslist = _healerslist + [_x];
-                        _healedName = name _x;
+                        // is one of players healed
+                        if ( isPlayer _x ) exitWith {
+                            playSound "healing";
+                            _points = _points + _score_to_add;
+                            _healedName = name _x;
+                        };
+                        // if enemy healed
+                        if ( side _x  == x_side_enemy ) exitWith {
+                            ["say_sound", _x, call SYG_exclamationSound] call XSendNetStartScriptClientAll;
+                        }
                     };
                 };
             } forEach _objs;
-            if (_points > 0) then {
+            if ( _points > 0 ) then {
                 player addScore _points;
-                (format [localize "STR_MED_8", _points, _healedName]) call XfHQChat; //"You get %1 points for healing other units!"
+                ( format [localize "STR_MED_8", _points, _healedName] ) call XfHQChat; //"You get %1 points for healing other units!"
             };
             sleep 0.01;
         };

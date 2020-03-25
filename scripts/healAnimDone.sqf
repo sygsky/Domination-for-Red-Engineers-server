@@ -40,7 +40,7 @@ if ( ( _this select 1 ) in ["AinvPknlMstpSnonWnonDnon_medic_1" ])  then { // You
     } forEach _nearmanList;
     if (!_friend_healed) then { // may be some enemy healed?
         {
-            if ( ( alive _x ) && (side _x == d_enemy_side)) exitWith {
+            if ( ( alive _x ) && (side _x == d_side_enemy)) exitWith {
                 sleep 0.1;
                 if (damage _x == 0) then { // player healed enemy, the enemy is surprised
                     ["say_sound", _x, call SYG_exclamationSound] call XSendNetStartScriptClientAll;

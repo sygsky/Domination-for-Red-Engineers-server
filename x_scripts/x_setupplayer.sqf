@@ -601,9 +601,9 @@ if (__ReviveVer || __AIVer || !d_with_respawn_dialog_after_death) then {
 	};
 #endif
 };
-_p addEventHandler ["animChanged", { SYG_lastAnimationType = _this select 1 } ];
-SYG_healAnimDoneHandler = compile preprocessFileLineNumbers "scripts\healAnimDone.sqf";
-_p addEventHandler ["animDone", {_this spawn SYG_healAnimDoneHandler} ];
+//_p addEventHandler ["animChanged", { SYG_lastAnimationType = _this select 1 } ];
+//SYG_healAnimDoneHandler = compile preprocessFileLineNumbers "scripts\healAnimDone.sqf";
+//_p addEventHandler ["animDone", {_this spawn SYG_healAnimDoneHandler} ];
 
 d_chop_lift_list = [];
 d_chop_wreck_lift_list = [];
@@ -1636,9 +1636,9 @@ if (d_player_air_autokick > 0) then {
 };
 #else
 	execVM "x_scripts\x_playerveccheck.sqf";
-	if (_string_player in d_is_medic) then {
+//	if (_string_player in d_is_medic) then {
 		execVM "x_scripts\x_mediccheck.sqf";
-	};
+//	};
 	execVM "x_scripts\x_playervectrans.sqf";
 #endif
 
