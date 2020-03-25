@@ -97,6 +97,7 @@ SYG_getRumourText = {
 // call as: _str = [_arr,", "] call SYG_joinArr; // _str -> "item1, item2, item3"
 //
 SYG_joinArr = {
+    private [ "_sep", "_arr", "_str", "_i" ];
     if ( typeName _this != "ARRAY" ) exitWith {"?#1"};
     if ( count _this < 2 ) exitWith {"?#2"};
     if ( typeName (_this select 0) != "ARRAY" ) exitWith {"?#3"};
