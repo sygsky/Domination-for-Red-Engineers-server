@@ -24,7 +24,7 @@ if (X_Client) then {
 
 if (isServer) then {
 #ifdef __ACE__
-    _officer = (if (d_enemy_side == "EAST") then {"ACE_OfficerE"} else {"ACE_USMC8541A2"});
+    _officer = (if (d_enemy_side == "EAST") then {"ACE_OfficerE"} else {"ACE_USMC0302"});
 #else
     _officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
 #endif
