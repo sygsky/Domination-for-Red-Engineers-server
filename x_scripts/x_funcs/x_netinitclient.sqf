@@ -140,8 +140,8 @@ SYG_msgToUserParser =
         {
             _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
             if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
-                then {_print_title = _print_title <= 0} // print only if value set to false
-                else {_print_title = !_print_title}; // parse as boolean value, print if value == false
+            then {_print_title = _print_title <= 0} // print only if value set to false
+            else {_print_title = !_print_title}; // parse as boolean value, print if value == false
         };
 
         _msg_formatted = format _msg_fmt; // whole message formatted

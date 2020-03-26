@@ -3145,25 +3145,25 @@ class Mission
 		};
 		class Item243
 		{
-			position[]={9671.2,139.994995,9991.619141};
+			position[]={9670.7,139.994995,9991.619141};
 			azimut=90.000000;
 			id=283;
 			side="EMPTY";
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box4";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.25];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage -900000000000}]; box1 addEventHandler [""dammaged"", {box1 setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage -900000000000}]; box1 addEventHandler [""dammaged"", {box1 setDammage -900000000000}];";
 		};
 		class Item244
 		{
-			position[]={9671.2,139.994995,9989.473633};
+			position[]={9670.7,139.994995,9989.473633};
 			azimut=90.000000;
 			id=284;
 			side="EMPTY";
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box5";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.25];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage -900000000000}];box2 addEventHandler [""dammaged"", {box2 setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage -900000000000}];box2 addEventHandler [""dammaged"", {box2 setDammage -900000000000}];";
 		};
 	};
 	class Markers
