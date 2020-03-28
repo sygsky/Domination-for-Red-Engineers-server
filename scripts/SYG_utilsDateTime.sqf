@@ -424,7 +424,7 @@ SYG_holidayTable =
     [ 7,11, 5]  // 7th of November
 */
     [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"], "STR_HOLIDAY_1_JAN", 1], // new year, 10 days in range (not realized)
-    [23,  2, ["burnash","chapaev1"],"STR_HOLIDAY_23_FEB",0], // 23th of February
+    [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
     [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
@@ -432,7 +432,7 @@ SYG_holidayTable =
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
     [ 7, 10, ["communism","Vremia_vpered_Sviridov"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution
-    [ 7, 11, ["chapaev1","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
+    [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
 
 ];
 
