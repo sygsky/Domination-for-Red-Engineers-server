@@ -58,7 +58,7 @@ XClearSidemission = {
 				{
 					_was_captured = false;
 					{
-						if (isPlayer _x) exitWith {_was_captured = true;};
+						if (isPlayer _x) exitWith {_was_captured = true;}; // if player is in vehicle, consider it to be captured
 					} forEach (crew _x);
 					// check vehicle being on base
 					if ( ! _was_captured ) then
@@ -70,8 +70,8 @@ XClearSidemission = {
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
-					if (_was_captured) then { // vehicle was captured by player
-						[_vehicle] call XAddCheckDead;
+					if (_was_captured && !(isPlayer _x)) then { // vehicle was captured by player
+						[_x] call XAddCheckDead;
 					} else {
 						{deleteVehicle _x} forEach ([_x] + crew _x);
 					};

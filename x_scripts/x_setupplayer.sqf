@@ -705,6 +705,7 @@ d_chop_all = [];
 		};
 	};
 } forEach d_choppers_west;
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
 	_hindex = _x select 1;
 	_hobj = call compile format ["%1", _x select 0];
@@ -757,183 +758,97 @@ d_chop_all = [];
 #endif
 d_chop_all = d_chop_lift_list + d_chop_wreck_lift_list  + d_chop_normal_list;
 
-#ifndef __TT__
-for "_xx" from 1 to 2 do { // 'Menu MHQ'
-	call compile format ["
-		if (!(isNil 'MRR%1')) then {
-			if (d_own_side == 'EAST') then { MRR%1 call SYG_reammoMHQ;};
-			MRR%1 addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
-			MRR%1 addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
-			MRR%1 addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
-		};
-		'MRR%1' addPublicVariableEventHandler {
-			(_this select 1) addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
-			(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
-			(_this select 1) addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
-		};
-
-	", _xx];
-};
-#else
-for "_xx" from 1 to 2 do { //// 'Меню MHQ'
-	call compile format ["
-		if (!(isNil 'MRR%1')) then {
-			MRR%1 addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
-			MRR%1 addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
-			MRR%1 addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
-			MRR%1 addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillwest.sqf'}];
-		};
-		'MRR%1' addPublicVariableEventHandler {
-			(_this select 1) addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
-			(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
-			(_this select 1) addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
-			(_this select 1) addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillwest.sqf'}];
-		};
-	", _xx];
-};
-
-for "_xx" from 1 to 2 do { // 'Меню MHQ'
-	call compile format ["
-		if (!(isNil 'MRRR%1')) then {
-			MRRR%1 addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
-			MRRR%1 addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf';}];
-			MRRR%1 addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf';}];
-			MRRR%1 addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillracs.sqf';}];
-		};
-		'MRRR%1' addPublicVariableEventHandler {
-			(_this select 1) addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
-			(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf';}];
-			(_this select 1) addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf';}];
-			(_this select 1) addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillracs.sqf';}];
-		};
-	", _xx];
-};
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+    if (!(isNil str(_x))) then {
+        if (d_own_side == 'EAST') then { _x call SYG_reammoMHQ;};
+        _x addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
+        _x addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
+        _x addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
+    };
+    str(_x) addPublicVariableEventHandler {
+        (_this select 1) addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
+        (_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
+        (_this select 1) addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
+    };
+} forEach [MRR1,MRR2
+#ifdef __TT__
+          ,MRRR1,MRRR2
 #endif
+];
 
 #ifndef __TT__
-_addStat = /*__AIVer || */(_string_player in d_is_engineer);
-for "_xx" from 7 to 8 do { // 'Загрузить орудие', 'Разгрузить орудие'
-	call compile format ["
-		if (!(isNil 'TR%1')) then {
-			if (_addStat) then {
-				TR%1 addAction[localize 'STR_SYG_10','scripts\load_static.sqf',[],-1,false];
-				TR%1 addAction[localize 'STR_SYG_11','scripts\unload_static.sqf',[],-1,false];
-			} else {
-				TR%1 addEventHandler ['getin', {_this execVM 'x_scripts\x_checktrucktrans.sqf';}];
-			};
-			TR%1 setAmmoCargo 0;
-		};
-		'TR%1' addPublicVariableEventHandler {
-			if (str(player) in d_is_engineer) then {
-				(_this select 1) addAction[localize 'STR_SYG_10','scripts\load_static.sqf',[],-1,false];
-				(_this select 1) addAction[localize 'STR_SYG_11','scripts\unload_static.sqf',[],-1,false];
-			} else {
-				(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checktrucktrans.sqf';}];
-			};
-			(_this select 1) setAmmoCargo 0;
-		};
-	", _xx];
-};
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+    if (!(isNil str(_x))) then {
+        if (_addStat) then {  // 'Загрузить орудие', 'Разгрузить орудие'
+            _x addAction[localize 'STR_SYG_10','scripts\load_static.sqf',[],-1,false];
+            _x addAction[localize 'STR_SYG_11','scripts\unload_static.sqf',[],-1,false];
+        } else {
+            _x addEventHandler ['getin', {_this execVM 'x_scripts\x_checktrucktrans.sqf';}];
+        };
+        _x setAmmoCargo 0;
+    };
+    str(_x) addPublicVariableEventHandler {
+        if (str(player) in d_is_engineer) then {
+            (_this select 1) addAction[localize 'STR_SYG_10','scripts\load_static.sqf',[],-1,false];
+            (_this select 1) addAction[localize 'STR_SYG_11','scripts\unload_static.sqf',[],-1,false];
+        } else {
+            (_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checktrucktrans.sqf';}];
+        };
+        (_this select 1) setAmmoCargo 0;
+    };
+} forEach [TR7,TR8];
 #else
-if (!(isNil "TR4")) then {
-	if (str(player) in d_is_engineer && playerSide == west) then {
-		TR4 addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
-		TR4 addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Разгрузить орудие"
-	};
-	TR4 addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
-	TR4 addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
-	TR4 setAmmoCargo 0;
-};
-"TR4" addPublicVariableEventHandler {
-	if (str(player) in d_is_engineer && playerSide == west) then {
-		(_this select 1) addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
-		(_this select 1) addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; //"Разгрузить орудие"
-	};
-	(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
-	(_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
-	(_this select 1) setAmmoCargo 0;
-};
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+    if (!(isNil str(_x))) then {
+        if ( (str(player) in d_is_engineer) && (playerSide == west)) then {
+            _x addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
+            _x addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Разгрузить орудие"
+        };
+        _x addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+        _x addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
+        _x setAmmoCargo 0;
+    };
+    str(_x) addPublicVariableEventHandler {
+        if ( (str(player) in d_is_engineer) && (playerSide == west) ) then {
+            (_this select 1) addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
+            (_this select 1) addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; //"Разгрузить орудие"
+        };
+        (_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+        (_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
+        (_this select 1) setAmmoCargo 0;
+    };
+} forEach [TR4,TRR4];
 
-if (!(isNil "TRR4")) then {
-	if (str(player) in d_is_engineer && playerSide == resistance) then {
-		TRR4 addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
-		TRR4 addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Разгрузить орудие"
-	};
-	TRR4 addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
-	TRR4 addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
-	TRR4 setAmmoCargo 0;
-};
-"TRR4" addPublicVariableEventHandler {
-	if (str(player) in d_is_engineer && playerSide == resistance) then {
-		(_this select 1) addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false];// "Загрузить орудие"
-		(_this select 1) addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Разгрузить орудие"
-	};
-	(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
-	(_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checktrucktrans.sqf";}];
-	(_this select 1) setAmmoCargo 0;
-};
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+    if (!(isNil str(_x))) then {
+        _x addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+        _x addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+    };
+    str(_x) addPublicVariableEventHandler {
+        (_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
+        (_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
+    };
 
-if (!(isNil "MEDVEC")) then {
-	MEDVEC addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	MEDVEC addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
-};
-"MEDVEC" addPublicVariableEventHandler {
-	(_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
-};
-if (!(isNil "MEDVECR")) then {
-	MEDVECR addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	MEDVECR addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
-};
-"MEDVECR" addPublicVariableEventHandler {
-	(_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
-};
+} forEach [MEDVEC,MEDVECR];
 
-for "_i" from 1 to 3 do {
-	call compile format ["
-		if (!(isNil 'TR%1')) then {
-			TR%1 addEventHandler ['getin', {_this execVM 'x_scripts\x_checkenterer.sqf';}];
-			TR%1 addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillwest.sqf';}];
-			TR%1 setAmmoCargo 0;
-		};
-		'TR%1' addPublicVariableEventHandler {
-			(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkenterer.sqf';}];
-			(_this select 1) addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillwest.sqf';}];
-			(_this select 1) setAmmoCargo 0;
-		};
-		if (!(isNil 'TRR%1')) then {
-			TRR%1 addEventHandler ['getin', {_this execVM 'x_scripts\x_checkenterer.sqf';}];
-			TRR%1 addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillracs.sqf';}];
-			TRR%1 setAmmoCargo 0;
-		};
-		'TRR%1' addPublicVariableEventHandler {
-			(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkenterer.sqf';}];
-			(_this select 1) addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillracs.sqf';}];
-			(_this select 1) setAmmoCargo 0;
-		};
-	", _i];
-};
-if (!(isNil "TR5")) then {
-	TR5 addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	TR5 addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
-	TR5 setAmmoCargo 0;
-};
-"TR5" addPublicVariableEventHandler {
-	(_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
-	(_this select 1) setAmmoCargo 0;
-};
-if (!(isNil "TRR5")) then {
-	TRR5 addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	TRR5 addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
-	TRR5 setAmmoCargo 0;
-};
-"TRR5" addPublicVariableEventHandler {
-	(_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checkenterer.sqf";}];
-	(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf";}];
-	(_this select 1) setAmmoCargo 0;
-};
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+    if (!(isNil str(_x))) then {
+        _x addEventHandler ['getin', {_this execVM 'x_scripts\x_checkenterer.sqf';}];
+        _x addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillwest.sqf';}];
+        _x setAmmoCargo 0;
+    };
+    str(_x) addPublicVariableEventHandler {
+        (_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkenterer.sqf';}];
+        (_this select 1) addEventHandler ['killed', {_this execVM 'x_scripts\x_checkveckillwest.sqf';}];
+        (_this select 1) setAmmoCargo 0;
+    };
+} forEach [TR1,TR2,TR3,TR5,TRR1,TRR2,TRR3,TRR5];
+
 #endif
 
 if (count d_ammo_boxes > 0) then {
@@ -1390,9 +1305,9 @@ if (count d_action_menus_unit > 0) then {
 
 execVM "x_scripts\x_playerspawn.sqf";
 
-#ifndef __ACE__
+//#ifndef __ACE__
 execVM "x_scripts\x_water.sqf";
-#endif
+//#endif
 
 if (count d_action_menus_vehicle > 0) then {execVM "x_scripts\x_vecmenus.sqf";};
 
@@ -1851,11 +1766,16 @@ player addAction["score -15","scripts\addScore.sqf",-15];
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley
 hint localize "__DEBUG_ADD_VEHICLES__";
-//player setPos [14531,9930,0];
-if ( score player < 1500 ) then
+//player setPos [14531,9930,0]; // hill at Modesta near ammoboxes
+
+player setPos [9763,11145,0]; // dock in Rashidad
+// MRR1   setPos [9763,11150,0];
+
+if ( score player < (d_pseudo_ranks select 1) ) then
 {
-    player addScore (1500 - (score player));
+    player addScore ((d_pseudo_ranks select 1) - (score player));
 };
+
 #endif
 
 if (true) exitWith {};
