@@ -518,7 +518,11 @@ SYG_playWeatherForecastMusic = {
 //
 SYG_tanks_music = [ "chiz_tanki_1", "chiz_tanki_2" ];
 SYG_playDeathInTankSound = {
-    if ( localize "LANGUAGE" == "RUSSIAN") exitWith { playSound RANDOM_ARR_ITEM(SYG_tanks_music); true };
+    if ( localize "LANGUAGE" == "RUSSIAN") exitWith {
+        if (random 3 > 1) then {playSound RANDOM_ARR_ITEM(SYG_tanks_music)} // Chiz song about tankists
+        else {["say_sound", player, "tanki"] call XSendNetStartScriptClientAll}; // exclamation "Tanks!!!"
+        true
+    };
     false
 };
 

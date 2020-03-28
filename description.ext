@@ -127,7 +127,7 @@ class CfgMusic
     class four_tankists { name="Czterej Pancerni i Pies, Polska Rzeczpospolita Ludowa film, 1960"; sound[] = {\sounds\intro\4tankists.ogg,db-1,1.0};} // from PRL film "4 tankists and dog"
 
 	class burnash	{	    name="";	    sound[]=   {\sounds\burnash.ogg,db-1,1.0};    };
-    class chapaev1  {        name="";        sound[]=   {\sounds\intro\holidays\feb_23\chapaev1.ogg,db-1,1.0};    };
+    class soviet_officers  {        name="";        sound[]=   {\sounds\intro\holidays\feb_23\soviet_officers.ogg,db-1,1.0};    };
     class johnny    {        name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};    };
     class druzba    {        name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};    };
     class bond      {        name="";        sound[]=   {\sounds\bond.ogg,db-1,1.0};    };
@@ -185,13 +185,15 @@ class CfgMusic
 //+++++++++++++++++++++++++++++++++++++ MORZE for Rokse [LT] +++++++++++++++++++++++++++++++++++++++++++++++++++++
     class morze   { name="Morze about Sahrani island"; sound[] = {\sounds\intro\morze\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...
     class morze2  { name="Real Morze (Canada)"; sound[] = {\sounds\intro\morze\morze2.ogg,db+0,1.0};}; // Morze real message (Canada)
-    class morze_0 { name="Morzyanka";   sound[] = {\sounds\intro\morze\Morzyanka.ogg.ogg,db+0,1.0};}; // Morze
-    class morze_2 { name="Morzyanka 2"; sound[] = {\sounds\intro\morze\Morzyanka2.ogg.ogg,db+0,1.0};}; // Morze
-    class morze_3 { name="Morzyanka - USSR song"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg.ogg,db+0,1.0};}; // Morze
-    class morze_4 { name="Morzyanka 4"; sound[] = {\sounds\intro\morze\Morzyanka4.ogg.ogg,db+0,1.0};}; // Morze
-    class morze_5 { name="Morzyanka 5"; sound[] = {\sounds\intro\morze\Morzyanka5.ogg.ogg,db+0,1.0};}; // Morze
-    class morze_6 { name="Morzyanka 6"; sound[] = {\sounds\intro\morze\Morzyanka6.ogg.ogg,db+0,1.0};}; // Morze
-    class morze_7 { name="Morzyanka 7"; sound[] = {\sounds\intro\morze\Morzyanka7.ogg.ogg,db+0,1.0};}; // Morze
+    class morze_0 { name="Morzyanka";   sound[] = {\sounds\intro\morze\Morzyanka.ogg,db+0,1.0};}; // Morze
+    class morze_2 { name="Morzyanka 2"; sound[] = {\sounds\intro\morze\Morzyanka2.ogg,db+0,1.0};}; // Morze
+    class morze_3 { name="Morzyanka - USSR song"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg,db+0,1.0};}; // Morze
+    class morze_4 { name="Morzyanka 4"; sound[] = {\sounds\intro\morze\Morzyanka4.ogg,db+0,1.0};}; // Morze
+    class morze_5 { name="Morzyanka 5"; sound[] = {\sounds\intro\morze\Morzyanka5.ogg,db+0,1.0};}; // Morze
+    class morze_6 { name="Morzyanka 6"; sound[] = {\sounds\intro\morze\Morzyanka6.ogg,db+0,1.0};}; // Morze
+    class morze_7 { name="Morzyanka 7"; sound[] = {\sounds\intro\morze\Morzyanka7.ogg,db+0,1.0};}; // Morze
+
+    class hungarian_dances { name="Brams, Hungarian Dances"; sound[] = {\sounds\intro\hungarian_dances.ogg,db+0,1.0};}; // Morze
 
 
 //------------------------------------- END of Intro music list --------------------------------------------------
@@ -246,7 +248,7 @@ class CfgMusic
     class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
     class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
 
-    class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg.ogg,db+10,1.0};} // defeat sound
+    class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg,db+10,1.0};} // defeat sound
     class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
     class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0};} // defeat sound by Kevin MacLeod
     class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0};} // defeat sound from Radio-nanny sign call
@@ -441,7 +443,7 @@ class CfgSounds
     class sorry_9  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-9.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_10 {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-10.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_11 {name = "Female kidding"; sound[] = {\sounds\women\sorry\are-you-kidding-me.ogg, db+0, 1.0}; titles[] = {}; };
-    class sorry_12 {name = "Female sexy";  sound[] = {\sounds\women\sorry\sexy-voice.ogg.ogg, db+0, 1.0}; titles[] = {}; };
+    class sorry_12 {name = "Female sexy";  sound[] = {\sounds\women\sorry\sexy-voice.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_13 {name = "Female so sorry"; sound[] = {\sounds\women\sorry\female-my-fault.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_14 {name = "Female going to bed time"; sound[] = {\sounds\women\sorry\female-it-s-getting-close-to-bedtime.ogg, db+0, 1.0}; titles[] = {}; };
 
@@ -528,12 +530,13 @@ class CfgSounds
     class fight { name="fight";   sound[] = {\sounds\defeat\laughter\fight.ogg,db+10,1.0}; titles[] = {}; } // say "fight"
     class handsup { name="put your hands up";   sound[] = {\sounds\defeat\laughter\Put_Your_Hands_Up.ogg,db+10,1.0}; titles[] = {}; } // say "put your hand up"
 
-    class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\laughter\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\laughter\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation3 { name="eclamation";   sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation4 { name="eclamation";   sound[] = {\sounds\defeat\laughter\4.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation5 { name="eclamation";   sound[] = {\sounds\defeat\laughter\5.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation6 { name="eclamation";   sound[] = {\sounds\defeat\laughter\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation3 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\3.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation4 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\4.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation5 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\5.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation6 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class tanki { name="eclamation";   sound[] = {\sounds\defeat\exclamations\tanki.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
 
     class under_water_3   {name = ""; sound[] = {\sounds\defeat\water\under_water3.ogg, db+10, 1.0}; titles[] = {};};
     // Period of the day sounds
@@ -570,7 +573,7 @@ class CfgSounds
 
     // Ranks messages
     // for Russian language only
-    class seargent_eng_1   {name = "Yes Sergeant"; sound[] = {\sounds\intro\ranks\seargent-eng-1.ogg.ogg, db+10, 1.0}; titles[] = {}; };
+    class seargent_eng_1   {name = "Yes Sergeant"; sound[] = {\sounds\intro\ranks\seargent-eng-1.ogg, db+10, 1.0}; titles[] = {}; };
     class corporal_eng_1   {name = "Yes Corporal"; sound[] = {\sounds\intro\ranks\corporal-eng-1.ogg, db+10, 1.0}; titles[] = {}; };
 
     class captain_rus_1   {name = "Captain please smile, USSR film 'Captain grant children'"; sound[] = {\sounds\intro\ranks\captain-rus-1.ogg, db+10, 1.0}; titles[] = {}; };

@@ -1,0 +1,14 @@
+ Volume in drive E is Bin
+ Volume Serial Number is 70DE-8980
+
+ Directory of e:\Bin\ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\not_used
+
+28.03.2020  01:00    <DIR>          .
+28.03.2020  01:00    <DIR>          ..
+28.03.2020  01:00                 0 dir.txt
+03.02.2020  18:32           276ÿ415 prekrasnoe_daleko_eng.ogg
+03.02.2020  18:32           285ÿ770 prekrasnoe_daleko_jap.ogg
+03.02.2020  18:32           269ÿ327 prekrasnoe_daleko_rus.ogg
+03.02.2020  18:32            52ÿ537 start_from_future.ogg
+               5 File(s)        884ÿ049 bytes
+               2 Dir(s)  70ÿ157ÿ070ÿ336 bytes free

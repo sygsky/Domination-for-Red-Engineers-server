@@ -89,31 +89,31 @@ if (_sound == "") then { // select random music for ordinal day
             [
                 ["Ceres-de","CERES de","Ceres.","CERES"] , // Germany
                 ["Rokse [LT]"], // military radist
-                ["Shelter", "Marcin"] // polyaks
+                ["Shelter", "Marcin"], // polyaks
+                ["Petigp", "gyuri", "Frosty"] // hungarian
             ];
             _sounds  =
             [
                 ["amigohome_ernst_bush","amigohome_ernst_bush","zaratustra"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
-                ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"]
+                ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
+                ["hungarian_dances","hungarian_dances","hungarian_dances"]
             ];
             _name    = name player;
             _personalSounds = [];
             {
                 _pos = _x find _name;
-                if ( _pos >= 0 ) exitWith { _personalSounds = _sounds select _pos};
+                if ( _pos >= 0 ) exitWith { {_personalSounds = _personalSounds + (_sounds select _pos)} forEach [1,2,3] };
             } forEach _players;
             if (format["%1",player] in ["RESCUE","RESCUE2"]) then {
-                {
-                    _personalSounds = _personalSounds + ["from_russia_with_love","bond1","bond"];
-                } forEach [1,2,3];
+                { _personalSounds = _personalSounds + ["from_russia_with_love","bond1","bond"]; } forEach [1,2,3];
             }; // as you are some kind of spy
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
             [
                 "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime2","lastdime3",
                 /*"Art_Of_Noise_mono",*/"mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio","nutcracker",
-                "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","chapaev1","cosmos","manchester_et_liverpool",
+                "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2",/*"morricone1",*/"toccata",
                 "del_vampiro1","del_vampiro2", "zaratustra", "bolivar"
