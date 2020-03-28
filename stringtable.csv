@@ -162,8 +162,8 @@ STR_SYS_70,"Base","Base","База"
 STR_SYS_71,"MHQ One","MHQ One","КШМ 1"
 STR_SYS_72,"MHQ Two","MHQ Two","КШМ 2"
 STR_SYS_73,"Teleport not available in a vehicle !!!","Teleport nicht in einem Fahrzeug !!!","Телепорт недоступен из техники!!!"
-STR_SYS_74,"You are carrying the flag. Teleport is not possible !!!","Sie tragen die fahne. Teleport ist nicht möglich !!!","Вы несете флаг. Телепорт недоступен!!!"
-STR_SYS_75,"Teleporting not possible while swimming !!!","Teleportieren nicht möglich, während Sie schwimmen !!!","Телепортирование в воде недоступен!!!"
+STR_SYS_74,"You are carrying the enemy flag. Teleport is not possible !!!","Sie tragen die fahne. Teleport ist nicht möglich !!!","Вы несете вражеский флаг. Телепорт недоступен!!!"
+STR_SYS_75,"Teleporting in water is off, it will explode !!!","Das Teleportieren im Wasser ist ausgeschaltet, es wird explodieren !!!","Телепортирование в воде отключено, рванёт!!!"
 STR_SYS_75_1,"Teleporting not possible while factory %1 is ruined !!!","Das teleportieren nicht möglich, während Fabrik %1 ist kaputt !!!","Телепортирование невозможно, пока разрушен сервис %1!!!"
 STR_SYS_75_2,"Teleporting not possible while MHQ has damage (%1%2)!!!","Teleportieren nicht möglich, während MHQ Schaden hat (%1%2)!!!","Телепортирование невозможно, из-за повреждений КШМ (%1%2)!!!"
 STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport will stop working!","MHQ %1%2 Schaden, sofort reparieren, sonst funktioniert der Teleport nicht mehr!","Повр. КШМ %1%2, немедленно почините, иначе перестанет работать телепорт!"
@@ -730,8 +730,11 @@ STR_SYS_613,Your recorded equipment wiped,Ihr Aufnahme-equipment gewischt,Ваш
 STR_SYS_614,A record of the equipment not found,Eine Aufzeichnung der Ausstattung nicht gefunden,Запись о снаряжении не найдена
 STR_SYS_615,"!!!!! ATTENTION !!!!! Incoming Missile !!!!!","!!!!! AUFMERKSAMKEIT !!!!! Eingehende Rakete !!!!!","!!! Опасность !!! Угроза попадания ракеты !!!"
 STR_SYS_616,"Height","Höhe","Высота"
-
 STR_SYS_618,"Viewdistance restore to %1 m.","Viewdistance Durchmesser restauriert wurde: %1 m.","Диаметр зоны обзора восстановлен: %1 м."
+
+STR_SYS_620,"Here it is - lying on the shore! If I collect it in 2 minutes, the waves will not carry it away!","Hier ist es - am Ufer liegen! Wenn ich es in 2 Minuten sammle, werden die Wellen es nicht wegtragen!","Да вот же оно, лежит на берегу! Если соберу за 2 минуты, то волны не унесут!"
+STR_SYS_620_0,"My weapon drowned, maybe I can find something on the beach nearby?","Meine Waffe ist ertrunken, vielleicht kann ich am Strand in der Nähe etwas finden?","Оружие утопил, так может на берегу найду?"
+STR_SYS_620_1,"You drowned your weapons foreve-e-e-er","Du hast deine Waffen für immer ertränkt","Утопил я оружие своё-о-о... безвозвратно-о-о!"
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
 STR_SYS_1001,"Lieutenant-General","Generalleutnant","Генерал-лейтенант"
