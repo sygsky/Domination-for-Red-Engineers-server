@@ -212,7 +212,7 @@ SYG_playRandomDefeatTrackByPos = {
     _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
     if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith
     {
-        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
+        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 9 time from 10
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_chorusDefeatTracks, done";
     };
 

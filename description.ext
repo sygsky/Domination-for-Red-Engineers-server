@@ -299,7 +299,11 @@ class CfgMusic
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
 
-    class church_voice    {name = ""; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
+    class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
+    class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10, 1.0};};
+    class sorrow_2        {name = "sorrow_2"; sound[] = {\sounds\church\sorrow_2.ogg, db+10, 1.0};};
+    class sorrow_3        {name = "sorrow_3"; sound[] = {\sounds\church\sorrow_3.ogg, db+10, 1.0};};
+    class sorrow_4        {name = "sorrow_4"; sound[] = {\sounds\church\sorrow_4.ogg, db+10, 1.0};};
 
     class church_organ_1  {name = ""; sound[] = {\sounds\organ\church_organ_1.ogg, db+10, 1.0};};
     class haunted_organ_1 {name = ""; sound[] = {\sounds\organ\haunted_organ_1.ogg, db+10, 1.0};};
@@ -561,12 +565,6 @@ class CfgSounds
     class armory1  { name=""; sound[] = {\sounds\armory1.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 1
     class armory2  { name=""; sound[] = {\sounds\armory2.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 2
     class armory3  { name=""; sound[] = {\sounds\armory3.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 3
-
-    class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0}; titles[] = {}; };
-    class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10, 1.0}; titles[] = {}; };
-    class sorrow_2        {name = "sorrow_2"; sound[] = {\sounds\church\sorrow_2.ogg, db+10, 1.0}; titles[] = {}; };
-    class sorrow_3        {name = "sorrow_3"; sound[] = {\sounds\church\sorrow_3.ogg, db+10, 1.0}; titles[] = {}; };
-    class sorrow_4        {name = "sorrow_4"; sound[] = {\sounds\church\sorrow_4.ogg, db+10, 1.0}; titles[] = {}; };
 
     class chiz_tanki_1   {name = "Чиж. 'По танку вдарила болванка'"; sound[] = {\sounds\defeat\chiz_tanki_1.ogg, db+10, 1.0}; titles[] = {}; }; // "The tank was hit by a dummy" song of the ensemble " Chizh"
     class chiz_tanki_2   {name = "Чиж. 'По танку вдарила болванка'"; sound[] = {\sounds\defeat\chiz_tanki_2.ogg, db+10, 1.0}; titles[] = {}; }; // "The tank was hit by a dummy" song of the ensemble " Chizh"
