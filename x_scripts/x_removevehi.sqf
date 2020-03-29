@@ -1,4 +1,4 @@
-// by Xeno, x_scripts/x_removevehi.sqf
+// by Xeno, x_scripts\x_removevehi.sqf
 // Creates copy of deleted vehicle on the same place. And puts vehicle to the common dead list
 // Used for town patrolling vehicles only. To increase reality of the game atmosphere
 #include "x_setup.sqf"

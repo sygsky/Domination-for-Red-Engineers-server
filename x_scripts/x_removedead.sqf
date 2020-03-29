@@ -27,7 +27,7 @@ while {true} do {
 			for "_oo" from 0 to (_how_many - 1) do {
 				_element = _tmp_array select _oo;
 				if (!(_element in _remove_dead_list)) then {
-					_remove_dead_list = _remove_dead_list + [_element];
+					_remove_dead_list set [count _remove_dead_list, _element];
 				};
 				_tmp_array set [_oo, "X_RM_ME"];
 				sleep 0.01;

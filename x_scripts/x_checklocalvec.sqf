@@ -1,5 +1,5 @@
 // by Xeno, x_scripts/x_checklocalvec.sqf. Time by time move all deleted vehicles to the common dead object list of the mission
-private ["_check_vec_list", "_remove_from_list", "_zz", "_dead", "_hastime"];
+private ["_check_vec_list", "_zz", "_dead", "_hastime"];
 if (!isServer) exitWith{};
 
 #include "x_macros.sqf"
@@ -9,7 +9,6 @@ if (!isServer) exitWith{};
 sleep 323.21;
 
 _check_vec_list = [];
-_remove_from_list = [];
 
 #ifdef __PRINT_STAT__
 #define __PRINT_INTERVAL__ 600 // 10 minutes
@@ -62,6 +61,7 @@ while {true} do {
 	sleep 30.461;
 
 #ifdef __PRINT_STAT__
+// TODO: use method SYG_utilstext->SYG_objArrToTypeStr except lower code
     if (time >_time_to_print) then  {
         _print_cnt = (count _check_vec_list) max 5; // print vehicles count
         if (  _print_cnt > 0 ) then // print only if there is some data to print
