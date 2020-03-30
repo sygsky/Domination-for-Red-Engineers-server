@@ -187,6 +187,7 @@ XCheckSMHardTarget = {
 		sleep (1.021 + random 1);
 	};
 	if (alive _vehicle) then {
+	    hint localize "+++ friendly_near_sm_target is now true: remove HIT & DAMMAGE protect events";
 		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
 		processInitCommands;
 	};
@@ -209,11 +210,18 @@ XCheckMTHardTarget = {
 	#ifdef __TT__
 	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
 	#endif
-	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
-	processInitCommands;
+#ifdef __OLD__
+    _vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
+    processInitCommands;
+#else
+	_vehicle addEventHandler ["hit", {(_this select 0) setDamage 0}];
+	_vehicle addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
+#endif
 	friendly_near_mt_target = false;
 	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
 	_trigger setTriggerArea [20, 20, 0, false];
+	_sound = call SYG_fearSound;
+	_trigger setSoundEffect [_sound, "", "", ""];
 	#ifndef __TT__
 	_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", false]; // trigger on "EAST PRESENT" for Red Engineers server
 	#else
@@ -230,9 +238,14 @@ XCheckMTHardTarget = {
 		sleep (1.021 + random 1);
 	};
 	if ( alive _vehicle ) then {
-	    hint localize "+++ friendly_near_mt_target is now true: remove HIT & DAMMAGE restore events";
+	    hint localize "+++ friendly_near_mt_target is now true: remove HIT & DAMMAGE protect events";
+#ifdef __OLD__
 		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
 		processInitCommands;
+#else
+		_vehicle removeAllEventHandlers "hit";
+		_vehicle removeAllEventHandlers "dammaged";
+#endif
 	};
 	deleteVehicle _trigger;
 	#ifdef __TT__
