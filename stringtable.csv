@@ -737,7 +737,7 @@ STR_SYS_620_0,"My weapon drowned, maybe I can find something on the beach nearby
 STR_SYS_620_1,"You drowned your weapons foreve-e-e-er","Du hast deine Waffen für immer ertränkt","Утопил я оружие своё-о-о... безвозвратно-о-о!"
 
 STR_SYS_630,"The waters of the oceans closed over the shamefully lost %1 (%2 m.). Someone has to be shot for this!","Das Wasser der Ozeane schloss sich über dem schändlich verlorenen %1 ( %2 m.). Dafür muss jemand erschossen werden!","Воды мирового океана сомкнулись над постыдно утерянным %1 ( %2 м.). Кого-то предстоит за это расстрелять!"
-STR_SYS_630_1,"Lost %1 can still be saved if delivered to the recovery server!","Lost% 1 kann bei Lieferung an den Wiederherstellungsserver weiterhin gespeichert werden!","Утерянный %1 можно ещё спасти, если доставить на сервер возрождения!"
+STR_SYS_630_1,"The lost %1 can still be restored if it is delivered to the appropriate service!","Das verlorene %1 kann noch wiederhergestellt werden, wenn es an den entsprechenden service geliefert wird!","Утерянный %1 можно ещё спасти, если доставить на сервис возрождения!"
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
 STR_SYS_1001,"Lieutenant-General","Generalleutnant","Генерал-лейтенант"
@@ -1266,7 +1266,7 @@ STR_MIS_15,"Ammo Point","Munition Punkt","Пункт м/т снаб."
 STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
 STR_MIS_18,"%1 wreck","%1 Wrack","обл. %1"
-STR_MIS_18_1,"Wreck: %1, deep","Trümmer: %1, Tief.","обл. %1, глуб."
+STR_MIS_18_1,"Wreck: %1, deep %2 m.","Trümmer: %1, Tief. %2 m.","обл. %1, глуб. %2 м."
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 
 STR_SET_1,"Version","Version","Версия"

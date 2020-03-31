@@ -5,7 +5,7 @@
 // 3. Remove marker and do: _vehicle execVM "x_scripts\x_wreckmarker2.sqf";
 // 4. exit!!!!! So it is only initiate marker procedure only
 
-private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str"];
+private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay"];
 if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -35,9 +35,12 @@ hint localize format["+++ x_wreckmarker.sqf: marker title ""%1""", _str] ;
 [_mname, _sav_pos,"ICON","ColorBlue",[1,1], _str, 0, "DestroyedVehicle"] call XfCreateMarkerGlobal; // "%1 wreck", variable _marker is assigned in call of XfCreateMarkerGlobal function
 d_wreck_marker set [ count d_wreck_marker, [ _mname, _sav_pos, _type_name ] ];
 
+_msg_time = time;
 if ((surfaceIsWater (getPos _vehicle)) ) then {
     // the vehicle didn't sink deep enough
-    ["msg_to_user", "", [["STR_SYS_630_1", _type_name]],0,12 + (random 10),0,"good_news"] call XSendNetStartScriptClientAll; // message output
+    _msg_delay = 12 + (random 10);
+    ["msg_to_user", "", [["STR_SYS_630_1", _type_name]],0,_msg_delay,0,"good_news"] call XSendNetStartScriptClientAll; // message output
+    _msg_time = time + _msg_delay;
 };
 
 _sunk = false;
@@ -64,13 +67,17 @@ deleteMarker _marker;
 if (_sunk) exitWith {
     // remove vehicle, add lost marker and remove it after 2 minutes
     hint localize format["+++ x_wreckmarker.sqf: %1 in water on depth %2, not restorable!", _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)];
-    ["msg_to_user", "", [["STR_SYS_630", _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)]],0,12 + (random 10),0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
+    _msg_time  = (_msg_time max time) + 6 + (random 8);
+    _msg_delay = _msg_time - time;
+    ["msg_to_user", "", [["STR_SYS_630", _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)]],0, _msg_delay ,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
     _sav_pos = position _vehicle;
-    [_mname, _sav_pos,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_MIS_18_1", _type_name],0,"Marker"] call XfCreateMarkerGlobal; // "wreck %1, deep", _marker is assigned in call of XfCreateMarkerGlobal function
+    [_mname, _sav_pos,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_MIS_18_1", _type_name, round(_vehicle modelToWorld [0,0,0]) select 2],0,"Marker"] call XfCreateMarkerGlobal; // "wreck %1, deep", _marker is assigned in call of XfCreateMarkerGlobal function
     [ _vehicle ] call XAddCheckDead;
     {
-        if ( count _x > 1) then {_marker setMarkerColor (_x select 1)};
-        if ( typeName _x == "ARRAY") then { _x = _x select 0 };
+        if ( typeName _x == "ARRAY") then {
+            if ( count _x > 1) then {_marker setMarkerColor (_x select 1)};
+            _x = _x select 0; // prepare sleep period value
+        };
         sleep _x;
     } forEach [40, [40,"ColorRed"],[40, "ColorRedAlpha"]];
     deleteMarker _marker;
