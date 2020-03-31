@@ -186,45 +186,27 @@ XHandleNetStartScriptServer = {
     			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the %1 of the warrior-internationalist in their troubled land"
 			};
             _name = _this select 1;
-            // add more messages if possible
-            _msg = "STR_SERVER_MOTD0"; // "The islanders are happy to welcome you in your native language!"
-            if ( _name == "Aron") then // Slovak
+            // add language specific messages if possible
+            if (localize "STR_LANGUAGE" != "RUSSIAN") then
             {
-    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!"; // Slovak
-            }
-            else
-            {
-                if ( _name in ["Petigp", "gyuri", "Frosty"] ) then // Hungarian
-                {
-        			_msg = "Üdvözöljük az alap a 'Vörös mérnökök'!";// "Üdvözöl a Red Engineers csapat!"; // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
-                }
-                else
-                {
-                    if ( _name == "Marco") then // vec. killer
-                    {
-                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)"
-                    }else {
-                        if (_name in ["Shelter", "Marcin"] ) then // Poland
-                        {
-                            _msg = "Nasz oddział spełnia polskiego brata!"
-                        } else
-                        {
-                            if (_name == "GTX460") then // Русский
-                            {
-                                _msg = "Островитяне: привет советскому разведчику! Мы никому не расскажем о тебе!";
-                            } else
-                            {
-                                if (_name == "Klich") then // Русский
-                                {
-                                    _msg = "Островитяне рады приветствовать Вас на вашем родном языке!";
-                                };
-                            };
-                        };
-                    };
+                _msg = switch (_name) do {
+                    case "Rokse [LT]" : {"Salos malonu pasveikinti jus į savo gimtąja kalba!"}; // Литовец!
+                    case "Aron"       : { "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!" }; // Slovak };
+                    case "gyuri";
+                    case "Frosty";
+                    case "Petigp"     : { "Üdvözöljük az alap a 'Vörös mérnökök'!" }; // Hungarian // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+                    case "Marco"      : { "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)" };// // vec. killer
+                    case "Shelter";
+                    case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
+                    case "Nushrok";
+                    case "Klich";
+                    case "GTX460"     : { "Островитяне: привет советскому воину-разведчику! Мы никому не расскажем о твоём настоящем языке!" };
+                    case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
+                    default             { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
                 };
-            };
 
-  			_msg_arr set [ count _msg_arr, [_msg] ];
+                _msg_arr set [ count _msg_arr, [_msg] ];
+  			};
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then // first time entry after half of game
 			{
@@ -273,7 +255,7 @@ XHandleNetStartScriptServer = {
             };
             if ( _equip_empty  && (_index >= 0)) then
             {
-                if ( argp(_parray,3) > 0) then // non-zero score and report about record absence
+                if ( argp(_parray,3) > 0) then // non-zero score? Report about record absence
                 {
                     _msg_arr set [ count _msg_arr, ["STR_SYS_614"] ]; // ammunition record not found
                 };

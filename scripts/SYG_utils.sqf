@@ -131,12 +131,13 @@ SYG_unitHasACECrewProtection = {
 SYG_makeUndestructible = {
 	private ["_obj", "_cnt"];
 	_cnt = 0;
+	if (typeName _this != "ARRAY") then {_this = [_this]};
 	{
 		_obj = [0,0,0] nearestObject _x;
 		if ( !isNull _obj ) then 
 		{
 			_cnt = _cnt + 1;
-			_obj addEventHandler ["hit", {(_this select 0) setDammage -900000000000}];
+			_obj addEventHandler ["hit", {(_this select 0) setDammage 0}];
 		};
 	} forEach _this;
 	_cnt

@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-//#define __PRINT__
+#define __PRINT__
 
 "d_nv_client" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
@@ -103,7 +103,7 @@ SYG_msgToUserParser =
 
     _msg_arr = _this select 2;
 #ifdef __PRINT__
-    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
+    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" [%1,[%2 item(s)]:%3]", _name, count _msg_arr, _msg_arr select  0];
 #endif
 
     {
@@ -730,15 +730,15 @@ XHandleNetStartScriptClient = {
 			if ( !isNil (_this select 1) ) then
 			{
 				call compile format ["%1 call SYG_reammoMHQ;", _this select 1 ];
-#ifdef __PRINT__
-				hint localize format["+++ 'MHQ_respawned' is called with var '%1'", _this select 1];
-#endif		
-			}
-			else
-			{
-#ifdef __PRINT__
-				hint localize format["--- 'MHQ_respawned' called with NIL variable %1 ", _this select 1];
-#endif		
+//#ifdef __PRINT__
+//				hint localize format["+++ 'MHQ_respawned' is called with var '%1'", _this select 1];
+//#endif
+//			}
+//			else
+//			{
+//#ifdef __PRINT__
+//				hint localize format["--- 'MHQ_respawned' called with NIL variable %1 ", _this select 1];
+//#endif
 			};	
 		};
 		case "flare_launched":	{ // add flare light for client

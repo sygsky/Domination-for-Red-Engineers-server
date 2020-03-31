@@ -945,12 +945,20 @@ SYG_getPos = {
 };
 
 //
+// Get correct ASL position
+//
+SYG_getPosASL = {
+    _this modelToWorld [0, 0, ((getPosASL _this) select 2)- ((getPos _this) select 2)]
+};
+
+//
 // Get random Wide Point in the 2-D tor (between 2 designated radius)
 // call as: [_center,_rad1,_rad2] call SYG_getWPointBetweenTwoRadius
 //
 SYG_getWPointBetweenTwoRadius = {
     // TODO: realize this method to find place for bonus vehicle
 };
+
 
 
 if (true) exitWith {};

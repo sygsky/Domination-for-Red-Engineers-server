@@ -523,7 +523,7 @@ STR_SYS_RELOAD_REFUEL,Filling of the fuel tank,Tankfüllung,Заправка ц�
 STR_SYS_258_1,"Engineers thank You for fully functional vehicles!","Ingenieure vielen Dank für die voll funktionsfähigen Fahrzeuge!","Инженеры благодарят Вас за полностью исправный транспорт!"
 STR_SYS_258_2,"You're not an engineer and can repair vehicle just with a loss of %1 point[s] per cycle","Du bist kein Ingenieur und kann Reparatur Fahrzeug nur mit einem Verlust von %1 pro Zyklus","Вы не инженер и можете чинить только с вычетом очков (%1 за цикл)"
 STR_SYS_258_3,"The engineer can locate and deactivate the mines","Der Ingenieur kann suchen Sie und deaktivieren Sie die Minen","Теперь инженер может работать с минами"
-STR_SYS_258_4,"You must install the addon EditorUpdate_v102.PBO for a full-scale game","Sie müssen den Addon EditorUpdate_v102.pbo installieren für ein full-scale-Spiel","Вм необходимо установить аддон EditorUpdate_v102.pbo"
+STR_SYS_258_4,"You must install the addon EditorUpdate_v102.PBO for a full-scale game","Sie müssen den Addon EditorUpdate_v102.pbo installieren für ein full-scale-Spiel","Вам необходимо установить аддон EditorUpdate_v102.pbo"
 STR_SYS_258_5,"The GRU curator thanks You for downloading the addon EditorUpdate_v102.pbo","Die GRU Kurator vielen Dank für den Download des addon EditorUpdate_v102.pbo","Куратор ГРУ благодарит Вас за загруженный аддон EditorUpdate_v102.pbo"
 
 STR_SYS_259,"%1: service completed","%1: Service abgeschlossen","%1: обслуживание завершено"
@@ -735,6 +735,9 @@ STR_SYS_618,"Viewdistance restore to %1 m.","Viewdistance Durchmesser restaurier
 STR_SYS_620,"Here it is - lying on the shore! If I collect it in 2 minutes, the waves will not carry it away!","Hier ist es - am Ufer liegen! Wenn ich es in 2 Minuten sammle, werden die Wellen es nicht wegtragen!","Да вот же оно, лежит на берегу! Если соберу за 2 минуты, то волны не унесут!"
 STR_SYS_620_0,"My weapon drowned, maybe I can find something on the beach nearby?","Meine Waffe ist ertrunken, vielleicht kann ich am Strand in der Nähe etwas finden?","Оружие утопил, так может на берегу найду?"
 STR_SYS_620_1,"You drowned your weapons foreve-e-e-er","Du hast deine Waffen für immer ertränkt","Утопил я оружие своё-о-о... безвозвратно-о-о!"
+
+STR_SYS_630,"The waters of the oceans closed over the shamefully lost %1 (%2 m.). Someone has to be shot for this!","Das Wasser der Ozeane schloss sich über dem schändlich verlorenen %1 ( %2 m.). Dafür muss jemand erschossen werden!","Воды мирового океана сомкнулись над постыдно утерянным %1 ( %2 м.). Кого-то предстоит за это расстрелять!"
+STR_SYS_630_1,"Lost %1 can still be saved if delivered to the recovery server!","Lost% 1 kann bei Lieferung an den Wiederherstellungsserver weiterhin gespeichert werden!","Утерянный %1 можно ещё спасти, если доставить на сервер возрождения!"
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
 STR_SYS_1001,"Lieutenant-General","Generalleutnant","Генерал-лейтенант"
@@ -1263,12 +1266,13 @@ STR_MIS_15,"Ammo Point","Munition Punkt","Пункт м/т снаб."
 STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
 STR_MIS_18,"%1 wreck","%1 Wrack","обл. %1"
+STR_MIS_18_1,"Wreck: %1, deep","Trümmer: %1, Tief.","обл. %1, глуб."
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 
 STR_SET_1,"Version","Version","Версия"
 STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ"
 STR_SET_3,"Ranked","Ranked","Ранговая"
-STR_SET_4,"With revive","Mit revive","С возможность оживлять"
+STR_SET_4,"With revive","Mit revive","С оживлением"
 STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Использование ""Джавелин"""
 STR_SET_6,"Simple side missions at the beginning","Einfache Nebenmissionen am Anfang","Простые дополнительные задания в начале"
 STR_SET_7,"Light armored vehicles at the base in the start","Leichte Gepanzerte Fahrzeuge am Start","Наличие своей лёгкой техники на базе при старте"

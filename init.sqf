@@ -122,13 +122,19 @@ if (isServer) then {
         ["ACE_WeaponBox", [14539,9922,0], -75],
         ["ACE_WeaponBox", [9672,9991,0], 270]
     ];
-	_vec = createVehicle ["ACE_Su34B", [9658.247070,10020.545898,0], [], 0, "NONE"];
+	_vec = createVehicle ["ACE_Su30Mk_Kh29T", [9658.247070,10020.545898,0], [], 0, "NONE"];
 	_vec setDir 90;
 	if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
 	else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
+	_vec  execVM "x_scripts\x_wreckmarker.sqf";
 
-	_vec = createVehicle ["ACE_Mi24P", [9688.247070,10020.545898,0], [], 0, "NONE"]; // ACE_Mi24P, ACE_AH64_AGM_HE
+	_vec = createVehicle ["ACE_Mi24D", [9720,10040,0], [], 0, "NONE"]; // ACE_Mi24P, ACE_AH64_AGM_HE
 	_vec setDir 90;
+	_vec  execVM "x_scripts\x_wreckmarker.sqf";
+
+	_vec = createVehicle ["ACE_UAZ_MG", [9740,10040,0], [], 0, "NONE"];
+	_vec setDir 90;
+	_vec  execVM "x_scripts\x_wreckmarker.sqf";
 
     _medic_tent = createVehicle ["MASH", [9359.855469, 10047.625000,0], [], 0, "NONE"];
     _medic_tent setDir 189;
@@ -264,6 +270,7 @@ if (isServer) then {
 
 	extra_mission_remover_array = [];
 	extra_mission_vehicle_remover_array = [];
+	SYG_owner_active_air_vehicles_arr = []; // list of player's vehicles in air
 	check_trigger = objNull;
 	create_new_paras = false;
 	first_time_after_start = true;

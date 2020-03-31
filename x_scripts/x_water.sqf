@@ -11,6 +11,7 @@ _removeWeaponHolders = {
     if ( count _this <= 0 ) exitWith { /*hint localize "--- x_water.sqf._removeWeaponHolders: WeaponHolders array is []"; */};
     sleep (100 + (random 40));
     { if (typeOf _x == "WeaponHolder" ) then {deleteVehicle _x;}; } forEach _this;
+    playSound "losing_patience";
 //    hint localize format["+++ x_water.sqf._removeWeaponHolders: WeaponHolders (%1 pc.) from water  removed", count _this];
 };
 
@@ -41,7 +42,7 @@ while {true} do {
 			sleep 0.521;
     	    playSound "under_water_3"; // you lost your weapon
 			// find ALL nearest weapon holders as Arma-1 createsmultiple weapon holders, that is surprize!
-			_wpArr = nearestObjects [ player, ["WeaponHolder"], HOLDER_SEARCH_RADIUS ]; // if you are at see with  depth at this point > 100 m it will not word
+			_wpArr = nearestObjects [ player, ["WeaponHolder"], HOLDER_SEARCH_RADIUS ]; // It will find all holdear around #N meters in 2D and any depth (so say https://community.bistudio.com/wiki/nearestObject)
 			if ( count _wpArr > 0 ) then {
 //                hint localize format["+++ x_water.sqf: WeaponHolder[s] with your lost weapon found and remembered (%1 pc.)",count _wpArr];
                 (localize "STR_SYS_620_0") call XfHQChat;
@@ -90,10 +91,12 @@ while {true} do {
 	if ( (count _wpArr) > 0 ) then { _wpArr spawn _removeWeaponHolders; _wpArr = [] };
 	if (!alive player) then {
 	    waitUntil {alive player};
+/*
 	    if (count wp_weapon_array > 0) then {
 	        sleep 2.432;
 	        wp_weapon_array = [];
 	    };
+*/
 	};
 	sleep 10.012;
 };
