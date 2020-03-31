@@ -427,6 +427,7 @@ XfCreateMarkerGlobal = {
 	if (_m_dir != -888888888888) then {_marker setMarkerDir _m_dir};
 	if (_m_type != "") then {_marker setMarkerType _m_type};
 	if (_m_brush != "") then {_marker setMarkerBrush _m_brush};
+    _marker
 };
 
 // create a local marker
@@ -452,6 +453,7 @@ XfCreateMarkerLocal = {
 	if (_m_dir != -888888888888) then {_marker setMarkerDirLocal _m_dir};
 	if (_m_type != "") then {_marker setMarkerTypeLocal _m_type};
 	if (_m_brush != "") then {_marker setMarkerBrushLocal _m_brush};
+	_marker
 };
 
 // send a text message over the network

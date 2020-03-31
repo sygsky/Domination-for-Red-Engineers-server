@@ -71,7 +71,7 @@ if (_sunk) exitWith {
     _msg_delay = _msg_time - time;
     ["msg_to_user", "", [["STR_SYS_630", _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)]],0, _msg_delay ,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
     _sav_pos = position _vehicle;
-    [_mname, _sav_pos,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_MIS_18_1", _type_name, round(_vehicle modelToWorld [0,0,0]) select 2],0,"Marker"] call XfCreateMarkerGlobal; // "wreck %1, deep", _marker is assigned in call of XfCreateMarkerGlobal function
+    [_mname, _sav_pos,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_MIS_18_1", _type_name, round((_vehicle modelToWorld [0,0,0]) select 2)],0,"Marker"] call XfCreateMarkerGlobal; // "wreck %1, deep", _marker is assigned in call of XfCreateMarkerGlobal function
     [ _vehicle ] call XAddCheckDead;
     {
         if ( typeName _x == "ARRAY") then {
