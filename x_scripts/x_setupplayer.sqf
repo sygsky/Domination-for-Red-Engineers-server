@@ -1768,8 +1768,8 @@ player addAction["score -15","scripts\addScore.sqf",-15];
 hint localize "__DEBUG_ADD_VEHICLES__";
 //player setPos [14531,9930,0]; // hill at Modesta near ammoboxes
 
-// player setPos [9763,11145,0]; // dock in Rashidad
-// MRR1   setPos [9763,11150,0];
+ player setPos [9763,11145,0]; // dock in Rashidad
+//ww MRR1   setPos [9763,11150,0];
 
 if ( score player < (d_pseudo_ranks select 1) ) then
 {
