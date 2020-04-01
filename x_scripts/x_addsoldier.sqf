@@ -1,5 +1,5 @@
 // by Xeno, x_addsoldier.sqf to add AI to the player
-private ["_type_soldier","_units","_ai_counter","_ai_side_char","_ai_side_unit"];
+private ["_type_soldier","_units","_ai_counter","_ai_side_char","_ai_side_unit","_msg_arr"];
 #include "x_setup.sqf"
 
 _type_soldier = _this select 3;
@@ -103,11 +103,15 @@ if (d_own_side == "EAST") then
         _identity = "Irina";
         _unit spawn { sleep 1.5; _this say (call SYG_getFemaleExclamation);}
     };
+    _msg_arr = [];
     _unit setIdentity _identity; // there are only 5 russina voice in the ACE
     hint localize format["+++ AI setIdentity ""%1""", _identity];
     if ( ! ((_identity == "Irina") || (localize "STR_LANG" == "RUSSIAN")) ) then {
-        ["msg_to_user", "", [["STR_SYS_1175_1", name _unit] ] ] call SYG_msgToUserParser; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
+        _msg_arr set [count _msg_arr, [["STR_SYS_1175_1", name _unit] ]];
     };
+    _msg_arr set [count _msg_arr, [["STR_SYS_1175_2"] ]];
+    ["msg_to_user", "", _msg_arr ] call SYG_msgToUserParser; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
+    playSound "losing_patience";
 };
 #endif
 
