@@ -15,7 +15,7 @@ _mags =
 [
     ["ACE_Bandage",3],
     ["ACE_Morphine",5],
-    ["ACE_75Rnd_762x39_B_AK",5],
+    ["ACE_75Rnd_762x39_BT_AK",5],
     ["ACE_RPG7_PG7VL",1]
 ];
 _magp = [["ACE_Epinephrine_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VL_PDM",1]];

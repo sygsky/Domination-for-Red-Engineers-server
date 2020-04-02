@@ -25,7 +25,7 @@ switch (_sec_solved_kind) do {
 		_msg = "STR_SYS_243"; // "Ваша команда уничтожила грузовик с боезапасом..."
 	};
 	case "apc_down": {
-		_msg = "STR_SYS_244"; // "Ваша команда уничтожила командный штаб противника..."
+		_msg = "STR_SYS_244"; // "Your team has destroyed the enemy MHQ..."
 	};
 	case "hq_down": {
 		_msg = "STR_SYS_245"; // "Ваша команда уничтожила командный пункт противника..."
@@ -56,7 +56,8 @@ if (_is_solved) then
             }
             else
             {
-                _msg = format["%1 [%2 +%3]!", _msg, ( _this select 2), d_ranked_a select 25];
+                _text = if (( _this select 2) == "Error: No unit") then {"STR_SYS_248_NUM" call SYG_getLocalizedRandomText} else {localize "STR_SYS_248_1"}; // " by force of circumstances..."
+                _msg = format["%1 [%2 +%3]!", _msg, _text, d_ranked_a select 25];
             };
         };
     };
