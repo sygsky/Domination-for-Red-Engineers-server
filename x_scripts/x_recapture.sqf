@@ -98,10 +98,15 @@ while {true} do {
 		if (d_own_side == "EAST") then //+++Sygsky: add more fun with flags
 		{
 			_arr = nearestObjects[_target_pos,["FlagCarrierNorth"],_radius];
+			_sound = false;
 			if ( (count _arr)  > 0 ) then
 			{
 				{
 					_x setFlagTexture "\ca\misc\data\usa_vlajka.pac"; //+++Sygsky: set USA flag for more fun
+				    if (!_sound) then {
+				        ["say_sound", _x, (call SYG_invasionSound)] call XSendNetStartScriptClientAll;
+				        _sound = true;
+				    };
 				} forEach _arr;
 			};
 		};

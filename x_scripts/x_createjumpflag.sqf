@@ -28,6 +28,7 @@ if (count _posi > 0) then {
 	if (d_own_side == "EAST") then //+++Sygsky: add more fun with flags
 	{
 		_flag setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag
+		 ["say_sound", _flag, "USSR"] call XSendNetStartScriptClientAll;
 	};
 	["new_jump_flag",_flag] call XSendNetStartScriptClient;
 };

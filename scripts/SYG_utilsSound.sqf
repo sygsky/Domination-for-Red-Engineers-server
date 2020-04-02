@@ -570,4 +570,8 @@ SYG_exclamationSound = { format["exclamation%1", ceil (random 6)] };
 
 SYG_fearSound = {["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence"] call XfRandomArrayVal};
 
+SYG_invasionSound = {
+    ["invasion","kwai","starwars","radmus","enemy"] call XfRandomArrayVal
+};
+
 if (true) exitWith {};

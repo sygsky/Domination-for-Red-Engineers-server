@@ -87,9 +87,14 @@ d_recapture_indices = d_recapture_indices - [_recap_index];
 //+++Sygsky: add more fun with flags
 if (d_own_side == "EAST") then
 {
+    _sound= false;
 	_arr = nearestObjects[_target_center,["FlagCarrierNorth"],_radius];
 	{
 		_x setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag again
+		if (!_sound) then {
+        	 ["say_sound", _x, "USSR"] call XSendNetStartScriptClientAll;
+		    _sound = true;
+		};
 	} forEach _arr;
 };
 //---Sygsky
