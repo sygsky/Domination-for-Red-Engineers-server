@@ -1,7 +1,11 @@
 // by Xeno. x_helilift_wreck.sqf
+
+#define __PRINT__
+
 private ["_id","_menu_lift_shown","_nearest","_nearest_pos","_npos","_nx","_ny","_p_x","_p_y","_p_z","_pos","_posi","_px","_py","_release_id","_vehicle"];
 
 if (!X_Client) exitWith {};
+
 
 _vehicle = _this select 0;
 
@@ -18,9 +22,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 	if ((driver _vehicle) == player) then {
 		_pos = getPos _vehicle;
 
-		if (!Vehicle_Attached && /* (_pos select 2 > 2.5) && */ (_pos select 2 < 100)) then {
+		if (!Vehicle_Attached && /* (_pos select 2 > 2.5) && */ (_pos select 2 < 50)) then {
 			_nearest = objNull;
-			_nobjects = nearestObjects [_vehicle, ["LandVehicle","Air","Ship"],100]; //+++ Sygsky: changed search dist from 70 to 100 m
+			_nobjects = nearestObjects [ _vehicle, [ "LandVehicle", "Air", "Ship" ], 70 ]; //+++ Sygsky: changed search dist from 70 to 100 m
 			if (count _nobjects > 0) then {
 				_dummy = _nobjects select 0;
 				if (_dummy == _vehicle) then {
@@ -38,7 +42,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 //				if ((_px <= _nx + 10 && _px >= _nx - 10) && (_py <= _ny + 10 && _py >= _ny - 10)) then {
 				if ( ((abs(_px - _nx)) < 10) && (abs(_py - _ny) < 10) ) then {
 					if (!_menu_lift_shown) then {
-						_id = _vehicle addAction [localize "STR_SYS_35"/* "ПОДНЯТЬ ТЕХНИКУ" */, "x_scripts\x_heli_action.sqf",-1,100000];
+						_id = _vehicle addAction [localize "STR_SYS_35", "x_scripts\x_heli_action.sqf",-1,100000]; // "Lift vehicle"
 						_menu_lift_shown = true;
 					};
 				} else {
@@ -64,14 +68,35 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 				if (Vehicle_Attached) then {
 
 				    if ( !( (typeof _nearest) in x_heli_wreck_lift_types ) ) exitWith {
-                    // vehicle not in legal list
+                        // vehicle not in legal list
                         //++ Sygsky: found that vehicle ready to lift isn't in legal list! Clear possible activity and report user about
-                        [_vehicle, format[localize "STR_SYS_38_1",typeOf _nearest]] call XfVehicleChat; // "The vehicle (%1) can still be repaired, say the engineers..."
+                        [_vehicle, format[localize "STR_SYS_38_1",typeOf _nearest]] call XfVehicleChat; // "The vehicle (%1) not in restore list..."
                         Vehicle_Attached = false;
                         Vehicle_Released = false;
                         Attached_Vec = objNull;
                     };
-
+                    // task #347.1: vehicle is too deep in water to get in
+                    if ( (surfaceIsWater (getPos _nearest)) && ( ( ( _nearest modelToWorld [0,0,0] ) select 2 ) < -7 ) ) exitWith {
+                        [_vehicle, format[localize "STR_SYS_38_2",typeOf _nearest, round ( ( _nearest modelToWorld [0,0,0] ) select 2 )]] call XfVehicleChat; // "This vehicle (%1) is too deep (%2 m.), we will not get it, alas..."
+                        Vehicle_Attached = false;
+                        Vehicle_Released = false;
+                        Attached_Vec = objNull;
+                        call SYG_playWaterSound;
+                    };
+#ifdef __PRINT__
+                    if ( (surfaceIsWater (getPos _nearest)) ) then {
+                        hint localize format["+++ x_helilift_wreck.sqf: %1 mTW %2,gP %3,gPA %4,d %5; %6 mTW %7,gP %8,gPA %9",
+                        typeOf _nearest,
+                        _nearest modelToWorld [0,0,0],
+                        getPos _nearest,
+                        getPosASL _nearest,
+                        _nearest distance _vehicle,
+                        typeOf _vehicle,
+                        _vehicle modelToWorld [0,0,0],
+                         getPos _vehicle,
+                         getPosASL _vehicle]
+                    };
+#endif
                     _release_id = _vehicle addAction [localize "STR_SYS_36"/* "СБРОСИТЬ ТЕХНИКУ" */, "x_scripts\x_heli_release.sqf",-1,100000];
                     [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName]] call XfVehicleChat;
                     Attached_Vec = _nearest;
