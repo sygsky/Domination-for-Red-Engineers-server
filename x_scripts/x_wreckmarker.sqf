@@ -1,14 +1,17 @@
-// by Xeno, x_scripts\x_wreckmarker.sqf. It is 1st time draw static destroy marker procedure, immediatelly after death of vehicle
+// by Xeno, x_scripts\x_wreckmarker.sqf. Runs on server only.
+// It is 1st time draw static destroy marker procedure, immediatelly after death of vehicle
 // Logic:
 // 1. Waits until vehicle is dead
 // 2. On death creates wreck marker and wait while vehicle not null and distance from vdead vehicle to marker origin is <= 30 m
 // 3. Remove marker and do: _vehicle execVM "x_scripts\x_wreckmarker2.sqf";
 // 4. exit!!!!! So it is only initiate marker procedure only
 
+if (!isServer) exitWith {};
+
 #define DEPTH_TO_SINK -7 // when vehicle considered to have sunk
 #define __PRINT__
+
 private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay","_time_stamp"];
-if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 _vehicle = _this;
@@ -16,15 +19,14 @@ _vehicle = _this;
 //+++++++++++++++++++++++++++++++++++++++++
 // Wait until vehicle is dead
 while {alive _vehicle} do {sleep (5.532 + random 2.2)};
-// TODO: add message sound about heli fatum if at water
+
 while {speed _vehicle > 4} do {sleep (1.532 + random 2.2)};
 sleep 0.01;
 
-// #347.1: Падающую в море, на глубину более N метров, любого рода технику сразу уничтожать.
 _type_name = [typeOf (_vehicle),0] call XfGetDisplayName;
 
 #ifdef __PRINT__
-hint localize format["+++ x_wreckmarker.sqf: %1 in water %2, on depth %3, restorable!", _type_name, surfaceIsWater (getPos _vehicle), round ((_vehicle modelToWorld [0,0,0]) select 2)];
+hint localize format["+++ x_wreckmarker.sqf: script start with %1, in water %2, height %3", _type_name, surfaceIsWater (getPos _vehicle), round ((_vehicle modelToWorld [0,0,0]) select 2)];
 #endif
 
 if ((vectorUp _vehicle) select 2 < 0) then {_vehicle setVectorUp [0,0,1]};
@@ -42,6 +44,7 @@ hint localize format["+++ x_wreckmarker.sqf(0): marker title ""%1""", _str] ;
 [_mname, _sav_pos,"ICON","ColorBlue",[1,1], _str, 0, "DestroyedVehicle"] call XfCreateMarkerGlobal; // "%1 wreck", variable _marker is assigned in call of XfCreateMarkerGlobal function
 d_wreck_marker set [ count d_wreck_marker, [ _mname, _sav_pos, _type_name ] ];
 
+// #347.1: Падающую в море, на глубину более N метров, любого рода технику сразу уничтожать.
 _msg_time = time;
 if ((surfaceIsWater (getPos _vehicle)) ) then {
     // the vehicle didn't sink deep enough
@@ -63,12 +66,17 @@ while { (!isNull _vehicle) && (([_vehicle, (markerPos _marker)] call SYG_distanc
 };
 
 // remove permanent marker at wreckage place
-for "_i" from 0 to (count d_wreck_marker - 1) do {
-	_element = d_wreck_marker select _i;
-	if ((_element select 0) == _mname && (format ["%1",(_element select 1)] == format ["%1",_sav_pos])) exitWith {
-		d_wreck_marker set [_i, "X_RM_ME"];
-	};
+if (count d_wreck_marker > 0) then {
+    for "_i" from 0 to (count d_wreck_marker - 1) do {
+        _element = d_wreck_marker select _i;
+        if (typeName _element == "ARRAY") then {
+            if ((_element select 0) == _mname && (format ["%1",(_element select 1)] == format ["%1",_sav_pos])) exitWith {
+                d_wreck_marker set [_i, "X_RM_ME"];
+            };
+        }
+    };
 };
+d_wreck_marker = d_wreck_marker - ["X_RM_ME"];
 deleteMarker _marker;
 
 if (_sunk) then {
@@ -79,9 +87,8 @@ if (_sunk) then {
     _msg_time  = (_msg_time max time) + 6 + (random 8);
     _msg_delay = _msg_time - time;
     ["msg_to_user", "", [["STR_SYS_630", _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)]],0, _msg_delay ,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
-    _sav_pos = position _vehicle;
     _depth = round((_vehicle modelToWorld [0,0,0]) select 2);
-    [_mname, _sav_pos,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_MIS_18_1", _type_name, _depth,"" ],0,"Marker"] call XfCreateMarkerGlobal; // "wreck %1, deep %2 m.%3", _marker is assigned in call of XfCreateMarkerGlobal function
+    [_mname, position _vehicle,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_MIS_18_1", _type_name, _depth,"" ],0,"Marker"] call XfCreateMarkerGlobal; // "wreck %1, deep %2 m.%3", _marker is assigned in call of XfCreateMarkerGlobal function
     [ _vehicle ] call XAddCheckDead;
     _timer_start = time;
 
@@ -100,29 +107,41 @@ if (_sunk) then {
             if ( count _x > 1) then {_marker setMarkerColor (_x select 1)};
             _x = _x select 0; // prepare sleep period value
         };
+
+        _exit = false;
         for "_i" from 1 to _x do
         {
             sleep 1;
             _back_counter = _back_counter -1;
             _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, format[" (%1)", _back_counter] ];
+
+            // check any changes in marked vehicle status
+            // if vehilce is deleted from meory
+            if ( isNull _vehicle ) exitWith{
+            #ifdef __PRINT__
+                hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 isNull, exit", round(time - _time_stamp), _type_name ];
+            #endif
+            #ifdef __ACE__
+                _marker setMarkerType  "ACE_Icon_SoldierDead"; // mark dead player as skull
+            #endif
+                _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, localize "STR_MIS_18_2"] ;
+                sleep 5; // last farewell to sunk vehicle
+                _exit = true;
+            }; // the vehicle removed
+            // if vehicle moved (by user may be)
+            if (([_vehicle, (markerPos _marker)] call SYG_distance2D) > 30) exitWith {
+            #ifdef __PRINT__
+                hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 moved from marker, goto x_wreckmarker2.sqf", round(time - _time_stamp), _type_name ];
+            #endif
+                _sunk = false;
+                _exit = true;
+            }; // the vehicle moved
+
         };
-        if ( isNull _vehicle ) exitWith{
-        #ifdef __PRINT__
-            hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 isNull, exit", round(time - _time_stamp), _type_name ];
-        #endif
-        #ifdef __ACE__
-            _marker setMarkerType  "ACE_Icon_SoldierDead"; // mark dead player as skull
-        #endif
-            _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, localize "STR_MIS_18_2"] ;
-            sleep 5; // last farewell to sunk vehicle
-        };
-        if (([_vehicle, (markerPos _marker)] call SYG_distance2D) > 30) exitWith {
-        #ifdef __PRINT__
-            hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 moved from marker, goto x_wreckmarker2.sqf", round(time - _time_stamp), _type_name ];
-        #endif
-            _sunk = false
-        }; // the vehicle moved
+        if (_exit) exitWith{};
+
     } forEach _marker_stage_arr;
+
     if ( !isNull _vehicle && _sunk ) then {
 #ifdef __PRINT__
         hint localize format[ "+++ x_wreckmarker.sqf(%1): deleteVehicle %2 after marker dynamic loop finished", round(time - _time_stamp), _type_name ];

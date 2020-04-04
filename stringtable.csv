@@ -118,7 +118,8 @@ STR_SYS_35,"Lift vehicle","Fahrzeug anheben","Поднять технику"
 STR_SYS_36,"Drop vehicle","Drop-fahrzeug","Сбросить технику"
 STR_SYS_37,"Vehicle (%1) is lifted...","Fahrzeug (% 1) mit Hubschrauber gehoben ...","Техника (%1) поднята вертолётом..."
 STR_SYS_38,"Overwhelming vehicle (%1)...","Sehr schwere Maschine (%1)...","Техника неподъёмна (%1)..."
-STR_SYS_38_1,"The vehicle (%1) can still be repaired, point it out to the engineers...","Das Fahrzeug (%1) kann noch repariert werden, sagen die Ingenieure...","Технику (%1) ещё можно починить, укажите на неё инженерам..."
+STR_SYS_38_1,"The vehicle (%1) not in restore list...","Wir stellen solche Fahrzeuge nicht wieder her (%1)...","Такую технику (%1) нет указаний восстанавливать, обратитесь к руководству операцией..."
+STR_SYS_38_2,"This vehicle (%1) is too deep (%2 m.), we will not get it, alas...","Dieses Fahrzeug (%1) ist zu tief (%2 M.), wir werden es leider nicht bekommen...","Эта техника (%1) слишком глубоко (%2 м.), не достанем, увы..."
 STR_SYS_39,"Vehicle was dropped...","Fahrzeug ist gelöscht...","Техника сброшена..."
 
 STR_SYS_40,"Warning! In the %1 discovered the presence of enemy spotters, in total %2 men.","Warnung! In %1 wurde die Anwesenheit feindlicher Spotter entdeckt, insgesamt %2 Männer.","Внимание! В %1 обнаружено присутствие вражеских корректировщиков, %2 чел."
@@ -581,7 +582,7 @@ STR_SYS_314,"There is a radio tower in a farm west of Bagango (south from Carmen
 
 STR_SYS_316_1,"All artillery guns are down. No artillery observers will appear now. But they can appear later","Alle Artilleriegeschütze sind unten. Keine artilleriebeobachter werden jetzt erscheinen. Aber Sie können später wieder auftauchen","Все артиллерийские орудия уничтожены. Корректировщики исчезли! Но они могут вернуться!"
 STR_SYS_317,"Radiotower","Funkturm","Телемачта"
-STR_SYS_318,"There is a transformer station in Tlaloc. The enemy uses it to for some experiments in a laboratory in Carmen. Simple task, destroy it.","Es ist eine Trafo-station im Tlaloc. Der Feind verwendet es für einige Experimente in einem Labor in Carmen. Einfache Aufgabe, es zu zerstören.","По данным разведки, где-то в Carmen расположена вражеская секретная научная лаборатория. Выша задача уничтожить трансформаторную подстанцию в Tlaloc, тем самым саботировать работу лаборатории."
+STR_SYS_318,"There is a transformer station in Tlaloc. The enemy uses it to for some experiments in a laboratory in Carmen. Simple task, destroy it.","Es ist eine Trafo-station im Tlaloc. Der Feind verwendet es für einige Experimente in einem Labor in Carmen. Einfache Aufgabe, es zu zerstören.","По данным разведки, где-то в р-не Carmen расположена вражеская секретная научная лаборатория. Выша задача уничтожить трансформаторную подстанцию в Tlaloc, тем самым саботировать работу лаборатории."
 STR_SYS_318_1,"Good job. The transformer station is down.","Gute Arbeit. Die Trafo-station ist ausgefallen.","Задание выполнено! Трансформаторная подстанция уничтожена."
 
 STR_SYS_320,"Says the first art.battery. Roger, over.","Sagt die erste Art.die Batterie. Sie verstanden habe, ist der Empfang.","Говорит первая арт.батарея. Вас понял, прием."
@@ -972,6 +973,7 @@ STR_HOLIDAY_1_JAN,"New Year","Neujahr","Новый Год"
 STR_HOLIDAY_23_FEB,"The day of Soviet army and Navy","Der Tag der sowjetischen Armee und Marine","День Советской Армии и ВМФ"
 STR_HOLIDAY_8_MAR,"International women's day","Internationaler Frauentag","Международный женский день"
 STR_HOLIDAY_12_APR,"Cosmonautics day","Tag der Raumfahrt","День Космонавтики"
+STR_HOLIDAY_22_APR,"The day of the birth of V. I. Lenin","Geburtstag von V. I. Lenin","День рождение В.И. Ленина"
 STR_HOLIDAY_1_MAY,"International workers' solidarity day","Tag der internationalen Solidarität der Arbeitnehmer","День международной солидарности трудящихся"
 STR_HOLIDAY_9_MAY,"Victory Day","Tag des Sieges","День Победы"
 STR_HOLIDAY_18_AUG,"Day of the USSR Air Fleet","Tag der Luftflotte der UdSSR","День Воздушного Флота СССР"
@@ -1268,7 +1270,8 @@ STR_MIS_15,"Ammo Point","Munition Punkt","Пункт м/т снаб."
 STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
 STR_MIS_18,"%1 wreck","%1 Wrack","обл. %1"
-STR_MIS_18_1,"Wreck: %1, deep %2 m.","Trümmer: %1, Tief. %2 m.","обл. %1, глуб. %2 м."
+STR_MIS_18_1,"Wreck: %1, deep %2 m.%3","Trümmer: %1, Tief. %2 m.%3","обл. %1, глуб. %2 м.%3"
+STR_MIS_18_2,", it's over",", es ist vorbei",", всё кончено"
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 
 STR_SET_1,"Version","Version","Версия"

@@ -22,9 +22,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 	if ((driver _vehicle) == player) then {
 		_pos = getPos _vehicle;
 
-		if (!Vehicle_Attached && /* (_pos select 2 > 2.5) && */ (_pos select 2 < 50)) then {
+		if (!Vehicle_Attached && /* (_pos select 2 > 2.5) && */ (_pos select 2 < 40)) then {
 			_nearest = objNull;
-			_nobjects = nearestObjects [ _vehicle, [ "LandVehicle", "Air", "Ship" ], 70 ]; //+++ Sygsky: changed search dist from 70 to 100 m
+			_nobjects = nearestObjects [ _vehicle, [ "LandVehicle", "Air", "Ship" ], 50 ]; //+++ Sygsky: changed search dist from 70 to 100 m
 			if (count _nobjects > 0) then {
 				_dummy = _nobjects select 0;
 				if (_dummy == _vehicle) then {
