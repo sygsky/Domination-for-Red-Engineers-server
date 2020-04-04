@@ -29,7 +29,6 @@ while {true} do {
 
     if ( (count _wpArr) > 0 ) then {
         {deleteVehicle _x} forEach _wpArr; _wpArr = [];
-        playSound "losing_patience";
     }; // remove all found before weapon holders
 
 	if ( alive player ) then {
@@ -41,7 +40,7 @@ while {true} do {
                 ( ( primaryWeapon player != "" ) || ( secondaryWeapon player != "" ))
                 && ( alive player )
                 && (surfaceIsWater (getPos player))
-            } do {sleep 0.621}; // wiat until weapons is lost
+            } do {sleep 0.621}; // wait until weapons is lost or player dead or out of water
 			sleep 0.521;
     	    playSound "under_water_3"; // you lost your weapon
 			// find ALL nearest weapon holders as Arma-1 createsmultiple weapon holders, that is surprize!
@@ -55,9 +54,11 @@ while {true} do {
                 _marker = [_mname, getPos player,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_SYS_620_3", round(((_wpArr select 0) modelToWorld [0,0,0]) select 2)],0,"Marker"] call XfCreateMarkerLocal; // "ammocrate", _marker is assigned in call of XfCreateMarkerGlobal function
 			}
 			else {
-//			    hint localize "--- x_water.sqf:  WeaponHolder[s] not found";
-			    sleep 4;
-			    (localize "STR_SYS_620_1") call XfHQChat; playSound "losing_patience";
+			    if (alive player && (surfaceIsWater (getPos player)) ) then {
+    //			    hint localize "--- x_water.sqf:  WeaponHolder[s] not found";
+                    sleep 4;
+                    (localize "STR_SYS_620_1") call XfHQChat; playSound "losing_patience";
+			    };
 			};
 		};
 	};
