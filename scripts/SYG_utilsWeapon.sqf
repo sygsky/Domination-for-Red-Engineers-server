@@ -1524,26 +1524,16 @@ SYG_removeNVGoggles = {
  * Call: _res = _unit call SYG_armPilotFull;
  */
 SYG_armPilotFull = {
-	private [ "_res" ];
-	_res = false;
-	if ( (_this isKindOf "SoldierWPilot") or ( _this isKindOf "SoldierEPilot")) exitWith
-	{
-		switch ( side _this ) do
-		{
-			case east:
-			{
-				[_this, call SYG_pilotEquipmentEast ] call SYG_armUnit;
-				_res = true;
-			};
-			case west:
-			{
-				//player globalChat format["%1: %2", typeName _this, call SYG_pilotEquipmentWest];
-				[_this, call SYG_pilotEquipmentWest ] call SYG_armUnit;
-				_res = true;
-			};
-		};
+	if ( (_this isKindOf "SoldierWPilot") ||  (_this isKindOf  "SoldierGPilot")) exitWith {
+		[_this, call SYG_pilotEquipmentWest ] call SYG_armUnit;
+		true
 	};
-	if ( true ) exitWith { _res };
+	if( _this isKindOf "SoldierEPilot") exitWith
+	{
+		[_this, call SYG_pilotEquipmentEast ] call SYG_armUnit;
+		true
+	};
+	false
 };
 
 /*
