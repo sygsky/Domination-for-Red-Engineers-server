@@ -156,11 +156,20 @@ SYG_MedievalDefeatTracks =
      "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17",
      "village_consort"
     ];
+
 SYG_waterDefeatTracks =
     [
         "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8","under_water_9","fish_man_song"
     ];
 
+SYG_playWaterSound = {
+    private ["_arr"];
+    _arr = SYG_waterDefeatTracks;
+    if (localize "LANGUAGE" == "RUSSIAN") then {
+        if ( (random (count SYG_waterDefeatTracks + 1)) < 1) then {_arr = ["fish_man_song"]}; // only for players known to be Russian
+    };
+    _arr call SYG_playRandomTrack;
+};
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
@@ -255,7 +264,7 @@ SYG_playRandomDefeatTrackByPos = {
     };
 
     // death in water
-    if (surfaceIsWater _this) exitWith { SYG_waterDefeatTracks call SYG_playRandomTrack};
+    if (surfaceIsWater _this) exitWith { call SYG_playWaterSound};
 
     // no special conditions found, play std music now
     switch (_this call SYG_whatPartOfIsland) do
@@ -574,4 +583,8 @@ SYG_invasionSound = {
     ["invasion","kwai","starwars","radmus","enemy"] call XfRandomArrayVal
 };
 
+SYG_prisonersSound = {
+    // TODO: add normal sounds
+    call SYG_exclamationSound
+};
 if (true) exitWith {};
