@@ -382,8 +382,10 @@ class CfgSounds
     class freefall7 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_chorus_5.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 7
     class freefall300m { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_300_m.ogg,db-1,1.0}; titles[] = {};} // You are in free fall sound 8
 
-    class rippara { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip.ogg,db-1,1.0}; titles[] = {};} // Rip parachute sound
-
+    class rippara1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip_1.ogg,db-1,1.0}; titles[] = {};} // Rip parachute sound
+    class rippara2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip_2.ogg,db-1,1.0}; titles[] = {};} // Rip parachute sound
+    class rippara3 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip_3.ogg,db-1,1.0}; titles[] = {};} // Rip parachute sound
+    class rippara4 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip_3.ogg,db-1,1.0}; titles[] = {};} // Rip parachute sound
 
     class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; titles[] = {};};
 
