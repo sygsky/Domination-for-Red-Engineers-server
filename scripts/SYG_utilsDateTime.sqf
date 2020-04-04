@@ -427,6 +427,7 @@ SYG_holidayTable =
     [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
+    [22,  4, ["lenin","lenin_1"],"STR_HOLIDAY_22_APR",0], // Birthday of V.I. Lenin
     [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
     [ 2,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
