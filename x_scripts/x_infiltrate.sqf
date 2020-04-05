@@ -188,7 +188,7 @@ while { true } do {
                         {
                             if (!(_vehicle in _items_to_clean)) then
                             {
-                                _items_to_clean = _items_to_clean + [_vehicle];
+                                _items_to_clean set [ count _items_to_clean, _vehicle];
                             };
                         };
                     };

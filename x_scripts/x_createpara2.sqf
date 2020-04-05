@@ -1,6 +1,6 @@
 ﻿// by Xeno
 //
-// x_createpara2.sqf
+// x_createpara2.sqf : not used anymore
 //
 // Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
@@ -219,7 +219,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 			};
 			d_on_base_groups = (d_on_base_groups - ["RM_ME"]);
 		};
-		d_on_base_groups = d_on_base_groups + [_paragrp]; // add a new group to common array
+		d_on_base_groups set [count d_on_base_groups, _paragrp]; // add a new group to common array
 		publicVariable "d_on_base_groups";
 
 #ifdef	__DEBUG_PRINT__

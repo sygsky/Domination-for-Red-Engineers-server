@@ -388,13 +388,13 @@ if (isServer) then {
 
 	// OnPlayer Connected DB
 	if (isNil "ace_sys_network_OPCB") then {ace_sys_network_OPCB = []};
-	ace_sys_network_OPCB = ace_sys_network_OPCB + [{[_this select 0] execVM "x_scripts\x_serverOPC.sqf"}];
+	ace_sys_network_OPCB set [count ace_sys_network_OPCB , {[_this select 0] execVM "x_scripts\x_serverOPC.sqf"} ];
 	hint localize format["ACE:ace_sys_network_OPCB = %1", ace_sys_network_OPCB];
 	hint localize format["ACE:ace_sys_network_OPC = %1", ace_sys_network_OPC];
 
 	// On Player Disconnect
 	if (isNil "ace_sys_network_OPD") then {ace_sys_network_OPD = []};
-	ace_sys_network_OPD = ace_sys_network_OPD + [{[_this select 0] execVM "x_scripts\x_serverOPD.sqf"}];
+	ace_sys_network_OPD set [ count ace_sys_network_OPD, {[_this select 0] execVM "x_scripts\x_serverOPD.sqf"}];
 	hint localize format["ACE:ace_sys_network_OPD = %1", ace_sys_network_OPD];
 
 #else

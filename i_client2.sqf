@@ -55,7 +55,7 @@ d_helilift1_types =
 #endif
 #ifdef __OWN_SIDE_WEST__
 	if (__ACEVer) then {
-		["M113_MHQ","ACE_M113_Ambul","ACE_M2A2","ACE_M2A1","ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT",/*"ACE_Stryker_RV",*/"ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","ACE_HMMWV_GAU19","ACE_M113_A3","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t"] + _armor + _car
+		["M113_MHQ","ACE_M113_Ambul","ACE_M2A2","ACE_M2A1","ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT",/*"ACE_Stryker_RV",*/"ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_GMV2","ACE_HMMWV_TOW","ACE_HMMWV_GAU19","ACE_M113_A3","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t"] + _armor + _car
 	} else {
 		["M113_MHQ","M113Ambul","M113AmbulRacs","WarfareWestSalvageTruck","Truck5tRepair","Truck5tRefuel","Truck5tReammo","Truck5tOpen","Truck5tMG","Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","Stryker_TOW","HMMWVTOW","M113_RACS","Vulcan_RACS","Vulcan"] + _armor + _car
 	};

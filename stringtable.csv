@@ -1285,7 +1285,7 @@ STR_MIS_ALIVE,alive,lebendig,жив
 STR_MIS_WOUNDED,wounded,verwundet,ранен
 
 STR_SET_1,"Version","Version","Версия"
-STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ"
+STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ-ботами"
 STR_SET_3,"Ranked","Ranked","Ранговая"
 STR_SET_4,"With revive","Mit revive","С оживлением"
 STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Использование ""Джавелин"""
