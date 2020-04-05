@@ -11,7 +11,8 @@ if (!isServer) exitWith {};
 #define DEPTH_TO_SINK -7 // when vehicle considered to have sunk
 #define __PRINT__
 
-private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay","_time_stamp"];
+private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay",
+        "_time_stamp", "_time", "_part"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 _vehicle = _this;
@@ -82,7 +83,7 @@ deleteMarker _marker;
 if (_sunk) then {
     // remove vehicle, add lost marker and remove it after time designated in this code section
 #ifdef __PRINT__
-    hint localize format["+++ x_wreckmarker.sqf(%1): %2 in water on depth %3, not restorable!", round(time - _time_stamp), _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)];
+    hint localize format["+++ x_wreckmarker.sqf(%1): %2 in water on depth %3, sunk!", round(time - _time_stamp), _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)];
 #endif
     _msg_time  = (_msg_time max time) + 6 + (random 8);
     _msg_delay = _msg_time - time;
@@ -94,7 +95,11 @@ if (_sunk) then {
 
     // make marker text to be dynamic, with decreasing seconds counter of remain existance
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _marker_stage_arr = [ 60, [120,"ColorRed"], [120, "ColorRedAlpha"] ];
+    // +++ BASE <-> Mercallilo for a distance 3754 m 300 seconds are required
+    _dist = round ([FLAG_BASE, _vehicle] call SYG_distance2D);
+    _time = ceil (((300 * _dist / (3754 / 2)) + 30) / 60); // new time in minutes, simplest formula: 100 seconds per 1 kilometers
+    _part = (_time * 0.2) max 1.0; // one part in minutes
+    _marker_stage_arr = [ round(_part  * 60), [round(_part * 120), "ColorRed"], [round(_part * 120), "ColorRedAlpha"] ];
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     _back_counter = 0;
     {
