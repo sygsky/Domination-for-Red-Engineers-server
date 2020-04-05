@@ -1282,6 +1282,7 @@ STR_MIS_18_2,", it's over",", es ist vorbei",", всё кончено"
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 STR_MIS_DEAD,dead,tot,мёртв
 STR_MIS_ALIVE,alive,lebendig,жив
+STR_MIS_WOUNDED,wounded,verwundet,ранен
 
 STR_SET_1,"Version","Version","Версия"
 STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ"

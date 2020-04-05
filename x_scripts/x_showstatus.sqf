@@ -122,7 +122,11 @@ if ((current_mission_text != localize "STR_SYS_120") && (current_mission_text !=
 				    _x = _units select 0;
                     _dist = format["%1 m", [ [_x, _pos ] call SYG_distance2D, 10] call SYG_roundTo];
                     if (alive _x) then {
-                        _str = format["%1 %2", localize "STR_MIS_ALIVE", _dist];
+                        if ( damage _x < 0.01 ) then {
+                            _str = format["%1 %2", localize "STR_MIS_ALIVE", _dist];
+                        } else {
+                            _str = format["%1 %2", localize "STR_MIS_WOUNDED", _dist];
+                        };
                     } else {
                         _str = format["%1 %2", localize "STR_MIS_DEAD", _dist];
                     };
