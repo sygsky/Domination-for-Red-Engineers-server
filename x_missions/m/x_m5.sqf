@@ -30,7 +30,14 @@ if (isServer) then {
 
     hint localize format["+++ king hotel _poss %1", _poss];
 	_nbuilding = _poss nearestObject 172902; // hotel at vallejo
+
+	// hotel has 266 building positions
+	_nbuilding = nearestBuilding king;
+	// these are hotel positions in rooms with no door !!!!
+	//_no_list = [86,87,88,89,148,149,150,151,177,178,179,188,189,190];//,200,201,202];//,210,211,212,213,215,216,217];//230,231,232,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,262,263,264,265];
+	_no_list = [86,87,88,89,148,149,150,151,210,211,212,213,262,263,264,265]; // no door room positions
 	_king_id = [55,57,58,59,60,67,69,70,71,80,81,82,94,96,98,118,120,129,131,142,144,158,160,180,182,184,191,195,204,206,218,220,221,224]; // good pos for king
+
 	_pos_id = _king_id call XfRandomArrayVal; // pos id in hotel
 	_bpos = _nbuilding buildingPos _pos_id; // pos coordinate
 
@@ -51,17 +58,12 @@ if (isServer) then {
 	
 	#ifndef __TT__
 	king addEventHandler ["killed", {_this call XKilledSMTargetNormal}];
-	king addEventHandler ["killed", { deleteVehicle SYG_sm_trigger;}];
+	king addEventHandler ["killed", { if (!isNull SYG_sm_trigger) then { deleteVehicle SYG_sm_trigger}; king = nil; publicVariable "king"; }];
 	#endif
 	#ifdef __TT__
 	king addEventHandler ["killed", {_this call XKilledSMTargetTT}];
 	#endif
-
-	// hotel has 266 building positions
-	_nbuilding = nearestBuilding king;
-	// these are hotel positions in rooms with no door !!!!
-	//_no_list = [86,87,88,89,148,149,150,151,177,178,179,188,189,190];//,200,201,202];//,210,211,212,213,215,216,217];//230,231,232,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,262,263,264,265];
-	_no_list = [86,87,88,89,148,149,150,151,210,211,212,213,262,263,264,265]; // no door positions
+	publicVariable "king";
 
     // create hut at random position somewhere higher along hotel canyon
     _new_pos = _new_pos_arr call XfRandomArrayVal;
@@ -92,7 +94,7 @@ if (isServer) then {
 #endif
 
 	sleep 2.222;
-	["shilka", 1, "bmp", 1, "tank", 1, _pos_other,1,80,true] spawn XCreateArmor;
+	["shilka", 2, "bmp", 1, "tank", 1, _pos_other,1,80,true] spawn XCreateArmor;
 	_leader = leader _newgroup;
 	_leader setRank "COLONEL";
 	_newgroup allowFleeing 0;

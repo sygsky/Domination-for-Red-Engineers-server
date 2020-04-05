@@ -101,10 +101,10 @@ STR_SYS_20,"Select respawn place","Wahl eines Revival-Ortes","Выбор мес�
 STR_SYS_21,"MHQ %1 gets transported by airlift...","MHQ %1 wird per Luftbrücke transportiert...","КШМ %1 в воздухе..."
 STR_SYS_22,"MHQ %1 currently driving...","MHQ %1 in Bewegung ...","КШМ %1 в движении..."
 
-STR_SYS_23,"% 1 has been destroyed and is queued for recovery","% 1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange","%1 уничтожен(а), и поставлена в очередь на на восстановление"
+STR_SYS_23,"1 has been destroyed and is queued for recovery","%1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange","%1 уничтожен(а), и поставлена в очередь на на восстановление"
 
 STR_SYS_25,"MHQ %1 is in water...","MHQ %1 ist im Wasser...","КШМ %1 сейчас в воде..."
-STR_SYS_26,"Teleport on MHQ %1 is faulty (%2%3)...","Der TELEPORT auf MHQ %1 ist defekt (%2% 3)...","Телепорт на КШМ %1 неисправен (%2%3)..."
+STR_SYS_26,"Teleport on MHQ %1 is faulty (%2%3)...","Der TELEPORT auf MHQ %1 ist defekt (%2%3)...","Телепорт на КШМ %1 неисправен (%2%3)..."
 STR_SYS_27,"MHQ %1 dmg %2%3, teleport in danger!","MHQ %1 dmg %2%3, teleportiere in Gefahr!","Повр. КШМ %1 %2%3, скоро отказ телепорта!"
 STR_SYS_28,"MHQ %1/teleport destroyed...","Teleporter/MHQ %1 wurde zerstört...","Телепорт/КШМ %1 уничтожены..."
 
@@ -116,7 +116,7 @@ STR_SYS_33,"%1 MHQ %2 is available","%1 Respawn %2 verfügbar","%1 КШМ %2 д�
 STR_SYS_34,"Teleport","Teleport","Телепорт"
 STR_SYS_35,"Lift vehicle","Fahrzeug anheben","Поднять технику"
 STR_SYS_36,"Drop vehicle","Drop-fahrzeug","Сбросить технику"
-STR_SYS_37,"Vehicle (%1) is lifted...","Fahrzeug (% 1) mit Hubschrauber gehoben ...","Техника (%1) поднята вертолётом..."
+STR_SYS_37,"Vehicle (%1) is lifted...","Fahrzeug (%1) mit Hubschrauber gehoben ...","Техника (%1) поднята вертолётом..."
 STR_SYS_38,"Overwhelming vehicle (%1)...","Sehr schwere Maschine (%1)...","Техника неподъёмна (%1)..."
 STR_SYS_38_1,"The vehicle (%1) not in restore list...","Wir stellen solche Fahrzeuge nicht wieder her (%1)...","Такую технику (%1) нет указаний восстанавливать, обратитесь к руководству операцией..."
 STR_SYS_38_2,"This vehicle (%1) is too deep (%2 m.), we will not get it, alas...","Dieses Fahrzeug (%1) ist zu tief (%2 M.), wir werden es leider nicht bekommen...","Эта техника (%1) слишком глубоко (%2 м.), не достанем, увы..."
@@ -331,6 +331,9 @@ STR_SM_29,"There is an enemy depot in a base south of Cabo Juventudo. Destroy al
 STR_SM_029,"Good job. All tanks are down.","Gute Arbeit. Alle Panzer sind unten.","Задание выполнено! Все танки уничтожены."
 
 STR_SM_30,"An enemy scientist is experimenting with volcano technology on Monte Asharah. We don't know yet what it's all about but it is better that he doesn't progress. Eliminate him ! Attention! Target has a reinforced Air Defense.","Ein Feind Wissenschaftler Experimentieren mit Vulkan-Technologie auf dem Monte Asharah. Wir wissen noch nicht, worum es geht, aber es ist besser, dass er nicht weiter. Beseitigen Sie ihn. Achtung! Ziel ist die verstärkte Luftverteidigung.","Противник проводит эксперименты в кратере вулкана на острове Asharah. Ваша задача - ликвидировать ученого-космополита. Внимание! С островов были обстреляны, из зенитных орудий, рыбаки!"
+STR_SM_30_1,"GRU: civilians not found in radius %1 m.","GRU: Zivilisten, die nicht in den radius %1 m.","ГРУ: гражданские не обнаружены в радиусе %1 м."
+STR_SM_30_2,"GRU: searching for civilians within a radius of %1 m gives the following - %2","GRU: die Suche nach Zivilisten im Umkreis von %1 m ergibt Folgendes: %2","ГРУ: поиск гражданских в радиусе %1 м. даёт следующее - %2"
+STR_SM_30_3,"GRU: no data about the position of the search!","GRU: keine Daten über die suchposition!","ГРУ: нет данных о позиции поиска!"
 STR_SM_030,"The enemy scientist is dead. Good job.","Der Feind Wissenschaftler ist tot. Gute Arbeit.","Задание выполнено! Ученый ликвидирован."
 
 STR_SM_31,"There is an enemy depot in a base east of Everon. Destroy all tanks there to weaken the enemy troops.","Es ist ein Feind depot in einem base-östlich von Everon. Zerstöre alle Panzer, es zu Schwächen der feindlichen Truppen.","По данным разведки, в районе города Everon, есть старая, заброшенная база. Враг использует её как склад для бронетехники. Отыщите этот склад и уничтожьте бронетехнику врага."
@@ -640,7 +643,7 @@ STR_SYS_367,"Maximum distance artillery operator to arti strike point: %1m","Max
 STR_SYS_368,"Artillery reload time between two salvoes: %1 secs","Artillerie reload-Zeit zwischen zwei Salven: %1 Sekunden","Время перезарядки  между двумя артиллерийскими залпами: %1 сек."
 STR_SYS_369,"With ACE Map: ","Mit ACE-Karte: ","С картой АСЕ: "
 STR_SYS_370,"Use GDT Mod Tracked routine to prevent tanks falling on their back: ","Mit GDT Mod Verfolgt mod Panzer von drehen auf dem Rücken zu verhindern:","Предотвращение переворачивания гусеничной техники: "
-STR_SYS_371,"Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs","Artillerie wieder verfügbar nach 1, 2, 3 Salven: %1, % 2, % 3 Sek.","Время доступа к артиллерии после  1, 2, 3 залпа(ов): %1, %2, %3 сек."
+STR_SYS_371,"Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs","Artillerie wieder verfügbar nach 1, 2, 3 Salven: %1, %2, %3 Sek.","Время доступа к артиллерии после  1, 2, 3 залпа(ов): %1, %2, %3 сек."
 STR_SYS_372,"Check for friendly units near artillery target: ","Überprüfen Sie für Verbündete Einheiten in der Nähe der Artillerie Ziel: ","Проверять на наличие союзников зону поражения артиллерии: "
 STR_SYS_373,"Maximum distance player to airdrop point to call in an airdrop: ","Maximale Entfernung von Spielern zu airdrop Punkt in einem airdrop anrufen: ","Максимальное расстояние между игроком и точкой сброса снабжения: "
 STR_SYS_373_1," m.\n"," m.\n"," м.\n"
@@ -668,7 +671,7 @@ STR_SYS_501,"Task completed! Convoy is destroyed","Auftrag ausgeführt! Der Konv
 STR_SYS_502,"Senior officers settled in the city of Corazol. Your task is to blow up five transformer substations at the South-West of the city, leaving the bastards without electricity","Ein höherer Offiziere in der Stadt nieder Corazol. Überschreitet die Aufgabe sprengen fünf Trafostationen im Süd-Westen der Stadt, verlassen Bastarde ohne Strom","Высший офицерский состав обосновался в городе Corazol. Выша задача взорвать пять трансформаторных подстанций на юго-западе города, оставив гадов без электричества"
 STR_SYS_503,"The target is completed! Transformer substations are destroyed","Auftrag ausgeführt! Umspannwerk zerstört.","Задание выполнено! Трансформаторные подстанции уничтожены"
 STR_SYS_504,"Our helicopter was shot down near %1. Your task to move forward as quickly as possible and search of the crew of the helicopter. The enemy troops also sent their forces in the area of the crash. You have approximately %2 minutes before their arrival. (The mission can be accomplished only by a player in the role of rescuer, pilota should go by feet to the flag)","Unsere Hubschrauber wurde abgeschossen in der Nähe von %1. Ihre Aufgabe zu bewegen, so schnell wie möglich vorwärts und der Suche nach der Besatzung des Hubschraubers. Die feindlichen Truppen schickte auch Ihre Kräfte im Bereich der Absturz. Sie haben ungefähr %2 Minuten vor Ihrer Ankunft. (Die mission kann nur erreicht werden, indem ein Spieler in die Rolle des Retters)","Возле %1 был сбит наш вертолёт. Ваша задача - как можно быстрее выдвинуться на поиски экипажа вертолёта. Вражеские силы так-же высланы в зону крушения. У вас примерно %2 минут до их прибытия. (Завершить миссию может только игрок в роли спасателя или лидер группы, пилоты должны подойти к флагу)"
-STR_SYS_504_1,"% 1: - Get us out of the vehicle, commander!","% 1: - Raus aus dem Fahrzeug, Commander!","%1: - Высади, командир!"
+STR_SYS_504_1,"%1: - Get us out of the vehicle, commander!","%1: - Raus aus dem Fahrzeug, Commander!","%1: - Высади, командир!"
 STR_SYS_504_2,"%1: - Need be closer to the flag, commander!","%1: - Müssen näher an der Flagge sein, commander!","%1: - Ближе к флагу надо, командир!"
 STR_SYS_504_3,"Pilot: - Take us to the flag, commander!","Pilot: - Bringt uns zur Flagge, commander!","Пилоты: - Нам к флагу надо, командир!"
 STR_SYS_505,"Good job! The rescue of helicopter crew was successful","Gute Arbeit! Die Rettung der Hubschrauber-crew erfolgreich war","Задание выполнено! Операция по спасению экипажа вертолёта прошла успешно"
@@ -689,6 +692,10 @@ STR_SYS_521,"Good job. The water tower is down.","Gute Arbeit. Der water tower i
 STR_SYS_522,"There are some special operations boats in a bay near Pacamac that enemy SF forces use for secret missions. Find them and destroy them.","Es gibt einige spezielle Operationen Boote in einer Bucht in der Nähe Regenmantel, der Feind SF erzwingt die Verwendung für geheime Missionen. Finden Sie und zerstören Sie.","Разведка докладывает что вблизи Pacamac силы специального назначения готовят операцию. Там же, на побережье, были обнаружены надувные лодки. Ваша задача уничтожить лодки и тем самым сорвать операцию"
 STR_SYS_523,"Good job. The boats are down.","Gute Arbeit. Die Boote sind unten.","Задание выполнено! Лодки уничтожены."
 STR_SYS_524,"Locals %1 claim that the king is hiding at %2 meters away!!!","Die einheimischen %1 behaupten, dass der König versteckt ist %2 Meter Weg!!!","Местные %1 уверяют, что король прячется в %2 м. от отеля!!!"
+STR_SYS_525,"The locals don't know anything about the king's location!!!","Die einheimischen wissen nichts über die Lage des Königs!!!","Местные ничего не знают про местоположение короля!!!"
+STR_SYS_526,"The locals think that the king is in the hotel or its surroundings.","Die einheimischen denken, dass der König in einem Hotel oder seiner Umgebung ist","Местные думают, что король - в отеле или рядом"
+STR_SYS_527,"The locals believe that the king has already died","Lokale glauben, dass der König bereits gestorben ist","Местные считают, что король уже помер"
+
 STR_SYS_530,"Only engineers can place static weapons","Nur Ingenieure platzieren können statische Waffen","Выгружать орудия может только инженер!"
 STR_SYS_531,"You have to get out before you can place the static weapon!","Sie müssen raus, bevor Sie die statische Waffe!","Для выгрузки орудия вам необходимо выйти из грузовика!"
 STR_SYS_532,"No static weapon loaded...","Keine statische Waffe geladen...","Орудие не погружено..."
@@ -896,7 +903,7 @@ STR_AI_12_1,"Commander! I'm not allowed to fly with you!","Commander! Ich darf n
 STR_AI_12_2,"Commander! I'm sorry, I'm busy!","Commander! Tut mir Leid, ich habe zu tun!","Командир! Извини, у меня дела!"
 STR_AI_12_3,"Next time, chief, the Partorg forbade, you heard!","Das nächste mal, Chef, hat der Parteivorstand verboten, hast du gehört!","В следующий раз, шеф, парторг запретил, ты же слышал!"
 STR_AI_12_4,"Commander! I don’t know how!","Commander! Ich weiß nicht wie!","Командир! Я же ж не умею!"
-STR_AI_12_6,"Commander! I like to drive... cars! Not damned heli!","Commander! Ich fahre gerne... Autos! Nicht verdammt heli!","Командир! Я машину могу водить, но в верт не сяду!"
+STR_AI_12_5,"Commander! I like to drive... cars! Not damned heli!","Commander! Ich fahre gerne... Autos! Nicht verdammt heli!","Командир! Я машину могу водить, но в верт не сяду!"
 
 STR_AI_13_NUM,5,5,5
 STR_AI_13_0,"And finally persuaded!","Und schließlich überredet!","И, наконец, уговорил!"
@@ -1137,7 +1144,7 @@ STR_CAMP_TEAM_4,fishermen,Fischer,рыбаки
 STR_CAMP_TEAM_5,merchants,Händler,торговцы
 STR_CAMP_TEAM_6,grooms,Stallburschen,конюхи
 
-STR_CAMP_TEAM_A_NUM,6,6,6
+STR_CAMP_TEAM_A_NUM,7,7,7
 STR_CAMP_TEAM_A_0,farmer,Bauer,фермер
 STR_CAMP_TEAM_A_1,guy,Kerl,парень
 STR_CAMP_TEAM_A_2,sorcerer,Zauberer,колдун
@@ -1273,6 +1280,8 @@ STR_MIS_18,"%1 wreck","%1 Wrack","обл. %1"
 STR_MIS_18_1,"Wreck: %1, deep %2 m.%3","Trümmer: %1, Tief. %2 m.%3","обл. %1, глуб. %2 м.%3"
 STR_MIS_18_2,", it's over",", es ist vorbei",", всё кончено"
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
+STR_MIS_DEAD,dead,tot,мёртв
+STR_MIS_ALIVE,alive,lebendig,жив
 
 STR_SET_1,"Version","Version","Версия"
 STR_SET_2,"With player AI","Mit dem Spieler-KI","C ИИ"

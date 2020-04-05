@@ -175,7 +175,7 @@ SYG_lastTownsAdd = {
 
 // Returns array of last towns added to queue
 SYG_lastTownsGet = {
-    +(SYG_lastTownsQueue call SYG_getQueueList)
+    SYG_lastTownsQueue call SYG_getQueueList
 };
 
 // call: _renewed_list = "Player_Name" call SYG_lastPlayersAdd;
