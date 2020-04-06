@@ -9,6 +9,8 @@
 if (!isServer) exitWith {};
 
 #define DEPTH_TO_SINK -7 // when vehicle considered to have sunk
+#define RIP_MARKER_TIME -5 // how long to show rip marker after vehicle is set to null
+
 #define __PRINT__
 
 private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay",
@@ -88,6 +90,7 @@ if (_sunk) then {
     _msg_time  = (_msg_time max time) + 6 + (random 8);
     _msg_delay = _msg_time - time;
     ["msg_to_user", "", [["STR_SYS_630", _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)]],0, _msg_delay ,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
+    _msg_time = time + _msg_delay;
     _depth = round((_vehicle modelToWorld [0,0,0]) select 2);
     [_mname, position _vehicle,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_MIS_18_1", _type_name, _depth,"" ],0,"Marker"] call XfCreateMarkerGlobal; // "wreck %1, deep %2 m.%3", _marker is assigned in call of XfCreateMarkerGlobal function
     [ _vehicle ] call XAddCheckDead;
@@ -108,11 +111,13 @@ if (_sunk) then {
     } forEach _marker_stage_arr;
 
     {
+        // change marker
         if ( typeName _x == "ARRAY") then {
             if ( count _x > 1) then {_marker setMarkerColor (_x select 1)};
             _x = _x select 0; // prepare sleep period value
         };
 
+        // change marker timer
         _exit = false;
         for "_i" from 1 to _x do
         {
@@ -121,16 +126,16 @@ if (_sunk) then {
             _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, format[" (%1)", _back_counter] ];
 
             // check any changes in marked vehicle status
-            // if vehilce is deleted from meory
-            if ( isNull _vehicle ) exitWith{
-            #ifdef __PRINT__
+
+            if ( isNull _vehicle ) exitWith{ // vehicle is deleted from memory, mark it for 5 seconds and exit
+                #ifdef __PRINT__
                 hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 isNull, exit", round(time - _time_stamp), _type_name ];
-            #endif
-            #ifdef __ACE__
+                #endif
+                #ifdef __ACE__
                 _marker setMarkerType  "ACE_Icon_SoldierDead"; // mark dead player as skull
-            #endif
+                #endif
                 _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, localize "STR_MIS_18_2"] ;
-                sleep 5; // last farewell to sunk vehicle
+                sleep RIP_MARKER_TIME; // last farewell to sunk vehicle
                 _exit = true;
             }; // the vehicle removed
             // if vehicle moved (by user may be)
@@ -153,6 +158,13 @@ if (_sunk) then {
 #endif
         deleteVehicle _vehicle;
     };
+    sleep 0.5;
+    if ( isNull _vehicle ) exitWith{ // vehicle is deleted from memory, mark it for 5 seconds and exit
+        _msg_time  = (_msg_time max time) + 6;
+        _msg_delay = _msg_time - time;
+        ["msg_to_user", "", [["STR_SYS_630_2", _type_name, "STR_SYS_630_2_NUM" call SYG_getRandomText]],0, _msg_delay,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
+    };
+
     deleteMarker _marker; // remove lost marker
 };
 

@@ -748,6 +748,13 @@ STR_SYS_620_3,"depth %1 m.","tiefe %1 m.","глуб. %1 м."
 
 STR_SYS_630,"The waters of the oceans closed over the shamefully lost %1 (%2 m.). Someone has to be shot for this!","Das Wasser der Ozeane schloss sich über dem schändlich verlorenen %1 ( %2 m.). Dafür muss jemand erschossen werden!","Воды мирового океана сомкнулись над постыдно утерянным %1 ( %2 м.). Кого-то предстоит за это расстрелять!"
 STR_SYS_630_1,"The lost %1 can still be restored if it is delivered to the appropriate service!","Das verlorene %1 kann noch wiederhergestellt werden, wenn es an den entsprechenden service geliefert wird!","Утерянный %1 можно ещё спасти, если доставить на сервис возрождения!"
+STR_SYS_630_2,"%1 disappeared! %2","%1 ist verschwunden! %2","%1 исчез! %2"
+
+STR_SYS_630_2_NUM,2,2,2
+STR_SYS_630_2_0,"There are strong undercurrents here","Hier sind starke Unterströmungen","Здесь сильные подводные течения"
+STR_SYS_630_2_1,"A giant Kraken was spotted nearby","Ein riesiger Kraken ist in der Nähe zu sehen","Неподалёку замечен гигинтский кракен"
+STR_SYS_630_2_2,"An unknown submarine was observed in the area of the fall","Im Herbst wurde ein unbekanntes U-Boot beobachtet","В районе падения наблюдалась неизвестная подводная лодка"
+STR_SYS_630_2_3,"A giant swell is recorded there from space","Dort wird eine riesige Dünung aus dem Weltraum aufgezeichnet","Из космоса там зафиксирована гигантская зыбь"
 
 STR_SYS_1000,"Brigadier-General","Generalmajor","Генерал-майор"
 STR_SYS_1001,"Lieutenant-General","Generalleutnant","Генерал-лейтенант"
