@@ -640,21 +640,21 @@ XGetScoreFromRank = {
         };
         default { _this = 0; }; // unknown argument, so private default rank 0 used
     };
-    hint localize format["+++ XGetScoreFromRank(0): _this = %1", _this];
+    // hint localize format["+++ XGetScoreFromRank(0): _this = %1", _this];
 
     if (_this <= 0) exitWith {0};
 #ifdef __SUPER_RANKING__
 
     if ( _this >= ((count d_points_needed) + (count d_pseudo_ranks))) exitWith { (d_pseudo_ranks select ((count d_pseudo_ranks) -1))}; // GENERALISSIMO
 
-    hint localize format["+++ XGetScoreFromRank(1): _rank_id - (count d_points_needed) %1", _this - (count d_points_needed)];
+    //hint localize format["+++ XGetScoreFromRank(1): _rank_id - (count d_points_needed) %1", _this - (count d_points_needed)];
     if ( _this > ((count d_points_needed))) exitWith {d_pseudo_ranks select (_this - (count d_points_needed) -1)};
 
-    hint localize format["+++ XGetScoreFromRank(2)"];
+    //hint localize format["+++ XGetScoreFromRank(2)"];
 #else
     if ( _this > (count d_points_needed)) exitWith {d_points_needed select ((count d_points_needed) -1)};
 #endif
-    hint localize format["+++ XGetScoreFromRank(3) _this %1", _this];
+    //hint localize format["+++ XGetScoreFromRank(3) _this %1", _this];
     d_points_needed select (_this - 1)
 };
 

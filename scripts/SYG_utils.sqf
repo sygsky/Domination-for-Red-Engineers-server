@@ -645,7 +645,7 @@ SYG_AIPriceByRankId = {
     _score = _rank_id call XGetScoreFromRank; // score for designated rank
     _score1 = ((_rank_id + 1) call XGetScoreFromRank) - _score; // score difference between this rank and next rank
 
-    hint localize format["+++ SYG_AIPriceByRankId(1): _rank_id %1, _start_rank_id %2, _score %3, _score1 %4", _rank_id, _start_rank_id, _score, _score1 ];
+    //hint localize format["+++ SYG_AIPriceByRankId(1): _rank_id %1, _start_rank_id %2, _score %3, _score1 %4", _rank_id, _start_rank_id, _score, _score1 ];
 
     floor(( (_score1 *.5)  / ( _rank_id - _start_rank_id + 1) ) / 5) * 5
 };
