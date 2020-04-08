@@ -518,7 +518,7 @@ SYG_rearmSabotage = {
 				// check for GL muzzle for primary weapon
 				_muzzles  = getArray(configFile>>"cfgWeapons" >> _wpn >> "muzzles");
 				_glMuzzle = (_muzzles  find "ACE_M203Muzzle") >= 0; // GL found
-				if (_glMuzzle) then {_equip set [0, SYG_GL_SET]};
+				if (_glMuzzle) then {_equip set [0, SYG_GL_SET]}; // replace pistol with GL items
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
 			case "ACE_SoldierWMAT_A":

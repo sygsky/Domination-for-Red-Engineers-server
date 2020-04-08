@@ -472,25 +472,49 @@ XPlayerRank = {
 };
 
 XGetRankIndex = {
-	["PRIVATE","CORPORAL","SERGEANT","LIEUTENANT","CAPTAIN","MAJOR","COLONEL"] find (toUpper (_this));
+    private ["_rank_id"];
+	_rank_id = d_rank_names find (toUpper (_this));
+#ifdef __SUPER_RANKING__
+	if ( _rank_id < 0 ) exitWith {
+	    _this call XGetRankIndexEx
+	};
+#endif
+	_rank_id
 };
 
+XGetRankFromIndex = {
+    if (typeName _this != "SCALAR") exitWith {d_rank_names select 0};
+    if ( _this < 0 ) exitWith {d_rank_names select 0};
+    if ( _this >= (count d_rank_names)) exitWith {
+#ifdef __SUPER_RANKING__
+        if (_this >= (count d_rank_names) + (count d_pseudo_rank_names)) exitWith { d_pseudo_rank_names select ((count d_pseudo_rank_names) -1) };
+#else
+        d_rank_names select ((count d_rank_names )-1)
+#endif
+    };
+    d_rank_names select _this
+};
 
 //============================================
+
+XGetRankIndexEx = {
+    private ["_rank_id"];
+//	["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"] find (toUpper (_this));
+	_rank_id = d_pseudo_rank_names find (toUpper (_this));
+	if ( _rank_id >= 0 ) then { _rank_id = _rank_id + (count d_point_needed) };
+	_rank_id
+};
+
 //+++ Sygsky
 // call: _rank_localized = _rank_str call XGetRankStringLocalized;
 //
-
-XGetRankIndexEx = {
-	["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"] find (toUpper (_this));
-};
 
 XGetRankStringLocalized = {
     if ( typeName _this == "OBJECT") then
     {
         if (isPlayer _this) then { _this = _this call XGetRankFromScoreExt;};
     };
-	switch (toUpper(_this)) do {
+	switch (toUpper(_this)) do {                     // indexes of rank array
 		case "PRIVATE":    {localize "STR_TSD9_26"}; // 0
 		case "CORPORAL":   {localize "STR_TSD9_27"}; // 1
 		case "SERGEANT":   {localize "STR_TSD9_28"}; // 2
@@ -505,10 +529,11 @@ XGetRankStringLocalized = {
         case "GENERAL-OF-THE-ARMY": {localize "STR_SYS_1003"};// 10
         case "MARSHAL": {localize "STR_SYS_1004"};            // 11
         case "GENERALISSIMO": {localize "STR_SYS_1005"};      // 12
+        default { localize "STR_TSD9_35"};                    // Unknown
 	};
 };
 
-// returns namee for the ordinal Arma rank
+// returns name for the ordinal Arma rank
 XGetRankFromScore = {
     if ( typeName _this == "OBJECT") then
     {
@@ -554,13 +579,19 @@ XGetRankFromScoreExt = {
     } forEach d_pseudo_ranks;
     (d_pseudo_rank_names select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
 };
+
 // Rank index from player score including extended scores from ranks above Colonel
+// call as follows: _rank_id = player call XGetRankIndexFromScoreExt; // or
+//                  _rank_id = 9score player) call XGetRankIndexFromScoreExt;
+//
 XGetRankIndexFromScoreExt = {
     private ["_index"];
     if ( typeName _this == "OBJECT") then
     {
         if (isPlayer _this) then { _this = score _this;};
     };
+    if ( typeName _this != "SCALAR") exitWith {0};
+
     if (!(_this call XIsRankFromScoreExtended)) exitWith
     {
         _this call XGetRankIndexFromScore // returns from 0 ("Private") to 6 ("Colonel")
@@ -603,25 +634,28 @@ XGetScoreFromRank = {
             _this = (score _this) call XGetRankFromScore;   // convert to unit score rank
 #endif
         };
-        case "SCALAR": { // rank index designated
-        };
-        case "STRING": { // rank name, e.g. "d"
-#ifdef __SUPER_RANKING__
-            _this = _this call XGetRankIndexFromScoreExt; // convert to unit score rank
-#else
-            _this = _this call XGetRankIndex;   // convert to unit score rank
-#endif
-
+        case "SCALAR": { };  // rank index designated
+        case "STRING": { // rank name, e.g. "Lieutenant"
+            _this = _this call XGetRankIndex;   // convert rank name to rank index
         };
         default { _this = 0; }; // unknown argument, so private default rank 0 used
     };
-    if (this <= 0) exitWith {0};
+    hint localize format["+++ XGetScoreFromRank(0): _this = %1", _this];
+
+    if (_this <= 0) exitWith {0};
 #ifdef __SUPER_RANKING__
-    if ( _this >= ((count d_score_needed) + (count d_score_needed))) exitWith { (d_pseudo_ranks select (count d_pseudo_ranks -1))}; // GENERALISSIMO
-    if ( _this >= ((count d_score_needed))) exitWith {d_pseudo_ranks select (count d_score_needed)};
+
+    if ( _this >= ((count d_points_needed) + (count d_pseudo_ranks))) exitWith { (d_pseudo_ranks select ((count d_pseudo_ranks) -1))}; // GENERALISSIMO
+
+    hint localize format["+++ XGetScoreFromRank(1): _rank_id - (count d_points_needed) %1", _this - (count d_points_needed)];
+    if ( _this > ((count d_points_needed))) exitWith {d_pseudo_ranks select (_this - (count d_points_needed) -1)};
+
+    hint localize format["+++ XGetScoreFromRank(2)"];
+#else
+    if ( _this > (count d_points_needed)) exitWith {d_points_needed select ((count d_points_needed) -1)};
 #endif
-    if ( _this >= ((count d_score_needed))) exitWith {d_score_needed select ((count d_score_needed) -1)};
-    d_points_needed select (_this -1)
+    hint localize format["+++ XGetScoreFromRank(3) _this %1", _this];
+    d_points_needed select (_this - 1)
 };
 
 XGetRankPic = {

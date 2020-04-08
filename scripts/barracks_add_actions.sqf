@@ -45,7 +45,6 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","Soldier%1Sniper"]; // "Recruit Sniper"
 		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","Soldier%1AA"];  // "Recruit AA Soldier"
 		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"]; // "Recruit Specop"
-		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
 	} else {
 		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1B"];
 		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AT"];
@@ -55,9 +54,10 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AA"];
 		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"];
 		AI_HUT addAction[localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Pilot"]; // Pilot
-
-		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"];
 	};
+	AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
+	AI_HUT addAction[localize "STR_AI_8_1","scripts\check_ai_points.sqf"]; // "Check your points"
+
 	_marker_name = "Recruit_x";
 	if ( ( getMarkerType _marker_name) == "") then // no such marker
 	{

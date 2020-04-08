@@ -188,25 +188,27 @@ if (X_Client) then {
     // gets even used in the unranked versions, though it's just cosmetic there
     d_points_needed = [
     #ifdef __OLD_SCORES__
-        40, // Ефрейтор
-        80, // Сержант
-        150, // Лейтенант
-        300, // Капитан
-        500, // Майор
-        800 // Полковник
+    //  score/ Name      /diff /r.num/r.cost
+        40, // Ефрейтор   +40  1      0
+        80, // Сержант    +40  2      5 (min, static)
+        150, // Лейтенант +70  3      15
+        300, // Капитан   +150 4      10
+        500, // Майор     +200 5      10
+        800 // Полковник  +300 6      30
     #else
-        40, // Ефрейтор
-        80, // Сержант
-        120, // Лейтенант
-        180, // Капитан
-        300, // Майор
-        800 // Полковник
+        40, // Ефрейтор   / Corporal   +40
+        80, // Сержант    / Sergeant   +80
+        120, // Лейтенант / Lieutenant +40
+        180, // Капитан   / Captain    +40
+        300, // Майор     / Major      +120
+        800 // Полковник  / Colonel    +500
     #endif
     ];
 
+    d_rank_names = ["PRIVATE","CORPORAL","SERGEANT","LIEUTENANT","CAPTAIN","MAJOR","COLONEL"];
     // not official ranks for super-gamers only
     d_pseudo_ranks =
-        [1200,1500,2000,2500,3000,5000];
+        [1300,1800,2300,3000,4000,5000]; // +500 6 40, +500 35, +500 8 30, +700 9 35, +1000 10 50, +1000 11 45
     d_pseudo_rank_names =
         //[localize "STR_SYS_1000",localize "STR_SYS_1001",localize "STR_SYS_1002",localize "STR_SYS_1003",localize "STR_SYS_1004",localize "STR_SYS_1005"];
         ["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"];
@@ -217,7 +219,7 @@ if (X_Client) then {
         10, 		// 0 очков необходимо инженеру для ремонта
         [4,3,2,1], 	// 1 очков начисляется инженеру за ремонт авиа, танки, машины, другое. Now is deprected, score added for the number of repair steps, not vehicle type!!!
         2, 			// 2 очков вычитается за 1 залп
-        3,          // 3 points in the AI version for recruiting one soldier
+        5,          // 3 points in the AI version for recruiting one soldier at lowest rank, each next rank add the same score number to cost
         1, 			// 4 очков вычитается за AAHALO parajump
         2, 			// 5 очков вычитается за создание техники из MHQ
         (d_points_needed select 0), // 6 очков необходимо игроку иметь для создания техники из MHQ (ефрейтор?)
@@ -240,8 +242,9 @@ if (X_Client) then {
         1,			//23 очков добавляется за посещение неизвестной до того палатки
         5,			//24 очка вычитают за провал задания ГРУ по доставке секретной карты...
         10,         //25 очков вычисляется за выполнение второстепенного задания в городе
-        "Corporal", //26 rank to resurrect internal objects on server map (vegetation, fences etc)
-        9           //27 scores added for observer kill +1 for ordinal frag
+        "Corporal", //26 rank to resurrect internal objects on server map (vegetation, fences etc) - not used
+        9,          //27 scores added for observer kill +1 for ordinal frag
+        "Sergeant"  //28 lowest rank abled to call the recruit
     ];
 
     // distance a player has to transport others to get points

@@ -54,7 +54,7 @@ if (time > d_vec_end_time && !isNull d_flag_vec) then {
 	};
 };
 if (!isNull d_flag_vec && alive d_flag_vec && _b_mode == 0) exitWith {
-	(format [localize "STR_SYS_332"/* "Выгрузка завершена... Вновь она будет доступна через %1 мин." */,0 max (round((d_vec_end_time - time)/60))]) call XfGlobalChat;
+	(format [localize "STR_SYS_332"/* "Выгрузка завершена... Вновь она будет доступна через %1 мин." */,0 max (ceil((d_vec_end_time - time)/60))]) call XfGlobalChat;
 };
 
 #ifdef __RANKED__

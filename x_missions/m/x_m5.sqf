@@ -31,8 +31,6 @@ if (isServer) then {
     hint localize format["+++ king hotel _poss %1", _poss];
 	_nbuilding = _poss nearestObject 172902; // hotel at vallejo
 
-	// hotel has 266 building positions
-	_nbuilding = nearestBuilding king;
 	// these are hotel positions in rooms with no door !!!!
 	//_no_list = [86,87,88,89,148,149,150,151,177,178,179,188,189,190];//,200,201,202];//,210,211,212,213,215,216,217];//230,231,232,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,262,263,264,265];
 	_no_list = [86,87,88,89,148,149,150,151,210,211,212,213,262,263,264,265]; // no door room positions
@@ -45,6 +43,8 @@ if (isServer) then {
 	king setPos _bpos;
     hint localize format["+++ king is at hotel pos %1", _pos_id];
 	[king] join _newgroup;
+	// hotel has 266 building positions
+	_nbuilding = nearestBuilding king;
 
 //	publicVariable "king";  // is will be PV in king_escape.sqf
 	

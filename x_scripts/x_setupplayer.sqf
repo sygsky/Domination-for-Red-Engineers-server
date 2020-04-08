@@ -1726,32 +1726,32 @@ player call SYG_handlePlayerDammage; // handle hit events
 	};
 */
 
-//+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc.
-//            Bar gates are processed somewhere in upper lines
-[] spawn {
-    sleep 5;
-    _targets = [];
-    {
-        _pos = _x select 0; // position
-        _target = "TargetEpopup" createVehicleLocal _pos; // create target at pos
-        if ( count _x > 1) then { _target setDir (_x select 1);}; // set target direction if designated
-        if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
-        _targets = _targets + [_target];
-    }forEach [
-        // south from flag between airstrip and courtyard
-        [[9663, 9958, 0], 180] /* nearest to flag*/,[[9663, 9894.2, 0], 180]/*middle*/,[[9651.7, 9829.25, 4],180 ]/* fathest from flag to south on the roof of courtyard house */,
-        [[9700.05,10190.07,0]], // north from flag on other side of airstrip
-        [[10397.581,10003.883, 0], 90] // east from flag at the end of airstrip
-    ];
-    /*
-    _str =  format["%1 targets detected", count _targets];
-    player groupChat _str;
-    hint localize _str;
-    */
-    _targets execVM "scripts\fireRange.sqf";
-};
+    //+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc.
+    //            Bar gates are processed somewhere in upper lines
+    [] spawn {
+        sleep 5;
+        _targets = [];
+        {
+            _pos = _x select 0; // position
+            _target = "TargetEpopup" createVehicleLocal _pos; // create target at pos
+            if ( count _x > 1) then { _target setDir (_x select 1);}; // set target direction if designated
+            if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
+            _targets = _targets + [_target];
+        }forEach [
+            // south from flag between airstrip and courtyard
+            [[9663, 9958, 0], 180] /* nearest to flag*/,[[9663, 9894.2, 0], 180]/*middle*/,[[9651.7, 9829.25, 4],180 ]/* fathest from flag to south on the roof of courtyard house */,
+            [[9700.05,10190.07,0]], // north from flag on other side of airstrip
+            [[10397.581,10003.883, 0], 90] // east from flag at the end of airstrip
+        ];
+        /*
+        _str =  format["%1 targets detected", count _targets];
+        player groupChat _str;
+        hint localize _str;
+        */
+        _targets execVM "scripts\fireRange.sqf";
+    };
 
- //+++ Sygsky: GRU computer handling - add action if found
+    //+++ Sygsky: GRU computer handling - add action if found
 	_comp = call SYG_getGRUComp;
 #ifdef __DEBUG__
 	hint localize format["x_setupplayer.sqf: GRU PC == %1",_comp];
@@ -1848,7 +1848,7 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-//#define __DEBUG_ADD_VEHICLES__
+#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley

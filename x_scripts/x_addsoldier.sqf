@@ -9,39 +9,52 @@ if (player != leader d_grp_caller) exitWith {
 	localize "STR_SYS_1172" call XfHQChat; // "You are currently not a group leader, no AI available. Create a new group"
 };
 _units = units d_grp_caller;
+_ai_counter = {(!isPlayer _x) && (alive _x)} count _units;
+
+_start_rank = d_ranked_a select 28; // initial AI caller rank name
+_start_rank_id = _start_rank call XGetRankIndex; // initial AI caller rank id
+_ai_low_cost = d_ranked_a select 3; // how many point needed to call 1st AI by caller of any enough rank
 
 #ifdef __RANKED__
 _rank = rank player;
-_rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel return 6)
-if (_rankIndex < ("SERGEANT" call XGetRankIndex)) exitWith {
-	(format [localize "STR_SYS_1174", _rank call XGetRankStringLocalized, "SERGEANT" call XGetRankStringLocalized]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]!"
+_rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
+_rank_max_ai = _rankIndex - _start_rank_id + 1; // e.g. 1 - Sergeant, 2 - Lieutenant... 11 - Generalissimus
+
+if ( _rank_max_ai < 1) exitWith {
+	(format [localize "STR_SYS_1174", player call XGetRankStringLocalized, _start_rank call XGetRankStringLocalized]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]!"
 };
 
-if (score player < ((d_points_needed select 0) + (d_ranked_a select 3))) exitWith {
-	(format [localize "STR_SYS_1175", score player, d_ranked_a select 3, "PRIVATE" call XGetRankStringLocalized]) call XfHQChat; // "You can't recruit an AI soldier, costs %2 points, your current score (%1) will drop below %2!"
+_ai_big_cost = player call SYG_AIPriceByScore; // price for 2nd and more AI recruinting. 1st always is of low cost
+_ai_cost = if (_ai_counter > 0) then {_ai_big_cost} else {_ai_low_cost};
+
+if ( score player < _ai_cost ) exitWith {
+	(format [localize "STR_SYS_1175", score player, _ai_cost, "PRIVATE" call XGetRankStringLocalized]) call XfHQChat; // "You can't recruit an AI soldier, costs %2 points, your current score (%1) will drop below %3!"
 };
-_max_rank_ai = (_rankIndex - 1) max 1; // 1 - Sergeant, 2 - Lieutenant... 11 - Generalissimus
+
+_new_ai_counter = _rank_max_ai -_ai_counter; // how many AI you still can call with your rank
+
+if (_new_ai_counter < 1) exitWith {
+	(format [localize "STR_SYS_1173", _ai_counter]) call XfHQChat; // "You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank..."
+};
+
+#else
+
+_rankIndex = player call XGetRankIndexFromScore; // extended rank system, may returns value > 6 (colonel rank index)
+_rank_max_ai = _rankIndex - _start_rank_id + 1; // e.g. 1 - Sergeant, 2 - Lieutenant... 11 - Generalissimus
+if ( _ai_counter >= _rank_max_ai) exitWith {
+	(format [localize "STR_SYS_1173", _ai_counter]) call XfHQChat; // "You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank..."
+};
+_ai_cost = _ai_low_cost;
+
 #endif
 
-_ai_counter = 0;
-{
-	if (!isPlayer _x && alive _x) then {_ai_counter = _ai_counter + 1;};
-} forEach _units;
-if (_ai_counter > _max_rank_ai) exitWith {
-	(format [localize "STR_SYS_1173", _max_rank_ai]) call XfHQChat; // "You allready have %1 AI soldiers under your control, it is not possible to recruit more with your current rank..."
-};
-
-#ifdef __RANKED__
 // each AI soldier costs score points
-_price = d_ranked_a select 3;
-if (_price != 0) then
+if (_ai_cost > 0) then
 {
     playSound "steal";
-    player addScore (d_ranked_a select 3) * -1;
-    (format[localize "STR_AI_11", _price]) call XfHQChat; // "You paid %1 for one AI, points will be returned when he is fired"
+    player addScore -_ai_cost;
+    (format[localize "STR_AI_11", _ai_cost]) call XfHQChat; // "You paid %1 for one AI, points will be returned when he is fired"
 };
-
-#endif
 
 _ai_side_char = (
 	switch (d_own_side) do {
@@ -88,8 +101,10 @@ _unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"]
 [_unit] join d_grp_caller;
 _unit setSkill 0.1;
 _unit call SYG_armPilotFull; // Rearm in case of pilot
+_unit setVariable ["AI_COST", _ai_cost]; // store cost to refund after demobilization
+
 // set AA unit aiming skill to expert to help base AA defence
-if ( (secondaryWeapon _unit) in ["M_Stinger_AA", "ACE_Missile_Stinger", "ACE_FIM92round", "M_Strela_AA",  "ACE_Missile_Strela"])
+if ( (secondaryWeapon _unit) in [ "ACE_FIM92A", "ACE_Strela" ])
     then { _unit setSkill 0.9; };
 _unit setRank "CORPORAL"; // Why???
 _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x_deleteai.sqf";}];
