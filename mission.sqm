@@ -2984,7 +2984,7 @@ class Mission
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box3";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1,2.75];ClearWeaponCargo this; ClearMagazineCargo this; box3 addEventHandler [""hit"", {box3 setDammage -900000000000}]; box3 addEventHandler [""dammaged"", {box3 setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1,2.75];ClearWeaponCargo this; ClearMagazineCargo this; box3 addEventHandler [""hit"", {box3 setDammage 0}]; box3 addEventHandler [""dammaged"", {box3 setDammage 0}];";
 		};
 		class Item229
 		{
@@ -2995,7 +2995,7 @@ class Mission
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box2";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 0.25];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage -900000000000}];box2 addEventHandler [""dammaged"", {box2 setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 0.25];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage 0}];box2 addEventHandler [""dammaged"", {box2 setDammage 0}];";
 		};
 		class Item230
 		{
@@ -3003,10 +3003,10 @@ class Mission
 			azimut=90.000000;
 			id=270;
 			side="EMPTY";
-			vehicle="ACE_WeaponBox";
+			vehicle="ACE_WeaponBox_East";
 			skill=0.600000;
 			text="box1";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 0.25];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage -900000000000}]; box1 addEventHandler [""dammaged"", {box1 setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 0.25];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage 0}]; box1 addEventHandler [""dammaged"", {box1 setDammage 0}];";
 		};
 		class Item231
 		{
@@ -3152,7 +3152,7 @@ class Mission
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box4";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage -900000000000}]; box1 addEventHandler [""dammaged"", {box1 setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage 0}]; box1 addEventHandler [""dammaged"", {box1 setDammage 0}];";
 		};
 		class Item244
 		{
@@ -3163,7 +3163,7 @@ class Mission
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box5";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage -900000000000}];box2 addEventHandler [""dammaged"", {box2 setDammage -900000000000}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage 0}];box2 addEventHandler [""dammaged"", {box2 setDammage 0}];";
 		};
 	};
 	class Markers
