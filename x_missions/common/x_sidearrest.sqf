@@ -96,50 +96,51 @@ while {!_offz_at_base && !_is_dead} do {
 
     if (!_rescued) then {
         _nobjs = nearestObjects [_officer, ["Man"], 20];
-        if (count _nobjs > 0) then {
-            _sound = "";
-            _player_cnt = 0;
-            {
-                if ( isPlayer _x  ) then {
-                    _player_cnt = _player_cnt + 1;
-                    if (_x == leader _x) then {
-                        _rescued = true;
-                        [_officer] join (leader _x);
-                        _officer setCaptive true;
-                        ["make_ai_captive",_officer] call XSendNetStartScriptClientAll;
-                    };
+        if (count _nobjs == 0) exitWith{};
+        _sound = "";
+        _player_cnt = 0;
+        {
+            if ( isPlayer _x  ) then {
+                _player_cnt = _player_cnt + 1;
+                if (_x == leader _x) then {
+                    _rescued = true;
+                    [_officer] join (leader _x);
+                    _officer setCaptive true;
+                    ["make_ai_captive",_officer] call XSendNetStartScriptClientAll;
+                    hint localize format["+++ x_sidearrest.sqf: nearest to officer player is %1(%2), is %3 leader", _x, name _x, (leader _x) == _x];
                 };
-                sleep 0.01;
-                if (_rescued) exitWith {};
-            } forEach _nobjs;
-            if (_player_cnt) then { // some player near
-                if (_grant) then {
-                    if (_rescued) then {
-                        switch (localize "STR_LANGUAGE" ) do
-                        {
-                            case "GERMAN": { _sound = "ger_grant_intro"};
-                            case "ENGLISH";
-                            default {
-                                _sound = "eng_grant_intro";
-                            };
-                        };
-                    } else { // no leader near, officer not surrendered
-                        // set sound
-                        switch (localize "STR_LANGUAGE" ) do
-                        {
-                            case "GERMAN": { _sound = "ger_grant_surrend"};
-                            case "ENGLISH";
-                            default {
-                                _sound = "eng_grant_surrend";
-                            };
-                        };
-                    };
-                } else { // not Grant && any player near
-                    if (_player_cnt > 0) then {_sound = call SYG_exclamationSound};
-                };
-                // TODO: force officer to look at the nearest player
-                if  (_sound != "") then { ["say_sound","", _sound] call XSendNetStartScriptClientAll;}; // play sound
             };
+            sleep 0.01;
+            if (_rescued) exitWith {};
+        } forEach _nobjs;
+
+        if (_player_cnt) then { // some player near
+            if (_grant) then {
+                if (_rescued) then {
+                    switch (localize "STR_LANGUAGE" ) do
+                    {
+                        case "GERMAN": { _sound = "ger_grant_intro"};
+                        case "ENGLISH";
+                        default {
+                            _sound = "eng_grant_intro";
+                        };
+                    };
+                } else { // no leader near, officer not surrendered
+                    // set sound
+                    switch (localize "STR_LANGUAGE" ) do
+                    {
+                        case "GERMAN": { _sound = "ger_grant_surrend"};
+                        case "ENGLISH";
+                        default {
+                            _sound = "eng_grant_surrend";
+                        };
+                    };
+                };
+            } else { // not Grant && any player near
+                _sound = call SYG_exclamationSound;
+            };
+            // TODO: force officer to look at the nearest player
+            if  (_sound != "") then { ["say_sound",_officer, _sound] call XSendNetStartScriptClientAll;}; // play sound
         };
     } else {
         if (_officer distance FLAG_BASE < 20) then {
