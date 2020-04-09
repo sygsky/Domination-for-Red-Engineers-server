@@ -424,15 +424,16 @@ SYG_holidayTable =
     [ 7,11, 5]  // 7th of November
 */
     [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"], "STR_HOLIDAY_1_JAN", 1], // new year, 10 days in range (not realized)
-    [23,  2, ["burnash","chapaev1"],"STR_HOLIDAY_23_FEB",0], // 23th of February
+    [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
+    [22,  4, ["lenin","lenin_1"],"STR_HOLIDAY_22_APR",0], // Birthday of V.I. Lenin
     [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
     [ 2,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
-    [ 7, 10, "communism","STR_HOLIDAY_7_OCT",1], // Day of USSR constitution
-    [ 7, 11, ["chapaev1","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
+    [ 7, 10, ["communism","Vremia_vpered_Sviridov"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution
+    [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
 
 ];
 
@@ -499,10 +500,10 @@ SYG_getMsgForCurrentDayTime = {
 SYG_getDayTimeIdRandomSound = {
     switch (_this) do
     {
-        case 0 : { playSound format["night_%1", 1 + floor (random 5)]; };   // STAT_NIGHT
+        case 0 : { playSound format["night_%1", ceil (random 5)]; };   // STAT_NIGHT
         case 1 : {  ""  }; // STAT_DAY
-        case 2 : {  playSound format["morning_%1", 1 + floor (random 3)]; }; // STAT_MORNING
-        case 3 : {   format["evening_%1", 1 + floor (random 5)]; };// STAT_EVENING
+        case 2 : {  playSound format["morning_%1", ceil (random 3)]; }; // STAT_MORNING
+        case 3 : {   format["evening_%1", ceil (random 5)]; };// STAT_EVENING
         default {""};
     };
 };

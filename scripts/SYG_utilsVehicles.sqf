@@ -162,10 +162,10 @@ SYG_detectedEnemy = {
 	_cost = -1000000;
 	_enemy = objNull;
 	{
-	    _side = argp(_x,2);
+	    _side = _x select 2;
 	    if ( _side == _eside) then
 	    {
-	        _target = argp(_x,4);
+	        _target = _x select 4;
 	        if ( (_target isKindOf "LandVehicle") && ((_unit knowsAbout _target) >= 1.5)) then
 	        {
 	            if ( vehicle  _target != _target ) then // check vehicle to has crew
@@ -1215,7 +1215,7 @@ SYG_assignVecToSmokeOnHit =
     _magazines = getArray (configFile >> "CfgVehicles" >> (typeOf _this) >> "Turrets" >> "MainTurret" >> "magazines");
         //_magazines = getArray(_config >> "magazines");
     if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith {
-        if (_this isKindOf "M1Abrams" || _this isKindOf "ACE_M60") then {
+        if ( (_this isKindOf "M1Abrams" || _this isKindOf "ACE_M60") && (!isNil "SYG_eventOnDamage")) then {
             _this addEventHandler ["dammage", {_this spawn SYG_eventOnDamage}]; true
         } else {
             _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true
@@ -1605,7 +1605,7 @@ SYG_setHeliParaCargo = {
     _paraType = argopt(2,"ACE_ParachuteRoundPack");//default parachute
 
     _heli addWeaponCargo [_paraType, _num];
-    hint localize format[ "+++ SYG_setHeliParaCargo [%1,%2] for %3  >>>", _paraType, _num, _heli ]; // log start
+    //hint localize format[ "+++ SYG_setHeliParaCargo [%1,%2] for %3  >>>", _paraType, _num, _heli ]; // log start
 };
 
 /*

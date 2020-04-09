@@ -50,6 +50,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 	if (_get_points) then {
 		(format [localize "STR_SYS_125"/* "Participating in the side mission execution you get points: +%1 and %2 !!!" */,(d_ranked_a select 11),_bonus_vehicle]) call XfHQChat;
 		player addScore (d_ranked_a select 11);
+		playSound "good_news";
 	};
 	d_sm_p_pos = nil;
 #endif

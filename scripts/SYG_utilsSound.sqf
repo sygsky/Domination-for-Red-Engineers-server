@@ -143,11 +143,10 @@ SYG_baseDefeatTracks =
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_gongNextIndex = 0;
-SYG_TVTowerDefeatTracks =
-    [
-    "clock_1x_gong", "gong_01", "gong_02","gong_03","gong_04","gong_05","gong_06","gong_07","gong_08","gong_09","gong_10",
-    "gong_11","gong_12","gong_13"
-    ];
+
+SYG_getTVTowerGong = {
+    format["gong_%1", floor(random 16)];
+};
 
 // for the death near medieval castles (2 buildings on whole island)
 SYG_MedievalDefeatTracks =
@@ -157,11 +156,20 @@ SYG_MedievalDefeatTracks =
      "medieval_defeat12", "medieval_defeat13", "medieval_defeat14", "medieval_defeat15", "medieval_defeat16", "medieval_defeat17",
      "village_consort"
     ];
+
 SYG_waterDefeatTracks =
     [
         "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8","under_water_9","fish_man_song"
     ];
 
+SYG_playWaterSound = {
+    private ["_arr"];
+    _arr = SYG_waterDefeatTracks;
+    if (localize "STR_LANGUAGE" == "RUSSIAN") then {
+        if ( (random (count SYG_waterDefeatTracks + 1)) < 1) then {_arr = ["fish_man_song"]}; // only for players known to be Russian
+    };
+    _arr call SYG_playRandomTrack;
+};
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 
@@ -169,7 +177,7 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 SYG_getLaughterSound =
 {
     ["laughter_1","laughter_2","laughter_3","laughter_4","good_job","game_over","get_some","go_go_go","cheater","busted",
-    "greatjob1","greatjob2","fight"] call XfRandomArrayVal
+    "greatjob1","greatjob2","fight","handsup"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
@@ -213,7 +221,7 @@ SYG_playRandomDefeatTrackByPos = {
     _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
     if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith
     {
-        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 4 time from 5
+        SYG_chorusDefeatTracks call SYG_playRandomTrack; // 9 time from 10
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_chorusDefeatTracks, done";
     };
 
@@ -229,10 +237,10 @@ SYG_playRandomDefeatTrackByPos = {
     if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
         // let gong play sequentially on one client (in MP it will be randomized)
-        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod (count SYG_TVTowerDefeatTracks);
-        _sound =  SYG_TVTowerDefeatTracks select SYG_gongNextIndex;
+        _sound =  format["gong_%1", SYG_gongNextIndex];
+        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod 16; // number of gong sounds
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
-        hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_TVTowerDefeatTracks, say_sound, done";
+        hint localize "+++ SYG_playRandomDefeatTrackByPos: gong, say_sound, done";
     };
 
     // check if we are near castle
@@ -256,7 +264,7 @@ SYG_playRandomDefeatTrackByPos = {
     };
 
     // death in water
-    if (surfaceIsWater _this) exitWith { SYG_waterDefeatTracks call SYG_playRandomTrack};
+    if (surfaceIsWater _this) exitWith { call SYG_playWaterSound};
 
     // no special conditions found, play std music now
     switch (_this call SYG_whatPartOfIsland) do
@@ -314,6 +322,7 @@ SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure
 SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
 //
+// NOTE: play music by playMusic call, not playSound, so use sections only from CfgMusic, never from CfgSounds
 // Plays random track or track part depends on input array kind (see below)
 // NOTE: This procedure use only playMusic operator and player items from CfgMisic sections
 //
@@ -518,9 +527,22 @@ SYG_playWeatherForecastMusic = {
 //
 SYG_tanks_music = [ "chiz_tanki_1", "chiz_tanki_2" ];
 SYG_playDeathInTankSound = {
-    if ( localize "LANGUAGE" == "RUSSIAN") exitWith { playSound RANDOM_ARR_ITEM(SYG_tanks_music); true };
+    if ( localize "STR_LANGUAGE" == "RUSSIAN") exitWith {
+        if (random 3 > 1) then {playSound RANDOM_ARR_ITEM(SYG_tanks_music)} // Chiz song about tankists
+        else {["say_sound", player, "tanki"] call XSendNetStartScriptClientAll}; // exclamation "Tanks!!!"
+        true
+    };
     false
 };
+
+//
+// play random sound about death from enemy tank
+// "Время вперёд", далее "Раммштейн 1-й и 5-й", gayane2, the_complex.ogg, betrayed.ogg
+SYG_enemy_tanks_music = [ ["Vremia_vpered_Sviridov",0.451, 9.795], "gayane2", "the_complex", "betrayed","rammstein_1","rammstein_5"];
+SYG_playDeathFromEnemyTankSound = {
+    SYG_enemy_tanks_music call SYG_playRandomTrack;
+};
+
 
 SYG_getFemaleFuckSpeech = {
     private ["_arr"];
@@ -537,4 +559,32 @@ SYG_getFemaleExclamation = {
     ["woman_excl1","woman_excl2","woman_excl3","woman_excl4","woman_excl5","woman_excl6","woman_excl7","woman_dont_trust"] call XfRandomArrayVal;
 };
 
+SYG_captainRankSound = {
+    format["captain_rus_%1", ceil (random 2)]
+};
+
+SYG_corporalRankSound = {
+    "corporal_eng_1"
+};
+
+SYG_sergeantRankSound = {
+    "sergeant_eng_1"
+};
+
+SYG_colonelRankSound = {
+    format["colonel_rus_%1", ceil (random 2)]
+};
+
+SYG_exclamationSound = { format["exclamation%1", ceil (random 6)] };
+
+SYG_fearSound = {["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence"] call XfRandomArrayVal};
+
+SYG_invasionSound = {
+    ["invasion","kwai","starwars","radmus","enemy"] call XfRandomArrayVal
+};
+
+SYG_prisonersSound = {
+    // TODO: add normal sounds
+    call SYG_exclamationSound
+};
 if (true) exitWith {};

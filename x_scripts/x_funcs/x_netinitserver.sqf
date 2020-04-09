@@ -9,7 +9,7 @@
 };
 
 SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron"];
-SYG_localZones = [            0,          0,        0,    -4,           0,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
+SYG_localZones = [            0,          0,        0,    -4,          +1,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
@@ -163,7 +163,8 @@ XHandleNetStartScriptServer = {
 		 * ["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
 		 */
 		case "d_p_varname": {
-			private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr","_val","_date"];
+			private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr",
+			         "_val","_date","_arr1","_arr2","_arr","_str"];
 			_index = d_player_array_names find arg(1);
 			//hint localize format["***************** _index = %1 *********************", _index];
 			_parray = [];
@@ -184,46 +185,28 @@ XHandleNetStartScriptServer = {
 			    d_connection_number = d_connection_number + 1;
     			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the %1 of the warrior-internationalist in their troubled land"
 			};
-
-            // add more messages if possible
-            _msg = "STR_SERVER_MOTD0"; // "The islanders are happy to welcome you in your native language!"
-            if ( _name == "Aron") then // Slovak
+            _name = _this select 1;
+            // add language specific messages if possible
+            if (localize "STR_LANGUAGE" != "RUSSIAN") then
             {
-    			_msg = "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!"; // Slovak
-            }
-            else
-            {
-                if ( _name in ["Petigp", "gyuri", "Frosty"] ) then // Hungarian
-                {
-        			_msg = "Üdvözöljük az alap a 'Vörös mérnökök'!";// "Üdvözöl a Red Engineers csapat!"; // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
-                }
-                else
-                {
-                    if ( _name == "Marco") then // vec. killer
-                    {
-                        _msg = "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)"
-                    }else {
-                        if (_name in ["Shelter", "Marcin"] ) then // Poland
-                        {
-                            _msg = "Nasz oddział spełnia polskiego brata!"
-                        } else
-                        {
-                            if (_name == "GTX460") then // Русский
-                            {
-                                _msg = "Островитяне: привет советскому разведчику! Мы никому не расскажем о тебе!";
-                            } else
-                            {
-                                if (_name == "Klich") then // Русский
-                                {
-                                    _msg = "Островитяне рады приветствовать Вас на вашем родном языке!";
-                                };
-                            };
-                        };
-                    };
+                _msg = switch (_name) do {
+                    case "Rokse [LT]" : {"Salos malonu pasveikinti jus į savo gimtąja kalba!"}; // Литовец!
+                    case "Aron"       : { "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!" }; // Slovak };
+                    case "gyuri";
+                    case "Frosty";
+                    case "Petigp"     : { "Üdvözöljük az alap a 'Vörös mérnökök'!" }; // Hungarian // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+                    case "Marco"      : { "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)" };// // vec. killer
+                    case "Shelter";
+                    case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
+                    case "Nushrok";
+                    case "Klich";
+                    case "GTX460"     : { "Островитяне: привет советскому воину-разведчику! Мы никому не расскажем о твоём настоящем языке!" };
+                    case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
+                    default             { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
                 };
-            };
 
-  			_msg_arr set [ count _msg_arr, [_msg] ];
+                _msg_arr set [ count _msg_arr, [_msg] ];
+  			};
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then // first time entry after half of game
 			{
@@ -272,7 +255,7 @@ XHandleNetStartScriptServer = {
             };
             if ( _equip_empty  && (_index >= 0)) then
             {
-                if ( argp(_parray,3) > 0) then // non-zero score and report about record absence
+                if ( argp(_parray,3) > 0) then // non-zero score? Report about record absence
                 {
                     _msg_arr set [ count _msg_arr, ["STR_SYS_614"] ]; // ammunition record not found
                 };
@@ -284,9 +267,21 @@ XHandleNetStartScriptServer = {
 			    _date = __GetGVar(INFILTRATION_TIME);
 			    if (typeName _date == "ARRAY") then
 			    {
-                    _msg_arr set [ count _msg_arr, ["STR_SYS_617", _date call SYG_dateToStr] ]; // "Last assault was at dd.MM.yyyy hh:mm:ss"
+                    _msg_arr set [ count _msg_arr, ["STR_GRU_55", _date call SYG_dateToStr] ]; // "Last assault was at dd.MM.yyyy hh:mm:ss"
 			    };
 			    __SetGVar(INFILTRATION_TIME,_date); // send info to this client too
+			};
+
+			_arr1 = call SYG_lastTownsGet;
+			_arr2 = call SYG_lastPlayersGet;
+			_name call SYG_lastPlayersAdd; // add player to linked list of entered ones
+			if (((count _arr1) + (count _arr2)) > 0) then // if any towns/players are counted, inform user about them
+			{
+			    _str = [_arr1, ","] call SYG_joinArr;
+			    _arr = ["STR_GRU_56",_str];
+			    _str = [_arr2,","] call SYG_joinArr;
+                _arr set [ count _arr, _str ];
+                _msg_arr set [ count _msg_arr, _arr ]; // "GRU: last towns%1,  last soldiers%2"
 			};
 
 			// TODO: add here more messages for the 1st greeting to user

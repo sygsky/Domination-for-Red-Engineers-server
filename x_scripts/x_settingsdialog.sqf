@@ -160,6 +160,12 @@ _str = _str + _strYes;
 _str = _str + _strNo;
 #endif
 
+#ifdef __NO_TELEPORT_ON_DAMAGE__
+    _str = _str + (format[localize "STR_SET_9_2", __NO_TELEPORT_ON_DAMAGE__ ]) + "\n"; // "Teleport works until the destruction of MHQ"
+#else
+    _str = _str + (localize "STR_SET_9_1") + "\n"; // "Teleport shuts off when MHQ is damaged at %1 percents"
+#endif
+
 _str = _str + (localize "STR_SET_10") ; // "Jail"
 #ifdef __JAIL_MAX_SCORE__
 _str = _str + format[localize "STR_SET_10_1",__JAIL_MAX_SCORE__] + "\n";
@@ -192,7 +198,7 @@ _str = _str + _strNo1 + ". ";
 
 // _str = _str + "Версия: " + d_version_string + "\n";
 
-_str = _str + (localize "STR_SET_14");//"Built-in ruksack: ";
+_str = _str + (localize "STR_SET_14");//"Built-in rucksack: ";
 if (d_use_backpack) then {
 	_str = _str + _strYes;
 } else {
@@ -607,7 +613,7 @@ else
 if (__HasGVar(INFILTRATION_TIME)) then
 {
     _date = __GetGVar(INFILTRATION_TIME);
-    _str = _str + format[localize "STR_SYS_617", _date call SYG_dateToStr] + "\n";
+    _str = _str + format[localize "STR_GRU_55", _date call SYG_dateToStr] + "\n";
 }
 else
 {

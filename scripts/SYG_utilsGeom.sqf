@@ -15,6 +15,7 @@
  *
  */
 SYG_vectorAdd = {
+    private [ "_pnt1", "_pnt2" ];
 	_pnt1 = arg(0);
 	_pnt2 = arg(1);
 	[argp(_pnt1,X_POS) + argp(_pnt2,X_POS), argp(_pnt1,Y_POS) + argp(_pnt2,Y_POS), 0]
@@ -29,6 +30,7 @@ SYG_vectorAdd = {
  *
  */
 SYG_vectorSub = {
+    private [ "_pnt1", "_pnt2" ];
 	_pnt1 = arg(0);
 	_pnt2 = arg(1);
 	[argp(_pnt1,X_POS) - argp(_pnt2,X_POS), argp(_pnt1,Y_POS) - argp(_pnt2,Y_POS), 0]
@@ -43,6 +45,7 @@ SYG_vectorSub = {
  *
  */
 SYG_vectorSub3D = {
+    private [ "_pnt1", "_pnt2" ];
 	_pnt1 = arg(0);
 	_pnt2 = arg(1);
 	[argp(_pnt1,X_POS) - argp(_pnt2,X_POS), argp(_pnt1,Y_POS) - argp(_pnt2,Y_POS), argp(_pnt1,Z_POS) - argp(_pnt2,Z_POS)]
@@ -62,7 +65,7 @@ SYG_vectorSub3D = {
  *        0 if point is on the vector [p0,p1]
  */
 SYG_distPoint2Vector1 = {
-	private ["_p0","_p1","_p2","_a","_b","_cross","_sqrlen"];
+	private ["_p0","_p1","_p2","_a","_b","_cross","_len"];
 	_p0 = arg(0);
 	_p1 = arg(1);
 	_p2 = arg(2);
@@ -102,6 +105,7 @@ SYG_distPoint2Vector = {
  *
  */
 SYG_3pntDotProduct={
+    private ["_v1", "_v2"];
     _v1 = [arg(1),arg(0)] call SYG_vectorSub;
     _v2 = [arg(2),arg(0)] call SYG_vectorSub;
     argp(_v1,X_POS) * argp(_v2,X_POS) +  argp(_v1,Y_POS) * argp(_v2,Y_POS)
@@ -114,6 +118,7 @@ SYG_3pntDotProduct={
  *
  */
 SYG_vectorDotProduct={
+    private ["_v1", "_v2"];
     _v1 = arg(0);
     _v2 = arg(1);
     argp(_v1,X_POS) * argp(_v2,X_POS) +  argp(_v1,Y_POS) * argp(_v2,Y_POS)
@@ -123,6 +128,7 @@ SYG_vectorDotProduct={
  * _pnt = [_pnt , coeff] call SYG_multiplyPoint;
  */
 SYG_multiplyPoint = {
+    private ["_pnt", "_coeff"];
     _pnt = arg(0);
     _coeff = arg(1);
     [argp(_pnt,X_POS) * _coeff, argp(_pnt,Y_POS) * _coeff, 0]
@@ -151,7 +157,7 @@ SYG_multiplyPoint = {
     }
  */
 SYG_closestPointOnLineSegment = {
-
+    private [ "_v1", "_v2","_dot","_sqr","_percAlongLine" ];
     _v1 = [arg(1),arg(0)] call SYG_vectorSub; // main vector (p0,p1)
     _v2 = [arg(2),arg(0)] call SYG_vectorSub; // vector from point (p0,p2)
     _dot = [_v1, _v2] call SYG_vectorDotProduct;
@@ -238,6 +244,7 @@ SYG_calcPosRotation = {
 // Where: _relArr = [[_dx,_dy,_dz], _ang]; _posRelArr = [[_x,_y,_z], _dir];
 //
 SYG_calcRelArr = {
+    private ["_house","_houseDir","_thingObjArr","_thingRelPos","_thingAng","_thingPos","_thingDir"];
     _house = arg(0);
     _houseDir = getDir _house;
     _thingObjArr = arg(1);
@@ -255,6 +262,7 @@ SYG_calcRelArr = {
  * where _rel_arr = [[_dx,_dy,_dz], _angle, _house_center_world_pos]; // _angle is object angle in house model space
  */
 SYG_worldObjectToModel = {
+    private ["_house","_unit","_pos"];
     //player groupChat format["SYG_worldObjectToModel: %1", _this];
     _house = _this select 0;
     _unit  = _this select 1;
@@ -358,7 +366,7 @@ SYG_elongate2 = {
 	_dx = argp(_pnt2,X_POS) - argp(_pnt1,X_POS); // (_pnt2 select 0) - (_pnt1 select 0);
 	_dy = argp(_pnt2,Y_POS) - argp(_pnt1,Y_POS); //(_pnt2 select 1) - (_pnt1 select 1);
 
-	[argp(_pnt1,X_POS) + _elongate *_dx, argp(_pnt1,Y_POS) + _elongate * _dy, argp(_pnt2,Z_POS)] // new point coordinates
+	[argp(_pnt1,X_POS) + _elongate *_dx, argp(_pnt1,Y_POS) + _elongate * _dy, 0] // new point coordinates
 };
 
 /**
@@ -415,6 +423,7 @@ SYG_cubeRoot = {
 // Angle in degrees
 // call as: _angle = [_vec1, _vec2] call SYG_angleBetween2Vectors3D;
 SYG_angleBetweenVectors3D = {
+    private ["_v1","_v2","_sc","_L1","_L2","_tmp","_cos"];
     _v1 = _this select 0;
     _v2 = _this select 1;
     _sc = _this call SYG_vectorDotProduct;
@@ -436,3 +445,4 @@ SYG_distance2D =
     _p1 distance _p2
 }
 */
+

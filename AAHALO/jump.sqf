@@ -151,7 +151,7 @@ if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize 
 if ( (vehicle player) != player ) then
 {
     hint localize format["+++ jump.sqf: Player in parachute now, height AGL %1!", getPos player select 2];
-    playSound "rippara";
+    playSound format["rippara%1", ceil(random 4)]; // short versions insteed of one long
 };
 
 if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound

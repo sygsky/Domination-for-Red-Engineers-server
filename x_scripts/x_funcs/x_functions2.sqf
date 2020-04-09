@@ -404,7 +404,7 @@ XfGetSlope = {
 	_height / 8
 };
 
-// create a global marker
+// create a global marker, in caller namespace must be declared: private ["_marker"]
 // parameters: marker name, marker pos, marker shape, marker color, marker size;(optional) marker text, marker dir, marker type, marker brush
 // example: ["my marker",  position player, "ICON", "ColorBlue", [0.5,0.5]<,"AmmoBox",0,"Marker">] call XfCreateMarkerLocal;
 XfCreateMarkerGlobal = {
@@ -427,6 +427,7 @@ XfCreateMarkerGlobal = {
 	if (_m_dir != -888888888888) then {_marker setMarkerDir _m_dir};
 	if (_m_type != "") then {_marker setMarkerType _m_type};
 	if (_m_brush != "") then {_marker setMarkerBrush _m_brush};
+    _marker
 };
 
 // create a local marker
@@ -452,6 +453,7 @@ XfCreateMarkerLocal = {
 	if (_m_dir != -888888888888) then {_marker setMarkerDirLocal _m_dir};
 	if (_m_type != "") then {_marker setMarkerTypeLocal _m_type};
 	if (_m_brush != "") then {_marker setMarkerBrushLocal _m_brush};
+	_marker
 };
 
 // send a text message over the network

@@ -45,11 +45,11 @@ if ( isNull _killer  || _fac == _killer ) exitWith
 
 // Some agent killed factory, send message
 
-_man    = if ( _killer isKindOf "CaManBase" ) then { "MAN" } else { "VEH" };
+_man    = if ( _killer isKindOf "CAManBase" ) then { "MAN" } else { "VEH" };
 _side   = if ( side _killer == d_side_enemy ) then { "ENEMY" } else { if (side _killer == d_side_player ) then {"OWN"} else {"UNKNOWN"} };
 
 _param1 = typeOf _killer;
-_param2 = if ( _killer isKindOf "CaManBase" ) then { name _killer } else { name ( gunner _killer ) };
+_param2 = if ( _killer isKindOf "CAManBase" ) then { name _killer } else { name ( gunner _killer ) };
 
 _str    = format[ "STR_FAC_%1_%2", _side, _man ];
 [ "sub_fac_score", _str, _param1, _param2 ] call XSendNetStartScriptClient;

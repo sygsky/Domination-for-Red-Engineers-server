@@ -65,7 +65,7 @@ medic_tent addEventHandler ["killed",{[_this select 0] spawn XMashKilled;}];
 
 #ifdef __RANKED__
 medic_tent spawn {
-	private ["_tent", "_pos_healers", "_healerslist", "_points", "_nobs", "_i", "_h"];
+	private ["_tent", "_pos_healers", "_healerslist", "_points", "_nobs", "_i", "_h", "_anim_list"];
 	_tent = _this;
 	_pos_healers = (
 		switch (d_own_side) do {
@@ -75,12 +75,13 @@ medic_tent spawn {
 		}
 	);
 	_healerslist = [];
-	while {!isNull _tent && alive _tent} do {
+	_anim_list   = ["ainvpknlmstpslaywrfldnon_healed","amovppnemstpsraswrfldnon_healed"];
+	while { alive _tent } do {
 		_points = 0;
 		_nobs = nearestObjects [_tent, [_pos_healers], 7];
 		{
 			if (!(_x in _healerslist) && (_x != player)) then {
-				if (animationState _x in ["ainvpknlmstpslaywrfldnon_healed","amovppnemstpsraswrfldnon_healed"]) then {
+				if (animationState _x in _anim_list) then {
 					_points = _points + (d_ranked_a select 7);
 					_healerslist = _healerslist + [_x];
 				};
@@ -88,13 +89,13 @@ medic_tent spawn {
 		} forEach _nobs;
 		if (_points > 0) then {
 			player addScore _points;
-			(format [localize "STR_MED_7"/* "Вы получаете %1 очк. за лечение бойцов в вашей палатке..." */, _points]) call XfHQChat;
+			(format [localize "STR_MED_7"/* "You get %1 points because other units used your mash for healing!" */, _points]) call XfHQChat;
 		};
 		sleep 0.01;
 		if (count _healerslist > 0) then {
 			for "_i" from 0 to (count _healerslist - 1) do {
 				_h = _healerslist select _i;
-				if (!(animationState _h in ["ainvpknlmstpslaywrfldnon_healed","amovppnemstpsraswrfldnon_healed"])) then {
+				if (!(animationState _h in _anim_list)) then {
 					_healerslist set [_i, "X_RM_ME"];
 				};
 			};

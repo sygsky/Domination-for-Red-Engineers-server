@@ -1,4 +1,4 @@
-// by Xeno, x_scripts/x_removevehi.sqf
+// by Xeno, x_scripts\x_removevehi.sqf
 // Creates copy of deleted vehicle on the same place. And puts vehicle to the common dead list
 // Used for town patrolling vehicles only. To increase reality of the game atmosphere
 #include "x_setup.sqf"
@@ -22,7 +22,7 @@ _itself = _aunit == _eunit;
 _aunit reveal _eunit; // just in case
 _aunit removeAllEventHandlers "killed";
 _aunit removeAllEventHandlers "hit";
-_aunit removeAllEventHandlers "damage";
+_aunit removeAllEventHandlers "dammaged";
 _aunit removeAllEventHandlers "getin";
 _aunit removeAllEventHandlers "getout";
 _type = typeOf _aunit;
@@ -38,7 +38,7 @@ _velocity = velocity _aunit;
 {
 	_x removeAllEventHandlers "killed";
 	_x removeAllEventHandlers "hit";
-	_x removeAllEventHandlers "damage";
+	_x removeAllEventHandlers "dammaged";
 	_x removeAllEventHandlers "getin";
 	_x removeAllEventHandlers "getout";
 	deleteVehicle _x

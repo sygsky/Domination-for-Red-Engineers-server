@@ -111,7 +111,7 @@ _vehicle execVM "x_scripts\x_wreckmarker.sqf";
     // try to repair object if it is damaged
     if ( !isNull ( _mash ) ) then
     {
-        if (!alive _mash) then { _mash removeAllEventHandlers "hit";  _mash removeAllEventHandlers "damage"; deleteVehicle _mash;sleep 0.2; _mash = objNull; _rebuild_mash = true;};
+        if (!alive _mash) then { _mash removeAllEventHandlers "hit";  _mash removeAllEventHandlers "dammaged"; deleteVehicle _mash;sleep 0.2; _mash = objNull; _rebuild_mash = true;};
     };
     // (re)build mash if not available
     if ( (_vehicle isKindOf "Plane") || _rebuild_mash ) then

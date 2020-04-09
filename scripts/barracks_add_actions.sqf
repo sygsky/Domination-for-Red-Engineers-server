@@ -35,7 +35,7 @@ _string_player = format ["%1",player];
 if ( _string_player in d_can_use_artillery ) then {
 
     AI_HUT addEventHandler [   "hit", {AI_HUT setDamage 0}];
-    AI_HUT addEventHandler ["damage", {AI_HUT setDamage 0}];
+    AI_HUT addEventHandler ["dammaged", {AI_HUT setDamage 0}];
 
 	if (!(__ACEVer)) then {
 		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","Soldier%1B"]; //"Recruit Soldier"
@@ -45,7 +45,6 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","Soldier%1Sniper"]; // "Recruit Sniper"
 		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","Soldier%1AA"];  // "Recruit AA Soldier"
 		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"]; // "Recruit Specop"
-		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
 	} else {
 		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1B"];
 		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AT"];
@@ -55,9 +54,10 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AA"];
 		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"];
 		AI_HUT addAction[localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Pilot"]; // Pilot
-
-		AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"];
 	};
+	AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
+	AI_HUT addAction[localize "STR_AI_8_1","scripts\check_ai_points.sqf"]; // "Check your points"
+
 	_marker_name = "Recruit_x";
 	if ( ( getMarkerType _marker_name) == "") then // no such marker
 	{
@@ -67,7 +67,7 @@ if ( _string_player in d_can_use_artillery ) then {
 }
 else
 {
-    AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\barracks_info.sqf"]; // "Inspect"
+    AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\info_barracks.sqf"]; // "Inspect"
 };
 
 #endif

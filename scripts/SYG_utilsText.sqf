@@ -91,3 +91,50 @@ SYG_getRumourText = {
     _name3 = text (player call SYG_nearestSettlement); // nearest settlement name
     format[_str1, _name1, _name2, _name3]; // just in case of usage %1 %2 %3 in string
 };
+
+//
+// Joins string arrays into single string using designated separator
+// call as: _str = [_arr,", "] call SYG_joinArr; // _str -> "item1, item2, item3"
+//
+SYG_joinArr = {
+    private [ "_sep", "_arr", "_str", "_i" ];
+    if ( typeName _this != "ARRAY" ) exitWith {"?#1"};
+    if ( count _this < 2 ) exitWith {"?#2"};
+    if ( typeName (_this select 0) != "ARRAY" ) exitWith {"?#3"};
+    if ( count (_this select 0) == 0 ) exitWith {""};
+    private ["_str", "_sep", "_arr"];
+    _sep = _this select 1;
+    if ( typeName _sep != "STRING" ) then { _sep = str(_sep) };
+    _arr = _this select 0;
+    _str = _arr select 0;
+    if ( count _arr == 1) exitWith {_str};
+    for "_i" from 1 to ((count _arr) - 1) do{ _str = format[ "%1%2%3", _str, _sep, _arr select _i] };
+    _str
+};
+
+/*
+ * Prepare string to print from vehicles array син converting them into type strings (typeOf _vehicle_obj)
+ * Input: _result = [_veh_arr, _max_num_to_print] call SYG_objArrToTypeStr; // result = "[ACE_Abrams,ACE_UAZ,ACE_Mi24P,...25]"
+ */
+SYG_objArrToTypeStr = {
+    if (typeName _this != "ARRAY") exitWith {"--- SYG_objArrToTypeStr: typeOf _this != ""ARRAY"""};
+    if (count _this < 2) then {_this set[1, 10]};
+    if (typeName (_this select 0) != "ARRAY") then {_this set [0, [_this select 0]]};
+
+    private ["_arr","_print_cnt","_str","_i"];
+    _arr = _this select 0;
+    _print_cnt = _this select 1;
+    _print_cnt = (count _arr) min _print_cnt; // print vehicles count
+    if (  _print_cnt > 0 ) then // print only if there is some data to print
+    {
+        _str = "";
+        for "_i" from 0 to _print_cnt - 1 do {
+            if (_str == "") then  {_str = format["%1", typeOf (_check_vec_list select _i)];}
+            else {_str = format["%1,%2",_str, typeOf (_check_vec_list select _i)]};
+        };
+        if ( ( count _check_vec_list ) > _print_cnt ) then {
+            _str = format["%1,...%2",count _arr];
+        };
+        _str
+    };
+};

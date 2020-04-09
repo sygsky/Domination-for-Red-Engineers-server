@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-//#define __PRINT__
+#define __PRINT__
 
 "d_nv_client" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
@@ -68,7 +68,7 @@ SYG_msgToUserParser =
         };
     };
 
-    if (typeName _name == "OBJECT") then // mag is sent to the vehicle team only
+    if (typeName _name == "OBJECT") then // msg is sent to the vehicle team only
     {
         _msg_target_found = vehicle player == _name;
         _vehicle_chat = _msg_target_found;
@@ -103,7 +103,7 @@ SYG_msgToUserParser =
 
     _msg_arr = _this select 2;
 #ifdef __PRINT__
-    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" params [%1,[%2 item(s)]]", _name, count _msg_arr ];
+    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" [%1,[%2 item(s)]:%3]", _name, count _msg_arr, _msg_arr select  0];
 #endif
 
     {
@@ -140,8 +140,8 @@ SYG_msgToUserParser =
         {
             _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
             if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
-                then {_print_title = _print_title <= 0} // print only if value set to false
-                else {_print_title = !_print_title}; // parse as boolean value, print if value == false
+            then {_print_title = _print_title <= 0} // print only if value set to false
+            else {_print_title = !_print_title}; // parse as boolean value, print if value == false
         };
 
         _msg_formatted = format _msg_fmt; // whole message formatted
@@ -453,7 +453,7 @@ XHandleNetStartScriptClient = {
                         else
                         {
                             // inform about new hero
-                            if (_name == "") then
+                            if (_name == "" || _name == "Error: No unit") then
                             {
                                 _msg = format["(%1)! %2", localize "STR_MAIN_COMPLETED_BY_UNKNOWN", _msg ];
                             }
@@ -691,8 +691,9 @@ XHandleNetStartScriptClient = {
 		case "syg_observer_kill" : {
             if ( str(arg(1)) == str(player) ) then // code only for killer
             {
-                private ["_score"];
-                hint localize format["+++ x_netinitclient.sqf: Observer killed by %1", name player];
+                private ["_score", "_str"];
+                if (count _this > 2) then {_str = format[" (%1)", arg(1)]} else {_str = "";};
+                hint localize format["+++ x_netinitclient.sqf: Observer(%1) killed by you", _str];
                 // add scores
                 _score = argp( d_ranked_a, 27 );
                 player addScore _score;
@@ -710,7 +711,7 @@ XHandleNetStartScriptClient = {
 			if (name player == _pname) then {
 				__compile_to_var
 				SYG_dateStart = arg(2); // set server start date
-				hint localize format["d_player_stuff: SYG_dateStart = %1", SYG_dateStart];
+				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1", SYG_dateStart];
 			};
 		};
 		case "d_hq_sm_msg": {
@@ -729,15 +730,15 @@ XHandleNetStartScriptClient = {
 			if ( !isNil (_this select 1) ) then
 			{
 				call compile format ["%1 call SYG_reammoMHQ;", _this select 1 ];
-#ifdef __PRINT__
-				hint localize format["'MHQ_respawned' is called with var '%1'", _this select 1];
-#endif		
-			}
-			else
-			{
-#ifdef __PRINT__
-				hint localize format["'MHQ_respawned' called with NIL variable %1 ", _this select 1];
-#endif		
+//#ifdef __PRINT__
+//				hint localize format["+++ 'MHQ_respawned' is called with var '%1'", _this select 1];
+//#endif
+//			}
+//			else
+//			{
+//#ifdef __PRINT__
+//				hint localize format["--- 'MHQ_respawned' called with NIL variable %1 ", _this select 1];
+//#endif
 			};	
 		};
 		case "flare_launched":	{ // add flare light for client
@@ -794,17 +795,17 @@ XHandleNetStartScriptClient = {
 			};
 		};
 
-        case "say_sound": // say user sound from predefined vehicle/unit
+        case "say_sound": // say user sound from predefined vehicle/unit ["say_sound",_object,_sound, [,"-",_player_name]]
 		{
-		    private ["_nil","_obj","_sound"];
+		    private ["_nil","_obj","_sound","_exit"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
+		    if ( (argopt(3,"") == "-") && (argopt(4,"") == name player)) exitWith {false}; // Player disallowed to receipt this sound
 		    _obj = arg(1);
-		    if ((_obj distance player) > 2000 ) exitWith{}; // too far from sound source
+		    if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
 		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) )then
 		    {
                 _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
                 sleep 0.01;
-                // let all to hear this sound, not only current player
                 _nil say arg(2);
                 sleep 0.01;
     		    _sound = nearestObject [position _nil, "#soundonvehicle"];
@@ -889,7 +890,7 @@ XHandleNetStartScriptClient = {
                 };
                 case "info": // print info on day/night time
                 {
-                    private ["_id","_str"];
+                    private ["_id","_str", "_playSound"];
                     _id = _this select 2; // message id to be printed about day time begin
                     if ( typeName _id ==  "ARRAY") then { _id = _id select 0};
 
@@ -899,9 +900,14 @@ XHandleNetStartScriptClient = {
                     titleText [ _str, "PLAIN"];
 
                     //+++++++++++++++++++++++++++++++++++++++++++++++++++++
-                    // say something on a next period of day coming
-                    _str = _id call SYG_getDayTimeIdRandomSound;
-                    if ( _str != "" ) then {playSound _str};
+                    // say something on a next period of day coming if player not in a vehicle with engine on (too noisy to listen music)
+                    _playSound = vehicle player == player;
+                    if (!_playSound) then {_playSound = ! (isEngineOn  (vehicle player) ) };
+
+                    if (_playSound ) then {
+                        _str = _id call SYG_getDayTimeIdRandomSound;
+                        if ( _str != "" ) then {playSound _str};
+                    };
                     //-------------------------------------------------------
                 };
             };

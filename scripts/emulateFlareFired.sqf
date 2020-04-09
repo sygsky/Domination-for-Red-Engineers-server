@@ -1,7 +1,7 @@
 //
 // ACE flare script modified to use on server by Sygsky
 //
-// call as: [_pos, _height, _flare_color (may be "Red","Green","Yellow","White"), _dist_to_observer] spawn "emulateFlareFired.sqf"
+// call as: [_pos, _height, _flare_color (may be "Red","Green","Yellow","White"), _dist_to_observer] exec "emulateFlareFired.sqf"
 //
 private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height"];
 

@@ -329,3 +329,20 @@ SYG_getViewDistance = {
     if ( ! X_Client ) exitWith {-1};
     d_viewdistance
 };
+
+// Check if point/object is in nearest house rectangle
+// call: _isInHouseRect = _unit call SYG_isInHouseRect;
+//
+SYG_isInHouseRect =
+{
+    private ["_near","_bb","_po"];
+    _near  = nearestObject [player, "House"];
+    if (isNull _near) exitWith {false};
+    _bb = boundingBox _near;
+    _po = _near worldToModel (getPos _near);
+    if (((_bb select 0) select 0) > (_po select 0)) exitWith { false};
+    if (((_bb select 1) select 0) < (_po select 0)) exitWith { false};
+    if (((_bb select 0) select 1) > (_po select 1)) exitWith { false};
+    if (((_bb select 1) select 1) < (_po select 1)) exitWith { false};
+    true
+};

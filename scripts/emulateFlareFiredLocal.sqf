@@ -1,7 +1,6 @@
+// Sygsky: scripts\emulateFlareFiredLocal.sqf: ACE flare script modified to use on client at daytime, else flare light is not visible
 //
-// emulateFlareFired.sqf: ACE flare script modified to use on server by Sygsky
-//
-// call as: [_flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] spawn "emulateFlareFired.sqf"
+// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
 //
 private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_pos","_flare_type","_die_away_height"];
 
@@ -37,7 +36,7 @@ __W, \
 [0.08], 1, 0, "", "", _flare]
 
 _flare = __FLARE;
-if ( isNull _flare ) exitWith { hint localize "emulateFlareFiredLocal.sqf: flare object isNull"; };
+if ( isNull _flare ) exitWith { hint localize "--- emulateFlareFiredLocal.sqf: flare object isNull"; };
 
 _col = __COL;
 switch (toUpper(_col)) do

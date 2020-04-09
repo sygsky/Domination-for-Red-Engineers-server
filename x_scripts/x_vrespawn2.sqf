@@ -1,4 +1,4 @@
-// by Xeno: x_vrespawn2.sqf, called only on server
+// by Xeno: x_vrespawn2.sqf, called only on server. Initiate editor vehicles on the base: MHQs, helicopters, trucks
 private ["_vec_array", "_vehicle", "_number_v", "_kind", "_truck_ammo", "_truck_fuel", "_truck_rep", "_i", "_vec_a", "_disabled", "_type", "_empty", "_hasbox","_var"];
 if (!isServer) exitWith{};
 
@@ -127,9 +127,9 @@ while {true} do {
 		};
 
 		sleep 0.01;
-		_empty = (if (({alive _x} count (crew _vehicle)) > 0) then {false} else {true});
+		_empty = ({alive _x} count (crew _vehicle)) == 0;
 
-		if ( _empty && (_disabled  || (!(alive _vehicle))) ) then {
+		if ( _empty && (_disabled  || (!(alive _vehicle))) ) then { // vehicle havs to be respawned
 			_hasbox = _vehicle getVariable "d_ammobox";
 			if (format["%1",_hasbox] == "<null>") then {
 				_hasbox = false;
@@ -160,8 +160,8 @@ while {true} do {
 					//call compile format ["MRR%1=_vehicle;publicVariable ""MRR%1"";", _number_v];
 					//_vehicle call SYG_reammoMHQ; // this function call is useless on server computer
 
-					if (X_SPE) then {
-						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
+					if (X_SPE) then { // on client running server
+						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Chopper Menu"
 						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
 						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};
@@ -173,7 +173,7 @@ while {true} do {
 				case "MRR": {
 					call compile format ["MRRR%1=_vehicle;publicVariable ""MRRR%1"";", _number_v];
 					if (X_SPE) then {
-						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Меню вертолета"
+						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Chopper Menu"
 						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
 						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};
@@ -275,6 +275,6 @@ while {true} do {
 			#endif
 			};
 		};
-		sleep 8 + random 5;
+		sleep (8 + (random 5));
 	}; // for "_i" from 0 to (count _vec_array - 1) do
 }; //while {true} do 

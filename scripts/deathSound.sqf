@@ -24,27 +24,35 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then // Play o
 {
     if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doen't like such sounds
 
-    // check for russian tank)))
+    // if killed in tank
     _exit = false;
-    if ( ((vehicle _unit) isKindOf "Tank") && (call SYG_playExtraSounds)) then { _exit = call SYG_playDeathInTankSound };
+    if ( (vehicle _unit) isKindOf "Tank" ) then { _exit = call SYG_playDeathInTankSound }; // play only for RUSSIAN language interface
     if ( _exit) exitWith {};
+
+    // if killed from enemy tank
+    if ((vehicle _killer) isKindof "Tank") exitWith { call SYG_playDeathFromEnemyTankSound };
 
     // check for helicopter
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith
     {
         playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
     };
-    _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
 
-    if ((_killer isKindOf "SoldierWB") ) then
+    _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
+    if ((side _killer == d_side_enemy) && (_killer isKindOf "CAManBase")) then
     {
-        if (format["%1",side _killer] == d_enemy_side) then
+        _sound = _killer getVariable "killer_sound";
+        if (!isNil "_sound") then { // AI already killed someone nad his sound is already known
+            ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
+        }
+        else
         {
-            if (random 3 <= 1) then
+            if (random 2 <= 1) then
             {
                 // try to play killer laughter sound on all clients
                 _sound = call SYG_getLaughterSound;
-                ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
+                ["say_sound",  _killer, _sound] call XSendNetStartScriptClientAll;
+                _killer setVariable ["killer_sound", _sound]; // store killer sound to repaat next lucky time
             };
         };
     };
@@ -63,7 +71,7 @@ else    // some kind of suicide? Say something about...
     _TVTowerArr = _unit nearObjects [ "Land_telek1", 50];
     if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
     {
-        _sound =  RANDOM_ARR_ITEM(SYG_TVTowerDefeatTracks);
+        _sound =  call SYG_getTVTowerGong;
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
     };
 

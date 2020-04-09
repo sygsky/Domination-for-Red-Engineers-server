@@ -1,4 +1,4 @@
-// by Sygsky, scripts/barracks_info.sqf.sqf to inform player about barracks
+// by Sygsky, scripts\info_ammobox.sqf to inform player about barracks
 //
 //  Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]
 //    target (_this select 0): Object - the object which the action is assigned to
@@ -6,10 +6,9 @@
 //    ID (_this select 2): Number - ID of the activated action (same as ID returned by addAction)
 //    arguments (_this select 3): Anything - arguments given to the script if you are using the extended syntax
 //
+// // Usage from code: ammobox1 addAction[localize "STR_CHECK_ITEM","scripts\info_ammobox.sqf"]; // "Inspect"
 
-// "This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!"
-_args = [localize "STR_AI_10"];
-["msg_to_user", "", [_args]] call SYG_msgToUserParser; // message output
-
+["msg_to_user", "", [ [_this select 3] ] ] call SYG_msgToUserParser; // message output
 (_this select 0) removeAction (_this select 2); // Remove action
+playSound "losing_patience"; // he-he
 if (true) exitWith {};

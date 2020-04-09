@@ -1,4 +1,5 @@
 // by Xeno, x_scripts/x_setvehiclemarker.sqf : for clients only
+// Totally transparent color: "ACE_ColorTransparent"
 private ["_ap","_as","_i","_marker","_p_marker_color"];
 if (!X_Client) exitWith {};
 

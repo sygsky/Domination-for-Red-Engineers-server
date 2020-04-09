@@ -44,6 +44,7 @@ if (client_target_counter < number_targets) then {
 		{
 		    _strBonus = format[ localize "STR_SYS_1102_1", d_ranked_a select 9 ];
             player addScore (d_ranked_a select 9); // you get point only being in the town!
+            playSound "good_news";
 		};
         (format [localize "STR_SYS_1102"/* "For the liberation of the settlement you get %1%2 !" */,_strBonus, _bonus_vehicle]) call XfHQChat;
 	};

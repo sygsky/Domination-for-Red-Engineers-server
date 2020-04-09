@@ -518,7 +518,7 @@ SYG_rearmSabotage = {
 				// check for GL muzzle for primary weapon
 				_muzzles  = getArray(configFile>>"cfgWeapons" >> _wpn >> "muzzles");
 				_glMuzzle = (_muzzles  find "ACE_M203Muzzle") >= 0; // GL found
-				if (_glMuzzle) then {_equip set [0, SYG_GL_SET]};
+				if (_glMuzzle) then {_equip set [0, SYG_GL_SET]}; // replace pistol with GL items
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
 			case "ACE_SoldierWMAT_A":
@@ -1524,26 +1524,16 @@ SYG_removeNVGoggles = {
  * Call: _res = _unit call SYG_armPilotFull;
  */
 SYG_armPilotFull = {
-	private [ "_res" ];
-	_res = false;
-	if ( (_this isKindOf "SoldierWPilot") or ( _this isKindOf "SoldierEPilot")) exitWith
-	{
-		switch ( side _this ) do
-		{
-			case east:
-			{
-				[_this, call SYG_pilotEquipmentEast ] call SYG_armUnit;
-				_res = true;
-			};
-			case west:
-			{
-				//player globalChat format["%1: %2", typeName _this, call SYG_pilotEquipmentWest];
-				[_this, call SYG_pilotEquipmentWest ] call SYG_armUnit;
-				_res = true;
-			};
-		};
+	if ( (_this isKindOf "SoldierWPilot") ||  (_this isKindOf  "SoldierGPilot")) exitWith {
+		[_this, call SYG_pilotEquipmentWest ] call SYG_armUnit;
+		true
 	};
-	if ( true ) exitWith { _res };
+	if( _this isKindOf "SoldierEPilot") exitWith
+	{
+		[_this, call SYG_pilotEquipmentEast ] call SYG_armUnit;
+		true
+	};
+	false
 };
 
 /*

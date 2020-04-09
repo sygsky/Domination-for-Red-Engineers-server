@@ -22,6 +22,15 @@ if (!isServer) exitWith {};
 #define KA_MIMG_ARRIVAL_DELAY 300
 #define REFUEL_INTERVAL 600
 #define PRINT_PERIOD 600 // period to inform about heli position
+#define RELOAD_PERIOD 60 // TODO: use as period to reload ammo for plane
+
+#define FLIGHT_HEIGHT_KA 350 // 450
+#define FLIGHT_HEIGHT_MI 250 // 350
+#define FLIGHT_HEIGHT_SU 400 // 600
+
+#define FLYBY_HEIGHT_KA 600
+#define FLYBY_HEIGHT_MI 500
+#define FLYBY_HEIGHT_SU 1000
 
 // how many player is not detected near target in seconds
 #define PLAYER_NOT_AT_TARGET_LIMIT 1200
@@ -318,8 +327,8 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_airki_attack_chopper;
-			_flight_height = 350;
-        	//_flyby_height  = 500;
+			_flight_height = FLIGHT_HEIGHT_KA;
+        	_flyby_height  = FLYBY_HEIGHT_KA;
 			_flight_random = 50;
 			_min_dist_between_wp = 100;
 		};
@@ -327,18 +336,18 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		{
 			_vec_cnt = d_number_attack_planes;
 			_heli_arr = d_airki_attack_plane;
-			_flight_height = 600;
-        	_flyby_height  = 1000;
+			_flight_height = FLIGHT_HEIGHT_SU;
+        	_flyby_height  = FLYBY_HEIGHT_SU;
 			_flight_random = 100;
-			_min_dist_between_wp = 500;
+			_min_dist_between_wp = 1000;
 		};
 		case "MIMG"; 
 		default 
 		{
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_light_attack_chopper;
-			_flight_height = 250;
-        	//_flyby_height  = 500;
+			_flight_height = FLIGHT_HEIGHT_MI;
+        	_flyby_height  = 500;
 			_flight_random = 20;
 			_min_dist_between_wp = 100;
 		};
@@ -358,7 +367,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	for "_xxx" from 1 to _vec_cnt do {
 		_heli_type = _heli_arr call XfRandomArrayVal;
 		_vehicle = createVehicle [_heli_type, _pos, [], 100, "FLY"];
-		_vehicle setVariable ["damage",0];
+		_vehicle setVariable ["damage",0]; // TODO: for future use
 
 		_vehicles = _vehicles + [_vehicle];
 		[_vehicle, _grp, _crew_member, _grpskill] call SYG_populateVehicle;
@@ -409,15 +418,14 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_pat_pos = _current_target_pos;
 	_wp setWaypointStatements ["never", ""];
 #ifdef __PRINT__
-   	hint localize format["+++ x_airki.sqf[%3]: veh %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
+   	hint localize format["+++ x_airki.sqf[%3]: %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
 #endif
 
 
 #ifdef __PRINT__
-	_lastDamage = 0;
-	_timeToPrint = time - PRINT_PERIOD + 60; // print after 60 seconds
+	_timeToPrint = time + PRINT_PERIOD + (random 60); // print after 60 seconds
 #endif
-
+    _timeToReload = time + RELOAD_PERIOD  + (random 60); // reload period
 
 	_loop_do = true;
 
@@ -521,7 +529,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                     {
                         if ( ({alive _x} count crew _enemy_heli) == 0) then
                         {
-                            hint localize format["+++ x_airki: enemy air vehicle %1 empty, remove from array", typeOf _enemy_heli ];
+                            hint localize format["+++ x_airki: [%1] enemy air vehicle %2 empty, remove from array", _type, typeOf _enemy_heli ];
                             SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"];
                         }
                         else
@@ -529,11 +537,11 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                             _pos = getPos _enemy_heli;
                             if ( (_x distance _pos)  < 3500 ) then
                             {
-                                if ( ( _pos select 2) > ((getPos _x) select 2) ) then
+                                if ( (( _pos select 2) - 50) > ((getPos _x) select 2) ) then
                                 {
-                                    _flyHeight = ((_pos select 2)+50);
+                                    _flyHeight = ((_pos select 2)+100);
                                     _x flyInHeight _flyHeight;
-                                    hint localize format["+++ x_airki: enemy air vehicle %1 detected, set fly height ~ %2 (h%3) m", typeOf _enemy_heli, round( _flyHeight ), (getPos _x) select 2 ];
+                                    hint localize format["+++ x_airki: [%1] enemy air vehicle %2 detected, set fly height ~ %3 (h%4) m", _type, typeOf _enemy_heli, round( _flyHeight ), round((getPos _x) select 2) ];
                                     _height_not_set = false;
                                 };
                                 _x reveal _enemy_heli;
@@ -547,7 +555,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                         hint localize format["+++ x_airki: bad item in enemy air vehicle array %1", _enemy_heli ];
                     };
                 }; // forEach SYG_owner_active_air_vehicles_arr;
-                SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["R_ME"];
+                SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["RM_ME"];
                 if (_height_not_set) then
                 {
                     _flyHeight = (_flight_height + (random _flight_random));
@@ -570,33 +578,39 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		if (count _vehicles > 0) then {
 			for "_i" from 0 to ((count _vehicles) - 1) do {
 				_vecx = _vehicles select _i;
-				if ( ! alive _vecx ) then
-				{
+				if ( ! alive _vecx ) then {
 					_vehicles set [_i, "X_RM_ME"]; 
 #ifdef __PRINT__
 					hint localize format[ "+++ x_airki.sqf[%1]: airkiller is Null, remove from list",  _type];
 #endif			
 				}
-				else
-				{
+				else {
                     sleep 1;
                     if ( ( {alive _x} count (crew _vecx) ) == 0 ) then
                     {
                         s_down_heli_arr = s_down_heli_arr + [_vecx];
+                        _vecx setFuel 0;
                         _vehicles set [_i, "X_RM_ME"];
 					}
 					else
 					{
+                        if ( damage _vecx > 0) then
+                        {
+                             _lastDamage = _vecx getVariable "damage";
+                            if ( (damage _vecx) != _lastDamage ) then
+                            {
 #ifdef __PRINT__
-						if ( count _vehicles == 1) then
-						{
-							if ( ((damage _vecx) > 0) && ((damage _vecx) != _lastDamage) ) then
-							{
-								hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 received damage = %2", typeOf _vecx, damage _vecx, _type ];
-								_lastDamage = damage _vecx;
-							};
-						};
-#endif			
+                                hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 get damage = %2", typeOf _vecx, (damage _vecx) - _lastDamage, _type ];
+#endif
+                                _vecx setVariable ["damage", damage _vecx];
+                            };
+                            if ( ((damage _vecx) > _lastDamage)  && (speedMode _vecx == "LIMITED")) then { // accelerate in case of damage received
+                                _vecx setSpeedMode "FULL";
+#ifdef __PRINT__
+                                hint localize format[ "+++ x_airki.sqf[%1]: change airkiller %2 speed from LIMITED to FULL", _type, typeOf _vecx ];
+#endif
+                            };
+                        };
 						_vecx setFuel 1;
 					};
 					sleep 0.01;
@@ -628,7 +642,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		//+++ Sygsky: TODO add info exchange between air-air, air-land, air-ship units
 #endif
 #ifdef __PRINT__
-        if ( (time - _timeToPrint) >= PRINT_PERIOD) then
+        if ( time >= _timeToPrint) then
         {
             _heli = _vehicles select 0;
             _loc = _heli call SYG_nearestSettlement;
@@ -640,7 +654,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                 round(speed _heli),
                 damage _heli
             ];
-            _timeToPrint = time;
+            _timeToPrint = time + PRINT_PERIOD;
         };
 #endif
 	}; // while {_loop_do} do

@@ -6,7 +6,7 @@
 
 // [
 //["NVGoggles","ACE_RPK47"],
-//["ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Epinephrine"],
+//["ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Epinephrine"],
 //"ACE_Rucksack_MOLLE_Green_Miner",
 //[],
 //3000]
@@ -16,7 +16,7 @@ removeAllWeapons _p;
 // add magazines first to reload weapon later
 {
     _p addMagazine _x;
-} forEach ["ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_75Rnd_762x39_B_AK","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Epinephrine"];
+} forEach ["ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Epinephrine"];
 
 // add all weapons
 _wpn = "ACE_RPK47";

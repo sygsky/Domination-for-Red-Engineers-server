@@ -139,7 +139,7 @@ while { true } do {
 		{
 			if (_flare_launched >= MAX_FLARE_NUMBER ) exitWith { /* Exit from flare loop */ };
 			_unit = _wounded select _i;
-			if ( !isNull _unit && alive _unit ) then
+			if ( alive _unit ) then
 			{
 				_unc = (damage _unit) >= 0.7;
 				if (format["%1",_unit getVariable "ACE_unconscious"] != "<null>") then { _unc = _unit getVariable "ACE_unconscious"; };

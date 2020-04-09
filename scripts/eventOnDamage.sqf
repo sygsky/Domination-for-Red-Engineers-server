@@ -13,7 +13,6 @@ selectionName: String - Name of the selection where the unit was damaged
 damage: Number - Resulting level of damage
 */
 
-private ["_vec", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_smoke_array", "_pp", "_shell", "_hideobject", "_name"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -24,6 +23,8 @@ if (!isServer) exitWith {};
 #ifdef __PRINT__
 hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %4", _this, count crew (_this select 0)];
 #endif
+
+private ["_vec", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_smoke_array", "_pp", "_shell", "_hideobject", "_name"];
 
 _vec = _this select 0;
 

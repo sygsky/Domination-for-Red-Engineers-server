@@ -13,7 +13,7 @@ if (!isServer) exitWith{};
 #endif
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-private ["_time"];
+private ["_time","_msg"];
 
 hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 )", current_counter, current_mission_counter];
 
@@ -70,6 +70,8 @@ check_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
 // Static objects not used in lower condition (""Static"" countType thislist >= d_static_count_for_target_clear)
 check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_for_target_clear) && (""Tank"" countType thislist >= d_tank_count_for_target_clear) && (""Car"" countType thislist  >= d_car_count_for_target_clear)", "[""current_target_index"",current_target_index] call XSendNetVarClient;target_clear = false;update_target=true;[""update_target"",objNull] call XSendNetStartScriptClient;deleteVehicle check_trigger;", ""];
 
+(_dummy select 1) call SYG_lastTownsAdd; // add name to queue to inform about last towns on OPC event
+
 [_current_target_pos, _current_target_radius, _dummy select 1] execVM "x_scripts\x_createguardpatrolgroups.sqf";
 
 while {!update_target} do {sleep 2.123};
@@ -117,7 +119,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
             {
                 _x removeAllEventHandlers "killed";
                 _x removeAllEventHandlers "hit";
-                _x removeAllEventHandlers "damage"; //+++ Sygsky: just in case
+                _x removeAllEventHandlers "dammaged"; //+++ Sygsky: just in case
                 _x removeAllEventHandlers "getin";  //+++ Sygsky: just in case
                 _x removeAllEventHandlers "getout"; //+++ Sygsky: just in case
                 deleteVehicle _x;
@@ -143,7 +145,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
         };
      } forEach _list;
 #ifdef __DEBUG__
-    hint localize format[ "x_createnexttarget.sqf: Bodies cleaned in %1: men %2 (found alive %3, east %4, cleaned dead %5), holders %6(water %7)", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
+    hint localize format[ "x_createnexttarget.sqf: Bodies cleaned in %1: men %2 (alive %3, east %4, dead %5), holders %6(water %7)", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
 #endif
      _list = nil;
      sleep 2.56;

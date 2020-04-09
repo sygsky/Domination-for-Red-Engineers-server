@@ -23,6 +23,8 @@ _pos = position _p;
 _type = typeOf _p;
 _string_player = format ["%1",_p];
 
+//hint localize format["+++ x_setupplayer: _string_player ""%1"",  %2",_string_player, getPos AMMOLOAD];
+
 #ifdef __RANKED__
 d_sm_p_pos = nil;
 #endif
@@ -108,17 +110,15 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	// ask the server for the client score etc
 	sleep random 0.5;
 	_endtime = time + 60;
-	_equip = "";
 	// initial information on player connected
 	["d_p_a",name player,missionStart, localize "STR_LANG"] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
-    _equip = "";
 #ifdef __DEBUG__
     if (!(isNil "d_player_stuff")) then
     {
         if (count d_player_stuff >= 6) then { if ( (d_player_stuff select 5) != "" ) then {_equip = "has items";}; };
     };
-    hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1, equipment %2 +++", if (isNil "d_player_stuff") then { "isNil" } else { "not nil"}, _equip];
+    hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { format["has %1 item[s]", count d_player_stuff]}];
 #endif
 	if (isNil "d_player_stuff") exitWith {
 		player_autokick_time = d_player_air_autokick;
@@ -133,6 +133,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 		// execute player rearm procedure
         _p = player;
 #ifdef __RANKED__
+        _equip = "";
         if ( count d_player_stuff >= 6) then // equipment returned
         {
             _equip = d_player_stuff select 5;
@@ -246,8 +247,6 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 case 2: {["S", "ACE_TT", "ACE_8Rnd_762x25_B_Tokarev", 4]};
                                 default {["S", "ACE_Scorpion", "ACE_20Rnd_765x17_vz61", 4]};
                             };
-                            hint localize format["+++ x_setupplayer: _string_player ""%1""",_string_player];
-
                             if (_string_player in d_can_use_artillery) exitWith
                             {
                                 _weapp =  [["P","ACE_RPG22","ACE_RPG22",2], _diversant, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
@@ -602,6 +601,9 @@ if (__ReviveVer || __AIVer || !d_with_respawn_dialog_after_death) then {
 	};
 #endif
 };
+//_p addEventHandler ["animChanged", { SYG_lastAnimationType = _this select 1 } ];
+//SYG_healAnimDoneHandler = compile preprocessFileLineNumbers "scripts\healAnimDone.sqf";
+//_p addEventHandler ["animDone", {_this spawn SYG_healAnimDoneHandler} ];
 
 d_chop_lift_list = [];
 d_chop_wreck_lift_list = [];
@@ -756,8 +758,9 @@ d_chop_all = [];
 d_chop_all = d_chop_lift_list + d_chop_wreck_lift_list  + d_chop_normal_list;
 
 #ifndef __TT__
-for "_xx" from 1 to 2 do { // 'Меню MHQ'
+for "_xx" from 1 to 2 do { // 'Menu MHQ'
 	call compile format ["
+	    hint localize format['+++ КШМ addAction/addEventHandler/addPublicVariableEventHandler to %1',MMR%1];
 		if (!(isNil 'MRR%1')) then {
 			if (d_own_side == 'EAST') then { MRR%1 call SYG_reammoMHQ;};
 			MRR%1 addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
@@ -765,6 +768,7 @@ for "_xx" from 1 to 2 do { // 'Меню MHQ'
 			MRR%1 addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
 		};
 		'MRR%1' addPublicVariableEventHandler {
+		    hint localize format['+++ КШМ addPublicVariableEventHandler executed on %1',MMR%1];
 			(_this select 1) addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
 			(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
 			(_this select 1) addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
@@ -1388,9 +1392,9 @@ if (count d_action_menus_unit > 0) then {
 
 execVM "x_scripts\x_playerspawn.sqf";
 
-#ifndef __ACE__
+//#ifndef __ACE__
 execVM "x_scripts\x_water.sqf";
-#endif
+//#endif
 
 if (count d_action_menus_vehicle > 0) then {execVM "x_scripts\x_vecmenus.sqf";};
 
@@ -1600,6 +1604,7 @@ if (!d_para_at_base) then {
 
 #ifdef __ACE__
 // create additional boxes (rucksack, HuntIR etc)
+hint localize format["+++ d_ace_boxes = %1",d_ace_boxes ];
 for "_i" from 0 to (count d_ace_boxes) - 1 do {
 	_element = d_ace_boxes select _i;
 	_box = (_element select 0) createVehicleLocal (_element select 1);
@@ -1612,7 +1617,7 @@ for "_i" from 0 to (count d_ace_boxes) - 1 do {
 		_dir = _this select 2;
 		_boxname = _this select 3;
 		while {true} do {
-			sleep 1500 + random 500;
+			sleep (1500 + (random 500));
 			if (!isNull _box) then {deleteVehicle _box};
 			_box = _boxname createVehicleLocal _pos;
 			_box setDir _dir;
@@ -1633,9 +1638,9 @@ if (d_player_air_autokick > 0) then {
 };
 #else
 	execVM "x_scripts\x_playerveccheck.sqf";
-	if (_string_player in d_is_medic) then {
+//	if (_string_player in d_is_medic) then {
 		execVM "x_scripts\x_mediccheck.sqf";
-	};
+//	};
 	execVM "x_scripts\x_playervectrans.sqf";
 #endif
 
@@ -1683,7 +1688,7 @@ if (d_with_repstations) then {
 	[] spawn {
 		private ["_vec", "_nobs"];
 		while {true} do {
-			waitUntil {sleep 1 + random 0.2; vehicle player != player};
+			waitUntil {sleep (1 + (random 0.2)); vehicle player != player};
 			_vec = vehicle player;
 			while {vehicle player != player && alive player && alive _vec} do {
 				if (player == driver _vec) then {
@@ -1691,7 +1696,7 @@ if (d_with_repstations) then {
 					if (count _nobs > 0) then {
 						if (damage _vec > 0) then {
 							_vec setDamage 0;
-							_vec vehicleChat localize "STR_SYS_64";/* "Ваш транспорт отремонтирован техсервисом..."; */
+							_vec vehicleChat format[localize "STR_SYS_64", typeOf _vec]; // "Your transport (%1) is refurbished by technical service..."
 						};
 					};
 				};
@@ -1721,32 +1726,32 @@ player call SYG_handlePlayerDammage; // handle hit events
 	};
 */
 
-//+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc.
-//            Bar gates are processed somewhere in upper lines
-[] spawn {
-    sleep 5;
-    _targets = [];
-    {
-        _pos = _x select 0; // position
-        _target = "TargetEpopup" createVehicleLocal _pos; // create target at pos
-        if ( count _x > 1) then { _target setDir (_x select 1);}; // set target direction if designated
-        if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
-        _targets = _targets + [_target];
-    }forEach [
-        // south from flag between airstrip and courtyard
-        [[9663, 9958, 0], 180] /* nearest to flag*/,[[9663, 9894.2, 0], 180]/*middle*/,[[9651.7, 9829.25, 4],180 ]/* fathest from flag to south on the roof of courtyard house */,
-        [[9700.05,10190.07,0]], // north from flag on other side of airstrip
-        [[10397.581,10003.883, 0], 90] // east from flag at the end of airstrip
-    ];
-    /*
-    _str =  format["%1 targets detected", count _targets];
-    player groupChat _str;
-    hint localize _str;
-    */
-    _targets execVM "scripts\fireRange.sqf";
-};
+    //+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc.
+    //            Bar gates are processed somewhere in upper lines
+    [] spawn {
+        sleep 5;
+        _targets = [];
+        {
+            _pos = _x select 0; // position
+            _target = "TargetEpopup" createVehicleLocal _pos; // create target at pos
+            if ( count _x > 1) then { _target setDir (_x select 1);}; // set target direction if designated
+            if ( _pos select 2 != 0) then { _target setPos _pos;}; // set target height, may  be this is not needed
+            _targets = _targets + [_target];
+        }forEach [
+            // south from flag between airstrip and courtyard
+            [[9663, 9958, 0], 180] /* nearest to flag*/,[[9663, 9894.2, 0], 180]/*middle*/,[[9651.7, 9829.25, 4],180 ]/* fathest from flag to south on the roof of courtyard house */,
+            [[9700.05,10190.07,0]], // north from flag on other side of airstrip
+            [[10397.581,10003.883, 0], 90] // east from flag at the end of airstrip
+        ];
+        /*
+        _str =  format["%1 targets detected", count _targets];
+        player groupChat _str;
+        hint localize _str;
+        */
+        _targets execVM "scripts\fireRange.sqf";
+    };
 
- //+++ Sygsky: GRU computer handling - add action if found
+    //+++ Sygsky: GRU computer handling - add action if found
 	_comp = call SYG_getGRUComp;
 #ifdef __DEBUG__
 	hint localize format["x_setupplayer.sqf: GRU PC == %1",_comp];
@@ -1806,11 +1811,26 @@ player call SYG_handlePlayerDammage; // handle hit events
     // make the load on the Mi-17 less
     _cnt = 0;
     {
-        [_x,2] call SYG_setHeliParaCargo; // TODO
+        [_x,2] call SYG_setHeliParaCargo;
         sleep 0.05;
         _cnt = _cnt + 1;
     }    forEach [	HR1, HR2, HR3, HR4];
-    hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
+    //hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
+    {
+        if ( !( (isNil str( _x ) ) || ( ! alive _x ) ) ) then {
+            _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", format[localize format["STR_SYS_%1", toUpper str(_x)], localize "STR_SYS_BOX" ]];
+        } else {
+            hint localize format["--- Error: variable ""%1"" not found/not alive", str(_x)];
+        };
+    }   forEach [box1, box2, box3, box4, box5, grubox];
+    hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
+#ifdef __ACE__
+    _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
+    _personal_boxes = nearestObjects [depot, _personal_boxes, 20];
+    {
+        _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];
+    }   forEach _personal_boxes;
+#endif
 };
 
 #ifdef __MISSION_START__
@@ -1828,12 +1848,13 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-// #define __DEBUG_ADD_VEHICLES__
+//#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley
 hint localize "__DEBUG_ADD_VEHICLES__";
 //player setPos [14531,9930,0];
+//player setPos []9763, 11145, 0]; // near Rashidan dock
 if ( score player < 1500 ) then
 {
     player addScore (1500 - (score player));

@@ -131,12 +131,13 @@ SYG_unitHasACECrewProtection = {
 SYG_makeUndestructible = {
 	private ["_obj", "_cnt"];
 	_cnt = 0;
+	if (typeName _this != "ARRAY") then {_this = [_this]};
 	{
 		_obj = [0,0,0] nearestObject _x;
 		if ( !isNull _obj ) then 
 		{
 			_cnt = _cnt + 1;
-			_obj addEventHandler ["hit", {(_this select 0) setDammage -900000000000}];
+			_obj addEventHandler ["hit", {(_this select 0) setDammage 0}];
 		};
 	} forEach _this;
 	_cnt
@@ -411,10 +412,31 @@ SYG_vehUpAngle = {
  * ...
  */
 SYG_ACEUnitUnconscious = {
-	if ( !alive _this ) exitWith {false};
-	if (format["%1",_this getVariable "ACE_unconscious"] == "<null>") then { false } else { _this getVariable "ACE_unconscious" };
+    private ["_var"];
+	if ( !alive _this ) exitWith {true};
+	if (!(_this isKindof "CAManBase") ) exitWith {false};
+	_var = _this getVariable "ACE_unconscious";
+	if ( isNil "_var" ) then {
+	    !canStand _this
+	} else { _this getVariable "ACE_unconscious" };
 };
-	
+// #ifdef __ACE__ answers the unit is conscious (true) or not
+/**
+ * Detectes if unit is conscious (return true), unconscious (return false) or in unknown state (false)
+ * ...
+ * call: _unc = _unit call SYG_ACEUnitConscious;
+ * ...
+ */
+SYG_ACEUnitConscious = {
+    private ["_var"];
+	if ( !alive _this ) exitWith {false};
+	if ( !(_this isKindof "CAManBase") ) exitWith {false};
+	_var = _this getVariable "ACE_unconscious";
+	if ( isNil "_var" ) then {
+	    canStand _this
+	} else { !(_this getVariable "ACE_unconscious") };
+};
+
 // count all alive units of group in consciousnesss
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
@@ -563,6 +585,76 @@ SYG_findItemInArray = {
     {
         if ( _x in _itemArr ) exitWith {_x};
     } forEach _sampleArr;
+};
+
+//
+// Detects the price of next AI for this player
+// call as follows:
+//      _AIPrice = (score player) call  SYG_AIPriceByScore; // or
+//      _AIPrice = player call  SYG_AIPriceByScore;
+//
+//
+SYG_AIPriceByScore = {
+    private ["_score","_rank_id"];
+    if (typeName _this == "OBJECT") then {
+        if (isPlayer _this) then {_this = score _this};
+    };
+    if (typeName _this != "SCALAR") exitWith {1000000};
+#ifdef __SUPER_RANKING__
+    _rank_id = _this call XGetRankIndexFromScoreExt;
+#else
+    _rank_id = _this call XGetRankFromScore;
+#endif
+    _rank_id call SYG_AIPriceByRankId
+};
+
+//
+// Detects the price of next AI for this player rank index
+// call as follows:
+//      _AIPrice = ((score player) call XGetRankFromScoreExt) call  SYG_AIPriceByRankId; // or
+//      _AIPrice = ((rank player) call XGetRankFromScore) call  SYG_AIPriceByRankId; // or
+//      _AIPrice = player call  SYG_AIPriceByRankId;
+//
+//
+SYG_AIPriceByRankId = {
+    private [ "_rank_id", "_max_id", "_start_rank_id", "_score", "_score1" ];
+//    hint localize format["+++ %1 call SYG_AIPriceByRankId", _this];
+    if (typeName _this == "OBJECT") then {
+        if (isPlayer _this) then {
+#ifdef __SUPER_RANKING__
+            _this = (score _this)call XGetRankFromScoreExt;
+#else
+            _this = (score _this)call XGetRankFromScore;
+#endif
+        };
+    } else {
+        if (typeName _this == "STRING") then { // rank name used
+            _this = _this call XGetRankIndex;
+        };
+    };
+
+//    hint localize format["+++ SYG_AIPriceByRankId(0): _this = %1", _this];
+
+    if ( typeName _this != "SCALAR" ) exitWith { 1000000 };
+    _rank_id = _this;
+    _start_rank_id = ( d_ranked_a select 28 ) call XGetRankIndex;
+    if (_rank_id <_start_rank_id ) exitWith { 1000000 };
+    if (_rank_id == _start_rank_id ) exitWith { d_ranked_a select 3 }; // first AI price is a system constant
+    _max_id = ( count d_points_needed + count d_pseudo_ranks );
+    if ( _rank_id >= _max_id ) exitWith { ( _max_id - 1 )  call SYG_AIPriceByRankId };
+    _score = _rank_id call XGetScoreFromRank; // score for designated rank
+    _score1 = ((_rank_id + 1) call XGetScoreFromRank) - _score; // score difference between this rank and next rank
+
+    //hint localize format["+++ SYG_AIPriceByRankId(1): _rank_id %1, _start_rank_id %2, _score %3, _score1 %4", _rank_id, _start_rank_id, _score, _score1 ];
+
+    floor(( (_score1 *.5)  / ( _rank_id - _start_rank_id + 1) ) / 5) * 5
+};
+
+SYG_AIPriceByRankString = {
+    private ["_rank_id", "_max_id"];
+    if (typeName _this != "STRING") exitWith {100000};
+    _rank_id  = _this call XGetRankIndex;
+    _rank_id call SYG_AIPriceByRankId
 };
 
 if (true) exitWith {};

@@ -77,7 +77,7 @@ _search_radious = sqrt( _dx * _dx + _dy * _dy) + 10;
 
 while { true } do {
 
-    // zombi AI features: group is null, name == "Error: No unit", is alive, isKindOf "CaManBase"
+    // zombi AI features: group is null, name == "Error: No unit", is alive, isKindOf "CAManBase"
 	if ( time >= _time_to_clean ) then
 	{
 		_cnt1 = count _items_to_clean;
@@ -188,7 +188,7 @@ while { true } do {
                         {
                             if (!(_vehicle in _items_to_clean)) then
                             {
-                                _items_to_clean = _items_to_clean + [_vehicle];
+                                _items_to_clean set [ count _items_to_clean, _vehicle];
                             };
                         };
                     };

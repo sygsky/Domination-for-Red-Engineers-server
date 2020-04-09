@@ -22,7 +22,7 @@ class TeleportModule
 		w = 0.3;
 		x = 0.625;
 		idc = 100102;
-		text = $STR_SYS_34;//"Телепорт";
+		text = $STR_SYS_34;//"Teleport";
 		action = "_bt = 0 execVM ""dlg\beam_tele.sqf""";
 	};
 	class BaseButton : RscNavButton
@@ -31,7 +31,7 @@ class TeleportModule
 		w = 0.3;
 		x = 0.625;
 		idc = 100107;
-		text = "База";
+		text = $STR_SYS_70; // "Base"
 		colorBackground[] = {0.04, 0.22, 0.54, 0.7};
 		action = "_bt = [0] execVM ""dlg\update_target.sqf""";
 	};

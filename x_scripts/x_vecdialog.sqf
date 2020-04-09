@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_vecdialog.sqf - assigned in x_setupplayer.sqf
 private ["_vec", "_caller", "_ok", "_XD_display", "_control", "_the_box", "_vec_name", "_hasbox", "_ctrl_but_drop", "_ctrl_but_load", "_move_controls", "_pic", "_index", "_pos"];
 if (!X_Client) exitWith {};
 
@@ -6,26 +6,6 @@ if (!X_Client) exitWith {};
 #include "x_macros.sqf"
 
 _vec = _this select 0;
-_caller = _this select 1;
-
-_ok = createDialog "XD_VecDialog";
-
-_XD_display = findDisplay 11002;
-
-_control = _XD_display displayCtrl 44444;
-if (getText (configFile >> "CfgVehicles" >> typeOf _vec >> "picture") != "picturestaticobject") then {
-	_control ctrlSetText getText (configFile >> "CfgVehicles" >> typeOf _vec >> "picture");
-} else {
-	_control ctrlSetText "";
-};
-
-_the_box = (
-	switch (d_own_side) do {
-		case "RACS": {"WeaponBoxGuer"};
-		case "EAST": {"WeaponBoxEast"};
-		case "WEST": {"WeaponBoxWest"};
-	}
-);
 
 _vec_name = (
 	switch (_vec) do {
@@ -34,7 +14,7 @@ _vec_name = (
 		case MRR2: { localize "STR_SYS_72"}; // "Мобильный респаун 2"
 		case HR1: { format [localize "STR_SYS_78", 1 ] }; // "Транспортный вертолет 1"
 		case HR2: { format [localize "STR_SYS_78", 2 ] }; // "Транспортный вертолет 2"
-		case HR3: { format [localize "STR_SYS_78", 2 ] }; // "Транспортный вертолет 3"
+		case HR3: { format [localize "STR_SYS_78", 3 ] }; // "Транспортный вертолет 3"
 		case HR4: { localize "STR_SYS_79"}; // "Вертолет для утилизации отходов"
 #endif
 #ifdef __TT__
@@ -51,6 +31,30 @@ _vec_name = (
 		case HRR3: {"Racs Lift Three"};
 		case HRR4: {"Racs Wreck Lift"};
 #endif
+	}
+);
+
+if ( !alive _vec ) exitWith {
+    (format [localize "STR_SYS_23",_vec_name]) call XfHQChat;
+};
+
+_caller = _this select 1;
+
+_ok = createDialog "XD_VecDialog";
+_XD_display = findDisplay 11002;
+
+_control = _XD_display displayCtrl 44444;
+if (getText (configFile >> "CfgVehicles" >> typeOf _vec >> "picture") != "picturestaticobject") then {
+	_control ctrlSetText getText (configFile >> "CfgVehicles" >> typeOf _vec >> "picture");
+} else {
+	_control ctrlSetText "";
+};
+
+_the_box = (
+	switch (d_own_side) do {
+		case "RACS": {"WeaponBoxGuer"};
+		case "EAST": {"WeaponBoxEast"};
+		case "WEST": {"WeaponBoxWest"};
 	}
 );
 

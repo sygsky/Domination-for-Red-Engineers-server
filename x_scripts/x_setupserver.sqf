@@ -58,7 +58,7 @@ XClearSidemission = {
 				{
 					_was_captured = false;
 					{
-						if (isPlayer _x) exitWith {_was_captured = true;};
+						if (isPlayer _x) exitWith {_was_captured = true;}; // if player is in vehicle, consider it to be captured
 					} forEach (crew _x);
 					// check vehicle being on base
 					if ( ! _was_captured ) then
@@ -70,8 +70,8 @@ XClearSidemission = {
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
-					if (_was_captured) then { // vehicle was captured by player
-						[_vehicle] call XAddCheckDead;
+					if (_was_captured && !(isPlayer _x)) then { // vehicle was captured by player
+						[_x] call XAddCheckDead;
 					} else {
 						{deleteVehicle _x} forEach ([_x] + crew _x);
 					};
@@ -155,7 +155,7 @@ XCheckSMHardTarget = {
 	_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true;}];
 	#endif
 
-	_vec_init = "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
+	_vec_init = "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
 	#ifdef __WITH_SCALAR__
 	if (typeOf _vehicle == "Land_telek1") then {
 		_vec_init = _vec_init + "xhandle = [this] execVM ""scripts\scalar.sqf"";";
@@ -187,7 +187,8 @@ XCheckSMHardTarget = {
 		sleep (1.021 + random 1);
 	};
 	if (alive _vehicle) then {
-		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""damage"";";
+	    hint localize "+++ friendly_near_sm_target is now true: remove HIT & DAMMAGE protect events";
+		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
 		processInitCommands;
 	};
 	deleteVehicle _trigger;
@@ -209,11 +210,18 @@ XCheckMTHardTarget = {
 	#ifdef __TT__
 	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
 	#endif
-	_vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""damage"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
-	processInitCommands;
+#ifdef __OLD__
+    _vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
+    processInitCommands;
+#else
+	_vehicle addEventHandler ["hit", {(_this select 0) setDamage 0}];
+	_vehicle addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
+#endif
 	friendly_near_mt_target = false;
 	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
 	_trigger setTriggerArea [20, 20, 0, false];
+	_sound = call SYG_fearSound;
+	_trigger setSoundEffect [_sound, "", "", ""];
 	#ifndef __TT__
 	_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", false]; // trigger on "EAST PRESENT" for Red Engineers server
 	#else
@@ -226,15 +234,18 @@ XCheckMTHardTarget = {
 	_trigger2 setTriggerActivation ["GUER", "PRESENT", false];
 	_trigger setTriggerStatements["this && ((getpos (thislist select 0)) select 2 < 20)", "friendly_near_mt_target = true", ""];
 	#endif
-	while {!friendly_near_mt_target && alive _vehicle} do {
-		if (X_MP) then {
-			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
-		};
+	while {(!friendly_near_mt_target) && (alive _vehicle)} do {
 		sleep (1.021 + random 1);
 	};
-	if (alive _vehicle) then {
-		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""damage"";";
+	if ( alive _vehicle ) then {
+	    hint localize "+++ friendly_near_mt_target is now true: remove HIT & DAMMAGE protect events";
+#ifdef __OLD__
+		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
 		processInitCommands;
+#else
+		_vehicle removeAllEventHandlers "hit";
+		_vehicle removeAllEventHandlers "dammaged";
+#endif
 	};
 	deleteVehicle _trigger;
 	#ifdef __TT__

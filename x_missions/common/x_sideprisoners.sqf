@@ -1,9 +1,12 @@
 // x_missions/common/x_sideprisoners.sqf : by Xeno
-private ["_posi_a", "_pos", "_newgroup", "_unit_array", "_leader", "_hostages_reached_dest", "_all_dead", "_rescued", "_units", "_winner", "_nobjs", "_retter", "_do_loop", "_i", "_one"];
+private ["_posi_a", "_pos", "_newgroup", "_unit_array", "_leader", "_hostages_reached_dest", "_all_dead", "_rescued",
+         "_units", "_winner", "_nobjs", "_retter", "_do_loop", "_i", "_one","_say_time"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+
+#define SAY_INTERVAL 7 // in seconds
 
 _posi_a = _this select 0;
 _pos = _posi_a select 0;
@@ -15,6 +18,15 @@ _posi_a = nil;
 d_sm_p_pos = nil;
 #endif
 
+_say_grp_sound = {
+    if (_say_time > time) exitWith {};
+    {
+        if (alive _x && canStand _x) exitWith {
+            ["say_sound", _x, call SYG_prisonersSound] call XSendNetStartScriptClientAll;
+            _say_time = time + SAY_INTERVAL;
+        };
+    } forEach _units;
+};
 sleep 2;
 
 __WaitForGroup
@@ -53,6 +65,7 @@ _units =+ units _newgroup;
 _winner = 0;
 #endif
 
+_say_time = time + SAY_INTERVAL;
 #ifndef __AI__
 while {!_hostages_reached_dest && !_all_dead} do {
     if (X_MP) then {
@@ -69,6 +82,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
 			_nobjs = nearestObjects [_leader, ["Man"], 15];
 			if (count _nobjs > 0) then {
 				{
+				    call _say_grp_sound;
 					if ((isPlayer _x) AND ((format ["%1", _x] in ["RESCUE","RESCUE2"]) OR (leader group _x == _x))) exitWith {
 						_rescued = true;
 						_retter = _x;
@@ -124,7 +138,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
 	sleep 5.123;
 };
 #else
-_retter = objNull;
+_retter = objNull; // In English "resquer" is in German "retter"
 
 while {!_hostages_reached_dest && !_all_dead} do {
 	if (X_MP) then {
@@ -143,7 +157,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
                 };
                 sleep 0.01;
             } forEach _nobjs;
-            if (_rescued && !isNull _retter) then {
+            if (_rescued && alive _retter) then {
                 {
                     if ( alive _x ) then {
                         _x setCaptive false;
@@ -151,6 +165,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
                     };
                 } forEach _units;
                 _units join (leader _retter);
+                call _say_grp_sound;
             };
         };
     } else {
@@ -167,6 +182,12 @@ while {!_hostages_reached_dest && !_all_dead} do {
 		};
 	};
 	sleep 5.123;
+	for "_i" from 0 to count _units - 1 do
+	{
+	    if (!alive _x) then { _units set [_i, "RM_ME"]};
+	};
+	_units = _units - ["RM_ME"];
+	if ( count _units == 0) exitWith { _all_dead = true; };
 };
 #endif
 
@@ -182,7 +203,7 @@ if (_all_dead) then {
 			};
 			deleteVehicle _x;
 		};
-	} forEach _units;
+	} forEach units _newgroup;
 	sleep 0.5321;
 	if (!isNull _newgroup) then {deleteGroup _newgroup};
 } else {
@@ -202,12 +223,13 @@ if (_all_dead) then {
 			if (!isNull _x) then {
 				if (vehicle _x != _x) then {
 					_x action ["eject", vehicle _x];
+					sleep 0.1;
 					unassignVehicle _x;
 					_x setPos [0,0,0];
 				};
 				deleteVehicle _x;
 			};
-		} forEach _units;
+		} forEach units _newgroup;
 		sleep 2.5321;
 		if (!isNull _newgroup) then {deleteGroup _newgroup};
 	};

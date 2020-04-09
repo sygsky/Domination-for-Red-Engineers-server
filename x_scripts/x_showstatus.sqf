@@ -93,16 +93,50 @@ if ((current_mission_text != localize "STR_SYS_120") && (current_mission_text !=
 		{
 			if (! isNil "king" ) then
 			{
+
 				if ( alive king ) then
 				{
+
 					_dist = _pos distance king;
 					if ( _dist > 100 ) then 
 					{
-						 // "Местные %1 уверяют, что король прячется в %2 м. от отеля!!!"
+						 // "Locals %1 claim that the king is hiding at %2 meters away!!!"
 						_s = _s + "\n" + format[localize "STR_SYS_524", localize (call SYG_getLocalMenRandomName), (round (_dist / 100)) * 100];
-					};
+					} else { _s = _s + "\n" + localize "STR_SYS_526"}; // "The locals think that the king is in the hotel or its surroundings."
+
+				} else {_s = _s + "\n" + localize "STR_SYS_527"}; // "The locals believe that the king has already died"
+
+			} else { _s = _s + "\n" + localize "STR_SYS_525"}; // "The locals don't know anything about the king's location!!!"
+		};
+		case 30: // scientist on Asharan
+		{
+			// find side mission marker and its coordinates
+			_str = "";
+			if (format ["%1",_pos] != "[0,0,0]") then
+			{
+				// find civilians
+				_units = nearestObjects [_pos, ["Civilian"], 500];
+				_cnt = count _units;
+				if ( _cnt == 0 ) exitwith {_str = format[localize "STR_SM_30_1", 500]};
+				for "_i" from 0 to (_cnt - 1) do {
+				    _x = _units select 0;
+                    _dist = format["%1 m", [ [_x, _pos ] call SYG_distance2D, 10] call SYG_roundTo];
+                    if (alive _x) then {
+                        if ( damage _x < 0.01 ) then {
+                            _str = format["%1 %2", localize "STR_MIS_ALIVE", _dist];
+                        } else {
+                            _str = format["%1 %2", localize "STR_MIS_WOUNDED", _dist];
+                        };
+                    } else {
+                        _str = format["%1 %2", localize "STR_MIS_DEAD", _dist];
+                    };
+                    _units set [_i, _str];
 				};
-			};
+				_str = [_units, ","] call SYG_joinArr;
+				_str = format[ localize "STR_SM_30_2", 500, _str];
+			} else { _str = localize "STR_SM_30_3"};
+			if (_str != "") then {_s = _s + "\n" + _str};
+
 		};
 		case 40;
 		case 41: // hostages
