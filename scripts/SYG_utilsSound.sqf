@@ -165,7 +165,7 @@ SYG_waterDefeatTracks =
 SYG_playWaterSound = {
     private ["_arr"];
     _arr = SYG_waterDefeatTracks;
-    if (localize "LANGUAGE" == "RUSSIAN") then {
+    if (localize "STR_LANGUAGE" == "RUSSIAN") then {
         if ( (random (count SYG_waterDefeatTracks + 1)) < 1) then {_arr = ["fish_man_song"]}; // only for players known to be Russian
     };
     _arr call SYG_playRandomTrack;
@@ -527,7 +527,7 @@ SYG_playWeatherForecastMusic = {
 //
 SYG_tanks_music = [ "chiz_tanki_1", "chiz_tanki_2" ];
 SYG_playDeathInTankSound = {
-    if ( localize "LANGUAGE" == "RUSSIAN") exitWith {
+    if ( localize "STR_LANGUAGE" == "RUSSIAN") exitWith {
         if (random 3 > 1) then {playSound RANDOM_ARR_ITEM(SYG_tanks_music)} // Chiz song about tankists
         else {["say_sound", player, "tanki"] call XSendNetStartScriptClientAll}; // exclamation "Tanks!!!"
         true

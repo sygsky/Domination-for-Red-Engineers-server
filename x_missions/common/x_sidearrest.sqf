@@ -1,11 +1,14 @@
 // by Xeno, x_missions\common\x_sidearrest.sqf
-private ["_is_dead","_leader","_nobjs","_officer","_offz_at_base","_rescued","_winner","_rescue"];
+private ["_is_dead","_leader","_nobjs","_officer","_offz_at_base","_rescued","_winner","_rescue","_grant","_sound","_player_cnt"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
 _officer = _this select 0;
+_grant = _officer getVariable "GRANT";
+_grant = !isNil "_grant";
+
 
 _offz_at_base = false;
 _is_dead = false;
@@ -89,28 +92,74 @@ while {!_offz_at_base && !_is_dead} do {
 		};
 	};
 #else
-	if (!alive _officer) then {
-		_is_dead = true;
-	} else {
-		if (!_rescued) then {
-			_nobjs = nearestObjects [_officer, ["Man"], 20];
-			if (count _nobjs > 0) then {
-				{
-					if (isPlayer _x) exitWith {
-						_rescued = true;
-						[_officer] join (leader _x);
-						_officer setCaptive true;
-						["make_ai_captive",_officer] call XSendNetStartScriptClient;
-					};
-					sleep 0.01;
-				} forEach _nobjs;
-			};
-		} else {
-			if (_officer distance FLAG_BASE < 20) then {
-				_offz_at_base = true;
-			};
-		};
-	};
+	if (!alive _officer) exitWith { _is_dead = true; };
+
+    if (!_rescued) then {
+        _nobjs = nearestObjects [_officer, ["Man"], 20];
+        if (count _nobjs > 0) then {
+            _sound = "";
+            _player_cnt = 0;
+            {
+                if ( isPlayer _x  ) then {
+                    _player_cnt = _player_cnt + 1;
+                    if (_x == leader _x) then {
+                        _rescued = true;
+                        [_officer] join (leader _x);
+                        _officer setCaptive true;
+                        ["make_ai_captive",_officer] call XSendNetStartScriptClientAll;
+                    };
+                };
+                sleep 0.01;
+                if (_rescued) exitWith {};
+            } forEach _nobjs;
+            if (_player_cnt) then { // some player near
+                if (_grant) then {
+                    if (_rescued) then {
+                        switch (localize "STR_LANGUAGE" ) do
+                        {
+                            case "GERMAN": { _sound = "ger_grant_intro"};
+                            case "ENGLISH";
+                            default {
+                                _sound = "eng_grant_intro";
+                            };
+                        };
+                    } else { // no leader near, officer not surrendered
+                        // set sound
+                        switch (localize "STR_LANGUAGE" ) do
+                        {
+                            case "GERMAN": { _sound = "ger_grant_surrend"};
+                            case "ENGLISH";
+                            default {
+                                _sound = "eng_grant_surrend";
+                            };
+                        };
+                    };
+                } else { // not Grant && any player near
+                    if (_player_cnt > 0) then {_sound = call SYG_exclamationSound};
+                };
+                // TODO: force officer to look at the nearest player
+                if  (_sound != "") then { ["say_sound","", _sound] call XSendNetStartScriptClientAll;}; // play sound
+            };
+        };
+    } else {
+        if (_officer distance FLAG_BASE < 20) then {
+            _offz_at_base = true;
+        } else {
+            // check if officer again is alone
+            if ( (leader _officer) == _officer ) then
+            {
+                if ( (count units (group _officer)) > 1 ) then
+                {
+                    [_officer] join grpNull; // move officer out of group
+                    sleep 0.01;
+                };
+                _officer setCaptive false;
+                if ( (rating _officer) < 0) then { _officer addRating (2500 - (rating _officer)) }; // set high rating to prevent officer being killed by friendly AI
+                _rescued = false;
+                sleep 0.01;
+            };
+        };
+    };
 #endif
 	sleep 5.621;
 };

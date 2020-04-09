@@ -28,6 +28,7 @@ if (isServer) then {
     #else
         _officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
     #endif
+    _officer setVariable ["GRANT", true];
 
 	__Poss
 	sleep 2.111;
