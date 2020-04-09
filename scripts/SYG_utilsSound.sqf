@@ -584,7 +584,8 @@ SYG_invasionSound = {
 };
 
 SYG_prisonersSound = {
-    // TODO: add normal sounds
-    call SYG_exclamationSound
+    if ((random 10) < 5) exitWith {call SYG_exclamationSound};
+    format[ "hisp", ceil (random 4)]
 };
+
 if (true) exitWith {};

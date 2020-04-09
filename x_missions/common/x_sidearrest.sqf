@@ -9,6 +9,7 @@ _officer = _this select 0;
 _grant = _officer getVariable "GRANT";
 _grant = !isNil "_grant";
 
+hint localize format["+++ x_sidearrest.sqf: %1 GRANT", _grant];
 
 _offz_at_base = false;
 _is_dead = false;
@@ -21,11 +22,7 @@ d_sm_p_pos = nil;
 
 while {!_offz_at_base && !_is_dead} do {
 	if (X_MP) then {
-	    if ((call XPlayersNumber) == 0 ) then
-	    {
-    		waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0};
-	    }
-	};
+	    if ((call XPlayersNumber) == 0 ) then { waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0}; };
 	
 #ifndef __AI__
 	
@@ -46,7 +43,7 @@ while {!_offz_at_base && !_is_dead} do {
                     sleep 0.1;
                     [_officer] join (group _x);
                     ["make_ai_captive",_officer] call XSendNetStartScriptClient;
-                    hint localize format["+++ x_sidearrest.sqf: nearest to officer EAST man is %1(%2), is leader = %3", _x, name _x, (leader _x) == _x];
+                    hint localize format["+++ x_sidearrest.sqf: nearest to officer man is %1(%2), is leader = %3", _x, name _x, (leader _x) == _x];
                 };
                 sleep 0.01;
             } forEach _nobjs;

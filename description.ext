@@ -589,11 +589,19 @@ class CfgSounds
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; titles[] = {};};
 
+// SM 49
     class eng_grant_surrend { name=""; sound[] = {\sounds\sm\49\eng_grant_surrend.ogg,db-1,1.0}; titles[] = {};};
     class ger_grant_surrend { name=""; sound[] = {\sounds\sm\49\ger_grant_surrend.ogg,db-1,1.0}; titles[] = {};};
     class eng_grant_intro   { name=""; sound[] = {\sounds\sm\49\eng_grant_intro.ogg,db-1,1.0}; titles[] = {};};
     class ger_grant_intro   { name=""; sound[] = {\sounds\sm\49\ger_grant_intro.ogg,db-1,1.0}; titles[] = {};};
 
+// SM hostages
+    class hisp1   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_1.ogg,db-1,1.0}; titles[] = {};};
+    class hisp2   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_2.ogg,db-1,1.0}; titles[] = {};};
+    class hisp3   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_3.ogg,db-1,1.0}; titles[] = {};};
+    class hisp4   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_4.ogg,db-1,1.0}; titles[] = {};};
+
+sm\hostages\hisp_excl_1.ogg
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};
 #endif

@@ -23,7 +23,7 @@ _say_grp_sound = {
     {
         if (alive _x && canStand _x) exitWith {
             ["say_sound", _x, call SYG_prisonersSound] call XSendNetStartScriptClientAll;
-            _say_time = time + SAY_INTERVAL;
+            _say_time = time + 2 + (random (SAY_INTERVAL * 2));
         };
     } forEach _units;
 };
@@ -66,13 +66,11 @@ _winner = 0;
 #endif
 
 _say_time = time + SAY_INTERVAL;
+
 #ifndef __AI__
 while {!_hostages_reached_dest && !_all_dead} do {
     if (X_MP) then {
-        if ((call XPlayersNumber) == 0) then
-        {
-            waitUntil { sleep (10.0123 + random 1);(call XPlayersNumber) > 0 };
-        };
+        if ((call XPlayersNumber) == 0) then { waitUntil { sleep (10.0123 + random 1);(call XPlayersNumber) > 0 }; };
     };
 	if (({alive _x} count _units) == 0) then {
 		_all_dead = true;
@@ -83,7 +81,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
 			if (count _nobjs > 0) then {
 				{
 				    call _say_grp_sound;
-					if ((isPlayer _x) AND ((format ["%1", _x] in ["RESCUE","RESCUE2"]) OR (leader group _x == _x))) exitWith {
+					if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
 						_rescued = true;
 						_retter = _x;
 						{
@@ -147,11 +145,11 @@ while {!_hostages_reached_dest && !_all_dead} do {
 	if (({alive _x} count _units) == 0) exitWith { _all_dead = true; };
 
     _leader = leader _newgroup;
-    if (!_rescued) then {
+    if ( !_rescued ) then {
         _nobjs = nearestObjects [_leader, ["Man"], 20];
         if (count _nobjs > 0) then {
             {
-                if (isPlayer _x) exitWith {
+                if ((isPlayer _x) && (leader _x == _x)) exitWith {
                     _rescued = true;
                     _retter = _x;
                 };
@@ -173,9 +171,11 @@ while {!_hostages_reached_dest && !_all_dead} do {
             if ( (alive _x) && (_x distance FLAG_BASE < 20) ) exitWith {
                 _hostages_reached_dest = true;
             };
-            sleep 0.01;
+            sleep 1;
         } forEach _units;
+        call _say_grp_sound;
     };
+
 	if (__RankedVer) then {
 		if (_hostages_reached_dest) then {
 			["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
