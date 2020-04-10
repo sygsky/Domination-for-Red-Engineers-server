@@ -830,8 +830,9 @@ STR_SYS_1172,You are currently not a group leader, no AI available. Create a new
 STR_SYS_1173,"You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank...","Du hast bereits %1 KI-Soldaten unter Ihrer Kontrolle, ist es nicht möglich zu rekrutieren, die mit Ihren aktuellen Rang...","У вас в подчинении уже %1 ИИ и это максимум для вашего звания"
 
 STR_SYS_1174,"You current rank is %1. You need to be %2 to recruit soldier[s]!","Sie Aktueller rank ist %1. Sie müssen %2 zu rekrutieren Soldat[en]!","Ваш ранг %1. Минимальное звание, дающее право призыва - %2"
-STR_SYS_1174_1,"Draftees: you have %1, in the barracks %2. The draftee will cost -%3%4","Wehrpflichtige: Sie haben %1 im Wehrdienst %2. Der Wehrpflichtige kostet -%3%4","Призывники:  у Вас %1, в военкомате %2. Призывник обойдётся в -%3%4"
+STR_SYS_1174_1,"Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4","Wehrpflichtige: Sie haben %1 im Wehrdienst %2. Der Wehrpflichtige kostet -%3%4","Призывники:  у Вас %1, в военкомате %2. Призывник обойдётся в -%3%4"
 STR_SYS_1174_2,". After which you will be demoted to '%1'"," (danach werden Sie auf '%1' herabgestuft)",". После чего будете разжалованы до '%1'"
+STR_SYS_1174_3,". Next AI will cost you -%1",". Die nächste KI kostet dich -%1",". Следующий призывник обойдётся в -%1!"
 
 STR_SYS_1175,"You can't recruit an AI soldier, costs %2 points, your current scores (%1) and rank will drop below %32!","Das kannst du nicht rekrutieren ein KI-Soldat, Kosten %2 Punkte, Ihre aktuelle Punktzahl (%1), Ihren Rang fallen Sie unter %3!","Вы не можете призвать ИИ (стоимость %2, а у вас только %1!), звание упадёт ниже '%3'"
 STR_SYS_1175_1,"Your recruit (%1) speaks only Russian. Can use idioms in an enemy language","Ihr Rekrut (%1) spricht nur Russisch. Kann Idiome in einer feindlichen Sprache verwenden","Ваши призывник (%1) говорит только на русском. Может употреблять идиомы на вражеском языке"
@@ -883,7 +884,7 @@ STR_SYS_GRUBOX," The GRU's public weapon box. Keep weapons that are not used on 
 
 STR_SYS_BOX,"A weapon box available to everyone.","Eine Waffenkiste für jedermann","Оружейный ящик, доступный всем"
 STR_SYS_BOX1,"%1. Keep our weapons in it for passing on to lower ranked comrades","%1. Bewahren Sie unsere Waffen für den Transfer an niedrigrangige Kameraden auf.","%1. Храните в нём наше оружие для передачи младшим по званию"
-STR_SYS_BOX2,"%1. Keep captured rifles in it","%1. Bewahren Sie Trophäengewehre darin auf.","%1. Храните в нём трофейные виинтовки"
+STR_SYS_BOX2,"%1. Keep captured rifles in it","%1. Bewahren Sie Trophäengewehre darin auf.","%1. Храните в нём трофейные винтовки"
 STR_SYS_BOX3,"%1. Store here any weapons that can be used to defend the base","%1. Behalte hier eine Waffe, mit der du die Basis verteidigen kannst.","%1. Храните здесь оружие, которое можно использовать для обороны базы"
 STR_SYS_BOX4,"%1. Store various captured AT/AA weapons in it","%1. Speichern Sie verschiedene Gefangene AT / AA Waffen darin","%1. Храните в нём различные трофейные РПГ/Стингеры"
 STR_SYS_BOX5,"%1. Store captured pistols, grenades, and other equipment in it","%1. Speichern Sie erfasste Pistolen, Granaten und andere Ausrüstung darin","%1. Храните в нём трофейные пистолеты, гранаты, прочее снаряжение"

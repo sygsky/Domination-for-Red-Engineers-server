@@ -223,7 +223,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [49];   // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
+    _first_array = [];   // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
     side_missions_random = _first_array + (side_missions_random - _first_array);
 
 //+++ Sygsky: move ranked player missions out of the list beginning

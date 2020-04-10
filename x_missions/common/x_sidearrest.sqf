@@ -23,6 +23,7 @@ d_sm_p_pos = nil;
 while {!_offz_at_base && !_is_dead} do {
 	if (X_MP) then {
 	    if ((call XPlayersNumber) == 0 ) then { waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0}; };
+	};
 	
 #ifndef __AI__
 	
@@ -111,9 +112,10 @@ while {!_offz_at_base && !_is_dead} do {
             if (_rescued) exitWith {};
         } forEach _nobjs;
 
-        if (_player_cnt) then { // some player near
+        if (_player_cnt > 0) then { // some player near
             if (_grant) then {
                 if (_rescued) then {
+                    sleep 5;
                     switch (localize "STR_LANGUAGE" ) do
                     {
                         case "GERMAN": { _sound = "ger_grant_intro"};
@@ -137,7 +139,7 @@ while {!_offz_at_base && !_is_dead} do {
                 _sound = call SYG_exclamationSound;
             };
             // TODO: force officer to look at the nearest player
-            if  (_sound != "") then { ["say_sound",_officer, _sound] call XSendNetStartScriptClientAll;}; // play sound
+            if  (_sound != "") then { ["say_sound",_officer, _sound] call XSendNetStartScriptClient;}; // play sound
         };
     } else {
         if (_officer distance FLAG_BASE < 20) then {
@@ -151,6 +153,11 @@ while {!_offz_at_base && !_is_dead} do {
                     [_officer] join grpNull; // move officer out of group
                     sleep 0.01;
                 };
+                if (vehicle _officer != _officer) then {
+                    _officer action ["eject", vehicle _officer];
+                    unassignVehicle _officer;
+                };
+                sleep 1;
                 _officer setCaptive false;
                 if ( (rating _officer) < 0) then { _officer addRating (2500 - (rating _officer)) }; // set high rating to prevent officer being killed by friendly AI
                 _rescued = false;

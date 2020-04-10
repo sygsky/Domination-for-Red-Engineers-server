@@ -56,7 +56,6 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Pilot"]; // Pilot
 	};
 	AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
-	AI_HUT addAction[localize "STR_AI_8_1","scripts\check_ai_points.sqf"]; // "Check your points"
 
 	_marker_name = "Recruit_x";
 	if ( ( getMarkerType _marker_name) == "") then // no such marker
@@ -69,5 +68,6 @@ else
 {
     AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\info_barracks.sqf"]; // "Inspect"
 };
+AI_HUT addAction[localize "STR_AI_8_1","scripts\check_ai_points.sqf"]; // "Check your points"
 
 #endif

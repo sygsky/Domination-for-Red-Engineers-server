@@ -1848,17 +1848,17 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-#define __DEBUG_ADD_VEHICLES__
+//#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 // teleport player to the hills above Bagango valley
 hint localize "__DEBUG_ADD_VEHICLES__";
 //player setPos [14531,9930,0];
 //player setPos []9763, 11145, 0]; // near Rashidan dock
-if ( score player < 1500 ) then
-{
-    player addScore (1500 - (score player));
-};
+
+player setPos [16545,12875,0];
+
+if ( score player < 1500 ) then { player addScore (1500 - (score player) ) };
 #endif
 
 if (true) exitWith {};
