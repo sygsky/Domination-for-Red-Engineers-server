@@ -5,7 +5,8 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define HIT_RADIOUS 45 // radious to be hit by arti shoots
+#define KILL_RADIOUS 30 // radious to be hit directly by arti shoots
+#define HIT_RADIOUS 45 // radious to be hit indirectly by arti shoots
 #define SAVE_RADIOUS 50 // radious to he save by arti shoots
 #define MIN_FRIENDLY_COUNT_TO_STRIKE 3
 
@@ -117,7 +118,7 @@ while { nr_observers > 0 && !target_clear } do {
                         _cnt = 0;
                         if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
 
-                            _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, HIT_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
+                            _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
                             _own_cnt       = {alive _x} count _own_arr;
 
                             _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
@@ -126,17 +127,19 @@ while { nr_observers > 0 && !target_clear } do {
                             _observers_arr = _pos_nearest nearObjects [_observer_type, SAVE_RADIOUS];
                             _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr; // observers not is save zone
 
-                            _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, HIT_RADIOUS]; // array of enemy vehicle in kill zone
+                            _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, KILL_RADIOUS]; // array of enemy vehicle in kill zone
                             _veh_cnt       =  {side _x == _enemySide} count _veh_arr;    // enemy crew vehicles in kill zone
 
                             _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE;
+
                             if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1); };
 
                             _type          = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                             // If enemy is too far from strike point, do smoking attack only
                             _dist = round( _pos_nearest distance _enemy );
-                            if ( ( _dist > (HIT_RADIOUS * 1.5) ) && ( _type == 1 ) ) then { _type = 2 }; // smoke except strike on teleport
+
+                            if ( ( _dist > SAVE_RADIOUS ) && ( _type == 1 ) && (_own_cnt == 0) ) then { _type = 2 }; // smoke except strike as no player or his vehicles in unsave zone
 
                             if ( _dist < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is high
                             else
@@ -148,14 +151,14 @@ while { nr_observers > 0 && !target_clear } do {
                             [
                                 "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4) on dist %5 m., [enemy %6, enveh %7, obs %8/%9, ownveh %10], %11, real<->vrt dist %12 m.",
                                 _i,
-                                if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'.%2",name _enemy, typeOf (vehicle _enemy)]},
+                                if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'(%2)",name _enemy, typeOf (vehicle _enemy)]},
                                 if (_type == 1) then {"warheads"} else {"smokes"},
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
                                 _unit_cnt,
                                 _veh_cnt,
-                                _observer_cnt,
-                                count _observers_arr,
+                                _observer_cnt,  // observers in non-save zone
+                                count _observers, // number of active observers
                                 _own_cnt,
                                 [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist
