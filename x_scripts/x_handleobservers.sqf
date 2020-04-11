@@ -5,7 +5,8 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define HIT_RADIOUS 45
+#define HIT_RADIOUS 45 // radious to be hit by arti shoots
+#define SAVE_RADIOUS 50 // radious to he save by arti shoots
 #define MIN_FRIENDLY_COUNT_TO_STRIKE 3
 
 _enemy_ari_available = true;
@@ -40,8 +41,8 @@ _ownSide = (
         case "EAST": {east};
     }
 );
-_usa = ["StrykerBase","M113","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded"];
-_ussr  = ["BMP2","T72","D30","ZSU","UAZMG","Ural","BRDM2","BMP2_MHQ_unfolded"];
+_usa = ["StrykerBase","M113","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded","StaticWeapon"];
+_ussr  = ["BMP2","T72","D30","ZSU","UAZMG","Ural","BRDM2","BMP2_MHQ_unfolded"]; // BMP2_MHQ inherited from BMP2
 
 _own_vehicles = (
     switch (d_own_side) do {
@@ -113,21 +114,20 @@ while { nr_observers > 0 && !target_clear } do {
                             sleep 0.001;
                         } forEach _near_targets;
                         _near_targets = [];
-                        _vecs = [];
                         _cnt = 0;
                         if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
 
-                            _own_arr      =  nearestObjects [_pos_nearest, _own_vehicles, HIT_RADIOUS]; // any alive owner vehicles in kill zone to kill them immediatelly
-                            _own_cnt      = {alive _x} count _own_arr;
+                            _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, HIT_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
+                            _own_cnt       = {alive _x} count _own_arr;
 
                             _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
                             _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // units in kill zone
 
-                            _observers_arr = _pos_nearest nearObjects [_observer_type, HIT_RADIOUS];
-                            _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr; // observers in kill zone
+                            _observers_arr = _pos_nearest nearObjects [_observer_type, SAVE_RADIOUS];
+                            _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr; // observers not is save zone
 
-                            _vecs_arr      =  nearestObjects [_pos_nearest, _enemy_vehicles, HIT_RADIOUS];
-                            _veh_cnt       =  {side _x == _enemySide} count _vecs_arr;    // enemy crew vehicles in kill zone
+                            _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, HIT_RADIOUS]; // array of enemy vehicle in kill zone
+                            _veh_cnt       =  {side _x == _enemySide} count _veh_arr;    // enemy crew vehicles in kill zone
 
                             _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE;
                             if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1); };
@@ -165,9 +165,9 @@ while { nr_observers > 0 && !target_clear } do {
                             [_pos_nearest,_type] spawn x_shootari;
                             _enemy_ari_available = false;
                             _near_targets        = nil;
-#ifndef  __TT__
-                            _vecs                = nil;
-#endif
+                            _own_arr             = nil;
+                            _units_arr           = nil;
+                            _veh_arr             = nil;
                         };
                     };
                 };

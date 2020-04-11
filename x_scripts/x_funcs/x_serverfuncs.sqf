@@ -15,10 +15,28 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 
 // add score for observer kill
 SAddObserverKillScores = {
-    if (isPlayer (_this select 1) ) then
+    private ["_killer"];
+    _killer =  _this select 1;
+    if ( isPlayer _killer ) then
     {
-        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE];
+        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 at %4",
+            primaryWeapon (_this select 0),
+            name (_this select 1),
+            if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
+            [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
+        ];
         ["syg_observer_kill",(_this select 1),primaryWeapon (_this select 0)] call XSendNetStartScriptClient;
+    } else {
+        if (isNull _killer) then {
+            hint localize format["+++ SAddObserverKillScores: observer (%1) killed under unclear circumstances (killer is null)",
+                primaryWeapon (_this select 0)
+            ];
+        } else {
+            hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2",
+                primaryWeapon (_this select 0),
+                _killer
+            ];
+        };
     };
 };
 #endif
