@@ -14,11 +14,11 @@ if (_name == "__SERVER__") exitWith {};
 hint localize format[ "+++ x_scripts\x_serverOPC.sqf: player name is ""%1""", _name ];
 #endif
 
-__DEBUG_NET("x_serverOPC player connected",_name)
+//__DEBUG_NET("x_serverOPC player connected",_name)
 
 if (!(_name in d_player_array_names)) then {
-	d_player_array_names = d_player_array_names + [_name];
-	d_player_array_misc = d_player_array_misc + [[d_player_air_autokick, time, _name, 0,"",""]];
+	d_player_array_names set [ count d_player_array_names, _name];
+	d_player_array_misc set [count d_player_array_misc,[d_player_air_autokick, time, _name, 0,"",""]];
 };
 
 date_str = date;
@@ -64,7 +64,7 @@ d_vars_array = d_vars_array + [d_jet_service_fac,d_chopper_service_fac,d_wreck_r
 	d_vars_array = d_vars_array + [points_array];
 #endif
 
-__DEBUG_NET("x_serverOPC player connected d_vars_array",d_vars_array)
+//__DEBUG_NET("x_serverOPC player connected d_vars_array",d_vars_array)
 
 publicVariable "d_vars_array";
 d_vars_array = [];

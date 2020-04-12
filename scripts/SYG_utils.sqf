@@ -428,9 +428,9 @@ SYG_ACEUnitUnconscious = {
  * ...
  */
 SYG_ACEUnitConscious = {
-    private ["_var"];
 	if ( !alive _this ) exitWith {false};
 	if ( !(_this isKindof "CAManBase") ) exitWith {false};
+    private ["_var"];
 	_var = _this getVariable "ACE_unconscious";
 	if ( isNil "_var" ) then {
 	    canStand _this

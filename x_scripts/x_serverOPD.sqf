@@ -28,11 +28,13 @@ if (_index >= 0) then {
     _parray set [0, _newwtime];
     (_parray select 4) execVM "x_scripts\x_markercheck.sqf"; // remove all player created markers
 
-    // TODO: try to disconnect all AI of disconnecting player
-
 #ifdef __DEBUG_PRINT__
     hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", array %2", _name, _parray ];
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: ammo ""%1""", weapons player ];
+#endif
+
+#ifdef __AI__
+    // TODO: try to remove all AI of disconnecting player
+    // orphaned AI must be now local to server, not to any player as only single group player can recruit AI from barracks
 #endif
 
     __DEBUG_NET("x_serverOPD player disconnected _parray",_parray)
