@@ -124,8 +124,7 @@ while { nr_observers > 0 && !target_clear } do {
                             _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
                             _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // units in kill zone
 
-                            _observers_arr = _pos_nearest nearObjects [_observer_type, SAVE_RADIOUS];
-                            _observer_cnt  = {_x call SYG_ACEUnitConscious} count _observers_arr; // observers not is save zone
+                            _observer_cnt = { ( _x call SYG_ACEUnitConscious) && ((_x distance _pos_nearest) < SAVE_RADIOUS) } count _observers;
 
                             _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, KILL_RADIOUS]; // array of enemy vehicle in kill zone
                             _veh_cnt       =  {side _x == _enemySide} count _veh_arr;    // enemy crew vehicles in kill zone
