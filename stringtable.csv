@@ -717,6 +717,7 @@ STR_SYS_600,"You were killed by %1. %1 looses %2 scores!","Sie wurden getötet, 
 STR_SYS_601,"Respawn at Base",Respawn an der Basis,"Возрождение на базе"
 STR_SYS_602,"Teleport to Mobile Resp %1","Teleport auf Mobile Resp %1","Телепорт на КШМ %1"
 STR_SYS_603,"Respawn at Mobile Resp %1","Respawn bei Mobile Resp %1","Возрождение на КШМ %1"
+STR_SYS_601_1,"%1. Dmg. %2%3","%1. Schaden %2%3","%1. Повр. %2%3"
 
 STR_SYS_604,"Sahrani People welcome the %1 of the warrior-internationalist in their troubled land: ""Liberate us from the boot of the occupier, a soldier!""","Sahrani Menschen begrüßen die %1 des Kriegers-internationalistischen in ihrem unruhigen Land: "" Befreien Sie ihn aus dem Boot der Besatzer, Soldat!""","Население Сахрани приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""
 STR_SYS_604_1,"Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty, and welcomes the %1 warrior-the internationalist at this long-suffering land:\n""Deliver us from the boot of The Federal reserve agents, soldier!""","Fast die Hälfte von Sahrani veröffentlicht, aber die Bevölkerung Sahrani froh, dass alle Verteidiger des wahren Freiheit, und begrüßt die %1 Krieger-die Internationalistische an diesem leidgeprüften land:\n""Erlöse uns von dem boot Der Federal reserve Agenten, Soldaten!""","Уже половина Сахрани освобождена, но население Сахрани радо любому защитнику свободы без обмана и  приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""
@@ -1232,13 +1233,13 @@ STR_TSD9_21,Pos,Pos,Позиция
 STR_TSD9_23,My Prox,My Prox,Расстояние
 STR_TSD9_24,Target,Ziel,Цель
 STR_TSD9_25,Actions,Aktionen,Действия
-STR_TSD9_26,Pvt,Pvt,Рядовой
-STR_TSD9_27,Cpl,Cpl,Ефрейтор
-STR_TSD9_28,Sgt,Sgt,Сержант
-STR_TSD9_29,Ltn,Ltn,Лейтенант
-STR_TSD9_30,Cpt,Cpt,Капитан
-STR_TSD9_31,Mjr,Mjr,Майор
-STR_TSD9_32,Col,Col,Полковник
+STR_TSD9_26,Pvt,Soldat,Рядовой
+STR_TSD9_27,Cpl,Gefreiter,Ефрейтор
+STR_TSD9_28,Sgt,Feldwebel,Сержант
+STR_TSD9_29,Ltn,Leutnant,Лейтенант
+STR_TSD9_30,Cpt,Hauptmann,Капитан
+STR_TSD9_31,Mjr,Major,Майор
+STR_TSD9_32,Col,Oberst,Полковник
 STR_TSD9_33,A.I.,K.I.,И.И.
 STR_TSD9_34,Dead,Tot,Мёртв
 STR_TSD9_35,Name unknown,Unbekannt,Безымянный

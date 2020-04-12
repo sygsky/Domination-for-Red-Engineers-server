@@ -110,6 +110,7 @@ switch (_target) do {
 };
 #endif
 
+if (damage _target >= 0.01) then {_text = format[localize "STR_SYS_601_1", _text, round((damage _target) *100), "%"]};
 _textctrl ctrlSetText _text;
 
 [100001, 100104, _end_pos] call SYG_setMapPosToMainTarget;
