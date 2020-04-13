@@ -565,7 +565,7 @@ STR_MAIN_COMPLETED_5,"Finally, it is easier to live without ZombiVision...","Sch
 STR_MAIN_COMPLETED_6,"Broke this, next may be Ostankino TV tower...","Gebrochen zu haben, diese dann in der Zukunft brechen und Ostankino Fernsehturm...","Заломал эту, заломаешь и Останкинскую... в следующий раз"
 STR_MAIN_COMPLETED_BY_YOU,by You,Durch Sie,Вами
 STR_MAIN_COMPLETED_BY_UNKNOWN,by unknown hero,durch einen unbekannten Helden,неизвестным героем
-STR_SEC_COMPLETED_BY_YOU,with your help,mit Ihrer Hilfe,с вашей помощью
+STR_SEC_COMPLETED_BY_YOU,with your help,mit Ihrer Hilfe,с Вашей помощью
 
 STR_SYS_300,"You are too far away from the selected region (%1 m), the required distance <= %2 m","Sie sind zu weit von der gewählten Bereich (%1 m) muss der Abstand <= %2 m","Вы слишком далеко от выбранной области (%1 м.), требуется дистанция <= %2 м."
 STR_SYS_301,"The first artillery battery unavailable...","Die erste Artillerie-Batterie ist nicht verfügbar...","Первая арт.батарея недоступна..."
