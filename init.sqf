@@ -192,7 +192,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [14];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldom 14: Eponia
+    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldom 14: Eponia
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];

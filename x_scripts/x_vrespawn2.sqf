@@ -161,7 +161,7 @@ while {true} do {
 					//_vehicle call SYG_reammoMHQ; // this function call is useless on server computer
 
 					if (X_SPE) then { // on client running server
-						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Chopper Menu"
+						_vehicle addAction [localize "STR_SYS_79_2","x_scripts\x_vecdialog.sqf",[],-1,false]; // "MHQ menu"
 						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
 						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};
@@ -173,7 +173,7 @@ while {true} do {
 				case "MRR": {
 					call compile format ["MRRR%1=_vehicle;publicVariable ""MRRR%1"";", _number_v];
 					if (X_SPE) then {
-						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Chopper Menu"
+						_vehicle addAction [localize "STR_SYS_79_2","x_scripts\x_vecdialog.sqf",[],-1,false]; // "MHQ Menu"
 						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
 						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};

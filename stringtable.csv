@@ -715,8 +715,8 @@ STR_SYS_541_2,"Good job. The counterattack was defeated.",,"Задача вып�
 STR_SYS_600,"You were killed by %1. %1 looses %2 scores!","Sie wurden getötet, von %1. %1 verliert %2 Punkte!","Вас убил %1. Он отштрафован на -%2 оч.!"
 
 STR_SYS_601,"Respawn at Base",Respawn an der Basis,"Возрождение на базе"
-STR_SYS_602,"Teleport to Mobile Resp %1","Teleport auf Mobile Resp %1","Телепорт на КШМ %1"
-STR_SYS_603,"Respawn at Mobile Resp %1","Respawn bei Mobile Resp %1","Возрождение на КШМ %1"
+STR_SYS_602,"Teleport to MHQ %1","Teleport auf MHQ %1","Телепорт на КШМ %1"
+STR_SYS_603,"Respawn at MHQ %1","Respawn bei MHQ %1","Возрождение на КШМ %1"
 STR_SYS_601_1,"%1. Dmg. %2%3","%1. Schaden %2%3","%1. Повр. %2%3"
 
 STR_SYS_604,"Sahrani People welcome the %1 of the warrior-internationalist in their troubled land: ""Liberate us from the boot of the occupier, a soldier!""","Sahrani Menschen begrüßen die %1 des Kriegers-internationalistischen in ihrem unruhigen Land: "" Befreien Sie ihn aus dem Boot der Besatzer, Soldat!""","Население Сахрани приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""

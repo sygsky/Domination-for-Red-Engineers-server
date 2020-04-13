@@ -120,13 +120,13 @@ switch (_target) do {
     #ifdef __NO_TELEPORT_ON_DAMAGE__
 
 if  ( !isNull _veh  ) then {
-
-    if (damage _veh >= 0.01) then {
+    if (!alive _veh) exitWith {playSound "teleporter_disabled"};
+    if (damage _veh >= 0.01) exitWith {
         _text = format[localize "STR_SYS_601_1", _text, round((damage _veh) *100), "%"];
-        if ( damage _veh >  __NO_TELEPORT_ON_DAMAGE__ ) exitWith { playSound "damaged";}; // never go here with value >= __NO_TELEPORT_ON_DAMAGE__
-        if (damage _veh >  __NO_TELEPORT_ON_DAMAGE__ / 5 ) then {playSound "damaging";};
+        if ( damage _veh >=  __NO_TELEPORT_ON_DAMAGE__ ) exitWith { playSound "damaged";};
+        if ( damage _veh >=  (__NO_TELEPORT_ON_DAMAGE__ / 5) ) exitWith {playSound "damaging";};
     };
-
+    playSound "teleporter_enabled";
 };
 
     #endif
