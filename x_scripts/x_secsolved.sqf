@@ -57,7 +57,7 @@ if (_is_solved) then
             else
             {
                 _text = if (( _this select 2) == "Error: No unit") then {"STR_SYS_248_NUM" call SYG_getLocalizedRandomText} else {localize "STR_SYS_248_1"}; // " by force of circumstances..."
-                _msg = format["%1 [%2 +%3]!", _msg, _text, d_ranked_a select 25];
+                _msg = format["%1 [%2]!", _msg, _text];
             };
         };
     };
