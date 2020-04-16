@@ -25,7 +25,7 @@ if (!isServer) exitWith {};
 //#define __FULL_PRINT__
 
 #ifdef __PRINT__
-hint localize format["x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4", typeOf (_this select 0), _this select 1, _this select 2, count crew (_this select 0)];
+hint localize format["x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4", typeOf (_this select 0), typeOf(_this select 1), _this select 2, count crew (_this select 0)];
 #endif
 
 _vec = _this select 0;

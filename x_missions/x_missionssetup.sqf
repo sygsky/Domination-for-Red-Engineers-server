@@ -90,7 +90,7 @@ if (isServer) then {
 	};
 
 	// Only for Sahrani: convoy start position and direction
-	// convoy waypoints 1 and 2 (1 or 2 gets randomly selected)
+	// convoy waypoint arrays 1 and 2 (1 or 2 gets randomly selected)
 	d_sm_convoy = [
 		[ // Ixel - Tandag
 			[17452.8,13577.6,0],0,
@@ -140,7 +140,7 @@ if (isServer) then {
 //			case "WEST": {["ACE_Stryker_MGS","ACE_M2A2","ACE_PIVADS","ACE_M6A1","ACE_Stryker_MGS","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_PIVADS","ACE_M1A2_SEP_TUSK"]};
 			case "WEST": 
 			{
-			["ACE_M1A2_SEP_TUSK","ACE_PIVADS","ACE_M6A1","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_PIVADS","ACE_M1A2_SEP_TUSK"]
+			["ACE_M1A2_SEP_TUSK","ACE_PIVADS","ACE_Stryker_MK19","ACE_M6A1","ACE_Truck5t_Repair"/*"ACE_Truck5t_Refuel"*/,"ACE_Truck5t_Reammo",/*"ACE_PIVADS",*/"ACE_M1A2_SEP_TUSK"]
 			};
 		}
 	);

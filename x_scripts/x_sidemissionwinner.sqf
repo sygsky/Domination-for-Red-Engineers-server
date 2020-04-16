@@ -27,9 +27,9 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 
 #ifdef __RANKED__
 	_get_points = false;
-	if (isNil "d_sm_p_pos") then
+	if ( ( isNil "d_sm_p_pos") && (!d_was_at_sm)) then
 	{
-	    hint localize format["x_sidemissionwinner.sqf:d_sm_p_pos is nil, x_sm_pos %1 ", x_sm_pos];
+	    hint localize format["x_sidemissionwinner.sqf:d_sm_p_pos is nil, x_sm_pos %1, d_was_at_sm %2 ", x_sm_pos, d_was_at_sm];
 		_posi_array = x_sm_pos;
 		_posione = _posi_array select 0;
 		_get_points = (player distance _posione < (d_ranked_a select 12));
@@ -39,12 +39,12 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 		_get_points =  d_was_at_sm;
 		if (!_get_points) then
 		{
-    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player was visit SM", d_sm_p_pos];
+    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player not visited SM", d_sm_p_pos];
 			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12));
 		}
 		else
 		{
-    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player visited SM", d_sm_p_pos];
+    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, but player visited SM", d_sm_p_pos];
 		};
 	};
 	if (_get_points) then {

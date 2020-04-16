@@ -15,7 +15,7 @@
 #define __P85Ver "P85" in d_version
 #define __RankedVer "RANKED" in d_version
 
-#define __AddToExtraVec(ddvec) extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [ddvec];
+#define __AddToExtraVec(ddvec) extra_mission_vehicle_remover_array set [count extra_mission_vehicle_remover_array, ddvec];
 
 //#define __WaitForGroup waitUntil {sleep random 0.3;can_create_group};
 #define __WaitForGroup while {!can_create_group} do {sleep 0.1 + random (0.2)};

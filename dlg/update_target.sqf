@@ -1,6 +1,6 @@
 #include "x_setup.sqf"
 
-private ["_target","_display","_textctrl","_text","_end_pos","_veh"];
+private ["_target","_display","_textctrl","_text","_end_pos","_veh","_sound"];
 
 _target = _this select 0;
 
@@ -10,6 +10,7 @@ _textctrl = _display displayCtrl 100110;
 if (x_loop_end) exitWith {};
 
 _text = "";
+_sound = "";
 _end_pos = position player;
 
 #ifndef __TT__
@@ -20,11 +21,13 @@ switch (_target) do {
 			_text = localize "STR_SYS_601"; // "Respawn at Base"
 			beam_target = 0;
 			_end_pos = position FLAG_BASE;
+    		_sound = "base";
 		} else { // it is not possible option
 			_text = format[localize "STR_SYS_602",1]; // "Teleport to Mobile Resp %1"
 			beam_target = 1;
 			_end_pos = position MRR1;
 			_veh = MRR1;
+            _sound = "first_teleporter";
 		};
 	};
 	case 1: { // teleport to MHQ1
@@ -38,9 +41,9 @@ switch (_target) do {
 		beam_target = 1;
 		_end_pos = position MRR1;
 		_veh = MRR1;
-
+        _sound = "first_teleporter";
 	};
-	case 2: { // telport to MHQ2
+	case 2: { // teleport to MHQ2
 		_text = (
 			if (tele_dialog == 0) then {
 				format[localize "STR_SYS_603",2] //"Respawn at Mobile Resp %1"
@@ -51,6 +54,7 @@ switch (_target) do {
 		beam_target = 2;
 		_end_pos = position MRR2;
     	_veh = MRR2;
+        _sound = "second_teleporter";
 	};
 };
 #endif
@@ -120,15 +124,15 @@ switch (_target) do {
     #ifdef __NO_TELEPORT_ON_DAMAGE__
 
 if  ( !isNull _veh  ) then {
-    if (!alive _veh) exitWith {playSound "teleporter_disabled"};
+    if (!alive _veh) exitWith {_sound = "teleporter_disabled"};
     if (damage _veh >= 0.01) exitWith {
         _text = format[localize "STR_SYS_601_1", _text, round((damage _veh) *100), "%"];
-        if ( damage _veh >=  __NO_TELEPORT_ON_DAMAGE__ ) exitWith { playSound "damaged";};
-        if ( damage _veh >=  (__NO_TELEPORT_ON_DAMAGE__ / 5) ) exitWith {playSound "damaging";};
+        if ( damage _veh >=  __NO_TELEPORT_ON_DAMAGE__ ) exitWith { _sound = "damaged";};
+        if ( damage _veh >=  (__NO_TELEPORT_ON_DAMAGE__ / 5) ) exitWith { _sound = "damaging";};
+        _sound = "warning";
     };
-    playSound "teleporter_enabled";
 };
-
+if ( _sound != "") then  { playSound _sound };
     #endif
 #endif
 

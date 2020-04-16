@@ -107,7 +107,7 @@ if (alive _shooter) then {
     sleep 1
 };
 _vec fire _muzzle;
-// TODO: If detected enemy is a tank and damaged vehicle is a tank too, lets shoot to the attacker smoke first and sabot second
+// TODO: If detected enemy is a tank and damaged vehicle is a tank too, lets shoot to the attacker smoke projectile first and sabot second
 sleep 0.27;
 if (alive _shooter) then { _vec doWatch objNull}; // stop watching
 sleep 0.512;

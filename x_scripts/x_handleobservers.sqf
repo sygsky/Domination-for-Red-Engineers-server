@@ -1,5 +1,5 @@
 // by Xeno, x_scripts\x_handleobservers.sqf
-private ["_enemy_ari_available","_nextaritime","_type","_man_type","_observer_type"];
+private ["_enemy_ari_available","_nextaritime","_type","_man_type","_observer_type","_observers", "_pos_nearest"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -58,15 +58,26 @@ _enemy_vehicles = (
         case "EAST": {_ussr};
         }
 );
-
+// call: _cnt = _observers call _count_observers;
+_count_observers = {
+    if (count _this == 0) exitWith { 0 };
+    private ["_cnt"];
+    _cnt = 0;
+    {
+        if (!isNull _x) then {
+            if (typeName _x != "OBJECT") then {
+                if ( ( _x call SYG_ACEUnitConscious) && ((_x distance _pos_nearest) < SAVE_RADIOUS)) then { _cnt = _cnt + 1 };
+            };
+        };
+    } forEach _this;
+    _cnt
+};
 
 _land_veh_type = "LandVehicle";
-_tt = false;
 #endif
 
 #ifdef __TT__
 _man_type = ["SoldierWB","SoldierGB"];
-_tt = true;
 #endif
 
 if (isNil "x_shootari") then {
@@ -82,7 +93,7 @@ _observers set [1, Observer2];
 _observers set [2, Observer3];
 hint localize format["+++ x_handleobservers start: nr_observers = %1", nr_observers];
 _enemyToReveal = objNull;
-while { nr_observers > 0 && !target_clear } do {
+while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 	if (X_MP) then {
 	    if ((call XPlayersNumber) == 0) then { waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0}; };
 	};
@@ -96,6 +107,9 @@ while { nr_observers > 0 && !target_clear } do {
         }
         else
         {
+            if (typeName __observer != "OBJECT") exitWith {
+                hint localize format["--- x_handleobservers.sqf: Obs#%1 typeName == %2", _i,typeName _observer ];
+            };
             if (_enemy_ari_available) then {
                 if (alive _enemyToReveal) then
                 {
@@ -124,7 +138,7 @@ while { nr_observers > 0 && !target_clear } do {
                             _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
                             _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // units in kill zone
 
-                            _observer_cnt = { ( _x call SYG_ACEUnitConscious) && ((_x distance _pos_nearest) < SAVE_RADIOUS) } count _observers;
+                            _observer_cnt = _observers call _count_observers;
 
                             _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, KILL_RADIOUS]; // array of enemy vehicle in kill zone
                             _veh_cnt       =  {side _x == _enemySide} count _veh_arr;    // enemy crew vehicles in kill zone
@@ -190,6 +204,6 @@ if ( target_clear ) then
     // kill remaining observers
 };
 */
-hint localize format["+++ x_handleobservers.sqf: exit, observers %1, target_clear = %2", nr_observers, target_clear ];
+hint localize format["+++ x_handleobservers.sqf: exit, observers %1, count _observers %2, target_clear = %3", nr_observers, count _observers, target_clear ];
 
 if (true) exitWith {};

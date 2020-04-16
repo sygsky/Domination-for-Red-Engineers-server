@@ -1,4 +1,4 @@
-// by Xeno, x_sec_solved.sqf, called on client with params:
+// by Xeno, x_secsolved.sqf, called on client with params:
 // ["sec_solved", kind_solved,killer_name]
 private ["_sec_solved_kind","_is_solved"];
 if (!X_Client) exitWith {};
@@ -56,8 +56,9 @@ if (_is_solved) then
             }
             else
             {
-                _text = if (( _this select 2) == "Error: No unit") then {"STR_SYS_248_NUM" call SYG_getLocalizedRandomText} else {localize "STR_SYS_248_1"}; // " by force of circumstances..."
-                _msg = format["%1 [%2]!", _msg, _text];
+                _text = if ( (( _this select 2) == "") || (( _this select 2) == "Error: No unit") ) then {"STR_SYS_248_NUM" call SYG_getLocalizedRandomText} // " by force of circumstances..."
+                    else { format["%1 +%2", _this select 2, d_ranked_a select 25 ] }; // " somebody +10"
+                _msg = format["%1 (%2)!", _msg, _text];
             };
         };
     };

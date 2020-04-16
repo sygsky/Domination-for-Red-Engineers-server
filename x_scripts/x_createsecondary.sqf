@@ -355,7 +355,7 @@ if (_cnt > 0) then
             {
                 [_unit] join _newgroup;
 #ifdef __DEBUG_PRINT__
-                hint localize format["+++ x_createsecondary.sqf: guard %5 (group %6) on top of main tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit, _newgroup];
+                hint localize format["+++ x_createsecondary.sqf: guard %1 (grp %2) on top of main tower at pos %3[%4/%5]", _type, _newgroup, _pos, _i, _cnt];
 #endif
                 _unit setPos _pos;
                 _unit setSkill 1.0;

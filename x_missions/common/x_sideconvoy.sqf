@@ -1,7 +1,7 @@
 // by Xeno: [_poss, _pos_other, 0] execVM "x_sideconvoy.sqf"
 private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_convoyGroup",
          "_nr_convoy","_pos_end","_pos_start","_side","_side1","_vehicles","_wp","_wps",
-         "_selector", "_veh_arr","_footmen_check_time","_str","_pos1","_pos2","_dist","_dir","_vecnum"];
+         "_way_id", "_veh_arr","_footmen_check_time","_str","_pos1","_pos2","_dist","_dir","_vecnum"];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -149,13 +149,24 @@ _side1 = if ( d_enemy_side == "WEST" ) then {west} else {east};
 _convoyGroup = call SYG_createEnemyGroup;
 
 //[d_sm_convoy_vehicles select 0, _side] call x_getunitliste;
+
+// first vehicle created separatedly, to assign the leader correctly
 _vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select 0), _convoyGroup, 0, _c_array select 1] call x_makevgroup; // vehicle type
 (_vehicles select 0) lock true;
 _veh_arr = [_vehicles select 0];
+
 #ifdef __TT__
 (_vehicles select 0) addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
-extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _vehicles;
+
+#ifndef __TT_
+#ifdef __RANKED__
+(_vehicles select 0) addEventHandler ["killed", { _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // note the closest players who visited this mission
+#endif
+#endif
+
+extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _vehicles select 0 ];
+
 _leader = leader _convoyGroup;
 _leader setRank "LIEUTENANT";
 _convoyGroup allowFleeing 0;
@@ -164,6 +175,10 @@ _convoyGroup setFormation "COLUMN";
 _convoyGroup setSpeedMode "LIMITED";
 sleep 0.933;
 _vehicles = nil;
+
+//+++++++++++++++++++++++++++++++++++++++
+//          create vehicles
+//+++++++++++++++++++++++++++++++++++++++
 for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
 	_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select _i), _convoyGroup, 0, _c_array select 1] call x_makevgroup;
 	(_vehicles select 0) lock true;
@@ -171,7 +186,14 @@ for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
 #ifdef __TT__
 	(_vehicles select 0) addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
-	extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _vehicles;
+
+#ifndef __TT_
+    #ifdef __RANKED__
+    (_vehicles select 0) addEventHandler ["killed", { _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // mark neighbouring users to be at SM
+    #endif
+#endif
+
+	extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _vehicles select 0];
 	sleep 0.933;
 	_vehicles = nil;
 };
@@ -184,16 +206,17 @@ _vecnum = 0;
 		{
 			if ( _str != "" ) then {_str = _str + format[", %1", typeOf _x];} else {_str = _str + format["%1", typeOf _x];};
 		};
-	}forEach _veh_arr;
+	} forEach _veh_arr;
 	hint localize format["x_sideconvoy.sqf: Convoy moves from %1 to %2, %3", text (_pos_start call SYG_nearestSettlement), text (_pos_end call SYG_nearestSettlement), _str];
 #endif							
 
 //#ifdef __SYG_OPTIMIZATION__
-//_selector = 3;
+//_way_id = 3;
 //#else
-_selector = (if ((floor random 100) > 49) then {2} else {3});
+_way_id = 2 + floor(random ((count _c_array) - 2)); // 2 .. n  - the ways id variants, may be more then 2 ways in a happy future, now now only 2 different ways are available
 //#endif
-_wps = _c_array select _selector;
+
+_wps = _c_array select _way_id;
 {
 	_wp=_convoyGroup addWaypoint[_x, 0];
 	_wp setWaypointBehaviour "SAFE";
@@ -216,6 +239,7 @@ _footmen_check_time = time + CHECK_DELAY;
 #ifdef __DEBUG_PRINT__
 _time2print = time + PRINT_DELAY;
 #endif
+
 while {!_convoy_reached_dest && !_convoy_destroyed} do {
 	if (X_MP) then {
 		waitUntil 

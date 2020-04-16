@@ -1,6 +1,6 @@
 // x_scripts/x_getbonus.sqf : by Xeno
 // creates bonus vehicle for side missions and place it to the ground
-private ["_dir","_pos","_posa","_vehicle", "_vec_number"];
+private ["_dir","_pos","_posa","_vehicle", "_vec_number", "_resurrect"];
 
 if (!isServer) exitWith {};
 

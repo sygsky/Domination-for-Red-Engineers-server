@@ -19,7 +19,7 @@ SAddObserverKillScores = {
     _killer =  _this select 1;
     if ( isPlayer _killer ) then
     {
-        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 at %4",
+        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
             primaryWeapon (_this select 0),
             name (_this select 1),
             if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
@@ -28,13 +28,16 @@ SAddObserverKillScores = {
         ["syg_observer_kill",(_this select 1),primaryWeapon (_this select 0)] call XSendNetStartScriptClient;
     } else {
         if (isNull _killer) then {
-            hint localize format["+++ SAddObserverKillScores: observer (%1) killed under unclear circumstances (killer is null)",
-                primaryWeapon (_this select 0)
+            hint localize format["+++ SAddObserverKillScores: observer (%1) killed under unclear circumstances (killer is null) at %2",
+                primaryWeapon (_this select 0),
+                [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
             ];
         } else {
-            hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2",
+            hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
                 primaryWeapon (_this select 0),
-                _killer
+                typeOf _killer,
+                if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
+                [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
             ];
         };
     };
@@ -245,7 +248,7 @@ SYG_addEventsAndDispose = {
 
 
 
-// Makes enemy vehicles group
+// Makes enemy vehicles group for sidemission (e.g. convoy)
 x_makevgroup = {
 	private ["_numbervehicles", "_pos", "_crewmember", "_vehiclename", "_grp", "_radius", "_direction", "_do_points",
 	"_the_vehicles", "_d_crewman", "_d_crewman2", "_no_crew", "_side_char", "_grpskill", "_n", "_vehicle", "_dir",

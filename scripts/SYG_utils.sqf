@@ -412,14 +412,17 @@ SYG_vehUpAngle = {
  * ...
  */
 SYG_ACEUnitUnconscious = {
-    private ["_var"];
+    if (isNull _this ) exitWith {true};
+    if ( typeName _this != "OBJECT") exitWith {true};
 	if ( !alive _this ) exitWith {true};
 	if (!(_this isKindof "CAManBase") ) exitWith {false};
+    private ["_var"];
 	_var = _this getVariable "ACE_unconscious";
 	if ( isNil "_var" ) then {
 	    !canStand _this
 	} else { _this getVariable "ACE_unconscious" };
 };
+
 // #ifdef __ACE__ answers the unit is conscious (true) or not
 /**
  * Detectes if unit is conscious (return true), unconscious (return false) or in unknown state (false)
@@ -428,6 +431,10 @@ SYG_ACEUnitUnconscious = {
  * ...
  */
 SYG_ACEUnitConscious = {
+    ! (_this call SYG_ACEUnitUnconscious)
+    /**
+    if (isNull _this ) exitWith {false};
+    if ( typeName _this != "OBJECT") exitWith {false};
 	if ( !alive _this ) exitWith {false};
 	if ( !(_this isKindof "CAManBase") ) exitWith {false};
     private ["_var"];
@@ -435,6 +442,7 @@ SYG_ACEUnitConscious = {
 	if ( isNil "_var" ) then {
 	    canStand _this
 	} else { !(_this getVariable "ACE_unconscious") };
+	*/
 };
 
 // count all alive units of group in consciousnesss

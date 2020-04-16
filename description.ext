@@ -587,7 +587,11 @@ class CfgSounds
     class damaged         {name = "Damaged, by robot woman"; sound[]  = {\sounds\women\damaged.ogg, db+10, 1.0}; titles[] = {};};
     class damaging        {name = "Damaging, by robot woman"; sound[] = {\sounds\women\damaging.ogg, db+10, 1.0}; titles[] = {};};
     class teleporter_disabled {name = "Disabled, by robot woman"; sound[] = {\sounds\women\teleporter_disabled.ogg, db+10, 1.0}; titles[] = {};};
-    class teleporter_enabled  {name = "Enabled by robot woman"; sound[] = {\sounds\women\teleporter_enabled.ogg, db+10, 1.0}; titles[] = {};};
+//    class teleporter_enabled  {name = "Enabled by robot woman"; sound[] = {\sounds\women\teleporter_enabled.ogg, db+10, 1.0}; titles[] = {};};
+    class first_teleporter  {name = "1st tp by robot woman"; sound[] = {\sounds\women\first_teleporter.ogg, db+10, 1.0}; titles[] = {};};
+    class second_teleporter  {name = "2nd tp by robot woman"; sound[] = {\sounds\women\second_teleporter.ogg, db+10, 1.0}; titles[] = {};};
+    class base  {name = "2nd tp by robot woman"; sound[] = {\sounds\women\base.ogg, db+10, 1.0}; titles[] = {};};
+    class warning  {warning = "warning by robot woman"; sound[] = {\sounds\women\warning.ogg, db+10, 1.0}; titles[] = {};};
 
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; titles[] = {};};
 
