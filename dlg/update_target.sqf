@@ -1,3 +1,4 @@
+// Xeno, dlg\update_target.sqf
 #include "x_setup.sqf"
 
 private ["_target","_display","_textctrl","_text","_end_pos","_veh","_sound"];
@@ -27,7 +28,7 @@ switch (_target) do {
 			beam_target = 1;
 			_end_pos = position MRR1;
 			_veh = MRR1;
-            _sound = "first_teleporter";
+            _sound = "beep";
 		};
 	};
 	case 1: { // teleport to MHQ1
@@ -41,7 +42,7 @@ switch (_target) do {
 		beam_target = 1;
 		_end_pos = position MRR1;
 		_veh = MRR1;
-        _sound = "first_teleporter";
+        _sound = "beep";
 	};
 	case 2: { // teleport to MHQ2
 		_text = (
@@ -54,7 +55,7 @@ switch (_target) do {
 		beam_target = 2;
 		_end_pos = position MRR2;
     	_veh = MRR2;
-        _sound = "second_teleporter";
+        _sound = "beepbeep";
 	};
 };
 #endif

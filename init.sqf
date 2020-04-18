@@ -223,9 +223,8 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
+    _first_array = [];
     side_missions_random = _first_array + (side_missions_random - _first_array);
-
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
@@ -252,12 +251,17 @@ if (isServer) then {
     };
 #endif
 
-
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //+ fill _first_array with sm numbers to go first in any case +
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = []; // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest
+    // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
+    // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest, 40 - prisoners in Tiberia
+    _first_array = [];
     side_missions_random = _first_array + (side_missions_random - _first_array);
+
+//    side_missions_random = side_missions_random - [40,41]; // nemporarily remove all SM with prisoners (not work!!)
+
+    hint localize format["+++ SM array: %1", side_missions_random];
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
 

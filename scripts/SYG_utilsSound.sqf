@@ -584,8 +584,10 @@ SYG_invasionSound = {
 };
 
 SYG_prisonersSound = {
-    if ((random 10) < 5) exitWith {call SYG_exclamationSound};
-    format[ "hisp", ceil (random 4)]
+    private ["_rnd"];
+    _rnd = random 10;
+    if ( _rnd < 4) exitWith {call SYG_exclamationSound};
+    format[ "hisp%1", ceil _rnd]
 };
 
 if (true) exitWith {};

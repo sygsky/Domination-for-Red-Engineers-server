@@ -158,7 +158,7 @@ x_getunitliste = {
 		case "uralfuel": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 9);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "uralrep": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 10);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "uralammo": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 11);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
-		case "civilian": {for "_i" from 1 to 12 do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
+		case "civilian": {for "_i" from 1 to 10 do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
 		case "sabotage": {_how_many = 6 + (ceil random 6); _list = call compile format ["d_sabotage_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
 		case "civbus": {_vehiclename = "Bus_city";_how_many = ceil random 8;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
 		case "civcar": {_vehiclename = d_civ_cars select (floor (random (count d_civ_cars)));_how_many = ceil random 4;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};

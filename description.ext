@@ -593,6 +593,9 @@ class CfgSounds
     class base  {name = "2nd tp by robot woman"; sound[] = {\sounds\women\base.ogg, db+10, 1.0}; titles[] = {};};
     class warning  {warning = "warning by robot woman"; sound[] = {\sounds\women\warning.ogg, db+10, 1.0}; titles[] = {};};
 
+    class beep  {warning = "single short beep"; sound[] = {\sounds\short\beep.ogg, db+10, 1.0}; titles[] = {};};
+    class beepbeep  {warning = "single short beep"; sound[] = {\sounds\short\beepbeep.ogg, db+10, 1.0}; titles[] = {};};
+
     class losing_patience { name=""; sound[] = {\sounds\losing_patience.ogg,db-1,1.0}; titles[] = {};};
 
 // SM hostages

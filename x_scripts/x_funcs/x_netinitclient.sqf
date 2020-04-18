@@ -915,10 +915,14 @@ XHandleNetStartScriptClient = {
         // mark user as participant of SM
         case "was_at_sm" : {
             if (count _this < 2) exitWith {hint localize ["--- x_netinitclient.sqf: %1", _this];};
-            if ( typeName ( _this select 1 ) == "ARRAY" ) then {
-//                hint localize ["+++ %1 : %2", x_netinitclient.sqf];
-                if ( (name player) in (_this select 1) ) then { d_was_at_sm = true; playSound "good_news" };
-            }
+            private ["_val"];
+            _val =  _this select 1;
+            if ( typeName ( _val ) != "ARRAY" ) then {
+                if ( typeName ( _val ) != "STRING" ) then { _val  = str (_val); };
+                _val = [_val];
+            };
+//          hint localize ["+++ %1 : %2", x_netinitclient.sqf];
+            if ( (name player) in (_val) ) then { d_was_at_sm = true; playSound "good_news" };
         };
 
 /*

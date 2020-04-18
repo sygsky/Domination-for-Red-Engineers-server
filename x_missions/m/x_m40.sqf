@@ -26,8 +26,7 @@ if (isServer) then {
 
 #ifdef __AA_DEFENCE_ON_TIBERIA__
 //+++ Sygsky: add more AA-defence
-	__WaitForGroup
-	__GetEGrp(_newgroup) // create a group
+	_newgroup = call SYG_createEnemyGroup;
 //    hint localize format["_newgroup == %1", _newgroup];
 	sleep 1.56;
 	_utype = if (d_enemy_side == "EAST") then {d_crewman2_E} else {d_crewman2_W}; // d_crewman2_E

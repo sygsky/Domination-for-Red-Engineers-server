@@ -64,8 +64,8 @@ _count_observers = {
     private ["_cnt"];
     _cnt = 0;
     {
-        if (!isNull _x) then {
-            if (typeName _x != "OBJECT") then {
+        if (typeName _x == "OBJECT") then {
+            if (alive _x) then {
                 if ( ( _x call SYG_ACEUnitConscious) && ((_x distance _pos_nearest) < SAVE_RADIOUS)) then { _cnt = _cnt + 1 };
             };
         };
@@ -171,7 +171,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                                 _unit_cnt,
                                 _veh_cnt,
                                 _observer_cnt,  // observers in non-save zone
-                                count _observers, // number of active observers
+                                count _observers, // observers array length
                                 _own_cnt,
                                 [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
                                 _dist
@@ -204,6 +204,6 @@ if ( target_clear ) then
     // kill remaining observers
 };
 */
-hint localize format["+++ x_handleobservers.sqf: exit, observers %1, count _observers %2, target_clear = %3", nr_observers, count _observers, target_clear ];
+hint localize format["+++ x_handleobservers.sqf: exit, observers %1, count alive _observers %2, target_clear = %3", nr_observers, {alive _x} count _observers, target_clear ];
 
 if (true) exitWith {};

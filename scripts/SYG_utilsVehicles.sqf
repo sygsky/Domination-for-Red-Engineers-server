@@ -1618,6 +1618,12 @@ SYG_createEnemyGroup =
     [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
 };
 
+/*
+    Extension of follow statements:
+    __WaitForGroup
+    _owngroup = [_side_crew] call x_creategroup;
+*/
+
 SYG_createOwnGroup =
 {
     while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup

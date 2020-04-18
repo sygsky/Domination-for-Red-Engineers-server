@@ -29,7 +29,6 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 	_get_points = false;
 	if ( ( isNil "d_sm_p_pos") && (!d_was_at_sm)) then
 	{
-	    hint localize format["x_sidemissionwinner.sqf:d_sm_p_pos is nil, x_sm_pos %1, d_was_at_sm %2 ", x_sm_pos, d_was_at_sm];
 		_posi_array = x_sm_pos;
 		_posione = _posi_array select 0;
 		_get_points = (player distance _posione < (d_ranked_a select 12));
@@ -39,14 +38,14 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 		_get_points =  d_was_at_sm;
 		if (!_get_points) then
 		{
-    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, player not visited SM", d_sm_p_pos];
 			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12));
-		}
-		else
-		{
-    	    hint localize format["+++ convoy sidemissionwinner.sqf : d_sm_p_pos %1, but player visited SM", d_sm_p_pos];
 		};
 	};
+    hint localize format["+++ x_sidemissionwinner.sqf : d_sm_p_pos %1, d_was_at_sm %2, x_sm_pos %3",
+        if (isNil "d_sm_p_pos") then {"nil"} else {d_sm_p_pos},
+        if (isNil "d_was_at_sm") then {"nil"} else {d_was_at_sm},
+        if (isNil "x_sm_pos") then {"nil"} else {x_sm_pos}
+    ];
 	if (_get_points) then {
 		(format [localize "STR_SYS_125"/* "Participating in the side mission execution you get points: +%1 and %2 !!!" */,(d_ranked_a select 11),_bonus_vehicle]) call XfHQChat;
 		player addScore (d_ranked_a select 11);
@@ -92,7 +91,7 @@ else
         case -500 : {"STR_SYS_129_5"/*"Вражеский офицер спятил и застрелился..."*/};
         case -600 : {"STR_SYS_129_6"/*"Образец захваченной у врага техники развалился до того, как попал в руки ГРУ на базе..."*/};
         case -700 : {"STR_SYS_129_7"/*"Пилоты скончались от столбняка до прибытия на базу..."*/};
-        case -701 : {"STR_SYS_129_8"/*"Bus is destroyed or all civilans are dead"*/}; // the future SM type - "Safely deliver a group of civilians by bus to their destination!"
+        case -701 : {"STR_SYS_129_8"/*"Bus is destroyed or all civilians are dead"*/}; // the future SM type - "Safely deliver a group of civilians by bus to their destination!"
         default {"STR_SYS_129_100"};
     };
 	_s = localize _s;

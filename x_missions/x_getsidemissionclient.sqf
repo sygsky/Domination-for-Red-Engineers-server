@@ -40,19 +40,19 @@ if (current_mission_index != -1) then {
 	if (x_sm_type != "convoy") then {
 		_m_name = format ["XMISSIONM%1", current_mission_index + 1];
 		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Доп.задание"
-		#ifdef __RANKED__
-			_posione spawn {
-				private ["_posione"];
-				_posione = _this;
-				while {d_sm_running} do {
-					if (player distance _posione < (d_ranked_a select 12)) exitWith {
-						d_was_at_sm = true;
-						d_sm_running = false;
-					};
-					sleep (3.012 + (random 3));
-				};
-			};
-		#endif
+        #ifdef __RANKED__
+        _posione spawn {
+            private ["_posione"];
+            _posione = _this;
+            while {d_sm_running} do {
+                if (player distance _posione < (d_ranked_a select 12)) exitWith {
+                    d_was_at_sm = true;
+                    d_sm_running = false;
+                };
+                sleep (3.012 + (random 3));
+            };
+        };
+        #endif
 	} else {
 		_m_name = format ["XMISSIONM%1", current_mission_index + 1];
 		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_158",0,"Start"] call XfCreateMarkerLocal; // "Начало маршрута"
