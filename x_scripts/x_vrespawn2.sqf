@@ -139,12 +139,12 @@ while {true} do {
 				["ammo_boxes",ammo_boxes] call XSendNetVarClient;
 			};
 			sleep 0.1;
-			deletevehicle _vehicle;
+			deleteVehicle _vehicle;
 			sleep 0.5;
 			_vehicle = objNull;
 			_vehicle = _type createVehicle (_vec_a select 3);
 			_vehicle setPos (_vec_a select 3);
-			_vehicle setdir (_vec_a select 4);
+			_vehicle setDir (_vec_a select 4);
 
 			_vec_a set [0, _vehicle];
 			_vehicle setVariable ["D_OUT_OF_SPACE",-1];

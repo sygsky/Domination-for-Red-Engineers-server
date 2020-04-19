@@ -206,13 +206,12 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 								mr1_in_air = false;
 								["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
 								["mr1_lift_chopper",objNull] call XSendNetStartScriptServer;
-                                publicVariable "MRR1";
+								// Never  use statement like publicVariable "MRR1", it will have strange effect in multiple items of "Menu MHQ 1", the same snatds for MHQ 2 also
 							};
 							case MRR2: {
 								mr2_in_air = false;
 								["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
 								["mr2_lift_chopper",objNull] call XSendNetStartScriptServer;
-                                publicVariable "MRR2";
 							};
 #ifdef __TT__
 							case MRRR1: {

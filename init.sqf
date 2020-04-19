@@ -686,9 +686,10 @@ if ( X_Client ) then {// runs only on client
     #ifdef __MANDO_MISSILES_UPDATE__  // execute code if on client and ACE is defined
 
     mando_scorefunc                 = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
-    hint localize "+++ mando_score replaced by custom version";
+    hint localize "+++ mando_scorefunc replaced by custom version";
 
     #endif
+
 
 
 };
