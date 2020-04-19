@@ -376,6 +376,8 @@ STR_SM_050,"Good job. All artillery guns are down. No artillery observers will a
 
 STR_SM_55,"An enemy officer is on a walk in the forest Selva de Caza. This is a good chance to arrest him and bring him to your base (only a rescue operator or group leader can do that). Note: he can be found at 50 meters of center point! Beware of local AA!","Einer der Offiziere ging Pilze im Wald Selva de Caza. Ihre Aufgabe abzunehmen Pilze, die Verhaftung Offizier und liefern es an der Basis. (Eine Mission zu erfüllen, kann nur der Spieler in die Rolle der Retter). Hinweis: er kann gefunden werden, an 50 Metern der Mittelpunkt! Hüten Sie sich vor der lokalen AA!","Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. Внимание! Офицер может находиться на расстоянии 50 метров от центра района, а местные трапперы на хребте неподалёку были обстреляны из зенитной установки! (Завершить миссию может только игрок в роли спасателя или лидер группы)"
 
+STR_SM_TELEPORT_1,"You realized that teleportation didn’t work with some of your team members (%1)","Sie haben festgestellt, dass die Teleportation bei einigen Mitgliedern Ihres Teams nicht funktioniert (% 1)","Вы поняли, что телепорт не сработал для некоторых членов отряда (%1)"
+
 STR_SYS_160,"Select Viewdistance","Sichtweite","Дист. обзора"
 STR_SYS_161,"Click on the number to change the VD","Wählen Sie aus der Liste","Выберите из списка"
 STR_SYS_162,"Select Grass Layer","Wählen Sie Die Gras-Ebene","Прорисовка травы"

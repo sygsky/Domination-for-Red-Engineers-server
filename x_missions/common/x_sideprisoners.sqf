@@ -1,5 +1,6 @@
 // x_missions/common/x_sideprisoners.sqf : by Xeno
-private ["_posi_a", "_pos", "_newgroup", "_unit_array", "_leader", "_hostages_reached_dest", "_all_dead", "_rescued", "_units", "_winner", "_nobjs", "_retter", "_do_loop", "_i", "_one"];
+private ["_posi_a", "_pos", "_newgroup", "_unit_array", "_leader", "_hostages_reached_dest", "_all_dead", "_rescued",
+         "_units", "_winner", "_nobjs", "_retter", "_do_loop", "_i", "_one","_say_time","_sound"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -16,6 +17,19 @@ _posi_a = nil;
 #ifdef __RANKED__
 d_sm_p_pos = nil;
 #endif
+
+
+#define SAY_INTERVAL 7 // in seconds
+_say_grp_sound = {
+    if (_say_time > time) exitWith {};
+    {
+        _sound = call SYG_prisonersSound;
+        if (alive _x && canStand _x) exitWith {
+            ["say_sound", _x, _sound] call XSendNetStartScriptClientAll;
+            _say_time = time + 2 + (random (SAY_INTERVAL * 2));
+        };
+    } forEach _units;
+};
 
 sleep 2;
 
@@ -62,6 +76,8 @@ hint localize format["+++ x_sideprisoners.sqf: civilians created %1", count _uni
 #ifdef __TT__
 _winner = 0;
 #endif
+
+_say_time = time + SAY_INTERVAL;
 
 #ifndef __AI__
 while {!_hostages_reached_dest && !_all_dead} do {
@@ -169,6 +185,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
                     };
                 } forEach _units;
                 _units join (leader _retter);
+                call _say_grp_sound;
             };
         };
     } else {
@@ -190,6 +207,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
             };
             sleep 0.01;
         } forEach _units;
+        call _say_grp_sound;
     };
 	sleep 5.123;
 };

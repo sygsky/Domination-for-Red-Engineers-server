@@ -1851,14 +1851,15 @@ player addAction["score -15","scripts\addScore.sqf",-15];
 //#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
-// teleport player to the hills above Bagango valley
-hint localize "__DEBUG_ADD_VEHICLES__";
-//player setPos [14531,9930,0];
-//player setPos []9763, 11145, 0]; // near Rashidan dock
-
-player setPos [16545,12875,0];
-
-if ( score player < 1500 ) then { player addScore (1500 - (score player) ) };
+if (name player == "EngineerACE") then {
+    // teleport player to the hills above Bagango valley
+    hint localize "__DEBUG_ADD_VEHICLES__";
+    //player setPos [14531,9930,0];
+    //player setPos [9763, 11145, 0]; // near Rashidan dock
+    // player setPos [16545,12875,0];
+    MRR1 setPos [9407,5260,0]; // move teleport to the positon at SM #40 (hostages in Tiberis)
+    if ( score player < 1500 ) then { player addScore (1500 - (score player) ) };
+};
 #endif
 
 if (true) exitWith {};
