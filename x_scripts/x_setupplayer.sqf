@@ -1816,17 +1816,18 @@ player call SYG_handlePlayerDammage; // handle hit events
         _cnt = _cnt + 1;
     }    forEach [	HR1, HR2, HR3, HR4];
     //hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
+    _common_boxes = [box1, box2, box3, box4, box5, grubox];
     {
         if ( !( (isNil str( _x ) ) || ( ! alive _x ) ) ) then {
             _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", format[localize format["STR_SYS_%1", toUpper str(_x)], localize "STR_SYS_BOX" ]];
         } else {
             hint localize format["--- Error: variable ""%1"" not found/not alive", str(_x)];
         };
-    }   forEach [box1, box2, box3, box4, box5, grubox];
+    }   forEach _common_boxes;
     hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
 #ifdef __ACE__
     _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
-    _personal_boxes = nearestObjects [depot, _personal_boxes, 20];
+    _personal_boxes = nearestObjects [depot, _personal_boxes, 20]  - _common_boxes;
     {
         _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];
     }   forEach _personal_boxes;
