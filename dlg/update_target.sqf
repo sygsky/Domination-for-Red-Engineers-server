@@ -28,7 +28,7 @@ switch (_target) do {
 			beam_target = 1;
 			_end_pos = position MRR1;
 			_veh = MRR1;
-            _sound = "beep";
+            _sound = "one";
 		};
 	};
 	case 1: { // teleport to MHQ1
@@ -42,7 +42,7 @@ switch (_target) do {
 		beam_target = 1;
 		_end_pos = position MRR1;
 		_veh = MRR1;
-        _sound = "beep";
+        _sound = "one";
 	};
 	case 2: { // teleport to MHQ2
 		_text = (
@@ -55,7 +55,7 @@ switch (_target) do {
 		beam_target = 2;
 		_end_pos = position MRR2;
     	_veh = MRR2;
-        _sound = "beepbeep";
+        _sound = "two";
 	};
 };
 #endif
@@ -125,11 +125,11 @@ switch (_target) do {
     #ifdef __NO_TELEPORT_ON_DAMAGE__
 
 if  ( !isNull _veh  ) then {
-    if (!alive _veh) exitWith {_sound = "teleporter_disabled"};
+    if (!alive _veh) exitWith {_sound = "crashed"};
     if (damage _veh >= 0.01) exitWith {
         _text = format[localize "STR_SYS_601_1", _text, round((damage _veh) *100), "%"];
-        if ( damage _veh >=  __NO_TELEPORT_ON_DAMAGE__ ) exitWith { _sound = "damaged";};
-        if ( damage _veh >=  (__NO_TELEPORT_ON_DAMAGE__ / 5) ) exitWith { _sound = "damaging";};
+        if ( damage _veh >=  __NO_TELEPORT_ON_DAMAGE__ ) exitWith { _sound = ["down","disabled"] call XfRandomArrayVal;};
+        if ( damage _veh >=  (__NO_TELEPORT_ON_DAMAGE__ / 5) ) exitWith { _sound = ["damage","damaging"] call XfRandomArrayVal;};
         _sound = "warning";
     };
 };
