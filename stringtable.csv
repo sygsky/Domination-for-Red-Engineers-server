@@ -1123,7 +1123,7 @@ STR_RUM_72,"Red rockets over cities usually mean the destruction of important in
 STR_RUM_73,"In the inventory, you can compare ammunition by selecting and reading the information","Im Inventar können Sie Munition vergleichen, indem Sie Informationen auswählen und Lesen","В инвентаре можно сравнивать боеприпасы, тыкая на них и просматривая информацию"
 STR_RUM_74,"Usually a strong wind blows over the ocean","Normalerweise weht ein starker wind über den Ozean","Над океаном обычно дует сильный ветер"
 STR_RUM_75,"Rumors depend on the time of day and length of stay","Gerüchte hängen von der Tageszeit und der Dauer des Aufenthalts ab","Слухи меняются от времени дня и длительности пребывания"
-STR_RUM_76,"If MHQ is damaged by more than 0.1, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.1 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","При повреждении КШМ более 0.1 телепорт на нём не сработает. Всегда чините КШМ!"
+STR_RUM_76,"If MHQ is damaged by more than 0.5, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.5 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","При повреждении КШМ более 0.5 телепорт на нём не сработает. Всегда чините КШМ!"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
