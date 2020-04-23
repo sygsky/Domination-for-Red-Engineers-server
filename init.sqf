@@ -277,7 +277,6 @@ if (isServer) then {
 	SYG_owner_active_air_vehicles_arr = []; // list of player's vehicles in air
 	check_trigger = objNull;
 	create_new_paras = false;
-	first_time_after_start = true;
 	nr_observers = 0;
 #ifdef __TT__
 	[

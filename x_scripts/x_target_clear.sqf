@@ -1,5 +1,5 @@
 //
-// by Xeno: x_target_clear.sqf. Called on server from town or airbase trigger if all goals are achived
+// by Xeno: x_target_clear.sqf. Called on server from town or airbase trigger if all goals are achieved
 //
 private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array"];
 if (!isServer) exitWith{};
@@ -52,6 +52,9 @@ if (_start_real) then {
 	["an_countera", "over"] call XSendNetStartScriptClient;
 	sleep 2.321;
 };
+
+_dummy = target_names select current_target_index;
+(_dummy select 1) call SYG_townScoresPrint; // print statistics on finished town
 
 #ifndef __TT__
 resolved_targets = resolved_targets + [current_target_index];

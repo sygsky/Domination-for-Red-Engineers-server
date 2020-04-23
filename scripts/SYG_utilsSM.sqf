@@ -186,3 +186,78 @@ SYG_lastPlayersAdd = {
 SYG_lastPlayersGet = {
     SYG_lastPlayersQueue call SYG_getQueueList
 };
+
+// ++++++++++++++++++++++++++ System to prnt scores of players during each town siege
+//
+// [[_players],[_scores]];
+// _players = ["player1",...,"playerN"]; // list of players participated in current town
+// _scores  = [1,...,N]; // scores of corresponding players
+ //
+SYG_townScores = [[],[], time];
+
+// Create internal arrays with currently online players at the start of the next town
+SYG_townScoresInit = {
+    private ["_names","_pl"];
+    SYG_townScores  = [ [], [], time];
+    _names = [];
+    {
+        _pl = call _x;
+        if (isPlayer _pl) then { _names set [count _names, name _pl];   };
+    } forEach SYG_players_arr;
+    _names call SYG_townScoresAdd;
+    hint localize format["+++ SYG_townScoresInit: SYG_townScores = %1", SYG_townScores];
+};
+
+//
+// Call: [_player_name1,...,_player_name_N] call SYG_townScoresAdd;
+// add each new player connected while town siege process
+//
+SYG_townScoresAdd = {
+    private ["_id","_arr"];
+    if ( typeName _this != "ARRAY" ) then {
+        if (typeName _this != "STRING") then {
+            if (isPlayer _this) then { _this = name _this} else { _this = str _this};
+        };
+        _this = [_this];
+    };
+    //hint localize format["+++ SYG_townScoresAdd _this %1", _this];
+
+    {
+        _id = d_player_array_names find _x;
+        hint localize format["+++ SYG_townScoresAdd for %1 id == %2", _x, _id];
+        if (_id >= 0) then { // player is registered on the server
+            _arr = SYG_townScores select 0;
+            if ( !(_id in _arr)) then {  // add new player to list of town liberation participates
+                _arr set [count _arr, _id];
+                _arr = SYG_townScores select 1;
+                _arr set [count _arr, (d_player_array_misc select _id) select 3]; // set player score, from d_player_array_misc player_item: [[d_player_air_autokick, time, _name, 0, "", arg(1)]]
+            };
+        };
+    }forEach _this;
+    //hint localize format["+++ SYG_townScoresAdd result %1", SYG_townScores];
+};
+
+// Prints to arma_server.RPT all player scores got during this town liberation process
+// call: _town_name call SYG_townScoresPrint
+SYG_townScoresPrint = {
+    private ["_arr","_arr1","_i","_id","_item","_diff","_str"];
+    //hint localize format["++++++ Town ""%1"" personal players score:",_this];
+    _arr  = SYG_townScores select 0;
+    _arr1 = SYG_townScores select 1;
+    hint localize "[";
+    hint localize format[ "++++++ Town ""%1"" players score report ++++++", _this ];
+
+    _sum = 0;
+    for "_i" from 0 to (count _arr)-1 do
+    {
+        _id   = _arr select _i;
+        _item = d_player_array_misc select _id;
+        _diff =  (_item select 3) - (_arr1 select _i); // new score minus old one
+        _sum  = _sum + _diff;
+        hint localize format[ "++++++ ""%1"": %2", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff } ];
+    };
+//    hint localize format["+++ [time, SYG_townScores select 2] %1", [time, SYG_townScores select 2]];
+    _str =  [time, SYG_townScores select 2] call SYG_timeDiffToStr;
+    hint localize format["++++++ Town ""%1"" players score summary: %2 (aver. %3) during %4",_this, _sum, round (_sum / (count _arr)),_str];
+    hint localize "]";
+};

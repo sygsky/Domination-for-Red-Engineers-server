@@ -21,6 +21,8 @@ if (!(_name in d_player_array_names)) then {
 	d_player_array_misc set [count d_player_array_misc,[d_player_air_autokick, time, _name, 0,"",""]];
 };
 
+_name call SYG_townScoresAdd; // register player as current town pliberation participant
+
 date_str = date;
 _tmp_a = [];
 _bit_array = [mt_radio_down,target_clear,all_sm_res,the_end,mr1_in_air,mr2_in_air,ari_available,ari2_available,d_jet_service_fac_rebuilding,d_chopper_service_fac_rebuilding,d_wreck_repair_fac_rebuilding];
