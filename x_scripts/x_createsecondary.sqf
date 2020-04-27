@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno,
 // x_createsecondary.sqf: creating secondary target for the city
 //
 private ["_man","_newgroup","_poss","_unit_array","_units","_vehicle","_wp_array","_truck","_the_officer", "_unit", "_pos"];
@@ -37,7 +37,7 @@ _current_target_pos = _target_array2 select 0;
 _current_target_radius = _target_array2 select 2;
 
 #ifdef __DEBUG_PRINT__
-hint localize format["x_createsecondary.sqf: sec_kind = %1", sec_kind];
+hint localize format["+++ x_createsecondary.sqf: sec_kind = %1", sec_kind];
 #endif
 
 governor = nil;

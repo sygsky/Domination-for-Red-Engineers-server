@@ -349,7 +349,7 @@ SYG_nearestZoneOfInterest = {
 				};
 				case "SIDEMISSION": 
 				{
-					if (!all_sm_res && !side_mission_resolved && (current_mission_index >= 0)) then
+					if (!all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then
 					{
 						if ( !(current_mission_index in nonstatic_sm_array) ) then // don't use non-static sidemissions (convoys, pilots etc)
 						{
@@ -499,7 +499,7 @@ SYG_getTargetTownName = {
  *      _smindex = call SYG_getSideMissionIndex;
  */
 SYG_getSideMissionIndex = {
-	if (!all_sm_res && !side_mission_resolved && (current_mission_index >= 0)) then {current_mission_index} else {-1};
+	if (!all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then {current_mission_index} else {-1};
 };
 
 //==================================

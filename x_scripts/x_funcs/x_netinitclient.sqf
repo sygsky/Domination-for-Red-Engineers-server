@@ -420,6 +420,10 @@ XHandleNetStartScriptClient = {
 			playSound "fanfare";
 			hint current_mission_resolved_text;
 		};
+		case "stop_sm": {
+			current_mission_text = localize "STR_SYS_121_2"; // "The enemy has fled! Forget about his sorties!"
+		    [ "msg_to_user", "*", [ [ "STR_SYS_121_1" ] ], 0, 2, false, "fanfare" ] call SYG_msgToUserParser; // The enemy escaped! ..."
+		};
 		#ifndef __TT__
 		case "new_jump_flag": {
 			if (!d_no_para_at_all) then {

@@ -568,9 +568,10 @@ if (fFogMore >= 0.3885) then {fog2 = localize "STR_WET_20"}; //"видимост
 0 setOvercast fRainLess;
 0 setFog fFogLess;
 
-if (all_sm_res) then {
+if (all_sm_res ) then {
 	current_mission_text= localize "STR_SYS_121"; // "All missions resolved!";
 } else {
+    if (stop_sm) exitWith { current_mission_text= localize "STR_SYS_121_2"}; // "The enemy fled..."
 	[false] execVM "x_missions\x_getsidemissionclient.sqf";
 };
 

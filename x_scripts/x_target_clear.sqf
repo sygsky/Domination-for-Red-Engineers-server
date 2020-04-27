@@ -127,6 +127,9 @@ if (current_counter < number_targets) then {
 #endif
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
+    // TODO: #368, wait until base cleared from enemies and
+    // TODO: no recaptured towns and
+    // TODO: side mission completed
 	if (count d_recapture_indices == 0) then {
 		the_end = true;
 		["the_end",the_end] call XSendNetVarClient;

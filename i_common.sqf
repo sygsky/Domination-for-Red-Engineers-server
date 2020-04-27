@@ -670,6 +670,7 @@ side_mission_winner = 0;
 resolved_targets = [];
 target_clear=false;
 all_sm_res = false;
+stop_sm = false; // is SM system is stopped (last town leberated) or not
 ammo_boxes = 0;
 the_end = false;
 bonus_number = -1;

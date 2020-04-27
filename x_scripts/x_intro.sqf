@@ -223,7 +223,7 @@ _SYG_selectIntroPath = {
 };
 
 //+++Sygsky TODO: try to prepare flight above all targets
-if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !side_mission_resolved && (current_mission_index >= 0)) then {
+if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then {
 
 	hint localize format["x_intro.sqf: current_target_index = %1, current_mission_index = %2",current_target_index, current_mission_index ];
 /* 	_target_array2 = target_names select current_target_index;
