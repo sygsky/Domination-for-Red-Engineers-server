@@ -162,14 +162,14 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 
                             hint localize format
                             [
-                                "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4) on dist %5 m., [enemy %6, enveh %7, obs %8/%9, ownveh %10], %11, real<->vrt dist %12 m.",
+                                "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4) on dist %5 m., [eu %6, ev %7/%8, obs %9/%10, ov %11], %12, real<->vrt dist %13 m.",
                                 _i,
                                 if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'(%2)",name _enemy, typeOf (vehicle _enemy)]},
                                 if (_type == 1) then {"warheads"} else {"smokes"},
                                 _observer knowsAbout _enemy,
                                 round(_observer distance _enemy),
                                 _unit_cnt,
-                                _veh_cnt,
+                                _veh_cnt, count _veh_arr,
                                 _observer_cnt,  // observers in non-save zone
                                 count _observers, // observers array length
                                 _own_cnt,
