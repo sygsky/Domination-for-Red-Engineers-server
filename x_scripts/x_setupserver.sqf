@@ -70,7 +70,7 @@ XClearSidemission = {
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
-					if (_was_captured && !(isPlayer _x)) then { // vehicle was captured by player
+					if (_was_captured ) then { // vehicle was captured by player
 						[_x] call XAddCheckDead;
 					} else {
 						{deleteVehicle _x} forEach ([_x] + crew _x);
