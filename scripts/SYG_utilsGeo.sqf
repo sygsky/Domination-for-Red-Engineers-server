@@ -279,7 +279,7 @@ SYG_nearestZoneOfInterest = {
 		_min_dist = 9999999.9;
 		for "_i" from 0 to (count _opts) - 1  do
 		{
-			_opt = toUpper (_opts select _i);
+			_opt  = toUpper (_opts select _i);
 			_dist = -1;
 			_pos1 = [];
 			switch _opt do
@@ -289,11 +289,11 @@ SYG_nearestZoneOfInterest = {
 					_ret = call SYG_getTargetTown; // returs some about [[9348.73,5893.4,0],"Cayo", 210]
 					if ( count _ret > 0 ) then 
 					{
-						_pos1 = _ret select 0;
+						_pos1  = _ret select 0;
 						_part1 = _pos1 call SYG_whatPartOfIsland;
 						if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
 						{
-							if (count _ret > 0) then {_dist = _pos distance (_ret select 0);};
+							_dist = _pos distance (_ret select 0);
 						};
 					};
 				};
@@ -301,7 +301,7 @@ SYG_nearestZoneOfInterest = {
 				{
 					if ( !isNil "FLAG_BASE" ) then
 					{
-						_pos1 = position FLAG_BASE;
+						_pos1  = position FLAG_BASE;
 						_part1 = _pos1 call SYG_whatPartOfIsland;
 //						hint localize format[ "SYG_nearestZoneOfInterest: same part %1, _pos1 %2, _pos %3, dist %4", _same_part, _pos1, _pos, round(_pos1 distance _pos) ];
 						if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part) ) then
@@ -313,7 +313,7 @@ SYG_nearestZoneOfInterest = {
 				};
 				case "LOCATION": 
 				{
-					_pos1 = _pos call SYG_nearestLocation; // location returned!!!
+					_pos1  = _pos call SYG_nearestLocation; // location returned!!!
 					_part1 = _pos1 call SYG_whatPartOfIsland;
 					if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
 					{
@@ -436,6 +436,7 @@ SYG_pointOnIslet = {
 	private ["_ret"];
 	_ret = false;
 	if (typeName _this != "ARRAY") then {_this = position _this;};
+	if (count _this < 2) exitWith {false};
 	{
 		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = true;};
 	}forEach SYG_SahraniIsletCircles;
@@ -449,8 +450,21 @@ SYG_pointOnIslet = {
  */
 SYG_pointOnRahmadi = {
 	if (typeName _this != "ARRAY") then {_this = position _this;};
+	if (count _this < 2) exitWith {false};
 	[_this,SYG_RahmadiIslet select 1, SYG_RahmadiIslet select 2] call SYG_pointInCircle
 };
+
+/*
+ * Detects if point is near base (near area is designated by predefined rectange)
+ * call:
+ * _bool = (_pos || _obj) call SYG_pointInRect
+ */
+SYG_pointNearBase = {
+    if (typeName _this != "ARRAY") then {_this = position _this};
+	if (count _this < 2) exitWith {false};
+    [_this, [[9913,10385,0],1300,800]] call SYG_pointInRect
+};
+
 
 /**
  * call: 

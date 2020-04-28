@@ -32,7 +32,7 @@ if ( isNil "d_on_base_groups" ) then
 	d_on_base_groups = [];
 	[] execVM "scripts\flaresoverbase.sqf";
 #ifdef __PRINT__
-	hint localize "x_infiltrate.sqf: d_on_base_groups = []; [] execVM ""scripts\flaresoverbase.sqf""";
+	hint localize "+++x_infiltrate.sqf: d_on_base_groups = []; [] execVM ""scripts\flaresoverbase.sqf""";
 #endif
 
 // create fires from array
@@ -46,7 +46,7 @@ if ( isNil "d_on_base_groups" ) then
 #endif
 		_cnt = _cnt + 1;
 	} forEach d_base_patrol_fires_array;
-	hint localize format["x_infiltrate.sqf: %1 fires created", _cnt];
+	hint localize format["+++x_infiltrate.sqf: %1 fires created", _cnt];
 	// send info to already connected clients about
 	sleep 1.07;
 	["update_fires", true] call XSendNetStartScriptClient;
@@ -199,7 +199,7 @@ while { true } do {
 		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2));
 		_time_to_clean = time + _delay;
 #ifdef __DEBUG_CLEAN_PRINT__
-		hint localize format["x_infiltrate.sqf: %3 base cleaning proc: %1 items cleaned, %2 items added to the clean queue, next clean after %4 secs", _cnt1, count _items_to_clean, call SYG_missionTimeInfoStr, round(_delay) ];
+		hint localize format["+++x_infiltrate.sqf: %3 base cleaning proc: %1 items cleaned, %2 items added to the clean queue, next clean after %4 secs", _cnt1, count _items_to_clean, call SYG_missionTimeInfoStr, round(_delay) ];
 		if ((count _items_to_clean) > 0) then
 		{
 			_arr = [];
@@ -207,12 +207,12 @@ while { true } do {
 			{
 				_arr set [_i, typeOf (_items_to_clean select _i)];
 			};
-			hint localize format["x_infiltrate.sqf: items to clear later %1 ...", _arr];
+			hint localize format["+++x_infiltrate.sqf: items to clear later %1 ...", _arr];
 			_arr = [];
 		}
 		else
 		{
-			hint localize "x_infiltrate.sqf: no items to clear found";
+			hint localize "+++x_infiltrate.sqf: no items to clear found";
 		};
 #endif		
 	}; // if ( time >= _time_to_clean ) then
@@ -229,7 +229,7 @@ while { true } do {
 			waitUntil { sleep (10.0123 + random 1);(call XPlayersNumber) > 0 };
 		};
 	};
-	//__DEBUG_NET("x_infiltrate.sqf",(call XPlayersNumber))
+	//__DEBUG_NET("+++x_infiltrate.sqf",(call XPlayersNumber))
 
 	// select LZ
 	_ind = floor random 2; // 0 or 1 is used
@@ -278,7 +278,7 @@ while { true } do {
 	//[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
 	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2cut.sqf";
 #ifdef __PRINT__
-	hint localize format["x_infiltrate.sqf: ejected at %1, on point %2", date, _msg ];
+	hint localize format["+++ x_infiltrate.sqf: ejected at %1, on point %2", date, _msg ];
 #endif
 
 #ifdef __DEBUG__
@@ -287,7 +287,13 @@ while { true } do {
 	// additional delay for small player team < 5. If player number >=5 there is no additional delay
 	sleep ((600 + random 200) + (5-(5 min(call XPlayersNumber)))*1000);
 #endif	
+     if (current_counter >= number_targets) exitWith {
+        [ "msg_to_user", "*", [ [ "STR_SYS_1220" ] ], 0, 2, false, "hound_chase" ] call  XSendNetStartScriptClient; // "The enemy aircraft carrier got out together with the paratroopers!"
+#ifdef __PRINT__
+	hint localize "*** x_infiltrate.sqf: EXIT infiltration loop as end of last town reached";
+#endif
 
+     };
 }; // while { true } do 
 
 if (true) 

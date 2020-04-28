@@ -235,7 +235,11 @@ STR_SYS_119,"Combat mission accomplished! Prisoners released.","Combat Mission e
 STR_SYS_120,"Secondary objective has not yet been received...","Sekundäre Aufgabe noch nicht erhalten...","Дополнительное задание ещё не получено..."
 STR_SYS_121,"All secondary missions resolved!","Alle sekundären Missionen gelöst!","Все доп. задания выполнены!"
 STR_SYS_121_1,"The enemy escaped! The population of the island will breathe quietly! And we will no longer be distracted by additional tasks!","Der Feind ist entkommen! Die Bevölkerung der Insel wird ruhig atmen! Und wir werden nicht länger von zusätzlichen Aufgaben abgelenkt!","Враг бежал! Население острова вздохнёт спокойно! А мы больше не будем отвлекаться на дополнительные задания!"
-STR_SYS_121_2,"The enemy has fled! Forget about his sorties!","Der Feind ist geflohen! Vergiss seine Einsätze!","Враг бежал, можно забыть о его вылазках!"
+STR_SYS_121_2,"The enemy has escaped, and will not return","Feind ist entkommen, man kann vergessen dass er wieder kommt unerwarteter Angriff","Враг бежал, можете забыть о его вылазках!"
+
+STR_SYS_121_3_FULL,"For the complete liberation of the island, complete the SM and destroy the invaders","Für die vollständige Befreiung der Insel vervollständigen Sie die SM und die frei zurückeroberte Stadt","Для полного освобождения острова, завершите дополнительную миссию и уничтожьте оккупантов"
+STR_SYS_121_3_SM,"For the complete liberation of the island, complete the SM","Für die vollständige Befreiung der Insel vervollständigen Sie die SM","Для полного освобождения острова, завершите дополнительную миссию"
+STR_SYS_121_3_RECAPTURED,"For the complete liberation of the island, free the recaptured town","Befreie die zurückeroberte Stadt für die vollständige Befreiung der Insel","Для полного освобождения острова, уничтожьте оккупантов"
 
 STR_SYS_122,"No hostages detected","Die Geiseln wurden nicht gefunden","Заложники не обнаружены"
 STR_SYS_123,"The leader is not detected","Der Führer nicht erkannt","Лидер не обнаружен"
@@ -256,7 +260,7 @@ STR_SYS_129_8,"Bus is destroyed or all civilians are dead!","Bus ist zerstört o
 STR_SYS_129_100,"You lost a fortune...","Sie verlor ein Vermögen...","Удача от Вас отвернулась..."
 
 STR_SYS_130,"For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!","Für die Nichterfüllung der Aufgaben, die Sie persönlich trugen die Verantwortung. Abgezogen %1 Punkte. So wird es mit jedem!","За невыполнение задания Вы лично понесли ответственность. Вычтенo %1 баллов. Так будет с каждым!"
-STR_SYS_131,"Officer is at dist of about %1 m. from %3 and at Azimut of about %2 deg. from it","Officer ist bei einem Abstand von über %1 m. von %3 und in Azimut von etwa %2 Grad. ","Офицер примерно в %1 м. от %3, азимут поиска %2 гр."
+STR_SYS_131,"Officer is at dist of about %1 m. from %3 and at Azimuth of about %2 deg. from it","Officer ist bei einem Abstand von über %1 m. von %3 und in Azimut von etwa %2 Grad. ","Офицер примерно в %1 м. от %3, азимут поиска %2 гр."
 STR_SYS_132,"Your Glonass position","Ihr Glonass-position","вашей Глонасс-позицией"
 STR_SYS_133,"Side Mission point","Side Mission punkt","точки задания"
 STR_SYS_134,"The officer was not detected neither at Side Mission point nor near Your Glonass-Position","Der Offizier wurde nicht erkannt, weder in Side Mission punkt noch in Ihre Glonass-Position","Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
@@ -882,7 +886,8 @@ STR_SYS_1214,"Rank needed to fly the wreck lift chopper: ","Rang benötigt, um d
 STR_SYS_1215,"Weapons limited: ","Waffen limitiert: ","Ограничение вооружение: "
 STR_SYS_1216,"Air drop radius (0 = exact position): ","Lufttropfenradius (0 = genaue Position):","Радиус сброса снабжения (0 = точная позиция): "
 STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / Auftanken / Reparieren: ","Время цикла перезарядки/заправки/ремонта: "
-STR_SYS_1218,"Enemy air vehicles locked: ","Feindliche Luftfahrzeuge gesperrt:","Вражеская авиатехника блокирована: "
+
+STR_SYS_1220,"The enemy aircraft carrier got out, along with the paratroopers!","Der feindliche Flugzeugträger stieg zusammen mit den Fallschirmjägern aus!","Вражеский авианосец убрался, вместе с десантниками!"
 
 STR_SYS_MAINBOX,"Your personal equipment box. No one but You can use it","Deine persönliche Waffenkiste. Niemand, aber Sie können es verwenden","Ваш личный ящик со снаряжением. Никто, кроме Вас, не может его использовать"
 STR_SYS_GRUBOX," The GRU's public weapon box. Keep weapons that are not used on secret missions here","Die öffentliche Waffenkiste der GRU. Bewahren Sie hier Waffen auf, die nicht für geheime Missionen verwendet werden","Общедоступный оружейный ящик ГРУ. Храните здесь оружие, не используемое на секретных заданиях"
@@ -1326,9 +1331,9 @@ STR_SET_12,"Points will be added when the service is restored (%1)","Punkte werd
 STR_SET_12_1,"When repairing the service, points are deducted (-%1)","Punkte werden bei der Reparatur abgezogen (-%1)","За ремонт сервисов вычитают очки (-%1)"
 STR_SET_13,"Mando missiles pack: ","Mando missiles pack: ","Пак Mando missiles: "
 STR_SET_14,"Built-in rucksack: ","Eingebauter rucksack: ","Встроенный рюкзак: "
-STR_SET_15,"Enemy armored vehicles blocked: ","Feindliche Gepanzerte Fahrzeuge blockiert: ","Вражеская бронетехника блокирована: "
-STR_SET_16,"Enemy cars blocked: ","Feindliche Autos blockiert: ","Вражеский транспорт заблокирован: "
-STR_SET_17,"Enemy air vehicles blocked: ","Feindliche Luftfahrzeuge gesperrt: ","Вражеская авиатехника блокирована: "
+STR_SET_15,"Enemy armored vehicles locked: ","Feindliche Gepanzerte Fahrzeuge blockiert: ","Вражеская бронетехника блокирована: "
+STR_SET_16,"Enemy cars locked: ","Feindliche Autos blockiert: ","Вражеский транспорт заблокирован: "
+STR_SET_17,"Enemy air vehicles locked: ","Feindliche Luftfahrzeuge gesperrt:","Вражеская авиатехника блокирована: "
 STR_SET_18,"Chopper hud on: ","Head-Up-Display im Helikopter: ","Проекционный дисплей в вертолётах: "
 STR_SET_19,"Show chopper welcome message: ","Chopper-Begrüßungsnachricht anzeigen: ","Показывать приветствие в вертолётах: "
 STR_SET_20,"Show vehicle welcome message: ","Fahrzeug-Begrüßungsnachricht anzeigen:","Показывать приветствие в технике: "

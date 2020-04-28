@@ -16,11 +16,14 @@ if (current_mission_counter >= number_side_missions) exitWith {
 #endif
 };
 
-// exit if all towns are liberated!!!
+// stop SM system if all towns are liberated!!!
 if (current_counter >= number_targets) exitWith {
     stop_sm = true;
     publicVariable "stop_sm";
     ["stop_sm"] call XSendNetStartScriptClient;
+#ifdef __DEBUG__
+    hint localize "+++ x_getsidemission.sqf: stop mission system as all target towns are liberated!!!";
+#endif
 };
 
 while {!main_target_ready} do {sleep 12.321};

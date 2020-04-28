@@ -25,8 +25,9 @@ _infcnt = 0; // infantry cnt
 		_posran = [_target_center, _radius] call XfGetRanPointCircle;
 		sleep 0.4;
 	};
-	__WaitForGroup
-	_grp = [d_enemy_side] call x_creategroup;
+	//__WaitForGroup
+	//_grp = [d_enemy_side] call x_creategroup;
+	_grp = call SYG_createEnemyGroup;
 	_vecs = [(2 call XfRandomCeil),_posran,(_ulist select 2), (_ulist select 1),_grp,0,-1.111,true] call x_makevgroup;
 	_veccnt = _veccnt + (count _vecs);
 	{_x lock true} forEach _vecs;
@@ -54,8 +55,9 @@ for "_i" from 0 to 1 do {
 		_posran = [_target_center, _radius] call XfGetRanPointCircle;
 		sleep 0.4;
 	};
-	__WaitForGroup
-	_grp = [d_enemy_side] call x_creategroup;
+	//__WaitForGroup
+	//_grp = [d_enemy_side] call x_creategroup;
+	_grp = call SYG_createEnemyGroup;
 	_units = [_posran,(_ulist select 0),_grp,true] call x_makemgroup;
 	_infcnt = _infcnt + 1;
 	_unitslist = _unitslist + _units;
