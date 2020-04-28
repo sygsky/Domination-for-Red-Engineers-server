@@ -17,12 +17,13 @@
 // at 10.1: debug print any new waypoints if TRUE and not if FALSE. Optional. Default FALSE
 // at 10.2: prevent new wp be on islet (TRUE) or not (FALSE). Optional.  Default FALSE, i.e. not prevent WP be on Islet
 // at 10.3: distance to detect hill near new wp. Optional.  Default 0, i.e. not seek for hills near WP
+// at 10.4: prevent new wp be near owner base (TRUE) or not (FALSE). Optional.  Default FALSE, i.e. not prevent WP be near owner base
 //-----------------------------------------------------------------------------------------------------------------------
 
 private ["_grp_array", "_grp", "_enemy_array", "_reached_wp", "_time_at_wp", "_next_wp_time", "_units", 
          "_checktime", "_flank_pos_a",/*  "_make_normal",  */"_leader", "_start_pos", "_wp_array", "_wp_one", 
 		 "_wp_pos", "_last_pos", "_counter", "_stime","_had_towait", "_side", "_joingrp","_leader1","_rejoin_num","_i",
-		 "_debug_print","_skip_islets","_hills_seek_dist","_all_grp_list"];
+		 "_debug_print","_skip_islets","_hills_seek_dist","_skip_base","_all_grp_list"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -44,6 +45,7 @@ _rejoin_time     = 0; // time for next re-join
 _debug_print     = false;
 _skip_islets     = false;
 _hills_seek_dist = 0;
+_skip_base       = false;
 if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) then
 {
 	_wp_array = _grp_array select 10;
@@ -51,6 +53,7 @@ if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) the
 	if ( count _wp_array > 1) then {    _debug_print = _wp_array select 1;};
 	if ( count _wp_array > 2) then {    _skip_islets = _wp_array select 2;};
 	if ( count _wp_array > 3) then {_hills_seek_dist = _wp_array select 3;};
+	if ( count _wp_array > 4) then {      _skip_base = _wp_array select 4;};
 };
 
 _enemy_array = [];
@@ -165,8 +168,19 @@ while {true} do {
 									if (_wp_pos call SYG_pointOnIslet) then 
 									{
 #ifdef __DEBUG__
-										hint localize format["%1 x_groupsm.sqf: grp %2, new wp %3 is on islet (code 1)",call SYG_nowTimeToStr,_grp, _wp_pos];
+										hint localize format["%1 x_groupsm.sqf: grp %2, new wp %3 is on islet (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos];
 #endif							
+										_wp_pos = [];
+									};
+								};
+								if (_skip_base) then
+								{
+									// check if point is near owner base
+									if (_wp_pos call SYG_pointNearBase) then
+									{
+#ifdef __DEBUG__
+										hint localize format["%1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos];
+#endif
 										_wp_pos = [];
 									};
 								};
@@ -184,10 +198,21 @@ while {true} do {
 										if ( _wp_pos call SYG_pointOnIslet ) then 
 										{
 #ifdef __DEBUG__
-											hint localize format["%1 x_groupsm.sqf: new wp %2 is on islet (code 2), counter %3",call SYG_nowTimeToStr,_wp_pos,_counter];
+											hint localize format["%1 x_groupsm.sqf: new wp %2 is on islet (case 2), counter %3",call SYG_nowTimeToStr,_wp_pos,_counter];
 #endif							
 											_wp_pos = _start_pos
 										};
+                                        if (_skip_base) then
+                                        {
+                                            // check if point is near owner base
+                                            if (_wp_pos call SYG_pointNearBase) then
+                                            {
+#ifdef __DEBUG__
+                                                hint localize format["%1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 2)",call SYG_nowTimeToStr,_grp, _wp_pos];
+#endif
+                                                _wp_pos = [];
+                                            };
+                                        };
 										_counter = _counter + 1;
 										sleep 0.02;
 									};
