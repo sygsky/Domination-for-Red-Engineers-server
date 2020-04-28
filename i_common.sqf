@@ -449,7 +449,7 @@ sm_bonus_vehicle_array = (
 "ACE_T55_A",        // 11
 "ACE_T55_AM",       // 12
 
-"ACE_T62_M",        // 13
+"ACE_ZSU",          // 13 //"ACE_T62_M",
 "ACE_T62_MK",       // 14
 "ACE_T62_MV",       // 15
 
@@ -520,7 +520,7 @@ mt_bonus_vehicle_array = (
 "ACE_BMP3_M", 		    // 2 - ordinal vehicles list
 
 "ACE_ZSU",          	// 3
-"ACE_Tunguska",			// 4
+"ACE_ZSU",			// 4
 
 "ACE_T55_AMV",          // 5
 "ACE_T64_BV",			// 6
