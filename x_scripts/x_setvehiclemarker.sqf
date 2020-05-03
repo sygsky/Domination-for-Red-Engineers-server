@@ -32,16 +32,6 @@ X_XMarkerVehicles = {
 	sleep 0.11;
 };
 
-// prepare players variables to speed up marker drawing
-SYG_players_arr =
-    [
-     {RESCUE},{RESCUE2},
-     {alpha_1},{alpha_2},{alpha_3},{alpha_4},{alpha_5},{alpha_6},{alpha_7},{alpha_8},
-     {bravo_1},{bravo_2},{bravo_3},{bravo_4},{bravo_5},{bravo_6},{bravo_7},{bravo_8},
-     {charlie_1},{charlie_2},{charlie_3},{charlie_4},{charlie_5},{charlie_6},{charlie_7},{charlie_8},{charlie_9},
-     {delta_1},{delta_2},{delta_3},{delta_4}
-    ];
-
 SYG_markerRefreshTime = time;   // time to refresh player markers
 SYG_activeMarkers = [];         // marker active during predefined interval
 /**

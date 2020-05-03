@@ -248,16 +248,23 @@ SYG_townScoresPrint = {
     hint localize format[ "++++++ Town ""%1"" players score report ++++++", _this ];
 
     _sum = 0;
-    for "_i" from 0 to (count _arr)-1 do
-    {
-        _id   = _arr select _i;
-        _item = d_player_array_misc select _id;
-        _diff =  (_item select 3) - (_arr1 select _i); // new score minus old one
-        _sum  = _sum + _diff;
-        hint localize format[ "++++++ ""%1"": %2", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff } ];
+    if (count _arr > 0) then {
+        for "_i" from 0 to (count _arr)-1 do
+        {
+            _id   = _arr select _i;
+            _item = d_player_array_misc select _id;
+            _diff =  (_item select 3) - (_arr1 select _i); // new score minus old one
+            _sum  = _sum + _diff;
+            hint localize format[ "++++++ ""%1"": %2", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff } ];
+        };
     };
 //    hint localize format["+++ [time, SYG_townScores select 2] %1", [time, SYG_townScores select 2]];
     _str =  [time, SYG_townScores select 2] call SYG_timeDiffToStr;
-    hint localize format["++++++ Town ""%1"" players score summary: %2 (aver. %3) during %4",_this, _sum, round (_sum / (count _arr)),_str];
+    hint localize format["++++++ Town ""%1"" players score summary: %2 (aver. %3) during %4",
+        _this,
+        _sum,
+        if(count _arr > 0) then {round (_sum / (count _arr))} else {0},
+        _str
+    ];
     hint localize "]";
 };

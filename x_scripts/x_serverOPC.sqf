@@ -1,3 +1,4 @@
+// by Xeno: x_scripts\x_serverOPC.sqf
 // OPC == On Player Connect
 if (!isServer) exitWith{};
 private ["_name", "_miscp", "_index", "_bit_array", "_var", "_bitasnum","_tmp_a","_new_p","_time"];
@@ -21,7 +22,7 @@ if (!(_name in d_player_array_names)) then {
 	d_player_array_misc set [count d_player_array_misc,[d_player_air_autokick, time, _name, 0,"",""]];
 };
 
-_name call SYG_townScoresAdd; // register player as current town pliberation participant
+_name call SYG_townScoresAdd; // register player as current town liberation participant
 
 date_str = date;
 _tmp_a = [];
