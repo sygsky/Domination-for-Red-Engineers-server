@@ -14,7 +14,7 @@ if (!isServer) exitWith {};
 #define __PRINT__
 
 private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay",
-        "_time_stamp", "_time", "_part"];
+        "_time_stamp", "_time", "_part","_depth","_depth1"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 _vehicle = _this;
@@ -122,7 +122,8 @@ if (_sunk) then {
         for "_i" from 1 to _x do
         {
             sleep 1;
-            _back_counter = _back_counter -1;
+            _back_counter = (_back_counter - 1) max 0;
+            _depth = round((_vehicle modelToWorld [0,0,0]) select 2); // Error #372 (update depth of vehicle)
             _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, format[" (%1)", _back_counter] ];
 
             // check any changes in marked vehicle status

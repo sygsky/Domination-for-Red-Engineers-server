@@ -1052,7 +1052,7 @@ STR_FLAG_7,"(Create %1)","(Anlegen %1)","(Создать %1)"
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,78,78,78
+STR_RUM_NUM,79,79,79
 STR_RUM_NIGHT,"They are sleeping in %3","Alle schlafen in %3","В %3 все спят, однако"
 STR_RUM_0,"Rumors are absent! It's weird...","Gerüchte sind nicht vorhanden! Es ist seltsam...","Слухи отсутствуют! Что странно..."
 STR_RUM_1,"Enemy refuel truck will help only if your vehicle engine is on","Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf","Вражеский бензовоз заправляет при включенном двигателе техники"
@@ -1132,6 +1132,7 @@ STR_RUM_74,"Usually a strong wind blows over the ocean","Normalerweise weht ein 
 STR_RUM_75,"Rumors depend on the time of day and length of stay","Gerüchte hängen von der Tageszeit und der Dauer des Aufenthalts ab","Слухи меняются от времени дня и длительности пребывания"
 STR_RUM_76,"If MHQ is damaged by more than 0.5, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.5 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","При повреждении КШМ более 0.5 телепорт на нём не сработает. Всегда чините КШМ!"
 STR_RUM_77,Points for taking a city are given within a radius of 500 meters from its center,Punkte für die Einnahme einer Stadt werden in einem Umkreis von 500 Metern um ihr Zentrum vergeben,Очки за взятие города даются в радиусе 500 метров от его центра
+STR_RUM_78,A sunken vehicle can be saved if it is no deeper than -15 meters,Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -15 Meter ist,Утонувшую боевую машину можно достать с глубины не менее -15 метров
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
