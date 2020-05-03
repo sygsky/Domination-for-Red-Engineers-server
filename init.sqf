@@ -393,7 +393,6 @@ if (isServer) then {
 	if (isNil "ace_sys_network_OPCB") then {ace_sys_network_OPCB = []};
 	ace_sys_network_OPCB set [count ace_sys_network_OPCB , {[_this select 0] execVM "x_scripts\x_serverOPC.sqf"} ];
 	hint localize format["ACE:ace_sys_network_OPCB = %1", ace_sys_network_OPCB];
-	hint localize format["ACE:ace_sys_network_OPC = %1", ace_sys_network_OPC];
 
 	// On Player Disconnect
 	if (isNil "ace_sys_network_OPD") then {ace_sys_network_OPD = []};
@@ -457,13 +456,30 @@ if (isServer) then {
         // build flag on Antigua (by Yeti request)
         sleep 60; // wait 1 minute to ensure user to build flag on map
         [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
-        // create outdoor toilet ("Land_KBud")
 
+        // create outdoor toilet ("Land_KBud")
 		_obj = createVehicle ["Land_KBud", [0,0,0],[],0, "CAN_COLLIDE"];
 		_obj setDir 270;
 		_obj setPos [9438.9,9858.4,0];
-		// add some action to toilet on client computer
-
+		// TODO: add some action to toilet on client computer
+		// add some random equipment
+#ifdef __ACE__
+		if ( (random 1) < 0.5 ) then {
+            _cnt = _obj call SYG_housePosCount;
+            _pos = floor (random _cnt);
+            _pos = _obj buildingPos _pos;
+            _pos set [2, (_pos select 2) + 0.55];
+//          _pos set [0, (_pos select 0) - 0.25];
+            _weaponHolder = "WeaponHolder" createVehicleLocal [0,0,0];
+            _weaponHolder setPos _pos;// [_weaponHolderPos, [], 0, "CAN_COLLIDE"];
+            _item = (SYG_PISTOL_WPN_SET_WEST) call XfRandomArrayVal;
+            _wpn = _item select 1;
+            _mag = _item select 2;
+            _weaponHolder addWeaponCargo [_wpn, 1];
+            _weaponHolder addMagazineCargo [_mag, 4 ];
+            hint format["+++ init: %1 created in %2", _wpn, typeOf _obj;];
+		};
+#endif
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
