@@ -460,23 +460,23 @@ class CfgSounds
 
 
 // man self-killed. If append next scream, don't forget to edit method SYG_getSuicideScreamSound() in file SYG_utilsSound.sqf (increase harcoded number of screams)
-    class male_scream_0 {name = ""; sound[] = {\sounds\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_1 {name = ""; sound[] = {\sounds\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_2 {name = ""; sound[] = {\sounds\male_scream_2.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_3 {name = ""; sound[] = {\sounds\male_scream_8.ogg, db+0, 1.0}; titles[] = {}; }; // 3rd was removed and replaced temporarily with 8th
-    class male_scream_4 {name = ""; sound[] = {\sounds\male_scream_4.ogg, db+10, 1.0}; titles[] = {}; };
-    class male_scream_5 {name = ""; sound[] = {\sounds\male_scream_5.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_6 {name = ""; sound[] = {\sounds\male_scream_6.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_7 {name = ""; sound[] = {\sounds\male_scream_7.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_8 {name = ""; sound[] = {\sounds\male_scream_8.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_9 {name = ""; sound[] = {\sounds\male_scream_9.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_10 {name = ""; sound[] = {\sounds\male_scream_10.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_11 {name = ""; sound[] = {\sounds\male_scream_11.ogg, db+0, 1.0}; titles[] = {}; };
-    class male_scream_12 {name = ""; sound[] = {\sounds\male_scream_12.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_0  {name = ""; sound[] = {\sounds\suicide\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_1  {name = ""; sound[] = {\sounds\suicide\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_2  {name = ""; sound[] = {\sounds\suicide\male_scream_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_3  {name = ""; sound[] = {\sounds\suicide\male_scream_8.ogg, db+0, 1.0}; titles[] = {}; }; // 3rd was removed and replaced temporarily with 8th
+    class male_scream_4  {name = ""; sound[] = {\sounds\suicide\male_scream_4.ogg, db+10, 1.0}; titles[] = {}; };
+    class male_scream_5  {name = ""; sound[] = {\sounds\suicide\male_scream_5.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_6  {name = ""; sound[] = {\sounds\suicide\male_scream_6.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_7  {name = ""; sound[] = {\sounds\suicide\male_scream_7.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_8  {name = ""; sound[] = {\sounds\suicide\male_scream_8.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_9  {name = ""; sound[] = {\sounds\suicide\male_scream_9.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_10 {name = ""; sound[] = {\sounds\suicide\male_scream_10.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_11 {name = ""; sound[] = {\sounds\suicide\male_scream_11.ogg, db+0, 1.0}; titles[] = {}; };
+    class male_scream_12 {name = ""; sound[] = {\sounds\suicide\male_scream_12.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_13 {name = ""; sound[] = {\sounds\suicide\scream1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_14 {name = "Demonic woman scream on suicide"; sound[] = {\sounds\suicide\demonic_woman_scream.ogg, db+0, 1.0}; titles[] = {}; }; // demonic scream
 
-    class suicide_yeti {name = "Special Yeti's scream on suicide";   sound[] = {\sounds\suicide\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti   {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_1 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_1.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_2 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_2.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_3 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_3.ogg, db+0, 1.0}; titles[] = {}; };

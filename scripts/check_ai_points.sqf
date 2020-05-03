@@ -43,12 +43,12 @@ _ai_big_cost = player call SYG_AIPriceByScore; // price for 2nd and more AI recr
 _ai_cost = if (_ai_counter > 0) then {_ai_big_cost} else {_ai_low_cost};
 
 _rank_score = _rank_id call XGetScoreFromRank;
-if ( (score player - _ai_cost) < _rank_score) then {
+if ( (score player - _ai_cost *2) < _rank_score ) then {
     _prev_rank_id = _rank_id - 1;
-    _str = format[localize "STR_SYS_1174_2", (_prev_rank_id call XGetRankFromIndex) call XGetRankStringLocalized]; // ". After which you will be demoted to '%1'"
+    _str = format[localize "STR_SYS_1174_2", (_prev_rank_id call XGetRankFromIndex) call XGetRankStringLocalized]; // ". After which you can be demoted to '%1', as pilots cost twice as expensive!"
 } else {
     if ( (_ai_counter == 0) && (_new_ai_counter > 1) ) then {
-        _str = format[localize "STR_SYS_1174_3", _ai_big_cost]; // ". Next AI will cost you %1"
+        _str = format[localize "STR_SYS_1174_3", _ai_big_cost, _ai_big_cost * 2]; // ". Next AI will cost you -%1 (%2 if pilot)"
     };
 };
 /*
@@ -56,6 +56,6 @@ hint localize format["--- check_ai_points.sqf: _rank %1, _rank_id %2, _rank_max_
                                                _rank, _rank_id, _rank_max_ai, _new_ai_counter, _ai_big_cost, _ai_cost,
                                                _rank_score, _ai_counter, _start_rank_id];
 */
-(format [localize "STR_SYS_1174_1", _ai_counter, _new_ai_counter, _ai_cost,  _str]) call XfHQChat; // "Draftees: you have %1, in the barracks %2. The draftee will cost -%3%4"
+(format [localize "STR_SYS_1174_1", _ai_counter, _new_ai_counter, _ai_cost,  _str]) call XfHQChat; // "Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4. A pilot is always twice as expensive!"
 
 if (true) exitWith {};

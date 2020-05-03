@@ -462,8 +462,8 @@ if (isServer) then {
 		_obj setDir 270;
 		_obj setPos [9438.9,9858.4,0];
 		// TODO: add some action to toilet on client computer
-		// add some random equipment
 #ifdef __ACE__
+		// add some random equipment
 		if ( (random 1) < 0.5 ) then {
             _cnt = _obj call SYG_housePosCount;
             _pos = floor (random _cnt);
@@ -477,7 +477,7 @@ if (isServer) then {
             _mag = _item select 2;
             _weaponHolder addWeaponCargo [_wpn, 1];
             _weaponHolder addMagazineCargo [_mag, 4 ];
-            hint format["+++ init: %1 created in %2", _wpn, typeOf _obj;];
+            hint localize format["+++ init: %1 created in %2", _wpn, typeOf _obj];
 		};
 #endif
 	};

@@ -148,7 +148,7 @@ STR_SYS_59_1,"large","groß","крупный"
 STR_SYS_59_2,"last","letzte","посл."
 STR_SYS_59_3, "Finish SM!","Fertig SM!","Завершите доп.!"
 STR_SYS_60,"DANGER:","ACHTUNG:","ВНИМАНИЕ:"
-STR_SYS_61,"Enemy troops in your base.","Feindliche Soldaten auf dem Luftwaffenstützpunkt","Вражеский десант на базе"
+STR_SYS_61,"Enemy troops on your base.","Feindliche Soldaten auf dem Luftwaffenstützpunkt","Вражеский десант на базе"
 STR_SYS_62,"CLEAR:","Entwarnung","ОТБОЙ:"
 STR_SYS_63,"No more enemies in your base.","Die Anwesenheit von feindlichen Truppen auf unserer Militärbasis eliminiert","Враги исчезли с территории базы"
 STR_SYS_64,"Your transport (%1) is refurbished by technical service...","Ihr Transport (%1) renoviert technischen Service...","Ваш транспорт (%1) отремонтирован техсервисом..."
@@ -839,9 +839,9 @@ STR_SYS_1172,You are currently not a group leader, no AI available. Create a new
 STR_SYS_1173,"You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank...","Du hast bereits %1 KI-Soldaten unter Ihrer Kontrolle, ist es nicht möglich zu rekrutieren, die mit Ihren aktuellen Rang...","У вас в подчинении уже %1 ИИ и это максимум для вашего звания"
 
 STR_SYS_1174,"You current rank is %1. You need to be %2 to recruit soldier[s]!","Sie Aktueller rank ist %1. Sie müssen %2 zu rekrutieren Soldat[en]!","Ваш ранг %1. Минимальное звание, дающее право призыва - %2"
-STR_SYS_1174_1,"Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4","Wehrpflichtige: Sie haben %1 im Wehrdienst %2. Der Wehrpflichtige kostet -%3%4","Призывники:  у Вас %1, в военкомате %2. Призывник обойдётся в -%3%4"
-STR_SYS_1174_2,". After which you will be demoted to '%1'"," (danach werden Sie auf '%1' herabgestuft)",". После чего будете разжалованы до звания '%1'"
-STR_SYS_1174_3,". Next AI will cost you -%1",". Die nächste KI kostet dich -%1",". Следующий призывник обойдётся в -%1!"
+STR_SYS_1174_1,"Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4. A pilot is always twice as expensive!","Wehrpflichtige: Sie haben %1 im Wehrdienst %2. Der Wehrpflichtige kostet -%3%4. Ein Pilot ist immer doppelt so teuer!","Призывники:  у Вас %1, в военкомате %2. Призывник обойдётся в -%3%4. Пилот всегда в два раза дороже!"
+STR_SYS_1174_2,". After which you can be demoted to '%1', as pilots cost twice as expensive!",". Danach können Sie auf '% 1' herabgestuft werden, da Piloten doppelt so teuer sind!",". После чего можете быть разжалованы до звания '%1', т.к. пилоты в два раза дороже"
+STR_SYS_1174_3,". Next AI will cost you -%1 (%2 if pilot)",". Die nächste KI kostet dich -%1 (%2 wenn Pilot)",". Следующий призывник обойдётся в -%1 (-%2 если пилот)!"
 
 STR_SYS_1175,"You can't recruit an AI soldier, costs %2 points, your current scores (%1) and rank will drop below %32!","Das kannst du nicht rekrutieren ein KI-Soldat, Kosten %2 Punkte, Ihre aktuelle Punktzahl (%1), Ihren Rang fallen Sie unter %3!","Вы не можете призвать ИИ (стоимость %2, а у вас только %1!), звание упадёт ниже '%3'"
 STR_SYS_1175_1,"Your recruit (%1) speaks only Russian. Can use idioms in an enemy language","Ihr Rekrut (%1) spricht nur Russisch. Kann Idiome in einer feindlichen Sprache verwenden","Ваши призывник (%1) говорит только на русском. Может употреблять идиомы на вражеском языке"
@@ -923,6 +923,7 @@ STR_AI_9_2,"You have no recruits!","Du hast keine Rekruten!","У Вас нет �
 
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
 STR_AI_11,"Points for one militia: -%1. Refund of half - upon demobilization","Punkte für eine Miliz: -%1. Rückerstattung der Hälfte - bei Demobilisierung","Затраты за одного ополченца: -%1. Возврат половины - после его демобилизации"
+STR_AI_11_PILOT,"A local glider club pilot will cost twice as much: - %1! Refund of half - after demobilization in full health","Ein lokaler Segelflugklubpilot kostet doppelt so viel: -% 1! Rückerstattung der Hälfte - nach Demobilisierung bei voller Gesundheit","Пилот местного планерного клуба обойдётся в два раза выше: -%1! Возврат половины - после демобилизации в полном здравии"
 
 STR_AI_12_NUM,6,6,6
 STR_AI_12_0,"Chief! I'm afraid to go with You!","Chef! Ich habe Angst, mit Ihnen zu Fliegen!","Шеф! Опасаюсь лететь с Вами!"

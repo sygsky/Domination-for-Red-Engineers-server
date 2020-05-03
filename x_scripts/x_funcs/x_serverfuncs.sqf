@@ -679,13 +679,20 @@ XAddPlayerScore = {
 
 // Sends info about player score etc if found it in server cache
 XGetPlayerPoints = {
-	private ["_name", "_index", "_score"];
-	_name = _this;_index = d_player_array_names find _name;
+	private ["_name", "_index", "_staff", "_sound"];
+	_name = _this;
+	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
 	//__DEBUG_NET("XGetPlayerPoints",_index)
-	_score = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
-	["d_player_stuff", _score, SYG_dateStart] call XSendNetStartScriptClient;
-	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client +++", _score];
+	_staff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
+	// prepare also semi-unical (up to 15 users) suicide sound for this player as parameter index 3
+	if ( (toUpper (_name)) == "YETI") then {
+	    _sound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti;
+	} else {
+	    _sound = _index call SYG_getSuicideScreamSoundById;
+	};
+	["d_player_stuff", _staff, SYG_dateStart, _sound] call XSendNetStartScriptClient;
+	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client +++", _staff];
 };
 
 // calls as follow: _near_enemy_arr = _grp_array call x_get_nenemy

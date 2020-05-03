@@ -120,13 +120,10 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
     };
     hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { format["has %1 item[s]", count d_player_stuff]}];
 #endif
-	if (isNil "d_player_stuff") exitWith {
+	if ( (isNil "d_player_stuff") || (time > _endtime) ) exitWith {
 		player_autokick_time = d_player_air_autokick;
 	};
-	if (time > _endtime) exitWith {
-		player_autokick_time = d_player_air_autokick;
-	};
-	if ((d_player_stuff select 2) == name player) exitWith
+	if ( (d_player_stuff select 2) == name player ) exitWith
 	{
 		player_autokick_time = d_player_stuff select 0;
 		player addScore (d_player_stuff select 3);
@@ -313,7 +310,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             case "YETI":  // Yeti
                             {
                                 d_rebornmusic_index = 1; // no play death sound
-                                SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
+                                //SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                                 3000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; _rearmed = true; };
                             };
@@ -1254,23 +1251,48 @@ XBaseEnemies = {
 	switch (_status) do {
 		case 0: {
 			hint composeText[
-				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "ВНИМАНИЕ:" */ + "</t>"), lineBreak,
-				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Вражеский десант на базе" */ + "</t>")
+				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "DANGER:" */ + "</t>"), lineBreak,
+				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Enemy troops on your base." */ + "</t>")
 			];
+        	private ["_alarm_obj","_no"];
+            _alarm_obj = FLAG_BASE;
+            if ( ( count _this ) >  1 ) then {
+                _alarm_obj = _this select 1;
+                if (typeName _alarm_obj == "ARRAY") then {
+                    // this is list of enemy intruders
+                    {
+                        if ( ((_x isKindOf 'LandVehicle') || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit'))) && (alive _x) ) exitWith {
+                            // find nearest to this object alive service
+                            // find allowed objects on base to play sounds
+                            _no = nearestObjects [_x, [ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM"], 1000];
+                            if ( count _no > 0) then {
+                                _alarm_obj = _no select 0;
+//                               hint localize format[ "+++ XBaseEnemies: alarm on %1 (%2), dist to alarm_obj %3 m", typeOf _alarm_obj, typeName _alarm_obj, round (_x distance _alarm_obj) ];
+                            };
+                        };
+                    } forEach _alarm_obj;
+                };
+                if ( (typeName _alarm_obj != "OBJECT") || (!alive _alarm_obj)) then {
+//                    hint localize format["+++ XBaseEnemies: alarm form 51 changed to FLAG_BASE", typeOf _alarm_obj ];
+                    _alarm_obj = FLAG_BASE;
+                };
+            };
+            _alarm_obj say "alarm";
 		};
 		case 1: {
 			hint composeText[
 				parseText("<t color='#f00000ff' size='2'>" + (localize "STR_SYS_62") /* "ОТБОЙ:" */ + "</t>"), lineBreak,
-				parseText("<t size='1'>" + (localize "STR_SYS_63")/* "Присутствие вражеских войск на базе устранено" */ + "</t>")
+				parseText("<t size='1'>" + (localize "STR_SYS_63")/* "No more enemies in your base." */ + "</t>")
 			];
 		};
 	};
 };
+
 "enemy_base" setMarkerPosLocal (d_base_array select 0);
 _trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 _trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
 _trigger setTriggerActivation [d_enemy_side, "PRESENT", true];
-_trigger setTriggerStatements["{ _x isKindOf 'LandVehicle' || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "FLAG_BASE say 'Alarm';[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+_trigger setTriggerStatements["{ _x isKindOf 'LandVehicle' || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "[0, thislist] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
 #endif
 
 if (d_weather) then {execVM "scripts\weather\weatherrec2.sqf";};
