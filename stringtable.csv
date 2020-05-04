@@ -759,7 +759,7 @@ STR_SYS_630,"The waters of the oceans closed over the shamefully lost %1 (%2 m.)
 STR_SYS_630_1,"The lost %1 can still be restored if it is delivered to the appropriate service!","Das verlorene %1 kann noch wiederhergestellt werden, wenn es an den entsprechenden service geliefert wird!","Утерянный %1 можно ещё спасти, если доставить на сервис возрождения!"
 STR_SYS_630_2,"%1 disappeared! %2","%1 ist verschwunden! %2","%1 исчез! %2"
 
-STR_SYS_630_2_NUM,2,2,2
+STR_SYS_630_2_NUM,4,4,4
 STR_SYS_630_2_0,"There are strong undercurrents here","Hier sind starke Unterströmungen","Здесь сильные подводные течения"
 STR_SYS_630_2_1,"A giant Kraken was spotted nearby","Ein riesiger Kraken ist in der Nähe zu sehen","Неподалёку замечен гигинтский кракен"
 STR_SYS_630_2_2,"An unknown submarine was observed in the area of the fall","Im Herbst wurde ein unbekanntes U-Boot beobachtet","В районе падения наблюдалась неизвестная подводная лодка"
@@ -1132,8 +1132,8 @@ STR_RUM_73,"In the inventory, you can compare ammunition by selecting and readin
 STR_RUM_74,"Usually a strong wind blows over the ocean","Normalerweise weht ein starker wind über den Ozean","Над океаном обычно дует сильный ветер"
 STR_RUM_75,"Rumors depend on the time of day and length of stay","Gerüchte hängen von der Tageszeit und der Dauer des Aufenthalts ab","Слухи меняются от времени дня и длительности пребывания"
 STR_RUM_76,"If MHQ is damaged by more than 0.5, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.5 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","При повреждении КШМ более 0.5 телепорт на нём не сработает. Всегда чините КШМ!"
-STR_RUM_77,Points for taking a city are given within a radius of 500 meters from its center,Punkte für die Einnahme einer Stadt werden in einem Umkreis von 500 Metern um ihr Zentrum vergeben,Очки за взятие города даются в радиусе 500 метров от его центра
-STR_RUM_78,A sunken vehicle can be saved if it is no deeper than -15 meters,Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -15 Meter ist,Утонувшую боевую машину можно достать с глубины не менее -15 метров
+STR_RUM_77,"Points for taking a city are given within a radius of 500 meters from its center","Punkte für die Einnahme einer Stadt werden in einem Umkreis von 500 Metern um ihr Zentrum vergeben","Очки за взятие города даются в радиусе 500 метров от его центра"
+STR_RUM_78,"A sunken vehicle can be saved if it is no deeper than -15 meters","Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -15 Meter ist","Утонувшую боевую машину можно достать с глубины не менее -15 метров"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"

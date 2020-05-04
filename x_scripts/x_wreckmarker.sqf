@@ -14,7 +14,7 @@ if (!isServer) exitWith {};
 #define __PRINT__
 
 private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay",
-        "_time_stamp", "_time", "_part","_depth","_depth1"];
+        "_time_stamp", "_time", "_part","_depth"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 _vehicle = _this;
@@ -147,7 +147,6 @@ if (_sunk) then {
                 _sunk = false;
                 _exit = true;
             }; // the vehicle moved
-
         };
         if (_exit) exitWith{};
 
@@ -160,13 +159,13 @@ if (_sunk) then {
         deleteVehicle _vehicle;
     };
     sleep 0.5;
+    deleteMarker _marker; // remove marker anyway
     if ( isNull _vehicle ) exitWith{ // vehicle is deleted from memory, mark it for 5 seconds and exit
         _msg_time  = (_msg_time max time) + 6;
         _msg_delay = _msg_time - time;
         ["msg_to_user", "", [["STR_SYS_630_2", _type_name, "STR_SYS_630_2_NUM" call SYG_getRandomText]],0, _msg_delay,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
     };
 
-    deleteMarker _marker; // remove lost marker
 };
 
 if (_sunk) exitWith{}; // that's all, vehicle lost permanently
