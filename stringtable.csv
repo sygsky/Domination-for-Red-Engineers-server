@@ -140,7 +140,7 @@ STR_SYS_55,"The intelligence agent will arrive in the next version. He will info
 STR_SYS_56,"Just a rumor:","Nur Gerüchte:","А пока только слухи:"
 STR_SYS_56_1,"And a rumor:","Auch neue Gerüchte:","Также слухи:"
 STR_SYS_57,"Settings","Einstellung","Настройки"
-STR_SYS_58,"Side mission:","Side mission:","Дополнительное задание:"
+STR_SYS_58,"Side mission:","Side mission:","Доп. задание:"
 STR_SYS_58_1,"Secondary Main Target Mission:","Sekundäre Ziel Der Mission:","Дополнительный приказ:"
 STR_SYS_58_2,"Wait for further instructions...","Warten Sie auf weitere Anweisungen...","Ожидайте дополнительно приказа..."
 STR_SYS_59,"Main target:","Ziel:","Главная цель:"
@@ -831,7 +831,7 @@ STR_SYS_1151,"Finish SM(# %1)","Fertig SM(# %1)","Завершите доп(# %1
 STR_SYS_1151_1,"The Resistance of Sahrani asks you to complete the next side mission (# %1)","Guerilla Сахрани bitten abzuschließen SM (# %1)!","Партизаны Сахрани просят вас завершить доп. миссию (# %1)!"
 STR_SYS_1152,"The people of Sahrani thank you for your liberation mission!","Die Leute von Sahrani danke für Sie Befreiung mission!","Сопротивление Сахрани благодарит Вас за выполнение освободительной миссии!"
 
-STR_SYS_1160,T'was a spotter (+%1)!,Es war ein spotter (+%1)!,Это был корректировщик (+%1)!
+STR_SYS_1160,"T'was a spotter (+%1)!","Es war ein spotter (+%1)!","Это был корректировщик (+%1)!"
 
 STR_SYS_1170,You were killed by the AI of %1,Sie wurden getötet durch die KI von %1,Вы были убиты подчинённым %1
 STR_SYS_1171,Recruit Barracks,Einberufungsstelle,Призывной пункт
