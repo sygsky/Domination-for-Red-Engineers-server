@@ -752,8 +752,8 @@ STR_SYS_618,"Viewdistance restore to %1 m.","Viewdistance Durchmesser restaurier
 STR_SYS_620,"Here it is - lying on the shore! If I collect it in 2 minutes, the waves will not carry it away!","Hier ist es - am Ufer liegen! Wenn ich es in 2 Minuten sammle, werden die Wellen es nicht wegtragen!","Да вот же оно, лежит на берегу! Если соберу за 2 минуты, то волны не унесут!"
 STR_SYS_620_0,"My weapon drowned, maybe I can find something on the beach nearby?","Meine Waffe ist ertrunken, vielleicht kann ich am Strand in der Nähe etwas finden?","Оружие утопил, так может на берегу найду?"
 STR_SYS_620_1,"You drowned your weapons foreve-e-e-er","Du hast deine Waffen für immer ertränkt","Утопил я оружие своё-о-о... безвозвратно-о-о!"
-STR_SYS_620_2,"I just need to get out on a gentle Bank, so I'll find it faster...","Ich muss nur auf eine sanfte Bank gehen, damit ich es schneller finde...","Надо только выбраться на пологий берег, так быстрее найду..."
-STR_SYS_620_3,"depth %1 m.","tiefe %1 m.","глуб. %1 м."
+STR_SYS_620_2,"I just need to get out on a gentle Bank, so I'll find it faster...","Ich muss nur auf eine sanfte Bank gehen, damit ich es schneller finde...","Надо только выбраться на пологий берег, проще искать..."
+STR_SYS_620_3,"depth %1 m.","tiefe %1 m.","гл. %1 м."
 
 STR_SYS_630,"The waters of the oceans closed over the shamefully lost %1 (%2 m.). Someone has to be shot for this!","Das Wasser der Ozeane schloss sich über dem schändlich verlorenen %1 ( %2 m.). Dafür muss jemand erschossen werden!","Воды мирового океана сомкнулись над постыдно утерянным %1 ( %2 м.). Кого-то предстоит за это расстрелять!"
 STR_SYS_630_1,"The lost %1 can still be restored if it is delivered to the appropriate service!","Das verlorene %1 kann noch wiederhergestellt werden, wenn es an den entsprechenden service geliefert wird!","Утерянный %1 можно ещё спасти, если доставить на сервис возрождения!"
@@ -1308,6 +1308,7 @@ STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
 STR_MIS_18,"%1 wreck","%1 Wrack","обл. %1"
 STR_MIS_18_1,"Wreck: %1, deep %2 m.%3","Trümmer: %1, Tief. %2 m.%3","обл. %1, глуб. %2 м.%3"
+STR_MIS_18_BAD,"Wreck: %1/%2/%3 m.","Trümmer: %1/%2/%3 m.","Крушение %1/%2/%3 м."
 STR_MIS_18_2,", it's over",", es ist vorbei",", всё кончено"
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 STR_MIS_DEAD,dead,tot,мёртв

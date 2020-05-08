@@ -10,18 +10,30 @@ if (!isServer) exitWith {};
 
 #define DEPTH_TO_SINK -7 // when vehicle considered to have sunk
 #define RIP_MARKER_TIME -5 // how long to show rip marker after vehicle is set to null
+#define RIP_MARKER_LIVE_PERIOD (6 * 3600) // 6 hours
+// #define RIP_MARKER_LIVE_PERIOD (6 * 60) // 6 minutes for DEBUG purposes
 
 #define __PRINT__
 
 private ["_vehicle", "_mname", "_sav_pos", "_type_name", "_marker", "_i", "_element", "_str","_msg_time","_msg_delay",
-        "_time_stamp", "_time", "_part","_depth"];
+        "_time_stamp", "_time", "_part","_depth","_driver", "_drname", "_local"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
-_vehicle = _this;
 
+_vehicle = _this;
+_local   = local _vehicle;
+_driver  = driver _vehicle;
 //+++++++++++++++++++++++++++++++++++++++++
 // Wait until vehicle is dead
-while {alive _vehicle} do {sleep (5.532 + random 2.2)};
+while {alive _vehicle} do { if ( alive driver _vehicle) then {_driver = driver _vehicle}; sleep (5.532 + random 2.2)};
+_drname = "";
+if (!isNull _driver ) then {
+    if (!isPLayer _driver) then { _driver = leader _driver;}; // try to penalize leader of AI
+    if (isPlayer _driver) exitWith {
+        _drname = name _driver;
+        if (_drname in ["Error: No vehicle", "Error: No unit"]) then { _drname = ""}; // no name
+    };
+};
 
 while {speed _vehicle > 4} do {sleep (1.532 + random 2.2)};
 sleep 0.01;
@@ -29,11 +41,19 @@ sleep 0.01;
 _type_name = [typeOf (_vehicle),0] call XfGetDisplayName;
 
 #ifdef __PRINT__
-hint localize format["+++ x_wreckmarker.sqf: script start with %1, in water %2, height %3", _type_name, surfaceIsWater (getPos _vehicle), round ((_vehicle modelToWorld [0,0,0]) select 2)];
+hint localize format[ "+++ x_wreckmarker.sqf: script for %1, in water %2, Z %3, driver %4, vectorUp %5, local %6",
+    _type_name,
+    surfaceIsWater (getPos _vehicle),
+    round ((_vehicle modelToWorld [0,0,0]) select 2),
+    if (isNull _driver) then {"null"} else {name _driver},
+    vectorUp _vehicle,
+    _local
+    ];
 #endif
 
 if ((vectorUp _vehicle) select 2 < 0) then {_vehicle setVectorUp [0,0,1]};
 while {speed _vehicle > 4} do {sleep (0.532 + random 1)};
+if ((vectorUp _vehicle) select 2 < 0) then {_vehicle setVectorUp [0,0,1]};
 
 _mname = format ["%1", _vehicle];
 _sav_pos = position _vehicle;
@@ -46,6 +66,7 @@ hint localize format["+++ x_wreckmarker.sqf(0): marker title ""%1""", _str] ;
 
 [_mname, _sav_pos,"ICON","ColorBlue",[1,1], _str, 0, "DestroyedVehicle"] call XfCreateMarkerGlobal; // "%1 wreck", variable _marker is assigned in call of XfCreateMarkerGlobal function
 d_wreck_marker set [ count d_wreck_marker, [ _mname, _sav_pos, _type_name ] ];
+
 
 // #347.1: Падающую в море, на глубину более N метров, любого рода технику сразу уничтожать.
 _msg_time = time;
@@ -62,7 +83,6 @@ while { (!isNull _vehicle) && (([_vehicle, (markerPos _marker)] call SYG_distanc
     sleep (3.321 + random 2.2);
 
     if ( ( surfaceIsWater (getPos _vehicle) ) ) then {
-        if ( ( vectorUp _vehicle ) select 2 < 0 ) then { _vehicle setVectorUp [0,0,1]; };
         while {speed _vehicle > 4} do {sleep (0.532 + random 1)};
         _sunk = ( (_vehicle modelToWorld [0,0,0]) select 2 ) < DEPTH_TO_SINK; // it sunk!!!
     };
@@ -81,8 +101,8 @@ if (count d_wreck_marker > 0) then {
 };
 d_wreck_marker = d_wreck_marker - ["X_RM_ME"];
 deleteMarker _marker;
-
-if (_sunk) then {
+_depth = 0;
+if ( _sunk ) then {
     // remove vehicle, add lost marker and remove it after time designated in this code section
 #ifdef __PRINT__
     hint localize format["+++ x_wreckmarker.sqf(%1): %2 in water on depth %3, sunk!", round(time - _time_stamp), _type_name, round ((_vehicle modelToWorld [0,0,0]) select 2)];
@@ -118,7 +138,6 @@ if (_sunk) then {
         };
 
         // change marker timer
-        _exit = false;
         for "_i" from 1 to _x do
         {
             sleep 1;
@@ -137,7 +156,7 @@ if (_sunk) then {
                 #endif
                 _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, localize "STR_MIS_18_2"] ;
                 sleep RIP_MARKER_TIME; // last farewell to sunk vehicle
-                _exit = true;
+                _sunk = false;
             }; // the vehicle removed
             // if vehicle moved (by user may be)
             if (([_vehicle, (markerPos _marker)] call SYG_distance2D) > 30) exitWith {
@@ -145,31 +164,41 @@ if (_sunk) then {
                 hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 moved from marker, goto x_wreckmarker2.sqf", round(time - _time_stamp), _type_name ];
             #endif
                 _sunk = false;
-                _exit = true;
             }; // the vehicle moved
         };
-        if (_exit) exitWith{};
-
+        if ( !_sunk ) exitWith{};
     } forEach _marker_stage_arr;
 
-    if ( !isNull _vehicle && _sunk ) then {
+    if ( !isNull _vehicle && _sunk ) then {  // end of timer, user not get sunken vehicle
 #ifdef __PRINT__
         hint localize format[ "+++ x_wreckmarker.sqf(%1): deleteVehicle %2 after marker dynamic loop finished", round(time - _time_stamp), _type_name ];
 #endif
         deleteVehicle _vehicle;
     };
     sleep 0.5;
-    deleteMarker _marker; // remove marker anyway
-    if ( isNull _vehicle ) exitWith{ // vehicle is deleted from memory, mark it for 5 seconds and exit
-        _msg_time  = (_msg_time max time) + 6;
-        _msg_delay = _msg_time - time;
-        ["msg_to_user", "", [["STR_SYS_630_2", _type_name, "STR_SYS_630_2_NUM" call SYG_getRandomText]],0, _msg_delay,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
-    };
 
+    if ( _sunk ) exitWith {
+
+        if (_drname != "") then { // remove marker later
+            // rename marker with bad boy name and keep it for predefined period
+            [_marker, format[localize "STR_MIS_18_BAD", _type_name, _drname, _depth ]] spawn {
+                (_this select 0) setMarkerText (_this select 1);
+                sleep RIP_MARKER_LIVE_PERIOD;
+                deleteMarker (_this select 0);
+            };
+        } else { deleteMarker _marker;};   // remove marker now
+
+        if ( isNull _vehicle ) then { // vehicle is deleted from memory, mark it for 5 seconds and exit
+            _msg_time  = (_msg_time max time) + 6;
+            _msg_delay = _msg_time - time;
+            ["msg_to_user", "", [["STR_SYS_630_2", _type_name, "STR_SYS_630_2_NUM" call SYG_getRandomText]],0, _msg_delay,0,"under_water_3"] call XSendNetStartScriptClientAll; // message output
+        };
+    };
 };
 
 if (_sunk) exitWith{}; // that's all, vehicle lost permanently
 
+if (!_sunk) then { deleteMarker _marker; }; // remove sunk marker
 d_wreck_marker = d_wreck_marker - ["X_RM_ME"];
 _vehicle execVM "x_scripts\x_wreckmarker2.sqf";
 if (true) exitWith {};
