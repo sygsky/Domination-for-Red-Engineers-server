@@ -240,7 +240,7 @@ SYG_townScoresAdd = {
 // Prints to arma_server.RPT all player scores got during this town liberation process
 // call: _town_name call SYG_townScoresPrint
 SYG_townScoresPrint = {
-    private ["_arr","_arr1","_i","_id","_item","_diff","_str"];
+    private ["_arr","_arr1","_sum", "_i","_id","_item","_diff","_str","_time_diff"];
     //hint localize format["++++++ Town ""%1"" personal players score:",_this];
     _arr  = SYG_townScores select 0;
     _arr1 = SYG_townScores select 1;
@@ -248,6 +248,7 @@ SYG_townScoresPrint = {
     hint localize format[ "++++++ Town ""%1"" players score report ++++++", _this ];
 
     _sum = 0;
+    _time_diff = time - (SYG_townScores select 2);
     if (count _arr > 0) then {
         for "_i" from 0 to (count _arr)-1 do
         {
@@ -255,15 +256,16 @@ SYG_townScoresPrint = {
             _item = d_player_array_misc select _id;
             _diff =  (_item select 3) - (_arr1 select _i); // new score minus old one
             _sum  = _sum + _diff;
-            hint localize format[ "++++++ ""%1"": %2", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff } ];
+            hint localize format[ "++++++ ""%1"": %2 (%3 per h.)", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff }, round(_diff  * 3600 / _time_diff)];
         };
     };
 //    hint localize format["+++ [time, SYG_townScores select 2] %1", [time, SYG_townScores select 2]];
     _str =  [time, SYG_townScores select 2] call SYG_timeDiffToStr;
-    hint localize format["++++++ Town ""%1"" players score summary: %2 (aver. %3) during %4",
+    hint localize format["++++++ Town ""%1"" players score summary: %2 (avg. %3, %4 per h.) during %5",
         _this,
         _sum,
         if(count _arr > 0) then {round (_sum / (count _arr))} else {0},
+        _sum * 3600 / _time_diff,
         _str
     ];
     hint localize "]";
