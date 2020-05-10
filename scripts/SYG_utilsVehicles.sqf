@@ -1630,10 +1630,16 @@ SYG_createOwnGroup =
     [d_own_side] call x_creategroup
 };
 
+SYG_createCivGroup =
+{
+    while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
+    ["CIV"] call x_creategroup
+};
+
 SYG_addToExtraVec = {
     if (typeName _this == "OBJECT") exitWith
     {
-        extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_this];
+        extra_mission_vehicle_remover_array set [count  extra_mission_vehicle_remover_array, _this];
     };
     if ( typeName _this != "ARRAY") exitWith {};
     extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _this;
@@ -1890,7 +1896,7 @@ SYG_addHorn = {
 };
 
 /**
-Find leader for goup, if leader is null, return first alive from units of gorup
+Find leader for group, if leader is null, return first alive from units of gorup
  * call: _leader = _grp call _get_leader;
  */
 SYG_getLeader = {
