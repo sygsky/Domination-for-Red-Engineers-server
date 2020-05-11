@@ -148,9 +148,21 @@ if (isServer) then {
 #endif
 
 #ifdef __ADDITIONAL_BASE_VEHICLES__
+
 #ifdef __DEFAULT__
     [] execVM "scripts\addRndVehsOnBase.sqf"; // all positions in file are set for Sahrani only
+
+ #ifdef __SCUD__
+    if (SYG_found_SCUD) then {
+        hint localize "+++ SCUD addon gig_scud.sqf installed";
+        [] execVM "scripts\addSCUD.sqf";
+    } else {
+        hint localize "--- SCUD addon gig_scud.sqf not installed";
+    };
+ #endif
+
 #endif
+
 #endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base

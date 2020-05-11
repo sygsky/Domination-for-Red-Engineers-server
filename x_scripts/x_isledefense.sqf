@@ -195,7 +195,7 @@ _make_isle_grp = {
         _agrp setCombatMode "YELLOW";
         _agrp setSpeedMode "NORMAL";
 	};
-	_grp_array = [_agrp, _start_point, 0,_params,[],-1,0,[],400 + (random 100),1, [0,false,true,200,true]]; // param 10: [no rejoin,no debug print,prevent wp on islet generation]
+	_grp_array = [_agrp, _start_point, 0,_params,[],-1,0,[],400 + (random 100),1, [0,false,true,200,true]]; // param 10: [no rejoin,no debug print,prevent wp on islet generation, hills  dist 200, skip in base WP]
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 	[_agrp, _units, [0,0,0], _vecs, DELAY_NOT_SET, STATUS_NORMAL, _grp_array, _patrol_type]
 }; // _make_isle_grp = {...};

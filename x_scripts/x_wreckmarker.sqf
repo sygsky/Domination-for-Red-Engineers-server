@@ -8,7 +8,7 @@
 
 if (!isServer) exitWith {};
 
-#define DEPTH_TO_SINK -7 // when vehicle considered to have sunk
+#define DEPTH_TO_SINK -1 // when vehicle considered to have sunk
 #define RIP_MARKER_TIME -5 // how long to show rip marker after vehicle is set to null
 #define RIP_MARKER_LIVE_PERIOD (6 * 3600) // 6 hours
 // #define RIP_MARKER_LIVE_PERIOD (6 * 60) // 6 minutes for DEBUG purposes
@@ -68,22 +68,19 @@ hint localize format["+++ x_wreckmarker.sqf(0): marker title ""%1""", _str] ;
 d_wreck_marker set [ count d_wreck_marker, [ _mname, _sav_pos, _type_name ] ];
 
 
-// #347.1: Падающую в море, на глубину более N метров, любого рода технику сразу уничтожать.
+// #347.1: Inform user about vehicle being in water
 _msg_time = time;
 if ((surfaceIsWater (getPos _vehicle)) ) then {
     // the vehicle didn't sink deep enough
     _msg_delay = 12 + (random 10);
-    ["msg_to_user", "", [["STR_SYS_630_1", _type_name]],0,_msg_delay,0,"good_news"] call XSendNetStartScriptClientAll; // message output
+    ["msg_to_user", "", [["STR_SYS_630_1", _type_name]],0,_msg_delay,0,"good_news"] call XSendNetStartScriptClientAll; // "The lost %1 can still be restored if it is delivered to the appropriate service!"
     _msg_time = time + _msg_delay;
 };
 
 _sunk = false;
 while { (!isNull _vehicle) && (([_vehicle, (markerPos _marker)] call SYG_distance2D) < 30) && (!_sunk) } do {
-
     sleep (3.321 + random 2.2);
-
-    if ( ( surfaceIsWater (getPos _vehicle) ) ) then {
-        while {speed _vehicle > 4} do {sleep (0.532 + random 1)};
+    if ( ( surfaceIsWater (getPos _vehicle) ) ) exitWith {
         _sunk = ( (_vehicle modelToWorld [0,0,0]) select 2 ) < DEPTH_TO_SINK; // it sunk!!!
     };
 };
@@ -143,7 +140,7 @@ if ( _sunk ) then {
             sleep 1;
             _back_counter = (_back_counter - 1) max 0;
             _depth = round((_vehicle modelToWorld [0,0,0]) select 2); // Error #372 (update depth of vehicle)
-            _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, format[" (%1)", _back_counter] ];
+            _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, format[localize "STR_MIS_18_3", _back_counter] ];
 
             // check any changes in marked vehicle status
 

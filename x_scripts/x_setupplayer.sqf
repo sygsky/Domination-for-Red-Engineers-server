@@ -1101,6 +1101,14 @@ if (player_can_call_drop) then {
 if ( SYG_found_EditorUpdate_v102 ) then {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_4"]}
 else {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_5"]};
 
+#ifdef __SCUD__
+if (SYG_found_SCUD ) then {
+    "+++ SCUD addon gig_scud.sqf installed on client" call XfGlobalChat;
+} else {
+    "+++ SCUD addon gig_scud.sqf not installed on client!!! Must be present simultaneously on the server and client" call XfGlobalChat;
+};
+#endif
+
 if (random 10 < 7) then
 {
     _local_msg_arr = _local_msg_arr + [localize "STR_SYS_RUMORS"]
@@ -1882,6 +1890,13 @@ if (name player == "EngineerACE") then {
     // player setPos [16545,12875,0];
     // MRR1 setPos [9407,5260,0]; // move teleport to the positon at SM #40 (hostages in Tiberis)
     if ( score player < 1500 ) then { player addScore (1500 - (score player) ) };
+};
+#endif
+
+#ifdef __SCUD__
+if (name player == "HE_MACTEP") then {
+    hint localize "+++ x_setuplayer,sqf: __SCUD__";
+    if ( score player < 1000 ) then { player addScore (1000 - (score player) ) };
 };
 #endif
 
