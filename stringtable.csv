@@ -1308,8 +1308,9 @@ STR_MIS_16,Start,Starten,Старт
 STR_MIS_17,T1,T1,Гр1
 STR_MIS_18,"%1 wreck","%1 Wrack","обл. %1"
 STR_MIS_18_1,"Wreck: %1, deep %2 m.%3","Trümmer: %1, Tief. %2 m.%3","обл. %1, глуб. %2 м.%3"
-STR_MIS_18_BAD,"Wreck: %1/%2/%3 m.","Trümmer: %1/%2/%3 m.","Крушение %1/%2/%3 м."
 STR_MIS_18_2,", it's over",", es ist vorbei",", всё кончено"
+STR_MIS_18_3," (%1s)"," (%1s)"," (%1с)"
+STR_MIS_18_BAD,"Wreck: %1/%2/%3 m.","Trümmer: %1/%2/%3 m.","Крушение %1/%2/%3 м."
 STR_MIS_19,"Arti Two Trg.","Arti Two Trg.","Арт. цель 2"
 STR_MIS_DEAD,dead,tot,мёртв
 STR_MIS_ALIVE,alive,lebendig,жив

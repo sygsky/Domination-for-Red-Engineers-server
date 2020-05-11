@@ -138,7 +138,7 @@ SYG_nearestLocationD = {
  *     _ret = [_location, _locTypeList] call SYG_nearestLocationA;
  * returns:
  *      location : nearest location with designated in _locTypeList names or
- *      locationNull if bad or  empty list is designated
+ *      locationNull if bad parameters used or  empty list is designated
  *
  * to get position of location, call: _pos = position _loc;
  * to text of location call: _text = text  _loc;
@@ -152,8 +152,9 @@ SYG_nearestLocationA = {
 		case "LOCATION": {_pos = locationPosition _pos;};
 		case "ARRAY": {/* already correct format */};
 		case "GROUP": { _pos = if ( isNull leader _pos) then {[0,0,0]} else {position leader _pos};};
-		default {/* error */};
+		default {_pos = []};
 	};
+	if (count _pos < 3) exitWith {locationNull};
 	_lst = arg(1);
 	switch (typeName _lst) do
 	{
