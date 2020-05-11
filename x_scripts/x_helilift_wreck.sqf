@@ -1,12 +1,12 @@
 // by Xeno. x_helilift_wreck.sqf
 
-#define __PRINT__
+//#define __PRINT__
 
 private ["_id","_menu_lift_shown","_nearest","_nearest_pos","_npos","_nx","_ny","_p_x","_p_y","_p_z","_pos","_posi","_px","_py","_release_id","_vehicle"];
 
 if (!X_Client) exitWith {};
 
-
+#define MAX_DEPTH_TO_LIFT -15
 _vehicle = _this select 0;
 
 Attached_Vec = objNull;
@@ -22,9 +22,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 	if ((driver _vehicle) == player) then {
 		_pos = getPos _vehicle;
 
-		if (!Vehicle_Attached && /* (_pos select 2 > 2.5) && */ (_pos select 2 < 40)) then {
+		if (!Vehicle_Attached && /* (_pos select 2 > 2.5) && */ (_pos select 2 < 30)) then {
 			_nearest = objNull;
-			_nobjects = nearestObjects [ _vehicle, [ "LandVehicle", "Air", "Ship" ], 50 ]; //+++ Sygsky: changed search dist from 70 to 100 m
+			_nobjects = nearestObjects [ _vehicle, [ "LandVehicle", "Air", "Ship" ], 40 ]; //+++ Sygsky: changed search dist from 70 to 100 m
 			if (count _nobjects > 0) then {
 				_dummy = _nobjects select 0;
 				if (_dummy == _vehicle) then {
@@ -75,14 +75,17 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         Vehicle_Released = false;
                         Attached_Vec = objNull;
                     };
+
                     // task #347.1: vehicle is too deep in water to get in
-                    if ( (surfaceIsWater (getPos _nearest)) && ( ( ( _nearest modelToWorld [0,0,0] ) select 2 ) < -7 ) ) exitWith {
+/**
+                    if ( (surfaceIsWater (getPos _nearest)) && ( ( ( _nearest modelToWorld [0,0,0] ) select 2 ) < MAX_DEPTH_TO_LIFT ) ) exitWith {
                         [_vehicle, format[localize "STR_SYS_38_2",typeOf _nearest, round ( ( _nearest modelToWorld [0,0,0] ) select 2 )]] call XfVehicleChat; // "This vehicle (%1) is too deep (%2 m.), we will not get it, alas..."
                         Vehicle_Attached = false;
                         Vehicle_Released = false;
                         Attached_Vec = objNull;
                         call SYG_playWaterSound;
                     };
+*/
 #ifdef __PRINT__
                     if ( (surfaceIsWater (getPos _nearest)) ) then {
                         hint localize format["+++ x_helilift_wreck.sqf: %1 mTW %2,gP %3,gPA %4,d %5; %6 mTW %7,gP %8,gPA %9",

@@ -70,7 +70,7 @@ XClearSidemission = {
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
-					if (_was_captured && !(isPlayer _x)) then { // vehicle was captured by player
+					if (_was_captured ) then { // vehicle was captured by player
 						[_x] call XAddCheckDead;
 					} else {
 						{deleteVehicle _x} forEach ([_x] + crew _x);
@@ -148,111 +148,156 @@ if (!d_old_ammobox_handling) then {
 XCheckSMHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
 	_vehicle = _this select 0;
+
 	#ifdef __TT__
 	_vehicle addEventHandler ["killed", {side_mission_winner = (switch (side (_this select 1)) do {case resistance:{1};case west:{2};default{-1};});side_mission_resolved = true;}];
 	#endif
+
 	#ifndef __TT__
 	_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true;}];
 	#endif
 
-	_vec_init = "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
+   _vehicle addEventHandler ["hit", {(_this select 0) setDamage 0}];
+   _vehicle addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
+
 	#ifdef __WITH_SCALAR__
 	if (typeOf _vehicle == "Land_telek1") then {
 		_vec_init = _vec_init + "xhandle = [this] execVM ""scripts\scalar.sqf"";";
+        _vehicle setVehicleInit  _vec_init;
+        processInitCommands;
 	};
 	#endif
-	_vehicle setVehicleInit  _vec_init;
-	processInitCommands;
 
 	extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_vehicle];
 	friendly_near_sm_target = false;
 	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
 	_trigger setTriggerArea [20, 20, 0, false];
+
 	#ifndef __TT__
+
 	_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", false];
+
 	#else
+
 	_trigger setTriggerActivation ["WEST", "PRESENT", false];
+
 	#endif
+
 	_trigger setTriggerStatements["this && ((getpos (thislist select 0)) select 2 < 20)", "friendly_near_sm_target = true", ""];
+
 	#ifdef __TT__
 	_trigger2 = createTrigger["EmptyDetector" ,position _vehicle];
 	_trigger2 setTriggerArea [20, 20, 0, false];
 	_trigger2 setTriggerActivation ["GUER", "PRESENT", false];
 	_trigger2 setTriggerStatements["this && ((getpos (thislist select 0)) select 2 < 20)", "friendly_near_sm_target = true", ""];
 	#endif
+
 	while {!friendly_near_sm_target && alive _vehicle} do {
 		if (X_MP) then {
 			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 		};
 		sleep (1.021 + random 1);
 	};
+
 	if (alive _vehicle) then {
+	    _vehicle removeAllEventHandlers "hit";
+	    _vehicle removeAllEventHandlers "dammaged";
 	    hint localize "+++ friendly_near_sm_target is now true: remove HIT & DAMMAGE protect events";
-		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
-		processInitCommands;
 	};
+
 	deleteVehicle _trigger;
+
 	#ifdef __TT__
 	deleteVehicle _trigger2;
 	#endif
+
 	sleep 0.513;
-	clearVehicleInit _vehicle;
+
+	#ifdef __WITH_SCALAR__
+    clearVehicleInit _vehicle;
+	#endif
+
 };
 
-/*
- * Set target unvulnerable while any own side vehicle not in circle 20 meters and less than 20 m. height. After it tower became vulnerable again!
- */
-XCheckMTHardTarget = {
-	private ["_vehicle","_trigger","_trigger2"];
-	_vehicle = _this select 0;
-	_vehicle addEventHandler ["killed", {mt_spotted = false;mt_radio_down = true;["mt_radio_down",mt_radio_down,if (!isNull (_this select 1)) then { name (_this select 1) } else {""}] call XSendNetStartScriptClient;_this spawn x_removevehiextra;}];
+/**
+SYG_whoKilledMT = {
+    private ["_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_type","_newhouse","_house_type"];
+    // 1.check if tower was killed from some vehicle, not by units with explosive
+    _house = _this select 0;
+    _killer = _this select 1;
+    _restored = false;
+    ["+++ MTTarget ""killed"": house %1, killer %2, damage %3 m, vUp %4.", typeOf _house, typeOf _killer, damage _house, vectorUp _house];
 
-	#ifdef __TT__
-	_vehicle addEventHandler ["killed", {[4,_this select 1] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient;}];
-	#endif
-#ifdef __OLD__
-    _vehicle setVehicleInit "this addEventHandler [""hit"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];this addEventHandler [""dammaged"", {if (local (_this select 0)) then {(_this select 0) setDamage 0}}];";
-    processInitCommands;
-#else
-	_vehicle addEventHandler ["hit", {(_this select 0) setDamage 0}];
-	_vehicle addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
+    // Don't accept kill if done not by direct existing player action
+    if ( ! ( ( isNull  _killer) || (_killer isKindOf "CAManBase" ) ) ) then { // not NULL and not MAN, so some VEHICLE
+         hint localize format["+++ MTTarget: killer %1(not man), dist %2 m.", typeOf _killer, round(_killer distance _house)];
+        // killed NOT directly by man, but from some kind of vehicle!!
+
+        // 1.1 Don't wait animation end, create new TVTower creation
+        if (!(_house isKindOf "House")) exitWith {};
+
+        _time        = time;
+        _sleep_until = _time + 60;
+        _ruin        = objNull;
+        _house_type  = typeOf _house;
+        _pos         = getPos _house;
+        _ruin_type   = format["%1_ruin", _house_type];
+        if ( !(_ruin_type isKindOf "Ruins") ) then { _ruin_type = "Ruins"};
+        while { (time < _sleep_until) && (isNull _ruin)} do
+        {
+            _ruin = nearestObject [_pos, _ruin_type];
+            sleep 0.05;
+        };
+        if ( isNull _ruin) exitWith { hint localize format["--- MTTarget: _ruin not found in %1 sec, exit", time - _time ] };
+        hint localize format["+++ MTTarget: _ruin found in %1 sec", time - _time];
+        deleteVehicle _house;
+        deleteVehicle _ruin;
+        _newhouse = createVehicle [_house_type, _pos, [], 0, "CAN_COLLIDE"];
+        _vUp = vectorUp _newhouse;
+        hint localize format["+++ MTTarget: tower %1(%2) vUp %3 restored, XCheckMTHardTarget is assigned to !", _newhouse, typeOf _newhouse, _vUp];
+        _newhouse setVectorUp [0,0,1];
+        [_newhouse] spawn XCheckMTHardTarget;
+        _restored = true;
+    };
+    if (_restored) exitWith {};
+    //hint localize format["+++ MTTarget: killed by %1, go to Xeno code", typeOf _killer];
+    hint localize "--- MTTarget: _house != ""House"", folow  the path of Xeno";
+    // 2. Killed by man or by unknown cause, allow continue in natural way
+    mt_spotted = false;
+    mt_radio_down = true;
+    ["mt_radio_down",mt_radio_down,if (!isNull _killer) then { name _killer } else {""}] call XSendNetStartScriptClient;
+    _this spawn x_removevehiextra;
+};
+*/
+
+/**
+ by Sygsky 12-APR-2020
+ "Hit" event processing for Main Target (TV-Tower in target town)
+ */
+SYG_hitMTTarget = {
+    // drop damage if < 1 or hit not from man
+    if ( ((_this select 2)  >= 1) &&  ((typeOf (_this select 1)) isKindOf "CAManBase" ) ) exitWith {
+//           player groupChat format["Damage %1 accepted", _this select 2]
+    };
+    (_this select 0) setDamage  ( ((damage (_this select 0) - (_this select 2))) max 0 ); // fix possible negative value
+//    player groupChat format["*** Not accepted: dmg %1, killer %2 (is CAManBase == %3), dist. %4 m", _this select 2, typeOf (_this select 1), (typeOf (_this select 1)) isKindof "CaManBase", round ((_this select 1) distance (_this select 0))]
+};
+
+//
+// Set target (always "Land_telek1" from x_createsecondary.sqf, line 320) unvulnerable while any own side vehicle not in circle 20 meters and less than 20 m. height.
+// After it tower became vulnerable again!
+// call as: [_obj_to_protect] call XCheckMTHardTarget
+//
+XCheckMTHardTarget = {
+    private ["_vehicle"];
+
+	if ( typeName _this != "ARRAY" ) then { _this = [_this] }; // allow any form of input, as array [_obj] as single object _obj
+	_vehicle = _this select 0;
+	_vehicle addEventHandler ["killed", { _this execVM "scripts\eventKilledMT.sqf" } ]; // protect the tower from forbidden attacks
+#ifdef __TT__
+	_vehicle addEventHandler ["killed", { [ 4, _this select 1 ] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient; } ];
 #endif
-	friendly_near_mt_target = false;
-	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
-	_trigger setTriggerArea [20, 20, 0, false];
-	_sound = call SYG_fearSound;
-	_trigger setSoundEffect [_sound, "", "", ""];
-	#ifndef __TT__
-	_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", false]; // trigger on "EAST PRESENT" for Red Engineers server
-	#else
-	_trigger setTriggerActivation ["WEST", "PRESENT", false];
-	#endif
-	_trigger setTriggerStatements["this && ((getpos (thislist select 0)) select 2 < 20)", "friendly_near_mt_target = true", ""];
-	#ifdef __TT__
-	_trigger2 = createTrigger["EmptyDetector" ,position _vehicle];
-	_trigger2 setTriggerArea [20, 20, 0, false];
-	_trigger2 setTriggerActivation ["GUER", "PRESENT", false];
-	_trigger setTriggerStatements["this && ((getpos (thislist select 0)) select 2 < 20)", "friendly_near_mt_target = true", ""];
-	#endif
-	while {(!friendly_near_mt_target) && (alive _vehicle)} do {
-		sleep (1.021 + random 1);
-	};
-	if ( alive _vehicle ) then {
-	    hint localize "+++ friendly_near_mt_target is now true: remove HIT & DAMMAGE protect events";
-#ifdef __OLD__
-		_vehicle setVehicleInit "this removeAllEventHandlers ""hit""; this removeAllEventHandlers ""dammaged"";";
-		processInitCommands;
-#else
-		_vehicle removeAllEventHandlers "hit";
-		_vehicle removeAllEventHandlers "dammaged";
-#endif
-	};
-	deleteVehicle _trigger;
-	#ifdef __TT__
-	deleteVehicle _trigger2;
-	#endif
-	sleep 0.513;
-	clearVehicleInit _vehicle;
+	_vehicle addEventHandler [ "hit", { _this call SYG_hitMTarget } ]; // drop damage from easy forbidden attacks
 };
 
 #ifndef __TT__

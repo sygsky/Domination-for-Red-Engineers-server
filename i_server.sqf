@@ -280,6 +280,7 @@ d_crewman2_G = "SoldierGB";
 
 d_pilot_E = (
 	if (__ACEVer) then {
+// TODO: ACE_SoldierEPilot_IRAQ_RG - can be used too
 		"ACE_SoldierEPilot"
 	} else {
 		"SoldierEPilot"
@@ -321,6 +322,7 @@ d_allmen_E = (
 		]
 	}
 );
+
 d_allmen_W = (
 	[
 		if (__ACEVer) then {
@@ -348,6 +350,12 @@ d_allmen_W = (
 		}
 	]
 );
+
+// "basic" groups for forest action (*_WDL[_]*)
+d_allmen_forest_W = [];
+
+d_allmen_forest_E = d_allmen_E;
+
 d_allmen_G =
 	[
 		["SquadLeaderG","TeamLeaderG","SoldierGMG","SoldierGG","SoldierGAT","SoldierGMG","SoldierGB","SoldierGB","SoldierGB","SoldierGMedic"]+
@@ -1118,6 +1126,6 @@ d_enemy_aa_vehicle = ["ZSU"];
 //##############################################################################
 // add more civilian cars if you want
 d_civ_cars = ["Skoda","SkodaBlue","SkodaRed","SkodaGreen","car_hatchback","car_sedan"];
-// creates randomly spawned civilians (busses, cars, pedestrian) in some cities, if a player is near that city (to enable it set it to true)
+// creates randomly spawned civilians (buses, cars, pedestrian) in some cities, if a player is near that city (to enable it set it to true)
 d_create_civilian = false;
 };

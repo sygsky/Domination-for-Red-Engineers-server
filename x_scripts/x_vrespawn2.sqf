@@ -139,12 +139,12 @@ while {true} do {
 				["ammo_boxes",ammo_boxes] call XSendNetVarClient;
 			};
 			sleep 0.1;
-			deletevehicle _vehicle;
+			deleteVehicle _vehicle;
 			sleep 0.5;
 			_vehicle = objNull;
 			_vehicle = _type createVehicle (_vec_a select 3);
 			_vehicle setPos (_vec_a select 3);
-			_vehicle setdir (_vec_a select 4);
+			_vehicle setDir (_vec_a select 4);
 
 			_vec_a set [0, _vehicle];
 			_vehicle setVariable ["D_OUT_OF_SPACE",-1];
@@ -161,7 +161,7 @@ while {true} do {
 					//_vehicle call SYG_reammoMHQ; // this function call is useless on server computer
 
 					if (X_SPE) then { // on client running server
-						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Chopper Menu"
+						_vehicle addAction [localize "STR_SYS_79_2","x_scripts\x_vecdialog.sqf",[],-1,false]; // "MHQ menu"
 						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
 						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};
@@ -173,7 +173,7 @@ while {true} do {
 				case "MRR": {
 					call compile format ["MRRR%1=_vehicle;publicVariable ""MRRR%1"";", _number_v];
 					if (X_SPE) then {
-						_vehicle addAction [localize "STR_SYS_79_1","x_scripts\x_vecdialog.sqf",[],-1,false]; // "Chopper Menu"
+						_vehicle addAction [localize "STR_SYS_79_2","x_scripts\x_vecdialog.sqf",[],-1,false]; // "MHQ Menu"
 						_vehicle addEventHandler ["getin", {_this execVM "x_scripts\x_checkdriver.sqf";}];
 						_vehicle addEventHandler ["getout", {_this execVM "x_scripts\x_checkdriverout.sqf";}];
 					};

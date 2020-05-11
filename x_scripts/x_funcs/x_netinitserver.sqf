@@ -274,7 +274,6 @@ XHandleNetStartScriptServer = {
 
 			_arr1 = call SYG_lastTownsGet;
 			_arr2 = call SYG_lastPlayersGet;
-			_name call SYG_lastPlayersAdd; // add player to linked list of entered ones
 			if (((count _arr1) + (count _arr2)) > 0) then // if any towns/players are counted, inform user about them
 			{
 			    _str = [_arr1, ","] call SYG_joinArr;
@@ -283,6 +282,7 @@ XHandleNetStartScriptServer = {
                 _arr set [ count _arr, _str ];
                 _msg_arr set [ count _msg_arr, _arr ]; // "GRU: last towns%1,  last soldiers%2"
 			};
+			_name call SYG_lastPlayersAdd; // add player to linked list of entered ones
 
 			// TODO: add here more messages for the 1st greeting to user
 

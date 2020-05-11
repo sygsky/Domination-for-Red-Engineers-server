@@ -1,3 +1,4 @@
+// Xeno: x_scripts\x_funcs\x_commonfuncs.sqf
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
@@ -46,11 +47,14 @@ d_use_mod_tracked = false;
 XGDTTracked = {};
 #endif
 
-SYG_found_GL3 = "GL3" in _search_array;
-SYG_found_ai_spotting = "ai_spotting" in _search_array;
-SYG_found_TCN_GrenadeFix = "TCN_GrenadeFix" in _search_array;
+SYG_found_GL3               = "GL3" in _search_array;
+SYG_found_ai_spotting       = "ai_spotting" in _search_array;
+SYG_found_TCN_GrenadeFix    = "TCN_GrenadeFix" in _search_array;
 SYG_found_EditorUpdate_v102 = "EditorUpdate_v102" in _search_array;
 
+#ifdef __SCUD__
+SYG_found_SCUD               = "GIG_Scud" in _search_array;
+#endif
 
 hint localize format["+++ GL3 = %1, ai_spotting = %2, Grenade fix = %3 ", SYG_found_GL3, SYG_found_ai_spotting, SYG_found_TCN_GrenadeFix];
 #ifdef __ACE__

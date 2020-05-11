@@ -65,10 +65,11 @@ if (!isServer) exitWith {};
 #define PARAM_GRP_ARRAY 6   // group array used by x_groupsm.sqf
 #define PARAM_TYPE 7        // type of patrol "HP", "AP" etc
 
+#define STATUS_STUB -1              // this patrol not processed anymore
 #define STATUS_NORMAL 0             // normal patrol state
 #define STATUS_DEAD 1               // patrol is dead (killed) after being stoped
 #define STATUS_STOPPED 2            // patrol is stopped
-#define STATUS_STOPPED1 3           // patrol is stopped in chasm
+#define STATUS_STOPPED1 3           // patrol is stopped in chasm. TODO: now not works, improve it
 #define STATUS_WAIT_RESTORE 4       // patrol waits for restore
 #define STATUS_DEAD_WAIT_RESTORE 5  // patrol waits for restore after being killed from player[s]
 
@@ -97,17 +98,17 @@ _make_isle_grp = {
 	_start_point = []; //_params call XfGetRanPointSquare;
 	while {(count _start_point) == 0} do {
 		_start_point = _params call XfGetRanPointSquare;
-		if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];}; // try next, skip islet point
+		if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];};  // try next, skip islet point
 		sleep 0.4;
 	};
-#ifdef __DEBUG__
+#ifdef __SYG_PRINT_ACTIVITY__
     hint localize format["+++ x_isledefense.sqf: make isle group, start point %1", _start_point];
 #endif
 #ifdef __TT__
 	sleep 0.753;
 #else
 	_dummycounter = 0;
-	while {_start_point distance FLAG_BASE < 1000 && _dummycounter < 99} do // TODO - find start points far from active war zones (airbase, targets etc)
+	while {_start_point distance FLAG_BASE < 1200 && _dummycounter < 99} do // TODO - find start points far from active war zones (airbase, targets etc)
 	{
 		_start_point = []; //_params call XfGetRanPointSquare;
 		 while {count _start_point == 0} do {
@@ -149,7 +150,7 @@ _make_isle_grp = {
         };
     };
 
-//#ifdef __DEBUG__
+//#ifdef __SYG_PRINT_ACTIVITY__
 //    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
 //#endif
 
@@ -194,7 +195,7 @@ _make_isle_grp = {
         _agrp setCombatMode "YELLOW";
         _agrp setSpeedMode "NORMAL";
 	};
-	_grp_array = [_agrp, _start_point, 0,_params,[],-1,0,[],400 + (random 100),1, [0,false,true]]; // param 10: [no rejoin,no debug print,prevent wp on islet generation]
+	_grp_array = [_agrp, _start_point, 0,_params,[],-1,0,[],400 + (random 100),1, [0,false,true,200,true]]; // param 10: [no rejoin,no debug print,prevent wp on islet generation, hills  dist 200, skip in base WP]
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 	[_agrp, _units, [0,0,0], _vecs, DELAY_NOT_SET, STATUS_NORMAL, _grp_array, _patrol_type]
 }; // _make_isle_grp = {...};
@@ -221,7 +222,7 @@ _replace_grp =
 
 	{_x setVariable ["PATROL_ITEM", _i]} forEach _vecs;
 
-#ifdef __DEBUG__
+#ifdef __SYG_PRINT_ACTIVITY__
     hint localize format["+++ x_isledefense.sqf: group created"];
 #endif
 
@@ -521,6 +522,7 @@ _show_absence = false; // disable patrol absence message at start as patrol are 
 //
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
 //
+//  if( current_counter >= number_targets ) exitWith {"All towns complated, no more patrols"}
 while { true } do {
 
     _time = time; // mark time just in case
@@ -528,7 +530,7 @@ while { true } do {
 	if ( (time - _time) >= DELAY_RESPAWN_STOPPED ) then // mission returned after first player waiting
 	{
 	    _delta = time - _time;  // how many time mission was sleeping without movement
-	    hint localize format["+++ x_isledefence: after first player respawn patrols timeouts increased by %1 sec.", round(_delta)];
+	    hint localize format["+++ x_isledefence: after sleeping during %1 sec. next player entered and respawn patrols timeouts updated.", round(_delta)];
 	    {
 	        _new_timestamp = argp(_x, PARAM_TIMESTAMP) + _delta;
             _x set [PARAM_TIMESTAMP, _new_timestamp]; // increment timestamp to continue same behaviur as before sleep
@@ -536,7 +538,7 @@ while { true } do {
 	};
 
 	//__DEBUG_NET("x_isledefense.sqf",(call XPlayersNumber))
-//#ifdef __DEBUG__
+//#ifdef __SYG_PRINT_ACTIVITY__
 //    hint localize "+++ x_isledefense.sqf: loop start";
 //#endif
 	//
@@ -560,7 +562,7 @@ while { true } do {
 		_stat          = argp(_igrpa, PARAM_STATUS); // status of patrol group
 		_timestamp     = argp(_igrpa, PARAM_TIMESTAMP); // time to wait before create new patrol
 		_igrppos       = argp(_igrpa, PARAM_LAST_POS); // last stored position of the group
-//#ifdef __DEBUG__
+//#ifdef __SYG_PRINT_ACTIVITY__
 //        hint localize format["+++ x_isledefense.sqf: loop id %1, grp %2, stat %3, timestamp %4, pos %5 ", _i, _igrp, _stat, _timestamp, _igrppos];
 //#endif
 
@@ -570,6 +572,17 @@ while { true } do {
             // replace group waiting for restore with new one if wait time is out
 			if ( _stat == STATUS_WAIT_RESTORE  || _stat == STATUS_DEAD_WAIT_RESTORE) then
 			{
+			    if (current_counter >= number_targets) then {
+			        // not replace dead group as enemy is fled
+                #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
+                    hint localize format["+++ x_isledefence: patrol #%1 will not restored as all main targets completed", _i];
+                #endif
+   					_igrpa set [PARAM_STATUS, STATUS_STUB];
+			        breakTo "main_loop";
+			        // TODO: Send remaining  groups to a certain point on the coast, with the goal of transporting them back to the United States
+			        // TODO: select this point from predefined ones set manually in the editor
+			    };
+
 				if (time > _timestamp) then 
 				{
 					_i call  _replace_grp;
@@ -610,6 +623,8 @@ while { true } do {
 				};
 				breakTo "main_loop";
 			};
+
+            if ( _stat == STATUS_STUB ) then { breakTo "main_loop"};
 
 			_vecs = argp(_igrpa, PARAM_VEHICLES);
 
@@ -781,7 +796,13 @@ while { true } do {
 		{
     		_stat = argp( _igrpa, PARAM_STATUS ); // status of patrol group
             if ( (_stat  == STATUS_DEAD) || (_stat  == STATUS_DEAD_WAIT_RESTORE)) then {_str  = _str + "<DEAD>; ";}
-            else {_str  = _str + "<EMPTY>; ";}; // group/vehicles not exist more
+            else {
+                if ( _stat  == STATUS_STUB ) then { _str  = _str + "<EXPIRE>; "}
+                else {
+                    //  if (_stat == STATUS_WAIT_RESTORE) ...
+                    _str  = _str + "<EMPTY>; ";
+                };
+            }; // group/vehicles not exist more
 		}
 		else
 		{

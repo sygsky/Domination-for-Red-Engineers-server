@@ -32,16 +32,6 @@ X_XMarkerVehicles = {
 	sleep 0.11;
 };
 
-// prepare players variables to speed up marker drawing
-SYG_players_arr =
-    [
-     {RESCUE},{RESCUE2},
-     {alpha_1},{alpha_2},{alpha_3},{alpha_4},{alpha_5},{alpha_6},{alpha_7},{alpha_8},
-     {bravo_1},{bravo_2},{bravo_3},{bravo_4},{bravo_5},{bravo_6},{bravo_7},{bravo_8},
-     {charlie_1},{charlie_2},{charlie_3},{charlie_4},{charlie_5},{charlie_6},{charlie_7},{charlie_8},{charlie_9},
-     {delta_1},{delta_2},{delta_3},{delta_4}
-    ];
-
 SYG_markerRefreshTime = time;   // time to refresh player markers
 SYG_activeMarkers = [];         // marker active during predefined interval
 /**
@@ -364,11 +354,19 @@ X_XAI_Markers = {
 			_unit = _units select _abcdef;
 			if (alive _unit) then {
 				(format[_mkname, _abcdef]) setMarkerPosLocal position _unit;
+
+                // 0 = player markers turned off
+                // 1 = player markers with player names and healthess
+                // 2 = player markers without player names
+                // 3 = player markers with roles but no name
+                // 4 = player markers with player health, no name
+
 				switch (d_show_player_marker) do {
+				    case 3;
 					case 1: {(format[_mkname, _abcdef]) setMarkerTextLocal (str _abcdef)};
 					case 2: {(format[_mkname, _abcdef]) setMarkerTextLocal ""};
-					case 3: {(format[_mkname, _abcdef]) setMarkerTextLocal ""};
-					case 4: {(format[_mkname, _abcdef]) setMarkerTextLocal format["Health: %1", str(9 - round(9 * damage _unit)) ]};
+//					case 3: {(format[_mkname, _abcdef]) setMarkerTextLocal ""};
+					case 4: {(format[_mkname, _abcdef]) setMarkerTextLocal format["h%1", str((10 - round(10 * damage _unit)) mod 10)]};
 				};
 			} else {
 				(format[_mkname, _abcdef]) setMarkerPosLocal [0,0];

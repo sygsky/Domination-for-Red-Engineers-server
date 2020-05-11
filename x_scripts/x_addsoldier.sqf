@@ -1,6 +1,9 @@
 // by Xeno, x_addsoldier.sqf to add AI to the player
-private ["_type_soldier","_units","_ai_counter","_ai_side_char","_ai_side_unit","_msg_arr"];
+private ["_type_soldier","_units","_ai_counter","_ai_side_char","_ai_side_unit","_msg_arr","_pilot"];
 #include "x_setup.sqf"
+
+_ai_counter = {(!isPlayer _x) && (alive _x)} count _units; // alive AI counter
+if (isNil "ai_counter") then { ai_counter = _ai_counter }; // how many was recruited during this session
 
 _type_soldier = _this select 3;
 
@@ -8,8 +11,8 @@ d_grp_caller = group player;
 if (player != leader d_grp_caller) exitWith {
 	localize "STR_SYS_1172" call XfHQChat; // "You are currently not a group leader, no AI available. Create a new group"
 };
+
 _units = units d_grp_caller;
-_ai_counter = {(!isPlayer _x) && (alive _x)} count _units;
 
 _start_rank = d_ranked_a select 28; // initial AI caller rank name
 _start_rank_id = _start_rank call XGetRankIndex; // initial AI caller rank id
@@ -25,7 +28,7 @@ if ( _rank_max_ai < 1) exitWith {
 };
 
 _ai_big_cost = player call SYG_AIPriceByScore; // price for 2nd and more AI recruinting. 1st always is of low cost
-_ai_cost = if (_ai_counter > 0) then {_ai_big_cost} else {_ai_low_cost};
+_ai_cost = if (ai_counter > 0) then {_ai_big_cost} else {_ai_low_cost};
 
 if ( score player < _ai_cost ) exitWith {
 	(format [localize "STR_SYS_1175", score player, _ai_cost, "PRIVATE" call XGetRankStringLocalized]) call XfHQChat; // "You can't recruit an AI soldier, costs %2 points, your current score (%1) will drop below %3!"
@@ -47,14 +50,6 @@ if ( _ai_counter >= _rank_max_ai) exitWith {
 _ai_cost = _ai_low_cost;
 
 #endif
-
-// each AI soldier costs score points
-if (_ai_cost > 0) then
-{
-    playSound "steal";
-    player addScore -_ai_cost;
-    (format[localize "STR_AI_11", _ai_cost]) call XfHQChat; // "You paid %1 for one AI, points will be returned when he is fired"
-};
 
 _ai_side_char = (
 	switch (d_own_side) do {
@@ -100,7 +95,21 @@ _ai_side_unit = (
 _unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"];
 [_unit] join d_grp_caller;
 _unit setSkill 0.1;
-_unit call SYG_armPilotFull; // Rearm in case of pilot
+
+// Rearm in case of pilot
+_pilot = _unit call SYG_armPilotFull;
+if (_pilot ) then { _ai_cost = _ai_cost * 2; }; // it is a pilot. He costs 2 times more than an ordinary soldier
+
+// each AI soldier costs score points
+if (_ai_cost > 0) then
+{
+    playSound "steal";
+    player addScore -_ai_cost;
+    _str = "STR_AI_11";
+    if (_pilot) then {_str = "STR_AI_11_PILOT"};
+    (format[localize _str, _ai_cost]) call XfHQChat; // "You paid %1 for one AI, points will be returned when he is fired"
+};
+
 _unit setVariable ["AI_COST", _ai_cost]; // store cost to refund after demobilization
 
 // set AA unit aiming skill to expert to help base AA defence
@@ -123,12 +132,14 @@ if (d_own_side == "EAST") then
     _unit setIdentity _identity; // there are only 5 russina voice in the ACE
     hint localize format["+++ AI setIdentity ""%1""", _identity];
     if ( ! ((_identity == "Irina") || (localize "STR_LANG" == "RUSSIAN")) ) then {
-        _msg_arr set [count _msg_arr, [["STR_SYS_1175_1", name _unit] ]];
+        _msg_arr set [count _msg_arr, [["STR_SYS_1175_1", name _unit] ]]; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
     };
     _msg_arr set [count _msg_arr, [["STR_SYS_1175_2"] ]];
     ["msg_to_user", "", _msg_arr ] call SYG_msgToUserParser; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
     playSound "losing_patience";
 };
 #endif
+
+ai_counter = ai_counter + 1; // how many are recruited from barracs in this session
 
 if (true) exitWith {};

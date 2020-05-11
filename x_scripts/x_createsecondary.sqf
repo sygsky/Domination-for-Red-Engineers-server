@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno,
 // x_createsecondary.sqf: creating secondary target for the city
 //
 private ["_man","_newgroup","_poss","_unit_array","_units","_vehicle","_wp_array","_truck","_the_officer", "_unit", "_pos"];
@@ -37,7 +37,7 @@ _current_target_pos = _target_array2 select 0;
 _current_target_radius = _target_array2 select 2;
 
 #ifdef __DEBUG_PRINT__
-hint localize format["x_createsecondary.sqf: sec_kind = %1", sec_kind];
+hint localize format["+++ x_createsecondary.sqf: sec_kind = %1", sec_kind];
 #endif
 
 governor = nil;
@@ -355,7 +355,7 @@ if (_cnt > 0) then
             {
                 [_unit] join _newgroup;
 #ifdef __DEBUG_PRINT__
-                hint localize format["+++ x_createsecondary.sqf: guard %5 (group %6) on top of main tower is %1 at pos %2(%3) of available %4", _type, _pos, _i, _cnt, _unit, _newgroup];
+                hint localize format["+++ x_createsecondary.sqf: guard %1 (grp %2) on top of main tower at pos %3[%4/%5]", _type, _newgroup, _pos, _i, _cnt];
 #endif
                 _unit setPos _pos;
                 _unit setSkill 1.0;

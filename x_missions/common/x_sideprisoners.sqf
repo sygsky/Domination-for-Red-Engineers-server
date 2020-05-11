@@ -1,12 +1,12 @@
 // x_missions/common/x_sideprisoners.sqf : by Xeno
 private ["_posi_a", "_pos", "_newgroup", "_unit_array", "_leader", "_hostages_reached_dest", "_all_dead", "_rescued",
-         "_units", "_winner", "_nobjs", "_retter", "_do_loop", "_i", "_one","_say_time"];
+         "_units", "_winner", "_nobjs", "_retter", "_do_loop", "_i", "_one","_say_time","_sound"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define SAY_INTERVAL 7 // in seconds
+//#define __DEBUG_SM__  // if defined, no enemy will be created
 
 _posi_a = _this select 0;
 _pos = _posi_a select 0;
@@ -18,24 +18,30 @@ _posi_a = nil;
 d_sm_p_pos = nil;
 #endif
 
+
+#define SAY_INTERVAL 7 // in seconds
 _say_grp_sound = {
     if (_say_time > time) exitWith {};
     {
+        _sound = call SYG_prisonersSound;
         if (alive _x && canStand _x) exitWith {
-            ["say_sound", _x, call SYG_prisonersSound] call XSendNetStartScriptClientAll;
-            _say_time = time + SAY_INTERVAL;
+            ["say_sound", _x, _sound] call XSendNetStartScriptClientAll;
+            _say_time = time + 2 + (random (SAY_INTERVAL * 2));
         };
     } forEach _units;
 };
+
 sleep 2;
 
-__WaitForGroup
+while {!can_create_group} do {sleep (0.1 + random (0.2))};
 #ifndef __TT__
 _newgroup = [d_own_side] call x_creategroup;
 #endif
+
 #ifdef __TT__
 _newgroup = ["WEST"] call x_creategroup;
 #endif
+
 _unit_array = ["civilian", "CIV"] call x_getunitliste;
 [_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
 _leader = leader _newgroup;
@@ -49,10 +55,12 @@ _newgroup allowFleeing 0;
 	_x disableAI "MOVE";
 } forEach units _newgroup;
 
+#ifndef __DEBUG_SM__
 sleep 2.333;
 ["specops", 2, "basic", 2, _pos, if (_patrol_dist > 0) then {_patrol_dist} else {200},true] spawn XCreateInf;
 sleep 2.333;
 ["shilka", 2, "bmp", 1, "tank", 1, _pos,1,if (_patrol_dist > 0) then {_patrol_dist} else {170},true] spawn XCreateArmor;
+#endif
 
 sleep 32.123;
 
@@ -61,11 +69,16 @@ _all_dead = false;
 _rescued = false;
 _units =+ units _newgroup;
 
+#ifdef __DEBUG_SM__
+hint localize format["+++ x_sideprisoners.sqf: civilians created %1", count _units];
+#endif
+
 #ifdef __TT__
 _winner = 0;
 #endif
 
 _say_time = time + SAY_INTERVAL;
+
 #ifndef __AI__
 while {!_hostages_reached_dest && !_all_dead} do {
     if (X_MP) then {
@@ -82,7 +95,6 @@ while {!_hostages_reached_dest && !_all_dead} do {
 			_nobjs = nearestObjects [_leader, ["Man"], 15];
 			if (count _nobjs > 0) then {
 				{
-				    call _say_grp_sound;
 					if ((isPlayer _x) AND ((format ["%1", _x] in ["RESCUE","RESCUE2"]) OR (leader group _x == _x))) exitWith {
 						_rescued = true;
 						_retter = _x;
@@ -138,26 +150,34 @@ while {!_hostages_reached_dest && !_all_dead} do {
 	sleep 5.123;
 };
 #else
-_retter = objNull; // In English "resquer" is in German "retter"
+_retter = objNull;
 
 while {!_hostages_reached_dest && !_all_dead} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	if (({alive _x} count _units) == 0) exitWith { _all_dead = true; };
+	if (({alive _x} count _units) == 0) exitWith {
+	    _all_dead = true;
+        #ifdef __DEBUG_SM__
+        hint localize format["+++ x_sideprisoners.sqf: all civilians dead, grp count %1", count _units];
+        #endif
+	};
 
     _leader = leader _newgroup;
     if (!_rescued) then {
         _nobjs = nearestObjects [_leader, ["Man"], 20];
         if (count _nobjs > 0) then {
             {
-                if (isPlayer _x) exitWith {
+                if ((isPlayer _x) && (_x == leader _x)) exitWith {
                     _rescued = true;
                     _retter = _x;
+                    #ifdef __DEBUG_SM__
+                     hint localize format["+++ x_sideprisoners.sqf: civilians resсued by %1", name _retter];
+                    #endif
                 };
                 sleep 0.01;
             } forEach _nobjs;
-            if (_rescued && alive _retter) then {
+            if (_rescued && !isNull _retter) then {
                 {
                     if ( alive _x ) then {
                         _x setCaptive false;
@@ -172,22 +192,24 @@ while {!_hostages_reached_dest && !_all_dead} do {
         {
             if ( (alive _x) && (_x distance FLAG_BASE < 20) ) exitWith {
                 _hostages_reached_dest = true;
+                if (__RankedVer) then {
+                        ["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
+                        //["x_weather_array",x_weather_array] call XSendNetVarClient;
+                        // TODO: add to winners all players who were at this SM (use method from convoy algorithm)
+                        #ifdef __DEBUG_SM__
+                        hint localize format["+++ x_sideprisoners.sqf: [""d_sm_p_pos"", position FLAG_BASE] call XSendNetVarClient"];
+                        #endif
+                };
+
+                #ifdef __DEBUG_SM__
+                hint localize format["+++ x_sideprisoners.sqf: civilians reached FLAG_BASE"];
+                #endif
             };
             sleep 0.01;
         } forEach _units;
+        call _say_grp_sound;
     };
-	if (__RankedVer) then {
-		if (_hostages_reached_dest) then {
-			["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
-		};
-	};
 	sleep 5.123;
-	for "_i" from 0 to count _units - 1 do
-	{
-	    if (!alive _x) then { _units set [_i, "RM_ME"]};
-	};
-	_units = _units - ["RM_ME"];
-	if ( count _units == 0) exitWith { _all_dead = true; };
 };
 #endif
 
@@ -203,9 +225,13 @@ if (_all_dead) then {
 			};
 			deleteVehicle _x;
 		};
-	} forEach units _newgroup;
+	} forEach _units;
 	sleep 0.5321;
 	if (!isNull _newgroup) then {deleteGroup _newgroup};
+#ifdef __DEBUG_SM__
+    hint localize format["+++ x_sideprisoners.sqf: side_mission_winner = -400; remove all civilians from mission"];
+#endif
+
 } else {
 	if (_hostages_reached_dest) then {
 		if (({alive _x} count _units) >= 1) then {
@@ -223,20 +249,26 @@ if (_all_dead) then {
 			if (!isNull _x) then {
 				if (vehicle _x != _x) then {
 					_x action ["eject", vehicle _x];
-					sleep 0.1;
 					unassignVehicle _x;
 					_x setPos [0,0,0];
 				};
 				deleteVehicle _x;
 			};
-		} forEach units _newgroup;
+		} forEach _units;
 		sleep 2.5321;
 		if (!isNull _newgroup) then {deleteGroup _newgroup};
+#ifdef __DEBUG_SM__
+        hint localize format["+++ x_sideprisoners.sqf: side_mission_winner = %1; remove all civilians from mission",side_mission_winner ];
+#endif
+
 	};
 };
 
 _units = nil;
 
 side_mission_resolved = true;
+#ifdef __DEBUG_SM__
+        hint localize format["+++ x_sideprisoners.sqf: SM resolved"];
+#endif
 
 if (true) exitWith {};

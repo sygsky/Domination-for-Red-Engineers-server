@@ -1,5 +1,5 @@
 // by Xeno: x_scripts/x_recapture.sqf, server call only
-private ["_x_can_recapture", "_num_p", "_recap_index", "_loop_running", "_ran", "_target_array", "_target_pos", "_checktrigger", "_checktrigger2", "_target_name", "_radius", "_helih","_allready_recaptured","_arr"];
+private [ "_num_p", "_recap_index", "_loop_running", "_ran", "_target_array", "_target_pos", "_checktrigger", "_checktrigger2", "_target_name", "_radius", "_helih","_allready_recaptured","_arr"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -7,16 +7,9 @@ if (!isServer) exitWith {};
 
 sleep (1200 + random 1200);
 
-_x_can_recapture = {
-	private ["_ret"];
-	_ret = false;
-	if (d_max_recaptures > 0) then {
-		if (count d_recapture_indices < d_max_recaptures) then { _ret = true };
-	} else {
-		_ret = true;
-	};
-	_ret
-};
+// return true if recapture is possible, else false
+
+#define CAN_RECAPTURE ((d_max_recaptures > 0) && (count d_recapture_indices < d_max_recaptures))
 
 _allready_recaptured = [];
 
@@ -31,7 +24,7 @@ while {true} do {
 	
 	if (the_end) exitWith {false}; // no more towns, end of game
 
-	 if( (count resolved_targets > 1) && (count d_recapture_indices < count resolved_targets - 1) && call _x_can_recapture) then {
+	 if( (count resolved_targets > 1) && (count d_recapture_indices < count resolved_targets - 1) && CAN_RECAPTURE ) then {
 		_recap_index = -1;
 		_loop_running = true;
 

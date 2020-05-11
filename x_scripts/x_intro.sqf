@@ -116,7 +116,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2",/*"morricone1",*/"toccata",
-                "del_vampiro1","del_vampiro2", "zaratustra", "bolivar"
+                "del_vampiro1","del_vampiro2", "zaratustra", "bolivar","jrtheme"
             ] + _personalSounds ) call _XfRandomArrayVal;
     //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
     //        _music = (call compile _music) call _XfRandomArrayVal;
@@ -223,7 +223,7 @@ _SYG_selectIntroPath = {
 };
 
 //+++Sygsky TODO: try to prepare flight above all targets
-if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !side_mission_resolved && (current_mission_index >= 0)) then {
+if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then {
 
 	hint localize format["x_intro.sqf: current_target_index = %1, current_mission_index = %2",current_target_index, current_mission_index ];
 /* 	_target_array2 = target_names select current_target_index;

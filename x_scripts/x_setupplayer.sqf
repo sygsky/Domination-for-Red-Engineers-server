@@ -120,13 +120,10 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
     };
     hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { format["has %1 item[s]", count d_player_stuff]}];
 #endif
-	if (isNil "d_player_stuff") exitWith {
+	if ( (isNil "d_player_stuff") || (time > _endtime) ) exitWith {
 		player_autokick_time = d_player_air_autokick;
 	};
-	if (time > _endtime) exitWith {
-		player_autokick_time = d_player_air_autokick;
-	};
-	if ((d_player_stuff select 2) == name player) exitWith
+	if ( (d_player_stuff select 2) == name player ) exitWith
 	{
 		player_autokick_time = d_player_stuff select 0;
 		player addScore (d_player_stuff select 3);
@@ -313,7 +310,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             case "YETI":  // Yeti
                             {
                                 d_rebornmusic_index = 1; // no play death sound
-                                SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
+                                //SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                                 3000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; _rearmed = true; };
                             };
@@ -568,9 +565,10 @@ if (fFogMore >= 0.3885) then {fog2 = localize "STR_WET_20"}; //"видимост
 0 setOvercast fRainLess;
 0 setFog fFogLess;
 
-if (all_sm_res) then {
+if (all_sm_res ) then {
 	current_mission_text= localize "STR_SYS_121"; // "All missions resolved!";
 } else {
+    if (stop_sm) exitWith { current_mission_text= localize "STR_SYS_121_2"}; // "The enemy fled..."
 	[false] execVM "x_missions\x_getsidemissionclient.sqf";
 };
 
@@ -1103,6 +1101,14 @@ if (player_can_call_drop) then {
 if ( SYG_found_EditorUpdate_v102 ) then {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_4"]}
 else {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_5"]};
 
+#ifdef __SCUD__
+if (SYG_found_SCUD ) then {
+    "+++ SCUD addon gig_scud.sqf installed on client" call XfGlobalChat;
+} else {
+    "+++ SCUD addon gig_scud.sqf not installed on client!!! Must be present simultaneously on the server and client" call XfGlobalChat;
+};
+#endif
+
 if (random 10 < 7) then
 {
     _local_msg_arr = _local_msg_arr + [localize "STR_SYS_RUMORS"]
@@ -1253,23 +1259,47 @@ XBaseEnemies = {
 	switch (_status) do {
 		case 0: {
 			hint composeText[
-				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "ВНИМАНИЕ:" */ + "</t>"), lineBreak,
-				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Вражеский десант на базе" */ + "</t>")
+				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "DANGER:" */ + "</t>"), lineBreak,
+				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Enemy troops on your base." */ + "</t>")
 			];
+        	private ["_alarm_obj","_no","_thislist"];
+            _alarm_obj = FLAG_BASE;
+            if ( ( count _this ) >  1 ) then {
+                _thislist = _this select 1;
+                if (typeName _thislist == "ARRAY") then {
+                    // this is list of enemy intruders
+                    {
+                        if ( ((_x isKindOf 'LandVehicle') || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit'))) && (alive _x) ) exitWith {
+                            // find nearest to this object alive service
+                            // find allowed objects on base to play sounds
+                            _no = nearestObjects [_x, [ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM"], 1000];
+                            {
+                                if (alive _x) exitWith {_alarm_obj = _x};
+                            } forEach _no;
+                        };
+                    } forEach _thislist;
+                };
+                if ( (typeName _alarm_obj != "OBJECT") || (!alive _alarm_obj)) then {
+//                    hint localize format["+++ XBaseEnemies: alarm form 51 changed to FLAG_BASE", typeOf _alarm_obj ];
+                    _alarm_obj = FLAG_BASE;
+                };
+            };
+            _alarm_obj say "alarm";
 		};
 		case 1: {
 			hint composeText[
 				parseText("<t color='#f00000ff' size='2'>" + (localize "STR_SYS_62") /* "ОТБОЙ:" */ + "</t>"), lineBreak,
-				parseText("<t size='1'>" + (localize "STR_SYS_63")/* "Присутствие вражеских войск на базе устранено" */ + "</t>")
+				parseText("<t size='1'>" + (localize "STR_SYS_63")/* "No more enemies in your base." */ + "</t>")
 			];
 		};
 	};
 };
+
 "enemy_base" setMarkerPosLocal (d_base_array select 0);
 _trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 _trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
 _trigger setTriggerActivation [d_enemy_side, "PRESENT", true];
-_trigger setTriggerStatements["{ _x isKindOf 'LandVehicle' || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "FLAG_BASE say 'Alarm';[0] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+_trigger setTriggerStatements["{ _x isKindOf 'LandVehicle' || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "[0, thislist] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
 #endif
 
 if (d_weather) then {execVM "scripts\weather\weatherrec2.sqf";};
@@ -1816,17 +1846,18 @@ player call SYG_handlePlayerDammage; // handle hit events
         _cnt = _cnt + 1;
     }    forEach [	HR1, HR2, HR3, HR4];
     //hint localize format["+++ SYG_setHeliParaCargo called for %1 Mi-17 at base", _cnt];
+    _common_boxes = [box1, box2, box3, box4, box5, grubox];
     {
         if ( !( (isNil str( _x ) ) || ( ! alive _x ) ) ) then {
             _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", format[localize format["STR_SYS_%1", toUpper str(_x)], localize "STR_SYS_BOX" ]];
         } else {
             hint localize format["--- Error: variable ""%1"" not found/not alive", str(_x)];
         };
-    }   forEach [box1, box2, box3, box4, box5, grubox];
+    }   forEach _common_boxes;
     hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
 #ifdef __ACE__
     _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
-    _personal_boxes = nearestObjects [depot, _personal_boxes, 20];
+    _personal_boxes = nearestObjects [depot, _personal_boxes, 20]  - _common_boxes;
     {
         _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];
     }   forEach _personal_boxes;
@@ -1851,13 +1882,21 @@ player addAction["score -15","scripts\addScore.sqf",-15];
 //#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
-// teleport player to the hills above Bagango valley
-hint localize "__DEBUG_ADD_VEHICLES__";
-//player setPos [14531,9930,0];
-//player setPos []9763, 11145, 0]; // near Rashidan dock
-if ( score player < 1500 ) then
-{
-    player addScore (1500 - (score player));
+if (name player == "EngineerACE") then {
+    // teleport player to the hills above Bagango valley
+    hint localize "+++ x_setuplayer,sqf: __DEBUG_ADD_VEHICLES__";
+    //player setPos [14531,9930,0];
+    //player setPos [9763, 11145, 0]; // near Rashidan dock
+    // player setPos [16545,12875,0];
+    // MRR1 setPos [9407,5260,0]; // move teleport to the positon at SM #40 (hostages in Tiberis)
+    if ( score player < 1500 ) then { player addScore (1500 - (score player) ) };
+};
+#endif
+
+#ifdef __SCUD__
+if (name player == "HE_MACTEP") then {
+    hint localize "+++ x_setuplayer,sqf: __SCUD__";
+    if ( score player < 1000 ) then { player addScore (1000 - (score player) ) };
 };
 #endif
 

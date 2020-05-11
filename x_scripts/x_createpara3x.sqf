@@ -222,7 +222,7 @@ for "_i" from 1 to _number_vehicles do {
 	sleep 5.012;
 	
 	_vehicle flyInHeight 100;
-	hint localize format["+++x_createpara3x.sqf: Desant procedure to current town %2 with %1 starts at pos %3", typeOf _vehicle, _dummy select 1, _startpoint];
+	hint localize format["+++x_createpara3x.sqf: Air assault procedure to current town %2 with %1 starts at pos %3", typeOf _vehicle, _dummy select 1, _startpoint];
 
 	if (mt_radio_down) exitWith {
 		_stop_it = true;

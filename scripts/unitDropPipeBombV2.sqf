@@ -54,7 +54,9 @@
 // ----------
 // Init:
 
-private ["_error", "_unit", "_dropArr", "_pos2Retreat", "_debug", "_pbname", "_dropItemPosIdx", "_dropArrCount", "_unitname", "_bomb2center", "_prevBehaviour", "_pipeBombCount", "_dropItemPos", "_distToBombPlace", "_moveRetryCount", "_arr", "_placedBomb", "_dropRealPos", "_distToRetreatPlace", "_cnt", "_dir","_prev_pos", "_i", "_val","_startTime"];
+private ["_error", "_unit", "_dropArr", "_pos2Retreat", "_debug", "_pbname", "_dropItemPosIdx", "_dropArrCount", "_unitname",
+    "_bomb2center", "_prevBehaviour", "_pipeBombCount", "_dropItemPos", "_distToBombPlace", "_moveRetryCount", "_arr",
+    "_placedBomb", "_dropRealPos", "_distToRetreatPlace", "_cnt", "_dir","_prev_pos", "_i", "_val","_startTime", "_PBNAME_"];
 
 if (isNil "m_PIPEBOMBNAME" ) then
 {
@@ -345,7 +347,7 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 	};
 	
 #ifdef __DEBUG__
-	if _error exitWith // unit not ready or dead
+	if (_error) exitWith
 	{
 		hint localize format["DropScript (%1): Failure: unit time-out while dropping bomb!!! Exit from main loop",ELAPSED_TIME];
 	};

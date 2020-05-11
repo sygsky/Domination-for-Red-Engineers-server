@@ -387,9 +387,8 @@ SYG_playRandomTrack = {
         // ["ATrack12,[10,10]<,[20,15]>]
         // first is track name (STRING), others are part descriptors [start, length], ...
         //
-        if ((typeName (_this select 1)) == "ARRAY") exitWith  // list of track parts
-        {
-
+        if ((typeName (_this select 1)) == "ARRAY") exitWith   {
+            // list of track parts
             // check if death count is too big and play long-long music for this case
             if (SYG_deathCountCnt > DEATH_COUNT_TO_PLAY_MUSIC) exitWith
             {
@@ -419,7 +418,7 @@ SYG_playRandomTrack = {
                 hint localize format["*** SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
 #endif
                 playMusic [arg(0),argp(_trk,0)];
-            };
+            }
 
         };
         hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
@@ -499,9 +498,16 @@ SYG_getMusicName = {
     ""
 };
 
+// static randomized sound assigned on the first call to this fanction
 SYG_getSuicideScreamSound  = {
     if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 15))};  // 0-13
     SYG_suicideScreamSound
+};
+
+// call: _sound = _id call SYG_getSuicideScreamSoundById; // return sound according to the designated _id (must be in range[0..N]
+SYG_getSuicideScreamSoundById  = {
+    if (_this < 0) exitWith {call SYG_getSuicideScreamSound};
+    format ["male_scream_%1",  str( _this % 15)] //  returns sound from the range {0.. 14}
 };
 
 /**
@@ -584,7 +590,10 @@ SYG_invasionSound = {
 };
 
 SYG_prisonersSound = {
-    // TODO: add normal sounds
-    call SYG_exclamationSound
+    private ["_rnd"];
+    _rnd = random 10;
+    if ( _rnd > 4) exitWith {call SYG_exclamationSound};
+    format[ "hisp%1", ceil _rnd]
 };
+
 if (true) exitWith {};

@@ -1,6 +1,6 @@
 // by Xeno, x_scripts\x_removevehiextra.sqf
 // called on "killed" event
-// Triggered when the unit is killed.
+// Triggered when the unit/object is killed.
 //
 // Local.
 //

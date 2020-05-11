@@ -1,7 +1,7 @@
 //
-// by Xeno: x_target_clear.sqf. Called on server from town or airbase trigger if all goals are achived
+// by Xeno: x_target_clear.sqf. Called on server from town or airbase trigger if all goals are achieved
 //
-private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array"];
+private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array","_str"];
 if (!isServer) exitWith{};
 
 hint localize format["%1 execVM x_scripts\x_target_clear.sqf", _this];
@@ -52,6 +52,9 @@ if (_start_real) then {
 	["an_countera", "over"] call XSendNetStartScriptClient;
 	sleep 2.321;
 };
+
+_dummy = target_names select current_target_index;
+(_dummy select 1) call SYG_townScoresPrint; // print statistics on finished town
 
 #ifndef __TT__
 resolved_targets = resolved_targets + [current_target_index];
@@ -124,12 +127,25 @@ if (current_counter < number_targets) then {
 #endif
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
-	if (count d_recapture_indices == 0) then {
+    // TODO: #368, wait until base cleared from enemies and
+    // no recaptured towns and (resolved)
+    // side mission completed (resolved)
+	if ( (count d_recapture_indices == 0) && side_mission_resolved ) then {
 		the_end = true;
 		["the_end",the_end] call XSendNetVarClient;
 	} else {
+        _str = "";
+        if ( (count d_recapture_indices > 0) && (!side_mission_resolved) )
+        then { _str = "STR_SYS_121_3_FULL" }
+        else {
+            if ( !side_mission_resolved ) then { _str = "STR_SYS_121_3_SM" } else { _str = "STR_SYS_121_3_RECAPTURED"};
+        };
+        if (_str != "") then {
+            [ "msg_to_user", "*", [ [ _str ] ], 0, 2, false, "fanfare" ] call  XSendNetStartScriptClient; // The enemy escaped! ..."
+        };
 		[] spawn {
-			while {count d_recapture_indices > 0} do {
+		    // while any town recaptured or side mission active
+			while { (count d_recapture_indices > 0) || (!side_mission_resolved)} do {
 				sleep 2.543;
 			};
 			the_end = true;

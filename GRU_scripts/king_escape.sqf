@@ -24,7 +24,7 @@ d_sm_p_pos = nil;
 
 _nbarr = [];
 _center = [];
-if ( (random 1) <= 0.1428571) then // 1 of 7
+if ( (random 1) <= 0.33333333) then // 1 of 3
 {
     _center = [10412.7,7732.9,0];
     _nbarr = nearestObjects [_center, ["Land_kulna"], SEARCH_DISTANCE]; // find new kulna

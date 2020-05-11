@@ -12,9 +12,11 @@ __TargetInfo
 
 _current_target_name setMarkerColorLocal "ColorGreen";
 
+_current_target_pos = _target_array2 select 0;
+
 client_target_counter = client_target_counter + 1;
 
-call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID]; // mark just libarated town with correcponding marker in the diary
+call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID]; // mark just liberated town with correcponding marker in the diary
 
 if (client_target_counter < number_targets) then {
 	_type_name = mt_bonus_vehicle_array select extra_bonus_number;
@@ -22,7 +24,6 @@ if (client_target_counter < number_targets) then {
 	_bonus_vehicle = [_type_name, 0] call XfGetDisplayName;
 
 	_bonus_pos = localize "STR_SYS_309";//"на базе.";
-
 
 	_mt_str = format [localize "STR_SYS_1100", _current_target_name]; //"%1 освобождён!!!"
 	
@@ -38,7 +39,6 @@ if (client_target_counter < number_targets) then {
 	];
 	if (__RankedVer) then
 	{
-		_current_target_pos = _target_array2 select 0;
 		_strBonus = "";
 		if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then
 		{
@@ -74,7 +74,6 @@ if (client_target_counter < number_targets) then {
 	];
 	titleText [_winner_string, "PLAIN"];
 	if (__RankedVer) then {
-		_current_target_pos = _target_array2 select 0;
 		if (player distance _current_target_pos < 400) then {
 			"Вы получаете 20 очков за взятие города!!!" call XfHQChat;
 			player addScore 20;
@@ -92,6 +91,12 @@ if (client_target_counter < number_targets) then {
 		parseText("<t color='#f02b11ed' size='1'>" + _mt_str + "</t>"), lineBreak,lineBreak,
 		localize "STR_SYS_128" /* "Поздравления..." */
 	];
+    if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then
+    {
+        player addScore (d_ranked_a select 9); // you get point only being in the town!
+        playSound "good_news";
+    };
+
 #endif
 #ifdef __TT__
 	_winner_string = "";

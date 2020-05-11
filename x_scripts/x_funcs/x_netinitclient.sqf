@@ -420,6 +420,10 @@ XHandleNetStartScriptClient = {
 			playSound "fanfare";
 			hint current_mission_resolved_text;
 		};
+		case "stop_sm": {
+			current_mission_text = localize "STR_SYS_121_2"; // "The enemy has fled! Forget about his sorties!"
+		    [ "msg_to_user", "*", [ [ "STR_SYS_121_1" ] ], 0, 2, false, "fanfare" ] call SYG_msgToUserParser; // The enemy escaped! ..."
+		};
 		#ifndef __TT__
 		case "new_jump_flag": {
 			if (!d_no_para_at_all) then {
@@ -711,7 +715,8 @@ XHandleNetStartScriptClient = {
 			if (name player == _pname) then {
 				__compile_to_var
 				SYG_dateStart = arg(2); // set server start date
-				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1", SYG_dateStart];
+				if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
+				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, SYG_suicideScreamSound %2", SYG_dateStart, call SYG_getSuicideScreamSound];
 			};
 		};
 		case "d_hq_sm_msg": {
@@ -884,9 +889,9 @@ XHandleNetStartScriptClient = {
                     private ["_time2skip"];
                     _time2skip = (_this select 2); // hours to skip
                     if ( typeName _time2skip ==  "ARRAY") then { _time2skip = _time2skip select 0};
-                    hint localize format["+++ daytime %1, skiptime %2, time %3, date %4;", daytime, _time2skip, time, date];
+                    hint localize format["+++ shortnight skip:: daytime %1, skiptime %2, time %3, date %4;", daytime, _time2skip, time, date];
                     skipTime _time2skip;
-                    hint localize format["+++ after skip daytime %1, time %2, date %3;", daytime, time, date];
+                    hint localize format["+++ shortnight skip: after skip daytime %1, time %2, date %3;", daytime, time, date];
                 };
                 case "info": // print info on day/night time
                 {
@@ -912,6 +917,19 @@ XHandleNetStartScriptClient = {
                 };
             };
         };
+        // mark user as participant of SM
+        case "was_at_sm" : {
+            if (count _this < 2) exitWith {hint localize ["--- x_netinitclient.sqf: %1", _this];};
+            private ["_val"];
+            _val =  _this select 1;
+            if ( typeName ( _val ) != "ARRAY" ) then {
+                if ( typeName ( _val ) != "STRING" ) then { _val  = str (_val); };
+                _val = [_val];
+            };
+//          hint localize ["+++ %1 : %2", x_netinitclient.sqf];
+            if ( (name player) in (_val) ) then { d_was_at_sm = true; playSound "good_news" };
+        };
+
 /*
          // reveal vehicle (MHQ in main) to all players
         case "revealVehicle":

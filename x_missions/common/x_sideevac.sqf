@@ -29,10 +29,6 @@ _wrecktype = nil;
 
 sleep 2;
 
-/*
-__WaitForGroup
-_owngroup = [_side_crew] call x_creategroup;
-*/
 _owngroup = call SYG_createOwnGroup;
 _pilot1 = _owngroup createUnit [_pilottype, _poss, [], 30, "FORM"];
 [_pilot1] join _owngroup;
@@ -133,7 +129,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                 _x enableAI "MOVE";
                 [_x] join objNull;
                 sleep 0.1;
-                [_x] join (leader _rescue);
+                [_x] join _rescue;
               };
             } forEach _pilots_arr;
             ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 2, 2] call XSendNetStartScriptClient; // "Good job! The rescue of helicopter crew was successful"
@@ -144,8 +140,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
     { // _rescued!!!
 
 //++++++++++++++++++++++++ !__TTVer
-        if (!(__TTVer)) then
-        {
+        if (!(__TTVer)) then {
             {
                 if (alive _x ) then
                 {
@@ -153,23 +148,19 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                     {
                         _rescued = false;
                         // again create separate group for our poor pilots
-                        /**
-                        __WaitForGroup
-                        _owngroup = [_side_crew] call x_creategroup;
-                        */
                         _owngroup = call SYG_createOwnGroup;
+                        _x join _owngroup;
                         sleep 0.12345;
                         {
                           if (alive _x) then
                           {
                             [_x] join objNull;
                             sleep 0.1;
-                            [_x] join (leader _rescue);
+                            [_x] join _owngroup;
                             _x disableAI "MOVE";
                             _x setUnitPos "DOWN"
                           };
                         } forEach _pilots_arr;
-                        {  } forEach _pilots_arr;
                         hint localize format["--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, so pilots are moved to its own group at %2",
                                              _x,  [_x, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
                         // TODO: send info to all about lost control of pilots

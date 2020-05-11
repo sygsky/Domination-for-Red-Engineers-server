@@ -1,5 +1,6 @@
 // x_shootari.sqf, by Xeno
-private ["_angle","_center_x","_center_y","_height","_i","_number_shells","_pos_enemy","_radius","_type","_wp_array","_x1","_xo","_y1","_kind"];
+private ["_angle","_center_x","_center_y","_height","_i","_number_shells","_shell","_pos_enemy","_radius","_type",
+         "_wp_array","_x1","_xo","_y1","_kind"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -7,7 +8,9 @@ if (!isServer) exitWith {};
 _pos_enemy = _this select 0;
 _kind = _this select 1;
 
-_radius = 30;
+#define HIT_RADIOUS 30
+
+_radius = HIT_RADIOUS;
 _height = (switch (_kind) do {case 1: {150}; case 2: {0};});
 
 _center_x = (_pos_enemy) select 0;
@@ -34,13 +37,14 @@ if (_kind == 1) then {["o_arti",_pos_enemy] call XSendNetStartScriptClient;};
 
 _wp_array = [];
 while {count _wp_array < _number_shells} do {
-	_angle = floor random 360;
-	_x1 = _center_x - ((random _radius) * sin _angle);
-	_y1 = _center_y - ((random _radius) * cos _angle);
+	_angle = random 360;
+	_radius =random HIT_RADIOUS;
+	_x1 = _center_x - (_radius * sin _angle);
+	_y1 = _center_y - (_radius * cos _angle);
 	_wp_array = _wp_array + [[_x1, _y1, _height]];
 	sleep 0.0153; // 0.2
 };
-sleep 5.25 + (random 5);
+sleep (5.25 + (random 5));
 for "_i" from 0 to (_number_shells - 1) do {
 	_shell = _type createVehicle (_wp_array select _i);
 	if (_kind == 2) then {

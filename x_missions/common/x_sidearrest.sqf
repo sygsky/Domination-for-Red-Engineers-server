@@ -9,6 +9,7 @@ _officer = _this select 0;
 _grant = _officer getVariable "GRANT";
 _grant = !isNil "_grant";
 
+hint localize format["+++ x_sidearrest.sqf: %1 GRANT", _grant];
 
 _offz_at_base = false;
 _is_dead = false;
@@ -21,10 +22,7 @@ d_sm_p_pos = nil;
 
 while {!_offz_at_base && !_is_dead} do {
 	if (X_MP) then {
-	    if ((call XPlayersNumber) == 0 ) then
-	    {
-    		waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0};
-	    }
+	    if ((call XPlayersNumber) == 0 ) then { waitUntil {sleep (10.012 + random 1);(call XPlayersNumber) > 0}; };
 	};
 	
 #ifndef __AI__
@@ -46,7 +44,7 @@ while {!_offz_at_base && !_is_dead} do {
                     sleep 0.1;
                     [_officer] join (group _x);
                     ["make_ai_captive",_officer] call XSendNetStartScriptClient;
-                    hint localize format["+++ x_sidearrest.sqf: nearest to officer EAST man is %1(%2), is leader = %3", _x, name _x, (leader _x) == _x];
+                    hint localize format["+++ x_sidearrest.sqf: nearest to officer man is %1(%2), is leader = %3", _x, name _x, (leader _x) == _x];
                 };
                 sleep 0.01;
             } forEach _nobjs;
@@ -96,50 +94,52 @@ while {!_offz_at_base && !_is_dead} do {
 
     if (!_rescued) then {
         _nobjs = nearestObjects [_officer, ["Man"], 20];
-        if (count _nobjs > 0) then {
-            _sound = "";
-            _player_cnt = 0;
-            {
-                if ( isPlayer _x  ) then {
-                    _player_cnt = _player_cnt + 1;
-                    if (_x == leader _x) then {
-                        _rescued = true;
-                        [_officer] join (leader _x);
-                        _officer setCaptive true;
-                        ["make_ai_captive",_officer] call XSendNetStartScriptClientAll;
-                    };
+        if (count _nobjs == 0) exitWith{};
+        _sound = "";
+        _player_cnt = 0;
+        {
+            if ( isPlayer _x  ) then {
+                _player_cnt = _player_cnt + 1;
+                if (_x == leader _x) then {
+                    _rescued = true;
+                    [_officer] join (leader _x);
+                    _officer setCaptive true;
+                    ["make_ai_captive",_officer] call XSendNetStartScriptClientAll;
+                    hint localize format["+++ x_sidearrest.sqf: nearest to officer player is %1(%2), is %3 leader", _x, name _x, (leader _x) == _x];
                 };
-                sleep 0.01;
-                if (_rescued) exitWith {};
-            } forEach _nobjs;
-            if (_player_cnt) then { // some player near
-                if (_grant) then {
-                    if (_rescued) then {
-                        switch (localize "STR_LANGUAGE" ) do
-                        {
-                            case "GERMAN": { _sound = "ger_grant_intro"};
-                            case "ENGLISH";
-                            default {
-                                _sound = "eng_grant_intro";
-                            };
-                        };
-                    } else { // no leader near, officer not surrendered
-                        // set sound
-                        switch (localize "STR_LANGUAGE" ) do
-                        {
-                            case "GERMAN": { _sound = "ger_grant_surrend"};
-                            case "ENGLISH";
-                            default {
-                                _sound = "eng_grant_surrend";
-                            };
-                        };
-                    };
-                } else { // not Grant && any player near
-                    if (_player_cnt > 0) then {_sound = call SYG_exclamationSound};
-                };
-                // TODO: force officer to look at the nearest player
-                if  (_sound != "") then { ["say_sound","", _sound] call XSendNetStartScriptClientAll;}; // play sound
             };
+            sleep 0.01;
+            if (_rescued) exitWith {};
+        } forEach _nobjs;
+
+        if (_player_cnt > 0) then { // some player near
+            if (_grant) then {
+                if (_rescued) then {
+                    sleep 5;
+                    switch (localize "STR_LANGUAGE" ) do
+                    {
+                        case "GERMAN": { _sound = "ger_grant_intro"};
+                        case "ENGLISH";
+                        default {
+                            _sound = "eng_grant_intro";
+                        };
+                    };
+                } else { // no leader near, officer not surrendered
+                    // set sound
+                    switch (localize "STR_LANGUAGE" ) do
+                    {
+                        case "GERMAN": { _sound = "ger_grant_surrend"};
+                        case "ENGLISH";
+                        default {
+                            _sound = "eng_grant_surrend";
+                        };
+                    };
+                };
+            } else { // not Grant && any player near
+                _sound = call SYG_exclamationSound;
+            };
+            // TODO: force officer to look at the nearest player
+            if  (_sound != "") then { ["say_sound",_officer, _sound] call XSendNetStartScriptClient;}; // play sound
         };
     } else {
         if (_officer distance FLAG_BASE < 20) then {
@@ -153,6 +153,11 @@ while {!_offz_at_base && !_is_dead} do {
                     [_officer] join grpNull; // move officer out of group
                     sleep 0.01;
                 };
+                if (vehicle _officer != _officer) then {
+                    _officer action ["eject", vehicle _officer];
+                    unassignVehicle _officer;
+                };
+                sleep 1;
                 _officer setCaptive false;
                 if ( (rating _officer) < 0) then { _officer addRating (2500 - (rating _officer)) }; // set high rating to prevent officer being killed by friendly AI
                 _rescued = false;

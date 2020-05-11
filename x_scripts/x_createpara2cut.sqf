@@ -65,7 +65,7 @@ if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Crea
 	_real_units = _unit_array select 0;
 	_cnt_uni = (count _real_units) min (_chopper emptyPositions "Cargo"); // heli may be small one
 #ifdef __DEBUG_PRINT__
-    hint localize format["x_scripts/x_createpara2.sqf: %1 / десант из %2 чел., лимит был установлен на %3", typeOf _chopper, _cnt_uni, count _real_units];
+    hint localize format["x_scripts/x_createpara2.sqf: %1 / desant is %2 men., limit is %3,chopper  empty pos %4", typeOf _chopper, _cnt_uni, count _real_units, _chopper emptyPositions "Cargo" ];
 #endif
 	_unit_array = [];
 	sleep 0.1;
@@ -175,7 +175,7 @@ if (!_ejected && alive _chopper) then
 {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
-    hint localize format["--- x_createpara2cut.sqf: Ordinal saboteurs ejection started, %1 unit[s], h %2, %3", count crew _chopper, round((getPos _chopper) select 2), _msg ];
+    hint localize format["+++ x_createpara2cut.sqf: Ordinal saboteurs ejection started, %1 unit[s], h %2, %3", count crew _chopper, round((getPos _chopper) select 2), _msg ];
 	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;

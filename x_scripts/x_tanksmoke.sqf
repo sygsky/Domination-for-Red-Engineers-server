@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno,x_scripts\x_tanksmoke.sqf, not used if __ACE__ defined
 private ["_possible_vecs","_get_vec"];
 // base classes
 _possible_vecs = ["StrykerBase","Tank"];

@@ -449,7 +449,7 @@ sm_bonus_vehicle_array = (
 "ACE_T55_A",        // 11
 "ACE_T55_AM",       // 12
 
-"ACE_T62_M",        // 13
+"ACE_ZSU",          // 13 //"ACE_T62_M",
 "ACE_T62_MK",       // 14
 "ACE_T62_MV",       // 15
 
@@ -520,7 +520,7 @@ mt_bonus_vehicle_array = (
 "ACE_BMP3_M", 		    // 2 - ordinal vehicles list
 
 "ACE_ZSU",          	// 3
-"ACE_Tunguska",			// 4
+"ACE_ZSU",			// 4
 
 "ACE_T55_AMV",          // 5
 "ACE_T64_BV",			// 6
@@ -670,6 +670,7 @@ side_mission_winner = 0;
 resolved_targets = [];
 target_clear=false;
 all_sm_res = false;
+stop_sm = false; // is SM system is stopped (last town leberated) or not
 ammo_boxes = 0;
 the_end = false;
 bonus_number = -1;
@@ -750,6 +751,15 @@ ADD_DAM_EH(AMMOBUILDING2)
 // for markers and revive (same like NORRN_player_units)
 d_player_entities = ["RESCUE","RESCUE2","alpha_1","alpha_2","alpha_3","alpha_4","alpha_5","alpha_6","alpha_7","alpha_8","bravo_1","bravo_2","bravo_3","bravo_4","bravo_5","bravo_6","bravo_7","bravo_8","charlie_1","charlie_2","charlie_3","charlie_4","charlie_5","charlie_6","charlie_7","charlie_8","charlie_9","delta_1","delta_2","delta_3","delta_4"];
 d_player_roles = ["PLT LD","PLT SGT","SL","SN","MD","TL","MG","AT","MG","GL","SL","OP","SN","AT","MG","MD","HS","SP","SL","SN","MD","TL","MG","AT","GL","AT","EN","EN","EN","EN"];
+// prepare players variables to speed up marker drawing (must be present on client and server at the same time)
+SYG_players_arr =
+    [
+     {RESCUE},{RESCUE2},
+     {alpha_1},{alpha_2},{alpha_3},{alpha_4},{alpha_5},{alpha_6},{alpha_7},{alpha_8},
+     {bravo_1},{bravo_2},{bravo_3},{bravo_4},{bravo_5},{bravo_6},{bravo_7},{bravo_8},
+     {charlie_1},{charlie_2},{charlie_3},{charlie_4},{charlie_5},{charlie_6},{charlie_7},{charlie_8},{charlie_9},
+     {delta_1},{delta_2},{delta_3},{delta_4}
+    ];
 
 #ifdef __REVIVE__
 d_NORRN_max_respawns = 30;

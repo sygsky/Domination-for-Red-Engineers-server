@@ -295,14 +295,15 @@ if ( _s <= 7.0 ) then {_color = [1,0,0,1];};
 _ctrl ctrlSetTextColor _color;
 _ctrl ctrlSetText format[localize "STR_SYS_11", _s];// "Здоровье: %1"
 //--- Sygsky
-
+_wind = round(wind distance [0,0,0]); // wind speed
+_dir = if (_wind == 0) then {"-"} else {round ([[0,0,0], wind] call XfDirToObj)}; // wind dir
 _s = if(d_weather_sandstorm) then {
-	format [localize "STR_SYS_230",clouds1,fog1,"%", round ([[0,0,0], wind] call XfDirToObj),round(wind distance [0,0,0])]; // "Погода вне помеченных движущихся зон: %1 и %2. В зонах песчанных бурь видимость резко снижена"
+	format [localize "STR_SYS_230",clouds1,fog1,"%", _dir, _wind]; // "Nonmarked zones has %1 and %2. Areas marked as sandstorm has degraded visibility.\nWind %3 deg, %4 m/s"
 }
 else {
-	format [localize "STR_SYS_231",clouds1,fog1,clouds2,fog2, round ([[0,0,0], wind] call XfDirToObj),round(wind distance [0,0,0])]; // "Погода вне помеченных зон: %1, %2.\nВ помеченных зонах: с осадками и облачностью %3, с туманом %4."
+	format [localize "STR_SYS_231",clouds1,fog1,clouds2,fog2, _dir, _wind]; // "Погода вне помеченных зон: %1, %2.\nВ помеченных зонах: с осадками и облачностью %3, с туманом %4."
 };
-if (!d_weather) then { _s = format [localize "STR_SYS_232", round(overcast*100), round(fog*100), "%", round ([[0,0,0], wind] call XfDirToObj),round(wind distance [0,0,0])]; }; // "Динамическая система погодных явлений не используется, текущие  значения погодных факторов: облачность %1 %3, вероятность тумана: %2 %3."
+if (!d_weather) then { _s = format [localize "STR_SYS_232", round(overcast*100), round(fog*100), "%", _dir, _wind]; }; // "Domination dynamic weather system not used, but still mission starts randomly on the nice side. Current cloud level is %1 %3. Current fog level is %2 %3.\nWind dir. %4 deg, spd. %5 m/s"
 _ctrl = _XD_display displayCtrl 11013;
 _ctrl ctrlSetText _s;
 

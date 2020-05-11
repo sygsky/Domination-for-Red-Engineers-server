@@ -133,11 +133,16 @@ XfRndRadious = {
 		(sqrt((random _this)/_this))*_this
 };
 
-// call as: _rad = [_rad1, _rad2] call XfRndRadious2;
-XfRndRadious2 = {
-        private [ "_size" ];
-        _size = ( _this select 1 ) - ( _this select 0 );
-		( sqrt( random 1 ) * _size ) + ( _this select 0 )
+// call as: _rad = [_rad1, _rad2] call XfRndOfAnnulus;
+XfRndRadiousInAnnulus = {
+    private ["_r1", "_r2"];
+    _r1 = _this select 0;
+    _r2 = _this select 1;
+    if ( _r1 > _r2) then {
+        _r1 = _r2;
+        _r2 = _this select 0;
+    };
+    sqrt(random( _r2 * _r2 - _r1 * _r1 ) + _r1 * _r1)
 };
 
 // get a random clear point inside a circle

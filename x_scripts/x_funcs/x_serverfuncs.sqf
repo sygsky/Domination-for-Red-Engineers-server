@@ -15,10 +15,31 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 
 // add score for observer kill
 SAddObserverKillScores = {
-    if (isPlayer (_this select 1) ) then
+    private ["_killer"];
+    _killer =  _this select 1;
+    if ( isPlayer _killer ) then
     {
-        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2 at %3", primaryWeapon (_this select 0) , name (_this select 1), [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE];
+        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
+            primaryWeapon (_this select 0),
+            name (_this select 1),
+            if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
+            [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
+        ];
         ["syg_observer_kill",(_this select 1),primaryWeapon (_this select 0)] call XSendNetStartScriptClient;
+    } else {
+        if (isNull _killer) then {
+            hint localize format["+++ SAddObserverKillScores: observer (%1) killed under unclear circumstances (killer is null) at %2",
+                primaryWeapon (_this select 0),
+                [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
+            ];
+        } else {
+            hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
+                primaryWeapon (_this select 0),
+                typeOf _killer,
+                if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
+                [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
+            ];
+        };
     };
 };
 #endif
@@ -41,7 +62,7 @@ x_creategroup = {
 	can_create_group = false;
 	if ( (typeName _this) != "ARRAY") then {_this = [_this];};
 	_side = _this select 0;_grp = grpNull;
-	_side_str = (switch (_side) do {case "EAST": {"east"};case "WEST": {"west"};case "RACS": {"resistance"};case "CIV": {"civilian"};});
+	_side_str = (switch (toUpper(_side)) do {case "EAST": {"east"};case "WEST": {"west"};case "RACS": {"resistance"};case "CIV": {"civilian"};});
 	call compile format ["if (count groups_%1 > 0) then {for ""_i"" from 0 to (count groups_%1 - 1) do {if (_i > (count groups_%1 - 1)) exitWith {};_tmp_grp_a = groups_%1 select _i;if (typeName _tmp_grp_a == ""ARRAY"") then {_tmp_time = _tmp_grp_a select 1;if (time >= _tmp_time) then {_tmp_grp = _tmp_grp_a select 0;if (isNull _tmp_grp) then {groups_%1 set [_i, ""X_RM_ME""];} else {if (count (units _tmp_grp) == 0) then {deleteGroup _tmp_grp;groups_%1 set [_i, ""X_RM_ME""];};};};};sleep 0.012;};groups_%1 = groups_%1 - [""X_RM_ME""];};_grp = createGroup %1;groups_%1 = groups_%1 + [[_grp, time + 120]];",_side_str];
 	can_create_group = true;
 	_grp
@@ -137,7 +158,7 @@ x_getunitliste = {
 		case "uralfuel": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 9);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "uralrep": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 10);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "uralammo": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 11);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
-		case "civilian": {for "_i" from 1 to 12 do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
+		case "civilian": {for "_i" from 1 to 10 do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
 		case "sabotage": {_how_many = 6 + (ceil random 6); _list = call compile format ["d_sabotage_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
 		case "civbus": {_vehiclename = "Bus_city";_how_many = ceil random 8;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
 		case "civcar": {_vehiclename = d_civ_cars select (floor (random (count d_civ_cars)));_how_many = ceil random 4;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
@@ -227,7 +248,7 @@ SYG_addEventsAndDispose = {
 
 
 
-// Makes enemy vehicles group
+// Makes enemy vehicles group for sidemission (e.g. convoy)
 x_makevgroup = {
 	private ["_numbervehicles", "_pos", "_crewmember", "_vehiclename", "_grp", "_radius", "_direction", "_do_points",
 	"_the_vehicles", "_d_crewman", "_d_crewman2", "_no_crew", "_side_char", "_grpskill", "_n", "_vehicle", "_dir",
@@ -658,13 +679,20 @@ XAddPlayerScore = {
 
 // Sends info about player score etc if found it in server cache
 XGetPlayerPoints = {
-	private ["_name", "_index", "_score"];
-	_name = _this;_index = d_player_array_names find _name;
+	private ["_name", "_index", "_staff", "_sound"];
+	_name = _this;
+	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
 	//__DEBUG_NET("XGetPlayerPoints",_index)
-	_score = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
-	["d_player_stuff", _score, SYG_dateStart] call XSendNetStartScriptClient;
-	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client +++", _score];
+	_staff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
+	// prepare also semi-unical (up to 15 users) suicide sound for this player as parameter index 3
+	if ( (toUpper (_name)) == "YETI") then {
+	    _sound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti;
+	} else {
+	    _sound = _index call SYG_getSuicideScreamSoundById;
+	};
+	["d_player_stuff", _staff, SYG_dateStart, _sound] call XSendNetStartScriptClient;
+	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client +++", _staff];
 };
 
 // calls as follow: _near_enemy_arr = _grp_array call x_get_nenemy

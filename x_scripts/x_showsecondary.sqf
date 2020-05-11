@@ -49,7 +49,7 @@ if ((current_target_index != -1) && (sec_kind > 0)) then
 			// TODO find this ammo truck and make it super ammo one
 			_rearmed = [_target_array2 select 0] call SYG_reammoTruckAround;
 #ifdef __PRINT__
-			hint localize format[ "x_showsecondary.sqf: %1 vehicles of 'Truck5tReammo' type are rearmed", _rearmed ];
+			hint localize format[ "x_showsecondary.sqf: vehicles of 'Truck5tReammo' type rearmed %1", _rearmed ];
 #endif				
 		}; 
  	    case 4;

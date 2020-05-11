@@ -17,12 +17,13 @@
 // at 10.1: debug print any new waypoints if TRUE and not if FALSE. Optional. Default FALSE
 // at 10.2: prevent new wp be on islet (TRUE) or not (FALSE). Optional.  Default FALSE, i.e. not prevent WP be on Islet
 // at 10.3: distance to detect hill near new wp. Optional.  Default 0, i.e. not seek for hills near WP
+// at 10.4: prevent new wp be near owner base (TRUE) or not (FALSE). Optional.  Default FALSE, i.e. not prevent WP be near owner base
 //-----------------------------------------------------------------------------------------------------------------------
 
 private ["_grp_array", "_grp", "_enemy_array", "_reached_wp", "_time_at_wp", "_next_wp_time", "_units", 
          "_checktime", "_flank_pos_a",/*  "_make_normal",  */"_leader", "_start_pos", "_wp_array", "_wp_one", 
 		 "_wp_pos", "_last_pos", "_counter", "_stime","_had_towait", "_side", "_joingrp","_leader1","_rejoin_num","_i",
-		 "_debug_print","_skip_islets","_hills_seek_dist","_all_grp_list"];
+		 "_debug_print","_skip_islets","_hills_seek_dist","_skip_base","_all_grp_list"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -44,6 +45,7 @@ _rejoin_time     = 0; // time for next re-join
 _debug_print     = false;
 _skip_islets     = false;
 _hills_seek_dist = 0;
+_skip_base       = false;
 if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) then
 {
 	_wp_array = _grp_array select 10;
@@ -51,8 +53,11 @@ if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) the
 	if ( count _wp_array > 1) then {    _debug_print = _wp_array select 1;};
 	if ( count _wp_array > 2) then {    _skip_islets = _wp_array select 2;};
 	if ( count _wp_array > 3) then {_hills_seek_dist = _wp_array select 3;};
+	if ( count _wp_array > 4) then {      _skip_base = _wp_array select 4;};
 };
-
+#ifdef __DEBUG__
+_debug_print = _debug_print && ((side _grp) != civilian); // skip debug print if civil group
+#endif
 _enemy_array = [];
 _reached_wp = true;
 _time_at_wp = 15 + random 15;
@@ -75,7 +80,11 @@ _last_pos = _start_pos; // last known position of the group
 while {true} do {
 
 	// check group to be empty or dead
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["+++ x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith {
+	    // exit if group is empty or dead
+	    if (count _last_pos < 3) exitWith { if (_debug_print) then {hint localize "+++ x_groupsm.sqf: group with null WP(0) dead"}};
+        if(_debug_print) then {hint localize format["+++ x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)]};
+	};
 
 	if (X_MP) then {
 		//hint localize format["x_groupsm.sqf: call XPlayersNumber == %1",(call XPlayersNumber)];
@@ -165,8 +174,19 @@ while {true} do {
 									if (_wp_pos call SYG_pointOnIslet) then 
 									{
 #ifdef __DEBUG__
-										hint localize format["%1 x_groupsm.sqf: grp %2, new wp %3 is on islet (code 1)",call SYG_nowTimeToStr,_grp, _wp_pos];
+										if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is on islet (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos]};
 #endif							
+										_wp_pos = [];
+									};
+								};
+								if (_skip_base) then
+								{
+									// check if point is near owner base
+									if (_wp_pos call SYG_pointNearBase) then
+									{
+#ifdef __DEBUG__
+										if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos]};
+#endif
 										_wp_pos = [];
 									};
 								};
@@ -184,10 +204,21 @@ while {true} do {
 										if ( _wp_pos call SYG_pointOnIslet ) then 
 										{
 #ifdef __DEBUG__
-											hint localize format["%1 x_groupsm.sqf: new wp %2 is on islet (code 2), counter %3",call SYG_nowTimeToStr,_wp_pos,_counter];
+											if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: new wp %2 is on islet (case 2), counter %3",call SYG_nowTimeToStr,_wp_pos,_counter]};
 #endif							
 											_wp_pos = _start_pos
 										};
+                                        if (_skip_base) then
+                                        {
+                                            // check if point is near owner base
+                                            if (_wp_pos call SYG_pointNearBase) then
+                                            {
+#ifdef __DEBUG__
+                                                if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 2)",call SYG_nowTimeToStr,_grp, _wp_pos]};
+#endif
+                                                _wp_pos = [];
+                                            };
+                                        };
 										_counter = _counter + 1;
 										sleep 0.02;
 									};
@@ -201,7 +232,7 @@ while {true} do {
 								(units _grp) doMove _wp_pos;
 								if ( _debug_print ) then
 								{
-									hint localize format["%1 x_groupsm.sqf: group %2 - > set new WP %3 near %4",call SYG_nowTimeToStr,_grp, _wp_pos, text (_wp_pos call SYG_nearestLocation)];
+									if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: group %2 - > set new WP %3 near %4",call SYG_nowTimeToStr,_grp, _wp_pos, text (_wp_pos call SYG_nearestLocation)]};
 								};
 								_grp_array set [4, _wp_pos];
 								_grp_array set [5, time];
@@ -209,7 +240,7 @@ while {true} do {
 							};
 						} else
 						{
-							hint localize format[ "--- x_groupsm: expected _wp_array not ARRAY => %1", _grp_array];
+							if(_debug_print) then {hint localize format[ "--- x_groupsm: expected _wp_array not ARRAY => %1", _grp_array]};
 						}
 					};
 				};
@@ -218,7 +249,7 @@ while {true} do {
 #ifdef __DEBUG__			
 				if ( count (_grp_array select 4) != 3 ) then
 				{
-					hint localize format["%1 x_groupsm.sqf: grp %2, count of next wp coords (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
+					if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, count of next wp coords (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)]};
 				};
 #endif				
 				
@@ -310,7 +341,11 @@ while {true} do {
 	}; // switch (_grp_array select 2)
 	
 	// check group to be empty or dead
-	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith { hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)];}; // exit if group is empty or dead
+	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith {
+        if (count _last_pos < 3) exitWith { if (_debug_print) then {hint localize "+++ x_groupsm.sqf: group with null WP(1) dead";}};
+    	if(_debug_print) then {hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)]};
+	};
+	// exit if group is empty or dead
 	
 	sleep (4 + random 4);
 	//+++ Sygsky: OPTIMIZE small groups utilizing with time to time trying to rejoin with bigger ones
@@ -378,8 +413,9 @@ while {true} do {
 				    count units _grp,
 				    _rejoin_num,
 //				    (getPos (leader _grp)) call SYG_nearestLocationName,
-				    [leader _grp, "%1 m. to %2 from %3"] call SYG_MsgOnPosE,
-				    typeOf (leader _grp)];
+				    [_grp call XfGetLeader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE,
+				    typeOf (_grp call XfGetLeader)
+				    ];
 #endif				
                 if ( (isNull _joingrp) && (!isNull _any_grp) ) then // use bad group if no good one found
                 {
@@ -389,7 +425,10 @@ while {true} do {
 				if ( !isNull _joingrp ) then 
 				{
 #ifdef __DEBUG__			
-					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %6, dist %7; %8", _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr, typeOf (leader _joingrp), round((leader _joingrp) distance (leader _grp)), [(leader _joingrp),"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %6, dist %7; %8",
+					    _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr,
+					    typeOf (leader _joingrp), round((leader _joingrp) distance (leader _grp)),
+					    [(_joingrp call XfGetLeader),"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
 #endif				
 					if ( rank _leader != "PRIVATE" ) then {_leader setRank "PRIVATE"};
 					(units _grp) join _joingrp; sleep 1.111;

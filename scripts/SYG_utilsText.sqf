@@ -113,7 +113,7 @@ SYG_joinArr = {
 };
 
 /*
- * Prepare string to print from vehicles array син converting them into type strings (typeOf _vehicle_obj)
+ * Prepare string to print from vehicles array by converting them into type strings (typeOf _vehicle_obj)
  * Input: _result = [_veh_arr, _max_num_to_print] call SYG_objArrToTypeStr; // result = "[ACE_Abrams,ACE_UAZ,ACE_Mi24P,...25]"
  */
 SYG_objArrToTypeStr = {

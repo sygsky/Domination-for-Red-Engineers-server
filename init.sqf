@@ -107,7 +107,7 @@ if (isServer) then {
 //SYG_client_start = missionStart;
 
 #ifdef __DEBUG_ADD_VEHICLES__
-	// create vehicle to help isle defence activity debugging
+    // create vehicle to help isle defence activity debugging
 
     {
         _vec = createVehicle [_x select 0, _x select 1, [], 0, "NONE"];
@@ -122,19 +122,19 @@ if (isServer) then {
         ["ACE_WeaponBox", [14539,9922,0], -75],
         ["ACE_WeaponBox", [9672,9991,0], 270]
     ];
-	_vec = createVehicle ["ACE_Su30Mk_Kh29T", [9658.247070,10020.545898,0], [], 0, "NONE"];
-	_vec setDir 90;
-	if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
-	else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
-	_vec  execVM "x_scripts\x_wreckmarker.sqf";
+    _vec = createVehicle ["ACE_Su30Mk_Kh29T", [9658,10021,0], [], 0, "NONE"];
+    _vec setDir 90;
+    if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
+    else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
+    _vec  execVM "x_scripts\x_wreckmarker.sqf";
 
-	_vec = createVehicle ["ACE_Mi24D", [9720,10040,0], [], 0, "NONE"]; // ACE_Mi24P, ACE_AH64_AGM_HE
-	_vec setDir 90;
-	_vec  execVM "x_scripts\x_wreckmarker.sqf";
+    _vec = createVehicle ["ACE_Mi24D", [9720,10040,0], [], 0, "NONE"]; // ACE_Mi24P, ACE_AH64_AGM_HE
+    _vec setDir 90;
+    _vec  execVM "x_scripts\x_wreckmarker.sqf";
 
-	_vec = createVehicle ["ACE_UAZ_MG", [9740,10040,0], [], 0, "NONE"];
-	_vec setDir 90;
-	_vec  execVM "x_scripts\x_wreckmarker.sqf";
+    _vec = createVehicle ["ACE_UAZ_MG", [9740,10040,0], [], 0, "NONE"];
+    _vec setDir 90;
+    _vec  execVM "x_scripts\x_wreckmarker.sqf";
 
     _medic_tent = createVehicle ["MASH", [9359.855469, 10047.625000,0], [], 0, "NONE"];
     _medic_tent setDir 189;
@@ -148,9 +148,21 @@ if (isServer) then {
 #endif
 
 #ifdef __ADDITIONAL_BASE_VEHICLES__
+
 #ifdef __DEFAULT__
     [] execVM "scripts\addRndVehsOnBase.sqf"; // all positions in file are set for Sahrani only
+
+ #ifdef __SCUD__
+    if (SYG_found_SCUD) then {
+        hint localize "+++ SCUD addon gig_scud.sqf installed";
+        [] execVM "scripts\addSCUD.sqf";
+    } else {
+        hint localize "--- SCUD addon gig_scud.sqf not installed";
+    };
+ #endif
+
 #endif
+
 #endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
@@ -192,7 +204,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo
+    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldom 14: Eponia
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
@@ -223,9 +235,8 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 10 - arti above base (SanSebastian), 32 - flag in Parato
+    _first_array = [];
     side_missions_random = _first_array + (side_missions_random - _first_array);
-
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
@@ -252,12 +263,17 @@ if (isServer) then {
     };
 #endif
 
-
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //+ fill _first_array with sm numbers to go first in any case +
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = []; // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest
+    // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
+    // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest, 40 - prisoners in Tiberia
+    _first_array = [];
     side_missions_random = _first_array + (side_missions_random - _first_array);
+
+//    side_missions_random = side_missions_random - [40,41]; // nemporarily remove all SM with prisoners (not work!!)
+
+    hint localize format["+++ SM array: %1", side_missions_random];
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
 
@@ -273,7 +289,6 @@ if (isServer) then {
 	SYG_owner_active_air_vehicles_arr = []; // list of player's vehicles in air
 	check_trigger = objNull;
 	create_new_paras = false;
-	first_time_after_start = true;
 	nr_observers = 0;
 #ifdef __TT__
 	[
@@ -390,7 +405,6 @@ if (isServer) then {
 	if (isNil "ace_sys_network_OPCB") then {ace_sys_network_OPCB = []};
 	ace_sys_network_OPCB set [count ace_sys_network_OPCB , {[_this select 0] execVM "x_scripts\x_serverOPC.sqf"} ];
 	hint localize format["ACE:ace_sys_network_OPCB = %1", ace_sys_network_OPCB];
-	hint localize format["ACE:ace_sys_network_OPC = %1", ace_sys_network_OPC];
 
 	// On Player Disconnect
 	if (isNil "ace_sys_network_OPD") then {ace_sys_network_OPD = []};
@@ -454,13 +468,30 @@ if (isServer) then {
         // build flag on Antigua (by Yeti request)
         sleep 60; // wait 1 minute to ensure user to build flag on map
         [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
-        // create outdoor toilet ("Land_KBud")
 
+        // create outdoor toilet ("Land_KBud")
 		_obj = createVehicle ["Land_KBud", [0,0,0],[],0, "CAN_COLLIDE"];
 		_obj setDir 270;
 		_obj setPos [9438.9,9858.4,0];
-		// add some action to toilet on client computer
-
+		// TODO: add some action to toilet on client computer
+#ifdef __ACE__
+		// add some random equipment
+		if ( (random 1) < 0.5 ) then {
+            _cnt = _obj call SYG_housePosCount;
+            _pos = floor (random _cnt);
+            _pos = _obj buildingPos _pos;
+            _pos set [2, (_pos select 2) + 0.55];
+//          _pos set [0, (_pos select 0) - 0.25];
+            _weaponHolder = "WeaponHolder" createVehicleLocal [0,0,0];
+            _weaponHolder setPos _pos;// [_weaponHolderPos, [], 0, "CAN_COLLIDE"];
+            _item = (SYG_PISTOL_WPN_SET_WEST) call XfRandomArrayVal;
+            _wpn = _item select 1;
+            _mag = _item select 2;
+            _weaponHolder addWeaponCargo [_wpn, 1];
+            _weaponHolder addMagazineCargo [_mag, 4 ];
+            hint localize format["+++ init: %1 created in %2", _wpn, typeOf _obj];
+		};
+#endif
 	};
 #endif
 	//+++ Sygsky: create and handle GRU computer on server
@@ -682,9 +713,10 @@ if ( X_Client ) then {// runs only on client
     #ifdef __MANDO_MISSILES_UPDATE__  // execute code if on client and ACE is defined
 
     mando_scorefunc                 = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
-    hint localize "+++ mando_score replaced by custom version";
+    hint localize "+++ mando_scorefunc replaced by custom version";
 
     #endif
+
 
 
 };
