@@ -217,6 +217,8 @@ class CfgMusic
     class lenin { name="And again the battle continues";                sound[] = {\sounds\intro\holidays\apr_22\lenin.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
     class lenin_1 { name="Day by day are years go";                     sound[] = {\sounds\intro\holidays\apr_22\lenin_1.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
 
+	class invasion { name="invasion";                                   sound[]={\sounds\invasion.ogg,db+0,1.0};}; // Invasion - Shostakovitch
+
     class hugging_the_sky { name="Hugging the sky...";                  sound[] = {\sounds\intro\holidays\aug_17\hugging_the_sky.ogg,db-1,1.0}; } // Soviet air fleet day
     class we_teach_planes_to_fly { name="We teach planes to fly...";    sound[] = {\sounds\intro\holidays\aug_17\we_teach_planes_to_fly.ogg,db-1,1.0}; } // Soviet air fleet day
 
