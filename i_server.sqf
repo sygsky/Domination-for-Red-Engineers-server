@@ -1126,6 +1126,6 @@ d_enemy_aa_vehicle = ["ZSU"];
 //##############################################################################
 // add more civilian cars if you want
 d_civ_cars = ["Skoda","SkodaBlue","SkodaRed","SkodaGreen","car_hatchback","car_sedan"];
-// creates randomly spawned civilians (busses, cars, pedestrian) in some cities, if a player is near that city (to enable it set it to true)
+// creates randomly spawned civilians (buses, cars, pedestrian) in some cities, if a player is near that city (to enable it set it to true)
 d_create_civilian = false;
 };
