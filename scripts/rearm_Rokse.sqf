@@ -1,6 +1,6 @@
 /*
 	author: Sygsky
-	description: none
+	description: rearm player Rokse [LT]
 	returns: nothing
 */
 
