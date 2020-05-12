@@ -1679,7 +1679,7 @@ if (d_player_air_autokick > 0) then {
 	private ["_oldscore","_newscore"];
 	_oldscore = 0;
 	while {true} do {
-		sleep 3 + random 3;
+		sleep (3 + random 3);
 		_newscore = score player;
 		if (_oldscore != _newscore) then {
 			["d_ad_sc", name player, _newscore] call XSendNetStartScriptServer;
@@ -1889,13 +1889,17 @@ if (name player == "EngineerACE") then {
     //player setPos [9763, 11145, 0]; // near Rashidan dock
     // player setPos [16545,12875,0];
     // MRR1 setPos [9407,5260,0]; // move teleport to the positon at SM #40 (hostages in Tiberis)
+    waitUntil { sleep 0.5; (!isNil "d_player_stuff")};
+    sleep 5;
     if ( score player < 1500 ) then { player addScore (1500 - (score player) ) };
 };
 #endif
 
 #ifdef __SCUD__
 if (name player == "HE_MACTEP") then {
-    hint localize "+++ x_setuplayer,sqf: __SCUD__";
+    hint localize "+++ x_setuplayer.sqf: __SCUD__";
+    waitUntil { sleep 0.5;(!isNil "d_player_stuff")};
+    sleep 5;
     if ( score player < 1000 ) then { player addScore (1000 - (score player) ) };
 };
 #endif

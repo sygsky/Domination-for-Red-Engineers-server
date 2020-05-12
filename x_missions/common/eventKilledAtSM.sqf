@@ -52,8 +52,8 @@ if ( !(isNull _killer) ) then {
     } forEach crew (vehicle _killer);
     //hint localize format["+++ eventKilledAtSM.sqf: killer not is null %1, found %2", name _killer, count _plist];
 };
-
-_arr = position _unit nearObjects ["AllVehicles", d_ranked_a select 12];
+_arr = getPos _unit;
+_arr = _arr nearObjects ["AllVehicles", d_ranked_a select 12];
 {
     {
         if ( isPlayer _x ) then { (name _x) call _add_to_list };
