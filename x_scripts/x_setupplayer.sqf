@@ -320,6 +320,13 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 3500 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf";  _rearmed = true; };
                             };
+                            case "ROKSE [LT] " : // Rokse [LT]
+                            {
+                                // Viewdistance
+                                10000 call SYG_setViewDistance;
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf";  _rearmed = true; };
+
+                            };
                             // TODO: add more personal setting here (as for "Yeti" done)
                             default {}; // all other players are rearmed by standart
                         };
