@@ -2365,7 +2365,7 @@ class Mission
 			special="NONE";
 			id=207;
 			side="EMPTY";
-			vehicle="M1030";
+			vehicle="ACE_ATV_HondaR";
 			skill=1.000000;
 			text="moto1";
 		};
@@ -2376,7 +2376,7 @@ class Mission
 			special="NONE";
 			id=208;
 			side="EMPTY";
-			vehicle="TT650G";
+			vehicle="ACE_ATV_HondaR";
 			skill=1.000000;
 			text="moto2";
 		};
