@@ -304,7 +304,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             };
                         };
                         // try to rearm predefined players (Yeti, EngineerACE etc)
-                        _rearmed = false;
+                        _rearmed = true;
                         switch (toUpper (name player)) do
                         {
                             case "YETI":  // Yeti
@@ -312,23 +312,23 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 d_rebornmusic_index = 1; // no play death sound
                                 //SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                                 3000 call SYG_setViewDistance;
-                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; _rearmed = true; };
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
                             };
                             case "ENGINEERACE":  // EngineerACE
                             {
                                 // Viewdistance
                                 3500 call SYG_setViewDistance;
-                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf";  _rearmed = true; };
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf"; };
                             };
-                            case "ROKSE [LT] " : // Rokse [LT]
+                            case "ROKSE [LT]" : // Rokse [LT]
                             {
                                 // Viewdistance
                                 10000 call SYG_setViewDistance;
-                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf";  _rearmed = true; };
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf"; };
 
                             };
                             // TODO: add more personal setting here (as for "Yeti" done)
-                            default {}; // all other players are rearmed by standart
+                            default { _rearmed = false; }; // all other players are rearmed by standart
                         };
                         if (!_rearmed ) then {
                             [_p, _weapp] call SYG_armUnit;
