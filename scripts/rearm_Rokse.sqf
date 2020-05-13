@@ -1,5 +1,5 @@
 /*
-	author: Sygsky
+	author: Sygsky, scripts\rearm_Rokse.sqf
 	description: rearm player Rokse [LT]
 	returns: nothing
 */
@@ -10,6 +10,7 @@
 //   "ACE_Rucksack_Alice",
 //   [["ACE_RPG7_PG7VR_PDM",4]],10000,1
 // ]
+//hint localize "+++ I'm Rokse-e-e-e";
 _p = _this;
 if (typeName _p == "ARRAY") then {_p = _p select 0}; // can be designated array [player, _rankIndex] for the future development
 
@@ -19,7 +20,7 @@ _wpn  = "ACE_RPK47";
 _rpg  = "ACE_RPG7";
 _mags =
 [
-    ["ACE_Morphine",3],
+    ["ACE_Morphine",4],
     ["ACE_Bandage",4],
     ["ACE_Morphine"],
     ["ACE_RPG7_PG7VR",2],
