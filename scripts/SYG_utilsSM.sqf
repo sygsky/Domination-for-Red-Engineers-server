@@ -245,7 +245,7 @@ SYG_townScoresPrint = {
     _arr  = SYG_townScores select 0;
     _arr1 = SYG_townScores select 1;
     hint localize "[";
-    hint localize format[ "++++++ Town ""%1"" players score report ++++++", _this ];
+    hint localize format[ "++++++ Town ""%1"" (%2) players score report ++++++", _this, current_target_index ];
 
     _sum = 0;
     _time_diff = time - (SYG_townScores select 2);
