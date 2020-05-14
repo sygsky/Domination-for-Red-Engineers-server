@@ -371,7 +371,7 @@ XHandleNetStartScriptClient = {
 		};
 		// last target town cleared, no more target remained !!!
 		case "target_clear": {
-			playSound "USSR"; // playSound "fanfare";
+			// playSound "USSR"; // playSound "fanfare"; // dont play as this sound also is heard from town flag
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2);
 			execVM "x_scripts\x_target_clear_client.sqf";
