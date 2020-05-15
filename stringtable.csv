@@ -382,7 +382,7 @@ STR_SM_050,"Good job. All artillery guns are down. No artillery observers will a
 
 STR_SM_55,"An enemy officer is on a walk in the forest Selva de Caza. This is a good chance to arrest him and bring him to your base (only a rescue operator or group leader can do that). Note: he can be found at 50 meters of center point! Beware of local AA!","Einer der Offiziere ging Pilze im Wald Selva de Caza. Ihre Aufgabe abzunehmen Pilze, die Verhaftung Offizier und liefern es an der Basis. (Eine Mission zu erfüllen, kann nur der Spieler in die Rolle der Retter). Hinweis: er kann gefunden werden, an 50 Metern der Mittelpunkt! Hüten Sie sich vor der lokalen AA!","Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. Внимание! Офицер может находиться на расстоянии 50 метров от центра района, а местные трапперы на хребте неподалёку были обстреляны из зенитной установки! (Завершить миссию может только игрок в роли спасателя или лидер группы)"
 
-STR_SM_TELEPORT_1,"You realized that teleportation didn’t work with some of your team members (%1)","Sie haben festgestellt, dass die Teleportation bei einigen Mitgliedern Ihres Teams nicht funktioniert (% 1)","Вы поняли, что телепорт не сработал для некоторых членов отряда (%1)"
+STR_SM_TELEPORT_1,"You realized that teleportation didn’t work with some of your team members (%1)","Sie haben festgestellt, dass die Teleportation bei einigen Mitgliedern Ihres Teams nicht funktioniert (%1)","Вы поняли, что телепорт не сработал для некоторых членов отряда (%1)"
 
 STR_SYS_160,"Select Viewdistance","Sichtweite","Дист. обзора"
 STR_SYS_161,"Click on the number to change the VD","Wählen Sie aus der Liste","Выберите из списка"
@@ -840,7 +840,7 @@ STR_SYS_1173,"You already have %1 AI soldiers under your control, it is not poss
 
 STR_SYS_1174,"You current rank is %1. You need to be %2 to recruit soldier[s]!","Sie Aktueller rank ist %1. Sie müssen %2 zu rekrutieren Soldat[en]!","Ваш ранг %1. Минимальное звание, дающее право призыва - %2"
 STR_SYS_1174_1,"Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4. A pilot is always twice as expensive!","Wehrpflichtige: Sie haben %1 im Wehrdienst %2. Der Wehrpflichtige kostet -%3%4. Ein Pilot ist immer doppelt so teuer!","Призывники:  у Вас %1, в военкомате %2. Призывник обойдётся в -%3%4. Пилот всегда в два раза дороже!"
-STR_SYS_1174_2,". After which you can be demoted to '%1', as pilots cost twice as expensive!",". Danach können Sie auf '% 1' herabgestuft werden, da Piloten doppelt so teuer sind!",". После чего можете быть разжалованы до звания '%1', т.к. пилоты в два раза дороже"
+STR_SYS_1174_2,". After which you can be demoted to '%1', as pilots cost twice as expensive!",". Danach können Sie auf '%1' herabgestuft werden, da Piloten doppelt so teuer sind!",". После чего можете быть разжалованы до звания '%1', т.к. пилоты в два раза дороже"
 STR_SYS_1174_3,". Next AI will cost you -%1 (%2 if pilot)",". Die nächste KI kostet dich -%1 (%2 wenn Pilot)",". Следующий призывник обойдётся в -%1 (-%2 если пилот)!"
 
 STR_SYS_1175,"You can't recruit an AI soldier, costs %2 points, your current scores (%1) and rank will drop below %32!","Das kannst du nicht rekrutieren ein KI-Soldat, Kosten %2 Punkte, Ihre aktuelle Punktzahl (%1), Ihren Rang fallen Sie unter %3!","Вы не можете призвать ИИ (стоимость %2, а у вас только %1!), звание упадёт ниже '%3'"
@@ -918,12 +918,12 @@ STR_AI_8,"Dismiss AI","Entlassen KI","Демобилизовать всех"
 STR_AI_8_1,"Verify recruitment","Rekrutierung überprüfen","Проверить призыв"
 
 STR_AI_9,"All AI soldiers dismissed (%1) !!! Points returned %2%3","Alle KI-Soldaten entlassen (%1) !!! Punkte returned %2%3","Все местные бойцы демобилизованы (%1) !!! Возвращено очков: %2%3"
-STR_AI_9_1,". Take care of your soldiers better (injured% 1)!",". Pass besser auf deine Soldaten auf (Verletzte% 1)!",". Заботьтесь  о своих солдатах лучше (ранен[ы] %1)!"
+STR_AI_9_1,". Take care of your soldiers better (injured%1)!",". Pass besser auf deine Soldaten auf (Verletzte%1)!",". Заботьтесь  о своих солдатах лучше (ранен[ы] %1)!"
 STR_AI_9_2,"You have no recruits!","Du hast keine Rekruten!","У Вас нет призывников!"
 
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
 STR_AI_11,"Points for one militia: -%1. Refund of half - upon demobilization","Punkte für eine Miliz: -%1. Rückerstattung der Hälfte - bei Demobilisierung","Затраты за одного ополченца: -%1. Возврат половины - после его демобилизации"
-STR_AI_11_PILOT,"A local glider club pilot will cost twice as much: - %1! Refund of half - after demobilization in full health","Ein lokaler Segelflugklubpilot kostet doppelt so viel: -% 1! Rückerstattung der Hälfte - nach Demobilisierung bei voller Gesundheit","Пилот местного планерного клуба обойдётся в два раза выше: -%1! Возврат половины - после демобилизации в полном здравии"
+STR_AI_11_PILOT,"A local glider club pilot will cost twice as much: - %1! Refund of half - after demobilization in full health","Ein lokaler Segelflugklubpilot kostet doppelt so viel: -%1! Rückerstattung der Hälfte - nach Demobilisierung bei voller Gesundheit","Пилот местного планерного клуба обойдётся в два раза выше: -%1! Возврат половины - после демобилизации в полном здравии"
 
 STR_AI_12_NUM,6,6,6
 STR_AI_12_0,"Chief! I'm afraid to go with You!","Chef! Ich habe Angst, mit Ihnen zu Fliegen!","Шеф! Опасаюсь лететь с Вами!"
@@ -941,6 +941,12 @@ STR_AI_13_3,"Only... until... the political Manager does not see!","Nur... bis..
 STR_AI_13_4,"Commander! Do you know how to fly?","Commander! Kannst du selbst Fliegen?","Командир! А ты сам-то умеешь летать?"
 
 STR_AI_14,"Commander! Let's wait at least %1 sec. for decency","Commander! Warten wir mindestens %1 Sek. für Anstand","Командир! Давайте подождём %1 сек... для приличия"
+
+STR_ILLUM,"Illumination on the base for this night is already running (%1). Try again next night","Die Beleuchtung an der Basis für diese Nacht läuft bereits (%1). Versuchen Sie es noch einmal nach der Nacht","Освещение базы уже запушено ""%1"", попытайтесь ещё раз после ночи"
+STR_ILLUM_1,"You don't have enough points. Required, with your rank, %1","Du hast nicht genug Punkte. Erforderlich, mit Ihrem Rang, %1","У Вас не хватает очков. С вашим званием требуется %1."
+STR_ILLUM_2,"Come again at night (after message). And don't forget the points (%1)","Komm nachts wieder (nach Nachricht). Und vergiss die Punkte nicht (%1)","Приходите ночью (будет сообщение). И прихватите баллы (%1)"
+STR_ILLUM_2_0,"Come again at night (after message)","Komm nachts wieder (nach Nachricht)","Приходите ночью (будет сообщение)"
+STR_ILLUM_3,"Over the base, a regular launch of flares began. Points taken: -%1","Über der Basis begann ein regelmäßiger Start von Fackeln. Erhaltene Punkte: -%1","Над базой начат регулярный запуск сигнальных ракет. Снято очков: -%1"
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
