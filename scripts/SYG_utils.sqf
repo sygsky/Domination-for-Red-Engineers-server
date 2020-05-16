@@ -608,11 +608,7 @@ SYG_AIPriceByScore = {
         if (isPlayer _this) then {_this = score _this};
     };
     if (typeName _this != "SCALAR") exitWith {1000000};
-#ifdef __SUPER_RANKING__
     _rank_id = _this call XGetRankIndexFromScoreExt;
-#else
-    _rank_id = _this call XGetRankFromScore;
-#endif
     _rank_id call SYG_AIPriceByRankId
 };
 
@@ -629,11 +625,7 @@ SYG_AIPriceByRankId = {
 //    hint localize format["+++ %1 call SYG_AIPriceByRankId", _this];
     if (typeName _this == "OBJECT") then {
         if (isPlayer _this) then {
-#ifdef __SUPER_RANKING__
             _this = (score _this)call XGetRankFromScoreExt;
-#else
-            _this = (score _this)call XGetRankFromScore;
-#endif
         };
     } else {
         if (typeName _this == "STRING") then { // rank name used
