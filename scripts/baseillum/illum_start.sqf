@@ -13,9 +13,11 @@ if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
 
-#define COST_PER_RANK 10
+_score = ((player call XGetRankIndexFromScoreExt) +1) * (d_ranked_a select 29);
 
-_score = ( ( player call XGetRankIndexFromScoreExt ) + 1 ) * COST_PER_RANK;
+_id = call SYG_getDayTimeId;
+_str = call SYG_nowTimeToStr;
+//hint localize format[ "+++ illum_start.sqf: (call SYG_getDayTimeId) = %1, time = %2", _id, _str];
 
 if ((call SYG_getDayTimeId) != 0) exitWith {
     // this is not night

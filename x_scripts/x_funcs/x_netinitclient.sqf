@@ -933,11 +933,17 @@ XHandleNetStartScriptClient = {
         // response from server to confirm you request on illumination on base: [ "illum_over_base", _player_name]
         case "illum_over_base" : {
             if (name player == _this select 1) exitWith {
+            #ifdef __RANKED__
                 private ["_score"];
                 // inform player about his illumination and consume scores
-                _score = ((player call XGetRankIndexFromScoreExt) +1) * COST_PER_RANK;
+                _score = ((player call XGetRankIndexFromScoreExt) +1) * (d_ranked_a select 29);
                 // "Over the base, a regular launch of flares began. Points taken: -%1"
                 [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
+                player addScore -_score;
+            #else
+                // "Over the base, a regular launch of flares began"
+                [ "msg_to_user", "",  [ ["STR_ILLUM_3_1" ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
+            #endif
             };
             // inform others about illumination start
             // "%1 provided regular launch of flares over our base"

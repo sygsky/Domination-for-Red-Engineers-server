@@ -484,7 +484,7 @@ SYG_getDayTimeId = {
     if ( _dt <     SYG_startDay ) exitWith {2};
     if ( _dt < SYG_startEvening ) exitWith {1};
     if ( _dt <   SYG_startNight ) exitWith {3};
-    1
+    0
 };
 
 // Return localized message text on the current daytime period: night, morning, day, evening

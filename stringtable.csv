@@ -947,7 +947,9 @@ STR_ILLUM_1,"You don't have enough points. Required, with your rank, %1","Du has
 STR_ILLUM_2,"Come again at night (after message). And don't forget the points (%1)","Komm nachts wieder (nach Nachricht). Und vergiss die Punkte nicht (%1)","Приходите ночью (будет сообщение). И прихватите баллы (%1)"
 STR_ILLUM_2_0,"Come again at night (after message)","Komm nachts wieder (nach Nachricht)","Приходите ночью (будет сообщение)"
 STR_ILLUM_3,"Over the base, a regular launch of flares began. Points taken: -%1","Über der Basis begann ein regelmäßiger Start von Fackeln. Erhaltene Punkte: -%1","Над базой начат регулярный запуск сигнальных ракет. Снято очков: -%1"
+STR_ILLUM_3_1,"Over the base, a regular launch of flares began","Über der Basis begann ein regelmäßiger Start von Fackeln","Над базой начат регулярный запуск сигнальных ракет"
 STR_ILLUM_3_0,"%1 provided regular launch of flares over our base","%1 lieferte einen regelmäßigen Abschuss von Signalraketen über unserer Basis","%1 обеспечил регулярный запуск сигнальных ракет над нашей базой"
+STR_ILLUM_4,"Flares spent on the base illumination at night: %1 PC.","Nachts wurden Beleuchtungsraketen ausgegeben, um die Basis zu beleuchten: %1 Stk.","На подсветку базы потрачены осветительные ракеты: %1 шт."
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
