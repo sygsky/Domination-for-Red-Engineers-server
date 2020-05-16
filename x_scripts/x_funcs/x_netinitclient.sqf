@@ -20,7 +20,7 @@
 // 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
 // 3: _delay_between_messages is seconds number to sleep between multiple messages;
 // 4: _initial_delay is seconds before first message show;
-// 5: no_title_msg if true - no title shown, else shown if false or "" empty string;
+// 5: no_title_msg if true - no title shown, else shown if false or "" empty string, or scalar <= 0;
 // 6: sound_name is the name of the sound to play with first message show on 'say' command;
 //
 // msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
@@ -930,6 +930,20 @@ XHandleNetStartScriptClient = {
             if ( (name player) in (_val) ) then { d_was_at_sm = true; playSound "good_news" };
         };
 
+        // response from server to confirm you request on illumination on base: [ "illum_over_base", _player_name]
+        case "illum_over_base" : {
+            if (name player == _this select 1) exitWith {
+                private ["_score"];
+                // inform player about his illumination and consume scores
+                _score = ((player call XGetRankIndexFromScoreExt) +1) * COST_PER_RANK;
+                // "Over the base, a regular launch of flares began. Points taken: -%1"
+                [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
+            };
+            // inform others about illumination start
+            // "%1 provided regular launch of flares over our base"
+            [ "msg_to_user", "",  [ ["STR_ILLUM_3_0", _this select 1 ] ], 0, 2, "message_received" ] call SYG_msgToUserParser;
+        };
+
 /*
          // reveal vehicle (MHQ in main) to all players
         case "revealVehicle":
@@ -942,7 +956,7 @@ XHandleNetStartScriptClient = {
 
         default
         {
-            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
+            hint localize format["--- x_netinitclient.sqf: unknown command detected: %1", _this];
         };
 
 

@@ -53,12 +53,13 @@ hint localize format["+++ Illumination (%1): started by ""%2""", call SYG_nowTim
 // 0 for night, 1 for day, 2 for morning and 3 for evening
 if (call SYG_getDayTimeId != 0 ) then {
     // wait for the next night
-    hint localize format["*** Illumination over base will sleep %1 hour(s) up to the night", round (SYG_startNight - daytime)];
+    hint localize format["+++ Illumination over base will sleep %1 hour(s) up to the night", round (SYG_startNight - daytime)];
     sleep SYG_startNight - daytime;
     // TODO: inform user about
 };
 
-// TODO: send info about start of illumination over base
+// TODO: send info about start of illumination over base for this player
+["illum_over_base", name player] call XSendNetStartScriptClient;
 
 // fire illumination flare one by one up to the end of night
 _no = nearestObjects [_center, FLARE_POINT_TYPES , 1000]; // Objects to fire flares above them
@@ -66,6 +67,7 @@ if (count _no == 0) exitWith {hint localize "--- Illumination: exit because no f
 _flares = [];
 // loop for flares whole night
 _id_pos = 0; // next flare object in list id
+
 while { ( daytime > SYG_startNight ) || ( time < SYG_startMorning ) } do {
     // create flares step by step
     _obj_cnt = {alive _x} count _no;
@@ -95,9 +97,10 @@ while { ( daytime > SYG_startNight ) || ( time < SYG_startMorning ) } do {
 };
 
 // wait until all the flares goes out
-waitUntil {sleep 5; ({!isNull _x} count _flares) == 0};
-{deleteVehicle _x } forEach _flares;
+while { ({!isNull _x} count _flares) > 0 } do {sleep 5; };
 _flares = [];
 
 // allow the next illumination to start on the next night
 SYG_illum_customer = nil;
+
+hint localize "+++ Illumination over base stopped (at morning)";

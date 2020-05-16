@@ -243,6 +243,7 @@ GRU_procClientMsg = {
 					_comp addAction [ localize (call SYG_getGRUCompActionTextId), call SYG_getGRUCompScript,[] ];
 					_comp setVariable [COMPUTER_ACTION_ID_NAME,true];
 				};
+				_comp addAction [localize "STR_COMP_ILLUM", "scripts\baseillum\illum_start.sqf"];
 			};
 		};
 

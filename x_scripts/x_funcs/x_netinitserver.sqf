@@ -1,3 +1,4 @@
+// Xeno, x_scripts\x_funcs\x_netinitserver.sqf, on server only
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 #include "global_vars.sqf"
@@ -304,6 +305,7 @@ XHandleNetStartScriptServer = {
             ["syg_plants_restored", arg(1), arg(2), arg(3), _score] call XSendNetStartScriptClient;
 		    hint localize format["+++ Server send msg: %1", ["syg_plants_restored", arg(1), arg(2), arg(3)]];
 		};
+/** Not used at all
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
 		    private ["_vehicle","_sound"];
@@ -315,6 +317,7 @@ XHandleNetStartScriptServer = {
 		    _this call XSendNetStartScriptClientAll; // resend to all clients
 //		    _vehicle say _sound; // do this on clients only
 		};
+*/
 		// ["GRU_event_scores",_score_id, name player] call XSendNetStartScriptServer;
 		case "GRU_event_scores":
 		{
@@ -368,12 +371,23 @@ XHandleNetStartScriptServer = {
 		    }
 		};
 
+        // request to run illum over base, params: [ "illum_over_base", _player_name]
+        case "illum_over_base" : {
+            // find illumination center
+            [   _this select 1,
+            #ifndef __TT__
+                FLAG_BASE // center of illumination zone
+            #else
+                if (d_own_side == "WEST") then { WFLAG_BASE } else { RFLAG_BASE  }
+            #endif
+            ] execVM "scripts\baseillum\illumination_full.sqf"
+        };
 
 //========================================================================================================== END OF CASES
 
         default
         {
-            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
+            hint localize format["--- x_netinitserver.sqf: unknown command detected: %1", _this];
         };
 	}; // switch (_this select 0) do
 }; // XHandleNetStartScriptServer = {

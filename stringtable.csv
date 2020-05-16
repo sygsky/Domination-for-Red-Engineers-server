@@ -947,6 +947,7 @@ STR_ILLUM_1,"You don't have enough points. Required, with your rank, %1","Du has
 STR_ILLUM_2,"Come again at night (after message). And don't forget the points (%1)","Komm nachts wieder (nach Nachricht). Und vergiss die Punkte nicht (%1)","Приходите ночью (будет сообщение). И прихватите баллы (%1)"
 STR_ILLUM_2_0,"Come again at night (after message)","Komm nachts wieder (nach Nachricht)","Приходите ночью (будет сообщение)"
 STR_ILLUM_3,"Over the base, a regular launch of flares began. Points taken: -%1","Über der Basis begann ein regelmäßiger Start von Fackeln. Erhaltene Punkte: -%1","Над базой начат регулярный запуск сигнальных ракет. Снято очков: -%1"
+STR_ILLUM_3_0,"%1 provided regular launch of flares over our base","%1 lieferte einen regelmäßigen Abschuss von Signalraketen über unserer Basis","%1 обеспечил регулярный запуск сигнальных ракет над нашей базой"
 
 //HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
@@ -1191,6 +1192,7 @@ STR_CAMP_TEAM_A_6,groom,Stallknecht,конюх
 
 //------------------------------------ COMPUTER info strings ------------------------------------
 STR_COMP_ENTER,"Login PC","Login PC","Вход в ПЭВМ"
+STR_COMP_ILLUM,"Night illumination of the base","Nachtbeleuchtung der Basis","Ночная подсветка базы"
 STR_COMP_0,"press any key to exit from screen","drücken Sie eine beliebige Taste","для выхода нажмите любую клавишу"
 STR_COMP_1,"After some hacking of GRU PC, you see:","Nach einigen Manipulationen mit dem PC GRU Sie sehen:","После некоторых манипуляций с ПЭВМ ГРУ вы видите:"
 STR_COMP_2,"Intelligence mission are not yet available, please be patient","Nachrichtendienstliche Aufgaben noch fehlt, geduldig zu sein","Разведывательные задания отсутствуют, наберитесь терпения"
