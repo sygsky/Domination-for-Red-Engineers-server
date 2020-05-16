@@ -172,4 +172,4 @@
 #define __NO_TELEPORT_ON_DAMAGE__ 0.5 // MHQ damage limit to prevent its teleport functionality
 
 // uncomment to allow SCUD added on base. Needs addon gig_scud.pbo, else mission and client not start
-#define __SCUD__
+//#define __SCUD__
