@@ -835,7 +835,7 @@ STR_SYS_1160,"T'was a spotter (+%1)!","Es war ein spotter (+%1)!","Это был
 
 STR_SYS_1170,You were killed by the AI of %1,Sie wurden getötet durch die KI von %1,Вы были убиты подчинённым %1
 STR_SYS_1171,Recruit Barracks,Einberufungsstelle,Призывной пункт
-STR_SYS_1172,You are currently not a group leader, no AI available. Create a new group,Sie sind derzeit nicht ein Gruppenleiter, keine KI vorhanden. Erstellen Sie eine neue Gruppe,Только лидер группы может призывать солдат
+STR_SYS_1172,"You are currently not a group leader, no AI available. Create a new group","Sie sind derzeit nicht ein Gruppenleiter, keine KI vorhanden. Erstellen Sie eine neue Gruppe","Только лидер группы может призывать солдат"
 STR_SYS_1173,"You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank...","Du hast bereits %1 KI-Soldaten unter Ihrer Kontrolle, ist es nicht möglich zu rekrutieren, die mit Ihren aktuellen Rang...","У вас в подчинении уже %1 ИИ и это максимум для вашего звания"
 
 STR_SYS_1174,"You current rank is %1. You need to be %2 to recruit soldier[s]!","Sie Aktueller rank ist %1. Sie müssen %2 zu rekrutieren Soldat[en]!","Ваш ранг %1. Минимальное звание, дающее право призыва - %2"
@@ -1058,8 +1058,8 @@ STR_FLAG_7,"(Create %1)","(Anlegen %1)","(Создать %1)"
 
 //
 // In rumors info string prepared for use in format statement:
-// %1 stands for random main target name;
-// %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
+// %1 stands for random main target name
+// %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc)
 // %3 stands for nearest settlement
 //
 STR_RUM_NUM,79,79,79
@@ -1451,7 +1451,7 @@ STR_GRU_TASK_DESCR_0_INFO,"The partizans in %1 has collected information on enem
 
 STR_GRU_TASK_1,Close and exit,Schließen und beenden,Закрыть и уйти
 STR_GRU_TASK_2,Perform the task!,Führen Sie die Aufgabe!,Выполнить задание!
-STR_GRU_TASK_3,1. Shipping intelligence,1. Versand intelligence, Доставить развединформацию
+STR_GRU_TASK_3,1. Shipping intelligence,1. Versand intelligence,1. Доставить развединформацию
 STR_GRU_TASK_4,2. A covert operation behind enemy lines,2. Eine verdeckte operation hinter den feindlichen Linien,2. Секретная операция в тылу противника
 STR_GRU_TASK_5,3. The investigation on the island,3. Die Untersuchung wird auf der Insel,3. Поиск на территории острова
 

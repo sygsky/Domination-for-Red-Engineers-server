@@ -947,7 +947,7 @@ XHandleNetStartScriptClient = {
             };
             // inform others about illumination start
             // "%1 provided regular launch of flares over our base"
-            [ "msg_to_user", "",  [ ["STR_ILLUM_3_0", _this select 1 ] ], 0, 2, "message_received" ] call SYG_msgToUserParser;
+            [ "msg_to_user", "",  [ [ "STR_ILLUM_3_0", _this select 1 ] ], 0, 2, false, "message_received" ] call SYG_msgToUserParser;
         };
 
 /*

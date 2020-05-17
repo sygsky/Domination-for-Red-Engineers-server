@@ -53,7 +53,7 @@ if (call SYG_getDayTimeId != 0 ) then {
 };
 
 // send info about start of illumination over base for this player
-["illum_over_base", name player] call XSendNetStartScriptClient;
+[ "illum_over_base",  _pname ] call XSendNetStartScriptClient;
 
 // fire illumination flare one by one up to the end of night
 _no = nearestObjects [_center, FLARE_POINT_TYPES , FLARE_DIST]; // Objects to fire flares above them
