@@ -27,7 +27,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define ACTION_RADIUS 250 // how far from killer event place player is counted as partisipant of this SideMission
+#define ACTION_RADIUS 250 // how far from killer event place player is counted as participant of this SideMission
 
 hint localize format["+++ eventKilledAtSM.sqf: _this = %1", _this];
 
