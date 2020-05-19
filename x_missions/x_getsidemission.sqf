@@ -22,7 +22,7 @@ if (current_counter >= number_targets) exitWith {
     publicVariable "stop_sm";
     ["stop_sm"] call XSendNetStartScriptClient;
 #ifdef __DEBUG__
-    hint localize "+++ x_getsidemission.sqf: stop mission system as all target towns are liberated!!!";
+    hint localize "+++ x_getsidemission.sqf: stop side mission system as all target towns are liberated!!!";
 #endif
 };
 

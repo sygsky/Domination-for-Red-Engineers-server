@@ -24,7 +24,8 @@ if (!isServer) exitWith {};
 #ifdef __DEBUG_CLEAN__
 #define ON_BASE_GARBAGE_REMOVE_INTERVAL 600
 #else
-#define ON_BASE_GARBAGE_REMOVE_INTERVAL 86400
+//#define ON_BASE_GARBAGE_REMOVE_INTERVAL 86400 // 86400 secs ==24 hours
+#define ON_BASE_GARBAGE_REMOVE_INTERVAL 14400 // 144004 secs = 4 hours
 #endif
 
 if ( isNil "d_on_base_groups" ) then
@@ -80,20 +81,37 @@ while { true } do {
     // zombi AI features: group is null, name == "Error: No unit", is alive, isKindOf "CAManBase"
 	if ( time >= _time_to_clean ) then
 	{
-		_cnt1 = count _items_to_clean;
-		{ 
+		_cnt1        = count _items_to_clean; // whole counter
+		_cnt_dead    = 0;
+		_cnt_alive   = 0;
+		_cnt_car     = 0;
+		_cnt_holder  = 0;
+		_cnt_null    = 0;
+		_cnt_pb      = 0;
+		_cnt_garbage = 0;
+		_cnt_zombi   = 0;
+		{
 			if ( !isNull _x ) then
 			{
 			    _man = _x isKindOf "CAManBase";
 			    _alive = alive _x;
 			    if ( ! _man ) then
 				{
+				    // count by vehicle type
+                    if (_x isKindOf "Car") then { _cnt_car = _cnt_car + 1;} else {
+                        if (_x isKindOf "WeaponHolder") then { _cnt_holder = _cnt_holder + 1;} else {
+                            if (_x isKindOf "PipeBomb") then { _cnt_pb = _cnt_pb + 1;} else {
+                                _cnt_garbage = _cnt_garbage + 1;
+                            };
+                        };
+                    };
 					deleteVehicle _x; sleep 0.1;
 				}
 				else // may be alive so called zombi
 				{
 				    if ( !_alive ) then
 				    {
+				        _cnt_dead = _cnt_dead + 1;
     					deleteVehicle _x; sleep 0.1;
 				    }
 				    else // alive man
@@ -103,11 +121,19 @@ while { true } do {
                         {
                             hint localize format["+++ x_infiltrate.sqf: try to delete zombi %1 pos %2 from base in clean proc", _x, getPos _x];
                             deleteVehicle _x; sleep 0.1;
+                            _cnt_zombi = _cnt_zombi + 1;
+                        } else {
+                            _cnt_alive = _cnt_alive + 1;
                         };
 				    };
 				}
+			}
+			else {
+                // item is null, count as skipped
+                _cnt_null = _cnt_null + 1;
 			};
 		} forEach _items_to_clean; // clean  all old WeaponHolders and dead Apaches from the base
+		_str = format[ "cnt %1: men alive %2, dead %3, z %4, car %5, weapon %6, bombs %7, garb %8", _cnt1, _cnt_alive, _cnt_dead, _cnt_zombi, _cnt_zombi, _cnt_holder, _cnt_pb, _cnt_garbage ];
 		_items_to_clean = [];
 		sleep 15;
 		// seek for new items to clean
@@ -122,6 +148,7 @@ while { true } do {
 		sleep 0.5;
 		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]); // why this is added? Don't know :o(
 		sleep 0.5;
+		_cnt_dead = 0;
 		if (count _arr > 0) then
 		{
             for "_i" from 0 to count _arr - 1 do
@@ -138,42 +165,30 @@ while { true } do {
                             { // check if dead man not player
                                 _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
 
-                                if ( !_found ) then // check for zombies found (not player and alive)
+                                if ( _found ) then
                                 {
-                                    if ( primaryWeapon _vehicle == "") then // may be zombi or AI at rearming in progress
+                                    // dead body
+                                    _cnt_dead = _cnt_dead + 1;
+                                }
+                                else
+                                {
+                                    // check for zombies found (not player and alive)
+                                    if ( primaryWeapon _vehicle == "") then // may be zombi or AI at rearming progress
                                     {
                                         if (name _vehicle == "Error: No unit") then
                                         {
-                                            hint localize "+++ x_infiltrate.sqf: zombi (no prim weapon) in clean proc, remove it away from the base";
                                             // Yesss, he is ZOMBIiiiii..... try to remove him in any way
-                                            hint localize format["+++ x_infiltrate.sqf: zombi detected in clean proc, try to remove it away from the base"];
                                             //_vehicle setPos [ 0, 0, 0 ];
                                             _vehicle setDamage 1.1;
                                             _name = name _vehicle;
+                                            hint localize format["+++ x_infiltrate.sqf: zombi (no prim weapon) ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
                                             sleep 0.1;
                                             //hideBody _vehicle;
                                             deleteVehicle _vehicle;
                                             sleep 0.5;
-                                            hint localize format["+++ x_infiltrate.sqf: zombi ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
                                             _found = !isNull _vehicle;
                                         };
                                     };
-                                    /**
-                                    if ( isNull (group _vehicle) && (name _vehicle == "Error: No unit")) then
-                                    {
-                                        // Yesss, he is ZOMBIiiiii..... try to remove him in any way
-                                        hint localize format["+++ x_infiltrate.sqf: zombi detected in clean proc, try to remove it away from the base"];
-                                        //_vehicle setPos [ 0, 0, 0 ];
-                                        _vehicle setDamage 1.1;
-                                        _name = name _vehicle;
-                                        sleep 0.1;
-                                        //hideBody _vehicle;
-                                        deleteVehicle _vehicle;
-                                        sleep 0.5;
-                                        hint localize format["+++ x_infiltrate.sqf: zombi ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
-                                        _found = !isNull _vehicle;
-                                    };
-                                    */
                                 };
                             };
                             if ( _vehicle isKindOf "Car") exitWith
@@ -199,7 +214,7 @@ while { true } do {
 		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2));
 		_time_to_clean = time + _delay;
 #ifdef __DEBUG_CLEAN_PRINT__
-		hint localize format["+++ x_infiltrate.sqf: %3 base cleaning proc: %1 items cleaned, %2 items added to the clean queue, next clean after %4 secs", _cnt1, count _items_to_clean, call SYG_missionTimeInfoStr, round(_delay) ];
+		hint localize format["+++ x_infiltrate.sqf: %3 base cleaning proc: %1 cleaned, %2 items added, next in %4", _str, count _items_to_clean, call SYG_missionTimeInfoStr, _delay call SYG_secondsToStr ];
 		if ((count _items_to_clean) > 0) then
 		{
 			_arr = [];

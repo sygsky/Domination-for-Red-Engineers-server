@@ -6,7 +6,7 @@ private ["_i", "_j", "_ret", "_make_isle_grp", "_replace_grp", "_remove_grp",
 		"_igrpa", "_igrp", "_make_new", "_units","_igrppos", "_leader",
 		"_unit","_veh", "_count","_feetmen","_invalid_men","_str","_vtype",
 		"_grp_array","_cnt","_cnt1","_delay","_goal_grp","_locname","_loc","_dir","_dist","_pos1","_pos2",
-		"_show_absence","_patrol_cnt"];
+		"_show_absence","_patrol_cnt","_exit"];
 		
 if (!isServer) exitWith {};
 
@@ -47,7 +47,7 @@ if (!isServer) exitWith {};
 #endif
 
 // show absence with designated probability
-#define SHOW_ABSENCE_PROBABILITY 0.5
+#define SHOW_ABSENCE_PROBABILITY 0.8
 
 #define DELAY_BETWEEN_EACH_PATROL_CHECK (5 + random 5)
 #define DELAY_BETWEEN_CHECK_LOOP (25 + random 25)
@@ -517,7 +517,7 @@ _show_absence = false; // disable patrol absence message at start as patrol are 
 // send info about first patrol on island
 ["msg_to_user","",[["STR_SYS_1146"]],0, 10 + random 10] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
 
-
+_exit = false; // exit from nearly eternal loop
 //_patrol_cnt = 0; // active patrol counter
 //
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
@@ -872,10 +872,15 @@ while { true } do {
 	        if ((random 1) <= SHOW_ABSENCE_PROBABILITY ) then // inform users about patrol absence
 	        {
                 ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
+        	    if (current_counter >= number_targets) then {_exit = true};
 	        };
             _show_absence = false; // disable patrol absence message
 	    };
 	};
 #endif
-		
+    if ( _exit ) exitWith {
+        // "The GRU reports that the enemy abandoned his plans to patrol the island! This is our victory!"
+        ["msg_to_user","",[["STR_SYS_1147"]],0,4 + round(random 4), false, "fanfare"] call XSendNetStartScriptClient;
+        hint localize "+++ x_isledefense.sqf: stop isle defence system as all target towns are liberated !!!";
+    };
 }; // while 

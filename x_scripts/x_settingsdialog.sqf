@@ -629,6 +629,8 @@ if (__HasGVar(PATROL_COUNT)) then
     if ( _counter > 0 ) then
     {
         _str = _str + format[localize "STR_GRU_50", _counter] + "\n";
+    } else {
+        _str = _str + (localize "STR_GRU_51") + "\n";
     };
 };
 #ifdef __DEBUG__

@@ -830,7 +830,7 @@ XHandleNetStartScriptClient = {
 		    };
 		};
 
-		case "play_music": { // FIXME: is it called anywhere?
+		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
 		    switch (_this select 1) do
 		    {
 		        case "OFP";

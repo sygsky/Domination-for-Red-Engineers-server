@@ -518,6 +518,21 @@ class CfgSounds
     class medieval_defeat4 { name=""; sound[] = {\sounds\medieval\medieval-introduction-2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
     class medieval_defeat5 { name=""; sound[] = {\sounds\medieval\medieval-introduction-3.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
 
+    class medieval_defeat6  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_11.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat7  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_1.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat8  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat9  { name=""; sound[] = {\sounds\medieval\nomen_est_omen_13_3.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat10 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_15_1.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat11 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_15_2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat12 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_3.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat13 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_4.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat14 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_5_1.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat15 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_5_2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat16 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_6_1.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class medieval_defeat17 { name=""; sound[] = {\sounds\medieval\nomen_est_omen_6_2.ogg,db+10,1.0}; titles[] = {}; } // medieval defeat sound
+    class village_consort { name=""; sound[] = {\sounds\medieval\village_consort.ogg,db+10,1.0}; titles[] = {}; }       // medieval defeat sound by Kevin MacLeod
+
+
     class rammstein_1 { name=""; sound[] = {\sounds\ramm\rammstein_1.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
     class rammstein_2 { name=""; sound[] = {\sounds\ramm\rammstein_2.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
     class rammstein_3 { name=""; sound[] = {\sounds\ramm\rammstein_3.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds

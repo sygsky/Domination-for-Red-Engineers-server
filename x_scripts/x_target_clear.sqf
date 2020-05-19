@@ -127,27 +127,28 @@ if (current_counter < number_targets) then {
 #endif
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
+    d_max_recaptures = 0;
+    stop_sm          = true;
+    publicVariable "stop_sm";
     // TODO: #368, wait until base cleared from enemies and
     // no recaptured towns and (resolved)
     // side mission completed (resolved)
-	if ( (count d_recapture_indices == 0) && side_mission_resolved ) then {
+    hint localize "+++ x_target_clear.sqf: stop new target town creation system as all target towns are liberated !!!";
+	if ( (count d_recapture_indices == 0) && stop_sm ) then {
 		the_end = true;
 		["the_end",the_end] call XSendNetVarClient;
 	} else {
         _str = "";
-        if ( (count d_recapture_indices > 0) && (!side_mission_resolved) )
-        then { _str = "STR_SYS_121_3_FULL" }
+        if ( (count d_recapture_indices > 0) && (!stop_sm) ) then { _str = "STR_SYS_121_3_FULL" }
         else {
-            if ( !side_mission_resolved ) then { _str = "STR_SYS_121_3_SM" } else { _str = "STR_SYS_121_3_RECAPTURED"};
+            if ( !stop_sm ) then { _str = "STR_SYS_121_3_SM" } else { _str = "STR_SYS_121_3_RECAPTURED"};
         };
         if (_str != "") then {
             [ "msg_to_user", "*", [ [ _str ] ], 0, 2, false, "fanfare" ] call  XSendNetStartScriptClient; // The enemy escaped! ..."
         };
 		[] spawn {
 		    // while any town recaptured or side mission active
-			while { (count d_recapture_indices > 0) || (!side_mission_resolved)} do {
-				sleep 2.543;
-			};
+			while { (count d_recapture_indices > 0) || (!stop_sm)} do { sleep 2.543; };
 			the_end = true;
 			["the_end",the_end] call XSendNetVarClient;
 		};

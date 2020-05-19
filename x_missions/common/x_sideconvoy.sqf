@@ -284,7 +284,16 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 				_dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
 //					hint localize format["%1 x_groupsm.sqf: grp %2, count (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
 
-				hint localize format["%6 x_sideconvoy.sqf: alive vecs %1/%5(%7), pos. %3 m to %4 from %2", {alive _x} count _veh_arr, text _loc, (round (_dist/50))*50, _dir, count _veh_arr, call SYG_nowTimeToStr, typeOf (vehicle _leader) ];
+				hint localize format["%6 x_sideconvoy.sqf: vecs a%1/m%8/c%5(%7), pos. %3 m to %4 from %2",
+				    {alive _x} count _veh_arr,
+				    text _loc,
+				    (round (_dist/10))*10,
+				    _dir,
+				    count _veh_arr,
+				    call SYG_nowTimeToStr,
+				    typeOf (vehicle _leader),
+				    {alive driver _x}  count _veh_arr
+				];
 			}
 			else
 			{

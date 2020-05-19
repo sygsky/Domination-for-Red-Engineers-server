@@ -123,6 +123,30 @@ SYG_userTimeToStr = {
 };
 
 /**
+ * Returns internal mission day time info in format "hh:mm:ss"
+ * call: _timestr = call SYG_daytimeToStr;
+ */
+SYG_daytimeToStr = {
+	daytime call SYG_userTimeToStr
+};
+
+/**
+ * Returns user designated period in time (in seconds) to string format as follow: "hh:mm:ss"
+ * call: _timestr = time call SYG_secondsToStr;
+ */
+SYG_secondsToStr = {
+	private ["_hour", "_minute","_second","_counted","_day"];
+	_day = floor( _this /DAY_SECS);
+	_counted = _day * DAY_SECS;
+	_hour = floor ( (_this - _counted) / HOUR_SECS); // hours
+	_counted = _counted + _hour * HOUR_SECS;
+	_minute = floor ((_this - _counted) / 60);
+	_counted = _counted + _minute * 60;
+	_second = round (_this - _counted);
+	format["%1%2:%3:%4", if (_day == 0) then {""} else {format["%1d ", _day]}, _hour call SYG_twoDigsNumber0, _minute call SYG_twoDigsNumber0, _second call SYG_twoDigsNumber0]
+};
+
+/**
  * Returns number of days current mission is runnning. Returned number has decimal part
  * call: _days = round(call SYG_missionDayToNum); // to return full days mission run
  * call: _days = ceil(call SYG_missionDayToNum); // to return current day number mission run, be 1 for first day, 2 for second etc
@@ -144,14 +168,6 @@ SYG_missionTimeInfoStr =
 SYG_nowToStr = SYG_nowTimeToStr;
 SYG_nowDateToStr = SYG_nowTimeToStr;
 SYG_nowDateTimeToStr = SYG_nowTimeToStr;
-
-/**
- * Returns internal mission day time info in format "hh:mm:ss"
- * call: _timestr = call SYG_userTimeToStr;
- */
-SYG_daytimeToStr = {
-	daytime call SYG_userTimeToStr
-};
 
 /**
  * Returns human date localized format: e.g: "1 August 1985"/"1 августа 1985"
