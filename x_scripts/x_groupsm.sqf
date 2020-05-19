@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------------------------------------------------
 
 private ["_grp_array", "_grp", "_enemy_array", "_reached_wp", "_time_at_wp", "_next_wp_time", "_units", 
-         "_checktime", "_flank_pos_a",/*  "_make_normal",  */"_leader", "_start_pos", "_wp_array", "_wp_one", 
+         "_checktime", "_flank_pos_a",/*  "_make_normal",  */"_leader", "_jleader", "_start_pos", "_wp_array", "_wp_one",
 		 "_wp_pos", "_last_pos", "_counter", "_stime","_had_towait", "_side", "_joingrp","_leader1","_rejoin_num","_i",
 		 "_debug_print","_skip_islets","_hills_seek_dist","_skip_base","_all_grp_list"];
 if (!isServer) exitWith {};
@@ -356,8 +356,8 @@ while {true} do {
 		if ( (_counter <= _rejoin_num) AND (_counter > 0) ) then // try to join other group
 		{
 			_counter = _counter + 1; // size for bigger group to be rejoinable
-			_leader = leader _grp;
-			if ( (!isNull _leader) AND (vehicle _leader == _leader)) then // try re-join only for feet man group
+			_leader = _grp call XfGetLeader;
+			if ( (!isNull _leader) && (vehicle _leader == _leader)) then // try re-join only for feet man group
 			{
 				_side = side _leader;
 				_joingrp = grpNull;
@@ -413,8 +413,8 @@ while {true} do {
 				    count units _grp,
 				    _rejoin_num,
 //				    (getPos (leader _grp)) call SYG_nearestLocationName,
-				    [_grp call XfGetLeader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE,
-				    typeOf (_grp call XfGetLeader)
+				    [_leader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE,
+				    typeOf _leader
 				    ];
 #endif				
                 if ( (isNull _joingrp) && (!isNull _any_grp) ) then // use bad group if no good one found
@@ -424,11 +424,12 @@ while {true} do {
 
 				if ( !isNull _joingrp ) then 
 				{
-#ifdef __DEBUG__			
+#ifdef __DEBUG__
+                    _jleader = _joingrp call XfGetLeader;
 					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %6, dist %7; %8",
 					    _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr,
-					    typeOf (leader _joingrp), round((leader _joingrp) distance (leader _grp)),
-					    [(_joingrp call XfGetLeader),"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+					    typeOf _jleader, round(_jleader distance _leader),
+					    [_jleader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
 #endif				
 					if ( rank _leader != "PRIVATE" ) then {_leader setRank "PRIVATE"};
 					(units _grp) join _joingrp; sleep 1.111;

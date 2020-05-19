@@ -27,7 +27,9 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __ACTION_RADIUS__ 100 // how far from killer event place player is counted as partisipant of this SideMission
+#define ACTION_RADIUS 250 // how far from killer event place player is counted as partisipant of this SideMission
+
+hint localize format["+++ eventKilledAtSM.sqf: _this = %1", _this];
 
 private ["_unit","_killer","_kill_veh","_plist","_add_to_list","_arr"];
 
@@ -53,7 +55,7 @@ if ( !(isNull _killer) ) then {
     //hint localize format["+++ eventKilledAtSM.sqf: killer not is null %1, found %2", name _killer, count _plist];
 };
 _arr = getPos _unit;
-_arr = _arr nearObjects ["AllVehicles", d_ranked_a select 12];
+_arr = _arr nearObjects ["AllVehicles", ACTION_RADIUS];
 {
     {
         if ( isPlayer _x ) then { (name _x) call _add_to_list };
