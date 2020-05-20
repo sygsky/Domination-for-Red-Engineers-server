@@ -128,8 +128,8 @@ if (current_counter < number_targets) then {
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
     d_max_recaptures = 0;
-    stop_sm          = true;
-    publicVariable "stop_sm";
+//    stop_sm          = true;
+//    publicVariable "stop_sm";
     // TODO: #368, wait until base cleared from enemies and
     // no recaptured towns and (resolved)
     // side mission completed (resolved)
