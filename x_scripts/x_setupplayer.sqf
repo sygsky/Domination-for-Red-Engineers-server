@@ -1802,6 +1802,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 			_comp addAction [ localize (call SYG_getGRUCompActionTextId), call SYG_getGRUCompScript, []];
 			_comp setVariable [COMPUTER_ACTION_ID_NAME,true];
 			//hint localize format["x_setupplayer.sqf: %1. Action added to GRU PC", call SYG_nowTimeToStr];
+    		_comp addAction [localize "STR_COMP_ILLUM", "scripts\baseillum\illum_start.sqf"];
 		}
 #ifdef __DEBUG__
 		else
