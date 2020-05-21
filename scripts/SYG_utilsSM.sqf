@@ -265,7 +265,7 @@ SYG_townScoresPrint = {
         _this,
         _sum,
         if(count _arr > 0) then {round (_sum / (count _arr))} else {0},
-        _sum * 3600 / _time_diff,
+        round(_sum * 36000 / _time_diff)/10,
         _str
     ];
     hint localize "]";

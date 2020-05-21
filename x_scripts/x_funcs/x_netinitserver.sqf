@@ -10,7 +10,7 @@
 };
 
 SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron"];
-SYG_localZones = [            0,          0,        0,    -4,          +1,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
+SYG_localZones = [            0,          0,        0,    -4,          0,        +1,        +1,      +1,     +1,     +1,      +1,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
@@ -140,7 +140,8 @@ XHandleNetStartScriptServer = {
 			        // and local time to help know real time through whole mission during being suspend/resume in virtual machines
 			        // TODO: надо как то 
                     SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
-                    hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",_timeOffset];
+                    hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",
+                        if (_timeOffset >= 0) then {format["+%1",_timeOffset ]} else {_timeOffset}];
 			    }
 			    else
 			    {

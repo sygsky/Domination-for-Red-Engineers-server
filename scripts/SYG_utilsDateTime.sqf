@@ -540,7 +540,7 @@ SYG_bumpDateByHours = {
     _addhr =    _this select 1;
     if ( _addhr == 0) exitWith
     {
-        hint localize "+++ SYG_bumpDateByHours: called with 0 hour change, exit";
+        hint localize "+++ SYG_bumpDateByHours: called with 0 hour change, accepted as is";
         _dt
     };
 
