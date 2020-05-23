@@ -53,9 +53,6 @@ if (_start_real) then {
 	sleep 2.321;
 };
 
-_dummy = target_names select current_target_index;
-(_dummy select 1) call SYG_townScoresPrint; // print statistics on finished town
-
 #ifndef __TT__
 resolved_targets = resolved_targets + [current_target_index];
 #endif

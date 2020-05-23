@@ -12,6 +12,14 @@ if (!isServer) exitWith{};
     hint localize "+++ x_createnexttarget.sqf started +++";
 #endif
 
+private ["_current_target_pos","_current_target_radius","_emptyH","_dummy"];
+
+if (current_counter > 0) then {
+    // at last first town is already completed
+    _dummy = target_names select (maintargets_list select (current_counter - 1));
+    (_dummy select 1) call SYG_townScoresPrint; // print statistics on finished town
+};
+
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 private ["_time","_msg"];
 
@@ -38,8 +46,6 @@ if ( ((time - _time) > 60) ) then
     hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 ) true", current_counter, current_mission_counter];
 };
 #endif
-
-private ["_current_target_pos","_current_target_radius","_dummy","_emptyH"];
 
 current_target_index = maintargets_list select current_counter;
 
