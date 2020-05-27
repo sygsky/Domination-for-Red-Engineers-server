@@ -41,7 +41,7 @@ if ( isNil "d_on_base_groups" ) then
 	{
 #ifdef __DEBUG_FIRE__	
 		_fire = createVehicle ["FireLit", _x, [], 0, "NONE"];
-		_fire setVariable ["fire_choke_time", time + 120];
+		_fire setVariable ["fire_off_time", time + 120];
 #else
 		_fire = createVehicle ["Fire", _x, [], 0, "NONE"];
 #endif

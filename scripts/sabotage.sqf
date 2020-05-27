@@ -10,7 +10,8 @@
 // global variable m_PIPEBOMBNAME  redefines pipe-bomb name, e.g. to "ACE_PipeBomb". Default value used is Arma standard "PipeBomb" (name always case-sensitive!!!)
 
 private ["_units", "_unit", "_shell_unit","_grp", "_leader", "_mags", "_no", "_cnt", "_obj", "_obj_pos","_pos", "_continue",
-        "_bombScript", "_i", "_objClassType", "_objTypesArr", "_debug", "_debug1","_fire","_time", "_msgPrev","_msg1"];
+        "_bombScript", "_i", "_objClassType", "_objTypesArr", "_debug", "_debug1","_fire","_time", "_msgPrev","_msg1","_list",
+        "_replaceFire","_delUnitsInWater"];
 
 if (!isServer) exitWith {};
 
@@ -154,7 +155,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	//++++++++++++++++++
 	if ( _debug ) then 	{ player globalChat format["+++ sabotage.sqf: WarfareBEastAircraftFactory %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE]; };
 #ifdef __PRINT__
-    hint localize format["+++ sabotage.sqf: WarfareBEastAircraftFactory %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
+    hint localize format["+++ sabotage.sqf: WarfareBEastAircraftFactory cnt = %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
 #endif
 
 	//--------------
@@ -201,7 +202,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	    _obj = _no select _obj_pos; // define target to bomb
 		if ( _debug ) then { player globalChat format["+++ sabotage.sqf: targets cnt: %1, selected %2, type %3, z = %4", count _no, _obj_pos, _objClassType, (position _obj) select 2 ]; };
 #ifdef __PRINT__
-		hint localize format["+++ sabotage.sqf: units %1, factory cnt %2, ind %3, type %4, z %5 m", {alive _x} count (units _grp), count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
+		hint localize format["+++ sabotage.sqf: units %1, factory cnt %2, attacked ind %3, type %4, z %5 m", {alive _x} count (units _grp), count _no, _obj_pos, _objClassType, (position _obj) select 2 ];
 #endif	
 		
 		// wait until target destroyed and while group alive and there is any bomberman in it
@@ -333,7 +334,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				//==============================================
 				//======== unit returning to the duty ==========
 				//==============================================
-				if ( alive _shell_unit) then
+				if ( alive _shell_unit ) then
 				{
 					if ( (isNull _grp) || (({ alive _x } count units _grp) == 0)) then // try to find other active group
 					{
@@ -482,19 +483,18 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	{
           _no = nearestObjects [_leader, ["Fire","FireLit"], FIRE_DISTANCE_TO_LIT];
           {
-            _no = _x;
-            if (typeOf _no == "Fire") then
+            if (typeOf _x == "Fire") then
             {
                 // light this fire
-                _no call _replaceFire;
+                _x call _replaceFire;
             }
             else
             {
 #ifdef __PRINT_FIRE__
-                hint localize format["+++ sabotage.sqf: Update FireLit at %1", getPos _no];
+                hint localize format["+++ sabotage.sqf: Update FireLit at %1", getPos _x];
 #endif
             };
-            _no setVariable ["fire_choke_time", time + FIRE_CHOKE_DELAY];
+            _x setVariable ["fire_off_time", time + FIRE_CHOKE_DELAY];
           } forEach _no;
 	};
 	if ( !_continue) exitWith { _no = nil;};
@@ -526,33 +526,46 @@ if ( !isNil "d_on_base_groups") then
 if ( _debug ) then
 	{player globalChat format["--- sabotage.sqf: --- Exiting sabotage group script, d_on_base_groups %1 ---",d_on_base_groups]};
 #ifdef __PRINT__
-	hint localize format["--- sabotage.sqf: --- Exiting sabotage group script, d_on_base_groups %1 ---",d_on_base_groups];
-#endif	
+        _list = [];
+        { _list set [count _list, {alive _x} count units _x ]} forEach d_on_base_groups;
+    	hint localize format["--- sabotage.sqf: --- Exiting sabotage group script, d_on_base_groups %1 ---",_list];
+		_list = nil;
+#endif
 
 if (true) exitWith 
 {
-    sleep random 60;
     // supress any fire lit too long time
     {
-        _fire = nearestObject [_x, "FireLit"];
-        if ( !isNull _fire) then
-        {
-            if (count d_on_base_groups == 0) then
+#ifndef __TT__
+        _pos = getPos FLAG_BASE;
+#else
+        _pos = getPos (if (d_own_side == "WEST") then { WFLAG_BASE } else { RFLAG_BASE  });
+#endif
+
+        _no = nearestObjects [_pos, ["FireLit"], SEARCH_OTHER_GROUP_DIST];
+        if (count _no > 0 ) then {
+#ifdef __PRINT__
+           if (count d_on_base_groups == 0) then {
+               hint localize format["+++ sabotage.sqf: --- Exiting sabotage, all groups are dead, finishing %1 fire[s]", count _no];
+           };
+#endif
             {
-                _fire call _replaceFire;
-            }
-            else
-            {
-                _time = _fire getVariable "fire_choke_time";
-                if (!isNil "_time") then
-                {
-                    if ( _time <= time ) then
+                sleep (30 + (random 60));
+                if (count d_on_base_groups == 0) then {
+                    _x call _replaceFire;
+                }
+                else {
+                    _time = _x getVariable "fire_off_time";
+                    if (!isNil "_time") then
                     {
-                        sleep random 20;
-                        _fire  call _replaceFire;
+                        if ( _time <= time ) then
+                        {
+                            sleep random 20;
+                            _x  call _replaceFire;
+                        };
                     };
                 };
-            };
+            }forEach _no;
         };
     } forEach d_base_patrol_fires_array;
 };
