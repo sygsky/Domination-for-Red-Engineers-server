@@ -4,8 +4,9 @@
 	returns: nothing
 */
 
+// positions for Camel only, not use it for BMP
 _camelPosArr = [[9428,9749,0], [9728,9824,0], [9731,9778,0], [9621,9781], [9767,9962,0], [9804,9956,0], [9842,9954,0]]; // Camel positions
-_camelDirArr = [225, 0, 0, 180, 0, 0, 0]; // Camel directions
+_camelDirArr = [          225,             0,             0,         180,             0,             0,            0];  // Camel directions
 
 { // start loop for vehicle creation
     // parameters:
@@ -15,15 +16,14 @@ _camelDirArr = [225, 0, 0, 180, 0, 0, 0]; // Camel directions
     // 3: vector (for setVectorUp)
     // 4: probability to create
     // 5: fuel volume
-    // 6: remove magzines (true) or not remove (false)
-    _prob = if (count _x > 3) then {_x select 4} else {1}; // probability to create
+    // 6: remove magazines (true) or not (false)
+    _prob = if (count _x > 4) then {_x select 4} else {1}; // probability to create
     if ( (random 1) < _prob ) then
     {
         //+++ get type
         _type = _x select 1;
-        if ((typeName _type) == "ARRAY") then
-        {
-            _type = _type select (floor (random (count _type)))  // get random type if array
+        if ((typeName _type) == "ARRAY") then {
+            _type = _type call XfRandomArrayVal;  // get random type if array
         };
         _veh = createVehicle [_type, [0,0,0], [], 0, "NONE"];
         [_veh] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and points
