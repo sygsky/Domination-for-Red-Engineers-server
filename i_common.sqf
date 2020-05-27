@@ -895,11 +895,14 @@ d_base_patrol_array =
 
 d_base_patrol_fires_array = 
 [
- [9624,10293,0],[10081,10261,0], // northe fires (slope to shore)
- [9084,10006,0], // west fire at a pit
- [9453,9868,0],  // main yard fire
- [9899,9697,0],	// east to yard fire
- [10231,9910,0] // nearest to Paraiso fire
+ [9624,10293,0],  // northern fires
+ [10081,10261,0], //   (slope to shore)
+ [9084,10006,0],  // west fire at a pit
+ [9453,9868,0],   // main yard fire
+ [9899,9697,0],	  // east to yard fire
+ [10231,9910,0],  // nearest to Paraiso fire
+ [10595,10033,0], // east to airfield
+ [9613,9351,0]    // southern fire (behind  barn)
 ];
 
 // Only for Kronsky patrol script (UPS)
