@@ -879,6 +879,7 @@ while { true } do {
 	};
 #endif
     if ( _exit ) exitWith {
+        sleep 10;
         // "The GRU reports that the enemy abandoned his plans to patrol the island! This is our victory!"
         ["msg_to_user","",[["STR_SYS_1147"]],0,4 + round(random 4), false, "fanfare"] call XSendNetStartScriptClient;
         hint localize "+++ x_isledefense.sqf: stop isle defence system as all target towns are liberated !!!";
