@@ -423,6 +423,7 @@ XHandleNetStartScriptClient = {
 		case "stop_sm": {
 			current_mission_text = localize "STR_SYS_121_2"; // "The enemy has fled! Forget about his sorties!"
 		    [ "msg_to_user", "*", [ [ "STR_SYS_121_1" ] ], 0, 2, false, "fanfare" ] call SYG_msgToUserParser; // The enemy escaped! ..."
+		    hint localize "+++ stop_sm == true. No more SM allowed";
 		};
 		#ifndef __TT__
 		case "new_jump_flag": {

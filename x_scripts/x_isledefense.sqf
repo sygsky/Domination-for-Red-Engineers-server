@@ -522,7 +522,7 @@ _exit = false; // exit from nearly eternal loop
 //
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
 //
-//  if( current_counter >= number_targets ) exitWith {"All towns complated, no more patrols"}
+//  if( current_counter > number_targets ) exitWith {"All towns complated, no more patrols"}
 while { true } do {
 
     _time = time; // mark time just in case
@@ -572,7 +572,7 @@ while { true } do {
             // replace group waiting for restore with new one if wait time is out
 			if ( _stat == STATUS_WAIT_RESTORE  || _stat == STATUS_DEAD_WAIT_RESTORE) then
 			{
-			    if (current_counter >= number_targets) then {
+			    if ( (current_counter >= number_targets) && (!main_target_ready) ) then {
 			        // not replace dead group as enemy is fled
                 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
                     hint localize format["+++ x_isledefence: patrol #%1 will not restored as all main targets completed", _i];
@@ -872,7 +872,7 @@ while { true } do {
 	        if ((random 1) <= SHOW_ABSENCE_PROBABILITY ) then // inform users about patrol absence
 	        {
                 ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
-        	    if (current_counter >= number_targets) then {_exit = true};
+        	    if ((current_counter >= number_targets) && (!main_target_ready)) then {_exit = true};
 	        };
             _show_absence = false; // disable patrol absence message
 	    };

@@ -9,6 +9,7 @@ if (!isServer) exitWith {};
 #define HIT_RADIOUS 45 // radious to be hit indirectly by arti shoots
 #define SAVE_RADIOUS 50 // radious to he save by arti shoots
 #define MIN_FRIENDLY_COUNT_TO_STRIKE 3
+#define MAX_SHOOT_DIST 2000 // maximum distance observer can shoot to players
 
 _enemy_ari_available = true;
 _nextaritime = 0;
@@ -101,12 +102,10 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 
 	for "_i" from 0 to (count _observers) - 1 do {
 	    _observer = _observers select _i; // current observer
-        if (!alive _observer) then
-        {
+        if (!alive _observer) then {
             _observers set[_i, "RM_ME"];
         }
-        else
-        {
+        else { // if (!alive _observer) then
             if (typeName __observer != "OBJECT") exitWith {
                 hint localize format["--- x_handleobservers.sqf: Obs#%1 typeName == %2", _i,typeName _observer ];
             };
@@ -117,7 +116,16 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     sleep 0.1;
                 };
                 _enemy = _observer findNearestEnemy _observer;
-                if ((alive _enemy) && ((_observer knowsAbout _enemy) > 1.5) && ((vehicle _enemy) isKindOf "Land") ) then {
+                if (alive _enemy) then {
+
+                    if ((_observer knowsAbout _enemy) <= 1.5) exitWith {};
+
+                    // check if player in not landed air vehicle
+                    if (
+                        ( (vehicle _enemy) isKindOf "Air") &&
+                        ( (getPos _enemy) select 2 > 5) && ( ((velocity  _enemy) distance [0,0,0]) > 5)
+                       ) exitWith {};
+
                     _distance = _observer distance _enemy;
                     _near_targets = _observer nearTargets (_distance + 10);
                     if (count _near_targets > 0) then {
@@ -131,6 +139,9 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                         _near_targets = [];
                         _cnt = 0;
                         if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
+
+                            // don't shoot too far
+                            if ( (_observer distance _pos_nearest) > MAX_SHOOT_DIST ) exitWith {};
 
                             _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
                             _own_cnt       = {alive _x} count _own_arr;
@@ -147,7 +158,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 
                             if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1); };
 
-                            _type          = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
+                            _type = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                             // If enemy is too far from strike point, do smoking attack only
                             _dist = round( _pos_nearest distance _enemy );
@@ -186,7 +197,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                             _veh_arr             = nil;
                         };
                     };
-                };
+                }; // if (alive)
             };
             sleep 3.321;
         };

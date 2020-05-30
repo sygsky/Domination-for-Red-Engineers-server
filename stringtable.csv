@@ -775,7 +775,7 @@ STR_SYS_1005,"Generalissimo","Generalissimus","Генералиссимус"
 STR_SYS_1100,"%1 has been cleared!!!","%1 wurde gelöscht!!!","Н.п. %1 освобождён!!!"
 STR_SYS_1100_1,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
 STR_SYS_1101,"Waiting for new orders...","Warten auf neue Aufträge...","Ожидайте дальнейших распоряжений..."
-STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг покидает остров. Вам остаётся только зачистить последний оккупированный город!"
+STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city and finish last SM!","Der Feind ist endlich geflohen. Sie müssen nur die Letzte besetzte Stadt Aufräumen und Letzte SM beenden!","Враг покидает остров. Остаётся очистить оккупированный город и завершить последнюю доп. миссию!"
 STR_SYS_1102,"For the liberation of the settlement your group gets %1%2 !","Für die Befreiung der Siedlung bekommt Ihre Gruppe %1%2 !","За освобождение города ваша группа получает %1%2 !"
 STR_SYS_1102_1,"points ( %1 ) and ","Punkte ( %1 ) und ","очки ( %1 ) и "
 
@@ -889,6 +889,8 @@ STR_SYS_1216,"Air drop radius (0 = exact position): ","Lufttropfenradius (0 = ge
 STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / Auftanken / Reparieren: ","Время цикла перезарядки/заправки/ремонта: "
 
 STR_SYS_1220,"The enemy aircraft carrier got out, along with the paratroopers!","Der feindliche Flugzeugträger stieg zusammen mit den Fallschirmjägern aus!","Вражеский авианосец убрался, вместе с десантниками!"
+
+STR_SYS_1230,"H U R R A H!","H U R R A!","У Р А !"
 
 STR_SYS_MAINBOX,"Your personal equipment box. No one but You can use it","Deine persönliche Waffenkiste. Niemand, aber Sie können es verwenden","Ваш личный ящик со снаряжением. Никто, кроме Вас, не может его использовать"
 STR_SYS_GRUBOX," The GRU's public weapon box. Keep weapons that are not used on secret missions here","Die öffentliche Waffenkiste der GRU. Bewahren Sie hier Waffen auf, die nicht für geheime Missionen verwendet werden","Общедоступный оружейный ящик ГРУ. Храните здесь оружие, не используемое на секретных заданиях"
@@ -1076,12 +1078,12 @@ STR_RUM_7,"Hunters claim that at night someone gives signals from the forest abo
 STR_RUM_8,"At the introdution because of overload you can seem non-existent objects","Bei der Vorstellung wegen überlastung können Sie scheinen nicht vorhandene Objekte","При выброске из-за перегрузок могут чудиться несуществующие предметы"
 STR_RUM_9,"GRU could know about next attack plan","GRU, wissen konnte, über den nächsten Angriff planen","ГРУ-шник может знать о многих планах врага"
 STR_RUM_10,"Missiles to enemy RPGs are different","Die Rakete zu den feindlichen RPGs sind unterschiedlich","Ракеты к вражеским РПГ бывают разные"
-STR_RUM_11,"The enemies could to build an air base on Rahmadi","Die Feinde bauen wollen Avia-Basis auf den Рахмади","Враги могут построить на Рахмади авиа-базу"
+STR_RUM_11,"The enemies could to build an air base on Rahmadi","Die Feinde bauen wollen Avia-Basis auf den Рахмади","Враги могут построить на Рахмади авиа-базу, особенно если дело идёт к концу"
 STR_RUM_12,"GRU agent will tell you something about enemy Isle patrolling","Späher erzählt etwas und zu patrouillieren","ГРУшник расскажет что-то и о патрулях"
 STR_RUM_13,"Armored patrols appear after 20-25 minutes after the start of the mission and reach its maximum strength in about 40 minutes","Rüstung Patrouillen erscheinen nach 5-7 Minuten nach Beginn der Mission und erreichen Ihre maximale Zahl der in etwa 40 Minuten","Бронепатрули появляются через 20-25 минут после начала миссии и достигают максимальной численности примерно на 40-й минуте"
 STR_RUM_14,"They say Americans send Isle patrols to help nearly liberated Settlements","Sie sagen, die Amerikaner Patrouillen schicken befreit Settlements helfen","Говорят, американцы  посылают патрули на помощь осаждаемым городам"
 STR_RUM_15,"The Governor is armed with a good weapon","Der Gouverneur ist bewaffnet mit einer guten Waffe","Губернатор отлично вооружён"
-STR_RUM_16,"Artillery observers now are more dangerous. They will send smoke charges if find any alive friendly unit  near target point","Artillerie-Beobachter gefährlicher sein. Sie schicken Rauch Gebühren wenn finden lebendig Verbündete Einheit in der Nähe von Zielpunkt","Корректировщики стали ещё опаснее. Но толерастично пустят дымовые, если рядом с целью есть их люди"
+STR_RUM_16,"Artillery observers now are more dangerous. They will send smoke charges if find alive friendly unit  near target point","Artillerie-Beobachter gefährlicher sein. Sie schicken Rauch Gebühren wenn finden lebendig Verbündete Einheit in der Nähe von Zielpunkt","Корректировщики стали опаснее. Но толерастично пустят дымовые, если рядом с целью есть их люди"
 STR_RUM_17,"They say, that saw you near %3","Man sagt, jemand habe Sie bei %3","Говорят, у н.п. %3 видели вас"
 STR_RUM_18,"In %1 said that one out of twenty sabotages on airbase has some HK417 weapon","In %1 gesagt, dass man in zwanzig Saboteure auf die Datenbank haben irgendwelche HK417 Waffen","В %1 сказали, что примерно каждый двадцатый десантник имеет какую-либо винтовку НК417. А реже - нечто лучшее"
 STR_RUM_19,"Scientists claim that the migration of birds through Sahrani restored","Wissenschaftler behaupten, dass die Migration der Vögel durch Sahrani wieder","Учёные утверждают, что возобновилась миграция птиц через Сахрани"
@@ -1143,7 +1145,7 @@ STR_RUM_74,"Usually a strong wind blows over the ocean","Normalerweise weht ein 
 STR_RUM_75,"Rumors depend on the time of day and length of stay","Gerüchte hängen von der Tageszeit und der Dauer des Aufenthalts ab","Слухи меняются от времени дня и длительности пребывания"
 STR_RUM_76,"If MHQ is damaged by more than 0.5, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.5 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","При повреждении КШМ более 0.5 телепорт на нём не сработает. Всегда чините КШМ!"
 STR_RUM_77,"Points for taking a city are given within a radius of 500 meters from its center","Punkte für die Einnahme einer Stadt werden in einem Umkreis von 500 Metern um ihr Zentrum vergeben","Очки за взятие города даются в радиусе 500 метров от его центра"
-STR_RUM_78,"A sunken vehicle can be saved if it is no deeper than -15 meters","Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -15 Meter ist","Утонувшую боевую машину можно достать с глубины не менее -15 метров"
+STR_RUM_78,"A sunken vehicle can be saved if it is no deeper than -7 meters","Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -7 Meter ist","Утонувшую боевую машину можно достать с глубины не более -7 метров"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
