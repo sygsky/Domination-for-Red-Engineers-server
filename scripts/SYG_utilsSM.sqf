@@ -189,7 +189,7 @@ SYG_lastPlayersGet = {
 
 // ++++++++++++++++++++++++++ System to prnt scores of players during each town siege
 //
-// [[_players],[_scores]];
+// [[_players],[_scores], _start_time];
 // _players = ["player1",...,"playerN"]; // list of players participated in current town
 // _scores  = [1,...,N]; // scores of corresponding players
  //
@@ -245,7 +245,7 @@ SYG_townScoresPrint = {
     _arr  = SYG_townScores select 0;
     _arr1 = SYG_townScores select 1;
     hint localize "[";
-    hint localize format[ "++++++ Town ""%1"" (#%2) players score report ++++++", _this, current_counter + 1 ];
+    hint localize format[ "++++++ Town ""%1"" (#%2) players score report ++++++", _this, current_counter ];
 
     _sum = 0;
     _time_diff = time - (SYG_townScores select 2);

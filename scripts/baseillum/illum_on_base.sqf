@@ -1,5 +1,7 @@
 /*
-    scripts\baseillum.sqf
+        NOT USED!!!
+
+    scripts\baseillum\illum_on_base.sqf
 
 	author: Sygsky, 14-MAY-2020
 	description: produce illumination over base at night

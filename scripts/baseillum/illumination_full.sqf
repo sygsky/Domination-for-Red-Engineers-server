@@ -17,6 +17,7 @@ if (!isServer) exitWith{}; // only for server
 //#define FLARE_MAX_COUNT 5                  // maximum number of flares
 //#define FLARE_INTERVAL 10
 #define FLARE_POINT_TYPES ["WarfareBEastAircraftFactory","WarfareBWestAircraftFactory","FlagCarrier","Land_Vysilac_FM","Land_telek1"]
+#define FLARE_OBJ_CHECK_INTERVAL 120        // interval in seconds to check launch flare objects (e.g. towers on base)
 
 #include "x_setup.sqf"
 
@@ -37,7 +38,7 @@ if (typeName _this != "ARRAY") exitWith { hint localize format["--- Illumination
 if (count _this < 2) exitWith {hint localize format["--- Illumination: illegal start parameters (must be [_player_name, _illum_center_obj]) _this = %1", _this]};
 if ( !( typeName ( _this select 0 ) == "STRING" ) ) exitWith { hint localize format[ "--- Illumination: Expected started player name string as 1st parameter, detected ""%1""", typeof (_this select 0) ] };
 
-private ["_i", "_pos", "_flares", "_id_pos","_no","_center","_obj_cnt","_center", "_cnt"];
+private ["_i", "_pos", "_flares", "_id_pos","_no","_center","_obj_cnt","_center", "_cnt", "_check_time"];
 
 _pname = _this select 0;
 _center = _this select 1;
@@ -55,8 +56,6 @@ if (call SYG_getDayTimeId != 0 ) then {
 // send info about start of illumination over base for this player
 [ "illum_over_base",  _pname ] call XSendNetStartScriptClient;
 
-// fire illumination flare one by one up to the end of night
-_no = nearestObjects [_center, FLARE_POINT_TYPES , FLARE_DIST]; // Objects to fire flares above them
 
 if (count _no == 0) exitWith {
     SYG_illum_runner = nil;
@@ -67,7 +66,13 @@ _flares = [];
 _id_pos = 0; // next flare object in list id
 //hint localize format["+++ Illumination: start flare launch loop, daytime = %1, ( daytime > SYG_startNight ) || ( time < SYG_startMorning ) = %2", daytime, ( daytime > SYG_startNight ) || ( daytime < SYG_startMorning )];
 _cnt = 0;
+_check_time = time  - 1;
 while { ( daytime > SYG_startNight ) || ( daytime < SYG_startMorning ) } do {
+    if ( time >= _check_time) then {
+        // fire illumination flare one by one up to the end of night above these buildings
+        _no = nearestObjects [_center, FLARE_POINT_TYPES , FLARE_DIST]; // Objects to fire flares above them
+        _check_time = time + FLARE_OBJ_CHECK_INTERVAL;
+    };
     // create flares step by step
     _obj_cnt = {alive _x} count _no;
 //    if (_obj_cnt !=  count _no) then {hint localize format["+++ Illumination: alive centers %1, whole centers %2", _obj_cnt, count _no]};

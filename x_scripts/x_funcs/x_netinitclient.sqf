@@ -937,7 +937,7 @@ XHandleNetStartScriptClient = {
             #ifdef __RANKED__
                 private ["_score"];
                 // inform player about his illumination and consume scores
-                _score = ((player call XGetRankIndexFromScoreExt) +1) * (d_ranked_a select 29);
+                _score = round(_rankId call XGetScoreFromRank) / 10; // How costs the illumination above base
                 // "Over the base, a regular launch of flares began. Points taken: -%1"
                 [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
                 player addScore -_score;

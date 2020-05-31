@@ -13,7 +13,7 @@ if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
 
-_score = ((player call XGetRankIndexFromScoreExt) +1) * (d_ranked_a select 29);
+_score = round(_rankId call XGetScoreFromRank) / 10; // How costs the illumination above base
 
 _id = call SYG_getDayTimeId;
 _str = call SYG_nowTimeToStr;
