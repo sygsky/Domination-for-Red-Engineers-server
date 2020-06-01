@@ -36,7 +36,7 @@ if ( isNil "d_on_base_groups" ) then
 	hint localize "+++ x_infiltrate.sqf: d_on_base_groups = []; [] execVM ""scripts\flaresoverbase.sqf""";
 #endif
 
-// create fires from array
+    // create fires from array
 	_cnt = 0;
 	{
 #ifdef __DEBUG_FIRE__	
@@ -81,34 +81,44 @@ while { true } do {
     // zombi AI features: group is null, name == "Error: No unit", is alive, isKindOf "CAManBase"
 	if ( time >= _time_to_clean ) then
 	{
-		_cnt1        = count _items_to_clean; // whole counter
-		_cnt_dead    = 0;
-		_cnt_alive   = 0;
-		_cnt_car     = 0;
-		_cnt_holder  = 0;
-		_cnt_null    = 0;
-		_cnt_pb      = 0;
-		_cnt_garbage = 0;
-		_cnt_zombi   = 0;
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // clear previously  accumulated array of garbage vehicles on the base
+        //------------------------------------------------------------------
+
+		 _cnt             = count _items_to_clean; // whole counter
+		_cnt_dead         = 0; // dead men
+		_cnt_alive        = 0; // alive men (so then were standing her all the time
+		_cnt_car          = 0; // dead cars
+		_cnt_holder       = 0; // all weapon holders
+		_cnt_holder_water = 0; // weapon holders in water
+		_cnt_null         = 0; // null objects (nullified after time out)
+		_cnt_pb           = 0;  // pipe bombs
+		_cnt_garbage      = 0;  // all other types
+		_cnt_zombi        = 0; // detected zombi
 		{
-			if ( !isNull _x ) then
-			{
+			if ( !isNull _x ) then {
 			    _man = _x isKindOf "CAManBase";
 			    _alive = alive _x;
-			    if ( ! _man ) then
-				{
+			    if ( ! _man ) then {
 				    // count by vehicle type
-                    if (_x isKindOf "Car") then { _cnt_car = _cnt_car + 1;} else {
-                        if (_x isKindOf "WeaponHolder") then { _cnt_holder = _cnt_holder + 1;} else {
-                            if (_x isKindOf "PipeBomb") then { _cnt_pb = _cnt_pb + 1;} else {
+                    if (_x isKindOf "Car") then {
+                        _cnt_car = _cnt_car + 1;
+                    } else {
+                        if (_x isKindOf "WeaponHolder") then {
+                            _cnt_holder = _cnt_holder + 1;
+                            if ( surfaceIsWater (getPos _x)) then { _cnt_holder_water = _cnt_holder_water + 1 };
+                        } else {
+                            if (_x isKindOf "PipeBomb") then {
+                                _cnt_pb = _cnt_pb + 1;
+                            } else {
                                 _cnt_garbage = _cnt_garbage + 1;
                             };
                         };
                     };
 					deleteVehicle _x; sleep 0.1;
-				}
-				else // may be alive so called zombi
-				{
+				} else {
+				    // may be alive so called zombi
 				    if ( !_alive ) then
 				    {
 				        _cnt_dead = _cnt_dead + 1;
@@ -116,7 +126,6 @@ while { true } do {
 				    }
 				    else // alive man
 				    {
-				        // todo: call delete procedure on server, may be it could do it
                         if ( isNull (group _x) && (name _x == "Error: No unit")) then // zombi - arghhhhhh!!!
                         {
                             hint localize format["+++ x_infiltrate.sqf: try to delete zombi %1 pos %2 from base in clean proc", _x, getPos _x];
@@ -126,17 +135,20 @@ while { true } do {
                             _cnt_alive = _cnt_alive + 1;
                         };
 				    };
-				}
-			}
-			else {
+				};
+			} else {
                 // item is null, count as skipped
                 _cnt_null = _cnt_null + 1;
 			};
-		} forEach _items_to_clean; // clean  all old WeaponHolders and dead Apaches from the base
-		_str = format[ "cnt %1: men alive %2, dead %3, z %4, car %5, weapon %6, bombs %7, garb %8", _cnt1, _cnt_alive, _cnt_dead, _cnt_zombi, _cnt_zombi, _cnt_holder, _cnt_pb, _cnt_garbage ];
+		} forEach _items_to_clean; // clean  all garbages (especially  bombs, WeaponHolders and dead Apaches) from the base area
+		_str = format[ "cnt %1: men alv %2/ded %3, zmb %4, car %5, w/h %6%7, bmb %8, grb %8, nul %10",
+		     _cnt, _cnt_alive, _cnt_dead, _cnt_zombi, _cnt_car, _cnt_holder, if (_cnt_holder_water > 0) then {format["(water %1)", _cnt_holder_water]} else {""}, _cnt_pb, _cnt_garbage, _cnt_null ];
 		_items_to_clean = [];
 		sleep 15;
-		// seek for new items to clean
+
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// add all vehicles found on base again to clean after good timeout
+		//------------------------------------------------------------------
 
 		_arr = _base_center nearObjects ["CAManBase",_search_radious];
 		sleep 0.5;
@@ -214,9 +226,10 @@ while { true } do {
 		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2));
 		_time_to_clean = time + _delay;
 #ifdef __DEBUG_CLEAN_PRINT__
-		hint localize format["+++ x_infiltrate.sqf: %3 base cleaning proc: %1 cleaned, %2 items added, next in %4", _str, count _items_to_clean, call SYG_missionTimeInfoStr, _delay call SYG_secondsToStr ];
-		if ((count _items_to_clean) > 0) then
-		{
+		hint localize format["+++ x_infiltrate.sqf: %3 base cleaning proc: %1 cleaned / %2 items added, next in %4",
+		        _str, count _items_to_clean, call SYG_missionTimeInfoStr, _delay call SYG_secondsToStr
+		    ];
+		if ((count _items_to_clean) > 0) then {
 			_arr = [];
 			for "_i" from 0 to (15 min (count _items_to_clean)) - 1 do
 			{
@@ -311,4 +324,4 @@ while { true } do {
      };
 }; // while { true } do 
 
-if (true) 
+if (true) exitWith {};

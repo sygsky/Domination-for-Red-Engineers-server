@@ -224,7 +224,7 @@ SYG_townScoresAdd = {
 
     {
         _id = d_player_array_names find _x;
-        hint localize format["+++ SYG_townScoresAdd for %1 id == %2", _x, _id];
+        // hint localize format["+++ SYG_townScoresAdd for %1 id == %2", _x, _id];
         if (_id >= 0) then { // player is registered on the server
             _arr = SYG_townScores select 0;
             if ( !(_id in _arr)) then {  // add new player to list of town liberation participates

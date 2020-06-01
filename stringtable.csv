@@ -101,7 +101,7 @@ STR_SYS_20,"Select respawn place","Wahl eines Revival-Ortes","Выбор мес�
 STR_SYS_21,"MHQ %1 gets transported by airlift...","MHQ %1 wird per Luftbrücke transportiert...","КШМ %1 в воздухе..."
 STR_SYS_22,"MHQ %1 currently driving...","MHQ %1 in Bewegung ...","КШМ %1 в движении..."
 
-STR_SYS_23,"1 has been destroyed and is queued for recovery","%1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange","%1 уничтожен(а), и поставлена в очередь на на восстановление"
+STR_SYS_23,"%1 has been destroyed and is queued for recovery","%1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange","%1 уничтожен(а), и поставлена в очередь на восстановление"
 
 STR_SYS_25,"MHQ %1 is in water...","MHQ %1 ist im Wasser...","КШМ %1 сейчас в воде..."
 STR_SYS_26,"Teleport on MHQ %1 is faulty (%2%3)...","Der TELEPORT auf MHQ %1 ist defekt (%2%3)...","Телепорт на КШМ %1 неисправен (%2%3)..."
