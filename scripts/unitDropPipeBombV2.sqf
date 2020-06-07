@@ -354,9 +354,7 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 #endif		
 	
 	// V 2.1.6 new: magically move the bomb to its exact desired location:
-	sleep 2;
-	// SLEEP IS IMPORTANT TO FIND THE BOMB!\
-	// But is it really work? Not sure!
+	sleep 2; // SLEEP IS IMPORTANT TO FIND THE BOMB!\
 	_arr = nearestObjects [ _unit, [], 25];
 	_cnt = count _arr;
 	if ( _cnt > 0 ) then
@@ -379,12 +377,6 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do
 #endif		
 	};
 
-//#ifdef __DEBUG__
-//	_str = "";
-//	{ _str = _str + format["%1,", typeOf _x]; } forEach _arr;
-	hint localize format["DropScript (%2): array of %1 bombs found", count _arr, ELAPSED_TIME]; // have to understand it works or not
-//#endif
-	
 	if ( _bomb2center ) then 
 	{
 		_pipeBombCount = count _arr;

@@ -189,7 +189,7 @@ switch (sec_kind) do {
 		_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddPoints;}];
 		#endif
 	};
-	case 4: {
+	case 4: { // battle control station disguised as an ambulance
 		_truck = (if (d_enemy_side == "EAST") then {"ACE_BMP2_Ambul"} else {"ACE_M113_Ambul"});
 		_vehicle = _truck createVehicle (_poss);
 		_vehicle setDir (floor random 360);

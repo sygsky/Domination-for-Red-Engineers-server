@@ -204,8 +204,8 @@ SYG_addEvents = {
         if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked};
     };
 
-    _smoke_veh = false;
-    if ( count _this > 2) then { _smoke_veh = _this select 2};
+//    _smoke_veh = false;
+//    if ( count _this > 2) then { _smoke_veh = _this select 2};
     _vehicle call SYG_assignVecToSmokeOnHit;
 
     // add wreckage restore option
