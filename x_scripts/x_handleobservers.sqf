@@ -7,7 +7,7 @@ if (!isServer) exitWith {};
 
 #define KILL_RADIOUS 30 // radious to be hit directly by arti shoots
 #define HIT_RADIOUS 45 // radious to be hit indirectly by arti shoots
-#define SAVE_RADIOUS 50 // radious to he save by arti shoots
+#define SAVE_RADIOUS 60 // radious to he save by arti shoots
 #define MIN_FRIENDLY_COUNT_TO_STRIKE 3
 #define MAX_SHOOT_DIST 2000 // maximum distance observer can shoot on players
 
@@ -144,7 +144,9 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _observer reveal _pos_nearest; // team helps to observer)))
                     sleep 0.3;
                 // don't shoot too far
-                    if ( (_observer distance _pos_nearest) > MAX_SHOOT_DIST ) exitWith {};
+                    if ( (_observer distance _pos_nearest) > MAX_SHOOT_DIST ) exitWith {
+                        hint localize format["+++ x_handleobservers.sqf: attempt to strike on distance %1 m", _observer distance _pos_nearest) > MAX_SHOOT_DIST];
+                    };
 
                     _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
                     _own_cnt       = {alive _x} count _own_arr;

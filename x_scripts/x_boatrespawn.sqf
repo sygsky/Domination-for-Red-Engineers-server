@@ -175,7 +175,7 @@ while {true} do {
 			else
 			{
 				_new_pos = position _boat;
-				if ( IS_BOAT_EMPTY(_boat) AND (([_new_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) > DIST_TO_BE_OUT)) then
+				if ( IS_BOAT_EMPTY(_boat) && (([_new_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) > DIST_TO_BE_OUT)) then
 				{
 #ifdef	__DEBUG__
 				hint localize format["x_boatrespawn.sqf: boat %1 (%2) changed its position, marked for restore", _boat,_i];

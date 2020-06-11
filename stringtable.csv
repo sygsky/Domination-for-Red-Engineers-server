@@ -873,7 +873,7 @@ STR_SYS_1204_4,"Points an engineer gets for servicing other: ","Punkte, die ein 
 STR_SYS_1204_5,"Points an engineer needs to rebuild the support buildings at base: ","Punkte, die ein Ingenieur braucht, um die stützgebäude an der Basis wieder aufzubauen: ","Очков списывается с инженера за ремонт сервисов на базе: "
 
 STR_SYS_1205,"Points an artillery operator needs for a strike: ","Punkte, die ein Artillerie-operator für einen Streik braucht: ","Очков списывается за вызов одного артиллерийского залпа: "
-STR_SYS_1206,"Points needed to recuruit one AI soldier: ","Punkte benötigt, um einen KI-Soldaten recuruit: ","Очков за призыв одного АИ:"
+STR_SYS_1206,"Points needed to recruit first AI soldier: ","Punkte benötigt, um erste KI-Soldaten zu rekrutieren: ","Очков за призыв первого АИ:"
 STR_SYS_1207,"Points needed to call in an air taxi: ","Punkte benötigt, um in einem Lufttaxi zu rufen: ","Очков за вызов воздушного такси: "
 
 STR_SYS_1208,"Points needed for AAHALO parajump: ","Punkte für AAHALO parajump benötigt: ","Очков необходимо для десантирования с базы: "

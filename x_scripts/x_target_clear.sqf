@@ -116,7 +116,7 @@ d_run_illum = false;
 
 // now decide what to do next
 if (current_counter < number_targets) then {
-	sleep 15;
+	sleep (30 + random(60));
 #ifdef __TT__
 	kill_points_west = 0;
 	kill_points_racs = 0;
