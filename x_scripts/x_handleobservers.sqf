@@ -143,9 +143,9 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                 if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
                     _observer reveal _pos_nearest; // team helps to observer)))
                     sleep 0.3;
-                // don't shoot too far
+                    // don't shoot too far
                     if ( (_observer distance _pos_nearest) > MAX_SHOOT_DIST ) exitWith {
-                        hint localize format["+++ x_handleobservers.sqf: attempt to strike on distance %1 m", _observer distance _pos_nearest) > MAX_SHOOT_DIST];
+                        hint localize format["+++ x_handleobservers.sqf: failed attempt to strike on distance %1 m", _observer distance _pos_nearest];
                     };
 
                     _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly

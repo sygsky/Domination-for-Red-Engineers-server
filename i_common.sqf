@@ -649,6 +649,7 @@ d_jumpflag_vec = ""; //+++ Sygsky: normal jump by request for Home and Yeti
 
 // Fixes the bug that tanks fly through the air or fall on their back
 // code from Hein Blds GDTModTracked addon, thanks Hein
+//+++ Sygsky: really this solution NOT help in any case!! I repalced it with some procedure based on "getout: event
 d_use_mod_tracked = true;
 
 // max distance from target where an arti operator can order an artillery strike
@@ -772,7 +773,7 @@ x_default_revive_setpos = false;
 d_with_qg_anims = false;
 #endif
 
-// all lower objects are null if they are alive. If they are not null, corresponding ruins object stored in it
+// all lower objects are null if they are alive. If they are not null, corresponding ruins object located on the site of factory
 d_jet_service_fac = objNull;
 d_chopper_service_fac = objNull;
 d_wreck_repair_fac = objNull;

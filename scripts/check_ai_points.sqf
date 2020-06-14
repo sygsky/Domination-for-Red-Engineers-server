@@ -11,7 +11,7 @@ _ai_low_cost = d_ranked_a select 3; // how many point needed to call 1st AI by c
 
 _str = "";
 
-#ifdef __RANKED__
+#ifdef __SUPER_RANKING__
 
 _rank =  player call XGetRankFromScoreExt; // rank string
 _rank_id = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)

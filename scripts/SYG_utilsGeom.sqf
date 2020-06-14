@@ -434,15 +434,4 @@ SYG_angleBetweenVectors3D = {
     _cos = _sc / (_tmp);
     acos _cos
 };
-// _dist = [_p1,_p2] call SYG_distance2D;
-/*
-SYG_distance2D =
-{
-    _p1 = + arg(0);
-    _p2 = + arg(1);
-    _p1 set [Z_POS,0];
-    _p2 set [Z_POS,0];
-    _p1 distance _p2
-}
-*/
 
