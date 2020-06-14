@@ -935,9 +935,15 @@ XHandleNetStartScriptClient = {
         case "illum_over_base" : {
             if (name player == _this select 1) exitWith {
             #ifdef __RANKED__
-                private ["_score"];
+                private ["_score","_rank_id"];
                 // inform player about his illumination and consume scores
-                _score = round(_rankId call XGetScoreFromRank) / 10; // How costs the illumination above base
+                #ifdef __SUPER_RANKING__
+                _rank_id = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
+                #else
+                _rank_id = player call XGetRankIndexFromScore; // rank index
+                #endif
+
+                _score = round((_rank_id max 1) call XGetScoreFromRank) / 10; // How costs the illumination above base, for Private as for Corporal
                 // "Over the base, a regular launch of flares began. Points taken: -%1"
                 [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
                 player addScore -_score;

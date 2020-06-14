@@ -657,4 +657,16 @@ SYG_AIPriceByRankString = {
     _rank_id call SYG_AIPriceByRankId
 };
 
+//
+// _arr = [1,2,3];
+// _add_arr = [4,5,6];
+// _arr = [_arr, _add] call SYG_addArrayInPlace; // [1,2,3,4,5,6] and _arr is the same object as before addition!!!
+//
+SYG_addArrayInPlace = {
+    private ["_arr"];
+    _arr = _this select 0;
+    { _arr set [ count _arr, _x ] } forEach (_this select 1);
+    _arr
+};
+
 if (true) exitWith {};

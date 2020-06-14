@@ -374,10 +374,12 @@ XHandleNetStartScriptServer = {
 
         // request to run illum over base, params: [ "illum_over_base", _player_name]
         case "illum_over_base" : {
-            // find illumination center
+            // define object to be center of illumination zone (base flag)
+
+            // script will remove all found objects that are closer (in 2D dist) than 10 meters to these poins
             [   _this select 1,
             #ifndef __TT__
-                FLAG_BASE // center of illumination zone
+                FLAG_BASE // [ flare lunching player name, central object of illumination zone]
             #else
                 if (d_own_side == "WEST") then { WFLAG_BASE } else { RFLAG_BASE  }
             #endif
