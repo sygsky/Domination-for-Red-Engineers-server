@@ -299,6 +299,8 @@ XHandleNetStartScriptServer = {
 			_this call GRU_procServerMsg;
 		};
         // ["syg_plants_restore", _player_name, _restore_center_pos, _restore_radious] call XSendNetStartScriptServer;
+/**
+        // REMOVED as non workable correctly in Arma-1. Vegetation can't be restored as no synchronization betweeen server and client about it.
         case "syg_plants_restore": // restore plants and fences
 		{
 		    hint localize format["+++ Server received msg: %1",_this];
@@ -306,6 +308,7 @@ XHandleNetStartScriptServer = {
             ["syg_plants_restored", arg(1), arg(2), arg(3), _score] call XSendNetStartScriptClient;
 		    hint localize format["+++ Server send msg: %1", ["syg_plants_restored", arg(1), arg(2), arg(3)]];
 		};
+*/
 /** Not used at all
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
@@ -384,6 +387,11 @@ XHandleNetStartScriptServer = {
                 if (d_own_side == "WEST") then { WFLAG_BASE } else { RFLAG_BASE  }
             #endif
             ] execVM "scripts\baseillum\illumination_full.sqf"
+        };
+
+        // ["log2server", _player_name,"literal_message_not_STR_NNN"]...
+        case "log2server": {
+            hint localize format["+++ Log from ""%1"": %2", _this select 1, _this select 2];
         };
 
 //========================================================================================================== END OF CASES

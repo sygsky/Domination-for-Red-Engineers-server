@@ -1,5 +1,6 @@
+// scripts\jail.sqf
 // By sygsky: Remastered jail from Evolution
-// no specail input parameters except ["TEST"] for testing only.
+// no special input parameters except ["TEST"] for testing only.
 // Call on client only,
 /*
 	author: Sygsky
@@ -71,7 +72,7 @@ if (isNil "jail_places") then
 */
     // jail rooms, array items: [offset point for jail position, jail pos dir, hotel search point]
     jail_places = [
-        [[-5.26367,-6.39551,-7.74754],0,[10270.2,7384.86,8.01088]], // behind the logotype of the 1st hotel
+        [[-5.26367,-6.39551,-7.74754],0,[10270.2,7384.86,8.01088]], // behind the logotype of the hotel
         [[-2.8457,2.97168,-7.73003],-270,[10270.2,7384.86,8.01088]] // in lift cabine
     ];
 };
@@ -95,6 +96,7 @@ if (isNull _hotel) exitWith {
 #ifdef __JAIL_DEBUG__
     hint localize format["--- jail.sqf: No jail buildings %2 exists for (%1)", name player, jail_buildings];
 #endif
+["log2server", name player, "jail building not found"] call  call XSendNetStartScriptServer;
 };
 
 //hint localize format[ "jail: %1", _jailArr ];
@@ -168,6 +170,7 @@ _str = format["+++jail.sqf: pos %1, hld %2, model %3", getPos player, getPos _we
 //player groupChat _str;
 hint localize _str;
 #endif
+["log2server", name player, "jail process started"] call  call XSendNetStartScriptServer;
 
 //if (bancount > 2) exitWith {hint "press Alt + F4 to exit"};
 
