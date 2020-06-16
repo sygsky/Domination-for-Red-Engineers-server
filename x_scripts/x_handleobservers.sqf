@@ -141,7 +141,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                 _near_targets = [];
                 _cnt = 0;
                 if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
-                    _observer reveal _pos_nearest; // team helps to observer)))
+                    _observer reveal _enemy; // team helps to observer)))
                     sleep 0.3;
                     // don't shoot too far
                     if ( (_observer distance _pos_nearest) > MAX_SHOOT_DIST ) exitWith {

@@ -173,3 +173,6 @@
 
 // uncomment to allow SCUD added on base. Needs addon gig_scud.pbo, else mission and client not start
 //#define __SCUD__
+
+// #385: uncomment to allow lock vehicles on recapture towns procedure
+//#define __LOCK_ON_RECAPTURE__
