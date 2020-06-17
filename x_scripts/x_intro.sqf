@@ -10,6 +10,7 @@ d_still_in_intro = true;
 #include "x_macros.sqf"
 
 #define __DEBUG__
+#define __TIME_OF_DAY_MISIC__
 
 // uncomment next line to test how 23-FEB-1985, 7-NOV-1985 etc are processed as Soviet holiday
 //#define __HOLIDAY_DEBUG__
@@ -63,8 +64,7 @@ _holiday = SYG_client_start call SYG_getHoliday;
 
 _sound = "";
 if (count _holiday > 0 ) then {
-    // Soviet holiday detected, show its info to user
-    // TODO: show info about soviet holiday and/or play corresponding sound
+    // Soviet holiday detected, show its info about soviet holiday and/or play correponding sound
     _sound = _holiday select 1;
     if (_sound != "") then {playMusic _sound};
 };
@@ -108,20 +108,44 @@ if (_sound == "") then { // select random music for ordinal day
             if (format["%1",player] in ["RESCUE","RESCUE2"]) then {
                 { _personalSounds = _personalSounds + ["from_russia_with_love","bond1","bond"]; } forEach [1,2,3];
             }; // as you are some kind of spy
+
+#ifdef __TIME_OF_DAY_MISIC__
+            // music to play at night
+            _night_music = [
+                "bond","bond1","adjutant","prince_negaafellaga","total_recall_mountain","adagio","morze","morze_3",
+                "treasure_island_intro","fear2","soviet_officers","cosmos","manchester_et_liverpool","tovarich_moy",
+                "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","toccata","del_vampiro1",
+                "del_vampiro2","zaratustra","bolivar","jrtheme","vague"
+            ];
+
+            // music to play night and day time
+            _daytime_music = [
+                "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
+                "Letyat_perelyotnye_pticy_2nd","ruffian","morze","morze_3","chapaev","rider","condor","Vremia_vpered_Sviridov",
+                "Letyat_perelyotnye_pticy_end","sovest1","sovest2","toccata","zaratustra"
+            ];
+
+            // only night music
+            _music = _night_music + _personalSounds;
+            // if day time add day music too
+            if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { _music = _music + _daytime_music };
+            _music = _music call _XfRandomArrayVal;
+#else
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
             [
-                "bond","grant",/*"red_alert_soviet_march",*/"burnash","adjutant","lastdime","lastdime2","lastdime3",
-                /*"Art_Of_Noise_mono",*/"mission_impossible","from_russia_with_love","bond1","prince_negaafellaga","strelok",
-                "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio",//"nutcracker",
+                "bond","grant","burnash","adjutant","lastdime","lastdime2","lastdime3",
+                "mission_impossible","bond1","prince_negaafellaga","strelok",
+                "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio",
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
-                "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov", // "ipanoram",
-                "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2",/*"morricone1",*/"toccata",
-                "del_vampiro1","del_vampiro2", "zaratustra", "bolivar","jrtheme"
-            ] + _personalSounds ) call _XfRandomArrayVal;
-    //        _music = format["[%1]", """johnny"",""Art_Of_Noise_mono"""];
-    //        _music = (call compile _music) call _XfRandomArrayVal;
-            playMusic _music;
-            //playMusic "ATrack25"; // oldest value by Xeno
+                "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
+                "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
+                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague"
+            ]
+                + _personalSounds ) call _XfRandomArrayVal;
+#endif
+
+            playMusic _music; //playMusic "ATrack25"; // oldest value by Xeno
+
          };
     };
 };

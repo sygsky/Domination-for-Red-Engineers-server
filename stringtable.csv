@@ -947,14 +947,12 @@ STR_AI_14,"Commander! Let's wait at least %1 sec. for decency","Commander! Warte
 
 STR_ILLUM,"Illumination on the base for this night is already running (%1). Try again next night","Die Beleuchtung an der Basis für diese Nacht läuft bereits (%1). Versuchen Sie es noch einmal nach der Nacht","Освещение базы уже запушено ""%1"", попытайтесь ещё раз после ночи"
 STR_ILLUM_1,"You don't have enough points. Required, with your rank, %1","Du hast nicht genug Punkte. Erforderlich, mit Ihrem Rang, %1","У Вас не хватает очков. С вашим званием требуется %1."
-STR_ILLUM_2,"Come again at night (after message). And don't forget the points (%1)","Komm nachts wieder (nach Nachricht). Und vergiss die Punkte nicht (%1)","Приходите ночью (будет сообщение). И прихватите баллы (%1)"
+STR_ILLUM_2,"Come again at night (after message). Costs in scores %1. Points of launching flares - the air base operational radio towers","Kommen Sie wieder in der Nacht (nach Nachricht). Kosten in Partituren %1. Punkte der flares starten - die air base operational radio towers","Приходите ночью (будет сообщение). Затраты в очках %1. Точки запуска - радиобашни базы"
 STR_ILLUM_2_0,"Come again at night (after message)","Komm nachts wieder (nach Nachricht)","Приходите ночью (будет сообщение)"
 STR_ILLUM_3,"Over the base, a regular launch of flares began. Points taken: -%1","Über der Basis begann ein regelmäßiger Start von Fackeln. Erhaltene Punkte: -%1","Над базой начат регулярный запуск сигнальных ракет. Снято очков: -%1"
 STR_ILLUM_3_1,"Over the base, a regular launch of flares began","Über der Basis begann ein regelmäßiger Start von Fackeln","Над базой начат регулярный запуск сигнальных ракет"
 STR_ILLUM_3_0,"%1 provided regular launch of flares over our base","%1 lieferte einen regelmäßigen Abschuss von Signalraketen über unserer Basis","%1 обеспечил регулярный запуск сигнальных ракет над нашей базой"
 STR_ILLUM_4,"Flares spent on the base illumination at night: %1 PC.","Nachts wurden Beleuchtungsraketen ausgegeben, um die Basis zu beleuchten: %1 Stk.","На подсветку базы потрачены осветительные ракеты: %1 шт."
-
-//HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 
 STR_PATROL_TYPE_HP,"heavy patrol","schwere Patrouille","тяжёлый патруль"
 STR_PATROL_TYPE_AP,"АА patrol","AA Patrouille","патруль ПВО"
