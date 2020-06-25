@@ -14,11 +14,7 @@ if (!X_Client) exitWith {};
 #include "x_setup.sqf"
 
 #ifdef __RANKED__
-#ifdef __SUPER_RANKING__
-_rank_id = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
-#else
 _rank_id = player call XGetRankIndexFromScore; // rank index
-#endif
 _score = round((_rank_id max 1) call XGetScoreFromRank) / 10; // How costs the illumination above base. For Private as for Corporal
 #endif
 
