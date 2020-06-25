@@ -625,7 +625,7 @@ SYG_AIPriceByRankId = {
 //    hint localize format["+++ %1 call SYG_AIPriceByRankId", _this];
     if (typeName _this == "OBJECT") then {
         if (isPlayer _this) then {
-            _this = (score _this)call XGetRankFromScoreExt;
+            _this = (score _this)call XGetRankFromScore;
         };
     } else {
         if (typeName _this == "STRING") then { // rank name used
