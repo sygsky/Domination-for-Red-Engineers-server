@@ -189,23 +189,23 @@ SYG_lastPlayersGet = {
 
 // ++++++++++++++++++++++++++ System to prnt scores of players during each town siege
 //
-// [[_players],[_scores]];
+// [[_players],[_scores], _start_time];
 // _players = ["player1",...,"playerN"]; // list of players participated in current town
 // _scores  = [1,...,N]; // scores of corresponding players
  //
-SYG_townScores = [[],[], time];
+SYG_townScores = [[],[], time, current_counter];
 
 // Create internal arrays with currently online players at the start of the next town
 SYG_townScoresInit = {
     private ["_names","_pl"];
-    SYG_townScores  = [ [], [], time];
+    SYG_townScores  = [ [], [], time, current_counter];
     _names = [];
     {
         _pl = call _x;
         if (isPlayer _pl) then { _names set [count _names, name _pl];   };
     } forEach SYG_players_arr;
     _names call SYG_townScoresAdd;
-    hint localize format["+++ SYG_townScoresInit: SYG_townScores = %1", SYG_townScores];
+    hint localize format["+++ SYG_townScoresInit: SYG_townScores = %1, SM counter %2", SYG_townScores, current_counter];
 };
 
 //
@@ -224,7 +224,7 @@ SYG_townScoresAdd = {
 
     {
         _id = d_player_array_names find _x;
-        hint localize format["+++ SYG_townScoresAdd for %1 id == %2", _x, _id];
+        // hint localize format["+++ SYG_townScoresAdd for %1 id == %2", _x, _id];
         if (_id >= 0) then { // player is registered on the server
             _arr = SYG_townScores select 0;
             if ( !(_id in _arr)) then {  // add new player to list of town liberation participates
@@ -245,7 +245,7 @@ SYG_townScoresPrint = {
     _arr  = SYG_townScores select 0;
     _arr1 = SYG_townScores select 1;
     hint localize "[";
-    hint localize format[ "++++++ Town ""%1"" players score report ++++++", _this ];
+    hint localize format[ "++++++ Town ""%1"" (%2 SM done) players score report ++++++", _this, current_counter - (SYG_townScores select 3)];
 
     _sum = 0;
     _time_diff = time - (SYG_townScores select 2);
@@ -265,7 +265,7 @@ SYG_townScoresPrint = {
         _this,
         _sum,
         if(count _arr > 0) then {round (_sum / (count _arr))} else {0},
-        _sum * 3600 / _time_diff,
+        round(_sum * 36000 / _time_diff)/10,
         _str
     ];
     hint localize "]";

@@ -10,7 +10,7 @@ if (!isServer) exitWith {};
 #define __ILLUM_BY_ALIVE__ // to fire flares above alive man in predefined radious
 
 #ifdef __FULL_LIGHT__
-#define MIN_FLARE_HEIGHT 30
+#define MIN_FLARE_HEIGHT 15 // min flare height above the groud allowed
 #endif
 
 //#define __DEBUG__

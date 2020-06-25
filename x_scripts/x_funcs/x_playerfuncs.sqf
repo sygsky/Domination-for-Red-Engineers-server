@@ -201,7 +201,7 @@ if (_str_p in d_can_use_mgnests) then {
 // Update client info for recaptured town[s]
 //
 XRecapturedUpdate = {
-	private ["_index","_target_array", "_target_name", "_targetName","_state"];
+	private ["_index","_target_array", "_target_name", "_targetName","_state","_target_rad"];
 	_index = _this select 0;
 	_state = _this select 1;
 	_target_array = target_names select _index;
@@ -339,8 +339,8 @@ XPlayerRank = {
                     {
                         hint localize format["Player %1 has higher rank (%2) than you (%3)",
                         name _highest_ranked_player,
-                        _highest_ranked_player call XGetRankFromScoreExt,
-                        _score call XGetRankFromScoreExt];
+                        _highest_ranked_player call XGetRankFromScore,
+                        _score call XGetRankFromScore];
                     };
                 };
 
@@ -476,7 +476,7 @@ XGetRankIndex = {
 	_rank_id = d_rank_names find (toUpper (_this));
 #ifdef __SUPER_RANKING__
 	if ( _rank_id < 0 ) exitWith {
-	    _this call XGetRankIndexEx
+	    _this call XGetRankIndexExt
 	};
 #endif
 	_rank_id
@@ -497,7 +497,7 @@ XGetRankFromIndex = {
 
 //============================================
 
-XGetRankIndexEx = {
+XGetRankIndexExt = {
     private ["_rank_id"];
 //	["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"] find (toUpper (_this));
 	_rank_id = d_pseudo_rank_names find (toUpper (_this));
@@ -510,9 +510,8 @@ XGetRankIndexEx = {
 //
 
 XGetRankStringLocalized = {
-    if ( typeName _this == "OBJECT") then
-    {
-        if (isPlayer _this) then { _this = _this call XGetRankFromScoreExt;};
+    if ( typeName _this == "OBJECT") then {
+        if (isPlayer _this) then { _this = _this call XGetRankFromScore;};
     };
 	switch (toUpper(_this)) do {                     // indexes of rank array
 		case "PRIVATE":    {localize "STR_TSD9_26"}; // 0
@@ -533,25 +532,10 @@ XGetRankStringLocalized = {
 	};
 };
 
-// returns name for the ordinal Arma rank
-XGetRankFromScore = {
-    if ( typeName _this == "OBJECT") then
-    {
-        if (isPlayer _this) then { _this = score _this;};
-    };
-	if (_this < (d_points_needed select 0)) exitWith {"Private"};
-	if (_this < (d_points_needed select 1)) exitWith {"Corporal"};
-	if (_this < (d_points_needed select 2)) exitWith {"Sergeant"};
-	if (_this < (d_points_needed select 3)) exitWith {"Lieutenant"};
-	if (_this < (d_points_needed select 4)) exitWith {"Captain"};
-	if (_this < (d_points_needed select 5)) then {"Major"} else {"Colonel"};
-};
-
 #ifdef __SUPER_RANKING__
 
 XIsRankFromScoreExtended =  {
-    if ( typeName _this == "OBJECT") then
-    {
+    if ( typeName _this == "OBJECT") then {
         if (isPlayer _this) then { _this = score _this;};
     };
     _this >= argp(d_pseudo_ranks,0)
@@ -564,13 +548,16 @@ XIsRankFromScoreExtended =  {
 //
 XGetRankFromScoreExt = {
     private ["_index"];
-    if ( typeName _this == "OBJECT") then
-    {
+    if ( typeName _this == "OBJECT") then  {
         if (isPlayer _this) then { _this = score _this;};
     };
-    if (!(_this call XIsRankFromScoreExtended)) exitWith
-    {
-        _this call XGetRankFromScore; // returns from "Private"(0) to "Colonel" (6)
+    if (!(_this call XIsRankFromScoreExtended)) exitWith     {
+        if (_this < (d_points_needed select 0)) exitWith {"Private"};
+        if (_this < (d_points_needed select 1)) exitWith {"Corporal"};
+        if (_this < (d_points_needed select 2)) exitWith {"Sergeant"};
+        if (_this < (d_points_needed select 3)) exitWith {"Lieutenant"};
+        if (_this < (d_points_needed select 4)) exitWith {"Captain"};
+        if (_this < (d_points_needed select 5)) then {"Major"} else {"Colonel"};
     };
     _index = -1; // Colonel
     {
@@ -580,21 +567,26 @@ XGetRankFromScoreExt = {
     (d_pseudo_rank_names select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
 };
 
+XGetRankFromScore = XGetRankFromScoreExt;
+
 // Rank index from player score including extended scores from ranks above Colonel
 // call as follows: _rank_id = player call XGetRankIndexFromScoreExt; // or
-//                  _rank_id = 9score player) call XGetRankIndexFromScoreExt;
+//                  _rank_id = (score player) call XGetRankIndexFromScoreExt;
 //
 XGetRankIndexFromScoreExt = {
     private ["_index"];
-    if ( typeName _this == "OBJECT") then
-    {
+    if ( typeName _this == "OBJECT") then {
         if (isPlayer _this) then { _this = score _this;};
     };
     if ( typeName _this != "SCALAR") exitWith {0};
 
-    if (!(_this call XIsRankFromScoreExtended)) exitWith
-    {
-        _this call XGetRankIndexFromScore // returns from 0 ("Private") to 6 ("Colonel")
+    if (!(_this call XIsRankFromScoreExtended)) exitWith {
+        _index = 0;
+        {
+            if (  _this  < _x) exitWith {_index};
+            _index = _index +  1;
+        } forEach d_points_needed;
+        _index
     };
     _index = 6; // Colonel
     {
@@ -604,14 +596,28 @@ XGetRankIndexFromScoreExt = {
     _index // returns from 7("Brigadier-General") to 12("Generalissimo")
 };
 
-#endif
+XGetRankIndexFromScore = XGetRankIndexFromScoreExt;
+
+#else
+
+// returns name for the ordinal Arma rank
+XGetRankFromScore = {
+    if ( typeName _this == "OBJECT") then {
+        if (isPlayer _this) then { _this = score _this;};
+    };
+	if (_this < (d_points_needed select 0)) exitWith {"Private"};
+	if (_this < (d_points_needed select 1)) exitWith {"Corporal"};
+	if (_this < (d_points_needed select 2)) exitWith {"Sergeant"};
+	if (_this < (d_points_needed select 3)) exitWith {"Lieutenant"};
+	if (_this < (d_points_needed select 4)) exitWith {"Captain"};
+	if (_this < (d_points_needed select 5)) then {"Major"} else {"Colonel"};
+};
+
 // gets player rank index (0 - private ... 6 - colonel)
 XGetRankIndexFromScore = {
     private ["_index"];
-    if ( typeName _this == "OBJECT") then
-    {
-        if (isPlayer _this) then { _this = score _this;};
-    };
+    if ( typeName _this == "OBJECT") then { if (isPlayer _this) then { _this = score _this;}; };
+    if ( typeName _this != "SCALAR") exitWith {0};
     _index = 0;
     {
         if (  _this  < _x) exitWith {_index};
@@ -619,6 +625,8 @@ XGetRankIndexFromScore = {
     } forEach d_points_needed;
     _index
 };
+
+#endif
 // Finds and return score needed for designated rank
 // call: _rankScore  = player call XGetScoreFromRank; // to get initial rank score for the player current rank
 //       _rankScore  = 1 call XGetScoreFromRank; // to get initial rank score for the  CORPORAL rank
@@ -628,11 +636,7 @@ XGetScoreFromRank = {
     switch (typeName _this) do
     {
         case "OBJECT": { // player of unit designated, convert to score
-#ifdef __SUPER_RANKING__
-            _this = (score _this) call XGetRankIndexFromScoreExt; // convert to unit score rank
-#else
             _this = (score _this) call XGetRankFromScore;   // convert to unit score rank
-#endif
         };
         case "SCALAR": { };  // rank index designated
         case "STRING": { // rank name, e.g. "Lieutenant"

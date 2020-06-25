@@ -53,9 +53,6 @@ if (_start_real) then {
 	sleep 2.321;
 };
 
-_dummy = target_names select current_target_index;
-(_dummy select 1) call SYG_townScoresPrint; // print statistics on finished town
-
 #ifndef __TT__
 resolved_targets = resolved_targets + [current_target_index];
 #endif
@@ -119,7 +116,7 @@ d_run_illum = false;
 
 // now decide what to do next
 if (current_counter < number_targets) then {
-	sleep 15;
+	sleep (30 + random(60));
 #ifdef __TT__
 	kill_points_west = 0;
 	kill_points_racs = 0;
@@ -127,31 +124,26 @@ if (current_counter < number_targets) then {
 #endif
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
+    d_max_recaptures = 0;
+//    stop_sm          = true;
+//    publicVariable "stop_sm";
     // TODO: #368, wait until base cleared from enemies and
     // no recaptured towns and (resolved)
     // side mission completed (resolved)
-	if ( (count d_recapture_indices == 0) && side_mission_resolved ) then {
-		the_end = true;
-		["the_end",the_end] call XSendNetVarClient;
-	} else {
-        _str = "";
-        if ( (count d_recapture_indices > 0) && (!side_mission_resolved) )
-        then { _str = "STR_SYS_121_3_FULL" }
-        else {
-            if ( !side_mission_resolved ) then { _str = "STR_SYS_121_3_SM" } else { _str = "STR_SYS_121_3_RECAPTURED"};
-        };
-        if (_str != "") then {
-            [ "msg_to_user", "*", [ [ _str ] ], 0, 2, false, "fanfare" ] call  XSendNetStartScriptClient; // The enemy escaped! ..."
-        };
-		[] spawn {
-		    // while any town recaptured or side mission active
-			while { (count d_recapture_indices > 0) || (!side_mission_resolved)} do {
-				sleep 2.543;
-			};
-			the_end = true;
-			["the_end",the_end] call XSendNetVarClient;
-		};
-	};
+    hint localize "+++ x_target_clear.sqf: run stop new target town creation system process as all target towns are liberated !!!";
+    _str = "";
+    if ( (count d_recapture_indices > 0) && (!stop_sm) ) then { _str = "STR_SYS_121_3_FULL" }
+    else {
+        if ( !stop_sm ) then { _str = "STR_SYS_121_3_SM" } else { _str = "STR_SYS_121_3_RECAPTURED"};
+    };
+    if (_str != "") then {
+        [ "msg_to_user", "*", [ [ _str ] ], 0, 2, false, "fanfare" ] call  XSendNetStartScriptClient; // The enemy escaped! ..."
+    };
+    // while any town recaptured or side mission active
+    while { !((count d_recapture_indices == 0) && stop_sm) } do { sleep 2.543; };
+    the_end = true;
+    ["the_end",the_end] call XSendNetVarClient;
+    hint localize "+++ x_target_clear.sqf: the_end = true; !!!";
 };
 
 if (true) exitWith {};

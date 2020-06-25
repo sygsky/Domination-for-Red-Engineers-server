@@ -7,7 +7,7 @@ showCinemaBorder false;
 _dlg = createDialog "X_RscAnimatedLetters";
 _line = 0;
 i = 0;
-playMusic "ATrack8";
+playMusic "farewell_slavs"; // "ATrack8";
 _display = findDisplay 11098;
 _control = _display displayCtrl 101113;
 

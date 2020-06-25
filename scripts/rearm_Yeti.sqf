@@ -1,5 +1,5 @@
 /*
-	author: Sygsky
+	author: Sygsky, scripts\rearm_Yeti.sqf
 	description: none
 	returns: nothing
 */

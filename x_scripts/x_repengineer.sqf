@@ -69,7 +69,13 @@ _fuel_capacity_in_litres = objectID2 call SYG_fuelCapacity; // litres of fuel in
 #ifdef __LIMITED_REFUELLING__
 _refuel_add = 0;
 
-_rankIndex = _caller call XGetRankIndexFromScoreExt;
+
+#ifdef __SUPER_RANKING__
+_rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
+#else
+_rankIndex = player call XGetRankIndexFromScore; // rank index
+#endif
+
 _refuel_volume = d_refuel_volume + d_refuel_per_rank * _rankIndex; // how many liters to refuel
 
 if (_fuel_capacity_in_litres > 0) then

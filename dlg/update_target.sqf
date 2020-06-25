@@ -129,7 +129,7 @@ if  ( !isNull _veh  ) then {
     if (damage _veh >= 0.01) exitWith {
         _text = format[localize "STR_SYS_601_1", _text, round((damage _veh) *100), "%"];
         if ( damage _veh >=  __NO_TELEPORT_ON_DAMAGE__ ) exitWith { _sound = ["down","disabled"] call XfRandomArrayVal;};
-        if ( damage _veh >=  (__NO_TELEPORT_ON_DAMAGE__ / 5) ) exitWith { _sound = ["damage","damaging"] call XfRandomArrayVal;};
+        if ( damage _veh >=  (__NO_TELEPORT_ON_DAMAGE__ / 5) ) exitWith { _sound = ["damaged","damaging"] call XfRandomArrayVal;};
         _sound = "warning";
     };
 };

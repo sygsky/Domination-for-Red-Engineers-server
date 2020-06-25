@@ -1,7 +1,7 @@
 /*
     x_missions/common\eventKilledAtSM.sqf
 	author: Sygsky
-	description: none
+	description: event on convoy vehicle killed. Tries to find player throwed this event and award him
 	returns: nothing
 
 	2.13 Killed
@@ -16,10 +16,10 @@
     Contains the unit itself in case of collisions.
 
     =================================================
-    Called when any convoy vehicles is killed. We have to find and count follow players:
-    a) killer. If it not  AI, he is counted
+    Called when any convoy vehicles is killed. We have to find and count follow situations (except case when isNull _unit):
+    a) killer is player on feet. If he is not AI, he is counted
     b) all players sitting in vehicle of killer (player or AI), are counted
-    b) any player near the killed event (radious hardcoded here in file) is counted
+    c) any player near the killed event (radious hardcoded here in file) is counted
 */
 
 if (!isServer) exitWith {};
@@ -27,13 +27,15 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __ACTION_RADIUS__ 100 // how far from killer event place player is counted as partisipant of this SideMission
+#define ACTION_RADIUS 250 // how far from "killed" event place player is counted as participant of this SideMission
 
-private ["_unit","_killer","_kill_veh","_plist","_add_to_list","_arr"];
+hint localize format["+++ eventKilledAtSM.sqf: _this = %1", _this];
+
+private ["_unit","_killer","_plist","_add_to_list","_arr"];
 
 _unit     = _this select 0;
+if (isNull _unit) exitWith {hint localize "*** eventKilledAtSM.sqf: _unit is NULL, can't process event..."};
 _killer   = _this select 1;
-_kill_veh = _objNull;
 _plist    = []; // list of found participaiting player
 
 //
@@ -47,13 +49,15 @@ _add_to_list = {
 
 // 1. count killer and all players in his vehicle
 if ( !(isNull _killer) ) then {
-    {
-        if ( isPlayer _x ) then { (name _x) call _add_to_list };
-    } forEach crew (vehicle _killer);
-    //hint localize format["+++ eventKilledAtSM.sqf: killer not is null %1, found %2", name _killer, count _plist];
+    if (_killer != _unit) then {
+        // killer is not itself
+        {
+            if ( isPlayer _x ) then { (name _x) call _add_to_list };
+        } forEach crew (vehicle _killer);
+    };
 };
-
-_arr = position _unit nearObjects ["AllVehicles", d_ranked_a select 12];
+_arr = getPos _unit;
+_arr = _arr nearObjects ["AllVehicles", ACTION_RADIUS];
 {
     {
         if ( isPlayer _x ) then { (name _x) call _add_to_list };

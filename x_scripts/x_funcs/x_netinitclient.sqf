@@ -20,7 +20,7 @@
 // 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
 // 3: _delay_between_messages is seconds number to sleep between multiple messages;
 // 4: _initial_delay is seconds before first message show;
-// 5: no_title_msg if true - no title shown, else shown if false or "" empty string;
+// 5: no_title_msg if true - no title shown, else shown if false or "" empty string, or scalar <= 0;
 // 6: sound_name is the name of the sound to play with first message show on 'say' command;
 //
 // msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
@@ -371,7 +371,7 @@ XHandleNetStartScriptClient = {
 		};
 		// last target town cleared, no more target remained !!!
 		case "target_clear": {
-			playSound "USSR"; // playSound "fanfare";
+			// playSound "USSR"; // playSound "fanfare"; // dont play as this sound also is heard from town flag
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2);
 			execVM "x_scripts\x_target_clear_client.sqf";
@@ -423,6 +423,7 @@ XHandleNetStartScriptClient = {
 		case "stop_sm": {
 			current_mission_text = localize "STR_SYS_121_2"; // "The enemy has fled! Forget about his sorties!"
 		    [ "msg_to_user", "*", [ [ "STR_SYS_121_1" ] ], 0, 2, false, "fanfare" ] call SYG_msgToUserParser; // The enemy escaped! ..."
+		    hint localize "+++ stop_sm == true. No more SM allowed";
 		};
 		#ifndef __TT__
 		case "new_jump_flag": {
@@ -830,7 +831,7 @@ XHandleNetStartScriptClient = {
 		    };
 		};
 
-		case "play_music": { // FIXME: is it called anywhere?
+		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
 		    switch (_this select 1) do
 		    {
 		        case "OFP";
@@ -930,6 +931,32 @@ XHandleNetStartScriptClient = {
             if ( (name player) in (_val) ) then { d_was_at_sm = true; playSound "good_news" };
         };
 
+        // response from server to confirm you request on illumination on base: [ "illum_over_base", _player_name]
+        case "illum_over_base" : {
+            if (name player == _this select 1) exitWith {
+            #ifdef __RANKED__
+                private ["_score","_rank_id"];
+                // inform player about his illumination and consume scores
+                #ifdef __SUPER_RANKING__
+                _rank_id = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
+                #else
+                _rank_id = player call XGetRankIndexFromScore; // rank index
+                #endif
+
+                _score = round((_rank_id max 1) call XGetScoreFromRank) / 10; // How costs the illumination above base, for Private as for Corporal
+                // "Over the base, a regular launch of flares began. Points taken: -%1"
+                [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
+                player addScore -_score;
+            #else
+                // "Over the base, a regular launch of flares began"
+                [ "msg_to_user", "",  [ ["STR_ILLUM_3_1" ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
+            #endif
+            };
+            // inform others about illumination start
+            // "%1 provided regular launch of flares over our base"
+            [ "msg_to_user", "",  [ [ "STR_ILLUM_3_0", _this select 1 ] ], 0, 2, false, "message_received" ] call SYG_msgToUserParser;
+        };
+
 /*
          // reveal vehicle (MHQ in main) to all players
         case "revealVehicle":
@@ -942,7 +969,7 @@ XHandleNetStartScriptClient = {
 
         default
         {
-            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
+            hint localize format["--- x_netinitclient.sqf: unknown command detected: %1", _this];
         };
 
 

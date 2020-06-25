@@ -12,6 +12,14 @@ if (!isServer) exitWith{};
     hint localize "+++ x_createnexttarget.sqf started +++";
 #endif
 
+private ["_current_target_pos","_current_target_radius","_emptyH","_dummy"];
+
+if (current_counter > 0) then {
+    // at last first town is already completed
+    _dummy = target_names select (maintargets_list select (current_counter - 1));
+    (_dummy select 1) call SYG_townScoresPrint; // print statistics on finished town
+};
+
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 private ["_time","_msg"];
 
@@ -38,8 +46,6 @@ if ( ((time - _time) > 60) ) then
     hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 ) true", current_counter, current_mission_counter];
 };
 #endif
-
-private ["_current_target_pos","_current_target_radius","_dummy","_emptyH"];
 
 current_target_index = maintargets_list select current_counter;
 
@@ -145,7 +151,7 @@ hint localize format["+++ x_createnexttarget.sqf (%1:%2)completed +++", _dummy s
         };
      } forEach _list;
 #ifdef __DEBUG__
-    hint localize format[ "x_createnexttarget.sqf: Bodies cleaned in %1: men %2 (alive %3, east %4, dead %5), holders %6(water %7)", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
+    hint localize format[ "+++ x_createnexttarget.sqf: Bodies cleaned in %1: men %2 (alive %3, east %4, dead %5), holders %6(water %7)", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
 #endif
      _list = nil;
      sleep 2.56;

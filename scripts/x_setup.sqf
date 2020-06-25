@@ -170,3 +170,9 @@
 
 // uncomment lower line to diable teleport on MHQ damaged more then designated in define
 #define __NO_TELEPORT_ON_DAMAGE__ 0.5 // MHQ damage limit to prevent its teleport functionality
+
+// uncomment to allow SCUD added on base. Needs addon gig_scud.pbo, else mission and client not start
+//#define __SCUD__
+
+// #385: uncomment to allow lock vehicles on recapture towns procedure
+//#define __LOCK_ON_RECAPTURE__

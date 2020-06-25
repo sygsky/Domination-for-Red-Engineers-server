@@ -15,7 +15,7 @@ private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_
 
 if (isNil "SYG_DA_NAMES") then // men allowed to load double ammunition on this service
 {
-    SYG_DA_NAMES = ["HE_MACTEP","Rokse [LT]"];
+    SYG_DA_NAMES = ["HE_MACTEP","Rokse [LT]","Виталий"];
 };
 #define PLAYER_CAN_LOAD_DOUBLE_AMMO ((isPlayer (driver _vehicle)) && ((name (driver _vehicle)) in SYG_DA_NAMES))
 
@@ -228,6 +228,7 @@ else
 {
     [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx from engineers!"
     player addScore 1;
+    playSound "good_news";
 };
 
 //+++++ Refuelling

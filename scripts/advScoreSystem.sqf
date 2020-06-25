@@ -5,7 +5,7 @@
 // Call this script on client computer only
 //
 
-if ( isServer && (!X_SPE) ) exitWith { hint localize "scripts/advScoreSystem.sqf can't be call on server"};
+if ( isServer && (!X_SPE) ) exitWith { hint localize "--- scripts/advScoreSystem.sqf can't be call on server"};
 
 #define SCORES_PER_LIFE 10
 #define LIFE_CHECKED_COUNT 4
@@ -36,7 +36,7 @@ SYG_bumpScores = {
         player addScore SYG_score_per_award;
         // todo: inform user about prize
         // reset internal data
-        SYG_scoreCount = 0;
+        SYG_scoreCount = ( SYG_scoreCount + _score_bump) - SYG_score_per_award;
         for "_i" from 0 to LIFE_CHECKED_COUNT - 1 do { SYG_scoreQueue set [_i, 0]; };
     }
     else

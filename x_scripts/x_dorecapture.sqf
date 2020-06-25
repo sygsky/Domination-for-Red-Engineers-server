@@ -30,7 +30,9 @@ _infcnt = 0; // infantry cnt
 	_grp = call SYG_createEnemyGroup;
 	_vecs = [(2 call XfRandomCeil),_posran,(_ulist select 2), (_ulist select 1),_grp,0,-1.111,true] call x_makevgroup;
 	_veccnt = _veccnt + (count _vecs);
+#ifdef __LOCK_ON_RECAPTURE__
 	{_x lock true} forEach _vecs;
+#endif
 	sleep 1.012;
 	_veclist = _vecs;
 	{

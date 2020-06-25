@@ -443,15 +443,12 @@ sm_bonus_vehicle_array = (
 "ACE_BMP2_D",       // 9
 "ACE_BMP2_K",       // 10
 
-//"ACE_BMD1",         // 11
-//"ACE_BMD1p",        // 12
-
-"ACE_T55_A",        // 11
-"ACE_T55_AM",       // 12
+"ACE_T55_A",        // 11 "ACE_BMD1",
+"ACE_T55_AM",       // 12 "ACE_BMD1p",
 
 "ACE_ZSU",          // 13 //"ACE_T62_M",
-"ACE_T62_MK",       // 14
-"ACE_T62_MV",       // 15
+"ACE_UAZ_AGS30",    // 14 "ACE_T62_MK",
+"ACE_BRDM2_SA9",    // 15 "ACE_T62_MV",
 
 "ACE_T64_B",        // 16
 "ACE_T64_BK",       // 17
@@ -461,12 +458,11 @@ sm_bonus_vehicle_array = (
 "ACE_T72_BK",       // 20
 
 "ACE_T80_B",        // 21
-//"ACE_T80_BK",       // 22
-"ACE_T80_BV",       // 22
+"ACE_T80_BV",       // 22 "ACE_T80_BK",
 "ACE_T80_BVK",      // 23
 "ACE_T80_U",        // 24
-"ACE_BMP2_K",       // 25
-"ACE_T90"           // 26
+"ACE_BMP2_K"//,       // 25
+//"ACE_T90"           // 26
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -554,7 +550,8 @@ mt_big_bonus_vehicle_array = [
 "ACE_Ka50_N", 	        // 1
 "ACE_Su30Mk_Kh29T",     // 2
 "ACE_Su30Mk_KAB500KR",  // 3
-"ACE_T90A"              // 4
+"ACE_T90",              // 4
+"ACE_T90A"              // 5
 ];
 
 mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
@@ -649,6 +646,7 @@ d_jumpflag_vec = ""; //+++ Sygsky: normal jump by request for Home and Yeti
 
 // Fixes the bug that tanks fly through the air or fall on their back
 // code from Hein Blds GDTModTracked addon, thanks Hein
+//+++ Sygsky: really this solution NOT help in any case!! I repalced it with some procedure based on "getout: event
 d_use_mod_tracked = true;
 
 // max distance from target where an arti operator can order an artillery strike
@@ -670,7 +668,7 @@ side_mission_winner = 0;
 resolved_targets = [];
 target_clear=false;
 all_sm_res = false;
-stop_sm = false; // is SM system is stopped (last town leberated) or not
+if (isNil "stop_sm") then { stop_sm = false  }; // is SM system is stopped (last town liberated) or not
 ammo_boxes = 0;
 the_end = false;
 bonus_number = -1;
@@ -772,7 +770,7 @@ x_default_revive_setpos = false;
 d_with_qg_anims = false;
 #endif
 
-// all lower objects are null if they are alive. If they are not null, corresponding ruins object stored in it
+// all lower objects are null if they are alive. If they are not null, corresponding ruins object located on the site of factory
 d_jet_service_fac = objNull;
 d_chopper_service_fac = objNull;
 d_wreck_repair_fac = objNull;
@@ -895,11 +893,14 @@ d_base_patrol_array =
 
 d_base_patrol_fires_array = 
 [
- [9624,10293,0],[10081,10261,0], // northe fires (slope to shore)
- [9084,10006,0], // west fire at a pit
- [9453,9868,0],  // main yard fire
- [9899,9697,0],	// east to yard fire
- [10231,9910,0] // nearest to Paraiso fire
+ [9624,10293,0],  // northern fires
+ [10081,10261,0], //   (slope to shore)
+ [9084,10006,0],  // west fire at a pit
+ [9453,9868,0],   // main yard fire
+ [9899,9697,0],	  // east to yard fire
+ [10231,9910,0],  // nearest to Paraiso fire
+ [10595,10033,0], // east to airfield
+ [9613,9351,0]    // southern fire (behind  barn)
 ];
 
 // Only for Kronsky patrol script (UPS)

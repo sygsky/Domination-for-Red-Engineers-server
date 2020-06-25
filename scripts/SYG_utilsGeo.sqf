@@ -817,18 +817,6 @@ SYG_distance2D = {
 	[argp(_pos1,0), argp(_pos1,1),0] distance [argp(_pos2,0),argp(_pos2,1),0]
 };
 
-// Old varian: _dist = [_p1,_p2] call SYG_distance2D;
-/*
-SYG_distance2D =
-{
-    _p1 = + arg(0);
-    _p2 = + arg(1);
-    _p1 set [Z_POS,0];
-    _p2 set [Z_POS,0];
-    _p1 distance _p2
-}
-*/
-
 //
 // Creates message with any object distance and direction according to the nearest location
 // Input: _msg = player call SYG_MsgOnPos;
@@ -922,7 +910,7 @@ SYG_distByCar = {
 };
 
 /*
- * Distance from 1 point to second by land. To make it distance by car multiply result by 1.4.
+ * Distance from 1st point to 2nd by land. To make it distance by car multiply result by 1.4.
 
   Calls:
         _dist = [player, FLAG_BASE] call SYG_distByCar;
@@ -934,6 +922,7 @@ SYG_distByCar = {
 SYG_geoDist = {
     if (typeName _this != "ARRAY") exitWith {-1};
     if (count _this != 2) exitWith{-1};
+    private ["_pos1","_pos2","_pn1","_pn2","_part1","_part2","_onSamePart"];
     _pos1 = arg(0);
     _pos2 = arg(1);
     if (typeName _pn1 == "OBJECT") then {_pos1 = getPos _pos1;};

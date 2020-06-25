@@ -84,7 +84,7 @@ _ctrl = _XD_display displayCtrl 11002;  // secondary mission text control
 _s = current_mission_text;
 
 //+++ Sygsky: added more info about hostages, officer, snipers etc
-if ((current_mission_text != localize "STR_SYS_120") && (current_mission_text != localize "STR_SYS_121") ) then
+if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm) ) then
 { 
 	call compile format ["_pos = markerPos ""XMISSIONM%1"";", current_mission_index + 1];
 	switch current_mission_index do

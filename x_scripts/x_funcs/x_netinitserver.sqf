@@ -1,3 +1,4 @@
+// Xeno, x_scripts\x_funcs\x_netinitserver.sqf, on server only
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 #include "global_vars.sqf"
@@ -9,7 +10,7 @@
 };
 
 SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron"];
-SYG_localZones = [            0,          0,        0,    -4,          +1,        +2,        +2,      +2,     +2,     +2,      +2,     +1];
+SYG_localZones = [            0,          0,        0,    -4,          0,        +1,        +1,      +1,     +1,     +1,      +1,     +1];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
@@ -139,7 +140,8 @@ XHandleNetStartScriptServer = {
 			        // and local time to help know real time through whole mission during being suspend/resume in virtual machines
 			        // TODO: надо как то 
                     SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
-                    hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",_timeOffset];
+                    hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",
+                        if (_timeOffset >= 0) then {format["+%1",_timeOffset ]} else {_timeOffset}];
 			    }
 			    else
 			    {
@@ -297,6 +299,8 @@ XHandleNetStartScriptServer = {
 			_this call GRU_procServerMsg;
 		};
         // ["syg_plants_restore", _player_name, _restore_center_pos, _restore_radious] call XSendNetStartScriptServer;
+/**
+        // REMOVED as non workable correctly in Arma-1. Vegetation can't be restored as no synchronization betweeen server and client about it.
         case "syg_plants_restore": // restore plants and fences
 		{
 		    hint localize format["+++ Server received msg: %1",_this];
@@ -304,6 +308,8 @@ XHandleNetStartScriptServer = {
             ["syg_plants_restored", arg(1), arg(2), arg(3), _score] call XSendNetStartScriptClient;
 		    hint localize format["+++ Server send msg: %1", ["syg_plants_restored", arg(1), arg(2), arg(3)]];
 		};
+*/
+/** Not used at all
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
 		    private ["_vehicle","_sound"];
@@ -315,6 +321,7 @@ XHandleNetStartScriptServer = {
 		    _this call XSendNetStartScriptClientAll; // resend to all clients
 //		    _vehicle say _sound; // do this on clients only
 		};
+*/
 		// ["GRU_event_scores",_score_id, name player] call XSendNetStartScriptServer;
 		case "GRU_event_scores":
 		{
@@ -368,12 +375,30 @@ XHandleNetStartScriptServer = {
 		    }
 		};
 
+        // request to run illum over base, params: [ "illum_over_base", _player_name]
+        case "illum_over_base" : {
+            // define object to be center of illumination zone (base flag)
+
+            // script will remove all found objects that are closer (in 2D dist) than 10 meters to these poins
+            [   _this select 1,
+            #ifndef __TT__
+                FLAG_BASE // [ flare lunching player name, central object of illumination zone]
+            #else
+                if (d_own_side == "WEST") then { WFLAG_BASE } else { RFLAG_BASE  }
+            #endif
+            ] execVM "scripts\baseillum\illumination_full.sqf"
+        };
+
+        // ["log2server", _player_name,"literal_message_not_STR_NNN"]...
+        case "log2server": {
+            hint localize format["+++ Log from ""%1"": %2", _this select 1, _this select 2];
+        };
 
 //========================================================================================================== END OF CASES
 
         default
         {
-            hint localize format["--- x_scripts\x_funcs/x_netinitserver.sqf: unknown command detected: %1", _this];
+            hint localize format["--- x_netinitserver.sqf: unknown command detected: %1", _this];
         };
 	}; // switch (_this select 0) do
 }; // XHandleNetStartScriptServer = {

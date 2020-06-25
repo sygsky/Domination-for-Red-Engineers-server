@@ -123,8 +123,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	if ( (isNil "d_player_stuff") || (time > _endtime) ) exitWith {
 		player_autokick_time = d_player_air_autokick;
 	};
-	if ( (d_player_stuff select 2) == name player ) exitWith
-	{
+	if ( (d_player_stuff select 2) == name player ) exitWith {
 		player_autokick_time = d_player_stuff select 0;
 		player addScore (d_player_stuff select 3);
 		// execute player rearm procedure
@@ -304,7 +303,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                             };
                         };
                         // try to rearm predefined players (Yeti, EngineerACE etc)
-                        _rearmed = false;
+                        _rearmed = true;
                         switch (toUpper (name player)) do
                         {
                             case "YETI":  // Yeti
@@ -312,16 +311,23 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 d_rebornmusic_index = 1; // no play death sound
                                 //SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                                 3000 call SYG_setViewDistance;
-                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; _rearmed = true; };
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
                             };
                             case "ENGINEERACE":  // EngineerACE
                             {
                                 // Viewdistance
                                 3500 call SYG_setViewDistance;
-                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf";  _rearmed = true; };
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf"; };
+                            };
+                            case "ROKSE [LT]" : // Rokse [LT]
+                            {
+                                // Viewdistance
+                                10000 call SYG_setViewDistance;
+                                if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf"; };
+
                             };
                             // TODO: add more personal setting here (as for "Yeti" done)
-                            default {}; // all other players are rearmed by standart
+                            default { _rearmed = false; }; // all other players are rearmed by standart
                         };
                         if (!_rearmed ) then {
                             [_p, _weapp] call SYG_armUnit;
@@ -370,17 +376,16 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
             [player, _equip] call SYG_rearmUnit;
         };
 #endif
-		hint localize format["+++ rearm: before player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
+//		hint localize format["+++ rearm: before player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
 		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toUpper (name player) == "YETI")  ) then
 		{
 		    player call SYG_addNVGoggles;
 		};
 		player call SYG_addBinocular;
-		hint localize format["+++ rearm: after player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
-    	d_player_stuff = nil;
+//		hint localize format["+++ rearm: after player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
+//    	d_player_stuff = nil;
 	}; // spawn
 	//__DEBUG_NET("x_setupplayer.sqf",d_player_stuff)
-	d_player_stuff = nil;
 };
 
 d_player_old_score = 0;
@@ -404,7 +409,7 @@ if (d_with_ace_map) then { "ACE_Map_Logic" createVehicleLocal [0,0,0]; };
 
 if ( count resolved_targets > 0) then
 {
-hint localize format["+++ count resolved_targets %1 +++", resolved_targets];
+    hint localize format["+++ count resolved_targets %1 +++", resolved_targets];
 #ifndef __TT__
     for "_i" from 0 to (count resolved_targets - 1) do {
         _res = resolved_targets select _i;
@@ -523,9 +528,9 @@ if (!mt_radio_down) then {
 
 // setDate date_str;
 
-#ifdef __DEBUG__
-hint localize format["x_setupplayer.sqf: time AFTER date setting %1", call SYG_nowTimeToStr];
-#endif
+//#ifdef __DEBUG__
+//hint localize format["x_setupplayer.sqf: time AFTER date setting %1", call SYG_nowTimeToStr];
+//#endif
 
 //Cloudcover descriptions will depend on cloud texture addon, but these are close enough for practical purposes.
 if (fRainLess < 0.025) then {clouds1 = localize "STR_WET_1"}; // "ясно"
@@ -758,7 +763,6 @@ d_chop_all = d_chop_lift_list + d_chop_wreck_lift_list  + d_chop_normal_list;
 #ifndef __TT__
 for "_xx" from 1 to 2 do { // 'Menu MHQ'
 	call compile format ["
-	    hint localize format['+++ КШМ addAction/addEventHandler/addPublicVariableEventHandler to %1',MMR%1];
 		if (!(isNil 'MRR%1')) then {
 			if (d_own_side == 'EAST') then { MRR%1 call SYG_reammoMHQ;};
 			MRR%1 addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
@@ -766,7 +770,6 @@ for "_xx" from 1 to 2 do { // 'Menu MHQ'
 			MRR%1 addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
 		};
 		'MRR%1' addPublicVariableEventHandler {
-		    hint localize format['+++ КШМ addPublicVariableEventHandler executed on %1',MMR%1];
 			(_this select 1) addAction [localize 'STR_SYS_79_2','x_scripts\x_vecdialog.sqf',[],-1,false];
 			(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checkdriver.sqf'}];
 			(_this select 1) addEventHandler ['getout', {_this execVM 'x_scripts\x_checkdriverout.sqf'}];
@@ -1679,7 +1682,7 @@ if (d_player_air_autokick > 0) then {
 	private ["_oldscore","_newscore"];
 	_oldscore = 0;
 	while {true} do {
-		sleep 3 + random 3;
+		sleep (3 + random 3);
 		_newscore = score player;
 		if (_oldscore != _newscore) then {
 			["d_ad_sc", name player, _newscore] call XSendNetStartScriptServer;
@@ -1799,6 +1802,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 			_comp addAction [ localize (call SYG_getGRUCompActionTextId), call SYG_getGRUCompScript, []];
 			_comp setVariable [COMPUTER_ACTION_ID_NAME,true];
 			//hint localize format["x_setupplayer.sqf: %1. Action added to GRU PC", call SYG_nowTimeToStr];
+    		_comp addAction [localize "STR_COMP_ILLUM", "scripts\baseillum\illum_start.sqf"];
 		}
 #ifdef __DEBUG__
 		else
@@ -1854,7 +1858,7 @@ player call SYG_handlePlayerDammage; // handle hit events
             hint localize format["--- Error: variable ""%1"" not found/not alive", str(_x)];
         };
     }   forEach _common_boxes;
-    hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
+//    hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
 #ifdef __ACE__
     _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
     _personal_boxes = nearestObjects [depot, _personal_boxes, 20]  - _common_boxes;
@@ -1884,18 +1888,23 @@ player addAction["score -15","scripts\addScore.sqf",-15];
 #ifdef __DEBUG_ADD_VEHICLES__
 if (name player == "EngineerACE") then {
     // teleport player to the hills above Bagango valley
-    hint localize "+++ x_setuplayer,sqf: __DEBUG_ADD_VEHICLES__";
+    hint localize format["+++ x_setupplayer.sqf: EngineerACE (score %1) && __DEBUG_ADD_VEHICLES__", score player];
     //player setPos [14531,9930,0];
     //player setPos [9763, 11145, 0]; // near Rashidan dock
     // player setPos [16545,12875,0];
     // MRR1 setPos [9407,5260,0]; // move teleport to the positon at SM #40 (hostages in Tiberis)
-    if ( score player < 1500 ) then { player addScore (1500 - (score player) ) };
+    waitUntil { sleep 0.5; (!isNil "d_player_stuff")};
+    if ( (score player) < 1500 ) then { player addScore (1500 - (score player) ) };
+    hint localize format["+++ x_setupplayer.sqf: EngineerACE score %1", score player];
 };
+#else
+    hint localize "+++ x_setupplayer.sqf: __DEBUG_ADD_VEHICLES__ not defined";
 #endif
 
 #ifdef __SCUD__
 if (name player == "HE_MACTEP") then {
-    hint localize "+++ x_setuplayer,sqf: __SCUD__";
+    hint localize "+++ x_setupplayer.sqf: __SCUD__";
+    waitUntil { sleep 0.5;(!isNil "	d_player_stuff")};
     if ( score player < 1000 ) then { player addScore (1000 - (score player) ) };
 };
 #endif

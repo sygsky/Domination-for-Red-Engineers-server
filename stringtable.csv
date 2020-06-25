@@ -101,7 +101,7 @@ STR_SYS_20,"Select respawn place","Wahl eines Revival-Ortes","Выбор мес�
 STR_SYS_21,"MHQ %1 gets transported by airlift...","MHQ %1 wird per Luftbrücke transportiert...","КШМ %1 в воздухе..."
 STR_SYS_22,"MHQ %1 currently driving...","MHQ %1 in Bewegung ...","КШМ %1 в движении..."
 
-STR_SYS_23,"1 has been destroyed and is queued for recovery","%1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange","%1 уничтожен(а), и поставлена в очередь на на восстановление"
+STR_SYS_23,"%1 has been destroyed and is queued for recovery","%1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange","%1 уничтожен(а), и поставлена в очередь на восстановление"
 
 STR_SYS_25,"MHQ %1 is in water...","MHQ %1 ist im Wasser...","КШМ %1 сейчас в воде..."
 STR_SYS_26,"Teleport on MHQ %1 is faulty (%2%3)...","Der TELEPORT auf MHQ %1 ist defekt (%2%3)...","Телепорт на КШМ %1 неисправен (%2%3)..."
@@ -117,7 +117,7 @@ STR_SYS_34,"Teleport","Teleport","Телепорт"
 STR_SYS_35,"Lift vehicle","Fahrzeug anheben","Поднять технику"
 STR_SYS_36,"Drop vehicle","Drop-fahrzeug","Сбросить технику"
 STR_SYS_37,"Vehicle (%1) is lifted...","Fahrzeug (%1) mit Hubschrauber gehoben ...","Техника (%1) поднята вертолётом..."
-STR_SYS_38,"Overwhelming vehicle (%1)...","Sehr schwere Maschine (%1)...","Техника неподъёмна (%1)..."
+STR_SYS_38,"Overwhelming vehicle (%1)...","Sehr schwere Maschine (%1)...","Техника неподъёмно тяжела (%1)..."
 STR_SYS_38_1,"The vehicle (%1) not in restore list...","Wir stellen solche Fahrzeuge nicht wieder her (%1)...","Такую технику (%1) нет указаний восстанавливать, обратитесь к руководству операцией..."
 STR_SYS_38_2,"This vehicle (%1) is too deep (%2 m.), we will not get it, alas...","Dieses Fahrzeug (%1) ist zu tief (%2 M.), wir werden es leider nicht bekommen...","Эта техника (%1) слишком глубоко (%2 м.), не достанем, увы..."
 STR_SYS_39,"Vehicle was dropped...","Fahrzeug ist gelöscht...","Техника сброшена..."
@@ -269,7 +269,7 @@ STR_SYS_136,"The service is cancelled...","Service abgebrochen...","Обслуж
 
 STR_SYS_137,"Added points for maintenance: +%1 ...","Addierte Punkte für die Bedienung der Technik: %1 ...","Добавлено очков за обслуживание техники: +%1 ..."
 STR_SYS_137_1,"Scores spent for maintenance: %1 ...","Abgezogen Punkte für die Pflege: %1 ...","Вычтено очков за обслуживание техники: %1 ..."
-STR_SYS_137_2,"Maintenance scores (+%1) are reallocated from you to the Engineering Fund (=%2)","Wartungs-scores (+%1) ist reserviert, um engineering-Fonds (=%2)","Ваши очки за обслуживание техники (+%1) направлены в инженерный фонд (=%2)"
+STR_SYS_137_2,"Maintenance scores (+%1) are reallocated from you to the Engineering Fund (-%2)","Wartungs-scores (+%1) ist reserviert, um engineering-Fonds (-%2)","Ваши очки за обслуживание техники (+%1) направлены в инженерный фонд (-%2)"
 STR_SYS_137_3,"Engineering Fund scores: available %1, required for repair of building %2","Die engineering-Fonds Punkten: er hat eine %1, erforderlich für die Reparatur von Gebäuden %2","Очки в инженерном фонде: в наличии %1, требуется для ремонта здания %2"
 STR_SYS_137_4,"The Engineering Fund's expenses for restoration of service %1 scores, %2 will remain","Die Aufwendungen des Engineering-Fonds für die Wiederherstellung von service %1 Punkte, %2 bleiben","Затраты инженерного фонда на восстановление сервиса %1, останется %2"
 STR_SYS_137_5,"The Engineering Fund","Die Technischen Mittel","Инженерный фонд"
@@ -371,7 +371,7 @@ STR_SM_045,"The job is done! The Bank building was destroyed.","Der job ist geta
 STR_SM_46,"The plant near Paraiso enemy started the production of ball bearings. Destroy the two main buildings to stop production","Auf der Anlage in der Nähe von Paraiso der Feind begann mit der Produktion von Kugellagern. Zerstören die beiden wichtigsten Gebäude, die Produktion zu stoppen","На заводе вблизи Paraiso враг наладил производство шарикоподшипников. Уничтожьте два главных здания для остановки производства"
 STR_SM_046,"The job is done! All the buildings are destroyed.","Der job ist getan! Alle Gebäude sind zerstört.","Задание выполнено! Все здания уничтожены."
 
-STR_SM_47,"Near Somato operates a munitions factory. Destroy the warehouse and the pipe, to stop production.","In der Nähe von Somato betreibt eine Munitionsfabrik. Zerstören Sie die Lager und die Leitung, die Produktion zu stoppen.","Возле Somato действует завод по производству боеприпасов. Уничтожьте склад и трубу, для полной остановки производства."
+STR_SM_47,"Near Somato operates a munitions factory. Destroy the warehouse(in the hangar) and the pipe, to stop production.","In der Nähe von Somato betreibt eine Munitionsfabrik. Zerstören Sie die Lager(im Hangar) und die Leitung, die Produktion zu stoppen.","Возле Somato действует завод по производству боеприпасов. Уничтожьте склад(в ангаре) и трубу, для полной остановки производства."
 STR_SM_047,"Great job! Plant operations have ceased.","Great job! Pflanze Operationen aufgehört haben.","Задание выполнено! Работа завода остановлена."
 
 STR_SM_49,"In Search of the captain Grant. The enemy has a small outpost in a valley near Benoma. Their commander captain Grant decided to switch sides and talk about the plans of the enemy. Bring him back to the flag at your base to get some vital informations.","Auf der Suche nach dem Kapitän Grant. Der Feind hat einen kleinen Außenposten in einem Tal in der Nähe von Benoma. Ihr Kommandant Kapitän Grant beschlossen, die Seiten zu wechseln und sprechen über die Pläne des Feindes. Bringen Sie ihn zurück, um die Flagge zu Ihrer Basis zu erhalten einige wichtige Informationen.","Враг разместил недалеко от н.п. Benoma небольшой аванпост. Его командир, капитан Грант, хочет перейти на нашу сторону, рассказав о происках ФРС на острове. Доставьте его на базу! (Завершить миссию может только игрок в роли спасателя или лидер группы)."
@@ -382,7 +382,7 @@ STR_SM_050,"Good job. All artillery guns are down. No artillery observers will a
 
 STR_SM_55,"An enemy officer is on a walk in the forest Selva de Caza. This is a good chance to arrest him and bring him to your base (only a rescue operator or group leader can do that). Note: he can be found at 50 meters of center point! Beware of local AA!","Einer der Offiziere ging Pilze im Wald Selva de Caza. Ihre Aufgabe abzunehmen Pilze, die Verhaftung Offizier und liefern es an der Basis. (Eine Mission zu erfüllen, kann nur der Spieler in die Rolle der Retter). Hinweis: er kann gefunden werden, an 50 Metern der Mittelpunkt! Hüten Sie sich vor der lokalen AA!","Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. Внимание! Офицер может находиться на расстоянии 50 метров от центра района, а местные трапперы на хребте неподалёку были обстреляны из зенитной установки! (Завершить миссию может только игрок в роли спасателя или лидер группы)"
 
-STR_SM_TELEPORT_1,"You realized that teleportation didn’t work with some of your team members (%1)","Sie haben festgestellt, dass die Teleportation bei einigen Mitgliedern Ihres Teams nicht funktioniert (% 1)","Вы поняли, что телепорт не сработал для некоторых членов отряда (%1)"
+STR_SM_TELEPORT_1,"You realized that teleportation didn’t work with some of your team members (%1)","Sie haben festgestellt, dass die Teleportation bei einigen Mitgliedern Ihres Teams nicht funktioniert (%1)","Вы поняли, что телепорт не сработал для некоторых членов отряда (%1)"
 
 STR_SYS_160,"Select Viewdistance","Sichtweite","Дист. обзора"
 STR_SYS_161,"Click on the number to change the VD","Wählen Sie aus der Liste","Выберите из списка"
@@ -775,7 +775,7 @@ STR_SYS_1005,"Generalissimo","Generalissimus","Генералиссимус"
 STR_SYS_1100,"%1 has been cleared!!!","%1 wurde gelöscht!!!","Н.п. %1 освобождён!!!"
 STR_SYS_1100_1,"Last settlement %1 has been cleared!!!","Letzte Siedlung %1 geräumt hat!!!","Последний из захваченных н.п., %1, освобождён!!!"
 STR_SYS_1101,"Waiting for new orders...","Warten auf neue Aufträge...","Ожидайте дальнейших распоряжений..."
-STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city!","Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!","Враг покидает остров. Вам остаётся только зачистить последний оккупированный город!"
+STR_SYS_1101_1,"The enemy has finally fled. You just have to clean up the last occupied city and finish last SM!","Der Feind ist endlich geflohen. Sie müssen nur die Letzte besetzte Stadt Aufräumen und Letzte SM beenden!","Враг покидает остров. Остаётся очистить оккупированный город и завершить последнюю доп. миссию!"
 STR_SYS_1102,"For the liberation of the settlement your group gets %1%2 !","Für die Befreiung der Siedlung bekommt Ihre Gruppe %1%2 !","За освобождение города ваша группа получает %1%2 !"
 STR_SYS_1102_1,"points ( %1 ) and ","Punkte ( %1 ) und ","очки ( %1 ) и "
 
@@ -823,6 +823,7 @@ STR_SYS_1140,Viewdistance set to: %1,Viewdistance: %1,Установлена д�
 
 STR_SYS_1145,The guerrillas said some of the changes in the number of patrols,Die Partisanen bemerkten einige änderungen in der Zahl der Patrouillen,Партизаны отметили изменение в числе патрулей
 STR_SYS_1146,"GRU reports that the enemy began patrolling the island with armored forces","GRU berichten, dass der Feind begann patrouillieren die Insel mit gepanzerten Kräften","ГРУ сообщает, что враг начал патрулирование острова бронегруппами"
+STR_SYS_1147,"The GRU reports that the enemy abandoned his plans to patrol the island! This is our victory!","Die GRU berichtet, dass der Feind seine Pläne, die Insel zu patrouillieren, aufgegeben hat! Dies ist unser Sieg!","ГРУ сообщает, что враг отказался от патрулирования острова! Это - наша победа!"
 
 //STR_SYS_1150,Restore plants/fences,Wiederherstellen Pflanzen/Zäune,Восст. растит./заборов
 
@@ -835,12 +836,12 @@ STR_SYS_1160,"T'was a spotter (+%1)!","Es war ein spotter (+%1)!","Это был
 
 STR_SYS_1170,You were killed by the AI of %1,Sie wurden getötet durch die KI von %1,Вы были убиты подчинённым %1
 STR_SYS_1171,Recruit Barracks,Einberufungsstelle,Призывной пункт
-STR_SYS_1172,You are currently not a group leader, no AI available. Create a new group,Sie sind derzeit nicht ein Gruppenleiter, keine KI vorhanden. Erstellen Sie eine neue Gruppe,Только лидер группы может призывать солдат
+STR_SYS_1172,"You are currently not a group leader, no AI available. Create a new group","Sie sind derzeit nicht ein Gruppenleiter, keine KI vorhanden. Erstellen Sie eine neue Gruppe","Только лидер группы может призывать солдат"
 STR_SYS_1173,"You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank...","Du hast bereits %1 KI-Soldaten unter Ihrer Kontrolle, ist es nicht möglich zu rekrutieren, die mit Ihren aktuellen Rang...","У вас в подчинении уже %1 ИИ и это максимум для вашего звания"
 
 STR_SYS_1174,"You current rank is %1. You need to be %2 to recruit soldier[s]!","Sie Aktueller rank ist %1. Sie müssen %2 zu rekrutieren Soldat[en]!","Ваш ранг %1. Минимальное звание, дающее право призыва - %2"
 STR_SYS_1174_1,"Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4. A pilot is always twice as expensive!","Wehrpflichtige: Sie haben %1 im Wehrdienst %2. Der Wehrpflichtige kostet -%3%4. Ein Pilot ist immer doppelt so teuer!","Призывники:  у Вас %1, в военкомате %2. Призывник обойдётся в -%3%4. Пилот всегда в два раза дороже!"
-STR_SYS_1174_2,". After which you can be demoted to '%1', as pilots cost twice as expensive!",". Danach können Sie auf '% 1' herabgestuft werden, da Piloten doppelt so teuer sind!",". После чего можете быть разжалованы до звания '%1', т.к. пилоты в два раза дороже"
+STR_SYS_1174_2,". After which you can be demoted to '%1', as pilots cost twice as expensive!",". Danach können Sie auf '%1' herabgestuft werden, da Piloten doppelt so teuer sind!",". После чего можете быть разжалованы до звания '%1', т.к. пилоты в два раза дороже"
 STR_SYS_1174_3,". Next AI will cost you -%1 (%2 if pilot)",". Die nächste KI kostet dich -%1 (%2 wenn Pilot)",". Следующий призывник обойдётся в -%1 (-%2 если пилот)!"
 
 STR_SYS_1175,"You can't recruit an AI soldier, costs %2 points, your current scores (%1) and rank will drop below %32!","Das kannst du nicht rekrutieren ein KI-Soldat, Kosten %2 Punkte, Ihre aktuelle Punktzahl (%1), Ihren Rang fallen Sie unter %3!","Вы не можете призвать ИИ (стоимость %2, а у вас только %1!), звание упадёт ниже '%3'"
@@ -872,7 +873,7 @@ STR_SYS_1204_4,"Points an engineer gets for servicing other: ","Punkte, die ein 
 STR_SYS_1204_5,"Points an engineer needs to rebuild the support buildings at base: ","Punkte, die ein Ingenieur braucht, um die stützgebäude an der Basis wieder aufzubauen: ","Очков списывается с инженера за ремонт сервисов на базе: "
 
 STR_SYS_1205,"Points an artillery operator needs for a strike: ","Punkte, die ein Artillerie-operator für einen Streik braucht: ","Очков списывается за вызов одного артиллерийского залпа: "
-STR_SYS_1206,"Points needed to recuruit one AI soldier: ","Punkte benötigt, um einen KI-Soldaten recuruit: ","Очков за призыв одного АИ:"
+STR_SYS_1206,"Points needed to recruit first AI soldier: ","Punkte benötigt, um erste KI-Soldaten zu rekrutieren: ","Очков за призыв первого АИ:"
 STR_SYS_1207,"Points needed to call in an air taxi: ","Punkte benötigt, um in einem Lufttaxi zu rufen: ","Очков за вызов воздушного такси: "
 
 STR_SYS_1208,"Points needed for AAHALO parajump: ","Punkte für AAHALO parajump benötigt: ","Очков необходимо для десантирования с базы: "
@@ -888,6 +889,8 @@ STR_SYS_1216,"Air drop radius (0 = exact position): ","Lufttropfenradius (0 = ge
 STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / Auftanken / Reparieren: ","Время цикла перезарядки/заправки/ремонта: "
 
 STR_SYS_1220,"The enemy aircraft carrier got out, along with the paratroopers!","Der feindliche Flugzeugträger stieg zusammen mit den Fallschirmjägern aus!","Вражеский авианосец убрался, вместе с десантниками!"
+
+STR_SYS_1230,"H U R R A H!","H U R R A!","У Р А !"
 
 STR_SYS_MAINBOX,"Your personal equipment box. No one but You can use it","Deine persönliche Waffenkiste. Niemand, aber Sie können es verwenden","Ваш личный ящик со снаряжением. Никто, кроме Вас, не может его использовать"
 STR_SYS_GRUBOX," The GRU's public weapon box. Keep weapons that are not used on secret missions here","Die öffentliche Waffenkiste der GRU. Bewahren Sie hier Waffen auf, die nicht für geheime Missionen verwendet werden","Общедоступный оружейный ящик ГРУ. Храните здесь оружие, не используемое на секретных заданиях"
@@ -918,12 +921,12 @@ STR_AI_8,"Dismiss AI","Entlassen KI","Демобилизовать всех"
 STR_AI_8_1,"Verify recruitment","Rekrutierung überprüfen","Проверить призыв"
 
 STR_AI_9,"All AI soldiers dismissed (%1) !!! Points returned %2%3","Alle KI-Soldaten entlassen (%1) !!! Punkte returned %2%3","Все местные бойцы демобилизованы (%1) !!! Возвращено очков: %2%3"
-STR_AI_9_1,". Take care of your soldiers better (injured% 1)!",". Pass besser auf deine Soldaten auf (Verletzte% 1)!",". Заботьтесь  о своих солдатах лучше (ранен[ы] %1)!"
+STR_AI_9_1,". Take care of your soldiers better (injured%1)!",". Pass besser auf deine Soldaten auf (Verletzte%1)!",". Заботьтесь  о своих солдатах лучше (ранен[ы] %1)!"
 STR_AI_9_2,"You have no recruits!","Du hast keine Rekruten!","У Вас нет призывников!"
 
 STR_AI_10,"This is a barracks, a place to call AI for military service. Only the rescue ranger can use it!","Das ist eine Kaserne, einen Ort zu nennen, AI für den Militärdienst. Nur die rescue ranger, der es tun kann!","Это - военкомат. Призывать в нём местных бойцов может [пока] только артиллерист-спасатель ГРУ"
 STR_AI_11,"Points for one militia: -%1. Refund of half - upon demobilization","Punkte für eine Miliz: -%1. Rückerstattung der Hälfte - bei Demobilisierung","Затраты за одного ополченца: -%1. Возврат половины - после его демобилизации"
-STR_AI_11_PILOT,"A local glider club pilot will cost twice as much: - %1! Refund of half - after demobilization in full health","Ein lokaler Segelflugklubpilot kostet doppelt so viel: -% 1! Rückerstattung der Hälfte - nach Demobilisierung bei voller Gesundheit","Пилот местного планерного клуба обойдётся в два раза выше: -%1! Возврат половины - после демобилизации в полном здравии"
+STR_AI_11_PILOT,"A local glider club pilot will cost twice as much: - %1! Refund of half - after demobilization in full health","Ein lokaler Segelflugklubpilot kostet doppelt so viel: -%1! Rückerstattung der Hälfte - nach Demobilisierung bei voller Gesundheit","Пилот местного планерного клуба обойдётся в два раза выше: -%1! Возврат половины - после демобилизации в полном здравии"
 
 STR_AI_12_NUM,6,6,6
 STR_AI_12_0,"Chief! I'm afraid to go with You!","Chef! Ich habe Angst, mit Ihnen zu Fliegen!","Шеф! Опасаюсь лететь с Вами!"
@@ -942,7 +945,14 @@ STR_AI_13_4,"Commander! Do you know how to fly?","Commander! Kannst du selbst Fl
 
 STR_AI_14,"Commander! Let's wait at least %1 sec. for decency","Commander! Warten wir mindestens %1 Sek. für Anstand","Командир! Давайте подождём %1 сек... для приличия"
 
-//HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
+STR_ILLUM,"Illumination on the base for this night is already running (%1). Try again next night","Die Beleuchtung an der Basis für diese Nacht läuft bereits (%1). Versuchen Sie es noch einmal nach der Nacht","Освещение базы уже запушено ""%1"", попытайтесь ещё раз после ночи"
+STR_ILLUM_1,"You don't have enough points. Required, with your rank, %1","Du hast nicht genug Punkte. Erforderlich, mit Ihrem Rang, %1","У Вас не хватает очков. С вашим званием требуется %1."
+STR_ILLUM_2,"Come again at night (after message). Costs in scores %1. Points of launching flares - the air base operational radio towers","Kommen Sie wieder in der Nacht (nach Nachricht). Kosten in Partituren %1. Punkte der flares starten - die air base operational radio towers","Приходите ночью (будет сообщение). Затраты в очках %1. Точки запуска - радиобашни базы"
+STR_ILLUM_2_0,"Come again at night (after message)","Komm nachts wieder (nach Nachricht)","Приходите ночью (будет сообщение)"
+STR_ILLUM_3,"Over the base, a regular launch of flares began. Points taken: -%1","Über der Basis begann ein regelmäßiger Start von Fackeln. Erhaltene Punkte: -%1","Над базой начат регулярный запуск сигнальных ракет. Снято очков: -%1"
+STR_ILLUM_3_1,"Over the base, a regular launch of flares began","Über der Basis begann ein regelmäßiger Start von Fackeln","Над базой начат регулярный запуск сигнальных ракет"
+STR_ILLUM_3_0,"%1 provided regular launch of flares over our base","%1 lieferte einen regelmäßigen Abschuss von Signalraketen über unserer Basis","%1 обеспечил регулярный запуск сигнальных ракет над нашей базой"
+STR_ILLUM_4,"Flares spent on the base illumination at night: %1 PC.","Nachts wurden Beleuchtungsraketen ausgegeben, um die Basis zu beleuchten: %1 Stk.","На подсветку базы потрачены осветительные ракеты: %1 шт."
 
 STR_PATROL_TYPE_HP,"heavy patrol","schwere Patrouille","тяжёлый патруль"
 STR_PATROL_TYPE_AP,"АА patrol","AA Patrouille","патруль ПВО"
@@ -1049,8 +1059,8 @@ STR_FLAG_7,"(Create %1)","(Anlegen %1)","(Создать %1)"
 
 //
 // In rumors info string prepared for use in format statement:
-// %1 stands for random main target name;
-// %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc);
+// %1 stands for random main target name
+// %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc)
 // %3 stands for nearest settlement
 //
 STR_RUM_NUM,79,79,79
@@ -1066,12 +1076,12 @@ STR_RUM_7,"Hunters claim that at night someone gives signals from the forest abo
 STR_RUM_8,"At the introdution because of overload you can seem non-existent objects","Bei der Vorstellung wegen überlastung können Sie scheinen nicht vorhandene Objekte","При выброске из-за перегрузок могут чудиться несуществующие предметы"
 STR_RUM_9,"GRU could know about next attack plan","GRU, wissen konnte, über den nächsten Angriff planen","ГРУ-шник может знать о многих планах врага"
 STR_RUM_10,"Missiles to enemy RPGs are different","Die Rakete zu den feindlichen RPGs sind unterschiedlich","Ракеты к вражеским РПГ бывают разные"
-STR_RUM_11,"The enemies could to build an air base on Rahmadi","Die Feinde bauen wollen Avia-Basis auf den Рахмади","Враги могут построить на Рахмади авиа-базу"
+STR_RUM_11,"The enemies could to build an air base on Rahmadi","Die Feinde bauen wollen Avia-Basis auf den Рахмади","Враги могут построить на Рахмади авиа-базу, особенно если дело идёт к концу"
 STR_RUM_12,"GRU agent will tell you something about enemy Isle patrolling","Späher erzählt etwas und zu patrouillieren","ГРУшник расскажет что-то и о патрулях"
 STR_RUM_13,"Armored patrols appear after 20-25 minutes after the start of the mission and reach its maximum strength in about 40 minutes","Rüstung Patrouillen erscheinen nach 5-7 Minuten nach Beginn der Mission und erreichen Ihre maximale Zahl der in etwa 40 Minuten","Бронепатрули появляются через 20-25 минут после начала миссии и достигают максимальной численности примерно на 40-й минуте"
 STR_RUM_14,"They say Americans send Isle patrols to help nearly liberated Settlements","Sie sagen, die Amerikaner Patrouillen schicken befreit Settlements helfen","Говорят, американцы  посылают патрули на помощь осаждаемым городам"
 STR_RUM_15,"The Governor is armed with a good weapon","Der Gouverneur ist bewaffnet mit einer guten Waffe","Губернатор отлично вооружён"
-STR_RUM_16,"Artillery observers now are more dangerous. They will send smoke charges if find any alive friendly unit  near target point","Artillerie-Beobachter gefährlicher sein. Sie schicken Rauch Gebühren wenn finden lebendig Verbündete Einheit in der Nähe von Zielpunkt","Корректировщики стали ещё опаснее. Но толерастично пустят дымовые, если рядом с целью есть их люди"
+STR_RUM_16,"Artillery observers now are more dangerous. They will send smoke charges if find alive friendly unit  near target point","Artillerie-Beobachter gefährlicher sein. Sie schicken Rauch Gebühren wenn finden lebendig Verbündete Einheit in der Nähe von Zielpunkt","Корректировщики стали опаснее. Но толерастично пустят дымовые, если рядом с целью есть их люди"
 STR_RUM_17,"They say, that saw you near %3","Man sagt, jemand habe Sie bei %3","Говорят, у н.п. %3 видели вас"
 STR_RUM_18,"In %1 said that one out of twenty sabotages on airbase has some HK417 weapon","In %1 gesagt, dass man in zwanzig Saboteure auf die Datenbank haben irgendwelche HK417 Waffen","В %1 сказали, что примерно каждый двадцатый десантник имеет какую-либо винтовку НК417. А реже - нечто лучшее"
 STR_RUM_19,"Scientists claim that the migration of birds through Sahrani restored","Wissenschaftler behaupten, dass die Migration der Vögel durch Sahrani wieder","Учёные утверждают, что возобновилась миграция птиц через Сахрани"
@@ -1133,7 +1143,7 @@ STR_RUM_74,"Usually a strong wind blows over the ocean","Normalerweise weht ein 
 STR_RUM_75,"Rumors depend on the time of day and length of stay","Gerüchte hängen von der Tageszeit und der Dauer des Aufenthalts ab","Слухи меняются от времени дня и длительности пребывания"
 STR_RUM_76,"If MHQ is damaged by more than 0.5, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.5 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","При повреждении КШМ более 0.5 телепорт на нём не сработает. Всегда чините КШМ!"
 STR_RUM_77,"Points for taking a city are given within a radius of 500 meters from its center","Punkte für die Einnahme einer Stadt werden in einem Umkreis von 500 Metern um ihr Zentrum vergeben","Очки за взятие города даются в радиусе 500 метров от его центра"
-STR_RUM_78,"A sunken vehicle can be saved if it is no deeper than -15 meters","Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -15 Meter ist","Утонувшую боевую машину можно достать с глубины не менее -15 метров"
+STR_RUM_78,"A sunken vehicle can be saved if it is no deeper than -7 meters","Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -7 Meter ist","Утонувшую боевую машину можно достать с глубины не более -7 метров"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!","Х-м-м, похоже, партизаны уже действуют!"
@@ -1185,6 +1195,7 @@ STR_CAMP_TEAM_A_6,groom,Stallknecht,конюх
 
 //------------------------------------ COMPUTER info strings ------------------------------------
 STR_COMP_ENTER,"Login PC","Login PC","Вход в ПЭВМ"
+STR_COMP_ILLUM,"Night illumination of the base","Nachtbeleuchtung der Basis","Ночная подсветка базы"
 STR_COMP_0,"press any key to exit from screen","drücken Sie eine beliebige Taste","для выхода нажмите любую клавишу"
 STR_COMP_1,"After some hacking of GRU PC, you see:","Nach einigen Manipulationen mit dem PC GRU Sie sehen:","После некоторых манипуляций с ПЭВМ ГРУ вы видите:"
 STR_COMP_2,"Intelligence mission are not yet available, please be patient","Nachrichtendienstliche Aufgaben noch fehlt, geduldig zu sein","Разведывательные задания отсутствуют, наберитесь терпения"
@@ -1417,6 +1428,7 @@ STR_GRU_49,"Enemies have here a good trophy","Feinde haben hier eine gute Troph�
 STR_GRU_49_1,"The enemies here have a nice booty","Die Feinde haben eine schöne Beute","У врагов здесь можно разжиться несколькими трофеями"
 
 STR_GRU_50,"The guerrillas reported: enemy patrols noticed on the island, %1 PCs.","Die Guerilla berichtet: feindliche Patrouillen bemerkt, auf der Insel, %1 Stck.","Сопротивление информирует: на острове замечены патрули, %1 шт."
+STR_GRU_51,"The locals report that the patrols are not visible. But they may be wrong.","Gerüchten zufolge gibt es derzeit keine Militärpatrouillen, aber dies sind nur Gerüchte","Местные сообщают, что патрулей не видно. Но они могут и ошибаться"
 STR_GRU_52,"At the airbase air assault still have not yet been seen.","Auf der airbase desants noch noch nicht gesehen.","Десантов в р-не базы ещё не наблюдалось."
 
 STR_GRU_53,"GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1","GRU berichtet, dass das feindliche Flugzeug startete eine Träger-flight-Verfahren über %1","ГРУ сообщает, что на вражеском авианосце начали готовить к вылету какой-то %1"
@@ -1441,7 +1453,7 @@ STR_GRU_TASK_DESCR_0_INFO,"The partizans in %1 has collected information on enem
 
 STR_GRU_TASK_1,Close and exit,Schließen und beenden,Закрыть и уйти
 STR_GRU_TASK_2,Perform the task!,Führen Sie die Aufgabe!,Выполнить задание!
-STR_GRU_TASK_3,1. Shipping intelligence,1. Versand intelligence, Доставить развединформацию
+STR_GRU_TASK_3,1. Shipping intelligence,1. Versand intelligence,1. Доставить развединформацию
 STR_GRU_TASK_4,2. A covert operation behind enemy lines,2. Eine verdeckte operation hinter den feindlichen Linien,2. Секретная операция в тылу противника
 STR_GRU_TASK_5,3. The investigation on the island,3. Die Untersuchung wird auf der Insel,3. Поиск на территории острова
 

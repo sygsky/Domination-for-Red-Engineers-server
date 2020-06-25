@@ -83,20 +83,28 @@ if (client_target_counter < number_targets) then {
 
 	(format ["%1 %2", format[localize "STR_SYS_1100", _current_target_name], localize "STR_SYS_1101" ]) call XfHQChat; // "%1 has been cleared!!! Waiting for new orders..."
 } else {
+
+/**
+        if ( (count d_recapture_indices > 0) && (!stop_sm) ) then { _str = "STR_SYS_121_3_FULL" }
+        else {
+            if ( !stop_sm ) then { _str = "STR_SYS_121_3_SM" } else { _str = "STR_SYS_121_3_RECAPTURED"};
+        };
+
+*/
     hint localize "+++ last town is cleared ++=+";
-	_mt_str = format ["%1 %2",format[localize "STR_SYS_1100_1", _current_target_name], localize "STR_SYS_1101_1"]; // "Last settlement %1 has been cleared!!! The enemy has finally fled. You just have to clean up the last occupied city!"
-	
+    _mt_str = format ["%1 %2",format[localize "STR_SYS_1100_1", _current_target_name], localize "STR_SYS_1101_1"]; // "Last settlement %1 has been cleared!!!", ""The enemy has finally fled. You just have to clean up the last occupied city and finish last SM!"
+
 #ifndef __TT__
 	hint  composeText[
 		parseText("<t color='#f02b11ed' size='1'>" + _mt_str + "</t>"), lineBreak,lineBreak,
-		localize "STR_SYS_128" /* "Поздравления..." */
+		localize "STR_SYS_128" /* "Congratulations..." */
 	];
     if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then
     {
         player addScore (d_ranked_a select 9); // you get point only being in the town!
         playSound "good_news";
     };
-
+    titleText [localize "STR_SYS_1230" , "PLAIN"]; // "H U R R A H!"
 #endif
 #ifdef __TT__
 	_winner_string = "";

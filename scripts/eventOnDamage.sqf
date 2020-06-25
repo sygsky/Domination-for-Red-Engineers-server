@@ -99,7 +99,7 @@ if (alive _shooter) then {
 #ifdef __PRINT__
 	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to nearest enemy %2", typeOf _vec, typeOf _shooter];
 #endif
-    _vec doWatch _shooter; sleep 3.634;
+    _vec glanceAt _shooter; sleep 3.634;
 } else {
 #ifdef __PRINT__
 	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to random direction", typeOf _vec];

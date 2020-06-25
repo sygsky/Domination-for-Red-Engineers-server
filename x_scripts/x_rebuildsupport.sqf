@@ -35,7 +35,7 @@ if (!_is_engineer) then
     if ( SYG_engineering_fund < _addscore) exitWith  // to repair you need enough score in engineering fund
     {
         // not enough scores in fund
-        (format [localize "STR_SYS_137_3", (d_ranked_a select 20), SYG_engineering_fund]) call XfHQChat;
+        (format [localize "STR_SYS_137_3", SYG_engineering_fund, (d_ranked_a select 20)] ) call XfHQChat;
         _exit = true;
     };
     // enough scores in fund

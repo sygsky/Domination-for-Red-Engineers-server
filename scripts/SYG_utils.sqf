@@ -608,11 +608,7 @@ SYG_AIPriceByScore = {
         if (isPlayer _this) then {_this = score _this};
     };
     if (typeName _this != "SCALAR") exitWith {1000000};
-#ifdef __SUPER_RANKING__
     _rank_id = _this call XGetRankIndexFromScoreExt;
-#else
-    _rank_id = _this call XGetRankFromScore;
-#endif
     _rank_id call SYG_AIPriceByRankId
 };
 
@@ -629,11 +625,7 @@ SYG_AIPriceByRankId = {
 //    hint localize format["+++ %1 call SYG_AIPriceByRankId", _this];
     if (typeName _this == "OBJECT") then {
         if (isPlayer _this) then {
-#ifdef __SUPER_RANKING__
-            _this = (score _this)call XGetRankFromScoreExt;
-#else
             _this = (score _this)call XGetRankFromScore;
-#endif
         };
     } else {
         if (typeName _this == "STRING") then { // rank name used
@@ -663,6 +655,18 @@ SYG_AIPriceByRankString = {
     if (typeName _this != "STRING") exitWith {100000};
     _rank_id  = _this call XGetRankIndex;
     _rank_id call SYG_AIPriceByRankId
+};
+
+//
+// _arr = [1,2,3];
+// _add_arr = [4,5,6];
+// _arr = [_arr, _add] call SYG_addArrayInPlace; // [1,2,3,4,5,6] and _arr is the same object as before addition!!!
+//
+SYG_addArrayInPlace = {
+    private ["_arr"];
+    _arr = _this select 0;
+    { _arr set [ count _arr, _x ] } forEach (_this select 1);
+    _arr
 };
 
 if (true) exitWith {};
