@@ -443,15 +443,12 @@ sm_bonus_vehicle_array = (
 "ACE_BMP2_D",       // 9
 "ACE_BMP2_K",       // 10
 
-//"ACE_BMD1",         // 11
-//"ACE_BMD1p",        // 12
-
-"ACE_T55_A",        // 11
-"ACE_T55_AM",       // 12
+"ACE_T55_A",        // 11 "ACE_BMD1",
+"ACE_T55_AM",       // 12 "ACE_BMD1p",
 
 "ACE_ZSU",          // 13 //"ACE_T62_M",
-"ACE_T62_MK",       // 14
-"ACE_T62_MV",       // 15
+"ACE_UAZ_AGS30",    // 14 "ACE_T62_MK",
+"ACE_BRDM2_SA9",    // 15 "ACE_T62_MV",
 
 "ACE_T64_B",        // 16
 "ACE_T64_BK",       // 17
@@ -461,12 +458,11 @@ sm_bonus_vehicle_array = (
 "ACE_T72_BK",       // 20
 
 "ACE_T80_B",        // 21
-//"ACE_T80_BK",       // 22
-"ACE_T80_BV",       // 22
+"ACE_T80_BV",       // 22 "ACE_T80_BK",
 "ACE_T80_BVK",      // 23
 "ACE_T80_U",        // 24
-"ACE_BMP2_K",       // 25
-"ACE_T90"           // 26
+"ACE_BMP2_K"//,       // 25
+//"ACE_T90"           // 26
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -554,7 +550,8 @@ mt_big_bonus_vehicle_array = [
 "ACE_Ka50_N", 	        // 1
 "ACE_Su30Mk_Kh29T",     // 2
 "ACE_Su30Mk_KAB500KR",  // 3
-"ACE_T90A"              // 4
+"ACE_T90",              // 4
+"ACE_T90A"              // 5
 ];
 
 mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
