@@ -51,8 +51,7 @@ if (isServer) then {
 	[_sm_vehicle] join _newgroup;
 	
 	//+++ Sygsky: rearm with M14. Original primary weapon for him was M16A4
-	if (d_enemy_side == "WEST") then
-	{
+	if (d_enemy_side == "WEST") then {
 		sleep 0.5;
 		[_sm_vehicle,1.0,SYG_M14_WPN_SET_STD_OPTICS] call SYG_rearmM14;
 	};
@@ -70,11 +69,10 @@ if (isServer) then {
 	_leader = leader _newgroup;
 	_leader setRank "COLONEL";
 	_newgroup allowFleeing 0;
-	_newgroup setbehaviour "AWARE";
+	_newgroup setBehaviour "AWARE";
 	sleep 2.123;
 
-	if (d_enemy_side == "WEST") then
-	{
+	if (d_enemy_side == "WEST") then {
 		// as this group is near officer, rearm it with some special specops weapons
 		["specops", 1, "basic", 0, _poss, 80,true]  spawn 
 		{
@@ -86,8 +84,7 @@ if (isServer) then {
 #endif
 		};
 	}
-	else
-	{
+	else {
 		["specops", 1, "basic", 0, _poss, 80,true] spawn XCreateInf;
 	};
 	
@@ -138,8 +135,6 @@ if (isServer) then {
 	_grp = call SYG_createEnemyGroup;
 	{ //  forEach weapon group
 		{
-//			_wpn = _x select 0;
-//			_arr = _x select 1;
 			// call: [_grp, _wpntype, _unittype, _posarray, _delay] call _createStaticWeaponGroup;
 			[_grp, _x select 0, _utype, _x select 1, DELAY_BEFORE_NEXT_CREATION] call SYG_createStaticWeaponGroup;
 		} forEach _x;

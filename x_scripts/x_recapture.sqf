@@ -109,7 +109,7 @@ while {true} do {
 		// send to players
 		["recaptured",_recap_index,0] call XSendNetStartScriptClient;
 	};
-	if (current_counter > number_targets) exitWith {
+	if (current_counter >= number_targets) exitWith {
 	    hint localize "+++ x_recapture.sqf: stop recapture system as all target towns are liberated !!!";
 	};
 	sleep (1800 + random 600);

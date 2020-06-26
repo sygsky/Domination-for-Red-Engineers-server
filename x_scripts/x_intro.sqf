@@ -291,7 +291,7 @@ else
 _lobj = (
     ["LODy_test", "Barrels", "Land_kulna","misc01", "Land_helfenburk","FireLit",
     "Land_majak2","Land_zastavka_jih","Land_ryb_domek","Land_aut_zast","Land_telek1",
-    "Land_water_tank2","Land_R_Minaret","Land_vez","Land_strazni_vez"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
+    "Land_water_tank2","Land_R_Minaret","Land_vez","Land_strazni_vez","Platform"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
 sleep 0.1;
 _lobj  setVectorUp [0,0,1]; // make object be upright
 switch typeOf _lobj do

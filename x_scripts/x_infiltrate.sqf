@@ -315,7 +315,7 @@ while { true } do {
 	// additional delay for small player team < 5. If player number >=5 there is no additional delay
 	sleep ((600 + random 200) + (5-(5 min(call XPlayersNumber)))*1000);
 #endif	
-     if (current_counter > number_targets) exitWith {
+     if (current_counter >= number_targets) exitWith {
         [ "msg_to_user", "*", [ [ "STR_SYS_1220" ] ], 0, 2, false, "hound_chase" ] call  XSendNetStartScriptClient; // "The enemy aircraft carrier got out together with the paratroopers!"
 #ifdef __PRINT__
 	hint localize "*** x_infiltrate.sqf: EXIT infiltration loop as end of last town reached";

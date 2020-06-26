@@ -278,7 +278,7 @@ XHandleNetStartScriptServer = {
 			_arr2 = call SYG_lastPlayersGet;
 			if (((count _arr1) + (count _arr2)) > 0) then // if any towns/players are counted, inform user about them
 			{
-			    _str = [_arr1, ","] call SYG_joinArr;
+			    _str = [_arr1, ", "] call SYG_joinArr;
 			    _arr = ["STR_GRU_56",_str];
 			    _str = [_arr2,","] call SYG_joinArr;
                 _arr set [ count _arr, _str ];

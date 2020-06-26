@@ -888,7 +888,7 @@ STR_SYS_1215,"Weapons limited: ","Waffen limitiert: ","Ограничение в
 STR_SYS_1216,"Air drop radius (0 = exact position): ","Lufttropfenradius (0 = genaue Position):","Радиус сброса снабжения (0 = точная позиция): "
 STR_SYS_1217,"Reload/refuel/repair time factor: ","Faktor für das Nachladen / Auftanken / Reparieren: ","Время цикла перезарядки/заправки/ремонта: "
 
-STR_SYS_1220,"The enemy aircraft carrier got out, along with the paratroopers!","Der feindliche Flugzeugträger stieg zusammen mit den Fallschirmjägern aus!","Вражеский авианосец убрался, вместе с десантниками!"
+STR_SYS_1220,"GRU reports that an enemy aircraft carrier seems to have gotten away with the paratroopers!","Die GRU berichtet, dass ein feindlicher Flugzeugträger anscheinend mit den Fallschirmjägern davongekommen ist!","ГРУ сообщает, что вражеский авианосец, кажется, убрался восвояси, вместе с десантниками!"
 
 STR_SYS_1230,"H U R R A H!","H U R R A!","У Р А !"
 
@@ -953,6 +953,8 @@ STR_ILLUM_3,"Over the base, a regular launch of flares began. Points taken: -%1"
 STR_ILLUM_3_1,"Over the base, a regular launch of flares began","Über der Basis begann ein regelmäßiger Start von Fackeln","Над базой начат регулярный запуск сигнальных ракет"
 STR_ILLUM_3_0,"%1 provided regular launch of flares over our base","%1 lieferte einen regelmäßigen Abschuss von Signalraketen über unserer Basis","%1 обеспечил регулярный запуск сигнальных ракет над нашей базой"
 STR_ILLUM_4,"Flares spent on the base illumination at night: %1 PC.","Nachts wurden Beleuchtungsraketen ausgegeben, um die Basis zu beleuchten: %1 Stk.","На подсветку базы потрачены осветительные ракеты: %1 шт."
+
+// patrol types  : HEAVY(HP), AA(AP), FLOATING(FP), SPEED(SP), LIGHT(LP)
 
 STR_PATROL_TYPE_HP,"heavy patrol","schwere Patrouille","тяжёлый патруль"
 STR_PATROL_TYPE_AP,"АА patrol","AA Patrouille","патруль ПВО"
