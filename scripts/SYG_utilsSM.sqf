@@ -192,7 +192,7 @@ SYG_lastPlayersGet = {
 // [[_players],[_scores], _start_time, _main_target_count];
 // _players = ["player1",...,"playerN"]; // list of players participated in current town
 // _scores  = [1,...,N]; // scores of corresponding players
- //
+//
 SYG_townScores = [[], [], time,  current_mission_counter max 1];
 
 // Create internal arrays with currently online players at the start of the next town
@@ -245,7 +245,8 @@ SYG_townScoresPrint = {
     _arr  = SYG_townScores select 0;
     _arr1 = SYG_townScores select 1;
     hint localize "[";
-    hint localize format[ "++++++ Town ""%1"" #%2 (%3 SM done) players score report ++++++", _this, current_counter, current_mission_counter - (SYG_townScores select 3)];
+    _str = (call SYG_getServerDate) call SYG_dateToStr;
+    hint localize format[ "++++++ Town ""%1"" #%2 (%3 SM done) players score report at %4 ++++++", _this, current_counter, current_mission_counter - (SYG_townScores select 3), _str];
 
     _sum = 0;
     _time_diff = time - (SYG_townScores select 2);
