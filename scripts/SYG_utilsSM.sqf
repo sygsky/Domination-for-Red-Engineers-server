@@ -256,8 +256,10 @@ SYG_townScoresPrint = {
             _id   = _arr select _i;
             _item = d_player_array_misc select _id;
             _diff =  (_item select 3) - (_arr1 select _i); // new score minus old one
-            _sum  = _sum + _diff;
-            hint localize format[ "++++++ ""%1"": %2 (%3 per h.)", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff }, round(_diff  * 3600 / _time_diff)];
+            if (_diff != 0) then {
+                _sum  = _sum + _diff;
+                hint localize format[ "++++++ ""%1"": %2 (%3 per h.)", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff }, round(_diff  * 3600 / _time_diff)];
+            }
         };
     };
 //    hint localize format["+++ [time, SYG_townScores select 2] %1", [time, SYG_townScores select 2]];

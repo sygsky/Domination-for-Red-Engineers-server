@@ -322,22 +322,23 @@ XPlayerRank = {
                 // TODO: check if no players in the same group with the same or higher rank
                 _grp = group player;
                 _units = (units _grp) - [player]; // group units minus player itself
-                if( count _units > 0) then
-                {
+                if( count _units > 0) then {
                     hint localize format["+++ Ranking: grp %1, cnt %2", _grp, count units _grp];
                     _rankIndex = _score call XGetRankIndexFromScore;
                     _highest_ranked_player = objNull;
                     {
-                        if ( (isPlayer _x) &&  (( (score _x) call XGetRankIndexFromScore ) > _rankIndex) ) exitWith {_highest_ranked_player = _x;};
+                        if ( (alive _x) && (isPlayer _x) )  then {
+                            _xRankIndex = (score _x ) call XGetRankIndexFromScore;
+                            if ( _xRankIndex > _rankIndex ) then { _highest_ranked_player = _x; _rankIndex = _xRankIndex };
+                        };
                     } forEach _units;
-                    if ( isNull _highest_ranked_player  ) then
-                    {
+                    if ( isNull _highest_ranked_player  ) then {
                         // TODO: set player leader
-                        hint localize format["This player with score %1 (%2) has max rank in the group (count %3)", _score, _new_rank, count (units _grp)];
+                        hint localize format["+++ This player with score %1/rank %2 has max rank in the group (cnt %3)", _score, _new_rank, count (units _grp)];
                     }
                     else
                     {
-                        hint localize format["Player %1 has higher rank (%2) than you (%3)",
+                        hint localize format["+++ Player %1 has higher rank (%2) than you (%3)",
                         name _highest_ranked_player,
                         _highest_ranked_player call XGetRankFromScore,
                         _score call XGetRankFromScore];

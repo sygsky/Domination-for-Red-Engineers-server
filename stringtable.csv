@@ -128,7 +128,7 @@ STR_SYS_42,"Teleport/Parajump","Teleport/Parajump","Телепорт/Параш�
 
 STR_SYS_43,"You were demoted from the rank of %1 to %2! Alas, farewell to high rank in the Homeland...","Sie verbannt wurden in den Rang von %1 und %2! Ach, verzeihe, einen hohen Rang in der Heimat...","Вы разжалованы со звания %1 до %2! Прощай, высокая пенсия на Родине..."
 STR_SYS_44,"You were promoted in rank from %1 to %2, and be assigned to it in the Homeland!","Sie sind im Rang erhöht mit %1 bis %2, die zugewiesen wird, in der Heimat!","Вы повышены в звании с %1 до %2, с повышенной пенсией на Родине!"
-STR_SYS_45,"You have reached an incredible level! From the title %1 to the %2! It doesn't happen! Go home immediately! After all, the Motherland is in danger!!!","Sie erreichten unglaublichen Maß! Mit Rang %1 und %2! So gibt es nicht! Sofort nach Hause! Denn Heimat ist in Gefahr!!!","Вы достигли невероятного уровня! Со звания %1 до %2! Так не бывает! Немедленно домой! Ведь Родина в опасности!!!"
+STR_SYS_45,"You have reached an incredible level! From %1 to %2! It doesn't happen! Go home now! Because the Homeland is in danger!","Sie haben ein unglaubliches Niveau erreicht! Von %1 bis %2! Dies ist nicht der Fall! Gehen Sie sofort nach Hause! Denn das Vaterland ist in Gefahr!","Вы достигли невероятного уровня! Со звания %1 до %2! Так не бывает! Немедленно домой! Ведь Родина в опасности!!!"
 STR_SYS_46,"Your rank:","Ihr Titel:","Звание:"
 
 STR_SYS_50,"Combat Engineers","Militär-Ingenieure","Военные инженеры"
@@ -1356,7 +1356,7 @@ STR_SET_19,"Show chopper welcome message: ","Chopper-Begrüßungsnachricht anzei
 STR_SET_20,"Show vehicle welcome message: ","Fahrzeug-Begrüßungsnachricht anzeigen:","Показывать приветствие в технике: "
 STR_SET_21,"Island repair stations can repair vehicles: ","Inselreparaturstationen können Fahrzeuge reparieren: ","Наземные ремонтные станции работают: "
 STR_SET_22,"Teamstatus Dialog enabled: ","Teamstatus-Dialog aktiviert: ","Меню статус включено: "
-STR_SET_23,"Time a player has to wait until he can create a new vehicle at a MHQ: ","Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet: ","Время между выгрузками техники из КШМ: "
+STR_SET_23,"Time a player has to wait until he can create a new vehicle at a MHQ (sec): ","Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet (sec): ","Время между выгрузками техники из КШМ (сек): "
 STR_SET_24,"Able to fly: ","Able to fly: ","Им разрешено летать: "
 STR_SET_25,"Maximum number of ammoboxes: ","Maximale Anzahl von Ammoboxen: ","Ящики снабжения: максимум "
 STR_SET_25_1,", currently in use: ",", aktuell in Verwendung: ",", активированы: "
