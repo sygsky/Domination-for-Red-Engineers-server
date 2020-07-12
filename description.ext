@@ -208,7 +208,7 @@ class CfgMusic
     class detected_Paraiso { name=""; sound[] = {\sounds\locations\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
     class detected_Carmen  { name=""; sound[] = {\sounds\locations\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
     class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; } // town detected music (Rahmadi)
-    class detected_Eponia  { name="Japanese Shinto traditional ceremony"; sound[] = {\sounds\locations\Eponia.ogg,db-1,1.0}; } // town detected music (Eponia)
+    class detected_Eponia  { name="Banzai, 1983"; sound[] = {\sounds\locations\Banzai.ogg,db-1,1.0}; } // town detected music (Eponia)
 
 //+++++++++++++++++++++++ Holiday music
 

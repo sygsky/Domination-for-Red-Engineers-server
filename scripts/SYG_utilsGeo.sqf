@@ -479,18 +479,14 @@ SYG_getTargetTown = {
 	_ret = [];
 	// target_clear == false if town still not liberated and still occupied
 	_cur_cnt = if ( isServer ) then {current_counter} else {client_target_counter};
-	if ( (_cur_cnt <= number_targets) && (!target_clear) && (current_target_index >=0)) then
-	{
+	if ( (_cur_cnt <= number_targets) && (!target_clear) && (current_target_index >=0)) then {
 		_ret = target_names select current_target_index; //  e.g. [[9348.73,5893.4,0],"Cayo", 210],
-	}
-	else
-	{
+	} else {
 	    _print = false;
-	    if ( format["%1",this] == "<null>") then { _print = true};
+	    if ( format["%1",_this] == "<null>") then { _print = true};
 	    if (!_print ) then {if (typeName _this != "STRING") then {_print = true}};
 	    if (!_print ) then {if (_this != "NO_DEBUG") then {_print = true}};
-	    if ( _print) then
-	    {
+	    if ( _print) then {
     		hint localize format["--- error in SYG_getTargetTown: time=%3,c_c=%1,c_c2=%5,t_c=%2,c_t_i=%4",_cur_cnt, target_clear, call SYG_nowTimeToStr,current_target_index,current_counter];
 	    };
 	};
@@ -506,6 +502,50 @@ SYG_getTargetTownName = {
 	private [ "_ret" ];
 	_ret = "NO_DEBUG" call SYG_getTargetTown;
 	if (count _ret == 0 ) then {"<not defined>"} else { _ret select 1};
+};
+
+//
+// Returns additional town descriptive array, if available, else return empty [] array
+//
+// call: _additionalArray = call SYG_getTargetTown; // [[9349,5893,0],   "Cayo"      ,210, 2, ["detected_Cayo"]]
+//
+SYG_getTargetTownAddArray = {
+    private ["_arr"];
+    _arr = "NO_DEBUG" call SYG_getTargetTown; // gets town main info array
+    if ( count _arr == 0) exitWith {[]};      // no town defined, return empty array
+    if (count _arr <= 4) exitWith {[]};       // no additional array defined
+    _arr select 4
+};
+
+/*
+ * Returns sound name for town detection. If no sound defined empty string "" is returned
+ *
+ */
+SYG_getTargetTownDetectedSound = {
+    private ["_item"];
+    _item = call SYG_getTargetTownAddArray; // gets town additional array
+    if (typeName _item == "STRING") exitWith {_item};   // sound is designated, not array
+    if (typeName _item == "ARRAY") exitWith {
+        if ( count _item == 0) exitWith {""};   // no array - no sound
+        _item = _item select 0;
+        if (typeName _item == "STRING") exitWith { _item }; // string must be sound name
+        if (typeName _item == "ARRAY") exitWith { // may be array of sound names
+            _item = _item call XfRandomArrayVal; // get array random item
+            if (typeName _item == "STRING") exitWith {_item}; // item is string, return as sound name
+            ""
+        };
+        "" // not array and not string with name of sound
+    };
+    "" // sound not detected
+};
+
+/**
+ * Returns index for current side mission. If no mission is available, -1 is returned;
+ * call:
+ *      _smindex = call SYG_getSideMissionIndex;
+ */
+SYG_getSideMissionIndex = {
+	if (!all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then {current_mission_index} else {-1};
 };
 
 /**

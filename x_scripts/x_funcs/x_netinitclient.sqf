@@ -656,22 +656,15 @@ XHandleNetStartScriptClient = {
 			[(_this select 1),(_this select 2)] spawn XRecapturedUpdate;
 		};
 		case "mt_spotted": {
-		    private ["_townArr","_musicClassName"];
+		    private ["_townArr","_musicName"];
 			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
 			if ( !(call SYG_playExtraSounds) ) exitWith{};
             _townArr  = "NO_DEBUG" call SYG_getTargetTown;
             if (count _townArr == 0) exitWith{};
             _townName = _townArr select 1;
-            _musicClassName = "";
-            _musicClassName = switch (_townName) do
-            {
-                case "Arcadia" : {"detected_Arcadia"};
-                case "Paraiso" : {"detected_Paraiso"};
-                case "Carmen" : {"detected_Carmen"};
-                case "Rahmadi": {"detected_Rahmadi"};
-                case "Eponia": {"detected_Eponia"};
-            };
-            if (_musicClassName != "" ) then {playMusic _musicClassName};
+            _musicName = "";
+            _musicName = call SYG_getTargetTownDetectedSound;
+            if (_musicName != "" ) then {playMusic _musicName};
 		};
 		#ifdef __AI__
 		case "d_ataxi": {
