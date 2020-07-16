@@ -210,22 +210,22 @@ XHandleNetStartScriptServer = {
                 _msg_arr set [ count _msg_arr, [_msg] ];
   			};
 
-			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then // first time entry after half of game
-			{
+			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then {
+    			// first time entry after half of game
 				_msg_arr set [ count _msg_arr, ["STR_SYS_604_1"] ]; // "Nearly half of Sahrani released, but the population Sahrani glad to any defender of true liberty"
 			};
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 			// info about side mission before next town
-			if ( !call SYG_isMainTargetAllowed ) then
-			{
+			if ( !call SYG_isMainTargetAllowed ) then {
 				_msg_arr set [ count _msg_arr, ["STR_SYS_1151_1", current_mission_counter + 1 ] ]; // "Finish SM(%1)"
 			};
 #endif
 
 			_equip_empty = true;
-            if ( count _parray >= 6 ) then // ammunition is stored some time ago, restore it now
+            if ( count _parray >= 6 ) then
             {
+                // ammunition is stored some time ago, restore it now
                 _equipment = _parray select 5; // read string with equipment array
                 if ( _equipment != "") then
                 {
@@ -233,21 +233,18 @@ XHandleNetStartScriptServer = {
                     _equip_empty = false;
                     // check for distance view
                     _wpnArr = _equipment call SYG_unpackEquipmentFromStr;
-                    if ( (count _wpnArr) >= 5 ) then
-                    {
-                        if ( typeName argp(_wpnArr,4) == "SCALAR") then // old variant
-                        {
+                    if ( (count _wpnArr) >= 5 ) then {
+                        if ( typeName argp(_wpnArr,4) == "SCALAR") then {
+                            // old variant
                             _msg_arr set [ count _msg_arr, ["STR_SYS_618",_wpnArr select 4] ]; // "Viewdistance restore to %1 m."
                         }
-                        else
-                        {
+                        else {
                         // TODO: implement code for parsing array of user settings
-                            if ( typeName argp(_wpnArr, 4) == "ARRAY") then // new variant
-                            {
+                            if ( typeName argp(_wpnArr, 4) == "ARRAY") then {
+                                // new variant
                                 _settingsArr = _wpnArr select 4;
                                 _val = [_settingsArr, "VD"] call SYG_getParamFromSettingsArray;
-                                if ( _val >= 0) then
-                                {
+                                if ( _val >= 0) then {
                                     _msg_arr set [ count _msg_arr, ["STR_SYS_618",_val] ]; // "Viewdistance restore to %1 m."
                                 };
                             };
@@ -255,10 +252,9 @@ XHandleNetStartScriptServer = {
                     };
                 };
             };
-            if ( _equip_empty  && (_index >= 0)) then
-            {
-                if ( argp(_parray,3) > 0) then // non-zero score? Report about record absence
-                {
+            if ( _equip_empty  && (_index >= 0)) then {
+                if ( argp(_parray,3) > 0) then {
+                    // non-zero score? Report about record absence
                     _msg_arr set [ count _msg_arr, ["STR_SYS_614"] ]; // ammunition record not found
                 };
             };
@@ -276,8 +272,8 @@ XHandleNetStartScriptServer = {
 
 			_arr1 = call SYG_lastTownsGet;
 			_arr2 = call SYG_lastPlayersGet;
-			if (((count _arr1) + (count _arr2)) > 0) then // if any towns/players are counted, inform user about them
-			{
+			if (((count _arr1) + (count _arr2)) > 0) then {
+			    // if any towns/players are counted, inform user about them
 			    _str = [_arr1, ", "] call SYG_joinArr;
 			    _arr = ["STR_GRU_56",_str];
 			    _str = [_arr2,","] call SYG_joinArr;
@@ -323,8 +319,7 @@ XHandleNetStartScriptServer = {
 		};
 */
 		// ["GRU_event_scores",_score_id, name player] call XSendNetStartScriptServer;
-		case "GRU_event_scores":
-		{
+		case "GRU_event_scores": {
 		    private ["_id","_playerName","_score"];
             _id = argopt(1, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
@@ -341,21 +336,20 @@ XHandleNetStartScriptServer = {
                 ["GRU_event_scores", _id, _score, ""] call XSendNetStartScriptClient;
             };
 		};
-		case "addVehicle": // add vehicle to the group
-		{
+
+		// add vehicle to the group
+		case "addVehicle": {
 		    (_this select 1) addVehicle (_this select 2); // (group player) addVehicle _veh;
 		};
 
-		case "veh_info": // information about battle air vehicle activity
-		{
+        // information about battle air vehicle activity
+		case "veh_info": {
 		    private ["_veh","_cmd","_cnt"];
 		    _params = (_this select 1); // parameters array of this command
 		    _veh    = _params select 0; // vehicle
 		    _cmd    = _params select 1; // "on"/"off"
-		    switch (toLower _cmd) do
-		    {
-		        case "on"  :
-		        {
+		    switch (toLower _cmd) do {
+		        case "on"  : {
 		            if (!(_veh isKindOf "Air") ) exitWith {
 		                _cnt = count SYG_owner_active_air_vehicles_arr;
 		                hint localize format["--- ""veh_info"": attempt to add illegal param %1 to the list[%2]", typeOf _veh, _cnt];
@@ -365,8 +359,8 @@ XHandleNetStartScriptServer = {
 		            _cnt = count SYG_owner_active_air_vehicles_arr;
 		            hint localize format["+++ ""veh_info"": %1 added to list[%2]", typeOf _veh, _cnt];
 		        };
-		        case "off" :    // remove vehicle
-		        {
+		        // remove vehicle
+		        case "off" : {
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ];
 		            _cnt = count SYG_owner_active_air_vehicles_arr;
 		            hint localize format["+++ ""veh_info"": %1 removed from list[%2]", typeOf _veh, _cnt];
