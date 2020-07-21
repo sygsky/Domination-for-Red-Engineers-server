@@ -1112,21 +1112,29 @@ if (SYG_found_SCUD ) then {
 };
 #endif
 
-if (random 10 < 7) then
-{
-    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_RUMORS"]
+if (random 10 < 7) then {
+    _local_msg_arr set [count _local_msg_arr, localize "STR_SYS_RUMORS"];
 };
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 //+ show all specific  messages for the player type +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
 _local_msg_arr spawn {
-    if (count _this == 0) exitWith{};
-    sleep 55;
-    {
-         sleep 6;
-         _x call XfGlobalChat;
-    } forEach _this;
+    if (count _this > 0 ) then {
+        sleep 55;
+        {
+             sleep 6;
+             _x call XfGlobalChat;
+        } forEach _this;
+    };
+    if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) then {
+        [
+            "msg_to_user",
+            "",
+            [ ["Für zahlreiche militärische Verdienste erklären das Kommando und die dankbaren Bürger Sie zum Ehrenbürger der Insel Sahrani." ] ],
+            0, 5, false, "drum_fanfare"
+        ] call SYG_msgToUserParser;
+    };
 };
 
 #ifndef __REVIVE__

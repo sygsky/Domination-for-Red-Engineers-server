@@ -197,7 +197,7 @@ XHandleNetStartScriptServer = {
                     case "gyuri";
                     case "Frosty";
                     case "Petigp"     : { "Üdvözöljük az alap a 'Vörös mérnökök'!" }; // Hungarian // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
-                    case "Marco"      : { "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)" };// // vec. killer
+                    case "Marco"      : { "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)" };// // veh. killer
                     case "Shelter";
                     case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
                     case "Nushrok";

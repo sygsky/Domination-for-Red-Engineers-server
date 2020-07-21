@@ -131,6 +131,8 @@ class CfgMusic
     class druzba    { name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};      };
     class adjutant  { name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};    };
     class vague     { name="";        sound[]=   {\sounds\intro\vague.ogg,db-1,1.0}; };
+    class enchanted_boy     { name="";        sound[]=   {\sounds\intro\enchanted_boy.ogg,db-1,1.0}; };
+
     class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };
     class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
     class               lastdime { name=""; sound[]= {\sounds\intro\lastdime.ogg,db-1,1.0};    };
@@ -488,6 +490,7 @@ class CfgSounds
     class losing_patience  {name = ""; sound[] = {\sounds\short\losing_patience.ogg,db-1,1.0}; titles[] = {};};
     class good_news        {name = ""; sound[] = {\sounds\short\good_news.ogg, db+10, 1.0}; titles[] = {}; };
     class message_received {name = ""; sound[] = {\sounds\short\received.ogg, db+10, 1.0}; titles[] = {}; };
+    class drum_fanfare     {name = ""; sound[] = {\sounds\short\drum_fanfare.ogg, db+10, 1.0}; titles[] = {}; };
 
     class gong_0       {name = ""; sound[] = {\sounds\gong\clock-1x-gong.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_1       {name = ""; sound[] = {\sounds\gong\gong-01.ogg, db+10, 1.0}; titles[] = {}; };
