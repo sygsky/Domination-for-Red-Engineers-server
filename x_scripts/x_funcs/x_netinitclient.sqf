@@ -825,8 +825,8 @@ XHandleNetStartScriptClient = {
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
-		    switch (_this select 1) do
-		    {
+		    switch (_this select 1) do {
+		        case "forecast_change" : {call SYG_playWeatherForecastMusic};
 		        case "OFP";
 		        default { call SYG_playRandomOFPTrack};
 		        hint localize "+++ king escape music played";
