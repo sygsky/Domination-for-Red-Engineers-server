@@ -40,24 +40,20 @@ SYG_activeMarkers = [];         // marker active during predefined interval
  */
 X_XMarkerPlayers = {
 	private [ "_i", "_ap", "_as", "_text","_markers_changed" ];
-	if (time < SYG_markerRefreshTime) exitWith // use existing markers, simply change their position
-	{
+	if (time < SYG_markerRefreshTime) exitWith  {
+	    // use existing markers, simply change their position
 	    _markers_changed = false;
 	    {
             _as = d_player_entities select _x; // marker name (_x here is the index in whole array)
             _ap = call (SYG_players_arr select _x); // object (_x here is the index in whole array)
-            if ( isPlayer _ap) then
-            {
-                if ( alive _ap ) then
-                {
+            if ( isPlayer _ap) then {
+                if ( alive _ap ) then {
                     _as setMarkerPosLocal position _ap;
                     if (d_p_marker_dirs) then {
                         _as setMarkerDirLocal (direction ((vehicle _ap)+90));
                     };
                     _as setMarkerTypeLocal  d_p_marker;
-                }
-                else
-                {
+                } else {
                     // this marker is dead
 #ifdef __ACE__
                     _as setMarkerTypeLocal  "ACE_Icon_SoldierDead"; // mark dead player as skull
@@ -67,9 +63,7 @@ X_XMarkerPlayers = {
 //                    SYG_activeMarkers set [SYG_activeMarkers find _x, "RM_ME"];
 //                    _markers_changed = true;
                 };
-            }
-            else
-            {
+            } else {
                 _as setMarkerTypeLocal d_p_marker;
                 _as setMarkerPosLocal [0,0];
                 _as setMarkerTextLocal "";

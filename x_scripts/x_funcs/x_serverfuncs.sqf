@@ -17,8 +17,7 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 SAddObserverKillScores = {
     private ["_killer"];
     _killer =  _this select 1;
-    if ( isPlayer _killer ) then
-    {
+    if ( isPlayer _killer ) then {
         hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
             primaryWeapon (_this select 0),
             name (_this select 1),
