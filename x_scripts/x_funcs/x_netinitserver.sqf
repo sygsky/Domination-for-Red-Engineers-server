@@ -218,7 +218,7 @@ XHandleNetStartScriptServer = {
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 			// info about side mission before next town
 			if ( !call SYG_isMainTargetAllowed ) then {
-				_msg_arr set [ count _msg_arr, ["STR_SYS_1151_1", current_mission_counter + 1 ] ]; // "Finish SM(%1)"
+				_msg_arr set [ count _msg_arr, ["STR_SYS_1151_1", current_mission_counter ] ]; // "Finish SM(%1)"
 			};
 #endif
 
