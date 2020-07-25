@@ -69,21 +69,15 @@ if (count _holiday > 0 ) then {
     if (_sound != "") then {playMusic _sound};
 };
 if (_sound == "") then { // select random music for ordinal day
-    if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then
-    {
+    if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then {
         playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
         _newyear = true;
-    }
-    else // music normally played on intro
-    {
-
-        if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then
-        {
+    } else {
+        // music normally played on intro
+        if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then {
             // 7th November is a Day of Great October Socialist Revolution
             playMusic  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
-        }
-        else
-        {
+        } else {
             // add some personalized songs for well known players
             _players =
             [
@@ -103,10 +97,11 @@ if (_sound == "") then { // select random music for ordinal day
             _personalSounds = [];
             {
                 _pos = _x find _name;
-                if ( _pos >= 0 ) exitWith { {_personalSounds = _personalSounds + (_sounds select _pos)} forEach [1,2,3] };
+                if ( _pos >= 0 ) exitWith { { [ _personalSounds ,_sounds select _pos ] call SYG_addArrayInPlace } forEach [1,2,3] };
             } forEach _players;
-            if (format["%1",player] in ["RESCUE","RESCUE2"]) then {
-                { _personalSounds = _personalSounds + ["from_russia_with_love","bond1","bond"]; } forEach [1,2,3];
+            if ( format["%1",player] in ["RESCUE","RESCUE2"] ) then {
+                // add special music for GRU soldiers
+                { [ _personalSounds, ["from_russia_with_love","bond1","bond"] ] call SYG_addArrayInPlace } forEach [1,2,3];
             }; // as you are some kind of spy
 
 #ifdef __TIME_OF_DAY_MISIC__
@@ -128,7 +123,7 @@ if (_sound == "") then { // select random music for ordinal day
             // only night music
             _music = _night_music + _personalSounds;
             // if day time add day music too
-            if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { _music = _music + _daytime_music };
+            if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { [_music, _daytime_music] call SYG_addArrayInPlace };
             _music = _music call _XfRandomArrayVal;
 #else
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
@@ -143,9 +138,7 @@ if (_sound == "") then { // select random music for ordinal day
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
-
             playMusic _music; //playMusic "ATrack25"; // oldest value by Xeno
-
          };
     };
 };
@@ -205,14 +198,13 @@ _SYG_selectIntroPath = {
 	_posInd = -1; // index of point in nearest path
 	//find nearest entry point to the target
 	_min = 1000000;
-	for "_i" from 0 to (count _this - 1) do // for each paths in available array
-	{
+	for "_i" from 0 to (count _this - 1) do {
+    	// for each paths in available array
 		_path = _this select _i; // whole array of path point + possible last index for object
-		for "_j" from 0 to (count _path - 1) do
-		{
+		for "_j" from 0 to (count _path - 1) do {
 		    _x = argp(_path, j); // point [x,y,z] of the path
-            if ( (typeName _x) == "ARRAY") then // may be not point but scalar index (last in array)
-            {
+            if ( (typeName _x) == "ARRAY") then {
+                // may be not point but scalar index (last in array)
                 if ( (_x distance _pos) < _min ) then {_min = _x distance _pos; _ind = _i; _posInd = j};
             };
 		};
@@ -248,7 +240,6 @@ _SYG_selectIntroPath = {
 
 //+++Sygsky TODO: try to prepare flight above all targets
 if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then {
-
 	hint localize format["x_intro.sqf: current_target_index = %1, current_mission_index = %2",current_target_index, current_mission_index ];
 /* 	_target_array2 = target_names select current_target_index;
 	_current_target_pos = _target_array2 select 0;
@@ -264,8 +255,8 @@ if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm &&
 
 _pos = [];
 _lobjpos = [];
-if (_Sahrani_island ) then // 7703.5,7483.2, 0
-{
+if (_Sahrani_island ) then {
+    // 7703.5,7483.2, 0
 	// array of camera turn points. Last point is for illusion object creation point.If it is NUMBER in range {0..last_turn_point_index-1>} designated index turn point is used for illusion
   _camstart = 
   [
@@ -294,8 +285,7 @@ _lobj = (
     "Land_water_tank2","Land_R_Minaret","Land_vez","Land_strazni_vez","Platform"] call _XfRandomArrayVal) createVehicleLocal _lobjpos;
 sleep 0.1;
 _lobj  setVectorUp [0,0,1]; // make object be upright
-switch typeOf _lobj do
-{
+switch typeOf _lobj do {
 	case "Barrels": { _lobj setDamage 1.0;};
 };
 //_lobj setDirection (random 360);
@@ -338,13 +328,10 @@ _PS1 setDropInterval 0.01;
 
 _camera = objNull;
 _plpos = [(position player select 0),(position player select 1),1.5];
-if ( typeName _camstart == "ARRAY" ) then
-{
+if ( typeName _camstart == "ARRAY" ) then {
 	_camera = "camera" camCreate _start;
 	if (surfaceIsWater _start) then { _camera say "under_water_3" }; // gurgle if in water
-}
-else
-{
+} else {
 	_camera = "camera" camCreate [(position _camstart select 0), (position _camstart select 1) + 1, 200];
 };
 //hint localize format["x_intro.sqf: started at %1, look to  %2", _start,_camstart select 0];
@@ -392,12 +379,9 @@ switch (count _sarray) do {
 };
 #endif
 
-if ( _newyear ) then
-{
+if ( _newyear ) then {
 	cutRsc ["XDomLabelNewYear","PLAIN",2];
-}
-else
-{
+} else {
 	cutRsc ["XDomLabel","PLAIN",2];
 };
 
@@ -407,14 +391,11 @@ if (count _sarray > 0) then {
 	[_start_pos2, _str2, 6] execVM "IntroAnim\animateLettersX.sqf";_line = _line + 1; waitUntil {i == _line};
 };
 
-if (typeName _camstart != "ARRAY" ) then
-{
+if (typeName _camstart != "ARRAY" ) then {
 	_camera camSetTarget player;
 	_camera camSetPos _plpos;
 	_camera camCommit 18;
-}
-else
-{
+} else {
 };
 
 //titleRsc ["Titel1", "PLAIN"];
@@ -445,11 +426,10 @@ else
 };
 
 _start spawn {
-	private ["_txt","_arr"];
+	private ["_txt","_arr","_str","_date","_holiday"];
 	//sleep 2;
 	{
-		_txt = switch _x do
-		{
+		_txt = switch _x do {
 			case 1: { localize "STR_INTRO_1" }; // Alternative reality
 			case 2: { localize "STR_INTRO_2" }; // North Atlantic
 			case 3: { format[localize "STR_INTRO_3", date call SYG_humanDateStr, (date call SYG_weekDay) call SYG_weekDayLocalName, call SYG_nowHourMinToStr, ceil(call SYG_missionDayToNum)] }; // landing time / week day 
@@ -457,7 +437,6 @@ _start spawn {
 			case 5: {  // message and sound for current day period (morning,day,evening,night), if available
                 [] spawn {
                     sleep (60 + (random 20));
-                    private ["_str"];
                     _str = [] call SYG_getMsgForCurrentDayTime;
                     titleText[_str, "PLAIN DOWN"];
                     _str = ([] call SYG_getCurrentDayTimeRandomSound);
@@ -491,59 +470,52 @@ _start spawn {
 //
 // ++++++++++++++++++++++++++ MAIN SHOW WAY +++++++++++++++++++++++++++++++++++++
 //
-	_cnt = count _camstart;
+_cnt = count _camstart;
 //	hint localize format["%1 x_intro.sqf: start commits for %2", call SYG_daytimeToStr, _camstart];
 
-	for "_i" from 1 to (_cnt-1) do
-	{
-		_pos = _camstart select _i; // next point to look and go to it
-		if ( (_pos select 2)  < 0 ) then
-		{
-			_tgt = + _pos;
-			_tgt set [2, 0]; // point on the ground
-			_pos set [2, abs(_pos select 2)]; // point above the ground
-			hint localize format["_x_init.sqf: spec point tgt %1, pnt %2", _tgt, _pos];
-		}
-		else
-		{
-		    // TODO: shift X and Y coordinates slightly, for more native behaviour
-		    if ( _x < (_cnt-1)) then
-		    {
-		        _pos set [0, (_pos select 0) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along X
-		        _pos set [1, (_pos select 1) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along Y
-		    };
-			_tgt = [_start, _pos, 30000.0] call SYG_elongate2Z;
-		};
+for "_i" from 1 to (_cnt-1) do {
+    _pos = _camstart select _i; // next point to look and go to it
+    if ( (_pos select 2)  < 0 ) then {
+        _tgt = + _pos;
+        _tgt set [2, 0]; // point on the ground
+        _pos set [2, abs(_pos select 2)]; // point above the ground
+        hint localize format["_x_init.sqf: spec point tgt %1, pnt %2", _tgt, _pos];
+    } else {
+        // TODO: shift X and Y coordinates slightly, for more native behaviour
+        if ( _x < (_cnt-1)) then
+        {
+            _pos set [0, (_pos select 0) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along X
+            _pos set [1, (_pos select 1) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along Y
+        };
+        _tgt = [_start, _pos, 30000.0] call SYG_elongate2Z;
+    };
 
- 		_camera camPrepareTarget _tgt; // let look to over there
+    _camera camPrepareTarget _tgt; // let look to over there
 //		_camera camCommitPrepared 0.5; // time to rotate to target
 //		waitUntil {camCommitted _camera}; // wait until pointing to the target
 
 //		hint localize format["_x_init.sqf: %2, vectorDir at %1", vectorDir _camera, time];
-		
-		_camera camPreparePos _pos;	// let go to over there
- 		_camera camCommitPrepared (_arr select _i); // set time to go
-		waitUntil {camCommitted _camera}; // wait until come
-		//if ( _i == 2 ) then {sleep 5;};
+
+    _camera camPreparePos _pos;	// let go to over there
+    _camera camCommitPrepared (_arr select _i); // set time to go
+    waitUntil {camCommitted _camera}; // wait until come
+    //if ( _i == 2 ) then {sleep 5;};
 //		hint localize format["_x_init.sqf: %2, pos       at %1", getPos _camera, time];
 
 /*  		if ( _wait == 0) then 
-		{
-			playSound "ACE_VERSION_DING";
-			sleep 2.0;
-		};
- */
+    {
+        playSound "ACE_VERSION_DING";
+        sleep 2.0;
+    };
+*/
 
-		_start = _pos;
-	};
+    _start = _pos;
+};
 //	hint localize format["%1 x_intro.sqf: last camera commit completed",call SYG_daytimeToStr];
 
-if ( typeName _camstart != "ARRAY" ) then
-{
+if ( typeName _camstart != "ARRAY" ) then {
 	waitUntil {camCommitted _camera};
-}
-else
-{
+} else {
 	//_cnt = 0;
 	//_maxcnt = 18*2; // 18 second minus 6 seconds already slept with step by 0.5 second (see next waitUntil)
 	//waitUntil {sleep 0.5; _cnt = _cnt +1; (scriptDone _handle) || (_cnt > _maxcnt)};
