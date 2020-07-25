@@ -1177,7 +1177,7 @@ STR_CAMP_INFO_3,A pair of hunters from %1 went to the nearest hills today,Ein pa
 STR_CAMP_INFO_0,Youngs from %1 left home,Der Junge von %1 links home,Jóvenes los guardias de %1 abandonan vivienda,Молодогвардейцы из %1 покинули жилища
 //------------------------------------ CAMP info additional strings ------------------------------------
 
-STR_CAMP_TEAM_NUM,7,7,,7
+STR_CAMP_TEAM_NUM,7,7,7,7
 STR_CAMP_TEAM_0,farmers,lokale Landwirte,agricultores,фермеры
 STR_CAMP_TEAM_1,guys,die Jungs,muchachos,ребята
 STR_CAMP_TEAM_2,sorcerers,Zauberer,brujos,колдуны
@@ -1186,7 +1186,7 @@ STR_CAMP_TEAM_4,fishermen,Fischer,pescadores,рыбаки
 STR_CAMP_TEAM_5,merchants,Händler,comercio,торговцы
 STR_CAMP_TEAM_6,grooms,Stallburschen,mozo de cuadra,конюхи
 
-STR_CAMP_TEAM_A_NUM,7,7,,7
+STR_CAMP_TEAM_A_NUM,7,7,7,7
 STR_CAMP_TEAM_A_0,farmer,Bauer,agricultor,фермер
 STR_CAMP_TEAM_A_1,guy,Kerl,chico,парень
 STR_CAMP_TEAM_A_2,sorcerer,Zauberer,brujo,колдун
