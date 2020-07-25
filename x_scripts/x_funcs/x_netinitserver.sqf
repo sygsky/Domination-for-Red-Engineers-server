@@ -276,7 +276,7 @@ XHandleNetStartScriptServer = {
 			    // if any towns/players are counted, inform user about them
 			    _str = [_arr1, ", "] call SYG_joinArr;
 			    _arr = ["STR_GRU_56",_str];
-			    _str = [_arr2,","] call SYG_joinArr;
+			    _str = [_arr2,", "] call SYG_joinArr;
                 _arr set [ count _arr, _str ];
                 _msg_arr set [ count _msg_arr, _arr ]; // "GRU: last towns%1,  last soldiers%2"
 			};
