@@ -15,31 +15,32 @@ XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _
 
 // add score for observer kill
 SAddObserverKillScores = {
-    private ["_killer"];
+    private ["_killer","_observer"];
+    _observer = _this select 0;
     _killer =  _this select 1;
     if ( isPlayer _killer ) then {
         hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
-            primaryWeapon (_this select 0),
-            name (_this select 1),
+            primaryWeapon _observer,
+            name _killer,
             if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
             [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
         ];
-        ["syg_observer_kill",(_this select 1),primaryWeapon (_this select 0)] call XSendNetStartScriptClient;
     } else {
         if (isNull _killer) then {
-            hint localize format["+++ SAddObserverKillScores: observer (%1) killed under unclear circumstances (killer is null) at %2",
-                primaryWeapon (_this select 0),
-                [_this select 0, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
+            hint localize format["+++ SAddObserverKillScores: observer (%1) killed with unclear circumstances (killer is null) at %2",
+                primaryWeapon _observer,
+                [_observer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
             ];
         } else {
             hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
-                primaryWeapon (_this select 0),
+                primaryWeapon _observer,
                 typeOf _killer,
                 if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
                 [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
             ];
         };
     };
+    [ "syg_observer_kill", _killer, primaryWeapon _observer, _observer] call XSendNetStartScriptClient;
 };
 #endif
 

@@ -833,6 +833,8 @@ STR_SYS_1151_1,The Resistance of Sahrani asks you to complete the next side miss
 STR_SYS_1152,The people of Sahrani thank you for your liberation mission!,Die Leute von Sahrani danke für Sie Befreiung mission!,¡La resistencia de Sahrani te agradece por completar la misión de liberación!,Сопротивление Сахрани благодарит Вас за выполнение освободительной миссии!
 
 STR_SYS_1160,T'was a spotter (+%1)!,Es war ein spotter (+%1)!,¡Era un observador (+%1)!,Это был корректировщик (+%1)!
+STR_SYS_1161,"Spotter killed by ""%1"" (+%2)!","Spotter getötet durch ""%1"" (+%2)!","¡Observador asesinado por ""%1"" (+%2)!","Корректировщик убит: ""%1"" (+%2)!"
+STR_SYS_1162,Spotter died...,Spotter gestorben,El observador murió,Корректировщик погиб...
 
 STR_SYS_1170,You were killed by the AI of %1,Sie wurden getötet durch die KI von %1,Has sido asesinado por un subordinado de %1,Вы были убиты подчинённым %1
 STR_SYS_1171,Recruit Barracks,Einberufungsstelle,Caja de recluta,Призывной пункт
