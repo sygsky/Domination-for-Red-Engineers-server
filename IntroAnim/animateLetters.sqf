@@ -24,7 +24,7 @@ controls = [];
 
 for "_i" from _Slot to (_Slot + 30) do {
 	_ctrl = _display displayCtrl (_idcPool + _i);
-	controls set [ controls , _ctrl ];
+	controls set [ count controls , _ctrl ];
 	waitUntil{ ctrlCommitted _ctrl };
 };
 
