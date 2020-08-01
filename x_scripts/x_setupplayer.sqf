@@ -312,19 +312,21 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 //SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                                 3000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
+                                _rearmed = false; // if here, plyaer not rearmed
                             };
                             case "ENGINEERACE":  // EngineerACE
                             {
                                 // Viewdistance
                                 3500 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf"; };
+                                _rearmed = false; // if here, plyaer not rearmed
                             };
                             case "ROKSE [LT]" : // Rokse [LT]
                             {
                                 // Viewdistance
                                 10000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf"; };
-
+                                _rearmed = false; // if here, plyaer not rearmed
                             };
                             // TODO: add more personal setting here (as for "Yeti" done)
                             default { _rearmed = false; }; // all other players are rearmed by standart
