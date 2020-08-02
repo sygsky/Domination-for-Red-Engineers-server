@@ -15,7 +15,7 @@ private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_
 
 if (isNil "SYG_DA_NAMES") then // men allowed to load double ammunition on this service
 {
-    SYG_DA_NAMES = ["HE_MACTEP","Rokse [LT]"];
+    SYG_DA_NAMES = ["Виталий","Rokse [LT]","HE_MACTEP"];
 };
 #define PLAYER_CAN_LOAD_DOUBLE_AMMO ((isPlayer (driver _vehicle)) && ((name (driver _vehicle)) in SYG_DA_NAMES))
 
