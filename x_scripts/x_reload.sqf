@@ -13,9 +13,8 @@ private ["_config","_count","_i","_magazines","_vehicle","_type","_type_name","_
 #define __DOUBLE_AMMUNITION__
 #ifdef __DOUBLE_AMMUNITION__
 
-if (isNil "SYG_DA_NAMES") then // men allowed to load double ammunition on this service
-{
-    SYG_DA_NAMES = ["HE_MACTEP","Rokse [LT]","Виталий"];
+if (isNil "SYG_DA_NAMES") then {// men allowed to load double ammunition on this service
+    SYG_DA_NAMES = ["Виталий","Rokse [LT]","HE_MACTEP"];
 };
 #define PLAYER_CAN_LOAD_DOUBLE_AMMO ((isPlayer (driver _vehicle)) && ((name (driver _vehicle)) in SYG_DA_NAMES))
 
@@ -30,18 +29,13 @@ _vehicle = objNull;
 
 _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
 {
-    if ( _x isKindOf _type) then
-    {
-        if (isNull _vehicle ) then
-        {
+    if ( _x isKindOf _type) then {
+        if (isNull _vehicle ) then {
             _vehicle = _x;
         }
-        else
-        {
-            if (!(_vehicle isKindOf "ParachuteBase")) then
-            {
-                if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then // find fastest of vehicles available
-                {
+        else {
+            if (!(_vehicle isKindOf "ParachuteBase")) then {
+                if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then {// find fastest of vehicles available
                     _vehicle = _x;
                 };
             };
@@ -67,17 +61,14 @@ if (isNil "_already_loading") then {_already_loading = false;};
 //hint localize format["+++ x_reload.sqf: player %1 (%2), in DA list == %3, already loading %4", isPlayer (driver _vehicle), name player, (name player) in SYG_DA_NAMES, _already_loading];
 
 //hint localize format["_nemaster = %1, _already_loading = %2", _nemaster, _already_loading];
-if ((!_nemaster) && _already_loading ) exitWith
-{
+if ((!_nemaster) && _already_loading ) exitWith {
     [_vehicle, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
     _vehicle setVariable ["already_on_load", nil];
 };
 
 _done = false;
-if (_nemaster && _already_loading ) then
-{
-    if ((random 5) < 1) exitWith // works 4 times out of 5
-    {
+if (_nemaster && _already_loading ) then {
+    if ((random 5) < 1) exitWith {// works 4 times out of 5
         [_vehicle, "STR_SYS_256_STOP_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "It seems that there are no technicians, we will have to ship everything manually"
         _done = true;
     };
@@ -98,8 +89,7 @@ _type = typeOf _vehicle;
 #ifdef __REARM_SU34__
 //_su34 = _vehicle call SYG_rearmAnySu34;
 _su34 = _vehicle call SYG_rearmVehicleA;
-if ( _su34 ) then // Su34 is rearmed
-{
+if ( _su34 ) then {// Su34 is rearmed
     _magazines = argp((_type call SYG_getVehicleTable),1); // get magazines list to reload each time
 };
 #endif
@@ -121,8 +111,7 @@ _type_name = [_type,0] call XfGetDisplayName;
 [_vehicle,format [localize "STR_SYS_255", _type_name]] call XfVehicleChat; // "Обслуживание: %1... Ожидайте..."
 
 #ifdef __REARM_SU34__
-if (! _su34 ) then // not filled with Su34 rearm code
-{
+if (! _su34 ) then {// not filled with Su34 rearm code
 #endif
     _magazines = getArray(configFile >> "CfgVehicles" >> _type >> "magazines");
 #ifdef __REARM_SU34__
@@ -147,8 +136,7 @@ if (count _magazines > 0) then {
 
 #ifdef __REARM_SU34__
 _count = 0;
-if (!_su34) then
-{
+if (!_su34) then {
 #endif
     _count = count (configFile >> "CfgVehicles" >> _type >> "Turrets");
 #ifdef __REARM_SU34__
@@ -218,17 +206,13 @@ sleep x_reload_time_factor;
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 
 //++++++++++++ Repairing
-if ((getDammage _vehicle) > 0) then
-{
+if ((getDammage _vehicle) > 0) then {
     [_vehicle, localize "STR_SYS_258"] call XfVehicleChat; // "Repairing..."
     _vehicle setDamage 0;
     sleep x_reload_time_factor;
-}
-else
-{
+} else {
     [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx from engineers!"
     player addScore 1;
-    playSound "good_news";
 };
 
 //+++++ Refuelling
@@ -238,8 +222,7 @@ _pos = getPos _vehicle; // original position on service
 while {fuel _vehicle < 0.99} do {
 
     _pos1 = getPos _vehicle;
-	if ( (_pos distance _pos1) > 0.5) exitWith // vehicle moved from service, so stop refuelling
-	{
+	if ( (_pos distance _pos1) > 0.5) exitWith {// vehicle moved from service, so stop refuelling
 	    hint localize format["x_reload.sqf: refuelling aborted, fuel %1, (pos_orig %2) distance (pos_now %3) = %4", fuel _vehicle, _pos, getPos _vehicle, _pos distance _vehicle];
         [_vehicle, format [localize "STR_SYS_257_1", _type_name]] call XfVehicleChat; // "Refueling is interrupted, the hose came off"
 	};
@@ -250,8 +233,7 @@ while {fuel _vehicle < 0.99} do {
 sleep x_reload_time_factor;
 
 #ifdef __ACE__
-if ( alive _vehicle) then
-{
+if ( alive _vehicle) then {
     // add fuel/repair/ammo cargo for any vehicles that support it
     _msg = "";
     switch (typeOf _vehicle) do {
@@ -260,8 +242,7 @@ if ( alive _vehicle) then
         case "ACE_Truck5t_Refuel": { _vehicle setFuelCargo       1; _msg = "STR_SYS_RELOAD_REFUEL";};
         default {};
     };
-    if (_mgs != "") then
-    {
+    if (_mgs != "") then {
         [_vehicle, localize _msg] call XfVehicleChat; // "Reloading cargo..."
         sleep x_reload_time_factor;
     };
@@ -269,10 +250,8 @@ if ( alive _vehicle) then
 #endif
 
 
-if (!alive _vehicle) exitWith
-{
-    if ( !isNull _vehicle) then
-    {
+if (!alive _vehicle) exitWith {
+    if ( !isNull _vehicle) then {
         _vehicle setVariable ["already_on_load", nil];
     };
     // TODO: print "Vehicle is destroyed"
