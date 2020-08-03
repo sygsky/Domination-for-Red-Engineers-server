@@ -645,7 +645,7 @@ STR_SYS_361,Engine gets shut off on service point:,Motor wird abgestellt auf ser
 STR_SYS_362,AAHALO jump enabled:,AAHALO parajump aktiviert:,Aterrizaje activo:,Десантирование активно:
 STR_SYS_363,AAHALO jump available at flag at base:,AAHALO parajump verfügbar unter der Flagge an Ihrer Basis:,El aterrizaje está disponible en la base:,Десантирование доступно на базе:
 STR_SYS_364,Time between two AAHALO jumps from base flag: %1 secs,Die Zeit zwischen zwei AAHALO parajumps von base flag: %1 secs,Frecuencia de aterrizaje de la bandera en la base: %1 seg.,Периодичность десантирования от флага на базе: %1 сек.
-STR_SYS_365,AAHALO jump start base height: %1m,AAHALO jump start Höhe: %1m,Altitud básica de aterrizaje :%1 m.,Базовая высота десантирования: %1 м.
+STR_SYS_365,AAHALO jump start base height: %1 m,AAHALO jump start Höhe: %1 m,Altitud básica de aterrizaje :%1 m.,Базовая высота десантирования: %1 м.
 STR_SYS_366,Create the following vehicle at jump flag instead parajump: %1,"Erstellen Sie das folgende Fahrzeug zu springen, stattdessen parajump: %1",Crear transporte en la bandera de la ciudad en lugar de saltar: %1,Создание транспорта у флага в городе вместо прыжка: %1
 STR_SYS_367,Maximum distance artillery operator to arti strike point: %1m,Maximale Distanz Artillerie-Betreiber zu arti-strike point: %1m,Distancia máxima entre el operador y el punto de aplicación de artudar :%1 m.,Максимальная дистанция между оператором и точкой нанесения артудара: %1 м.
 STR_SYS_368,Artillery reload time between two salvoes: %1 secs,Artillerie reload-Zeit zwischen zwei Salven: %1 Sekunden,Tiempo de recarga entre dos descargas de artillería: %1 seg.,Время перезарядки  между двумя артиллерийскими залпами: %1 сек.
