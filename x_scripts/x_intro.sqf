@@ -134,7 +134,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague"
+                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","enchanted_boy"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
