@@ -1,5 +1,5 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
-private ["_StartLocation","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime"];
+private ["_StartLocation","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime","_pos"];
 _StartLocation = _this select 0;
 _paratype      = _this select 1;
 _jump_score    = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
@@ -28,6 +28,8 @@ if (playerSide == east) then {
 
 #define __SPECIAL_JUMP_OVER_SEA__ // special condition of strong wind over sea surface
 #define JUMP_DISPERSION 1000        // max. dispersion due to wind in ocean
+#define MAX_SHIFT 3500
+
 #ifdef __SPECIAL_JUMP_OVER_SEA__
 
 _shift = JUMP_DISPERSION;
@@ -36,29 +38,31 @@ if (_paratype == "ACE_ParachutePack") then { _shift = 6 * _shift }; // up to 6 t
 #endif
 
 // detect if jump is over sea
+_pos = [];
 _water_count = 0;
 {
-    _pos = + _StartLocation;
-    _pos set [0, (_pos select 0) + (_x select 0)];
-    _pos set [1, (_pos select 1) + (_x select 1)];
-    if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
-} forEach [
-        [-JUMP_DISPERSION,+JUMP_DISPERSION],[0,+JUMP_DISPERSION],[+JUMP_DISPERSION,+JUMP_DISPERSION],[+JUMP_DISPERSION,0],
-        [+JUMP_DISPERSION,-JUMP_DISPERSION],[0,-JUMP_DISPERSION],[-JUMP_DISPERSION,-JUMP_DISPERSION],[-JUMP_DISPERSION,0]];
+    _pos set [0, (_StartLocation select 0) + (_x select 0)];
+    {
+        _pos set [1, (_StartLocation select 1) + (_x select 1)];
+        if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
+    } forEach [-JUMP_DISPERSION,0, +JUMP_DISPERSION];
+} forEach [-JUMP_DISPERSION,0, +JUMP_DISPERSION];
 
-if (_water_count >= 7 ) then { // player jumps over sea surface, add strong wind effect
+// if 3 or more points in 3x3 grid with 1 km sides ar on land, no wind will be applied, else wind is very-very strong))
+if (_water_count > 7 ) then { // player jumps over sea surface, add strong wind effect
     _wind_arr = wind;
     _len = _wind_arr distance [0,0,0]; // scalar vector length
-    _shift = (random _shift) min 3500; // not further then 3500 meters from the original start point
+    _shift = (random _shift) min MAX_SHIFT; // not further then 3500 meters from the original start point
     _dx = ((_wind_arr select 0) / _len) * _shift;
     _dy = ((_wind_arr select 1) / _len) * _shift;
+    _dz = ((_wind_arr select 2) / _len) * _shift;
     _StartLocation set [0, (_StartLocation select 0) + _dx];
     _StartLocation set [1, (_StartLocation select 1) + _dx];
-    if (_shift > 50) then
-    {
-        (localize "STR_SYS_76") call XfHQChat; // “A strong ocean wind blew the parachute off”
+    _StartLocation set [2, (_StartLocation select 2) + _dz];
+    if (_shift > 50) then {
+        (localize "STR_SYS_76_1") call XfHQChat; // “A strong ocean wind blew the parachute off”
     };
-    hint localize format["+++ jump.sqf: wind %1, dispersion is %2 [%3,%4] m", _wind_arr, round(_shift), round(_dx), round(_dy) ];
+    hint localize format["+++ jump.sqf: wind %1, dispersion is %2 [%3,%4,%5] m", _wind_arr, round(_shift), round(_dx), round(_dy), round(_dz) ];
 };
 #endif
 
@@ -69,8 +73,7 @@ titleText ["","Plain"];
 uh60p = createVehicle [_jump_helo, _StartLocation, [], 0, "FLY"];
 _halo_height = d_halo_height;
 #ifdef __ACE__
-switch _paratype do
-{
+switch _paratype do {
     case "ACE_ParachuteRoundPack": {_halo_height = d_halo_height / 7};
     case "ACE_ParachutePack";
     default {_halo_height = d_halo_height * 2};
@@ -94,12 +97,9 @@ _startTime = time;
 if ( _paratype == "" ) then
 {
     (localize "STR_SYS_609_1") call XfHQChat; // "You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?"
-    if ( player call SYG_isWoman ) then
-    {
+    if ( player call SYG_isWoman ) then {
         player say ("female_shout_of_pain_" + str(ceil (random 4)));  // 1-4
-    }
-    else
-    {
+    } else {
         player say (call SYG_getSuicideScreamSound);
     };
 

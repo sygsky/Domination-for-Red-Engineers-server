@@ -86,7 +86,7 @@ class XD_UnloadDialog
 		y = 0.725;
 		w = 0.15;
 		h = 0.05;
-		text = "Отмена";
+		text = $STR_SYS_1120;
 		action = "closeDialog 0;";
 	};
 	class XD_Unloadlistbox : RscListBox

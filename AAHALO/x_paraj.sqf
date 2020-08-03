@@ -1,4 +1,5 @@
-﻿// Xeno, AAHALO/x_paraj.sqf - flag pole action "parajump"
+﻿// Xeno, AAHALO\x_paraj.sqf - flag pole action "parajump"
+// e.g.: FLAG_BASE addaction [localize "STR_SYS_76","AAHALO\x_paraj.sqf"];
 
 private ["_do_exit","_wait_score","_jump_score","_full_score"];
 

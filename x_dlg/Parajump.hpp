@@ -57,7 +57,7 @@ class XD_ParajumpDialog
 		y = 0.82;
 		w = 0.2;
 		h = 0.05;
-		text = "Отмена";
+		text = $STR_SYS_1120;
 		action = "closeDialog 0;onMapSingleClick ''";
 	};
 	class XD_ArtiMapText : XC_RscText

@@ -23,8 +23,7 @@ if (X_Client) then {
 
 if (isServer) then {
     _reselect_pos = (random 1) < 0.5;
-	if ( _reselect_pos ) then
-	{
+	if ( _reselect_pos ) then {
 #ifdef __RANKED__
         d_sm_p_pos = nil;
 #endif
@@ -33,8 +32,7 @@ if (isServer) then {
 	};
 	__Poss
 #ifdef __RANKED__
-    if ( _reselect_pos ) then
-    {
+    if ( _reselect_pos ) then {
     	["d_sm_p_pos", _poss] call XSendNetVarClient;
     };
 #endif

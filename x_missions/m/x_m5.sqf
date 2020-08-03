@@ -24,12 +24,21 @@ if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for p
 
 if (isServer) then {
 
+
 	__PossAndOther
+    hint localize format["+++ king hotel _poss %1", _poss];
+	_nbuilding = _poss nearestObject 172902; // hotel at vallejo
+	if (!alive _nbuilding) exitWith { // hotel destroyed, abort mission
+		#ifndef __TT__
+    	king call XKilledSMTargetNormalNoDeadAdd;
+    	#ifdef __TT__
+    	king call XKilledSMTargetTTNoDeadAdd;
+    	#endif
+	};
+
 	__WaitForGroup
 	__GetEGrp(_newgroup)
 
-    hint localize format["+++ king hotel _poss %1", _poss];
-	_nbuilding = _poss nearestObject 172902; // hotel at vallejo
 
 	// these are hotel positions in rooms with no door !!!!
 	//_no_list = [86,87,88,89,148,149,150,151,177,178,179,188,189,190];//,200,201,202];//,210,211,212,213,215,216,217];//230,231,232,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,262,263,264,265];
