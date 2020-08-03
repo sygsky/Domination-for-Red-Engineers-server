@@ -61,11 +61,10 @@ _acc = 0;
 
 _day = date select 2; // current day
 
-while {true} do {
+while { true } do {
     _forecast_change = false;
 	if (X_MP) then {
-	    if ((call XPlayersNumber) == 0) then
-	    {
+	    if ((call XPlayersNumber) == 0) then {
     		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	    };
 	};
@@ -100,16 +99,15 @@ while {true} do {
 		if(_counter <= 0) then { // change fog ellipse
 			//+++Sygsky: disable for the day time between 5:00 and 19:00
 			_fogdy = FOG_Y_STEP_SIZE;
-			if ( (daytime >= FOG_ON_ISLAND_MAX_TIME) || (daytime < FOG_ON_ISLAND_MIN_TIME) ) then // night time is foggy
-			{
+			if ( (daytime >= FOG_ON_ISLAND_MAX_TIME) || (daytime < FOG_ON_ISLAND_MIN_TIME) ) then {
+			    // night time is foggy0
 				_randx = _x_fog_start+(random _x_fog_ran);
 				_randy = _x_fog_start+(random _y_fog_ran);
 				_foggy_helper = [_randx,_randy,0];
 				_counter = 300 + ceil(random 300); // set fog to spread on average about  450 turns of weather generator
 				_fogdx = FOG_X_STEP_SIZE;
-			}
-			else // non-foggy daytime on island mainland
-			{
+			} else {
+			    // non-foggy daytime on island mainland
 				_randx = FOG_DAY_X_MIN + random (FOG_DAY_X_MAX-FOG_DAY_X_MIN);
 				_randy = (FOG_DAY_Y_MIN-3000)+random 3000;
 				_fogdx = FOG_X_STEP_SIZE;
@@ -119,9 +117,7 @@ while {true} do {
 				_counter = 200 + ceil(random 200); // set fog to spread on average about 300 turns of weather generator
 				//hint localize format["weathergen2.sqf: bump fog out of mainland during day, time %1, counter %2,[%3,%4]", daytime call SYG_daytimeToStr, _counter, _randx, _randy];
 			};
-		}
-		else
-		{
+		} else {
 			_foggy_helper = [(_foggy_helper select 0)+_fogdx,(_foggy_helper select 1)+ _fogdy,0];
 		};
 		_counter = (_counter - 1);
@@ -131,16 +127,15 @@ while {true} do {
 		x_weather_array = [_rainy_helper,_rainy2_helper,_rainy3_helper];
 		if (d_weather_fog) then {x_weather_array = x_weather_array + [_foggy_helper];};
 		["x_weather_array",x_weather_array] call XSendNetVarClient;
-		if (_forecast_change) then
-		{
-		    // todo : send info to client to print info on forecast changed
+		if (_forecast_change) then {
+		    ["play_music","forecast_change"] call XSendNetStartScriptClientAll;
+		    // todo : send info to client about forecast change. Client may play sound etc
 		};
 		_acc = 0;
 	};
 	
 	//+++ Sygsky: change weather each day
-	if ( (date select 2) != _day) then
-	{
+	if ( (date select 2) != _day) then {
 		// it is time to change weather
 		call SYG_updateWeather;
 		_day = date select 2; // store new day value

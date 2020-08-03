@@ -189,16 +189,16 @@ SYG_lastPlayersGet = {
 
 // ++++++++++++++++++++++++++ System to prnt scores of players during each town siege
 //
-// [[_players],[_scores], _start_time];
+// [[_players],[_scores], _start_time, _main_target_count];
 // _players = ["player1",...,"playerN"]; // list of players participated in current town
 // _scores  = [1,...,N]; // scores of corresponding players
- //
-SYG_townScores = [[],[], time, current_counter];
+//
+SYG_townScores = [[], [], time,  current_mission_counter max 1];
 
 // Create internal arrays with currently online players at the start of the next town
 SYG_townScoresInit = {
     private ["_names","_pl"];
-    SYG_townScores  = [ [], [], time, current_counter];
+    SYG_townScores  = [ [], [], time, current_mission_counter max 1];
     _names = [];
     {
         _pl = call _x;
@@ -245,7 +245,8 @@ SYG_townScoresPrint = {
     _arr  = SYG_townScores select 0;
     _arr1 = SYG_townScores select 1;
     hint localize "[";
-    hint localize format[ "++++++ Town ""%1"" (%2 SM done) players score report ++++++", _this, current_counter - (SYG_townScores select 3)];
+    _str = (call SYG_getServerDate) call SYG_dateToStr;
+    hint localize format[ "++++++ Town ""%1"" #%2 (%3 SM done) players score report at %4 ++++++", _this, current_counter, current_mission_counter - (SYG_townScores select 3), _str];
 
     _sum = 0;
     _time_diff = time - (SYG_townScores select 2);
@@ -255,8 +256,10 @@ SYG_townScoresPrint = {
             _id   = _arr select _i;
             _item = d_player_array_misc select _id;
             _diff =  (_item select 3) - (_arr1 select _i); // new score minus old one
-            _sum  = _sum + _diff;
-            hint localize format[ "++++++ ""%1"": %2 (%3 per h.)", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff }, round(_diff  * 3600 / _time_diff)];
+            if (_diff != 0) then {
+                _sum  = _sum + _diff;
+                hint localize format[ "++++++ ""%1"": %2 (%3 per h.)", _item select 2, if ( _diff > 0 ) then { format["+%1", _diff] } else { _diff }, round(_diff  * 3600 / _time_diff)];
+            }
         };
     };
 //    hint localize format["+++ [time, SYG_townScores select 2] %1", [time, SYG_townScores select 2]];

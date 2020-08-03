@@ -32,11 +32,11 @@ if ( _stop ) exitWith {true};
 counterattack = false;
 _start_real = false;
 #ifndef __TT__
-if (number_targets == 22 && current_target_index != 5) then { // if maximal mission and not Rahmadi
+if (number_targets == 22 && current_target_index != 5 && (current_counter < number_targets)) then { // if maximal mission count and not Rahmadi
 #endif
-	_rnd = random 100;
-	// _rnd > 94 means counterattack, aka 5 % chance for a counterattack
-	if (_rnd > 94) then {
+	_rnd = random number_targets;
+	// _rnd < 5 % chance for a counterattack is nearly 1 town per game
+	if (_rnd < (number_targets  * 0.05) ) then {
 		counterattack = true;
 		_start_real = true;
 		["an_countera", "start"] call XSendNetStartScriptClient;

@@ -131,6 +131,8 @@ class CfgMusic
     class druzba    { name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};      };
     class adjutant  { name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};    };
     class vague     { name="";        sound[]=   {\sounds\intro\vague.ogg,db-1,1.0}; };
+    class enchanted_boy     { name="";        sound[]=   {\sounds\intro\enchanted_boy.ogg,db-1,1.0}; };
+
     class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };
     class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
     class               lastdime { name=""; sound[]= {\sounds\intro\lastdime.ogg,db-1,1.0};    };
@@ -139,7 +141,7 @@ class CfgMusic
     class              lastdime3 { name=""; sound[]= {\sounds\intro\lastdime3.ogg,db-1,1.0};    };
     class      esli_ranili_druga { name=""; sound[]= {\sounds\intro\esli_ranili_druga.ogg,db-1,1.0};    };
     class        soviet_officers { name=""; sound[]= {\sounds\intro\holidays\feb_23\soviet_officers.ogg,db-1,1.0}; };
-
+    class     travel_with_friends { name=""; sound[]= {\sounds\intro\travel_with_friends.ogg,db-1,1.0}; };
 
 //    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
@@ -208,7 +210,7 @@ class CfgMusic
     class detected_Paraiso { name=""; sound[] = {\sounds\locations\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
     class detected_Carmen  { name=""; sound[] = {\sounds\locations\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
     class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; } // town detected music (Rahmadi)
-    class detected_Eponia  { name="Japanese Shinto traditional ceremony"; sound[] = {\sounds\locations\Eponia.ogg,db-1,1.0}; } // town detected music (Eponia)
+    class detected_Eponia  { name="Banzai, 1983"; sound[] = {\sounds\locations\Banzai.ogg,db-1,1.0}; } // town detected music (Eponia)
 
 //+++++++++++++++++++++++ Holiday music
 
@@ -488,6 +490,7 @@ class CfgSounds
     class losing_patience  {name = ""; sound[] = {\sounds\short\losing_patience.ogg,db-1,1.0}; titles[] = {};};
     class good_news        {name = ""; sound[] = {\sounds\short\good_news.ogg, db+10, 1.0}; titles[] = {}; };
     class message_received {name = ""; sound[] = {\sounds\short\received.ogg, db+10, 1.0}; titles[] = {}; };
+    class drum_fanfare     {name = ""; sound[] = {\sounds\short\drum_fanfare.ogg, db+10, 1.0}; titles[] = {}; };
 
     class gong_0       {name = ""; sound[] = {\sounds\gong\clock-1x-gong.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_1       {name = ""; sound[] = {\sounds\gong\gong-01.ogg, db+10, 1.0}; titles[] = {}; };

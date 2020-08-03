@@ -530,7 +530,7 @@ while { true } do {
 	if ( (time - _time) >= DELAY_RESPAWN_STOPPED ) then // mission returned after first player waiting
 	{
 	    _delta = time - _time;  // how many time mission was sleeping without movement
-	    hint localize format["+++ x_isledefence: after sleeping during %1 sec. next player entered and respawn patrols timeouts updated.", round(_delta)];
+	    hint localize format["+++ x_isledefense: after sleeping during %1 sec. next player entered and respawn patrols timeouts updated.", round(_delta)];
 	    {
 	        _new_timestamp = argp(_x, PARAM_TIMESTAMP) + _delta;
             _x set [PARAM_TIMESTAMP, _new_timestamp]; // increment timestamp to continue same behaviur as before sleep
@@ -572,10 +572,10 @@ while { true } do {
             // replace group waiting for restore with new one if wait time is out
 			if ( _stat == STATUS_WAIT_RESTORE  || _stat == STATUS_DEAD_WAIT_RESTORE) then
 			{
-			    if ( (current_counter >= number_targets) && (!main_target_ready) ) then {
+			    if ( (current_counter >= number_targets) /* && (!main_target_ready)*/ ) then {
 			        // not replace dead group as enemy is fled
                 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
-                    hint localize format["+++ x_isledefence: patrol #%1 will not restored as all main targets completed", _i];
+                    hint localize format["+++ x_isledefense: patrol #%1 will not restored as all main targets completed", _i];
                 #endif
    					_igrpa set [PARAM_STATUS, STATUS_STUB];
 			        breakTo "main_loop";
@@ -872,7 +872,7 @@ while { true } do {
 	        if ((random 1) <= SHOW_ABSENCE_PROBABILITY ) then // inform users about patrol absence
 	        {
                 ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
-        	    if ((current_counter >= number_targets) && (!main_target_ready)) then {_exit = true};
+        	    if ( (current_counter >= number_targets) /** && (!main_target_ready) */ ) then { _exit = true };
 	        };
             _show_absence = false; // disable patrol absence message
 	    };

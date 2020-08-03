@@ -25,6 +25,7 @@ _local   = local _vehicle;
 _driver  = driver _vehicle;
 //+++++++++++++++++++++++++++++++++++++++++
 // Wait until vehicle is dead
+// remember last driver of vehicle
 while {alive _vehicle} do { if ( alive driver _vehicle) then {_driver = driver _vehicle}; sleep (5.532 + random 2.2)};
 _drname = "";
 if (!isNull _driver ) then {
@@ -54,6 +55,7 @@ hint localize format[ "+++ x_wreckmarker.sqf: script for %1, in water %2, Z %3, 
 if ((vectorUp _vehicle) select 2 < 0) then {_vehicle setVectorUp [0,0,1]};
 while {speed _vehicle > 4} do {sleep (0.532 + random 1)};
 if ((vectorUp _vehicle) select 2 < 0) then {_vehicle setVectorUp [0,0,1]};
+if ((surfaceIsWater (getPos _vehicle)) ) then {_vehicle setVelocity [0,0, - (0.1 + (random 0.05))];  }; // sunk with speed from -0.1 to -0.15
 
 _mname = format ["%1", _vehicle];
 _sav_pos = position _vehicle;
@@ -71,7 +73,8 @@ d_wreck_marker set [ count d_wreck_marker, [ _mname, _sav_pos, _type_name ] ];
 // #347.1: Inform user about vehicle being in water
 _msg_time = time;
 if ((surfaceIsWater (getPos _vehicle)) ) then {
-    // the vehicle didn't sink deep enough
+    // the vehicle hasn't yet sunk deep yet
+    _vehicle setVelocity [0,0, - (0.1 + (random 0.2))]; // sunk with speed from -0.1 to -0.3
     _msg_delay = 12 + (random 10);
     ["msg_to_user", "", [["STR_SYS_630_1", _type_name]],0,_msg_delay,0,"good_news"] call XSendNetStartScriptClientAll; // "The lost %1 can still be restored if it is delivered to the appropriate service!"
     _msg_time = time + _msg_delay;
@@ -80,7 +83,8 @@ if ((surfaceIsWater (getPos _vehicle)) ) then {
 _sunk = false;
 while { (!isNull _vehicle) && (([_vehicle, (markerPos _marker)] call SYG_distance2D) < 30) && (!_sunk) } do {
     sleep (3.321 + random 2.2);
-    if ( ( surfaceIsWater (getPos _vehicle) ) ) exitWith {
+    if ( ( surfaceIsWater (getPos _vehicle) ) ) then {
+        _vehicle setVelocity [0,0, - (0.2 + (random 0.1))]; // sunk with speed from -0.2 to -0.3
         _sunk = ( (_vehicle modelToWorld [0,0,0]) select 2 ) < DEPTH_TO_SINK; // it sunk!!!
     };
 };

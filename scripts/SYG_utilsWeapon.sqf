@@ -611,7 +611,7 @@ SYG_rearmSabotage = {
 			if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
 			//if (!(_unit hasWeapon "Binocular")) then {	_unit addWeapon "Binocular"; };
 		}
-		else{ hint localize format["+++ SYG_rearmSabotage full rearming falied due to unknown soldier type %1", _unit_type]; };
+		else{ hint localize format["+++ SYG_rearmSabotage full rearming failed due to unknown soldier type %1", _unit_type]; };
 	}
 	else // AI is not rearmed (used standart equipment)
 	{
@@ -694,7 +694,7 @@ SYG_rearmSabotageGroup = {
  *   _advanced_probability: probability to ream unit with advanced weapon. Must be < _ordinal_probability. Optional.
  *    Default 0.1. Range 0.0 <-> 1.0
  */
-#define __SYG_rearmSpecops_DEBUG__
+// #define __SYG_rearmSpecops_DEBUG__
 
 SYG_rearmSpecops = {
 
@@ -719,7 +719,7 @@ SYG_rearmSpecops = {
 	if ( _rnd < _prob) then  // do ordinal rearming
 	{
 #ifdef __SYG_rearmSpecops_DEBUG__
-        hint localize format["+++ SYG_rearmSabotage: %1 full rearming", _unit_type];
+        hint localize format["+++ SYG_rearmSpecops: %1 full rearming", _unit_type];
 #endif
 
 		_super_rearm = _rnd < (_adv_rearm / 2.0);

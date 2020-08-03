@@ -1,7 +1,7 @@
 // by Xeno, x_scripts\x_wreckmarker2.sqf, called only from x_scripts\x_wreckmarker.sqf or from itself
 //
 // Logic:
-// 1. waits whle vehicle distance from wreck repair service > 30 and vehicle in air and vehicle speed > 1
+// 1. waits while vehicle distance from wreck repair service > 30 and vehicle in air and vehicle speed > 1
 // 2. If vehicle closer than 30 v to wreck repair service then exit.
 //    So marker not needed? But maker still exists, I'm sure, just if vehicle is closer than 30 m to wreck repair service!!!
 //    Or I'm wrong? Let test it in game!

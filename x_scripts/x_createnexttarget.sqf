@@ -28,7 +28,7 @@ hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAll
 _time = time;
 if ( !( call SYG_isMainTargetAllowed ) ) then
 {
-    _msg = [ "localize", "STR_SYS_1151_1", current_mission_counter + 1 ]; // "Finish SM(%1)"
+    _msg = [ "localize", "STR_SYS_1151_1", current_mission_counter ]; // "Finish SM(%1)"
     ["msg_to_user", "*", [_msg], 0, 4] call XSendNetStartScriptClient;
     hint localize format["x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 ) false", current_counter, current_mission_counter];
 };

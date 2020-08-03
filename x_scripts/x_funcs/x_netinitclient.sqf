@@ -656,22 +656,15 @@ XHandleNetStartScriptClient = {
 			[(_this select 1),(_this select 2)] spawn XRecapturedUpdate;
 		};
 		case "mt_spotted": {
-		    private ["_townArr","_musicClassName"];
+		    private ["_townArr","_musicName"];
 			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
 			if ( !(call SYG_playExtraSounds) ) exitWith{};
             _townArr  = "NO_DEBUG" call SYG_getTargetTown;
             if (count _townArr == 0) exitWith{};
             _townName = _townArr select 1;
-            _musicClassName = "";
-            _musicClassName = switch (_townName) do
-            {
-                case "Arcadia" : {"detected_Arcadia"};
-                case "Paraiso" : {"detected_Paraiso"};
-                case "Carmen" : {"detected_Carmen"};
-                case "Rahmadi": {"detected_Rahmadi"};
-                case "Eponia": {"detected_Eponia"};
-            };
-            if (_musicClassName != "" ) then {playMusic _musicClassName};
+            _musicName = "";
+            _musicName = call SYG_getTargetTownDetectedSound;
+            if (_musicName != "" ) then {playMusic _musicName};
 		};
 		#ifdef __AI__
 		case "d_ataxi": {
@@ -693,20 +686,28 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		#endif
+		// [ "syg_observer_kill", _killer, primaryWeapon _observer, _observer] call XSendNetStartScriptClient;
 		case "syg_observer_kill" : {
-            if ( str(arg(1)) == str(player) ) then // code only for killer
-            {
-                private ["_score", "_str"];
-                if (count _this > 2) then {_str = format[" (%1)", arg(1)]} else {_str = "";};
-                hint localize format["+++ x_netinitclient.sqf: Observer(%1) killed by you", _str];
-                // add scores
-                _score = argp( d_ranked_a, 27 );
-                player addScore _score;
-                (format[localize "STR_SYS_1160", _score + 1]) call XfHQChat; // "Twas a spotter
-            };
+            private ["_score","_str","_sound_obj"];
+            _score = argp( d_ranked_a, 27 );
+		    if( isNull arg(1) ) then { // killer unknown
+                _sound_obj = arg(3); // play sound at observer position
+                ( (localize "STR_SYS_1162") call XfHQChat; // "Spotter died..."
+		    } else {
+                if ( str(arg(1)) == str(player) ) then  { // killer is this player
+                    if (count _this > 2) then {_str = format[" (%1)", arg(2)]} else {_str = "";};
+                    hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you", _str];
+                    // add scores
+                    player addScore _score;
+                    (format[localize "STR_SYS_1160", _score + 1]) call XfHQChat; // T'was a spotter (+%1)!
+                } else { // Other player killed an observer
+                    (format[localize "STR_SYS_1161", name (_this select 1), _score + 1]) call XfHQChat; // Spotter killed by %1 (+%2)!
+                };
+                _sound_obj = arg(1); // play sound at sutable position
+		    };
             // common code
             //playSound "no_more_waiting";
-            ["say_sound", arg(1), "no_more_waiting"] call XHandleNetStartScriptClient; // inform me/all about next observer death
+            ["say_sound", _sound_obj, "no_more_waiting"] call XHandleNetStartScriptClient; // inform me/all about next observer death
             // show message
 		};
 		// to inform player about his server stored data
@@ -801,39 +802,32 @@ XHandleNetStartScriptClient = {
 			};
 		};
 
-        case "say_sound": // say user sound from predefined vehicle/unit ["say_sound",_object,_sound, [,"-",_player_name]]
-		{
+        case "say_sound": { // say user sound from predefined vehicle/unit ["say_sound",_object,_sound, [,"-",_player_name]]
 		    private ["_nil","_obj","_sound","_exit"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
-		    if ( (argopt(3,"") == "-") && (argopt(4,"") == name player)) exitWith {false}; // Player disallowed to receipt this sound
+		    if ( (argopt(3,"") == "-") && (argopt(4,"") == name player)) exitWith {false}; // The player disallowed to receipt this sound
 		    _obj = arg(1);
 		    if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
-		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) )then
-		    {
+		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) ) then {
                 _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
                 sleep 0.01;
                 _nil say arg(2);
                 sleep 0.01;
     		    _sound = nearestObject [position _nil, "#soundonvehicle"];
-    		    if (isNull _sound) then
-    		    {
-                    sleep 20; // sleep longer than known max sound length
-    		    }
-    		    else
-    		    {
+    		    if (isNull _sound) then {
+                    sleep 20; // sleep longer than known max sound length (10 seconds)
+    		    } else {
                     waitUntil {isNull _sound};
 	            };
                 deleteVehicle _nil;
-		    }
-		    else
-		    {
+		    } else {
     		    _obj say arg(2); // do this on clients only
 		    };
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
-		    switch (_this select 1) do
-		    {
+		    switch (_this select 1) do {
+		        case "forecast_change" : {call SYG_playWeatherForecastMusic};
 		        case "OFP";
 		        default { call SYG_playRandomOFPTrack};
 		        hint localize "+++ king escape music played";

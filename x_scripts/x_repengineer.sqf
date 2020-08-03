@@ -78,16 +78,14 @@ _rankIndex = player call XGetRankIndexFromScore; // rank index
 
 _refuel_volume = d_refuel_volume + d_refuel_per_rank * _rankIndex; // how many liters to refuel
 
-if (_fuel_capacity_in_litres > 0) then
-{
+if (_fuel_capacity_in_litres > 0) then {
    _refuel_add = _refuel_volume/_fuel_capacity_in_litres;  // max part of volume he could refuel, (value in Arma config not in litres)
 };
 _fuel_add      = _refuel_add min (1 - _fuel);     // how many he will up to the fuel tank limit
 _refuel_limit  = ( _fuel + _fuel_add ) min 1.0;   // limit value he can refuel up to the capacity of the vehicle fuel tank
 
 _fuel_steps = 0;
-if (_refuel_add > 0) then
-{
+if (_refuel_add > 0) then {
 	_fuel_steps = _refuel_volume * (_fuel_add / _refuel_add) / 20; // how many animations are need to complete refuelling
 };
 
@@ -123,8 +121,7 @@ for "_wc" from 1 to _coef do {
 	if (!alive player || d_cancelrep) exitWith {player removeAction _rep_action;};
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (_is_engineer) then {
-        if (!_damage_ok) then
-        {
+        if (!_damage_ok) then {
 #endif
 	        (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat; // Repair ...
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
@@ -132,8 +129,7 @@ for "_wc" from 1 to _coef do {
             (localize "STR_SYS_257") call XfGlobalChat; // Refuel ...
         };
 	} else {
-        if (!_damage_ok) then
-        {
+        if (!_damage_ok) then {
     	    (format[localize "STR_SYS_152", -(_addscore + 1)]) call XfGlobalChat;// Repair ...
         } else {
             (localize "STR_SYS_257") call XfGlobalChat; // Refuel ...
@@ -150,8 +146,7 @@ for "_wc" from 1 to _coef do {
 		_breaked_out2 = true;
 		hint localize "STR_SYS_142"/* "Обслуживание отменено..." */;
 	};
-	if (!_damage_ok) then
-	{
+	if (!_damage_ok) then {
 		_damage = _damage - _rep_count;
 		if (_damage <= 0.01) then {_damage = 0;_damage_ok = true;};
 		_addscore = _addscore + 1;

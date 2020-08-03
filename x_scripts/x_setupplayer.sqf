@@ -312,19 +312,21 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                 //SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                                 3000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
+                                _rearmed = false; // if here, plyaer not rearmed
                             };
                             case "ENGINEERACE":  // EngineerACE
                             {
                                 // Viewdistance
                                 3500 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf"; };
+                                _rearmed = false; // if here, plyaer not rearmed
                             };
                             case "ROKSE [LT]" : // Rokse [LT]
                             {
                                 // Viewdistance
                                 10000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf"; };
-
+                                _rearmed = false; // if here, plyaer not rearmed
                             };
                             // TODO: add more personal setting here (as for "Yeti" done)
                             default { _rearmed = false; }; // all other players are rearmed by standart
@@ -1112,21 +1114,29 @@ if (SYG_found_SCUD ) then {
 };
 #endif
 
-if (random 10 < 7) then
-{
-    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_RUMORS"]
+if (random 10 < 7) then {
+    _local_msg_arr set [count _local_msg_arr, localize "STR_SYS_RUMORS"];
 };
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 //+ show all specific  messages for the player type +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
 _local_msg_arr spawn {
-    if (count _this == 0) exitWith{};
-    sleep 55;
-    {
-         sleep 6;
-         _x call XfGlobalChat;
-    } forEach _this;
+    if (count _this > 0 ) then {
+        sleep 55;
+        {
+             sleep 6;
+             _x call XfGlobalChat;
+        } forEach _this;
+    };
+    if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) then {
+        [
+            "msg_to_user",
+            "",
+            [ ["Für zahlreiche militärische Verdienste erklären das Kommando und die dankbaren Bürger Sie zum Ehrenbürger der Insel Sahrani." ] ],
+            0, 5, false, "drum_fanfare"
+        ] call SYG_msgToUserParser;
+    };
 };
 
 #ifndef __REVIVE__

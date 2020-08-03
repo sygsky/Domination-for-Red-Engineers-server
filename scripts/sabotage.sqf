@@ -125,13 +125,13 @@ _grp setCombatMode "YELLOW";
 
 if ( _debug ) then { player globalChat format["+++ sabotage.sqf: Start, group units count: %1", count units _grp]; };
 #ifdef __PRINT__
-    _cnt = 0;
-    _cnt1 = 0;
-    {
-        if (m_PIPEBOMBNAME in (magazines _x)) then {_cnt = _cnt + 1;};
-        if ( canStand _x) then {_cnt1 = _cnt1 + 1;};
-    } forEach units _grp;
-	hint localize format["+++ sabotage.sqf: Start, units in group %1, canStand %2, bombs in inventory %3", count units _grp, _cnt1, _cnt];
+_cnt = 0;
+_cnt1 = 0;
+{
+    if (m_PIPEBOMBNAME in (magazines _x)) then {_cnt = _cnt + 1;};
+    if ( canStand _x) then {_cnt1 = _cnt1 + 1;};
+} forEach units _grp;
+hint localize format["+++ sabotage.sqf: Start, units in group %1, canStand %2, bombs in inventory %3", count units _grp, _cnt1, _cnt];
 #endif	
 
 // do up to the last man
@@ -153,9 +153,16 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	//++++++++++++++++++
 	// seek factories  +
 	//++++++++++++++++++
-	if ( _debug ) then 	{ player globalChat format["+++ sabotage.sqf: WarfareBEastAircraftFactory %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE]; };
+	if ( _debug ) then 	{ player globalChat format["+++ sabotage.sqf: WarfareBEastAircraftFactory %1, grp (%2) leader at %3",
+	    count _no,
+	    {alive _x} count units _grp,
+	    [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
+	    };
 #ifdef __PRINT__
-    hint localize format["+++ sabotage.sqf: WarfareBEastAircraftFactory cnt = %1, leader at %2", count _no, [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
+    hint localize format["+++ sabotage.sqf: WarfareBEastAircraftFactory cnt = %1, grp (%2), leader at %3",
+    count _no,
+    {alive _x} count units _grp,
+    [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
 #endif
 
 	//--------------

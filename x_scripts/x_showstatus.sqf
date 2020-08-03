@@ -142,15 +142,12 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 		case 41: // hostages
 		{
 			// find side mission marker and its coordinates
-			if (format ["%1",_pos] != "[0,0,0]") then
-			{
+			if (format ["%1",_pos] != "[0,0,0]") then {
 				// find civilians
 				_units = nearestObjects [_pos, ["Civilian"], 1000];
 				_cnt = count _units;
-				if ( _cnt > 0 ) then
-				{
-					for "_i" from 0 to _cnt - 1 do 
-					{ 
+				if ( _cnt > 0 ) then {
+					for "_i" from 0 to _cnt - 1 do {
 						_x = _units select _i; 
 						if (!alive _x) then {_units set [_i, "RM_ME"]};
 					};
@@ -158,8 +155,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 					_alive_cnt = count _units;
 					_dist = -1;
 					_s1 = localize "STR_SYS_123"; // "Лидер не обнаружен"
-					if (_alive_cnt > 0) then
-					{
+					if (_alive_cnt > 0) then {
 						_dist   = _pos distance(_units select(_alive_cnt-1));
 						_dist   = (ceil(_dist/50))*50;
 						_leader = leader (group(_units select 0));
@@ -179,25 +175,20 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 		{
 			_s1 = localize "STR_SYS_135"; //"Side Mission marker is absent"  - default message
 			// find side mission marker and its coordinates
-			if (format["%1",_pos] != "[0,0,0]") then
-			{
+			if (format["%1",_pos] != "[0,0,0]") then {
 				// find officer. He must be alone or rarely may be dead
 				_units = nearestObjects [_pos, ["ACE_USMC0302"], 500];
-				if ( count _units > 0 ) then
-				{
+				if ( count _units > 0 ) then {
 					_s1 = localize "STR_SYS_133"; // "точки задания"
-				}
-				else  // search around player
-				{
+				} else {
+				    // search around player
 				    _pos = getPos player;
 					_units = nearestObjects [_pos, ["ACE_USMC0302"], 1500];
-					if ( count _units > 0 ) then
-					{
+					if ( count _units > 0 ) then {
 						_s1 = localize "STR_SYS_132"; // "вашей Глонасс-позицией"
 					};
 				}; // Not found near side mission position
-				if ( count _units > 0 ) then
-				{
+				if ( count _units > 0 ) then {
 					_leader = _units select 0;
 					_dist   = _pos distance _leader;
 					_dist   = (ceil(_dist/50))*50;
@@ -236,20 +227,15 @@ if ( current_target_index >= 0 && (client_target_counter < number_targets)) then
 {
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-    if (! call SYG_isMainTargetAllowed) then // show some special info
-    {
+    if (! call SYG_isMainTargetAllowed) then { // show some special info
         _s = localize "STR_SYS_59_3"; // You are Asked to complete next SM!
-    }
-    else
-    {
+    } else {
 #endif
         _s1 = "";
-        if ( (_target_array2 select 2) >= big_town_radious) then // big town
-        {
+        if ( (_target_array2 select 2) >= big_town_radious) then { // big town
             _s1 = localize "STR_SYS_59_1";
         };
-        if (client_target_counter == number_targets-1) then // last town
-        {
+        if (client_target_counter == number_targets-1) then { // last town
             if ( _s1 != "" ) then {_s1 = _s1 + ",";};
             _s1 = _s1 + localize "STR_SYS_59_2";
         };
@@ -260,8 +246,7 @@ if ( current_target_index >= 0 && (client_target_counter < number_targets)) then
 #endif
 }
 else{
-    if ( client_target_counter >= number_targets) then // all towns are done!
-    {
+    if ( client_target_counter >= number_targets) then { // all towns are done!
         _s = localize "STR_SYS_216"; // "occupied town" TODO: click should move to occupied town
     };
 };
@@ -321,8 +306,7 @@ if (!d_use_teamstatusdialog) then {
 _s = "";
 if (current_target_index != -1) then {
 	switch (sec_kind) do {
-		case 1: 
-		{
+		case 1: {
 			_s = format ["%1\n",format [localize "STR_SYS_200", _current_target_name]]; //"Найти в %1 и устранить местного губернатора.\n"
 #ifdef __SYG_GOVERNOR_INFO__
 
@@ -330,47 +314,29 @@ if (current_target_index != -1) then {
 			_center = _target_array2 select 0; // center of curent town
 			_searchDist = 5000;
 			_list = _center nearObjects [ "ACE_OfficerW", _searchDist]; // search any officer (may be not nearest!) unit around
-			if ( count _list == 0 )	then 
-			{
+			if ( count _list == 0 )	then {
 				_s = _s + format[localize "STR_SYS_113", "ACE_OfficerW", _searchDist]; //"Губернатор (%1) не обнаружен в радиусе %2м.!"
-			}
-			else
-			{
+			} else {
 			    _ind = 0;
 				_unit = _list select _ind;
                 _dist = [_center distance _unit, 25] call SYG_roundTo;
                 _dir  = [[_center,_unit] call XfDirToObj,5] call SYG_roundTo;
-				if (!alive _unit) then
-				{
-				    if (_dist > 0)
-				    then
-				    {
+				if (!alive _unit) then {
+				    if (_dist > 0) then {
 				        _s = _s + format[ localize "STR_SYS_115", _dist, _dir]; // "Some corpse in the uniform of the Governor is lying in %1 m from the center of the red zone. Direction %2 gr."
-				    }
-				    else
-				    {
+				    } else {
            				_s = _s + localize "STR_SYS_115_0"; // "Some corpse in the uniform of the Governor is found at the center of the red zone"
 				    };
-				}
-				else
-				{
-                    _str = if ((damage _unit) > 0.3) then
-                    {"STR_SYS_115_3";}
-                    else
-                    {
-                        if ((damage _unit) > 0.1) then
-                        {"STR_SYS_115_2";}
-                        else
-                        {"STR_SYS_115_1";}
-                    };
+				} else {
+                    _str = if ((damage _unit) > 0.3) then { "STR_SYS_115_3" }
+                           else {
+                               if ((damage _unit) > 0.1) then { "STR_SYS_115_2" }
+                               else { "STR_SYS_115_1" }
+                           };
                     _str = format ["%1 %2 %3", name _unit, localize "STR_SYS_114", localize _str]; // "Juan/Julio/etc alive/but wounded/but seriously wounded"
-				    if (_dist == 0)
-				    then
-				    {
+				    if (_dist == 0) then {
     				    _s = _s + format[ localize "STR_SYS_116_0", _str]; //"Partisans inform: Governor %1, at center of red zone"
-    				}
-    				else
-    				{
+    				} else {
     				    _s = _s + format[ localize "STR_SYS_116", _str, _dist, _dir]; //"Partisans inform: Governor %1, dist. %2 m., dir. %3 deg. from the centre of the red zone"
     				}
 				};
@@ -393,7 +359,7 @@ if (current_target_index != -1) then {
 _ctrl = _XD_display displayCtrl 11007;
 _ctrl ctrlSetText _s;
 
-_ctrl = _XD_display displayCtrl 12010; // Звание
+_ctrl = _XD_display displayCtrl 12010; // Rank/Звание
 _ctrl ctrlSetText d_rank_pic;
 
 _ctrl = _XD_display displayCtrl 11014;
