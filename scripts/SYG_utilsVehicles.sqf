@@ -807,7 +807,7 @@ SYG_makePatrolGroup = {
 //
 // use it as list of short strings: ["aa","at","mg","cn","gl"<,"st">]
 
-WEAPONS_TYPE_ARR = [
+STATIC_WEAPONS_TYPE_ARR = [
 	["Stinger_Pod","Stinger_Pod_East","ACE_ZU23M"/*,"ACE_ZU23"*/], // AntiAircraft
 	["TOW_TriPod","TOW_TriPod_East","ACE_TOW","ACE_KonkursM","ACE_SPG9"], // AntiTank static
 	["M2StaticMG","M2HD_mini_TriPod","DSHKM","DSHkM_Mini_TriPod","WarfareBEastMGNest_PK"], // MachineGun
@@ -834,47 +834,35 @@ SYG_sideStaticWeapons = {
 
 	private ["_mgs","_aas","_ats","_gls","_cns",/* "_wpa", */"_ret","_unk","_side","_pos","_dist","_arr","_vec","_type","_found","_i"];
 
-/* 	_mgs = ["M2StaticMG","M2HD_mini_TriPod","DSHKM","DSHkM_Mini_TriPod","WarfareBEastMGNest_PK"];
-	_aas = ["Stinger_Pod","Stinger_Pod_East","ACE_ZU23M","ACE_ZU23"];
-	_ats = ["TOW_TriPod","TOW_TriPod_East","ACE_TOW","ACE_KonkursM"];
-	_gls = ["MK19_TriPod","AGS"];
-	_cns = ["M119","D30"];
-	_wpa = [_aas,_ats,_mgs,_cns,_gls];
- */	_ret = EMPTY_RETURN_ARRAY;
+    _ret = EMPTY_RETURN_ARRAY;
 	_unk = []; // unknown type objects array
 	_side = arg(0);
 	_side = _side call SYG_getSide;
-	if ( (typeName _side) == "STRING") exitWith 
-	{
+	if ( (typeName _side) == "STRING") exitWith {
 		hint localize format["--- call to SYG_sideStaticWeapons failed -> %1",_side];
 		EMPTY_RETURN_ARRAY
 	};
 
 	_pos = argopt(1,[]);
 	if ( (typeName _pos) == "OBJECT") then { _pos = position _pos; };
-	if ( count _pos != 3 ) exitWith 
-	{ 
+	if ( count _pos != 3 ) exitWith {
 		hint localize format["--- SYG_sideStaticWeapons: expected pos illegal or absent ""%1""", _pos];EMPTY_RETURN_ARRAY
 	};
 
 	_dist = argopt(2,-1);
-	if ( _dist < 0 ) exitWith 
-	{
+	if ( _dist < 0 ) exitWith {
 		hint localize "--- SYG_sideStaticWeapons: expected search radious absent";
 		EMPTY_RETURN_ARRAY
 	};
 	
 	_arr = _pos nearObjects [ "StaticWeapon", _dist];
 	{ // forEach _arr;
-		if ( (side _x) == _side ) then
-		{
+		if ( (side _x) == _side ) then {
 			_vec = _x;
 			_type = typeOf _x;
 			_found = false;
-			for "_i" from 0 to (count WEAPONS_TYPE_ARR) - 1 do
-			{
-				if ( _type in (WEAPONS_TYPE_ARR select _i) ) exitWith 
-				{ 
+			for "_i" from 0 to (count STATIC_WEAPONS_TYPE_ARR) - 1 do {
+				if ( _type in (STATIC_WEAPONS_TYPE_ARR select _i) ) exitWith {
 					_rar = _ret select _i; _rar set [count _rar, _vec]; _found = true;
 				};
 			};
@@ -882,10 +870,8 @@ SYG_sideStaticWeapons = {
 		};
 		sleep 0.01;
 	} forEach _arr; // _aas,_ats,_mgs,_cns,_gls
-	if ((count _unk) > 0) then
-	{
-		for "_i" from 0 to ((count _unk) - 1) do
-		{
+	if ((count _unk) > 0) then {
+		for "_i" from 0 to ((count _unk) - 1) do {
 			_unk set [ _i, typeOf  (_unk select _i) ];
 		};
 	};
