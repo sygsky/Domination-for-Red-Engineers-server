@@ -307,10 +307,8 @@ SYG_pointInEllipse = {
     _pnt = arg(0);
     //player groupChat format["SYG_pointInEllipse: elli %1, pnt %2, rot %3", _elli,_pnt, argp(_elli,3)];
     _ellic = argp(_elli,0);
-    if ( count _elli > 3) then // ellipse may be rotated
-    {
-        if ( argp(_elli,3) != 0 ) then // ellipse is rotated
-        {
+    if ( count _elli > 3) then {// ellipse may be rotated
+        if ( argp(_elli,3) != 0 ) then  { // ellipse is rotated
             _pnt = [ _ellic,_pnt, argp(_elli,3)] call SYG_rotatePointAroundPoint;
         };
     };
@@ -335,10 +333,8 @@ SYG_pointInRect = {
 	_rect = arg(1);
 	_rpnt = argp(_rect,0);
 	//player groupChat format["SYG_pointInRect: rect %1, pnt %2, rot %3", _rect,_pnt, argp(_rect,3)];
-	if ( count _rect > 3 ) then // may be rotated
-	{
-		if ( argp(_rect,3) != 0) then
-		{
+	if ( count _rect > 3 ) then {// may be rotated
+		if ( argp(_rect,3) != 0) then {
 			_pnt = [_rpnt,_pnt,argp(_rect,3)] call SYG_rotatePointAroundPoint;
 		};
 	};

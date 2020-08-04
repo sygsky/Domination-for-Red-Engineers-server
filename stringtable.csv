@@ -171,7 +171,7 @@ STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport wil
 STR_SYS_75_chopper,Teleporting not possible while swimming !!!,"Teleportieren nicht möglich, während Sie schwimmen !!!",¡Teletransportarse en el agua no está disponible!!!,Телепортирование в воде недоступно!!!
 STR_SYS_75_wreck,Teleporting not possible while swimming !!!,"Teleportieren nicht möglich, während Sie schwimmen !!!",¡Teletransportarse en el agua no está disponible!!!,Телепортирование в воде недоступно!!!
 
-STR_SYS_76,"Due to the strong wind over the ocean, you jumped a little wrong",Aufgrund des starken Windes über dem Ozean sind Sie ein wenig falsch gesprungen,"Debido al fuerte viento sobre el océano, saltaste un poco hacia el lado equivocado",Из-за сильного ветра над океаном Вы прыгнули немного не туда
+STR_SYS_76,"Due to the strong wind over the ocean, you jumped a little wrong: %1 m. to %2","Wegen des starken Windes über dem Ozean sind Sie ein wenig falsch gesprungen: %1 m. bis %2","Debido al fuerte viento sobre el océano, saltaste un poco hacia el lado equivocado: %1 m. a %2",Из-за сильного ветра над океаном Вы прыгнули немного не туда: %1 m. на %2
 STR_SYS_77,Cancel service,Rückgängig Service,Cancelar Servicio,Отменить обслуживание
 STR_SYS_78,Lift %1,Hubschrauber %1,Helicóptero de transporte %1,Трансп. вертолёт %1
 STR_SYS_79,Wreck Lift,Wrack heben,Transporte de escombros,Трансп. обломков

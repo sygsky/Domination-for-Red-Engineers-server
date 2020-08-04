@@ -4,7 +4,7 @@ _StartLocation = _this select 0;
 _paratype      = _this select 1;
 _jump_score    = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
 
-hint localize format["+++ jump.sqf: _this = %1", _paratype];
+hint localize format["+++ jump.sqf: _this = %1", _this ];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -29,6 +29,7 @@ if (playerSide == east) then {
 #define __SPECIAL_JUMP_OVER_SEA__ // special condition of strong wind over sea surface
 #define JUMP_DISPERSION 1000        // max. dispersion due to wind in ocean
 #define MAX_SHIFT 3500
+#define MIN_SHIFT 300
 
 #ifdef __SPECIAL_JUMP_OVER_SEA__
 
@@ -40,29 +41,47 @@ if (_paratype == "ACE_ParachutePack") then { _shift = 6 * _shift }; // up to 6 t
 // detect if jump is over sea
 _pos = [];
 _water_count = 0;
+_offsets = [-JUMP_DISPERSION,0, +JUMP_DISPERSION]; // offsets on X and Y to create check matrix 3 x 3 of dimension
+// _offsets = [-JUMP_DISPERSION,-JUMP_DISPERSION/2,0, +JUMP_DISPERSION/2,+JUMP_DISPERSION]; // offsets on X and Y to create check matrix 5 x 5 on dimensiono
+for "_x" from 0 to (count _offsets)-1 do {
+    _pos set [0, (_StartLocation select 0) + (_offsets select _x)];
+    for "_y" from 0 to (count _offsets)-1 do {
+        // skip central point from counting
+        if (_x != 1 || _y != 1) then {
+            _pos set [1, (_StartLocation select 1) + (_offsets select _y)];
+            if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
+        };
+    };
+};
+/*
 {
-    _pos set [0, (_StartLocation select 0) + (_x select 0)];
+    _pos set [0, (_StartLocation select 0) + _x ]; // point in check matrix on X axis
     {
-        _pos set [1, (_StartLocation select 1) + (_x select 1)];
+        _pos set [1, (_StartLocation select 1) + _x ]; // point in check matrix on Y axis
         if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
-    } forEach [-JUMP_DISPERSION,0, +JUMP_DISPERSION];
-} forEach [-JUMP_DISPERSION,0, +JUMP_DISPERSION];
+    } forEach _offsets;
+} forEach _offsets;
+*/
 
-// if 3 or more points in 3x3 grid with 1 km sides ar on land, no wind will be applied, else wind is very-very strong))
-if (_water_count > 7 ) then { // player jumps over sea surface, add strong wind effect
-    _wind_arr = wind;
+// if 2 or more points in 3x3 grid with 1 km sides are on land, no ocean wind effect will be applied, else wind is very-very strong))
+_wind_arr = wind;
+if (_water_count >= ((count _offsets) * (count _offsets) - 2) ) then { // player jumps over sea surface, add strong wind effect
     _len = _wind_arr distance [0,0,0]; // scalar vector length
-    _shift = (random _shift) min MAX_SHIFT; // not further then 3500 meters from the original start point
+    _shift = MIN_SHIFT max (random ( _shift min MAX_SHIFT) ); //  shift 300 to 3500 meters from the original start point
     _dx = ((_wind_arr select 0) / _len) * _shift;
     _dy = ((_wind_arr select 1) / _len) * _shift;
     _dz = ((_wind_arr select 2) / _len) * _shift;
     _StartLocation set [0, (_StartLocation select 0) + _dx];
-    _StartLocation set [1, (_StartLocation select 1) + _dx];
+    _StartLocation set [1, (_StartLocation select 1) + _dy];
     _StartLocation set [2, (_StartLocation select 2) + _dz];
-    if (_shift > 50) then {
-        (localize "STR_SYS_76_1") call XfHQChat; // “A strong ocean wind blew the parachute off”
+    _str_dir = ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirName;
+    if ( _shift > 50 ) then {
+        format[localize "STR_SYS_76", round(_shift / 20) * 20, _str_dir] call XfHQChat; // “A strong ocean wind blew the parachute off”
     };
-    hint localize format["+++ jump.sqf: wind %1, dispersion is %2 [%3,%4,%5] m", _wind_arr, round(_shift), round(_dx), round(_dy), round(_dz) ];
+    hint localize format["+++ jump.sqf: wind %1 (dir %2), dispersion is %3 [%4,%5,%6] m, water count %7 of %8",
+        _wind_arr, ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirNameEng,
+        round(_shift), round(_dx), round(_dy), round(_dz), _water_count, ((count _offsets) * (count _offsets) - 1) ];
+
 };
 #endif
 

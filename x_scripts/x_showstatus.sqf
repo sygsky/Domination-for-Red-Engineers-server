@@ -15,22 +15,17 @@ _XD_display = findDisplay 11001;
 _target_array2 = [];
 _current_target_name = "";
 
-if (current_target_index == -1) then // before 1st town or current town cleared
-{
-    if (client_target_counter < number_targets ) then
-    {
+if (current_target_index == -1) then {// before 1st town or current town cleared
+    if (client_target_counter < number_targets ) then {
         _current_target_name = localize "STR_SYS_208"; // "No target"
     };
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-    if ( call SYG_isMainTargetAllowed ) then
-    {
+    if ( call SYG_isMainTargetAllowed ) then {
 #endif
         _target_array2 = d_base_array;
         _current_target_name = localize "STR_SYS_215"; //"Airbase";
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-    }
-    else
-    {
+    } else {
         _current_target_name = format[localize "STR_SYS_1151", current_mission_counter + 1 ]; // "Finish SM(%1)"
     };
 #endif
@@ -84,22 +79,17 @@ _ctrl = _XD_display displayCtrl 11002;  // secondary mission text control
 _s = current_mission_text;
 
 //+++ Sygsky: added more info about hostages, officer, snipers etc
-if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm) ) then
-{ 
+if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm) ) then {
 	call compile format ["_pos = markerPos ""XMISSIONM%1"";", current_mission_index + 1];
-	switch current_mission_index do
-	{
+	switch current_mission_index do {
 		case 5: // king in hotel
 		{
-			if (! isNil "king" ) then
-			{
+			if (! isNil "king" ) then {
 
-				if ( alive king ) then
-				{
+				if ( alive king ) then {
 
 					_dist = _pos distance king;
-					if ( _dist > 100 ) then 
-					{
+					if ( _dist > 100 ) then {
 						 // "Locals %1 claim that the king is hiding at %2 meters away!!!"
 						_s = _s + "\n" + format[localize "STR_SYS_524", localize (call SYG_getLocalMenRandomName), (round (_dist / 100)) * 100];
 					} else { _s = _s + "\n" + localize "STR_SYS_526"}; // "The locals think that the king is in the hotel or its surroundings."
@@ -112,8 +102,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 		{
 			// find side mission marker and its coordinates
 			_str = "";
-			if (format ["%1",_pos] != "[0,0,0]") then
-			{
+			if (format ["%1",_pos] != "[0,0,0]") then {
 				// find civilians
 				_units = nearestObjects [_pos, ["Civilian"], 500];
 				_cnt = count _units;
@@ -205,10 +194,8 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
     if (!isNil "SM_HeavySniperCnt") then
     {
 //        hint localize format["SM_HeavySniperCnt = %1", SM_HeavySniperCnt];
-        if (SM_HeavySniperCnt > 0) then
-        {
-            switch (SM_HeavySniperCnt) do
-            {
+        if (SM_HeavySniperCnt > 0) then {
+            switch (SM_HeavySniperCnt) do {
                 case 1: { _s = _s + "\n" + localize "STR_GRU_49";}; // "У врагов тут можно разжиться трофеем"
                 default { _s = _s + "\n" + localize "STR_GRU_49_1";}; // "У врагов здесь можно разжиться несколькими трофеями"
             };
