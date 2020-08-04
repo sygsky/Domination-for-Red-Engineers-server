@@ -1129,8 +1129,8 @@ _local_msg_arr spawn {
              _x call XfGlobalChat;
         } forEach _this;
     };
-    sleep 6;
     if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) exitWith {
+        sleep 6;
         [
             "msg_to_user",
             "",
@@ -1139,6 +1139,7 @@ _local_msg_arr spawn {
         ] call SYG_msgToUserParser;
     };
     if ( (name player) == "Rokse [LT]") exitWith {
+        sleep 6;
         [
             "msg_to_user",
             "",
