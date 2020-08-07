@@ -43,7 +43,7 @@ _ownSide = (
         case "EAST": {east};
     }
 );
-_usa = ["StrykerBase","M113","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded","StaticWeapon"];
+_usa = ["StrykerBase","M113","ACE_M2A1","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded","StaticWeapon"];
 _ussr  = ["BMP2","T72","D30","ZSU","UAZMG","Ural","BRDM2","BMP2_MHQ_unfolded"]; // BMP2_MHQ inherited from BMP2
 
 _own_vehicles = (
