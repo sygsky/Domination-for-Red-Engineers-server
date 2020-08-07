@@ -970,5 +970,10 @@ SYG_morningEnd       =  7.00;
 SYG_eveningStart     = 18.30;
 SYG_shortNightStart  = 19.75;
 
+#ifdef __OLD__ // Sygsky's original plan
 SYG_nightSkipFrom    = 21.00 ;  // skip server/client time from
 SYG_nightSkipTo      =  3.00;   // skip server/client time to
+#else // Yeti proposal 07-AUG-2020
+SYG_nightSkipFrom    = 20.00 ;  // skip server/client time from
+SYG_nightSkipTo      =  4.00;   // skip server/client time to
+#endif
