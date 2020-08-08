@@ -84,14 +84,16 @@ if (_sound == "") then { // select random music for ordinal day
                 ["Ceres-de","CERES de","Ceres.","CERES"] , // Germany
                 ["Rokse [LT]"], // military radist
                 ["Shelter", "Marcin"], // polyaks
-                ["Petigp", "gyuri", "Frosty"] // hungarian
+                ["Petigp", "gyuri", "Frosty"], // hungarian
+                ["Snooper" ] // Russian from Belorussia
             ];
             _sounds  =
             [
                 ["amigohome_ernst_bush","amigohome_ernst_bush","zaratustra"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
-                ["hungarian_dances","hungarian_dances","hungarian_dances"]
+                ["hungarian_dances","hungarian_dances","hungarian_dances"],
+                ["toccata","toccata","toccata","hungarian_dances","hungarian_dances","hungarian_dances"]
             ];
             _name    = name player;
             _personalSounds = [];
@@ -105,19 +107,19 @@ if (_sound == "") then { // select random music for ordinal day
             }; // as you are some kind of spy
 
 #ifdef __TIME_OF_DAY_MISIC__
-            // music to play at night
+            // music to play day and night
             _night_music = [
                 "bond","bond1","adjutant","prince_negaafellaga","total_recall_mountain","adagio","morze","morze_3",
                 "treasure_island_intro","fear2","soviet_officers","cosmos","manchester_et_liverpool","tovarich_moy",
-                "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","toccata","del_vampiro1",
+                "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","del_vampiro1",
                 "del_vampiro2","zaratustra","bolivar","jrtheme","vague","enchanted_boy"
             ];
 
-            // music to play night and day time
+            // music to play only in day time
             _daytime_music = [
                 "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
-                "Letyat_perelyotnye_pticy_2nd","ruffian","morze","morze_3","chapaev","rider","condor","Vremia_vpered_Sviridov",
-                "Letyat_perelyotnye_pticy_end","sovest1","sovest2","toccata","zaratustra","travel_with_friends"
+                "Letyat_perelyotnye_pticy_2nd","ruffian","morze","morze_3","chapaev","rider","Vremia_vpered_Sviridov",
+                "Letyat_perelyotnye_pticy_end","toccata","travel_with_friends"
             ];
 
             // only night music
