@@ -3,23 +3,6 @@ Language,English,German,Spanish,Russian
 STR_LANG,ENGLISH,GERMAN,SPANISH,RUSSIAN
 STR_LANGUAGE,ENGLISH,GERMAN,SPANISH,RUSSIAN
 
-//---------------------------------------------------------------------
-// X Scripts strings:
-//--------------------------------------------------------------------
-STR_XCP_01,Saboteur sent to targer,Saboteur sent to target,Saboteur sent to target,Подрывник получил задание
-STR_XCP_02,DEBUG: Restoring behaviour to %1. Moving to drop pos %2,DEBUG: Restoring behaviour to %1. Moving to drop pos %2,DEBUG: Restoring behaviour to %1. Moving to drop pos %2,DEBUG: задан режим %1. Двигаться на позицию %2
-STR_XCP_03,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Перемещение завершено через unitReady и exitWith
-STR_XCP_04,DEBUG: Move FAILED,DEBUG: Move FAILED,DEBUG: Move FAILED,DEBUG: Перемещение было неудачным
-STR_XCP_05,DEBUG: NEW behaviour %1. Prev behaviour %2,DEBUG: NEW behaviour %1. Prev behaviour %2,DEBUG: NEW behaviour %1. Prev behaviour %2,2Новый режим %1. Пред. режим %2
-STR_XCP_06,PipeBomb: %1,PipeBomb: %1,PipeBomb: %1,Взрывпакет: %12
-STR_XCP_07,DEBUG: Restoring behaviour to %1. Moving to retreat pos...,DEBUG: Restoring behaviour to %1. Moving to retreat pos...,DEBUG: Restoring behaviour to %1. Moving to retreat pos...,DEBUG: Восст. реж. %1. И отход обратно...
-STR_XCP_08,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Перемещ. завершено через unitReady и exitWith
-STR_XCP_09,DEBUG: Start x_sabotage.sqf,DEBUG: Start x_sabotage.sqf,DEBUG: Start x_sabotage.sqf,DEBUG: Запуск x_sabotage.sqf
-STR_XCP_10,x_sabotage.sqf: script starts,x_sabotage.sqf: script starts,x_sabotage.sqf: script starts,x_sabotage.sqf: запуск скрипта диверсии
-STR_XCP_11,x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible,x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible,x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible,"x_sabotage.sqf: Бомбы у бойцов не найдены, cдаёмся КГБ"
-STR_XCP_12,x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started,x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started,x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started,x_sabotage.sqf: В отряде есть бомба! Начинаем диверсию...
-//------------------------------------------------------------------------
-
 //-----------------------------------------------------------------------
 // SYG scripts strings:
 //----------------------------------------------------------------------
