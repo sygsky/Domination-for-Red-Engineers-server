@@ -1404,8 +1404,8 @@ STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2,
 STR_GRU_46,The landing of the enemy patrol spotted by %1%2%3%4%5%6,Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6,Local %1 vio el desembarco de una patrulla enemiga%2%3%4%5%6,Местный %1 наблюдал высадку вражеского патруля %2%3%4%5%6
 STR_GRU_46_0,Sahrani inhabitants inform: Enemy patrols disappeared!,Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!,"¡Las patrullas enemigas han desaparecido, informan los residentes!","Вражеские патрули исчезли, сообщают жители!"
 STR_GRU_46_1,"near ""%1""","in der Nähe von ""%1""","cerca de "" %1""","близ ""%1"""
-STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," a una distancia de aproximadamente %1 m."," на дист. примерно %1 м.
-STR_GRU_46_3,bearing %1,Richtung %1,. acimut %1,", азимут %1"
+STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," a una distancia de aproximadamente %1 m."," на дист. примерно %1 м."
+STR_GRU_46_3," bearing %1"," Richtung %1"," acimut %1"," азимут %1"
 STR_GRU_46_4,numbering %1 unit[s],die Nummerierung %1 Fahrzeug[s],", numerando %1 unidades.",", численностью %1 ед."
 STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
 
@@ -1475,6 +1475,11 @@ STR_FAC_UNKNOWN_MAN,The factory was destroyed by unknown means,Die Fabrik wurde 
 STR_HUD_ON,Turn HUD On,HUD einschalten,Encender la pantalla,Вкл. дисплей
 STR_HUD_OFF,Turn HUD off,HUD ausschalten,Desactivar la pantalla,Откл. дисплей
 
+STR_BONUS,"In gratitude, people reported that they noticed the old Soviet equipment (%2) at n.p. %1. Find it and deliver it to the base, receiving points. The vehicle you visited is considered to have been found","Dankbarkeit berichteten die Bewohner, dass ihnen in der Region des n.p. %1 alte sowjetische Ausrüstung aufgefallen sei (%2). Finden Sie es und liefern Sie es an den Stützpunkt und die Empfangsstellen. Die von Ihnen besuchte Technik gilt als gefunden","En agradecimiento, los residentes informaron que en la región de n.p. %1 se dieron cuenta del viejo equipo soviético (%2). Encuéntralo y entrégalo en la base, recibiendo puntos. Se considera que la técnica que visitó ha sido encontrada","В благодарность жители сообщили, что в р-не н.п. %1 заметили старую советскую технику (%2). Найдите и доставьте её на базу, получив очки. Найденной считается техника, в которой Вы побывали"
+STR_BONUS_1,"You found %1! Try to deliver the find to the base. You will get points (+%2), the machine - full recovery on the service","Sie haben %1 gefunden! Versuchen Sie, den Fund bei der Basis abzuliefern. Sie erhalten Punkte (+%2), die Maschine - vollständige Wiederherstellung auf dem Service","Encontraste %1! Intenta llevar el hallazgo a la base. Obtendrás puntos (+%2), la máquina - recuperación total en el servicio","Вы обнаружили %1! Попробуйте доставить находну на базу. Вы получите очки (+%2), машина - возможность полного восстановления на сервисе"
+STR_BONUS_2,"It was ""%1""! When you deliver the vehicle to the base you get points (+%2), and the machine - the possibility of full resurrection","Es war ""%1""! Wenn Sie die Ausrüstung an den Stützpunkt liefern, erhalten Sie Punkte (+%2), und die Maschine - die Möglichkeit der vollständigen Wiederherstellung","¡Era ""%1""!Cuando entregas el equipo a la base obtienes puntos (+%2), y la máquina - la posibilidad de una recuperación total","Здесь был ""%1""! При доставке технику на базу Вы получаете очки (+%2), а машина - возможность полного восстановления"
+STR_BONUS_3,"Not bad! You delivered the car to the base, got points (+%1), the car can now be restored!","Nicht schlecht! Sie haben den Wagen zur Basis gebracht, Sie haben Punkte (+%1) erhalten, der Wagen hat die Fähigkeit zur Wiederherstellung erworben!","¡No está mal! Entregaste el coche a la base, te dieron puntos (+%1), el coche ha adquirido la capacidad de restaurar!","Неплохо! Вы доставили машину на базу, Вам выданы очки (+%1), машина приобрела возоможность восстановленния!"
+
 STR_CHECK_ITEM,Inspect,Überprüfen,Estudiar,Изучить
 
 STR_LIB_ACE_MAP,A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it,"Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen",Mapa secreto arrugado de la ubicación de las fuerzas enemigas de Tamaño A0. Parece que los chicos tuvieron que trabajar duro fabricándola.,"Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"
@@ -1509,4 +1514,3 @@ STR_GEAR_DROP,Drop,Ablegen,Aplazar,Отложить
 STR_NAME_MARINE,Name Marine,Name Marine,Topónimo marítimo,Морской топоним
 STR_BISCAMEL_NAME,Camel,Camel,Sopwich-Camel,Сопвич-Кэмел
 STR_BISCAMEL_NAME2,An-2(USSR),An-2(UdSSR),An-2(USSR),Кукурузник
-"
