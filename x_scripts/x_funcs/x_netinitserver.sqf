@@ -326,13 +326,10 @@ XHandleNetStartScriptServer = {
             _playerName = argopt(2, "" );
             if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: empty or absent player name"};
             _score = argpopt( GRU_specialBonusArr, _id, 0 ); // check for score available
-            if( _score > 0 ) then // this event score is available, clear it now
-            {
+            if( _score > 0 ) then { // this event score is available, clear it now
                 GRU_specialBonusArr set [ _id, 0 ]; // use it now
                 ["GRU_event_scores", _id, _score, _playerName] call XSendNetStartScriptClient;
-            }
-            else
-            {
+            } else {
                 ["GRU_event_scores", _id, _score, ""] call XSendNetStartScriptClient;
             };
 		};

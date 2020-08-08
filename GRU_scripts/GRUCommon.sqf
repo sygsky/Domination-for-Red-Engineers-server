@@ -104,22 +104,17 @@ GRU_mainTaskDescription = {
 
 /*
     Scores for investigations of some special objects (fire, map, enemy plans paper etc).
-    If called from client computer, message if sent to server
-    if called on serveк computer, scores are checked and available information sent ot user
+    If called from client computer, message is sent to server
+    if called on serveк computer, scores are checked and available information sent to user
 */
 GRU_SpecialScores = {
-    if (!X_CLIENT) then
-    {
+    if (!X_CLIENT) then {
         // todo: check for scores
         hint localize format["Server-> GRU_specialScores: input %1", _this];
-    }
-    else
-    {
+    } else {
         hint localize format["Client-> GRU_specialScores: input %1", _this];
-        if ( _this >= 0 && _this < (count GRU_specialBonusArr)) then
-        {
-            if ( argp(GRU_specialBonusArr, _this) > 0) then
-            {
+        if ( _this >= 0 && _this < (count GRU_specialBonusArr)) then {
+            if ( argp(GRU_specialBonusArr, _this) > 0) then {
                 // todo: send info to user about scores for investigations etc
                 //hint format[ "Client-> In future you'll got %1 score", argp(GRU_specialBonusArr,_this) ];
                 // GRU_specialBonusArr set [_this, 0]; // no more scores available
