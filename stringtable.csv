@@ -1421,7 +1421,7 @@ STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2,
 STR_GRU_46,The landing of the enemy patrol spotted by %1%2%3%4%5%6,Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6,Local %1 vio el desembarco de una patrulla enemiga%2%3%4%5%6,Местный %1 наблюдал высадку вражеского патруля %2%3%4%5%6
 STR_GRU_46_0,Sahrani inhabitants inform: Enemy patrols disappeared!,Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!,"¡Las patrullas enemigas han desaparecido, informan los residentes!","Вражеские патрули исчезли, сообщают жители!"
 STR_GRU_46_1,"near ""%1""","in der Nähe von ""%1""","cerca de "" %1""","близ ""%1"""
-STR_GRU_46_2,at a dist. of about %1 m.,in einer Entfernung von ca. %1 m.,a una distancia de aproximadamente %1 m.,на дист. примерно %1 м.
+STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," a una distancia de aproximadamente %1 m."," на дист. примерно %1 м.
 STR_GRU_46_3,bearing %1,Richtung %1,. acimut %1,", азимут %1"
 STR_GRU_46_4,numbering %1 unit[s],die Nummerierung %1 Fahrzeug[s],", numerando %1 unidades.",", численностью %1 ед."
 STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
@@ -1526,3 +1526,4 @@ STR_GEAR_DROP,Drop,Ablegen,Aplazar,Отложить
 STR_NAME_MARINE,Name Marine,Name Marine,Topónimo marítimo,Морской топоним
 STR_BISCAMEL_NAME,Camel,Camel,Sopwich-Camel,Сопвич-Кэмел
 STR_BISCAMEL_NAME2,An-2(USSR),An-2(UdSSR),An-2(USSR),Кукурузник
+"
