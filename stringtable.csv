@@ -114,6 +114,8 @@ STR_SYS_44,"You were promoted in rank from %1 to %2, and be assigned to it in th
 STR_SYS_45,"You have reached an incredible level! From the title %1 to the %2! It doesn't happen! Go home immediately! After all, the Motherland is in danger!!!",Sie erreichten unglaublichen Maß! Mit Rang %1 und %2! So gibt es nicht! Sofort nach Hause! Denn Heimat ist in Gefahr!!!,"¡Has alcanzado un nivel increíble! ¡Del rango %1 al %2! ¡Eso no sucede! ¡Ahora a casa! ¡Después de todo, la patria está en peligro!!!",Вы достигли невероятного уровня! Со звания %1 до %2! Так не бывает! Немедленно домой! Ведь Родина в опасности!!!
 STR_SYS_46,Your rank:,Ihr Titel:,Título:,Звание:
 
+STR_SYS_47,"'\' - parachute!","'\' - öffne die Rutsche","'\' - abrir el paracaídas","'\' - раскрыть парашют"
+
 STR_SYS_50,Combat Engineers,Militär-Ingenieure,Ingenieros militares,Военные инженеры
 STR_SYS_51,Rescue-gunners,Retten-schützen,Fuerzas especiales GRU-artilleros,Спецназ ГРУ-артиллеристы
 STR_SYS_52,Military medics,Militär-Sanitäter,Médicos militares,Военные медики
@@ -719,10 +721,12 @@ STR_SYS_606,During %4 you are on GRU duty in %1 [+%2/%3],During %4 you are on GR
 
 STR_SYS_607,You need %2 point[s] for parajump. Your current scores are %1,Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1,Para saltar necesita puntos: %2. Ahora tienes: %1,Для прыжка необходимо очков: %2. Сейчас у вас: %1
 STR_SYS_608,"You need more points, now wait %1 minutes for a free jump (or %2 points), the jump itself requires another %3 points. You only have %4","Sie haben nur wenige Punkte, Sie müssen auf %1 Minuten für einen freien Sprung warten (oder %2 Punkte ausgeben), der Sprung selbst kostet %3 Punkte. Sie haben nur %4","Tienes pocos puntos, tienes que esperar %1 min para el salto libre (o gastar %2 puntos), necesitas otro %3 puntos para el salto. Usted tiene sólo %4","У вас мало очков, Вы должны подождать %1 мин для свободного прыжка (или потратить %2 балла), на прыжок нужны ещё %3 балла. Вы имеет только %4"
-STR_SYS_608_1,"You spent points on this jump: %1, %2 for jump and %3 for impatience to free jump (%4 min.)","Du hast Punkte für diesen Sprung ausgegeben: %1, %2 für Sprung und %3 für Ungeduld zum freien Sprung (%4 min.)","Gastaste puntos en este salto: %1 ,%2 por salto y %3 por impaciencia por salto libre(%4 min.)","На этот прыжок вы потратили очков: %1, %2 за прыжок и %3 за нетерпение до свободного прыжка(%4 мин.)"
+STR_SYS_608_1,"You will spend points on this jump: %1, %2 for the jump and %3 for not waiting for a free jump (%4 min.)","Sie werden Punkte für diesen Sprung ausgeben: %1, %2 für den Sprung und %3 für das warten auf den freien Sprung (%4 min.)","Gastarás puntos en este salto: %1 ,% 2 por el salto y %3 por no esperar el salto libre (%4 min.)","На этот прыжок вы потрате очков: %1, %2 за прыжок и %3 за то что не дождасьо свободного прыжка(%4 мин.)"
 STR_SYS_609,!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!,!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!,!!!!!!!!!!!! ¡Necesitas un paracaídas !!!!!!!!!!!,!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!
-STR_SYS_609_1,You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?,"Man merkt endlich, dass Fallschirmspringen einen Fallschirm erfordert ! Aber es ist spät... Frage: - warum habe ich für diesen Sprung bezahlt?",¡Te das cuenta de que se necesitaba un paracaídas para saltar! Pero es tarde... Último pensamiento: - ¿Devolverán los puntos?,"Вы понимаете, что для прыжка был нужен парашют! Но уже поздно... Последняя мысль: - Вернут ли очки?"
-STR_SYS_609_2,You've got your jump points (%1) back for this stupid episode.,Du hast deine Punkte für jump (%1) zurück in dieser dummen episode.,Te devolvieron puntos por salto (%1) en este estúpido episodio.,Вам возвратили очки за прыжок (%1) в этом дурацком эпизоде.
+STR_SYS_609_1,You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?,"Man merkt endlich, dass Fallschirmspringen einen Fallschirm erfordert ! Aber es ist spät... Frage: - warum habe ich für diesen Sprung bezahlt?",¡Te das cuenta de que se necesitaba un paracaídas para saltar! Pero es tarde... Último pensamiento: - ¿Devolverán los puntos?,"Внезапное озарение - для прыжка был нужен парашют! Но поздно... Последняя мысль: - Вернут ли очки?"
+STR_SYS_609_2,You can jump without a parachute all you want.,Du kannst ohne Fallschirm springen, so viel du willst.,Puedes saltar sin paracaídas todo lo que quieras.,Вам можете прыгать без парашюта сколько угодно.
+STR_SYS_609_3,Jump costs -%1,Fallschirmsprungausgaben -%1,Gastos de paracaidismo -%1,Затраты на прыжок -%1
+STR_SYS_609_4,"Because of your poor health, You decided not to jump","Weil du dich nicht gut fühlst, hast du dich entschieden, nicht zu springen...","Como no te sientes bien, decidiste no saltar...","Из-за плохого самочувствия Вы решили не прыгать"
 
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Su equipo está registrado y se emitirá la próxima vez,Ваше снаряжение записано и будет выдано в следующий раз
 STR_SYS_612,You've got the equipment recorded the last time,"Sie haben die Ausrüstung, erfasst der letzten Zeit",Se le dio el equipo de la Última vez,Вам выдано снаряжение с прошлого раза
@@ -778,7 +782,6 @@ STR_SYS_1114,Player markers with player roles available,Spieler-Marker mit Spiel
 STR_SYS_1115,Player markers with player health available,Spieler-Marker mit der Gesundheit des Spielers verfügbar,Marcadores de jugador que muestran el estado de salud,Маркеры игроков с отображением состояния здоровья
 STR_SYS_1116,"Hiding player markers, one moment","Versteck Spieler-Marker, einen moment",Quitamos los marcadores de los jugadores...,Убираем маркеры игроков...
 STR_SYS_1117,Player markers hidden,Spieler-Marker versteckt,Marcadores de jugador desactivados,Маркеры игроков отключены
-
 
 STR_SYS_1120,Cancel,Abbrechen,Cancelación,Отмена
 STR_SYS_1121,Drop Item 1,Drop-item 1,Restablecer objeto 1,Сбросить объект 1

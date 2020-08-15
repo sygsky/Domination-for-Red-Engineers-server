@@ -1,3 +1,4 @@
+// Xeno: AAHALO\freeFall.sqf
 _obj_jump = _this select 0;
 _obj_jump setVariable["bool_freeFall",true];
 deleteVehicle uh60p;

@@ -53,15 +53,6 @@ for "_x" from 0 to (count _offsets)-1 do {
         };
     };
 };
-/*
-{
-    _pos set [0, (_StartLocation select 0) + _x ]; // point in check matrix on X axis
-    {
-        _pos set [1, (_StartLocation select 1) + _x ]; // point in check matrix on Y axis
-        if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
-    } forEach _offsets;
-} forEach _offsets;
-*/
 
 // if 2 or more points in 3x3 grid with 1 km sides are on land, no ocean wind effect will be applied, else wind is very-very strong))
 _wind_arr = wind;
@@ -121,7 +112,6 @@ if ( _paratype == "" ) then
     } else {
         player say (call SYG_getSuicideScreamSound);
     };
-
 };
 
 deleteVehicle uh60p;
@@ -136,9 +126,14 @@ if (__AIVer) then {
 waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (vehicle player) != player || (time - _startTime) >= 20};
 
 // ## 312
-if ( _paratype == "" && _jump_score > 0) then {
-    format[localize "STR_SYS_609_2",_jump_score] call XfHQChat; // "You got your points for jump (%1) back for this stupid episode."
-    player addScore _jump_score;
+if (_jump_score > 0) then { // subtract score from player NOW, while he is alive (may be0
+    if ( _paratype == "" ) then {
+        (localize "STR_SYS_609_2") call XfHQChat; // "You can jump without a parachute all you want."
+    } else {
+        format[localize "STR_SYS_609_3",_jump_score] call XfHQChat; // "Jump costs -%1"
+        playSound "losing_patience";
+        player addScore -_jump_score;
+    };
 };
 
 if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound

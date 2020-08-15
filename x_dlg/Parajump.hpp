@@ -58,7 +58,7 @@ class XD_ParajumpDialog
 		w = 0.2;
 		h = 0.05;
 		text = $STR_SYS_1120;
-		action = "closeDialog 0;onMapSingleClick ''";
+		action = "closeDialog 0;d_cancelled=true;onMapSingleClick ''";
 	};
 	class XD_ArtiMapText : XC_RscText
 	{
@@ -68,7 +68,7 @@ class XD_ParajumpDialog
 		h = 0.1;
 		colorBackground[] = {1, 1, 1, 0.0};
 		colorText[] = { 1, 1, 1, 1 };
-		text = "Выбор места десантирования";
+		text = $STR_FLAG_1;
 	};
 	class XD_ArtiMapText2 : XC_RscText
 	{
@@ -78,12 +78,12 @@ class XD_ParajumpDialog
 		h = 0.1;
 		colorBackground[] = {1, 1, 1, 0.0};
 		colorText[] = { 1, 1, 1, 1 };
-#ifndef __ACE__
-		text = " \ - раскрыть парашют";
-#endif
-#ifdef __ACE__
-		text = "'Esc' - открыть парашют!!!";
-#endif
+//#ifndef __ACE__
+		text = $STR_SYS_47;
+//#endif
+//#ifdef __ACE__
+//		text = "'Esc' - открыть парашют!!!";
+//#endif
 	};
 	class XD_ArtiMapText3 : XC_RscText
 	{

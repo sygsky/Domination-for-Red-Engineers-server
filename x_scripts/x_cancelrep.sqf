@@ -1,5 +1,5 @@
 // by Xeno
 
-d_cancelrep = true;
+d_cancelled = true;
 
 if (true) exitWith {};
