@@ -108,8 +108,12 @@ if ( (vehicle player) != player ) then { // parachute was on!
     // the parachute was just opened, so remove it from slot after landing/death
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
     player removeWeapon new_paratype;
-    player action ["Eject", vehicle player];
-    playSound "steal";
+    if ( (player call XGetRankIndexFromScore) > 2 ) then {
+        player action ["Eject", vehicle player];
+        hint localize "+++ x_paraj.sqf: parashute is cut off";
+        playSound "steal";
+        (localize "STR_SYS_609_5") call XfHQChat;
+    }
 };
 //hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
 
