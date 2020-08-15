@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_scripts\x_funcs\x_functions2.sqf
 
 x_funcs2_compiled = false;
 

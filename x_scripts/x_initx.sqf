@@ -1,4 +1,4 @@
-// x_scripts/x_initx.sqf, by Xeno
+// x_scripts\x_initx.sqf, by Xeno
 private ["_search_array"];
 if (!isServer) exitWith{};
 
