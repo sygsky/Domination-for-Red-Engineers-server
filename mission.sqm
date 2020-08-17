@@ -3426,7 +3426,7 @@ class Mission
 		class Item32
 		{
 			position[]={9942.959961,0.429431,4658.562500};
-			name="boats2_1";
+			name="boats7";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};
@@ -3508,49 +3508,49 @@ class Mission
 		class Item43
 		{
 			position[]={3550.392822,0.375493,2762.659668};
-			name="boats3_1";
+			name="boats8";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};
 		class Item44
 		{
 			position[]={8135.809082,0.363924,9642.587891};
-			name="boats3_2";
+			name="boats9";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};
 		class Item45
 		{
 			position[]={10687.391602,0.417009,16286.106445};
-			name="boats3_3";
+			name="boats10";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};
 		class Item46
 		{
 			position[]={19250.453125,0.454745,13607.198242};
-			name="boats3_4";
+			name="boats11";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};
 		class Item47
 		{
 			position[]={7493.552246,0.506569,6250.856934};
-			name="boats3_5";
+			name="boats12";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};
 		class Item48
 		{
 			position[]={18234.693359,0.293018,17849.808594};
-			name="boats3_6";
+			name="boats13";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};
 		class Item49
 		{
 			position[]={15215.633789,0.516245,8304.143555};
-			name="boats2_2";
+			name="boats14";
 			type="ACE_Icon_Boat";
 			colorName="ColorBlue";
 		};

@@ -997,6 +997,31 @@ SYG_getWPointBetweenTwoRadius = {
     // TODO: realize this method to find place for bonus vehicle
 };
 
-
+/*
+ * Finds nearest to the designated point/object boat station, marked by markers of follow names: "boats1", "boats2", ...
+ * call: _obj call SYG_nearestBoatsMarker; // nearest marker of boat station
+ * call: [_x,_y<,_z>] call SYG_nearestBoatsMarker; // nearest marker of boat station
+ */
+SYG_nearestBoatsMarker = {
+    if (typeName _this == "OBJECT") then { _this = position _this};
+    if (typeName _this != "ARRAY") exitWith {""}; // bad parameter in call
+    if (count _this < 2) exitWith {""}; // bad array with position coordinates (length msut be 2..3)
+    private ["_id","_near_dist","_near_marker_name","_marker","_mpos"];
+    _id = 1;
+    _near_dist = 999999;
+    _near_marker_name = "";
+    // find all boats marker
+    while {true} do {
+        _marker = format["boats%1", _id];
+        if ( (getMarkerType _marker) == "") exitWith {};
+        _mpos = getMarkerPos _marker;
+        if ( (_mpos distance _this) < _near_dist) then {
+            _near_dist =  _mpos distance _this;
+            _near_marker_name = _marker;
+        };
+        _id = _id + 1;
+    };
+    _near_marker_name // return nearest marker name or "" if error occured
+};
 
 if (true) exitWith {};

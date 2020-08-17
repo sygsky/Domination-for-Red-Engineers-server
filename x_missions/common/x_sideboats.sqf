@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_missions\common\x_sideboats.sqf
 private ["_boat1","_boat2","_boat3","_boat4","_pos_other","_pos_other2","_pos_other3","_pos_other4","_posi_array","_poss","_poss2","_poss3","_poss4","_boat_type"];
 if (!isServer) exitWith {};
 

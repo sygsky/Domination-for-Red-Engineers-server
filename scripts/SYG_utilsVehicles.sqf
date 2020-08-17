@@ -1783,6 +1783,7 @@ SYG_deleteVehicleCrew = {
  * _bonusIndex =  params call SYG_findTargetBonusIndex;
  */
 SYG_findTargetBonusIndex = {
+    private ["_initialList","_currentList","_fullList","_bonusInd","_bonus"];
     _initialList = _this select 0;  // initial read-only list
     _currentList = _this select 1;  // real list
     _fullList    = _this select 2;  // full list

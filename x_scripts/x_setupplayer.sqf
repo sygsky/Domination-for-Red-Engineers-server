@@ -1904,7 +1904,7 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-#define __DEBUG_ADD_VEHICLES__
+//#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 if (name player == "EngineerACE") then {
