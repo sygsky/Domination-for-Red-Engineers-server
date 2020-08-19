@@ -1,4 +1,4 @@
-﻿// init included common (executed on both server and client)
+// init included common (executed on both server and client)
 
 titleText ["", "BLACK FADED", 0.2];
 
@@ -446,9 +446,9 @@ sm_bonus_vehicle_array = (
 "ACE_T55_A",        // 11 "ACE_BMD1",
 "ACE_T55_AM",       // 12 "ACE_BMD1p",
 
-"ACE_ZSU",          // 13 // "ACE_T62_M",
-"ACE_UAZ_AGS30",    // 14 // "ACE_T62_MK",
-"ACE_BRDM2_SA9",    // 15 // "ACE_T62_MV",
+"ACE_ZSU",          // 13 //"ACE_T62_M",
+"ACE_UAZ_AGS30",    // 14 "ACE_T62_MK",
+"ACE_BRDM2_SA9",    // 15 "ACE_T62_MV",
 
 "ACE_T64_B",        // 16
 "ACE_T64_BK",       // 17
@@ -478,7 +478,7 @@ sm_bonus_vehicle_array = (
 sm_bonus_params = [sm_bonus_vehicle_array, [], sm_bonus_vehicle_array];
 
 //hint localize format["sm_bonus_vehicle_array=%1", sm_bonus_vehicle_array];
-mt_small_bonus_vehicle_array = (
+mt_bonus_vehicle_array = (
 #ifdef __SCHMALFELDEN__
 	switch (d_own_side) do {
 		case "RACS": {["A10","AH1W","AH6_RACS","AV8B","AV8B2","UH60","T72_RACS","Vulcan_RACS"]};
@@ -508,35 +508,34 @@ mt_small_bonus_vehicle_array = (
 				["Su34B","KA50","CSLA_Mi8T_UK","Su34","Su34","CSLA_Mi8T_S5","CSLA_T72","ZSU"]
 			} else {
 				if (__ACEVer) then {
-                    [
-                    "ACE_BRDM2_SA9", 		 // 0
-                    "ACE_BRDM2_ATGM",        // 1
+[
+"ACE_BRDM2_SA9", 		 // 0
+"ACE_BRDM2_ATGM",        // 1
 
-                    "ACE_BMP3",
-                    "ACE_BMP3_M", 		    // 2 - ordinal vehicles list
+"ACE_BMP3",
+"ACE_BMP3_M", 		    // 2 - ordinal vehicles list
 
-                    "ACE_ZSU",          	// 3
-                    "ACE_ZSU",			// 4
+"ACE_ZSU",          	// 3
+"ACE_ZSU",			// 4
 
-                    "ACE_T55_AMV",          // 5
-                    "ACE_T64_BV",			// 6
-                    "ACE_T72_BM", 			// 7
-                    "ACE_T80_UM1",     		// 8
+"ACE_T55_AMV",          // 5
+"ACE_T64_BV",			// 6
+"ACE_T72_BM", 			// 7
+"ACE_T80_UM1",     		// 8
 
-                    "ACE_Mi24D", 			// 9
-                    "ACE_Mi24V",     	    //10
-                    "ACE_Mi24P",	        //11
-                    "ACE_KA52",  			//12
-                    "ACE_Mi17", 		    //13
-                    "ACE_Su30Mk_R27_R73",	//14
-                    "ACE_Su34B"             //15
-                    ];
-                } else {
-                    ["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
-                };
-			};
+"ACE_Mi24D", 			// 9
+"ACE_Mi24V",     	    //10
+"ACE_Mi24P",	        //11
+"ACE_KA52",  			//12
+"ACE_Mi17", 		    //13
+"ACE_Su30Mk_R27_R73",	//14
+"ACE_Su34B"             //15
+];				} else {
+					["Su34B","KA50","Mi17","Su34","Su34","Mi17","T72","ZSU"]
+				}
+			}
 		};
-	};
+	}
 #endif
 #ifdef __TT__
 	["Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","HMMWVTOW","Stryker_TOW","M113"]
@@ -545,6 +544,7 @@ mt_small_bonus_vehicle_array = (
 
 #ifdef __DEFAULT__
 
+mt_small_bonus_vehicle_array = + mt_bonus_vehicle_array;
 mt_big_bonus_vehicle_array = [
 "ACE_Ka50", 		    // 0 - first big bonus vehicle (heli + plane + big tank)
 "ACE_Ka50_N", 	        // 1
@@ -554,10 +554,10 @@ mt_big_bonus_vehicle_array = [
 "ACE_T90A"              // 5
 ];
 
-mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array; // common array for all vehicle types
+mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
 
-mt_small_bonus_params     = [mt_small_bonus_vehicle_array, [], mt_bonus_vehicle_array]; // param array for small town bonuses
-mt_big_bonus_params = [mt_big_bonus_vehicle_array, [], mt_bonus_vehicle_array]; // param array for big town bonuses
+mt_small_bonus_params     = [mt_small_bonus_vehicle_array, [], mt_bonus_vehicle_array];
+mt_big_bonus_params = [mt_big_bonus_vehicle_array, [], mt_bonus_vehicle_array];
 
 //big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle
