@@ -109,6 +109,9 @@ if ( (vehicle player) != player ) then { // parachute was on!
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
     player removeWeapon new_paratype;
     if ( (player call XGetRankIndexFromScore) > 2 ) then {
+    	#ifdef __ACE __
+    	if (new_paratype != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
+    	#endif
         player action ["Eject", vehicle player];
         hint localize "+++ x_paraj.sqf: parashute is cut off";
         playSound "steal";
