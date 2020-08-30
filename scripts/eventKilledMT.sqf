@@ -20,13 +20,13 @@ private ["_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_t
 _house = _this select 0;
 _killer = _this select 1;
 _restored = false;
-_name = "(not player)";
+_name = "not player";
 if ( !(isNull _killer) ) then{
-    if ( isPlayer _killer ) exitWith  {_name = format["(%1)", name _killer]};
+    if ( isPlayer _killer ) exitWith  {_name = format["%1", name _killer]};
     if ( !( _killer isKindOf "CaManBase" ) ) exitWith {
-        if ( isPlayer (gunner _killer) ) exitWith { _name = format["(%s) ", name  (gunner _killer)]};
-        if ( isPlayer (driver _killer)) exitWith {_name = format["(%s) ", name  (driver _killer)]};
-        if ( isPlayer (commander _killer)) exitWith {_name = format["(%s) ", name  (commander _killer)]};
+        if ( isPlayer (gunner _killer) ) exitWith { _name = format["%1", name  (gunner _killer)]};
+        if ( isPlayer (driver _killer)) exitWith {_name = format["%1", name  (driver _killer)]};
+        if ( isPlayer (commander _killer)) exitWith {_name = format["%1", name  (commander _killer)]};
     }
 };
 ["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4 m, vUp %5.", typeOf _house, typeOf _killer, _name, damage _house, vectorUp _house];

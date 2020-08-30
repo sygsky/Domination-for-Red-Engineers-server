@@ -17,7 +17,7 @@ nonstatic_sm_array = [20,21,22,51,52,54]; // indexes for no static mission objec
 #endif
 
 #ifdef __EASY_SM_GO_FIRST__
-// list of easy missions suitable to run them at the mission start while player is of low rank
+// list of easy missions (near base) suitable to run them at the mission start while player is of low rank
 // easy_sm_array = [5,10,12,18,21,24,34,46,47,51]; // 19,52,54 also are suitable
 easy_sm_array = []; // no easy side missions near base
 hint localize format["+++ easy_sm_array = %1", easy_sm_array];

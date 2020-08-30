@@ -692,7 +692,7 @@ XHandleNetStartScriptClient = {
             _score = argp( d_ranked_a, 27 );
 		    if( isNull arg(1) ) then { // killer unknown
                 _sound_obj = arg(3); // play sound at observer position
-                ( (localize "STR_SYS_1162") call XfHQChat; // "Spotter died..."
+                (localize "STR_SYS_1162") call XfHQChat; // "Spotter died..."
 		    } else {
                 if ( str(arg(1)) == str(player) ) then  { // killer is this player
                     if (count _this > 2) then {_str = format[" (%1)", arg(2)]} else {_str = "";};
@@ -846,15 +846,13 @@ XHandleNetStartScriptClient = {
 
 		case "GRU_event_scores":
 		{
-            private ["_id","_score","_playerName"];
-            _id = argopt(1, -1);
+            private [/*"GRU_event_scores",*/"_score","_id","_playerName"];
+            _id = argopt(2, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
-            _score = argopt(2,0);
-            if ( _score != 0 ) then
-            {
+            _score = argopt(1,0);
+            if ( _score != 0 ) then {
                 _playerName = argopt(3, "" );
-                if ( _playerName == (name player)) then
-                {
+                if ( _playerName == (name player)) then {
                     player addScore _score;
                     format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
                     ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClient;
@@ -868,8 +866,7 @@ XHandleNetStartScriptClient = {
         case "sub_fac_score":
         {
             [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call SYG_msgToUserParser;
-            if (name player == _this select 3) then
-            {
+            if (name player == _this select 3) then {
                 _score = (d_ranked_a select 20);
                 if ( _score > 0 ) then { _score = - _score };
                 player addScore _score;

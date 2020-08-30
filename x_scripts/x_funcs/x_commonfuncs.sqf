@@ -42,7 +42,7 @@ if (isServer) then {
 	};
 };
 #else
-d_found_gdtmodtracked = true; // skip GDTModTracked as totally useless
+d_found_gdtmodtracked = true; // skip GDTModTracked as totally useless/replaced by "getout" processing for 1st unit to be out
 d_use_mod_tracked = false;
 XGDTTracked = {};
 #endif
@@ -58,15 +58,13 @@ SYG_found_SCUD               = "GIG_Scud" in _search_array;
 
 hint localize format["+++ GL3 = %1, ai_spotting = %2, Grenade fix = %3 ", SYG_found_GL3, SYG_found_ai_spotting, SYG_found_TCN_GrenadeFix];
 #ifdef __ACE__
-if ((d_enemy_side == "WEST")  && isServer && SYG_found_GL3) then
-{
+if ((d_enemy_side == "WEST")  && isServer && SYG_found_GL3) then {
     hint localize format["+++ Server: GL3_Global[65] = %1", argp(GL3_Global,65)];
     hint localize format["+++ Server: GL3_Server[64] = %1", argp(GL3_Server,64)];
     GL3_Server set[64, [d_crewman_W, d_crewman2_W, d_pilot_W]]; // set crew men who never unmount vehicles during reinforcement
     hint localize format["+++ Server: GL3_Server[64] = %1", argp(GL3_Server,64)];
 };
-if ( SYG_found_ai_spotting) then
-{
+if ( SYG_found_ai_spotting) then {
     _sensitivity1  = getNumber(configFile >> "CfgVehicles" >> "SoldierWG" >> "sensitivity");
     _sensitivity2  = getNumber(configFile >> "CfgVehicles" >> "SoldierWSniper" >> "sensitivity");
     hint localize format["+++ ai_spotting found, sensitivity: %1 = %2; %3  %4","SoldierWG",  _sensitivity1, "SoldierWSniper", _sensitivity2];

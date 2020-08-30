@@ -86,23 +86,19 @@ SYG_chasmExitWP = {
     private ["_ret","_center","_radious"];
    _ret = [];
 #ifdef __DEFAULT__
-    if ( typeName _this == "OBJECT") then
-    {
+    if ( typeName _this == "OBJECT") then {
         _this = getPos _this;
     };
-    if ( typeName _this != "ARRAY") exitWith
-    {
+    if ( typeName _this != "ARRAY") exitWith {
         _ret
     };
-    if ( count _this != 3 ) exitWith
-    {
+    if ( count _this != 3 ) exitWith {
         _ret
     };
     {
         _center = _x select 0;
         _radious = _x select 1;
-        if ([_this, _circle, _radious] call SYG_pointInCircle) exitWith
-        {
+        if ([_this, _circle, _radious] call SYG_pointInCircle) exitWith {
             // yes, in circle
             _ret = _x select 2;
         };
@@ -156,8 +152,7 @@ SYG_nearestLocationA = {
 	};
 	if (count _pos < 3) exitWith {locationNull};
 	_lst = arg(1);
-	switch (typeName _lst) do
-	{
+	switch (typeName _lst) do {
 		case "STRING": {_lst = [_lst];};
 		case "ARRAY": {/* correct */};
 		default {/* error */};
@@ -413,8 +408,7 @@ SYG_whatPartOfIsland = {
 SYG_isDesert = {
 	private ["_pos","_ret"];
 	_pos = [];
-	switch toUpper(typeName _this) do
-	{
+	switch toUpper(typeName _this) do {
 		case "OBJECT": {_pos = getPos _this;};
 		case "LOCATION": {_pos = locationPosition _this;};
 		case "GROUP": {_pos = getPos (leader _this);};
@@ -440,7 +434,7 @@ SYG_pointOnIslet = {
 	if (count _this < 2) exitWith {false};
 	{
 		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = true;};
-	}forEach SYG_SahraniIsletCircles;
+	} forEach SYG_SahraniIsletCircles;
 	_ret
 };
 
@@ -1003,6 +997,31 @@ SYG_getWPointBetweenTwoRadius = {
     // TODO: realize this method to find place for bonus vehicle
 };
 
-
+/*
+ * Finds nearest to the designated point/object boat station, marked by markers of follow names: "boats1", "boats2", ...
+ * call: _obj call SYG_nearestBoatsMarker; // nearest marker of boat station
+ * call: [_x,_y<,_z>] call SYG_nearestBoatsMarker; // nearest marker of boat station
+ */
+SYG_nearestBoatsMarker = {
+    if (typeName _this == "OBJECT") then { _this = position _this};
+    if (typeName _this != "ARRAY") exitWith {""}; // bad parameter in call
+    if (count _this < 2) exitWith {""}; // bad array with position coordinates (length msut be 2..3)
+    private ["_id","_near_dist","_near_marker_name","_marker","_mpos"];
+    _id = 1;
+    _near_dist = 999999;
+    _near_marker_name = "";
+    // find all boats marker
+    while {true} do {
+        _marker = format["boats%1", _id];
+        if ( (getMarkerType _marker) == "") exitWith {};
+        _mpos = getMarkerPos _marker;
+        if ( (_mpos distance _this) < _near_dist) then {
+            _near_dist =  _mpos distance _this;
+            _near_marker_name = _marker;
+        };
+        _id = _id + 1;
+    };
+    _near_marker_name // return nearest marker name or "" if error occured
+};
 
 if (true) exitWith {};

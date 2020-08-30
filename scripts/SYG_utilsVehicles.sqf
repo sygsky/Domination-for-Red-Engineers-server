@@ -1623,8 +1623,7 @@ SYG_createCivGroup =
 };
 
 SYG_addToExtraVec = {
-    if (typeName _this == "OBJECT") exitWith
-    {
+    if (typeName _this == "OBJECT") exitWith {
         extra_mission_vehicle_remover_array set [count  extra_mission_vehicle_remover_array, _this];
     };
     if ( typeName _this != "ARRAY") exitWith {};
@@ -1783,6 +1782,7 @@ SYG_deleteVehicleCrew = {
  * _bonusIndex =  params call SYG_findTargetBonusIndex;
  */
 SYG_findTargetBonusIndex = {
+    private ["_initialList","_currentList","_fullList","_bonusInd","_bonus"];
     _initialList = _this select 0;  // initial read-only list
     _currentList = _this select 1;  // real list
     _fullList    = _this select 2;  // full list

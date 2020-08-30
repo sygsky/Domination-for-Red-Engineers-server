@@ -1,5 +1,5 @@
-// by Xeno, x_gettargetbonus.sqf, creates bonus vehicle for main targed completion
-if (!isServer) exitWith {};
+// by Xeno, x_gettargetbonus.sqf, creates bonus vehicle for main targed completion.
+if (!isServer) exitWith {}; // Runned on server only
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -14,32 +14,25 @@ extra_bonus_number = -1;
 #ifdef __DEFAULT__
 
 _town = call SYG_getTargetTown; // town def array
-if ( count _town > 0 ) then // town is defined
-{
+if ( count _town > 0 ) then {// town is defined
 
     hint localize format["+++ find bonus vehicle for town %1 (big_town_radious = %2)", _town, big_town_radious];
     // new feature to select main target bonus indexes
-	if ( (_town select 2) >= big_town_radious ) then // select from best vehicles (big bonus)
-	{
+	if ( (_town select 2) >= big_town_radious ) then { // select from best vehicles (big bonus)
 	    extra_bonus_number = mt_big_bonus_params call SYG_findTargetBonusIndex;
-	}
-	else
-	{
+	} else {
 	    extra_bonus_number = mt_small_bonus_params call SYG_findTargetBonusIndex;
 	};
 
 //---------------------------------------------------------------
 
-}
-else
-{
+} else {
 	hint localize "--- error in x_gettargetbonus.sqf: a newly captured city not defined!!!";
 };
 
 #endif
 
-if ( extra_bonus_number < 0 ) then
-{
+if ( extra_bonus_number < 0 ) then {
 	hint localize "--- extra_bonus_number find error: get vehicle from small array only";
 	extra_bonus_number = mt_bonus_vehicle_array call XfRandomFloorArray; // случайное число в диапазоне длины массива
 };
@@ -109,13 +102,11 @@ _vehicle execVM "x_scripts\x_wreckmarker.sqf";
     _mash = nearestObject [argp( _x, 0), "MASH"];
     _rebuild_mash = false;
     // try to repair object if it is damaged
-    if ( !isNull ( _mash ) ) then
-    {
+    if ( !isNull ( _mash ) ) then {
         if (!alive _mash) then { _mash removeAllEventHandlers "hit";  _mash removeAllEventHandlers "dammaged"; deleteVehicle _mash;sleep 0.2; _mash = objNull; _rebuild_mash = true;};
     };
     // (re)build mash if not available
-    if ( (_vehicle isKindOf "Plane") || _rebuild_mash ) then
-    {
+    if ( (_vehicle isKindOf "Plane") || _rebuild_mash ) then {
         if ( isNull _mash) then
         {
             _mash = createVehicle ["MASH", argp(_x,0), [], 0, "NONE"];

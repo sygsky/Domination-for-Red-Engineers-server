@@ -1,10 +1,10 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
-private ["_StartLocation","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime"];
+private ["_StartLocation","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime","_pos"];
 _StartLocation = _this select 0;
 _paratype      = _this select 1;
 _jump_score    = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
 
-hint localize format["+++ jump.sqf: _this = %1", _paratype];
+hint localize format["+++ jump.sqf: _this = %1", _this ];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -28,6 +28,9 @@ if (playerSide == east) then {
 
 #define __SPECIAL_JUMP_OVER_SEA__ // special condition of strong wind over sea surface
 #define JUMP_DISPERSION 1000        // max. dispersion due to wind in ocean
+#define MAX_SHIFT 3500
+#define MIN_SHIFT 300
+
 #ifdef __SPECIAL_JUMP_OVER_SEA__
 
 _shift = JUMP_DISPERSION;
@@ -36,29 +39,40 @@ if (_paratype == "ACE_ParachutePack") then { _shift = 6 * _shift }; // up to 6 t
 #endif
 
 // detect if jump is over sea
+_pos = [];
 _water_count = 0;
-{
-    _pos = + _StartLocation;
-    _pos set [0, (_pos select 0) + (_x select 0)];
-    _pos set [1, (_pos select 1) + (_x select 1)];
-    if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
-} forEach [
-        [-JUMP_DISPERSION,+JUMP_DISPERSION],[0,+JUMP_DISPERSION],[+JUMP_DISPERSION,+JUMP_DISPERSION],[+JUMP_DISPERSION,0],
-        [+JUMP_DISPERSION,-JUMP_DISPERSION],[0,-JUMP_DISPERSION],[-JUMP_DISPERSION,-JUMP_DISPERSION],[-JUMP_DISPERSION,0]];
+_offsets = [-JUMP_DISPERSION,0, +JUMP_DISPERSION]; // offsets on X and Y to create check matrix 3 x 3 of dimension
+// _offsets = [-JUMP_DISPERSION,-JUMP_DISPERSION/2,0, +JUMP_DISPERSION/2,+JUMP_DISPERSION]; // offsets on X and Y to create check matrix 5 x 5 on dimensiono
+for "_x" from 0 to (count _offsets)-1 do {
+    _pos set [0, (_StartLocation select 0) + (_offsets select _x)];
+    for "_y" from 0 to (count _offsets)-1 do {
+        // skip central point from counting
+        if (_x != 1 || _y != 1) then {
+            _pos set [1, (_StartLocation select 1) + (_offsets select _y)];
+            if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
+        };
+    };
+};
 
-if (_water_count >= 7 ) then { // player jumps over sea surface, add strong wind effect
-    _wind_arr = wind;
+// if 2 or more points in 3x3 grid with 1 km sides are on land, no ocean wind effect will be applied, else wind is very-very strong))
+_wind_arr = wind;
+if (_water_count >= ((count _offsets) * (count _offsets) - 2) ) then { // player jumps over sea surface, add strong wind effect
     _len = _wind_arr distance [0,0,0]; // scalar vector length
-    _shift = (random _shift) min 3500; // not further then 3500 meters from the original start point
+    _shift = MIN_SHIFT max (random ( _shift min MAX_SHIFT) ); //  shift 300 to 3500 meters from the original start point
     _dx = ((_wind_arr select 0) / _len) * _shift;
     _dy = ((_wind_arr select 1) / _len) * _shift;
+    _dz = ((_wind_arr select 2) / _len) * _shift;
     _StartLocation set [0, (_StartLocation select 0) + _dx];
-    _StartLocation set [1, (_StartLocation select 1) + _dx];
-    if (_shift > 50) then
-    {
-        (localize "STR_SYS_76") call XfHQChat; // “A strong ocean wind blew the parachute off”
+    _StartLocation set [1, (_StartLocation select 1) + _dy];
+    _StartLocation set [2, (_StartLocation select 2) + _dz];
+    _str_dir = ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirName;
+    if ( _shift > 50 ) then {
+        format[localize "STR_SYS_76", round(_shift / 20) * 20, _str_dir] call XfHQChat; // “A strong ocean wind blew the parachute off”
     };
-    hint localize format["+++ jump.sqf: wind %1, dispersion is %2 [%3,%4] m", _wind_arr, round(_shift), round(_dx), round(_dy) ];
+    hint localize format["+++ jump.sqf: wind %1 (dir %2), dispersion is %3 [%4,%5,%6] m, water count %7 of %8",
+        _wind_arr, ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirNameEng,
+        round(_shift), round(_dx), round(_dy), round(_dz), _water_count, ((count _offsets) * (count _offsets) - 1) ];
+
 };
 #endif
 
@@ -69,8 +83,7 @@ titleText ["","Plain"];
 uh60p = createVehicle [_jump_helo, _StartLocation, [], 0, "FLY"];
 _halo_height = d_halo_height;
 #ifdef __ACE__
-switch _paratype do
-{
+switch _paratype do {
     case "ACE_ParachuteRoundPack": {_halo_height = d_halo_height / 7};
     case "ACE_ParachutePack";
     default {_halo_height = d_halo_height * 2};
@@ -94,15 +107,11 @@ _startTime = time;
 if ( _paratype == "" ) then
 {
     (localize "STR_SYS_609_1") call XfHQChat; // "You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?"
-    if ( player call SYG_isWoman ) then
-    {
+    if ( player call SYG_isWoman ) then {
         player say ("female_shout_of_pain_" + str(ceil (random 4)));  // 1-4
-    }
-    else
-    {
+    } else {
         player say (call SYG_getSuicideScreamSound);
     };
-
 };
 
 deleteVehicle uh60p;
@@ -117,25 +126,24 @@ if (__AIVer) then {
 waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (vehicle player) != player || (time - _startTime) >= 20};
 
 // ## 312
-if ( _paratype == "" && _jump_score > 0) then
-{
-    format[localize "STR_SYS_609_2",_jump_score] call XfHQChat; // "You got your points for jump (%1) back for this stupid episode."
-    player addScore _jump_score;
+if (_jump_score > 0) then { // subtract score from player NOW, while he is alive (may be0
+    if ( _paratype == "" ) then {
+        (localize "STR_SYS_609_2") call XfHQChat; // "You can jump without a parachute all you want."
+    } else {
+        format[localize "STR_SYS_609_3",_jump_score] call XfHQChat; // "Jump costs -%1"
+        playSound "losing_patience";
+        player addScore -_jump_score;
+    };
 };
 
 if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
 
-if ( (time - _startTime) >= 20) then
-{
-    if ( (vehicle player) == player ) then
-    {
-        if ( (getPos player select 2) > 300) then
-        {
+if ( (time - _startTime) >= 20) then {
+    if ( (vehicle player) == player ) then {
+        if ( (getPos player select 2) > 300) then {
             hint localize format["+++ jump.sqf: Player still in free fall, height AGL >= 300 (%1) m.", round(getPos player select 2)];
             playSound (["freefall1", "freefall2", "freefall3", "freefall4", "freefall5", "freefall6", "freefall7"] call XfRandomArrayVal); // Start of parajump event (and corresponding sound of 20 seconds length max)
-        }
-        else
-        {
+        } else {
             hint localize format["+++ jump.sqf: Player in free fall, height AGL < 300 (%1) m.", round(getPos player select 2)];
             playSound "freefall300m"; // Start of free fall on height < 300 m (and corresponding sound of 16-20 seconds length max)
         };
@@ -145,18 +153,17 @@ if ( (time - _startTime) >= 20) then
 
 waitUntil {sleep 0.1; !alive player || ((getPos player select 2) < 5) || (((time - _startTime) >= 20) && (vehicle player !=  player)) };
 
-if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed emergency, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
 
 // 2. para opening
-if ( (vehicle player) != player ) then
-{
+if ( (vehicle player) != player ) then {
     hint localize format["+++ jump.sqf: Player in parachute now, height AGL %1!", getPos player select 2];
     playSound format["rippara%1", ceil(random 4)]; // short versions insteed of one long
 };
 
-if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
+if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed emergency, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
 
-hint localize format["+++ jump.sqf: Exit from script, alive %1, height AGL %2", alive player, round(getPos player select 2)];
+hint localize format["+++ jump.sqf: Normal exit from script, alive %1, height AGL %2", alive player, round(getPos player select 2)];
 if (true) exitWith {}; // ++++++++++++++++ end of script
 #endif
 

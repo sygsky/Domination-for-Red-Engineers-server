@@ -32,8 +32,7 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
     if ( _x isKindOf _type) then {
         if (isNull _vehicle ) then {
             _vehicle = _x;
-        }
-        else {
+        } else {
             if (!(_vehicle isKindOf "ParachuteBase")) then {
                 if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then {// find fastest of vehicles available
                     _vehicle = _x;

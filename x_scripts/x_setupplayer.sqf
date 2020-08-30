@@ -1129,7 +1129,8 @@ _local_msg_arr spawn {
              _x call XfGlobalChat;
         } forEach _this;
     };
-    if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) then {
+    if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) exitWith {
+        sleep 6;
         [
             "msg_to_user",
             "",
@@ -1137,6 +1138,16 @@ _local_msg_arr spawn {
             0, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
+    if ( (name player) == "Rokse [LT]") exitWith {
+        sleep 6;
+        [
+            "msg_to_user",
+            "",
+            [ ["За заслуги в деле построения нашей миссии главный инженер выносит Вам благодарность, за внимание и глубкий поиск ошибок!!!" ] ],
+            0, 5, false, "drum_fanfare"
+        ] call SYG_msgToUserParser;
+    };
+
 };
 
 #ifndef __REVIVE__

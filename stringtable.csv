@@ -3,23 +3,6 @@ Language,English,German,Spanish,Russian
 STR_LANG,ENGLISH,GERMAN,SPANISH,RUSSIAN
 STR_LANGUAGE,ENGLISH,GERMAN,SPANISH,RUSSIAN
 
-//---------------------------------------------------------------------
-// X Scripts strings:
-//--------------------------------------------------------------------
-STR_XCP_01,Saboteur sent to targer,Saboteur sent to target,Saboteur sent to target,Подрывник получил задание
-STR_XCP_02,DEBUG: Restoring behaviour to %1. Moving to drop pos %2,DEBUG: Restoring behaviour to %1. Moving to drop pos %2,DEBUG: Restoring behaviour to %1. Moving to drop pos %2,DEBUG: задан режим %1. Двигаться на позицию %2
-STR_XCP_03,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Перемещение завершено через unitReady и exitWith
-STR_XCP_04,DEBUG: Move FAILED,DEBUG: Move FAILED,DEBUG: Move FAILED,DEBUG: Перемещение было неудачным
-STR_XCP_05,DEBUG: NEW behaviour %1. Prev behaviour %2,DEBUG: NEW behaviour %1. Prev behaviour %2,DEBUG: NEW behaviour %1. Prev behaviour %2,2Новый режим %1. Пред. режим %2
-STR_XCP_06,PipeBomb: %1,PipeBomb: %1,PipeBomb: %1,Взрывпакет: %12
-STR_XCP_07,DEBUG: Restoring behaviour to %1. Moving to retreat pos...,DEBUG: Restoring behaviour to %1. Moving to retreat pos...,DEBUG: Restoring behaviour to %1. Moving to retreat pos...,DEBUG: Восст. реж. %1. И отход обратно...
-STR_XCP_08,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Move done by unitReady via exitWith,DEBUG: Перемещ. завершено через unitReady и exitWith
-STR_XCP_09,DEBUG: Start x_sabotage.sqf,DEBUG: Start x_sabotage.sqf,DEBUG: Start x_sabotage.sqf,DEBUG: Запуск x_sabotage.sqf
-STR_XCP_10,x_sabotage.sqf: script starts,x_sabotage.sqf: script starts,x_sabotage.sqf: script starts,x_sabotage.sqf: запуск скрипта диверсии
-STR_XCP_11,x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible,x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible,x_sabotage.sqf: PipeBomb  NOT found in squad. Sabotage impossible,"x_sabotage.sqf: Бомбы у бойцов не найдены, cдаёмся КГБ"
-STR_XCP_12,x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started,x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started,x_sabotage.sqf: PipeBomb  Found in squad. Sabotage started,x_sabotage.sqf: В отряде есть бомба! Начинаем диверсию...
-//------------------------------------------------------------------------
-
 //-----------------------------------------------------------------------
 // SYG scripts strings:
 //----------------------------------------------------------------------
@@ -131,6 +114,8 @@ STR_SYS_44,"You were promoted in rank from %1 to %2, and be assigned to it in th
 STR_SYS_45,"You have reached an incredible level! From the title %1 to the %2! It doesn't happen! Go home immediately! After all, the Motherland is in danger!!!",Sie erreichten unglaublichen Maß! Mit Rang %1 und %2! So gibt es nicht! Sofort nach Hause! Denn Heimat ist in Gefahr!!!,"¡Has alcanzado un nivel increíble! ¡Del rango %1 al %2! ¡Eso no sucede! ¡Ahora a casa! ¡Después de todo, la patria está en peligro!!!",Вы достигли невероятного уровня! Со звания %1 до %2! Так не бывает! Немедленно домой! Ведь Родина в опасности!!!
 STR_SYS_46,Your rank:,Ihr Titel:,Título:,Звание:
 
+STR_SYS_47,"'\' - parachute!","'\' - öffne die Rutsche","'\' - abrir el paracaídas","'\' - раскрыть парашют"
+
 STR_SYS_50,Combat Engineers,Militär-Ingenieure,Ingenieros militares,Военные инженеры
 STR_SYS_51,Rescue-gunners,Retten-schützen,Fuerzas especiales GRU-artilleros,Спецназ ГРУ-артиллеристы
 STR_SYS_52,Military medics,Militär-Sanitäter,Médicos militares,Военные медики
@@ -171,7 +156,7 @@ STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport wil
 STR_SYS_75_chopper,Teleporting not possible while swimming !!!,"Teleportieren nicht möglich, während Sie schwimmen !!!",¡Teletransportarse en el agua no está disponible!!!,Телепортирование в воде недоступно!!!
 STR_SYS_75_wreck,Teleporting not possible while swimming !!!,"Teleportieren nicht möglich, während Sie schwimmen !!!",¡Teletransportarse en el agua no está disponible!!!,Телепортирование в воде недоступно!!!
 
-STR_SYS_76,"Due to the strong wind over the ocean, you jumped a little wrong",Aufgrund des starken Windes über dem Ozean sind Sie ein wenig falsch gesprungen,"Debido al fuerte viento sobre el océano, saltaste un poco hacia el lado equivocado",Из-за сильного ветра над океаном Вы прыгнули немного не туда
+STR_SYS_76,"Due to the strong wind over the ocean, you jumped a little wrong: %1 m. to %2","Wegen des starken Windes über dem Ozean sind Sie ein wenig falsch gesprungen: %1 m. bis %2","Debido al fuerte viento sobre el océano, saltaste un poco hacia el lado equivocado: %1 m. a %2",Из-за сильного ветра над океаном Вы прыгнули немного не туда: %1 m. на %2
 STR_SYS_77,Cancel service,Rückgängig Service,Cancelar Servicio,Отменить обслуживание
 STR_SYS_78,Lift %1,Hubschrauber %1,Helicóptero de transporte %1,Трансп. вертолёт %1
 STR_SYS_79,Wreck Lift,Wrack heben,Transporte de escombros,Трансп. обломков
@@ -645,7 +630,7 @@ STR_SYS_361,Engine gets shut off on service point:,Motor wird abgestellt auf ser
 STR_SYS_362,AAHALO jump enabled:,AAHALO parajump aktiviert:,Aterrizaje activo:,Десантирование активно:
 STR_SYS_363,AAHALO jump available at flag at base:,AAHALO parajump verfügbar unter der Flagge an Ihrer Basis:,El aterrizaje está disponible en la base:,Десантирование доступно на базе:
 STR_SYS_364,Time between two AAHALO jumps from base flag: %1 secs,Die Zeit zwischen zwei AAHALO parajumps von base flag: %1 secs,Frecuencia de aterrizaje de la bandera en la base: %1 seg.,Периодичность десантирования от флага на базе: %1 сек.
-STR_SYS_365,AAHALO jump start base height: %1m,AAHALO jump start Höhe: %1m,Altitud básica de aterrizaje :%1 m.,Базовая высота десантирования: %1 м.
+STR_SYS_365,AAHALO jump start base height: %1 m,AAHALO jump start Höhe: %1 m,Altitud básica de aterrizaje :%1 m.,Базовая высота десантирования: %1 м.
 STR_SYS_366,Create the following vehicle at jump flag instead parajump: %1,"Erstellen Sie das folgende Fahrzeug zu springen, stattdessen parajump: %1",Crear transporte en la bandera de la ciudad en lugar de saltar: %1,Создание транспорта у флага в городе вместо прыжка: %1
 STR_SYS_367,Maximum distance artillery operator to arti strike point: %1m,Maximale Distanz Artillerie-Betreiber zu arti-strike point: %1m,Distancia máxima entre el operador y el punto de aplicación de artudar :%1 m.,Максимальная дистанция между оператором и точкой нанесения артудара: %1 м.
 STR_SYS_368,Artillery reload time between two salvoes: %1 secs,Artillerie reload-Zeit zwischen zwei Salven: %1 Sekunden,Tiempo de recarga entre dos descargas de artillería: %1 seg.,Время перезарядки  между двумя артиллерийскими залпами: %1 сек.
@@ -736,10 +721,13 @@ STR_SYS_606,During %4 you are on GRU duty in %1 [+%2/%3],During %4 you are on GR
 
 STR_SYS_607,You need %2 point[s] for parajump. Your current scores are %1,Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1,Para saltar necesita puntos: %2. Ahora tienes: %1,Для прыжка необходимо очков: %2. Сейчас у вас: %1
 STR_SYS_608,"You need more points, now wait %1 minutes for a free jump (or %2 points), the jump itself requires another %3 points. You only have %4","Sie haben nur wenige Punkte, Sie müssen auf %1 Minuten für einen freien Sprung warten (oder %2 Punkte ausgeben), der Sprung selbst kostet %3 Punkte. Sie haben nur %4","Tienes pocos puntos, tienes que esperar %1 min para el salto libre (o gastar %2 puntos), necesitas otro %3 puntos para el salto. Usted tiene sólo %4","У вас мало очков, Вы должны подождать %1 мин для свободного прыжка (или потратить %2 балла), на прыжок нужны ещё %3 балла. Вы имеет только %4"
-STR_SYS_608_1,"You spent points on this jump: %1, %2 for jump and %3 for impatience to free jump (%4 min.)","Du hast Punkte für diesen Sprung ausgegeben: %1, %2 für Sprung und %3 für Ungeduld zum freien Sprung (%4 min.)","Gastaste puntos en este salto: %1 ,%2 por salto y %3 por impaciencia por salto libre(%4 min.)","На этот прыжок вы потратили очков: %1, %2 за прыжок и %3 за нетерпение до свободного прыжка(%4 мин.)"
+STR_SYS_608_1,"You will spend points on this jump: %1, %2 for the jump and %3 for not waiting for a free jump (%4 min.)","Sie werden Punkte für diesen Sprung ausgeben: %1, %2 für den Sprung und %3 für das warten auf den freien Sprung (%4 min.)","Gastarás puntos en este salto: %1 ,% 2 por el salto y %3 por no esperar el salto libre (%4 min.)","На этот прыжок вы потрате очков: %1, %2 за прыжок и %3 за то что не дождасьо свободного прыжка(%4 мин.)"
 STR_SYS_609,!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!,!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!,!!!!!!!!!!!! ¡Necesitas un paracaídas !!!!!!!!!!!,!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!
-STR_SYS_609_1,You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?,"Man merkt endlich, dass Fallschirmspringen einen Fallschirm erfordert ! Aber es ist spät... Frage: - warum habe ich für diesen Sprung bezahlt?",¡Te das cuenta de que se necesitaba un paracaídas para saltar! Pero es tarde... Último pensamiento: - ¿Devolverán los puntos?,"Вы понимаете, что для прыжка был нужен парашют! Но уже поздно... Последняя мысль: - Вернут ли очки?"
-STR_SYS_609_2,You've got your jump points (%1) back for this stupid episode.,Du hast deine Punkte für jump (%1) zurück in dieser dummen episode.,Te devolvieron puntos por salto (%1) en este estúpido episodio.,Вам возвратили очки за прыжок (%1) в этом дурацком эпизоде.
+STR_SYS_609_1,You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?,"Man merkt endlich, dass Fallschirmspringen einen Fallschirm erfordert ! Aber es ist spät... Frage: - warum habe ich für diesen Sprung bezahlt?",¡Te das cuenta de que se necesitaba un paracaídas para saltar! Pero es tarde... Último pensamiento: - ¿Devolverán los puntos?,"Внезапное озарение - для прыжка был нужен парашют! Но поздно... Последняя мысль: - Вернут ли очки?"
+STR_SYS_609_2,"You can jump without a parachute all you want.","Du kannst ohne Fallschirm springen, so viel du willst.","Puedes saltar sin paracaídas todo lo que quieras.","Вы можете прыгать без парашюта сколько угодно."
+STR_SYS_609_3,Jump costs -%1,Fallschirmsprungausgaben -%1,Gastos de paracaidismo -%1,Затраты на прыжок -%1
+STR_SYS_609_4,"Because of your poor health, You decided not to jump","Weil du dich nicht gut fühlst, hast du dich entschieden, nicht zu springen...","Como no te sientes bien, decidiste no saltar...","Из-за плохого самочувствия Вы решили не прыгать"
+STR_SYS_609_5,"Thanks to your life experience (and rank!), you immediately got rid of your parachute.","Dank deiner Lebenserfahrung bist du sofort deinen Fallschirm losgeworden.","Gracias a tu experiencia de vida, te deshiciste inmediatamente de tu paracaídas.","Благодаря жизненному опыту (звание дают не зря!) Вы сразу избавились от парашюта"
 
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Su equipo está registrado y se emitirá la próxima vez,Ваше снаряжение записано и будет выдано в следующий раз
 STR_SYS_612,You've got the equipment recorded the last time,"Sie haben die Ausrüstung, erfasst der letzten Zeit",Se le dio el equipo de la Última vez,Вам выдано снаряжение с прошлого раза
@@ -795,7 +783,6 @@ STR_SYS_1114,Player markers with player roles available,Spieler-Marker mit Spiel
 STR_SYS_1115,Player markers with player health available,Spieler-Marker mit der Gesundheit des Spielers verfügbar,Marcadores de jugador que muestran el estado de salud,Маркеры игроков с отображением состояния здоровья
 STR_SYS_1116,"Hiding player markers, one moment","Versteck Spieler-Marker, einen moment",Quitamos los marcadores de los jugadores...,Убираем маркеры игроков...
 STR_SYS_1117,Player markers hidden,Spieler-Marker versteckt,Marcadores de jugador desactivados,Маркеры игроков отключены
-
 
 STR_SYS_1120,Cancel,Abbrechen,Cancelación,Отмена
 STR_SYS_1121,Drop Item 1,Drop-item 1,Restablecer objeto 1,Сбросить объект 1
@@ -1421,8 +1408,8 @@ STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2,
 STR_GRU_46,The landing of the enemy patrol spotted by %1%2%3%4%5%6,Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6,Local %1 vio el desembarco de una patrulla enemiga%2%3%4%5%6,Местный %1 наблюдал высадку вражеского патруля %2%3%4%5%6
 STR_GRU_46_0,Sahrani inhabitants inform: Enemy patrols disappeared!,Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!,"¡Las patrullas enemigas han desaparecido, informan los residentes!","Вражеские патрули исчезли, сообщают жители!"
 STR_GRU_46_1,"near ""%1""","in der Nähe von ""%1""","cerca de "" %1""","близ ""%1"""
-STR_GRU_46_2,at a dist. of about %1 m.,in einer Entfernung von ca. %1 m.,a una distancia de aproximadamente %1 m.,на дист. примерно %1 м.
-STR_GRU_46_3,bearing %1,Richtung %1,. acimut %1,", азимут %1"
+STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," a una distancia de aproximadamente %1 m."," на дист. примерно %1 м."
+STR_GRU_46_3," bearing %1"," Richtung %1"," acimut %1"," азимут %1"
 STR_GRU_46_4,numbering %1 unit[s],die Nummerierung %1 Fahrzeug[s],", numerando %1 unidades.",", численностью %1 ед."
 STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
 
@@ -1491,6 +1478,11 @@ STR_FAC_UNKNOWN_VEH,The Factory was destroyed by unknown means,Die Fabrik wurde 
 STR_FAC_UNKNOWN_MAN,The factory was destroyed by unknown means,Die Fabrik wurde mit unbekannten Mitteln zerstört,Servicio destruido de una manera desconocida,Сервис уничтожен неизвестным образом
 STR_HUD_ON,Turn HUD On,HUD einschalten,Encender la pantalla,Вкл. дисплей
 STR_HUD_OFF,Turn HUD off,HUD ausschalten,Desactivar la pantalla,Откл. дисплей
+
+STR_BONUS,"In gratitude, people reported that they noticed the old Soviet equipment (%2) at n.p. %1. Find it and deliver it to the base, receiving points. The vehicle you visited is considered to have been found","Dankbarkeit berichteten die Bewohner, dass ihnen in der Region des n.p. %1 alte sowjetische Ausrüstung aufgefallen sei (%2). Finden Sie es und liefern Sie es an den Stützpunkt und die Empfangsstellen. Die von Ihnen besuchte Technik gilt als gefunden","En agradecimiento, los residentes informaron que en la región de n.p. %1 se dieron cuenta del viejo equipo soviético (%2). Encuéntralo y entrégalo en la base, recibiendo puntos. Se considera que la técnica que visitó ha sido encontrada","В благодарность жители сообщили, что в р-не н.п. %1 заметили старую советскую технику (%2). Найдите и доставьте её на базу, получив очки. Найденной считается техника, в которой Вы побывали"
+STR_BONUS_1,"You found %1! Try to deliver the find to the base. You will get points (+%2), the machine - full recovery on the service","Sie haben %1 gefunden! Versuchen Sie, den Fund bei der Basis abzuliefern. Sie erhalten Punkte (+%2), die Maschine - vollständige Wiederherstellung auf dem Service","Encontraste %1! Intenta llevar el hallazgo a la base. Obtendrás puntos (+%2), la máquina - recuperación total en el servicio","Вы обнаружили %1! Попробуйте доставить находну на базу. Вы получите очки (+%2), машина - возможность полного восстановления на сервисе"
+STR_BONUS_2,"It was ""%1""! When you deliver the vehicle to the base you get points (+%2), and the machine - the possibility of full resurrection","Es war ""%1""! Wenn Sie die Ausrüstung an den Stützpunkt liefern, erhalten Sie Punkte (+%2), und die Maschine - die Möglichkeit der vollständigen Wiederherstellung","¡Era ""%1""!Cuando entregas el equipo a la base obtienes puntos (+%2), y la máquina - la posibilidad de una recuperación total","Здесь был ""%1""! При доставке технику на базу Вы получаете очки (+%2), а машина - возможность полного восстановления"
+STR_BONUS_3,"Not bad! You delivered the car to the base, got points (+%1), the car can now be restored!","Nicht schlecht! Sie haben den Wagen zur Basis gebracht, Sie haben Punkte (+%1) erhalten, der Wagen hat die Fähigkeit zur Wiederherstellung erworben!","¡No está mal! Entregaste el coche a la base, te dieron puntos (+%1), el coche ha adquirido la capacidad de restaurar!","Неплохо! Вы доставили машину на базу, Вам выданы очки (+%1), машина приобрела возоможность восстановленния!"
 
 STR_CHECK_ITEM,Inspect,Überprüfen,Estudiar,Изучить
 

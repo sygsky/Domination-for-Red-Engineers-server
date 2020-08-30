@@ -23,12 +23,20 @@ if (X_Client) then {
 if (isServer) then {
 	__Poss
 	_building = _poss nearestObject 279996;
-	#ifndef __TT__
-	_building addEventHandler ["killed", {_this call XKilledSMTargetNormalNoDeadAdd}];
-	#endif
-	#ifdef __TT__
-	_building addEventHandler ["killed", {_this call XKilledSMTargetTTNoDeadAdd}];
-	#endif
+	if (!alive _building) exitWith {
+        #ifndef __TT__
+        _building call XKilledSMTargetNormalNoDeadAdd;
+        #endif
+        #ifdef __TT__
+        _building call XKilledSMTargetTTNoDeadAdd;
+        #endif
+	};
+    #ifndef __TT__
+    _building addEventHandler ["killed", {_this call XKilledSMTargetNormalNoDeadAdd}];
+    #endif
+    #ifdef __TT__
+    _building addEventHandler ["killed", {_this call XKilledSMTargetTTNoDeadAdd}];
+    #endif
 	sleep 2.123;
 	["specops", 1, "basic", 2, _poss,90,true] spawn XCreateInf;
 	sleep 2.221;

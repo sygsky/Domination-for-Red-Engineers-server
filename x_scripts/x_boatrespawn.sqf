@@ -15,7 +15,7 @@ if (!isServer) exitWith{};
 #ifdef __DEBUG__
 #define CHECK_DELAY 60
 #else
-#define CHECK_DELAY 3600
+#define CHECK_DELAY 1800 // 30 minutes interval
 #endif
 
 hint localize format["x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHECK_DELAY];
@@ -24,12 +24,12 @@ hint localize format["x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHECK_DE
 #define DIST_TO_OWN_TO_PLAYER 20
 
 _boats_a = [];
-for "_i" from 1 to 40 do { // set max counter to value more or equal max boat index
+for "_i" from 1 to 40 do { // set max counter to value more or equal max boat index. 15-AUG-2020 ther are 35 separate boats in the mission
 	call compile format ["
 	if (!isNil ""boat%1"") then
 	{
-		_one_boat = [boat%1,position boat%1,direction boat%1,[]];
-		_boats_a = _boats_a + [_one_boat];
+		_one_boat = [boat%1, position boat%1, direction boat%1,[]];
+		_boats_a set [count _boats_a, _one_boat];
 	};
 	",_i]
 };
@@ -91,37 +91,29 @@ while {true} do {
 	
 	// loop to check boat marked to be changed by position or state (fuel, damage)
 	_change_cnt = 0;
-	for "_i" from 0 to count _boats_a - 1 do
-	{
+	for "_i" from 0 to count _boats_a - 1 do {
 		_descr = GET_BOAT_DESCR(_i);
 		_boat  = GET_BOAT(_descr);
 		
-		if (IS_BOAT_CHANGED(_descr)) then
-		{
+		if (IS_BOAT_CHANGED(_descr)) then {
 #ifdef __DEBUG__
 	hint localize format["x_boatrespawn.sqf: boat %1 (%2) is marked to restore",_boat, _i];
 #endif	
 			// restore or repair on place
 			_change_cnt = _change_cnt + 1;
-			if ( !alive _boat ) then
-			{
+			if ( !alive _boat ) then {
 				_descr call _restore_boat;
 			}
-			else // for alive boat
-			{
-				if ( IS_BOAT_EMPTY(_boat) ) then
-				{
+			else { // for alive boat
+				if ( IS_BOAT_EMPTY(_boat) ) then {
 					_pos = position _boat; // current pos
 					_old_pos = GET_BOAT_NEW_POS(_descr);
-					if (([_pos, _old_pos] call SYG_distance2D) > DIST_TO_BE_OUT) then 
-					{
+					if (([_pos, _old_pos] call SYG_distance2D) > DIST_TO_BE_OUT) then {
 						// boat moved from new position, set new pos and remain boat to the next loop
 						SET_NEW_POS(_descr,_pos);
 					}
-					else // empty, alive, not moved from previous place during check period
-					{
-						if ( ([_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) < DIST_TO_BE_OUT) then
-						{
+					else {// empty, alive, not moved from previous place during check period
+						if ( ([_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) < DIST_TO_BE_OUT) then {
 							// as boat is near birth place, simply restore fuel and damage
 							_boat setFuel 1;
 							_boat setDamage 0;
@@ -136,8 +128,7 @@ while {true} do {
 							_vec = objNull;
 #endif
 							{
-								if ((side _x) == _player_side) exitWith 
-								{
+								if ((side _x) == _player_side) exitWith {
 									_is_owned = true;
 #ifdef __DEBUG__
 									_vec = _x;
@@ -145,14 +136,12 @@ while {true} do {
 								};
 							} forEach _man_arr;
 							
-							if (! _is_owned) then
-							{
+							if (! _is_owned) then {
 								_descr call _restore_boat;
 								_cnt = _cnt + 1;
 							}
 #ifdef __DEBUG__
-							else
-							{
+							else {
 								hint localize format["x_boatrespawn.sqf: boat %1 is near %2 vehicle, restore skipped", _boat, typeOf _vec];
 							}
 #endif
@@ -162,11 +151,9 @@ while {true} do {
 				};
 			};
 		}
-		else // if (IS_BOAT_CHANGED(_descr)) then
-		{
+		else {// if (IS_BOAT_CHANGED(_descr)) then
 			// boat was not changed at last loop, check it at this one
-			if ( (!alive _boat) OR ((getDammage _boat) > 0.9)) then
-			{
+			if ( (!alive _boat) OR ((getDammage _boat) > 0.9)) then {
 #ifdef	__DEBUG__
 				hint localize format["x_boatrespawn.sqf: boat %1 (%2) is dead, marked for restore", _boat,_i];
 #endif
@@ -175,8 +162,7 @@ while {true} do {
 			else
 			{
 				_new_pos = position _boat;
-				if ( IS_BOAT_EMPTY(_boat) && (([_new_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) > DIST_TO_BE_OUT)) then
-				{
+				if ( IS_BOAT_EMPTY(_boat) && (([_new_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) > DIST_TO_BE_OUT)) then {
 #ifdef	__DEBUG__
 				hint localize format["x_boatrespawn.sqf: boat %1 (%2) changed its position, marked for restore", _boat,_i];
 #endif

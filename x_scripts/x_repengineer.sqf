@@ -111,14 +111,14 @@ _type_name = [typeOf (objectID2),0] call XfGetDisplayName;
 (format [localize "STR_SYS_19", round(_damage *100), "%", round(_refuel_volume), _type_name]) call XfGlobalChat; // "Repair %1%2, refuel %3 L.: %4... wait..."
 _damage_ok = false;
 _fuel_ok = false;
-d_cancelrep = false;
+d_cancelled = false;
 _breaked_out = false;
 _breaked_out2 = false;
 _rep_action = player addAction[localize "STR_SYS_77","x_scripts\x_cancelrep.sqf"]; // "Отменить обслуживание"
 
 _addscore = 0; // how many repair steps were done
 for "_wc" from 1 to _coef do {
-	if (!alive player || d_cancelrep) exitWith {player removeAction _rep_action;};
+	if (!alive player || d_cancelled) exitWith {player removeAction _rep_action;};
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (_is_engineer) then {
         if (!_damage_ok) then {
@@ -139,7 +139,7 @@ for "_wc" from 1 to _coef do {
 	player playMove "AinvPknlMstpSlayWrflDnon_medic";
 	sleep 3.0;
 	waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"}; // this animation cycle duration is approximatelly 6 seconds
-	if (d_cancelrep) exitWith {
+	if (d_cancelled) exitWith {
 		_breaked_out = true;
 	};
 	if (vehicle player != player) exitWith {

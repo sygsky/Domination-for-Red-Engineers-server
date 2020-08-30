@@ -43,7 +43,7 @@ _ownSide = (
         case "EAST": {east};
     }
 );
-_usa = ["StrykerBase","M113","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded","StaticWeapon"];
+_usa = ["StrykerBase","M113","ACE_M2A1","ACE_M60","M1Abrams","Truck5tMG","HMMWV50","M113_MHQ_unfolded","StaticWeapon"];
 _ussr  = ["BMP2","T72","D30","ZSU","UAZMG","Ural","BRDM2","BMP2_MHQ_unfolded"]; // BMP2_MHQ inherited from BMP2
 
 _own_vehicles = (
@@ -179,7 +179,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                         _i,
                         if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'(%2)",name _enemy, typeOf (vehicle _enemy)]},
                         if (_type == 1) then {"warheads"} else {"smokes"},
-                        _observer knowsAbout _enemy,
+                        (round((_observer knowsAbout _enemy) * 10.0))/10.0,
                         round(_observer distance _enemy),
                         _unit_cnt,
                         _veh_cnt, count _veh_arr,
