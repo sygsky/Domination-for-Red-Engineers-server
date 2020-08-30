@@ -583,22 +583,16 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 #ifdef __PRINT__
 					hint localize format[ "+++ x_airki.sqf[%1]: airkiller is Null, remove from list",  _type];
 #endif			
-				}
-				else {
+				} else {
                     sleep 1;
-                    if ( ( {alive _x} count (crew _vecx) ) == 0 ) then
-                    {
+                    if ( ( {alive _x} count (crew _vecx) ) == 0 ) then {
                         s_down_heli_arr = s_down_heli_arr + [_vecx];
                         _vecx setFuel 0;
                         _vehicles set [_i, "X_RM_ME"];
-					}
-					else
-					{
-                        if ( damage _vecx > 0) then
-                        {
+					} else {
+                        if ( damage _vecx > 0) then {
                              _lastDamage = _vecx getVariable "damage";
-                            if ( (damage _vecx) != _lastDamage ) then
-                            {
+                            if ( (damage _vecx) != _lastDamage ) then {
 #ifdef __PRINT__
                                 hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 get damage = %2", typeOf _vecx, (damage _vecx) - _lastDamage, _type ];
 #endif
@@ -619,8 +613,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_vehicles = _vehicles - ["X_RM_ME"];
 		};
 		
-		if (count _vehicles == 0) exitWith //+++ Sygsky: OPTIMIZE, crew may be on feet from now or wholly dead 
-		{
+		if (count _vehicles == 0) exitWith {//+++ Sygsky: OPTIMIZE, crew may be on feet from now or wholly dead
 			_vehicles = nil;
 			_loop_do = false;
 			sleep 5.654321;
@@ -642,8 +635,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		//+++ Sygsky: TODO add info exchange between air-air, air-land, air-ship units
 #endif
 #ifdef __PRINT__
-        if ( time >= _timeToPrint) then
-        {
+        if ( time >= _timeToPrint) then {
             _heli = _vehicles select 0;
             _loc = _heli call SYG_nearestSettlement;
                 hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, s %5 dmg %6",

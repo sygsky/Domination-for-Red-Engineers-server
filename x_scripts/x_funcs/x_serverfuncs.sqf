@@ -516,7 +516,7 @@ XCreateArmor = {
                 extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _vehicles;
                 {
                     {
-                        extra_mission_remover_array = extra_mission_remover_array + [_x];
+                        extra_mission_remover_array set[count extra_mission_remover_array, _x];
                         sleep 0.01;
                     } forEach (crew _x);
                 } forEach _vehicles;

@@ -102,7 +102,7 @@ hint localize format["+++ x_paraj.sqf: subtract full score %1 for the jump (jump
 #endif
 
 // detect for parachute to be on player and on the ground and remove it from magazines
-waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 )< 5 )};
+waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 )< 5 ) };
 
 if ( (vehicle player) != player ) then { // parachute was on!
     // the parachute was just opened, so remove it from slot after landing/death
@@ -113,7 +113,7 @@ if ( (vehicle player) != player ) then { // parachute was on!
     	if (new_paratype != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
     	#endif
         player action ["Eject", vehicle player];
-        hint localize "+++ x_paraj.sqf: parashute is cut off";
+        hint localize "+++ x_paraj.sqf: player ejected from parachute";
         playSound "steal";
         (localize "STR_SYS_609_5") call XfHQChat;
     }

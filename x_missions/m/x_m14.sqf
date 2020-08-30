@@ -25,12 +25,12 @@ if (isServer) then {
 	__PossAndOther
 	_vehicle = "Land_telek1" createVehicle (_poss);
 	_vehicle setVectorUp [0,0,1];
+	__AddToExtraVec(_vehicle)
 	[_vehicle] spawn XCheckSMHardTarget;
 	sleep 2.22;
 	["shilka", 3, "bmp", 1, "tank", 0, _pos_other,1,110,true] spawn XCreateArmor;
 	sleep 2.333;
 	["specops", 1, "basic", 1, _poss,70,true] spawn XCreateInf;
-	__AddToExtraVec(_vehicle)
 };
 
 if (true) exitWith {};

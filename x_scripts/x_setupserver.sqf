@@ -168,7 +168,7 @@ XCheckSMHardTarget = {
 	};
 	#endif
 
-	extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_vehicle];
+	extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _vehicle ];
 	friendly_near_sm_target = false;
 	_trigger = createTrigger["EmptyDetector" ,position _vehicle];
 	_trigger setTriggerArea [20, 20, 0, false];
@@ -202,7 +202,7 @@ XCheckSMHardTarget = {
 	if (alive _vehicle) then {
 	    _vehicle removeAllEventHandlers "hit";
 	    _vehicle removeAllEventHandlers "dammaged";
-	    hint localize "+++ friendly_near_sm_target is now true: remove HIT & DAMMAGE protect events";
+// all this garbage not work at all:	    hint localize "+++ friendly_near_sm_target is now true: remove HIT & DAMMAGE protect events";
 	};
 
 	deleteVehicle _trigger;
