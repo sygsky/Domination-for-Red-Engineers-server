@@ -18,8 +18,7 @@ if (x_sm_type == "convoy") then {
 
 current_mission_text = localize "STR_SYS_120"; // "Дополнительное задание ещё не назначено...";
 
-if (side_mission_winner != 0 && bonus_number != -1) then
-{
+if (side_mission_winner != 0 && bonus_number != -1) then {
 
 	_bonus_pos = localize "STR_SYS_309";//"on the base.";
 	_type_name = sm_bonus_vehicle_array select bonus_number;
@@ -27,17 +26,13 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 
 #ifdef __RANKED__
 	_get_points = false;
-	if ( ( isNil "d_sm_p_pos") && (!d_was_at_sm)) then
-	{
+	if ( ( isNil "d_sm_p_pos") && (!d_was_at_sm)) then {
 		_posi_array = x_sm_pos;
 		_posione = _posi_array select 0;
 		_get_points = (player distance _posione < (d_ranked_a select 12));
-	}
-	else
-	{ // not is nil
+	} else { // not is nil
 		_get_points =  d_was_at_sm;
-		if (!_get_points) then
-		{
+		if (!_get_points) then {
 			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12));
 		};
 	};
@@ -78,14 +73,11 @@ if (side_mission_winner != 0 && bonus_number != -1) then
 	_s call XfHQChat; // "Side mission accomplished"
     hint localize ("+++ SideMission: " + _s);
 
-} // if (side_mission_winner != 0 && bonus_number != -1) then
-else
-{
-
-    _s = switch (side_mission_winner) do
-    {
+} else { // if (side_mission_winner != 0 && bonus_number != -1) then
+    _s = switch (side_mission_winner) do {
         case   -1 : {"STR_SYS_129_1"/*"Персона, намеченная к ликвидации, погибла в результате трагического инцидента..."*/};
         case   -2 : {"STR_SYS_129_2"/*"Враг решил взорвать все сам..."*/};
+        case   -3 : {"STR_SYS_129_9"}; // "The enemy sensed danger and escaped..." - missins for king etc with predefined building!!!
         case -300 : {"STR_SYS_129_3"/*"Конвой достиг места назначения..."*/};
         case -400 : {"STR_SYS_129_4"/*"Ни один из заложников не выжил..."*/};
         case -500 : {"STR_SYS_129_5"/*"Вражеский офицер спятил и застрелился..."*/};

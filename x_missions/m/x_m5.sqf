@@ -24,20 +24,12 @@ if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for p
 
 if (isServer) then {
 
-
 	__PossAndOther
     hint localize format["+++ king hotel _poss %1", _poss];
 	_nbuilding = _poss nearestObject 172902; // hotel at vallejo
 	if (!alive _nbuilding) exitWith { // hotel destroyed, abort mission
-		#ifndef __TT__
-    	king call XKilledSMTargetNormalNoDeadAdd;
-    	#ifdef __TT__
-    	king call XKilledSMTargetTTNoDeadAdd;
-    	#endif
+    	-3 call XKilledSMTargetCodeNoDeadAdd;
 	};
-
-	__WaitForGroup
-	__GetEGrp(_newgroup)
 
 
 	// these are hotel positions in rooms with no door !!!!
@@ -47,6 +39,9 @@ if (isServer) then {
 
 	_pos_id = _king_id call XfRandomArrayVal; // pos id in hotel
 	_bpos = _nbuilding buildingPos _pos_id; // pos coordinate
+
+	__WaitForGroup
+	__GetEGrp(_newgroup)
 
 	king = _newgroup createUnit ["King", _bpos, [], 0, "FORM"];
 	king setPos _bpos;
@@ -58,8 +53,7 @@ if (isServer) then {
 //	publicVariable "king";  // is will be PV in king_escape.sqf
 	
 	//+++ Sygsky: rearm with random pistol
-	if (d_enemy_side != "EAST") then
-	{
+	if (d_enemy_side != "EAST") then {
 		sleep 0.5;
 		king call SYG_rearmPistolero;
 	};
