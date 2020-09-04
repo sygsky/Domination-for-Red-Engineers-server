@@ -233,7 +233,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [5]; // 5 - king in hotel
+    _first_array = []; // 5 - king in hotel
     side_missions_random = _first_array + (side_missions_random - _first_array);
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
