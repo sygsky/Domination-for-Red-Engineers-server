@@ -24,12 +24,7 @@ if (isServer) then {
 	__Poss
 	_building = _poss nearestObject 279996;
 	if (!alive _building) exitWith {
-        #ifndef __TT__
-        _building call XKilledSMTargetNormalNoDeadAdd;
-        #endif
-        #ifdef __TT__
-        _building call XKilledSMTargetTTNoDeadAdd;
-        #endif
+    	-3 call XKilledSMTargetCodeNoDeadAdd;
 	};
     #ifndef __TT__
     _building addEventHandler ["killed", {_this call XKilledSMTargetNormalNoDeadAdd}];

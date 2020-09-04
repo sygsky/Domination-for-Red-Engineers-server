@@ -16,7 +16,7 @@ _current_target_pos = _target_array2 select 0;
 
 client_target_counter = client_target_counter + 1;
 
-call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID]; // mark just liberated town with correcponding marker in the diary
+call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID]; // mark just liberated town with corresponding marker in the diary
 
 if (client_target_counter < number_targets) then {
 	_type_name = mt_bonus_vehicle_array select extra_bonus_number;

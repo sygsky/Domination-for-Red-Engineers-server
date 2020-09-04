@@ -201,7 +201,7 @@ if (_str_p in d_can_use_mgnests) then {
 // Update client info for recaptured town[s]
 //
 XRecapturedUpdate = {
-	private ["_index","_target_array", "_target_name", "_targetName","_state","_target_rad"];
+	private ["_index","_target_array", "_target_name", "_targetName","_current_target_pos","_state","_target_rad","_winner"];
 	_index = _this select 0;
 	_state = _this select 1;
 	_target_array = target_names select _index;
@@ -256,8 +256,10 @@ XRecapturedUpdate = {
 				_current_target_pos = _target_array select 0;
 				if ((player distance _current_target_pos) < (d_ranked_a select 10)) then
 				{
-					(format [localize "STR_SYS_109",round( (d_ranked_a select 9)/2)] ) call XfHQChat; // "За зачистку города вы получаете очки ( +%1 ) !"
-					player addScore (d_ranked_a select 9);
+					private ["_addscore"];
+					_addscore = round( (d_ranked_a select 9)/2);
+					(format [localize "STR_SYS_109", _addscore] ) call XfHQChat; // "За зачистку города вы получаете очки ( +%1 ) !"
+					player addScore _addscore;
 				};
 			};
 #endif

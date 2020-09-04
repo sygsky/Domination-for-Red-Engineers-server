@@ -61,31 +61,41 @@ if (isServer) then {
 	d_random_sm_array = true; // for real game set it true, of course
 //    d_random_sm_array = false; // for debugging purposes only set it false
 
+	// Passed array: [unit, killer]
 	XKilledSMTargetNormal = {
 		[_this select 0] call XAddDead;
 		side_mission_winner=2;
 		side_mission_resolved = true;
 	};
 
+	// Passed array: [unit, killer]
 	XKilledSMTargetTT = {
 		[_this select 0] call XAddDead;
 		side_mission_winner = (switch (side (_this select 1)) do {case resistance:{1}; case west:{2}; default{-1};});
 		side_mission_resolved = true;
 	};
-
+	// no parameters passed
 	XKilledSMTargetNormalNoDeadAdd = {
 		side_mission_winner=2;
 		side_mission_resolved = true;
 	};
 
+	// Passed array: [unit, killer]
 	XKilledSMTargetTTNoDeadAdd = {
 		side_mission_winner = (switch (side (_this select 1)) do {case resistance:{1}; case west:{2}; default{-1};});
 		side_mission_resolved = true;
 	};
 
+	// Passed array: [unit, killer]
 	XKilledSMTarget500 = {
 		[_this select 0] call XAddDead;
 		side_mission_winner=-500;
+		side_mission_resolved = true;
+	};
+
+	// _this: negative code to complete this sm -1,-1 etc
+	XKilledSMTargetCodeNoDeadAdd = {
+		side_mission_winner = _this;
 		side_mission_resolved = true;
 	};
 

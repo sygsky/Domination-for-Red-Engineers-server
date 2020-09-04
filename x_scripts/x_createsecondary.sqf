@@ -70,26 +70,21 @@ switch (sec_kind) do {
 			__TargetInfo
 			_center = _target_array2 select 0; // center of curent town
 #ifdef __DEBUG_PRINT__
-            hint localize format["+++ x_createsecondry.sqf->spawn: target center %1, governor %2", _center, _man];
+            hint localize format["+++ x_createsecondry.sqf->spawn: target center %1, governor %2, dist %3 m.", _center, _man, round(_center distance _man)];
 #endif
 			if ( count _this > 2) then {_pos = _this select 2} else { _pos = _center};
 			waitUntil { sleep 5.174; mt_radio_down }; // wint until radio tower is down
-			while { !side_main_done } do // check governor be in circle 2000 m.
-			{
-				if ( isNull _man ) exitWith  // strange but man is already absent in game
-				{
+			while { !side_main_done } do {// check governor be in circle 2000 m.
+				if ( isNull _man ) exitWith { // strange but man is already absent in game
 					side_main_done = true;
 					["sec_solved", "gov_out"] call SYG_solvedMsg;
 				}; // he is out in some manner
-				if ( not alive _man ) exitWith  // man is dead
-				{
+				if ( not alive _man ) exitWith  {// man is dead
 					_man call XAddDead;	side_main_done = true; ["sec_solved", "sec_over"] call SYG_solvedMsg;
 				}; // he is dead without event processing!
-				if ( (_man distance _center) >= _searchDist ) exitWith  // man is alive but out of circle
-				{ 
+				if ( (_man distance _center) >= _searchDist ) exitWith  {// man is alive but out of circle
 					_grp = group _man;
-					if ( !isNull _grp ) then
-					{
+					if ( !isNull _grp ) then {
 						_grp setCombatMode "YELLOW";
 						_grp setSpeedMode "FULL";
 						_grp setBehaviour "SAFE";

@@ -35,7 +35,7 @@ if ( !(isNull _killer) ) then{
 if ( ! ( ( isNull  _killer) || (_killer isKindOf "CAManBase" ) ) ) then { // not NULL house, not NULL killer,  killer not MAN, so some VEHICLE
      hint localize format["+++ MTTarget: killer %1(not man), dist %2 m.", typeOf _killer, round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle!!
-    // 1.1 Don't wait animation end, create new TVTower creation
+    // 1.1 Don't wait animation end, create new TVTower object
     if (!(_house isKindOf "House")) exitWith {};
     _time        = time;
     _ruin        = objNull;
@@ -62,7 +62,7 @@ if ( ! ( ( isNull  _killer) || (_killer isKindOf "CAManBase" ) ) ) then { // not
     [_newhouse] spawn XCheckMTHardTarget;
     _restored = true;
 };
-if (_restored) exitWith {}; // conitue with the same assignments
+if (_restored) exitWith {}; // continue with the same assignments
 hint localize "--- MTTarget: killed finalization -> destroyed by human or unrecognized means -> follow  the path of Xeno";
 // 2. Killed by man or by unknown cause, allow continue in natural way
 mt_spotted = false;

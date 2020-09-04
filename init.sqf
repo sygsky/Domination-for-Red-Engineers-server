@@ -219,9 +219,7 @@ if (isServer) then {
 
 	if (d_random_sm_array) then {
 		side_missions_random = sm_array call XfRandomArray;
-	}
-	else
-	{
+	} else{
 		side_missions_random = sm_array;
     };
 
@@ -235,13 +233,12 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];
+    _first_array = [5]; // 5 - king in hotel
     side_missions_random = _first_array + (side_missions_random - _first_array);
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
-    if (!isNil("ranked_sm_array") ) then
-    {
+    if (!isNil("ranked_sm_array") ) then {
         private ["_lowestPos","_rankedSMArr","_ind", "_newInd","_val"];
         _lowestPos = ranked_sm_array select 0; // first allowed position for missions that need some rank (to drive tank,heli, airplane)
         _rankedSMArr = ranked_sm_array select 1; // mission ids

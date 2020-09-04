@@ -692,7 +692,7 @@ XHandleNetStartScriptClient = {
             _score = argp( d_ranked_a, 27 );
 		    if( isNull arg(1) ) then { // killer unknown
                 _sound_obj = arg(3); // play sound at observer position
-                (localize "STR_SYS_1162") call XfHQChat; // "Spotter died..."
+                (format[localize "STR_SYS_1162","STR_SYS_COR_NUM" call SYG_getLocalizedRandomText]) call XfHQChat; // "Spotter died..."
 		    } else {
                 if ( str(arg(1)) == str(player) ) then  { // killer is this player
                     if (count _this > 2) then {_str = format[" (%1)", arg(2)]} else {_str = "";};
