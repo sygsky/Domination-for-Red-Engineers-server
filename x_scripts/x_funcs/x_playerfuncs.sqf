@@ -201,7 +201,7 @@ if (_str_p in d_can_use_mgnests) then {
 // Update client info for recaptured town[s]
 //
 XRecapturedUpdate = {
-	private ["_index","_target_array", "_target_name", "_targetName","_state","_target_rad"];
+	private ["_index","_target_array", "_target_name", "_targetName","_current_target_pos","_state","_target_rad","_winner"];
 	_index = _this select 0;
 	_state = _this select 1;
 	_target_array = target_names select _index;
