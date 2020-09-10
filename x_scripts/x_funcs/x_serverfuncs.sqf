@@ -692,7 +692,7 @@ XGetPlayerPoints = {
 	    _sound = _index call SYG_getSuicideScreamSoundById;
 	};
 	["d_player_stuff", _staff, SYG_dateStart, _sound] call XSendNetStartScriptClient;
-	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client +++", _staff];
+	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client, suiside snd ""%2"" +++", _staff, _sound];
 };
 
 // calls as follow: _near_enemy_arr = _grp_array call x_get_nenemy

@@ -119,7 +119,7 @@ if (_sound == "") then { // select random music for ordinal day
             _daytime_music = [
                 "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
                 "Letyat_perelyotnye_pticy_2nd","ruffian","morze","morze_3","chapaev","rider","Vremia_vpered_Sviridov",
-                "Letyat_perelyotnye_pticy_end","toccata","travel_with_friends"
+                "Letyat_perelyotnye_pticy_end","toccata","travel_with_friends","on_thin_ice"
             ];
 
             // only night music
@@ -136,7 +136,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","travel_with_friends"
+                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","travel_with_friends","on_thin_ice"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
