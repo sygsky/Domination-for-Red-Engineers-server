@@ -516,7 +516,7 @@ SYG_getMsgForCurrentDayTime = {
 SYG_getDayTimeIdRandomSound = {
     switch (_this) do
     {
-        case 0 : { playSound format["night_%1", ceil (random 5)]; };   // STAT_NIGHT
+        case 0 : { playSound format["night_%1", ceil (random 6)]; };   // STAT_NIGHT
         case 1 : {  ""  }; // STAT_DAY
         case 2 : {  playSound format["morning_%1", ceil (random 3)]; }; // STAT_MORNING
         case 3 : {   format["evening_%1", ceil (random 5)]; };// STAT_EVENING
