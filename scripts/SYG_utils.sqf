@@ -669,4 +669,25 @@ SYG_addArrayInPlace = {
     _arr
 };
 
+// Remove all strings "RM_ME" from input _arr
+// call: _cleaned_arr = _arr call SYG_cleanArray;
+// returns the same array without "RM_ME" items. Order of remained items in array may change!!!
+SYG_cleanArray = {
+	if ( (typeName _this) != "ARRAY") exitWith {_this};
+	private ["_i"];
+	for "_i" from (count _this -1)  to 0 step -1 do {
+		_x = _this select _i;
+		if ( typeName _x == "STRING") then {
+			if (_x == "RM_ME") then {
+				if ( _i == (count _this - 1) ) then { _this resize (count _this -1)}
+				else {
+					_this set [_i, _this select (count _this - 1)];
+					_this resize (count _this -1);
+				};
+			};
+		};
+	};
+	_this
+};
+
 if (true) exitWith {};

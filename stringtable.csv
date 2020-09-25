@@ -248,9 +248,9 @@ STR_SYS_129_100,You lost a fortune...,Sie verlor ein Vermögen...,La suerte Te h
 
 STR_SYS_130,For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!,"Für die Nichterfüllung der Aufgaben, die Sie persönlich trugen die Verantwortung. Abgezogen %1 Punkte. So wird es mit jedem!","Por no completar la tarea, usted personalmente incurrió en responsabilidad. Se restó %1 puntos. ¡Así será con todos!",За невыполнение задания Вы лично понесли ответственность. Вычтенo %1 баллов. Так будет с каждым!
 STR_SYS_131,Officer is at dist of about %1 m. from %3 and at Azimuth of about %2 deg. from it,Officer ist bei einem Abstand von über %1 m. von %3 und in Azimut von etwa %2 Grad.,"El oficial está aproximadamente en %1 m. de %3, acimut de búsqueda %2 gr.","Офицер примерно в %1 м. от %3, азимут поиска %2 гр."
-STR_SYS_132,Your Glonass position,Ihr Glonass-position,su posición GLONASS,вашей Глонасс-позицией
+STR_SYS_132,Your Glonass position,Ihr Glonass-position,su posición GLONASS,вашей Глонасс-позиции
 STR_SYS_133,Side Mission point,Side Mission punkt,puntos de trabajo,точки задания
-STR_SYS_134,The officer was not detected neither at Side Mission point nor near Your Glonass-Position,"Der Offizier wurde nicht erkannt, weder in Side Mission punkt noch in Ihre Glonass-Position",El oficial no se encuentra en el punto de trabajo ni cerca de su posición GLONASS,"Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
+STR_SYS_134,The officer was not detected neither at Side Mission point nor near Your Glonass-Position ((%1 m.),"Der Offizier wurde nicht erkannt, weder in Side Mission punkt noch in Ihre Glonass-Position (%1 m.)",El oficial no se encuentra en el punto de trabajo ni cerca de su posición GLONASS  (%1 m.),"Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией (%1 м.)"
 STR_SYS_135,Side Mission marker is absent from map!!!,Seite Mission marker ist nicht in der Karte!!!,¡El marcador de tarea adicional no se encuentra en el mapa!!!,Маркер доп. задания не найден на карте!!!
 STR_SYS_136,The service is cancelled...,Service abgebrochen...,Servicio cancelado...,Обслуживание отменено...
 
@@ -1363,6 +1363,11 @@ STR_SET_27,Vehicles able to load ammoboxes:,"Fahrzeuge, die Ammoboxen laden kön
 STR_SET_28,Player respawn delay (in seconds):,Verzögerung beim Respawn des Spielers (in Sekunden):,Tiempo de renacimiento (seg.):,Время возрождения (в сек.):
 STR_SET_29,Player respawn dialog after death:,Spieler Respawn Dialog nach dem Tod:,Diálogo de elección del lugar del renacimiento después de la muerte:,Диалог выбора места возрождения после смерти:
 
+STR_SPPM,SPPM,SPPM,SPPM,СППМ
+STR_SPPM_1,"All SPPM markers will be renewed (you are not in vehicle)","Alle SPPM-Marker werden erneuert (du bist nicht im Fahrzeug)","Todos los marcadores de SPPM serán renovados (no estás en el vehículo)","Все маркеры СППМ будут обновлены (Вы не в транспортном средстве)"
+STR_SPPM_2,"SPPM marker can't be created on the base","SPPM-Marker kann nicht auf der Basis erstellt werden","El SPPM no puede ser creado en la base","Маркер СППМ не может быть создан на базе"
+STR_SPPM_3,"You are in vehicle, no SPPM marker detected near around, the new one can be created","Du bist in einem Fahrzeug, in der Nähe wurde keine SPPM-Markierung entdeckt, die neue kann erstellt werden","Estás en el vehículo, no se ha detectado ningún marcador de SPPM cerca, se puede crear uno nuevo","Вы в машине, поблизости нет других маркеров СППММ, новый маркер может быть создан (в ближайшем будущем)"
+STR_SPPM_4,"In the radius of %1 m. a valid SPMP marker was detected, creation of a new one is prohibited","Im Radius von %1 m. wurde eine gültige SPPM-Markierung entdeckt, die Erstellung einer neuen ist verboten","En el radio de %1 m. se detectó un marcador SPPM válido, se prohíbe la creación de uno nuevo","В радиусе %1 м. обнаружен действующий маркер СППМ, создание нового запрещено"
 
 STR_GRU_1,GRU,GRU,GRU,ГРУ
 STR_GRU_2,deliver the map,liefern Sie die Karte,entregar la tarjeta,доставить карту

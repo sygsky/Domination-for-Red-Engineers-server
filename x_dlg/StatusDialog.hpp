@@ -109,6 +109,7 @@ class XD_StatusDialog
  		XD_CloseButton,
 		XD_MainTargetNumber,
 		XD_MainTarget, // main target name
+		XD_SPPMButton, // SPPM button
 		XD_PlayerHealth,
 		XD_PlayerFatigue,
 		XD_SecondaryCaption,
@@ -146,6 +147,140 @@ class XD_StatusDialog
 	};
 
   // ####
+
+	class XD_SPPMButton
+	{
+		idc = 11020;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = false;
+		font = FontM;
+		sizeEx = 0.02;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.2 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.58;
+		y = 0.17;
+		w = 0.09;
+		h = 0.033;
+		text = $STR_SPPM; // "SPPM";
+		action = "CloseDialog 0;xhandle = player execVM ""scripts\sppm.sqf"";";
+	};
+
+	class XD_TeamStatusButton
+	{
+		idc = 11009;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = false;
+		font = FontM;
+		sizeEx = 0.02;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.2 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.68;
+		y = 0.55;
+		w = 0.2;
+		h = 0.05;
+		text = $STR_TSD9_01; //"Статус команды";
+		action = "CloseDialog 0;xhandle = player execVM ""x_scripts\x_teamstatus.sqf"";";
+	};
+
+	class XD_SettingsButton
+	{
+		idc = -1;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = false;
+		font = FontM;
+		sizeEx = 0.02;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.2 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.68;
+		y = 0.64;
+		w = 0.2;
+		h = 0.05;
+		text = $STR_SYS_57; //"Настройки";
+		action = "CloseDialog 0;_handle = [] execVM ""x_scripts\x_settingsdialog.sqf""";
+	};
+
+	class XD_FixHeadBugButton
+	{
+		idc = -1;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = false;
+		font = FontM;
+		sizeEx = 0.02;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.2 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.68;
+		y = 0.73;
+		w = 0.2;
+		h = 0.05;
+		text = $STR_SYS_1150; //"Restore veg/fences";
+		action = "closeDialog 0;_bt = player spawn XsFixHeadBug";
+//		action = "closeDialog 0; _handle = [0,5] execVM ""dlg\resurrect_dlg.sqf""";
+	};
+
 	class XD_CloseButton
 	{
 		idc = -1;
@@ -178,106 +313,7 @@ class XD_StatusDialog
 		text = $STR_SYS_53; //"Закрыть"
 		action = "closeDialog 0;";
 	};
-	class XD_FixHeadBugButton
-	{
-		idc = -1;
-		type = CT_BUTTON;
-		style = ST_CENTER;
-		default = false;
-		font = FontM;
-		sizeEx = 0.02;
-		colorText[] = { 0, 0, 0, 1 };
-		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
-		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
-		colorBackground[] = { 1, 1, 1, 0.2 };
-		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
-		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
-		offsetX = 0.003;
-		offsetY = 0.003;
-		offsetPressedX = 0.002;
-		offsetPressedY = 0.002;
-		colorShadow[] = { 0, 0, 0, 0.5 };
-		colorBorder[] = { 0, 0, 0, 1 };
-		borderSize = 0;
-		soundEnter[] = { "", 0, 1 }; // no sound
-		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
-		soundClick[] = { "", 0, 1 }; // no sound
-		soundEscape[] = { "", 0, 1 }; // no sound
-		x = 0.68;
-		y = 0.72;
-		w = 0.2;
-		h = 0.05;
-		text = $STR_SYS_1150; //"Restore veg/fences";
-		action = "closeDialog 0;_bt = player spawn XsFixHeadBug";
-//		action = "closeDialog 0; _handle = [0,5] execVM ""dlg\resurrect_dlg.sqf""";
-	};
-
-	class XD_SettingsButton
-	{
-		idc = -1;
-		type = CT_BUTTON;
-		style = ST_CENTER;
-		default = false;
-		font = FontM;
-		sizeEx = 0.02;
-		colorText[] = { 0, 0, 0, 1 };
-		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
-		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
-		colorBackground[] = { 1, 1, 1, 0.2 };
-		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
-		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
-		offsetX = 0.003;
-		offsetY = 0.003;
-		offsetPressedX = 0.002;
-		offsetPressedY = 0.002;
-		colorShadow[] = { 0, 0, 0, 0.5 };
-		colorBorder[] = { 0, 0, 0, 1 };
-		borderSize = 0;
-		soundEnter[] = { "", 0, 1 }; // no sound
-		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
-		soundClick[] = { "", 0, 1 }; // no sound
-		soundEscape[] = { "", 0, 1 }; // no sound
-		x = 0.68;
-		y = 0.62;
-		w = 0.2;
-		h = 0.05;
-		text = $STR_SYS_57; //"Настройки";
-		action = "CloseDialog 0;_handle = [] execVM ""x_scripts\x_settingsdialog.sqf""";
-	};
-
-	class XD_TeamStatusButton
-	{
-		idc = 11009;
-		type = CT_BUTTON;
-		style = ST_CENTER;
-		default = false;
-		font = FontM;
-		sizeEx = 0.02;
-		colorText[] = { 0, 0, 0, 1 };
-		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
-		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
-		colorBackground[] = { 1, 1, 1, 0.2 };
-		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
-		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
-		offsetX = 0.003;
-		offsetY = 0.003;
-		offsetPressedX = 0.002;
-		offsetPressedY = 0.002;
-		colorShadow[] = { 0, 0, 0, 0.5 };
-		colorBorder[] = { 0, 0, 0, 1 };
-		borderSize = 0;
-		soundEnter[] = { "", 0, 1 }; // no sound
-		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
-		soundClick[] = { "", 0, 1 }; // no sound
-		soundEscape[] = { "", 0, 1 }; // no sound
-		x = 0.68;
-		y = 0.52;
-		w = 0.2;
-		h = 0.05;
-		text = $STR_TSD9_01; //"Статус команды";
-		action = "CloseDialog 0;xhandle = player execVM ""x_scripts\x_teamstatus.sqf"";";
-	};
-
+	// Side mission botton
 	class XD_ShowSideButton
 	{
 		idc = -1;

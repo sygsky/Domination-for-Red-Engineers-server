@@ -170,6 +170,11 @@ SYG_playWaterSound = {
     };
     _arr call SYG_playRandomTrack;
 };
+
+SYG_getSubmarineSound = {
+	format["submarine_sound_%1", ceil (random 6)]; // sounds from 1 to 6
+};
+
 // All available curche types in the Arma (I think so)
 SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
 

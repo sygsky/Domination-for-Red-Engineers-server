@@ -335,6 +335,14 @@ class CfgMusic
     class under_water_9   {name = ""; sound[] = {\sounds\defeat\water\under_water9.ogg, db+10, 1.0};};
     class fish_man_song   {name = ""; sound[] = {\sounds\defeat\water\fish_man_song.ogg, db+10, 1.0};};
 
+	// internal submaribe effect sounds
+    class submarine_sound_1   {name = ""; sound[] = {\sounds\submarine\submarine_sound_1.ogg, db+10, 1.0};};
+    class submarine_sound_2   {name = ""; sound[] = {\sounds\submarine\submarine_sound_2.ogg, db+10, 1.0};};
+    class submarine_sound_3   {name = ""; sound[] = {\sounds\submarine\submarine_sound_3.ogg, db+10, 1.0};};
+    class submarine_sound_4   {name = ""; sound[] = {\sounds\submarine\submarine_sound_4.ogg, db+10, 1.0};};
+    class submarine_sound_5   {name = ""; sound[] = {\sounds\submarine\submarine_sound_5.ogg, db+10, 1.0};};
+    class submarine_sound_6   {name = ""; sound[] = {\sounds\submarine\submarine_sound_6.ogg, db+10, 1.0};};
+
 };
 
 class CfgSounds
@@ -574,6 +582,14 @@ class CfgSounds
     class tanki { name="eclamation";   sound[] = {\sounds\defeat\exclamations\tanki.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
 
     class under_water_3   {name = ""; sound[] = {\sounds\defeat\water\under_water3.ogg, db+10, 1.0}; titles[] = {};};
+
+	// internal submaribe effect sounds
+    class submarine_sound_1   {name = ""; sound[] = {\sounds\submarine\submarine_sound_1.ogg, db+10, 1.0}; titles[] = {};};
+    class submarine_sound_2   {name = ""; sound[] = {\sounds\submarine\submarine_sound_2.ogg, db+10, 1.0}; titles[] = {};};
+    class submarine_sound_3   {name = ""; sound[] = {\sounds\submarine\submarine_sound_3.ogg, db+10, 1.0}; titles[] = {};};
+    class submarine_sound_4   {name = ""; sound[] = {\sounds\submarine\submarine_sound_4.ogg, db+10, 1.0}; titles[] = {};};
+    class submarine_sound_5   {name = ""; sound[] = {\sounds\submarine\submarine_sound_5.ogg, db+10, 1.0}; titles[] = {};};
+    class submarine_sound_6   {name = ""; sound[] = {\sounds\submarine\submarine_sound_6.ogg, db+10, 1.0}; titles[] = {};};
 
     // Period of the day sounds
     class morning_1 { name="Morning: alarm-clock"; sound[] = {\sounds\timeofday\morning\alarm-clock.ogg,db+10,1.0}; titles[] = {}; } // Morning: alarm clock
