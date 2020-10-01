@@ -34,6 +34,11 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";	// Sound/music functions
+#ifdef __SPPM__
+	call compile preprocessFileLineNumbers "scripts\SYG_utilsSPPM.sqf";		// SPPM markers
+#endif
+
+
 #ifdef __PREVENT_OVERTURN__
 	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";		// anti-overturn method
 #endif
@@ -670,9 +675,9 @@ SYG_addArrayInPlace = {
 };
 
 // Remove all strings "RM_ME" from input _arr
-// call: _cleaned_arr = _arr call SYG_cleanArray;
+// call: _cleaned_arr = _arr call SYG_clearArray;
 // returns the same array without "RM_ME" items. Order of remained items in array may change!!!
-SYG_cleanArray = {
+SYG_clearArray = {
 	if ( (typeName _this) != "ARRAY") exitWith {_this};
 	private ["_i"];
 	for "_i" from (count _this -1)  to 0 step -1 do {

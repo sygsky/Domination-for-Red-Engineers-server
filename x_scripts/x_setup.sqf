@@ -151,6 +151,11 @@
 //uncomment to disable jump from base flag pole without parachute pack, to be more serious :o)
 //#define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
 
+//+++ uncomment to create Su34 on the base,
+// add 1500 score to allow get in,
+// add some Vehicles and ammoBoxes on hills near Corazol and on base
+//#define __DEBUG_ADD_VEHICLES__
+
 // uncomment next line to prevent land vehicle overturning
 #define __PREVENT_OVERTURN__
 
@@ -172,5 +177,4 @@
 // #385: uncomment to allow lock vehicles on recapture towns procedure
 //#define __LOCK_ON_RECAPTURE__
 
-//+++ uncomment to create Su34 on the base, add 1500 score to allow get in, add some Vehicles and ammoBoxes on hills near Corazol and on base
-// #define __DEBUG_ADD_VEHICLES__
+#define __SPPM__ // support for SPPM markers

@@ -345,17 +345,11 @@ _ctrl ctrlSetText ((rank player) call XGetRankStringLocalized);
 
 #ifdef __ACE__
 if (d_with_ace_map) then {  // Карта A.C.E.
-	if (!(call XCheckForMap)) then {
-		_ctrl = _XD_display displayCtrl 11010;
-		_ctrl ctrlShow false;
-		_ctrl = _XD_display displayCtrl 111111;
-		_ctrl ctrlShow true;
-	} else {
-		_ctrl = _XD_display displayCtrl 11010;
-		_ctrl ctrlShow true;
-		_ctrl = _XD_display displayCtrl 111111;
-		_ctrl ctrlShow false;
-	};
+	_map_on = call XCheckForMap;
+	_ctrl = _XD_display displayCtrl 11010;
+	_ctrl ctrlShow _map_on;
+	_ctrl = _XD_display displayCtrl 111111;
+	_ctrl ctrlShow (!_map_on);
 } else {
 	_ctrl = _XD_display displayCtrl 111111;
 	_ctrl ctrlShow false;
@@ -364,9 +358,10 @@ if (d_with_ace_map) then {  // Карта A.C.E.
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // SPPM handling: starts working only if player is in vehicle
-if ( vehicle player != player) then {
-
-};
+#ifndef __SPPM__
+_ctrl = _XD_display displayCtrl 11020;
+_ctrl ctrlShow false;
+#endif
 
 //-------------------------------------------------------
 

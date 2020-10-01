@@ -457,7 +457,7 @@ SYG_pointOnRahmadi = {
 SYG_pointNearBase = {
     if (typeName _this != "ARRAY") then {_this = position _this};
 	if (count _this < 2) exitWith {false};
-    [_this, [[9913,10385,0],1300,800]] call SYG_pointInRect
+    [_this, [[9913,10385,0],1300,800]] call SYG_pointInRect // only for Sahrani island
 };
 
 
@@ -976,10 +976,12 @@ SYG_geoDist = {
 // Call as: _pos = _obj call SYG_getPos;
 //
 SYG_getPos = {
-    if ( typeName _this == "OBJECT" ) exitWith { getPos _this};
-    if ( typeName _this == "GROUP" ) exitWith { getPos (_this call SYG_getLeader)};
-    if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this};
-    [0,0,0]
+    if ( typeName _this == "ARRAY"    ) exitWith { _this };
+    if ( typeName _this == "OBJECT"   ) exitWith { getPos _this };
+    if ( typeName _this == "GROUP"    ) exitWith { getPos (_this call SYG_getLeader) };
+    if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this };
+    if ( typeName _this == "STRING"   ) exitWith { getMarkerPos _this };
+    [ 0,0,0 ]
 };
 
 //

@@ -1,5 +1,5 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
+// scripts\SYG_utilsSound.sqf
 // Script to detect if designated weapon is sniper one (return true) or not (return false)
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -84,7 +84,7 @@ SYG_defeatTracks =
     ["Delerium_Wisdom","pimbompimbom","vendetta"],
     ["Gandalf_Simades","whold","end","radionanny"],
     ["ATrack9","ATrack10","ATrack14"],
-    ["ATrack16","ATrack17","ATrack18","ipanoramDefeat"],
+    ["ATrack16","ATrack17","ATrack18"],
     ["ATrack20","ATrack21","ATrack22","thetrembler"],
     ["arroyo","ATrack15","ATrack19","sinbad_baghdad"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],
@@ -107,15 +107,15 @@ SYG_playRandomDefeatTrack = {
 
 SYG_rammsteinDefeatTracks1 = ["rammstein_1","rammstein_2","rammstein_3","rammstein_4"];
 SYG_rammsteinDefeatTracks2 = ["rammstein_5","rammstein_6","rammstein_7","rammstein_8","rammstein_9"];
-SYG_rammsteinDefeatTracks =  [ SYG_rammsteinDefeatTracks1,   SYG_rammsteinDefeatTracks2 ];
 
 SYG_northDefeatTracks =
 [
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
     ["ATrack9","ATrack10","ATrack19","bolero"],
-    ["metel","gayane1","gayane2","gayane3", "mountains"]
-] + SYG_rammsteinDefeatTracks;
+    ["metel","gayane1","gayane2","gayane3", "mountains"],
+    SYG_rammsteinDefeatTracks1,   SYG_rammsteinDefeatTracks2
+];
 
 SYG_southDefeatTracks =
 [
@@ -138,8 +138,9 @@ SYG_baseDefeatTracks =
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
     ["ruffian",[0,10.27]],
-    ["Vremia_vpered_Sviridov",[0.479,9.778]]
-] + SYG_rammsteinDefeatTracks1 + SYG_rammsteinDefeatTracks2;
+    ["Vremia_vpered_Sviridov",[0.479,9.778]],
+	SYG_rammsteinDefeatTracks1,
+	SYG_rammsteinDefeatTracks2];
 
 // for the death near TV-tower, independently in town/SM or ordinal on map one
 SYG_gongNextIndex = 0;
