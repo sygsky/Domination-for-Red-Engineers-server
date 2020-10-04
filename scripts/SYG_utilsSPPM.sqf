@@ -1,4 +1,4 @@
-// SYG_utilsSPPM.sqf : utils for SPPM handling
+// scripts\SYG_utilsSPPM.sqf : utils for SPPM handling
 // SPPM id id integer id from SPPM array
 private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_startPos", "_procWP", "_wpIndex", "_unittype", "_stopBoat" ];
 
@@ -19,6 +19,7 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 #define SPPM_OBJ_TYPE "RoadCone" // SPPM object for search
 #define SPPM_MARKER_COLOR "ColorGreen" // Color of any SPPM marker
 #define SPPM_MARKER_NAME "SPPM_MARKER" // variable name of marker object with marker name
+
 #ifdef __ACE__
 #define SPPM_MARKER_TYPE "ACE_Icon_Truck" // ACE common truck marker for SPPM
 #else
@@ -26,7 +27,7 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 #endif
 
 if ( !isNil "SYG_SPPMArr" )exitWith { hint "SYG_utilsSM already initialized"};
-hint localize "INIT of SYG_utilsSPPM";
+hint localize "+++ INIT of SYG_utilsSPPM";
 // Array to store SPPM objects
 SYG_SPPMArr = []; // List of road cones used to designate all SPPM markers
 
@@ -42,20 +43,18 @@ hint "INIT of SYG_utilsSPPM";
 //          if SPPM found in radius 50 meters, its marker name is returned
 
 SYG_findNearestSPPM = {
-#ifdef __DEBUG__
-    hint localize format["SYG_utilsSPPM.sqf#SYG_findNearestSPPM: called with %1", _this];
-#endif
 	if (count SYG_SPPMArr == 0) exitWith {""}; // no markers in mission, return empty name
-	switch (typeName _this) do {
-		case "ARRAY":  { // Position
-		};
-		case "OBJECT": { // any object, including player
-			_this = getPos _this;
-		};
-	};
-	if (typeName _this != "ARRAY") exitWith {""};
-	private ["_arr"];
+	_this = _this call SYG_getPos;
+	if (_this select 0 == 0 && _this select 1 == 0) exitWith { "" }; // "Error in the creation of the new SPPM: The parameters for the procedure were incorrect"
+
+#ifdef __DEBUG__
+    hint localize format[ "+++ SYG_utilsSPPM.sqf#SYG_findNearestSPPM: called with %1", _this ];
+#endif
+	private ["_arr","_marker_name"];
 	_arr = nearestObjects [_this, [SPPM_OBJ_TYPE], SPPM_MIN_DISTANCE];
+#ifdef __DEBUG__
+    hint localize format[ "+++ SYG_utilsSPPM.sqf#SYG_findNearestSPPM: found %1 cone[s]", count _arr ];
+#endif
 	_marker_name = "";
 	{
 		_marker_name = _x getVariable SPPM_MARKER_NAME;
@@ -65,100 +64,193 @@ SYG_findNearestSPPM = {
 };
 
 //
-// call: _marker_name = _id call SYG_SPPMMarkerNameById;
-//
-SYG_SPPMMarkerNameById = {
-	format[ "SPPM_MARKER_%1", _id];
-};
-
-//
 // call: _vehArr = _pos | _object(RaodCone) call  SYG_getAllSPPMVehicles;
 //
 SYG_getAllSPPMVehicles = {
-	private ["_pos", "_arr", "_i"];
+	private ["_pos", "_arr", "_i", "_veh"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
 	_arr = nearestObjects [_pos, ["LandVehicle", "Air","Ship"], SPPM_MIN_DISTANCE];
 	for "_i" from 0 to count _arr - 1 do {
-		_x = _arr select _i;
-		if (!alive _x || _x isKindOf "ParachuteBase") then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
+		_veh = _arr select _i;
+		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon")) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
 	};
 	_arr call SYG_clearArray
 };
 
 //
 // Tries to add new SPPM:
-// call: _sppm_nmarker = _pos|obj call SYG_addSPPMMarker;
+// call: _result_str = _pos | obj call SYG_addSPPMMarker;
 // returns: result text string to localize
 //
 SYG_addSPPMMarker = {
-	private ["_pos", "_marker_name","_arr","_pnt","_cone"];
+	private ["_pos", "_marker","_arr","_pnt","_cone","_marker"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith { "STR_SPPM_ADD_ERR" }; // "Error in the creation of the new SPPM: The parameters for the procedure were incorrect"
-	_marker_name = _pos call SYG_findNearestSPPM;
-	if ( _marker_name != "" ) exitWith {
+	_marker = _pos call SYG_findNearestSPPM;
+	if ( _marker != "" ) exitWith {
 		// SPPM found at distance SPPM_MIN_DISTANCE meters
-		_marker_pos = getMarkerPos _marker_name;
-		if ((_pos distance _marker_pos) > SPPM_VEH_MIN_DISTANCE ) exitWith {
+		_marker_pos = getMarkerPos _marker;
+		if ( ( _pos distance _marker_pos ) > SPPM_VEH_MIN_DISTANCE ) exitWith {
 			"STR_SPPM_ADD_ERR_3" // "The nearest SPPM is at %1 m. Move the vehicle closer to it."
 		};
-		"STR_SPPM_4" // "The valid SPPM  (distance %1 m.) is updated"
+		// find underground SPPM road cone
+		_arr = nearestObjects [ _marker_pos, [SPPM_OBJ_TYPE], SPPM_MIN_DISTANCE ];
+		if (count _arr > 0) exitWith {
+#ifdef __DEBUG__
+	hint localize format["+++ SYG_addSPPMMarker: Detected SPPM cone"];
+#endif
+			if ((_arr select 0) call SYG_updateSPPM ) exitWith {"STR_SPPM_4"}; // "The valid SPPM is updated"
+			"STR_SPPM_5" // "The existing SPPM is used"
+		};
+		"STR_SPPM_6" // "The SPPM removed"
 	};
 
 	// No near SPPM found, create new one
 	_arr = _pos call SYG_getAllSPPMVehicles;
-
 	if (count _arr == 0) exitWith{ "STR_SPPM_ADD_ERR_2" }; // no vehicles in vicinity
+
 	_pnt = _arr call SYG_averPoint; // found average point
 
+#ifdef __DEBUG__
+	hint localize format["+++ SYG_addSPPMMarker: _pnt %1", _pnt];
+#endif
+
 	// try to create marker for SPPM
-	_marker_name = "";
+	_marker = "";
 	for "_i" from 0 to (count SYG_SPPMArr + 100) do {
-		_marker_name = createMarker [ _i call SYG_SPPMMarkerNameById, _pnt ];
-		if (_marker_name != "") exitWith {};
+		_marker = createMarker [ format[ "SPPM_MARKER_%1", _i], _pnt ];
+		if (_marker != "") exitWith {};
 	};
-	if (_marker_name == "") exitWith { "STR_SPPM_ADD_ERR_1" }; // can't create marker name
-	hint localize format["+++ SPPM, created new marker ""%1""", _marker_name];
-	_marker_name setMarkerColor SPPM_MARKER_COLOR;
-	_marker_name setMarkerShape "ICON";
-	_marker_name setMarkerType SPPM_MARKER_TYPE;
+	if (_marker == "") exitWith { "STR_SPPM_ADD_ERR_1" }; // can't create marker name
+	hint localize format["+++ SPPM, created new marker ""%1"" for %2 vehicle[s]", _marker, count _arr];
+	_marker setMarkerColor SPPM_MARKER_COLOR;
+	_marker setMarkerShape "ICON";
+	_marker setMarkerType SPPM_MARKER_TYPE;
+	_marker setMarkerText (_arr call SYG_generateSPPMText);
 	// create mark object (e.g. road cone) for this SPPM
-	_cone = createVehicle [SPPM_OBJ_TYPE, _pos, [], 0, "NONE"]; // add road cone
-	_cone setVariable [SPPM_MARKER_NAME, _marker_name ];
+	//	_pos set [2, -1]; // put underground to keep forever
+	_cone = createVehicle [SPPM_OBJ_TYPE, _pnt, [], 0, "CAN_COLLIDE"]; // add road cone
+	_cone setVariable [SPPM_MARKER_NAME, _marker ];
+#ifdef __DEBUG__
+	hint localize format["+++ SYG_addSPPMMarker: marker %1 assigned to road cone", _marker];
+#endif
+	SYG_SPPMArr set [ count SYG_SPPMArr, _cone ];	// put new object to the list
 	"STR_SPPM_ADD_SUCCESS"
 };
-// Updates all markers removing empty ones
+
+// Update one designated SPPM
+// _res = _cone call SYG_updateSPPM;
+// returns true if SPPM changed position/removed else false
+SYG_updateSPPM = {
+	hint localize format["+++ SYG_updateSPPM: call with _this = %1", _this];
+	if (typeOf _this != SPPM_OBJ_TYPE ) exitWith { false };
+	private ["_marker","_arr","_new_pos","_pos"];
+	_marker = _this getVariable SPPM_MARKER_NAME;
+	if ( isNil "_marker" ) exitWith {
+		hint localize format["--- SYG_updateSPPM: marker non-assigned to the SPPM cone!!!"];
+		false
+	};
+	hint localize format["+++ SYG_updateSPPM: marker assigned"];
+	_pos = getMarkerPos _marker;
+	_arr = _pos call SYG_getAllSPPMVehicles;
+	hint localize format["+++ SYG_updateSPPM: vehicles count %1", count _arr];
+	if ( count _arr == 0 ) exitWith {
+		hint localize format["+++ SYG_updateSPPM: SPPM removed"];
+		// remove this SPPM as empty
+		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
+		deleteMarker _marker; // remove marker itself
+		deleteVehicle _this; // remove cone
+	 	true
+	 };
+	_new_pos = _arr call SYG_averPoint;
+	_marker setMarkerText (_arr call SYG_generateSPPMText);
+	if ( [_pos, _new_pos] call SYG_distance2D > 1 ) exitWith {
+		// move mark object to marker pos
+		hint localize format["*** SPPM ""%1"" position changed by %2 m.", _marker, [_pos, _new_pos] call SYG_distance2D];
+//		_new_pos set [2, -1];
+		_this setVehiclePosition [_new_pos, [], 0, "CAN_COLLIDE"];
+		sleep 0.05;
+		_this setVectorUp [0,0,1];
+		_marker setMarkerPos _new_pos;
+		true
+	};
+	false
+};
+
+// Generate text title for SPPM marker
+//
+// call: _text = _arr call SYG_generateSPPMText;
+//
+// returns follow string: "0/1/2/3/4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
+// result may be in partial form^ "///1/1" - that means 1 ship and 1 air vehicle
+SYG_generateSPPMText = {
+	if (typeName _this != "ARRAY") then {_this = [_this]};
+	private ["_truck","_tank","_car","_ship","_air"];
+	_truck = 0;
+	_tank = 0;
+	_car = 0;
+	_ship = 0;
+	_air = 0;
+	{
+		if (typeName _x == "OBJECT") then {
+			if (_x isKindOf "Truck") exitWith { _truck = _truck + 1 };
+			if (_x isKindOf "Tank" ) exitWith { _tank = _tank + 1 };
+			if (_x isKindOf "Car"  ) exitWith { _car = _car + 1 };
+			if (_x isKindOf "Ship" ) exitWith { _ship = _ship + 1 };
+			if ((_x isKindOf "Air") && (!(_x isKindOf "ParachuteBase"))) exitWith { _air = _air + 1 };
+		};
+	} forEach _this;
+	format["%1:%2/%3/%4/%5/%6",
+		localize "STR_SPPM",
+		if (_truck == 0) then {""} else {_truck},
+		if (_tank == 0) then {""} else {_tank},
+		if (_car == 0) then {""} else {_car},
+		if (_ship == 0) then {""} else {_ship},
+		if (_air == 0) then {""} else {_air}
+		]
+};
+
+// Updates all markers on map removing empty ones
 SYG_updateAllSPPMMarkers = {
-	private ["_marker_name","_count_corrected","_count_removed","_pos","_arr","_new_pos"];
-	_count_corrected = 0; // how many mark objects were corrected
-	_count_removed = 0; // how many mark objects were corrected
+	hint localize format["+++ SYG_updateAllSPPMMarkers +++"];
+	private ["_marker","_count_updated","_count_removed","_pos","_arr","_new_pos","_i", "_cone"];
+	_count_updated = 0; // how many mark objects were corrected
+	_count_removed = 0; // how many mark objects were removed
 	for "_i" from 0 to count SYG_SPPMArr - 1 do  {
-		_x =  SYG_SPPMArr select _i;
-		_marker_name = _x getVariable SPPM_MARKER_NAME;
-		if ( !isNil "_marker_name" ) then {
-			_pos = getMarkerPos _marker_name;
+		_cone =  SYG_SPPMArr select _i; // road cone linked with SPPM marker
+		_marker = _cone getVariable SPPM_MARKER_NAME;
+		if ( !isNil "_marker" ) then {
+			_pos = getMarkerPos _marker;
 			_arr = _pos call SYG_getAllSPPMVehicles;
 			if ( count _arr == 0) exitWith {
 				// remove empty (no vehicles) marker
-				deleteMarker _marker_pos;
-				_x setVariable [SPPM_MARKER_NAME, nil ];
-				deleteVehicle _x;
+				deleteMarker _marker;
+				_cone setVariable [SPPM_MARKER_NAME, nil ];
+				deleteVehicle _cone;
 				_count_removed = _count_removed + 1;
 				SYG_SPPMArr set [_i, "RM_ME"];
-				hint localize format["*** empty SPPM ""%1"" (%2) is removed", _marker_name, _marker_pos];
+				hint localize format["*** SPPM: empty ""%1"" (%2) is removed", _marker, _pos];
 			};
 			// recalculate center position of SPPM
 			_new_pos = _arr call SYG_averPoint;
-			_marker_name setMarkerPos _new_pos;
-			if ( [_pos, _new_pos] call SYG_distance2D > 0.5) then {
-				// returns mark object to marker pos
-				_count_corrected = _count_corrected + 1;
-				_x setPos _new_pos;
-				hint localize format["*** SPPM ""%1"" position changed by %1 m.", _marker_name, [_pos, _new_pos] call SYG_distance2D];
+			hint localize format["+++ SPPM update: cnt %1, old pos %2, new pos %3", count _arr, _pos, _new_pos];
+			if ( [_pos, _new_pos] call SYG_distance2D > 1) then {
+				_marker setMarkerPos _new_pos;
+				// move the mark object to a new pos
+				_marker setMarkerPos _new_pos;
+				_count_updated = _count_updated + 1;
+//				_new_pos set [2, -1];
+				_cone setVehiclePosition  [_new_pos, [], 0, "CAN_COLLIDE"]; // update name just in case
+				sleep 0.05;
+				_cone setVectorUp [0,0,1];
+				hint localize format["*** SPPM ""%1"" position changed by %2 m.", _marker, [_pos, _new_pos] call SYG_distance2D];
 			};
+			_marker setMarkerText (_arr call SYG_generateSPPMText);
 		};
 	};
 	SYG_SPPMArr call SYG_clearArray;
-	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3", count SYG_SPPMArr, _count_corrected, _count_removed];
+	player groupChat format["+++  count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];
+	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];
 };
-hint localize "INIT of SYG_utilsSPPM completed";
+hint localize "+++ INIT of SYG_utilsSPPM completed";
