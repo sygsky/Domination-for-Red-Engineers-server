@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_scripts\x_vec_hud.sqf
 private ["_speed_str", "_fuel_str", "_dam_str", "_dir_str", /* "_gendirlist", */ "_welcome_message", "_vec", "_welcome_str", "_vec_msg1", "_struct_text", "_endtime", "_type_name", "_vec_string", "_vdir", "_gendir", "_dstr", "_count", "_control", "_type_weap", "_dirtmp"];
 _speed_str = localize "STR_SYS_324_1"; // Speed
 _fuel_str =  localize "STR_SYS_324_2"; // Fuel

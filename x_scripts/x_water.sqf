@@ -42,24 +42,25 @@ while {true} do {
                 && (surfaceIsWater (getPos player))
             } do {sleep 0.621}; // wait until weapons is lost or player dead or out of water
 			sleep 0.521;
-    	    playSound "under_water_3"; // you lost your weapon
+			_sound = "under_water_3"; // you lost your weapon
+//    	    playSound "under_water_3";
 			// find ALL nearest weapon holders as Arma-1 createsmultiple weapon holders, that is surprize!
 			_wpArr = nearestObjects [ player, ["WeaponHolder"], HOLDER_SEARCH_RADIUS ]; // It will find all holdear around #N meters in 2D and any depth (so say https://community.bistudio.com/wiki/nearestObject)
 			if ( count _wpArr > 0 ) then {
 //                hint localize format["+++ x_water.sqf: WeaponHolder[s] with your lost weapon found and remembered (%1 pc.)",count _wpArr];
-                playSound "under_water_3";
                 (localize "STR_SYS_620_0") call XfHQChat;
                 "" spawn {sleep 5; (localize "STR_SYS_620_2") call XfHQChat;};
                 _mname = format ["%1", _wpArr select 0];
                 _marker = [_mname, getPos player,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_SYS_620_3", round(((_wpArr select 0) modelToWorld [0,0,0]) select 2)],0,"Marker"] call XfCreateMarkerLocal; // "ammocrate", _marker is assigned in call of XfCreateMarkerGlobal function
-			}
-			else {
+			} else {
 			    if (alive player && (surfaceIsWater (getPos player)) ) then {
     //			    hint localize "--- x_water.sqf:  WeaponHolder[s] not found";
                     sleep 4;
-                    (localize "STR_SYS_620_1") call XfHQChat; playSound "losing_patience";
+                    (localize "STR_SYS_620_1") call XfHQChat;
 			    };
+                _sound = "losing_patience"; // you lost weapon forever
 			};
+			if (_sound != "") then { playSound _sound};
 		};
 	};
 

@@ -437,7 +437,7 @@ SYG_angleBetweenVectors3D = {
 //
 SYG_averPoint = {
 	private [ "_pnt", "_posX", "_posY", "_posZ", "_cnt" ];
-	if (typeName _this != "ARRAY") then {_this =[_this]};
+	if ( typeName _this != "ARRAY" ) then { _this = [ _this ] };
 	_posX = 0.0;
 	_posY = 0.0;
 	_posZ = 0.0;
@@ -445,7 +445,7 @@ SYG_averPoint = {
 		_pnt = _x call SYG_getPos;
 		_posX = _posX + (_pnt select 0);
 		_posY = _posY + (_pnt select 1);
-		if (count _pnt > 2) then { _posZ = _posZ + (_pnt select 2); };
+		if ( count _pnt > 2 ) then { _posZ = _posZ + ( _pnt select 2 ); };
 	} forEach _this;
 	_cnt = count _this;
 	[_posX/_cnt, _posY/_cnt, _posZ/_cnt]

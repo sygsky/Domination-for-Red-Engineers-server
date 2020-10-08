@@ -34,6 +34,13 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";	// Sound/music functions
+#ifdef __SPPM__
+	if (isServer) then {
+		call compile preprocessFileLineNumbers "scripts\SYG_utilsSPPM.sqf";		// SPPM markers
+	};
+#endif
+
+
 #ifdef __PREVENT_OVERTURN__
 	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";		// anti-overturn method
 #endif
@@ -667,6 +674,27 @@ SYG_addArrayInPlace = {
     _arr = _this select 0;
     { _arr set [ count _arr, _x ] } forEach (_this select 1);
     _arr
+};
+
+// Remove all strings "RM_ME" from input _arr
+// call: _cleaned_arr = _arr call SYG_clearArray;
+// returns the same array without "RM_ME" items. Order of remained items in array may change!!!
+SYG_clearArray = {
+	if ( (typeName _this) != "ARRAY") exitWith {_this};
+	private ["_i"];
+	for "_i" from (count _this -1)  to 0 step -1 do {
+		_x = _this select _i;
+		if ( typeName _x == "STRING") then {
+			if (_x == "RM_ME") then {
+				if ( _i == (count _this - 1) ) then { _this resize (count _this -1)}
+				else {
+					_this set [_i, _this select (count _this - 1)];
+					_this resize (count _this -1);
+				};
+			};
+		};
+	};
+	_this
 };
 
 if (true) exitWith {};

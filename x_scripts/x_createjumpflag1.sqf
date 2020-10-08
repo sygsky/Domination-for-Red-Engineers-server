@@ -18,10 +18,9 @@ _ftype = (
 _flag = _ftype createVehicle _posi;
 sleep 0.05;
 jump_flags = jump_flags + [_flag];
-if (d_own_side == "EAST") then //+++Sygsky: add more fun with the flag
-{
+if (d_own_side == "EAST") then {//+++Sygsky: add more fun with the flag
     _flag setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag
 };
-["new_jump_flag",_flag] call XSendNetStartScriptClient;
+["new_jump_flag",_flag, false] call XSendNetStartScriptClient;
 
 if (true) exitWith {_flag};

@@ -34,6 +34,7 @@ SYG_getVehicleType = {
 	private ["_entry","_typeCfg","_typeNr"];
 	_entry = _this;
 	if (typeName _this == "OBJECT") then { _entry = typeName _this;};
+	if (typeName _this != "STRING") exitWith {-1};
 	_typeCfg = configFile >> _entry >> "Library" >> "type";
 	_entry = configFile >> _entry;
 	_typeNr = -1;
@@ -148,6 +149,35 @@ SYG_getVehicleType = {
 		}; // if ((_typeNr < 0) || (_typeNr > 11)) then
 	};
 	_typeNr
+};
+
+// returns 0: tank, 1: car/moto, 2: static, 3: heli, 4: plane, 5: Ship, -1: Unknnown/not vehicle
+SYG_getVehicleType1 = {
+    if( typeName _this != "OBJECT" ) exitWith {-1};
+    if ( _this isKindOf "LandVehicle" ) exitWith {
+        if ( _this isKindOf "Tank" ) exitWith { 0 };
+        if ( (_this isKindOf "Car") || (_this isKindOf "Motorcycle") ) exitWith { 1 };
+        if ( _this isKindOf "StaticWeapon" ) exitWith { 2 };
+        -1
+    };
+    if ( _this isKindOf "Helicopter" ) exitWith {
+    	if (_this isKindOf "ParachuteBase") exitWith {-1};
+    	3
+    };
+    if ( _this isKindOf "Plane" ) exitWith { 4 };
+    if ( _this isKindOf "Ship" ) exitWith { 5 };
+    -1
+};
+
+/**
+ * Returns an estimate of the difficulty of transporting the specified vehicle type to the base
+ *
+ */
+SYG_getVehicleTypeScore = {
+    _type = _this call SYG_getVehicleType1;
+    if (_type < 0 ) exitWith {0};
+    // return scores for 0 (tank),1(moto|car),2(static),3(heli),4(plane),5(ship)
+    [2,4,0,1,3,3] select _type
 };
 
 //
@@ -1918,6 +1948,89 @@ SYG_removeAnyWeapon = {
     _wpn = [weapons _heli, _sampleArr] call SYG_findItemInArray;
     if (_wpn != "") exitWith { _heli removeWeapon _wpn; true};
     false
+};
+
+//
+// _type = _veh call SYG_getMarkerType;
+// _marker_obj setMarkerType _type;//
+// _type = _veh call SYG_getMarkerType;
+// _marker_obj setMarkerType _type;
+SYG_getVehicleMarkerType = {
+    if (typeName _this == "ARRAY") then {_this = _this select 0};
+#ifdef __ACE__
+    if(typeName _this != "OBJECT") exitWith {"ACE_Icon_Unknown"};
+    if (_this isKindOf "LandVehicle") exitWith {
+        if ( _this isKindOf "StaticWeapon") exitWith {
+            if ( _this isKindOf "D30" || _this isKindOf "M119" ) exitWith {"ACE_Icon_Howitzer"};
+            if ( _this isKindOf "AGS" || _this isKindOf "MK19_TriPod" ) exitWith {"ACE_Icon_GrenadeLauncher"};
+            if ( (typeOf _this) in (STATIC_WEAPONS_TYPE_ARR select 0) ) exitWith {"ACE_Icon_AirDefenceGun"};
+            if ( (typeOf _this) in (STATIC_WEAPONS_TYPE_ARR select 1) ) exitWith {"ACE_Icon_AntiTank"};
+            "ACE_Icon_Machinegun" // unknown type is default machinegun one
+        };
+        if ( _this isKindOf "M113") exitWith {"ACE_Icon_ArmourTrackedAPC"};
+        if (_this isKindOf "ZSU") exitWith {"ACE_Icon_ArmourTrackedAirDefence"}; // Shilka, Tunguska
+        if (_this isKindOf "BMP2" || _this isKindOf "ACE_M2A1" ) exitWith {"ACE_Icon_ArmourTrackedIFV"}; // Bradley, Linebacker, BMP
+        if (_this isKindOf "Car") exitWith {
+            if (_this isKindOf "Truck") exitWith {"ACE_Icon_Truck"};
+            if (_this isKindOf "StrykerBase" || _this isKindOf  "BRDM2") exitWith {"ACE_Icon_ArmourWheeled"}; // Striker, BRDM2
+            if (_this isKindOf "Motorcycle") exitWith {"ACE_Icon_Motorbike"};
+            "ACE_Icon_Car"
+        };
+        "ACE_Icon_Tank" //, "ACE_Icon_ArmourTrackedIFV", "ACE_Icon_ArmourTrackedAPC", "ACE_Icon_ArmourTrackedAirDefence"]
+    };
+    if (_this isKindOf "Helicopter") exitWith {
+    	if (_this isKindOf "ParachuteBase") exitWith{ "Parachute" };
+    	"ACE_Icon_Helo"
+    };
+    if (_this isKindOf "Plane") exitWith { "ACE_Icon_AirFixedWing" };
+    if (_this isKindOf "Ship") exitWith { "ACE_Icon_Boat" };
+    "ACE_Icon_Unknown";
+#else
+    if(typeName _this != "OBJECT") exitWith {"Vehicle"};
+    if (_this isKindOf "LandVehicle") exitWith {
+        if (_this isKindOf "Tank") exitWith { "HeavyTeam" };
+        "Dot" // square point
+    };
+    //["Dot","Vehicle"] // Square, Round
+    if (_this isKindOf "Helicopter") exitWith { "LightTeam" };
+    if (_this isKindOf "Plane") exitWith { "AirTeam" };
+    if (_this isKindOf "Ship") exitWith { "Empty" };
+    "Vehicle" // Round point
+#endif
+};
+//
+// call:
+//	_id = _veh call SYG_getVehicleType1;
+// _markerName = _id call SYG_getVehicleTypeMarker;
+//
+SYG_getVehicleTypeMarkerName = {
+	if ( ((typeName _this) != "SCALAR") && ( (typeName _this) in ["STRING","OBJECT"] ) )  then {_this = _this call SYG_getVehicleType1};
+	if (typeName _this != "SCALAR") exitWith {
+#ifdef __ACE__
+		"ACE_Icon_Unknown"
+#else
+		"Vehicle"
+#endif
+	 };
+	switch (_this) do {
+#ifdef __ACE__
+		case 0: {"ACE_Icon_Tank"};
+		case 1: {"ACE_Icon_Truck"};
+		case 2: {"ACE_Icon_Machinegun"};
+		case 3: {"ACE_Icon_Helo"};
+		case 4: {"ACE_Icon_AirFixedWing"};
+		case 5: {"ACE_Icon_Boat"};
+		default {"ACE_Icon_Unknown"};
+#else
+		case 0: {"HeavyTeam"};
+		case 1: {"Dot"};
+		case 2: {"Defend"};
+		case 3: {"LightTeam"};
+		case 4: {"AirTeam"};
+		case 5: {"Empty"};
+		default {"Vehicle"};
+#endif
+	};
 };
 
 //------------------------------------------------------------- END OF INIT

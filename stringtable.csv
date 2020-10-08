@@ -248,9 +248,9 @@ STR_SYS_129_100,You lost a fortune...,Sie verlor ein Vermögen...,La suerte Te h
 
 STR_SYS_130,For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!,"Für die Nichterfüllung der Aufgaben, die Sie persönlich trugen die Verantwortung. Abgezogen %1 Punkte. So wird es mit jedem!","Por no completar la tarea, usted personalmente incurrió en responsabilidad. Se restó %1 puntos. ¡Así será con todos!",За невыполнение задания Вы лично понесли ответственность. Вычтенo %1 баллов. Так будет с каждым!
 STR_SYS_131,Officer is at dist of about %1 m. from %3 and at Azimuth of about %2 deg. from it,Officer ist bei einem Abstand von über %1 m. von %3 und in Azimut von etwa %2 Grad.,"El oficial está aproximadamente en %1 m. de %3, acimut de búsqueda %2 gr.","Офицер примерно в %1 м. от %3, азимут поиска %2 гр."
-STR_SYS_132,Your Glonass position,Ihr Glonass-position,su posición GLONASS,вашей Глонасс-позицией
+STR_SYS_132,Your Glonass position,Ihr Glonass-position,su posición GLONASS,вашей Глонасс-позиции
 STR_SYS_133,Side Mission point,Side Mission punkt,puntos de trabajo,точки задания
-STR_SYS_134,The officer was not detected neither at Side Mission point nor near Your Glonass-Position,"Der Offizier wurde nicht erkannt, weder in Side Mission punkt noch in Ihre Glonass-Position",El oficial no se encuentra en el punto de trabajo ni cerca de su posición GLONASS,"Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
+STR_SYS_134,The officer was not detected neither at Side Mission point nor near Your Glonass-Position ((%1 m.),"Der Offizier wurde nicht erkannt, weder in Side Mission punkt noch in Ihre Glonass-Position (%1 m.)",El oficial no se encuentra en el punto de trabajo ni cerca de su posición GLONASS  (%1 m.),"Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией (%1 м.)"
 STR_SYS_135,Side Mission marker is absent from map!!!,Seite Mission marker ist nicht in der Karte!!!,¡El marcador de tarea adicional no se encuentra en el mapa!!!,Маркер доп. задания не найден на карте!!!
 STR_SYS_136,The service is cancelled...,Service abgebrochen...,Servicio cancelado...,Обслуживание отменено...
 
@@ -1363,6 +1363,19 @@ STR_SET_27,Vehicles able to load ammoboxes:,"Fahrzeuge, die Ammoboxen laden kön
 STR_SET_28,Player respawn delay (in seconds):,Verzögerung beim Respawn des Spielers (in Sekunden):,Tiempo de renacimiento (seg.):,Время возрождения (в сек.):
 STR_SET_29,Player respawn dialog after death:,Spieler Respawn Dialog nach dem Tod:,Diálogo de elección del lugar del renacimiento después de la muerte:,Диалог выбора места возрождения после смерти:
 
+STR_SPPM,SPPM,SPPM,SPPM,СППМ
+STR_SPPM_1,"All SPPM markers have been updated","Alle SPPM-Marker wurden aktualisiert","Todos los marcadores de SPPM han sido actualizados","Все маркеры СППМ обновлены"
+STR_SPPM_2,"SPPM markers are not used on the base","SPMM-Marker werden in der Basis nicht benutzt","Los marcadores SPPM no se usan en la base","Маркеры СППМ не действуют на базе"
+STR_SPPM_3,"You are in vehicle, no SPPM marker detected near around, the new one can be created","Du bist in einem Fahrzeug, in der Nähe wurde keine SPPM-Markierung entdeckt, die neue kann erstellt werden","Estás en el vehículo, no se ha detectado ningún marcador de SPPM cerca, se puede crear uno nuevo","Вы в машине, поблизости нет других маркеров СППМ, новый маркер может быть создан (в ближайшем будущем)"
+STR_SPPM_4,The existing SPPM is updated,SPPM aktualisiert,SPPM actualizado,СППМ обновлён
+STR_SPPM_5,The existing SPPM is used,Das existierende SPPM wird benutzt,Se ha utilizado el SPPM más cercano,Использован ближайший СППМ
+STR_SPPM_6,The SPPM removed,SPPM aus der Ferne,El SPPM se quitó,СППМ удалён
+STR_SPPM_7,You press this button too often (%1/%2 sec),Du drückst diese Taste zu oft (%1/%2 Sek.),Presionas este botón con demasiada frecuencia (%1/%2 seg.),Вы слишком часто нажимаете эту кнопку (%1/%2 сек.)
+STR_SPPM_ADD_ERR,Error in the creation of the new SPPM: The parameters for the procedure were incorrect,Neuer SPPM-Erstellungsfehler: falsche Parameter für die angegebene Prozedur,Nuevo error de creación de SPPM: parámetros incorrectos para el procedimiento especificado,Ошибка создания нового СППМ: указаны неверные параметры для процедуры
+STR_SPPM_ADD_ERR_1,New SPPM creation error: can't generate good marker name,Neuer SPPM-Erstellungsfehler: Marker-Name kann nicht generiert werden!,Nuevo error de creación de SPMM: ¡El nombre del marcador no puede ser generado!,Ошибка создания нового СППМ: нельзя сгенерировать имя маркера!
+STR_SPPM_ADD_ERR_2,SPPM not created: no vehicles in the vicinity,SPPM nicht erstellt: keine Fahrzeuge,SPPM no creado: no hay vehículos,СППМ не создан: транспортные средства отсутствуют
+STR_SPPM_ADD_ERR_3,The nearest SPPM is at %1 m. Move the vehicle closer to it.,Der nächstgelegene SPPM ist bei %1 m. Fahr das Fahrzeug näher ran.,El SPPM está en %1 m. Acerque el vehículo a él.,Есть СППМ на дистанции %1 м. Переместите  транспортное средство ближе к нему.
+STR_SPPM_ADD_SUCCESS,SPPM successfully created,SPPM wurde erfolgreich erstellt!,¡El SPPM ha sido creado con éxito!,СППМ успешно создан!
 
 STR_GRU_1,GRU,GRU,GRU,ГРУ
 STR_GRU_2,deliver the map,liefern Sie die Karte,entregar la tarjeta,доставить карту

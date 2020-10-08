@@ -29,9 +29,7 @@ if (current_target_index == -1) then {// before 1st town or current town cleared
         _current_target_name = format[localize "STR_SYS_1151", current_mission_counter + 1 ]; // "Finish SM(%1)"
     };
 #endif
-}
-else // next target town ready
-{
+} else {// next target town ready
     if (client_target_counter < number_targets ) then {
         __TargetInfo
     } else {
@@ -82,8 +80,7 @@ _s = current_mission_text;
 if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm) ) then {
 	call compile format ["_pos = markerPos ""XMISSIONM%1"";", current_mission_index + 1];
 	switch current_mission_index do {
-		case 5: // king in hotel
-		{
+		case 5: {// king in hotel
 			if (! isNil "king" ) then {
 
 				if ( alive king ) then {
@@ -98,8 +95,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 
 			} else { _s = _s + "\n" + localize "STR_SYS_525"}; // "The locals don't know anything about the king's location!!!"
 		};
-		case 30: // scientist on Asharan
-		{
+		case 30: {// scientist on Asharan
 			// find side mission marker and its coordinates
 			_str = "";
 			if (format ["%1",_pos] != "[0,0,0]") then {
@@ -128,8 +124,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 
 		};
 		case 40;
-		case 41: // hostages
-		{
+		case 41: {// hostages
 			// find side mission marker and its coordinates
 			if (format ["%1",_pos] != "[0,0,0]") then {
 				// find civilians
@@ -160,8 +155,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 		//case 25; Officer on Isla da Voda and isla da Vassal
 		case 42;
 		case 49; // officer Grant
-		case 55: // officer arrest
-		{
+		case 55: {// officer arrest
 			_s1 = localize "STR_SYS_135"; //"Side Mission marker is absent"  - default message
 			// find side mission marker and its coordinates
 			if (format["%1",_pos] != "[0,0,0]") then {
@@ -183,16 +177,14 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 					_dist   = (ceil(_dist/50))*50;
 					_angle  = [_pos, _leader] call XfDirToObj;
 					_s1     = format[ localize "STR_SYS_131", _dist, (ceil(_angle/10))*10, _s1 ]; // Is at dist %1 and angle %2 from %3
-				}
-				else {_s1 = localize "STR_SYS_134";}; // "Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
+				} else {_s1 = format[localize "STR_SYS_134", 1500];}; // "Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
 				_units = nil;
 			};
 			_s = _s + "\n" + _s1;
 		};
 	};
     // check for big gun at one of the snipers of side mission team
-    if (!isNil "SM_HeavySniperCnt") then
-    {
+    if (!isNil "SM_HeavySniperCnt") then {
 //        hint localize format["SM_HeavySniperCnt = %1", SM_HeavySniperCnt];
         if (SM_HeavySniperCnt > 0) then {
             switch (SM_HeavySniperCnt) do {
@@ -210,8 +202,7 @@ _ctrl ctrlSetText _s; // secondary mission text
 _s = _current_target_name;
 
 // if town is big type info about it
-if ( current_target_index >= 0 && (client_target_counter < number_targets)) then
-{
+if ( current_target_index >= 0 && (client_target_counter < number_targets)) then {
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
     if (! call SYG_isMainTargetAllowed) then { // show some special info
@@ -354,22 +345,25 @@ _ctrl ctrlSetText ((rank player) call XGetRankStringLocalized);
 
 #ifdef __ACE__
 if (d_with_ace_map) then {  // Карта A.C.E.
-	if (!(call XCheckForMap)) then {
-		_ctrl = _XD_display displayCtrl 11010;
-		_ctrl ctrlShow false;
-		_ctrl = _XD_display displayCtrl 111111;
-		_ctrl ctrlShow true;
-	} else {
-		_ctrl = _XD_display displayCtrl 11010;
-		_ctrl ctrlShow true;
-		_ctrl = _XD_display displayCtrl 111111;
-		_ctrl ctrlShow false;
-	};
+	_map_on = call XCheckForMap;
+	_ctrl = _XD_display displayCtrl 11010;
+	_ctrl ctrlShow _map_on;
+	_ctrl = _XD_display displayCtrl 111111;
+	_ctrl ctrlShow (!_map_on);
 } else {
 	_ctrl = _XD_display displayCtrl 111111;
 	_ctrl ctrlShow false;
 };
 #endif
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// SPPM handling: starts working only if player is in vehicle
+#ifndef __SPPM__
+_ctrl = _XD_display displayCtrl 11020;
+_ctrl ctrlShow false;
+#endif
+
+//-------------------------------------------------------
 
 waitUntil {!dialog || !alive player};
 

@@ -294,6 +294,34 @@ XHandleNetStartScriptServer = {
 		case "GRU_msg": {
 			_this call GRU_procServerMsg;
 		};
+
+		// SPPM event handler on server (receive messages from client)
+		case "SPPM": {
+			switch (arg(1)) do {
+				// format: ["SPPM","ADD", _pos, player_name]
+				case "ADD": { // add SPPM at designated position by known player
+					hint localize format["+++ SPPM ADD: pos %1 (%2), player ""%3""",
+						arg(2),
+						[arg(2),"%1 m. to %2 from %3",10] call SYG_MsgOnPosE,
+						arg(3)
+						];
+					_msg_arr = arg(2) call SYG_addSPPMMarker; // returns message about results
+					if (typeName _msg_arr == "STRING") then {_msg_arr = [_msg_arr]};
+					[ "msg_to_user", arg(3), [_msg_arr], 5, 4, false, "message_received" ] call XSendNetStartScriptClient; // corresponding message after procedure execution
+				};
+
+				// format: ["SPPM","ADD", player_name]
+				case "UPDATE" : { // update all SPPM available
+					hint localize format["+++ SPPM UPDATE (ALL): player ""%2""", arg(2)];
+					call SYG_updateAllSPPMMarkers;
+					["msg_to_user", "*", [["STR_SPPM_1"]], 5, 4, false, "message_received"] call XSendNetStartScriptClient; // "All SPPM markers have been updated"
+
+				};
+
+				default {hint localize format["--- bad SPPM params: %1", _this];};
+			};
+		};
+
         // ["syg_plants_restore", _player_name, _restore_center_pos, _restore_radious] call XSendNetStartScriptServer;
 /**
         // REMOVED as non workable correctly in Arma-1. Vegetation can't be restored as no synchronization betweeen server and client about it.

@@ -457,7 +457,7 @@ SYG_pointOnRahmadi = {
 SYG_pointNearBase = {
     if (typeName _this != "ARRAY") then {_this = position _this};
 	if (count _this < 2) exitWith {false};
-    [_this, [[9913,10385,0],1300,800]] call SYG_pointInRect
+    [_this, [[9913,10385,0],1300,800]] call SYG_pointInRect // only for Sahrani island
 };
 
 
@@ -877,10 +877,7 @@ SYG_MsgOnPosA = {
 	_pos1 = position _loc;
 	_pos1 set [2,0];
 	_pos2 = _obj;
-	if ( typeName _pos2 != "ARRAY") then
-	{
-    	_pos2 = position _obj;
-	};
+	if ( typeName _pos2 != "ARRAY") then { _pos2 = position _obj; };
 	_pos2 set [2,0];
 	_dist = (round ((_pos1 distance _pos2)/_roundTo)) * _roundTo;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirName;
@@ -907,7 +904,7 @@ SYG_MsgOnPosA2B = {
 };
 
 //
-// Creates english message based on user format string with 3 params %1, %2, %3 in follow order:
+// Creates non-localized (usually english) message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location, direction_to_location, location_name
 //
 // call as: _msg_eng = [_obj, _localized_format_msg<,roundTo> ] call SYG_MsgOnPosE;
@@ -976,10 +973,12 @@ SYG_geoDist = {
 // Call as: _pos = _obj call SYG_getPos;
 //
 SYG_getPos = {
-    if ( typeName _this == "OBJECT" ) exitWith { getPos _this};
-    if ( typeName _this == "GROUP" ) exitWith { getPos (_this call SYG_getLeader)};
-    if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this};
-    [0,0,0]
+    if ( typeName _this == "ARRAY"    ) exitWith { _this };
+    if ( typeName _this == "OBJECT"   ) exitWith { getPos _this };
+    if ( typeName _this == "GROUP"    ) exitWith { getPos (_this call SYG_getLeader) };
+    if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this };
+    if ( typeName _this == "STRING"   ) exitWith { getMarkerPos _this };
+    [ 0,0,0 ]
 };
 
 //

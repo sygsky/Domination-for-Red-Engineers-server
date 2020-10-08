@@ -13,7 +13,16 @@ XAddKills = {private ["_points","_killer"];_points = _this select 0;_killer = _t
 XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {points_west = points_west + _points;};case resistance: {points_racs = points_racs + _points;};};};
 #else
 
-// add score for observer kill
+/*
+	Add score for observer kill on "killed" event
+	4.13 Killed
+	Triggered when the unit is killed.
+	Local.
+	Passed array: [unit, killer]
+	unit: Object - Object the event handler is assigned to
+	killer: Object - Object that killed the unit
+	Contains the unit itself in case of collisions.
+*/
 SAddObserverKillScores = {
     private ["_killer","_observer"];
     _observer = _this select 0;
@@ -35,7 +44,9 @@ SAddObserverKillScores = {
             hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
                 primaryWeapon _observer,
                 typeOf _killer,
-                if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
+                if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {
+                	if ( _observer == _killer) then {" by itself"} else {""}
+                },
                 [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
             ];
         };

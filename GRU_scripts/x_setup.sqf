@@ -176,3 +176,5 @@
 
 // #385: uncomment to allow lock vehicles on recapture towns procedure
 //#define __LOCK_ON_RECAPTURE__
+
+#define __SPPM__ // support for SPPM markers

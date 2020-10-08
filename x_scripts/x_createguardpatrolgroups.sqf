@@ -277,7 +277,7 @@ if (!no_more_observers) then {
 		_grp_array execVM "x_scripts\x_groupsm.sqf";
 		call compile format ["
 			Observer%1 = _units select 0;
-			Observer%1 addEventHandler [""killed"", {Observer%1 = objNull;call SAddObserverKillScores;nr_observers = nr_observers - 1;if (nr_observers == 0) then {update_observers = -1; [""update_observers"",update_observers] call XSendNetStartScriptClient;}}];
+			Observer%1 addEventHandler [""killed"", {Observer%1 = objNull;call SAddObserverKillScores;nr_observers = nr_observers - 1;if (nr_observers <= 0) then {update_observers = -1; [""update_observers"",update_observers] call XSendNetStartScriptClient;}}];
 		",_xx];
 		sleep 1.231;
 	};

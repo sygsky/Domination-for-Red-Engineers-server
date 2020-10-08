@@ -68,6 +68,7 @@ if (count _holiday > 0 ) then {
     _sound = _holiday select 1;
     if (_sound != "") then {playMusic _sound};
 };
+_music_cnt = 0;
 if (_sound == "") then { // select random music for ordinal day
     if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then {
         playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
@@ -126,6 +127,7 @@ if (_sound == "") then { // select random music for ordinal day
             _music = _night_music + _personalSounds;
             // if day time add day music too
             if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { [_music, _daytime_music] call SYG_addArrayInPlace };
+            _music_cnt = count _music;
             _music = _music call _XfRandomArrayVal;
 #else
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
@@ -140,6 +142,7 @@ if (_sound == "") then { // select random music for ordinal day
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
+			_sound = _music;
             playMusic _music; //playMusic "ATrack25"; // oldest value by Xeno
          };
     };
@@ -150,7 +153,7 @@ if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMorning - 0.5))) 
 };
 
 #ifdef __DEBUG__
-hint localize format["x_intro.sqf: time is %1, daytime is %2, nowtime is %3, missionStart is %4",time, daytime, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
+hint localize format["+++ x_intro.sqf: music/cnt ""%1"", time is %2, daytime is %3, nowtime is %4, missionStart is %5", format["%1/%2", _sound, _music_cnt ], time, daytime, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
 #endif
 
 #ifdef __DEFAULT__
@@ -332,7 +335,11 @@ _camera = objNull;
 _plpos = [(position player select 0),(position player select 1),1.5];
 if ( typeName _camstart == "ARRAY" ) then {
 	_camera = "camera" camCreate _start;
-	if (surfaceIsWater _start) then { _camera say "under_water_3" }; // gurgle if in water
+	if (surfaceIsWater _start) then { // gurgle if in water
+		_camera say "under_water_3";
+		sleep (random 0.2);
+		_camera say (call SYG_getSubmarineSound);
+	};
 } else {
 	_camera = "camera" camCreate [(position _camstart select 0), (position _camstart select 1) + 1, 200];
 };

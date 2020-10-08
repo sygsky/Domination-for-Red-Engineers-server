@@ -8,7 +8,7 @@ if (!isServer) exitWith {};
 #define KILL_RADIOUS 30 // radious to be hit directly by arti shoots
 #define HIT_RADIOUS 45 // radious to be hit indirectly by arti shoots
 #define SAVE_RADIOUS 60 // radious to he save by arti shoots
-#define MIN_FRIENDLY_COUNT_TO_STRIKE 3
+#define MIN_FRIENDLY_COUNT_TO_STRIKE 3 // maximum number of enemy vehilce in zone to allow strike onto them
 #define MAX_SHOOT_DIST 2000 // maximum distance observer can shoot on players
 
 _enemy_ari_available = true;
@@ -104,15 +104,13 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 	    _observer = _observers select _i; // current observer
         if (!alive _observer) then {
             _observers set[_i, "RM_ME"];
-        }
-        else { // if (!alive _observer) then
+        } else { // if (!alive _observer) then
             if (typeName _observer != "OBJECT") exitWith {
                 hint localize format["--- x_handleobservers.sqf: Obs#%1 typeName == %2", _i,typeName _observer ];
             };
             if (!_enemy_ari_available) exitWith { sleep 3.132 };
 
-            if (alive _enemyToReveal) then
-            {
+            if (alive _enemyToReveal) then {
                 _observer reveal _enemyToReveal;
                 sleep 0.1;
             };
@@ -153,17 +151,13 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _own_cnt       = {alive _x} count _own_arr;
 
                     _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
-                    _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // units in kill zone
-
-                    _observer_cnt = _observers call _count_observers;
-
-                    _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, KILL_RADIOUS]; // array of enemy vehicle in kill zone
+                    _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // observer side units in hit zone
+                    _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, KILL_RADIOUS]; // array of observer side vehicle in kill zone
                     _veh_cnt       =  {side _x == _enemySide} count _veh_arr;    // enemy crew vehicles in kill zone
+                    _observer_cnt = _observers call _count_observers;
+                    _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1);  // how many units to hit is allowed
 
-                    _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE;
-
-                    if (_own_cnt > 0) then { _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1); };
-
+					// observer side vehicles not allowed to be killed/hit
                     _type = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                     // If enemy is too far from strike point, do smoking attack only
