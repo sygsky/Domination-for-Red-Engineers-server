@@ -2,7 +2,7 @@
 // It is 1st time draw static destroy marker procedure, immediatelly after death of vehicle
 // Logic:
 // 1. Waits until vehicle is dead
-// 2. On death creates wreck marker and wait while vehicle not null and distance from vdead vehicle to marker origin is <= 30 m
+// 2. On death creates wreck marker and wait while vehicle not null and distance from dead vehicle to the marker origin is <= 30 m
 // 3. Remove marker and do: _vehicle execVM "x_scripts\x_wreckmarker2.sqf";
 // 4. exit!!!!! So it is only initiate marker procedure only
 

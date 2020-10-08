@@ -6,25 +6,50 @@
 	returns: nothing
 */
 
-#define SPPM_MIN_DISTANCE 50 // Minimum distance at which the nearest SPPM can be located
-#define SPPM_VEH_MIN_DISTANCE 20 // Minimum distance between vehicle  and SPPM
-#define SPPM_OBJ_TYPE "ACE_Target_CArm" // SPPM invisible object for search
+//#define SPPM_OBJ_TYPE "ACE_Target_CArm" // SPPM invisible object for search
+#define SPPM_UPDATE_INTERVAL_SECS 30 // interval in seconds to update SPPM markers on server
+#define SPPM_ADD_INTERVAL_SECS 300 // interval in seconds to add next SPPM marker on server
+
 
 hint localize "+++ scripts/sppm.sqf: check/set SPPM marker[s]";
 // 0. Check if player is on base
 _pos = player call SYG_getPos;
-hint localize format["+++ sppm.sqf: [player call SYG_getPos, d_base_array] = %1", [ _pos, d_base_array]];
+//hint localize format["+++ sppm.sqf: [player call SYG_getPos, d_base_array] = %1", [ _pos, d_base_array]];
 
-if ((vehicle player == player)) exitWith {
-	(localize "STR_SPPM_1") call XfHQChat; // "All SPPM markers will be renewed (you are not in vehicle)"
-	call SYG_updateAllSPPMMarkers;
+
+if ((vehicle player != player) && (!((vehicle player) isKindOf "ParachuteBase") ) ) exitWith {
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++ You are in vehicle (ADD SPPM can be applyed) +++
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// On base you can't add SPPM markers
+        if ( [_pos, d_base_array] call SYG_pointInRect) exitWith {
+        	(localize "STR_SPPM_2") call XfHQChat; // "SPPM markers are not used on the base"
+        };
+
+		if ( (time - SYG_recentSPPMCmdUseTime
+) < SPPM_ADD_INTERVAL_SECS) exitWith {
+		format[localize "STR_SPPM_7", round (time - SYG_recentSPPMCmdUseTime
+), SPPM_ADD_INTERVAL_SECS ] call XfHQChat;
+	};
+	["SPPM","ADD", _pos, name player] call XSendNetStartScriptServer;
+	SYG_recentSPPMCmdUseTime
+ = time; // store last update time
 };
 
-if ( ([player call SYG_getPos, d_base_array] call SYG_pointInRect) ) exitWith {
-	(localize "STR_SPPM_2") call XfHQChat; // "SPPM marker can't be created on the base"
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++u   You are on your feet so UPDATE SPPM command can be applyed  +++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+if ( (time - SYG_recentSPPMCmdUseTime
+) < SPPM_UPDATE_INTERVAL_SECS) exitWith {
+	format[localize "STR_SPPM_7", round (time - SYG_recentSPPMCmdUseTime
+), SPPM_UPDATE_INTERVAL_SECS ] call XfHQChat; // You press this button too often (%1/%2 sec)
 };
 
-// 1. Check if current vehicle is in existing SPPM or existing SPPM is closer then 50 meters
-_str = _pos call SYG_addSPPMMarker;
+SYG_recentSPPMCmdUseTime
+ = time; // store last update time
 
-(localize _str) call XfHQChat; // "You are in vehicle, no SPPM marker detected near around, the new one can be created";
+// Update all markers on server
+["SPPM", "UPDATE", name player] call XSendNetStartScriptServer;
+//_str = _pos call SYG_addSPPMMarker;
+
+//(localize _str) call XfHQChat; // "You are in vehicle, no SPPM marker detected near around, the new one can be created";

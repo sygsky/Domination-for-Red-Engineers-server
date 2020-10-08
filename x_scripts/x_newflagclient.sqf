@@ -8,8 +8,7 @@ _marker_name = "";
 call compile format ["_marker_name = ""paraflag%1"";", client_target_counter];
 [_marker_name, position new_jump_flag,"ICON","ColorYellow",[0.5,0.5],"Parajump",0,"Flag1"] call XfCreateMarkerLocal;
 
-if (d_own_side == "EAST") then //+++Sygsky: add more fun with flags
-{
+if (d_own_side == "EAST") then  {//+++Sygsky: add more fun with flags
     new_jump_flag say "USSR";
 };
 

@@ -267,4 +267,8 @@ if (X_Client) then {
     // Set it to false if you have performance problems (short hickups) at mission start.
     // If false repair stations can not repair vehicles
     d_with_repstations = true;
+#ifdef __SPPM__
+    SYG_recentSPPMCmdUseTime
+ = time;
+#endif
 };

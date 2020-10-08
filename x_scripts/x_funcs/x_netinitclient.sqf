@@ -789,6 +789,11 @@ XHandleNetStartScriptClient = {
 			_this call GRU_procClientMsg;
 		};
 
+		// SPPM event handler on client (receive messages from server)
+		case "SPPM": {
+
+		};
+
 		case "syg_plants_restored": { // message about restore result to subtract corresponding scores from user
 		// params are: ["syg_plants_restored", _name, _pos, _radious, _score] call XSendNetStartScriptClient;
 		    private ["_score"];

@@ -35,7 +35,9 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";	// Sound/music functions
 #ifdef __SPPM__
-	call compile preprocessFileLineNumbers "scripts\SYG_utilsSPPM.sqf";		// SPPM markers
+	if (isServer) then {
+		call compile preprocessFileLineNumbers "scripts\SYG_utilsSPPM.sqf";		// SPPM markers
+	};
 #endif
 
 
