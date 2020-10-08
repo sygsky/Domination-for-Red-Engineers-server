@@ -562,6 +562,14 @@ class CfgSounds
     class laughter_2 { name="Laughter 2"; sound[] = {\sounds\defeat\laughter\2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_3 { name="Laughter 3"; sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_4 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\4.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_5 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\5.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_6 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\6.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_7 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\7.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_8 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\8.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_9 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\9.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_10 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\10.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_11 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\11.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_12 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\12.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
     class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\game_job.ogg,db+10,1.0}; titles[] = {}; } // War cry "game over"
     class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "get some"
