@@ -268,7 +268,6 @@ if (X_Client) then {
     // If false repair stations can not repair vehicles
     d_with_repstations = true;
 #ifdef __SPPM__
-    SYG_recentSPPMCmdUseTime
- = time;
+    SYG_recentSPPMCmdUseTime = time;
 #endif
 };

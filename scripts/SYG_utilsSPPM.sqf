@@ -285,5 +285,6 @@ SYG_updateAllSPPMMarkers = {
 	SYG_SPPMArr call SYG_clearArray;
 	//player groupChat format["+++  count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];
 	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];
+	[_count_updated, _count_removed]
 };
 hint localize "+++ INIT of SYG_utilsSPPM completed";
