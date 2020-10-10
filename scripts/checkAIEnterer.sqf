@@ -22,14 +22,12 @@ while {(alive _this) && ((vehicle player) != player) && ((player distance FLAG_B
                     if ( count _role_arr > 0 ) then {
                         if ( ( _role_arr select 0 == "Turret" ) )  then { // AI is sitting in gunner nest
 							_gunner = true;
-                            if ( !_enter ) then // entered on this loop step only
-                            {
+                            if ( !_enter ) then { // entered on this loop step only
                                 if ( time < _time ) then { // attempt requested too soon
 									_diff = _time - time;
                                     [_this, format[localize "STR_AI_14", round(_diff/5)*5 max 1]] call XfVehicleChat;
                                 } else { // time to request
-                                    if ( _x call SYG_isWoman ) then
-                                    {
+                                    if ( _x call SYG_isWoman ) then {
                                         // 1/3 probability that woman AI will agree to be a gunner of battle heli
                                         if ((random 9) < 3) then {
                                             //hint localize format["+++ checkAIEnterer: woman entered"];
@@ -38,9 +36,7 @@ while {(alive _this) && ((vehicle player) != player) && ((player distance FLAG_B
                                             ["say_sound", _x, format["sorry_%1", 12 + floor(random 3)] ] call XSendNetStartScriptClientAll; // Woman say "Sorry" etc 12..14
                                             _enter = true; // entrance allowed
 											_time = time;  // mark time to allow test
-                                        }
-                                        else // AI leave battle heli in this case
-                                        {
+                                        } else { // AI leave battle heli in this case
                                             //hint localize format["+++ checkAIEnterer: woman ejected"];
                                             ["say_sound", _x, format["sorry_%1",floor(random 12)] ] call XSendNetStartScriptClientAll; // Woman say "Sorry" etc in 0..11
                                         };
@@ -48,6 +44,7 @@ while {(alive _this) && ((vehicle player) != player) && ((player distance FLAG_B
 										if ( (_x isKindOf "SoldierWPilot") or ( _x isKindOf "SoldierEPilot")) then {
                                             _msg = "STR_AI_13_NUM" call SYG_getRandomText;
                                             [_this, localize _msg] call XfVehicleChat;
+                                            // ["say_sound", _x, format["sorry_%1", 12 + floor(random 3)] ] call XSendNetStartScriptClientAll; // Woman say "Sorry" etc 12..14
                                             _enter = true; // entrance allowed
 											_time = time;  // mark time to allow test
 										};

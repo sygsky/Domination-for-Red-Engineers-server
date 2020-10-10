@@ -33,13 +33,11 @@ if (isServer && ! X_SPE) exitWith{false};  // isDedicated
 
 // hint localize format["--- scripts/storeequipment.sqf: _this is %1", _this ];
 
-if ( ( typeName arg(3) ) != "STRING" ) exitWith
-{
+if ( ( typeName arg(3) ) != "STRING" ) exitWith {
     hint localize format["--- scripts/storeequipment.sqf: illegal argument ""%1"" found, expected ""S""[tore]", arg(3)];
 };
 
-switch (toUpper arg(3)) do
-{
+switch (toUpper arg(3)) do {
     case "S":
     {
         // store equipment
@@ -49,8 +47,7 @@ switch (toUpper arg(3)) do
                     {
                         player call SYG_getPlayerEquipAsStr
                     };
-		// TODO: send armory sound to all
-		_sound = format["armory%1", 1 + floor(random 3)];
+		_sound = format["armory%1", ceil(random 4)];
 		["say_sound", player, _sound] call XSendNetStartScriptClientAll;
         ["d_ad_wp", name player, _equip] call XSendNetStartScriptServer;
 

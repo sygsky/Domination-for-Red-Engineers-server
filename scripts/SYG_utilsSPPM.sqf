@@ -232,7 +232,7 @@ SYG_generateSPPMText = {
 		};
 	} forEach _this;
 	format["%1:%2/%3/%4/%5/%6",
-		localize "STR_SPPM",
+		localize "STR_SPPM", // Localization on server means same language text on all client engines
 		if (_truck == 0) then {""} else {_truck},
 		if (_tank == 0) then {""} else {_tank},
 		if (_car == 0) then {""} else {_car},

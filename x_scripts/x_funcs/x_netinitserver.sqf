@@ -314,7 +314,7 @@ XHandleNetStartScriptServer = {
 
 				// format: ["SPPM","UPDATE", player_name]
 				case "UPDATE" : { // update all SPPM available
-					hint localize format["+++ SPPM UPDATE (ALL): player ""%2""", arg(2)];
+					hint localize format["+++ SPPM UPDATE (ALL): player ""%1""", arg(2)];
 					private ["_cnt"];
 					_cnt = count SYG_SPPMArr;
 					if ( _cnt == 0) exitWith {

@@ -553,16 +553,15 @@ SYG_playDeathInTankSound = {
 // play random sound about death from enemy tank
 // "Время вперёд", далее "Раммштейн 1-й и 5-й", gayane2, the_complex.ogg, betrayed.ogg
 SYG_enemy_tanks_music = [ ["Vremia_vpered_Sviridov",0.451, 9.795], "gayane2", "the_complex", "betrayed","rammstein_1","rammstein_5"];
+
 SYG_playDeathFromEnemyTankSound = {
     SYG_enemy_tanks_music call SYG_playRandomTrack;
 };
 
-
 SYG_getFemaleFuckSpeech = {
     private ["_arr"];
 	_arr = ["woman_fuck","woman_fuck_2","woman_fuck_3","woman_fuck_4","woman_fuck_5","woman_kidding","woman_motherfucker","woman_sob","woman_svoloch","sorry_11","woman_dont_trust"];
-    switch localize "STR_LANG" do
-    {
+    switch localize "STR_LANG" do {
         case "RUSSIAN": { _arr = _arr + ["woman_svoloch","woman_svoloch","woman_svoloch"]};
     };
 	_arr call XfRandomArrayVal
