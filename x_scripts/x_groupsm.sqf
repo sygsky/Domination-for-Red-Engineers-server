@@ -47,7 +47,10 @@ _rejoin_time     = 0; // time for next re-join
 _debug_print     = false;
 _skip_islets     = false;
 _hills_seek_dist = 0;
+#ifdef SKIP_WP_NEAR_BASE
 _skip_base       = false;
+#endif
+
 if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) then
 {
 	_wp_array = _grp_array select 10;
@@ -182,15 +185,17 @@ while {true} do {
 										_wp_pos = [];
 									};
 								};
+#ifdef SKIP_WP_NEAR_BASE
 								if (_skip_base) then {
 									// check if point is near owner base
 									if (_wp_pos call SYG_pointNearBase) then {
-#ifdef __DEBUG__
+	#ifdef __DEBUG__
 										if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos]};
-#endif
+	#endif
 										_wp_pos = [];
 									};
 								};
+#endif
 								if (count _wp_pos == 0) exitWith {_grp_array set [2,0]};
 								_counter = 0;
 								while {_wp_pos distance _start_pos < 20 && _counter < 50} do {
@@ -207,6 +212,7 @@ while {true} do {
 #endif							
 											_wp_pos = _start_pos
 										};
+#ifdef SKIP_WP_NEAR_BASE
                                         if (_skip_base) then {
                                             // check if point is near owner base
                                             if (_wp_pos call SYG_pointNearBase) then {
@@ -216,6 +222,7 @@ while {true} do {
                                                 _wp_pos = [];
                                             };
                                         };
+#endif
 										_counter = _counter + 1;
 										sleep 0.02;
 									};
