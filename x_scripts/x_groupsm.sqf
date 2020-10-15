@@ -20,6 +20,8 @@
 // at 10.4: prevent new wp be near owner base (TRUE) or not (FALSE). Optional.  Default FALSE, i.e. not prevent WP be near owner base
 //-----------------------------------------------------------------------------------------------------------------------
 
+#define SKIP_WP_NEAR_BASE // if defined, patrols will not try to move in base area
+
 private ["_grp_array", "_grp", "_enemy_array", "_reached_wp", "_time_at_wp", "_next_wp_time", "_units", 
          "_checktime", "_flank_pos_a",/*  "_make_normal",  */"_leader", "_jleader", "_start_pos", "_wp_array", "_wp_one",
 		 "_wp_pos", "_last_pos", "_counter", "_stime","_had_towait", "_side", "_joingrp","_leader1","_rejoin_num","_i",
@@ -52,8 +54,10 @@ if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) the
 	if ( count _wp_array > 0) then {    _rejoin_num  = _wp_array select 0;};
 	if ( count _wp_array > 1) then {    _debug_print = _wp_array select 1;};
 	if ( count _wp_array > 2) then {    _skip_islets = _wp_array select 2;};
-	if ( count _wp_array > 3) then {_hills_seek_dist = _wp_array select 3;};
+	if ( count _wp_array > 3) then {_hills_seek_dist = _wp_array select 3; if (_hills_seek_dist < 0) then {_hills_seek_dist = 0}};
+#ifdef SKIP_WP_NEAR_BASE
 	if ( count _wp_array > 4) then {      _skip_base = _wp_array select 4;};
+#endif
 };
 #ifdef __DEBUG__
 _debug_print = _debug_print && ((side _grp) != civilian); // skip debug print if civil group
@@ -168,8 +172,7 @@ while {true} do {
 									case 4: {[_wp_one, _wp_array select 1, _wp_array select 2, _wp_array select 3] call XfGetRanPointSquareOld};
 									default {[]};
 								};
-								if (_skip_islets) then
-								{
+								if (_skip_islets) then {
 									// check if point is on some islet near main Sahrani Isle (Rahmadi is always allowed for patrolling)
 									if (_wp_pos call SYG_pointOnIslet) then 
 									{
@@ -179,11 +182,9 @@ while {true} do {
 										_wp_pos = [];
 									};
 								};
-								if (_skip_base) then
-								{
+								if (_skip_base) then {
 									// check if point is near owner base
-									if (_wp_pos call SYG_pointNearBase) then
-									{
+									if (_wp_pos call SYG_pointNearBase) then {
 #ifdef __DEBUG__
 										if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos]};
 #endif
@@ -198,21 +199,17 @@ while {true} do {
 										case 4: {[_wp_one, _wp_array select 1, _wp_array select 2, _wp_array select 3] call XfGetRanPointSquareOld};
 									};
 									// check if point is on some islet near main Sahrani Isle (Rahmadi is always allowed for patrolling)
-									if (_skip_islets) then
-									{
+									if (_skip_islets) then {
 										
-										if ( _wp_pos call SYG_pointOnIslet ) then 
-										{
+										if ( _wp_pos call SYG_pointOnIslet ) then {
 #ifdef __DEBUG__
 											if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: new wp %2 is on islet (case 2), counter %3",call SYG_nowTimeToStr,_wp_pos,_counter]};
 #endif							
 											_wp_pos = _start_pos
 										};
-                                        if (_skip_base) then
-                                        {
+                                        if (_skip_base) then {
                                             // check if point is near owner base
-                                            if (_wp_pos call SYG_pointNearBase) then
-                                            {
+                                            if (_wp_pos call SYG_pointNearBase) then {
 #ifdef __DEBUG__
                                                 if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 2)",call SYG_nowTimeToStr,_grp, _wp_pos]};
 #endif
@@ -230,16 +227,14 @@ while {true} do {
 									_grp call XCombatPatrol;
 								};
 								(units _grp) doMove _wp_pos;
-								if ( _debug_print ) then
-								{
+								if ( _debug_print ) then {
 									if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: group %2 - > set new WP %3 near %4",call SYG_nowTimeToStr,_grp, _wp_pos, text (_wp_pos call SYG_nearestLocation)]};
 								};
 								_grp_array set [4, _wp_pos];
 								_grp_array set [5, time];
 								_grp_array set [7, _start_pos];
 							};
-						} else
-						{
+						} else {
 							if(_debug_print) then {hint localize format[ "--- x_groupsm: expected _wp_array not ARRAY => %1", _grp_array]};
 						}
 					};
@@ -247,8 +242,7 @@ while {true} do {
 			} else { // if (_reached_wp) then {
 				if (isNull _grp || (_grp call XfGetAliveUnitsGrp) == 0) exitWith {};
 #ifdef __DEBUG__			
-				if ( count (_grp_array select 4) != 3 ) then
-				{
+				if ( count (_grp_array select 4) != 3 ) then {
 					if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, count of next wp coords (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)]};
 				};
 #endif				
