@@ -516,7 +516,7 @@ mt_bonus_vehicle_array = (
 "ACE_BMP3_M", 		    // 2 - ordinal vehicles list
 
 "ACE_ZSU",          	// 3
-"ACE_ZSU",			// 4
+"ACE_ZSU",				// 4
 
 "ACE_T55_AMV",          // 5
 "ACE_T64_BV",			// 6
@@ -556,8 +556,8 @@ mt_big_bonus_vehicle_array = [
 
 mt_bonus_vehicle_array = mt_small_bonus_vehicle_array + mt_big_bonus_vehicle_array;
 
-mt_small_bonus_params     = [mt_small_bonus_vehicle_array, [], mt_bonus_vehicle_array];
-mt_big_bonus_params = [mt_big_bonus_vehicle_array, [], mt_bonus_vehicle_array];
+mt_small_bonus_params     = [mt_small_bonus_vehicle_array, [], mt_bonus_vehicle_array];	// bonuses for ordinal towns
+mt_big_bonus_params = [mt_big_bonus_vehicle_array, [], mt_bonus_vehicle_array]; // bonuses for big towns only
 
 //big_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Ka50"; // index of first good vehicle (helis + jets + big tanks)
 //jet_bonus_vec_index = mt_bonus_vehicle_array find "ACE_Su30Mk_Kh29T"; // index of first good plane vehicle

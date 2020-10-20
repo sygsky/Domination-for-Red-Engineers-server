@@ -1370,12 +1370,15 @@ STR_SPPM_2,"SPPM markers are not used on the base","SPMM-Marker werden in der Ba
 STR_SPPM_3,"You are in vehicle, no SPPM marker detected near around, the new one can be created","Du bist in einem Fahrzeug, in der Nähe wurde keine SPPM-Markierung entdeckt, die neue kann erstellt werden","Estás en el vehículo, no se ha detectado ningún marcador de SPPM cerca, se puede crear uno nuevo","Вы в машине, поблизости нет других маркеров СППМ, новый маркер может быть создан (в ближайшем будущем)"
 STR_SPPM_4,The existing SPPM is updated,SPPM aktualisiert,SPPM actualizado,СППМ обновлён
 STR_SPPM_5,The existing SPPM is used,Das existierende SPPM wird benutzt,Se ha utilizado el SPPM más cercano,Использован ближайший СППМ
-STR_SPPM_6,The SPPM removed,SPPM aus der Ferne,El SPPM se quitó,СППМ удалён
+STR_SPPM_6,The empty SPPM removed,Das leere SPPM entfernt,El SPPM vacío eliminado,Пустой СППМ удалён
+STR_SPPM_6_1,The SPPM mark without marker removed,Der SPMM-Punkt ohne Markierung wurde entfernt,El punto SPMM sin marcador ha sido eliminado.,Точка СППМ без маркера удалена
+STR_SPPM_6_2,SPPM marking object (%1) not found!,Der SPPM ohne Markierung entfernt,El SPPM sin el marcador removido,Центр СППМ на земле не обнаружен
+STR_SPPM_6_3,Marking object (%1) on SPPM of unknown type!,Objekt (%1) auf SPPM unbekannten Typs markieren,Objeto marcador (%1) en SPPM de tipo desconocido,Маркерный предмет (%1) СППМ неизвестноготипа
 STR_SPPM_7,You press this button too often (%1/%2 sec),Du drückst diese Taste zu oft (%1/%2 Sek.),Presionas este botón con demasiada frecuencia (%1/%2 seg.),Вы слишком часто нажимаете эту кнопку (%1/%2 сек.)
 STR_SPPM_8,"Stop engine to work with SPPM markers","Stoppe die Engine, um mit SPPM-Markern zu arbeiten","Parar el motor para trabajar con los marcadores SPPM","Выключите двигатель для работы с СППМ маркерами"
-STR_SPPM_ADD_ERR,Error in the creation of the new SPPM: The parameters for the procedure were incorrect,Neuer SPPM-Erstellungsfehler: falsche Parameter für die angegebene Prozedur,Nuevo error de creación de SPPM: parámetros incorrectos para el procedimiento especificado,Ошибка создания нового СППМ: указаны неверные параметры для процедуры
+STR_SPPM_ADD_ERR,Error in the creation of the new SPPM: The parameters for the procedure were incorrect (%1),Neuer SPPM-Erstellungsfehler: falsche Parameter für die angegebene Prozedur (%1),Nuevo error de creación de SPPM: parámetros incorrectos para el procedimiento especificado (%1),Ошибка создания нового СППМ: указаны неверные параметры для процедуры (%1)
 STR_SPPM_ADD_ERR_1,New SPPM creation error: can't generate good marker name,Neuer SPPM-Erstellungsfehler: Marker-Name kann nicht generiert werden!,Nuevo error de creación de SPMM: ¡El nombre del marcador no puede ser generado!,Ошибка создания нового СППМ: нельзя сгенерировать имя маркера!
-STR_SPPM_ADD_ERR_2,SPPM not created: no vehicles in the vicinity,SPPM nicht erstellt: keine Fahrzeuge,SPPM no creado: no hay vehículos,СППМ не создан: транспортные средства отсутствуют
+STR_SPPM_ADD_ERR_2,SPPM not created: no suitable vehicles in the vicinity,SPPM nicht erstellt: keine Fahrzeuge,SPPM no creado: no hay vehículos,СППМ не создан: подходящие транспортные средства отсутствуют
 STR_SPPM_ADD_ERR_3,The nearest SPPM is at %1 m. Move the vehicle closer to it.,Der nächstgelegene SPPM ist bei %1 m. Fahr das Fahrzeug näher ran.,El SPPM está en %1 m. Acerque el vehículo a él.,Есть СППМ на дистанции %1 м. Переместите  транспортное средство ближе к нему.
 STR_SPPM_ADD_SUCCESS,SPPM successfully created,SPPM wurde erfolgreich erstellt!,¡El SPPM ha sido creado con éxito!,СППМ успешно создан!
 

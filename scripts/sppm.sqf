@@ -10,7 +10,6 @@
 #define SPPM_UPDATE_INTERVAL_SECS 30 // interval in seconds to update SPPM markers on server
 #define SPPM_ADD_INTERVAL_SECS 120 // interval in seconds to add next SPPM marker on server
 
-
 hint localize "+++ scripts/sppm.sqf: check/set SPPM marker[s]";
 // 0. Check if player is on base
 _pos = player call SYG_getPos;
@@ -43,8 +42,9 @@ if ( (time - SYG_recentSPPMCmdUseTime ) < SPPM_UPDATE_INTERVAL_SECS) exitWith {
 	format[localize "STR_SPPM_7", round (time - SYG_recentSPPMCmdUseTime ), SPPM_UPDATE_INTERVAL_SECS ] call XfHQChat; // "You press this button too often (%1/%2 sec)"
 };
 
-SYG_recentSPPMCmdUseTime = time; // store last update time
-
 // Update all markers on server
 ["SPPM", "UPDATE", name player] call XSendNetStartScriptServer;
+
+SYG_recentSPPMCmdUseTime = time; // store last update time
+
 //_str = _pos call SYG_addSPPMMarker;

@@ -20,7 +20,7 @@
 // at 10.4: prevent new wp be near owner base (TRUE) or not (FALSE). Optional.  Default FALSE, i.e. not prevent WP be near owner base
 //-----------------------------------------------------------------------------------------------------------------------
 
-#define SKIP_WP_NEAR_BASE // if defined, patrols will not try to move in base area
+// #define SKIP_WP_NEAR_BASE // if defined, patrols will not try to move in base area
 
 private ["_grp_array", "_grp", "_enemy_array", "_reached_wp", "_time_at_wp", "_next_wp_time", "_units", 
          "_checktime", "_flank_pos_a",/*  "_make_normal",  */"_leader", "_jleader", "_start_pos", "_wp_array", "_wp_one",
@@ -51,7 +51,7 @@ _hills_seek_dist = 0;
 _skip_base       = false;
 #endif
 
-if ( count _grp_array > 10 && (typeNAME (_grp_array select 10) == "ARRAY") ) then
+if ( count _grp_array > 10 && (typeName (_grp_array select 10) == "ARRAY") ) then
 {
 	_wp_array = _grp_array select 10;
 	if ( count _wp_array > 0) then {    _rejoin_num  = _wp_array select 0;};
@@ -189,9 +189,9 @@ while {true} do {
 								if (_skip_base) then {
 									// check if point is near owner base
 									if (_wp_pos call SYG_pointNearBase) then {
-	#ifdef __DEBUG__
+//	#ifdef __DEBUG__
 										if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos]};
-	#endif
+//	#endif
 										_wp_pos = [];
 									};
 								};
@@ -216,9 +216,9 @@ while {true} do {
                                         if (_skip_base) then {
                                             // check if point is near owner base
                                             if (_wp_pos call SYG_pointNearBase) then {
-#ifdef __DEBUG__
+//#ifdef __DEBUG__
                                                 if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 2)",call SYG_nowTimeToStr,_grp, _wp_pos]};
-#endif
+//#endif
                                                 _wp_pos = [];
                                             };
                                         };
@@ -354,7 +354,7 @@ while {true} do {
 	{
 	    _rejoin_time = time + REJOIN_RERIOD;    // prepare next time to re-join attempt
 		_counter = _grp call XfGetStandUnits;	// how many units can stand
-		if ( (_counter <= _rejoin_num) AND (_counter > 0) ) then // try to join other group
+		if ( (_counter <= _rejoin_num) && (_counter > 0) ) then // try to join other group
 		{
 			_counter = _counter + 1; // size for bigger group to be rejoinable
 			_leader = _grp call XfGetLeader;

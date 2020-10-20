@@ -70,16 +70,13 @@ sleep CYCLE_DELAY;
 
 // Driver type to be checked near before teleport moto back to base positioo
 _driverType = switch playerSide do {
-    case east:
-    {
+    case east: {
         "SoldierEB"
     };
-    case resistance:
-    {
+    case resistance: {
         "SoldierGB"
     };
-    case west:
-    {
+    case west: {
         "SoldierWB"
     };
     default {"SoldierEB"};

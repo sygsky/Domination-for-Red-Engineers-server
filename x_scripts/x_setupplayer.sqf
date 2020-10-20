@@ -1700,6 +1700,10 @@ if (d_player_air_autokick > 0) then {
 
 [] spawn {
 	waitUntil {!d_still_in_intro};
+#ifdef __SPPM__
+	hint localize "++ SPPM UPDATE initiated for markers";
+	["SPPM", "UPDATE", name player, false] call XSendNetStartScriptServer; // allow SPPM markers visibility at the start
+#endif
 	private ["_oldscore","_newscore"];
 	_oldscore = 0;
 	while {true} do {

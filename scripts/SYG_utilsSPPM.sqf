@@ -90,7 +90,7 @@ SYG_getAllSPPMVehicles = {
 	for "_i" from 0 to count _arr - 1 do {
 		_veh = _arr select _i;
 		// ) || _cargo) ) then {
-		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon") || (_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2])) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
+		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon") || (_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || (_veh isKindOf "ACE_ATV_HondaR") || (_veh isKindOf "Motorcycle") ) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
 	};
 	_arr call SYG_clearArray
 };
@@ -128,19 +128,7 @@ SYG_addSPPMMarker = {
 #ifdef __DEBUG__
 			hint localize format["+++ SYG_addSPPMMarker: Detected SPPM cone"];
 #endif
-			_ret = (_arr select 0) call SYG_updateSPPM;
-			// returns: 1 = updated; 0 = not changed; -1 = empty (no vehicles), delete it; -2 = no marker, delete it; -3 = input is not of predefined type (e.g. road cone), delete it
-			if ( _ret < 0 ) exitWith {
-				deleteMarker _marker ; // removal of marker
-				SYG_SPPMArr = SYG_SPPMArr - [_arr select 0]; // removal of the marking object
-				switch (_ret) do {
-					case -1: {"STR_SPPM_6"};     // The empty SPPM removed
-					case -2: {"STR_SPPM_6_1"};  // The SPPM without marker removed
-					case -3: {"STR_SPPM_6_2"};  // The existing SPPM is updated
-				};
-			};
-			if (_ret == 0 ) exitWith {"STR_SPPM_5" }; // "The existing SPPM is used"
-			"STR_SPPM_4" // The existing SPPM is updated
+			(_arr select 0) call SYG_updateSPPM;
 		};
 		// no marking object is found near marker itself, so remove the marker at last
 		deleteMarker _marker; // removal of marker
@@ -193,41 +181,41 @@ SYG_updateSPPM = {
 	hint localize format["+++ SYG_updateSPPM: call with _this = %1", _this];
 	if (typeOf _this != SPPM_OBJ_TYPE ) exitWith {
 		hint localize format["--- SYG_updateSPPM: item isn't of predefined type (%1), delete it", SPPM_OBJ_TYPE];
-//		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
-	 	-3
+	 	"STR_SPPM_6_3" //Marking object (%1) on SPPM of unknown type!
 	 };
 	private ["_marker","_arr","_new_pos","_pos"];
 	_marker = _this getVariable SPPM_MARKER_NAME;
 	if ( isNil "_marker" ) exitWith {
 		hint localize format["--- SYG_updateSPPM: marker non-assigned to the SPPM cone, delete it!"];
-//		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
-		-2
+		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
+		"STR_SPPM_6_1"  // The SPPM without marker removed
 	};
-	hint localize format["+++ SYG_updateSPPM: marker assigned"];
 	_pos = getMarkerPos _marker;
 	_arr = _pos call SYG_getAllSPPMVehicles;
-	hint localize format["+++ SYG_updateSPPM: vehicles count %1", count _arr];
+	hint localize format["+++ SYG_updateSPPM: %1 vehicles count %2", _marker, count _arr];
 	if ( count _arr == 0 ) exitWith {
 		hint localize format["+++ SYG_updateSPPM: SPPM removed"];
 		// remove this SPPM as empty
 //		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
 		deleteMarker _marker; // remove marker itself
-		deleteVehicle _this; // remove cone
-	 	-1
+		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove from array
+		deleteVehicle _this; // remove cone from system too
+	 	"STR_SPPM_6"   // The empty SPPM removed
 	 };
+	 // Cone, marker, vehicles found, let check center point
 	_new_pos = _arr call SYG_averPoint;
 	_marker setMarkerText (_arr call SYG_generateSPPMText);
-	if ( [_pos, _new_pos] call SYG_distance2D > 1 ) exitWith {
-		if ( (_new_pos call SYG_findNearSPPMCount) > 1 ) exitWith {false}; // cant move closer 50 meters to other existing SPPM
+	if ( [_pos, _new_pos] call SYG_distance2D > 1 ) exitWith { // SPPM center moved
+		if ( (_new_pos call SYG_findNearSPPMCount) > 1 ) exitWith {false}; // can't move closer 50 meters to other existing SPPM
 		// move mark object to marker pos
 		hint localize format["*** SPPM ""%1"" position changed by %2 m.", _marker, [_pos, _new_pos] call SYG_distance2D];
 		_new_pos set [2, -1];
 		_this setVectorUp [0,0,1];
 		_this setVehiclePosition [_new_pos, [], 0, "CAN_COLLIDE"];
 		_marker setMarkerPos _new_pos;
-		1
+		"STR_SPPM_4"     // The existing SPPM is updated
 	};
-	0
+	"STR_SPPM_5" // "The existing SPPM is used"
 };
 
 // Generate text title for SPPM marker

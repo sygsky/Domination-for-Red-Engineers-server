@@ -1,7 +1,7 @@
-// scripts/storeequipment.sqf: by Sygsky
-// script to store/restory equipment for player
+// scripts\storeequipment.sqf: by Sygsky
+// script to store\restory equipment for player
 // Example:
-// [...] execVM "scripts/storeequipment.sqf";
+// [...] execVM "scripts\storeequipment.sqf";
 //     Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]
 //       target (_this select 0): Object - the object which the action is assigned to
 //       caller (_this select 1): Object - the unit that activated the action

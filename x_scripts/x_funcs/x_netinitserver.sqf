@@ -312,17 +312,22 @@ XHandleNetStartScriptServer = {
 					[ "msg_to_user", arg(3), [_msg_arr], 5, random 4, false, "message_received" ] call XSendNetStartScriptClient; // corresponding message after procedure execution
 				};
 
-				// format: ["SPPM","UPDATE", player_name]
+				// format: ["SPPM","UPDATE", player_name<,send_answer>]
 				case "UPDATE" : { // update all SPPM available
 					hint localize format["+++ SPPM UPDATE (ALL): player ""%1""", arg(2)];
-					private ["_cnt"];
+					private ["_cnt","_arr", "_send"];
 					_cnt = count SYG_SPPMArr;
+					_send = if (count _this > 3) then { _this select 3 } else {true};
 					if ( _cnt == 0) exitWith {
+						if (_send) then {
 							["msg_to_user", "*", [["STR_SPPM_0"]], 5, 0, false, "losing_patience"] call XSendNetStartScriptClient; // "SPPM markers not found on map"
-						}; //
+							}
+					}; //
 
 					_arr = call SYG_updateAllSPPMMarkers;
-					["msg_to_user", "*", [["STR_SPPM_1", arg(2), _cnt, _arr select 0, _arr select 1]], 5, 4, false, "message_received"] call XSendNetStartScriptClient; // "All SPPM markers have been updated"
+					if (_send) then {
+						["msg_to_user", "*", [["STR_SPPM_1", arg(2), _cnt, _arr select 0, _arr select 1]], 5, 4, false, "message_received"] call XSendNetStartScriptClient; // "All SPPM markers have been updated"
+					}
 				};
 
 				default {hint localize format["--- bad SPPM params: %1", _this];};
