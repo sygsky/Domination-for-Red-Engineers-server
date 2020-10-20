@@ -181,7 +181,7 @@ SYG_updateSPPM = {
 	hint localize format["+++ SYG_updateSPPM: call with _this = %1", _this];
 	if (typeOf _this != SPPM_OBJ_TYPE ) exitWith {
 		hint localize format["--- SYG_updateSPPM: item isn't of predefined type (%1), delete it", SPPM_OBJ_TYPE];
-	 	"STR_SPPM_6_3" //Marking object (%1) on SPPM of unknown type!
+	 	["STR_SPPM_6_3",typeOf _this] //Marking object (%1) on SPPM of unknown type!
 	 };
 	private ["_marker","_arr","_new_pos","_pos"];
 	_marker = _this getVariable SPPM_MARKER_NAME;
@@ -206,7 +206,7 @@ SYG_updateSPPM = {
 	_new_pos = _arr call SYG_averPoint;
 	_marker setMarkerText (_arr call SYG_generateSPPMText);
 	if ( [_pos, _new_pos] call SYG_distance2D > 1 ) exitWith { // SPPM center moved
-		if ( (_new_pos call SYG_findNearSPPMCount) > 1 ) exitWith {false}; // can't move closer 50 meters to other existing SPPM
+		if ( (_new_pos call SYG_findNearSPPMCount) > 1 ) exitWith {"STR_SPPM_4_1"}; // "This SPPM cannot be updated due to the proximity of another SPPM"
 		// move mark object to marker pos
 		hint localize format["*** SPPM ""%1"" position changed by %2 m.", _marker, [_pos, _new_pos] call SYG_distance2D];
 		_new_pos set [2, -1];

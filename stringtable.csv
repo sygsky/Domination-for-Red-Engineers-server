@@ -1369,10 +1369,11 @@ STR_SPPM_1,"%1: %2 SPPM markers, %3 updated, %4 removed","%1: %2 SPPM-Markierung
 STR_SPPM_2,"SPPM markers are not used on the base","SPMM-Marker werden in der Basis nicht benutzt","Los marcadores SPPM no se usan en la base","Маркеры СППМ не действуют на базе"
 STR_SPPM_3,"You are in vehicle, no SPPM marker detected near around, the new one can be created","Du bist in einem Fahrzeug, in der Nähe wurde keine SPPM-Markierung entdeckt, die neue kann erstellt werden","Estás en el vehículo, no se ha detectado ningún marcador de SPPM cerca, se puede crear uno nuevo","Вы в машине, поблизости нет других маркеров СППМ, новый маркер может быть создан (в ближайшем будущем)"
 STR_SPPM_4,The existing SPPM is updated,SPPM aktualisiert,SPPM actualizado,СППМ обновлён
+STR_SPPM_4_1,"This SPPM cannot be updated due to the proximity of another SPPM","Du kannst dieses SPPM nicht aktualisieren, weil jemand anderes in der Nähe ist","No se puede actualizar este SPPM debido a la proximidad de alguien más","Нельзя обновить этот СППМ из-за близости другого"
 STR_SPPM_5,The existing SPPM is used,Das existierende SPPM wird benutzt,Se ha utilizado el SPPM más cercano,Использован ближайший СППМ
 STR_SPPM_6,The empty SPPM removed,Das leere SPPM entfernt,El SPPM vacío eliminado,Пустой СППМ удалён
 STR_SPPM_6_1,The SPPM mark without marker removed,Der SPMM-Punkt ohne Markierung wurde entfernt,El punto SPMM sin marcador ha sido eliminado.,Точка СППМ без маркера удалена
-STR_SPPM_6_2,SPPM marking object (%1) not found!,Der SPPM ohne Markierung entfernt,El SPPM sin el marcador removido,Центр СППМ на земле не обнаружен
+STR_SPPM_6_2,SPPM marking object not found!,Der SPPM ohne Markierung entfernt,El SPPM sin el marcador removido,Центр СППМ на земле не обнаружен
 STR_SPPM_6_3,Marking object (%1) on SPPM of unknown type!,Objekt (%1) auf SPPM unbekannten Typs markieren,Objeto marcador (%1) en SPPM de tipo desconocido,Маркерный предмет (%1) СППМ неизвестноготипа
 STR_SPPM_7,You press this button too often (%1/%2 sec),Du drückst diese Taste zu oft (%1/%2 Sek.),Presionas este botón con demasiada frecuencia (%1/%2 seg.),Вы слишком часто нажимаете эту кнопку (%1/%2 сек.)
 STR_SPPM_8,"Stop engine to work with SPPM markers","Stoppe die Engine, um mit SPPM-Markern zu arbeiten","Parar el motor para trabajar con los marcadores SPPM","Выключите двигатель для работы с СППМ маркерами"
