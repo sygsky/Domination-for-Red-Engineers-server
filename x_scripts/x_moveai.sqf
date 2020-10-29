@@ -2,15 +2,27 @@
 // +++ 06-МАР-2019: Sygsky  changes:
 // AI is moved to player if 2D distance  is more them 500 m.
 // AI is moved if player is leader of his group or is formation leader of his formation
-// prevent teleport of some units if special SM is executing
+// prevent teleport of some units if special SM is executing, parajump is still allowed for such persons
 // ---
 private ["_grp_player","_units_player","_ntp_cnt","_ai"];
 
-_disable_teleport_list = 
+#include "x_setup.sqf"
+
+_disable_teleport_list =
     if (d_enemy_side == "EAST") then {
-        ["ACE_OfficerE","OfficerE"]
+        [
+#ifdef __ACE__
+        "ACE_OfficerE",
+#endif
+        "OfficerE"
+        ]
     } else {
-        ["ACE_USMC0302","ACE_USMC8541A2","OfficerW"]
+        [
+#ifdef __ACE__
+        "ACE_USMC0302","ACE_USMC8541A2",
+#endif
+        "OfficerW"
+        ]
     };
 
 _grp_player = group player;
@@ -23,12 +35,10 @@ if (({alive _x} count _units_player) > 0) then {
 		_pos_p = [_pos_p select 0, _pos_p select 1, 0];
 		{
 			if ( (alive _x) && !isPlayer _x && vehicle _x == _x && ( [_x,_pos_p] call SYG_distance2D) > 500 ) then {
-			    if ( (formationLeader _x == player) || (leader _x == player)) then
-			    {
+			    if ( (formationLeader _x == player) || (leader _x == player)) then {
 			        _ai = _x getVariable "AI_COST"; // AI of this player must have the variable
 			        _ai = !(isNil "_ai");
-			        if ( _ai )
-			            then { _x setPos _pos_p; } // teleport
+			        if ( _ai && (!((typeOf _x) in _disable_teleport_list)) ) then { _x setPos _pos_p; } // teleport
 			            else  { _ntp_cnt = _ntp_cnt +1; }; // no teleport
 			    };
 			};
@@ -39,6 +49,7 @@ if (({alive _x} count _units_player) > 0) then {
 		    playSound "losing_patience";
 		};
 	} else { // called for parajump
+		 // params: [position _obj_jump, velocity _obj_jump, direction _obj_jump]
 		_pos_p = _this select 0;
 		_veloc = _this select 1;
 		_dir = _this select 2;
@@ -51,11 +62,9 @@ if (({alive _x} count _units_player) > 0) then {
 			}
 		);
 		{
-            if (alive _x) then // there were situations when dead AI was para-jumping :)
-            {
+            if (alive _x) then { // there were situations when dead AI was para-jumping :)
                 if (!isPlayer _x && vehicle _x == _x && ( [_x,_pos_p] call SYG_distance2D) > 500) then {
-                    if ( (formationLeader _x == player) || (leader _x == player)) then
-                    {
+                    if ( (formationLeader _x == player) || (leader _x == player)) then {
                         _obj_para = _parachute createVehicle[ 0,0,0 ];
                         _obj_para setPos _pos_p;
                         _obj_para setDir _dir;
