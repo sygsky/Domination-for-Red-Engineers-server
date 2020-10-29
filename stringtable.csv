@@ -1023,6 +1023,7 @@ STR_HOLIDAY_9_MAY,Victory Day,Tag des Sieges,Día De La Victoria,День Поб
 STR_HOLIDAY_18_AUG,Day of the USSR Air Fleet,Tag der Luftflotte der UdSSR,Día de la Flota aérea de la URSS,День Воздушного Флота СССР
 STR_HOLIDAY_7_OCT,Constitution day of the USSR,Tag der Verfassung der UdSSR,Día de la Constitución de la URSS,День Конституции СССР
 STR_HOLIDAY_7_NOV,The day of the Great October Socialist Revolution,Tag der großen Sozialistischen Oktoberrevolution,Día De La Gran Revolución Socialista De Octubre,День Великой Октябрьской Социалистической Революции
+STR_HOLIDAY_28_OCT,The day of the Komsomol (Communist Youth Union),Komsomol-Tag (Kommunistischer Jugendverband),Día del Komsomol (Unión de la Juventud Comunista),День Комсомола
 
 STR_TIME_0,Night on Sahrani,Nacht auf Sahrani,en Sahrani-noche...,на Сахрани  - ночь...
 STR_TIME_1,Day on Sahrani,Tag auf Sahrani,en el día de Sahrani...,на Сахрани - день...
@@ -1367,14 +1368,14 @@ STR_SPPM,SPPM,SPPM,SPPM,СППМ
 STR_SPPM_0,SPPM markers not found on map,SPPM-Marker nicht auf der Karte gefunden,Los marcadores de SPPM no se encuentran en el mapa,Маркеры СППМ на карте отсутствуют
 STR_SPPM_1,"%1: %2 SPPM markers, %3 updated, %4 removed","%1: %2 SPPM-Markierungen, %3 aktualisiert, %4 entfernt","%1: %3 marcadores de SPPM, %3 actualizado, %4 eliminado","%1: СППМ маркеров %2, обновлено %3, удалено %4"
 STR_SPPM_2,"SPPM markers are not used on the base","SPMM-Marker werden in der Basis nicht benutzt","Los marcadores SPPM no se usan en la base","Маркеры СППМ не действуют на базе"
-STR_SPPM_3,"You are in vehicle, no SPPM marker detected near around, the new one can be created","Du bist in einem Fahrzeug, in der Nähe wurde keine SPPM-Markierung entdeckt, die neue kann erstellt werden","Estás en el vehículo, no se ha detectado ningún marcador de SPPM cerca, se puede crear uno nuevo","Вы в машине, поблизости нет других маркеров СППМ, новый маркер может быть создан (в ближайшем будущем)"
+//STR_SPPM_3,"You are in vehicle, no SPPM marker detected near around, the new one can be created","Du bist in einem Fahrzeug, in der Nähe wurde keine SPPM-Markierung entdeckt, die neue kann erstellt werden","Estás en el vehículo, no se ha detectado ningún marcador de SPPM cerca, se puede crear uno nuevo","Вы в машине, поблизости нет других маркеров СППМ, новый маркер может быть создан (в ближайшем будущем)"
 STR_SPPM_4,The existing SPPM is updated,SPPM aktualisiert,SPPM actualizado,СППМ обновлён
 STR_SPPM_4_1,"This SPPM cannot be updated due to the proximity of another SPPM","Du kannst dieses SPPM nicht aktualisieren, weil jemand anderes in der Nähe ist","No se puede actualizar este SPPM debido a la proximidad de alguien más","Нельзя обновить этот СППМ из-за близости другого"
 STR_SPPM_5,The existing SPPM is used,Das existierende SPPM wird benutzt,Se ha utilizado el SPPM más cercano,Использован ближайший СППМ
 STR_SPPM_6,The empty SPPM removed,Das leere SPPM entfernt,El SPPM vacío eliminado,Пустой СППМ удалён
 STR_SPPM_6_1,The SPPM mark without marker removed,Der SPMM-Punkt ohne Markierung wurde entfernt,El punto SPMM sin marcador ha sido eliminado.,Точка СППМ без маркера удалена
 STR_SPPM_6_2,SPPM marking object not found!,Der SPPM ohne Markierung entfernt,El SPPM sin el marcador removido,Центр СППМ на земле не обнаружен
-STR_SPPM_6_3,Marking object (%1) on SPPM of unknown type!,Objekt (%1) auf SPPM unbekannten Typs markieren,Objeto marcador (%1) en SPPM de tipo desconocido,Маркерный предмет (%1) СППМ неизвестноготипа
+STR_SPPM_6_3,Marking object (%1) on SPPM of unknown type!,Objekt (%1) auf SPPM unbekannten Typs markieren,Objeto marcador (%1) en SPPM de tipo desconocido,Маркерный предмет (%1) СППМ неизвестного типа
 STR_SPPM_7,You press this button too often (%1/%2 sec),Du drückst diese Taste zu oft (%1/%2 Sek.),Presionas este botón con demasiada frecuencia (%1/%2 seg.),Вы слишком часто нажимаете эту кнопку (%1/%2 сек.)
 STR_SPPM_8,"Stop engine to work with SPPM markers","Stoppe die Engine, um mit SPPM-Markern zu arbeiten","Parar el motor para trabajar con los marcadores SPPM","Выключите двигатель для работы с СППМ маркерами"
 STR_SPPM_ADD_ERR,Error in the creation of the new SPPM: The parameters for the procedure were incorrect (%1),Neuer SPPM-Erstellungsfehler: falsche Parameter für die angegebene Prozedur (%1),Nuevo error de creación de SPPM: parámetros incorrectos para el procedimiento especificado (%1),Ошибка создания нового СППМ: указаны неверные параметры для процедуры (%1)

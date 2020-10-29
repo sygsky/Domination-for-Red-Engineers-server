@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno x_scripts\x_endcam.sqf, outro playing
 private ["_camera"];
 
 #include "x_setup.sqf"

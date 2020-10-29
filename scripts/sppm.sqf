@@ -7,14 +7,13 @@
 */
 
 //#define SPPM_OBJ_TYPE "ACE_Target_CArm" // SPPM invisible object for search
-#define SPPM_UPDATE_INTERVAL_SECS 30 // interval in seconds to update SPPM markers on server
-#define SPPM_ADD_INTERVAL_SECS 120 // interval in seconds to add next SPPM marker on server
+#define SPPM_UPDATE_INTERVAL_SECS 15 // interval in seconds to update SPPM markers on server
+#define SPPM_ADD_INTERVAL_SECS 60 // interval in seconds to add next SPPM marker on server
 
 hint localize "+++ scripts/sppm.sqf: check/set SPPM marker[s]";
 // 0. Check if player is on base
 _pos = player call SYG_getPos;
 //hint localize format["+++ sppm.sqf: [player call SYG_getPos, d_base_array] = %1", [ _pos, d_base_array]];
-
 
 if ((vehicle player != player) && (!((vehicle player) isKindOf "ParachuteBase") ) ) exitWith {
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -14,8 +14,8 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 #define RAR(ARR) ((ARR)select(floor(random(count(ARR)))))
 #define RANDOM_ARR_ITEM(ARR) ((ARR)select(floor(random(count(ARR)))))
 
-#define SPPM_MIN_DISTANCE 50 // Minimum distance at which the nearest SPPM can be located
-#define SPPM_VEH_MIN_DISTANCE 25 // Minimum distance between marker of SPPM and vehicle to count it in SPPM
+#define SPPM_MIN_DISTANCE 80 // Minimum distance at which the nearest SPPM can be located
+#define SPPM_VEH_MIN_DISTANCE 40 // Minimum distance between marker of SPPM and vehicle to count it in SPPM
 #define SPPM_OBJ_TYPE "RoadCone" // SPPM object for search
 #define SPPM_MARKER_COLOR "ColorRed" // Color of any SPPM marker
 #define SPPM_MARKER_NAME "SPPM_MARKER" // variable name of marker object with marker name

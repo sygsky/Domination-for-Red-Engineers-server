@@ -142,7 +142,14 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _observer reveal _enemy; // team helps to observer)))
                     sleep 0.3;
                     // don't shoot too far if player is not in vehicle as he can teleport from battle field but Arma update its real coordinates in nearTargets array
-					_notAllowed = (isPlayer _enemy) && (vehicle _enemy != _enemy); // Arti strike is not allowed if player is teleported far away (it is impossible while he in vehicle)
+                    // Arti strike is not allowed if player is teleported far away (user on base, on feet || close to flag)
+
+#ifndef __TT__
+					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || (position _enemy distance FLAG_BASE < SAVE_RADIOUS));
+#else
+					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || (position _enemy distance RFLAG_BASE < SAVE_RADIOUS || position _enemy distance WFLAG_BASE < SAVE_RADIOUS));
+#endif
+
                     if ( ((_observer distance _pos_nearest) > MAX_SHOOT_DIST) && _notAllowed ) exitWith {
                         hint localize format["+++ x_handleobservers.sqf: arti strike on distance %1 m at enemy (%2) not in vehicle prohibited", round(_observer distance _pos_nearest), name _enemy];
                     };

@@ -268,13 +268,10 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 		    (call XPlayersNumber) > 0
 		};
 	};
-	if ( true ) then
-	{
+	if ( true ) then {
 #ifdef __DEBUG_PRINT__							
-		if ( _time2print <= time ) then
-		{
-			if (!isNull (_convoyGroup call SYG_getLeader)) then
-			{
+		if ( _time2print <= time ) then {
+			if (!isNull (_convoyGroup call SYG_getLeader)) then {
 				_loc = (_convoyGroup call SYG_getLeader) call SYG_nearestLocation;
 				_pos1 = position _loc;
 				_pos1 set [2,0];
@@ -294,22 +291,14 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 				    typeOf (vehicle _leader),
 				    {alive driver _x}  count _veh_arr
 				];
-			}
-			else
-			{
-				hint localize "x_sideconvoy.sqf: no leader exists";
-			};
+			} else { hint localize "x_sideconvoy.sqf: no leader exists"; };
 			_time2print = time + PRINT_DELAY;
 			// check new convoy vehicle state
 			_newcnt = {({alive _x} count crew _x) > 0} count _veh_arr;
-			if ( _newcnt != _vecnum) then
-			{
-			    if ( _newcnt == 0) then
-			    {
+			if ( _newcnt != _vecnum) then {
+			    if ( _newcnt == 0) then {
                     _msg = ["STR_SYS_500_2"]; // "All the vehicles in the convoy lost crew!"
-			    }
-			    else
-			    {
+			    } else {
                     _msg = ["STR_SYS_500_1",_newcnt ]; // "Moving vehicles in the convoy: %1"
 			    };
 			    // send message to users about
@@ -318,21 +307,15 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 			};
 		};
 #endif							
-		if ( ({ !isNull _x && alive _x } count _veh_arr) == 0 ) then
-		{
+		if ( ({ !isNull _x && alive _x } count _veh_arr) == 0 ) then {
 			_convoy_destroyed = true;
 			//_convoyGroup call _clearFeetmen;
-		} 
-		else 
-		{
+		} else {
 			_leader = leader _convoyGroup;
 			if ((position _leader) distance _pos_end < 20) then {
 				_convoy_reached_dest = true;
-			}
-			else
-			{
-				if ( time > _footmen_check_time ) then
-				{
+			} else {
+				if ( time > _footmen_check_time ) then {
 					_footmen = [];
 					{ //  forEach units _convoyGroup;
 						if ( (alive _x) && (vehicle _x == _x)) then // unit on feet
