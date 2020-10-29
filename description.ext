@@ -415,8 +415,8 @@ class CfgSounds
 	class fear4     { name=""; sound[]=   {\sounds\fear\fear4.ogg,db-1,1.0}; titles[] = {}; };
 	class fear_Douce_Violence     { name=""; sound[]=   {\sounds\fear\fear_Douce_Violence.ogg,db-1,1.0}; titles[] = {}; };
 
-	class teleport { name=""; sound[]=   {\sounds\teleport.ogg,db-1,1.0}; titles[] = {}; };
-	class tropelet { name=""; sound[]=   {\sounds\tropelet.ogg,db-1,1.0}; titles[] = {}; };
+	class teleport_from { name=""; sound[]=   {\sounds\short\teleport_from.ogg,db-1,1.0}; titles[] = {}; };
+	class teleport_to   { name=""; sound[]=   {\sounds\short\teleport_to.ogg,db-1,1.0}; titles[] = {}; };
 
     class countdown10     {name = ""; sound[] = {\sounds\countdown10.ogg, db+10, 1.0}; titles[] = {}; };
     class countdown       {name = ""; sound[] = {\sounds\countdown.ogg, db+10, 1.0}; titles[] = {}; }; // Rammstein
@@ -655,6 +655,8 @@ class CfgSounds
 
 //    class beep     {name = "beep once"; sound[] = {\sounds\short\beep.ogg, db+10, 1.0}; titles[] = {};};
 //    class beepbeep  {name = "beep twice"; sound[] = {\sounds\short\beepbeep.ogg, db+10, 1.0}; titles[] = {};};
+
+    class set_marker  {name = "beep twice"; sound[] = {\sounds\short\set_marker.ogg, db+10, 1.0}; titles[] = {};};
 
 // SM hostages
     class hisp1   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_1.ogg,db-1,1.0}; titles[] = {};};

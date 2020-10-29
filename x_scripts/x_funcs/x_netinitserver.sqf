@@ -309,7 +309,7 @@ XHandleNetStartScriptServer = {
 					private [ "_msg_arr" ];
 					_msg_arr = arg(2) call SYG_addSPPMMarker; // returns message about results
 					if (typeName _msg_arr == "STRING") then {_msg_arr = [_msg_arr]};
-					[ "msg_to_user", arg(3), [_msg_arr], 5, random 4, false, "message_received" ] call XSendNetStartScriptClient; // corresponding message after procedure execution
+					[ "msg_to_user", arg(3), [_msg_arr], 5, random 4, false, "set_marker" ] call XSendNetStartScriptClient; // corresponding message after procedure execution
 				};
 
 				// format: ["SPPM","UPDATE", player_name<,send_answer>]

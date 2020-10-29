@@ -808,13 +808,16 @@ XHandleNetStartScriptClient = {
 		};
 
         case "say_sound": { // say user sound from predefined vehicle/unit ["say_sound",_object,_sound, [,"-",_player_name]]
-		    private ["_nil","_obj","_sound","_exit"];
+		    private ["_nil","_obj","_sound","_exit","_pos"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
 		    if ( (argopt(3,"") == "-") && (argopt(4,"") == name player)) exitWith {false}; // The player disallowed to receipt this sound
 		    _obj = arg(1);
 		    if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
-		    if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) ) then {
-                _nil = "Logic" createVehicleLocal position _obj; // use temp object to say sound
+		    _pos = [];
+		    if (typeName _obj == "ARRAY") then {_pos = _obj} // position designated
+		    else { if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) ) then { _pos = position _obj}; }; // player is dead but his positon is known
+		    if ( count _pos > 0 ) then { // emulate object tp say sound
+                _nil = "Logic" createVehicleLocal _pos; // use temp object to say sound
                 sleep 0.01;
                 _nil say arg(2);
                 sleep 0.01;

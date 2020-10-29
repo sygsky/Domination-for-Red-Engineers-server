@@ -1,5 +1,5 @@
 // Xeno, dlg\beam_tele.sqf
-private ["_control","_index","_p","_pp","_global_pos","_typepos","_global_dir","_veh"];
+private ["_control","_index","_pos","_global_pos","_typepos","_global_dir","_veh"];
 if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
@@ -71,9 +71,13 @@ if (_typepos == 1) then {  //  teleport to some of our MHQ
 };
 
 _global_pos set [2, 0];  // always port to the ground
+_pos = getPos _player; // start positon
 player setPos _global_pos;
 player setDir _global_dir;
-sleep 2;
+["say_sound", _pos, "teleport_from"] call XSendNetStartScriptClientAll; // play sound of teleport out event everywhere
+sleep 0.2;
+["say_sound", player, "teleport_to"] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
+sleep 1.8;
 // TODO: try to set vehicle locally on each client computer
 _veh call SYG_revealToAllPlayers;
 
