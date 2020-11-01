@@ -98,19 +98,15 @@ _ejected = false;
 _next_to_eject = 0;
 _main_polling_interval = 2.123;
 
-while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _chopper} do
-{ 
+while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _chopper} do {
 	if (!alive _chopper) exitWith {_ejected = true; /*[player,"Chopper destroyed"] call XfSideChat;*/};
 	_msg = "unknown";
-	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
-	{
+	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then {
 	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 		//hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
-        while {alive _chopper && alive driver _chopper && (position _chopper select 2) >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
-		{
+        while {alive _chopper && alive driver _chopper && (position _chopper select 2) >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do {
 			_cur_uni = _unit_array select _next_to_eject;
-			if (alive _cur_uni ) then
-			{
+			if (alive _cur_uni ) then {
 				_cur_uni action ["Eject",_chopper];
 				//[player, format["Unit %1 ejected as HI altitude", _next_to_eject]] call XfSideChat;
 				unassignVehicle _cur_uni;
@@ -123,21 +119,16 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 		//hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting completed, pos %1", _msg ];
 	};
 
-	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then
-	{
+	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then {
   	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 
-        while {alive _chopper && alive driver _chopper && (position _chopper select 2) < HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do
-		{
-			if (position _chopper select 2 < 2) exitWith
-			{
+        while {alive _chopper && alive driver _chopper && (position _chopper select 2) < HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do {
+			if (position _chopper select 2 < 2) exitWith {
         	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
         		hint localize format["--- x_createpara2cut.sqf: Chopper on the ground, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
-				while {_next_to_eject < _cnt_uni} do
-				{
+				while {_next_to_eject < _cnt_uni} do {
 					_cur_uni = _unit_array select _next_to_eject;
-					if ( alive _cur_uni ) then
-					{
+					if ( alive _cur_uni ) then {
 						_cur_uni action ["Eject",_chopper];
 						//[player, format["Unit %1 ejected as chopper touched ground", _next_to_eject]] call XfSideChat;
 						unassignVehicle _cur_uni;
@@ -252,18 +243,13 @@ if (_ejected) then { // create sabotage group
 	[_paragrp] execVM "scripts\sabotage.sqf"; // run sabotage logic (separate from patrol one)
 
 	// check previous groups and add to common list
-	if (!isNil "d_on_base_groups") then 
-	{
-		if ( count d_on_base_groups > 0 ) then
-		{
-			for "_i" from 0 to count d_on_base_groups - 1 do
-			{
+	if (!isNil "d_on_base_groups") then  {
+		if ( count d_on_base_groups > 0 ) then {
+			for "_i" from 0 to count d_on_base_groups - 1 do {
 				_grp = d_on_base_groups select _i;
                 _cnt = _grp call XfGetAliveUnits;
-                if ( _cnt <= 2) then
-                {
-                    if ( _cnt > 0) then // join last member to this group
-                    {
+                if ( _cnt <= 2) then {
+                    if ( _cnt > 0) then {// join last member to this group
 #ifdef	__DEBUG_PRINT__
                         hint localize format["x_createpara2.sqf: prev. group id %1 (of %2 alive saboteur[s]) joined to this one", _i, _cnt];
 #endif
@@ -289,9 +275,7 @@ if (_ejected) then { // create sabotage group
 		hint localize format["x_createpara2.sqf: d_on_base_groups counts %1", _list];
 		_list = nil;
 #endif		
-	}
-	else
-	{
+	} else {
 #ifdef	__DEBUG_PRINT__
 		hint localize "--- x_createpara2.sqf: d_on_base_groups isNil ---";
 #endif		
