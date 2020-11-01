@@ -160,8 +160,13 @@ SYG_addSPPMMarker = {
 	hint localize format["+++ SPPM, created new marker ""%1"" for %2 vehicle[s]", _marker, count _arr];
 	_marker setMarkerColor SPPM_MARKER_COLOR;
 	_marker setMarkerShape "ICON";
-	_marker setMarkerType SPPM_MARKER_TYPE;
-	_marker setMarkerText (_arr call SYG_generateSPPMText);
+	// TODO: find marker
+	_arr = _arr call SYG_generateSPPMText1;
+	_marker setMarkerType (_arr select 0);
+	_marker setMarkerText (_arr select 1);
+//	_marker setMarkerType SPPM_MARKER_TYPE;
+//	_marker setMarkerText (_arr call SYG_generateSPPMText);
+
 	// create mark object (e.g. road cone) for this SPPM
 	_pnt set [2, -1]; // put underground to keep forever
 	_cone = createVehicle [SPPM_OBJ_TYPE, _pnt, [], 0, "CAN_COLLIDE"]; // add road cone
@@ -204,7 +209,10 @@ SYG_updateSPPM = {
 	 };
 	 // Cone, marker, vehicles found, let check center point
 	_new_pos = _arr call SYG_averPoint;
-	_marker setMarkerText (_arr call SYG_generateSPPMText);
+	_arr = _arr call SYG_generateSPPMText1;
+	_marker setMarkerType (_arr select 0);
+	_marker setMarkerText (_arr select 1);
+
 	if ( [_pos, _new_pos] call SYG_distance2D > 1 ) exitWith { // SPPM center moved
 		if ( (_new_pos call SYG_findNearSPPMCount) > 1 ) exitWith {"STR_SPPM_4_1"}; // "This SPPM cannot be updated due to the proximity of another SPPM"
 		// move mark object to marker pos
@@ -220,7 +228,9 @@ SYG_updateSPPM = {
 
 // Generate text title for SPPM marker
 //
-// call: _text = _arr call SYG_generateSPPMText;
+// call:
+//	_arr = [_veh1, _veh2...];
+//  _text = _arr call SYG_generateSPPMText;
 //
 // returns follow string: "0/1/2/3/4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
 // result may be in partial form^ "///1/1" - that means 1 ship and 1 air vehicle
@@ -249,6 +259,40 @@ SYG_generateSPPMText = {
 		if (_ship == 0) then {""} else {_ship},
 		if (_air == 0) then {""} else {_air}
 		]
+};
+
+// Generate text title for SPPM marker
+//
+// call:
+//	_arr = [_veh1, _veh2...];
+//  _arr = _arr call SYG_generateSPPMText1; // _arr = [_marker_type, _marker_text]
+//
+// returns follow string: "0/1/2/3/4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
+// result may be in partial form^ "///1/1" - that means 1 ship and 1 air vehicle
+SYG_generateSPPMText1 = {
+	if (typeName _this != "ARRAY") then {_this = [_this]};
+	private ["_truck","_tank","_car","_ship","_air","_marker","_title"];
+	_truck = 0;
+	_tank = 0;
+	_car = 0;
+	_ship = 0;
+	_air = 0;
+	_marker = "";
+	{
+		if (typeName _x == "OBJECT") then {
+			if (_x isKindOf "Truck") exitWith { _truck = _truck + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType} };
+			if (_x isKindOf "Tank" ) exitWith {  _tank =  _tank + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType} };
+			if (_x isKindOf "Car"  ) exitWith {   _car =   _car + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType}  };
+			if (_x isKindOf "Ship" ) exitWith {  _ship =  _ship + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType}  };
+			if ( ( _x isKindOf "Air" ) && ( !( _x isKindOf "ParachuteBase" ) ) ) exitWith { _air = _air + 1; if ( _marker == "" ) then { _marker = _x call SYG_getVehicleMarkerType }  };
+		};
+	} forEach _this;
+	_title = "";
+	{
+		if (_x == 0) then { if (_title != "") then {_title = format["%1:", _title]} }
+			else { if(_title == "") then {_title = format["СППМ:%1",_x]} else {_title = format["%1:%2",_title, _x]} };
+	} forEach [ _truck, _tank, _car, _ship, _air];
+	[_marker, _title]
 };
 
 // Updates all markers on map removing empty ones
@@ -290,7 +334,9 @@ SYG_updateAllSPPMMarkers = {
 					hint localize format["*** SPPM ""%1"" position could be changes by %2 m. but is closer then 50 m. to other SPPM", _marker, [_pos, _new_pos] call SYG_distance2D];
 				};
 			};
-			_marker setMarkerText (_arr call SYG_generateSPPMText);
+			_arr = _arr call SYG_generateSPPMText1;
+			_marker setMarkerType (_arr select 0);
+			_marker setMarkerText (_arr select 1);
 		} else { _count_empty = _count_empty + 1 };
 	};
 	SYG_SPPMArr call SYG_clearArray;

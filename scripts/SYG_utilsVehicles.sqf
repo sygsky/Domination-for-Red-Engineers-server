@@ -1952,8 +1952,6 @@ SYG_removeAnyWeapon = {
 
 //
 // _type = _veh call SYG_getMarkerType;
-// _marker_obj setMarkerType _type;//
-// _type = _veh call SYG_getMarkerType;
 // _marker_obj setMarkerType _type;
 SYG_getVehicleMarkerType = {
     if (typeName _this == "ARRAY") then {_this = _this select 0};
