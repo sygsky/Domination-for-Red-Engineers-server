@@ -153,7 +153,7 @@ if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMorning - 0.5))) 
 };
 
 #ifdef __DEBUG__
-hint localize format["+++ x_intro.sqf: music/cnt ""%1"", time is %2, daytime is %3, nowtime is %4, missionStart is %5", format["%1/%2", _sound, _music_cnt ], time, daytime, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
+hint localize format["+++ x_intro.sqf: music/cnt %1, time is %2, daytime is %3, nowtime is %4, missionStart is %5", format["""%1""/%2", _sound, _music_cnt ], time, daytime, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
 #endif
 
 #ifdef __DEFAULT__
