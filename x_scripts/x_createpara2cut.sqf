@@ -1,6 +1,6 @@
 ﻿// by Xeno, Sygsky, Snooper(Agent)
 //
-// x_createpara2cut.sqf : used version of desant to the base
+// x_createpara2cut.sqf : working version of desant to the base script
 //
 // Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
@@ -163,16 +163,14 @@ _unit_array = nil;
 // try to animate ramp opening
 #ifdef __ACE__
 	// animate heli action
-	if ( alive _chopper  && _chopper isKindOf "ACE_CH47D" ) then
-	{
+	if ( alive _chopper  && _chopper isKindOf "ACE_CH47D" ) then {
 		_chopper animate ["ramp", 1]; // open ramp
 		// hint localize "x_createpara2.sqf: _chopper animate [""ramp"", 1] executed";
 	};
 	sleep 1.123;
 #endif
 
-if (!_ejected && alive _chopper) then 
-{
+if (!_ejected && alive _chopper) then {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
     hint localize format["+++ x_createpara2cut.sqf: Ordinal saboteurs ejection started, %1 unit[s], h %2, %3", {alive _x} count (units _paragrp), round((getPos _chopper) select 2), _msg ];
@@ -187,10 +185,9 @@ if (!_ejected && alive _chopper) then
 	//[player,"Scheduled drop finished"] call XfSideChat;
 };
 
-if (_ejected) then // create sabotage group
-{
-//[player,"Saboteurs team onground setup block entered"] call XfSideChat;
-_chopper flyInHeight 200;
+if (_ejected) then { // create sabotage group
+	//[player,"Saboteurs team onground setup block entered"] call XfSideChat;
+	_chopper flyInHeight 200;
 
 	_leader = leader _paragrp;
 	_leader setRank "LIEUTENANT";
