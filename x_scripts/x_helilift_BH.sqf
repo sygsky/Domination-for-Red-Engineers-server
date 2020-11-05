@@ -1,4 +1,5 @@
-// x_helilift.sqf, by Xeno. Called on client computer only for BH heli lift type
+// x_helilift_BH.sqf, by Xeno. Called on client computer only for BH heli lift type. Not in use now.
+// Cerated for the future option of trophy heli lift
 #ifdef __TT__
     if (true) exitWith{false};
 #endif

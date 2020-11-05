@@ -185,7 +185,8 @@ SYG_getLaughterSound =
     ["laughter_1","laughter_2","laughter_3","laughter_4","laughter_5","laughter_6","laughter_7","laughter_8",
     "laughter_9","laughter_10","laughter_11","laughter_12",
     "good_job","game_over","get_some","go_go_go","cheater","busted",
-    "greatjob1","greatjob2","fight","handsup"] call XfRandomArrayVal
+    "greatjob1","greatjob2","fight","handsup","indeanwarcry",
+    "targetdown47","targetdown01"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
@@ -194,19 +195,14 @@ SYG_getLaughterSound =
 SYG_playRandomDefeatTrackByPos = {
     _done = false;
     hint localize "+++ SYG_playRandomDefeatTrackByPos +++";
-	if (typeName _this != "ARRAY") then // called as: _unit call  SYG_playRandomDefeatTrackByPos;
-	{
+	if (typeName _this != "ARRAY") then {// called as: _unit call  SYG_playRandomDefeatTrackByPos;
 	    _this = position _this;
-	}
-	else
-	{
-	    if (( count _this >= 2) && ((_this select 1) isKindOf "Helicopter")) then // called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
-	    {
-	        if (side (_this select 1) == d_enemy_side) then
-	        {
+	} else {
+	    if (( count _this >= 2) && ((_this select 1) isKindOf "Helicopter")) then {// called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
+	        if (side (_this select 1) == d_enemy_side) then {
     	        playSound "helicopter_fly_over";
     	        _done = true;
-  	            hint localize "+++ SYG_playRandomDefeatTrackByPos: helicopter_fly_over, done";
+//  	            hint localize "+++ SYG_playRandomDefeatTrackByPos: helicopter_fly_over, done";
 	        };
 	    };
 	};
@@ -217,8 +213,7 @@ SYG_playRandomDefeatTrackByPos = {
 	_flag = FLAG_BASE;
     #endif
     #ifdef __TT__
-	if (playerSide == west) then
-	{
+	if (playerSide == west) then {
 		_flag = WFLAG_BASE;
 	} else {
 		_flag = RFLAG_BASE;
@@ -227,23 +222,20 @@ SYG_playRandomDefeatTrackByPos = {
 
     // check if we are near some church
     _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
-    if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith
-    {
+    if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith {
         SYG_chorusDefeatTracks call SYG_playRandomTrack; // 9 time from 10
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_chorusDefeatTracks, done";
     };
 
     // check if we are near base flag
-    if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith
-    {
+    if ( (!isNull  _flag) && ((_this distance _flag) <= NEW_DEATH_SOUND_ON_BASE_DISTANCE) ) exitWith {
         SYG_baseDefeatTracks call SYG_playRandomTrack;
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_baseDefeatTracks, done";
     };
 
     // check if we are near TV-Tower
     _TVTowerArr = _this nearObjects [ "Land_telek1", 50];
-    if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith
-    {
+    if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith {
         // let gong play sequentially on one client (in MP it will be randomized)
         _sound =  format["gong_%1", SYG_gongNextIndex];
         SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod 16; // number of gong sounds
@@ -253,20 +245,17 @@ SYG_playRandomDefeatTrackByPos = {
 
     // check if we are near castle
     _castleArr = _this nearObjects [ "Land_helfenburk", 800]; // This radious includes Mercallilo and Benoma wholly!
-    if ( ((count _castleArr) > 0) && ((random 10) > 1)) exitWith
-    {
+    if ( ((count _castleArr) > 0) && ((random 10) > 1)) exitWith {
         SYG_MedievalDefeatTracks call SYG_playRandomTrack;
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_MedievalDefeatTracks, done";
     };
 
-    if (_this call SYG_pointOnIslet) exitWith // always if on a small island
-    {
+    if (_this call SYG_pointOnIslet) exitWith { // always if on a small island
         SYG_islandDefeatTracks call SYG_playRandomTrack;
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_islandDefeatTracks, done";
     };
 
-    if (_this call SYG_pointOnRahmadi) exitWith // always if on Rahmadi
-    {
+    if (_this call SYG_pointOnRahmadi) exitWith {// always if on Rahmadi
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_RahmadiDefeatTracks, done";
     };
@@ -275,8 +264,7 @@ SYG_playRandomDefeatTrackByPos = {
     if (surfaceIsWater _this) exitWith { call SYG_playWaterSound};
 
     // no special conditions found, play std music now
-    switch (_this call SYG_whatPartOfIsland) do
-    {
+    switch (_this call SYG_whatPartOfIsland) do {
         case "NORTH": {SYG_northDefeatTracks call SYG_playRandomTrack}; // North Sahrani
         case "SOUTH": {SYG_southDefeatTracks call SYG_playRandomTrack}; // South Sahrani
         default  { call SYG_playRandomDefeatTrack; };                   // Corazol // central Sahrani
@@ -345,28 +333,24 @@ SYG_playRandomTrack = {
     private ["_this","_item","_trk"];
 
     //hint localize format["+++ scripts/SYG_utilsSound.sqf: input %1 +++",_this];
-    if (typeName _this == "STRING") exitWith // 3. _arr = "ATrack24"; // play full track
-    {
+    if (typeName _this == "STRING") exitWith {// 3. _arr = "ATrack24"; // play full track
 #ifdef __DEBUG__
         hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this];
 #endif
         playMusic _this
     }; // full track
 
-    if ( typeName _this != "ARRAY") exitWith // must be array or string
-    {
+    if ( typeName _this != "ARRAY") exitWith {// must be array or string
         hint localize format["--- SYG_playRandomTrack: unknown params %1",_this];
     };
 
     // if we are here, it is ARRAY
-    if (count _this == 0) exitWith
-    {
+    if (count _this == 0) exitWith {
         hint localize "--- SYG_playRandomTrack : empty input array";
     };
 
     // count >= 1
-    if ( (typeName (_this select 0)) == "ARRAY" ) exitWith // array of array
-    {
+    if ( (typeName (_this select 0)) == "ARRAY" ) exitWith { // array of array
         _item = _this call SYG_checkLastSoundRepeated;
         _item call SYG_playRandomTrack; // find random array and try to play from it
     };
@@ -374,20 +358,16 @@ SYG_playRandomTrack = {
     //
     // if here it is some ARRAY
     //
-    if (count _this == 1) exitWith
-    {
-        if (  typeName (_this select 0) == "STRING") exitWith
-        {
+    if (count _this == 1) exitWith {
+        if (  typeName (_this select 0) == "STRING") exitWith {
             playMusic arg(0);
         };
         hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
     };
 
     // Check to be array of size > 1 and with special items sequence ["cosmos",[0, 10]]
-    if ( (typeName (_this select 0)) == "STRING") exitWith // ordinal array may be,  mandatory with size > 1
-    {
-        if ((typeName (_this select 1)) == "STRING") exitWith // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
-        {
+    if ( (typeName (_this select 0)) == "STRING") exitWith {// ordinal array may be,  mandatory with size > 1
+        if ((typeName (_this select 1)) == "STRING") exitWith { // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
             _item = _this call SYG_checkLastSoundRepeated;
             _item call SYG_playRandomTrack;
         }; // list of tracks, play any selected
@@ -395,39 +375,33 @@ SYG_playRandomTrack = {
         // ["ATrack12,[10,10]<,[20,15]>]
         // first is track name (STRING), others are part descriptors [start, length], ...
         //
-        if ((typeName (_this select 1)) == "ARRAY") exitWith   {
+        if ((typeName (_this select 1)) == "ARRAY") exitWith {
             // list of track parts
             // check if death count is too big and play long-long music for this case
-            if (SYG_deathCountCnt > DEATH_COUNT_TO_PLAY_MUSIC) exitWith
-            {
+            if (SYG_deathCountCnt > DEATH_COUNT_TO_PLAY_MUSIC) exitWith {
                 // in rare case (more then 30-40 death in one session) play whole track
-    #ifdef __DEBUG__
+#ifdef __DEBUG__
                 hint localize format[ "*** SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
-    #endif
+#endif
                 SYG_deathCountCnt = 0;
                 if (call SYG_playExtraSounds) then { playMusic arg(0); };
             };
 
-            private ["_trk"];
             // play partial random sub-track
             _trk = floor(random ((count _this)-1)) + 1;
-            _trk = arg(_trk); // get any random partial item, excluding 1st (sound name)
+            _trk = _this select _trk; // get any random partial item, excluding 1st (sound name)
             // TODO: not allow the same partial track
-            if ( argp(_trk,1) > 0) then // partial length defined, else play up to the end of music
-            {
+            if ( (_trk select  1) > 0) then { // partial length defined, else play up to the end of music
 #ifdef __DEBUG__
                 hint localize format["*** SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
 #endif
                 [arg(0),argp(_trk,0),argp(_trk,1)] spawn SYG_playPartialTrack;
-            }
-            else
-            {
+            } else {
 #ifdef __DEBUG__
                 hint localize format["*** SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
 #endif
                 playMusic [arg(0),argp(_trk,0)];
-            }
-
+            };
         };
         hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
     };

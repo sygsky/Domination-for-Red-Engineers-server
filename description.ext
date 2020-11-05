@@ -497,6 +497,13 @@ class CfgSounds
     class suicide_yeti_1 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_1.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_2 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_2.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_3 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti_4 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_4.ogg, db+0, 1.0}; titles[] = {}; };
+
+    class suicide_german_0 {name = "Special Germans scream on suicide"; sound[] = {\sounds\suicide\suicide_german_0.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_german_1{name = "Special Germans scream on suicide";  sound[] = {\sounds\suicide\suicide_german_1.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_german_2 {name = "Special Germans scream on suicide"; sound[] = {\sounds\suicide\suicide_german_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_german_3 {name = "Special Germans scream on suicide"; sound[] = {\sounds\suicide\suicide_german_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_german_4 {name = "Special Germans scream on suicide"; sound[] = {\sounds\suicide\suicide_german_4.ogg, db+0, 1.0}; titles[] = {}; };
 
     class losing_patience  {name = ""; sound[] = {\sounds\short\losing_patience.ogg,db-1,1.0}; titles[] = {};};
     class good_news        {name = ""; sound[] = {\sounds\short\good_news.ogg, db+10, 1.0}; titles[] = {}; };
@@ -564,14 +571,15 @@ class CfgSounds
     class laughter_2 { name="Laughter 2"; sound[] = {\sounds\defeat\laughter\2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_3 { name="Laughter 3"; sound[] = {\sounds\defeat\laughter\3.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_4 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\4.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_5 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\5.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_6 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\6.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_7 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\7.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_8 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\8.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_9 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\9.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_10 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\10.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_11 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\11.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class laughter_12 { name="Laughter 4"; sound[] = {\sounds\defeat\laughter\12.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_5 { name="Laughter 5"; sound[] = {\sounds\defeat\laughter\5.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_6 { name="Laughter 6"; sound[] = {\sounds\defeat\laughter\6.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_7 { name="Laughter 7"; sound[] = {\sounds\defeat\laughter\7.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_8 { name="Laughter 8"; sound[] = {\sounds\defeat\laughter\8.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_9 { name="Laughter 9"; sound[] = {\sounds\defeat\laughter\9.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_10 { name="Laughter 10"; sound[] = {\sounds\defeat\laughter\10.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_11 { name="Laughter 11"; sound[] = {\sounds\defeat\laughter\11.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class laughter_12 { name="Laughter 12"; sound[] = {\sounds\defeat\laughter\12.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
     class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\game_job.ogg,db+10,1.0}; titles[] = {}; } // War cry "game over"
     class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "get some"
@@ -582,6 +590,10 @@ class CfgSounds
     class greatjob2 { name="Great job 2";   sound[] = {\sounds\defeat\laughter\great-job1.ogg,db+10,1.0}; titles[] = {}; } // say "Great job"
     class fight { name="fight";   sound[] = {\sounds\defeat\laughter\fight.ogg,db+10,1.0}; titles[] = {}; } // say "fight"
     class handsup { name="put your hands up";   sound[] = {\sounds\defeat\laughter\Put_Your_Hands_Up.ogg,db+10,1.0}; titles[] = {}; } // say "put your hand up"
+    class indeanwarcry { name="Indean warc ry"; sound[] = {\sounds\defeat\laughter\indeanwarcry.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class targetdown47 { name="One dead"; sound[] = {\sounds\defeat\laughter\targetdown47.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class targetdown01 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown01.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+
 
     class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation

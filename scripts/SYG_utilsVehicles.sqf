@@ -1969,7 +1969,10 @@ SYG_getVehicleMarkerType = {
         if (_this isKindOf "ZSU") exitWith {"ACE_Icon_ArmourTrackedAirDefence"}; // Shilka, Tunguska
         if (_this isKindOf "BMP2" || _this isKindOf "ACE_M2A1" ) exitWith {"ACE_Icon_ArmourTrackedIFV"}; // Bradley, Linebacker, BMP
         if (_this isKindOf "Car") exitWith {
-            if (_this isKindOf "Truck") exitWith {"ACE_Icon_Truck"};
+            if (_this isKindOf "Truck") exitWith {
+            	if ( typeOf _this == "ACE_Truck5t_Reammo") exitWith {"ACE_Icon_TruckSupport"};
+            	"ACE_Icon_Truck"
+            };
             if (_this isKindOf "StrykerBase" || _this isKindOf  "BRDM2") exitWith {"ACE_Icon_ArmourWheeled"}; // Striker, BRDM2
             if (_this isKindOf "Motorcycle") exitWith {"ACE_Icon_Motorbike"};
             "ACE_Icon_Car"
@@ -1997,6 +2000,7 @@ SYG_getVehicleMarkerType = {
 #endif
 };
 //
+// Finds best marker for designated vehicle type string
 // call:
 //	_id = _veh call SYG_getVehicleType1;
 // _markerName = _id call SYG_getVehicleTypeMarker;

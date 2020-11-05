@@ -698,12 +698,13 @@ XGetPlayerPoints = {
 	_staff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
 	// prepare also semi-unical (up to 15 users) suicide sound for this player as parameter index 3
 	if ( (toUpper (_name)) == "YETI") then {
-	    _sound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti;
+	    _sound = format["suicide_yeti_%1", floor 5]; // personal suicide sound for yeti (0..4);
 	} else {
+		if (localize "STR_LANG" == "GERMAN") exitWith {_sound = format["suicide_german_%1", floor 5]}; // German player suicide screams (0..4)
 	    _sound = _index call SYG_getSuicideScreamSoundById;
 	};
 	["d_player_stuff", _staff, SYG_dateStart, _sound] call XSendNetStartScriptClient;
-	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, [""d_player_stuff"",%1] msg sent to client, suiside snd ""%2"" +++", _staff, _sound];
+	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, staff sent to client, suicide snd ""%1"" set +++", _sound];
 };
 
 // calls as follow: _near_enemy_arr = _grp_array call x_get_nenemy

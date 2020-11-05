@@ -50,10 +50,6 @@ sleep 2;
 	sleep 0.2;
 	_motoarr = _motoarr + [[_x, _pos1, getDir _x, TIMEOUT_ZERO]];
 //	_x addWeapon "CarHorn";  // add horn for motorcycle: not work in MP
-#ifdef __DEBUG__
-    hint localize format["%1: initPos %2, setPos %3", _x, _pos, _pos1];
-#endif
-
 } forEach _this; // list all motocyrcles/automobiles
 
 sleep CYCLE_DELAY;
