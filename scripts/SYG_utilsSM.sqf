@@ -99,10 +99,11 @@ SYG_findEnemyAt = {
 	_dist = arg(2);
 	_types= arg(3);
 	_arr = nearestObjects [_pos, _types, _dist];
+	_ret = objNull;
 	{
-		if ((side _x) == _side) exitWith { _x };
+		if ((side _x) == _side) exitWith { _ret = _x };
 	} forEach _arr;
-	objNull
+	_ret
 };
 
 //

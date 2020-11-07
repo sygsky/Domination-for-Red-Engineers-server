@@ -267,31 +267,46 @@ SYG_generateSPPMText = {
 //	_arr = [_veh1, _veh2...];
 //  _arr = _arr call SYG_generateSPPMText1; // _arr = [_marker_type, _marker_text]
 //
-// returns follow string: "0/1/2/3/4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
-// result may be in partial form^ "///1/1" - that means 1 ship and 1 air vehicle
+// returns follow string: "0:1:2:3:4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
+// result may be in partial form^ "СППМ:1:1" - that means 1 ship and 1 air vehicle
 SYG_generateSPPMText1 = {
 	if (typeName _this != "ARRAY") then {_this = [_this]};
-	private ["_truck","_tank","_car","_ship","_air","_marker","_title"];
-	_truck = 0;
-	_tank = 0;
-	_car = 0;
-	_ship = 0;
-	_air = 0;
-	_marker = "";
+	private ["_cntArr","_mrkArr","_marker","_title","_i","_marker"];
+	_cntArr = [ 0, 0, 0, 0, 0 ]; // type counts
+#ifdef __ACE__
+	_mrkArr = ["ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown"];  // markers array
+#else
+	_mrkArr = ["Vehicle","Vehicle","Vehicle","Vehicle","Vehicle"];  // markers array
+#endif
+	// clean array
+	for "_i" from 0 to count _this -1 do {
+		_x = _this select _i;
+		if (typeName _x != "OBJECT") then { _this set [_i, "RM_ME"] };
+	};
+	_this call SYG_clearArray;
+	// fill all possible params
 	{
-		if (typeName _x == "OBJECT") then {
-			if (_x isKindOf "Truck") exitWith { _truck = _truck + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType} };
-			if (_x isKindOf "Tank" ) exitWith {  _tank =  _tank + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType} };
-			if (_x isKindOf "Car"  ) exitWith {   _car =   _car + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType}  };
-			if (_x isKindOf "Ship" ) exitWith {  _ship =  _ship + 1; if (_marker == "") then {_marker = _x call SYG_getVehicleMarkerType}  };
-			if ( ( _x isKindOf "Air" ) && ( !( _x isKindOf "ParachuteBase" ) ) ) exitWith { _air = _air + 1; if ( _marker == "" ) then { _marker = _x call SYG_getVehicleMarkerType }  };
+		_marker = _x call SYG_getVehicleMarkerType;
+//		hint localize format["+++  SYG_getVehicleMarkerType, type  %1, marker %2", typeOf _x,  _marker ];
+		if (true) then {
+			if (_x isKindOf "Truck") exitWith { _cntArr set [0 , (_cntArr select 0) +1 ]; _mrkArr set [0, _marker] };
+			if (_x isKindOf "Tank")  exitWith { _cntArr set [1 , (_cntArr select 1) +1 ]; _mrkArr set [1, _marker] };
+			if (_x isKindOf "Car")   exitWith { _cntArr set [2 , (_cntArr select 2) +1 ]; _mrkArr set [2, _marker] };
+			if (_x isKindOf "Ship")  exitWith { _cntArr set [3 , (_cntArr select 3) +1 ]; _mrkArr set [3, _marker] };
+			if (( _x isKindOf "Air" ) && ( !( _x isKindOf "ParachuteBase" ) ) ) then { _cntArr set [4 , (_cntArr select 4) +1 ]; _mrkArr set [4, _marker] };
 		};
 	} forEach _this;
+
+	// Find most important marker
+	{
+		if ( ( _cntArr select _x) > 0) exitWith {_marker = _mrkArr select _x};
+	} forEach [ 0,1,2,3,4];
+
 	_title = "";
 	{
 		if (_x == 0) then { if (_title != "") then {_title = format["%1:", _title]} }
 			else { if(_title == "") then {_title = format["СППМ:%1",_x]} else {_title = format["%1:%2",_title, _x]} };
-	} forEach [ _truck, _tank, _car, _ship, _air];
+	} forEach _cntArr;
 	[_marker, _title]
 };
 

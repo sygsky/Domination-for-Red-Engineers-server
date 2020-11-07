@@ -401,7 +401,10 @@ class CfgSounds
     class rippara3 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip_3.ogg,db-1,1.0}; titles[] = {};} // Rip parachute sound
     class rippara4 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_rip_3.ogg,db-1,1.0}; titles[] = {};} // Rip parachute sound
 
-    class helicopter_fly_over { name=""; sound[] = {\sounds\helicopter_fly_over.ogg,db-1,1.0}; titles[] = {};};
+    class heli_over_1 { name=""; sound[] = {\sounds\defeat\heli\3d_heli_sound.ogg,db-1,1.0}; titles[] = {};};
+    class heli_over_2 { name=""; sound[] = {\sounds\defeat\heli\3d_heli_sound_2.ogg,db-1,1.0}; titles[] = {};};
+    class heli_over_3 { name=""; sound[] = {\sounds\defeat\heli\3d_heli_sound_3.ogg,db-1,1.0}; titles[] = {};};
+    class heli_over_4 { name=""; sound[] = {\sounds\defeat\heli\3d_heli_sound_4.ogg,db-1,1.0}; titles[] = {};};
 
     // Fear sounds
 	class fear      { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; titles[] = {}; };

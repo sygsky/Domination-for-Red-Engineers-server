@@ -200,7 +200,7 @@ SYG_playRandomDefeatTrackByPos = {
 	} else {
 	    if (( count _this >= 2) && ((_this select 1) isKindOf "Helicopter")) then {// called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
 	        if (side (_this select 1) == d_enemy_side) then {
-    	        playSound "helicopter_fly_over";
+    	        playSound format["heli_over_", ceil 4];
     	        _done = true;
 //  	            hint localize "+++ SYG_playRandomDefeatTrackByPos: helicopter_fly_over, done";
 	        };
