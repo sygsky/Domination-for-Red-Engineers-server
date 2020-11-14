@@ -1,34 +1,7 @@
 // open.sqf, called on player respawn on client side only
 _this execVM "scripts\deathSound.sqf";
 
-private ["_ok","_unit", "_killer"];
-_killer = _this select 1;
-_unit = _this select 0; // player
-
-#include "x_setup.sqf"
-
 //hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
-
-
-/*
-if (!(local _unit)) exitWith {};
-if (!(isPlayer _unit)) exitWith {};
-if ( _unit != _killer) then
-{
-    if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) then
-    {
-        playSound "helicopter_fly_over"; // play sound of heli fly over your poor remnants
-    }
-    else
-    {
-        _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
-    };
-}
-else
-{
-    plaSound "huh1"; // short melody on unknown case
-};
-*/
 
 sleep d_respawn_delay;
 
@@ -36,8 +9,15 @@ if (dialog) then {closeDialog 0};
 
 [-1] execVM "GRU_Scripts\GRU_removedoc.sqf"; // remove map just in case
 
+
 beam_target = -1;
 tele_dialog = 0; // 0 = respawn, 1 = teleport
+
+private ["_ok","_unit", "_killer","_display","_ctrl"];
+_killer = _this select 1;
+_unit = _this select 0; // player
+
+#include "x_setup.sqf"
 
 _ok = createDialog "TeleportModule";
 

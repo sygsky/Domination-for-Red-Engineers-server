@@ -586,15 +586,11 @@ if ((daytime > 19.75) || (daytime < 4.25)) then {
 #endif
 
 if (__ReviveVer || __AIVer || !d_with_respawn_dialog_after_death) then {
-    if (_string_player in d_can_use_artillery ) then // Only resque can't select resurrect place, but can hear music
-    {
+    if (_string_player in d_can_use_artillery ) then  {// Only resque can't select resurrect place, but can hear music
 	    _p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "scripts\deathSound.sqf";}];
-    }
-    else
-    {
+    } else {
     	_p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "dlg\open.sqf";}];
     };
-
 } else {
 #ifndef __TT__
 	_p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "dlg\open.sqf";}];

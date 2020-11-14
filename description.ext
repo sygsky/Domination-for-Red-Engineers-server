@@ -660,7 +660,7 @@ class CfgSounds
 //    class teleporter_enabled  {name = "Enabled by robot woman"; sound[] = {\sounds\women\teleporter_enabled.ogg, db+10, 1.0}; titles[] = {};};
 //    class first_teleporter  {name = "1st tp by robot woman"; sound[] = {\sounds\women\first_teleporter.ogg, db+10, 1.0}; titles[] = {};};
 //    class second_teleporter  {name = "2nd tp by robot woman"; sound[] = {\sounds\women\second_teleporter.ogg, db+10, 1.0}; titles[] = {};};
-    class base  {name = "2nd tp by robot woman"; sound[] = {\sounds\women\base.ogg, db+10, 1.0}; titles[] = {};};
+    class base  {name = "2nd by robot woman"; sound[] = {\sounds\women\base.ogg, db+10, 1.0}; titles[] = {};};
     class warning  {name = "warning by robot woman"; sound[] = {\sounds\women\warning.ogg, db+10, 1.0}; titles[] = {};};
     class down  {name = "down by robot woman"; sound[] = {\sounds\women\down.ogg, db+10, 1.0}; titles[] = {};};
     class disabled  {name = "disabled by robot woman"; sound[] = {\sounds\women\disabled.ogg, db+10, 1.0}; titles[] = {};};
