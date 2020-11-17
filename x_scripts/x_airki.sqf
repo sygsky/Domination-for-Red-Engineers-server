@@ -567,7 +567,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 
         // prevent execution until at least one player is connected
 		if (X_MP && (call XPlayersNumber) == 0) then {
-		    hint localize format["+++ x_airki.sqf[%1]: no players, wait for the first player on line, refuelling alive vehicles during pause",_type];
+		    hint localize format["+++ x_airki.sqf[%1]: no players, wait for the first player on line, refueling alive vehicles during pause",_type];
 		    while {call XPlayersNumber == 0} do
 		    {
 		        sleep 25.128;

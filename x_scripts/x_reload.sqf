@@ -214,15 +214,15 @@ if ((getDammage _vehicle) > 0) then {
     player addScore 1;
 };
 
-//+++++ Refuelling
+//+++++ refueling
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 _pos = getPos _vehicle; // original position on service
 [_vehicle, localize "STR_SYS_257"] call XfVehicleChat; // "Refuel..."
 while {fuel _vehicle < 0.99} do {
 
     _pos1 = getPos _vehicle;
-	if ( (_pos distance _pos1) > 0.5) exitWith {// vehicle moved from service, so stop refuelling
-	    hint localize format["x_reload.sqf: refuelling aborted, fuel %1, (pos_orig %2) distance (pos_now %3) = %4", fuel _vehicle, _pos, getPos _vehicle, _pos distance _vehicle];
+	if ( (_pos distance _pos1) > 0.5) exitWith {// vehicle moved from service, so stop refueling
+	    hint localize format["x_reload.sqf: refueling aborted, fuel %1, (pos_orig %2) distance (pos_now %3) = %4", fuel _vehicle, _pos, getPos _vehicle, _pos distance _vehicle];
         [_vehicle, format [localize "STR_SYS_257_1", _type_name]] call XfVehicleChat; // "Refueling is interrupted, the hose came off"
 	};
 	sleep 0.3;

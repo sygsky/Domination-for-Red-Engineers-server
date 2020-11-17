@@ -66,7 +66,7 @@ _damage = damage objectID2;
 _damage_val    = (_damage / _rep_count); // how many undamage steps for reparing
 
 _fuel_capacity_in_litres = objectID2 call SYG_fuelCapacity; // litres of fuel in vehicle fuel tanks
-#ifdef __LIMITED_REFUELLING__
+#ifdef __LIMITED_REFUELING__
 _refuel_add = 0;
 
 
@@ -86,7 +86,7 @@ _refuel_limit  = ( _fuel + _fuel_add ) min 1.0;   // limit value he can refuel u
 
 _fuel_steps = 0;
 if (_refuel_add > 0) then {
-	_fuel_steps = _refuel_volume * (_fuel_add / _refuel_add) / 20; // how many animations are need to complete refuelling
+	_fuel_steps = _refuel_volume * (_fuel_add / _refuel_add) / 20; // how many animations are need to complete refueling
 };
 
 _fuel_vol_on_step    = 0; // default is "already refuelled"
@@ -96,10 +96,10 @@ if ( abs(_fuel_steps) > 0.0000001) then {_fuel_vol_on_step = _fuel_add /_fuel_st
 _rep_array = [objectID2,_refuel_limit];
 #else
 _refuel_limit  = 1.0;
-_fuel_steps      = ((_refuel_limit - _fuel) / _rep_count); // how many refuel steps for refuelling
+_fuel_steps      = ((_refuel_limit - _fuel) / _rep_count); // how many refuel steps for refueling
 _fuel_vol_on_step    = _rep_count; // how may refuel at one step
 _rep_array     = [objectID2];
-//hint localize "x_repengineer.sqf: No __LIMITED_REFUELLING__ defined";
+//hint localize "x_repengineer.sqf: No __LIMITED_REFUELING__ defined";
 #endif
 
 _coef = ceil (_fuel_steps max _damage_val);

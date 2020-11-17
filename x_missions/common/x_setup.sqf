@@ -79,8 +79,8 @@
 
 //#define __SMMISSIONS_MARKER__
 
-//+++ Sygsky: uncomment to add limited refuelling ability for engineers
-#define __LIMITED_REFUELLING__
+//+++ Sygsky: uncomment to add limited refueling ability for engineers
+#define __LIMITED_REFUELING__
 
 //+++ Sygsky: uncomment to debug new airkillers. Only for debug purposes
 //#define __SYG_AIRKI_DEBUG__

@@ -338,8 +338,8 @@ FLAG_BASE setPos [position FLAG_BASE select 0, position FLAG_BASE select 1, 0];
 #endif
 
 
-//+++ Sygsky: enable limited refuelling enabled for engineers
-#ifdef __LIMITED_REFUELLING__
+//+++ Sygsky: enable limited refueling enabled for engineers
+#ifdef __LIMITED_REFUELING__
 d_refuel_volume = 10; // how many liters engineer can fill up into any repaired vehicle
 d_refuel_per_rank = 10;
 d_refuel_rank_for_upgrade = "Private"; // begins from Major rank you are  allowed to refuel more and more by any next ranks

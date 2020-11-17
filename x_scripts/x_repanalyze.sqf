@@ -32,7 +32,7 @@ _damage_val = (_damage / _rep_count);
 
 _fuelCapacity = objectID2 call SYG_fuelCapacity; // litres of fuel in vehicle fuel tanks
 
-#ifdef __LIMITED_REFUELLING__
+#ifdef __LIMITED_REFUELING__
 _fuel_val = (d_refuel_volume min (_fuelCapacity * (1 - _fuel))) / 20; //how many 
 
 #else
@@ -55,7 +55,7 @@ _estimated_time = _coef * 6;
 
 _type_name = [typeOf (objectID2),0] call XfGetDisplayName;
 
-//+++ Sygsky: to add some more functionality for refuelling, namely to add limited refuelling
+//+++ Sygsky: to add some more functionality for refueling, namely to add limited refueling
 _fuelCapacity = objectID2 call SYG_fuelCapacity;
 //hint localize format["x_repanalyze.sqf: _fuelCapacity = %1", _fuelCapacity];
 if ( _fuelCapacity > 0 ) then

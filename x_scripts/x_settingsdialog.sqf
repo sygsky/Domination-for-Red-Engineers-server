@@ -376,10 +376,10 @@ if (d_reload_engineoff) then {
 	_str = _str + _strNo;
 };
 
-#ifdef __LIMITED_REFUELLING__
-_str = _str + format[localize "STR_SYS_06", d_refuel_volume]; // "Engineer refuelling is limited to (litres): %1"
+#ifdef __LIMITED_REFUELING__
+_str = _str + format[localize "STR_SYS_06", d_refuel_volume]; // "Engineer refueling is limited to (litres): %1"
 #else
-_str = _str + localize "STR_SYS_05"; // "Engineer refuelling is unlimited: yes"
+_str = _str + localize "STR_SYS_05"; // "Engineer refueling is unlimited: yes"
 #endif 
 
 _str = _str + (localize "STR_SYS_362")/* "Десантирование активно: " */;

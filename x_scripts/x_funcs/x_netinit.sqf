@@ -24,7 +24,7 @@ XHandleNetStartScriptAll = {
 	__DEBUG_NET("x_netinit.sqf XHandleNetStartScriptAll",_this)
 	switch (_this select 0) do {
 		case "rep_array": {
-#ifdef __LIMITED_REFUELLING__		
+#ifdef __LIMITED_REFUELING__
 			(_this select 1) spawn x_repall;
 #else
 			[(_this select 1) select 0] spawn x_repall;

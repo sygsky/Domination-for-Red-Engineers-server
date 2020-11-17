@@ -125,7 +125,7 @@ x_repall = {
 	private ["_vec"];
 	_vec = _this select 0;
 	_vec setDamage 0;
-#ifdef __LIMITED_REFUELLING__
+#ifdef __LIMITED_REFUELING__
 	if ((count _this)>1)then{_vec setFuel(_this select 1);}else{_vec setFuel 1;};
 #else
 	_vec setFuel 1;

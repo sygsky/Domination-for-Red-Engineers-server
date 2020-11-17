@@ -61,8 +61,8 @@ STR_MED_7,You get %1 points because other units used your mash for healing!,"Sie
 STR_MED_8,You get +%1 points for healing %2!,Erhalten Sie +%1 Punkte für die Heilung %2!,Obtienes puntos: + %1 por curar %2,Вы получаете очки: +%1 за излечение %2
 
 STR_SYS_04,"Engineer scores for vehicles repair: air +%1, armored +%2, transport +%3, others +%4\n","Ingenieur erreicht souverän für Fahrzeuge reparieren: Luft +%1, Gepanzerte +%2, transport +%3, andere +%4\n","Interconexión ingeniero para el mantenimiento: vehículos de aviación +%1, vehículos blindados +%2, transporte +%3, otros +%4\n \ n","Очки инженера за ремонт: авиатехники +%1, бронетехники +%2, транспорта +%3, прочего +%4\n"
-STR_SYS_05,Engineer refuelling not limited: yes\n,Ingenieur tanken nicht begrenzt: ja\n,Ingeniero vierte el tanque lleno durante la reparación: sí\N,Инженер заливает полный бак при ремонте: Да\n
-STR_SYS_06,Engineer refuelling is limited to (litres): %1\n,Ingenieur tanken ist beschränkt (Liter): %1\n,Ingeniero durante la reparación vierte combustible (litros): %1\n,Инженер при ремонте заливает горючего (литры): %1\n
+STR_SYS_05,Engineer refueling not limited: yes\n,Ingenieur tanken nicht begrenzt: ja\n,Ingeniero vierte el tanque lleno durante la reparación: sí\N,Инженер заливает полный бак при ремонте: Да\n
+STR_SYS_06,Engineer refueling is limited to (litres): %1\n,Ingenieur tanken ist beschränkt (Liter): %1\n,Ingeniero durante la reparación vierte combustible (litros): %1\n,Инженер при ремонте заливает горючего (литры): %1\n
 STR_SYS_07,Vehicle status,Status des Fahrzeugs,Estado de la máquina,Статус машины
 
 STR_SYS_10,Additional death scores penalty after rank: %1\n,Zusätzliche Tod Strafe Partitur nach Rang: %1\n,Resta puntos por muerte después de otro título: %1\n,Доп. вычитание очков за смерть  после очередного звания: %1\n
@@ -511,8 +511,8 @@ STR_SYS_256_STOP_0,"I'm sorry, but there are no technicians, they may be asleep"
 STR_SYS_256_STOP_1,"It seems that there are no technicians, we will have to ship everything manually","Es scheint, dass es keine Techniker gibt, müssen Sie alles manuell herunterladen","Parece que los técnicos no pueden esperar, tendrán que enviar los misiles por sí mismos","Похоже, техников не дождаться, придётся самому грузить ракеты"
 STR_SYS_256_STOP_3,Up your ass! Yeez! Rats! The political officer is coming!,In deinen Arsch! Yeez! Ratten! Der politische Offizier kommt!,Atas! ¡Viene el policía!,Атас! Замполит идёт!
 
-STR_SYS_257,Refuelling...,Tanken...,Aderezo...,Заправка...
-STR_SYS_257_1,"Refuelling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","La recarga %1 se ha interrumpido, la manguera se ha desprendido","Заправка %1 прервана, шланг оторвался"
+STR_SYS_257,refueling...,Tanken...,Aderezo...,Заправка...
+STR_SYS_257_1,"refueling of %1 is interrupted, the hose came off","Betanken von %1 ist unterbrochen, der Schlauch kam aus","La recarga %1 se ha interrumpido, la manguera se ha desprendido","Заправка %1 прервана, шланг оторвался"
 STR_SYS_258,Repairing...,Reparieren...,Reparación...,Починка...
 
 STR_SYS_RELOAD_REPAIR,Loading of repair equipment,Das laden von reparaturgeräten,Carga de inventario de reparación,Загрузка ремонтного инвентаря
