@@ -918,8 +918,7 @@ SYG_MsgOnPosE = {
 	_pos1 = position _loc;
 	_pos1 set [2,0];
 	_pos2 = _obj;
-	if ( typeName _pos2 != "ARRAY") then
-	{
+	if ( typeName _pos2 != "ARRAY") then {
     	_pos2 = position _obj;
 	};
 	_pos2 set [2,0];

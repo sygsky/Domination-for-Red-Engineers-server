@@ -230,41 +230,6 @@ SYG_updateSPPM = {
 //
 // call:
 //	_arr = [_veh1, _veh2...];
-//  _text = _arr call SYG_generateSPPMText;
-//
-// returns follow string: "0/1/2/3/4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
-// result may be in partial form^ "///1/1" - that means 1 ship and 1 air vehicle
-SYG_generateSPPMText = {
-	if (typeName _this != "ARRAY") then {_this = [_this]};
-	private ["_truck","_tank","_car","_ship","_air"];
-	_truck = 0;
-	_tank = 0;
-	_car = 0;
-	_ship = 0;
-	_air = 0;
-	{
-		if (typeName _x == "OBJECT") then {
-			if (_x isKindOf "Truck") exitWith { _truck = _truck + 1 };
-			if (_x isKindOf "Tank" ) exitWith { _tank = _tank + 1 };
-			if (_x isKindOf "Car"  ) exitWith { _car = _car + 1 };
-			if (_x isKindOf "Ship" ) exitWith { _ship = _ship + 1 };
-			if ((_x isKindOf "Air") && (!(_x isKindOf "ParachuteBase"))) exitWith { _air = _air + 1 };
-		};
-	} forEach _this;
-	format["СППМ:%1:%2:%3:%4:%5",
-//		localize "STR_SPPM", // Localization on server means same language text on all client engines
-		if (_truck == 0) then {""} else {_truck},
-		if (_tank == 0) then {""} else {_tank},
-		if (_car == 0) then {""} else {_car},
-		if (_ship == 0) then {""} else {_ship},
-		if (_air == 0) then {""} else {_air}
-		]
-};
-
-// Generate text title for SPPM marker
-//
-// call:
-//	_arr = [_veh1, _veh2...];
 //  _arr = _arr call SYG_generateSPPMText1; // _arr = [_marker_type, _marker_text]
 //
 // returns follow string: "0:1:2:3:4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
@@ -334,7 +299,7 @@ SYG_updateAllSPPMMarkers = {
 			};
 			// recalculate center position of SPPM
 			_new_pos = _arr call SYG_averPoint;
-			hint localize format["+++ SPPM update: cnt %1, old pos %2, new pos %3", count _arr, _pos, _new_pos];
+//			hint localize format["+++ SPPM update: cnt %1, old pos %2, new pos %3", count _arr, _pos, _new_pos];
 			if ( [_pos, _new_pos] call SYG_distance2D > 1) then {
 					if ( _new_pos call SYG_findNearSPPMCount == 1) then {
 					_marker setMarkerPos _new_pos;
@@ -344,7 +309,7 @@ SYG_updateAllSPPMMarkers = {
 					_new_pos set [2, -1];
 					_cone setVectorUp [0,0,1];
 					_cone setVehiclePosition  [_new_pos, [], 0, "CAN_COLLIDE"]; // update name just in case
-					hint localize format["*** SPPM ""%1"" position changed by %2 m.", _marker, [_pos, _new_pos] call SYG_distance2D];
+					hint localize format["*** SPPM ""%1"" position changed by %2 m.", _marker, round( [_pos, _new_pos] call SYG_distance2D ) ];
 				} else {
 					hint localize format["*** SPPM ""%1"" position could be changes by %2 m. but is closer then 50 m. to other SPPM", _marker, [_pos, _new_pos] call SYG_distance2D];
 				};

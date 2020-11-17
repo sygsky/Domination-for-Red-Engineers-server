@@ -688,22 +688,27 @@ XHandleNetStartScriptClient = {
 		#endif
 		// [ "syg_observer_kill", _killer, primaryWeapon _observer, _observer] call XSendNetStartScriptClient;
 		case "syg_observer_kill" : {
-            private ["_score","_str","_sound_obj"];
+            private ["_score","_str","_sound_obj","_killer"];
             _score = argp( d_ranked_a, 27 );
-		    if( isNull arg(1) ) then { // killer unknown
+            _killer = arg(1);
+		    if( isNull _killer ) then { // killer unknown
                 _sound_obj = arg(3); // play sound at observer position
                 (format[localize "STR_SYS_1162","STR_SYS_COR_NUM" call SYG_getLocalizedRandomText]) call XfHQChat; // "Spotter died..."
 		    } else {
-                if ( str(arg(1)) == str(player) ) then  { // killer is this player
+                _sound_obj = _killer; // play sound at sutable position
+                if ( str(_killer) == str(player) ) exitWith  { // killer is this player
                     if (count _this > 2) then {_str = format[" (%1)", arg(2)]} else {_str = "";};
                     hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you", _str];
                     // add scores
                     player addScore _score;
                     (format[localize "STR_SYS_1160", _score + 1]) call XfHQChat; // T'was a spotter (+%1)!
-                } else { // Other player killed an observer
-                    (format[localize "STR_SYS_1161", name (_this select 1), _score + 1]) call XfHQChat; // Spotter killed by %1 (+%2)!
                 };
-                _sound_obj = arg(1); // play sound at sutable position
+               	// Other player/AI killed an observer
+				if (side _killer != d_side_player) exitWith {
+					(format[localize "STR_SYS_1162",localize "STR_SYS_COR_5"]) call XfHQChat; //  "Spotter died... in an accident"};
+				};
+				// TODO: check if killer is AI assigned to the one of players
+				(format[localize "STR_SYS_1161", name _killer, _score + 1]) call XfHQChat; // Spotter killed by %1 (+%2)!
 		    };
             // common code
             //playSound "no_more_waiting";

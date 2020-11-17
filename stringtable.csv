@@ -825,11 +825,14 @@ STR_SYS_1160,T'was a spotter (+%1)!,Es war ein spotter (+%1)!,¡Era un observado
 STR_SYS_1161,"Spotter killed by ""%1"" (+%2)!","Spotter getötet durch ""%1"" (+%2)!","¡Observador asesinado por ""%1"" (+%2)!","Корректировщик убит: ""%1"" (+%2)!"
 STR_SYS_1162,Spotter died... %1,Spotter gestorben... %1,El observador murió... %1,Корректировщик погиб... %1
 
-STR_SYS_COR_NUM,4,4,4,4
+STR_SYS_COR_NUM,5,5,5,5
 STR_SYS_COR_0,in despair,aus Verzweiflung,por la desesperación,от безысходности
 STR_SYS_COR_1,of sadness,sehnsüchtig,de anhelo,от тоски
 STR_SYS_COR_2,from a thermal shock,im Falle eines thermischen Schocks,en el caso de un choque térmico,от теплового удара
 STR_SYS_COR_3,from excess feelings,übersehen,sobre-sentido,от избытка чувств
+STR_SYS_COR_4,by foolishness,durch Dummheit,por tonterías,по глупости
+
+STR_SYS_COR_5,in an accident,bei einem Unfall,en un accidente,от несчастного случая
 
 STR_SYS_1170,You were killed by the AI of %1,Sie wurden getötet durch die KI von %1,Has sido asesinado por un subordinado de %1,Вы были убиты подчинённым %1
 STR_SYS_1171,Recruit Barracks,Einberufungsstelle,Caja de recluta,Призывной пункт
