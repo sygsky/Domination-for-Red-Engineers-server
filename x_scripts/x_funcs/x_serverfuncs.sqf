@@ -698,10 +698,10 @@ XGetPlayerPoints = {
 	_staff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
 	// prepare also semi-unical (up to 15 users) suicide sound for this player as parameter index 3
 	if ( (toUpper (_name)) == "YETI") then {
-	    _sound = format["suicide_yeti_%1", floor 5]; // personal suicide sound for yeti (0..4);
+	    _sound = format["suicide_yeti_%1", floor (random 5)]; // personal suicide sound for yeti (0..4);
 	} else {
-		if (localize "STR_LANG" == "GERMAN") exitWith {_sound = format["suicide_german_%1", floor 5]}; // German player suicide screams (0..4)
-	    _sound = _index call SYG_getSuicideScreamSoundById;
+		if (localize "STR_LANG" == "GERMAN") exitWith {_sound = format["suicide_german_%1", floor (random 5)]}; // German player suicide screams (0..4)
+	    _sound = _index call SYG_getSuicideScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
 	};
 	["d_player_stuff", _staff, SYG_dateStart, _sound] call XSendNetStartScriptClient;
 	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, staff sent to client, suicide snd ""%1"" set +++", _sound];

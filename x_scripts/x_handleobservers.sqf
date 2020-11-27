@@ -1,5 +1,5 @@
 // by Xeno, x_scripts\x_handleobservers.sqf
-private ["_enemy_ari_available","_nextaritime","_type","_man_type","_observer_type","_observers", "_pos_nearest"];
+private ["_enemy_ari_available","_nextaritime","_type","_enemy_man_type","_observer_type","_observers", "_pos_nearest"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -23,11 +23,18 @@ else
     _observer_type = "-"; // unknown
 };
 #ifndef __TT__
-_man_type = (
+_enemy_man_type = (
 	switch (d_enemy_side) do {
 		case "WEST": {"SoldierWB"};
 		case "EAST": {"SoldierEB"};
 	}
+);
+
+_player_type = (
+    switch (d_own_side) do {
+        case "WEST": {"SoldierWB"};
+        case "EAST": {"SoldierEB"};
+    }
 );
 
 _enemySide = (
@@ -59,6 +66,7 @@ _enemy_vehicles = (
         case "EAST": {_ussr};
         }
 );
+// Counts observers in the proposed  hit zone
 // call: _cnt = _observers call _count_observers;
 _count_observers = {
     if (count _this == 0) exitWith { 0 };
@@ -78,7 +86,7 @@ _land_veh_type = "LandVehicle";
 #endif
 
 #ifdef __TT__
-_man_type = ["SoldierWB","SoldierGB"];
+_enemy_man_type = ["SoldierWB","SoldierGB"];
 #endif
 
 if (isNil "x_shootari") then {
@@ -120,34 +128,31 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 
             if ((_observer knowsAbout _enemy) <= 1.5) exitWith {};
 
-            // check if player in not landed air vehicle
-            if (
-                ( (vehicle _enemy) isKindOf "Air") &&
-                ( (getPos _enemy) select 2 > 5) //&& ( ((velocity  _enemy) distance [0,0,0]) > 5)
-               ) exitWith { sleep 3.345 };
+            // check if player in not landed air vehicl;
 
-            _distance = _observer distance _enemy;
-            _near_targets = _observer nearTargets (_distance + HIT_RADIOUS);
+			if ( ( (vehicle _enemy) isKindOf "Air") && ( (getPos _enemy) select 2 > 5) ) exitWith { sleep 3.345 }; // lets help to observe rto detects enemy detected
+			_observer reveal _enemy; // team helps to the observer)))
+			sleep 0.3;
+            _dist_obs_enemy = _observer distance _enemy; // distance to enemy from observer
+            _near_targets = _observer nearTargets (_dist_obs_enemy + HIT_RADIOUS);
             if (count _near_targets > 0) then {
-                _pos_nearest = [];
+                _pos_nearest = []; // position of then nearest enemy found (intially empty)
                 {
                     if ( (_x select 4) == _enemy ) exitWith {
-                        _pos_nearest = _x select 0;
+                        _pos_nearest = _x select 0; // position to this target in the system list
                     };
                     sleep 0.001;
                 } forEach _near_targets;
+                _near_targets_cnt = count _near_targets;
                 _near_targets = [];
-                _cnt = 0;
                 if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
-                    _observer reveal _enemy; // team helps to observer)))
-                    sleep 0.3;
-                    // don't shoot too far if player is not in vehicle as he can teleport from battle field but Arma update its real coordinates in nearTargets array
-                    // Arti strike is not allowed if player is teleported far away (user on base, on feet || close to flag)
+                    // don't shoot too far if player is not in vehicle as he can teleport from battle field but Arma updates its real coordinates in the nearTargets array
+                    // Arti strike is not allowed if player is teleported far away (user is on base, on feet || close to flag)
 
 #ifndef __TT__
-					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || (position _enemy distance FLAG_BASE < SAVE_RADIOUS));
+					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance FLAG_BASE) < SAVE_RADIOUS));
 #else
-					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || (position _enemy distance RFLAG_BASE < SAVE_RADIOUS || position _enemy distance WFLAG_BASE < SAVE_RADIOUS));
+					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance RFLAG_BASE) < SAVE_RADIOUS || (_enemy distance WFLAG_BASE) < SAVE_RADIOUS));
 #endif
 
                     if ( ((_observer distance _pos_nearest) > MAX_SHOOT_DIST) && _notAllowed ) exitWith {
@@ -157,43 +162,45 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
                     _own_cnt       = {alive _x} count _own_arr;
 
-                    _units_arr     = _pos_nearest nearObjects [_man_type, HIT_RADIOUS];
+                    _units_arr     = _pos_nearest nearObjects [_enemy_man_type, HIT_RADIOUS];
                     _unit_cnt      =  {(_x call SYG_ACEUnitConscious) && (side _x == _enemySide) } count _units_arr; // observer side units in hit zone
                     _veh_arr       =  nearestObjects [_pos_nearest, _enemy_vehicles, KILL_RADIOUS]; // array of observer side vehicle in kill zone
                     _veh_cnt       =  {side _x == _enemySide} count _veh_arr;    // enemy crew vehicles in kill zone
-                    _observer_cnt = _observers call _count_observers;
-                    _killCnt = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1);  // how many units to hit is allowed
+                    _observer_cnt  = _observers call _count_observers;
+                    _killCnt       = MIN_FRIENDLY_COUNT_TO_STRIKE * (_own_cnt + 1);  // how many friendly units are allowed to hit
 
 					// observer side vehicles not allowed to be killed/hit
                     _type = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                     // If enemy is too far from strike point, do smoking attack only
-                    _dist = round( _pos_nearest distance _enemy );
+                    _dist_between_pos = round( _pos_nearest distance _enemy );
 
-                    if ( ( _dist > SAVE_RADIOUS ) && ( _type == 1 ) && (_own_cnt == 0) ) then { _type = 2 }; // smoke except strike as no player or his vehicles in unsave zone
+                    if ( ( _dist_between_pos > SAVE_RADIOUS ) && ( _type == 1 ) && (_own_cnt == 0) ) then { _type = 2 }; // smoke except strike as no player or his vehicles in unsave zone
 
-                    if ( _dist < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is correct
+                    if ( _dist_between_pos < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is correct
                     else { if ( _enemyToReveal == _enemy ) then { _enemyToReveal = objNull } }; // knowledge is bad
 
                     hint localize format
                     [
-                        "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4) on dist %5 m., [eu %6, ev %7/%8, obs %9/%10, ov %11], %12, real<->vrt dist %13 m.",
+                        "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4), knwn/real dist %5/%6 m. [eu %7, ev %8/%9, obs %10/%11, ov %12], %13, real<->knwn dist %14 m., tgtcnt %15",
                         _i,
                         if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'(%2)",name _enemy, typeOf (vehicle _enemy)]},
                         if (_type == 1) then {"warheads"} else {"smokes"},
                         (round((_observer knowsAbout _enemy) * 10.0))/10.0,
-                        round(_observer distance _enemy),
+                        round (_observer distance _pos_nearest),
+                        round _dist_obs_enemy,
                         _unit_cnt,
                         _veh_cnt, count _veh_arr,
                         _observer_cnt,  // observers in non-save zone
                         count _observers, // observers array length
                         _own_cnt,
                         [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
-                        _dist
+                        _dist_between_pos,
+                        _near_targets_cnt
                     ];
 
                     _nextaritime  = time + d_arti_reload_time + (random 40);
-                    [_pos_nearest,_type] spawn x_shootari;
+                    [_pos_nearest,_type,HIT_RADIOUS] spawn x_shootari;
                     _enemy_ari_available = false;
                     _near_targets        = nil;
                     _own_arr             = nil;

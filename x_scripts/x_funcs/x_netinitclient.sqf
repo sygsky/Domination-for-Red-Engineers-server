@@ -493,8 +493,9 @@ XHandleNetStartScriptClient = {
 			};
 			playSound "no_more_waiting";
 		};
+		// ["o_arti",_pos_enemy,_radius] ...
 		case "o_arti": {
-			(_this select 1) spawn Xoartimsg;
+			[_this select 1, _this select 2] spawn Xoartimsg;
 		};
 		#ifndef __TT__
 		case "d_jet_service_fac": {

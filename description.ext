@@ -496,7 +496,7 @@ class CfgSounds
     class male_scream_13 {name = ""; sound[] = {\sounds\suicide\scream1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_14 {name = "Demonic woman scream on suicide"; sound[] = {\sounds\suicide\demonic_woman_scream.ogg, db+0, 1.0}; titles[] = {}; }; // demonic scream
 
-    class suicide_yeti   {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_yeti_0 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_1 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_1.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_2 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_2.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_3 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_3.ogg, db+0, 1.0}; titles[] = {}; };
@@ -606,9 +606,7 @@ class CfgSounds
     class exclamation6 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class tanki { name="eclamation";   sound[] = {\sounds\defeat\exclamations\tanki.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
 
-    class under_water_3   {name = ""; sound[] = {\sounds\defeat\water\under_water3.ogg, db+10, 1.0}; titles[] = {};};
-
-	// internal submaribe effect sounds
+	// internal submarine effect sounds
     class submarine_sound_1   {name = ""; sound[] = {\sounds\submarine\submarine_sound_1.ogg, db+10, 1.0}; titles[] = {};};
     class submarine_sound_2   {name = ""; sound[] = {\sounds\submarine\submarine_sound_2.ogg, db+10, 1.0}; titles[] = {};};
     class submarine_sound_3   {name = ""; sound[] = {\sounds\submarine\submarine_sound_3.ogg, db+10, 1.0}; titles[] = {};};
@@ -645,7 +643,7 @@ class CfgSounds
 
     // Ranks messages
     // for Russian language only
-    class seargent_eng_1   {name = "Yes Sergeant"; sound[] = {\sounds\intro\ranks\seargent-eng-1.ogg, db+10, 1.0}; titles[] = {}; };
+    class sergeant_eng_1   {name = "Yes Sergeant"; sound[] = {\sounds\intro\ranks\seargent-eng-1.ogg, db+10, 1.0}; titles[] = {}; };
     class corporal_eng_1   {name = "Yes Corporal"; sound[] = {\sounds\intro\ranks\corporal-eng-1.ogg, db+10, 1.0}; titles[] = {}; };
 
     class captain_rus_1   {name = "Captain please smile, USSR film 'Captain grant children'"; sound[] = {\sounds\intro\ranks\captain-rus-1.ogg, db+10, 1.0}; titles[] = {}; };
@@ -685,6 +683,17 @@ class CfgSounds
     class eng_grant_intro   { name=""; sound[] = {\sounds\sm\49\eng_grant_intro.ogg,db-1,1.0}; titles[] = {};};
     class ger_grant_intro   { name=""; sound[] = {\sounds\sm\49\ger_grant_intro.ogg,db-1,1.0}; titles[] = {};};
 
+    // water splash effects
+    class under_water_1   {name = ""; sound[] = {\sounds\defeat\water\under_water1.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_2   {name = ""; sound[] = {\sounds\defeat\water\under_water2.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_3   {name = ""; sound[] = {\sounds\defeat\water\under_water3.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_4   {name = ""; sound[] = {\sounds\defeat\water\under_water4.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_5   {name = ""; sound[] = {\sounds\defeat\water\under_water5.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_6   {name = ""; sound[] = {\sounds\defeat\water\under_water6.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_7   {name = ""; sound[] = {\sounds\defeat\water\under_water7.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_8   {name = ""; sound[] = {\sounds\defeat\water\under_water8.ogg, db+10, 1.0}; titles[] = {};};
+    class under_water_9   {name = ""; sound[] = {\sounds\defeat\water\under_water9.ogg, db+10, 1.0}; titles[] = {};};
+    class fish_man_song   {name = ""; sound[] = {\sounds\defeat\water\fish_man_song.ogg, db+10, 1.0}; titles[] = {};};
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};

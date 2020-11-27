@@ -158,16 +158,14 @@ SYG_MedievalDefeatTracks =
      "village_consort"
     ];
 
-SYG_waterDefeatTracks =
-    [
-        "under_water_1","under_water_2","under_water_3","under_water_4","under_water_5","under_water_6","under_water_7","under_water_8","under_water_9"
-    ];
+
+SYG_getWaterDefeatTracks = {
+    if (localize "STR_LANGUAGE" == "RUSSIAN" && (random 2) < 1 ) exitWith { "fish_man_song" };
+    format["under_water_%1", ceil 9];
+};
 
 SYG_playWaterSound = {
-    private ["_str"];
-    if (localize "STR_LANGUAGE" == "RUSSIAN" && (random 2) < 1 ) then {_str = "fish_man_song"}
-    else { _str = format["under_water_%1", ceil 9] };
-    _str call SYG_playRandomTrack;
+    (call SYG_getWaterDefeatTracks) call SYG_playRandomTrack;
 };
 
 SYG_getSubmarineSound = {

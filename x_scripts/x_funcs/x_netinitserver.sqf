@@ -124,14 +124,12 @@ XHandleNetStartScriptServer = {
             // store server time directly now for better accuracy
             SYG_server_time  = time;       // current server time at the synchonizaton moment
 
-			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance
-			if ( count _this > 2) then // missionStart received
-			{
+			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance, suicide sound...
+			if ( count _this > 2) then {// missionStart received
 			    private ["_userLogin", "_ind"];
 			    _userLogin = arg(1);
 			    _ind = SYG_userNames find _userLogin;
-			    if (_ind >= 0 ) then
-			    {
+			    if (_ind >= 0 ) then {
     			    private ["_localDate", "_timeOffset"];
 			        _localDate  = arg(2);
 			        _timeOffset = SYG_localZones select _ind;
@@ -142,17 +140,12 @@ XHandleNetStartScriptServer = {
                     SYG_client_start = [_localDate, _timeOffset] call SYG_bumpDateByHours; // current time on last connected client
                     hint localize format["+++ x_netinitserver.sqf: ""d_p_a"", missionStart from known timezone (%1) client was accepted !!!",
                         if (_timeOffset >= 0) then {format["+%1",_timeOffset ]} else {_timeOffset}];
-			    }
-			    else
-			    {
-			        if ( isNil "SYG_client_start") then
-			        {
+			    } else {
+			        if ( isNil "SYG_client_start") then {
                         // unknown client started server, let get time from it in any case
                         SYG_client_start = _localDate; // current time on first and unknown connected client
                         hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client started server without known timezone was accepted !!!";
-			        }
-			        else
-			        {
+			        } else {
                         hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client with unknown timezone wasn't accepted !!!";
 			        };
 			    };
@@ -203,6 +196,7 @@ XHandleNetStartScriptServer = {
                     case "Nushrok";
                     case "Klich";
                     case "GTX460"     : { "Островитяне: привет советскому воину-разведчику! Мы никому не расскажем о твоём настоящем языке!" };
+                    case "nejcg";
                     case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
                     default             { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
                 };

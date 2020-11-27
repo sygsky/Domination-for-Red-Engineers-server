@@ -130,7 +130,7 @@
 // uncomment follow line if you want teleport available only if all services on base are valid
 // #define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
 
-// uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value
+// uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value, c) no opened dialog (so user is alive)
 #define __JAIL_MAX_SCORE__ -15
 
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks

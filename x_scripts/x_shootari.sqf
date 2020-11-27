@@ -5,12 +5,12 @@ if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 
+#define HIT_RADIOUS 45
+
 _pos_enemy = _this select 0;
 _kind = _this select 1;
+_radius = if (count _this < 3) then {HIT_RADIOUS} else {_this select 2}; // read average arti hit radious
 
-#define HIT_RADIOUS 30
-
-_radius = HIT_RADIOUS;
 _height = (switch (_kind) do {case 1: {150}; case 2: {0};});
 
 _center_x = (_pos_enemy) select 0;
@@ -33,7 +33,7 @@ if (d_enemy_side == "EAST") then {
 	};
 };
 
-if (_kind == 1) then {["o_arti",_pos_enemy] call XSendNetStartScriptClient;};
+if (_kind == 1) then {["o_arti",_pos_enemy,_radius] call XSendNetStartScriptClient;};
 
 _wp_array = [];
 while {count _wp_array < _number_shells} do {

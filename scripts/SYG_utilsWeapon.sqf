@@ -2783,31 +2783,26 @@ SYG_findPlayerEquipmentAsStr = {
 // [_name,_wpn_arr_str] call SYG_storePlayerEquipmentAsStr;
 SYG_storePlayerEquipmentAsStr = {
     if ( (typeName _this) != "ARRAY" ) exitWith {hint localize format["--- SYG_storePlayerEquipmentAsStr: expected param isn't array: %1",_this];};
-    if ( (count _this) < 2 ) exitWith
-    {
+    if ( (count _this) < 2 ) exitWith {
         hint localize format["--- SYG_storePlayerEquipmentAsStr: expected params are not 2 item array: %1", _this ];
     };
     if ( (typeName arg(0)) == "OBJECT") then {_this set[0,name arg(0)];};
 
     //hint localize format["SYG_storePlayerEquipmentAsStr(%1 param[s]);",count _this];
 
-    if ( (typeName arg(0)) == "STRING" && (typeName arg(1)) == "STRING" )  then
-    {
+    if ( (typeName arg(0)) == "STRING" && (typeName arg(1)) == "STRING" )  then {
         //hint localize "SYG_storePlayerEquipmentAsStr: enter store code";
         private ["_index", "_parray", "_name"];
         _name = arg(0);
         _index = d_player_array_names find _name;
-        if (_index >= 0) then
-        {
+        if (_index >= 0) then {
             //  player array is: [d_player_air_autokick, time, _name, 0, "", eqp_list_as_str]
             _parray = argp( d_player_array_misc,_index);
             _parray set [ 5, arg(1)];
             hint localize format ["+++ equipment re-written for %1: %2", _name, arg(1)];
-        }
-        else
-        {
-            d_player_array_names = d_player_array_names + [_name];
-            d_player_array_misc = d_player_array_misc + [[d_player_air_autokick, time, _name, 0, "", arg(1)]];
+        } else {
+            d_player_array_names set [count d_player_array_names, _name];
+            d_player_array_misc set [ count d_player_array_misc, [d_player_air_autokick, time, _name, 0, "", arg(1)]];
             hint localize format ["+++ equipment stored for %1: %2", _name, arg(1)];
         };
     };

@@ -51,6 +51,12 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then {// Play 
         };
     };
 } else   {  // some kind of suicide? Say something about...
+
+	// check if we are in water
+    if (surfaceIsWater (getPos _this) ) exitWith {
+        ["say_sound", _unit, call SYG_getWaterDefeatTracks] call XSendNetStartScriptClientAll; // medieval music if suicide near castle
+     };
+
     // check if you are near church etc
     _churchArr = nearestObjects [ getPos _unit, SYG_religious_buildings, 50];
     if ( (count _churchArr > 0) && ((random 9) > 1)) exitWith {
@@ -71,6 +77,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) then {// Play 
         _sound =  RANDOM_ARR_ITEM(SYG_MedievalDefeatTracks);
         ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // medieval music if suicide near castle
     };
+
 
     // short melody on unknown death case, anybody within some range can hear this
     _sound = "male_scream_0"; // default value

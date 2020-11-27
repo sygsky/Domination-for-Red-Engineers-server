@@ -1,5 +1,5 @@
 /*
-    scripts\healAnimDone.sqf
+    scripts\healAnimDone.sqf, note this script is not used anymore
 	author: Sygsky, by task #197
 	description:
         2.2 AnimDone

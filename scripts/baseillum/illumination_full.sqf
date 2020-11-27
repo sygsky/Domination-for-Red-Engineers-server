@@ -11,7 +11,7 @@ if (!isServer) exitWith{}; // only for server
 
 //#define FLARE_NUM 7
 #define FLARE_ALT_START 450                  // altitude to create flare
-#define FLARE_DIST 800                       // dist from center to luanch flare (550 for flares only over base)
+#define FLARE_DIST 800                       // dist from center to launch flare (550 for flares only over base)
 //#define FLARE_ALT_END 20                   // altitude of flare to start next one
 //#define FLARE_NIGHT_COST_PER_RANK 10       // how many per rank index (private == 1) costs base illumination during whole night
 //#define FLARE_MAX_COUNT 5                  // maximum number of flares

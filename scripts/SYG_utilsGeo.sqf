@@ -534,15 +534,7 @@ SYG_getTargetTownDetectedSound = {
 };
 
 /**
- * Returns index for current side mission. If no mission is available, -1 is returned;
- * call:
- *      _smindex = call SYG_getSideMissionIndex;
- */
-SYG_getSideMissionIndex = {
-	if (!all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then {current_mission_index} else {-1};
-};
-
-/**
+ * TODO: the method is not used anywhere, use it please!
  * Returns index for current side mission. If no mission is available, -1 is returned;
  * call:
  *      _smindex = call SYG_getSideMissionIndex;

@@ -75,7 +75,7 @@ if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Crea
 		_one_unit = _paragrp createUnit [_type, [0,0,0], [], 300,"NONE"];
 		_one_unit moveInCargo _chopper;
 		[_one_unit] join _paragrp;
-		_unit_array = _unit_array + [_one_unit];
+		_unit_array set [ count _unit_array, _one_unit];
 		_one_unit addEventHandler ["killed", {[_this select 0] call XAddDead;if (d_smoke) then {[_this select 0, _this select 1] spawn x_dosmoke}}];
 		#ifdef __TT__
 		_one_unit addEventHandler ["killed", {[1,_this select 1] call XAddKills;}];
@@ -287,7 +287,7 @@ _paragrp spawn {
     sleep 15; // wait for all to be on the earth
     // heal whole group for fun and just in case
     {
-        if ( alive _x) then {sleep random 3; _x setDamage 0};
+        if (alive _x) then {_x setDamage 0; sleep random 3;};
     } forEach (units _paragrp);
 };
 if ( !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {

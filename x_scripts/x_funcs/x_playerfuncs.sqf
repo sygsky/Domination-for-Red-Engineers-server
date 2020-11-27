@@ -143,12 +143,13 @@ if (!(__ACEVer)) then {
 };
 #endif
 
+// Xoartimsg params : [_pos_enemy,_hit_radius]
 Xoartimsg = {
-	private ["_target_pos"];
-	_target_pos = _this;
-	if ((player distance _target_pos < 50) && ((random 10) > 1) ) then { // 9 of 10 times inform about the death approaching
+	if ( ( (player distance (_this select 0) ) <= (_this select 1) ) ) then {  // always inform by sound
 	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence"] call XfRandomArrayVal);
-		("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
+	    if (( random 10 ) > 1  ) then { // 9 of 10 times inform about the death approaching by text too
+			("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
+	    };
 	};
 };
 

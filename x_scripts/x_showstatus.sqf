@@ -258,10 +258,10 @@ if ( _s <= 7.0 ) then {_color = [1,0,0,1];};
 _ctrl ctrlSetTextColor _color;
 _ctrl ctrlSetText format[localize "STR_SYS_11", _s];// "Здоровье: %1"
 //--- Sygsky
-_wind = round(wind distance [0,0,0]); // wind speed
+_wind = round ( ( wind distance [0,0,0] ) * 10) / 10; // wind speed
 _dir = if (_wind == 0) then {"-"} else {round ([[0,0,0], wind] call XfDirToObj)}; // wind dir
 _s = if(d_weather_sandstorm) then {
-	format [localize "STR_SYS_230",clouds1,fog1,"%", _dir, _wind]; // "Nonmarked zones has %1 and %2. Areas marked as sandstorm has degraded visibility.\nWind %3 deg, %4 m/s"
+	format [localize "STR_SYS_230",clouds1,fog1,"%", _dir, _wind]; // "Non-marked zones has %1 and %2. Areas marked as sandstorm has degraded visibility.\nWind %3 deg, %4 m/s"
 }
 else {
 	format [localize "STR_SYS_231",clouds1,fog1,clouds2,fog2, _dir, _wind]; // "Погода вне помеченных зон: %1, %2.\nВ помеченных зонах: с осадками и облачностью %3, с туманом %4."

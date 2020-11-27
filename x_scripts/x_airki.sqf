@@ -505,8 +505,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		};
 	    // reset flight height for each new WP, as task can change here
    		{
-   		    if (_old_target_name != (_dummy select 1)) then // target changed, move heli to other target
-   		    {
+   		    if (_old_target_name != (_dummy select 1)) then {// target changed, move heli to other target
    		        _flyHeight = (_flyby_height + random _flight_random);
    		        _x flyInHeight _flyHeight;
                 hint localize format["+++ airki.sqf: %1 redirected from %2 to %3, flyby height ~ %4",
@@ -516,29 +515,20 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                    round(_flyHeight)
                    ];
    		        _old_target_name = _dummy select 1;
-   		    }
-   		    else
-   		    {
+   		    } else {
    		        // check what height we should set
    		        // if enemy air vehicles detected, set height according enemy vehicle one
    		        _height_not_set = true;
-                for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do
-                {
+                for "_i" from 0 to count SYG_owner_active_air_vehicles_arr-1 do {
                     _enemy_heli = SYG_owner_active_air_vehicles_arr select _i;
-                    if (typeName _enemy_heli == "OBJECT") then
-                    {
-                        if ( ({alive _x} count crew _enemy_heli) == 0) then
-                        {
+                    if (typeName _enemy_heli == "OBJECT") then {
+                        if ( ({alive _x} count crew _enemy_heli) == 0) then {
                             hint localize format["+++ x_airki: [%1] enemy air vehicle %2 empty, remove from array", _type, typeOf _enemy_heli ];
                             SYG_owner_active_air_vehicles_arr set [_i, "RM_ME"];
-                        }
-                        else
-                        {
+                        } else {
                             _pos = getPos _enemy_heli;
-                            if ( (_x distance _pos)  < 3500 ) then
-                            {
-                                if ( (( _pos select 2) - 50) > ((getPos _x) select 2) ) then
-                                {
+                            if ( (_x distance _pos)  < 3500 ) then {
+                                if ( (( _pos select 2) - 50) > ((getPos _x) select 2) ) then {
                                     _flyHeight = ((_pos select 2)+100);
                                     _x flyInHeight _flyHeight;
                                     hint localize format["+++ x_airki: [%1] enemy air vehicle %2 detected, set fly height ~ %3 (h%4) m", _type, typeOf _enemy_heli, round( _flyHeight ), round((getPos _x) select 2) ];
@@ -549,15 +539,12 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                                 if ( _x knowsAbout _enemy_heli > 1.4) then {_x doTarget _enemy_heli} else { _x doWatch objNull };
                             };
                         };
-                    }
-                    else
-                    {
+                    } else {
                         hint localize format["+++ x_airki: bad item in enemy air vehicle array %1", _enemy_heli ];
                     };
                 }; // forEach SYG_owner_active_air_vehicles_arr;
                 SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["RM_ME"];
-                if (_height_not_set) then
-                {
+                if (_height_not_set) then {
                     _flyHeight = (_flight_height + (random _flight_random));
        		        _x flyInHeight _flyHeight ;
                     //hint localize format["+++ x_airki: patrol fly height set to ~ %2", typeOf _enemy_heli, round(_flyHeight)];
@@ -568,8 +555,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
         // prevent execution until at least one player is connected
 		if (X_MP && (call XPlayersNumber) == 0) then {
 		    hint localize format["+++ x_airki.sqf[%1]: no players, wait for the first player on line, refueling alive vehicles during pause",_type];
-		    while {call XPlayersNumber == 0} do
-		    {
+		    while {call XPlayersNumber == 0} do {
 		        sleep 25.128;
 		        { if (alive _x) then { _x setFuel 1} } forEach _vehicles;
 		    };

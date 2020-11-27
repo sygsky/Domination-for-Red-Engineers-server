@@ -308,7 +308,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                         {
                             case "YETI":  // Yeti
                             {
-                                d_rebornmusic_index = 1; // no play death sound
+                                d_rebornmusic_index = 1; // no play std death sound
                                 //SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
                                 3000 call SYG_setViewDistance;
                                 if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
@@ -366,21 +366,18 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                 _p addWeapon _weapp;
                 _p selectWeapon (primaryWeapon _p);
                 _muzzles = getArray(configFile>>"cfgWeapons" >> (primaryWeapon _p) >> "muzzles");
-                if ( count _muzzles > 1) then
-                {
+                if ( count _muzzles > 1) then {
                     _p selectWeapon (_muzzles select 0);
                 };
             };
 		}
-        else // _equip != "";
-        {
+        else {// _equip != "";
             //hint localize format["d_player_stuff with equipment: %1", _equip];
             [player, _equip] call SYG_rearmUnit;
         };
 #endif
 //		hint localize format["+++ rearm: before player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
-		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toUpper (name player) == "YETI")  ) then
-		{
+		if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toUpper (name player) == "YETI")  ) then {
 		    player call SYG_addNVGoggles;
 		};
 		player call SYG_addBinocular;
@@ -1305,6 +1302,8 @@ XBaseEnemies = {
                 };
             };
             _alarm_obj say "alarm";
+            // TODO: throw flare above alarm object
+            [getPos _alarm_obj, _height, "Yellow", 400, true] execVM "scripts\emulateFlareFired.sqf";
 		};
 		case 1: {
 			hint composeText[
@@ -1689,7 +1688,7 @@ if (d_player_air_autokick > 0) then {
 #else
 	execVM "x_scripts\x_playerveccheck.sqf";
 //	if (_string_player in d_is_medic) then {
-		execVM "x_scripts\x_mediccheck.sqf";
+	execVM "x_scripts\x_mediccheck.sqf";
 //	};
 	execVM "x_scripts\x_playervectrans.sqf";
 #endif

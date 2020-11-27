@@ -28,8 +28,7 @@ if (!isServer) exitWith {};
 #define ON_BASE_GARBAGE_REMOVE_INTERVAL 14400 // 144004 secs = 4 hours
 #endif
 
-if ( isNil "d_on_base_groups" ) then
-{
+if ( isNil "d_on_base_groups" ) then {
 	d_on_base_groups = [];
 	[] execVM "scripts\flaresoverbase.sqf";
 #ifdef __PRINT__
@@ -56,8 +55,7 @@ if ( isNil "d_on_base_groups" ) then
 };
 
 #ifdef __PRINT__
-if ( isNil "d_on_base_groups" ) then
-{
+if ( isNil "d_on_base_groups" ) then {
 	hint localize "--- x_infiltrate.sqf: d_on_base_groups isNil, while MUST be defined";
 };
 #endif
@@ -79,8 +77,7 @@ _search_radious = sqrt( _dx * _dx + _dy * _dy) + 10;
 while { true } do {
 
     // zombi AI features: group is null, name == "Error: No unit", is alive, isKindOf "CAManBase"
-	if ( time >= _time_to_clean ) then
-	{
+	if ( time >= _time_to_clean ) then {
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // clear previously  accumulated array of garbage vehicles on the base
@@ -119,15 +116,11 @@ while { true } do {
 					deleteVehicle _x; sleep 0.1;
 				} else {
 				    // may be alive so called zombi
-				    if ( !_alive ) then
-				    {
+				    if ( !_alive ) then {
 				        _cnt_dead = _cnt_dead + 1;
     					deleteVehicle _x; sleep 0.1;
-				    }
-				    else // alive man
-				    {
-                        if ( isNull (group _x) && (name _x == "Error: No unit")) then // zombi - arghhhhhh!!!
-                        {
+				    } else { // alive man
+                        if ( isNull (group _x) && (name _x == "Error: No unit")) then { // zombi - arghhhhhh!!!
                             hint localize format["+++ x_infiltrate.sqf: try to delete zombi %1 pos %2 from base in clean proc", _x, getPos _x];
                             deleteVehicle _x; sleep 0.1;
                             _cnt_zombi = _cnt_zombi + 1;

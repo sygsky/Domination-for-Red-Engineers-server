@@ -1,4 +1,4 @@
-// by Xeno, x_scripts\x_mediccheck.sqf, called only for medic role player
+// by Xeno, x_scripts\x_mediccheck.sqf, added to player on client only for medic role player
 private ["_nearestbase", "_healerslist", "_objs", "_points", "_nobs", "_i", "_h", "_anim_list", "_healedName","_sound"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"

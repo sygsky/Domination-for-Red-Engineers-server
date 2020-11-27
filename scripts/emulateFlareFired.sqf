@@ -1,14 +1,15 @@
 //
-// ACE flare script modified to use on server by Sygsky
+// ACE flare script modified to use by Sygsky: scripts\emulateFlareFired.sqf
 //
-// call as: [_pos, _height, _flare_color (may be "Red","Green","Yellow","White"), _dist_to_observer] exec "emulateFlareFired.sqf"
+// call as: [_pos, _height, _flare_color (may be "Red","Green","Yellow","White"), _factor(what the factor is it?)<,_only_here>] exec "emulateFlareFired.sqf"
 //
-private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height"];
+private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height","_local"];
 
 #define __POS    (_this select 0)
 #define __HEIGHT ((_this select 1)-5+(random 10))
 #define __COL    (_this select 2)
 #define __DIST   ((_this select 3)/1600)
+#define __LOCAL (if(count _this < 5)then{false}else{_this select 4})
 
 //#define __DEBUG__
 
@@ -48,7 +49,12 @@ sleep 0.5;
 
 _factor = __DIST max 12.5; // if (_factor > 12.5) then { _factor = 12.5; };
 
-[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient;
+_local = if(count _this < 5) then { false} else{_this select 4};
+if (_local) then {
+	 [ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
+} else {
+	[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient; // run on all clients
+};
 
 _die_away_height = 15 + random 15;
 while { alive _flare && (((getPos _flare) select 2) > _die_away_height) } do { sleep 0.5; };

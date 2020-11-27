@@ -93,7 +93,7 @@ SYG_createStaticWeaponGroup = {
 //        
 //
 SYG_findEnemyAt = {
-	private ["_side","_pos","_dist","_types","_arr"];
+	private ["_side","_pos","_dist","_types","_arr","_ret"];
 	_side = arg(0);
 	_pos  = arg(1);
 	_dist = arg(2);
@@ -113,6 +113,7 @@ SYG_findEnemyAt = {
 // returns: array of SM id, near to the point. If case of bad parameters, always [] is returned
 //
 SYG_findNearSMIdsArray = {
+	private ["_sm_id_arr","_center","_search_dist","_ret_id_arr","_sm_pos","_dist"];
     if ( typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_findNearSM: expected argument is array, found %1", typeName _this];[]};
     if ( count _this < 3) exitWith {hint localize format["--- SYG_findNearSM: expected number of arguments >= 3, found %1", count _this]; []};
     _sm_id_arr   = arg(0);
@@ -136,6 +137,7 @@ SYG_findNearSMIdsArray = {
 //
 SYG_isMainTargetAllowed = 
 {
+	private ["_target_counter"];
     _target_counter = if (isServer) then {current_counter} else {client_target_counter}; // main target counter
     if ( _target_counter <= 0 ) exitWith {true}; // Lets start in any way at the mission beginning
     if (current_mission_counter == 0) exitWith {true};

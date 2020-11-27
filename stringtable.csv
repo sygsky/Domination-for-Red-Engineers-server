@@ -38,7 +38,7 @@ STR_DANGER_1,Suddenly you felt terrible ...,Plotzlich und unerwartet spuren Sie 
 STR_DANGER_2,Suddenly you realize that this is your last thought ...,Plotzlich verstehen Sie das es Ihr letzter gedanke...,"De repente, te das cuenta de que este es tu último pensamiento...","Внезапно вы понимаете, что это - ваша последняя мысль..."
 STR_DANGER_3,Alarm! It seemed to you that the evil cold look follows you ...,Sie denken das ein kalter boser Blick sie anschaut...,De repente te das cuenta de que estás siendo seguido por una mirada fría y malvada...,"Вдруг Вы осознаёте, что за вами следит холодный злобный взгляд..."
 
-STR_SYS_2,MG nest,MG-Nest,nido de ametralladoras,Пул.гнездо
+STR_SYS_2,MG nest,MG-Nest,MG-nido,Пул.гнездо
 STR_SYS_02,MG %1,MG %1,MG %1,Пул. %1
 STR_SYS_03,Your MG nest was destroyed,Ihre  Maschinengewehr-Nest zerstört wurde,Su nido de ametralladoras ha sido destruido.,Ваше пулемётное гнездо было уничтожено.
 STR_MG_1,You must be kidding...,Sie müssen Spaß machen...,"Bromeaba, sí...","Пошутил, да..."
@@ -414,7 +414,7 @@ STR_SYS_213,"You need %2 scores to rebuild a factory, your current scores are: %
 STR_SYS_214,Restore support building. This will take some time and scores...,Wiederherstellen Unterstützung bauen. Dies wird einige Zeit dauern und Partitur...,Se realiza la reparación del Servicio. Esto llevará tiempo y reducirá la factura...,Производится ремонт сервиса. Это потребует времени и убавит счёт...
 STR_SYS_214_1,The service is being repaired at the expense of the engineering Fund...,Der Service wird auf Kosten des engineering Fund repariert...,Se realiza la reparación del Servicio a los medios del fondo de ingeniería...,Производится ремонт сервиса на средства инженерного фонда...
 STR_SYS_214_2,Restore support building. This will take some time and add more scores...,Restore Unterstützung bauen. Dies wird einige Zeit dauern und fügen Sie mehr Punkte...,Se realiza la reparación del Servicio. Esto lleva tiempo y sumará puntos...,Производится ремонт сервиса. Это требует времени и прибавит очки...
-STR_SYS_215,Airbase,Airbase,Base aérea,Авиабаза
+STR_SYS_215,Airbase etc,Airbase etc,Base aérea etc,Авиабаза и  т.д.
 STR_SYS_216,occupied city,besetzte Stadt,ocupo,оккупированный
 
 STR_SYS_220,for aircrafts maintenance,für die Wartung der Flugzeuge,mantenimiento de aeronaves,по обслуживанию самолетов
@@ -430,8 +430,8 @@ STR_SYS_227_1,Repair vehicle only,Reparatur Fahrzeug nur,Sólo reparar el equipo
 STR_SYS_228,Unflip Vehicle,Unflip Fahrzeug,Poner técnica,Поставить технику
 STR_SYS_229,Engineer repair/refuel capability restored...,Ingenieur Reparatur/tanken Funktion wiederhergestellt...,"La capacidad de reparar, repostar equipos restaurados...","Способность ремонтировать, заправлять технику восстановлена..."
 
-STR_SYS_230,"Nonmarked zones has %1 and %2. Areas marked as sandstorm has degraded visibility.\nWind %3 deg, %4 m/s","Nonmarked Zonen hat %1 und %2. Markierte Bereiche, die als Sandsturm hat abgebaut Sichtbarkeit.\nWind %3 deg, %4 m/s","Tiempo fuera de las zonas móviles marcadas: %1 y %2. En zonas de tormentas de arena, la visibilidad se reduce drásticamente \ n Viento %3 gr. %4 m / c",Погода вне маркированых движущихся зон: %1 и %2. В зонах песчанных бурь видимость резко снижена\nВетер %3 гр. %4 м/c
-STR_SYS_231,"Nonmarked zones has %1 and %2. Areas marked with cloudy has %3, while fog marked areas has %4.\nWind %5 deg, %6 m/s","Nonmarked Zonen hat %1 und %2. Markierte Bereiche, die mit bewölktem hat %3, während der Nebel markierten Bereiche hat %4.\nWind %5 deg, %6 m/s","Tiempo fuera de las zonas marcadas: %1, %2.\ nen la zona marcada con nubosidad: %3. En la zona con niebla: %4.\ N viento por ejemplo. %5 gr., SC. %6 m / c","Погода вне маркерных зон: %1, %2.\nВ маркерной зоне с облачностью: %3. В зоне с туманом: %4.\nВетер  напр. %5 гр., ск. %6 м/c"
+STR_SYS_230,"Non-marked zones has %1 and %2. Areas marked as sandstorm has degraded visibility.\nWind %3 deg, %4 m/s","Non-marked Zonen hat %1 und %2. Markierte Bereiche, die als Sandsturm hat abgebaut Sichtbarkeit.\nWind %3 deg, %4 m/s","Tiempo fuera de las zonas móviles marcadas: %1 y %2. En zonas de tormentas de arena, la visibilidad se reduce drásticamente \ n Viento %3 gr. %4 m / c",Погода вне маркированых движущихся зон: %1 и %2. В зонах песчанных бурь видимость резко снижена\nВетер %3 гр. %4 м/c
+STR_SYS_231,"Non-marked zones has %1 and %2. Areas marked with cloudy has %3, while fog marked areas has %4.\nWind %5 deg, %6 m/s","Non-marked Zonen hat %1 und %2. Markierte Bereiche, die mit bewölktem hat %3, während der Nebel markierten Bereiche hat %4.\nWind %5 deg, %6 m/s","Tiempo fuera de las zonas marcadas: %1, %2.\ nen la zona marcada con nubosidad: %3. En la zona con niebla: %4.\ N viento por ejemplo. %5 gr., SC. %6 m / c","Погода вне маркерных зон: %1, %2.\nВ маркерной зоне с облачностью: %3. В зоне с туманом: %4.\nВетер  напр. %5 гр., ск. %6 м/c"
 STR_SYS_232,"Domination dynamic weather system not used, but still mission starts randomly on the nice side. Current cloud level is %1 %3. Current fog level is %2 %3.\nWind dir. %4 deg, spd. %5 m/s","Herrschaft dynamische Wettersystem nicht benutzt, aber immer noch mission beginnt zufällig auf der netten Seite. Aktuelle cloud-Ebene ist %1 %3. Aktuelle Nebel Ebene ist %2 %3.\nWind dir %4 deg, spd. %5 m/s","No se utiliza el sistema dinámico de fenómenos meteorológicos, los valores actuales de los factores meteorológicos son: nubosidad %1%3, probabilidad de niebla: %2%3.\ n Viento %4 gr. %5 m / c","Динамическая система погодных явлений не используется, текущие  значения погодных факторов: облачность %1 %3, вероятность тумана: %2 %3.\nВетер %4 гр. %5 м/c"
 
 STR_WET_1,clear skies,das klare Wetter,claro,ясно
@@ -1266,7 +1266,7 @@ STR_TSD9_29,Ltn,Leutnant,Teniente,Лейтенант
 STR_TSD9_30,Cpt,Hauptmann,Capitán,Капитан
 STR_TSD9_31,Mjr,Major,Mayor,Майор
 STR_TSD9_32,Col,Oberst,Coronel,Полковник
-STR_TSD9_33,A.I.,K.I.,I. I.,И.И.
+STR_TSD9_33,A.I.,K.I.,I.I.,И.И.
 STR_TSD9_34,Dead,Tot,Muerto,Мёртв
 STR_TSD9_35,Name unknown,Unbekannt,Sin nombre,Безымянный
 STR_TSD9_36,some,some,varios,несколько
@@ -1441,7 +1441,7 @@ STR_GRU_46_0,Sahrani inhabitants inform: Enemy patrols disappeared!,Sahrani Bewo
 STR_GRU_46_1,"near ""%1""","in der Nähe von ""%1""","cerca de "" %1""","близ ""%1"""
 STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," a una distancia de aproximadamente %1 m."," на дист. примерно %1 м."
 STR_GRU_46_3," bearing %1"," Richtung %1"," acimut %1"," азимут %1"
-STR_GRU_46_4,numbering %1 unit[s],die Nummerierung %1 Fahrzeug[s],", numerando %1 unidades.",", численностью %1 ед."
+STR_GRU_46_4,num. %1 unit[s],die Num. %1 Fahrzeug[s],", num. %1 unidades.",", числ. %1 ед."
 STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
 
 STR_GRU_47,Enemy activity detected near the base,Feindliche Aktivitäten erkannt in der Nähe der Basis,Actividad enemiga detectada cerca de la base,Вражеская активность обнаружена неподалёку от базы
