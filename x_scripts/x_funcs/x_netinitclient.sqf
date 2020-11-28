@@ -371,10 +371,10 @@ XHandleNetStartScriptClient = {
 		};
 		// last target town cleared, no more target remained !!!
 		case "target_clear": {
-			// playSound "USSR"; // playSound "fanfare"; // dont play as this sound also is heard from town flag
+			// playSound "USSR"; // dont play sound as it is already played from town flag
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2);
-			execVM "x_scripts\x_target_clear_client.sqf";
+			(_this select 2) execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is the only parameter for execVM
 		};
 
 		//+++ Sygsky: added for airbase take mission (before any towns)

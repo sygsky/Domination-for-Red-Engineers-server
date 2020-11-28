@@ -764,10 +764,14 @@ STR_SYS_1005,Generalissimo,Generalissimus,Generalísimo,Генералиссим
 
 STR_SYS_1100,%1 has been cleared!!!,%1 wurde gelöscht!!!,La localidad de %1 ha sido liberada!!!,Н.п. %1 освобождён!!!
 STR_SYS_1100_1,Last settlement %1 has been cleared!!!,Letzte Siedlung %1 geräumt hat!!!,"¡El último de los asentamientos capturados, %1, liberado!!!","Последний из захваченных н.п., %1, освобождён!!!"
+
 STR_SYS_1101,Waiting for new orders...,Warten auf neue Aufträge...,Espere más órdenes...,Ожидайте дальнейших распоряжений...
 STR_SYS_1101_1,The enemy has finally fled. You just have to clean up the last occupied city!,"Der Feind ist endlich geflohen. Sie müssen nur Aufräumen, die Letzte besetzte Stadt!",El enemigo sale de la isla. ¡Solo tienes que limpiar la Última ciudad ocupada!,Враг покидает остров. Вам остаётся только зачистить последний оккупированный город!
-STR_SYS_1102,For the liberation of the settlement your group gets %1%2 !,Für die Befreiung der Siedlung bekommt Ihre Gruppe %1%2 !,"¡Para liberar la ciudad, tu grupo obtiene %1%2 !",За освобождение города ваша группа получает %1%2 !
-STR_SYS_1102_1,points ( %1 ) and,Punkte ( %1 ) und,puntos (%1) y,очки ( %1 ) и
+
+STR_SYS_1102,For the liberation of the settlement %1you gets %2%3!,Für die Befreiung der Siedlung %1bekommt Ihre Gruppe %2%3!,"¡Para liberar la ciudad %1tu grupo obtiene %2%3!",За освобождение города %1Вы получаете %2%3!
+STR_SYS_1102_0,"You only receive %1 for liberating the settlement because you are outside the city radius (%2 m.)","Du bekommst nur %1 für die Befreiung der Siedlung, weil du dich außerhalb des Stadtradius befindest (%2 m.)","Sólo obtienes %1 por liberar el asentamiento porque estás fuera del radio de la ciudad (%2 m.)","За освобождение поселения вы получаете только %1, так как находитесь за пределами радиуса города (%2 м.)"
+STR_SYS_1102_1,"points (%1) and ","Punkte (%1) und ","puntos (%1) y ","очки (%1) и "
+STR_SYS_1102_3,"and repelling a counterattack ","und Konterangriff ","y contraatacar ","и отбитие контратаки "
 
 STR_SYS_1103,Can't drop box near Ammo Point.,Sie können nicht entladen Kiste in der Nähe des Lagerhauses der Versorgung.,No puede descargar una Caja cerca del almacén de suministros.,Вы не можете выгрузить ящик возле склада снабжения.
 STR_SYS_1104,"Too high to drop an ammocrate, please land!","Zu hoch, um drop eine ammocrate, bitte landen!",¡Demasiado alto! Baja...,Слишком высоко! Опуститесь ниже...

@@ -85,7 +85,7 @@ public_points = false;
 sleep 0.5;
 
 if (current_counter < number_targets) then {
-	execVM "x_scripts\x_gettargetbonus.sqf";
+	_start_real execVM "x_scripts\x_gettargetbonus.sqf"; // inform user about counterattack and bonus score for it
 } else {
     // no bonus vehicle after last target town was cleared
 	target_clear = true;

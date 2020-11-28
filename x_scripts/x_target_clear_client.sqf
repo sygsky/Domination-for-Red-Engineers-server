@@ -37,16 +37,25 @@ if (client_target_counter < number_targets) then {
 		_bonus_string, lineBreak,lineBreak,
 		localize "STR_SYS_1101"/* "Ожидайте дальнейших распоряжений..." */
 	];
-	if (__RankedVer) then
-	{
-		_strBonus = "";
-		if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then
-		{
+	if (__RankedVer) then {
+		_strBonus = "0";
+		_strCountera = "";
+		if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then {
 		    _strBonus = format[ localize "STR_SYS_1102_1", d_ranked_a select 9 ];
-            player addScore (d_ranked_a select 9); // you get point only being in the town!
+		    // TODO: #412 add score per town only if you get positive points for this town
+		    _score = d_ranked_a select 9;
+		    if (_this) then { // conter attack occured
+		    	_score = round (_score  * 1.25 );
+		    	_strCountera = localize "STR_SYS_1102_3";
+		    };
+            player addScore (); // you get point only being in the town!
             playSound "good_news";
+			// "For the liberation of the settlement %1you gets %2%3!"
+			(format [localize "STR_SYS_1102",_strCountera, _strBonus, _bonus_vehicle]) call XfHQChat;
+		} else {
+			// "You only receive %1 for liberating the settlement because you are outside the city radius (%2 m.)"
+	        (format [localize "STR_SYS_1102_0", _bonus_vehicle, d_ranked_a select 10]) call XfHQChat;
 		};
-        (format [localize "STR_SYS_1102"/* "For the liberation of the settlement you get %1%2 !" */,_strBonus, _bonus_vehicle]) call XfHQChat;
 	};
 #endif
 

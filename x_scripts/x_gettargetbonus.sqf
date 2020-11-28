@@ -4,13 +4,16 @@ if (!isServer) exitWith {}; // Runned on server only
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-private ["_dir","_pos","_posa","_vehicle","_town"];
+private ["_dir","_pos","_posa","_vehicle","_town","_counterattack_occurred"];
 
 //  smart select bonus according to the size of sieged town -> the larger town the bigger bonus
 // 
 // current_target_index -> index of completed town in target list
 
 extra_bonus_number = -1;
+
+_counterattack_occurred = _this; // Counter attack was started and finished (true) or  not (false)
+
 #ifdef __DEFAULT__
 
 _town = call SYG_getTargetTown; // town def array
@@ -70,7 +73,7 @@ if (mt_winner == 1) then {
 #endif
 
 target_clear = true; // town is liberated, no any occupied towns from now
-["target_clear",target_clear, extra_bonus_number] call XSendNetStartScriptClient;
+["target_clear",target_clear, extra_bonus_number, _counterattack_occurred] call XSendNetStartScriptClient;
 
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 
@@ -107,8 +110,7 @@ _vehicle execVM "x_scripts\x_wreckmarker.sqf";
     };
     // (re)build mash if not available
     if ( (_vehicle isKindOf "Plane") || _rebuild_mash ) then {
-        if ( isNull _mash) then
-        {
+        if ( isNull _mash) then {
             _mash = createVehicle ["MASH", argp(_x,0), [], 0, "NONE"];
             sleep 1;
             _mash setDir argp(_x,1);
