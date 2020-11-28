@@ -751,9 +751,10 @@ grp_getnenemy = {
 	if ( typeName _grp != "GROUP") exitWith {[]};
 	if (isNull _grp || ({alive _x} count units _grp) == 0) exitWith {[]};
 	_dist = _this select 1;
-	_leader = leader _grp;
-	if ((isNull _leader) || ((_leader distance _nearest_enemy) <_dist)) exitWith{[]};
+	_leader = _grp call SYG_getLeader;
+	if (isNull _leader ) exitWith{[]};
 	_nearest_enemy = _leader findNearestEnemy (position _leader);
+	if ((_leader distance _nearest_enemy) <_dist) exitWith {[]};
 	_ret = [];
 	if (!isNull _nearest_enemy) then
 	{
