@@ -259,7 +259,7 @@ SYG_addEventsAndDispose = {
 
 
 
-// Makes enemy vehicles group for sidemission (e.g. convoy)
+// Makes vehicle group on enemy side for sidemission (e.g. convoy) and main targets too
 x_makevgroup = {
 	private ["_numbervehicles", "_pos", "_crewmember", "_vehiclename", "_grp", "_radius", "_direction", "_do_points",
 	"_the_vehicles", "_d_crewman", "_d_crewman2", "_no_crew", "_side_char", "_grpskill", "_n", "_vehicle", "_dir",
@@ -282,7 +282,7 @@ x_makevgroup = {
 	};
 	
 	#ifndef __ACE__
-	_grpskill = (if (_vehiclename in ["M2StaticMG","AGS","M119","D30","DSHkM_Mini_TriPod","Stinger_Pod_East","TOW_TriPod_East","M2HD_mini_TriPod","MK19_TriPod","Stinger_Pod","TOW_TriPod"]) then {1.0} else {(d_skill_array select 0) + (random (d_skill_array select 1))});
+	_grpskill = (if (_vehiclename in ["M2StaticMG","AGS","M119","D30","DSHKM","DSHkM_Mini_TriPod","Stinger_Pod_East","TOW_TriPod_East","M2HD_mini_TriPod","MK19_TriPod","Stinger_Pod","TOW_TriPod"]) then {1.0} else {(d_skill_array select 0) + (random (d_skill_array select 1))});
 	#else
 	_grpskill = (d_skill_array select 0) + (random (d_skill_array select 1));
 	#endif
@@ -313,13 +313,11 @@ x_makevgroup = {
 
 //#ifndef __NEW__
         if (d_smoke) then { _vehicle call SYG_assignVecToSmokeOnHit; };
-        if (!(_vehiclename in x_heli_wreck_lift_types)) then //  this is not resurrectable vehicle, so remove it from the game if dead
-        {
+        if (!(_vehiclename in x_heli_wreck_lift_types)) then {//  this is not resurrectable vehicle, so remove it from the game if dead
             _vehicle addEventHandler ["killed", { _this spawn x_removevehi;} ];
             [_vehicle] call XAddCheckDead;
         };
-		if ( _vehicle isKindOf "Tank" ) then
-		{
+		if ( _vehicle isKindOf "Tank" ) then {
 			if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked; };
     #ifdef __TT__
             if (_do_points) then {_vehicle addEventHandler ["killed", {[5,_this select 1] call XAddKills;}]};
@@ -330,9 +328,7 @@ x_makevgroup = {
             };
     #endif
         //  if (_vehicle isKindOf "Tank") then { ...
-		}
-		else
-		{
+		} else {
 	#ifdef __TT__
 			if (_do_points) then {_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddKills;}]};
 	#endif

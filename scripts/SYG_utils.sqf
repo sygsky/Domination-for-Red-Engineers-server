@@ -422,12 +422,12 @@ SYG_ACEUnitUnconscious = {
     if (isNull _this ) exitWith {true};
     if ( typeName _this != "OBJECT") exitWith {true};
 	if ( !alive _this ) exitWith {true};
-	if (!(_this isKindof "CAManBase") ) exitWith {false};
+	if (!(_this isKindof "CAManBase") ) exitWith {true};
     private ["_var"];
 	_var = _this getVariable "ACE_unconscious";
 	if ( isNil "_var" ) then {
 	    !canStand _this
-	} else { _this getVariable "ACE_unconscious" };
+	} else { _var };
 };
 
 // #ifdef __ACE__ answers the unit is conscious (true) or not

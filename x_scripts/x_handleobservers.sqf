@@ -9,7 +9,7 @@ if (!isServer) exitWith {};
 #define HIT_RADIOUS 45 // radious to be hit indirectly by arti shoots
 #define SAVE_RADIOUS 60 // radious to he save by arti shoots
 #define MIN_FRIENDLY_COUNT_TO_STRIKE 3 // maximum number of enemy vehilce in zone to allow strike onto them
-#define MAX_SHOOT_DIST 2000 // maximum distance observer can shoot on players
+#define MAX_SHOOT_DIST 200 // maximum distance between known and real player pos observer can shoot on
 
 _enemy_ari_available = true;
 _nextaritime = 0;
@@ -149,14 +149,20 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     // don't shoot too far if player is not in vehicle as he can teleport from battle field but Arma updates its real coordinates in the nearTargets array
                     // Arti strike is not allowed if player is teleported far away (user is on base, on feet || close to flag)
 
+                    _dist_between_pos = round( _pos_nearest distance _enemy );
+                    _dist_obs_pos   = round( _observer distance _pos_nearest ); // dist between observer and hit point
+
+                    if ( _dist_between_pos >= MAX_SHOOT_DIST ) exitWith {
+                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to distance %2 m between known and real pos. Only %3 m. allowed", name _enemy, round(_observer distance _pos_nearest), MAX_SHOOT_DIST];
+                    };
 #ifndef __TT__
 					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance FLAG_BASE) < SAVE_RADIOUS));
 #else
 					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance RFLAG_BASE) < SAVE_RADIOUS || (_enemy distance WFLAG_BASE) < SAVE_RADIOUS));
 #endif
-
-                    if ( ((_observer distance _pos_nearest) > MAX_SHOOT_DIST) && _notAllowed ) exitWith {
-                        hint localize format["+++ x_handleobservers.sqf: arti strike on distance %1 m at enemy (%2) not in vehicle prohibited", round(_observer distance _pos_nearest), name _enemy];
+                    if ( (_dist_obs_pos >= (MAX_SHOOT_DIST * 10) ) && _notAllowed ) exitWith {
+                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 has been cancelled due to big distance between the corrector and the player who is not in vehilce (pos %2 m), up to %3 m is permitted",
+                        					name _enemy, _dist_obs_pos, MAX_SHOOT_DIST * 10];
                     };
 
                     _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
@@ -173,9 +179,9 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _type = if ( (_unit_cnt > _killCnt )  || ((_observer_cnt  + _veh_cnt) > 0)) then { 2 } else { 1 }; // strike (1) or smoke (2)
 
                     // If enemy is too far from strike point, do smoking attack only
-                    _dist_between_pos = round( _pos_nearest distance _enemy );
-
                     if ( ( _dist_between_pos > SAVE_RADIOUS ) && ( _type == 1 ) && (_own_cnt == 0) ) then { _type = 2 }; // smoke except strike as no player or his vehicles in unsave zone
+                    if ( ( _dist_obs_pos < SAVE_RADIOUS ) && ( _type == 1 ) ) then { _type = 2 }; // Prevent observer from killing himself!
+                    //_dist_obs_pos
 
                     if ( _dist_between_pos < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is correct
                     else { if ( _enemyToReveal == _enemy ) then { _enemyToReveal = objNull } }; // knowledge is bad
@@ -187,7 +193,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                         if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'(%2)",name _enemy, typeOf (vehicle _enemy)]},
                         if (_type == 1) then {"warheads"} else {"smokes"},
                         (round((_observer knowsAbout _enemy) * 10.0))/10.0,
-                        round (_observer distance _pos_nearest),
+                        _dist_obs_pos,
                         round _dist_obs_enemy,
                         _unit_cnt,
                         _veh_cnt, count _veh_arr,

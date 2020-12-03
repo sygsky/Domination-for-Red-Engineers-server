@@ -36,14 +36,12 @@ _clearFootmen = {
 _checkOverturnedVehicles = {
     _footmen  = + _this select 0;
     _vehicles =  + _this select 1;
-    if (count _footmen == 0) exitWith
-    {
+    if (count _footmen == 0) exitWith {
         hint localize "+++ Convoy checkOverturnedVehicles called with empty footmen array";
         []
     };
 
-    if (count _vehicles == 0) exitWith
-    {
+    if (count _vehicles == 0) exitWith {
         hint localize "+++ Convoy checkOverturnedVehicles called with empty vehicles array";
         _this select 0
     };
@@ -62,8 +60,7 @@ _checkOverturnedVehicles = {
             _x setVectorUp [0,0,1];
 
             // first always assign driver
-            if (_x emptyPositions "Driver" > 0) then
-            {
+            if (_x emptyPositions "Driver" > 0) then {
                 _man = _footmen select _pos;
                 _man assignAsDriver _x;
                 [_man] orderGetIn true;
@@ -72,8 +69,7 @@ _checkOverturnedVehicles = {
             if ( _pos < 0 ) exitWith { _footmen = []};
 
             // secondary try to assign gunner
-            if (_x emptyPositions "Gunner" > 0) then
-            {
+            if (_x emptyPositions "Gunner" > 0) then {
                 _man = _footmen select _pos;
                 _man assignAsGunner _x;
                 [_man] orderGetIn true;
@@ -82,8 +78,7 @@ _checkOverturnedVehicles = {
             if ( _pos < 0 ) exitWith { _footmen = []};
 
             // last try fit commander
-            if (_x emptyPositions "Commander"  > 0) then
-            {
+            if (_x emptyPositions "Commander"  > 0) then {
                 _man = _footmen select _pos;
                 _man assignAsCommander _x;
                 [_man] orderGetIn true;
@@ -93,8 +88,7 @@ _checkOverturnedVehicles = {
 
             // and some cargo too
             _cargoCnt = (_x emptyPositions "Cargo") min ( _pos + 1);
-            if (_cargoCnt  > 0) then
-            {
+            if (_cargoCnt  > 0) then {
                 for "_i" from 0 to _cargoCnt - 1 do
                 {
                     _man = _footmen select _i;
@@ -103,23 +97,18 @@ _checkOverturnedVehicles = {
                     _pos = _pos - 1;
                 };
             };
-            if ( _pos != _initPos) then
-            {
+            if ( _pos != _initPos) then {
                 hint localize format["+++ Convoy checkOverturnedVehicles: vehicle %1 populated with %2 men of %3", typeOf _x, _initPos - _pos, count _footMan];
                 _populateVehCnt = _populateVehCnt + 1;
             };
             sleep 1;
         };
     } forEach _vehicles;
-    if ( _pos < 0) exitWith
-    {
+    if ( _pos < 0) exitWith {
         hint localize format["+++ Convoy checkOverturnedVehicles: all footmen are populated among %1 vehicles", _populateVehCnt];
         []
-    }
-    else
-    {
-        if ( (_pos + 1) != (count _footmen) ) then
-        {
+    } else {
+        if ( (_pos + 1) != (count _footmen) ) then {
             hint localize format["+++ Convoy checkOverturnedVehicles: %1 footmen are populated among %1 vehicles", (count _footmen) - _pos - 1, _populateVehCnt];
             _footmen resize (_pos + 1);
         };
