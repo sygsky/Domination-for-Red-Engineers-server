@@ -6,7 +6,7 @@ if (!isServer) exitWith {};
 _poss = _this select 0;
 
 _objs = [(_poss nearestObject 488815),(_poss nearestObject 488837),(_poss nearestObject 488838),(_poss nearestObject 291972),(_poss nearestObject 288075)];
-
+//hint localize format[ "--- x_sidecora: _poss = %1, trafostations found %2", _poss, count _objs ];
 #ifdef __TT__
 sm_points_west = 0;
 sm_points_racs = 0;
@@ -16,9 +16,9 @@ sm_points_racs = 0;
 #endif
 
 sleep 2.123;
-["specops", 1, "basic", 1, _poss,100,true] spawn XCreateInf;
+["specops", 1, "basic", 1, _poss, 100, true] spawn XCreateInf;
 sleep 2.221;
-["shilka", 1, "bmp", 1, "tank", 1, _poss,1,150,true] spawn XCreateArmor;
+["shilka", 1, "bmp", 1, "tank", 1, _poss, 1, 150, true] spawn XCreateArmor;
 
 while {({alive _x} count _objs) > 0} do {
 	sleep 5.326;

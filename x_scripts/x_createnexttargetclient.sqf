@@ -2,6 +2,7 @@
 private ["_current_target_name","_current_target_pos","_marker","_t_array","_radious"];
 if (!X_Client) exitWith{};
 
+if (count resolved_targets <= 0) then {sleep 30}; // if it is still first town, wait 30 seconds to allow intro music to be completed
 sleep 1.012;
 _t_array = target_names select current_target_index;
 

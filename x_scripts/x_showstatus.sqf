@@ -73,6 +73,9 @@ _s = format ["%1 : %2", kill_points_west, kill_points_racs];
 _ctrl ctrlSetText _s;
 #endif
 
+_ctrl = _XD_display displayCtrl 11021;  // secondary mission title (including current SM number)
+_ctrl ctrlSetText format[localize "STR_SYS_58", current_mission_counter + 1];
+
 _ctrl = _XD_display displayCtrl 11002;  // secondary mission text control
 _s = current_mission_text;
 

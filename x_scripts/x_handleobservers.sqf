@@ -153,7 +153,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _dist_obs_pos   = round( _observer distance _pos_nearest ); // dist between observer and hit point
 
                     if ( _dist_between_pos >= MAX_SHOOT_DIST ) exitWith {
-                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to distance %2 m between known and real pos. Only %3 m. allowed", name _enemy, round(_observer distance _pos_nearest), MAX_SHOOT_DIST];
+                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to dist %2 m between known and real pos. Only %3 m. allowed", name _enemy, round(_observer distance _pos_nearest), MAX_SHOOT_DIST];
                     };
 #ifndef __TT__
 					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance FLAG_BASE) < SAVE_RADIOUS));
@@ -161,7 +161,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance RFLAG_BASE) < SAVE_RADIOUS || (_enemy distance WFLAG_BASE) < SAVE_RADIOUS));
 #endif
                     if ( (_dist_obs_pos >= (MAX_SHOOT_DIST * 10) ) && _notAllowed ) exitWith {
-                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 has been cancelled due to big distance between the corrector and the player who is not in vehilce (pos %2 m), up to %3 m is permitted",
+                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to big dist between the obs and player who is not in vehilce (dist %2 m), up to %3 m is permitted",
                         					name _enemy, _dist_obs_pos, MAX_SHOOT_DIST * 10];
                     };
 

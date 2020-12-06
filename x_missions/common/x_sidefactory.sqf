@@ -17,7 +17,7 @@ _b1 addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {s
 _b2 addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
 
-while {(!_b1_down) /*&&*/ || (!_b2_down)} do { //+++ Sygsky: impove logic to end mission when BOTH buildings are down, not one of them
+while {(!_b1_down) /*&&*/ || (!_b2_down)} do { //+++ Sygsky: improve logic to finish mission when BOTH buildings are down, not one of them
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};

@@ -136,27 +136,22 @@ switch (sec_kind) do {
 
         _posCnt = _vehicle call SYG_housePosCount;
 		_cnt = floor (random (3 min _posCnt));    // add guard[s] on the top of radar
-		if (_cnt > 0) then
-		{
+		if (_cnt > 0) then {
 //		    hint localize format["x_scripts/x_createsecondary.sqf: %1 unit[s] guards secondary target", _cnt];
             _types =
-            if ( _ACE) then
-            {
+            if ( _ACE) then {
                 ["ACE_SoldierWSniper2_WDL","ACE_SoldierWMG_A"]
-            }
-            else
-            {
+            } else {
                 ["SoldierWSniper","SoldierWMG"];
             };
             __WaitForGroup
             __GetEGrp(_newgroup)
-            for "_i" from 0 to _cnt - 1 do
-            {
+            for "_i" from 0 to _cnt - 1 do {
                 _type = _types call XfRandomArrayVal;
                 _unit = _newgroup createUnit [ _type, _poss, [], 0, "FORM"];
                 [_unit] join _newgroup;
                 _pos = _vehicle buildingPos _i;
-                hint localize format["+++ x_createsecondary.sqf: creating guard %5 (grp %6) on top of tower, %1 at pos %2(%3) of max %4", _type, _pos, _i, _cnt, _unit, _newgroup];
+                hint localize format["+++ x_createsecondary.sqf: creating guard %5 (grp %6) on top of radar, %1 at pos %2(%3) of max %4", _type, _pos, _i, _cnt, _unit, _newgroup];
                 _unit disableAI "MOVE";
                 _unit setBehaviour "SAFE";
                 _unit setPos _pos;
@@ -199,8 +194,7 @@ switch (sec_kind) do {
 		#endif
 
 		//+++Sygsky: add one more medical BMP here
-		if ( (random 1.0) < 0.66 ) then // create additional false BMP not each time
-		{
+		if ( (random 1.0) < 0.66 ) then {// create additional false BMP not each time
 			_xx_ran = (count _wp_array) call XfRandomFloor;
 			_poss = _wp_array select _xx_ran;
 			_wp_array set [_xx_ran, "X_RM_ME"];
@@ -210,30 +204,22 @@ switch (sec_kind) do {
 			_vehicle setDir (floor random 360);
 #ifdef __OLD__
             //_this call SYG_assignVecToSmokeOnHit; // set smoking function on hit if smoke device is available
-			if (_vehicle isKindOf "Tank") then
-			{
+			if (_vehicle isKindOf "Tank") then {
 				if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked};
-				if (!(_vehiclename in x_heli_wreck_lift_types)) then
-				{
+				if (!(_vehiclename in x_heli_wreck_lift_types)) then {
 					_vehicle addEventHandler ["killed", {_this spawn x_removevehi}];
 	        		[_vehicle] call XAddCheckDead;
                 };
-			} 
-			else 
-			{
+			} else {
 /*
 				if (d_smoke) then {
 					if (_vehicle isKindOf "StrykerBase" || _vehicle isKindOf "BRDM2") then {_vehicle setVariable ["D_SMOKE_SHELLS",2]};
 				};
 */
-				if (!(_vehiclename in x_heli_wreck_lift_types)) then
-				{
-					if (!(_vehicle isKindOf "StrykerBase") && !(_vehicle isKindOf "BRDM2")) then
-					{
+				if (!(_vehiclename in x_heli_wreck_lift_types)) then {
+					if (!(_vehicle isKindOf "StrykerBase") && !(_vehicle isKindOf "BRDM2")) then {
 						__addRemoveVehi(_vehicle)
-					}
-					else
-					{
+					} else {
 						_vehicle addEventHandler [ "killed", {_this spawn x_removevehi} ];
 					};
         			[_vehicle] call XAddCheckDead;
@@ -328,26 +314,22 @@ mt_spotted = false; // set player status  as 'not spotted'
 
 _posCnt = _vehicle call SYG_housePosCount;
 _cnt = floor (random (3 min _posCnt));    // add max 3 guard[s] on the top of radar
-if (_cnt > 0) then
-{
+if (_cnt > 0) then {
     __WaitForGroup
     __GetEGrp(_newgroup)
     sleep 0.1;
-    if ( !isNull _newgroup) then
-    {
+    if ( !isNull _newgroup) then {
         _types =
 #ifdef __ACE__
             ["ACE_SoldierWAR_A","ACE_SoldierWMG_A"];
 #else
             ["SoldierWSniper","SoldierWMG"];
 #endif
-        for "_i" from 0 to _cnt - 1 do
-        {
+        for "_i" from 0 to _cnt - 1 do {
             _pos = _vehicle buildingPos _i;
             _type = _types call XfRandomArrayVal;
             _unit = _newgroup createUnit [_type, [0,0,0], [], 0, "FORM"];
-            if ( !isNull _unit) then
-            {
+            if ( !isNull _unit) then {
                 [_unit] join _newgroup;
 #ifdef __DEBUG_PRINT__
                 hint localize format["+++ x_createsecondary.sqf: guard %1 (grp %2) on top of main tower at pos %3[%4/%5]", _type, _newgroup, _pos, _i, _cnt];
@@ -357,9 +339,7 @@ if (_cnt > 0) then
                 //_unit setBehaviour "SAFE";
                 _unit disableAI "MOVE";
                 _unit addEventHandler ["killed", {[_this select 0] call XAddDead;}];
-            }
-            else
-            {
+            } else {
                 hint localize format["--- x_createsecondary.sqf: guard of type %1 created (group %2) on top of a main tower is NULL", _type, _newgroup];
             };
             _newgroup call XGuardWP;

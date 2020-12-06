@@ -125,7 +125,7 @@ STR_SYS_55,The intelligence agent will arrive in the next version. He will infor
 STR_SYS_56,Just a rumor:,Nur Gerüchte:,"Mientras tanto, solo rumores:",А пока только слухи:
 STR_SYS_56_1,And a rumor:,Auch neue Gerüchte:,También rumores:,Также слухи:
 STR_SYS_57,Settings,Einstellung,Ajustes,Настройки
-STR_SYS_58,Side mission:,Side mission:,Tarea adicional:,Доп. задание:
+STR_SYS_58,Side mission(%1):,Side mission(%1):,Tarea adicional(%1):,Доп. задание(%1):
 STR_SYS_58_1,Secondary Main Target Mission:,Sekundäre Ziel Der Mission:,Orden adicional:,Дополнительный приказ:
 STR_SYS_58_2,Wait for further instructions...,Warten Sie auf weitere Anweisungen...,Espere una orden adicional...,Ожидайте дополнительно приказа...
 STR_SYS_59,Main target:,Ziel:,Objetivo principal:,Главная цель:

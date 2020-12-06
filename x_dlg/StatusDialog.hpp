@@ -316,7 +316,7 @@ class XD_StatusDialog
 	// Side mission botton
 	class XD_ShowSideButton
 	{
-		idc = -1;
+		idc = 11021;
 		type = CT_BUTTON;
 		style = ST_CENTER;
 		default = false;
