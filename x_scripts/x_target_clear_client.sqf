@@ -1,4 +1,6 @@
 ﻿// by Xeno, x_scripts/x_target_clear_client.sqf
+// parameter (_this) is counter attack state (true if counterattack occured or false if not)
+//
 private ["_current_target_name","_target_array2"];
 
 #include "x_setup.sqf"
@@ -23,7 +25,7 @@ if (client_target_counter < number_targets) then {
 
 	_bonus_vehicle = [_type_name, 0] call XfGetDisplayName;
 
-	_bonus_pos = localize "STR_SYS_309";//"на базе.";
+	_bonus_pos = localize "STR_SYS_309";	//"на базе.";
 
 	_mt_str = format [localize "STR_SYS_1100", _current_target_name]; //"%1 освобождён!!!"
 	
@@ -40,21 +42,22 @@ if (client_target_counter < number_targets) then {
 	if (__RankedVer) then {
 		_strBonus = "0";
 		_strCountera = "";
-		if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then {
-		    _strBonus = format[ localize "STR_SYS_1102_1", d_ranked_a select 9 ];
-		    // TODO: #412 add score per town only if you get positive points for this town
+		_dist = d_ranked_a select 10;
+		if ( player distance _current_target_pos <= _dist ) then {
 		    _score = d_ranked_a select 9;
+		    _strBonus = format[ localize "STR_SYS_1102_1", _score ]; // "points (%1) and "
+		    // TODO: #412 add score per town only if you get positive points for this town
 		    if (_this) then { // conter attack occured
 		    	_score = round (_score  * 1.25 );
-		    	_strCountera = localize "STR_SYS_1102_3";
+		    	_strCountera = localize "STR_SYS_1102_3"; // "and repelling a counterattack "
 		    };
-            player addScore (); // you get point only being in the town!
+            player addScore _score; // you get point only being in the town!
             playSound "good_news";
 			// "For the liberation of the settlement %1you gets %2%3!"
-			(format [localize "STR_SYS_1102",_strCountera, _strBonus, _bonus_vehicle]) call XfHQChat;
+			( format [ localize "STR_SYS_1102",_strCountera, _strBonus, _bonus_vehicle ] ) call XfHQChat;
 		} else {
 			// "You only receive %1 for liberating the settlement because you are outside the city radius (%2 m.)"
-	        (format [localize "STR_SYS_1102_0", _bonus_vehicle, d_ranked_a select 10]) call XfHQChat;
+	        ( format [localize "STR_SYS_1102_0", _bonus_vehicle, _dist] ) call XfHQChat;
 		};
 	};
 #endif

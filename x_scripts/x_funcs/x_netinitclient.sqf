@@ -370,11 +370,12 @@ XHandleNetStartScriptClient = {
 			_this execVM "x_scripts\x_secsolved.sqf";
 		};
 		// last target town cleared, no more target remained !!!
+		// call: ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred] call XSendNetStartScriptClient;
 		case "target_clear": {
 			// playSound "USSR"; // dont play sound as it is already played from town flag
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2);
-			(_this select 2) execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is the only parameter for execVM
+			(_this select 3) execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is the only parameter for execVM
 		};
 
 		//+++ Sygsky: added for airbase take mission (before any towns)
@@ -404,12 +405,10 @@ XHandleNetStartScriptClient = {
 		// обновление информации о сторонней миссии и инициализация новой миссии на клиенте
 		case "update_mission": {
 			current_mission_index = _this select 1;
-			if ( count _this > 2 ) then
-			{
+			if ( count _this > 2 ) then {
 				current_mission_counter = _this select 2;
 			};
-			if ( count _this > 3 ) then // if first point coordinates were changed with some purpose
-			{
+			if ( count _this > 3 ) then {// if first point coordinates were changed with some purpose
 				x_sm_pos set [0, _this select 3];
 			};
 			[true] execVM "x_missions\x_getsidemissionclient.sqf";
@@ -983,4 +982,4 @@ XHandleNetStartScriptClient = {
 
  "d_ns_client" addPublicVariableEventHandler {
 	(_this select 1) spawn XHandleNetStartScriptClient;
-};
+};         

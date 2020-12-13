@@ -119,8 +119,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
         } forEach _pilots_arr;
         ////////////////////////////////////////////
 
-        if (_dist < 20) then
-        {
+        if (_dist < 20) then {
             _rescued = true;
             {
               if (alive _x) then
@@ -135,54 +134,41 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
             ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 2, 2] call XSendNetStartScriptClient; // "Good job! The rescue of helicopter crew was successful"
         };
               ////////////////////////////////////////////
-    }
-    else
-    { // _rescued!!!
+    } else { // _rescued!!!
 
 //++++++++++++++++++++++++ !__TTVer
         if (!(__TTVer)) then {
             {
-                if (alive _x ) then
-                {
-                    if ( _x == leader (group _x) ) exitWith // check if pilot already is leader of the group, so rescuer must be dead
-                    {
+                if (alive _x ) then {
+                    if ( _x == leader (group _x) ) exitWith {// check if pilot already is leader of the group, so rescuer must be dead
                         _rescued = false;
                         // again create separate group for our poor pilots
                         _owngroup = call SYG_createOwnGroup;
-                        _x join _owngroup;
                         sleep 0.12345;
                         {
-                          if (alive _x) then
-                          {
-                            [_x] join objNull;
-                            sleep 0.1;
-                            [_x] join _owngroup;
-                            _x disableAI "MOVE";
-                            _x setUnitPos "DOWN"
-                          };
+							if (alive _x) then {
+								[_x] join objNull;
+								sleep 0.1;
+								[_x] join _owngroup;
+								_x disableAI "MOVE";
+								_x setUnitPos "DOWN"
+							};
                         } forEach _pilots_arr;
-                        hint localize format["--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, so pilots are moved to its own group at %2",
+                        hint localize format["--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, all pilots are moved to its own group at %2",
                                              _x,  [_x, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
                         // TODO: send info to all about lost control of pilots
                     };
-                    if ( vehicle _x != _x ) then    // pilot in some vehicle
-                    {
-                        if ([getPos _x,d_base_array] call SYG_pointInRect ) then // pilot  not so far from flag
-                        {
-                            if (time - _last_warn_said > WARN_INTERVAL) then
-                            {
+                    if ( vehicle _x != _x ) then    {// pilot in some vehicle
+                        if ([getPos _x,d_base_array] call SYG_pointInRect ) then { // pilot  not so far from flag
+                            if (time - _last_warn_said > WARN_INTERVAL) then {
                                 ["msg_to_user",vehicle _x,[["STR_SYS_504_1", name _x]]] call XSendNetStartScriptClient; // "% 1: - Get us out of the vehicle, commander!"
                                 _last_warn_said = time;
                             };
                         };
-                    }
-                    else // pilot not  in vehicle (on ground)
-                    {
+                    } else {// pilot not  in vehicle (on ground)
                         if (_x distance FLAG_BASE < 20) then { _pilots_at_base = true; } // pilot near flag
-                        else // not near flag
-                        {
-                             if ( ([getPos _x,d_base_array] call SYG_pointInRect) && (time - _last_warn_said > WARN_INTERVAL)) then
-                             {
+                        else { // not near flag
+                             if ( ([getPos _x,d_base_array] call SYG_pointInRect) && (time - _last_warn_said > WARN_INTERVAL)) then {
                                 [ "msg_to_user", name _rescue,[["STR_SYS_504_2", name _x]] ] call XSendNetStartScriptClient; // "%1: - Need be closer to the flag, commander!"
                                  _last_warn_said = time;
                              };
@@ -192,9 +178,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                 if (_pilots_at_base || (!_rescued) ) exitWith{};
             } forEach _pilots_arr;
 //++++++++++++++++++++++ __TTVer
-        }
-        else
-        {
+        } else {
             {
                 if (alive _x && (vehicle _x == _x)) then {
                     if (_x distance WFLAG_BASE < 20) then {

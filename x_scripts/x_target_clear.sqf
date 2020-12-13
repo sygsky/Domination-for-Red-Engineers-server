@@ -89,7 +89,7 @@ if (current_counter < number_targets) then {
 } else {
     // no bonus vehicle after last target town was cleared
 	target_clear = true;
-	["target_clear",target_clear, -1] call XSendNetStartScriptClient;
+	["target_clear",target_clear, -1, _start_real] call XSendNetStartScriptClient;
 };
 
 sleep 2.123;

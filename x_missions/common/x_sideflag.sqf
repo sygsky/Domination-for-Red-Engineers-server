@@ -16,11 +16,12 @@ _posi_array = nil;
 d_sm_p_pos = nil;
 #endif
 
-_flagtype = "FlagCarrierWest";
-_ini_str = "this setflagside west;";
 if (d_enemy_side == "EAST") then {
 	_flagtype = "FlagCarrierNorth";
 	_ini_str = "this setFlagSide east;";
+} else {
+	_flagtype = "FlagCarrierWest";
+	_ini_str = "this setFlagSide west;";
 };
 
 _flag = _flagtype createVehicle _ran_pos;
@@ -38,21 +39,20 @@ _ini_str = nil;
 
 sleep 15.111;
 
-_owned = false;
+_ownedPrev = false; // at start mission flag is on pole and not owned by anybody
 while {true} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);( call XPlayersNumber) > 0 };
 	};
 	_owner = flagOwner _flag;
 	#ifndef __TT__
-	_alive = alive _owner;  // (alive owner) is the same as (flag owned)
-	if ( ( _alive || _owned ) && !( _alive && _owned ) ) then // state changed and if alive, flag is owned
-	{
-	    _owned = _alive;
-	    _msg = if ( _owned ) then { [ "STR_SYS_FLAG_OWNED", name _owner ] } else { [ "STR_SYS_FLAG_EMPTY" ] };
+	_ownedNow = alive _owner;  // (alive owner) is the same as (flag owned)
+	if (  _ownedNow != _ownedPrev ) then {// state changed and if alive, flag is owned
+	    _ownedPrev = _ownedNow; // save current state to check it changed or not at the next step
+	    _msg = if ( _ownedNow ) then { [ "STR_SYS_FLAG_OWNED", name _owner ] } else { [ "STR_SYS_FLAG_EMPTY" ] };
         [ "msg_to_user", "", [ _msg ] ] call XSendNetStartScriptClientAll; // inform about flag state change
 	};
-	if ((_alive) && (_owner distance FLAG_BASE < 20)) exitWith {
+	if ((_ownedNow) && (_owner distance FLAG_BASE < 20)) exitWith {
 		if (__RankedVer) then {
 			["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
 		};

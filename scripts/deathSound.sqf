@@ -33,7 +33,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 
     // check for helicopter
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith {
-	    playSound format["heli_over_", ceil 4]; // play sound of heli fly over your poor remnants
+	    playSound format["heli_over_%1", ceil 4]; // play sound of heli fly over your poor remnants
     };
 
     _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man

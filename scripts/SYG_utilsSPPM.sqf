@@ -132,7 +132,7 @@ SYG_addSPPMMarker = {
 		};
 		// no marking object is found near marker itself, so remove the marker at last
 		deleteMarker _marker; // removal of marker
-		"STR_SPPM_6_2"	//SPPM marking object (%1) not found!
+		"STR_SPPM_6_2"	// "SPPM marking object not found!"
 	};
 
 	// No near SPPM found, create new one
@@ -143,7 +143,7 @@ SYG_addSPPMMarker = {
 	_marker = _pnt call SYG_findNearestSPPM;
 	if (_marker != "") exitWith {
 		// new average point is too close  (<= 50 m) to a near SPPM
-		"STR_SPPM_ADD_ERR_3" // "The nearest SPPM is at %1 m. Move the vehicle closer to it."
+		"STR_SPPM_ADD_ERR_4" // "New average point is too close to the near SPPM.Move or combine them"
 	};
 
 #ifdef __DEBUG__
@@ -199,7 +199,7 @@ SYG_updateSPPM = {
 	_arr = _pos call SYG_getAllSPPMVehicles;
 	hint localize format["+++ SYG_updateSPPM: %1 vehicles count %2", _marker, count _arr];
 	if ( count _arr == 0 ) exitWith {
-		hint localize format["+++ SYG_updateSPPM: SPPM removed"];
+		hint localize format["+++ SYG_updateSPPM: empty SPPM removed"];
 		// remove this SPPM as empty
 //		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
 		deleteMarker _marker; // remove marker itself
@@ -236,7 +236,7 @@ SYG_updateSPPM = {
 // result may be in partial form^ "СППМ:1:1" - that means 1 ship and 1 air vehicle
 SYG_generateSPPMText1 = {
 	if (typeName _this != "ARRAY") then {_this = [_this]};
-	private ["_cntArr","_mrkArr","_marker","_title","_i","_marker"];
+	private ["_cntArr","_mrkArr","_marker","_title","_i","_marker","_ace_support"];
 	_cntArr = [ 0, 0, 0, 0, 0 ]; // type counts
 #ifdef __ACE__
 	_mrkArr = ["ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown"];  // markers array
@@ -249,12 +249,25 @@ SYG_generateSPPMText1 = {
 		if (typeName _x != "OBJECT") then { _this set [_i, "RM_ME"] };
 	};
 	_this call SYG_clearArray;
+#ifdef __ACE__
+	_ace_support = ""; // main marker from any combinations od SPPM vehicle (ACE :o)
+#endif
 	// fill all possible params
 	{
 		_marker = _x call SYG_getVehicleMarkerType;
+#ifdef __ACE__
+		if (_marker == "ACE_Icon_TruckSupport") then { _ace_support = _marker };
+#endif
+
 //		hint localize format["+++  SYG_getVehicleMarkerType, type  %1, marker %2", typeOf _x,  _marker ];
 		if (true) then {
-			if (_x isKindOf "Truck") exitWith { _cntArr set [0 , (_cntArr select 0) +1 ]; _mrkArr set [0, _marker] };
+			if (_x isKindOf "Truck") exitWith {
+#ifdef __ACE__
+				// if ammo truck detected, use its marker in  any case, use it as first SPPM position!!!
+				if (_ace_support == "ACE_Icon_TruckSupport") exitWith { _cntArr set [0 , (_cntArr select 0) +1 ]; _mrkArr set [0, _ace_support] };
+#endif
+				_cntArr set [0 , (_cntArr select 0) +1 ]; _mrkArr set [0, _marker]
+			};
 			if (_x isKindOf "Tank")  exitWith { _cntArr set [1 , (_cntArr select 1) +1 ]; _mrkArr set [1, _marker] };
 			if (_x isKindOf "Car")   exitWith { _cntArr set [2 , (_cntArr select 2) +1 ]; _mrkArr set [2, _marker] };
 			if (_x isKindOf "Ship")  exitWith { _cntArr set [3 , (_cntArr select 3) +1 ]; _mrkArr set [3, _marker] };
