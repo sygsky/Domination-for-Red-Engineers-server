@@ -153,17 +153,20 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _dist_obs_pos   = round( _observer distance _pos_nearest ); // dist between observer and hit point
 
                     if ( _dist_between_pos >= MAX_SHOOT_DIST ) exitWith {
-                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to dist %2 m between known and real pos. Only %3 m. allowed", name _enemy, round(_observer distance _pos_nearest), MAX_SHOOT_DIST];
+                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to dist %2 m between known and real pos. Only %3 m. allowed",
+                        name _enemy, _dist_between_pos, MAX_SHOOT_DIST];
                     };
-#ifndef __TT__
-					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance FLAG_BASE) < SAVE_RADIOUS));
-#else
-					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance RFLAG_BASE) < SAVE_RADIOUS || (_enemy distance WFLAG_BASE) < SAVE_RADIOUS));
-#endif
-                    if ( (_dist_obs_pos >= (MAX_SHOOT_DIST * 10) ) && _notAllowed ) exitWith {
-                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to big dist between the obs and player who is not in vehilce (dist %2 m), up to %3 m is permitted",
-                        					name _enemy, _dist_obs_pos, MAX_SHOOT_DIST * 10];
-                    };
+// The following lines are commented as useless, because the previous statement completely solves the problem
+// of firing far away from the real position (including because of the teleport to the base)
+//#ifndef __TT__
+//					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance FLAG_BASE) < SAVE_RADIOUS));
+//#else
+//					_notAllowed = (isPlayer _enemy) && ((vehicle _enemy == _enemy) || ((_enemy distance RFLAG_BASE) < SAVE_RADIOUS || (_enemy distance WFLAG_BASE) < SAVE_RADIOUS));
+//#endif
+//                    if ( (_dist_obs_pos >= (MAX_SHOOT_DIST * 10) ) && _notAllowed ) exitWith {
+//                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to big dist between the obs and player who is not in vehilce (dist %2 m), up to %3 m is permitted",
+//                        					name _enemy, _dist_obs_pos, MAX_SHOOT_DIST * 10];
+//                    };
 
                     _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
                     _own_cnt       = {alive _x} count _own_arr;
@@ -180,8 +183,11 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 
                     // If enemy is too far from strike point, do smoking attack only
                     if ( ( _dist_between_pos > SAVE_RADIOUS ) && ( _type == 1 ) && (_own_cnt == 0) ) then { _type = 2 }; // smoke except strike as no player or his vehicles in unsave zone
-                    if ( ( _dist_obs_pos < SAVE_RADIOUS ) && ( _type == 1 ) ) then { _type = 2 }; // Prevent observer from killing himself!
-                    //_dist_obs_pos
+                    if ( ( _dist_obs_pos < SAVE_RADIOUS ) && ( _type == 1 ) ) then {
+                    	// Prevent observer from killing himself!
+                     	_type = 2;
+                     	_pos_nearest = getPos _enemy; // help observer to blind enemy
+                      };
 
                     if ( _dist_between_pos < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is correct
                     else { if ( _enemyToReveal == _enemy ) then { _enemyToReveal = objNull } }; // knowledge is bad
@@ -206,7 +212,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     ];
 
                     _nextaritime  = time + d_arti_reload_time + (random 40);
-                    [_pos_nearest,_type,HIT_RADIOUS] spawn x_shootari;
+                    [_pos_nearest,_type,KILL_RADIOUS] spawn x_shootari;
                     _enemy_ari_available = false;
                     _near_targets        = nil;
                     _own_arr             = nil;

@@ -5,11 +5,11 @@ if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 
-#define HIT_RADIOUS 45
+#define KILL_RADIOUS 30
 
 _pos_enemy = _this select 0;
 _kind = _this select 1;
-_radius = if (count _this < 3) then {HIT_RADIOUS} else {_this select 2}; // read average arti hit radious
+_radius = if (count _this < 3) then {KILL_RADIOUS} else {_this select 2}; // read average arti hit radious
 
 _height = (switch (_kind) do {case 1: {150}; case 2: {0};});
 
@@ -38,7 +38,7 @@ if (_kind == 1) then {["o_arti",_pos_enemy,_radius] call XSendNetStartScriptClie
 _wp_array = [];
 while {count _wp_array < _number_shells} do {
 	_angle = random 360;
-	_radius =random HIT_RADIOUS;
+	_radius = random _radius;
 	_x1 = _center_x - (_radius * sin _angle);
 	_y1 = _center_y - (_radius * cos _angle);
 	_wp_array = _wp_array + [[_x1, _y1, _height]];
