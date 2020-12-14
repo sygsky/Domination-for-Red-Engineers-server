@@ -9,8 +9,8 @@
 	(_this select 1) call XHandleNetVar;
 };
 // Yeti has variable time offset, so I commented him
-SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper",/*"yeti",*/"Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron"];
-SYG_localZones = [            0,          0,        0,/*    -4,*/          0,        +1,        +1,      +1,     +1,     +1,      +1,     +1];
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron","White Jaguar"];
+SYG_localZones = [            0,          0,        0,    -4,           0,        +1,        +1,      +1,     +1,     +1,       +1,     +1,            -4 ];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
