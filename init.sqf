@@ -233,14 +233,14 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [48]; // 5 - king in hotel, 48 - transformer substations of Corazol
+    _first_array = []; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu
     side_missions_random = _first_array + (side_missions_random - _first_array);
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
     if (!isNil("ranked_sm_array") ) then {
         private ["_lowestPos","_rankedSMArr","_ind", "_newInd","_val"];
-        _lowestPos = ranked_sm_array select 0; // first allowed position for missions that need some rank (to drive tank,heli, airplane)
+        _lowestPos = ranked_sm_array select 0; // first allowed position for missions that need some rank (to drive tanks, helis, airplanes)
         _rankedSMArr = ranked_sm_array select 1; // mission ids
         // forEach ranked_sm_array;
         {
