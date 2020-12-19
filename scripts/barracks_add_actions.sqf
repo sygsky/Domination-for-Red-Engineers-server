@@ -16,17 +16,12 @@ if (isServer && ! X_SPE) exitWith {};
 #ifdef __AI__
 
 // check for the AI_HUT to be alive
-if (isNil "AI_HUT") exitWith {hint localize "--- barracks_add_actions.sqf: no AI_HUT detected"}; // no hut
+if (isNil "AI_HUT") exitWith {hint localize "--- barracks_add_actions.sqf: AI_HUT is nil"}; // no hut
 hint localize format["+++ %1 barracks_add_actions.sqf starting...", _this];
-if (typeName _this == "ARRAY") then
-{
-    if ( count _this > 0) then
-    {
-        _sound= _this select 0;
-        if (typeName _arg == "STRING") then
-        {
-            AI_HUT say _sound;
-        };
+if (typeName _this == "ARRAY") then {
+    if ( count _this > 2) then {
+        _sound= _this select 2;
+        if (typeName _sound == "STRING") then { AI_HUT say _sound; };
     }
 };
 
@@ -58,14 +53,11 @@ if ( _string_player in d_can_use_artillery ) then {
 	AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
 
 	_marker_name = "Recruit_x";
-	if ( ( getMarkerType _marker_name) == "") then // no such marker
-	{
+	if ( ( getMarkerType _marker_name) == "") then {// no such marker
     	[_marker_name, position AI_HUT,"ICON","ColorYellow",[0.5,0.5],localize "STR_SYS_1171",0,"DOT"] call XfCreateMarkerLocal; // "Recruit Barracks"
 	    hint localize "+++ barracks_add_actions.sqf: Barracks marker drawn";
 	};
-}
-else
-{
+} else {
     AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\info_barracks.sqf"]; // "Inspect"
 };
 AI_HUT addAction[localize "STR_AI_8_1","scripts\check_ai_points.sqf"]; // "Check your points"

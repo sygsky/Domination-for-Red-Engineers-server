@@ -1,4 +1,4 @@
-// by Sygsky, scripts\check_ai_points.sqf - check your points before call for the AI
+// by Sygsky, scripts\check_ai_points.sqf - check your points before call for the AI recruit
 
 #include "x_setup.sqf"
 

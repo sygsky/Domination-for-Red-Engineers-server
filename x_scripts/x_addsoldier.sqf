@@ -125,23 +125,25 @@ _unit setRank "CORPORAL"; // Why???
 _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x_deleteai.sqf";}];
 
 #ifdef __ACE__
-if (d_own_side == "EAST") then
-{
+if (d_own_side == "EAST") then {
 
     _identity =  format["Rus%1", ceil (random 5)];
-    if (_ai_side_unit call SYG_isWoman) then
-    {
+    if (_ai_side_unit call SYG_isWoman) then { // woman
         _identity = "Irina";
         _unit spawn { sleep 1.5; _this say (call SYG_getFemaleExclamation);}
+    } else { // man
+    	if (random 2 > 1) then {
+	        _unit spawn { sleep 1.5; _this say (call SYG_getMaleFuckSpeech);}
+    	};
     };
     _msg_arr = [];
-    _unit setIdentity _identity; // there are only 5 russina voice in the ACE
+    _unit setIdentity _identity; // there are only 5 russian voice in the ACE
     hint localize format["+++ AI setIdentity ""%1""", _identity];
-    if ( ! ((_identity == "Irina") || (localize "STR_LANG" == "RUSSIAN")) ) then {
+    if ( ! ((_identity == "Irina") || (localize "STR_LANG" == "RUSSIAN")) ) then { // for not russian player
         _msg_arr set [count _msg_arr, [["STR_SYS_1175_1", name _unit] ]]; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
     };
-    _msg_arr set [count _msg_arr, [["STR_SYS_1175_2"] ]];
-    ["msg_to_user", "", _msg_arr ] call SYG_msgToUserParser; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
+    _msg_arr set [count _msg_arr, [["STR_SYS_1175_2"] ]]; // "The command of the detachment issued an order: return your soldiers before leaving the game!..."
+    ["msg_to_user", "", _msg_arr ] call SYG_msgToUserParser;
     playSound "losing_patience";
 };
 #endif

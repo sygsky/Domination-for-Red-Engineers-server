@@ -1,4 +1,4 @@
-/*
+/* scripts\restore_barracks.sqf
 	author: Sygsky
 
 	description:
@@ -15,17 +15,14 @@
 
 // check for the AI_HUT to be alive
 if (isNil "AI_HUT") exitWith {hint localize "--- restore_barracks.sqf: no AI_HUT detected"}; // no hut
-if ( damage AI_HUT == 0) exitWith{}; // All is well
+if ( damage AI_HUT == 0) exitWith{}; // All is normal
 if (damage AI_HUT < 1 ) exitWith { hint localize format["+++ restore_barracks.sqf: AI_HUT repaired damage %1",damage AI_HUT]; AI_HUT setDamage 0;};
 
 // AI_HUT is destroyed (damage 1), lets restore it
 _ruin = nearestObject [d_pos_ai_hut select 0,"Land_budova2_ruins"]; // ruins name for Barracks
-if ( isNull _ruin) then
-{
+if ( isNull _ruin) then {
     hint localize "--- restore_barracks.sqf: try to repair, but no land_budova2_ruins found near";
-}
-else
-{
+} else {
     _ruin setVelocity [0,0,-0.5];
     sleep 3;
     deleteVehicle _ruin;
@@ -51,11 +48,10 @@ AI_HUT = "WarfareBBarracks" createVehicle (d_pos_ai_hut select 0);
 publicVariable "AI_HUT";
 sleep 0.5;
 
-["add_barracks_actions", AI_HUT, "AlarmBell"] call XSendNetStartScriptServer;
+["add_barracks_actions", AI_HUT, "AlarmBell"] call XSendNetStartScriptServer; // TODO: realize this option, now it is not developed
 
 AI_HUT setDir (d_pos_ai_hut select 1);
-for "_z" from -5 to 0 step 0.1 do
-{
+for "_z" from -5 to 0 step 0.1 do {
     _pos set [2, _z];
     AI_HUT setPos _pos;
     sleep 0.05;
@@ -68,7 +64,6 @@ AI_HUT addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
 
 if ( !isNull AI_HUT ) then { hint localize "--- restore_barracks.sqf: AI_HUT restored";}
 else { hint localize  "--- restore_barracks.sqf: unable  to restore AI_HUT"; };
-
 
 sleep 0.1;
 

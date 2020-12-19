@@ -537,9 +537,12 @@ SYG_getFemaleFuckSpeech = {
 	_arr call XfRandomArrayVal
 };
 
-
 SYG_getFemaleExclamation = {
     ["woman_excl1","woman_excl2","woman_excl3","woman_excl4","woman_excl5","woman_excl6","woman_excl7","woman_dont_trust"] call XfRandomArrayVal;
+};
+
+SYG_getMaleFuckSpeech = {
+	["exclamation1", "exclamation2", "male_fuck_1"] call XfRandomArrayVal
 };
 
 SYG_captainRankSound = {

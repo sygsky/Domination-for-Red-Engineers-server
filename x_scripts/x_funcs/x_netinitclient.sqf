@@ -847,8 +847,6 @@ XHandleNetStartScriptClient = {
 		    };
 		}; // case "play_misic"
 
-
-		// ["add_barracks_actions", AI_HUT, "AlarmBell"] call XSendNetStartScriptServer;
         case "add_barracks_actions": // adds all user actions on barracks created
 		{
 		    [arg(2)] execVM "scripts\barracks_add_actions.sqf"; // do this on clients only
