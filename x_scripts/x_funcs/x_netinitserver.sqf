@@ -182,9 +182,9 @@ XHandleNetStartScriptServer = {
 			};
             _name = _this select 1;
             // add language specific messages if possible
-            if (localize "STR_LANGUAGE" != "RUSSIAN") then
-            {
+            if (localize "STR_LANGUAGE" != "RUSSIAN") then {
                 _msg = switch (_name) do {
+                	case "Comrad (LT)":
                     case "Rokse [LT]" : {"Salos malonu pasveikinti jus į savo gimtąja kalba!"}; // Литовец!
                     case "Aron"       : { "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!" }; // Slovak };
                     case "gyuri";
@@ -212,7 +212,7 @@ XHandleNetStartScriptServer = {
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 			// info about side mission before next town
 			if ( !call SYG_isMainTargetAllowed ) then {
-				_msg_arr set [ count _msg_arr, ["STR_SYS_1151_1", current_mission_counter ] ]; // "Finish SM(%1)"
+				_msg_arr set [ count _msg_arr, ["STR_SYS_1151_1", current_mission_counter + 1] ]; // "Finish SM(%1)"
 			};
 #endif
 

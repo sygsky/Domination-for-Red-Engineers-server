@@ -615,7 +615,7 @@ SYG_AIPriceByScore = {
         if (isPlayer _this) then {_this = score _this};
     };
     if (typeName _this != "SCALAR") exitWith {1000000};
-    _rank_id = _this call XGetRankIndexFromScoreExt;
+    _rank_id = _this call XGetRankIndexFromScore;
     _rank_id call SYG_AIPriceByRankId
 };
 
@@ -626,13 +626,12 @@ SYG_AIPriceByScore = {
 //      _AIPrice = ((rank player) call XGetRankFromScore) call  SYG_AIPriceByRankId; // or
 //      _AIPrice = player call  SYG_AIPriceByRankId;
 //
-//
 SYG_AIPriceByRankId = {
     private [ "_rank_id", "_max_id", "_start_rank_id", "_score", "_score1" ];
 //    hint localize format["+++ %1 call SYG_AIPriceByRankId", _this];
     if (typeName _this == "OBJECT") then {
         if (isPlayer _this) then {
-            _this = (score _this)call XGetRankFromScore;
+            _this = (score _this) call XGetRankFromScore;
         };
     } else {
         if (typeName _this == "STRING") then { // rank name used
@@ -654,7 +653,7 @@ SYG_AIPriceByRankId = {
 
     //hint localize format["+++ SYG_AIPriceByRankId(1): _rank_id %1, _start_rank_id %2, _score %3, _score1 %4", _rank_id, _start_rank_id, _score, _score1 ];
 
-    floor(( (_score1 *.5)  / ( _rank_id - _start_rank_id + 1) ) / 5) * 5
+    floor ((( (_score1 *.5)  / ( _rank_id - _start_rank_id + 1) ) / 5) * 5)
 };
 
 SYG_AIPriceByRankString = {

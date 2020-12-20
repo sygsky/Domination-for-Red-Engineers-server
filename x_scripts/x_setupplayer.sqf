@@ -1110,6 +1110,7 @@ if (SYG_found_SCUD ) then {
 if (random 10 < 7) then {
     _local_msg_arr set [count _local_msg_arr, localize "STR_SYS_RUMORS"];
 };
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 //+ show all specific  messages for the player type +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1118,12 +1119,13 @@ _local_msg_arr spawn {
     if (count _this > 0 ) then {
         sleep 55;
         {
-             sleep 6;
+             sleep 10;
              _x call XfGlobalChat;
         } forEach _this;
     };
     if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) exitWith {
         sleep 6;
+        // "For numerous military services, the command and the grateful citizens declare you an honorary citizen of Sahrani Island."
         [
             "msg_to_user",
             "",
@@ -1140,6 +1142,15 @@ _local_msg_arr spawn {
             0, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
+    // if no special message, type common one
+    // "For his services in developing our mission, the chief engineer extends his thanks to fighter Rokse!!!"
+    sleep 10;
+	[
+		"msg_to_user",
+		"",
+		[ ["STR_GREETING_COMMON" ] ],
+		0, 5, false, "drum_fanfare"
+	] call SYG_msgToUserParser;
 
 };
 
@@ -1271,9 +1282,7 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 #ifndef __TT__
 // Enemy at base
 XBaseEnemies = {
-	private ["_status"];
-	_status = _this select 0;
-	switch (_status) do {
+	switch ( _this select 0 ) do {
 		case 0: {
 			hint composeText[
 				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "DANGER:" */ + "</t>"), lineBreak,

@@ -244,7 +244,7 @@ if (X_Client) then {
         10,         //25 очков вычисляется за выполнение второстепенного задания в городе
         "Corporal", //26 rank to resurrect internal objects on server map (vegetation, fences etc) - not used
         9,          //27 scores added for observer kill +1 for ordinal frag
-        "Sergeant" //28 lowest rank abled to call the recruit
+        "Sergeant"  //28 lowest rank abled to call the recruit
     ];
 
     // distance a player has to transport others to get points

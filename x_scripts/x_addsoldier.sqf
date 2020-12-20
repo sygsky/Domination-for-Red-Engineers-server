@@ -2,17 +2,23 @@
 private ["_type_soldier","_units","_ai_counter","_ai_side_char","_ai_side_unit","_msg_arr","_pilot"];
 #include "x_setup.sqf"
 
-_ai_counter = {(!isPlayer _x) && (alive _x)} count _units; // alive AI counter
-if (isNil "ai_counter") then { ai_counter = _ai_counter }; // how many was recruited during this session
-
-_type_soldier = _this select 3;
+// comment lower line to stop debug output on AI handling
+//#define __DEBUG_AI__
 
 d_grp_caller = group player;
 if (player != leader d_grp_caller) exitWith {
 	localize "STR_SYS_1172" call XfHQChat; // "You are currently not a group leader, no AI available. Create a new group"
 };
-
 _units = units d_grp_caller;
+_ai_counter = {(!isPlayer _x) && (alive _x)} count _units; // count alive AI counter the player have at this moment
+if (isNil "ai_counter") then {
+	ai_counter = _ai_counter; // recruited ai counter, is only increased during session, not saved betweeen sessions
+#ifdef __DEBUG_AI__
+	hint localize format["+++ x_addsoldier.sqf: init ai_counter = %1", ai_counter];
+#endif
+}; // how many was recruited during this session
+
+_type_soldier = _this select 3;
 
 _start_rank = d_ranked_a select 28; // initial AI caller rank name
 _start_rank_id = _start_rank call XGetRankIndex; // initial AI caller rank id
@@ -20,14 +26,14 @@ _ai_low_cost = d_ranked_a select 3; // how many point needed to call 1st AI by c
 
 #ifdef __RANKED__
 _rank = rank player;
-#ifdef __SUPER_RANKING__
-_rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
-#else
-_rankIndex = player call XGetRankIndexFromScore; // rank index
-#endif
+_rankIndex = player call XGetRankIndexFromScore; // rank index (oncluding extended ones)
 
 _rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
 _rank_max_ai = _rankIndex - _start_rank_id + 1; // e.g. 1 - Sergeant, 2 - Lieutenant... 11 - Generalissimus
+
+#ifdef __DEBUG_AI__
+	hint localize format["+++ x_addsoldier.sqf: internal Arma _rank %1, extended _rankIndex %2, recruit max num _rank_max_ai %3", _rank, _rankIndex, _rank_max_ai ];
+#endif
 
 if ( _rank_max_ai < 1) exitWith {
 	(format [localize "STR_SYS_1174", player call XGetRankStringLocalized, _start_rank call XGetRankStringLocalized]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]!"
@@ -36,11 +42,19 @@ if ( _rank_max_ai < 1) exitWith {
 _ai_big_cost = player call SYG_AIPriceByScore; // price for 2nd and more AI recruinting. 1st always is of low cost
 _ai_cost = if (ai_counter > 0) then {_ai_big_cost} else {_ai_low_cost};
 
+#ifdef __DEBUG_AI__
+	hint localize format["+++ x_addsoldier.sqf: _ai_low_cost %1, _ai_big_cost %2, your cost will be %3", _ai_low_cost, _ai_big_cost, _ai_cost ];
+#endif
+
 if ( score player < _ai_cost ) exitWith {
 	(format [localize "STR_SYS_1175", score player, _ai_cost, "PRIVATE" call XGetRankStringLocalized]) call XfHQChat; // "You can't recruit an AI soldier, costs %2 points, your current score (%1) will drop below %3!"
 };
 
 _new_ai_counter = _rank_max_ai -_ai_counter; // how many AI you still can call with your rank
+
+#ifdef __DEBUG_AI__
+	hint localize format["+++ x_addsoldier.sqf: you can recruit up to _new_ai_counter  %1",_new_ai_counter ];
+#endif
 
 if (_new_ai_counter < 1) exitWith {
 	(format [localize "STR_SYS_1173", _ai_counter]) call XfHQChat; // "You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank..."
@@ -48,12 +62,18 @@ if (_new_ai_counter < 1) exitWith {
 
 #else
 
-_rankIndex = player call XGetRankIndexFromScore; // extended rank system, may returns value > 6 (colonel rank index)
+// _rankIndex = player call XGetRankIndexFromScore; // extended rank system, may returns value > 6 (colonel rank index)
 _rank_max_ai = _rankIndex - _start_rank_id + 1; // e.g. 1 - Sergeant, 2 - Lieutenant... 11 - Generalissimus
+
+//#ifdef __DEBUG_AI__
+//	hint localize format["+++ x_addsoldier.sqf: _rank_max_ai %1", _rank_max_ai ];
+//#endif
+
 if ( _ai_counter >= _rank_max_ai) exitWith {
+	hint localize format["+++ x_addsoldier.sqf: _ai_counter >= _rank_max_ai(%1), exit", _rank_max_ai ];
 	(format [localize "STR_SYS_1173", _ai_counter]) call XfHQChat; // "You already have %1 AI soldiers under your control, it is not possible to recruit more with your current rank..."
 };
-_ai_cost = _ai_low_cost;
+_ai_cost = _ai_low_cost; // if not ranked, any AI has minimal cost
 
 #endif
 
@@ -86,12 +106,9 @@ _ai_side_unit = (
 			case "EAST": {"ACE_SoldierEDemo_SNR"};
 		}
 	} else {
-    	if (_type_soldier == "ACE_Soldier%1Medic" && d_own_side == "EAST") then
-    	{
+    	if (_type_soldier == "ACE_Soldier%1Medic" && d_own_side == "EAST") then {
             "ACE_SoldierEMedicWoman_VDV" // woman for russian that he was noble
-    	}
-    	else
-    	{
+    	} else {
     		format [_type_soldier, _ai_side_char]
     	}
 	}
@@ -107,8 +124,7 @@ _pilot = _unit call SYG_armPilotFull;
 if (_pilot ) then { _ai_cost = _ai_cost * 2; }; // it is a pilot. He costs 2 times more than an ordinary soldier
 
 // each AI soldier costs score points
-if (_ai_cost > 0) then
-{
+if (_ai_cost > 0) then {
     playSound "steal";
     player addScore -_ai_cost;
     _str = "STR_AI_11";

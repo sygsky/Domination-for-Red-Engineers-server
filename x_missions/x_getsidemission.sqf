@@ -42,7 +42,7 @@ extra_mission_vehicle_remover_array = [];
 
 #ifdef __DEBUG__
 //hint localize format["x_getsidemission.sqf: side_missions_random is %1", side_missions_random];
-hint localize format["+++ x_getsidemission.sqf: Preparing next Side Mission; current_mission_index %1, current_mission_counter %2", current_mission_index, current_mission_counter - 1];
+hint localize format["+++ x_getsidemission.sqf: Preparing next Side Mission; current_mission_index %1, current_mission_counter %2", current_mission_index, current_mission_counter];
 #endif
 
 
