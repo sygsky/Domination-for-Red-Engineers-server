@@ -1288,8 +1288,9 @@ XBaseEnemies = {
 				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "DANGER:" */ + "</t>"), lineBreak,
 				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Enemy troops on your base." */ + "</t>")
 			];
-        	private ["_alarm_obj","_no","_thislist"];
+        	private ["_alarm_obj","_no","_thislist","_height"];
             _alarm_obj = FLAG_BASE;
+            _height    = 250; // default flare start height
             if ( ( count _this ) >  1 ) then {
                 _thislist = _this select 1;
                 if (typeName _thislist == "ARRAY") then {

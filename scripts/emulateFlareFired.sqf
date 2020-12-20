@@ -1,9 +1,9 @@
 //
 // ACE flare script modified to use by Sygsky: scripts\emulateFlareFired.sqf
 //
-// call as: [_pos, _height, _flare_color (may be "Red","Green","Yellow","White"), _factor(what the factor is it?)<,_only_here>] exec "emulateFlareFired.sqf"
+// call as: [getPos _alarm_obj, _height, "Yellow", 400, true] execVM "scripts\emulateFlareFired.sqf";
 //
-private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height","_local"];
+private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height"];
 
 #define __POS    (_this select 0)
 #define __HEIGHT ((_this select 1)-5+(random 10))
@@ -23,7 +23,7 @@ private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type",
 #define __I .025
 
 _col = __COL;
-_flare_type = "F_40mm_White";
+_flare_type = "F_40mm_White"; // default flare type
 switch (toUpper(_col)) do
 {
 	case "WHITE":  { _flare_type = "F_40mm_White";  };
@@ -33,26 +33,27 @@ switch (toUpper(_col)) do
 };
 
 _pos = __POS;
-if ( typeName _pos == "OBJECT" ) then {_pos = getPos _pos;};
+if ( typeName _pos == "OBJECT" ) then {_pos = getPos _pos;}; // convert object to its position
 _pos set [ 2, __HEIGHT ];
 
+_factor = __DIST max 12.5; // if (_factor > 12.5) then { _factor = 12.5; };
 
 #ifdef __DEBUG__
-hint localize format[ "emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4", _pos, __COL, _factor, _flare_type ];
+hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4", _pos, __COL, _factor, _flare_type ];
 #endif
 
 _flare = objNull;
 _flare = _flare_type createVehicle _pos;
-if ( isNull _flare ) exitWith { hint localize "emulateFlareFired.sqf: flare object not created"; };
+if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 
 sleep 0.5;
 
-_factor = __DIST max 12.5; // if (_factor > 12.5) then { _factor = 12.5; };
 
-_local = if(count _this < 5) then { false} else{_this select 4};
-if (_local) then {
+if (__LOCAL) then {
+// call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
 	 [ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
 } else {
+// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
 	[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient; // run on all clients
 };
 
