@@ -265,6 +265,7 @@ class CfgMusic
     class moon_stone {name = ""; sound[] = {\sounds\defeat\moon_stone.ogg, db+10, 1.0};}; // Famous Soviet singer Edvard Hill: "Moon stone" song
     class hound_chase    {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0};}; // chase from "Hound of Baskerville" Soviet film
 
+
 //+++++++++++++++++++++++ medieval defeats (death near castles)
     class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // medieval defeat sound
     class medieval_defeat1 { name=""; sound[] = {\sounds\medieval\bard-melody.ogg,db+10,1.0};} // medieval defeat sound
@@ -638,8 +639,9 @@ class CfgSounds
     class armory3  { name=""; sound[] = {\sounds\short\armory\armory3.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 3
     class armory4  { name=""; sound[] = {\sounds\short\armory\armory4.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 4
 
-    class chiz_tanki_1   {name = "Чиж. 'По танку вдарила болванка'"; sound[] = {\sounds\defeat\chiz_tanki_1.ogg, db+10, 1.0}; titles[] = {}; }; // "The tank was hit by a dummy" song of the ensemble " Chizh"
-    class chiz_tanki_2   {name = "Чиж. 'По танку вдарила болванка'"; sound[] = {\sounds\defeat\chiz_tanki_2.ogg, db+10, 1.0}; titles[] = {}; }; // "The tank was hit by a dummy" song of the ensemble " Chizh"
+    class chiz_tanki_1   {name = "Чиж. 'По танку вдарила болванка...'"; sound[] = {\sounds\defeat\chiz_tanki_1.ogg, db+10, 1.0}; titles[] = {}; }; // "The tank was hit by a dummy..." song of the ensemble " Chizh"
+    class chiz_tanki_2   {name = "Чиж. 'Нас извлекут из под обломков...'"; sound[] = {\sounds\defeat\chiz_tanki_2.ogg, db+10, 1.0}; titles[] = {}; }; // "We will be pulled from under the rubble..." song of the ensemble " Chizh"
+    class whatsapp       {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
 
     // Ranks messages
     // for Russian language only
