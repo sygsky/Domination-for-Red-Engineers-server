@@ -249,7 +249,7 @@ d_crewman2_E = (
 d_crewman_W = (
 	if (__ACEVer) then {
 
-// ТАНКИСТ
+// Tankmaster
 //##############################################################################
 "ACE_SoldierWCrew_WDL"
 	} else {
@@ -263,7 +263,7 @@ d_crewman_W = (
 d_crewman2_W = (
 	if (__ACEVer) then {
 
-// ВОДИТЕЛЬ
+// Driver
 //##############################################################################
 "ACE_SoldierWB_A"
 
@@ -289,7 +289,7 @@ d_pilot_E = (
 d_pilot_W = (
 	if (__ACEVer) then {
 
-// ПИЛОТ
+// Pilot
 //##############################################################################
 "ACE_SoldierWPilot_WDL"
 
@@ -326,7 +326,7 @@ d_allmen_E = (
 d_allmen_W = (
 	[
 		if (__ACEVer) then {
-// ПЕХОТА В ГОРОДЕ
+// Infantry in main target town
 //##############################################################################
 // any group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 
@@ -372,7 +372,7 @@ d_specops_E = (
 d_specops_W = (
 	if (__ACEVer) then {
 
-// СПЕЦГРУППА
+// Specops
 //##############################################################################
 // Group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 ["ACE_SoldierWSniper2_A","ACE_USMC8541A1A","ACE_SoldierWMAT_USSF_ST_BDUL","ACE_SoldierWAA","ACE_SoldierWB_USSF_ST_BDUL","ACE_SoldierW_Spotter_A","ACE_SoldierWMedic_A","ACE_SoldierWAT2_A"
@@ -398,7 +398,7 @@ d_sabotage_E = (
 d_sabotage_W = (
 	if (__ACEVer) then {
 
-// ДЕСАНТ НА БАЗУ
+// Sabotages on base
 //##############################################################################
 // Group must have: squad leader, radio-operator, medic, AT оператор, MG operator, sniper, other may be from a random list
 ["ACE_SquadLeaderW_A","ACE_SoldierWDemo_A","ACE_SoldierWMAT_A","ACE_SoldierWAA","ACE_SoldierWAA","ACE_SoldierWDemo_USSF_LRSD","ACE_SoldierWDemo_USSF_ST"]
@@ -455,7 +455,7 @@ _bmp_list =
 d_veh_a_W = (
 	if (__ACEVer) then {
 		[
-// ТЕХНИКА В ГОРОДЕ
+// Vehicles in main towns
 //##############################################################################
 			ABRAMS_LIST,    // tank
 			//["ACE_M1Abrams","ACE_M1A1_HA","ACE_M1A2","ACE_M1A2_SEP","ACE_M1A2_SEP_TUSK","ACE_M1A2_TUSK"], // tank

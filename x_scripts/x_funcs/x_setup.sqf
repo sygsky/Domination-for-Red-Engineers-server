@@ -130,7 +130,7 @@
 // uncomment follow line if you want teleport available only if all services on base are valid
 // #define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
 
-// uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value, c) no opened dialog (so user is alive)
+// uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value
 #define __JAIL_MAX_SCORE__ -15
 
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
@@ -168,7 +168,7 @@
 // uncomment to allow shotgun armed AI soldiers
 #define __ALLOW_SHOTGUNS__
 
-// uncomment lower line to diable teleport on MHQ damaged more then designated in define
+// uncomment lower line to disable teleport on MHQ damaged more then designated in define
 #define __NO_TELEPORT_ON_DAMAGE__ 0.5 // MHQ damage limit to prevent its teleport functionality
 
 // uncomment to allow SCUD added on base. Needs addon gig_scud.pbo, else mission and client not start
@@ -178,3 +178,5 @@
 //#define __LOCK_ON_RECAPTURE__
 
 #define __SPPM__ // support for SPPM markers
+
+#define __NO_AI_PLANE_PILOTS__ // prevents AI to enter plane as driver/pilot, gunner or commaner. Cargo role is allowed

@@ -85,6 +85,14 @@ _vehicle setDir _dir;
 _vehicle call SYG_rearmVehicleA; // rearm if bonus vehicle is marked to rearm
 #endif
 
+#ifdef __AI__
+#ifdef __NO_AI_PLANE_PILOTS__
+// check for any pilot or driver to be AI and get them out if yes
+if ( (_vehicle isKindOf "Plane") ) then {
+	_vehicle addEventHandler ["getin", "scripts\SYG_eventPlainGetIn.sqf"];
+};
+#endif
+#endif
 
 #ifdef __NO_ETERNAL_BONUS__
 

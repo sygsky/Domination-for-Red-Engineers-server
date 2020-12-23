@@ -667,11 +667,15 @@ XStealthPatrol = {
 	_grp setBehaviour "STEALTH";
 };
 
+//
+// Finds wreck vehicle on wreck service circle
+//
 XGetWreck = {
-	private ["_no","_rep_station","_types"];
-	_rep_station = _this select 0;_types = _this select 1;
-	_no = nearestObjects [position _rep_station, _types, 8];
-	if (count _no > 0) then {if (damage (_no select 0) >= 1) then {_no select 0} else {objNull}} else {objNull}
+	private ["_no"];
+	_no = nearestObjects [position (_this select 0), _this select 1, 8];
+	if (count _no == 0) exitWith { objNull };
+	if (damage (_no select 0) >= 1) exitWith {_no select 0};
+	objNull
 };
 
 XAddPlayerScore = {

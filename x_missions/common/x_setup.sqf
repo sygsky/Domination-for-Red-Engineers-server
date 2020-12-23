@@ -168,7 +168,7 @@
 // uncomment to allow shotgun armed AI soldiers
 #define __ALLOW_SHOTGUNS__
 
-// uncomment lower line to diable teleport on MHQ damaged more then designated in define
+// uncomment lower line to disable teleport on MHQ damaged more then designated in define
 #define __NO_TELEPORT_ON_DAMAGE__ 0.5 // MHQ damage limit to prevent its teleport functionality
 
 // uncomment to allow SCUD added on base. Needs addon gig_scud.pbo, else mission and client not start
@@ -178,3 +178,5 @@
 //#define __LOCK_ON_RECAPTURE__
 
 #define __SPPM__ // support for SPPM markers
+
+#define __NO_AI_PLANE_PILOTS__ // prevents AI to enter plane as driver/pilot, gunner or commaner. Cargo role is allowed

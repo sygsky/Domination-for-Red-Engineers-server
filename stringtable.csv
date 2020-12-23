@@ -478,7 +478,7 @@ STR_SYS_248_2,by infuriated enemies?,von wütenden Feinden?,¿enemigos furiosos?
 STR_SYS_249,Wreck Repair Point,Wrack-Reparatur-Punkt,Servicio de recuperación,Сервис восстановления
 
 STR_SYS_250,Your rank: %1 does not allow to use this helicopter (Wreck-repair). Required rank: %2.,Ihr Rang: %1 ist nicht erlaubt die Verwendung dieser Hubschrauber (Wrack). Erforderlich Rang: %2.,"Su rango, %1, no permite el uso de este helicóptero (recuperación-Wreck). Rango requerido: %2.","Ваше звание, %1, не позволяет использовать этот вертолёт (восстановление-Wreck). Требуемое звание: %2."
-STR_SYS_251,There is no access to the flights!,Es gibt keine Zulassung zum Fliegen!,¡No hay autorización para volar!,Отсутствует допуск к полётам!
+STR_SYS_251,No permission to fly!,Keine Erlaubnis zum Fliegen!,¡No hay permiso para volar!,Отсутствует допуск к полётам!
 STR_SYS_252,Your rank: %1. You are not allowed to use %3.\n\nRank required is: %2.,"Ihr Rang: %1. Sie nicht verwenden dürfen, %3.\n\nErforderliche dienstgrad: %2.","Su rango, %1, no permite el uso de %3.\ n \ rango requerido: %2.","Ваше звание, %1, не позволяет использовать %3.\n\nТребуемое звание: %2."
 STR_SYS_252_BULKY,When you try to enter into the doorway you're stuck (%1?)! %2,"Wenn Sie versuchen, geben Sie in die Tür, Sie stecken (%1?)! %2","Al intentar entrar en una abertura, estás atascado (%1?)! %2",При попытке проникнуть в проём вы застряли (%1?)! %2
 

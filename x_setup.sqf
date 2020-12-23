@@ -178,3 +178,5 @@
 //#define __LOCK_ON_RECAPTURE__
 
 #define __SPPM__ // support for SPPM markers
+
+#define __NO_AI_PLANE_PILOTS__ // prevents AI to enter plane as driver/pilot, gunner or commaner. Cargo role is allowed

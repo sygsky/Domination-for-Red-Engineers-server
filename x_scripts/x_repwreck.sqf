@@ -40,6 +40,13 @@ while {true} do {
 
 	_sleep_time = 120;
 	if (_new_vec isKindOf "Plane") then {
+#ifdef __AI__
+	#ifdef __NO_AI_PLANE_PILOTS__
+		// prevent to enter AI as driver, pilot or commander into any plane. AI are too bad pilots)))
+		_new_vec addEventHandler ["getin", "scripts\SYG_eventPlainGetIn.sqf"];
+	#endif
+#endif
+
 		_sleep_time = 360;
 	} else {
 		if (_new_vec isKindOf "Helicopter") then {
