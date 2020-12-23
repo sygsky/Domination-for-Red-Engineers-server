@@ -124,8 +124,14 @@ if (isServer) then {
     ];
     _vec = createVehicle ["ACE_Su30Mk_Kh29T", [9658,10021,0], [], 0, "NONE"];
     _vec setDir 90;
+#ifdef __AI__
+	#ifdef __NO_AI_IN_PLANE__
+	_vec addEventHandler ["getin", {_this execVM "scripts\SYG_eventPlaneGetIn.sqf"}];
+	#endif
+#endif
     if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
     else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
+
     _vec  execVM "x_scripts\x_wreckmarker.sqf";
 
     _vec = createVehicle ["ACE_Mi24D", [9720,10040,0], [], 0, "NONE"]; // ACE_Mi24P, ACE_AH64_AGM_HE

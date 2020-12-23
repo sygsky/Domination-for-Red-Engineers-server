@@ -1,5 +1,5 @@
 /*
-    scripts/SYG_eventGetOut.sqf, 17-JAN-2019, v. 1.1
+    scripts\SYG_eventGetOut.sqf, 17-JAN-2019, v. 1.1
 
 	author: Sygsky
 	description: none
