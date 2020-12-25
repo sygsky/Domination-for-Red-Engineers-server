@@ -111,8 +111,7 @@ if (client_target_counter < number_targets) then {
 		parseText("<t color='#f02b11ed' size='1'>" + _mt_str + "</t>"), lineBreak,lineBreak,
 		localize "STR_SYS_128" /* "Congratulations..." */
 	];
-    if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then
-    {
+    if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then {
         player addScore (d_ranked_a select 9); // you get point only being in the town!
         playSound "good_news";
     };

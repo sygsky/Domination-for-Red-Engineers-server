@@ -101,6 +101,7 @@ SYG_housePosCount = {
 	};
 	_ret
 };
+
 //
 // Finds building nearest to designated position with number of positions >= minPosCnt value
 //
@@ -127,15 +128,11 @@ SYG_nearestGoodHouse = {
 	_spec_list     = argopt(3,[]);
 
 	_arr = [];
-	if ( typeName _pos == "ARRAY" ) then
-	{
-		if ( count _pos > 0 ) then
-		{
-			_obj = argp(_pos, 0);
-			if ( typeName _obj == "OBJECT" ) then
-			{
-				if ( _obj isKindOf "House" ) then
-				{
+	if ( typeName _pos == "ARRAY" ) then {
+		if ( count _pos > 0 ) then {
+			_obj = _pos select 0;
+			if ( typeName _obj == "OBJECT" ) then {
+				if ( _obj isKindOf "House" ) then {
 					_arr = _pos; // list of houses is detected not position
 				};
 			};
@@ -145,22 +142,17 @@ SYG_nearestGoodHouse = {
 
 	_obj = objNull;
 	// check if spec list contains houses id
-	if ( count _spec_list > 0 ) then
-	{
-		if ( typeName(argp(_spec_list,0)) == "SCALAR") then // house id array detected, not prohibited types array
-		{
+	if ( count _spec_list > 0 ) then {
+		if ( ( typeName(_spec_list select 0)) == "SCALAR") then {// house id array detected, not prohibited types array
 			_id = _spec_list call XfRandomArrayVal;
 			_cnt1 = 0;
 			_max = count _spec_list;
-			while { (isNull _obj) && ((count _spec_list) > 0) && (_cnt1 < _max)} do
-			{
+			while { (isNull _obj) && ((count _spec_list) > 0) && (_cnt1 < _max)} do {
 				//hint localize format["--- SYG_nearestGoodHouse: house ID selected %1", _id];
 				_obj = _pos nearestObject _id; 
-				if ( !isNull _obj ) then
-				{
+				if ( !isNull _obj ) then {
 					_cnt = _obj call SYG_housePosCount;
-					if ( (_cnt == 0) || (_obj isKindOf "Ruins") ) then
-					{
+					if ( (_cnt == 0) || (_obj isKindOf "Ruins") ) then{
 						_obj = objNull;
 						hint localize format["--- SYG_nearestGoodHouse: house ID == %1 (%2) has %3 positions", _id, typeOf _obj, _cnt];
 						_spec_list = _spec_list - [ _id ];
@@ -173,8 +165,7 @@ SYG_nearestGoodHouse = {
 	
 	if ( !isNull _obj ) exitWith { _obj };
 
-	if ( count _arr == 0 ) then
-	{
+	if ( count _arr == 0 ) then {
 		_arr = nearestObjects [_pos, ["House"], _minSearchDist];
 		sleep 0.01;
 	};
@@ -185,19 +176,14 @@ SYG_nearestGoodHouse = {
 	_i = 0;
 	{
 		_type = typeOf _x;
-		if  ( _good_type == "" ) then
-		{
-			if ( ( !( _type in _spec_list) ) && ( ( _x call SYG_housePosCount ) >= _minPosCnt ) ) then
-			{
+		if  ( _good_type == "" ) then {
+			if ( ( !( _type in _spec_list) ) && ( ( _x call SYG_housePosCount ) >= _minPosCnt ) ) then {
 				_good_type = _type;
-			}
-			else
-			{
+			} else {
 				_arr set [_i, "RM_ME"];
 			};
 		}
-		else // good house type already detected
-		{
+		else {// good house type already detected
 			if ( _type != _good_type ) then { _arr set [_i, "RM_ME"]; }; // remove all except first found good type
 		};
 		_i = _i + 1;
@@ -230,11 +216,9 @@ SYG_teleportToHouse = {
 	
 	_hpos = argopt(1,"RANDOM_CENTER");
 	_unit = objNull;
-	if ((typeName _hpos) == "STRING") then
-	{
+	if ((typeName _hpos) == "STRING") then {
 		_cnt = _house call SYG_housePosCount;
- 		switch toUpper(_hpos) do
-		{
+ 		switch toUpper(_hpos) do {
 			case "RANDOM_CENTER": {
 				_part = argopt(2,20); // use position at 20% around center of position array
 				if ( _part <= 0) then {_part = 20;};
@@ -260,13 +244,10 @@ SYG_teleportToHouse = {
 	}
 	else { _unit = argopt(2,objNull);};
 	_pos = _house buildingPos _hpos;
-	if ( isNull _unit ) then // teleport player, not unit
-	{
+	if ( isNull _unit ) then { // teleport player, not unit
 		if (isNull player) exitWith {hint localize "--- SYG_teleportToHouse: unit/player isNull";-1};
 	    player setPos _pos;
-	}
-	else
-	{
+	} else {
 	    _unit setPos _pos;
 	};
 	_hpos
@@ -290,4 +271,32 @@ SYG_setObjectInHousePos = {
     _pos
 };
 
+// Check if point/object is in nearest house rectangle
+// call: _isInHouseRect = _unit call SYG_isInHouseRect;
+//
+SYG_isInHouseRect =
+{
+	if (typeName _this != "OBJECT") exitWith {false};
+    private ["_near","_bb","_po"];
+    _near  = nearestObject [_this, "House"];
+    if (isNull _near) exitWith {false};
+    _bb = boundingBox _near;
+    _po = _near worldToModel (getPos _near);
+    if (((_bb select 0) select 0) > (_po select 0)) exitWith { false};
+    if (((_bb select 1) select 0) < (_po select 0)) exitWith { false};
+    if (((_bb select 0) select 1) > (_po select 1)) exitWith { false};
+    if (((_bb select 1) select 1) < (_po select 1)) exitWith { false};
+    true
+};
+
+//
+// Chhecks if designated object(house) is building with room[s] in it
+// call: _hasRooms = _house call SYG_isBuilding;
+// returns:true if there is at least one rooom (with buildingPos) in the house, else false. If _house is not "OBJECT", returns false
+//
+SYG_isBuilding = {
+	if (typeName _this != "OBJECT") exitWith { false };
+	if (! (_this isKindOf "House")) exitWith { false };
+	( ( ( _this buildingPos 0 ) distance [0,0,0] ) > 0.1) // so (_this buildingPos 0) is [0,0,0] itrself
+};
 if (true) exitWith {};
