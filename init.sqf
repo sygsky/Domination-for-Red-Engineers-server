@@ -124,11 +124,11 @@ if (isServer) then {
     ];
     _vec = createVehicle ["ACE_Su30Mk_Kh29T", [9658,10021,0], [], 0, "NONE"];
     _vec setDir 90;
-#ifdef __AI__
-	#ifdef __NO_AI_IN_PLANE__
-	_vec addEventHandler ["getin", {_this execVM "scripts\SYG_eventPlaneGetIn.sqf"}];
-	#endif
-#endif
+//#ifdef __AI__
+//	#ifdef __NO_AI_IN_PLANE__
+//	_vec addEventHandler ["getin", {_this execVM "scripts\SYG_eventPlaneGetIn.sqf"}];
+//	#endif
+//#endif
     if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
     else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
 
@@ -374,11 +374,9 @@ if (isServer) then {
             hint localize "init.sqf: New Year procedure completed, JAN more then 10 is out of range";
             false
     	}; // out of January NE days
-        while {true} do
-        {
+        while {true} do {
             // now check NewYear period
-            if ( call SYG_isNewYear ) exitWith // make gift for a player on a New Year event
-            {
+            if ( call SYG_isNewYear ) exitWith {// make gift for a player on a New Year event
                 hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
                 private ["_vec","_snd"];
                 _vec = "Radio" createVehicle [0, 0, 0];
@@ -393,8 +391,8 @@ if (isServer) then {
                 _vec setVariable ["SoundSource", _snd];
                 _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
             };
-            hint localize format["init.sqf: %1 -> New Year still not detected, next check after half of day", (call SYG_getServerDate) call SYG_humanDateStr];
-            sleep 43200; // wait 12 hours to check new year next half of day
+            hint localize format["init.sqf: %1 -> New Year still not detected, next check after 6 hours", (call SYG_getServerDate) call SYG_humanDateStr];
+            sleep 21600; // wait 6 hours to check new year next time after
         };
         hint localize "init.sqf: New Year procedure completed";
 	};
@@ -451,7 +449,7 @@ if (isServer) then {
 				  ];
 /**
         sleep 1.0;
-        // TODO: remove event handlers as non-workable on embedded map objects
+        // removed event handlers as non-workable on embedded map objects
         // set island hotels to be more undestructible as usual
         {
             _obj = [10000,10000,0] nearestObject _x;

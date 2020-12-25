@@ -695,13 +695,14 @@ XHandleNetStartScriptClient = {
                 _sound_obj = arg(3); // play sound at observer position
                 (format[localize "STR_SYS_1162","STR_SYS_COR_NUM" call SYG_getLocalizedRandomText]) call XfHQChat; // "Spotter died..."
 		    } else {
-                _sound_obj = _killer; // play sound at sutable position
+                _sound_obj = _killer; // play sound on sutable position
                 if ( str(_killer) == str(player) ) exitWith  { // killer is this player
-                    if (count _this > 2) then {_str = format[" (%1)", arg(2)]} else {_str = "";};
-                    hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you", _str];
+                	_str  = if (count _this > 2) then {format[" (%1)", arg(2)]} else {" (no WPN)";};
+                    _str1 = if (count _this > 3) then {_str1 = format[localize "STR_SYS_1163", round( _killer distance (_this select 3)) ]} else {_str = "";}; // " from a distance of %1 m."
+                    hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you%2", _str, _str1 ];
                     // add scores
                     player addScore _score;
-                    (format[localize "STR_SYS_1160", _score + 1]) call XfHQChat; // T'was a spotter (+%1)!
+                    (format[localize "STR_SYS_1160", _score + 1, _str1]) call XfHQChat; // T'was a spotter (+%1%2)!
                 };
                	// Other player/AI killed an observer
 				if (side _killer != d_side_player) exitWith {
