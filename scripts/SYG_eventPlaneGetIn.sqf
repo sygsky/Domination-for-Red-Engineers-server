@@ -10,16 +10,19 @@ if (isPlayer  _enterer) exitWith {}; // players are allowed to enter
 if (side _enterer != d_side_player) exitWith{}; // enemies are allowed to enter :o)
 
 _position = _this select 1;
-if ( ! (_position in ["driver", "gunner", "commander"]) ) exitWith { }; // cargo is allowed
+if ( ! (_position in ["driver", "gunner", "commander"]) ) exitWith {
+	hint localize format["--- SYG_eventPlaneGetIn: AI entered %1 as %2, its owner ""%3"", no msg sent", typeOf _vehicle, _position, name leader _enterer ];
+}; // cargo is allowed
 
 _enterer action["Eject",_vehicle]; // get him/her out
 
 // send info to the player owned this AI that it is not allowed to board the plane
-if (! isPlayer ( leader _enterer ) ) exitWith {
+if (isPlayer ( leader _enterer ) ) then {
+	["msg_to_user", name leader _enterer,  [ ["STR_SYS_251"]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "No permission to fly!"
+	hint localize format["--- SYG_eventPlaneGetIn: AI entered %1 as %2, its owner ""%3"", msg sent", typeOf _vehicle, _position, name leader _enterer ];
+} else {
 	hint localize format["--- SYG_eventPlaneGetIn: AI tries to getin as %1, no player owner detected and msg not sent", _position];
 };
-["msg_to_user", name leader _enterer,  [ ["STR_SYS_251"]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "No permission to fly!"
-hint localize format["--- SYG_eventPlaneGetIn: AI entered %1 as %2, hiw player owned name ""%3"", msg sent", typeOf _vehicle, _position, name leader _enterer ];
 
 sleep 1;
 if (isEngineOn _vehicle) then {

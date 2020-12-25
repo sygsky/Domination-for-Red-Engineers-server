@@ -1,4 +1,11 @@
 // by Xeno, x_addsoldier.sqf to add AI to the player
+// Parameters array passed to the script upon activation in _this  variable is: [target, caller, ID, arguments]
+//   target (_this select 0): Object  - the object which the action is assigned to
+//   caller (_this select 1): Object  - the unit that activated the action
+//   ID (_this select 2): Number  - ID of the activated action (same as ID returned by addAction)
+//   arguments (_this select 3): Anything  - arguments given to the script if you are using the extended syntax
+//
+
 private ["_type_soldier","_units","_ai_counter","_ai_side_char","_ai_side_unit","_msg_arr","_pilot"];
 #include "x_setup.sqf"
 
@@ -114,7 +121,6 @@ _ai_side_unit = (
 	}
 );
 #endif
-
 _unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"];
 [_unit] join d_grp_caller;
 _unit setSkill 0.1;

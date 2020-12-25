@@ -74,7 +74,7 @@ _ctrl ctrlSetText _s;
 #endif
 
 _ctrl = _XD_display displayCtrl 11021;  // secondary mission title (including current SM number)
-_ctrl ctrlSetText format[localize "STR_SYS_58", current_mission_counter + 1];
+_ctrl ctrlSetText format[localize "STR_SYS_58", current_mission_counter];
 
 _ctrl = _XD_display displayCtrl 11002;  // secondary mission text control
 _s = current_mission_text;
@@ -225,8 +225,7 @@ if ( current_target_index >= 0 && (client_target_counter < number_targets)) then
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
     };
 #endif
-}
-else{
+} else {
     if ( client_target_counter >= number_targets) then { // all towns are done!
         _s = localize "STR_SYS_216"; // "occupied town" TODO: click should move to occupied town
     };

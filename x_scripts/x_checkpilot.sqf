@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_checkpilot.sqf, not used anywhere?
 private ["_vehicle","_position","_enterer"];
 
 _vehicle = _this select 0;

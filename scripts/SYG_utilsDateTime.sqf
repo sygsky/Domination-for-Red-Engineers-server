@@ -160,8 +160,7 @@ SYG_missionDayToNum = {
  * where 'md' is number of days mission is running (from 1 to ...)
  * call: _str = call SYG_missionTimeInfoStr;
  */
-SYG_missionTimeInfoStr =
-{
+SYG_missionTimeInfoStr = {
 	format["%1/%2",call SYG_nowTimeToStr, (ceil(call SYG_missionDayToNum)) call SYG_twoDigsNumber0]
 };
 
@@ -175,14 +174,10 @@ SYG_nowDateTimeToStr = SYG_nowTimeToStr;
  * call: _str = date call SYG_humanDateStr;
  *
  */
-SYG_humanDateStr =
-{
-	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then
-	{
+SYG_humanDateStr = {
+	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then {
 		format["%1 %2 %3", _this select 2, localize (format["STR_MON_%1",_this select 1]), _this select 0]
-	}
-	else
-	{
+	} else {
 		format["--- SYG_humanDateStr: Expected date format illegal:'%1'",_this]
 	};
 };
@@ -194,16 +189,13 @@ SYG_humanDateStr =
 SYG_weekDay = { // by Zeller formulae
 // _now = date;   // _now = [2014,10,30,2,30] (Oct. 30th, 2:30am)
 	_ret = -1;
-	if ( count _this >= 3 ) then
-	{
+	if ( count _this >= 3 ) then {
 		_q = _this select 2; // month day
 		_m = _this select 1; // month number (1-12)
 		if ( _m < 3 ) then { _m = _m + 12;}; // 3 = March, ... 13 = January, 14 = February
 		_Y = _this select 0; // year
 		_ret = (((_q + floor(13*(_m+1)/5) + _Y + floor(_Y/4) + 6* floor(_Y/100) + floor(_Y/400)) mod 7) +5) mod 7;
-	}
-	else
-	{
+	} else {
 		hint localize format["SYG_weekDay: Expected input array[min 3 items] is illegal -> (%1)", _this];
 	};
 	_ret
@@ -217,16 +209,10 @@ SYG_monthLen = {
 	_mon  = arg(0);
 	_year = arg(1);
 	if ( _mon < 1 || _mon > 12 ) exitWith { localize format["--- SYG_monthLen: expected month number must be in range 1..12, found %1", _this]; -1 };
-	_len = if ( _mon == 2 ) then
-	{
-		if ( (_year  mod 4) == 0 ) then
-		{
-			if ( (_year mod 100) == 0 ) then
-			{
-				if ( (_year mod 400) == 0 ) then
-				{
-					29
-				}
+	_len = if ( _mon == 2 ) then {
+		if ( (_year  mod 4) == 0 ) then {
+			if ( (_year mod 100) == 0 ) then {
+				if ( (_year mod 400) == 0 ) then { 29 }
 				else {28};
 			}
 			else {28};

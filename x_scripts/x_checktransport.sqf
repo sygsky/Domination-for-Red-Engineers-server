@@ -1,9 +1,8 @@
-// by Xeno
+// by Xeno, x_scripts\x_checktransport.sqf
 private ["_chopper","_nr"];
 _chopper = _this select 0;
 
-_nr = 1;
-if (_chopper == mr2_lift_chopper) then {_nr = 2;};
+_nr = if (_chopper == mr2_lift_chopper) then {2} else {1};
 
 call compile format ["
 while {mr%1_in_air && !isNull (driver _chopper)} do {sleep 2.453;};

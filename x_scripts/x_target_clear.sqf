@@ -13,21 +13,17 @@ deleteVehicle current_trigger;
 sleep 0.01;
 
 // TODO: for airbase initial mission, still not realized
-_stop = false;
-if ( (count _this > 0) && ( typeName (_this select 0) == "SCALAR" ) ) exitWith // e.g. [-1] execVM "x_target_clear.sqf": input param array not empty only for airbase taken by our army, nothing really to clear
-{
+if ( (count _this > 0) && ( typeName (_this select 0) == "SCALAR" ) ) exitWith  {// e.g. [-1] execVM "x_target_clear.sqf": input param array not empty only for airbase taken by our army, nothing really to clear
     ["airbase_clear"] call XSendNetStartScriptClient; // inform about this event and exit
-    _stop = true;
 };
 
 // but may be so: [thislist]  execVM "x_target_clear.sqf", and can count alive remnants
-if ( count _this > 0 && ( typeName (_this select 0) == "ARRAY" )) then
-{
-    hint localize format[ "call to x_scripts\x_target_clear.sqf with remained enemy men %1, tanks %2, cars %3, statics %4",
-        "Man" countType _this, "Tank" countType _this, "Car" countType _this, "StaticWeapon" countType _this];
+if ( count _this > 0 ) then {
+	if (  typeName (_this select 0) == "ARRAY" ) then {
+		hint localize format[ "call to x_scripts\x_target_clear.sqf with remained enemy men %1, tanks %2, cars %3, statics %4",
+			"Man" countType _this, "Tank" countType _this, "Car" countType _this, "StaticWeapon" countType _this];
+	};
 };
-
-if ( _stop ) exitWith {true};
 
 counterattack = false;
 _start_real = false;
