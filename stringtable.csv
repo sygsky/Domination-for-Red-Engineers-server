@@ -825,9 +825,10 @@ STR_SYS_1151,Finish SM(# %1),Fertig SM(# %1),¡Completa el DOP (#%1)!,Завер
 STR_SYS_1151_1,The Resistance of Sahrani asks you to complete the next side mission (# %1),Guerilla Сахрани bitten abzuschließen SM (# %1)!,¡Los partisanos de Sahrani te piden que completes una misión adicional (#%1)!,Партизаны Сахрани просят вас завершить доп. миссию (# %1)!
 STR_SYS_1152,The people of Sahrani thank you for your liberation mission!,Die Leute von Sahrani danke für Sie Befreiung mission!,¡La resistencia de Sahrani te agradece por completar la misión de liberación!,Сопротивление Сахрани благодарит Вас за выполнение освободительной миссии!
 
-STR_SYS_1160,T'was a spotter (+%1)!,Es war ein spotter (+%1)!,¡Era un observador (+%1)!,Это был корректировщик (+%1)!
+STR_SYS_1160,T'was a spotter (+%1%2)!,Es war ein spotter (+%1%2)!,¡Era un observador (+%1%2)!,Это был корректировщик (+%1%2)!
 STR_SYS_1161,"Spotter killed by ""%1"" (+%2)!","Spotter getötet durch ""%1"" (+%2)!","¡Observador asesinado por ""%1"" (+%2)!","Корректировщик убит: ""%1"" (+%2)!"
 STR_SYS_1162,Spotter died... %1,Spotter gestorben... %1,El observador murió... %1,Корректировщик погиб... %1
+STR_SYS_1163,",  dist. of %1 m.",", aus einer Entfernung von %1 m.",", desde una distancia de 1 m.",", дист. %1 м."
 
 STR_SYS_COR_NUM,5,5,5,5
 STR_SYS_COR_0,in despair,aus Verzweiflung,por la desesperación,от безысходности
