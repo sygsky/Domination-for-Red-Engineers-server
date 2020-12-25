@@ -48,7 +48,17 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Sniper"];
 		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AA"];
 		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"];
-		AI_HUT addAction[localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Pilot"]; // Pilot
+		if (d_enemy_side == "EAST") then {
+			AI_HUT addAction[localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf", "BISCamelPilot" /*"ACE_Soldier%1Pilot"*/]; // Pilot
+		} else {
+			// Set random pilot type
+			_pilot = switch (ceil (random 3)) do {
+				case 1: {"BISCamelPilot2"};
+				case 2: {"ACE_SoldierEPilot_IRAQ_RG"};
+				default {"ACE_Soldier%1Pilot"};
+			};
+			AI_HUT addAction[ localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf", _pilot ]; // Pilot
+		};
 	};
 	AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
 
