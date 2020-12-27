@@ -69,7 +69,6 @@ _fuel_capacity_in_litres = objectID2 call SYG_fuelCapacity; // litres of fuel in
 #ifdef __LIMITED_REFUELING__
 _refuel_add = 0;
 
-
 #ifdef __SUPER_RANKING__
 _rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
 #else
@@ -115,6 +114,14 @@ d_cancelled = false;
 _breaked_out = false;
 _breaked_out2 = false;
 _rep_action = player addAction[localize "STR_SYS_77","x_scripts\x_cancelrep.sqf"]; // "Отменить обслуживание"
+
+// #413: off engine before repairing
+if ( !(alive (driver objectID2) ) ) then {
+	// switch engine off only if drive not alive or is absent
+	if (isEngineOn objectID2) then {
+		objectID2 engineOn false;
+	};
+};
 
 _addscore = 0; // how many repair steps were done
 for "_wc" from 1 to _coef do {
