@@ -192,7 +192,7 @@ XHandleNetStartScriptServer = {
                     case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
                     case "Nushrok";
                     case "Klich";
-                    case "GTX460"     : { "Островитяне: привет советскому разведчику! Мы свято храним тайну  твоей Родины!" };
+                    case "GTX460"     : { "Островитяне: привет советскому разведчику! Мы свято сохраним тайну твоей Родины!" };
                     case "nejcg";
                     case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
 					case "Renton J. Junior" : {"Salinieki ir priecīgi sveikt Jūs savā dzimtajā valodā!"}; // Латыш
