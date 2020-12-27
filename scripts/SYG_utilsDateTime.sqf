@@ -61,14 +61,11 @@ SYG_twoDigsNumberSpace = {
  *
  */
 SYG_dateToStr = {
-	if ( typeName _this == "ARRAY" && count _this  >= 5 ) then
-	{
+	if ( typeName _this == "ARRAY" && count _this  >= 5 ) then {
 		private ["_str"];
 		if (count _this > 5) then { _str = (_this select 5) call SYG_twoDigsNumber0;} else { _str = "00";};
 		format["%1.%2.%3 %4:%5:%6",(_this select 2) call SYG_twoDigsNumber0,(_this select 1) call SYG_twoDigsNumber0, _this select 0, (_this select 3) call SYG_twoDigsNumber0, (_this select 4) call SYG_twoDigsNumber0, _str]
-	}
-	else
-	{
+	} else {
 		format["-- SYG_dateToStr: expected date format illegal:'%1'",_this]
 	};
 };
@@ -254,7 +251,10 @@ SYG_nowHourMinToStr = {
 // returns true if day is in a new year range (from 21.12 to 10.01)
 //
 SYG_isNewYear = {
-	(call SYG_getServerDate) call _SYG_isNewYear0
+	private ["_serverDateTime"];
+	_serverDateTime = call SYG_getServerDate;
+//	hint localize format["+++ SYG_isNewYear: %1", _serverDateTime];
+	_serverDateTime call SYG_isNewYear0
 };
 
 //
@@ -265,10 +265,11 @@ SYG_isNewYear = {
 //                _srvDate = call SYG_getServerDate;
 //                _isNewYear = _srvDate call SYG_isNewYear0;
 //
-_SYG_isNewYear0 = {
+SYG_isNewYear0 = {
 	private ["_day","_mon"];
 	// must be array of at least 3 items [year, month, day]
-	if ( count _this  < 2) exitWith { false }; // illegal or suspicious  time received from server
+//	hint localize format["+++ _SYG_isNewYear0: _this %1", _this ];
+	if ( count _this  < 3) exitWith { false }; // illegal or suspicious  time received from server
 	_mon = arg(1);
 	_day = arg(2);
 	( ((_mon == 12) && (_day >= NEW_YEAR_FIRST_DAY)) || ((_mon == 1) && ( _day <= NEW_YEAR_LAST_DAY)))
@@ -309,16 +310,13 @@ SYG_getServerDate = {
 
 	//hint localize format["SYG_getServerDate(1): _this %6, _time %5, _adddays %1, _addsecs %2, _ssecs %3, _ssecsreminder %4", _adddays, _addsecs, _ssecs, _ssecsreminder, _time, _this];
 
-	if ( _addsecs >= _ssecsreminder ) then
-	{
+	if ( _addsecs >= _ssecsreminder ) then {
 		_adddays = _adddays + 1; // bump next server day
 		_addsecs = _addsecs - _ssecsreminder;
 		//hint localize format["SYG_getServerDate(2): day added by seconds, _adddays %1, _addsecs %2", _adddays, _addsecs];
-	}
-	else { _addsecs = _ssecs + _addsecs;};
+	} else { _addsecs = _ssecs + _addsecs;};
 
-	if ( _adddays > 0 ) then // bump days
-	{
+	if ( _adddays > 0 ) then {// bump days
 	     // server year
 		_year = argp(SYG_client_start,0);
 		 // server month (1..12)
@@ -329,11 +327,9 @@ SYG_getServerDate = {
 		{
 			_monlen = if ( _mon == 2 ) then { if (_year call SYG_leapYear) then { 29} else {28}} else {argp(SYG_monLength,_mon-1)};
 			_newday = _day + _adddays;
-			if ( _newday > _monlen) then // bump month as days  are out of range
-			{
+			if ( _newday > _monlen) then {// bump month as days  are out of range
 				_newday  = _monlen;
-				if ( _mon == 12 ) then // December, so bump year too
-				{
+				if ( _mon == 12 ) then { // December, so bump year too
 					_year = _year + 1;
 					_ret set [0, _year];
 					_mon = 1;
@@ -346,11 +342,11 @@ SYG_getServerDate = {
 	};
 	// bump hours, mins, secs
 	_hour = floor(_addsecs / HOUR_SECS);
-	_ret set [3, _hour ];
+	_ret set [ 3, _hour ];
 	_min = floor((_addsecs % HOUR_SECS)/60);
-	_ret set [4, _min ];
+	_ret set [ 4, _min ];
 	_sec = round (_addsecs % 60);
-	_ret set[ 5, _sec ];
+	_ret set [ 5, _sec ];
 	_ret
 };
 
@@ -363,8 +359,7 @@ SYG_countDaysInMonth = {
 	_m1 = arg(0);
 	_m2 = arg(1);
 	_y  = arg(3);
-	for "_i" from _m1 to _m2 do
-	{
+	for "_i" from _m1 to _m2 do {
 		_cnt  = _cnt + (if (_i != 2) then { SYG_monLength select  _i } else { if (_y call SYG_leapYear) then {29} else {28} } );
 	};
 	_cnt;
