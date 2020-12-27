@@ -32,20 +32,16 @@ _makeNameTarget = {
 _makeNameObject = {
     private ["_name"];
     _name = "<obj>"; // default value
-    if ( _this isKindOf "CAManBase" ) exitWith
-    {
+    if ( _this isKindOf "CAManBase" ) exitWith {
         if ( isPlayer _this) then {_name = name _this }
         else { _name = typeOf _this; };
         _name
     };
 
     _name = typeOf _this;
-    if ( (count crew _this) == 1) then
-    {
+    if ( (count crew _this) == 1) then {
         if ( isPlayer((crew _this) select 0) ) then {_name = format["%1(%2)",name ((crew _this) select 0), _name]};
-    }
-    else
-    {
+    } else {
         if (isPlayer (effectiveCommander _this)) then {_name = format["%1(%2)",name (effectiveCommander _this), _name] };
     };
     _name
@@ -241,9 +237,9 @@ _rocketNamesArr  = [
      "M_Strela_AA",  "ACE_Missile_Strela"
     ];
 _rocketParamsArr = [
-    _rocketJavelin, _rocketJavelin,
-    _rocketStinger, _rocketStinger, _rocketStinger,
-    _rocketStrela,  _rocketStrela
+    _rocketJavelin,       _rocketJavelin,
+    _rocketStinger,       _rocketStinger, _rocketStinger,
+     _rocketStrela,       _rocketStrela
     ];
 
 _target  = _this select 0;
@@ -253,8 +249,7 @@ _replaced = false;
 
 //hint localize format["+++ ACE_MANDO_REPLACE_MISSILE: %1", _this];
 
-if ( local _shooter ) then
-{
+if ( local _shooter ) then {
 // hint format["M:%1", _this];
     _missile = nearestObject [_shooter, _type];
     sleep 0.4;
@@ -262,8 +257,7 @@ if ( local _shooter ) then
     _vdir = vectorDir _missile;
     _dir = (_vdir select 0) atan2 (_vdir select 1);
     _ind = _rocketNamesArr find _type;
-    if (_ind >= 0) then
-    {
+    if (_ind >= 0) then {
         _replaced = true;
         _dropped = false;
         _ra = _rocketParamsArr select _ind;
@@ -288,9 +282,7 @@ if ( local _shooter ) then
                 _ra call _applyStrelaParams1;
             };
         };
-    }
-   else
-   {
+    } else {
         if (!mando_replace_all_missiles) exitWith {_replaced = false;};
         _replaced = true;
         _ra = _rocketDefault;
@@ -356,7 +348,7 @@ _target reveal _shooter;
 
 _name  = call _makeNameShooter;
 _name1 = call _makeNameTarget;
-_arr call mando_missile_handler;
+_arr call mando_missile_handler; // variable in ACE code
 //2020/04/04, 16:33:28 +++ MANDO Missile: from ACE_SoldierWAA.ACE_Missile_Stinger spd 0 m/s -> Виталий(ACE_Mi17_MG) dmg 0.01, h 12 d 88 spd 255 m/s, near Gulan
 hint localize format[ "+++ MANDO Missile: from %1.%2 spd %3 m/s -> %4 dmg %5, h %6 d %7 spd %8 m/s, near %9",
     _name,

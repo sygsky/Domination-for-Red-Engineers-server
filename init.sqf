@@ -364,7 +364,7 @@ if (isServer) then {
 
     	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
     	while {isNil "SYG_client_start"} do {sleep 60}; // wait for 1st user connection with known time and receiving real server time from him (this is Arma!!!)
-        hint localize "init.sqf: New Year procedure, ""SYG_client_start"" detected";
+        hint localize format["init.sqf: New Year procedure, ""SYG_client_start"" detected %1", SYG_client_start];
 
     	if ( (argp(SYG_client_start,1) > 1) && (argp(SYG_client_start,1) < 12) ) exitWith {
     	    hint localize "init.sqf: New Year procedure completed, month not DEC or JAN";
@@ -383,7 +383,7 @@ if (isServer) then {
                  // set radio on top of the table
                 _vec setPos [ 9384.3, 9972.8, 1.5];
                 _vec setDir 90;
-                sleep 30.512;	// wait until dropped to ground
+                sleep 5.512;	// wait until dropped to the underlying surface
                 _snd = createSoundSource ["Music", (getpos _vec), [], 0];// only one source on the server should be created
 
             //	hint localize format["SoundSource created: %1, typeOf %2", _snd, typeOf _snd];
@@ -391,7 +391,7 @@ if (isServer) then {
                 _vec setVariable ["SoundSource", _snd];
                 _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
             };
-            hint localize format["init.sqf: %1 -> New Year still not detected, next check after 6 hours", (call SYG_getServerDate) call SYG_humanDateStr];
+            hint localize format["init.sqf: server date/time %1 -> New Year not detected, next check after 6 hours", (call SYG_getServerDate) call SYG_dateToStr];
             sleep 21600; // wait 6 hours to check new year next time after
         };
         hint localize "init.sqf: New Year procedure completed";

@@ -129,9 +129,9 @@ XHandleNetStartScriptServer = {
 			    private ["_userLogin", "_ind"];
 			    _userLogin = arg(1);
 			    _ind = SYG_userNames find _userLogin;
+				private ["_localDate", "_timeOffset"];
+				_localDate  = arg(2);
 			    if (_ind >= 0 ) then {
-    			    private ["_localDate", "_timeOffset"];
-			        _localDate  = arg(2);
 			        _timeOffset = SYG_localZones select _ind;
 
 			        // store real time or the server (MSK must be guarantied)
