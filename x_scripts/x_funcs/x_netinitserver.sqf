@@ -170,19 +170,16 @@ XHandleNetStartScriptServer = {
 
 			// Prepare 1st message for the new player
 
-			if (isNil "d_connection_number") then
-			{
+			if (isNil "d_connection_number") then {
 			    d_connection_number = 1;
     			_msg_arr = [["STR_SYS_604_0"]]; // "You are the first [English speaking] warrior in this dangerous mission to liberate Sahrani!"
-			}
-			else
-			{
+			} else {
 			    d_connection_number = d_connection_number + 1;
     			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the %1 of the warrior-internationalist in their troubled land"
 			};
             _name = _this select 1;
-            // add language specific messages if possible
-            if (localize "STR_LANGUAGE" != "RUSSIAN") then {
+            // add language specific message if available
+//            if (localize "STR_LANGUAGE" != "RUSSIAN") then {
                 _msg = switch (_name) do {
                 	case "Comrad (LT)":
                     case "Rokse [LT]" : {"Salos malonu pasveikinti jus į savo gimtąja kalba!"}; // Литовец!
@@ -195,14 +192,15 @@ XHandleNetStartScriptServer = {
                     case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
                     case "Nushrok";
                     case "Klich";
-                    case "GTX460"     : { "Островитяне: привет советскому воину-разведчику! Мы никому не расскажем о твоём настоящем языке!" };
+                    case "GTX460"     : { "Островитяне: привет советскому разведчику! Мы свято храним тайну  твоей Родины!" };
                     case "nejcg";
                     case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
+					case "Renton J. Junior" : {"Salinieki ir priecīgi sveikt Jūs savā dzimtajā valodā!"}; // Латыш
                     default             { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
                 };
 
                 _msg_arr set [ count _msg_arr, [_msg] ];
-  			};
+//  			};
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then {
     			// first time entry after half of game
