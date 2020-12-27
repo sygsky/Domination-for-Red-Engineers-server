@@ -378,18 +378,29 @@ if (isServer) then {
             // now check NewYear period
             if ( call SYG_isNewYear ) exitWith {// make gift for a player on a New Year event
                 hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
-                private ["_vec","_snd"];
-                _vec = "Radio" createVehicle [0, 0, 0];
+                private ["_veh","_snd"];
+                _veh = "Radio" createVehicle [0, 0, 0];
                  // set radio on top of the table
-                _vec setPos [ 9384.3, 9972.8, 1.5];
-                _vec setDir 90;
+                _veh setPos [ 9384.3, 9972.8, 1.5];
+                _veh setDir 90;
                 sleep 5.512;	// wait until dropped to the underlying surface
-                _snd = createSoundSource ["Music", (getpos _vec), [], 0];// only one source on the server should be created
+                _snd = createSoundSource ["Music", (getpos _veh), [], 0];// only one source on the server should be created
 
             //	hint localize format["SoundSource created: %1, typeOf %2", _snd, typeOf _snd];
 
-                _vec setVariable ["SoundSource", _snd];
-                _vec addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
+                _veh setVariable ["SoundSource", _snd];
+                _veh addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
+                [_veh,_snd] spawn {
+	                private ["_veh","_snd"];
+	                _veh = _this select 0;
+	                _snd = _this select 1;
+	                while { (alive _veh) && (alive _snd) } do {
+	                	sleep 60; // each minute
+	                	if ((_veh distance _snd) > 0.5) then {
+	                		_snd setPos (getPos _veh);
+	                	};
+	                };
+                };
             };
             hint localize format["init.sqf: server date/time %1 -> New Year not detected, next check after 6 hours", (call SYG_getServerDate) call SYG_dateToStr];
             sleep 21600; // wait 6 hours to check new year next time after
