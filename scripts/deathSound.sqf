@@ -55,7 +55,8 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 
 // check if we are in water
 if (surfaceIsWater (getPos _unit) ) exitWith {
-	["say_sound", _unit, call SYG_getWaterDefeatTracks] call XSendNetStartScriptClientAll; // medieval music if suicide near castle
+	_sound =  SYG_getWaterDefeatTracks;
+	["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // in water  sounds if suicide in water
  };
 
 // check if you are near church etc
