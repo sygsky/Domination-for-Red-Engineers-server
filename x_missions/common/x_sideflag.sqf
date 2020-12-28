@@ -47,7 +47,8 @@ while {true} do {
 	_owner = flagOwner _flag;
 	#ifndef __TT__
 	_ownedNow = alive _owner;  // (alive owner) is the same as (flag owned)
-	if (  _ownedNow != _ownedPrev ) then {// state changed and if alive, flag is owned
+	if ((_ownedNow || _ownedPrev) && !(_ownedNow && _ownedPrev)) then {// state changed
+//	if (  _ownedNow != _ownedPrev ) then { // logical values can't be compared in this manner (!=, == etc)
 	    _ownedPrev = _ownedNow; // save current state to check it changed or not at the next step
 	    _msg = if ( _ownedNow ) then { [ "STR_SYS_FLAG_OWNED", name _owner ] } else { [ "STR_SYS_FLAG_EMPTY" ] };
         [ "msg_to_user", "", [ _msg ] ] call XSendNetStartScriptClientAll; // inform about flag state change

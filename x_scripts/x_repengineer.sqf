@@ -117,7 +117,7 @@ _rep_action = player addAction[localize "STR_SYS_77","x_scripts\x_cancelrep.sqf"
 
 // #413: off engine before repairing
 if ( !(alive (driver objectID2) ) ) then {
-	// switch engine off only if drive not alive or is absent
+	// switch engine off only if driver not alive or is absent
 	if (isEngineOn objectID2) then {
 		objectID2 engineOn false;
 	};

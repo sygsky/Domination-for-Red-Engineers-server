@@ -36,7 +36,7 @@ while {!_offz_at_base && !_is_dead} do {
 			////////////////////////////////////////////++ Dupa by Engineer's request
 			_nobjs = nearestObjects [_officer, ["CAManBase"], 20];
             {
-                if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || ((leader _x) == _x) ) ) exitWith {
+                if ((isPlayer _x) && ((format ["%1", _x] in d_can_use_artillery) || ((leader _x) == _x) ) ) exitWith {
                     _rescued = true;
                     _officer setCaptive true;
                     sleep 0.1;

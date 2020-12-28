@@ -95,7 +95,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
 			_nobjs = nearestObjects [_leader, ["Man"], 15];
 			if (count _nobjs > 0) then {
 				{
-					if ((isPlayer _x) AND ((format ["%1", _x] in ["RESCUE","RESCUE2"]) OR (leader group _x == _x))) exitWith {
+					if ((isPlayer _x) AND ((format ["%1", _x] in d_can_use_artillery) OR (leader group _x == _x))) exitWith {
 						_rescued = true;
 						_retter = _x;
 						{

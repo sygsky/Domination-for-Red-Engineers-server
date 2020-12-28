@@ -106,7 +106,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                 _nobjs = nearestObjects [_x, [_soldier], 20];
                 _pilot = _x;
                 {
-                    if ((isPlayer _x) && ((format ["%1", _x] in ["RESCUE","RESCUE2"]) || (leader group _x == _x))) exitWith {
+                    if ((isPlayer _x) && ((format ["%1", _x] in d_can_use_artillery) || (leader group _x == _x))) exitWith {
                         if ((_x distance _pilot) < _dist) then
                         {
                             _rescue = _x;

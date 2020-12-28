@@ -69,7 +69,7 @@ while { true } do {
 
         _player_not_in_GRU_mission = isNil "player_is_on_town_raid";
         #ifdef __DISABLE_GRU_BE_PILOTS__
-        _player_is_GRU             = (format["%1",player]) in ["RESCUE","RESCUE2"];
+        _player_is_GRU             = (format["%1",player]) in d_can_use_artillery;
         #endif
         _enemy_vec = false; // if vehicle is enemy trophy one
         if ( _player_not_in_GRU_mission ) then {

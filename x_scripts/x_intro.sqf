@@ -107,7 +107,7 @@ if (_sound == "") then { // select random music for ordinal day
 					if ( _pos >= 0 ) exitWith { { [ _personalSounds ,_sounds select _pos ] call SYG_addArrayInPlace } forEach [1,2,3] };
 				} forEach _players;
             };
-            if ( format["%1",player] in ["RESCUE","RESCUE2"] ) then {
+            if ( format["%1",player] in d_can_use_artillery ) then {
                 // add special music for GRU soldiers
                 { [ _personalSounds, ["from_russia_with_love","bond1","bond"] ] call SYG_addArrayInPlace } forEach [1,2,3];
             }; // as you are some kind of spy
