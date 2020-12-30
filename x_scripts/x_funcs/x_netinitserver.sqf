@@ -182,7 +182,7 @@ XHandleNetStartScriptServer = {
 //            if (localize "STR_LANGUAGE" != "RUSSIAN") then {
                 _msg = switch (_name) do {
                 	case "Comrad (LT)";
-                    case "Rokse [LT]" : {"Salos malonu pasveikinti jus į savo gimtąja kalba!"}; // Литовец!
+                    case "Rokse [LT]" : {"Salos gyventojai sveikina tave tavo gimtaja kalba!"}; // Литовец!
                     case "Aron"       : { "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!" }; // Slovak };
                     case "gyuri";
                     case "Frosty";

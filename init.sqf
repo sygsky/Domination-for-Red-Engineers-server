@@ -378,10 +378,11 @@ if (isServer) then {
             // now check NewYear period
             if ( call SYG_isNewYear ) exitWith {// make gift for a player on a New Year event
                 hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
-                private ["_veh","_snd"];
+                private ["_veh","_snd","_pos"];
                 _veh = "Radio" createVehicle [0, 0, 0];
                  // set radio on top of the table
-                _veh setPos [ 9384.3, 9972.8, 1.5];
+                 _pos = if (random 2 > 1) then { [ 9384.3, 9972.8, 1.5] } else { [ 9384.3, 9971.6, 1.5] };
+                _veh setPos _pos;
                 _veh setDir 90;
                 sleep 5.512;	// wait until dropped to the underlying surface
                 _snd = createSoundSource ["Music", (getpos _veh), [], 0];// only one source on the server should be created
@@ -397,7 +398,7 @@ if (isServer) then {
 	                while { (alive _veh) && (alive _snd) } do {
 	                	sleep 60; // each minute
 	                	if ((_veh distance _snd) > 0.5) then {
-	                		_snd setPos (getPos _veh);
+	                		_snd setPos (getPos _veh); // move sound to its source
 	                	};
 	                };
                 };

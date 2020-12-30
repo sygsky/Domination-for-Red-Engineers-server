@@ -697,8 +697,8 @@ XHandleNetStartScriptClient = {
 		    } else {
                 _sound_obj = _killer; // play sound on sutable position
                 if ( str(_killer) == str(player) ) exitWith  { // killer is this player
-                	_str  = if (count _this > 2) then {format[" (%1)", arg(2)]} else {" (no WPN)";};
-                    _str1 = if (count _this > 3) then {_str1 = format[localize "STR_SYS_1163", round( _killer distance (_this select 3)) ]} else {_str = "";}; // " from a distance of %1 m."
+                	_str  = if (count _this > 2) then { format[" (%1)", arg(2)]} else { (" (no WPN)"); };
+                    _str1 = if (count _this > 3) then { format[ localize "STR_SYS_1163", round( _killer distance (_this select 3)) ] } else { "" }; // " from a distance of %1 m."
                     hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you%2", _str, _str1 ];
                     // add scores
                     player addScore _score;
