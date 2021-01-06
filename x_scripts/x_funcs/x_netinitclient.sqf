@@ -641,17 +641,26 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		#endif
+
 		case "x_wreck_repair": {
 			__compile_to_var
 			switch (x_wreck_repair select 2) do {
-				case 0: {
-					(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "Restoring %1 at %2, this will take some time..."
+				case 0: { // start of restore procedure
+					//	x_wreck_repair = [_type_name, _name, 0, name _player ];
+					if ((name player) == (x_wreck_repair select 3)) then {
+						(format [localize "STR_SYS_269_1", x_wreck_repair select 0, localize (x_wreck_repair select 1), d_ranked_a select 29]) call XfHQChat; // "Restoring %1 at %2, your score (+%3). This will take some time..."
+						playSound "good_news";
+						player addScore (d_ranked_a select 29);
+					} else {
+						(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1), x_wreck_repair select 3]) call XfHQChat; // "Restoring %1 at %2 (%3), this will take some time..."
+					};
 				};
 				case 1: {
 					(format [localize "STR_SYS_270", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%1 ready at %2"
 				};
 			};
 		};
+
 		case "recaptured": {
 			[(_this select 1),(_this select 2)] spawn XRecapturedUpdate;
 		};

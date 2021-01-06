@@ -23,7 +23,22 @@ while {true} do {
 			_wreck = [_rep_station,_types] call XGetWreck;
 		};
 	};
-	
+ 	_player = objNull;
+#ifdef __RANKED__
+	// wreck vehicle detected on recovery service, lets award player who delivered it
+	 _nearArr =   nearestObjects [getPos _rep_station, ["Man"], 30];
+	 if (count _nearArr > 0 ) then {
+	 	{
+			if (!isNull _player ) exitWith {};
+	 		if (alive _x) then {
+				if (side _x == d_side_player) then {
+					if (vehicle _x == _x) exitWith { _player = _x; };
+					if ( driver (vehicle _x) == _x ) exitWith { _player = _x };
+				};
+			};
+	 	} forEach _nearArr;
+	 };
+#endif
 	_type = typeOf _wreck;
 	_dpos = position _wreck;
 	_ddir = direction _wreck;
@@ -35,7 +50,8 @@ while {true} do {
 	sleep 0.3;
 	_new_vec lock true;
 	_type_name = [_type,0] call XfGetDisplayName;
-	x_wreck_repair = [_type_name, _name, 0];
+	_player = if (isNull _player) then {""} else {name _player};
+	x_wreck_repair = [_type_name, _name, 0, _player ];
 	["x_wreck_repair", x_wreck_repair] call XSendNetStartScriptClient;
 
 	_sleep_time = 120;
