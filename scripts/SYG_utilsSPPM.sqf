@@ -64,7 +64,7 @@ SYG_findNearestSPPM = {
     hint localize format[ "+++ SYG_utilsSPPM.sqf#SYG_findNearestSPPM: _this %1, found %2 cone[s] %3",
     	_this,
     	count _arr,
-    		_arr call SYG_Variables2Arr
+    	_arr call SYG_Variables2Arr
     	];
 #endif
 	_marker_name = "";

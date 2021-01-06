@@ -20,9 +20,6 @@
 //#define __WaitForGroup waitUntil {sleep random 0.3;can_create_group};
 #define __WaitForGroup while {!can_create_group} do {sleep 0.1 + random (0.2)};
 
-//#define __WaitForPatrol waitUntil {sleep 0.321;can_add_patrol_group};
-//#define __WaitForPatrol while {!can_add_patrol_group} do {sleep 0.1 + random (0.2)};
-
 #define __GetEGrp(grpnamexx) grpnamexx = [d_enemy_side] call x_creategroup;
 
 #define __TargetInfo _target_array2 = target_names select current_target_index;_current_target_name = _target_array2 select 1;

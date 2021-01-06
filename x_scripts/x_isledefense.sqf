@@ -204,7 +204,7 @@ _make_isle_grp = {
  *
  */
 _replace_grp =  {
-	private ["_igrpa","_i"];
+	private ["_igrpa","_i","_vecs"];
 	_i = _this;
 #ifdef __SYG_PRINT_ACTIVITY__
 	hint localize format["+++ %1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
@@ -553,12 +553,12 @@ while { true } do {
 			    if ( (current_counter >= number_targets) /* && (!main_target_ready)*/ ) then {
 			        // not replace dead group as enemy is fled
                 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
-                    hint localize format["+++ x_isledefense: patrol #%1 will not restored as all main targets completed", _i];
+                    hint localize format["+++ x_isledefense: patrol #%1 will not be restored as all main targets completed", _i];
                 #endif
    					_igrpa set [PARAM_STATUS, STATUS_STUB];
-			        breakTo "main_loop";
 			        // TODO: Send remaining  groups to a certain point on the coast, with the goal of transporting them back to the United States
 			        // TODO: select this point from predefined ones set manually in the editor
+			        breakTo "main_loop";
 			    };
 
 				if (time > _timestamp) then {
@@ -575,7 +575,7 @@ while { true } do {
 
                                 ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_DETECTED, [_witness, _pos, _size, _pattype]] call XSendNetStartScriptClient;
                             };
-                        } forEach argp(_igrpa, PARAM_VEHICLES); // find first alive vehicle
+                        } forEach argp(_igrpa, PARAM_VEHICLES); // this lopp check if patrol created has at least one vehicle
 					};
     				if (_stat == STATUS_DEAD_WAIT_RESTORE) then {_dead_patrols = (_dead_patrols -1) max 0;};
 				};

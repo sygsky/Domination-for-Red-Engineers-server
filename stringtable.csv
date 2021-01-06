@@ -536,7 +536,8 @@ STR_SYS_265,"This is %1 artillery, roger.","Das ist das %1 Artillerie, roger.",E
 STR_SYS_266,"%1 artillery executing %2 strike, salvoes %2","%1 Artillerie ausführen %1 strike, Salven %2","%1 Art.batería, realizado: munición %1, voleas: %2.","%1 арт.батарея, выполнили: боеприпасы %1, залпов: %2."
 STR_SYS_267,%1 artillery available,%1 Artillerie zur Verfügung,%1 Art.batería disponible!,%1 арт.батарея доступна!
 STR_SYS_268,%1 artillery available again in a few minutes,"%2 Artillerie wieder zur Verfügung stehen, in ein paar Minuten",%1 Art.¡la batería estará disponible en unos minutos!,%1 арт.батарея будет доступна через несколько минут!
-STR_SYS_269,"Restoring %1 at %2, this will take some time...","Wiederherstellen %1 at %2, dies wird einige Zeit in Anspruch nehmen...","%2, técnica: %1. Tomará tiempo...","%2, техника: %1. Это потребует времени..."
+STR_SYS_269,"Restoring %1 at %2 (%3), this will take some time...","Wiederherstellen %1 at %2 (%3), dies wird einige Zeit in Anspruch nehmen...","%2, técnica: %1 (%3). Tomará tiempo...","%2, техника: %1 (%3). Это потребует времени..."
+STR_SYS_269_1,"Restoring %1 at %2, your score (+%3). It will take some time...","%2, Technik: %1, du bekommst Punkte (+%3). Das wird Zeit brauchen...","%2, técnica: %1, obtienes puntos (+%3). Esto llevará tiempo...","%2, техника: %1, Вы получаете очки (+%3). Это потребует времени..."
 STR_SYS_270,%1 ready at %2,%1 ready at %2,%2 ha terminado de trabajar en %1,%2 завершил работу над %1
 STR_SYS_271,Next target is: %1,Nächstes Ziel ist: %1,Objetivo actual: %1,Текущая цель: %1
 STR_SYS_271_1,large,groß,grande,большая
@@ -1071,7 +1072,7 @@ STR_FLAG_7,(Create %1),(Anlegen %1),(Crear %1),(Создать %1)
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc)
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,79,79,79,79
+STR_RUM_NUM,80,80,80,80
 STR_RUM_NIGHT,They are sleeping in %3,Alle schlafen in %3,"En %3, todos duermen, sin embargo","В %3 все спят, однако"
 STR_RUM_0,Rumors are absent! It's weird...,Gerüchte sind nicht vorhanden! Es ist seltsam...,¡No hay rumores! Lo cual es extraño...,Слухи отсутствуют! Что странно...
 STR_RUM_1,Enemy refuel truck will help only if your vehicle engine is on,"Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf",El camión cisterna enemigo repostará con el motor del equipo encendido,Вражеский бензовоз заправляет при включенном двигателе техники
@@ -1151,7 +1152,8 @@ STR_RUM_74,Usually a strong wind blows over the ocean,Normalerweise weht ein sta
 STR_RUM_75,Rumors depend on the time of day and length of stay,Gerüchte hängen von der Tageszeit und der Dauer des Aufenthalts ab,Los rumores cambian con la hora del día y la Duración de la estancia,Слухи меняются от времени дня и длительности пребывания
 STR_RUM_76,"If MHQ is damaged by more than 0.5, the teleport on it will not work. Always repair MHQ!","Wenn MHQ um mehr als 0.5 beschädigt ist, funktioniert der Teleport nicht. MHQ immer reparieren!","Si el KSHM se daña más de 0.5, el teletransportador no funcionará en él. ¡Siempre arregle KSHM!",При повреждении КШМ более 0.5 телепорт на нём не сработает. Всегда чините КШМ!
 STR_RUM_77,Points for taking a city are given within a radius of 500 meters from its center,Punkte für die Einnahme einer Stadt werden in einem Umkreis von 500 Metern um ihr Zentrum vergeben,Los puntos por tomar la ciudad se dan en un Radio de 500 metros desde su centro,Очки за взятие города даются в радиусе 500 метров от его центра
-STR_RUM_78,A sunken vehicle can be saved if it is no deeper than -7 meters,"Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -7 Meter ist",Se puede obtener un vehículo de combate ahogado desde una profundidad de al menos -7 metros,Утонувшую боевую машину можно достать с глубины не менее -7 метров
+STR_RUM_78,A sunken vehicle can be saved if it is no deeper than -7 meters,"Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -7 Meter ist",Se puede obtener un vehículo de combate ahogado desde una profundidad de al menos -7 metros,Утонувшую боевую машину можно достать с глубины не более -7 метров
+STR_RUM_79,The siren and yellow missiles on the base appear on the radio tower closest to the enemy,"Die Sirene und die gelben Raketen auf der Basis erscheinen auf dem Funkmast, der dem Feind am nächsten ist",La sirena y los misiles amarillos de la base aparecen en el mástil de radio más cercano al enemigo,Сирена и жёлтые ракеты на базе появляются на ближайшей к врагу радомачте
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!",¡Parece que los guerrilleros ya están actuando!,"Х-м-м, похоже, партизаны уже действуют!"

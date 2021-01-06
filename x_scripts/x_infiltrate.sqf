@@ -154,34 +154,24 @@ while { true } do {
 		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]); // why this is added? Don't know :o(
 		sleep 0.5;
 		_cnt_dead = 0;
-		if (count _arr > 0) then
-		{
-            for "_i" from 0 to count _arr - 1 do
-            {
+		if (count _arr > 0) then {
+            for "_i" from 0 to count _arr - 1 do {
                 _vehicle = _arr select _i;
-                if ( [getPos _vehicle, d_base_array] call SYG_pointInRect ) then // in rect of base
-                {
+                if ( [getPos _vehicle, d_base_array] call SYG_pointInRect ) then { // in rect of base
                     if ( !isNull _vehicle ) then
                     {
                         _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
-                        if (!_found) then
-                        {
-                            if ( _vehicle isKindOf "CAManBase") exitWith
-                            { // check if dead man not player
+                        if (!_found) then {
+                            if ( _vehicle isKindOf "CAManBase") exitWith { // check if dead man not player
                                 _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
 
-                                if ( _found ) then
-                                {
+                                if ( _found ) then {
                                     // dead body
                                     _cnt_dead = _cnt_dead + 1;
-                                }
-                                else
-                                {
+                                } else {
                                     // check for zombies found (not player and alive)
-                                    if ( primaryWeapon _vehicle == "") then // may be zombi or AI at rearming progress
-                                    {
-                                        if (name _vehicle == "Error: No unit") then
-                                        {
+                                    if ( primaryWeapon _vehicle == "") then { // may be zombi or AI at rearming progress
+                                        if (name _vehicle == "Error: No unit") then {
                                             // Yesss, he is ZOMBIiiiii..... try to remove him in any way
                                             //_vehicle setPos [ 0, 0, 0 ];
                                             _vehicle setDamage 1.1;
@@ -196,18 +186,15 @@ while { true } do {
                                     };
                                 };
                             };
-                            if ( _vehicle isKindOf "Car") exitWith
-                            {
+                            if ( _vehicle isKindOf "Car") exitWith {
                                 _found = !(alive _vehicle || (_vehicle in d_helilift1_types) ); // don't clean alive and ressurrectable vehicles
                             };
 
                             // check if holder is on the ground or is hanging in air (some Arma bug)
                             _found = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
                         };
-                        if ( _found ) then
-                        {
-                            if (!(_vehicle in _items_to_clean)) then
-                            {
+                        if ( _found ) then {
+                            if (!(_vehicle in _items_to_clean)) then {
                                 _items_to_clean set [ count _items_to_clean, _vehicle];
                             };
                         };
@@ -219,20 +206,17 @@ while { true } do {
 		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2));
 		_time_to_clean = time + _delay;
 #ifdef __DEBUG_CLEAN_PRINT__
-		hint localize format["+++ x_infiltrate.sqf: %3 base cleaning proc: %1 cleaned / %2 items added, next in %4",
+		hint localize format["+++ x_infiltrate.sqf: %3 base cleaning proc: %1 cleaned / %2 items added, next after %4",
 		        _str, count _items_to_clean, call SYG_missionTimeInfoStr, _delay call SYG_secondsToStr
 		    ];
 		if ((count _items_to_clean) > 0) then {
 			_arr = [];
-			for "_i" from 0 to (15 min (count _items_to_clean)) - 1 do
-			{
+			for "_i" from 0 to (15 min (count _items_to_clean)) - 1 do {
 				_arr set [_i, typeOf (_items_to_clean select _i)];
 			};
 			hint localize format["+++ x_infiltrate.sqf: items to clear later %1 ...", _arr];
 			_arr = [];
-		}
-		else
-		{
+		} else {
 			hint localize "+++ x_infiltrate.sqf: no items to clear found";
 		};
 #endif		
@@ -299,7 +283,7 @@ while { true } do {
 	//[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
 	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2cut.sqf";
 #ifdef __PRINT__
-	hint localize format["+++ x_infiltrate.sqf: ejected at %1, on point %2", date, _msg ];
+	hint localize format["+++ x_infiltrate.sqf: started at %1 on pnt %2", date, _msg ];
 #endif
 
 #ifdef __DEBUG__

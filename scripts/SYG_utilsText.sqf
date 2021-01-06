@@ -101,7 +101,7 @@ SYG_joinArr = {
     if ( typeName _this != "ARRAY" ) exitWith {"?#1"};
     if ( count _this < 2 ) exitWith {"?#2"};
     if ( typeName (_this select 0) != "ARRAY" ) exitWith {"?#3"};
-    if ( count (_this select 0) == 0 ) exitWith {""};
+    if ( count (_this select 0) == 0 ) exitWith {"?#4"};
     private ["_str", "_sep", "_arr"];
     _sep = _this select 1;
     if ( typeName _sep != "STRING" ) then { _sep = str(_sep) };

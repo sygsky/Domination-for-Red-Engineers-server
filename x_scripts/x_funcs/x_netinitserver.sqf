@@ -180,26 +180,29 @@ XHandleNetStartScriptServer = {
             _name = _this select 1;
             // add language specific message if available
 //            if (localize "STR_LANGUAGE" != "RUSSIAN") then {
-                _msg = switch (_name) do {
-                	case "Comrad (LT)";
-                    case "Rokse [LT]" : {"Salos gyventojai sveikina tave tavo gimtaja kalba!"}; // Литовец!
-                    case "Aron"       : { "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!" }; // Slovak };
-                    case "gyuri";
-                    case "Frosty";
-                    case "Petigp"     : { "Üdvözöljük az alap a 'Vörös mérnökök'!" }; // Hungarian // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
-                    case "Marco"      : { "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)" };// // veh. killer
-                    case "Shelter";
-                    case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
-                    case "Nushrok";
-                    case "Klich";
-                    case "GTX460"     : { "Островитяне: привет советскому разведчику! Мы свято сохраним тайну твоей Родины!" };
-                    case "nejcg";
-                    case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
-					case "Renton J. Junior" : {"Salinieki ir priecīgi sveikt Jūs savā dzimtajā valodā!"}; // Латыш
-                    default             { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
-                };
+			_msg = switch (_name) do {
+				case "Comrad (LT)";
+				case "Rokse [LT]" : {"Salos gyventojai sveikina tave tavo gimtaja kalba!"}; // Литовец!
+				case "Aron"       : { "Ostrovania su radi, vitam vas vo svojom rodnom jazyku!" }; // Slovak };
+				case "gyuri";
+				case "Frosty";
+				case "Petigp"     : { "Üdvözöljük az alap a 'Vörös mérnökök'!" }; // Hungarian // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
+				case "Marco"      : { "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)" };// // veh. killer
+				case "Shelter";
+				case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
+				case "Nushrok";
+				case "Klich";
+				case "GTX460"     : { "Островитяне: привет советскому разведчику! Мы свято сохраним тайну твоей Родины!" };
+				case "nejcg";
+				case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
+				case "Renton J. Junior" : {"Salinieki ir priecīgi sveikt Jūs savā dzimtajā valodā!"}; // Латыш
+				case "Lt. Jay" : {"Les habitants de l'île sont heureux de vous accueillir dans votre langue maternelle !"}; // Le francais
+				case "Elia";
+				case "Moe" : {"Gli isolani sono lieti di darvi il benvenuto nella loro lingua madre italiana !"}; // Italian language
+				default             { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
+			};
 
-                _msg_arr set [ count _msg_arr, [_msg] ];
+			_msg_arr set [ count _msg_arr, [_msg] ];
 //  			};
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then {
@@ -211,16 +214,19 @@ XHandleNetStartScriptServer = {
 			// info about side mission before next town
 			if ( !call SYG_isMainTargetAllowed ) then {
 				_msg_arr set [ count _msg_arr, ["STR_SYS_1151_1", current_mission_counter + 1] ]; // "Finish SM(%1)"
+				[] spawn {
+					// notice user 1 more time about side mission
+					// ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
+					["msg_to_user", _name, [ ["STR_SYS_1151_1", current_mission_counter + 1], ["STR_SYS_1151_1", current_mission_counter + 1]], 60, 60] call XSendNetStartScriptClient;
+				};
 			};
 #endif
 
 			_equip_empty = true;
-            if ( count _parray >= 6 ) then
-            {
+            if ( count _parray >= 6 ) then {
                 // ammunition is stored some time ago, restore it now
                 _equipment = _parray select 5; // read string with equipment array
-                if ( _equipment != "") then
-                {
+                if ( _equipment != "") then {
                     _msg_arr set [ count _msg_arr, ["STR_SYS_612"] ]; // "Вам было выдано снаряжение с прошлого раза"
                     _equip_empty = false;
                     // check for distance view
@@ -252,14 +258,12 @@ XHandleNetStartScriptServer = {
             };
 
             //hint localize format["+++ __HasGVar(INFILTRATION_TIME) = %1",__HasGVar(INFILTRATION_TIME)];
-			if (__HasGVar(INFILTRATION_TIME)) then
-			{
+			if (__HasGVar(INFILTRATION_TIME)) then {
 			    _date = __GetGVar(INFILTRATION_TIME);
-			    if (typeName _date == "ARRAY") then
-			    {
+			    if (typeName _date == "ARRAY") then {
                     _msg_arr set [ count _msg_arr, ["STR_GRU_55", _date call SYG_dateToStr] ]; // "Last assault was at dd.MM.yyyy hh:mm:ss"
 			    };
-			    __SetGVar(INFILTRATION_TIME,_date); // send info to this client too
+			    // __SetGVar(INFILTRATION_TIME,_date); // No need to send info to the new player as Arma do it itself
 			};
 
 			_arr1 = call SYG_lastTownsGet;
