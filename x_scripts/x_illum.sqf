@@ -1,4 +1,6 @@
-// x_scripts/x_illum.sqf, by Xeno
+// x_scripts\x_illum.sqf, by Xeno
+// Heavily modified by Sygsky: 21-MAR-2019, flares started about alive enemy soldiers only, controlled by #define __ILLUM_BY_ALIVE__ (x_setup.sqf)
+// call: [_trg_center, _radius, _town_name] execVM "x_scripts\x_illum.sqf";
 private ["_tgt_center","_radius","_center_x","_center_y", "_flare","_flareCnt","_current_counter"];
 
 if (!isServer) exitWith {};
@@ -31,16 +33,10 @@ while {!mt_spotted} do {sleep 7.75};
 _flares = [ "F_40mm_Yellow", "F_40mm_Red", "F_40mm_White" ]; // "F_40mm_Green" - for officers only
 #ifdef __ILLUM_BY_ALIVE__
 _manType = switch playerSide do {
-    case east:
-    {
-        "SoldierWB"
-    };
+    case east: { "SoldierWB" };
     default{};
     case resistance;
-    case west:
-    {
-        "SoldierEB"
-    };
+    case west: { "SoldierEB" };
 };
 #ifdef __DEBUG__
 hint localize format["+++ x_illum: manType %1", _manType];
@@ -51,6 +47,7 @@ _manArr = [];
 #endif
 hint localize format["+++ x_illum: start in %1+++", _this select 2];
 
+// script stoppeв by main target change from x_target_clear.sqf by setting d_run_illum= false or if (_current_counter != current_counter)
 while {d_run_illum && (_current_counter == current_counter) } do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
@@ -96,10 +93,10 @@ while {d_run_illum && (_current_counter == current_counter) } do {
         };
         _man = _manArr call XfRandomArrayVal;
 
-		_angle = floor (random 360);
+		_angle = random 360;
 		_randrad = FLASH_RANDOM_OFFSET call XfRndRadious; // correct randomly distributed radious
-		_x1 = (getPos _man select 0) - (_randrad * sin _angle);
-		_y1 = (getPos _man select 1) - (_randrad * cos _angle);
+		_x1 = (getPos _man select 0) + (_randrad * cos _angle);
+		_y1 = (getPos _man select 1) + (_randrad * sin _angle);
 
         if ( _man isKindOf "OfficerW" || _man isKindOf "SquadLeaderW" || _man isKindOf "TeamLeaderW" ) then {
              _flare = "F_40mm_Green"; // Officer's flares are green
@@ -114,10 +111,10 @@ while {d_run_illum && (_current_counter == current_counter) } do {
     		_flare = if (mt_radio_down ) then {"F_40mm_Red"} else { _flares select (( floor random 10 ) min 2); }; // while color is mostly flared
         };
 		_flare =  _flare createVehicle [_x1, _y1, 250];
-		_flareCnt = _flareCnt + 1;
-		if (_flareCnt == 1) then {
+		if (_flareCnt == 0) then {
 			hint localize format["+++ x_illum: %1, night flares procedure started at %2 +++", call SYG_nowTimeToStr, _this select 2];
 		};
+		_flareCnt = _flareCnt + 1;
 #ifdef __DEBUG__
         hint localize format["+++ x_illum: %1 flare created at x %2, y %3 +++", call SYG_nowTimeToStr, _x1, _y1];
 #endif
@@ -132,7 +129,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
 #endif
 	    if (!isNull _flare) then {deleteVehicle _flare};
 	}
-	else {sleep 300}; // check night come every 300 seconds to not skip it during main target change
+	else {sleep 300}; // check night come every 300 seconds (5 minutes) to not skip it during main target change
 };
 
 #ifdef __ILLUM_BY_ALIVE__
