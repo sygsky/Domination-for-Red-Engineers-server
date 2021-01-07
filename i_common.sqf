@@ -433,36 +433,36 @@ sm_bonus_vehicle_array = (
 
 "ACE_BRDM2",	    // 3
 "ACE_BRDM2_ATGM",	// 4 (vehicles total)
-"ACE_BRDM2_ATGM",	// 5
+"ACE_BMD1",			// 5
 "ACE_BRDM2_SA9",    // 6
 
 "ACE_BMP1",         // 7
 "ACE_BMP1_D",       // 8
-"ACE_BMP1_P",
+"ACE_BMP1_P",		// 9
 
-"ACE_BMP2_D",       // 9
-"ACE_BMP2_K",       // 10
+"ACE_BMP2_D",       // 10
+"ACE_BMP2_K",       // 11
 
-"ACE_T55_A",        // 11 "ACE_BMD1",
-"ACE_T55_AM",       // 12 "ACE_BMD1p",
+"ACE_T55_A",        // 12 "ACE_BMD1",
+"ACE_T55_AM",       // 13 "ACE_BMD1p",
 
-"ACE_ZSU",          // 13 //"ACE_T62_M",
-"ACE_UAZ_AGS30",    // 14 "ACE_T62_MK",
-"ACE_BRDM2_SA9",    // 15 "ACE_T62_MV",
+"ACE_ZSU",          // 14 //"ACE_T62_M",
+"ACE_UAZ_AGS30",    // 15 "ACE_T62_MK",
+"ACE_BMD1p",    	// 16 "ACE_T62_MV",
 
-"ACE_T64_B",        // 16
-"ACE_T64_BK",       // 17
+"ACE_T64_B",        // 17
+"ACE_T64_BK",       // 18
 
-"ACE_T72",          // 18
-"ACE_T72_B",        // 19
-"ACE_T72_BK",       // 20
+"ACE_T72",          // 19
+"ACE_T72_B",        // 20
+"ACE_T72_BK",       // 21
 
-"ACE_T80_B",        // 21
-"ACE_T80_BV",       // 22 "ACE_T80_BK",
-"ACE_T80_BVK",      // 23
-"ACE_T80_U",        // 24
-"ACE_BMP2_K"//,       // 25
-//"ACE_T90"           // 26
+"ACE_T80_B",        // 22
+"ACE_T80_BV",       // 23 "ACE_T80_BK",
+"ACE_T80_BVK",      // 24
+"ACE_T80_U",        // 25
+"ACE_BMP2_K"//,     // 26
+//"ACE_T90"         // 27
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
@@ -726,7 +726,7 @@ ADD_DAM_EH(AMMOBUILDING)
 ADD_HIT_EH(MEDIC_TENT2)
 ADD_DAM_EH(MEDIC_TENT2)
 #endif
-
+/* Wall around new base depot, not work as needed, changed to events in sqm file, it may help... problem not solved, we need to restore wall on kill
 #ifndef __TT__
 ADD_HIT_EH(WALL1)
 ADD_DAM_EH(WALL1)
@@ -737,9 +737,9 @@ ADD_DAM_EH(WALL3)
 ADD_HIT_EH(WALL4)
 ADD_DAM_EH(WALL4)
 #endif
-
 ADD_HIT_EH(depot)
 ADD_DAM_EH(depot)
+*/
 
 #ifdef __TT__
 ADD_HIT_EH(AMMOBUILDING2)

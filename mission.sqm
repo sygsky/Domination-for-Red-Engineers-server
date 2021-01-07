@@ -2943,6 +2943,7 @@ class Mission
 			side="EMPTY";
 			vehicle="WarfareBHesco10xTall";
 			skill=0.600000;
+			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
 		};
 		class Item225
 		{
@@ -2951,6 +2952,7 @@ class Mission
 			side="EMPTY";
 			vehicle="WarfareBHesco10xTall";
 			skill=0.600000;
+			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
 		};
 		class Item226
 		{
@@ -2961,7 +2963,7 @@ class Mission
 			vehicle="WarfareBDepot";
 			skill=0.600000;
 			text="depot";
-			init="this setPos [(getpos this select 0),(getpos this select 1), -0.25];";
+			init="this setPos [(getpos this select 0),(getpos this select 1), -0.25];this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
 		};
 		class Item227
 		{
@@ -3101,7 +3103,7 @@ class Mission
 		};
 		class Item239
 		{
-			position[]={9662.299805,141.384857,9999.000000};
+			position[]={9662.3,141.384857,9999.000000};
 			azimut=90.000000;
 			special="NONE";
 			id=279;
@@ -3109,10 +3111,11 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL1";
+			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
 		};
 		class Item240
 		{
-			position[]={9683.500000,139.994995,9998.000000};
+			position[]={9683.5,139.994995,9998.000000};
 			azimut=90.000000;
 			special="NONE";
 			id=280;
@@ -3120,10 +3123,11 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL2";
+			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
 		};
 		class Item241
 		{
-			position[]={9662.299805,139.994995,9989.000000};
+			position[]={9662.3,139.994995,9989.000000};
 			azimut=90.000000;
 			special="NONE";
 			id=281;
@@ -3131,10 +3135,11 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL3";
+			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
 		};
 		class Item242
 		{
-			position[]={9683.500000,139.994995,9988.000000};
+			position[]={9683.5,139.994995,9988.000000};
 			azimut=90.000000;
 			special="NONE";
 			id=282;
@@ -3142,6 +3147,7 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL4";
+			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
 		};
 		class Item243
 		{
@@ -3152,7 +3158,7 @@ class Mission
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box4";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this; box1 addEventHandler [""hit"", {box1 setDammage 0}]; box1 addEventHandler [""dammaged"", {box1 setDammage 0}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this; box4 addEventHandler [""hit"", {box4 setDammage 0}]; box4 addEventHandler [""dammaged"", {box4 setDammage 0}];";
 		};
 		class Item244
 		{
@@ -3163,7 +3169,7 @@ class Mission
 			vehicle="ACE_WeaponBox";
 			skill=0.600000;
 			text="box5";
-			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this;box2 addEventHandler [""hit"",{box2 setDammage 0}];box2 addEventHandler [""dammaged"", {box2 setDammage 0}];";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this;box5 addEventHandler [""hit"",{box2 setDammage 0}];box5 addEventHandler [""dammaged"", {box5 setDammage 0}];";
 		};
 	};
 	class Markers
