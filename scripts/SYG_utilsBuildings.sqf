@@ -299,4 +299,27 @@ SYG_isBuilding = {
 	if (! (_this isKindOf "House")) exitWith { false };
 	( ( ( _this buildingPos 0 ) distance [0,0,0] ) > 0.1) // so (_this buildingPos 0) is [0,0,0] itrself
 };
+
+//
+// call on "killed" event ot restore it momentarily
+// Parameters: [_building, killer]
+//
+SYG_invulnerableBuilding = {
+	private ["_building","_killer","_pos","_new","_azi","_str","_code"];
+	_building = _this select 0;
+	if (count _this > 2) then { _pos = _this select 2 } else { _pos = getPos _building; _pos set[ 2, 0 ] };
+	if (count _this > 3 ) then { _azi = _this select 3 } else {_azi = getDir _building};
+	_killer   = _this select 1;
+	_new = createVehicle [typeOf _building, _pos, [], 0, "CAN_COLLIDE"];
+	_new setDir _azi;
+	_code = compile format["[_this select 0,_this select 1,%1,%2] call SYG_invulnerableBuilding", _pos, _azi];
+	_new addEventHandler["killed", _code];
+	_str = format["*** SYG_invulnerableBuilding _this: %1", _this];
+	_building removeAllEventHandlers "killed";
+	if(!isNull _building) then {deleteVehicle _building; _str = _str + " building deleted"};
+	hint    localize _str;
+	player groupchat _str;
+};
+
+
 if (true) exitWith {};
