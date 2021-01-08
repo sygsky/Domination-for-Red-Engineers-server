@@ -1122,11 +1122,13 @@ d_enemy_aa_vehicle = ["ZSU"];
 };
 #endif
 
+// make main base structures imvulnerable
 #ifdef __DEFAULT__
 WALL1 addEventHandler["killed", {[_this select 0, _this select 1,[9662.3,9999.0], 90] call SYG_invulnerableBuilding}];
 WALL2 addEventHandler["killed", {[_this select 0, _this select 1,[9683.5,9998.0], 90] call SYG_invulnerableBuilding}];
 WALL3 addEventHandler["killed", {[_this select 0, _this select 1,[9662.3,9989.0], 90] call SYG_invulnerableBuilding}];
 WALL4 addEventHandler["killed", {[_this select 0, _this select 1,[9683.5,9988.0], 90] call SYG_invulnerableBuilding}];
+depot addEventHandler["killed", {[_this select 0, _this select 1,[9673.95,9992.74], 180] call SYG_invulnerableBuilding}];
 #endif
 // ГРАЖДАНСКИЕ В ГОРОДЕ
 //##############################################################################

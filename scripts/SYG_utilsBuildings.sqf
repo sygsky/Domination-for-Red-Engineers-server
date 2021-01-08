@@ -308,17 +308,27 @@ SYG_invulnerableBuilding = {
 	private ["_building","_killer","_pos","_new","_azi","_str","_code"];
 	_building = _this select 0;
 	if (count _this > 2) then { _pos = _this select 2 } else { _pos = getPos _building; _pos set[ 2, 0 ] };
-	if (count _this > 3 ) then { _azi = _this select 3 } else {_azi = getDir _building};
+	if (count _this > 3 ) then { _azi = _this select 3 } else { _azi = getDir _building };
 	_killer   = _this select 1;
 	_new = createVehicle [typeOf _building, _pos, [], 0, "CAN_COLLIDE"];
 	_new setDir _azi;
-	_code = compile format["[_this select 0,_this select 1,%1,%2] call SYG_invulnerableBuilding", _pos, _azi];
+	_code = compile format["[_this select 0,_this select 1%1%2] call SYG_invulnerableBuilding",
+		if (count _this > 2) then { format[",%1", _this select 2] } else { "" },
+		if (count _this > 3 ) then { format[",%1",_this select 3] } else { "" }
+		];
 	_new addEventHandler["killed", _code];
 	_str = format["*** SYG_invulnerableBuilding _this: %1", _this];
 	_building removeAllEventHandlers "killed";
-	if(!isNull _building) then {deleteVehicle _building; _str = _str + " building deleted"};
-	hint    localize _str;
-	player groupchat _str;
+	if ( !isNull _building ) then { deleteVehicle _building; _str = _str + ", ruines deleted" };
+
+	hint    localize _str;  //	player groupchat _str;
+
+	// check if player is killer and let's punish him for that
+	if (isNull _killer) exitWith{};
+	_killer = gunner _killer;
+	if (!isPlayer _killer) exitWith {};
+	[ "change_score", name _killer, -10, [ "msg_to_user", "",  [ ["STR_KILLED_WALL", name _killer, 10]], 0, 2, false, "losing_patience" ] ] call XSendNetStartScriptClientAll;
+	[ "msg_to_user", name _killer,  [ ["STR_JAIL_4"]], 0, 65, false, "losing_patience" ] call XSendNetStartScriptClientAll;
 };
 
 
