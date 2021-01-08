@@ -29,15 +29,10 @@ while {true} do {
 	 _nearArr =   nearestObjects [getPos _rep_station, ["Man"], 30];
 	 if (count _nearArr > 0 ) then {
 	 	{
-			if (!isNull _player ) exitWith {};
-	 		if (alive _x) then {
-				if (side _x == d_side_player) then {
-					if (vehicle _x == _x) exitWith { _player = _x; };
-					if ( driver (vehicle _x) == _x ) exitWith { _player = _x };
-				};
-			};
+	 		if (isPlayer (driver  _x) && alive (driver _x)) exitWith { _player = driver  _x } ;
 	 	} forEach _nearArr;
 	 };
+//	 hint localize format["+++ x_repwreck.sqf: count _nearArr == %1, _player %2", count _nearArr, typeOf _player];
 #endif
 	_type = typeOf _wreck;
 	_dpos = position _wreck;
