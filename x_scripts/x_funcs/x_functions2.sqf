@@ -145,7 +145,26 @@ XfRndRadiousInAnnulus = {
     sqrt(random( _r2 * _r2 - _r1 * _r1 ) + _r1 * _r1)
 };
 
-// get a random clear point inside a circle
+//
+// Returns position of designated point if it is clear, that not in water and not on steep slope
+// call: _clearPos = _pnt call XfGetClearPoint;
+// where _pnt is 2D or 3D coordinates array
+// Returns clear point position [x,y,0] or [] if point is not clear
+//
+XfGetClearPoint = {
+	private ["_pos", "_helper"];
+	_pos = + _this;
+	if (count _pos == 3) then { _pos set [2, 0] }; // zeroing Z coordinate of point
+	if (surfaceIsWater _pos) exitWith {[]};
+	_helper = "RoadCone" createVehicleLocal _pos;
+	_pos = position _helper;
+	deleteVehicle _helper;
+	if (surfaceIsWater _pos) exitWith {[] };
+	_pos set[2,0];
+	if (([ _pos, 5] call XfGetSlope) >= 0.5) exitWith{ [] };
+	_pos
+};
+// get a random clear point inside a circle. Clear point is one not in water and not on steep slope
 // parameters:
 // center position, radius of the circle
 // example: _random_point = [position trigger1, 200] call XfGetRanPointCircle;
@@ -156,7 +175,7 @@ XfGetRanPointCircle = {
 	_ret_val = [];_co = 0;
 	while {count _ret_val == 0 && _co < 50} do {
 		_angle = random 360;
-        _dist = (sqrt(( random _radius)/ _radius)) * _radius;
+        _dist = _radius call XfRndRadious;
 		_x1 = _center_x - ( _dist * cos _angle);
 		_y1 = _center_y - ( _dist * sin _angle);
 		if (!(surfaceIsWater [_x1, _y1])) then {

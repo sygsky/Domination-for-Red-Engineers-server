@@ -99,8 +99,7 @@ class CfgIdentities
 #endif
 //--- Sygsky
 
-class CfgMusic
-{
+class CfgMusic {
 
 	tracks[]={};
 
@@ -306,8 +305,10 @@ class CfgMusic
     class gayane3     { name=""; sound[] = {\sounds\gayane3.ogg,db+0,1.0};} // "Gayane" ballet
     class gamlet_hunt { name=""; sound[] = {\sounds\gamlet_hunt.ogg,db+0,1.0};} // "Hamlet" soviet movie
     class treasure_island_defeat { name=""; sound[] = {\sounds\treasure_island_defeat.ogg,db-1,1.0};} // "tresure island alarm theme" USSR movie of 1971 year
-    class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {};}
-    class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {};}
+    class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0};}
+    class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0};};
+    class whatsapp    {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0};}; // Some sound from one of WhatsApp messages
+
 
     class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
     class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10, 1.0};};
@@ -344,8 +345,7 @@ class CfgMusic
 
 };
 
-class CfgSounds
-{
+class CfgSounds {
 	sounds[] = {
 		Funk,Ari,odinakovo,slavianskiy,highvoltage,upsidedown,vam_bileter,Tank_GetIn,APC_GetIn
 
@@ -702,68 +702,57 @@ class CfgSounds
 #endif
 
 #ifdef __REVIVE__
-	class DBrian_Im_hit
-	{
+	class DBrian_Im_hit {
 		name="Brian_Im_hit";
 		sound[]={"\sounds\UNIV_v05.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Im_bleeding
-	{
+	class DBrian_Im_bleeding {
 		name="Brian_Im_bleeding";
 		sound[]={"\sounds\UNIV_v06.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Medic
-	{
+	class DBrian_Medic {
 		name="Brian_Medic";
 		sound[]={"\sounds\UNIV_v07.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Bastards
-	{
+	class DBrian_Bastards {
 		name="Brian_Bastards";
 		sound[]={"\sounds\UNIV_v10.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Shit_Man_down
-	{
+	class DBrian_Shit_Man_down {
 		name="Brian_Shit_Man_down";
 		sound[]={"\sounds\UNIV_v11.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Oh_no
-	{
+	class DBrian_Oh_no {
 		name="Brian_Oh_no";
 		sound[]={"\sounds\UNIV_v18.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Fuck
-	{
+	class DBrian_Fuck {
 		name="Brian_Fuck";
 		sound[]={"\sounds\UNIV_v24.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Fuck_it
-	{
+	class DBrian_Fuck_it {
 		name="Brian_Fuck_it";
 		sound[]={"\sounds\UNIV_v25.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Shit
-	{
+	class DBrian_Shit {
 		name="Brian_Shit";
 		sound[]={"\sounds\UNIV_v31.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_Need_help
-	{
+	class DBrian_Need_help {
 		name="Brian_Need_help";
 		sound[]={"\sounds\UNIV_v50.ogg",0.05,1.0};
 		titles[]={};
 	};
-	class DBrian_A_little_help_here
-	{
+	class DBrian_A_little_help_here {
 		name="Brian_A_little_help_here";
 		sound[]={"\sounds\UNIV_v51.ogg",0.05,1.0};
 		titles[]={};
@@ -771,15 +760,13 @@ class CfgSounds
 #endif
 };
 
-class X_RscAnimatedLetters
-{
+class X_RscAnimatedLetters {
 	idd = 77043;
 	movingEnable = false;
 
 	class ControlsBackground {};
 
-	class Controls
-	{
+	class Controls {
 		__EXEC(idc = 5000)
 		class L1: X3_RscText
 		{

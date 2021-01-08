@@ -149,7 +149,7 @@ SYG_secondsToStr = {
  * call: _days = ceil(call SYG_missionDayToNum); // to return current day number mission run, be 1 for first day, 2 for second etc
  */
 SYG_missionDayToNum = {
-    ([SYG_dateStart, date] call SYG_getDateDiff) + 1 // mission length in days
+    ([SYG_dateStart, date] call SYG_getDateDiffInDays) + 1 // mission length in days
 };
 
 /**
@@ -365,14 +365,29 @@ SYG_countDaysInMonth = {
 	_cnt;
 };
 
-// call: _diff =  [_date1, _date2] call SYG_getDateDiff;
+// call: _diff =  [_date1, _date2] call SYG_getDateDiffInDays;
 //
 // _data1 and _data2 may be in any relations each to other, the difference be calculated correctly
 //
-// Example: _diff = [[2016,5,17,15,45],[2016,4,26,9,5]] call SYG_getDateDiff;
+// Example: _diff = [[2016,5,17,15,45],[2016,4,26,9,5]] call SYG_getDateDiffInDays;
 //
 // always returns positive integer difference between two dates in days. Use JDN calculatuions from: https://en.wikipedia.org/wiki/Julian_day
-/*
+SYG_getDateDiffInDays = {
+    private ["_date1","_date2","_short_date","_ids"];
+	_date1 = _this select 0;
+	_date2 = _this select 1;
+	// check what date is younger
+	_short_date = count date1 == 3 || count date2 == 3;
+	_ids = [0,1,2];
+	if ( !_short_date ) then {_ids = _ids + [3,4];};
+	{
+		if ((_date1 select _x) > (_date2 select _x)) exitWith { };
+		if ((_date1 select _x) < (_date2 select _x)) exitWith {	_date2 = _this select 0; _date1 = _this select 1; };
+	} forEach _ids;
+    (_date1 call SYG_JDN) - (_date2 call SYG_JDN)
+};
+
+/* Julian Day Number -> JDN
 All division is integer division, operator % is modulus.
 Given integer y, m, d, calculate day number g as:
 function g(y,m,d)
@@ -381,21 +396,6 @@ y = y - m/10
 return 365*y + y/4 - y/100 + y/400 + (m*306 + 5)/10 + ( d - 1 )
 Difference between two dates = g(y2,m2,d2) - g(y1,m1,d1)
 */
-SYG_getDateDiff = {
-    private ["_date1","_date2","_short_date","_ids"];
-	_date1 = arg(0);
-	_date2 = arg(1);
-	// check what date is younger
-	_short_date = count date1 == 3 || count date2 == 3;
-	_ids = [0,1,2];
-	if ( !_short_date ) then {_ids = _ids + [3,4];};
-	{
-		if ((_date1 select _x) > (_date2 select _x)) exitWith { };
-		if ((_date1 select _x) < (_date2 select _x)) exitWith {	_date2 = arg(0);	_date1 = arg(1); };
-	} forEach _ids;
-    (_date1 call SYG_JDN) - (_date2 call SYG_JDN)
-};
-
 SYG_JDN = {
     private ["_m","_y"];
     _m = ((_this select 1) + 9) % 12;
@@ -420,7 +420,7 @@ SYG_holidayTable =
     [ 9, 5, 3], // 9th of May
     [ 7,11, 5]  // 7th of November
 */
-    [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"], "STR_HOLIDAY_1_JAN", 1], // new year, 10 days in range (not realized)
+    [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"], "STR_HOLIDAY_1_JAN", 1], // New Year Day
     [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day

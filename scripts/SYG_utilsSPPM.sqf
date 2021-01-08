@@ -61,11 +61,13 @@ SYG_findNearestSPPM = {
 	private ["_arr","_marker_name"];
 	_arr = nearestObjects [_this, [SPPM_OBJ_TYPE], SPPM_MIN_DISTANCE];
 #ifdef __DEBUG__
-    hint localize format[ "+++ SYG_utilsSPPM.sqf#SYG_findNearestSPPM: _this %1, found %2 cone[s] %3",
-    	_this,
-    	count _arr,
-    	_arr call SYG_Variables2Arr
-    	];
+	if (count _arr > 0 ) then {
+		hint localize format[ "+++ SYG_utilsSPPM.sqf#SYG_findNearestSPPM: _this %1, found %2 cone[s] %3",
+			_this,
+			count _arr,
+			_arr call SYG_Variables2Arr
+			];
+	};
 #endif
 	_marker_name = "";
 	{
@@ -146,9 +148,9 @@ SYG_addSPPMMarker = {
 		"STR_SPPM_ADD_ERR_4" // "New average point is too close to the near SPPM.Move or combine them"
 	};
 
-#ifdef __DEBUG__
-	hint localize format["+++ SYG_addSPPMMarker: _pnt %1", _pnt];
-#endif
+//#ifdef __DEBUG__
+//	hint localize format["+++ SYG_addSPPMMarker: _pnt %1", _pnt];
+//#endif
 
 	// try to create marker for SPPM
 	_marker = "";
@@ -171,9 +173,9 @@ SYG_addSPPMMarker = {
 	_pnt set [2, -1]; // put underground to keep forever
 	_cone = createVehicle [SPPM_OBJ_TYPE, _pnt, [], 0, "CAN_COLLIDE"]; // add road cone
 	_cone setVariable [SPPM_MARKER_NAME, _marker ];
-#ifdef __DEBUG__
-	hint localize format["+++ SYG_addSPPMMarker: marker %1 assigned to road cone", _marker];
-#endif
+//#ifdef __DEBUG__
+//	hint localize format["+++ SYG_addSPPMMarker: marker %1 assigned to road cone", _marker];
+//#endif
 	SYG_SPPMArr set [ count SYG_SPPMArr, _cone ];	// put new object to the list
 	"STR_SPPM_ADD_SUCCESS"
 };

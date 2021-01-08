@@ -980,11 +980,23 @@ SYG_getPosASL = {
 };
 
 //
-// Get random Wide Point in the 2-D tor (between 2 designated radius)
-// call as: [_center,_rad1,_rad2] call SYG_getWPointBetweenTwoRadius
+// Get random Way Point in designated annulus (between 2 designated radius)
+// call as: _wp = [_center,_rad1,_rad2] call SYG_getWPointInAnnulus
+// Returns: [x,y,z] point, or [] if can't create such point
 //
-SYG_getWPointBetweenTwoRadius = {
-    // TODO: realize this method to find place for bonus vehicle
+SYG_getWPointInAnnulus = {
+	private ["_rad","_ang","_pos"];
+	_pos = [];
+	_cnt = 0;
+	while {(count _pos == 0) && _cnt < 10} do {
+		_rad = [_this select 1, _this select 2] call XfRndRadiousInAnnulus; // random radius indesignated  annulus
+		_ang = random 360;
+		_pos = [_rad * (cos _ang), _rad * (sin _ang)] call XfGetClearPoint; // random point on radios
+		_cnt = _cnt + 1;
+		sleep 0.01;
+	};
+	if (count _pos == 0) exitWith {_pnt};
+	[(_pos select 0) + ((_this select 0) select 0),(_pos select 1) + ((_this select 0) select 1), 0]
 };
 
 /*

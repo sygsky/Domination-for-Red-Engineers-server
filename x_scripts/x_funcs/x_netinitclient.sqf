@@ -51,30 +51,22 @@ SYG_msgToUserParser =
     _vehicle_chat = false;
 
     // hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
-    if  (typeName _name == "ARRAY") then
-    {
+    if  (typeName _name == "ARRAY") then {
         if ( count _name == 0) then {_name = "";}
-        else
-        {
+        else {
             _ind = _name find (name player);
-            if ( _ind >= 0) then
-            {
+            if ( _ind >= 0) then {
                 _name = name player;
-            }
-            else
-            {
+            } else {
                 _name = _name select 0;
             };
         };
     };
 
-    if (typeName _name == "OBJECT") then // msg is sent to the vehicle team only
-    {
+    if (typeName _name == "OBJECT") then { // msg is sent to the vehicle team only
         _msg_target_found = vehicle player == _name;
         _vehicle_chat = _msg_target_found;
-    }
-    else
-    {
+    } else {
         _msg_target_found = (_name == name player) || (_name == "") || (_name == "*");
     };
 
@@ -82,62 +74,50 @@ SYG_msgToUserParser =
 
     // check for initial delay
 
-    if ( (count _this) > 4) then
-    {
-        if ( (_this select 4) > 0 ) then
-        {
+    if ( (count _this) > 4) then {
+        if ( (_this select 4) > 0 ) then {
             sleep ( _this select 4 );
         };
         // try to say sound on 1st text showing
-        if ( (count _this) > 6 ) then
-        {
+        if ( (count _this) > 6 ) then {
             _sound = _this select 6;
             if ( typeName _sound == "STRING" ) then { playSound _sound };
         };
     };
     _delay = 4; // default delay between messages is 4 seconds
-    if ( count _this > 3 ) then
-    {
+    if ( count _this > 3 ) then {
         if ( (_this select 3) > 0 ) then { _delay = (_this select 4) min 4}; // minimum delay is 4 seconds
     };
 
     _msg_arr = _this select 2;
 #ifdef __PRINT__
-    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" [%1,[%2 item(s)]:%3]", _name, count _msg_arr, _msg_arr select  0];
+    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" [""%1"",[%2 item(s)]:%3]", _name, count _msg_arr, _msg_arr select  0];
 #endif
 
     {
-        if (typeName _x == "STRING") then // it is not array but single string, put it to array and process as usuall
-        {
+        if (typeName _x == "STRING") then { // it is not array but single string, put it to array and process as usuall
             _x = [_x]; // emulate as array with single item
         };
         // all string are localized only if previous string is "localize" (is skipped from output) or is of format "STR..."
         _localize = false;
         _msg_fmt = [];
         {
-            if ( _localize ) then
-            {
+            if ( _localize ) then {
                 _msg_fmt set [count _msg_fmt, localize (_x)]; // localize this format item
                 _localize = false;
-            }
-            else
-            {
-                if (typeName _x == "STRING" ) then
-                {
+            } else {
+                if (typeName _x == "STRING" ) then {
                     if ( toLower(_x) == "localize") exitWith { _localize = true; }; // Let's localize next string if it will exists
                     _str = _x call _SYG_processSingleStr;
                     _msg_fmt set [ count _msg_fmt, _str ];
-                }
-                else
-                {
+                } else {
                     _msg_fmt set [count _msg_fmt, _x]; // not localize this format item
                 };
             };
         } forEach _x; // parse each format item. Any item MUST be an array (or single string without following parameters, or array with a single string, doesnt matter)
 
         _print_title = (count _this) < 6; // if no setting, let print title in screen middle, not only radio message at bottom
-        if (!_print_title) then  // value detected in param array, read and parse it
-        {
+        if (!_print_title) then { // value detected in param array, read and parse it
             _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
             if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
             then {_print_title = _print_title <= 0} // print only if value set to false
@@ -145,17 +125,14 @@ SYG_msgToUserParser =
         };
 
         _msg_formatted = format _msg_fmt; // whole message formatted
-        if ( _print_title ) then // no title text disable parameter
-        {
+        hint localize format["+++ ""mag_to_user"": _x %1, _msg_fmt = %2", _x, _msg_fmt];
+        if ( _print_title ) then { // no title text disable parameter
             titleText[ _msg_formatted, "PLAIN DOWN" ];
         };
 
-        if (_vehicle_chat) then
-        {
+        if (_vehicle_chat) then {
             [_name, _msg_formatted call XfRemoveLineBreak] call XfVehicleChat;
-        }
-        else
-        {
+        } else {
             ( _msg_formatted call XfRemoveLineBreak) call XfGlobalChat;
         };
 
@@ -943,7 +920,7 @@ XHandleNetStartScriptClient = {
             if ( (name player) in (_val) ) then { d_was_at_sm = true; playSound "good_news" };
         };
 
-        // response from server to confirm you request on illumination on base: [ "illum_over_base", _player_name]
+        // response from server to confirm you request on illumination of base: [ "illum_over_base", _player_name]
         case "illum_over_base" : {
             if (name player == _this select 1) exitWith {
             #ifdef __RANKED__
@@ -969,6 +946,17 @@ XHandleNetStartScriptClient = {
             [ "msg_to_user", "",  [ [ "STR_ILLUM_3_0", _this select 1 ] ], 0, 2, false, "message_received" ] call SYG_msgToUserParser;
         };
 
+        // Change score of the player
+        // [ "change_score", "" || "*" || "name" || [ _name1, _name2..., _nameN ], _score_to_subtract<, _msg_parser_arr> ] execVM...
+        case "change_score" : {
+        	private [ "_name", "_found" ];
+        	hint localize format["*** change_score _this: %1", _this];
+        	_name = _this select 1;
+        	_found = if ( typeName _name == "ARRAY" ) then { ( name player ) in _name; } else { _name in [ "", "*", name player ] };
+        	if ( _found ) then { player addScore ( _this select 2 ); };
+			if ( ( count _this ) > 3 ) exitWith { ( _this select 3 ) call SYG_msgToUserParser}; // try to print message if exists
+        };
+
 /*
          // reveal vehicle (MHQ in main) to all players
         case "revealVehicle":
@@ -979,8 +967,7 @@ XHandleNetStartScriptClient = {
 
 //========================================================================================================== END OF CASES
 
-        default
-        {
+        default {
             hint localize format["--- x_netinitclient.sqf: unknown command detected: %1", _this];
         };
 

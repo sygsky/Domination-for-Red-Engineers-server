@@ -83,13 +83,11 @@ if (X_InstalledECS) then {
 	ECS_local set[133, 10 /* 15 */];	// ECS fires effect, Max fire Max number of fires runing simultaneous (Prevents CPU overload)
 };
 
-if (SYG_found_GL3) then
-{
+if (SYG_found_GL3) then {
     // TODO: tune local settings of GL3 addon here
     hint localize format["+++ GL3_Local[0]=",argp(GL3_Local,0)];
 };
-if ( SYG_found_ai_spotting) then
-{
+if ( SYG_found_ai_spotting) then {
     _sensitivity1  = getNumber(configFile >> "CfgVehicles" >> (typeOf player) >> "sensitivity");
     _sensitivity2  = getNumber(configFile >> "CfgVehicles" >> "SoldierWSniper" >> "sensitivity");
     hint localize format["+++ ai_spotting found, sensitivity: %1 = %2; %3  %4",(typeOf player),  _sensitivity1, "SoldierWSniper", _sensitivity2];
@@ -114,8 +112,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	["d_p_a",name player,missionStart, localize "STR_LANG"] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
 #ifdef __DEBUG__
-    if (!(isNil "d_player_stuff")) then
-    {
+    if (!(isNil "d_player_stuff")) then {
         if (count d_player_stuff >= 6) then { if ( (d_player_stuff select 5) != "" ) then {_equip = "has items";}; };
     };
     hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { format["has %1 item[s]", count d_player_stuff]}];
@@ -130,8 +127,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
         _p = player;
 #ifdef __RANKED__
         _equip = "";
-        if ( count d_player_stuff >= 6) then // equipment returned
-        {
+        if ( count d_player_stuff >= 6) then { // equipment returned
             _equip = d_player_stuff select 5;
         };
         // generate common weapon set
@@ -152,55 +148,46 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                 case "EAST": {
                     if (__ACEVer) then {
                         _old_rank = "";
-                        while {true } do
-                        {
+                        while {true } do {
                             _old_rank = (score player) call XGetRankFromScore;
                             _index = _old_rank call XGetRankIndex;
                             _rpg   = if (_index == 0 ) then { ["P","ACE_RPG7","ACE_RPG7_PG7VL",1] } else { ["P","ACE_RPG7_PGO7","ACE_RPG7_PG7VL",1]};
 
-                            _rifle = switch _index do
-                            {
+                            _rifle = switch _index do {
                                 case 0;
                                 case 1;
-                                case 2:
-                                {
+                                case 2: {
                                     if ((random 1) < 0.33) then {
                                         ["P", "ACE_AK74", "ACE_45Rnd_545x39_BT_AK", 10]
-                                    }
-                                    else {
+                                    } else {
                                         if ((random 1) < 0.66) then {["P", "ACE_AKM", "ACE_75Rnd_762x39_BT_AK", 5]}
                                         else  {["P", "ACE_RPK47", "ACE_75Rnd_762x39_BT_AK", 5]}
                                     }
                                 };
                                 case 3: {["P", "ACE_AKM_Cobra", "ACE_75Rnd_762x39_BT_AK", 5]}; // Lieutenant
-                                default
-                                {
+                                default {
                                     if ((random 1) > 0.5) then {["P", "ACE_Val_Cobra", "ACE_20Rnd_9x39_B_VAL", 10]} else {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10]}
                                 };
                             };
 
-                            _mg    = switch _index do
-                            {
+                            _mg = switch _index do {
                                 case 0: {["P", "ACE_RPK47", "ACE_75Rnd_762x39_BT_AK", 5]};
                                 case 1: {["P", "ACE_RPK74", "ACE_45Rnd_545x39_BT_AK", 10]};
-                                case 2:
-                                {
+                                case 2: {
                                     if ( random 1 > 0.5) then {["P", "ACE_PK", "ACE_100Rnd_762x54_BT_PK", 3]} else {["P", "ACE_RPK74M_1P29", "ACE_45Rnd_545x39_BT_AK", 10]}
                                 };
                                 case 3: {["P", "ACE_Pecheneg", "ACE_100Rnd_762x54_BT_PK", 3]}; // Lieutenant
                                 default {["P", "ACE_Pecheneg_1P29", "ACE_100Rnd_762x54_BT_PK", 3]};
                             };
 
-                            _sniper= switch _index do
-                            {
+                            _sniper = switch _index do {
                                 case 0: {["P", "ACE_AKM", "ACE_75Rnd_762x39_BT_AK", 5]};
                                 case 1: {["P", "ACE_AKS74PSO", "ACE_45Rnd_545x39_BT_AK", 10]};
                                 case 2: {["P", "ACE_SVD", "ACE_10Rnd_762x54_SB_SVD", 10]};
                                 default {["P", "ACE_KSVK", "ACE_5Rnd_127x108_BT_KSVK", 10]};
                             };
 
-                            _medic = switch _index do
-                            {
+                            _medic = switch _index do {
                                 case 0;
                                 case 1: {["P", "ACE_AKS74U", "ACE_45Rnd_545x39_BT_AK", 10]};
                                 case 2;
@@ -209,25 +196,20 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
     //							default {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10]};
                             };
 
-                            _diversant = switch _index do
-                            {
+                            _diversant = switch _index do {
                                 case 0;
                                 case 1: {["P", "ACE_Bizon", "ACE_64Rnd_9x18_B_Bizon", 10]};
                                 case 2;
-                                case 3:
-                                {
-                                    switch floor (random 4) do
-                                    {
+                                case 3: {
+                                    switch floor (random 4) do {
 										case 0: {["P", "ACE_Val", "ACE_20Rnd_9x39_B_VAL", 10]};
 										case 1: {["P", "ACE_Bizon_SD", "ACE_64Rnd_9x18_B_Bizon", 10] };
 										case 2: {["P", "ACE_AKMS_PBS1", "ACE_30Rnd_762x39_SD_AK", 10] };
 										case 3: {["P", "ACE_AKS74USD", "ACE_45Rnd_545x39_BT_AK", 10] };
                                     };
                                 };
-                                default
-								{
-                                    switch floor (random 4) do
-                                    {
+                                default {
+                                    switch floor (random 4) do {
 										case 0: {["P", "ACE_Val_Cobra", "ACE_20Rnd_9x39_B_VAL", 10]};
 										case 1: {["P", "ACE_Bizon_SD_Cobra", "ACE_64Rnd_9x18_B_Bizon", 10] };
 										case 2: {["P", "ACE_AKS74USD_Cobra", "ACE_45Rnd_545x39_BT_AK", 10] };
@@ -236,76 +218,65 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 								};
                             };
 
-                            _pistol= switch _index do
-                            {
+                            _pistol= switch _index do {
                                 case 0: {["S", "ACE_Makarov", "ACE_8Rnd_9x18_B_Makarov", 4]};
                                 case 1: {["S", "ACE_MakarovSD", "ACE_8Rnd_9x18_SD_Makarov", 4]};
                                 case 2: {["S", "ACE_TT", "ACE_8Rnd_762x25_B_Tokarev", 4]};
                                 default {["S", "ACE_Scorpion", "ACE_20Rnd_765x17_vz61", 4]};
                             };
-                            if (_string_player in d_can_use_artillery) exitWith
-                            {
+                            if (_string_player in d_can_use_artillery) exitWith {
                                 _weapp =  [["P","ACE_RPG22","ACE_RPG22",2], _diversant, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _diversant set [3,8];
                                 _magp = [[format["%1_PDM",_diversant select 2],2],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
 
                             };
-                            if ( _p isKindOf "SoldierEMG") exitWith
-                            {
+                            if ( _p isKindOf "SoldierEMG") exitWith {
                                 _weapp =  [["P","ACE_RPG22","ACE_RPG22",1],_mg, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_40Rnd_762x39_BT_AK_PDM",6], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
-                            if ( _p isKindOf "SoldierEAT" ) exitWith
-                            {
+                            if ( _p isKindOf "SoldierEAT" ) exitWith {
                                 _rpg set [2, "ACE_RPG7_PG7VR"];
                                 _rifle set [3, 9]; // 9 magazines
                                 _weapp =  [_rpg, _rifle ,_pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VR_PDM",1]];
                             };
 
-                            if ( _p isKindOf "SoldierEAA" ) exitWith
-                            {
+                            if ( _p isKindOf "SoldierEAA" ) exitWith {
                                 _rifle set [3,6]; // 6 magazines
                                 _weapp =  [["P","ACE_Strela","ACE_Strela",1],_rifle,_pistol,["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_Strela_PDM",1]];
                             };
 
-                            if ( _p isKindOf "SoldierESniper") exitWith
-                            {
+                            if ( _p isKindOf "SoldierESniper") exitWith {
                                 _weapp =  [_rpg, _sniper, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_40Rnd_762x39_BT_AK_PDM",6], */["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
-                            if ( _p isKindOf "SoldierEMedic") exitWith
-                            {
+                            if ( _p isKindOf "SoldierEMedic") exitWith {
                                 _weapp =  [_rpg, _medic, _pistol, ["ACE_Bandage",1],["ACE_Morphine",1],["ACE_Epinephrine",1]];
                                 _pistol set [3,5]; // 5 mags except standard 4
                                 _magp = [/* ["ACE_40Rnd_762x39_BT_AK_PDM",6], */["ACE_RPG7_PG7VL_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
-                            if ( _p isKindOf "SoldierECrew") exitWith
-                            {
+                            if ( _p isKindOf "SoldierECrew") exitWith {
                                 _weapp =  [_rpg, _rifle, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
-                            if ( _p isKindOf "SoldierEMiner") exitWith
-                            {
+                            if ( _p isKindOf "SoldierEMiner") exitWith {
                                 _weapp =  [_rpg, _rifle, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
                             };
 
-                            if ( true ) exitWith
-                            {
+                            if ( true ) exitWith {
                                 _weapp =  [_rpg,_rifle,_pistol,["ACE_Bandage",2],["ACE_Morphine",2]];
                                 _magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VL_PDM",1]];
                             };
                         };
                         // try to rearm predefined players (Yeti, EngineerACE etc)
                         _rearmed = true;
-                        switch (toUpper (name player)) do
-                        {
+                        switch (toUpper (name player)) do {
                             case "YETI":  // Yeti
                             {
                                 d_rebornmusic_index = 1; // no play std death sound
@@ -341,9 +312,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                                     name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];
                             //--- Sygsky
                         };
-                    }
-                    else  // if (__ACEVer) then
-                    {
+                    } else {  // if (__ACEVer) then
                         if (__CSLAVer) then {
                             _weapp = "CSLA_Sa58P";
                             _magp = "CSLA_Sa58_30rnd_7_62vz43";
@@ -370,8 +339,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
                     _p selectWeapon (_muzzles select 0);
                 };
             };
-		}
-        else {// _equip != "";
+		} else {// _equip != "";
             //hint localize format["d_player_stuff with equipment: %1", _equip];
             [player, _equip] call SYG_rearmUnit;
         };
@@ -1143,7 +1111,7 @@ _local_msg_arr spawn {
         ] call SYG_msgToUserParser;
     };
     // if no special message, type common one
-    // "For his services in developing our mission, the chief engineer extends his thanks to fighter Rokse!!!"
+    //"For his services in developing our mission, the chief engineer extends his thanks to fighters Rokse and Ceres!!!"
     sleep 10;
 	[
 		"msg_to_user",
@@ -1703,6 +1671,9 @@ if (d_player_air_autokick > 0) then {
 	execVM "x_scripts\x_playervectrans.sqf";
 #endif
 
+/*
+	if score changed, send info about it to the server
+*/
 [] spawn {
 	waitUntil {!d_still_in_intro};
 #ifdef __SPPM__
@@ -1712,14 +1683,13 @@ if (d_player_air_autokick > 0) then {
 	private ["_oldscore","_newscore"];
 	_oldscore = 0;
 	while {true} do {
-		sleep (3 + random 3);
+		sleep 4.5; // Xeno value was(3 + random 3); // Lets test  to change sleep delay to the period 4.5 seconds
 		_newscore = score player;
 		if (_oldscore != _newscore) then {
 			["d_ad_sc", name player, _newscore] call XSendNetStartScriptServer;
 			[] spawn XPlayerRank; // detect if new rank is reached and inform player about
 
-			if ( rating player < 0  ) then // prevent player from being enemy to AI
-			{
+			if ( rating player < 0  ) then { // prevent player from being enemy to AI
 			    hint localize format["--- Your rating is below zero (%1), up it now", rating player];
 			    player addRating (100 -(rating player));
 			};
@@ -1727,8 +1697,7 @@ if (d_player_air_autokick > 0) then {
 #ifdef __JAIL_MAX_SCORE__
 //    	    hint localize format[ "--- oldscore %1, newscore %2", _oldscore, _newscore ];
 			// Jail is assigned if score are negative and lowered by more then -1 value (not personal death occured)
-			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore - 1)) ) then
-			{
+			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore - 1)) ) then {
 			    [_newscore] execVM "scripts\jail.sqf"; // send him to jail for (_newscore + 60) seconds
 			};
 #endif
@@ -1891,7 +1860,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 //    hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
 #ifdef __ACE__
     _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
-    _personal_boxes = nearestObjects [depot, _personal_boxes, 20]  - _common_boxes;
+    _personal_boxes = nearestObjects [FLAG_BASE, _personal_boxes, 30]  - _common_boxes;
     {
         _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];
     }   forEach _personal_boxes;

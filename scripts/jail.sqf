@@ -1,6 +1,6 @@
 // scripts\jail.sqf
 // By sygsky: Remastered jail from Evolution
-// no special input parameters except ["TEST"] for testing only.
+// no special input parameters except ["TEST"] for testing purposes.
 // Call on client only,
 /*
 	author: Sygsky
@@ -27,13 +27,11 @@ if ( isServer && !X_SPE ) exitWith {"--- jail called on server, exit!"};
 scopeName "main";
 
 //===================================== FIND AND PREPARE PLAYER =========================
-if ( !alive player ) then
-{
-    waitUntil 
-    {
+if ( !alive player ) then {
+    waitUntil {
         sleep 0.05;
-        if  (isNull player) then  {  breakOut "main"; }; // if not alive, go out
-        if (dialog) then {breakOut "main"}; // if in dialog, go out
+        if  (isNull player) then  {  breakOut "main"; }; // if not alive, exit
+        if (dialog) then {breakOut "main"}; // if in dialog, exit
         alive player
     };
 };
@@ -42,10 +40,8 @@ if ( !alive player ) then
 #include "x_macros.sqf"
 
 _test = false; // defines if this is test call or real one
-if ( typeName _this == "ARRAY") then
-{
-    if ( count _this > 3) then // test call from test action at flag
-    {
+if ( typeName _this == "ARRAY") then {
+    if ( count _this > 3) then { // test call from test action at flag
         _test = (typeName (_this select 3) == "STRING") && ((_this select 3) == "TEST");
     };
 };
@@ -53,8 +49,7 @@ _playerPos = getPos player;
 _playerDir = getDir player;
 
 //============================================ INIT JAIL PLACES ===========================
-if (isNil "jail_places") then
-{
+if (isNil "jail_places") then {
     jail_buildings = [[10270.2,7384.86,8.01088],[8274.52,9045.37,7.85906],[7610.99,6363.07,7.86087]]; // all 3 Sahrani hotels model center coordinates
 /*
     {
@@ -96,7 +91,7 @@ if (isNull _hotel) exitWith {
 #ifdef __JAIL_DEBUG__
     hint localize format["--- jail.sqf: No jail buildings %2 exists for (%1)", name player, jail_buildings];
 #endif
-["log2server", name player, "jail building not found"] call  call XSendNetStartScriptServer;
+	["log2server", name player, "jail building not found"] call  call XSendNetStartScriptServer;
 };
 
 //hint localize format[ "jail: %1", _jailArr ];
@@ -113,8 +108,7 @@ player playMove "AmovPercMstpSnonWnonDnon"; // stand up!
 
 _wpn = weapons player;
 _mags = magazines player;
-if (!_test) then
-{
+if (!_test) then {
     removeAllWeapons player; // TODO: remove ACE backpack too
 #ifdef __ACE__
     player setVariable ["ACE_weapononback",nil];
@@ -153,12 +147,12 @@ _weaponHolder = "WeaponHolder" createVehicleLocal [0,0,0];
 _weaponHolder setPos _weaponHolderPos;// [_weaponHolderPos, [], 0, "CAN_COLLIDE"];
 {
     _weaponHolder addWeaponCargo [_x,1];
-}forEach _wpn;
+} forEach _wpn;
 _weaponHolder addWeaponCargo ["Phone",1];
 
 {
     _weaponHolder addMagazineCargo [_x,1];
-}forEach _mags;
+} forEach _mags;
 sleep 0.05;
 _cam camSetTarget _weaponHolder;
 _cam camCommit 0.5;
@@ -195,21 +189,18 @@ _sound = nearestObject [player, "#soundonvehicle"];
 waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
 //if (isNull _sound) then {hint localize "--- jail.sqf: No initial sound object detected!"};
 
-for "_i" from 0 to (_score - 1) do
-{
-    if ( (_i mod 10) == 0 ) then
-    {
+for "_i" from 0 to (_score - 1) do {
+    if ( (_i mod 10) == 0 ) then {
         _id = (floor(_i / 10)) mod (count _msg_arr);
         //player groupChat format["Prepare sound with _i = %1",_i];
-        cutText [_msg_arr select _id, "PLAIN"];
+        cutText [_msg_arr select _id, "PLAIN"]; // STR_JAIL_4
     };
 
     titleText [format ["%1",_i - _score],"PLAIN DOWN"];
 
 	{
 	    sleep 0.25;
-        if ((isNull _sound) && (alive player)) then
-        {
+        if ((isNull _sound) && (alive player)) then {
             player say _soundName;
 
             waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
@@ -235,3 +226,8 @@ disableUserInput true;
 disableUserInput false;
 
 deleteVehicle _weaponHolder;
+
+[] spawn {
+	sleep 15;
+  	cutText [localize "STR_JAIL_4", "PLAIN"]; // "Don't be in a hurry to spoil military property!"
+};
