@@ -2,10 +2,11 @@
     scripts\addSCUD.sqf
 
 	author: Sygsky
-	description: adds SCUD, hangar and control panel onto base
+	description: adds SCUD, hangar and control panel onto base (by НЕ_МАСТЕР request)
 	returns: nothing
 */
 
+// TODO: add std "killed" event handler
 _veh = createVehicle [ "GIG_Scud", [9411,10063,0], [], 0, "NONE" ];
 _veh setDir 180;
 //hint localize format[ "+++ veh %1: %2", typeof _veh, getPos _veh];
