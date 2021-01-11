@@ -10,7 +10,7 @@ private [""];
     00: AI name,
     01: AI pos,
     02: nearest settlement name,
-    03: random settlemet name
+    03: random settlement name
     04: one of settlement name
     05: current target town name or "" if no
     06: player name,

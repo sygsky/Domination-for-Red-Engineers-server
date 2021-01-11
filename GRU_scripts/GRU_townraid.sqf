@@ -325,8 +325,7 @@ for "_check" from 0 to 0 do
 		}; // while { true } do
 	}; // for "_main" from 0 to 0 do
 
-	if ( _score != 0 ) then 
-	{
+	if ( _score != 0 ) then {
 		player addScore _score ;
 	};
 	[0] execVM "GRU_scripts\GRU_removedoc.sqf";

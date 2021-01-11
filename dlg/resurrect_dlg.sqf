@@ -54,8 +54,7 @@ _rankPlayer = _rankPlayerStr call XGetRankIndex;
 
 #ifdef __DEBUG__
 hint localize format["rank needed %1, rank player %2",_rankNeeded,_rankPlayer];
-if ( _rankNeeded > _rankPlayer) then // inform user about his rank to be too low
-{
+if ( _rankNeeded > _rankPlayer) then { // inform user about his rank to be too low
     player addScore 100;
     sleep 1;
 };
