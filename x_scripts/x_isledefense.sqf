@@ -182,7 +182,7 @@ _make_isle_grp = {
 //	_units = [];
 //	{ _units = _units + (crew _x); } forEach _vecs;
 	_units = units _agrp;
-    hint localize format["+++ x_isledefense.sqf: %1 vehicles created for patrol type % , group %3, men %4", count _vecs, _patrol_type, _agrp, count _units]; // _pos call SYG_nearestLocationName
+    hint localize format["+++ x_isledefense.sqf: %1 vehicle[s] created for patrol type %2, group %3, men %4", count _vecs, _patrol_type, _agrp, count _units]; // _pos call SYG_nearestLocationName
 
 	if ( !(isNull (leader _agrp))) then {
         _leader = leader _agrp;
