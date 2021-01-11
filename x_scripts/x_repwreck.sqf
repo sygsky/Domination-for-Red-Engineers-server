@@ -23,15 +23,18 @@ while {true} do {
 			_wreck = [_rep_station,_types] call XGetWreck;
 		};
 	};
- 	_player = objNull;
+ 	_player = ""; // name of player who delivered vehicle onmto the recovery service
 #ifdef __RANKED__
-	// wreck vehicle detected on recovery service, lets award player who delivered it
-	 _nearArr =   nearestObjects [getPos _rep_station, ["Man"], 30];
-	 if (count _nearArr > 0 ) then {
-	 	{
-	 		if (isPlayer (driver  _x) && alive (driver _x)) exitWith { _player = driver  _x } ;
-	 	} forEach _nearArr;
-	 };
+	// wreck vehicle detected on recovery service, lets find player who delivered it for award
+	_nearArr =   nearestObjects [getPos _rep_station, ["LandVehicle", "Helicopter"], 30];
+	{
+		if (alive _x) then {
+			if (_x isKindOf "ParachuteBase") exitWith {};
+			if ( !alive ( driver _x) ) exitWith{};
+			if ( isPlayer (driver _x) ) exitWith { _player = name (driver _x) };
+		};
+		if (_player != "") exitWith {};
+	} forEach _nearArr;
 //	 hint localize format["+++ x_repwreck.sqf: count _nearArr == %1, _player %2", count _nearArr, typeOf _player];
 #endif
 	_type = typeOf _wreck;
@@ -45,7 +48,6 @@ while {true} do {
 	sleep 0.3;
 	_new_vec lock true;
 	_type_name = [_type,0] call XfGetDisplayName;
-	_player = if (isNull _player) then {""} else {name _player};
 	x_wreck_repair = [_type_name, _name, 0, _player ];
 	["x_wreck_repair", x_wreck_repair] call XSendNetStartScriptClient;
 
