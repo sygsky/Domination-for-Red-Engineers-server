@@ -374,8 +374,7 @@ d_rank_pic = d_player_old_rank call XGetRankPic;
 if (d_with_ace_map) then { "ACE_Map_Logic" createVehicleLocal [0,0,0]; };
 #endif
 
-if ( count resolved_targets > 0) then
-{
+if ( count resolved_targets > 0) then {
     hint localize format["+++ count resolved_targets %1 +++", resolved_targets];
 #ifndef __TT__
     for "_i" from 0 to (count resolved_targets - 1) do {
@@ -1812,33 +1811,24 @@ player call SYG_handlePlayerDammage; // handle hit events
 		;
 	}
 #ifdef __DEBUG__
-	else
-	{
-		hint localize "x_setupplayer.sqf: GRU PC isNull";
-	}
+	else { hint localize "x_setupplayer.sqf: GRU PC isNull"; }
 #endif
 	;
 	// Play about all fires
 	sleep 5;
-	if (SYG_firesAreCreated) then
-	{
+	if (SYG_firesAreCreated) then {
 	    call SYG_firesService
-	}
-	else
-	{
+	} else {
 	    hint localize "x_setupplayer.sqf: Fires not detected"
 	};
 	// play with map if exists
     _pos = call SYG_mapPos;
     _map = nearestObjects [_pos, ["Wallmap","RahmadiMap"], 100];
-    if ( count _map > 0) then
-    {
+    if ( count _map > 0) then {
         _map = _map select 0;
         _id = _map addAction [localize "STR_CHECK_ITEM","GRU_scripts\mapAction.sqf", typeOf _map]; // "Изучить"
         hint localize format["x_setupserver.sqf: addAction == %1 added to the map of %2", _id, typeOf _map];
-    }
-    else
-    {
+    } else {
         hint localize format["x_setupserver.sqf:  GRU map object not detected near pos %1", _pos];
     };
     // make the load on the Mi-17 less
@@ -1875,14 +1865,13 @@ SYG_client_start = missionStart;
 #endif
 
 #ifdef __DEBUG_JAIL__
-if (localize "STR_LANGUAGE" == "RUSSIAN") then
-{
+if (localize "STR_LANGUAGE" == "RUSSIAN") then {
     FLAG_BASE addAction ["В тюрьму!", "scripts\jail.sqf", "TEST" ];
 };
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-//#define __DEBUG_ADD_VEHICLES__
+// #define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 if (name player == "EngineerACE") then {

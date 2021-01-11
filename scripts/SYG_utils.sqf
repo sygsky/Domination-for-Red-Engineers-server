@@ -676,7 +676,7 @@ SYG_addArrayInPlace = {
 };
 
 // Remove all strings "RM_ME" from input _arr
-// call: _cleaned_arr = _arr call SYG_clearArray;
+// call: _cleaned_arr = _cleaned_arr call SYG_clearArray;
 // returns the same array without "RM_ME" items. Order of remained items in array may change!!!
 SYG_clearArray = {
 	if ( (typeName _this) != "ARRAY") exitWith {_this};
@@ -695,5 +695,46 @@ SYG_clearArray = {
 	};
 	_this
 };
+
+SYG_cleanArray = SYG_clearArray;
+
+// Remove all strings "RM_ME" from input _arr not changing oreder of items
+// call: _cleaned_arr = [_cleaned_arr,"RM_ME"] call SYG_clearArray;
+// returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
+SYG_clearArrayA = {
+	if ( (typeName _this) != "ARRAY") exitWith {[]};
+	if ( count _this < 2) exitWith {[]};
+	if ( (typeName (_this select 0) ) != "ARRAY") exitWith {[]};
+
+	private ["_dst","_src","_arr","_rm","_cnt"];
+	_arr = _this select 0;
+	_rm  = _this select 1;
+	_dst = _arr find _rm;
+	if (_dst < 0) exitWith{ _arr }; // nothing to remove
+	_src = _dst + 1;
+	_cnt = count _arr;
+//	hint localize "+";
+//	hint localize format["+++ orig: %1, _dst %2, _src %3", _arr, _dst, _src];
+	while { _src < _cnt } do {
+		if ( (_arr select _src) != _rm) then {
+			_arr set [_dst, _arr select _src];
+			_dst = _dst + 1;
+		};
+//		hint localize format["+++ _arr: %1, _src %2", _arr, _src];
+		_src = _src + 1;
+	};
+	_arr resize _dst;
+	_arr
+};
+SYG_cleanArrayA = SYG_clearArrayA;
+
+// Remove all strings "RM_ME" from input _arr not changing oreder of items
+// call: _cleaned_arr = _cleaned_arr call SYG_clearArray;
+// returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
+SYG_clearArrayB = {
+	[_this, "RM_ME"] call SYG_clearArrayA
+};
+SYG_cleanArrayB = SYG_clearArrayB;
+
 
 if (true) exitWith {};

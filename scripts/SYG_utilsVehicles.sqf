@@ -1216,7 +1216,7 @@ SYG_removeIntelLegend = {
 };
 
 //
-// set smoke throwed to the shooter side for "hit" event if vehicle has a smoke magazines in base inventory
+// set smoke throwed to the shooter side for "hit"/"dammage"(tanks) event if vehicle has a smoke magazines in base inventory
 //
 // Call: _isAssingedToSmoke = _vec call SYG_assignVecToSmokeOnHit;
 //

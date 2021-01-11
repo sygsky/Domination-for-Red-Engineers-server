@@ -177,8 +177,7 @@ while {true} do {
 								};
 								if (_skip_islets) then {
 									// check if point is on some islet near main Sahrani Isle (Rahmadi is always allowed for patrolling)
-									if (_wp_pos call SYG_pointOnIslet) then 
-									{
+									if (_wp_pos call SYG_pointOnIslet) then {
 #ifdef __DEBUG__
 										if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is on islet (case 1)",call SYG_nowTimeToStr,_grp, _wp_pos]};
 #endif							
@@ -344,22 +343,19 @@ while {true} do {
 	// check group to be empty or dead
 	if (isNull _grp || ((_grp call XfGetAliveUnitsGrp) == 0)) exitWith {
         if (count _last_pos < 3) exitWith { if (_debug_print) then {hint localize "+++ x_groupsm.sqf: group with null WP(1) dead";}};
-    	if(_debug_print) then {hint localize format["x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)]};
+    	if(_debug_print) then {hint localize format["+++ x_groupsm.sqf: group with WP near %1 is dead", text (_last_pos call SYG_nearestLocation)]};
 	};
 	// exit if group is empty or dead
 	
 	sleep (4 + random 4);
 	//+++ Sygsky: OPTIMIZE small groups utilizing with time to time trying to rejoin with bigger ones
-	if ( (_rejoin_num > 0) and (_rejoin_time <= time) ) then
-	{
+	if ( (_rejoin_num > 0) and (_rejoin_time <= time) ) then {
 	    _rejoin_time = time + REJOIN_RERIOD;    // prepare next time to re-join attempt
 		_counter = _grp call XfGetStandUnits;	// how many units can stand
-		if ( (_counter <= _rejoin_num) && (_counter > 0) ) then // try to join other group
-		{
+		if ( (_counter <= _rejoin_num) && (_counter > 0) ) then { // try to join other group
 			_counter = _counter + 1; // size for bigger group to be rejoinable
 			_leader = _grp call XfGetLeader;
-			if ( (!isNull _leader) && (vehicle _leader == _leader)) then // try re-join only for feet man group
-			{
+			if ( (!isNull _leader) && (vehicle _leader == _leader)) then { // try re-join only for feet man group
 				_side = side _leader;
 				_joingrp = grpNull;
 				_any_grp = grpNull;
@@ -376,28 +372,20 @@ while {true} do {
 				_min_dist = REJOIN_DISTANCE;
 
 				{
-                    if (typeName _x == "ARRAY") then
-                    {
+                    if (typeName _x == "ARRAY") then {
                         _grp1 = _x select 0;
 						if (isNull _grp1) exitWith{}; // dead group detected, skip it
-                        if ( (_grp1 call XfGetStandUnits) > 0 ) then
-                        {
+                        if ( (_grp1 call XfGetStandUnits) > 0 ) then {
                             _leader1 = leader _grp1;
-                            if ( alive _leader1 ) then
-                            {
-                                if ( (vehicle _leader1 == _leader1) &&  (_grp != _grp1)  && (_side == side _grp1) ) then
-                                {
+                            if ( alive _leader1 ) then {
+                                if ( (vehicle _leader1 == _leader1) &&  (_grp != _grp1)  && (_side == side _grp1) ) then {
 									_dist = _leader distance _leader1;
-									if ( _dist < _min_dist) then
-									{
+									if ( _dist < _min_dist) then {
 									    _stand_cnt = _grp1 call XfGetStandUnits;
-									    if (_stand_cnt >= _rejoin_num ) then
-									    {
+									    if (_stand_cnt >= _rejoin_num ) then {
                                             _joingrp = _grp1;
                                             _min_dist = _dist;
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             if ( _stand_cnt > 1) then {_any_grp = _grp1;};
                                         };
 									};
@@ -408,7 +396,7 @@ while {true} do {
                     };
 				} forEach _all_grp_list;
 #ifdef __DEBUG__			
-				hint localize format["%1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4]) at %5, leader %6",
+				hint localize format["+++ %1 x_groupsm.sqf: Trying to re-join grp %2(of %3[%4]) at %5, leader %6",
 				    call SYG_missionTimeInfoStr,
 				    _grp,
 				    count units _grp,
@@ -418,16 +406,14 @@ while {true} do {
 				    typeOf _leader
 				    ];
 #endif				
-                if ( (isNull _joingrp) && (!isNull _any_grp) ) then // use bad group if no good one found
-                {
+                if ( (isNull _joingrp) && (!isNull _any_grp) ) then {  // use bad group if no good one found
                     _joingrp = _any_grp;
                 };
 
-				if ( !isNull _joingrp ) then 
-				{
+				if ( !isNull _joingrp ) then {
 #ifdef __DEBUG__
                     _jleader = _joingrp call XfGetLeader;
-					hint localize format["%5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %6, dist %7; %8",
+					hint localize format["+++ %5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %6, dist %7; %8",
 					    _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr,
 					    typeOf _jleader, round(_jleader distance _leader),
 					    [_jleader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];

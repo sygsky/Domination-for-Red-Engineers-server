@@ -288,7 +288,8 @@ SYG_modelObjectToWorld = {
  */
 SYG_pointInCircle =
 {
-	( (_this select 0)  distance (_this select 1) ) <= (_this select 2)
+	( [_this select 0, _this select 1] call SYG_distance2D) <= (_this select 2)
+//	( (_this select 0)  distance (_this select 1) ) <= (_this select 2)
 };
 
 // =======================================

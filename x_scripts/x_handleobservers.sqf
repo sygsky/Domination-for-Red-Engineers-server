@@ -153,8 +153,8 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _dist_obs_pos   = round( _observer distance _pos_nearest ); // dist between observer and hit point
 
                     if ( _dist_between_pos >= MAX_SHOOT_DIST ) exitWith {
-                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to dist %2 m between known and real pos. Only %3 m. allowed",
-                        name _enemy, _dist_between_pos, MAX_SHOOT_DIST];
+                        hint localize format[ "+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to dist %2 m (<= %3 allowed) between known and real pos. KnowAbout %4",
+                        name _enemy, _dist_between_pos, MAX_SHOOT_DIST, (round((_observer knowsAbout _enemy) * 10.0))/10.0 ];
                     };
 // The following lines are commented as useless, because the previous statement completely solves the problem
 // of firing far away from the real position (including because of the teleport to the base)

@@ -94,8 +94,7 @@ if ( _dead ) exitWith // find other units of the group
     #endif
 };
 
-if (side _shooter == side _vec) exitWith
-{
+if (side _shooter == side _vec) exitWith {
     #ifdef __PRINT__
     hint localize format["x_dosmoke2.sqf: attacked vec %1 is under friendly fire from ""%2""", typeOf _vec, _name];
     #endif
@@ -106,7 +105,7 @@ if (side _shooter == side _vec) exitWith
 if (!("ACE_LVOSS_Magazine" in (magazines _vec))) exitWith {
 // TODO: try to find ammo and reload smoke grenades from it
 #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: veh %1 has no more smoke shells!!!", typeOf _vec];
+	hint localize format["x_dosmoke2.sqf: veh %1 has no more smoke shells against ""%2""!!!", typeOf _vec, _name];
 #endif
 };
 

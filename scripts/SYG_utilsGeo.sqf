@@ -80,21 +80,15 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 // if not in chasm, empty array is returned
 //  call:
 //  _newWP = (getPos _vehicle) call SYG_chasmExitWP;
-//  if ( count _newWP == 3) _vehicle addWP _newWP
+//  if ( count _newWP == 3) then {_vehicle addWP _newWP};
 //
 SYG_chasmExitWP = {
     private ["_ret","_center","_radious"];
    _ret = [];
 #ifdef __DEFAULT__
-    if ( typeName _this == "OBJECT") then {
-        _this = getPos _this;
-    };
-    if ( typeName _this != "ARRAY") exitWith {
-        _ret
-    };
-    if ( count _this != 3 ) exitWith {
-        _ret
-    };
+    if ( typeName _this == "OBJECT") then {  _this = getPos _this; };
+    if ( typeName _this != "ARRAY") exitWith { _ret };
+    if ( count _this != 3 ) exitWith { _ret };
     {
         _center = _x select 0;
         _radious = _x select 1;

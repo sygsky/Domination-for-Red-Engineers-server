@@ -45,7 +45,7 @@ SAddObserverKillScores = {
                 primaryWeapon _observer,
                 typeOf _killer,
                 if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {
-                	if ( _observer == _killer) then {" by itself"} else {""}
+                	if ( _observer == _killer) then {"(himself)"} else {""}
                 },
                 [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
             ];

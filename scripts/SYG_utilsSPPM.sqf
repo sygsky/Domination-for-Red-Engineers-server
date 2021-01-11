@@ -94,7 +94,7 @@ SYG_getAllSPPMVehicles = {
 		// ) || _cargo) ) then {
 		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon") || (_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || (_veh isKindOf "ACE_ATV_HondaR") || (_veh isKindOf "Motorcycle") ) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
 	};
-	_arr call SYG_clearArray
+	_arr call SYG_clearArrayB
 };
 
 SYG_findNearSPPMCount = {
@@ -250,7 +250,7 @@ SYG_generateSPPMText1 = {
 		_x = _this select _i;
 		if (typeName _x != "OBJECT") then { _this set [_i, "RM_ME"] };
 	};
-	_this call SYG_clearArray;
+	_this call SYG_clearArrayB;
 #ifdef __ACE__
 	_ace_support = ""; // main marker from any combinations od SPPM vehicle (ACE :o)
 #endif
@@ -334,7 +334,7 @@ SYG_updateAllSPPMMarkers = {
 			_marker setMarkerText (_arr select 1);
 		} else { _count_empty = _count_empty + 1 };
 	};
-	SYG_SPPMArr call SYG_clearArray;
+	SYG_SPPMArr call SYG_clearArrayB;
 	//player groupChat format["+++  count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];
 	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3, empty %4", count SYG_SPPMArr, _count_updated, _count_removed, _count_empty];
 	[_count_updated, _count_removed]

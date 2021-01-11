@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_scripts\x_parahandler.sqf
 private ["_current_target_pos","_dummy","_end_pos","_start_pos","_vecs","_num_p","_attack_pos","_fly_height","_tmp"];
 if (!isServer) exitWith {};
 
@@ -21,14 +21,13 @@ while {!mt_radio_down} do {
 		if (X_MP) then {
 			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 		};
-		__DEBUG_NET("x_parahandler.sqf",(call XPlayersNumber))
+		//__DEBUG_NET("x_parahandler.sqf",(call XPlayersNumber))
 		_start_pos = d_para_start_positions select (floor random (count d_para_start_positions));
 		_end_pos = d_para_end_positions select (floor random (count d_para_end_positions));
 		_fly_height = 100;
 #ifdef __DEFAULT__		
 		_tmp = _spec_names_arr find (_dummy select 1 ); // use special start point for some marine cities
-		if ( _tmp >= 0 ) then
-		{
+		if ( _tmp >= 0 ) then {
 			_start_pos = _start_pnt_arr select _tmp;
 			_end_pos   = _end_pnt_arr select _tmp;
 		};
@@ -38,8 +37,7 @@ while {!mt_radio_down} do {
 			_start_pos = [982.0,24545.0,0]; // in sea on NW from Mataredo
 		};
  */		
-		if ( (_dummy select 1 ) in  d_mountine_towns/* ["Pacamac", "Hunapu", "Masbete"] */ ) then  // fly at higher height to prevent collision with mountine slopes
-		{
+		if ( (_dummy select 1 ) in  d_mountine_towns/* ["Pacamac", "Hunapu", "Masbete"] */ ) then {  // fly at higher height to prevent collision with mountine slopes
 			_fly_height = 350;
 		};
 #endif		
@@ -58,13 +56,10 @@ while {!mt_radio_down} do {
 		_attack_pos = [_current_target_pos,200] call XfGetRanPointCircle;
 #ifdef __DEFAULT__
 
-        if ((_dummy select 1)  == "Everon") then
-        {
-            _attack_pos set [1, (_attack_pos select 1) +200 ]; //shift +200 meters to north (landing not to sea)
-        } else
-        {
-            if ((_dummy select 1)  == "Mataredo") then
-            {
+        if ((_dummy select 1)  == "Everon") then {
+            _attack_pos set [1, (_attack_pos select 1) + 200 ]; //shift +200 meters to north (landing not to sea)
+        } else {
+            if ((_dummy select 1)  == "Mataredo") then {
                 _attack_pos set [1, (_attack_pos select 1) -150 ]; //shift -150 meters to south (landing not to sea)
             };
         };

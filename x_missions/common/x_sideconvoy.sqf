@@ -268,7 +268,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 				_pos2 set [2,0];
 				_dist = (round ((_pos1 distance _pos2)/100)) * 100;
 				_dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
-//					hint localize format["%1 x_groupsm.sqf: grp %2, count (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
+//					hint localize format["+++ %1 x_groupsm.sqf: grp %2, count (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
 
 				hint localize format["%6 x_sideconvoy.sqf: vecs a%1/m%8/c%5(%7), pos. %3 m to %4 from %2",
 				    {alive _x} count _veh_arr,
