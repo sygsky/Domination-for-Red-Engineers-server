@@ -1,14 +1,16 @@
 // by Xeno
 //
-// x_repengineer.sqf
+// x_scripts\x_repengineer.sqf
 //
 // Runs only on client side
+//
+// Modified by Sygsky in 2018. Limited by rank refuelling + score by step count not vehicle type
 //
 
 #include "x_setup.sqf"
 
 private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_steps",
-        "_rep_count","_rep_array","_breaked_out","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres","_addscore"];
+        "_rep_count","_rep_array","_break_str","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres","_addscore"];
 
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
 _is_engineer = format ["%1", player] in d_is_engineer;
@@ -26,7 +28,7 @@ _truck_near = false;
 } forEach _trArr;
 
 if (!d_eng_can_repfuel && !_truck_near) exitWith {
-	hint (localize "STR_SYS_18");//"Следует восстановить способность ремонта и заправки техники на базе...";
+	hint (localize "STR_SYS_18"); //"Следует восстановить способность ремонта и заправки техники на базе...";
 };
 
 #ifdef __RANKED__
@@ -111,8 +113,8 @@ _type_name = [typeOf (objectID2),0] call XfGetDisplayName;
 _damage_ok = false;
 _fuel_ok = false;
 d_cancelled = false;
-_breaked_out = false;
-_breaked_out2 = false;
+_break_str = "";
+_pos = getPos player;
 _rep_action = player addAction[localize "STR_SYS_77","x_scripts\x_cancelrep.sqf"]; // "Отменить обслуживание"
 
 // #413: off engine before repairing
@@ -124,8 +126,8 @@ if ( !(alive (driver objectID2) ) ) then {
 };
 
 _addscore = 0; // how many repair steps were done
-for "_wc" from 1 to _coef do {
-	if (!alive player || d_cancelled) exitWith {player removeAction _rep_action;};
+
+for "_i" from 1 to _coef do {
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (_is_engineer) then {
         if (!_damage_ok) then {
@@ -146,20 +148,23 @@ for "_wc" from 1 to _coef do {
 	player playMove "AinvPknlMstpSlayWrflDnon_medic";
 	sleep 3.0;
 	waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"}; // this animation cycle duration is approximatelly 6 seconds
-	if (d_cancelled) exitWith {
-		_breaked_out = true;
-	};
-	if (vehicle player != player) exitWith {
-		_breaked_out2 = true;
-		hint localize "STR_SYS_142"/* "Обслуживание отменено..." */;
-	};
+
+	if (!alive player) exitWith { _break_str = "STR_SYS_142_3"; }; // "You are dead, service is cancelled..."
+
+	if (d_cancelled) exitWith { _break_str = "STR_SYS_136"; }; // The service is cancelled...
+
+	if (vehicle player != player) exitWith { _break_str = "STR_SYS_142"; }; // "Service from the vehicle is impossible..."
+
+	if ( ! (alive objectID2) ) exitWith { _break_str = "STR_SYS_142_1"; };// "The vehicle burned out... you're too late!"
+
+	if ( (_pos distance player) > 10 ) exitWith {_break_str = "STR_SYS_142_2";}; // "You are far from the vehicle..."
+
 	if (!_damage_ok) then {
 		_damage = _damage - _rep_count;
 		if (_damage <= 0.01) then {_damage = 0;_damage_ok = true;};
 		_addscore = _addscore + 1;
 	} else  {
-        if (!_fuel_ok) then
-        {
+        if (!_fuel_ok) then {
             _fuel = _fuel + _fuel_vol_on_step;
             if (_fuel >= _refuel_limit) then {_fuel = _refuel_limit; _fuel_ok = true;};
         };
@@ -168,14 +173,16 @@ for "_wc" from 1 to _coef do {
 	hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
 };
 
-if (_breaked_out) exitWith {
-	(localize "STR_SYS_136") call XfGlobalChat; // "Сервис отменен..."
-	player removeAction _rep_action;
-};
-if (_breaked_out2) exitWith {};
-d_eng_can_repfuel = false;
 player removeAction _rep_action;
-if (!alive player) exitWith {player removeAction _rep_action};
+
+// Service may be cancelled by any circumstances
+if (_break_str != "") exitWith {
+	if ( alive player ) then { playSound "losing_patience" }; // death usually have special sounds
+	(localize _break_str) call XfGlobalChat;
+};
+
+d_eng_can_repfuel = false; // Well, refuel ability is exhausted
+
 #ifdef __RANKED__
 
 // now count score by steps, not vehicle size and class. Previous version is commented
@@ -199,27 +206,33 @@ _addscore = (
 */
 if (_addscore > 0) then {
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
-#ifdef __NON_ENGINEER_REPAIR_PENALTY__
-    if (!_is_engineer) then
-    {
+	#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+    if (!_is_engineer) then {
         _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__; // must be negative value!
         SYG_engineering_fund = SYG_engineering_fund - _addscore; // add to enginering fund, not subtract!!!
         publicVariable "SYG_engineering_fund"; // send spent scores to the fund
-    #ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
+    	#ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
         _str = "STR_SYS_137_2"; // "Maintenance score (%1) is reallocated to the Engineering Fund (%2)"
-    #endif
-    #ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
+    	#endif
+    	#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
         _str = "STR_SYS_137_1"; //"Subtracted points for maintenance: %1 ..."
-    #endif
+    	#endif
     };
-#endif
-	player addScore _addscore;
-	(format [localize _str, _addscore, SYG_engineering_fund]) call XfHQChat;
+	#endif
+	if (alive _vehicle) then {
+		player addScore _addscore;
+		(format [localize _str, _addscore, SYG_engineering_fund]) call XfHQChat;
+	} else {
+		(localize "STR_SYS_138_1") call XfGlobalChat; // "You didn't make it, the vehicle burned..."
+	};
 };
 #endif
+
 rep_array = _rep_array;
 ["rep_array",_rep_array] call XSendNetStartScriptAll;
-_rep_array spawn x_repall;
-(format [localize "STR_SYS_138", _type_name]) call XfGlobalChat; //"Обслуживание закончено: %1 ..."
+_rep_array call x_repall;
+
+(format [localize "STR_SYS_138", _type_name]) call XfGlobalChat; // "Обслуживание закончено: %1 ..."
+
 if (true) exitWith {};
 
