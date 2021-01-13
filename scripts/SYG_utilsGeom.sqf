@@ -286,8 +286,7 @@ SYG_modelObjectToWorld = {
  *     _bool = [_p, _circle_center, _circle_radius] call SYG_pointInCircle;
  * Returns: TRUE if point is in circle or on bound, FALSE if totally out of circle
  */
-SYG_pointInCircle =
-{
+SYG_pointInCircle = {
 	( [_this select 0, _this select 1] call SYG_distance2D) <= (_this select 2)
 //	( (_this select 0)  distance (_this select 1) ) <= (_this select 2)
 };

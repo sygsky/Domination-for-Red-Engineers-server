@@ -1912,16 +1912,13 @@ SYG_addHorn = {
 };
 
 /**
-Find leader for group, if leader is null, return first alive from units of gorup
+ * Finds leader for group, if leader is null, return first alive from units of group or objNull if empty group
  * call: _leader = _grp call _get_leader;
  */
 SYG_getLeader = {
 	private ["_leader"];
 	if (isNull _this) exitWith { objNull };
-	if (typeName _this == "OBJECT") then
-	{
-		_this = group _this;
-	};
+	if (typeName _this == "OBJECT") then { _this = group _this; };
 	if (isNull _this) exitWith { objNull };
 	if (typeName _this != "GROUP" )  exitWith { objNull };
 	_leader = leader _this;

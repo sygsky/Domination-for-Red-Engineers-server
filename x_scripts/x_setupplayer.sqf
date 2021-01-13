@@ -1681,7 +1681,7 @@ if (d_player_air_autokick > 0) then {
 #endif
 	private ["_oldscore","_newscore"];
 	_oldscore = 0;
-	while {true} do {
+	while { true } do {
 		sleep 4.5; // Xeno value was(3 + random 3); // Lets test  to change sleep delay to the period 4.5 seconds
 		_newscore = score player;
 		if (_oldscore != _newscore) then {
@@ -1871,7 +1871,7 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then {
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-// #define __DEBUG_ADD_VEHICLES__
+#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 if (name player == "EngineerACE") then {

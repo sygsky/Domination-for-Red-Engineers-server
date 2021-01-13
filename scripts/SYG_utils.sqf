@@ -29,6 +29,7 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsDateTime.sqf";	// Date-time
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsGeo.sqf";		// Geography
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSM.sqf";		// Side Missions
+	call compile preprocessFileLineNumbers "scripts\SYG_utilsMT.sqf";		// Main Target
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsEnv.sqf";		// Environment
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsVehicles.sqf";	// Vehicles
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
