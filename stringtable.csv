@@ -902,6 +902,8 @@ STR_SYS_1220,"GRU reports that an enemy aircraft carrier seems to have gotten aw
 
 STR_SYS_1230,"H U R R A H!","H U R R A!","H U R R A - A - A!","У Р А !"
 
+STR_SYS_1231,"Command has forbidden you to use any combat equipment until you deliver %1 to the base to replace what has been lost","Das Kommando hat dir verboten, jegliche Kampfausrüstung zu benutzen, bis du %1 an die Basis lieferst, um zu ersetzen, was verloren gegangen ist","El comando le ha prohibido usar cualquier equipo de combate hasta que entregue %1 a la base para reemplazar lo que se ha perdido","Командование запретило Вам использование любой боевой техники, пока Вы не доставите на базу %1 взамен утраченного"
+
 STR_SYS_MAINBOX,Your personal equipment box. No one but You can use it,"Deine persönliche Waffenkiste. Niemand, aber Sie können es verwenden",Su cajón personal con equipo. Nadie más que Tú puede usarlo,"Ваш личный ящик со снаряжением. Никто, кроме Вас, не может его использовать"
 STR_SYS_GRUBOX,The GRU's public weapon box. Keep weapons that are not used on secret missions here,"Die öffentliche Waffenkiste der GRU. Bewahren Sie hier Waffen auf, die nicht für geheime Missionen verwendet werden",Caja de armas pública GRU. Guarda aquí armas que no se usan en misiones secretas,"Общедоступный оружейный ящик ГРУ. Храните здесь оружие, не используемое на секретных заданиях"
 
