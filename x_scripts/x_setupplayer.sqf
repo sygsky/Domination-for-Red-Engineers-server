@@ -1109,6 +1109,16 @@ _local_msg_arr spawn {
             0, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
+	if ( (name player) == "lolport" ) exitWith {
+		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ ["Recordamos al Che Guevara, ¡fue nuestro invitado una vez!" ] ],
+			0, 5, false, "drum_fanfare"
+		] call SYG_msgToUserParser;
+	};
+
     // if no special message, type common one
     //"For his services in developing our mission, the chief engineer extends his thanks to fighters Rokse and Ceres!!!"
     sleep 10;
@@ -1679,13 +1689,17 @@ if (d_player_air_autokick > 0) then {
 	hint localize "++ SPPM UPDATE initiated for markers";
 	["SPPM", "UPDATE", name player, false] call XSendNetStartScriptServer; // allow SPPM markers visibility at the start
 #endif
-	private ["_oldscore","_newscore"];
+	private ["_oldscore","_newscore","_mtscore","_bonusscore"];
 	_oldscore = 0;
 	while { true } do {
 		sleep 4.5; // Xeno value was(3 + random 3); // Lets test  to change sleep delay to the period 4.5 seconds
 		_newscore = score player;
 		if (_oldscore != _newscore) then {
-			["d_ad_sc", name player, _newscore] call XSendNetStartScriptServer;
+			_mtscore = if (call SYG_playerIsAtTown) then { _newscore - _oldscore } else { 0 };
+			_bonusscore = SYG_MTBonusScore;
+			// send full score (_newscore), in town score (_mtsocore), bonus score (SYG_MTBonusScore)
+			["d_ad_sc", name player, _newscore, _mtscore, _bonusscore] call XSendNetStartScriptServer;
+			SYG_MTBonusScore = SYG_MTBonusScore - _bonusscore;
 			[] spawn XPlayerRank; // detect if new rank is reached and inform player about
 
 			if ( rating player < 0  ) then { // prevent player from being enemy to AI
@@ -1871,7 +1885,7 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then {
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-#define __DEBUG_ADD_VEHICLES__
+//#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 if (name player == "EngineerACE") then {

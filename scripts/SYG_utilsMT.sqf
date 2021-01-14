@@ -196,6 +196,27 @@ SYG_townScoresPrint = {
     ];
     hint localize "]";
 };
+// Player statistics for main target: [bon,mt] : (any bonus score, mait target scores)
+//
+SYG_MTBonusScore = 0; // score added as mission bonus system, not by Arma itself
+//
+// Adds score to plyaer and store them in main target statistical array
+// _MTScore = _addScore call SYG_addMTScore;
+//
+SYG_addMTScore = {
+	SYG_MTBonusScore = SYG_MTBonusScore + _this;
+	player addScore _this;
+};
 
+//
+// Detects player to be in town radious
+// call as: _playerIsInTown = call SYG_playerIsAtTown;
+//
+SYG_playerIsAtTown = {
+	if( current_target_index < 0 ) exitWith { false };
+	private [ "_dummy" ];
+	_dummy = target_names select current_target_index;
+	[player, _dummy select 0, _dummy select 2] call SYG_pointInCircle
+};
 
 // EOF
