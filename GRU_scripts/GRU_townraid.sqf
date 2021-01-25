@@ -326,7 +326,8 @@ for "_check" from 0 to 0 do
 	}; // for "_main" from 0 to 0 do
 
 	if ( _score != 0 ) then {
-		player addScore _score ;
+		//player addScore _score ;
+		_score call SYG_addBonusScore;
 	};
 	[0] execVM "GRU_scripts\GRU_removedoc.sqf";
 }; //for "_check" from 0 to 0 do

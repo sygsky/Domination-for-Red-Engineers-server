@@ -30,20 +30,18 @@ SYG_bumpScores = {
 	if ( vehicle player != player ) exitWith {}; // check score only if player is not in vehicle
     private ["_score_bump","_i"];
     _score_bump = _score - SYG_lastScore;
-    if (( SYG_scoreCount + _score_bump) >= SYG_score_per_award) then
-    {
+    if (( SYG_scoreCount + _score_bump) >= SYG_score_per_award) then {
         // lets award user with additional scores
-        player addScore SYG_score_per_award;
+        //player addScore SYG_score_per_award;
+   		SYG_score_per_award call SYG_addBonusScore;
+
         // todo: inform user about prize
         // reset internal data
         SYG_scoreCount = ( SYG_scoreCount + _score_bump) - SYG_score_per_award;
         for "_i" from 0 to LIFE_CHECKED_COUNT - 1 do { SYG_scoreQueue set [_i, 0]; };
-    }
-    else
-    {
+    } else {
         SYG_scoreQueue set [SYG_deathCounter, (SYG_scoreQueue select SYG_deathCounter) + _score_bump];
-        if ( SYG_scoreCount >= SYG_score_inform_limit ) then
-        {
+        if ( SYG_scoreCount >= SYG_score_inform_limit ) then {
             (format["Got score +%1, lost life count %2, award after +%3 scores",SYG_score_per_award - SYG_scoreCount, SYG_deathCounter, SYG_score_per_award]) call XfGlobalChat;
         };
     };

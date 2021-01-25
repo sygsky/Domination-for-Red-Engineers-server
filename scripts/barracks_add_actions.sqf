@@ -41,6 +41,18 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","Soldier%1AA"];  // "Recruit AA Soldier"
 		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"]; // "Recruit Specop"
 	} else {
+
+//#define __LOCALE_RECRUITS__
+#ifdef __LOCALE_RECRUITS__ // Add locale specific recruits not soviet ones
+		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf",["ACE_SoldierAR_INS","ACE_SoldierG_B_INS_A",/*"ACE_SoldierG_B_INS_R",*/"ACE_SoldierG_SR_INS_R","ACE_SoldierG_MediumMort"]];
+		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf",["ACE_SoldierG_AT_INS_A","ACE_SoldierG_RPG_INS_R","ACE_SoldierG_RPG_INS_A","ACE_SoldierAT_INS","ACE_SoldierRPG_INS"]];
+		AI_HUT addAction[localize "STR_AI_3","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Medic"];
+		AI_HUT addAction[localize "STR_AI_4","x_scripts\x_addsoldier.sqf","ACE_SoldierG_MG_INS_A"];
+		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf",["ACE_SoldierSniper_INS","ACE_SoldierG_Sniper_INS_A","ACE_SoldierG_Sniper_INS_R"]];
+		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf",["ACE_SoldierAA_INS","ACE_SoldierG_AA_INS_A"]];
+		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf",["ACE_SoldierG_Demo_INS_A","ACE_SoldierG_Miner_INS_R"]];
+#endif
+#ifndef __LOCALE_RECRUITS__ // Add locale specific recruits not soviet ones
 		AI_HUT addAction[localize "STR_AI_1","x_scripts\x_addsoldier.sqf","ACE_Soldier%1B"];
 		AI_HUT addAction[localize "STR_AI_2","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AT"];
 		AI_HUT addAction[localize "STR_AI_3","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Medic"];
@@ -48,16 +60,12 @@ if ( _string_player in d_can_use_artillery ) then {
 		AI_HUT addAction[localize "STR_AI_5","x_scripts\x_addsoldier.sqf","ACE_Soldier%1Sniper"];
 		AI_HUT addAction[localize "STR_AI_6","x_scripts\x_addsoldier.sqf","ACE_Soldier%1AA"];
 		AI_HUT addAction[localize "STR_AI_7","x_scripts\x_addsoldier.sqf","Specop"];
+#endif
 		if (d_enemy_side == "EAST") then {
 			AI_HUT addAction[localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf", "BISCamelPilot" /*"ACE_Soldier%1Pilot"*/]; // Pilot
 		} else {
 			// Set random pilot type
-			_pilot = switch (ceil (random 3)) do {
-				case 1: {"BISCamelPilot2"};
-				case 2: {"ACE_SoldierEPilot_IRAQ_RG"};
-				default {"ACE_Soldier%1Pilot"};
-			};
-			AI_HUT addAction[ localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf", _pilot ]; // Pilot
+			AI_HUT addAction[ localize "STR_AI_7_1","x_scripts\x_addsoldier.sqf", ["BISCamelPilot2","ACE_SoldierEPilot_IRAQ_RG"] ]; // Pilot
 		};
 	};
 	AI_HUT addAction[localize "STR_AI_8","x_scripts\x_dismissai.sqf"]; // "Dismiss AI"
