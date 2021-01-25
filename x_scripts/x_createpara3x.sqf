@@ -1,8 +1,8 @@
 // by Xeno
 //
-// x_createpara3x.sqf
+// x_createpara3x.sqf, called from x_scripts\x_parahandler.sqf as follow: [_start_pos,_attack_pos,_end_pos,_vecs, _fly_height] execVM "x_scripts\x_createpara3x.sqf";
 //
-// creates paratroopers for targeted city + heli to transport them
+// creates paratroopers for targeted city, heli created in x_scripts\x_parahandler.sqf
 private ["_type","_startpoint","_attackpoint","_heliendpoint","_number_vehicles","_fly_height","_crew_member","_parachute_type","_make_jump","_stop_it","_current_target_pos","_dummy", "_mti"];
 if (!isServer) exitWith {};
 
@@ -92,12 +92,10 @@ _make_jump = {
 			// try to animate ramp opening
 #ifdef __ACE__	
 			// animate heli action
-			if ( _vehicle isKindOf "ACE_CH47D" ) then
-			{
+			if ( _vehicle isKindOf "ACE_CH47D" ) then {
 				_vehicle animate ["ramp", 1]; // open ramp
 			};
-			sleep 5.0;
-#endif	
+#endif
 			sleep 0.1;
 			for "_i" from 0 to ((count _real_units) - 1) do {
 				_type = _real_units select _i;
@@ -141,13 +139,13 @@ _make_jump = {
 			_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[_current_target_pos,200],[],-1,0,[],300 + (random 50),0,[2]]; // rejoin in 2 units in group
 			_grp_array execVM "x_scripts\x_groupsm.sqf";
 			
-			d_c_attacking_grps = d_c_attacking_grps + [_paragrp];
+			d_c_attacking_grps set [count d_c_attacking_grps, _paragrp];
 			
 			sleep 0.112;
 			d_should_be_there = d_should_be_there - 1;
 
 			//+++ Sygsky: rearm group
-			(units _paragrp) call SYG_rearmBasicGroup;
+			_paragrp call SYG_rearmBasicGroup;
 			//--- Sygsky
 			
 			while {(_heliendpoint distance (leader _vgrp) > 300)} do {
@@ -250,7 +248,7 @@ if (!mt_radio_down) then {
 	if (count d_c_attacking_grps > 0) then {
 		[d_c_attacking_grps] execVM "x_scripts\x_handleattackgroups.sqf";
 	} else {
-		d_c_attacking_grps = [];
+		d_c_attacking_grps resize 0;
 		create_new_paras = true;
 	};
 };

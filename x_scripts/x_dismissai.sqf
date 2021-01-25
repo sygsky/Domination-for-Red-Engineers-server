@@ -38,7 +38,8 @@ if (_ai_cnt > 0) then {
 	if ( (_ai_cnt > 0) && (_refund != 0)) then {
 	    playSound "return";
         // each AI soldier costs score points
-        player addScore _refund; // return scores for each alive dismissed AI
+        //player addScore _refund; // return scores for each alive dismissed AI
+        _refund call SYG_addBonusScore;
 	};
 	_str = "";
 	if ( _dmg_cnt  > 0) then {
