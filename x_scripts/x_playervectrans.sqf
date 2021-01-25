@@ -16,7 +16,8 @@ d_getOutEHPoints = {
 			if (_var distance position _unit > d_transport_distance) then
 			{
 				_var = d_ranked_a select 18;
-				player addScore ( _var );
+				//player addScore ( _var );
+				_var call SYG_addBonusScore;
 				(format [localize "STR_SYS_360"/* "За перевозку 1-го бойца +%1 очков" */, _var ]) call XfHQChat;
 			};
 		};

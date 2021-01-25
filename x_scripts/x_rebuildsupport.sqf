@@ -30,10 +30,8 @@ if (score player < (d_ranked_a select 13)) exitWith {
 // non-engineer is here only if __REP_SERVICE_FROM_ENGINEERING_FUND__ is defined in x_setup.sqf
 
 _exit = false;
-if (!_is_engineer) then
-{
-    if ( SYG_engineering_fund < _addscore) exitWith  // to repair you need enough score in engineering fund
-    {
+if (!_is_engineer) then {
+    if ( SYG_engineering_fund < _addscore) exitWith { // to repair you need enough score in engineering fund
         // not enough scores in fund
         (format [localize "STR_SYS_137_3", SYG_engineering_fund, (d_ranked_a select 20)] ) call XfHQChat;
         _exit = true;
@@ -42,10 +40,9 @@ if (!_is_engineer) then
     SYG_engineering_fund = SYG_engineering_fund - _addscore; // subtract non-engineer support price
     publicVariable "SYG_engineering_fund";
     (format [localize "STR_SYS_137_4", (d_ranked_a select 20), SYG_engineering_fund]) call XfHQChat;
-}
-else
-{
-    player addScore _engineer_profit; // subtract (if normal flow) or add if is defined __ADD_SCORE_FOR_FACTORY_SUPPORT__
+} else {
+    //player addScore _engineer_profit; // subtract (if normal flow) or add if is defined __ADD_SCORE_FOR_FACTORY_SUPPORT__
+	_engineer_profit call SYG_addBonusScore;
 };
 if (_exit ) exitWith {false};
 

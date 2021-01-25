@@ -211,7 +211,8 @@ if ((getDammage _vehicle) > 0) then {
     sleep x_reload_time_factor;
 } else {
     [_vehicle, localize "STR_SYS_258_1"] call XfVehicleChat; // "Vehicle is fully functional, thx from engineers!"
-    player addScore 1;
+    //player addScore 1;
+    1 call SYG_addBonusScore;
 };
 
 //+++++ refueling

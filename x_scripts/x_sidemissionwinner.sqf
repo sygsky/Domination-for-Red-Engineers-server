@@ -43,7 +43,8 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
     ];
 	if (_get_points) then {
 		(format [localize "STR_SYS_125"/* "Participating in the side mission execution you get points: +%1 and %2 !!!" */,(d_ranked_a select 11),_bonus_vehicle]) call XfHQChat;
-		player addScore (d_ranked_a select 11);
+		//player addScore (d_ranked_a select 11);
+		(d_ranked_a select 11) call SYG_addBonusScore;
 		playSound "good_news";
 	};
 	d_sm_p_pos = nil;
@@ -91,7 +92,8 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 	if (_s != "") then
 	{
         _penalty = d_ranked_a select 11; // todo: lower all players in rank on such bad event!!!
-        player addScore (-_penalty);
+        //player addScore (-_penalty);
+        (-_penalty) call SYG_addBonusScore;
 		hint composeText[ 
 			parseText("<t color='#f0ff00ff' size='1'>" + localize "STR_SYS_129"/* "Side mission failed!!!" */ + "</t>"),
 			lineBreak,
