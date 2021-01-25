@@ -30,7 +30,8 @@ if (!isNull _killer && isPlayer _killer && _killer != _killed) then {
 };
 
 #ifdef __RANKED__
-if (!_killedfriendly) then {player addScore d_sub_kill_points};
+//if (!_killedfriendly) then {player addScore d_sub_kill_points};
+if (!_killedfriendly) then { call SYG_incDeathCount };
 #endif
 
 #ifndef __REVIVE__

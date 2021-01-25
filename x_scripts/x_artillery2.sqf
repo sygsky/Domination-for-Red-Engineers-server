@@ -111,7 +111,8 @@ if (ari_type2 != "") then {
 	};
 	#ifdef __RANKED__
 	if ((d_ranked_a select 2) > 0) then {
-		player addScore (d_ranked_a select 2) * -1;
+		//player addScore (d_ranked_a select 2) * -1;
+		((d_ranked_a select 2) * -1) call SYG_addBonusScore;
 	};
 	#endif
 	if (!X_SPE) then {

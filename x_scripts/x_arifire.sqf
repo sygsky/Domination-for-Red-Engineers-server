@@ -189,7 +189,7 @@ for "_series" from 1 to ari_salvos do {
 		sleep d_arti_reload_time + random 7;
 		_remove_them = [];
 		{
-			if (!alive _x) then {_points_p = _points_p + 1;_remove_them = _remove_them + [_x]};
+			if (!alive _x) then {_points_p = _points_p + 1;_remove_them set[count _remove_them,_x]};
 		} forEach _enemy_units;
 		_enemy_units = _enemy_units - _remove_them;
 	};

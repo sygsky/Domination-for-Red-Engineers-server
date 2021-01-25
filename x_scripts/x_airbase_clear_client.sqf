@@ -31,7 +31,8 @@ if (client_target_counter < number_targets) then {
 		_current_target_pos = _target_array2 select 0;
 		if (player distance _current_target_pos < (d_ranked_a select 10)) then {
 			(format [localize "STR_SYS_1102"/* "For the liberation of the settlement you get %1%2 !"*/,(d_ranked_a select 9), _bonus_vehicle]) call XfHQChat;
-			player addScore (d_ranked_a select 9);
+			//player addScore (d_ranked_a select 9);
+			(d_ranked_a select 9) call SYG_addBonusScore;
 		};
 	};
 #endif
@@ -63,7 +64,8 @@ if (client_target_counter < number_targets) then {
 		_current_target_pos = _target_array2 select 0;
 		if (player distance _current_target_pos < 400) then {
 			"Вы получаете 20 очков за взятие города!!!" call XfHQChat;
-			player addScore 20;
+			//player addScore 20;
+			20 call SYG_addBonusScore;
 		};
 	};
 #endif

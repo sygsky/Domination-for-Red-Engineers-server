@@ -58,7 +58,8 @@ if (!isNull d_flag_vec && alive d_flag_vec && _b_mode == 0) exitWith {
 };
 
 #ifdef __RANKED__
-player addScore (d_ranked_a select 5) * -1;
+//player addScore (d_ranked_a select 5) * -1;
+((d_ranked_a select 5) * -1) call SYG_addBonusScore;
 #endif
 
 _pos = position player;

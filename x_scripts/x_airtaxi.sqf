@@ -14,7 +14,9 @@ if (FLAG_BASE distance player < 1000) exitWith {
 if (score player < (d_ranked_a select 15)) exitWith {
 	(format [localize "STR_SYS_1180", score player,(d_ranked_a select 15)]) call XfHQChat; // "You can't call an air taxi. You need %2 points for that, your score is %1!"
 };
-player addScore (d_ranked_a select 15) * -1;
+//player addScore (d_ranked_a select 15) * -1;
+( (d_ranked_a select 15) * -1) call SYG_addBonusScore;
+
 #endif
 
 localize "STR_SYS_1181" call XfHQChat; // "Air taxi will start in a few seconds, stand by. Stay at your position!"

@@ -70,7 +70,8 @@ if (x_drop_type != "") then {
 	};
 	(format [localize "STR_SYS_1128", x_drop_type]) call XfHQChat; // "Calling in %1 air drop"
 	#ifdef __RANKED__
-	player addScore (d_ranked_a select 22) * -1;
+	//player addScore (d_ranked_a select 22) * -1;
+	((d_ranked_a select 22) * -1) call SYG_addBonusScore;
 	#endif
 	["x_drop_type",x_drop_type,markerPos "x_drop_zone"] call XSendNetStartScriptServer;
 } else {
