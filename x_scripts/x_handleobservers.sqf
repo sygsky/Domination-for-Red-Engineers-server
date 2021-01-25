@@ -9,7 +9,7 @@ if (!isServer) exitWith {};
 #define HIT_RADIOUS 45 // radious to be hit indirectly by arti shoots
 #define SAVE_RADIOUS 60 // radious to he save by arti shoots
 #define MIN_FRIENDLY_COUNT_TO_STRIKE 3 // maximum number of enemy vehilce in zone to allow strike onto them
-#define MAX_SHOOT_DIST 200 // maximum distance between known and real player pos observer can shoot on
+#define MAX_SHOOT_DIST 300 // maximum distance between known and real player pos observer can shoot on
 
 _enemy_ari_available = true;
 _nextaritime = 0;
@@ -153,8 +153,8 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     _dist_obs_pos   = round( _observer distance _pos_nearest ); // dist between observer and hit point
 
                     if ( _dist_between_pos >= MAX_SHOOT_DIST ) exitWith {
-                        hint localize format[ "+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to dist %2 m (<= %3 allowed) between known and real pos. KnowAbout %4",
-                        name _enemy, _dist_between_pos, MAX_SHOOT_DIST, (round((_observer knowsAbout _enemy) * 10.0))/10.0 ];
+                        hint localize format[ "+++ x_handleobservers.sqf: Arti strike on player %1 (known %2) cancelled, dist %3 m (<= %4 allowed) betw. known/real pos",
+                        name _enemy, (round((_observer knowsAbout _enemy) * 10.0))/10.0, _dist_between_pos, MAX_SHOOT_DIST ];
                     };
 // The following lines are commented as useless, because the previous statement completely solves the problem
 // of firing far away from the real position (including because of the teleport to the base)
