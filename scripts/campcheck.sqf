@@ -57,7 +57,8 @@ if ( !_visited ) then
 {
 	// TODO: add some score to player
 	(_this select 0) setVariable ["camp_is_visited", true];
-	player addScore d_ranked_a select INDEX_FOR_VISIT_SCORE;
+	//player addScore d_ranked_a select INDEX_FOR_VISIT_SCORE;
+	(d_ranked_a select INDEX_FOR_VISIT_SCORE) call SYG_addBonusScore;
 };
 
 

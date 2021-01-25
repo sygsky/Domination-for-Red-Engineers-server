@@ -280,7 +280,7 @@ if (isServer) then {
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
 
-	current_target_index = -1;
+	current_target_index = -1; // main target index, not defined at start
 	current_counter = 0;
 
 	side_mission_resolved = false;

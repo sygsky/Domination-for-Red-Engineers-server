@@ -1,22 +1,24 @@
-// by Sygsky, scripts\check_ai_points.sqf - check your points before call for the AI recruit
+// by Sygsky, scripts\check_ai_points.sqf - check your points before call for the AI recruit (client only)
 
 #include "x_setup.sqf"
 
 _grp_player = group player;
-_ai_counter = {!isPlayer _x && alive _x} count (units _grp_player);
+_ai_counter = { !isPlayer _x && alive _x } count (units _grp_player);
+_player_is_GRU =  (format ["%1",player]) in d_can_use_artillery;
 
 _start_rank = d_ranked_a select 28; // initial AI caller rank name
 _start_rank_id = _start_rank call XGetRankIndex; // initial AI caller rank id
 _ai_low_cost = d_ranked_a select 3; // how many point needed to call 1st AI by caller of any enough rank
 
 _str = "";
+_str_not_GRU = if (_player_is_GRU) then {""} else { localize "STR_SYS_1174_0"};
 
 _rank =  player call XGetRankFromScore; // rank string
 _rank_id = player call XGetRankIndexFromScore; // rank index
 
 _rank_max_ai = _rank_id - _start_rank_id + 1; // e.g. 1 - Sergeant, 2 - Lieutenant... 11 - Generalissimus
 if ( _rank_max_ai < 1 ) exitWith {
-	(format [localize "STR_SYS_1174", player call XGetRankStringLocalized, _start_rank call XGetRankStringLocalized]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]!"
+	(format [localize "STR_SYS_1174", player call XGetRankStringLocalized, _start_rank call XGetRankStringLocalized, _str_not_GRU]) call XfHQChat; // "You current rank is %1. You need to be %2 to recruit soldier[s]%3!"
 };
 
 _new_ai_counter = _rank_max_ai -  _ai_counter; // how many AI you still can call with your rank
@@ -47,6 +49,6 @@ hint localize format["--- check_ai_points.sqf: _rank %1, _rank_id %2, _rank_max_
                                                _rank, _rank_id, _rank_max_ai, _new_ai_counter, _ai_big_cost, _ai_cost,
                                                _rank_score, _ai_counter, _start_rank_id];
 */
-(format [localize "STR_SYS_1174_1", _ai_counter, _new_ai_counter, _ai_cost,  _str]) call XfHQChat; // "Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4. A pilot is always twice as expensive!"
+(format [localize "STR_SYS_1174_1", _ai_counter, _new_ai_counter, _ai_cost,  _str, _str_not_GRU]) call XfHQChat; // "Draftees: you have %1, in the military enlistment office %2. The draftee will cost -%3%4. A pilot is always twice as expensive!"
 
 if (true) exitWith {};

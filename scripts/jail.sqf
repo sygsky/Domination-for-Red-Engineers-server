@@ -193,7 +193,7 @@ for "_i" from 0 to (_score - 1) do {
     if ( (_i mod 10) == 0 ) then {
         _id = (floor(_i / 10)) mod (count _msg_arr);
         //player groupChat format["Prepare sound with _i = %1",_i];
-        cutText [_msg_arr select _id, "PLAIN"]; // STR_JAIL_4
+        cutText [_msg_arr select _id, "PLAIN"];
     };
 
     titleText [format ["%1",_i - _score],"PLAIN DOWN"];
@@ -227,7 +227,9 @@ disableUserInput false;
 
 deleteVehicle _weaponHolder;
 
+/*
 [] spawn {
 	sleep 15;
   	cutText [localize "STR_JAIL_4", "PLAIN"]; // "Don't be in a hurry to spoil military property!"
 };
+*/
