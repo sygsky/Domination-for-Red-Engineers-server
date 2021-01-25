@@ -132,7 +132,8 @@ if (_jump_score > 0) then { // subtract score from player NOW, while he is alive
     } else {
         format[localize "STR_SYS_609_3",_jump_score] call XfHQChat; // "Jump costs -%1"
         playSound "losing_patience";
-        player addScore -_jump_score;
+        //player addScore -_jump_score;
+        (-_jump_score) call SYG_addBonusScore;
     };
 };
 

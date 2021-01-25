@@ -23,7 +23,8 @@ player removeAction _aid;
 //+++ Sygsky: add point for unflipping
 #ifdef __RANKED__
 _addscore = (d_ranked_a select 1) select 3; // add scores as for car repairing maitenance
-player addScore _addscore;
+//player addScore _addscore;
+_addscore call SYG_addBonusScore;
 (format [localize "STR_SYS_137", _addscore]) call XfHQChat; //"Добавлено очков за обслуживание техники: %1 ..."
 #endif
 
