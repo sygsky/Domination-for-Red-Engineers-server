@@ -39,7 +39,8 @@ if ((abs (((getPosASL _helper1) select 2) - ((getPosASL _helper2) select 2)) > 2
 for "_mt" from 1 to 4 do {call compile format ["deleteVehicle _helper%1;", _mt];};
 
 #ifdef __RANKED__
-player addScore (d_ranked_a select 21) * -1;
+//player addScore (d_ranked_a select 21) * -1;
+((d_ranked_a select 21) * -1) call SYG_addBonusScore;
 #endif
 
 player playMove "AinvPknlMstpSlayWrflDnon_medic";

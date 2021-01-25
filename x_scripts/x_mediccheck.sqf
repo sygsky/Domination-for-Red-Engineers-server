@@ -50,7 +50,8 @@ while {true} do {
                 };
             } forEach _objs;
             if ( _points > 0 ) then {
-                player addScore _points;
+                //player addScore _points;
+                _points call SYG_addBonusScore;
                 ( format [localize "STR_MED_8", _points, _healedName] ) call XfHQChat; // "You get +%1 points for healing %2!"
             };
             sleep 0.01;

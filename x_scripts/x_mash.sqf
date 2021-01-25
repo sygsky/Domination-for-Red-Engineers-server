@@ -88,7 +88,8 @@ medic_tent spawn {
 			};
 		} forEach _nobs;
 		if (_points > 0) then {
-			player addScore _points;
+			//player addScore _points;
+			_points call SYG_addBonusScore;
 			(format [localize "STR_MED_7"/* "You get %1 points because other units used your mash for healing!" */, _points]) call XfHQChat;
 		};
 		sleep 0.01;

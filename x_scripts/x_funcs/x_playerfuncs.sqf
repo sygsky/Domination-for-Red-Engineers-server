@@ -259,8 +259,9 @@ XRecapturedUpdate = {
 				{
 					private ["_addscore"];
 					_addscore = round( (d_ranked_a select 9)/2);
+					//player addScore _addscore;
+					_addscore call SYG_addBonusScore;
 					(format [localize "STR_SYS_109", _addscore] ) call XfHQChat; // "За зачистку города вы получаете очки ( +%1 ) !"
-					player addScore _addscore;
 				};
 			};
 #endif
