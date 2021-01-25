@@ -9,8 +9,11 @@
 
 #include "x_setup.sqf"
 
-private ["_aid","_caller","_coef","_damage","_damage_ok","_damage_val","_fuel","_fuel_ok","_fuel_steps",
+// #define __DEBUG__
+
+private ["_aid","_caller","_total_steps","_damage","_damage_ok","_dmg_steps","_fuel","_fuel_ok","_fuel_steps",
         "_rep_count","_rep_array","_break_str","_rep_action","_type_name", "_trArr","_fuel_capacity_in_litres","_addscore"];
+
 
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
 _is_engineer = format ["%1", player] in d_is_engineer;
@@ -20,15 +23,19 @@ _is_engineer = format ["%1", player] in d_is_engineer;
 _caller = _this select 1;
 _aid = _this select 2;
 
-_truck_near = false;
+_truck_near = objNull;
 _trArr =  nearestObjects [ position player, SYG_repTruckNamesArr, 21]; // find nearest repair vehicle in radius 20 meters
-_truck_near = false;
 {
-    if ( alive _x ) exitWith { _truck_near = true; };
+    if ( alive _x ) exitWith { _truck_near = _x; };
 } forEach _trArr;
 
-if (!d_eng_can_repfuel && !_truck_near) exitWith {
+if (!d_eng_can_repfuel && (isNull _truck_near) ) exitWith {
 	hint (localize "STR_SYS_18"); //"Следует восстановить способность ремонта и заправки техники на базе...";
+};
+
+// print info about nearby truck
+if (!d_eng_can_repfuel) then {
+	(format [localize "STR_SYS_18_2", typeOf _truck_near, round	(player distance _truck_near)]) call XfHQChat; // "Near %1 (%2 m.), repairs possible!"
 };
 
 #ifdef __RANKED__
@@ -41,9 +48,9 @@ if (score player < (d_ranked_a select 0)) exitWith {
 	d_last_base_repair = -1;
 };
 if (player in (list d_engineer_trigger) && d_last_base_repair != -1) exitWith {
-	_coef = ceil((d_last_base_repair - time)/60);
+	_total_steps = ceil((d_last_base_repair - time)/60);
 	// "Wait some time to restore repairing ability..."
-	(format[localize "STR_SYS_17",_coef]) call XfHQChat;
+	(format[localize "STR_SYS_17",_total_steps]) call XfHQChat;
 };
 if (player in (list d_engineer_trigger)) then {d_last_base_repair = time + 300;};
 #endif
@@ -62,25 +69,25 @@ if (objectID2 isKindOf "Air") then {
 	};
 };
 
-_fuel = fuel objectID2;
+_fuel = fuel objectID2; // fuel the vehicle has (0..1)
 _damage = damage objectID2;
 
-_damage_val    = (_damage / _rep_count); // how many undamage steps for reparing
+_dmg_steps    = (_damage / _rep_count); // how many undamage steps for reparing
 
 _fuel_capacity_in_litres = objectID2 call SYG_fuelCapacity; // litres of fuel in vehicle fuel tanks
 #ifdef __LIMITED_REFUELING__
 _refuel_add = 0;
 
-#ifdef __SUPER_RANKING__
+	#ifdef __SUPER_RANKING__
 _rankIndex = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
-#else
+	#else
 _rankIndex = player call XGetRankIndexFromScore; // rank index
-#endif
+	#endif
 
-_refuel_volume = d_refuel_volume + d_refuel_per_rank * _rankIndex; // how many liters to refuel
+_refuel_volume = d_refuel_volume + d_refuel_per_rank * _rankIndex; // how many liters can refuel the player
 
 if (_fuel_capacity_in_litres > 0) then {
-   _refuel_add = _refuel_volume/_fuel_capacity_in_litres;  // max part of volume he could refuel, (value in Arma config not in litres)
+   _refuel_add = _refuel_volume/_fuel_capacity_in_litres;  // max part of volume he could refuel, (note that value in Arma config not in litres!)
 };
 _fuel_add      = _refuel_add min (1 - _fuel);     // how many he will up to the fuel tank limit
 _refuel_limit  = ( _fuel + _fuel_add ) min 1.0;   // limit value he can refuel up to the capacity of the vehicle fuel tank
@@ -92,7 +99,7 @@ if (_refuel_add > 0) then {
 
 _fuel_vol_on_step    = 0; // default is "already refuelled"
 if ( abs(_fuel_steps) > 0.0000001) then {_fuel_vol_on_step = _fuel_add /_fuel_steps;}; // how many refuel at one step
-//hint localize format["x_repengineer.sqf: %1, _fuel %8, _fuel_capacity_in_litres %2, _refuel_add %3, _fuel_add %4, _refuel_limit %5, _fuel_steps %6, _fuel_vol_on_step %7, damage %9, _damage_val %10", typeOf objectID2,_fuel_capacity_in_litres,_refuel_add,_fuel_add,_refuel_limit,_fuel_steps,_fuel_vol_on_step,_fuel,_damage,_damage_val];
+//hint localize format["x_repengineer.sqf: %1, _fuel %8, _fuel_capacity_in_litres %2, _refuel_add %3, _fuel_add %4, _refuel_limit %5, _fuel_steps %6, _fuel_vol_on_step %7, damage %9, _dmg_steps %10", typeOf objectID2,_fuel_capacity_in_litres,_refuel_add,_fuel_add,_refuel_limit,_fuel_steps,_fuel_vol_on_step,_fuel,_damage,_dmg_steps];
 
 _rep_array = [objectID2,_refuel_limit];
 #else
@@ -103,7 +110,11 @@ _rep_array     = [objectID2];
 //hint localize "x_repengineer.sqf: No __LIMITED_REFUELING__ defined";
 #endif
 
-_coef = ceil (_fuel_steps max _damage_val);
+#ifdef __LIMITED_REFUELING__
+_total_steps = ceil (_dmg_steps) + ceil (_fuel_steps);
+#else
+_total_steps = ceil (_dmg_steps);
+#endif
 
 _lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
 hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
@@ -125,26 +136,25 @@ if ( !(alive (driver objectID2) ) ) then {
 	};
 };
 
-_addscore = 0; // how many repair steps were done
+_addscore = 0; // how many repair/refuel steps were done
 
-for "_i" from 1 to _coef do {
+for "_i" from 1 to _total_steps do {
+	// print info about action type
+	if (!_damage_ok) then {
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
-    if (_is_engineer) then {
-        if (!_damage_ok) then {
+		if (!_is_engineer) then {  (format[localize "STR_SYS_152", (_addscore + 1) * __NON_ENGINEER_REPAIR_PENALTY__ ]) call XfGlobalChat }// Repair -5 ...
+		else {
 #endif
-	        (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat; // Repair ...
+	        (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat; // Repair -1...
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
-        } else {
-            (localize "STR_SYS_257") call XfGlobalChat; // Refuel ...
-        };
-	} else {
-        if (!_damage_ok) then {
-    	    (format[localize "STR_SYS_152", -(_addscore + 1)]) call XfGlobalChat;// Repair ...
-        } else {
-            (localize "STR_SYS_257") call XfGlobalChat; // Refuel ...
-        };
+		};
+#endif
+#ifdef __LIMITED_REFUELING__
+	} else  {
+        if (!_fuel_ok) then { (localize "STR_SYS_257") call XfGlobalChat; }; // Refueling ...
+#endif
 	};
-#endif
+
 	player playMove "AinvPknlMstpSlayWrflDnon_medic";
 	sleep 3.0;
 	waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"}; // this animation cycle duration is approximatelly 6 seconds
@@ -161,7 +171,7 @@ for "_i" from 1 to _coef do {
 
 	if (!_damage_ok) then {
 		_damage = _damage - _rep_count;
-		if (_damage <= 0.01) then {_damage = 0;_damage_ok = true;};
+		if (_damage <= 0.001) then {_damage = 0;_damage_ok = true;};
 		_addscore = _addscore + 1;
 	} else  {
         if (!_fuel_ok) then {
@@ -171,6 +181,7 @@ for "_i" from 1 to _coef do {
 	};
 	_lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
 	hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
+	if ( _damage_ok && _fuel_ok ) exitWith{};  // completed
 };
 
 player removeAction _rep_action;
@@ -204,8 +215,16 @@ _addscore = (
 	}
 );
 */
+
+#ifdef __DEBUG__
+hint localize format["*** x_repengineer.sqf: _addscore = %1 in %2 total steps (rep %3, fuel %4), ", _addscore, _total_steps, ceil(_dmg_steps), ceil(_fuel_steps) ];
+#endif
+
 if (_addscore > 0) then {
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
+	#ifdef __DEBUG__
+	hint localize format["*** x_repengineer.sqf: (_addscore > 0) _str = ""%1""", _str ];
+	#endif
 	#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (!_is_engineer) then {
         _addscore = _addscore * __NON_ENGINEER_REPAIR_PENALTY__; // must be negative value!
@@ -217,10 +236,14 @@ if (_addscore > 0) then {
     	#ifndef __REP_SERVICE_FROM_ENGINEERING_FUND__
         _str = "STR_SYS_137_1"; //"Subtracted points for maintenance: %1 ..."
     	#endif
+		#ifdef __DEBUG__
+		hint localize format["*** x_repengineer.sqf: (!_is_engineer _str) = ""%1""", _str ];
+		#endif
     };
 	#endif
-	if (alive _vehicle) then {
-		player addScore _addscore;
+	if (alive objectID2) then {
+		//player addScore _addscore;
+		_addscore call SYG_addBonusScore;
 		(format [localize _str, _addscore, SYG_engineering_fund]) call XfHQChat;
 	} else {
 		(localize "STR_SYS_138_1") call XfGlobalChat; // "You didn't make it, the vehicle burned..."
