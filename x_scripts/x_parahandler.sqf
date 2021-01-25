@@ -65,7 +65,7 @@ while {!mt_radio_down} do {
         };
 #endif
 		sleep 0.01;
-		[_start_pos,_attack_pos,_end_pos,_vecs, _fly_height] execVM "x_scripts\x_createpara3x.sqf";
+		[_start_pos,_attack_pos,_end_pos,_vecs, _fly_height] execVM "x_scripts\x_createpara3xcargopopulated.sqf";
 	};
 	sleep 7.213;
 };
