@@ -177,7 +177,7 @@ for "_series" from 1 to ari_salvos do {
 	if (_first_run) then {
 		_first_run = false;
 		ari_type spawn {
-			if (_this in ["flare","he"]) then {
+			if (_this in ["dpicm","he"]) then {
 				sleep 2.123;
 				AriTarget execVM "x_scripts\x_arihit.sqf";
 			};

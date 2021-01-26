@@ -1,4 +1,13 @@
 // x_scripts/x_arihit.sqf, by Xeno
+// The purpose of this script is unclear.
+// It seems to do follow:
+// 1. Find allgroups in arti strike zone
+// 2. All tank-like vehicle are coberd with shell smoke bomb
+// 3. All infantry groups smoke with available smoke grenades and try to leave strike zone!!!
+//
+// Modified:
+// by Sygsky on 25-JAN-2021: added ACE type smoke grenades
+//
 private ["_grp","_grps","_hideobject","_leader","_noa","_shell","_units","_grpx","_ari_target"];
 if (!isServer) exitWith {};
 
@@ -14,7 +23,7 @@ _grps = [];
 {
 	_grp = group _x;
 	if (!(_grp in _grps)) then {
-		_grps = _grps + [_grp];
+		_grps = _grps set [ count _grps, _grp];
 	};
 	sleep 0.01;
 } forEach _noa;
@@ -49,7 +58,12 @@ if (d_smoke) then {
 						_mags = magazines _x;
 						_shell_unit = _x;
 						{
-							if (_x in ["SmokeShellRed","SmokeShellGreen","SmokeShell"]) then {
+							if (_x in
+							#ifdef __ ACE__
+							["ACE_SmokeGrenade_Red","ACE_SmokeGrenade_White","ACE_SmokeGrenade_Green","ACE_SmokeGrenade_Yellow","ACE_SmokeGrenade_Violet"],
+							#endif
+							["SmokeShellRed","SmokeShellGreen","SmokeShell"] ) then
+							{
 								_one_shell = _x;
 								breakOut "xxxx9";
 							};

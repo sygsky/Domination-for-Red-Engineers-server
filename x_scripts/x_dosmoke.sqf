@@ -1,5 +1,8 @@
 // by Xeno; x_dosmoke.sqf; launch smokes for men
 //called on unit kill
+//
+// Modified:
+//
 private ["_killed", "_killer", "_grp_killed", "_has_smoke", "_grp_units", "_leader", "_one_shell", "_shell_unit", "_mags", "_one_shell_muzzle"];
 
 if (!isServer) exitWith {};
@@ -18,16 +21,14 @@ if ( side _killer == side _killed || side _killer == civilian || isNull _killer 
 //if ( _killer isKindOf "Air" && (((getPos _killer) select 2) > 5) ) exitWith {}; // Heli in air is killer
 #endif
 
-if ( vehicle _killed != _killed ) exitWith
-{
+if ( vehicle _killed != _killed ) exitWith {
     [vehicle _killed, _killer, damage vehicle _killed] call x_smoke2;
 };
 _has_smoke = false;
 
-if (_grp_killed in smoke_groups) exitWith
-{
+if (_grp_killed in smoke_groups) exitWith {
 #ifdef __DEBUG__
-	player groupChat "x_dosmoke2.sqf: group of killed unit is already smoking, exit";
+	player groupChat "+++ x_dosmoke2.sqf: group of killed unit is already smoking, exit";
 #endif
 };
 
@@ -37,8 +38,7 @@ _grp_units = units _grp_killed;
 player groupChat format["x_dosmoke.sqf: units in group %1, alive units %2", count _grp_units, {alive _x} count _grp_units];
 #endif
 
-if (({alive _x} count _grp_units) > 0) then
-{
+if (({alive _x} count _grp_units) > 0) then {
 	_grp_killed setCombatMode "YELLOW";
 	_grp_killed setSpeedMode "NORMAL";
 	_grp_killed setBehaviour "AWARE";
@@ -46,10 +46,9 @@ if (({alive _x} count _grp_units) > 0) then
 	sleep 0.5123;
 	_leader = leader _grp_killed;
 #ifdef __DEBUG__
-	player groupChat format["x_dosmoke.sqf: leader %1 knowsAbout %2", name _leader, _leader knowsAbout _killer];
+	player groupChat format["+++ x_dosmoke.sqf: leader %1 knowsAbout %2", name _leader, _leader knowsAbout _killer];
 #endif
-	if ((!isNull _leader) && (_leader knowsAbout _killer >= 1.5)) then
-	{
+	if ((!isNull _leader) && (_leader knowsAbout _killer >= 1.5)) then {
 		{
 			if (alive _x) then {
 				_x setUnitPos "DOWN";
@@ -62,8 +61,7 @@ if (({alive _x} count _grp_units) > 0) then
 	    _dist = 999999;
 		_shell_unit = objNull;
 		{
-		    if (canStand _x) then
-		    {
+		    if (canStand _x) then {
                 _shell_unit = _x;
                 {
                     if (_x in [
@@ -80,11 +78,10 @@ if (({alive _x} count _grp_units) > 0) then
 			};
 		} forEach units _grp_killed;
 
-		if ( ! isNull _nearest ) then
-		{
+		if ( ! isNull _nearest ) then {
 		    _shell_unit = _nearest;
 #ifdef __DEBUG__
-			player groupChat format["x_scripts/x_dosmoke.sqf: shell %1, unit %2 selected to throw", _one_shell, _shell_unit];
+			player groupChat format["+++ x_scripts/x_dosmoke.sqf: shell %1, unit %2 selected to throw", _one_shell, _shell_unit];
 #endif			
 			_one_shell_muzzle = (switch (_one_shell) do
 			{
@@ -102,7 +99,7 @@ if (({alive _x} count _grp_units) > 0) then
 			});
 //			_one_shell_muzzle = (switch (_one_shell) do {case "SmokeShell": {"SmokeShellMuzzle"};case "SmokeShellGreen": {"SmokeShellGreenMuzzle"};case "SmokeShellRed": {"SmokeShellRedMuzzle"};});
 #ifdef __DEBUG__			
-			player groupChat format["x_scripts/x_dosmoke.sqf: shell %1, muzzle %2, unit %3 selected to throw", _one_shell, _one_shell_muzzle, _shell_unit];
+			player groupChat format["+++ x_scripts/x_dosmoke.sqf: shell %1, muzzle %2, unit %3 selected to throw", _one_shell, _one_shell_muzzle, _shell_unit];
 #endif			
 			_shell_unit selectWeapon _one_shell_muzzle;
 			sleep 0.121;
@@ -112,7 +109,7 @@ if (({alive _x} count _grp_units) > 0) then
 				_shell_unit commandTarget _killer;
 			};
 #ifdef __DEBUG__			
-			player groupChat "x_scripts/x_dosmoke.sqf: unit watch you now";
+			player groupChat "+++ x_scripts/x_dosmoke.sqf: unit watch you now";
 #endif			
 			sleep 1.634;
 			_shell_unit fire _one_shell_muzzle;
@@ -121,22 +118,17 @@ if (({alive _x} count _grp_units) > 0) then
 			sleep 1.437;
 		    _shell_unit doWatch objNull;
 #ifdef __DEBUG__		
-			player groupChat "x_scripts/x_dosmoke.sqf: unit stop watching you";
-		}
-		else
-		{
-			player groupChat "x_scripts/x_dosmoke.sqf: smoke shell not found";
+			player groupChat "+++ x_scripts/x_dosmoke.sqf: unit stop watching you";
+		} else {
+			player groupChat "+++ x_scripts/x_dosmoke.sqf: smoke shell not found";
 #endif			
 		};
 #ifdef __DEBUG__
-	}
-	else
-	{
-		player groupChat format["x_scripts/x_dosmoke.sqf: leader knowsAbout about %1 (too little)",_leader knowsAbout _killer];
+	} else {
+		player groupChat format["+++ x_scripts/x_dosmoke.sqf: leader knowsAbout about %1 (too little)",_leader knowsAbout _killer];
 #endif		
 	};
-	if (_has_smoke ) then
-	{
+	if (_has_smoke ) then {
 		sleep 0.512;
 		{
 			if (alive _x) then {
