@@ -185,7 +185,7 @@ SYG_addSPPMMarker = {
 // returns true if SPPM changed position/removed else false
 // returns: 1 = updated, 0 = not changed, -1 = empty, delete it, -2 = no marker, delete it
 SYG_updateSPPM = {
-	hint localize format["+++ SYG_updateSPPM: call with _this = %1", _this];
+	// hint localize format["+++ SYG_updateSPPM: call with _this = %1", _this];
 	if (typeOf _this != SPPM_OBJ_TYPE ) exitWith {
 		hint localize format["--- SYG_updateSPPM: item isn't of predefined type (%1), delete it", SPPM_OBJ_TYPE];
 	 	["STR_SPPM_6_3",typeOf _this] //Marking object (%1) on SPPM of unknown type!

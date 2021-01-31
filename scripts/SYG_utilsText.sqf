@@ -138,3 +138,63 @@ SYG_objArrToTypeStr = {
         _str
     };
 };
+
+
+//
+// call as: _multpliedText = [_srcText, _multiplicator] call SYG_textMultiply;
+// E.g.: ["txt_",3] call  SYG_textMultiply => "txt_txt_txt_";
+//
+SYG_textMultiply = {
+	toString (_this call SYG_textMultiplyArr)
+};
+
+//
+// call as: _multpliedTextArr = [_srcText, _multiplicator] call SYG_textMultiplyArr;
+// E.g.: ["txt_",3] call  SYG_textMultiply => ['t','x','t','_','t','x','t','_','t','x','t','_'];
+//
+SYG_textMultiplyArr = {
+	private ["_txt","_mult","_res","_i"];
+	_txt = toArray (_this select 0);
+	_mult = _this select 1;
+	_res = [];
+	for "_i" from 1 to _mult do {
+		{ _res set [count _res, _x]} forEach _txt;
+	};
+	_res
+};
+
+//
+// Align text  to left or righty by designated width
+// call as: _aligned_text = [_text, _align<,_align_symbol>] call SYG_textAlign;
+// if align < 0 align is to left: ["align", -10] call SYG_textAlign => "align    ", if > 0 to right: ["align", +10] call SYG_textAlign => "     align"
+// if align < string length, returned string is resized to size = abs(aligh)
+// if _align == 0, empty string "" is returned
+// if _align presents only 1st =ymbol is used as aligning one
+//
+SYG_textAlign = {
+	private [ "_align", "_left", "_right", "_sym", "_empty", "_str" ];
+	_sym = if (count _this > 2) then { toArray (_this select 2)} else {toArray " "};
+	_sym resize 1;
+	_sym = toString _sym;
+
+	_align = _this select 1;
+	_empty = false;
+	// prepare left and rihht part to combine in lower code
+	if (typeName _align == "STRING") then { // Add symbols from left [20, _text]
+		_align = _this select 0;
+		if (_align == 0) exitWith { _empty = true };
+		_right = toArray(_this select 1); // text is here
+		if (_align <= (count _right)) exitWith { _right resize _align; _left = [] };
+		_left = [_sym, _align - (count _right)] call SYG_textMultiplyArr;
+	} else  { // Add symbols from right [_text,20];
+		if (_align == 0) exitWith { _empty = true};
+		_left = toArray (_this select 0); // text is here
+		if (_align <= (count _left)) exitWith { _left resize _align; __right = [] };
+		_right = [_sym, _align - (count _left)] call SYG_textMultiplyArr;
+	};
+//	_str = format["+++ SYG_textAlign: _sym ""%1"",  _left ""%2"", _right ""%3""", _sym, _align, _left, _right];
+//	hint localize _str; player groupChat _str;
+	if (_empty) exitWith { "" };
+	{ _left set [count _left, _x] } forEach _right;
+	toString _left
+};

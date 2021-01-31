@@ -210,7 +210,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia
+    _first_array = [4];   // 2: Arcadia, 3: Chantico, 4: Somato, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
@@ -371,7 +371,7 @@ if (isServer) then {
     	    false
     	}; // new year expected if only december or january is current month
     	if ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,2) > 10) ) exitWith {
-            hint localize "init.sqf: New Year procedure completed, JAN more then 10 is out of range";
+            hint localize format["init.sqf: New Year procedure completed, JAN day (%1) > 10   is out of range", argp(SYG_client_start,2)];
             false
     	}; // out of January NE days
         while {true} do {

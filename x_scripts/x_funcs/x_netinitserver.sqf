@@ -109,8 +109,17 @@ XHandleNetStartScriptServer = {
 			[(_this select 1)] call XAddCheckDead;
 		};
 		// store currect player score
+		// send full score (_newscore), in town kill score (_mtkills)
+        // Variants:
+        // 1. ["d_ad_sc", name player || _player_id, _newscore, _mtkills] call XSendNetStartScriptServer;
+        // 2. ["d_ad_sc", name player] - simply to inform about town score received by the player
+
 		case "d_ad_sc": {
-			[(_this select 1),(_this select 2)] spawn XAddPlayerScore;
+			if (count _this  == 2 ) exitWith {
+				SYG_players_online set [count SYG_players_online, _this select 1]; // add player name to the bonus receiver array
+				hint localize format[ "+++ DEBUG: town score %1", _this ];
+			};
+			_this call XAddPlayerScore;
 		};
 		// store player weapon list on server
 		// params: ["d_ad_wp", _player_name,_player_weapon_str_array]

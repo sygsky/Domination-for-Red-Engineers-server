@@ -122,7 +122,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	};
 	if ( (d_player_stuff select 2) == name player ) exitWith {
 		player_autokick_time = d_player_stuff select 0;
-		player addScore (d_player_stuff select 3);
+		player addScore (d_player_stuff select 3); // set saved scores
 		// execute player rearm procedure
         _p = player;
 #ifdef __RANKED__
@@ -1689,17 +1689,23 @@ if (d_player_air_autokick > 0) then {
 	hint localize "++ SPPM UPDATE initiated for markers";
 	["SPPM", "UPDATE", name player, false] call XSendNetStartScriptServer; // allow SPPM markers visibility at the start
 #endif
-	private ["_oldscore","_newscore","_mtscore","_bonusscore"];
-	_oldscore = 0;
+	private ["_oldscore","_newscore","_mtkills","_oldkills","_newkills","_player"];
+	_oldscore  = 0;
+	_oldkills = (score player) - SYG_bonusScore + SYG_deathCount;
+	call SYG_townStatInit; // init town kills stat for the player on connection
 	while { true } do {
 		sleep 4.5; // Xeno value was(3 + random 3); // Lets test  to change sleep delay to the period 4.5 seconds
 		_newscore = score player;
+		_newkills = _newscore - SYG_bonusScore + SYG_deathCount;
 		if (_oldscore != _newscore) then {
-			_mtscore = if (call SYG_playerIsAtTown) then { _newscore - _oldscore } else { 0 };
-			_bonusscore = SYG_MTBonusScore;
-			// send full score (_newscore), in town score (_mtsocore), bonus score (SYG_MTBonusScore)
-			["d_ad_sc", name player, _newscore, _mtscore, _bonusscore] call XSendNetStartScriptServer;
-			SYG_MTBonusScore = SYG_MTBonusScore - _bonusscore;
+			// real player kills in the town
+			_mtkills = if (call SYG_playerIsAtTown) then { _newkills - _oldkills } else { -1 };
+			// send full score (_newscore), in town real kills score (_mtkills)
+			_player = if (SYG_playerID < 0) then {name player} else {SYG_playerID};
+			["d_ad_sc", _player, _newscore, _mtkills] call XSendNetStartScriptServer;
+
+			hint localize format["+++ send %1, bon %2, ded %3", ["d_ad_sc", _player, _newscore, _mtkills], SYG_bonusScore, SYG_deathCount];
+
 			[] spawn XPlayerRank; // detect if new rank is reached and inform player about
 
 			if ( rating player < 0  ) then { // prevent player from being enemy to AI
@@ -1715,6 +1721,7 @@ if (d_player_air_autokick > 0) then {
 			};
 #endif
 			_oldscore = _newscore;
+			_oldkills = _newkills;
 		};
 	};
 };
@@ -1885,7 +1892,7 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then {
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-//#define __DEBUG_ADD_VEHICLES__
+#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 if (name player == "EngineerACE") then {
@@ -1906,7 +1913,7 @@ if (name player == "EngineerACE") then {
 #ifdef __SCUD__
 if (name player == "HE_MACTEP") then {
     hint localize "+++ x_setupplayer.sqf: __SCUD__";
-    waitUntil { sleep 0.5;(!isNil "	d_player_stuff")};
+    waitUntil { sleep 0.5;(!isNil "d_player_stuff")};
     if ( score player < 1000 ) then { player addScore (1000 - (score player) ) };
 };
 #endif

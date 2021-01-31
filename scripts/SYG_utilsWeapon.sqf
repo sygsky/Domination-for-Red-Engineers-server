@@ -991,10 +991,8 @@ SYG_rearmBasic = {
 		_adv_rearm = _rnd < _adv_rearm;
 		scopeName "main";
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] + SYG_STD_MEDICAL_SET;
-		for "_i" from 0 to 0 do
-		{
-			if ( (typeOf _unit) isKindOf "SoldierWMG" ) then // M240
-			{ 	// rearm with some special kind of M240
+		for "_i" from 0 to 0 do {
+			if ( (typeOf _unit) isKindOf "SoldierWMG" ) then { 	// rearm with some special kind of M240
 				_wpn = if ( _adv_rearm ) then  {"ACE_M240G_M145"} else {"ACE_M240G"};
 				//_probArr = _probArr + [format["%1:%2:%3;",typeOf _unit, round(_rnd * 100) / 100, _wpn]];
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 3]] + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
@@ -1002,8 +1000,7 @@ SYG_rearmBasic = {
 				breakTo "main";
 			}; // "SoldierWMG"
 
-			if ( (typeOf _unit) isKindOf "SoldierWAR" ) then  // M249
-			{	// rearm with some special kind of M249
+			if ( (typeOf _unit) isKindOf "SoldierWAR" ) then {	// rearm with some special kind of M249
 				_wpn = if ( _adv_rearm ) then {"ACE_M249Para_M145"} else {"ACE_M249Para"};
 				//_probArr = _probArr + [format["%1:%2:%3;",typeOf _unit, round(_rnd * 100) / 100, _wpn]];
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 3]] + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
@@ -1011,8 +1008,7 @@ SYG_rearmBasic = {
 				breakTo "main";
 			}; // "SoldierWAR"
 
-			if ( (typeOf _unit) == "ACE_SoldierWSniper_A" ) then  // M24-M40
-			{	// rearm with some special kind of M24-M40
+			if ( (typeOf _unit) == "ACE_SoldierWSniper_A" ) then {	// rearm with some special kind of M24-M40
 				_magnum = 9;
 				if ( _adv_rearm ) then  { _wpn = SYG_M110_WPN_SET/* + SYG_M110_WPN_SET_SD*/; _wpn = RAR(_wpn); } else { _wpn = RAR(SYG_M24_WPN_SET);};
 				//_probArr = _probArr + [format["%1:%2:%3;",typeOf _unit, round(_rnd * 100) / 100, _wpn]];
@@ -1021,15 +1017,11 @@ SYG_rearmBasic = {
 				breakTo "main";
 			}; //"ACE_SoldierWSniper_A"
 
-			if ( (typeOf _unit) == "ACE_SoldierWMAT_A" ) then  // M136
-			{	// rearm with some special kind of m136/M72
-				if (_adv_rearm ) then
-				{
+			if ( (typeOf _unit) == "ACE_SoldierWMAT_A" ) then {	// rearm with some special kind of m136/M72
+				if (_adv_rearm ) then {
 					_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket ACE_AT4_HP
 //					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HP", 2]]; // small launcher+ high penetration rocket
-				}
-				else
-				{
+				} else {
 					_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HEAT", 2]]; // average launcher + high penetration rocket ACE_AT4_HEAT
 //					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HEAT", 2]]; // small launcher
 				};
@@ -1039,15 +1031,11 @@ SYG_rearmBasic = {
 				breakTo "main";
 			}; // "ACE_SoldierWMAT_A"
 
-			if ( (typeOf _unit) == "ACE_SoldierWAT2_A" ) then  // Dragon
-			{	// rearm with Dragon
+			if ( (typeOf _unit) == "ACE_SoldierWAT2_A" ) then {	// rearm with Dragon
 				_equip = _equip + [["P", "ACE_Dragon", "ACE_Dragon"]]; // AT missile launcher
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
-				}
-				else
-				{
+				} else {
 					_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 7]] + [[_smoke_grenade]];
@@ -1056,15 +1044,11 @@ SYG_rearmBasic = {
 			};
 
 #ifdef __JAVELIN__
-			if ( (typeOf _unit) == "ACE_SoldierWHAT_A" ) then  // Javelin
-			{
+			if ( (typeOf _unit) == "ACE_SoldierWHAT_A" ) then {// Javelin
 				_equip = _equip + [["P", "ACE_Javelin", "ACE_Javelin"]]; // AT missile launcher
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
-				}
-				else
-				{
+				} else {
 					_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [[_smoke_grenade]];

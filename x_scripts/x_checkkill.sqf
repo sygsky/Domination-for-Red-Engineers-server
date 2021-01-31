@@ -7,7 +7,7 @@ _killed = _this select 0;
 _killer = _this select 1;
 
 _killedfriendly = false;
-
+//hint localize format["+++ x_checkkill.sqf: killed at pos %1, alive is %2", getPos _killed, if (alive _killed) then {"true"} else {"false"}];
 #ifdef __AI__
 if (!isNull _killer && side _killer == d_side_player && !isPlayer _killer) then {
 	_leader_killer = leader _killer;

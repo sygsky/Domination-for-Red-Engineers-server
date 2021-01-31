@@ -332,7 +332,7 @@ SYG_playRandomTrack = {
     //hint localize format["+++ scripts/SYG_utilsSound.sqf: input %1 +++",_this];
     if (typeName _this == "STRING") exitWith {// 3. _arr = "ATrack24"; // play full track
 #ifdef __DEBUG__
-        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this];
+        hint localize format["+++ ""%1"" call SYG_playRandomTrack;",_this];
 #endif
         playMusic _this
     }; // full track
@@ -359,7 +359,7 @@ SYG_playRandomTrack = {
         if (  typeName (_this select 0) == "STRING") exitWith {
             playMusic arg(0);
         };
-        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
+        hint localize format["--- 1: ""%1"" call SYG_playRandomTrack;",_this ];
     };
 
     // Check to be array of size > 1 and with special items sequence ["cosmos",[0, 10]]
@@ -400,9 +400,9 @@ SYG_playRandomTrack = {
                 playMusic [arg(0),argp(_trk,0)];
             };
         };
-        hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
+        hint localize format["--- 2: ""%1"" call SYG_playRandomTrack;",_this ];
     };
-    hint localize format["--- ""%1"" call SYG_playRandomTrack;",_this ];
+    hint localize format["--- 3: ""%1"" call SYG_playRandomTrack;",_this ];
 };
 
 // NOT IN USE AT ALL
@@ -494,14 +494,7 @@ SYG_getSuicideScreamSoundById  = {
  * TODO: create weather forecast event system and sound it
  */
 SYG_playWeatherForecastMusic = {
- [
-    ["manchester_et_liverpool",  0,      9.465],
-    ["manchester_et_liverpool", 10.092,  9.182],
-    ["manchester_et_liverpool", 18.42,   8.01],
-    ["manchester_et_liverpool", 26.74,   7.27],
-    ["manchester_et_liverpool", 34.006, 11.215],
-    ["manchester_et_liverpool", 45.221, -1]
- ] call SYG_playRandomTrack;
+    ["manchester_et_liverpool",  [0, 9.465], [10.092, 9.182], [ 18.42,   8.01], [ 26.74,   7.27], [ 34.006, 11.215], [ 45.221, -1] ];
 };
 
 

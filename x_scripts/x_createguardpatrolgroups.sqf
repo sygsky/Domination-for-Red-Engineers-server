@@ -15,6 +15,8 @@ if (!isServer ) exitWith{};
 
 //#define __DEBUG_PRINT__
 
+#define __WEAK_DEFENCE__
+
 #include "x_macros.sqf"
 
 _selectit = {
@@ -133,6 +135,7 @@ _wp_array = [_trg_center, _radius] call x_getwparray;
 
 sleep 0.112;
 
+// Static weapons (canons, M2, AGS, TOW etc)
 for "_xx" from 0 to (count _type_list_guard - 1) do {
 	_typeidx = _type_list_guard select _xx;
 	call compile format["if (_number_%1_guard > 0) then {for ""_xxx"" from 1 to _number_%1_guard do {_wp_ran = (count _wp_array) call XfRandomFloor;[_typeidx select 0, [_wp_array select _wp_ran], _trg_center, _typeidx select 1, ""guard"",d_enemy_side,0,-1.111] execVM ""x_scripts\x_makegroup.sqf"";_wp_array set [_wp_ran, ""X_RM_ME""];_wp_array = _wp_array - [""X_RM_ME""];sleep 1.123;};};",_typeidx select 0];
@@ -202,6 +205,8 @@ hint localize format[ "+++ x_createguardpatrolgroups.sqf: StaticWeapon men %1, d
 _array = [];
 #endif
 
+#ifndef __WEAK_DEFENCE__ // compiled if not a weak defence defined
+// patrol groups (infantry, BMPs, tanks etc)
 for "_xx" from 0 to (count _type_list_patrol - 1) do {
 	_typeidx = _type_list_patrol select _xx;
 	call compile format["if (_number_%1_patrol > 0) then {for ""_xxx"" from 1 to _number_%1_patrol do {_wp_ran = (count _wp_array) call XfRandomFloor;[_typeidx select 0, [_wp_array select _wp_ran], _trg_center, _typeidx select 1, ""patrol"",d_enemy_side,0,-1.111,[_trg_center, _radius]] execVM ""x_scripts\x_makegroup.sqf"";_wp_array set [_wp_ran, ""X_RM_ME""];_wp_array = _wp_array - [""X_RM_ME""];sleep 1.123;};};",_typeidx select 0];
@@ -239,6 +244,7 @@ _ammotruck = [1, _xpos, (_unit_array select 2), (_unit_array select 1), _agrp, 0
 
 _unit_array = nil;
 _xpos = nil;
+#endif
 
 sleep 2.124;
 

@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_scripts\x_handleattackgroups.sqf - hadnles with paratrooper groups at main targets
 private ["_allunits","_grp","_grps"];
 
 #include "x_macros.sqf"
@@ -21,7 +21,7 @@ while {!mt_radio_down} do {
 	if (X_MP) then {
 		waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	__DEBUG_NET("x_handleattackgroups.sqf",(call XPlayersNumber))
+	// __DEBUG_NET("x_handleattackgroups.sqf",(call XPlayersNumber))
 	if (({alive _x} count _allunits) < 5) exitWith {
 		create_new_paras = true;
 	};

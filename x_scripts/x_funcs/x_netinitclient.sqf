@@ -125,7 +125,7 @@ SYG_msgToUserParser =
         };
 
         _msg_formatted = format _msg_fmt; // whole message formatted
-        hint localize format["+++ ""mag_to_user"": _x %1, _msg_fmt = %2", _x, _msg_fmt];
+ //       hint localize format["+++ ""mag_to_user"": _x %1, _msg_fmt = %2", _x, _msg_fmt];
         if ( _print_title ) then { // no title text disable parameter
             titleText[ _msg_formatted, "PLAIN DOWN" ];
         };
@@ -237,7 +237,11 @@ XHandleNetStartScriptClient = {
 			#endif
 		};
 		case "d_parti_add": {
-			if (str(player) == (_this select 1)) then {player addScore (_this select 2)};
+			if (str(player) == (_this select 1) && ((_this select 2) != 0 )) then {
+				//player addScore (_this select 2)
+				(_this select 2) call SYG_addBonusScore
+			};
+
 		};
 		case "d_create_box": {
 			private ["_the_box", "_box", "_boxscript"];
@@ -347,12 +351,23 @@ XHandleNetStartScriptClient = {
 			_this execVM "x_scripts\x_secsolved.sqf";
 		};
 		// last target town cleared, no more target remained !!!
-		// call: ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred] call XSendNetStartScriptClient;
+		// call: ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred<, _town_players_bonus>] call XSendNetStartScriptClient;
 		case "target_clear": {
 			// playSound "USSR"; // dont play sound as it is already played from town flag
+			private ["_arr","_ind","_bon","_sleep_time"];
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2);
-			(_this select 3) execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is the only parameter for execVM
+			if (count _this > 4) then {
+				_arr = _this select 4;// bonus score array [_names_arr, _bonus_arr], if current player is in the _names_arr he receives a bonus award, else not
+				_ind = (_arr select 0) find (name player);
+				_bon = if (_ind >= 0 ) then {(_arr select 1) select _ind} else {0};
+			} else {_bon = -1}; // no bonus info sent from server
+			// inform player about counter attack state (param 0) and town bonus (or its absence) (param 1)
+			[(_this select 3), _bon] execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is 1st parameter for execVM
+			call SYG_townStatInit; // reset split score statistics for the next town
+			// send confirmation of bonus score received and added
+			sleep ((_ind * 0.2) max 0.1); // sleep different time for each client to ensure smooth execution of corresponding events on server
+			["d_ad_sc", name player] call XSendNetStartScriptServer;
 		};
 
 		//+++ Sygsky: added for airbase take mission (before any towns)
@@ -422,24 +437,18 @@ XHandleNetStartScriptClient = {
                 if ( (count _this) > 2) then
                 {
                     _name = arg(2);
-                    if (typeName (arg(2)) == "STRING") then
-                    {
+                    if (typeName (arg(2)) == "STRING") then {
                         private ["_score"];
                         _score =  round(argp(d_ranked_a,9)/2); // lower the points for main target
-                        if ( (name player) == _name) then
-                        {
+                        if ( (name player) == _name) then {
                             _msg = format["%1 (+%2)! %3",localize "STR_MAIN_COMPLETED_BY_YOU", _score, _msg ];
-                            player addScore ( _score );
-                        }
-                        else
-                        {
+                            //player addScore ( _score );
+                            _score call SYG_addBonusScore;
+                        } else {
                             // inform about new hero
-                            if (_name == "" || _name == "Error: No unit") then
-                            {
+                            if (_name == "" || _name == "Error: No unit") then {
                                 _msg = format["(%1)! %2", localize "STR_MAIN_COMPLETED_BY_UNKNOWN", _msg ];
-                            }
-                            else
-                            {
+                            } else {
                                 _msg = format["(%1)! %2", _name, _msg ];
                             };
                         };
@@ -541,9 +550,12 @@ XHandleNetStartScriptClient = {
 		};
 		#endif
 		#ifndef __TT__
-		case "unit_killer": { // TODO: lower rank of thee killer in the future
+		case "unit_killer": { // TODO: lower rank of the killer in the future
 			[format [localize "STR_SYS_605"/* "%1 убил %2. %1 наказан на %3 очков!" */, (_this select 1) select 0, (_this select 1) select 1,d_sub_tk_points], "GLOBAL"] call XHintChatMsg;
-			if (player == ((_this select 1) select 2)) then {player addScore (d_sub_tk_points * -1)};
+			if (player == ((_this select 1) select 2)) then {
+				// player addScore (d_sub_tk_points * -1)
+				(d_sub_tk_points * -1) call SYG_addBonusScore;
+			};
 		};
 		#else
 		case "points_array": {
@@ -627,7 +639,8 @@ XHandleNetStartScriptClient = {
 					if ((name player) == (x_wreck_repair select 3)) then {
 						(format [localize "STR_SYS_269_1", x_wreck_repair select 0, localize (x_wreck_repair select 1), d_ranked_a select 29]) call XfHQChat; // "Restoring %1 at %2, your score (+%3). This will take some time..."
 						playSound "good_news";
-						player addScore (d_ranked_a select 29);
+						//player addScore (d_ranked_a select 29);
+						(d_ranked_a select 29) call SYG_addBonusScore;
 					} else {
 						(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1), x_wreck_repair select 3]) call XfHQChat; // "Restoring %1 at %2 (%3), this will take some time..."
 					};
@@ -667,7 +680,8 @@ XHandleNetStartScriptClient = {
 		case "d_ai_kill": { // TODO: check killer to be vehicle
 			if ((_this select 1) in (units (group player))) then {
 				if (player == leader (group player)) then {
-					player addScore (_this select 2);
+					//player addScore (_this select 2);
+					(_this select 2) call SYG_addBonusScore;
 				};
 			};
 		};
@@ -683,11 +697,12 @@ XHandleNetStartScriptClient = {
 		    } else {
                 _sound_obj = _killer; // play sound on sutable position
                 if ( str(_killer) == str(player) ) exitWith  { // killer is this player
+                    // add scores
+                    //player addScore _score;
+                    _score call SYG_addBonusScore;
                 	_str  = if (count _this > 2) then { format[" (%1)", arg(2)]} else { (" (no WPN)"); };
                     _str1 = if (count _this > 3) then { format[ localize "STR_SYS_1163", round( _killer distance (_this select 3)) ] } else { "" }; // " from a distance of %1 m."
                     hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you%2", _str, _str1 ];
-                    // add scores
-                    player addScore _score;
                     (format[localize "STR_SYS_1160", _score + 1, _str1]) call XfHQChat; // T'was a spotter (+%1%2)!
                 };
                	// Other player/AI killed an observer
@@ -710,7 +725,11 @@ XHandleNetStartScriptClient = {
 				__compile_to_var
 				SYG_dateStart = arg(2); // set server start date
 				if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
-				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, SYG_suicideScreamSound %2", SYG_dateStart, call SYG_getSuicideScreamSound];
+				SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server
+				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, SYG_suicideScreamSound %2, SYG_playerID %3",
+				SYG_dateStart,
+				call SYG_getSuicideScreamSound,
+				SYG_playerID];
 			};
 		};
 		case "d_hq_sm_msg": {
@@ -732,9 +751,7 @@ XHandleNetStartScriptClient = {
 //#ifdef __PRINT__
 //				hint localize format["+++ 'MHQ_respawned' is called with var '%1'", _this select 1];
 //#endif
-//			}
-//			else
-//			{
+//			} else {
 //#ifdef __PRINT__
 //				hint localize format["--- 'MHQ_respawned' called with NIL variable %1 ", _this select 1];
 //#endif
@@ -794,7 +811,8 @@ XHandleNetStartScriptClient = {
 			{
     		    hint localize format["+++ Client received msg: %1",_this];
                 _score = arg(4);
-                player addScore -_score; // subract score by number of resurrected items
+                //player addScore -_score; // subract score by number of resurrected items
+                (-_score) call SYG_addBonusScore;
                 format[localize "STR_RESTORE_DLG_7", _score] call XfGlobalChat; // "scores subtracted %1"
 			};
 		};
@@ -851,7 +869,8 @@ XHandleNetStartScriptClient = {
             if ( _score != 0 ) then {
                 _playerName = argopt(3, "" );
                 if ( _playerName == (name player)) then {
-                    player addScore _score;
+                    //player addScore _score;
+                    _score call SYG_addBonusScore;
                     format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
                     ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClient;
                     playSound "no_more_waiting";
@@ -867,7 +886,8 @@ XHandleNetStartScriptClient = {
             if (name player == _this select 3) then {
                 _score = (d_ranked_a select 20);
                 if ( _score > 0 ) then { _score = - _score };
-                player addScore _score;
+                //player addScore _score;
+                _score call SYG_addBonusScore;
             };
         };
         // [ "shortnight", _command<, _param<s>_for_command> ]
@@ -935,7 +955,8 @@ XHandleNetStartScriptClient = {
                 _score = round((_rank_id max 1) call XGetScoreFromRank) / 10; // How costs the illumination above base, for Private as for Corporal
                 // "Over the base, a regular launch of flares began. Points taken: -%1"
                 [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
-                player addScore -_score;
+                //player addScore -_score;
+                (-_score) call SYG_addBonusScore;
             #else
                 // "Over the base, a regular launch of flares began"
                 [ "msg_to_user", "",  [ ["STR_ILLUM_3_1" ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
@@ -953,7 +974,10 @@ XHandleNetStartScriptClient = {
         	hint localize format["*** change_score _this: %1", _this];
         	_name = _this select 1;
         	_found = if ( typeName _name == "ARRAY" ) then { ( name player ) in _name; } else { _name in [ "", "*", name player ] };
-        	if ( _found ) then { player addScore ( _this select 2 ); };
+        	if ( _found ) then {
+        		//player addScore ( _this select 2 );
+        		( _this select 2 ) call SYG_addBonusScore;
+        	};
 			if ( ( count _this ) > 3 ) exitWith { ( _this select 3 ) call SYG_msgToUserParser}; // try to print message if exists
         };
 
@@ -977,4 +1001,4 @@ XHandleNetStartScriptClient = {
 
  "d_ns_client" addPublicVariableEventHandler {
 	(_this select 1) spawn XHandleNetStartScriptClient;
-};         
+};       

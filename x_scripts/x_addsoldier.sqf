@@ -26,6 +26,7 @@ if (isNil "ai_counter") then {
 }; // how many was recruited during this session
 
 _type_soldier = _this select 3;
+if (typeName _type_soldier == "ARRAY") then { _type_soldier = _type_soldier call XfRandomArrayVal};
 
 _start_rank = d_ranked_a select 28; // initial AI caller rank name
 _start_rank_id = _start_rank call XGetRankIndex; // initial AI caller rank id
@@ -121,7 +122,7 @@ _ai_side_unit = (
 	}
 );
 #endif
-_unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"];
+_unit = d_grp_caller createUnit [_ai_side_unit, position AISPAWN, [], 0, "FORM"]; // spawn on invisible heli circle
 [_unit] join d_grp_caller;
 _unit setSkill 0.1;
 
@@ -132,7 +133,8 @@ if (_pilot ) then { _ai_cost = _ai_cost * 2; }; // it is a pilot. He costs 2 tim
 // each AI soldier costs score points
 if (_ai_cost > 0) then {
     playSound "steal";
-    player addScore -_ai_cost;
+    //player addScore -_ai_cost;
+    (-_ai_cost) call SYG_addBonusScore;
     _str = "STR_AI_11";
     if (_pilot) then {_str = "STR_AI_11_PILOT"};
     (format[localize _str, _ai_cost]) call XfHQChat; // "You paid %1 for one AI, points will be returned when he is fired"

@@ -1,6 +1,19 @@
 // by Xeno, x_scripts/x_createjumpflag.sqf - creates jump flag at designated point
-private ["_dummy", "_current_target_pos", "_radius", "_posi", "_ftype", "_flag"];
+private ["_dummy", "_current_target_pos", "_radius", "_posi", "_ftype", "_flag","_i"];
 if (!isServer) exitWith {};
+
+if (current_target_index < 0) then {
+	hint localize format["--- x_createjumpflag.sqf: current_target_index = %1", current_target_index];
+	for "_i" from 1 to 60 do {
+		sleep 1;
+		if (current_target_index >= 0 ) exitWith {
+			hint localize format["+++ x_createjumpflag.sqf: after waiting %1 second[s] current_target_index = %2", _i, current_target_index]
+		};
+	};
+	if (current_target_index < 0 ) then {
+		hint localize format["--- x_createjumpflag.sqf: after waiting 60 seconds current_target_index = %1", current_target_index]
+	};
+};
 
 _dummy = target_names select current_target_index;
 _current_target_pos = _dummy select 0;

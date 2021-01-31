@@ -13,6 +13,8 @@ XAddKills = {private ["_points","_killer"];_points = _this select 0;_killer = _t
 XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {points_west = points_west + _points;};case resistance: {points_racs = points_racs + _points;};};};
 #else
 
+#define __DEBUG__ // to debug town splitted score
+
 /*
 	Add score for observer kill on "killed" event
 	4.13 Killed
@@ -680,14 +682,25 @@ XGetWreck = {
 
 //
 // Update player score in the storage
+// Call as follow:
+// ["d_ad_sc", name player || _player_id, _newscore, _mtkills] call XAddPlayerScore; // 4 params
 //
 XAddPlayerScore = {
-	private ["_name", "_score", "_index", "_parray"];
-	_name = _this select 0;_score = _this select 1;
-	_index = d_player_array_names find _name;
-	if (_index != -1) then {
+	private [ "_index", "_parray" ];
+	if (typeName (_this select 1) == "SCALAR") then { _index = _this select 1 } // client ID
+	else { _index = d_player_array_names find ( _this select 1 ) };
+
+	if (_index >= 0) exitWith {
 		_parray = d_player_array_misc select _index;
-		_parray set [3, _score];
+#ifdef __DEBUG__
+		if ( round( (_parray select 3) / 10)  < round( (_this select 2) / 10 ) ) then { // each next 10 scores print debug status to check functionality
+			format["DEBUG: %1", (target_names select (maintargets_list select (current_counter - 1))) select 1] call SYG_townStatReport;
+		};
+#endif
+		_parray set [3, _this select 2]; // update total score
+		if ( (_this select 3 ) > 0 ) then {	// update a player town kills
+			[_index, _this select 3] call SYG_townStatItemUpdate;
+		};
 	};
 };
 
@@ -706,7 +719,7 @@ XGetPlayerPoints = {
 		if (localize "STR_LANG" == "GERMAN") exitWith {_sound = format["suicide_german_%1", floor (random 5)]}; // German player suicide screams (0..4)
 	    _sound = _index call SYG_getSuicideScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
 	};
-	["d_player_stuff", _staff, SYG_dateStart, _sound] call XSendNetStartScriptClient;
+	["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
 	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, staff sent to client, suicide snd ""%1"" set +++", _sound];
 };
 

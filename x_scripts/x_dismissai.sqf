@@ -43,7 +43,7 @@ if (_ai_cnt > 0) then {
 	};
 	_str = "";
 	if ( _dmg_cnt  > 0) then {
-	    _str = format[localize "STR_AI_9_1", _dmg_cnt];
+	    _str = format[localize "STR_AI_9_1", _dmg_cnt]; // ". Take care of your soldiers better (injured %1)!"
 	    playSound "losing_patience";
 	}; // "Treat your soldiers better (wounded %1)"
 	(format[localize "STR_AI_9", _ai_cnt, _refund, _str])  call XfHQChat; // "All (%1) AI soldiers dismissed !!! Points returned %2%3"

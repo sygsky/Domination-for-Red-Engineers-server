@@ -28,38 +28,16 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #ifdef __ACE__
 	x_sfunc = {
 		private ["_objs"];
-		if ((vehicle player) == player && (player call ACE_Sys_Ruck_HasRucksack))then
-		{
+		if ((vehicle player) == player && (player call ACE_Sys_Ruck_HasRucksack))then {
 		    _objs = nearestObjects [player,["LandVehicle","Air","Ship"],5];
-		    if (count _objs > 0) then
-		    {
+		    if (count _objs > 0) then {
 		        objectID2 = _objs select 0;
-		        if (alive objectID2) then
-		        {
-		            if(damage objectID2 > 0.0000001 || fuel objectID2<0.3333)then
-		            {
-		                true
-		            }
-		            else
-		            {
-		                false
-		            };
-		        }
-		        else
-		        {
-		            false
-		        };
-		    }
-		    else
-		    {
-		        false
-		    };
-		}
-		else
-		{
-		    false
-		};
-
+		        if (alive objectID2) then {
+		            if(damage objectID2 > 0.0000001 || fuel objectID2<0.3333) then { true }
+		            else { false };
+		        } else { false };
+		    } else { false };
+		} else { false };
 	};
 #else
 	x_sfunc = {
@@ -74,31 +52,20 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #endif
     // Only for engineers
 	x_ffunc = {
-		private ["_l","_vUp","_angle", "_pos", "_tr", "_trArr", "_dist"];
-		if ((vehicle player) == player) then 
-		{
-			objectID1=(position player nearestObject "LandVehicle");
-			if ( !(alive objectID1) || (player distance objectID1) > 8) then {false}
-			else
-			{
-				// check presence of ANY repair truck in vicinity of 20 meters
-				_trArr =  nearestObjects [ position player, SYG_repTruckNamesArr, 20]; // find nearest truck in radius 20 meters
-				_tr = objNull;
-				{
-					if ( alive _x ) exitWith { _tr = _x;};
-				} forEach _trArr;
-
-				if ( !(isNull _tr)) then 
-				{
-					objectID1 call SYG_vehIsUpsideDown; // source is in "scripts\SYG_Utils.sqf"
-				}
-				else{false};
-			}
-		} 
-		else {false};
+		if ((vehicle player) != player) exitWith {false};
+		objectID1=(position player nearestObject "LandVehicle");
+		if ( !(alive objectID1) || (player distance objectID1) > 8 ) exitWith { false };
+		if (objectID1 isKindOf "Motorcycle") exitWith {false}; // No need for put on its feet
+		// check presence of ANY repair truck in vicinity of 20 meters
+		private [ "_tr", "_trArr" ];
+		_trArr =  nearestObjects [ position player, SYG_repTruckNamesArr, 20]; // find nearest truck in radius 20 meters
+		_tr = objNull;
+		{ if ( alive _x ) exitWith { _tr = _x;} } forEach _trArr;
+		if ( isNull _tr) exitWith { false };
+		objectID1 call SYG_vehIsUpsideDown; // source is in "scripts\SYG_Utils.sqf"
 	};
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
-    };
+};
 #endif
 
 #ifndef __NON_ENGINEER_REPAIR_PENALTY__

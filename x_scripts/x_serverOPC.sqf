@@ -37,7 +37,7 @@ _bit_array = [mt_radio_down,target_clear,all_sm_res,the_end,mr1_in_air,mr2_in_ai
 	if (format["%1",_var] == "<null>") then {
 		_var = -1;
 	};
-	_tmp_a = _tmp_a + [_var];
+	_tmp_a set [count _tmp_a, _var];
 } forEach [MRR1,MRR2,HR1,HR2,HR3,HR4];
 
 #ifdef __TT__
@@ -47,12 +47,12 @@ _bit_array = _bit_array + [mrr1_in_air,mrr2_in_air];
 	if (format["%1",_var] == "<null>") then {
 		_var = false;
 	};
-	_bit_array = _bit_array + [_var];
+	_bit_array set [ count _bit_array, _var ];
 	_var = _x getVariable "d_ammobox_next";
 	if (format["%1",_var] == "<null>") then {
 		_var = -1;
 	};
-	_tmp_a = _tmp_a + [_var];
+	_tmp_a set [count _tmp_a, _var];
 } forEach [MRRR1,MRRR2,HRR1,HRR2,HRR3,HRR4];
 #endif
 

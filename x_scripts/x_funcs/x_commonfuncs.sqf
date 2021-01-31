@@ -8,7 +8,7 @@ private ["_search_array"];
 _search_array = [];
 
 for "_i" from 0 to (count (configFile >> "cfgPatches") - 1) do {
-	_search_array = _search_array + [configName ((configFile >> "cfgPatches") select _i)];
+	_search_array set [ count _search_array, configName ((configFile >> "cfgPatches") select _i)];
 };
 
 #ifndef __ACE__
@@ -51,6 +51,7 @@ SYG_found_GL3               = "GL3" in _search_array;
 SYG_found_ai_spotting       = "ai_spotting" in _search_array;
 SYG_found_TCN_GrenadeFix    = "TCN_GrenadeFix" in _search_array;
 SYG_found_EditorUpdate_v102 = "EditorUpdate_v102" in _search_array;
+SYG_found_ECS               = "ECS_Core" in _search_array;
 
 #ifdef __SCUD__
 SYG_found_SCUD               = "GIG_Scud" in _search_array;
@@ -75,7 +76,10 @@ if ( SYG_found_ai_spotting) then {
 d_found_DMSmokeGrenadeVB = (if ("DMSmokeGrenadeVB" in _search_array) then {true} else {false});
 //__DEBUG_SERVER("x_commonfuncs.sqf",d_found_DMSmokeGrenadeVB)
 
-if ("six_sys_suppression" in _search_array) then {d_suppression = false;};
+if ("six_sys_suppression" in _search_array) then {
+	d_suppression = false;
+    hint localize format["+++ six_sys_suppression found, set d_supression = %1",  d_suppression];
+};
 
 if (d_found_DMSmokeGrenadeVB) then {
 	X_DM_SMOKE_SHELL = {

@@ -1,5 +1,5 @@
 ﻿// by Xeno, x_scripts/x_target_clear_client.sqf
-// parameter (_this) is counter attack state (true if counterattack occured or false if not)
+// parameters _this is [counter attack state (true if counterattack occured or false if not), _bonus_score_for_finished_town]
 //
 private ["_current_target_name","_target_array2"];
 
@@ -9,8 +9,8 @@ private ["_current_target_name","_target_array2"];
 #define OBJECT_ID (_target_array2 select 3)
 
 if (!X_Client) exitWith {};
-
-__TargetInfo
+//__TargetInfo
+_target_array2 = target_names select current_target_index;_current_target_name = _target_array2 select 1;
 
 _current_target_name setMarkerColorLocal "ColorGreen";
 
@@ -42,22 +42,28 @@ if (client_target_counter < number_targets) then {
 	if (__RankedVer) then {
 		_strBonus = "0";
 		_strCountera = "";
-		_dist = d_ranked_a select 10;
-		if ( player distance _current_target_pos <= _dist ) then {
-		    _score = d_ranked_a select 9;
+		//_dist = d_ranked_a select 10;
+	    _score = _this select 1;
+		if ( _score > 0 ) then {
 		    _strBonus = format[ localize "STR_SYS_1102_1", _score ]; // "points (%1) and "
-		    // TODO: #412 add score per town only if you get positive points for this town
-		    if (_this) then { // conter attack occured
-		    	_score = round (_score  * 1.25 );
+		    // #412 add score per town only if you get positive points for this town
+		    if (_this select 0) then { // counterattack occured
 		    	_strCountera = localize "STR_SYS_1102_3"; // "and repelling a counterattack "
 		    };
-            player addScore _score; // you get point only being in the town!
+            //player addScore _score; // you get point only being in the town!
+            _score call SYG_addBonusScore;
             playSound "good_news";
 			// "For the liberation of the settlement %1you gets %2%3!"
 			( format [ localize "STR_SYS_1102",_strCountera, _strBonus, _bonus_vehicle ] ) call XfHQChat;
 		} else {
-			// "You only receive %1 for liberating the settlement because you are outside the city radius (%2 m.)"
-	        ( format [localize "STR_SYS_1102_0", _bonus_vehicle, _dist] ) call XfHQChat;
+			if (_score == 0 ) exitWith  {
+				// "For the liberation of a settlement the team receives (+%1). You did not participate in the liberation of the city!"
+	            playSound "losing_patience";
+				( format [localize "STR_SYS_1102_0", _bonus_vehicle] ) call XfHQChat;
+			};
+            playSound "good_news";
+			// _score < 0 (-1): last target cleared, print farewell message
+			( localize "STR_SYS_1102_4" ) call XfHQChat;
 		};
 	};
 #endif
@@ -103,7 +109,7 @@ if (client_target_counter < number_targets) then {
         };
 
 */
-    hint localize "+++ last town is cleared ++=+";
+    hint localize "+++ x_target_clear_client.sqf: last town is cleared ++=+";
     _mt_str = format ["%1 %2",format[localize "STR_SYS_1100_1", _current_target_name], localize "STR_SYS_1101_1"]; // "Last settlement %1 has been cleared!!!", ""The enemy has finally fled. You just have to clean up the last occupied city and finish last SM!"
 
 #ifndef __TT__
@@ -112,7 +118,8 @@ if (client_target_counter < number_targets) then {
 		localize "STR_SYS_128" /* "Congratulations..." */
 	];
     if ( player distance _current_target_pos <= (d_ranked_a select 10) ) then {
-        player addScore (d_ranked_a select 9); // you get point only being in the town!
+        //player addScore (d_ranked_a select 9); // you get point only being in the town!
+        (d_ranked_a select 9) call SYG_addBonusScore;
         playSound "good_news";
     };
     titleText [localize "STR_SYS_1230" , "PLAIN"]; // "H U R R A H!"

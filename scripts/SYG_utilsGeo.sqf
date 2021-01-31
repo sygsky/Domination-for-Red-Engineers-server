@@ -92,7 +92,7 @@ SYG_chasmExitWP = {
     {
         _center = _x select 0;
         _radious = _x select 1;
-        if ([_this, _circle, _radious] call SYG_pointInCircle) exitWith {
+        if ([_this, _center, _radious] call SYG_pointInCircle) exitWith {
             // yes, in circle
             _ret = _x select 2;
         };
@@ -463,7 +463,7 @@ SYG_pointNearBase = {
  * if call: _reta = "NO_DEBUG" call SYG_getTargetTown; // then no info about target town absence is printed to arma.rpt file
  */
 SYG_getTargetTown = {
-	private [ "_ret","_cur_cnt" ];
+	private [ "_ret","_cur_cnt","_print" ];
 	_ret = [];
 	// target_clear == false if town still not liberated and still occupied
 	_cur_cnt = if ( isServer ) then {current_counter} else {client_target_counter};
@@ -500,8 +500,7 @@ SYG_getTargetTownName = {
 SYG_getTargetTownAddArray = {
     private ["_arr"];
     _arr = "NO_DEBUG" call SYG_getTargetTown; // gets town main info array
-    if ( count _arr == 0) exitWith {[]};      // no town defined, return empty array
-    if (count _arr <= 4) exitWith {[]};       // no additional array defined
+    if (count _arr <= 4) exitWith {[]};       // no additional array or no town are defined
     _arr select 4
 };
 
@@ -827,13 +826,14 @@ SYG_setMapPosToMainTarget = {
 	ctrlMapAnimCommit _ctrlmap;
 };
 
-// call: _dist = [_obj1||_pos1, _obj2||_pos2] call SYG_distance2D;
+// call as: _dist = [_obj1||_pos1, _obj2||_pos2] call SYG_distance2D;
 SYG_distance2D = {
 	private ["_pos1", "_pos2"];
 	_pos1 = arg(0);
 	if ( typeName _pos1 == "OBJECT") then { _pos1 = position _pos1;};
 	_pos2 = arg(1);
 	if ( typeName _pos2 == "OBJECT") then { _pos2 = position _pos2;};
+//	hint localize format["--- SYG_distance2D: _pos1 %1, _pos2 %2", _pos1,_pos2];
 	[argp(_pos1,0), argp(_pos1,1),0] distance [argp(_pos2,0),argp(_pos2,1),0]
 };
 

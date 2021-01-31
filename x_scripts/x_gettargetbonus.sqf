@@ -72,8 +72,34 @@ if (mt_winner == 1) then {
 };
 #endif
 
-target_clear = true; // town is liberated, no any occupied towns from now
-["target_clear",target_clear, extra_bonus_number, _counterattack_occurred] call XSendNetStartScriptClient;
+// TODO: add info for split MT score bonus ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred] call XSendNetStartScriptClient
+// must be ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred, _town_stat_arr] call XSendNetStartScriptClient
+_bonus_score_arr = true call SYG_townStatCalcScores;
+target_clear = true; // town is liberated, no new occupied towns is created while target_clear is true
+
+
+SYG_players_online = []; // collector for online player names
+["target_clear",target_clear, extra_bonus_number, _counterattack_occurred, _bonus_score_arr] call XSendNetStartScriptClient;
+
+hint localize format["+++ DEBUG: town bonus info sent to all players (%1)", _bonus_score_arr];
+_bonus_score_arr spawn {
+	sleep 10;
+	private ["_offline_arr","_arr","_add_arr","_ind","_item"];
+	_offline_arr = (+ (_this select 0)) - SYG_players_online; // remain only offline players in list
+	hint localize format["+++ DEBUG: town bonus offline players (%1) processing", _offline_arr];
+	_arr = (_this select 0); // all town player names array
+	_add_arr = (_this select 1); // all town player town bonus score array
+	{
+		_ind = _arr find _x;	// this player is offline, add score to him indirectly
+		if (_ind >= 0 ) then  {
+			_add = _add_arr select _ind; // added bonus value
+			_ind = d_player_array_names find _x; // find player ion system misc array
+			_item = d_player_array_misc select _ind; // player stats descriptor
+			_item set [3, (_item select 3) + _add]; // add town bonus score to the player
+		};
+	} forEach _offline_arr;
+	SYG_players_online = nil;
+};
 
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 
