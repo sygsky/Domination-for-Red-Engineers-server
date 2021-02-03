@@ -1840,7 +1840,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	if (SYG_firesAreCreated) then {
 	    call SYG_firesService
 	} else {
-	    hint localize "x_setupplayer.sqf: Fires not detected"
+	    hint localize "*** x_setupplayer.sqf: SYG_firesAreCreated == false"
 	};
 	// play with map if exists
     _pos = call SYG_mapPos;

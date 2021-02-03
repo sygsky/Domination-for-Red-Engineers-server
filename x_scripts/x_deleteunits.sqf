@@ -2,7 +2,7 @@
 private ["_index", "_dummy", "_current_target_pos", "_current_target_rad", "_old_units_trigger", "_i", "_list"];
 
 if (!isServer) exitWith{};
-#define __DEBUG__
+//#define __DEBUG__
 
 _index = _this;
 _old_units_trigger = "";

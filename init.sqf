@@ -24,7 +24,8 @@ if (isServer) then {
 	};
 };
 
-hint localize format["+++ init.sqf: isServer = %1, X_Server = %2, X_Client = %3, X_JIP = %4, X_SPE = %5, X_MP = %6, X_INIT = %7", isServer, X_Server, X_Client, X_JIP, X_SPE, X_MP, X_INIT];
+hint localize format["+++ init.sqf: isServer = %1, X_Server = %2, X_Client = %3, X_JIP = %4, X_SPE = %5, X_MP = %6, X_INIT = %7, mission ""%8"" in world ""%9""",
+	isServer, X_Server, X_Client, X_JIP, X_SPE, X_MP, X_INIT, missionName, worldName];
 
 SYG_firesAreCreated  = false; // are fires on airbase created
 publicVariable "SYG_firesAreCreated";

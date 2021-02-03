@@ -3,8 +3,8 @@
 //
 // call as follow: [_max_num, _rad_step execVM "dlg\resurrect-dlg.sqf"]
 //
+// Not used as action not works in multiplayer
 
-#define __DEBUG__
 if (! X_Client) exitWith {};
 private ["_ok","_XD_display","_ctrl","_index","_max_num","_rad_step","_score","_item"];
 
@@ -33,8 +33,6 @@ else
     _max_num = _this;
     _rad_step = DEFAULT_RADIOUS_STEP ;
 };
-
-#define __DEBUG__
 
 _ok = createDialog "XD_ResurrectDialog";
 
