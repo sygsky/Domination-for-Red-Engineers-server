@@ -3,6 +3,8 @@
 // x_createpara3xcargopopulated.sqf
 //
 // creates paratroopers for targeted city + heli to actually transport them
+// Heavily modified by Snooper(Agent) by Engineer request as December 2020 - January 2021
+//
 private ["_type","_startpoint","_attackpoint","_heliendpoint","_number_vehicles","_fly_height","_crew_member","_parachute_type","_make_jump","_stop_it","_current_target_pos","_dummy", "_mti",
          "_cnt_uni"];
 if (!isServer) exitWith {};
@@ -285,7 +287,7 @@ for "_i" from 1 to _number_vehicles do {
 	sleep 5.012;
 	
 	_vehicle flyInHeight 100;
-	hint localize format["+++x_createpara3x.sqf: Air assault procedure to current town %2 with %1 starts at pos %3", typeOf _vehicle, _dummy select 1, _startpoint];
+	hint localize format["+++ x_createpara3xcargopopulated.sqf: Air assault procedure to current town %2 with %1 starts at pos %3", typeOf _vehicle, _dummy select 1, _startpoint];
 
 	if (mt_radio_down) exitWith {
 		_stop_it = true;

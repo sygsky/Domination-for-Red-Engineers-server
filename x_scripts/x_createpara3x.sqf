@@ -3,6 +3,8 @@
 // x_createpara3x.sqf, called from x_scripts\x_parahandler.sqf as follow: [_start_pos,_attack_pos,_end_pos,_vecs, _fly_height] execVM "x_scripts\x_createpara3x.sqf";
 //
 // creates paratroopers for targeted city, heli created in x_scripts\x_parahandler.sqf
+//
+// Not used from January-2021 (replaced by x_scripts\x_createpara3xcargopopulated.sqf)
 private ["_type","_startpoint","_attackpoint","_heliendpoint","_number_vehicles","_fly_height","_crew_member","_parachute_type","_make_jump","_stop_it","_current_target_pos","_dummy", "_mti"];
 if (!isServer) exitWith {};
 
