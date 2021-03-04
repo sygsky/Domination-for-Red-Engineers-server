@@ -1,19 +1,46 @@
 // by Xeno, x_scripts\x_counterattack.sqf
-private ["_current_target_pos","_current_target_radius","_dummy","_number_basic","_number_bmp","_number_specops","_number_tank","_start_array","_type_list_attack","_typeidx","_xx","_numbervecs","_vecs_counter_attack"];
+#include "x_setup.sqf"
+
+private ["_current_target_pos","_current_target_radius","_dummy","_number_basic","_number_bmp","_number_specops",
+		 "_number_tank","_start_array","_type_list_attack","_typeidx","_xx","_numbervecs","_vecs_counter_attack",
+	     "_outer_size","_counter_pos","_counter_rad"];
 if (!isServer) exitWith {};
 
 _dummy = target_names select current_target_index;
 _current_target_pos = _dummy select 0;
 _current_target_radius = _dummy select 2;
+_outer_size = 200;
+// TODO: counterattack on Paraiso should not start on base territory only!
+_counter_pos = _current_target_pos;
+_counter_rad = _current_target_radius + _outer_size;
+#ifdef __DEFAULT__
+switch (_dummy select 1 ) do { // change start pos for some special targets
+	case "Paraiso": {
+		_counter_pos = [[10299,8954,0],[11261,9341,0]] call XfRandomArrayVal;
+		_counter_rad = 100;
+	};
+	case "Rahmadi": {
+		_counter_pos = [[2498,2679,0],[3202,2259,0],[3308,2584,0]]  call XfRandomArrayVal;
+		_counter_rad = 100;
+	};
+	case "Everon": {
+		_counter_pos = [16476,9035,0];
+		_counter_rad = 100;
+	};
+	case "Hunapu" : {
+		_counter_pos = [[7524,15536,0],[8318,15667,0]] call XfRandomArrayVal;
+		_counter_rad = 50;
+	};
+};
+#endif
+_start_array = [_counter_pos, _counter_rad] call x_getwparray2;
 
-_start_array = [_current_target_pos, _current_target_radius + 200] call x_getwparray2;
-
-_vecs_counter_attack = (5 call XfRandomFloor) max 2; // 4..2
+_vecs_counter_attack =  2 + ceil (random 2); // 2..4
 
 _number_basic = ceil (random _vecs_counter_attack); // 4..1
 _number_specops = ceil (random _vecs_counter_attack); // 4..1
-_number_tank = ceil (random (_vecs_counter_attack - 1)); // 4..1
-_number_bmp = ceil (random (_vecs_counter_attack - 1)); // 4..1
+_number_tank = ceil (random (_vecs_counter_attack - 1)); // 3..1
+_number_bmp = ceil (random (_vecs_counter_attack - 1)); // 3..1
 
 _numbervecs = (_vecs_counter_attack - 2) max 1; // 2..1
 

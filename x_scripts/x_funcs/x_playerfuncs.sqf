@@ -531,8 +531,6 @@ XGetRankFromScoreExt = {
     (d_pseudo_rank_names select _index) // returns string from "Brigadier-General"(7) to "Generalissimo"(12)
 };
 
-XGetRankFromScore = XGetRankFromScoreExt;
-
 // Rank index from player score including extended scores from ranks above Colonel
 // call as follows: _rank_id = player call XGetRankIndexFromScoreExt; // or
 //                  _rank_id = (score player) call XGetRankIndexFromScoreExt;
@@ -560,6 +558,7 @@ XGetRankIndexFromScoreExt = {
     _index // returns from 7("Brigadier-General") to 12("Generalissimo")
 };
 
+XGetRankFromScore = XGetRankFromScoreExt;
 XGetRankIndexFromScore = XGetRankIndexFromScoreExt;
 
 #else

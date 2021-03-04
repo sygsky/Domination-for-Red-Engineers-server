@@ -3,17 +3,17 @@
 #include "x_macros.sqf"
 
 // add dead object(vehicle, unit) to the common dead list
-XAddDead = {if (!((_this select 0) in dead_list)) then {dead_list = dead_list + [_this select 0];}};
+XAddDead = {if (!((_this select 0) in dead_list)) then { dead_list set[ count dead_list,_this select 0] } };
 
-// Adds vehicle to the dead vehicles list
-XAddCheckDead = {if (!((_this select 0) in check_vec_list)) then {check_vec_list = check_vec_list + [_this select 0];}};
+// Adds vehicle to the check dead vehicles list
+XAddCheckDead = {if (!((_this select 0) in check_vec_list)) then { check_vec_list set [count check_vec_list, _this select 0] } };
 
 #ifdef __TT__
 XAddKills = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {kill_points_west = kill_points_west + _points;};case resistance: {kill_points_racs = kill_points_racs + _points;};};};
 XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {points_west = points_west + _points;};case resistance: {points_racs = points_racs + _points;};};};
 #else
 
-#define __DEBUG__ // to debug town splitted score
+#define __DEBUG__ 20 // to debug town splitted score each 20 ccore changed
 
 /*
 	Add score for observer kill on "killed" event
@@ -693,7 +693,7 @@ XAddPlayerScore = {
 	if (_index >= 0) exitWith {
 		_parray = d_player_array_misc select _index;
 #ifdef __DEBUG__
-		if ( round( (_parray select 3) / 10)  < round( (_this select 2) / 10 ) ) then { // each next 10 scores print debug status to check functionality
+		if ( round( (_parray select 3) / __DEBUG__)  < round( (_this select 2) / __DEBUG__ ) ) then { // each next 10 scores print debug status to check functionality
 			format["DEBUG: %1", (target_names select (maintargets_list select (current_counter - 1))) select 1] call SYG_townStatReport;
 		};
 #endif

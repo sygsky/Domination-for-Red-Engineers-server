@@ -104,8 +104,7 @@ sleep 3;
 playSound (["parajump1", "parajump2"] call XfRandomArrayVal); // Start of parajump event (and corresponding sound of 20 seconds length max)
 _startTime = time;
 
-if ( _paratype == "" ) then
-{
+if ( _paratype == "" ) then {
     (localize "STR_SYS_609_1") call XfHQChat; // "You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?"
     if ( player call SYG_isWoman ) then {
         player say ("female_shout_of_pain_" + str(ceil (random 4)));  // 1-4

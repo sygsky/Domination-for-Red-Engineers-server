@@ -51,24 +51,10 @@ _playerDir = getDir player;
 //============================================ INIT JAIL PLACES ===========================
 if (isNil "jail_places") then {
     jail_buildings = [[10270.2,7384.86,8.01088],[8274.52,9045.37,7.85906],[7610.99,6363.07,7.86087]]; // all 3 Sahrani hotels model center coordinates
-/*
-    {
-        _arr =  nearestObjects [getPos _x,["Land_Hotel"], 50];
-        _hotel = objNull;
-        if ( count _arr > 0 ) then { _hotel = _arr select 0 };
-        if (!isNull _hotel) then
-        {
-            jail_buildings set [count jail_buildings, _hotel modelToWorld [0,0,0]];
-        };
-        hint localize format["_arr %1",_arr];
-    } forEach [jail,jail_1,jail_2];
-
-    hint localize format["+++ jail_buildings = %1; +++", jail_buildings];
-*/
     // jail rooms, array items: [offset point for jail position, jail pos dir, hotel search point]
     jail_places = [
-        [[-5.26367,-6.39551,-7.74754],0,[10270.2,7384.86,8.01088]], // behind the logotype of the hotel
-        [[-2.8457,2.97168,-7.73003],-270,[10270.2,7384.86,8.01088]] // in lift cabine
+        [[-5.26367,-6.39551,-7.74754],0], // behind the logotype of the hotel
+        [[-2.8457,2.97168,-7.73003],-270] // in the lift cabine
     ];
 };
 
@@ -76,11 +62,11 @@ if (isNil "jail_places") then {
 
 // check hotel to be alive
 _hotel = objNull;
-_hotelP = [];
+_hotel_pos = [];
 for "_i" from 0 to count jail_buildings -1 do {
     //_id = jail_buildings call  XfRandomFloorArray;
-    _hotelP = jail_buildings select _i;
-    _hotel = _hotelP nearestObject "Land_Hotel";
+    _hotel_pos = jail_buildings select _i;
+    _hotel = _hotel_pos nearestObject "Land_Hotel";
     if (  !isNull _hotel) exitWith {};
     jail_buildings set [_i, "RM_ME"];
 };
@@ -89,14 +75,16 @@ jail_buildings = jail_buildings - ["RM_ME"];
 
 if (isNull _hotel) exitWith {
 #ifdef __JAIL_DEBUG__
-    hint localize format["--- jail.sqf: No jail buildings %2 exists for (%1)", name player, jail_buildings];
+    hint localize format["--- jail.sqf: No jail buildings found, remained pos array %1", jail_buildings];
 #endif
-	["log2server", name player, "jail building not found"] call  call XSendNetStartScriptServer;
+	["log2server", name player, "--- jail building not found"] call XSendNetStartScriptServer;
 };
 
 //hint localize format[ "jail: %1", _jailArr ];
+
+// select pos to jail
 _jailArr = jail_places call XfRandomArrayVal;
-_jailArr set [2, _hotelP]; // set hotel position
+_jailArr set [2, _hotel_pos]; // set hotel position
 
 //hint localize format[ "jail: hotel %1", _hotel ];
 
@@ -105,6 +93,8 @@ disableUserInput true;
 player setDamage 0;
 player setVelocity [0,0,0];
 player playMove "AmovPercMstpSnonWnonDnon"; // stand up!
+
+_score = -((score player)-JAIL_START_PERIOD);
 
 _wpn = weapons player;
 _mags = magazines player;
@@ -164,11 +154,9 @@ _str = format["+++jail.sqf: pos %1, hld %2, model %3", getPos player, getPos _we
 //player groupChat _str;
 hint localize _str;
 #endif
-["log2server", name player, "jail process started"] call  call XSendNetStartScriptServer;
+["log2server", name player, format["+++ jail process started for %1 seconds", _score]] call XSendNetStartScriptServer;
 
 //if (bancount > 2) exitWith {hint "press Alt + F4 to exit"};
-
-_score = -((score player)-JAIL_START_PERIOD);
 
 _msg_arr = [
    localize "STR_JAIL_1",//"Hint: You have been punished for having a negitive score",

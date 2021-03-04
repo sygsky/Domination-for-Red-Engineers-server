@@ -115,9 +115,11 @@ XHandleNetStartScriptServer = {
         // 2. ["d_ad_sc", name player] - simply to inform about town score received by the player
 
 		case "d_ad_sc": {
-			if (count _this  == 2 ) exitWith {
-				SYG_players_online set [count SYG_players_online, _this select 1]; // add player name to the bonus receiver array
-				hint localize format[ "+++ DEBUG: town score %1", _this ];
+			if (count _this  == 2 ) exitWith { // confirmation tha player is online
+				if ( ! ((_this select 1) in SYG_players_online) ) then {
+					SYG_players_online set [count SYG_players_online, _this select 1]; // add player name to the bonus receiver array
+					hint localize format[ "+++ DEBUG: town split score assigned -> %1", _this ];
+				};
 			};
 			_this call XAddPlayerScore;
 		};
@@ -432,8 +434,7 @@ XHandleNetStartScriptServer = {
 
 //========================================================================================================== END OF CASES
 
-        default
-        {
+        default {
             hint localize format["--- x_netinitserver.sqf: unknown command detected: %1", _this];
         };
 	}; // switch (_this select 0) do

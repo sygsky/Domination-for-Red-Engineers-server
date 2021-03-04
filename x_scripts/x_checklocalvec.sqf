@@ -22,8 +22,8 @@ while {true} do {
 	//__DEBUG_NET("x_checklocalvec.sqf",(call XPlayersNumber))
 	// add to the new units list
 	if (count check_vec_list > 0) then {
-	    _check_vec_list1 = check_vec_list;
-		check_vec_list = [];
+	    _check_vec_list1 = check_vec_list; // rename list
+		check_vec_list = []; // set empty
 		sleep 0.1;
 		_check_vec_list = _check_vec_list + _check_vec_list1;
 		_check_vec_list1 = nil;

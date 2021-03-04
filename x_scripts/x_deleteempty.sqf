@@ -1,9 +1,12 @@
 // by Xeno, x_scripts\x_deleteempty.sqf
+// removes only empty vehicles from the newly liberated town
+//
 private ["_index","_no","_pos","_radius","_target","_vecs","_vehicle"];
 if (!isServer) exitWith{};
 
-_index = _this select 0;
+_index = _this;
 
+/* remove ASAP
 if (current_target_index < 0) then {
 	hint localize format["--- x_deleteempty.sqf: current_target_index = %1", current_target_index];
 	for "_i" from 1 to 60 do {
@@ -16,6 +19,7 @@ if (current_target_index < 0) then {
 		hint localize format["--- x_deleteempty.sqf: after waiting 60 seconds current_target_index = %1", current_target_index]
 	};
 };
+*/
 
 // if (_index < 0) then { hint localize format["--- x_deleteempty.sqf: [_index = %1]",_index]}; // debug printing
 
@@ -26,12 +30,14 @@ _rnd = 1500 + (random 300);
 hint localize format["+++ x_deleteempty.sqf: sleep %1 secs in %2", round (_rnd), _target select 1]; // debug printing
 sleep _rnd;
 
-_vecs = [];
-switch (d_enemy_side) do {
-	case "EAST" : {{_vecs = _vecs + _x;} forEach d_veh_a_E};
-	case "WEST" : {{_vecs = _vecs + _x;} forEach d_veh_a_W};
-	case "RACS" : {{_vecs = _vecs + _x;} forEach d_veh_a_G};
+_vecs = []; // full list of enemy vehilces
+_side_vehs = switch (d_enemy_side) do { // array of arrays of enemy vehicle types
+	case "EAST" : { d_veh_a_E  };
+	case "WEST" : { d_veh_a_W };
+	case "RACS" : { d_veh_a_G };
 };
+
+{{[_vecs,_x] call SYG_addArrayInPlace} forEach _side_vehs};
 
 _no = nearestObjects [_pos, _vecs, _radius];
 

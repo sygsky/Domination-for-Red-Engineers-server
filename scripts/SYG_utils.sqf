@@ -699,7 +699,7 @@ SYG_clearArray = {
 
 SYG_cleanArray = SYG_clearArray;
 
-// Remove all strings "RM_ME" from input _arr not changing oreder of items
+// Remove all designated strings (e.g. "RM_ME") from input _arr not changing oreder of items
 // call: _cleaned_arr = [_cleaned_arr,"RM_ME"] call SYG_clearArray;
 // returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
 SYG_clearArrayA = {

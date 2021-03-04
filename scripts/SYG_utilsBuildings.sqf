@@ -261,6 +261,7 @@ SYG_teleportToHouse = {
  * Returns: new position of the uint
  */
 SYG_setObjectInHousePos = {
+	private ["_house","_obj","_rel_arr","_angle","_pos"];
     _house   = arg(0);
     _obj     = arg(1);
     _rel_arr = arg(2);

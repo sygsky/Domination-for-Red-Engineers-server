@@ -92,8 +92,7 @@ _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "L
 //
 //
 _make_isle_grp = {
-
-	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vecs", "_veh", "_rand", "_leader", "_grp_array","_params"];
+	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vecs", "_veh_arr", "_rand", "_leader", "_grp_array","_params"];
 	_params = [d_with_isledefense select 0,d_with_isledefense select 1,d_with_isledefense select 2,d_with_isledefense select 3];
 	_start_point = []; //_params call XfGetRanPointSquare;
 	while {(count _start_point) == 0} do {
@@ -108,8 +107,7 @@ _make_isle_grp = {
 	sleep 0.753;
 #else
 	_dummycounter = 0;
-	while {_start_point distance FLAG_BASE < 1200 && _dummycounter < 99} do // TODO - find start points far from active war zones (airbase, targets etc)
-	{
+	while {_start_point distance FLAG_BASE < 1200 && _dummycounter < 99} do  { // TODO - find start points far from active war zones (airbase, targets etc)
 		_start_point = []; //_params call XfGetRanPointSquare;
 		 while {count _start_point == 0} do {
 			_start_point = _params call XfGetRanPointSquare;
@@ -123,8 +121,7 @@ _make_isle_grp = {
 #endif
 
 #ifdef __SYG_PRINT_ACTIVITY__
-	if ( count _start_point == 0) then
-	{
+	if ( count _start_point == 0) then {
 		hint localize format["+++ %1 x_isledefense.sqf: _start_point %2 is empty []", call SYG_missionTimeInfoStr, _i + 1];
 	};
 #endif							
@@ -155,11 +152,9 @@ _make_isle_grp = {
 //#endif
 
     {
-        _veh = [1, _start_point, _crew_type, _x, _agrp, 0, -1.111] call x_makevgroup;
+        _veh_arr = [1, _start_point, _crew_type, _x, _agrp, 0, -1.111] call x_makevgroup;
         sleep 0.73; // Magic)))
-        //_veh = createVehicle [_x, _start_point, [], 10, "NONE"];
-        //[_veh, _agrp,  _crew_type,     0.9,               0.1 ] call SYG_populateVehicle;
-        _vecs = _vecs + _veh;
+        [_vecs, _veh_arr] call SYG_addArrayInPlace;
     } forEach _elist;
 
 #else
@@ -168,10 +163,10 @@ _make_isle_grp = {
 	{
 		_rand = floor random 3; // 0..2 vehicles to create
 		if (_rand > 0) then  {
-			_veh = ([_rand,_start_point,_x select 1,_x select 0,_agrp,0,-1.111] call x_makevgroup);
+			_veh_arr = ([_rand,_start_point,_x select 1,_x select 0,_agrp,0,-1.111] call x_makevgroup);
 			sleep 0.73;
-			//{ _x lock true; } forEach _veh;
-			_vecs = _vecs + _veh;
+			//{ _x lock true; } forEach _veh_arr;
+			[_vecs, _veh_arr] call SYG_addArrayInPlace;
 		};
 	} forEach _elist;
     hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
@@ -204,20 +199,18 @@ _make_isle_grp = {
  *
  */
 _replace_grp =  {
-	private ["_igrpa","_i","_vecs"];
+	private ["_igrpa","_i"];
 	_i = _this;
 #ifdef __SYG_PRINT_ACTIVITY__
 	hint localize format["+++ %1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
 #endif							
 	_igrpa = argp(SYG_isle_grps, _i);
 	_igrpa call _remove_grp;
-    _igrpa = call _make_isle_grp;
-	SYG_isle_grps set [_i, _igrpa];
+    _igrpa = call _make_isle_grp; // create new group
+	SYG_isle_grps set [_i, _igrpa]; // put it to the array
 
-	// TODO: mark each vehicle with its patrol group id
-	_vecs  = argp(_igrpa,PARAM_VEHICLES);
-
-	{_x setVariable ["PATROL_ITEM", _i]} forEach _vecs;
+	// mark each vehicle with its patrol group id, later replace integer id with x_smgroup id
+	{_x setVariable ["PATROL_ITEM", _i]} forEach argp(_igrpa,PARAM_VEHICLES);
 
 #ifdef __SYG_PRINT_ACTIVITY__
     hint localize format["+++ x_isledefense.sqf: group created"];
@@ -233,7 +226,7 @@ _replace_grp =  {
 // Returns: nothing
 //
 _remove_grp = {
-	private ["_igrpa","_vecs","_igrp","_units","_crew"];
+	private ["_igrpa","_vecs","_igrp","_units","_crew","_plist"];
 	_igrpa = _this;
 	_igrp  = argp(_igrpa,PARAM_GROUP);
 //	if ( !isNull _igrp ) then
@@ -257,7 +250,7 @@ _remove_grp = {
 					 (_xside == d_own_side ) ||
 					 ( (_xside != d_enemy_side) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && ((getDammage _x) < 0.000001) )
 				    ) 
-				   )  then {// vehicle was captured by player
+				   )  then { // vehicle was captured by player
 					// re-assign vehicle to be ordinal ones
 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
 					hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
@@ -266,7 +259,13 @@ _remove_grp = {
 					[_x] call XAddCheckDead;
 					// clean vehicle variables
 					_x setVariable ["PATROL_ITEM", nil];
-				} else { // remove all units in vehicles
+					// TODO: #434 - inform players in vehicle about
+					_plist = []; // players list for vehicle
+					{ if (isPLayer _x) then { _plist set [count _plist, _x] } } forEach (crew _x);
+					if (count _plist > 0) then { // inform player about
+					    ["msg_to_user", _plist,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
+					};
+				} else { // remove all units in vehicles. Why not delete them? May be they will append to any enemy group nearby?
 					{
 						_x action["Eject", vehicle _x]; 
 //						sleep 0.33;
@@ -277,7 +276,7 @@ _remove_grp = {
 //						_crew_removed_cnt = _crew_removed_cnt + 1;
 //#endif
 					} forEach crew _x;
-					sleep 0.1;
+					sleep 0.3;
 					deleteVehicle _x;
 #ifdef __SYG_PRINT_ACTIVITY__
 					_vec_removed_cnt = _vec_removed_cnt + 1;
@@ -398,7 +397,6 @@ _firstGoodVehicle = {
 	_veh
 };
 
-
 //
 // call: _vehCnt = [_veh1,_veh2 ...] call _countNonEmptyVehicles;
 //
@@ -485,7 +483,7 @@ SYG_patrolGroupNumber = {
 	{!isNull (_x select PARAM_GROUP)} count SYG_isle_grps;
 };
 
-// if this is rerun of script, count already existing patrol groups
+// if this is r-erun of script, count already existing patrol groups
 _patrol_cnt = d_with_isledefense select 4;
 _patrol_cnt = (_patrol_cnt - (count SYG_isle_grps)) max 0; // how many patrol to add to normal count
 if ( _patrol_cnt > 0) then {

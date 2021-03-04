@@ -118,7 +118,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "bond","bond1","adjutant","prince_negaafellaga","total_recall_mountain","adagio","morze","morze_3",
                 "treasure_island_intro","fear2","soviet_officers","cosmos","manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","del_vampiro1",
-                "del_vampiro2","zaratustra","bolivar","jrtheme","vague","enchanted_boy"
+                "del_vampiro2","zaratustra","bolivar","jrtheme","vague","enchanted_boy","robinson_crusoe"
             ];
 
             // music to play only in day time

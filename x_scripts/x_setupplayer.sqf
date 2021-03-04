@@ -1063,8 +1063,8 @@ if (player_can_call_drop) then {
 #endif
 
 // play with EditorUpdate_v102.pbo
-if ( SYG_found_EditorUpdate_v102 ) then {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_4"]}
-else {_local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_5"]};
+if ( SYG_found_EditorUpdate_v102 ) then {_local_msg_arr set [ count _local_msg_arr,  localize "STR_SYS_258_4"]}
+else {_local_msg_arr = _local_msg_arr set [ count _local_msg_arr,  localize "STR_SYS_258_5"]};
 
 #ifdef __SCUD__
 if (SYG_found_SCUD ) then {
@@ -1078,11 +1078,44 @@ if (random 10 < 7) then {
     _local_msg_arr set [count _local_msg_arr, localize "STR_SYS_RUMORS"];
 };
 
+// send information about scores
+_rank = (score player) call XGetRankIndexFromScore;
+hint localize format["+++ setup info: player rank %1", _rank]; // DEBUG
+
+if ( _rank < 6 ) then { // you are Major or lower, send info about ranks
+
+	// "Ranks: Private (%1), Corporal (%2), Sergeant (%3), Lieutenant (%4), Captain (%5), Major (%6), Colonel (%7) etc"
+	_local_msg_arr set [count _local_msg_arr,
+		format[ localize "STR_SYS_68_1",
+			(d_rank_names select 0) call XGetRankStringLocalized,
+			(d_rank_names select 1) call XGetRankStringLocalized,
+			(d_rank_names select 2) call XGetRankStringLocalized,
+			(d_rank_names select 3) call XGetRankStringLocalized,
+			(d_rank_names select 4) call XGetRankStringLocalized,
+			(d_rank_names select 5) call XGetRankStringLocalized,
+			(d_rank_names select 6) call XGetRankStringLocalized
+		]
+	];
+
+	 // "Capabilities: repair(%1),BRDM/BMP(%2),tank(%3),attack helicopter(%4),airplane(%5)"
+	_ranks = d_ranked_a select 8;
+	_local_msg_arr set [count _local_msg_arr,
+		format[ localize "STR_SYS_68_2",
+			d_ranked_a select 0,
+			(_ranks select 0) call XGetRankStringLocalized,
+			(_ranks select 1) call XGetRankStringLocalized,
+			(_ranks select 2) call XGetRankStringLocalized,
+			(_ranks select 3) call XGetRankStringLocalized
+		]
+	];
+
+};
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 //+ show all specific  messages for the player type +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
 _local_msg_arr spawn {
+	hint localize format["+++ _local_msg_arr count %1", count _this]; // DEBUG
     if (count _this > 0 ) then {
         sleep 55;
         {
@@ -1128,7 +1161,7 @@ _local_msg_arr spawn {
 		[ ["STR_GREETING_COMMON" ] ],
 		0, 5, false, "drum_fanfare"
 	] call SYG_msgToUserParser;
-
+	hint localize "+++ STR_GREETING_COMMON printed"; // DEBUG
 };
 
 #ifndef __REVIVE__
@@ -1892,7 +1925,7 @@ if (localize "STR_LANGUAGE" == "RUSSIAN") then {
 player addAction["score -15","scripts\addScore.sqf",-15];
 #endif
 
-#define __DEBUG_ADD_VEHICLES__
+//#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
 if (name player == "EngineerACE") then {
@@ -1901,7 +1934,7 @@ if (name player == "EngineerACE") then {
     //player setPos [14531,9930,0];
     //player setPos [9763, 11145, 0]; // near Rashidan dock
     // player setPos [16545,12875,0];
-    // MRR1 setPos [9407,5260,0]; // move teleport to the positon at SM #40 (hostages in Tiberis)
+    // MRR1 setPos [9407,5260,0]; // move teleport to the position at SM #40 (hostages in Tiberis)
     waitUntil { sleep 0.5; (!isNil "d_player_stuff")};
     if ( (score player) < 1500 ) then { player addScore (1500 - (score player) ) };
     hint localize format["+++ x_setupplayer.sqf: EngineerACE score %1", score player];

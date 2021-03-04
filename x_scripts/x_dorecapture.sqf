@@ -1,6 +1,7 @@
 // by Xeno, x_scripts\x_dorecapture.sqf, server call only
 
-private ["_target_center", "_radius", "_recap_index", "_helih", "_unitslist", "_ulist", "_posran", "_grp", "_vecs", "_grp_array", "_i", "_units", "_vec","_veclist", "_arr"];
+private ["_target_center", "_radius", "_recap_index", "_helih", "_unitslist", "_ulist", "_posran", "_grp", "_vecs",
+		 "_grp_array", "_i", "_units", "_vec","_veclist", "_arr","_xside"];
 
 if (!isServer) exitWith	{};
 
@@ -20,7 +21,7 @@ _infcnt = 0; // infantry cnt
 
 {
 	_ulist = [_x,d_enemy_side] call x_getunitliste;
-	_posran = [_target_center, _radius] call XfGetRanPointCircle;
+	_posran = [];
 	while {count _posran == 0} do {
 		_posran = [_target_center, _radius] call XfGetRanPointCircle;
 		sleep 0.4;
@@ -110,7 +111,22 @@ sleep 300;
 {
 	if (!isNull _x) then {
 		_vec = _x;
-		{if (!isNull _x) then {deleteVehicle _x}} forEach ([_vec] + crew _vec);
+		_xside =  format["%1", side _x];
+		if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
+			(
+			 (_xside == d_own_side ) ||
+			 ( (_xside != d_enemy_side) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && ((getDammage _x) < 0.000001) )
+			)
+		   )  then { // vehicle was captured by player
+			// re-assign vehicle to be ordinal ones
+#ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
+			hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
+#endif
+			// put vehicle under system control
+			[_x] call XAddCheckDead;
+		} else {
+			{if (!isNull _x) then {deleteVehicle _x}} forEach ([_vec] + crew _vec);
+		};
 	};
 } forEach _veclist;
 

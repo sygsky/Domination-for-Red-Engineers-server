@@ -77,13 +77,12 @@ if (mt_winner == 1) then {
 _bonus_score_arr = true call SYG_townStatCalcScores;
 target_clear = true; // town is liberated, no new occupied towns is created while target_clear is true
 
-
 SYG_players_online = []; // collector for online player names
 ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred, _bonus_score_arr] call XSendNetStartScriptClient;
 
 hint localize format["+++ DEBUG: town bonus info sent to all players (%1)", _bonus_score_arr];
 _bonus_score_arr spawn {
-	sleep 10;
+	sleep 10; // wait until all online clients send confirmation messages
 	private ["_offline_arr","_arr","_add_arr","_ind","_item"];
 	_offline_arr = (+ (_this select 0)) - SYG_players_online; // remain only offline players in list
 	hint localize format["+++ DEBUG: town bonus offline players (%1) processing", _offline_arr];
@@ -94,8 +93,11 @@ _bonus_score_arr spawn {
 		if (_ind >= 0 ) then  {
 			_add = _add_arr select _ind; // added bonus value
 			_ind = d_player_array_names find _x; // find player ion system misc array
-			_item = d_player_array_misc select _ind; // player stats descriptor
-			_item set [3, (_item select 3) + _add]; // add town bonus score to the player
+			if (_ind >= 0) then {
+				_item = d_player_array_misc select _ind; // player stats descriptor
+				_item set [3, (_item select 3) + _add]; // add town bonus score to the player
+				hint localize format["+++ town bonus for ""%1"" +%2", _x, _add];
+			};
 		};
 	} forEach _offline_arr;
 	SYG_players_online = nil;

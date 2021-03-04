@@ -16,7 +16,7 @@
 //
 // Offset in command array are as follow:
 // 0:"msg_to_user": identifier for command, may be any
-// 1: player name or "" or "*" or vehicle to inform crew only, or group to inform units only. Must be present!
+// 1: player name or "" or "*" or vehicle to inform crew only, or array of players, or array of vehicles. Must be present!
 // 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
 // 3: _delay_between_messages is seconds number to sleep between multiple messages;
 // 4: _initial_delay is seconds before first message show;
@@ -26,8 +26,7 @@
 // msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
 // msg additionally displayed as title in the middle of the screen
 
-SYG_msgToUserParser =
-{
+SYG_msgToUserParser = {
 
     private [ "_msg_arr","_msg_fmt","_name","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
      "_msg_target_found","_ind","_SYG_processSingleStr","_str"];
@@ -51,14 +50,14 @@ SYG_msgToUserParser =
     _vehicle_chat = false;
 
     // hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
-    if  (typeName _name == "ARRAY") then {
-        if ( count _name == 0) then {_name = "";}
+    if  (typeName _name == "ARRAY") then { // list of names is expected
+        if ( count _name == 0) then {_name = "";} // all players are addressed
         else {
             _ind = _name find (name player);
             if ( _ind >= 0) then {
                 _name = name player;
-            } else {
-                _name = _name select 0;
+            } else { // player name not found in the input array, verify player vehicle too
+            	if ( (vehicle player) in _name ) then { _name = vehicle player } else {_name = _name select 0};
             };
         };
     };
@@ -67,7 +66,7 @@ SYG_msgToUserParser =
         _msg_target_found = vehicle player == _name;
         _vehicle_chat = _msg_target_found;
     } else {
-        _msg_target_found = (_name == name player) || (_name == "") || (_name == "*");
+        _msg_target_found = _name in [name player, "", "*"];
     };
 
     if ( !_msg_target_found ) exitWith {}; // target for message not found
@@ -472,7 +471,12 @@ XHandleNetStartScriptClient = {
 		case "update_observers": {
 			__compile_to_var
 			if (update_observers != -1) then {
-				[format [localize "STR_SYS_40"/* "Warning! In the %1 discovered the presence of enemy spotters, in total %2 men." */,call SYG_getTargetTownName, (_this select 1)], "HQ"] call XHintChatMsg;
+				if ( count ("NO_DEBUG" call SYG_getTargetTown) == 0) then {	// still no town defined at this moment, skip town name usage
+					[format [localize "STR_SYS_40_0",(_this select 1)], "HQ"] call XHintChatMsg; // "Warning! On island discovered presence of enemy spotters, in total %1 men."
+				}
+				else {
+					[format [localize "STR_SYS_40",call SYG_getTargetTownName, (_this select 1)], "HQ"] call XHintChatMsg; // /* "Warning! In the %1 discovered the presence of enemy spotters, in total %2 men." */
+				};
 			} else {
 				hint localize "STR_SYS_41"/* "All enemy spotters are killed..." */;
 			};
@@ -862,6 +866,7 @@ XHandleNetStartScriptClient = {
 
 		case "GRU_event_scores":
 		{
+			hint localize format["+++ Client ""GRU_event_scores"" event with %1", _this];
             private [/*"GRU_event_scores",*/"_score","_id","_playerName"];
             _id = argopt(2, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
@@ -872,8 +877,8 @@ XHandleNetStartScriptClient = {
                     //player addScore _score;
                     _score call SYG_addBonusScore;
                     format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
-                    ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClient;
-                    playSound "no_more_waiting";
+                    ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClientAll;
+                    // playSound "no_more_waiting";
                 };
             };
             GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure

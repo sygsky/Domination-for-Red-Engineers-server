@@ -157,25 +157,20 @@ while { true } do {
                         };
                     };
                 };
-            }
-            else
-            {
-                if (_veh in [MRR1,MRR2] ) then
-                {
+            } else {
+                if (_veh in [MRR1,MRR2] ) then {
                     _veh say "APC_GetIn";
                 };
             };
             _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
 
     #ifdef __DEBUG_PRINT__
-            if ( _bulky_weapon != "" ) then
-            {
+            if ( _bulky_weapon != "" ) then {
                 hint localize format["x_playerveccheck.sqf: bulky weapon is ""%1""",_bulky_weapon];
             };
     #endif
     #ifdef __FUTURE__
-            while { _cargo || ((((!_not_allowed) && (_bulky_weapon == "") ) ) && (vehicle player != player)) } do
-            {
+            while { _cargo || ((((!_not_allowed) && (_bulky_weapon == "") ) ) && (vehicle player != player)) } do {
                 sleep 0.666;
                 _role_arr = assignedVehicleRole player;
                 _new_role = if (count _role_arr > 0) then  { _role_arr select 0 } else {""};
@@ -187,9 +182,7 @@ while { true } do {
                 };
             };
     #endif
-        } // not in native vehicle on base
-        else // player is the executing GRU mission, check his options
-        {
+        } else { // not in native vehicle on base, is player is in executing GRU mission? check his options!
             // check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
             _not_allowed =  !(_veh isKindOf "Motorcycle" || _veh isKindOf "ACE_ATV_HondaR" || _veh isKindOf "Truck5t" || _veh isKindOf "Ural" || _veh isKindOf "Zodiac");
         };
@@ -199,12 +192,10 @@ while { true } do {
         if ( _not_allowed || (_bulky_weapon != "") ) then {
             player action[ "Eject",_veh ];
             _attempts_count = _attempts_count + 1;
-            if ( _role == "Driver" ) then
-            {
+            if ( _role == "Driver" ) then {
                 if (isEngineOn _veh) then { _veh engineOn false; };
             };
-            if ( !_player_not_in_GRU_mission ) exitWith
-            {
+            if ( !_player_not_in_GRU_mission ) exitWith {
                 (localize "STR_GRU_38") call XfGlobalChat; // "No, no! I can't disobey orders about not using such vehicle during GRU task!"
 //                hint localize format["--- player is on GRU duty and not allowed into %1",typeOf _veh];
             };
@@ -215,8 +206,7 @@ while { true } do {
 //                hint localize format["--- GRU player not allowed to drive battle heli or plane %1",typeOf _veh];
 //            };
 //    #endif
-            if ( _not_allowed ) exitWith
-            {
+            if ( _not_allowed ) exitWith {
                 // "Ваше звание: %1. Вам не позволено использовать %3.\n\nТребуемое звание: %2."
                 [format [localize "STR_SYS_252", toLower(((rank player) call XGetRankStringLocalized)), _needed_rank call XGetRankStringLocalized,[typeOf _veh,0] call XfGetDisplayName], "HQ"] call XHintChatMsg;
                 hint localize format["--- player with rank index %1 ejected from %2", _index, typeOf _veh];
@@ -224,9 +214,7 @@ while { true } do {
             // bulky weapon
             [format[localize "STR_SYS_252_BULKY",_bulky_weapon call SYG_readWeaponDisplayName,"STR_SYS_252_NUM" call SYG_getLocalizedRandomText], "HQ"] call XHintChatMsg; // вы зацепляетесь оружием за люк и отваливаетесь
             //hint localize format["x_playerveccheck.sqf: _index == %1, _attempts_count == %2, STR_SYS_252_NUM == %3, new str == ""%4""", _index, _attempts_count, localize "STR_SYS_252_NUM", localize (format["STR_SYS_252_%1",_index])];
-        }
-        else // player allowed to be in vehicle
-        {
+        } else { // player allowed to be in vehicle
 //            hint localize format[ "+++ x_playerveccheck: player allowed to be in vehicle %1, airbattle %2, cargo %3", typeOf _veh, _air_battle, _cargo ];
             if ( _air_battle && !_cargo ) then // periodically send info to server about player battle air vehicle activity
             {
@@ -239,15 +227,12 @@ while { true } do {
     #endif
             };
         };
-	} // if ( _player_not_in_GRU_mission ) then
-	else // ACE_Bicycle
-	{
+	} else {// ACE_Bicycle
         _veh say "bicycle";
 	};
 	//hint localize format["x_playerveccheck.sqf: player is not assigned %1", _role_arr];
 	waitUntil {sleep 0.2; vehicle player == player};
-    if ( _activity_info_sent ) then // stop activity
-    {
+    if ( _activity_info_sent ) then { // stop activity
         [ _veh, "off" ] call _sendInfoOnAirVehToServer; // drop info about this vehicle
         hint localize format["+++ x_playerveccheck: stop activity report on %1", typeOf _veh];
     };

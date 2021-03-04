@@ -13,6 +13,8 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 #define RAR(ARR) ((ARR)select(floor(random(count(ARR)))))
 #define RANDOM_ARR_ITEM(ARR) ((ARR)select(floor(random(count(ARR)))))
 
+#define __EXTENDED_TOWN_RADIOUS__  100
+
 if ( !isNil "SYG_mt_initialized" )exitWith { hint "--- SYG_utilsMT already initialized"};
 SYG_mt_initialized = true;
 //hint "INIT of SYG_utilsMT";
@@ -247,14 +249,14 @@ SYG_incDeathCount = {
 };
 
 //
-// Detects player to be in town radious plus 100 meters
+// Detects player to be in town radious plus 100 (__EXTENDED_TOWN_RADIOUS__) meters
 // call as: _playerIsInTown = call SYG_playerIsAtTown;
 //
 SYG_playerIsAtTown = {
 	if( current_target_index < 0 ) exitWith { false };
 	private [ "_dummy" ];
 	_dummy = target_names select current_target_index;
-	[player, _dummy select 0, (_dummy select 2) + 100 ] call SYG_pointInCircle
+	[player, _dummy select 0, (_dummy select 2) + __EXTENDED_TOWN_RADIOUS__ ] call SYG_pointInCircle
 };
 
 //

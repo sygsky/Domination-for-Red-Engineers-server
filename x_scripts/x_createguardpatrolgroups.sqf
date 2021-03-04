@@ -52,18 +52,31 @@ sleep 0.01;
 
 _type_list_patrol = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_patrol, 0] call _selectit],["bmp",[d_vehicle_numbers_patrol, 1] call _selectit],["brdm",[d_vehicle_numbers_patrol, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_patrol, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_patrol, 4] call _selectit]];
 
-_type_list_guard_static2 = [["D30",ceil (random 5)],["DSHKM",(ceil (random 2)) + _addnum],["AGS",(ceil (random 2)) + _addnum]];
+_type_list_guard_static2 = [
+#ifndef __WEAK_DEFENCE
+["D30",ceil (random 5)],
+#endif
+["DSHKM",(ceil (random 2)) + _addnum],["AGS",(ceil (random 2)) + _addnum]];
 
 sleep 0.01;
 
 _selectit = nil;
-
+/*
+d_vehicle_numbers_patrol = [
+	[[1,1], 1], // tanks
+	[[1,1], 1], // apc (bmp)
+	[[1,1], 1], // apc2 (brdm)
+	[[1,1], 1], // jeep with mg (uaz mg)
+	[[1,1], 1] 	// jeep with gl (uaz grenade)
+];
+[d_vehicle_numbers_patrol, 0] call _selectit;
+*/
 _selectitmen = {
 	private ["_array","_num","_a_vng2","_num_ret"];
-	_array = _this select 0;
-	_num = _this select 1;
-	_a_vng2 = _array select _num;
-	_num_ret = round (random (_a_vng2 select 0));
+	_array = _this select 0; // [[1,1], 1]
+	_num = _this select 1; // 0
+	_a_vng2 = _array select _num; // [1,1]
+	_num_ret = round (random (_a_vng2 select 0)); // 1
 	if (_num_ret < (_a_vng2 select 1)) then {_num_ret = (_a_vng2 select 1);};
 	_num_ret
 };
@@ -135,6 +148,8 @@ _wp_array = [_trg_center, _radius] call x_getwparray;
 
 sleep 0.112;
 
+#ifndef __WEAK_DEFENCE__ // compiled if not a weak defence defined
+
 // Static weapons (canons, M2, AGS, TOW etc)
 for "_xx" from 0 to (count _type_list_guard - 1) do {
 	_typeidx = _type_list_guard select _xx;
@@ -143,13 +158,13 @@ for "_xx" from 0 to (count _type_list_guard - 1) do {
 
 sleep 0.233;
 
-
 // guard static vehicles (tanks, bmps, shilkas etc) in one group
 _agrp = call SYG_createEnemyGroup;
 for "_xx" from 0 to (count _type_list_guard_static - 1) do {
 	_typeidx = _type_list_guard_static select _xx;
 	call compile format["if (_number_%1_guardstatic > 0) then {for ""_xxx"" from 1 to _number_%1_guardstatic do {_wp_ran = (count _wp_array) call XfRandomFloor;[_typeidx select 0, [_wp_array select _wp_ran], _trg_center, _typeidx select 1, ""guardstatic"",d_enemy_side,_agrp,-1.111] execVM ""x_scripts\x_makegroup.sqf"";_wp_array set [_wp_ran, ""X_RM_ME""];_wp_array = _wp_array - [""X_RM_ME""];sleep 1.123;};};",_typeidx select 0];
 };
+#endif
 
 // create common group of static weapons: mg, at, aa, canons etc
 //while {!can_create_group} do {sleep 0.1 + random (0.2)}; //__WaitForGroup
@@ -186,10 +201,8 @@ for "_xx" from 0 to (count _type_list_guard_static2 - 1) do {
 _array = [];
 _driver_cnt = 0;
 {
-	if (vehicle _x != _x) then
-	{
-		if ( ! (vehicle _x in _array) ) then
-		{
+	if (vehicle _x != _x) then {
+		if ( ! (vehicle _x in _array) ) then {
 			_array = _array + [vehicle _x];
 		};
 		_driver_cnt = _driver_cnt + 1;
@@ -289,7 +302,6 @@ if (!no_more_observers) then {
 	};
 //	hint localize format["x_scripts\x_createguardpatrolgroups.sqf: observers to create %1, type %2, created %3", nr_observers, _unit_array select 0, _cnt];
 
-
 	update_observers = nr_observers;
 	["update_observers",update_observers] call XSendNetStartScriptClient;
 
@@ -311,8 +323,7 @@ d_run_illum = true;
 hint localize format["+++ x_createguardpatrolgroups.sqf: new x_illum.sqf executed for %1 at %2", _this select 2, call SYG_nowTimeToStr ];
 [_trg_center, _radius, _this select 2] execVM "x_scripts\x_illum.sqf";
 
-//+++ Sygsky: todo add here statistics test code
-//#define __DEBUG_STAT_SERVICE__
+#define __DEBUG_STAT_SERVICE__
 #ifdef __DEBUG_STAT_SERVICE__
 
 waitUntil { sleep 10; main_target_ready };
@@ -322,3 +333,4 @@ _array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get s
 
 if (true) exitWith {};
 
+     

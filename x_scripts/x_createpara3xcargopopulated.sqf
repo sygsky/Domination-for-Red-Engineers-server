@@ -260,8 +260,7 @@ for "_i" from 1 to _number_vehicles do {
 	_unit_array = [];
 
 	sleep 0.1;
-	for "_i" from 0 to (_cnt_uni - 1) do 
-	{
+	for "_i" from 0 to (_cnt_uni - 1) do {
 		_type = _real_units select _i;
 		_one_unit = _paragrp createUnit [_type, [0,0,0], [], 300,"NONE"];
 		_one_unit moveInCargo _vehicle;
@@ -279,7 +278,10 @@ for "_i" from 1 to _number_vehicles do {
 		_one_unit setSkill ((d_skill_array select 0) + (random (d_skill_array select 1)));
 	};
 	// cargo is created and loaded on the chopper
-	
+	//+++ Sygsky: randomly create pure white or pure black troopers
+	_unit_array call ([SYG_makeNegroMen,SYG_makeWhiteMen] call XfRandomArrayVal);
+	hint localize "+++ x_createpara3xcargopopulated: Desant to town is created purely with white or black faces";
+	//---
 	
 	if (d_lock_ai_air) then {
 		_vehicle lock true;

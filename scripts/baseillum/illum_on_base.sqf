@@ -27,7 +27,7 @@ if ( !( typeOf ( _this select 0 ) == "STRING" ) ) exitWith { hint localize forma
 _this = _this select 0;
 if (!isNil "SYG_illum_customer") exitWith  {
     // send info to player about already started illumination.
-    ["msg_to_user", _this,  [ ["This night illumination already started by %1", SYG_illum_customer]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient;
+    ["msg_to_user", _this,  [ ["STR_ILLUM_5", SYG_illum_customer]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "The night illumination already started by '%1'"
 };
 SYG_illum_customer = _this; // store name of illum starter
 // 0 for night, 1 for day, 2 for morning and 3 for evening

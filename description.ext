@@ -144,6 +144,7 @@ class CfgMusic {
     class            on_thin_ice { name=""; sound[]= {\sounds\intro\on_thin_ice.ogg,db-1,1.0}; }; // from Soviet film "On thin ice"
 
 //    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
+	class robinson_crusoe { name=""; sound[] = {\sounds\intro\robinson_crusoe.ogg,db-1,1.0};} // used in intro
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
     class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0};} // used in  intro, only for resque players
     class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0};} // used in  intro
@@ -214,14 +215,14 @@ class CfgMusic {
     class cosmos_1 { name="Earth attraction";                           sound[] = {\sounds\intro\holidays\apr_12\Earth_attraction.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
     class cosmos_2 { name="I trust, my friends";                        sound[] = {\sounds\intro\holidays\apr_12\I_trust_my_friends.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
     class cosmos_3 { name="You know what kind of guy He was (Gagarin)"; sound[] = {\sounds\intro\holidays\apr_12\YouKnowWhatKindOfGuyHeWas.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
-    class lenin    { name="And again the battle continues";                sound[] = {\sounds\intro\holidays\apr_22\lenin.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
-    class lenin_1  { name="Day by day are years go";                     sound[] = {\sounds\intro\holidays\apr_22\lenin_1.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
+    class lenin    { name="And again the battle continues";             sound[] = {\sounds\intro\holidays\apr_22\lenin.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
+    class lenin_1  { name="Day by day are years go";                    sound[] = {\sounds\intro\holidays\apr_22\lenin_1.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
 	class invasion { name="invasion";                                   sound[] = {\sounds\invasion.ogg,db+0,1.0};}; // Invasion - Shostakovitch
     class hugging_the_sky { name="Hugging the sky...";                  sound[] = {\sounds\intro\holidays\aug_17\hugging_the_sky.ogg,db-1,1.0}; } // Soviet air fleet day
     class we_teach_planes_to_fly { name="We teach planes to fly...";    sound[] = {\sounds\intro\holidays\aug_17\we_teach_planes_to_fly.ogg,db-1,1.0}; } // Soviet air fleet day
     class communism { name="We will live in communism...";              sound[] = {\sounds\intro\holidays\nov_7\communism.ogg,db-1,1.0}; } // Last Soviet Constitution day (1977)
     class komsomol { name="И вновь продолжается бой";                   sound[] = {\sounds\intro\holidays\oct_29\komsomol.ogg,db-1,1.0}; } // Komsomal Day!(1918)
-    class ddrhimn  { name="DDR Day";                                     sound[] = {\sounds\intro\holidays\oct_29\ddrhymn.ogg,db-1,1.0}; } // DDR Day!(1949)
+    class ddrhimn  { name="DDR Day";                                    sound[] = {\sounds\intro\holidays\oct_29\ddrhymn.ogg,db-1,1.0}; } // DDR Day!(1949)
 
 //+++++++++++++++++++++++ Defeat music track list
 

@@ -1220,8 +1220,7 @@ SYG_removeIntelLegend = {
 //
 // Call: _isAssingedToSmoke = _vec call SYG_assignVecToSmokeOnHit;
 //
-SYG_assignVecToSmokeOnHit =
-{
+SYG_assignVecToSmokeOnHit = {
     if (!d_smoke) exitWith {false}; // not allowed in setup
     if ( (typeName _this) != "OBJECT") exitWith {false};
     if (!(_this isKindOf "LandVehicle")) exitWith{false}; // only for land vehicles
@@ -1445,8 +1444,7 @@ SYG_vehiclesRearmTables =
 // call: _vtbl = _su34_type call SYG_getVehicleTable;
 // returns array: [[vec_wpn1,...,vec_wpn#],[vec_mgz1,...,vec_mgz#]]
 //   or [] if vehicle not found in rearm table
-SYG_getSu34Table =
-{
+SYG_getSu34Table = {
     if ( typeName _this == "OBJECT") then {_this = typeOf _this};
     if (typeName _this != "STRING") exitWith {[]};
     private ["_list", "_pos"];
@@ -1461,8 +1459,7 @@ SYG_getSu34Table =
 // call: _vtbl = _su34 call SYG_getVehicleTable;
 // returns array: [[vec_wpn1,...,vec_wpn#],[vec_mgz1,...,vec_mgz#]]
 //   or [] if vehicle not found in rearm table
-SYG_getHeliTable =
-{
+SYG_getHeliTable = {
     if ( typeName _this == "OBJECT") then {_this = typeOf _this};
     if (typeName _this != "STRING") exitWith {[]};
     private ["_list", "_pos"];
@@ -1478,8 +1475,7 @@ SYG_getHeliTable =
 // call: _vtbl = [_vec,table] call SYG_getVehicleTable;
 // returns array: [[vec_wpn1,...,vec_wpn#],[vec_mgz1,...,vec_mgz#]]
 //   or [] if vehicle not found in rearm table
-SYG_getAnyTable =
-{
+SYG_getAnyTable = {
     private ["_list", "_table", "_pos","_vec"];
     _vec = arg(0);
     if ( typeName _vec == "OBJECT") then {_vec = typeOf _vec};
@@ -1497,8 +1493,7 @@ SYG_getAnyTable =
 // call: _vtbl = _su34 call SYG_getVehicleTable;
 // returns array: [[vec_wpn1,...,vec_wpn#],[vec_mgz1,...,vec_mgz#]]
 //   or [] if vehicle not found in rearm table
-SYG_getVehicleTable =
-{
+SYG_getVehicleTable = {
     if ( typeName _this == "OBJECT") then {_this = typeOf _this};
     if (typeName _this != "STRING") exitWith {[]};
     private ["_list", "_pos"];
@@ -1515,8 +1510,7 @@ SYG_getVehicleTable =
 //      _vecTbl = _vec call SYG_getVehicleTable;
 //      _res = ([_vec] + _vecTbl) call SYG_rearmVehicle;
 //
-SYG_rearmVehicle =
-{
+SYG_rearmVehicle = {
     if ( typeName _this != "ARRAY") exitWith {false};
     if ( count _this < 3) exitWith {false};
     private ["_vec"];
@@ -1544,8 +1538,7 @@ SYG_rearmVehicleA = {
 };
 
 // call:      _res = _this call SYG_rearmAnySu34;
-SYG_rearmAnySu34 =
-{
+SYG_rearmAnySu34 = {
     private ["_list"];
     _list = _this call SYG_getSu34Table;
     if ( count _list == 0) exitWith {false};
@@ -1555,8 +1548,7 @@ SYG_rearmAnySu34 =
 
 
 // call:      _res = _this call SYG_rearmAnyHeli;
-SYG_rearmAnyHeli =
-{
+SYG_rearmAnyHeli = {
     private ["_list"];
     _list = _this call SYG_getHeliTable;
     if ( count _list == 0) exitWith {false};
@@ -1576,23 +1568,19 @@ SYG_ACEDamageReportStr = {
     private ["_varTurret","_varEngine","_varHull","_varTracks","_ret"];
     _ret = "";
     _varTurret = _veh getVariable "ACE_TurretHit";
-    if ( !isNil _varTurret) then
-    {
+    if ( !isNil "_varTurret") then {
         if (_varTurret == "1") then {_ret = "башня"};
     };
     _varEngine = _veh getVariable "ACE_EngineHit";
-    if ( !isNil _varEngine) then
-    {
+    if ( !isNil "_varEngine") then {
         if (_varEngine == "1") then {_ret = _ret + " двигатель"};
     };
     _varHull = _veh getVariable "ACE_HullHit";
-    if ( !isNil _varHull) then
-    {
+    if ( !isNil "_varHull") then {
         if (_varHull == "1") then {_ret = _ret + " корпус"};
     };
     _varTracks = _veh getVariable "ACE_TracksHit";
-    if ( !isNil _varTracks) then
-    {
+    if ( !isNil "_varTracks") then {
         if (_varTracks == "1") then {_ret = _ret + " гусениц[а|ы]"};
     };
     //hint localize format["ACE_TurretHit=%1, ACE_EngineHit=%2, ACE_HullHit=%3, ACE_TracksHit=%4",_varTurret,_varEngine,_varHull,_varTracks ];
@@ -1628,8 +1616,7 @@ SYG_setHeliParaCargo = {
  * Creates one group on enemy side, return created group:
  * _enemy_grp = call SYG_createEnemyGroup;
  */
-SYG_createEnemyGroup =
-{
+SYG_createEnemyGroup = {
     while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
     [d_enemy_side] call x_creategroup //__GetEGrp(_agrp)
 };
@@ -1640,14 +1627,12 @@ SYG_createEnemyGroup =
     _owngroup = [_side_crew] call x_creategroup;
 */
 
-SYG_createOwnGroup =
-{
+SYG_createOwnGroup = {
     while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
     [d_own_side] call x_creategroup
 };
 
-SYG_createCivGroup =
-{
+SYG_createCivGroup = {
     while {!can_create_group} do {sleep (0.1+(random 0.2))};//__WaitForGroup
     ["CIV"] call x_creategroup
 };
@@ -1812,17 +1797,16 @@ SYG_deleteVehicleCrew = {
  * _bonusIndex =  params call SYG_findTargetBonusIndex;
  */
 SYG_findTargetBonusIndex = {
-    private ["_initialList","_currentList","_fullList","_bonusInd","_bonus"];
+    private ["_initialList","_currentList","_bonusInd","_bonus"];
     _initialList = _this select 0;  // initial read-only list
     _currentList = _this select 1;  // real list
-    _fullList    = _this select 2;  // full list
+    // _full_list = (_this select 2);
     if ( (count _currentList) == 0 )  then { _currentList = + _initialList}; // reset real list
     _bonusInd = _currentList call XfRandomFloorArray; // find next bonus index
     _bonus = _currentList select _bonusInd;
     _currentList set [_bonusInd, "RM_ME"];
-    _currentList = _currentList - ["RM_ME"]; // remove bonus from real list
-    _this set [1, _currentList];            // update real list for outer world
-    _fullList find _bonus    // find and return index of found bonus
+    _currentList call SYG_clearArrayB; // remove bonus from real list
+    (_this select 2) find _bonus    // find and return index of found bonus
 };
 
 // call as: _new_type = [_type, _pos] call SYG_camouflageTank;
@@ -1838,16 +1822,14 @@ SYG_camouflageTank = {
 //   or
 //          _new_name = _new_name call SYG_makeDesertAbrams;
 SYG_makeDesertAbrams = {
-    if ( typeName _this == "STRING") exitWith
-    {
+    if ( typeName _this == "STRING") exitWith {
         _pos = ABRAMS_LIST find toUpper(_this);
         if (_pos >= 0 ) exitWith {  ABRAMS_DESERT_LIST select _pos};
         _this
     };
     if ( typeName _this != "ARRAY") exitWith {_this};
 
-    for "_i" from 0 to (count _this - 1) do
-    {
+    for "_i" from 0 to (count _this - 1) do {
         _pos = ABRAMS_LIST find (_this select _i);
         if (_pos >= 0 ) then { _this set [_i, ABRAMS_DESERT_LIST select _pos];};
     };
@@ -1885,18 +1867,19 @@ SYG_makeWhiteMen = {
 //      _man_list = [_colorArr, _man_list] call SYG_makeColoredMen;
 //
 SYG_makeColoredMen = {
-    _list = _this select 0;
+	private ["_men","_clr_arr"];
     _men  = _this select 1;
 
-    if ( typeName _men == "OBJECT" && _men isKindOf "CAManBase") exitWith { _men setFace format["Face%1", _list call XfRandomArrayVal]; _men };
+    if ( typeName _men == "OBJECT" ) then {  // if single object not array
+    	if (_men isKindOf "CAManBase") then { _men  = [_men]};
+    }; // _men -> [_men]
 
     if ( typeName _men != "ARRAY") exitWith {_men};
+    _clr_arr = (_this select 0);
     {
-        if (typeName _x == "OBJECT") then
-        {
-            if (_x isKindOf "CAManBase") then
-            {
-                _x setFace format["Face%1",_list call XfRandomArrayVal] // black faces
+        if (typeName _x == "OBJECT") then {
+            if (_x isKindOf "CAManBase") then {
+                _x setFace format["Face%1", _clr_arr call XfRandomArrayVal] // black faces
             };
         };
     } forEach _men;

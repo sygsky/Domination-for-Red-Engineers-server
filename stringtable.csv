@@ -107,6 +107,7 @@ STR_SYS_38_2,"This vehicle (%1) is too deep (%2 m.), we will not get it, alas...
 STR_SYS_39,Vehicle was dropped...,Fahrzeug ist gelöscht...,Técnica descartada...,Техника сброшена...
 
 STR_SYS_40,"Warning! In the %1 discovered the presence of enemy spotters, in total %2 men.","Warnung! In %1 wurde die Anwesenheit feindlicher Spotter entdeckt, insgesamt %2 Männer.","¡Atención! %1 detectó la presencia de observadores enemigos, %2 personas.","Внимание! В %1 обнаружено присутствие вражеских корректировщиков, %2 чел."
+STR_SYS_40_0,"Warning! On island discovered presence of enemy spotters, in total %1 men.","Achtung! Feindliche Späher Präsenz auf der Insel entdeckt, %1","¡Atención! Se ha detectado la presencia de observadores enemigos en la isla, %1","Внимание! На острове обнаружено присутствие вражеских корректировщиков, %1 чел."
 STR_SYS_41,All enemy spotters are killed...,Alle feindlichen Aufklärer zerstört ...,Todos los observadores enemigos han sido destruidos...,Все вражеские корректировщики уничтожены...
 STR_SYS_42,Teleport/Parajump,Teleport/Parajump,Teletransporte / Paracaídas,Телепорт/Парашют
 
@@ -142,7 +143,9 @@ STR_SYS_65,The enemy revealed us...,Der Feind öffnete Sie...,El enemigo nos enc
 
 STR_SYS_66,You were demoted from %1 to %2 !!!,"Sie wurden abgebaut von %1, %2 !!!",Ha sido degradado de %1 a %2,Вы разжалованы со звания %1 до звания %2
 STR_SYS_67,"You were promoted to %1, congratulations !!!","Sie wurden gefördert %1, herzlichen Glückwunsch !!!",Felicitaciones por el título extraordinario %1,Поздравляем с присвоением внеочередного звания %1
-STR_SYS_68,"This is the maximum std grade for the island, but will rank higher!","Dies ist der höchste std Rang für die Insel, aber Sie werden mit Titel und höher!","Este es el rango estándar máximo para la isla, ¡pero habrá rangos y más altos!","Это максимальный стандартный ранг для острова, но будут звания и повыше!"
+STR_SYS_68,"This is the maximum standard rank for the island, but there will be higher ranks!","Dies ist der maximale Standardrang für die Insel, aber es wird auch höhere Ränge geben!","Este es el máximo rango estándar para la isla, ¡pero habrá rangos más altos!","Это максимальный стандартный ранг для острова, но будут звания и повыше!"
+STR_SYS_68_1,"Ranks: Private (%1), Corporal (%2), Sergeant (%3), Lieutenant (%4), Captain (%5), Major (%6), Colonel (%7) and further, Generals","Dienstgrade: Gefreiter(%1),Gefreiter(%2),Feldwebel(%3),Leutnant(%4),Hauptmann(%5),Major(%6),Oberst(%7) und darüber hinaus Generäle","Rangos: Soldado(%1),Cabo(%2),Sargento(%3),Teniente(%4),Capitán(%5),Mayor(%6),Coronel(%7) y además, Generales","Звания: рядовой(%1),ефрейтор(%2),сержант(%3), лейтенант(%4),капитан(%5),майор(%6),полковник(%7) и далее, генералы"
+STR_SYS_68_2,"Capabilities: repair(%1),BRDM/BMP(%2),tank(%3),attack helicopter(%4),airplane(%5)","Fähigkeiten: Fix(%1),BRDM/BMP(%2),Panzer(%3),Kampfhubschrauber(%4),Flugzeug(%5)","Capacidades: fix(%1),BRDM/BMP(%2),tanque(%3),helicóptero de ataque(%4),avión(%5)","Возможности: починка(%1),БРДМ/БМП(%2),танк(%3),боевой вертолёт(%4),самолёт(%5)"
 
 STR_SYS_69,Select Teleport Destination,Wählen Sie Teleportieren Ziel,Selección del lugar de teletransporte,Выбор места телепортирования
 STR_SYS_70,Base,Base,Base,База
@@ -211,7 +214,7 @@ STR_SYS_115_0,Some corpse in the uniform of the Governor is found at center of t
 STR_SYS_115_1,and healthy,und gesund,y saludable,и здоров
 STR_SYS_115_2,but wounded,aber verwundet,pero herido,но ранен
 STR_SYS_115_3,but seriously wounded,aber ernsthaft verletzt,pero gravemente herido,но серьёзно ранен
-STR_SYS_116,"Partisans inform: Governor %1, dist. %2 m., dir. %3 deg. from the centre of the red zone","Die Partisanen berichten: Der Gouverneur %1, Dist. %2 m, Richtung %3 Gr. vom Zentrum der roten Zone","Los guerrilleros informan: gobernador %1, dist. %2 m, P. ej. %3 gr. desde el centro de la zona roja","Партизаны сообщают: губернатор %1, дист. %2 м., напр. %3 гр. от центра красной зоны"
+STR_SYS_116,"Partisans inform: Governor %1, dist. %2 m., dir. %3 deg. from the centre of the red zone (The data is not accurate)","Die Partisanen berichten: Der Gouverneur %1, Dist. %2 m, Richtung %3 Gr. vom Zentrum der roten Zone (Daten sind nicht genau)","Los guerrilleros informan: gobernador %1, dist. %2 m, P. ej. %3 gr. desde el centro de la zona roja (los datos no son exactos)","Партизаны сообщают: губернатор %1, дист. %2 м., напр. %3 гр. от центра красной зоны (данные не точные)"
 STR_SYS_116_0,"Partisans report about the Governor: %1, spotted near the center of the red zone","Partisanen berichten über den Gouverneur: %1, in der Nähe der Mitte der roten zone entdeckt","Los guerrilleros informan: gobernador %1, distancia %2 m., por ejemplo, %3 gr. desde el centro de la zona roja","Партизаны сообщают о губернаторе: %1, замечен у центра красной зоны"
 
 STR_SYS_117,The Hostages (alive %1 of %2) are within a %3 m radius from the center of side mission. %4,Die Geiseln (lebendig %1 von %2) sind innerhalb von %3 m Radius von der Mitte der Seite Mission. %4,Los rehenes (%1 vivo de %2) se encuentran en un Radio Aproximado de %3 m desde el punto de misión. %4,Заложники (в живых %1 из %2) находятся в примерном радиусе %3 м от точки задания. %4
@@ -270,7 +273,7 @@ STR_SYS_140,The Prime Minister of Takistan arrived in Pesto. Punish him!,Der Pre
 STR_SYS_141,Good job! Prime Minister punished.,Auftrag ausgeführt! Premierminister bestraft.,¡Misión cumplida! El primer ministro está castigado.,Задание выполнено! Премьер-министр наказан.
 STR_SYS_142,Service from the vehicle is impossible...,Service innerhalb des Transports ist nicht möglich...,El servicio dentro del transporte no es posible...,Ремонт из техники невозможен...
 STR_SYS_142_1,The vehicle burned out... You're too late!,Das Fahrzeug brannte... Du kommst zu spät!,El vehículo se quemó... ¡es demasiado tarde!,Техника сгорела... Вы не успели!
-STR_SYS_142_2,You are far from the vehicle...,Sie sind weit vom Fahrzeug entfernt...,Estás lejos del vehículo...,Вы далеко от техники...
+STR_SYS_142_2,"You are far from the vehicle, service is cancelled...","Sie sind weit vom Fahrzeug entfernt, der Dienst ist gestrichen...","Estás lejos del vehículo, el servicio está cancelado...","Вы далеко от техники... обслуживание прервано..."
 STR_SYS_142_3,"You are dead, service is cancelled...","Du bist tot, der Dienst ist gestrichen...","Estás muerto, el servicio está cancelado...", "Вы погибли, обслуживание прервано..."
 
 STR_SYS_143,The king of Sedia is on vacation in a hotel near Vallejo. He is a good friend of the enemy leaders. Eliminate him!,Der König von Sedia ist auf Urlaub in einem hotel in der Nähe von Vallejo. Er ist ein guter Freund von Feind Führer. Beseitigen Sie ihn!,Se dio a conocer que el rey Sedia se da placeres carnales en un hotel cerca de Vallejo. Él es un buen amigo y protegido del gobierno enemigo. ¡Elimínalo!,"Стало известно, что король Sedia придается плотским утехам в отеле вблизи Vallejo. Он является хорошим другом и ставленником вражеского правительства. Устраните его!"
@@ -968,6 +971,7 @@ STR_ILLUM_3,"Over the base, a regular launch of flares began. Points taken: -%1"
 STR_ILLUM_3_1,"Over the base, a regular launch of flares began",Über der Basis begann ein regelmäßiger Start von Fackeln,El lanzamiento regular de misiles de señal comenzó sobre la base,Над базой начат регулярный запуск сигнальных ракет
 STR_ILLUM_3_0,%1 provided regular launch of flares over our base,%1 lieferte einen regelmäßigen Abschuss von Signalraketen über unserer Basis,%1 ha Asegurado el lanzamiento regular de misiles de señal sobre nuestra base,%1 обеспечил регулярный запуск сигнальных ракет над нашей базой
 STR_ILLUM_4,Flares spent on the base illumination at night: %1 PC.,"Nachts wurden Beleuchtungsraketen ausgegeben, um die Basis zu beleuchten: %1 Stk.",Los cohetes de iluminación gastados en la base de iluminación: %1 PC.,На подсветку базы потрачены осветительные ракеты: %1 шт.
+STR_ILLUM_5,"The night illumination already started by '%1'","Die Nachtbeleuchtung wurde bereits von '%1' gestartet","La iluminación nocturna ya comenzó por '%1'","Ночная иллюминация на базе уже запущена ('%1')"
 
 // patrol types  : HEAVY(HP), AA(AP), FLOATING(FP), SPEED(SP), LIGHT(LP)
 
@@ -1081,7 +1085,7 @@ STR_FLAG_7,(Create %1),(Anlegen %1),(Crear %1),(Создать %1)
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc)
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,80,80,80,80
+STR_RUM_NUM,81,81,81,81
 STR_RUM_NIGHT,They are sleeping in %3,Alle schlafen in %3,"En %3, todos duermen, sin embargo","В %3 все спят, однако"
 STR_RUM_0,Rumors are absent! It's weird...,Gerüchte sind nicht vorhanden! Es ist seltsam...,¡No hay rumores! Lo cual es extraño...,Слухи отсутствуют! Что странно...
 STR_RUM_1,Enemy refuel truck will help only if your vehicle engine is on,"Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf",El camión cisterna enemigo repostará con el motor del equipo encendido,Вражеский бензовоз заправляет при включенном двигателе техники
@@ -1163,6 +1167,7 @@ STR_RUM_76,"If MHQ is damaged by more than 0.5, the teleport on it will not work
 STR_RUM_77,Points for taking a city are given within a radius of 500 meters from its center,Punkte für die Einnahme einer Stadt werden in einem Umkreis von 500 Metern um ihr Zentrum vergeben,Los puntos por tomar la ciudad se dan en un Radio de 500 metros desde su centro,Очки за взятие города даются в радиусе 500 метров от его центра
 STR_RUM_78,A sunken vehicle can be saved if it is no deeper than -7 meters,"Ein versunkenes Fahrzeug kann gerettet werden, wenn es nicht tiefer als -7 Meter ist",Se puede obtener un vehículo de combate ahogado desde una profundidad de al menos -7 metros,Утонувшую боевую машину можно достать с глубины не более -7 метров
 STR_RUM_79,The siren and yellow missiles on the base appear on the radio tower closest to the enemy,"Die Sirene und die gelben Raketen auf der Basis erscheinen auf dem Funkmast, der dem Feind am nächsten ist",La sirena y los misiles amarillos de la base aparecen en el mástil de radio más cercano al enemigo,Сирена и жёлтые ракеты на базе появляются на ближайшей к врагу радомачте
+STR_RUM_80,"The more radio masts at a base, the more accurate the determination of the direction of an enemy invasion","Je mehr Funkmasten auf einer Basis stehen, desto genauer lässt sich die Richtung einer feindlichen Invasion bestimmen.","Cuantos más mástiles de radio haya en una base, más precisa será la determinación de la dirección de una invasión enemiga","Чем больше радомачт на базе, тем точнее определение направления вражеского вторжения на неё"
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!",¡Parece que los guerrilleros ya están actuando!,"Х-м-м, похоже, партизаны уже действуют!"
@@ -1460,6 +1465,7 @@ STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m.","
 STR_GRU_46_3," bearing %1"," Richtung %1"," acimut %1"," азимут %1"
 STR_GRU_46_4,num. %1 unit[s],die Num. %1 Fahrzeug[s],", num. %1 unidades.",", числ. %1 ед."
 STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
+STR_GRU_46_6,"You have seized this car from the patrol. Make good use of it!",Sie haben dieses Fahrzeug von der Streife beschlagnahmt. Nutzen Sie es gut aus!,"Avete sequestrato quest'auto alla pattuglia. Fatene buon uso!","Вы захватили эту машину у патруля, используйте её с толком!"
 
 STR_GRU_47,Enemy activity detected near the base,Feindliche Aktivitäten erkannt in der Nähe der Basis,Actividad enemiga detectada cerca de la base,Вражеская активность обнаружена неподалёку от базы
 STR_GRU_48,"Local %1 report that the king has left the building and found another asylum, not further than %2 m. from hotel","Lokale %1 berichten, dass der king hat das Gebäude verlassen und fand eine andere Asyl, nicht weiter als %2 m. vom hotel","%1 local informa que el rey ha abandonado el edificio y ha encontrado otro refugio, no más de %2 m. desde el hotel","Местные %1 сообщают, что король покинул здание и нашёл другое убежище, не далее %2 м. от отеля"
@@ -1511,9 +1517,9 @@ STR_FIRE_2,You think: why is there a fire?,Sie denken: - wo ist hier das Feuer?,
 
 STR_FIRE_UNKNOWN,You can't understand what it is,"Ich kann nicht verstehen, was es ist",No está claro qué es,"Непонятно, что это такое"
 
-STR_JAIL_1,Hint: You are subject to disciplinary action for violation of the Charter of the Soviet army,Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der Sowjetischen Armee,Se le impone una sanción disciplinaria por violar los estatutos del Ejército Soviético,На вас наложено дисциплинарное взыскание  за нарушение устава Советской Армии
+STR_JAIL_1,Hint: You are subject to disciplinary action for violation of the Charter of the Soviet army,Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der Sowjetischen Armee,Se le impone una sanción disciplinaria por violar los estatutos del Ejército Soviético,На вас наложено дисциплинарное взыскание за нарушение устава Советской Армии
 STR_JAIL_2,You will regain control after you have served your sentence of %1 seconds,"Sie werden die Kontrolle zurückzugewinnen, nachdem Sie gedient haben Ihren Satz von %1 Sekunden",Después de cumplir la pena durante %1 seg. el control será devuelto,После отбывания наказания в течении %1 сек. контроль будет возвращён
-STR_JAIL_3,Or you can press  Alt + F4 to exit,Oder Sie drücken Alt + F4 zu beenden,"Para salir de la isla, use Alt + F4","Чтобы покинуть остров, используйте Alt + F4"
+STR_JAIL_3,Or you can press  Alt + F4 to exit immediately,"Oder du kannst Alt + F4 drücken, um sofort zu beenden","O puedes pulsar Alt + F4 para salir inmediatamente","Чтобы покинуть остров немедленно, используйте Alt + F4"
 STR_JAIL_4,Don't be in a hurry to spoil military property!,"Habe es nicht eilig, militärisches Eigentum zu verderben!",¡No tengas prisa por estropear la propiedad militar!,Не спешите портить военное имущество!
 
 STR_ENG_FUND_1,The Engineering Fund rises to %1,Das Der technische Fonds steigt auf %1,El fondo de ingeniería sube a %1,Инженерный Фонд вырос до %1
@@ -1536,7 +1542,7 @@ STR_BONUS_3,"Not bad! You delivered the car to the base, got points (+%1), the c
 
 STR_KILLED_WALL,Attempt to kill base building ('%1' scores removed -%2),Versuchte Basiszerstörung ('%1' Punkte entfernt -%2),Intento de destrucción de la base ('%1' puntos removidos -%2),Попытка уничтожения базы ('%1' снято очков -%2)
 
-STR_GREETING_COMMON,"For his services in developing our mission, the chief engineer extends his thanks to fighters Rokse and Ceres!!!","Der Chefingenieur bedankt sich bei den Rokse- und Ceres-Kämpfern für ihren Einsatz beim Aufbau unserer Mission!!!","Por su servicio en la construcción de nuestra misión, el ingeniero jefe extiende su agradecimiento a los combatientes de Rokse y Ceres!!!","За заслуги в деле построения нашей миссии главный инженер выносит благодарность бойцам Rokse и Ceres!!!"
+STR_GREETING_COMMON,"For his services in developing our mission, the chief engineer extends his thanks to fighters Rokse, Ceres, Snooper!!!","Der Chefingenieur bedankt sich bei den Rokse, Ceres und Snooper Kämpfern für ihren Einsatz beim Aufbau unserer Mission!!!","Por su servicio en la construcción de nuestra misión, el ingeniero jefe extiende su agradecimiento a los combatientes de Rokse, Ceres, Snooper!!!","За заслуги в деле построения нашей миссии главный инженер выносит благодарность бойцам Rokse, Ceres, Snooper!!!"
 
 STR_CHECK_ITEM,Inspect,Überprüfen,Estudiar,Изучить
 

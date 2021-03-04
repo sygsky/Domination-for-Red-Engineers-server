@@ -1,7 +1,11 @@
-// by Xeno, x_scripts/x_createjumpflag.sqf - creates jump flag at designated point
+// by Xeno, x_scripts\x_createjumpflag.sqf - creates jump flag at designated point
+//
+// run as: _last_town_id execVM "x_scripts\x_createjumpflag.sqf";
+//
 private ["_dummy", "_current_target_pos", "_radius", "_posi", "_ftype", "_flag","_i"];
 if (!isServer) exitWith {};
 
+/** remove ASAP
 if (current_target_index < 0) then {
 	hint localize format["--- x_createjumpflag.sqf: current_target_index = %1", current_target_index];
 	for "_i" from 1 to 60 do {
@@ -14,13 +18,14 @@ if (current_target_index < 0) then {
 		hint localize format["--- x_createjumpflag.sqf: after waiting 60 seconds current_target_index = %1", current_target_index]
 	};
 };
+*/
 
-_dummy = target_names select current_target_index;
+_dummy = target_names select _this;
 _current_target_pos = _dummy select 0;
 _radius = _dummy select 2;
 
 // create random position
-_posi = [_current_target_pos, _radius] call XfGetRanPointCircle;
+_posi = [];
 while {count _posi == 0} do {
 	_posi = [_current_target_pos, _radius] call XfGetRanPointCircle;
 	sleep 0.04;
@@ -38,8 +43,7 @@ if (count _posi > 0) then {
 
 	_flag = _ftype createVehicle _posi;
 	jump_flags = jump_flags + [_flag];
-	if (d_own_side == "EAST") then //+++Sygsky: add more fun with flags
-	{
+	if (d_own_side == "EAST") then  { //+++Sygsky: add more fun with flags
 		_flag setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag
 	};
 	["new_jump_flag",_flag] call XSendNetStartScriptClient;

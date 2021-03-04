@@ -55,7 +55,7 @@ if (X_Client) then {
 
         #else
         //[[9654.24,9993,0],270]; // [[9654.24,9993.49,0],270] box pos for orginal Xeno base building (Camp of Warfire)
-        [[9672.535,9993.026, 0.25],180]; // box pos for the depot as base building (Depot of Warfire) 9672.535156,142.730530,9993.026367
+        [[9672.935,9993.026, 0.25],180]; // box pos for the depot as base building (Depot of Warfire) 9672.535156,142.730530,9993.026367
 
         #endif
     #endif
@@ -63,9 +63,9 @@ if (X_Client) then {
     #ifdef __ACE__
     d_ace_boxes = [
         #ifdef __DEFAULT__
-        ["ACE_RuckBox",[9670.771,9998.445,0.69],0], 	// [9659.13,9982.11,0],0]
+        ["ACE_RuckBox",[9671.071,9998.445,0.69],0], 	// [9659.13,9982.11,0],0]
         //["ACE_MedicBox",[9659.12,9980.25,0],0], // [9664.12,9979.25,0],0]
-        ["ACE_HuntIRBox",[9667.064,9995.478,0.7],270] // [9659.16,9978.42,0],0]
+        ["ACE_HuntIRBox",[9667.464,9995.478,0.7],270] // [9659.16,9978.42,0],0]
         #endif
     ];
     #endif

@@ -5,6 +5,7 @@ private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array","_s
 if (!isServer) exitWith{};
 
 hint localize format["%1 execVM x_scripts\x_target_clear.sqf", _this];
+
 #include "x_setup.sqf"
 
 sleep 1.123;
@@ -28,10 +29,10 @@ if ( count _this > 0 ) then {
 counterattack = false;
 _start_real = false;
 #ifndef __TT__
-if (number_targets == 22 && current_target_index != 5 && (current_counter < number_targets)) then { // if maximal mission count and not Rahmadi
+if (number_targets == 22 /* && current_target_index != 5 */ && (current_counter < number_targets)) then { // Now all towns have counter attacks
 #endif
 	_rnd = random number_targets;
-	// _rnd < 5 % chance for a counterattack is nearly 1 town per game
+	// _rnd < 5 % chance for a counterattack is nearly 1 town per 20 towns
 	if (_rnd < (number_targets  * 0.05) ) then {
 		counterattack = true;
 		_start_real = true;
@@ -74,6 +75,9 @@ _points_array = [points_west,points_racs,kill_points_west,kill_points_racs];
 resolved_targets = resolved_targets + [[current_target_index,mt_winner]];
 ["mt_winner",mt_winner] call XSendNetVarClient;
 
+// pre-save last town index (newly liberated one)
+_last_town_index = current_target_index;
+
 sleep 0.5;
 public_points = false;
 #endif
@@ -90,14 +94,14 @@ if (current_counter < number_targets) then {
 
 sleep 2.123;
 
-current_target_index execVM "x_scripts\x_deleteunits.sqf";
+_last_town_index execVM "x_scripts\x_deleteunits.sqf";
 
 sleep 4.321;
 
 #ifndef __TT__
 if (!d_no_para_at_all) then {
 	if (current_counter < number_targets) then {
-		execVM "x_scripts\x_createjumpflag.sqf";
+		_last_town_index execVM "x_scripts\x_createjumpflag.sqf";
 	};
 };
 #endif
@@ -105,14 +109,14 @@ if (!d_no_para_at_all) then {
 sleep 0.245;
 
 if (d_do_delete_empty_main_target_vecs) then {
-	[current_target_index] execVM "x_scripts\x_deleteempty.sqf";
+	_last_town_index execVM "x_scripts\x_deleteempty.sqf";
 };
 
 d_run_illum = false;
 
 // now decide what to do next
 if (current_counter < number_targets) then {
-	sleep (30 + random(60));
+	sleep (60 + random(60));
 #ifdef __TT__
 	kill_points_west = 0;
 	kill_points_racs = 0;
@@ -124,8 +128,8 @@ if (current_counter < number_targets) then {
 //    stop_sm          = true;
 //    publicVariable "stop_sm";
     // TODO: #368, wait until base cleared from enemies and
-    // no recaptured towns and (resolved)
-    // side mission completed (resolved)
+    // no recaptured towns and (implemented)
+    // side mission completed (implemented)
     hint localize "+++ x_target_clear.sqf: run stop new target town creation system process as all target towns are liberated !!!";
     _str = "";
     if ( (count d_recapture_indices > 0) && (!stop_sm) ) then { _str = "STR_SYS_121_3_FULL" }
