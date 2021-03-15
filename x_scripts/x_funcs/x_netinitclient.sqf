@@ -646,7 +646,13 @@ XHandleNetStartScriptClient = {
 						//player addScore (d_ranked_a select 29);
 						(d_ranked_a select 29) call SYG_addBonusScore;
 					} else {
-						(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1), x_wreck_repair select 3]) call XfHQChat; // "Restoring %1 at %2 (%3), this will take some time..."
+						private ["_str"];
+						if ( (x_wreck_repair select 3) != "" ) then {
+							 _str = format[" (%1)", (x_wreck_repair select 3) ];
+						} else {
+							 _str = "";
+						};
+							(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1), _str]) call XfHQChat; // "Restoring %1 at %2 (%3), this will take some time..."
 					};
 				};
 				case 1: {

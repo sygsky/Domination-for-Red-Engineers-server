@@ -116,7 +116,7 @@ d_run_illum = false;
 
 // now decide what to do next
 if (current_counter < number_targets) then {
-	sleep (60 + random(60));
+	sleep 15; // TODO: sleep (60 + random(60)); // explore this veriant, it may be very dangerous
 #ifdef __TT__
 	kill_points_west = 0;
 	kill_points_racs = 0;
