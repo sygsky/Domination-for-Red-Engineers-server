@@ -10,7 +10,8 @@ _t_array = target_names select current_target_index;
 
 _current_target_pos = _t_array select 0;
 _current_target_name = _t_array select 1;
-_radious = (_t_array select 2) max 300;
+// _radious = (_t_array select 2) max 300; // marker is create with radius minimum 300, in real active radius may be smaller (e.g. Somato is 230!!!)
+_radious = _t_array select 2; // real town radius
 
 [_current_target_name, _current_target_pos,"ELLIPSE","ColorRed",[_radious,_radious]] call XfCreateMarkerLocal;
 "dummy_marker" setMarkerPosLocal _current_target_pos;
