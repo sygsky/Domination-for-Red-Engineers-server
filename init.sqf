@@ -211,7 +211,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [4];   // 2: Arcadia, 3: Chantico, 4: Somato, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia
+    _first_array = [4];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia, 4: Somato
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
@@ -281,7 +281,7 @@ if (isServer) then {
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
 
-	current_target_index = -1; // main target index, not defined at start
+	current_target_index = -1;
 	current_counter = 0;
 
 	side_mission_resolved = false;
@@ -372,7 +372,7 @@ if (isServer) then {
     	    false
     	}; // new year expected if only december or january is current month
     	if ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,2) > 10) ) exitWith {
-            hint localize format["init.sqf: New Year procedure completed, JAN day (%1) > 10   is out of range", argp(SYG_client_start,2)];
+            hint localize "init.sqf: New Year procedure completed, JAN more then 10 is out of range";
             false
     	}; // out of January NE days
         while {true} do {
