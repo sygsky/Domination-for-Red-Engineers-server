@@ -1,10 +1,10 @@
 //
 // by Xeno: x_target_clear.sqf. Called on server from town or airbase trigger if all goals are achieved
 //
-private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array","_str"];
 if (!isServer) exitWith{};
+private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array","_str","_last_town_index"];
 
-hint localize format["%1 execVM x_scripts\x_target_clear.sqf", _this];
+hint localize format["+++  %1 execVM x_scripts\x_target_clear.sqf", typeName _this];
 
 #include "x_setup.sqf"
 
@@ -21,16 +21,20 @@ if ( (count _this > 0) && ( typeName (_this select 0) == "SCALAR" ) ) exitWith  
 // but may be so: [thislist]  execVM "x_target_clear.sqf", and can count alive remnants
 if ( count _this > 0 ) then {
 	if (  typeName (_this select 0) == "ARRAY" ) then {
-		hint localize format[ "call to x_scripts\x_target_clear.sqf with remained enemy men %1, tanks %2, cars %3, statics %4",
+		_this = _this select 0;
+		hint localize format[ "+++ call to x_scripts\x_target_clear.sqf with remained enemy men %1, tanks %2, cars %3, statics %4",
 			"Man" countType _this, "Tank" countType _this, "Car" countType _this, "StaticWeapon" countType _this];
 	};
 };
 
 counterattack = false;
 _start_real = false;
+
 #ifndef __TT__
 if (number_targets == 22 /* && current_target_index != 5 */ && (current_counter < number_targets)) then { // Now all towns have counter attacks
 #endif
+
+#ifndef __TOWN_WEAK_DEFENCE__
 	_rnd = random number_targets;
 	// _rnd < 5 % chance for a counterattack is nearly 1 town per 20 towns
 	if (_rnd < (number_targets  * 0.05) ) then {
@@ -39,6 +43,8 @@ if (number_targets == 22 /* && current_target_index != 5 */ && (current_counter 
 		["an_countera", "start"] call XSendNetStartScriptClient;
 		execVM "x_scripts\x_counterattack.sqf";
 	};
+#endif
+
 #ifndef __TT__
 };
 #endif
@@ -55,6 +61,7 @@ resolved_targets = resolved_targets + [current_target_index];
 #endif
 
 #ifdef __TT__
+
 if (kill_points_west > kill_points_racs) then {
 	mt_winner = 1;
 	points_west = points_west + 10;
@@ -73,16 +80,20 @@ if (kill_points_west > kill_points_racs) then {
 _points_array = [points_west,points_racs,kill_points_west,kill_points_racs];
 ["points_array",_points_array] call XSendNetStartScriptClient;
 resolved_targets = resolved_targets + [[current_target_index,mt_winner]];
-["mt_winner",mt_winner] call XSendNetVarClient;
+["mt_winner",mt_winner] call XSendNetVarClient; // TODO: put under #ifdef __TT__ as it used only in this define
+
+
+sleep 0.5;
+public_points = false;
+
+#endif
+
+sleep 0.5;
 
 // pre-save last town index (newly liberated one)
 _last_town_index = current_target_index;
 
-sleep 0.5;
-public_points = false;
-#endif
-
-sleep 0.5;
+//hint localize format["+++ DEBUG: x_target_clear.sqf: _last_town_index (%1) = current_target_index (%2)", _last_town_index,  current_target_index];
 
 if (current_counter < number_targets) then {
 	_start_real execVM "x_scripts\x_gettargetbonus.sqf"; // inform user about counterattack and bonus score for it
@@ -100,8 +111,12 @@ sleep 4.321;
 
 #ifndef __TT__
 if (!d_no_para_at_all) then {
+//	hint localize format["+++ DEBUG: x_target_clear.sqf (x_createjumpflag.sqf): current_counter(%1) <  number_targets(%2) ?", current_counter, number_targets];
 	if (current_counter < number_targets) then {
+//		hint localize format["+++ DEBUG: x_target_clear.sqf (x_createjumpflag.sqf): %1 execVM ""x_scripts\x_createjumpflag.sqf""", _last_town_index];
 		_last_town_index execVM "x_scripts\x_createjumpflag.sqf";
+	} else {
+		hint localize "--- x_target_clear.sqf (x_createjumpflag.sqf) not execured as current_counter >= number_targets";
 	};
 };
 #endif
@@ -109,6 +124,7 @@ if (!d_no_para_at_all) then {
 sleep 0.245;
 
 if (d_do_delete_empty_main_target_vecs) then {
+//	hint localize format["+++ DEBUG: x_target_clear.sqf: execVM  ""x_deleteempty.sqf"", _last_town_index = %1", _last_town_index];
 	_last_town_index execVM "x_scripts\x_deleteempty.sqf";
 };
 
@@ -116,7 +132,7 @@ d_run_illum = false;
 
 // now decide what to do next
 if (current_counter < number_targets) then {
-	sleep 15; // TODO: sleep (60 + random(60)); // explore this veriant, it may be very dangerous
+	sleep 15; // TODO: sleep (60 + random(60)); // explore this variant, it may be very dangerous
 #ifdef __TT__
 	kill_points_west = 0;
 	kill_points_racs = 0;

@@ -196,7 +196,7 @@ _vecnum = 0;
 			if ( _str != "" ) then {_str = _str + format[", %1", typeOf _x];} else {_str = _str + format["%1", typeOf _x];};
 		};
 	} forEach _veh_arr;
-	hint localize format[+++ "x_sideconvoy.sqf: Convoy moves from %1 to %2, %3", text (_pos_start call SYG_nearestSettlement), text (_pos_end call SYG_nearestSettlement), _str];
+	hint localize format[ "+++ x_sideconvoy.sqf: Convoy moves from %1 to %2, %3", text (_pos_start call SYG_nearestSettlement), text (_pos_end call SYG_nearestSettlement), _str];
 #endif							
 
 //#ifdef __SYG_OPTIMIZATION__

@@ -1,8 +1,12 @@
 // by Xeno, x_scripts\x_deleteempty.sqf
 // removes only empty vehicles from the newly liberated town
 //
-private ["_index","_no","_pos","_radius","_target","_vecs","_vehicle"];
+
 if (!isServer) exitWith{};
+
+// hint localize format["+++ x_deleteempty.sqf: _this  = %1", _this]; // debug printing
+
+private ["_index","_no","_pos","_radius","_target","_vecs","_vehicle"];
 
 _index = _this;
 
@@ -27,7 +31,7 @@ _target = target_names select _index;
 _pos = _target select 0;
 _radius = _target select 2;
 _rnd = 1500 + (random 300);
-hint localize format["+++ x_deleteempty.sqf: sleep %1 secs in %2", round (_rnd), _target select 1]; // debug printing
+// hint localize format["+++ x_deleteempty.sqf: sleep %1 secs in %2", round (_rnd), _target select 1]; // debug printing
 sleep _rnd;
 
 _vecs = []; // full list of enemy vehilces
@@ -47,7 +51,7 @@ _no = nearestObjects [_pos, _vecs, _radius];
 		{deleteVehicle _x; sleep 3.321 } forEach [_vehicle] + (crew _vehicle);
 	};
 } forEach _no;
-hint localize format["+++ x_deleteempty.sqf: deleted %1 veh[s] in %2", count _no, _target select 1]; // debug printing
+hint localize format["+++ x_deleteempty.sqf: deleted %1 veh[s] in ""%2""", count _no, _target select 1]; // debug printing
 _no = nil;
 
 if (true) exitWith {};

@@ -40,12 +40,12 @@ SYG_isMainTargetAllowed =
 #endif
 
 //
-// Detects if designated point[s] are in main target boundaries (red circle on map)
-// call as: _inMT = <[>_pnt|_obj|_location<]> call SYG_isPointInMainTarget;
+// Detects if designated point[s] of object[s] are in main target boundaries (red circle on map)
+// call as: _inMT = <[>_pnt|_obj|_location<,...]> call SYG_areObjsInMainTarget;
 //
 // if parameter is array, method retruns true only if all array items (positions, objects, locations, groups) are in MT circle, else false
 //
-SYG_isPointInMainTarget = {
+SYG_areObjsInMainTarget = {
 	if(current_target_index < 0) exitWith {false};
 	private ["_dummy","_mt_pos","_mt_rad","_res"];
 	_dummy = target_names select current_target_index;
@@ -221,6 +221,7 @@ SYG_deathCount = 0; // how many death were counted during the town period
 SYG_startTownScore = score player; // Total scores at the town start / player connection
 
 // Reset all town stats values to the initial state (on client only)
+// Called only on client computer
 SYG_townStatInit = {
 	SYG_bonusScore = 0;
 	SYG_deathCount = 0;
@@ -260,9 +261,9 @@ SYG_playerIsAtTown = {
 };
 
 //
-// Array to store scores per town for each player participating in town liberation
+// Array to store score per town for each player participating in town liberation
 //
-// Each item is: _deadcnt, that is player death count (how many times player killed enemy by any means)
+// Each item is: _kills, that is player kill count (how many times player killed enemy by any means)
 
 SYG_townStat = []; // array for all players stat (on server only)
 
@@ -307,17 +308,18 @@ SYG_townStatReport = {
     _kills_sum = 0;
     _num = 0;
    	_onlineNames = call SYG_getOnlineNames; // all active player names (to print their stats)
-	hint localize  "++++++             name, kills,   state";
+	hint localize  "++++++              name,  kills,   state";
 	for "_id" from 0 to (count SYG_townStat)-1 do {
-		_kills = SYG_townStat select _id; // [_mtscore, _bonusscore, _deadcnt]
+		_kills = SYG_townStat select _id; //
 		if (!isNil "_kills") then {
 			if (_kills <= 0) exitWith{}; // no kills at all
 			_name = d_player_array_names select _id;
 			// print true kills (calculated from total-bonus+dead), dead сount, bonus score, total score accumulated
 			hint localize format[ "++++++ %1: %2,%3",
-				[17, format["""%1""",d_player_array_names select _id]] call SYG_textAlign,
-				[6, str(_kills)] call SYG_textAlign,
-				if ( _name in _onlineNames ) then { "  online" } else { " offline" } ];
+					[17, format["""%1""",d_player_array_names select _id]] call SYG_textAlign,  // player name
+					[6, str(_kills)] call SYG_textAlign,										// in game kill count (as in Arma itself)
+					if ( _name in _onlineNames ) then { "  online" } else { " offline" }		// satus in game (online/offline)
+				];
 			_kills_sum = _kills_sum + _kills;
 			_num = _num + 1;
 		};
@@ -333,38 +335,41 @@ SYG_townStatReport = {
 };
 
 //
-// Calculates all players scores for town
+// Calculates all players scores for town. Runs only on server
 //
 // call as:
-// _change_system = true;
-// _bonus_score_arr = _change_system call SYG_townStatCalcScores;
+// _bonus_score_arr = call SYG_townStatCalcScores;
 //
-// Returns: [_town_name_arr, _town_player_arr]
+// Returns: [_in_town_player_name_arr, _in_town_player_score_arr]
 //
 SYG_townStatCalcScores = {
+    if (count SYG_townStat == 0) exitWith {
+    	hint localize "--- SYG_townStatCalcScores: count SYG_townStat == 0 !!!";
+    	[[],[]]
+    };
     private [ "_id","_name_arr","_kill_arr","_kills","_max"];
 	_name_arr = [];
 	_kill_arr = [];
 	// 1. find max score
-	_max = 0;
-	_bonus_max = d_ranked_a select 9; // max value for town score (constant)
+	_max = -1;
 	for "_id" from 0 to (count SYG_townStat)-1 do {
 		_kills = SYG_townStat select _id;
 		if (!isNil "_kills") then { 		// valid kills number, add to the result set
 			if (_kills <= 0 ) exitWith{};	// no real kills
-			_name = d_player_array_names select _id;
 			// send to player client later
-			_name_arr set [count _name_arr, _name];
+			_name_arr set [count _name_arr, d_player_array_names select _id]; // [name1,name2...]
 			_kill_arr set [count _kill_arr, _kills];
 			_max = _max max _kills; // check max value
 		};
 	};
-
-	// play with scores, set relative values
-	for "_id" from 0 to count _kill_arr - 1 do {
-		_kill_arr set [_id, round ((_kill_arr select _id ) / _max * _bonus_max)];
+	if ( count _kill_arr > 0 ) then { // play with scores, set relative values
+		for "_id" from 0 to count _kill_arr - 1 do {
+			_kill_arr set [_id, round ((_kill_arr select _id ) / _max ) ]; // [score_coeff1, score_cpeff2 ...]
+		};
+	} else {
+    	hint localize "--- SYG_townStatCalcScores: count _kill_arr == 0 !!!";
 	};
-	[_name_arr, _kill_arr]
+	[ _name_arr, _kill_arr ]
 };
 
 // EOF

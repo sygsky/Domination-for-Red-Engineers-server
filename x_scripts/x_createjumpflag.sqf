@@ -2,27 +2,19 @@
 //
 // run as: _last_town_id execVM "x_scripts\x_createjumpflag.sqf";
 //
-private ["_dummy", "_current_target_pos", "_radius", "_posi", "_ftype", "_flag","_i"];
-if (!isServer) exitWith {};
+//hint localize format[ "+++ DEBUG: x_createjumpflag.sqf: current_target_index = %1", _this ];
 
-/** remove ASAP
-if (current_target_index < 0) then {
-	hint localize format["--- x_createjumpflag.sqf: current_target_index = %1", current_target_index];
-	for "_i" from 1 to 60 do {
-		sleep 1;
-		if (current_target_index >= 0 ) exitWith {
-			hint localize format["+++ x_createjumpflag.sqf: after waiting %1 second[s] current_target_index = %2", _i, current_target_index]
-		};
-	};
-	if (current_target_index < 0 ) then {
-		hint localize format["--- x_createjumpflag.sqf: after waiting 60 seconds current_target_index = %1", current_target_index]
-	};
+if (!isServer) exitWith {
+	hint localize format[ "--- x_createjumpflag.sqf: !isServer", _this ];
 };
-*/
+
+private ["_dummy", "_current_target_pos", "_radius", "_posi", "_ftype", "_flag","_i"];
 
 _dummy = target_names select _this;
 _current_target_pos = _dummy select 0;
 _radius = _dummy select 2;
+
+hint localize format[ "+++ x_createjumpflag.sqf: target ""%1"", radius %2", _dummy select 1, _radius ];
 
 // create random position
 _posi = [];
@@ -47,6 +39,8 @@ if (count _posi > 0) then {
 		_flag setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag
 	};
 	["new_jump_flag",_flag] call XSendNetStartScriptClient;
+} else {
+	hint localize "--- x_createjumpflag.sqf: position for jumpflag not found!";
 };
 
 if (true) exitWith {};

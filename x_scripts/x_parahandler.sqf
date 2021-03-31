@@ -15,7 +15,12 @@ _start_pnt_arr  = [d_para_end_positions select 2, d_para_end_positions select 0]
 _end_pnt_arr    = [d_para_end_positions select 0, d_para_end_positions select 1];
 #endif
 
+#ifdef __TOWN_WEAK_DEFENCE__
+sleep 3600; // sleep 1 hour if defemce is weak
+#else
 sleep 333.325;
+#endif
+
 while {!mt_radio_down} do {
 	if (create_new_paras) then {
 		if (X_MP) then {

@@ -74,18 +74,18 @@ if (mt_winner == 1) then {
 
 // TODO: add info for split MT score bonus ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred] call XSendNetStartScriptClient
 // must be ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred, _town_stat_arr] call XSendNetStartScriptClient
-_bonus_score_arr = true call SYG_townStatCalcScores;
+_bonus_score_arr = call SYG_townStatCalcScores;
 target_clear = true; // town is liberated, no new occupied towns is created while target_clear is true
 
 SYG_players_online = []; // collector for online player names
 ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred, _bonus_score_arr] call XSendNetStartScriptClient;
 
-hint localize format["+++ DEBUG: town bonus info sent to all players (%1)", _bonus_score_arr];
+// hint localize format["+++ DEBUG: town bonus info sent to all players (%1)", _bonus_score_arr];
 _bonus_score_arr spawn {
 	sleep 10; // wait until all online clients send confirmation messages
 	private ["_offline_arr","_arr","_add_arr","_ind","_item"];
 	_offline_arr = (+ (_this select 0)) - SYG_players_online; // remain only offline players in list
-	hint localize format["+++ DEBUG: town bonus offline players (%1) processing", _offline_arr];
+//	hint localize format["+++ DEBUG: town bonus offline players (%1) processing", _offline_arr];
 	_arr = (_this select 0); // all town player names array
 	_add_arr = (_this select 1); // all town player town bonus score array
 	{
@@ -152,7 +152,7 @@ _vehicle execVM "x_scripts\x_wreckmarker.sqf";
             _mash setDir argp(_x,1);
             ADD_HIT_EH(_mash)
             ADD_DAM_EH(_mash)
-            hint localize format["x_scripts\x_gettargetbonus.sqf: MASH created near plane service at %2 with target bonus %1", typeOf _vehicle, argp(_x,0) call SYG_nearestLocationName];
+            hint localize format["+++ x_scripts\x_gettargetbonus.sqf: MASH created near plane service at %2 with target bonus %1", typeOf _vehicle, argp(_x,0) call SYG_nearestLocationName];
         };
     };
 

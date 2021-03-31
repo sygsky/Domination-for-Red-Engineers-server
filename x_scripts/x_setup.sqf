@@ -180,3 +180,6 @@
 #define __SPPM__ // support for SPPM markers
 
 #define __NO_AI_IN_PLANE__ // prevents AI to enter plane as driver/pilot, gunner or commaner. Cargo role is allowed
+
+// If defined allows to get a weak defence force to the town, (no cars and tanks) only some infantry and statics
+//#define __TOWN_WEAK_DEFENCE__

@@ -1,15 +1,19 @@
 // by Xeno, x_scripts\x_counterattack.sqf
+if (!isServer) exitWith {};
+
 #include "x_setup.sqf"
 
 private ["_current_target_pos","_current_target_radius","_dummy","_number_basic","_number_bmp","_number_specops",
 		 "_number_tank","_start_array","_type_list_attack","_typeidx","_xx","_numbervecs","_vecs_counter_attack",
 	     "_outer_size","_counter_pos","_counter_rad"];
-if (!isServer) exitWith {};
 
 _dummy = target_names select current_target_index;
 _current_target_pos = _dummy select 0;
 _current_target_radius = _dummy select 2;
 _outer_size = 200;
+
+hint localize ["*** x_counterattack.sqf: target ""%1""", _dummy select 1];
+
 // TODO: counterattack on Paraiso should not start on base territory only!
 _counter_pos = _current_target_pos;
 _counter_rad = _current_target_radius + _outer_size;

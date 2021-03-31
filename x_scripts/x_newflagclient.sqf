@@ -1,6 +1,8 @@
 // by Xeno, x_newflagclient.sqf - executed on client comp only
-private ["_marker","_marker_name"];
+// Params: _this = ["new_jump_flag",_flag, false]
 if (!X_Client) exitWith {};
+
+private ["_marker","_marker_name"];
 
 #include "x_setup.sqf"
 
@@ -31,15 +33,19 @@ if (d_jumpflag_vec == "") then {
 _x addaction [localize "STR_FLAG_5"/* "{Rumours}" */,"scripts\rumours.sqf",""];
 
 #ifdef __ACE__
+_str = "";
 if (d_jumpflag_vec == "") then {
 	_box = "ACE_RuckBox" createVehicleLocal (position new_jump_flag);
 	ClearMagazineCargo _box;
 	ClearWeaponCargo _box;
 	_box addweaponcargo ["ACE_ParachutePack",50];
-	(localize "STR_SYS_339")/* "Создано новое место для десантирования." */  call XfHQChat;
+	_str = "STR_SYS_339"; // "New flag for parajump created at current target."
+	if (count _this > 2) then { if (! (_this select 2)) then { _str = "STR_SYS_339_1"; }; }; // "A new parajump flag was created at a secret base."
 } else {
-	(localize "STR_SYS_340")/*"В городе создано место вызова техники." */ call XfHQChat;
+	_str = "STR_SYS_340"; // "New vehicle call flag created at current target."
+	if (count _this > 2) then { if (! (_this select 2)) then { _str = "STR_SYS_340_1"; }; }; // "New vehicle call flag created at a secret base."
 };
+(localize _str)call XfHQChat;
 #endif
 
 if (true) exitWith {};

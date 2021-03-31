@@ -115,14 +115,15 @@ XHandleNetStartScriptServer = {
         // 2. ["d_ad_sc", name player] - simply to inform about town score received by the player
 
 		case "d_ad_sc": {
-			if (count _this  == 2 ) exitWith { // confirmation tha player is online
-				if ( ! ((_this select 1) in SYG_players_online) ) then {
-					SYG_players_online set [count SYG_players_online, _this select 1]; // add player name to the bonus receiver array
-					hint localize format[ "+++ DEBUG: town split score assigned -> %1", _this ];
+			if ( count _this  == 2 ) exitWith { // confirmation that player is online
+				if ( ! ( ( _this select 1 ) in SYG_players_online ) ) then {
+//					hint localize format[ "+++ DEBUG: player ""%1"" confirmed his online status", _this select 1 ];
+					SYG_players_online set [ count SYG_players_online, _this select 1 ]; // add player name to the bonus receiver array
 				};
 			};
 			_this call XAddPlayerScore;
 		};
+
 		// store player weapon list on server
 		// params: ["d_ad_wp", _player_name,_player_weapon_str_array]
 		case "d_ad_wp": {

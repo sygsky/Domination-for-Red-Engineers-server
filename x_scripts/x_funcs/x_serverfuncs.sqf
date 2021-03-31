@@ -9,11 +9,13 @@ XAddDead = {if (!((_this select 0) in dead_list)) then { dead_list set[ count de
 XAddCheckDead = {if (!((_this select 0) in check_vec_list)) then { check_vec_list set [count check_vec_list, _this select 0] } };
 
 #ifdef __TT__
+
 XAddKills = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {kill_points_west = kill_points_west + _points;};case resistance: {kill_points_racs = kill_points_racs + _points;};};};
 XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {points_west = points_west + _points;};case resistance: {points_racs = points_racs + _points;};};};
+
 #else
 
-#define __DEBUG__ 20 // to debug town splitted score each 20 ccore changed
+//#define __DEBUG__ 20 // to debug town splitted score each 20 ccore changed
 
 /*
 	Add score for observer kill on "killed" event
@@ -695,6 +697,9 @@ XAddPlayerScore = {
 #ifdef __DEBUG__
 		if ( round( (_parray select 3) / __DEBUG__)  < round( (_this select 2) / __DEBUG__ ) ) then { // each next 10 scores print debug status to check functionality
 			format["DEBUG: %1", (target_names select (maintargets_list select (current_counter - 1))) select 1] call SYG_townStatReport;
+//			_arr  = call SYG_townStatCalcScores;
+//			hint localize format["+++ SYG_townStatCalcScores: names  %1", _arr select 0];
+//			hint localize format["+++ SYG_townStatCalcScores: scores %1", _arr select 1];
 		};
 #endif
 		_parray set [3, _this select 2]; // update total score

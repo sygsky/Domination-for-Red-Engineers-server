@@ -3,7 +3,7 @@
 
 	description:
 	    try to add actions to AI_HUT
-        arguments: ["sound_name"] execVM "scripts\barracks_add_actions.sqf"
+        arguments:  ["add_barracks_actions", AI_HUT, "AlarmBell"] execVM "scripts\barracks_add_actions.sqf" execVM "scripts\barracks_add_actions.sqf"
 
 	returns: nothing
 */
@@ -21,7 +21,7 @@ hint localize format["+++ %1 barracks_add_actions.sqf starting...", _this];
 if (typeName _this == "ARRAY") then {
     if ( count _this > 2) then {
         _sound= _this select 2;
-        if (typeName _sound == "STRING") then { AI_HUT say _sound; };
+        if (typeName _sound == "STRING") then { if (_sound != "") then { AI_HUT say _sound; }; };
     }
 };
 

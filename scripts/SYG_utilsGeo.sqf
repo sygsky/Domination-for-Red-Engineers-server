@@ -550,7 +550,7 @@ SYG_getSideMissionIndex = {
 //
 SYG_readMarkerInfo = {
 	private ["_shape","_size","_name"];
-	_shape = toUpper(arg(1));
+	_shape = toUpper(_this select 1);
 	if ( !(_shape in ["ELLIPSE","RECTANGLE"]) ) exitWith {[]};
 	_name = arg(0);
 	if ( markerType _name == "" ) exitWith {[]};
@@ -828,13 +828,28 @@ SYG_setMapPosToMainTarget = {
 
 // call as: _dist = [_obj1||_pos1, _obj2||_pos2] call SYG_distance2D;
 SYG_distance2D = {
+	if (typeName _this != "ARRAY") exitWith {
+		hint localize format["--- SYG_distance2D: _this =  %1", _this];
+		9999999.0 // assign maximum distance available
+	};
+	if (count _this != 2) then {
+		hint localize format["--- SYG_distance2D: _this =  %1", _this];
+	};
+
 	private ["_pos1", "_pos2"];
-	_pos1 = arg(0);
+	_pos1 = _this select 0;
 	if ( typeName _pos1 == "OBJECT") then { _pos1 = position _pos1;};
-	_pos2 = arg(1);
+	if (typeName _pos1 != "ARRAY") exitWith {
+		hint localize format["--- SYG_distance2D: _this =  %1", _this];
+		9999999.0 // assign maximum distance available
+	};
+	_pos2 = _this select 1;
 	if ( typeName _pos2 == "OBJECT") then { _pos2 = position _pos2;};
-//	hint localize format["--- SYG_distance2D: _pos1 %1, _pos2 %2", _pos1,_pos2];
-	[argp(_pos1,0), argp(_pos1,1),0] distance [argp(_pos2,0),argp(_pos2,1),0]
+	if (typeName _pos2 != "ARRAY") exitWith {
+		hint localize format["--- SYG_distance2D: _this =  %1", _this];
+		9999999.0 // assign maximum distance available
+	};
+	[_pos1 select 0, _pos1 select 1] distance [_pos2 select 0, _pos2 select 1]
 };
 
 //

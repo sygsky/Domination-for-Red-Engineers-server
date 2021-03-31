@@ -406,6 +406,7 @@ SYG_vehIsUpsideDown = {
 };
 
 SYG_vehUpAngle = {
+	private ["_vUp","_L2"];
 	if ( isNull _this ) exitWith { -1000 };
     _vUp = vectorUp _this;	// vector up for the goal
     _L2 = [_vUp,[ 0, 0, 0 ]] call SYG_distance2D;

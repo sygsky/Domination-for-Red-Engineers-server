@@ -965,7 +965,8 @@ _local_msg_arr = [];
 #ifdef __AI__
 
 // add all user actions now
-_handle  = ["add_barracks_actions", AI_HUT, "AlarmBell"] execVM "scripts\barracks_add_actions.sqf";
+//_handle  = ["add_barracks_actions", AI_HUT, "AlarmBell"] execVM "scripts\barracks_add_actions.sqf";
+_handle  = ["add_barracks_actions", AI_HUT] execVM "scripts\barracks_add_actions.sqf";
 waitUntil { scriptDone _handle };
 
 if ( isNil "AI_HUT" ) then
@@ -1737,7 +1738,7 @@ if (d_player_air_autokick > 0) then {
 			_player = if (SYG_playerID < 0) then {name player} else {SYG_playerID};
 			["d_ad_sc", _player, _newscore, _mtkills] call XSendNetStartScriptServer;
 
-			hint localize format["+++ send %1, bon %2, ded %3", ["d_ad_sc", _player, _newscore, _mtkills], SYG_bonusScore, SYG_deathCount];
+//			hint localize format["+++ send %1, bon %2, ded %3", ["d_ad_sc", _player, _newscore, _mtkills], SYG_bonusScore, SYG_deathCount];
 
 			[] spawn XPlayerRank; // detect if new rank is reached and inform player about
 

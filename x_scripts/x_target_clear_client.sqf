@@ -1,6 +1,9 @@
 ﻿// by Xeno, x_scripts/x_target_clear_client.sqf
 // parameters _this is [counter attack state (true if counterattack occured or false if not), _bonus_score_for_finished_town]
 //
+if (!X_Client) exitWith {};
+hint localize format["+++ DEBUG: x_target_clear_client.sqf: counterattack is %1, town bonus to player %2", _this select 0, _this select 1];
+
 private ["_current_target_name","_target_array2"];
 
 #include "x_setup.sqf"
@@ -8,7 +11,6 @@ private ["_current_target_name","_target_array2"];
 
 #define OBJECT_ID (_target_array2 select 3)
 
-if (!X_Client) exitWith {};
 //__TargetInfo
 _target_array2 = target_names select current_target_index;_current_target_name = _target_array2 select 1;
 
@@ -19,6 +21,8 @@ _current_target_pos = _target_array2 select 0;
 client_target_counter = client_target_counter + 1;
 
 call compile format ["""%1"" objStatus ""DONE"";", OBJECT_ID]; // mark just liberated town with corresponding marker in the diary
+
+//hint localize format["+++ DEBUG: x_target_clear_client.sqf: client_target_counter (%1) < number_targets (%2) ?", client_target_counter, number_targets];
 
 if (client_target_counter < number_targets) then {
 	_type_name = mt_bonus_vehicle_array select extra_bonus_number;

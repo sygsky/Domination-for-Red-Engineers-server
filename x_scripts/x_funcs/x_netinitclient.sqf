@@ -11,17 +11,17 @@
 
 // this procedure parse and processs "msg_to_user" server command or compound client message
 // In any message to user, param numbers are:
-//              1,                      2,                 3,                       4,              5,            6,           7
+// Offsets:     0,                      1,                 2,                        3,              4,             5,             6
 // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
 //
 // Offset in command array are as follow:
-// 0:"msg_to_user": identifier for command, may be any
+// 0:"msg_to_user": the identifier for this command, must be present
 // 1: player name or "" or "*" or vehicle to inform crew only, or array of players, or array of vehicles. Must be present!
 // 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
 // 3: _delay_between_messages is seconds number to sleep between multiple messages;
 // 4: _initial_delay is seconds before first message show;
 // 5: no_title_msg if true - no title shown, else shown if false or "" empty string, or scalar <= 0;
-// 6: sound_name is the name of the sound to play with first message show on 'say' command;
+// 6: sound_name is the name of the sound to play with first message show on 'say' command; no way to play sound on each message
 //
 // msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
 // msg additionally displayed as title in the middle of the screen
@@ -352,6 +352,7 @@ XHandleNetStartScriptClient = {
 		// last target town cleared, no more target remained !!!
 		// call: ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred<, _town_players_bonus>] call XSendNetStartScriptClient;
 		case "target_clear": {
+			hint localize format["+++ client event ""target_clear"": %1", _this];
 			// playSound "USSR"; // dont play sound as it is already played from town flag
 			private ["_arr","_ind","_bon","_sleep_time"];
 			target_clear = (_this select 1);
@@ -359,10 +360,10 @@ XHandleNetStartScriptClient = {
 			if (count _this > 4) then {
 				_arr = _this select 4;// bonus score array [_names_arr, _bonus_arr], if current player is in the _names_arr he receives a bonus award, else not
 				_ind = (_arr select 0) find (name player);
-				_bon = if (_ind >= 0 ) then {(_arr select 1) select _ind} else {0};
+				_bon = if (_ind >= 0 ) then { ((_arr select 1) select _ind) * (d_ranked_a select 9) } else {0};
 			} else {_bon = -1}; // no bonus info sent from server
 			// inform player about counter attack state (param 0) and town bonus (or its absence) (param 1)
-			[(_this select 3), _bon] execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is 1st parameter for execVM
+			[(_this select 3), _bon] execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is 1st parameter for execVM, player bonus score is 2nd
 			call SYG_townStatInit; // reset split score statistics for the next town
 			// send confirmation of bonus score received and added
 			sleep ((_ind * 0.2) max 0.1); // sleep different time for each client to ensure smooth execution of corresponding events on server
@@ -416,10 +417,12 @@ XHandleNetStartScriptClient = {
 		    hint localize "+++ stop_sm == true. No more SM allowed";
 		};
 		#ifndef __TT__
+		// creates markers for jump flags (it is possible to create them on server of courseBut this is the decision of Xeno)
+		// call as: ["new_jump_flag",_flag, false] call XSendNetStartScriptClient;
 		case "new_jump_flag": {
 			if (!d_no_para_at_all) then {
 				__compile_to_var
-				execVM "x_scripts\x_newflagclient.sqf";
+				_this execVM "x_scripts\x_newflagclient.sqf";
 			};
 		};
 		#endif

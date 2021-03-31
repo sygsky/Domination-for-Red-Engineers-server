@@ -281,7 +281,7 @@ if (isServer) then {
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
 
-	current_target_index = -1;
+	current_target_index = -1; // main target index, not defined at start
 	current_counter = 0;
 
 	side_mission_resolved = false;
@@ -372,7 +372,7 @@ if (isServer) then {
     	    false
     	}; // new year expected if only december or january is current month
     	if ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,2) > 10) ) exitWith {
-            hint localize "init.sqf: New Year procedure completed, JAN more then 10 is out of range";
+            hint localize format["init.sqf: New Year procedure completed, JAN day (%1) > 10   is out of range", argp(SYG_client_start,2)];
             false
     	}; // out of January NE days
         while {true} do {

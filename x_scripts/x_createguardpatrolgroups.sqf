@@ -15,8 +15,9 @@ if (!isServer ) exitWith{};
 
 //#define __DEBUG_PRINT__
 
-#define __WEAK_DEFENCE__
+//#define __TOWN_WEAK_DEFENCE__
 
+#include "x_setup.sqf"
 #include "x_macros.sqf"
 
 _selectit = {
@@ -53,7 +54,7 @@ sleep 0.01;
 _type_list_patrol = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_patrol, 0] call _selectit],["bmp",[d_vehicle_numbers_patrol, 1] call _selectit],["brdm",[d_vehicle_numbers_patrol, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_patrol, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_patrol, 4] call _selectit]];
 
 _type_list_guard_static2 = [
-#ifndef __WEAK_DEFENCE
+#ifndef __TOWN_WEAK_DEFENCE__
 ["D30",ceil (random 5)],
 #endif
 ["DSHKM",(ceil (random 2)) + _addnum],["AGS",(ceil (random 2)) + _addnum]];
@@ -148,7 +149,7 @@ _wp_array = [_trg_center, _radius] call x_getwparray;
 
 sleep 0.112;
 
-#ifndef __WEAK_DEFENCE__ // compiled if not a weak defence defined
+#ifndef __TOWN_WEAK_DEFENCE__ // compiled if not a weak defence defined
 
 // Static weapons (canons, M2, AGS, TOW etc)
 for "_xx" from 0 to (count _type_list_guard - 1) do {
@@ -218,7 +219,7 @@ hint localize format[ "+++ x_createguardpatrolgroups.sqf: StaticWeapon men %1, d
 _array = [];
 #endif
 
-#ifndef __WEAK_DEFENCE__ // compiled if not a weak defence defined
+#ifndef __TOWN_WEAK_DEFENCE__ // compiled if not a weak defence defined
 // patrol groups (infantry, BMPs, tanks etc)
 for "_xx" from 0 to (count _type_list_patrol - 1) do {
 	_typeidx = _type_list_patrol select _xx;
@@ -261,6 +262,9 @@ _xpos = nil;
 
 sleep 2.124;
 
+#ifdef __TOWN_WEAK_DEFENCE__
+	no_more_observers = true; // skip observers for this define
+#endif
 // create observers in the town
 if (!no_more_observers) then {
 	// artillery observers
@@ -307,10 +311,9 @@ if (!no_more_observers) then {
 
 	(_unit_array select 0) execVM "x_scripts\x_handleobservers.sqf";
 	_unit_array = nil;
-
 	sleep 2.214;
-}
-else {
+
+} else {
 //  inform about observer absence
 //	hint localize "x_scripts\x_createguardpatrolgroups.sqf: no_more_observers = true";
 	["msg_to_user", "*", [["STR_SYS_316_1"]], 0, 30, 0] call XSendNetStartScriptClient; // not print message as title text, only as chat

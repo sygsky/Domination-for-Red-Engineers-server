@@ -329,6 +329,7 @@ SYG_invulnerableBuilding = {
 	_killer = gunner _killer;
 	if (!isPlayer _killer) exitWith {};
 	[ "change_score", name _killer, -10, [ "msg_to_user", "",  [ ["STR_KILLED_WALL", name _killer, 10]], 0, 2, false, "losing_patience" ] ] call XSendNetStartScriptClientAll;
+	// TODO: combine lower line wuth the upper one, it is possible!!!
 	[ "msg_to_user", name _killer,  [ ["STR_JAIL_4"]], 0, 65, false, "losing_patience" ] call XSendNetStartScriptClientAll;
 };
 
