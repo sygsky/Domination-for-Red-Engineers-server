@@ -3,29 +3,29 @@
 //Description: Aim and fire artillery.
 //*****************************************************************************************
 
-Private["_ammo","_angle","_arcDistance","_artillery","_destination","_direction","_distance","_minRange","_maxRange","_position","_radius","_shell","_side","_type","_velocity","_weapon","_x","_y"];
+private["_ammo","_angle","_arcDistance","_artillery","_destination","_direction","_distance","_minRange","_maxRange","_position","_radius","_shell","_side","_type","_velocity","_weapon","_x","_y"];
 
-_artillery = _this Select 0;
-_destination = _this Select 1;
-_side = _this Select 2;
-_radius = _this Select 3;
+_artillery = _this select 0;
+_destination = _this select 1;
+_side = _this select 2;
+_radius = _this select 3;
 
-_type = Call Compile Format["%1ArtilleryNames Find TypeOf _artillery",Str _side];
-if (_type == -1) ExitWith {};
+_type = call compile format["%1ArtilleryNames Find TypeOf _artillery",str _side];
+if (_type < 0) exitWith {};
 
-_minRange = Call Compile Format["%1ArtilleryMinRanges Select _type",Str _side];
-_maxRange = Call Compile Format["%1ArtilleryMaxRanges Select _type",Str _side];
-_weapon = Call Compile Format["%1ArtilleryWeapons Select _type",Str _side];
-_ammo = Call Compile Format["%1ArtilleryAmmos Select _type",Str _side];
-_velocity = Call Compile Format["%1ArtilleryVelocities Select _type",Str _side];
-_dispersion = Call Compile Format["%1ArtilleryDispersions Select _type",Str _side];
+_minRange = call compile format["%1ArtilleryMinRanges select _type",str _side];
+_maxRange = call compile format["%1ArtilleryMaxRanges select _type",str _side];
+_weapon = call compile format["%1ArtilleryWeapons select _type",str _side];
+_ammo = call compile format["%1ArtilleryAmmos select _type",str _side];
+_velocity = call compile format["%1ArtilleryVelocities select _type",str _side];
+_dispersion = call compile format["%1ArtilleryDispersions select _type",str _side];
 
-if (IsNull Gunner _artillery) ExitWith {};
-if (IsPlayer Gunner _artillery) ExitWith {};
+if (isNull gunner _artillery) exitWith {};
+if (isPlayer gunner _artillery) exitWith {};
 
-_position = GetPos _artillery;
-_x = (_destination Select 0) - (_position Select 0);
-_y = (_destination Select 1) - (_position Select 1);
+_position = getPos _artillery;
+_x = (_destination select 0) - (_position select 0);
+_y = (_destination select 1) - (_position select 1);
 
 _direction =  -(((_y atan2 _x) + 270) % 360);
 if (_direction < 0) then {_direction = _direction + 360};
@@ -34,34 +34,34 @@ _distance = sqrt ((_x ^ 2) + (_y ^ 2)) - _minRange;
 _angle = _distance / (_maxRange - _minRange) * 100 + 15;
 
 if (_angle > 90) then {_angle = 90};
-if (_distance < 0 || _distance + _minRange > _maxRange) ExitWith {};
+if (_distance < 0 || _distance + _minRange > _maxRange) exitWith {};
 
-_watchPosition = [(_position Select 0) + (sin _direction) * 50,(_position Select 1) + (cos _direction) * 50,_angle];
-Gunner _artillery DoWatch _watchPosition;
+_watchPosition = [(_position select 0) + (sin _direction) * 50,(_position select 1) + (cos _direction) * 50,_angle];
+gunner _artillery doWatch _watchPosition;
 
-Sleep (3 + Random 3);
+sleep (3 + random 3);
 
-_amount = _artillery Ammo _weapon;
-_artillery Fire _weapon;
+_amount = _artillery ammo _weapon;
+_artillery fire _weapon;
 
-WaitUntil {_artillery Ammo _weapon < _amount};
+waitUntil {_artillery ammo _weapon < _amount};
 
 _shell = nearestObject [_artillery,_ammo];
 
-_shell SetPos [0,0,1000 + Random 20];
-_shell SetVelocity [0,0,0];
+_shell setPos [0,0,1000 + random 20];
+_shell setPos [0,0,0];
 
 //Rough approximation of the distance the shell will travel in a parabola.
 _arcDistance = sqrt((_distance ^ 2) * 2);
 
 //Wait until shell should arrive.
-Sleep (_arcDistance / _velocity);
+sleep (_arcDistance / _velocity);
 
-_distance = Random (_distance / _maxRange * 100) + Random _radius;
-_direction = Random 360;
-_shell SetPos [(_destination Select 0)+((sin _direction)*_distance),(_destination Select 1)+((cos _direction)*_distance),400];
-_destination = [(_destination Select 0)+((sin _direction)*_distance),(_destination Select 1)+((cos _direction)*_distance),400];
-_shell SetVelocity [0,0,-_velocity];
+_distance = random (_distance / _maxRange * 100) + random _radius;
+_direction = random 360;
+_shell setPos [(_destination select 0)+((sin _direction)*_distance),(_destination select 1)+((cos _direction)*_distance),400];
+_destination = [(_destination select 0)+((sin _direction)*_distance),(_destination select 1)+((cos _direction)*_distance),400];
+_shell setPos [0,0,-_velocity];
 
 //*****************************************************************************************
 //12/18/7 MM - Created file.
