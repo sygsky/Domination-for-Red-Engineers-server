@@ -211,7 +211,12 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [4];   // 2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia, 4: Somato
+    // Town ids =  2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia, 4: Somato
+#ifdef __TOWN_WEAK_DEFENCE__
+    _first_array = [4]; // set some predefined towns at start
+#else
+    _first_array = []; // no predefined towns at start
+#endif
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];

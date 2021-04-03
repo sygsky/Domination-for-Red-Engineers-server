@@ -349,18 +349,22 @@ XHandleNetStartScriptClient = {
 		case "sec_solved": {
 			_this execVM "x_scripts\x_secsolved.sqf";
 		};
-		// last target town cleared, no more target remained !!!
+
 		// call: ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred<, _town_players_bonus>] call XSendNetStartScriptClient;
 		case "target_clear": {
 			hint localize format["+++ client event ""target_clear"": %1", _this];
 			// playSound "USSR"; // dont play sound as it is already played from town flag
 			private ["_arr","_ind","_bon","_sleep_time"];
 			target_clear = (_this select 1);
-			extra_bonus_number = (_this select 2);
+			extra_bonus_number = (_this select 2); // index in the bonus vehicle list
 			if (count _this > 4) then {
 				_arr = _this select 4;// bonus score array [_names_arr, _bonus_arr], if current player is in the _names_arr he receives a bonus award, else not
 				_ind = (_arr select 0) find (name player);
-				_bon = if (_ind >= 0 ) then { ((_arr select 1) select _ind) * (d_ranked_a select 9) } else {0};
+				_bon = if (_ind >= 0 ) then {
+					// Existance of SYG_townMaxScore means that server knows about this variable too.
+					// And bonus scores are already as points not coefficient for the unknown on server max score value
+					if ( isNil "SYG_townMaxScore" ) then { ( (_arr select 1) select _ind ) * ( d_ranked_a select 9 ) } else { ( (_arr select 1) select _ind ) };
+				} else {0};
 			} else {_bon = -1}; // no bonus info sent from server
 			// inform player about counter attack state (param 0) and town bonus (or its absence) (param 1)
 			[(_this select 3), _bon] execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is 1st parameter for execVM, player bonus score is 2nd
@@ -743,6 +747,10 @@ XHandleNetStartScriptClient = {
 				SYG_dateStart,
 				call SYG_getSuicideScreamSound,
 				SYG_playerID];
+				if (SYG_playerID == 0) then { // Im FIRST player in the game
+					SYG_townMaxScore = (d_ranked_a select 9); // 02-APR-2021 value was +40
+					publicVariable "SYG_townMaxScore"; // set public variable with the maximum scores bonus per town
+				};
 			};
 		};
 		case "d_hq_sm_msg": {
@@ -810,7 +818,7 @@ XHandleNetStartScriptClient = {
 			};
 			_this call GRU_procClientMsg;
 		};
-
+/* Comment not developed options
 		// SPPM event handler on client (receive messages from server)
 		case "SPPM": {
 
@@ -829,7 +837,7 @@ XHandleNetStartScriptClient = {
                 format[localize "STR_RESTORE_DLG_7", _score] call XfGlobalChat; // "scores subtracted %1"
 			};
 		};
-
+*/
         case "say_sound": { // say user sound from predefined vehicle/unit ["say_sound",_object,_sound, [,"-",_player_name]]
 		    private ["_nil","_obj","_sound","_exit","_pos"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];

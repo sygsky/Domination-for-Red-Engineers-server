@@ -1730,8 +1730,8 @@ if (d_player_air_autokick > 0) then {
 	while { true } do {
 		sleep 4.5; // Xeno value was(3 + random 3); // Lets test  to change sleep delay to the period 4.5 seconds
 		_newscore = score player;
-		_newkills = _newscore - SYG_bonusScore + SYG_deathCount;
 		if (_oldscore != _newscore) then {
+			_newkills = _newscore - SYG_bonusScore + SYG_deathCount; // find pure kills in the current town boundaries
 			// real player kills in the town
 			_mtkills = if (call SYG_playerIsAtTown) then { _newkills - _oldkills } else { -1 };
 			// send full score (_newscore), in town real kills score (_mtkills)

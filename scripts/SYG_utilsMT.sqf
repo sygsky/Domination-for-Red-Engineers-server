@@ -274,9 +274,10 @@ SYG_townStatClear = {
 };
 
 //
-// Checks if designated Id exists, and initialize it if not found
-// call as: _id call SYG_townStatCheck;
-// Returns: nothing
+// Checks if designated player Id exists in the array. If id not existed its item is initialized to zero (0)
+// id MUST be >= 0!!!
+// call as: _val = _id call SYG_townStatCheck;
+// returns: score value at designated item index, if item is created on this call, zero(0) is returned
 //
 SYG_townStatCheck = {
 	//hint localize format["--- SYG_townStatCheck: _this = %1", _this];

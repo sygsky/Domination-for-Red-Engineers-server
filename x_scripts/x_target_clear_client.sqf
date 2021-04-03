@@ -1,5 +1,5 @@
 ﻿// by Xeno, x_scripts/x_target_clear_client.sqf
-// parameters _this is [counter attack state (true if counterattack occured or false if not), _bonus_score_for_finished_town]
+// parameters _this is [counter attack state (true if counterattack occured or false if not), _player_bonus_score_for_finished_town]
 //
 if (!X_Client) exitWith {};
 hint localize format["+++ DEBUG: x_target_clear_client.sqf: counterattack is %1, town bonus to player %2", _this select 0, _this select 1];

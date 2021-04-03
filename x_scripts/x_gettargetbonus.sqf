@@ -84,22 +84,44 @@ SYG_players_online = []; // collector for online player names
 _bonus_score_arr spawn {
 	sleep 10; // wait until all online clients send confirmation messages
 	private ["_offline_arr","_arr","_add_arr","_ind","_item"];
-	_offline_arr = (+ (_this select 0)) - SYG_players_online; // remain only offline players in list
-//	hint localize format["+++ DEBUG: town bonus offline players (%1) processing", _offline_arr];
+
 	_arr = (_this select 0); // all town player names array
 	_add_arr = (_this select 1); // all town player town bonus score array
-	{
-		_ind = _arr find _x;	// this player is offline, add score to him indirectly
-		if (_ind >= 0 ) then  {
-			_add = _add_arr select _ind; // added bonus value
-			_ind = d_player_array_names find _x; // find player ion system misc array
-			if (_ind >= 0) then {
-				_item = d_player_array_misc select _ind; // player stats descriptor
-				_item set [3, (_item select 3) + _add]; // add town bonus score to the player
-				hint localize format["+++ town bonus for ""%1"" +%2", _x, _add];
+
+	_offline_arr = (+ (_this select 0)) - SYG_players_online; // remain only offline players in list
+	if ( count SYG_players_online == 0) then {
+		hint localize "+++ No fighters involved in the liberation of the city have been found.";
+	} else {
+		{
+			_ind = _arr select _x;
+			if (_ind >= 0 ) then  {
+				_add = _add_arr select _ind; // assigned bonus coessficient (as decimal part of 40 score, from 0.0 to 40.0)
+				if (!isNil "SYG_townMaxScore") then { _add = round(_add * SYG_townMaxScore); };
+				hint localize format["+++ Online player town bonus coeff +%1 for ""%2""", _add, _x];
 			};
-		};
-	} forEach _offline_arr;
+		} forEach SYG_players_online;
+	};
+
+//	hint localize format["+++ DEBUG: town bonus offline players (%1) processing", _offline_arr];
+	if ( count _offline_arr == 0) then {
+		hint localize "+++ No offline players involved in the battle for the city were found.";
+	} else {
+		{
+			_ind = _arr find _x;	// this player is offline, add score to him indirectly
+			if (_ind >= 0 ) then  {
+				_add = _add_arr select _ind; // assigned bonus coefficient (as decimal part of score value 40, from 0.0 to 40.0)
+				_ind = d_player_array_names find _x; // find player ion system misc array
+				if (_ind >= 0) then {
+					_item = d_player_array_misc select _ind; // player stats descriptor
+					if (!isNil "SYG_townMaxScore") then {
+						_add = round(_add * SYG_townMaxScore);
+						_item set [3, (_item select 3) + _add]; // add town bonus score to the player
+					};
+					hint localize format["+++ Offline player town bonus coeff +%1 for ""%2""", _add, _x];
+				};
+			};
+		} forEach _offline_arr;
+	};
 	SYG_players_online = nil;
 };
 

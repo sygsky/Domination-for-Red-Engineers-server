@@ -29,12 +29,14 @@ if ( !(isNull _killer) ) then{
         if ( isPlayer (commander _killer)) exitWith {_name = format["%1", name  (commander _killer)]};
     }
 };
-hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4 m, vUp %5.", typeOf _house, typeOf _killer, _name, damage _house, vectorUp _house];
+hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4, vUp %5.", typeOf _house, typeOf _killer, _name, damage _house, vectorUp _house];
 
 // Don't accept kill if done not by direct existing player action
-if ( ! ( ( isNull  _killer) || ( (_killer isKindOf "CAManBase" ) && (vehicle _killer == _killer) )  )  ) then { // not NULL killer, killer is man and not driver, so some VEHICLE
-     hint localize format["+++ MTTarget: killer %1(not man), dist %2 m.", typeOf _killer, round(_killer distance _house)];
-    // killed NOT directly by man, but from some kind of vehicle!!
+if ( !( isNull  _killer) ) then { // not NULL killer
+	if ( !(_killer isKindOf "CAManBase" ) ) exitWith{}; // killer is not man but vehicle
+	if ( ( vehicle _killer == _killer ) || (  alive ( vehicle _killer ) ) ) exitWith{}; // killer man is on feet and killer not rammed the tower while in the heli
+     hint localize format["+++ MTTarget: killer %1 (not man on feet), veh %2,  dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
+    // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object
     if (!(_house isKindOf "House")) exitWith {};
     _time        = time;
@@ -44,8 +46,7 @@ if ( ! ( ( isNull  _killer) || ( (_killer isKindOf "CAManBase" ) && (vehicle _ki
     _ruin_type   = format["%1_ruin", _house_type];
     if ( !(_ruin_type isKindOf "Ruins") ) then { _ruin_type = "Ruins"};
     _sleep_until = _time + 60;
-    while { (time < _sleep_until) && (isNull _ruin)} do
-    {
+    while { (time < _sleep_until) && (isNull _ruin)} do {
         _ruin = nearestObject [_pos, _ruin_type];
         sleep 0.05;
     };
