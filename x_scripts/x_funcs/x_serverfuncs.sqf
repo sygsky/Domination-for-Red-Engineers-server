@@ -710,9 +710,10 @@ XAddPlayerScore = {
 };
 
 // Sends info about player score etc if found it in server cache
+// input params: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 XGetPlayerPoints = {
 	private ["_name", "_index", "_staff", "_sound"];
-	_name = _this;
+	_name = (_this select 1);
 	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
 	//__DEBUG_NET("XGetPlayerPoints",_index)
@@ -721,8 +722,14 @@ XGetPlayerPoints = {
 	if ( (toUpper (_name)) == "YETI") then {
 	    _sound = format["suicide_yeti_%1", floor (random 5)]; // personal suicide sound for yeti (0..4);
 	} else {
-		if (localize "STR_LANG" == "GERMAN") exitWith {_sound = format["suicide_german_%1", floor (random 5)]}; // German player suicide screams (0..4)
-	    _sound = _index call SYG_getSuicideScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
+		// try to find special sound for german players
+		_sound = "";
+		if (count _this > 3 ) then {
+			if ( (_this select 3) == "GERMAN") exitWith {_sound = format["suicide_german_%1", _index mod 5 ]}; // German player suicide screams (0..4)
+		};
+		if (_sound == "") then { // get ordinal sound, not special
+	    	_sound = _index call SYG_getSuicideScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
+	    };
 	};
 	["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
 	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, staff sent to client, suicide snd ""%1"" set +++", _sound];

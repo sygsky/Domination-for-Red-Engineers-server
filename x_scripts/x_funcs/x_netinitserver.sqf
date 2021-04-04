@@ -136,7 +136,7 @@ XHandleNetStartScriptServer = {
             // store server time directly now for better accuracy
             SYG_server_time  = time;       // current server time at the synchonizaton moment
 
-			arg(1) spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance, suicide sound...
+			_this spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance, suicide sound...
 			if ( count _this > 2) then {// missionStart received
 			    private ["_userLogin", "_ind"];
 			    _userLogin = arg(1);
