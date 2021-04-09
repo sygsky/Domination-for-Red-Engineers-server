@@ -708,9 +708,9 @@ SYG_clearArrayA = {
 	if ( count _this < 2) exitWith {[]};
 	if ( (typeName (_this select 0) ) != "ARRAY") exitWith {[]};
 
-	private ["_dst","_src","_arr","_rm","_cnt"];
+	private ["_dst","_src","_arr","_rm","_cnt","_notRM_ME","_item"];
 	_arr = _this select 0;
-	_rm  = _this select 1;
+	_rm  = _this select 1; // this MUST BE string!!!
 	_dst = _arr find _rm;
 	if (_dst < 0) exitWith{ _arr }; // nothing to remove
 	_src = _dst + 1;
@@ -718,8 +718,10 @@ SYG_clearArrayA = {
 //	hint localize "+";
 //	hint localize format["+++ orig: %1, _dst %2, _src %3", _arr, _dst, _src];
 	while { _src < _cnt } do {
-		if ( (_arr select _src) != _rm) then {
-			_arr set [_dst, _arr select _src];
+		_item = _arr select _src;
+		_notRM_ME = if ( typeName _item == "STRING" ) then { _item != _rm } else { true };
+		if ( _notRM_ME ) then {
+			_arr set [ _dst, _item ];
 			_dst = _dst + 1;
 		};
 //		hint localize format["+++ _arr: %1, _src %2", _arr, _src];

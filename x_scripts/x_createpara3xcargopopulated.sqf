@@ -5,8 +5,9 @@
 // creates paratroopers for targeted city + heli to actually transport them
 // Heavily modified by Snooper(Agent) by Engineer request as December 2020 - January 2021
 //
-private ["_type","_startpoint","_attackpoint","_heliendpoint","_number_vehicles","_fly_height","_crew_member","_parachute_type","_make_jump","_stop_it","_current_target_pos","_dummy", "_mti",
-         "_cnt_uni"];
+private ["_type","_startpoint","_attackpoint","_heliendpoint","_number_vehicles","_fly_height","_crew_member",
+		 "_parachute_type","_make_jump","_stop_it","_current_target_pos","_dummy", "_mti","_cnt_uni"];
+
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -84,12 +85,12 @@ _make_jump = {
 		};
 
 		if (!alive _vehicle) exitWith {};
-		if (!canMove _vehicle && !_eject_complete && alive driver _vehicle && alive _vehicle) then {
-			while {alive _vehicle && alive driver _vehicle && (position _vehicle select 2) >= HEIGHT_TO_EJECT && !_eject_complete} do {
+		if (!canMove _vehicle && !_eject_complete && alive _driver_vec && alive _vehicle && !_eject_complete) then {
+			_emergency_eject = true;
+			while {alive _vehicle && alive _driver_vec && (position _vehicle select 2) >= HEIGHT_TO_EJECT &&  (_next_to_eject < _cnt_uni)} do {
 				_cur_uni = _unit_array select _next_to_eject;
 				if (alive _cur_uni ) then {
 					_cur_uni action ["Eject",_vehicle];
-					_emergency_eject = true;
 					unassignVehicle _cur_uni;
 				};
 				_next_to_eject = _next_to_eject + 1;
@@ -98,14 +99,14 @@ _make_jump = {
 			_eject_complete = _next_to_eject >= _cnt_uni;
 		};
 
-		if (!canMove _vehicle && !_eject_complete && alive driver _vehicle && alive _vehicle) then {
-			while {alive _vehicle && alive driver _vehicle && (position _vehicle select 2) < HEIGHT_TO_EJECT && !_eject_complete} do {
+		if (!canMove _vehicle && !_eject_complete && alive _driver_vec && alive _vehicle) then {
+			while {alive _vehicle && alive _driver_vec && (position _vehicle select 2) < HEIGHT_TO_EJECT && !_eject_complete} do {
 				if (position _vehicle select 2 < 2) exitWith {
+					_emergency_eject = true;
 					while {_next_to_eject < _cnt_uni} do {
 						_cur_uni = _unit_array select _next_to_eject;
 						if ( alive _cur_uni ) then {
 							_cur_uni action ["Eject",_vehicle];
-							_emergency_eject = true;
 							unassignVehicle _cur_uni;
 						};
 						_next_to_eject = _next_to_eject + 1;
@@ -116,10 +117,9 @@ _make_jump = {
 			};
 		};
 		
-		if (!alive driver _vehicle) exitWith {};
-		if (!canMove _vehicle && (position _vehicle select 2) >= HEIGHT_TO_EJECT) then {_main_polling_interval = 0.1;};
-		if (!canMove _vehicle && (position _vehicle select 2) < HEIGHT_TO_EJECT) then {_main_polling_interval = 1.123;};
+		if (!alive _driver_vec) exitWith {};
 		if (_eject_complete) exitWith	{};
+		_main_polling_interval = if (!canMove _vehicle && (position _vehicle select 2) >= HEIGHT_TO_EJECT) then { 0.1;} else {1.123};
 		sleep _main_polling_interval;
 	};
 	
@@ -127,18 +127,18 @@ _make_jump = {
 	//if (_stop_me) exitWith {};	
 
 #ifdef __ACE__	
-			// animate heli action
-			if ( _vehicle isKindOf "ACE_CH47D" && alive _vehicle) then {
-				_vehicle animate ["ramp", 1]; // open ramp
-			};
-			sleep 5.0;
+	// animate heli action
+	if ( _vehicle isKindOf "ACE_CH47D" && alive _vehicle) then {
+		_vehicle animate ["ramp", 1]; // open ramp
+	};
+	sleep 5.0;
 #endif	
 	
 	//Regular drop, or emergency drop from chopper with dead pilot
 	if (!_eject_complete && alive _vehicle) then {
-			while {_next_to_eject < _cnt_uni &&  alive _vehicle} do {
+			while {_next_to_eject < _cnt_uni &&  alive _driver_vec} do {
 				_cur_uni = _unit_array select _next_to_eject;
-				if ( alive _cur_uni && canMove _cur_uni) then {
+				if ( alive _cur_uni ) then {
 					_cur_uni action ["Eject",_vehicle];
 					unassignVehicle _cur_uni;
 				};
@@ -161,17 +161,13 @@ _make_jump = {
 	};
 			
 #ifdef __ACE__	
-			// animate heli action - close ramp
-			if ( _vehicle isKindOf "ACE_CH47D"  && alive _vehicle) then	{
-				_vehicle animate ["ramp", 0]; // close ramp
-			};
+	// animate heli action - close ramp
+	if ( _vehicle isKindOf "ACE_CH47D"  && alive _vehicle) then	{
+		_vehicle animate ["ramp", 0]; // close ramp
+	};
 #endif	
 
-	{   
-		if (alive _x && canMove _x) exitWith { 
-			_at_least_one_active = true;
-		};
-	} forEach units _paragrp;
+	_at_least_one_active = ( {alive _x && canStand _x} count units _paragrp) > 0;
 
 	if (_at_least_one_active) then {
 		_leader = leader _paragrp;
@@ -196,7 +192,7 @@ _make_jump = {
 	};
 	
 	while {(_heliendpoint distance (leader _vgrp) > 300)} do {
-		if (isNull _vehicle || !alive _vehicle || !alive _driver_vec || !canMove _vehicle) exitWith {};
+		if ( !alive _vehicle || !alive _driver_vec || !canMove _vehicle) exitWith {};
 		sleep 5.123;
 	};
 
@@ -205,7 +201,7 @@ _make_jump = {
    	    deleteVehicle _x;
 	} forEach ([_vehicle] + crew _vehicle);
 	
-	if (!isNull _driver_vec) then {_driver_vec setDamage 1.1};
+	if ( alive _driver_vec) then {_driver_vec setDamage 1.1};
 	
 };
 
@@ -218,8 +214,7 @@ for "_i" from 1 to _number_vehicles do {
 	_dummy = target_names select current_target_index;
 	_new_current_target_pos = _dummy select 0;
 	if (_new_current_target_pos distance _current_target_pos > 500) exitWith {_stop_it = true;};
-	__WaitForGroup
-	__GetEGrp(_vgrp)
+	_vgrp = call SYG_createEnemyGroup; // __WaitForGroup // __GetEGrp(_vgrp)
 	_heli_type = d_transport_chopper select ((count d_transport_chopper) call XfRandomFloor);
 	_vehicle = createVehicle [_heli_type, _startpoint, [], 150, "FLY"];
 	[ _vehicle, _vgrp, _crew_member, 1.0 ] call SYG_populateVehicle;
@@ -251,7 +246,8 @@ for "_i" from 1 to _number_vehicles do {
 		_vehicle addEventHandler ["killed", {[8,_this select 1] call XAddKillsAI}];
 	};
 	#endif
-	// Chopper is prepared now and waiting for cargo
+
+	// Chopper is prepared now and waiting for the cargo
 	
 	_paragrp = call SYG_createEnemyGroup;
 	_unit_array = ["heli", d_enemy_side] call x_getunitliste;
@@ -271,16 +267,14 @@ for "_i" from 1 to _number_vehicles do {
 		_one_unit addEventHandler ["killed", {[1,_this select 1] call XAddKills;}];
 		#endif
 		#ifdef __AI__
-		if (__RankedVer) then {
-			_one_unit addEventHandler ["killed", {[1,_this select 1] call XAddKillsAI}];
-		};
+		if (__RankedVer) then { _one_unit addEventHandler ["killed", {[1,_this select 1] call XAddKillsAI}]; };
 		#endif
 		_one_unit setSkill ((d_skill_array select 0) + (random (d_skill_array select 1)));
 	};
 	// cargo is created and loaded on the chopper
 	//+++ Sygsky: randomly create pure white or pure black troopers
 	_unit_array call ([SYG_makeNegroMen,SYG_makeWhiteMen] call XfRandomArrayVal);
-	hint localize "+++ x_createpara3xcargopopulated: Desant to town is created purely with white or black faces";
+//	hint localize "+++ x_createpara3xcargopopulated.sqf: Desant to town is created purely with white or black faces";
 	//---
 	
 	if (d_lock_ai_air) then {
@@ -291,12 +285,13 @@ for "_i" from 1 to _number_vehicles do {
 	_vehicle flyInHeight 100;
 	hint localize format["+++ x_createpara3xcargopopulated.sqf: Air assault procedure to current town %2 with %1 starts at pos %3", typeOf _vehicle, _dummy select 1, _startpoint];
 
+	// TODO: may be due to lower lines heli sometimes hungs above atack point up to its disappearance
 	if (mt_radio_down) exitWith {
 		_stop_it = true;
 		[_vehicle] spawn {
 			private ["_vehicle"];
 			_vehicle = _this select 0;
-			sleep 240 + random 100;
+			sleep (240 + (random 100));
 			if (!isNull _vehicle) then {
 				{_x removeAllEventHandlers "killed"; deleteVehicle _x} forEach ([_vehicle] + crew _vehicle);
 			};

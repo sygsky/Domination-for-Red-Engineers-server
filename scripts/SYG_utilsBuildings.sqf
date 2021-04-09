@@ -291,14 +291,14 @@ SYG_isInHouseRect =
 };
 
 //
-// Chhecks if designated object(house) is building with room[s] in it
+// Checks if designated object(house) is building with room[s] in it
 // call: _hasRooms = _house call SYG_isBuilding;
 // returns:true if there is at least one rooom (with buildingPos) in the house, else false. If _house is not "OBJECT", returns false
 //
 SYG_isBuilding = {
 	if (typeName _this != "OBJECT") exitWith { false };
 	if (! (_this isKindOf "House")) exitWith { false };
-	( ( ( _this buildingPos 0 ) distance [0,0,0] ) > 0.1) // so (_this buildingPos 0) is [0,0,0] itrself
+	( ( ( _this buildingPos 0 ) distance [0,0,0] ) > 0.1) // so (_this buildingPos 0) is [0,0,0] itself
 };
 
 //

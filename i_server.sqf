@@ -5,7 +5,7 @@ SYG_AV8B_TYPES = [ "ACE_A10_AGM_FFAR","ACE_A10_AGM_FFAR",/*,"ACE_A10_MK82","ACE_
 if (isServer) then {
 if (!X_InstalledECS) then {
 	// next variables turns on/off some internal AI features
-	// maybe you are using a mod like ECS which allready has an enhanced AI system
+	// maybe you are using a mod like ECS which already has an enhanced AI system
 	// turn on/off Rommels suppression script (true = on), now off as default
 	d_suppression = false; //--- Sygsky
 	// turn on/off smoke, means enemy will throw smoke grenades if true
@@ -451,6 +451,22 @@ _bmp_list =
 			["ACE_Stryker_TOW"] +
 #endif
 			["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"]; // bmp
+
+// TODO: Use in x_deleteempty.sqf to search for the empty western vehicles
+d_veh_types_W = [
+#ifdef __ACE__
+		// ACE only vehicles
+		"ACE_M60","ACE_TOW","ACE_M2A1",
+#else
+		// Arma Gold only vehicles
+		"MK19","M2",
+#endif
+		// Arma Gold common vehicles
+		"M1Abrams","M113","StrykerBase","HMMWV50","Truck5tMG","M119",
+		// DBE1 (Warfare)  common vehicles
+		"TOW_Tripod","M2HD_mini_TriPod","MK19_TriPod","Stinger_Pod",
+		"WarfareBWestMGNest_M240"
+		];
 
 d_veh_a_W = (
 	if (__ACEVer) then {

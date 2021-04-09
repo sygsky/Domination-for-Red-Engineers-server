@@ -2963,7 +2963,7 @@ class Mission
 			vehicle="WarfareBDepot";
 			skill=0.600000;
 			text="depot";
-			init="this setPos [(getpos this select 0),(getpos this select 1), -0.25];this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
+			init="this setPos [(getpos this select 0),(getpos this select 1), -0.25];this addEventHandler [""hit"",{depot setDammage 0}];this addEventHandler [""dammaged"", {depot setDammage 0}];";
 		};
 		class Item227
 		{
@@ -3111,7 +3111,7 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL1";
-			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
+			init="this addEventHandler [""hit"",{WALL1 setDammage 0}];this addEventHandler [""dammaged"", {WALL1 setDammage 0}];";
 		};
 		class Item240
 		{
@@ -3123,7 +3123,7 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL2";
-			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
+			init="this addEventHandler [""hit"",{WALL2 setDammage 0}];this addEventHandler [""dammaged"", {WALL2 setDammage 0}];";
 		};
 		class Item241
 		{
@@ -3135,7 +3135,7 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL3";
-			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
+			init="this addEventHandler [""hit"",{WALL3 setDammage 0}];this addEventHandler [""dammaged"", {WALL3 setDammage 0}];";
 		};
 		class Item242
 		{
@@ -3147,7 +3147,7 @@ class Mission
 			vehicle="WarfareBHesco5x";
 			skill=0.600000;
 			text="WALL4";
-			init="this addEventHandler [""hit"",{this setDammage 0}];this addEventHandler [""dammaged"", {this setDammage 0}];";
+			init="this addEventHandler [""hit"",{WALL4 setDammage 0}];this addEventHandler [""dammaged"", {WALL4 setDammage 0}];";
 		};
 		class Item243
 		{

@@ -12,7 +12,7 @@ _current_target_pos = _dummy select 0;
 _current_target_radius = _dummy select 2;
 _outer_size = 200;
 
-hint localize ["*** x_counterattack.sqf: target ""%1""", _dummy select 1];
+hint localize format["*** x_counterattack.sqf: target ""%1""", _dummy select 1];
 
 // TODO: counterattack on Paraiso should not start on base territory only!
 _counter_pos = _current_target_pos;

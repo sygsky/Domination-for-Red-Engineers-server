@@ -45,13 +45,15 @@ _side_vehs = switch (d_enemy_side) do { // array of arrays of enemy vehicle type
 
 _no = nearestObjects [_pos, _vecs, _radius];
 
+_cnt = 0;
 {
 	_vehicle = _x;
 	if (({alive _x} count (crew _vehicle)) == 0) then {
+	_cnt = _cnt +1;
 		{deleteVehicle _x; sleep 3.321 } forEach [_vehicle] + (crew _vehicle);
 	};
 } forEach _no;
-hint localize format["+++ x_deleteempty.sqf: deleted %1 veh[s] in ""%2""", count _no, _target select 1]; // debug printing
+hint localize format["+++ x_deleteempty.sqf: deleted %1 veh[s] from %2 found (%3 types) in ""%4""", count _no, _cnt, count _vecs, _target select 1]; // debug printing
 _no = nil;
 
 if (true) exitWith {};
