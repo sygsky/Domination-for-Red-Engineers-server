@@ -350,24 +350,20 @@ XHandleNetStartScriptClient = {
 			_this execVM "x_scripts\x_secsolved.sqf";
 		};
 
-		// call: ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred<, _town_players_bonus>] call XSendNetStartScriptClient;
+		// call: ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred<, _town_player_bonus_arr>] call XSendNetStartScriptClient;
 		case "target_clear": {
 			hint localize format["+++ client event ""target_clear"": %1", _this];
 			// playSound "USSR"; // dont play sound as it is already played from town flag
-			private ["_arr","_ind","_bon","_sleep_time"];
+			private ["_arr","_ind","_bon"];
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2); // index in the bonus vehicle list
-			if (count _this > 4) then {
+			if ( count _this > 4 ) then {
 				_arr = _this select 4;// bonus score array [_names_arr, _bonus_arr], if current player is in the _names_arr he receives a bonus award, else not
-				_ind = (_arr select 0) find (name player);
-				_bon = if (_ind >= 0 ) then {
-					// Existance of SYG_townMaxScore means that server knows about this variable too.
-					// And bonus scores are already as points not coefficient for the unknown on server max score value
-					if ( isNil "SYG_townMaxScore" ) then { ( (_arr select 1) select _ind ) * ( d_ranked_a select 9 ) } else { ( (_arr select 1) select _ind ) };
-				} else {0};
-			} else {_bon = -1}; // no bonus info sent from server
+				_ind = ( _arr select 0 ) find ( name player );
+				_bon = if (_ind >= 0 ) then { round( ( (_arr select 1) select _ind )  * (d_ranked_a select 9) ) }  else { 0 }; // Bonus scores here are coefficients for the unknown on server max score values
+			} else { _bon = -1 }; // no bonus info sent from server
 			// inform player about counter attack state (param 0) and town bonus (or its absence) (param 1)
-			[(_this select 3), _bon] execVM "x_scripts\x_target_clear_client.sqf"; // counterattack state is 1st parameter for execVM, player bonus score is 2nd
+			[(_this select 3), _bon] execVM "x_scripts\x_target_clear_client.sqf"; // set counterattack state ias 1st parameter for execVM, set players bonus score is 2nd one
 			call SYG_townStatInit; // reset split score statistics for the next town
 			// send confirmation of bonus score received and added
 			sleep ((_ind * 0.2) max 0.1); // sleep different time for each client to ensure smooth execution of corresponding events on server

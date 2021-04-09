@@ -365,7 +365,7 @@ SYG_townStatCalcScores = {
 	};
 	if ( count _kill_arr > 0 ) then { // play with scores, set relative values
 		for "_id" from 0 to count _kill_arr - 1 do {
-			_kill_arr set [_id, round ((_kill_arr select _id ) / _max ) ]; // [score_coeff1, score_cpeff2 ...]
+			_kill_arr set [_id, (_kill_arr select _id ) / _max ]; // [score_coeff1, score_coeff2 ...]
 		};
 	} else {
     	hint localize "--- SYG_townStatCalcScores: count _kill_arr == 0 !!!";
