@@ -83,7 +83,7 @@ SYG_players_online = []; // collector for online player names
 // hint localize format["+++ DEBUG: town bonus info sent to all players (%1)", _bonus_score_arr];
 _bonus_score_arr spawn {
 	sleep 10; // wait until all online clients send confirmation messages
-	private ["_offline_arr","_arr","_add_arr","_ind","_item"];
+	private ["_offline_arr","_arr","_add_arr","_ind","_item","_add"];
 
 	_arr = (_this select 0); // all town player names array
 	_add_arr = (_this select 1); // all town player town bonus score array
@@ -93,9 +93,9 @@ _bonus_score_arr spawn {
 		hint localize "+++ No fighters involved in the liberation of the city have been found.";
 	} else {
 		{
-			_ind = _arr select _x;
+			_ind = _arr find _x;
 			if (_ind >= 0 ) then  {
-				_add = _add_arr select _ind; // assigned bonus coessficient (as decimal part of 40 score, from 0.0 to 40.0)
+				_add = _add_arr select _ind; // assigned bonus coefficient (as decimal part of 40 score, from 0.0 to 40.0)
 				if (!isNil "SYG_townMaxScore") then { _add = round(_add * SYG_townMaxScore); };
 				hint localize format["+++ Online player town bonus coeff +%1 for ""%2""", _add, _x];
 			};
