@@ -122,7 +122,7 @@ class CfgMusic {
     class merry_xmas    { name=""; sound[] = {\sounds\newyear\merry_xmas.ogg,db+0,1.0};}; // Merry Xmas melody by Kevin Macleod
     class vangelis      { name=""; sound[] = {\sounds\newyear\vangelis.ogg,db+0,1.0};}; // Vangelis - "La petite fille de la mer", 1973
 
-	class stavka_bolshe_chem { name=""; sound[]={\sounds\stavka_bolshe_chem.ogg,db-1,1.0}; };
+	class stavka_bolshe_chem { name=""; sound[]={\sounds\intro\stavka_bolshe_chem.ogg,db-1,1.0}; };
     class four_tankists { name="Czterej Pancerni i Pies, Polska Rzeczpospolita Ludowa film, 1960"; sound[] = {\sounds\intro\4tankists.ogg,db-1,1.0};} // from PRL film "4 tankists and dog"
 
     class burnash	{ name="";	      sound[]=   {\sounds\burnash.ogg,db-1,1.0};     };
@@ -184,6 +184,7 @@ class CfgMusic {
     class del_vampiro2 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro2.ogg,db-1,1.0};} // intro music, Italian film "L'amante del Vampiro"
     class zaratustra { name="Thus Sprach Zarathustra, Richard Strauss"; sound[] = {\sounds\intro\zaratustra.ogg,db-1,1.0};} // intro music, "Thus Sprach Zarathustra", Richard Strauss
     class bolivar { name="'The roads we take' film music, 1962, Leonid Haiday"; sound[] = {\sounds\intro\bolivar.ogg,db-1,1.0};} // intro music
+    class peregrinus { name="'Alexander Nevsky' film music by Sergei Prokofiev, 1938, episode 'Expectans Peregrinus'"; sound[] = {\sounds\intro\peregrinus.ogg,db-1,1.0};} // intro music
 
 //+++++++++++++++++++++++++++++++++++++ MORZE for Rokse [LT] +++++++++++++++++++++++++++++++++++++++++++++++++++++
     class morze   { name="Morze about Sahrani island"; sound[] = {\sounds\intro\morze\morze.ogg,db+0,1.0};}; // Morze packed message in Russian...

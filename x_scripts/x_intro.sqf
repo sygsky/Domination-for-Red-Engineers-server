@@ -90,7 +90,7 @@ if (_sound == "") then { // select random music for ordinal day
             ];
             _sounds  =
             [
-                ["amigohome_ernst_bush","amigohome_ernst_bush","zaratustra"],
+                ["amigohome_ernst_bush","ddrhimn","zaratustra"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
                 ["hungarian_dances","hungarian_dances","hungarian_dances"],
@@ -112,6 +112,9 @@ if (_sound == "") then { // select random music for ordinal day
                 { [ _personalSounds, ["from_russia_with_love","bond1","bond"] ] call SYG_addArrayInPlace } forEach [1,2,3];
             }; // as you are some kind of spy
 
+            // add some rarely heard music now if no personal music set
+
+
 #ifdef __TIME_OF_DAY_MISIC__
             // music to play day and night
             _night_music = [
@@ -129,21 +132,27 @@ if (_sound == "") then { // select random music for ordinal day
             ];
 
             // only night music
-            _music = _night_music + _personalSounds;
+//            _music = _night_music + _personalSounds;
+            _music = +_night_music;
+            if ( count _personalSounds > 0 ) then {
+	            [_music, _personalSounds] call SYG_addArrayInPlace;
+            } else {
+            		[_music, ["ddrhimn", "4tankists","four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
+            };
             // if day time add day music too
             if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { [_music, _daytime_music] call SYG_addArrayInPlace };
             _music_cnt = count _music;
             _music = _music call _XfRandomArrayVal;
 #else
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
-            [
+            [	// most common sounds list
                 "bond","grant","burnash","adjutant","lastdime","lastdime2","lastdime3",
                 "mission_impossible","bond1","prince_negaafellaga","strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio",
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","travel_with_friends","on_thin_ice"
+                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","travel_with_friends","on_thin_ice","peregrinus"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
