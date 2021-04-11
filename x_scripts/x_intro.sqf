@@ -121,7 +121,8 @@ if (_sound == "") then { // select random music for ordinal day
                 "bond","bond1","adjutant","prince_negaafellaga","total_recall_mountain","adagio","morze","morze_3",
                 "treasure_island_intro","fear2","soviet_officers","cosmos","manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","del_vampiro1",
-                "del_vampiro2","zaratustra","bolivar","jrtheme","vague","enchanted_boy","robinson_crusoe"
+                "del_vampiro2","zaratustra","bolivar","jrtheme","vague","enchanted_boy","robinson_crusoe","bloody",
+                "peregrinus"
             ];
 
             // music to play only in day time
@@ -137,7 +138,7 @@ if (_sound == "") then { // select random music for ordinal day
             if ( count _personalSounds > 0 ) then {
 	            [_music, _personalSounds] call SYG_addArrayInPlace;
             } else {
-            		[_music, ["ddrhimn", "4tankists","four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
+            	[_music, ["ddrhimn", "4tankists","four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
             };
             // if day time add day music too
             if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { [_music, _daytime_music] call SYG_addArrayInPlace };
@@ -152,7 +153,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","travel_with_friends","on_thin_ice","peregrinus"
+                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","travel_with_friends","on_thin_ice","peregrinus","peregrinus"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
