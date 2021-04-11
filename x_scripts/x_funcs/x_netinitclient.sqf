@@ -640,6 +640,8 @@ XHandleNetStartScriptClient = {
 
 		case "x_wreck_repair": {
 			__compile_to_var
+			// x_wreck_repair = [_type_name, _name, 0, _player ];  if start wreck repair or
+			// x_wreck_repair = [_type_name, _name, 1]; if end of wreck repair
 			switch (x_wreck_repair select 2) do {
 				case 0: { // start of restore procedure
 					//	x_wreck_repair = [_type_name, _name, 0, name _player ];
@@ -655,7 +657,7 @@ XHandleNetStartScriptClient = {
 						} else {
 							 _str = "";
 						};
-							(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1), _str]) call XfHQChat; // "Restoring %1 at %2 (%3), this will take some time..."
+						(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1), _str]) call XfHQChat; // "Restoring %1 at %2 (%3), this will take some time..."
 					};
 				};
 				case 1: {
