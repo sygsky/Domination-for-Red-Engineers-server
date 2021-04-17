@@ -19,7 +19,7 @@ _counterattack_occurred = _this; // Counter attack was started and finished (tru
 _town = call SYG_getTargetTown; // town def array
 if ( count _town > 0 ) then {// town is defined
 
-    hint localize format["+++ find bonus vehicle for town %1 (big_town_radious = %2)", _town, big_town_radious];
+    hint localize format["+++ find bonus vehicle for town %1 (big_town_radious %2)", _town, big_town_radious];
     // new feature to select main target bonus indexes
 	if ( (_town select 2) >= big_town_radious ) then { // select from best vehicles (big bonus)
 	    extra_bonus_number = mt_big_bonus_params call SYG_findTargetBonusIndex;
@@ -122,7 +122,7 @@ _bonus_score_arr spawn {
 						_add = round(_add * SYG_townMaxScore);
 						_item set [3, (_item select 3) + _add]; // add town bonus score to the player
 					};
-					hint localize format["+++ Offline player ""%1"" town bonus coeff +%1", _x, _add];
+					hint localize format["+++ Offline player ""%1"" town bonus value +%2", _x, _add];
 				};
 			};
 		} forEach _offline_arr;

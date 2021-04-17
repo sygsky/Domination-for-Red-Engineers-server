@@ -732,7 +732,7 @@ XGetPlayerPoints = {
 	    };
 	};
 	["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
-	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg  received, staff sent to client, suicide snd ""%1"" set +++", _sound];
+	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg for ""%1"" received,  staff (scores %2) sent to the client, suicide snd ""%3"" +++", _name, d_player_stuff select 3, _sound];
 };
 
 // calls as follow: _near_enemy_arr = _grp_array call x_get_nenemy
