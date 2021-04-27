@@ -1,5 +1,5 @@
 ﻿// by Xeno, x_scripts/x_target_clear_client.sqf
-// parameters _this is [counter attack state (true if counterattack occured or false if not), _player_bonus_score_for_finished_town]
+// parameters _this is [counter attack state (true if counterattack occured or false if not), _player_bonus_score_for_finished_town, _all_players_names_and_bonus_array]
 //
 if (!X_Client) exitWith {};
 hint localize format["+++ DEBUG: x_target_clear_client.sqf: counterattack is %1, town bonus to player %2", _this select 0, _this select 1];
@@ -69,6 +69,14 @@ if (client_target_counter < number_targets) then {
 			// _score < 0 (-1): last target cleared, print farewell message
 			( localize "STR_SYS_1102_4" ) call XfHQChat;
 		};
+
+		if (count _this  > 2) then { // todo: find player[s] with maximum city liberation bonus and inform the player about about
+			_arr = _this select 2;
+			 if ( typeOf _arr != "ARRAY" ) exitWith { hint localize format["--- expected town bonus array not ARRAY (%1)", typeOf (_this select 2)]; }; // --- not array
+			 if ( count _arr == 0 ) exitWith { hint localize "--- expected town bonus array length is zero"; }; // --- empty array
+			_arr = _arr call SYG_mainTownBonusInfoStr; // get info str on main town bonus scores
+			( format["%1. %2",_arr select 0, _arr select 1]) call XfHQChat; // "Max bonus %1. Min bonus %1"
+		}
 	};
 #endif
 

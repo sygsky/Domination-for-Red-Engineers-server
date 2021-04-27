@@ -373,4 +373,32 @@ SYG_townStatCalcScores = {
 	[ _name_arr, _kill_arr ]
 };
 
+// Called only on client:
+// call as: _info_arr = [_names_arr, _bonus_coeffs_arr] call SYG_mainTownBonusInfoStr;
+// where _info_arr: [_best_players_info, _worst_player_info]
+//
+SYG_mainTownBonusInfoStr = {
+	if(isServer) exitWith {["---Can't be called on server","---Can't be called on server"]};
+	private ["_names","_coeffs","_max_town_bonus","_min","_max","_i","_bonus","_best_str","_worst_str"];
+	_names  = _this select  0;
+	_coeffs = _this select 1;
+	_max_town_bonus = (d_ranked_a select 9);
+	_min = 100000;
+	_max = 0;
+	for "_i" from 0 to (count _names - 1) do {
+		_bonus = round ((_coeffs select _i) * _max_town_bonus);
+		if ( _bonus  < _min ) then { _min = _bonus};
+		if ( _bonus  > _max ) then { _max = _bonus};
+	};
+	_best_str = "";
+	_worst_str = "";
+	for "_i" from 0 to (count (_arr select 0) - 1) do {
+		_bonus = round ((_coeffs select _i) * _max_town_bonus);
+		if (_bonus == _max) then {  _best_str = format["%1%2""%3"":%4", _best_str, if (_best_str == "") then {""} else {","},_names select _i, _bonus ] } else  {
+			if (_bonus == _min) then { _worst_str = format["%1%2""%3"":%4", _worst_str, if (_worst_str == "") then {""} else {","},_names select _i, _bonus ] };
+		};
+	};
+	[format[localize "STR_SYS_MTBONUS_MAX", _best_str],format[localize "STR_SYS_MTBONUS_MIN", _worst_str]]
+}
+
 // EOF

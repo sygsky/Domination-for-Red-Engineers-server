@@ -738,9 +738,17 @@ STR_SYS_608_1,"You will spend points on this jump: %1, %2 for the jump and %3 fo
 STR_SYS_609,!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!,!!!!!!!!!!!! Sie brauchen einen Fallschirm pack zuerst !!!!!!!!!!!,!!!!!!!!!!!! ¡Necesitas un paracaídas !!!!!!!!!!!,!!!!!!!!!!!! Вам нужен парашют !!!!!!!!!!!
 STR_SYS_609_1,You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?,"Man merkt endlich, dass Fallschirmspringen einen Fallschirm erfordert ! Aber es ist spät... Frage: - warum habe ich für diesen Sprung bezahlt?",¡Te das cuenta de que se necesitaba un paracaídas para saltar! Pero es tarde... Último pensamiento: - ¿Devolverán los puntos?,"Внезапное озарение - для прыжка был нужен парашют! Но поздно... Последняя мысль: - Вернут ли очки?"
 STR_SYS_609_2,"You can jump without a parachute all you want.","Du kannst ohne Fallschirm springen, so viel du willst.","Puedes saltar sin paracaídas todo lo que quieras.","Вы можете прыгать без парашюта сколько угодно."
-STR_SYS_609_3,Jump costs -%1,Fallschirmsprungausgaben -%1,Gastos de paracaidismo -%1,Затраты на прыжок -%1
-STR_SYS_609_4,"Because of a bad feeling, you decided not to jump...","Wegen eines schlechten Gefühls hast du dich entschieden, nicht zu springen...","Debido a un mal presentimiento, decidiste no saltar...","Из-за плохих предчувствий Вы решили не прыгать..."
+STR_SYS_609_3,Jump costs -%1,Fallschirmspringen Kosten -%1,Gastos de paracaidismo -%1,Затраты на прыжок -%1
+
+STR_SYS_JUMP_NUM,3,3,3,3
+STR_SYS_JUMP_0,"Because of a bad feeling, you decided not to jump...","Wegen eines schlechten Gefühls hast du dich entschieden, nicht zu springen...","Debido a un mal presentimiento, decidiste no saltar...","Из-за плохих предчувствий Вы решили не прыгать..."
+STR_SYS_JUMP_1,"I don't feel like skydiving... I'd rather go to sleep.","Mir ist nicht nach Fallschirmspringen zumute... Ich würde lieber schlafen gehen.","No tengo ganas de hacer paracaidismo... prefiero ir a dormir","Что-то прыгать с парашютом расхотелось...лучше пойду посплю"
+STR_SYS_JUMP_2,"You're looking up at the sky and... don't dare to jump!","Du schaust in den Himmel und... traust dich nicht zu springen!","Estás mirando al cielo y... ¡no te atrevas a saltar!","Вы смотрите в небо и... не решаетесь прыгать!"
+
 STR_SYS_609_5,"Thanks to your life experience (and rank!), you  got rid of your parachute.","Dank deiner Lebenserfahrung bist du den Fallschirm losgeworden","Gracias a tu experiencia de vida, te deshiciste del paracaídas","Благодаря жизненному опыту (звания дают не зря!) Вы избавились таки от парашюта"
+
+STR_SYS_MTBONUS_MAX,Max bonus %1,Max. Bonus %1,Bono máximo %1,Макс. очки у %1
+STR_SYS_MTBONUS_MIN,Min bonus %1,Min. Bonus %1,Bono mínimo %1,Мин. очки у %1
 
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Su equipo está registrado y se emitirá la próxima vez,Ваше снаряжение записано и будет выдано в следующий раз
 STR_SYS_612,You've got the equipment recorded the last time,"Sie haben die Ausrüstung, erfasst der letzten Zeit",Se le dio el equipo de la Última vez,Вам выдано снаряжение с прошлого раза
@@ -754,7 +762,7 @@ STR_SYS_620,"Here it is - lying on the shore! If I collect it in 2 minutes, the 
 STR_SYS_620_0,"My weapon drowned, maybe I can find something on the beach nearby?","Meine Waffe ist ertrunken, vielleicht kann ich am Strand in der Nähe etwas finden?","El arma se ahogó, así que tal vez en la orilla de Naidu?","Оружие утопил, так может на берегу найду?"
 STR_SYS_620_1,You drowned your weapons foreve-e-e-er,Du hast deine Waffen für immer ertränkt,,Утопил я оружие своё-о-о... безвозвратно-о-о!
 STR_SYS_620_2,"I just need to get out on a gentle Bank, so I'll find it faster...","Ich muss nur auf eine sanfte Bank gehen, damit ich es schneller finde...","Solo tienes que salir a la suave orilla, es más fácil buscar...","Надо только выбраться на пологий берег, проще искать..."
-STR_SYS_620_3,depth %1 m.,tiefe %1 m.,C. 1 m.,гл. %1 м.
+STR_SYS_620_3,depth %1 m.,tiefe %1 m.,Prof. 1 m.,гл. %1 м.
 
 STR_SYS_630,The waters of the oceans closed over the shamefully lost %1 (%2 m.). Someone has to be shot for this!,Das Wasser der Ozeane schloss sich über dem schändlich verlorenen %1 ( %2 m.). Dafür muss jemand erschossen werden!,Las aguas de los océanos del mundo se cerraron sobre el vergonzosamente perdido %1 ( %2 m). ¡Alguien tiene que ser fusilado por esto!,Воды мирового океана сомкнулись над постыдно утерянным %1 ( %2 м.). Кого-то предстоит за это расстрелять!
 STR_SYS_630_1,The lost %1 can still be restored if it is delivered to the appropriate service!,"Das verlorene %1 kann noch wiederhergestellt werden, wenn es an den entsprechenden service geliefert wird!",¡El %1 perdido aún se puede salvar si se entrega al Servicio de renacimiento!,"Утерянный %1 можно ещё спасти, если доставить на сервис возрождения!"

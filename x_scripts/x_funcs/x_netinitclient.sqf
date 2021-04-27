@@ -357,17 +357,25 @@ XHandleNetStartScriptClient = {
 			private ["_arr","_ind","_bon"];
 			target_clear = (_this select 1);
 			extra_bonus_number = (_this select 2); // index in the bonus vehicle list
+			_arr = []; // set default bonus score array empty
+			_bon = -1;// default value as if no bonus info sent from server
 			if ( count _this > 4 ) then {
 				_arr = _this select 4;// bonus score array [_names_arr, _bonus_arr], if current player is in the _names_arr he receives a bonus award, else not
 				_ind = ( _arr select 0 ) find ( name player );
-				_bon = if (_ind >= 0 ) then { round( ( (_arr select 1) select _ind )  * (d_ranked_a select 9) ) }  else { 0 }; // Bonus scores here are coefficients for the unknown on server max score values
-			} else { _bon = -1 }; // no bonus info sent from server
+				if (_ind >= 0) then { // Informing the server that the player is online
+					((_ind * 0.2) max 0.1) spawn {
+						// send confirmation of bonus score received and added
+						sleep _this; // sleep different time for each client to ensure smooth execution of corresponding events on server
+						["d_ad_sc", name player] call XSendNetStartScriptServer;
+					};
+					_bon = round( ( (_arr select 1) select _ind )  * (d_ranked_a select 9) ); // // Bonus scores here are coefficients for the unknown on server max score values
+				} else { _bon = 0 };
+			};
+			
 			// inform player about counter attack state (param 0) and town bonus (or its absence) (param 1)
-			[(_this select 3), _bon] execVM "x_scripts\x_target_clear_client.sqf"; // set counterattack state ias 1st parameter for execVM, set players bonus score is 2nd one
+			[(_this select 3), _bon, _arr] execVM "x_scripts\x_target_clear_client.sqf"; // set counterattack state ias 1st parameter for execVM, set players bonus score is 2nd one
 			call SYG_townStatInit; // reset split score statistics for the next town
-			// send confirmation of bonus score received and added
-			sleep ((_ind * 0.2) max 0.1); // sleep different time for each client to ensure smooth execution of corresponding events on server
-			["d_ad_sc", name player] call XSendNetStartScriptServer;
+
 		};
 
 		//+++ Sygsky: added for airbase take mission (before any towns)
