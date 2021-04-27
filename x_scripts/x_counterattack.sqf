@@ -12,8 +12,6 @@ _current_target_pos = _dummy select 0;
 _current_target_radius = _dummy select 2;
 _outer_size = 200;
 
-hint localize format["*** x_counterattack.sqf: target ""%1""", _dummy select 1];
-
 // TODO: counterattack on Paraiso should not start on base territory only!
 _counter_pos = _current_target_pos;
 _counter_rad = _current_target_radius + _outer_size;
@@ -54,10 +52,30 @@ sleep (120 + random 120);
 
 ["an_countera", "start_real"] call XSendNetStartScriptClient;
 
+_basic_num = 0;
+_specops_num = 0;
+_tank_num = 0;
+_bmp_num = 0;
+
 for "_xx" from 0 to (count _type_list_attack - 1) do {
 	_typeidx = _type_list_attack select _xx;
+	switch (_typeidx) do {
+		case "basic" : {
+			_basic_num = _number_basic * (_typeidx select _xx);
+		};
+		case "specops":  {
+			_specops_num = _number_specops * (_typeidx select _xx);
+		};
+		case "tank":  {
+			_tank_num = _number_tank * (_typeidx select _xx);
+		};
+		case "bmp":  {
+			_bmp_num = _number_bmp * (_typeidx select _xx);
+		};
+	};
 	call compile format["if (_number_%1 > 0) then {for ""_i"" from 1 to _number_%1 do {[_typeidx select 0, _start_array, _current_target_pos, _typeidx select 1, ""attack"",d_enemy_side,0,-1.111] execVM ""x_scripts\x_makegroup.sqf"";sleep 5.123;};};",_typeidx select 0];
 };
+hint localize format["*** x_counterattack.sqf: target ""%1"", basic  %2,  specops %3, tank %4, bmp %5", _dummy select 1, _basic_num, _specops_num, _tank_num, _bmp_num];
 
 _start_array = nil;
 _type_list_attack = nil;
