@@ -88,7 +88,7 @@ onMapSingleClick "";
 
 if (d_cancelled) exitWith {
     hint localize "*** player cancelled parajump dialog";
-    (localize "STR_SYS_609_4") call XfHQChat; // "Because of your poor health, You decided not to jump"
+    (localize ("STR_SYS_JUMP_NUM" call SYG_getRandomText)) call XfHQChat; // "Because of your poor health, You decided not to jump"
     playSound "return";
 };
 
