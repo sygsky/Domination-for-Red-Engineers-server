@@ -46,8 +46,7 @@ SYG_getRandomText = {
 	call compile format["_counter=%1;", localize _this];
 	_chars = toArray _this;
 	_base = [];
-	for "_i" from 0 to count _chars - 4 do
-	{
+	for "_i" from 0 to count _chars - 4 do {
 	    _base set [_i, argp(_chars, _i)];
 	};
 	//hint localize format["SYG_getRandomText: _counter = %5; %1 ->%2 -> %3 -> %4", _this, _chars, _base, toString(_base), _counter];
@@ -97,18 +96,17 @@ SYG_getRumourText = {
 // call as: _str = [_arr,", "] call SYG_joinArr; // _str -> "item1, item2, item3"
 //
 SYG_joinArr = {
+    if ( typeName _this != "ARRAY" ) exitWith {"--SYG_joinArr:?#1"};
+    if ( count _this < 2 ) exitWith {"--SYG_joinArr:?#2"};
+    if ( typeName (_this select 0) != "ARRAY" ) exitWith {"--SYG_joinArr:?#3"};
+    if ( count (_this select 0) == 0 ) exitWith {"--SYG_joinArr:?#4"};
     private [ "_sep", "_arr", "_str", "_i" ];
-    if ( typeName _this != "ARRAY" ) exitWith {"?#1"};
-    if ( count _this < 2 ) exitWith {"?#2"};
-    if ( typeName (_this select 0) != "ARRAY" ) exitWith {"?#3"};
-    if ( count (_this select 0) == 0 ) exitWith {"?#4"};
-    private ["_str", "_sep", "_arr"];
     _sep = _this select 1;
     if ( typeName _sep != "STRING" ) then { _sep = str(_sep) };
     _arr = _this select 0;
-    _str = _arr select 0;
+    _str = format["%1", _arr select 0];
     if ( count _arr == 1) exitWith {_str};
-    for "_i" from 1 to ((count _arr) - 1) do{ _str = format[ "%1%2%3", _str, _sep, _arr select _i] };
+    for "_i" from 1 to ((count _arr) - 1) do { _str = format[ "%1%2%3", _str, _sep, _arr select _i] };
     _str
 };
 
