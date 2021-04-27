@@ -138,7 +138,7 @@ if (_sound == "") then { // select random music for ordinal day
             if ( count _personalSounds > 0 ) then {
 	            [_music, _personalSounds] call SYG_addArrayInPlace;
             } else {
-            	[_music, ["ddrhimn", "4tankists","four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
+            	[_music, ["ddrhimn", "four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
             };
             // if day time add day music too
             if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { [_music, _daytime_music] call SYG_addArrayInPlace };
