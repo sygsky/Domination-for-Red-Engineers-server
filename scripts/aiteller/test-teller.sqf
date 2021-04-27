@@ -24,7 +24,7 @@ private [""];
 _mainArray =
 [
     [1,2,3,4], // initial options available after start, different for each call
-    [ 1, [[1,0.5],[2,0.5]], "What is you name ?", ["%0","I'm not chief in this group, find and ask him about anything"]],
+    [ 1, [[1,0.5],[2,0.5]], "What is you name ?", ["%1","I'm not chief in this group, find and ask him about anything"]],
     [ 2, {_this == 2}, "Do you smoke?", ["None", "Yes", "Not you business, sorry", "I'm too young, h-m..."]],
     [ 3, {_this < 2}, "Are you married?", ["yes", "not", "not you business", "how about you"]],
     [ 4, {_this > 0}, "Where are you living?", ["In %4", "And you?"]]

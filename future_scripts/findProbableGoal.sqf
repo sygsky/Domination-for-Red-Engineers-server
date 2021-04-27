@@ -57,7 +57,7 @@ _readAction = {
     private "_moves";
     _moves = getText (
         configFile >> "CfgVehicles" >> (typeOf arg(0)) >> "moves"
-    );
+    ));
     configFile >> _moves >> "Actions" >>
         getText (
             configFile >> _moves >> "States" >> animationState arg(0) >> "actions"

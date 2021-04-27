@@ -38,13 +38,13 @@ switch (_sim) do
 	//-15%
 	case "helicopter": 
 	{
-		_realMaxSpeed = _maxSpeed - (_maxSpeed * 0.15);
+		_realMaxSpeed = _maxSpeed * 0.85;
 	};
 	
 	//-20%
 	case "airplane": 
 	{
-		_realMaxSpeed = _maxSpeed - (_maxSpeed * 0.2);
+		_realMaxSpeed = _maxSpeed * 0.8;
 	};
 	
 	//-0%
