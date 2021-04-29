@@ -81,7 +81,7 @@ SYG_musicTrackCount = {
 // Corazol (center of island with radious 500 m) sounds
 SYG_defeatTracks =
 [
-    ["Delerium_Wisdom","pimbompimbom","vendetta"],
+    ["Delerium_Wisdom","pimbompimbom","vendetta","take_five"],
     ["Gandalf_Simades","whold","end","radionanny"],
     ["ATrack9","ATrack10","ATrack14"],
     ["ATrack16","ATrack17","ATrack18"],
@@ -134,7 +134,7 @@ SYG_baseDefeatTracks =
     "tezcatlipoca","village_ruins","yma_sumac","yma_sumac_2","aztecs","aztecs2","aztecs3","aztecs4","aztecs5","aztecs6",
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
-    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone",
+    "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone","take_five",
     ["cosmos", [0,8.281] ],
     ["cosmos", [14.25,9.25] ],
     ["cosmos", [28.8,-1] ],
