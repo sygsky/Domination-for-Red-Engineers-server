@@ -428,7 +428,7 @@ SYG_holidayTable =
     [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
     [ 2,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
-    [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
+    [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
     [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhimn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
     [29, 10, "komsomol","STR_HOLIDAY_28_OCT",0], // Komsomol day
     [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
