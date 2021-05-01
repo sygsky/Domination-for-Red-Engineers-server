@@ -49,7 +49,7 @@ if (client_target_counter < number_targets) then {
 		//_dist = d_ranked_a select 10;
 	    _score = _this select 1;
 		if ( _score > 0 ) then {
-		    _strBonus = format[ localize "STR_SYS_1102_1", _score ]; // "points (%1) and "
+		    _strBonus = format[ localize "STR_SYS_1102_1", _score, if (_score == (d_ranked_a select 9)) then {" MAX"} else {""} ]; // "points (%1%2) and "
 		    // #412 add score per town only if you get positive points for this town
 		    if (_this select 0) then { // counterattack occured
 		    	_strCountera = localize "STR_SYS_1102_3"; // "and repelling a counterattack "

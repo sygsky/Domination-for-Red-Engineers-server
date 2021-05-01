@@ -789,7 +789,7 @@ STR_SYS_1101_1,The enemy has finally fled. You just have to clean up the last oc
 
 STR_SYS_1102,For the liberation of the settlement %1you gets %2%3!,Für die Befreiung der Siedlung %1bekommt Ihre Gruppe %2%3!,"¡Para liberar la ciudad %1tu grupo obtiene %2%3!",За освобождение города %1Вы получаете %2%3!
 STR_SYS_1102_0,"For the liberation of a settlement the team receives (+%1). You did not participate in the liberation of the city!","Für die Befreiung einer Siedlung erhält das Team (+%1). Du hast dich nicht an der Befreiung der Stadt beteiligt!","Por la liberación de un asentamiento el equipo recibe (+%1). ¡No has participado en la liberación de la ciudad!","За освобождение населённого пункта команда получает (+%1). Вы в освобождении города вплотную не участвовали!"
-STR_SYS_1102_1,"points (+%1) and ","Punkte (+%1) und ","puntos (+%1) y ","очки (+%1) и "
+STR_SYS_1102_1,"points (+%1%2) and ","Punkte (+%1%2) und ","puntos (+%1%2) y ","очки (+%1%2) и "
 STR_SYS_1102_3,"and repelling a counterattack ","und Konterangriff ","y contraatacar ","и отбитие контратаки "
 STR_SYS_1102_4,"You have liberated the last city! The islanders are grateful. And the homeland won't forget!","Du hast die letzte Stadt befreit! Die Inselbewohner sind dankbar. Und die Heimat wird es nicht vergessen!","¡Has liberado la última ciudad! Los isleños están agradecidos. Y la patria no lo olvidará","Вы освободили последний город! Островитяне благодарны. А Родина - не забудет!"
 
