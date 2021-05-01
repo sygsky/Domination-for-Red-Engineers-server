@@ -2,7 +2,7 @@
 private ["_pos_array", "_poss", "_endtime", "_side_crew", "_pilottype", "_wrecktype", "_wreck", "_owngroup",
          "_pilot1", "_owngroup2", "_pilot2", "_hideobject", "_is_dead", "_pilots_at_base", "_rescued", "_winner",
          "_time_over", "_enemy_created", "_nobjs", "_estart_pos", "_unit_array", "_ran", "_i", "_newgroup", "_units", "_leader",
-         "_pilots_arr"];
+         "_pilots_arr", "_arr"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -107,8 +107,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                 _pilot = _x;
                 {
                     if ((isPlayer _x) && ((format ["%1", _x] in d_can_use_artillery) || (leader group _x == _x))) exitWith {
-                        if ((_x distance _pilot) < _dist) then
-                        {
+                        if ((_x distance _pilot) < _dist) then {
                             _rescue = _x;
                             _dist = _x distance _pilot;
                         };
@@ -121,16 +120,18 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 
         if (_dist < 20) then {
             _rescued = true;
+            _arr = []; // captive pilots array
             {
-              if (alive _x) then
-              {
+              if (alive _x) then {
                 _x setUnitPos "AUTO";
                 _x enableAI "MOVE";
                 [_x] join objNull;
                 sleep 0.1;
                 [_x] join _rescue;
+                _arr set [count _arr, _x]; // add joined pilot to the captive array
               };
             } forEach _pilots_arr;
+            ["make_ai_friendly",_arr] call XSendNetStartScriptClientAll;
             ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 2, 2] call XSendNetStartScriptClient; // "Good job! The rescue of helicopter crew was successful"
         };
               ////////////////////////////////////////////

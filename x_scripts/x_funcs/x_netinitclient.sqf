@@ -604,8 +604,18 @@ XHandleNetStartScriptClient = {
 			hint format ["The %1 team solved the main target mission and gets 3 points.", _killedby2];
 		};
 		#endif
-		case "make_ai_captive": {
-			(_this select 1) setCaptive true;
+
+		// _this = ["make_ai_friendly",_unit_arr]
+		case "make_ai_friendly": { // [previous name was "make_ai_captive"
+			private ["_arr"];
+			_arr = _this select 1;
+			if ( typeName _arr == "GROUP" ) then { _arr = units _arr } else {
+				if ( typeName _arr != "ARRAY" ) then { _arr = [_arr] };
+			};
+			{
+				_x setCaptive true; if ((rating _x) < 0) then {_x addRating (2500 - (rating _x)}; )
+			} forEach _arr;
+
 		};
 		case "mr1_in_air": {
 			__compile_to_var

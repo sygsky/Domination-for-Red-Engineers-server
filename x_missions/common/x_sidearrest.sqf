@@ -43,7 +43,7 @@ while {!_offz_at_base && !_is_dead} do {
                     [_officer] join grpNull; // stronger (possibly) remove action, as ordinal work good not all times
                     sleep 0.1;
                     [_officer] join (group _x);
-                    ["make_ai_captive",_officer] call XSendNetStartScriptClient;
+                    ["make_ai_friendly",_officer] call XSendNetStartScriptClientAll;
                     hint localize format["+++ x_sidearrest.sqf: nearest to officer man is %1(%2), is leader = %3", _x, name _x, (leader _x) == _x];
                 };
                 sleep 0.01;
@@ -104,7 +104,7 @@ while {!_offz_at_base && !_is_dead} do {
                     _rescued = true;
                     [_officer] join (leader _x);
                     _officer setCaptive true;
-                    ["make_ai_captive",_officer] call XSendNetStartScriptClientAll;
+                    ["make_ai_friendly",_officer] call XSendNetStartScriptClientAll;
                     hint localize format["+++ x_sidearrest.sqf: nearest to officer player is %1(%2), is %3 leader", _x, name _x, (leader _x) == _x];
                 };
             };
