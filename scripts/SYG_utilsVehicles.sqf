@@ -923,8 +923,7 @@ SYG_sideStaticWeapons = {
 SYG_sideStat = {
 	private [ "_side","_pos","_arr","_men","_statics","_tanks","_bmps","_cars","_aa","_canons","_c1arr","_c2arr" ];
 	_side = arg(0);
-	if (typeName _side == "OBJECT") then 
-	{
+	if (typeName _side == "OBJECT") then {
 		_side = side _side;
 	};
 	if ( typeName _side != "SIDE" ) exitWith {hint localize format["--- SYG_sideStat: expected side illegal ""%1""", _side];[0,0,0,0,0,0]};
@@ -944,35 +943,25 @@ SYG_sideStat = {
 	_c1arr   = [];
 	_c2arr   = [];
 	{
-		if (_side == side _x) then
-		{
+		if (_side == side _x) then {
 			if ( _x isKindOf "CAManBase") then {_men = _men +1;}
 			else {
-				if ( _x isKindOf "StaticWeapon") then 
-				{
-					if ( _x isKindOf "Stinger_Pod" ) then 
-					{
+				if ( _x isKindOf "StaticWeapon") then {
+					if ( _x isKindOf "Stinger_Pod" ) then{
 						_aa = _aa +1;
-					} 
-					else 
-					{
-						if ( _x isKindOf "D30" || _x isKindOf "M119" ) then
-						{
+					} else {
+						if ( _x isKindOf "D30" || _x isKindOf "M119" ) then {
 							_canons = _canons + 1;
-						}
-						else { _statics = _statics +1;};
+						} else { _statics = _statics +1;};
 					};
 				} 
 				else {
-					if ( _x isKindOf "Tank") then 
-					{
+					if ( _x isKindOf "Tank") then {
 						if ( _x isKindOf "T72" || _x isKindOf "M1Abrams") then {_tanks = _tanks+1;}
 						else { _bmps = _bmps +1; };
 					} else {
-						if ( _x isKindOf "Car") then 
-						{
-							if ( _x isKindOf "StrykerBase"  || _x isKindOf "BRDM2") then
-							{ 
+						if ( _x isKindOf "Car") then {
+							if ( _x isKindOf "StrykerBase"  || _x isKindOf "BRDM2") then {
 								if ( ! ((typeOf _x) in ["BMP2_MHQ","BMP2_MHQ_unfolded","M113_MHQ","M113_MHQ_unfolded"]) ) then {_bmps = _bmps +1;};
 							} else {_cars = _cars+1;};
 						};
@@ -980,7 +969,7 @@ SYG_sideStat = {
 				};
 			};
 		};
-	}forEach _arr;
+	} forEach _arr;
 	_arr = [];
 	[_men, _statics, _tanks, _bmps, _cars, _aa, _canons];
 //	hint localize format["SYG_sideStat: size %1, men %2, static %3, tank %4, apc %5, car %6, aa %7",_side,_men,_statics,_tanks,_bmps,_cars,_aa];
@@ -1987,13 +1976,11 @@ SYG_getVehicleMarkerType = {
 //
 SYG_getVehicleTypeMarkerName = {
 	if ( ((typeName _this) != "SCALAR") && ( (typeName _this) in ["STRING","OBJECT"] ) )  then {_this = _this call SYG_getVehicleType1};
-	if (typeName _this != "SCALAR") exitWith {
 #ifdef __ACE__
-		"ACE_Icon_Unknown"
+	if (typeName _this != "SCALAR") exitWith { "ACE_Icon_Unknown" };
 #else
-		"Vehicle"
+	if (typeName _this != "SCALAR") exitWith { "Vehicle" };
 #endif
-	 };
 	switch (_this) do {
 #ifdef __ACE__
 		case 0: {"ACE_Icon_Tank"};
@@ -2013,6 +2000,24 @@ SYG_getVehicleTypeMarkerName = {
 		default {"Vehicle"};
 #endif
 	};
+};
+
+//
+// call as:
+// _isRecoverable = (<typeOf> _veh) call SYG_vehIsRecoverable; // single item
+// _isRecoverable = [<typeOf> _veh1,... <typeOf> _vehN ] call SYG_vehIsRecoverable; // array of items
+//
+SYG_vehIsRecoverable = {
+	if (typeName _this != "ARRAY") then { _this = [_this] };
+	if (count _this == 0) exitWith { false };
+	private ["_res", "_rec"];
+	_res = true;
+	{
+		if ( typeName _x != "OBJECT" ) exitWith { _res = false };
+		_rec = _x getVariable "RECOVERABLE";
+		if (isNil "_rec") exitWith { _res = false};
+	} forEach _this;
+	_res
 };
 
 //------------------------------------------------------------- END OF INIT

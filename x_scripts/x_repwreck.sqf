@@ -1,9 +1,10 @@
-// by Xeno: x_repwreck.sqf, rebuilds wreck vehicle, work only on server
-private ["_rep_station","_name","_types","_wreck","_type","_dpos","_ddir","_new_vec"];
+// by Xeno: x_repwreck.sqf, recovers wreck vehicle, work only on server
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+
+private ["_rep_station","_name","_types","_wreck","_type","_dpos","_ddir","_new_vec"];
 
 _rep_station = _this select 0;
 _name = _this select 1;
@@ -19,7 +20,7 @@ while {true} do {
 		};
 		//__DEBUG_NET("x_repwreck.sqf",(call XPlayersNumber))
 		sleep 2.432;
-		if (isNull d_wreck_repair_fac) then {
+		if ( isNull d_wreck_repair_fac ) then {
 			_wreck = [_rep_station,_types] call XGetWreck;
 		};
 	};

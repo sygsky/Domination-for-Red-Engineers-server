@@ -61,10 +61,9 @@ if (mt_winner == 1) then {
 			_west = mt_bonus_positions select 0;
 			_posa = _west select extra_bonus_number; _pos = _posa select 0;_dir = _posa select 1;
 			_vehicle2 = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
+			_vehicle2 setVariable ["RECOVERABLE", true];
 			_vehicle2 setDir _dir;
-
 			_vehicle2 execVM "x_scripts\x_wreckmarker.sqf";
-
 			_racs = mt_bonus_positions select 1;
 			_posa = _racs select extra_bonus_number; _pos = _posa select 0;_dir = _posa select 1;
 		};
@@ -131,6 +130,7 @@ _bonus_score_arr spawn {
 };
 
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
+_vehicle setVariable ["RECOVERABLE", true];
 
 hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created ""%1""", typeOf _vehicle];
 
@@ -151,7 +151,7 @@ if ( (_vehicle isKindOf "Plane") ) then {
 
 #ifdef __NO_ETERNAL_BONUS__
 
-[_vehicle ]call SYG_addEventsAndDispose; // add events to this vehicle, no points, no smoke
+[_vehicle ] call SYG_addEventsAndDispose; // add events to this vehicle, no points, no smoke
 
 #else
 
