@@ -10,8 +10,8 @@ XAddCheckDead = {if (!((_this select 0) in check_vec_list)) then { check_vec_lis
 
 #ifdef __TT__
 
-XAddKills = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {kill_points_west = kill_points_west + _points;};case resistance: {kill_points_racs = kill_points_racs + _points;};};};
-XAddPoints = {private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {points_west = points_west + _points;};case resistance: {points_racs = points_racs + _points;};};};
+XAddKills = { private ["_points","_killer"];_points = _this select 0; _killer = _this select 1;switch (side _killer) do {case west: {kill_points_west = kill_points_west + _points;};case resistance: {kill_points_racs = kill_points_racs + _points; }; }; };
+XAddPoints = { private ["_points","_killer"];_points = _this select 0;_killer = _this select 1;switch (side _killer) do {case west: {points_west = points_west + _points;};case resistance: {points_racs = points_racs + _points; }; }; };
 
 #else
 
@@ -210,58 +210,46 @@ x_getmixedliste = {
 //
 // call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
 SYG_addEvents = {
-    private ["_vehicle", "_do_points", "_static"];
+    private ["_vehicle", "_static"];
     _vehicle   = arg(0);
     _static =  _vehicle isKindOf "StaticWeapon";
 
-    if (_vehicle isKindOf "Tank") then
-    {
-        if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked};
-    };
+    if (_vehicle isKindOf "Tank") then { if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked}; };
 
-//    _smoke_veh = false;
-//    if ( count _this > 2) then { _smoke_veh = _this select 2};
     _vehicle call SYG_assignVecToSmokeOnHit;
 
     // add wreckage restore option
-    if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then
-    {
-            _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
-            [_vehicle] call XAddCheckDead; // insert to dead vehicles list for follow handling and removing
+    if ( !( (typeOf _vehicle) in x_heli_wreck_lift_types) ) then {
+		_vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
+		[_vehicle] call XAddCheckDead; // insert to dead vehicles list for follow handling and removing
     };
 
 #ifdef __TT__
-    if (count _this > 1) then {_do_points = _this select 1}
-    else {_do_points = false};
-
-    if (_do_points) then {_vehicle addEventHandler ["killed", {[5,arg(1)] call XAddKills}]};
+    if ( count _this > 1 ) then {
+    	if ( _this select 1 ) then { _vehicle addEventHandler ["killed", {[5, _this select 1] call XAddKills}]; };
+    };
 #endif
 
 #ifdef __AI__
-    if (__RankedVer) then {
-        _vehicle addEventHandler ["killed", {[5,arg(1)] call XAddKillsAI}];
-    };
+    if (__RankedVer) then { _vehicle addEventHandler ["killed", {[5, _this select 1 ] call XAddKillsAI}]; };
 #endif
 };
 
 // TODO: test and use everywhere
-// Add all needed events to a newly created standard vehicle (for main/side mission action)
+// Append remove code to a newly created standard vehicle (for main/side mission action) in ANY case, independently from unwreck procedure
 //
 // call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
 SYG_addEventsAndDispose = {
+	if ( typeName _this != "ARRAY" ) then { _this = [ _this ]; };
     _this call SYG_addEvents;
     _vehicle = arg(0);
     // add dispose event
-    if ( (typeOf _vehicle) in x_heli_wreck_lift_types ) then // in any case add dispose option
-    {
+    if ( (typeOf _vehicle) in x_heli_wreck_lift_types ) then { // add dispose option even for wreckable vehicles too
         hint localize format["+++SYG_addEventsAndDispose: %1", typeOf _vehicle];
         _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
         [_vehicle] call XAddCheckDead; // prepare to insert to dead vehicles list for follow handling and removing
     };
-
 };
-
-
 
 // Makes vehicle group on enemy side for sidemission (e.g. convoy) and main targets too
 x_makevgroup = {
@@ -672,13 +660,17 @@ XStealthPatrol = {
 };
 
 //
-// Finds wreck vehicle on wreck service circle
+// Finds wreck vehicle on wreck service circle.
+// Wreck is defined as follow: vehicle has variable "RECOVERABLE" of veriable space and has damage >= 1
 //
 XGetWreck = {
-	private ["_no"];
+	private ["_no","_rec"];
 	_no = nearestObjects [position (_this select 0), _this select 1, 8];
 	if (count _no == 0) exitWith { objNull };
-	if (damage (_no select 0) >= 1) exitWith {_no select 0};
+	_no = _no select 0;
+	_rec = _no getVariable "RECOVERABLE";
+	if (isNil "_rec") exitWith {objNull};
+	if ( (damage _no) >= 1 ) exitWith { _no };
 	objNull
 };
 

@@ -1,4 +1,5 @@
 /*
+	scripts\addRndVehsOnBase.sqf
 	author: Sygsky
 	description: Adds some vehicles on base at game start
 	returns: nothing

@@ -56,7 +56,7 @@ for "_x" from 0 to (count _offsets)-1 do {
 
 // if 2 or more points in 3x3 grid with 1 km sides are on land, no ocean wind effect will be applied, else wind is very-very strong))
 _wind_arr = wind;
-if (_water_count >= ((count _offsets) * (count _offsets) - 2) ) then { // player jumps over sea surface, add strong wind effect
+if (_water_count >= ((count _offsets) ^ 2 - 2) ) then { // player jumps over sea surface, add strong wind effect
     _len = _wind_arr distance [0,0,0]; // scalar vector length
     _shift = MIN_SHIFT max (random ( _shift min MAX_SHIFT) ); //  shift 300 to 3500 meters from the original start point
     _dx = ((_wind_arr select 0) / _len) * _shift;

@@ -501,7 +501,7 @@ if (isServer) then {
             _pos = _obj buildingPos _pos;
             _pos set [2, (_pos select 2) + 0.55];
 //          _pos set [0, (_pos select 0) - 0.25];
-            _weaponHolder = "WeaponHolder" createVehicleLocal [0,0,0];
+            _weaponHolder = "WeaponHolder" createVehicle [0,0,0];
             _weaponHolder setPos _pos;// [_weaponHolderPos, [], 0, "CAN_COLLIDE"];
             _item = (SYG_PISTOL_WPN_SET_WEST) call XfRandomArrayVal;
             _wpn = _item select 1;

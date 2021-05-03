@@ -24,7 +24,7 @@ class ctrlParaDiag
 		h = 1;
 		text = "";
 		onMouseMoving = "v__float_mousePos =[ _this select 1,_this select 2 ];";
-		onKeyDown = "v__int_reqKeys = v__int_reqKeys +[ _this select 1 ];";
+		onKeyDown = "v__int_reqKeys set [ count v__int_reqKeys, _this select 1 ];";
 	};
 	class altmeter
 	{
