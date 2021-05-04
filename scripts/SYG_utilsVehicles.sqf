@@ -1786,13 +1786,11 @@ SYG_deleteVehicleCrew = {
  * _bonusIndex =  params call SYG_findTargetBonusIndex;
  */
 SYG_findTargetBonusIndex = {
-    private ["_initialList","_currentList","_bonusInd","_bonus"];
-    _initialList = _this select 0;  // initial read-only list
+    private ["_currentList","_bonusInd","_bonus"];
     _currentList = _this select 1;  // real list
-    // _full_list = (_this select 2);
     if ( (count _currentList) == 0 )  then {
-    	_currentList = + _initialList;  // reset real list with the initial vehicle list
-    	_this set [1, _currentList];
+    	_currentList = + (_this select 0);  // reset real list with the initial vehicle list
+    	_this set [1, _currentList];		// store it again
 	    hint localize "+++ SYG_findTargetBonusIndex: vehicle list empty, load content again";
     };
     _bonusInd = _currentList call XfRandomFloorArray; // find next bonus index

@@ -613,7 +613,7 @@ XHandleNetStartScriptClient = {
 				if ( typeName _arr != "ARRAY" ) then { _arr = [_arr] };
 			};
 			{
-				_x setCaptive true; if ((rating _x) < 0) then {_x addRating (2500 - (rating _x)}; )
+				_x setCaptive true; if ((rating _x) < 0) then {_x addRating (2500 - (rating _x))};
 			} forEach _arr;
 
 		};

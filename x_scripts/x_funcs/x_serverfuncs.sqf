@@ -669,7 +669,8 @@ XGetWreck = {
 	if (count _no == 0) exitWith { objNull };
 	_no = _no select 0;
 	_rec = _no getVariable "RECOVERABLE";
-	if (isNil "_rec") exitWith {objNull};
+	if (isNil "_rec") exitWith { objNull };
+	if (!_rec) exitWith { objNull };
 	if ( (damage _no) >= 1 ) exitWith { _no };
 	objNull
 };

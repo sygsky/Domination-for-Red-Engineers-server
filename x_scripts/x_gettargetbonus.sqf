@@ -23,7 +23,7 @@ if ( count _town > 0 ) then {// town is defined
     // new feature to select main target bonus indexes
 	if ( (_town select 2) >= big_town_radious ) then { // select from best vehicles (big bonus)
 	    extra_bonus_number = mt_big_bonus_params call SYG_findTargetBonusIndex;
-        hint localize format["+++ x_gettargetbonus.sqf: current list after get next is %1", mt_big_bonus_params select 1];
+        hint localize format["+++ x_gettargetbonus.sqf: current veh list after get next is %1", mt_big_bonus_params select 1];
 	} else {
 	    extra_bonus_number = mt_small_bonus_params call SYG_findTargetBonusIndex;
 	};
@@ -31,7 +31,7 @@ if ( count _town > 0 ) then {// town is defined
 //---------------------------------------------------------------
 
 } else {
-	hint localize "--- error in x_gettargetbonus.sqf: a newly captured city not defined!!!";
+	hint localize "--- error in x_gettargetbonus.sqf: no target town defined!!!";
 };
 
 #endif
@@ -150,11 +150,7 @@ if ( (_vehicle isKindOf "Plane") ) then {
 #endif
 #endif
 
-#ifdef __NO_ETERNAL_BONUS__
-
-[_vehicle ] call SYG_addEventsAndDispose; // add events to this vehicle, no points, no smoke
-
-#else
+// [_vehicle ] call SYG_addEventsAndDispose; // add events to this vehicle, no points, no smoke
 
 // set marker procedure for the newly created vehicle
 _vehicle execVM "x_scripts\x_wreckmarker.sqf";

@@ -44,6 +44,7 @@ while {true} do {
 	deleteVehicle _wreck;
 	sleep 1.012;
 	_new_vec = _type createVehicle _dpos;
+	_new_vec setVariable ["RECOVERABLE", true];
 	_new_vec setDir _ddir;
 	_new_vec setPos _dpos;
 	sleep 0.3;
