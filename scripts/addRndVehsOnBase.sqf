@@ -5,6 +5,8 @@
 	returns: nothing
 */
 
+// #define __DEBUG__
+
 // positions for Camel only, not use it for BMP
 _camelPosArr = [[9428,9749,0], [9728,9824,0], [9731,9778,0], [9621,9781], [9767,9962,0], [9804,9956,0], [9842,9954,0]]; // Camel positions
 _camelDirArr = [          225,             0,             0,         180,             0,             0,            0];  // Camel directions
@@ -27,6 +29,13 @@ _camelDirArr = [          225,             0,             0,         180,       
             _type = _type call XfRandomArrayVal;  // get random type if array
         };
         _veh = createVehicle [_type, [0,0,0], [], 0, "NONE"];
+#ifdef __DEBUG__
+        if (_type == "ACE_BRDM2") then {
+        	_veh setVariable ["RECOVERABLE", true];
+        	sleep 0.05;
+   			hint localize format["+++ addRndVehsOnBase.sqf: %1 on recovery service, var ""RECOVERABLE"" == %2", typeOf _veh, _veh getVariable "RECOVERABLE"];
+        };
+#endif
         [_veh] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and points
 
         //+++ get position

@@ -16,7 +16,9 @@ while {true} do {
 	_wreck = objNull;
 	while {isNull _wreck} do {
 		if (X_MP) then {
-			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+			if ((call XPlayersNumber) == 0) then {
+				waitUntil {sleep 25;(call XPlayersNumber) > 0};
+			};
 		};
 		//__DEBUG_NET("x_repwreck.sqf",(call XPlayersNumber))
 		sleep 2.432;

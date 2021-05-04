@@ -35,6 +35,7 @@ _velocity = velocity _aunit;
     _ace_hh = _aunit getVariable "ACE_HullHit";
     _ace_trh = _aunit getVariable "ACE_TracksHit";
 #endif
+	_recoverable = _aunit getVariable "RECOVERABLE";
 {
 	_x removeAllEventHandlers "killed";
 	_x removeAllEventHandlers "hit";
@@ -58,6 +59,7 @@ if (_dummyvehicle isKindOf "Tank" || _dummyvehicle isKindOf "Car") then {
 	[_dummyvehicle] spawn ACE_Destruction_FX;
 };
 #endif
+_dummyvehicle setVariable ["RECOVERABLE",_recoverable];
 [_dummyvehicle] call XAddDead; // *************** PUT TO THE LIST OF DEAD ********************
 
 // inform group itself about killer

@@ -668,9 +668,17 @@ XGetWreck = {
 	_no = nearestObjects [position (_this select 0), _this select 1, 8];
 	if (count _no == 0) exitWith { objNull };
 	_no = _no select 0;
+	if ( (damage _no) < 1 ) exitWith { objNull };
+//	hint localize format["+++ XGetWreck: %1 on recovery service", typeOf _no];
 	_rec = _no getVariable "RECOVERABLE";
-	if (isNil "_rec") exitWith { objNull };
-	if (!_rec) exitWith { objNull };
+	if (isNil "_rec") exitWith {
+//		hint localize format["+++ XGetWreck: %1 on recovery service, but ""RECOVERABLE"" isNil", typeOf _no];
+		objNull
+	};
+	if (!_rec) exitWith {
+//		hint localize format["+++ XGetWreck: %1 on recovery service, but ""RECOVERABLE"" == false", typeOf _no];
+		objNull
+	};
 	if ( (damage _no) >= 1 ) exitWith { _no };
 	objNull
 };
