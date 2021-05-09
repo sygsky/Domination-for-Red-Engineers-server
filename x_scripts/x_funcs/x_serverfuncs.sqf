@@ -441,7 +441,7 @@ XCreateInf = {
                 _ret_grps = _ret_grps + [_newgroup];
                 _grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0,[_pos_center,_radius],[],-1,0,[],50 + (random 100),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
                 _grp_array execVM "x_scripts\x_groupsm.sqf";
-                {extra_mission_remover_array = extra_mission_remover_array + [_x]} foreach _units;
+                {extra_mission_remover_array set [ count extra_mission_remover_array, _x ] } foreach _units;
                 sleep 2.011;
             };
         };
@@ -512,8 +512,9 @@ XCreateArmor = {
                 };
                 _unit_array = [(_grpArr select 1), _side] call x_getunitliste; // (_grpArr select 1) is type of vehicle
                 _vehicles = [_numvehicles, _pos, (_unit_array select 2), (_unit_array select 1), _newgroup, 0,-1.111] call x_makevgroup;
-                extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _vehicles;
                 {
+                	extra_mission_vehicle_remover_array set[ count extra_mission_vehicle_remover_array, _x];
+                	sleep 0.01;
                     {
                         extra_mission_remover_array set[count extra_mission_remover_array, _x];
                         sleep 0.01;

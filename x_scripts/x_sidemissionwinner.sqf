@@ -85,7 +85,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
         case -600 : {"STR_SYS_129_6"/*"Образец захваченной у врага техники развалился до того, как попал в руки ГРУ на базе..."*/};
         case -700 : {"STR_SYS_129_7"/*"Пилоты скончались от столбняка до прибытия на базу..."*/};
         case -701 : {"STR_SYS_129_8"/*"Bus is destroyed or all civilians are dead"*/}; // the future SM type - "Safely deliver a group of civilians by bus to their destination!"
-        default {"STR_SYS_129_100"};
+        default {"STR_SYS_129_100"}; // "You lost a fortune..."
     };
 	_s = localize _s;
 
