@@ -72,7 +72,7 @@ if (client_target_counter < number_targets) then {
 
 		if (count _this  > 2) then { // todo: find player[s] with maximum city liberation bonus and inform the player about about
 			_arr = _this select 2;
-			 if ( typeOf _arr != "ARRAY" ) exitWith { hint localize format["--- expected town bonus array not ARRAY (%1)", typeOf (_this select 2)]; }; // --- not array
+			 if ( typeName _arr != "ARRAY" ) exitWith { hint localize format["--- expected town bonus array not ARRAY (%1)", typeOf (_this select 2)]; }; // --- not array
 			 if ( count _arr == 0 ) exitWith { hint localize "--- expected town bonus array length is zero"; }; // --- empty array
 			_arr = _arr call SYG_mainTownBonusInfoStr; // get info str on main town bonus scores
 			( format["%1. %2",_arr select 0, _arr select 1]) call XfHQChat; // "Max bonus %1. Min bonus %1"
