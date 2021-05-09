@@ -4,7 +4,7 @@
 if (!isServer) exitWith{};
 private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array","_str","_last_town_index"];
 
-hint localize format["+++  %1 execVM x_scripts\x_target_clear.sqf", typeName _this];
+// hint localize format["+++  %1 execVM x_scripts\x_target_clear.sqf", typeName _this];
 
 #include "x_setup.sqf"
 

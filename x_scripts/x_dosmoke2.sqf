@@ -25,7 +25,7 @@ if (!isServer) exitWith {};
 //#define __FULL_PRINT__
 
 #ifdef __PRINT__
-hint localize format["x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4", typeOf (_this select 0), typeOf(_this select 1), _this select 2, count crew (_this select 0)];
+hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4", typeOf (_this select 0), typeOf(_this select 1), _this select 2, count crew (_this select 0)];
 #endif
 
 _vec = _this select 0;
@@ -38,7 +38,7 @@ if (str(_issmoking) == "<null>") then {
 if (_issmoking) exitWith
 {
     #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: attacked vec %1 is already in smoking", typeOf _vec];
+	hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is already in smoking", typeOf _vec];
     #endif
 };
 
@@ -46,18 +46,18 @@ _shooter = _this select 1;
 if (isNull _shooter) exitWith
 {
 #ifdef __PRINT__
-	hint localize "x_dosmoke2.sqf: shooter is null, exit";
+	hint localize "+++ x_dosmoke2.sqf: shooter is null, exit";
 #endif
 };
 _damage = _this select 2;
 
 _name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
-if ( _damage >= 1) exitWith { hint localize format["x_dosmoke2.sqf: attacked vec %1 is killed by %2", typeOf _vec, _name]; }; // End Of Life
-if (!local _vec) exitWith {  hint localize format["x_dosmoke2.sqf: attacked vec %1 is commanded by player %2", typeOf _vec, _name]; }; // It is player commanded vehicle, don't handle it
+if ( _damage >= 1) exitWith { hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is killed by %2", typeOf _vec, _name]; }; // End Of Life
+if (!local _vec) exitWith {  hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is commanded by player %2", typeOf _vec, _name]; }; // It is player commanded vehicle, don't handle it
 
 if ( _vec == _shooter) exitWith{/* collision, not hit by enemy weapon */
     #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: vec %1 is collided with dmg %2 by ""%3"", not smoking", typeOf _vec, _damage, _name];
+	hint localize format["+++ x_dosmoke2.sqf: vec %1 is collided with dmg %2 by ""%3"", not smoking", typeOf _vec, _damage, _name];
     #endif
 };
 
@@ -73,13 +73,13 @@ while { _dead } do
     if (count _crew == 0) exitWith
     {
     #ifdef __FULL_PRINT__
-        hint localize format["x_dosmoke2.sqf: vec %1 crew is out", typeOf _vec];
+        hint localize format["+++ x_dosmoke2.sqf: vec %1 crew is out", typeOf _vec];
     #endif
     };
     if ((_crew call XfGetAliveUnits) == 0) exitWith
     {
     #ifdef __FULL_PRINT__
-        hint localize format["x_dosmoke2.sqf: vec %1 crew is dead", typeOf _vec];
+        hint localize format["+++ x_dosmoke2.sqf: vec %1 crew is dead", typeOf _vec];
     #endif
     };
     _dead = false;
@@ -96,7 +96,7 @@ if ( _dead ) exitWith // find other units of the group
 
 if (side _shooter == side _vec) exitWith {
     #ifdef __PRINT__
-    hint localize format["x_dosmoke2.sqf: attacked vec %1 is under friendly fire from ""%2""", typeOf _vec, _name];
+    hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is under friendly fire from ""%2""", typeOf _vec, _name];
     #endif
 };
 
@@ -105,7 +105,7 @@ if (side _shooter == side _vec) exitWith {
 if (!("ACE_LVOSS_Magazine" in (magazines _vec))) exitWith {
 // TODO: try to find ammo and reload smoke grenades from it
 #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: veh %1 has no more smoke shells against ""%2""!!!", typeOf _vec, _name];
+	hint localize format["+++ x_dosmoke2.sqf: veh %1 has no more smoke shells against ""%2""!!!", typeOf _vec, _name];
 #endif
 };
 
@@ -122,7 +122,7 @@ _vec doWatch _shooter;
 sleep 3.634;
 _vec fire _muzzle;
 #ifdef __PRINT__
-	hint localize format["x_dosmoke2.sqf: vec ""%1"" fires smoke curtain against ""%2"" (%3 m)", typeOf _vec, _name, round( _shooter distance _vec )];
+	hint localize format["+++ x_dosmoke2.sqf: vec ""%1"" fires smoke curtain against ""%2"" (%3 m)", typeOf _vec, _name, round( _shooter distance _vec )];
 #endif
 
 // TODO: If attacker is a tank and damaged is a tank shoot to the attacker smoke first and sabot second

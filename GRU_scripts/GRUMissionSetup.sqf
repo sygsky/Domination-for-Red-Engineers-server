@@ -67,7 +67,7 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 	if ( _startScore < GRU_MAIN_TASK_MIN_SCORE ) then // not enough score for the next run
 	{
 #ifdef __PRINT__			
-		hint localize "GRUMissionSetup: MAIN TASK has too low scores to run";
+		hint localize "+++ GRUMissionSetup: MAIN TASK has too low scores to run";
 #endif
 		waitUntil {sleep 9.843; target_clear || mt_radio_down || side_main_done };
 		
@@ -79,7 +79,7 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 		_task = + GRU_GET_TASK(GRU_MAIN_TASK);
 #ifdef __PRINT__			
 		_town_name = argp(_ttinfo,1);
-		hint localize format["GRUMissionSetup.sqf: GRU MAIN task [re]started for %1", _town_name];
+		hint localize format["+++ GRUMissionSetup.sqf: GRU MAIN task [re]started for %1", _town_name];
 #endif
 		//["GRU_msg", GRU_MSG_START_TASK] call XSendNetStartScriptClient;
 
@@ -136,7 +136,7 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 		if ( GRU_MAIN_TASK call GRU_stopTask ) then // msg about task stop
 		{
 #ifdef __PRINT__			
-			hint localize "GRUMissionSetup: MAIN TASK stopped on town check loop exit";
+			hint localize "+++ GRUMissionSetup: MAIN TASK stopped on town check loop exit";
 #endif
 		};
 	};

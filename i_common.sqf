@@ -956,7 +956,7 @@ if ( isNil "global_vars" ) then { global_vars = []; };
 
 // Special fund to accumulate non-engineers score subracted when repairing damaged vehicles
 if ( isNil "SYG_engineering_fund") then { SYG_engineering_fund = 0;};
-hint localize format["i_common.date = %1", date];
+hint localize format["+++ i_common.date = %1", date];
 
 // Short night feature constants
 

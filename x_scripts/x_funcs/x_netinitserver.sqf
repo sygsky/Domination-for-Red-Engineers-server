@@ -297,7 +297,7 @@ XHandleNetStartScriptServer = {
 			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
 			// log info  about logging
-			hint localize format["x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
+			hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
 		};
 		case "GRU_msg": {
 			_this call GRU_procServerMsg;

@@ -980,7 +980,7 @@ SYG_sideStat = {
 //	call as: _score = [_pos, _dist<,true|false>] call SYG_getScore4IntelTask;
 //
 SYG_getScore4IntelTask = {
-	hint localize format["SYG_getScore4IntelTask: %1", _this];
+	hint localize format["+++ SYG_getScore4IntelTask: %1", _this];
 	private ["_town_center","_dist","_hint","_stat","_stat1","_info","_info1","_arr", "_resultScore"];
 	_town_center = argopt(0,[]);
 	if ( count _town_center != 3) exitWith {hint localize format["--- SYG_getScore4IntelTask: expected center position is illegal or absent"]; -1};
@@ -990,16 +990,14 @@ SYG_getScore4IntelTask = {
 
 	_info  = [west, _town_center, _dist] call SYG_sideStat;
 	_stat = _info call SYG_stat2Score;
-	if ( _hint ) then
-	{
-		hint localize format["West stat on TOWN: side %1, cnt %8, score %9, men %2, static %3, tank %4, apc %5, car %6, aa %7, canon %10", west, argp(_info,0),argp(_info,1),argp(_info,2),argp(_info,3),argp(_info,4),argp(_info,5), argp(_stat,0), argp(_stat,1), argp(_info,6)];
+	if ( _hint ) then {
+		hint localize format["+++ West stat on TOWN: side %1, cnt %8, score %9, men %2, static %3, tank %4, apc %5, car %6, aa %7, canon %10", west, argp(_info,0),argp(_info,1),argp(_info,2),argp(_info,3),argp(_info,4),argp(_info,5), argp(_stat,0), argp(_stat,1), argp(_info,6)];
 	};
 
 	_info1  = [east, _town_center, _dist] call SYG_sideStat;
 	_stat1 = _info1 call SYG_stat2Score;
-	if ( _hint) then
-	{
-		hint localize format["East stat on town: side %1, cnt %8, score %9, men %2, static %3, tank %4, apc %5, car %6, aa %7, canon %10", east,argp(_info1,0),argp(_info1,1),argp(_info1,2),argp(_info1,3),argp(_info1,4),argp(_info1,5), argp(_stat1,0), argp(_stat1,1), argp(_info1,6)];
+	if ( _hint) then {
+		hint localize format["+++ East stat on town: side %1, cnt %8, score %9, men %2, static %3, tank %4, apc %5, car %6, aa %7, canon %10", east,argp(_info1,0),argp(_info1,1),argp(_info1,2),argp(_info1,3),argp(_info1,4),argp(_info1,5), argp(_stat1,0), argp(_stat1,1), argp(_info1,6)];
 //#ifdef __DEBUG_INTEL_MAP_MARKERS__
 //		_arr = [ west, _town_center, _dist ] call SYG_sideStaticWeapons;
 //		[ _arr ] call SYG_resetIntelMapMarkers;

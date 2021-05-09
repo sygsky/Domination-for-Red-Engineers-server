@@ -55,12 +55,12 @@ sleep 2;
 sleep CYCLE_DELAY;
 #ifdef __DEBUG__
 	hint localize format[
-	    "motorespawn.sqf:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_ON_PLACE_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
+	    "+++ motorespawn.sqf:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_ON_PLACE_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
 	                       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_ON_PLACE_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
 	                    ];
 	{
 	    hint localize format[
-	    "motorespawn.sqf:  %1", _x];
+	    "+++ motorespawn.sqf:  %1", _x];
 	} forEach _motoarr;
 #endif
 
@@ -120,10 +120,10 @@ while {true} do {
                 if (! _driver_near ) then {
     				_driver_near = ( {alive _x} count (crew _moto) ) > 0; // is some man in moto crew?
     				if (_driver_near) then {
-                        hint localize format["motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
+                        hint localize format["+++ motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
                     };
                 }
-                else {  hint localize format["motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
+                else {  hint localize format["+++ motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
 
                 if ( ! _driver_near) then { // if empty and no man nearby (10 meters circle)
                     _say = (_pos1 distance _pos) >= SOUND_MIN_DIST_TO_SAY; // sound only if long dist teleport
@@ -138,11 +138,11 @@ while {true} do {
                        	_moto addWeapon "CarHorn"; // add horn for motorcycle
                         _x set[MOTO_ITSELF, _moto];
 #ifdef __DEBUG__
-                        hint localize format["motorespawn.sqf: %1 (%2) recreated after breakdown", typeOf _moto, _type];
+                        hint localize format["+++ motorespawn.sqf: %1 (%2) recreated after breakdown", typeOf _moto, _type];
 #endif
                     } else {	// use current vehicle item
 #ifdef __DEBUG__
-                        hint localize format["motorespawn.sqf: %1 moved back alive", typeOf _moto];
+                        hint localize format["+++ motorespawn.sqf: %1 moved back alive", typeOf _moto];
 #endif
                         _moto setDammage 0.0;
                         _moto setFuel 1.0;
@@ -157,7 +157,7 @@ while {true} do {
                     //_x set [MOTO_ORIG_POS, getPos _moto];
                     sleep 0.5 + random 0.5;
 #ifdef __DEBUG__
-                    hint localize format[ "motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), typeOf _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
+                    hint localize format[ "+++ motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), typeOf _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
 #endif
 				};
 				_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop

@@ -56,17 +56,17 @@ GRU_mainTaskActive = {
 GRU_mainTaskNotValid = 
 {
 	// check if any of town sub-targets alreadycompleted
-	if ( target_clear || mt_radio_down || side_main_done ) exitWith { hint localize "GRUCommon.sqf.GRU_mainTaskNotValid: sub-target(s) finished"; true };
+	if ( target_clear || mt_radio_down || side_main_done ) exitWith { hint localize "+++ GRUCommon.sqf.GRU_mainTaskNotValid: sub-target(s) finished"; true };
 	
 	private ["_task","_param_town"];
 	_task = _this; // task array
 	// check if town name is actual
 	_param_town = call SYG_getTargetTown; // real target town info
 	//hint localize format[ "param_town -> %1", _param_town ];
-	if ( (count _param_town) == 0 ) exitWith { hint localize "GRUCommon.sqf.GRU_mainTaskNotValid: target not defined"; true}; // no real town defined
+	if ( (count _param_town) == 0 ) exitWith { hint localize "+++ GRUCommon.sqf.GRU_mainTaskNotValid: target not defined"; true}; // no real town defined
 	
 	_name = argp( _param_town, TOWN_NAME_IN_INFO );
-	if ( GRU_MAIN_GET_TOWN_NAME_FROM_TASK(_task) != _name ) exitWith { hint localize "GRUCommon.sqf.GRU_mainTaskNotValid: target not coincide"; true };
+	if ( GRU_MAIN_GET_TOWN_NAME_FROM_TASK(_task) != _name ) exitWith { hint localize "+++ GRUCommon.sqf.GRU_mainTaskNotValid: target not coincide"; true };
 	
 	false
 };

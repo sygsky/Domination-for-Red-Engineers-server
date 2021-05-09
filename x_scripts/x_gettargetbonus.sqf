@@ -155,8 +155,6 @@ if ( (_vehicle isKindOf "Plane") ) then {
 // set marker procedure for the newly created vehicle
 _vehicle execVM "x_scripts\x_wreckmarker.sqf";
 
-#endif
-
 //
 // RESTORE DESTROYED BUILDINGS
 //

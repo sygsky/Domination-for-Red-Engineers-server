@@ -310,38 +310,31 @@ SYG_findAndAssignAsCargo = {
     if ( count _feetman == 0 ) exitWith {[]};
 	_vecs = [] +  arg(1);
 	scopeName "exit";
-	if ( (count _vecs > 0) && (count _feetmen > 0) ) then
-	{
+	if ( (count _vecs > 0) && (count _feetmen > 0) ) then {
 		_feetmen1 = [] + _feetmen;
 		_vecs = [] + _vecs;
 		// filter vehicles
-		for "_i" from 0 to count _vecs - 1 do
-		{
+		for "_i" from 0 to count _vecs - 1 do {
 			_x = _vecs select _i;
 			if ( !(canMove _x) || (isNull driver _x) || ((_x emptyPositions "Cargo") <= 0) )  then {_vecs set [_i, "RM_ME"]};
 		};
 		_vecs = _vecs - ["RM_ME"];
-		if ( count _vecs > 0 ) then
-		{
+		if ( count _vecs > 0 ) then {
 			// filter feetmen
-			for "_i" from 0 to count _feetmen1 - 1 do
-			{
+			for "_i" from 0 to count _feetmen1 - 1 do{
 				_x = _feetmen1 select _i;
 				if ( !alive _x ) then { _feetmen1 set [_i, "RM_ME"] }
-				else
-				{ 
+				else{
 					if ( (_x call SYG_ACEUnitUnconscious) || (!isNull assignedVehicle _x) ) then { _feetmen1 set [_i, "RM_ME"] };
 				};
 			};
 			_feetmen1 = _feetmen1 - ["RM_ME"];
-			if ( count _feetmen1 > 0 ) then
-			{
+			if ( count _feetmen1 > 0 ) then {
 				_feetmen1 allowGetIn true;
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-				hint localize format["%1 SYG_findAndAssignAsCargo: reassigning to cargo %2 men with patrol %3 vecs", call SYG_nowToStr, count _feetmen1, count _vecs];
+				hint localize format["+++ SYG_findAndAssignAsCargo (%1): reassigning to cargo %2 men with patrol %3 vecs", call SYG_nowToStr, count _feetmen1, count _vecs];
 #endif								
-				while { (count _vecs > 0) || (count _feetmen1) > 0 } do
-				{
+				while { (count _vecs > 0) || (count _feetmen1) > 0 } do {
 					// find suitable vehicle with free cargo space,
 					_reta = [_feetmen1 select 0, _vecs, DEFAULT_GROUP_SEARCH_RADIUS] call SYG_findVehWithFreeCargo;
 					// returned is _reta as follow: [_veh, emptyPosNum], or [] if no suitable vec found;
@@ -351,8 +344,7 @@ SYG_findAndAssignAsCargo = {
 					_veh = _reta select 0;
 					_vecs = _vecs - [_veh];
 					_assigned = [];
-					for "_i" from 0 to _count - 1 do // count always not equal to zero
-					{
+					for "_i" from 0 to _count - 1 do {// count always not equal to zero
 						_unit = _feetmen1 select _i;
 						_unit assignAsCargo _veh;
 						_assigned = _assigned + [_unit];
@@ -365,7 +357,7 @@ SYG_findAndAssignAsCargo = {
 					sleep 1.01;
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-					hint localize format["%1 SYG_findAndAssignAsCargo: %2 assignedToCargo %3 dist %4", call SYG_nowToStr, count _assigned, typeOf _veh, _veh distance (_assigned select 0)];
+					hint localize format["+++ SYG_findAndAssignAsCargo(%1): %2 assignedToCargo %3 dist %4", call SYG_nowToStr, count _assigned, typeOf _veh, _veh distance (_assigned select 0)];
 #endif
 
 				}; // while { (count _vecs > 0) || (count _feetmen1) > 0 } do
@@ -373,7 +365,7 @@ SYG_findAndAssignAsCargo = {
 		}; // if ( count _vecs > 0 ) then 
 	};
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-	hint localize format[ "%1 SYG_findAndAssignAsCargo: %2 free feetmen remained", call SYG_nowToStr, count _feetmen];
+	hint localize format[ "+++ SYG_findAndAssignAsCargo(%1): %2 free feetmen remained", call SYG_nowToStr, count _feetmen];
 #endif
 	_feetmen
 };
@@ -388,21 +380,16 @@ SYG_findAndAssignAsCargo = {
  */
 SYG_vehIsUpsideDown = {
 	private ["_l","_vUp","_angle"];
-	if ( (alive _this) && (_this isKindOf "LandVehicle") ) then
-	{
+	if ( (alive _this) && (_this isKindOf "LandVehicle") ) then {
 		_vUp = vectorUp _this;	// vector up for the goal
-		if((_vUp select 2) < 0 )then {true}
-		else // vehicle still can lay on one of its side
-		{
+		if((_vUp select 2) < 0 )then {true} else { // vehicle still can lay on one of its side
 			_l = sqrt((_vUp select 0)^2+(_vUp select 1)^2);
-			if( _l != 0 )then
-			{
+			if( _l != 0 ) then {
 				_angle=(_vUp select 2) atan2 _l;
 				if( _angle < 30 ) then {true} else{false};
 			} else {false}; // standing in good position
 		};
-	}
-	else{false};
+	} else { false };
 };
 
 SYG_vehUpAngle = {
@@ -441,17 +428,6 @@ SYG_ACEUnitUnconscious = {
  */
 SYG_ACEUnitConscious = {
     ! (_this call SYG_ACEUnitUnconscious)
-    /**
-    if (isNull _this ) exitWith {false};
-    if ( typeName _this != "OBJECT") exitWith {false};
-	if ( !alive _this ) exitWith {false};
-	if ( !(_this isKindof "CAManBase") ) exitWith {false};
-    private ["_var"];
-	_var = _this getVariable "ACE_unconscious";
-	if ( isNil "_var" ) then {
-	    canStand _this
-	} else { !(_this getVariable "ACE_unconscious") };
-	*/
 };
 
 // count all alive units of group in consciousnesss
@@ -473,8 +449,7 @@ SYG_ensureOfficerInGroup = {
     if ( !(_officer isKindOf "Man")) exitWith { hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not kind of ""Man"": %1", _this];};
 
     _grp     = arg(1);
-    switch (typeName _grp) do
-    {
+    switch (typeName _grp) do {
         case "GROUP":  {};
         case "OBJECT": { if (_grp isKindOf "Man") then {_grp = group _grp; } else { _grp = grpNull;}; };
         default {_grp = grpNull;};
@@ -511,8 +486,7 @@ SYG_ensureOfficerInGroup = {
   * call: _isPatrolGrp = _grp call SYG_isPatrolGroup;
  */
 SYG_isPatrolGroup = {
-    if ( typeName _this ==  "OBJECT") then
-    {
+    if ( typeName _this ==  "OBJECT") then {
         if ( _this isKindOf "Man") exitWith { _this = group _this };
         {
             if ( alive _x) exitWith { _this = group _x };
@@ -564,13 +538,11 @@ SYG_isWoman = {
 		if (typeName _this != "STRING") exitWith {false};
 		if (_this isKIndOf "MarianQuandt") exitWith {true}; // She is not woman in Arma-1
 		_entry = configFile >> "CfgVehicles" >> _this;
-		if ( isNumber (_entry >> "woman") )  exitWith
-		{
+		if ( isNumber (_entry >> "woman") )  exitWith {
             if ( getNumber(_entry >> "woman")  > 0) exitWith { true };
             false
 		};
-		if ( isText (_entry >> "woman") ) exitWith
-		{
+		if ( isText (_entry >> "woman") ) exitWith {
             if ( toLower(getText(_entry >> "woman")) == "true" ) exitWith {true};
             false;
 		};
@@ -687,11 +659,8 @@ SYG_clearArray = {
 		_x = _this select _i;
 		if ( typeName _x == "STRING") then {
 			if (_x == "RM_ME") then {
-				if ( _i == (count _this - 1) ) then { _this resize (count _this -1)}
-				else {
-					_this set [_i, _this select (count _this - 1)];
+				if ( _i < (count _this - 1) ) then { _this set [_i, _this select (count _this - 1)]; };
 					_this resize (count _this -1);
-				};
 			};
 		};
 	};

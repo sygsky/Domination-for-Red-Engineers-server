@@ -67,7 +67,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 
     SYG_chasmArray = [
         [[14269,10545,0],70,[13919,10632,0], "Obregan"],
-        [[11725,15467,0],70,[11371,14877], "Pesados"]
+        [[11725,15467,0],70,[11371,14877,0], "Pesados"]
     ];
 
 #endif

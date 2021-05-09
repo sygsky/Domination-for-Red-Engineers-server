@@ -30,11 +30,14 @@ GRU_stopTask = {
 // params: [_task_kind, [_task params...]]
 //
 GRU_startNewTask = {
-	hint localize format["GRUServer.sqf.GRU_startNewTask: %1", _this];
+	hint localize format["+++ GRUServer.sqf.GRU_startNewTask: %1", _this];
 	if (!isServer) exitWith {false};
 	private ["_task_id"];
 	_task_id = arg(GRU_TASK_KIND);
-	if ( TASK_ID_NOT_VALID(_task_id)) exitWith { hint localize format["GRUServer.sqf.GRU_startNewTask: illegal task id %1, must be {0..%2}", _task_id, (count GRU_tasks)]; false};
+	if ( TASK_ID_NOT_VALID(_task_id) ) exitWith {
+	 	hint localize format["+++ GRUServer.sqf.GRU_startNewTask: illegal task id %1, must be {0..%2}", _task_id, ((count GRU_tasks) -1)];
+	 	false;
+	};
 	if ( _task_id call GRU_stopTask ) then { sleep 2.63;};
 	GRU_tasks set[_task_id, arg(GRU_TASK_PARAMS)];
 	publicVariable "GRU_tasks";
