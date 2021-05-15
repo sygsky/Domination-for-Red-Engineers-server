@@ -27,7 +27,7 @@ _mags =
     ["ACE_75Rnd_762x39_BT_AK",3]
 ];
 
-_magp = [["ACE_RPG7_PG7VR_PDM",4]];
+_magp = [["ACE_RPG7_PG7VR_PDM",1]];
 
 // add magazines first to reload weapon later
 {
