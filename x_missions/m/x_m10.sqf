@@ -37,7 +37,7 @@ _grp = call SYG_createEnemyGroup;
 _canon_arr = [];
 {
 	// create canon
-	_veh = [_xarti, _x select 0, [], 0, "CAB_COLLIDE"];
+	_veh = createVehicle [_xarti, _x select 0, [], 0, "CAN_COLLIDE"];
 //	_veh lock true;
 	_veh setVectorUp (_x select 2);
 	// put crew
