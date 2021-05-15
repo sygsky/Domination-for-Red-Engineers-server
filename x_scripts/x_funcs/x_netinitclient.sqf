@@ -889,22 +889,20 @@ XHandleNetStartScriptClient = {
 		    };
 		}; // case "play_misic"
 
-        case "add_barracks_actions": // adds all user actions on barracks created
-		{
+		// adds all user actions on barracks created
+        case "add_barracks_actions": {
 		    [arg(2)] execVM "scripts\barracks_add_actions.sqf"; // do this on clients only
 		};
 
 		// somebody requested GRU score
-		// ["GRU_event_scores", _score, _id, ""] call XSendNetStartScriptClient;
-
-		case "GRU_event_scores":
-		{
+		// ["GRU_event_scores", _id, _score, _playerName] call XSendNetStartScriptClient;
+		case "GRU_event_scores": {
 			hint localize format["+++ Client ""GRU_event_scores"" event with %1", _this];
             private [/*"GRU_event_scores",*/"_score","_id","_playerName"];
-            _id = argopt(2, -1);
+            _id = argopt(1, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
-            _score = argopt(1,0);
-            if ( _score != 0 ) then {
+            _score = argopt(2,0);
+            if ( _score > 0 ) then {
                 _playerName = argopt(3, "" );
                 if ( _playerName == (name player)) then {
                     //player addScore _score;
@@ -914,12 +912,11 @@ XHandleNetStartScriptClient = {
                     // playSound "no_more_waiting";
                 };
             };
-            GRU_specialBonusArr set [ _id, 0 ]; // no more this event could occure
+            GRU_specialBonusArr set [ _id, 0 ]; // never more this event could occure
 		};
 
         // [ "sub_fac_score", _str, _param1, _param2 ]
-        case "sub_fac_score":
-        {
+        case "sub_fac_score": {
             [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call SYG_msgToUserParser;
             if (name player == _this select 3) then {
                 _score = (d_ranked_a select 20);
@@ -984,11 +981,7 @@ XHandleNetStartScriptClient = {
             #ifdef __RANKED__
                 private ["_score","_rank_id"];
                 // inform player about his illumination and consume scores
-                #ifdef __SUPER_RANKING__
-                _rank_id = player call XGetRankIndexFromScoreExt; // extended rank system, may returns value > 6 (colonel rank index)
-                #else
-                _rank_id = player call XGetRankIndexFromScore; // rank index
-                #endif
+                _rank_id = player call XGetRankIndexFromScore; // rank index in any case (extended system (may returns value > 6 (colonel rank index)) or not)
 
                 _score = round((_rank_id max 1) call XGetScoreFromRank) / 10; // How costs the illumination above base, for Private as for Corporal
                 // "Over the base, a regular launch of flares began. Points taken: -%1"
