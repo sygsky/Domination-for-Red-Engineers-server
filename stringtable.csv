@@ -1218,14 +1218,16 @@ STR_CAMP_TEAM_4,fishermen,Fischer,pescadores,рыбаки
 STR_CAMP_TEAM_5,merchants,Händler,comercio,торговцы
 STR_CAMP_TEAM_6,grooms,Stallburschen,mozo de cuadra,конюхи
 
-STR_CAMP_TEAM_A_NUM,7,7,7,7
+STR_CAMP_TEAM_A_NUM,9,9,9,9
 STR_CAMP_TEAM_A_0,farmer,Bauer,agricultor,фермер
 STR_CAMP_TEAM_A_1,guy,Kerl,chico,парень
-STR_CAMP_TEAM_A_2,sorcerer,Zauberer,brujo,колдун
-STR_CAMP_TEAM_A_3,hunter,Jäger,cazador,охотник
-STR_CAMP_TEAM_A_4,fisherman,Fischer,pescador,рыбак
-STR_CAMP_TEAM_A_5,merchant,Kaufmann,comerciante,торговец
-STR_CAMP_TEAM_A_6,groom,Stallknecht,mozo de cuadra,конюх
+STR_CAMP_TEAM_A_2,kid,das Kind,el niño,паренёк
+STR_CAMP_TEAM_A_3,boy,kleiner Kerl,pequeño,парнишка
+STR_CAMP_TEAM_A_4,sorcerer,Zauberer,brujo,колдун
+STR_CAMP_TEAM_A_5,hunter,Jäger,cazador,охотник
+STR_CAMP_TEAM_A_6,fisherman,Fischer,pescador,рыбак
+STR_CAMP_TEAM_A_7,merchant,Kaufmann,comerciante,торговец
+STR_CAMP_TEAM_A_8,groom,Stallknecht,mozo de cuadra,конюх
 
 //------------------------------------ COMPUTER info strings ------------------------------------
 STR_COMP_ENTER,Login PC,Login PC,Entrada de PC,Вход в ПЭВМ
