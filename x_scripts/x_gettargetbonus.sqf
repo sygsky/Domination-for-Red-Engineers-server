@@ -72,7 +72,6 @@ if (mt_winner == 1) then {
 };
 #endif
 
-// TODO: add info for split MT score bonus ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred] call XSendNetStartScriptClient
 // must be ["target_clear",target_clear, extra_bonus_number, _counterattack_occurred, _town_stat_arr] call XSendNetStartScriptClient
 _bonus_score_arr = call SYG_townStatCalcScores;
 target_clear = true; // town is liberated, no new occupied towns is created while target_clear is true

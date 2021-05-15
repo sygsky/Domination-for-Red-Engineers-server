@@ -8,6 +8,7 @@
 
 if (!isServer) exitWith {};
 
+if (isNull _this) exitWith { hint localize "--- x_wreckmarker.sqf: vehicle is null" };
 #define DEPTH_TO_SINK -1 // when vehicle considered to have sunk
 #define RIP_MARKER_TIME -5 // how long to show rip marker after vehicle is set to null
 #define RIP_MARKER_LIVE_PERIOD (6 * 3600) // 6 hours
@@ -39,7 +40,7 @@ if (!isNull _driver ) then {
 while {speed _vehicle > 4} do {sleep (1.532 + random 2.2)};
 sleep 0.01;
 
-_type_name = [typeOf (_vehicle),0] call XfGetDisplayName;
+_type_name = typeOf _vehicle;// [typeOf (_vehicle),0] call XfGetDisplayName;
 
 #ifdef __PRINT__
 hint localize format[ "+++ x_wreckmarker.sqf: script for %1, in water %2, Z %3, driver %4, vectorUp %5, local %6",

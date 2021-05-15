@@ -765,7 +765,7 @@ STR_SYS_620_2,"I just need to get out on a gentle Bank, so I'll find it faster..
 STR_SYS_620_3,depth %1 m.,tiefe %1 m.,Prof. 1 m.,гл. %1 м.
 
 STR_SYS_630,The waters of the oceans closed over the shamefully lost %1 (%2 m.). Someone has to be shot for this!,Das Wasser der Ozeane schloss sich über dem schändlich verlorenen %1 ( %2 m.). Dafür muss jemand erschossen werden!,Las aguas de los océanos del mundo se cerraron sobre el vergonzosamente perdido %1 ( %2 m). ¡Alguien tiene que ser fusilado por esto!,Воды мирового океана сомкнулись над постыдно утерянным %1 ( %2 м.). Кого-то предстоит за это расстрелять!
-STR_SYS_630_1,The lost %1 can still be restored if it is delivered to the appropriate service!,"Das verlorene %1 kann noch wiederhergestellt werden, wenn es an den entsprechenden service geliefert wird!",¡El %1 perdido aún se puede salvar si se entrega al Servicio de renacimiento!,"Утерянный %1 можно ещё спасти, если доставить на сервис возрождения!"
+STR_SYS_630_1,"The lost ""%1"" can still be restored if it is delivered to the appropriate service!","Das verlorene ""%1"" kann noch wiederhergestellt werden, wenn es an den entsprechenden service geliefert wird!","¡El ""%1"" perdido aún se puede salvar si se entrega al Servicio de renacimiento!","Утерянный ""%1"" можно ещё спасти, если доставить на сервис возрождения!"
 STR_SYS_630_2,%1 disappeared! %2,%1 ist verschwunden! %2,%1 ha desaparecido! %2,%1 исчез! %2
 
 STR_SYS_630_2_NUM,4,4,4,4
