@@ -11,6 +11,7 @@ d_still_in_intro = true;
 
 #define __DEBUG__
 #define __TIME_OF_DAY_MISIC__
+// #define __SOVIET_MUSIC_ONLY__
 
 // uncomment next line to test how 23-FEB-1985, 7-NOV-1985 etc are processed as Soviet holiday
 //#define __HOLIDAY_DEBUG__
@@ -114,7 +115,6 @@ if (_sound == "") then { // select random music for ordinal day
 
             // add some rarely heard music now if no personal music set
 
-
 #ifdef __TIME_OF_DAY_MISIC__
             // music to play day and night
             _night_music = [
@@ -157,6 +157,13 @@ if (_sound == "") then { // select random music for ordinal day
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
+
+#ifdef __SOVIET_MUSIC_ONLY__
+			_music = ["strelok","Letyat_perelyotnye_pticy_2nd","chapaev","soviet_officers","tovarich_moy","Vremia_vpered_Sviridov",
+				"Letyat_perelyotnye_pticy_end","bolivar","travel_with_friends","on_thin_ice","peregrinus"] call _XfRandomArrayVal;
+#endif
+
+
 			_sound = _music;
             playMusic _music; //playMusic "ATrack25"; // oldest value by Xeno
          };
