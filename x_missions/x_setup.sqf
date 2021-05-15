@@ -183,3 +183,6 @@
 
 // If defined allows to get a weak defence force to the town, (no cars and tanks) only some infantry and statics
 //#define __TOWN_WEAK_DEFENCE__
+
+// uncomment lower line to allow 1st side mission fast start, else long time to start
+//#define __FAST_START_SM__
