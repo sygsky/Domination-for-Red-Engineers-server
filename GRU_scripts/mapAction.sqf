@@ -17,8 +17,7 @@ _msg = "STR_MAP_NUM" call SYG_getRandomText;
 _args = ["STR_MAP_10", _msg, "STR_" + _type]; // '%1 всматриваясь в карту, вы воcклицаете: "Да это-же %2!"'
 //hint localize format["GRU_scripts\mapAction.sqf: %1",_args];
 ["msg_to_user", "", [_args]] call SYG_msgToUserParser; // message output
-if ( _msg == "STR_MAP_7" ) then
-{
+if ( _msg == "STR_MAP_7" ) then {
     GRU_SPECIAL_SCORE_ON_MAP_INFO call GRU_SpecialScores;
 };
 
