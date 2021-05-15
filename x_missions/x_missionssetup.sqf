@@ -1,7 +1,8 @@
-// by Xeno
+// by Xeno, x_missions\x_missionssetup.sqf
 
-#include "x_setup.sqf"
-#include "x_macros.sqf"
+// lower include already used in parent init.sqf
+//#include "x_setup.sqf"
+//#include "x_macros.sqf"
 
 // I'm using x_mXXX.sqf for the mission filename where XXX has to be added to sm_array
 d_mission_filename = "x_m";

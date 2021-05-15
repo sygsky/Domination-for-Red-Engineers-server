@@ -54,8 +54,7 @@ XClearSidemission = {
 	{
 		if !(isNull _x) then {
 			if (_x isKindOf "LandVehicle" ) then {
-				if ( alive _x ) then
-				{
+				if ( alive _x ) then {
 					_was_captured = false;
 					{
 						if (isPlayer _x) exitWith {_was_captured = true;}; // if player is in vehicle, consider it to be captured
@@ -374,8 +373,7 @@ if (!d_no_sabotage) then {execVM "x_scripts\x_infiltrate.sqf";};
 
 #ifdef __ACE__
 //+++ Sygsky: added on heli wind effect for server only as all heli are created on host (server) computer
-if ( d_with_wind_effect ) then
-{
+if ( d_with_wind_effect ) then {
 	"ACE_HeliWind" createVehicle [0,0,0]; ACE_Wind_Modifier_Vehicles = 0.75;
  };
 #endif
@@ -388,12 +386,9 @@ if ( d_with_wind_effect ) then
 SYG_isSMPosRequest = {
     private ["_ret"];
     _ret = false;
-    if ( !isNull _this ) then
-    {
-        if (typeof _this == "STRING") then
-        {
-            if (_this == "SM_POS_REQUEST") then
-            {
+    if ( !isNull _this ) then{
+        if (typeof _this == "STRING") then {
+            if (_this == "SM_POS_REQUEST") then {
                 _ret = true;
             };
         };

@@ -1,5 +1,7 @@
 // by Xeno, x_getsidemission.sqf, server side
-private ["_bpos","_grps","_leader","_leadero","_nbuilding","_newgroup","_no_list","_ogroup","_pos_other","_pos_other2","_posi_array","_poss","_sm_vehicle","_unitsg","_vehicle","_officer","_building2","_xtank","_xplane","_xchopper","_xarti"];
+//private ["_bpos","_grps","_leader","_leadero","_nbuilding","_newgroup","_no_list","_ogroup","_pos_other","_pos_other2",
+//		 "_posi_array","_poss","_sm_vehicle","_unitsg","_vehicle","_officer","_building2","_xtank","_xplane","_xchopper","_xarti"];
+
 #include "x_setup.sqf"
 
 #define __DEBUG__

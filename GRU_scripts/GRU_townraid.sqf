@@ -1,5 +1,5 @@
 //
-// GRU_townraid.sqf, created by Sygsky at 09-DEC-2105
+// GRU_townraid.sqf, created by Sygsky at 09-DEC-2015
 //
 // start with GRU town reconnaissance mission. Call only on client to use 'player' variable
 //
