@@ -74,7 +74,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 	_s call XfHQChat; // "Side mission accomplished"
     hint localize ("+++ SideMission: " + _s);
 
-} else { // if (side_mission_winner != 0 && bonus_number != -1) then
+} else { // if (side_mission_winner != 0 && bonus_number != -1) then {...} else {...
     _s = switch (side_mission_winner) do {
         case   -1 : {"STR_SYS_129_1"/*"Персона, намеченная к ликвидации, погибла в результате трагического инцидента..."*/};
         case   -2 : {"STR_SYS_129_2"/*"Враг решил взорвать все сам..."*/};
@@ -89,8 +89,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
     };
 	_s = localize _s;
 
-	if (_s != "") then
-	{
+	if (_s != "") then {
         _penalty = d_ranked_a select 11; // todo: lower all players in rank on such bad event!!!
         //player addScore (-_penalty);
         (-_penalty) call SYG_addBonusScore;

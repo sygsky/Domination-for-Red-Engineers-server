@@ -215,19 +215,6 @@ while {! (_hostages_reached_dest || _all_dead) } do {
 
 if (_all_dead) then {
 	side_mission_winner = -400;
-	sleep 2.123;
-	{
-		if (!isNull _x) then {
-			if (vehicle _x != _x) then {
-				_x action ["eject", vehicle _x];
-				unassignVehicle _x;
-				_x setPos [0,0,0];
-			};
-			deleteVehicle _x;
-		};
-	} forEach _units;
-	sleep 0.5321;
-	if (!isNull _newgroup) then {deleteGroup _newgroup};
 #ifdef __DEBUG_SM__
     hint localize format["+++ x_sideprisoners.sqf: side_mission_winner = -400; remove all civilians from mission"];
 #endif
@@ -244,25 +231,29 @@ if (_all_dead) then {
 		} else {
 			side_mission_winner = -400;
 		};
-		sleep 2.123;
-		{
-			if (!isNull _x) then {
-				if (vehicle _x != _x) then {
-					_x action ["eject", vehicle _x];
-					unassignVehicle _x;
-					_x setPos [0,0,0];
-				};
-				sleep 0.05;
-				deleteVehicle _x;
-			};
-		} forEach _units;
-		sleep 2.5321;
-		if (!isNull _newgroup) then {deleteGroup _newgroup};
 #ifdef __DEBUG_SM__
         hint localize format["+++ x_sideprisoners.sqf: side_mission_winner = %1; remove all civilians from mission",side_mission_winner ];
 #endif
 
+	} else {
+#ifdef __DEBUG_SM__
+        hint localize "--- x_sideprisoners.sqf: prisoners not dead and not resqued. All removed in any case!!!";
+#endif
 	};
+	// remove prisoners in any case
+	sleep 2.123;
+	{
+		if (!isNull _x) then {
+			if (vehicle _x != _x) then {
+				_x action ["eject", vehicle _x];
+				unassignVehicle _x;
+				_x setPos [0,0,0];
+			};
+			deleteVehicle _x;
+		};
+	} forEach _units;
+	sleep 0.5321;
+	if (!isNull _newgroup) then {deleteGroup _newgroup};
 };
 
 _units = nil;
