@@ -6,7 +6,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG_SM__  // if defined, no enemy will be created
+#define __DEBUG_SM__  // if defined, no enemy will be created
 
 _posi_a = _this select 0;
 _pos = _posi_a select 0;
@@ -18,8 +18,8 @@ _posi_a = nil;
 d_sm_p_pos = nil;
 #endif
 
-
 #define SAY_INTERVAL 7 // in seconds
+
 _say_grp_sound = {
     if (_say_time > time) exitWith {};
     {
@@ -152,7 +152,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
 #else
 _retter = objNull;
 
-while {!_hostages_reached_dest && !_all_dead} do {
+while {! (_hostages_reached_dest || _all_dead) } do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
@@ -168,7 +168,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
         _nobjs = nearestObjects [_leader, ["Man"], 20];
         if (count _nobjs > 0) then {
             {
-                if ((isPlayer _x) && (_x == leader _x)) exitWith {
+                if ( (isPlayer _x) && (_x == leader _x) && (alive _x) ) exitWith {
                     _rescued = true;
                     _retter = _x;
                     #ifdef __DEBUG_SM__
@@ -177,7 +177,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
                 };
                 sleep 0.01;
             } forEach _nobjs;
-            if (_rescued && !isNull _retter) then {
+            if (_rescued && alive _retter) then {
                 {
                     if ( alive _x ) then {
                         _x setCaptive false;
@@ -188,7 +188,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
                 call _say_grp_sound;
             };
         };
-    } else {
+    } else { // they are rescued
         {
             if ( (alive _x) && (_x distance FLAG_BASE < 20) ) exitWith {
                 _hostages_reached_dest = true;
@@ -252,6 +252,7 @@ if (_all_dead) then {
 					unassignVehicle _x;
 					_x setPos [0,0,0];
 				};
+				sleep 0.05;
 				deleteVehicle _x;
 			};
 		} forEach _units;
@@ -268,7 +269,7 @@ _units = nil;
 
 side_mission_resolved = true;
 #ifdef __DEBUG_SM__
-        hint localize format["+++ x_sideprisoners.sqf: SM resolved"];
+	hint localize format["+++ x_sideprisoners.sqf: SM resolved"];
 #endif
 
 if (true) exitWith {};
