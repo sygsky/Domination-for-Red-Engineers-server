@@ -51,8 +51,7 @@ _hills_seek_dist = 0;
 _skip_base       = false;
 #endif
 
-if ( count _grp_array > 10 && (typeName (_grp_array select 10) == "ARRAY") ) then
-{
+if ( count _grp_array > 10 && (typeName (_grp_array select 10) == "ARRAY") ) then {
 	_wp_array = _grp_array select 10;
 	if ( count _wp_array > 0) then {    _rejoin_num  = _wp_array select 0;};
 	if ( count _wp_array > 1) then {    _debug_print = _wp_array select 1;};
@@ -101,10 +100,8 @@ while {true} do {
 			_units = units _grp;
 			// refuel all vehicles after player wait periods
             {
-                if (alive _x) then
-                {
-                    if (vehicle _x != _x) then
-                    {
+                if (alive _x) then {
+                    if (vehicle _x != _x) then {
                         (vehicle _x) setFuel 1;
                     };
                 };
@@ -119,19 +116,14 @@ while {true} do {
 	switch (_grp_array select 2) do {
 		case 0: { // quiet initial state, nothing unusual
 			_enemy_array = _grp_array call x_get_nenemy; // returns array [enemy, enemy_pos, enemy_knowlege];
-			if (count _enemy_array > 0) then 
-			{
-				if (_enemy_array select 2 >= 1.5) then // we knew about him!
-				{
-					if ((leader _grp) distance (_enemy_array select 1) > 20) then 
-					{
+			if (count _enemy_array > 0) then  {
+				if (_enemy_array select 2 >= 1.5) then { // we knew about him!
+					if ((leader _grp) distance (_enemy_array select 1) > 20) then {
 						_grp_array set [2,3];
-					} else 
-					{
+					} else  {
 						_grp_array set [2,1];
 					};
-				} else 
-				{
+				} else  {
 					_grp_array set [2,9];
 				};
 			} else {
@@ -290,8 +282,7 @@ while {true} do {
 			_units doMove (_flank_pos_a select 0);
 			_grp_array set [2,4];
 		};
-		case 4:
-		{ // check flanking pos on X less than 20 meters to enemy
+		case 4: { // check flanking pos on X less than 20 meters to enemy
 			if ((leader _grp) distance (_flank_pos_a select 0) < 20 || (time > _checktime)) then {
 				_units doMove (_flank_pos_a select 1);
 				_grp_array set [2,5];
@@ -326,7 +317,7 @@ while {true} do {
 				_grp_array call xx_make_normal;
 			};
 		};
-		case 9; { // case to watch some little known position during next 2 minutes
+		case 9: { // case to watch some little known position during next 2 minutes
 			_grp setCombatMode "YELLOW";
 			_grp setSpeedMode "NORMAL";
 			_grp setBehaviour "AWARE";
@@ -337,6 +328,9 @@ while {true} do {
 				sleep 0.012;
 			} forEach _units;
 			_grp_array set [2,8];
+		};
+		case 10: { // special case for the patrol to get out of the gorge, changes current WP to the next one stored in 4 pos of _group_array
+			// TODO: change new WP position on the fly
 		};
 	}; // switch (_grp_array select 2)
 	

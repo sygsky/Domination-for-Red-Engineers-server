@@ -30,7 +30,7 @@ XSideMissionResolved = {
 		#endif
 		execVM "x_scripts\x_getbonus.sqf";
 	};
-	if (side_mission_winner in [-1,-2,-300,-400,-500,-600,-700,-701]) then {
+	if (side_mission_winner < 0 /*in [-1,-2,-300,-400,-500,-600,-700,-701]*/ ) then {
 		["sm_res_client",side_mission_winner,-1] call XSendNetStartScriptClient;
 		side_mission_winner = 0;
 	};

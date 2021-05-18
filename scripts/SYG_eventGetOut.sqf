@@ -432,7 +432,7 @@ SYG_getOutEvent = {
         _veh,
         (round((time - _start_time) *10))/10,
         _start_dmg,
-        _tlist,
+        count _tlist,
         count crew _veh,
         {alive _x} count crew _veh,
         SYG_TrueGetOutsCnt,

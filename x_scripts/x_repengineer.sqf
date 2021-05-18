@@ -128,7 +128,7 @@ _break_str = "";
 _pos = getPos player;
 _rep_action = player addAction[localize "STR_SYS_77","x_scripts\x_cancelrep.sqf"]; // "Отменить обслуживание"
 
-// #413: off engine before repairing
+// #413: off engine before repairing. TODO: Not works on client computer, try to do on server in the bright  future
 if ( !(alive (driver objectID2) ) ) then {
 	// switch engine off only if driver not alive or is absent
 	if (isEngineOn objectID2) then {
@@ -145,7 +145,7 @@ for "_i" from 1 to _total_steps do {
 		if (!_is_engineer) then {  (format[localize "STR_SYS_152", (_addscore + 1) * __NON_ENGINEER_REPAIR_PENALTY__ ]) call XfGlobalChat }// Repair -5 ...
 		else {
 #endif
-	        (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat; // Repair -1...
+	        (format[localize "STR_SYS_152", _addscore + 1]) call XfGlobalChat; // "Still working (score %1)..."
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
 		};
 #endif
@@ -171,7 +171,7 @@ for "_i" from 1 to _total_steps do {
 
 	if (!_damage_ok) then {
 		_damage = _damage - _rep_count;
-		if (_damage <= 0.001) then {_damage = 0;_damage_ok = true;};
+		if ( _damage <= 0 ) then {_damage = 0;_damage_ok = true;};
 		_addscore = _addscore + 1;
 	} else  {
         if (!_fuel_ok) then {
