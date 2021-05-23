@@ -527,7 +527,7 @@ STR_SYS_RELOAD_REPAIR,Loading of repair equipment,Das laden von reparaturgeräte
 STR_SYS_RELOAD_REAMMO,Ammunition reloading,Munition nachladen,Recarga de municiones,Перезарядка боезапаса
 STR_SYS_RELOAD_REFUEL,Filling of the fuel tank,Tankfüllung,Repostar el tanque,Заправка цистерны
 
-STR_SYS_258_1,Engineers thank You for fully functional vehicles!,Ingenieure vielen Dank für die voll funktionsfähigen Fahrzeuge!,¡Los ingenieros le agradecen por el transporte completamente funcional!,Инженеры благодарят Вас за полностью исправный транспорт!
+STR_SYS_258_1,Engineers thank You for fully functional vehicles (+1)!,Ingenieure vielen Dank für die voll funktionsfähigen Fahrzeuge (+1)!,¡Los ingenieros le agradecen por el transporte completamente funcional (+)!,Инженеры благодарят Вас за полностью исправный транспорт (+1)!
 STR_SYS_258_2,You're not an engineer and can repair vehicle just with a loss of %1 point[s] per cycle,Du bist kein Ingenieur und kann Reparatur Fahrzeug nur mit einem Verlust von %1 pro Zyklus,Usted no es un ingeniero y sólo puede reparar con la deducción de puntos (%1 por ciclo),Вы не инженер и можете чинить только с вычетом очков (%1 за цикл)
 STR_SYS_258_3,The engineer can locate and deactivate the mines,Der Ingenieur kann suchen Sie und deaktivieren Sie die Minen,Ahora el ingeniero puede trabajar con minas,Теперь инженер может работать с минами
 STR_SYS_258_4,You must install the addon EditorUpdate_v102.PBO for a full-scale game,Sie müssen den Addon EditorUpdate_v102.pbo installieren für ein full-scale-Spiel,Es necesario instalar el complemento EditorUpdate_v102.pbo,Вам необходимо установить аддон EditorUpdate_v102.pbo
