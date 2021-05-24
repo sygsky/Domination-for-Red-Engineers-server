@@ -15,7 +15,12 @@ sm_points_racs = 0;
 _count_arti = count _this;
 {
 	/* Passed array: [unit, killer] */
-	_x addEventHandler ["killed", { dead_arti = dead_arti + 1; _this spawn x_removevehi }];
+	_x addEventHandler ["killed", {
+			dead_arti = dead_arti + 1; _this spawn x_removevehi;
+			// send info about next canon death to all players
+			[ "msg_to_user", "", [ ["STR_SM_10_1", dead_arti] ], 0, 2, false, "good_news" ] call XSendNetStartScriptClientAll; // "Canon Nr. %1 destroyed."
+		}
+	];
 	#ifdef __TT__
 	_x addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 	#endif
