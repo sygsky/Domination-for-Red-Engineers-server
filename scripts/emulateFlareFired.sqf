@@ -23,13 +23,12 @@ private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type",
 #define __I .025
 
 _col = __COL;
-_flare_type = "F_40mm_White"; // default flare type
-switch (toUpper(_col)) do
-{
-	case "WHITE":  { _flare_type = "F_40mm_White";  };
+//_flare_type = "F_40mm_White"; // default flare type
+_flare_type = switch (toUpper(_col)) do {
 	case "RED":    { _flare_type = "F_40mm_Red";    };
 	case "GREEN":  { _flare_type = "F_40mm_Green";  };
 	case "YELLOW": { _flare_type = "F_40mm_Yellow"; };
+	default{ _flare_type = "F_40mm_White"; }; //	case "WHITE":  { _flare_type = "F_40mm_White";  };
 };
 
 _pos = __POS;
@@ -44,10 +43,10 @@ hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4
 
 _flare = objNull;
 _flare = _flare_type createVehicle _pos;
+__POS setVariable ["flare", true]; // mark flare is on
 if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 
 sleep 0.5;
-
 
 if (__LOCAL) then {
 // call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
@@ -62,4 +61,5 @@ while { alive _flare && (((getPos _flare) select 2) > _die_away_height) } do { s
 
 //if ( !isNull _flare ) then {hint localize format["emulateFlareFired.sqf: flare drop speed %1. Fog %2, fogForecast %3, weather change %4", velocity _flare, fog, fogForecast,nextWeatherChange]; 
 if ( !isNull _flare ) then { /* hint localize format["emulateFlareFired.sqf: flare drop speed %1", velocity _flare];*/ deleteVehicle _flare;};
+__POS setVariable [ "flare", nil ]; // mark flare is off
 	

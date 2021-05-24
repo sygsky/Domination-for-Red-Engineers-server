@@ -4,7 +4,7 @@ private ["_p", "_pos", "_type", "_i", "_res", "_target_array", "_current_target_
 "_box", "_xx", "_units", "_strp", "_artinum", "_vec", "_ari1", "_respawn_marker", "_s",
 "_trigger", "_dbase_a", "_status", "_bravo", "_is_climber", "_types", "_action", "_ar", "_mcctypeaascript", "_num",
 "_thefac", "_element", "_posf", "_facid", "_exit_it", "_boxname", "_dir", "_oldscore","_string_player","_local_msg_arr",
-"_rad","_old_rank"];
+"_rad","_old_rank","_flare"];
 if (!X_Client) exitWith {};
 
 sleep 1;
@@ -1291,7 +1291,7 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 
 
 #ifndef __TT__
-// Enemy at base
+// Enemy at base: called from trigger< _this = [0, thislist]
 XBaseEnemies = {
 	switch ( _this select 0 ) do {
 		case 0: {
@@ -1310,7 +1310,11 @@ XBaseEnemies = {
                         if ( ((_x isKindOf 'LandVehicle') || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit'))) && (alive _x) ) exitWith {
                             // find nearest to this object alive service
                             // find allowed objects on base to play sounds
-                            _no = nearestObjects [_x, [ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM"], 1000];
+                            _no = nearestObjects [
+                            	_x,
+                            	[ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM", "Land_hlaska","Land_vez","Land_strazni_vez"],
+                            	1000
+                            ];
                             {
                                 if (alive _x) exitWith {_alarm_obj = _x};
                             } forEach _no;
@@ -1323,8 +1327,11 @@ XBaseEnemies = {
                 };
             };
             _alarm_obj say "alarm";
-            // TODO: throw flare above alarm object
-            [getPos _alarm_obj, _height, "Yellow", 400, true] execVM "scripts\emulateFlareFired.sqf";
+            // throw flare above alarm object
+            _flare = _alarm_obj getVariable "flare"; // check if flare already on above this alarm object
+            if (isNil "_flare") then  {
+	            [_alarm_obj, _height, "Yellow", 400, true] execVM "scripts\emulateFlareFired.sqf";
+            }
 		};
 		case 1: {
 			hint composeText[
