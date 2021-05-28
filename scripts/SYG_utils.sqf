@@ -710,5 +710,21 @@ SYG_clearArrayB = {
 };
 SYG_cleanArrayB = SYG_clearArrayB;
 
+//
+// _arr = [1,2,3];
+// _arr = [_arr, 1] call SYG_removeItemFromArray; // returns [1,3] and _arr is the same object as before subtraction!!!
+//
+SYG_removeItemFromArray = {
+	private [ "_arr", "_ind", "_i" ];
+	_arr = _this select 0;
+	if (typeName _arr != "ARRAY") exitWith {[]};
+	_ind = _this select 1;
+	if (_ind < 0) exitWith { _arr};
+	if (_ind >= (count _arr)) exitWith {_arr};
+	for "_i" from _ind  to (count _arr) - 2 do { _arr set [_i, _arr select (_i + 1)]; };
+	_arr resize (count _arr) - 1;
+	_arr
+};
+
 
 if (true) exitWith {};
