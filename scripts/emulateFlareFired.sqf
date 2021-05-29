@@ -3,7 +3,7 @@
 //
 // call as: [getPos _alarm_obj, _height, "Yellow", 400, true] execVM "scripts\emulateFlareFired.sqf";
 //
-private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height"];
+private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height","_alarm_obj"];
 
 #define __POS    (_this select 0)
 #define __HEIGHT ((_this select 1)-5+(random 10))
@@ -32,7 +32,11 @@ _flare_type = switch (toUpper(_col)) do {
 };
 
 _pos = __POS;
-if ( typeName _pos == "OBJECT" ) then {_pos = getPos _pos;}; // convert object to its position
+_alarm_obj = objNull;
+if ( typeName _pos == "OBJECT" ) then {
+	_alarm_obj = _pos; // store alarm object (tower etc)
+	_pos = getPos _pos; // convert object to its position
+};
 _pos set [ 2, __HEIGHT ];
 
 _factor = __DIST max 12.5; // if (_factor > 12.5) then { _factor = 12.5; };
@@ -43,7 +47,9 @@ hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4
 
 _flare = objNull;
 _flare = _flare_type createVehicle _pos;
-__POS setVariable ["flare", true]; // mark flare is on
+if (!isNull _alarm_obj) then  {
+	_alarm_obj setVariable ["flare", true]; // mark flare is on above this alarm object
+};
 if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 
 sleep 0.5;
@@ -61,5 +67,7 @@ while { alive _flare && (((getPos _flare) select 2) > _die_away_height) } do { s
 
 //if ( !isNull _flare ) then {hint localize format["emulateFlareFired.sqf: flare drop speed %1. Fog %2, fogForecast %3, weather change %4", velocity _flare, fog, fogForecast,nextWeatherChange]; 
 if ( !isNull _flare ) then { /* hint localize format["emulateFlareFired.sqf: flare drop speed %1", velocity _flare];*/ deleteVehicle _flare;};
-__POS setVariable [ "flare", nil ]; // mark flare is off
-	
+
+if (!isNull _alarm_obj) then  {
+	_alarm_obj setVariable ["flare", nil]; // mark flare is off
+};
