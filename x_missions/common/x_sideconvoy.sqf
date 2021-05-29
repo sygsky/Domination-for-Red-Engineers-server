@@ -16,7 +16,7 @@ private ["_c_array","_convoy_destroyed","_convoy_reached_dest","_leader","_convo
 //#define __SYG_OPTIMIZATION__
 #define CHECK_DELAY 120
 
-#define DISTANCE_BETWEEN_CTRL_POINT 1000 // distance in emetrs between control points
+#define DISTANCE_BETWEEN_CTRL_POINT 1000 // distance in meters between control points
 
 // call: _grp call _clearFootmen;
 _clearFootmen = {
