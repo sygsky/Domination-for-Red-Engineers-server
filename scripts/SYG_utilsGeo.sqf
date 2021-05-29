@@ -136,8 +136,7 @@ SYG_nearestLocationD = {
 SYG_nearestLocationA = {
 	private ["_pos","_dist","_nearloc", "_loc","_lst","_ploc"];
 	_pos = arg(0);
-	switch (typeName _pos) do
-	{
+	switch (typeName _pos) do {
 		case "OBJECT": {_pos = position _pos;};
 		case "LOCATION": {_pos = locationPosition _pos;};
 		case "ARRAY": {/* already correct format */};
@@ -855,12 +854,12 @@ SYG_distance2D = {
 //
 // Creates message with any object distance and direction according to the nearest location
 // Input: _msg = player call SYG_MsgOnPos;
-// Result message is localized as follow: "%DIST m. to %DIR from %LOC_NAME", please compound you messsage as follow:
+// Result message is localized as follow: "from %LOC_NAME %DIST m. to %DIR", please compound you messsage as follow:
 // e.g. "You are " + "1400 м. to North from Bagango" 
 // или "Вы на расстоянии " + "1400 м. к северу от Bagango"
 //
 SYG_MsgOnPos = {
-	[_this, localize "STR_SYS_151"] call SYG_MsgOnPosA
+	[_this, localize "STR_SYS_151"] call SYG_MsgOnPosA // "from %1 %2 m. to %3"
 };
 
 //
@@ -919,9 +918,7 @@ SYG_MsgOnPosE = {
 	_pos1 = position _loc;
 	_pos1 set [2,0];
 	_pos2 = _obj;
-	if ( typeName _pos2 != "ARRAY") then {
-    	_pos2 = position _obj;
-	};
+	if ( typeName _pos2 != "ARRAY") then { _pos2 = position _obj; };
 	_pos2 set [2,0];
 	_dist = (round ((_pos1 distance _pos2)/_roundTo)) * _roundTo;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;

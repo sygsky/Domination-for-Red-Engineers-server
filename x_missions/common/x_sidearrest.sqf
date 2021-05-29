@@ -1,5 +1,5 @@
 // by Xeno, x_missions\common\x_sidearrest.sqf
-private ["_is_dead","_leader","_nobjs","_officer","_offz_at_base","_rescued","_winner","_rescue","_grant","_sound","_player_cnt"];
+private ["_is_dead","_leader_name","_nobjs","_officer","_offz_at_base","_rescued","_winner","_rescue","_grant","_sound","_player_cnt"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -30,8 +30,7 @@ while {!_offz_at_base && !_is_dead} do {
 	if (!alive _officer) then {
 		_is_dead = true;
 	} else {
-		if (!_rescued) then 
-		{
+		if (!_rescued) then {
 
 			////////////////////////////////////////////++ Dupa by Engineer's request
 			_nobjs = nearestObjects [_officer, ["CAManBase"], 20];
@@ -43,6 +42,7 @@ while {!_offz_at_base && !_is_dead} do {
                     [_officer] join grpNull; // stronger (possibly) remove action, as ordinal work good not all times
                     sleep 0.1;
                     [_officer] join (group _x);
+                    _leader_name = name _x;
                     ["make_ai_friendly",_officer] call XSendNetStartScriptClientAll;
                     hint localize format["+++ x_sidearrest.sqf: nearest to officer man is %1(%2), is leader = %3", _x, name _x, (leader _x) == _x];
                 };
@@ -50,21 +50,14 @@ while {!_offz_at_base && !_is_dead} do {
             } forEach _nobjs;
 			////////////////////////////////////////////
 
-		} 
-		else 
-		{
-			if (!(__TTVer)) then 
-			{
+		} else {
+			if (!(__TTVer)) then {
 				if (_officer distance FLAG_BASE < 20) then {
 					_offz_at_base = true;
-				}
-				else
-				{
-					// check if officer again is alone
-					if ( (leader _officer) == _officer ) then
-					{
-						if ( (count units (group _officer)) > 1 ) then
-						{
+				} else {
+					// check if officer again is alone that is not under comtrol
+					if ( (leader _officer) == _officer ) then {
+						if ( (count units (group _officer)) > 1 ) then {
 							[_officer] join grpNull; // move officer out of group
 							sleep 0.01;
 						};
@@ -74,9 +67,7 @@ while {!_offz_at_base && !_is_dead} do {
 						sleep 0.01;
 					};
 				};
-			} 
-			else 
-			{
+			} else {
 				if (_officer distance WFLAG_BASE < 20) then {
 					_offz_at_base = true;
 					_winner = 2;
@@ -103,6 +94,7 @@ while {!_offz_at_base && !_is_dead} do {
                 if (_x == leader _x) then {
                     _rescued = true;
                     [_officer] join (leader _x);
+       				if (stopped _officer) then {_officer doFollow (leader _x)};
                     _officer setCaptive true;
                     ["make_ai_friendly",_officer] call XSendNetStartScriptClientAll;
                     hint localize format["+++ x_sidearrest.sqf: nearest to officer player is %1(%2), is %3 leader", _x, name _x, (leader _x) == _x];
@@ -116,8 +108,7 @@ while {!_offz_at_base && !_is_dead} do {
             if (_grant) then {
                 if (_rescued) then {
                     sleep 5;
-                    switch (localize "STR_LANGUAGE" ) do
-                    {
+                    switch (localize "STR_LANGUAGE" ) do {
                         case "GERMAN": { _sound = "ger_grant_intro"};
                         case "ENGLISH";
                         default {
@@ -126,8 +117,7 @@ while {!_offz_at_base && !_is_dead} do {
                     };
                 } else { // no leader near, officer not surrendered
                     // set sound
-                    switch (localize "STR_LANGUAGE" ) do
-                    {
+                    switch (localize "STR_LANGUAGE" ) do {
                         case "GERMAN": { _sound = "ger_grant_surrend"};
                         case "ENGLISH";
                         default {
@@ -141,27 +131,42 @@ while {!_offz_at_base && !_is_dead} do {
             // TODO: force officer to look at the nearest player
             if  (_sound != "") then { ["say_sound",_officer, _sound] call XSendNetStartScriptClient;}; // play sound
         };
-    } else {
-        if (_officer distance FLAG_BASE < 20) then {
+    } else { // rescued
+        if (_officer distance FLAG_BASE < 20) then { // end of SM
             _offz_at_base = true;
         } else {
             // check if officer again is alone
-            if ( (leader _officer) == _officer ) then
-            {
-                if ( (count units (group _officer)) > 1 ) then
-                {
+            if ( (leader _officer) == _officer ) then {
+                if ( (count units (group _officer)) > 1 ) then {
                     [_officer] join grpNull; // move officer out of group
                     sleep 0.01;
                 };
+                // info message
+                hint localize format["+++ x_sidearrest.sqf: control of the officer lost by %1 at pos %2%3, %4",
+						_leader_name,
+						(getPos _officer) call SYG_nearestSettlement,
+						if (surfaceIsWater (getPos _officer)) then { " (in water)"} else {" (on land)"},
+						_officer call SYG_MsgOnPos
+                	];
+
                 if (vehicle _officer != _officer) then {
                     _officer action ["eject", vehicle _officer];
                     unassignVehicle _officer;
                 };
                 sleep 1;
                 _officer setCaptive false;
+                [_officer] join (call SYG_createEnemyGroup);
+                sleep 0.1;
+
+                // remove all waypoints
+                _egroup =  group _officer;
+				for "_i" from (count waypoints  (_egroup)) - 1 to 0 step -1 do { deleteWaypoint [ _egroup, _i ]; };
+				doStop _officer;
                 if ( (rating _officer) < 0) then { _officer addRating (2500 - (rating _officer)) }; // set high rating to prevent officer being killed by friendly AI
                 _rescued = false;
                 sleep 0.01;
+                // ""Officer lost by %1 at pos %2""
+                ["msg_to_user", "", [ ["STR_SM_042_1", _leader_name, [_officer, "%1 m. to %2 from %3"] call SYG_MsgOnPosE]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "Officer is lost (%1), lost pos is %2"
             };
         };
     };
