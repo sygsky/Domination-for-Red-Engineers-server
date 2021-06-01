@@ -101,7 +101,7 @@ class CfgIdentities
 
 #include "h\CfgMusic.hpp"
 
-#include "h\CfgSound.hpp"
+#include "h\CfgSounds.hpp"
 
 class X_RscAnimatedLetters {
 	idd = 77043;
