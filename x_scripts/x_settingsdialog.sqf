@@ -583,51 +583,40 @@ _ctrl ctrlSetText _str;
  */
  
 _ctrl = _XD_display displayCtrl GRU_DIALOG_ID; // Intel info (GRU)
-if ( isNil "player_is_on_town_raid" ) then
-{
+if ( isNil "player_is_on_town_raid" ) then {
 	_str = localize "STR_SYS_55" + "\n";
-	if ( !isNull (call SYG_getGRUComp) ) then
-	{
+	if ( !isNull (call SYG_getGRUComp) ) then {
 		_str = _str + localize "STR_GRU_44" + "\n";
 	};
-	if (!isNil "d_on_base_groups") then
-	{
+	if (!isNil "d_on_base_groups") then {
 	    _not_empty = false;
 	    {
 	        if ( ({alive _x} count (units _x)) > 0 ) exitWith {_not_empty = true;};
 	    } forEach d_on_base_groups;
 
-	    if ( _not_empty ) then
-	    {
+	    if ( _not_empty ) then {
 	        _str = _str + localize "STR_GRU_47" + "\n";
 	    };
 	};
 	_str = _str + localize "STR_SYS_56" + "\n"; // "Just a rumor:"
-}
-else
-{
+} else {
 	_str = format[localize "STR_SYS_606",argp(player_is_on_town_raid,0),argp(player_is_on_town_raid,1),argp(player_is_on_town_raid,2),[time, argp(player_is_on_town_raid,3)] call SYG_timeDiffToStr] +  "\n\n" + localize "STR_SYS_56_1" + "\n"""; // GRU mission etc ...;
 };
 
 // Check for last infiltation time
-if (__HasGVar(INFILTRATION_TIME)) then
-{
+if (__HasGVar(INFILTRATION_TIME)) then {
     _date = __GetGVar(INFILTRATION_TIME);
     _str = _str + format[localize "STR_GRU_55", _date call SYG_dateToStr] + "\n";
-}
-else
-{
+} else {
     _str = _str + format[localize "STR_GRU_52"] + "\n";
 };
 #ifdef __DEBUG__
 hint localize format["__HasGVar(INFILTRATION_TIME)=%1:__GetGVar(INFILTRATION_TIME)=%2,",__HasGVar(INFILTRATION_TIME), __GetGVar(INFILTRATION_TIME) ];
 #endif
 // check for patrol number
-if (__HasGVar(PATROL_COUNT)) then
-{
+if (__HasGVar(PATROL_COUNT)) then {
     _counter = __GetGVar(PATROL_COUNT);
-    if ( _counter > 0 ) then
-    {
+    if ( _counter > 0 ) then {
         _str = _str + format[localize "STR_GRU_50", _counter] + "\n";
     } else {
         _str = _str + (localize "STR_GRU_51") + "\n";
@@ -636,50 +625,6 @@ if (__HasGVar(PATROL_COUNT)) then
 #ifdef __DEBUG__
     hint localize format["__HasGVar(PATROL_COUNT)=%1:__GetGVar(PATROL_COUNT)=%2,",__HasGVar(PATROL_COUNT), __GetGVar(PATROL_COUNT) ];
 #endif
-/**
-_daytime = daytime;
-if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then {_str1 = localize "STR_RUM_NIGHT";}
-else
-{
-	call compile format["_counter=%1;", localize "STR_RUM_NUM"];
-	
-	if ( isNil "SYG_rumor_index" ) then 
-	{
-		SYG_rumor_index = floor (random _counter); // start index for random rumor message
-		SYG_rumor_hour  = floor(daytime);
-#ifdef __DEBUG__		
-		hint localize format["x_settingsdialog.sqf: initial settings SYG_rumor_index %1, SYG_rumor_hour %2",
-	                         SYG_rumor_index,SYG_rumor_hour]; 
-#endif							 
-	};
-	
-	// get main index of message
-	_index = floor(daytime) - SYG_rumor_hour; 
-	_rnd   = (random 2.0) - 1.0; // from +1 to -1
-	_index = (_index + (floor((_rnd*_rnd*_rnd)*RUMOR_WIDTH)) + SYG_rumor_index) % _counter ;
-	if ( _index < 0 ) then
-	{
-		_index = _counter + _index;
-	}
-	else
-	{
-		if ( _index >= _counter ) then
-		{
-			_index = _index - _counter;
-		};
-	};
-	_str1 = format["STR_RUM_%1",_index];
-	_str1 =  (localize _str1) + "\n";
-#ifdef __DEBUG__	
-	hint localize format["x_settingsdialog.sqf: SYG_rumor_index %1, SYG_rumor_hour %2, _index %3, _rnd %4",
-	                         SYG_rumor_index,SYG_rumor_hour,_index,_rnd];
-#endif							 
-};	
-_name1 = (target_names call XfRandomArrayVal) select 1; // random main target name
-_name2 = text (player call SYG_nearestLocation); // nearest location name
-_name3 = text (player call SYG_nearestSettlement); // nearest settlement name
-_str1 = format[_str1, _name1, _name2, _name3]; // just in case of %1 %2 etc
-*/
 _str1 = call SYG_getRumourText;
 _str = _str + _str1;
 
