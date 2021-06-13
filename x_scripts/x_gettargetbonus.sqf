@@ -97,7 +97,7 @@ _bonus_score_arr spawn {
 			if (_ind >= 0 ) then  {
 				_add = _add_arr select _ind; // assigned bonus coefficient (as decimal part of 40 score, from 0.0 to 40.0)
 				if (!isNil "SYG_townMaxScore") then {
-				 	_add = round(_add * SYG_townMaxScore);
+				 	_add = ((round(_add * SYG_townMaxScore)) max 1); // add minimum +1 score on a town liberation
 					hint localize format["+++ Online player ""%1"" town bonus score +%2", _x, _add];
 				} else {
 					hint localize format["+++ Online player ""%1"" town bonus coeff +%2", _x, _add];
@@ -118,7 +118,7 @@ _bonus_score_arr spawn {
 				if (_ind >= 0) then {
 					_item = d_player_array_misc select _ind; // player stats descriptor
 					if (!isNil "SYG_townMaxScore") then {
-						_add = round(_add * SYG_townMaxScore);
+						_add = (round(_add * SYG_townMaxScore)) max 1; // add minimum +1 score on a town liberation
 						_item set [3, (_item select 3) + _add]; // add town bonus score to the player
 					};
 					hint localize format["+++ Offline player ""%1"" town bonus value +%2", _x, _add];
