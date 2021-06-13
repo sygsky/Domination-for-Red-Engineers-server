@@ -428,7 +428,9 @@ SYG_holidayTable =
     [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
     [ 2,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
+    [ 28, 5, "board_guards","STR_HOLIDAY_28_MAY",1], // //Border Guard Day
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
+    [[6, 9, 2], 5, "board_guards","STR_HOLIDAY_28_MAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
     [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhimn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
     [29, 10, "komsomol","STR_HOLIDAY_28_OCT",0], // Komsomol day
     [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
@@ -440,7 +442,7 @@ SYG_holidayTable =
 // where:
 //   _retArr is [false (ordinal day) || true (day off), "registered_sound_name" || "" (no sound),"Holiday_title"] || [] (not holiday)
 SYG_getHoliday = {
-    private ["_curr_mon","_cur_day","_ret","_music","_XfRandomFloorArray","_XfRandomArrayVal"];
+    private ["_curr_mon","_cur_day","_week_day","_ret","_music","_XfRandomFloorArray","_XfRandomArrayVal"];
 
     // get a random number, floored, from count array
     // parameters: array
@@ -462,11 +464,17 @@ SYG_getHoliday = {
     {
         if ( _curr_mon  < (_x select 1)) exitWith {}; // month in sorted table .GT. current one, it means current month not exists in the table
         if ( _curr_mon == (_x select 1) ) then  {// month found, check days in table for coincidence with current one
-            if ( (_x select 0) == _curr_day ) then { // day also found, it's holyday!!!
-                _music = _x select OFF_HOLIDAY_SND;
-                if ( typeName _music == "ARRAY" ) then { _music = _music call _XfRandomArrayVal }; // not one music is set for this day, select random one
-                _ret = [(_x select OFF_HOLIDAY_HOL) > 0, _music, _x select OFF_HOLIDAY_TIT ];
-            };
+        	if (typeName (_x select 0) == "ARRAY") exitWith { // if array seek for the day of week, not the day of month
+        		_week_day     = [_this select 0, _curr_mon,_curr_day] call SYG_weekDay;
+        		_week_day_1   = [_this select 0, _curr_mon, 1] call SYG_weekDay;
+        		_week_day_arr = _x select 0;
+//        		if ( ( _week_day == _week_day_arr select 0 ) && (true) ) then {};
+        	};
+			if ( (_x select 0) == _curr_day ) then { // day also found, it's holyday!!!
+				_music = _x select OFF_HOLIDAY_SND;
+				if ( typeName _music == "ARRAY" ) then { _music = _music call _XfRandomArrayVal }; // not one music is set for this day, select random one
+				_ret = [(_x select OFF_HOLIDAY_HOL) > 0, _music, _x select OFF_HOLIDAY_TIT ];
+			};
         };
         if (count _ret > 0 ) exitWith {}; // A holday coincided with current day and its data returned to caller
     } forEach SYG_holidayTable;
