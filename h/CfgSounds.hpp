@@ -37,6 +37,7 @@ class CfgSounds {
     class starwars { name="Star wars march";               sound[]= {\sounds\starwars.ogg,db-1,1.0};     titles[] = {};};
     class radmus   { name="radmus from old OFP campany";   sound[]= {\sounds\enemy\radmus.ogg,db-1,1.0}; titles[] = {};};
     class enemy    { name="Hans Zimmer - Barbarian horde"; sound[]= {\sounds\enemy\enemy.ogg,db-1,1.0};  titles[] = {};};
+    class ortegogr { name="Found in one Arma mission (German)"; sound[]= {\sounds\enemy\ortegogr.ogg,db-1,1.0};  titles[] = {};};
 
     class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
 
