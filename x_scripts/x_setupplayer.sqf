@@ -109,7 +109,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	sleep random 0.5;
 	_endtime = time + 60;
 	// initial information on player connected
-	["d_p_a",name player,missionStart, localize "STR_LANG"] call XSendNetStartScriptServer;
+	["d_p_a", name player, missionStart, localize "STR_LANG", __FILE__] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
 #ifdef __DEBUG__
     if (!(isNil "d_player_stuff")) then {

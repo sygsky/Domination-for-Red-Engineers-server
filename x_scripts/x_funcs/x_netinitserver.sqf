@@ -108,12 +108,12 @@ XHandleNetStartScriptServer = {
 			(_this select 1) setVariable ["d_end_time", (time + d_remove_mhq_vec_time + 60)];
 			[(_this select 1)] call XAddCheckDead;
 		};
+
 		// store currect player score
 		// send full score (_newscore), in town kill score (_mtkills)
         // Variants:
         // 1. ["d_ad_sc", name player || _player_id, _newscore, _mtkills] call XSendNetStartScriptServer;
         // 2. ["d_ad_sc", name player] - simply to inform about town score received by the player
-
 		case "d_ad_sc": {
 			if ( count _this  == 2 ) exitWith { // confirmation that player is online
 				if ( ! ( ( _this select 1 ) in SYG_players_online ) ) then {
@@ -131,7 +131,7 @@ XHandleNetStartScriptServer = {
 		};
 
 		// info from user about his name and missionStart value
-		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
+		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN"<,FILE_PATH>>>]
 		case "d_p_a": {
             // store server time directly now for better accuracy
             SYG_server_time  = time;       // current server time at the synchonizaton moment
@@ -162,6 +162,7 @@ XHandleNetStartScriptServer = {
 			        };
 			    };
 			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"<NO_LANG>"), _userLogin, arg(2) ];
+			    if (count _this > 4) then { " x_netinitserver.sqf: file path ""%1""", arg(5) }; // "x_setuplayer.sqf" file path on client computer (just for fun)
 			};
 		};
 		/*
@@ -299,6 +300,7 @@ XHandleNetStartScriptServer = {
 			// log info  about logging
 			hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
 		};
+
 		case "GRU_msg": {
 			_this call GRU_procServerMsg;
 		};
