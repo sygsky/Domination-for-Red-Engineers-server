@@ -38,6 +38,7 @@ class CfgSounds {
     class radmus   { name="radmus from old OFP campany";   sound[]= {\sounds\enemy\radmus.ogg,db-1,1.0}; titles[] = {};};
     class enemy    { name="Hans Zimmer - Barbarian horde"; sound[]= {\sounds\enemy\enemy.ogg,db-1,1.0};  titles[] = {};};
     class ortegogr { name="Found in one Arma mission (German)"; sound[]= {\sounds\enemy\ortegogr.ogg,db-1,1.0};  titles[] = {};};
+    class desant   { name="Red Alert desant music"; sound[]= {\sounds\enemy\desant.ogg,db-1,1.0};  titles[] = {};}; // from Red Alert game, called only for 2st otwn occupied
 
     class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
 

@@ -550,6 +550,7 @@ STR_SYS_269,"Restoring %1 at %2%3, this will take some time...","Wiederherstelle
 STR_SYS_269_1,"Restoring %1 at %2, your score (+%3). It will take some time...","%2, Technik: %1, du bekommst Punkte (+%3). Das wird Zeit brauchen...","%2, técnica: %1, obtienes puntos (+%3). Esto llevará tiempo...","%2, техника: %1, Вы получаете очки (+%3). Это потребует времени..."
 STR_SYS_270,%1 ready at %2,%1 ready at %2,%2 ha terminado de trabajar en %1,%2 завершил работу над %1
 STR_SYS_271,Next target is: %1,Nächstes Ziel ist: %1,Objetivo actual: %1,Текущая цель: %1
+STR_SYS_271_0,"Enemy troops are landing in the ""%1"" area!","Feindliche Truppen landen im Bereich ""%1""!","¡Las tropas enemigas están aterrizando en el área "%1"!","Вражеские войска высаживаются в р-не ""%1""!"
 STR_SYS_271_1,large,groß,grande,большая
 
 STR_SYS_280,Liberation!,Freistellung!,¡Liberación!,Освобождение!
