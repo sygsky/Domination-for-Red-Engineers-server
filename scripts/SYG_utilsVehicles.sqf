@@ -1789,7 +1789,7 @@ SYG_findTargetBonusIndex = {
     if ( (count _currentList) == 0 )  then {
     	_currentList = + (_this select 0);  // reset real list with the initial vehicle list
     	_this set [1, _currentList];		// store it again
-	    hint localize "+++ SYG_findTargetBonusIndex: vehicle list empty, load content again";
+	    hint localize format["+++ SYG_findTargetBonusIndex: vehicle list empty, load content again (size %1)", count _currentList];
     };
     _bonusInd = _currentList call XfRandomFloorArray; // find next bonus index
     _bonus = _currentList select _bonusInd;

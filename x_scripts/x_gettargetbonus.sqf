@@ -94,10 +94,10 @@ _bonus_score_arr spawn {
 	} else {
 		{	// print online player bonus score
 			_ind = _arr find _x;
-			if (_ind >= 0 ) then  {
-				_add = _add_arr select _ind; // assigned bonus coefficient (as decimal part of 40 score, from 0.0 to 40.0)
-				if (!isNil "SYG_townMaxScore") then {
-				 	_add = ((round(_add * SYG_townMaxScore)) max 1); // add minimum +1 score on a town liberation
+			if ( _ind >= 0 ) then  {
+				_add = _add_arr select _ind; // assigned bonus coefficient (as decimal part of town bonus score, from 0.0 to 1.0)
+				if ( !isNil "SYG_townMaxScore" ) then {
+				 	_add = (round(_add * SYG_townMaxScore)) max 1; // add minimum +1 score on a town liberation
 					hint localize format["+++ Online player ""%1"" town bonus score +%2", _x, _add];
 				} else {
 					hint localize format["+++ Online player ""%1"" town bonus coeff +%2", _x, _add];
@@ -114,7 +114,7 @@ _bonus_score_arr spawn {
 			_ind = _arr find _x;	// this player is offline, add score to him indirectly
 			if (_ind >= 0 ) then  {
 				_add = _add_arr select _ind; // assigned bonus coefficient (as decimal part of score value 40, from 0.0 to 1.0)
-				_ind = d_player_array_names find _x; // find player ion system misc array
+				_ind = d_player_array_names find _x; // find player in the system misc array
 				if (_ind >= 0) then {
 					_item = d_player_array_misc select _ind; // player stats descriptor
 					if (!isNil "SYG_townMaxScore") then {
