@@ -302,7 +302,7 @@ SYG_isBuilding = {
 };
 
 //
-// call on "killed" event ot restore it momentarily
+// call on "killed" event to restore it momentarily
 // Parameters: [_building, killer]
 //
 SYG_invulnerableBuilding = {
