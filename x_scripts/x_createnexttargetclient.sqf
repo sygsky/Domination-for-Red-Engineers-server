@@ -35,7 +35,7 @@ hint localize format ["+++ x_createnexttargetclient.sqf: %1, radious %2 m", form
 hint format[localize "STR_SYS_271", _current_target_name];
 
 if (count resolved_targets <= 0) then { // if it is still first town, show white big message on the screen
-	titleText[ format["STR_SYS_271_0", _current_target_name], "PLAIN DOWN" ]; //
+	titleText[ format["STR_SYS_271_0", _current_target_name], "PLAIN DOWN" ]; // "Enemy troops are landing in the ""%1"" area!"
 };
 
 playSound _sound;
