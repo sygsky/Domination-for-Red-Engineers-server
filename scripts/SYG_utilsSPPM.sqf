@@ -1,5 +1,5 @@
 // scripts\SYG_utilsSPPM.sqf : utils for SPPM handling
-// SPPM id id integer id from SPPM array
+// SPPM id is integer id from SPPM array
 private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_startPos", "_procWP", "_wpIndex", "_unittype", "_stopBoat" ];
 
 #include "x_setup.sqf"
