@@ -35,6 +35,9 @@ if (!isServer) exitWith {};
 #define REJOIN_RERIOD 600
 // try to re-join only to groups not far then 1000 meters
 #define REJOIN_DISTANCE 1000
+
+#define SET_NEXT_STATE (NEXT_STATE) (_grp_array set [2,NEXT_STATE])
+
 #define __DEBUG__
 
 _grp_array = _this;
@@ -194,29 +197,31 @@ while {true} do {
 										case 2: {[_wp_one, _wp_array select 1] call XfGetRanPointCircleOld};
 										case 4: {[_wp_one, _wp_array select 1, _wp_array select 2, _wp_array select 3] call XfGetRanPointSquareOld};
 									};
-									// check if point is on some islet near main Sahrani Isle (Rahmadi is always allowed for patrolling)
-									if (_skip_islets) then {
-										
-										if ( _wp_pos call SYG_pointOnIslet ) then {
+									if (count _wp_point > 0) then { // new wp created
+ 										if (_skip_islets) then {
+											// check if point is on some islet near main Sahrani Isle (Rahmadi is always allowed for patrolling)
+											if ( _wp_pos call SYG_pointOnIslet ) then {
 #ifdef __DEBUG__
-											if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: new wp %2 is on islet (case 2), counter %3",call SYG_nowTimeToStr,_wp_pos,_counter]};
-#endif							
-											_wp_pos = _start_pos
+												if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: new wp %2 is on islet (case 2), counter %3",call SYG_nowTimeToStr,_wp_pos,_counter]};
+#endif
+												_wp_pos = _start_pos
+											};
+											sleep 0.02;
 										};
 #ifdef SKIP_WP_NEAR_BASE
-                                        if (_skip_base) then {
-                                            // check if point is near owner base
-                                            if (_wp_pos call SYG_pointNearBase) then {
-//#ifdef __DEBUG__
-                                                if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 2)",call SYG_nowTimeToStr,_grp, _wp_pos]};
-//#endif
-                                                _wp_pos = [];
-                                            };
-                                        };
+										if (_skip_base) then {
+											// check if point is near owner base
+											if (_wp_pos call SYG_pointNearBase) then {
+#ifdef __DEBUG__
+												if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 2)",call SYG_nowTimeToStr,_grp, _wp_pos]};
 #endif
-										_counter = _counter + 1;
-										sleep 0.02;
+												_wp_pos = [];
+											};
+										};
+#endif
 									};
+									_counter = _counter + 1;
+									sleep 0.02;
 								};
 								if (count _wp_pos == 0) exitWith {_grp_array set [2,0]};
 								if ((_grp_array select 6) == 0) then {
@@ -225,12 +230,10 @@ while {true} do {
 									_grp call XCombatPatrol;
 								};
 								(units _grp) doMove _wp_pos;
-								if ( _debug_print ) then {
-									if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: group %2 - > set new WP %3 near %4",call SYG_nowTimeToStr,_grp, _wp_pos, text (_wp_pos call SYG_nearestLocation)]};
-								};
-								_grp_array set [4, _wp_pos];
-								_grp_array set [5, time];
-								_grp_array set [7, _start_pos];
+								if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: group %2 -> set new WP %3 near %4",call SYG_nowTimeToStr,_grp, _wp_pos, text (_wp_pos call SYG_nearestLocation)]};
+								_grp_array set [4, _wp_pos]; // store new wp
+								_grp_array set [5, time];	 // set wp start time
+								_grp_array set [7, _start_pos]; // start position, what is it?
 							};
 						} else {
 							if(_debug_print) then {hint localize format[ "--- x_groupsm: expected _wp_array not ARRAY => %1", _grp_array]};
@@ -244,7 +247,6 @@ while {true} do {
 					if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, count of next wp coords (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)]};
 				};
 #endif				
-				
 				if ((position _leader) distance (_grp_array select 4) < 10) then {
 					_reached_wp = true;
 					_next_wp_time = time + _time_at_wp;
@@ -329,9 +331,15 @@ while {true} do {
 			} forEach _units;
 			_grp_array set [2,8];
 		};
+#ifdef __FUTURE__
 		case 10: { // special case for the patrol to get out of the gorge, changes current WP to the next one stored in 4 pos of _group_array
 			// TODO: change new WP position on the fly
+			//_grp_array set [4, _wp_pos]; // store new wp
+			_units doMove (_grp_array select 4); // move to the exiting from the chasm wp
+			_grp_array set [5, time];	 // set wp start time
+			SET_NEXT_STATE(0);
 		};
+#endif
 	}; // switch (_grp_array select 2)
 	
 	// check group to be empty or dead

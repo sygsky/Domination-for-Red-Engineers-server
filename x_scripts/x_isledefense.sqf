@@ -662,18 +662,17 @@ while { true } do {
 #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
                             hint localize format[ "+++ %1 x_groupsm.sqf: group %2 in chasm at %3, finding exit", call SYG_nowTimeToStr, _igrp, _pos call SYG_nearestLocationName ];
 #endif
-                            // redirect patrol to exit from chasm
-                            _grp_array set [4, _exitWP]; // current assigned wp;[]
-                            _grp_array set [5, time];  // current time when wp assigned;-1
-                            _grp_array set [7, _pos]; // start position before assigning wp; []
-                            _grp_array set [2, 2]; // initial mode of group, will be changed in progress of group engaging; 0
-                            if ((_grp_array select 6) == 0) then {
-                                [_igrp,_grp_array select 9] call XNormalPatrol;
-                            } else {
-                                _igrp call XCombatPatrol;
-                            };
+                            // redirect patrol to exit from the chasm
+                            // Let's get the hell out of here.
+                   			_igrp setCombatMode "GREEN";
+							_igrp setFormation "COLUMN";
+							_igrp setSpeedMode "FULL"; // go-go-go
+							_igrp setBehaviour "CARELESS";
                             (units _igrp) doMove _exitWP;
-
+                            _grp_array set [4, _exitWP]; // current assigned wp
+                            _grp_array set [5, time];  // current time when wp was assigned
+                            _grp_array set [7, _pos]; // start position before assigning wp
+                            _grp_array set [2, 0]; // initial mode of group, will be changed in progress of group engaging
                				_igrpa set [ PARAM_STATUS, STATUS_STOPPED1 ];
 	    					_igrpa set [ PARAM_TIMESTAMP, time + DELAY_REMOVE_STOPPED ];
     						breakTo "main_loop";
