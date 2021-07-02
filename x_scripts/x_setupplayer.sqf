@@ -951,7 +951,11 @@ if (count d_ammo_boxes > 0) then {
 				}
 			);
 			#endif
+#ifdef __ACE__
+			[_boxnew, medbox] execVM _boxscript;
+#else
 			[_boxnew] execVM _boxscript;
+#endif
 			_boxnew addEventHandler ["killed",{["d_rem_box",position (_this select 0)] call XSendNetStartScriptServer;deleteVehicle (_this select 0)}];
 		};
 	} forEach d_ammo_boxes;
@@ -1911,7 +1915,7 @@ player call SYG_handlePlayerDammage; // handle hit events
     }   forEach _common_boxes;
 //    hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
 #ifdef __ACE__
-    _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"];
+    _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East"/*,"ACE_MedicBox"*/];
     _personal_boxes = nearestObjects [FLAG_BASE, _personal_boxes, 30]  - _common_boxes;
     {
         _x addAction [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];

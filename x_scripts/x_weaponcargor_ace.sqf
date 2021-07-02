@@ -435,7 +435,7 @@ _ve spawn {
 				_ve addMagazineCargo ["ACE_MineE",100];
 			};
 		};
-		sleep 2.32;
+		sleep 5;
 	};
 };
 

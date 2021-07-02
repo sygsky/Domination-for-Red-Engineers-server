@@ -692,7 +692,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=245;
+		items=246;
 		class Item0
 		{
 			position[]={9660.000000,139.994995,9992.799805};
@@ -3170,6 +3170,18 @@ class Mission
 			skill=0.600000;
 			text="box5";
 			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[-1,0,0]];ClearWeaponCargo this; ClearMagazineCargo this;box5 addEventHandler [""hit"",{box2 setDammage 0}];box5 addEventHandler [""dammaged"", {box5 setDammage 0}];";
+		};
+		class Item245
+		{
+			presenceCondition="false";
+			position[]={9673.34,142.730530,9993.1};
+			azimut=180.000000;
+			id=285;
+			side="EMPTY";
+			vehicle="ACE_MedicBox";
+			skill=0.600000;
+			text="medbox";
+			init="this setPos [(getPos this) select 0,(getPos this) select 1, 1.55];this setVectorDirAndUp[[0,0,1],[0,1,0]];ClearWeaponCargo this; ClearMagazineCargo this;medbox addEventHandler [""hit"",{medbox setDammage 0}];medbox addEventHandler [""dammaged"", {medbox setDammage 0}];";
 		};
 	};
 	class Markers
