@@ -5,8 +5,6 @@ hint localize format["+++ x_createnexttargetclient.sqf: resolved targets counter
 if (count resolved_targets <= 0) then { // if it is still first town, wait 30 seconds to allow intro music to be completed
 	sleep 30;
 	_sound = "desant";
-	titleText[ format["STR_SYS_271_0"], "PLAIN DOWN" ];
-	// Show "STR_SYS_271_0" message
 } else  {
 	sleep 1.012;
 	_sound = call SYG_invasionSound;
@@ -35,7 +33,7 @@ hint localize format ["+++ x_createnexttargetclient.sqf: %1, radious %2 m", form
 hint format[localize "STR_SYS_271", _current_target_name];
 
 if (count resolved_targets <= 0) then { // if it is still first town, show white big message on the screen
-	titleText[ format["STR_SYS_271_0", _current_target_name], "PLAIN DOWN" ]; // "Enemy troops are landing in the ""%1"" area!"
+	titleText[ format[localize "STR_SYS_271_0", _current_target_name], "PLAIN DOWN" ]; // "Enemy troops are landing in the ""%1"" area!"
 };
 
 playSound _sound;

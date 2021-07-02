@@ -36,7 +36,7 @@ if (!isServer) exitWith {};
 // try to re-join only to groups not far then 1000 meters
 #define REJOIN_DISTANCE 1000
 
-#define SET_NEXT_STATE (NEXT_STATE) (_grp_array set [2,NEXT_STATE])
+// #define SET_NEXT_STATE(NEXT_STATE) (_grp_array set [2,NEXT_STATE])
 
 #define __DEBUG__
 
@@ -212,9 +212,9 @@ while {true} do {
 										if (_skip_base) then {
 											// check if point is near owner base
 											if (_wp_pos call SYG_pointNearBase) then {
-#ifdef __DEBUG__
+// #ifdef __DEBUG__
 												if(_debug_print) then {hint localize format["+++ %1 x_groupsm.sqf: grp %2, new wp %3 is near base (case 2)",call SYG_nowTimeToStr,_grp, _wp_pos]};
-#endif
+// #endif
 												_wp_pos = [];
 											};
 										};
@@ -331,15 +331,6 @@ while {true} do {
 			} forEach _units;
 			_grp_array set [2,8];
 		};
-#ifdef __FUTURE__
-		case 10: { // special case for the patrol to get out of the gorge, changes current WP to the next one stored in 4 pos of _group_array
-			// TODO: change new WP position on the fly
-			//_grp_array set [4, _wp_pos]; // store new wp
-			_units doMove (_grp_array select 4); // move to the exiting from the chasm wp
-			_grp_array set [5, time];	 // set wp start time
-			SET_NEXT_STATE(0);
-		};
-#endif
 	}; // switch (_grp_array select 2)
 	
 	// check group to be empty or dead
