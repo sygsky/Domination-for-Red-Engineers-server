@@ -14,8 +14,7 @@
 #define argopt(num,val) (if((count _this)<=(num))then{val}else{arg(num)})
 #define argoptskip(num,defval,skipval) (if((count _this)<=(num))then{defval}else{if(arg(num)==(skipval))then{defval}else{arg(num)}})
 
-if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
-{
+if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static information
 	SYG_UTILS_GEO_COMPILED = true;
 
 #ifdef __DEFAULT__
@@ -48,22 +47,27 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then  // generate some static information
 			b=500.000000;
 */
 
-	SYG_SahraniIsletCircles = 
+	//*** *** *** *** *** *** *** ***
+	//*** Coordinates of circles with island of Sahrani in circumstances ***
+	//*** ["Name",[cx,cy,cz],rad, "Text"] ***
+	SYG_SahraniIsletCircles =
 	[
-		["isle1",[12281.7,10650.4,0],600, "острова в заливе Abra de Boca"],         // 0
-        ["isle2",[14019.2,8010.04,0],220, "Islas Gatunas"],                         // 1
-		["isle3",[17497.5,4029.05,0],1500,"Antigua Isles group"],                   // 2
-		["isle4",[17462.2,18669.0,0],1500,"Юго-восточные острова/Monte Asharan"],   // 3
-		["isle5",[7821.18,14328.8,0],400, "Trelobada"],                             // 4
-        ["isle6",[5159.06,15475.9,0],1000,"Isla de Vassal"],                        // 5
-		["isle7",[2115.56,17959.3,0],1100,"Most western islets"],                   // 6
-		["isle8",[10755.2,16742.6,0],200, "Isla des Compadres"],                    // 7
-		["isle9",[9533.61,3497.75,0],500, "San Tomas"],                             // 8
-		["isle10",[11630.9,16940.8,0],50, "полуостров в заливе Porto de Perolas"],  // 9
-		["isle11",[11784,11422.8,0]  ,200,"два островка на юго-западном побережье Северного Сахрани, залив Абра да Бока"] // 10
+		["isle1",[12322.5,10609.7,0],600,"острова в заливе Abra de Boca"],	// 0
+		["isle2",[14005.7,8008.81,0],220,"Islas Gatunas"],	// 1
+		["isle3",[17485.8,4014.21,0],1550,"Юго-восточные острова (Asharah)"],	// 2
+		["isle4",[17368.9,18636.7,0],1300,"Северо-восточные острова (Антигуа)"],	// 3
+		["isle5",[7805.58,14350.3,0],400,"Trelobada"],	// 4
+		["isle6",[5134.54,15489.3,0],1000,"Isla de Vassal 1"],	// 5
+		["isle7",[1984.43,17968.6,0],1100,"Isla de Vassal 2"],	// 6
+		["isle8",[10750.9,16758.9,0],200,"Isla des Compadres"],	// 7
+		["isle9",[9497.47,3472.44,0],500,"San Tomas"],	// 8
+//		["isle10",[2478.14,2597.8,0],1500,"Rahmadi"],	// 9 rAhmadi is separated islet parsed in other arrays
+		["isle11",[11630.1,16942.4,0],50,"полуостров в заливе Porto de Perolas"],	// 10
+		["isle12",[11794,11433.1,0],200,"островки на юго-западном побережье Северного Сахрани, залив Абра да Бока"],	// 11
+		["isle13",[13723.7,8307.14,0],130,"Islas Gatunas"]	// 12
 	];
 
-	SYG_RahmadiIslet = ["isle12",[2537.55,2538.37,0],1500,"Rahmadi"];
+	SYG_RahmadiIslet = ["isle10",[2478.14,2597.8,0],1500,"Rahmadi"];
 
     SYG_chasmArray = [
         [[14269,10545,0],70,[13919,10632,0], "Obregan"],
@@ -256,52 +260,41 @@ SYG_nearestZoneOfInterest = {
 	
 //	hint localize format[ "SYG_nearestZoneOfInterest: pos %1, same %2, opts %3, dist %4", _pos, _same_part, _opts, _wanted_dist];
 	
-	if ( count _opts > 0 ) then
-	{
+	if ( count _opts > 0 ) then {
 		if ( typeName _pos != "ARRAY" ) then { _pos = position _pos;};
 		_part = _pos call SYG_whatPartOfIsland; // island part (upper/lower or Nothern/Southern) for designated point
-		if ( _same_part ) then // check need for the same part
-		{
+		if ( _same_part ) then { // check need for the same part
 			if ( _part == "CENTER" ) then {_same_part = false;}; // doesn't matter where is situated tested point according to the Corazol city
 		};
 		
 		_min_dist = 9999999.9;
-		for "_i" from 0 to (count _opts) - 1  do
-		{
+		for "_i" from 0 to (count _opts) - 1  do {
 			_opt  = toUpper (_opts select _i);
 			_dist = -1;
 			_pos1 = [];
-			switch _opt do
-			{
-				case "MAIN": 
-				{
+			switch _opt do {
+				case "MAIN": {
 					_ret = call SYG_getTargetTown; // returs some about [[9348.73,5893.4,0],"Cayo", 210]
-					if ( count _ret > 0 ) then 
-					{
+					if ( count _ret > 0 ) then {
 						_pos1  = _ret select 0;
 						_part1 = _pos1 call SYG_whatPartOfIsland;
-						if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
-						{
+						if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then {
 							_dist = _pos distance (_ret select 0);
 						};
 					};
 				};
-				case "AIRBASE": 
-				{
-					if ( !isNil "FLAG_BASE" ) then
-					{
+				case "AIRBASE": {
+					if ( !isNil "FLAG_BASE" ) then {
 						_pos1  = position FLAG_BASE;
 						_part1 = _pos1 call SYG_whatPartOfIsland;
 //						hint localize format[ "SYG_nearestZoneOfInterest: same part %1, _pos1 %2, _pos %3, dist %4", _same_part, _pos1, _pos, round(_pos1 distance _pos) ];
-						if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part) ) then
-						{
+						if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part) ) then {
 							_dist =  _pos1 distance _pos;
 						};
 					};
 					
 				};
-				case "LOCATION": 
-				{
+				case "LOCATION":  {
 					_pos1  = _pos call SYG_nearestLocation; // location returned!!!
 					_part1 = _pos1 call SYG_whatPartOfIsland;
 					if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
@@ -309,26 +302,21 @@ SYG_nearestZoneOfInterest = {
 						_dist =  _pos distance _pos1;
 					};
 				};
-				case "SETTLEMENT": 
-				{
+				case "SETTLEMENT":  {
 					_pos1 = _pos call SYG_nearestSettlement; // settlement returned!!!
 					_part1 = _pos1 call SYG_whatPartOfIsland;
-					if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
-					{
+					if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then {
 						_dist = _pos distance _pos1;
 					};
 				};
-				case "OCCUPIED": 
-				{
-					if ( isServer ) then
-					{
+				case "OCCUPIED": {
+					if ( isServer ) then {
 						_pos2 = [];
 						{
 							_ret = target_names select _x; //  e.g. [[9348.73,5893.4,0],"Cayo", 210],
 							_pos1 = _ret select 0;
 							_part1 = _pos1 call SYG_whatPartOfIsland;
-							if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
-							{
+							if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then {
 								_dist1 = _pos1 distance _pos;
 								if ( (_dist1 < _dist) || (_dist < 0)) then { _dist = _dist1; _pos2 = _pos1;};
 							};
@@ -336,18 +324,13 @@ SYG_nearestZoneOfInterest = {
 						_pos1 = _pos2;
 					};
 				};
-				case "SIDEMISSION": 
-				{
-					if (!all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then
-					{
-						if ( !(current_mission_index in nonstatic_sm_array) ) then // don't use non-static sidemissions (convoys, pilots etc)
-						{
+				case "SIDEMISSION": {
+					if (!all_sm_res && !stop_sm && !side_mission_resolved && (current_mission_index >= 0)) then {
+						if ( !(current_mission_index in nonstatic_sm_array) ) then {  // don't use non-static sidemissions (convoys, pilots etc)
 							_pos1 = x_sm_pos select 0;
-							if (!((_pos1 call SYG_pointOnIslet) || (_pos1 call SYG_pointOnRahmadi))) then // filter out any islet missions
-							{
+							if (!((_pos1 call SYG_pointOnIslet) || (_pos1 call SYG_pointOnRahmadi))) then { // filter out any islet missions
 								_part1 = _pos1 call SYG_whatPartOfIsland;
-								if ((!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then // it is possible to reach from designated point
-								{
+								if ((!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then { // it is possible to reach from designated point
 									// check if mission is on any of islets
 									_dist = _pos distance _pos1;
 								};
@@ -356,8 +339,7 @@ SYG_nearestZoneOfInterest = {
 					};
 				};
 			};
-			if ( _dist <= _wanted_dist ) then // found zone is in wanted range
-			{
+			if ( _dist <= _wanted_dist ) then { // found zone is in wanted range
 			    if ( (_dist < _min_dist)  && (_dist >= 0) ) then { _min_dist = _dist; _ind = _i }; // detect zone with minimum distance
 			};
   			_reta set [_i, _pos1]; // always set position value, doesnt matter is it detected or not
@@ -373,19 +355,16 @@ SYG_nearestZoneOfInterest = {
 SYG_whatPartOfIsland = {
 	private ["_pos","_str","_res"];
 	_pos = [];
-	switch toUpper(typeName _this) do
-	{
+	switch toUpper(typeName _this) do {
 		case "OBJECT": {_pos = getPos _this;};
 		case "LOCATION": {_pos = locationPosition _this;};
 		case "GROUP": {_pos = getPos leader _this;};
 		case "ARRAY": {_pos = _this;};
 	};
 	_str = "<ERROR DETECTED>";
-	if ( count _pos > 0 ) then
-	{
+	if ( count _pos > 0 ) then {
 		_res = _pos distance SYG_Sahrani_p0;
-		if ( _res < 500 ) then {_str = "CENTER";} else
-		{
+		if ( _res < 500 ) then {_str = "CENTER";} else {
 			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel; // vector comes approximately from S-E to N-W through Corazol
 			_str = if (_res >= 0) then {"NORTH"} else {"SOUTH"};
 		};
