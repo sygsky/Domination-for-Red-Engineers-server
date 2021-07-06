@@ -162,7 +162,9 @@ XHandleNetStartScriptServer = {
 			        };
 			    };
 			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"<NO_LANG>"), _userLogin, arg(2) ];
-			    if (count _this > 4) then { " x_netinitserver.sqf: file path ""%1""", arg(5) }; // "x_setuplayer.sqf" file path on client computer (just for fun)
+			    if (count _this > 4) then {
+			    	hint localize format[" x_netinitserver.sqf: client file path ""%1""", arg(5)]
+			    }; // "x_setuplayer.sqf" file path on client computer (just for fun)
 			};
 		};
 		/*

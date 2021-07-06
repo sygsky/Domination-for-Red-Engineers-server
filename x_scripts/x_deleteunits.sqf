@@ -9,7 +9,7 @@ private ["_index", "_dummy", "_current_target_pos", "_current_target_rad", "_old
 
 _index = _this;
 _old_units_trigger = "";
-_town_name = "(???)"
+_town_name = "(???)";
 if ( _index >= 0) then {
     _dummy = target_names select _index;
     _town_name = _dummy select 1;
@@ -21,7 +21,7 @@ if ( _index >= 0) then {
 } else {  // take of airfield completed (new action, before any town!!!)
     hint localize "+++ x_scripts/x_deleteunits.sqf: called on airbase taken event";
     _old_units_trigger = createTrigger["EmptyDetector",d_base_array select 0];
-    _old_units_trigger setTriggerArea [(d_base_array select 1) + 50, (d_base_array select 2) + 50, d_base_array select 3, true]; // rect shape trigger
+    _old_units_trigger setTriggerArea [(d_base_array select 1) + 100, (d_base_array select 2) + 100, d_base_array select 3, true]; // rect shape trigger
 };
 _old_units_trigger setTriggerActivation [d_enemy_side, "PRESENT", false]; // list only alive enemy side vehicles (with crew in it) and men
 _old_units_trigger setTriggerStatements["this", "", ""];

@@ -146,12 +146,6 @@ _veh_arr = [_vehicles select 0];
 (_vehicles select 0) addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
 
-#ifndef __TT_
-#ifdef __RANKED__
-(_vehicles select 0) addEventHandler ["killed", { _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // note the closest players who visited this mission
-#endif
-#endif
-
 extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _vehicles select 0 ];
 
 _leader = leader _convoyGroup;
@@ -189,8 +183,7 @@ _vecnum = 0;
 #ifdef __DEBUG_PRINT__		
 	_str = "";
 	{
-		if (!isNull _x) then
-		{
+		if (!isNull _x) then {
 			if ( _str != "" ) then {_str = _str + format[", %1", typeOf _x];} else {_str = _str + format["%1", typeOf _x];};
 		};
 	} forEach _veh_arr;
@@ -243,7 +236,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
                     _dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
                     hint localize format["%6 x_sideconvoy.sqf (wait players): alive vecs %1/%5(%7), pos. %3 m to %4 from %2", {alive _x} count _veh_arr, text _loc, (round (_dist/50))*50, _dir, count _veh_arr, call SYG_nowTimeToStr, typeOf (vehicle _leader) ];
                 } else {
-                    hint localize "--- x_sideconvoy.sqf: no leader exists";
+                		hint localize format["--- x_sideconvoy.sqf (wait players): no leader exists, %1 units ", {alive _x } count (units _convoyGroup)];
                 };
                 // TODO: check for any overturned vehicles and turn it on while no players on island
                 _time2print = time + PRINT_DELAY;
@@ -275,13 +268,14 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 				typeOf (vehicle _leader),
 				{alive driver _x}  count _veh_arr
 			];
-		} else { hint localize "--- x_sideconvoy.sqf: no leader exists"; };
+		} else { hint localize format["--- x_sideconvoy.sqf: no leader exists, %1 alive units ", {alive _x } count (units _convoyGroup)]; };
 		_time2print = time + PRINT_DELAY;
 		// check new convoy vehicle state
 		_newcnt = {({alive _x} count crew _x) > 0} count _veh_arr;
 		if ( _newcnt != _vecnum) then {
 			if ( _newcnt == 0) then {
 				_msg = ["STR_SYS_500_2"]; // "All the vehicles in the convoy lost crew!"
+				hint localize "*** x_sideconvoy.sqf: All the vehicles in the convoy lost crew!";
 			} else {
 				_msg = ["STR_SYS_500_1",_newcnt ]; // "Moving vehicles in the convoy: %1"
 			};

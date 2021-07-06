@@ -220,8 +220,9 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 
                             _pistol= switch _index do {
                                 case 0: {["S", "ACE_Makarov", "ACE_8Rnd_9x18_B_Makarov", 4]};
-                                case 1: {["S", "ACE_MakarovSD", "ACE_8Rnd_9x18_SD_Makarov", 4]};
                                 case 2: {["S", "ACE_TT", "ACE_8Rnd_762x25_B_Tokarev", 4]};
+                                case 3: {["S", "ACE_MakarovSD", "ACE_8Rnd_9x18_SD_Makarov", 4]};
+                                case 4;
                                 default {["S", "ACE_Scorpion", "ACE_20Rnd_765x17_vz61", 4]};
                             };
                             if (_string_player in d_can_use_artillery) exitWith {

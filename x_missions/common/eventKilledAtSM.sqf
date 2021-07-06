@@ -29,7 +29,7 @@ if (!isServer) exitWith {};
 
 #define ACTION_RADIUS 250 // how far from "killed" event place player is counted as participant of this SideMission
 
-hint localize format["+++ eventKilledAtSM.sqf: _this = %1", _this];
+hint localize format["+++ eventKilledAtSM.sqf: veh %1, killer %2", _this, typeOf (_this select 0), name (_this select 1)];
 
 private ["_unit","_killer","_plist","_add_to_list","_arr"];
 
