@@ -29,29 +29,10 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static informatio
 	    [   [17551,18732,0],  1200, 1200,   0 ], // Antigua area
 	    [   [7873,  9107,0],  2000,  500, 315 ] // Ambergris (on coast west from Chantico)
     ];
-/*
-			position[]={9529.110352,0.540940,4389.480469};
-			name="desert_rect";
-			a=10000.000000;
-			b=3500.000000;
-			angle=0;
-
-			position[]={17550.677734,0.516296,18731.679688};
-			name="desert_rect_2";
-			a=1200.000000;
-			b=1200.000000;
-
-			position[]={7872.850586,4.995000,9106.516602};
-			name="desert_rect_3";
-			a=2000.000000;
-			b=500.000000;
-*/
-
 	//*** *** *** *** *** *** *** ***
 	//*** Coordinates of circles with island of Sahrani in circumstances ***
 	//*** ["Name",[cx,cy,cz],rad, "Text"] ***
-	SYG_SahraniIsletCircles =
-	[
+	SYG_SahraniIsletCircles = [
 		["isle1",[12322.5,10609.7,0],600,"острова в заливе Abra de Boca"],	// 0
 		["isle2",[14005.7,8008.81,0],220,"Islas Gatunas"],	// 1
 		["isle3",[17485.8,4014.21,0],1550,"Юго-восточные острова (Asharah)"],	// 2
