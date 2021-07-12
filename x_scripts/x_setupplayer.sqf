@@ -545,13 +545,14 @@ if (all_sm_res ) then {
 };
 
 #ifndef __ACE__
-if ((daytime > 19.75) || (daytime < 4.25)) then {
+if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) ) then {
 	_p action ["NVGoggles",_p];
 };
 #endif
 
 if (__ReviveVer || __AIVer || !d_with_respawn_dialog_after_death) then {
     if (_string_player in d_can_use_artillery ) then  {// Only resque can't select resurrect place, but can hear music
+    	hint localize "*** resque can't select resurrect place (but can hear death music)";
 	    _p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "scripts\deathSound.sqf";}];
     } else {
     	_p addEventHandler ["killed", {_this execVM "x_scripts\x_checkkill.sqf";_this execVM "dlg\open.sqf";}];
