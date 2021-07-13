@@ -4,7 +4,7 @@
 
 private [/*"_hasWeapon",*/"_posASL","_wpArr","_wpArr","_p","_marker"]; // Do we need this operator? Not sure
 
-hint localize "+++ x_water started!!!";
+hint localize "+++ x_water.sqf started!!!";
 
 _removeWeaponHolders = {
     private ["_wpArr","_notNull"];

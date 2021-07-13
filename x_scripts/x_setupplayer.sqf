@@ -109,7 +109,7 @@ call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";
 	sleep random 0.5;
 	_endtime = time + 60;
 	// initial information on player connected
-	["d_p_a", name player, missionStart, localize "STR_LANG", __FILE__] call XSendNetStartScriptServer;
+	["d_p_a", name player, missionStart, localize "STR_LANG" ] call XSendNetStartScriptServer;
 	waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
 #ifdef __DEBUG__
     if (!(isNil "d_player_stuff")) then {
@@ -1336,8 +1336,10 @@ XBaseEnemies = {
             // throw flare above alarm object
             _flare = _alarm_obj getVariable "flare"; // check if flare already on above this alarm object
             if (isNil "_flare") then  {
-	            [_alarm_obj, _height, "Yellow", 400, true] execVM "scripts\emulateFlareFired.sqf";
-            }
+	            [_alarm_obj, _height, "YELLOW", 400, true] execVM "scripts\emulateFlareFired.sqf";
+            } else {
+            	hint localize format["--- XBaseEnemies: ""flare"" variable is set on, skip next flare on base invasion", typeOf _alarm_obj];
+            };
 		};
 		case 1: {
 			hint composeText[

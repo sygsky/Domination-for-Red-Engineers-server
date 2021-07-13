@@ -37,6 +37,9 @@ if ( typeName _pos == "OBJECT" ) then {
 	_alarm_obj = _pos; // store alarm object (tower etc)
 	_pos = getPos _pos; // convert object to its position
 };
+// set flare position as slightly random one
+_pos set [ 0, (_pos select 0) + random 2];
+_pos set [ 1, (_pos select 1) + random 2];
 _pos set [ 2, __HEIGHT ];
 
 _factor = __DIST max 12.5; // if (_factor > 12.5) then { _factor = 12.5; };
@@ -47,10 +50,10 @@ hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4
 
 _flare = objNull;
 _flare = _flare_type createVehicle _pos;
+if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 if (!isNull _alarm_obj) then  {
 	_alarm_obj setVariable ["flare", true]; // mark flare is on above this alarm object
 };
-if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 
 sleep 0.5;
 
