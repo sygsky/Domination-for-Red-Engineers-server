@@ -69,16 +69,13 @@ SYG_teleportToTown = {
 		if ( !isNull _nb) exitWith {};
 	}forEach _dist_arr;
 	
-	if ( !isNull _nb ) then
-	{
+	if ( !isNull _nb ) then {
 		_pos_id = [_nb, "RANDOM_CENTER", 20] call SYG_teleportToHouse;
 #ifdef __DEBUG_PRINT___
 		hint localize format[ "--- SYG_teleportToTown: teleport tt %1, _nb pos %2, _pos_id %3", _town_params, getPos _nb, _pos_id ];
 #endif
 		sleep 0.01;
-	}
-	else
-	{
+	} else {
 #ifdef __DEBUG_PRINT___
 		hint localize format[ "--- SYG_teleportToTown: house at town %1 with min pos count %2 at dist from center %3 not found", _tname, _cnt, _dist ];
 #endif
@@ -94,8 +91,7 @@ SYG_housePosCount = {
 	private ["_pos","_ret"];
 	_pos = [1, 1, 1];
 	_ret = 0;
-	for "_i" from 0 to 1000 do
-	{
+	for "_i" from 0 to 1000 do {
 		_pos = _this buildingPos _i;
 		if (format["%1", _pos] == "[0,0,0]" ) exitWith {_ret = _i;};
 	};

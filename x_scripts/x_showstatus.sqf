@@ -290,10 +290,16 @@ if (current_target_index != -1) then {
 			_s = format ["%1\n",format [localize "STR_SYS_200", _current_target_name]]; //"Найти в %1 и устранить местного губернатора.\n"
 #ifdef __SYG_GOVERNOR_INFO__
 
-			private ["_center","_list", "_unit","_str","_searchDist"];
+			private ["_center","_list", "_unit","_str","_searchDist","_the_officer"];
 			_center = _target_array2 select 0; // center of curent town
 			_searchDist = 5000;
-			_list = _center nearObjects [ "ACE_OfficerW", _searchDist]; // search any officer (may be not nearest!) unit around
+			#ifdef __ACE__
+          		_the_officer = (if (d_enemy_side == "EAST") then {"ACE_OfficerE"} else {"ACE_OfficerW"});
+            #else
+           		_the_officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
+            #endif
+
+			_list = _center nearObjects [ _the_officer, _searchDist ]; // search any officer (may be not nearest!) unit around
 			if ( count _list == 0 )	then {
 				_s = _s + format[localize "STR_SYS_113", "ACE_OfficerW", _searchDist]; //"Губернатор (%1) не обнаружен в радиусе %2м.!"
 			} else {
@@ -328,9 +334,10 @@ if (current_target_index != -1) then {
 		case 4;//: {_s = format ["%1\n",format [localize "STR_SYS_203", _current_target_name]];};//"Найти в %1 командный штаб (замаскирован под медицинскую бронемашину) и уничтожить его.\n"
 		case 5;//: {_s = format ["%1\n",format [localize "STR_SYS_204", _current_target_name]];};//"Найти и уничтожить в %1 командный пункт противника.\n"
 		case 6;//: {_s = format ["%1\n",format [localize "STR_SYS_205", _current_target_name]];};//"Найти и уничтожить в %1 лабораторию по производству героина.\n"
-		case 7: {_s = format ["%1\n",format [localize (format["STR_SYS_20%1", (sec_kind - 1)]), _current_target_name]];};//"Найти и уничтожить в %1 большой завод по производству героина.\n"
+		case 7;//: {_s = format ["%1\n",format [localize "STR_SYS_207", _current_target_name]];};//"Найти и уничтожить в %1 лабораторию по производству героина.\n"
+		case 8: { _s = format ["%1\n",format [localize (format["STR_SYS_20%1", (sec_kind - 1)]), _current_target_name]]; };//"Найти и уничтожить в %1 большой завод по производству героина.\n"
 		default {}; // may bу negative value too
-		case 0: { _s = localize "STR_SYS_207";};  //"Второстепенная задача недоступна..."
+		case 0: { _s = localize "STR_SYS_199";};  //"Secondary target not available..."
 	};
 } else {
 	_s = localize "STR_SYS_209";//"No secondary main target mission available..."

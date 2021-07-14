@@ -703,7 +703,7 @@ SYG_clearArrayA = {
 SYG_cleanArrayA = SYG_clearArrayA;
 
 // Remove all strings "RM_ME" from input _arr not changing oreder of items
-// call: _cleaned_arr = _cleaned_arr call SYG_clearArray;
+// call: _cleaned_arr = _cleaned_arr call SYG_clearArrayB;
 // returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
 SYG_clearArrayB = {
 	[_this, "RM_ME"] call SYG_clearArrayA

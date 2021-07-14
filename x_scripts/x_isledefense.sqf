@@ -22,8 +22,6 @@ if (!isServer) exitWith {};
 
 #endif
 
-#define __SYG_ISLEDEFENCE_PRINT_SHORT__
-
 #define arrset(ARR,POS,VAL) ((ARR)set[(POS),(VAL)])
 
 #ifdef __DEBUG__
@@ -252,7 +250,7 @@ _remove_grp = {
 				    ) 
 				   )  then { // vehicle was captured by player
 					// re-assign vehicle to be ordinal ones
-#ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
+#ifdef __SYG_PRINT_ACTIVITY__
 					hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
 #endif
 					// put vehicle under system control
@@ -550,7 +548,7 @@ while { true } do {
 			if ( _stat == STATUS_WAIT_RESTORE  || _stat == STATUS_DEAD_WAIT_RESTORE) then {
 			    if ( (current_counter >= number_targets) /* && (!main_target_ready)*/ ) then {
 			        // not replace dead group as enemy is fled
-                #ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
+                #ifdef __SYG_PRINT_ACTIVITY__
                     hint localize format["+++ x_isledefense: patrol #%1 will not be restored as all main targets completed", _i];
                 #endif
    					_igrpa set [PARAM_STATUS, STATUS_STUB];
@@ -587,7 +585,7 @@ while { true } do {
 					_igrpa set [PARAM_STATUS, STATUS_DEAD_WAIT_RESTORE];
 					_dead_cnt =  ((_dead_patrols max 1) min (_patrol_cnt - 1));
 					_delay = DELAY_RESPAWN_KILLED * _dead_cnt; // delay multiplied by 1..4
-#ifdef	__SYG_ISLEDEFENCE_PRINT_SHORT__
+#ifdef	__SYG_PRINT_ACTIVITY__
 					hint localize format["+++ x_isledefense.sqf: DEAD GROUP restore delay %1 * %2 = %3", DELAY_RESPAWN_KILLED, _dead_cnt, _delay];
 #endif
 					_igrpa set [PARAM_TIMESTAMP, time + _delay];
@@ -659,7 +657,7 @@ while { true } do {
                         _pos = getPos (leader _igrp);
                         _exitWP =  _pos call SYG_chasmExitWP;
                         if ( (count _exitWP) == 3 ) then {// yes we are in chasm, try to find way out
-#ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
+#ifdef __SYG_PRINT_ACTIVITY__
                             hint localize format[ "+++ %1 x_groupsm.sqf: group %2 in chasm at %3, finding exit", call SYG_nowTimeToStr, _igrp, _pos call SYG_nearestLocationName ];
 #endif
                             // redirect patrol to exit from the chasm
@@ -723,7 +721,7 @@ while { true } do {
 	sleep DELAY_BETWEEN_CHECK_LOOP;
 
 	// ==================================== END OF LOOP ON PATROLS ======================================
-#ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
+#ifdef __SYG_PRINT_ACTIVITY__
 	// igrpa: [_agrp, _units, [0,0,0], _vecs]
 
 	hint localize format["+++ x_isledefense.sqf: %1, target ""%2"" (%3), groups on isle count %4", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, current_counter, count groups_west ];
@@ -779,9 +777,8 @@ while { true } do {
 			};
 		};
 	};  // while {true} do
-	if ( _cnt > 0) then
-	{
-	// __SHOW_PATROL_CHANGE_INFO__ not defined anywhere
+	if ( _cnt > 0) then {
+#undef __SHOW_PATROL_CHANGE_INFO__ // not show this message
 #ifdef __SHOW_PATROL_CHANGE_INFO__
 	    if ( _cnt != _patrol_cnt ) then {
 	        _patrol_cnt = _cnt;
