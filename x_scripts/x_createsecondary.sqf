@@ -20,12 +20,12 @@ sec_kind = (floor (random 7)) + 1; // (-1 value still not used,) 0 - for finishe
 
 //sec_kind = 1; // always governor for secondary target !!!
 //sec_kind = 2; // always radar for main target !!!
+//sec_kind = 8; // always sabotage stash for main target !!!
 
 //
 // Sends message to connected clients about secondary completed and set sec_kind to zero
 //
-SYG_solvedMsg = 
-{
+SYG_solvedMsg = {
 	_this call XSendNetStartScriptClient;
 	sec_kind = 0; // value will be sent to a client in jip procedure
 	publicVariable "sec_kind";
@@ -85,8 +85,10 @@ switch (sec_kind) do {
 				if ( (_man distance _center) >= _searchDist ) exitWith  {// man is alive but out of circle
 					_grp = group _man;
 					if ( !isNull _grp ) then {
-						_grp setCombatMode "YELLOW";
-						_grp setSpeedMode "FULL";
+//						_grp setCombatMode "YELLOW";
+						_grp setCombatMode "GREEN";
+//						_grp setSpeedMode "FULL";
+						_grp setSpeedMode "NORMAL";
 						_grp setBehaviour "SAFE";
 						_grp move _pos;
 					};
@@ -282,6 +284,9 @@ switch (sec_kind) do {
 		_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddPoints;}];
 		#endif
 	};
+	case 8: { // sabotage stash (mines, blasts,
+		_target_array2 execVM "scripts\SYG_sabotage_stash.sqf"; // set sabotage stash into the town
+	};
 };
 
 ["sec_kind",sec_kind] call XSendNetStartScriptClient;
@@ -314,7 +319,7 @@ mt_spotted = false; // set player status  as 'not spotted'
 
 _posCnt = _vehicle call SYG_housePosCount;
 _cnt = floor (random (3 min _posCnt));    // add max 3 guard[s] on the top of radar
-if (_cnt > 0) then {
+if ( _cnt > 0 ) then {
     __WaitForGroup
     __GetEGrp(_newgroup)
     sleep 0.1;
@@ -350,16 +355,12 @@ if (_cnt > 0) then {
     [ "basic", [getPos _vehicle], getPos _vehicle, 0, "guardvehicle", d_enemy_side, _newgroup, -1.111 /*, [_trg_center, _radius] */] execVM "x_scripts\x_makegroup.sqf";
     hint localize format["+++ x_createsecondary.sqf: tower guard group of %1 men (%2) created", count _newgroup, "basic" ];
 #endif
-
-    }
-    else
-    {
+    } else {
         hint localize "-- x_createsecondary.sqf: group created for a tower guard[s] is NULL";
     };
 }
 #ifdef __DEBUG_PRINT__
-else
-{
+else {
     hint localize "+++ x_createsecondary.sqf: no guard on top of the main tower was created";
 }
 #endif

@@ -36,6 +36,9 @@ switch (_sec_solved_kind) do {
 	case "heavy_down": {
 		_msg = "STR_SYS_247"; // "Ваша команда уничтожила большой завод по производству героина..."
 	};
+	case "stash_down": {
+		_msg = "STR_SYS_247_1"; // "Your team has destroyed a sabotage stash..."
+	};
 	case "sec_over": {
 		_msg = "STR_SYS_248"; // "Secondary objective achieved..."
 		// "STR_FIRE_NUM" call SYG_getRandomText
@@ -43,20 +46,14 @@ switch (_sec_solved_kind) do {
 	};
 };
 _msg = localize _msg;
-if (_is_solved) then
-{
-    if ( (count _this) > 2 ) then
-    {
-        if (typeName ( _this select 2) == "STRING") then
-        {
-            if (( _this select 2) == (name player)) then
-            {
+if (_is_solved) then {
+    if ( (count _this) > 2 ) then {
+        if (typeName ( _this select 2) == "STRING") then {
+            if (( _this select 2) == (name player)) then {
                 _msg = format["%1 %2 (+%3)!", _msg, localize "STR_SEC_COMPLETED_BY_YOU", d_ranked_a select 25];
                 //player addScore (d_ranked_a select 25);
                 (d_ranked_a select 25) call SYG_addBonusScore;
-            }
-            else
-            {
+            } else {
                 _text = if ( (( _this select 2) == "") || (( _this select 2) == "Error: No unit") ) then {"STR_SYS_248_NUM" call SYG_getLocalizedRandomText} // " by force of circumstances..."
                     else { format["%1 +%2", _this select 2, d_ranked_a select 25 ] }; // " somebody +10"
                 _msg = format["%1 (%2)!", _msg, _text];
@@ -64,11 +61,8 @@ if (_is_solved) then
         };
     };
     hint localize format["+++ sec_solved: %1", _this];
-}
-else
-{
-    if ( _sec_solved_kind == "sec_over") then // add some random rumor
-    {
+} else {
+    if ( _sec_solved_kind == "sec_over") then { // add some random rumor
         _msg = format["%1%2", _msg, "STR_SYS_248_NUM"  call SYG_getLocalizedRandomText];
     };
 };
