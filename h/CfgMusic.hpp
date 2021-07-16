@@ -101,6 +101,7 @@ class CfgMusic {
     class hungarian_dances { name="Brams, Hungarian Dances"; sound[] = {\sounds\intro\hungarian_dances.ogg,db+0,1.0};}; // For Hungarian players
     class jrtheme { name="USA film jack Reacher theme"; sound[] = {\sounds\intro\jrtheme.ogg,db+0,1.0};}; // Simply majestic music
     class farewell_slavs { name="Farewell of Slavs, Russian march"; sound[] = {\sounds\intro\farewell_slavs.ogg,db+0,1.0};}; // Well known military march of old Russian Emmpire
+    class jaws    {name = "Jaws Title"; sound[] = {\sounds\intro\jaws.ogg, db+10, 1.0};}; // from "Jaws" film
 
 //------------------------------------- END of Intro music list --------------------------------------------------
 
