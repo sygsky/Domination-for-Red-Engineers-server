@@ -285,7 +285,7 @@ switch (sec_kind) do {
 		#endif
 	};
 	case 8: { // sabotage stash (mines, blasts,
-		_target_array2 execVM "scripts\SYG_sabotage_stash.sqf"; // set sabotage stash into the town
+		[_target_array2 select 0, _target_array2 select 2] execVM "scripts\SYG_sabotage_stash.sqf"; // set sabotage stash into the town
 	};
 };
 
