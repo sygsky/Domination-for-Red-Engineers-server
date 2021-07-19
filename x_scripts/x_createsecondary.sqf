@@ -16,18 +16,18 @@ _poss = _wp_array select _xx_ran;
 _wp_array set [_xx_ran, "X_RM_ME"];
 _wp_array = _wp_array - ["X_RM_ME"];
 
-sec_kind = (floor (random 7)) + 1; // (-1 value still not used,) 0 - for finished,  [1..7] - kind of current
+sec_kind = (floor (random 8)) + 1; // (-1 value still not used,) 0 - for finished,  [1..7] - kind of current
 
 //sec_kind = 1; // always governor for secondary target !!!
 //sec_kind = 2; // always radar for main target !!!
-//sec_kind = 8; // always sabotage stash for main target !!!
+sec_kind = 8; // always sabotage stash for main target !!!
 
 //
 // Sends message to connected clients about secondary completed and set sec_kind to zero
 //
 SYG_solvedMsg = {
 	_this call XSendNetStartScriptClient;
-	sec_kind = 0; // value will be sent to a client in jip procedure
+	sec_kind = 0; // value will be sent to the client in jip mode too
 	publicVariable "sec_kind";
 };
 
@@ -284,7 +284,7 @@ switch (sec_kind) do {
 		_vehicle addEventHandler ["killed", {[3,_this select 1] call XAddPoints;}];
 		#endif
 	};
-	case 8: { // sabotage stash (mines, blasts,
+	case 8: { // sabotage stash (mines, blasts, etc)
 		[_target_array2 select 0, _target_array2 select 2] execVM "scripts\SYG_sabotage_stash.sqf"; // set sabotage stash into the town
 	};
 };
