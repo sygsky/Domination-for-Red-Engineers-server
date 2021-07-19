@@ -16,11 +16,10 @@ if (!isServer) exitWith {};
 #include "global_vars.sqf"
 
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
-
 #define __DEBUG__
-#define __SYG_PRINT_ACTIVITY__
-
 #endif
+
+#define __PRINT_ACTIVITY__
 
 #define arrset(ARR,POS,VAL) ((ARR)set[(POS),(VAL)])
 
@@ -98,7 +97,7 @@ _make_isle_grp = {
 		if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];};  // try next, skip islet point
 		sleep 0.4;
 	};
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
     hint localize format["+++ x_isledefense.sqf: make isle group, start point %1", _start_point];
 #endif
 #ifdef __TT__
@@ -118,7 +117,7 @@ _make_isle_grp = {
 	};
 #endif
 
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 	if ( count _start_point == 0) then {
 		hint localize format["+++ %1 x_isledefense.sqf: _start_point %2 is empty []", call SYG_missionTimeInfoStr, _i + 1];
 	};
@@ -145,7 +144,7 @@ _make_isle_grp = {
         };
     };
 
-//#ifdef __SYG_PRINT_ACTIVITY__
+//#ifdef __PRINT_ACTIVITY__
 //    hint localize format["+++ x_isledefense.sqf: crew %1, veh. list %2", _crew_type, _elist];
 //#endif
 
@@ -199,7 +198,7 @@ _make_isle_grp = {
 _replace_grp =  {
 	private ["_igrpa","_i"];
 	_i = _this;
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 	hint localize format["+++ %1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
 #endif							
 	_igrpa = argp(SYG_isle_grps, _i);
@@ -210,7 +209,7 @@ _replace_grp =  {
 	// mark each vehicle with its patrol group id, later replace integer id with x_smgroup id
 	{_x setVariable ["PATROL_ITEM", _i]} forEach argp(_igrpa,PARAM_VEHICLES);
 
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
     hint localize format["+++ x_isledefense.sqf: group created"];
 #endif
 
@@ -231,12 +230,12 @@ _remove_grp = {
 //	{
 		_vecs  = argp(_igrpa,PARAM_VEHICLES);
 		_units = argp(_igrpa, PARAM_UNITS);
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
 #endif						
 		
 		// clean vehicles
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 		_vec_removed_cnt = 0;
 //		_crew_removed_cnt  = 0;
 #endif
@@ -250,7 +249,7 @@ _remove_grp = {
 				    ) 
 				   )  then { // vehicle was captured by player
 					// re-assign vehicle to be ordinal ones
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 					hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
 #endif
 					// put vehicle under system control
@@ -270,13 +269,13 @@ _remove_grp = {
 //						_x setDammage 1.1;
 //						sleep 0.1;
 //						deleteVehicle _x;
-//#ifdef __SYG_PRINT_ACTIVITY__
+//#ifdef __PRINT_ACTIVITY__
 //						_crew_removed_cnt = _crew_removed_cnt + 1;
 //#endif
 					} forEach crew _x;
 					sleep 0.3;
 					deleteVehicle _x;
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 					_vec_removed_cnt = _vec_removed_cnt + 1;
 #endif
 				};
@@ -285,13 +284,13 @@ _remove_grp = {
 		} forEach _vecs;
 		_vecs = nil;
 		sleep 1.06;
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
     _str = "isNull";
     if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
 		hint localize format["+++ x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
 #endif
 		// clean units
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 		_units_removed_cnt     = 0;
 		_grp_units_removed_cnt = 0;
 #endif
@@ -301,7 +300,7 @@ _remove_grp = {
 				deleteVehicle _x;
 	//			[_x] call XAddDead;
 				sleep 0.1;
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
                 _units_removed_cnt = _units_removed_cnt + 1;
 #endif
 			};
@@ -316,14 +315,14 @@ _remove_grp = {
 				deleteVehicle _x;
 	//			[_x] call XAddDead;
 				sleep 0.1;
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
                 _grp_units_removed_cnt = _grp_units_removed_cnt + 1;
 #endif
 
 			};
 		} forEach units _igrp;
 		sleep 0.1;
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
         hint localize format["+++ x_isledefense: finish remove group: count units grp %1, removed _units %2, removed grp units %3",count units _igrp, _units_removed_cnt,  _grp_units_removed_cnt];
 #endif
 
@@ -367,7 +366,7 @@ _getFeetmen = {
 					sleep 0.01;
 					_leader setRank "LIEUTENANT";
 					sleep 0.01;
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 					hint localize format["+++ %4 x_isledefense.sqf: Move leadership from feetman %1 to the crewman %2 (%3)", _x, _leader, typeOf _veh, call SYG_missionTimeInfoStr];
 #endif									
 				};
@@ -431,7 +430,7 @@ _utilizeFeetmen = {
 
 	// remove invalid men directly now
 	if ( count _invalid_men > 0 ) then {
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 		hint localize format["%+++ 1 x_isledefense.sqf: invalid %2 are killed", call SYG_missionTimeInfoStr, _invalid_men];
 #endif								
 		{ 
@@ -450,7 +449,7 @@ _utilizeFeetmen = {
 		// try to re-join to some near target (target town, airbase, re-occupied town)
 		_goal_grp = [_feetmen select 0, 500, 5] call SYG_findGroupAtTargets;
 		if ( !isNull _goal_grp ) then {// assign all feetmen to this group
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 			hint localize format["+++ %1 x_isledefense.sqf: %2 joined to a target group %3 (%4 men) at dist %5", call SYG_missionTimeInfoStr, _feetmen, _goal_grp, count units _goal_grp, (_feetmen select 0) distance (leader _goal_grp)];
 #endif								
 			_feetmen join _goal_grp;
@@ -462,7 +461,7 @@ _utilizeFeetmen = {
 	};
 	
 	if ( count _feetmen > 0) then { // kill surplus men on feet
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 		hint localize format["+++ %1 x_isledefense.sqf: surplus feetmen %2 are killed", call SYG_missionTimeInfoStr,_feetmen];
 #endif								
 		{
@@ -516,7 +515,7 @@ while { true } do {
 	};
 
 	//__DEBUG_NET("x_isledefense.sqf",(call XPlayersNumber))
-//#ifdef __SYG_PRINT_ACTIVITY__
+//#ifdef __PRINT_ACTIVITY__
 //    hint localize "+++ x_isledefense.sqf: loop start";
 //#endif
 	//
@@ -538,7 +537,7 @@ while { true } do {
 		_stat          = argp(_igrpa, PARAM_STATUS); // status of patrol group
 		_timestamp     = argp(_igrpa, PARAM_TIMESTAMP); // time to wait before create new patrol
 		_igrppos       = argp(_igrpa, PARAM_LAST_POS); // last stored position of the group
-//#ifdef __SYG_PRINT_ACTIVITY__
+//#ifdef __PRINT_ACTIVITY__
 //        hint localize format["+++ x_isledefense.sqf: loop id %1, grp %2, stat %3, timestamp %4, pos %5 ", _i, _igrp, _stat, _timestamp, _igrppos];
 //#endif
 
@@ -548,7 +547,7 @@ while { true } do {
 			if ( _stat == STATUS_WAIT_RESTORE  || _stat == STATUS_DEAD_WAIT_RESTORE) then {
 			    if ( (current_counter >= number_targets) /* && (!main_target_ready)*/ ) then {
 			        // not replace dead group as enemy is fled
-                #ifdef __SYG_PRINT_ACTIVITY__
+                #ifdef __PRINT_ACTIVITY__
                     hint localize format["+++ x_isledefense: patrol #%1 will not be restored as all main targets completed", _i];
                 #endif
    					_igrpa set [PARAM_STATUS, STATUS_STUB];
@@ -585,7 +584,7 @@ while { true } do {
 					_igrpa set [PARAM_STATUS, STATUS_DEAD_WAIT_RESTORE];
 					_dead_cnt =  ((_dead_patrols max 1) min (_patrol_cnt - 1));
 					_delay = DELAY_RESPAWN_KILLED * _dead_cnt; // delay multiplied by 1..4
-#ifdef	__SYG_PRINT_ACTIVITY__
+#ifdef	__PRINT_ACTIVITY__
 					hint localize format["+++ x_isledefense.sqf: DEAD GROUP restore delay %1 * %2 = %3", DELAY_RESPAWN_KILLED, _dead_cnt, _delay];
 #endif
 					_igrpa set [PARAM_TIMESTAMP, time + _delay];
@@ -657,7 +656,7 @@ while { true } do {
                         _pos = getPos (leader _igrp);
                         _exitWP =  _pos call SYG_chasmExitWP;
                         if ( (count _exitWP) == 3 ) then {// yes we are in chasm, try to find way out
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
                             hint localize format[ "+++ %1 x_groupsm.sqf: group %2 in chasm at %3, finding exit", call SYG_nowTimeToStr, _igrp, _pos call SYG_nearestLocationName ];
 #endif
                             // redirect patrol to exit from the chasm
@@ -721,7 +720,7 @@ while { true } do {
 	sleep DELAY_BETWEEN_CHECK_LOOP;
 
 	// ==================================== END OF LOOP ON PATROLS ======================================
-#ifdef __SYG_PRINT_ACTIVITY__
+#ifdef __PRINT_ACTIVITY__
 	// igrpa: [_agrp, _units, [0,0,0], _vecs]
 
 	hint localize format["+++ x_isledefense.sqf: %1, target ""%2"" (%3), groups on isle count %4", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, current_counter, count groups_west ];
