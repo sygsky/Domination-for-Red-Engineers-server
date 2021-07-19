@@ -378,7 +378,7 @@ SYG_townStatCalcScores = {
 // where _info_arr: [_best_players_info, _worst_player_info]
 //
 SYG_mainTownBonusInfoStr = {
-	if(isServer) exitWith {["---Can't be called on server","---Can't be called on server"]};
+	if(!X_Client) exitWith {["--- SYG_mainTownBonusInfoStr: expected to be called on the server", "--- SYG_mainTownBonusInfoStr: expected to be called on the server"]};
 	private ["_names","_coeffs","_max_town_bonus","_min","_max","_i","_bonus","_best_str","_worst_str"];
 	_names  = _this select  0;
 	_coeffs = _this select 1;
