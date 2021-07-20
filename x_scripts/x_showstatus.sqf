@@ -287,7 +287,7 @@ _s = "";
 if (current_target_index != -1) then {
 	switch (sec_kind) do {
 		case 1: {
-			_s = format ["%1\n",format [localize "STR_SYS_200", _current_target_name]]; //"Найти в %1 и устранить местного губернатора.\n"
+			_s = format ["%1\n",format [localize "STR_SEC_1", _current_target_name]]; //"Найти в %1 и устранить местного губернатора.\n"
 #ifdef __SYG_GOVERNOR_INFO__
 
 			private ["_center","_list", "_unit","_str","_searchDist","_the_officer"];
@@ -329,13 +329,25 @@ if (current_target_index != -1) then {
 			};
 #endif	
 		}; 
-		case 2;//: {_s = format ["%1\n",format [localize "STR_SYS_201", _current_target_name]];}; //"Найти вышку связи в %1 и уничтожить её.\n"
-		case 3;//: {_s = format ["%1\n",format [localize "STR_SYS_202", _current_target_name]];}; //"Найти и уничтожить в %1 грузовик с боезапасом.\n"
-		case 4;//: {_s = format ["%1\n",format [localize "STR_SYS_203", _current_target_name]];};//"Найти в %1 командный штаб (замаскирован под медицинскую бронемашину) и уничтожить его.\n"
-		case 5;//: {_s = format ["%1\n",format [localize "STR_SYS_204", _current_target_name]];};//"Найти и уничтожить в %1 командный пункт противника.\n"
-		case 6;//: {_s = format ["%1\n",format [localize "STR_SYS_205", _current_target_name]];};//"Найти и уничтожить в %1 лабораторию по производству героина.\n"
-		case 7;//: {_s = format ["%1\n",format [localize "STR_SYS_207", _current_target_name]];};//"Найти и уничтожить в %1 лабораторию по производству героина.\n"
-		case 8: { _s = format ["%1\n",format [localize (format["STR_SYS_20%1", (sec_kind - 1)]), _current_target_name]]; };//"Найти и уничтожить в %1 большой завод по производству героина.\n"
+		case 2; //"Найти вышку связи в %1 и уничтожить её.\n"
+		case 3; //"Найти и уничтожить в %1 грузовик с боезапасом.\n"
+		case 4; //"Найти в %1 командный штаб (замаскирован под медицинскую бронемашину) и уничтожить его.\n"
+		case 5; //"Найти и уничтожить в %1 командный пункт противника.\n"
+		case 6; //"Найти и уничтожить в %1 лабораторию по производству героина.\n"
+		case 7; { _s = format ["%1\n",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ] };//"Найти и уничтожить в %1 большой завод по производству героина.\n"
+		case 8: { // find in town the ammo box with diversant stash
+			_s = format ["%1\n",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ]; // Find and destroy a sabotage stash in %1.
+			_center = _target_array2 select 0; // center of curent town
+			_searchDist = _target_array2 select 2;
+			#ifdef __OWN_SIDE_EAST__
+			_box  = "WeaponBoxWest";
+			#endif
+			#ifdef __OWN_SIDE_WEST__
+			_box  = "WeaponBoxEast";
+			#endif
+			_list = _center nearObjects [ _box, _searchDist ]; // search outside box, not inside one (see such in the base)
+			_s = _s + if (count _center == 0 ) then { localize "STR_SEC_8_0" } else { localize "STR_SEC_8_1" }; // 0 - in the buildings, 1 - out of the building
+		};
 		default {}; // may bу negative value too
 		case 0: { _s = localize "STR_SYS_199";};  //"Secondary target not available..."
 	};

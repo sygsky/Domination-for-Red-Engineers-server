@@ -408,14 +408,17 @@ STR_SYS_181,New order:,Die neue Aufgabe:,Nueva tarea:,Новое задание:
 STR_SYS_182,The enemy troops will be at place in less than %1 minutes,Die feindlichen Truppen werden am Ort in weniger als %1 Minuten,Las tropas enemigas estarán en el lugar del accidente en menos de %1 minutos[s],Вражеские войска будут на месте крушения менее чем через %1 минут[ы]
 
 STR_SYS_199,Secondary target not available...,Sekundäre Aufgabe nicht zur Verfügung...,La tarea secundaria no está disponible...,Второстепенная задача не доступна...
-STR_SYS_200,Find in %1 and eliminate the local Governor.,Finden in %1 und beheben des örtlichen Gouverneurs.,Buscar en %1 y eliminar el gobernador local.,Найти в %1 и устранить местного губернатора.
-STR_SYS_201,Find the communication tower at %1 and destroy it.,Finden Sie den Turm der Kommunikation in %1 und es zu zerstören.,Encontrar la torre de comunicaciones en %1 y destruirla.,Найти вышку связи в %1 и уничтожить её.
-STR_SYS_202,Search and destroy ammo-truck in %1.,Suchen und zerstören in %1 Lastwagen mit Munition.,Encuentra y destruye en %1 camión con munición.,Найти и уничтожить в %1 грузовик с боезапасом.
-STR_SYS_203,Find in %1 armored mobile headquarters (camouflaged as medical one) and destroy it.,Finden in %1 штабную Panzerwagen (maskierte unter-und Sanitär) und Sie zu zerstören.,Encuentra en %1 un vehículo blindado de personal (disfrazado de sanitario) y destruirlo.,Найти в %1 штабную бронемашину (замаскированную под санитарную) и уничтожить её.
-STR_SYS_204,Find in %1 armored mobile headquarters and destroy it.,Finden in %1 gepanzerten mobile Hauptquartier und es zu zerstören.,Encuentra y destruye en %1 el vehículo blindado de personal del enemigo.,Найти и уничтожить в %1 штабную бронемашину противника.
-STR_SYS_205,Search and destroy in %1 some heroin laboratory.,Suchen und Zerstören von %1 im Labor für die Herstellung von Heroin.,Encuentra y destruye un laboratorio de heroína en %1.,Найти и уничтожить в %1 лабораторию по производству героина.
-STR_SYS_206,Search and destroy in %1 big heroin factory.,Suchen und zerstören in %1 Fabrik für die Herstellung von Heroin.,Encuentra y destruye en %1 la planta de producción de heroína.,Найти и уничтожить в %1 завод по производству героина.
-STR_SYS_207,Find and destroy a sabotage stash in %1.,Finde und zerstöre ein Sabotageversteck in %1.,Encuentra y destruye un alijo de sabotaje en %1.,Найти и уничтожить тайник для диверсантов в %1.
+
+STR_SEC_1,Find in %1 and eliminate the local Governor.,Finden in %1 und beheben des örtlichen Gouverneurs.,Buscar en %1 y eliminar el gobernador local.,Найти в %1 и устранить местного губернатора.
+STR_SEC_2,Find the communication tower at %1 and destroy it.,Finden Sie den Turm der Kommunikation in %1 und es zu zerstören.,Encontrar la torre de comunicaciones en %1 y destruirla.,Найти вышку связи в %1 и уничтожить её.
+STR_SEC_3,Search and destroy ammo-truck in %1.,Suchen und zerstören in %1 Lastwagen mit Munition.,Encuentra y destruye en %1 camión con munición.,Найти и уничтожить в %1 грузовик с боезапасом.
+STR_SEC_4,Find in %1 armored mobile headquarters (camouflaged as medical one) and destroy it.,Finden in %1 штабную Panzerwagen (maskierte unter-und Sanitär) und Sie zu zerstören.,Encuentra en %1 un vehículo blindado de personal (disfrazado de sanitario) y destruirlo.,Найти в %1 штабную бронемашину (замаскированную под санитарную) и уничтожить её.
+STR_SEC_5,Find in %1 armored mobile headquarters and destroy it.,Finden in %1 gepanzerten mobile Hauptquartier und es zu zerstören.,Encuentra y destruye en %1 el vehículo blindado de personal del enemigo.,Найти и уничтожить в %1 штабную бронемашину противника.
+STR_SEC_6,Search and destroy in %1 some heroin laboratory.,Suchen und Zerstören von %1 im Labor für die Herstellung von Heroin.,Encuentra y destruye un laboratorio de heroína en %1.,Найти и уничтожить в %1 лабораторию по производству героина.
+STR_SEC_7,Search and destroy in %1 big heroin factory.,Suchen und zerstören in %1 Fabrik für die Herstellung von Heroin.,Encuentra y destruye en %1 la planta de producción de heroína.,Найти и уничтожить в %1 завод по производству героина.
+STR_SEC_8,Find and destroy a sabotage stash in %1.,Finde und zerstöre ein Sabotageversteck in %1.,Encuentra y destruye un alijo de sabotaje en %1.,Найти и уничтожить тайник для диверсантов в %1.
+STR_SEC_8_0,Probably a stash in one of the buildings.,Vielleicht ist dieses Versteck in einem der Gebäude.,Quizás este escondite esté en uno de los edificios,"Возможно, тайник в одном из зданий"
+STR_SEC_8_1,Probably a stash somewhere outside the buildings.,Finde und zerstöre ein Sabotageversteck in %1.,Wahrscheinlich ein Versteck irgendwo außerhalb der Gebäude.,"Вероятно, тайник где-то вне зданий"
 
 STR_SYS_208,No target,Ohne Auftrag,sin objetivo,Нет цели
 STR_SYS_209,No secondary main target mission available...,Keine zweite Hauptziel der mission zur Verfügung...,Falta tarea secundaria en la ciudad,Вторичная задача в городе отсутствует

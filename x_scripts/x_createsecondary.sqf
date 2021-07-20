@@ -16,11 +16,11 @@ _poss = _wp_array select _xx_ran;
 _wp_array set [_xx_ran, "X_RM_ME"];
 _wp_array = _wp_array - ["X_RM_ME"];
 
-sec_kind = (floor (random 8)) + 1; // (-1 value still not used,) 0 - for finished,  [1..7] - kind of current
+sec_kind = ((floor (random 9)) + 1) min 8; // (-1 value still not used,) 0 - for finished,  [1..8] - kind of current
 
 //sec_kind = 1; // always governor for secondary target !!!
 //sec_kind = 2; // always radar for main target !!!
-sec_kind = 8; // always sabotage stash for main target !!!
+//sec_kind = 8; // always sabotage stash for main target !!!
 
 //
 // Sends message to connected clients about secondary completed and set sec_kind to zero
