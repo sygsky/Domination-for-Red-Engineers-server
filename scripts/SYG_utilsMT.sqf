@@ -398,7 +398,10 @@ SYG_mainTownBonusInfoStr = {
 			if (_bonus == _min) then { _worst_str = format["%1%2""%3"":%4", _worst_str, if (_worst_str == "") then {""} else {","},_names select _i, _bonus ] };
 		};
 	};
-	[format[localize "STR_SYS_MTBONUS_MAX", _best_str],format[localize "STR_SYS_MTBONUS_MIN", _worst_str]]
+	if (_worst_str == "") exitWith {
+		[format[localize "STR_SYS_MTBONUS_MAX", _best_str], localize "STR_SYS_MTBONUS_NOMIN"];
+	};
+	[format[localize "STR_SYS_MTBONUS_MAX", _best_str], format[localize "STR_SYS_MTBONUS_MIN", _worst_str]]
 }
 
 // EOF
