@@ -417,8 +417,14 @@ STR_SEC_5,Find in %1 armored mobile headquarters and destroy it.,Finden in %1 ge
 STR_SEC_6,Search and destroy in %1 some heroin laboratory.,Suchen und Zerstören von %1 im Labor für die Herstellung von Heroin.,Encuentra y destruye un laboratorio de heroína en %1.,Найти и уничтожить в %1 лабораторию по производству героина.
 STR_SEC_7,Search and destroy in %1 big heroin factory.,Suchen und zerstören in %1 Fabrik für die Herstellung von Heroin.,Encuentra y destruye en %1 la planta de producción de heroína.,Найти и уничтожить в %1 завод по производству героина.
 STR_SEC_8,Find and destroy a sabotage stash in %1.,Finde und zerstöre ein Sabotageversteck in %1.,Encuentra y destruye un alijo de sabotaje en %1.,Найти и уничтожить тайник для диверсантов в %1.
-STR_SEC_8_0,Probably a stash in one of the buildings.,Vielleicht ist dieses Versteck in einem der Gebäude.,Quizás este escondite esté en uno de los edificios,"Возможно, тайник в одном из зданий"
-STR_SEC_8_1,Probably a stash somewhere outside the buildings.,Finde und zerstöre ein Sabotageversteck in %1.,Wahrscheinlich ein Versteck irgendwo außerhalb der Gebäude.,"Вероятно, тайник где-то вне зданий"
+STR_SEC_8_0,Probably a stash in one of the buildings.,Vielleicht ist dieses Versteck in einem der Gebäude.,Quizás este escondite esté en uno de los edificios,"Возможно, тайник в одном из зданий."
+STR_SEC_8_1,Probably a stash somewhere outside the buildings.,Finde und zerstöre ein Sabotageversteck in %1.,Wahrscheinlich ein Versteck irgendwo außerhalb der Gebäude.,"Вероятно, тайник где-то вне зданий."
+
+STR_SEC_8_10,"As a ranking private, you're sure you don't understand anything.","Als ranghoher Gefreiter verstehen Sie sicher nichts.","Como soldado raso, seguro que no entiendes nada","Как рядовой, вы уверены, что ничего не понимаете."
+STR_SEC_8_11,"As %1, you are almost certain that stash at a distance of no more than %2 m. (you don't know more accurately).","Als %1 sind Sie fast sicher, dass das Versteck nicht weiter als %2m entfernt ist. (genaueres ist nicht bekannt)","Como %1, estás casi seguro de que el alijo no está a más de %2m. (no se sabe con más exactitud)","Как %1, вы почти уверены, что тайник на дистанции не более %2 м. (точнее не известно)"
+STR_SEC_8_12,"As %1, you intuitively feel that the hiding place is no further than %2 m. (but how much less?).","Als %1 spüren Sie intuitiv, dass das Versteck nicht weiter als %2m ist. (aber wie viel weniger?)","Como %1, intuyes que el escondite no está más allá de %2m. (¿pero cuánto menos?)","Как %1, вы интуитивно чувствуете, что тайник не далее чем %2 м. (но насколько менее?)"
+STR_SEC_8_13,"You feel that inside %1 your intuition isn't working for some reason.","Sie spüren, dass in %1 Ihre Intuition aus irgendeinem Grund nicht funktioniert","Sientes que dentro de %1 tu intuición no está funcionando por alguna razón","Вы чувствуете, что внутри %1 ваша интуиция почему-то не работает"
+STR_SEC_8_14,Where is the damn stash?,Wo ist das verdammte Versteck?,¿Dónde está el maldito escondite?,Где же этот тайник?
 
 STR_SYS_208,No target,Ohne Auftrag,sin objetivo,Нет цели
 STR_SYS_209,No secondary main target mission available...,Keine zweite Hauptziel der mission zur Verfügung...,Falta tarea secundaria en la ciudad,Вторичная задача в городе отсутствует
@@ -761,6 +767,7 @@ STR_SYS_609_5,"Thanks to your life experience (and rank!), you  got rid of your 
 
 STR_SYS_MTBONUS_MAX,Max bonus %1,Max. Bonus %1,Bono máximo %1,Макс. очки у %1
 STR_SYS_MTBONUS_MIN,Min bonus %1,Min. Bonus %1,Bono mínimo %1,Мин. очки у %1
+STR_SYS_MTBONUS_NOMIN,No min. pointsKeine Min.-Punkte,No hay puntos mínimos,Мин. очки отсутствую
 
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Su equipo está registrado y se emitirá la próxima vez,Ваше снаряжение записано и будет выдано в следующий раз
 STR_SYS_612,You've got the equipment recorded the last time,"Sie haben die Ausrüstung, erfasst der letzten Zeit",Se le dio el equipo de la Última vez,Вам выдано снаряжение с прошлого раза

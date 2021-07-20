@@ -336,7 +336,10 @@ if (current_target_index != -1) then {
 		case 6; //"Найти и уничтожить в %1 лабораторию по производству героина.\n"
 		case 7; { _s = format ["%1\n",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ] };//"Найти и уничтожить в %1 большой завод по производству героина.\n"
 		case 8: { // find in town the ammo box with diversant stash
-			_s = format ["%1\n",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ]; // Find and destroy a sabotage stash in %1.
+			_s = format ["%1",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ]; // Find and destroy a sabotage stash in %1.
+			// if player is in vehicle, no info on distance
+			if (vehicle player != player) exitWith  {_s = format["%1\n%2",_s, format[ localize "STR_SEC_8_13", typeOf (vehicle player) ]];}; // "You feel that inside %1 your intuition isn't working for some reason."
+
 			_center = _target_array2 select 0; // center of curent town
 			_searchDist = _target_array2 select 2;
 			#ifdef __OWN_SIDE_EAST__
@@ -346,7 +349,50 @@ if (current_target_index != -1) then {
 			_box  = "WeaponBoxEast";
 			#endif
 			_list = _center nearObjects [ _box, _searchDist ]; // search outside box, not inside one (see such in the base)
-			_s = _s + if (count _center == 0 ) then { localize "STR_SEC_8_0" } else { localize "STR_SEC_8_1" }; // 0 - in the buildings, 1 - out of the building
+			_s1 = if (count _list == 0 ) then {
+				localize "STR_SEC_8_0" // 0 - in the buildings
+			} else { localize "STR_SEC_8_1" }; // 1 - out of the building
+			_s = format["%1\n%2", _s, _s1];
+			_max_dist = 600; // for outdoor stash
+			if (count _list == 0 ) then { // it must be indoor box, specify its correct type
+				_max_dist = 300; // for indoor stash
+				_box_west =
+				#ifdef __ACE__
+					"ACE_AmmoBox_West";
+				#else
+					"AmmoBoxWest";
+				#endif
+				_box_east =
+				#ifdef __ACE__
+					"ACE_AmmoBox_East";
+				#else
+					"AmmoBoxEast";
+				#endif
+				#ifdef __OWN_SIDE_EAST__
+				_box  = _box_west;
+				#endif
+				#ifdef __OWN_SIDE_WEST__
+				_box  = _box_east;
+				#endif
+			};
+			// search for the box near player
+			_list = player nearObjects [ _box, _max_dist ];
+			if ( count _list == 0 ) then { _s1 = localize "STR_SEC_8_14" } // "Where is the damn stash?"
+			else {
+				// add more info on stash (approximate) distance
+				_rank_id = player call XGetRankIndexFromScoreExt; // rank index
+				_rank = player call XGetRankStringLocalized; // localized rank name
+				if (_rank_id == 0) exitWith { _s1 = format[localize "STR_SEC_8_10", _rank]; }; // "As a ranking private, you're sure you don't understand anything."
+				// print extended info
+				_s1   = if ( (random 2) < 1 ) then {"STR_SEC_8_11"} else {"STR_SEC_8_12"};
+				// make artificially approximate distance by rank
+				_dist = round( ( _list select 0 ) distance player);
+				_step = round( _max_dist / _rank_id ); // accuracy step
+				_dist = ( ( round (_dist / _step) ) * _step ) max _step; // show distance never less than accuracy stap size
+				hint localize format["+++ STASH info: _dist %1, _step %2, _rank_id %3", _dist, _step, _rank_id];
+				_s1   = format[ localize _s1, _rank, _dist ]; // "As %1, you are almost certain that stash at a distance of no more than %2 m. (you don't know more accurately)."
+			};
+			_s = format["%1\n%2",_s, _s1 ]; // add extended info to the result one
 		};
 		default {}; // may bу negative value too
 		case 0: { _s = localize "STR_SYS_199";};  //"Secondary target not available..."

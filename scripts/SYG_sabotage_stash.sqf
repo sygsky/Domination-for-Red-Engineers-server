@@ -39,7 +39,7 @@ if ( (random 10) <= 5 ) then { // find position in a house
 	#ifdef __DEBUG__
 	_str = format["+++ SYG_sabotage_stash.sqf: create STASH in the house %1, pos ind %2 %3", typeOf _house, _ind, _pos];
 	hint localize _str;
-	player groupChat _str;
+	//player groupChat _str;
 	#endif
 	_spec = "CAN_COLLIDE";
 	// small boxes for houses
@@ -63,12 +63,12 @@ if ( (random 10) <= 5 ) then { // find position in a house
 	#endif
 };
 
-if (count _pos == 0 ) then { // find position in the town area
+if ( count _pos == 0 ) then { // find position in the town area
 
 	#ifdef __DEBUG__
 	_str = format["+++ SYG_sabotage_stash.sqf: create STASH outdoor at %1 with radius %2", (_this select 0), (_this select 1)];
 	hint localize _str;
-	player groupChat _str;
+	//player groupChat _str;
 	#endif
 	_spec = "NONE";
 	_pos = [(_this select 0), (_this select 1)] call XfGetRanPointCircle;
@@ -85,7 +85,7 @@ if (count _pos == 0 ) then { // find position in the town area
 #ifdef __DEBUG__
 _str = format["+++ SYG_sabotage_stash.sqf: create STASH in %1 on pos %2", _box, _pos];
 hint localize _str;
-player groupChat _str;
+//player groupChat _str;
 #endif
 
 _box =  createVehicle [ _box, _pos, [], 0, _spec ];
