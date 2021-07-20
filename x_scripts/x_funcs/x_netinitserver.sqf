@@ -391,28 +391,29 @@ XHandleNetStartScriptServer = {
 		    (_this select 1) addVehicle (_this select 2); // (group player) addVehicle _veh;
 		};
 
-        // information about battle air vehicle activity
+        // information about battle air vehicle activity: ["veh_info", [ _veh, "on" ]] or ["veh_info", [ _veh, "off" ]]
 		case "veh_info": {
-		    private ["_veh","_cmd","_cnt"];
+		    private ["_veh","_cmd","_cnt","_usr"];
 		    _params = (_this select 1); // parameters array of this command
 		    _veh    = _params select 0; // vehicle
 		    _cmd    = _params select 1; // "on"/"off"
+		    _usr    = if (count _params > 2) then (format["(%1)", _params select 2]) else {"(?)"};
 		    switch (toLower _cmd) do {
 		        case "on"  : {
 		            if (!(_veh isKindOf "Air") ) exitWith {
 		                _cnt = count SYG_owner_active_air_vehicles_arr;
-		                hint localize format["--- ""veh_info"": attempt to add illegal type %1 to the list[%2]", typeOf _veh, _cnt];
+		                hint localize format["--- ""veh_info"": attempt to add illegal type %1%2 to the list[%3]", typeOf _veh, _usr, _cnt];
 		            };
 		            if (_veh in SYG_owner_active_air_vehicles_arr) exitWith {};  // already in
 		            SYG_owner_active_air_vehicles_arr set[ count SYG_owner_active_air_vehicles_arr , _veh ]; // add new vehicle
 		            _cnt = count SYG_owner_active_air_vehicles_arr;
-		            hint localize format["+++ ""veh_info"": %1 added to list[%2]", typeOf _veh, _cnt];
+		            hint localize format["+++ ""veh_info"": %1%2 added to list[%3]", typeOf _veh, _usr, _cnt];
 		        };
 		        // remove vehicle
 		        case "off" : {
 		            SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - [ _veh ];
 		            _cnt = count SYG_owner_active_air_vehicles_arr;
-		            hint localize format["+++ ""veh_info"": %1 removed from list[%2]", typeOf _veh, _cnt];
+		            hint localize format["+++ ""veh_info"": %1%2 removed from list[%3]", typeOf _veh, _usr, _cnt];
 		        };
 		        default {hint localize format["--- ""veh_info"": illegal params %1", _params]};
 		    }

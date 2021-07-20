@@ -216,9 +216,8 @@ while { true } do {
             //hint localize format["x_playerveccheck.sqf: _index == %1, _attempts_count == %2, STR_SYS_252_NUM == %3, new str == ""%4""", _index, _attempts_count, localize "STR_SYS_252_NUM", localize (format["STR_SYS_252_%1",_index])];
         } else { // player allowed to be in vehicle
 //            hint localize format[ "+++ x_playerveccheck: player allowed to be in vehicle %1, airbattle %2, cargo %3", typeOf _veh, _air_battle, _cargo ];
-            if ( _air_battle && !_cargo ) then // periodically send info to server about player battle air vehicle activity
-            {
-                [ _veh, "on" ] call _sendInfoOnAirVehToServer; // add info about to server
+            if ( _air_battle && !_cargo ) then { // periodically send info to server about player battle air vehicle activity
+                [ _veh, "on", name player ] call _sendInfoOnAirVehToServer; // add info about to server
                 _activity_info_sent = true;
                 hint localize format[ "+++ x_playerveccheck: start activity report on %1", typeOf _veh ];
     #ifdef __DISABLE_GRU_BE_PILOTS__
@@ -233,7 +232,7 @@ while { true } do {
 	//hint localize format["x_playerveccheck.sqf: player is not assigned %1", _role_arr];
 	waitUntil {sleep 0.2; vehicle player == player};
     if ( _activity_info_sent ) then { // stop activity
-        [ _veh, "off" ] call _sendInfoOnAirVehToServer; // drop info about this vehicle
+        [ _veh, "off", name player] call _sendInfoOnAirVehToServer; // drop info about this vehicle
         hint localize format["+++ x_playerveccheck: stop activity report on %1", typeOf _veh];
     };
 };
