@@ -1136,8 +1136,12 @@ _local_msg_arr spawn {
         [
             "msg_to_user",
             "",
-            [ ["Für zahlreiche militärische Verdienste erklären das Kommando und die dankbaren Bürger Sie zum Ehrenbürger der Insel Sahrani." ] ],
-            0, 5, false, "drum_fanfare"
+            [
+              ["Für zahlreiche militärische Verdienste erklären das Kommando und die dankbaren Bürger Sie zum Ehrenbürger der Insel Sahrani." ],
+              ["Anfragen zum Einschalten des Servers sollten auf WhatsApp 8(916)136-2219 gesendet werden."],
+              ["Groß-/Kleinschreibung beachten Skype-Anmeldung: sygsky"]
+            ],
+            7, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
     if ( (name player) == "Rokse [LT]") exitWith {
