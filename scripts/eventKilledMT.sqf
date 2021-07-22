@@ -33,8 +33,7 @@ hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %
 
 // Don't accept kill if done not by direct existing player action
 if ( !( isNull  _killer) ) then { // not NULL killer
-	if ( !(_killer isKindOf "CAManBase" ) ) exitWith{}; // killer is not man but vehicle
-	if ( ( vehicle _killer == _killer ) || (  alive ( vehicle _killer ) ) ) exitWith{}; // killer man is on feet and killer not rammed the tower while in the heli
+	if ( ( ( vehicle _killer ) == _killer) && ( _killer isKindOf "CAManBase" ) ) exitWith{}; // killer man is on feet and killer not rammed the tower while in the heli
      hint localize format["+++ MTTarget: killer %1 (not man on feet), veh %2,  dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object
