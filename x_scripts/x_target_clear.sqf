@@ -22,7 +22,8 @@ if ( (count _this > 0) && ( typeName (_this select 0) == "SCALAR" ) ) exitWith  
 if ( count _this > 0 ) then {
 	if (  typeName (_this select 0) == "ARRAY" ) then {
 		_this = _this select 0;
-		hint localize format[ "+++ call to x_scripts\x_target_clear.sqf with remained enemy men %1, tanks %2, cars %3, statics %4",
+		hint localize format[ "+++ x_scripts\x_target_clear.sqf: %1 finished with alive enemy men %2, tanks %3, cars %4, statics %5",
+			(target_names select current_target_index) select 1,
 			"Man" countType _this, "Tank" countType _this, "Car" countType _this, "StaticWeapon" countType _this];
 	};
 };
@@ -31,7 +32,7 @@ counterattack = false;
 _start_real = false;
 
 #ifndef __TT__
-if (number_targets == 22 /* && current_target_index != 5 */ && (current_counter < number_targets)) then { // Now all towns have counter attacks
+if (number_targets >= 15 /* && current_target_index != 5 */ && (current_counter < number_targets)) then { // Now all towns have counter attacks
 #endif
 
 #ifndef __TOWN_WEAK_DEFENCE__
