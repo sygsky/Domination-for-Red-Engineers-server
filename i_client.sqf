@@ -208,7 +208,7 @@ if (X_Client) then {
     d_rank_names = ["PRIVATE","CORPORAL","SERGEANT","LIEUTENANT","CAPTAIN","MAJOR","COLONEL"];
     // not official ranks for super-gamers only
     d_pseudo_ranks =
-        [1300,1800,2300,3000,4000,5000]; // +500 6 40, +500 35, +500 8 30, +700 9 35, +1000 10 50, +1000 11 45
+        [1300,1800,2300,3000,4000,5000]; // +500 6 40, +500 7 35, +500 8 30, +700 9 35, +1000 10 50, +1000 11 45
     d_pseudo_rank_names =
         //[localize "STR_SYS_1000",localize "STR_SYS_1001",localize "STR_SYS_1002",localize "STR_SYS_1003",localize "STR_SYS_1004",localize "STR_SYS_1005"];
         ["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"];

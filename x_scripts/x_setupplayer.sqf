@@ -1867,8 +1867,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	{
 		// check if action not added
 //		hint localize format["x_setupplayer.sqf: Action adding to GRU PC, %1 == %2",COMPUTER_ACTION_ID_NAME,_var];
-		if (format["%1",_comp getVariable COMPUTER_ACTION_ID_NAME] == "<null>") then
-		{
+		if (format["%1",_comp getVariable COMPUTER_ACTION_ID_NAME] == "<null>") then {
 //			playSound "ACE_VERSION_DING"; // inform about computer creation
 			// add action
 //			hint localize format["x_setupplayer.sqf: Action (%1) added to GRU PC", call SYG_getGRUCompScript];
@@ -1878,8 +1877,7 @@ player call SYG_handlePlayerDammage; // handle hit events
     		_comp addAction [localize "STR_COMP_ILLUM", "scripts\baseillum\illum_start.sqf"];
 		}
 #ifdef __DEBUG__
-		else
-		{
+		else {
 			hint localize "x_setupplayer.sqf: Action on GRU PC is set already!!!";
 		}
 #endif
