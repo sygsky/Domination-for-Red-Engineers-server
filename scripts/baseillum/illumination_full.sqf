@@ -33,9 +33,11 @@ if (!isServer) exitWith{}; // only for server
     #define FLARE_TYPE "ACE_Flare_Arty_White"
     #define FLARE_LIVE_TIME 60
 #else
-    #define FLARE_TYPE "ACE_Flare_40mm_White"
+    #define FLARE_TYPE "F_40mm_White"
     #define FLARE_LIVE_TIME 30
 #endif
+
+#define FLARE_TYPE_ARR ["ACE_Flare_40mm_Red","ACE_Flare_40mm_White","ACE_Flare_40mm_Yellow","ACE_Flare_40mm_Green"]
 
 //+++Sygsky: SYG_illum_runner variable is known only on server
 if (!isNil "SYG_illum_runner") exitWith  {
@@ -108,7 +110,14 @@ while { ( daytime > SYG_startNight ) || ( daytime < SYG_startMorning ) } do {
         _pos set [ 0, (_pos select 0) + random 10 ];
         _pos set [ 1, (_pos select 1) + random 10 ];
         _pos set [ 2, FLARE_ALT_START  + (random 10)];
-        _flares set [count _flares, FLARE_TYPE createVehicle _pos];
+        if ( (random 10) < 1) then {
+        	_flare = FLARE_TYPE_ARR call XfRandomArrayVal;
+	        _flares set [count _flares, _flare createVehicle _pos];
+	        _flares set [count _flares, _flare createVehicle _pos];
+	        _flares set [count _flares, _flare createVehicle _pos];
+        } else {
+	        _flares set [count _flares, FLARE_TYPE createVehicle _pos];
+       	};
         _cnt = _cnt + 1;
     };
     sleep   floor (FLARE_LIVE_TIME / (_obj_cnt max 1));// sleep for next
