@@ -13,15 +13,6 @@ private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type",
 
 //#define __DEBUG__
 
-//#define __R [[1,0,0,1],[1,0,0,0.8],[1,0,0,1],[1,0,0,0.9]]
-#define __R [[1,0,0,0.7],[1,0,0,0.5],[1,0,0,0.7],[1,0,0,0.6]]
-#define __G [[0,1,0,1],[0,1,0,0.8],[0,1,0,1],[0,1,0,0.9]]
-//#define __W [[1,1,1,1],[1,1,1,1.8],[1,1,1,1],[1,1,1,1.9]]
-#define __W [[1,1,1,0.7],[1,1,1,0.5],[1,1,1,0.7],[1,1,1,0.9]]
-#define __Y [[1,1,0,1],[1,1,0,0.8],[1,1,0,1],[1,1,0,0.9]]
-#define __VEL velocity _flare
-#define __I .025
-
 _col = __COL;
 //_flare_type = "F_40mm_White"; // default flare type
 _flare_type = switch (toUpper(_col)) do {
@@ -52,6 +43,7 @@ _flare = objNull;
 _flare = _flare_type createVehicle _pos;
 if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 if (!isNull _alarm_obj) then  {
+   	hint localize format["+++ emulateFlareFired.sqf: ""flare"" variable found, launch next flare over %1", typeOf _alarm_obj];
 	_alarm_obj setVariable ["flare", true]; // mark flare is on above this alarm object
 };
 
@@ -59,9 +51,11 @@ sleep 0.5;
 
 if (__LOCAL) then {
 // call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
-	 [ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
+	hint localize format["+++ emulateFlareFired.sqf: flare is locally launched above %1", typeOf _alarm_obj];
+	[ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
 } else {
-// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
+	// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
+	hint localize format["+++ emulateFlareFired.sqf: flare launched globally with col. %1 above %2", _col, typeOf _alarm_obj];
 	[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient; // run on all clients
 };
 
@@ -72,5 +66,6 @@ while { alive _flare && (((getPos _flare) select 2) > _die_away_height) } do { s
 if ( !isNull _flare ) then { /* hint localize format["emulateFlareFired.sqf: flare drop speed %1", velocity _flare];*/ deleteVehicle _flare;};
 
 if (!isNull _alarm_obj) then  {
+   	hint localize format["+++ emulateFlareFired.sqf: remove ""flare"" variable from %1", typeOf _alarm_obj];
 	_alarm_obj setVariable ["flare", nil]; // mark flare is off
 };

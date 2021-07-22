@@ -14,7 +14,7 @@ private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_pos","_flare
 //#define __W [[1,1,1,1],[1,1,1,1.8],[1,1,1,1],[1,1,1,1.9]]
 #define __W [[1,1,1,0.7],[1,1,1,0.5],[1,1,1,0.7],[1,1,1,0.9]]
 #define __Y [[1,1,0,1],[1,1,0,0.8],[1,1,0,1],[1,1,0,0.9]]
-#define __VEL velocity _flare
+#define __VEL (velocity _flare)
 #define __I .025
 
 //#define __DIST ( (player distance _flare) / 400 )

@@ -1340,9 +1340,10 @@ XBaseEnemies = {
             // throw flare above alarm object
             _flare = _alarm_obj getVariable "flare"; // check if flare already on above this alarm object
             if (isNil "_flare") then  {
+            	hint localize format["+++ XBaseEnemies: ""flare"" variable is nil, launch next flare over %1", typeOf _alarm_obj];
 	            [_alarm_obj, _height, "YELLOW", 400, true] execVM "scripts\emulateFlareFired.sqf";
             } else {
-            	hint localize format["--- XBaseEnemies: ""flare"" variable is set on, skip next flare on base invasion", typeOf _alarm_obj];
+            	hint localize format["*** XBaseEnemies: ""flare"" variable is set on, skip next flare on base invasion above %1", typeOf _alarm_obj];
             };
 		};
 		case 1: {
