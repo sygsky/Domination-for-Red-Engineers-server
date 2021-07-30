@@ -398,7 +398,7 @@ XHandleNetStartScriptServer = {
 		    _params = (_this select 1); // parameters array of this command
 		    _veh    = _params select 0; // vehicle
 		    _cmd    = _params select 1; // "on"/"off"
-		    _usr    = if (count _params > 2) then (format["(%1)", _params select 2]) else {"(?)"};
+		    _usr    = if ( (count _params) > 2) then {format["(%1)", _params select 2]} else {"(?)"};
 		    switch (toLower _cmd) do {
 		        case "on"  : {
 		            if (!(_veh isKindOf "Air") ) exitWith {

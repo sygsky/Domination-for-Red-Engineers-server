@@ -174,7 +174,7 @@ SYG_getSubmarineSound = {
 };
 
 // All available curche types in the Arma (I think so)
-SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky"];
+SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky","Land_R_Minaret"];
 
 // returns random male laughter sound on your defeate
 SYG_getLaughterSound =
@@ -217,6 +217,9 @@ SYG_playRandomDefeatTrackByPos = {
 	};
     #endif
 
+    // death in water
+    if (surfaceIsWater _this) exitWith { call SYG_playWaterSound};
+
     // check if we are near some church
     _churchArr = nearestObjects [ _this, SYG_religious_buildings, 100];
     if ( (count _churchArr > 0) && ((random 10) > 1)) exitWith {
@@ -256,9 +259,6 @@ SYG_playRandomDefeatTrackByPos = {
         SYG_RahmadiDefeatTracks call SYG_playRandomTrack;
         hint localize "+++ SYG_playRandomDefeatTrackByPos: SYG_RahmadiDefeatTracks, done";
     };
-
-    // death in water
-    if (surfaceIsWater _this) exitWith { call SYG_playWaterSound};
 
     // no special conditions found, play std music now
     switch (_this call SYG_whatPartOfIsland) do {
@@ -466,7 +466,7 @@ SYG_getMusicName = {
     private ["_name","_type"];
 
     _config = configFile >> "CfgMusic" >> _this >> "name";
-    player groupChat format["+++ Config %1", _config];
+//    player groupChat format["+++ Config %1", _config];
     _name = getText(configFile >> "CfgMusic" >> _this >> "name" );
     _isText = isText(configFile >> "CfgMusic" >> _this >> "name" );
     _isNumber = isNumber(configFile >> "CfgMusic" >> _this >> "name" );

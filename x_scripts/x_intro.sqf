@@ -72,7 +72,7 @@ if (count _holiday > 0 ) then {
 _music_cnt = 0;
 if (_sound == "") then { // select random music for ordinal day
     if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then {
-        playMusic (["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis"] call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
+        playMusic ( ((SYG_holidayTable select 0) select 2) call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
         _newyear = true;
     } else {
         // music normally played on intro

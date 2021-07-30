@@ -43,7 +43,7 @@ _flare = objNull;
 _flare = _flare_type createVehicle _pos;
 if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 if (!isNull _alarm_obj) then  {
-   	hint localize format["+++ emulateFlareFired.sqf: ""flare"" variable found, launch next flare over %1", typeOf _alarm_obj];
+   	hint localize format["+++ emulateFlareFired.sqf: _alarm_obj object found, launch next flare over it (%1)", typeOf _alarm_obj];
 	_alarm_obj setVariable ["flare", true]; // mark flare is on above this alarm object
 };
 
@@ -51,11 +51,11 @@ sleep 0.5;
 
 if (__LOCAL) then {
 // call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
-	hint localize format["+++ emulateFlareFired.sqf: flare is locally launched above %1", typeOf _alarm_obj];
+	hint localize format["+++ emulateFlareFired.sqf: local ""%1"" flare is launched above %2", _col, typeOf _alarm_obj];
 	[ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
 } else {
 	// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
-	hint localize format["+++ emulateFlareFired.sqf: flare launched globally with col. %1 above %2", _col, typeOf _alarm_obj];
+	hint localize format["+++ emulateFlareFired.sqf: global ""%1"" flare launched above %2", _col, typeOf _alarm_obj];
 	[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient; // run on all clients
 };
 

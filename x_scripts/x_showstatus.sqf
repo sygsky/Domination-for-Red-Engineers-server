@@ -334,7 +334,7 @@ if (current_target_index != -1) then {
 		case 4; //"Найти в %1 командный штаб (замаскирован под медицинскую бронемашину) и уничтожить его.\n"
 		case 5; //"Найти и уничтожить в %1 командный пункт противника.\n"
 		case 6; //"Найти и уничтожить в %1 лабораторию по производству героина.\n"
-		case 7; { _s = format ["%1\n",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ] };//"Найти и уничтожить в %1 большой завод по производству героина.\n"
+		case 7:{ _s = format ["%1\n",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ] };//"Найти и уничтожить в %1 большой завод по производству героина.\n"
 		case 8: { // find in town the ammo box with diversant stash
 			_s = format ["%1",format [localize (format["STR_SEC_%1", sec_kind]), _current_target_name] ]; // Find and destroy a sabotage stash in %1.
 			// if player is in vehicle, no info on distance
@@ -380,9 +380,9 @@ if (current_target_index != -1) then {
 			if ( count _list == 0 ) then { _s1 = localize "STR_SEC_8_14" } // "Where is the damn stash?"
 			else {
 				// add more info on stash (approximate) distance
-				_rank_id = player call XGetRankIndexFromScoreExt; // rank index
+				_rank_id = (player call XGetRankIndexFromScoreExt) max 1; // rank index with min value of 1
 				_rank = player call XGetRankStringLocalized; // localized rank name
-				if (_rank_id == 0) exitWith { _s1 = format[localize "STR_SEC_8_10", _rank]; }; // "As a ranking private, you're sure you don't understand anything."
+//				if (_rank_id == 0) exitWith { _s1 = format[localize "STR_SEC_8_10", _rank]; }; // "As a ranking private, you're sure you don't understand anything."
 				// print extended info
 				_s1   = if ( (random 2) < 1 ) then {"STR_SEC_8_11"} else {"STR_SEC_8_12"};
 				// make artificially approximate distance by rank

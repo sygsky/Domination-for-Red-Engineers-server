@@ -71,8 +71,7 @@ _on_base_groups = []; // array of active groups on base
 //player groupChat "flaresoverbase.sqf: ENTERED";
 
 #ifdef __PRINT__
-if ( isNil "d_on_base_groups" ) then
-{
+if ( isNil "d_on_base_groups" ) then {
 	hint localize "flaresoverbase.sqf: d_on_base_groups is Nil";
 };
 #endif
@@ -98,16 +97,14 @@ _wounded_found = false;
 
 while { true } do {
 #ifdef __DEBUG__
-	if ( _first_time ) then
-	{
-		player groupChat "flaresoverbase.sqf: entering main loop";
+	if ( _first_time ) then {
+//		player groupChat "flaresoverbase.sqf: entering main loop";
 		hint localize  "flaresoverbase.sqf: entering main loop";
 		_first_time = false;
 	};
 #endif
 
-	if ( X_MP && ((call XPlayersNumber) == 0) ) then
-	{
+	if ( X_MP && ((call XPlayersNumber) == 0) ) then {
 #ifdef __PRINT__
 //		player groupChat "flaresoverbase.sqf: waits for player";
 		hint localize  "flaresoverbase.sqf: waits for player";
@@ -117,9 +114,7 @@ while { true } do {
 //		player groupChat "flaresoverbase.sqf: player entered";
 		hint localize  "flaresoverbase.sqf: player entered";
 #endif			
-	}
-	else
-	{
+	} else {
 #ifdef __DEBUG__
 //		player groupChat "flaresoverbase.sqf: player entered";
 		_delay = random INTERFLARE_DELAY;
@@ -133,33 +128,25 @@ while { true } do {
 	
 	// first check wounded list. If it is not empty, launch illumination
 	_flare_launched = 0;
-	if ( count _wounded > 0 ) then
-	{
-		for "_i" from 0 to count _wounded - 1 do
-		{
+	if ( count _wounded > 0 ) then {
+		for "_i" from 0 to count _wounded - 1 do {
 			if (_flare_launched >= MAX_FLARE_NUMBER ) exitWith { /* Exit from flare loop */ };
 			_unit = _wounded select _i;
-			if ( alive _unit ) then
-			{
+			if ( alive _unit ) then {
 				_unc = (damage _unit) >= 0.7;
 				if (format["%1",_unit getVariable "ACE_unconscious"] != "<null>") then { _unc = _unit getVariable "ACE_unconscious"; };
-				if ( _unc ) then
-				{
+				if ( _unc ) then {
 					[ getPos _unit, 20 * (damage _unit), 150, "Red"/* "F_40mm_Red" */ ] spawn _illumination;
 					sleep random INTERFLARE_DELAY; 
 					_flare_launched = _flare_launched + 1;
-				}
-				else
-				{
+				} else {
 #ifdef __DEBUG__
 //		player groupChat "flaresoverbase.sqf: wounded is in conscious";
 		hint localize "flaresoverbase.sqf: wounded is in conscious";
 #endif			
 					_wounded set [_i, "RM_ME"];
 				};
-			}
-			else
-			{
+			} else {
 				_wounded set [_i, "RM_ME"];
 			};
 		};
@@ -168,10 +155,7 @@ while { true } do {
 		//player groupChat format["flaresoverbase.sqf: at check time wounded list cnt %1, flares launched %2", count _wounded, _flare_launched];
 		hint localize format["flaresoverbase.sqf: at check time wounded list cnt %1, flares launched %2", count _wounded, _flare_launched];
 #endif			
-
-	}
-	else
-	{
+	} else {
 #ifdef __DEBUG__
 //		player groupChat "flaresoverbase.sqf: wounded list is empty, seek for more";
 		hint localize "flaresoverbase.sqf: wounded list is empty, seek for more";
@@ -179,89 +163,68 @@ while { true } do {
 	};
 	
 	_wounded_found = false;
-	if ( _flare_launched < MAX_FLARE_NUMBER ) then  // few flares launched, check for more unconscious
-	{
+	if ( _flare_launched < MAX_FLARE_NUMBER ) then { // few flares launched, check for more unconscious
 		// move outer groups into internal pool for check
 		_base_groups = [] + d_on_base_groups;
-		if ( count _base_groups > 0 ) then
-		{
+		if ( count _base_groups > 0 ) then {
 #ifdef __DEBUG__
 			hint localize    format[ "flaresoverbase.sqf: check loop on %1 groups on base", count _base_groups ];
 #endif			
-			for "_i" from 0 to count _base_groups - 1 do
-			{
+			for "_i" from 0 to count _base_groups - 1 do {
 				_grp = argp(_base_groups,_i);
 				// check group for wounded unconscious men
-				if ( !isNull _grp ) then 
-				{
-					if ( (typeName _grp) != "STRING" ) then // item is not marked for remove
-					{
-						if ( ({alive _x} count units _grp) > 0 ) then
-						{
-							if ( !(_grp in _on_base_groups) ) then
-							{
+				if ( !isNull _grp ) then {
+					if ( (typeName _grp) != "STRING" ) then { // item is not marked for remove
+						if ( ({alive _x} count units _grp) > 0 ) then {
+							if ( !(_grp in _on_base_groups) ) then {
 								_on_base_groups = _on_base_groups + [_grp ];
 							};
 						};
-					}
-					else
-					{
+					} else {
 #ifdef __PRINT__
 						//player groupChat format[ "flaresoverbase.sqf: typeName _grp %1 == ""STRING""", _i ];
 						hint localize    format[ "--- flaresoverbase.sqf: typeName _grp %1 == ""STRING"" ---", _i ];
 #endif				
 					};
 				} //if ( typeName _grp != "STRING" ) then // item is not marked for remove
-				else
-				{
+				else {
 				};
 			}; //for "_i" from 0 to count d_on_base_groups - 1 do
 		} 	// if ( count _base_groups > 0 ) then
-		else
-		{
+		else {
 #ifdef __DEBUG__
-					player groupChat "flaresoverbase.sqf: no groups at base";
+//					player groupChat "flaresoverbase.sqf: no groups at base";
 					hint localize    "flaresoverbase.sqf: no groups at base";
 #endif				
 		};
 		
 		// check for one more wounded
-		if ( count _on_base_groups > 0 ) then
-		{
+		if ( count _on_base_groups > 0 ) then {
 			_empty_grp = true;
-			for "_i" from 0 to count _on_base_groups - 1 do
-			{
+			for "_i" from 0 to count _on_base_groups - 1 do {
 				_grp = _on_base_groups select _i;
-				if ( isNull _grp ) then 
-				{
+				if ( isNull _grp ) then {
 					_on_base_groups set [_i, "RM_ME"];
-				}
-				else
-				{
+				} else {
 					{ // forEach units _grp;
 						_unc = false;
-						if ( !isNull _x ) then
-						{
-							if ( alive _x ) then
-							{
+						if ( !isNull _x ) then {
+							if ( alive _x ) then {
 								_empty_grp = false;
 								_unc = (damage _x)  >= 0.8;
 								if ( format["%1",_x getVariable "ACE_unconscious"] != "<null>" ) then { _unc = _x getVariable "ACE_unconscious"; };
 							};
 						};
-						if ( _unc ) exitWith // wounded man found, add it to list ans exit
-						{
+						if ( _unc ) exitWith { // wounded man found, add it to list ans exit
 							// launch flare now
-							if ( ! (_x in _wounded) ) then 
-							{
+							if ( ! (_x in _wounded) ) then {
 								_wounded = _wounded + [ _x ];
 								_wounded_found = true;
 							};
 						};
 					} forEach units _grp;
 #ifdef __PRINT__
-					if ( _wounded_found ) then
-					{
+					if ( _wounded_found ) then {
 						//player groupChat format[ "flaresoverbase.sqf: group %1, new wounded found", _i ];
 						hint localize    format[ "flaresoverbase.sqf: group %1, new wounded added to flare launch queue", _i ];
 					};
@@ -273,18 +236,16 @@ while { true } do {
 			sleep random 20;
 		}; // if ( count d_on_base_groups > 0 ) then
 #ifdef __DEBUG__
-		if ( !_wounded_found ) then
-		{
-			player groupChat "flaresoverbase.sqf: no new wounded found";
+		if ( !_wounded_found ) then {
+//			player groupChat "flaresoverbase.sqf: no new wounded found";
 			hint localize    "flaresoverbase.sqf: no new wounded found";
 		};
 #endif			
 	};
 	
-	if ( (_flare_launched == 0 ) && ( count _on_base_groups == 0 ) ) then
-	{
+	if ( (_flare_launched == 0 ) && ( count _on_base_groups == 0 ) ) then {
 #ifdef __DEBUG__
-		player groupChat "flaresoverbase.sqf: no groups on base, wait for more";
+//		player groupChat "flaresoverbase.sqf: no groups on base, wait for more";
 		hint localize    "flaresoverbase.sqf: no groups on base, wait for more";
 #endif			
 		sleep (random WAIT_FOR_SABOTAGE_DELAY); // wait for next group infiltrated

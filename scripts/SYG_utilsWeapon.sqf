@@ -1664,18 +1664,16 @@ SYG_armUnit = {
 //
 // Example:
 //
-SYG_rearmUnit =
-{
+SYG_rearmUnit = {
 	private [ "_unit", "_list", "_mag", "_mags", "_cnt", "_i", "_wpn", "_muzzles", "_ruck", "_ruck_items",
 	 "_wpn", "_rifle","_gun", "_sidearm","_vdist"];
 	if ( typeName _this != "ARRAY") exitWith { false };
 	if ( (count _this) < 2 ) exitWith { false };
-    if ( (typeName arg(1)) == "STRING") then
-    {
+    if ( (typeName arg(1)) == "STRING") then {
         _this = [arg(0)] + [arg(1) call SYG_equipStr2Arr];
     };
-	hint localize format["arr %1", arg(1)];
-   	player groupChat format["arr %1", arg(1)];
+	hint localize format["+++ SYG_rearmUnit: arr %1", arg(1)];
+//   	player groupChat format["arr %1", arg(1)];
 	_unit = arg(0);
 	removeAllWeapons _unit;
 	_this = arg(1);
@@ -1683,10 +1681,8 @@ SYG_rearmUnit =
 	_list = arg(1); // read magazine list and add them to unit
 	{
 		// check if it is array: ["MAG_NAME", count]
-		if ( typeName _x == "ARRAY") then
-		{
-			if ( count _x == 2) then
-			{
+		if ( typeName _x == "ARRAY") then {
+			if ( count _x == 2) then {
 				_mag = argp(_x,0);
 				_cnt = argp(_x,1);
 				for "_i" from 0 to _cnt - 1 do
@@ -1694,11 +1690,8 @@ SYG_rearmUnit =
 					_unit addMagazine _mag;
 				};
 			};
-		}
-		else // it is simple "MAG_NAME" item
-		{
-			if ( typeName _x == "STRING") then
-			{
+		} else  { // it is simple "MAG_NAME" item
+			if ( typeName _x == "STRING") then {
 				_unit addMagazine _x;
 			};
 		};
@@ -1708,20 +1701,16 @@ SYG_rearmUnit =
 	_list = arg(0);
 	_rifle = ""; _sidearm = "";
 	{
-		if ( typeName _x == "STRING") then
-		{
+		if ( typeName _x == "STRING") then {
 			_unit addWeapon _x;
-            switch (_x call SYG_weaponClass) do
-            {
+            switch (_x call SYG_weaponClass) do {
                 // rifle/gun
-                case 1:
-                {
+                case 1: {
                     //hint localize format["SYG_weaponType found rifle %1",_x];
                     _rifle = _x;
                 };
                 // sidearm
-                case 3:
-                {
+                case 3: {
                     //hint localize format["SYG_weaponType found sidearm %1",_x];
                     _sidearm = _x;
                 };
@@ -1731,33 +1720,27 @@ SYG_rearmUnit =
 	_wpn = "";
     if (_rifle != "" ) then {_wpn = _rifle;}
     else {if (_sidearm != "" ) then {_wpn = _sidearm;};};
-    if ( _wpn != "") then
-    {
+    if ( _wpn != "") then {
         // select best weapon as primary one
         _unit selectWeapon _wpn;
         _muzzles = getArray( configFile >> "cfgWeapons" >> _wpn >> "muzzles" );
-        if ( count _muzzles > 0) then
-        {
+        if ( count _muzzles > 0) then {
             _unit selectWeapon ( _muzzles select 0 );
         };
     };
 
 	// add rucksack
 	_ruck = argopt(2,"");
-	if ( _ruck != "") then
-	{
-	    if ( typeName _ruck == "STRING" ) then
-	    {
+	if ( _ruck != "") then {
+	    if ( typeName _ruck == "STRING" ) then {
 	        _unit setVariable [ "ACE_weapononback", _ruck ];
 	    };
 	};
 
 	// add rucksack items from array of type: [ [MAG_NAME_1,MAG_CNT_1], ... [MAG_NAME_N,MAG_CNT_N] ]
 	_ruck_items = argopt( 3, [] );
-	if ( typeName _ruck_items == "ARRAY") then
-	{
-        if ( count _ruck_items > 0) then
-        {
+	if ( typeName _ruck_items == "ARRAY") then {
+        if ( count _ruck_items > 0) then {
             _unit setVariable [ "ACE_Ruckmagazines", _ruck_items ];
         };
 	};

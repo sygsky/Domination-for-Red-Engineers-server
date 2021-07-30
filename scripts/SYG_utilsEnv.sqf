@@ -53,7 +53,7 @@ SYG_blinkingTexture = {
 
 // _nul = [_obj, _face, _texture] call SYG_setTexture;
 SYG_setTexture = {
-	player groupChat format["[%1,%2,%3] call SYG_setTexture;", arg(0),arg(1),arg(2)];
+//	player groupChat format["[%1,%2,%3] call SYG_setTexture;", arg(0),arg(1),arg(2)];
 	arg(0) setObjectTexture [arg(1),arg(2)];
 };
 
