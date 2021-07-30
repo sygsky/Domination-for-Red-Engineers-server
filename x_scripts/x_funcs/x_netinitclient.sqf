@@ -425,7 +425,7 @@ XHandleNetStartScriptClient = {
 		    hint localize "+++ stop_sm == true. No more SM allowed";
 		};
 		#ifndef __TT__
-		// creates markers for jump flags (it is possible to create them on server of courseBut this is the decision of Xeno)
+		// creates markers for jump flags (it is possible to create them on server of course. But this is the decision of Xeno)
 		// call as: ["new_jump_flag",_flag, false] call XSendNetStartScriptClient;
 		case "new_jump_flag": {
 			if (!d_no_para_at_all) then {
@@ -434,18 +434,17 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		#endif
+
 		// this message sent on main tower down. Params are: ["mt_radio_down", mt_radio_down (true or false),name_of_person_killed_tower]]
 		case "mt_radio_down": {
 			__compile_to_var
 			private ["_msg","_name"];
-			if (mt_radio_down && ( argp(mt_radio_pos,0) != 0)) then
-			{
+			if (mt_radio_down && ( argp(mt_radio_pos,0) != 0)) then {
 				private ["_msg","_ind"];
 //				_msg = [localize "STR_SYS_300",localize "STR_SYS_301",localize "STR_SYS_302",localize "STR_SYS_303",localize "STR_SYS_303"] call XfRandomArrayVal;
                 _msg = "STR_MAIN_COMPLETED_NUM" call SYG_getLocalizedRandomText; // _msg must be localized
                 #ifdef __RANKED__
-                if ( (count _this) > 2) then
-                {
+                if ( (count _this) > 2) then {
                     _name = arg(2);
                     if (typeName (arg(2)) == "STRING") then {
                         private ["_score"];
