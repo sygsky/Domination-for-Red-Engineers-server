@@ -20,6 +20,7 @@ _vec_array = [];
 		case "MR": {
 			_var = format["MRR%1",_number_v];
 			call compile format ["%1=_vehicle;publicVariable ""%1"";", _var];
+			_vehicle addRating -10000; // #451: enemy may prefer to kill it ASAP
 	#ifdef __TT__
 			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 	#endif
@@ -153,7 +154,7 @@ while {true} do {
 
 			switch (_kind) do {
 				case "MR": {
-				
+					_vehicle addRating -10000; // #451: enemy may prefer to kill it ASAP
 					_var = format["MRR%1",_number_v];
 					call compile format ["%1=_vehicle;publicVariable ""%1"";", _var];
 					[ "MHQ_respawned", _var ] call XSendNetStartScriptClient;
