@@ -508,7 +508,7 @@ if (isServer) then {
             _mag = _item select 2;
             _weaponHolder addWeaponCargo [_wpn, 1];
             _weaponHolder addMagazineCargo [_mag, 4 ];
-            hint localize format["+++ init: %1 created in %2", _wpn, typeOf _obj];
+            hint localize format["*** init: %1 created in %2", _wpn, typeOf _obj];
 		};
 #endif
 	};
@@ -535,7 +535,7 @@ if (isServer) then {
 
     [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
 
-    hint localize format["init.sqf; shortNightNew.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
+    hint localize format["*** init.sqf; shortNightNew.sqf: morning %1, day %2, evening %3, night %4, skipFrom %5, skipTo %6",
         SYG_startMorning,SYG_startDay,SYG_startEvening, SYG_startNight,SYG_nightSkipFrom, SYG_nightSkipTo];
 
     //-------------------------------
@@ -546,7 +546,7 @@ if (isServer) then {
     ace_sys_missiles_incomingMissile = compile (preprocessFileLineNumbers ("scripts\ACE\ace_mando_replacemissile.sqf")); // replace mando guidance missile range
     mando_scorefunc                  = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
     //mando_missile_handler            = compile (preprocessFileLineNumbers ("scripts\ACE\mando_missile.sqf"));
-    hint localize "+++ mando_missile_replaced replaced by custom version";
+    hint localize "*** mando_missile_replaced replaced by custom version";
     #endif
 
 #endif

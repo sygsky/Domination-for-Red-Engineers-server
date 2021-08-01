@@ -312,8 +312,7 @@ _ve spawn {
 	_old_rank = "";
 	while {!isNull _ve && alive _ve} do {
 		if (_old_rank != rank player) then {
-			clearMagazineCargo _ve;
-			clearWeaponCargo _ve;
+			_ve call SYG_clearAmmoBox;
 			_old_rank = rank player;
 			_index = _old_rank call XGetRankIndex;
             // weaponcargo that is always in a box

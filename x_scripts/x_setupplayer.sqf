@@ -229,8 +229,7 @@ _counterxx = 0;
 	#ifdef __ACE__
 	if (d_jumpflag_vec == "") then {
 		_box = "ACE_RuckBox" createVehicleLocal _pos;
-		clearMagazineCargo _box;
-		clearWeaponCargo _box;
+		_box call SYG_clearAmmoBox;
 		_box addWeaponCargo ["ACE_ParachutePack",10];
 	};
 	#endif
@@ -843,13 +842,13 @@ if ( _rank < 6 ) then { // you are Major or lower, send info about ranks
 	// "Ranks: Private (%1), Corporal (%2), Sergeant (%3), Lieutenant (%4), Captain (%5), Major (%6), Colonel (%7) etc"
 	_local_msg_arr set [count _local_msg_arr,
 		format[ localize "STR_SYS_68_1",
-			(d_rank_names select 0) call XGetRankStringLocalized,
-			(d_rank_names select 1) call XGetRankStringLocalized,
-			(d_rank_names select 2) call XGetRankStringLocalized,
-			(d_rank_names select 3) call XGetRankStringLocalized,
-			(d_rank_names select 4) call XGetRankStringLocalized,
-			(d_rank_names select 5) call XGetRankStringLocalized,
-			(d_rank_names select 6) call XGetRankStringLocalized
+			(d_rank_names select 0) call XGetRankStringLocalized, 0,
+			(d_rank_names select 1) call XGetRankStringLocalized, d_points_needed select 0,
+			(d_rank_names select 2) call XGetRankStringLocalized, d_points_needed select 1,
+			(d_rank_names select 3) call XGetRankStringLocalized, d_points_needed select 2,
+			(d_rank_names select 4) call XGetRankStringLocalized, d_points_needed select 3,
+			(d_rank_names select 5) call XGetRankStringLocalized, d_points_needed select 4,
+			(d_rank_names select 6) call XGetRankStringLocalized, d_points_needed select 5
 		]
 	];
 

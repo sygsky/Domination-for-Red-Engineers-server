@@ -94,19 +94,37 @@ _box setDir (random 360);
 
 // clear content and fill new one
 
-clearMagazineCargo _box;
-clearWeaponCargo _box;
+_box call SYG_clearAmmoBox;
 
-_box addMagazineCargo ["ACE_PipeBomb",10 + floor (random 10)];
-#ifdef __OWN_SIDE_EAST__
-_box addMagazineCargo ["ACE_Mine",10 + floor (random 10)];
-#else
-_box addMagazineCargo ["ACE_MineE",10 + floor (random 10)];
-#endif
-
+_mine = "Mine";
+_bomb = "PipeBomb";
+_arr = [];
+_str = "";
 #ifdef __ACE__
-_box addMagazineCargo ["ACE_Claymore_M",10 + floor (random 10)];
+	#ifdef __OWN_SIDE_EAST__
+_mine = "ACE_MineE";
+	#endif
+	#ifdef __OWN_SIDE_WEST__
+_mine = "ACE_Mine";
+	#endif
+_bomb = "ACE_PipeBomb";
+
+_arr set [2, "ACE_Claymore_M"];
 #endif
+_arr set [0, _mine];
+_arr set [1, _bomb];
+
+{ // fill created items into the box
+	_cnt = 10 + floor (random 10);
+	_box addMagazineCargo [_x, _cnt];
+	_str = format["%1this addMagazineCargo [""%2"",%3];", _str, _x, _cnt];
+} forEach _arr;
+
+_box lock true;
+
+_box call SYG_clearAmmoBox;
+_box setVehicleInit ("this call SYG_clearAmmoBox;" + _str + "this lock true;");
+processInitCommands;
 
 #ifdef __TT__
 _box addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) in [west,resistance]) then {_sec_solved = "stash_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
@@ -114,6 +132,6 @@ _box addEventHandler ["killed", {[3,_this select 1] call XAddPoints;}];
 #else
 _box addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "stash_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
 #endif
-hint localize format["+++ STASH of %1 created", typeOf _box];
+hint localize format["+++ STASH of %1 created %2", typeOf _box, [_box,"at %1 m to %2 from %3", 50] call SYG_MsgOnPosE];
 _box
 

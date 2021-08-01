@@ -36,8 +36,7 @@ _x addaction [localize "STR_FLAG_5"/* "{Rumours}" */,"scripts\rumours.sqf",""];
 _str = "";
 if (d_jumpflag_vec == "") then {
 	_box = "ACE_RuckBox" createVehicleLocal (position new_jump_flag);
-	ClearMagazineCargo _box;
-	ClearWeaponCargo _box;
+	_box call SYG_clearAmmoBox ;
 	_box addweaponcargo ["ACE_ParachutePack",50];
 	_str = "STR_SYS_339"; // "New flag for parajump created at current target."
 	if (count _this > 2) then { if (! (_this select 2)) then { _str = "STR_SYS_339_1"; }; }; // "A new parajump flag was created at a secret base."

@@ -2483,8 +2483,7 @@ SYG_reammoTruck = {
 	{
 		hint localize format["SYG_reammoTruck: called for %1", typeOf _this];
 
-		clearMagazineCargo _this;
-		clearWeaponCargo   _this;
+		_this call SYG_clearAmmoBox;
 
 		_this addWeaponCargo   ["ACE_FIM92A",2];
 		_this addMagazineCargo ["ACE_Stinger", 5];
@@ -2628,8 +2627,7 @@ SYG_reammoMHQ = {
 	{
 		// hint localize format["SYG_reammoMHQ: entered with %1", _this];
 
-		clearMagazineCargo _this;
-		clearWeaponCargo   _this;
+		_this call SYG_clearAmmoBox;
 
 		_this addMagazineCargo ["ACE_Strela", 3];
 
