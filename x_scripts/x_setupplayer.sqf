@@ -1050,7 +1050,7 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 
 
 #ifndef __TT__
-// Enemy at base: called from trigger< _this = [0, thislist]
+// Enemy at base: called from trigger, _this = [0, thislist]
 XBaseEnemies = {
 	switch ( _this select 0 ) do {
 		case 0: {
@@ -1085,10 +1085,14 @@ XBaseEnemies = {
                     _alarm_obj = FLAG_BASE;
                 };
             };
-            _alarm_obj say "alarm";
+            if ((random 10) < 1 ) then {
+	            _alarm_obj say (call SYG_onBaseAttackSound); // sometimes call special sounds
+            } else {
+	            _alarm_obj say "alarm";
+            };
             // throw flare above alarm object
             _flare = _alarm_obj getVariable "flare"; // check if flare already on above this alarm object
-           	hint localize format["+++ XBaseEnemies: Run alarm above %1, its _flare is %2", typeOf _alarm_obj, _flare];
+           	hint localize format["+++ XBaseEnemies: Run alarm above %1, its flare var is %2", typeOf _alarm_obj, _flare];
             if ( isNil "_flare" ) then  {
 	            [_alarm_obj, _height, "YELLOW", 400, true] execVM "scripts\emulateFlareFired.sqf";
             };
@@ -1610,8 +1614,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 	hint localize format["x_setupplayer.sqf: GRU PC == %1",_comp];
 #endif
 
-	if ( !isNull _comp ) then
-	{
+	if ( !isNull _comp ) then{
 		// check if action not added
 //		hint localize format["x_setupplayer.sqf: Action adding to GRU PC, %1 == %2",COMPUTER_ACTION_ID_NAME,_var];
 		if (format["%1",_comp getVariable COMPUTER_ACTION_ID_NAME] == "<null>") then {

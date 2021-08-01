@@ -314,6 +314,9 @@ SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure
 
 SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
+// additional sound, when base is under attack
+SYG_onBaseAttackSound = {"enemy_attacks_base"};
+
 //
 // NOTE: play music by playMusic call, not playSound, so use sections only from CfgMusic, never from CfgSounds
 // Plays random track or track part depends on input array kind (see below)

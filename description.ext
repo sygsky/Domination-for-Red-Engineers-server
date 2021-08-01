@@ -14,8 +14,7 @@ respawndelay = D_RESPAWN_DELAY;
 debriefing=1;
 showGPS=1;
 
-class Header
-{
+class Header {
  gameType = COOP;            //DM, Team, Coop, CTI
  minPlayers = 1;             //min # of players the mission supports
  maxPlayers = 10;            //Max # of players the mission supports
@@ -92,8 +91,7 @@ textsParam2[] = {"00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00"
 
 //+++ Sygsky: add russian voices according to ACE documentation (see in ACE_FX_Voices_Russian dir)
 #ifdef __ACE__
-class CfgIdentities
-{
+class CfgIdentities {
 	#include "h\CfgIdentities.hpp"
 };
 #endif
@@ -111,8 +109,7 @@ class X_RscAnimatedLetters {
 
 	class Controls {
 		__EXEC(idc = 5000)
-		class L1: X3_RscText
-		{
+		class L1: X3_RscText {
 			idc = __EVAL(idc);
 			x = 0.5; y = 0.5;
 			h = 0.3; w = 0.1;
