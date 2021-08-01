@@ -29,7 +29,7 @@ if ( !(isNull _killer) ) then{
         if ( isPlayer (commander _killer)) exitWith {_name = format["%1", name  (commander _killer)]};
     }
 };
-hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4, vUp %5.", typeOf _house, typeOf _killer, _name, damage _house, vectorUp _house];
+hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4, vUp %5.", _house, typeOf _killer, _name, damage _house, vectorUp _house];
 
 // Don't accept kill if done not by direct existing player action
 if ( !( isNull  _killer) ) then { // not NULL killer
