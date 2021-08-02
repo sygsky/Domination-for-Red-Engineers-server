@@ -220,7 +220,15 @@ XCheckSMHardTarget = {
 
 /**
  by Sygsky 12-APR-2020
- "Hit" event processing for Main Target (TV-Tower in target town)
+
+ Triggered when the unit is damaged. In ArmA works with all vehicles not only men like in OFP.
+ (Does not fire if damage is set via setDammage.) (If simultaneous damage occured (e.g. via grenade) EH might be triggered several times.)
+
+ Global. Passed array: [unit, selectionName, damage]
+
+ unit: Object - Object the event handler is assigned to
+ selectionName: String - Name of the selection where the unit was damaged
+ damage: Number - Resulting level of damage
  */
 SYG_hitMTTarget = {
     // drop damage if < 1 or hit not from man
@@ -243,7 +251,7 @@ XCheckMTHardTarget = {
 	_vehicle = _this select 0;
 	_vehicle addEventHandler ["killed", { _this execVM "scripts\eventKilledMT.sqf" } ]; // protect the tower from forbidden attacks
 #ifdef __TT__
-	_vehicle addEventHandler ["killed", { [ 4, _this select 1 ] call XAddPoints;_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient; } ];
+	_vehicle addEventHandler ["killed", { [ 4, _this select 1 ] call XAddPoints;private ["_mt_radio_tower_kill"];_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient; } ];
 #endif
 	_vehicle addEventHandler [ "hit", { _this call SYG_hitMTarget } ]; // drop damage from easy forbidden attacks
 };

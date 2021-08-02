@@ -31,7 +31,6 @@ SYG_msgToUserParser = {
     private [ "_msg_arr","_msg_fmt","_name","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
      "_msg_target_found","_ind","_SYG_processSingleStr","_str"];
 
-
     //
     // call as: _newStr = _str call _SYG_processSingleStr; // _str is localized or not localized depending on its value.
     //  if _str start with "STR" (case sensitive) it is localized in any case!!!
@@ -93,6 +92,7 @@ SYG_msgToUserParser = {
     hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" [""%1"",[%2 item(s)]:%3]", _name, count _msg_arr, _msg_arr select  0];
 #endif
 
+	if ( typeName (_msg_arr select 0) != "ARRAY") then {_msg_arr = [_msg_arr]}; // allow to use single message without array envelope
     {
         if (typeName _x == "STRING") then { // it is not array but single string, put it to array and process as usuall
             _x = [_x]; // emulate as array with single item

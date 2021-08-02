@@ -58,9 +58,11 @@ if ( !( isNull  _killer) ) then { // not NULL killer
     _newhouse = createVehicle [_house_type, _pos, [], 0, "CAN_COLLIDE"];
     _vUp = vectorUp _newhouse;
     hint localize format["+++ MTTarget: tower %1(%2) vUp %3 restored, XCheckMTHardTarget is assigned to !", _newhouse, typeOf _newhouse, _vUp];
+    // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
     _newhouse setVectorUp [0,0,1];
     [_newhouse] spawn XCheckMTHardTarget;
     _restored = true;
+    [ "msg_to_user", "",  ["STR_SYS_311_0", name _killer], 0, 2, false, "losing_patience" ] call SYG_msgToUserParser; // Send msg to all: "The %1 hit on the TV tower has gone to waste!"
 };
 if (_restored) exitWith {}; // continue with the same assignments
 hint localize "--- MTTarget: killed finalization -> destroyed by human or unrecognized means -> follow  the path of Xeno";
