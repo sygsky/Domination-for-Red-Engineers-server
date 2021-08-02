@@ -178,8 +178,7 @@ SYG_nearestGoodHouse = {
 			} else {
 				_arr set [_i, "RM_ME"];
 			};
-		}
-		else {// good house type already detected
+		} else {// good house type already detected
 			if ( _type != _good_type ) then { _arr set [_i, "RM_ME"]; }; // remove all except first found good type
 		};
 		_i = _i + 1;
@@ -212,33 +211,39 @@ SYG_teleportToHouse = {
 	
 	_hpos = argopt(1,"RANDOM_CENTER");
 	_unit = objNull;
-	if ((typeName _hpos) == "STRING") then {
+	if ((typeName _hpos) == "STRING") then { // defined by mnemonic name
 		_cnt = _house call SYG_housePosCount;
- 		switch toUpper(_hpos) do {
-			case "RANDOM_CENTER": {
-				_part = argopt(2,20); // use position at 20% around center of position array
-				if ( _part <= 0) then {_part = 20;};
-				_part = _part min 50; 
-				_hpos = floor((_cnt*(0.5-_part/100))+(random(_cnt*(_part/50))));
-				_unit = argopt(3,objNull);
-				//player groupChat format["RANDOM_CENTER: house with posnum %1, center part %2%4, selected pos %3", _cnt, _part, _hpos, "%"];
+		_done = false;
+#include "SYG_hotel_rooms.sqf"
+		while {!_done} do {
+			switch toUpper(_hpos) do {
+				case "RANDOM_CENTER": {
+					_part = argopt(2,20); // use position at 20% around center of position array
+					if ( _part <= 0) then {_part = 20;};
+					_part = _part min 50;
+					_hpos = ((floor((_cnt*(0.5-_part/100))+(random(_cnt*(_part/50))))) max 0) min (_cnt -1);
+					_unit = argopt(3,objNull);
+					//player groupChat format["RANDOM_CENTER: house with posnum %1, center part %2%4, selected pos %3", _cnt, _part, _hpos, "%"];
+				};
+				case "RANDOM_MIDDLE": {
+					_hpos = floor(_cnt/2 + (random (_cnt % 2)));
+					_unit = argopt(2,objNull);
+				};
+				case "RANDOM": {
+					_hpos = floor (random _cnt);
+					_unit = argopt(2,objNull);
+				};
+				case "MIDDLE";
+				default  {
+					_hpos = floor(_cnt/2);
+					_unit = argopt(2,objNull);
+				};
 			};
-			case "RANDOM_MIDDLE": {
-				_hpos = floor(_cnt/2 + (random (_cnt % 2)));
-            	_unit = argopt(2,objNull);
-			};
-			case "RANDOM": {
-				_hpos = floor (random _cnt);
-            	_unit = argopt(2,objNull);
-			};
-			case "MIDDLE";
-			default  {
-				_hpos = floor(_cnt/2);
-            	_unit = argopt(2,objNull);
-			};
+			// test to be in hotel building with blind rooms
+			if ( (typeName _house)  != "Land_Hotel") exitWith {};
+			_done = ! (_hpos in _no_list); // find position not in room without door (listed in _no_list array from SYG_hotel_rooms.sqf file
 		};
-	}
-	else { _unit = argopt(2,objNull);};
+	} else { _unit = argopt(2,objNull);}; // defined by position index
 	_pos = _house buildingPos _hpos;
 	if ( isNull _unit ) then { // teleport player, not unit
 		if (isNull player) exitWith {hint localize "--- SYG_teleportToHouse: unit/player isNull";-1};
