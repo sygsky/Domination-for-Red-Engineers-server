@@ -186,3 +186,6 @@
 
 // uncomment lower line to allow 1st side mission fast start, else long time to start
 //#define __FAST_START_SM__
+
+// Comment line to stop Sahrani lighthouse howler sounds
+#define __LH_HOWLER__

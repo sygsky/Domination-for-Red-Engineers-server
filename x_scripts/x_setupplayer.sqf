@@ -1581,7 +1581,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 		//player setIdentity _identity;
 	};
 */
-
+#ifdef __DEFAULT__
     //+++ Sygsky: here process some additional objects added to the gameplay, e.g. informational targets for fire ranges,GRU computer etc.
     //            Bar gates are processed somewhere in upper lines
     [] spawn {
@@ -1605,7 +1605,11 @@ player call SYG_handlePlayerDammage; // handle hit events
         hint localize _str;
         */
         _targets execVM "scripts\fireRange.sqf";
+        #ifdef __LH_HOWLER__
+        [SYG_startNight, SYG_startMorning] execVM "scripts\SYG_lighthouses.sqf";
+        #endif
     };
+#endif
 
     //+++ Sygsky: GRU computer handling - add action if found
 	_comp = call SYG_getGRUComp;
