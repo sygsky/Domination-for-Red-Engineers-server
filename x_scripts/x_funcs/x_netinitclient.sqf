@@ -929,11 +929,9 @@ XHandleNetStartScriptClient = {
             };
         };
         // [ "shortnight", _command<, _param<s>_for_command> ]
-        case "shortnight":
-        {
+        case "shortnight": {
             switch (_this select 1) do {
-                case "skip": // skip some time
-                {
+                case "skip": { // skip some time
                     private ["_time2skip"];
                     _time2skip = (_this select 2); // hours to skip
                     if ( typeName _time2skip ==  "ARRAY") then { _time2skip = _time2skip select 0};
@@ -941,8 +939,7 @@ XHandleNetStartScriptClient = {
                     skipTime _time2skip;
                     hint localize format["+++ shortnight skip: after skip daytime %1, time %2, date %3;", daytime, time, date];
                 };
-                case "info": // print info on day/night time
-                {
+                case "info": { // print info on day/night time
                     private ["_id","_str", "_playSound"];
                     _id = _this select 2; // message id to be printed about day time begin
                     if ( typeName _id ==  "ARRAY") then { _id = _id select 0};
@@ -960,6 +957,10 @@ XHandleNetStartScriptClient = {
                     if (_playSound ) then {
                         _str = _id call SYG_getDayTimeIdRandomSound;
                         if ( _str != "" ) then {playSound _str};
+                    };
+                    if (_id == 0) then {	// night detected, run lighthouse hawler
+						// TODO: #450: add lighthouse night hawler sounds
+						//[] execVM "\nothing.sqf";
                     };
                     //-------------------------------------------------------
                 };

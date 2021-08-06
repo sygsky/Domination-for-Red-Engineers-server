@@ -1,4 +1,4 @@
-// Created by Dupa, modified by Sygsky
+// scripts\shortNightNew.sqf: created by Dupa, modified by Sygsky
 // syntax: _temp = [nightStart, nightEnd, nightSpan, twilightDuration] execVM shortNight.sqf
 // nightStart MUST BE GREATER than nightEnd e.g. [21,6,2].
 // Values such as [1,6,2] will lead to unexpected behavior.
@@ -37,14 +37,10 @@ if ( !isServer) exitWith {false};
 
 #define __DEBUG__
 
-#define STD_SLEEP_DURATION 60
-#define TWILIGHT_SMOOTH_FACTOR 10
-#define TWILIGHT_SLEEP_DURATION (STD_SLEEP_DURATION/TWILIGHT_SMOOTH_FACTOR)
-
 private ["_titleTime","_morningStart","_dayStart","_eveningStart","_nightStart","_nightSkipFrom","_nightSkipTo","_str","_skipped"
         ,"_skip"];
 
-waitUntil {time > 0}; // wait time synchronization
+waitUntil { time > 0 }; // wait time synchronization
 if ( isServer ) then { sleep 300; };// wait 5 min just in case to pass all possible date changes to first user started the server
 // TODO: add some sound effects (morning sounds, day insects, evening bells, night cries etc)
 _titleTime = {
@@ -68,8 +64,7 @@ _str = format[ "+++ SHORTNIGHT: SYG_startMorning %1, SYG_startDay %2, SYG_startE
 hint localize _str;
 _skipped = false;
 
-while {true } do
-{
+while {true } do {
     _skipped = false;
     // NIGHT begins
     if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then {// we are in real night after 21:00, simply skip time up to the morning twilight

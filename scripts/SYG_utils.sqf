@@ -711,8 +711,8 @@ SYG_clearArrayB = {
 SYG_cleanArrayB = SYG_clearArrayB;
 
 //
-// _arr = [1,2,3];
-// _arr = [_arr, 1] call SYG_removeItemFromArray; // returns [1,3] and _arr is the same object as before subtraction!!!
+// _arr = [1,2,3,4];
+// _arr = [_arr, 2] call SYG_removeItemFromArray; // returns [1,3,4] and _arr is the same object as before subtraction!!!
 //
 SYG_removeItemFromArray = {
 	private [ "_arr", "_ind", "_i" ];

@@ -34,7 +34,8 @@ hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %
 // Don't accept kill if done not by direct existing player action
 if ( !( isNull  _killer) ) then { // not NULL killer
 	if ( ( ( vehicle _killer ) == _killer) && ( _killer isKindOf "CAManBase" ) ) exitWith{}; // killer is man on his feet and killer not rammed the tower while in the heli or other way
-     hint localize format["+++ MTTarget: killer %1 (not man on feet), veh %2,  dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
+	if ( !(vehicle _killer isKindOf "Air") ) exitWith {}; // killer is a man on his feet and killer not rammed the tower while in the air
+     hint localize format["--- MTTarget: restore tower as killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object
     if (!(_house isKindOf "House")) exitWith {};
@@ -44,7 +45,7 @@ if ( !( isNull  _killer) ) then { // not NULL killer
     _pos         = getPos _house;
     _ruin_type   = format["%1_ruin", _house_type];
     if ( !(_ruin_type isKindOf "Ruins") ) then { _ruin_type = "Ruins"};
-    _sleep_until = _time + 60;
+    _sleep_until = _time + 5;
     while { (time < _sleep_until) && (isNull _ruin)} do {
         _ruin = nearestObject [_pos, _ruin_type];
         sleep 0.05;
@@ -55,6 +56,9 @@ if ( !( isNull  _killer) ) then { // not NULL killer
     _house removeAllEventHandlers "killed";
     deleteVehicle _house;
     deleteVehicle _ruin;
+	["d_del_ruin",position _ruin] call XSendNetStartScriptAll;
+	deleteVehicle _ruin;
+
     _newhouse = createVehicle [_house_type, _pos, [], 0, "CAN_COLLIDE"];
     _vUp = vectorUp _newhouse;
     hint localize format["+++ MTTarget: tower %1(%2) vUp %3 restored, XCheckMTHardTarget is assigned to !", _newhouse, typeOf _newhouse, _vUp];

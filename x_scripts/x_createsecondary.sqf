@@ -160,8 +160,7 @@ switch (sec_kind) do {
                 _unit setSkill 1.0;
                 _unit addEventHandler ["killed", {[_this select 0] call XAddDead;}];
             };
-		}
-		else {  hint localize format["x_scripts/x_createsecondary.sqf: secondary target is unguarded", _cnt];};
+		} else {  hint localize format["+++ x_scripts/x_createsecondary.sqf: secondary target is unguarded", _cnt];};
 		#endif
 		#ifdef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) in [west,resistance]) then {_sec_solved = "radar_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];

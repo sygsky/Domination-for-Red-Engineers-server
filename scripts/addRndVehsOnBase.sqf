@@ -10,9 +10,9 @@
 // positions for Camel only, not use it for BMP
 _camelPosArr = [[9428,9749,0], [9728,9824,0], [9731,9778,0], [9621,9781], [9767,9962,0], [9804,9956,0], [9842,9954,0]]; // Camel positions
 _camelDirArr = [          225,           180,             0,           0,             0,             0,            0];  // Camel directions
-_landPosArr  = [ [9439.2,9800.7,0], [10254.87,10062,0], [10503,10090,0], [9153,10045,0], [9064,10036,0] ];
-_landDirArr  = [               180,               180,                0,              0,           350  ];
-_landTypeArr = [ "ACE_BRDM2", "ACE_BMP1_D", "ACE_UAZ_MG", "ACE_UAZ_AGS30", "ACE_BRDM2_ATGM", "ACE_BRDM2_SA9"  ];
+_landPosArr  = [ [9439.2,9800.7,0], [10254.87,10062,0], [10503,10090,0], [9153,10045,0], [9064,10036,0] ]; // cars (land) vehicles positions
+_landDirArr  = [               180,               180,                0,              0,           350  ]; // cars (land) vehicles directions
+_landTypeArr = [ "ACE_BRDM2", "ACE_BMP1_D", "ACE_UAZ", "ACE_UAZ_MG", "ACE_UAZ_AGS30", "ACE_BRDM2_ATGM", "ACE_BRDM2_SA9"  ];
 
 #define __LAND_VEH_NUM__ 2 // how many vehicle create on the base in init procedure
 
@@ -41,8 +41,6 @@ for "_i" from 1 to (count _landTypeArr) - __LAND_VEH_NUM__ do { [_landTypeArr, _
          	_type = _type select _ind;
          	_arr = _x select 1;
          	[_arr, _ind] call SYG_removeItemFromArray;
-//         	_arr set [_ind, "RM_ME"];
-//         	_arr call SYG_clearArrayB;
         };
         _veh = createVehicle [_type, [0,0,0], [], 0, "NONE"];
 #ifdef __DEBUG__

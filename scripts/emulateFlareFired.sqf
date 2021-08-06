@@ -22,6 +22,7 @@ _flare_type = switch (toUpper(_col)) do {
 	default{ _flare_type = "F_40mm_White"; }; //	case "WHITE":  { _flare_type = "F_40mm_White";  };
 };
 
+hint localize format["+++ emulateFlareFired.sqf: _this = %1", _this];
 _pos = __POS;
 _alarm_obj = objNull;
 if ( typeName _pos == "OBJECT" ) then {
