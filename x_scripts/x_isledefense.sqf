@@ -657,7 +657,7 @@ while { true } do {
                         _exitWP =  _pos call SYG_chasmExitWP;
                         if ( (count _exitWP) == 3 ) then {// yes we are in chasm, try to find way out
 #ifdef __PRINT_ACTIVITY__
-                            hint localize format[ "+++ %1 x_groupsm.sqf: group %2 in chasm at %3, finding exit", call SYG_nowTimeToStr, _igrp, _pos call SYG_nearestLocationName ];
+                            hint localize format[ "+++ %1 x_groupsm.sqf: %2 group %3 in chasm at %4, finding exit", call SYG_nowTimeToStr, argp(_igrpa,PARAM_TYPE), _igrp, _pos call SYG_nearestLocationName ];
 #endif
                             // redirect patrol to exit from the chasm
                             // Let's get the hell out of here.
