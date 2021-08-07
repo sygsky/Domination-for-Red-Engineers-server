@@ -353,9 +353,9 @@ if (current_target_index != -1) then {
 				localize "STR_SEC_8_0" // 0 - in the buildings
 			} else { localize "STR_SEC_8_1" }; // 1 - out of the building
 			_s = format["%1\n%2", _s, _s1];
-			_max_dist = 600; // for outdoor stash
+			_max_dist = 200; // for outdoor stash
 			if (count _list == 0 ) then { // it must be indoor box, specify its correct type
-				_max_dist = 300; // for indoor stash
+				_max_dist = 100; // for indoor stash
 				_box_west =
 				#ifdef __ACE__
 					"ACE_AmmoBox_West";
@@ -376,7 +376,7 @@ if (current_target_index != -1) then {
 				#endif
 			};
 			// search for the box near player
-			_list = player nearObjects [ _box, _max_dist ];
+			_list = player nearObjects [ _box, 300 ];
 			if ( count _list == 0 ) then { _s1 = localize "STR_SEC_8_14" } // "Where is the damn stash?"
 			else {
 				// add more info on stash (approximate) distance
@@ -387,9 +387,13 @@ if (current_target_index != -1) then {
 				_s1   = if ( (random 2) < 1 ) then {"STR_SEC_8_11"} else {"STR_SEC_8_12"};
 				// make artificially approximate distance by rank
 				_dist = round( ( _list select 0 ) distance player);
+				#ifdef __OLD__
 				_step = round( _max_dist / _rank_id ); // accuracy step
-				_dist = ( ( round (_dist / _step) ) * _step ) max _step; // show distance never less than accuracy stap size
-				hint localize format["+++ STASH info: _dist %1, _step %2, _rank_id %3", _dist, _step, _rank_id];
+				_dist = _dist - (_dist mod _step) +  _step; // show distance never less than accuracy step size
+//				hint localize format["+++ STASH info: _dist %1, _step %2, _rank_id %3", _dist, _step, _rank_id];
+				#else
+				_dist =  _dist - (_dist mod _max_dist) + _max_dist; // distance is always on the boundary of granularity value
+				#endif
 				_s1   = format[ localize _s1, _rank, _dist ]; // "As %1, you are almost certain that stash at a distance of no more than %2 m. (you don't know more accurately)."
 			};
 			_s = format["%1\n%2",_s, _s1 ]; // add extended info to the result one
