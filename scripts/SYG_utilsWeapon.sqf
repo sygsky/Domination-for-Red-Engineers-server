@@ -1672,7 +1672,7 @@ SYG_rearmUnit = {
     if ( (typeName arg(1)) == "STRING") then {
         _this = [arg(0)] + [arg(1) call SYG_equipStr2Arr];
     };
-	hint localize format["+++ SYG_rearmUnit: arr %1", arg(1)];
+	hint localize format["+++ SYG_rearmUnit: arr %1", arg(1) call SYG_compactArray];
 //   	player groupChat format["arr %1", arg(1)];
 	_unit = arg(0);
 	removeAllWeapons _unit;

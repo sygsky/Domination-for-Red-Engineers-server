@@ -9,7 +9,6 @@ _name = _this select 0;
 
 #define __DEBUG_PRINT__
 
-
 if (_name == "__SERVER__") exitWith {};
 
 // __DEBUG_NET("x_serverOPD player disconnected",_name)
@@ -29,7 +28,7 @@ if (_index >= 0) then {
     (_parray select 4) execVM "x_scripts\x_markercheck.sqf"; // remove all player created markers
 
 #ifdef __DEBUG_PRINT__
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", array %2", _name, _parray ];
+    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", array %2", _name, _parray call SYG_compactArray ];
 #endif
 
 #ifdef __AI__
@@ -41,8 +40,7 @@ if (_index >= 0) then {
 } else {
     hint localize format[ "+++ x_scripts\x_serverOPD.sqf: unknow player ""%1"", weapons %2, mags %3", _name, weapons player, magazines player ];
 #ifdef __ACE__
-    if ( player call ACE_Sys_Ruck_HasRucksack ) then
-    {
+    if ( player call ACE_Sys_Ruck_HasRucksack ) then{
         _str = [call ACE_Sys_Ruck_RuckMagazines,","] call SYG_joinArr;
         hint localize format[ "+++ x_scripts\x_serverOPD.sqf: unknown player rucksack ""%1""", _str ];
     };
