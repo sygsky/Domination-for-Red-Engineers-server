@@ -196,3 +196,63 @@ SYG_textAlign = {
 	{ _left set [count _left, _x] } forEach _right;
 	toString _left
 };
+
+//
+// Compact array of names (strings) by print count after repetitive names.
+// NOTE: don't designate non-string array as input one as resulted array items all will be strings!
+// call as: _new_arr = _old_arr call SYG_compactArray;
+// E.g.:  _old_arr = [0,0,"lolport",170,"RESCUE",
+//	               [
+//                   ["Binocular","ACE_Dragon","ACE_SCAR_H_CQB_mk4"],
+//                     [
+//                       "ACE_Dragon","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB",
+//                       "ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB"
+//                     ],
+//                   "ACE_Rucksack_Alice",[["ACE_Dragon_PDM",2]],1500,0
+//                  ]
+//               ]
+//     _ret is = [0,0,"lolport",170,"RESCUE",
+//                 [
+//                  ["Binocular","ACE_Dragon","ACE_SCAR_H_CQB_mk4"],
+//                  ["ACE_Dragon","ACE_20Rnd_762x51_SB_SCAR_CQB(6)"],
+//                  "ACE_Rucksack_Alice",[["ACE_Dragon_PDM",2]],1500,0
+//                ]
+//              ]
+//
+SYG_compactArray = {
+    // compact equipment array
+    if (typeName _this != "ARRAY") exitWith {_this};
+    private ["_items", "_counts","_i", "_arr", "_ind"];
+    _items  = [];
+    _counts = [];
+
+    {
+    	if (typeName _x == "ARRAY") then {
+			_items  set [count _items, _x call SYG_compactArray];
+			_counts set [count _counts, 1];
+    	} else {
+			_ind = _items find _x;
+			if (_ind < 0) then { // uknown item, add it to the list
+				_items  set [count _items, _x];
+				_counts set [count _counts, 1];
+			} else { // item known, compact if string else copy to output
+				if (typeName _x != "STRING") then { // non-string items (arrays, scalar, object etc
+					_items  set [count _items, _x];
+					_counts set [count _counts, 1];
+				} else { // count item
+					_counts set [_ind, (_counts select _ind) + 1];
+				};
+			};
+    	};
+    } forEach _this;
+
+// 	hint localize format["SYG_compactArray: _items  = %1", _items];
+// 	hint localize format["SYG_compactArray: _counts = %1", _counts];
+
+	_arr = [];
+    for "_i" from 0 to count _items - 1 do {
+    	_x = _counts select _i;
+    	if (_x > 1) then { _arr set [_i, format["%1(%2)", _items select _i, _x]]} else { _arr set [_i, _items select _i]};
+    };
+	_arr
+}
