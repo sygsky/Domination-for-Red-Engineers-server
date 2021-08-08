@@ -43,30 +43,22 @@ hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4
 _flare = objNull;
 _flare = _flare_type createVehicle _pos;
 if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
-if (!isNull _alarm_obj) then  {
-   	hint localize format["+++ emulateFlareFired.sqf: _alarm_obj object found, launch next flare over it (%1)", typeOf _alarm_obj];
-	_alarm_obj setVariable ["flare", true]; // mark flare is on above this alarm object
-};
 
 sleep 0.5;
 
 if (__LOCAL) then {
 // call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
-	hint localize format["+++ emulateFlareFired.sqf: local ""%1"" flare is launched above %2", _col, typeOf _alarm_obj];
+	hint localize format["+++ emulateFlareFired.sqf: local ""%1""%2", _col,
+						 if (isNull _alarm_obj) then {format[" flare is launched above %1", typeOf _alarm_obj]}, ""];
 	[ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
 } else {
 	// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
-	hint localize format["+++ emulateFlareFired.sqf: global ""%1"" flare launched above %2", _col, typeOf _alarm_obj];
+	hint localize format["+++ emulateFlareFired.sqf: global ""%1""%2", _col,
+						 if (isNull _alarm_obj) then {format[" flare is launched above %1", typeOf _alarm_obj]}, ""];
 	[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient; // run on all clients
 };
 
 _die_away_height = 15 + random 15;
 while { alive _flare && (((getPos _flare) select 2) > _die_away_height) } do { sleep 0.5; };
 
-//if ( !isNull _flare ) then {hint localize format["emulateFlareFired.sqf: flare drop speed %1. Fog %2, fogForecast %3, weather change %4", velocity _flare, fog, fogForecast,nextWeatherChange]; 
 if ( !isNull _flare ) then { /* hint localize format["emulateFlareFired.sqf: flare drop speed %1", velocity _flare];*/ deleteVehicle _flare;};
-
-if (!isNull _alarm_obj) then  {
-   	hint localize format["+++ emulateFlareFired.sqf: remove ""flare"" variable from %1", typeOf _alarm_obj];
-	_alarm_obj setVariable ["flare", nil]; // mark flare is off
-};

@@ -1090,11 +1090,11 @@ XBaseEnemies = {
 	            _alarm_obj say "alarm";
             };
             // throw flare above alarm object
-            _flare = _alarm_obj getVariable "flare"; // check if flare already on above this alarm object
-           	hint localize format["+++ XBaseEnemies: Run alarm above %1, its flare var is %2", typeOf _alarm_obj, _flare];
-            if ( isNil "_flare" ) then  {
+            _arr = nearestObjects [_alarm_obj, "F_40mm_Yellow", [], 50];
+            if (count _arr == 0 ) then {
 	            [_alarm_obj, _height, "YELLOW", 400, true] execVM "scripts\emulateFlareFired.sqf";
-            };
+	           	hint localize format["+++ XBaseEnemies: throw alarm above %1", typeOf _alarm_obj];
+            } else {hint localize format["+++ XBaseEnemies: YELLOW flare above %1 already on", typeOf _alarm_obj];};
 		};
 		case 1: {
 			hint composeText[
