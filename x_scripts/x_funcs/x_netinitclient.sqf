@@ -28,7 +28,7 @@
 
 SYG_msgToUserParser = {
 
-    private [ "_msg_arr","_msg_fmt","_name","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
+    private [ "_msg_arr","_msg_fmt","_name","_np","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
      "_msg_target_found","_ind","_SYG_processSingleStr","_str"];
 
     //
@@ -47,25 +47,34 @@ SYG_msgToUserParser = {
     _name = _this select 1;
     _msg_target_found = false;
     _vehicle_chat = false;
+    _np = name player;
 
     // hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
     if  (typeName _name == "ARRAY") then { // list of names is expected
         if ( count _name == 0) then {_name = "";} // all players are addressed
         else {
-            _ind = _name find (name player);
+        	if (count _name == 2) then {
+        		if (typeName (_name select 0) == "SCALAR") then { // special case: [_dist, _pos] as 2nd parameter
+        			if (player distance (_name select 1) <= (_name select 0) ) then { // you are close enough to the designated position
+        				_name = [_np];
+        			};
+        		};
+        	};
+            _ind = _name find (_np);
             if ( _ind >= 0) then {
-                _name = name player;
+                _name = _np;
+                _msg_target_found = true;
             } else { // player name not found in the input array, verify player vehicle too
             	if ( (vehicle player) in _name ) then { _name = vehicle player } else {_name = _name select 0};
             };
         };
     };
 
-    if (typeName _name == "OBJECT") then { // msg is sent to the vehicle team only
+    if (typeName _name == "OBJECT") then { // is msg is sent to the vehicle team only
         _msg_target_found = vehicle player == _name;
         _vehicle_chat = _msg_target_found;
     } else {
-        _msg_target_found = _name in [name player, "", "*"];
+        _msg_target_found = _name in [_np, "", "*"," "];
     };
 
     if ( !_msg_target_found ) exitWith {}; // target for message not found
@@ -84,16 +93,19 @@ SYG_msgToUserParser = {
     };
     _delay = 4; // default delay between messages is 4 seconds
     if ( count _this > 3 ) then {
-        if ( (_this select 3) > 0 ) then { _delay = (_this select 4) min 4}; // minimum delay is 4 seconds
+        if ( (_this select 3) > 0 ) then { _delay = (_this select 4) max 4}; // minimum delay is 4 seconds
     };
 
     _msg_arr = _this select 2;
 #ifdef __PRINT__
-    hint localize format["+++ x_netinitclient.sqf: ""msg_to_user"" [""%1"",[%2 item(s)]:%3]", _name, count _msg_arr, _msg_arr select  0];
+    hint localize format["+++ SYG_msgToUserParser: %1", _this];
 #endif
 
-	if ( typeName (_msg_arr select 0) != "ARRAY") then {_msg_arr = [_msg_arr]}; // allow to use single message without array envelope
-    {
+	if ( typeName (_msg_arr select 0) != "ARRAY") then { // allow to use single message without array envelope
+		_msg_arr = [_msg_arr]
+	};
+	//
+	{
         if (typeName _x == "STRING") then { // it is not array but single string, put it to array and process as usuall
             _x = [_x]; // emulate as array with single item
         };
@@ -857,30 +869,62 @@ XHandleNetStartScriptClient = {
 			};
 		};
 */
-        case "say_sound": { // say user sound from predefined vehicle/unit ["say_sound",_object,_sound, [,"-",_player_name]]
+		//
+		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound, [,"-",_player_name]] or
+		//                                             ["say_sound","LIST", _arr, [,"-",_player_name]]  where _arr is array of [_object, _sound, sleep time]
+        case "say_sound": {
+
+			//
+			// call as: [_x, _sound, _sleep <"-",_name>] spawn )say_proc;
+			//
+			_say_proc = {
+				private ["_obj","_pos","_nil","_sound"];
+			    if ( (argopt(3,"") == "-") && (argopt(4,"") == (name player))) exitWith {}; // This player not assigned to play this this sound
+				_obj = _this select 0;
+				if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
+				_pos = [];
+				if (typeName _obj == "ARRAY") then {_pos = _obj} // position designated
+				else {  // it is position: e.g. player is dead but body  has position or position of teleport etc
+					if ( typeName _obj == "OBJECT") then {
+						if (_obj isKindOf "CAManBase") then  {
+							 if ( !(alive _obj) ) then { _pos = position _obj };
+						};
+					};
+				};
+
+				if ( count _pos > 0 ) then { // emulate object to say sound
+					_nil = "Logic" createVehicleLocal _pos; // use temp object to say sound
+					if ((_this select 2) <= 0 ) then {sleep 0.01}
+					else { sleep (_this select 2); };
+					_nil say (_x select 1);
+					sleep 0.01;
+					_sound = nearestObject [position _nil, "#soundonvehicle"];
+					if (isNull _sound) then {
+						sleep 20; // sleep longer than known max sound length (10 seconds)
+					} else {
+						waitUntil {isNull _sound};
+					};
+					deleteVehicle _nil;
+				} else {
+					sleep (_this select 2);
+					_obj say (_this select 1); // this is done on the client only you remember?
+				};
+			};
+
 		    private ["_nil","_obj","_sound","_exit","_pos"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
-		    if ( (argopt(3,"") == "-") && (argopt(4,"") == name player)) exitWith {false}; // The player disallowed to receipt this sound
-		    _obj = arg(1);
-		    if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
-		    _pos = [];
-		    if (typeName _obj == "ARRAY") then {_pos = _obj} // position designated
-		    else { if ( (_obj isKindOf "CAManBase") && (!(alive _obj)) ) then { _pos = position _obj}; }; // player is dead but his positon is known
-		    if ( count _pos > 0 ) then { // emulate object tp say sound
-                _nil = "Logic" createVehicleLocal _pos; // use temp object to say sound
-                sleep 0.01;
-                _nil say arg(2);
-                sleep 0.01;
-    		    _sound = nearestObject [position _nil, "#soundonvehicle"];
-    		    if (isNull _sound) then {
-                    sleep 20; // sleep longer than known max sound length (10 seconds)
-    		    } else {
-                    waitUntil {isNull _sound};
-	            };
-                deleteVehicle _nil;
+
+		    _arr = [];
+
+		    if ( typeName (_this select 1) != "STRING") then {
+		    	_arr = [[_this select 1, _this select 2, 0, (argopt(3,""), (argopt(4,"")]]; // array of 1 item
 		    } else {
-    		    _obj say arg(2); // do this on clients only
+		    	_arr = _this select 2
 		    };
+
+		    {
+		    	_x spawn _say_proc;
+		    }forEach _arr;
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
