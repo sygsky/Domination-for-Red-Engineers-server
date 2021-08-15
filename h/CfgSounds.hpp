@@ -28,6 +28,7 @@ class CfgSounds {
 	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class bicycle {name="bicycle";sound[]={\sounds\bicycle.ogg,db+0,1.0};titles[] = {};};
+	class stalin_dal_prikaz {name="Soviet artillery himn";sound[]={\sounds\intro\vehicles\stalin_dal_prikaz.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
 	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; }; // remove as non needed
@@ -185,9 +186,9 @@ class CfgSounds {
     class gong_10       {name = ""; sound[] = {\sounds\gong\magic-string-spell.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_11       {name = ""; sound[] = {\sounds\gong\gong-11.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_12       {name = ""; sound[] = {\sounds\gong\soapdramgong.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_13       {name = ""; sound[] = {\sounds\gong\Startlet.ogg, db+10, 1.0}; titles[] = {}; };
+    class gong_13       {name = ""; sound[] = {\sounds\gong\gong-15.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_14       {name = "oriental game over"; sound[] = {\sounds\gong\oriental-game-over.ogg, db+10, 1.0}; titles[] = {}; };
-    class gong_15       {name = ""; sound[] = {\sounds\gong\gong-15.ogg, db+10, 1.0}; titles[] = {}; };
+    class gong_15       {name = ""; sound[] = {\sounds\gong\Startlet.ogg, db+10, 1.0}; titles[] = {}; };
 
     class liturgy_1     {name = ""; sound[] = {\sounds\liturgy\diamon_hand.ogg, db+10, 1.0}; titles[] = {}; };
     class liturgy_2     {name = ""; sound[] = {\sounds\liturgy\gospodu_pomolimsa.ogg, db+10, 1.0}; titles[] = {}; };
@@ -242,7 +243,7 @@ class CfgSounds {
     class laughter_12 { name="Laughter 12"; sound[] = {\sounds\defeat\laughter\12.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
-    class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\game_job.ogg,db+10,1.0}; titles[] = {}; } // War cry "game over"
+    class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\over,db+10,1.0}; titles[] = {}; } // War cry "game over"
     class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "get some"
     class go_go_go { name="Go-go-go";   sound[] = {\sounds\defeat\laughter\go_go_go.ogg,db+10,1.0}; titles[] = {}; } // War cry "go-go-gob"
     class cheater { name="cheater";   sound[] = {\sounds\defeat\laughter\cheater.ogg,db+10,1.0}; titles[] = {}; } // say "cheater"
@@ -254,6 +255,13 @@ class CfgSounds {
     class indeanwarcry { name="Indean war cry"; sound[] = {\sounds\defeat\laughter\indeanwarcry.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class targetdown47 { name="One dead"; sound[] = {\sounds\defeat\laughter\targetdown47.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class targetdown01 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown01.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class bastards { name="Bastards"; sound[] = {\sounds\defeat\laughter\bastards.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class clear { name="Clear!"; sound[] = {\sounds\defeat\laughter\clear.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class shoot_MF { name="Shoot the motherfackers!"; sound[] = {\sounds\defeat\laughter\shoot_MF.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class target_neutralised { name="Target neutralized!"; sound[] = {\sounds\defeat\laughter\target_neutralised.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class tasty { name="Tasty!"; sound[] = {\sounds\defeat\laughter\tasty.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class doggy { name="Red Neck Doggy!"; sound[] = {\sounds\defeat\laughter\doggy.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class score { name="Score!"; sound[] = {\sounds\defeat\laughter\score.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
     class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation

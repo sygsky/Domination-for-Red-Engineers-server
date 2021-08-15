@@ -5,7 +5,8 @@
 	returns: nothing
 */
 
-private ["_killer","_unit","_exit","_churchArr","_TVTowerArr","_castleArr","_sound"];
+private ["_killer","_man","_men", "_unit","_exit","_churchArr","_TVTowerArr","_castleArr","_sound","_sounds", "_arr",
+		 "_i","_cnt"];
 #include "x_setup.sqf"
 
 #define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random(count ARR))))
@@ -21,7 +22,7 @@ if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSoun
 SYG_deathCountCnt = SYG_deathCountCnt + 1; // total death count bump
 
 if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// Play ordinal sound if KIA or alone
-    if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doen't like such sounds
+    if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doesn't like such sounds
 
     // if killed in tank
     _exit = false;
@@ -37,19 +38,42 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
     };
 
     _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
-    if ((side _killer == d_side_enemy) && (_killer isKindOf "CAManBase")) then {
-        _sound = _killer getVariable "killer_sound";
-        if (!isNil "_sound") then { // AI already killed you with some sound, already known
-            ["say_sound", _killer, _sound] call XSendNetStartScriptClientAll;
-        } else {
-            if (random 2 <= 1) then {
-                // try to play killer laughter sound on all clients
-                _sound = call SYG_getLaughterSound;
-                ["say_sound",  _killer, _sound] call XSendNetStartScriptClientAll;
-                _killer setVariable ["killer_sound", _sound]; // store killer sound to repeat next luck time
-            };
-        };
-    };
+    _arr = []; // array of enemies to cry
+   	_sounds = []; // aray oа sounds to cry
+
+	// try to play laughter sound from killer and his collegues
+
+	_men = nearestObjects [player, ["CAManBase"], 60];
+	_men = _men - [_unit, _killer];
+	_men = [_killer] + _men; // killer shoul be first to process
+
+	_cnt = 0;	 // max count of possible war cries
+	{
+		if ( _cnt >=3 ) exitWith {}; // not more than 3 men can exclamate now
+		if ( ( canStand _x ) && ( ( side _killer) == (side _x) ) ) then {
+			_sound = _x getVariable "killer_sound"; // has already some sound sayed?
+			if (!isNil "_sound") then {
+				while { _sound in _sounds } do { _sound = call SYG_getLaughterSound;};
+				_sounds set [count _sounds, _sound];
+				_x setVariable ["killer_sound", _sound];
+				_arr set [count _arr, [_x, _sound, random 1.5]]; // next exclamation cry added
+			} else {
+				if ( (random 3) < 2 ) then {
+					_sound = call SYG_getLaughterSound; // prepare new war cry sound
+					while { _sound in _sounds } do { _sound = call SYG_getLaughterSound;};
+					_sounds set [count _sounds, _sound];
+					_x setVariable ["killer_sound", _sound];
+					_arr set [count _arr, [_x, _sound, random 1.5]];
+				};
+			};
+			_cnt = _cnt + 1;
+		};
+	} forEach _men;
+
+	if (count _arr > 0) then {
+		["say_sound", "LIST", _arr] call XSendNetStartScriptClientAll;
+		hint localize format["+++ deathSound: %1 war cry prepared => %2", count _arr, _arr];
+	};
 };
 // some kind of suicide? Say something about...
 

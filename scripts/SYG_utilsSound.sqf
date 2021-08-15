@@ -147,7 +147,7 @@ SYG_baseDefeatTracks =
 SYG_gongNextIndex = 0;
 
 SYG_getTVTowerGong = {
-    format["gong_%1", floor(random 16)];
+    format["gong_%1", floor(random 15)]; // gong_[0..14].ogg
 };
 
 // for the death near medieval castles (2 buildings on whole island)
@@ -183,7 +183,8 @@ SYG_getLaughterSound =
     "laughter_9","laughter_10","laughter_11","laughter_12",
     "good_job","game_over","get_some","go_go_go","cheater","busted",
     "greatjob1","greatjob2","fight","handsup","indeanwarcry",
-    "targetdown47","targetdown01"] call XfRandomArrayVal
+    "targetdown47","targetdown01","bastards","clear", "shoot_MF","target_neutralised",
+    "tasty","doggy","score"] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;
