@@ -139,6 +139,8 @@ if (current_counter < number_targets) then {
 	kill_points_racs = 0;
 	public_points = true;
 #endif
+// todo: #437 - count number of new riuns in town and inform all players abpout
+	_last_town_index execVM "script\countTargetRuins.sqf";
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
     d_max_recaptures = 0;
