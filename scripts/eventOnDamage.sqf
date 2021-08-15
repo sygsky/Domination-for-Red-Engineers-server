@@ -33,8 +33,7 @@ if (str(_issmoking) == "<null>") then {
     _issmoking = false;
 };
 
-if (_issmoking) exitWith
-{
+if (_issmoking) exitWith {
     #ifdef __PRINT__
 	hint localize format["+++ eventOnDamage.sqf: attacked vec %1 is already smoking", typeOf _vec];
     #endif
@@ -51,16 +50,13 @@ if ( _damage >= 1) exitWith { hint localize format["+++ eventOnDamage.sqf: attac
 
 _dead = true;
 _crew = crew _vec;
-while { _dead } do
-{
-    if (count _crew == 0) exitWith
-    {
+while { _dead } do {
+    if (count _crew == 0) exitWith {
     #ifdef __FULL_PRINT__
         hint localize format["+++ eventOnDamage.sqf: vec %1 crew is out", typeOf _vec];
     #endif
     };
-    if ((_crew call XfGetAliveUnits) == 0) exitWith
-    {
+    if ((_crew call XfGetAliveUnits) == 0) exitWith {
     #ifdef __FULL_PRINT__
         hint localize format["+++ eventOnDamage.sqf: vec %1 crew is dead", typeOf _vec];
     #endif
@@ -68,8 +64,7 @@ while { _dead } do
     _dead = false;
 };
 
-if ( _dead ) exitWith // find other units of the group
-{
+if ( _dead ) exitWith { // find other units of the group
     #ifdef __FUTURE__
     {
       // TODO: find next vehicle in the group if any exists

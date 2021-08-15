@@ -74,20 +74,17 @@ X_XMarkerPlayers = {
         }  forEach SYG_activeMarkers;
 
         // remove dead markers, new ones will draw after next predefined interval
-        if ( _markers_changed ) then
-        {
+        if ( _markers_changed ) then {
             SYG_activeMarkers = SYG_activeMarkers - ["RM_ME"];
         };
 	};
 
 	// it is time to refresh all players marker
 	SYG_activeMarkers = []; // load new alive markers
-	for "_i" from 0 to ((count d_player_entities) - 1) do
-	{
+	for "_i" from 0 to ((count d_player_entities) - 1) do {
         _as = d_player_entities select _i; // name
         _ap = call (SYG_players_arr select _i); // object
-        if ( isPlayer _ap && alive _ap) then
-        {
+        if ( isPlayer _ap && alive _ap) then {
             _as setMarkerPosLocal position _ap;
 
             // 0 = player markers turned off
