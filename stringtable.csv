@@ -794,6 +794,11 @@ STR_SYS_630_2_1,A giant Kraken was spotted nearby,Ein riesiger Kraken ist in der
 STR_SYS_630_2_2,An unknown submarine was observed in the area of the fall,Im Herbst wurde ein unbekanntes U-Boot beobachtet,Se observó un submarino desconocido en el área de la caída,В районе падения наблюдалась неизвестная подводная лодка
 STR_SYS_630_2_3,A giant swell is recorded there from space,Dort wird eine riesige Dünung aus dem Weltraum aufgezeichnet,Desde el espacio se registra un oleaje gigante,Из космоса там зафиксирована гигантская зыбь
 
+STR_SYS_650,The siege of the city destroyed buildings %1. The islanders are concerned!,Während der Belagerung der Stadt zerstörte Gebäude: %1. Die Inselbewohner sind besorgt!,Edificios destruidos durante el asedio de la ciudad: %1. ¡Los isleños están preocupados!,При осаде города разрушено зданий: %1. Островитяне обеспокоены!
+STR_SYS_650_0,Not a single building was destroyed in the siege of the city. The islanders thank you!,Während der Belagerung der Stadt wurde kein einziges Gebäude zerstört. Die Inselbewohner danken Ihnen!,No se destruyó ni un solo edificio durante el asedio a la ciudad. Los isleños se lo agradecen.,Ни одного здания при осаде города не было разрушено. Островитяне благодарят Вас!
+STR_SYS_650_1,Few buildings (%1) were destroyed during the liberation of the city. The islanders are grateful to you for your concern for the population!,Bei der Befreiung der Stadt wurden nur wenige Gebäude zerstört (%1). Die Inselbewohner sind Ihnen dankbar für Ihre Sorge um die Bevölkerung!,Pocos edificios fueron destruidos durante la liberación de la ciudad (%1). Los isleños le agradecen su preocupación por la población.,При освобождении города было разрушено мало зданий (%1). Островитяне благодарны Вам за вашу заботу о населении!
+STR_SYS_650_2,"In the future, penalty points may be given for destroyed buildings!",In Zukunft können für zerstörte Gebäude Strafpunkte vergeben werden!,"¡En el futuro, los puntos de penalización pueden ser otorgados por los edificios destruidos!",В будущем за разрушенные здания могут начисляться штрафные  очки!
+
 STR_SYS_1000,Brigadier-General,Generalmajor,General de división,Генерал-майор
 STR_SYS_1001,Lieutenant-General,Generalleutnant,Teniente general,Генерал-лейтенант
 STR_SYS_1002,Colonel-General,Der general-Oberst,Coronel,Генерал-полковник
@@ -1535,7 +1540,7 @@ STR_GRU_TASK_3,1. Shipping intelligence,1. Versand intelligence,Entregar informa
 STR_GRU_TASK_4,2. A covert operation behind enemy lines,2. Eine verdeckte operation hinter den feindlichen Linien,2. Operación secreta detrás de las líneas enemigas,2. Секретная операция в тылу противника
 STR_GRU_TASK_5,3. The investigation on the island,3. Die Untersuchung wird auf der Insel,3. Búsqueda en el territorio de la isla,3. Поиск на территории острова
 
-STR_GRU_DRIVE,GRU specialists are not birds! And they can't fly!!!,GRU-Spezialisten sind keine Vögel! Und Sie können nicht Fliegen!!!,¡Los especialistas de GRU no son pájaros! ¡Y no pueden volar!!!,Спецы из ГРУ - не птицы! И летать не умеют!!!
+// STR_GRU_DRIVE,GRU specialists are not birds! And they can't fly!!!,GRU-Spezialisten sind keine Vögel! Und Sie können nicht Fliegen!!!,¡Los especialistas de GRU no son pájaros! ¡Y no pueden volar!!!,Спецы из ГРУ - не птицы! И летать не умеют!!!
 
 STR_FIRELIT_NUM,2,2,2,2
 STR_FIRELIT_0,Our people are not bured such fires,Unsere Leute solche Brände sind nicht gezüchtet,Parece que la hoguera no fue avivada por nuestra gente.,"Похоже, что костёр разжигали не наши люди"
