@@ -22,7 +22,7 @@ _killer = _this select 1;
 _restored = false;
 _name = "not player";
 if ( !(isNull _killer) ) then{
-    if ( isPlayer _killer ) exitWith  {_name = format["%1", name _killer]};
+    if ( isPlayer _killer ) exitWith  { _name = name _killer };
     if ( !( _killer isKindOf "CaManBase" ) ) exitWith {
         if ( isPlayer (gunner _killer) ) exitWith { _name = format["%1", name  (gunner _killer)]};
         if ( isPlayer (driver _killer)) exitWith {_name = format["%1", name  (driver _killer)]};
@@ -33,9 +33,15 @@ hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %
 
 // Don't accept kill if done not by direct existing player action
 if ( !( isNull  _killer) ) then { // not NULL killer
-	if ( ( ( vehicle _killer ) == _killer) && ( _killer isKindOf "CAManBase" ) ) exitWith{}; // killer is man on his feet and killer not rammed the tower while in the heli or other way
-	if ( !(vehicle _killer isKindOf "Air") ) exitWith {}; // killer is a man on his feet and killer not rammed the tower while in the air
-     hint localize format["--- MTTarget: restore tower as killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
+
+	_killed = false;
+	if  ( _killer isKindOf "CAManBase" ) then {  // if killer is a man, check for his vehicle too
+		if (vehicle _killer == _killer) exitWith {}; // no vehicle so tower is killed correctly
+		// killer is in vehicle, check if vehicle is alive or not
+		_killed = alive ( vehicle _killer );  // if vehicle dead that is kamikadze one
+	};
+	If (_killed ) exitWith{};
+     hint localize format["--- MTTarget: resurrect tower on killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object
     if (!(_house isKindOf "House")) exitWith {};
@@ -61,12 +67,15 @@ if ( !( isNull  _killer) ) then { // not NULL killer
 
     _newhouse = createVehicle [_house_type, _pos, [], 0, "CAN_COLLIDE"];
     _vUp = vectorUp _newhouse;
+    _newhouse setVectorUp [0,0,1];
+
+    // Send msg to anybody in radious of ### meters: "The %1 hit on the TV tower has gone to waste!". And play special gong sound
+    [ "msg_to_user", [200, _pos],  ["STR_SYS_311_0", name _killer], 0, 2, false, "gong_15" ] call XSendNetStartScriptClient;
+
     hint localize format["+++ MTTarget: tower %1(%2) vUp %3 restored, XCheckMTHardTarget is assigned to !", _newhouse, typeOf _newhouse, _vUp];
     // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
-    _newhouse setVectorUp [0,0,1];
     [_newhouse] spawn XCheckMTHardTarget;
     _restored = true;
-    [ "msg_to_user", "",  ["STR_SYS_311_0", name _killer], 0, 2, false, "losing_patience" ] call SYG_msgToUserParser; // Send msg to all: "The %1 hit on the TV tower has gone to waste!"
 };
 if (_restored) exitWith {}; // continue with the same assignments
 hint localize "--- MTTarget: killed finalization -> destroyed by human or unrecognized means -> follow  the path of Xeno";
