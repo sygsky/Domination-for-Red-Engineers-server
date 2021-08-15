@@ -32,6 +32,7 @@ private ["_veh", "_not_allowed", "_needed_rank", "_index", "_activity_info_sent"
         ];
 
 _attempts_count = 0;
+_arti_visited = false;
 
 while { true } do {
     _activity_info_sent = false; // activity event not sent
@@ -54,14 +55,18 @@ while { true } do {
 
 	if ((typeOf _veh) != "ACE_Bicycle") then {
 //        hint localize "x_playerveccheck.sqf: (typeOf _veh) != ""ACE_Bicycle""";
+		if ( (typeOf _veh) in ["D30", "M119"]) exitWith {
+			if (_arti_visited) exitWith{};
+			playSound "stalin_dal_prikaz"; // Soviet artillerists himn
+			_arti_visited = true; // play sound only first time
+		};
 
         //+++ Sygsky:
         _role_arr = assignedVehicleRole player;
         #ifdef __DEBUG_PRINT__
         hint localize format["x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _veh];
         #endif
-        if ( count _role_arr > 0 ) then
-        {
+        if ( count _role_arr > 0 ) then{
             _role = _role_arr select 0;
             if ( _role == "Cargo" ) then  { _cargo = true; };
         };
@@ -88,12 +93,10 @@ while { true } do {
                 _indexplane = (toUpper (_vrs select 3)) call XGetRankIndex; // plane
                 if (_veh isKindOf "LandVehicle") then {
                     if ( _veh isKindOf "BMP2" || _veh isKindOf "M113" || _veh isKindOf "Vulcan" || _veh isKindOf "StrykerBase" || _veh isKindOf "BRDM2") then {
-                        if (!(_veh isKindOf "StrykerBase" || _veh isKindOf "BRDM2")) then // play light tracked armour entering sound
-                        {
+                        if (!(_veh isKindOf "StrykerBase" || _veh isKindOf "BRDM2")) then { // play light tracked armour entering sound
                             _veh say "APC_GetIn";
                         };
-                        if ( _veh isKindOf "M113" || _veh isKindOf "Vulcan" || _veh isKindOf "StrykerBase" ) then
-                        {
+                        if ( _veh isKindOf "M113" || _veh isKindOf "Vulcan" || _veh isKindOf "StrykerBase" ) then {
                             _indexsb = _indexsb - 1; // Entering enemy vehicle requires a lower rank
                             _enemy_vec = true;
                         };
@@ -108,8 +111,7 @@ while { true } do {
     #ifdef __ACE__
                                 || _veh isKindOf "ACE_M60" || _veh isKindOf "ACE_M2A1"
     #endif
-                                ) then
-                            {
+                                ) then {
                                 _indexta = _indexta - 1; // Entering enemy vehicle requires a lower rank
                                 _enemy_vec = true;
                             };
@@ -139,8 +141,7 @@ while { true } do {
     #endif
                                      && (_role == "Driver"))
                                     ) then { // follow check for soviet helicopters only, any western ones are allowed
-                                        if (_index < _indexheli) then
-                                        {
+                                        if (_index < _indexheli) then {
                                             _not_allowed = true;
                                             _needed_rank = (_vrs select 2);
                                         };
@@ -174,8 +175,7 @@ while { true } do {
                 sleep 0.666;
                 _role_arr = assignedVehicleRole player;
                 _new_role = if (count _role_arr > 0) then  { _role_arr select 0 } else {""};
-                if ( _new_role != _role ) then
-                {
+                if ( _new_role != _role ) then {
                     _role = _new_role;
                     _cargo = (_role == "Cargo");
                     _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
