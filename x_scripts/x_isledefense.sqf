@@ -254,14 +254,14 @@ _remove_grp = {
 #endif
 					// put vehicle under system control
 					[_x] call XAddCheckDead;
-					// clean vehicle variables
-					_x setVariable ["PATROL_ITEM", nil];
-					// TODO: #434 - inform players in vehicle about
-					_plist = []; // players list for vehicle
-					{ if (isPLayer _x) then { _plist set [count _plist, _x] } } forEach (crew _x);
-					if (count _plist > 0) then { // inform player about
-					    ["msg_to_user", _plist,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
-					};
+//					_x setVariable ["PATROL_ITEM", nil]; // don't clear patrol flag to keep trophy vehicle in town during clearing procedure
+					// added on #434 - inform players in trophy vehicles about
+//					_plist = []; // players list for vehicle
+//					{ if (isPLayer _x) then { _plist set [count _plist, _x] } } forEach (crew _x);
+//					if (count _plist > 0) then { // inform player about
+//					    ["msg_to_user", _plist,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
+					    ["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
+//					};
 				} else { // remove all units in vehicles. Why not delete them? May be they will append to any enemy group nearby?
 					{
 						_x action["Eject", vehicle _x]; 
