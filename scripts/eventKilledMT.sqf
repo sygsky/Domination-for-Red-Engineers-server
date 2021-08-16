@@ -36,7 +36,7 @@ if ( !( isNull  _killer) ) then { // not NULL killer
 
 	_killed = false;
 	if  ( _killer isKindOf "CAManBase" ) then {  // if killer is a man, check for his vehicle too
-		if (vehicle _killer == _killer) exitWith {}; // no vehicle so tower is killed correctly
+		if (vehicle _killer == _killer) exitWith {_killed = true;}; // no vehicle so tower is killed correctly
 		// killer is in vehicle, check if vehicle is alive or not
 		_killed = alive ( vehicle _killer );  // if vehicle dead that is kamikadze one
 	};
