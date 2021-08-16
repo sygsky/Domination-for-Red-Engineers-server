@@ -875,11 +875,11 @@ XHandleNetStartScriptClient = {
         case "say_sound": {
 
 			//
-			// call as: [_x, _sound, _sleep <"-",_name>] spawn )say_proc;
+			// call as: [_x, _sound, _sleep <,"-",_name>] spawn say_proc;
 			//
 			_say_proc = {
 				private ["_obj","_pos","_nil","_sound"];
-			    if ( (argopt(3,"") == "-") && (argopt(4,"") == (name player))) exitWith {}; // This player not assigned to play this this sound
+			    if ( ( argopt( 3, "" ) == "-" ) && ( argopt( 4, "" ) == ( name player ) ) ) exitWith {}; // This player not assigned to play this this sound
 				_obj = _this select 0;
 				if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
 				_pos = [];
@@ -917,7 +917,7 @@ XHandleNetStartScriptClient = {
 		    _arr = [];
 
 		    if ( typeName (_this select 1) != "STRING") then {
-		    	_arr = [[_this select 1, _this select 2, 0, (argopt(3,""), (argopt(4,"")]]; // array of 1 item
+		    	_arr = [[_this select 1, _this select 2, 0, argopt(3,""), argopt(4,"")]]; // array of 1 item
 		    } else {
 		    	_arr = _this select 2
 		    };

@@ -72,7 +72,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 
 	if (count _arr > 0) then {
 		["say_sound", "LIST", _arr] call XSendNetStartScriptClientAll;
-		hint localize format["+++ deathSound: %1 war cry prepared => %2", count _arr, _arr];
+//		hint localize format["+++ deathSound: %1 war cry prepared => %2, lis of %3", count _arr, _arr, count _men];
 	};
 };
 // some kind of suicide? Say something about...

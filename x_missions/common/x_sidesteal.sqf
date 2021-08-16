@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_missions\common\x_sidesteal.sqf
 private ["_reached_base","_vehicle"];
 if (!isServer) exitWith {};
 

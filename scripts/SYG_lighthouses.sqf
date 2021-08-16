@@ -80,7 +80,7 @@ _i = 1;
 //
 _start = _this select 0;
 _end   = _this select 1;
-while { true } do _start
+while { true } do {
 	if ( if (_start > _end) then { (daytime > _end) && (daytime < _start) } else { (daytime < _start) ||  (daytime > _end) } ) then {
 		_time = (_start - daytime) * 3600;
 		hint localize format["+++ SYG_lighthouses: sleep until night start %1 sec", random( time * 3600)];

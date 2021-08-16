@@ -390,9 +390,14 @@ x_makemgroup = {
 	_ret
 };
 
-// Creates group of infantry for side mission. All bodies will be automatically removed after SM is finished
+//
+// Creates group of infantry for side mission. All bodies will be automatically removed after SM if finished
+// call as: ["specopsbig", 1, "basic", 2, _pos, 90, true] spawn {XCreateInf;
+//
 XCreateInf = {
-	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_pos_center", "_radius", "_do_patrol", "_side", "_gwp_formations", "_ret_grps", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type", "_units", "_leader", "_grp_array"];
+	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_pos_center", "_radius", "_do_patrol", "_side",
+	         "_gwp_formations", "_ret_grps", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type",
+	         "_units", "_leader", "_grp_array","_arr","_grpArr"];
 	_type1 = _this select 0;
 	_numbergroups1 = _this select 1;
 	_type2 = _this select 2;
@@ -438,7 +443,7 @@ XCreateInf = {
                     _newgroup setFormDir (floor random 360);
                     _newgroup setSpeedMode "NORMAL";
                 };
-                _ret_grps = _ret_grps + [_newgroup];
+                _ret_grps set [ count _ret_grps, _newgroup];
                 _grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0,[_pos_center,_radius],[],-1,0,[],50 + (random 100),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
                 _grp_array execVM "x_scripts\x_groupsm.sqf";
                 {extra_mission_remover_array set [ count extra_mission_remover_array, _x ] } foreach _units;
