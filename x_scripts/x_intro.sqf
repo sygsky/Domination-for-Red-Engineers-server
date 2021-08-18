@@ -333,8 +333,7 @@ _tgt set [2, DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD];
 _camstart set [(count _camstart)-1, _tgt]; // replace illusion data with destination point 3D position
 _arr = [];
 _pos = _start;
-for "_i" from 1 to ((count _camstart) - 1) do
-{
+for "_i" from 1 to ((count _camstart) - 1) do {
 	_tgt = _camstart select _i;
 	_dist = _pos distance _tgt;
 	_plen = _plen + _dist;
@@ -431,25 +430,43 @@ if (typeName _camstart != "ARRAY" ) then {
 
 //titleRsc ["Titel1", "PLAIN"];
 [] spawn {
-	private ["_XD_display", "_control", "_endtime", "_r", "_a"];
-	sleep 6;
+	private ["_XD_display", "_control", "_endtime", "_r", "_g", "_b", "_a","_sec"];
+	sleep 3;
 	_XD_display = findDisplay 77043;
 	_control = _XD_display displayCtrl 66666;
+//	_contol setText (localize "STR_TITLE");
 	_control ctrlShow true;
-	_endtime = time + 10;
-	_r = 0;_a = 0.008;_sec = 0;
-	while {_endtime > time} do {
+
+//	_endtime = time + 10;
+	_endtime = time + 20;
+	_r = 0.2; _a = 0.008;_sec = 0;
+	_g = 0.2; _b = 0.2; // new
+	while { (_endtime > time) && d_still_in_intro } do {
 		//_control = _XD_display displayCtrl 66666;
-		_control ctrlSetTextColor [_r,_r,_r,_r];
+//		_control ctrlSetTextColor [_r,_r,_r,_r];
+		_control ctrlSetTextColor [_r,_g,_b,_r];
+		if ( _r <= 1) then {
+			_r = _r + _a;
+		} else {
+			if ( _g <= 1) then {
+				_g = _g + _a;
+			} else {
+				if ( _b <= 1) then {
+					_b = _b + _a;
+				} else { _a = -_a;  _r = 1; _g = 1; _b = 1; sleep 5; };
+			};
+		};
+/**
 		_r = _r + _a;
 		if (_r >= 1) then {
 			_r = 1;
 			_sec = _sec + 1;
 		};
 		if (_sec == 300) then {
-			_a = -0.008;
+			_a = -_a;
 			_sec = _sec + 1;
 		};
+*/
 		sleep .01;
 	};
 	//_control = _XD_display displayCtrl 66666;
@@ -513,8 +530,7 @@ for "_i" from 1 to (_cnt-1) do {
         hint localize format["_x_init.sqf: spec point tgt %1, pnt %2", _tgt, _pos];
     } else {
         // TODO: shift X and Y coordinates slightly, for more native behaviour
-        if ( _x < (_cnt-1)) then
-        {
+        if ( _x < (_cnt-1)) then {
             _pos set [0, (_pos select 0) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along X
             _pos set [1, (_pos select 1) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along Y
         };
