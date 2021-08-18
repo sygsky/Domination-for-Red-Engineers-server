@@ -109,7 +109,7 @@ class Mission
 					skill=0.466667;
 					text="alpha_1";
 					init="this setGroupid [""Alpha""];";
-					description="Team Alpha Leader (ком.од. мотострелков)";
+					description="Team Alpha Leader (ком.отд. мотострелков)";
 				};
 				class Item1
 				{
@@ -148,7 +148,7 @@ class Mission
 					skill=0.333333;
 					text="alpha_4";
 					init="this setGroupid [""Alpha""]";
-					description="Group Leader (замком.од.)";
+					description="Group Leader (замком.отд.)";
 				};
 				class Item4
 				{
@@ -279,7 +279,7 @@ class Mission
 					skill=0.466667;
 					text="bravo_1";
 					init="this setGroupid [""Bravo""]";
-					description="Team Bravo Leader (ком.од. спецназа)";
+					description="Team Bravo Leader (ком.отд. спецназа)";
 				};
 				class Item1
 				{
@@ -293,7 +293,7 @@ class Mission
 					skill=0.333333;
 					text="bravo_3";
 					init="this setGroupid [""Bravo""]";
-					description="Assistance Squad Leader (замком.од.)";
+					description="Assistance Squad Leader (замком.отд.)";
 				};
 				class Item2
 				{
@@ -399,7 +399,7 @@ class Mission
 					skill=0.466667;
 					text="charlie_1";
 					init="this setGroupid [""Charlie""]";
-					description="Squad Leader ""Charlie"" (ком.од. ВДВ)";
+					description="Squad Leader ""Charlie"" (ком.отд. ВДВ)";
 				};
 				class Item1
 				{
@@ -438,7 +438,7 @@ class Mission
 					skill=0.333333;
 					text="charlie_4";
 					init="this setGroupid [""Charlie""]";
-					description="Assistant Squad Leader (замком.од. ВДВ)";
+					description="Assistant Squad Leader (замком.отд. ВДВ)";
 				};
 				class Item4
 				{
@@ -525,7 +525,7 @@ class Mission
 					skill=0.333333;
 					text="delta_1";
 					init="this setGroupid [""Delta""];";
-					description="Team Delta Engineer Leader (ком.од. инженеров)";
+					description="Team Delta Engineer Leader (ком.отд. инженеров)";
 				};
 				class Item1
 				{

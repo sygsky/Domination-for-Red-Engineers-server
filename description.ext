@@ -329,7 +329,7 @@ class X_RscAnimatedLetters {
 			idc=66666;
 			style="16+2+512";
 			lineSpacing=0.950000;
-			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2021 by EngineerACE\n          for Red-Engineers.ucoz.ru";
+			text=$STR_TITLE;
 			x=0.39000000;
 			y=0.8100000;
 			w=0.900000;
@@ -339,7 +339,24 @@ class X_RscAnimatedLetters {
 			size=0.57;
 			sizeEx=0.026;
 		};
-
+/**
+		class titel2: XC_RscText
+		{
+			idc=66667;
+			style="16+2+512";
+			lineSpacing=0.950000;
+			text="Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2021 by EngineerACE\n          for Red-Engineers.ucoz.ru";
+			text=$STR_TITLE;
+			x=0.1;
+			y=0.8100000;
+			w=0.500000;
+			h=0.500000;
+			colorBackground[]={0,0,0,0};
+			colorText[]={0.8,0.9,0.9,0.7};
+			size=0.57;
+			sizeEx=0.026;
+		};
+*/
 	};
 };
 

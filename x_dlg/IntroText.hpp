@@ -1,3 +1,4 @@
+/**
 class Titel1
 {
 	idd=123000;
@@ -22,7 +23,7 @@ class Titel1
 		sizeEx = 0.026;
 	};
 };
-
+*/
 class XDomLabel
 {
 	idd=-1;
