@@ -26,6 +26,9 @@ sec_kind = ((floor (random 9)) + 1) min 8; // (-1 value still not used,) 0 - for
 // Sends message to connected clients about secondary completed and set sec_kind to zero
 //
 SYG_solvedMsg = {
+	if (sec_kind == 8) then { // stash destroyed
+		hint localize format["+++ SYG_sabotage_stash.sqf: ammobox killed by ""%1""", _thi select 2];
+	};
 	_this call XSendNetStartScriptClient;
 	sec_kind = 0; // value will be sent to the client in jip mode too
 	publicVariable "sec_kind";
