@@ -72,7 +72,7 @@ _current_target_pos = _dummy select 0;
 _current_target_radius = _dummy select 2;
 
 // #437 - count nymber of new ruins during siege processs
-intital_ruins_count = count (_current_target_pos nearObjects ["Ruins", _current_target_radius]);
+initial_ruins_count = count (_current_target_pos nearObjects ["Ruins", _current_target_radius]);
 
 check_trigger=createTrigger["EmptyDetector",_current_target_pos];
 check_trigger setTriggerArea [(_current_target_radius max 300) + 20, (_current_target_radius max 300) + 20, 0, false];

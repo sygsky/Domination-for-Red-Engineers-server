@@ -11,9 +11,9 @@ _dummy = target_names select _this;
 _current_target_pos = _dummy select 0;
 _current_target_radius = _dummy select 2;
 _list = _current_target_pos nearObjects ["Ruins", _current_target_radius];
-_new_ruins_cnt = (count _list) - intital_ruins_count;
+_new_ruins_cnt = (count _list) - initial_ruins_count;
 
-hint localize format["+++ countTargetRuins.sqf: new ruins added during %1 siege %2", _dummy select 1, _new_ruins_cnt];
+hint localize format["+++ countTargetRuins.sqf: new ruins added during %1 siege is %2", _dummy select 1, _new_ruins_cnt];
 
 _msg = "STR_SYS_650";  _sound = "losing_patience"; // Many building destroyed
 
