@@ -1090,7 +1090,7 @@ XBaseEnemies = {
 	            _alarm_obj say "alarm";
             };
             // throw flare above alarm object
-            _arr = nearestObjects [_alarm_obj, "F_40mm_Yellow", [], 400];
+            _arr = nearestObjects [_alarm_obj, "F_40mm_Yellow", 400];
             if (count _arr == 0 ) then {
 	            [_alarm_obj, _height, "YELLOW", 400, true] execVM "scripts\emulateFlareFired.sqf";
 	           	hint localize format["+++ XBaseEnemies: throw alarm above %1", typeOf _alarm_obj];
