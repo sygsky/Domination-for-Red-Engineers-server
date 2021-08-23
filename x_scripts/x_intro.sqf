@@ -1,7 +1,7 @@
 // x_intro.sqf, by Xeno
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_Sahrani_island","_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
-		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date"];
+		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date","_music"];
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
@@ -165,6 +165,7 @@ if (_sound == "") then { // select random music for ordinal day
 
 
 			_sound = _music;
+//			_music = "grant";
             playMusic _music; //playMusic "ATrack25"; // oldest value by Xeno
          };
     };
@@ -429,11 +430,21 @@ if (typeName _camstart != "ARRAY" ) then {
 };
 
 //titleRsc ["Titel1", "PLAIN"];
-[] spawn {
-	private ["_XD_display", "_control", "_endtime", "_r", "_g", "_b", "_a","_sec"];
-	sleep 3;
+[_music] spawn {
+	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a","_sec"];
 	_XD_display = findDisplay 77043;
 	_control = _XD_display displayCtrl 66666;
+	_str = localize format["STR_%1", _this select 0];
+	if ( _str != "") then {
+		_control1 = _XD_display displayCtrl 66667;
+		_control1 ctrlSetText _str;
+		_control1 ctrlShow true;
+		hint format["+++ x_intro.sqf: music text control = (%1)", ctrlText _control1];
+	} else  {
+		_control1 = displayNull;
+		hint "--- x_intro.sqf: music text control npt created";
+	};
+	sleep 3;
 //	_contol setText (localize "STR_TITLE");
 	_control ctrlShow true;
 
@@ -471,6 +482,7 @@ if (typeName _camstart != "ARRAY" ) then {
 	};
 	//_control = _XD_display displayCtrl 66666;
 	_control ctrlShow false;
+	if (!isNull _control1) then { _control1 ctrlShow false };
 };
 
 _start spawn {
