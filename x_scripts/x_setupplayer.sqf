@@ -879,6 +879,7 @@ _local_msg_arr spawn {
             "msg_to_user",
             "",
             [
+			  ["Das Kommando lobt die Ausbildung der jungen Rekruten"],
               ["Für zahlreiche militärische Verdienste erklären das Kommando und die dankbaren Bürger Sie zum Ehrenbürger der Insel Sahrani." ],
               ["Anfragen zum Einschalten des Servers sollten auf WhatsApp 8(916)136-2219 gesendet werden."],
               ["Groß-/Kleinschreibung beachten Skype-Anmeldung: sygsky"]
@@ -921,7 +922,7 @@ _local_msg_arr spawn {
 					_sound = "return";
 				};
 			};
-			case 9: {
+			case 9: { // September
 				if ( (_date select 2) < 5 ) then {
 					_str = "Островитяне поздравляют Вас с началом занятий в советской школе!";
 					_sound = "school_ring";
