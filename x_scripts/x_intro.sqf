@@ -91,7 +91,7 @@ if (_sound == "") then { // select random music for ordinal day
             ];
             _sounds  =
             [
-                ["amigohome_ernst_bush","ddrhimn","zaratustra"],
+                ["amigohome_ernst_bush","ddrhymn","zaratustra"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
                 ["hungarian_dances","hungarian_dances","hungarian_dances"],
@@ -138,7 +138,7 @@ if (_sound == "") then { // select random music for ordinal day
             if ( count _personalSounds > 0 ) then {
 	            [_music, _personalSounds] call SYG_addArrayInPlace;
             } else {
-            	[_music, ["ddrhimn", "four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
+            	[_music, ["ddrhymn", "four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
             };
             // if day time add day music too
             if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { [_music, _daytime_music] call SYG_addArrayInPlace };

@@ -293,6 +293,7 @@ SYG_monthLength = {
 //
 // returns real time (from real world) server date, based on variable SYG_client_start (filled with missionStart info from user on "d_p_a" message ),
 // SYG_mission_time  and current server time
+// Return code = [year, month, day, hour, minute, sec];
 //
 SYG_getServerDate = {
 	private ["_time", "_adddays","_addsecs","_ssecs","_ssecsreminder","_ret","_year","_mon","_day","_hour","_min","_sec","_monlen","_newday"];
@@ -430,8 +431,9 @@ SYG_holidayTable =
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
     [ 28, 5, "board_guards","STR_HOLIDAY_28_MAY",0], // //Border Guard Day
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
+    [  1, 9, "uchat_v_shkole", "STR_HOLIDAY_1_SEP", 0], // 1st of September, Day of Knowledge
     [[6, 9, 2], 5, "board_guards","STR_HOLIDAY_28_MAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
-    [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhimn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
+    [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhymn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
     [29, 10, "komsomol","STR_HOLIDAY_28_OCT",0], // Komsomol day
     [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
 

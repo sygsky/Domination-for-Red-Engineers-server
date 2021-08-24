@@ -1,7 +1,7 @@
  Volume in drive E is Bin
  Volume Serial Number is 70DE-8980
 
- Directory of e:\Bin\ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\not_used
+ Directory of ...ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\not_used
 
 28.03.2020  01:00    <DIR>          .
 28.03.2020  01:00    <DIR>          ..

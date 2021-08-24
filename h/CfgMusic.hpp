@@ -128,8 +128,9 @@ class CfgMusic {
     class aviamarch_ger { name="Drum höher und höher und höher..";      sound[] = {\sounds\intro\holidays\aug_18\aviamarch_ger.ogg,db-1,1.0}; } // Soviet air fleet day
     class communism { name="We will live in communism...";              sound[] = {\sounds\intro\holidays\nov_7\communism.ogg,db-1,1.0}; } // Last Soviet Constitution day (1977)
     class komsomol { name="И вновь продолжается бой";                   sound[] = {\sounds\intro\holidays\oct_29\komsomol.ogg,db-1,1.0}; } // Komsomal Day!(1918)
-    class ddrhimn  { name="DDR Day";                                    sound[] = {\sounds\intro\holidays\oct_29\ddrhymn.ogg,db-1,1.0}; } // DDR Day!(1949)
+    class ddrhymn  { name="DDR Day";                                    sound[] = {\sounds\intro\ddrhymn.ogg,db-1,1.0}; } // DDR Day!(1949)
     class border_guards  { name="Day of Border Guards";                 sound[] = {\sounds\intro\holidays\may_28\border_guards.ogg,db-1,1.0}; } // Day of Border Guards
+    class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; } // Day of School
 
 //+++++++++++++++++++++++ Defeat music track list
 
