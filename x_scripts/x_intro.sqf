@@ -484,7 +484,9 @@ if (typeName _camstart != "ARRAY" ) then {
 	_control ctrlShow false;
 	if (!isNull _control1) then { _control1 ctrlShow false };
 };
-
+//
+// +++++++++++++ SHOW MAIL TITLE and test messages ++++++++++++
+//
 _start spawn {
 	private ["_txt","_arr","_str","_date","_holiday"];
 	//sleep 2;
