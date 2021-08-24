@@ -723,26 +723,20 @@ _local_msg_arr = [];
 _handle  = ["add_barracks_actions", AI_HUT] execVM "scripts\barracks_add_actions.sqf";
 waitUntil { scriptDone _handle };
 
-if ( isNil "AI_HUT" ) then
-{
-    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1176"]; // "The barracks is destroyed, the military draft is cancelled"
-}
-else
-{
-    if ( !(_string_player in d_can_use_artillery) ) then
-    {
-        _local_msg_arr = _local_msg_arr + [localize "STR_SYS_1177"]; // "To call on the military service can only observer-rescue"
+if ( isNil "AI_HUT" ) then {
+    _local_msg_arr set [ count _local_msg_arr , localize "STR_SYS_1176"]; // "The barracks is destroyed, the military draft is cancelled"
+} else {
+    if ( !(_string_player in d_can_use_artillery) ) then {
+        _local_msg_arr set [ count _local_msg_arr, localize "STR_SYS_1177"]; // "To call on the military service can only observer-rescue"
     };
 };
 
-if (_string_player in d_is_engineer) then // only for engineers
-{
-    _local_msg_arr = _local_msg_arr + [localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
-}
-else // for NOT engineers
-{
+if (_string_player in d_is_engineer) then { // only for engineers
+    _local_msg_arr set [count _local_msg_arr, localize "STR_SYS_258_3"]; // "The engineer can locate and deactivate the mines"
+} else {
+// for NOT engineers
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
-        _local_msg_arr = _local_msg_arr + [format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_PENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
+	_local_msg_arr set [ count _local_msg_arr, format[localize "STR_SYS_258_2",__NON_ENGINEER_REPAIR_PENALTY__]]; // "You're not an engineer and can repair vehicle just with a loss of %1 point[s]"
 #endif
 };
 
@@ -819,7 +813,7 @@ if (player_can_call_drop) then {
 
 // play with EditorUpdate_v102.pbo
 if ( SYG_found_EditorUpdate_v102 ) then {_local_msg_arr set [ count _local_msg_arr,  localize "STR_SYS_258_4"]}
-else {_local_msg_arr = _local_msg_arr set [ count _local_msg_arr,  localize "STR_SYS_258_5"]};
+else { _local_msg_arr set [ count _local_msg_arr,  localize "STR_SYS_258_5"]};
 
 #ifdef __SCUD__
 if (SYG_found_SCUD ) then {
@@ -909,6 +903,53 @@ _local_msg_arr spawn {
 			[ ["Recordamos al Che Guevara, ¡fue nuestro invitado una vez!" ] ],
 			0, 5, false, "drum_fanfare"
 		] call SYG_msgToUserParser;
+	};
+
+//	hint localize format["+++ DEBUG: if ( ((name player) == ""EngineerACE:"")) == %1", ((name player) == "EngineerACE")];
+//	if ( ((name player) == "EngineerACE")) exitWith {
+	if ( ((name player) == "SarDELKA122")) exitWith {
+		private ["_date","_str","_sound","_hour","_week_day"];
+		_date = date; // real date+time
+		_str = "Остров приветствует бойца Горьковского спецназа!";
+		_sound = "drum_fanfare";
+//		_date set [2, 26];
+//		switch	( 8 ) do {
+		switch	(_date select 1) do {
+			case 8: { // Aygust
+				if ( (_date select 2) >= 25 ) then {
+					_str = "Берегите местные школы, они нужны детям островитян!";
+					_sound = "return";
+				};
+			};
+			case 9: {
+				if ( (_date select 2) < 5 ) then {
+					_str = "Островитяне поздравляют Вас с началом занятий в советской школе!";
+					_sound = "school_ring";
+				};
+			}
+		};
+		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ [ _str ] ],
+			0, 5, false, _sound
+		] call SYG_msgToUserParser;
+		_hour = _date select 3;
+		_week_day = _date call SYG_weekDay;
+		if ( ( (_week_day < 4) || (_week_day > 5) ) && (_hour < 23) && (_hour >= 8) ) then { // Not week day and not night
+//		if ( true ) then { // Not week day and not night
+//			hint localize format["+++ sleep %1 to remind Sardelko that tomorrow is a school day!", (23 - daytime) * 3600];
+			[] spawn {
+				sleep ((23 - daytime) * 3600); // wait for the night to come
+				[
+					"msg_to_user",
+					"",
+					[ [ "Завтра в школу, завтра в школу, завтра в школу-у-у-у..." ] ],
+					0, 5, false, "school_ring"
+				] call SYG_msgToUserParser;
+			};
+		};
 	};
 
     // if no special message, type common one
