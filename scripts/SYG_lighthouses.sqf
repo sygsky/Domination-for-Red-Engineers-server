@@ -64,11 +64,12 @@ _lh_arr = [];
 _i = 1;
 {
 	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
+	hint localize "+++ Detect Lighthouse buildings";
 	{
 		if (alive _x) then {
 			if (!(_x in _lh_arr) ) then {
 				_lh_arr set[ count _lh_arr, _x ];
-				hint localize format[ "+++ Lighthouse #%1: %2", _i, [_x, "at %1 m. to %2 from %3",50] call SYG_MsgOnPosE ];
+				hint localize format[ "+++ found #%1: %2", _i, [_x, "at %1 m. to %2 from %3",50] call SYG_MsgOnPosE ];
 				_i = _i + 1;
 			}
 		}
