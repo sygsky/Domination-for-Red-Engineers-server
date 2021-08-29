@@ -337,6 +337,9 @@ class CfgSounds {
 //    class beepbeep  {name = "beep twice"; sound[] = {\sounds\short\beepbeep.ogg, db+10, 1.0}; titles[] = {};};
 
     class set_marker  {name = "beep twice"; sound[] = {\sounds\short\set_marker.ogg, db+10, 1.0}; titles[] = {};};
+    class on          {name = "switch on"; sound[] = {\sounds\short\on.ogg, db+10, 1.0}; titles[] = {};};
+    class off         {name = "switch off"; sound[] = {\sounds\short\off.ogg, db+10, 1.0}; titles[] = {};};
+
 
 // SM hostages
     class hisp1   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_1.ogg,db-1,1.0}; titles[] = {};};

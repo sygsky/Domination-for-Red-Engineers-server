@@ -36,23 +36,40 @@ _wholer_data = [
 	["lighthouse_4", 10, 10, 25]  // length 5.5
 ];
 
+//_diff_pos = [1.06738,-0.278809,-8.07489];
+//_diff_dir = -66.116;
+
 //
 // [_lighthouse, _start, _end, _ind, _howler_arr] call _howler_work;
 //
+#define __FUTURE__
 _howler_work = {
-	private ["_i", "_arr", "_sound","_majak","_start","_end"];
+	private ["_id","_i", "_arr", "_sound","_majak","_start","_end","_last_ind","_pos"];
 	_majak = _this select 0;
+#ifdef __FUTURE__
+	_id = _majak addAction [ localize "STR_LIGHTHOUSE_SIREN", "scripts\sirenSwitch.sqf" ];
+	_majak setVariable ["siren", true]; // By default siren in on
+#endif
+	_pos   = getPos _majak;
 	_start = _this select 1;
 	_end   = _this select 2;
 	_arr   = _this select 4;
+	_last_ind = ( count _arr ) - 1;
 	_sound =  _arr select 0;
-	hint localize format[ "+++ SYG_lighthouses: spawned service for the majak(%1) #%2, daytime %3, _start %4, _end %5, sound %6", _majak, _this select 3, daytime, _start, _end, _sound ];
+	hint localize format[ "+++ SYG_lighthouses: spawned service #%1 for the majak(%2) #%3, daytime %4, _start %5, _end %6, sound %7", _id, _majak, _this select 3, daytime, _start, _end, _sound ];
 	while { if (_start > _end) then { (daytime > _start) || (daytime < _end) }  else { (daytime > _start) &&  (daytime < _end) } } do  {
-		if (!alive _majak) exitWith {hint localize format["--- SYG_lighthouses: _howler_work for majak #%1 destroyed, exit", _this select 3] };
-		for "_i" from 1 to ( count _arr ) - 1 do {
+		// while it is the night do
+		for "_i" from 1 to _last_ind do {
+			if (!alive _majak) exitWith {
+				hint localize format["--- SYG_lighthouses: _howler_work for dead majak #%1 stopped", _this select 3];
+				// ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>] call SYG_msgToUserParser
+				_majak = _pos call SYG_nearestSettlement;
+				["msg_to_user", "", ["STR_LIGHTHOUSE_KILLED", _majak ], 0, 3, false, "return"] call SYG_msgToUserParser;
+			};
 			if ((player distance _majak) < LH_HEARING_DISTANCE) then { _majak say _sound; };
 			sleep (_arr select _i);
 		};
+		if (!alive _majak) exitWith {};
 	};
 	hint localize format[ "+++ SYG_lighthouses: Finished service for the majak #%1", _this select 3 ];
 };
@@ -83,8 +100,8 @@ _start = _this select 0;
 _end   = _this select 1;
 while { true } do {
 	if ( if (_start > _end) then { (daytime > _end) && (daytime < _start) } else { (daytime < _start) ||  (daytime > _end) } ) then {
-		_time = (_start - daytime) * 3600;
-		hint localize format["+++ SYG_lighthouses: sleep until night start %1 sec", random( time * 3600)];
+		_time = (((_start - daytime) + 24 )  % 24) * 3600;
+		hint localize format["+++ SYG_lighthouses: sleep until night start %1 sec", round( _time )];
 		sleep _time;
 	};
 
