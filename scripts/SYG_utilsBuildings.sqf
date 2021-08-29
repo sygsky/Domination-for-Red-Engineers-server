@@ -334,5 +334,4 @@ SYG_invulnerableBuilding = {
 	[ "msg_to_user", name _killer,  [ ["STR_JAIL_4"]], 0, 65, false, "losing_patience" ] call XSendNetStartScriptClientAll;
 };
 
-
 if (true) exitWith {};

@@ -260,7 +260,7 @@ _remove_grp = {
 //					{ if (isPLayer _x) then { _plist set [count _plist, _x] } } forEach (crew _x);
 //					if (count _plist > 0) then { // inform player about
 //					    ["msg_to_user", _plist,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
-					    ["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
+					["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
 //					};
 				} else { // remove all units in vehicles. Why not delete them? May be they will append to any enemy group nearby?
 					{
@@ -286,7 +286,7 @@ _remove_grp = {
 		sleep 1.06;
 #ifdef __PRINT_ACTIVITY__
     _str = "isNull";
-    if ( !isNull _igrp) then { _str = format["has (count units grp) = %1", count units _igrp] };
+    if ( !isNull _igrp) then { _str = format["has %1 units in grp", count units _igrp] };
 		hint localize format["+++ x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
 #endif
 		// clean units
