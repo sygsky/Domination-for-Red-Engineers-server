@@ -1358,6 +1358,11 @@ STR_SPPM_ADD_ERR_3,The nearest SPPM is at %1 m. Move the vehicle closer to it.,D
 STR_SPPM_ADD_ERR_4,New SPPM center is too close to the near SPPM. Move or combine them,Das neue SPPM-Zentrum liegt zu nahe am nahen SPPM. Verschieben oder kombinieren Sie sie,El nuevo centro de SPPM está demasiado cerca del SPPM cercano. Muévelos o combínalos,Центр нового СППМ слишком близок к существующему. Разнесите/объедините эти два СППМ
 STR_SPPM_ADD_SUCCESS,SPPM successfully created,SPPM wurde erfolgreich erstellt!,¡El SPPM ha sido creado con éxito!,СППМ успешно создан!
 
+STR_LIGHTHOUSE_KILLED,"Lighthouse near %1 destroyed","Leuchtturm bei %1 zerstört","Faro cerca de %1 destruido","Маяк близ %1 уничтожен"
+STR_LIGHTHOUSE_SIREN,"Siren on/off","Sirene ein/aus","Activación/desactivación de la sirena","Вкл/выкл сирену"
+STR_LIGHTHOUSE_OFF,Siren off,Sirene ausgeschaltet,sirena apagada,Сирена отключена
+STR_LIGHTHOUSE_ON,Siren on,Sirene ein,Sirena encendida,Сирена включена
+
 #include "strgru.csv"
 
 #include "strrumors.csv"
