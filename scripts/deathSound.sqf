@@ -50,7 +50,13 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 	_cnt = 0;	 // max count of possible war cries
 	{
 		if ( _cnt >=3 ) exitWith {}; // not more than 3 men can exclamate now
-		if ( ( canStand _x ) && ( ( side _killer) == (side _x) ) ) then {
+		if ( (
+#ifdef __ACE__
+		_x  call SYG_ACEUnitConscious
+#else
+		canStand _x
+#endif
+		) && ( ( side _killer) == (side _x) ) ) then {
 			_sound = _x getVariable "killer_sound"; // has already some sound sayed?
 			if (!isNil "_sound") then {
 				while { _sound in _sounds } do { _sound = call SYG_getLaughterSound;};

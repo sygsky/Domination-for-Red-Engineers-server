@@ -376,10 +376,8 @@ SYG_getSide = {
     if ( typeName _this == "OBJECT") exitWith { side _this };
     if ( typeName _this == "GROUP") exitWith { side _this };
     if ( typeName _this == "SIDE") exitWith { _this };
-    if ( typeName _this == "STRING") exitWith
-    {
-        switch (toUpper(_this)) do
-        {
+    if ( typeName _this == "STRING") exitWith {
+        switch (toUpper(_this)) do {
             case "EAST": {east};
             case "WEST": {west};
             case "GUER": {resistance};
@@ -399,15 +397,11 @@ SYG_getSide = {
 //
 SYG_handlePlayerDammage = {
 	//hint localize format["*** SYG_handlePlayerDammage: called with %1", _this]; 
-	if ( (typeName _this) == "OBJECT" ) exitWith
-	{
-		if ( isPlayer _this ) then
-		{
+	if ( (typeName _this) == "OBJECT" ) exitWith {
+		if ( isPlayer _this ) then {
 			_this addEventHandler["dammaged", {_this call SYG_handlePlayerDammage}];
 			hint localize format["*** SYG_handlePlayerDammage: handler set for %1", _this];
-		}
-		else
-		{
+		} else {
 			hint localize format["*** SYG_handlePlayerDammage: Expected initializing unit is not a player (%1)", _this];
 		};
 	};
@@ -415,10 +409,8 @@ SYG_handlePlayerDammage = {
 	if ( (typeName _this) != "ARRAY" ) exitWith {};
 	if ( (count _this) < 2 ) exitWith {};
 	_unit = arg(0);
-	if ( !(_unit call SYG_ACEUnitUnconscious) ) then 
-	{
-		_msg_id = switch ( _this select 1) do
-		{
+	if ( !(_unit call SYG_ACEUnitUnconscious) ) then {
+		_msg_id = switch ( _this select 1) do {
 			case "legs": {"STR_HIT_LEGS"};
 			case "hands": {"STR_HIT_HANDS"};
 			case "head": {"STR_HIT_HEAD"};
@@ -426,13 +418,10 @@ SYG_handlePlayerDammage = {
 			case "body" : {"STR_HIT_BODY"};
 			default {"STR_HIT_UNKNOWN"};
 		};
-        if ( (count _this) > 2 ) then
-        {
+        if ( (count _this) > 2 ) then {
     		hint localize format["*** SYG_handlePlayerDammage: player damaged %1",arg(2)];
         };
-	}
-	else
-	{
+	} else {
 		_msg_id =  "STR_HIT_UNCONSCIOUS";
 		hint localize "*** SYG_handlePlayerDammage: player is unconscious";
 	};
@@ -456,8 +445,7 @@ SYG_turretsList = {
 	_out =  [];
 	_cfg = configFile >> "CfgVehicles" >> typeOf _this >> "turrets";
 	_mtc = (count _cfg); // number of main turrets
-	if ( _mtc > 0 ) then
-	{
+	if ( _mtc > 0 ) then {
 		for "_mti" from 0 to _mtc-1 do {
 			_out = _out + [[_mti]]; // + main turret
 			_mt = (_cfg select _mti);
@@ -486,16 +474,12 @@ SYG_removeFromTurretList =
 	_rarr_cnt = count _role_arr;
 	if (_rarr_cnt == 0 ) exitWith {player globalChat "SYG_removeFromTurretList: 1st array is of zero length!";};
 	_tlist = arg(1);
-	if ( count _tlist > 0 ) then
-	{
-		for "_i" from 0 to ((count _tlist)-1) do
-		{ // find unit position in vehicle turret list and remove it from list
+	if ( count _tlist > 0 ) then {
+		for "_i" from 0 to ((count _tlist)-1) do { // find unit position in vehicle turret list and remove it from list
 			_diff = 0;
 			_arr = _tlist select _i; // current turret description array
-			if ( count _arr == _rarr_cnt ) then
-			{
-				for "_j" from 0 to (_rarr_cnt - 1) do
-				{
+			if ( count _arr == _rarr_cnt ) then {
+				for "_j" from 0 to (_rarr_cnt - 1) do {
 					if (( _arr select _j) != (_role_arr select _j) ) exitWith { _diff = 1};
 				};
 				if ( _diff == 0 ) exitWith { _tlist set [_i, "RM_ITEM_NOW"]};
@@ -524,7 +508,7 @@ SYG_removeFromTurretList =
  * Function tryes to first populate commander, then driver and only after  all other available turret gunners
  * Not populates any cargo!!!
  */
-SYG_populateVehicle ={
+SYG_populateVehicle = {
 	private [ "_veh", "_utype", "_grpskill", "_grprndskill", "_grprndskill", "_pos", "_tlist", "_role_arr", "_unit",
 	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh"];
 
@@ -542,18 +526,15 @@ SYG_populateVehicle ={
 
 	_tlist = _veh call SYG_turretsList;
 #ifdef __NOT_POPULATE_LOADER_TO_TANK__
-	if ( _veh isKindOf "Tank" ) then
-	{
-	    if ( (count _tlist) == 4) then
-	    {
+	if ( _veh isKindOf "Tank" ) then {
+	    if ( (count _tlist) == 4) then {
     		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
 	    };
 	};
 #endif
 
 #ifdef __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
-	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then
-	{
+	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then {
 		_tlist = [[1], _tlist] call SYG_removeFromTurretList;
 		_tlist = [[2], _tlist] call SYG_removeFromTurretList;
 	};
@@ -562,8 +543,7 @@ SYG_populateVehicle ={
 	_isAirVeh = _veh isKindOf "Air";
 //	player globalChat format["Turrs %1", _tlist ];
 	// first try to put commander (according to role of name)
-	if (_veh emptyPositions "Commander" > 0) then
-	{
+	if (_veh emptyPositions "Commander" > 0) then {
 		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
 		_unit setSkill _grpskill + random (_grprndskill );
 		[_unit] joinSilent _grp;
@@ -572,18 +552,15 @@ SYG_populateVehicle ={
 		_unit moveInCommander _veh;
 		sleep 0.01;
 		_role_arr = assignedVehicleRole _unit;
-		if (count _role_arr > 0 ) then
-		{
-			if ( _role_arr select 0 == "Turret" ) then
-			{
+		if (count _role_arr > 0 ) then {
+			if ( _role_arr select 0 == "Turret" ) then {
 				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
 			};
 		};
 	};
 
 	// second try to put driver (no turrets be occupied)
-	if ( isNull driver _veh ) then  // add driver if he is not already assigned as commander
-	{
+	if ( isNull driver _veh ) then { // add driver if he is not already assigned as commander
 		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
 		_unit setSkill _grpskill + random (_grprndskill );
 		[_unit] joinSilent _grp;
@@ -592,10 +569,8 @@ SYG_populateVehicle ={
 		_unit moveInDriver _veh;
 		sleep 0.01;
 		_role_arr = assignedVehicleRole _unit;
-		if (count _role_arr > 0 ) then
-		{
-			if ( _role_arr select 0 == "Turret" ) then
-			{
+		if (count _role_arr > 0 ) then {
+			if ( _role_arr select 0 == "Turret" ) then {
 				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
 			};
 		};
@@ -616,12 +591,10 @@ SYG_populateVehicle ={
 
 #ifdef __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
 // for WEST enemy only
-	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
-	{
+	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then {
         // add "ACE_SoldierWMAT_A" as a passenger
         _emptypos = _veh emptyPositions "Cargo";
-        if ( _emptypos > 0 ) then
-        {
+        if ( _emptypos > 0 ) then {
             _unit=_grp createUnit ["ACE_SoldierWMAT_A", _pos, [], 0, "FORM"];
             _unit setSkill _grpskill + random (_grprndskill );
             [_unit] joinSilent _grp;
@@ -672,15 +645,13 @@ SYG_populateVehicleWithUnits = {
 
 	_tlist = _veh call SYG_turretsList;
 #ifdef __NOT_POPULATE_LOADER_TO_TANK__
-	if ( _veh isKindOf "Tank" ) then
-	{
+	if ( _veh isKindOf "Tank" ) then {
 		_tlist = [[0,1], _tlist] call SYG_removeFromTurretList;
 	};
 #endif
 
 #ifdef __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
-	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then
-	{
+	if ( _veh isKindOf "ACE_HMMWV_GMV" ) then {
 		_tlist = [[1], _tlist] call SYG_removeFromTurretList;
 		_tlist = [[2], _tlist] call SYG_removeFromTurretList;
 	};
@@ -689,8 +660,7 @@ SYG_populateVehicleWithUnits = {
 	_isAirVeh = _veh isKindOf "Air";
 //	player globalChat format["Turrs %1", _tlist ];
 	// first try to put commander (according to role of name)
-	if (_veh emptyPositions "Commander" > 0) then
-	{
+	if (_veh emptyPositions "Commander" > 0) then {
 		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
 		_unit setSkill _grpskill + random (_grprndskill );
 		[_unit] joinSilent _grp;
@@ -699,8 +669,7 @@ SYG_populateVehicleWithUnits = {
 		_unit moveInCommander _veh;
 		sleep 0.01;
 		_role_arr = assignedVehicleRole _unit;
-		if (count _role_arr > 0 ) then
-		{
+		if (count _role_arr > 0 ) then {
 			if ( _role_arr select 0 == "Turret" ) then
 			{
 				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
@@ -709,8 +678,7 @@ SYG_populateVehicleWithUnits = {
 	};
 
 	// second try to put driver (no turrets be occupied)
-	if ( isNull driver _veh ) then  // add driver if he is not already assigned as commander
-	{
+	if ( isNull driver _veh ) then { // add driver if he is not already assigned as commander
 		_unit=_grp createUnit [_utype, _pos, [], 0, "FORM"];
 		_unit setSkill _grpskill + random (_grprndskill );
 		[_unit] joinSilent _grp;
@@ -719,10 +687,9 @@ SYG_populateVehicleWithUnits = {
 		_unit moveInDriver _veh;
 		sleep 0.01;
 		_role_arr = assignedVehicleRole _unit;
-		if (count _role_arr > 0 ) then
-		{
+		if (count _role_arr > 0 ) then {
 			if ( _role_arr select 0 == "Turret" ) then
-			{
+
 				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
 			};
 		};
@@ -743,12 +710,10 @@ SYG_populateVehicleWithUnits = {
 
 #ifdef __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
 // for WEST enemy only
-	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then
-	{
+	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then {
         // add "ACE_SoldierWMAT_A" as a passenger
         _emptypos = _veh emptyPositions "Cargo";
-        if ( _emptypos > 0 ) then
-        {
+        if ( _emptypos > 0 ) then {
             _unit=_grp createUnit ["ACE_SoldierWMAT_A", _pos, [], 0, "FORM"];
             _unit setSkill _grpskill + random (_grprndskill );
             [_unit] joinSilent _grp;
@@ -797,14 +762,12 @@ SYG_makePatrolGroup = {
 	_elist = [d_enemy_side] call x_getmixedliste;
 	{
 	    _rand = floor random 3;
-		if ( _rand > 0) then
-		{
+		if ( _rand > 0) then {
 			([_rand, [], _x select 1, _x select 0, _agrp, 30, -1.111] call x_makevgroup);
 			sleep 0.73;
 		};
 	} forEach _elist;
-	if ( (count units _agrp) == 0) then // No units at all, create random single one!
-	{
+	if ( (count units _agrp) == 0) then { // No units at all, create random single one!
 	    _elist = _elist select (floor random (count _elist));
 		([1,_start_point,_elist select 1,_elist select 0,_agrp,30,_dir] call x_makevgroup);
 	};

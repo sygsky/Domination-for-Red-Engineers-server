@@ -480,12 +480,12 @@ SYG_patrolGroupNumber = {
 	{!isNull (_x select PARAM_GROUP)} count SYG_isle_grps;
 };
 
-// if this is r-erun of script, count already existing patrol groups
+// if this is re-run of script, count already existing patrol groups
 _patrol_cnt = d_with_isledefense select 4;
 _patrol_cnt = (_patrol_cnt - (count SYG_isle_grps)) max 0; // how many patrol to add to normal count
 if ( _patrol_cnt > 0) then {
     for "_i" from 1 to _patrol_cnt do {
-        SYG_isle_grps = SYG_isle_grps + [[ grpNull, [], [0,0,0], [], time + DELAY_ON_PATROL_INIT * _i, STATUS_WAIT_RESTORE, [] ]]; // initiate new patrols creation after some sequential time-out
+        SYG_isle_grps set [count SYG_isle_grps, [ grpNull, [], [0,0,0], [], time + DELAY_ON_PATROL_INIT * _i, STATUS_WAIT_RESTORE, [] ]]; // initiate new patrols creation after some sequential time-out
         sleep 3.012;
     };
 };
