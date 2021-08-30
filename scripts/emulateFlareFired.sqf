@@ -49,7 +49,7 @@ sleep 0.5;
 if (__LOCAL) then {
 // call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
 	hint localize format["+++ emulateFlareFired.sqf: local ""%1""%2", _col,
-						 if (isNull _alarm_obj) then {format[" flare is launched above %1", typeOf _alarm_obj]}, ""];
+						 if (isNull _alarm_obj) then {" _alarm_obj isNull"} else {format[" flare is launched above %1", typeOf _alarm_obj]}];
 	[ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
 } else {
 	// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
