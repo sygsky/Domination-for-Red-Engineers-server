@@ -688,8 +688,7 @@ SYG_populateVehicleWithUnits = {
 		sleep 0.01;
 		_role_arr = assignedVehicleRole _unit;
 		if (count _role_arr > 0 ) then {
-			if ( _role_arr select 0 == "Turret" ) then
-
+			if ( _role_arr select 0 == "Turret" ) then {
 				_tlist = [_role_arr select 1, _tlist] call SYG_removeFromTurretList;
 			};
 		};

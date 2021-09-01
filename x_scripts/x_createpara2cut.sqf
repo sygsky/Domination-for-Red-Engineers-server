@@ -4,7 +4,7 @@
 //
 // Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
-// TODO: allow pilots to patrol with saboteurs if landed
+// TODO: allow heli pilots to patrol with saboteurs if landed
 //
 //private ["_assigned","_helifirstpoint","_chopper","_paragrp","_leader","_pos_end","_u","_vgrp","_wp","_xx","_heliendpoint","_wp2","_attack_pos", "_i", "_grp_array","_parachute_type"];
 private ["_assigned", "_helifirstpoint", "_chopper", "_paragrp", "_leader", "_u", "_vgrp", "_wp", "_xx", 

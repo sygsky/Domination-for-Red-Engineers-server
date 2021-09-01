@@ -251,8 +251,7 @@ XHandleNetStartScriptServer = {
                         if ( typeName argp(_wpnArr,4) == "SCALAR") then {
                             // old variant
                             _msg_arr set [ count _msg_arr, ["STR_SYS_618",_wpnArr select 4] ]; // "Viewdistance restore to %1 m."
-                        }
-                        else {
+                        } else {
                         // TODO: implement code for parsing array of user settings
                             if ( typeName argp(_wpnArr, 4) == "ARRAY") then {
                                 // new variant

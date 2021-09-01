@@ -81,7 +81,7 @@ _lh_arr = [];
 _i = 1;
 {
 	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
-	hint localize "+++ Detect Lighthouse buildings";
+	hint localize "+++ Detect Lighthouse buildings...";
 	{
 		if (alive _x) then {
 			if (!(_x in _lh_arr) ) then {
@@ -99,13 +99,15 @@ _i = 1;
 _start = _this select 0;
 _end   = _this select 1;
 while { true } do {
+	// sleep to the start of the night *siren ON)
 	if ( if (_start > _end) then { (daytime > _end) && (daytime < _start) } else { (daytime < _start) ||  (daytime > _end) } ) then {
-		_time = (((_start - daytime) + 24 )  % 24) * 3600;
+		// we are in night, start services for the lighthouses
+		_time = (((_start - daytime) + 24 )  % 24) * 3600 + 10;
 		hint localize format["+++ SYG_lighthouses: sleep until night start %1 sec", round( _time )];
 		sleep _time;
 	};
 
-	//time is after night evening or before morning
+	//time is directly after night evening or somewhere before morning
 	for "_i" from 0 to (count _lh_arr) - 1 do {
 		_x = _lh_arr select _i;
 		if (alive _x ) then {
@@ -113,6 +115,12 @@ while { true } do {
 		};
 		sleep 0.1;
 	};
+	// sleep to the start of the day (siren off)
+	// we are in night, start services for the lighthouses
+	_time = (((_end - daytime) + 24 )  % 24) * 3600 + 10;
+	hint localize format["+++ SYG_lighthouses: sleep until day start %1 sec", round( _time )];
+	sleep _time;
+
 };
 
 SYG_lighthouse_handled = nil;

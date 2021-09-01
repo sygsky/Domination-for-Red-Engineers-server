@@ -151,7 +151,7 @@
 //uncomment to disable jump from base flag pole without parachute pack, to be more serious :o)
 //#define __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
 
-// uncomment next line to prevent land vehicle overturning
+// uncomment next line to prevent enemy land vehicle overturning
 #define __PREVENT_OVERTURN__
 
 // comment it out to use the new score system, with lower values per rank

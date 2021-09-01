@@ -2685,8 +2685,7 @@ SYG_fastReload = {
 	_ret = count _this > 0;
 	{
 		_vec = _x;
-		if ( (!isNull _vec) && (alive _vec) && ((typeName _vec) == "OBJECT") ) then
-		{
+		if ( (!isNull _vec) && (alive _vec) && ((typeName _vec) == "OBJECT") ) then {
 			_type = typeOf _vec;
 			_mags = getArray(configFile >> "CfgVehicles" >> _type >> "magazines"); //low level mags
 
@@ -2730,14 +2729,12 @@ SYG_fastReload = {
 SYG_findPlayerEquipmentAsStr = {
     private ["_index", "_parray"];
     if ( (typeName _this) == "OBJECT") then {_this = name _this;};
-    if ( (typeName _this) != "STRING" ) exitWith
-    {
+    if ( (typeName _this) != "STRING" ) exitWith {
         hint localize format["--- SYG_findPlayerEquipmentAsStr: expected param isn't string: %1", _this ];
     };
     //hint localize format["--- %1 call SYG_findPlayerEquipmentAsStr;", _this ];
     _index = d_player_array_names find _this;
-    if (_index >= 0) exitWith
-    {
+    if (_index >= 0) exitWith {
         //  player array is: [d_player_air_autokick, time, _name, 0, "", eqp_list_as_str]
         _parray = d_player_array_misc select _index;
         _parray select 5
@@ -2831,8 +2828,7 @@ SYG_getPlayerEquipAsStr = {
 };
 
 // _wpn_arr = _str_wpn call SYG_unpackEquipmentFromStr;
-SYG_unpackEquipmentFromStr =
-{
+SYG_unpackEquipmentFromStr = {
     call compile _this
 };
 
@@ -2856,8 +2852,7 @@ SYG_getParamFromSettingsArray = {
     _prm = arg(1);
     if (typeName _arr != "STRING" ) exitWith{-1};
     // return requested value
-    switch toUpper(_prm) do
-    {
+    switch toUpper(_prm) do {
         case "VD": {argp(_arr, 0)}; // ViewDistance
         case "GI": {argp(_arr, 1)}; // GrassIndex
         case "PI": {argp(_arr, 2)}; // Player marker Index

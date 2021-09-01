@@ -2,6 +2,8 @@
 //
 // call on client as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
 //
+hint localize format["+++ emulateFlareFiredLocal.sqf: _this = %1", _this];
+
 private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_pos","_flare_type","_die_away_height"];
 
 #define __FLARE    (_this select 0)
@@ -36,11 +38,10 @@ __W, \
 [0.08], 1, 0, "", "", _flare]
 
 _flare = __FLARE;
-if ( isNull _flare ) exitWith { hint localize "--- emulateFlareFiredLocal.sqf: flare object isNull"; };
+if ( isNull _flare ) exitWith { hint localize "--- emulateFlareFiredLocal.sqf: flare object isNull, exit..."; };
 
 _col = __COL;
-switch (toUpper(_col)) do
-{
+switch (toUpper(_col)) do {
 	case "WHITE":  { _col = __W; };
 	case "GREEN":  { _col = __G; };
 	case "YELLOW": { _col = __Y; };

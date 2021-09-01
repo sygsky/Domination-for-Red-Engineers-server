@@ -67,12 +67,16 @@ _sound = "";
 if (count _holiday > 0 ) then {
     // Soviet holiday detected, show its info about soviet holiday and/or play correponding sound
     _sound = _holiday select 1;
-    if (_sound != "") then {playMusic _sound};
+    if (_sound != "") then {
+    	_music = _sound;
+    	playMusic _sound;
+    };
 };
 _music_cnt = 0;
 if (_sound == "") then { // select random music for ordinal day
     if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then {
-        playMusic ( ((SYG_holidayTable select 0) select 2) call _XfRandomArrayVal); //music for New Year period from 21 December to 10 January
+    	_music = ((SYG_holidayTable select 0) select 2) call _XfRandomArrayVal;
+        playMusic _music; //music for New Year period from 21 December to 10 January
         _newyear = true;
     } else {
         // music normally played on intro
