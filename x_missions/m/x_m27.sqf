@@ -32,6 +32,7 @@ if (isServer) then {
 	__AddToExtraVec(_vehicle)
     sleep 10;
     [_poss,200] call SYG_rearmAroundAsHeavySniper;
+	// TODO: use code from x_scripts\x_createsecondary.sqf line 335 to populate the tower
 };
 
 if (true) exitWith {};

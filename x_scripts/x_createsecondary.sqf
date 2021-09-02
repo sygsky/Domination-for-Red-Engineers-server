@@ -320,7 +320,7 @@ mt_spotted = false; // set player status  as 'not spotted'
 // add guard group for tower position
 
 _posCnt = _vehicle call SYG_housePosCount;
-_cnt = floor (random (3 min _posCnt));    // add max 3 guard[s] on the top of radar
+_cnt = floor (random (3 min _posCnt));    // add max 2 guard[s] on the top of radar
 if ( _cnt > 0 ) then {
     __WaitForGroup
     __GetEGrp(_newgroup)
@@ -354,8 +354,8 @@ if ( _cnt > 0 ) then {
 
         // TODO: add more units to the group to guard the tower
 #ifdef __FUTURE__
-    [ "basic", [getPos _vehicle], getPos _vehicle, 0, "guardvehicle", d_enemy_side, _newgroup, -1.111 /*, [_trg_center, _radius] */] execVM "x_scripts\x_makegroup.sqf";
-    hint localize format["+++ x_createsecondary.sqf: tower guard group of %1 men (%2) created", count _newgroup, "basic" ];
+		[ "basic", [getPos _vehicle], getPos _vehicle, 0, "guardvehicle", d_enemy_side, _newgroup, -1.111 /*, [_trg_center, _radius] */] execVM "x_scripts\x_makegroup.sqf";
+		hint localize format["+++ x_createsecondary.sqf: tower guard group of %1 men (%2) created", count _newgroup, "basic" ];
 #endif
     } else {
         hint localize "-- x_createsecondary.sqf: group created for a tower guard[s] is NULL";
