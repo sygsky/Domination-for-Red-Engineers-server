@@ -12,7 +12,7 @@ if (!isServer) exitWith {};
 #define __PRINT__
 
 // to debug sabotages with short intervals between infiltrations
-//#define __DEBUG__
+#define __DEBUG__
 
 // to debug cleansing procedure (run it with short intervals)
 //#define __DEBUG_CLEAN__
@@ -66,6 +66,25 @@ _pilot = (
 		case "WEST": {d_pilot_W};
 	}
 );
+
+// Sabotage drop zone array
+_drop_zone_arr = [
+	[ [ 9536, 9134, 0 ], 450, 300, 25, -2000],
+	[ [ 10034, 10485, 0 ], 700, 200, 8.5, 2000 ]
+];
+
+//
+// Returns count of alive sobatages in all known groups
+//
+_alive_sabotage = {
+	private ["_cnt"];
+	_cnt = 0;
+	{
+		_cnt = _cnt + ({alive _x } count units _x);
+	} forEach d_on_base_groups;
+	hint localize format["+++ Alive sabotage count = %1", _cnt];
+	_cnt
+};
 
 _time_to_clean = time;
 _items_to_clean = [];
@@ -229,63 +248,52 @@ while { true } do {
 #endif
 
 	if (X_MP) then {
-		if ((call XPlayersNumber) == 0) then
-		{		
+		if ((call XPlayersNumber) == 0) then {
 			waitUntil { sleep (10.0123 + random 1);(call XPlayersNumber) > 0 };
 		};
 	};
 	//__DEBUG_NET("+++x_infiltrate.sqf",(call XPlayersNumber))
 
-	// select LZ
-	_ind = floor random 2; // 0 or 1 is used
-	/*
-			class Item87
-    		{
-    			position[]={10033.973633,107.050949,10484.583984};
-    			name="eject2";
-    			markerType="RECTANGLE";
-    			type="Flag";
-    			a=700.000000;
-    			b=200.000000;
-    			angle=8.522486;
-    		};
-	*/
-	_rect = [ [ [ 9536, 9134, 0 ], 450, 300, 25],[ [ 10034, 10485, 0 ], 700, 200, 8.5 ] ] select _ind; // call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
-	_delta = [-2000, 2000] select _ind; // start point offset to south or north
-	//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
-	_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
-	_msg = [_attack_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-//	_attack_pos  = position FLAG_BASE;
-//	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
+	// start sabotage only if alive sabotage count < 10
+	if (( call _alive_sabotage ) < 10 ) then {
+		// Sabotage drop zones array
+		_ind = floor random (count _drop_zone_arr); // 0 or 1 is used
+		_rect =  _drop_zone_arr select _ind; // call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
+		_delta = _rect select 4; // start point offset to south or north
+		//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
+		_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
+		_msg = [_attack_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+	//	_attack_pos  = position FLAG_BASE;
+	//	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
 
-	//__WaitForGroup
-	//__GetEGrp(_grp)
-	_grp = call SYG_createEnemyGroup;
-	_chopper = d_transport_chopper call XfRandomArrayVal;
-	_start_pos = d_airki_start_positions select 0;
-	_start_pos set [1, random _delta];
+		//__WaitForGroup
+		//__GetEGrp(_grp)
+		_grp = call SYG_createEnemyGroup;
+		_chopper = d_transport_chopper call XfRandomArrayVal;
+		_start_pos = d_airki_start_positions select 0;
+		_start_pos set [1, random _delta];
 
-	_vehicle = createVehicle [_chopper, _start_pos, [], 100, "FLY"];
-	[ _vehicle, _grp, _pilot, 1.0 ] call SYG_populateVehicle;
-	// forEach crew _vehicle;
-	{ // support each crew member
-		__addDead(_x)
-		sleep 0.01;
-	} forEach crew _vehicle;
+		_vehicle = createVehicle [_chopper, _start_pos, [], 100, "FLY"];
+		[ _vehicle, _grp, _pilot, 1.0 ] call SYG_populateVehicle;
+		// forEach crew _vehicle;
+		{ // support each crew member
+			__addDead(_x)
+			sleep 0.01;
+		} forEach crew _vehicle;
 
-	__addRemoveVehi(_vehicle)
-	
-	_grp setCombatMode "RED";
-	sleep 1.123;
+		__addRemoveVehi(_vehicle)
+
+		_grp setCombatMode "RED";
+		sleep 1.123;
 
 
-	sleep 0.1;
-	//[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
-	[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2cut.sqf";
-#ifdef __PRINT__
-	hint localize format["+++ x_infiltrate.sqf: started at %1 on pnt %2", date, _msg ];
-#endif
-
+		sleep 0.1;
+		//[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2.sqf";
+		[_grp,_vehicle,_attack_pos,d_airki_start_positions select 1] execVM "x_scripts\x_createpara2cut.sqf";
+	#ifdef __PRINT__
+		hint localize format["+++ x_infiltrate.sqf: started at %1 on pnt %2", date, _msg ];
+	#endif
+	}; // if ((call _alive_sabotage) < 10) then {
 #ifdef __DEBUG__
 	sleep 1200; // 20 mins to kill them all or be down himself
 #else

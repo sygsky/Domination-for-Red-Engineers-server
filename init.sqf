@@ -5,10 +5,10 @@
 #include "i_common.sqf"
 
 X_INIT = false;
-X_Server = false; X_Client = false; X_JIP = false;X_SPE = false;
-X_InstalledECS = if (isClass (configFile >> "cfgVehicles" >> "ECS_basic")) then {true} else {false};
+X_Server = false; X_Client = false; X_JIP = false; X_SPE = false;
+X_InstalledECS = isClass (configFile >> "cfgVehicles" >> "ECS_basic");
 
-X_MP = (if (playersNumber east + playersNumber west + playersNumber resistance + playersNumber civilian > 0) then {true} else {false});
+X_MP = (playersNumber east + playersNumber west + playersNumber resistance + playersNumber civilian) > 0;
 
 if (isServer) then {
 	X_Server = true;

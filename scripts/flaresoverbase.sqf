@@ -1,10 +1,11 @@
 // flaresoverbase.sqf: by Sygsky
-// script to shoot flares above base from wounded diversants
+// script to shoot flares above base from wounded sabotages. Runs only on server!!
 // Example:
 // [] execVM "scripts\flaresoverbase.sqf";
 //
 // script uses global variable d_on_base_groups as array of sabotage groups sent to blow base
 //
+#include "x_setup.sqf"
 #include "x_macros.sqf"
 
 if (!isServer) exitWith{};
@@ -17,7 +18,7 @@ if (!isServer) exitWith{};
 
 #ifdef __DEBUG__
 // delay between flares 
-#define INTERFLARE_DELAY 30
+#define INTERFLARE_DELAY 20
 #define CYCLE_DELAY 10
 #define START_DELAY  10
 #define WAIT_FOR_SABOTAGE_DELAY 60
@@ -44,7 +45,7 @@ if (!isServer) exitWith{};
 // =======================================================================================
 //
 _illumination = {
-	private ["_trg_center","_radius","_height","_type","_x","_y","_angle"];
+	private ["_trg_center","_radius","_height","_type","_pos"];
 	
 	_trg_center = _this select 0;
 	_radius     = _this select 1;
@@ -54,15 +55,10 @@ _illumination = {
 	//player groupChat format[ "flaresoverbase.sqf: [%1,%2,%3,%4] call _illumination ", _trg_center, _radius, _height, _type];
 	hint localize    format[ "flaresoverbase.sqf: [%1,%2,%3,%4] call _illumination ", _trg_center, _radius, _height, _type];
 #endif				
-	
-	_x      = _trg_center select 0;
-	_y      = _trg_center select 1;
-	_radius = (sqrt((random _radius)/_radius))*_radius;
 
-	_angle = floor (random 360);
-	_x = _x - _radius * sin _angle;
-	_y = _y - _radius * cos _angle;
-	[[ _x, _y, 0], _height, "Red", 400/* player distance _trg_center */] execVM "scripts\emulateFlareFired.sqf";
+	_pos = [_trg_center, _radius] call SYG_rndPointInRad;
+	_pos set [2, 0];
+	[ _pos, _height, "Red", 400/* player distance _trg_center */] execVM "scripts\emulateFlareFired.sqf";
 };
 
 _wounded = []; // array to accumulate wounded units
@@ -133,10 +129,12 @@ while { true } do {
 			if (_flare_launched >= MAX_FLARE_NUMBER ) exitWith { /* Exit from flare loop */ };
 			_unit = _wounded select _i;
 			if ( alive _unit ) then {
-				_unc = (damage _unit) >= 0.7;
+				_unc = (damage _unit) >= 0.7; // TODO: lets try (!canStand _unit)
+#ifdef __ACE__
 				if (format["%1",_unit getVariable "ACE_unconscious"] != "<null>") then { _unc = _unit getVariable "ACE_unconscious"; };
+#endif
 				if ( _unc ) then {
-					[ getPos _unit, 20 * (damage _unit), 150, "Red"/* "F_40mm_Red" */ ] spawn _illumination;
+					[ getPos _unit, 20 * (damage _unit), 150, "Red"/* "F_40mm_Red" */ ] call _illumination;
 					sleep random INTERFLARE_DELAY; 
 					_flare_launched = _flare_launched + 1;
 				} else {

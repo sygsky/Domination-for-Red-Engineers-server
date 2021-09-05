@@ -38,6 +38,13 @@ STR_DANGER_1,Suddenly you felt terrible ...,Plotzlich und unerwartet spuren Sie 
 STR_DANGER_2,Suddenly you realize that this is your last thought ...,Plotzlich verstehen Sie das es Ihr letzter gedanke...,"De repente, te das cuenta de que este es tu último pensamiento...","Внезапно вы понимаете, что это - ваша последняя мысль..."
 STR_DANGER_3,Alarm! It seemed to you that the evil cold look follows you ...,Sie denken das ein kalter boser Blick sie anschaut...,De repente te das cuenta de que estás siendo seguido por una mirada fría y malvada...,"Вдруг Вы осознаёте, что за вами следит холодный злобный взгляд..."
 
+STR_TV_NUM,5,5,5,5
+STR_TV_0,"For a second you thought the tower had fallen!","Eine Sekunde lang dachten Sie, der Turm sei eingestürzt!","¡Por un segundo pensaste que la torre había caído!","На секунду Вам показалось, что башня упала!"
+STR_TV_1,"You've got your eyes squeezed shut... the tower - stands!","Du hast deine Augen zugedrückt... der turm - steht!","Tienes los ojos cerrados... la torre - ¡se mantiene!","Вы зажмурили глаза... башня - стоит!"
+STR_TV_2,"You blinked... You thought it had fallen! But alas... wrong...","Du hast geblinzelt... Du dachtest, sie sei gefallen! Aber leider... falsch...","Parpadeaste... ¡Pensabas que se había caído! Pero, por desgracia... equivocado...","Вы моргнули... Вам показалось - она упала! Но увы... ошиблись..."
+STR_TV_3,"Damn tower, it fell! I saw it!!! Ahhhhhhhh...","Der verdammte Turm, er ist eingestürzt! Ich habe es gesehen!!! Ahhhhhhhh...","¡La maldita torre, se ha caído! ¡¡Lo vi!! Ahhhhhhhh...","Проклятая башня, она же упала! Я видел!!! А-а-а-а-а..."
+STR_TV_4,What the hell is this!,Was zum Teufel!,¿Qué diablos?,Что за чертовщина!
+
 STR_SYS_2,MG nest,MG-Nest,MG-nido,Пул.гнездо
 STR_SYS_02,MG %1,MG %1,MG %1,Пул. %1
 STR_SYS_03,Your MG nest was destroyed,Ihre  Maschinengewehr-Nest zerstört wurde,Su nido de ametralladoras ha sido destruido.,Ваше пулемётное гнездо было уничтожено.
@@ -797,7 +804,7 @@ STR_SYS_630_2_3,A giant swell is recorded there from space,Dort wird eine riesig
 STR_SYS_650,The siege of the city destroyed buildings %1. The islanders are concerned!,Während der Belagerung der Stadt zerstörte Gebäude: %1. Die Inselbewohner sind besorgt!,Edificios destruidos durante el asedio de la ciudad: %1. ¡Los isleños están preocupados!,При осаде города разрушено зданий: %1. Островитяне обеспокоены!
 STR_SYS_650_0,Not a single building was destroyed in the siege of the city. The islanders thank you!,Während der Belagerung der Stadt wurde kein einziges Gebäude zerstört. Die Inselbewohner danken Ihnen!,No se destruyó ni un solo edificio durante el asedio a la ciudad. Los isleños se lo agradecen.,Ни одного здания при осаде города не было разрушено. Островитяне благодарят Вас!
 STR_SYS_650_1,Few buildings (%1) were destroyed during the liberation of the city. The islanders are grateful to you for your concern for the population!,Bei der Befreiung der Stadt wurden nur wenige Gebäude zerstört (%1). Die Inselbewohner sind Ihnen dankbar für Ihre Sorge um die Bevölkerung!,Pocos edificios fueron destruidos durante la liberación de la ciudad (%1). Los isleños le agradecen su preocupación por la población.,При освобождении города было разрушено мало зданий (%1). Островитяне благодарны Вам за вашу заботу о населении!
-STR_SYS_650_2,"In the future, penalty points may be given for destroyed buildings!",In Zukunft können für zerstörte Gebäude Strafpunkte vergeben werden!,"¡En el futuro, los puntos de penalización pueden ser otorgados por los edificios destruidos!",В будущем за разрушенные здания могут начисляться штрафные  очки!
+STR_SYS_650_2,"In the future, penalty points may be given for destroyed buildings!",In Zukunft können für zerstörte Gebäude Strafpunkte vergeben werden!,"¡En el futuro, los puntos de penalización pueden ser otorgados por los edificios destruidos!",А ведь за разрушенные здания могут начисляться штрафные  очки!
 
 STR_SYS_1000,Brigadier-General,Generalmajor,General de división,Генерал-майор
 STR_SYS_1001,Lieutenant-General,Generalleutnant,Teniente general,Генерал-лейтенант

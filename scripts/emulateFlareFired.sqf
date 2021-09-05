@@ -1,7 +1,8 @@
 //
 // ACE flare script modified to use by Sygsky: scripts\emulateFlareFired.sqf
 //
-// call as: [getPos _alarm_obj, _height, "Yellow", 400, true] execVM "scripts\emulateFlareFired.sqf";
+// Calld from server!!!
+// call as: [getPos _alarm_obj, _height, "Yellow", 400] execVM "scripts\emulateFlareFired.sqf";
 //
 private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height","_alarm_obj"];
 
@@ -9,7 +10,7 @@ private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type",
 #define __HEIGHT ((_this select 1)-5+(random 10))
 #define __COL    (_this select 2)
 #define __DIST   ((_this select 3)/1600)
-#define __LOCAL (if(count _this < 5)then{false}else{_this select 4})
+//#define __LOCAL (if(count _this < 5)then{false}else{_this select 4})
 
 //#define __DEBUG__
 
@@ -22,7 +23,7 @@ _flare_type = switch (toUpper(_col)) do {
 	default{ _flare_type = "F_40mm_White"; }; //	case "WHITE":  { _flare_type = "F_40mm_White";  };
 };
 
-hint localize format["+++ emulateFlareFired.sqf: _this = %1", _this];
+hint localize format["+++ emulateFlareFired.sqf: _this = %1, %2", _this, if (isServer) then {"isServer"} else {"isClient"}];
 _pos = __POS;
 _alarm_obj = objNull;
 if ( typeName _pos == "OBJECT" ) then {
@@ -41,20 +42,28 @@ hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4
 #endif
 
 _flare = objNull;
-if (__LOCAL) then { _flare = _flare_type createVehicleLocal _pos; } else { _flare = _flare_type createVehicle _pos; };
+if ( isServer ) then {
+	_flare = _flare_type createVehicle _pos;
+} else {
+	_flare = _flare_type createVehicleLocal _pos;
+};
+
 if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 sleep 0.5;
 
-if (__LOCAL) then {
-// call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
-	hint localize format["+++ emulateFlareFired.sqf: local ""%1""%2", _col,
-						 if (isNull _alarm_obj) then {" _alarm_obj isNull"} else {format[" %1 flare is launched above %2", typeOf _flare, typeOf _alarm_obj]}];
-	[ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
-} else {
+hint localize format["+++ emulateFlareFired.sqf: ""%1"" %2",
+	_col,
+	format[ "%1 ""%2"" flare is launched above %3",
+		if (local _flare) then {"local"} else {"global"},
+		typeOf _flare,
+		if (isNull _alarm_obj) then { "null" } else { typeOf _alarm_obj }]
+];
+if ( isServer ) then {
 	// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
-	hint localize format["+++ emulateFlareFired.sqf: global ""%1""%2", _col,
-						 if (isNull _alarm_obj) then { " _alarm_obj isNull" } else { format[" flare is launched above %1", typeOf _alarm_obj] }];
 	[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient; // run on all clients
+} else {
+// call on client as: [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
+	[ _flare, _col, _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // run only on local client
 };
 
 _die_away_height = 15 + random 15;

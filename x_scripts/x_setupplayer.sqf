@@ -1132,9 +1132,9 @@ XBaseEnemies = {
 	            _alarm_obj say "alarm";
             };
             // throw flare above alarm object
-            _arr = nearestObjects [_alarm_obj, ["F_40mm_Yellow"], 400];
-            if (count _arr == 0 ) then {
-	            [_alarm_obj, _height, "YELLOW", 400, true] execVM "scripts\emulateFlareFired.sqf";
+//            _arr = nearestObjects [_alarm_obj, ["F_40mm_Yellow"], 400];
+            if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
+	            [_alarm_obj, _height, "YELLOW", 400] execVM "scripts\emulateFlareFired.sqf";
 	           	hint localize format["+++ XBaseEnemies: throw yellow flare above %1", typeOf _alarm_obj];
             } else {hint localize format["+++ XBaseEnemies: YELLOW flare above %1 already on", typeOf _alarm_obj];};
 		};

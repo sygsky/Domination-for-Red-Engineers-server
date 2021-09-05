@@ -108,7 +108,7 @@ GRU_mainTaskDescription = {
     if called on serveк computer, scores are checked and available information sent to user
 */
 GRU_SpecialScores = {
-    if (!X_CLIENT) then {
+    if (!X_Client) then {
         // todo: check for scores
         hint localize format["Server-> GRU_specialScores: input %1", _this];
     } else {

@@ -125,6 +125,6 @@ if ( _unit call SYG_isWoman ) then {
 //#endif
 };
 
-hint localize format["deathSound: killer unknown, dmg %1", damage _unit ];
+hint localize format["deathSound: killer unknown, dmg %1	, sound ""%s""", damage _unit, _sound ];
 // let all to hear this sound, not only current player
 ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll;

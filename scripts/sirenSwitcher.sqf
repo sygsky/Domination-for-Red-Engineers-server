@@ -18,7 +18,7 @@
 // Switched siren on / off opposire to the cyrrent state: if was on, set off, if was off set on
 //----------------------
 
-if (!X_CLIENT) exitWith { hint localize "--- scripts\sirenSwitcher.sqf: called not on client computer" };
+if (!X_Client) exitWith { hint localize "--- scripts\sirenSwitcher.sqf: called not on client computer" };
 _majak = _this select 0;
 if (!alive _majak) exitWith {hint localize format[ "--- SYG_lighthouseSirenSwitch: call with dead object %1", typeOf _majak ]; false };
 if ( !(_majak isKindOf "Land_majak") ) exitWith { hint localize format[ "--- SYG_lighthouseSirenSwitch: call with dead object %1", typeOf _majak ]; false };

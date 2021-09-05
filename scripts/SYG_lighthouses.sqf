@@ -30,10 +30,10 @@ _majak_data = [
 
 // Description for each lighthouse sound sequences
 _wholer_data = [
-	["lighthouse_1",  6, 13], // length 3.4, 3 buzzer + 1 silence
-	["lighthouse_2",  8, 15],   // length 4.0 sec. 2 buzz + 2 silence
-	["lighthouse_3", 10, 18],   // lemgth 5.44
-	["lighthouse_4", 10, 10, 25]  // length 5.5
+	["lighthouse_1",  6, 13],		// length 18, 2 buzz
+	["lighthouse_2",  8, 15],		// length 21, 2 buzz
+	["lighthouse_3", 10, 18],		// lemgth 28, 2 buzz
+	["lighthouse_4", 10, 10, 25]	// length 45, 3 buzz
 ];
 
 //_diff_pos = [1.06738,-0.278809,-8.07489];
@@ -43,6 +43,7 @@ _wholer_data = [
 // [_lighthouse, _start, _end, _ind, _howler_arr] call _howler_work;
 //
 #define __FUTURE__
+
 _howler_work = {
 	private ["_id","_i", "_arr", "_sound","_majak","_start","_end","_last_ind","_pos"];
 	_majak = _this select 0;
@@ -61,7 +62,7 @@ _howler_work = {
 		// while it is the night do
 		for "_i" from 1 to _last_ind do {
 			if (!alive _majak) exitWith {
-				hint localize format["--- SYG_lighthouses: _howler_work for dead majak #%1 stopped", _this select 3];
+				hint localize format["--- SYG_lighthouses: service for the dead majak #%1 stopping...", _this select 3];
 				// ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>] call SYG_msgToUserParser
 				_majak = _pos call SYG_nearestSettlement;
 				["msg_to_user", "", ["STR_LIGHTHOUSE_KILLED", _majak ], 0, 3, false, "return"] call SYG_msgToUserParser;
@@ -71,7 +72,7 @@ _howler_work = {
 		};
 		if (!alive _majak) exitWith {};
 	};
-	hint localize format[ "+++ SYG_lighthouses: Finished service for the majak #%1", _this select 3 ];
+	hint localize format[ "+++ SYG_lighthouses: service for the dead majak #%1 killed", _this select 3 ];
 };
 
 //
@@ -81,7 +82,7 @@ _lh_arr = [];
 _i = 1;
 {
 	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
-	hint localize "+++ Detect Lighthouse buildings...";
+	hint localize "+++ Detect Lighthouse buildings procedure...";
 	{
 		if (alive _x) then {
 			if (!(_x in _lh_arr) ) then {
@@ -99,26 +100,24 @@ _i = 1;
 _start = _this select 0;
 _end   = _this select 1;
 while { true } do {
-	// sleep to the start of the night *siren ON)
-	if ( if (_start > _end) then { (daytime > _end) && (daytime < _start) } else { (daytime < _start) ||  (daytime > _end) } ) then {
+	// Detect if client is at the night (switch siren ON)
+	if ( if (_start > _end) then { (daytime < _end) || (daytime > _start) } else { (daytime < _start) &&  (daytime > _end) } ) then {
 		// we are in night, start services for the lighthouses
-		_time = (((_start - daytime) + 24 )  % 24) * 3600 + 10;
-		hint localize format["+++ SYG_lighthouses: sleep until night start %1 sec", round( _time )];
-		sleep _time;
+		_str = call SYG_missionTimeInfoStr;
+		hint localize format["+++ %1 SYG_lighthouses: start all alive lighthouse services", _str];
+		_cnt = count _wholer_data;
+		for "_i" from 0 to (count _lh_arr) - 1 do {
+			_x = _lh_arr select _i;
+			if (alive _x ) then {
+				[_x, _start, _end, _i, _wholer_data select ( _i mod _cnt )] spawn _howler_work;
+			};
+			sleep 0.05;
+		};
 	};
 
-	//time is directly after night evening or somewhere before morning
-	for "_i" from 0 to (count _lh_arr) - 1 do {
-		_x = _lh_arr select _i;
-		if (alive _x ) then {
-			[_x, _start, _end, _i, _wholer_data select ( _i mod 4 )] spawn _howler_work;
-		};
-		sleep 0.1;
-	};
-	// sleep to the start of the day (siren off)
-	// we are in night, start services for the lighthouses
-	_time = (((_end - daytime) + 24 )  % 24) * 3600 + 10;
-	hint localize format["+++ SYG_lighthouses: sleep until day start %1 sec", round( _time )];
+	// and sleep to the start of the next night
+	_time = (((_start - daytime) + 24 )  % 24) * 3600 + 10;
+	hint localize format["+++ SYG_lighthouses: sleep %1 hour[s] until next night start ", round( _time / 360 ) / 10];
 	sleep _time;
 
 };

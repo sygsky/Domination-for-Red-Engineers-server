@@ -93,12 +93,9 @@ SYG_timeDiffToStr = {
  *
  */
 SYG_dateOnlyToStr = {
-	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then
-	{
+	if ( typeName _this == "ARRAY" && count _this  >= 3 ) then {
 		format["%1.%2.%3",(_this select 2) call SYG_twoDigsNumber0,(_this select 1) call SYG_twoDigsNumber0, _this select 0]
-	}
-	else
-	{
+	} else {
 		format["--- Expected date only format illegal:'%1'",_this]
 	};
 };
@@ -506,8 +503,7 @@ SYG_getMsgForCurrentDayTime = {
 // _soundName = (call SYG_getDayTimeId) call SYG_getDayTimeIdRandomSound;
 // return empty string if no sound or illegal id not in [0..3] designated
 SYG_getDayTimeIdRandomSound = {
-    switch (_this) do
-    {
+    switch (_this) do {
         case 0 : { playSound format["night_%1", ceil (random 6)]; };   // STAT_NIGHT
         case 1 : {  ""  }; // STAT_DAY
         case 2 : {  playSound format["morning_%1", ceil (random 3)]; }; // STAT_MORNING
@@ -530,8 +526,7 @@ SYG_getCurrentDayTimeRandomSound = {
 SYG_bumpDateByHours = {
     _dt    = + (_this select 0);
     _addhr =    _this select 1;
-    if ( _addhr == 0) exitWith
-    {
+    if ( _addhr == 0) exitWith {
         hint localize "+++ SYG_bumpDateByHours: called with 0 hour change, accepted as is";
         _dt
     };
@@ -546,20 +541,14 @@ SYG_bumpDateByHours = {
 
     _new  = _min + round((_addhr mod 1) * 60);
     // hint localize format["SYG_bumpDateByHours: new minutes = %1", _new];
-    if (_new > 59 ) then
-    {
+    if (_new > 59 ) then {
         _dt set [DT_MIN_OFF, _new - 60];
         _addhr = ceil(_addhr);
-    }
-    else
-    {
-        if (_new < 0) then
-        {
+    } else {
+        if (_new < 0) then {
             _dt set [DT_MIN_OFF, 60 + _new];
             _addhr = floor(_addhr);
-        }
-        else
-        {
+        } else {
             _dt set [DT_MIN_OFF, _new];
             _addhr = _addhr - (_addhr mod 1);
         };
@@ -573,12 +562,9 @@ SYG_bumpDateByHours = {
         _dt set [DT_HOUR_OFF, _new % 24];
     }
     else {
-        if (_new < 0) then
-        {
+        if (_new < 0) then {
             _dt set [DT_HOUR_OFF, 24 + (_new % 24)];
-        }
-        else
-        {
+        } else {
             _dt set [DT_HOUR_OFF, _new];
         };
     };
@@ -590,16 +576,12 @@ SYG_bumpDateByHours = {
 
     _new = _new + _day; // new day value
     // hint localize format["SYG_bumpDateByHours: new days = %1", _new];
-    if ( _new > _monlen) then
-    {
+    if ( _new > _monlen) then {
         if ( _mon == 12 ) then { _mon = 1; _year = _year + 1 } // December => January
         else { _mon = _mon + 1 };
         _new = _new - _monlen;
-    }
-    else
-    {
-        if ( _new < 1 ) then
-        {
+    } else {
+        if ( _new < 1 ) then {
             if ( _mon == 1 ) then { _mon = 12; _year = _year - 1 } // January => December
             else { _mon = _mon - 1 };
             _monlen = [_year, _mon] call SYG_monthLength; // new month may change day number

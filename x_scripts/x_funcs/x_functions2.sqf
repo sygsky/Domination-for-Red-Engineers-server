@@ -133,6 +133,18 @@ XfRndRadious = {
 		(sqrt((random _this)/_this))*_this
 };
 
+//
+// Finds random point in designated radius
+//
+// Call: [_posint, _rad] call SYG_rndPointInRad
+SYG_rndPointInRad = {
+	private ["_rad", "_center", "_angle"];
+	_rad    = (_this select 1) call XfRndRadious;
+	_center = _this select 0;
+	_angle  = random 360;
+	[ (_center select 0) + ( _rad * cos _angle), (_center select 1) + ( _rad * sin _angle) ]
+};
+
 // call as: _rad = [_rad1, _rad2] call XfRndOfAnnulus;
 XfRndRadiousInAnnulus = {
     private ["_r1", "_r2"];
