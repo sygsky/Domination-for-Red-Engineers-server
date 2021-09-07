@@ -81,6 +81,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 //		hint localize format["+++ deathSound: %1 war cry prepared => %2, lis of %3", count _arr, _arr, count _men];
 	};
 };
+
 // some kind of suicide? Say something about...
 
 // check if we are in water
@@ -125,6 +126,6 @@ if ( _unit call SYG_isWoman ) then {
 //#endif
 };
 
-hint localize format["deathSound: killer unknown, dmg %1	, sound ""%s""", damage _unit, _sound ];
+hint localize format["deathSound: killer unknown, dmg %1, sound ""%s""", damage _unit, _sound ];
 // let all to hear this sound, not only current player
 ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll;
