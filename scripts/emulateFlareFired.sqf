@@ -11,19 +11,16 @@ private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type",
 #define __COL    (_this select 2)
 #define __DIST   ((_this select 3)/1600)
 //#define __LOCAL (if(count _this < 5)then{false}else{_this select 4})
-
 //#define __DEBUG__
 
 _col = __COL;
-//_flare_type = "F_40mm_White"; // default flare type
 _flare_type = switch (toUpper(_col)) do {
-	case "RED":    { _flare_type = "F_40mm_Red";    };
-	case "GREEN":  { _flare_type = "F_40mm_Green";  };
-	case "YELLOW": { _flare_type = "F_40mm_Yellow"; };
-	default{ _flare_type = "F_40mm_White"; }; //	case "WHITE":  { _flare_type = "F_40mm_White";  };
+	case "RED":    { "F_40mm_Red"    };
+	case "GREEN":  { "F_40mm_Green"  };
+	case "YELLOW": { "F_40mm_Yellow" };
+	default        { "F_40mm_White"  }; //	default case "WHITE":  { "F_40mm_White"  };
 };
 
-hint localize format["+++ emulateFlareFired.sqf: _this = %1, %2", _this, if (isServer) then {"isServer"} else {"isClient"}];
 _pos = __POS;
 _alarm_obj = objNull;
 if ( typeName _pos == "OBJECT" ) then {
@@ -36,10 +33,13 @@ _pos set [ 1, (_pos select 1) + random 2];
 _pos set [ 2, __HEIGHT ];
 
 _factor = __DIST max 12.5; // if (_factor > 12.5) then { _factor = 12.5; };
+hint localize format["+++ emulateFlareFired.sqf: _this = %1, type %2, pos %3", _this, _flare_type, if (isServer) then {"on server"} else {"on client"}, _pos];
 
 #ifdef __DEBUG__
 hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4", _pos, __COL, _factor, _flare_type ];
 #endif
+
+//_flare = _flare_type createVehicle _pos;
 
 _flare = objNull;
 if ( isServer ) then {
@@ -50,14 +50,16 @@ if ( isServer ) then {
 
 if ( isNull _flare ) exitWith { hint localize format["--- emulateFlareFired.sqf: flare object not created (null) at pos %1", _pos]; };
 sleep 0.5;
-
+/*
 hint localize format["+++ emulateFlareFired.sqf: ""%1"" %2",
 	_col,
-	format[ "%1 ""%2"" flare is launched above %3",
+	format[ "%1 ""%2"" flare is launched above %3 %4",
 		if (local _flare) then {"local"} else {"global"},
 		typeOf _flare,
-		if (isNull _alarm_obj) then { "null" } else { typeOf _alarm_obj }]
+		if (isNull _alarm_obj) then { "null" } else { typeOf _alarm_obj },
+		if (isServer) then {"on Server"} else {"on Client"}]
 ];
+*/
 if ( isServer ) then {
 	// call on server as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
 	[ "flare_launched", [ _flare, _col, _factor] ] call XSendNetStartScriptClient; // run on all clients

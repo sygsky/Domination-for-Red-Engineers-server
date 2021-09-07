@@ -10,7 +10,7 @@
 };
 // Yeti has variable time offset, so I commented him
 SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", "Aron","White Jaguar"];
-SYG_localZones = [            0,          0,        0,    -4,           0,        +1,        +1,      +1,     +1,     +1,       +1,     +1,            -4 ];
+SYG_localZones = [            0,          0,        0,    -4,           0,        +1,        +1,      +1,     +1,     +1,       +1,     +1,            -4];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
@@ -357,7 +357,7 @@ XHandleNetStartScriptServer = {
 		    hint localize format["+++ Server send msg: %1", ["syg_plants_restored", arg(1), arg(2), arg(3)]];
 		};
 */
-/** Not used at all
+/** Not used on server
         case "say_sound": // say user sound from predefined vehicle/unit
 		{
 		    private ["_vehicle","_sound"];
@@ -432,6 +432,13 @@ XHandleNetStartScriptServer = {
             #endif
             ] execVM "scripts\baseillum\illumination_full.sqf"
         };
+#ifdef __DEBUG_FLARE__
+        // debug YELLOW flares over base object (e.g. FLAG_BSE)
+        case "yellow_flare_over_base" : {
+			[_this select 1, 150, "Yellow", 400] execVM "scripts\emulateFlareFired.sqf";
+        };
+
+#endif
 
         // ["log2server", _player_name,"literal_message_not_STR_NNN"]...
         case "log2server": {

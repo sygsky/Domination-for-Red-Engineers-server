@@ -1453,6 +1453,11 @@ if (__AIVer || d_para_at_base) then {
 FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
 #endif
 
+#ifdef __DEBUG_FLARE__
+FLAG_BASE addAction [">>> Client  flare", "scripts\testflareclient.sqf"];
+FLAG_BASE addAction [">>> Server flare", "scripts\testflareserver.sqf"];
+#endif
+
 #ifdef __TT__
 if (d_own_side == "WEST") then {
 	WFLAG_BASE addAction [localize "STR_FLAG_0","dlg\teleport.sqf"];
