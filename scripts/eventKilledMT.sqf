@@ -32,7 +32,7 @@ if ( !(isNull _killer) ) then{
 hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4, vUp %5.", _house, typeOf _killer, _name, damage _house, vectorUp _house];
 
 // Don't accept kill if done not by direct existing player action
-if ( !( isNull  _killer) ) then { // not NULL killer
+if ( !( isNull  _killer ) ) then { // not NULL killer
 
 	_killed = false;
 	if  ( _killer isKindOf "CAManBase" ) then {  // if killer is a man, check for his vehicle too
@@ -41,7 +41,7 @@ if ( !( isNull  _killer) ) then { // not NULL killer
 		_killed = alive ( vehicle _killer );  // if vehicle dead that is kamikadze one
 	};
 	If (_killed ) exitWith{};
-     hint localize format["--- MTTarget: resurrect tower on killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
+     hint localize format["*** MTTarget: resurrect tower on killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object
     if (!(_house isKindOf "House")) exitWith {};
@@ -70,9 +70,12 @@ if ( !( isNull  _killer) ) then { // not NULL killer
     _newhouse setVectorUp [0,0,1];
 
     // Send msg to anybody in radious of ### meters: "The %1 hit on the TV tower has gone to waste!". And play special gong sound
-    [ "msg_to_user", [200, _pos],  ["STR_SYS_311_0", name _killer], 0, 2, false, "gong_15" ] call XSendNetStartScriptClient;
+    if ( _killer isKindOf "CAManBase") then { _name = name _killer } else { _name = _killer };
+	_str = ("STR_TV_NUM" call SYG_getLocalizedRandomText); // ""Damn tower, it fell!..."
 
-    hint localize format["+++ MTTarget: tower %1(%2) vUp %3 restored, XCheckMTHardTarget is assigned to !", _newhouse, typeOf _newhouse, _vUp];
+	[ "msg_to_user", _name,  [ [_str] ], 0, 0, false, "gong_15" ] call XSendNetStartScriptClient;
+
+    hint localize format[ "+++ MTTarget: tower %1(%2) vUp %3 restored, XCheckMTHardTarget is assigned to !", _newhouse, typeOf _newhouse, _vUp ];
     // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
     [_newhouse] spawn XCheckMTHardTarget;
     _restored = true;
