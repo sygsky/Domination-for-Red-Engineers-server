@@ -894,9 +894,8 @@ XHandleNetStartScriptClient = {
 				};
 
 				if ( count _pos > 0 ) then { // emulate object to say sound
+					sleep (0.01 max (_this select 2));
 					_nil = "Logic" createVehicleLocal _pos; // use temp object to say sound
-					if ((_this select 2) <= 0 ) then {sleep 0.01}
-					else { sleep (_this select 2); };
 					_nil say (_x select 1);
 					sleep 0.01;
 					_sound = nearestObject [position _nil, "#soundonvehicle"];
