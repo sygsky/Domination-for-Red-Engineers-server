@@ -867,8 +867,8 @@ d_para_end_positions =
 
 // positions of the tanks in the sidemissions, where you have to destroy tanks
 d_sm_tanks_dir_array = [
-	[114.952,114.952,114.952,114.952,292.444,292.444],
-	[178.861, 178.861, 178.861, 0, 0, 273.398]
+	[115,115,115,115,292,292],
+	[179, 179, 179, 0, 0, 273]
 ];
 
 // enemy ai skill: [base skill, random value (random 0.2) that gets added to the base skill]

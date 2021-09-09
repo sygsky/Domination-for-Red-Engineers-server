@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_missions\common\x_sidetanks.sqf
 private ["_posi_array","_tank1","_tank2","_tank3","_tank4","_tank5","_tank6","_dirs","_m_nr","_tank_type"];
 if (!isServer) exitWith {};
 
@@ -83,7 +83,15 @@ _m_nr = nil;
 
 sleep 15.321;
 
-while {dead_tanks < 6} do {
+_play_sound = true;
+while { dead_tanks < 6 } do {
+	if ( _play_sound ) then {
+		if (dead_tanks > 0) then {
+			_play_sound = false;
+			sleep (2 + (random 2));
+			["say_sound", _posi_array select 0, SYG_tanks_sounds call XfRandomArrayVal] call XSendNetStartScriptClient; // play some sound now
+		};
+	};
 	sleep 5.321;
 };
 

@@ -444,10 +444,10 @@ if (typeName _camstart != "ARRAY" ) then {
 		_control1 = _XD_display displayCtrl 66667;
 		_control1 ctrlSetText _str;
 		_control1 ctrlShow true;
-		hint format["+++ x_intro.sqf: music text control = (%1)", ctrlText _control1];
+		hint localize format[ "+++ x_intro.sqf: music text control = (%1)", ctrlText _control1 ];
 	} else  {
 		_control1 = displayNull;
-		hint "--- x_intro.sqf: music text control npt created";
+		hint localize format[ "--- x_intro.sqf: music text control for ""%1"" not found", _this select 0 ];
 	};
 	sleep 3;
 //	_contol setText (localize "STR_TITLE");
@@ -461,10 +461,10 @@ if (typeName _camstart != "ARRAY" ) then {
 		//_control = _XD_display displayCtrl 66666;
 //		_control ctrlSetTextColor [_r,_r,_r,_r];
 		_control ctrlSetTextColor [_r,_g,_b,_r];
-		if ( _r <= 1) then {
+		if ( _r < 1) then {
 			_r = _r + _a;
 		} else {
-			if ( _g <= 1) then {
+			if ( _g < 1) then {
 				_g = _g + _a;
 			} else {
 				if ( _b <= 1) then {

@@ -32,10 +32,9 @@ _no = nearestObjects [_pos, _vecs, _radius];
 
 _cnt = 0;
 {
-	_vehicle = _x;
-	if (({alive _x} count (crew _vehicle)) == 0) then {
+	if (({alive _x} count (crew _x)) == 0) then {
 		_cnt = _cnt +1;
-		{deleteVehicle _x; sleep 3.321 } forEach [_vehicle] + (crew _vehicle);
+		{deleteVehicle _x; sleep 3.321 } forEach (crew _x) + [_x];
 	};
 } forEach _no;
 hint localize format["+++ x_deleteempty.sqf: deleted %1 veh[s] from %2 found (%3 types) in ""%4""", _cnt, count _no, count _vecs, _target select 1]; // debug printing

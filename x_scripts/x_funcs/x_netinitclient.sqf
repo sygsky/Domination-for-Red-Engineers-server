@@ -895,7 +895,7 @@ XHandleNetStartScriptClient = {
 
 				if ( count _pos > 0 ) then { // emulate object to say sound
 					sleep (0.01 max (_this select 2));
-					_nil = "Logic" createVehicleLocal _pos; // use temp object to say sound
+					_nil = "Logic" createVehicleLocal _pos; // use temp object to play sound
 					_nil say (_x select 1);
 					hint localize format["+++ say_sound ""%1""", (_this select 1)];
 					sleep 0.01;

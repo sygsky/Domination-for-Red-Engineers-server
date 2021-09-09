@@ -38,111 +38,53 @@ SYG_getVehicleType = {
 	_typeCfg = configFile >> _entry >> "Library" >> "type";
 	_entry = configFile >> _entry;
 	_typeNr = -1;
-	if ((configName _typeCfg) == "type") then 
-	{
+	if ((configName _typeCfg) == "type") then {
 		_typeNr = getNumber _typeCfg;
 		
-		if ((_typeNr < 0) || (_typeNr > 11)) then  // illegal number, may be overrriden
-		{
+		if ((_typeNr < 0) || (_typeNr > 11)) then {   // illegal number, may be overrriden
 			//Assign correct type id.
-			if ((configName(_entry >> "vehicleClass")) != "") then 
-			{
+			if ((configName(_entry >> "vehicleClass")) != "") then {
 				private ["_sim"];
 				_sim = getText(_entry >> "simulation");
 				
-				_typeNr = switch (_sim) do 
-				{
-					case "tank": 
-					{
-						if (getNumber(_entry >> "maxSpeed") > 0) then 
-						{
-							0
-						} 
-						else 
-						{
-							//Static.
-							2
-						};
+				_typeNr = switch (_sim) do {
+					case "tank":  {
+						if (getNumber(_entry >> "maxSpeed") > 0) then { 0}
+						else { 2 }; //Static.
 					};
-					
-					case "car": 
-					{
-						1
-					};
-					case "motorcycle":
-					{ 
-						1
-					};
-					
-					case "helicopter": 
-					{ 
-						3
-					};
-					
-					case "airplane": 
-					{ 
-						4
-					};
-					
-					case "ship": 
-					{ 
-						5
-					};
-					
-					case "soldier": 
-					{
-						11
-					};
+					case "car";
+					case "motorcycle": { 1 };
+					case "helicopter": { 3 };
+					case "airplane":  { 4 };
+					case "ship": { 5 };
+					case "soldier": { 11 };
 					default { -1 };
 				};
 			} // if ((configName(_entry >> "vehicleClass")) != "") then 
-			else // may be weapon
-			{
+			else  { // may be weapon
 				private ["_type"];
 				_type = getNumber (_entry >> "type");
 				
-				_typeNr = switch (_type) do 
-				{
+				_typeNr = switch (_type) do {
 					//Rifles.
-					case 1: 
-					{
-						6
-					};
+					case 1:  { 6 };
 					
 					//Sidearms.
-					case 2: 
-					{
-						8
-					};
+					case 2:  { 8 };
 					
 					//Launchers.
-					case 4: 
-					{
-						9
-					};
+					case 4:  { 9 };
 					
 					//Machineguns.
-					case 5: 
-					{
+					case 5: {
 						//Check autofire to see this is a machinegun.
-						if (getNumber(_entry >> "autoFire") == 1) then 
-						{				
-							7
-						} 
-						else 
-						{
-							//Probably a heavy sniper rifle.
-							6
-						};
+						if (getNumber(_entry >> "autoFire") == 1) then { 7 }
+						else  { 6 }; //Probably a heavy sniper rifle.
 					};
 					
-					default 
-					{
+					default  {
 						//Explosives?
-						if ((_type % 256) == 0) then 
-						{
-							10	
-						};
+						if ((_type % 256) == 0) then { 10 };
 					};
 				}; //switch (_type) do 
 			};
@@ -193,20 +135,13 @@ SYG_detectedEnemy = {
 	_enemy = objNull;
 	{
 	    _side = _x select 2;
-	    if ( _side == _eside) then
-	    {
+	    if ( _side == _eside) then {
 	        _target = _x select 4;
-	        if ( (_target isKindOf "LandVehicle") && ((_unit knowsAbout _target) >= 1.5)) then
-	        {
-	            if ( vehicle  _target != _target ) then // check vehicle to has crew
-	            {
-	                if ( ((crew (vehicle _target)) call XfGetAliveUnits) == 0 ) then
-	                {
-        	            _target = objNull;
-	                };
+	        if ( (_target isKindOf "LandVehicle") && ((_unit knowsAbout _target) >= 1.5)) then {
+	            if ( vehicle  _target != _target ) then { // check vehicle to has crew
+	                if ( ((crew (vehicle _target)) call XfGetAliveUnits) == 0 ) then { _target = objNull; };
 	            };
-	            if ( alive _target ) then
-	            {
+	            if ( alive _target ) then {
     	            if ( _cost < _x select 3) then {_cost = _x select 3; _enemy = _target}; // get maximum cost (danger)
     	        };
     	    };
@@ -222,10 +157,7 @@ SYG_detectedEnemy = {
 // 
 SYG_nearestEnemy = {
 	private ["_enemy","_distance","_near_targets","_pos_nearest"];
-	if (typeName _this == "GROUP") then
-	{
-   	    _this = leader _this;
-	};
+	if (typeName _this == "GROUP") then { _this = leader _this; };
 	if (isNull _this) exitWith{objNull};
 	_enemy = _this findNearestEnemy _this;
 	if (!(isNull _enemy) && (_this knowsAbout _enemy >= 0.5) && ((vehicle _enemy) isKindOf "CAManBase")) then {
@@ -234,9 +166,7 @@ SYG_nearestEnemy = {
 		if (count _near_targets > 0) then {
 			_pos_nearest = [];
 			{
-				if ((_x select 4) == _enemy) exitWith {
-					_pos_nearest = _x select 0;
-				};
+				if ((_x select 4) == _enemy) exitWith { _pos_nearest = _x select 0; };
 				sleep 0.001;
 			} forEach _near_targets;
 			_near_targets = nil;
@@ -290,32 +220,23 @@ SYG_nearestSoldierGroups = {
 	_nearArr = nearestObjects [_pos, _types, _dist];
 	{
 		// find good, healthy, fast and aggressive group for our man :o)
-		if ( _x isKindOf "CAManBase") then
-		{
-			if (canStand _x && ((side _x) == _side)) then
-			{
-				if (!(group _x in _grps)) then 
-				{
+		if ( _x isKindOf "CAManBase") then {
+			if (canStand _x && ((side _x) == _side)) then {
+				if (!(group _x in _grps)) then {
 					_grps = _grps + [group _x];
 					sleep 0.01;
 				};
 			};
-		}
-		else // not a man, check for a crew
-		{
-			if ( canStand _x) then
-			{
-				if (( {canStand _x} count crew _x) > 0 && (side _x == _side) ) then
-				{
+		} else  { // not a man, check for a crew
+			if ( canStand _x) then {
+				if (( {canStand _x} count crew _x) > 0 && (side _x == _side) ) then {
 					_unit = objNull;
 					{	
 						if ( canStand _x ) exitWith {_unit = _x;};
 					} forEach (crew _x);
 					
-					if ( !isNull _unit) then 
-					{
-						if (!(group _unit in _grps)) then 
-						{
+					if ( !isNull _unit) then  {
+						if (!(group _unit in _grps)) then {
 							_grps = _grps + [group _unit];
 							sleep 0.01;
 						};
