@@ -306,6 +306,8 @@ class CfgSounds {
 
     class chiz_tanki_1   {name = "Чиж. 'По танку вдарила болванка...'"; sound[] = {\sounds\defeat\chiz_tanki_1.ogg, db+10, 1.0}; titles[] = {}; }; // "The tank was hit by a dummy..." song of the ensemble " Chizh"
     class chiz_tanki_2   {name = "Чиж. 'Нас извлекут из под обломков...'"; sound[] = {\sounds\defeat\chiz_tanki_2.ogg, db+10, 1.0}; titles[] = {}; }; // "We will be pulled from under the rubble..." song of the ensemble " Chizh"
+    class tanki_grohotaly   {name = "На поел танки грохотали из фильма 'На войне как на войне' (1968)"; sound[] = {\sounds\defeat\tanki_grohotaly.ogg, db+10, 1.0}; titles[] = {}; }; // "Tanks rumbled in the field" "Tanks were rumbling in the field" folk song from the war 1941-1945 times
+
     class whatsapp       {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
 
     // Ranks messages

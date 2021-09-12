@@ -872,7 +872,8 @@ XHandleNetStartScriptClient = {
 */
 		//
 		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound, [,"-",_player_name]] or
-		//                                             ["say_sound","LIST", _arr, [,"-",_player_name]]  where _arr is array of [_object, _sound, sleep time]
+		//                                             ["say_sound","LIST", _arr, [,"-",_player_name]]  where _arr is array of [_object, _sound, sleep time] or
+		//                                             ["say_sound","PLAY", _sound]   - play sound with playSound Arma command
         case "say_sound": {
 
 			//
@@ -917,13 +918,13 @@ XHandleNetStartScriptClient = {
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
 
 		    _arr = [];
-
 		    if ( typeName (_this select 1) != "STRING") then {
 		    	_arr = [[_this select 1, _this select 2, 0, argopt(3,""), argopt(4,"")]]; // array of 1 item
-		    } else {
+		    } else { // 2nd arg is string and id "PLAY" sub-command
+		    	if ( (_this select 1) == "PLAY" ) exitWith { playSound (_this select 2); }; // as _arr = [], nothing momre will be produced
+		    	// it must be "LIST" sub-command
 		    	_arr = _this select 2
 		    };
-
 		    {
 		    	_x spawn _say_proc;
 		    }forEach _arr;

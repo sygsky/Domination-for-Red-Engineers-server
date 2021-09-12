@@ -507,7 +507,7 @@ SYG_playWeatherForecastMusic = {
 // returns: true if player is russian and sound played
 //          or false if not russian and sound not played
 //
-SYG_tanks_sounds = [ "chiz_tanki_1", "chiz_tanki_2" ];
+SYG_tanks_sounds = [ "chiz_tanki_1", "chiz_tanki_2","tanki_grohotaly" ];
 SYG_playDeathInTankSound = {
     if ( localize "STR_LANGUAGE" == "RUSSIAN") exitWith {
         if (random 3 > 1) then {playSound RANDOM_ARR_ITEM(SYG_tanks_sounds)} // Chiz song about tankists

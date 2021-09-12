@@ -245,7 +245,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = []; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base
+    _first_array = [29]; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base, 29 - tanks at Cabo Juventudo
     side_missions_random = _first_array + (side_missions_random - _first_array);
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
@@ -257,11 +257,9 @@ if (isServer) then {
         // forEach ranked_sm_array;
         {
             _ind = side_missions_random find _x;
-            if ( (_ind >= 0) && (_ind < _lowestPos) ) then // found, bump it to righter position in array
-            {
+            if ( (_ind >= 0) && (_ind < _lowestPos) ) then { // found, bump it to righter position in array
                 _val = _rankedSMArr select 0;
-                while { _val in _rankedSMArr } do
-                {
+                while { _val in _rankedSMArr } do {
                     _newInd = [_lowestPos, count side_missions_random] call XfGetRandomRangeInt;
                     _val = side_missions_random select _newInd;
                 };
