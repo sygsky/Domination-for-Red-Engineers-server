@@ -897,8 +897,8 @@ XHandleNetStartScriptClient = {
 				if ( count _pos > 0 ) then { // emulate object to say sound
 					sleep (0.01 max (_this select 2));
 					_nil = "Logic" createVehicleLocal _pos; // use temp object to play sound
-					_nil say (_x select 1);
-					hint localize format["+++ say_sound ""%1""", (_this select 1)];
+					_nil say (_this select 1);
+					hint localize format["+++ say_sound ""%1"" at pos", (_this select 1)];
 					sleep 0.01;
 					_sound = nearestObject [position _nil, "#soundonvehicle"];
 					if (isNull _sound) then {
@@ -910,7 +910,7 @@ XHandleNetStartScriptClient = {
 				} else {
 					sleep (_this select 2);
 					_obj say (_this select 1); // this is done on the client only you remember?
-					hint localize format["+++ say_sound ""%1""", (_this select 1)];
+					hint localize format["+++ say_sound ""%1"" at object", (_this select 1)];
 				};
 			};
 

@@ -667,7 +667,7 @@ XStealthPatrol = {
 
 //
 // Finds wreck vehicle on wreck service circle.
-// Wreck is defined as follow: vehicle has variable "RECOVERABLE" of veriable space and has damage >= 1
+// Wreck is defined as follow: vehicle has variable "RECOVERABLE" in personal variable space and has damage >= 1
 //
 XGetWreck = {
 	private ["_no","_rec"];
@@ -676,13 +676,8 @@ XGetWreck = {
 	_no = _no select 0;
 	if ( (damage _no) < 1 ) exitWith { objNull };
 //	hint localize format["+++ XGetWreck: %1 on recovery service", typeOf _no];
-	_rec = _no getVariable "RECOVERABLE";
-	if (isNil "_rec") exitWith {
-//		hint localize format["+++ XGetWreck: %1 on recovery service, but ""RECOVERABLE"" isNil", typeOf _no];
-		objNull
-	};
-	if (!_rec) exitWith {
-//		hint localize format["+++ XGetWreck: %1 on recovery service, but ""RECOVERABLE"" == false", typeOf _no];
+	if ( ! (_no call SYG_vehIsRecoverable) ) exitWith {
+//		hint localize format["+++ XGetWreck: %1 on recovery service, but vehicle is not "RECOVERABLE"", typeOf _no];
 		objNull
 	};
 	if ( (damage _no) >= 1 ) exitWith { _no };

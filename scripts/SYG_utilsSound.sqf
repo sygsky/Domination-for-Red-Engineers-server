@@ -483,7 +483,7 @@ SYG_getMusicName = {
 
 // static randomized sound assigned on the first call to this fanction
 SYG_getSuicideScreamSound  = {
-    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 15))};  // 0-13
+    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 15))};  // 0-14
     SYG_suicideScreamSound
 };
 
