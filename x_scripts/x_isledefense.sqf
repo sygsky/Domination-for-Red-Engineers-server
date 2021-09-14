@@ -6,7 +6,7 @@ private ["_i", "_j", "_ret", "_make_isle_grp", "_replace_grp", "_remove_grp",
 		"_igrpa", "_igrp", "_make_new", "_units","_igrppos", "_leader",
 		"_unit","_veh", "_count","_feetmen","_invalid_men","_str","_vtype",
 		"_grp_array","_cnt","_cnt1","_delay","_goal_grp","_locname","_loc","_dir","_dist","_pos1","_pos2",
-		"_show_absence","_patrol_cnt","_exit"];
+		"_show_absence","_patrol_cnt","_exit","_patrol_type"];
 		
 if (!isServer) exitWith {};
 
@@ -262,7 +262,7 @@ _remove_grp = {
 //					    ["msg_to_user", _plist,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
 					["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
 //					};
-				} else { // remove all units in vehicles. Why not delete them? May be they will append to any enemy group nearby?
+				} else { // remove all units in vehicles. Todo: Why not delete them? May be they will append to any enemy group nearby?
 					{
 						_x action["Eject", vehicle _x]; 
 //						sleep 0.33;
@@ -493,7 +493,7 @@ _dead_patrols = 0; // how many patrols are currently dead
 _show_absence = false; // disable patrol absence message at start as patrol are still absent
 
 // send info about first patrol on island
-["msg_to_user","",[["STR_SYS_1146"]],0, 10 + random 10] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
+["msg_to_user","",[["STR_SYS_1146",format["STR_PATROL_TYPE_%1",_patrol_type]]],0, 10 + random 10] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
 
 _exit = false; // exit from nearly eternal loop
 //_patrol_cnt = 0; // active patrol counter
@@ -804,6 +804,4 @@ while { true } do {
         sleep 10;
         // "The GRU reports that the enemy abandoned his plans to patrol the island! This is our victory!"
         ["msg_to_user","",[["STR_SYS_1147"]],0,4 + round(random 4), false, "fanfare"] call XSendNetStartScriptClient;
-        hint localize "+++ x_isledefense.sqf: stop isle defence system as all target towns are liberated !!!";
-    };
-}; // while 
+        hint localize "+++ x_isledefense.sqf: stop isle defence system as a
