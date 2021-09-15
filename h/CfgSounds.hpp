@@ -264,6 +264,18 @@ class CfgSounds {
     class doggy { name="Red Neck Doggy!"; sound[] = {\sounds\defeat\laughter\doggy.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class score { name="Score!"; sound[] = {\sounds\defeat\laughter\score.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
+    class disagreement_tongue { name="joy laugh"; sound[] = {\sounds\defeat\laughter\disagreement_tongue,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class joy_yes             { name="joy laugh"; sound[] = {\sounds\defeat\laughter\joy_yes.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class disagreement        { name="disagreement"; sound[] = {\sounds\defeat\laughter\disagreement.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class surprize            { name="surprize"; sound[] = {\sounds\defeat\laughter\surprize.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class sarcasm             { name="sarcasm"; sound[] = {\sounds\defeat\laughter\sarcasm.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class yes_yes2            { name="yes yes"; sound[] = {\sounds\defeat\laughter\yes_yes2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class busted2             { name="busted"; sound[] = {\sounds\defeat\laughter\busted2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class joy_laugh2          { name="joy laugh"; sound[] = {\sounds\defeat\laughter\joy_laugh2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class joy_laugh           { name="joy laugh"; sound[] = {\sounds\defeat\laughter\joy_laugh.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+
+// "E:\Bin\ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\defeat\laughter\joy_laugh.ogg"
+
     class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation3 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\3.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation

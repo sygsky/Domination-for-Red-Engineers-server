@@ -184,7 +184,9 @@ SYG_getLaughterSound =
     "good_job","game_over","get_some","go_go_go","cheater","busted",
     "greatjob1","greatjob2","fight","handsup","indeanwarcry",
     "targetdown47","targetdown01","bastards","clear", "shoot_MF","target_neutralised",
-    "tasty","doggy","score"] call XfRandomArrayVal
+    "tasty","doggy","score",
+    "disagreement_tongue","joy_yes","disagreement","surprize","sarcasm","yes_yes2","busted2","joy_laugh2","joy_laugh"
+    ] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)
 // call: _unit call SYG_playRandomDefeatTrackByPos;

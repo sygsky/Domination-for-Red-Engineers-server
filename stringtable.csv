@@ -1364,7 +1364,7 @@ STR_SPPM_ADD_ERR_1,New SPPM creation error: can't generate good marker name,Neue
 STR_SPPM_ADD_ERR_2,SPPM not created: no suitable vehicles in the vicinity,SPPM nicht erstellt: keine Fahrzeuge,SPPM no creado: no hay vehículos,СППМ не создан: подходящие транспортные средства отсутствуют
 STR_SPPM_ADD_ERR_3,The nearest SPPM is at %1 m. Move the vehicle closer to it.,Der nächstgelegene SPPM ist bei %1 m. Fahr das Fahrzeug näher ran.,El SPPM está en %1 m. Acerque el vehículo a él.,Есть СППМ на дистанции %1 м. Переместите  транспортное средство ближе к нему.
 STR_SPPM_ADD_ERR_4,New SPPM center is too close to the near SPPM. Move or combine them,Das neue SPPM-Zentrum liegt zu nahe am nahen SPPM. Verschieben oder kombinieren Sie sie,El nuevo centro de SPPM está demasiado cerca del SPPM cercano. Muévelos o combínalos,Центр нового СППМ слишком близок к существующему. Разнесите/объедините эти два СППМ
-STR_SPPM_ADD_SUCCESS,SPPM successfully created,SPPM wurde erfolgreich erstellt!,¡El SPPM ha sido creado con éxito!,СППМ успешно создан!
+STR_SPPM_ADD_SUCCESS,SPPM successfully created (%1 m),SPPM wurde erfolgreich erstellt (%1 m)!,¡El SPPM ha sido creado con éxito (%1 m)!,СППМ успешно создан (%1 м)!
 
 STR_LIGHTHOUSE_KILLED,"Lighthouse near %1 destroyed","Leuchtturm bei %1 zerstört","Faro cerca de %1 destruido","Маяк близ %1 уничтожен"
 STR_LIGHTHOUSE_SIREN,"Siren on/off","Sirene ein/aus","Activación/desactivación de la sirena","Вкл/выкл сирену"

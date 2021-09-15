@@ -177,7 +177,7 @@ SYG_addSPPMMarker = {
 //	hint localize format["+++ SYG_addSPPMMarker: marker %1 assigned to road cone", _marker];
 //#endif
 	SYG_SPPMArr set [ count SYG_SPPMArr, _cone ];	// put new object to the list
-	"STR_SPPM_ADD_SUCCESS"
+	["STR_SPPM_ADD_SUCCESS", round( _pos distance _cone)]
 };
 
 // Update one designated SPPM
