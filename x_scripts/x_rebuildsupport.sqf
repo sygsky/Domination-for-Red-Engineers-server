@@ -57,16 +57,13 @@ _pos = [_pos select 0,_pos select 1, 0];
 deleteVehicle _no;
 sleep 1.021;
 
-if (!_is_engineer) then
-{
+if (!_is_engineer) then {
    (localize "STR_SYS_214_1") call XfHQChat; // "The service is being repaired at the expense of the engineering Fund..."
-}
-else
-{
+} else {
 #ifdef __ADD_SCORE_FOR_FACTORY_SUPPORT__
-   (localize "STR_SYS_214_2") call XfHQChat; // "Restore support building. This will take some time and add more scores..."
+   (format[localize "STR_SYS_214_2", d_ranked_a select 20]) call XfHQChat; // "Restore support building. This will take some time and add more scores..."
 #else
-   (localize "STR_SYS_214") call XfHQChat; // "Restore support building. This will take some time and scores..."
+   (format [ localize "STR_SYS_214", d_ranked_a select 20]) call XfHQChat; // "Restore support building. This will take some time and scores..."
 #endif
 };
 

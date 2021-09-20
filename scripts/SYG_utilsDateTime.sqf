@@ -42,7 +42,7 @@ if ( !isNil "SYG_timeStart" ) exitWith {};
 // set some internal info
 SYG_timeStart = time;
 SYG_dateStart = date;
-hint localize format["SYG_utilsDateTime.sqf: init with SYG_timeStart = %1, SYG_dateStart = %2, daytime = %3", SYG_timeStart, SYG_dateStart, daytime ];
+hint localize format["+++ SYG_utilsDateTime.sqf: init with SYG_timeStart = %1, SYG_dateStart = %2, daytime = %3", SYG_timeStart, SYG_dateStart, daytime ];
 
 // creates 1 digit number as 2 symbol string, adding zero before dogit
 SYG_twoDigsNumber0 = {
@@ -66,7 +66,7 @@ SYG_dateToStr = {
 		if (count _this > 5) then { _str = (_this select 5) call SYG_twoDigsNumber0;} else { _str = "00";};
 		format["%1.%2.%3 %4:%5:%6",(_this select 2) call SYG_twoDigsNumber0,(_this select 1) call SYG_twoDigsNumber0, _this select 0, (_this select 3) call SYG_twoDigsNumber0, (_this select 4) call SYG_twoDigsNumber0, _str]
 	} else {
-		format["-- SYG_dateToStr: expected date format illegal:'%1'",_this]
+		format["--- SYG_dateToStr: expected date format illegal:'%1'",_this]
 	};
 };
 
