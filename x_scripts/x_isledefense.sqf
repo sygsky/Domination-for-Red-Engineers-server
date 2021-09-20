@@ -80,7 +80,7 @@ sleep DELAY_BEFORE_SCRIPT_START;
 
 // TODO: the closer to the mission finish, the heavier must be patrols
 // some patrol types are more frequently generated
-//                         HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
+//                     HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
 
 #endif
