@@ -6,7 +6,10 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __DEBUG_SM__  // if defined, no enemy will be created
+// #define __DEBUG_SM__  // if defined, no enemy will be created
+#ifdef __DEBUG_SM__
+hint localize "*** __DEBUG_SM__ is defined in x_missions\common\x_sideprisoners.sqf !!!";
+#endif
 
 _posi_a = _this select 0;
 _pos = _posi_a select 0;
