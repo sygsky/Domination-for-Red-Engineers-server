@@ -153,7 +153,7 @@ while { true } do {
                 _cnt_null = _cnt_null + 1;
 			};
 		} forEach _items_to_clean; // clean  all garbages (especially  bombs, WeaponHolders and dead Apaches) from the base area
-		_str = format[ "cnt %1: men alv %2/ded %3, zmb %4, car %5, w/h %6%7, bmb %8, grb %8, nul %10",
+		_str = format[ "cnt %1: men alv %2/ded %3, zmb %4, car %5, w/h %6%7, bmb %8, grb %8, null %10",
 		     _cnt, _cnt_alive, _cnt_dead, _cnt_zombi, _cnt_car, _cnt_holder, if (_cnt_holder_water > 0) then {format["(water %1)", _cnt_holder_water]} else {""}, _cnt_pb, _cnt_garbage, _cnt_null ];
 		_items_to_clean = [];
 		sleep 15;
