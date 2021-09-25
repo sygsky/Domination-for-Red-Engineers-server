@@ -589,18 +589,22 @@ if ( isNil "player_is_on_town_raid" ) then {
 		_str = _str + localize "STR_GRU_44" + "\n";
 	};
 	if (!isNil "d_on_base_groups") then {
-	    _not_empty = false;
+	    _cnt = 0;
 	    {
-	        if ( ({alive _x} count (units _x)) > 0 ) exitWith {_not_empty = true;};
+	        _cnt = _cnt + ({alive _x} count (units _x));
 	    } forEach d_on_base_groups;
 
-	    if ( _not_empty ) then {
-	        _str = _str + localize "STR_GRU_47" + "\n";
+	    if ( _cnt < 3 ) exitWith {
+	        _str = _str + localize "STR_GRU_47_0" + "\n";
 	    };
+	    if ( _cnt < 6 ) exitWith {
+	        _str = _str + localize "STR_GRU_47_1" + "\n";
+	    };
+        _str = _str + localize "STR_GRU_47_2" + "\n";
 	};
 	_str = _str + localize "STR_SYS_56" + "\n"; // "Just a rumor:"
 } else {
-	_str = format[localize "STR_SYS_606",argp(player_is_on_town_raid,0),argp(player_is_on_town_raid,1),argp(player_is_on_town_raid,2),[time, argp(player_is_on_town_raid,3)] call SYG_timeDiffToStr] +  "\n\n" + localize "STR_SYS_56_1" + "\n"""; // GRU mission etc ...;
+	_str = ()format[localize "STR_SYS_606",argp(player_is_on_town_raid,0),argp(player_is_on_town_raid,1),argp(player_is_on_town_raid,2),[time, argp(player_is_on_town_raid,3)]) call SYG_timeDiffToStr] +  "\n\n" + localize "STR_SYS_56_1" + "\n"""; // GRU mission etc ...;
 };
 
 // Check for last infiltation time

@@ -57,14 +57,16 @@ STR_GRU_46_4,num. %1 unit[s],die Num. %1 Fahrzeug[s],", num. %1 unidades.",", ч
 STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
 STR_GRU_46_6,"You have seized this car from the patrol. Make good use of it!",Sie haben dieses Fahrzeug von der Streife beschlagnahmt. Nutzen Sie es gut aus!,"Avete sequestrato quest'auto alla pattuglia. Fatene buon uso!","Вы захватили эту машину у патруля, используйте её с толком!"
 
-STR_GRU_47,Enemy activity detected near the base,Feindliche Aktivitäten erkannt in der Nähe der Basis,Actividad enemiga detectada cerca de la base,Вражеская активность обнаружена неподалёку от базы
+STR_GRU_47_0,Weak enemy activity detected near the base,Schwache feindliche Aktivitäten in der Nähe des Stützpunkts entdeckt,Actividad débil del enemigo detectada cerca de la base,Слабая вражеская активность обнаружена неподалёку от базы
+STR_GRU_47_1,Average enemy activity detected near the base,Durchschnittliche Feindaktivität in der Nähe der Basis,Actividad enemiga media detectada cerca de la base,Средняя вражеская активность обнаружена неподалёку от базы
+STR_GRU_47_2,Significant enemy activity detected near the base,Erhebliche feindliche Aktivitäten in der Nähe des Stützpunktes entdeckt,Se detecta una actividad enemiga significativa en las proximidades de la base,Существенная вражеская активность обнаружена неподалёку от базы
 STR_GRU_48,"Local %1 report that the king has left the building and found another asylum, not further than %2 m. from hotel","Lokale %1 berichten, dass der king hat das Gebäude verlassen und fand eine andere Asyl, nicht weiter als %2 m. vom hotel","%1 local informa que el rey ha abandonado el edificio y ha encontrado otro refugio, no más de %2 m. desde el hotel","Местные %1 сообщают, что король покинул здание и нашёл другое убежище, не далее %2 м. от отеля"
 STR_GRU_49,Enemies have here a good trophy,Feinde haben hier eine gute Trophäe,Los enemigos aquí pueden obtener un trofeo,У врагов тут можно разжиться трофеем
 STR_GRU_49_1,The enemies here have a nice booty,Die Feinde haben eine schöne Beute,Los enemigos aquí pueden obtener varios trofeos,У врагов здесь можно разжиться несколькими трофеями
 
 STR_GRU_50,"The guerrillas reported: enemy patrols noticed on the island, %1 PCs.","Die Guerilla berichtet: feindliche Patrouillen bemerkt, auf der Insel, %1 Stck.","La resistencia informa: se han avistado patrullas en la isla, %1.","Сопротивление информирует: на острове замечены патрули, %1 шт."
 STR_GRU_51,"The locals report that the patrols are not visible. But they may be wrong","Gerüchten zufolge gibt es derzeit keine Militärpatrouillen, aber dies sind nur Gerüchte","Los lugareños informan que las patrullas no son visibles. Pero pueden estar equivocados","Местные сообщают, что патрулей не видно. Но они могут и ошибаться"
-STR_GRU_52,At the airbase air assault still have not yet been seen.,Auf der airbase desants noch noch nicht gesehen.,Las tropas en la base R - no se han observado todavía.,Десантов в р-не базы ещё не наблюдалось.
+STR_GRU_52,No landing parties in the vicinity of the base.,Keine Landungstrupps in der Nähe des Stützpunktes.,No hay grupos de desembarco en los alrededores de la base..,Десантов в р-не базы не наблюдается.
 
 STR_GRU_53,GRU reports that the enemy aircraft carrier launched procedures for the flight of some %1,"GRU berichtet, dass das feindliche Flugzeug startete eine Träger-flight-Verfahren über %1",GRU informa que el portaaviones enemigo comenzó a prepararse para la salida de algún %1,"ГРУ сообщает, что на вражеском авианосце начали готовить к вылету какой-то %1"
 STR_GRU_53_MIMG,helicopter,Helikopter,helicóptero,вертолёт
