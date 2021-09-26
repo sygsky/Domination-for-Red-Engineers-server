@@ -9,6 +9,8 @@ if (!isServer) exitWith {};
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
+#define MIN_SABOTAGE_LIMIT_TO_START_NEXT_GROUP 10 // how many alive sabotages must exist to not send next group to infiltrate base
+
 #define __PRINT__
 
 // to debug sabotages with short intervals between infiltrations
@@ -109,8 +111,8 @@ while { true } do {
 		_cnt_holder       = 0; // all weapon holders
 		_cnt_holder_water = 0; // weapon holders in water
 		_cnt_null         = 0; // null objects (nullified after time out)
-		_cnt_pb           = 0;  // pipe bombs
-		_cnt_garbage      = 0;  // all other types
+		_cnt_pb           = 0; // pipe bombs
+		_cnt_garbage      = 0; // all other types
 		_cnt_zombi        = 0; // detected zombi
 		{
 			if ( !isNull _x ) then {
@@ -254,8 +256,10 @@ while { true } do {
 	};
 	//__DEBUG_NET("+++x_infiltrate.sqf",(call XPlayersNumber))
 
-	// start sabotage only if alive sabotage count < 10
-	if (( call _alive_sabotage ) < 10 ) then {
+	// start sabotage only if alive sabotage count <  MIN_SABOTAGE_LIMIT_TO_START_NEXT_GROUP
+	_alive_cnt = ( call _alive_sabotage );
+	if ( _alive_cnt <  MIN_SABOTAGE_LIMIT_TO_START_NEXT_GROUP ) then {
+		hint localize format["+++ x_infiltrate: %1 sabotage[s] found, next infiltration STARTED", _alive_cnt];
 		// Sabotage drop zones array
 		_ind = floor random (count _drop_zone_arr); // 0 or 1 is used
 		_rect =  _drop_zone_arr select _ind; // call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
@@ -293,7 +297,9 @@ while { true } do {
 	#ifdef __PRINT__
 		hint localize format["+++ x_infiltrate.sqf: started at %1 on pnt %2", date, _msg ];
 	#endif
-	}; // if ((call _alive_sabotage) < 10) then {
+	} else {  // if ((call _alive_sabotage) < 10) then {
+		hint localize format["+++ x_infiltrate: %1 sabotage[s] found, next infiltration STOPPED", _alive_cnt];
+	};
 #ifdef __DEBUG__
 	sleep 1200; // 20 mins to kill them all or be down himself
 #else

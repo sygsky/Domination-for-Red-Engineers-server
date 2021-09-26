@@ -46,7 +46,7 @@ _replaceFire = {
 			sleep 0.5;
 			_this = createVehicle [_nextType, _pos, [], 0, "NONE"];
 #ifdef __PRINT_FIRE__
-			hint localize format[ "sabotage.sqf. replaceFire: Fire changed to ""%1"" at pos %2", _nextType, _pos ];
+			hint localize format[ "sabotage.sqf. replaceFire: campfire changed to ""%1"" at pos %2", _nextType, _pos ];
 #endif			
 		};
 	};
@@ -424,14 +424,14 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	};
 
     //
-	// check fire state near leader
+	// check campfire state near leader
 	//
 	_leader = _grp call SYG_getLeader;
 	if ( alive _leader ) then {
           _no = nearestObjects [_leader, ["Fire","FireLit"], FIRE_DISTANCE_TO_LIT];
           {
             if (typeOf _x == "Fire") then {
-                // light this fire
+                // light this campfire
                 _x call _replaceFire;
             } else {
 #ifdef __PRINT_FIRE__
@@ -473,7 +473,7 @@ if ( _debug ) then
 #endif
 
 if (true) exitWith {
-    // supress any fire lit too long time
+    // supress any campfire lit too long time
     {
 #ifndef __TT__
         _pos = getPos FLAG_BASE;
@@ -485,7 +485,7 @@ if (true) exitWith {
         if (count _no > 0 ) then {
 #ifdef __PRINT__
            if (count d_on_base_groups == 0) then {
-               hint localize format["+++ sabotage.sqf: --- Exiting sabotage, all groups are dead, finishing %1 fire[s]", count _no];
+               hint localize format["+++ sabotage.sqf: --- Exiting sabotage, all groups are dead, finishing %1 campfire[s]", count _no];
            };
 #endif
             {

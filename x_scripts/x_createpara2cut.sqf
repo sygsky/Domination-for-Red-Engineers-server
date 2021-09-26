@@ -1,6 +1,6 @@
 ﻿// by Xeno, Sygsky, Snooper(Agent)
 //
-// x_createpara2cut.sqf : working version of desant to the base script
+// x_scripts\x_createpara2cut.sqf : working version of desant to the base script
 //
 // Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
@@ -253,7 +253,6 @@ if (_ejected) then { // create sabotage group
 #ifdef	__DEBUG_PRINT__
                         hint localize format["x_createpara2.sqf: prev. group id %1 (of %2 alive saboteur[s]) joined to this one", _i, _cnt];
 #endif
-
                         (units _grp) join _paragrp;
                         sleep 1.04;
                     };

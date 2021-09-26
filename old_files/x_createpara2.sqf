@@ -1,6 +1,6 @@
 ﻿// by Xeno
 //
-// x_createpara2.sqf : not used anymore
+// x_createpara2.sqf : old version, not used anymore
 //
 // Creates paratroopers for base invasion, eject them and follow heli up to the final moment
 //
