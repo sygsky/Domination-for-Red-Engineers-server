@@ -25,10 +25,8 @@ SYG_checkLastSoundRepeated= {
     private ["_item","_ind","_ind0"];
     _ind = floor(random(count _this));
     _item = _this select _ind;
-    if ( count _this > 1 ) then
-    {
-        if ( str(_item) == SYG_lastPlayedSoundItem ) then
-        {
+    if ( count _this > 1 ) then {
+        if ( str(_item) == SYG_lastPlayedSoundItem ) then {
             _ind0 = floor( random( ( count _this ) - 1 ) );
             if ( _ind0 >= _ind ) then { _ind0  = _ind0 + 1 };
             _item = _this select _ind0;

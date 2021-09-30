@@ -480,6 +480,10 @@ SYG_patrolGroupNumber = {
 	{!isNull (_x select PARAM_GROUP)} count SYG_isle_grps;
 };
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ++++++++++++++++++++++++++++++++++++++++ START OF PATROLS ++++++++++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 // if this is re-run of script, count already existing patrol groups
 _patrol_cnt = d_with_isledefense select 4;
 _patrol_cnt = (_patrol_cnt - (count SYG_isle_grps)) max 0; // how many patrol to add to normal count
@@ -492,8 +496,8 @@ if ( _patrol_cnt > 0) then {
 _dead_patrols = 0; // how many patrols are currently dead
 _show_absence = false; // disable patrol absence message at start as patrol are still absent
 
-// send info about first patrol on island
-["msg_to_user","",[["STR_SYS_1146",format["STR_PATROL_TYPE_%1",_patrol_type]]],0, 10 + random 10] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
+// send info about starting of patrolling of island
+["msg_to_user","",[["STR_SYS_1146"]],0, 10 + random 10] call XSendNetStartScriptClient; // "GRU reports that the enemy began patrolling the island with armored forces"
 
 _exit = false; // exit from nearly eternal loop
 //_patrol_cnt = 0; // active patrol counter

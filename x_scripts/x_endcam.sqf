@@ -80,7 +80,7 @@ waitUntil {camCommitted _camera};
 _camera cameraEffect ["terminate","front"];
 camDestroy _camera;
 
-3 FADEMUSIC 0;
+3 fadeMusic 0;
 
 if (true) exitWith {};
 

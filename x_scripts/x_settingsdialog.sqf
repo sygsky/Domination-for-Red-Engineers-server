@@ -327,8 +327,11 @@ _str = _str + localize"STR_SYS_350" + str(d_sub_tk_points) + "\n"; // "Points a 
 _str = _str + (localize "STR_SYS_1202") + str(abs(d_sub_kill_points)) + "\n"; // "Player points that get subtracted after death: "
 _str = _str + (localize "STR_SYS_1203") + str(d_ranked_a select 0) + "\n"; // "Points an engineer needs to service a vehicle: "
 _str = _str + (localize "STR_SYS_1204");                                                    // "Points an engineer gets for servicing: "
-_str = _str + (localize "STR_SYS_1204_1") + str((d_ranked_a select 1) select 0) + (localize "STR_SYS_1204_2") + str((d_ranked_a select 1) select 1) + (localize "STR_SYS_1204_3") + str((d_ranked_a select 1) select 2) + "\n"; // (air vec), (tank), (car)
-_str = _str + (localize "STR_SYS_1204_4") + str((d_ranked_a select 1) select 3) + "\n"; // (other)
+_str = _str + (localize "STR_SYS_1204_1") + str((d_ranked_a select 1) select 0)
+			+ (localize "STR_SYS_1204_2") + str((d_ranked_a select 1) select 1)
+			+ (localize "STR_SYS_1204_3") + str((d_ranked_a select 1) select 2)
+			+ (localize "STR_SYS_1204_4") + str((d_ranked_a select 1) select 3)
+			+ "\n"; // (air vec), (tank), (car), (other)
 _str = _str + (localize "STR_SYS_1204_5") + str(d_ranked_a select 13) + "\n";   // "Points an engineer needs to rebuild the support buildings at base: "
 _str = _str + (localize "STR_SYS_1205") + str(d_ranked_a select 2) + "\n";         // "Points an artillery operator needs for a strike: "
 if (__AIVer) then {
@@ -594,6 +597,9 @@ if ( isNil "player_is_on_town_raid" ) then {
 	        _cnt = _cnt + ({alive _x} count (units _x));
 	    } forEach d_on_base_groups;
 
+		if (_cnt == 0) exitWith {
+	        _str = _str + localize "STR_GRU_47" + "\n";
+		};
 	    if ( _cnt < 3 ) exitWith {
 	        _str = _str + localize "STR_GRU_47_0" + "\n";
 	    };
@@ -604,7 +610,11 @@ if ( isNil "player_is_on_town_raid" ) then {
 	};
 	_str = _str + localize "STR_SYS_56" + "\n"; // "Just a rumor:"
 } else {
-	_str = ()format[localize "STR_SYS_606",argp(player_is_on_town_raid,0),argp(player_is_on_town_raid,1),argp(player_is_on_town_raid,2),[time, argp(player_is_on_town_raid,3)]) call SYG_timeDiffToStr] +  "\n\n" + localize "STR_SYS_56_1" + "\n"""; // GRU mission etc ...;
+	_str1 = [time, argp(player_is_on_town_raid,3)] call SYG_timeDiffToStr;
+	_str = format[localize "STR_SYS_606", argp(player_is_on_town_raid,0), argp(player_is_on_town_raid,1), argp(player_is_on_town_raid,2), _str1]
+		+ "\n\n"
+		+ localize "STR_SYS_56_1"
+		+ "\n"""; // GRU mission etc ...;
 };
 
 // Check for last infiltation time

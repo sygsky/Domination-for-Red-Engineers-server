@@ -2,8 +2,6 @@
 
 class CfgMusic {
 
-	tracks[]={Varshavianka,Varshavianka_eng,warschawyanka_german,grant}; // TODO: try to access music classes from intto to get name text for printing during intro  video
-
 //+++++++++++++++++++++++++++++++++++++++++++++ INTRO MUSIC +++++++++++++++++++++++++++++++++++++++++++
 
 // Revolution day intro music

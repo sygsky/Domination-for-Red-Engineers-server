@@ -449,4 +449,24 @@ class CfgSounds {
 		titles[]={};
 	};
 #endif
+
+	// define some music (for Rokse [LT]) as sounds to debug "burnash","johnny","druzba","adjutant","vague","enchanted_boy","ahead_friends","mission_impossible","lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice:
+	class burnash	{ name="";	      sound[]=   {\sounds\burnash.ogg,db-1,1.0};   titles[] = {};    };
+	class johnny    { name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};   titles[] = {};     };
+	class druzba    { name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};    titles[] = {};    };
+	class adjutant  { name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};  titles[] = {};    };
+	class vague     { name="";        sound[]=   {\sounds\intro\vague.ogg,db-1,1.0}; titles[] = {};  };
+	class enchanted_boy { name="";    sound[]=   {\sounds\intro\enchanted_boy.ogg,db-1,1.0};  titles[] = {}; };
+
+	class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0};  titles[] = {}; };
+	class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0};  titles[] = {}; };
+	class               lastdime { name=""; sound[]= {\sounds\intro\lastdime.ogg,db-1,1.0};    titles[] = {};  };
+//    class              lastdime1 { name=""; sound[]= {\sounds\intro\lastdime1.ogg,db-1,1.0};  titles[] = {};    };
+	class              lastdime2 { name=""; sound[]= {\sounds\intro\lastdime2.ogg,db-1,1.0};  titles[] = {};    };
+	class              lastdime3 { name=""; sound[]= {\sounds\intro\lastdime3.ogg,db-1,1.0};    titles[] = {};  };
+	class      esli_ranili_druga { name=""; sound[]= {\sounds\intro\esli_ranili_druga.ogg,db-1,1.0};  titles[] = {};    };
+	class        soviet_officers { name=""; sound[]= {\sounds\intro\holidays\feb_23\soviet_officers.ogg,db-1,1.0}; titles[] = {};  };
+	class    travel_with_friends { name=""; sound[]= {\sounds\intro\travel_with_friends.ogg,db-1,1.0}; titles[] = {};  }; // Sovier children song
+	class            on_thin_ice { name=""; sound[]= {\sounds\intro\on_thin_ice.ogg,db-1,1.0}; titles[] = {};  }; // from Soviet film "On thin ice"
+
 };

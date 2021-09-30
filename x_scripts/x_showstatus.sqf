@@ -353,9 +353,9 @@ if (current_target_index != -1) then {
 				localize "STR_SEC_8_0" // 0 - in the buildings
 			} else { localize "STR_SEC_8_1" }; // 1 - out of the building
 			_s = format["%1\n%2", _s, _s1];
-			_max_dist = 200; // for outdoor stash
+//			_max_dist = 200; // for outdoor stash
+			_max_dist = 100; // for indoor stash
 			if (count _list == 0 ) then { // it must be indoor box, specify its correct type
-				_max_dist = 100; // for indoor stash
 				_box_west =
 				#ifdef __ACE__
 					"ACE_AmmoBox_West";
@@ -380,7 +380,9 @@ if (current_target_index != -1) then {
 			if ( count _list == 0 ) then { _s1 = localize "STR_SEC_8_14" } // "Where is the damn stash?"
 			else {
 				// add more info on stash (approximate) distance
+				#ifdef __OLD__
 				_rank_id = (player call XGetRankIndexFromScoreExt) max 1; // rank index with min value of 1
+				#endif
 				_rank = player call XGetRankStringLocalized; // localized rank name
 //				if (_rank_id == 0) exitWith { _s1 = format[localize "STR_SEC_8_10", _rank]; }; // "As a ranking private, you're sure you don't understand anything."
 				// print extended info

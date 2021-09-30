@@ -84,6 +84,15 @@ if (_sound == "") then { // select random music for ordinal day
             // 7th November is a Day of Great October Socialist Revolution
             playMusic  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
         } else {
+
+        	if (name player == "Rokse [LT]") exitWith {
+        		_music = ["burnash","johnny","druzba","adjutant","vague","enchanted_boy","ahead_friends","mission_impossible",
+        		"lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice"] call _XfRandomArrayVal;
+        		playMusic _music;
+        		_sound = _music;
+        		hint localize format["+++ Sound (not music!) ""%1"" player as intro", _sound];
+        	};
+
             // add some personalized songs for well known players
             _players =
             [
@@ -248,8 +257,7 @@ _SYG_selectIntroPath = {
 	// now find nearest point in this path to target town
 	_path = _this select _ind;
 	_min = 1000000;
-	for "_i" from 0 to (count _path - 2) do 
-	{
+	for "_i" from 0 to (count _path - 2) do {
 		if ( ((_path select _i) distance _pos) < _min) then {_min = (_path select _i) distance _pos; _ind = _i;};
 	};
 	// we found path point nearest to the target town, assigned to the _ind variable
@@ -283,8 +291,8 @@ if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm &&
 	"1" objStatus "DONE";
 	call compile format ["""%1"" objStatus ""VISIBLE"";", current_target_index + 2];
  */
- };
- //--- Sygsky
+};
+//--- Sygsky
 
 _pos = [];
 _lobjpos = [];
@@ -305,9 +313,7 @@ if (_Sahrani_island ) then {
   // last pos is illusion object one. If number it means index of point to use as pos, else it means pos3D to build illusion
   _lobjpos = _camstart select ((count _camstart) - 1);
   _lobjpos = if (typeName _lobjpos == "ARRAY") then {_lobjpos} else { _camstart select _lobjpos};
-}
-else
-{
+} else {
 	_camstart = [[(position camstart select 0),(position camstart select 1),175]];
 	_pos = _camstart select 0;
 };
@@ -450,7 +456,7 @@ if (typeName _camstart != "ARRAY" ) then {
 		hint localize format[ "--- x_intro.sqf: music text control for ""%1"" not found", _this select 0 ];
 	};
 	sleep 3;
-//	_contol setText (localize "STR_TITLE");
+//	_control setText (localize "STR_TITLE");
 	_control ctrlShow true;
 
 //	_endtime = time + 10;

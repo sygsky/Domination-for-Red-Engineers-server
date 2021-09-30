@@ -57,6 +57,7 @@ STR_GRU_46_4,num. %1 unit[s],die Num. %1 Fahrzeug[s],", num. %1 unidades.",", ч
 STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
 STR_GRU_46_6,"You have seized this car from the patrol. Make good use of it!",Sie haben dieses Fahrzeug von der Streife beschlagnahmt. Nutzen Sie es gut aus!,"Avete sequestrato quest'auto alla pattuglia. Fatene buon uso!","Вы захватили эту машину у патруля, используйте её с толком!"
 
+STR_GRU_47,No enemy activity detected near the base,Keine feindlichen Aktivitäten in der Nähe der Basis entdeckt,No se detecta actividad enemiga cerca de la base,Вражеская активность не обнаружена
 STR_GRU_47_0,Weak enemy activity detected near the base,Schwache feindliche Aktivitäten in der Nähe des Stützpunkts entdeckt,Actividad débil del enemigo detectada cerca de la base,Слабая вражеская активность обнаружена неподалёку от базы
 STR_GRU_47_1,Average enemy activity detected near the base,Durchschnittliche Feindaktivität in der Nähe der Basis,Actividad enemiga media detectada cerca de la base,Средняя вражеская активность обнаружена неподалёку от базы
 STR_GRU_47_2,Significant enemy activity detected near the base,Erhebliche feindliche Aktivitäten in der Nähe des Stützpunktes entdeckt,Se detecta una actividad enemiga significativa en las proximidades de la base,Существенная вражеская активность обнаружена неподалёку от базы

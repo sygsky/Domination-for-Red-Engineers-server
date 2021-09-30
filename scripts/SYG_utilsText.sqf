@@ -94,12 +94,13 @@ SYG_getRumourText = {
 //
 // Joins string arrays into single string using designated separator
 // call as: _str = [_arr,", "] call SYG_joinArr; // _str -> "item1, item2, item3"
+// call as: _str = [хъ,", "] call SYG_joinArr; // _str -> "..."
 //
 SYG_joinArr = {
     if ( typeName _this != "ARRAY" ) exitWith {"--SYG_joinArr:?#1"};
     if ( count _this < 2 ) exitWith {"--SYG_joinArr:?#2"};
     if ( typeName (_this select 0) != "ARRAY" ) exitWith {"--SYG_joinArr:?#3"};
-    if ( count (_this select 0) == 0 ) exitWith {"--SYG_joinArr:?#4"};
+    if ( count (_this select 0) == 0 ) exitWith {"..."};
     private [ "_sep", "_arr", "_str", "_i" ];
     _sep = _this select 1;
     if ( typeName _sep != "STRING" ) then { _sep = str(_sep) };

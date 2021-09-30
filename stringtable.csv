@@ -868,7 +868,7 @@ STR_SYS_1139,Select artillery target by map click:,Wählen Sie Artillerie den Ge
 STR_SYS_1140,Viewdistance set to: %1,Viewdistance: %1,Distancia de visión establecida: %1 metros.,Установлена дистанция обзора: %1 метров.
 
 STR_SYS_1145,The guerrillas said some of the changes in the number of patrols,Die Partisanen bemerkten einige änderungen in der Zahl der Patrouillen,Guerrilla marca cambio en número de patrullas,Партизаны отметили изменение в числе патрулей
-STR_SYS_1146,GRU reports that the enemy began patrolling the island with %1,"GRU berichten, dass der Feind begann patrouillieren die Insel mit %1",GRU informa que el enemigo comenzó a patrullar la isla con %1,"ГРУ сообщает, что враг начал патрулирование острова (%1)"
+STR_SYS_1146,GRU reports that the enemy began patrolling the island with armored forces,"GRU berichten, dass der Feind begann patrouillieren die Insel mit gepanzerten Kräften",GRU informa que el enemigo comenzó a patrullar la isla con grupos blindados,"ГРУ сообщает, что враг начал патрулирование острова бронегруппами"
 STR_SYS_1147,"The GRU reports that the enemy abandoned his plans to patrol the island! This is our victory!","Die GRU berichtet, dass der Feind seine Pläne, die Insel zu patrouillieren, aufgegeben hat! Dies ist unser Sieg!","ГРУ сообщает, что враг отказался от патрулирования острова! Это - наша победа!"
 
 //STR_SYS_1150,Restore plants/fences,Wiederherstellen Pflanzen/Zäune,La recuperación crece./vallas,Восст. растит./заборов
@@ -926,9 +926,9 @@ STR_SYS_1202,Player points that get subtracted after death:,"Spielerpunkte, die 
 STR_SYS_1203,Points an engineer needs to service a vehicle:,"Punkte, die ein Ingenieur braucht, um ein Fahrzeug zu warten:",Los puntos son necesarios por el ingeniero para el mantenimiento de la maquinaria:,Очков необходимо инженеру для обслуживания техники:
 STR_SYS_1204,Points an engineer gets for servicing:\n,"Punkte, die ein Ingenieur für die Wartung bekommt:\n",Ingeniero obtiene puntos por reparación:\n,Инженер получает очков за ремонт:\n
 STR_SYS_1204_1,Air vehicle :,Luftfahrttechnik:,Técnico de aviación:,Авиатехника:
-STR_SYS_1204_2,", armored vehicles:",", Gepanzerte Fahrzeuge:",", vehículos blindados:",", бронетехника:"
-STR_SYS_1204_3,", motor transport:",", Kraftverkehr:",", autotransporte:",", автотранспорт:"
-STR_SYS_1204_4,Points an engineer gets for servicing other:,"Punkte, die ein Ingenieur für die Wartung anderer bekommt:",Ingeniero obtiene puntos por reparación (otros):,Инженер получает очков за ремонт (прочее):
+STR_SYS_1204_2,", armored vehicles:",", Gepanzerte Fahrzeuge:",", Vehículos blindados:",", бронетехника:"
+STR_SYS_1204_3,", motor transport:",", Kraftverkehr:",", Autotransporte:",", автотранспорт:"
+STR_SYS_1204_4,", other:",", Andere:",", Otros:",", прочее:"
 STR_SYS_1204_5,Points an engineer needs to rebuild the support buildings at base:,"Punkte, die ein Ingenieur braucht, um die stützgebäude an der Basis wieder aufzubauen:",Se cobra a un ingeniero por reparar servicios en la base:,Очков списывается с инженера за ремонт сервисов на базе:
 
 STR_SYS_1205,Points an artillery operator needs for a strike:,"Punkte, die ein Artillerie-operator für einen Streik braucht:",Puntos dados de baja por llamar a una salva de artillería:,Очков списывается за вызов одного артиллерийского залпа:
@@ -1337,13 +1337,13 @@ STR_SET_21,Island repair stations can repair vehicles:,Inselreparaturstationen k
 STR_SET_22,Teamstatus Dialog enabled:,Teamstatus-Dialog aktiviert:,Menú estado habilitado:,Меню статус включено:
 STR_SET_23,Time a player has to wait until he can create a new vehicle at a MHQ (sec):,"Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet (sec):",Tiempo entre descargas de equipos de KSHM (sec):,Время между выгрузками техники из КШМ:
 STR_SET_24,Able to fly:,Able to fly:,Se les permite volar:,Им разрешено летать:
-STR_SET_25,Maximum number of ammoboxes:,Maximale Anzahl von Ammoboxen:,Cajas de suministro: máximo,Ящики снабжения: максимум
-STR_SET_25_1,", currently in use:",", aktuell in Verwendung:",", activado:",", активированы:"
-STR_SET_25_2,Time to wait until an ammobox can be dropped/loaded again:,"Wartezeit, bis eine Ammobox wieder geladen/werden kann:",Tiempo de espera entre cajas de carga/descarga:,Время ожидания между загрузкой/выгрузкой ящиков:
-STR_SET_26,Maximum number of statics per engineer truck:,Maximale Anzahl statischer Wepons pro Ingenieur-LKW:,Número máximo de objetos estáticos en el camión de un ingeniero militar:,Максимальное кол-во статических объектов в грузовике военного инженера:
-STR_SET_27,Vehicles able to load ammoboxes:,"Fahrzeuge, die Ammoboxen laden können:",Transporte capaz de cargar cajas de suministro:,"Транспорт, способный загружать ящики снабжения:"
-STR_SET_28,Player respawn delay (in seconds):,Verzögerung beim Respawn des Spielers (in Sekunden):,Tiempo de renacimiento (seg.):,Время возрождения (в сек.):
-STR_SET_29,Player respawn dialog after death:,Spieler Respawn Dialog nach dem Tod:,Diálogo de elección del lugar del renacimiento después de la muerte:,Диалог выбора места возрождения после смерти:
+STR_SET_25,"Maximum number of ammoboxes: ","Maximale Anzahl von Ammoboxen: ","Cajas de suministro: máximo ","Ящики снабжения: максимум "
+STR_SET_25_1,", currently in use: ",", aktuell in Verwendung: ",", activado: ",", активированы: "
+STR_SET_25_2,"Time to wait until an ammobox can be dropped/loaded again: ","Wartezeit, bis eine Ammobox wieder geladen/werden kann: ","Tiempo de espera entre cajas de carga/descarga: ","Время ожидания между загрузкой/выгрузкой ящиков: "
+STR_SET_26,"Maximum number of statics per engineer truck: ","Maximale Anzahl statischer Wepons pro Ingenieur-LKW: ","Número máximo de objetos estáticos en el camión de un ingeniero militar: ","Максимальное кол-во статических объектов в грузовике военного инженера: "
+STR_SET_27,"Vehicles able to load ammoboxes: ","Fahrzeuge, die Ammoboxen laden können: ","Transporte capaz de cargar cajas de suministro: ","Транспорт, способный загружать ящики снабжения: "
+STR_SET_28,"Player respawn delay (in seconds): ","Verzögerung beim Respawn des Spielers (in Sekunden): ","Tiempo de renacimiento (seg.): ","Время возрождения (в сек.): "
+STR_SET_29,"Player respawn dialog after death: ","Spieler Respawn Dialog nach dem Tod: ","Diálogo de elección del lugar del renacimiento después de la muerte: ","Диалог выбора места возрождения после смерти: "
 
 STR_SPPM,SPPM,SPPM,SPPM,СППМ
 STR_SPPM_0,SPPM markers not found on map,SPPM-Marker nicht auf der Karte gefunden,Los marcadores de SPPM no se encuentran en el mapa,Маркеры СППМ на карте отсутствуют
