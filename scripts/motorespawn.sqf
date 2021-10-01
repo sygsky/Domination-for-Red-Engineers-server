@@ -102,13 +102,14 @@ while {true} do {
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened dealy
 				};
 #ifdef __DEBUG__
-				hint localize format["+++ motorespawn.sqf: %1 marked for respawn, canMove %2, shift %3, pos %4", typeOf _moto, canMove _moto, round( _pos1 distance _pos), _pos1];
+				_dist = (round(( _pos1 distance _pos) * 10)) / 10; // better accuracy to unerstand the problem with microdistance change events
+				if (_dist < 10) then {
+					hint localize format["+++ motorespawn.sqf: %1 marked for respawn, canMove %2, shift %3, pos1 %4, _pos0 %5", typeOf _moto, canMove _moto, _dist, _pos1, _pos];
+				};
 #endif
 			};
-		}
-		else { // time-out was already set
-			if ( time > _timeout) then
-			{
+		} else { // time-out was already set
+			if ( time > _timeout) then {
 			    _objNearArr = _pos1 nearObjects [_driverType, DRIVER_NEAR_DIST];
 
 				_nobj = objNull; //nearestObject [ _pos1, "CAManBase" ];
