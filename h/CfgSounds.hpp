@@ -16,6 +16,7 @@ class CfgSounds {
 #ifdef __MANDO__
 #include "mando_missiles\mando_sounds.h"
 #endif
+
     class USSR {name = ""; sound[] = {\sounds\USSR.ogg, db+10, 1.0};titles[] = {};};
 	class Funk {name="Funk";sound[]={\sounds\funk.ogg,db+20,1.0};titles[] = {};};
 	class Ari {name="Ari";sound[]={\sounds\ari.ogg,db+30,1.0};titles[] = {};};
@@ -31,10 +32,9 @@ class CfgSounds {
 	class stalin_dal_prikaz {name="Soviet artillery himn";sound[]={\sounds\intro\vehicles\stalin_dal_prikaz.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
-	//class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; }; // remove as non needed
+//	class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; }; // remove as non needed
 //	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; }; // removed as not interesting and ancient
 	class kwai     { name="kwai";                          sound[]={\sounds\kwai.ogg,db+0,1.0};          titles[] = {}; };
-	class invasion { name="invasion";                      sound[]={\sounds\invasion.ogg,db+0,1.0};      titles[] = {}; };
     class starwars { name="Star wars march";               sound[]= {\sounds\starwars.ogg,db-1,1.0};     titles[] = {};};
     class radmus   { name="radmus from old OFP campany";   sound[]= {\sounds\enemy\radmus.ogg,db-1,1.0}; titles[] = {};};
     class enemy    { name="Hans Zimmer - Barbarian horde"; sound[]= {\sounds\enemy\enemy.ogg,db-1,1.0};  titles[] = {};};
@@ -450,6 +450,28 @@ class CfgSounds {
 	};
 #endif
 
+//+++++++++++++++++++++++++++++++++++++++++++++ INTRO MUSIC +++++++++++++++++++++++++++++++++++++++++++
+
+// Revolution day intro music
+	class Varshavianka         { name = "";sound[] = {\sounds\Varshavianka.ogg, db+20, 1.0}; titles[] = {};}; // russian
+	class Varshavianka_eng     { name = "";sound[] =  {\sounds\Varshavianka_eng.ogg, db+20, 1.0}; titles[] = {};}; // english
+	class warschawyanka_german { name = "";sound[] =  {\sounds\warschawyanka_german.ogg, db+10, 1.0}; titles[] = {};}; // german
+
+	class grant { name = ""; sound[] =  {\sounds\grant.ogg, db+20, 1.0}; titles[] = {};};
+
+// New year intro musics
+	class snovymgodom   { name=""; sound[] = {\sounds\newyear\snovymgodom.ogg, db+20, 1.0}; titles[] = {};};
+	class nutcracker    { name=""; sound[] = {\sounds\newyear\NutCracker.ogg, db+20, 1.0}; titles[] = {};};
+    class home_alone    { name=""; sound[] = {\sounds\newyear\home_alone.ogg,db+10,1.0}; titles[] = {};}; // From "Home alone" american movie 1990
+    class mountain_king { name=""; sound[] = {\sounds\newyear\mountain_king.ogg,db+10,1.0}; titles[] = {};}; // From "Home alone" american movie 1990
+    class zastolnaya    { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0}; titles[] = {};}; // intro New Year music
+    class grig          { name=""; sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0}; titles[] = {};};
+    class merry_xmas    { name=""; sound[] = {\sounds\newyear\merry_xmas.ogg,db+0,1.0}; titles[] = {};}; // Merry Xmas melody by Kevin Macleod
+    class vangelis      { name=""; sound[] = {\sounds\newyear\vangelis.ogg,db+0,1.0}; titles[] = {};}; // Vangelis - "La petite fille de la mer", 1973
+
+	class stavka_bolshe_chem { name=""; sound[]={\sounds\intro\stavka_bolshe_chem.ogg,db-1,1.0}; titles[] = {};};
+    class four_tankists { name="Czterej Pancerni i Pies, Polska Rzeczpospolita Ludowa film, 1960"; sound[] = {\sounds\intro\4tankists.ogg,db-1,1.0}; titles[] = {};}; // from PRL film "4 tankists and dog"
+
 	// define some music (for Rokse [LT]) as sounds to debug "burnash","johnny","druzba","adjutant","vague","enchanted_boy","ahead_friends","mission_impossible","lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice:
 	class burnash	{ name="";	      sound[]=   {\sounds\burnash.ogg,db-1,1.0};   titles[] = {};    };
 	class johnny    { name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};   titles[] = {};     };
@@ -468,5 +490,82 @@ class CfgSounds {
 	class        soviet_officers { name=""; sound[]= {\sounds\intro\holidays\feb_23\soviet_officers.ogg,db-1,1.0}; titles[] = {};  };
 	class    travel_with_friends { name=""; sound[]= {\sounds\intro\travel_with_friends.ogg,db-1,1.0}; titles[] = {};  }; // Sovier children song
 	class            on_thin_ice { name=""; sound[]= {\sounds\intro\on_thin_ice.ogg,db-1,1.0}; titles[] = {};  }; // from Soviet film "On thin ice"
+
+//    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
+	class robinson_crusoe { name=""; sound[] = {\sounds\intro\robinson_crusoe.ogg,db-1,1.0}; titles[] = {};}; // used in intro
+    class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
+    class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0}; titles[] = {};}; // used in  intro, only for resque players
+    class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
+    class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
+    class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0}; titles[] = {};}; // intro music from "Bloody diamond" movie
+    class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};}; // intro music from "Total recall" movie (The Mountain)
+//    class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
+    class capricorn1title { name=""; sound[] = {\sounds\capricorn1title.ogg,db+20,1.0};}; // intro music from great american movie "Capricorn-1"
+    class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg,db+20,1.0};}; // intro music from Soviet great song (1950)
+    class Letyat_perelyotnye_pticy_end { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_end.ogg,db+20,1.0};}; // intro music #2 (final verse) from the same Soviet great song (1950)
+
+    class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0}; titles[] = {};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0}; titles[] = {};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class amigohome_ernst_bush { name=""; sound[] = {\sounds\amigohome_ernst_bush.ogg,db+0,1.0}; titles[] = {};}; // Ami go home by Ernsh Busch, DDR communust and great singer!
+    class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0}; titles[] = {};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
+    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0}; titles[] = {};}; // Some feat music
+    class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0}; titles[] = {};}; // USSR film Chapaev
+    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0}; titles[] = {};}; // Cosmic music
+    class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0}; titles[] = {};}; // Well known melody
+    class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0}; titles[] = {};}; // Dean Reed song "Rider"
+    class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0}; titles[] = {};}; // USSR famous film "Hound of Baskervill hall"
+    class condor { name=""; sound[] = {\sounds\condor.ogg,db+0,1.0}; titles[] = {};}; // El-Condor-Pasa by Leo Rojas
+    class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0}; titles[] = {};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
+    class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0}; titles[] = {};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
+    class melody_by_voice { name=""; sound[] = {\sounds\melody_by_voice.ogg,db+0,1.0}; titles[] = {};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
+    class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0}; titles[] = {};};// intro music, Soviet song about comrade
+    class sovest1 { name=""; sound[] = {\sounds\intro\sovest1.ogg,db-1,1.0}; titles[] = {};}; // intro music, Soviet song from film "consciousness"
+    class sovest2 { name=""; sound[] = {\sounds\intro\sovest2.ogg,db-1,1.0}; titles[] = {};}; // intro music, Soviet song from film "consciousness"
+    class bond1 { name=""; sound[] = {\sounds\intro\bond1.ogg,db-1,1.0}; titles[] = {};}; // intro music, one of the James Bond film main theme (don't remember)
+    class bond { name=""; sound[] = {\sounds\bond.ogg,db-1,1.0}; titles[] = {};}; // intro music, one of the James Bond film main theme (don't remember)
+    class toccata { name="toccata-and-fugue-in-d-minor-by-kevin-macleod"; sound[] = {\sounds\intro\toccata.ogg,db-1,1.0}; titles[] = {};}; // intro music, J.S. Bach tocatta
+    class del_vampiro1 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro1.ogg,db-1,1.0}; titles[] = {};}; // intro music, Italian film "L'amante del Vampiro"
+    class del_vampiro2 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro2.ogg,db-1,1.0}; titles[] = {};}; // intro music, Italian film "L'amante del Vampiro"
+    class zaratustra { name="Thus Sprach Zarathustra, Richard Strauss"; sound[] = {\sounds\intro\zaratustra.ogg,db-1,1.0}; titles[] = {};}; // intro music, "Thus Sprach Zarathustra", Richard Strauss
+    class bolivar { name="'The roads we take' film music, 1962, Leonid Haiday"; sound[] = {\sounds\intro\bolivar.ogg,db-1,1.0}; titles[] = {};}; // intro music
+    class peregrinus { name="'Alexander Nevsky' film music by Sergei Prokofiev, 1938, episode 'Expectans Peregrinus'"; sound[] = {\sounds\intro\peregrinus.ogg,db-1,1.0}; titles[] = {};}; // intro music
+
+//+++++++++++++++++++++++++++++++++++++ MORZE for Rokse [LT] +++++++++++++++++++++++++++++++++++++++++++++++++++++
+    class morze   { name="Morze about Sahrani island"; sound[] = {\sounds\intro\morze\morze.ogg,db+0,1.0}; titles[] = {};}; // Morze packed message in Russian...
+    class morze2  { name="Real Morze (Canada)"; sound[] = {\sounds\intro\morze\morze2.ogg,db+0,1.0}; titles[] = {};}; // Morze real message (Canada)
+    class morze_0 { name="Morzyanka";   sound[] = {\sounds\intro\morze\Morzyanka.ogg,db+0,1.0}; titles[] = {};}; // Morze
+    class morze_2 { name="Morzyanka 2"; sound[] = {\sounds\intro\morze\Morzyanka2.ogg,db+0,1.0}; titles[] = {};}; // Morze
+    class morze_3 { name="Morzyanka - USSR song"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg,db+0,1.0}; titles[] = {};}; // Morze
+    class morze_4 { name="Morzyanka 4"; sound[] = {\sounds\intro\morze\Morzyanka4.ogg,db+0,1.0}; titles[] = {};}; // Morze
+    class morze_5 { name="Morzyanka 5"; sound[] = {\sounds\intro\morze\Morzyanka5.ogg,db+0,1.0}; titles[] = {};}; // Morze
+    class morze_6 { name="Morzyanka 6"; sound[] = {\sounds\intro\morze\Morzyanka6.ogg,db+0,1.0}; titles[] = {};}; // Morze
+    class morze_7 { name="Morzyanka 7"; sound[] = {\sounds\intro\morze\Morzyanka7.ogg,db+0,1.0}; titles[] = {};}; // Morze
+
+    class hungarian_dances { name="Brams, Hungarian Dances"; sound[] = {\sounds\intro\hungarian_dances.ogg,db+0,1.0}; titles[] = {};}; // For Hungarian players
+    class jrtheme { name="USA film jack Reacher theme"; sound[] = {\sounds\intro\jrtheme.ogg,db+0,1.0}; titles[] = {};}; // Simply majestic music
+    class farewell_slavs { name="Farewell of Slavs, Russian march"; sound[] = {\sounds\intro\farewell_slavs.ogg,db+0,1.0}; titles[] = {};}; // Well known military march of old Russian Emmpire
+    class jaws    {name = "Jaws Title"; sound[] = {\sounds\intro\jaws.ogg, db+10, 1.0}; titles[] = {};}; // from "Jaws" film
+    class wild_geese {name = "Film 'The Wild Geese' theme"; sound[] = {\sounds\intro\wild_geese.ogg, db+10, 1.0}; titles[] = {};}; // from "The Wild geese" film
+
+//+++++++++++++++++++++++ Holiday music
+
+    class cosmos_1 { name="Earth attraction";                           sound[] = {\sounds\intro\holidays\apr_12\Earth_attraction.ogg,db-1,1.0}; titles[] = {};}; // Cosmonoutics day 12 of April
+    class cosmos_2 { name="I trust, my friends";                        sound[] = {\sounds\intro\holidays\apr_12\I_trust_my_friends.ogg,db-1,1.0}; titles[] = {};}; // Cosmonoutics day 12 of April
+    class cosmos_3 { name="You know what kind of guy He was (Gagarin)"; sound[] = {\sounds\intro\holidays\apr_12\YouKnowWhatKindOfGuyHeWas.ogg,db-1,1.0}; titles[] = {};}; // Cosmonoutics day 12 of April
+    class lenin    { name="And again the battle continues";             sound[] = {\sounds\intro\holidays\apr_22\lenin.ogg,db-1,1.0}; titles[] = {};}; // Birthday of V.I. Lebin
+    class lenin_1  { name="Day by day are years go";                    sound[] = {\sounds\intro\holidays\apr_22\lenin_1.ogg,db-1,1.0}; titles[] = {};}; // Birthday of V.I. Lebin
+	class invasion { name="invasion";                                   sound[] = {\sounds\invasion.ogg,db+0,1.0}; titles[] = {};}; // Invasion - Shostakovitch
+    class hugging_the_sky { name="Hugging the sky...";                  sound[] = {\sounds\intro\holidays\aug_18\hugging_the_sky.ogg,db-1,1.0}; titles[] = {};}; // Soviet air fleet day
+    class we_teach_planes_to_fly { name="We teach planes to fly...";    sound[] = {\sounds\intro\holidays\aug_18\we_teach_planes_to_fly.ogg,db-1,1.0}; titles[] = {};}; // Soviet air fleet day
+    class aviamarch_rus { name="Мы рождены чтоб сказку сделать былью";  sound[] = {\sounds\intro\holidays\aug_18\aviamarch_rus.ogg,db-1,1.0}; titles[] = {};}; // Soviet air fleet day
+    class aviamarch_eng { name="We were born to make a fairy tale come true";  sound[] = {\sounds\intro\holidays\aug_18\aviamarch_eng.ogg,db-1,1.0}; titles[] = {};}; // Soviet air fleet day
+    class aviamarch_ger { name="Drum höher und höher und höher..";      sound[] = {\sounds\intro\holidays\aug_18\aviamarch_ger.ogg,db-1,1.0}; titles[] = {};}; // Soviet air fleet day
+    class communism { name="We will live in communism...";              sound[] = {\sounds\intro\holidays\nov_7\communism.ogg,db-1,1.0}; titles[] = {};}; // Last Soviet Constitution day (1977)
+    class komsomol { name="И вновь продолжается бой";                   sound[] = {\sounds\intro\holidays\oct_29\komsomol.ogg,db-1,1.0}; titles[] = {};}; // Komsomal Day!(1918)
+    class ddrhymn  { name="DDR Day";                                    sound[] = {\sounds\intro\ddrhymn.ogg,db-1,1.0}; titles[] = {};}; // DDR Day!(1949)
+    class border_guards  { name="Day of Border Guards";                 sound[] = {\sounds\intro\holidays\may_28\border_guards.ogg,db-1,1.0}; titles[] = {};}; // Day of Border Guards
+    class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; titles[] = {};}; // Day of School
+
+//--------------------------------------------- INTRO MUSIC -------------------------------------------
 
 };

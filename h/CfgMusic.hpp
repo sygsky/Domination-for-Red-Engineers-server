@@ -3,7 +3,7 @@
 class CfgMusic {
 
 //+++++++++++++++++++++++++++++++++++++++++++++ INTRO MUSIC +++++++++++++++++++++++++++++++++++++++++++
-
+/** All commented music moved to sounds
 // Revolution day intro music
 	class Varshavianka { name = "";sound[] = {\sounds\Varshavianka.ogg, db+20, 1.0};}; // russian
 	class Varshavianka_eng { name = "";sound[] =  {\sounds\Varshavianka_eng.ogg, db+20, 1.0};}; // english
@@ -41,7 +41,6 @@ class CfgMusic {
     class        soviet_officers { name=""; sound[]= {\sounds\intro\holidays\feb_23\soviet_officers.ogg,db-1,1.0}; };
     class    travel_with_friends { name=""; sound[]= {\sounds\intro\travel_with_friends.ogg,db-1,1.0}; }; // Sovier children song
     class            on_thin_ice { name=""; sound[]= {\sounds\intro\on_thin_ice.ogg,db-1,1.0}; }; // from Soviet film "On thin ice"
-
 //    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
 	class robinson_crusoe { name=""; sound[] = {\sounds\intro\robinson_crusoe.ogg,db-1,1.0};} // used in intro
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0};} // used in  intro
@@ -56,19 +55,23 @@ class CfgMusic {
     class Letyat_perelyotnye_pticy_end { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_end.ogg,db+20,1.0};} // intro music #2 (final verse) from the same Soviet great song (1950)
 
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
-    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class amigohome_ernst_bush { name=""; sound[] = {\sounds\amigohome_ernst_bush.ogg,db+0,1.0};}; // Ami go home by Ernsh Busch, DDR communust and great singer!
     class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
-    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some feat music
     class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0};}; // USSR film Chapaev
+*/
+
+	// this music remained is needed as partial tracks music
+    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some feat music
     class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
+    class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
+/** All music moveв to sounds
 //    class ipanoram { name=""; sound[] = {\sounds\ipanoram.ogg,db+0,1.0};}; // Soviet political review Telecast "International panoram"
     class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0};}; // Dean Reed song "Rider"
     class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0};}; // USSR famous film "Hound of Baskervill hall"
     class condor { name=""; sound[] = {\sounds\condor.ogg,db+0,1.0};}; // El-Condor-Pasa by Leo Rojas
     class way_to_dock { name=""; sound[] = {\sounds\way_to_dock.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
-    class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
     class melody_by_voice { name=""; sound[] = {\sounds\melody_by_voice.ogg,db+0,1.0};}; // melody from Charles Wilp - Mad. Ave. Perfume Ad
 //    class english_murder { name=""; sound[] = {\sounds\english_murder.ogg,db-1,1.0};} // intro music
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0};} // intro music, Soviet song about comrade
@@ -103,7 +106,7 @@ class CfgMusic {
     class wild_geese {name = "Film 'The Wild Geese' theme"; sound[] = {\sounds\intro\wild_geese.ogg, db+10, 1.0};}; // from "The Wild geese" film
 
 //------------------------------------- END of Intro music list --------------------------------------------------
-
+*/
 //+++++++++++++++++++++++ Detect town music, if added, seek and add to the 'case "mt_spotted":' code in the file "x_netinitclient.sqf"
 
     class detected_Arcadia { name=""; sound[] = {\sounds\locations\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
@@ -214,8 +217,6 @@ class CfgMusic {
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0};};
     class whatsapp    {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0};}; // Some sound from one of WhatsApp messages
     class stripped_voyage    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\stripped_voyage, db+10, 1.0};}; // Some sound from Soviet film "Stripped Voyage" (196)
-    //stripped_voyage.ogg
-
 
     class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10, 1.0};};
     class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10, 1.0};};

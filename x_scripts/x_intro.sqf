@@ -69,26 +69,26 @@ if (count _holiday > 0 ) then {
     _sound = _holiday select 1;
     if (_sound != "") then {
     	_music = _sound;
-    	playMusic _sound;
+    	playSound _sound;
     };
 };
 _music_cnt = 0;
 if (_sound == "") then { // select random music for ordinal day
     if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then {
     	_music = ((SYG_holidayTable select 0) select 2) call _XfRandomArrayVal;
-        playMusic _music; //music for New Year period from 21 December to 10 January
+        playSound _music; //music for New Year period from 21 December to 10 January
         _newyear = true;
     } else {
         // music normally played on intro
         if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then {
             // 7th November is a Day of Great October Socialist Revolution
-            playMusic  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
+            playSound  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
         } else {
 
         	if (name player == "Rokse [LT]") exitWith {
         		_music = ["burnash","johnny","druzba","adjutant","vague","enchanted_boy","ahead_friends","mission_impossible",
         		"lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice"] call _XfRandomArrayVal;
-        		playMusic _music;
+        		playSound _music;
         		_sound = _music;
         		hint localize format["+++ Sound (not music!) ""%1"" player as intro", _sound];
         	};
@@ -180,7 +180,7 @@ if (_sound == "") then { // select random music for ordinal day
 
 			_sound = _music;
 //			_music = "grant";
-            playMusic _music; //playMusic "ATrack25"; // oldest value by Xeno
+            playSound _music; //playSound "ATrack25"; // oldest value by Xeno
          };
     };
 };
