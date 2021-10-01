@@ -758,6 +758,10 @@ XHandleNetStartScriptClient = {
 					(format[localize "STR_SYS_1162",localize "STR_SYS_COR_5"]) call XfHQChat; //  "Spotter died... in an accident"};
 				};
 				// TODO: check if killer is AI assigned to the one of players
+				if ((name _killer) == "Error: No unit") exitWith {
+					(localize "STR_SYS_1161_1") call XfHQChat; // "Spotter killed... in a firefight!"
+				};
+
 				(format[localize "STR_SYS_1161", name _killer, _score + 1]) call XfHQChat; // Spotter killed by %1 (+%2)!
 		    };
             // common code

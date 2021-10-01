@@ -880,6 +880,7 @@ STR_SYS_1152,The people of Sahrani thank you for your liberation mission!,Die Le
 
 STR_SYS_1160,T'was a spotter (+%1%2)!,Es war ein spotter (+%1%2)!,¡Era un observador (+%1%2)!,Это был корректировщик (+%1%2)!
 STR_SYS_1161,"Spotter killed by ""%1"" (+%2)!","Spotter getötet durch ""%1"" (+%2)!","¡Observador asesinado por ""%1"" (+%2)!","Корректировщик убит: ""%1"" (+%2)!"
+STR_SYS_1161_1,"Spotter killed... in a firefight!","Spotter getötet... bei einem Feuergefecht!","¡Observador muerto... en un tiroteo!","Корректировщик убит... в перестрелке!"
 STR_SYS_1162,Spotter died... %1,Spotter gestorben... %1,El observador murió... %1,Корректировщик погиб... %1
 STR_SYS_1163,",  dist. of %1 m.",", aus einer Entfernung von %1 m.",", desde una distancia de 1 m.",", дист. %1 м."
 
