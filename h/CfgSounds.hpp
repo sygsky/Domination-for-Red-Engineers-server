@@ -590,5 +590,8 @@ class CfgSounds {
     class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; titles[] = {};}; // Day of School
 
 //--------------------------------------------- INTRO MUSIC -------------------------------------------
+    class money { name="Money by Pink Floyd";                           sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
+
+
 
 };

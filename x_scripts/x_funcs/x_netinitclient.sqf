@@ -898,7 +898,7 @@ XHandleNetStartScriptClient = {
 					};
 				};
 
-				if ( count _pos > 0 ) then { // emulate object to say sound
+				if ( count _pos > 0 ) exitWith { // emulate object to say sound
 					sleep (0.01 max (_this select 2));
 					_nil = "Logic" createVehicleLocal _pos; // use temp object to play sound
 					_nil say (_this select 1);
@@ -911,27 +911,33 @@ XHandleNetStartScriptClient = {
 						waitUntil {isNull _sound};
 					};
 					deleteVehicle _nil;
-				} else {
-					sleep (_this select 2);
-					_obj say (_this select 1); // this is done on the client only you remember?
-					hint localize format["+++ say_sound ""%1"" at object", (_this select 1)];
 				};
+				sleep (_this select 2);
+				_obj say (_this select 1); // this is done on the client only you remember?
+				hint localize format["+++ say_sound ""%1"" at object", (_this select 1)];
 			};
 
-		    private ["_nil","_obj","_sound","_exit","_pos","_arr"];
+		    private ["_arr"];
 		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
 
 		    _arr = [];
 		    if ( typeName (_this select 1) != "STRING") then {
-		    	_arr = [[_this select 1, _this select 2, 0, argopt(3,""), argopt(4,"")]]; // array of 1 item
-		    } else { // 2nd arg is string and id "PLAY" sub-command
-		    	if ( (_this select 1) == "PLAY" ) exitWith { playSound (_this select 2); }; // as _arr = [], nothing momre will be produced
-		    	// it must be "LIST" sub-command
-		    	_arr = _this select 2
-		    };
-		    {
-		    	_x spawn _say_proc;
-		    }forEach _arr;
+		    	_arr = [[_this select 1, _this select 2, 0, argopt(3,""), argopt(4,"")]]; // array of 1 sound to play
+		    } else { // 2nd arg is string and may be "PLAY" sub-command: ["say_sound", "PLAY", "money", 5 ] call XSendNetStartScriptClient;
+		    	if ( ( _this select 1 ) == "PLAY" ) exitWith {
+					if ( count _this > 3 ) then {
+						if ( typeName ( _this select 3 ) == "SCALAR" ) then {
+							sleep ( ( _this select 2 ) min 0 );
+						};
+					};
+					playSound ( _this select 2 ); // as _arr = [], nothing more will be played
+		    	};
+				// it must be "LIST" sub-command
+				_arr = _this select 2
+			};
+			{
+				_x spawn _say_proc;
+			}forEach _arr;
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)

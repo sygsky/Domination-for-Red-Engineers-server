@@ -36,6 +36,8 @@ if (isServer) then {
 	["specops", 1, "basic", 2, _poss,90,true] spawn XCreateInf;
 	sleep 2.221;
 	["shilka", 1, "bmp", 1, "tank", 1, _poss,1,160,true] spawn XCreateArmor;
+	["say_sound", "PLAY", "money", 5 ] call XSendNetStartScriptClient; // playSound on all connected players compters
+
 };
 
 if (true) exitWith {};
