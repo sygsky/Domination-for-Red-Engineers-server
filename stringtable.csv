@@ -389,7 +389,7 @@ STR_SM_55,An enemy officer is on a walk in the forest Selva de Caza. This is a g
 
 STR_SM_TELEPORT_1,You realized that teleportation didn’t work with some of your team members (%1),"Sie haben festgestellt, dass die Teleportation bei einigen Mitgliedern Ihres Teams nicht funktioniert (%1)",Te das cuenta de que el teletransportador no funcionó para algunos miembros del escuadrón (%1),"Вы поняли, что телепорт не сработал для некоторых членов отряда (%1)"
 
-STR_SYS_160,Select Viewdistance,Sichtweite,Distancia de visión,Дист. обзора
+STR_SYS_160,Select Viewdistance,Sichtweite,Distancia de visión,Зона обзора
 STR_SYS_161,Click on the number to change the VD,Wählen Sie aus der Liste,Seleccione de la lista,Выберите из списка
 STR_SYS_162,Select Grass Layer,Wählen Sie Die Gras-Ebene,Dibujo de hierba,Прорисовка травы
 STR_SYS_163,Player Marker,Spieler-marker,Marcador de jugador,Маркер игрока
@@ -1416,7 +1416,7 @@ STR_BONUS_3,"Not bad! You delivered the car to the base, got points (+%1), the c
 
 STR_TITLE,"Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2021 by EngineerACE\n          for Red-Engineers.ucoz.ru","Erstellt 2009 von Xeno\n  für www.germany-fun.de\n\nBearbeitet 2014-2021 von EngineerACE\n   für Red-Engineers.ucoz.ru","Hecho en 2009 por Xeno\n   para www.germany-fun.de\n\nEdit 2014-2021 por EngineerACE\n para     Red-Engineers.ucoz.ru","Автор 2009 Xeno\n  для www.germany-fun.de\n\nПереработка 2014-2021 EngineerACE\n  для Red-Engineers.ucoz.ru"
 
-STR_AVIAMARCH,aviamarch_eng,aviamarch_eng,aviamarch_rus,aviamarch_rus
+STR_AVIAMARCH,aviamarch_eng,aviamarch_ger,aviamarch_rus,aviamarch_rus
 
 STR_KILLED_WALL,Attempt to kill base building ('%1' scores removed -%2),Versuchte Basiszerstörung ('%1' Punkte entfernt -%2),Intento de destrucción de la base ('%1' puntos removidos -%2),Попытка уничтожения базы ('%1' снято очков -%2)
 

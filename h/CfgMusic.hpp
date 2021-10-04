@@ -107,32 +107,25 @@ class CfgMusic {
 
 //------------------------------------- END of Intro music list --------------------------------------------------
 */
-//+++++++++++++++++++++++ Detect town music, if added, seek and add to the 'case "mt_spotted":' code in the file "x_netinitclient.sqf"
-
-    class detected_Arcadia { name=""; sound[] = {\sounds\locations\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; } // town detected music (Arcadia)
-    class detected_Paraiso { name=""; sound[] = {\sounds\locations\Paraiso.ogg,db-1,1.0}; } // town detected music (Paraiso)
-    class detected_Carmen  { name=""; sound[] = {\sounds\locations\toreador.ogg,db-1,1.0}; } // town detected music (Carmen)
-    class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; } // town detected music (Rahmadi)
-    class detected_Eponia  { name="Banzai, 1983"; sound[] = {\sounds\locations\Banzai.ogg,db-1,1.0}; } // town detected music (Eponia)
 
 //+++++++++++++++++++++++ Holiday music
 
-    class cosmos_1 { name="Earth attraction";                           sound[] = {\sounds\intro\holidays\apr_12\Earth_attraction.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
-    class cosmos_2 { name="I trust, my friends";                        sound[] = {\sounds\intro\holidays\apr_12\I_trust_my_friends.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
-    class cosmos_3 { name="You know what kind of guy He was (Gagarin)"; sound[] = {\sounds\intro\holidays\apr_12\YouKnowWhatKindOfGuyHeWas.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
-    class lenin    { name="And again the battle continues";             sound[] = {\sounds\intro\holidays\apr_22\lenin.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
-    class lenin_1  { name="Day by day are years go";                    sound[] = {\sounds\intro\holidays\apr_22\lenin_1.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
-	class invasion { name="invasion";                                   sound[] = {\sounds\invasion.ogg,db+0,1.0};}; // Invasion - Shostakovitch
-    class hugging_the_sky { name="Hugging the sky...";                  sound[] = {\sounds\intro\holidays\aug_18\hugging_the_sky.ogg,db-1,1.0}; } // Soviet air fleet day
-    class we_teach_planes_to_fly { name="We teach planes to fly...";    sound[] = {\sounds\intro\holidays\aug_18\we_teach_planes_to_fly.ogg,db-1,1.0}; } // Soviet air fleet day
-    class aviamarch_rus { name="Мы рождены чтоб сказку сделать былью";  sound[] = {\sounds\intro\holidays\aug_18\aviamarch_rus.ogg,db-1,1.0}; } // Soviet air fleet day
-    class aviamarch_eng { name="We were born to make a fairy tale come true";  sound[] = {\sounds\intro\holidays\aug_18\aviamarch_eng.ogg,db-1,1.0}; } // Soviet air fleet day
-    class aviamarch_ger { name="Drum höher und höher und höher..";      sound[] = {\sounds\intro\holidays\aug_18\aviamarch_ger.ogg,db-1,1.0}; } // Soviet air fleet day
-    class communism { name="We will live in communism...";              sound[] = {\sounds\intro\holidays\nov_7\communism.ogg,db-1,1.0}; } // Last Soviet Constitution day (1977)
-    class komsomol { name="И вновь продолжается бой";                   sound[] = {\sounds\intro\holidays\oct_29\komsomol.ogg,db-1,1.0}; } // Komsomal Day!(1918)
-    class ddrhymn  { name="DDR Day";                                    sound[] = {\sounds\intro\ddrhymn.ogg,db-1,1.0}; } // DDR Day!(1949)
-    class border_guards  { name="Day of Border Guards";                 sound[] = {\sounds\intro\holidays\may_28\border_guards.ogg,db-1,1.0}; } // Day of Border Guards
-    class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; } // Day of School
+//    class cosmos_1 { name="Earth attraction";                           sound[] = {\sounds\intro\holidays\apr_12\Earth_attraction.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
+//    class cosmos_2 { name="I trust, my friends";                        sound[] = {\sounds\intro\holidays\apr_12\I_trust_my_friends.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
+//    class cosmos_3 { name="You know what kind of guy He was (Gagarin)"; sound[] = {\sounds\intro\holidays\apr_12\YouKnowWhatKindOfGuyHeWas.ogg,db-1,1.0}; } // Cosmonoutics day 12 of April
+//    class lenin    { name="And again the battle continues";             sound[] = {\sounds\intro\holidays\apr_22\lenin.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
+//    class lenin_1  { name="Day by day are years go";                    sound[] = {\sounds\intro\holidays\apr_22\lenin_1.ogg,db-1,1.0}; } // Birthday of V.I. Lebin
+//	class invasion { name="invasion";                                   sound[] = {\sounds\invasion.ogg,db+0,1.0};}; // Invasion - Shostakovitch
+//    class hugging_the_sky { name="Hugging the sky...";                  sound[] = {\sounds\intro\holidays\aug_18\hugging_the_sky.ogg,db-1,1.0}; } // Soviet air fleet day
+//    class we_teach_planes_to_fly { name="We teach planes to fly...";    sound[] = {\sounds\intro\holidays\aug_18\we_teach_planes_to_fly.ogg,db-1,1.0}; } // Soviet air fleet day
+//    class aviamarch_rus { name="Мы рождены чтоб сказку сделать былью";  sound[] = {\sounds\intro\holidays\aug_18\aviamarch_rus.ogg,db-1,1.0}; } // Soviet air fleet day
+//    class aviamarch_eng { name="We were born to make a fairy tale come true";  sound[] = {\sounds\intro\holidays\aug_18\aviamarch_eng.ogg,db-1,1.0}; } // Soviet air fleet day
+//    class aviamarch_ger { name="Drum höher und höher und höher..";      sound[] = {\sounds\intro\holidays\aug_18\aviamarch_ger.ogg,db-1,1.0}; } // Soviet air fleet day
+//    class communism { name="We will live in communism...";              sound[] = {\sounds\intro\holidays\nov_7\communism.ogg,db-1,1.0}; } // Last Soviet Constitution day (1977)
+//    class komsomol { name="И вновь продолжается бой";                   sound[] = {\sounds\intro\holidays\oct_29\komsomol.ogg,db-1,1.0}; } // Komsomal Day!(1918)
+//    class ddrhymn  { name="DDR Day";                                    sound[] = {\sounds\intro\ddrhymn.ogg,db-1,1.0}; } // DDR Day!(1949)
+//    class border_guards  { name="Day of Border Guards";                 sound[] = {\sounds\intro\holidays\may_28\border_guards.ogg,db-1,1.0}; } // Day of Border Guards
+//    class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; } // Day of School
 
 //+++++++++++++++++++++++ Defeat music track list
 

@@ -408,8 +408,7 @@ SYG_JDN = {
 #define OFF_HOLIDAY_HOL 4 // day off (1), work day (0)
 
 // [day,mon,range<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
-SYG_holidayTable =
-[
+SYG_holidayTable = [
 /**
     [ 1, 1,10], // new year, 10 days in range
     [23, 2, 2], // 23th of February
@@ -426,7 +425,7 @@ SYG_holidayTable =
     [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
     [ 2,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
     [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
-    [ 28, 5, "board_guards","STR_HOLIDAY_28_MAY",0], // //Border Guard Day
+    [ 28, 5, "border_guards","STR_HOLIDAY_28_MAY",0], // //Border Guard Day
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
     [  1, 9, "uchat_v_shkole", "STR_HOLIDAY_1_SEP", 0], // 1st of September, Day of Knowledge
     [[6, 9, 2], 5, "board_guards","STR_HOLIDAY_28_MAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)

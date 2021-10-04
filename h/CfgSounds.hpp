@@ -274,6 +274,21 @@ class CfgSounds {
     class joy_laugh2          { name="joy laugh"; sound[] = {\sounds\defeat\laughter\joy_laugh2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class joy_laugh           { name="joy laugh"; sound[] = {\sounds\defeat\laughter\joy_laugh.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
+    class joy2           { name=""; sound[] = {\sounds\defeat\laughter\joy2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class joy            { name=""; sound[] = {\sounds\defeat\laughter\joy.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class yeah           { name=""; sound[] = {\sounds\defeat\laughter\yeah.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class yes_yes        { name=""; sound[] = {\sounds\defeat\laughter\yes_yes.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class yes            { name=""; sound[] = {\sounds\defeat\laughter\yes.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class good_work      { name=""; sound[] = {\sounds\defeat\laughter\good_work.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class good_job_squad { name=""; sound[] = {\sounds\defeat\laughter\good_job_squad.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class we_ve_got_them { name=""; sound[] = {\sounds\defeat\laughter\we_ve_got_them.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class soldier_down   { name=""; sound[] = {\sounds\defeat\laughter\soldier_down.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class get_down       { name=""; sound[] = {\sounds\defeat\laughter\get_down.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class hi_is_down2    { name=""; sound[] = {\sounds\defeat\laughter\hi_is_down2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class hi_is_down     { name=""; sound[] = {\sounds\defeat\laughter\hi_is_down.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class enemy_down     { name=""; sound[] = {\sounds\defeat\laughter\enemy_down.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+
+
 // "E:\Bin\ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\defeat\laughter\joy_laugh.ogg"
 
     class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
@@ -451,6 +466,14 @@ class CfgSounds {
 #endif
 
 //+++++++++++++++++++++++++++++++++++++++++++++ INTRO MUSIC +++++++++++++++++++++++++++++++++++++++++++
+
+//+++++++++++++++++++++++ Detect town music, if added, seek and add to the 'case "mt_spotted":' code in the file "x_netinitclient.sqf"
+
+    class detected_Arcadia { name=""; sound[] = {\sounds\locations\Benny_Hill_Paradise_2006.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Arcadia)
+    class detected_Paraiso { name=""; sound[] = {\sounds\locations\Paraiso.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Paraiso)
+    class detected_Carmen  { name=""; sound[] = {\sounds\locations\toreador.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Carmen)
+    class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Rahmadi)
+    class detected_Eponia  { name="Banzai, 1983"; sound[] = {\sounds\locations\Banzai.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Eponia)
 
 // Revolution day intro music
 	class Varshavianka         { name = "";sound[] = {\sounds\Varshavianka.ogg, db+20, 1.0}; titles[] = {};}; // russian
