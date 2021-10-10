@@ -2,7 +2,7 @@
 
 #define HOLDER_SEARCH_RADIUS 20
 
-private [/*"_hasWeapon",*/"_posASL","_wpArr","_wpArr","_p","_marker"]; // Do we need this operator? Not sure
+private ["_posASL","_wpArr","_wpArr","_p","_marker"]; // Do we need this operator? Not sure
 
 hint localize "+++ x_water.sqf started!!!";
 
@@ -25,17 +25,14 @@ _swimAnimList = ["aswmpercmstpsnonwnondnon","aswmpercmstpsnonwnondnon_aswmpercmr
 while {true} do {
 
     // wait until we are swimming!!!
-	waitUntil {sleep 2.412; (animationState player) in _swimAnimList};
+	waitUntil {sleep 4.412; (animationState player) in _swimAnimList};
 
     if ( (count _wpArr) > 0 ) then {
         {deleteVehicle _x} forEach _wpArr; _wpArr = [];
     }; // remove all found before weapon holders
 
 	if ( alive player ) then {
-//		wp_weapon_array = [ weapons player, magazines player ]; // We don't need now this item. If you lost weapons, why try to restore it?
-//		_hasWeapon = false;
 		if ( ( primaryWeapon player != "" ) || ( secondaryWeapon player != "" ) ) then {
-//			_hasWeapon = true;
 			while {
                 ( ( primaryWeapon player != "" ) || ( secondaryWeapon player != "" ))
                 && ( alive player )
@@ -43,7 +40,6 @@ while {true} do {
             } do {sleep 0.621}; // wait until weapons is lost or player dead or out of water
 			sleep 0.521;
 			_sound = "under_water_3"; // you lost your weapon
-//    	    playSound "under_water_3";
 			// find ALL nearest weapon holders as Arma-1 createsmultiple weapon holders, that is surprize!
 			_wpArr = nearestObjects [ player, ["WeaponHolder"], HOLDER_SEARCH_RADIUS ]; // It will find all holdear around #N meters in 2D and any depth (so say https://community.bistudio.com/wiki/nearestObject)
 			if ( count _wpArr > 0 ) then {
@@ -53,12 +49,12 @@ while {true} do {
                 _mname = format ["%1", _wpArr select 0];
                 _marker = [_mname, getPos player,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_SYS_620_3", round(((_wpArr select 0) modelToWorld [0,0,0]) select 2)],0,"Marker"] call XfCreateMarkerLocal; // "ammocrate", _marker is assigned in call of XfCreateMarkerGlobal function
 			} else {
-			    if (alive player && (surfaceIsWater (getPos player)) ) then {
+			    if (alive player && surfaceIsWater (getPos player) && ( primaryWeapon player == "" ) && ( secondaryWeapon player == "" )) then {
     //			    hint localize "--- x_water.sqf:  WeaponHolder[s] not found";
                     sleep 4;
                     (localize "STR_SYS_620_1") call XfHQChat;
+	                _sound = "losing_patience"; // you lost weapon forever
 			    };
-                _sound = "losing_patience"; // you lost weapon forever
 			};
 			if (_sound != "") then { playSound _sound};
 		};
