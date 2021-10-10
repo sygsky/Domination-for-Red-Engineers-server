@@ -927,7 +927,7 @@ XHandleNetStartScriptClient = {
 		    	if ( ( _this select 1 ) == "PLAY" ) exitWith {
 					if ( count _this > 3 ) then {
 						if ( typeName ( _this select 3 ) == "SCALAR" ) then {
-							sleep ( ( _this select 2 ) min 0 );
+							sleep ( ( _this select 3 ) min 0 );
 						};
 					};
 					playSound ( _this select 2 ); // as _arr = [], nothing more will be played
