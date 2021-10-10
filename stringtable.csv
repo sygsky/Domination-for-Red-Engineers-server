@@ -114,8 +114,8 @@ STR_SYS_38_1,The vehicle (%1) not in restore list...,Wir stellen solche Fahrzeug
 STR_SYS_38_2,"This vehicle (%1) is too deep (%2 m.), we will not get it, alas...","Dieses Fahrzeug (%1) ist zu tief (%2 M.), wir werden es leider nicht bekommen...","Esta técnica (%1) es demasiado profunda (%2 m.), no podemos conseguirlo, por desgracia...","Эта техника (%1) слишком глубоко (%2 м.), не достанем, увы..."
 STR_SYS_39,Vehicle was dropped...,Fahrzeug ist gelöscht...,Técnica descartada...,Техника сброшена...
 
-STR_SYS_40,"Warning! In the %1 discovered the presence of enemy spotters, in total %2 men.","Warnung! In %1 wurde die Anwesenheit feindlicher Spotter entdeckt, insgesamt %2 Männer.","¡Atención! %1 detectó la presencia de observadores enemigos, %2 personas.","Внимание! В %1 обнаружено присутствие вражеских корректировщиков, %2 чел."
-STR_SYS_40_0,"Warning! On island discovered presence of enemy spotters, in total %1 men.","Achtung! Feindliche Späher Präsenz auf der Insel entdeckt, %1","¡Atención! Se ha detectado la presencia de observadores enemigos en la isla, %1","Внимание! На острове обнаружено присутствие вражеских корректировщиков, %1 чел."
+STR_SYS_40,"Attention! There are %2 enemy spotter[s] in %1","Achtung! Es gibt %2 feindliche Späher in %1","¡Atención! Hay %2 observadores enemigos en %1","Внимание! В %1 действую вражеские корректировщики, %2 чел."
+STR_SYS_40_0,"Attention! There are %1 enemy spotter[s] on the island","Achtung! Es befinden sich %1 feindliche Späher auf der Insel","¡Atención! Hay %1 observadores enemigos en la isla","Внимание! На острове действуют вражеские корректировщики, %1 чел."
 STR_SYS_41,All enemy spotters are killed...,Alle feindlichen Aufklärer zerstört ...,Todos los observadores enemigos han sido destruidos...,Все вражеские корректировщики уничтожены...
 STR_SYS_42,Teleport/Parajump,Teleport/Parajump,Teletransporte / Paracaídas,Телепорт/Парашют
 
@@ -788,7 +788,7 @@ STR_SYS_618,Viewdistance restore to %1 m.,Viewdistance Durchmesser restauriert w
 
 STR_SYS_620,"Here it is - lying on the shore! If I collect it in 2 minutes, the waves will not carry it away!","Hier ist es - am Ufer liegen! Wenn ich es in 2 Minuten sammle, werden die Wellen es nicht wegtragen!","¡Ahí está, en la orilla! Si recojo en 2 minutos, ¡las olas no se llevarán!","Да вот же оно, лежит на берегу! Если соберу за 2 минуты, то волны не унесут!"
 STR_SYS_620_0,"My weapon drowned, maybe I can find something on the beach nearby?","Meine Waffe ist ertrunken, vielleicht kann ich am Strand in der Nähe etwas finden?","El arma se ahogó, así que tal vez en la orilla de Naidu?","Оружие утопил, так может на берегу найду?"
-STR_SYS_620_1,You drowned your weapons foreve-e-e-er,Du hast deine Waffen für immer ertränkt,,Утопил я оружие своё-о-о... безвозвратно-о-о!
+STR_SYS_620_1,You drowned your weapons foreve-e-e-er,Du hast deine Waffen für immer ertränkt,Ahogaste tus armas para siempre-e-e-e,Утопил я оружие своё-о-о... безвозвратно-о-о!
 STR_SYS_620_2,"I just need to get out on a gentle Bank, so I'll find it faster...","Ich muss nur auf eine sanfte Bank gehen, damit ich es schneller finde...","Solo tienes que salir a la suave orilla, es más fácil buscar...","Надо только выбраться на пологий берег, проще искать..."
 STR_SYS_620_3,depth %1 m.,tiefe %1 m.,Prof. 1 m.,гл. %1 м.
 
