@@ -574,4 +574,8 @@ SYG_prisonersSound = {
     format[ "hisp%1", ceil _rnd]
 };
 
+SYG_powerDownSound = {
+	format["powerdown%1", (ceil (random 4)) min 1];
+}
+
 if (true) exitWith {};

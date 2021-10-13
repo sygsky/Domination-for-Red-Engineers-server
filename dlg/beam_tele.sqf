@@ -1,5 +1,5 @@
 // Xeno, dlg\beam_tele.sqf
-private ["_control","_index","_pos","_global_pos","_typepos","_global_dir","_veh"];
+private ["_control","_index","_pos","_global_pos","_typepos","_global_dir","_veh","_sound"];
 if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
@@ -14,7 +14,6 @@ if (vehicle player != player) then {
 	unassignVehicle player;
 };
 
-d_last_telepoint = beam_target;
 _global_pos = [];
 _global_dir = 180;
 _typepos = 0;
@@ -36,9 +35,9 @@ switch (beam_target) do {
 #endif
 #ifdef __TT__
         if (playerSide == west) then {
-        _veh = MRR1;
+        	_veh = MRR1;
         } else {
-        _veh = MRRR1;
+        	_veh = MRRR1;
         };
 #endif
 		_typepos = 1;
@@ -58,6 +57,17 @@ switch (beam_target) do {
 	};
 };
 
+#ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
+// check if big metal mass is near teleporter
+if ( ( _typepos == 1 ) && ( nearestObjects [ _veh, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck5tMG","Truck","D30","M119" ], __NO_TELEPORT_NEAR_LARGE_METALL_MASS__ ] > 0 ) ) exitWith {
+	( localize "STR_SYS_75_4" )  call XfGlobalChat; // "Teleportation is impossible as long as there is a large mass of metal nearby!!!"
+	_sound = call SYG_powerDownSound;
+	[ "say_sound", _veh, _sound ] call XSendNetStartScriptClientAll; // play sound of invalid teleport
+};
+#endif
+
+// TODO: if teleport point is in house, prevent teleport ("You can't teleport to non-empty space!!!")
+d_last_telepoint = beam_target;
 beam_target = -1;
 
 if (_typepos == 1) then {  //  teleport to some of our MHQ

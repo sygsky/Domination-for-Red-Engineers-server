@@ -42,8 +42,7 @@ if (!isNull d_wreck_repair_fac) exitwith {
 
 #ifdef __NO_TELEPORT_ON_DAMAGE__
 _exit = false;
-if ( _mhqcall ) then
-{
+if ( _mhqcall ) then {
     // find nearest teleport vehicle
     _veh = nearestObject [_caller, "BMP2_MHQ"];
     if (isNull _veh) exitWith {};

@@ -396,12 +396,18 @@ class CfgSounds {
 
     class enemy_attacks_base   {name = "On base attack event in Russian"; sound[] = {\sounds\onbase\enemy_attack.ogg, db+10, 1.0}; titles[] = {};};    // base attack additional sound
 
-	// TODO: use lower sound
+	// Lighthouse sounds
     class lighthouse_1    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v01.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 1
     class lighthouse_2    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 2
     class lighthouse_3    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v03.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 3
     class lighthouse_4    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v04.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 4
-    //
+
+    // power down sounds
+    class powerdown1    {name = ""; sound[] = {\sounds\short\power_down\PowerDown1.ogg, db+10, 1.0}; titles[] = {};};
+    class powerdown2    {name = ""; sound[] = {\sounds\short\power_down\PowerDown2.ogg, db+10, 1.0}; titles[] = {};};
+    class powerdown3    {name = ""; sound[] = {\sounds\short\power_down\PowerDown3.ogg, db+10, 1.0}; titles[] = {};};
+    class powerdown4    {name = ""; sound[] = {\sounds\short\power_down\PowerDown4.ogg, db+10, 1.0}; titles[] = {};};
+
 
 #ifdef __WITH_SCALAR__
 	class scalarDown {name="scalarDown";sound[] = {"\sounds\scalarDown.ogg",1,1};titles[] = {};};
