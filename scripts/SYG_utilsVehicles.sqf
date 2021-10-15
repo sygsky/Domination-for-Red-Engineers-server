@@ -1903,6 +1903,16 @@ SYG_vehIsRecoverable = {
 	_res
 };
 
+SYG_vehToType = {
+	if ( typeName _this == "OBJECT" ) exitWith { typeOf _this };
+	if ( typeName _this == "ARRAY" ) exitWith {
+		private _arr;
+		_arr = [];
+		{ _arr set [count _arr, typeOf _x]} forEach _this;
+		_arr
+	};
+	_this
+};
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

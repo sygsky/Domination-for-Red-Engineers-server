@@ -59,11 +59,33 @@ switch (beam_target) do {
 
 #ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
 // check if big metal mass is near teleporter
-if ( ( _typepos == 1 ) && ( nearestObjects [ _veh, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck5tMG","Truck","D30","M119" ], __NO_TELEPORT_NEAR_LARGE_METALL_MASS__ ] > 0 ) ) exitWith {
-	( localize "STR_SYS_75_4" )  call XfGlobalChat; // "Teleportation is impossible as long as there is a large mass of metal nearby!!!"
-	_sound = call SYG_powerDownSound;
-	[ "say_sound", _veh, _sound ] call XSendNetStartScriptClientAll; // play sound of invalid teleport
+_exit = false;
+if ( ( _typepos == 1 )  ) then {
+	_arr = nearestObjects [ _veh, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck5tMG","Truck","D30","M119" ], __NO_TELEPORT_NEAR_LARGE_METALL_MASS__ ];
+	#ifdef __OWN_SIDE_EAST__
+		_mhq = "BMP2_MHQ";
+	#endif
+	#ifndef __OWN_SIDE_EAST__
+			_mhq = "M113_MHQ";
+	#endif
+	_count = 0;
+	{
+	#ifdef __ACE__
+		if (_x isKindOf "ACE_BMP3") then {_count = _count + 1};
+		if (_x isKindOf "ACE_BMD1") then {_count = _count + 1};
+	#endif
+		if (_x isKindOf _mhq) then {_count = _count + 1};
+	} forEach _arr;
+	_cnt = (count _arr) - _cnt;
+	hint localize format["+++ beam_tele: _veh = %1, armors in dist 10 m = %2, _cnt = %3", _veh, _arr, _count];
+	if (  _count > 0 ) then {
+		( localize "STR_SYS_75_4" )  call XfGlobalChat; // "Teleportation is impossible as long as there is a large mass of metal nearby!!!"
+		_sound = call SYG_powerDownSound;
+		[ "say_sound", _veh, _sound ] call XSendNetStartScriptClientAll; // play sound of invalid teleport
+		_exit = true;
+	};
 };
+if (_exit) exitWith {};
 #endif
 
 // TODO: if teleport point is in house, prevent teleport ("You can't teleport to non-empty space!!!")
