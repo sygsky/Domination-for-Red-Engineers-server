@@ -18,61 +18,78 @@ _mr2text ctrlSetText "";
 #ifdef __TT__
 if (playerSide == west) then {
 #endif
-    if ( true ) then { // check MHQ #1
-        if (mr1_in_air) exitWith {
-            _mr1text ctrlSetText format[localize "STR_SYS_21", 1];//"Mobile respawn %1 gets transported by airlift..."
-            _mr1_available = false;
-        };
-        if (speed MRR1 > 4) exitWith {
-            _mr1text ctrlSetText format[localize "STR_SYS_22",1]; //"Mobile respawn %1 currently driving..."
-            _mr1_available = false;
-        };
-        if (surfaceIsWater [(position MRR1) select 0,(position MRR1) select 1]) exitWith {
-            _mr1text ctrlSetText format[localize "STR_SYS_25",1];// "MHQ 1 is in water..."
-            _mr1_available = false;
-        };
-    #ifdef __NO_TELEPORT_ON_DAMAGE__
-        if (!alive MRR1) exitWith {
-            _mr1text ctrlSetText format[localize "STR_SYS_28", 1]; // "MHQ %1 destroyed..."
-            _mr1_available = false;
-        };
-        if (damage MRR1 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
-            _mr1text ctrlSetText format[localize "STR_SYS_26", 1, round((damage MRR1) * 100),"%"]; // "MHQ %1/teleport damaged (%1%2)..."
-            _mr1_available = false;
-        };
-        if ( (damage MRR1) > (__NO_TELEPORT_ON_DAMAGE__ / 5)) exitWith {
-            _mr1text ctrlSetText format[localize "STR_SYS_27",1 , round((damage MRR1) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
-        };
-    #endif
-    };
-    if (true) then { // check MHQ #2
-        if (mr2_in_air) exitWith {
-            _mr2text ctrlSetText format[localize "STR_SYS_21",2];  //"Mobile respawn %1 gets transported by airlift..."
-            _mr2_available = false;
-        };
-        if (speed MRR2 > 4) exitWith {
-            _mr2text ctrlSetText format[localize "STR_SYS_22",2]; //"Mobile respawn 2 currently driving..."
-            _mr2_available = false;
-        };
-        if (surfaceIsWater [(position MRR2) select 0,(position MRR2) select 1]) exitWith {
-            _mr2text ctrlSetText format[localize "STR_SYS_25", 2]; // "MHQ 2 is in water..."
-            _mr2_available = false;
-        };
-    #ifdef __NO_TELEPORT_ON_DAMAGE__
-        if (!alive MRR2) exitWith {
-            _mr2text ctrlSetText format[localize "STR_SYS_28", 2]; // "MHQ %1 destroyed..."
-            _mr2_available = false;
-        };
-        if (damage MRR2 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
-            _mr2text ctrlSetText format[localize "STR_SYS_26", 2, round((damage MRR2) * 100),"%"]; // "MHQ %1/teleport damaged (%1%2)..."
-            _mr2_available = false;
-        };
-        if ( (damage MRR2) > (__NO_TELEPORT_ON_DAMAGE__ / 5)) then {
-            _mr2text ctrlSetText format[localize "STR_SYS_27", 2, round((damage MRR2) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
-        };
-    #endif
-    };
 
+	//
+	// MHQ #1 check ++++++++++++++++++++++++++++++++++++
+	//
+	if (true) then { // dont remove if (true), it is needed for correct code execution, to exit from scope by exitWith
+		if (mr1_in_air) exitWith {
+			_mr1text ctrlSetText format[localize "STR_SYS_21", 1];//"Mobile respawn %1 gets transported by airlift..."
+			_mr1_available = false;
+		};
+		if (speed MRR1 > 4) exitWith {
+			_mr1text ctrlSetText format[localize "STR_SYS_22",1]; //"Mobile respawn %1 currently driving..."
+			_mr1_available = false;
+		};
+		if (surfaceIsWater [(position MRR1) select 0,(position MRR1) select 1]) exitWith {
+			_mr1text ctrlSetText format[localize "STR_SYS_25",1];// "MHQ 1 is in water..."
+			_mr1_available = false;
+		};
+	#ifdef __NO_TELEPORT_ON_DAMAGE__
+		if (!alive MRR1) exitWith {
+			_mr1text ctrlSetText format[localize "STR_SYS_28", 1]; // "MHQ %1 destroyed..."
+			_mr1_available = false;
+		};
+		if (damage MRR1 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
+			_mr1text ctrlSetText format[localize "STR_SYS_26", 1, round((damage MRR1) * 100),"%"]; // "MHQ %1/teleport damaged (%1%2)..."
+			_mr1_available = false;
+		};
+		if ( (damage MRR1) > (__NO_TELEPORT_ON_DAMAGE__ / 5)) exitWith {
+			_mr1text ctrlSetText format[localize "STR_SYS_27",1 , round((damage MRR1) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
+		};
+	#endif
+	#ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
+		_mr1_available = !([MRR1, __NO_TELEPORT_NEAR_LARGE_METALL_MASS__] call SYG_isNearIronMass);
+//		hint localize  format["+++ update_dlg.sqf: mhq1 available = %1", _mr1_available];
+		if ( !_mr1_available ) exitWith { _mr1text ctrlSetText (localize "STR_SYS_75_4"); }; // "Teleport does not work near a large mass of iron!"
+	#endif
+	};
+
+	//
+    // MHQ #2 check ++++++++++++++++++++++++++++++++++++++++
+    //
+   	if (true) then {
+		if (mr2_in_air) exitWith {
+			_mr2text ctrlSetText format[localize "STR_SYS_21",2];  //"Mobile respawn %1 gets transported by airlift..."
+			_mr2_available = false;
+		};
+		if (speed MRR2 > 4) exitWith {
+			_mr2text ctrlSetText format[localize "STR_SYS_22",2]; //"Mobile respawn 2 currently driving..."
+			_mr2_available = false;
+		};
+		if (surfaceIsWater [(position MRR2) select 0,(position MRR2) select 1]) exitWith {
+			_mr2text ctrlSetText format[localize "STR_SYS_25", 2]; // "MHQ 2 is in water..."
+			_mr2_available = false;
+		};
+	#ifdef __NO_TELEPORT_ON_DAMAGE__
+		if (!alive MRR2) exitWith {
+			_mr2text ctrlSetText format[localize "STR_SYS_28", 2]; // "MHQ %1 destroyed..."
+			_mr2_available = false;
+		};
+		if (damage MRR2 > __NO_TELEPORT_ON_DAMAGE__) exitWith {
+			_mr2text ctrlSetText format[localize "STR_SYS_26", 2, round((damage MRR2) * 100),"%"]; // "MHQ %1/teleport damaged (%1%2)..."
+			_mr2_available = false;
+		};
+		if ( (damage MRR2) > (__NO_TELEPORT_ON_DAMAGE__ / 5)) then {
+			_mr2text ctrlSetText format[localize "STR_SYS_27", 2, round((damage MRR2) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
+		};
+	#endif
+	#ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
+		_mr2_available = !([MRR2, __NO_TELEPORT_NEAR_LARGE_METALL_MASS__] call SYG_isNearIronMass);
+//		hint localize  format["+++ update_dlg.sqf: mhq2 available = %1", _mr2_available];
+		if ( !_mr2_available ) exitWith { _mr2text ctrlSetText (localize "STR_SYS_75_4"); }; // "Teleport does not work near a large mass of iron!"
+	#endif
+};
 #ifdef __TT__
 } else {
 	if (mrr1_in_air) then {
@@ -108,30 +125,24 @@ if (playerSide == west) then {
 
 if (x_loop_end) exitWith {};
 
+_button = _display displayCtrl 100108;
+_button ctrlEnable _mr1_available;
 if (!_mr1_available) then {
-	_button = _display displayCtrl 100108;
-	_button ctrlEnable false;
 	if (beam_target == 1) then {
 		beam_target = -1;
 		_textctrl = _display displayCtrl 100110;
 		_textctrl ctrlSetText "";
 	};
-} else {
-	_button = _display displayCtrl 100108;
-	_button ctrlEnable true;
 };
 
+_button = _display displayCtrl 100109;
+_button ctrlEnable _mr2_available;
 if (!_mr2_available) then {
-	_button = _display displayCtrl 100109;
-	_button ctrlEnable false;
 	if (beam_target == 2) then {
 		beam_target = -1;
 		_textctrl = _display displayCtrl 100110;
 		_textctrl ctrlSetText "";
 	};
-} else {
-	_button = _display displayCtrl 100109;
-	_button ctrlEnable true;
 };
 
 if (true) exitWith {};

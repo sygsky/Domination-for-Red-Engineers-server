@@ -134,21 +134,22 @@ if  ( !isNull _veh  ) then {
         _sound = "warning";
     };
 };
-if ( _sound != "") then  { playSound _sound };
     #endif
+if ( _sound != "") then  { playSound _sound };
+
+	#ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
+
+if ( ([_end_pos, __NO_TELEPORT_NEAR_LARGE_METALL_MASS__] call SYG_isNearIronMass) ) then {
+	sleep 1;
+	playSOund (call SYG_powerDownSound);
+};
+
+	#endif
+
 #endif
 
 _textctrl ctrlSetText _text;
 
 [100001, 100104, _end_pos] call SYG_setMapPosToMainTarget;
 
-/* _ctrlmap = _display displayCtrl 100104;
-ctrlMapAnimClear _ctrlmap;
-
-_start_pos = position player;
-_ctrlmap ctrlMapAnimAdd [0.0, 1.00, _start_pos];
-_ctrlmap ctrlMapAnimAdd [1.2, 1.00, _end_pos];
-_ctrlmap ctrlMapAnimAdd [0.5, 0.30, _end_pos];
-ctrlmapanimcommit _ctrlmap;
- */
 if (true) exitWith {};

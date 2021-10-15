@@ -527,11 +527,11 @@ class CfgSounds {
     class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
     class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
     class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0}; titles[] = {};}; // intro music from "Bloody diamond" movie
-    class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0};}; // intro music from "Total recall" movie (The Mountain)
+    class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0}; titles[] = {};}; // intro music from "Total recall" movie (The Mountain)
 //    class comrade_my { name=""; sound[] = {\sounds\comrade_my.ogg,db+10,1.0};} // intro music from Soviet song "Comrade mine"
-    class capricorn1title { name=""; sound[] = {\sounds\capricorn1title.ogg,db+20,1.0};}; // intro music from great american movie "Capricorn-1"
-    class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg,db+20,1.0};}; // intro music from Soviet great song (1950)
-    class Letyat_perelyotnye_pticy_end { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_end.ogg,db+20,1.0};}; // intro music #2 (final verse) from the same Soviet great song (1950)
+    class capricorn1title { name=""; sound[] = {\sounds\capricorn1title.ogg,db+20,1.0}; titles[] = {};}; // intro music from great american movie "Capricorn-1"
+    class Letyat_perelyotnye_pticy_2nd { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_2nd.ogg,db+20,1.0}; titles[] = {};}; // intro music from Soviet great song (1950)
+    class Letyat_perelyotnye_pticy_end { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_end.ogg,db+20,1.0}; titles[] = {};}; // intro music #2 (final verse) from the same Soviet great song (1950)
 
     class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0}; titles[] = {};}; // intro music from Soviet great film Gussar Ballad (1962)
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0}; titles[] = {};}; // intro music from Soviet great film Gussar Ballad (1962)

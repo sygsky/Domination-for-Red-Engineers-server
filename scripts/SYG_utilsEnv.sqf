@@ -67,22 +67,6 @@ SYG_setTexture = {
 // deleteVehicle _tobj;
 //
 SYG_showTeleport = {
-/*	private ["_PS1", "_pos","_dur","_obj"];
- 	_obj = arg(0);
-	if ( isNull _obj ) exitWith {hint localize "--- SYG_showTeleport: expected object isNull";};
-	_pos = getPos _obj;
-	_pos set [2, argp(_pos,2)+arg(1)];
-	_dur = argopt(2,5);
-	_PS1 = "#particlesource" createVehicleLocal _pos;
-	hint localize format["SYG_showTeleport: obj %1, pos %2, dur %3, particle obj %4", typeOf _obj, _pos, _dur, _PS1];
-	_PS1 setParticleCircle [0, [0, 0, 0]];
-	_PS1 setParticleRandom [0, [0, 0, 0], [0,0,0], 0, 1, [0, 0, 0, 0], 0, 0];
-	_PS1 setParticleParams [["\Ca\Data\ParticleEffects\SPARKSEFFECT\SparksEffect.p3d", 8, 3, 1], "", "spaceobject", 1, 0.2, [0, 0, 1], [0,0,0], 1, 10/10, 1, 0.2, [2, 2], [[1, 1, 1 ,1], [1, 1, 1, 1], [1, 1, 1, 1]], [0, 1], 1, 0, "", "", objNull];
-//	_PS1 setDropInterval 0.01;
-//	if ( _dur > 0 ) then { _PS1 spawn {deleteVehicle _this};};
-//	_PS1
-*/
-
 
 // args == [_obj, _height_above_obj,_time_to_expire]
 
@@ -121,8 +105,7 @@ SYG_firesService = {
     _cnt = 0;
     {
         _fires = nearestObjects [_x, ["Fire","FireLit"],10];
-        if ( count _fires > 0) then
-        {
+        if ( count _fires > 0) then {
             (_fires select 0) addAction [localize "STR_CHECK_ITEM", "scripts\fireLitAction.sqf"];
             _cnt = _cnt + 1;
         };
@@ -179,11 +162,9 @@ SYG_findRestorableObjects = {
     hint localize format["+++ SYG_findRestorableObjects %1",[_pos, _dist]];
     _list = nearestObjects [ _pos, [], _dist ];
     hint localize format["+++ SYG_findRestorableObjects found %1 items",count _list];
-    for "_i" from 0 to ((count _list) - 1) do
-    {
+    for "_i" from 0 to ((count _list) - 1) do {
         _x = argp(_list, _i);
-        if ( (typeOf _x != "") || (getDammage _x < 1) )then
-        {
+        if ( (typeOf _x != "") || (getDammage _x < 1) ) then {
             _list set [_i, "RM_ME"];
         };
     };
@@ -240,37 +221,28 @@ SYG_makeRestoreArray = {
     if ( _max_cnt == 0) exitWith { _res };
     //player groupChat format["[pos %1, max cnt %2, step %3] call SYG_makeRestoreArray: max_cnt %4, %5 restoreable items", _pos, _num, _step, _max_cnt, count _list];
     //hint localize format["[pos %1, max cnt %2, step %3] call SYG_makeRestoreArray => found cnt %4", _pos, _num, _step, _max_cnt];
-    for "_num" from 0 to _max_cnt - 1 do
-    {
+    for "_num" from 0 to _max_cnt - 1 do {
         _dist = _pos distance (argp(_list,_num));
         //hint localize format["%1: %2 %3 %4", _num + 1, _dist, _ring_rad, _filled_in_ring ];
-        if ( _dist > _ring_rad ) then // curent dist limit detected
-        {
-            if ( _filled_in_ring > 0 ) then
-            {
+        if ( _dist > _ring_rad ) then { // curent dist limit detected
+            if ( _filled_in_ring > 0 ) then {
                 _res = _res + [[_num, _ring_rad]];
                 _filled_in_ring = 0; // start next ring
             };
             // find next ring to fit current object
-            while {(_ring_rad < _dist_limit) && ( _dist > _ring_rad)} do
-            {
+            while {(_ring_rad < _dist_limit) && ( _dist > _ring_rad)} do {
                 _ring_rad = _ring_rad + _step;
             };
         };
-        if ( _dist <= _ring_rad ) then // curent dist limit detected
-        {
+        if ( _dist <= _ring_rad ) then { // curent dist limit detected
             _filled_in_ring = _filled_in_ring + 1; // one more for this dist
         };
     };
     _num = if ( count _res > 0) then {_res select ((count _res) - 1) select 0} else {0}; // last filled count
-    if ( _max_cnt > _num ) then
-    {
+    if ( _max_cnt > _num ) then {
         _res = _res + [[_max_cnt, _dist + 0.01 ]]; // fill with last object distance
-    }
-    else
-    {
-        if (count _res > 0 ) then
-        {
+    } else {
+        if (count _res > 0 ) then {
             (_res select [ (count _res) - 1 ]) set [ 1, _dist + 0.01 ];
         };
     };

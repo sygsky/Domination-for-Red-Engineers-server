@@ -962,7 +962,7 @@ _local_msg_arr spawn {
 		[ ["STR_GREETING_COMMON" ] ],
 		0, 5, false, "drum_fanfare"
 	] call SYG_msgToUserParser;
-	hint localize "+++ STR_GREETING_COMMON printed"; // DEBUG
+//	hint localize "+++ STR_GREETING_COMMON printed"; // DEBUG
 };
 
 #ifndef __REVIVE__
