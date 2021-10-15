@@ -76,7 +76,7 @@ if ( ( _typepos == 1 )  ) then {
 	#endif
 		if (_x isKindOf _mhq) then {_count = _count + 1};
 	} forEach _arr;
-	_cnt = (count _arr) - _cnt;
+	_count = (count _arr) - _count;
 	hint localize format["+++ beam_tele: _veh = %1, armors in dist 10 m = %2, _cnt = %3", _veh, _arr, _count];
 	if (  _count > 0 ) then {
 		( localize "STR_SYS_75_4" )  call XfGlobalChat; // "Teleportation is impossible as long as there is a large mass of metal nearby!!!"
