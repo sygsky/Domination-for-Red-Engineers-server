@@ -506,8 +506,9 @@ class CfgSounds {
 	class johnny    { name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};   titles[] = {};     };
 	class druzba    { name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};    titles[] = {};    };
 	class adjutant  { name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};  titles[] = {};    };
-	class vague     { name="";        sound[]=   {\sounds\intro\vague.ogg,db-1,1.0}; titles[] = {};  };
+//	class vague     { name="";        sound[]=   {\sounds\intro\vague.ogg,db-1,1.0}; titles[] = {};  };
 	class enchanted_boy { name="";    sound[]=   {\sounds\intro\enchanted_boy.ogg,db-1,1.0};  titles[] = {}; };
+	class dangerous_chase { name="";    sound[]=   {\sounds\intro\dangerous_chase.ogg,db-1,1.0};  titles[] = {}; }; // From Japab file 1976
 
 	class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0};  titles[] = {}; };
 	class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0};  titles[] = {}; };

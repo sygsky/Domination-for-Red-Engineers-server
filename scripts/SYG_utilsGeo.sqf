@@ -473,14 +473,9 @@ SYG_getTargetTownDetectedSound = {
     if (typeName _item == "STRING") exitWith {_item};   // sound is designated, not array
     if (typeName _item == "ARRAY") exitWith {
         if ( count _item == 0) exitWith {""};   // no array - no sound
-        _item = _item select 0;
-        if (typeName _item == "STRING") exitWith { _item }; // string must be sound name
-        if (typeName _item == "ARRAY") exitWith { // may be array of sound names
-            _item = _item call XfRandomArrayVal; // get array random item
-            if (typeName _item == "STRING") exitWith {_item}; // item is string, return as sound name
-            ""
-        };
-        "" // not array and not string with name of sound
+		_item = _item call XfRandomArrayVal; // get array random item
+		if (typeName _item == "STRING") exitWith {_item}; // item is string, return as sound name
+        "" // array with not strings as sound name
     };
     "" // sound not detected
 };

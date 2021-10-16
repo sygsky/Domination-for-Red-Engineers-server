@@ -833,7 +833,7 @@ hint localize format["+++ setup info: player rank %1", _rank]; // DEBUG
 
 if ( _rank < 6 ) then { // you are Major or lower, send info about ranks
 
-	// "Ranks: Private (%1), Corporal (%2), Sergeant (%3), Lieutenant (%4), Captain (%5), Major (%6), Colonel (%7) etc"
+	// "Ranks: %1(%2), %3(%4), %5(6), %7(%8), %9(%10), %11(%12), %13(%14) and further, Generals""
 	_local_msg_arr set [count _local_msg_arr,
 		format[ localize "STR_SYS_68_1",
 			(d_rank_names select 0) call XGetRankStringLocalized, 0,

@@ -1818,8 +1818,7 @@ SYG_isInList = {
 	_list = _this select 1;
 	_prev = "";
 	_retval = false;
-	while { true} do
-	{
+	while { true } do {
 		if (_name == "" ) exitWith {_retval = false;}; // not found rifle parent, it can be not weapon name
 		if ( _name == "rifle" ) exitWith { _retval = _prev in _list;}; // found rifle parent, prev must be MG kind or not
 		if ( _name in _list) exitWith { _retval = true; };
@@ -1833,8 +1832,7 @@ SYG_isInList = {
 // checks if unit (_this) has sniper rifle as primary weapon
 // Example: _unit call SYG_hasSniperRifle; // return true is unit has some kind of SVD, KSVK, M21, M24, M107 etc
 //
-SYG_hasSniperRifle =
-{
+SYG_hasSniperRifle = {
 	if (true) exitWith {(primaryWeapon _this) call SYG_isSniperRifle};
 //	player globalChat format["SYG_hasSniperRifle test on '%1'", primaryWeapon _this];
 };
@@ -1852,8 +1850,7 @@ SYG_isMG = {
 //
 // call: _isRadio = (secondaryWeapon player) call isRadio;
 //
-SYG_isRadio =
-{
+SYG_isRadio = {
     //_wpn = secondaryWeapon _unit;
     _this in SYG_RADIO_SET;
 };
@@ -1861,8 +1858,7 @@ SYG_isRadio =
 //
 // call: _isRadio = player call asRadio;
 //
-SYG_hasRadio =
-{
+SYG_hasRadio = {
     private ["_ret, _wpn, _ruck"];
     _ret = false;
     _wpn = weapons _this;
@@ -1896,27 +1892,20 @@ SYG_weaponClass = {
 
 //	hint localize format[ "SYG_weaponClass.sqf: %1 has class %2", _this, _class ];
 
-	if (isClass _class) then
-	{
-	    if ( isNumber(configFile >> "CfgWeapons" >> configName _class >> "ACE_PackSize") ) exitWith
-	    {
+	if (isClass _class) then {
+	    if ( isNumber(configFile >> "CfgWeapons" >> configName _class >> "ACE_PackSize") ) exitWith {
 	        _ret = 4; // Rucksack
 	    };
 		_ret = 0;
-		while { (isClass _class) && (_ret == 0) } do
-		{
-			switch (configName _class) do
-			{
-				case "RifleCore":
-				{
+		while { (isClass _class) && (_ret == 0) } do {
+			switch (configName _class) do {
+				case "RifleCore": {
 					_ret = 1;
 				};
-				case "LauncherCore":
-				{
+				case "LauncherCore": {
 					_ret = 2;
 				};
-				case "PistolCore":
-				{
+				case "PistolCore": {
 					_ret = 3;
 				};
 /*
@@ -1938,11 +1927,9 @@ SYG_hasOnlyPistol = {
 	if ( (typeName _this != "OBJECT") || (! (_this isKindOf "CAManBase")) ) exitWith { false };
 	_other_weapon = false;
 	_weapons = weapons _this;
-	if (format["%1",_this getVariable "ACE_weapononback"] != "<null>") then
-	{
+	if (format["%1",_this getVariable "ACE_weapononback"] != "<null>") then {
 		_wob = _this getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
-		{
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then {
 			_weapons = _weapons + [_wob];
 		};
 	};
@@ -1959,16 +1946,15 @@ SYG_hasOnlyPistol = {
 GRU_allowedNonPistolList = ["ACE_MK13","ACE_M32","ACE_ShotgunBase"];
 // returns true if a unit posess only pistol or nothing
 // call: _only_pistols = _unit call SYG_hasWeapon4GRUMainTask;
+
 SYG_hasWeapon4GRUMainTask = {
 	private ["_ret", "_other_weapon", "_onback", "_weapons","_wob"];
 	if ( (typeName _this != "OBJECT") || (! (_this isKindOf "CAManBase")) ) exitWith { false };
 	_other_weapon = false;
 	_weapons = weapons _this;
-	if (format["%1",_this getVariable "ACE_weapononback"] != "<null>") then
-	{
+	if (format["%1",_this getVariable "ACE_weapononback"] != "<null>") then {
 		_wob = _this getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
-		{
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then {
 			_weapons = _weapons + [_wob];
 		};
 	};
@@ -2044,8 +2030,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 							hint localize format[ "SYG_unitHasOnlyAllowedWeapon: SMG (%1) not allowed", _x ];
 							_other_weapon = true; breakTo "main";
 						};
-					} else
-					{
+					} else {
 						// may be long muzzle rifle?
 						if ( [_x, LONG_MUZZLE_WEAPON_LIST] call SYG_isInList ) then  // long muzzle detected
 						{
@@ -2055,8 +2040,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 						} else // ordinal rifle detected
 						{
 							hint localize format["SYG_unitHasOnlyAllowedWeapon: RFL (%1) found",_x];
-							if (! ("rfl" in _list) ) then
-							{
+							if (! ("rfl" in _list) ) then {
 								hint localize format[ "SYG_unitHasOnlyAllowedWeapon: RFL (%1) not allowed", _x ];
 								_other_weapon = true; breakTo "main";
 							};
@@ -2066,24 +2050,21 @@ SYG_unitHasOnlyAllowedWeapon = {
 			};
 			case 2:	// Launcher
 			{
-				if (! ("rpg" in _list) ) then
-				{
+				if (! ("rpg" in _list) ) then {
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: LNC (%1) not allowed", _x ];
 					_other_weapon = true; breakTo "main";
 				};
 			};
 			case 3:	// Pistol
 			{
-				if (! ("pst" in _list) ) then
-				{
+				if (! ("pst" in _list) ) then {
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: PST (%1) not allowed", _x ];
 					_other_weapon = true; breakTo "main";
 				};
 			};
 			case 4:	// Rucksack
 			{
-				if (! ("rks" in _list) ) then
-				{
+				if (! ("rks" in _list) ) then {
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: RKS (%1) not allowed", _x ];
 					_other_weapon = true; breakTo "main";
 				};
@@ -2118,11 +2099,9 @@ SYG_findExcessiveWeapon = {
 	_list = arg(1);
 	_other_weapon = "";
 	_weapons = weapons _unit;
-	if (format["%1",_unit getVariable "ACE_weapononback"] != "<null>") then
-	{
+	if (format["%1",_unit getVariable "ACE_weapononback"] != "<null>") then {
 		_wob = _unit getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
-		{
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then {
 			_weapons = _weapons + [_wob];
 		};
 	};
@@ -2171,17 +2150,13 @@ SYG_findExcessiveWeapon = {
 			};
 			case 2:	// Launcher
 			{
-				if (_x in LIGHT_LAUNCHER_WEAPON_LIST) then
-				{
-					if (!(("rpg1" in _list) || ("rpg" in _list))) then
-					{
+				if (_x in LIGHT_LAUNCHER_WEAPON_LIST) then {
+					if (!(("rpg1" in _list) || ("rpg" in _list))) then {
 						//hint localize format[ "SYG_findExcessiveWeapon: LNC1 (%1) not allowed in list %2", _x, _list ];
 						_other_weapon = _x; breakTo "main";
 					};
-				}else
-				{
-					if (!("rpg" in _list)) then
-					{
+				} else {
+					if (!("rpg" in _list)) then {
 						//hint localize format[ "SYG_findExcessiveWeapon: LNC (%1) not allowed in list %2", _x, _list ];
 						_other_weapon = _x; breakTo "main";
 					};
@@ -2249,8 +2224,7 @@ SYG_getVecRoleBulkyWeapon = {
 	scopeName "main";
 	_bulky_weapon = [];
 
-	while {true} do
-	{
+	while {true} do {
 		// first add allowed weapon in bulky_weapon array
 		//if ( _cargo) exitWith {};
 		// check pre-defined vehicles
@@ -2260,8 +2234,7 @@ SYG_getVecRoleBulkyWeapon = {
 //		if (_vec isKindOf "LandVehicle" ) exitWith {_bulky_weapon = ["rfl","rpg1"];};
 
 		if (_vec isKindOf "Air") then {
-		    if (!((_vec isKindOf "ParachuteBase") || ( _vec isKindOf "RAS_Parachute"))) then
-		    {
+		    if (!((_vec isKindOf "ParachuteBase") || ( _vec isKindOf "RAS_Parachute"))) then {
                 if (_vec isKindOf "Helicopter") then {
                     //["rks","rfl","smg","pst","rpg","lng"]
 //                    if (_driver || (_vec call SYG_isBattleHeli) ) then {_bulky_weapon = ["smg"]; breakTo "main";}
@@ -2283,62 +2256,35 @@ SYG_getVecRoleBulkyWeapon = {
 // call: _wpnType = _wpn call SYG_weaponType;
 // returns: 6..10 for [Rifle(6),MG(7),SideArm(8),Launcher(9),Explosive(10)] or -1 if not a weapon
 SYG_weaponType = {
-		private ["_type"];
-		_type = getNumber (configFile >> "CfgWeapons" >> _this >> "type");
-		// _class = configFile  >> _this;
+	private ["_type"];
+	_type = getNumber (configFile >> "CfgWeapons" >> _this >> "type");
+	// _class = configFile  >> _this;
 
-		switch (_type) do
-		{
-			//Rifles.
-			case 1:
-			{
-				6
-			};
+	switch (_type) do {
+		//Rifles.
+		case 1: { 6 };
+		//Sidearms.
+		case 2: { 8 };
+		//Launchers.
+		case 4: { 9 };
+		//Machineguns.
+		case 5: {
+			//Check autofire to see this is a machinegun.
+			if (getNumber(_entry >> "autoFire") == 1) then { 7 } else { 6 };  //Probably a heavy sniper rifle.
+		};
 
-			//Sidearms.
-			case 2:
-			{
-				8
-			};
-
-			//Launchers.
-			case 4:
-			{
-				9
-			};
-
-			//Machineguns.
-			case 5:
-			{
-				//Check autofire to see this is a machinegun.
-				if (getNumber(_entry >> "autoFire") == 1) then
-				{
-					7
-				}
-				else
-				{
-					//Probably a heavy sniper rifle.
-					6;
-				};
-			};
-
-			default
-			{
-				//Explosives?
-				if ((_type % 256) == 0) then
-				{
-					10
-				};
-			};
-		}
+		default {
+			//Explosives?
+			if ((_type % 256) == 0) then { 10 };
+		};
+	}
 };
 
 //
 // checks if unit (_this) has MG as primary weapon
 // Example: _unit call SYG_hasMG; // return true is unit has some kind of M240, M249, PK, RPK47, RPK74
 //
-SYG_hasMG =
-{
+SYG_hasMG = {
 	if (true) exitWith {(primaryWeapon _this) call SYG_isMG};
 //	player globalChat format["hasMG test on '%1'", primaryWeapon _this];
 };
@@ -2352,21 +2298,18 @@ SYG_isSMG = {
 	[_this, SMG_WEAPON_LIST] call SYG_isInList;
 };
 
-SYG_hasSMG =
-{
+SYG_hasSMG =  {
 	if (true) exitWith { (primaryWeapon _this) call SYG_isSMG};
 };
 
-SYG_isLauncher =
-{
+SYG_isLauncher = {
 	[_this, LAUNCHER_WEAPON_LIST] call SYG_isInList;
 };
 
 //
 // call: _hasLauncher = _unit call SYG_hasLauncher;
 //
-SYG_hasLauncher =
-{
+SYG_hasLauncher =  {
 	private ["_res"];
 	_res = false;
 	{
@@ -2479,8 +2422,7 @@ SYG_getCompatibleMagazines = {
 // returns: true is reammed or false is not reammed
 //
 SYG_reammoTruck = {
-	if ( _this isKindOf "Truck5tReammo" ) then
-	{
+	if ( _this isKindOf "Truck5tReammo" ) then {
 		hint localize format["SYG_reammoTruck: called for %1", typeOf _this];
 
 		_this call SYG_clearAmmoBox;
@@ -2592,9 +2534,7 @@ SYG_reammoTruck = {
         _this setAmmoCargo 1; // Ensure full reammo ability
 
 		true
-	}
- 	else
-	{
+	} else {
 		//hint localize format["SYG_reammoTruck: --- Expected input vehicle type Truck5tReammo, detected %1 ---", typeOf _this ];
 		false
 	};
@@ -2623,8 +2563,7 @@ SYG_reammoTruckAround = {
 // call: _ret = _vehicle call SYG_reammoMHQ;
 //
 SYG_reammoMHQ = {
-	if ( _this isKindOf "BMP2_MHQ" ) then
-	{
+	if ( _this isKindOf "BMP2_MHQ" ) then {
 		// hint localize format["SYG_reammoMHQ: entered with %1", _this];
 
 		_this call SYG_clearAmmoBox;
@@ -2661,9 +2600,7 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_Epinephrine", 1];
 		_this addmagazinecargo ["ACE_MineE",       5];
 		true
-	}
-	else
-	{
+	} else {
 		hint localize format["--- SYG_reammoMHQ: --- Expected input vehicle type BMP2_MHQ, detected %1 ---", typeOf _this ];
 		false
 	};

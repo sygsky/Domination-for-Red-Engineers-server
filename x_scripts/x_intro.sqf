@@ -86,8 +86,8 @@ if (_sound == "") then { // select random music for ordinal day
         } else {
 
         	if (name player == "Rokse [LT]") exitWith {
-        		_music = ["burnash","johnny","druzba","adjutant","vague","enchanted_boy","ahead_friends","mission_impossible",
-        		"lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice"] call _XfRandomArrayVal;
+        		_music = ["burnash","johnny","druzba","adjutant",/*"vague",*/"enchanted_boy","ahead_friends","mission_impossible",
+        		"lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice","dangerous_chase"] call _XfRandomArrayVal;
         		playSound _music;
         		_sound = _music;
         		hint localize format["+++ Sound (not music!) ""%1"" player as intro", _sound];
@@ -134,7 +134,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "bond","bond1","adjutant","prince_negaafellaga","total_recall_mountain","adagio","morze","morze_3",
                 "treasure_island_intro","fear2","soviet_officers","cosmos","manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","del_vampiro1",
-                "del_vampiro2","zaratustra","bolivar","jrtheme","vague","enchanted_boy","robinson_crusoe","bloody",
+                "del_vampiro2","zaratustra","bolivar","jrtheme",/*"vague",*/"enchanted_boy","robinson_crusoe","bloody",
                 "peregrinus"
             ];
 
@@ -142,7 +142,8 @@ if (_sound == "") then { // select random music for ordinal day
             _daytime_music = [
                 "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
                 "Letyat_perelyotnye_pticy_2nd","ruffian","morze","morze_3","chapaev","rider","Vremia_vpered_Sviridov",
-                "Letyat_perelyotnye_pticy_end","toccata","travel_with_friends","on_thin_ice","wild_geese","wild_geese"
+                "Letyat_perelyotnye_pticy_end","toccata","travel_with_friends","on_thin_ice","wild_geese","wild_geese",
+                "dangerous_chase"
             ];
 
             // only night music
@@ -166,8 +167,8 @@ if (_sound == "") then { // select random music for ordinal day
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme","vague","travel_with_friends","on_thin_ice","peregrinus",
-                "wild_geese","wild_geese"
+                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme",/*"vague",*/"travel_with_friends","on_thin_ice","peregrinus",
+                "wild_geese","wild_geese","dangerous_chase.ogg"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif

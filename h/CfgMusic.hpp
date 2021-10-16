@@ -28,7 +28,7 @@ class CfgMusic {
     class johnny    { name="";        sound[]=   {\sounds\johnny.ogg,db-1,1.0};      };
     class druzba    { name="";        sound[]=   {\sounds\druzba.ogg,db-1,1.0};      };
     class adjutant  { name="";        sound[]=   {\sounds\adjutant.ogg,db-1,1.0};    };
-    class vague     { name="";        sound[]=   {\sounds\intro\vague.ogg,db-1,1.0}; };
+//    class vague     { name="";        sound[]=   {\sounds\intro\vague.ogg,db-1,1.0}; };
     class enchanted_boy     { name="";        sound[]=   {\sounds\intro\enchanted_boy.ogg,db-1,1.0}; };
 
     class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };

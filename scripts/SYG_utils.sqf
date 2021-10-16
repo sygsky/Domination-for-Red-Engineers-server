@@ -737,15 +737,20 @@ SYG_isNearIronMass = {
 	_dist = if ((count _this) > 1) then { _this select 1} else { 10 };
 	_arr = nearestObjects [ _veh, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119" ], _dist ];
 	if (count _arr == 0) exitWith { false };
+	#ifdef __OWN_SIDE_EAST__
+		#define __OWN_MHQ "BMP2_MHQ"
+	#else
+		#define __OWN_MHQ "M113_MHQ"
+	#endif
 	_ironCount = count _arr;
 	{
-	#ifdef __ACE__
-		if ( (_x isKindOf "ACE_BMP3") || (_x isKindOf "ACE_BMD1")  ) then {_ironCount = _ironCount - 1};
-	#endif
-	#ifdef __OWN_SIDE_EAST__
-		if ( (_x isKindOf "BMP2_MHQ") ) then {_ironCount = _ironCount - 1};
+	#ifndef __ACE__
+		if ( (_x isKindOf "M113")  || (_x isKindOf __OWN_MHQ) ) then {_ironCount = _ironCount - 1}; _x in [""];
 	#else
-		if ( (_x isKindOf "M113_MHQ") ) then {_ironCount = _ironCount - 1};
+		if (      (_x isKindOf "M113") || (_x isKindOf __OWN_MHQ) ||
+			  (_x isKindOf "ACE_BMP3") || (_x isKindOf "ACE_BMD1") ||
+			 (_x isKindOf  "ACE_M2A1")
+		   ) then {_ironCount = _ironCount - 1};
 	#endif
 	} forEach _arr;
 //	hint localize format["+++ isNearIronMass: _veh = %1, armors in dist %2 m = %3, _cnt = %4", _veh, _dist, _arr, _ironCount];
