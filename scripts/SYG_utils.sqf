@@ -745,7 +745,7 @@ SYG_isNearIronMass = {
 	_ironCount = count _arr;
 	{
 	#ifndef __ACE__
-		if ( (_x isKindOf "M113")  || (_x isKindOf __OWN_MHQ) ) then {_ironCount = _ironCount - 1}; _x in [""];
+		if ( (_x isKindOf "M113")  || (_x isKindOf __OWN_MHQ) ) then {_ironCount = _ironCount - 1};
 	#else
 		if (      (_x isKindOf "M113") || (_x isKindOf __OWN_MHQ) ||
 			  (_x isKindOf "ACE_BMP3") || (_x isKindOf "ACE_BMD1") ||

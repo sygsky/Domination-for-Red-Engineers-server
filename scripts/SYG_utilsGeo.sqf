@@ -528,12 +528,10 @@ SYG_readMarkerInfo = {
 SYG_pointInMarker = {
 	private ["_pnt","_mrk","_ret"];
 	_mrk = arg(1);
-	switch typeName _mrk do
-	{
+	switch typeName _mrk do {
 		case "ARRAY":  // marker description array (by Xeno, 4 params for rectangle, 2 - for circle)
 		{
-			switch  count _mrk do
-			{
+			switch  count _mrk do {
 				//hint localize format["Marker for circle ""%1"" converted to a form [center,w,h,angle]",_mrk];
 				case 2: {_mrk = [argp(_mrk,0), argp(_mrk,1),0,0,"CIRCLE"];};
 				case 3: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),0,"RECTANGLE"];};
@@ -549,18 +547,14 @@ SYG_pointInMarker = {
 	};
 	_pnt = arg(0);
 	_ret = false;
-	switch argp(_mrk,4) do
-	{
-		case "CIRCLE": 
-		{
+	switch argp(_mrk,4) do {
+		case "CIRCLE": {
 			_ret = [_pnt, argp(_mrk,0),argp(_mrk,1)] call SYG_pointInCircle;
 		};
-		case "ELLIPSE": 
-		{
+		case "ELLIPSE": {
 			_ret = [_pnt, _mrk] call SYG_pointInEllipse;
 		};
-		case "RECTANGLE": 
-		{
+		case "RECTANGLE": {
 			_ret = [_pnt, _mrk] call SYG_pointInRect;
 		};
 	};
@@ -576,8 +570,7 @@ SYG_getDirName = {
 //	hint localize format["SYG_getDirName: this %1", _this];
 	_this  = _this mod 360;
 	if ( _this < 0 ) then {_this = _this + 360;};
-	switch localize "STR_LANG" do
-	{
+	switch localize "STR_LANG" do {
 		case "RUSSIAN": { SYG_gendirlistE select (round (_this/22.5))};
 		case "ENGLISH";
 		case "GERMAN";
