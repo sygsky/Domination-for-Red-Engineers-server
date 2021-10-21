@@ -1914,6 +1914,84 @@ SYG_vehToType = {
 	_this
 };
 
+#ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
+//
+// Call as: _near = [_veh | _pos<, _dist = 10>] call  isNearIronMass;
+//
+SYG_isNearIronMass = {
+	(count (_this call SYG_ironMassNear)) > 0
+};
+
+//
+// Call as: _nearPosArr = [_veh | _pos<, _dist = 20>] call  isNearIronMass;
+//
+SYG_ironMassNear = {
+	if ((typeName _this) != "ARRAY") exitWith  { false};
+	private ["_dist","_arr","_ret"];
+	// check if big metal mass is near teleporter
+	_dist = if ((count _this) > 1) then { _this select 1} else { 10 };
+	_arr = nearestObjects [ _this select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119" ], _dist ];
+	if (count _arr == 0) exitWith { false };
+	_ret = [];
+#ifdef __OWN_SIDE_EAST__
+		#define __OWN_MHQ "BMP2_MHQ"
+#endif
+#ifndef __OWN_SIDE_EAST__
+		#define __OWN_MHQ "M113_MHQ"
+#endif
+	{
+#ifndef __ACE__
+		if (!( (_x isKindOf "M113")  || (_x isKindOf __OWN_MHQ)) ) then { _ret set [count _ret, _x] };
+#endif
+#ifdef __ACE__
+		if (! (      (_x isKindOf "M113") || (_x isKindOf __OWN_MHQ) ||
+			  (_x isKindOf "ACE_BMP3") || (_x isKindOf "ACE_BMD1") ||
+			 (_x isKindOf  "ACE_M2A1")
+		   ) ) then {_ret set [count _ret, _x]};
+#endif
+	} forEach _arr;
+	_ret
+};
+
+//
+// Finds the teleport error based on number of iron vhicle in designated radious
+// call as: [_veh|_pos<, __ERR_DIST>] call SYG_findTeleportError;
+//
+SYG_findTeleportError = {
+	private [ "_arr","_pos","_mindist","_sum","_dist" ];
+	_arr = _this  call SYG_ironMassNear;
+	if ( count _arr == 0 ) exitWith {0};
+	_pos  = _this select 0;
+	_mindist = if( count _this > 1 ) then { _this select 1 } else { __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ };
+	_pos = if ( typeName _pos == "OBJECT" ) then { getPos _pos } else { _pos };
+	_sum = 0;
+	{
+		_dist = [_pos, _x] call SYG_distance2D;
+		if (_dist < _mindist) then { _sum = _sum + __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ - _dist };
+	} forEach _arr;
+//	player groupChat format[ "+++ Found %1 vehicle[s] in radious %2 m, sum %3, %4", count _arr, _mindist, _sum, [_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE ];
+	sqrt (_sum *  5)
+};
+
+//
+// [_pnt, _shift] call SYG_deviateTPPoint
+//
+SYG_deviateTeleportPoint = {
+	private ["_err","_pos","_rad","_dx","_dy"];
+	_pos = _this select 0;
+	_err = _this select 1;
+	if (_err == 0) exitWith { _pos };
+	_rad = random _err; // Do tendency of randomness to the center of circle
+	_ang = random 360;
+	_dx = (cos _ang) * _rad;
+	_dy = (sin _ang) * _rad;
+//	hint localize format["+++ deviate: sinr %1, cosr %2, dx %3, dy %4", sin _rad, cos _rad, _dx, _dy];
+	[(_pos select 0) + _dx, (_pos select 1) + _dy, 0]
+};
+
+#endif
+
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

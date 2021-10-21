@@ -726,35 +726,4 @@ SYG_removeItemFromArray = {
 	_arr
 };
 
-//
-// Call as: _near = [_veh | _pos<, _dist = 10>] call  isNearIronMass;
-//
-SYG_isNearIronMass = {
-	if (typeName _this != "ARRAY") exitWith  { false};
-	private ["_veh","_dist","_arr","_ironCount"];
-	_veh = _this select 0;
-	// check if big metal mass is near teleporter
-	_dist = if ((count _this) > 1) then { _this select 1} else { 10 };
-	_arr = nearestObjects [ _veh, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119" ], _dist ];
-	if (count _arr == 0) exitWith { false };
-	#ifdef __OWN_SIDE_EAST__
-		#define __OWN_MHQ "BMP2_MHQ"
-	#else
-		#define __OWN_MHQ "M113_MHQ"
-	#endif
-	_ironCount = count _arr;
-	{
-	#ifndef __ACE__
-		if ( (_x isKindOf "M113")  || (_x isKindOf __OWN_MHQ) ) then {_ironCount = _ironCount - 1};
-	#else
-		if (      (_x isKindOf "M113") || (_x isKindOf __OWN_MHQ) ||
-			  (_x isKindOf "ACE_BMP3") || (_x isKindOf "ACE_BMD1") ||
-			 (_x isKindOf  "ACE_M2A1")
-		   ) then {_ironCount = _ironCount - 1};
-	#endif
-	} forEach _arr;
-//	hint localize format["+++ isNearIronMass: _veh = %1, armors in dist %2 m = %3, _cnt = %4", _veh, _dist, _arr, _ironCount];
-	( _ironCount > 0 )
-};
-
 if (true) exitWith {};

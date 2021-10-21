@@ -48,11 +48,10 @@ if (playerSide == west) then {
 			_mr1text ctrlSetText format[localize "STR_SYS_27",1 , round((damage MRR1) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
 		};
 	#endif
-	#ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
-		_mr1_available = !([MRR1, __NO_TELEPORT_NEAR_LARGE_METALL_MASS__] call SYG_isNearIronMass);
+	#ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
 //		hint localize  format["+++ update_dlg.sqf: mhq1 available = %1", _mr1_available];
-		if ( !_mr1_available ) exitWith { // "Teleport does not work near a large mass of iron!"
-			hint localize  format["+++ update_dlg.sqf: large iron mass detected near MHQ1 %1",  [MRR1, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE];
+		if ( [MRR1, __NO_TELEPORT_NEAR_LARGE_IRON_MASS__] call SYG_isNearIronMass) exitWith { // "Teleport does not work near a large mass of iron!"
+//			hint localize  format["+++ update_dlg.sqf: large iron mass detected near MHQ1 %1",  [MRR1, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE];
 			_mr1text ctrlSetText (localize "STR_SYS_75_4");
 			};
 	#endif
@@ -87,10 +86,9 @@ if (playerSide == west) then {
 			_mr2text ctrlSetText format[localize "STR_SYS_27", 2, round((damage MRR2) * 100),"%"]; // "MHQ %1 dmg %2%3, teleport in danger!"
 		};
 	#endif
-	#ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
-		_mr2_available = !([MRR2, __NO_TELEPORT_NEAR_LARGE_METALL_MASS__] call SYG_isNearIronMass);
-		if ( !_mr2_available ) exitWith {
-			hint localize  format["+++ update_dlg.sqf: large iron mass detected near MHQ2 %1",  [MRR2, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE];
+	#ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
+		if ( [MRR2, __NO_TELEPORT_NEAR_LARGE_IRON_MASS__] call SYG_isNearIronMass ) exitWith {
+//			hint localize  format["+++ update_dlg.sqf: large iron mass detected near MHQ2 %1",  [MRR2, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE];
 			_mr2text ctrlSetText (localize "STR_SYS_75_4");  // "Teleport does not work near a large mass of iron!"
 		};
 	#endif

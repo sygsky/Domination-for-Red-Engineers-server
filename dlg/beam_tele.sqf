@@ -61,14 +61,24 @@ switch (beam_target) do {
 d_last_telepoint = beam_target;
 beam_target = -1;
 
-if (_typepos == 1) then {  //  teleport to some of our MHQ
-
+_sound_to = "teleport_to";
+if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
     _global_pos = _veh modelToWorld [0,-5,0];
+#ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
+    // if teleport is near iron mass add dome deviation to the position
+    _diff = [_veh, __NO_TELEPORT_NEAR_LARGE_IRON_MASS__] call SYG_findTeleportError;
+    if ( _diff > 0 ) then {
+	   	// if there is an error on teleport, calculate shifted position now
+     	_global_pos = [_global_pos, _diff] call SYG_deviateTeleportPoint;
+		hint localize format["+++ teleport deviated to %1 m", (round(_diff*10))/10];
+	    format [localize "STR_SYS_75_5", (round(_diff*10))/10 ]  call XfHQChat; // "Due to the presence of a large mass of iron placed nearby, teleportation error (%1 m) is noticed!"
+     	_sound_to = call SYG_powerDownSound; // play specific sound for this case
+     };
+#endif
     // TODO: if teleport point is in house, prevent teleport ("You can't teleport to non-empty space!!!")
     _global_dir = direction _veh;
-
-    ["addVehicle", (group player), _veh] call XSendNetStartScriptServer; // inform enemy about MHQ position
-    sleep 1.0;
+    ["addVehicle", (group player), _veh] call XSendNetStartScriptServer; // try to inform enemy about MHQ position
+    sleep 1.0; // (round(_err*10))/10, (round((_global_pos distance _new_pos)*10))/10
 };
 
 _global_pos set [2, 0];  // always port to the ground
@@ -77,7 +87,7 @@ player setPos _global_pos;
 player setDir _global_dir;
 ["say_sound", _pos, "teleport_from"] call XSendNetStartScriptClientAll; // play sound of teleport out event everywhere
 sleep 0.2;
-["say_sound", player, "teleport_to"] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
+["say_sound", player, _sound_to] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
 sleep 1.8;
 // TODO: try to set vehicle locally on each client computer
 _veh call SYG_revealToAllPlayers;

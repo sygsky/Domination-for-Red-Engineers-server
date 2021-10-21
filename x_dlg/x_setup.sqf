@@ -191,4 +191,4 @@
 #define __LH_HOWLER__
 
 // uncomment to disable teleport near large metall masses in designated distance
-#define __NO_TELEPORT_NEAR_LARGE_METALL_MASS__ 10
+#define __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ 20

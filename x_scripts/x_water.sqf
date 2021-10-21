@@ -56,7 +56,7 @@ while {true} do {
 	                _sound = "losing_patience"; // you lost weapon forever
 			    };
 			};
-			if (_sound != "") then { playSound _sound};
+			if ( _sound != "" ) then { playSound _sound };
 		};
 	};
 

@@ -137,11 +137,14 @@ if  ( !isNull _veh  ) then {
     #endif
 if ( _sound != "") then  { playSound _sound };
 
-	#ifdef __NO_TELEPORT_NEAR_LARGE_METALL_MASS__
-
-if ( ([_end_pos, __NO_TELEPORT_NEAR_LARGE_METALL_MASS__] call SYG_isNearIronMass) ) then {
-	sleep 1;
-	playSOund (call SYG_powerDownSound);
+	#ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
+if ( ([_end_pos, __NO_TELEPORT_NEAR_LARGE_IRON_MASS__] call SYG_isNearIronMass) ) then {
+	[] spawn {
+		// initial sound message on the destination teleport near iron mass
+		(localize "STR_SYS_75_4") call XfHQChat;
+		sleep 1;
+		playSound (call SYG_powerDownSound);
+	};
 };
 
 	#endif
