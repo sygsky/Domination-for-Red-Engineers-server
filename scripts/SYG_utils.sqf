@@ -548,18 +548,6 @@ SYG_isWoman = {
 		};
         false // unknown entry
 };
-//
-// Reveal vehicle to all players
-//  call: _vehicle call SYG_revealToAllPlayers;
-//
-SYG_revealToAllPlayers = {
-    private ["_player"];
-    if (typeName _this != "OBJECT") exitWith{}; //illegal parameter, exit
-    {
-        _player = call (SYG_players_arr select _i); // object
-        if (!(isNull _player)) then { _player reveal _this };
-    } forEach SYG_players_arr;
-};
 
 // finds in array _itemArr first item from array _sampleArr.
 // call as: _item = [["item1","itrm2"],_itemArr] call  SYG_findItemInArray;

@@ -97,7 +97,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 				
 					// ++ Sygsky: checking again legal type of vehicle to lift here
 				  
-					if ( !((typeof _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon"))) exitWith 	{
+					if ( !((typeOf _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon"))) exitWith 	{
                         // vehicle not in legal list
                         //++ Sygsky: found that vehicle ready to lift isn't in legal list! Clear possible activity and report user about
                         [_vehicle, format[localize "STR_SYS_38", typeOf _nearest]] call XfVehicleChat; // "Overwhelming vehicle (%1)..."
@@ -111,25 +111,29 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         Attached_Vec = _nearest;
 						_release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
                         [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName]] call XfVehicleChat;
-	  
+	  					_reveal_name = "";
 						switch (_nearest) do {
 							case MRR1: {
+								_reveal_name = "MRR1";
 								mr1_in_air=true;
 								["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
 								["mr1_lift_chopper",_vehicle] call XSendNetStartScriptServer;
 							};
 							case MRR2: {
+								_reveal_name = "MRR2";
 								mr2_in_air=true;
 								["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
 								["mr2_lift_chopper",_vehicle] call XSendNetStartScriptServer;
 							};
 #ifdef __TT__
 							case MRRR1: {
+								_reveal_name = "MRRR1";
 								mrr1_in_air=true;
 								["mrr1_in_air",mrr1_in_air] call XSendNetStartScriptAllDiff;
 								["mrr1_lift_chopper",_vehicle] call XSendNetStartScriptServer;
 							};
 							case MRRR2: {
+								_reveal_name = "MRRR2";
 								mrr2_in_air=true;
 								["mrr2_in_air",mrr2_in_air] call XSendNetStartScriptAllDiff;
 								["mrr2_lift_chopper",_vehicle] call XSendNetStartScriptServer;
@@ -197,8 +201,10 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         Attached_Vec = objNull;
 
                         // reveal to all players new position of MHQ. It can help!
-                        //["revealVehicle", _nearest] call XSendNetStartScriptClient;
-                        _nearest call SYG_revealToAllPlayers;
+                        // hint localize format["_reveal_name = ""%1""", _reveal_name];
+                        if (_reveal_name != "") then {
+                        	["remote_execute", format["%1 setPos %2; %1 setDir %3", _reveal_name, getPos _nearest, getDir _nearest]] call XSendNetStartScriptClient;
+                        };
 
                         // send information to all clients about new position of well known lifted vehicle
 						switch (_nearest) do {
@@ -206,7 +212,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 								mr1_in_air = false;
 								["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
 								["mr1_lift_chopper",objNull] call XSendNetStartScriptServer;
-								// Never  use statement like publicVariable "MRR1", it will have strange effect in multiple items of "Menu MHQ 1", the same snatds for MHQ 2 also
+								// Never  use statement like publicVariable "MRR1", it will have strange effect in multiple items of "Menu MHQ 1", the same stands for MHQ 2 also
 							};
 							case MRR2: {
 								mr2_in_air = false;

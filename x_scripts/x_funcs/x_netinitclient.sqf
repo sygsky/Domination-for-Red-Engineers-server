@@ -385,7 +385,7 @@ XHandleNetStartScriptClient = {
 			};
 			
 			// inform player about counter attack state (param 0) and town bonus (or its absence) (param 1)
-			[(_this select 3), _bon, _arr] execVM "x_scripts\x_target_clear_client.sqf"; // set counterattack state ias 1st parameter for execVM, set players bonus score is 2nd one
+			[(_this select 3), _bon, _arr] execVM "x_scripts\x_target_clear_client.sqf"; // set counterattack state as 1st parameter for execVM, set players bonus score is 2nd one
 			call SYG_townStatInit; // reset split score statistics for the next town
 
 		};
@@ -409,8 +409,6 @@ XHandleNetStartScriptClient = {
             call SYG_firesService;
         };
 		case "update_target": {
-			//playSound "tune";
-			// playMusic "invasion"; // now music is played from lower script run
 			execVM "x_scripts\x_createnexttargetclient.sqf";
 		};
 
@@ -693,7 +691,7 @@ XHandleNetStartScriptClient = {
 						(format [localize "STR_SYS_269", x_wreck_repair select 0, localize (x_wreck_repair select 1), _str]) call XfHQChat; // "Restoring %1 at %2 (%3), this will take some time..."
 					};
 				};
-				case 1: {
+				case 1: { // finish the restore
 					(format [localize "STR_SYS_270", x_wreck_repair select 0, localize (x_wreck_repair select 1)]) call XfHQChat; // "%1 ready at %2"
 				};
 			};
@@ -703,16 +701,17 @@ XHandleNetStartScriptClient = {
 			[(_this select 1),(_this select 2)] spawn XRecapturedUpdate;
 		};
 		case "mt_spotted": {
-		    private ["_townArr","_musicName"];
+		    private ["_townArr","_soundName"];
 			localize "STR_SYS_65" call XfHQChat; // "The enemy revealed you..."
 			if ( !(call SYG_playExtraSounds) ) exitWith{};
             _townArr  = "NO_DEBUG" call SYG_getTargetTown;
             if (count _townArr == 0) exitWith{};
             _townName = _townArr select 1;
-            _musicName = "";
-            _musicName = call SYG_getTargetTownDetectedSound;
-            if (_musicName != "" ) then {playSound _musicName};
+            _soundName = "";
+            _soundName = call SYG_getTargetTownDetectedSound;
+            if (_soundName != "" ) then {playSound _soundName};
 		};
+
 		#ifdef __AI__
 		case "d_ataxi": {
 			if (player == (_this select 2)) then {
@@ -725,6 +724,7 @@ XHandleNetStartScriptClient = {
 				};
 			};
 		};
+
 		case "d_ai_kill": { // TODO: check killer to be vehicle
 			if ((_this select 1) in (units (group player))) then {
 				if (player == leader (group player)) then {
@@ -734,6 +734,7 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		#endif
+
 		// [ "syg_observer_kill", _killer, primaryWeapon _observer, _observer] call XSendNetStartScriptClient;
 		case "syg_observer_kill" : {
             private ["_score","_str","_sound_obj","_killer"];
@@ -769,6 +770,7 @@ XHandleNetStartScriptClient = {
             ["say_sound", _sound_obj, "no_more_waiting"] call XHandleNetStartScriptClient; // inform me/all about next observer death
             // show message
 		};
+
 		// to inform player about his server stored data
 		// sent as follows: ["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
 		case "d_player_stuff": {
@@ -789,6 +791,7 @@ XHandleNetStartScriptClient = {
 				};
 			};
 		};
+
 		case "d_hq_sm_msg": {
 			private ["_msg"];
 			_msg = (
@@ -800,10 +803,10 @@ XHandleNetStartScriptClient = {
 			);
 			_msg call XfHQChat;
 		};
+
 		case "MHQ_respawned": {
 			sleep 1.0; // wait for variable to be initialized
-			if ( !isNil (_this select 1) ) then
-			{
+			if ( !isNil (_this select 1) ) then {
 				call compile format ["%1 call SYG_reammoMHQ;", _this select 1 ];
 //#ifdef __PRINT__
 //				hint localize format["+++ 'MHQ_respawned' is called with var '%1'", _this select 1];
@@ -854,26 +857,7 @@ XHandleNetStartScriptClient = {
 			};
 			_this call GRU_procClientMsg;
 		};
-/* Comment not developed options
-		// SPPM event handler on client (receive messages from server)
-		case "SPPM": {
 
-		};
-
-		case "syg_plants_restored": { // message about restore result to subtract corresponding scores from user
-		// params are: ["syg_plants_restored", _name, _pos, _radious, _score] call XSendNetStartScriptClient;
-		    private ["_score"];
-            _score = [arg(2),arg(3)] call SYG_restoreIslandItems; // restore items on all client to show result for players
-			if ( arg(1) == (name player)) then // this player name!!!
-			{
-    		    hint localize format["+++ Client received msg: %1",_this];
-                _score = arg(4);
-                //player addScore -_score; // subract score by number of resurrected items
-                (-_score) call SYG_addBonusScore;
-                format[localize "STR_RESTORE_DLG_7", _score] call XfGlobalChat; // "scores subtracted %1"
-			};
-		};
-*/
 		//
 		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound, [,"-",_player_name]] or
 		//                                             ["say_sound","LIST", _arr, [,"-",_player_name]]  where _arr is array of [_object, _sound, sleep time] or
@@ -1072,13 +1056,14 @@ XHandleNetStartScriptClient = {
 			if ( ( count _this ) > 3 ) exitWith { ( _this select 3 ) call SYG_msgToUserParser}; // try to print message if exists
         };
 
-/*
-         // reveal vehicle (MHQ in main) to all players
-        case "revealVehicle":
-        {
-            player reveal (_this select 1);
-        };
-*/
+        //
+        // remove execute command sent as string on all client except caller one
+        // call as:		["remote_execute", format["%1 setPos %2", _reveal_name, getPos _nearest]] call XSendNetStartScriptClient;
+        //
+		case "remote_execute" : {
+			hint localize format["+++ x_netinitclient.sqf ""remove_execute"": ""%1""", _this select 1 ];
+			call (compile (_this select 1));
+		};
 
 //========================================================================================================== END OF CASES
 

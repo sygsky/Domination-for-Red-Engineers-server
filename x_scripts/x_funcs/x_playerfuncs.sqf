@@ -10,8 +10,7 @@
 
 #define __SUPER_RANKING__
 
-if ( isNil "SYG_repTruckNamesArr" ) then 
-{
+if ( isNil "SYG_repTruckNamesArr" ) then {
 #ifdef __ACE__			
 	SYG_repTruckNamesArr = [ "UralRepair", "Truck5tRepair", "ACE_HMMWV_GMV2" ]; // "UralRepair","Truck5tRepair",
 #else				
@@ -472,7 +471,6 @@ XGetRankIndexExt = {
 //+++ Sygsky
 // call: _rank_localized = _rank_str call XGetRankStringLocalized;
 //
-
 XGetRankStringLocalized = {
     if ( typeName _this == "OBJECT") then {
         if (isPlayer _this) then { _this = _this call XGetRankFromScore;};

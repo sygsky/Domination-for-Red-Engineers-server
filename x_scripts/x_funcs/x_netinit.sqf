@@ -60,7 +60,7 @@ XSendNetStartScriptAll = {
 	(_this select 1) spawn XHandleNetStartScriptAll;
 };
 
-/////////////////////////////////// received on server and client simutaneously but processed by different procedures
+/////////////////////////////////// received on server and client simutaneously with the same command name but processed by different code
 
 XHandleNetStartScriptAllDiff = {
 	private ["_this"];

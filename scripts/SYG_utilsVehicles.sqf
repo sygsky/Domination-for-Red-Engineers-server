@@ -1926,12 +1926,12 @@ SYG_isNearIronMass = {
 // Call as: _nearPosArr = [_veh | _pos<, _dist = 20>] call  isNearIronMass;
 //
 SYG_ironMassNear = {
-	if ((typeName _this) != "ARRAY") exitWith  { false};
+	if ((typeName _this) != "ARRAY") exitWith  { [] };
 	private ["_dist","_arr","_ret"];
 	// check if big metal mass is near teleporter
 	_dist = if ((count _this) > 1) then { _this select 1} else { 10 };
 	_arr = nearestObjects [ _this select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119" ], _dist ];
-	if (count _arr == 0) exitWith { false };
+	if (count _arr == 0) exitWith { [] };
 	_ret = [];
 #ifdef __OWN_SIDE_EAST__
 		#define __OWN_MHQ "BMP2_MHQ"
@@ -2000,3 +2000,4 @@ hint localize "INIT of SYG_utilsVehicles completed";
 if ( true ) exitWith {};
 
 
+      

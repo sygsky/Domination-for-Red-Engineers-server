@@ -1,4 +1,4 @@
-// Music. Used to call methods like playMusic, defined in CfgMusic included in Description.ext
+// Music. Used to call methods playMusic, defined in CfgMusic included in Description.ext
 
 class CfgMusic {
 

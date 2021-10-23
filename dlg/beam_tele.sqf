@@ -90,8 +90,6 @@ sleep 0.2;
 ["say_sound", player, _sound_to] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
 sleep 1.8;
 // TODO: try to set vehicle locally on each client computer
-_veh call SYG_revealToAllPlayers;
-
 closeDialog 100001;
 
 titletext ["", "BLACK IN"];
