@@ -1,10 +1,7 @@
 #define ADD_HIT_EH(AHEOBJ) AHEOBJ addEventHandler ["hit", {(_this select 0) setDamage 0}];
 #define ADD_DAM_EH(ADEOBJ) ADEOBJ addEventHandler ["dammaged", {(_this select 0) setDamage 0}];
 
-#define __compile_to_var call compile ((_this select 0) + "=(_this select 1)");
-
-#define __isRacs if (d_own_side == "RACS") then {
-#define __isWest if (d_own_side == "WEST") then {
+#define __compile_to_var call compile ((_this select 0) + "=(_this select 1)")
 
 #define __ReviveVer "REVIVE" in d_version
 #define __AIVer "AI" in d_version

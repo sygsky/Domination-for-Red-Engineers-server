@@ -480,7 +480,7 @@ XfCreateMarkerLocal = {
 	_m_dir = (if (count _this > 6) then {_this select 6} else {-888888888888});
 	_m_type = (if (count _this > 7) then {_this select 7} else {""});
 	_m_brush = (if (count _this > 8) then {_this select 8} else {""});
-	
+	hint localize format["--- XfCreateMarkerLocal: %1,  _m_pos type %2", _this ];
 	_marker = createMarkerLocal [_m_name, _m_pos];
 	if (_m_shape != "") then {_marker setMarkerShapeLocal _m_shape};
 	if (_m_col != "") then {_marker setMarkerColorLocal _m_col};

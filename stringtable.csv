@@ -114,7 +114,7 @@ STR_SYS_38_1,The vehicle (%1) not in restore list...,Wir stellen solche Fahrzeug
 STR_SYS_38_2,"This vehicle (%1) is too deep (%2 m.), we will not get it, alas...","Dieses Fahrzeug (%1) ist zu tief (%2 M.), wir werden es leider nicht bekommen...","Esta técnica (%1) es demasiado profunda (%2 m.), no podemos conseguirlo, por desgracia...","Эта техника (%1) слишком глубоко (%2 м.), не достанем, увы..."
 STR_SYS_39,Vehicle was dropped...,Fahrzeug ist gelöscht...,Técnica descartada...,Техника сброшена...
 
-STR_SYS_40,"Attention! There are %2 enemy spotter[s] in %1","Achtung! Es gibt %2 feindliche Späher in %1","¡Atención! Hay %2 observadores enemigos en %1","Внимание! В %1 действую вражеские корректировщики, %2 чел."
+STR_SYS_40,"Attention! There are %2 enemy spotter[s] in %1","Achtung! Es gibt %2 feindliche Späher in %1","¡Atención! Hay %2 observadores enemigos en %1","Внимание! В %1 действуют вражеские корректировщики, %2 чел."
 STR_SYS_40_0,"Attention! There are %1 enemy spotter[s] on the island","Achtung! Es befinden sich %1 feindliche Späher auf der Insel","¡Atención! Hay %1 observadores enemigos en la isla","Внимание! На острове действуют вражеские корректировщики, %1 чел."
 STR_SYS_41,All enemy spotters are killed...,Alle feindlichen Aufklärer zerstört ...,Todos los observadores enemigos han sido destruidos...,Все вражеские корректировщики уничтожены...
 STR_SYS_42,Teleport/Parajump,Teleport/Parajump,Teletransporte / Paracaídas,Телепорт/Парашют

@@ -4,7 +4,7 @@
 XHandleNetVar = {
 	private ["_this"];
 	__DEBUG_NET("x_netinit.sqf XHandleNetVar",_this)
-	__compile_to_var
+	__compile_to_var;
 };
 
 XSendNetVarAll = {

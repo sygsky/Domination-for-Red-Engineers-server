@@ -159,7 +159,7 @@ XHandleNetStartScriptClient = {
 
 		case "ari1msg": {
 			#ifdef __TT__
-			__isWest
+			if (d_own_side == "WEST") then {
 			if (format ["%1",player] == (d_can_use_artillery select 0) || player distance (call compile format ["%1",(d_can_use_artillery select 0)]) <= 15) then {
 			#else
 			if (!(__AIVer) && (format ["%1",player] == (d_can_use_artillery select 0) || player distance (call compile format ["%1",(d_can_use_artillery select 0)]) <= 15)) then {
@@ -190,7 +190,7 @@ XHandleNetStartScriptClient = {
 		};
 		case "ari2msg": {
 			#ifdef __TT__
-			__isRacs
+			if (d_own_side == "RACS") then {
 			if (format ["%1",player] == (d_can_use_artillery select 1) || player distance (call compile format ["%1",(d_can_use_artillery select 1)]) <= 15) then {
 			#else
 			if (!(__AIVer) && (format ["%1",player] == (d_can_use_artillery select 1) || player distance (call compile format ["%1",(d_can_use_artillery select 1)]) <= 15)) then {
@@ -220,28 +220,28 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		case "ari_available": {
-			__compile_to_var
+			__compile_to_var;
 			#ifndef __TT__
 			private ["_name"];
 			_name = localize "STR_SYS_402";
 			if (ari_available) then {playSound "tune"; format[localize "STR_SYS_267", _name] call XfHQChat;}; // "%1 арт.батарея доступна!"
 			if (!ari_available) then {format[localize "STR_SYS_268", _name] call XfHQChat;}; // "%1 арт.батарея будет доступна через несколько минут!"
 			#else
-			__isWest
+			if (d_own_side == "WEST") then {
 				if (ari_available) then {playSound "tune";"Artillery available" call XfHQChat;};
 				if (!ari_available) then {"Artillery available again in a few minutes" call XfHQChat;};
 			};
 			#endif
 		};
 		case "ari2_available": {
-			__compile_to_var
+			__compile_to_var;
 			#ifndef __TT__
 			private ["_name"];
 			_name = localize "STR_SYS_403";
 			if (ari_available) then {playSound "tune"; format[localize "STR_SYS_267", _name] call XfHQChat;}; // "%1 арт.батарея доступна!"
 			if (!ari_available) then {format[localize "STR_SYS_268", _name] call XfHQChat;}; // "%1 арт.батарея будет доступна через несколько минут!"
 			#else
-			__isRacs
+			if (d_own_side == "RACS") then {
 				if (ari2_available) then {playSound "tune";"Artillery available" call XfHQChat;};
 				if (!ari2_available) then {"Artillery available again in a few minutes" call XfHQChat;};
 			};
@@ -355,7 +355,7 @@ XHandleNetStartScriptClient = {
 			[_this select 1] execVM "x_scripts\x_counterattackclient.sqf";
 		};
 		case "sec_kind": {
-			__compile_to_var
+			__compile_to_var;
 			execVM "x_scripts\x_showsecondary.sqf";
 		};
 		case "sec_solved": {
@@ -424,7 +424,7 @@ XHandleNetStartScriptClient = {
 			[true] execVM "x_missions\x_getsidemissionclient.sqf";
 		};
 		case "all_sm_res": {
-			__compile_to_var
+			__compile_to_var;
 			current_mission_text = localize "STR_SYS_121"; // "All missions resolved!"
 			playSound "fanfare";
 			hint current_mission_resolved_text;
@@ -439,7 +439,7 @@ XHandleNetStartScriptClient = {
 		// call as: ["new_jump_flag",_flag, false] call XSendNetStartScriptClient;
 		case "new_jump_flag": {
 			if (!d_no_para_at_all) then {
-				__compile_to_var
+				__compile_to_var;
 				_this execVM "x_scripts\x_newflagclient.sqf";
 			};
 		};
@@ -447,7 +447,7 @@ XHandleNetStartScriptClient = {
 
 		// this message sent on main tower down. Params are: ["mt_radio_down", mt_radio_down (true or false),name_of_person_killed_tower]]
 		case "mt_radio_down": {
-			__compile_to_var
+			__compile_to_var;
 			private ["_msg","_name"];
 			if (mt_radio_down && ( argp(mt_radio_pos,0) != 0)) then {
 				private ["_msg","_ind"];
@@ -489,7 +489,7 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		case "update_observers": {
-			__compile_to_var
+			__compile_to_var;
 			if (update_observers != -1) then {
 				if ( count ("NO_DEBUG" call SYG_getTargetTown) == 0) then {	// still no town defined at this moment, skip town name usage
 					[format [localize "STR_SYS_40_0",(_this select 1)], "HQ"] call XHintChatMsg; // "Warning! On island discovered presence of enemy spotters, in total %1 men."
@@ -508,7 +508,7 @@ XHandleNetStartScriptClient = {
 		};
 		#ifndef __TT__
 		case "d_jet_service_fac": {
-			__compile_to_var
+			__compile_to_var;
 			if (!isNull (_this select 1)) then {
 				// "Был уничтожен сервис по обслуживанию самолетов. Просите инженеров отремонтировать его ..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_220"] call XfHQChat;
@@ -528,7 +528,7 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		case "d_chopper_service_fac": {
-			__compile_to_var
+			__compile_to_var;
 			if (!isNull (_this select 1)) then {
 				//"Был уничтожен сервис по обслуживанию вертолетов. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_221"] call XfHQChat;
@@ -548,7 +548,7 @@ XHandleNetStartScriptClient = {
 			};
 		};
 		case "d_wreck_repair_fac": {
-			__compile_to_var
+			__compile_to_var;
 			if (!isNull (_this select 1)) then {
 				//"Был уничтожен сервис по восстановлению техники. Просите инженеров отремонтировать его..." call XfHQChat;
 				format[localize "STR_SYS_223",localize "STR_SYS_222"] call XfHQChat;
@@ -631,9 +631,9 @@ XHandleNetStartScriptClient = {
 
 		};
 		case "mr1_in_air": {
-			__compile_to_var
+			__compile_to_var;
 			#ifdef __TT__
-			__isWest
+			if (d_own_side == "WEST") then {
 			#endif
 			if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,1]) call XfHQChat;}; // "%1 мобильный респаун %2 транспортируется по воздуху"
 			if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,1]) call XfHQChat;}; // "%1 мобильный респаун 1 доступен"
@@ -642,9 +642,9 @@ XHandleNetStartScriptClient = {
 			#endif
 		};
 		case "mr2_in_air": {
-			__compile_to_var
+			__compile_to_var;
 			#ifdef __TT__
-			__isWest
+			if (d_own_side == "WEST") then {
 			#endif
 			if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,2]) call XfHQChat;}; //"%1 мобильный респаун 2 транспортируется по воздуху"
 			if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,2]) call XfHQChat;}; //"%1 мобильный респаун 2 доступен"
@@ -654,15 +654,15 @@ XHandleNetStartScriptClient = {
 		};
 		#ifdef __TT__
 		case "mrr1_in_air": {
-			__compile_to_var
-			__isRacs
+			__compile_to_var;
+			if (d_own_side == "RACS") then {
 				if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,1]) call XfHQChat;}; // "%1 мобильный респаун %2 транспортируется по воздуху"
 				if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,1]) call XfHQChat;}; // "%1 мобильный респаун 1 доступен"
 			};
 		};
 		case "mrr2_in_air": {
-			__compile_to_var
-			__isRacs
+			__compile_to_var;
+			if (d_own_side == "RACS") then {
 				if ((_this select 1)) then {(format [localize "STR_SYS_32",d_own_side,2]) call XfHQChat;};  //"%1 Respawn %2 is transported by airlift"
 				if (!(_this select 1)) then {(format [localize "STR_SYS_33",d_own_side,2]) call XfHQChat;}; // "%1 Respawn %2 is available"
 			};
@@ -670,7 +670,7 @@ XHandleNetStartScriptClient = {
 		#endif
 
 		case "x_wreck_repair": {
-			__compile_to_var
+			__compile_to_var;
 			// x_wreck_repair = [_type_name, _name, 0, _player ];  if start wreck repair or
 			// x_wreck_repair = [_type_name, _name, 1]; if end of wreck repair
 			switch (x_wreck_repair select 2) do {
@@ -777,7 +777,7 @@ XHandleNetStartScriptClient = {
 		    private ["_pname"];
 		    _pname = argp(arg(1),2);
 			if (name player == _pname) then {
-				__compile_to_var
+				__compile_to_var;
 				SYG_dateStart = arg(2); // set server start date
 				if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
 				SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server

@@ -24,12 +24,12 @@ XHandleNetStartScriptServer = {
 	    };
 #endif
 		case "ari_type": {
-			__compile_to_var
+			__compile_to_var;
 			ari_salvos = (_this select 2);
 			(_this select 3) execVM "x_scripts\x_arifire.sqf";
 		};
 		case "ari_type2": {
-			__compile_to_var
+			__compile_to_var;
 			ari_salvos2 = (_this select 2);
 			(_this select 3) execVM "x_scripts\x_arifire2.sqf";
 		};
@@ -54,34 +54,34 @@ XHandleNetStartScriptServer = {
 		};
 #endif
 		case "mr1_in_air": {
-			__compile_to_var
+			__compile_to_var;
 		};
 		case "mr2_in_air": {
-			__compile_to_var
+			__compile_to_var;
 		};
 #ifdef __TT__
 		case "mrr1_in_air": {
-			__compile_to_var
+			__compile_to_var;
 		};
 		case "mrr2_in_air": {
-			__compile_to_var
+			__compile_to_var;
 		};
 #endif
 		case "mr1_lift_chopper": {
-			__compile_to_var
+			__compile_to_var;
 			if (!isNull mr1_lift_chopper) then {[mr1_lift_chopper] spawn x_checktransport;};
 		};
 		case "mr2_lift_chopper": {
-			__compile_to_var
+			__compile_to_var;
 			if (!isNull mr2_lift_chopper) then {[mr2_lift_chopper] spawn x_checktransport;};
 		};
 #ifdef __TT__
 		case "mrr1_lift_chopper": {
-			__compile_to_var
+			__compile_to_var;
 			if (!isNull mrr1_lift_chopper) then {[mrr1_lift_chopper] spawn x_checktransport2;};
 		};
 		case "mrr2_lift_chopper": {
-			__compile_to_var
+			__compile_to_var;
 			if (!isNull mrr2_lift_chopper) then {[mrr2_lift_chopper] spawn x_checktransport2;};
 		};
 #endif
