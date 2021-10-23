@@ -23,10 +23,13 @@ if (!isNull _killer && side _killer == d_side_player && !isPlayer _killer) then 
 #endif
 
 if (!isNull _killer && isPlayer _killer && _killer != _killed) then {
-	_s = format [localize "STR_SYS_600", name _killer,d_sub_tk_points]; // "Вас убил %1. Штрафные очки для него -%2!"
-	[_s, "GLOBAL"] call XHintChatMsg;
-	_unit_killer = [name _killer, name _killed, _killer];
-	["unit_killer",_unit_killer] call XSendNetStartScriptClient;
+	if ( _killer == driver ( vehicle _killed ) ) exitWith {
+		hint localize format["+++ x_scripts\x_checkkill.sqf: killed in %1 (driver ""%2"")", typeName (vehicle _killed), name (driver (vehicle _killed))];
+	};
+	_s = format [ localize "STR_SYS_600", name _killer,d_sub_tk_points ]; // "Вас убил %1. Штрафные очки для него -%2!"
+	[ _s, "GLOBAL" ] call XHintChatMsg;
+	_unit_killer = [ name _killer, name _killed, _killer ];
+	[ "unit_killer",_unit_killer ] call XSendNetStartScriptClient;
 	[ "log2server", name player, format[ "+++ player killed by ""%1"" %2", name _killer, [player, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE ] ] call XSendNetStartScriptServer;
 	_killedfriendly = true;
 };
