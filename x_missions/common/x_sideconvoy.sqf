@@ -193,7 +193,7 @@ _vecnum = 0;
 //#ifdef __SYG_OPTIMIZATION__
 //_way_id = 3;
 //#else
-_way_id = 2 + floor(random ((count _c_array) - 2)); // 2 .. n  - the ways id variants, may be more then 2 ways in a happy future, now now only 2 different ways are available
+_way_id = 2 + floor(random ((count _c_array) - 2)); // 2 .. n  - the ways id variants, may be more then 2 ways in a happy future, now only 2 different ways are available
 //#endif
 
 _wps = _c_array select _way_id;
@@ -365,7 +365,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 		private ["_msg"];
 		_last_ctrl_point = _pos;
 		// send info to all players
-		_msg = if ((_pos distance _pos_end ) < DISTANCE_BETWEEN_CTRL_POINT * 2) then {"STR_SYS_500_3"} else {"STR_SYS_500_4"};
+		_msg = if ((_pos distance _pos_end ) >= DISTANCE_BETWEEN_CTRL_POINT * 2) then {"STR_SYS_500_3"} else {"STR_SYS_500_4"};
 		// "Islanders report about convoy movement spotted" or
 		// "Islanders report about convoy movement spotted near the target"
 		["msg_to_user", _this,  [[_msg]], 0, 2, false, "message_received" ] call XSendNetStartScriptClient;

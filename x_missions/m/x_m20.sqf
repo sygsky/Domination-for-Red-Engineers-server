@@ -4,7 +4,7 @@ private ["_vehicle"];
 #include "x_macros.sqf"
 
 #define __Poss _poss = x_sm_pos select 0;
-#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
+#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1
 
 x_sm_pos = [[17452.8,13577.6,0], [11851.9,14376.5,0]]; // index: 20,   Convoy Ixel to Tandag, start and end position
 x_sm_type = "convoy"; // "convoy"
@@ -21,7 +21,7 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-	__PossAndOther
+	__PossAndOther;
 	[_poss, _pos_other, 0] execVM "x_missions\common\x_sideconvoy.sqf";
 };
 
