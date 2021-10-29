@@ -156,7 +156,7 @@ if (!d_dont_show_player_markers_at_all) then {
 	    _as = d_player_entities select _i; // name of a player
 	    _ap = call (SYG_players_arr select _i);   // player itself
         _grpm = group _ap;
-        if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm = _tmp_grpsm + [_grpm];};
+        if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm set[count _tmp_grpsm, _grpm];};
         _mindex = _tmp_grpsm find _grpm;
         [_as, [0,0],"ICON",(_colarray select _mindex),[0.4,0.4],"",0,d_p_marker] call XfCreateMarkerLocal;
         if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};

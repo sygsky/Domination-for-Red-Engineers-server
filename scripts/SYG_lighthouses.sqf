@@ -20,6 +20,7 @@ SYG_lighthouse_handled = true;
 if ( true ) exitWith {}; // only island Sahrani supported
 #endif
 
+sleep 60;
 #define LH_DISTANCE 2000 // search distance
 #define LH_HEARING_DISTANCE 1000 // distance to hear lighthouse hawler
 
@@ -82,6 +83,7 @@ _lh_arr = [];
 _i = 1;
 {
 	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
+	sleep 1;
 	hint localize "+++ Detect Lighthouse buildings procedure...";
 	{
 		if (alive _x) then {
