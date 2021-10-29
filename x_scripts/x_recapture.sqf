@@ -82,8 +82,8 @@ while {true} do {
 		_radius = _target_array select 2;
 		_helih = _target_pos nearestObject "HeliHEmpty";
 		_helih setDir 359;
-		d_recapture_indices = d_recapture_indices + [_recap_index];
-		_allready_recaptured = _allready_recaptured + [_recap_index];
+		d_recapture_indices set [ count d_recapture_indices, _recap_index ];
+		_allready_recaptured set [ count _allready_recaptured, _recap_index ];
 		sleep 0.01;
 		// create enemy troops, add to an array, check if units in array are still alive !!! if not, recapture over
 		[_target_pos, _radius,_recap_index,_helih] execVM "x_scripts\x_dorecapture.sqf";

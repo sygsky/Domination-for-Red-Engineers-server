@@ -87,7 +87,7 @@ sleep 5;
 
 _helih setDir -532.37;
 
-d_recapture_indices = d_recapture_indices - [_recap_index];
+d_recapture_indices = d_recapture_indices - [_recap_index];  SYG_remove
 
 //+++Sygsky: add more fun with flags
 if (d_own_side == "EAST") then

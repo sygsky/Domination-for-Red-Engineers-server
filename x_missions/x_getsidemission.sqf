@@ -22,7 +22,7 @@ if (current_mission_counter >= number_side_missions) exitWith {
 if ((current_counter >= number_targets) /** && (!main_target_ready) */) exitWith {
     stop_sm = true;
     publicVariable "stop_sm";
-    ["stop_sm", true] call XSendNetStartScriptClient;
+    ["stop_sm", stop_sm] call XSendNetStartScriptClient;
 #ifdef __DEBUG__
     hint localize "+++ x_getsidemission.sqf: stop_sm = true, side mission system stopped as all target towns are liberated !!!";
 #endif

@@ -714,4 +714,20 @@ SYG_removeItemFromArray = {
 	_arr
 };
 
+//
+// _arr = [_obj1,_obj2,_obj3,_obj4];
+// _arr = [_arr, _obj22] call SYG_removeItemFromArray; // returns [_obj1,_obj3,_obj4] and _arr is the same object as before subtraction!!!
+//
+SYG_removeObjectFromArray = {
+	private [ "_arr", "_ind", "_i" ];
+	_arr = _this select 0;
+	if (typeName _arr != "ARRAY") exitWith {[]};
+	_ind = _arr find (_this select 1);
+	if (_ind >= 0 ) exitWith {
+		_this set [1, _ind];
+		_this call SYG_removeItemFromArray;
+	};
+	_arr
+};
+
 if (true) exitWith {};

@@ -6,17 +6,17 @@ if (!XClient) exitWith {};
 _which = _this select 0;
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-if (_which == 1) then
-{
+if (_which == 1) then {
     if (!call SYG_isMainTargetAllowed) then { _which = 0; }; // show side mission except of main one
 };
 #endif
 
-if ((_which == 1 && ((current_target_index == -1)) || (client_target_counter >= number_targets))) exitWith {};
+if ((_which == 1 && ((current_target_index == -1)) || (client_target_counter >= number_targets))) exitWith {
+	// TODO: show info about all main target completed
+};
 
 //if (_which == 0 && (current_mission_text == "Все миссии выполнены!!!" || current_mission_text == "Новых дополнительных заданий не определено..." || current_mission_text == "В настоящие время дополнительное задание не определено...")) exitWith {};
-if (_which == 0 && ((current_mission_text == localize "STR_SYS_120") || (current_mission_text == localize "STR_SYS_121"))) exitWith
-{
+if (_which == 0 && ((current_mission_text == localize "STR_SYS_120") || (current_mission_text == localize "STR_SYS_121"))) exitWith {
     hint localize "--- x_scripts/x_showsidemain.sqf: SM mission text is empty, exit ---"
 };
 
