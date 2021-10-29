@@ -179,7 +179,7 @@ _make_jump = {
 		_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[_current_target_pos,200],[],-1,0,[],300 + (random 50),0,[2]]; // rejoin in 2 units in group
 		_grp_array execVM "x_scripts\x_groupsm.sqf";
 	
-		d_c_attacking_grps = d_c_attacking_grps + [_paragrp];
+		d_c_attacking_grps set[count d_c_attacking_grps, _paragrp];
 	
 		sleep 0.112;
 		d_should_be_there = d_should_be_there - 1;

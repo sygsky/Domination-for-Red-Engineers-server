@@ -44,8 +44,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 	// try to play laughter sound from killer and his collegues
 
 	_men = nearestObjects [player, ["CAManBase"], 60];
-	_men = _men - [_unit, _killer];
-	_men = [_killer] + _men; // killer shoul be first to say
+	_men =  [_killer]  + (_men - [_unit, _killer]); // killer shoul be first to say
 
 	{
 		if ( (count _sounds) >= 3 ) exitWith {}; // not more than 3 men can exclamate now
@@ -61,7 +60,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 				_x setVariable ["killer_sound", _sound];
 				_arr set [count _arr, [_x, _sound, random 1.5]]; // next exclamation cry added
 			} else {
-				if ( (random 3) < 2 ) then {
+				if ( (random 3) <= 2 ) then {
 					_sound = call SYG_getLaughterSound; // prepare new war cry sound 66% of times
 					while { _sound in _sounds } do { _sound = call SYG_getLaughterSound;};
 					_sounds set [count _sounds, _sound];

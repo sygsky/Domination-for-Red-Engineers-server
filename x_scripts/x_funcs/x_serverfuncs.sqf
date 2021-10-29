@@ -61,6 +61,7 @@ SAddObserverKillScores = {
 
 #ifdef __AI__
 if (__RankedVer) then {
+	// adds # points on enemy vehicle kill
 	XAddKillsAI = {
 		private ["_points","_killer"];
 		_killer = _this select 1;
@@ -205,7 +206,7 @@ x_getmixedliste = {
 	_ret_list
 };
 
-// TODO: test and use everywhere
+//
 // Add all needed events to a newly created standard vehicle (for main/side mission action)
 //
 // call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
@@ -226,19 +227,25 @@ SYG_addEvents = {
 
 #ifdef __TT__
     if ( count _this > 1 ) then {
-    	if ( _this select 1 ) then { _vehicle addEventHandler ["killed", {[5, _this select 1] call XAddKills}]; };
+    	if ( _this select 1 ) then { _vehicle addEventHandler [ "killed", {[5, _this select 1] call XAddKills} ] };
     };
 #endif
-
-#ifdef __AI__
-    if (__RankedVer) then { _vehicle addEventHandler ["killed", {[5, _this select 1 ] call XAddKillsAI}]; };
+#ifndef __TT__
+	#ifdef __AI__
+    if (__RankedVer) then {
+    	if (count _this > 1 ) then { // add/subtract points if vehicle is killed by someboby AI
+	    	_vehicle addEventHandler ["killed", compile format[ "[%1, _this select 1] call XAddKillsAI;", _this select 1] ];
+    	};
+    };
+	#endif
 #endif
+
 };
 
-// TODO: test and use everywhere
+//
 // Append remove code to a newly created standard vehicle (for main/side mission action) in ANY case, independently from unwreck procedure
 //
-// call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
+// call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEventsAndDispose;
 SYG_addEventsAndDispose = {
 	if ( typeName _this != "ARRAY" ) then { _this = [ _this ]; };
     _this call SYG_addEvents;

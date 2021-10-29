@@ -372,6 +372,7 @@ SYG_playRandomTrack = {
             _item = _this call SYG_checkLastSoundRepeated;
             _item call SYG_playRandomTrack;
         }; // list of tracks, play any selected
+
         //
         // ["ATrack12,[10,10]<,[20,15]>]
         // first is track name (STRING), others are part descriptors [start, length], ...
@@ -380,7 +381,7 @@ SYG_playRandomTrack = {
             // list of track parts
             // check if death count is too big and play long-long music for this case
             if (SYG_deathCountCnt > DEATH_COUNT_TO_PLAY_MUSIC) exitWith {
-                // in rare case (more then 30-40 death in one session) play whole track
+                // in rare case (more then 50-60 death in one session) play whole track
 #ifdef __DEBUG__
                 hint localize format[ "*** SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
 #endif

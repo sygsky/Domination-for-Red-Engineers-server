@@ -648,7 +648,7 @@ SYG_clearArray = {
 		if ( typeName _x == "STRING") then {
 			if (_x == "RM_ME") then {
 				if ( _i < (count _this - 1) ) then { _this set [_i, _this select (count _this - 1)]; };
-					_this resize (count _this -1);
+				_this resize (count _this -1);
 			};
 		};
 	};

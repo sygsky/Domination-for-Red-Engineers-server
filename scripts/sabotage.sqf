@@ -349,7 +349,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 							// TODO: send unit to the roof of any suitable building (towers, hangars, air terminal, some houses etc)
 							// find enemy to hide from
 							_obj = _shell_unit findNearestEnemy (position _shell_unit);
-							if ( !isNull _obj ) then  { // no enemies found
+							if ( (!isNull _obj) && (_obj isKindOf  "CAManBase") ) then  { // no enemies found
 							    _obj_pos = position _obj;
 #ifdef __PRINT__
     							hint localize format ["+++ sabotage.sqf: found enemy %1(%2) at pos %3", name _obj, typeOf _obj, _obj_pos];
@@ -365,7 +365,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 							_obj = _shell_unit findCover [ position _shell_unit, _obj_pos, 400, 100, _obj_pos ];
 							if ( isNull _obj ) then {
                                 // todo: find any building and hide to it
-                                // find house to hide wшер min 3 pos in it and not closer then 150 meters
+                                // find house to hide when min 3 pos in it and not closer then 150 meters
                                 // _ngb = [position _shell_unit,3,150] call SYG_nearestGoodHouse;
                                 // ... buildingPos _ngb;
 #ifdef __PRINT__

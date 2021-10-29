@@ -149,8 +149,6 @@ if ( (_vehicle isKindOf "Plane") ) then {
 #endif
 #endif
 
-// [_vehicle ] call SYG_addEventsAndDispose; // add events to this vehicle, no points, no smoke
-
 // set marker procedure for the newly created vehicle
 _vehicle execVM "x_scripts\x_wreckmarker.sqf";
 

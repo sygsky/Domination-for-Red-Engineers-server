@@ -50,7 +50,9 @@ for "_i" from 1 to (count _landTypeArr) - __LAND_VEH_NUM__ do { [_landTypeArr, _
    			hint localize format["+++ addRndVehsOnBase.sqf: %1 on recovery service, var ""RECOVERABLE"" == %2", typeOf _veh, _veh getVariable "RECOVERABLE"];
         };
 #endif
-        [_veh] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and points
+		//++++++++++++++++++++++++++++++++++++++++++++++
+        [_veh,-5] call SYG_addEventsAndDispose; // dispose these vehicles along with the enemy ones. No smoke and -5 points on AI killing
+		//++++++++++++++++++++++++++++++++++++++++++++++
 
         //+++ get position
         _pos = _x select 0;
