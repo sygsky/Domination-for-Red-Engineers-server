@@ -242,7 +242,7 @@ if ( alive _vehicle) then {
         case "ACE_Truck5t_Refuel": { _vehicle setFuelCargo       1; _msg = "STR_SYS_RELOAD_REFUEL";};
         default {};
     };
-    if (_mgs != "") then {
+    if (_msg != "") then {
         [_vehicle, localize _msg] call XfVehicleChat; // "Reloading cargo..."
         sleep x_reload_time_factor;
     };
