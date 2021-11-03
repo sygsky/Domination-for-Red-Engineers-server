@@ -196,29 +196,9 @@ d_eng_can_repfuel = false; // Well, refuel ability is exhausted
 
 #ifdef __RANKED__
 
-// now count score by steps, not vehicle size and class. Previous version is commented
-/*
-_parray = d_ranked_a select 1;
-_addscore = (
-	if (objectID2 isKindOf "Air") then {
-		(_parray select 0)
-	} else {
-		if (objectID2 isKindOf "Tank") then {
-			(_parray select 1)
-		} else {
-			if (objectID2 isKindOf "Car") then {
-				(_parray select 2)
-			} else {
-				(_parray select 3)
-			}
-		}
-	}
-);
-*/
-
-#ifdef __DEBUG__
+	#ifdef __DEBUG__
 hint localize format["*** x_repengineer.sqf: _addscore = %1 in %2 total steps (rep %3, fuel %4), ", _addscore, _total_steps, ceil(_dmg_steps), ceil(_fuel_steps) ];
-#endif
+	#endif
 
 if (_addscore > 0) then {
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
