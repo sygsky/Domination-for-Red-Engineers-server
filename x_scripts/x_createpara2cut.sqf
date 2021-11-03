@@ -57,9 +57,7 @@ _parachute_type = (
 	}
 );
 
-
-if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Create sabotage group and arrange it as chopper cargo
-{
+if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then { // Create sabotage group and arrange it as chopper cargo
 	_paragrp = call SYG_createEnemyGroup;
 	_unit_array = ["sabotage", d_enemy_side] call x_getunitliste;
 	_real_units = _unit_array select 0;
@@ -69,8 +67,7 @@ if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then // Crea
 #endif
 	_unit_array = [];
 	sleep 0.1;
-	for "_i" from 0 to (_cnt_uni - 1) do 
-	{
+	for "_i" from 0 to (_cnt_uni - 1) do {
 		_type = _real_units select _i;
 		_one_unit = _paragrp createUnit [_type, [0,0,0], [], 300,"NONE"];
 		_one_unit moveInCargo _chopper;
@@ -102,7 +99,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 	if (!alive _chopper) exitWith {_ejected = true; /*[player,"Chopper destroyed"] call XfSideChat;*/};
 	_msg = "unknown";
 	if (!canMove _chopper && !_ejected && alive driver _chopper && alive _chopper) then {
-	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+	    // _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 		//hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting %1 unit[s], pos %2", {alive _x} count _unit_array, _msg ];
         while {alive _chopper && alive driver _chopper && (position _chopper select 2) >= HEIGHT_TO_EJECT && _next_to_eject < _cnt_uni} do {
 			_cur_uni = _unit_array select _next_to_eject;
@@ -115,7 +112,7 @@ while { ([_helifirstpoint,leader _vgrp] call SYG_distance2D) > 250 || !canMove _
 			sleep 0.82;
 		};
 		_ejected = _next_to_eject >= _cnt_uni;
-	    _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+	    // _msg = [_chopper, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
 		//hint localize format["--- x_createpara2cut.sqf: Chopper in air, ejecting completed, pos %1", _msg ];
 	};
 
@@ -165,6 +162,9 @@ if (!_ejected && alive _chopper) then {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
     hint localize format["+++ x_createpara2cut.sqf: Ordinal saboteurs ejection started, %1 unit[s], h %2, %3", {alive _x} count (units _paragrp), round((getPos _chopper) select 2), _msg ];
+	if (d_enemy_side == "WEST") then { // play good american sound from the chopper)))
+    	["say_sound", _chopper, "usa_desant_heli" ] call XSendNetStartScriptClientAll; // Woman say "Sorry" etc 12..14
+	};
 	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;
