@@ -599,6 +599,8 @@ class CfgSounds {
 //--------------------------------------------- INTRO MUSIC -------------------------------------------
     class money { name="Money by Pink Floyd";                           sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
 
+    class usa_desant_heli { name="Babyyyyyyy";                          sound[] = {\sounds\intro\vehicles\usa_desant_heli.ogg,db-1,1.0}; titles[] = {};}; // Baby-y-y-y-y...
+	//
 
 
 };
