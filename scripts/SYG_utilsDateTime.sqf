@@ -428,12 +428,19 @@ SYG_holidayTable = [
     [ 28, 5, "border_guards","STR_HOLIDAY_28_MAY",0], // //Border Guard Day
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
     [  1, 9, "uchat_v_shkole", "STR_HOLIDAY_1_SEP", 0], // 1st of September, Day of Knowledge
-    [[6, 9, 2], 5, "board_guards","STR_HOLIDAY_28_MAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
+    [[6, 2], 9, "board_guards","STR_HOLIDAY_TANKIST_DAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
     [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhymn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
     [29, 10, "komsomol","STR_HOLIDAY_28_OCT",0], // Komsomol day
     [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
 
 ];
+
+//
+// _day_number = [[[6, 2], 9, 2011] call SYG_NthWeekday; // day of 2nd sunday in September 2021!
+//
+SYG_NthWeekday = {
+
+};
 
 // Checks current server date agains holiday list and return array of data if detected, or empty array [] if not
 // _retArr = _server_date call  SYG_getHoliday;
