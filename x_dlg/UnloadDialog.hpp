@@ -54,7 +54,7 @@ class XD_UnloadDialog
 		y = 0.725;
 		w = 0.15;
 		h = 0.05;
-		text = "Выберите";
+		text = $STR_SYS_161_0;
 		action = "_kk = 0 execVM ""x_scripts\x_setcargo.sqf""";
 	};
 	class XD_CancelButton
@@ -112,6 +112,6 @@ class XD_UnloadDialog
 		h = 0.1;
 		colorBackground[] = {1, 1, 1, 0.0};
 		colorText[] = { 1, 1, 1, 1 };
-		text = "Выберите автомобиль для разгрузки:";
+		text = $STR_SYS_161_1;
 	};
 };

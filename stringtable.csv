@@ -391,6 +391,8 @@ STR_SM_TELEPORT_1,You realized that teleportation didn’t work with some of you
 
 STR_SYS_160,Select Viewdistance,Sichtweite,Distancia de visión,Зона обзора
 STR_SYS_161,Click on the number to change the VD,Wählen Sie aus der Liste,Seleccione de la lista,Выберите из списка
+STR_SYS_161_0,Select,Auswählen,Seleccione,Выберите
+STR_SYS_161_1,Select the vehicle to unload:,Wählen Sie das zu entladende Fahrzeug:,Elija el vehículo a descargar:,Выберите автомобиль для разгрузки:
 STR_SYS_162,Select Grass Layer,Wählen Sie Die Gras-Ebene,Dibujo de hierba,Прорисовка травы
 STR_SYS_163,Player Marker,Spieler-marker,Marcador de jugador,Маркер игрока
 STR_SYS_164,Points needed for,Punkte benötigt,Puntos necesarios para,Необходимо очков для
@@ -1089,6 +1091,7 @@ STR_HOLIDAY_9_MAY,Victory Day,Tag des Sieges,Día De La Victoria,День Поб
 STR_HOLIDAY_28_MAY,Border Guards Day,Grenzschutztag,Día de la Guardia de Fronteras,День пограничника
 STR_HOLIDAY_18_AUG,Day of the USSR Air Fleet,Tag der Luftflotte der UdSSR,Día de la Flota aérea de la URSS,День Воздушного Флота СССР
 STR_HOLIDAY_1_SEP,Knowledge Day,Tag des Wissens,Día del Conocimiento,День знаний
+STR_HOLIDAY_TANKIST_DAY,Tankman day,Tankwarttag,Día del hombre del tanque,День танкиста
 STR_HOLIDAY_7_OCT,Constitution day of the USSR/Anniversary of the DDR,Tag der Verfassung der UdSSR/Jahrestag der Gründung der DDR,Día de la Constitución de la URSS/aniversario de la fundación de la RDA,День Конституции СССР/День независимости DDR
 STR_HOLIDAY_7_NOV,The day of the Great October Socialist Revolution,Tag der großen Sozialistischen Oktoberrevolution,Día De La Gran Revolución Socialista De Octubre,День Великой Октябрьской Социалистической Революции
 STR_HOLIDAY_28_OCT,The day of the Komsomol (Communist Youth Union),Komsomol-Tag (Kommunistischer Jugendverband),Día del Komsomol (Unión de la Juventud Comunista),День Комсомола
