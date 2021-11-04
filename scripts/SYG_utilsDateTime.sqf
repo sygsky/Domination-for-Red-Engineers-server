@@ -432,14 +432,6 @@ SYG_JDN = {
 
 // [day,mon,range<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
 SYG_holidayTable = [
-/**
-    [ 1, 1,10], // new year, 10 days in range
-    [23, 2, 2], // 23th of February
-    [ 8, 3, 2], // 8th of March
-    [ 1, 5, 3], // 1st May
-    [ 9, 5, 3], // 9th of May
-    [ 7,11, 5]  // 7th of November
-*/
     [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis","enchanted_boy"], "STR_HOLIDAY_1_JAN", 1], // New Year Day
     [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
@@ -457,13 +449,6 @@ SYG_holidayTable = [
     [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
 
 ];
-
-//
-// _day_number = [[[6, 2], 9, 2011] call SYG_NthWeekday; // day of 2nd sunday in September 2021!
-//
-SYG_NthWeekday = {
-
-};
 
 // Checks current server date agains holiday list and return array of data if detected, or empty array [] if not
 // _retArr = _server_date call  SYG_getHoliday;

@@ -1046,10 +1046,10 @@ STR_AAHALO_4," m/s"," m/s"," m/s"," м/с"
 STR_AAHALO_5,Descent Rate:,Descent Rate:,Pendiente vertical:,Верт. ск.:
 STR_AAHALO_6,Brakes amount:,Brakes amount:,Frenado:,Торможение:
 
-STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""mission_impossible"",""capricorn1title"",""rider"",""strelok""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""",,"tovarich_moy, ""Letyat_perelyotnye_pticy_2nd"""
-STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka_eng""","""ahead_friends"",""warschawyanka_german""",,"""chapaev"",""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
+STR_INTRO_MUSIC,"""johnny"",""prince_negaafellaga"",""mission_impossible"",""capricorn1title"",""rider"",""strelok""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""","""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german""","""tovarich_moy"", ""Letyat_perelyotnye_pticy_2nd"""
+STR_INTRO_MUSIC_VOSR,"""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german""","""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german""","""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german""","""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german"""
 
-STR_INTRO_1,Alternative reality,Alternative Realität,realidad alternativa,Альтернативная реальность
+STR_INTRO_1,Alternative reality,Alternative Realität,Realidad alternativa,Альтернативная реальность
 STR_INTRO_2,Somewhere in North Atlantics not far from USA,Irgendwo in North Atlantics nicht weit von USA,"Atlántico Norte, 1000 km de la costa de los Estados Unidos","Северная Атлантика, 1000 км от побережья США"
 STR_INTRO_3,"%1. %2, %3, %4 mission day","%1. %2, %3, %4 mission Tag","%1. %2, %3, %4º día de la misión","%1. %2, %3, %4-й день миссии"
 STR_INTRO_4,Sahrani island. Nearest settlement - %1,Insel Sahrani. Nächste Siedlung - %1,Isla De Sahrani. El asentamiento más cercano es %1,Остров Сахрани. Ближайшее поселение - %1

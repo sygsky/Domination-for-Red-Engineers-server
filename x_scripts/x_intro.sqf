@@ -76,23 +76,27 @@ _music_cnt = 0;
 if (_sound == "") then { // select random music for ordinal day
     if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then {
     	_music = ((SYG_holidayTable select 0) select 2) call _XfRandomArrayVal;
+    	_sound = _music;
         playSound _music; //music for New Year period from 21 December to 10 January
         _newyear = true;
     } else {
         // music normally played on intro
         if ( _mon == 11 && (_day >= 4 && _day <= 10) ) then {
             // 7th November is a Day of Great October Socialist Revolution
-            playSound  ((call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal);
+            _sound = (call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal;
+            _music = _sound;
+            playSound  _sound;
         } else {
 
+#ifdef __TEST__
         	if (name player == "Rokse [LT]") exitWith {
         		_music = ["burnash","johnny","druzba","adjutant",/*"vague",*/"enchanted_boy","ahead_friends","mission_impossible",
         		"lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice","dangerous_chase"] call _XfRandomArrayVal;
         		playSound _music;
         		_sound = _music;
-        		hint localize format["+++ Sound (not music!) ""%1"" player as intro", _sound];
+        		hint localize format["+++ Sound (not music!) for ""%1"" player as intro", _sound];
         	};
-
+#endif
             // add some personalized songs for well known players
             _players =
             [
@@ -168,7 +172,7 @@ if (_sound == "") then { // select random music for ordinal day
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
                 "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme",/*"vague",*/"travel_with_friends","on_thin_ice","peregrinus",
-                "wild_geese","wild_geese","dangerous_chase.ogg"
+                "wild_geese","wild_geese","dangerous_chase"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
@@ -178,9 +182,7 @@ if (_sound == "") then { // select random music for ordinal day
 				"Letyat_perelyotnye_pticy_end","bolivar","travel_with_friends","on_thin_ice","peregrinus"] call _XfRandomArrayVal;
 #endif
 
-
 			_sound = _music;
-//			_music = "grant";
             playSound _music; //playSound "ATrack25"; // oldest value by Xeno
          };
     };
@@ -514,7 +516,7 @@ _start spawn {
                     _str = [] call SYG_getMsgForCurrentDayTime;
                     titleText[_str, "PLAIN DOWN"];
                     _str = ([] call SYG_getCurrentDayTimeRandomSound);
-                    if (_sound != "") then { playSound _str; };
+                    if (_str != "") then { playSound _str; };
                 };
                 ""
 			};
