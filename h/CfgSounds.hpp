@@ -595,6 +595,8 @@ class CfgSounds {
     class ddrhymn  { name="DDR Day";                                    sound[] = {\sounds\intro\ddrhymn.ogg,db-1,1.0}; titles[] = {};}; // DDR Day!(1949)
     class border_guards  { name="Day of Border Guards";                 sound[] = {\sounds\intro\holidays\may_28\border_guards.ogg,db-1,1.0}; titles[] = {};}; // Day of Border Guards
     class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; titles[] = {};}; // Day of School
+    class march_of_soviet_tankmen { name="2nd Sunday of September ";    sound[] = {\sounds\intro\holidays\tankist_day\march_of_soviet_tankmen.ogg,db-1,1.0}; titles[] = {};}; // Day of School
+    // march_of_soviet_tankmen.ogg
 
 //--------------------------------------------- INTRO MUSIC -------------------------------------------
     class money { name="Money by Pink Floyd";                           sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd

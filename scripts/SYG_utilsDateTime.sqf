@@ -178,21 +178,44 @@ SYG_humanDateStr = {
 
 //
 // returns day of week for the designated date. For Monday returns 0, for Sunday 6. Returns -1 on input error
-// Uses Zeller formula: https://en.wikipedia.org/wiki/Zeller's_congruence
+// Uses Zeller formula: "https://en.wikipedia.org/wiki/Zeller's_congruence"
 //
-SYG_weekDay = { // by Zeller formulae
 // _now = date;   // _now = [2014,10,30,2,30] (Oct. 30th, 2:30am)
+SYG_weekDay = {
+//	hint localize format["+++ SYG_weekDay: _this => %1", _this];
+	private [ "_ret"];
 	_ret = -1;
 	if ( count _this >= 3 ) then {
+		private [ "_q", "_m", "_y", "_K", "_J" ];
 		_q = _this select 2; // month day
 		_m = _this select 1; // month number (1-12)
-		if ( _m < 3 ) then { _m = _m + 12;}; // 3 = March, ... 13 = January, 14 = February
-		_Y = _this select 0; // year
-		_ret = (((_q + floor(13*(_m+1)/5) + _Y + floor(_Y/4) + 6* floor(_Y/100) + floor(_Y/400)) mod 7) +5) mod 7;
+		_y = _this select 0;
+		if ( _m < 3 ) then { _m = _m + 12; _y = _y - 1;}; // 3 = March, ... 13 = January, 14 = February
+		_K = _y mod 100; // year of the century
+		_J = floor(_y / 100); // zero base century of the year
+//		hint localize format["+++ SYG_weekDay: %1 => q %2, m %3, K %4, J %5", _this, _q, _m, _K, _J];
+		_ret = (((_q + floor((13*(_m+1))/5) + _K + floor(_K/4) + floor(_J/4) - 2*_J) mod 7) + 5) mod 7;
 	} else {
 		hint localize format["SYG_weekDay: Expected input array[min 3 items] is illegal -> (%1)", _this];
 	};
 	_ret
+};
+
+//
+// _day_number = [[6, 2], 9, 2011] call SYG_NthWeekday; // day of 2nd Sunday in September 2021!
+//
+SYG_NthWeekday = {
+	private ["_nthArr","_weekday","_weekcnt","_weekDay1","_weekDayOff"];
+	_nthArr  = _this select 0;
+	_weekday = _nthArr select 0;
+	_weekcnt = _nthArr select 1;
+//	hint localize format["+++ SYG_NthWeekday call SYG_weekDay: _this => %1", _arr];
+	_weekDay1 = [ _this select 2, _this select 1, 1 ] call SYG_weekDay; // 0 - Monday ... 6 - Sunday
+	_weekDayOff = _weekday - _weekDay1;
+	hint localize format["+++ SYG_NthWeekday: _this %1, 1st day is %2, weekday off = %3", _this, _weekDay1 call SYG_weekDayLocalName, _weekDayOff];
+	if (_weekDayOff < 0 ) then { _weekDayOff = _weekDayOff + 7; }; // first designated weekday month day offset to 1st day (0 - 1st day is wanted weekday)
+	if ( _weekcnt > 1) then { _weekDayOff = _weekDayOff + ((_weekcnt -1) * 7)}; // nth weekday
+	(_weekDayOff + 1) // 1st day has offset zero
 };
 
 // call: _mlen = [_mon, _year] call SYG_monthLen;
@@ -428,7 +451,7 @@ SYG_holidayTable = [
     [ 28, 5, "border_guards","STR_HOLIDAY_28_MAY",0], // //Border Guard Day
     [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
     [  1, 9, "uchat_v_shkole", "STR_HOLIDAY_1_SEP", 0], // 1st of September, Day of Knowledge
-    [[6, 2], 9, "board_guards","STR_HOLIDAY_TANKIST_DAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
+    [[6, 2], 9, "march_of_soviet_tankmen","STR_HOLIDAY_TANKIST_DAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
     [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhymn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
     [29, 10, "komsomol","STR_HOLIDAY_28_OCT",0], // Komsomol day
     [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
@@ -447,7 +470,7 @@ SYG_NthWeekday = {
 // where:
 //   _retArr is [false (ordinal day) || true (day off), "registered_sound_name" || "" (no sound),"Holiday_title"] || [] (not holiday)
 SYG_getHoliday = {
-    private ["_curr_mon","_cur_day","_week_day","_ret","_music","_XfRandomFloorArray","_XfRandomArrayVal"];
+    private ["_curr_mon","_curr_day","_day","_ret","_music","_XfRandomFloorArray","_XfRandomArrayVal"];
 
     // get a random number, floored, from count array
     // parameters: array
@@ -469,13 +492,11 @@ SYG_getHoliday = {
     {
         if ( _curr_mon  < (_x select 1)) exitWith {}; // month in sorted table .GT. current one, it means current month not exists in the table
         if ( _curr_mon == (_x select 1) ) then  {// month found, check days in table for coincidence with current one
-        	if (typeName (_x select 0) == "ARRAY") exitWith { // if array seek for the day of week, not the day of month
-        		_week_day     = [_this select 0, _curr_mon,_curr_day] call SYG_weekDay;
-        		_week_day_1   = [_this select 0, _curr_mon, 1] call SYG_weekDay;
-        		_week_day_arr = _x select 0;
-//        		if ( ( _week_day == _week_day_arr select 0 ) && (true) ) then {};
+        	_day = _x select 0;	// day number from table item
+        	if (typeName _day == "ARRAY") exitWith { // if array, Nth week day designated, not direct day number
+        		_day = [ _day, _curr_mon, _this select 0] call SYG_NthWeekday; // Example call:  [[6, 2], 9, 2011] call SYG_NthWeekday; // 2nd Sunday of the month
         	};
-			if ( (_x select 0) == _curr_day ) then { // day also found, it's holyday!!!
+			if ( _day == _curr_day ) then { // day also found, it's holyday!!!
 				_music = _x select OFF_HOLIDAY_SND;
 				if ( typeName _music == "ARRAY" ) then { _music = _music call _XfRandomArrayVal }; // not one music is set for this day, select random one
 				_ret = [(_x select OFF_HOLIDAY_HOL) > 0, _music, _x select OFF_HOLIDAY_TIT ];
