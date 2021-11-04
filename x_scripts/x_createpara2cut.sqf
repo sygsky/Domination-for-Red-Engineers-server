@@ -162,9 +162,10 @@ if (!_ejected && alive _chopper) then {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
     hint localize format["+++ x_createpara2cut.sqf: Ordinal saboteurs ejection started, %1 unit[s], h %2, %3", {alive _x} count (units _paragrp), round((getPos _chopper) select 2), _msg ];
-	if (d_enemy_side == "WEST") then { // play good american sound from the chopper)))
-    	["say_sound", _chopper, "usa_desant_heli" ] call XSendNetStartScriptClientAll; // Woman say "Sorry" etc 12..14
-	};
+#ifdef __OWN_SIDE_EAST__
+	// play good american sound from the chopper)))
+    ["say_sound", _chopper, "usa_desant_heli" ] call XSendNetStartScriptClientAll; // "Ouh baby-y-y-y-..." - pure american armu war sound)_))
+#endif
 	{
 		_x action ["Eject",_chopper];
 		unassignVehicle _x;
