@@ -407,6 +407,7 @@ class CfgSounds {
     class powerdown2    {name = ""; sound[] = {\sounds\short\power_down\PowerDown2.ogg, db+10, 1.0}; titles[] = {};};
     class powerdown3    {name = ""; sound[] = {\sounds\short\power_down\PowerDown3.ogg, db+10, 1.0}; titles[] = {};};
     class powerdown4    {name = ""; sound[] = {\sounds\short\power_down\PowerDown4.ogg, db+10, 1.0}; titles[] = {};};
+    class powerdown5    {name = ""; sound[] = {\sounds\short\power_down\PowerDown5.ogg, db+10, 1.0}; titles[] = {};};
 
 
 #ifdef __WITH_SCALAR__
