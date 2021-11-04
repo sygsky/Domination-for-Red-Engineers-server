@@ -166,7 +166,11 @@ STR_SYS_75_1,Teleporting not possible while factory %1 is ruined !!!,"Das telepo
 STR_SYS_75_2,Teleporting not possible while MHQ has damage (%1%2)!!!,"Teleportieren nicht möglich, während MHQ Schaden hat (%1%2)!!!","No es posible teletransportarse, debido a los daños de KSHM (%1%2)!!!","Телепортирование невозможно, из-за повреждений КШМ (%1%2)!!!"
 STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport will stop working!","MHQ %1%2 Schaden, sofort reparieren, sonst funktioniert der Teleport nicht mehr!","Dañado KSHM %1%2, reparar inmediatamente, de lo contrario el teletransportador dejará de funcionar!","Повр. КШМ %1%2, немедленно почините, иначе перестанет работать телепорт!"
 STR_SYS_75_4,A large mass of iron was found nearby!,In der Nähe - eine Masse aus Eisen!,"Cerca, una masa de hierro!",Рядом обнаружена большая масса железа!
-STR_SYS_75_5,A large mass of iron next to the MHQ displaced the point of teleport (<= %1 m)!,Eine große Eisenmasse neben dem MHQ hat den Verschiebungspunkt verschoben (<= %1m)!,¡La gran masa de hierro junto a la MHQ ha desplazado el punto de desplazamiento (<= %1m)!,Расположенная рядом c КШМ большая масса железа сместила точку перемещения (<= %1 м)!
+STR_SYS_75_5,A large mass of iron next to the MHQ %1 shifted the point of teleport!,Eine große Eisenmasse %1 neben der Kurbelwelle hat den Verschiebepunkt verschoben!,Una gran masa de hierro %1 junto al cigüeñal ha desplazado el punto de desplazamiento.,Расположенная у КШМ большая масса железа %1 сместила точку перемещения!
+STR_SYS_75_5_2,slightly,leicht,ligeramente,слегка
+STR_SYS_75_5_5,a little,ein wenig,un poco,ненамного
+STR_SYS_75_5_10,significantly,deutlich,significativamente,существенно
+STR_SYS_75_5_MORE,has very much,sehr,muy,весьма
 
 STR_SYS_76,"Due to the strong wind over the ocean, you jumped a little wrong: %1 m. to %2","Wegen des starken Windes über dem Ozean sind Sie ein wenig falsch gesprungen: %1 m. bis %2","Debido al fuerte viento sobre el océano, saltaste un poco hacia el lado equivocado: %1 m. a %2",Из-за сильного ветра над океаном Вы прыгнули немного не туда: %1 m. на %2
 STR_SYS_77,Cancel service,Rückgängig Service,Cancelar Servicio,Отменить обслуживание
