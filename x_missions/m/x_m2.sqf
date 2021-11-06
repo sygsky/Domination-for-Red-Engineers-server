@@ -3,8 +3,8 @@ private ["_vehicle"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __Poss _poss = x_sm_pos select 0;
-#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
+#define __Poss _poss = x_sm_pos select 0
+#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1
 
 #ifdef __TT__
 x_sm_pos = [[9469.29,9980.0,0], [9475.11,10052.3,0]]; // index: 2,   steal plane prototype, Paraiso airfield, second array position armor
@@ -36,13 +36,13 @@ if (isServer) then {
 	_planetypes = if (d_enemy_side == "EAST") then
 #ifdef __ACE__
     {["ACE_Su27S","ACE_Su27S2"]} else
-	{["ACE_A10_MK82", "ACE_A10_MK83_HD", "ACE_A10_AGM_FFAR"]};
+	{SYG_AV8B_TYPES};
 #else
 	{["SU34","Su34B"]}
 	else { ["A10"] }; //+++ Sygsky: for more fun
 #endif
 	_xplane =  _planetypes call XfRandomArrayVal; //+++ Sygsky: for more fun
-	__PossAndOther
+	__PossAndOther;
 	_hangar = "Land_SS_hangar" createVehicle (_poss);
 	_hangar setDir 260;
 	__AddToExtraVec(_hangar)

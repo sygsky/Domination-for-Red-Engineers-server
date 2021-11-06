@@ -792,8 +792,8 @@ STR_SYS_615,!!!!! ATTENTION !!!!! Incoming Missile !!!!!,!!!!! AUFMERKSAMKEIT !!
 STR_SYS_616,Height,Höhe,Altura,Высота
 STR_SYS_618,Viewdistance restore to %1 m.,Viewdistance Durchmesser restauriert wurde: %1 m.,Diámetro del área de visión restaurada: %1 m.,Диаметр зоны обзора восстановлен: %1 м.
 
-STR_SYS_620,"Here it is - lying on the shore! If I collect it in 2 minutes, the waves will not carry it away!","Hier ist es - am Ufer liegen! Wenn ich es in 2 Minuten sammle, werden die Wellen es nicht wegtragen!","¡Ahí está, en la orilla! Si recojo en 2 minutos, ¡las olas no se llevarán!","Да вот же оно, лежит на берегу! Если соберу за 2 минуты, то волны не унесут!"
-STR_SYS_620_0,"Some weapon drowned, if it's mine, I'll find it on the shore. Otherwise...","Eine Waffe ist ertrunken, wenn es meine ist, werde ich sie am Ufer finden. Ansonsten...","Algún arma ahogada, si es la mía, la encontraré en la orilla. Si no...","Какое-то оружие утоплено, если иоё, то найду на берегу. Иначе..."
+STR_SYS_620,"Here it is - lying on the shore! If I collect it in 2 minutes, the waves will not carry it away!","Hier ist es - am Ufer liegen! Wenn ich es in 2 Minuten sammle, werden die Wellen es nicht wegtragen!","¡Ahí está, en la orilla! Si recojo en 2 minutos, ¡las olas no se llevarán!","Да вот же оно, выбросило на берег! Если соберу за 2 минуты, то волны не унесут!"
+STR_SYS_620_0,"How hard it is to swim... I'll drop my gun! Otherwise...","Wie schwer es ist, zu schwimmen... Ich werde meine Waffe fallen lassen! Ansonsten...","Qué difícil es nadar... ¡Soltaré mi arma! Si no...","Как тяжело плыть... Сброшу-ка оружие! Иначе..."
 STR_SYS_620_1,You drowned your weapons foreve-e-e-er,Du hast deine Waffen für immer ertränkt,Ahogaste tus armas para siempre-e-e-e,Утопил я оружие своё-о-о... безвозвратно-о-о!
 STR_SYS_620_2,"I just need to get out on a gentle Bank, so I'll find it faster...","Ich muss nur auf eine sanfte Bank gehen, damit ich es schneller finde...","Solo tienes que salir a la suave orilla, es más fácil buscar...","Надо только выбраться на пологий берег, проще искать..."
 STR_SYS_620_3,depth %1 m.,tiefe %1 m.,Prof. 1 m.,гл. %1 м.
@@ -1464,3 +1464,5 @@ STR_GEAR_DROP,Drop,Ablegen,Aplazar,Отложить
 STR_NAME_MARINE,Name Marine,Name Marine,Topónimo marítimo,Морской топоним
 STR_BISCAMEL_NAME,Camel,Camel,Sopwich-Camel,Сопвич-Кэмел
 STR_BISCAMEL_NAME2,An-2(USSR),An-2(UdSSR),An-2(USSR),Кукурузник
+
+STR_ACE_MDN_M1A1COAXBOX,7.62x51mm Ball,7.62x51mm Ball,7.62x51mm Ball,7.62x51mm со ст. сердечником

@@ -44,15 +44,18 @@ while {true} do {
 			_wpArr = nearestObjects [ player, ["WeaponHolder"], HOLDER_SEARCH_RADIUS ]; // It will find all holdear around #N meters in 2D and any depth (so say https://community.bistudio.com/wiki/nearestObject)
 			if ( count _wpArr > 0 ) then {
 //                hint localize format["+++ x_water.sqf: WeaponHolder[s] with your lost weapon found and remembered (%1 pc.)",count _wpArr];
-                (localize "STR_SYS_620_0") call XfHQChat;
-                "" spawn {sleep 5; (localize "STR_SYS_620_2") call XfHQChat;};
-                _mname = format ["%1", _wpArr select 0];
-                _marker = [_mname, getPos player,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_SYS_620_3", round(((_wpArr select 0) modelToWorld [0,0,0]) select 2)],0,"Marker"] call XfCreateMarkerLocal; // "ammocrate", _marker is assigned in call of XfCreateMarkerGlobal function
+				if (alive player) then {
+					(localize "STR_SYS_620_0") call XfHQChat; // "Some weapon drowned, if it's mine, I'll find it on the shore. Otherwise..."
+					"" spawn {sleep 5; (localize "STR_SYS_620_2") call XfHQChat;}; // "I just need to get out on a gentle Bank, so I'll find it faster..."
+					_mname = format ["%1", _wpArr select 0];
+					// "depth %1 m."
+					_marker = [_mname, getPos player,"ICON","ColorBlue",[0.5,0.5],format [localize "STR_SYS_620_3", round(((_wpArr select 0) modelToWorld [0,0,0]) select 2)],0,"Marker"] call XfCreateMarkerLocal; // "ammocrate", _marker is assigned in call of XfCreateMarkerGlobal function
+                };
 			} else {
 			    if (alive player && surfaceIsWater (getPos player) && ( primaryWeapon player == "" ) && ( secondaryWeapon player == "" )) then {
     //			    hint localize "--- x_water.sqf:  WeaponHolder[s] not found";
                     sleep 4;
-                    (localize "STR_SYS_620_1") call XfHQChat;
+                    (localize "STR_SYS_620_1") call XfHQChat; // You drowned your weapons foreve-e-e-er
 	                _sound = "losing_patience"; // you lost weapon forever
 			    };
 			};
@@ -70,6 +73,7 @@ while {true} do {
             _x setPos _pos;
             sleep 0.1;
         } forEach _wpArr;
+        // "Here it is - lying on the shore! If I collect it in 2 minutes, the waves will not carry it away!"
         ["msg_to_user", "", [["STR_SYS_620"]], 0,1,0,"good_news"] call SYG_msgToUserParser; // message output+sound
         _marker setMarkerPosLocal (getPos (_wpArr select 0));
         _marker setMarkerColorLocal "ColorRed";

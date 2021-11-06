@@ -231,8 +231,7 @@ SYG_monthLen = {
 			if ( (_year mod 100) == 0 ) then {
 				if ( (_year mod 400) == 0 ) then { 29 }
 				else {28};
-			}
-			else {28};
+			} else {28};
 		} else {28};
 	} else {argp(MONTH_LEN_ARR,_mon)};
 	_len
@@ -372,7 +371,7 @@ SYG_getServerDate = {
 };
 
 // gets day count in month sequence from m1 to m2 (e.g. from jan to mar if 1, 3 used) at designated year
-// call: _days = [1,3,_2016] call SYG_countDaysInMonth; // Result is 89
+// call: _days = [1,3,2016] call SYG_countDaysInMonth; // Result is 89
 SYG_countDaysInMonth = {
 	private ["_cnt","_m1","_m2","_y","_i"];
 	_cnt = 0;
@@ -536,6 +535,7 @@ SYG_getCurrentDayTimeRandomSound = {
 //  hour value to add can't be more than 28*24 hours
 //--------------------------------------------------
 SYG_bumpDateByHours = {
+	private ["_dt","_addhr","_min","_hour","_day","_mon","_year","_new","_monlen"];
     _dt    = + (_this select 0);
     _addhr =    _this select 1;
     if ( _addhr == 0) exitWith {

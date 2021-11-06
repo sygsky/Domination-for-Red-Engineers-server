@@ -3,7 +3,7 @@ private ["_vehicle"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __Poss _poss = x_sm_pos select 0;
+#define __Poss _poss = x_sm_pos select 0
 #define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
 
 x_sm_pos = [[12535.7,12699.6,0]]; // index: 27,   Radio tower at farm near Bagango
@@ -21,7 +21,7 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-	__Poss
+	__Poss;
 	_vehicle = "Land_telek1" createVehicle (_poss);
 	_vehicle setVectorUp [0,0,1];
 	[_vehicle] spawn XCheckSMHardTarget;
