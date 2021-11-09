@@ -38,7 +38,11 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
 	if  ( _killer isKindOf "CAManBase" ) then {  // if killer is a man, check for his vehicle too
 		if (vehicle _killer == _killer) exitWith {_killed = true;}; // no vehicle so tower is killed correctly
 		// killer is in vehicle, check if vehicle is alive or not
-		_killed = alive ( vehicle _killer );  // if vehicle dead that is kamikadze one
+		// if vehicle dead that is kamikadze one
+		if ( alive ( vehicle _killer ) ) then {
+			// TODO: vehicle is alive! Check if tower not killed by vehicle weapon
+			_killed = true;
+		};
 	};
 	if (_killed ) exitWith{};
      hint localize format["*** MTTarget: resurrect tower on killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
@@ -56,8 +60,8 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
         _ruin = nearestObject [_pos, _ruin_type];
         sleep 0.05;
     };
-    if ( isNull _ruin) exitWith { hint localize format["--- MTTarget: _ruin not found in %1 sec, exit", time - _time ] };
-    hint localize format["+++ MTTarget: _ruin found in %1 sec", time - _time];
+    if ( isNull _ruin) exitWith { hint localize format["--- MTTarget: _ruin not found in %1 sec, exit", round(time - _time) ] };
+    hint localize format["+++ MTTarget: _ruin found in %1 sec", round(time - _time) ];
     _house removeAllEventHandlers "hit";
     _house removeAllEventHandlers "killed";
     deleteVehicle _house;

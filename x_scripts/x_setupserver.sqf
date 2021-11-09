@@ -235,7 +235,7 @@ SYG_hitMTTarget = {
     if ( ((_this select 2)  >= 1) &&  ((typeOf (_this select 1)) isKindOf "CAManBase" ) ) exitWith {
 //           player groupChat format["Damage %1 accepted", _this select 2]
     };
-    (_this select 0) setDamage  ( ((damage (_this select 0) - (_this select 2))) max 0 ); // fix possible negative value
+    (_this select 0) setDamage  0; // fix possible negative value
 //    player groupChat format["*** Not accepted: dmg %1, killer %2 (is CAManBase == %3), dist. %4 m", _this select 2, typeOf (_this select 1), (typeOf (_this select 1)) isKindof "CaManBase", round ((_this select 1) distance (_this select 0))]
 };
 
@@ -253,7 +253,7 @@ XCheckMTHardTarget = {
 #ifdef __TT__
 	_vehicle addEventHandler ["killed", { [ 4, _this select 1 ] call XAddPoints;private ["_mt_radio_tower_kill"];_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient; } ];
 #endif
-	_vehicle addEventHandler [ "hit", { _this call SYG_hitMTarget } ]; // drop damage from easy forbidden attacks
+	_vehicle addEventHandler [ "hit", { _this call SYG_hitMTTarget } ]; // drop damage from easy forbidden attacks
 };
 
 #ifndef __TT__
