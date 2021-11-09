@@ -20,7 +20,7 @@ private ["_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_t
 _house = _this select 0;
 _killer = _this select 1;
 _restored = false;
-_name = "not player";
+_name = _killer;
 if ( !(isNull _killer) ) then{
     if ( isPlayer _killer ) exitWith  { _name = name _killer };
     if ( !( _killer isKindOf "CaManBase" ) ) exitWith {
@@ -28,7 +28,7 @@ if ( !(isNull _killer) ) then{
         if ( isPlayer (driver _killer)) exitWith {_name = format["%1", name  (driver _killer)]};
         if ( isPlayer (commander _killer)) exitWith {_name = format["%1", name  (commander _killer)]};
     }
-};
+} else { _name = "<null>"; };
 hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4, vUp %5.", _house, typeOf _killer, _name, damage _house, vectorUp _house];
 
 // Don't accept kill if done not by direct existing player action
@@ -40,7 +40,7 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
 		// killer is in vehicle, check if vehicle is alive or not
 		_killed = alive ( vehicle _killer );  // if vehicle dead that is kamikadze one
 	};
-	If (_killed ) exitWith{};
+	if (_killed ) exitWith{};
      hint localize format["*** MTTarget: resurrect tower on killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object

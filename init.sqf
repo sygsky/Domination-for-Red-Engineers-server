@@ -697,22 +697,29 @@ if ( sec_kind == 3) then
 if ( X_Client ) then {// runs only on client
     // store rucksack position (not move automatically it to the secondary gear slot)
     ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
+    hint localize "+++ ACE_Sys_Ruck_Switch_WOBCheck replaced by custom version";
+
     // improve available magazines description
     ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\ACE\MyUpdateDescriptionDisplay.sqf";
+    hint localize "+++ ACE_Sys_Ruck_UI_UpdateDescriptionDisplay replaced by custom version";
 
     #ifdef __JAVELIN__
         #ifndef __NO_RPG_CLONING__
     // Disable Javelin to rucksack load
     ACE_Sys_Ruck_CanPackMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\CanPackMagToDummyMag.sqf";
+    hint localize "+++ ACE_Sys_Ruck_CanPackMagToDummyMag replaced by custom version";
+
         #endif
     #endif
 
     #ifdef __NO_RPG_CLONING__
     // disables AT etc missiles cloning through rucksacks
     ACE_Sys_Ruck_PackInventoryMagToDummyMag = compile preprocessFileLineNumbers "scripts\ACE\PackInventoryMagToDummyMag.sqf";
+    hint localize "+++ ACE_Sys_Ruck_PackInventoryMagToDummyMag replaced by custom version";
     #endif
 
     #ifdef __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
+    hint localize "+++ ace_sys_eject... replaced by custom version";
 
     ace_sys_eject_ace_getin_eject   = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_eject.sqf";
     ace_sys_eject_ace_init_eject    = compile preprocessFileLineNumbers "scripts\ACE\ace_init_eject.sqf";
@@ -724,6 +731,7 @@ if ( X_Client ) then {// runs only on client
     #ifdef __DISABLE_HIDE_UNCONSCIOUS__
 
     ACE_Sys_Wound_Net_fSetUnc       = compile preProcessFileLineNumbers "scripts\ACE\setUnc.sqf"; // stop setCaptive for unconsciones player
+    hint localize "+++ ACE_Sys_Wound_Net_fSetUnc replaced by custom version";
 
     #endif
 

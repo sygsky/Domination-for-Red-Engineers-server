@@ -300,7 +300,7 @@ if (!_replaced) exitWith {
         round(speed _shooter),
         _name1,
         (round((damage _target)*100))/100,
-        round(_target distance _shooter), // distance forom shooter to target
+        round(_target distance _shooter), // distance from the shooter to the target
         round((getPos _target) select 2), // height
         round(speed _target),
         text( _target call SYG_nearestLocation)]; // distance from target to location
