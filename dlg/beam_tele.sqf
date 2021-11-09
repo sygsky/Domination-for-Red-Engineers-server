@@ -70,12 +70,14 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
     if ( _diff > 0 ) then {
 	   	// if there is an error on teleport, calculate shifted position now
      	_global_pos = [_global_pos, _diff] call SYG_deviateTeleportPoint;
+     	_diff = _global_pos distance _diff;
 		hint localize format["+++ teleport deviated to %1 m", (round(_diff*10))/10];
 		_str = if ( _diff < 2 ) then {"STR_SYS_75_5_2"} else {
 			if ( _diff < 5 ) then {"STR_SYS_75_5_5"} else {
 				if ( _diff < 10 ) then {"STR_SYS_75_5_10"} else {"STR_SYS_75_5_MORE"};
+			};
 		};
-	    format [localize "STR_SYS_75_5", _str ]  call XfHQChat; // "Due to the presence of a large mass of iron placed nearby, teleportation error (%1 m) is noticed!"
+	    format [localize "STR_SYS_75_5", localize _str ]  call XfHQChat; // "A large mass of iron next to the MHQ %1 shifted the point of teleport!"
      	_sound_to = call SYG_powerDownSound; // play specific sound for this case
      };
 #endif
