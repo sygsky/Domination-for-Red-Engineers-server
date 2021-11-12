@@ -1,5 +1,6 @@
 // x_helilift.sqf, by Xeno. Called on client computer
-private ["_vehicle", "_menu_lift_shown", "_nearest", "_id", "_possible_types", "_pos", "_nobjects", "_dummy", "_nearest_pos", "_nx", "_ny", "_px", "_py", "_release_id", "_height", "_vup", "_vdir", "_npos", "_fheight"];
+private ["_vehicle", "_menu_lift_shown", "_nearest", "_id", "_possible_types", "_pos", "_nobjects", "_dummy", "_nearest_pos",
+		 "_nx", "_ny", "_px", "_py", "_release_id", "_height", "_vup", "_vdir", "_npos", "_fheight","_reveal_name"];
 
 if (!X_Client) exitWith {};
 
@@ -190,7 +191,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                             [_vehicle, localize "STR_SYS_39"] call XfVehicleChat; //"Техника сброшена..."
                         };
 
-                        // Wait until stop
+                        // Wait until stop format["%1 setPos %2; %1 setDir %3", _reveal_name, getPos _nearest, getDir _nearest]
                         waitUntil { ((velocity _nearest) distance [0,0,0] < 0.1) };
 
                         sleep 1.012;
@@ -203,7 +204,9 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         // reveal to all players new position of MHQ. It can help!
                         // hint localize format["_reveal_name = ""%1""", _reveal_name];
                         if (_reveal_name != "") then {
-                        	["remote_execute", format["%1 setPos %2; %1 setDir %3", _reveal_name, getPos _nearest, getDir _nearest]] call XSendNetStartScriptClient;
+                        	_str = format["%1 setPos %2; %1 setDir %3", _reveal_name, getPos _nearest, getDir _nearest];
+                        	hint localize format["+++ ""remote_execute"" sent: ""%1""", _str];
+                        	["remote_execute", _str] call XSendNetStartScriptClient;
                         };
 
                         // send information to all clients about new position of well known lifted vehicle

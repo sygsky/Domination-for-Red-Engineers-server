@@ -38,7 +38,7 @@ _infcnt = 0; // infantry cnt
 	_veclist = _vecs;
 	{
 		{
-			_unitslist = _unitslist + [_x];
+			_unitslist set [count _unitslist, _x];
 			sleep 0.01;
 		} forEach (crew _x);
 		sleep 0.01;
@@ -87,11 +87,10 @@ sleep 5;
 
 _helih setDir -532.37;
 
-d_recapture_indices = d_recapture_indices - [_recap_index];  SYG_remove
+d_recapture_indices = d_recapture_indices - [_recap_index];
 
 //+++Sygsky: add more fun with flags
-if (d_own_side == "EAST") then
-{
+if (d_own_side == "EAST") then {
     _sound= false;
 	_arr = nearestObjects[_target_center,["FlagCarrierNorth"],_radius];
 	{

@@ -18,7 +18,7 @@ _landTypeArr = [ "ACE_BRDM2", "ACE_BMP1_D", "ACE_UAZ", "ACE_UAZ_MG", "ACE_UAZ_AG
 
 #ifdef __LAND_VEH_NUM__
 
-for "_i" from 1 to (count _landTypeArr) - __LAND_VEH_NUM__ do { [_landTypeArr, _landTypeArr call XfRandomFloorArray] call SYG_removeItemFromArray; };
+for "_i" from 1 to (count _landTypeArr) - __LAND_VEH_NUM__ do { [_landTypeArr, _landTypeArr call XfRandomFloorArray] call SYG_removeFromArrayByIndex; };
 
 #endif
 
@@ -40,7 +40,7 @@ for "_i" from 1 to (count _landTypeArr) - __LAND_VEH_NUM__ do { [_landTypeArr, _
         	_ind = _type call XfRandomFloorArray;
          	_type = _type select _ind;
          	_arr = _x select 1;
-         	[_arr, _ind] call SYG_removeItemFromArray;
+         	[_arr, _ind] call SYG_removeFromArrayByIndex;
         };
         _veh = createVehicle [_type, [0,0,0], [], 0, "NONE"];
 #ifdef __DEBUG__
@@ -61,7 +61,7 @@ for "_i" from 1 to (count _landTypeArr) - __LAND_VEH_NUM__ do { [_landTypeArr, _
             _ind = floor (random (count _pos)); // random index
             _pos = _pos select _ind;  // select random pos in array
             _arr =  _x select 0; // remove selected positions
-         	[_arr, _ind] call SYG_removeItemFromArray;
+         	[_arr, _ind] call SYG_removeFromArrayByIndex;
 //            _arr set [_ind, "RM_ME"];
 //            _arr call SYG_clearArrayB; // remove "RM_ME" item from the array of positions
         };
@@ -73,7 +73,7 @@ for "_i" from 1 to (count _landTypeArr) - __LAND_VEH_NUM__ do { [_landTypeArr, _
             else {_dir = _dir select _ind}; // get special direction for each separate position
             // remove selected direction
             _arr =  _x select 2;
-         	[_arr, _ind] call SYG_removeItemFromArray;
+         	[_arr, _ind] call SYG_removeFromArrayByIndex;
 //            _arr set [_ind, "RM_ME"];
 //            _arr call SYG_clearArrayB; // remove "RM_ME" item from the array of directions
         };

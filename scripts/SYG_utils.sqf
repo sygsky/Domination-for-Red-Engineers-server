@@ -639,7 +639,7 @@ SYG_addArrayInPlace = {
 
 // Remove all strings "RM_ME" from input _arr
 // call: _cleaned_arr = _cleaned_arr call SYG_clearArray;
-// returns the same array without "RM_ME" items. Order of remained items in array may change!!!
+// returns the same array without "RM_ME" items. Order of remained items in array is changed in most cases
 SYG_clearArray = {
 	if ( (typeName _this) != "ARRAY") exitWith {_this};
 	private ["_i"];
@@ -700,9 +700,9 @@ SYG_cleanArrayB = SYG_clearArrayB;
 
 //
 // _arr = [1,2,3,4];
-// _arr = [_arr, 2] call SYG_removeItemFromArray; // returns [1,3,4] and _arr is the same object as before subtraction!!!
+// _arr = [_arr, 2] call SYG_removeFromArrayByIndex; // returns [1,3,4] and _arr is the same object as before subtraction!!!
 //
-SYG_removeItemFromArray = {
+SYG_removeFromArrayByIndex = {
 	private [ "_arr", "_ind", "_i" ];
 	_arr = _this select 0;
 	if (typeName _arr != "ARRAY") exitWith {[]};
@@ -716,7 +716,7 @@ SYG_removeItemFromArray = {
 
 //
 // _arr = [_obj1,_obj2,_obj3,_obj4];
-// _arr = [_arr, _obj22] call SYG_removeItemFromArray; // returns [_obj1,_obj3,_obj4] and _arr is the same object as before subtraction!!!
+// _arr = [_arr, _obj2] call SYG_removeFromArrayByIndex; // returns [_obj1,_obj3,_obj4] and _arr is the same object as before subtraction!!!
 //
 SYG_removeObjectFromArray = {
 	private [ "_arr", "_ind", "_i" ];
@@ -725,7 +725,7 @@ SYG_removeObjectFromArray = {
 	_ind = _arr find (_this select 1);
 	if (_ind >= 0 ) exitWith {
 		_this set [1, _ind];
-		_this call SYG_removeItemFromArray;
+		_this call SYG_removeFromArrayByIndex;
 	};
 	_arr
 };

@@ -194,7 +194,7 @@ SYG_updateSPPM = {
 	_marker = _this getVariable SPPM_MARKER_NAME;
 	if ( isNil "_marker" ) exitWith {
 		hint localize format["--- SYG_updateSPPM: marker non-assigned to the SPPM cone, delete it!"];
-		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
+		[SYG_SPPMArr, _this] call SYG_removeObjectFromArray; // remove cone
 		"STR_SPPM_6_1"  // The SPPM without marker removed
 	};
 	_pos = getMarkerPos _marker;
@@ -205,7 +205,7 @@ SYG_updateSPPM = {
 		// remove this SPPM as empty
 //		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove cone
 		deleteMarker _marker; // remove marker itself
-		SYG_SPPMArr = SYG_SPPMArr - [_this]; // remove from array
+		[SYG_SPPMArr, _this] call SYG_removeObjectFromArray; // remove from array
 		deleteVehicle _this; // remove cone from system too
 	 	"STR_SPPM_6"   // The empty SPPM removed
 	 };
@@ -292,7 +292,7 @@ SYG_generateSPPMText1 = {
 
 // Updates all markers on map removing empty ones
 SYG_updateAllSPPMMarkers = {
-	hint localize format["+++ SYG_updateAllSPPMMarkers +++"];
+//	hint localize format["+++ SYG_updateAllSPPMMarkers +++"];
 	private ["_marker","_count_updated","_count_removed","_count_empty","_pos","_arr","_new_pos","_i","_cone"];
 	_count_updated = 0; // how many mark objects were corrected
 	_count_removed = 0; // how many mark objects were removed

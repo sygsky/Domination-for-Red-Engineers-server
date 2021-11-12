@@ -456,9 +456,9 @@ XHandleNetStartScriptClient = {
                 #ifdef __RANKED__
                 if ( (count _this) > 2) then {
                     _name = arg(2);
-                    if (typeName (arg(2)) == "STRING") then {
+                    if (typeName (_this select 2) == "STRING") then {
                         private ["_score"];
-                        _score =  round(argp(d_ranked_a,9)/2); // lower the points for main target
+                        _score =  round( (d_ranked_a select 9) / 2.0); // lower the points for main target
                         if ( (name player) == _name) then {
                             _msg = format["%1 (+%2)! %3",localize "STR_MAIN_COMPLETED_BY_YOU", _score, _msg ];
                             //player addScore ( _score );
@@ -1043,7 +1043,7 @@ XHandleNetStartScriptClient = {
         };
 
         // Change score of the player
-        // [ "change_score", "" || "*" || "name" || [ _name1, _name2..., _nameN ], _score_to_subtract<, _msg_parser_arr> ] execVM...
+        // [ "change_score", "" || "*" || "name" || [ _name1, _name2..., _nameN ], _score_to_add_subtract<, _msg_parser_arr> ] execVM...
         case "change_score" : {
         	private [ "_name", "_found" ];
         	hint localize format["*** change_score _this: %1", _this];
@@ -1061,7 +1061,7 @@ XHandleNetStartScriptClient = {
         // call as:		["remote_execute", format["%1 setPos %2", _reveal_name, getPos _nearest]] call XSendNetStartScriptClient;
         //
 		case "remote_execute" : {
-			hint localize format["+++ x_netinitclient.sqf ""remove_execute"": ""%1""", _this select 1 ];
+			hint localize format["+++ x_netinitclient.sqf ""remote_execute"": ""%1""", _this select 1 ];
 			call (compile (_this select 1));
 		};
 

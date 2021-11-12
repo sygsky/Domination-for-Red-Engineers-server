@@ -114,8 +114,7 @@ while {true} do {
 			_vec_a set [0,_vehicle];
 			_number_v = _vec_a select 1;
             // change cargo for Mi-17 only (USSR version). FIXME: do the same for non USSR version heli
-            if ((typeOf _vehicle) == "ACE_Mi17_MG") then
-            {
+            if ((typeOf _vehicle) == "ACE_Mi17_MG") then {
                 _vehicle setVehicleInit "[this, 2] call SYG_setHeliParaCargo;";
                 processInitCommands;
             };

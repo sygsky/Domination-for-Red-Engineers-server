@@ -27,8 +27,8 @@ if ( ( _this select 1 ) in ["AinvPknlMstpSnonWnonDnon_medic_1" ])  then { // You
 
     if (count _nearmanList <= 0) exitWith { false };
 
+    _friend_healed = false;
     {
-        _friend_healed = false;
         if ( ( alive _x ) && ( _x != player ) && ( isPlayer _x ) && (damage _x > 0.05) && (side _x == side player)) exitWith {
             // add score, send information
             _points = d_ranked_a select 7;

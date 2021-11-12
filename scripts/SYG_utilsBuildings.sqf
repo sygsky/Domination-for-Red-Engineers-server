@@ -276,11 +276,10 @@ SYG_setObjectInHousePos = {
 // Check if point/object is in nearest house rectangle
 // call: _isInHouseRect = _unit call SYG_isInHouseRect;
 //
-SYG_isInHouseRect =
-{
+SYG_isInHouseRect = {
 	if (typeName _this != "OBJECT") exitWith {false};
     private ["_near","_bb","_po"];
-    _near  = nearestObject [_this, "House"];
+    _near  = nearestObject [_this, "Building"];
     if (isNull _near) exitWith {false};
     _bb = boundingBox _near;
     _po = _near worldToModel (getPos _near);
@@ -298,8 +297,8 @@ SYG_isInHouseRect =
 //
 SYG_isBuilding = {
 	if (typeName _this != "OBJECT") exitWith { false };
-	if (! (_this isKindOf "House")) exitWith { false };
-	( ( ( _this buildingPos 0 ) distance [0,0,0] ) > 0.1) // so (_this buildingPos 0) is [0,0,0] itself
+	if (! (_this isKindOf "Building")) exitWith { false };
+	format["%1", _this buildingPos 0] != "[0,0,0]"
 };
 
 //

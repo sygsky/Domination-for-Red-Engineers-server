@@ -301,3 +301,11 @@ SYG_getViewDistance = {
     if ( ! X_Client ) exitWith {-1};
     d_viewdistance
 };
+//
+// _h = _obj call SYG_getObjectHeigth;
+//
+SYG_getObjectHeight = {
+	private ["_bb"];
+	_bb = boundingBox _this;
+	((_bb select 1) select 2) - ((_bb select 0) select 2)
+};
