@@ -7,12 +7,6 @@
 	Note: _start_time and _stop_time are in daytime format (hours).
 	E.g. [[_po1, _pos2], 20.5, 4.25] execVM "scripts\SYG_lighthouses.sqf";
 */
-hint localize format[ "+++ SYG_lighthouses: X_Client is %1, lighthouse hawler service _this = %2", X_Client, _this ];
-if ( !X_Client ) exitWith{};
-
-if ( !isNil "SYG_lighthouse_handled" ) exitWith { hint localize "--- SYG_lighthouses: SYG_lighthouse_handled already defined, exit..." };
-
-SYG_lighthouse_handled = true;
 
 #include "x_setup.sqf"
 
@@ -20,15 +14,40 @@ SYG_lighthouse_handled = true;
 if ( true ) exitWith {}; // only island Sahrani supported
 #endif
 
+hint localize format[ "+++ SYG_lighthouses: X_Client is %1, lighthouse hawler service _this = %2", X_Client, _this ];
+if ( !X_Client ) exitWith{};
+
+if ( !isNil "SYG_lighthouse_handled" ) exitWith { hint localize "--- SYG_lighthouses: SYG_lighthouse_handled already defined, exit..." };
+
+SYG_lighthouse_handled = true;
+
+//#define __PRINT_MAJAKS__
+
+
+#ifdef __PRINT_MAJAKS__
+
 sleep 60;
-#define LH_DISTANCE 2000 // search distance
+
+#define LH_DISTANCE 2000 // search distance for 2-3 majaks at one circle
+
+#else
+
+#define LH_DISTANCE 15 // search distance at point very near each majak on the Sahrani map
+
+#endif
+
 #define LH_HEARING_DISTANCE 1000 // distance to hear lighthouse hawler
 
 // Points to search for lighthouses around them
+#ifdef __PRINT_MAJAKS__
 _majak_data = [
-	[19446,13598],[6541,16011],[12743,9929],[10021,11816],[11628,5053],[7285,8903]
+	[19446,13598],[6541,16011],[12743,9929],[10021,11816],[11628,5053],[7285,8903] // centers of big cicles (very slow and frozen screen pocedure)
 ];
-
+#else
+_majak_data = [
+	[19487,13617],[4964,16070],[12376,10354],[12492,10856],[13207,8999],[10845,12565],[8982,10779],[11759,5952],[10641,4645],[7844,9742],[6725,8054]
+];
+#endif
 // Description for each lighthouse sound sequences
 _wholer_data = [
 	["lighthouse_1",  6, 13],		// length 18, 2 buzz
@@ -82,9 +101,14 @@ _howler_work = {
 _lh_arr = [];
 _i = 1;
 {
-	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
+//	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
+	_arr = _x nearObjects ["Land_majak", LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
+#ifdef __PRINT_MAJAKS__
 	sleep 1;
-	hint localize "+++ Detect Lighthouse buildings procedure...";
+#else
+	sleep 0.1;
+#endif
+//	hint localize "+++ Detect Lighthouse buildings procedure...";
 	{
 		if (alive _x) then {
 			if (!(_x in _lh_arr) ) then {
@@ -95,6 +119,25 @@ _i = 1;
 		}
 	} forEach _arr;
 } forEach _majak_data;
+
+// +++++++++++++++++++++++++++++++++++
+// Print new array of majak positions
+// -----------------------------------
+#ifdef __PRINT_MAJAKS__
+hint localize "";
+hint localize "_majak_data = [";
+{
+	_x = getPos _x;
+	hint localize format["[%1,%2],    ", round( _x select 0), round (_x select 1)];
+} forEach _lh_arr;
+hint localize "];";
+hint localize "";
+#endif
+
+// Points to search for lighthouses around them
+_majak_data = [
+	[19446,13598],[6541,16011],[12743,9929],[10021,11816],[11628,5053],[7285,8903]
+];
 
 //
 // Run all buzzers
