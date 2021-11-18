@@ -97,7 +97,7 @@ STR_SYS_23,%1 has been destroyed and is queued for recovery,%1 wurde zerstört u
 
 STR_SYS_25,MHQ %1 is in water...,MHQ %1 ist im Wasser...,KSHM %1 está ahora en el agua...,КШМ %1 сейчас в воде...
 STR_SYS_26,Teleport on MHQ %1 is faulty (%2%3)...,Der TELEPORT auf MHQ %1 ist defekt (%2%3)...,El teletransportador en KSHM %1 está defectuoso (%2%3)...,Телепорт на КШМ %1 неисправен (%2%3)...
-STR_SYS_27,"MHQ %1 dmg %2%3, teleport in danger!","MHQ %1 dmg %2%3, teleportiere in Gefahr!","¡KSHM dañado %1%2%3, pronto fracaso del teletransportador!","Повр. КШМ %1 %2%3, скоро отказ телепорта!"
+STR_SYS_27,"MHQ/teleport %1 dmg %2%3!","MHQ/teleportiere %1 dmg %2%3!","¡KSHM/teletransportador dañado %1 %2%3!","Повр. КШМ/телепорта %1 %2%3!"
 STR_SYS_28,MHQ %1/teleport destroyed...,Teleporter/MHQ %1 wurde zerstört...,Teletransportador /KSHM %1 destruido...,Телепорт/КШМ %1 уничтожены...
 
 
@@ -782,7 +782,7 @@ STR_SYS_609_5,"Thanks to your life experience (and rank!), you  got rid of your 
 
 STR_SYS_MTBONUS_MAX,Max bonus %1,Max. Bonus %1,Bono máximo %1,Макс. очки у %1
 STR_SYS_MTBONUS_MIN,Min bonus %1,Min. Bonus %1,Bono mínimo %1,Мин. очки у %1
-STR_SYS_MTBONUS_NOMIN,No min. pointsKeine Min.-Punkte,No hay puntos mínimos,Мин. очки отсутствую
+STR_SYS_MTBONUS_NOMIN,No min. pointsKeine Min.-Punkte,No hay puntos mínimos,Мин. очки отсутствуют
 
 STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Su equipo está registrado y se emitirá la próxima vez,Ваше снаряжение записано и будет выдано в следующий раз
 STR_SYS_612,You've got the equipment recorded the last time,"Sie haben die Ausrüstung, erfasst der letzten Zeit",Se le dio el equipo de la Última vez,Вам выдано снаряжение с прошлого раза

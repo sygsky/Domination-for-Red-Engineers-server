@@ -600,9 +600,9 @@ class CfgSounds {
     // march_of_soviet_tankmen.ogg
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
-    class money1 { name="Money by Pink Floyd";                           sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
+    class money1 { name="Money by Pink Floyd";                          sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
     class money2 { name="The sound of coins dropping";                  sound[] = {\sounds\sm\45\money1.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
-    class pilots_resque { name="The sound of coins dropping";                  sound[] = {\sounds\sm\pilots\pilots_resque.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
+    class pilots_resque { name="Resque mission sound intro";            sound[] = {\sounds\sm\pilots\pilots_resque.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
     class usa_desant_heli { name="Babyyyyyyy";                          sound[] = {\sounds\intro\vehicles\usa_desant_heli.ogg,db-1,1.0}; titles[] = {};}; // Baby-y-y-y-y...
 	//
 
