@@ -5,7 +5,7 @@ private ["_pos_array", "_poss", "_endtime", "_side_crew", "_pilottype", "_wreckt
          "_pilots_arr", "_arr"];
 if (!isServer) exitWith {};
 
-["say_sound", "PLAY", "pilots_resque", 5 ] call XSendNetStartScriptClient; // playSound on all connected players computers
+["say_sound", "PLAY", format["pilots_resque%1", ceil (random(3))], 5 ] call XSendNetStartScriptClient; // playSound on all connected players computers
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"

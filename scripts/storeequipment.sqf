@@ -33,18 +33,15 @@ if (isServer && ! X_SPE) exitWith{false};  // isDedicated
 
 // hint localize format["--- scripts/storeequipment.sqf: _this is %1", _this ];
 
-if ( ( typeName arg(3) ) != "STRING" ) exitWith {
+if ( ( typeName (_this select 3) ) != "STRING" ) exitWith {
     hint localize format["--- scripts/storeequipment.sqf: illegal argument ""%1"" found, expected ""S""[tore]", arg(3)];
 };
 
-switch (toUpper arg(3)) do {
-    case "S":
-    {
+switch (toUpper (_this select 3) ) do {
+    case "S": {
         // store equipment
-        _equip = if ( ( primaryWeapon player ) == "" )
-                    then { "" }
-                    else
-                    {
+        _equip = if ( ( primaryWeapon player ) == "" ) then { "" }
+                    else {
                         player call SYG_getPlayerEquipAsStr
                     };
 		_sound = format["armory%1", ceil(random 4)];
@@ -58,8 +55,7 @@ switch (toUpper arg(3)) do {
 //        hint localize format["--- scripts/storeequipment.sqf: msg is %1", args ];
 
     };
-    case "L":
-    {
+    case "L": {
         // load equipment
     };
 };
