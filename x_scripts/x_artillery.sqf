@@ -119,7 +119,7 @@ if (ari_type != "") then {
 		[player, (format [localize "STR_SYS_308", ari_type,ari_salvos, position AriTarget select 1, position AriTarget select 0])] call XfSideChat; // "Запрашиваю арт.удар (%1) снарядами, %2 залпом(и) по следующим координатам: %3 - %4."
 		player say "Funk";
 	};
-	["d_say",player,"Funk"] call XSendNetStartScriptAll;
+//	["d_say",player,"Funk"] call XSendNetStartScriptAll; // moved to the client processor of message "ari1msg"
 	["ari1msg", 4, ari_type,ari_salvos, position AriTarget select 1, position AriTarget select 0] call XSendNetStartScriptClient;
 	sleep 9.123;
 	if (!X_SPE) then {

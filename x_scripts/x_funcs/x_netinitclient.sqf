@@ -178,6 +178,7 @@ XHandleNetStartScriptClient = {
 				}
 			);
 			_msg call XfHQChat;
+			if ((_this select 1) == 4) then { player say "Funk"; };
 			#ifdef __TT__
 			};
 			#endif
@@ -209,6 +210,7 @@ XHandleNetStartScriptClient = {
 				}
 			);
 			_msg call XfHQChat;
+			if ((_this select 1) == 4) then { player say "Funk"; };
 			#ifdef __TT__
 			};
 			#endif
