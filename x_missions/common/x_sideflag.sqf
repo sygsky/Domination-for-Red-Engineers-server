@@ -1,5 +1,5 @@
 // by Xeno
-private ["_flag","_owner","_posi_array","_ran","_ran_pos","_flagtype","_ini_str"];
+private ["_flag","_owner","_posi_array","_ran","_ran_pos","_flagtype","_ini_str","_msg","_sound"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -50,8 +50,10 @@ while {true} do {
 	if ((_ownedNow || _ownedPrev) && !(_ownedNow && _ownedPrev)) then {// state changed
 //	if (  _ownedNow != _ownedPrev ) then { // logical values can't be compared in this manner (!=, == etc)
 	    _ownedPrev = _ownedNow; // save current state to check it changed or not at the next step
-	    _msg = if ( _ownedNow ) then { [ "STR_SYS_FLAG_OWNED", name _owner ] } else { [ "STR_SYS_FLAG_EMPTY" ] };
-        [ "msg_to_user", "", [ _msg ] ] call XSendNetStartScriptClientAll; // inform about flag state change
+	    _msg       = if ( _ownedNow ) then { [ "STR_SYS_FLAG_OWNED", name _owner ] } else { [ "STR_SYS_FLAG_EMPTY" ] };
+	    _sound     = if ( _ownedNow ) then { "flag_captured" } else { "flag_lost" };
+	    // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
+        [ "msg_to_user", "", [ _msg ], 0, 0, false, _sound ] call XSendNetStartScriptClientAll; // inform about flag state change and play corrsponding sound
 	};
 	if ((_ownedNow) && (_owner distance FLAG_BASE < 20)) exitWith {
 		if (__RankedVer) then {
