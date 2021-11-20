@@ -1,7 +1,7 @@
 /*
 	scripts\SYG_sabotage_stash.sqf
 	author: Sygsky
-	description: set sabotage stash (some kind of amoobox with different type of mines) in target town as the secondary target
+	description: set saboteur stash (some kind of amoobox with different type of mines) in target town as the secondary target
 	input: [[9349,5893,0], 210]
 	returns: created ammo-box
 */
@@ -18,29 +18,25 @@ private ["_house","_cnt","_ind","_pos","_spec"];
 _pos = [];
 _box = "";
 _spec = "NONE";
+_ind = -1;
 
 // find position in house or in town itself
 if ( (random 10) <= 5 ) then { // find position in a house
 	_list  = (_this select 0) nearObjects ["House", _this select 1];
-	if ( count _list == 0 ) exitWith { hint localize format["--- SYG_sabotage_stash.sqf: no houses in radius %1, find pos in empty areas", _this select 1] };
+	if ( count _list == 0 ) exitWith { hint localize format["--- SYG_sabotage_stash.sqf: no houses in radius %1 found, find pos in empty areas", _this select 1] };
 	_cnt = 0;
 	while { _cnt == 0 } do {
 		_house = _list call XfRandomArrayVal; // get random house
 		_cnt   = _house call SYG_housePosCount; // count positions in this house
 		if ( _cnt  > 1) then { // use houses with more than 1 positions
 			_ind = floor ( random _cnt );
-			if ( (typeOf _house) == "Land_Hotel" ) then { // prevent blind positions of the hotel rooms
+			if ( (typeOf _house) == "Land_Hotel" ) then { // prevent blind positions in the hotel rooms
 				while { _ind in _no_list } do { _ind = floor ( random _cnt ); };
 			};
 			_pos   = _house buildingPos ( _ind ); // get random position in the house to set the stash
 			if ( ( _pos select 2) < 0 ) then { _cnt = 0 }; // avoid negative Z values in position
 		};
 	};
-	#ifdef __DEBUG__
-	_str = format["+++ SYG_sabotage_stash.sqf: create STASH in the house %1, pos ind %2 %3", typeOf _house, _ind, _pos];
-	hint localize _str;
-	//player groupChat _str;
-	#endif
 	_spec = "CAN_COLLIDE";
 	// small boxes for houses
 	_box_west =
@@ -64,12 +60,6 @@ if ( (random 10) <= 5 ) then { // find position in a house
 };
 
 if ( count _pos == 0 ) then { // find position in the town area
-
-	#ifdef __DEBUG__
-	_str = format["+++ SYG_sabotage_stash.sqf: create STASH outdoor at %1 with radius %2", (_this select 0), (_this select 1)];
-	hint localize _str;
-	//player groupChat _str;
-	#endif
 	_spec = "NONE";
 	_pos = [(_this select 0), (_this select 1)] call XfGetRanPointCircle;
 	// big boxes for the open areas
@@ -83,7 +73,8 @@ if ( count _pos == 0 ) then { // find position in the town area
 
 // set box position and rotate it
 #ifdef __DEBUG__
-_str = format["+++ SYG_sabotage_stash.sqf: create STASH in %1 on pos %2", _box, _pos];
+_str = if (isNull _house) then {format["outdoor with radius %1",  (_this select 1)]} else {format["in %1 (at pos %2)",typeOf _house, _ind]};
+_str = format["+++ SYG_sabotage_stash.sqf: create %1 STASH at %2 %3", _box, _pos, _str];
 hint localize _str;
 //player groupChat _str;
 #endif
@@ -96,8 +87,6 @@ _box setDir (random 360);
 
 _box call SYG_clearAmmoBox;
 
-_mine = "Mine";
-_bomb = "PipeBomb";
 _arr = [];
 _str = "";
 #ifdef __ACE__
@@ -110,11 +99,14 @@ _mine = "ACE_Mine";
 _bomb = "ACE_PipeBomb";
 
 _arr set [2, "ACE_Claymore_M"];
+#else
+_mine = "Mine";
+_bomb = "PipeBomb";
 #endif
 _arr set [0, _mine];
 _arr set [1, _bomb];
 
-{ // fill created items into the box
+{ // fill created items into the box at each client (so Arma-1 need, only items added бфтгфддн during play are propagated through network to all clients)
 	_cnt = 10 + floor (random 10);
 	_box addMagazineCargo [_x, _cnt];
 	_str = format["%1this addMagazineCargo [""%2"",%3];", _str, _x, _cnt];
