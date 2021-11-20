@@ -8,11 +8,11 @@
 //
 // Where motoN - reference to device with position to keep it here
 //
-#include "x_macros.sqf"
-
-private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", "_nobj", "_driver_near","_driverType"];
 
 if (!isServer) exitWith{};
+
+#include "x_macros.sqf"
+private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", "_nobj", "_driver_near","_driverType"];
 
 // comment next line to not create debug messages
 #define __DEBUG__
@@ -53,15 +53,19 @@ sleep 2;
 } forEach _this; // list all motocyrcles/automobiles
 
 sleep CYCLE_DELAY;
+
 #ifdef __DEBUG__
+
+hint localize format[
+	"+++ motorespawn.sqf:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_ON_PLACE_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
+					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_ON_PLACE_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
+];
+
+{
 	hint localize format[
-	    "+++ motorespawn.sqf:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_ON_PLACE_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
-	                       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_ON_PLACE_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
-	                    ];
-	{
-	    hint localize format[
-	    "+++ motorespawn.sqf:  %1", _x];
-	} forEach _motoarr;
+	"+++ motorespawn.sqf:  %1", _x];
+} forEach _motoarr;
+
 #endif
 
 // Driver type to be checked near before teleport moto back to base positioo
@@ -89,22 +93,27 @@ while {true} do {
 
 	//  forEach _motoarr;
 	{
-		_moto    = argp(_x, MOTO_ITSELF);
-		_timeout = argp(_x, MOTO_TIMEOUT);
-		_pos     = argp(_x, MOTO_ORIG_POS); // base pos (where it must be!)
+		_moto    = _x select MOTO_ITSELF; //
+		_timeout = _x select MOTO_TIMEOUT;
+		_pos     = _x select MOTO_ORIG_POS; // base pos (where it must be!)
 
 		_pos1 = getPos _moto; // real pos
-		if ( _timeout == TIMEOUT_ZERO ) then { // check conditonsm for moto restoring
+		if ( _timeout == TIMEOUT_ZERO ) then { // check conditions for moto position restoring
 			_pos1 set [2,0]; // zero Z coordinate
-			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( ( _pos1 distance _pos) > MOTO_ON_PLACE_DIST)  ) then {
+			_dist = round( _pos1 distance _pos);
+			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > MOTO_ON_PLACE_DIST)  ) then {
 				if ( ( {alive _x} count (crew _moto)) == 0) then { // empty
-					if ( (canMove _moto) && ((fuel _moto) > FUEL_MIN_VOLUME) ) then  {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_NORMAL)]} // restore after normal delay
-					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened dealy
+					if ( (canMove _moto) && ( ( fuel _moto ) > FUEL_MIN_VOLUME ) ) then  { _x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ] } // restore after normal delay
+					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened delay
 				};
 #ifdef __DEBUG__
-				_dist = (round(( _pos1 distance _pos) * 10)) / 10; // better accuracy to unerstand the problem with microdistance change events
 				if (_dist < 10) then {
-					hint localize format["+++ motorespawn.sqf: %1 marked for respawn, canMove %2, shift %3, pos1 %4, _pos0 %5", typeOf _moto, canMove _moto, _dist, _pos1, _pos];
+					hint localize format["+++ motorespawn.sqf: lets return %1 to the place, canMove %2, fuel %3, dist %4, MOTO_ON_PLACE_DIST %5",
+						typeOf _moto,
+						canMove _moto,
+						fuel _moto,
+						_dist,
+						MOTO_ON_PLACE_DIST];
 				};
 #endif
 			};
@@ -123,8 +132,7 @@ while {true} do {
     				if (_driver_near) then {
                         hint localize format["+++ motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
                     };
-                }
-                else {  hint localize format["+++ motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
+                } else {  hint localize format["+++ motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
 
                 if ( ! _driver_near) then { // if empty and no man nearby (10 meters circle)
                     _say = (_pos1 distance _pos) >= SOUND_MIN_DIST_TO_SAY; // sound only if long dist teleport
@@ -150,15 +158,15 @@ while {true} do {
                     };
                     sleep 1.11;
 
-                    _moto setDir (argp(_x,MOTO_ORIG_DIR));
+                    _moto setDir (_x select MOTO_ORIG_DIR);
                     _moto setPos (_pos);
                     if ( isEngineOn _moto) then { _moto engineOn false; };
-                    if ( _say) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClientAll };
+                    if ( _say ) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClientAll };
 
                     //_x set [MOTO_ORIG_POS, getPos _moto];
                     sleep 0.5 + random 0.5;
 #ifdef __DEBUG__
-                    hint localize format[ "+++ motorespawn.sqf: time %1, pos %5, %2 dir %3, engine on %4",round(time), typeOf _moto, getDir _moto, isEngineOn _moto, getPos _moto ];
+                    hint localize format[ "+++ motorespawn.sqf: moto returned, pos %1, %2 dir %3, engine on %4", getPos _moto , typeOf _moto, getDir _moto, isEngineOn _moto ];
 #endif
 				};
 				_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop
@@ -168,6 +176,5 @@ while {true} do {
 	} forEach _motoarr;
 	//_mainCnt = _mainCnt +1;
 };
-_motoarr = [];
 _motoarr = nil;
 hint localize "--- scripts/motorespawn.sqf is exiting due to any fatal error ----"
