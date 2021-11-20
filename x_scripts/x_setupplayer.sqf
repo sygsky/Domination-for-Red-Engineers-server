@@ -1468,13 +1468,11 @@ if (d_own_side == "WEST") then {
 
 //+++ Sygsky: add bar gates functionality
 #ifdef 	__BARGATE_ANIM__
-
 // find all bargates
 _arr = nearestObjects[[9621,9874,0],["ZavoraAnim"],300];
 hint localize format["x_setupplayer.sqf: found bar gates on base %1", count _arr];
 FLAG_BASE addAction [localize "STR_FLAG_3"/* "Open gates" */,"scripts\controlgates.sqf", [0, _arr]];
 FLAG_BASE addAction [localize "STR_FLAG_4"/* "Close gates" */,"scripts\controlgates.sqf", [1, _arr]];
-
 #endif
 
 #ifdef __STORE_EQUIPMENT__
@@ -1482,7 +1480,6 @@ FLAG_BASE addAction [localize "STR_FLAG_2" /* "Store equipment" */,"scripts\stor
 #endif
 
 FLAG_BASE addAction [localize "STR_FLAG_5" /*"Rumours"*/,"scripts\rumours.sqf","",-1.2];
-
 //--- Sygsky
 
 if (!d_para_at_base) then {

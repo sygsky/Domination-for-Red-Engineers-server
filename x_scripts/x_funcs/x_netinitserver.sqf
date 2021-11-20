@@ -128,6 +128,11 @@ XHandleNetStartScriptServer = {
 		// params: ["d_ad_wp", _player_name,_player_weapon_str_array]
 		case "d_ad_wp": {
 			[(_this select 1),(_this select 2)] spawn SYG_storePlayerEquipmentAsStr;
+			if (!isNil "FLAG_BASE") then {
+				if ((count _this) > 3) then {
+					["say_sound", FLAG_BASE, _this select 3] call XSendNetStartScriptClientAll; // sent sound to all players
+				};
+			};
 		};
 
 		// info from user about his name and missionStart value
@@ -194,7 +199,6 @@ XHandleNetStartScriptServer = {
 			};
             _name = _this select 1;
             // add language specific message if available
-//            if (localize "STR_LANGUAGE" != "RUSSIAN") then {
 			_msg = switch (_name) do {
 				case "Comrad (LT)";
 				case "Rokse [LT]" : {"Salos gyventojai sveikina tave tavo gimtaja kalba!"}; // Литовец!
@@ -219,7 +223,6 @@ XHandleNetStartScriptServer = {
 			};
 
 			_msg_arr set [ count _msg_arr, [_msg] ];
-//  			};
 
 			if ( (_index < 0) && ( current_counter >= (floor(number_targets /2)) ) ) then {
     			// first time entry after half of game

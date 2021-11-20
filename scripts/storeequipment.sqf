@@ -1,5 +1,5 @@
 // scripts\storeequipment.sqf: by Sygsky
-// script to store\restory equipment for player
+// script to store\restore equipment for player. Run ony on client compuetrs as action command executed
 // Example:
 // [...] execVM "scripts\storeequipment.sqf";
 //     Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]
@@ -45,9 +45,7 @@ switch (toUpper (_this select 3) ) do {
                         player call SYG_getPlayerEquipAsStr
                     };
 		_sound = format["armory%1", ceil(random 4)];
-		["say_sound", player, _sound] call XSendNetStartScriptClientAll;
-        ["d_ad_wp", name player, _equip] call XSendNetStartScriptServer;
-
+        ["d_ad_wp", name player, _equip, _sound] call XSendNetStartScriptServer; // sent to server
         _args = if ( _equip == "" )
                     then  { ["STR_SYS_613"]} // Record is wiped off
                     else {["STR_SYS_611"] }; // Record is stored
