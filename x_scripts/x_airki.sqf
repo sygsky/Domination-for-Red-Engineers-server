@@ -43,8 +43,7 @@ _pos = d_airki_start_positions select 0; // from where to fly to goal
 
 _wp_behave = "AWARE";
 
-if (isNil "SYG_owner_active_air_vehicles_arr") then
-{
+if (isNil "SYG_owner_active_air_vehicles_arr") then {
     SYG_owner_active_air_vehicles_arr = []; // array of active owner air vehicles
 };
 
@@ -57,8 +56,7 @@ _crew_member = (
 );
 
 // List of all heli downed on Sahrani
-if ( isNil "s_down_heli_arr" ) then
-{
+if ( isNil "s_down_heli_arr" ) then {
 	s_down_heli_arr = [];
 };
 
@@ -76,8 +74,7 @@ _killUnits = {
 	if ( typeName _this == "OBJECT") then { _arr = [_this] }; // single unit designated
 	if ( typeName _this != "ARRAY") exitWith {false};
 	{
-		if (!isNull _x ) then
-		{
+		if (!isNull _x ) then {
 			_x setDammage 1.1;
 			sleep 0.3;
 			[_x] call XAddDead;
@@ -114,35 +111,25 @@ _addToClean = {
  * returns: true if one or more pilot were rejoined, false if no one is
  *
  */
-_rejoinPilots = 
-{
+_rejoinPilots =  {
 	private ["_grp", "_newgrp", "_pilot", "_badunits", "_goodunits", "_counter", "_i", "_unit", "_killUnits", "_ret", "_current_target_pos"];
 	_grp = _this;
 	_ret = true;
-	if ( (!isNull _grp) && (count (units _grp)) > 0 ) then
-	{
+	if ( (!isNull _grp) && (count (units _grp)) > 0 ) then {
 		_badunits = units _grp; // execution list
 		_counter = count _badunits;
-		if ( _counter  > 0 ) then
-		{
+		if ( _counter  > 0 ) then {
             _pilot = objNull;
             _goodunits = [] + _badunits; // live units list
 
-            for "_i" from 0 to _counter - 1 do
-            {
+            for "_i" from 0 to _counter - 1 do {
                 _unit = _badunits select _i;
-                if ( !canStand _unit) then
-                {
+                if ( !canStand _unit) then {
                     _goodunits set [_i, "RM_ME"]; // remove dead from good list
-                }
-                else
-                {
-                    if ( _unit  call SYG_ACEUnitUnconscious ) then
-                    {
+                } else {
+                    if ( _unit  call SYG_ACEUnitUnconscious ) then {
                         _goodunits set [_i, "RM_ME"];   // remove unc from good list
-                    }
-                    else
-                    {
+                    } else {
                         _badunits set [_i, "RM_ME"]; // remove alive from bad list
                         _unit setRank "PRIVATE";
                         _pilot = _unit;
@@ -152,13 +139,11 @@ _rejoinPilots =
             _badunits = _badunits - ["RM_ME"];
             _goodunits = _goodunits - ["RM_ME"];
             _newgrp = grpNull;
-            if ( !isNull _pilot ) then // there is some alive pilots in the group
-            {
+            if ( !isNull _pilot ) then { // there is some alive pilots in the group
 
                 _newgrp     = [_pilot, 2500, (count _goodunits) + 1] call SYG_findGroupAtTargets;
                 // prepare good pilots to change group
-                if ( !isNull _newgrp ) then
-                {
+                if ( !isNull _newgrp ) then {
 #ifdef __PRINT__
                     hint localize format["+++ x_airki.sqf[%1]: Rejoin good pilots (%2) to group %3 (%4 men) dist %5, and removing invalid pilots %6",
                         _type,
@@ -170,9 +155,7 @@ _rejoinPilots =
 #endif
                     _goodunits join _newgrp;
                     sleep 0.25;
-                }
-                else
-                {
+                } else {
                     // no good group is found, let kill them all now
 #ifdef __PRINT__
                     hint localize format["+++ x_airki.sqf[%1]: Re-join is unavailble, kill air crew, as good (%2) as bad (%3)",_type,_goodunits, _badunits];
@@ -181,9 +164,7 @@ _rejoinPilots =
                     _ret = false;
                 };
                 sleep 0.36;
-            }
-            else
-            {
+            } else {
 #ifdef __PRINT__
                 hint localize format["+++ x_airki.sqf[%1]: No good pilots in grp %2 found, remove bad ones (%3)",_type, _grp, _badunits];
 #endif
@@ -192,17 +173,13 @@ _rejoinPilots =
             _badunits call _killUnits;
             _badunits = nil;
             _goodunits = nil;
-		}
-		else
-		{
+		} else {
 #ifdef __PRINT__
                 hint localize format["++++ x_airki.sqf[%1]: Count of alive group units == 0, exit",_type];
 #endif
 		    _ret = false;
 		};
-	}
-	else
-	{
+	} else {
 #ifdef __PRINT__	
 		hint localize format["+++ x_airki.sqf[%1]: Grp is <NULL> or pilots are dead",_type];
 #endif		
@@ -294,8 +271,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		}
 	};
 	if (X_MP) then {
-		if ((call XPlayersNumber) == 0) then
-		{
+		if ((call XPlayersNumber) == 0) then {
 			waitUntil {sleep (10.012 + random 1); (call XPlayersNumber) > 0 };
 			// sleep some time to allow different arriving
 			if (_initial_type == "KA" ) then { sleep (random KA_MIMG_ARRIVAL_DELAY); }; // to prevent arriving at near time
@@ -323,8 +299,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	_flyby_height  = 500;   // transport stage height
 	_flight_random = 100;   // random part of heigth
 	switch (_type) do {
-		case "KA": 
-		{
+		case "KA":  {
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_airki_attack_chopper;
 			_flight_height = FLIGHT_HEIGHT_KA;
@@ -332,8 +307,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_flight_random = 50;
 			_min_dist_between_wp = 100;
 		};
-		case "SU": 
-		{
+		case "SU":  {
 			_vec_cnt = d_number_attack_planes;
 			_heli_arr = d_airki_attack_plane;
 			_flight_height = FLIGHT_HEIGHT_SU;
@@ -342,8 +316,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			_min_dist_between_wp = 1000;
 		};
 		case "MIMG"; 
-		default 
-		{
+		default {
 			_vec_cnt = d_number_attack_choppers;
 			_heli_arr = d_light_attack_chopper;
 			_flight_height = FLIGHT_HEIGHT_MI;
@@ -395,8 +368,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	sleep 1.011;
 
 #ifdef __DEFAULT__
-    if ( (_dummy select 1) in d_mountine_towns ) then // raise the height of the flight for mountain towns ("Hunapu","Pacamac" etc)
-    {
+    if ( (_dummy select 1) in d_mountine_towns ) then { // raise the height of the flight for mountain towns ("Hunapu","Pacamac" etc)
         _flight_height = _flight_height * 1.5;
     };
 #endif
@@ -572,7 +544,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 				} else {
                     sleep 1;
                     if ( ( {alive _x} count (crew _vecx) ) == 0 ) then {
-                        s_down_heli_arr = s_down_heli_arr + [_vecx];
+                        s_down_heli_arr set [count s_down_heli_arr, _vecx]; // ADD NEXT VEHICLE TO THE LIST OF DOWNED ONES
                         _vecx setFuel 0;
                         _vehicles set [_i, "X_RM_ME"];
 					} else {

@@ -84,7 +84,7 @@ XSendNetStartScriptAllDiff = {
 	if (X_SPE) then {_this spawn XHandleNetStartScriptAllDiff};
 };
 
- "d_ns_alld" addPublicVariableEventHandler {
+"d_ns_alld" addPublicVariableEventHandler {
 	(_this select 1) spawn XHandleNetStartScriptAllDiff;
 };
 
