@@ -211,9 +211,8 @@ x_getmixedliste = {
 //
 // call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEvents;
 SYG_addEvents = {
-    private ["_vehicle", "_static"];
+    private ["_vehicle"];
     _vehicle   = arg(0);
-    _static =  _vehicle isKindOf "StaticWeapon";
 
     if (_vehicle isKindOf "Tank") then { if (!d_found_gdtmodtracked) then {[_vehicle] spawn XGDTTracked}; };
 
@@ -243,11 +242,11 @@ SYG_addEvents = {
 };
 
 //
-// Append remove code to a newly created standard vehicle (for main/side mission action) in ANY case, independently from unwreck procedure
+// Append remove code to a newly created standard vehicle (for main/side mission action) in ANY case, independently it is restorable or not
 //
 // call as: [_vehiсle<<, _do_points<,_smoke<,_wreck>>>] call SYG_addEventsAndDispose;
 SYG_addEventsAndDispose = {
-	if ( typeName _this != "ARRAY" ) then { _this = [ _this ]; };
+	if ( typeName _this == "OBJECT" ) then { _this = [ _this ]; };
     _this call SYG_addEvents;
     _vehicle = arg(0);
     // add dispose event
