@@ -1325,7 +1325,7 @@ STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Uso De ""Javelin"
 STR_SET_6,Simple side missions at the beginning,Einfache Nebenmissionen am Anfang,Tareas adicionales simples al principio,Простые дополнительные задания в начале
 STR_SET_7,Light armored vehicles at the base in the start,Leichte Gepanzerte Fahrzeuge am Start,La presencia de su equipo ligero en la base al Inicio,Наличие своей лёгкой техники на базе при старте
 STR_SET_8,Mandatory side missions,Obligatorischen Nebenmissionen,Misiones de terceros obligatorias,Обязательные сторонние миссии
-STR_SET_8_1,", towns per mission: %1",", Städte pro mission: %1",", ciudades por misión: %1",", городов за одну миссию: %1"
+STR_SET_8_1,", towns per SM: %1",", Städte pro 1 SM: %1",", ciudades por 1 SM: %1",", городов за 1 доп.миссию: %1"
 STR_SET_9,Teleport works only when all services on the base are available,Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind,El teletransportador solo funciona con todos los servicios en la base,Телепорт действует только при всех исправных сервисах на базе
 STR_SET_9_1,Teleport works until the destruction of MHQ,Teleport funktioniert bis zur Zerstörung von MHQ,El teletransportador funciona hasta la destrucción de KSHM,Телепорт функционирует до уничтожения КШМ
 STR_SET_9_2,Teleport shuts off when MHQ is damaged at %1%2,"Teleport wird abgeschaltet, wenn MHQ bei %1%2 beschädigt ist.",El teletransportador se desactiva cuando el KSHM está dañado hasta %1%2,Телепорт отключается при повреждении КШМ до %1%2
