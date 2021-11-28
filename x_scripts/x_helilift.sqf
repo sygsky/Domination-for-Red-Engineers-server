@@ -119,12 +119,14 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 								mr1_in_air=true;
 								["mr1_in_air",mr1_in_air] call XSendNetStartScriptAllDiff;
 								["mr1_lift_chopper",_vehicle] call XSendNetStartScriptServer;
+	                        	hint localize format["+++ reveal_name = ""%1""", _reveal_name];
 							};
 							case MRR2: {
 								_reveal_name = "MRR2";
 								mr2_in_air=true;
 								["mr2_in_air",mr2_in_air] call XSendNetStartScriptAllDiff;
 								["mr2_lift_chopper",_vehicle] call XSendNetStartScriptServer;
+	                        	hint localize format["+++ reveal_name = ""%1""", _reveal_name];
 							};
 #ifdef __TT__
 							case MRRR1: {
@@ -202,11 +204,13 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         Attached_Vec = objNull;
 
                         // reveal to all players new position of MHQ. It can help!
-                        // hint localize format["_reveal_name = ""%1""", _reveal_name];
+                        hint localize format["_reveal_name = ""%1""", _reveal_name];
                         if (_reveal_name != "") then {
-                        	_str = format["%1 setPos %2; %1 setDir %3", _reveal_name, getPos _nearest, getDir _nearest];
+                        	_str  = format["hint localize format[""+++ %1(1) %2"", getPos %1]", _reveal_name, "%1" ];
+                        	_str1 = format["hint localize format[""+++ %1(2) %2"", getPos %1]", _reveal_name, "%1" ];
+                        	_str  = format["%1; %2 setPos %3; %2 setDir %4;sleep 0.1;%5;", _str, _reveal_name, getPos _nearest, getDir _nearest, _str1];
                         	hint localize format["+++ ""remote_execute"" sent: ""%1""", _str];
-                        	["remote_execute", _str] call XSendNetStartScriptClient;
+                        	["remote_execute", _str] call XSendNetStartScriptClient; // Sent to all clients only
                         };
 
                         // send information to all clients about new position of well known lifted vehicle
