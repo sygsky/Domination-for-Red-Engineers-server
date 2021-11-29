@@ -64,9 +64,6 @@
 // uncomment, if you want the old intro
 //#define __OLD_INTRO__
 
-// if true then the old engineer (faster) script gets used
-//#define __ENGINEER_OLD__
-
 // if you are still running 1.14 comment the following line
 #define __NO_PARABUG_FIX__
 

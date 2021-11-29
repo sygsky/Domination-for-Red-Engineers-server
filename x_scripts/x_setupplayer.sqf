@@ -220,12 +220,12 @@ _counterxx = 0;
 
 	_counterxx = _counterxx + 1;
 	if (d_jumpflag_vec == "") then {
-		_x addaction [localize "STR_FLAG_6"/* "(Choose Parachute location)" */,"AAHALO\x_paraj.sqf"];
+		_x addAction [localize "STR_FLAG_6"/* "(Choose Parachute location)" */,"AAHALO\x_paraj.sqf"];
 	} else {
 		_text = format [localize "STR_FLAG_7"/* "(Create %1)" */,d_jumpflag_vec];
 		_x addAction [_text,"x_scripts\x_bike.sqf",[d_jumpflag_vec,1]];
 	};
-	_x addaction [localize "STR_FLAG_5"/* "{Rumours}" */,"scripts\rumours.sqf",""];
+	_x addAction [localize "STR_FLAG_5"/* "{Rumours}" */,"scripts\rumours.sqf",""];
 	#ifdef __ACE__
 	if (d_jumpflag_vec == "") then {
 		_box = "ACE_RuckBox" createVehicleLocal _pos;
@@ -551,7 +551,7 @@ for "_xx" from 7 to 8 do { // 'Загрузить орудие', 'Разгруз
 };
 #else
 if (!(isNil "TR4")) then {
-	if (str(player) in d_is_engineer && playerSide == west) then {
+	if ( (str(player) in d_is_engineer) && (playerSide == west)) then {
 		TR4 addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
 		TR4 addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Разгрузить орудие"
 	};
@@ -560,7 +560,7 @@ if (!(isNil "TR4")) then {
 	TR4 setAmmoCargo 0;
 };
 "TR4" addPublicVariableEventHandler {
-	if (str(player) in d_is_engineer && playerSide == west) then {
+	if ( (str(player) in d_is_engineer) && (playerSide == west)) then {
 		(_this select 1) addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
 		(_this select 1) addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; //"Разгрузить орудие"
 	};
@@ -570,7 +570,7 @@ if (!(isNil "TR4")) then {
 };
 
 if (!(isNil "TRR4")) then {
-	if (str(player) in d_is_engineer && playerSide == resistance) then {
+	if ( (str(player) in d_is_engineer) && (playerSide == resistance)) then {
 		TRR4 addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузить орудие"
 		TRR4 addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Разгрузить орудие"
 	};
@@ -579,7 +579,7 @@ if (!(isNil "TRR4")) then {
 	TRR4 setAmmoCargo 0;
 };
 "TRR4" addPublicVariableEventHandler {
-	if (str(player) in d_is_engineer && playerSide == resistance) then {
+	if ( (str(player) in d_is_engineer) && (playerSide == resistance)) then {
 		(_this select 1) addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false];// "Загрузить орудие"
 		(_this select 1) addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Разгрузить орудие"
 	};
@@ -1078,12 +1078,8 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 	_trigger = createTrigger["EmptyDetector" ,_pos];
 	_trigger setTriggerArea [0, 0, 0, true];
 	_trigger setTriggerActivation ["NONE", "PRESENT", true];
-#ifndef __ENGINEER_OLD__
-	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_SYS_226', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"]; // 'Осмотреть технику', 'Починить/заправить технику'
-#endif
-#ifdef __ENGINEER_OLD__
-	_trigger setTriggerStatements["call x_sfunc", "actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer_old.sqf',[],-1,false]", "player removeAction actionID2"]; //'Починить/заправить технику'
-#endif
+	// 'Analyze Vehicle', 'Repair/refill vehicle'
+	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_SYS_226', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"];
 
 #ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
@@ -1354,7 +1350,7 @@ XFacAction = {
 			case 2: {d_wreck_repair_fac};
 		}
 	);
-	waitUntil {(sleep 1.521 + (random 0.3));!isNull _thefac};
+	waitUntil { (sleep (1.521 + (random 0.3))); !isNull _thefac};
 	_element = d_aircraft_facs select _num;
 	_posf = _element select 0;
 	sleep 0.543;
@@ -1445,7 +1441,7 @@ FLAG_BASE addAction [localize "STR_FLAG_0","dlg\teleport.sqf"];
 //FLAG_BASE addAction ["За допку","test.sqf"];
 //FLAG_BASE addAction ["За город","test2.sqf"];
 if (__AIVer || d_para_at_base) then {
-	FLAG_BASE addaction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
+	FLAG_BASE addAction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
 };
 #endif
 

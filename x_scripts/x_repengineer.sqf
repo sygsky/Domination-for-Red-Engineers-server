@@ -57,20 +57,20 @@ if (player in (list d_engineer_trigger)) then {d_last_base_repair = time + 300;}
 
 _caller removeAction _aid;
 if (!(local _caller)) exitWith {};
-_rep_count = 1;
+_rep_count = 1; // how many damage removed on each step (the less value the longer repair procedure)
 
 if (objectID2 isKindOf "Air") then {
 	_rep_count = 0.1;
 } else {
 	if (objectID2 isKindOf "Tank") then {
-		_rep_count = 0.2;
+		_rep_count = 0.05;
 	} else {
 		_rep_count = 0.3;
 	};
 };
 
 _fuel = fuel objectID2; // fuel the vehicle has (0..1)
-_damage = damage objectID2;
+_damage = damage objectID2; // from 0 (totally functional) to 1 (totally damaged)
 
 _dmg_steps    = (_damage / _rep_count); // how many undamage steps for reparing
 
@@ -121,8 +121,10 @@ hint format [localize "STR_SYS_16"/* "Статус техники:\n------------
 
 _type_name = [typeOf (objectID2),0] call XfGetDisplayName;
 (format [localize "STR_SYS_19", round(_damage *100), "%", round(_refuel_volume), _type_name]) call XfGlobalChat; // "Repair %1%2, refuel %3 L.: %4... wait..."
-_damage_ok = false;
-_fuel_ok = false;
+
+_damage_ok = _damage > 0;
+_fuel_ok = _fuel < 1;
+
 d_cancelled = false;
 _break_str = "";
 _pos = getPos player;
@@ -139,6 +141,9 @@ if ( !(alive (driver objectID2) ) ) then {
 _addscore = 0; // how many repair/refuel steps were done
 
 for "_i" from 1 to _total_steps do {
+
+	if (vehicle player != player) exitWith { _break_str = "STR_SYS_142"; }; // "Service from the vehicle is impossible..."
+
 	// print info about action type
 	if (!_damage_ok) then {
 #ifdef __NON_ENGINEER_REPAIR_PENALTY__
@@ -151,19 +156,18 @@ for "_i" from 1 to _total_steps do {
 #endif
 #ifdef __LIMITED_REFUELING__
 	} else  {
-        if (!_fuel_ok) then { (localize "STR_SYS_257") call XfGlobalChat; }; // Refueling ...
+        if (!_fuel_ok) then { (localize "STR_SYS_257") call XfGlobalChat; }; // Refueling .
 #endif
 	};
-
-	player playMove "AinvPknlMstpSlayWrflDnon_medic";
-	sleep 3.0;
-	waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"}; // this animation cycle duration is approximatelly 6 seconds
+    if (!(_damage_ok &&_fuel_ok)) then {
+        player playMove "AinvPknlMstpSlayWrflDnon_medic";
+        sleep 3.0;
+        waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"}; // this animation cycle duration is approximatelly 6 seconds
+	};
 
 	if (!alive player) exitWith { _break_str = "STR_SYS_142_3"; }; // "You are dead, service is cancelled..."
 
 	if (d_cancelled) exitWith { _break_str = "STR_SYS_136"; }; // The service is cancelled...
-
-	if (vehicle player != player) exitWith { _break_str = "STR_SYS_142"; }; // "Service from the vehicle is impossible..."
 
 	if ( ! (alive objectID2) ) exitWith { _break_str = "STR_SYS_142_1"; };// "The vehicle burned out... you're too late!"
 
@@ -179,8 +183,9 @@ for "_i" from 1 to _total_steps do {
             if (_fuel >= _refuel_limit) then {_fuel = _refuel_limit; _fuel_ok = true;};
         };
 	};
-	_lfuel = format[localize "STR_SYS_15"/* "%1/%2 л." */,round(_fuel_capacity_in_litres*_fuel),_fuel_capacity_in_litres];
-	hint format [localize "STR_SYS_16"/* "Статус техники:\n---------------------\nТопливо: %1\nПовреждение: %2" */,_lfuel, round(_damage*1000)/1000];
+	_lfuel = format[ localize "STR_SYS_15"/* "%1/%2 л." */, round(_fuel_capacity_in_litres*_fuel), _fuel_capacity_in_litres ];
+	// "Status of vehicle:\n---------------------\n Fuel: %1\nDamage: %2"
+	hint format [localize "STR_SYS_16",_lfuel, round(_damage*1000)/1000];
 	if ( _damage_ok && _fuel_ok ) exitWith{};  // completed
 };
 
@@ -203,7 +208,7 @@ hint localize format["*** x_repengineer.sqf: _addscore = %1 in %2 total steps (r
 if (_addscore > 0) then {
     _str = "STR_SYS_137"; //"Добавлено очков за обслуживание техники: %1 ..."
 	#ifdef __DEBUG__
-	hint localize format["*** x_repengineer.sqf: (_addscore > 0) _str = ""%1""", _str ];
+	hint localize format["*** x_repengineer.sqf: (_addscore > 0) _str => ""%1""", _str ];
 	#endif
 	#ifdef __NON_ENGINEER_REPAIR_PENALTY__
     if (!_is_engineer) then {
@@ -217,7 +222,7 @@ if (_addscore > 0) then {
         _str = "STR_SYS_137_1"; //"Subtracted points for maintenance: %1 ..."
     	#endif
 		#ifdef __DEBUG__
-		hint localize format["*** x_repengineer.sqf: (!_is_engineer _str) = ""%1""", _str ];
+		hint localize format["*** x_repengineer.sqf: (!_is_engineer _str) => ""%1""", _str ];
 		#endif
     };
 	#endif

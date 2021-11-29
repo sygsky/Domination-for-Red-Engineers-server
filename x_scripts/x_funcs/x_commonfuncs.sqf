@@ -125,6 +125,9 @@ X_DM_SMOKE_SHELL = {
 
 _search_array = nil;
 
+//
+// [ objectID2 <, _refuel_limit>] call x_repall;
+//
 x_repall = {
 	private ["_vec"];
 	_vec = _this select 0;
