@@ -8,8 +8,8 @@
 // #define __DEBUG__
 
 // positions for Camel only, not use it for BMP
-_camelPosArr = [[9428,9749,0], [9728,9824,0], [9731,9778,0], [9621,9781], [9767,9962,0], [9804,9956,0], [9842,9954,0]]; // Camel positions
-_camelDirArr = [          225,           180,             0,           0,             0,             0,            0];  // Camel directions
+_camelPosArr = [[+9428,9749,0], [11079,9844,0], [9721,9849,0], [9222,10346], [+9767,9962,0], [+9804,9956,0], [+9842,9954,0]]; // Camel positions
+_camelDirArr = [           225,              0,            90,          180,              0,              0,              0];  // Camel directions
 _landPosArr  = [ [9439.2,9800.7,0], [10254.87,10062,0], [10503,10090,0], [9153,10045,0], [9064,10036,0] ]; // cars (land) vehicles positions
 _landDirArr  = [               180,               180,                0,              0,           350  ]; // cars (land) vehicles directions
 _landTypeArr = [ "ACE_BRDM2", "ACE_BMP1_D", "ACE_UAZ", "ACE_UAZ_MG", "ACE_UAZ_AGS30", "ACE_BRDM2_ATGM", "ACE_BRDM2_SA9"  ];
