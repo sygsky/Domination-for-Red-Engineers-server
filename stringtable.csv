@@ -459,8 +459,8 @@ STR_SYS_222,for vehicles recovery,für Fahrzeuge recovery,por la restauración d
 STR_SYS_223,Was destroyed service %1. Ask the engineers to repair it ...,Zerstört wurde Dienst %1. Fragen Ingenieure zu reparieren ...,Se ha destruido el Servicio %1. Pida a los ingenieros que lo reparen ...,Был уничтожен сервис %1. Просите инженеров отремонтировать его ...
 STR_SYS_224,Service %1 available,Service %1 verfügbar,El Servicio %1 está disponible,Сервис %1 доступен
 STR_SYS_225,Restore the tech. service,Erstellen Sie den Dienst,Reparar el edificio de servicios técnicos,Починить здание техсервиса
-STR_SYS_226,Analyze Vehicle,Analysieren Fahrzeug,Inspeccionar la técnica,Осмотреть технику
-STR_SYS_227,Repair/refill vehicle,Reparatur/refill-Fahrzeug,Reparar / repostar electrodomésticos,Починить/заправить технику
+STR_SYS_226,Inspect vehicle,Fahrzeug inspizieren,Inspeccionar el vehículo,Осмотреть технику
+STR_SYS_227,Repair/refill vehicle,Reparatur/Tanken des Fahrzeug,Reparar / repostar electrodomésticos,Починить/заправить технику
 STR_SYS_227_1,Repair vehicle only,Reparatur Fahrzeug nur,Sólo reparar el equipo,Только починить технику
 STR_SYS_228,Unflip Vehicle,Unflip Fahrzeug,Poner técnica,Поставить технику
 STR_SYS_229,Engineer repair/refuel capability restored...,Ingenieur Reparatur/tanken Funktion wiederhergestellt...,"La capacidad de reparar, repostar equipos restaurados...","Способность ремонтировать, заправлять технику восстановлена..."

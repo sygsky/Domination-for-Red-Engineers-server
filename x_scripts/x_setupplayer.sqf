@@ -237,7 +237,8 @@ _counterxx = 0;
 
 if (!mt_radio_down) then {
 	if (mt_radio_pos select 0 != 0) then {
-		["main_target_radiotower", mt_radio_pos,"ICON","ColorBlack",[0.5,0.5],localize "STR_SYS_317"/* "Радиобашня" */,0,"DOT"] call XfCreateMarkerLocal;
+	    /* "Radiotower" */
+		["main_target_radiotower", mt_radio_pos,"ICON","ColorBlack",[0.5,0.5],localize "STR_SYS_317",0,"DOT"] call XfCreateMarkerLocal;
 	};
 };
 
