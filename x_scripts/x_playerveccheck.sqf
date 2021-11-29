@@ -64,7 +64,7 @@ while { true } do {
         //+++ Sygsky:
         _role_arr = assignedVehicleRole player;
         #ifdef __DEBUG_PRINT__
-        hint localize format["x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _veh];
+        hint localize format["+++ x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _veh];
         #endif
         if ( count _role_arr > 0 ) then{
             _role = _role_arr select 0;
@@ -167,7 +167,7 @@ while { true } do {
 
     #ifdef __DEBUG_PRINT__
             if ( _bulky_weapon != "" ) then {
-                hint localize format["x_playerveccheck.sqf: bulky weapon is ""%1""",_bulky_weapon];
+                hint localize format["+++ x_playerveccheck.sqf: bulky weapon is ""%1""",_bulky_weapon];
             };
     #endif
     #ifdef __FUTURE__
@@ -213,7 +213,7 @@ while { true } do {
             };
             // bulky weapon
             [format[localize "STR_SYS_252_BULKY",_bulky_weapon call SYG_readWeaponDisplayName,"STR_SYS_252_NUM" call SYG_getLocalizedRandomText], "HQ"] call XHintChatMsg; // вы зацепляетесь оружием за люк и отваливаетесь
-            //hint localize format["x_playerveccheck.sqf: _index == %1, _attempts_count == %2, STR_SYS_252_NUM == %3, new str == ""%4""", _index, _attempts_count, localize "STR_SYS_252_NUM", localize (format["STR_SYS_252_%1",_index])];
+            //hint localize format["+++ x_playerveccheck.sqf: _index == %1, _attempts_count == %2, STR_SYS_252_NUM == %3, new str == ""%4""", _index, _attempts_count, localize "STR_SYS_252_NUM", localize (format["STR_SYS_252_%1",_index])];
         } else { // player allowed to be in vehicle
 //            hint localize format[ "+++ x_playerveccheck: player allowed to be in vehicle %1, airbattle %2, cargo %3", typeOf _veh, _air_battle, _cargo ];
             if ( _air_battle && !_cargo ) then { // periodically send info to server about player battle air vehicle activity
@@ -229,7 +229,7 @@ while { true } do {
 	} else {// ACE_Bicycle
         _veh say "bicycle";
 	};
-	//hint localize format["x_playerveccheck.sqf: player is not assigned %1", _role_arr];
+	//hint localize format["+++ x_playerveccheck.sqf: player is not assigned %1", _role_arr];
 	waitUntil {sleep 0.2; vehicle player == player};
     if ( _activity_info_sent ) then { // stop activity
         [ _veh, "off", name player] call _sendInfoOnAirVehToServer; // drop info about this vehicle

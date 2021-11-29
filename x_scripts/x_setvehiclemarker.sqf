@@ -75,12 +75,12 @@ X_XMarkerPlayers = {
 
         // remove dead markers, new ones will draw after next predefined interval
         if ( _markers_changed ) then {
-            SYG_activeMarkers = SYG_activeMarkers - ["RM_ME"];
+            SYG_activeMarkers call  SYG_clearArray;
         };
 	};
 
 	// it is time to refresh all players marker
-	SYG_activeMarkers = []; // load new alive markers
+	SYG_activeMarkers resize 0; // load new alive markers
 	for "_i" from 0 to ((count d_player_entities) - 1) do {
         _as = d_player_entities select _i; // name
         _ap = call (SYG_players_arr select _i); // object
@@ -122,28 +122,6 @@ X_XMarkerPlayers = {
 
 _p_marker_color = "";
 
-/*
-if (!d_dont_show_player_markers_at_all) then {
-	_tmp_grpsm = [];
-	_mindex = 0;
-	_colarray = ["ColorBlue","ColorGreen","ColorBlack","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorOrange", "ColorPink","ColorBrown", "ColorKhaki"];
-	
-    for "_i" from 0 to ((count d_player_entities) - 1) do {
-		call compile format ["
-			_grpm = group %1;
-			if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm = _tmp_grpsm + [_grpm];};
-			_mindex = _tmp_grpsm find _grpm;			
-			_col = _colarray select (_mindex % (count _colarray));
-			[""%1"", [0,0],""ICON"",_col,[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
-			if (player in (units _grpm)) then {_p_marker_color = _col};
-		", d_player_entities select _i];
-		sleep 0.01;
-	};
-
-	_tmp_grpsm = nil;
-	_colarray = nil;
-	_mindex = nil;
-*/
 /**
  * Markers for player creation
  *
@@ -160,15 +138,6 @@ if (!d_dont_show_player_markers_at_all) then {
         _mindex = _tmp_grpsm find _grpm;
         [_as, [0,0],"ICON",(_colarray select _mindex),[0.4,0.4],"",0,d_p_marker] call XfCreateMarkerLocal;
         if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
-/*
-		call compile format ["
-			_grpm = group %1;
-			if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm = _tmp_grpsm + [_grpm];};
-			_mindex = _tmp_grpsm find _grpm;			
-			[""%1"", [0,0],""ICON"",(_colarray select _mindex),[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
-			if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
-		", d_player_entities select _i];
-*/
 		sleep 0.01;
 	};
 

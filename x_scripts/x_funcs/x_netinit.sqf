@@ -3,13 +3,13 @@
 
 XHandleNetVar = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XHandleNetVar",_this)
+	//__DEBUG_NET("x_netinit.sqf XHandleNetVar",_this)
 	__compile_to_var;
 };
 
 XSendNetVarAll = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetVarAll",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetVarAll",_this)
 	d_nv_all = _this;publicVariable "d_nv_all";
 };
 
@@ -21,7 +21,7 @@ XSendNetVarAll = {
 
 XHandleNetStartScriptAll = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XHandleNetStartScriptAll",_this)
+	//__DEBUG_NET("x_netinit.sqf XHandleNetStartScriptAll",_this)
 	switch (_this select 0) do {
 		case "rep_array": {
 #ifdef __LIMITED_REFUELING__
@@ -51,7 +51,7 @@ XHandleNetStartScriptAll = {
 
 XSendNetStartScriptAll = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptAll",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetStartScriptAll",_this)
 	d_ns_all = _this;publicVariable "d_ns_all";
 	if (X_SPE) then {_this spawn XHandleNetStartScriptAll};
 };
@@ -64,7 +64,7 @@ XSendNetStartScriptAll = {
 
 XHandleNetStartScriptAllDiff = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XHandleNetStartScriptAllDiff",_this)
+	//__DEBUG_NET("x_netinit.sqf XHandleNetStartScriptAllDiff",_this)
 	switch (_this select 0) do {
 		case "d_create_box";
 		case "d_rem_box";
@@ -79,7 +79,7 @@ XHandleNetStartScriptAllDiff = {
 
 XSendNetStartScriptAllDiff = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptAllDiff",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetStartScriptAllDiff",_this)
 	d_ns_alld = _this;publicVariable "d_ns_alld";
 	if (X_SPE) then {_this spawn XHandleNetStartScriptAllDiff};
 };
@@ -92,14 +92,14 @@ XSendNetStartScriptAllDiff = {
 
 XSendNetStartScriptServer = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptServer",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetStartScriptServer",_this)
 	d_ns_serv = _this;publicVariable "d_ns_serv";
 	if (X_SPE) then {_this spawn XHandleNetStartScriptServer}; // if Server on Player is Executed (not dedicated)
 };
 
 XSendNetVarServer = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetVarServer",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetVarServer",_this)
 	d_nv_serv = _this;publicVariable "d_nv_serv";
 };
 
@@ -107,7 +107,7 @@ XSendNetVarServer = {
 
 XSendNetStartScriptClient = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClient",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClient",_this)
 	d_ns_client = _this;publicVariable "d_ns_client";
 	if (X_SPE) then {_this spawn XHandleNetStartScriptClient}; // if Server on Player is Executed (not dedicated)
 };
@@ -115,13 +115,13 @@ XSendNetStartScriptClient = {
 // To ensure all clients receive this message
 XSendNetStartScriptClientAll = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClientAll",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClientAll",_this)
 	d_ns_client = _this; publicVariable "d_ns_client";
 	if (X_Client) then {_this spawn XHandleNetStartScriptClient}; // if sent from client, it should receive it too
 };
 
 XSendNetVarClient = {
 	private ["_this"];
-	__DEBUG_NET("x_netinit.sqf XSendNetVarClient",_this)
+	//__DEBUG_NET("x_netinit.sqf XSendNetVarClient",_this)
 	d_nv_client = _this;publicVariable "d_nv_client";
 };
