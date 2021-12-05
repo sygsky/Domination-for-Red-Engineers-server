@@ -122,8 +122,8 @@ hint format [localize "STR_SYS_16"/* "Статус техники:\n------------
 _type_name = [typeOf (objectID2),0] call XfGetDisplayName;
 (format [localize "STR_SYS_19", round(_damage *100), "%", round(_refuel_volume), _type_name]) call XfGlobalChat; // "Repair %1%2, refuel %3 L.: %4... wait..."
 
-_damage_ok = _damage > 0;
-_fuel_ok = _fuel < 1;
+_damage_ok = _damage <= 0;
+_fuel_ok = _fuel >= 1;
 
 d_cancelled = false;
 _break_str = "";
