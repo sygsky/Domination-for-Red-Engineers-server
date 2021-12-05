@@ -1,5 +1,5 @@
 // Xeno, dlg\beam_tele.sqf
-private ["_control","_index","_pos","_global_pos","_typepos","_global_dir","_veh","_sound_to","_diff","_dmg","_str"];
+private ["_control","_index","_pos","_global_pos","_typepos","_global_dir","_veh","_sound_to","_diff","_dist","_dmg","_str"];
 if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
@@ -67,18 +67,16 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
 #ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
     // if teleport is near iron mass add dome deviation to the position
     _diff = [_veh, __NO_TELEPORT_NEAR_LARGE_IRON_MASS__] call SYG_findTeleportError;
-    _dmg = damage _veh;
-    if (_dmg > 0) then { // add shift due to telepoter damage
-	    _diff = _diff + _dmg * __NO_TELEPORT_NEAR_LARGE_IRON_MASS__;
-    };
-    if ( _diff > 0 ) then {
+    _dmg = (damage _veh) * __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ / 2;
+    _dist = _diff + _dmg;
+    if ( _dist > 0 ) then {
 	   	// if there is an error on teleport, calculate shifted position now
-     	_global_pos = [_global_pos, _diff] call SYG_deviateTeleportPoint;
-     	_diff = _global_pos distance _veh;
-		hint localize format["+++ teleport deviated to %1 m", (round(_diff*10))/10];
-		_str = if ( _diff < 2 ) then {"STR_SYS_75_5_2"} else {
-			if ( _diff < 5 ) then {"STR_SYS_75_5_5"} else {
-				if ( _diff < 10 ) then {"STR_SYS_75_5_10"} else {"STR_SYS_75_5_MORE"};
+     	_global_pos = [_global_pos, _dist] call SYG_deviateTeleportPoint;
+     	_dist = _global_pos distance _veh;
+		hint localize format["+++ teleport deviated to %1 m", (round(_dist*10))/10];
+		_str = if ( _dist < 2 ) then {"STR_SYS_75_5_2"} else {
+			if ( _dist < 5 ) then {"STR_SYS_75_5_5"} else {
+				if ( _dist < 10 ) then {"STR_SYS_75_5_10"} else {"STR_SYS_75_5_MORE"};
 			};
 		};
 	    format [localize "STR_SYS_75_5", localize _str ]  call XfHQChat; // "A large mass of iron next to the MHQ %1 shifted the point of teleport!"

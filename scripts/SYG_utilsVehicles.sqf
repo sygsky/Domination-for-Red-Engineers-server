@@ -1929,8 +1929,8 @@ SYG_ironMassNear = {
 	if ((typeName _this) != "ARRAY") exitWith  { [] };
 	private ["_dist","_arr","_ret"];
 	// check if big metal mass is near teleporter
-	_dist = if ((count _this) > 1) then { _this select 1} else { 10 };
-	_arr = nearestObjects [ _this select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119" ], _dist ];
+	_dist = if ((count _this) > 1) then { _this select 1} else { __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ };
+	_arr = nearestObjects [ _this select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119","RHIB" ], _dist ];
 	if (count _arr == 0) exitWith { [] };
 	_ret = [];
 #ifdef __OWN_SIDE_EAST__
@@ -1969,7 +1969,7 @@ SYG_findTeleportError = {
 		_dist = [_pos, _x] call SYG_distance2D;
 		if (_dist < _mindist) then { _sum = _sum + __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ - _dist };
 	} forEach _arr;
-//	player groupChat format[ "+++ Found %1 vehicle[s] in radious %2 m, sum %3, %4", count _arr, _mindist, _sum, [_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE ];
+	hint localize  format[ "+++ Found %1 vehicle[s] in radious %2 m, sum %3, %4", count _arr, _mindist, _sum, [_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE ];
 	sqrt (_sum *  5)
 };
 
@@ -1977,7 +1977,7 @@ SYG_findTeleportError = {
 // [_pnt, _shift] call SYG_deviateTPPoint
 //
 SYG_deviateTeleportPoint = {
-	private ["_err","_pos","_rad","_dx","_dy"];
+	private ["_err","_pos","_rad","_ang","_dx","_dy"];
 	_pos = _this select 0;
 	_err = _this select 1;
 	if (_err == 0) exitWith { _pos };
