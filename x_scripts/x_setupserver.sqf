@@ -195,7 +195,7 @@ XCheckSMHardTarget = {
 		if (X_MP) then {
 			waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 		};
-		sleep (1.021 + random 1);
+		sleep (4 + random 1);
 	};
 
 	if (alive _vehicle) then {

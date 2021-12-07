@@ -66,7 +66,7 @@ STR_MED_4,Mash is ready.,Die medizinische Abteilung ist bereit.,La unidad sanita
 STR_MED_5,Mash %1,Med.Zelt %1.,Sanchart %1,Санчасть %1
 STR_MED_6,Remove Mash,Entfernen Sie die Med.Zelt,Eliminar el saneamiento,Убрать санчасть
 STR_MED_7,You get %1 points because other units used your mash for healing!,"Sie bekommen %1 Punkte, da andere Einheiten verwendet werden, Ihre Maische für die Heilung!",Usted obtiene %1 puntos. por tratar a los combatientes en su tienda...,Вы получаете %1 очк. за лечение бойцов в вашей палатке...
-STR_MED_8,You get +%1 points for healing %2!,Erhalten Sie +%1 Punkte für die Heilung %2!,Obtienes puntos: + %1 por curar %2,Вы получаете очки: +%1 за излечение %2
+STR_MED_8,You get +%1 points for healing %2 (%3)!,Erhalten Sie +%1 Punkte für die Heilung %2 (%3)!,Obtienes puntos: + %1 por curar %2 (%3),Вы получаете очки: +%1 за излечение %2 (%3)
 
 STR_SYS_04,"Engineer scores for vehicles repair: air +%1, armored +%2, transport +%3, others +%4\n","Ingenieur erreicht souverän für Fahrzeuge reparieren: Luft +%1, Gepanzerte +%2, transport +%3, andere +%4\n","Interconexión ingeniero para el mantenimiento: vehículos de aviación +%1, vehículos blindados +%2, transporte +%3, otros +%4\n \ n","Очки инженера за ремонт: авиатехники +%1, бронетехники +%2, транспорта +%3, прочего +%4\n"
 STR_SYS_05,Engineer refueling not limited: yes\n,Ingenieur tanken nicht begrenzt: ja\n,Ingeniero vierte el tanque lleno durante la reparación: sí\N,Инженер заливает полный бак при ремонте: Да\n
