@@ -251,7 +251,7 @@ SYG_calcRelArr = {
     _thingRelPos = argp(_thingObjArr,0);
     _thingAng = argp(_thingObjArr,1);
     _thingPos = [_house modelToWorld [0,0,0], ([[0,0,0], _thingRelPos, -_houseDir] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
-    _thingDir = _thingAng + _houseDir;
+    _thingDir = (_thingAng + _houseDir + 360) mod 360;
     [_thingPos, _thingDir]
 };
 
@@ -267,7 +267,7 @@ SYG_worldObjectToModel = {
     _house = _this select 0;
     _unit  = _this select 1;
     _pos   = _unit modelToWorld [0,0,0];
-    [_house worldToModel _pos, (getDir _unit) - (getDir _house), _house modelToWorld [0,0,0]]
+    [ _house worldToModel _pos, ((getDir _unit) - (getDir _house) + 360) mod 360, _house modelToWorld [0,0,0] ]
 };
 
 /**
