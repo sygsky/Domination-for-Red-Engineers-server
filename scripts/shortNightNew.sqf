@@ -117,7 +117,7 @@ while {true } do {
     if (daytime < _eveningStart) then {// we are in day time, sleep to evening
         1 call _titleTime; // send msg on day for all client
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: day: daytime (%1)< _eveningStart, sleep to it",daytime];
+        _str = format["SHORTNIGHT: day: daytime (%1)< _eveningStart, sleep %2 to it", daytime, round ((_eveningStart - daytime) * 3600)];
         //player groupChat _str;
         hint localize _str;
     #endif
