@@ -59,10 +59,11 @@ if (isServer) then {
     ["specopsbig", 1, "basic", 3, _pos_other, 200, true] spawn {
         private ["_grp_ret","_cnt", "_cnt1"];
         _grp_ret = _this call XCreateInf;
+        // 4 infantry groups (1 big specops and  3 basic) are generated for this SM
         _cnt = [units (_grp_ret select 0), 0.4, 0.1] call SYG_rearmSpecopsGroupA; // [_units_arr, _rearm_prob, _adv_rearm_prob ] call SYG_rearmSpecopsGroupA;
         _cnt1 = (units (_grp_ret select 1)) call SYG_rearmBasicGroup; // _res = [_unit1,... , _unitN] call SYG_rearmBasicGroup;
-        _cnt1 = _cnt1 + (units (_grp_ret select 2)) call SYG_rearmBasicGroup; // _res = [_unit1,... , _unitN] call SYG_rearmBasicGroup;
-        _cnt1 = _cnt1 + (units (_grp_ret select 3)) call SYG_rearmBasicGroup; // _res = [_unit1,... , _unitN] call SYG_rearmBasicGroup;
+        _cnt1 = _cnt1 + ((units (_grp_ret select 2)) call SYG_rearmBasicGroup); // _res = [_unit1,... , _unitN] call SYG_rearmBasicGroup;
+        _cnt1 = _cnt1 + ((units (_grp_ret select 3)) call SYG_rearmBasicGroup); // _res = [_unit1,... , _unitN] call SYG_rearmBasicGroup;
 #ifdef __DEBUG__
         hint localize format["%1 x_m9.sqf: %2 of %3 specops, %4 of %5 basic rearmed",
         					 call SYG_nowTimeToStr,
