@@ -42,7 +42,9 @@ while {true} do {
 			_sound = "under_water_3"; // you lost your weapon
 			// find ALL nearest weapon holders as Arma-1 createsmultiple weapon holders, that is surprize!
 			_wpArr = nearestObjects [ player, ["WeaponHolder"], HOLDER_SEARCH_RADIUS ]; // It will find all holdear around #N meters in 2D and any depth (so say https://community.bistudio.com/wiki/nearestObject)
+
 			if ( count _wpArr > 0 ) then {
+				if ( [_wpArr select 0, player] call SYG_distance2D > 20 ) exitWith {};
 //                hint localize format["+++ x_water.sqf: WeaponHolder[s] with your lost weapon found and remembered (%1 pc.)",count _wpArr];
 				if (alive player) then {
 					(localize "STR_SYS_620_0") call XfHQChat; // "Some weapon drowned, if it's mine, I'll find it on the shore. Otherwise..."
