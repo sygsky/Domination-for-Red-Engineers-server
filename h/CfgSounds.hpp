@@ -243,6 +243,7 @@ class CfgSounds {
     class laughter_11 { name="Laughter 11"; sound[] = {\sounds\defeat\laughter\11.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_12 { name="Laughter 12"; sound[] = {\sounds\defeat\laughter\12.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
+
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
     class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\over,db+10,1.0}; titles[] = {}; } // War cry "game over"
     class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "get some"
@@ -287,6 +288,7 @@ class CfgSounds {
     class hi_is_down2    { name=""; sound[] = {\sounds\defeat\laughter\hi_is_down2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class hi_is_down     { name=""; sound[] = {\sounds\defeat\laughter\hi_is_down.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class enemy_down     { name=""; sound[] = {\sounds\defeat\laughter\enemy_down.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class auf_wiedersehen{ name=""; sound[] = {\sounds\defeat\laughter\auf_wiedersehen.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
 
 // "E:\Bin\ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\defeat\laughter\joy_laugh.ogg"
