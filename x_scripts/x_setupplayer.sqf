@@ -938,7 +938,7 @@ _local_msg_arr spawn {
 			0, 5, false, _sound
 		] call SYG_msgToUserParser;
 		_hour = _date select 3;
-		_week_day = _date call SYG_weekDay;
+		_week_day = _date call SYG_weekDay; // Monday returns 0, for Sunday 6
 		if ( ( (_week_day < 4) || (_week_day > 5) ) && (_hour < 23) && (_hour >= 8) ) then { // Not week day and not night
 //		if ( true ) then { // Not week day and not night
 //			hint localize format["+++ sleep %1 to remind Sardelko that tomorrow is a school day!", (23 - daytime) * 3600];
