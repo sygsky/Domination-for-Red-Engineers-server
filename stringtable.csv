@@ -1449,6 +1449,7 @@ STR_ACE_EJECT1,<t color='#FF0000'>Jump Out</t>,<t color='#FF0000'>Springen</t>,<
 STR_ACE_VDN_UAZ_MG,UAZ-469 (Yak-B),UAZ-469 (Yak-B),UAZ-469 (Yak-B),УАЗ-469 Як-Б
 STR_WEST,NATO,NATO,NATO,НАТО
 STR_EAST,Comrades,Kameraden,Los nuestros,Наши
+STR_DISP_SRVSIDE_WEST,Enemy,Gegner,Enemigo,Враги
 STR_DISP_SRVSIDE_EAST,Comrades,Kameraden,Los nuestros,Наши
 STR_DISP_INTEL_EAST_FRIENDLY,Comrades,Kameraden,Los nuestros,Наши
 STR_GUERRILA,Partisans,Partisanen,Guerrilleros,Партизаны
