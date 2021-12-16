@@ -55,7 +55,7 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
  * returns: true if any item of first list found in second list. Comparison is case-sensitive.
  */
 SYG_isListInList = {
-    private ["_list","_ret"];
+    private ["_list","_ret","_x"];
 	_list = _this select 1;
 	_ret = false;
 	{
@@ -77,11 +77,10 @@ SYG_isListInList = {
 // _grp = [_unit, _dist, _zone_pos, _min_grp_size] call SYG_findNearestSideGroup; // search around _pos, return grpNull if no group found
 //
 SYG_findNearestSideGroup = {
-	private ["_unit", "_dist", "_side", /* "_nearArr", */ "_grp", "_min_count", "_types" ];
+	private ["_unit", "_dist", "_side", /* "_nearArr", */ "_grp", "_min_count", "_types", "_x" ];
 	_unit = arg(0);
 	_grp = grpNull;
-	if ( !isNull _unit ) then
-	{	
+	if ( !isNull _unit ) then {
 		_dist = 0;
 //		if ( (count _this ) > 1 ) then { _dist = _this select 1};
 		_dist = argopt(1, DEFAULT_MAX_DISTANCE_TO_TARGET);
@@ -137,13 +136,12 @@ SYG_unitHasACECrewProtection = {
  * returns: number of objects set undestructable. If all id are valid, count of whole array items is returned
  */
 SYG_makeUndestructible = {
-	private ["_obj", "_cnt"];
+	private ["_obj", "_cnt","_x"];
 	_cnt = 0;
 	if (typeName _this != "ARRAY") then {_this = [_this]};
 	{
 		_obj = [0,0,0] nearestObject _x;
-		if ( !isNull _obj ) then 
-		{
+		if ( !isNull _obj ) then {
 			_cnt = _cnt + 1;
 			_obj addEventHandler ["hit", {(_this select 0) setDammage 0}];
 		};
@@ -160,15 +158,13 @@ SYG_makeUndestructible = {
  * returns: number of objects set indestructible. If all id are valid, count of whole array items is returned
  */
 SYG_makeTypeUndestructible = {
-	private ["_obj", "_cnt"];
+	private ["_obj", "_cnt","_x"];
 	_cnt = 0;
 	_type = _this select 0;
 	{
 		_obj = [0,0,0] nearestObject _x;
-		if ( !isNull _obj ) then 
-		{
-			if ( _obj isKindOf _type ) then 
-			{
+		if ( !isNull _obj ) then {
+			if ( _obj isKindOf _type ) then  {
 				_cnt = _cnt + 1;
 				_obj addEventHandler ["hit", {(_this select 0) setDammage -900000000000}];
 			};
@@ -185,7 +181,7 @@ SYG_makeTypeUndestructible = {
  */
 #define DEFAULT_GROUP_SEARCH_RADIUS 350
 SYG_findVehWithFreeCargo = {
-	private ["_pos","_vecs","_searchdist","_dist","_reta","_emptypos","_mindist","_str"];
+	private ["_pos","_vecs","_searchdist","_dist","_reta","_emptypos","_mindist","_str","_x"];
 	_pos     = arg(0);
 	_vecs     = arg(1);
 	_searchdist  = argopt(2,DEFAULT_GROUP_SEARCH_RADIUS);
@@ -198,11 +194,9 @@ SYG_findVehWithFreeCargo = {
 	if ( typeName _pos != "ARRAY" ) then {_pos = getPos _pos;}; // if _pos not position but object
 	
 	{ 
-		if ( (!isNull _x) AND (canMove _x) AND (!isNull driver _x) AND ((_x distance _pos) <= _searchdist) ) then 
-		{
+		if ( (!isNull _x) AND (canMove _x) AND (!isNull driver _x) AND ((_x distance _pos) <= _searchdist) ) then {
 			_emptypos = _x emptyPositions "Cargo";
-			if ( _emptypos > 0 ) then 
-			{ 
+			if ( _emptypos > 0 ) then {
 				 _dist = _pos distance _x;
 				 if ( _dist < _mindist ) then {_mindist = _dist; _reta = [_x, _emptypos];};
 			};
@@ -233,7 +227,7 @@ SYG_findVehWithFreeCargo = {
  *		_grp    : found group of grpNull if no such group exists
  **/
 SYG_findGroupAtTargets = {
-	private ["_unit","_dist","_min_grp_size","_unit_pos","_pos","_goal_grp","_ret","_pos_arr","_zone_pos","_str"];
+	private ["_unit","_dist","_min_grp_size","_unit_pos","_pos","_goal_grp","_ret","_pos_arr","_zone_pos","_str","_x"];
 	// Let find new group in the follow order:
 	//
 	// 1. Target town
@@ -270,16 +264,13 @@ SYG_findGroupAtTargets = {
 		// try to find group
 		_zone_pos = argp(_pos_arr,_ret);
 		_goal_grp = [_unit, _dist, _zone_pos, _min_grp_size] call SYG_findNearestSideGroup;
-		if ( isNull _goal_grp ) then
-		{
+		if ( isNull _goal_grp ) then {
 			_pos_arr set[_ret, "RM_ME"];
 			_pos_arr = _pos_arr - ["RM_ME"];
 			// check all other zones too
 			{
-				if ( count _x > 0 ) then // zone exists
-				{
-					if ( (_pos distance _x) <= _dist ) then
-					{
+				if ( count _x > 0 ) then { // zone exists
+					if ( (_pos distance _x) <= _dist ) then {
 						_goal_grp = [_unit, DEFAULT_GROUP_SEARCH_RADIUS, _x, _min_grp_size] call SYG_findNearestSideGroup;
 					};
 				};
@@ -300,7 +291,8 @@ SYG_findGroupAtTargets = {
  *      _feetmen is array of men not fit into available cargo of designated vehicles
  */
 SYG_findAndAssignAsCargo = {
-	private ["_feetmen","_feetmen1","_vecs","_reta","_veh","_i","_count","_unit","_assigned","_j", "_pos","_grp_pos","_goal_grp","_grp","_part1","_part2","_grp_on_islet"];
+	private ["_feetmen","_feetmen1","_vecs","_reta","_veh","_i","_count","_unit","_assigned","_j", "_pos",
+			"_grp_pos","_goal_grp","_grp","_part1","_part2","_grp_on_islet","_x"];
 	_feetmen = arg(0);
 	if ( typeName _feetmen == "GROUP" ) then { _feetmen = units _feetmen; }
 	else { // may be single unit designated
@@ -434,6 +426,7 @@ SYG_ACEUnitConscious = {
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 SYG_getAllConsciousUnits = {
+	private ["_x"];
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
 	({ _x call SYG_ACEUnitUnconscious} count _this )
 };
@@ -442,7 +435,7 @@ SYG_getAllConsciousUnits = {
 // call: _officer = ["SquareLeaderW", _grp|_unit] call SYG_ensureOfficerInGroup;
 //
 SYG_ensureOfficerInGroup = {
-    private ["_officer","_grp"];
+    private ["_officer","_grp","_x"];
     _grp     = grpNull;
     _officer = arg(0);
     if ( typeName _officer != "STRING") exitWith {hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [_unit_type, ...] is not string type: %1", _this];};
@@ -458,10 +451,8 @@ SYG_ensureOfficerInGroup = {
     if (isNull _grp) exitWith {hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [..., _grp] is illegal: %1", _this];};
     _units = units _grp;
     // 1. check if leader is already officer
-    if (leader _grp isKindOf _officer ) exitWith { leader _grp }; // found as leader
-    {
-        if ( _x isKindOf _officer ) exitWith
-        {
+    if (leader _grp isKindOf _officer ) exitWith { leader _grp }; { // found as leader
+        if ( _x isKindOf _officer ) exitWith {
             _officer = _x;
              (leader _grp) setRank "PRIVATE";
             _grp selectLeader _x;
@@ -486,6 +477,7 @@ SYG_ensureOfficerInGroup = {
   * call: _isPatrolGrp = _grp call SYG_isPatrolGroup;
  */
 SYG_isPatrolGroup = {
+	private ["_x"];
     if ( typeName _this ==  "OBJECT") then {
         if ( _this isKindOf "Man") exitWith { _this = group _this };
         {
@@ -554,7 +546,7 @@ SYG_isWoman = {
 // Returns first item _itemArr in array or "" (empty String) if no any item in array
 //
 SYG_findItemInArray = {
-    private [ "_sampleArr", "_itemArr", "_pos" ];
+    private [ "_sampleArr", "_itemArr", "_pos","_x" ];
     if (typeName _this != "ARRAY") exitWith {""};
     if (count _this < 2) exitWith {""};
     _sampleArr = _this select 0;
@@ -631,7 +623,7 @@ SYG_AIPriceByRankString = {
 // _arr = [_arr, _add] call SYG_addArrayInPlace; // [1,2,3,4,5,6] and _arr is the same object as before addition!!!
 //
 SYG_addArrayInPlace = {
-    private ["_arr"];
+    private ["_arr","_x"];
     _arr = _this select 0;
     { _arr set [ count _arr, _x ] } forEach (_this select 1);
     _arr
@@ -642,7 +634,7 @@ SYG_addArrayInPlace = {
 // returns the same array without "RM_ME" items. Order of remained items in array is changed in most cases
 SYG_clearArray = {
 	if ( (typeName _this) != "ARRAY") exitWith {_this};
-	private ["_i"];
+	private ["_i","_x"];
 	for "_i" from (count _this -1)  to 0 step -1 do {
 		_x = _this select _i;
 		if ( typeName _x == "STRING") then {
@@ -651,6 +643,7 @@ SYG_clearArray = {
 				_this resize (count _this -1);
 			};
 		};
+//		hint localize format["%1", _this];
 	};
 	_this
 };
