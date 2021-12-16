@@ -53,8 +53,7 @@ info_arr = [];
 _info = [];
 
 {
-	if ( TASK_IS_ACTIVE(_x) ) then
-	{
+	if ( TASK_IS_ACTIVE(_x) ) then {
 #ifdef __DEBUG__
 		hint localize format["dlg.sqf: task ID %1 is active", _i];
 #endif	
@@ -64,25 +63,19 @@ _info = [];
 		ctrlSetText [_id,_str]; // set title for any task
 //		_action_str = format["ctrlSetText [12200, info_arr select %1];",_i]; // load description text into box on click
 		_info = [ "" ];
-		if ( _i == GRU_MAIN_TASK ) then
-		{
+		if ( _i == GRU_MAIN_TASK ) then {
 			//ctrlSetText [12200, call GRU_mainTaskDescription];
 			_ret_code = -2;
-			if (_pistol_only) then
-			{
+			if (_pistol_only) then {
 				ctrlEnable [ _id, true];
 //				ctrlActivate [_ctrl, true];
 //				_action_str = _action_str + format[" ctrlShow[12004, true]; ctrlEnable [12004, true]; dialog_ret = %1;",GRU_MAIN_TASK]; // enable "Accept" button
-			}
-			else
-			{
+			} else {
 				ctrlEnable [ _id, false]; // no task button as illegal weapon detected
 			};
 			_info set [_i, call GRU_mainTaskDescription]; // set text of order
-			[1] execVM "x_scripts\x_showsidemain.sqf"; // go to the main tanget on the map
-		}
-		else
-		{
+			[1] execVM "x_scripts\x_showsidemain.sqf"; // go to the main target on the map
+		} else {
 			_info set [_i,(localize format["STR_GRU_TASK_DESCR_%1_INFO", _i]) ];
 			//_action_str = _action_str + " ctrlShow [12004, false];  dialog_ret = -1;"; // disable accept button
 		};
@@ -93,14 +86,11 @@ _info = [];
 } forEach GRU_tasks;
 
 // hide not used lines
-if ( _cnt <= GRU_TASK_NUMBER ) then
-{
-	for "_j" from _cnt to GRU_TASK_NUMBER do 
-	{
+if ( _cnt <= GRU_TASK_NUMBER ) then {
+	for "_j" from _cnt to GRU_TASK_NUMBER do {
 		_id = 12100 + _j;
 		_ctrl = _GRU_display displayCtrl _id;
-		if ( !isNull _ctrl) then 
-		{ 
+		if ( !isNull _ctrl) then {
 			ctrlShow [_id, false]; 
 #ifdef __DEBUG__			
 			hint localize format[ "dlg.sqf: ctrl %1 shown = %2", _id, ctrlShown _ctrl];
@@ -111,19 +101,15 @@ if ( _cnt <= GRU_TASK_NUMBER ) then
 
 waitUntil { sleep 0.5; !dialog || !alive player};
 
-if ( alive player ) then
-{
-	switch  dialog_ret do
-	{
-		case -1:  // cancel button clicked (or "Escape" btn pushed)
-		{	
+if ( alive player ) then {
+	switch  dialog_ret do {
+		case -1:  {	// cancel button clicked (or "Escape" btn pushed)
 			// -1: "ничего кроме пистолета!", any other: "Сеанс связи с ГРУ закончен"
 			_str = localize "STR_GRU_27"; 
 			if ( !_pistol_only ) then { _str = format["%1.\n%2",_str, localize "STR_COMP_3"];};
 			titleText[ _str, "PLAIN DOWN" ];  
 		};
-		case GRU_MAIN_TASK: 
-		{
+		case GRU_MAIN_TASK: {
 			_task = GRU_GET_TASK (GRU_MAIN_TASK);
 			// find town and battle radious
 			private ["_tt"];
