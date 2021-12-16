@@ -330,7 +330,7 @@ hint localize format["+++ x_createguardpatrolgroups.sqf: new x_illum.sqf execute
 #ifdef __DEBUG_STAT_SERVICE__
 
 waitUntil { sleep 10; main_target_ready };
-_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // get score on current town
+// _array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // this method is also called from GRUMissionSetup.sqf at line 64
 
 #endif
 
