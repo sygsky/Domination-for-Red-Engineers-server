@@ -4,7 +4,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 
 private ["_current_target_pos","_current_target_radius","_dummy","_number_basic","_number_bmp","_number_specops",
-		 "_number_tank","_start_array","_type_list_attack","_typeidx","_xx","_numbervecs","_vecs_counter_attack",
+		 "_number_tank","_start_array","_type_list_attack","_typeidx","_xx","_numbervecs","_vehs_counter_attack",
 	     "_outer_size","_counter_pos","_counter_rad"];
 
 _dummy = target_names select current_target_index;
@@ -37,14 +37,15 @@ switch (_dummy select 1 ) do { // change start pos for some special targets
 #endif
 _start_array = [_counter_pos, _counter_rad] call x_getwparray2;
 
-_vecs_counter_attack =  2 + ceil (random 2); // 2..4
+_vehs_counter_attack =  2 + ceil (random 2); // 2..4
 
-_number_basic = ceil (random _vecs_counter_attack); // 4..1
-_number_specops = ceil (random _vecs_counter_attack); // 4..1
-_number_tank = ceil (random (_vecs_counter_attack - 1)); // 3..1
-_number_bmp = ceil (random (_vecs_counter_attack - 1)); // 3..1
+// generate different type of vehicles group sizes
+_number_basic = ceil (random _vehs_counter_attack); // 4..1
+_number_specops = ceil (random _vehs_counter_attack); // 4..1
+_number_tank = ceil (random (_vehs_counter_attack - 1)); // 3..1
+_number_bmp = ceil (random (_vehs_counter_attack - 1)); // 3..1
 
-_numbervecs = (_vecs_counter_attack - 2) max 1; // 2..1
+_numbervecs = (_vehs_counter_attack - 2) max 1; // 2..1
 
 _type_list_attack = [["basic",0],["specops",0],["tank",(ceil random _numbervecs)],["bmp",(ceil random _numbervecs)]];
 
@@ -59,18 +60,18 @@ _bmp_num = 0;
 
 for "_xx" from 0 to (count _type_list_attack - 1) do {
 	_typeidx = _type_list_attack select _xx;
-	switch (_typeidx) do {
+	switch (_typeidx select 0) do {
 		case "basic" : {
-			_basic_num = _number_basic * (_typeidx select _xx);
+			_basic_num = (_typeidx select 1) *_number_basic;
 		};
 		case "specops":  {
-			_specops_num = _number_specops * (_typeidx select _xx);
+			_specops_num = (_typeidx select 1) * _number_specops;
 		};
 		case "tank":  {
-			_tank_num = _number_tank * (_typeidx select _xx);
+			_tank_num = (_typeidx select 1) * _number_tank;
 		};
 		case "bmp":  {
-			_bmp_num = _number_bmp * (_typeidx select _xx);
+			_bmp_num = (_typeidx select 1) * _number_bmp;
 		};
 	};
 	call compile format["if (_number_%1 > 0) then {for ""_i"" from 1 to _number_%1 do {[_typeidx select 0, _start_array, _current_target_pos, _typeidx select 1, ""attack"",d_enemy_side,0,-1.111] execVM ""x_scripts\x_makegroup.sqf"";sleep 5.123;};};",_typeidx select 0];

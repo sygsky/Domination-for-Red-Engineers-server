@@ -168,7 +168,7 @@ x_getwparray2 = {
 	_wp_a
 };
 
-// Gets array of 100 base point in rectangle of designated radious
+// Gets array of 100 base point in rectangle of designated size
 // call: _wp_arr = [_pos, _a, _b, _angle] call x_getwparray3
 x_getwparray3 = {
 	private ["_pos","_a","_b","_angle","_wp_a","_point"];
