@@ -85,7 +85,7 @@ if (isServer) then {
 		publicVariable "fRainLess";
 
 		//fRainMore = 0.175 + random 0.375; //1.1 for better chance of actual thunderstorms
-		fRainMore = 0.175 + (random 0.825)^2; //tendency towards nicer weather in rainy weather areas
+		fRainMore = 0.175 + (random 0.825)^2; //tendency towards cloudy weather in rainy weather areas
 		publicVariable "fRainMore";
 
 		//  fFogLess = random 0.33; //linear random

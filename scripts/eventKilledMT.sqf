@@ -11,7 +11,7 @@
     killer: Object - Object that killed the unit
     Contains the unit itself in case of collisions.
 
-    Event assigned to Main Task (TV-Tower) and protect it from any kill except: a) unrecognized, b) by man on feet but not in vehicle
+    Event assigned to Main Task (TV-Tower) and protect it from any kill except: a) unrecognized, b) by man on feet, not in vehicle
 
 */
 
@@ -23,29 +23,29 @@ _restored = false;
 _name = _killer;
 if ( !(isNull _killer) ) then{
     if ( isPlayer _killer ) exitWith  { _name = name _killer };
-    if ( !( _killer isKindOf "CaManBase" ) ) exitWith {
-        if ( isPlayer (gunner _killer) ) exitWith { _name = format["%1", name  (gunner _killer)]};
-        if ( isPlayer (driver _killer)) exitWith {_name = format["%1", name  (driver _killer)]};
-        if ( isPlayer (commander _killer)) exitWith {_name = format["%1", name  (commander _killer)]};
-    }
+    if ( !( _killer isKindOf "CaManBase" ) ) exitWith { // killer is some vehicle
+        if ( isPlayer (gunner _killer) ) exitWith { _name = format["%1(%2)", typeOf __killer, name  (gunner _killer)]};
+        if ( isPlayer (driver _killer)) exitWith {_name = format["%1(%2)", typeOf __killer, name  (driver _killer)]};
+        if ( isPlayer (commander _killer)) exitWith {_name = format["%1(%2)", typeOf __killer, name  (commander _killer)]};
+    };
+    if ( vehicle _killer != _killer ) exitWith { // killer (player) is in vehicle
+        _name = format["%1(%2)",typeOf (vehicle _killer), name _killer];
+    };
 } else { _name = "<null>"; };
-hint localize format["+++ MTTarget ""killed"": house %1, killer %2(%3), damage %4, vUp %5.", _house, typeOf _killer, _name, damage _house, vectorUp _house];
+
+// PRINT INFO LINE TO THE *.RPT
+hint localize format["+++ MTTarget ""killed"": house %1, killer %2, dist %3, damage %4, vUp %5", _house, _name, round(_killer distance _house), damage _house, vectorUp _house];
 
 // Don't accept kill if done not by direct existing player action
 if ( !( isNull  _killer ) ) then { // not NULL killer
-
-	_killed = false;
+	_success_kill = false;
 	if  ( _killer isKindOf "CAManBase" ) then {  // if killer is a man, check for his vehicle too
-		if (vehicle _killer == _killer) exitWith {_killed = true;}; // no vehicle so tower is killed correctly
-		// killer is in vehicle, check if vehicle is alive or not
-		// if vehicle dead that is kamikadze one
-		if ( alive ( vehicle _killer ) ) then {
-			// TODO: vehicle is alive! Check if tower not killed by vehicle weapon
-			_killed = true;
-		};
+		if (vehicle _killer == _killer) exitWith {_success_kill = true;}; // killer is on feet, so tower is killed correctly
+		// killer is in vehicle, check if vehicle is alive or not, if vehicle dead that is kamikadze one
+		if (!alive (vehicle _killer)) then { _name = format["%1{KAMIKADZE}", _name]; };
 	};
-	if (_killed ) exitWith{};
-     hint localize format["*** MTTarget: resurrect tower on killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
+	if (_success_kill ) exitWith{}; // not restore target
+     hint localize format["*** MTTarget: resurrect tower, killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object
     if (!(_house isKindOf "House")) exitWith {};
