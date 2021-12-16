@@ -42,8 +42,8 @@ _tmo         = 0;
 //_sleep_delay = GRU_MAIN_TASK_NEXT_RUN; // start task on first step
 
 scopeName "main";
-while {current_counter < number_targets} do // TODO: provide exit for this procedure when all tasks are rached
-{
+while {current_counter < number_targets} do {
+	// TODO: provide exit for this procedure when all tasks are reached
 	//
 	// here we wait for the next town (first on init) ready
 	//
@@ -57,23 +57,19 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 	//
 	sleep MAIN_TASK_RERUN_DELAY; // ensure all troops are generated
 	_ttinfo = call SYG_getTargetTown;
-	if (count _ttinfo == 0) then
-	{
+	if (count _ttinfo == 0) then {
 	    waitUntil {sleep 10; _ttinfo  = call SYG_getTargetTown; count _ttinfo > 0}
 	};
 	_rad = argp( _ttinfo, 2 ) max 300; // get 300 or higher radious
-	_startScore = [ argp(_ttinfo,0), _rad, true ] call SYG_getScore4IntelTask;
+	_startScore = [ argp(_ttinfo,0), _rad +50, true ] call SYG_getScore4IntelTask;
 	
-	if ( _startScore < GRU_MAIN_TASK_MIN_SCORE ) then // not enough score for the next run
-	{
+	if ( _startScore < GRU_MAIN_TASK_MIN_SCORE ) then { // not enough score for the next run
 #ifdef __PRINT__			
 		hint localize "+++ GRUMissionSetup: MAIN TASK has too low scores to run";
 #endif
 		waitUntil {sleep 9.843; target_clear || mt_radio_down || side_main_done };
 		
-	}
-	else // enough score to run task next time
-	{
+	} else { // enough score to run task next time
 		
 		[GRU_MAIN_TASK, [ _ttinfo, _startScore, []]] call GRU_startNewTask; // run next task for next town
 		_task = + GRU_GET_TASK(GRU_MAIN_TASK);
@@ -88,10 +84,8 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 		//
 		// loop on the task active
 		//
-		while { true } do 
-		{
-			if ( (call XPlayersNumber) == 0 ) then
-			{
+		while { true } do  {
+			if ( (call XPlayersNumber) == 0 ) then {
     			 // as players are absent, clear participants list
 			    GRU_CLEAR_MAIN_TASK_USER_LIST;
 			};
@@ -100,8 +94,7 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 
 			// check if agents were present but now are null
    			_agent_list = argpopt(_task, GRU_MAIN_LIST,[]);
-   			if ( (count _agent_list > 0) &&( ( { alive _x } count _agent_list) <= 0) ) exitWith
-   			{
+   			if ( (count _agent_list > 0) &&( ( { alive _x } count _agent_list) <= 0) ) exitWith {
    			    // as no agents are alive
 			    GRU_CLEAR_MAIN_TASK_USER_LIST;
 			    hint localize format["--- GRU_scripts/GRUMissionSetup.sqf: all agents are null---"];
@@ -110,19 +103,17 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
    			// check for all agents alive
 
 			// checks task to be invalid
-			if ( _task call GRU_mainTaskNotValid ) exitWith 
-			{
+			if ( _task call GRU_mainTaskNotValid ) exitWith  {
 				hint localize "--- GRUMissionSetup.sqf: MAIN TASK is invalid, exit town loop";
 			};
-			if ( MAIN_TASK_IS_EMPTY ) then 
-			{
+			if ( MAIN_TASK_IS_EMPTY ) then  {
 //#ifdef __PRINT__			
 //				hint localize  "hint localize : GRU MAIN task is empty";
 //#endif
 				// task was stopped due to some circumstances, lets wait some time before restart
-				if ( _tmo == 0 ) then {_tmo = time + MAIN_TASK_RERUN_DELAY;} 
-				else 
-				{ 
+				if ( _tmo == 0 ) then {
+					_tmo = time + MAIN_TASK_RERUN_DELAY;
+				} else {
 					if (_tmo < time ) then { breakTo "restart_town";};
 				};
 			};
@@ -133,8 +124,7 @@ while {current_counter < number_targets} do // TODO: provide exit for this proce
 		//
 		// stop current task in any case
 		//
-		if ( GRU_MAIN_TASK call GRU_stopTask ) then // msg about task stop
-		{
+		if ( GRU_MAIN_TASK call GRU_stopTask ) then { // msg about task stop
 #ifdef __PRINT__			
 			hint localize "+++ GRUMissionSetup: MAIN TASK stopped on town check loop exit";
 #endif
