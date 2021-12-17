@@ -28,6 +28,7 @@ if ( !(isNull _killer) ) then{
         if ( isPlayer (driver _killer)) exitWith {_name = format["%1(%2)", typeOf __killer, name  (driver _killer)]};
         if ( isPlayer (commander _killer)) exitWith {_name = format["%1(%2)", typeOf __killer, name  (commander _killer)]};
     };
+    // Killer is player, but he is in vehicle, not on feet?
     if ( vehicle _killer != _killer ) exitWith { // killer (player) is in vehicle
         _name = format["%1(%2)",typeOf (vehicle _killer), name _killer];
     };
