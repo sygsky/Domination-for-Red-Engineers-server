@@ -1,5 +1,5 @@
 // Xeno, dlg\beam_tele.sqf
-private ["_control","_index","_pos","_global_pos","_typepos","_global_dir","_veh","_sound_to","_diff","_dist","_dmg","_str"];
+private ["_control","_index","_pos","_global_pos","_tele_pos","_typepos","_global_dir","_veh","_sound_to","_diff","_dist","_dmg","_str"];
 if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
@@ -63,16 +63,16 @@ beam_target = -1;
 
 _sound_to = "teleport_to";
 if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
-    _global_pos = _veh modelToWorld [0,-5,0];
-#ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
+    _tele_pos = _veh modelToWorld [0,-5,0]; // initial (not deviated) teleport position
+#ifdef __TELEPORT_DEVIATION__
     // if teleport is near iron mass add dome deviation to the position
-    _diff = [_veh, __NO_TELEPORT_NEAR_LARGE_IRON_MASS__] call SYG_findTeleportError;
-    _dmg = (damage _veh) * __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ / 2;
+    _diff = [_veh, __TELEPORT_DEVIATION__] call SYG_findTeleportError; // deviation due to magnetic mass vicinity
+    _dmg = (damage _veh) * __TELEPORT_DEVIATION__ / 2; // deviation due to damage
     _dist = _diff + _dmg;
-    if ( _dist > 0 ) then {
+    if ( _dist > 0.2 ) then {
 	   	// if there is an error on teleport, calculate shifted position now
-     	_global_pos = [_global_pos, _dist] call SYG_deviateTeleportPoint;
-     	_dist = _global_pos distance _veh;
+     	_global_pos = [_tele_pos, _dist] call SYG_deviateTeleportPoint; // real teleport position
+     	_dist = _global_pos distance _tele_pos;
 		hint localize format["+++ teleport deviated to %1 m", (round(_dist*10))/10];
 		_str = if ( _dist < 2 ) then {"STR_SYS_75_5_2"} else {
 			if ( _dist < 5 ) then {"STR_SYS_75_5_5"} else {
@@ -81,7 +81,7 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
 		};
 	    format [localize "STR_SYS_75_5", localize _str ]  call XfHQChat; // "A large mass of iron next to the MHQ %1 shifted the point of teleport!"
      	_sound_to = call SYG_powerDownSound; // play specific sound for this case
-     };
+     } else {_global_pos = _tele_pos};
 #endif
     // TODO: if teleport point is in house, prevent teleport ("You can't teleport to non-empty space!!!")
     _global_dir = direction _veh;
@@ -89,7 +89,7 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
     sleep 1.0; // (round(_err*10))/10, (round((_global_pos distance _new_pos)*10))/10
 };
 
-_global_pos set [2, 0];  // always port to the ground
+// _global_pos set [2, 0];  // always port to the ground, but this point already is zero at Z value
 _pos = getPos player; // start positon
 player setPos _global_pos;
 player setDir _global_dir;

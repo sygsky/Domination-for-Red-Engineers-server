@@ -1914,7 +1914,7 @@ SYG_vehToType = {
 	_this
 };
 
-#ifdef __NO_TELEPORT_NEAR_LARGE_IRON_MASS__
+#ifdef __TELEPORT_DEVIATION__
 //
 // Call as: _near = [_veh | _pos<, _dist = 10>] call  isNearIronMass;
 //
@@ -1929,7 +1929,7 @@ SYG_ironMassNear = {
 	if ((typeName _this) != "ARRAY") exitWith  { [] };
 	private ["_dist","_arr","_ret"];
 	// check if big metal mass is near teleporter
-	_dist = if ((count _this) > 1) then { _this select 1} else { __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ };
+	_dist = if ((count _this) > 1) then { _this select 1} else { __TELEPORT_DEVIATION__ };
 	_arr = nearestObjects [ _this select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119","RHIB" ], _dist ];
 	if (count _arr == 0) exitWith { [] };
 	_ret = [];
@@ -1962,12 +1962,12 @@ SYG_findTeleportError = {
 	_arr = _this  call SYG_ironMassNear;
 	if ( count _arr == 0 ) exitWith {0};
 	_pos  = _this select 0;
-	_mindist = if( count _this > 1 ) then { _this select 1 } else { __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ };
+	_mindist = if( count _this > 1 ) then { _this select 1 } else { __TELEPORT_DEVIATION__ };
 	_pos = if ( typeName _pos == "OBJECT" ) then { getPos _pos } else { _pos };
 	_sum = 0;
 	{
 		_dist = [_pos, _x] call SYG_distance2D;
-		if (_dist < _mindist) then { _sum = _sum + __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ - _dist };
+		if (_dist < _mindist) then { _sum = _sum + __TELEPORT_DEVIATION__ - _dist };
 	} forEach _arr;
 	hint localize  format[ "+++ Found %1 vehicle[s] in radious %2 m, sum %3, %4", count _arr, _mindist, _sum, [_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE ];
 	sqrt (_sum *  5)
