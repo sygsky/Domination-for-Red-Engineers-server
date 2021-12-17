@@ -184,7 +184,8 @@ SYG_getLaughterSound = {
     "tasty","doggy","score",
     "disagreement_tongue","joy_yes","disagreement","surprize","sarcasm","yes_yes2","busted2","joy_laugh2","joy_laugh",
     "joy2","joy","yeah","yes_yes","yes","good_work","good_job_squad","we_ve_got_them","soldier_down","get_down",
-    "hi_is_down2","hi_is_down","enemy_down","auf_wiedersehen"
+    "hi_is_down2","hi_is_down","enemy_down","auf_wiedersehen","blah_blah_blah","horks_and_spits","man_you_suck",
+    "mocking_laugh","mocking_laugh_1","mocking_laugh_2","mocking_laugh_6","mommas_boy","silly_noise","you_got_no_skills"
     ] call XfRandomArrayVal
 };
 // NOTE: Plays ONLY music (items from CfgMusic), not sound (CfgSounds)

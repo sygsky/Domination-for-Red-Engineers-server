@@ -24,8 +24,7 @@ class Titel1
 	};
 };
 */
-class XDomLabel
-{
+class XDomLabel {
 	idd=-1;
 	movingEnable=0;
 	duration=10;
@@ -34,16 +33,14 @@ class XDomLabel
 
 	controls[]={"Picture"};
 
-	class Picture : RscPicture
-	{
+	class Picture : RscPicture {
 		x=0.31; y=0.4; w=0.4; h=0.07;
 		text="pics\domination.paa";
 		sizeEx = 256;
 	};
 };
 
-class XDomLabelNewYear
-{
+class XDomLabelNewYear {
 	idd=-1;
 	movingEnable=0;
 	duration=10;
@@ -52,16 +49,14 @@ class XDomLabelNewYear
 
 	controls[]={"Picture"};
 
-	class Picture : RscPicture
-	{
+	class Picture : RscPicture {
 		x=0.31; y=0.4; w=0.4; h=0.07;
 		text="pics\domination_new_year.paa";
 		sizeEx = 256;
 	};
 };
 
-class xvehicle_hud
-{
+class xvehicle_hud {
 	idd=64431;
 	movingEnable = true;
 	fadein       =  0;
@@ -71,8 +66,7 @@ class xvehicle_hud
 	controls[]={"vehicle_hud_name","vehicle_hud_speed","vehicle_hud_fuel","vehicle_hud_damage","vehicle_hud_direction"};
 	onLoad="DVEC_HUD = _this select 0";
 
-	class vehicle_hud_name
-	{
+	class vehicle_hud_name {
 		type = 0;
 		idc = 64432;
 		style = 0;
@@ -87,8 +81,7 @@ class xvehicle_hud
 		text = "";
 	};
 
-	class vehicle_hud_speed
-	{
+	class vehicle_hud_speed {
 		type = 0;
 		idc = 64433;
 		style = 0;
@@ -103,8 +96,7 @@ class xvehicle_hud
 		text = "";
 	};
 
-	class vehicle_hud_fuel
-	{
+	class vehicle_hud_fuel {
 		type = 0;
 		idc = 64434;
 		style = 0;
@@ -119,8 +111,7 @@ class xvehicle_hud
 		text = "";
 	};
 
-	class vehicle_hud_damage
-	{
+	class vehicle_hud_damage {
 		type = 0;
 		idc = 64435;
 		style = 0;
@@ -135,8 +126,7 @@ class xvehicle_hud
 		text = "";
 	};
 
-	class vehicle_hud_direction
-	{
+	class vehicle_hud_direction {
 		type = 0;
 		idc = 64436;
 		style = 0;
@@ -152,8 +142,7 @@ class xvehicle_hud
 	};
 };
 //#####################
-class chopper_hud
-{
+class chopper_hud {
 	idd=64432;
 	movingEnable = true;
 	fadein       =  0;
@@ -163,8 +152,7 @@ class chopper_hud
 	controls[]={"vehicle_hud_start","vehicle_hud_start2","vehicle_hud_start3"};
 	onLoad="DCHOP_HUD = _this select 0";
 	
-	class vehicle_hud_start
-	{
+	class vehicle_hud_start {
 		type = 0;
 		idc = 64438;
 		style = 0;
@@ -178,8 +166,7 @@ class chopper_hud
 		colorBackground[]={0,0,0,0.0};
 		text = "";
 	};
-	class vehicle_hud_start2
-	{
+	class vehicle_hud_start2 {
 		type = 0;
 		idc = 64439;
 		style = 0;
@@ -193,8 +180,7 @@ class chopper_hud
 		colorBackground[]={0,0,0,0.0};
 		text = "";
 	};
-	class vehicle_hud_start3
-	{
+	class vehicle_hud_start3 {
 		type = 0;
 		idc = 64440;
 		style = 0;
@@ -210,8 +196,7 @@ class chopper_hud
 	};
 };
 
-class chopper_lift_hud
-{
+class chopper_lift_hud {
 	idd=61420;
 	movingEnable = true;
 	fadein       =  0;
@@ -221,8 +206,7 @@ class chopper_lift_hud
 	controls[]={"chopper_hud_background","chopper_hud_type","chopper_hud_icon","chopper_hud_edge","chopper_hud_dist","chopper_hud_height","chopper_hud_back","chopper_hud_forward","chopper_hud_left","chopper_hud_right","chopper_hud_middle","chopper_hud_icon2"};
 	onLoad="DCHOP_LIFT_HUD = _this select 0";
 	
-	class chopper_hud_background
-	{
+	class chopper_hud_background {
 		idc = 64437;
 		type = 0;
 		colorText[] = {1, 1, 1, 1};
@@ -237,8 +221,7 @@ class chopper_lift_hud
 		h = 0.4;
 	};
 	
-	class chopper_hud_type
-	{
+	class chopper_hud_type {
 		type = 0;
 		idc = 64438;
 		style = 0;
@@ -253,8 +236,7 @@ class chopper_lift_hud
 		text = "";
 	};
 	
-	class chopper_hud_icon
-	{
+	class chopper_hud_icon {
 		type = 0;
 		idc = 64439;
 		style = 48;
@@ -269,8 +251,7 @@ class chopper_lift_hud
 		text = "";
 	};
 	
-	class chopper_hud_edge
-	{
+	class chopper_hud_edge {
 		type = 0;
 		idc = 64440;
 		style = 0;
@@ -285,8 +266,7 @@ class chopper_lift_hud
 		text = "";
 	};
 	
-	class chopper_hud_dist
-	{
+	class chopper_hud_dist {
 		type = 0;
 		idc = 64441;
 		style = 0;
@@ -301,8 +281,7 @@ class chopper_lift_hud
 		text = "";
 	};
 	
-	class chopper_hud_height
-	{
+	class chopper_hud_height {
 		type = 0;
 		idc = 64442;
 		style = 0;
@@ -317,8 +296,7 @@ class chopper_lift_hud
 		text = "";
 	};
 	
-	class chopper_hud_back
-	{
+	class chopper_hud_back {
 		type = 0;
 		idc = 64443;
 		style = 48;
@@ -332,8 +310,7 @@ class chopper_lift_hud
 		colorBackground[]={0,0,0,0.0};
 		text = "";
 	};
-	class chopper_hud_forward
-	{
+	class chopper_hud_forward {
 		type = 0;
 		idc = 64444;
 		style = 48;
@@ -347,8 +324,7 @@ class chopper_lift_hud
 		colorBackground[]={0,0,0,0.0};
 		text = "";
 	};
-	class chopper_hud_left
-	{
+	class chopper_hud_left {
 		type = 0;
 		idc = 64445;
 		style = 48;
@@ -362,8 +338,7 @@ class chopper_lift_hud
 		colorBackground[]={0,0,0,0.0};
 		text = "";
 	};
-	class chopper_hud_right
-	{
+	class chopper_hud_right {
 		type = 0;
 		idc = 64446;
 		style = 48;
@@ -377,8 +352,7 @@ class chopper_lift_hud
 		colorBackground[]={0,0,0,0.0};
 		text = "";
 	};
-	class chopper_hud_middle
-	{
+	class chopper_hud_middle {
 		type = 0;
 		idc = 64447;
 		style = 48;
@@ -393,8 +367,7 @@ class chopper_lift_hud
 		text = "";
 	};
 	
-	class chopper_hud_icon2
-	{
+	class chopper_hud_icon2 {
 		type = 0;
 		idc = 64448;
 		style = 48;
@@ -410,8 +383,7 @@ class chopper_lift_hud
 	};
 };
 
-class chopper_lift_hud2
-{
+class chopper_lift_hud2 {
 	idd=61421;
 	movingEnable = true;
 	fadein       =  0;
@@ -421,8 +393,7 @@ class chopper_lift_hud2
 	controls[]={"chopper_hud_type"};
 	onLoad="DCHOP_HUD2 = _this select 0";
 	
-	class chopper_hud_type
-	{
+	class chopper_hud_type {
 		type = 0;
 		idc = 61422;
 		style = 0;

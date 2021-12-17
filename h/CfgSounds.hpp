@@ -290,6 +290,18 @@ class CfgSounds {
     class enemy_down     { name=""; sound[] = {\sounds\defeat\laughter\enemy_down.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class auf_wiedersehen{ name=""; sound[] = {\sounds\defeat\laughter\auf_wiedersehen.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
+    // next pack of mock sounds
+    class blah_blah_blah    { name=""; sound[] = {\sounds\defeat\laughter\blah-blah-blah.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class horks_and_spits   { name=""; sound[] = {\sounds\defeat\laughter\horks_and_spits.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class man_you_suck      { name=""; sound[] = {\sounds\defeat\laughter\man_you_suck.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class mocking_laugh     { name=""; sound[] = {\sounds\defeat\laughter\mocking_laugh.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class mocking_laugh_1   { name=""; sound[] = {\sounds\defeat\laughter\mocking_laugh_1.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class mocking_laugh_2   { name=""; sound[] = {\sounds\defeat\laughter\mocking_laugh_2.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class mocking_laugh_6   { name=""; sound[] = {\sounds\defeat\laughter\mocking_laugh_6.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class mommas_boy        { name=""; sound[] = {\sounds\defeat\laughter\mommas_boy.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class silly_noise       { name=""; sound[] = {\sounds\defeat\laughter\silly_noise.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class you_got_no_skills { name=""; sound[] = {\sounds\defeat\laughter\you_got_no_skills.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+
 
 // "E:\Bin\ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\defeat\laughter\joy_laugh.ogg"
 
