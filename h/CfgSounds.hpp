@@ -302,9 +302,6 @@ class CfgSounds {
     class silly_noise       { name=""; sound[] = {\sounds\defeat\laughter\silly_noise.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class you_got_no_skills { name=""; sound[] = {\sounds\defeat\laughter\you_got_no_skills.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
-
-// "E:\Bin\ArmA\MPMissions\domination_4_5_east_ace_ra.sara\sounds\defeat\laughter\joy_laugh.ogg"
-
     class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation3 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\3.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
