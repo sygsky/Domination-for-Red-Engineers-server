@@ -221,22 +221,40 @@ XCheckSMHardTarget = {
 /**
  by Sygsky 12-APR-2020
 
- Triggered when the unit is damaged. In ArmA works with all vehicles not only men like in OFP.
- (Does not fire if damage is set via setDammage.) (If simultaneous damage occured (e.g. via grenade) EH might be triggered several times.)
+ Triggered when the unit is hit/damaged.
 
- Global. Passed array: [unit, selectionName, damage]
+ Is not always triggered when unit is killed by a hit.
+ Most of the time only the killed event handler is triggered when a unit dies from a hit.
+ The hit EH will not necessarily fire if only minor damage occurred (e.g. firing a bullet at a tank), even though the damage increased.
+
+ Local.
+
+ Passed array: [unit, causedBy, damage]
 
  unit: Object - Object the event handler is assigned to
- selectionName: String - Name of the selection where the unit was damaged
- damage: Number - Resulting level of damage
+ causedBy: Object - Object that caused the damage.
+ Contains the unit itself in case of collisions.
+ damage: Number - Level of damage caused by the hit
  */
 SYG_hitMTTarget = {
     // drop damage if < 1 or hit not from man
-    if ( ((_this select 2)  >= 1) &&  ((typeOf (_this select 1)) isKindOf "CAManBase" ) ) exitWith {
-//           player groupChat format["Damage %1 accepted", _this select 2]
+    if ( ( damage (_this select 0)  >= 1 ) && ( (_this select 1) isKindOf "CAManBase") ) exitWith {
+        hint localize  format["*** Hit dmg %1(total %2) to %3, by %4 is accepted",
+            _this select 2,
+            damage (_this select 0),
+            typeOf (_this select 0),
+            name (_this select 1)];
     };
     (_this select 0) setDamage  0; // fix possible negative value
-//    player groupChat format["*** Not accepted: dmg %1, killer %2 (is CAManBase == %3), dist. %4 m", _this select 2, typeOf (_this select 1), (typeOf (_this select 1)) isKindof "CaManBase", round ((_this select 1) distance (_this select 0))]
+    if (isNull (_this select 1)) then {
+        hint localize format["*** Hit to %1 is not accepted: dmg %2, by null", typeOf (_this select 0), _this select 2];
+    } else {
+        hint localize format["*** Hit to %1 is not accepted: dmg %2, by %3, dist. %4 m",
+            typeOf (_this select 0),
+            _this select 2,
+            name  (_this select 1),
+            round ((_this select 1) distance (_this select 0))]
+    };
 };
 
 //

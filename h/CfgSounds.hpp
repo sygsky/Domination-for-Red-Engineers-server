@@ -243,7 +243,6 @@ class CfgSounds {
     class laughter_11 { name="Laughter 11"; sound[] = {\sounds\defeat\laughter\11.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class laughter_12 { name="Laughter 12"; sound[] = {\sounds\defeat\laughter\12.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
-
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
     class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\over,db+10,1.0}; titles[] = {}; } // War cry "game over"
     class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "get some"
