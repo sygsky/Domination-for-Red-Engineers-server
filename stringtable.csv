@@ -166,7 +166,7 @@ STR_SYS_75_1,Teleporting not possible while factory %1 is ruined !!!,"Das telepo
 STR_SYS_75_2,Teleporting not possible while MHQ has damage (%1%2)!!!,"Teleportieren nicht möglich, während MHQ Schaden hat (%1%2)!!!","No es posible teletransportarse, debido a los daños de KSHM (%1%2)!!!","Телепортирование невозможно, из-за повреждений КШМ (%1%2)!!!"
 STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport will stop working!","MHQ %1%2 Schaden, sofort reparieren, sonst funktioniert der Teleport nicht mehr!","Dañado KSHM %1%2, reparar inmediatamente, de lo contrario el teletransportador dejará de funcionar!","Повр. КШМ %1%2, немедленно почините, иначе перестанет работать телепорт!"
 STR_SYS_75_4,A large mass of iron was found nearby!,In der Nähe - eine Masse aus Eisen!,"Cerca, una masa de hierro!",Рядом обнаружена большая масса железа!
-STR_SYS_75_5,Dest. point is %1 off due to iron mass and/or MHQ damage!,Der Zielpunkt ist aufgrund der Eisenmasse und/oder des MHQ-Schadens um 1 % verschoben!,El punto de destino está %1 fuera debido a la masa de hierro y/o al daño del MHQ!,Точка назначения %1 смещена из-за массы железа и/или повреждения КШМ!
+STR_SYS_75_5,Dest. point is %1 off due to ferro-magnetic mass and/or MHQ damage!,Der Zielpunkt ist aufgrund der Eisenmasse und/oder des MHQ-Schadens um 1 % verschoben!,El punto de destino está %1 fuera debido a la masa de hierro y/o al daño del MHQ!,Точка назначения %1 смещена из-за массы железа и/или повреждения КШМ!
 STR_SYS_75_5_2,slightly,leicht,ligeramente,слегка
 STR_SYS_75_5_5,a little,ein wenig,un poco,ненамного
 STR_SYS_75_5_10,significantly,deutlich,significativamente,существенно

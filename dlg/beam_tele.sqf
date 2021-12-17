@@ -63,8 +63,8 @@ beam_target = -1;
 
 _sound_to = "teleport_to";
 if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
-    _tele_pos = _veh modelToWorld [0,-5,0]; // initial (not deviated) teleport position
 #ifdef __TELEPORT_DEVIATION__
+    _tele_pos = _veh modelToWorld [0,-5,0]; // initial (not deviated) teleport position
     // if teleport is near iron mass add dome deviation to the position
     _diff = [_veh, __TELEPORT_DEVIATION__] call SYG_findTeleportError; // deviation due to magnetic mass vicinity
     _dmg = (damage _veh) * __TELEPORT_DEVIATION__ / 2; // deviation due to damage
@@ -72,16 +72,18 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
     if ( _dist > 0.2 ) then {
 	   	// if there is an error on teleport, calculate shifted position now
      	_global_pos = [_tele_pos, _dist] call SYG_deviateTeleportPoint; // real teleport position
-     	_dist = _global_pos distance _tele_pos;
-		hint localize format["+++ teleport deviated to %1 m", (round(_dist*10))/10];
+     	_dist = [_global_pos, _tele_pos] call SYG_distance2D;
+		hint localize format["+++ teleport deviated to %1 m, shift %2", (round(_dist*10))/10, [ _global_pos, _tele_pos ] call  SYG_vectorSub];
 		_str = if ( _dist < 2 ) then {"STR_SYS_75_5_2"} else {
 			if ( _dist < 5 ) then {"STR_SYS_75_5_5"} else {
 				if ( _dist < 10 ) then {"STR_SYS_75_5_10"} else {"STR_SYS_75_5_MORE"};
 			};
 		};
-	    format [localize "STR_SYS_75_5", localize _str ]  call XfHQChat; // "A large mass of iron next to the MHQ %1 shifted the point of teleport!"
+	    format [localize "STR_SYS_75_5", localize _str ]  call XfHQChat; // "Dest. point is %1 off due to iron mass and/or MHQ damage!"
      	_sound_to = call SYG_powerDownSound; // play specific sound for this case
-     } else {_global_pos = _tele_pos};
+     } else { _global_pos = _tele_pos };
+#else
+    _global_pos = _veh modelToWorld [0,-5,0]; // real teleport position (no deviation allowed at this mission)
 #endif
     // TODO: if teleport point is in house, prevent teleport ("You can't teleport to non-empty space!!!")
     _global_dir = direction _veh;

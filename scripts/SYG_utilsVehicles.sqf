@@ -1980,7 +1980,7 @@ SYG_deviateTeleportPoint = {
 	private ["_err","_pos","_rad","_ang","_dx","_dy"];
 	_pos = _this select 0;
 	_err = _this select 1;
-	if (_err == 0) exitWith { _pos };
+	if (_err == 0) exitWith { [_pos select 0, _pos select 1, 0] };
 	_rad = random _err; // Do tendency of randomness to the center of circle
 	_ang = random 360;
 	_dx = (cos _ang) * _rad;
