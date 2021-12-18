@@ -31,7 +31,7 @@ SYG_sm_initialized = true;
 //
 
 SYG_createStaticWeaponGroup = {
-	private ["_grp","_vehtype","_vt","_utype","_posarr","_pos","_veh","_unit","_create_delay"];
+	private ["_grp","_vehtype","_vt","_utype","_posarr","_pos","_veh","_unit","_create_delay","_x"];
 	
 	_grp     = arg(0);
 	_vehtype = arg(1);
@@ -93,7 +93,7 @@ SYG_createStaticWeaponGroup = {
 //        
 //
 SYG_findEnemyAt = {
-	private ["_side","_pos","_dist","_types","_arr","_ret"];
+	private ["_side","_pos","_dist","_types","_arr","_ret","_x"];
 	_side = arg(0);
 	_pos  = arg(1);
 	_dist = arg(2);
@@ -113,7 +113,7 @@ SYG_findEnemyAt = {
 // returns: array of SM id, near to the point. If case of bad parameters, always [] is returned
 //
 SYG_findNearSMIdsArray = {
-	private ["_sm_id_arr","_center","_search_dist","_ret_id_arr","_sm_pos","_dist"];
+	private ["_sm_id_arr","_center","_search_dist","_ret_id_arr","_sm_pos","_dist","_x"];
     if ( typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_findNearSM: expected argument is array, found %1", typeName _this];[]};
     if ( count _this < 3) exitWith {hint localize format["--- SYG_findNearSM: expected number of arguments >= 3, found %1", count _this]; []};
     _sm_id_arr   = arg(0);

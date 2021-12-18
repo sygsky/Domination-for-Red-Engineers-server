@@ -152,7 +152,7 @@ SYG_textMultiply = {
 // E.g.: ["txt_",3] call  SYG_textMultiply => ['t','x','t','_','t','x','t','_','t','x','t','_'];
 //
 SYG_textMultiplyArr = {
-	private ["_txt","_mult","_res","_i"];
+	private ["_txt","_mult","_res","_i","_x"];
 	_txt = toArray (_this select 0);
 	_mult = _this select 1;
 	_res = [];

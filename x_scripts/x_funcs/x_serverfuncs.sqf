@@ -239,7 +239,7 @@ x_getunitliste = {
 
 // Makes mixed vehicles group (e.g. for patrol)
 x_getmixedliste = {
-	private ["_side", "_ret_list", "_list"];
+	private ["_side", "_ret_list", "_list","_x"];
 	_side = _this select 0;
 	_ret_list = [];
 	
@@ -306,7 +306,7 @@ SYG_addEventsAndDispose = {
 x_makevgroup = {
 	private ["_numbervehicles", "_pos", "_crewmember", "_vehiclename", "_grp", "_radius", "_direction", "_do_points",
 	"_the_vehicles", "_d_crewman", "_d_crewman2", "_no_crew", "_side_char", "_grpskill", "_n", "_vehicle", "_dir",
-	"_cmdr", "_drvr", "_gnnr", "_unit"];
+	"_cmdr", "_drvr", "_gnnr", "_unit","_x"];
 	_numbervehicles = _this select 0;
 	_pos = _this select 1;
 	_crewmember = _this select 2;
@@ -415,7 +415,7 @@ x_makevgroup = {
 // Params:
 // position, unitlist, group, do_points (for TT mode)
 x_makemgroup = {
-	private ["_grp","_pos","_ret","_unitliste","_do_points"];
+	private ["_grp","_pos","_ret","_unitliste","_do_points","_x"];
 	_pos = _this select 0;
 	_unitliste = _this select 1;
 	_grp = _this select 2;
@@ -448,7 +448,7 @@ x_makemgroup = {
 XCreateInf = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_pos_center", "_radius", "_do_patrol", "_side",
 	         "_gwp_formations", "_ret_grps", "_pos", "_nr", "_numbergroups", "_i", "_newgroup", "_unit_array", "_type",
-	         "_units", "_leader", "_grp_array","_arr","_grpArr"];
+	         "_units", "_leader", "_grp_array","_arr","_grpArr","_x"];
 	_type1 = _this select 0;
 	_numbergroups1 = _this select 1;
 	_type2 = _this select 2;
@@ -511,7 +511,7 @@ XCreateInf = {
 XCreateArmor = {
 	private ["_type1", "_numbergroups1", "_type2", "_numbergroups2", "_type3", "_numbergroups3", "_pos_center",
 	"_patrol_area", "_numvehicles", "_radius", "_do_patrol", "_ret_grps", "_side", "_pos", "_nr", "_numbergroups", "_i",
-	 "_newgroup", "_unit_array", "_type", "_vehicles", "_leader", "_grp_array"];
+	 "_newgroup", "_unit_array", "_type", "_vehicles", "_leader", "_grp_array","_x"];
 
 	_type1         = _this select 0;
  	_numbergroups1 = _this select 1;
@@ -792,7 +792,7 @@ XGetPlayerPoints = {
 // returns: known nearest enemy units array [_nearest_enemy,_pos_nearest,_leader knowsAbout _nearest_enemy]
 //or empty array []  if no enemy known to the designated unit
 x_get_nenemy = {
-	private ["_grp_array", "_grp", "_leader", "_nearest_enemy", "_ret", "_pos_nearest", "_near_targets"];
+	private ["_grp_array", "_grp", "_leader", "_nearest_enemy", "_ret", "_pos_nearest", "_near_targets","_x"];
 	_grp_array = _this;
 	_grp = _grp_array select 0;
 	if (isNull _grp || ({alive _x} count units _grp) == 0) exitWith {[]};
@@ -824,7 +824,7 @@ x_get_nenemy = {
 // returns: known nearest enemy units array [_nearest_enemy,_pos_nearest,_leader knowsAbout _nearest_enemy]
 //or empty array []  if no enemy known to the designated unit
 grp_getnenemy = {
-	private ["_grp", "_leader", "_nearest_enemy", "_ret", "_pos_nearest", "_near_targets","_dist"];
+	private ["_grp", "_leader", "_nearest_enemy", "_ret", "_pos_nearest", "_near_targets","_dist","_x"];
 	if ( typeName _this != "ARRAY" ) exitWith{[]};
 	if ( count _this < 2 ) exitWith{[]};
 	_grp = _this select 0;

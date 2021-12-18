@@ -512,7 +512,7 @@ XfGetAliveUnits = {
  * or _leader    = _unit call XfGetLeader
  */
 XfGetLeader = {
-	private ["_leader"];
+	private ["_leader","_x"];
 	if (isNull _this) exitWith { objNull };
 	if (typeName _this == "OBJECT") then
 	{

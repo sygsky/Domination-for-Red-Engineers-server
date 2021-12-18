@@ -68,7 +68,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static informatio
 //  if ( count _newWP == 3) then {_vehicle addWP _newWP};
 //
 SYG_chasmExitWP = {
-    private ["_ret","_center","_radious"];
+    private ["_ret","_center","_radious","_x"];
    _ret = [];
 #ifdef __DEFAULT__
     if ( typeName _this == "OBJECT") then {  _this = getPos _this; };
@@ -119,7 +119,7 @@ SYG_nearestLocationD = {
  * to text of location call: _text = text  _loc;
  */
 SYG_nearestLocationA = {
-	private ["_pos","_dist","_nearloc", "_loc","_lst","_ploc"];
+	private ["_pos","_dist","_nearloc", "_loc","_lst","_ploc","_x"];
 	_pos = arg(0);
 	switch (typeName _pos) do {
 		case "OBJECT": {_pos = position _pos;};
@@ -230,7 +230,7 @@ SYG_nearestForest = {
  *  or end of game or in very-very rare moments between main/secondary/occupied mission is finshed and still not started
  */
 SYG_nearestZoneOfInterest = {
-	private ["_dist","_dist1","_min_dist","_wanted_dist","_reta","_pos","_pos1","_pos2","_ret","_part","_part1","_same_part","_opt","_opts"];
+	private ["_dist","_dist1","_min_dist","_wanted_dist","_reta","_pos","_pos1","_pos2","_ret","_part","_part1","_same_part","_opt","_opts","_x"];
 	
 	_pos          = arg(0); // unit/object/vehicle pos
 	_same_part    = arg(1); // find only on same part of island if true
@@ -359,7 +359,7 @@ SYG_whatPartOfIsland = {
  *    _amIInDesert = _getPos player call SYG_isDesert; // TRUE or FALSE
  */
 SYG_isDesert = {
-	private ["_pos","_ret"];
+	private ["_pos","_ret","_x"];
 	_pos = [];
 	switch toUpper(typeName _this) do {
 		case "OBJECT": {_pos = getPos _this;};
@@ -381,7 +381,7 @@ SYG_isDesert = {
  *    _bool = (getPos player) call SYG_pointOnIslet; // true or false is returned
  */
 SYG_pointOnIslet = {
-	private ["_ret"];
+	private ["_ret","_x"];
 	_ret = false;
 	if (typeName _this != "ARRAY") then {_this = position _this;};
 	if (count _this < 2) exitWith {false};
