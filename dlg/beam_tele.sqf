@@ -93,6 +93,7 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
 
 // _global_pos set [2, 0];  // always port to the ground, but this point already is zero at Z value
 _pos = getPos player; // start positon
+_global_pos resize 2;
 player setPos _global_pos;
 player setDir _global_dir;
 ["say_sound", _pos, "teleport_from"] call XSendNetStartScriptClientAll; // play sound of teleport out event everywhere
