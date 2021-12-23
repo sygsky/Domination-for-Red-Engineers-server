@@ -61,13 +61,11 @@ SYG_getRumourText = {
     private ["_daytime","_counter","_index","_rnd","_name1","_name2","_name3","_str1"];
     _daytime = daytime;
     if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then {_str1 = localize "STR_RUM_NIGHT";}
-    else
-    {
+    else {
         //call compile format["_counter=%1;", localize "STR_RUM_NUM"];
         _counter = parseNumber (localize "STR_RUM_NUM");
 
-        if ( isNil "SYG_rumor_index" ) then
-        {
+        if ( isNil "SYG_rumor_index" ) then {
             SYG_rumor_index = floor (random _counter); // start index for current player connection
             SYG_rumor_hour  = floor(daytime); // initial hour of connection
         };
@@ -163,7 +161,7 @@ SYG_textMultiplyArr = {
 };
 
 //
-// Align text  to left or righty by designated width
+// Align text  to left or right by designated width
 // call as: _aligned_text = [_text, _align<,_align_symbol>] call SYG_textAlign;
 // if align < 0 align is to left: ["align", -10] call SYG_textAlign => "align    ", if > 0 to right: ["align", +10] call SYG_textAlign => "     align"
 // if align < string length, returned string is resized to size = abs(aligh)
@@ -171,7 +169,7 @@ SYG_textMultiplyArr = {
 // if _align presents only 1st =ymbol is used as aligning one
 //
 SYG_textAlign = {
-	private [ "_align", "_left", "_right", "_sym", "_empty", "_str" ];
+	private [ "_align", "_left", "_right", "_sym", "_empty", "_str", "_x" ];
 	_sym = if (count _this > 2) then { toArray (_this select 2)} else {toArray " "};
 	_sym resize 1;
 	_sym = toString _sym;
@@ -223,7 +221,7 @@ SYG_textAlign = {
 SYG_compactArray = {
     // compact equipment array
     if (typeName _this != "ARRAY") exitWith {_this};
-    private ["_items", "_counts","_i", "_arr", "_ind"];
+    private ["_items", "_counts","_i", "_arr", "_ind", "_x"];
     _items  = [];
     _counts = [];
 
