@@ -14,38 +14,63 @@
     Event assigned to Main Task (TV-Tower) and protect it from any kill except: a) unrecognized, b) by man on feet, not in vehicle
 
 */
-
-private ["_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_type","_newhouse","_house_type","_name"];
+//
+// _dead_heli_is_near = _killer call _dead_heli_near;
+//
+_dead_heli_near = {
+	private ["_veh"];
+	_veh = nearestObject [_this, "Air"];
+	if ( isNull _veh ) exitWith { objNull };
+	if ( _veh isKindOf "ParachuteBase" ) exitWith { objNull };
+	_veh
+}
+private ["_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_type","_newhouse","_house_type","_name"
+		,"_veh","_alive","_correct_kill"
+		];
 // 1.check if tower was killed from some vehicle, not by units with explosive
 _house = _this select 0;
 _killer = _this select 1;
 _restored = false;
 _name = _killer;
-if ( !(isNull _killer) ) then{
-    if ( isPlayer _killer ) exitWith  { _name = name _killer };
-    if ( !( _killer isKindOf "CaManBase" ) ) exitWith { // killer is some vehicle
-        if ( isPlayer (gunner _killer) ) exitWith { _name = format["%1(%2)", typeOf __killer, name  (gunner _killer)]};
-        if ( isPlayer (driver _killer)) exitWith {_name = format["%1(%2)", typeOf __killer, name  (driver _killer)]};
-        if ( isPlayer (commander _killer)) exitWith {_name = format["%1(%2)", typeOf __killer, name  (commander _killer)]};
+if ( !( isNull _killer ) ) then {
+    if ( isPlayer _killer ) exitWith  {
+		// Killer is player, but he is in vehicle, not on feet?
+		_alive = if(alive _killer) then {"alive "} else {"dead "};
+		if ( vehicle _killer != _killer ) exitWith { // killer (player) is in vehicle
+			_name = format[ "%1%2(%3)", _alive, name _killer, typeOf ( vehicle _killer )];
+			if (!alive (vehicle _killer)) then { _name = format["%1<KAMIKADZE>", _name]; }; // killer is in dead vehicle!
+		};
+		_veh = _killer call _dead_heli_near;
+		if (isNull _veh) then {
+	    	_name = name _killer;
+		} else {
+			_name = format[ "%1%2(%3)<KAMIKADZE>", _alive, name _killer, typeOf ( vehicle _killer )];
+		};
     };
-    // Killer is player, but he is in vehicle, not on feet?
-    if ( vehicle _killer != _killer ) exitWith { // killer (player) is in vehicle
-        _name = format["%1(%2)",typeOf (vehicle _killer), name _killer];
+    if ( !( _killer isKindOf "CaManBase" ) ) exitWith { // killer is some vehicle
+        if ( isPlayer ( gunner _killer ) ) exitWith { _name = format["%1(%2)", name  (gunner _killer), typeOf __killer] };
+        if ( isPlayer ( driver _killer ) ) exitWith { _name = format["%1(%2)", name  (driver _killer), typeOf __killer] };
+        if ( isPlayer ( commander _killer ) ) exitWith { _name = format["%1(%2)", name  (commander _killer), typeOf __killer] };
     };
 } else { _name = "<null>"; };
 
 // PRINT INFO LINE TO THE *.RPT
-hint localize format["+++ MTTarget ""killed"": house %1, killer %2, dist %3, damage %4, vUp %5", _house, _name, round(_killer distance _house), damage _house, vectorUp _house];
+hint localize format[ "+++ MTTarget ""killed"": house %1, killer %2, dist %3, damage %4, vUp %5", _house, _name, round(_killer distance _house), damage _house, vectorUp _house ];
 
 // Don't accept kill if done not by direct existing player action
 if ( !( isNull  _killer ) ) then { // not NULL killer
-	_success_kill = false;
+	_correct_kill = false;
 	if  ( _killer isKindOf "CAManBase" ) then {  // if killer is a man, check for his vehicle too
-		if (vehicle _killer == _killer) exitWith {_success_kill = true;}; // killer is on feet, so tower is killed correctly
-		// killer is in vehicle, check if vehicle is alive or not, if vehicle dead that is kamikadze one
-		if (!alive (vehicle _killer)) then { _name = format["%1{KAMIKADZE}", _name]; };
+		if (vehicle _killer == _killer) exitWith {
+			if (alive _killer) exitWIth { _correct_kill = true; }; // killer is alive on feet, so tower is killed correctly
+			// killer not alive. It aslo ca be, but chck if some friendly air vehicle is near. If so, restore tower.
+			_veh = _killer call _dead_heli_near;
+			if ( alive _veh ) exitWith { _correct_kill = true; };
+			if ( ( _veh distance _killer ) > 20) exitWith { _correct_kill = true; };
+		};
+		_correct_kill = alive _killer; // if killer is alive and is in vehicle - town is killed correctly
 	};
-	if (_success_kill ) exitWith{}; // not restore target
+	if (_correct_kill ) exitWith{}; // not restore target
      hint localize format["*** MTTarget: resurrect tower, killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
     // killed NOT directly by man, but from some kind of vehicle etc!!!
     // 1.1 Don't wait animation end, create new TVTower object
@@ -62,7 +87,7 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
         sleep 0.05;
     };
     if ( isNull _ruin) exitWith { hint localize format["--- MTTarget: _ruin not found in %1 sec, exit", round(time - _time) ] };
-    hint localize format["+++ MTTarget: _ruin found in %1 sec", round(time - _time) ];
+    hint localize format["+++ MTTarget: _ruin found in %1 sec", time - _time ];
     _house removeAllEventHandlers "hit";
     _house removeAllEventHandlers "killed";
     deleteVehicle _house;
@@ -76,7 +101,7 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
 
     // Send msg to anybody in radious of ### meters: "The %1 hit on the TV tower has gone to waste!". And play special gong sound
     if ( _killer isKindOf "CAManBase") then { _name = name _killer } else { _name = _killer };
-	_str = ("STR_TV_NUM" call SYG_getLocalizedRandomText); // ""Damn tower, it fell!..."
+	_str = ("STR_TV_NUM" call SYG_getLocalizedRandomText); // "Damn tower, it fell!..."
 
 	[ "msg_to_user", _name,  [ [_str] ], 0, 0, false, "gong_15" ] call XSendNetStartScriptClient;
 

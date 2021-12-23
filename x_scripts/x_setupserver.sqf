@@ -221,7 +221,7 @@ XCheckSMHardTarget = {
 /**
  by Sygsky 12-APR-2020
 
- Triggered when the unit is hit/damaged.
+ Triggered when the unit is "hit".
 
  Is not always triggered when unit is killed by a hit.
  Most of the time only the killed event handler is triggered when a unit dies from a hit.
@@ -231,19 +231,20 @@ XCheckSMHardTarget = {
 
  Passed array: [unit, causedBy, damage]
 
- unit: Object - Object the event handler is assigned to
- causedBy: Object - Object that caused the damage.
- Contains the unit itself in case of collisions.
- damage: Number - Level of damage caused by the hit
+ unit:     Object - Object the event handler is assigned to
+ causedBy: Object - Object that caused the damage. Contains the unit itself in case of collisions.
+ damage:   Number - Level of damage caused by the hit
  */
 SYG_hitMTTarget = {
     // drop damage if < 1 or hit not from man
     if ( ( damage (_this select 0)  >= 1 ) && ( (_this select 1) isKindOf "CAManBase") ) exitWith {
-        hint localize  format["*** Hit dmg %1(total %2) to %3, by %4 is accepted",
+        hint localize  format["*** Hit dmg %1(total %2) to %3, by %4(%5) is accepted",
             _this select 2,
             damage (_this select 0),
             typeOf (_this select 0),
-            name (_this select 1)];
+            name (_this select 1),
+            typeOf (vehicle (_this select 1))
+            ];
     };
     (_this select 0) setDamage  0; // fix possible negative value
     if (isNull (_this select 1)) then {
