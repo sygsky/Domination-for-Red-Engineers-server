@@ -26,24 +26,21 @@ if (_index >= 0) then {
     };
     _parray set [0, _newwtime];
     (_parray select 4) execVM "x_scripts\x_markercheck.sqf"; // remove all player created markers
-
+	_player = call (compile (_parray select 4)); // find player object by his role name
+	// Note: server knows nothing  about ACE ruckzack and distance and death sound on/off.
+	// These parameters are stored only on client computers
+	_str = _player call SYG_getPlayerEquipAsStr; // Get armament formatted array as string
 #ifdef __DEBUG_PRINT__
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", array %2", _name, _parray call SYG_compactArray ];
+    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", old array  %2", _name, _parray call SYG_compactArray ];
+	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", new wpnarr %2", _name, _str ];
 #endif
-
+//	_parray set [ 5, _str]; // set new armament in any case
 #ifdef __AI__
-    // TODO: try to remove all AI of disconnecting player
+    // TODO: try to remove all AI of the disconnecting player
     // orphaned AI must be now local to server, not to any player as only single group player can recruit AI from barracks
 #endif
-
-    __DEBUG_NET("x_serverOPD player disconnected _parray",_parray)
+    //__DEBUG_NET("x_serverOPD player disconnected _parray",_parray)
 } else {
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: unknow player ""%1"", weapons %2, mags %3", _name, weapons player, magazines player ];
-#ifdef __ACE__
-    if ( player call ACE_Sys_Ruck_HasRucksack ) then{
-        _str = [call ACE_Sys_Ruck_RuckMagazines,","] call SYG_joinArr;
-        hint localize format[ "+++ x_scripts\x_serverOPD.sqf: unknown player rucksack ""%1""", _str ];
-    };
-#endif
+    hint localize format[ "--- x_scripts\x_serverOPD.sqf: unknown player name detected ""%1""", _name];
 };
 if (true) exitWith {};

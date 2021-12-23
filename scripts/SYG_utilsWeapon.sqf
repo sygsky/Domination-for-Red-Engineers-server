@@ -2749,9 +2749,17 @@ SYG_getPlayerEquiptArr = {
 #endif
 
 #ifdef __JAVELIN__
-    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
+	if (isNil "d_viewdistance") then {
+	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags]
+	} else {
+	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
+	};
 #else
-    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
+	if (isNil "d_viewdistance") then {
+	    [_wpn, magazines _this, _ruck, _ruckMags]
+	} else {
+	    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
+	};
 #endif
 
 };
