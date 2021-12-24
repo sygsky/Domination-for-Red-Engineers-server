@@ -92,20 +92,22 @@ SYG_getRumourText = {
 //
 // Joins string arrays into single string using designated separator
 // call as: _str = [_arr,", "] call SYG_joinArr; // _str -> "item1, item2, item3"
-// call as: _str = [хъ,", "] call SYG_joinArr; // _str -> "..."
+// call as: _str = [_arr,", "<, """">] call SYG_joinArr; // _str -> """item1"", ""item2"", ""item3"""
+// call as: _str = [[],", "] call SYG_joinArr; // _str -> "..."
 //
 SYG_joinArr = {
     if ( typeName _this != "ARRAY" ) exitWith {"--SYG_joinArr:?#1"};
     if ( count _this < 2 ) exitWith {"--SYG_joinArr:?#2"};
     if ( typeName (_this select 0) != "ARRAY" ) exitWith {"--SYG_joinArr:?#3"};
     if ( count (_this select 0) == 0 ) exitWith {"..."};
-    private [ "_sep", "_arr", "_str", "_i" ];
+    private [ "_sep", "_frm_ch", "_arr", "_str", "_i" ];
     _sep = _this select 1;
+    _frm_ch  = if (count _this > 2) then {_this select 2} else {""};
     if ( typeName _sep != "STRING" ) then { _sep = str(_sep) };
     _arr = _this select 0;
     _str = format["%1", _arr select 0];
     if ( count _arr == 1) exitWith {_str};
-    for "_i" from 1 to ((count _arr) - 1) do { _str = format[ "%1%2%3", _str, _sep, _arr select _i] };
+    for "_i" from 1 to ((count _arr) - 1) do { _str = format[ "%1%2%4%3%4", _str, _sep, _arr select _i, _frm_ch] };
     _str
 };
 

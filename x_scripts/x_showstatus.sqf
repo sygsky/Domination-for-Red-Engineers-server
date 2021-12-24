@@ -103,26 +103,26 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			_str = "";
 			if (format ["%1",_pos] != "[0,0,0]") then {
 				// find civilians
-				_units = nearestObjects [_pos, ["Civilian"], 500];
+				_units = nearestObjects [_pos, ["Civilian"], 300];
 				_cnt = count _units;
-				if ( _cnt == 0 ) exitwith {_str = format[localize "STR_SM_30_1", 500]};
+				if ( _cnt == 0 ) exitwith {_str = format[localize "STR_SM_30_1", 500]}; // "GRU: civilians not found in radius %1 m."
 				for "_i" from 0 to (_cnt - 1) do {
 				    _x = _units select 0;
-                    _dist = format["%1 m", [ [_x, _pos ] call SYG_distance2D, 10] call SYG_roundTo];
+                    _dist = format["%1 %2", [ [_x, _pos ] call SYG_distance2D, 10] call SYG_roundTo, localize "STR_SM_30_4"];
                     if (alive _x) then {
                         if ( damage _x < 0.01 ) then {
-                            _str = format["%1 %2", localize "STR_MIS_ALIVE", _dist];
+                            _str = format["%1 %2", localize "STR_MIS_ALIVE", _dist]; // "alive"
                         } else {
-                            _str = format["%1 %2", localize "STR_MIS_WOUNDED", _dist];
+                            _str = format["%1 %2", localize "STR_MIS_WOUNDED", _dist]; // "wounded"
                         };
                     } else {
-                        _str = format["%1 %2", localize "STR_MIS_DEAD", _dist];
+                        _str = format["%1 %2", localize "STR_MIS_DEAD", _dist]; // "dead"
                     };
                     _units set [_i, _str];
 				};
 				_str = [_units, ","] call SYG_joinArr;
-				_str = format[ localize "STR_SM_30_2", 500, _str];
-			} else { _str = localize "STR_SM_30_3"};
+				_str = format[ localize "STR_SM_30_2", 300, _str]; // "GRU: searching for civilians within a radius of %1 m gives the following: %2"
+			} else { _str = localize "STR_SM_30_3"}; // "GRU: no data about the position of the search!"
 			if (_str != "") then {_s = _s + "\n" + _str};
 
 		};
