@@ -24,9 +24,8 @@ _dead_heli_near = {
 	if ( _veh isKindOf "ParachuteBase" ) exitWith { objNull };
 	_veh
 }
-private ["_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_type","_newhouse","_house_type","_name"
-		,"_veh","_alive","_correct_kill"
-		];
+private [ "_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_type","_newhouse","_house_type","_name"
+			,"_veh","_alive","_correct_kill" ];
 // 1.check if tower was killed from some vehicle, not by units with explosive
 _house = _this select 0;
 _killer = _this select 1;
@@ -89,6 +88,7 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
     if ( isNull _ruin) exitWith { hint localize format["--- MTTarget: _ruin not found in %1 sec, exit", round(time - _time) ] };
     hint localize format["+++ MTTarget: _ruin found in %1 sec", time - _time ];
     _house removeAllEventHandlers "hit";
+    _house removeAllEventHandlers "dammaged";
     _house removeAllEventHandlers "killed";
     deleteVehicle _house;
     deleteVehicle _ruin;
