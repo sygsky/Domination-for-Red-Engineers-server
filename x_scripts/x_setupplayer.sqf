@@ -873,6 +873,7 @@ _local_msg_arr spawn {
              _x call XfGlobalChat;
         } forEach _this;
     };
+    // West Grmany
     if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) exitWith {
         sleep 6;
         // "For numerous military services, the command and the grateful citizens declare you an honorary citizen of Sahrani Island."
@@ -888,6 +889,7 @@ _local_msg_arr spawn {
             7, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
+    // Litva
     if ( (name player) == "Rokse [LT]") exitWith {
         sleep 6;
         [
@@ -897,6 +899,7 @@ _local_msg_arr spawn {
             0, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
+    // Argentina
 	if ( (name player) == "lolport" ) exitWith {
 		sleep 6;
 		[
@@ -904,6 +907,16 @@ _local_msg_arr spawn {
 			"",
 			[ ["Recordamos al Che Guevara, ¡fue nuestro invitado una vez!" ] ],
 			0, 5, false, "drum_fanfare"
+		] call SYG_msgToUserParser;
+	};
+	// Latvia
+	if ( (name player) == "Renton J. Junior" ) exitWith { // "Рентон! Не трожь СППМ! За это - расстрел! Но в будущем)))"
+		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ ["Renton! Nepieskarieties СППМ! Tas ir nošaušanas komanda! Bet nākotnē)))))" ] ],
+			0, 5, false, "armory4"
 		] call SYG_msgToUserParser;
 	};
 
@@ -919,13 +932,13 @@ _local_msg_arr spawn {
 		switch	(_date select 1) do {
 			case 8: { // Aygust
 				if ( (_date select 2) >= 25 ) then {
-					_str = "Берегите местные школы, они нужны детям островитян!";
+					_str = "Береги местные школы, они нужны детям островитян!";
 					_sound = "return";
 				};
 			};
 			case 9: { // September
 				if ( (_date select 2) < 5 ) then {
-					_str = "Островитяне поздравляют Вас с началом занятий в советской школе!";
+					_str = "Островитяне поздравляют тебя с началом занятий в советской школе!";
 					_sound = "school_ring";
 				};
 			}
@@ -939,11 +952,11 @@ _local_msg_arr spawn {
 		] call SYG_msgToUserParser;
 		_hour = _date select 3;
 		_week_day = _date call SYG_weekDay; // Monday returns 0, for Sunday 6
-		if ( ( (_week_day < 4) || (_week_day > 5) ) && (_hour < 23) && (_hour >= 8) ) then { // Not week day and not night
+		if ( ( (_week_day < 4) || (_week_day > 5) ) && (_hour < (SYG_nightSkipFrom - 10)) && (_hour >= 8) ) then { // Not week day and not night
 //		if ( true ) then { // Not week day and not night
 //			hint localize format["+++ sleep %1 to remind Sardelko that tomorrow is a school day!", (23 - daytime) * 3600];
 			[] spawn {
-				sleep ((23 - daytime) * 3600); // wait for the night to come
+				sleep (((SYG_nightSkipFrom - daytime) - 10) * 3600); // wait for the night skip to come
 				[
 					"msg_to_user",
 					"",
