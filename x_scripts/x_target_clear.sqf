@@ -117,7 +117,7 @@ if (!d_no_para_at_all) then {
 //		hint localize format["+++ DEBUG: x_target_clear.sqf (x_createjumpflag.sqf): %1 execVM ""x_scripts\x_createjumpflag.sqf""", _last_town_index];
 		_last_town_index execVM "x_scripts\x_createjumpflag.sqf";
 	} else {
-		hint localize "--- x_target_clear.sqf (x_createjumpflag.sqf) not execured as current_counter >= number_targets";
+		hint localize "--- x_target_clear.sqf (x_createjumpflag.sqf) not executed as current_counter >= number_targets";
 	};
 };
 #endif

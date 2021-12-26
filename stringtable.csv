@@ -45,6 +45,7 @@ STR_TV_2,"You blinked... You thought it had fallen! But alas... wrong...","Du ha
 STR_TV_3,"Damn tower, it fell! I saw it!!! Ahhhhhhhh...","Der verdammte Turm, er ist eingestürzt! Ich habe es gesehen!!! Ahhhhhhhh...","¡La maldita torre, se ha caído! ¡¡Lo vi!! Ahhhhhhhh...","Проклятая башня, она же упала! Я видел!!! А-а-а-а-а..."
 STR_TV_4,What the hell is this!,Was zum Teufel!,¿Qué diablos?,Что за чертовщина!
 STR_TV_5,Your strike on the TV tower has gone to waste! You hit the milk!,Ihr Anschlag auf den Fernsehturm war umsonst! Du hast die Milch getroffen!,¡Tu golpe en la torre de televisión se ha ido al garete! ¡Le diste a la leche!,Ваш удар по телебашне пропал втуне! В молоко!
+STR_TV_VEH,For the loss of a valuable unit without damage to the enemy you lose points: -%1,Für den Verlust einer wertvollen Einheit ohne Schaden für den Feind verlieren Sie Punkte: -%1,Por la pérdida de una unidad valiosa sin daño al enemigo pierdes puntos: -%1,За утрату ценной боевой единицы без ущерба для врага вы теряете очки: -%1
 
 STR_SYS_2,MG nest,MG-Nest,MG-nido,Пул.гнездо
 STR_SYS_02,MG %1,MG %1,MG %1,Пул. %1
