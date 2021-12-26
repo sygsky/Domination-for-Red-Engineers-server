@@ -15,17 +15,18 @@
 
 */
 //
-// _dead_heli_is_near = _killer call _dead_heli_near;
+// _dead_heli_is_near = _killer call _air_veh_near;
 //
-_dead_heli_near = {
+_air_veh_near = {
 	private ["_veh"];
 	_veh = nearestObject [_this, "Air"];
 	if ( isNull _veh ) exitWith { objNull };
 	if ( _veh isKindOf "ParachuteBase" ) exitWith { objNull };
 	_veh
-}
+};
+
 private [ "_house", "_killer","_restored","_sleep_until","_time","_ruin","_ruin_type","_newhouse","_house_type","_name"
-			,"_veh","_alive","_correct_kill" ];
+			,"_veh","_alive","_correct_kill","_kamikadze","_time_delta" ];
 // 1.check if tower was killed from some vehicle, not by units with explosive
 _house = _this select 0;
 _killer = _this select 1;
@@ -39,16 +40,16 @@ if ( !( isNull _killer ) ) then {
 			_name = format[ "%1%2(%3)", _alive, name _killer, typeOf ( vehicle _killer )];
 			if (!alive (vehicle _killer)) then { _name = format["%1<KAMIKADZE>", _name]; }; // killer is in dead vehicle!
 		};
-		_veh = _killer call _dead_heli_near;
+		_veh = _killer call _air_veh_near;
 		if (isNull _veh) then {
 	    	_name = name _killer;
 		} else {
 			_name = format[ "%1%2(%3)<KAMIKADZE>", _alive, name _killer, typeOf ( vehicle _killer )];
 		};
     };
-    if ( !( _killer isKindOf "CaManBase" ) ) exitWith { // killer is some vehicle
-        if ( isPlayer ( gunner _killer ) ) exitWith { _name = format["%1(%2)", name  (gunner _killer), typeOf __killer] };
-        if ( isPlayer ( driver _killer ) ) exitWith { _name = format["%1(%2)", name  (driver _killer), typeOf __killer] };
+    if ( !( _killer isKindOf "CaManBase" ) )  exitWith { // killer is some vehicle
+        if ( isPlayer ( gunner _killer ) )    exitWith { _name = format["%1(%2)", name  (gunner _killer), typeOf __killer] };
+        if ( isPlayer ( driver _killer ) )    exitWith { _name = format["%1(%2)", name  (driver _killer), typeOf __killer] };
         if ( isPlayer ( commander _killer ) ) exitWith { _name = format["%1(%2)", name  (commander _killer), typeOf __killer] };
     };
 } else { _name = "<null>"; };
@@ -57,13 +58,23 @@ if ( !( isNull _killer ) ) then {
 hint localize format[ "+++ MTTarget ""killed"": house %1, killer %2, dist %3, damage %4, vUp %5", _house, _name, round(_killer distance _house), damage _house, vectorUp _house ];
 
 // Don't accept kill if done not by direct existing player action
+_kamikadze = nil;
 if ( !( isNull  _killer ) ) then { // not NULL killer
 	_correct_kill = false;
 	if  ( _killer isKindOf "CAManBase" ) then {  // if killer is a man, check for his vehicle too
 		if (vehicle _killer == _killer) exitWith {
 			if (alive _killer) exitWIth { _correct_kill = true; }; // killer is alive on feet, so tower is killed correctly
-			// killer not alive. It aslo ca be, but chck if some friendly air vehicle is near. If so, restore tower.
-			_veh = _killer call _dead_heli_near;
+			// killer not alive. It also can be, but check if some friendly air vehicle is near. If so, restore tower.
+			_kamikadze = _killer getVariable "KAMIKADZE";
+			if (!isNil "_kamikadze") exitWith {
+				_killer setVariable ["KAMIKADZE", nil]; // remove variable
+				_time_delta = time - _kamikadze;
+				if (_time_delta < 5) exitWith {
+					hint localize format["--- Kamikadze detected, tower will be restored, time delta %1!!!", _time_delta];
+				};
+				hint localize format["--- Kamikadze detected, but time delta too high: %1", _time_delta];
+			};
+			_veh = _killer call _air_veh_near;
 			if ( alive _veh ) exitWith { _correct_kill = true; };
 			if ( ( _veh distance _killer ) > 20) exitWith { _correct_kill = true; };
 		};
@@ -101,9 +112,12 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
 
     // Send msg to anybody in radious of ### meters: "The %1 hit on the TV tower has gone to waste!". And play special gong sound
     if ( _killer isKindOf "CAManBase") then { _name = name _killer } else { _name = _killer };
-	_str = ("STR_TV_NUM" call SYG_getLocalizedRandomText); // "Damn tower, it fell!..."
-
-	[ "msg_to_user", _name,  [ [_str] ], 0, 0, false, "gong_15" ] call XSendNetStartScriptClient;
+	_str = ("STR_TV_NUM" call SYG_getRandomText); // "Damn tower, it fell!..."
+	if (!isNil "_kamikadze") then {
+		[ "change_score", name _killer, -20, [ "msg_to_user", name _killer,  [ [_str],["STR_TV_VEH", 20] ], 7, 2, false ] ] call XSendNetStartScriptClientAll;
+	} else {
+		[ "msg_to_user", _name,  [ [_str] ], 0, 0, false, "gong_15" ] call XSendNetStartScriptClient;
+	};
 
     hint localize format[ "+++ MTTarget: tower %1(%2) vUp %3 restored, XCheckMTHardTarget is assigned to !", _newhouse, typeOf _newhouse, _vUp ];
     // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]

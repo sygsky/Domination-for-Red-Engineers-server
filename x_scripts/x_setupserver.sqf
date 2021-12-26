@@ -237,6 +237,16 @@ XCheckSMHardTarget = {
  */
 SYG_hitMTTarget = {
     // drop damage if < 1 or hit not from man
+    if ( ( (_this select 2)  > 1.5 ) && ( (_this select 1) isKindOf "CAManBase") ) exitWith {
+   		(_this select 1) setVariable ["KAMIKADZE", time]; // set it to check later in kill event
+        hint localize  format["*** Hit dmg %1(total %2) to %3, by %4(%5) refused as kamikadze detected",
+            _this select 2,
+            damage (_this select 0),
+            typeOf (_this select 0),
+            name (_this select 1),
+            typeOf (vehicle (_this select 1))
+            ];
+    };
     if ( ( damage (_this select 0)  >= 1 ) && ( (_this select 1) isKindOf "CAManBase") ) exitWith {
         hint localize  format["*** Hit dmg %1(total %2) to %3, by %4(%5) is accepted",
             _this select 2,
