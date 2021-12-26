@@ -431,7 +431,7 @@ SYG_JDN = {
 
 // [day,mon,range<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
 SYG_holidayTable = [
-    [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","mountain_king","merry_xmas","vangelis","enchanted_boy"], "STR_HOLIDAY_1_JAN", 1], // New Year Day
+    [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","merry_xmas","vangelis","enchanted_boy"], "STR_HOLIDAY_1_JAN", 1], // New Year Day
     [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day

@@ -503,7 +503,6 @@ class CfgSounds {
 	class snovymgodom   { name=""; sound[] = {\sounds\newyear\snovymgodom.ogg, db+20, 1.0}; titles[] = {};};
 	class nutcracker    { name=""; sound[] = {\sounds\newyear\NutCracker.ogg, db+20, 1.0}; titles[] = {};};
     class home_alone    { name=""; sound[] = {\sounds\newyear\home_alone.ogg,db+10,1.0}; titles[] = {};}; // From "Home alone" american movie 1990
-    class mountain_king { name=""; sound[] = {\sounds\newyear\mountain_king.ogg,db+10,1.0}; titles[] = {};}; // From "Home alone" american movie 1990
     class zastolnaya    { name=""; sound[] = {\sounds\newyear\zastolnaya.ogg,db-1,1.0}; titles[] = {};}; // intro New Year music
     class grig          { name=""; sound[]=   {\sounds\newyear\grig.ogg,db-1,1.0}; titles[] = {};};
     class merry_xmas    { name=""; sound[] = {\sounds\newyear\merry_xmas.ogg,db+0,1.0}; titles[] = {};}; // Merry Xmas melody by Kevin Macleod
