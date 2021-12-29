@@ -581,10 +581,12 @@ XHandleNetStartScriptClient = {
         // ["unit_killer",_unit_killer] call XSendNetStartScriptClient;
 		//
 		case "unit_killer": { // TODO: lower rank of the killer in the future
-			[format [localize "STR_SYS_605"/* %1 killed %2 and looses %3 scores" */, (_this select 1) select 0, (_this select 1) select 1,d_sub_tk_points], "GLOBAL"] call XHintChatMsg;
-			if (player == ((_this select 1) select 2)) then {
+			if ( (name player) == ((_this select 1) select 0)) then {
 				// player addScore (d_sub_tk_points * -1)
 				(d_sub_tk_points * -1) call SYG_addBonusScore;
+				[format [localize "STR_SYS_605_1", (_this select 1) select 1, d_sub_tk_points], "GLOBAL"] call XHintChatMsg; // "You killed '%2' and looses %2 scores"
+			} else {
+				[format [localize "STR_SYS_605"/* %1 killed %2 and looses %3 scores" */, (_this select 1) select 0, (_this select 1) select 1,d_sub_tk_points], "GLOBAL"] call XHintChatMsg;
 			};
 		};
 		#else

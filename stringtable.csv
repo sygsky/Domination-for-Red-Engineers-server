@@ -765,6 +765,8 @@ STR_SYS_604_1,"Nearly half of Sahrani released, but the population Sahrani glad 
 STR_SYS_604_0,You are the first [English speaking] warrior in this dangerous mission on Sahrani liberation!\n Be worthy of Your great goal!,Sie sind der erste [deutschsprachiger] Krieger in dieser gefährlichen Mission zur Befreiung der Сахрани!\n Seien Sie würdig seiner großen Aufgabe!,¡Eres el primer guerrero [soviético] en esta peligrosa misión para liberar a Sahrani!\ n ¡sea digno de su misión más importante!,Вы - первый [советский] воин в этой опасной миссии по освобождению Сахрани!\nБудьте достойны своей важнейшей миссии!
 
 STR_SYS_605,%1 killed %2 and looses %3 scores,%1 getötet %2. %1 verliert %3 erzielt,%1 mata %2 y pierde puntos: %3!,%1 убил %2 и теряет очков: %3!
+STR_SYS_605_1,You killed %1 and looses %2 scores,Du hast '%1' getötet und verlierst %2 Punkte,Has matado a '%1' y pierdes %2 puntos,Вы убили '%1' и теряете очки: %2!
+
 STR_SYS_606,During %4 you are on GRU duty in %1 [+%2/%3],During %4 you are on GRU duty in %1 [+%2/%3],"En %4, realiza la tarea GRU en %1 [+%2/%3]!",В течении %4 Вы выполняете задание ГРУ в %1 [+%2/%3]!
 
 STR_SYS_607,You need %2 point[s] for parajump. Your current scores are %1,Sie müssen %2 Punkte für parajump. Ihre aktuelle Punktzahl beträgt %1,Para saltar necesita puntos: %2. Ahora tienes: %1,Для прыжка необходимо очков: %2. Сейчас у вас: %1
