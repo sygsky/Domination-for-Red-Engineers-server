@@ -16,7 +16,7 @@ _end_pnt_arr    = [d_para_end_positions select 0, d_para_end_positions select 1]
 #endif
 
 #ifdef __TOWN_WEAK_DEFENCE__
-sleep 3600; // sleep 1 hour if defemce is weak
+sleep 3600; // sleep 1 hour if defence is weak
 #else
 sleep 333.325;
 #endif
@@ -56,11 +56,11 @@ while {!mt_radio_down} do {
 				_vecs = 3;
 			};
 		};
- */		_vecs = floor(_num_p / 6) + 1;
+ */		_vecs = ceil(_num_p / 6);
 		create_new_paras = false;
 		_attack_pos = [_current_target_pos,200] call XfGetRanPointCircle;
-#ifdef __DEFAULT__
 
+#ifdef __DEFAULT__
         if ((_dummy select 1)  == "Everon") then {
             _attack_pos set [1, (_attack_pos select 1) + 200 ]; //shift +200 meters to north (landing not to sea)
         } else {

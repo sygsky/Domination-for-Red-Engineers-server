@@ -14,7 +14,7 @@ if (!isServer) exitWith {};
 #define __PRINT__
 
 // to debug sabotages with short intervals between infiltrations
-//#define __DEBUG__
+//#define __DEBUG_INFILTRATE_PERIOD__  1200
 
 // to debug cleansing procedure (run it with short intervals)
 //#define __DEBUG_CLEAN__
@@ -243,7 +243,7 @@ while { true } do {
 #endif		
 	}; // if ( time >= _time_to_clean ) then
 	
-#ifdef __DEBUG__
+#ifdef __DEBUG_INFILTRATE_PERIOD__
 	sleep 1;
 #else
 	sleep 5000 + (random 1200);
@@ -300,8 +300,8 @@ while { true } do {
 	} else {  // if ((call _alive_sabotage) < 10) then {
 		hint localize format["+++ x_infiltrate: %1 sabotage[s] found, next infiltration STOPPED", _alive_cnt];
 	};
-#ifdef __DEBUG__
-	sleep 1200; // 20 mins to kill them all or be down himself
+#ifdef __DEBUG_INFILTRATE_PERIOD__
+	sleep __DEBUG_INFILTRATE_PERIOD__; // 20 mins to kill them all or be down himself
 #else
 	// additional delay for small player team < 5. If player number >=5 there is no additional delay
 	sleep ((600 + random 200) + (5-(5 min(call XPlayersNumber)))*1000);

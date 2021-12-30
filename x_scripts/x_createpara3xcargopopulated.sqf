@@ -3,7 +3,7 @@
 // x_createpara3xcargopopulated.sqf
 //
 // creates paratroopers for targeted city + heli to actually transport them
-// Heavily modified by Snooper(Agent) by Engineer request as December 2020 - January 2021
+// Heavily modified by Snooper(Agent) with Engineer request as December 2020 - January 2021
 //
 private ["_type","_startpoint","_attackpoint","_heliendpoint","_number_vehicles","_fly_height","_crew_member",
 		 "_parachute_type","_make_jump","_stop_it","_current_target_pos","_dummy", "_mti","_cnt_uni"];
@@ -208,6 +208,7 @@ _make_jump = {
 _dummy = target_names select current_target_index;
 _current_target_pos = _dummy select 0;
 _stop_it = false;
+_unit_array = [];
 
 for "_i" from 1 to _number_vehicles do {
 	if (mt_radio_down) exitWith {};
@@ -253,7 +254,7 @@ for "_i" from 1 to _number_vehicles do {
 	_unit_array = ["heli", d_enemy_side] call x_getunitliste;
 	_real_units = _unit_array select 0;
 	_cnt_uni = (count _real_units) min (_vehicle emptyPositions "Cargo"); // heli may be small one
-	_unit_array = [];
+	_unit_array  = [];
 
 	sleep 0.1;
 	for "_i" from 0 to (_cnt_uni - 1) do {
@@ -312,7 +313,7 @@ if (!mt_radio_down) then {
 	if (count d_c_attacking_grps > 0) then {
 		[d_c_attacking_grps] execVM "x_scripts\x_handleattackgroups.sqf";
 	} else {
-		d_c_attacking_grps = [];
+		d_c_attacking_grps resize 0;
 		create_new_paras = true;
 	};
 };

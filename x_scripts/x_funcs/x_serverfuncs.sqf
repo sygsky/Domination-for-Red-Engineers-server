@@ -187,10 +187,11 @@ x_getwparray3 = {
 
 /**
  * Creates list of unit types to createAgent
- * Call: _vec_list = [_grp_type, _side] call x_getunitliste;
+ * Call: _vec_list = [_grp_type, _side<,_crew_count>] call x_getunitliste;
  * Where:
  *  _grp_type - mnemonic name for group kind, e.g. "basic" (ordinal infantry), "specops" (special operation forces) etc
  *  _side  - side string of future group, e.g. "WEST", "EAST" etc
+ *  _crew_count - optional size of a new group (in the future)
  * Returns: array with [_unit_list, _vec_type, _crewtype];
  */
 x_getunitliste = {
@@ -200,12 +201,12 @@ x_getunitliste = {
 	_crewmember = call compile format["d_crewman_%1",_side_char];
 
 	switch (_grptype) do {
-		case "basic": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list select (_list call XfRandomFloorArray));};
-		case "specops": {_how_many = 2 + ceil random 3; _list = call compile format ["d_specops_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
-		// +++ Sygsky: big specops group (6-12 men)
-		case "specopsbig": {_how_many = 6 + ceil random 6; _list = call compile format ["d_specops_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
+		case "basic": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = _list call XfRandomArrayVal;};
+		case "specops": {_how_many = 2 + ceil random 3; _list = call compile format ["d_specops_%1",_side_char];for "_i" from 1 to _how_many do { _unitliste set [count _unitliste, _list call XfRandomArrayVal];};};
+		// +++ Sygsky: big specops group (7-12 men)
+		case "specopsbig": {_how_many = 6 + ceil random 6; _list = call compile format ["d_specops_%1",_side_char];for "_i" from 1 to _how_many do { _unitliste set [count _unitliste, _list call XfRandomArrayVal];};};
 		case "artiobserver": {_unitliste = [call compile format["d_arti_observer_%1",_side_char]];};
-		case "heli": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = (_list call XfRandomArrayVal);};
+		case "heli": {_list = call compile format ["d_allmen_%1",_side_char];_unitliste = _list call XfRandomArrayVal;};
 		case "tank": {call compile format ["_varray = (d_veh_a_%1 select 0);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "tank_desert": {call compile format ["_varray = d_veh_a_%1_desert;",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "bmp": {call compile format ["_varray = (d_veh_a_%1 select 1);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
@@ -219,19 +220,18 @@ x_getunitliste = {
 		case "uralfuel": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 9);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "uralrep": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 10);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
 		case "uralammo": {call compile format ["_crewmember=d_crewman2_%1;_varray = (d_veh_a_%1 select 11);",_side_char];_vehiclename = _varray call XfRandomArrayVal;};
-		case "civilian": {for "_i" from 1 to 10 do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
-		case "sabotage": {_how_many = 6 + (ceil random 6); _list = call compile format ["d_sabotage_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
-		case "civbus": {_vehiclename = "Bus_city";_how_many = ceil random 8;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
-		case "civcar": {_vehiclename = d_civ_cars select (floor (random (count d_civ_cars)));_how_many = ceil random 4;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
-		case "civcity": {_how_many = ceil random 5;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste = _unitliste + [_one_man];};};
+		case "civilian": {for "_i" from 1 to 10 do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste set [count _unitliste,_one_man];};};
+		case "sabotage": {_how_many = 6 + (ceil random 6); _list = call compile format ["d_sabotage_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste set [count _unitliste , _list call XfRandomArrayVal];};};
+		case "civbus": {_vehiclename = "Bus_city";_how_many = ceil random 8;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste set [count _unitliste,_one_man];};};
+		case "civcar": {_vehiclename = d_civ_cars select (floor (random (count d_civ_cars)));_how_many = ceil random 4;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste set[count _unitliste, _one_man];};};
+		case "civcity": {_how_many = ceil random 5;for "_i" from 1 to _how_many do {_random = floor random 19;_one_man = format ["Civilian%1", _random + 2];_unitliste set [count _unitliste,_one_man];};};
 		// +++ Sygsky: air base enemy team
-		case "airteam1": {_how_many = 6 + ceil random 6; _list = call compile format ["airbaseteam_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
-		case "airteam2": {_how_many = 1 + ceil random 3; _list = call compile format ["airbaseteam_pilots_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste = _unitliste + [_list call XfRandomArrayVal];};};
+		case "airteam1": {_how_many = 6 + ceil random 6; _list = call compile format ["airbaseteam_%1",_side_char];for "_i" from 1 to _how_many do {_unitliste set [count _unitliste, _list call XfRandomArrayVal];};};
+		case "airteam2": {_how_many = 1 + ceil random 3; _list = call compile format ["airbaseteam_pilots_%1",_side_char];for "_i" from 1 to _how_many do { _unitliste set [count _unitliste, _list call XfRandomArrayVal];};};
 	};
 /*
-    if ( _grptype == "tank_desert") then
-    {
-        hint localize format["+++ x_getunitliste %1 return %2",_this, [_unitliste, _vehiclename, _crewmember]];
+    if ( _grptype in ["basic","heli"]) then{
+        hint localize format["+++ x_getunitliste %1 returns %2",_this, [_unitliste, _vehiclename, _crewmember]];
     };
 */
 	[_unitliste, _vehiclename, _crewmember]

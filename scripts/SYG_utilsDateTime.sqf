@@ -242,8 +242,7 @@ SYG_monthLen = {
 // calls: _weekdayname = (date call SYG_weekDay) call SYG_weekDayLocalName;
 //
 SYG_weekDayLocalName = {
-	switch _this do
-	{
+	switch _this do {
 		case 0: {localize "STR_MONDAY"};
 		case 1: {localize "STR_TUESDAY"};
 		case 2: {localize "STR_WEDNESDAY"};
