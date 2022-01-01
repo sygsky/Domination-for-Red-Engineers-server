@@ -1777,6 +1777,6 @@ if (name player == "HE_MACTEP") then {
 };
 #endif
 
-date execVM "scripts\new_year_check.sqf";
+// TODO: date execVM "scripts\new_year_check.sqf";
 
 if (true) exitWith {};
