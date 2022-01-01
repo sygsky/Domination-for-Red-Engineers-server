@@ -394,7 +394,12 @@ if (isServer) then {
             //	hint localize format["SoundSource created: %1, typeOf %2", _snd, typeOf _snd];
 
                 _veh setVariable ["SoundSource", _snd];
-                _veh addEventHandler ["Killed", { deleteVehicle ((_this select 0) getVariable "SoundSource"); (_this select 0) setVariable ["SoundSource", nil]; hint localize "init.sqf: N.Y. Music is killed"}];
+                _veh addEventHandler ["Killed", {
+                	deleteVehicle ((_this select 0) getVariable "SoundSource");
+//                	(_this select 0) setVariable ["SoundSource", nil];
+                	hint localize format["--- init.sqf: N.Y. music radio is killed by ""%1""", name (_this select 1)
+                	}
+                ];
                 [_veh,_snd] spawn {
 	                private ["_veh","_snd"];
 	                _veh = _this select 0;
