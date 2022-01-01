@@ -42,8 +42,7 @@ SYG_createStaticWeaponGroup = {
     hint localize format["SYG_utilsSM.sqf.SYG_createStaticWeaponGroup: called with %1", _this];
 #endif
 
-	if ( (typeName (_posarr select 0)) != "ARRAY" ) then // it is single pos with 2-3 coordinates, not array of pos
-	{
+	if ( (typeName (_posarr select 0)) != "ARRAY" ) then { // it is single pos with 2-3 coordinates, not array of pos
 		_posarr = [_posarr];
 	};
 	
@@ -58,7 +57,7 @@ SYG_createStaticWeaponGroup = {
 		_veh setPos _x;
 		_veh setVectorUp [0,0,1];
 
-		extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_veh];
+		extra_mission_vehicle_remover_array set [count extra_mission_vehicle_remover_array, _veh];
 		
 		_unit = _grp createUnit [_utype, _pos, [], 0, "FORM"];
 		sleep 0.01;
@@ -67,15 +66,12 @@ SYG_createStaticWeaponGroup = {
 		_unit assignAsGunner _veh;
 		_unit moveInGunner _veh;
 
-		extra_mission_remover_array = extra_mission_remover_array + [_unit];
+		extra_mission_remover_array set [count extra_mission_remover_array, _unit];
 
 		// lets wait time inversely proportional to the player number
-		if ( (call XPlayersNumber) == 0 ) then 
-		{
+		if ( (call XPlayersNumber) == 0 ) then  {
 			sleep 1.0; // create next vehicle each second as no players to relax with progress
-		}
-		else
-		{
+		} else {
 			sleep  _create_delay; // sleep some time before next vehicle 
 		};
 	} forEach _posarr;
@@ -107,15 +103,15 @@ SYG_findEnemyAt = {
 };
 
 //
-// Finds all SM near to the designated point
+// Finds all SM near to the designated point. May be used to create new SM near the main target town
 // call as: _near_sm_arr = [_sm_array, _point, _dist] call SYG_findNearSM;
 // where: _sm_array = sm id array, _point = [x,y,z] as search center, _dist = search radious around the _point
 // returns: array of SM id, near to the point. If case of bad parameters, always [] is returned
 //
 SYG_findNearSMIdsArray = {
 	private ["_sm_id_arr","_center","_search_dist","_ret_id_arr","_sm_pos","_dist","_x"];
-    if ( typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_findNearSM: expected argument is array, found %1", typeName _this];[]};
-    if ( count _this < 3) exitWith {hint localize format["--- SYG_findNearSM: expected number of arguments >= 3, found %1", count _this]; []};
+    if ( typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_findNearSMIdsArray: expected argument is array, found %1", typeName _this];[]};
+    if ( count _this < 3) exitWith {hint localize format["--- SYG_findNearSMIdsArray: expected number of arguments >= 3, found %1", count _this]; []};
     _sm_id_arr   = arg(0);
     _center      = arg(1);
     _search_dist = arg(2);
@@ -123,7 +119,7 @@ SYG_findNearSMIdsArray = {
     {
         _sm_pos = call compile format ["""SM_POS_REQUEST"" call compile preprocessFileLineNumbers ""x_missions\m\%1%2.sqf"";",d_mission_filename, _x];
         _dist = _search_dist distance _sm_pos;
-        if (_dist < _search_dist ) then { _ret_id_arr = _ret_id_arr + [_x]; };
+        if (_dist < _search_dist ) then { _ret_id_arr set [count _ret_id_arr, _x]; };
     } forEach _sm_id_arr;
     _ret_id_arr
 };

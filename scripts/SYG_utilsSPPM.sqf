@@ -124,7 +124,7 @@ SYG_addSPPMMarker = {
 			["STR_SPPM_ADD_ERR_3", round (_pos distance _marker_pos)] // "The nearest SPPM is at %1 m. Move the vehicle closer to it."
 		};
 
-		// find underground SPPM road cone
+		// find ground SPPM road cone
 		_arr = nearestObjects [ _marker_pos, [SPPM_OBJ_TYPE], SPPM_MIN_DISTANCE ];
 		if (count _arr > 0) exitWith {
 #ifdef __DEBUG__
@@ -182,8 +182,7 @@ SYG_addSPPMMarker = {
 
 // Update one designated SPPM
 // _res = _cone call SYG_updateSPPM;
-// returns true if SPPM changed position/removed else false
-// returns: 1 = updated, 0 = not changed, -1 = empty, delete it, -2 = no marker, delete it
+// returns: corresponding message tag in the stringtable.csv
 SYG_updateSPPM = {
 	// hint localize format["+++ SYG_updateSPPM: call with _this = %1", _this];
 	if (typeOf _this != SPPM_OBJ_TYPE ) exitWith {
@@ -192,7 +191,7 @@ SYG_updateSPPM = {
 	 };
 	private ["_marker","_arr","_new_pos","_pos"];
 	_marker = _this getVariable SPPM_MARKER_NAME;
-	if ( isNil "_marker" ) exitWith {
+	if ( isNil "_marker" ) exitWith { // this is not SPPM marker cone
 		hint localize format["--- SYG_updateSPPM: marker non-assigned to the SPPM cone, delete it!"];
 		[SYG_SPPMArr, _this] call SYG_removeObjectFromArray; // remove cone
 		"STR_SPPM_6_1"  // The SPPM without marker removed
@@ -235,10 +234,10 @@ SYG_updateSPPM = {
 //  _arr = _arr call SYG_generateSPPMText1; // _arr = [_marker_type, _marker_text]
 //
 // returns follow string: "0:1:2:3:4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
-// result may be in partial form^ "СППМ:1:1" - that means 1 ship and 1 air vehicle
+// result may be in partial form: "СППМ:1:1" - that means 1 ship and 1 air vehicle
 SYG_generateSPPMText1 = {
 	if (typeName _this != "ARRAY") then {_this = [_this]};
-	private ["_cntArr","_mrkArr","_marker","_title","_i","_marker","_ace_support"];
+	private ["_cntArr","_mrkArr","_marker","_title","_i","_marker","_ace_support","_x"];
 	_cntArr = [ 0, 0, 0, 0, 0 ]; // type counts
 #ifdef __ACE__
 	_mrkArr = ["ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown","ACE_Icon_Unknown"];  // markers array
@@ -252,7 +251,7 @@ SYG_generateSPPMText1 = {
 	};
 	_this call SYG_clearArrayB;
 #ifdef __ACE__
-	_ace_support = ""; // main marker from any combinations od SPPM vehicle (ACE :o)
+	_ace_support = ""; // main marker from any combinations of SPPM vehicle (ACE :o)
 #endif
 	// fill all possible params
 	{
@@ -284,7 +283,8 @@ SYG_generateSPPMText1 = {
 
 	_title = "";
 	{
-		if (_x == 0) then { if (_title != "") then {_title = format["%1:", _title]} }
+		if (_x == 0) then { if (_title != "")
+			then {_title = format["%1:", _title]} }
 			else { if(_title == "") then {_title = format["СППМ:%1",_x]} else {_title = format["%1:%2",_title, _x]} };
 	} forEach _cntArr;
 	[_marker, _title]

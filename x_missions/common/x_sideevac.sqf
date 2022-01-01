@@ -239,7 +239,8 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 				_leader setRank "LIEUTENANT";
 				_newgroup allowFleeing 0;
 				[_newgroup, _poss] call XAttackWP;
-				extra_mission_remover_array = extra_mission_remover_array + _units;
+                {extra_mission_remover_array set [ count extra_mission_remover_array, _x ] } foreach _units;
+
 				sleep 1.012;
 			};
 			_unit_array = nil;

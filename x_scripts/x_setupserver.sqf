@@ -83,9 +83,7 @@ XClearSidemission = {
 	} forEach extra_mission_vehicle_remover_array;
 	extra_mission_vehicle_remover_array=nil;
 	{
-		if !(isNull _x) then {
-			deleteVehicle _x;
-		}
+		if !(isNull _x) then { deleteVehicle _x; }
 	} forEach extra_mission_remover_array;
 	extra_mission_remover_array = nil;
 	side_mission_resolved = false;

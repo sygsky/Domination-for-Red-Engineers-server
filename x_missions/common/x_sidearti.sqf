@@ -54,7 +54,7 @@ for "_i" from 0 to (_count_arti - 1) do {
 	_arti lock true;
     // populate each arti gun with the gunner
 	_unit = _grp createUnit [_crewman, (_arti_pos_dir select 0), [], 0, "NONE"];[_unit] join _grp;_unit setSkill 1;_unit assignAsGunner _arti;_unit moveInGunner _arti;
-	extra_mission_remover_array = extra_mission_remover_array + [_unit];
+	extra_mission_remover_array set[count extra_mission_remover_array, _unit];
 
 	//__addDead(_unit)
 	sleep 0.5321;
@@ -66,7 +66,7 @@ _pos_array = nil;
 for "_i" from 1 to 3 do {
 	_truck = _trackType createVehicle _poss;
 	_truck lock true;
-	extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_truck];
+	extra_mission_vehicle_remover_array = set [count ]extra_mission_vehicle_remover_array, _truck];
 //	_truck addEventHandler ["killed", {_this spawn x_removevehi}]; // #err313, remove trucks from server after this SM completion
 	sleep 0.523;
 };

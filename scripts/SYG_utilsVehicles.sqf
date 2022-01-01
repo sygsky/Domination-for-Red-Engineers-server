@@ -1512,7 +1512,7 @@ SYG_addToExtraVec = {
         extra_mission_vehicle_remover_array set [count  extra_mission_vehicle_remover_array, _this];
     };
     if ( typeName _this != "ARRAY") exitWith {};
-    extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + _this;
+    { extra_mission_vehicle_remover_array set [count extra_mission_vehicle_remover_array, _x} forEach _this;
 };
 
 SYG_createGroup = SYG_createEnemyGroup;
