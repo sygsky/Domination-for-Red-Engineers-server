@@ -273,13 +273,11 @@ SYG_nearestZoneOfInterest = {
 							_dist =  _pos1 distance _pos;
 						};
 					};
-					
 				};
 				case "LOCATION":  {
 					_pos1  = _pos call SYG_nearestLocation; // location returned!!!
 					_part1 = _pos1 call SYG_whatPartOfIsland;
-					if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then
-					{
+					if ( (!_same_part) || (_part1 == "CENTER") || (_part1 == _part)) then {
 						_dist =  _pos distance _pos1;
 					};
 				};
@@ -529,8 +527,7 @@ SYG_pointInMarker = {
 	private ["_pnt","_mrk","_ret"];
 	_mrk = arg(1);
 	switch typeName _mrk do {
-		case "ARRAY":  // marker description array (by Xeno, 4 params for rectangle, 2 - for circle)
-		{
+		case "ARRAY": { // marker description array (by Xeno, 4 params for rectangle, 2 - for circle)
 			switch  count _mrk do {
 				//hint localize format["Marker for circle ""%1"" converted to a form [center,w,h,angle]",_mrk];
 				case 2: {_mrk = [argp(_mrk,0), argp(_mrk,1),0,0,"CIRCLE"];};
@@ -538,8 +535,7 @@ SYG_pointInMarker = {
 				case 4: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),argp(_mrk,3),"RECTANGLE"];};
 			};
 		};
-		case "STRING":  // marker name, convert to Xeno array
-		{
+		case "STRING": { // marker name, convert to Xeno array
 			//hint localize format["Marker ""%1"" converted to a form [center,w,h,angle]",_mrk];
 			_mrk = [_mrk,arg(2)] call SYG_readMarkerInfo;
 			hint localize format["%1",_mrk];
@@ -953,10 +949,10 @@ SYG_getWPointInAnnulus = {
 
 /*
  * Finds nearest to the designated point/object boat station, marked by markers of follow names: "boats1", "boats2", ...
- * call: _obj call SYG_nearestBoatsMarker; // nearest marker of boat station
- * call: [_x,_y<,_z>] call SYG_nearestBoatsMarker; // nearest marker of boat station
+ * call: _obj call SYG_nearestBoatMarker; // nearest marker of boat station
+ * call: [_x,_y<,_z>] call SYG_nearestBoatMarker; // nearest marker of boat station
  */
-SYG_nearestBoatsMarker = {
+SYG_nearestBoatMarker = {
     if (typeName _this == "OBJECT") then { _this = position _this};
     if (typeName _this != "ARRAY") exitWith {""}; // bad parameter in call
     if (count _this < 2) exitWith {""}; // bad array with position coordinates (length msut be 2..3)

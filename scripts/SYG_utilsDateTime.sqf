@@ -1,5 +1,5 @@
 //
-// SYG_utilsDateTime
+// SYG_utilsDateTime.sqf
 //
 
 /**
@@ -163,7 +163,7 @@ SYG_nowDateToStr = SYG_nowTimeToStr;
 SYG_nowDateTimeToStr = SYG_nowTimeToStr;
 
 /**
- * Returns human date localized format: e.g: "1 August 1985"/"1 августа 1985"
+ * Returns human date localized format: e.g: "1 August 1985" / "1 августа 1985"
  *
  * call: _str = date call SYG_humanDateStr;
  *
@@ -266,7 +266,7 @@ SYG_nowHourMinToStr = {
 };
 
 //
-// returns true if day is in a new year range (from 21.12 to 10.01)
+// returns true if real day is in a new year range (from 21.12 to 10.01)
 //
 SYG_isNewYear = {
 	private ["_serverDateTime"];
@@ -309,7 +309,8 @@ SYG_monthLength = {
     if ( _mon == 2 ) then { if (_year call SYG_leapYear) then { 29} else {28}} else { SYG_monLength select (_mon-1)};
 };
 //
-// returns real time (from real world) server date, based on variable SYG_client_start (filled with missionStart info from user on "d_p_a" message ),
+// Works only on server!!!
+// Returns real time (from real world) server date, based on variable SYG_client_start (filled with missionStart info from user on "d_p_a" message ),
 // SYG_mission_time  and current server time
 // Return code = [year, month, day, hour, minute, sec];
 //
@@ -367,6 +368,13 @@ SYG_getServerDate = {
 	_sec = round (_addsecs % 60);
 	_ret set [ 5, _sec ];
 	_ret
+};
+
+//
+// Returns curent real time on client computer in format as missionStart [year, mon, day,hour, min,sec]
+//
+SYG_getClientDate = {
+	_start = missionStart;
 };
 
 // gets day count in month sequence from m1 to m2 (e.g. from jan to mar if 1, 3 used) at designated year

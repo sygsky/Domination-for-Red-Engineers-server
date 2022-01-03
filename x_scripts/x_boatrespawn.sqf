@@ -21,13 +21,12 @@ if (!isServer) exitWith{};
 hint localize format["x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHECK_DELAY];
 
 #define DIST_TO_BE_OUT 5
-#define DIST_TO_OWN_TO_PLAYER 20
+#define DIST_TO_OWN_TO_PLAYER 50
 
 _boats_a = [];
 for "_i" from 1 to 40 do { // set max counter to value more or equal max boat index. 15-AUG-2020 ther are 35 separate boats in the mission
 	call compile format ["
-	if (!isNil ""boat%1"") then
-	{
+	if (!isNil ""boat%1"") then {
 		_one_boat = [boat%1, position boat%1, direction boat%1,[]];
 		_boats_a set [count _boats_a, _one_boat];
 	};
@@ -103,26 +102,22 @@ while {true} do {
 			_change_cnt = _change_cnt + 1;
 			if ( !alive _boat ) then {
 				_descr call _restore_boat;
-			}
-			else { // for alive boat
+			} else { // for alive boat
 				if ( IS_BOAT_EMPTY(_boat) ) then {
 					_pos = position _boat; // current pos
 					_old_pos = GET_BOAT_NEW_POS(_descr);
 					if (([_pos, _old_pos] call SYG_distance2D) > DIST_TO_BE_OUT) then {
 						// boat moved from new position, set new pos and remain boat to the next loop
 						SET_NEW_POS(_descr,_pos);
-					}
-					else {// empty, alive, not moved from previous place during check period
+					} else {// empty, alive, not moved from previous place during check period
 						if ( ([_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) < DIST_TO_BE_OUT) then {
 							// as boat is near birth place, simply restore fuel and damage
 							_boat setFuel 1;
 							_boat setDamage 0;
 							CLEAR_CHANGE(_descr);
-						}
-						else
-						{
+						} else {
 							// check players near boat
-							_man_arr = _pos nearObjects ["AllVehicles", DIST_TO_OWN_TO_PLAYER];
+							_man_arr = _pos nearObjects ["CAManBase", DIST_TO_OWN_TO_PLAYER];
 							_is_owned = false;
 #ifdef __DEBUG__
 							_vec = objNull;
@@ -150,17 +145,14 @@ while {true} do {
 					};
 				};
 			};
-		}
-		else {// if (IS_BOAT_CHANGED(_descr)) then
+		} else {// if (IS_BOAT_CHANGED(_descr)) then
 			// boat was not changed at last loop, check it at this one
 			if ( (!alive _boat) OR ((getDammage _boat) > 0.9)) then {
 #ifdef	__DEBUG__
-				hint localize format["x_boatrespawn.sqf: boat %1 (%2) is dead, marked for restore", _boat,_i];
+				hint localize format["x_boatrespawn.sqf: boat %1 (#%2) is dead, marked for restore", _boat,_i];
 #endif
 				SET_NEW_POS(_descr,getPos _boat);
-			}
-			else
-			{
+			} else {
 				_new_pos = position _boat;
 				if ( IS_BOAT_EMPTY(_boat) && (([_new_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) > DIST_TO_BE_OUT)) then {
 #ifdef	__DEBUG__

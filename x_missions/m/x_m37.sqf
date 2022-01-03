@@ -45,7 +45,7 @@ if (isServer) then {
 	sleep 2.132;
 	["specops", 1, "basic", 1, _poss,100,true] spawn XCreateInf;
 	sleep 2.234;
-	["shilka", 1, "bmp", 1, "tank", 1, _poss,1,120,true] spawn XCreateArmor;
+	["shilka", 2, "bmp", 1, "tank", 1, _poss,1,120,true] spawn XCreateArmor;
 	__AddToExtraVec(_vehicle)
     sleep 10;
     [_poss,200] call SYG_rearmAroundAsHeavySniper;

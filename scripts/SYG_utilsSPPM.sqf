@@ -1,6 +1,6 @@
 // scripts\SYG_utilsSPPM.sqf : utils for SPPM handling
 // SPPM id is integer id from SPPM array
-private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_startPos", "_procWP", "_wpIndex", "_unittype", "_stopBoat" ];
+//private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_startPos", "_procWP", "_wpIndex", "_unittype", "_stopBoat" ];
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -31,8 +31,6 @@ hint localize "+++ INIT of SYG_utilsSPPM";
 // Array to store SPPM objects
 SYG_SPPMArr = []; // List of road cones used to designate all SPPM markers
 
-hint "INIT of SYG_utilsSPPM";
-
 // Tries to find any SPPM marker in radious 50 meters around desugnated object or position
 //
 // call as: _nearestSPPMDescrArr = _obj|_pos callSYG_findNearestSPPM;
@@ -44,7 +42,7 @@ hint "INIT of SYG_utilsSPPM";
 
 #ifdef __DEBUG__
 SYG_Variables2Arr = {
-	private ["_arr"];
+	private ["_arr","_x"];
 	_arr = [];
 	{
 		_arr set [count _arr, _x getVariable SPPM_MARKER_NAME];
@@ -58,7 +56,7 @@ SYG_findNearestSPPM = {
 	_this = _this call SYG_getPos;
 	if (_this select 0 == 0 && _this select 1 == 0) exitWith { "" }; // "Error in the creation of the new SPPM: The parameters for the procedure were incorrect"
 
-	private ["_arr","_marker_name"];
+	private ["_arr","_marker_name","_x"];
 	_arr = nearestObjects [_this, [SPPM_OBJ_TYPE], SPPM_MIN_DISTANCE];
 #ifdef __DEBUG__
 	if (count _arr > 0 ) then {
@@ -88,7 +86,7 @@ SYG_getAllSPPMVehicles = {
 	private ["_pos", "_arr", "_i", "_veh"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
-	_arr = nearestObjects [_pos, ["LandVehicle", "Air","Ship"], SPPM_VEH_MIN_DISTANCE];
+	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
 	for "_i" from 0 to count _arr - 1 do {
 		_veh = _arr select _i;
 		// ) || _cargo) ) then {
@@ -163,14 +161,14 @@ SYG_addSPPMMarker = {
 	_marker setMarkerColor SPPM_MARKER_COLOR;
 	_marker setMarkerShape "ICON";
 	// TODO: find marker
-	_arr = _arr call SYG_generateSPPMText1;
+	_arr = _arr call SYG_generateSPPMText;
 	_marker setMarkerType (_arr select 0);
 	_marker setMarkerText (_arr select 1);
 //	_marker setMarkerType SPPM_MARKER_TYPE;
 //	_marker setMarkerText (_arr call SYG_generateSPPMText);
 
 	// create mark object (e.g. road cone) for this SPPM
-	_pnt set [2, -1]; // put underground to keep forever
+	_pnt set [2, -1]; // attempt to put underground to keep forever, but it is not possible by any means(((
 	_cone = createVehicle [SPPM_OBJ_TYPE, _pnt, [], 0, "CAN_COLLIDE"]; // add road cone
 	_cone setVariable [SPPM_MARKER_NAME, _marker ];
 //#ifdef __DEBUG__
@@ -210,7 +208,7 @@ SYG_updateSPPM = {
 	 };
 	 // Cone, marker, vehicles found, let check center point
 	_new_pos = _arr call SYG_averPoint;
-	_arr = _arr call SYG_generateSPPMText1;
+	_arr = _arr call SYG_generateSPPMText;
 	_marker setMarkerType (_arr select 0);
 	_marker setMarkerText (_arr select 1);
 
@@ -231,11 +229,11 @@ SYG_updateSPPM = {
 //
 // call:
 //	_arr = [_veh1, _veh2...];
-//  _arr = _arr call SYG_generateSPPMText1; // _arr = [_marker_type, _marker_text]
+//  _arr = _arr call SYG_generateSPPMText; // _arr = [_marker_type, _marker_text]
 //
 // returns follow string: "0:1:2:3:4" where 0 is number of trucks, 1 is for tanks/BMP, 2 is for cars/moto, 3 is for ships, 4 is for air
 // result may be in partial form: "СППМ:1:1" - that means 1 ship and 1 air vehicle
-SYG_generateSPPMText1 = {
+SYG_generateSPPMText = {
 	if (typeName _this != "ARRAY") then {_this = [_this]};
 	private ["_cntArr","_mrkArr","_marker","_title","_i","_marker","_ace_support","_x"];
 	_cntArr = [ 0, 0, 0, 0, 0 ]; // type counts
@@ -255,7 +253,7 @@ SYG_generateSPPMText1 = {
 #endif
 	// fill all possible params
 	{
-		_marker = _x call SYG_getVehicleMarkerType;
+		_marker = _x call SYG_getVehicleMarkerType; // method from SYG_uitlsVehicles.sqf
 #ifdef __ACE__
 		if (_marker == "ACE_Icon_TruckSupport") then { _ace_support = _marker };
 #endif
@@ -329,7 +327,7 @@ SYG_updateAllSPPMMarkers = {
 					hint localize format["*** SPPM ""%1"" position could be changes by %2 m. but is closer then 50 m. to other SPPM", _marker, [_pos, _new_pos] call SYG_distance2D];
 				};
 			};
-			_arr = _arr call SYG_generateSPPMText1;
+			_arr = _arr call SYG_generateSPPMText;
 			_marker setMarkerType (_arr select 0);
 			_marker setMarkerText (_arr select 1);
 		} else { _count_empty = _count_empty + 1 };
