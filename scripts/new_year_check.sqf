@@ -14,16 +14,9 @@ if ( ((_start select 1) != 12) && ((_start select 2) < 30 ) ) exitWith {"--- new
 hint localize format["+++ new_year_check.sqf: new year activity procedure started with missionStart = %1", _start];
 
 _time = time; // current time of mission
+_nydate = [(_start select 0) + 1, 1, 1, 0, 0, 0]; // New Year date/time is is XXXX-JAN-01 00:00:00
+
 // call as: _diff_in_seconds = [_date_next, _date_prev] call SYG_getDateDiffInSeconds
-_nydate = + _start; // New Year date/time
-
-_nydate set [0, (_start select 0) + 1]; // New Year date/time is XXXX-JAN-01 00:00:00
-_nydate set [1,1]; // New Year date/time is is XXXX-JAN-01 00:00:00
-_nydate set [2,1]; // day 1
-_nydate set [3,0]; // hour 0
-_nydate set [4,0]; // min 0
-_nydate set [5,0]; // sec 0
-
 _nysecs = [ _nydate, _start ] call SYG_getDateDiffInSeconds; // seconds to New Year's Eve
 _sleep = _nysecs - _time - 600; // how to sleep to awake 10 minutes before NY
 // how many seconds to sleep up to 600 seconds before the NY
