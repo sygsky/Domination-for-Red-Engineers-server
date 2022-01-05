@@ -8,17 +8,22 @@
 	returns: nothing
 */
 
-_start = missionStart;
+_start = _this;
 if ( (_start select 0) == 0 ) exitWith {"--- new_year_check.sqf: multipleer not found, exiting"};
-if ( (_start select 1 != 12) && ((_start select 2) != 31 ) ) exitWith {"--- new_year_check.sqf: it is not 31th of December, good bye, soldier!"}; // check to be 31-DECEMBER-XXXX
+if ( ((_start select 1) != 12) && ((_start select 2) < 30 ) ) exitWith {"--- new_year_check.sqf: it is before 30th of December, good bye, soldier!"}; // check to be 31-DECEMBER-XXXX
 hint localize format["+++ new_year_check.sqf: new year activity procedure started with missionStart = %1", _start];
 
-_time = time; // time of mission
+_time = time; // current time of mission
 // call as: _diff_in_seconds = [_date_next, _date_prev] call SYG_getDateDiffInSeconds
-_nydate = + _start;
-_nydate set [3,23];
-_nydate set [4,59];
-_nydate set [5,60];
+_nydate = + _start; // New Year date/time
+
+_nydate set [0, (_start select 0) + 1]; // New Year date/time is XXXX-JAN-01 00:00:00
+_nydate set [1,1]; // New Year date/time is is XXXX-JAN-01 00:00:00
+_nydate set [2,1]; // day 1
+_nydate set [3,0]; // hour 0
+_nydate set [4,0]; // min 0
+_nydate set [5,0]; // sec 0
+
 _nysecs = [ _nydate, _start ] call SYG_getDateDiffInSeconds; // seconds to New Year's Eve
 _sleep = _nysecs - _time - 600; // how to sleep to awake 10 minutes before NY
 // how many seconds to sleep up to 600 seconds before the NY
@@ -26,11 +31,11 @@ if (_sleep <= 0) exitWith {format["+++ new_year_check.sqf: you are %1 seconds la
 // STR_SYS_NEW_YEAR_START
 ["msg_to_user", "", ["STR_SYS_NEW_YEAR_START" ], 0, 0, false, "drum_fanfare"] call SYG_msgToUserParser; // ""The New Year's Eve Combat Check Procedure has begun!""
 sleep _sleep; // wait up to the 10 minutes before NY
-_score = score player; // store score
+_score = score player; // remember current score befoe NY
 playSound "drum_fanfare"; // NY check procedure started
 _sleep =  900; // sleep period to the 5 minutes after NY
 sleep _sleep; // slip to the 5 minutes after NY
-if ((score player) != _score ) exitWith { // Combat activity detected!!!
+if ((score player) != _score ) exitWith { // Combat activity detected!!! Score changed during 15 minute interval over NY
 	10 call  SYG_addBonusScore;
 	["msg_to_user", "", ["STR_SYS_NEW_YEAR", 10 ], 0, 0, false, "good_news"] call SYG_msgToUserParser; // ""For combat activity on New Year's Eve, the chief engineer awards you +%1 points.""
 	[ "log2server", name player, format[ "+++ new_year_check.sqf: For combat activity on New Year's Eve, the chief engineer awards %1 with +%2 points", name player, 10] ] call XSendNetStartScriptServer;
