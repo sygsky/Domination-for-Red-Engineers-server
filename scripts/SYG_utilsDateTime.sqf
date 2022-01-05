@@ -630,6 +630,7 @@ SYG_bumpDateByHours = {
 //
 SYG_getDaysSeconds = {
 	private ["_last_id","_i","_diff"];
+//	hint localize format["+++ SYG_getDaysSeconds: %1", _this];
 	_last_id = ((count _this) min 4) - 1;
 	_diff = 0;
 	for "_i" from 0 to _last_id do {
@@ -646,13 +647,11 @@ SYG_getDaysSeconds = {
 };
 
 //
-// call as: _diff_in_seconds = [_date_next, _date_prev] call SYG_getDateDiffInSeconds
+// call as: _diff_in_seconds = [_date_old, _date_new] call SYG_getDateDiffInSeconds
 //
 SYG_getDateDiffInSeconds = {
 	private ["_date1","_date2","_cnt","_i","_year1","_mon1","_day1","_hour1","_min1","_sec1","_year2","_mon2","_day2",
 			"_hour2","_min2","_sec2","_diff","_days"];
-
-//	hint localize format["+++ SYG_getDateDiffInSeconds: %1", _this ];
 
 	_date1 = _this select 0;
 	_date2 = _this select 1;
@@ -667,8 +666,10 @@ SYG_getDateDiffInSeconds = {
 	if (_days == 0) exitWith {
 		([0, (_date1 select 3) - (_date2 select 3), (_date1 select 4) - (_date2 select 4), if (_cnt > 5 ) then {(_date1 select 5) - (_date2 select 5)} else {0}] call SYG_getDaysSeconds)
 	};
+
+//	hint localize format["+++ SYG_getDateDiffInSeconds: days = %1", _days ];
 	// sumarize full diff days + partial parts of day of older and newer dates
 	(_days - 1 /* full day number */) * 24 * 3600 +
 	([0, _date1 select 3, _date1 select 4, if (_cnt > 5 ) then {_date1 select 5} else {0}] call SYG_getDaysSeconds) +
-	([0, 23 - (_date2 select 3), 59 - (_date2 select 4), if (_cnt > 5 ) then { 60 - (_date2 select 5)} else {0}] call SYG_getDaysSeconds)
+	([0, 23 - (_date2 select 3), 59 - (_date2 select 4), if (_cnt > 5 ) then { 60 - (_date2 select 5)} else {60}] call SYG_getDaysSeconds)
 };

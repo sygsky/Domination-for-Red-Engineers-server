@@ -1778,6 +1778,6 @@ if (name player == "HE_MACTEP") then {
 };
 #endif
 
-[] execVM "scripts\new_year_check.sqf";
+SYG_client_start execVM "scripts\new_year_check.sqf";
 
 if (true) exitWith { hint localize format["+++ x_setupplayer.sqf: finished in %1 seconds", round (time - _time)]};

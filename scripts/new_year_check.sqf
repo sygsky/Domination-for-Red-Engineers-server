@@ -8,14 +8,15 @@
 	returns: nothing
 */
 
-_start = missionStart;
+_start = _this;
 if ( (_start select 0) == 0 ) exitWith {"--- new_year_check.sqf: multipleer not found, exiting"};
-if ( (_start select 1 != 12) && ((_start select 2) != 31 ) ) exitWith {"--- new_year_check.sqf: it is not 31th of December, good bye, soldier!"}; // check to be 31-DECEMBER-XXXX
+if ( ((_start select 1) != 12) && ((_start select 2) < 30 ) ) exitWith {"--- new_year_check.sqf: it is not 31th of December, good bye, soldier!"}; // check to be 31-DECEMBER-XXXX
 hint localize format["+++ new_year_check.sqf: new year activity procedure started with missionStart = %1", _start];
 
 _time = time; // time of mission
 // call as: _diff_in_seconds = [_date_next, _date_prev] call SYG_getDateDiffInSeconds
-_nydate = + _start;
+_nydate = + _start; // New Year date
+_nydate set [2,31]; // New Year date/time is is XXXX-DEC-31 23:59:60 or XXXX-JAN-01 00:00:00
 _nydate set [3,23];
 _nydate set [4,59];
 _nydate set [5,60];
