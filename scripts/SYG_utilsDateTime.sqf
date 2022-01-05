@@ -372,8 +372,9 @@ SYG_getServerDate = {
 
 //
 // Returns curent real time on client computer in format as missionStart [year, mon, day,hour, min,sec]
+// Works only in MP on client computer, return start of Arma.exe on client computer
 //
-SYG_getClientDate = {
+SYG_getClientStatDate = {
 	_start = missionStart;
 };
 
@@ -382,12 +383,13 @@ SYG_getClientDate = {
 SYG_countDaysInMonth = {
 	private ["_cnt","_m1","_m2","_y","_i"];
 	_cnt = 0;
-	if ( count _this < 3) exitWith {localize format["--- SYG_countDaysInMonth: expected param must be array[3], detected is %1", _this];0};
-	_m1 = arg(0);
-	_m2 = arg(1);
-	_y  = arg(3);
+	if ( count _this < 3 ) exitWith {localize format["--- SYG_countDaysInMonth: expected param must be array[3], detected is %1", _this];0};
+	_m1 = _this select 0;
+	_m2 = _this select 1;
+	if ( _m1  < 1 || _m1 > 12 || _m2 < 1 || _m2 > 12 ) exitWith { hint localize format["--- SYG_countDaysInMonth invalid month[s] desigmated: %1", _this]; 0};
+	_y  = _this select 3;
 	for "_i" from _m1 to _m2 do {
-		_cnt  = _cnt + (if (_i != 2) then { SYG_monLength select  _i } else { if (_y call SYG_leapYear) then {29} else {28} } );
+		_cnt  = _cnt + (if (_i != 2) then { SYG_monLength select  (_i - 1) } else { if (_y call SYG_leapYear) then {29} else {28} } );
 	};
 	_cnt;
 };
@@ -400,17 +402,14 @@ SYG_countDaysInMonth = {
 //
 // always returns positive integer difference between two dates in days. Use JDN calculatuions from: https://en.wikipedia.org/wiki/Julian_day
 SYG_getDateDiffInDays = {
-    private ["_date1","_date2","_short_date","_ids"];
+    private ["_date1","_date2","_x"];
 	_date1 = _this select 0;
 	_date2 = _this select 1;
 	// check what date is younger
-	_short_date = count date1 == 3 || count date2 == 3;
-	_ids = [0,1,2];
-	if ( !_short_date ) then {_ids = _ids + [3,4];};
 	{
 		if ((_date1 select _x) > (_date2 select _x)) exitWith { };
-		if ((_date1 select _x) < (_date2 select _x)) exitWith {	_date2 = _this select 0; _date1 = _this select 1; };
-	} forEach _ids;
+		if ((_date1 select _x) < (_date2 select _x)) exitWith {	_date2 = _date1; _date1 = _this select 1; };
+	} forEach [0,1,2];
     (_date1 call SYG_JDN) - (_date2 call SYG_JDN)
 };
 
@@ -461,7 +460,7 @@ SYG_holidayTable = [
 // where:
 //   _retArr is [false (ordinal day) || true (day off), "registered_sound_name" || "" (no sound),"Holiday_title"] || [] (not holiday)
 SYG_getHoliday = {
-    private ["_curr_mon","_curr_day","_day","_ret","_music","_XfRandomFloorArray","_XfRandomArrayVal"];
+    private ["_curr_mon","_curr_day","_day","_ret","_music","_XfRandomFloorArray","_XfRandomArrayVal","_x"];
 
     // get a random number, floored, from count array
     // parameters: array
@@ -550,6 +549,13 @@ SYG_bumpDateByHours = {
         _dt
     };
 
+	// TODO: process seconds too
+	if (count _dt > 5) then {
+		_sec = _dt select DT_SEC_OFF;
+	    _new = _sec  + (((_addhr mod 1) * 3600) mod 60); // seconds in new value
+	    _min = _new * 60;
+	};
+
     _min  = _dt select DT_MIN_OFF;
     _hour = _dt select DT_HOUR_OFF;
     _day  = _dt select DT_DAY_OFF;
@@ -560,7 +566,7 @@ SYG_bumpDateByHours = {
 
     _new  = _min + round((_addhr mod 1) * 60);
     // hint localize format["SYG_bumpDateByHours: new minutes = %1", _new];
-    if (_new > 59 ) then {
+    if ( _new >= 60 ) then {
         _dt set [DT_MIN_OFF, _new - 60];
         _addhr = ceil(_addhr);
     } else {
@@ -577,10 +583,9 @@ SYG_bumpDateByHours = {
 
     _new = _hour + _addhr; // new hour value
     // hint localize format["SYG_bumpDateByHours: new hours = %1", _new];
-    if ( _new > 23 ) then {
+    if ( _new >= 24 ) then {
         _dt set [DT_HOUR_OFF, _new % 24];
-    }
-    else {
+    } else {
         if (_new < 0) then {
             _dt set [DT_HOUR_OFF, 24 + (_new % 24)];
         } else {
@@ -611,9 +616,59 @@ SYG_bumpDateByHours = {
     // hint localize format["SYG_bumpDateByHours: new year  = %1", _year];
     _dt set [ DT_DAY_OFF   , _new  ]; // set new day
     _dt set [ DT_MONTH_OFF , _mon  ]; // set new month
-    _dt set [ DT_YEAR_OFF  , _year ]; // set new month
+    _dt set [ DT_YEAR_OFF  , _year ]; // set new year
     // now print old and new datetime values
     hint localize format["+++ SYG_bumpDateByHours: date initial %1, corrected %2", _this select 0, _dt];
 
     _dt
+};
+
+//
+// _days = [40,15,36,8]; // 40 days, 15 hours, 36 mins, 8 seconds
+// call: _seconds = _days call SYG_getDaysSeconds;
+// calculates number of seconds in days mhours, minutes and optionally seconds
+//
+SYG_getDaysSeconds = {
+	private ["_last_id","_i","_diff"];
+	_last_id = ((count _this) min 4) - 1;
+	_diff = 0;
+	for "_i" from 0 to _last_id do {
+		_diff = _diff + (
+			switch (_i) do {
+				case 0: { (_this select _i) * 24 * 3600 }; // days
+				case 1: { (_this select _i) * 3600      }; // hours
+				case 2: { (_this select _i) * 60        }; // minutes
+				case 3: { (_this select _i)             }; // seconds
+			}
+		)
+	};
+	_diff
+};
+
+//
+// call as: _diff_in_seconds = [_date_next, _date_prev] call SYG_getDateDiffInSeconds
+//
+SYG_getDateDiffInSeconds = {
+	private ["_date1","_date2","_cnt","_i","_year1","_mon1","_day1","_hour1","_min1","_sec1","_year2","_mon2","_day2",
+			"_hour2","_min2","_sec2","_diff","_days"];
+
+//	hint localize format["+++ SYG_getDateDiffInSeconds: %1", _this ];
+
+	_date1 = _this select 0;
+	_date2 = _this select 1;
+	_cnt = (count _date1) min (count _date2);
+	// put newer (larger) date to _date1 and older (smaller) to _date2
+	for "_i" from 0 to (_cnt - 1) do {
+		if ( (_date1 select _i) > (_date2 select _i)) exitWith {};
+		if ( (_date1 select _i) < (_date2 select _i)) exitWith { _date1 = _date2; _date2 = _this select 0;};
+	};
+
+	_days = [_date1, _date2] call SYG_getDateDiffInDays;
+	if (_days == 0) exitWith {
+		([0, (_date1 select 3) - (_date2 select 3), (_date1 select 4) - (_date2 select 4), if (_cnt > 5 ) then {(_date1 select 5) - (_date2 select 5)} else {0}] call SYG_getDaysSeconds)
+	};
+	// sumarize full diff days + partial parts of day of older and newer dates
+	(_days - 1 /* full day number */) * 24 * 3600 +
+	([0, _date1 select 3, _date1 select 4, if (_cnt > 5 ) then {_date1 select 5} else {0}] call SYG_getDaysSeconds) +
+	([0, 23 - (_date2 select 3), 59 - (_date2 select 4), if (_cnt > 5 ) then { 60 - (_date2 select 5)} else {0}] call SYG_getDaysSeconds)
 };

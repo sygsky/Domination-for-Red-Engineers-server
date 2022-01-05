@@ -984,6 +984,7 @@ STR_SYS_RUMORS,"Use rumors, they often contain useful information","Verwenden Si
 STR_SYS_SERVICE_DMG,Service %1 is damaged,Service %1 beschädigt,¡Servicio %1 dañado!,Сервис %1 повреждён!
 STR_SYS_SERVICE_DMG_1,One of the services of the base was damaged by saboteurs!,Eine der Dienstleistungen der Basis beschädigt von saboteurs!,¡Uno de los servicios en la base fue dañado por saboteadores!,Один из сервисов на базе был повреждён диверсантами!
 STR_SYS_NEW_YEAR,"For combat activity on New Year's Eve, the chief engineer awards you +%1 points.","Für die Kampftätigkeit in der Silvesternacht erhalten Sie vom Chefingenieur +%1 Punkte.","Por la actividad de combate en la víspera de Año Nuevo, el ingeniero jefe le otorga +%1 puntos","За боевую активность в Новый Год главный инженер вручает Вам +%1 очков"
+STR_SYS_NEW_YEAR_START,"The New Year's Eve Combat Check Procedure has begun!","Das Verfahren zur Überprüfung des Silvesterkampfes hat begonnen","¡El procedimiento de selección para el combate de Año Nuevo ha comenzado!","Процедура новогодней проверки боевой активности началась!"
 
 STR_AI_0,Call in Air Taxi,Rufen Sie in Luft-Taxi,Llamar a un helicóptero,Вызвать вертолёт
 STR_AI_1,Recruit Soldier,Rekrut Soldat,Llamar a la infantería,Призвать в пехоту

@@ -5,8 +5,9 @@ private ["_p", "_pos", "_type", "_i", "_res", "_target_array", "_current_target_
 "_trigger", "_dbase_a", "_status", "_bravo", "_is_climber", "_types", "_action", "_ar", "_mcctypeaascript", "_num",
 "_thefac", "_element", "_posf", "_facid", "_exit_it", "_boxname", "_dir", "_oldscore","_string_player","_local_msg_arr",
 "_rad","_flare"];
-if (!X_Client) exitWith {};
 
+if (!X_Client) exitWith {};
+_time = time; // to log duration of base level of setup player procedure
 sleep 1;
 
 #include "x_setup.sqf"
@@ -1777,6 +1778,6 @@ if (name player == "HE_MACTEP") then {
 };
 #endif
 
-// TODO: date execVM "scripts\new_year_check.sqf";
+[] execVM "scripts\new_year_check.sqf";
 
-if (true) exitWith {};
+if (true) exitWith { hint localize format["+++ x_setupplayer.sqf: finished in %1 seconds", round (time - _time)]};
