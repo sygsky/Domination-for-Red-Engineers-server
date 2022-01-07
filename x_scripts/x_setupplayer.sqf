@@ -1,4 +1,4 @@
-// by Xeno: x_setupplayer.sqf, called on client computer only
+// by Xeno: x_setupplayer.sqf, execVM on client computer only
 private ["_p", "_pos", "_type", "_i", "_res", "_target_array", "_current_target_pos", "_target_name", "_no", "_color",
 "_objstatus", "_xres", "_winner", "_target_array2", "_current_target_name", "_counterxx", "_marker_name", "_text",
 "_box", "_xx", "_units", "_strp", "_artinum", "_vec", "_ari1", "_respawn_marker", "_s",
@@ -866,7 +866,7 @@ if ( _rank < 6 ) then { // you are Major or lower, send info about ranks
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
 _local_msg_arr spawn {
-	hint localize format["+++ _local_msg_arr count %1", count _this]; // DEBUG
+//	hint localize format["+++ _local_msg_arr count %1", count _this]; // DEBUG
     if (count _this > 0 ) then {
         sleep 55;
         {
@@ -1780,4 +1780,4 @@ if (name player == "HE_MACTEP") then {
 
 SYG_client_start execVM "scripts\new_year_check.sqf";
 
-if (true) exitWith { hint localize format["+++ x_setupplayer.sqf: finished in %1 seconds", round (time - _time)]};
+if (true) exitWith { hint localize format["+++ x_setupplayer.sqf: finished in %1 seconds", time - _time]};
