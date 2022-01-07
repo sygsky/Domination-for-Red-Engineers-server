@@ -1462,6 +1462,10 @@ STR_EAST,Comrades,Kameraden,Los nuestros,Наши
 STR_DISP_SRVSIDE_WEST,Enemy,Gegner,Enemigo,Враги
 STR_DISP_SRVSIDE_EAST,Comrades,Kameraden,Los nuestros,Наши
 STR_DISP_INTEL_EAST_FRIENDLY,Comrades,Kameraden,Los nuestros,Наши
+
+STR_DISP_MPSETUP_ROLES_WEST,"Roles for NATO:","Rollen für die NATO:","funciones de la OTAN:","Роли для НАТО:"
+STR_DISP_MPSETUP_ROLES_EAST,"Roles for USSR:","Rollen für die UdSSR:","Funciones para el USSR:","Роли для СССР:"
+
 STR_GUERRILA,Partisans,Partisanen,Guerrilleros,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,zombies,зомби
 STR_ACE_WOUND_NONE,Relax!,Ruh dich aus!,Relájate!,Расслабься!
