@@ -11,6 +11,7 @@ for "_i" from 0 to (count (configFile >> "cfgPatches") - 1) do {
 	_search_array set [ count _search_array, configName ((configFile >> "cfgPatches") select _i)];
 };
 
+hint localize format["+++ AddOns found (at _search_array) %1", count _search_array];
 #ifndef __ACE__
 if (isServer) then {
 	if (d_use_mod_tracked) then {
@@ -32,15 +33,15 @@ if (isServer) then {
 					};
 				};
 			};
-		}
-		else
-		{
+		} else {
         	hint localize "+++ GDTModTracked detected";
 		};
 	} else {
 		d_found_gdtmodtracked = true;
 	};
 };
+SYG_found_ACE = "ace_code_common" in _search_array;
+if (SYG_found_ACE) then {hint localize "+++ ACE found!"} else { "--- ACE not found!"};
 #else
 d_found_gdtmodtracked = true; // skip GDTModTracked as totally useless/replaced by "getout" processing for 1st unit to be out
 d_use_mod_tracked = false;

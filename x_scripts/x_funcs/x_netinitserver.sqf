@@ -136,7 +136,7 @@ XHandleNetStartScriptServer = {
 		};
 
 		// info from user about his name and missionStart value
-		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN"<,FILE_PATH>>>]
+		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN"<,"ACE_found">>>]
 		case "d_p_a": {
             // store server time directly now for better accuracy
             SYG_server_time  = time;       // current server time at the synchonizaton moment
@@ -166,7 +166,7 @@ XHandleNetStartScriptServer = {
                         hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client with unknown timezone wasn't accepted !!!";
 			        };
 			    };
-			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3", argopt(3,"<NO_LANG>"), _userLogin, arg(2) ];
+			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3%4", argopt(3,"<NO_LANG>"), _userLogin, arg(2), if ((count _this) > 4) then {_this select 4} else { "" } ];
 //			    if (count _this > 4) then {
 //			    	hint localize format["+++ x_netinitserver.sqf: client file path ""%1""", arg(5)]
 //			    }; // "x_setuplayer.sqf" file path on client computer (just for fun)

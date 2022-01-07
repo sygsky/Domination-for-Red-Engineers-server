@@ -16,7 +16,8 @@ private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","
 sleep random 0.5;
 _endtime = time + 60;
 // initial information on player connected
-["d_p_a", name player, missionStart, localize "STR_LANG" ] call XSendNetStartScriptServer;
+_str = if (SYG_found_ACE) then {"ACE_found"} else {"ACE_not_found"};
+["d_p_a", name player, missionStart, localize "STR_LANG", _str ] call XSendNetStartScriptServer;
 waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
 #ifdef __DEBUG__
 if (!(isNil "d_player_stuff")) then {
