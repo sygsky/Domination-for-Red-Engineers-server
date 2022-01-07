@@ -38,7 +38,7 @@ showCinemaBorder false;
 _dlg = createDialog "X_RscAnimatedLetters";
 _XD_display = findDisplay 77043;
 _control = _XD_display displayCtrl 66666;
-_control ctrlShow false;
+_control ctrlShow false; // dont remove last 3 lines as they needed to show text with delay
 _line = 0;
 i = 0;
 
@@ -440,14 +440,12 @@ if (typeName _camstart != "ARRAY" ) then {
 	_camera camSetTarget player;
 	_camera camSetPos _plpos;
 	_camera camCommit 18;
-} else {
-};
+} else { };
 
 //titleRsc ["Titel1", "PLAIN"];
-[_music] spawn {
-	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a","_sec"];
+SYG_showMusicTitle = {
+	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a"/*,"_sec"*/];
 	_XD_display = findDisplay 77043;
-	_control = _XD_display displayCtrl 66666;
 	_str = localize format["STR_%1", _this select 0];
 	if ( _str != "") then {
 		_control1 = _XD_display displayCtrl 66667;
@@ -458,48 +456,70 @@ if (typeName _camstart != "ARRAY" ) then {
 		_control1 = displayNull;
 		hint localize format[ "--- x_intro.sqf: music text control for ""%1"" not found", _this select 0 ];
 	};
-	sleep 3;
-//	_control setText (localize "STR_TITLE");
-	_control ctrlShow true;
 
-//	_endtime = time + 10;
-	_endtime = time + 20;
-	_r = 0.2; _a = 0.008;_sec = 0;
-	_g = 0.2; _b = 0.2; // new
-	while { (_endtime > time) && d_still_in_intro } do {
-		//_control = _XD_display displayCtrl 66666;
-//		_control ctrlSetTextColor [_r,_r,_r,_r];
-		_control ctrlSetTextColor [_r,_g,_b,_r];
-		if ( _r < 1) then {
+	if (d_still_in_intro) then {
+//		sleep 1;
+		_control = _XD_display displayCtrl 66666;
+		_control ctrlShow true;
+
+		_endtime = time + 30;
+		_r = 0.2; _a = 0.008;
+		_g = 0.2; _b = 0.2; // new
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,_b], time];
+		//+++++++++++++++++++++++++++ PRINT BLUE TEXT ++++++++++++++++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,_b];
+			if ( _b > 1 ) exitWith {};
+			_b = _b + _a;
+			sleep .01;
+		};
+		if ( (_endtime > time) && d_still_in_intro ) then { sleep 1};
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,_b], time];
+		//+++++++++++++++++++++++++++ PRINT GREEN TEXT ++++++++++++++++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,1];
+			if ( _g > 1 ) exitWith {};
+			_g = _g + _a;
+			_b = (_b - _a) max 0.2;
+			sleep .01;
+		};
+		if ( (_endtime > time) && d_still_in_intro ) then { sleep 1};
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+		//+++++++++++++++++++++++++++ PRINT RED TEXT ++++++++++++++++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,1];
+			if ( _r > 1 ) exitWith {};
 			_r = _r + _a;
-		} else {
-			if ( _g < 1) then {
-				_g = _g + _a;
-			} else {
-				if ( _b <= 1) then {
-					_b = _b + _a;
-				} else { _a = -_a;  _r = 1; _g = 1; _b = 1; sleep 5; };
-			};
+			_g = (_g - _a) max 0.2;
+			sleep .01;
 		};
-/**
-		_r = _r + _a;
-		if (_r >= 1) then {
-			_r = 1;
-			_sec = _sec + 1;
+		if ( (_endtime > time) && d_still_in_intro ) then { sleep 1};
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+		//+++++++++++++++++++++++++++ PRINT WHITE TEXT ++++++++++++++++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,1];
+			if ( _g > 1 ) exitWith {};
+			_b = _b + _a;
+			_g = _g + _a;
+			sleep .01;
 		};
-		if (_sec == 300) then {
-			_a = -_a;
-			_sec = _sec + 1;
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+		while { (_endtime > time) && d_still_in_intro } do { sleep 0.5 };
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+		_control ctrlShow false;
+	} else {
+		if (!isNull _control1) then {
+			if (count _this > 1) then {	sleep (_this select 1)} else {sleep 30 };
 		};
-*/
-		sleep .01;
 	};
-	//_control = _XD_display displayCtrl 66666;
-	_control ctrlShow false;
+
 	if (!isNull _control1) then { _control1 ctrlShow false };
 };
+
+[_music, 30] spawn SYG_showMusicTitle;
+
 //
-// +++++++++++++ SHOW MAIL TITLE and test messages ++++++++++++
+// +++++++++++++ SHOW MAIL, TITLE and test messages ++++++++++++
 //
 _start spawn {
 	private ["_txt","_arr","_str","_date","_holiday"];
@@ -541,7 +561,6 @@ _start spawn {
 		};
 	} forEach [ 4, 1, 2, 3, 6, 5 ];
 };
-
 
 //
 // ++++++++++++++++++++++++++ MAIN SHOW WAY +++++++++++++++++++++++++++++++++++++
