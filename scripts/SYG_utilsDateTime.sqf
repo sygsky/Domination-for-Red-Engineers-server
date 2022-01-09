@@ -650,8 +650,7 @@ SYG_getDaysSeconds = {
 // call as: _diff_in_seconds = [_date_old, _date_new] call SYG_getDateDiffInSeconds
 //
 SYG_getDateDiffInSeconds = {
-	private ["_date1","_date2","_cnt","_i","_year1","_mon1","_day1","_hour1","_min1","_sec1","_year2","_mon2","_day2",
-			"_hour2","_min2","_sec2","_diff","_days"];
+	private ["_date1","_date2","_cnt","_i","_days"];
 
 	_date1 = _this select 0;
 	_date2 = _this select 1;
