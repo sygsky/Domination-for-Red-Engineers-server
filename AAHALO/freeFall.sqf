@@ -1,4 +1,4 @@
-// Xeno: AAHALO\freeFall.sqf
+// Xeno: AAHALO\freeFall.sqf, called only if no ACE defined
 _obj_jump = _this select 0;
 _obj_jump setVariable["bool_freeFall",true];
 deleteVehicle uh60p;
@@ -134,12 +134,12 @@ while{_obj_jump getVariable "bool_freeFall"}do {
 	};
 	
 	showCinemaBorder false;
-	"Player_Track" SetmarkerPosLocal position player;
-	"Player_Track" SetmarkerDirLocal (180+getdir player);
-	_display = finddisplay 856;
-	_map = _display displayctrl 858;
+	"Player_Track" setMarkerPosLocal position player;
+	"Player_Track" setMarkerDirLocal (180+getDir player);
+	_display = findDisplay 856;
+	_map = _display displayCtrl 858;
 	ctrlMapAnimClear _map;
-	_map ctrlMapAnimAdd [0, 0.5, markerPos "Player_Track"];ctrlmapAnimCommit _map;
+	_map ctrlMapAnimAdd [0, 0.5, markerPos "Player_Track"];ctrlMapAnimCommit _map;
 	ctrlSetText[857,format["%1",round(getPos _obj_jump select 2)]];
 	_obj_ps setPos[getPos _obj_jump select 0,getPos _obj_jump select 1,(getPos _obj_jump select 2)-6];
 	
