@@ -130,7 +130,10 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 
             // check if player in not landed air vehicl;
 
-			if ( ( (vehicle _enemy) isKindOf "Air") && ( (getPos _enemy) select 2 > 5) ) exitWith { sleep 3.345 }; // lets help to observe rto detects enemy detected
+			if (  (vehicle _enemy != _enemy) &&  (( (getPos _enemy) select 2 > 5 ) || ( ( speed _enemy  ) > 30 ) ) ) exitWith {
+			    hint localize format["*** x_handleobservers.sqf:  Exit on enemy (%1) heght %2 or speed %3", typeOf(vehicle _enemy), (getPos _enemy) select 2, speed _enemy ];
+			    sleep 3.345
+			}; // lets help to observer to view detected enemy
 			_observer reveal _enemy; // team helps to the observer)))
 			sleep 0.3;
             _dist_obs_enemy = _observer distance _enemy; // distance to enemy from observer
