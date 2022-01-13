@@ -1,7 +1,5 @@
 // by Xeno: x_scripts\x_funcs\x_functions1.sqf
 
-x_funcs1_compiled = false;
-
 // get a random numer, floored
 // parameters: number
 // example: _randomint = 30 call XfRandomFloor;
@@ -11,28 +9,54 @@ XfRandomFloor = {
 
 // shuffles the content of an array
 // parameters: array
-// example: _myrandomarray = _myNormalArray call XfRandomArray;
+// example: _myRandomArray = _myNormalArray call XfRandomArray;
+// Optimized by Sygsky (resize except new array creates) at 09-JAN-2022
 XfRandomArray = {
-	private ["_ar","_ran_array","_this"];
+	private ["_ar","_ran_array","_this","_ran","_cnt"];
 	_ar =+ _this;
+	if (count _ar < 2) exitWith { _ar };
 	_ran_array = [];
-	while {count _ar > 0} do {
-		_ran = (count _ar) call XfRandomFloor;
-		_ran_array = _ran_array + [_ar select _ran];
-		_ar set [_ran, "xfXX_del_432_ZFV"];
-		_ar = _ar - ["xfXX_del_432_ZFV"];
+//	hint localize format["+++ _this %1", _this];
+	_cnt = count _ar;
+	while { _cnt > 1 } do {
+		_ran = _cnt call XfRandomFloor; // get random index
+		_ran_array set [ count _ran_array, _ar select _ran];
+		_cnt = _cnt - 1;
+		if (_ran != _cnt) then { _ar set [ _ran, _ar select _cnt ]; };
 	};
+	_ran_array set [count _ran_array, _ar select 0];
 	_ran_array
+};
+
+// shuffles the content of an array in place (the same array returned)
+// parameters: array
+// example: _myRandomArray = _myNormalArray call XfRandomArray;
+// Optimized by Sygsky at 12-JAN-2022
+XfRandomArrayInPlace = {
+	private ["_ar","_tmp","_ran","_cnt", "_cnt1","_i"];
+	_ar = _this;
+	if (count _ar < 2) exitWith { _ar };
+	_cnt = count _ar;
+	_cnt1 = _cnt - 1;
+	for "_i" from _cnt1 to 1 step -1 do {
+		_ran = floor ( random (_i + 1)); // get random index for exchange
+		if ( _ran != _i ) then {
+			_tmp = _ar select _i;
+			_ar set [ _i, _ar select _ran ];
+			_ar set [ _ran, _tmp ];
+		} ;
+	};
+	_ar
 };
 
 // creates an array with count random indices
 // parameters: int (number of entries)
 // example: _myrandomindexarray = _numberentries call XfRandomIndexArray;
 XfRandomIndexArray = {
-	private ["_count","_ran_array"];
+	private ["_i","_count","_ran_array"];
 	_count = _this;
 	_ran_array = [];
-	for "_i" from 0 to (_count - 1) do {_ran_array = _ran_array + [_i]};
+	for "_i" from 0 to (_count - 1) do {_ran_array set [count _ran_array, _i ]};
 	_ran_array = _ran_array call XfRandomArray;
 	_ran_array
 };
@@ -102,5 +126,3 @@ XfNumToBitArray2 = {
 	};
 	_ret
 };
-
-x_funcs1_compiled = true;
