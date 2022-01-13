@@ -57,8 +57,7 @@ XfRandomIndexArray = {
 	_count = _this;
 	_ran_array = [];
 	for "_i" from 0 to (_count - 1) do {_ran_array set [count _ran_array, _i ]};
-	_ran_array = _ran_array call XfRandomArray;
-	_ran_array
+	_ran_array call XfRandomArrayInPlace;
 };
 
 /**
@@ -85,8 +84,8 @@ XfIndexArrayWithPredefVals = {
     _arrIn = _arrIn - _importantArr -_unimportantArr; // remove predefined indexes to create intermediate list
 
     _importantArr  = _importantArr call XfRandomArray; // shuffe important just in case (if they can be cut also)
-    _arrIn = _arrIn call XfRandomArray; // shuffle ordinal list to cut random items
-    _unimportantArr = _unimportantArr call XfRandomArray; // shuffle unimportant to cut random iteems
+    _arrIn call XfRandomArrayInPlace; // shuffle ordinal list to cut random items
+    _unimportantArr call XfRandomArrayInPlace; // shuffle unimportant to cut random iteems
 
     _arrIn = _importantArr + _arrIn + _unimportantArr ;
     _arrIn resize _outCnt;

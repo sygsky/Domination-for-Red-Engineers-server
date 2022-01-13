@@ -39,17 +39,16 @@ while {true} do {
 				if (format["%1",_hastime] != "<null>") then {
 					if (time > _hastime) then {
 						if (({alive _x} count (crew _dead)) == 0) then {
-							deleteVehicle _dead;_check_vec_list set [_zz, "X_RM_ME"]
+							deleteVehicle _dead;_check_vec_list set [_zz, "RM_ME"]
 						};
 					};
 				} else {
-					if (!alive _dead) then
-					{
+					if (!alive _dead) then {
 					    {
 					       deleteVehicle _x; // remove unit immediately from vehicle crew group
 					    } forEach crew _dead;
 					    [_dead] call XAddDead;
-					    _check_vec_list set [_zz, "X_RM_ME"];
+					    _check_vec_list set [_zz, "RM_ME"];
 					    sleep 10;
 					};
 				};
@@ -57,7 +56,7 @@ while {true} do {
 			sleep 3.422;
 		};
 	};
-	_check_vec_list = _check_vec_list - ["X_RM_ME"];
+	_check_vec_list call  SYG_cleanArray;
 	sleep 30.461;
 
 #ifdef __PRINT_STAT__

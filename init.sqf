@@ -236,9 +236,8 @@ if (isServer) then {
     };
 
 #ifdef __EASY_SM_GO_FIRST__
-        easy_sm_array = easy_sm_array call XfRandomArray;
         // adds easiest side missions to the head of common list
-        side_missions_random = easy_sm_array + side_missions_random;
+        [side_missions_random, easy_sm_array call XfRandomArrayInPlace] call SYG_addArrayInPlace;
         hint localize format["SM goes first: %1", side_missions_random];
 #endif
 
@@ -246,7 +245,9 @@ if (isServer) then {
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     _first_array = []; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base, 29 - tanks at Cabo Juventudo, 40-41 - prisoners in Tiberia and Tandag
-    side_missions_random = _first_array + (side_missions_random - _first_array);
+    if (count _first_array > 0) then {
+	    side_missions_random = _first_array + (side_missions_random - _first_array);
+    };
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
