@@ -29,7 +29,7 @@
 SYG_msgToUserParser = {
 
     private [ "_msg_arr","_msg_fmt","_name","_np","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
-     "_msg_target_found","_ind","_SYG_processSingleStr","_str"];
+     "_msg_target_found","_ind","_SYG_processSingleStr","_str","_no_negate"];
 
     //
     // call as: _newStr = _str call _SYG_processSingleStr; // _str is localized or not localized depending on its value.
@@ -48,13 +48,21 @@ SYG_msgToUserParser = {
     _msg_target_found = false;
     _vehicle_chat = false;
     _np = name player;
+    _no_negate = false;
 
     // hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
     if  (typeName _name == "ARRAY") then { // list of names is expected
         if ( count _name == 0) then {_name = "";} // all players are addressed
         else {
+//        	_str = _name select 0;
+//			if (typeName  _str == "STRING") then { // negate sign is detected as 1st item in the array
+//				if ( _str in ['-',"!" ] ) exitWith {
+//					_no_negate = true;
+//					[_name, 0] call SYG_removeFromArrayByIndex; // remove 1st item from array
+//				};
+//			};
         	if (count _name == 2) then {
-        		if (typeName (_name select 0) == "SCALAR") then { // special case: [_dist, _pos] as 2nd parameter
+        		if (typeName (_name select 0) == "SCALAR") exitWith { // special case: [_dist, _pos] as 2nd parameter
         			if (player distance (_name select 1) <= (_name select 0) ) then { // you are close enough to the designated position
         				_name = [_np];
         			};
@@ -74,7 +82,7 @@ SYG_msgToUserParser = {
         _msg_target_found = vehicle player == _name;
         _vehicle_chat = _msg_target_found;
     } else {
-        _msg_target_found = _name in [_np, "", "*"," "];
+    	if (typeName _name == "STRING") then { _msg_target_found = _name in [_np, "", "*"," "]; };
     };
 
     if ( !_msg_target_found ) exitWith {}; // target for message not found

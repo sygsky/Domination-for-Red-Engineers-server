@@ -34,7 +34,7 @@ current_mission_counter = 0;    // side missions counter (init on server and cli
 
 global_vars = []; // initiate global vars
 
-if (isNil "x_funcs1_compiled") then {
+if (isNil "XfRandomFloor") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions1.sqf";
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_netinit.sqf";
 	if (isServer) then {
