@@ -20,7 +20,7 @@ while {true} do {
 	    _tmp_array1 = dead_list;    // fast remove deads from one array to other
 		dead_list = []; // empty dead list
 		sleep 0.1; // now dead_list is guarantied to be switched to empty one
-		_tmp_array = _tmp_array + _tmp_array1;
+		[_tmp_array, _tmp_array1] call SYG_addArrayInPlace;
 		_tmp_array1 = nil;
 		if (count _tmp_array > _max_non_delete) then {
 			_how_many = (count _tmp_array) - _max_non_delete;
@@ -29,10 +29,10 @@ while {true} do {
 				if (!(_element in _remove_dead_list)) then {
 					_remove_dead_list set [count _remove_dead_list, _element];
 				};
-				_tmp_array set [_oo, "X_RM_ME"];
+				_tmp_array set [_oo, "RM_ME"];
 				sleep 0.01;
 			};
-			_tmp_array = _tmp_array - ["X_RM_ME"];
+			_tmp_array call SYG_clearArray;
 			sleep 10.723;
 			{
 				if !(isNull _x) then {
