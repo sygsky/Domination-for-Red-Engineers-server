@@ -95,12 +95,6 @@ if (d_cancelled) exitWith {
 // we are in air!!!
 sleep 2.56;
 
-#ifdef __RANKED__
-hint localize format["+++ x_paraj.sqf: subtract full score %1 for the jump (jump score %2 + wait score %3)", _full_score, _jump_score, _wait_score];
-//player addScore (-_full_score); // subtract score for parajump
-//playSound "losing_patience";
-#endif
-
 // detect for parachute to be on player and on the ground and remove it from magazines
 waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
 
@@ -108,18 +102,18 @@ if ( (vehicle player) != player ) then { // parachute still on!
     // the parachute was just opened, so remove it from slot after landing/death
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
     player removeWeapon new_paratype;
-    if ( (player call XGetRankIndexFromScore) > 2 ) then {
-    	#ifdef __ACE __
-    	if (new_paratype != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
-    	#endif
-    	sleep 5.0; // Ensure  player to be on the ground
-    	if ( (vehicle player) != player ) then {
-			player action ["Eject", vehicle player];
-			hint localize "+++ x_paraj.sqf: player ejected from parachute";
-			playSound "steal";
-			(localize "STR_SYS_609_5") call XfHQChat;
-    	};
-    }
+//    if ( (player call XGetRankIndexFromScore) > 2 ) then {
+    #ifdef __ACE __
+    if (new_paratype != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
+    #endif
+    sleep 5.0; // Ensure  player to be on the ground
+    if ( (vehicle player) != player ) then {
+        player action ["Eject", vehicle player];
+        hint localize "+++ x_paraj.sqf: player ejected from parachute";
+        playSound "steal";
+        (localize "STR_SYS_609_5") call XfHQChat;
+    };
+//    }
 };
 //hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
 
