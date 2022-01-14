@@ -70,7 +70,7 @@ _enemy_vehicles = (
 // call: _cnt = _observers call _count_observers;
 _count_observers = {
     if (count _this == 0) exitWith { 0 };
-    private ["_cnt"];
+    private ["_cnt","_x"];
     _cnt = 0;
     {
         if (typeName _x == "OBJECT") then {
@@ -195,8 +195,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                     if ( _dist_between_pos < HIT_RADIOUS ) then { _enemyToReveal = _enemy } // knowledge is correct
                     else { if ( _enemyToReveal == _enemy ) then { _enemyToReveal = objNull } }; // knowledge is bad
 
-                    hint localize format
-                    [
+                    hint localize format [
                         "+++ x_handleobservers.sqf: Obs#%1 strikes %2 with %3 (knows %4), knwn/real dist %5/%6 m. [eu %7, ev %8/%9, obs %10/%11, ov %12], %13, real<->knwn dist %14 m., tgtcnt %15",
                         _i,
                         if (vehicle _enemy == _enemy) then {format["'%1'", name _enemy]} else {format["'%1'(%2)",name _enemy, typeOf (vehicle _enemy)]},
@@ -226,7 +225,8 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
             sleep 3.321;
         };
 	};
-	_observers = _observers - ["RM_ME"]; // remove killed observers[s]
+	_observers call SYG_clearArray; // remove killed observers[s] if any
+//	_observers = _observers - ["RM_ME"];
 	sleep 5.123;
 	if (!_enemy_ari_available) then 
 	{

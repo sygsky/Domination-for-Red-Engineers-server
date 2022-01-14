@@ -665,7 +665,7 @@ SYG_clearArrayA = {
 	private ["_dst","_src","_arr","_rm","_cnt","_notRM_ME","_item"];
 	_arr = _this select 0;	// array of any items with possible "RM_ME" items inclusion!
 	_rm  = _this select 1; // must be string! E.g. "RM_ME"
-	_dst = _arr find _rm;	// find first item to remove if avaulable
+	_dst = _arr find _rm;	// find first item to remove if available
 	if (_dst < 0) exitWith{ _arr }; // nothing to remove, return to the caller
 	_src = _dst + 1;
 	_cnt = count _arr;

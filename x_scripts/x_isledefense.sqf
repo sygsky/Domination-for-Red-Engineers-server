@@ -726,8 +726,14 @@ while { true } do {
 	// ==================================== END OF LOOP ON PATROLS ======================================
 #ifdef __PRINT_ACTIVITY__
 	// igrpa: [_agrp, _units, [0,0,0], _vecs]
-
-	hint localize format["+++ x_isledefense.sqf: %1, target ""%2"" (%3), groups on isle count %4", call SYG_missionTimeInfoStr, call SYG_getTargetTownName, current_counter, count groups_west ];
+    _groups_arr_side = compile toLower (format["groups_%1", d_enemy_side]);
+	hint localize format["+++ x_isledefense.sqf: %1, target ""%2""(%3), groups on isle count %4(%5)",
+	    call SYG_missionTimeInfoStr,
+	    call SYG_getTargetTownName,
+	    current_counter,
+	    d_side_enemy call SYG_sideGroupsCount,
+	    count groups_west
+	];
 	_str = "";
 	_cnt = 0; // number of active patrols
 	for "_i" from 0 to (count SYG_isle_grps - 1) do {
@@ -781,7 +787,7 @@ while { true } do {
 		};
 	};  // while {true} do
 	if ( _cnt > 0) then {
-#undef __SHOW_PATROL_CHANGE_INFO__ // not show this message
+#undef __SHOW_PATROL_CHANGE_INFO__ // not show lower message
 #ifdef __SHOW_PATROL_CHANGE_INFO__
 	    if ( _cnt != _patrol_cnt ) then {
 	        _patrol_cnt = _cnt;

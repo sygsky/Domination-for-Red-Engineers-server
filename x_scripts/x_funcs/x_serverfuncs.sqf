@@ -74,8 +74,8 @@ if (__RankedVer) then {
 #endif
 
 x_creategroup = {
-	private ["_found_empty","_grp","_i","_side","_side_str","_this","_tmp_grp","_tmp_grp_a","_tmp_time","_x"];
 	can_create_group = false;
+	private ["_found_empty","_grp","_i","_side","_side_str","_this","_tmp_grp","_tmp_grp_a","_tmp_time","_x"];
 	if ( (typeName _this) != "ARRAY") then {_this = [_this];};
 	_side = _this select 0;_grp = grpNull;
 	_side_str = (switch (toUpper(_side)) do {case "EAST": {"east"};case "WEST": {"west"};case "RACS": {"resistance"};case "CIV": {"civilian"};});
@@ -85,50 +85,100 @@ x_creategroup = {
 
 };
 
+/**
+ * TODO: use this routine as main one soon
+ * Group is stored in array as 2 item array: [_group, _time_to_check]
+ * Not sure but it seems the initial time (120 seconds) is used here
+ * to prevent newly created group from check during first 120 seconds after generation
+ * What is the sense of such solution, don't know.
+ */
 x_createGroupA = {
-	private ["_found_empty","_grp","_i","_side","_side_arr","_this","_tmp_grp","_tmp_grp_a","_tmp_time","_x"];
 	can_create_group = false;
-	if ( (typeName _this) != "ARRAY") then {_this = [_this];};
-	_side = _this select 0;
+	private ["_found_empty","_grp","_i","_side","_side_arr","_this","_tmp_grp_a","_tmp_grp","_tmp_time","_x"];
+	_side = if ( (typeName _this) == "ARRAY") then { _this select 0 } else {_this};
 	if (_side == "STRING") then {
 		_side = (switch (toUpper(str(_side))) do {case "EAST": {east};case "WEST": {west};case "RACS": {resistance};case "CIV": {civilian};});
 	};
-	if (_side != "SIDE") exitWith{ hint localize format["--- x_createGroup error: Expected side unknown, typeNmae  ""%1"", value %2", typeName _size, _side]};
+	if (typeName _side != "SIDE") exitWith{ hint localize format["--- x_createGroup error: Expected side unknown, typeName  ""%1"", value %2", typeName _side, _side]};
 	_grp = grpNull;
-	_side_arr = switch (toUpper(str(_side))) do {case "EAST": {groups_east};case "WEST": {groups_west};case "RACS": {groups_resistance};case "CIV": {groups_civilian};};
+	_side_arr = switch (toUpper(str(_side))) do {case east: {groups_east};case west: {groups_west};case resistance: {groups_resistance};case civilian: {groups_civilian};};
 	_found_empty = false;
-	if ( count _groups_arr > 0 ) then {
-		for "_i" from 0 to (count _groups_arr - 1) do {
-			if (_i > (count _groups_arr - 1)) exitWith {};
-			_tmp_grp_a = _groups_arr select _i;
+	// 1. Clear all groups array from empty items
+	if ( count _side_arr > 0 ) then {
+		for "_i" from 0 to (count _side_arr - 1) do {
+			if (_i > (count _side_arr - 1)) exitWith {};
+			_tmp_grp_a = _side_arr select _i;
 			if ( typeName _tmp_grp_a == "ARRAY" ) then {
 				_tmp_time = _tmp_grp_a select 1;
 				if (time >= _tmp_time) then {
+				    // time is out to check this group to be null, empty oк with dead men only
 					_tmp_grp = _tmp_grp_a select 0;
 					if (isNull _tmp_grp) then {
-						_groups_arr set [_i, "RM_ME"];
+						_side_arr set [_i, "RM_ME"];
 						_found_empty = true;
 					} else {
-						if (count (units _tmp_grp) == 0) then {
+						if (count (units _tmp_grp) == 0) then { // empty group, remove it now
 							deleteGroup _tmp_grp;
-							_groups_arr set [_i, "RM_ME"];
+							_side_arr set [_i, "RM_ME"];
 							_found_empty = true;
-						};
-					};
-				};
-			};
+						} else { // not empty group, check it to be alive
+						    {
+                                if ( alive _x ) exitWith {
+                                    // alive men found, set new timeout for the next 2 minutes
+                                   _tmp_grp_a set [1, time + 120];
+                                };
+						    } forEach units _tmp_grp
+                        };
+                    };
+                };
+			} ;
 			sleep 0.012;
 		};
 		if ( _found_empty ) then {
-
-			_groups_arr = _groups_arr - ["RM_ME"];
+			// Remove groups marked as delected. Note then items in the array may change their positons after it,
+			// but is is not important here
+			_side_arr call SYG_clearArray;
 		};
 	};
+	// 2. Create and add new group to the array
 	_grp = createGroup _side;
-	_groups_arr set[count _groups_arr,[_grp, time + 120]];
+	_side_arr set[count _side_arr,[_grp, time + 120]];
 	can_create_group = true;
 	_grp
 };
+
+/**
+ * Counts alive groups in designated array (for side east, west etc)
+ * Call as: _is_alive =  _side call SYG_groupIsActive;
+ */
+SYG_sideGroupsCount = {
+    private ["_this","_side_arr", "_x", "_cnt"];
+    if (typeName _this == "STRING") then {
+		_this = switch (toUpper(str(_side))) do {case "EAST": {east};case "WEST": {west};case "RACS": {resistance};case "CIV": {civilian};};
+    };
+    if (typeName _this != "SIDE") exitWith {hint localize format["--- Illegal arg to call SYG_groupsCount: typeName = %1, value = %2", typeName _this, _this]};
+	_side_arr = switch (_this) do {case east: {groups_east};case west: {groups_west};case resistance: {groups_resistance};case civilian: {groups_civilian};};
+	_cnt = 0;
+	{
+        {
+            if ( alive _x ) exitWith { _cnt = _cnt + 1 };
+        } forEach units (_x select 0);
+	} forEach _side_arr;
+	_cnt
+};
+
+/**
+ * Counts all groups for all sides in the mission
+ */
+SYG_allGroupsCount = {
+    private [ "_x", "_cnt"];
+    _cnt = 0;
+    {
+        _cnt = _cnt + (_x call SYG_sideGroupsCount);
+    } forEach [east, west, resistance, civilian];
+	_cnt
+};
+
 
 // Gets array of 100(or desinated N) base point in circle of designated radious
 // call: _wp_arr = [_pnt, _radius <, _pnt_num>] call x_getwparray
