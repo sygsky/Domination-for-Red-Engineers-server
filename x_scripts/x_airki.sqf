@@ -537,7 +537,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			for "_i" from 0 to ((count _vehicles) - 1) do {
 				_vecx = _vehicles select _i;
 				if ( ! alive _vecx ) then {
-					_vehicles set [_i, "X_RM_ME"]; 
+					_vehicles set [_i, "RM_ME"]; 
 #ifdef __PRINT__
 					hint localize format[ "+++ x_airki.sqf[%1]: airkiller is Null, remove from list",  _type];
 #endif			
@@ -546,7 +546,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                     if ( ( {alive _x} count (crew _vecx) ) == 0 ) then {
                         s_down_heli_arr set [count s_down_heli_arr, _vecx]; // ADD NEXT VEHICLE TO THE LIST OF DOWNED ONES
                         _vecx setFuel 0;
-                        _vehicles set [_i, "X_RM_ME"];
+                        _vehicles call SYG_clearArray;
 					} else {
                         if ( damage _vecx > 0) then {
                              _lastDamage = _vecx getVariable "damage";
@@ -568,7 +568,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 					sleep 0.01;
 				};
 			};
-			_vehicles = _vehicles - ["X_RM_ME"];
+			_vehicles = _vehicles - ["RM_ME"];
 		};
 		
 		if (count _vehicles == 0) exitWith {//+++ Sygsky: OPTIMIZE, crew may be on feet from now or wholly dead
@@ -583,7 +583,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 			hint localize format[ "+++ x_airki.sqf[%1]: all vehicle[s] are down, rejoin %2 pilot[s], rejoined %3", _type, _cnt, _ret ];
 #endif
             if ( !_ret ) then { _grp call _killUnits } // just in case
-            else {["msg_to_user","",[["STR_GRU_54"],["STR_GRU_54_1"]], 4, 10 + random 30] call XSendNetStartScriptClient;  }; // "One or more enemy pilots have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
+            else {["msg_to_user","",[ ["STR_GRU_54",typeOf _vehx /*[typeOf _vehx, 0] call XfGetDisplayName*/], ["STR_GRU_54_1"] ], 4, 10 + random 30] call XSendNetStartScriptClient;  }; // "One or more enemy pilots have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
 		};
 #ifdef __FUTURE__		
 		//+++ Sygsky: try to reveal info on known enemies for near friendly units

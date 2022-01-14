@@ -74,7 +74,7 @@ STR_GRU_53_MIMG,helicopter,Helikopter,helicóptero,вертолёт
 STR_GRU_53_KA,helicopter,Helikopter,helicóptero,вертолёт
 STR_GRU_53_SU,jet,jet,avión,самолёт
 
-STR_GRU_54,GRU: One or more enemy pilots have escaped and are on their way to join their troops,"GRU: Ein oder mehrere feindliche Piloten sind entkommen und sind auf dem Weg, Ihre Truppen zu verbinden.",GRU: Uno o más pilotos han escapado y siguen a los suyos.,ГРУ: Один или более пилотов спаслись и следуют к своим.
+STR_GRU_54,GRU: One or more enemy pilots (from %1) have escaped and are on their way to join their troops,"GRU: Ein oder mehrere feindliche Piloten (aus %1) sind entkommen und auf dem Weg zu ihren Truppen",GRU: Uno o más pilotos enemigos (de %1) han escapado y están en camino para unirse a sus tropas,ГРУ: Один или более пилотов (из %1) спаслись и следуют к своим.
 STR_GRU_54_1,"GRU: You can arrest them, and on resist You know what to do","GRU: Sie können Sie verhaften, und auf widerstehen Sie wissen, was zu tun ist","GRU: Pueden ser arrestados, y si se resisten, entonces usted sabe qué hacer","ГРУ: Их можно арестовать, а если будут сопротивляться, то Вы знаете, что делать"
 
 STR_GRU_55,GRU: the enemy landing party was sent from helicopter carrier in %1,GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1,GRU: salida de aterrizaje desde el portaaviones marcado %1,ГРУ: вылет десант с вертолётоносца отмечен %1

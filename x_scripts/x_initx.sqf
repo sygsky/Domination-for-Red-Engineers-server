@@ -24,7 +24,7 @@ if (isNil "d_lock_ai_air") then {d_lock_ai_air = false;};
 
 if (isNil "x_funcs2_compiled") then {call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions2.sqf";};
 call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_serverfuncs.sqf";
-if (isNil "x_commonfuncs_compiled") then {call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_commonfuncs.sqf"};
+if (isNil "x_repall") then {call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_commonfuncs.sqf"};
 x_removevehi = compile preprocessFileLineNumbers "x_scripts\x_removevehi.sqf";
 x_removevehiextra = compile preprocessFileLineNumbers "x_scripts\x_removevehiextra.sqf";
 execVM "x_scripts\x_removedead.sqf";

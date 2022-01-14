@@ -277,7 +277,9 @@ if (isServer) then {
     // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
     // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest, 40 - prisoners in Tiberia
     _first_array = [];
-    side_missions_random = _first_array + (side_missions_random - _first_array);
+    if ( count _first_array > 0 ) then {
+	    side_missions_random = _first_array + (side_missions_random - _first_array);
+    };
 
 //    side_missions_random = side_missions_random - [40,41]; // nemporarily remove all SM with prisoners (not work!!)
 

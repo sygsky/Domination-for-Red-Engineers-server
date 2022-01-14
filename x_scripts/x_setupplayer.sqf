@@ -99,7 +99,7 @@ if (isNil "x_funcs2_compiled") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_functions2.sqf";
 };
 call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_playerfuncs.sqf";
-if (isNil "x_commonfuncs_compiled") then {
+if (isNil "x_repall") then {
 	call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_commonfuncs.sqf";
 };
 call compile preprocessFileLineNumbers "x_scripts\x_funcs\x_clientfuncs.sqf";

@@ -2,7 +2,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-x_commonfuncs_compiled = false;
+if (! isNil "x_repall") exitWith {};
 
 private ["_search_array"];
 _search_array = [];
@@ -139,7 +139,5 @@ x_repall = {
 	_vec setFuel 1;
 #endif	
 };
-
-x_commonfuncs_compiled = true;
 
 if (true) exitWith {};
