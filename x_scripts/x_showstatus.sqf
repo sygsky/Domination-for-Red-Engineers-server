@@ -431,9 +431,15 @@ if (d_with_ace_map) then {  // Карта A.C.E.
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // SPPM handling: starts working only if player is in vehicle
-#ifndef __SPPM__
 _ctrl = _XD_display displayCtrl 11020;
-_ctrl ctrlShow false;
+#ifdef __SPPM__
+if (vehicle player == player) then { // player is not in vehicle
+	_ctrl  ctrlSetText (localize "STR_SPPM_CHECK");
+} else { // player is in vehicle
+	_ctrl  ctrlSetText (localize "STR_SPPM_ADD");
+};
+//#else
+//_ctrl ctrlShow false; // hide button from user
 #endif
 
 //-------------------------------------------------------

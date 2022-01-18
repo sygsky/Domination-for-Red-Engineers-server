@@ -1152,7 +1152,7 @@ XBaseEnemies = {
             if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
 	            [_alarm_obj, _height, "YELLOW", 400] execVM "scripts\emulateFlareFired.sqf";
 	           	hint localize format["+++ XBaseEnemies: throw yellow flare above %1", typeOf _alarm_obj];
-            } else {hint localize format["+++ XBaseEnemies: YELLOW flare above %1 already on", typeOf _alarm_obj];};
+            } else {hint localize format["+++ XBaseEnemies: YELLOW flare near %1 already on", typeOf _alarm_obj];};
 		};
 		case 1: {
 			hint composeText[

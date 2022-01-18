@@ -108,8 +108,12 @@ class XD_StatusDialog
 		XD_SideMissionTxt,
  		XD_CloseButton,
 		XD_MainTargetNumber,
-		XD_MainTarget, // main target name
-		XD_SPPMButton, // SPPM button
+		XD_MainTarget,  // main target name
+#ifdef __SPPM__
+		XD_SPPMText,	// SPPM text
+		XD_SPPMButton,  // SPPM action button
+		XD_SPPMHelpButton, // show SPPM short help
+#endif
 		XD_PlayerHealth,
 		XD_PlayerFatigue,
 		XD_SecondaryCaption,
@@ -147,6 +151,17 @@ class XD_StatusDialog
 	};
 
   // ####
+#ifdef __SPPM__
+	class XD_SPPMText : XC_RscText {
+		x = 0.58;
+		y = 0.105;
+		w = 0.25;
+		h = 0.1;
+		sizeEx = 0.03;
+		colorText[] = { 1, 1, 1, 1 };
+		colorBackground[] = {1, 1, 1, 0.0};
+		text = "$STR_SPPM"; // SPPM
+	};
 
 	class XD_SPPMButton
 	{
@@ -177,10 +192,44 @@ class XD_StatusDialog
 		y = 0.17;
 		w = 0.09;
 		h = 0.033;
-		text = $STR_SPPM; // "SPPM";
+		text = $STR_SPPM_ADD; // "Add" or "Check out";
 		action = "CloseDialog 0;xhandle = player execVM ""scripts\sppm.sqf"";";
 	};
 
+	class XD_SPPMHelpButton
+	{
+		idc = 11022;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = false;
+		font = FontM;
+		sizeEx = 0.02;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.2 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.58;
+		y = 0.21;
+		w = 0.09;
+		h = 0.033;
+		text = $STR_SPPM_HELP; // "Add" or "Check out";
+		action = "CloseDialog 0;xhandle = player execVM ""scripts\sppmhelp.sqf"";";
+	};
+
+#endif
 	class XD_TeamStatusButton
 	{
 		idc = 11009;
