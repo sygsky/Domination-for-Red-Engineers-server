@@ -1,8 +1,8 @@
 // by Xeno, x_scripts\x_water.sqf - check player weapon in water and restore it if lost into WeaponHolder (by Arma engine)
 
-#define HOLDER_SEARCH_RADIUS 20
+#define HOLDER_SEARCH_RADIUS 50
 
-private ["_posASL","_wpArr","_wpArr","_p","_marker"]; // Do we need this operator? Not sure
+private ["_posASL","_wpArr","_p","_marker"]; // Do we need this operator? Not sure
 
 hint localize "+++ x_water.sqf started!!!";
 
@@ -40,11 +40,17 @@ while {true} do {
             } do {sleep 0.621}; // wait until weapons is lost or player dead or out of water
 			sleep 0.521;
 			_sound = "under_water_3"; // you lost your weapon
-			// find ALL nearest weapon holders as Arma-1 createsmultiple weapon holders, that is surprize!
-			_wpArr = nearestObjects [ player, ["WeaponHolder"], HOLDER_SEARCH_RADIUS ]; // It will find all holdear around #N meters in 2D and any depth (so say https://community.bistudio.com/wiki/nearestObject)
+			// find ALL nearest weapon holders as Arma-1 may create multiple weapon holders, that is surprize!
+			_wpArr = player nearObjects [ "WeaponHolder", HOLDER_SEARCH_RADIUS ]; // It will find all holders around < 50 meters at depth <= 5D meters at point directly beneath  the point
 
 			if ( count _wpArr > 0 ) then {
-				if ( [_wpArr select 0, player] call SYG_distance2D > 20 ) exitWith {};
+				for "_i" from 0 to count _wpArr - 1 do {
+					_wp = _wpArr select _i;
+					if ( [_wp, player] call SYG_distance2D > 20 ) then { _wpArr set [_i, "RM_ME"]};
+				};
+				_wpArr call SYG_clearArray;
+			};
+			if ( count _wpArr > 0 ) then {
 //                hint localize format["+++ x_water.sqf: WeaponHolder[s] with your lost weapon found and remembered (%1 pc.)",count _wpArr];
 				if (alive player) then {
 					(localize "STR_SYS_620_0") call XfHQChat; // "Some weapon drowned, if it's mine, I'll find it on the shore. Otherwise..."
@@ -55,7 +61,7 @@ while {true} do {
                 };
 			} else {
 			    if (alive player && surfaceIsWater (getPos player) && ( primaryWeapon player == "" ) && ( secondaryWeapon player == "" )) then {
-    //			    hint localize "--- x_water.sqf:  WeaponHolder[s] not found";
+    			    hint localize "--- x_water.sqf:  Weapon lost but WeaponHolder[s] not found";
                     sleep 4;
                     (localize "STR_SYS_620_1") call XfHQChat; // You drowned your weapons foreve-e-e-er
 	                _sound = "losing_patience"; // you lost weapon forever
