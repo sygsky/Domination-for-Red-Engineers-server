@@ -140,7 +140,8 @@ if (!d_old_ammobox_handling) then {
 };
 
 /*
- * Set target unvulnerable while any own side vehicle not in 20 meters distance. After it tower became vulnerable again!
+ * Set SM target unvulnerable while any own side vehicle not in 20 meters distance. After it tower became vulnerable again!
+ * TODO: may be we need to replace logic with the one developed in lower XCheckMTHardTarget subroutine, to reject any kills except manual blasting
  */
 XCheckSMHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
@@ -159,8 +160,7 @@ XCheckSMHardTarget = {
 
 	#ifdef __WITH_SCALAR__
 	if (typeOf _vehicle == "Land_telek1") then {
-		_vec_init = _vec_init + "xhandle = [this] execVM ""scripts\scalar.sqf"";";
-        _vehicle setVehicleInit  _vec_init;
+        _vehicle setVehicleInit  "xhandle = [this] execVM ""scripts\scalar.sqf"";";
         processInitCommands;
 	};
 	#endif
@@ -235,9 +235,9 @@ XCheckSMHardTarget = {
  */
 SYG_hitMTTarget = {
     // drop damage if < 1 or hit not from man
-    if ( ( (_this select 2)  > 1.5 ) && ( (_this select 1) isKindOf "CAManBase") ) exitWith {
+    if ( ( (_this select 2)  > 2 ) && ( (_this select 1) isKindOf "CAManBase") ) exitWith {
    		(_this select 1) setVariable ["KAMIKADZE", time]; // set it to check later in kill event
-        hint localize  format["*** Hit dmg %1(total %2) to %3, by %4(%5) refused as kamikadze detected",
+        hint localize  format["*** Hit dmg %1(total %2) to %3, by %4(%5) may be refused as kamikadze detected",
             _this select 2,
             damage (_this select 0),
             typeOf (_this select 0),
@@ -276,7 +276,7 @@ XCheckMTHardTarget = {
 
 	if ( typeName _this != "ARRAY" ) then { _this = [_this] }; // allow any form of input, as array [_obj] as single object _obj
 	_vehicle = _this select 0;
-	_vehicle addEventHandler ["killed", { _this execVM "scripts\eventKilledMT.sqf" } ]; // protect the tower from forbidden attacks
+	_vehicle addEventHandler ["killed", { _this execVM "scripts\eventKilledMT.sqf" } ]; // protect the tower from forbidden attacks (by kamikadze, by tanks etc)
 #ifdef __TT__
 	_vehicle addEventHandler ["killed", { [ 4, _this select 1 ] call XAddPoints;private ["_mt_radio_tower_kill"];_mt_radio_tower_kill = (_this select 1);["mt_radio_tower_kill",_mt_radio_tower_kill] call XSendNetStartScriptClient; } ];
 #endif
