@@ -12,7 +12,7 @@ XfRandomFloor = {
 // example: _myRandomArray = _myNormalArray call XfRandomArray;
 // Optimized by Sygsky (resize except new array creates) at 09-JAN-2022
 XfRandomArray = {
-	private ["_ar","_ran_array","_this","_ran","_cnt"];
+	private ["_ar","_ran_array","_ran","_cnt"];
 	_ar =+ _this;
 	if (count _ar < 2) exitWith { _ar };
 	_ran_array = [];

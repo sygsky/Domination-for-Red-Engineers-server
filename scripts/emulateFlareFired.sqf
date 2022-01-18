@@ -1,7 +1,7 @@
 //
 // ACE flare script modified to use by Sygsky: scripts\emulateFlareFired.sqf
 //
-// Calld from server!!!
+// Called on server!!!
 // call as: [getPos _alarm_obj, _height, "Yellow", 400] execVM "scripts\emulateFlareFired.sqf";
 //
 private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_flare_type","_die_away_height","_alarm_obj"];

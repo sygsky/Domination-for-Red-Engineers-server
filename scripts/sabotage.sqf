@@ -30,16 +30,13 @@ if (!isServer) exitWith {};
 
 _replaceFire = {
 	private ["_nextType","_pos"];
-	if (!isNull _this ) then
-	{
+	if (!isNull _this ) then {
 		_nextType = "";
 		if (typeOf _this == "Fire") then {_nextType = "FireLit";}
-		else
-		{
+		else {
 			if (typeOf _this == "FireLit") then {_nextType = "Fire";}
 		};
-		if ( _nextType != "" ) then
-		{	
+		if ( _nextType != "" ) then {
 			_pos = getPos _this;
 			_pos set [2,0];
 			deleteVehicle _this;

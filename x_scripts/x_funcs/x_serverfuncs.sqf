@@ -94,7 +94,7 @@ x_creategroup = {
  */
 x_createGroupA = {
 	can_create_group = false;
-	private ["_found_empty","_grp","_i","_side","_side_arr","_this","_tmp_grp_a","_tmp_grp","_tmp_time","_x"];
+	private ["_found_empty","_grp","_i","_side","_side_arr","_tmp_grp_a","_tmp_grp","_tmp_time","_x"];
 	_side = if ( (typeName _this) == "ARRAY") then { _this select 0 } else {_this};
 	if (_side == "STRING") then {
 		_side = (switch (toUpper(str(_side))) do {case "EAST": {east};case "WEST": {west};case "RACS": {resistance};case "CIV": {civilian};});
@@ -152,7 +152,7 @@ x_createGroupA = {
  * Call as: _is_alive =  _side call SYG_groupIsActive;
  */
 SYG_sideGroupsCount = {
-    private ["_this","_side_arr", "_x", "_cnt"];
+    private ["_side_arr", "_x", "_cnt"];
     if (typeName _this == "STRING") then {
 		_this = switch (toUpper(str(_side))) do {case "EAST": {east};case "WEST": {west};case "RACS": {resistance};case "CIV": {civilian};};
     };

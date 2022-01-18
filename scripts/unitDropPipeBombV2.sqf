@@ -334,7 +334,7 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do {
 	if ( _bomb2center ) then {
 		_pipeBombCount = count _arr;
 		if (_debug) then {
-			player sideChat (format["DropScript: %1 pipeBombs are placed to center", _pipeBombCount ]); // have to understand it works or not
+			player sideChat (format["DropScript: %1 pipeBombs placed to the center", _pipeBombCount ]); // have to understand it works or not
 		};
 		
 		{
@@ -342,7 +342,7 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do {
 		} forEach _arr;
 		_dropRealPos = _dropItemPos;
 //#ifdef __DEBUG__
-			hint localize format["DropScript (%2): %1 pipeBombs are placed to center", _pipeBombCount, ELAPSED_TIME ]; // have to understand it works or not
+			hint localize format["DropScript (%2): %1 pipeBombs placed to the center", _pipeBombCount, ELAPSED_TIME ]; // have to understand it works or not
 //#endif
 	} else {
 #ifdef __DEBUG__

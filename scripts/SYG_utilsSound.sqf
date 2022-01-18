@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // scripts\SYG_utilsSound.sqf
-// Script to detect if designated weapon is sniper one (return true) or not (return false)
+// Script to handle with miltiple sounds and music in the mission
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -340,16 +340,19 @@ SYG_playRandomTrack = {
 #ifdef __DEBUG__
         hint localize format["+++ ""%1"" call SYG_playRandomTrack;",_this];
 #endif
-        playMusic _this
+        playMusic _this;
+        _this
     }; // full track
 
     if ( typeName _this != "ARRAY") exitWith {// must be array or string
         hint localize format["--- SYG_playRandomTrack: unknown params %1",_this];
+        ""
     };
 
     // if we are here, it is ARRAY
     if (count _this == 0) exitWith {
         hint localize "--- SYG_playRandomTrack : empty input array";
+        ""
     };
 
     // count >= 1
@@ -363,9 +366,10 @@ SYG_playRandomTrack = {
     //
     if (count _this == 1) exitWith {
         if (  typeName (_this select 0) == "STRING") exitWith {
-            playMusic arg(0);
+            playMusic arg(0); arg(0)
         };
         hint localize format["--- 1: ""%1"" call SYG_playRandomTrack;",_this ];
+        ""
     };
 
     // Check to be array of size > 1 and with special items sequence ["cosmos",[0, 10]]
@@ -387,8 +391,9 @@ SYG_playRandomTrack = {
 #ifdef __DEBUG__
                 hint localize format[ "*** SYG_playRandomTrack: play whole track %1 now, death count %2!!!", arg(0), SYG_deathCountCnt];
 #endif
-                SYG_deathCountCnt = 0;
-                if (call SYG_playExtraSounds) then { playMusic arg(0); };
+                SYG_deathCountCnt = 0; // wait next 50-60 deaths to again play full track)))
+                if (call SYG_playExtraSounds) exitWith { playMusic arg(0); arg(0)};
+                ""
             };
 
             // play partial random sub-track
@@ -400,16 +405,20 @@ SYG_playRandomTrack = {
                 hint localize format["*** SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
 #endif
                 [arg(0),argp(_trk,0),argp(_trk,1)] spawn SYG_playPartialTrack;
+                ""
             } else {
 #ifdef __DEBUG__
                 hint localize format["*** SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
 #endif
                 playMusic [arg(0),argp(_trk,0)];
+                ""
             };
         };
         hint localize format["--- 2: ""%1"" call SYG_playRandomTrack;",_this ];
+        ""
     };
     hint localize format["--- 3: ""%1"" call SYG_playRandomTrack;",_this ];
+    ""
 };
 
 // NOT IN USE AT ALL
@@ -582,3 +591,4 @@ SYG_powerDownSound = {
 };
 
 if (true) exitWith {};
+                         

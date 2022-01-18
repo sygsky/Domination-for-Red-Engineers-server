@@ -1110,15 +1110,19 @@ XBaseEnemies = {
 				parseText("<t color='#f0ff0000' size='2'>" + (localize "STR_SYS_60")/* "DANGER:" */ + "</t>"), lineBreak,
 				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Enemy troops on your base." */ + "</t>")
 			];
-        	private ["_alarm_obj","_no","_thislist","_height"];
+//            hint localize format["+++ XBaseEnemies: %1", _this];
+        	private ["_alarm_obj","_no","_thislist","_height","_x","_pos"];
+//            hint localize format["+++ XBaseEnemies: %1", _this];
             _alarm_obj = FLAG_BASE;
             _height    = 250; // default flare start height
             if ( ( count _this ) >  1 ) then {
                 _thislist = _this select 1;
+//            	hint localize format["+++ XBaseEnemies: thislist count %1", count _thislist];
                 if (typeName _thislist == "ARRAY") then {
                     // this is list of enemy intruders
                     {
                         if ( ((_x isKindOf 'LandVehicle') || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit'))) && (alive _x) ) exitWith {
+                        	// we found one of the enemy on the base, it may be the single one
                             // find nearest to this object alive service
                             // find allowed objects on base to play sounds
                             _no = nearestObjects [
@@ -1126,15 +1130,16 @@ XBaseEnemies = {
                             	[ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM", "Land_hlaska","Land_vez","Land_strazni_vez"],
                             	1000
                             ];
+			            	hint localize format["+++ XBaseEnemies: nearestObjects count %1", count _no];
                             {
-                                if (alive _x) exitWith {_alarm_obj = _x};
+								_pos  = position _x;
+                                if ( (typeName _x == "OBJECT") && (alive _x) && ((_pos select 2) > -10) ) exitWith {
+//                                	hint localize format["+++ XBaseEnemies: nearest alarm obj %1 (%2 m.), whole objs %2", typeOf _x, count _no ];
+                                	_alarm_obj = _x
+                                };
                             } forEach _no;
                         };
                     } forEach _thislist;
-                };
-                if ( (typeName _alarm_obj != "OBJECT") || (!alive _alarm_obj)) then {
-//                    hint localize format["+++ XBaseEnemies: alarm form 51 changed to FLAG_BASE", typeOf _alarm_obj ];
-                    _alarm_obj = FLAG_BASE;
                 };
             };
             if ((random 10) < 1 ) then {

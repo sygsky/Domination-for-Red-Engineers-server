@@ -22,7 +22,7 @@ private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", 
 #define RESTORE_DELAY_SHORT 30
 #define CYCLE_DELAY 15
 #define TIMEOUT_ZERO 0
-#define MOTO_ON_PLACE_DIST 3.5
+#define MOTO_RETURN_DIST 3.5
 #define DRIVER_NEAR_DIST 10
 #define SOUND_MIN_DIST_TO_SAY 5 // Min shift in meters to play sound on moto teleport
 #define FUEL_MIN_VOLUME 0.2
@@ -31,6 +31,7 @@ private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", 
 #define MOTO_ORIG_POS 1
 #define MOTO_ORIG_DIR 2
 #define MOTO_TIMEOUT 3
+#define MOTO_ID      4
 
 #define inc(val) (val=val+1)
 #define TIMEOUT(addval) (time+(addval))
@@ -39,7 +40,8 @@ _motoarr = []; // create array of vehicles to return to original position after 
 sleep 2;
 
 // read all vehicles and store their inintial positon and angles
-{
+for "_i" from 0 to count _this -1 do { // list all motocyrcles/automobiles
+	_x = _this select _i;
 //	_motoarr = _motoarr + [[_x, getPos _x, direction _x, TIMEOUT_ZERO]];
 	_pos = getPos _x;
 	_pos set[2,0]; // zero Z coordinate
@@ -48,17 +50,23 @@ sleep 2;
 	_pos1 = getPos _x;
 	_pos1 set [2,0];
 	sleep 0.2;
-	_motoarr = _motoarr + [[_x, _pos1, getDir _x, TIMEOUT_ZERO]];
+	_motoarr set [count _motoarr , [_x, _pos1, getDir _x, TIMEOUT_ZERO, _i +1]];
+
+	if ( !(_x hasWeapon "CarHorn")) then {
+		_x addWeapon "CarHorn"; // add horn for motorcycle
+		hint localize format["+++ moto%1 (%2): CarHorn added", _i + 1, typeOf _x];
+	} else {hint localize format["+++ moto%1 (%2): already has CarHorn", _i + 1, typeOf _x]};
+
 //	_x addWeapon "CarHorn";  // add horn for motorcycle: not work in MP
-} forEach _this; // list all motocyrcles/automobiles
+};
 
 sleep CYCLE_DELAY;
 
 #ifdef __DEBUG__
 
 hint localize format[
-	"+++ motorespawn.sqf:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_ON_PLACE_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
-					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_ON_PLACE_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
+	"+++ motorespawn.sqf:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_RETURN_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
+					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_RETURN_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
 ];
 
 {
@@ -96,81 +104,91 @@ while {true} do {
 		_moto    = _x select MOTO_ITSELF; //
 		_timeout = _x select MOTO_TIMEOUT;
 		_pos     = _x select MOTO_ORIG_POS; // base pos (where it must be!)
+		_id      = _x select MOTO_ID;
 
 		_pos1 = getPos _moto; // real pos
+		_pos1 set [2,0]; // zero Z coordinate
+		_dist = _pos1 distance _pos;
+
 		if ( _timeout == TIMEOUT_ZERO ) then { // check conditions for moto position restoring
-			_pos1 set [2,0]; // zero Z coordinate
-			_dist = round( _pos1 distance _pos);
-			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > MOTO_ON_PLACE_DIST)  ) then {
+			if (!alive _moto) exitWith {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)] };
+			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > MOTO_RETURN_DIST)  ) then {
 				if ( ( {alive _x} count (crew _moto)) == 0) then { // empty
 					if ( (canMove _moto) && ( ( fuel _moto ) > FUEL_MIN_VOLUME ) ) then  { _x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ] } // restore after normal delay
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened delay
 				};
+			};
+		} else { // time-out was already set
+			if ( time < _timeout) exitWith {};
+			if ( ( {alive _x} count (crew _moto)) > 0) exitWith { // not empty
+				_x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ];
+			};
+
+			_objNearArr = _pos1 nearObjects [_driverType, DRIVER_NEAR_DIST];
+
+			_nobj = objNull; //nearestObject [ _pos1, "CAManBase" ];
+			{
+				if (alive _x && isPlayer _x) exitWith {_nobj = _x};
+			} forEach _objNearArr;
+			_driver_near = !isNull _nobj;
+
+			if (! _driver_near ) then {
+				_driver_near = ( {alive _x} count (crew _moto) ) > 0; // is some man in moto crew?
+				if (_driver_near) then {
+					hint localize format["+++ motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
+				};
+			} else {  hint localize format["+++ motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
+
+			if ( ! (_driver_near && (alive _moto))) then { // if empty and no man nearby (10 meters circle)
+				_say = (_pos1 distance _pos) >= SOUND_MIN_DIST_TO_SAY; // sound only if long dist teleport to the place
+				if (_say ) then {["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll; _pos1 set [2,-5]; _moto setPos _pos1;};
+
 #ifdef __DEBUG__
-				if (_dist < 10) then {
-					hint localize format["+++ motorespawn.sqf: lets return %1 to the place, canMove %2, fuel %3, dist %4, MOTO_ON_PLACE_DIST %5",
+					hint localize format["+++ motorespawn.sqf: %1 (#%2) returned to the place, canMove %3, fuel %4, dist %5 (MOTO_RETURN_DIST %6)",
 						typeOf _moto,
+						_id,
 						canMove _moto,
 						fuel _moto,
 						_dist,
-						MOTO_ON_PLACE_DIST];
+						MOTO_RETURN_DIST];
+#endif
+
+				if ( !alive _moto ) then { // recreate vehicle
+					_type = typeOf _moto;
+					deleteVehicle _moto;
+					_moto = objNull;
+					sleep 1.375;
+					_moto = _type createVehicle [0,0,0];
+					_x set[MOTO_ITSELF, _moto];
+					if ( !(_moto hasWeapon "CarHorn")) then {
+						_moto addWeapon "CarHorn"; // add horn for motorcycle
+						hint localize format["+++ moto%1 (%2): CarHorn added", _i + 1, _type];
+					} else {hint localize format["+++ moto%1(%2) has CarHorn", _i + 1, _type]};
+
+#ifdef __DEBUG__
+					hint localize format["+++ motorespawn.sqf: %1 (%2) recreated after breakdown", typeOf _moto, _type];
+#endif
+				} else {	// use current vehicle item
+#ifdef __DEBUG__
+					hint localize format["+++ motorespawn.sqf: %1 moved back alive", typeOf _moto];
+#endif
+					_moto setDammage 0.0;
+					_moto setFuel 1.0;
 				};
+				sleep 1.11;
+
+				_moto setDir (_x select MOTO_ORIG_DIR);
+				_moto setPos (_pos);
+				if ( isEngineOn _moto) then { _moto engineOn false; };
+				if ( _say ) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClientAll };
+
+				//_x set [MOTO_ORIG_POS, getPos _moto];
+				sleep 0.5 + random 0.5;
+#ifdef __DEBUG__
+				hint localize format[ "+++ motorespawn.sqf: moto %1 returned, dist %2, new pos %3, engine on %4", _id, _dist, getPos _moto , typeOf _moto, getDir _moto, isEngineOn _moto ];
 #endif
 			};
-		} else { // time-out was already set
-			if ( time > _timeout) then {
-			    _objNearArr = _pos1 nearObjects [_driverType, DRIVER_NEAR_DIST];
-
-				_nobj = objNull; //nearestObject [ _pos1, "CAManBase" ];
-				{
-				    if (alive _x && isPlayer _x) exitWith {_nobj = _x};
-				} forEach _objNearArr;
-				_driver_near = !isNull _nobj;
-
-                if (! _driver_near ) then {
-    				_driver_near = ( {alive _x} count (crew _moto) ) > 0; // is some man in moto crew?
-    				if (_driver_near) then {
-                        hint localize format["+++ motorespawn.sqf: alive crew on moto count %1", {alive _x} count (crew _moto)];
-                    };
-                } else {  hint localize format["+++ motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _pos1]; };
-
-                if ( ! _driver_near) then { // if empty and no man nearby (10 meters circle)
-                    _say = (_pos1 distance _pos) >= SOUND_MIN_DIST_TO_SAY; // sound only if long dist teleport
-                    if (_say ) then {["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll; _pos1 set [2,-5]; _moto setPos _pos1;};
-
-                    if ( !alive _moto ) then { // recreate vehicle
-                        _type = typeOf _moto;
-                        deleteVehicle _moto;
-                        _moto = objNull;
-                        sleep 1.375;
-                        _moto = _type createVehicle [0,0,0];
-                       	_moto addWeapon "CarHorn"; // add horn for motorcycle
-                        _x set[MOTO_ITSELF, _moto];
-#ifdef __DEBUG__
-                        hint localize format["+++ motorespawn.sqf: %1 (%2) recreated after breakdown", typeOf _moto, _type];
-#endif
-                    } else {	// use current vehicle item
-#ifdef __DEBUG__
-                        hint localize format["+++ motorespawn.sqf: %1 moved back alive", typeOf _moto];
-#endif
-                        _moto setDammage 0.0;
-                        _moto setFuel 1.0;
-                    };
-                    sleep 1.11;
-
-                    _moto setDir (_x select MOTO_ORIG_DIR);
-                    _moto setPos (_pos);
-                    if ( isEngineOn _moto) then { _moto engineOn false; };
-                    if ( _say ) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClientAll };
-
-                    //_x set [MOTO_ORIG_POS, getPos _moto];
-                    sleep 0.5 + random 0.5;
-#ifdef __DEBUG__
-                    hint localize format[ "+++ motorespawn.sqf: moto returned, pos %1, %2 dir %3, engine on %4", getPos _moto , typeOf _moto, getDir _moto, isEngineOn _moto ];
-#endif
-				};
-				_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop
-			};
+			_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop
 		};
 		sleep CYCLE_DELAY; // main cycle time-out
 	} forEach _motoarr;

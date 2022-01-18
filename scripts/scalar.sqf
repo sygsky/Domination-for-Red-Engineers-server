@@ -89,7 +89,7 @@ if (isServer) then {
 	while {alive _tower} do {
 		sleep 0.02;
 	};
-	_end1 = "Bo_GBU12_LGB" createVehicle ( getPos _tower);
+	_end1 = "Bo_GBU12_LGB" createVehicle ( getPos _tower); // Bo_GBU12_LGB exists in vanilla Arma-1 in weapons.pbo
 	_end1 setPos [(getPos _tower) select 0 , (getPos _tower) select 1, ((getPos _tower) select 2) +25];
 };
 /*
