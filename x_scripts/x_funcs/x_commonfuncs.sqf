@@ -40,26 +40,26 @@ if (isServer) then {
 		d_found_gdtmodtracked = true;
 	};
 };
-SYG_found_ACE = "ace_code_common" in _search_array;
-if (SYG_found_ACE) then {hint localize "+++ ACE found!"} else { "--- ACE not found!"};
 #else
 d_found_gdtmodtracked = true; // skip GDTModTracked as totally useless/replaced by "getout" processing for 1st unit to be out
 d_use_mod_tracked = false;
 XGDTTracked = {};
 #endif
 
-SYG_found_GL3               = "GL3" in _search_array;
-SYG_found_ai_spotting       = "ai_spotting" in _search_array;
-SYG_found_TCN_GrenadeFix    = "TCN_GrenadeFix" in _search_array;
-SYG_found_EditorUpdate_v102 = "EditorUpdate_v102" in _search_array;
-SYG_found_ECS               = "ECS_Core" in _search_array;
+SYG_found_ACE               = "ace_code_common" in _search_array;
+SYG_found_GL3               = "GL3" in _search_array; // on server and client
+SYG_found_ai_spotting       = "ai_spotting" in _search_array; // only server
+SYG_found_TCN_GrenadeFix    = "TCN_GrenadeFix" in _search_array; // on server
+SYG_found_EditorUpdate_v102 = "EditorUpdate_v102" in _search_array; // on server and client
+SYG_found_ECS               = "ECS_Core" in _search_array; // on server
 
 #ifdef __SCUD__
-SYG_found_SCUD               = "GIG_Scud" in _search_array;
+SYG_found_SCUD               = "GIG_Scud" in _search_array; // on server and client
 #endif
 
 hint localize format["+++ GL3 = %1, ai_spotting = %2, Grenade fix = %3 ", SYG_found_GL3, SYG_found_ai_spotting, SYG_found_TCN_GrenadeFix];
 #ifdef __ACE__
+if (SYG_found_ACE) then {hint localize "+++ ACE found!"} else { "--- ACE not found!"};
 if ((d_enemy_side == "WEST")  && isServer && SYG_found_GL3) then {
     hint localize format["+++ Server: GL3_Global[65] = %1", argp(GL3_Global,65)];
     hint localize format["+++ Server: GL3_Server[64] = %1", argp(GL3_Server,64)];
