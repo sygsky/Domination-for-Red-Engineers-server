@@ -62,23 +62,25 @@ if (isServer) then {
 	d_random_sm_array = true; // for real game set it true, of course
 //    d_random_sm_array = false; // for debugging purposes only set it false
 
+#ifndef __TT__
 	// Passed array: [unit, killer]
 	XKilledSMTargetNormal = {
+		_this call XKilledSMTargetNormalNoDeadAdd;
 		[_this select 0] call XAddDead;
-		side_mission_winner=2;
-		side_mission_resolved = true;
 	};
 
 	// Passed array: [unit, killer]
-	XKilledSMTargetTT = {
-		[_this select 0] call XAddDead;
-		side_mission_winner = (switch (side (_this select 1)) do {case resistance:{1}; case west:{2}; default{-1};});
-		side_mission_resolved = true;
-	};
-	// no parameters passed
 	XKilledSMTargetNormalNoDeadAdd = {
 		side_mission_winner=2;
 		side_mission_resolved = true;
+		hint localize format["+++ SideMission #%1 (object: %1) completed by %2 (%3)", current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 0))];
+	};
+#endif
+#ifdef __TT__
+	// Passed array: [unit, killer]
+	XKilledSMTargetTT = {
+		_this call XKilledSMTargetTTNoDeadAdd;
+		[_this select 0] call XAddDead;
 	};
 
 	// Passed array: [unit, killer]
@@ -86,22 +88,26 @@ if (isServer) then {
 		side_mission_winner = (switch (side (_this select 1)) do {case resistance:{1}; case west:{2}; default{-1};});
 		side_mission_resolved = true;
 	};
+#endif
 
 	// Passed array: [unit, killer]
 	XKilledSMTarget500 = {
+		-500 call XKilledSMTargetCodeNoDeadAdd;
 		[_this select 0] call XAddDead;
-		side_mission_winner=-500;
-		side_mission_resolved = true;
+		hint localize format["+++ SideMission #%1 (object: %1) aborted by %2 (%3)", current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 0))];
 	};
 
 	// _this: negative code to complete this sm -1,-1 etc
 	XKilledSMTargetCodeNoDeadAdd = {
 		side_mission_winner = _this;
 		side_mission_resolved = true;
+		hint localize format["+++ SideMission #%1 aborted with code %2 (-3: no building, -500: officer killed)", current_mission_counter, _this ];
 	};
 
-	// Only for Sahrani: convoy start position and direction
-	// convoy waypoint arrays 1 and 2 (1 or 2 gets randomly selected)
+	// Data are real for Sahrani only:
+	// 1st line: convoy start position and direction
+	// 2nd line: convoy waypoint array 1
+	// 3rd line: convoy waypoint array2 (1 or 2 gets randomly selected)
 	d_sm_convoy = [
 		[ // Ixel - Tandag
 			[17452.8,13577.6,0],0,
