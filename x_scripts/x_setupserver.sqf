@@ -199,7 +199,7 @@ XCheckSMHardTarget = {
 	if (alive _vehicle) then {
 	    _vehicle removeAllEventHandlers "hit";
 	    _vehicle removeAllEventHandlers "dammaged";
-// all this garbage not work at all:	    hint localize "+++ friendly_near_sm_target is now true: remove HIT & DAMMAGE protect events";
+// all this garbage not work at all:	    hint localize "+++ friendly_near_sm_target is now true: remove HIT & DAMMAGED protect events";
 	};
 
 	deleteVehicle _trigger;

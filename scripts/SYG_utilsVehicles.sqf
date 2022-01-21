@@ -1086,7 +1086,7 @@ SYG_removeIntelLegend = {
 };
 
 //
-// set smoke throwed to the shooter side for "hit"/"dammage"(tanks) event if vehicle has a smoke magazines in base inventory
+// set smoke throwed to the shooter side for "hit"/"dammaged"(tanks) event if vehicle has a smoke magazines in base inventory
 //
 // Call: _isAssingedToSmoke = _vec call SYG_assignVecToSmokeOnHit;
 //
@@ -1101,7 +1101,7 @@ SYG_assignVecToSmokeOnHit = {
         //_magazines = getArray(_config >> "magazines");
     if ( "ACE_LVOSS_Magazine" in _magazines ) exitWith {
         if ( (_this isKindOf "M1Abrams" || _this isKindOf "ACE_M60") && (!isNil "SYG_eventOnDamage")) then {
-            _this addEventHandler ["dammage", {_this spawn SYG_eventOnDamage}]; true
+            _this addEventHandler ["dammaged", {_this spawn SYG_eventOnDamage}]; true
         } else {
             _this addEventHandler ["hit", {_this spawn x_dosmoke2}]; true
         };
