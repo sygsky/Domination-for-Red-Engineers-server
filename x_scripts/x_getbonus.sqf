@@ -1,5 +1,6 @@
 // x_scripts/x_getbonus.sqf : by Xeno
 // creates bonus vehicle for side missions and place it to the ground
+// Called on server!
 private ["_dir","_pos","_posa","_vehicle", "_vec_number", "_resurrect"];
 
 if (!isServer) exitWith {};
@@ -54,18 +55,19 @@ if (side_mission_winner == 2) then {
 _vec_type = sm_bonus_vehicle_array select bonus_number;
 
 _vehicle = (_vec_type) createVehicle (_pos);
-_vehicle setVariable ["RECOVERABLE", true];
-
 _vehicle setDir _dir;
 hint localize format["+++ x_scripts/x_getbonus.sqf: type index %1, pos %2, veh %3", bonus_number, _pos, typeOf _vehicle];
 
-_pos = nil;
-_posa = nil;
+/**
+_vehicle setVariable ["RECOVERABLE", true];
+_vehicle execVM "x_scripts\x_wreckmarker.sqf";  //    [_vehicle] call SYG_addEventsAndDispose;
+*/
+_vehicle call SYG_assignVehAsBonusOne;
 
 ["sm_res_client",side_mission_winner,bonus_number] call XSendNetStartScriptClient;
 
+_pos = nil;
+_posa = nil;
 side_mission_winner = 0;
-
-_vehicle execVM "x_scripts\x_wreckmarker.sqf";  //    [_vehicle] call SYG_addEventsAndDispose;
 
 if (true) exitWith {};

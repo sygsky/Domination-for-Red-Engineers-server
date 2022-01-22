@@ -1242,7 +1242,7 @@ SYG_su34_RearmTables =
 
 SYG_heliRearmTable =
 [
-    // heli names, Mi24 can't be rearmed, doesnt try to do it
+    // heli names, Mi24P can't be rearmed, doesnt try to do it
  ["ACE_Mi24D","ACE_Mi24V"/*,"ACE_Ka50","ACE_Ka50_N"*/,"ACE_Mi17_MG", "ACE_Mi17"],
  	// heli params
  [
@@ -1398,7 +1398,7 @@ SYG_rearmVehicle = {
 	true
 };
 
-// call:      _res = _this call SYG_rearmVehicleA;
+// call as:      _wasVehRearmed = _veh call SYG_rearmVehicleA;
 SYG_rearmVehicleA = {
     private ["_list"];
     _list = _this call SYG_getVehicleTable;
@@ -1993,6 +1993,32 @@ SYG_deviateTeleportPoint = {
 
 #endif
 
+//
+// Assign designated vehicle as bonus one. Is called as for MT as for SM bonus vehicles in the same manner.
+// This proc replaces the same code for MT bonuses (x_gettargetbonus.sqf) and SM ones (x_getbonus.sqf)
+//
+SYG_assignVehAsBonusOne = {
+
+	private ["_vehicle"];
+	_vehicle = _this;
+	_vehicle setVariable ["RECOVERABLE", true];
+
+#ifdef __REARM_SU34__
+	_vehicle call SYG_rearmVehicleA; // rearm if bonus vehicle is marked to rearm
+#endif
+
+#ifdef __AI__
+	#ifdef __NO_AI_IN_PLANE__
+	// check for any pilot or driver to be AI and get them out if yes
+	if ( (_vehicle isKindOf "Plane") ) then {
+		_vehicle addEventHandler ["getin", {_this execVM  "scripts\SYG_eventPlaneGetIn.sqf"}];
+	};
+	#endif
+#endif
+
+	// set marker procedure for the newly created bonus vehicle
+	_vehicle execVM "x_scripts\x_wreckmarker.sqf";
+};
 
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

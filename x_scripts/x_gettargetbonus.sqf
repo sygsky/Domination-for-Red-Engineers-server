@@ -130,12 +130,10 @@ _bonus_score_arr spawn {
 };
 
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
-_vehicle setVariable ["RECOVERABLE", true];
-
+_vehicle setDir _dir;
 hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created ""%1""", typeOf _vehicle];
 
-_vehicle setDir _dir;
-
+/*
 #ifdef __REARM_SU34__
 _vehicle call SYG_rearmVehicleA; // rearm if bonus vehicle is marked to rearm
 #endif
@@ -151,6 +149,9 @@ if ( (_vehicle isKindOf "Plane") ) then {
 
 // set marker procedure for the newly created vehicle
 _vehicle execVM "x_scripts\x_wreckmarker.sqf";
+*/
+
+_vehicle call SYG_assignVehAsBonusOne;
 
 //
 // RESTORE DESTROYED BUILDINGS
