@@ -26,7 +26,7 @@ while {true} do {
 			_wreck = [_rep_station,_types] call XGetWreck;
 		};
 	};
- 	_player = ""; // name of player who delivered vehicle onmto the recovery service
+ 	_player = ""; // name of player who delivered vehicle onto the recovery service
 #ifdef __RANKED__
 	// wreck vehicle detected on recovery service, lets find player who delivered it for award
 	_nearArr =   nearestObjects [getPos _rep_station, ["LandVehicle", "Helicopter"], 30];

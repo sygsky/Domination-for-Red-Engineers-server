@@ -127,7 +127,7 @@ x_createGroupA = {
                                     // alive men found, set new timeout for the next 2 minutes
                                    _tmp_grp_a set [1, time + 120];
                                 };
-						    } forEach units _tmp_grp
+						    } forEach units _tmp_grp;
                         };
                     };
                 };
@@ -149,20 +149,27 @@ x_createGroupA = {
 
 /**
  * Counts alive groups in designated array (for side east, west etc)
- * Call as: _is_alive =  _side call SYG_groupIsActive;
+ * Call as: _enemy_grp_cnt =  _enemy_side call SYG_sideGroupsCount;
  */
 SYG_sideGroupsCount = {
-    private ["_side_arr", "_x", "_cnt"];
-    if (typeName _this == "STRING") then {
-		_this = switch (toUpper(str(_side))) do {case "EAST": {east};case "WEST": {west};case "RACS": {resistance};case "CIV": {civilian};};
+    private ["_side_arr", "_x", "_cnt","_grp_id","_side"];
+    _side = _this;
+    if (typeName _side == "STRING") then {
+		_side = switch (toUpper(str(_side))) do {case "EAST": {east};case "WEST": {west};case "RACS": {resistance};case "CIV": {civilian};};
     };
-    if (typeName _this != "SIDE") exitWith {hint localize format["--- Illegal arg to call SYG_groupsCount: typeName = %1, value = %2", typeName _this, _this]};
-	_side_arr = switch (_this) do {case east: {groups_east};case west: {groups_west};case resistance: {groups_resistance};case civilian: {groups_civilian};};
+    if (typeName _side != "SIDE") exitWith {hint localize format["--- Illegal arg to call SYG_sideGroupsCount: typeName = %1, _this = %2", typeName _side, _side]};
+	_side_arr = switch (_side) do {case east: {groups_east};case west: {groups_west};case resistance: {groups_resistance};case civilian: {groups_civilian};};
 	_cnt = 0;
+	_grp_id = 0;
 	{
-        {
-            if ( alive _x ) exitWith { _cnt = _cnt + 1 };
-        } forEach units (_x select 0);
+		if (typeName _x == "ARRAY") then  {
+			{
+				if ( alive _x ) exitWith { _cnt = _cnt + 1 };
+			} forEach units (_x select 0);
+		} else {
+			hint localize format["--- SYG_sideGroupsCount: group_%1[%2] = %3, skipped", toLower(str(_side)), _grp_id, _x ];
+		};
+		_grp_id = _grp_id + 1;
 	} forEach _side_arr;
 	_cnt
 };
@@ -771,18 +778,19 @@ XStealthPatrol = {
 // Wreck is defined as follow: vehicle has variable "RECOVERABLE" in personal variable space and has damage >= 1
 //
 XGetWreck = {
-	private ["_no","_rec"];
+	private ["_no","_obj"];
 	_no = nearestObjects [position (_this select 0), _this select 1, 8];
 	if (count _no == 0) exitWith { objNull };
-	_no = _no select 0;
-	if ( (damage _no) < 1 ) exitWith { objNull };
-//	hint localize format["+++ XGetWreck: %1 on recovery service", typeOf _no];
-	if ( ! (_no call SYG_vehIsRecoverable) ) exitWith {
+	_obj = objNull;
+	// find dead recoverable vechile on the circle
+	{
+		if ( (! alive _x) &&  (_x call SYG_vehIsRecoverable) ) exitWith {
+		//	hint localize format["+++ XGetWreck: %1 on recovery service", typeOf _x];
+			_obj = _x;
+		};
+	} forEach _no;
 //		hint localize format["+++ XGetWreck: %1 on recovery service, but vehicle is not "RECOVERABLE"", typeOf _no];
-		objNull
-	};
-	if ( (damage _no) >= 1 ) exitWith { _no };
-	objNull
+	_obj
 };
 
 //

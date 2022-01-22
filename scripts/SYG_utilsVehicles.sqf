@@ -1903,6 +1903,8 @@ SYG_vehIsRecoverable = {
 	_res
 };
 
+// Converts objects in input array to their types and return new array with types, on error return input array.
+// If single object is used as parameter, its type is returned
 SYG_vehToType = {
 	if ( typeName _this == "OBJECT" ) exitWith { typeOf _this };
 	if ( typeName _this == "ARRAY" ) exitWith {
