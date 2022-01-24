@@ -16,10 +16,14 @@ _end_pnt_arr    = [d_para_end_positions select 0, d_para_end_positions select 1]
 #endif
 
 #ifdef __TOWN_WEAK_DEFENCE__
-sleep 3600; // sleep 1 hour if defence is weak
+_sleep =  3600; // sleep 1 hour if defence is weak
 #else
-sleep 333.325;
+_sleep = 333.325;
 #endif
+
+hint localize format["+++ x_parahandler.sqf: Enemy town %1 detects your presence by trigger and sleep %2 secs. now", _dummy select 1, _sleep];
+sleep _sleep;
+hint localize format["+++ x_parahandler.sqf: Enemy town %1 desant procedure resumed after sleep", _dummy select 1];
 
 while {!mt_radio_down} do {
 	if (create_new_paras) then {

@@ -136,8 +136,8 @@ _rejoinPilots =  {
                     };
                 };
             };
-            _badunits = _badunits - ["RM_ME"];
-            _goodunits = _goodunits - ["RM_ME"];
+            _badunits  call SYG_clearArray;
+            _goodunits  call SYG_clearArray;
             _newgrp = grpNull;
             if ( !isNull _pilot ) then { // there is some alive pilots in the group
 
@@ -342,7 +342,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 		_vehicle = createVehicle [_heli_type, _pos, [], 100, "FLY"];
 		_vehicle setVariable ["damage",0]; // TODO: for future use
 
-		_vehicles = _vehicles + [_vehicle];
+		_vehicles set [count _vehicles, _vehicle];
 		[_vehicle, _grp, _crew_member, _grpskill] call SYG_populateVehicle;
 
 		{ // support each crew member
@@ -380,10 +380,12 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 	//_old_target = [0,0,0];
 	_current_target_pos = _dummy select 0;
 
+	// Send 1st heli to the target, all others will follow him
 	if ((_vehicles select 0) distance _current_target_pos > (_vehicles select 0) distance d_island_center) then {
 		_wp = _grp addWaypoint [d_island_center, 200]; // additional waypoint to island center
     	_wp setWaypointType "MOVE";
 	};
+
 	_wp = _grp addWaypoint [_current_target_pos, 50];
 	_old_pat_pos = _current_target_pos; // initial old patrol positon
 	_wp setWaypointType "SAD";
@@ -392,7 +394,6 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 #ifdef __PRINT__
    	hint localize format["+++ x_airki.sqf[%3]: %1 sent to town %2 at pos %4",_heli_type, _dummy select 1, _type, _current_target_pos];
 #endif
-
 
 #ifdef __PRINT__
 	_timeToPrint = time + PRINT_PERIOD + (random 60); // print after 60 seconds
@@ -515,7 +516,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
                         hint localize format["+++ x_airki: bad item in enemy air vehicle array %1", _enemy_heli ];
                     };
                 }; // forEach SYG_owner_active_air_vehicles_arr;
-                SYG_owner_active_air_vehicles_arr = SYG_owner_active_air_vehicles_arr - ["RM_ME"];
+                SYG_owner_active_air_vehicles_arr call SYG_clearArray;
                 if (_height_not_set) then {
                     _flyHeight = (_flight_height + (random _flight_random));
        		        _x flyInHeight _flyHeight ;
@@ -543,10 +544,18 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 #endif			
 				} else {
                     sleep 1;
-                    if ( ( {alive _x} count (crew _vecx) ) == 0 ) then {
+                    if ( (side _vehicle) != d_side_enemy) then {
+                    	// clean s_down_heli_arr first
+                    	for "_j" from 0 to count s_down_heli_arr - 1 do {
+                    		_dheli = s_down_heli_arr select _j;
+                    		if (!alive _dheli) then { s_down_heli_arr set [_j, "RM_ME"] } else {
+                    			if (side _dheli == d_side_player_) exitWith {s_down_heli_arr set [_j, "RM_ME"]};
+                    		};
+                    	};
+                    	s_down_heli_arr call SYG_clearArray; // remove bad helicopters from the global list
                         s_down_heli_arr set [count s_down_heli_arr, _vecx]; // ADD NEXT VEHICLE TO THE LIST OF DOWNED ONES
                         _vecx setFuel 0;
-                        _vehicles call SYG_clearArray;
+						_vehicles set [_i, "RM_ME"];
 					} else {
                         if ( damage _vecx > 0) then {
                              _lastDamage = _vecx getVariable "damage";
@@ -568,7 +577,7 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 					sleep 0.01;
 				};
 			};
-			_vehicles = _vehicles - ["RM_ME"];
+            _vehicles call SYG_clearArray;
 		};
 		
 		if (count _vehicles == 0) exitWith {//+++ Sygsky: OPTIMIZE, crew may be on feet from now or wholly dead
@@ -595,11 +604,9 @@ sleep (180 + random 180); // 3-6 mins to receive message and send helicopters on
 #ifdef __PRINT__
         if ( time >= _timeToPrint) then {
             _heli = _vehicles select 0;
-            _loc = _heli call SYG_nearestSettlement;
-                hint localize format["+++ x_airki: %1 at %2 in %3 m h %4, s %5 dmg %6",
+            hint localize format["+++ x_airki: %1 at %2, h %3, s %4, dmg %5",
                 typeOf _heli,
-                text _loc,
-                round((locationPosition _loc) distance _heli),
+                [_heli,"%1 m. to %2 from %3"] call SYG_MsgOnPosE,
                 round((getPos _heli) select 2),
                 round(speed _heli),
                 damage _heli

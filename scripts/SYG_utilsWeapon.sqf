@@ -2658,6 +2658,7 @@ SYG_fastReload = {
 				};
 			};
 		};
+		sleep 0.01;
 	} forEach _this;
 	_ret
 };

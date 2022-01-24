@@ -359,6 +359,16 @@ SYG_addEventsAndDispose = {
     };
 };
 
+// remove all standard vehicle event: hit, killed, dammaged, getin and getout
+SYG_removeAllVehicleStdEvents = {
+	if (typeName _this != "OBJECT") exitWith {};
+	_this removeAllEventHandlers "killed";
+	_this removeAllEventHandlers "hit";
+	_this removeAllEventHandlers "dammaged";
+    _this removeAllEventHandlers "getin";
+    _this removeAllEventHandlers "getout";
+};
+
 // Makes vehicle group on enemy side for sidemission (e.g. convoy) and main targets too
 x_makevgroup = {
 	private ["_numbervehicles", "_pos", "_crewmember", "_vehiclename", "_grp", "_radius", "_direction", "_do_points",

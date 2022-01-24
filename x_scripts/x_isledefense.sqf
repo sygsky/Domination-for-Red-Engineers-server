@@ -431,7 +431,7 @@ _utilizeFeetmen = {
 	// remove invalid men directly now
 	if ( count _invalid_men > 0 ) then {
 #ifdef __PRINT_ACTIVITY__
-		hint localize format["%+++ 1 x_isledefense.sqf: invalid %2 are killed", call SYG_missionTimeInfoStr, _invalid_men];
+		hint localize format["%+++ %1 x_isledefense.sqf: invalid %2 are killed", call SYG_missionTimeInfoStr, _invalid_men];
 #endif								
 		{ 
 			if ( !isNull _x ) then {

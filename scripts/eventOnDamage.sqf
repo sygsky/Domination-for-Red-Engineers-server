@@ -21,7 +21,7 @@ if (!isServer) exitWith {};
 //#define __FULL_PRINT__
 
 #ifdef __PRINT__
-hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %4", _this, count crew (_this select 0)];
+hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2", _this, count crew (_this select 0)];
 #endif
 
 private ["_vec", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_smoke_array", "_pp", "_shell", "_hideobject", "_name"];

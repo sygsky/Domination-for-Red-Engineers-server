@@ -18,10 +18,9 @@ if (!isServer) exitWith{};
 _aunit = _this select 0;
 _aunit removeAllEventHandlers "hit";
 _aunit removeAllEventHandlers "dammaged";
+_aunit removeAllEventHandlers "killed";
 _aunit removeAllEventHandlers "getin";
 _aunit removeAllEventHandlers "getout";
-_aunit removeAllEventHandlers "killed";
-_aunit removeAllEventHandlers "hit";
 
 _position = position _aunit;
 

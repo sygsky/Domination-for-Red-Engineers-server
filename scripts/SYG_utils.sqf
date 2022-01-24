@@ -629,30 +629,6 @@ SYG_addArrayInPlace = {
     _arr
 };
 
-// Remove all strings "RM_ME" from input _arr
-// call: _cleaned_arr = _cleaned_arr call SYG_clearArray;
-// returns the same array without "RM_ME" items. Order of remained items in array may change!!!
-SYG_clearArray = {
-	if ( (typeName _this) != "ARRAY") exitWith {_this};
-	private ["_i","_x","_this","_cnt","_start"];
-	_cnt = count _this;
-	_start = _this find "RM_ME";
-	if (_start < 0) then {_start = 0};
-	for "_i" from (_cnt -1)  to _start step -1 do {
-		_x = _this select _i;
-		if ( typeName _x == "STRING") then {
-			if (_x == "RM_ME") then {
-				if ( _i < (_cnt - 1) ) then { _this set [_i, _this select (_cnt - 1)]; };
-				_cnt = _cnt - 1;
-			};
-		};
-	};
-	_this resize _cnt;
-	_this
-};
-
-SYG_cleanArray = SYG_clearArray;
-
 // Remove all designated strings (e.g. "RM_ME") from input _arr not changing oreder of items
 // call: _cleaned_arr = [_cleaned_arr,"RM_ME"] call SYG_clearArray;
 // returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
@@ -693,6 +669,8 @@ SYG_clearArrayB = {
 	[_this, "RM_ME"] call SYG_clearArrayA
 };
 SYG_cleanArrayB = SYG_clearArrayB;
+SYG_clearArray  = SYG_cleanArrayB;
+SYG_cleanArray  = SYG_cleanArrayB;
 
 //
 // _arr = [1,2,3,4];
@@ -703,8 +681,8 @@ SYG_removeFromArrayByIndex = {
 	_arr = _this select 0;
 	if (typeName _arr != "ARRAY") exitWith {[]};
 	_ind = _this select 1;
-	if (_ind < 0) exitWith { _arr};
-	if (_ind >= (count _arr)) exitWith {_arr};
+	if (_ind < 0) exitWith { _arr};            // out of bounds
+	if (_ind >= (count _arr)) exitWith {_arr}; // out of bounds
 	for "_i" from _ind  to (count _arr) - 2 do { _arr set [_i, _arr select (_i + 1)]; };
 	_arr resize (count _arr) - 1;
 	_arr

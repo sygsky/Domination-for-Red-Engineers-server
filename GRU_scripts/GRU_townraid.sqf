@@ -188,6 +188,9 @@ for "_check" from 0 to 0 do
 			};
 		};
 
+		// TODO: send info about start to all players
+		["GRU_msg", GRU_MSG_TASK_ACCEPTED, GRU_MAIN_TASK, name player] call XSendNetStartScriptServer;
+
 		GRU_docState = 1; // owned doc
 
 		_str = format["%1.\n%2", _str, localize "STR_GRU_21"];
