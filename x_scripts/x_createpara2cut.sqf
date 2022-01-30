@@ -161,7 +161,7 @@ _unit_array = nil;
 if (!_ejected && alive _chopper) then {
 	//[player,"Scheduled drop started"] call XfSideChat;
     _msg = [_chopper, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
-    hint localize format["+++ x_createpara2cut.sqf: Ordinal saboteurs ejection started, %1 unit[s], h %2, %3", {alive _x} count (units _paragrp), round((getPos _chopper) select 2), _msg ];
+    hint localize format["+++ x_createpara2cut.sqf: Ordinal saboteurs ejection (%1) started, %2 unit[s], h %3, %4", typeOf _chopper, {alive _x} count (units _paragrp), round((getPos _chopper) select 2), _msg ];
 #ifdef __OWN_SIDE_EAST__
 	// play good american sound from the chopper)))
     ["say_sound", _chopper, "usa_desant_heli" ] call XSendNetStartScriptClientAll; // "Ouh baby-y-y-y-..." - pure american armu war sound)_))

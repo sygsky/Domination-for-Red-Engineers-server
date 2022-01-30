@@ -127,7 +127,7 @@ SYG_getVehicleTypeScore = {
 //
 // call _nenemy = [ _unit<, _dist> ] call SYG_detectedEnemy;
 SYG_detectedEnemy = {
-	private ["_enemy","_near_targets","_side","_eside","_target","_cost"];
+	private ["_enemy","_near_targets","_side","_eside","_target","_cost","_x"];
 	_unit = arg(0);
 	_near_targets = _unit nearTargets argopt(1,1000);
 	_eside = if ((side _unit) == east) then  { west } else {east};
@@ -156,7 +156,7 @@ SYG_detectedEnemy = {
 // Returns: nearest enemy object or null if no enemy (with knowAbout > 0.5) found
 // 
 SYG_nearestEnemy = {
-	private ["_enemy","_distance","_near_targets","_pos_nearest"];
+	private ["_enemy","_distance","_near_targets","_pos_nearest","_x"];
 	if (typeName _this == "GROUP") then { _this = leader _this; };
 	if (isNull _this) exitWith{objNull};
 	_enemy = _this findNearestEnemy _this;
@@ -193,7 +193,7 @@ SYG_nearestEnemy = {
 // _grps = [_unit, _dist, _pos, _grp_size] call SYG_nearestSoldierGroups; // search groups of designated size as if (_grp_size >= ({canStand _x} count _grp))..
 //
 SYG_nearestSoldierGroups = {
-	private ["_unit", "_dist", "_side", "_nearArr", "_grps", "_types" ];
+	private ["_unit", "_dist", "_side", "_nearArr", "_grps", "_types", "_x" ];
 	_unit = _this select 0;
 	if ( isNull _unit || !alive _unit ) exitWith {[]};
 	_grps = [];
@@ -279,7 +279,7 @@ Syg_findNearestVehicles = {
 // Where _act may be 1 (to open) or 0 (to close)
 //
 SYG_execBarrierAction = {
-	private ["_act", "_pos", "_ret", "_arr"];
+	private ["_act", "_pos", "_ret", "_arr", "_x"];
 	_act = arg(1);
 	_ret = 0;
 	if ( switch _act do {case 1; case 0: { true}; default {false};} ) then
@@ -431,7 +431,7 @@ SYG_removeFromTurretList =
  */
 SYG_populateVehicle = {
 	private [ "_veh", "_utype", "_grpskill", "_grprndskill", "_grprndskill", "_pos", "_tlist", "_role_arr", "_unit",
-	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh"];
+	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh", "_x"];
 
 	_veh   = arg(0);
 	_grp   = arg(1);
@@ -549,7 +549,7 @@ SYG_populateVehicle = {
  */
 SYG_populateVehicleWithUnits = {
 	private [ "_veh", "_utype", "_grpskill", "_grprndskill", "_grprndskill", "_pos", "_tlist", "_role_arr", "_unit",
-	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh"];
+	"_grp", "_add_unit", "_diff", "_ind", "_emptypos","_isAirVeh", "_x"];
 
 	_veh    = arg(0);
 	_units  = arg(1);
@@ -677,7 +677,7 @@ SYG_fuelCapacity = {
 //      _grp =  _params call SYG_makePatrolGroup;
 SYG_makePatrolGroup = {
     if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_makePatrolGroup: expected parameter is not ARRAY (%1)", _this] ;grpNull };
-    private ["_agrp","_elist","_rand","_leader"];
+    private ["_agrp","_elist","_rand","_leader", "_x"];
 	_agrp = call SYG_createGroup;
 	_elist = [d_enemy_side] call x_getmixedliste;
 	{
@@ -745,7 +745,7 @@ SYG_sideStaticWeapons = {
 
 #define EMPTY_RETURN_ARRAY [[],[],[],[],[],objNull]
 
-	private ["_mgs","_aas","_ats","_gls","_cns",/* "_wpa", */"_ret","_unk","_side","_pos","_dist","_arr","_vec","_type","_found","_i"];
+	private ["_mgs","_aas","_ats","_gls","_cns",/* "_wpa", */"_ret","_unk","_side","_pos","_dist","_arr","_vec","_type","_found","_i", "_x"];
 
     _ret = EMPTY_RETURN_ARRAY;
 	_unk = []; // unknown type objects array
@@ -804,7 +804,7 @@ SYG_sideStaticWeapons = {
  returns: [_men, _statics, _tanks, _bmps, _cars, _aa, _canons]
 */
 SYG_sideStat = {
-	private [ "_side","_pos","_arr","_men","_statics","_tanks","_bmps","_cars","_aa","_canons","_c1arr","_c2arr" ];
+	private [ "_side","_pos","_arr","_men","_statics","_tanks","_bmps","_cars","_aa","_canons","_c1arr","_c2arr", "_x" ];
 	_side = arg(0);
 	if (typeName _side == "OBJECT") then {
 		_side = side _side;
@@ -955,7 +955,7 @@ SYG_markerPrefixCounts = [0]; // count of markers with designated prefixes
 //         number of markers created
 //
 SYG_resetIntelMapMarkers = {
-	private ["_arr","_tarr","_prefix","_ind","_cnt","_i","_scale","_pos","_marker","_mrk_type"];
+	private ["_arr","_tarr","_prefix","_ind","_cnt","_i","_scale","_pos","_marker","_mrk_type", "_x"];
 	
 	if ( count _this < 1) exitWith {false};
 	_arr = arg(0);
@@ -1383,7 +1383,7 @@ SYG_getVehicleTable = {
 SYG_rearmVehicle = {
     if ( typeName _this != "ARRAY") exitWith {false};
     if ( count _this < 3) exitWith {false};
-    private ["_vec"];
+    private ["_vec", "_x"];
     //player groupChat format["SYG_rearmVehicle: %1", _this];
     _vec = arg(0);
     {_vec removeMagazines _x} forEach magazines _vec;
@@ -1512,6 +1512,7 @@ SYG_addToExtraVec = {
         extra_mission_vehicle_remover_array set [count  extra_mission_vehicle_remover_array, _this];
     };
     if ( typeName _this != "ARRAY") exitWith {};
+    private [ "_x"];
     { extra_mission_vehicle_remover_array set [count extra_mission_vehicle_remover_array, _x] } forEach _this;
 };
 
@@ -1572,7 +1573,7 @@ SYG_generatePatrolList = {
 // _vec_arr = [_list_to_fill, _vec_arr,_next_id]
 // _vec_list = _vec_arr call SYG_buildVecList;
 SYG_buildVecList = {
-    private ["_i", "_id", "_to","_itemType","_next_arr"];
+    private ["_i", "_id", "_to","_itemType","_next_arr", "_x","_list","_arr","_from"];
     // description arrays is designated
     if (typeName _this != "ARRAY") exitWith {[]};
     if (count _this == 0) exitWith {[]};
@@ -1591,18 +1592,14 @@ SYG_buildVecList = {
     //_str = format["SYG_buildVecList enter: id %1, %2, from 1 to %3, %4", _id, _this, _to, _itemType];
     //player groupChat _str;
     //hint localize _str;
-    for "_i" from 1 to _to do
-    {
+    for "_i" from 1 to _to do {
         //check type of items in array
         //hint localize format["loop %1, item type %2", _i, _itemType];
-        if ( _itemType == "ARRAY") then
-        {
+        if ( _itemType == "ARRAY") then {
             {
                 [_list, _x, _id + 1] call SYG_buildVecList;
             }forEach _next_arr;
-        }
-        else
-        {
+        } else {
             if ( _itemType == "STRING") then // list of vehicle types to randomly select one of them
             {
                 _list = _list + [_next_arr call XfRandomArrayVal];
@@ -1619,8 +1616,7 @@ SYG_buildVecList = {
  */
 #ifdef __OWN_SIDE_EAST__
 SYG_crewTypeByPatrolW = {
-    switch (toUpper _this) do
-    {
+    switch (toUpper _this) do {
         case "HP";
         case "AP";
         case "FP" : {d_crewman_W};
@@ -1632,8 +1628,7 @@ SYG_crewTypeByPatrolW = {
 #endif
 #ifdef __OWN_SIDE_WEST__
 SYG_crewTypeByPatrolE = {
-    switch (toUpper _this) do
-    {
+    switch (toUpper _this) do {
         case "HP";
         case "AP";
         case "FP" : {d_crewman_E};
