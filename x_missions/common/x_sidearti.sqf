@@ -66,7 +66,7 @@ _pos_array = nil;
 for "_i" from 1 to 3 do {
 	_truck = _trackType createVehicle _poss;
 	_truck lock true;
-	extra_mission_vehicle_remover_array = set [count ]extra_mission_vehicle_remover_array, _truck];
+	extra_mission_vehicle_remover_array set [count extra_mission_vehicle_remover_array, _truck];
 //	_truck addEventHandler ["killed", {_this spawn x_removevehi}]; // #err313, remove trucks from server after this SM completion
 	sleep 0.523;
 };

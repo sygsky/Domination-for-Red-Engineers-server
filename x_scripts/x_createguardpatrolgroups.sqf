@@ -316,7 +316,7 @@ if (!no_more_observers) then {
 } else {
 //  inform about observer absence
 //	hint localize "x_scripts\x_createguardpatrolgroups.sqf: no_more_observers = true";
-	["msg_to_user", "*", [["STR_SYS_316_1"]], 0, 30, 0] call XSendNetStartScriptClient; // not print message as title text, only as chat
+	["msg_to_user", "*", [["STR_SYS_316_1"]], 0, 10, 0] call XSendNetStartScriptClient; // not print message as title text, only as chat
 	no_more_observers = false; // skip observers only for one town
 };
 
