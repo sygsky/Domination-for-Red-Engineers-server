@@ -223,7 +223,7 @@ SYG_nearestSoldierGroups = {
 		if ( _x isKindOf "CAManBase") then {
 			if (canStand _x && ((side _x) == _side)) then {
 				if (!(group _x in _grps)) then {
-					_grps = _grps + [group _x];
+					_grps set [count _grps, group _x];
 					sleep 0.01;
 				};
 			};
@@ -237,7 +237,7 @@ SYG_nearestSoldierGroups = {
 					
 					if ( !isNull _unit) then  {
 						if (!(group _unit in _grps)) then {
-							_grps = _grps + [group _unit];
+							_grps set[count _grps, group _unit];
 							sleep 0.01;
 						};
 					};
@@ -1532,13 +1532,13 @@ BRADLEY_LIST  = [/*"ACE_M2A1","ACE_M2A2",*/ "ACE_M2A3"];
 AA_PATROL     = [ 2,2,[ [1,1,BRADLEY_LIST],[2,2,LINEBAKER_LIST] ] ];
 
 VULKAN_LIST   = ["ACE_Vulcan","ACE_PIVADS"];
-M113_LIST     = [/*"ACE_M113","ACE_M113_A1","ACE_M113_A2",*/"ACE_M113_A3"];
+//M113_LIST     = [/*"ACE_M113","ACE_M113_A1","ACE_M113_A2",*/"ACE_M113_A3"];
 VULKAN_PATROL = [ 1,2, [ /*[1,1,M113_LIST],*/ [2,3,VULKAN_LIST] ] ];
 
 STRYKER_CANON_LIST = ["ACE_Stryker_MGS_SLAT","ACE_Stryker_MGS"];
 STRYKER_PATROl     = [ 1,1, [ [1,2,STRYKER_CANON_LIST],[1,1,["ACE_Stryker_TOW"]], [1,1,["ACE_Stryker_M2"] ] , [1,2,["ACE_Stryker_MK19"]] ] ];
 
-CARS_LIST = ["ACE_HMMWV_50", "ACE_HMMWV_GAU19", "ACE_HMMWV_GL", "ACE_HMMWV_TOW"];
+//HMMWV_LIST = ["ACE_HMMWV_50", "ACE_HMMWV_GAU19", "ACE_HMMWV_GL", "ACE_HMMWV_TOW"];
 LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_GAU19"]], [1,2,["ACE_HMMWV_TOW"]], [1,1,["ACE_HMMWV_50"]], [1,1,["ACE_HMMWV_GL"]], [1,1,["ACE_HMMWV_GMV2"]], [1,1,["ACE_HMMWV_GAU19"]] ] ];
 
 /**
@@ -1549,7 +1549,7 @@ LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_GAU19"]], [1,2,["ACE_HMMWV_TOW"]], [1,1,[
  * "FP" - Floating Patrol
  * "SP" - Speed Patrol
  * "LP" - Light patrol
- * cal as follow:
+ * call as follow:
  *      _patrol_vec_arr = "HP" call SYG_generatePatrolList;
  * or
  *      _vec_name_list = _patrol_vec_arr call SYG_generatePatrolList;
@@ -1557,8 +1557,7 @@ LIGHT_PATROL = [1,1,[ [1,1,["ACE_HMMWV_GAU19"]], [1,2,["ACE_HMMWV_TOW"]], [1,1,[
 SYG_generatePatrolList = {
     if (typeName _this != "STRING") exitWith {hint localize format["SYG_generatePatrolList: param not STRING",_this]};
 
-    [[],switch (toUpper(_this)) do
-        {
+    [[],switch (toUpper(_this)) do {
             case "HP": {ABRAMS_PATROL};
             case "AP": {AA_PATROL};
             default {hint localize format["--- SYG_generatePatrolList: parameter unknown: ""%1""", _this]; [] };
@@ -1600,9 +1599,8 @@ SYG_buildVecList = {
                 [_list, _x, _id + 1] call SYG_buildVecList;
             }forEach _next_arr;
         } else {
-            if ( _itemType == "STRING") then // list of vehicle types to randomly select one of them
-            {
-                _list = _list + [_next_arr call XfRandomArrayVal];
+            if ( _itemType == "STRING") then { // list of vehicle types to randomly select one of them
+                _list set [count _list,_next_arr call XfRandomArrayVal];
             };
         };
     };
@@ -1645,6 +1643,7 @@ SYG_crewTypeByPatrolE = {
 // call: _veh call SYG_deleteVehicleCrew;
 // *** not used
 SYG_deleteVehicleCrew = {
+	private ["_x"];
     if ( (typeName _this) != "OBJECT") exitWith {};
     {
         unassignVehicle _x;
@@ -1734,7 +1733,7 @@ SYG_makeWhiteMen = {
 //      _man_list = [_colorArr, _man_list] call SYG_makeColoredMen;
 //
 SYG_makeColoredMen = {
-	private ["_men","_clr_arr"];
+	private ["_men","_clr_arr","_x"];
     _men  = _this select 1;
 
     if ( typeName _men == "OBJECT" ) then {  // if single object not array
@@ -1766,7 +1765,7 @@ SYG_addHorn = {
  * call: _leader = _grp call _get_leader;
  */
 SYG_getLeader = {
-	private ["_leader"];
+	private ["_leader", "_x"];
 	if (isNull _this) exitWith { objNull };
 	if (typeName _this == "OBJECT") then { _this = group _this; };
 	if (isNull _this) exitWith { objNull };
@@ -1888,7 +1887,7 @@ SYG_getVehicleTypeMarkerName = {
 SYG_vehIsRecoverable = {
 	if (typeName _this != "ARRAY") then { _this = [_this] };
 	if (count _this == 0) exitWith { false };
-	private ["_res", "_rec"];
+	private ["_res", "_rec", "_x"];
 	_res = true;
 	{
 		if ( typeName _x != "OBJECT" ) exitWith { _res = false };
@@ -1903,7 +1902,7 @@ SYG_vehIsRecoverable = {
 SYG_vehToType = {
 	if ( typeName _this == "OBJECT" ) exitWith { typeOf _this };
 	if ( typeName _this == "ARRAY" ) exitWith {
-		private _arr;
+		private ["_arr", "_x"];
 		_arr = [];
 		{ _arr set [count _arr, typeOf _x]} forEach _this;
 		_arr
@@ -1924,7 +1923,7 @@ SYG_isNearIronMass = {
 //
 SYG_ironMassNear = {
 	if ((typeName _this) != "ARRAY") exitWith  { [] };
-	private ["_dist","_arr","_ret"];
+	private ["_dist","_arr","_ret","_x"];
 	// check if big metal mass is near teleporter
 	_dist = if ((count _this) > 1) then { _this select 1} else { __TELEPORT_DEVIATION__ };
 	_arr = nearestObjects [ _this select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119","RHIB" ], _dist ];
@@ -1955,7 +1954,7 @@ SYG_ironMassNear = {
 // call as: [_veh|_pos<, __ERR_DIST>] call SYG_findTeleportError;
 //
 SYG_findTeleportError = {
-	private [ "_arr","_pos","_mindist","_sum","_dist" ];
+	private [ "_arr","_pos","_mindist","_sum","_dist","_x" ];
 	_arr = _this  call SYG_ironMassNear;
 	if ( count _arr == 0 ) exitWith {0};
 	_pos  = _this select 0;

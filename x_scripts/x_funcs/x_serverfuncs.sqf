@@ -377,7 +377,7 @@ x_makevgroup = {
 	_numbervehicles = _this select 0;
 	_pos = _this select 1;
 	_crewmember = _this select 2;
-	_vehiclename = _this select 3;
+	_vehiclename = _this select 3; // vehicle type name: (typeOf _vehicle)
 	_grp = _this select 4;
 	_radius = _this select 5;
 	_direction = _this select 6;
@@ -403,7 +403,7 @@ x_makevgroup = {
 		if (_no_crew) then {_crewmember = (if (_vehicle isKindOf "Tank") then {_d_crewman} else {_d_crewman2});};
 		_dir = if (_direction != -1.111) then {_direction} else {random 360};
 		_vehicle setDir _dir;
-		_the_vehicles = _the_vehicles + [_vehicle];
+		_the_vehicles set [ count _the_vehicles, _vehicle ];
 		sleep 0.543;
 		
 		[_vehicle, _grp, _crewmember, _grpskill] call SYG_populateVehicle;
