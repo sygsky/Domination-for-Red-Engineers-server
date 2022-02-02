@@ -487,7 +487,8 @@ XHandleNetStartScriptClient = {
 //				call compile format["_ind = floor (random %1);", localize "STR_MAIN_COMPLETED_NUM"];
 //				call compile format["_msg = localize ""STR_MAIN_COMPLETED_%1"";", _ind];
 				deleteMarkerLocal "main_target_radiotower";
-				[ format[localize "STR_SYS_311", _msg], "HQ"] call XHintChatMsg; //"Радиовышка уничтожена... %1"
+				[ format[localize "STR_SYS_311", _msg], "HQ"] call XHintChatMsg; // "TV-tower destroyed... %1"
+				playSound "tvpowerdown";
 			};
 		};
 		case "mt_radio": {
