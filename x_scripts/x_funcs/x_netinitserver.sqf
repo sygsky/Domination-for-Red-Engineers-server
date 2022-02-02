@@ -198,7 +198,7 @@ XHandleNetStartScriptServer = {
     			_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the %1 of the warrior-internationalist in their troubled land"
 			};
             _name = _this select 1;
-            // add language specific message if available
+            // add user language specific message if available
 			_msg = switch (_name) do {
 				case "Comrad (LT)";
 				case "Rokse [LT]" : {"Salos gyventojai sveikina tave tavo gimtaja kalba!"}; // Литовец!
@@ -216,10 +216,11 @@ XHandleNetStartScriptServer = {
 				case "nejcg";
 				case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
 				case "Renton J. Junior" : {"Salinieki ir priecīgi sveikt Jūs savā dzimtajā valodā!"}; // Латыш
-				case "Lt. Jay" : {"Les habitants de l'île sont heureux de vous accueillir dans votre langue maternelle !"}; // Le francais
+				case "Lt. Jay"    :{"Les habitants de l'île sont heureux de vous accueillir dans votre langue maternelle !"}; // Le francais
 				case "Elia";
-				case "Moe" : {"Gli isolani sono lieti di darvi il benvenuto nella loro lingua madre italiana !"}; // Italian language
-				default             { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
+				case "Moe"        : {"Gli isolani sono lieti di darvi il benvenuto nella loro lingua madre italiana !"}; // Italian language
+				case "Axmed"      : { "Ахмед! Островитяне, желая добра, советуют: купи лицензионный ключ (копеек 50 на советские деньги). Этим ключом пользуешься не только ты." }; // Русский Ахмед
+				default           { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
 			};
 
 			_msg_arr set [ count _msg_arr, [_msg] ];
