@@ -74,6 +74,10 @@ if (!isServer) exitWith {};
 
 //====================== delay before initial patrol creation ==================
 
+#ifdef __DEBUG__
+hint localize "+++ x_scripts\x_isledefense.sqf: __DEBUG__ is defined";
+#endif
+
 sleep DELAY_BEFORE_SCRIPT_START;
 
 #ifdef __OWN_SIDE_EAST__
@@ -133,14 +137,18 @@ _make_isle_grp = {
     _patrol_type  = _patrol_types select _type_id; // random patrol type selection
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
     _elist        = _patrol_type call SYG_generatePatrolList; // list of vehicle type names
+#ifdef __DEBUG__
+    hint localize format["+++ patrol veh list %1 created at %2", _elist, [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+#endif
 
 // if in desert region, replace  tanks with desert camouflage
     if (_patrol_type == "HP") then{
-        if (_start_point call SYG_isDesert) then // in desert regions replace ordinal Abrams of patrol to desert ones
-        {
+        if (_start_point call SYG_isDesert) then { // in desert regions replace ordinal Abrams of patrol to desert ones
             sleep 0.01;
             _elist = _elist call SYG_makeDesertAbrams;
-            hint localize format["+++ HP patrol created with desert camouflaged Abrams at %1", [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+#ifdef __DEBUG__
+            hint localize format["+++ HP patrol (vehs %1) created with desert camouflaged Abrams at %2", count _elist, [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+#endif
         };
     };
 
@@ -149,10 +157,13 @@ _make_isle_grp = {
 //#endif
 
     {
-        _veh_arr = [1, _start_point, _crew_type, _x, _agrp, 0, -1.111] call x_makevgroup;
+        _veh_arr = [1, _start_point, _crew_type, _x, _agrp, 0, -1.111] call x_makevgroup; // _veh_arr is an array with the vehicle type strings, count is 1st parameneter value (here is 1)
         sleep 0.73; // Magic)))
         [_vecs, _veh_arr] call SYG_addArrayInPlace;
     } forEach _elist;
+#ifdef __DEBUG__
+            hint localize format["+++ HP patrol (vehs %1) created with desert camouflaged Abrams at %2", count _elist, [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+#endif
 
 #else
 	_elist = [d_enemy_side] call x_getmixedliste;
