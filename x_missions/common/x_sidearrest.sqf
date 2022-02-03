@@ -132,43 +132,42 @@ while {!_offz_at_base && !_is_dead} do {
             if  (_sound != "") then { ["say_sound",_officer, _sound] call XSendNetStartScriptClient;}; // play sound
         };
     } else { // rescued
-        if (_officer distance FLAG_BASE < 20) then { // end of SM
+        if (_officer distance FLAG_BASE < 20) exitWith { // end of SM
             _offz_at_base = true;
-        } else {
-            // check if officer again is alone
-            if ( (leader _officer) == _officer ) then {
-                if ( (count units (group _officer)) > 1 ) then {
-                    [_officer] join grpNull; // move officer out of group
-                    sleep 0.01;
-                };
-                // info message
-                hint localize format["+++ x_sidearrest.sqf: control of the officer lost by %1 at pos %2%3, %4",
-						_leader_name,
-						(getPos _officer) call SYG_nearestSettlement,
-						if (surfaceIsWater (getPos _officer)) then { " (in water)"} else {" (on land)"},
-						_officer call SYG_MsgOnPos
-                	];
-
-                if (vehicle _officer != _officer) then {
-                    _officer action ["eject", vehicle _officer];
-                    unassignVehicle _officer;
-                };
-                sleep 1;
-                _officer setCaptive false;
-                [_officer] join (call SYG_createEnemyGroup);
-                sleep 0.1;
-
-                // remove all waypoints
-                _egroup =  group _officer;
-				for "_i" from (count waypoints  (_egroup)) - 1 to 0 step -1 do { deleteWaypoint [ _egroup, _i ]; };
-				doStop _officer;
-                if ( (rating _officer) < 0) then { _officer addRating (2500 - (rating _officer)) }; // set high rating to prevent officer being killed by friendly AI
-                _rescued = false;
-                sleep 0.01;
-                // ""Officer lost by %1 at pos %2""
-                ["msg_to_user", "", [ ["STR_SM_042_1", _leader_name, [_officer, "%1 m. to %2 from %3"] call SYG_MsgOnPosE]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "Officer is lost (%1), lost pos is %2"
-            };
         };
+		// check if officer again is alone
+		if ( (leader _officer) == _officer ) then {
+			if ( (count units (group _officer)) > 1 ) then {
+				[_officer] join grpNull; // move officer out of group
+				sleep 0.01;
+			};
+			// info message
+			hint localize format["+++ x_sidearrest.sqf: control of the officer lost by %1 at pos %2%3, %4",
+					_leader_name,
+					(getPos _officer) call SYG_nearestSettlement,
+					if (surfaceIsWater (getPos _officer)) then { " (in water)"} else {" (on land)"},
+					_officer call SYG_MsgOnPos
+				];
+
+			if (vehicle _officer != _officer) then {
+				_officer action ["eject", vehicle _officer];
+				unassignVehicle _officer;
+			};
+			sleep 1;
+			_officer setCaptive false;
+			[_officer] join (call SYG_createEnemyGroup);
+			sleep 0.1;
+
+			// remove all waypoints
+			_egroup =  group _officer;
+			for "_i" from (count waypoints  (_egroup)) - 1 to 0 step -1 do { deleteWaypoint [ _egroup, _i ]; };
+			doStop _officer;
+			if ( (rating _officer) < 0) then { _officer addRating (2500 - (rating _officer)) }; // set high rating to prevent officer being killed by friendly AI
+			_rescued = false;
+			sleep 0.01;
+			// ""Officer lost by %1 at pos %2""
+			["msg_to_user", "", [ ["STR_SM_042_1", _leader_name, [_officer, "%1 m. to %2 from %3"] call SYG_MsgOnPosE]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "Officer is lost (%1), lost pos is %2"
+		};
     };
 #endif
 	sleep 5.621;

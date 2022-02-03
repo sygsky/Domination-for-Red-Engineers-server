@@ -21,11 +21,10 @@ sleep 1.012;
 _dir = 0;
 _pos = [];
 
-
 #ifndef __TT__
 _posa = sm_bonus_positions select (bonus_number % (count sm_bonus_positions));
-_pos = _posa select 0;
-_dir = _posa select 1;
+_pos  = _posa select 0;
+_dir  = _posa select 1;
 //	_vec_type = sm_bonus_vehicle_array select (_i % (count sm_bonus_vehicle_array));
 #endif
 
@@ -66,7 +65,7 @@ _vehicle call SYG_assignVehAsBonusOne;
 
 ["sm_res_client",side_mission_winner,bonus_number] call XSendNetStartScriptClient;
 
-_pos = nil;
+_pos  = nil;
 _posa = nil;
 side_mission_winner = 0;
 

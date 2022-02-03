@@ -6,7 +6,7 @@ private ["_i", "_j", "_ret", "_make_isle_grp", "_replace_grp", "_remove_grp",
 		"_igrpa", "_igrp", "_make_new", "_units","_igrppos", "_leader",
 		"_unit","_veh", "_count","_feetmen","_invalid_men","_str","_vtype",
 		"_grp_array","_cnt","_cnt1","_delay","_goal_grp","_locname","_loc","_dir","_dist","_pos1","_pos2",
-		"_show_absence","_patrol_cnt","_exit","_patrol_type"];
+		"_show_absence","_patrol_cnt","_last_cnt", "_exit","_patrol_type"];
 		
 if (!isServer) exitWith {};
 
@@ -18,6 +18,8 @@ if (!isServer) exitWith {};
 #ifdef __SYG_ISLEDEFENCE_DEBUG__
 #define __DEBUG__
 #endif
+
+#define __DEBUG__
 
 #define __PRINT_ACTIVITY__
 
@@ -84,8 +86,14 @@ sleep DELAY_BEFORE_SCRIPT_START;
 
 // TODO: the closer to the mission finish, the heavier must be patrols
 // some patrol types are more frequently generated
+#ifndef __VEHICLES_BEFORE_1985__
 //                     HEAVY           AA     FLOATING         SPEED         LIGHT     patrol types
 _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "LP",        "HP",        "AP",        "HP",        "AP",         "FP"];
+#endif
+#ifdef __VEHICLES_BEFORE_1985__
+//                     HEAVY     FLOATING         SPEED         LIGHT     patrol types
+_patrol_types = [       "HP",        "FP",         "SP",         "LP",        "HP",        "HP",        "FP",         "FP"];
+#endif
 
 #endif
 
@@ -93,7 +101,7 @@ _patrol_types = [       "HP",        "AP",        "FP",         "SP",         "L
 //
 //
 _make_isle_grp = {
-	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vecs", "_veh_arr", "_rand", "_leader", "_grp_array","_params"];
+	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vecs", "_veh_arr", "_rand", "_leader", "_grp_array","_params","_x"];
 	_params = [d_with_isledefense select 0,d_with_isledefense select 1,d_with_isledefense select 2,d_with_isledefense select 3];
 	_start_point = []; //_params call XfGetRanPointSquare;
 	while {(count _start_point) == 0} do {
@@ -161,9 +169,6 @@ _make_isle_grp = {
         sleep 0.73; // Magic)))
         [_vecs, _veh_arr] call SYG_addArrayInPlace;
     } forEach _elist;
-#ifdef __DEBUG__
-            hint localize format["+++ HP patrol (vehs %1) created with desert camouflaged Abrams at %2", count _elist, [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
-#endif
 
 #else
 	_elist = [d_enemy_side] call x_getmixedliste;
@@ -177,13 +182,11 @@ _make_isle_grp = {
 			[_vecs, _veh_arr] call SYG_addArrayInPlace;
 		};
 	} forEach _elist;
-    hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
+//    hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
 #endif
 
 	_elist = nil;
 	sleep 0.31;
-//	_units = [];
-//	{ _units = _units + (crew _x); } forEach _vecs;
 	_units = units _agrp;
     hint localize format["+++ x_isledefense.sqf: %1 vehicle[s] created for patrol type %2, group %3, men %4", count _vecs, _patrol_type, _agrp, count _units]; // _pos call SYG_nearestLocationName
 
@@ -207,7 +210,7 @@ _make_isle_grp = {
  *
  */
 _replace_grp =  {
-	private ["_igrpa","_i"];
+	private ["_igrpa","_i","_x"];
 	_i = _this;
 #ifdef __PRINT_ACTIVITY__
 	hint localize format["+++ %1 x_isledefense.sqf: create/replace patrol group id #%2", call SYG_missionTimeInfoStr, _i];
@@ -234,7 +237,7 @@ _replace_grp =  {
 // Returns: nothing
 //
 _remove_grp = {
-	private ["_igrpa","_vecs","_igrp","_units","_crew","_plist"];
+	private ["_igrpa","_vecs","_igrp","_units","_crew","_plist","_x"];
 	_igrpa = _this;
 	_igrp  = argp(_igrpa,PARAM_GROUP);
 //	if ( !isNull _igrp ) then
@@ -349,7 +352,7 @@ _remove_grp = {
  *     _arr2 == [_feetmen,_invalid_men]; // _feetmen == [_unit1, _unit2 ...]; _invalid_men = [_unitN,_unitN1 ...];
  */
 _getFeetmen = {
-	private ["_igrp","_units","_vecs","_feetmen","_invalid_men","_veh","_leader"];
+	private ["_igrp","_units","_vecs","_feetmen","_invalid_men","_veh","_leader","_x"];
 	_igrp  = arg(0);
 	_units = units _igrp;
 	_vecs  = arg(1);
@@ -396,7 +399,7 @@ _getFeetmen = {
 //...
 //
 _firstGoodVehicle = {
-	private ["_veh", "_crew_not_east_or_zero"];
+	private ["_veh", "_crew_not_east_or_zero","_x"];
 	_veh = objNull;
 	{
 		_crew_not_east_or_zero = if (!isNull _x) then { if ( ({alive _x} count (crew _x)) > 0 ) then { (side _x) != east } else {true} } else {true};
@@ -409,7 +412,7 @@ _firstGoodVehicle = {
 // call: _vehCnt = [_veh1,_veh2 ...] call _countNonEmptyVehicles;
 //
 _countNonEmptyVehicles = {
-	private ["_cnt"];
+	private ["_cnt","_x"];
 	_cnt = 0;
 	{
 		if ( ({alive _x} count (crew _x)) > 0 ) then {_cnt  = _cnt + 1; } ;
@@ -516,6 +519,7 @@ _exit = false; // exit from nearly eternal loop
 //=============================== M A I N   L O O P  O N  P A T R O L S =========================
 //
 //  if( current_counter > number_targets ) exitWith {"All towns complated, no more patrols"}
+_last_cnt = 0; // patrol counter detected during last loop
 while { true } do {
 
     _time = time; // mark time just in case
@@ -760,9 +764,7 @@ while { true } do {
                     _str  = _str + "<EMPTY>; ";
                 };
             }; // group/vehicles not exist more
-		}
-		else
-		{
+		} else {
 			_vecs = argp(_igrpa, PARAM_VEHICLES); // vehicles
 			_veccnt = count _vecs;
 			_veccnta = 0; // count of alive vehicles with some crew on board
@@ -800,8 +802,7 @@ while { true } do {
 	if ( _cnt > 0) then {
 #undef __SHOW_PATROL_CHANGE_INFO__ // not show lower message
 #ifdef __SHOW_PATROL_CHANGE_INFO__
-	    if ( _cnt != _patrol_cnt ) then {
-	        _patrol_cnt = _cnt;
+	    if ( _cnt != _last_cnt ) then {
 	        if ( random 2 < 1) then {
 	            // show message about some patrol activity
                 // "The guerrillas said some of the changes in the number of patrols"
@@ -810,15 +811,18 @@ while { true } do {
 	    };
 #endif
         hint localize format[ "+++ %1 +++", _str ];
-        __SetGVar(PATROL_COUNT, _cnt);
 	} else  { // send info about patrol absence
-	    if ( _show_absence) then {
+	    if ( _show_absence && (_last_cnt != 0)) then {
 	        if ((random 1) <= SHOW_ABSENCE_PROBABILITY ) then { // inform users about patrol absence
                 ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
         	    if ( (current_counter >= number_targets) /** && (!main_target_ready) */ ) then { _exit = true };
 	        };
             _show_absence = false; // disable patrol absence message
 	    };
+	};
+	if (_last_cnt != _cnt ) then {
+	    _last_cnt = _cnt;
+        __SetGVar(PATROL_COUNT, _cnt);
 	};
 #endif
     if ( _exit ) exitWith {

@@ -882,10 +882,10 @@ _local_msg_arr spawn {
             "msg_to_user",
             "",
             [
-			  ["Das Kommando lobt die Ausbildung der jungen Rekruten"],
-              ["Für zahlreiche militärische Verdienste erklären das Kommando und die dankbaren Bürger Sie zum Ehrenbürger der Insel Sahrani." ],
-              ["Anfragen zum Einschalten des Servers sollten auf WhatsApp 8(916)136-2219 gesendet werden."],
-              ["Groß-/Kleinschreibung beachten Skype-Anmeldung: sygsky"]
+			  ["Das Kommando lobt die Ausbildung der jungen Rekruten"], // "The command praises the training of young recruits"
+              ["Für zahlreiche militärische Verdienste erklären das Kommando und die dankbaren Bürger Sie zum Ehrenbürger der Insel Sahrani." ], // "For numerous military services, the command and grateful citizens declare you an honorary citizen of Sahrani Island."
+              ["Anfragen zum Einschalten des Servers sollten auf WhatsApp 8(916)136-2219 gesendet werden."], // "Requests to turn on the server should be sent to WhatsApp 8(916)136-2219."
+              ["Groß-/Kleinschreibung beachten Skype-Anmeldung: sygsky"] //
             ],
             7, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;

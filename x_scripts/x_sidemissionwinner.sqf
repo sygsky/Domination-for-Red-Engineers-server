@@ -11,9 +11,13 @@ if (!X_Client) exitWith {};
 sleep 1;
 
 // clear finished side mission markers
-call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
+_mrk = format["XMISSIONM%1",current_mission_index + 1];
+deleteMarkerLocal _mkr;
+//call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
 if (x_sm_type == "convoy") then {
-	call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];
+	_mrk = format["XMISSIONM2%1",current_mission_index + 1];
+	deleteMarkerLocal _mkr;
+//	call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];
 };
 
 current_mission_text = localize "STR_SYS_120"; // "Дополнительное задание ещё не назначено...";
@@ -78,7 +82,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
     _s = switch (side_mission_winner) do {
         case   -1 : {"STR_SYS_129_1"/*"Персона, намеченная к ликвидации, погибла в результате трагического инцидента..."*/};
         case   -2 : {"STR_SYS_129_2"/*"Враг решил взорвать все сам..."*/};
-        case   -3 : {"STR_SYS_129_9"}; // "The enemy sensed danger and escaped..." - missins for king etc with predefined building!!!
+        case   -3 : {"STR_SYS_129_9"}; // "The enemy sensed danger and escaped..." - missins for king etc with predefined building or officer to catch killed!!!
         case -300 : {"STR_SYS_129_3"/*"Конвой достиг места назначения..."*/};
         case -400 : {"STR_SYS_129_4"/*"Ни один из заложников не выжил..."*/};
         case -500 : {"STR_SYS_129_5"/*"Вражеский офицер спятил и застрелился..."*/};
@@ -108,5 +112,3 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 sleep 1;
 side_mission_winner = 0;
 bonus_number = -1;
-
-if (true) exitWith {};

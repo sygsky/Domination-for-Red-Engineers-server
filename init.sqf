@@ -244,7 +244,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = []; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base, 29 - tanks at Cabo Juventudo, 40-41 - prisoners in Tiberia and Tandag
+    _first_array = []; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base, 29 - tanks at Cabo Juventudo, 40-41 - prisoners in Tiberia and Tandag, 50 - arti in field
     if (count _first_array > 0) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
     };
@@ -276,7 +276,7 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
     // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest, 40 - prisoners in Tiberia
-    _first_array = [];
+    _first_array = [50];
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
     };
