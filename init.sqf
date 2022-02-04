@@ -58,9 +58,7 @@ m_PIPEBOMBNAME = "ACE_PipeBomb"; // reset global/local bomb name
 // include the mission setup file
 #include "x_missions\x_missionssetup.sqf"
 
-hint localize format["+++ init.sqf: daytime before skipTime %1 = %2", param2, daytime];
 skipTime param2;
-hint localize format["+++ init.sqf: daytime after  skipTime %1 = %2", param2, daytime];
 
 if (X_SPE) then {     // Server is by Player Executed
 	date_str = date;
