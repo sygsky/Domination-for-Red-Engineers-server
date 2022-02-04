@@ -19,7 +19,7 @@ if (!isServer) exitWith {};
 #define __DEBUG__
 #endif
 
-#define __DEBUG__
+//#define __DEBUG__
 
 #define __PRINT_ACTIVITY__
 
