@@ -102,10 +102,10 @@
 //+++ uncomment to rearm some plains, heli, cars (e.g. Su-34B to carry 12 FAB500M62 freefall bombs)
 #define __REARM_SU34__
 
-//+++ uncomment to replace ACE_Stryker_TOW with ACE_M60 and ACE_M60A3
+//+++ uncomment to replace ACE_Stryker_TOW with ACE_M60 and ACE_M60A3 in towns
 #define __USE_M60__
 
-// uncomment follow line to enable Javelin usage. javelin can't be put into any rucksack and stored in weapon cache (at flag on base)
+// uncomment follow line to enable Javelin usage. Javelin also can't be put into any rucksack and stored in weapon cache (at flag on base)
 #define __JAVELIN__
 
 //+++ uncomment to enable the appearance of an unconscious player to enemies
@@ -142,7 +142,7 @@
 // uncomment to allow add predefined scores (now 3) for factory supports, not subtract as was designated by Xeno
 //#define __ADD_SCORE_FOR_FACTORY_SUPPORT__ 3
 
-// uncomment lower line to move air vehicle command "Eject" and "Лump out" to the command list bottom
+// uncomment lower line to move air vehicle command "Eject" and "Jump out" to the command list bottom
 #define __MOVE_EJECT_EVENT_TO_LIST_BOTTOM__
 
 //uncomment to disable jump from base flag pole without parachute pack, to be more serious :o)
@@ -188,4 +188,7 @@
 #define __LH_HOWLER__
 
 // uncomment to disable teleport near large metall masses in designated distance
-#define __NO_TELEPORT_NEAR_LARGE_IRON_MASS__ 20
+#define __TELEPORT_DEVIATION__ 20
+
+// uncomment to allow only vehicle BEFORE 1985 inclusivelly
+//#define __VEH_1985__
