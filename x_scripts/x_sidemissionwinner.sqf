@@ -11,13 +11,15 @@ if (!X_Client) exitWith {};
 sleep 1;
 
 // clear finished side mission markers
-_mrk = format["XMISSIONM%1",current_mission_index + 1];
-deleteMarkerLocal _mkr;
-//call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
+//deleteMarkerLocal format["XMISSIONM%1",current_mission_index + 1];
+//_s = getMarkerType format["XMISSIONM%1",current_mission_index + 1];
+call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
+//hint localize format["+++ x_sidemissionwinner.sqf: deleteMarkerLocal ""XMISSIONM%1"" (found as ""%2"")", current_mission_index + 1, _s];
 if (x_sm_type == "convoy") then {
-	_mrk = format["XMISSIONM2%1",current_mission_index + 1];
-	deleteMarkerLocal _mkr;
-//	call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];
+//	deleteMarkerLocal format["XMISSIONM2%1",current_mission_index + 1];
+//	_s = getMarkerType format["XMISSIONM2%1",current_mission_index + 1];
+	call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];
+//	hint localize format["+++ x_sidemissionwinner.sqf: deleteMarkerLocal ""XMISSIONM2%1"" (found as ""%2"")", current_mission_index + 1, _s];
 };
 
 current_mission_text = localize "STR_SYS_120"; // "Дополнительное задание ещё не назначено...";

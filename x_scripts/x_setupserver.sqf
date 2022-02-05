@@ -40,7 +40,7 @@ XSideMissionResolved = {
 // Clear all side missions vehicles and start next SM
 //
 XClearSidemission = {
-	private ["_waittime", "_num_p", "_was_captured", "_man", "_vehicle"];
+	private ["_waittime", "_num_p", "_was_captured", "_man", "_vehicle","_x"];
 	_waittime = 200 + random 20;
 	_num_p = call XPlayersNumber;
 	if (_num_p > 0) then {
@@ -60,8 +60,7 @@ XClearSidemission = {
 						if (isPlayer _x) exitWith {_was_captured = true;}; // if player is in vehicle, consider it to be captured
 					} forEach (crew _x);
 					// check vehicle being on base
-					if ( ! _was_captured ) then
-					{
+					if ( ! _was_captured ) then {
 #ifdef __OWN_SIDE_EAST__
 						_was_captured = (side _x != west) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && (getDammage _x < 0.000001);
 #else
@@ -76,6 +75,7 @@ XClearSidemission = {
 					};
 				};
 			} else {
+//				hint localize format["+++ XClearSidemission: deleteVehicle %1",typeOf _x ];
 				deleteVehicle _x;
 			};
 		};

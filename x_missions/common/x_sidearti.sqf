@@ -5,6 +5,8 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+//#define __DEBUG__
+
 _poss = _this select 0;
 
 _arti_type = (
@@ -16,7 +18,11 @@ _crewman = (
 );
 
 _trackType = (
+#ifdef __ACE
+	if (d_enemy_side == "EAST") then {"ACE_Ural_Reammo"} else {"ACE_Truck5t_Reammo"}
+#else
 	if (d_enemy_side == "EAST") then {"UralReammo"} else {"Truck5tReammo"}
+#endif
 );
 
 // calc positions
@@ -25,8 +31,12 @@ _center_y = _poss select 1;
 _radius = 40;
 _angle = 0;
 _pos_array = [];
-_count_arti = 8;
-_angle_plus = 360 / 8;
+#ifdef __DEBUG__
+_count_arti = 3;
+#else
+_count_arti = 5 + (ceil 3);
+#endif
+_angle_plus = 360 / _count_arti;
 
 for "_i" from 1 to _count_arti do {
 	_x1 = _center_x - (_radius * sin _angle);
@@ -54,7 +64,7 @@ for "_i" from 0 to (_count_arti - 1) do {
 	_arti lock true;
     // populate each arti gun with the gunner
 	_unit = _grp createUnit [_crewman, (_arti_pos_dir select 0), [], 0, "NONE"];[_unit] join _grp;_unit setSkill 1;_unit assignAsGunner _arti;_unit moveInGunner _arti;
-	extra_mission_remover_array set[count extra_mission_remover_array, _unit];
+	extra_mission_remover_array = extra_mission_remover_array + [_unit];
 
 	//__addDead(_unit)
 	sleep 0.5321;
@@ -66,16 +76,22 @@ _pos_array = nil;
 for "_i" from 1 to 3 do {
 	_truck = _trackType createVehicle _poss;
 	_truck lock true;
-	extra_mission_vehicle_remover_array set [count extra_mission_vehicle_remover_array, _truck];
+	extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array + [_truck];
 //	_truck addEventHandler ["killed", {_this spawn x_removevehi}]; // #err313, remove trucks from server after this SM completion
 	sleep 0.523;
 };
 
+#ifdef __DEBUG__
+sleep 2.123;
+["specops", 0, "basic", 1, _poss, 400,true] spawn XCreateInf; // Please, put such SM in very open areas!!!
+sleep 4.123;
+["shilka", 0, "bmp", 1, "tank", 0, _poss, 1, 250,true] spawn XCreateArmor;
+#else
 sleep 2.123;
 ["specops", 2, "basic", 4, _poss, 400,true] spawn XCreateInf; // Please, put such SM in very open areas!!!
 sleep 4.123;
 ["shilka", 2, "bmp", 2, "tank", 2, _poss, 1, 250,true] spawn XCreateArmor;
-
+#endif
 while {dead_arti < _count_arti} do {
 	sleep 4.631;
 };

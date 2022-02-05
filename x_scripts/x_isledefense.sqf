@@ -300,7 +300,7 @@ _remove_grp = {
 		sleep 1.06;
 #ifdef __PRINT_ACTIVITY__
     _str = "isNull";
-    if ( !isNull _igrp) then { _str = format["has %1 units in grp", count units _igrp] };
+    if ( !isNull _igrp) then { _str = format["has %1 units", count units _igrp] };
 		hint localize format["+++ x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
 #endif
 		// clean units

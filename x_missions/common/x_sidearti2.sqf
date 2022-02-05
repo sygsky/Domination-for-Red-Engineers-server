@@ -21,6 +21,7 @@ _count_arti = count _this;
 			private ["_name"];
 			_name = if (isPLayer (_this select 1)) then { format[" (%1)", name (_this select 1)]} else {""};
 			[ "msg_to_user", "", [ ["STR_SM_10_1", dead_arti, _name] ], 0, 2, false, "good_news" ] call XSendNetStartScriptClientAll; // "Canon Nr. %1 destroyed."
+			hint localize format["+++ x_sidearti2.sqf: Canon Nr. %1 destroyed.", dead_arti];
 		}
 	];
 	#ifdef __TT__
