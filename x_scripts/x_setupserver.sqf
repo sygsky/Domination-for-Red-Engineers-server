@@ -153,9 +153,9 @@ XCheckSMHardTarget = {
 
 	#ifndef __TT__
 	if (typeOf _vehicle == "Land_telek1") then {
-		_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_winner = true; ["say_sound", "PLAY", "tvpowerdown"] call XSendNetStartScriptClientAll}];
+		_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true; ["say_sound", "PLAY", "tvpowerdown"] call XSendNetStartScriptClientAll}];
 	} else {
-		_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_winner = true;}];
+		_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true;}];
 	};
 	#endif
 
