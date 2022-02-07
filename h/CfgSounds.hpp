@@ -577,7 +577,7 @@ class CfgSounds {
     class morze2  { name="Real Morze (Canada)"; sound[] = {\sounds\intro\morze\morze2.ogg,db+0,1.0}; titles[] = {};}; // Morze real message (Canada)
     class morze_0 { name="Morzyanka";   sound[] = {\sounds\intro\morze\Morzyanka.ogg,db+0,1.0}; titles[] = {};}; // Morze
     class morze_2 { name="Morzyanka 2"; sound[] = {\sounds\intro\morze\Morzyanka2.ogg,db+0,1.0}; titles[] = {};}; // Morze
-    class morze_3 { name="Morzyanka - USSR song"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg,db+0,1.0}; titles[] = {};}; // Morze
+    class morze_3 { name="Morzyanka - 1965 USSR song"; sound[] = {\sounds\intro\morze\Morzyanka3.ogg,db+0,1.0}; titles[] = {};}; // Morze
     class morze_4 { name="Morzyanka 4"; sound[] = {\sounds\intro\morze\Morzyanka4.ogg,db+0,1.0}; titles[] = {};}; // Morze
     class morze_5 { name="Morzyanka 5"; sound[] = {\sounds\intro\morze\Morzyanka5.ogg,db+0,1.0}; titles[] = {};}; // Morze
     class morze_6 { name="Morzyanka 6"; sound[] = {\sounds\intro\morze\Morzyanka6.ogg,db+0,1.0}; titles[] = {};}; // Morze
