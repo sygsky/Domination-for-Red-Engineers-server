@@ -6,18 +6,18 @@ STR_LANGUAGE,ENGLISH,GERMAN,SPANISH,RUSSIAN
 //-----------------------------------------------------------------------
 // SYG scripts strings:
 //----------------------------------------------------------------------
-STR_SYG_01,Only engineers can enter the Salvage trucks...,Nur Ingenieure können die Bergungsfahrzeuge betreten...,Only engineers can enter the Salvage trucks...,Только инженер может водить транспортный грузовик
-STR_SYG_02,Only engineers can load stationary weapons,Nur Ingenieure können stationäre Waffen laden,Only engineers can load stationary weapons,Только инженеры могу грузить станковое оружие
-STR_SYG_03,Already loaded %1 items. Unable to load more,Bereits %1-Elemente geladen. Kann nicht mehr laden,Already loaded %1 items. Unable to load more,Мест загружено: %1. Это максимум
-STR_SYG_04,No stationary weapon in range,Keine stationäre Waffe in Reichweite,No stationary weapon in range,Нет станкового оружия для погрузки
-STR_SYG_05,"You're too far from %1, max. dist. %2m!","Du bist zu weit von %1 entfernt, max. dist. %2m!","You're too far from %1, max. dist. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
-STR_SYG_06,You're in the process of loading. Wait for the end of the procedure,Sie sind gerade beim laden. Warten Sie auf das Ende des Verfahrens,You're in the process of loading. Wait for the end of the procedure,Вы в процессе погрузки. Дождитесь конца процедуры
-STR_SYG_07,%1 will be loaded in %2 sec.,%1 wird in %2 Sek. geladen.,%1 will be loaded in %2 sec.,%1 будет загружено через %2 сек.
-STR_SYG_08,%1 loaded and attached!,%1 loaded and attached!,%1 loaded and attached!,%1 загрузили и закрепили!
-STR_SYG_09,You can't load a %1 into a %2!,Du kannst kein %1 in %2 laden!,You can't load a %1 into a %2!,Вы не можете загрузить %1 в %2!
-STR_SYG_10,Load Stationary,Last Statische,Load Stationary,Загрузить орудие
-STR_SYG_11,Unload Static,Entladen Statischer,Unload Static,Разгрузить орудие
-STR_SYG_12,%1 to Backpack,%1 in den Rucksack,%1 to Backpack,%1 в рюкзак
+STR_SYG_01,Only engineers can enter the Salvage trucks...,Nur Ingenieure können die Bergungsfahrzeuge betreten...,Sólo los ingenieros pueden entrar en los camiones de salvamento...,Только инженер может водить транспортный грузовик
+STR_SYG_02,Only engineers can load stationary weapons,Nur Ingenieure können stationäre Waffen laden,Sólo los ingenieros pueden cargar armas fijas,Только инженеры могу грузить станковое оружие
+STR_SYG_03,Already loaded %1 items. Unable to load more,Bereits %1-Elemente geladen. Kann nicht mehr laden,Ya se han cargado %1 elementos. No se pueden cargar más,Мест загружено: %1. Это максимум
+STR_SYG_04,No stationary weapon in range,Keine stationäre Waffe in Reichweite,Ningún arma estacionaria al alcance,Нет станкового оружия для погрузки
+STR_SYG_05,"You're too far from %1, max. dist. %2m!","Du bist zu weit von %1 entfernt, max. dist. %2m!","¡Estás demasiado lejos de %1, dist. máx. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
+STR_SYG_06,You're in the process of loading. Wait for the end of the procedure,Sie sind gerade beim laden. Warten Sie auf das Ende des Verfahrens,Está en proceso de carga. Espere a que termine el procedimiento,Вы в процессе погрузки. Дождитесь конца процедуры
+STR_SYG_07,%1 will be loaded in %2 sec.,%1 wird in %2 Sek. geladen.,%1 se cargará en %2 segundos.,%1 будет загружено через %2 сек.
+STR_SYG_08,%1 loaded and attached!,%1 loaded and attached!,¡%1 cargado y adjunto!,%1 загрузили и закрепили!
+STR_SYG_09,You can't load a %1 into a %2!,Du kannst kein %1 in %2 laden!,¡No se puede cargar un %1 en un %2!,Вы не можете загрузить %1 в %2!
+STR_SYG_10,Load Stationary,Last Statische,Carguen las ametralladoras,Загрузить орудие
+STR_SYG_11,Unload Static,Entladen Statischer,Descarga Estática,Разгрузить орудие
+STR_SYG_12,%1 to Backpack,%1 in den Rucksack,%1 a Mochila,%1 в рюкзак
 
 //----------------------------------------------------------------------------
 // Server.cfg strings:
