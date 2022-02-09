@@ -244,7 +244,7 @@ class CfgSounds {
     class laughter_12 { name="Laughter 12"; sound[] = {\sounds\defeat\laughter\12.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
     class good_job { name="Good Job";   sound[] = {\sounds\defeat\laughter\goodjob.ogg,db+10,1.0}; titles[] = {}; } // War cry "good job"
-    class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\over,db+10,1.0}; titles[] = {}; } // War cry "game over"
+    class game_over { name="Good Job";   sound[] = {\sounds\defeat\laughter\game_over.ogg,db+10,1.0}; titles[] = {}; } // War cry "game over"
     class get_some { name="Good Job";   sound[] = {\sounds\defeat\laughter\get_some.ogg,db+10,1.0}; titles[] = {}; } // War cry "get some"
     class go_go_go { name="Go-go-go";   sound[] = {\sounds\defeat\laughter\go_go_go.ogg,db+10,1.0}; titles[] = {}; } // War cry "go-go-gob"
     class cheater { name="cheater";   sound[] = {\sounds\defeat\laughter\cheater.ogg,db+10,1.0}; titles[] = {}; } // say "cheater"
@@ -271,7 +271,7 @@ class CfgSounds {
     class doggy { name="Red Neck Doggy!"; sound[] = {\sounds\defeat\laughter\doggy.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class score { name="Score!"; sound[] = {\sounds\defeat\laughter\score.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
-    class disagreement_tongue { name="joy laugh"; sound[] = {\sounds\defeat\laughter\disagreement_tongue,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class disagreement_tongue { name="joy laugh"; sound[] = {\sounds\defeat\laughter\disagreement_tongue.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class joy_yes             { name="joy laugh"; sound[] = {\sounds\defeat\laughter\joy_yes.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class disagreement        { name="disagreement"; sound[] = {\sounds\defeat\laughter\disagreement.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class surprize            { name="surprize"; sound[] = {\sounds\defeat\laughter\surprize.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
