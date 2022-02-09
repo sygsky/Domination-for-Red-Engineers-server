@@ -435,9 +435,10 @@ SYG_JDN = {
 #define OFF_HOLIDAY_TIT 3 // title for holiday
 #define OFF_HOLIDAY_HOL 4 // day off (1), work day (0)
 
-// [day,mon,range<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
+// [day|Nth weekday,mon<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
 SYG_holidayTable = [
     [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","merry_xmas","vangelis","enchanted_boy"], "STR_HOLIDAY_1_JAN", 1], // New Year Day
+    [ 9,  2, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"], "STR_HOLIDAY_9_FEB", 0], // Day of the Soviet Civil aviations
     [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
