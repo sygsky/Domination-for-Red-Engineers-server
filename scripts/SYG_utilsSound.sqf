@@ -177,11 +177,10 @@ SYG_religious_buildings =  ["Church","Land_kostelik","Land_kostel_trosky","Land_
 // returns random male laughter sound on your defeate
 SYG_getLaughterSound = {
     ["laughter_1","laughter_2","laughter_3","laughter_4","laughter_5","laughter_6","laughter_7","laughter_8",
-    "laughter_9","laughter_10","laughter_11","laughter_12",
-    "good_job","game_over","get_some","go_go_go","cheater","busted",
-    "greatjob1","greatjob2","fight","handsup","indeanwarcry",
-    "targetdown47","targetdown01","bastards","clear", "shoot_MF","target_neutralised",
-    "tasty","doggy","score",
+    "laughter_9","laughter_10","laughter_11","laughter_12","good_job","game_over","get_some",
+    "go_go_go","cheater","busted","greatjob1","greatjob2","fight","handsup","indeanwarcry",
+    "targetdown01","targetdown17","targetdown18","targetdown19","targetdown24","targetdown27","targetdown36","targetdown37",
+    "targetdown38","targetdown47","bastards","clear", "shoot_MF","target_neutralised","tasty","doggy","score",
     "disagreement_tongue","joy_yes","disagreement","surprize","sarcasm","yes_yes2","busted2","joy_laugh2","joy_laugh",
     "joy2","joy","yeah","yes_yes","yes","good_work","good_job_squad","we_ve_got_them","soldier_down","get_down",
     "hi_is_down2","hi_is_down","enemy_down","auf_wiedersehen","blah_blah_blah","horks_and_spits","man_you_suck",
