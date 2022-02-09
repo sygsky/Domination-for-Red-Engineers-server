@@ -866,6 +866,7 @@ if ( _rank < 6 ) then { // you are Major or lower, send info about ranks
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
 _local_msg_arr spawn {
+
 //	hint localize format["+++ _local_msg_arr count %1", count _this]; // DEBUG
     if (count _this > 0 ) then {
         sleep 55;
@@ -874,7 +875,8 @@ _local_msg_arr spawn {
              _x call XfGlobalChat;
         } forEach _this;
     };
-    // West Grmany
+
+    // West Germany
     if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) exitWith {
         sleep 6;
         // "For numerous military services, the command and the grateful citizens declare you an honorary citizen of Sahrani Island."
@@ -890,6 +892,7 @@ _local_msg_arr spawn {
             7, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
+
     // Litva
     if ( (name player) == "Rokse [LT]") exitWith {
         sleep 6;
@@ -900,16 +903,18 @@ _local_msg_arr spawn {
             0, 5, false, "drum_fanfare"
         ] call SYG_msgToUserParser;
     };
-    // Argentina
-	if ( (name player) == "lolport" ) exitWith {
-		sleep 6;
-		[
-			"msg_to_user",
-			"",
-			[ ["Recordamos al Che Guevara, ¡fue nuestro invitado una vez!" ] ],
-			0, 5, false, "drum_fanfare"
-		] call SYG_msgToUserParser;
-	};
+
+	// Khabarovsk: 2-feb is the Soviet aviation day
+    if ( ((name player) == "HRUN") && ( ((SYG_client_start select 1) == 2) && ((SYG_client_start select 2) == 9) ) ) exitWith {
+        sleep 6;
+        [
+            "msg_to_user",
+            "",
+            [ ["Командование ОК ГРУ поздравляет с профессиональным праздником, благодарит за верность долгу и храбрость в бою!" ] ],
+            0, 5, false, "drum_fanfare"
+        ] call SYG_msgToUserParser;
+    };
+
 	// Latvia
 	if ( (name player) == "Renton J. Junior" ) exitWith { // "Рентон! Не трожь СППМ! За это - расстрел! Но в будущем)))"
 		sleep 6;
@@ -920,12 +925,22 @@ _local_msg_arr spawn {
 			0, 5, false, "armory4"
 		] call SYG_msgToUserParser;
 	};
+    // Argentina
+	if ( (name player) == "lolport" ) exitWith {
+		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ ["Recordamos al Che Guevara, ¡fue nuestro invitado una vez!" ] ],
+			0, 5, false, "drum_fanfare"
+		] call SYG_msgToUserParser;
+	};
 
 //	hint localize format["+++ DEBUG: if ( ((name player) == ""EngineerACE:"")) == %1", ((name player) == "EngineerACE")];
 //	if ( ((name player) == "EngineerACE")) exitWith {
 	if ( ((name player) == "SarDELKA122")) exitWith {
 		private ["_date","_str","_sound","_hour","_week_day"];
-		_date = date; // real date+time
+		_date = + SYG_client_start; // real date+time
 		_str = "Остров приветствует бойца Горьковского спецназа!";
 		_sound = "drum_fanfare";
 //		_date set [2, 26];
