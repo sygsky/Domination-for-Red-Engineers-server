@@ -42,6 +42,12 @@ extra_mission_vehicle_remover_array = [];
 //current_mission_index = _this select 0;
 //current_mission_index = 52;
 
+#ifdef __DEBUG__
+//hint localize format["x_getsidemission.sqf: side_missions_random is %1", side_missions_random];
+hint localize format["+++ x_getsidemission.sqf: Preparing next Side Mission; current_mission_index %1, current_mission_counter %2", current_mission_index, current_mission_counter];
+#endif
+
+
 #ifdef __DEFAULT__
 call compile format ["
 	execVM ""x_missions\m\%2%1.sqf"";
