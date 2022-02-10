@@ -133,7 +133,7 @@
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
 //#define __NO_RPG_CLONING__
 
-// comment to enable only engineers to repair and refuel, else anybody can repair with a defined penalty for each +1 engineer score but can't refuel
+// comment to enable only engineers to repair and refuel, else anybody can repair with a defined penalty for each +1 engineer score (can't refuel not realized)
 #define __NON_ENGINEER_REPAIR_PENALTY__ -5
 
 // uncomment follow line to allow non-engineers use engineering fund
@@ -188,7 +188,7 @@
 #define __LH_HOWLER__
 
 // uncomment to disable teleport near large metall masses in designated distance
-#define __TELEPORT_DEVIATION__ 20
+                                 #define __TELEPORT_DEVIATION__ 20
 
 // uncomment to allow only vehicle BEFORE 1985 inclusivelly
 //#define __VEH_1985__

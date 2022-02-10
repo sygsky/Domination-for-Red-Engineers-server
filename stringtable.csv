@@ -666,7 +666,7 @@ STR_SYS_353,"Rank needed to drive Strykers, BRDM:","Benötigter Rang zu fahren S
 STR_SYS_354,Rank needed to drive tanks:,Benötigter Rang zum Panzer fahren:,Rango requerido para el control de vehículos blindados:,Требуемое звание для управления бронетехникой:
 STR_SYS_355,Rank needed to fly battle helicopters:,Benötigter Rang zum Fliegen Kampf-Hubschrauber:,Rango requerido para controlar helicópteros de combate:,Требуемое звание для управления боевыми вертолётами:
 STR_SYS_356,Rank needed to fly planes:,"Benötigter Rang, Flugzeuge zu Fliegen:",Rango requerido para el control de aeronaves:,Требуемое звание для управления самолётами:
-STR_SYS_357,Points a player gets if he is %1 m away from a main target when it gets cleared:,"Punkte, die ein Spieler bekommt, wenn er %1 m von dem Haupt-Ziel, wenn es ruft gelöscht:","Puntos por completar la tarea principal, un jugador dentro de un Radio de 1 m. del centro de la ciudad:","Очков за выполнение основной задачи, игрок в радиусе %1 м. от центра города:"
+STR_SYS_357,"Max. points for the city (obtained outside vehicles in a radius of about %1 m. near the city):","Maximale Stadtpunkte (außerhalb von Maschinen in einem Radius von etwa %1m um die Stadt):","Puntos máximos de la ciudad (obtenidos fuera de la maquinaria en un radio de aproximadamente %1m cerca de la ciudad):","Макс. очки за город (получены вне техники в радиусе около %1 м. у города):"
 STR_SYS_358,Points a player gets if he is %1 m away from a sidemission when it gets solved:,"Punkte, die ein Spieler bekommt, wenn er %1 m entfernt von einer sidemission, wenn es gelöst:","Puntos por completar una tarea adicional, un jugador dentro de un Radio de %1 m. desde el lugar de la operación:","Очков за выполнение дополнительной задачи, игрок в радиусе %1 м. от места операции:"
 STR_SYS_359,Transport distance to get points:,Transport-Distanz um Punkte zu bekommen:,"La distancia de transporte por la que reciben puntos, en m.:","Дистанция транспортировки, за которую получают очки, в м.:"
 STR_SYS_360,For unit transportation +%1 scores,Für die unit Transport +%1 erzielt,Por el transporte del 1er luchador + %1 puntos,За перевозку 1-го бойца +%1 очков
@@ -677,10 +677,10 @@ STR_SYS_363,AAHALO jump available at flag at base:,AAHALO parajump verfügbar un
 STR_SYS_364,Time between two AAHALO jumps from base flag: %1 secs,Die Zeit zwischen zwei AAHALO parajumps von base flag: %1 secs,Frecuencia de aterrizaje de la bandera en la base: %1 seg.,Периодичность десантирования от флага на базе: %1 сек.
 STR_SYS_365,AAHALO jump start base height: %1 m,AAHALO jump start Höhe: %1 m,Altitud básica de aterrizaje :%1 m.,Базовая высота десантирования: %1 м.
 STR_SYS_366,Create the following vehicle at jump flag instead parajump: %1,"Erstellen Sie das folgende Fahrzeug zu springen, stattdessen parajump: %1",Crear transporte en la bandera de la ciudad en lugar de saltar: %1,Создание транспорта у флага в городе вместо прыжка: %1
-STR_SYS_367,Maximum distance artillery operator to arti strike point: %1m,Maximale Distanz Artillerie-Betreiber zu arti-strike point: %1m,Distancia máxima entre el operador y el punto de aplicación de artudar :%1 m.,Максимальная дистанция между оператором и точкой нанесения артудара: %1 м.
+STR_SYS_367,Max. distance artillery operator to arti strike point: %1m,Maximale Distanz Artillerie-Betreiber zu arti-strike point: %1m,Distancia máxima entre el operador y el punto de aplicación de artudar :%1 m.,Макс. дистанция между оператором и точкой нанесения артудара: %1 м.
 STR_SYS_368,Artillery reload time between two salvoes: %1 secs,Artillerie reload-Zeit zwischen zwei Salven: %1 Sekunden,Tiempo de recarga entre dos descargas de artillería: %1 seg.,Время перезарядки  между двумя артиллерийскими залпами: %1 сек.
 STR_SYS_369,With ACE Map:,Mit ACE-Karte:,Con el mapa de ACE:,С картой АСЕ:
-STR_SYS_370,Use GDT Mod Tracked routine to prevent tanks falling on their back:,Mit GDT Mod Verfolgt mod Panzer von drehen auf dem Rücken zu verhindern:,Prevención de volteretas maquinaria sobre orugas:,Предотвращение переворачивания гусеничной техники:
+STR_SYS_370,Addon 'GDT Mod Tracked' loaded:,Addon 'GDT Mod Tracked' geladen:,Addon 'GDT Mod Tracked' cargado:,Загрузка аддона 'GDT Mod Tracked':
 STR_SYS_371,"Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs","Artillerie wieder verfügbar nach 1, 2, 3 Salven: %1, %2, %3 Sek.","Tiempo de acceso a la artillería después de 1, 2, 3 volea(s): %1, %2, %3 sec.","Время доступа к артиллерии после  1, 2, 3 залпа(ов): %1, %2, %3 сек."
 STR_SYS_372,Check for friendly units near artillery target:,Überprüfen Sie für Verbündete Einheiten in der Nähe der Artillerie Ziel:,Inspeccionar la zona de destrucción de artillería aliada:,Проверять на наличие союзников зону поражения артиллерии:
 STR_SYS_373,Maximum distance player to airdrop point to call in an airdrop:,Maximale Entfernung von Spielern zu airdrop Punkt in einem airdrop anrufen:,Distancia máxima entre el jugador y el punto de descarga de suministro:,Максимальное расстояние между игроком и точкой сброса снабжения:
@@ -935,7 +935,7 @@ STR_SYS_1185,Air taxi heading to base in a few seconds !!!,Luft-taxi Richtung ba
 STR_SYS_1186,"Air taxi leaving now, have a nice day !!!","Luft-taxi jetzt verlassen, haben einen schönen Tag !!!","¡El helicóptero de rescate sale de la base, buena suerte !!!","Спасательный вертолёт покидает базу, удачи !!!"
 
 STR_SYS_1200,Respawn with same weapons after death:,Respawn mit gleichen Waffen nach dem Tod:,Renacimiento con las mismas armas:,Возрождение с тем же оружием:
-STR_SYS_1201,Maximum number of AI that can get recruited:,"Maximale Anzahl von KI, die rekrutiert werden kann :",Cantidad máxima de AI:,Максимальное кол-во АИ:
+STR_SYS_1201,Maximum number of AI that can get recruited:,"Maximale Anzahl von KI, die rekrutiert werden kann :",Cantidad máxima de AI:,Максимальное кол-во ИИ:
 
 STR_SYS_1202,Player points that get subtracted after death:,"Spielerpunkte, die nach dem Tod abgezogen werden:",Puntos deducidos por muerte:,Очков вычитается за смерть:
 
@@ -948,7 +948,7 @@ STR_SYS_1204_4,", other:",", Andere:",", Otros:",", прочее:"
 STR_SYS_1204_5,Points an engineer needs to rebuild the support buildings at base:,"Punkte, die ein Ingenieur braucht, um die stützgebäude an der Basis wieder aufzubauen:",Se cobra a un ingeniero por reparar servicios en la base:,Очков списывается с инженера за ремонт сервисов на базе:
 
 STR_SYS_1205,Points an artillery operator needs for a strike:,"Punkte, die ein Artillerie-operator für einen Streik braucht:",Puntos dados de baja por llamar a una salva de artillería:,Очков списывается за вызов одного артиллерийского залпа:
-STR_SYS_1206,Points needed to recuruit one AI soldier:,"Punkte benötigt, um einen KI-Soldaten recuruit:",Puntos por llamar a un AI:,Очков за призыв одного АИ:
+STR_SYS_1206,Points needed to recuruit one AI soldier:,"Punkte benötigt, um einen KI-Soldaten recuruit:",Puntos por llamar a un AI:,Очков за призыв одного ИИ:
 STR_SYS_1207,Points needed to call in an air taxi:,"Punkte benötigt, um in einem Lufttaxi zu rufen:",Puntos por llamar a un taxi aéreo:,Очков за вызов воздушного такси:
 
 STR_SYS_1208,Points needed for AAHALO parajump:,Punkte für AAHALO parajump benötigt:,Puntos necesarios para aterrizar desde la base:,Очков необходимо для десантирования с базы:
@@ -1335,15 +1335,15 @@ STR_SET_3,Ranked,Ranked,Rangos,Ранговая
 STR_SET_4,With revive,Mit revive,Con la revitalización,С оживлением
 STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Uso De ""Javelin""","Использование ""Джавелин"""
 STR_SET_6,Simple side missions at the beginning,Einfache Nebenmissionen am Anfang,Tareas adicionales simples al principio,Простые дополнительные задания в начале
-STR_SET_7,Light armored vehicles at the base in the start,Leichte Gepanzerte Fahrzeuge am Start,La presencia de su equipo ligero en la base al Inicio,Наличие своей лёгкой техники на базе при старте
+STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Versteckte rostige Leichtfahrzeuge in der Basiszone am Anfang,Vehículos ligeros oxidados ocultos en la zona de la base al principio,Скрытая ржавая лёгкая техники в райное базы при старте
 STR_SET_8,Mandatory side missions,Obligatorischen Nebenmissionen,Misiones de terceros obligatorias,Обязательные сторонние миссии
 STR_SET_8_1,", towns per SM: %1",", Städte pro 1 SM: %1",", ciudades por 1 SM: %1",", городов за 1 доп.миссию: %1"
 STR_SET_9,Teleport works only when all services on the base are available,Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind,El teletransportador solo funciona con todos los servicios en la base,Телепорт действует только при всех исправных сервисах на базе
 STR_SET_9_1,Teleport works until the destruction of MHQ,Teleport funktioniert bis zur Zerstörung von MHQ,El teletransportador funciona hasta la destrucción de KSHM,Телепорт функционирует до уничтожения КШМ
 STR_SET_9_2,Teleport shuts off when MHQ is damaged at %1%2,"Teleport wird abgeschaltet, wenn MHQ bei %1%2 beschädigt ist.",El teletransportador se desactiva cuando el KSHM está dañado hasta %1%2,Телепорт отключается при повреждении КШМ до %1%2
-STR_SET_10,Jail,Gefängnis,Celda de arresto,Гауптвахта
-STR_SET_10_1,when scores lower than %1,wenn der scores niedriger ist als %1,si el número de puntos es inferior a %1,", если число очков ниже %1"
-STR_SET_11,Cloning RPG-missiles,Klon-RPG-Rakete,Clonación de misiles RPG,Клонирование РПГ-ракет
+STR_SET_10,Jail:,Gefängnis:,Celda de arresto:,Гауптвахта:
+STR_SET_10_1, when scores lower than %1, wenn der scores niedriger ist als %1, si el número de puntos es inferior a %1,", если число очков ниже %1"
+STR_SET_11,Cloning RPG-missiles: ,Klon-RPG-Rakete: ,Clonación de misiles RPG: ,"Клонирование РПГ-ракет: "
 STR_SET_12,Points will be added when the service is restored (%1),"Punkte werden Hinzugefügt, wenn der Dienst wiederhergestellt wird (-%1)",Para reparar los servicios dan puntos (%1),За ремонт сервисов дают очки (%1)
 STR_SET_12_1,"When repairing the service, points are deducted (-%1)",Punkte werden bei der Reparatur abgezogen (-%1),Para reparar los servicios dan puntos (%1),За ремонт сервисов вычитают очки (-%1)
 STR_SET_13,Mando missiles pack:,Mando missiles pack:,Pak Mando missiles:,Пак Mando missiles:
@@ -1365,6 +1365,22 @@ STR_SET_26,"Maximum number of statics per engineer truck: ","Maximale Anzahl sta
 STR_SET_27,"Vehicles able to load ammoboxes: ","Fahrzeuge, die Ammoboxen laden können: ","Transporte capaz de cargar cajas de suministro: ","Транспорт, способный загружать ящики снабжения: "
 STR_SET_28,"Player respawn delay (in seconds): ","Verzögerung beim Respawn des Spielers (in Sekunden): ","Tiempo de renacimiento (seg.): ","Время возрождения (в сек.): "
 STR_SET_29,"Player respawn dialog after death: ","Spieler Respawn Dialog nach dem Tod: ","Diálogo de elección del lugar del renacimiento después de la muerte: ","Диалог выбора места возрождения после смерти: "
+STR_SET_30,"Can repair only engineers","Können nur Ingenieure reparieren","Sólo los ingenieros pueden reparar","Могут ремонтировать только инженеры"
+STR_SET_30_0,"Anyone can repair everything, with a %1 penalty per step. Engineers are not penalized.","Jeder kann alles reparieren, mit einem Malus von %1 pro Schritt. Ingenieure werden nicht bestraft.","Cualquiera puede reparar todo, con una penalización de %1 por paso. Los ingenieros no están penalizados","Могут ремонтировать все, со штрафом %1 за шаг. Инженеры не штрафуются"
+STR_SET_31,Checking the overturns of enemy vehicles: %1,Kontrolle der umgestürzten Fahrzeuge des Gegners: %1,Comprobación de los vuelcos de los vehículos enemigos: %1,Слежение за переворотом вражеской техники: %1
+STR_SET_32,Only recruited pilots can pilot air vehicles: %1,Nur rekrutierte Piloten können Luftfahrzeuge steuern: %1,Sólo los pilotos reclutados pueden pilotar vehículos aéreos: %1,Только призывники-пилоты могут пилотировать авиатехнику: %1
+STR_SET_33,Enemy has shotguns\n,Der Feind hat Schrotflinten\n,El enemigo tiene escopetas\n,У врагов можно найти дробовики\n
+STR_SET_34,The teleport stops working when taking damage %1%2\n,"Der Teleport funktioniert nicht mehr, wenn er Schaden nimmt %1%2\n","El teletransporte deja de funcionar al recibir daño %1%2\n",Телепорт перестаёт работать после повреждения %1%2\n
+STR_SET_35,"Enemy armored vehicles engaged in counterattacks are blocked from entering\n","Feindliche gepanzerte Fahrzeuge, die einen Gegenangriff starten, werden am Eindringen gehindert\n","Los vehículos blindados enemigos que participan en contraataques están bloqueados para entrar\n","Бронемашины врага, участвующие в контратаках, заблокированы от доступа\n"
+STR_SET_SPPM,SPPM service is on\n,Der SPPM-Dienst ist eingeschaltet\n,El servicio SPPM es on\n,Сервис СППМ включен\n
+STR_SET_SPPM_OFF,SPPM service is off\n,Der SPPM-Dienst ist ausgeschaltet\n,El servicio SPPM está desactivado\n,Сервис СППМ выключен\n
+STR_SET_36,AI entrance to any airplanes is prohibited\n,AI ist der Zutritt zu allen Flugzeugen verboten\n,La entrada de IA a cualquier avión está prohibida\n,Вход ИИ в боевые самолёты запрещён\n
+STR_SET_37,Lighthouse sirens at night are in effect\n,Nächtliche Leuchtturmsirenen sind in Betrieb\n,Las sirenas de los faros nocturnos están en funcionamiento\n,Ночные сирены маяков действуют\n
+STR_SET_37_0,The night sirens of the lighthouses are not activated\n,Die Nachtsirenen der Leuchttürme sind nicht aktiviert\n,Las sirenas nocturnas de los faros no se activan\n,Ночные сирены маяков не активированы\n
+STR_SET_38,Teleport is influenced by ferromagnetic masses on dist <= %1 m. and damage\n,Teleport wird von ferromagnetischen Massen auf Dist <= %1 m. und Schaden beeinflusst\n,El teletransporte está influenciado por las masas ferromagnéticas en dist <= %1 m. y el daño\n,На телепорт влияют ферро-магнитные массы на дист. до 20 м. и повреждения\n
+STR_SET_39,Only vehicles BEFORE 1985 inclusivelly allowed\n,Nur Maschinen bis einschließlich 1985 sind zugelassen\n,Sólo están autorizadas las máquinas hasta 1985 inclusive\n,Разрешены только машины до 1985 года включительно\n
+STR_SET_39_0,The mission uses all available equipment\n,Die Mission nutzt alle verfügbaren Geräte\n,La misión utiliza todo el equipo disponible\n,В миссии используется все доступная техника\n
+STR_SET_40,Parajumps without parachute are allowed)))\n,Fallschirmsprünge ohne Fallschirm sind erlaubt)))\n,Los saltos en paracaídas sin paracaídas están permitidos)))\n,Прыжки без парашюта разрешены)))
 
 STR_SPPM,SPPM :,SPPM :,SPPM :,СППМ :
 STR_SPPM_ADD,Add,Erstellen,Crear,Создать

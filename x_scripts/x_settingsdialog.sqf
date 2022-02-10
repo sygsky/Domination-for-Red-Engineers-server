@@ -1,7 +1,7 @@
 //
 // by Xeno. x_scripts/x_settingsdialog.sqf, runs only on client computer
 //
-private ["_ok", "_XD_display", "_ctrl", "_rarray", "_vdindex", "_i", "_index", "_glindex", "_mindex", "_str","_str1", "_strYes","_strNo","_ar", "_counter",
+private ["_ok", "_XD_display", "_ctrl", "_rarray", "_vdindex", "_i", "_index", "_glindex", "_mindex", "_str","_str1", "_strYesCR","_strNoCR","_ar", "_counter",
 		  "_name1", "_name2", "_name3"];
 
 #include "x_setup.sqf"
@@ -78,10 +78,10 @@ _ctrl ctrlSetText str(d_points_needed select 5);
 
 _ctrl = _XD_display displayCtrl 2007;
 
-_strYes = localize "STR_SYS_400";   // "Yes\n"
-_strYes1 = localize "STR_SYS_400_1";// "Yes"
-_strNo = localize "STR_SYS_401";    // "No\n"
-_strNo1 = localize "STR_SYS_401_1"; // "No"
+_strYesCR = localize "STR_SYS_400";   // "Yes\n"
+_strYes = localize "STR_SYS_400_1";// "Yes"
+_strNoCR = localize "STR_SYS_401";    // "No\n"
+_strNo = localize "STR_SYS_401_1"; // "No"
 
 _str = format[localize "STR_SYS_254", d_own_side, d_enemy_side, getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
 
@@ -95,47 +95,48 @@ if (__ACEVer || __CSLAVer) then {
 
 _str = _str + ". " + (localize "STR_SET_2")/* "С АИ" */ + ": ";
 #ifdef __AI__
-_str = _str + _strYes1; //"Yes"
+_str = _str + _strYes; //"Yes"
 #else
-_str = _str + _strNo1; // "No"
+_str = _str + _strNo; // "No"
 #endif
 
 _str = _str + ". " + (localize "STR_SET_3")/* "Ранговая" */ + ": ";
 #ifdef __RANKED__
-_str = _str + _strYes;
+_str = _str + _strYesCR;
 #else
-_str = _str + _strNo;
+_str = _str + _strNoCR;
 #endif
 
-//+++ 11-JUN-2018
+//+++ 11-JUN-2018: new non-Xeno defines starts from here
+
 _str = _str + (localize "STR_SET_5")/* Javelin" */ + ": ";
 #ifdef __JAVELIN__
-_str = _str + _strYes;
+_str = _str + _strYesCR;
 #else
-_str = _str + _strNo;
+_str = _str + _strNoCR;
 #endif
 
 
 _str = _str + (localize "STR_SET_6") + ": "; // "Simple side missions at the beginning"
 #ifdef __EASY_SM_GO_FIRST__
-_str = _str + _strYes;
+_str = _str + _strYesCR;
 #else
-_str = _str + _strNo;
+_str = _str + _strNoCR;
 #endif
 
 _str = _str + (localize "STR_SET_7") + ": "; // "Light vehicle[s] at the base in the beginning"
 #ifdef __ADDITIONAL_BASE_VEHICLES__
-_str = _str + _strYes;
+_str = _str + _strYesCR;
 #else
-_str = _str + _strNo;
+_str = _str + _strNoCR;
 #endif
 
 // Engineering Fund
 _str = _str + (localize "STR_SYS_137_5") + ": "; // "The Engineering Fund"
 #ifdef __REP_SERVICE_FROM_ENGINEERING_FUND__
-_str = _str + format["%1",SYG_engineering_fund] + "\n";
+_str = _str + format["%1\n",SYG_engineering_fund];
 #else
-_str = _str + _strNo;
+_str = _str + _strNoCR;
 #endif
 
 _str = _str +
@@ -150,18 +151,18 @@ _str = _str + (localize "STR_SET_8") ; // "Mandatory side missions"
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 _str = _str +  format[localize "STR_SET_8_1", __SIDE_MISSION_PER_MAIN_TARGET_COUNT__] + "\n";
 #else
-_str = _str + ": " + _strNo;
+_str = _str + ": " + _strNoCR;
 #endif
 
 _str = _str + (localize "STR_SET_9") + ": "; // "Teleport works only when all services on the base are available"
 #ifdef __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
-_str = _str + _strYes;
+_str = _str + _strYesCR;
 #else
-_str = _str + _strNo;
+_str = _str + _strNoCR;
 #endif
 
 #ifdef __NO_TELEPORT_ON_DAMAGE__
-    _str = _str + (format[localize "STR_SET_9_2", __NO_TELEPORT_ON_DAMAGE__ ]) + "\n"; // "Teleport works until the destruction of MHQ"
+    _str = _str + (format[localize "STR_SET_9_2", __NO_TELEPORT_ON_DAMAGE__,"%" ]) + "\n"; // "Teleport works until the destruction of MHQ"
 #else
     _str = _str + (localize "STR_SET_9_1") + "\n"; // "Teleport shuts off when MHQ is damaged at %1 percents"
 #endif
@@ -170,69 +171,131 @@ _str = _str + (localize "STR_SET_10") ; // "Jail"
 #ifdef __JAIL_MAX_SCORE__
 _str = _str + format[localize "STR_SET_10_1",__JAIL_MAX_SCORE__] + "\n";
 #else
-_str = _str + ": " + _strNo;
+_str = _str + ": " + _strNoCR;
 #endif
 
-_str = _str + (localize "STR_SET_11") + ": "; // "Clone RPG missiles"
+_str = _str + (localize "STR_SET_11"); // "Clone RPG missiles: "
 #ifndef __NO_RPG_CLONING__
-_str = _str + _strYes;
+_str = _str + _strYesCR;
 #else
-_str = _str + ": " + _strNo;
+_str = _str + ": " + _strNoCR;
 #endif
 
-//---
+#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+_str = _str + format[localize "STR_SET_30_0", __NON_ENGINEER_REPAIR_PENALTY__]  + "\n"; // "Anyone can repair everything, with a %1 penalty per step. Engineers are not penalized"
+#else
+_str = _str + (localize "STR_SET_30") + "\n"; // "Can repair only engineers"
+#endif
+
+#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+_str = _str + (localize "STR_SET_40");
+#endif
+
+#ifdef __PREVENT_OVERTURN__
+_str = _str + format[localize "STR_SET_31",_strYesCR]; //
+#else
+_str = _str + format[localize "STR_SET_31",_strNoCR]; //
+#endif
+
+#ifdef __DISABLE_GRU_BE_PILOTS__
+_str = _str + format[localize "STR_SET_32",_strYesCR]; //
+#else
+_str = _str + format[localize "STR_SET_32",_strNoCR]; //
+#endif
+
+#ifdef __ALLOW_SHOTGUNS__
+_str = _str + (localize "STR_SET_33"); //
+#endif
+
+#ifdef __NO_TELEPORT_ON_DAMAGE__
+_str = _str + format[localize "STR_SET_34", __NO_TELEPORT_ON_DAMAGE__ *100, "%"]; // "The teleport stops working when taking damage %1%2"
+#endif
+
+#ifdef __LOCK_ON_RECAPTURE__
+_str = _str + (localize "STR_SET_35"); // "Enemy armored vehicles engaged in counterattacks are blocked from entering\n"
+#endif
+
+#ifdef __SPPM__
+_str = _str + (localize "STR_SET_SPPM"); // "SPPM service is on\n"
+#else
+_str = _str + (localize "STR_SET_SPPM_OFF"); // "SPPM service is off\n"
+#endif
+
+#ifdef __NO_AI_IN_PLANE__
+_str = _str + (localize "STR_SET_36"); // prevents AI to enter plane as driver/pilot, gunner or commaner. Cargo role is allowed
+#endif
+
+#ifdef __LH_HOWLER__
+_str = _str + (localize "STR_SET_37"); // Sahrani lighthouse howler sounds on
+#else
+_str = _str + (localize "STR_SET_37_0"); // Sahrani lighthouse howler sounds off
+#endif
+
+// teleport is infuenced by ferro-magnetic masses and damagein designated distance
+#ifdef __TELEPORT_DEVIATION__
+_str = _str + (localize "STR_SET_38");
+#endif
+
+#ifdef __VEH_1985__
+_str = _str + (localize "STR_SET_39"); // "Only vehicles BEFORE 1985 inclusivelly allowed\n"
+#else
+_str = _str + (localize "STR_SET_39_0"); // "Only vehicles BEFORE 1985 inclusivelly allowed\n"
+#endif
+
+
+//--- new non-Xeno defines stops here
 
 _str = _str + (localize "STR_SET_4")/* "С возможность оживлять" */+": ";
 #ifdef __REVIVE__
-_str = _str + _strYes1 +". ";
+_str = _str + _strYes +". ";
 #else
-_str = _str + _strNo1 + ". ";
+_str = _str + _strNo + ". ";
 #endif
 
 _str = _str + (localize "STR_SET_13");// "Mando missiles pack: "
 #ifdef __MANDO__
-_str = _str + _strYes1 +". ";
+_str = _str + _strYes +". ";
 #else
-_str = _str + _strNo1 + ". ";
+_str = _str + _strNo + ". ";
 #endif
 
 // _str = _str + "Версия: " + d_version_string + "\n";
 
 _str = _str + (localize "STR_SET_14");//"Built-in rucksack: ";
 if (d_use_backpack) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SYS_343")/* "Отображение маркера с именем игрока: " */;
 if (d_show_player_marker_names) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SYS_344")/* "Отображение направления движения у маркера игрока: " */;
 if (d_p_marker_dirs) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SYS_345")/* "Отображение напр. движения маркеров техники: " */;
 if (d_v_marker_dirs) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SYS_346")/* "Тип маркера игрока: " */ + d_p_marker + "\n";
 
 _str = _str + (localize  "STR_SET_22"); // "Teamstatus Dialog enabled: "
 if (d_use_teamstatusdialog) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SYS_347")/* "Выгрузка техники из мобильного респауна: " */;
@@ -276,44 +339,47 @@ _str = _str + (localize "STR_SET_28") + str(D_RESPAWN_DELAY) + "\n"; // "Player 
 if (!isNil "d_with_respawn_dialog_after_death") then {
 	_str = _str + ( localize "STR_SET_29" );
 	if (d_with_respawn_dialog_after_death) then {
-		_str = _str + _strYes;
+		_str = _str + _strYesCR;
 	} else {
-		_str = _str + _strNo;
+		_str = _str + _strNoCR;
 	};
 };
 
+// TODO: add settings from x_setup.sqf here
+
+
 _str = _str + (localize "STR_SYS_348")/* "Система погодных явлений: " */;
 if (d_weather) then {
-	_str = _str + _strYes1 + ". ";
+	_str = _str + _strYes + ". ";
 } else {
-	_str = _str + _strNo1 + ". ";
+	_str = _str + _strNo + ". ";
 };
 _str = _str + format["%1: ",localize "STR_WET_22"]; // + "Туман: "
 if (d_weather_fog) then {
-	_str = _str + _strYes1 + ". ";
+	_str = _str + _strYes + ". ";
 } else {
-	_str = _str + _strNo1 + ". ";
+	_str = _str + _strNo + ". ";
 };
 _str = _str + format["%1: ",localize "STR_WET_23"]; // "Песчаная буря: "
 if (d_weather_sandstorm) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SYS_349"); // "Пулемётчики могут развёртывать пулемётные гнезда: "
 if (d_with_mgnest) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 #ifndef __REVIVE__
 _str = _str + (localize "STR_SYS_1200"); // "Respawn with same weapons after death: "
 if (x_weapon_respawn) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 #endif
 
@@ -363,9 +429,9 @@ _str = _str + (localize "STR_SYS_1214") + (d_wreck_lift_rank call XGetRankString
 
 _str = _str + (localize "STR_SYS_1215"); // "Weapons limited: "
 if (d_limit_weapons) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SYS_1216") + str(d_drop_radius) + " м.\n";           // "Air drop radius (0 = exact position): "
@@ -374,9 +440,9 @@ _str = _str + (localize "STR_SYS_1217") + str(x_reload_time_factor) + " сек.\
 
 _str = _str + (localize "STR_SYS_361") ;            // "Engine gets shut off on service point: "
 if (d_reload_engineoff) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 #ifdef __LIMITED_REFUELING__
@@ -389,9 +455,9 @@ _str = _str + (localize "STR_SYS_362")/* "Десантирование акти�
 if (!d_no_para_at_all) then {
 	_str = _str + (localize "STR_SYS_363")/* "Да, доступно на базе: " */;
 	if (d_para_at_base) then {
-		_str = _str + _strYes;
+		_str = _str + _strYesCR;
 	} else {
-		_str = _str + _strNo;
+		_str = _str + _strNoCR;
 	};
 	if (d_para_at_base) then {
 		_str = _str + format[localize "STR_SYS_364"/* "Периодичность десантирования от флага на базе: %1 сек." */,d_para_timer_base] +"\n";
@@ -401,25 +467,21 @@ if (!d_no_para_at_all) then {
 		_str = _str + format[localize "STR_SYS_366"/* "Создание транспорта у флага в городе вместо прыжка: %1 " */, d_jumpflag_vec] + "\n";
 	};
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + localize "STR_SYS_370"; // "Use GDT Mod Tracked routine to prevent tanks falling on their back: "
-if (d_use_mod_tracked) then {
-	_str = _str + localize "STR_SYS_400";
-} else {
-	_str = _str + localize "STR_SYS_400_1";
-};
-_str =_str + "\n";
+if (d_use_mod_tracked) then { _str = _str + _strYesCR }
+					   else { _str = _str + _strNoCR };
 
 _str = _str + format[localize "STR_SYS_367" /* "Максимальная дистанция между оператором и точкой нанесения артудара: %1 м." */,d_arti_operator_max_dist] + "\n";
 _str = _str + format[localize "STR_SYS_368" /* "Время перезарядки  между двумя артиллерийскими залпами: %1 сек." */,d_arti_reload_time] + "\n";
-_str = _str + format [localize "STR_SYS_371", d_arti_available_time, d_arti_available_time + 200, d_arti_available_time + 400] + " сек.\n"; // "Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs"
+_str = _str + format [localize "STR_SYS_371", d_arti_available_time, d_arti_available_time + 200, d_arti_available_time + 400] + "\n"; // "Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs"
 _str = _str + localize "STR_SYS_372"; // "Check for allied units in the vicinity of artillery target: "
 if (d_arti_check_for_friendlies) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 _str = _str + localize "STR_SYS_373" + str(d_drop_max_dist) + localize "STR_SYS_373_1";
 
@@ -435,29 +497,29 @@ _str = _str + localize "STR_SYS_374" + str(d_player_air_autokick) + " сек.\n"
 
 _str = _str + (localize "STR_SET_15"); // "Enemy vehicles are locked: "
 if (d_lock_ai_armor) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SET_16"); // "Enemy cars blocked: "
 if (d_lock_ai_car) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SET_17");
 if (d_lock_ai_air) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 if (d_show_chopper_hud) then {
 	_str = _str + (localize "STR_SET_18"); //"Head-Up Display в вертолётах: "
 	if (d_chophud_on) then {
-		_str = _str + _strYes;
+		_str = _str + _strYesCR;
 	} else {
 		_str = _str + "нет\n";
 	};
@@ -465,49 +527,54 @@ if (d_show_chopper_hud) then {
 
 _str = _str + (localize "STR_SET_19");
 if (d_show_chopper_welcome) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + (localize "STR_SET_20");
 if (d_show_vehicle_welcome) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 #ifndef __ACE__
 _str = _str + "Found and using DM smoke grenade view block: ";
 if (d_found_DMSmokeGrenadeVB) then {
-	_str = _str + _strYes + "\n";
+	_str = _str + _strYesCR + "\n";
 } else {
-	_str = _str + _strNo + "\n";
+	_str = _str + _strNoCR + "\n";
 };
 #endif
 
 #ifdef __ACE__
 _str = _str + (localize "STR_SYS_369")/* "С картой АСЕ: " */;
 if (d_with_ace_map) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 
 _str = _str + localize "STR_SYS_253"; // "Wind impact to heli: "
 if (d_with_wind_effect) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
 #endif
 
 _str = _str + localize "STR_SET_21"; // "Island repair stations can repair vehicles: "
 if (d_with_repstations) then {
-	_str = _str + _strYes;
+	_str = _str + _strYesCR;
 } else {
-	_str = _str + _strNo;
+	_str = _str + _strNoCR;
 };
+
+// TODO: add difficalty settings from "server.ArmAProfile"
+
+
+
 
 // don't forget to add \n, but not when adding the last string part
 
