@@ -68,12 +68,11 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static informatio
 //  if ( count _newWP == 3) then {_vehicle addWP _newWP};
 //
 SYG_chasmExitWP = {
-    private ["_ret","_center","_radious","_x"];
+    private ["_ret","_center","_radious","_x","_this"];
    _ret = [];
 #ifdef __DEFAULT__
-    if ( typeName _this == "OBJECT") then {  _this = getPos _this; };
-    if ( typeName _this != "ARRAY") exitWith { _ret };
-    if ( count _this != 3 ) exitWith { _ret };
+    _this = _this call SYG_getPos;
+   	if (_this select 0 == 0 && _this select 1 == 0) exitWith { [] }; // Error to get position
     {
         _center = _x select 0;
         _radious = _x select 1;
@@ -653,8 +652,7 @@ SYG_updateIntelBuilding = {
 	// check comp
 	_compArr = argp(SYG_intelObjects, 0);
 	_comp = nearestObject [ argp(_compArr, 0), argp(_compArr, 2) ];
-	if ( isNull _comp ) then // create it
-	{
+	if ( isNull _comp ) then {  // create it
 		_comp = argp(_compArr,2) createVehicle [0,0,0];
 		_comp setPos argp( _compArr, 0 );
 		_comp setDir argp( _compArr, 1);
@@ -671,17 +669,14 @@ SYG_updateIntelBuilding = {
 		hint localize "GRU_msg: GRU_MSG_COMP_CREATED sent to clients";
 		["GRU_msg", GRU_MSG_COMP_CREATED] call XSendNetStartScriptClient;
 #endif
-	}
-	else
-	{
+	} else {
 		// 1.1 check if equipment is damaged or stand not on place
 		//if ( !alive _comp) then { _comp setDamage 0;};
 		_pos  = getPos _comp;
 		_pos1 = argp(_compArr, 0);
 		_pos set [2, 0];
 		_pos1 = [argp(_pos1,0), argp(_pos1,1),0];
-		if ( ((_pos distance _pos1) > 0.1) || (((vectorUp _comp) distance [0,0,1]) > 0.1 ) ) then 
-		{
+		if ( ((_pos distance _pos1) > 0.1) || (((vectorUp _comp) distance [0,0,1]) > 0.1 ) ) then {
 			_pos = argp(_compArr, 0);
 			_comp setPos _pos;
 			sleep 0.01;
@@ -702,11 +697,9 @@ SYG_updateIntelBuilding = {
 	_maps = nearestObjects [ argp(_mapArr, 0), ["Wallmap","RahmadiMap"],10 ];
 	// 2. check if map has correct image (Sahrani or Rahmadi)
 	_name = if ( (call SYG_getTargetTownName) == "Rahmadi" ) then {"RahmadiMap"} else {"Wallmap"};
-	if ( count _maps > 0) then // check type to be correct
-	{
+	if ( count _maps > 0) then { // check type to be correct
 		_map = argp(_maps, 0);
-		if ( typeOf _map != _name ) then 
-		{
+		if ( typeOf _map != _name ) then {
 //			hint localize format["SYG_updateIntelBuilding: target town ""%3"", typeOf ""%1"" != ""%2"";",typeOf _map, _name, (call SYG_getTargetTownName) ];
 			deleteVehicle _map;
 			sleep 0.01;
@@ -715,8 +708,7 @@ SYG_updateIntelBuilding = {
 		};
 	};
 	
-	if ( isNull _map ) then // create it
-	{
+	if ( isNull _map ) then { // create it
 //		hint localize format["SYG_updateIntelBuilding: create map ""%1""", _name];
 		_map = _name createVehicle [0,0,0];
 		sleep 0.1;
@@ -725,17 +717,14 @@ SYG_updateIntelBuilding = {
 		sleep 0.1;
 		//_mapArr set [0, getPos _map];
 		["GRU_msg", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_MAP_CREATED] call XSendNetStartScriptClient;
-	}
-	else
-	{
+	} else {
 		// 1.1 check if equipment is damaged or stand not in place
 		//if ( !alive _map) then { _map setDamage 0;};
 		_pos  = getPos _map;
 		_pos set [2, 0];
 		_pos1 = argp(_mapArr, 0);
 		_pos1  = [_pos1 select 0, _pos1 select 1, 0];
-		if ( ((_pos distance _pos1) > 0.1) || ( ((vectorUp _map) distance [0,0,1]) > 0.1 ) ) then 
-		{
+		if ( ((_pos distance _pos1) > 0.1) || ( ((vectorUp _map) distance [0,0,1]) > 0.1 ) ) then {
 			_map setVectorUp [0,0,1];
 			_map setPos argp(_mapArr, 0);
 			_map setDir argp(_mapArr, 1);
@@ -974,4 +963,4 @@ SYG_nearestBoatMarker = {
     _near_marker_name // return nearest marker name or "" if error occured
 };
 
-if (true) exitWith {};
+if (true) exitWith {};                                    

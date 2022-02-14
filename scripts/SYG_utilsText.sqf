@@ -60,7 +60,7 @@ SYG_getRandomText = {
 SYG_getRumourText = {
     private ["_daytime","_counter","_index","_rnd","_name1","_name2","_name3","_str1"];
     _daytime = daytime;
-    if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then {_str1 = localize "STR_RUM_NIGHT";}
+    if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then { _str1 = localize "STR_RUM_NIGHT" }
     else {
         //call compile format["_counter=%1;", localize "STR_RUM_NUM"];
         _counter = parseNumber (localize "STR_RUM_NUM");
