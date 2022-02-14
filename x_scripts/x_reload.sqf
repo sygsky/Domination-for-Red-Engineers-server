@@ -42,8 +42,6 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
     };
 } forEach arg(0); // for each thislist item do
 
-if ( isNull _vehicle) exitWith{};
-
 if (!alive _vehicle) exitWith {};
 
 #ifdef __DOUBLE_AMMUNITION__
@@ -61,7 +59,7 @@ if (isNil "_already_loading") then {_already_loading = false;};
 
 //hint localize format["_nemaster = %1, _already_loading = %2", _nemaster, _already_loading];
 if ((!_nemaster) && _already_loading ) exitWith {
-    [_vehicle, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to download double ammunition"
+    [_vehicle, "STR_SYS_256_A_NUM" call SYG_getLocalizedRandomText] call XfVehicleChat; // "You lost your magical ability to reload double ammunition"
     _vehicle setVariable ["already_on_load", nil];
 };
 
@@ -192,6 +190,7 @@ if (_count > 0) then {
 	};
 };
 
+// TODO: allow to restore flares here without need to find repair trucks
 if (__MandoVer) then {
 	if (_vehicle isKindOf "Air") then {
 		_fcleft = _vehicle getVariable "mando_flaresleft";

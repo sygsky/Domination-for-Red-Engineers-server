@@ -203,16 +203,23 @@ while { true } do {
 #ifdef __PRINT__
 	_time = time;
 #endif
+// TODO: while { !(mt_radio_down && mt_spotted)} do {sleep 23.27};
  	if (!mt_radio_down) then { // while tower stands
+#ifdef __PRINT__
+		hint localize format["+++ x_airki.sqf[%1]: start loop with (!mt_radio_down)",_type];
+#endif
 		while {!mt_spotted} do {sleep 23.32}; // wait until player is spotted
 	} else { // tower is down
+#ifdef __PRINT__
+		hint localize format["+++ x_airki.sqf[%1]: start loop with (mt_radio_down)",_type];
+#endif
 		while {mt_radio_down} do {sleep 21.123}; // wait for next tower standing
 		while {!mt_spotted} do {sleep 23.36}; // wait until player spotted
 	};
 
 #ifdef __PRINT__
 	if ((time - _time) > 2) then {
-		hint localize format["+++ x_airki.sqf[%1]: delay at start %2 secs",_type, round (time - _time)];
+		hint localize format["+++ x_airki.sqf[%1]: delay at start was %2 secs",_type, round (time - _time)];
 	} else { hint localize format["+++ x_airki.sqf[%1]: delay at start skipped", _type] };
 #endif
 

@@ -144,11 +144,12 @@ while {true} do {
 				if (_say ) then {["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll; _pos1 set [2,-5]; _moto setPos _pos1;};
 
 #ifdef __DEBUG__
-					hint localize format["+++ motorespawn.sqf: %1 (#%2) returned to the place, canMove %3, fuel %4, dist %5 (MOTO_RETURN_DIST %6)",
+					hint localize format["+++ motorespawn.sqf: %1 (#%2) returned, %3canMove, fuel %4, dir %5, dist %6 (min %7)",
 						typeOf _moto,
 						_id,
-						canMove _moto,
+						if (canMove _moto) then {""} else {"!"},
 						fuel _moto,
+						round ( direction _moto),
 						_dist,
 						MOTO_RETURN_DIST];
 #endif
@@ -162,15 +163,15 @@ while {true} do {
 					_x set[MOTO_ITSELF, _moto];
 					if ( !(_moto hasWeapon "CarHorn")) then {
 						_moto addWeapon "CarHorn"; // add horn for motorcycle
-						hint localize format["+++ moto%1 (%2): CarHorn added", _i + 1, _type];
-					} else {hint localize format["+++ moto%1(%2) has CarHorn", _i + 1, _type]};
+						hint localize format["+++ moto%1(%2) restored, CarHorn added", _id + 1, _type];
+					} else {hint localize format["+++ moto%1(%2) restored, has CarHorn", _id + 1, _type]};
 
 #ifdef __DEBUG__
-					hint localize format["+++ motorespawn.sqf: %1 (%2) recreated after breakdown", typeOf _moto, _type];
+					hint localize format["+++ motorespawn.sqf: moto%1(%2) recreated after breakdown", _id + 1, _type];
 #endif
 				} else {	// use current vehicle item
 #ifdef __DEBUG__
-					hint localize format["+++ motorespawn.sqf: %1 moved back alive", typeOf _moto];
+					hint localize format[ "+++ motorespawn.sqf: noto%1(%2) returned", _id + 1, typeOf _moto ];
 #endif
 					_moto setDammage 0.0;
 					_moto setFuel 1.0;
@@ -185,7 +186,7 @@ while {true} do {
 				//_x set [MOTO_ORIG_POS, getPos _moto];
 				sleep 0.5 + random 0.5;
 #ifdef __DEBUG__
-				hint localize format[ "+++ motorespawn.sqf: moto %1 returned, dist %2, new pos %3, engine on %4", _id, _dist, getPos _moto , typeOf _moto, getDir _moto, isEngineOn _moto ];
+				hint localize format[ "+++ motorespawn.sqf: moto%1(%2) returned, dir %3, dist %4, new pos %5, engine %6", _id, typeOf _moto, direction _moto, _dist, getPos _moto , if (isEngineOn _moto) then {"on"} else {"off"} ];
 #endif
 			};
 			_x set [MOTO_TIMEOUT, TIMEOUT_ZERO]; // drop timeout to allow start it again on next loop

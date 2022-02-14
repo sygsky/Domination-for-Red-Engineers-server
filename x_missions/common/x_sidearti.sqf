@@ -46,7 +46,7 @@ for "_i" from 1 to _count_arti do {
 };
 
 dead_arti = 0;
-__GetEGrp(_grp)
+_grp = call SYG_createEnemyGroup;
 
 #ifdef __TT__
 sm_points_west = 0;
@@ -57,7 +57,7 @@ for "_i" from 0 to (_count_arti - 1) do {
 	_arti_pos_dir = _pos_array select _i;
 	_arti = _arti_type createVehicle (_arti_pos_dir select 0);
 	_arti setDir (_arti_pos_dir select 1);
-	_arti addEventHandler ["killed", {dead_arti = dead_arti + 1;_this spawn x_removevehi}];
+	_arti addEventHandler [ "killed", { dead_arti = dead_arti + 1; _this execVM "x_missions\common\eventKilledAtSM.sqf"; _this spawn x_removevehi }];
 	#ifdef __TT__
 	_arti addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 	#endif
@@ -92,8 +92,13 @@ sleep 2.123;
 sleep 4.123;
 ["shilka", 2, "bmp", 2, "tank", 2, _poss, 1, 250,true] spawn XCreateArmor;
 #endif
-while {dead_arti < _count_arti} do {
+_old_cnt = 0;
+while { dead_arti < _count_arti } do {
 	sleep 4.631;
+	if ( _old_cnt !=  dead_arti ) then {
+		[ "msg_to_user", "", ["STR_SM_4_CNT", dead_arti], 0, 2, false] call XSendNetStartScriptClient;
+		_old_cnt = dead_arti;
+	};
 };
 
 #ifndef __TT__

@@ -18,95 +18,93 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 
 #define __PRINT__
-//#define __FULL_PRINT__
+
+private ["_veh", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_x", "_dead", "_wpns", "_muzzle", "_shooter"];
 
 #ifdef __PRINT__
-hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2", _this, count crew (_this select 0)];
+hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2", _this, {alive _x} count crew (_this select 0)];
 #endif
 
-private ["_vec", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_smoke_array", "_pp", "_shell", "_hideobject", "_name"];
+_veh = _this select 0;
 
-_vec = _this select 0;
+_damage = _this select 2;
+if ( !(alive _veh)) exitWith { hint localize format["+++ eventOnDamage.sqf: attacked vec %1 is killed", typeOf _veh]; }; // End Of Life
 
-_issmoking = _vec getVariable "D_IS_SMOKING";
-if (str(_issmoking) == "<null>") then {
-    _issmoking = false;
-};
+_issmoking = _veh getVariable "D_IS_SMOKING";
+if (isNil "_issmoking") then { _issmoking = false; };
 
 if (_issmoking) exitWith {
     #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: attacked vec %1 is already smoking", typeOf _vec];
+	hint localize format["+++ eventOnDamage.sqf: attacked vec %1 is already smoking", typeOf _veh];
     #endif
 };
 
-_damage = _this select 2;
+// TODO: check attacker be an air vehicle. If so, not smoke against air enemy
 
-if ( _damage >= 1) exitWith { hint localize format["+++ eventOnDamage.sqf: attacked vec %1 is killed", typeOf _vec]; }; // End Of Life
-
-// TODO: check attacker be in air vehicle. If so, not smoke against air enemy
-
-// TODO: if attacker is a man, and veh is damaged, then load with HE and then shoot it to bastard.
+// TODO: if attacker is a man, and veh is damaged, then load with HE and then shoot it to the bastard.
 // TODO: If attacker is alive after HE shoot, shoot it again and change ammo to sabot again
 
 _dead = true;
-_crew = crew _vec;
+_crew = crew _veh;
 while { _dead } do {
     if (count _crew == 0) exitWith {
-    #ifdef __FULL_PRINT__
-        hint localize format["+++ eventOnDamage.sqf: vec %1 crew is out", typeOf _vec];
+    #ifdef __PRINT__
+        hint localize format["+++ eventOnDamage.sqf: vec %1 crew is out", typeOf _veh];
     #endif
     };
     if ((_crew call XfGetAliveUnits) == 0) exitWith {
-    #ifdef __FULL_PRINT__
-        hint localize format["+++ eventOnDamage.sqf: vec %1 crew is dead", typeOf _vec];
+    #ifdef __PRINT__
+        hint localize format["+++ eventOnDamage.sqf: vec %1 crew is dead", typeOf _veh];
     #endif
     };
     _dead = false;
 };
 
-if ( _dead ) exitWith { // find other units of the group
-    #ifdef __FUTURE__
-    {
-      // TODO: find next vehicle in the group if any exists
-    } forEach _crew;
-    #endif
-};
+if ( _dead ) exitWith { }; // Exit on empty stae
 
 // TODO: smoke with ACE_GMV (support humwee) too. But how?
 
-if (!("ACE_LVOSS_Magazine" in (magazines _vec))) exitWith {
+if (!("ACE_LVOSS_Magazine" in (magazines _veh))) exitWith {
 // TODO: try to find ammo and reload smoke grenades from it
-#ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: veh %1 has no more smoke shells!!!", typeOf _vec];
-#endif
+	_veh setVariable ["D_IS_SMOKING",nil]; // remove just in case
+	#ifdef __PRINT__
+	hint localize format["+++ eventOnDamage.sqf: veh %1 has no more smoke shells!!!", typeOf _veh];
+	#endif
 };
 
-_vec setVariable ["D_IS_SMOKING",true]; // we are smoking!!!
+_veh setVariable ["D_IS_SMOKING",true]; // we are smoking!!!
 
 //
 //smoke procedure
 //
-_wpns = weapons _vec;
+_wpns = weapons _veh;
 _muzzle = _wpns select (count _wpns - 1); // get last weapon (it should be a smoke launcher!)
-_vec selectWeapon _muzzle;
+_veh selectWeapon _muzzle;
 _shooter = _veh findNearestEnemy _veh;
 if (alive _shooter) then {
 #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to nearest enemy %2", typeOf _vec, typeOf _shooter];
+	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to nearest enemy %2", typeOf _veh, typeOf _shooter];
 #endif
-    _vec glanceAt _shooter; sleep 3.634;
+    _veh glanceAt _shooter; sleep 3.634;
 } else {
 #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to random direction", typeOf _vec];
+	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to random direction", typeOf _veh];
 #endif
     sleep 1
 };
-_vec fire _muzzle;
+
+_veh fire _muzzle;
 // TODO: If detected enemy is a tank and damaged vehicle is a tank too, lets shoot to the attacker smoke projectile first and sabot second
 sleep 0.27;
-if (alive _shooter) then { _vec doWatch objNull}; // stop watching
+
+// stop watching
+if (alive _shooter) then {
+	_veh doWatch objNull;
+	_muzzle = _wpns select 0;
+	_veh selectWeapon _muzzle;
+};
 sleep 0.512;
 
-_vec setVariable ["D_IS_SMOKING",false]; // drop smoking state
+_veh setVariable ["D_IS_SMOKING",nil]; // drop smoking state
 
 if (true) exitWith {};

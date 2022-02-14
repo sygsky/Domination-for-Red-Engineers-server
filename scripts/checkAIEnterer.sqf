@@ -7,7 +7,7 @@
 
 #define TIME_TO_NEXT_ATTEMPT 30 // time between attempts to enter
 
-private ["_role_arr","_sound","_enter","_gunner","_time","_diff"];
+private ["_role_arr","_sound","_enter","_gunner","_time","_diff","_msg"];
 _enter = false; // no request to enter was produced
 _time = time; // allow request to enter
 while {(alive _this) && ((vehicle player) != player) && ((player distance FLAG_BASE) < 2000)} do {
@@ -15,8 +15,7 @@ while {(alive _this) && ((vehicle player) != player) && ((player distance FLAG_B
         // check if AI in vehicle is in role "Gunner"
 		_gunner = false;
         {
-            if ( alive _x && !isPlayer _x ) then
-            {
+            if ( alive _x && !isPlayer _x ) then {
                 if ( group _x == group player ) then {
                     _role_arr = assignedVehicleRole _x;
                     if ( count _role_arr > 0 ) then {
@@ -25,7 +24,7 @@ while {(alive _this) && ((vehicle player) != player) && ((player distance FLAG_B
                             if ( !_enter ) then { // entered on this loop step only
                                 if ( time < _time ) then { // attempt requested too soon
 									_diff = _time - time;
-                                    [_this, format[localize "STR_AI_14", round(_diff/5)*5 max 1]] call XfVehicleChat;
+                                    [_this, format[localize "STR_AI_14", round(_diff/5)*5 max 1]] call XfVehicleChat; // "Commander! Let's wait at least %1 sec. for decency"
                                 } else { // time to request
                                     if ( _x call SYG_isWoman ) then {
                                         // 1/3 probability that woman AI will agree to be a gunner of battle heli
