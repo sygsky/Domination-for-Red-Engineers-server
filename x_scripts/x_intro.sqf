@@ -304,13 +304,14 @@ if (_Sahrani_island ) then {
 	// array of camera turn points. Last point is for illusion object creation point.If it is NUMBER in range {0..last_turn_point_index-1>} designated index turn point is used for illusion
   _camstart = 
   [
-    [[1947,19059,1],[2260,18839,10],[4979,15480,40],[8982.5,10777,150],1], // Island Parvulo
-    [[18361,18490,1],[14260,15170,30],[11141,13340,50],[18127,18337,0]], // Isle Antigua (2)
-    [[19684.6,14128.7,25],[17681.2,13076.8,40],[15397.763672,11924.510742,50],[11420,8570,20],[10869,9172,40],[19356,14018,0]], // Pita (3)
+    [[1947,19059,1],[2260,18839,10],[4979,15480,40],[8982.5,10777,150],1], // Island Parvulo (1)
+    [[18361,18490,1],[14260,15170,30],[11141,13340,50],[18127,18337,0],4], // Isle Antigua (2)
+    [[19684.6,14128.7,25],[17681.2,13076.8,40],[15397.76,11924.51,50],[11420,8570,20],[10869,9172,40],[19356,14018,0],2], // Pita (3)
     [[1224,1391,1],[1580,1711,20],[8971,8170,70],1], // Rahmadi (4)
     [[18534,2730,1],[18259,2978,10],[11420,8570,20],[10628,9328,40],1], // vulcano Asharan (5)
-	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,9],[11642,6336,9],[11480,6658,10],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0]], // Dolores (6)
-	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777,150],[11930,14526,0]] // Cabo Valiente (7)
+	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,9],[11642,6336,9],[11480,6658,10],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0],11], // Dolores (6)
+	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777,150],[11930,14526,0]], // Cabo Valiente (7)
+	[[19682,12457,1],[19169,11477,1],[18033,9741,1],[16747,8890,1],[15582,8257,1],[13968,7852,1],[13222,8655,10],[12746,9138,5],[12300,11038,1],[9346,11260,10],[8981,10765,30], 8]// 1.5 км to south of Pita near the shore in open sea (8)
   ] call _SYG_selectIntroPath;
   _pos = _camstart select 1;
   // last pos is illusion object one. If number it means index of point to use as pos, else it means pos3D to build illusion
@@ -361,7 +362,7 @@ for "_i" from 0 to ((count _arr) - 1) do {_arr set[_i, (_arr select _i) / _plen 
 
 #endif
 
-_PS1 = "#particlesource" createVehicleLocal [position player select 0, position player select 1, 1.5];
+_PS1 = "#particlesource" createVehicleLocal [position player select 0, position player select 1, 5]; // raise the spark above the player, as the base building became higher
 _PS1 setParticleCircle [0, [0, 0, 0]];
 _PS1 setParticleRandom [0, [0, 0, 0], [0,0,0], 0, 1, [0, 0, 0, 0], 0, 0];
 _PS1 setParticleParams [["\Ca\Data\ParticleEffects\SPARKSEFFECT\SparksEffect.p3d", 8, 3, 1], "", "spaceobject", 1, 0.2, [0, 0, 1], [0,0,0], 1, 10/10, 1, 0.2, [2, 2], [[1, 1, 1 ,1], [1, 1, 1, 1], [1, 1, 1, 1]], [0, 1], 1, 0, "", "", _this];
@@ -629,6 +630,7 @@ player cameraEffect ["terminate","back"];
 camDestroy _camera;
 closeDialog 0;
 deleteVehicle _PS1;
+["say_sound", player, "gong_5"] call XHandleNetStartScriptClient; // play gong very low sound on the place
 
 enableRadio true;
 //player removeEventHandler ["hit", _phiteh];
