@@ -1,0 +1,206 @@
+; Make a squad of AI's garrison nearby buildings. 
+_group = _this select 0
+;_stay = _this select 1
+_tg = _this select 1
+
+
+IF (format["%1",SLX_Debug] != SLX_Null) THEN {IF (format["%1",garrison_sqs] == SLX_Null) THEN {garrison_sqs = 0}; garrison_sqs = garrison_sqs + 1; player globalchat format[{garrison_sqs %1 %2}, garrison_sqs, _this select 0]}
+
+SLX_Busy  = SLX_Busy + [_group]
+
+;player globalchat format["%1 garrisoning buildings %2", _this select 0, _this select 0]
+;player globalchat format ["%1 %2 %3", _group, combatmode ((units _group) select 0), Behaviour ((units _group) select 0)]
+
+
+; Check if target group is defined for building distance search, if not then use group to find closest building
+? (format["%1",_tg] == SLX_Null) : _tg = _group
+_grpcnt = (count (units _tg)) - 1
+_building = objNull
+_garrisoned = []
+_inside_arr = []
+_i = 0
+
+; Start Garrison for a new building, reset number of spots
+#Start
+_i = 0
+_spotnum = 40
+
+; Find a building that hasn't been Garrisoned, if it's been Garrisoned find the closest building to the next unit that hasnt been Garrisoned, if no more units then exit.
+#FindBuilding
+~0.01
+? _i > _grpcnt : goto "EndFind"
+_unit = ((units _tg) select _i)
+_building = nearestBuilding _unit
+_i = _i + 1
+
+? _building in _garrisoned : goto "FindBuilding"
+
+; If there's no building or it's too far away then exit. If the first closest building has no spots then it's not an enterable building or even a building at all so don't garrison anything.
+? (isNull _building) || _building distance (leader _group) > 200 : goto "end"
+; || ((count _garrisoned==0) && ((_building buildingPos 0)==[0,0,0]))
+
+;_group setBehaviour "STEALTH"
+_group setBehaviour "AWARE"
+_group setCombatMode "YELLOW"
+_group setspeedmode "FULL"
+;_group move (getPos _building)
+;dostop ((units _group) select 0)
+;{dostop _x} foreach units _group
+;_group lockwp true
+;{_x setUnitPos {DOWN}; _x setUnitPos {AUTO}} foreach units _group
+_units = units _group
+
+if ((count (units _group)) > 3) then {[units _group, "move"] exec (SLX_GL3_path+"Shout.sqs")}
+
+_garrisoned = _garrisoned + [_building]
+;player globalchat format["%1 building %2", _group, _building]
+
+_i = 1
+
+#Garrison
+~1
+? ({alive _x}count (units _group)) == 0 : goto "end"
+
+; Find the last position in the house if there are any left to check and if they are null. If there aren't any positions then try finding another building.
+_pos = _building buildingPos _spotnum
+? _spotnum > 0 && _pos select 0 == 0 && _pos select 1 == 0 && _pos select 2 == 0 : while {_spotnum > 0 && _pos select 0 == 0 && _pos select 1 == 0 && _pos select 2 == 0} do {_pos = _building buildingPos _spotnum;_spotnum = _spotnum - 1;}; If (_spotnum > ( 1.5 * (count (units _group)) ) ) Then {_i = 2}; goto "Garrison"
+? _pos select 0 == 0 && _pos select 1 == 0 && _pos select 2 == 0 : goto "start"
+
+;_grpcnt = 100
+;_result = (_unit_arr select (_grpcnt))
+;player globalchat format["%1 %2", alive ((units _group) select (_grpcnt)), _grpcnt]
+
+? ({alive _x}count (units _group)) == 0 : goto "end"
+
+; Send them in, starting from the last unit
+;? (format[{%1},SLX_Debug] != SLX_Null) : player globalchat format["%1 garrison %2 %3", ((units _group) select (_grpcnt)), alive ((units _group) select (_grpcnt)), _grpcnt]
+;if alive ((units _group) select (_grpcnt)) then {
+_unit = _units select (_grpcnt)
+;} else {goto {Garrison}}
+
+
+_grpcnt = _grpcnt - 1
+? _unit in _inside_arr || vehicle _unit != _unit : goto "skipGarrison"
+_spotnum = _spotnum - _i
+
+;player globalchat format["Garrison %1 building %2 spot %3 group count %4", _unit, _building, _spotnum, _grpcnt]
+
+; Detach them from the group to go inside
+_inside_arr = _inside_arr + [_unit]
+;_unit setUnitPos "UP"
+;dostop _unit 
+_unit domove _pos
+~3
+
+#skipGarrison
+
+; If there are any units or spots left then keep sending 'em
+? (_grpcnt > -1) && (_spotnum > -1) : goto "Garrison"
+
+; If there's still units left find another building for them
+? (_grpcnt > -1) : goto "start"
+
+
+#EndFind
+
+;~4
+
+;player globalchat format ["%1 %2 %3", _group, combatmode ((units _group) select 0), Behaviour ((units _group) select 0)]
+;goto "ready"
+
+
+
+
+; If everyone has been sent wait for them to be ready, then rejoin the group and wait inside
+_wait = 20
+#Garrisonloop
+_wait = _wait - 1
+
+
+{if ((unitReady _x) || (isnull _x) || !(alive _x) || _wait <= 0) then {If (unitReady _x) Then {dostop _x; _dir = ((getpos _building select 0) - (getpos _x select 0)) atan2 ((getpos _building select 1) - (getpos _x select 1)); _dir = _dir + 180; _pos = [(getpos _x select 0) + 75*sin _dir, (getpos _x select 1) + 75*cos _dir, 3]; _x doWatch _pos}; _x setUnitPos ""AUTO""; _inside_arr = _inside_arr - [_x]}} foreach _inside_arr
+;"if ((unitReady _x) || (isnull _x) || !(alive _x) || _wait <= 0) then {If (unitReady _x) Then {dostop _x; _dir = ((getpos _building select 0) - (getpos _x select 0)) atan2 ((getpos _building select 1) - (getpos _x select 1)); _dir = _dir + 180; _pos = [(getpos _x select 0) + 75*sin _dir, (getpos _x select 1) + 75*cos _dir, 3]; _x doWatch _pos; player globalchat format [{%1 wait %2 ready ? %3 pos %4}, _x, _wait, (unitReady _x), _pos]; }; _x setUnitPos ""AUTO""; _inside_arr = _inside_arr - [_x]}" foreach _inside_arr
+;player globalchat format ["%1 %2 %3", _group, combatmode ((units _group) select 0), Behaviour ((units _group) select 0)]
+
+
+;"if ((unitReady _x) || (isnull _x) || !(alive _x) || _wait <= 0) then {If (unitReady _x) Then {dostop _x}; _x setUnitPos ""AUTO""; _inside_arr = _inside_arr - [_x]}" foreach _inside_arr
+
+~2
+? _wait > 0 : goto "Garrisonloop"
+
+
+
+#ready
+;player globalchat format [{%1 garrison done}, _group]; 
+;player globalchat format ["%1 %2 %3", _group, combatmode ((units _group) select 0), Behaviour ((units _group) select 0)]
+;"_x setUnitPos {AUTO}" foreach units _group
+
+
+
+; Wait inside for a while then return to formation and go
+;~30 + random 60
+
+goto "end"
+
+
+
+
+
+
+_wait = 10 + random 20
+_grpcnt = (count (units _group)) - 1
+#popup
+
+_wait = _wait - 1
+~1 + random 9
+
+_grpcnt = (count (units _group)) - 1
+? _grpcnt < 0 : goto "skipwait"
+
+_i = random _grpcnt
+_i = _i - _i % 1
+?alive ((units _group) select _i) : _unit = ((units _group) select _i)
+
+_i = random _grpcnt
+_i = _i - _i % 1
+?alive ((units _group) select _i) : _unit2 = ((units _group) select _i)
+
+_unit setUnitPos "UP"
+_unit2 setUnitPos "UP"
+
+player globalchat format ["%1 %2 pop up !", _unit, _unit2]; 
+
+~1 + random 9
+_unit setUnitPos "AUTO"
+_unit2 setUnitPos "AUTO"
+
+
+? _wait > 0 : goto "popup"
+
+
+
+
+
+#skipwait
+;"_x stop false; _x setUnitPos ""AUTO""; _x dofollow ((units _group) select 0)" foreach units _group
+;"_x stop false; _x setUnitPos {AUTO}" foreach units _group
+
+;_group setBehaviour "AWARE"
+
+
+
+
+#end
+
+;player globalchat format ["%1 End garrisoning buildings", _group]
+
+;? formation _group == "VEE" : _group setformation "WEDGE"
+;;player globalchat format ["%1", units _group]
+
+
+SLX_Busy  = SLX_Busy - [_group]
+;_group lockwp false
+
+IF (format["%1",SLX_Debug] != SLX_Null) THEN {IF (format["%1",garrison_sqs] == SLX_Null) THEN {garrison_sqs = 0}; garrison_sqs = garrison_sqs - 1; player globalchat format["garrison_sqs %1 %2", garrison_sqs, _this select 0]}
+
+; Exit script
+exit
