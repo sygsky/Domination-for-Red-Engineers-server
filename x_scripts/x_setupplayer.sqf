@@ -936,6 +936,17 @@ _local_msg_arr spawn {
 		] call SYG_msgToUserParser;
 	};
 
+	// "АЛЕКС МЭЙСОН"
+	if ( (name player) == "АЛЕКС МЭЙСОН" ) exitWith {
+		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ ["Боец! Командование местного отряда ГРУ МО СССР предлагает сменить позывной с имени агента ЦРУ на более адекватный задачам миссии" ] ],
+			0, 5, false, "losing_patience"
+		] call SYG_msgToUserParser;
+	};
+
 //	hint localize format["+++ DEBUG: if ( ((name player) == ""EngineerACE:"")) == %1", ((name player) == "EngineerACE")];
 //	if ( ((name player) == "EngineerACE")) exitWith {
 	if ( ((name player) == "SarDELKA122")) exitWith {
