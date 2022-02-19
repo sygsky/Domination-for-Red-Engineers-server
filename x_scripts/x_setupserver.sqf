@@ -409,15 +409,17 @@ if (d_create_civilian) then {
 if (!d_no_sabotage) then {execVM "x_scripts\x_infiltrate.sqf";};
 #endif
 
-
 #ifdef __ACE__
 //+++ Sygsky: added on heli wind effect for server only as all heli are created on host (server) computer
 if ( d_with_wind_effect ) then {
 	"ACE_HeliWind" createVehicle [0,0,0]; ACE_Wind_Modifier_Vehicles = 0.75;
  };
+//hint localize format["x_setupserver.sqf: d_with_wind_effect == %1",d_with_wind_effect];
 #endif
 
-//hint localize format["x_setupserver.sqf: d_with_wind_effect == %1",d_with_wind_effect];
+#ifdef __BATTLEFIELD_BONUS__
+server_bonus_markers_array = [];
+#endif
 
 //
 // Detect is it request for Side Mission position or call for SM execution, for konvoy return finish point, for all other - 1st point in array

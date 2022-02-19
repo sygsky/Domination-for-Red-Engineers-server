@@ -1683,6 +1683,9 @@ player call SYG_handlePlayerDammage; // handle hit events
         #ifdef __LH_HOWLER__
         [SYG_startNight, SYG_startMorning] execVM "scripts\SYG_lighthouses.sqf";
         #endif
+        #ifdef __BATTLEFIELD_BONUS__
+        execVM "scripts\bonus\bonus_client.sqf";
+        #endif
     };
 #endif
 

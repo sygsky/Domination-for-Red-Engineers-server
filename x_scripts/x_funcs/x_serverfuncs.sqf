@@ -362,11 +362,27 @@ SYG_addEventsAndDispose = {
 // remove all standard vehicle event: hit, killed, dammaged, getin and getout
 SYG_removeAllVehicleStdEvents = {
 	if (typeName _this != "OBJECT") exitWith {};
-	_this removeAllEventHandlers "killed";
+	if (_this call SYG_removeVehicleHitDamKilEvents) then {
+		if ( _this isKindOf "LandVehicle" || _this isKindOf "Air" || _this isKindOf "Ship") then  {
+			_this removeAllEventHandlers "getin";
+			_this removeAllEventHandlers "getout";
+		#ifdef __AI__
+			#ifdef __NO_AI_IN_PLANE__
+			// check for any pilot or driver to be AI and get them out if yes
+			if ( (_veh isKindOf "Plane") ) then { _veh addEventHandler ["getin", {_this execVM  "scripts\SYG_eventPlaneGetIn.sqf"}]; };
+			#endif
+		#endif
+		};
+	};
+};
+
+// remove all standard vehicle event: hit, killed, dammaged, getin and getout
+SYG_removeVehicleHitDamKilEvents = {
+	if (typeName _this != "OBJECT") exitWith {false};
 	_this removeAllEventHandlers "hit";
 	_this removeAllEventHandlers "dammaged";
-    _this removeAllEventHandlers "getin";
-    _this removeAllEventHandlers "getout";
+	_this removeAllEventHandlers "killed";
+	true
 };
 
 // Makes vehicle group on enemy side for sidemission (e.g. convoy) and main targets too

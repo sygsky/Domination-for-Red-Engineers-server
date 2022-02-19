@@ -9,157 +9,6 @@
 	(_this select 1) call XHandleNetVar;
 };
 
-// this procedure parse and processs "msg_to_user" server command or compound client message
-// In any message to user, param numbers are:
-// Offsets:     0,                      1,                 2,                        3,              4,             5,             6
-// ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
-//
-// Offset in command array are as follow:
-// 0:"msg_to_user": the identifier for this command, must be present
-// 1: player name or "" or "*" or vehicle to inform crew only, or array of players, or array of vehicles. Must be present!
-// 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
-// 3: _delay_between_messages is seconds number to sleep between multiple messages;
-// 4: _initial_delay is seconds before first message show;
-// 5: no_title_msg if true - no title shown, else shown if false or "" empty string, or scalar <= 0;
-// 6: sound_name is the name of the sound to play with first message show on 'say' command; no way to play sound on each message
-//
-// msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
-// msg additionally displayed as title in the middle of the screen
-
-SYG_msgToUserParser = {
-
-    private [ "_msg_arr","_msg_fmt","_name","_np","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
-     "_msg_target_found","_ind","_SYG_processSingleStr","_str","_no_negate"];
-
-    //
-    // call as: _newStr = _str call _SYG_processSingleStr; // _str is localized or not localized depending on its value.
-    //  if _str start with "STR" (case sensitive) it is localized in any case!!!
-    //
-    _SYG_processSingleStr = {
-        private ["_str"];
-        _str = toArray(toUpper(_this)); // e.g. [83,84,82,95,83,89,83,95,54,48,52] for  "STR_SYS_604"
-        if ( count _str <= 4) exitWith {_this};
-        // [83,84,82]
-        if ( (_str select 0 == 83) && (_str select 1 == 84) && (_str select 2 == 82) ) exitWith {localize _this };
-        _this
-    };
-
-    _name = _this select 1;
-    _msg_target_found = false;
-    _vehicle_chat = false;
-    _np = name player;
-    _no_negate = false;
-
-    // hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
-    if  (typeName _name == "ARRAY") then { // list of names is expected
-        if ( count _name == 0) then {_name = "";} // all players are addressed
-        else {
-//        	_str = _name select 0;
-//			if (typeName  _str == "STRING") then { // negate sign is detected as 1st item in the array
-//				if ( _str in ['-',"!" ] ) exitWith {
-//					_no_negate = true;
-//					[_name, 0] call SYG_removeFromArrayByIndex; // remove 1st item from array
-//				};
-//			};
-        	if (count _name == 2) then {
-        		if (typeName (_name select 0) == "SCALAR") exitWith { // special case: [_dist, _pos] as 2nd parameter
-        			if (player distance (_name select 1) <= (_name select 0) ) then { // you are close enough to the designated position
-        				_name = [_np];
-        			};
-        		};
-        	};
-            _ind = _name find (_np);
-            if ( _ind >= 0) then {
-                _name = _np;
-                _msg_target_found = true;
-            } else { // player name not found in the input array, verify player vehicle too
-            	if ( (vehicle player) in _name ) then { _name = vehicle player } else {_name = _name select 0};
-            };
-        };
-    };
-
-    if (typeName _name == "OBJECT") then { // is msg is sent to the vehicle team only
-        _msg_target_found = vehicle player == _name;
-        _vehicle_chat = _msg_target_found;
-    } else {
-    	if (typeName _name == "STRING") then { _msg_target_found = _name in [_np, "", "*"," "]; };
-    };
-
-    if ( !_msg_target_found ) exitWith {}; // target for message not found
-
-    // check for initial delay
-
-    if ( (count _this) > 4) then {
-        if ( (_this select 4) > 0 ) then {
-            sleep ( _this select 4 );
-        };
-        // try to say sound on 1st text showing
-        if ( (count _this) > 6 ) then {
-            _sound = _this select 6;
-            if ( typeName _sound == "STRING" ) then { playSound _sound };
-        };
-    };
-    _delay = 4; // default delay between messages is 4 seconds
-    if ( count _this > 3 ) then {
-        if ( (_this select 3) > 0 ) then { _delay = (_this select 4) max 4}; // minimum delay is 4 seconds
-    };
-
-    _msg_arr = _this select 2;
-#ifdef __PRINT__
-    hint localize format["+++ SYG_msgToUserParser: %1", _this];
-#endif
-
-	if ( typeName (_msg_arr select 0) != "ARRAY") then { // allow to use single message without array envelope
-		_msg_arr = [_msg_arr]
-	};
-	//
-	{
-        if (typeName _x == "STRING") then { // it is not array but single string, put it to array and process as usuall
-            _x = [_x]; // emulate as array with single item
-        };
-        // all string are localized only if previous string is "localize" (is skipped from output) or is of format "STR..."
-        _localize = false;
-        _msg_fmt = [];
-        {
-            if ( _localize ) then {
-                _msg_fmt set [count _msg_fmt, localize (_x)]; // localize this format item
-                _localize = false;
-            } else {
-                if (typeName _x == "STRING" ) then {
-                    if ( toLower(_x) == "localize") exitWith { _localize = true; }; // Let's localize next string if it will exists
-                    _str = _x call _SYG_processSingleStr;
-                    _msg_fmt set [ count _msg_fmt, _str ];
-                } else {
-                    _msg_fmt set [count _msg_fmt, _x]; // not localize this format item
-                };
-            };
-        } forEach _x; // parse each format item. Any item MUST be an array (or single string without following parameters, or array with a single string, doesnt matter)
-
-        _print_title = (count _this) < 6; // if no setting, let print title in screen middle, not only radio message at bottom
-        if (!_print_title) then { // value detected in param array, read and parse it
-            _print_title = _this select 5; // it may be boolean (true/false) or scalar (<=0 :false else true)
-            if ( typeName _print_title == "SCALAR")  // number <= 0 (false); number > 0 (true)
-            then {_print_title = _print_title <= 0} // print only if value set to false
-            else {_print_title = !_print_title}; // parse as boolean value, print if value == false
-        };
-
-        _msg_formatted = format _msg_fmt; // whole message formatted
- //       hint localize format["+++ ""mag_to_user"": _x %1, _msg_fmt = %2", _x, _msg_fmt];
-        if ( _print_title ) then { // no title text disable parameter
-            titleText[ _msg_formatted, "PLAIN DOWN" ];
-        };
-
-        if (_vehicle_chat) then {
-            [_name, _msg_formatted call XfRemoveLineBreak] call XfVehicleChat;
-        } else {
-            ( _msg_formatted call XfRemoveLineBreak) call XfGlobalChat;
-        };
-
-//					hint localize format["msg_to_user: format %1, titleText ""%2""", _msg_fmt, format _msg_fmt];
-        if ( (_delay > 0) && ((count _msg_arr) > 1 )) then { sleep _delay; };
-    } forEach _msg_arr; // for each messages: _x is format parameters array
-};
-
 XHandleNetStartScriptClient = {
 	private ["_this"];
 	//__DEBUG_NET("x_netinitclient.sqf XHandleNetStartScriptClient",_this)
@@ -1071,6 +920,89 @@ XHandleNetStartScriptClient = {
         	};
 			if ( ( count _this ) > 3 ) exitWith { ( _this select 3 ) call SYG_msgToUserParser}; // try to print message if exists
         };
+
+#ifdef __BATTLEFIELD_BONUS__
+		// adds vehicle to the player vehicle markers list
+		case "bonus" : { // [ "bonus", _sub_command, _player_name, _vehicle ]
+			if ( ! ( (_this select 2) in [""," ","*",name player]) ) exitWith {};
+			private ["_veh"];
+			_veh = _this select 3;
+			switch (_this select 1) do {
+
+				// send vehicle to players to control and re-draw its marker every few seconds
+				case "ADD": {
+					if (isNil "client_bonus_markers_array") then {  // first vehicle added
+						client_bonus_markers_array = [];
+						hint localize "--- battlefield bonus: nil marker array on ADD command!";
+					};
+					client_bonus_markers_array set [ count client_bonus_markers_array, _veh ];    // add next vehcile to the place of the timestamp
+					client_bonus_markers_timestamp = time;		 // set new timestamp
+					(localize "STR_BONUS_1") hintC [
+						format [localize "STR_BONUS_1_1", _this select 2, typeOf _veh ],
+						format[localize "STR_BONUS_1_2", typeOf _veh],
+						format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
+						];
+
+					//  send info to all players except author
+					hint localize format["+++ client: bonus ADD %1 to the markers list", typeOf _veh];
+//                    ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0,"good_news"] call XHandleNetStartScriptClient;
+				};
+
+				// send vehicle to players to remove from re-draw list as vehicle now is recoverable
+				case "REG": { // register vehicle as recoverable
+					private ["_id","_cnt"];
+					_id = _veh getVariable "INSPECT_ACTION_ID";
+					if (!isNil "_id") then {
+						_veh removeAction _id;
+						_veh setVariable ["INSPECT_ACTION_ID", nil];
+					} else {hint localize format["--- bonus.REG: %1 hasnt variable INSPECT_ACTION_ID!!!", typeOf _veh]};
+
+					// remove from markered vehs list
+					if (isNil "client_bonus_markers_array") then {
+						client_bonus_markers_array = [];
+						hint localize "--- battlefield bonus: nil marker array on REG command!";
+					} else {
+						_cnt = count client_bonus_markers_array;
+						[client_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
+						if (count client_bonus_markers_array < _cnt) then { client_bonus_markers_timestamp = time; }; // set new timestamp
+					}; // first vehicle added
+					// register as recoverable vehicle
+					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
+					localize "STR_BONUS_3_1" hintC [
+						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2 ],
+						localize "STR_BONUS_3_3"
+						];
+					  //0              1,                  2,                                                          3, 4, 5
+//                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, "good_news" ] call XHandleNetStartScriptClient;
+				};
+
+				// bonus vehicle killed event
+				//  [ "bonus", _sub_command, _killer, _vehicle ]
+				case "DEL" : {
+					private ["_killer","_name","_cnt"];
+					if (isNil "client_bonus_markers_array") then {
+						client_bonus_markers_array = [];
+						hint localize "--- battlefield bonus: nil marker array on DEL command!";
+					} else {
+						_cnt = count client_bonus_markers_array;
+						[client_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
+						if (count client_bonus_markers_array < _cnt) then { client_bonus_markers_timestamp = time;}; // markered vehicle killed
+					};
+					_killer = _this select 2;
+					_name = if (isPlayer _killer) then {name _killer} else {localize "STR_BONUS_DEL_1"};
+					["msg_to_user", "", [[ localize "STR_BONUS_DEL", typeOf _veh, _name]], 0, 2, "losing_patience"] call XHandleNetStartScriptClient;
+				};
+
+				// [ "bonus", _sub_command, "", _veh_arr ]: replace whole bonus marker array
+				case "RESET" : {
+					client_bonus_markers_array = _this select 3;
+					client_bonus_markers_timestamp = time;
+					["msg_to_user", "", [[ localize "STR_BONUS_6", count client_bonus_markers_array, _name]], 0, 105, "good_news"] call SYG_msgToUserParser;
+				};
+
+			};
+		};
+#endif
 
         //
         // remove execute command sent as string on all client except caller one

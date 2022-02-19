@@ -2609,33 +2609,33 @@ SYG_reammoMHQ = {
 // Reloads any vehicle at the moment
 //
 // call as follow:
-// _res = _vec call SYG_fastReload;
+// _res = _veh call SYG_fastReload;
 // or
-// _res = [_vec1, _vec2, ... _vecN] call  SYG_fastReload;
+// _res = [_veh1, _veh2, ... _vehN] call  SYG_fastReload;
 // returns true if reloaded, false if arguments wrong (not object, not array of objects
 //
 SYG_fastReload = {
-	private ["_i","_type","_mags","_removed","_config","_count","_vec"];
+	private ["_i","_type","_mags","_removed","_config","_count","_veh","_ret","_x"];
 
 	if ( (typeName _this) == "OBJECT" ) then { _this = [_this]; };
 	if ( ( typeName _this) != "ARRAY") exitWith { false};
 	_ret = count _this > 0;
 	{
-		_vec = _x;
-		if ( (!isNull _vec) && (alive _vec) && ((typeName _vec) == "OBJECT") ) then {
-			_type = typeOf _vec;
+		_veh = _x;
+		if ( (!isNull _veh) && (alive _veh) && ((typeName _veh) == "OBJECT") ) then {
+			_type = typeOf _veh;
 			_mags = getArray(configFile >> "CfgVehicles" >> _type >> "magazines"); //low level mags
 
 			if (count _mags > 0) then {
 				_removed = [];
 				{
 					if (!(_x in _removed)) then {
-						_vec removeMagazines _x;
+						_veh removeMagazines _x;
 						_removed = _removed + [_x];
 					};
 				} forEach _mags;
 				{
-					_vec addMagazine _x;
+					_veh addMagazine _x;
 				} forEach _mags;
 			};
 
@@ -2648,12 +2648,12 @@ SYG_fastReload = {
 					_removed = [];
 					{
 						if (!(_x in _removed)) then {
-							_vec removeMagazines _x;
+							_veh removeMagazines _x;
 							_removed = _removed + [_x];
 						};
 					} forEach _mags;
 					{
-						_vec addMagazine _x;
+						_veh addMagazine _x;
 					} forEach _mags;
 				};
 			};

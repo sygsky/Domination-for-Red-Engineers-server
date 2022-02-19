@@ -192,3 +192,6 @@
 
 // uncomment to allow only vehicle BEFORE 1985 inclusivelly
 //#define __VEH_1985__
+
+// uncomment to get bonuses not on base but near finished towns or SM
+//#define __BATTLEFIELD_BONUS__

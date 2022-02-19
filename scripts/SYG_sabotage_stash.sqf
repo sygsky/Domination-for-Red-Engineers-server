@@ -106,7 +106,7 @@ _bomb = "PipeBomb";
 _arr set [0, _mine];
 _arr set [1, _bomb];
 
-{ // fill created items into the box at each client (so Arma-1 need, only items added бфтгфддн during play are propagated through network to all clients)
+{ // fill created items into the box at each client ( so Arma-1 need, only items added manually on clients during gameplay are propagated through network to all clients )
 	_cnt = 10 + floor (random 10);
 	_box addMagazineCargo [_x, _cnt];
 	_str = format["%1this addMagazineCargo [""%2"",%3];", _str, _x, _cnt];
