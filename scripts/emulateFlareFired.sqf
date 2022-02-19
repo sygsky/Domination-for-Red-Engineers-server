@@ -33,7 +33,7 @@ _pos set [ 1, (_pos select 1) + random 2];
 _pos set [ 2, __HEIGHT ];
 
 _factor = __DIST max 12.5; // if (_factor > 12.5) then { _factor = 12.5; };
-hint localize format["+++ emulateFlareFired.sqf: _this = %1, type %2, %3, pos %3", _this, _flare_type, if (isServer) then {"on server"} else {"on client"}, _pos];
+//hint localize format["+++ emulateFlareFired.sqf: _this = %1, type %2, %3, pos %3", _this, _flare_type, if (isServer) then {"on server"} else {"on client"}, _pos];
 
 #ifdef __DEBUG__
 hint localize format[ "+++ emulateFlareFired.sqf: pos %1 col %2 fact %3 ftype %4", _pos, __COL, _factor, _flare_type ];

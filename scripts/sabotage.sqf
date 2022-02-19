@@ -501,5 +501,5 @@ if (true) exitWith {
                 };
             }forEach _no;
         };
-    } forEach d_base_patrol_fires_array;
+    } forEach d_base_sabotage_fires_array;
 };

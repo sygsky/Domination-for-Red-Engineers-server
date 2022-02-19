@@ -891,7 +891,7 @@ d_base_patrol_array =
 	[[10518,10061,0],150,350,0]        // east from base between butt end of airfield and the big hill
 ];
 
-d_base_patrol_fires_array = 
+d_base_sabotage_fires_array =
 [
  [9624,10293,0],  // northern fires
  [10081,10261,0], //   (slope to shore)

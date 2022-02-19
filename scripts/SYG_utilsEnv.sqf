@@ -96,7 +96,7 @@ SYG_showTeleport = {
 //
 SYG_firesService = {
     private ["_cnt","_fires"];
-    hint localize format["scripts/SYG_utilsEnv.sqf => SYG_firesService, isServer %1, isNil ""SYG_firesAreServed"" %2", isServer, isNil "SYG_firesAreServed"];
+    hint localize format["+++ scripts/SYG_utilsEnv.sqf => SYG_firesService, isServer %1, isNil ""SYG_firesAreServed"" %2", isServer, isNil "SYG_firesAreServed"];
     if ( ! X_Client ) exitWith{0};
     if (!isNil "SYG_firesAreServed") exitWith {false};
     SYG_firesAreServed = 0;
@@ -109,8 +109,8 @@ SYG_firesService = {
             (_fires select 0) addAction [localize "STR_CHECK_ITEM", "scripts\fireLitAction.sqf"];
             _cnt = _cnt + 1;
         };
-    } forEach d_base_patrol_fires_array;
-    hint localize format["scripts/SYG_utilsEnv.sqf: Inspect actionEventHandler added to %1 created fires ", _cnt];
+    } forEach d_base_sabotage_fires_array;
+    hint localize format["+++ scripts/SYG_utilsEnv.sqf: Inspect actionEventHandler added to %1 created fires ", _cnt];
 };
 
 //

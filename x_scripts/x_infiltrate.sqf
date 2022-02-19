@@ -47,7 +47,7 @@ if ( isNil "d_on_base_groups" ) then {
 		_fire = createVehicle ["Fire", _x, [], 0, "NONE"];
 #endif
 		_cnt = _cnt + 1;
-	} forEach d_base_patrol_fires_array;
+	} forEach d_base_sabotage_fires_array;
 	hint localize format["+++ x_infiltrate.sqf: %1 fires created", _cnt];
 	// send info to already connected clients about
 	sleep 1.07;
