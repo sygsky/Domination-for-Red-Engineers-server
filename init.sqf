@@ -213,9 +213,9 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Town ids =  2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia, 4: Somato
 #ifdef __TOWN_WEAK_DEFENCE__
-    _first_array = [4]; // set some predefined towns at start
+    _first_array = [4]; // set some predefined towns at start, dont use optional town indexes here
 #else
-    _first_array = []; // no predefined towns at start
+    _first_array = []; // no predefined towns at start, dont use optional town indexes here
 #endif
     maintargets_list = _first_array + (maintargets_list - _first_array);
 

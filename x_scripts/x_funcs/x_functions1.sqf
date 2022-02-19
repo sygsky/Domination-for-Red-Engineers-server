@@ -65,11 +65,11 @@ XfRandomIndexArray = {
  * Params:  _inds = [ _out_cnt, _cnt, _important_arr, _unimportant_arr ] call XfRandomIndexArrayWithPredefVals;
  * where: _unimportant_arr - array with predefined indexes that may be excluded in resulting array,
  * e.g. to work with target_names(defined in i_common.sqf) so that exclude some small towns,
- * use [count target_names, 22, [18,21,22,23,24,25,26,27]] call  XfRandomIndexArrayWithPredefVals to return 22 town indexes
+ * use [22, count target_names, d_big_towns_inds, d_small_towns_inds] call  XfRandomIndexArrayWithPredefVals to return 22 town indexes
  * excluding some of array [18,21,22,23,24,25,26,27]
- * Returns: array with _cnt indexes in range [0.._ind_max] excluding some (or all) of indexes stored in _pre_arr. Of course
- * input named arrays must contain only indexes in range [0..(_cnt-1)]
- */
+ * Returns: array with _out_cnt indexes in range [0.._ind_max] excluding some (or all) of indexes stored in d_small_towns_inds(_unimportant_arr).
+ * Of course input named arrays must contain only indexes in range [0..(_cnt-1)]
+  */
 XfIndexArrayWithPredefVals = {
     private ["_unimportantArr","_importantArr","_cnt","_outCnt","_arrIn","_i"];
     _unimportantArr    = + _this select 3; // unimportant town indexes, may be skipped from result list

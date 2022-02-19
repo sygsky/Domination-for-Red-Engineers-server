@@ -19,7 +19,7 @@ d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma", "Eponia" ];
 d_big_towns_inds = [5,6,7,8,11];
 
 // Small towns indexes. Can be absent from list when playing not minimum number of towns
-d_small_towns_inds = [13,15,16,17,18,19,21,22,23,24,25,26,27,28];
+d_small_towns_inds = [5,13,15,16,17,18,19,21,22,23,24,25,26,27,28]; // +++ Chantico (5) moved to the list of small towns as it is too easy to seize  from base (if there are tanks in it)
 
 #endif
 
