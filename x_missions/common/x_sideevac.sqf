@@ -2,7 +2,7 @@
 private ["_pos_array", "_poss", "_endtime", "_side_crew", "_pilottype", "_wrecktype", "_wreck", "_owngroup",
          "_pilot1", "_owngroup2", "_pilot2", "_hideobject", "_is_dead", "_pilots_at_base", "_rescued", "_winner",
          "_time_over", "_enemy_created", "_nobjs", "_estart_pos", "_unit_array", "_ran", "_i", "_newgroup", "_units", "_leader",
-         "_pilots_arr", "_arr"];
+         "_pilots_arr", "_arr","_rescue"];
 if (!isServer) exitWith {};
 
 ["say_sound", "PLAY", format["pilots_resque%1", ceil (random(3))], 5 ] call XSendNetStartScriptClient; // playSound on all connected players computers
@@ -34,7 +34,7 @@ sleep 2;
 _owngroup = call SYG_createOwnGroup;
 _pilot1 = _owngroup createUnit [_pilottype, _poss, [], 30, "FORM"];
 [_pilot1] join _owngroup;
-_pilot1 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russina voice in the ACE
+_pilot1 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russian voice in the ACE
 sleep 0.5;
 /**
 __WaitForGroup
@@ -43,7 +43,7 @@ _owngroup2 = [_side_crew] call x_creategroup;
 _owngroup2 = call SYG_createOwnGroup;
 _pilot2 = _owngroup2 createUnit [_pilottype, position _pilot1, [], 3, "FORM"];
 [_pilot2] join _owngroup2;
-_pilot2 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russina voice in the ACE
+_pilot2 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russian voice in the ACE
 sleep 0.1;
 
 _pilots_arr = [_pilot1,_pilot2];
@@ -59,8 +59,7 @@ _pilots_arr = [_pilot1,_pilot2];
 sleep 45;
 
 {
-    if (alive _x) then
-    {
+    if (alive _x) then {
         _x disableAI "MOVE";
         _x setDamage 0.5;
         _x setUnitPos "DOWN";
@@ -93,21 +92,20 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
 	};
 
-	if (!alive _pilot1 && !alive _pilot2) exitWith {
+	if ( ({alive _x} count _pilots_arr) == 0 ) exitWith {
 		_is_dead = true;
 	};
 
-    if (!_rescued) then
-    {
+    if (!_rescued) then {
         ////////////////////////////////////////////++ Dupa by Engineer's request
         _rescue = objNull;
         _dist = 999999;
         {
-            if ( alive _x) then
-            {
+            if ( alive _x) then {
                 _nobjs = nearestObjects [_x, [_soldier], 20];
                 _pilot = _x;
                 {
+                	// Resquer may be: only player AND (leader of the group OR artillery observer (always single in the group so the leader))
                     if ((isPlayer _x) && ((format ["%1", _x] in d_can_use_artillery) || (leader group _x == _x))) exitWith {
                         if ((_x distance _pilot) < _dist) then {
                             _rescue = _x;
@@ -124,19 +122,21 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
             _rescued = true;
             _arr = []; // captive pilots array
             {
-              if (alive _x) then {
-                _x setUnitPos "AUTO";
-                _x enableAI "MOVE";
-                [_x] join objNull;
-                sleep 0.1;
-                [_x] join _rescue;
-                _arr set [count _arr, _x]; // add joined pilot to the captive array
-              };
+				if (alive _x) then {
+				_x setUnitPos "AUTO";
+				_x enableAI "MOVE";
+				[_x] join objNull;
+				sleep 0.1;
+				[_x] join _rescue;
+				_arr set [count _arr, _x]; // add joined pilot to the captive array
+				};
             } forEach _pilots_arr;
             ["make_ai_friendly",_arr] call XSendNetStartScriptClientAll;
-            ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 2, 2] call XSendNetStartScriptClient; // "Good job! The rescue of helicopter crew was successful"
+            ["msg_to_user","",[["STR_SYS_504_0", name _rescue]], 0, 2, false, "good_news"] call XSendNetStartScriptClientAll; // "Pilots detected, controlled by ""%1""!"
+            sleep 1;
+            ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 0, 7] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
         };
-              ////////////////////////////////////////////
+        ////////////////////////////////////////////
     } else { // _rescued!!!
 
 //++++++++++++++++++++++++ !__TTVer
@@ -157,9 +157,9 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 								_x setUnitPos "DOWN"
 							};
                         } forEach _pilots_arr;
-                        hint localize format["--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, all pilots are moved to its own group at %2",
-                                             _x,  [_x, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
-                        // TODO: send info to all about lost control of pilots
+                        _pos = [_x, "at %1 m. to %2 from %3",10] call SYG_MsgOnPosE;
+                        hint localize format[ "--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, all pilots are moved to its own group at %2", _x,  _pos ];
+                        ["msg_to_user",name _rescue,[["STR_SYS_504_4",name _rescue, _pos]], 0, 7, false, "losing_patience"] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
                     };
                     if ( vehicle _x != _x ) then    {// pilot in some vehicle
                         if ([getPos _x,d_base_array] call SYG_pointInRect ) then { // pilot  not so far from flag
