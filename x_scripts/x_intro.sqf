@@ -305,18 +305,24 @@ if (_Sahrani_island ) then {
   _camstart = 
   [
     [[1947,19059,1],[2260,18839,10],[4979,15480,40],[8982.5,10777,150],1], // Island Parvulo (1)
-    [[18361,18490,1],[14260,15170,30],[11141,13340,50],[18127,18337,0],4], // Isle Antigua (2)
-    [[19684.6,14128.7,25],[17681.2,13076.8,40],[15397.76,11924.51,50],[11420,8570,20],[10869,9172,40],[19356,14018,0],2], // Pita (3)
+    [[18361,18490,1],[14260,15170,30],[11141,13340,50],[18127,18337,0]], // Isle Antigua (2)
+    [[19684.6,14128.7,25],[17681.2,13076.8,40],[15397.76,11924.51,50],[11420,8570,20],[10869,9172,40],[19356,14018,0]], // Pita (3)
     [[1224,1391,1],[1580,1711,20],[8971,8170,70],1], // Rahmadi (4)
     [[18534,2730,1],[18259,2978,10],[11420,8570,20],[10628,9328,40],1], // vulcano Asharan (5)
-	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,9],[11642,6336,9],[11480,6658,10],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0],11], // Dolores (6)
+	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,9],[11642,6336,9],[11480,6658,10],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0]], // Dolores (6)
 	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777,150],[11930,14526,0]], // Cabo Valiente (7)
 	[[19682,12457,1],[19454,11893,20],[17985,9733,20],[16713,8909,20],[15541,8262,20],[13968,7852,20],[13222,8655,30],[12746,9138,10],[12490,10850,30],[9369,11208,10],[8981,10777,40], 7]// 1.5 км to south of Pita near the shore in open sea (8)
   ] call _SYG_selectIntroPath;
   _pos = _camstart select 1;
-  // last pos is illusion object one. If number it means index of point to use as pos, else it means pos3D to build illusion
+  // last pos is illusion object one. If number found it means index of point to use as pos, else it means pos3D to build illusion
   _lobjpos = _camstart select ((count _camstart) - 1);
-  _lobjpos = if (typeName _lobjpos == "ARRAY") then {_lobjpos} else { _camstart select _lobjpos};
+  if ((typeName _lobjpos) == "SCALAR") then {
+	  if (_lobjpos < (count _camstart) - 1) then {
+	  	_lobjpos = _camstart select _lobjpos;
+	  } else {_lobjpos = _camstart select (count _camstart - 2)}; // use penultimate position
+//	  _camstart resize (count _camstart - 1); // remove illusion index from the end of list
+  };
+//  _lobjpos = if (typeName _lobjpos == "ARRAY") then {_lobjpos} else { _camstart select _lobjpos};
 } else {
 	_camstart = [[(position camstart select 0),(position camstart select 1),175]];
 	_pos = _camstart select 0;
@@ -335,28 +341,31 @@ switch typeOf _lobj do {
   
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_POINT 20
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 2
-#define DEFAULT_SHOW_TIME 17
+#define DEFAULT_SHOW_TIME 20
  
 //hint localize format["x_intro.sqf: _camstart %1 (cnt %2)", _camstart, count _camstart];
 
-// calc whole path length/partial segments commit times
-_plen = 0;
-_start = _camstart select 0;
+_start = _camstart select 0; // start point
 
-// complete path on player position
+// add last point as player position
 _tgt = position player;
 _tgt set [2, DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD];
-_camstart set [(count _camstart)-1, _tgt]; // replace illusion data with destination point 3D position
-_arr = [];
-_pos = _start;
-for "_i" from 1 to ((count _camstart) - 1) do {
-	_tgt = _camstart select _i;
+_camstart set [count _camstart -1, _tgt]; // replace illusion position with end point (player pos)
+
+// calc whole path length/partial segments commit times
+_plen = 0; // whole path length
+_arr = []; // array of segment lengths
+for "_i" from 1 to ((count _camstart) - 1) do { // skip start (1st) point
+	_tgt = _camstart select _i; // segment end point
+	_pos = _camstart select (_i -1); // segment start point
 	_dist = _pos distance _tgt;
 	_plen = _plen + _dist;
-	_arr set [_i, _dist];
+	_arr set [count _arr, _dist];
 };
-//hint localize format["x_intro.sqf: distance array [%1] is %2", count _arr, _arr];
+hint localize format["+++ x_intro.sqf: campath          [%1] %2", count _camstart, _camstart];
+hint localize format["+++ x_intro.sqf: len %1, segments [%2] %3", _plen, count _arr, _arr];
 for "_i" from 0 to ((count _arr) - 1) do {_arr set[_i, (_arr select _i) / _plen * DEFAULT_SHOW_TIME]}; // durations
+hint localize format["+++ x_intro.sqf: time array       [%1] %2", count _arr, _arr];
 //hint localize format["x_intro.sqf: updated  camstart is %1", _camstart];
 //hint localize format["x_intro.sqf: duration array %1", _arr];
 
@@ -443,27 +452,28 @@ if (typeName _camstart != "ARRAY" ) then {
 	_camera camCommit 18;
 } else { };
 
-//titleRsc ["Titel1", "PLAIN"];
+// [_music_name, _wait_title_is_showed_in_secs] spawn SYG_showMusicTitle;
 SYG_showMusicTitle = {
 	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a"/*,"_sec"*/];
 	_XD_display = findDisplay 77043;
+	// Check if music has title defined
 	_str = localize format["STR_%1", _this select 0];
-	if ( _str != "") then {
+	if ( _str != "") then { // title defined and found
 		_control1 = _XD_display displayCtrl 66667;
 		_control1 ctrlSetText _str;
 		_control1 ctrlShow true;
-		hint localize format[ "+++ x_intro.sqf: music text control = (%1)", ctrlText _control1 ];
-	} else  {
+		hint localize format[ "+++ SYG_showMusicTitle: music text control = (%1)", ctrlText _control1 ];
+	} else  { // to title found
 		_control1 = displayNull;
-		hint localize format[ "--- x_intro.sqf: music text control for ""%1"" not found", _this select 0 ];
+		hint localize format[ "--- SYG_showMusicTitle: music text control for ""%1"" not found", _this select 0 ];
 	};
 
-	if (d_still_in_intro) then {
+	if (d_still_in_intro) then { // then show logo of the mission (Author, modified by etc)
 //		sleep 1;
 		_control = _XD_display displayCtrl 66666;
 		_control ctrlShow true;
 
-		_endtime = time + 30;
+		_endtime = time + 30; // how long to show music title (if exists)
 		_r = 0.2; _a = 0.008;
 		_g = 0.2; _b = 0.2; // new
 //		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,_b], time];
@@ -575,7 +585,7 @@ for "_i" from 1 to (_cnt-1) do {
         _tgt = + _pos;
         _tgt set [2, 0]; // point on the ground
         _pos set [2, abs(_pos select 2)]; // point above the ground
-        hint localize format["_x_init.sqf: spec point tgt %1, pnt %2", _tgt, _pos];
+        hint localize format["+++ _xintro.sqf: spec point[%1] tgt %2, pnt %3", _i, _tgt, _pos];
     } else {
         // TODO: shift X and Y coordinates slightly, for more native behaviour
         if ( _x < (_cnt-1)) then {
@@ -592,9 +602,9 @@ for "_i" from 1 to (_cnt-1) do {
 //		hint localize format["_x_init.sqf: %2, vectorDir at %1", vectorDir _camera, time];
 
     _camera camPreparePos _pos;	// let go to over there
-    _camera camCommitPrepared (_arr select _i); // set time to go
+    _camera camCommitPrepared (_arr select (_i - 1)); // set time to go
     waitUntil {camCommitted _camera}; // wait until come
-    //if ( _i == 2 ) then {sleep 5;};
+//    hint localize format["+++ x_intro.sqf: step %1, duration %2, to pos %3", _i, _arr select (_i - 1), _pos	]; //if ( _i == 2 ) then {sleep 5;};
 //		hint localize format["_x_init.sqf: %2, pos       at %1", getPos _camera, time];
 
 /*  		if ( _wait == 0) then 
@@ -610,20 +620,6 @@ for "_i" from 1 to (_cnt-1) do {
 
 if ( typeName _camstart != "ARRAY" ) then {
 	waitUntil {camCommitted _camera};
-} else {
-	//_cnt = 0;
-	//_maxcnt = 18*2; // 18 second minus 6 seconds already slept with step by 0.5 second (see next waitUntil)
-	//waitUntil {sleep 0.5; _cnt = _cnt +1; (scriptDone _handle) || (_cnt > _maxcnt)};
-//	waitUntil {scriptDone _handle};
-	/* if ( _cnt >= _maxcnt ) then 
-	{
-		hint localize format["%1 x_intro.sqf: commit scrip finished by counter"];
-	}
-	else
-	{
-		hint localize format["%1 x_intro.sqf: commit scrip finished last camera commit completed",call SYG_daytimeToStr];
-	};
-	 */
 };
 
 player cameraEffect ["terminate","back"];
