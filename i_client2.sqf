@@ -17,16 +17,12 @@ _armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {
 _car = (if (!d_lock_ai_car) then {if (__ACEVer) then {["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t","ACE_Truck5t_MG","ACE_HMMWV_GMV","ACE_HMMWV_GMV2"]} else {["HMMWV50","HMMWVMK","HMMWVTOW"]}} else {[]});
 
 _enemy_heli_list =
-    ( if ((!d_lock_ai_air) && (__ACEVer))
-        then
-        {
-            SYG_HELI_BIG_LIST_ACE_W + SYG_HELI_LITTLE_LIST_ACE_W
-        }
+    ( if ((!d_lock_ai_air) && (__ACEVer)) then { SYG_HELI_BIG_LIST_ACE_W + SYG_HELI_LITTLE_LIST_ACE_W }
         else {[]});
 #endif
 
 #ifdef __OWN_SIDE_WEST__
-_armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {["ACE_BMD1","ACE_BMD1p","ACE_BMP2_D","ACE_BMP2","ACE_BMP2_K","ACE_BRDM2_ATGM"]} else {["BMP2","BRDM2","BRDM2_ATGM"]}} else {[]});
+_armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {["ACE_BMD1","ACE_BMD1p","ACE_BMP2_D","ACE_BMP2","ACE_BMP2_K"," ACE_BRDM2_ATGM"]} else {["BMP2","BRDM2","BRDM2_ATGM"]}} else {[]});
 _car = (if (!d_lock_ai_car) then {if (__ACEVer) then {["ACE_UAZ_AGS30","ACE_UAZ_MG","D30"]} else {["UAZ_AGS30","D30","UAZMG"]}} else {[]});
 #endif
 

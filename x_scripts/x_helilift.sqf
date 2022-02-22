@@ -65,7 +65,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 				};
 			};
 			sleep 0.1;
-			if (!(isNull _nearest) && _nearest != Attached_Vec && (((typeof _nearest) in _possible_types) || (_nearest isKindOf "StaticWeapon"))) then {
+			if (!(isNull _nearest) && _nearest != Attached_Vec && (((typeOf _nearest) in _possible_types) || (_nearest isKindOf "StaticWeapon"))) then {
 				_nearest_pos = getPos _nearest;
 				_nx = _nearest_pos select 0;_ny = _nearest_pos select 1;_px = _pos select 0;_py = _pos select 1;
 				if ((_px <= _nx + 10 && _px >= _nx - 10) && (_py <= _ny + 10 && _py >= _ny - 10)) then {

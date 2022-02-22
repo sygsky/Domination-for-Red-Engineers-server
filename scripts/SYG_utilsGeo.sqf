@@ -373,7 +373,7 @@ SYG_isDesert = {
 };
 
 /**
- * Detects if point is on any of small islet, not on main Island Sahrani
+ * Detects if point is on any of small islet, not on main Island Sahrani and not on Rahmadi isles group
  * call:
  *    _bool = (getPos player) call SYG_pointOnIslet; // true or false is returned
  */
@@ -389,9 +389,9 @@ SYG_pointOnIslet = {
 };
 
 /**
- * Detects if point is on any of small islet, not on main Island Sahrani
+ * Detects if point is on Rahmadi isles group, not on main Island Sahrani
  * call:
- *    _bool = (getPos player) call SYG_pointOnIslet; // true or false is returned
+ *    _bool = (getPos player) call SYG_pointOnRahmadi; // true or false is returned
  */
 SYG_pointOnRahmadi = {
 	if (typeName _this != "ARRAY") then {_this = position _this;};
@@ -479,7 +479,7 @@ SYG_getTargetTownDetectedSound = {
 
 /**
  * TODO: the method is not used anywhere, use it please!
- * Returns index for current side mission. If no mission is available, -1 is returned;
+ * Returns index for current side mission on the server. If no mission is available, -1 is returned;
  * call:
  *      _smindex = call SYG_getSideMissionIndex;
  */

@@ -16,7 +16,7 @@ setDate date_str;
 // missionStart means real time start of the local computer session. But this works only on client computer in MP mode.
 // On server is doesn't work at all :o(
 SYG_client_start = missionStart;
-hint localize format["x_jip.sqf: client time %1, date %2, missionStart %3", time, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
+hint localize format["+++ x_jip.sqf: client time %1, date %2, missionStart %3", time, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
 #endif
 
 #ifdef __OLD_INTRO__

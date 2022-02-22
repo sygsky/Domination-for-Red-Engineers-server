@@ -33,7 +33,7 @@ hint localize "INIT of SYG_utilsVehicles";
 SYG_getVehicleType = {
 	private ["_entry","_typeCfg","_typeNr"];
 	_entry = _this;
-	if (typeName _this == "OBJECT") then { _entry = typeName _this;};
+	if (typeName _this == "OBJECT") then { _entry = typeOf _this;};
 	if (typeName _this != "STRING") exitWith {-1};
 	_typeCfg = configFile >> _entry >> "Library" >> "type";
 	_entry = configFile >> _entry;
@@ -95,7 +95,8 @@ SYG_getVehicleType = {
 
 // returns 0: tank, 1: car/moto, 2: static, 3: heli, 4: plane, 5: Ship, -1: Unknnown/not vehicle
 SYG_getVehicleType1 = {
-    if( typeName _this != "OBJECT" ) exitWith {-1};
+    if( typeName _this == "OBJECT" ) then { _this = typeOf _this};
+    if (typeName _this != "STRING")exitWith {-1}; // unknown argument
     if ( _this isKindOf "LandVehicle" ) exitWith {
         if ( _this isKindOf "Tank" ) exitWith { 0 };
         if ( (_this isKindOf "Car") || (_this isKindOf "Motorcycle") ) exitWith { 1 };
@@ -279,11 +280,10 @@ Syg_findNearestVehicles = {
 // Where _act may be 1 (to open) or 0 (to close)
 //
 SYG_execBarrierAction = {
-	private ["_act", "_pos", "_ret", "_arr", "_x"];
+	private ["_act", "_ret", "_arr", "_x"];
 	_act = arg(1);
 	_ret = 0;
-	if ( switch _act do {case 1; case 0: { true}; default {false};} ) then
-	{
+	if ( switch _act do {case 1; case 0: { true}; default {false};} ) then {
 		_arr = arg(0);
 		{
 			_x animate ["BarGate",_act];
@@ -678,7 +678,7 @@ SYG_fuelCapacity = {
 SYG_makePatrolGroup = {
     if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_makePatrolGroup: expected parameter is not ARRAY (%1)", _this] ;grpNull };
     private ["_agrp","_elist","_rand","_leader", "_x"];
-	_agrp = call SYG_createGroup;
+	_agrp = call SYG_createEnemyGroup;
 	_elist = [d_enemy_side] call x_getmixedliste;
 	{
 	    _rand = floor random 3;
