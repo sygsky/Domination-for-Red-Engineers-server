@@ -1137,7 +1137,7 @@ XBaseEnemies = {
 				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Enemy troops on your base." */ + "</t>")
 			];
 //            hint localize format["+++ XBaseEnemies: %1", _this];
-        	private ["_alarm_obj","_no","_thislist","_height","_x","_pos"];
+        	private ["_alarm_obj","_no","_thislist","_height","_x","_pos","_sound"];
 //            hint localize format["+++ XBaseEnemies: %1", _this];
             _alarm_obj = FLAG_BASE;
             _height    = 250; // default flare start height
@@ -1168,17 +1168,14 @@ XBaseEnemies = {
                     } forEach _thislist;
                 };
             };
-            if ((random 10) < 1 ) then {
-	            _alarm_obj say (call SYG_onBaseAttackSound); // sometimes call special sounds
-            } else {
-	            _alarm_obj say "alarm";
-            };
+            _sound = if ( (random 10) < 1 ) then { call SYG_onBaseAttackSound } else { "alarm" };
+            if ( [ getPos player, d_base_array ] call SYG_pointInRect ) then { _alarm_obj say _sound } else { playSound _sound };
             // throw flare above alarm object
-//            _arr = nearestObjects [_alarm_obj, ["F_40mm_Yellow"], 400];
-            if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
+			// if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
+            if ( count ( _alarm_obj nearObjects ["F_40mm_Yellow", 400] ) == 0 ) then {
 	            [_alarm_obj, _height, "YELLOW", 400] execVM "scripts\emulateFlareFired.sqf";
 	           	hint localize format["+++ XBaseEnemies: throw yellow flare above %1", typeOf _alarm_obj];
-            } else {hint localize format["+++ XBaseEnemies: YELLOW flare near %1 already on", typeOf _alarm_obj];};
+            } else { hint localize format["+++ XBaseEnemies: YELLOW flare near %1 already on", typeOf _alarm_obj]; };
 		};
 		case 1: {
 			hint composeText[
