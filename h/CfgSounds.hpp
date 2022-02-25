@@ -259,10 +259,11 @@ class CfgSounds {
     class targetdown18 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown18.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class targetdown19 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown19.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class targetdown24 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown24.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class targetdown27 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown27.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class targetdown36 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown36.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class targetdown37 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown37.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class targetdown38 { name="Enemy down"; sound[] = {\sounds\defeat\laughter\targetdown38.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
-    class targetdown47 { name="One dead"; sound[] = {\sounds\defeat\laughter\targetdown47.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
+    class targetdown47 { name="One dead";   sound[] = {\sounds\defeat\laughter\targetdown47.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class bastards { name="Bastards"; sound[] = {\sounds\defeat\laughter\bastards.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class clear { name="Clear!"; sound[] = {\sounds\defeat\laughter\clear.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class shoot_MF { name="Shoot the motherfackers!"; sound[] = {\sounds\defeat\laughter\shoot_MF.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
