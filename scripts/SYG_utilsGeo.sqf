@@ -707,7 +707,7 @@ SYG_updateIntelBuilding = {
 		_comp setPos argp( _compArr, 0 );
 		_comp setDir argp( _compArr, 1);
 #ifdef __DEBUG_COMP__		
-		hint localize "SYG_updateIntelBuilding: computer created";
+		hint localize "+++ SYG_updateIntelBuilding: computer created";
 #endif
 		
 		sleep 0.1;
@@ -738,7 +738,7 @@ SYG_updateIntelBuilding = {
 	
 	// TODO: play with building
 /* 	_house = nearestBuilding _comp;
-	if ( _house distance _comp > 5 ) exitWith { hint localize "SYG_updateIntelBuilding: no house found" };
+	if ( _house distance _comp > 5 ) exitWith { hint localize "+++ SYG_updateIntelBuilding: no house found" };
  */	
 	// check map
 	sleep 0.01;
@@ -750,7 +750,7 @@ SYG_updateIntelBuilding = {
 	if ( count _maps > 0) then { // check type to be correct
 		_map = argp(_maps, 0);
 		if ( typeOf _map != _name ) then {
-//			hint localize format["SYG_updateIntelBuilding: target town ""%3"", typeOf ""%1"" != ""%2"";",typeOf _map, _name, (call SYG_getTargetTownName) ];
+//			hint localize format["+++ SYG_updateIntelBuilding: target town ""%3"", typeOf ""%1"" != ""%2"";",typeOf _map, _name, (call SYG_getTargetTownName) ];
 			deleteVehicle _map;
 			sleep 0.01;
 			_map = objNull;
@@ -759,7 +759,7 @@ SYG_updateIntelBuilding = {
 	};
 	
 	if ( isNull _map ) then { // create it
-//		hint localize format["SYG_updateIntelBuilding: create map ""%1""", _name];
+//		hint localize format["+++ SYG_updateIntelBuilding: create map ""%1""", _name];
 		_map = _name createVehicle [0,0,0];
 		sleep 0.1;
 		_map setPos argp(_mapArr, 0);

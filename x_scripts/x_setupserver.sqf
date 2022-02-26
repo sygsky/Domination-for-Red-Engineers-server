@@ -374,7 +374,7 @@ execVM "x_scripts\x_delaiserv.sqf";
 
 	private ["_waittime","_num_p"];
 	sleep 20;
-    hint localize "x_getsidemission.sqf execution loop spawn";
+    hint localize "+++ x_getsidemission.sqf execution loop spawn";
 #ifdef __FAST_START_SM__
 	_waittime = 40;
 #else

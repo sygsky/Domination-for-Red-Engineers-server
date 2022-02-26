@@ -11,10 +11,10 @@
 
 if (typeName _this != "ARRAY") then { _this = [_this];};
 
-hint localize format["fireRange.sqf: %1 input params detected", count _this];
+hint localize format["+++ fireRange.sqf: %1 input params detected", count _this];
 
 {
-	//hint localize format["fireRange.sqf: addEventHandler to ""%1""", typeOf _x];
+	//hint localize format["+++ fireRange.sqf: addEventHandler to ""%1""", typeOf _x];
 
 	if ( _x isKindOf "TargetEpopup" ) then
 	{
@@ -41,6 +41,6 @@ hint localize format["fireRange.sqf: %1 input params detected", count _this];
 	}
 	else 
 	{
-		//hint localize format["fireRange.sqf: Error! Expected base type is ""TargetEpopup"", detected ""%1""", typeOf _x];
+		//hint localize format["+++ fireRange.sqf: Error! Expected base type is ""TargetEpopup"", detected ""%1""", typeOf _x];
 	};
 } forEach _this;

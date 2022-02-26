@@ -1739,9 +1739,9 @@ player call SYG_handlePlayerDammage; // handle hit events
     if ( count _map > 0) then {
         _map = _map select 0;
         _id = _map addAction [localize "STR_CHECK_ITEM","GRU_scripts\mapAction.sqf", typeOf _map]; // "Изучить"
-        hint localize format["x_setupserver.sqf: addAction == %1 added to the map of %2", _id, typeOf _map];
+        hint localize format["+++ x_setupserver.sqf: addAction == %1 added to the map of %2", _id, typeOf _map];
     } else {
-        hint localize format["x_setupserver.sqf:  GRU map object not detected near pos %1", _pos];
+        hint localize format["+++ x_setupserver.sqf:  GRU map object not detected near pos %1", _pos];
     };
     // make the load on the Mi-17 less
     _cnt = 0;

@@ -186,7 +186,7 @@ GRU_procClientMsg = {
 			};
 /*			
 #ifdef __DEBUG__
-			hint localize "GRUClient.sqf: GRU_MSG_START_TASK received and message printed";
+			hint localize "+++ GRUClient.sqf: GRU_MSG_START_TASK received and message printed";
 #endif		
 */
 		};
@@ -213,7 +213,7 @@ GRU_procClientMsg = {
 			// GRU comp created, add action to it etc
 			// 1. check if computer exists
 			_comp = call SYG_getGRUComp; // get computer object
-			hint localize format["GRUClient.sqf: GRU_MSG_COMP_CREATED msg received, GRU PC == %1",_comp];
+			hint localize format["+++ GRUClient.sqf: GRU_MSG_COMP_CREATED msg received, GRU PC == %1",_comp];
 			if ( !isNull _comp ) then {
 				// check if action not added
 				if (format["%1",_comp getVariable COMPUTER_ACTION_ID_NAME] == "<null>") then {
@@ -290,6 +290,6 @@ GRU_procClientMsg = {
 		    };
 		};
 
-		default {hint localize format["GRUClient.sqf: ""GRU_msg"" unknown sub-id %1", _this]};
+		default {hint localize format["+++ GRUClient.sqf: ""GRU_msg"" unknown sub-id %1", _this]};
 	};
 };
