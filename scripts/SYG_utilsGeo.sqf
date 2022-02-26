@@ -140,8 +140,7 @@ SYG_nearestLocationA = {
 	{
 		_loc = nearestLocation [_pos, _x];
 		_ploc = locationPosition _loc;
-		if ( (_pos distance _ploc) < _dist ) then
-		{
+		if ( (_pos distance _ploc) < _dist ) then {
 			_dist = _pos distance _ploc;
 			_nearloc = _loc;
 		};
@@ -180,6 +179,57 @@ SYG_nearestLocation = {
  */
 SYG_nearestSettlement = {
 	[_this, ["NameCity","NameCityCapital","NameVillage"]] call SYG_nearestLocationA
+};
+
+//
+// Finds MT item array by target name (case sensitive). Call as follow:
+// _mt_item = "Rahmadi" call SYG_MTByName; // [[2826,2891,0],   "Rahmadi"   ,180, 22, ["detected_Rahmadi"]] or [] if error name used e.g. "rahmado"
+//
+SYG_MTByName = {
+	if (typeName _this != "STRING") exitWith {hint localize format["--- SYG_MTByName: illegal _this = %1", _this];[]};
+	private ["_i","_id","_pos","_mt"];
+	_id  = -1;
+	_pos = [];
+	for "_i" from 0 to ( ( count target_names ) - 1 ) do {
+		_mt = target_names select _i;
+		if ( ( _mt select 1 ) == _this ) exitWith { // name detected
+			_id  = _i;	// index in list
+			_pos = _mt select 0; // position
+		};
+	};
+	if (_id < 0) exitWith {[]};
+	target_names select _id
+};
+//
+// Finds MT center nearest to the desgnated one. E.g. find near MT to Rahmadi:
+// _near_MT_arr = "Rahmadi" call SYG_nearestMainTarget;
+// 	...
+// [[2826,2891,0],   "Rahmadi"   ,180, 22, ["detected_Rahmadi"]] // 20
+// ...
+// Returns: target_names item array (see above) if found or [] if not found.
+//
+SYG_nearestMainTarget = {
+	private ["_i","_id","_pos","_mt","_min_dist","_min_id","_dist"];
+	_mt = _this call SYG_MTByName;
+	if (count _mt == 0) exitWith {[]};
+	// find designated target
+	_id  = _mt select 3;  // id of town in list
+	_pos = _mt select 0;  // position
+	// find nearest to designated target
+	_min_dist = 999999.0;
+	_min_id = -1;
+	for "_i" from 0 to ( ( count target_names ) - 1 ) do {
+		_mt = target_names select _i;
+		if ( (_mt select 3) != _id ) then {
+			_dist = ( _mt select 0 ) distance _pos;
+			if ( _dist < _min_dist ) then {
+				_min_id   = _i;
+				_min_dist = _dist;
+			}
+		};
+	};
+	if ( _min_id <= 0 ) exitWith {[]};
+	target_names select _min_id
 };
 
 /**
@@ -922,7 +972,7 @@ SYG_getPosASL = {
 // Returns: [x,y,z] point, or [] if can't create such point
 //
 SYG_getWPointInAnnulus = {
-	private ["_rad","_ang","_pos"];
+	private ["_rad","_ang","_pos","_cnt"];
 	_pos = [];
 	_cnt = 0;
 	while {(count _pos == 0) && _cnt < 10} do {
@@ -961,6 +1011,19 @@ SYG_nearestBoatMarker = {
         _id = _id + 1;
     };
     _near_marker_name // return nearest marker name or "" if error occured
+};
+
+//
+// Find if designateв point/object is on the base (in base rectangle)
+// call:
+// _on_base = player call SYG_pointIsOnBase;
+// _on_base = _veh call SYG_pointIsOnBase;
+// _on_base = (getPos _veh) call SYG_pointIsOnBase;
+//
+SYG_pointIsOnBase = {
+	private ["_pos"];
+	_pos = _this call SYG_getPos;
+	[_pos,d_base_array] call SYG_pointInRect
 };
 
 if (true) exitWith {};                                    

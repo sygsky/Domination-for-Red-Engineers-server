@@ -188,7 +188,7 @@
 #define __LH_HOWLER__
 
 // uncomment to disable teleport near large metall masses in designated distance
-                                 #define __TELEPORT_DEVIATION__ 20
+#define __TELEPORT_DEVIATION__ 20
 
 // uncomment to allow only vehicle BEFORE 1985 inclusivelly
 //#define __VEH_1985__

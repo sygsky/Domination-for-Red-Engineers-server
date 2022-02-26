@@ -1,6 +1,8 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
-// Script to detect if designated weapon is sniper one (return true) or not (return false)
+// scripts\SYG_utils.sqf:
+//
+// Coomon scripts created by Sygsky to handle with Xeno super-Domination
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -20,8 +22,7 @@
 
 // ACE_Binocular, ACE_LaserDesignator, ACE_LaserDesignatorMag, ACE_Laserbatteries
 
-if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
-{
+if ( isNil "SYG_UTILS_COMPILED" ) then { // generate some static information
 	SYG_UTILS_COMPILED = true;
 	//hint localize "+++ SYG_utils initialization started";
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsWeapon.sqf";	// Weapons, re-arming etc
@@ -37,15 +38,17 @@ if ( isNil "SYG_UTILS_COMPILED" ) then  // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";	// Sound/music functions
 #ifdef __SPPM__
 	if (isServer) then {
-		call compile preprocessFileLineNumbers "scripts\SYG_utilsSPPM.sqf";		// SPPM markers
+		call compile preprocessFileLineNumbers "scripts\SYG_utilsSPPM.sqf";	// SPPM markers
 	};
 #endif
 
-
 #ifdef __PREVENT_OVERTURN__
-	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";		// anti-overturn method
+	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";	// anti-overturn method
 #endif
 
+#ifdef __BATTLEFIELD_BONUS__
+	call compile preprocessFileLineNumbers "scripts\bonus\SYG_utilsBonus.sqf";// BattleField bonus methods
+#endif
 	//hint localize "--- SYG_utils initialization finished";
 };
 

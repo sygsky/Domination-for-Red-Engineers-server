@@ -62,9 +62,9 @@ XClearSidemission = {
 					// check vehicle being on base
 					if ( ! _was_captured ) then {
 #ifdef __OWN_SIDE_EAST__
-						_was_captured = (side _x != west) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && (getDammage _x < 0.000001);
+						_was_captured = (side _x != west) && ( (getPos _x) call SYG_pointIsOnBase ) && (getDammage _x < 0.000001);
 #else
-						_was_captured = (side _x != east) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && (getDammage _x < 0.000001);
+						_was_captured = (side _x != east) && ( (getPos _x) call SYG_pointInRect ) && (getDammage _x < 0.000001);
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};

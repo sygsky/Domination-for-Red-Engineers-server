@@ -162,7 +162,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                         ["msg_to_user",name _rescue,[["STR_SYS_504_4",name _rescue, _pos]], 0, 7, false, "losing_patience"] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
                     };
                     if ( vehicle _x != _x ) then    {// pilot in some vehicle
-                        if ([getPos _x,d_base_array] call SYG_pointInRect ) then { // pilot  not so far from flag
+                        if ( (getPos _x) call SYG_pointIsOnBase ) then { // pilot  not so far from flag
                             if (time - _last_warn_said > WARN_INTERVAL) then {
                                 ["msg_to_user",vehicle _x,[["STR_SYS_504_1", name _x]]] call XSendNetStartScriptClient; // "% 1: - Get us out of the vehicle, commander!"
                                 _last_warn_said = time;
@@ -171,7 +171,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                     } else {// pilot not  in vehicle (on ground)
                         if (_x distance FLAG_BASE < 20) then { _pilots_at_base = true; } // pilot near flag
                         else { // not near flag
-                             if ( ([getPos _x,d_base_array] call SYG_pointInRect) && (time - _last_warn_said > WARN_INTERVAL)) then {
+                             if ( ( (getPos _x) call SYG_pointIsOnBase) && (time - _last_warn_said > WARN_INTERVAL) ) then {
                                 [ "msg_to_user", name _rescue,[["STR_SYS_504_2", name _x]] ] call XSendNetStartScriptClient; // "%1: - Need be closer to the flag, commander!"
                                  _last_warn_said = time;
                              };

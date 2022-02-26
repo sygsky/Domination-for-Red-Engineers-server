@@ -1169,7 +1169,7 @@ XBaseEnemies = {
                 };
             };
             _sound = if ( (random 10) < 1 ) then { call SYG_onBaseAttackSound } else { "alarm" };
-            if ( [ getPos player, d_base_array ] call SYG_pointInRect ) then { _alarm_obj say _sound } else { playSound _sound };
+            if ( player call SYG_pointIsOnBase ) then { _alarm_obj say _sound } else { playSound _sound };
             // throw flare above alarm object
 			// if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
             if ( count ( _alarm_obj nearObjects ["F_40mm_Yellow", 400] ) == 0 ) then {

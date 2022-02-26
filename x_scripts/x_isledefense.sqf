@@ -259,12 +259,12 @@ _remove_grp = {
 				if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
 				    (
 					 (_xside == d_own_side ) ||
-					 ( (_xside != d_enemy_side) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && ((getDammage _x) < 0.000001) )
+					 ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) )
 				    ) 
 				   )  then { // vehicle was captured by player
 					// re-assign vehicle to be ordinal ones
 #ifdef __PRINT_ACTIVITY__
-					hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
+					hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
 #endif
 					// put vehicle under system control
 					[_x] call XAddCheckDead;

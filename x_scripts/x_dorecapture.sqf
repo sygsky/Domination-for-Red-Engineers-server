@@ -114,7 +114,7 @@ sleep 300;
 		if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
 			(
 			 (_xside == d_own_side ) ||
-			 ( (_xside != d_enemy_side) && ( [getPos _x, d_base_array] call SYG_pointInRect ) && ((getDammage _x) < 0.000001) )
+			 ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) )
 			)
 		   )  then { // vehicle was captured by player
 			// re-assign vehicle to be ordinal ones
