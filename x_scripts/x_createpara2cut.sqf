@@ -47,7 +47,7 @@ _chopper flyInHeight 100; // fly on height about 100 meters
 // store time of the start of last infiltration on base
 __SetGVar(INFILTRATION_TIME, date);
 #ifdef __DEBUG_PRINT__
-hint localize format["x_scripts/x_createpara2.sqf: Десант на базу запущен, местное время %1", date];
+hint localize format["+++ x_scripts/x_createpara2.sqf: Десант на базу запущен, местное время %1", date];
 #endif
 
 _parachute_type = (
@@ -63,7 +63,7 @@ if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then { // Cr
 	_real_units = _unit_array select 0;
 	_cnt_uni = (count _real_units) min (_chopper emptyPositions "Cargo"); // heli may be small one
 #ifdef __DEBUG_PRINT__
-    hint localize format["x_scripts/x_createpara2.sqf: %1 / desant is %2 men., limit is %3,chopper  empty pos %4", typeOf _chopper, _cnt_uni, count _real_units, _chopper emptyPositions "Cargo" ];
+    hint localize format["+++ x_scripts/x_createpara2.sqf: %1 / desant is %2 men., limit is %3,chopper  empty pos %4", typeOf _chopper, _cnt_uni, count _real_units, _chopper emptyPositions "Cargo" ];
 #endif
 	_unit_array = [];
 	sleep 0.1;
@@ -311,7 +311,7 @@ if ( !isNull _nenemy) then
 {
     _grp reveal _nenemy;
 #ifdef __DEBUG_PRINT__
-    hint localize format["x_scripts/x_createpara2.sqf: %1 (knowledge %2) revealed to paratroopers at dist. %2 m", typeOf _nenemy, (driver _chopper) knowsAbout _nenemy, round(_chopper distance _nenemy)];
+    hint localize format["+++ x_scripts/x_createpara2.sqf: %1 (knowledge %2) revealed to paratroopers at dist. %2 m", typeOf _nenemy, (driver _chopper) knowsAbout _nenemy, round(_chopper distance _nenemy)];
 #endif
 };
 
