@@ -4,19 +4,20 @@ if (!isServer) exitWith {}; // Runned on server only
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-private ["_dir","_pos","_posa","_vehicle","_town","_counterattack_occurred"];
+private ["_dir","_pos","_posa","_vehicle","_town","_counterattack_occurred","_last_town_index"];
 
 //  smart select bonus according to the size of sieged town -> the larger town the bigger bonus
 // 
 // current_target_index -> index of completed town in target list
 
-extra_bonus_number = -1;
+extra_bonus_number      = -1;
 
-_counterattack_occurred = _this; // Counter attack was started and finished (true) or  not (false)
+_counterattack_occurred = _this select 0; // Counter attack was started and finished (true) or  not (false)
+_last_town_index        = _this select 1; // last town index to create bonus if new BattleField Bonus system is on
 
 #ifdef __DEFAULT__
 
-_town = call SYG_getTargetTown; // town def array
+_town = target_names select _last_town_index; // call SYG_getTargetTown; // town def array
 if ( count _town > 0 ) then {// town is defined
 
     hint localize format["+++ find bonus vehicle for town %1 (big_town_radious %2)", _town, big_town_radious];
@@ -129,30 +130,18 @@ _bonus_score_arr spawn {
 	SYG_players_online = nil;
 };
 
+#ifdef __BATTLEFIELD_BONUS__
+
+[_town select 0, _town select 2, mt_bonus_vehicle_array select extra_bonus_number] call SYG_createBonusVeh;
+
+#else
+
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 _vehicle setDir _dir;
+_vehicle call SYG_assignVehAsBonusOne;
 hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created ""%1""", typeOf _vehicle];
 
-/*
-#ifdef __REARM_SU34__
-_vehicle call SYG_rearmVehicleA; // rearm if bonus vehicle is marked to rearm
 #endif
-
-#ifdef __AI__
-#ifdef __NO_AI_IN_PLANE__
-// check for any pilot or driver to be AI and get them out if yes
-if ( (_vehicle isKindOf "Plane") ) then {
-	_vehicle addEventHandler ["getin", {_this execVM  "scripts\SYG_eventPlaneGetIn.sqf"}];
-};
-#endif
-#endif
-
-// set marker procedure for the newly created vehicle
-_vehicle execVM "x_scripts\x_wreckmarker.sqf";
-*/
-
-_vehicle call SYG_assignVehAsBonusOne;
-
 //
 // RESTORE DESTROYED BUILDINGS
 //

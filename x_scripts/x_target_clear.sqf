@@ -2,7 +2,7 @@
 // by Xeno: x_target_clear.sqf. Called on server from town or airbase trigger if all goals are achieved
 //
 if (!isServer) exitWith{};
-private ["_current_target_pos","_dummy","_rnd","_start_real","_points_array","_str","_last_town_index"];
+private ["_current_target_pos","_dummy","_rnd","_counter_attack","_points_array","_str","_last_town_index"];
 
 // hint localize format["+++  %1 execVM x_scripts\x_target_clear.sqf", typeName _this];
 
@@ -29,7 +29,7 @@ if ( count _this > 0 ) then {
 };
 
 counterattack = false;
-_start_real = false;
+_counter_attack = false;
 
 #ifndef __TT__
 if (number_targets >= 15 /* && current_target_index != 5 */ && (current_counter < number_targets)) then { // Now all towns have counter attacks
@@ -40,7 +40,7 @@ if (number_targets >= 15 /* && current_target_index != 5 */ && (current_counter 
 	// _rnd < 5 % chance for a counterattack is nearly 1 town per 20 towns
 	if (_rnd < (number_targets  * 0.05) ) then {
 		counterattack = true;
-		_start_real = true;
+		_counter_attack = true;
 		["an_countera", "start"] call XSendNetStartScriptClient;
 		execVM "x_scripts\x_counterattack.sqf";
 	};
@@ -52,7 +52,7 @@ if (number_targets >= 15 /* && current_target_index != 5 */ && (current_counter 
 
 while {counterattack} do {sleep 3.123};
 
-if (_start_real) then {
+if (_counter_attack) then {
 	["an_countera", "over"] call XSendNetStartScriptClient;
 	sleep 2.321;
 };
@@ -97,11 +97,11 @@ _last_town_index = current_target_index;
 //hint localize format["+++ DEBUG: x_target_clear.sqf: _last_town_index (%1) = current_target_index (%2)", _last_town_index,  current_target_index];
 
 if (current_counter < number_targets) then {
-	_start_real execVM "x_scripts\x_gettargetbonus.sqf"; // inform user about counterattack and bonus score for it
+	[_counter_attack,_last_town_index] execVM "x_scripts\x_gettargetbonus.sqf"; // inform user about counterattack and bonus score for it
 } else {
     // no bonus vehicle after last target town was cleared
 	target_clear = true;
-	["target_clear",target_clear, -1, _start_real] call XSendNetStartScriptClient;
+	["target_clear",target_clear, -1, _counter_attack] call XSendNetStartScriptClient;
 };
 
 sleep 2.123;

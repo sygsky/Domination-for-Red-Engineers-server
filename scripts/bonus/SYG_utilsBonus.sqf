@@ -9,7 +9,7 @@
 //
 // Creates bonus vehicle in the designated annulus or on the nearest spawn point for "Plane" vehicles
 //
-// call as follow: _new_veh = [[_x, _y<,_z>], _rad, _veh_type_name] call _create_bonus_veh;
+// call as follow: _new_veh = [[_x, _y<,_z>], _rad, _veh_type_name] call SYG_createBonusVeh;
 // on any error returns objNull
 //
 // List all heli lifts: d_helilift1_types
@@ -19,6 +19,7 @@ SYG_createBonusVeh = {
 	private ["_center","_rad","_type","_pos","_is_plane","_dir","_veh","_x","_name","_loc"];
 	_center = _this select 0;
 	if (typeName _center != "ARRAY") exitWith { hint localize format["---SYG_createBonusVeh: Expected 1st param type is 'ARRAY', found %1", typeName (_this select 0)]; objNull };
+	hint localize format[ "+++ SYG_createBonusVeh: _this = %1", _this ];
 	_rad    = _this select 1; // battle zone radious (e.g. town radious)
 	_type   = _this select 2; // vehicle type to create
 
