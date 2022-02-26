@@ -64,6 +64,6 @@ _arr = _arr nearObjects ["AllVehicles", ACTION_RADIUS];
 } forEach _arr;
 
 if (count _plist > 0 ) then {
-    ["was_at_sm", _plist] call XSendNetStartScriptClient;
+    ["was_at_sm", _plist] call XSendNetStartScriptClientAll;
     hint localize format["+++ eventKilledAtSM.sqf: send event [""was_at_sm"",%1]", _plist];
 };
