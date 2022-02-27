@@ -13,7 +13,7 @@
 */
 hint localize format ["+++ bonusInspectAction.sqf: %1", _this];
 _veh = _this select 0;
-_name = name (_this select 1);
+_name = name (_this select 1); // caller name (if a man)
 
 _loc = _veh call SYG_nearestSettlement;
 _loc_name =  text  _loc;

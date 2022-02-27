@@ -18,10 +18,11 @@ _msg_arr = [];
 	};
 
 	// TODO: set according to the server or client code
-	if (true) then { // MP server code
+	if (X_Server) then { // MP server code
 		_x setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_CHECK_ITEM"", ""scripts\bonuses\bonusInspectAction.sqf"", [] ]];";
 		processInitCommands;
-	} else { // SP code
+	};
+	if (X_SPE) then { // Server Player eXecution on client computer
 		_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_CHECK_ITEM", "scripts\bonuses\bonusInspectAction.sqf", [] ]];
 	};
 	_x call SYG_addEventsAndDispose; // add all std mission-driven events here (not recoverable, may be killed and removed from the mission)
@@ -30,7 +31,7 @@ _msg_arr = [];
 	_x addEventHandler [ "killed", {
 			[server_bonus_markers_array, _this select 0] call SYG_removeObjectFromArray;
 			["bonus","DEL", _this select 1, _this select 0] call XSendNetStartScriptClientAll;
-			hint localize format["+++ killed: %1", _this];
+			hint localize format["+++ assignAsBonus.sqf: killed _this %1", _this];
 		}
 	];
 	_near_town_name = text (_x call SYG_nearestSettlement);

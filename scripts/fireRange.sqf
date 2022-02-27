@@ -16,8 +16,7 @@ hint localize format["+++ fireRange.sqf: %1 input params detected", count _this]
 {
 	//hint localize format["+++ fireRange.sqf: addEventHandler to ""%1""", typeOf _x];
 
-	if ( _x isKindOf "TargetEpopup" ) then
-	{
+	if ( _x isKindOf "TargetEpopup" ) then {
 		// Input params for "Hit" event
 		// 0 unit: Object - Object the event handler is assigned to
 		// 1 causedBy: Object - Object that caused the damage.  Contains the unit itself in case of collisions.
@@ -38,9 +37,7 @@ hint localize format["+++ fireRange.sqf: %1 input params detected", count _this]
 				(format[localize "STR_SYS_334", _dist, _dmg]) call XfHQChat; // "Dst %1, dmg %2"
 			}
 		]; 
-	}
-	else 
-	{
+	} else {
 		//hint localize format["+++ fireRange.sqf: Error! Expected base type is ""TargetEpopup"", detected ""%1""", typeOf _x];
 	};
 } forEach _this;
