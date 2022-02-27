@@ -353,7 +353,7 @@ SYG_addEventsAndDispose = {
     _vehicle = arg(0);
     // add dispose event
     if ( (typeOf _vehicle) in x_heli_wreck_lift_types ) then { // add dispose option even for wreckable vehicles too
-        hint localize format["+++SYG_addEventsAndDispose: %1", typeOf _vehicle];
+        hint localize format["+++ SYG_addEventsAndDispose: %1", typeOf _vehicle];
         _vehicle addEventHandler ["killed", {_this spawn x_removevehi}]; // for good blasting on killed
         [_vehicle] call XAddCheckDead; // prepare to insert to dead vehicles list for follow handling and removing
     };

@@ -1,11 +1,11 @@
 /*
-	scripts\bonuses\createBonus.sqf
+	scripts\bonus\createBonus.sqf
 
     ...
 	author: Sygsky
 	description: place next bonus near the designated position according to the new rules of bonus placing
 	returns: nothing
-	call as: [[x,y,z], _typeName<, "CIRCLE",_rad>|<"ANNULUS", _rad1,_rad2>] execVM "scripts\bonuses\createBonus.sqf"; // ...
+	call as: [[x,y,z], _typeName<, "CIRCLE",_rad>|<"ANNULUS", _rad1,_rad2>] execVM "scripts\bonus\createBonus.sqf"; // ...
 */
 
 #include "bonus_def.sqf"
@@ -25,21 +25,21 @@ if (isNil "mt_bonus_vehicle_array_COM") exitWith{
 
 //    mt_bonus_vehicle_array_SHIP_arr = [mt_bonus_vehicle_array_SHIP, [], mt_bonus_vehicle_array_COM ];
 
-    player addAction ["Create CAR","scripts\bonuses\createBonus.sqf", "CAR"];
-    player addAction ["Create TANK","scripts\bonuses\createBonus.sqf", "TANK"];
-    player addAction ["Create HELI","scripts\bonuses\createBonus.sqf", "HELI"];
-    player addAction ["Create AIR","scripts\bonuses\createBonus.sqf", "AIR"];
-//    player addAction ["Create SHIP","scripts\bonuses\createBonus.sqf", "SHIP"];
-    player addAction ["Bump target","scripts\bonuses\createBonus.sqf", "BUMP_TARGET"];
-    player addAction ["Teleport to veh","scripts\bonuses\createBonus.sqf", "TELE"];
-    player addAction ["TURN over...","scripts\bonuses\createBonus.sqf", "TURN_OVER"];
+    player addAction ["Create CAR","scripts\bonus\createBonus.sqf", "CAR"];
+    player addAction ["Create TANK","scripts\bonus\createBonus.sqf", "TANK"];
+    player addAction ["Create HELI","scripts\bonus\createBonus.sqf", "HELI"];
+    player addAction ["Create AIR","scripts\bonus\createBonus.sqf", "AIR"];
+//    player addAction ["Create SHIP","scripts\bonus\createBonus.sqf", "SHIP"];
+    player addAction ["Bump target","scripts\bonus\createBonus.sqf", "BUMP_TARGET"];
+    player addAction ["Teleport to veh","scripts\bonus\createBonus.sqf", "TELE"];
+    player addAction ["TURN over...","scripts\bonus\createBonus.sqf", "TURN_OVER"];
 
     mt_id = 0; // start id for the town list
     flag_at_pos = objNull;
     conus_at_pos = objNull;
 
-	[] execVM "scripts\bonuses\bonus_client.sqf";
-	[] execVM "scripts\bonuses\bonus_server.sqf";
+	[] execVM "scripts\bonus\bonus_client.sqf";
+	[] execVM "scripts\bonus\bonus_server.sqf";
 
 	_str = "+++ test bonus module initiated";
     hint localize _str;
@@ -158,7 +158,7 @@ _create_bonus_veh = {
     { _veh removeMagazines _x; } forEach magazines _veh;
 	sleep 2;
 	_veh setDamage 0.5;
-	_veh execVM "scripts\bonuses\assignAsBonus.sqf"; // assign action to check movement to the base
+	_veh execVM "scripts\bonus\assignAsBonus.sqf"; // assign action to check movement to the base
 	_veh
 };
 

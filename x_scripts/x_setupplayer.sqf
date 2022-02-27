@@ -14,7 +14,7 @@ sleep 1;
 #include "x_macros.sqf"
 
 //#define __DEBUG__
-//#define __DEBUG_BONUS__
+#define __DEBUG_BONUS__
 //#define __DEBUG_JAIL__
 
 #define __MISSION_START__
@@ -1490,6 +1490,7 @@ if (__AIVer || d_para_at_base) then {
 
 #ifdef __DEBUG_BONUS__
 FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
+player addScore 800;
 #endif
 
 #ifdef __DEBUG_FLARE__

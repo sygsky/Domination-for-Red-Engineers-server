@@ -1,5 +1,5 @@
 /*
-	scripts\bonuses\bonusInspectAction.sqf, executed on client only
+	scripts\bonus\bonusInspectAction.sqf, executed on client only
 	author: Sygsky at 17-NOV-2021
 	description:
         Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]
@@ -19,7 +19,7 @@ _loc = _veh call SYG_nearestSettlement;
 _loc_name =  text  _loc;
 if ( !isPLayer (_this select 1) ) exitWith {
 	// "One of your local soldiers %1 inspected vehicle %2, which he discovered."
-	["msg_to_user","*",[["STR_BONUS_5"], _name, typeOf _veh],0,0,"received"] call XSendNetStartScriptClientAll;
+	["msg_to_user","*",[["STR_BONUS_5"], _name, typeOf _veh],0,0,false,"received"] call XSendNetStartScriptClientAll;
 	hint localize format["--- bonusInspectAction.sqf: Not player (%1) inspected bonus vehicle near %2. Exit.", typeOf (_this select 1), _loc_name];
 };
 

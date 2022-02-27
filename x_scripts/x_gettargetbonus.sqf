@@ -131,17 +131,16 @@ _bonus_score_arr spawn {
 };
 
 #ifdef __BATTLEFIELD_BONUS__
-
-[_town select 0, _town select 2, mt_bonus_vehicle_array select extra_bonus_number] call SYG_createBonusVeh;
-
+_vehicle = [_town select 0, _town select 2, mt_bonus_vehicle_array select extra_bonus_number] call SYG_createBonusVeh;
+hint localize format["+++ x_scripts\x_gettargetbonus.sqf: battlefield target bonus vehicle created ""%1""", typeOf _vehicle];
 #else
-
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 _vehicle setDir _dir;
 _vehicle call SYG_assignVehAsBonusOne;
 hint localize format["+++ x_scripts\x_gettargetbonus.sqf: target bonus vehicle created ""%1""", typeOf _vehicle];
-
 #endif
+
+
 //
 // RESTORE DESTROYED BUILDINGS
 //

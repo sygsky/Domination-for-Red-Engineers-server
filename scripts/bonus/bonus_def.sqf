@@ -1,5 +1,5 @@
 /*
-	scripts/bonuses/bonus_def.sqf
+	scripts/bonus/bonus_def.sqf
 	author: Sygsky
 	description: none
 	returns: nothing

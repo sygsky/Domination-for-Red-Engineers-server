@@ -1,5 +1,5 @@
 /*
-	1.Sara/scripts/bonuses/x_netinit.sqf
+	1.Sara/scripts/bonus/x_netinit.sqf
 	author: Sygsky
 	description: none
 	returns: nothing
@@ -35,7 +35,7 @@ XHandleNetStartScriptClient = {
 
 						//  send info to all players except author
 						hint localize format["+++ client: bonus ADD %1 to the markers list", typeOf _veh];
-	//                    ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0,"good_news"] call XHandleNetStartScriptClient;
+	//                    ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0,false,"good_news"] call XHandleNetStartScriptClient;
 					};
 
 					// send vehicle to players to remove from re-draw list as vehicle now is recoverable
@@ -56,8 +56,8 @@ XHandleNetStartScriptClient = {
 							format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2 ],
 							localize "STR_BONUS_3_3"
 							];
-						  //0              1,                  2,                                                          3, 4, 5
-	//                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, "good_news" ] call XHandleNetStartScriptClient;
+						  //0              1,                  2,                                                          3, 4, 5     6
+	//                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false,"good_news" ] call XHandleNetStartScriptClient;
 					};
 
 					// bonus vehicle killed event
@@ -68,7 +68,7 @@ XHandleNetStartScriptClient = {
 						client_bonus_markers_timestamp = time;		 // set new timestamp
 						_killer = _this select 2;
 						_name = if (isPlayer _killer) then {name _killer} else {localize "STR_BONUS_DEL_1"};
-						["msg_to_user", "", [[ localize "STR_BONUS_DEL", typeOf _veh, _name]], 0, 2, "losing_patience"] call XHandleNetStartScriptClient;
+						["msg_to_user", "", [[ localize "STR_BONUS_DEL", typeOf _veh, _name]], 0, 2, false,"losing_patience"] call XHandleNetStartScriptClient;
 					};
 
 					// init bonus vehicle event
@@ -82,7 +82,7 @@ XHandleNetStartScriptClient = {
 			};
 
 			// simples realization of msg_to_user
-			// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
+			// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_no_sound<,_sound>>>>]
 			case "msg_to_user" : {
 					private ["_x"];
 					hint localize format["+++ msg_to_user: %1", _this];

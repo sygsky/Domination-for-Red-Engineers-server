@@ -1,5 +1,5 @@
 /*
-	1.Sara/scripts/bonuses/bonus_client.sqf: draws and control all markers on client
+	1.Sara/scripts/bonus/bonus_client.sqf: draws and control all markers on client
 	author: Sygsky
 	description: none
 	returns: nothing
@@ -36,13 +36,13 @@ _reset_params = {
 			hint localize format["+++ bonus client: removed %1", typeOf _x];
 			if (_ind >= 0) then {
 				deleteMarkerLocal (_bonus_markers select _ind);
-				_bonus_markers set [_ind, ""];
-				_bonus_array   set [_ind, ""];
+				_bonus_markers set [_ind, "RM_ME"];
+				_bonus_array   set [_ind, "RM_ME"];
 			};
 			sleep 0.1;
 		} forEach _del_arr;
-		_bonus_array   = _bonus_array   - [""];
-		_bonus_markers = _bonus_markers - [""];
+		_bonus_array   = _bonus_array   - ["RM_ME"];
+		_bonus_markers = _bonus_markers - ["RM_ME"];
 		_del_arr = nil;
 	};
 

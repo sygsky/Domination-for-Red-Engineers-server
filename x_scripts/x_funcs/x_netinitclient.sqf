@@ -924,7 +924,8 @@ XHandleNetStartScriptClient = {
 #ifdef __BATTLEFIELD_BONUS__
 		// adds vehicle to the player vehicle markers list
 		case "bonus" : { // [ "bonus", _sub_command, _player_name, _vehicle ]
-			if ( ! ( (_this select 2) in [""," ","*",name player]) ) exitWith {};
+			hint localize format["+++ bonus: _this %1", _this ];
+//			if ( ! ( (_this select 2) in [""," ","*",name player]) ) exitWith {};
 			private ["_veh"];
 			_veh = _this select 3;
 			switch (_this select 1) do {
@@ -933,21 +934,24 @@ XHandleNetStartScriptClient = {
 				case "ADD": {
 					if (isNil "client_bonus_markers_array") then {  // first vehicle added
 						client_bonus_markers_array = [];
-						hint localize "--- battlefield bonus: nil marker array on ADD command!";
+						hint localize "--- bonus.ADD: nil marker array on ADD command!";
 					};
-					client_bonus_markers_array set [ count client_bonus_markers_array, _veh ];    // add next vehcile to the place of the timestamp
-					client_bonus_markers_timestamp = time;		 // set new timestamp
-					(localize "STR_BONUS_1") hintC [
-						format [localize "STR_BONUS_1_1", _this select 2, typeOf _veh ],
-						format[localize "STR_BONUS_1_2", typeOf _veh],
-						format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
-						];
+					if (! (_veh in client_bonus_markers_array)) then {
+						client_bonus_markers_array set [ count client_bonus_markers_array, _veh ];    // add next vehicle to the place of the timestamp
+						client_bonus_markers_timestamp = time;		 // set new timestamp
+						playSound "good_news";
+						(localize "STR_BONUS_1") hintC [
+							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh ],
+							format[localize "STR_BONUS_1_2", typeOf _veh],
+							format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
+							];
 
-					//  send info to all players except author
-					hint localize format["+++ client: bonus ADD %1 to the markers list", typeOf _veh];
-//                    ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0,"good_news"] call XHandleNetStartScriptClient;
+						//  send info to all players except author
+						hint localize format["+++ bonus.ADD %1 to the markers list", typeOf _veh];
+	//                    ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
+
+					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
 				};
-
 				// send vehicle to players to remove from re-draw list as vehicle now is recoverable
 				case "REG": { // register vehicle as recoverable
 					private ["_id","_cnt"];
@@ -960,7 +964,7 @@ XHandleNetStartScriptClient = {
 					// remove from markered vehs list
 					if (isNil "client_bonus_markers_array") then {
 						client_bonus_markers_array = [];
-						hint localize "--- battlefield bonus: nil marker array on REG command!";
+						hint localize "--- bonus.REG: nil marker array on REG command!";
 					} else {
 						_cnt = count client_bonus_markers_array;
 						[client_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
@@ -968,36 +972,40 @@ XHandleNetStartScriptClient = {
 					}; // first vehicle added
 					// register as recoverable vehicle
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
+					playSound "good_news";
 					localize "STR_BONUS_3_1" hintC [
 						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2 ],
 						localize "STR_BONUS_3_3"
 						];
-					  //0              1,                  2,                                                          3, 4, 5
-//                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, "good_news" ] call XHandleNetStartScriptClient;
+					  //0              1,                  2,                                                          3, 4, 5      6
+//                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;
 				};
 
 				// bonus vehicle killed event
 				//  [ "bonus", _sub_command, _killer, _vehicle ]
-				case "DEL" : {
+				case "DEL": {
+					hint localize format["+++ bonus.DEL: _this %1", _this];
 					private ["_killer","_name","_cnt"];
 					if (isNil "client_bonus_markers_array") then {
 						client_bonus_markers_array = [];
-						hint localize "--- battlefield bonus: nil marker array on DEL command!";
+						_cnt = count client_bonus_markers_array;
+						hint localize "--- bonus.DEL: nil marker array on DEL command!";
 					} else {
 						_cnt = count client_bonus_markers_array;
 						[client_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
-						if (count client_bonus_markers_array < _cnt) then { client_bonus_markers_timestamp = time;}; // markered vehicle killed
+						if (count client_bonus_markers_array != _cnt) then { client_bonus_markers_timestamp = time;}; // markered vehicle killed
 					};
 					_killer = _this select 2;
 					_name = if (isPlayer _killer) then {name _killer} else {localize "STR_BONUS_DEL_1"};
-					["msg_to_user", "", [[ localize "STR_BONUS_DEL", typeOf _veh, _name]], 0, 2, "losing_patience"] call XHandleNetStartScriptClient;
+					hint localize format["+++ bonus.DEL: prev. cnt %1 -> new cnt %2", _cnt, count client_bonus_markers_array];
+					["msg_to_user", "", [[ localize "STR_BONUS_DEL", typeOf _veh, _name]], 0, 2, false, "losing_patience"] call XHandleNetStartScriptClient;
 				};
 
 				// [ "bonus", _sub_command, "", _veh_arr ]: replace whole bonus marker array
-				case "RESET" : {
+				case "RESET": {
 					client_bonus_markers_array = _this select 3;
 					client_bonus_markers_timestamp = time;
-					["msg_to_user", "", [[ localize "STR_BONUS_6", count client_bonus_markers_array, _name]], 0, 105, "good_news"] call SYG_msgToUserParser;
+					["msg_to_user", "", [[ localize "STR_BONUS_6", count client_bonus_markers_array, _name]], 0, 105, false, "good_news"] call SYG_msgToUserParser;
 				};
 
 			};
