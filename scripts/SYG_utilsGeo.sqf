@@ -994,7 +994,7 @@ SYG_getWPointInAnnulus = {
 SYG_nearestBoatMarker = {
     if (typeName _this == "OBJECT") then { _this = position _this};
     if (typeName _this != "ARRAY") exitWith {""}; // bad parameter in call
-    if (count _this < 2) exitWith {""}; // bad array with position coordinates (length msut be 2..3)
+    if (count _this < 2) exitWith {""}; // bad array with position coordinates (length must be 2..3)
     private ["_id","_near_dist","_near_marker_name","_marker","_mpos"];
     _id = 1;
     _near_dist = 999999;
@@ -1021,9 +1021,7 @@ SYG_nearestBoatMarker = {
 // _on_base = (getPos _veh) call SYG_pointIsOnBase;
 //
 SYG_pointIsOnBase = {
-	private ["_pos"];
-	_pos = _this call SYG_getPos;
-	[_pos,d_base_array] call SYG_pointInRect
+	[_this call SYG_getPos,d_base_array] call SYG_pointInRect
 };
 
 if (true) exitWith {};                                    
