@@ -25,8 +25,11 @@ if (x_sm_type == "convoy") then {
 current_mission_text = localize "STR_SYS_120"; // "Дополнительное задание ещё не назначено...";
 
 if (side_mission_winner != 0 && bonus_number != -1) then {
-
+#ifdef __BATTLEFIELD_BONUS__
+	_bonus_pos = localize "STR_SYS_309_1";//"near last side mission.";
+#else
 	_bonus_pos = localize "STR_SYS_309";//"on the base.";
+#endif
 	_type_name = sm_bonus_vehicle_array select bonus_number;
 	_bonus_vehicle = [_type_name,0] call XfGetDisplayName;
 

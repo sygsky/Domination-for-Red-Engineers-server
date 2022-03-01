@@ -29,7 +29,11 @@ if (client_target_counter < number_targets) then {
 
 	_bonus_vehicle = [_type_name, 0] call XfGetDisplayName;
 
-	_bonus_pos = localize "STR_SYS_309";	//"на базе.";
+#ifdef __BATTLEFIELD_BONUS__
+	_bonus_pos = localize "STR_SYS_309_1";//"near last side mission.";
+#else
+	_bonus_pos = localize "STR_SYS_309";//"on the base.";
+#endif
 
 	_mt_str = format [localize "STR_SYS_1100", _current_target_name]; //"%1 освобождён!!!"
 	
