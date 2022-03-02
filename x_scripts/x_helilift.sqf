@@ -200,9 +200,12 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         _npos = position _nearest;
                         _nearest setPos [_npos select 0, _npos select 1, 0]; // TODO: allow to be upside down if dropping height was high
                         // TODO: bump vehicle ahead to try synchronize MHQ after drop:
-                        _vel = modelToWorld [0,1,0];
-                        _vel = [_vel, getPos _nearest] call SYG_vectorSub3D; // bump velocity vector
-                        _nearest setVelocity [0,0,0];
+                        _vel = [_nearest, 1] call SYG_getVelocityVector;
+//                        _off = _nearest modelToWorld [0,1,0];
+//                        _vel = [_off, _npos] call SYG_vectorSub3D; // bump velocity vector
+//                        _vel set [2, 0];
+                        _nearest setVelocity _vel;
+//                        hint localize format["+++ x_helilist.sqf: set %1 velocity to synchronize on drop, npos %2, modelToWorld %3", _vel, _npos, _off];
                         if ( isEngineOn _nearest ) then { _nearest engineOn false; };
                         Attached_Vec = objNull;
 

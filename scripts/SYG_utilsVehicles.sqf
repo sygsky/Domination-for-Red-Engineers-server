@@ -2014,6 +2014,17 @@ SYG_assignVehAsBonusOne = {
 	_vehicle execVM "x_scripts\x_wreckmarker.sqf";
 };
 
+//
+// _vel_vector = [_veh, _velocity_m_sec] call SYG_getVelocityVector;
+//
+SYG_getVelocityVector = {
+	private [ "_veh", "_pos" ];
+	_veh = _this select 0;
+	_pos = getPos _veh;
+	_pos set [ 2, 0 ];
+    [ _veh modelToWorld [ 0, _this select 1, 0 ], _pos ] call SYG_vectorSub3D; // bump velocity vector
+};
+
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
