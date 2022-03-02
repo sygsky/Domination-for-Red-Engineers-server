@@ -199,11 +199,15 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         sleep 1.012;
                         _npos = position _nearest;
                         _nearest setPos [_npos select 0, _npos select 1, 0]; // TODO: allow to be upside down if dropping height was high
+                        // TODO: bump vehicle ahead to try synchronize MHQ after drop:
+                        _vel = modelToWorld [0,1,0];
+                        _vel = [_vel, getPos _nearest] call SYG_vectorSub3D; // bump velocity vector
                         _nearest setVelocity [0,0,0];
                         if ( isEngineOn _nearest ) then { _nearest engineOn false; };
                         Attached_Vec = objNull;
 
                         // reveal to all players new position of MHQ. It can help!
+                        sleep 1;
                         hint localize format["_reveal_name = ""%1""", _reveal_name];
                         if (_reveal_name != "") then {
                         	_str  = format["hint localize format[""+++ %1(1) %2"", getPos %1]", _reveal_name, "%1" ];
