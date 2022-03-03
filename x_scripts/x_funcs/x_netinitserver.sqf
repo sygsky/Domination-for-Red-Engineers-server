@@ -302,8 +302,11 @@ XHandleNetStartScriptServer = {
 			["msg_to_user", arg(1), _msg_arr, 5, 10] call XSendNetStartScriptClient;
 			sleep 1.0;
 			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
+
+#ifdef __BATTLEFIELD_BONUS__
 			sleep 1.0;
 			if (count server_bonus_markers_array > 0) then { ["bonus", "RESET", "", server_bonus_markers_array ] call XSendNetStartScriptClient;};
+#endif
 
 			// log info  about logging
 			hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
