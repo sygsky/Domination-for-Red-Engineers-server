@@ -316,6 +316,8 @@ XHandleNetStartScriptServer = {
 			_this call GRU_procServerMsg;
 		};
 
+#ifdef __SPPM__
+
 		// SPPM event handler on server (receive messages from client)
 		case "SPPM": {
 			switch (arg(1)) do {
@@ -354,6 +356,7 @@ XHandleNetStartScriptServer = {
 				default {hint localize format["--- bad SPPM params: %1", _this];};
 			};
 		};
+#endif
 
         // ["syg_plants_restore", _player_name, _restore_center_pos, _restore_radious] call XSendNetStartScriptServer;
 /**
