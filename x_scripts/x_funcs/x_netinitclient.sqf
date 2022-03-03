@@ -941,7 +941,7 @@ XHandleNetStartScriptClient = {
 						client_bonus_markers_timestamp = time;		 // set new timestamp
 						playSound "good_news";
 						(localize "STR_BONUS_1") hintC [
-							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh ],
+							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
 							format[localize "STR_BONUS_1_2", typeOf _veh],
 							format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
 							];
@@ -951,7 +951,7 @@ XHandleNetStartScriptClient = {
 	//                    ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
 
 					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
-				};
+					if ((name player) == (_this select 2)) then { (d_ranked_a select 30) call SYG_addBonusScore;}; // this player found this bonus vehicle, add +2 to him
 				// send vehicle to players to remove from re-draw list as vehicle now is recoverable
 				case "REG": { // register vehicle as recoverable
 					private ["_id","_cnt"];
@@ -974,11 +974,12 @@ XHandleNetStartScriptClient = {
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
 					playSound "good_news";
 					localize "STR_BONUS_3_1" hintC [
-						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2 ],
+						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
 						localize "STR_BONUS_3_3"
 						];
 					  //0              1,                  2,                                                          3, 4, 5      6
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;
+					if ((name player) == (_this select 2)) then { (d_ranked_a select 31) call SYG_addBonusScore;}; // this player registered this bonus vehicle, add +2 to him
 				};
 
 				// bonus vehicle killed event
