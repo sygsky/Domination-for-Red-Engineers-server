@@ -194,4 +194,4 @@
 //#define __VEH_1985__
 
 // uncomment to get bonuses not on base but near finished towns or SM
-//#define __BATTLEFIELD_BONUS__
+#define __BATTLEFIELD_BONUS__
