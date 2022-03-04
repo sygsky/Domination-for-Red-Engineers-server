@@ -952,6 +952,7 @@ XHandleNetStartScriptClient = {
 
 					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
 					if ((name player) == (_this select 2)) then { (d_ranked_a select 30) call SYG_addBonusScore;}; // this player found this bonus vehicle, add +2 to him
+				};
 				// send vehicle to players to remove from re-draw list as vehicle now is recoverable
 				case "REG": { // register vehicle as recoverable
 					private ["_id","_cnt"];

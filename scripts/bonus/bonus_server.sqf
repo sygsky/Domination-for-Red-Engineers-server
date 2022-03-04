@@ -16,6 +16,6 @@
 // Markered bonus vehicles array, any new vehicles added to it one by one
 if (!isNil "server_bonus_markers_array" ) exitWith {};
 server_bonus_markers_array = [];
-player groupChat "+++ server_bonus_markers_array initiated +++";
+hint localize "+++ server_bonus_markers_array initiated +++";
 
 

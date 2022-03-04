@@ -272,7 +272,7 @@ XfGetRanPointAnnulusBig = {
 	_center = _this select 0; _radius1 = _this select 1; _radius2 = _this select 2;
 	_center_x = _center select 0; _center_y = _center select 1;
 	_ret_val = [];_co = 0;
-	while { (count (_ret_val == 0)) && (_co < 50) } do {
+	while { ((count _ret_val) == 0) && (_co < 50) } do {
 		_angle = random 360;
         _dist = [_radius1, _radius2] call XfRndRadiousInAnnulus;
 		_x1 = _center_x - ( _dist * cos _angle);
@@ -281,11 +281,11 @@ XfGetRanPointAnnulusBig = {
 			_nobs = [_x1,_y1,0] nearObjects ["Static",20];
 			if (count _nobs == 0) then {
 				_helper = "RoadCone" createVehicleLocal [_x1,_y1,0];
-				if (!(surfaceIsWater [position (_helper select 0), position (_helper select 1)])) then {
+				if (!(surfaceIsWater [(position _helper) select 0, (position _helper) select 1])) then {
 					_slope = [position _helper, 5] call XfGetSlope;
 					if (_slope < 0.5) exitWith {
-						if ( (position _helper) call SYG_pointIsOnBase ) then {
-							_ret_val = [position (_helper select 0),position (_helper select 1),0];
+						if ( !((position _helper) call SYG_pointIsOnBase) ) then {
+							_ret_val = [(position _helper) select 0, (position _helper) select 1,0];
 						};
 					};
 				};

@@ -12,7 +12,7 @@ if (!isNil "client_bonus_markers_array") exitWith {}; // already run
 private ["_bonus_markers", "_bonus_timestamp", "_bonus_array", "_i", "_veh", "_mrk", "_last_id", "_reset_params"];
 
 while {isNil "client_bonus_markers_array"} do {sleep DELAY_WHILE_NIL};
-player groupChat "+++ bonus_client started";
+hint localize "+++ bonus_client started";
 // markers for each markerd bouns vehicle
 _bonus_markers         = []; // known veh markers
 _bonus_timestamp       = -1;

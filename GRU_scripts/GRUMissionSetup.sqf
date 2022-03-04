@@ -6,8 +6,8 @@
 // Spawn it soon after new town target generated, and spawn on server of course
 //
 
-if ( !isServer) exitWith {};
-if ( !isNil "GRUMissionSetup_on" ) exitWith {};
+if ( !isServer ) exitWith { hint localize "--- GRUMissionSetup.sqf: !isServer, exit" };
+if ( !isNil "GRUMissionSetup_on" ) exitWith { hint localize "--- GRUMissionSetup.sqf: !isNil ""GRUMissionSetup_on"" exit" };
 
 GRUMissionSetup_on = true;
 
