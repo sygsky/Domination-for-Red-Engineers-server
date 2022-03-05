@@ -178,7 +178,7 @@ while { true } do {
 		if (count _arr > 0) then {
             for "_i" from 0 to count _arr - 1 do {
                 _vehicle = _arr select _i;
-                if ( [getPos _vehicle, d_base_array] call SYG_pointInRect ) then { // in rect of base
+                if ( _vehicle call SYG_pointIsOnBase ) then { // in rect of base
                     if ( !isNull _vehicle ) then
                     {
                         _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";

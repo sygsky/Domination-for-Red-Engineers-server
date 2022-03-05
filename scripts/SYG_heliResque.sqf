@@ -168,8 +168,7 @@ while {true} do
 	s_down_heli_arr = [];
 	{
 		// put any heli not dead and out of eastern base to the list of future hijacking
-		if ( (alive _x) AND ((count crew _x) == 0) AND (!([getPos _x, d_base_array] call SYG_pointInRect)) ) then 
-		{
+		if ( (alive _x) AND ((count crew _x) == 0) AND (!(_x call SYG_pointIsOnBase) ) then {
 #ifdef __DEBUG__
 	hint localize format["%1 SYG_heliresque.sqf: put %2 near %3 to down list", call SYG_missionTimeInfoStr, typeOf _x, (getPos _x) call SYG_nearestSettlement];
 #endif	
@@ -195,7 +194,7 @@ while {true} do
               AND
              (_x isKindof "AV8B" OR _x isKindof "A10" OR _x isKindOf "AH6" OR _x isKindof "AH1W" OR _x isKindOf "UH60MG" OR _x isKindOf "ACE_AH64_AGM_HE")
 			))
-			AND ([(getPos _x), d_base_array] call SYG_pointInRect)
+			AND (_x call SYG_pointIsOnBase)
 			//AND  (!(_x in _heli_dead_list))
 		   )
 		then

@@ -23,7 +23,7 @@ if ((vehicle player != player) && (!((vehicle player) isKindOf "ParachuteBase") 
         	(localize "STR_SPPM_8") call XfHQChat; // "Stop engine to work with SPPM markers"
 		};
 		// On base you can't add SPPM markers
-        if ( _pos call SYG_pointInRect ) exitWith {
+        if ( _pos call SYG_pointIsOnBase ) exitWith {
         	(localize "STR_SPPM_2") call XfHQChat; // "SPPM markers are not used on the base"
         };
 

@@ -62,9 +62,9 @@ XClearSidemission = {
 					// check vehicle being on base
 					if ( ! _was_captured ) then {
 #ifdef __OWN_SIDE_EAST__
-						_was_captured = (side _x != west) && ( (getPos _x) call SYG_pointIsOnBase ) && (getDammage _x < 0.000001);
+						_was_captured = (side _x != west) && ( _x call SYG_pointIsOnBase ) && (getDammage _x < 0.000001);
 #else
-						_was_captured = (side _x != east) && ( (getPos _x) call SYG_pointInRect ) && (getDammage _x < 0.000001);
+						_was_captured = (side _x != east) && ( _x call SYG_pointIsOnBase ) && (getDammage _x < 0.000001);
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
@@ -249,7 +249,7 @@ SYG_hitMTTarget = {
             typeOf (vehicle (_this select 1))
             ];
     };
-    if ( ( damage (_this select 0)  >= 1 ) && ( (_this select 1) isKindOf "CAManBase") ) exitWith {
+    if ( ( damage (_this select 0)  >= 1 ) && ( (_this select 1) isKindOf "CAManBase") || ( isNull (_this select 1) ) ) exitWith {
         hint localize  format["*** Hit dmg %1(total %2) to %3, by %4(%5) is accepted",
             _this select 2,
             damage (_this select 0),
@@ -259,15 +259,11 @@ SYG_hitMTTarget = {
             ];
     };
     (_this select 0) setDamage  0; // fix possible negative value
-    if (isNull (_this select 1)) then {
-        hint localize format["*** Hit to %1 is not accepted: dmg %2, by null", typeOf (_this select 0), _this select 2];
-    } else {
-        hint localize format["*** Hit to %1 is not accepted: dmg %2, by %3, dist. %4 m",
-            typeOf (_this select 0),
-            _this select 2,
-            name  (_this select 1),
-            round ((_this select 1) distance (_this select 0))]
-    };
+	hint localize format["*** Hit to %1 is not accepted: dmg %2, by %3, dist. %4 m",
+		typeOf (_this select 0),
+		_this select 2,
+		name  (_this select 1),
+		round ((_this select 1) distance (_this select 0))]
 };
 
 //
@@ -438,3 +434,4 @@ SYG_isSMPosRequest = {
 };
 
 if (true) exitWith {};
+                                                                                                                                                                                                         
