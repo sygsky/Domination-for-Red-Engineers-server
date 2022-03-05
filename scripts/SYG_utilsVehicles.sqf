@@ -1019,7 +1019,7 @@ SYG_showDefaultIntelMarkers = {
 	DEFAULT_INTEL_MAP_MARKERS_PREFIX call SYG_showIntelMarkers
 };
 
-// call: _exists = [_prefix_known,_color]  call call SYG_colorIntelMarkers;
+// call: _exists = [_prefix_known,_color]  call SYG_colorIntelMarkers;
 SYG_colorIntelMarkers = {
 	private ["_prefix","_ind","_color","_cnt","_i"];
 	_prefix = arg(0);

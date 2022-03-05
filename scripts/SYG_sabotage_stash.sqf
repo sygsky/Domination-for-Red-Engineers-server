@@ -122,7 +122,14 @@ processInitCommands;
 _box addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) in [west,resistance]) then {_sec_solved = "stash_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
 _box addEventHandler ["killed", {[3,_this select 1] call XAddPoints;}];
 #else
-_box addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "stash_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
+_box addEventHandler ["killed", {
+		_sec_solved = "sec_over";side_main_done = true;
+		if (side (_this select 1) == d_side_player) then { _sec_solved = "stash_down";};
+		private "_name";
+		_name = (_this select 1) call SYG_getUnitName;
+		["sec_solved",_sec_solved,_name] call SYG_solvedMsg;
+		_this spawn x_removevehiextra;
+	}];
 #endif
 hint localize format["+++ STASH of %1 created %2", typeOf _box, [_box,"at %1 m to %2 from %3", 50] call SYG_MsgOnPosE];
 _box

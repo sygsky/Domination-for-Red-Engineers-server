@@ -410,3 +410,21 @@ SYG_msgToUserParser = {
     } forEach _msg_arr; // for each messages: _x is format parameters array
 };
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//
+// Gets name of killer in any case, or direct unit of unit as gunner in some vehicle
+// killer can be:
+// a man => name _killer
+// gunner of land vehicle/ heli > gunner _killer
+// pilot of plane => driver _killer
+// call as: _unti_name = call SYG_getUnitName;
+//
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SYG_getUnitName = {
+	if (_this isKindOf "Man") exitWith { name _this };
+	if ( !(_this isKindOf "AllVehicles") ) exitWith { objNull };
+	if ( !(isNull (gunner _this) ) ) exitWith { name (gunner _this) };
+	if ( !(isNull (driver _this) ) ) exitWith { name (driver _this) };
+	if ( !(isNull (commander _this) ) ) exitWith { name (commander _this) };
+	objNull
+};

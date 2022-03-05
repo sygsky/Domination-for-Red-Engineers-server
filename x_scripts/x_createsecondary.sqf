@@ -63,7 +63,17 @@ switch (sec_kind) do {
 		_man call SYG_rearmGovernor;
 		//--- Sygsky
 #ifndef __TT__
-		_man addEventHandler ["killed", {[_this select 0] call XAddDead;side_main_done = true;_sec_solved = "sec_over";if (side (_this select 1) == d_side_player) then {_sec_solved = "gov_dead";};governor = nil; publicVariable governor; ["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;}];
+		_man addEventHandler ["killed", {
+			[_this select 0] call XAddDead;
+			side_main_done = true;
+			_sec_solved = "sec_over";
+			if (side (_this select 1) == d_side_player) then {_sec_solved = "gov_dead";};
+			governor = nil;
+			publicVariable governor;
+			private ["_name"];
+			_name = (_this select 1) call SYG_getUnitName;
+			["sec_solved",_sec_solved,_name] call SYG_solvedMsg;
+		}];
 #endif
 		// run check procedure for governor mission, dead or out of big enough circle (2000 m)
 		[_man, 2000, _poss] spawn {
@@ -137,7 +147,15 @@ switch (sec_kind) do {
         false;
 #endif
 		#ifndef __TT__
-		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "radar_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
+		_vehicle addEventHandler ["killed", {
+				_sec_solved = "sec_over";
+				side_main_done = true;
+				if (side (_this select 1) == d_side_player) then {_sec_solved = "radar_down";};
+				private "_name";
+				_name = (_this select 1) call SYG_getUnitName;
+				["sec_solved",_sec_solved,_name] call SYG_solvedMsg;
+				_this spawn x_removevehiextra;
+			}];
 
         _posCnt = _vehicle call SYG_housePosCount;
 		_cnt = floor (random (3 min _posCnt));    // add guard[s] on the top of radar
@@ -176,7 +194,15 @@ switch (sec_kind) do {
 		_vehicle setDir (floor random 360);
 		_vehicle lock true;
 		#ifndef __TT__
-		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "ammo_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
+		_vehicle addEventHandler ["killed", {
+				_sec_solved = "sec_over";
+				side_main_done = true;
+				if (side (_this select 1) == d_side_player) then {_sec_solved = "ammo_down";};
+				private ["_name"];
+				_name = (_this select 1) call SYG_getUnitName;
+				["sec_solved",_sec_solved,_name] call SYG_solvedMsg;
+				_this spawn x_removevehiextra;
+			}];
 		#endif
 		#ifdef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) in [west,resistance]) then {_sec_solved = "ammo_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
@@ -190,7 +216,14 @@ switch (sec_kind) do {
 		_vehicle lock true;
 		
 		#ifndef __TT__
-		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "apc_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
+		_vehicle addEventHandler ["killed", {
+				_sec_solved = "sec_over";
+				side_main_done = true;
+				if (side (_this select 1) == d_side_player) then {_sec_solved = "apc_down";};
+				private "_name";
+				_name = (_this select 1) call SYG_getUnitName;
+				["sec_solved",_sec_solved,_name] call SYG_solvedMsg;_this spawn x_removevehiextra;
+			}];
 		#endif
 		#ifdef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) in [west,resistance]) then {_sec_solved = "apc_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
@@ -247,7 +280,15 @@ switch (sec_kind) do {
 		_vehicle setDir (floor random 360);
 		_vehicle lock true;
 		#ifndef __TT__
-		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "hq_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
+		_vehicle addEventHandler ["killed", {
+			_sec_solved = "sec_over";
+			side_main_done = true;
+			if (side (_this select 1) == d_side_player) then {_sec_solved = "hq_down";};
+			private "_name";
+			_name = (_this select 1) call SYG_getUnitName;
+			["sec_solved",_sec_solved,_name] call SYG_solvedMsg;
+			_this spawn x_removevehiextra;
+		}];
 		#endif
 		#ifdef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) in [west,resistance]) then {_sec_solved = "hq_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
@@ -263,7 +304,15 @@ switch (sec_kind) do {
 		_vehicle = "WarfareBLightFactory" createVehicle (_poss);
 		_vehicle setDir (floor random 360);
 		#ifndef __TT__
-		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "light_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
+		_vehicle addEventHandler ["killed", {
+			_sec_solved = "sec_over";
+			side_main_done = true;
+			if (side (_this select 1) == d_side_player) then {_sec_solved = "light_down";};
+			private "_name";
+			_name = (_this select 1) call SYG_getUnitName;
+			["sec_solved",_sec_solved,_name] call SYG_solvedMsg;
+			_this spawn x_removevehiextra;}
+		];
 		#endif
 		#ifdef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if ((side (_this select 1)) in [west,resistance]) then {_sec_solved = "light_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
@@ -279,7 +328,15 @@ switch (sec_kind) do {
 		_vehicle = "WarfareBHeavyFactory" createVehicle (_poss);
 		_vehicle setDir (floor random 360);
 		#ifndef __TT__
-		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) == d_side_player) then {_sec_solved = "heavy_down";};["sec_solved",_sec_solved,name (_this select 1)] call SYG_solvedMsg;_this spawn x_removevehiextra;}];
+		_vehicle addEventHandler ["killed", {
+			_sec_solved = "sec_over";
+			side_main_done = true;
+			if (side (_this select 1) == d_side_player) then {_sec_solved = "heavy_down";};
+			private "_name";
+			_name = (_this select 1) call SYG_getUnitName;
+			["sec_solved",_sec_solved,_name] call SYG_solvedMsg;
+			_this spawn x_removevehiextra;
+		}];
 		#endif
 		#ifdef __TT__
 		_vehicle addEventHandler ["killed", {_sec_solved = "sec_over";side_main_done = true;if (side (_this select 1) in [west,resistance]) then {_sec_solved = "heavy_down";};["sec_solved",_sec_solved] call SYG_solvedMsg;_this spawn x_removevehiextra;}];

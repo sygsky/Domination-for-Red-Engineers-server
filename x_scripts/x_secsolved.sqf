@@ -1,5 +1,5 @@
 // by Xeno, x_secsolved.sqf, called on client with params:
-// ["sec_solved", kind_solved,killer_name]
+// ["sec_solved", kind_solved<,killer_name>]
 private ["_sec_solved_kind","_is_solved"];
 if (!X_Client) exitWith {};
 
