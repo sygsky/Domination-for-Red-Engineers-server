@@ -12,8 +12,7 @@
 GRU_stopTask = {
 	if (!isServer) exitWith {false};
 	private ["_task_id"];
-	if ( _this call GRU_taskActive ) then
-	{
+	if ( _this call GRU_taskActive ) then {
 		// stop old task first
 		GRU_tasks set [_this, []];
 		publicVariable "GRU_tasks";
@@ -104,7 +103,7 @@ GRU_procServerMsg = {
 			// send info back to all clients
 			_task = _task_id call GRU_getTask;
 			_agent_list = argp(_task,GRU_MAIN_LIST); 
-			if ( !_player_name in _agent_list) then {
+			if ( !(_player_name in _agent_list)) then {
 				_agent_list set [count _agent_list, _player_name];
 //				_task set [GRU_MAIN_LIST, _agent_list + [_player_name]];
 				publicVariable "GRU_tasks";
