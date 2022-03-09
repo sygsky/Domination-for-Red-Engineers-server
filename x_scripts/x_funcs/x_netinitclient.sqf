@@ -1006,8 +1006,9 @@ XHandleNetStartScriptClient = {
 				// [ "bonus", _sub_command, "", _veh_arr ]: replace whole bonus marker array
 				case "RESET": {
 					client_bonus_markers_array = _this select 3;
+					hint localize format["+++ bonus.RESET: new veh(s) added, count %1", count client_bonus_markers_array];
 					client_bonus_markers_timestamp = time;
-					["msg_to_user", "", [[ localize "STR_BONUS_6", count client_bonus_markers_array, _name]], 0, 105, false, "good_news"] call SYG_msgToUserParser;
+					["msg_to_user", "", [[ localize "STR_BONUS_6", count client_bonus_markers_array, _name]], 0, 105, false, "good_news"] call SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
 				};
 
 			};

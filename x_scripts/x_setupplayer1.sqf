@@ -10,6 +10,8 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+#define __DEBUG__
+
 private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant",
 		 "_pistol","_equip","_rearmed"];
 // ask the server for the client score etc

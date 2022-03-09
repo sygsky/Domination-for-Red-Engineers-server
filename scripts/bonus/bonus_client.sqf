@@ -7,7 +7,7 @@
 
 #include "bonus_def.sqf"
 
-if (!isNil "client_bonus_markers_array") exitWith {}; // already run
+// if (!isNil "client_bonus_markers_array") exitWith {hint localize format ["+++ As (!isNil client_bonus_markers_array), then exit"]}; // already run
 
 private ["_bonus_markers", "_bonus_timestamp", "_bonus_array", "_i", "_veh", "_mrk", "_last_id", "_reset_params"];
 

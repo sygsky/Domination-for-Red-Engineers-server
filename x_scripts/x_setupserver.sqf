@@ -117,7 +117,7 @@ if (!d_old_ammobox_handling) then {
 		["ammo_boxes",ammo_boxes] call XSendNetVarClient;
 		_mname = format ["bm_%1", str(_the_box_pos)];
 		d_ammo_boxes = d_ammo_boxes + [[_the_box_pos,_mname]];
-		[_mname, _the_box_pos,"ICON","ColorBlue",[0.5,0.5],"Ящик",0,"Marker"] call XfCreateMarkerGlobal;
+		[_mname, _the_box_pos,"ICON","ColorBlue",[0.5,0.5],localize "STR_SYS_338",0,"Marker"] call XfCreateMarkerGlobal;
 	};
 
 	execVM "x_scripts\x_boxhandling.sqf";

@@ -1,5 +1,5 @@
 /*
-	scripts\bonus\createBonus.sqf
+	scripts\bonus\createBonus.sqf: debug script to test main functionality
 
     ...
 	author: Sygsky
