@@ -65,8 +65,8 @@ _sound_to = "teleport_to";
 if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
 #ifdef __TELEPORT_DEVIATION__
     _tele_pos = _veh modelToWorld [0,-5,0]; // initial (not deviated) teleport position
-    // if teleport is near iron mass add dome deviation to the position
-    _diff = [_veh, __TELEPORT_DEVIATION__] call SYG_findTeleportError; // deviation due to magnetic mass vicinity
+    // if teleport is near iron mass add some deviation to the position
+    _diff = [_veh, __TELEPORT_DEVIATION__] call SYG_findTeleportError; // deviation in meters due to magnetic mass in vicinity
     _dmg = (damage _veh) * __TELEPORT_DEVIATION__ / 2; // deviation due to damage
     _dist = _diff + _dmg;
     if ( _dist > 0.2 ) then {
