@@ -166,7 +166,7 @@ XHandleNetStartScriptServer = {
                         hint localize "+++ x_netinitserver.sqf: ""d_p_a"", missionStart from client with unknown timezone wasn't accepted !!!";
 			        };
 			    };
-			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3%4", argopt(3,"<NO_LANG>"), _userLogin, arg(2), if ((count _this) > 4) then {_this select 4} else { "" } ];
+			    hint localize format[ "+++ x_netinitserver.sqf: %1 ""d_p_a"", %2, %3, %4", argopt(3,"<NO_LANG>"), _userLogin, arg(2), if ((count _this) > 4) then {_this select 4} else { "" } ];
 //			    if (count _this > 4) then {
 //			    	hint localize format["+++ x_netinitserver.sqf: client file path ""%1""", arg(5)]
 //			    }; // "x_setuplayer.sqf" file path on client computer (just for fun)

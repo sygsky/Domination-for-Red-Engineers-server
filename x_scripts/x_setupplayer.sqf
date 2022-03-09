@@ -1683,11 +1683,6 @@ player call SYG_handlePlayerDammage; // handle hit events
             [[9700.05,10190.07,0]], // north from flag on other side of airstrip
             [[10397.581,10003.883, 0], 90] // east from flag at the end of airstrip
         ];
-        /*
-        _str =  format["%1 targets detected", count _targets];
-        player groupChat _str;
-        hint localize _str;
-        */
         _targets execVM "scripts\fireRange.sqf";
         #ifdef __LH_HOWLER__
         [SYG_startNight, SYG_startMorning] execVM "scripts\SYG_lighthouses.sqf";
