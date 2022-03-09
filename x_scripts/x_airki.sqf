@@ -4,7 +4,7 @@
 private ["_type", "_pos", "_wp_behave", "_crew_member", "_addToClean", "_heli_type", "_vehicle", "_initial_type", "_grp",
  "_vehicles", "_num_p", "_re_random", "_randxx", "_grpskill", "_xxx", "_needs_gunner", "_leader",
  "_old_target", "_loop_do", "_dummy", "_current_target_pos", "_wp", "_pat_pos", "_radius", "_dist", "_old_pat_pos", "_angle",
-  "_x1", "_y1", "_i", "_vecx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage","_res_arr",
+  "_x1", "_y1", "_i", "_vehx","_pilot","_counter","_rejoinPilots", "_ret", "_lastDamage","_res_arr",
   "_flyHeight","_enemy_heli","_height_not_set","_old_target_name","_flight_height"];
 
 if (!isServer) exitWith {};
@@ -545,8 +545,8 @@ while { true } do {
 		//__DEBUG_NET("x_airki_2.sqf",(call XPlayersNumber))
 		if (count _vehicles > 0) then {
 			for "_i" from 0 to ((count _vehicles) - 1) do {
-				_vecx = _vehicles select _i;
-				if ( ! alive _vecx ) then {
+				_vehx = _vehicles select _i;
+				if ( ! alive _vehx ) then {
 					_vehicles set [_i, "RM_ME"]; 
 #ifdef __PRINT__
 					hint localize format[ "+++ x_airki.sqf[%1]: airkiller is Null, remove from list",  _type];
@@ -562,26 +562,26 @@ while { true } do {
                     		};
                     	};
                     	s_down_heli_arr call SYG_clearArray; // remove bad helicopters from the global list
-                        s_down_heli_arr set [count s_down_heli_arr, _vecx]; // ADD NEXT VEHICLE TO THE LIST OF DOWNED ONES
-                        _vecx setFuel 0;
+                        s_down_heli_arr set [count s_down_heli_arr, _vehx]; // ADD NEXT VEHICLE TO THE LIST OF DOWNED ONES
+                        _vehx setFuel 0;
 						_vehicles set [_i, "RM_ME"];
 					} else {
-                        if ( damage _vecx > 0) then {
-                             _lastDamage = _vecx getVariable "damage";
-                            if ( (damage _vecx) != _lastDamage ) then {
+                        if ( damage _vehx > 0) then {
+                             _lastDamage = _vehx getVariable "damage";
+                            if ( (damage _vehx) != _lastDamage ) then {
 #ifdef __PRINT__
-                                hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 get damage = %2", typeOf _vecx, (damage _vecx) - _lastDamage, _type ];
+                                hint localize format[ "+++ x_airki.sqf[%3]: airkiller %1 get damage = %2", typeOf _vehx, (damage _vehx) - _lastDamage, _type ];
 #endif
-                                _vecx setVariable ["damage", damage _vecx];
+                                _vehx setVariable ["damage", damage _vehx];
                             };
-                            if ( ((damage _vecx) > _lastDamage)  && (speedMode _vecx == "LIMITED")) then { // accelerate in case of damage received
-                                _vecx setSpeedMode "FULL";
+                            if ( ((damage _vehx) > _lastDamage)  && (speedMode _vehx == "LIMITED")) then { // accelerate in case of damage received
+                                _vehx setSpeedMode "FULL";
 #ifdef __PRINT__
-                                hint localize format[ "+++ x_airki.sqf[%1]: change airkiller %2 speed from LIMITED to FULL", _type, typeOf _vecx ];
+                                hint localize format[ "+++ x_airki.sqf[%1]: change airkiller %2 speed from LIMITED to FULL", _type, typeOf _vehx ];
 #endif
                             };
                         };
-						_vecx setFuel 1;
+						_vehx setFuel 1;
 					};
 					sleep 0.01;
 				};
@@ -600,11 +600,10 @@ while { true } do {
 #ifdef __PRINT__
 			hint localize format[ "+++ x_airki.sqf[%1]: all vehicle[s] are down, rejoin %2 pilot[s], rejoined %3", _type, _cnt, _ret ];
 #endif
-            if ( !_ret ) then { _grp call _killUnits } // just in case
-            else {
-            	_msg = if (isNull _vehx) then {"STR_GRU_54_2"} else {typeOf _vehx};
-            	["msg_to_user","",[ ["STR_GRU_54",_msg /*[typeOf _vehx, 0] call XfGetDisplayName*/], ["STR_GRU_54_1"] ], 4, 10 + random 30] call XSendNetStartScriptClient;
-            }; // "One or more enemy pilots from enemy air target have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
+            if ( !_ret ) exitWith { _grp call _killUnits }; // just in case
+            _msg = if ((isNil "_vehx") || (isNull _vehx)) then {"STR_GRU_54_2"} else {typeOf _vehx}; // Error #519
+            // "One or more enemy pilots from enemy air target have escaped and are on their way to join their troops. You can arrest them, and on resist You know what to do"
+            ["msg_to_user","",[ ["STR_GRU_54",_msg /*[typeOf _vehx, 0] call XfGetDisplayName*/], ["STR_GRU_54_1"] ], 4, 10 + random 30] call XSendNetStartScriptClient;
 		};
 #ifdef __FUTURE__		
 		//+++ Sygsky: try to reveal info on known enemies for near friendly units
