@@ -92,15 +92,26 @@ while {current_counter < number_targets} do {
 
 			_task = GRU_MAIN_TASK call GRU_getTask;
 
-			// check if agents were present but now are null
+			// check if agents are present but all are logged out
    			_agent_list = argpopt(_task, GRU_MAIN_LIST,[]);
-   			if ( (count _agent_list > 0) &&( ( { alive _x } count _agent_list) <= 0) ) exitWith {
-   			    // as no agents are alive
-			    GRU_CLEAR_MAIN_TASK_USER_LIST;
-			    hint localize format["--- GRU_scripts/GRUMissionSetup.sqf: all agents are null---"];
-   			};
+   			_cnt = count _agent_list; // valid agent count
+   			if ( _cnt > 0 ) then {
+				// check if all active agents (who is performing the task) are logged out
+				_cnt = 0;
+				{
+					_id = d_player_array_names find _x; // get agent index in known player list
+					if (_id >= 0 ) then {
+						_parray = d_player_array_misc select _id;
+						if ((_parray select 4) != "") then { _cnt = _cnt + 1}; // this agent is still logged in, count as active
+					};
+				} forEach _agent_list;
+   			} else { hint localize format["--- GRUMissionSetup.sqf: agent list is []"];  			};
 
-   			// check for all agents alive
+			if ( (_cnt == 0))  exitWith {
+				GRU_CLEAR_MAIN_TASK_USER_LIST;
+				if ( (count _agent_list) > 0) then { hint localize format["--- GRUMissionSetup.sqf: all %1 agent[s] logged out ", count _agent_list]; };
+			};
+		    hint localize format["--- GRUMissionSetup.sqf: %1 agent[s] active", _cnt];
 
 			// checks task to be invalid
 			if ( _task call GRU_mainTaskNotValid ) exitWith  {

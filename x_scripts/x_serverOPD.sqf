@@ -40,6 +40,7 @@ if (_index >= 0) then {
     // orphaned AI must be now local to server, not to any player as only single group player can recruit AI from barracks
 #endif
     //__DEBUG_NET("x_serverOPD player disconnected _parray",_parray)
+    _parray set[4, ""]; // mark player to be logged out (empty role name in player array)
 } else {
     hint localize format[ "--- x_scripts\x_serverOPD.sqf: unknown player name detected ""%1""", _name];
 };
