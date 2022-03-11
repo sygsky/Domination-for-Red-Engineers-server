@@ -24,6 +24,8 @@ SYG_createBonusVeh = {
 	_rad    = _this select 1; // battle zone radious (e.g. town radious)
 	_type   = _this select 2; // vehicle type to create
 
+	hint localize format["+++ SYG_createBonusVeh: creating vehicle %1", _type];
+
 	// check if pont is on one of Sahrani islands
 	if ( _center call SYG_pointOnIslet) then {
 		// we are on islet, move center to the main island
@@ -59,11 +61,11 @@ SYG_createBonusVeh = {
 	if ( _type isKindOf "Plane" ) then {
 //		_pos = _center call _find_air_pos; // find nearest position
 		_time = time;
-		_hnd = _pos execVM "scripts\bonus\bonus_air_pos.sqf";
+		_hnd = _pos execVM "scripts\bonus\bonus_air_pos.sqf"; //pos and dir are returned in _pos array
 		waitUntil {sleep 0.1; scriptDone _hnd};
 		hint localize format["+++ SYG_createBonusVeh: plane %1, delta time %2, new pos data %3", typeOf _veh, time - _time, _pos];
-		_pos = _pos select 0;
 		_dir = _pos select 1;
+		_pos = _pos select 0;
 	};
 #endif
 
@@ -72,7 +74,11 @@ SYG_createBonusVeh = {
 	_veh = _type createVehicle  _pos;
 	_veh setDir _dir;
     if ( !( _veh isKindOf "Ship" ) ) then {
-	    _fuel = 30 / (_veh call SYG_fuelCapacity); // 30 liters in the vehicle
+    	_fuel = _veh call SYG_fuelCapacity;
+    	if (_fuel == 0) then {
+    		hint localize format["--- SYG_utilsBonus.sqf: vehicle %1 has fuleCapacity = 0", _type];
+    		_fuels = 0.01
+    	} else { _fuel = 30 / (_veh call SYG_fuelCapacity) }; // 30 liters in the vehicle
 	    _veh setFuel _fuel;
 	    if (_veh isKindOf "Air" ) exitWith { _veh setVectorUp [0,0,1] };
 	    if ( ( _veh isKindOf "LandVehicle" ) && ( ( random 10 ) > 2 ) ) exitWith { _veh setFuel 0; _veh setVectorUp [0,0,-1] };
