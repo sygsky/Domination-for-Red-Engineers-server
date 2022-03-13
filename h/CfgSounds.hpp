@@ -630,7 +630,8 @@ class CfgSounds {
     class flag_lost     { name="Lostd flag";                            sound[] = {\sounds\sm\flag\flag_lost.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
 
     class usa_desant_heli { name="Babyyyyyyy";                          sound[] = {\sounds\intro\vehicles\usa_desant_heli.ogg,db-1,1.0}; titles[] = {};}; // Baby-y-y-y-y...
-	//
+
+    class Oberon { name="Oberon (Yuri Vizbbor song)";                   sound[] = {\sounds\intro\players\Oberon.ogg,db-1,1.0}; titles[] = {};}; // Song for player "Oberon"
 
 
 };

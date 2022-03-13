@@ -942,8 +942,19 @@ _local_msg_arr spawn {
 		[
 			"msg_to_user",
 			"",
-			[ ["Боец! Командование местного отряда ГРУ МО СССР предлагает сменить позывной с имени агента ЦРУ на более адекватный задачам миссии" ] ],
+			[ ["Боец! Командование местного отряда ГРУ МО СССР предлагает сменить позывной с имени агента ЦРУ на более адекватный нашей задаче" ] ],
 			0, 5, false, "losing_patience"
+		] call SYG_msgToUserParser;
+	};
+
+	// "Oberon"
+	if ( (name player) == "Oberon" ) exitWith {
+		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ ["Мы построим лестницу до звёзд, Мы пройдём сквозь чёрные циклоны От смоленских солнечных берёз До туманных далей Оберона." ] ],
+			0, 5, false, "Oberon"
 		] call SYG_msgToUserParser;
 	};
 
@@ -957,7 +968,7 @@ _local_msg_arr spawn {
 //		_date set [2, 26];
 //		switch	( 8 ) do {
 		switch	(_date select 1) do {
-			case 8: { // Aygust
+			case 8: { // August
 				if ( (_date select 2) >= 25 ) then {
 					_str = "Береги местные школы, они нужны детям островитян!";
 					_sound = "return";
