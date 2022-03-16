@@ -305,7 +305,7 @@ XHandleNetStartScriptServer = {
 
 #ifdef __BATTLEFIELD_BONUS__
 			sleep 1.0;
-			if (count server_bonus_markers_array > 0) then { ["bonus", "RESET", "", server_bonus_markers_array ] call XSendNetStartScriptClient;};
+			["bonus", "RESET", "", server_bonus_markers_array ] call XSendNetStartScriptClient;
 #endif
 
 			// log info  about logging
@@ -488,7 +488,7 @@ XHandleNetStartScriptServer = {
 						// remove vehicle from the markered list
 						[server_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
 					};
-					hint localize format["+++ server: bonus REG %1 to all clients", typeOf _veh];
+					hint localize format["+++ server: bonus.REG %1 to all clients by %2", typeOf _veh, _this select 2];
 					_this call XSendNetStartScriptClientAll; // to all clients
 				};
 

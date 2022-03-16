@@ -6,16 +6,20 @@
 */
 #include "x_setup.sqf"
 
+// uncomment to allow upsidedown, no fuel, no ammo for all DOSAAF vehicles
+//#define ALLOW_HARD_MODE
+
 //
 // Creates bonus vehicle in the designated annulus or on the nearest spawn point for "Plane" vehicles
-//
+// Called on server only
 // call as follow: _new_veh = [[_x, _y<,_z>], _rad, _veh_type_name] call SYG_createBonusVeh;
 // on any error returns objNull
 //
 // List all heli lifts: d_helilift1_types
 //
 SYG_createBonusVeh = {
-	if (count _this < 3) exitWith { hint localize format["---SYG_createBonusVeh: Expected params count 3, found %1", count _this]; objNull };
+	if (!X_Server) exitWith {};
+	if (count _this < 3) exitWith { hint localize format["--- SYG_createBonusVeh: Expected params count 3, found %1", count _this]; objNull };
 	private ["_center","_rad","_type","_pos","_dir","_veh","_x","_name","_loc", "_mt"];
 	_center = _this select 0;
 	_center = [_center select 0, _center select 1, 0];
@@ -81,11 +85,65 @@ SYG_createBonusVeh = {
     	} else { _fuel = 30 / (_veh call SYG_fuelCapacity) }; // 30 liters in the vehicle
 	    _veh setFuel _fuel;
 	    if (_veh isKindOf "Air" ) exitWith { _veh setVectorUp [0,0,1] };
-	    if ( ( _veh isKindOf "LandVehicle" ) && ( ( random 10 ) > 2 ) ) exitWith { _veh setFuel 0; _veh setVectorUp [0,0,-1] };
+	    if ( ( _veh isKindOf "LandVehicle" ) && ( ( random 10 ) > 2 ) ) exitWith {
+	    	_veh setFuel 0;
+#ifdef ALLOW_HARD_MODE
+	    	_veh setVectorUp [0,0,-1]
+#endif
+	    };
+#ifdef ALLOW_HARD_MODE
+	    { _veh removeMagazines _x } forEach magazines _veh;	// remove magazines from Air vehicles only
+#endif
     };
-    { _veh removeMagazines _x } forEach magazines _veh;
 	sleep 2;
-	_veh setDamage 0.5;
+	_veh setDamage (0.4 + (random 0.1));
 	_veh execVM "scripts\bonus\assignAsBonus.sqf"; // assign action to check register as bonus on base
 	_veh
+};
+
+//
+// Find cone on base that contain designated vehicle. Remove if found.
+// Called on client ONLY
+// Call as: _veh call SYG_removeBonusCone;
+//
+SYG_removeBonusCone = {
+	if (!X_Client) exitWith {};
+	private ["_cones", "_veh"];
+	_cones = CONE_MAP_SERVER nearObjects ["RoadCone", 200];
+	{
+		_veh = _x getVariable "bonus_veh";
+		if (! (isNil "_veh")) then {
+			if (_veh == _this) exitWith {
+				_veh say "steal";
+				sleep 0.5;
+				deleteVehicle _x;
+			};
+		};
+	}forEach _cones;
+};
+
+//
+// Called on client ONLY
+// Call as follows: _veh call SYG_addBonusCone;
+//
+SYG_addBonusCone = {
+	if (!XClient) exitWith {};
+	private ["_mt","_center","_scale","_new_center","_cone_type","_xc","_yc","_xn","_yn","_pos","_new_pos","_obj"];
+	_mt = "Corazol" call SYG_MTByName;
+	_center     = _mt select 0;
+	_scale      = 0.005; // scale 1: 100 => 100 m in 1 m
+	_new_center = CONE_MAP_SERVER; //getPos cone_map_center;
+	_cone_type  = "RoadCone";
+
+	_xc = _center select 0;
+	_yc = _center select 1;
+	_xn = _new_center select 0;
+	_yn = _new_center select 1;
+
+	_pos      = getPos _this;
+	_new_pos  = [_xn + (((_pos select 0) - _xc) * _scale), _yn + (((_pos select 1) - _yc) * _scale), 0.4];
+	_obj = _cone_type createVehicleLocal _new_pos;
+	_obj setVehiclePosition [_new_pos, [], 0, "CAN_COLLIDE"];
+	_obj setVariable [ "bonus_veh", _x ];
+	_obj addAction[ localize "STR_CHECK_ITEM", "scripts\bonus\coneInfo.sqf" ];
 };

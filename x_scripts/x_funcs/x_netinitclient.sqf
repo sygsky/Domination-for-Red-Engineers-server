@@ -960,12 +960,13 @@ XHandleNetStartScriptClient = {
 					if (!isNil "_id") then {
 						_veh removeAction _id;
 						_veh setVariable ["INSPECT_ACTION_ID", nil];
+						hint localize format["+++ bonus.REG: inspect action removed from %1", typeOf _veh];
 					} else {hint localize format["--- bonus.REG: %1 hasnt variable INSPECT_ACTION_ID!!!", typeOf _veh]};
 
 					// remove from markered vehs list
 					if (isNil "client_bonus_markers_array") then {
 						client_bonus_markers_array = [];
-						hint localize "--- bonus.REG: nil marker array on REG command!";
+						hint localize "*** bonus.REG: nil marker array on REG command!";
 					} else {
 						_cnt = count client_bonus_markers_array;
 						[client_bonus_markers_array, _veh] call SYG_removeObjectFromArray;

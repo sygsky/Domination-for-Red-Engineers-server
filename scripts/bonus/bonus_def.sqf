@@ -13,3 +13,4 @@
 
 #define MARKER_COLOR "ColorGreen"
 
+#define CONE_MAP_SERVER [9844,10098,0]
