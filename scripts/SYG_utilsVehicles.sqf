@@ -2031,6 +2031,3 @@ SYG_getVelocityVector = {
 SYG_utilsVehicles_INIT = true;
 hint localize "INIT of SYG_utilsVehicles completed";
 if ( true ) exitWith {};
-
-
-      

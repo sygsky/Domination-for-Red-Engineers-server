@@ -162,7 +162,7 @@ _str = _str + _strNoCR;
 #endif
 
 #ifdef __NO_TELEPORT_ON_DAMAGE__
-    _str = _str + (format[localize "STR_SET_9_2", __NO_TELEPORT_ON_DAMAGE__,"%" ]) + "\n"; // "Teleport works until the destruction of MHQ"
+    _str = _str + (format[localize "STR_SET_9_2", __NO_TELEPORT_ON_DAMAGE__ * 100,"%" ]) + "\n"; // "Teleport works until the MHQ damage %1%2"
 #else
     _str = _str + (localize "STR_SET_9_1") + "\n"; // "Teleport shuts off when MHQ is damaged at %1 percents"
 #endif

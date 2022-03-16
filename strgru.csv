@@ -48,9 +48,9 @@ STR_GRU_43,red-hot,weiß,calento,раскалённый
 STR_GRU_44,GRU already uses D-installation and control PC.,GRU nutzt bereits die D-Installation und Management-PC.,El GRU ya ha utilizado la D-instalación y el PC de control.,ГРУ уже задействовало Д-установку и управляющую ПЭВМ.
 STR_GRU_45,"Report to your commander about D-unit failure! Telemetry: %1, cc %2, nt %3, tc %4","Melden Sie Ihrem commander zu D-Einheit Fehler! Telemetrie: %1, cc %2, nt %3, tc %4","¡Informe al comando que la instalación D no funciona! Telemetría: %1, cc %2, nt %3, tc %4","Сообщите командованию, что Д-установка не работает! Телеметрия: %1, cc %2, nt %3, tc %4"
 
-STR_GRU_46,The landing of the enemy patrol spotted by %1%2%3%4%5%6,Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6,Local %1 vio el desembarco de una patrulla enemiga%2%3%4%5%6,Местный %1 наблюдал высадку вражеского патруля %2%3%4%5%6
+STR_GRU_46,The landing of the enemy patrol spotted by %1%2%3%4%5%6,Die Landung der feindlichen Patrouille entdeckt von %1%2%3%4%5%6,Local %1 vio el desembarco de una patrulla enemiga%2%3%4%5%6,Местный %1 наблюдал высадку вражеского патруля%2%3%4%5%6
 STR_GRU_46_0,Sahrani inhabitants inform: Enemy patrols disappeared!,Sahrani Bewohner informieren: Feindliche Patrouillen verschwunden!,"¡Las patrullas enemigas han desaparecido, informan los residentes!","Вражеские патрули исчезли, сообщают жители!"
-STR_GRU_46_1,"near ""%1""","in der Nähe von ""%1""","cerca de "" %1""","близ ""%1"""
+STR_GRU_46_1," near ""%1"""," in der Nähe von ""%1"""," cerca de "" %1"""," близ ""%1"""
 STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," a una distancia de aproximadamente %1 m."," на дист. примерно %1 м."
 STR_GRU_46_3," bearing %1"," Richtung %1"," acimut %1"," азимут %1"
 STR_GRU_46_4,num. %1 unit[s],die Num. %1 Fahrzeug[s],", num. %1 unidades.",", числ. %1 ед."
