@@ -16,8 +16,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,1)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = format[localize "STR_SYS_500","Ixel","Tandag"]; //"Враг отправил колонну снабжения усиленную бронетехникой из Ixel в Tandag. Ваша задача: обнаружить и уничтожить конвой.";
-	current_mission_resolved_text = localize "STR_SYS_501"; // "Задание выполнено! Конвой разбит.";
+	current_mission_text = format[localize "STR_SYS_500","Ixel","Tandag", d_ranked_a select 11]; //"The enemy has sent a convoy of supply, reinforced by armored vehicles, from %1 to %2. Your task: find and destroy all the machines, without any exception, including empty and upside down. If the mission fails, the penalty is -%3"
+	current_mission_resolved_text = localize "STR_SYS_501"; // Task completed! Convoy is destroyed
 };
 
 if (isServer) then {
