@@ -1,5 +1,5 @@
 /*
-	scripts\bonus\bonus_server.sqf
+	scripts\bonus\bonus_markers.sqf
 
 	author: Sygsky
 

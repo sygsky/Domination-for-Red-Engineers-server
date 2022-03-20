@@ -929,49 +929,32 @@ XHandleNetStartScriptClient = {
 			private ["_veh"];
 			_veh = _this select 3;
 			switch (_this select 1) do {
-
 				// send vehicle to players to control and re-draw its marker every few seconds
 				case "ADD": {
-					if (isNil "client_bonus_markers_array") then {  // first vehicle added
-						client_bonus_markers_array = [];
-						hint localize "--- bonus.ADD: nil marker array on ADD command!";
-					};
 					if (! (_veh in client_bonus_markers_array)) then {
-						client_bonus_markers_array set [ count client_bonus_markers_array, _veh ];    // add next vehicle to the place of the timestamp
-						client_bonus_markers_timestamp = time;		 // set new timestamp
 						playSound "good_news";
 						(localize "STR_BONUS_1") hintC [
 							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
 							format[localize "STR_BONUS_1_2", typeOf _veh],
 							format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
 							];
-
 						//  send info to all players except author
-						hint localize format["+++ bonus.ADD %1 to the markers list", typeOf _veh];
-	//                    ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
-
+						hint localize format["+++ bonus.ADD on client: %1 to the markers list", typeOf _veh];
+						// ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
+						if ((name player) == (_this select 2)) then { (d_ranked_a select 30) call SYG_addBonusScore;}; // this player found this bonus vehicle, add +2 to him
 					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
-					if ((name player) == (_this select 2)) then { (d_ranked_a select 30) call SYG_addBonusScore;}; // this player found this bonus vehicle, add +2 to him
 				};
 				// send vehicle to players to remove from re-draw list as vehicle now is recoverable
 				case "REG": { // register vehicle as recoverable
 					private ["_id","_cnt"];
 					_id = _veh getVariable "INSPECT_ACTION_ID";
 					if (!isNil "_id") then {
-						_veh removeAction _id;
 						_veh setVariable ["INSPECT_ACTION_ID", nil];
-						hint localize format["+++ bonus.REG: inspect action removed from %1", typeOf _veh];
-					} else {hint localize format["--- bonus.REG: %1 hasnt variable INSPECT_ACTION_ID!!!", typeOf _veh]};
+						_veh removeAction _id;
+						hint localize format["+++ bonus.REG on client: inspect action removed from %1", typeOf _veh];
+					};// else { hint localize format[ "--- bonus.REG: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 
 					// remove from markered vehs list
-					if (isNil "client_bonus_markers_array") then {
-						client_bonus_markers_array = [];
-						hint localize "*** bonus.REG: nil marker array on REG command!";
-					} else {
-						_cnt = count client_bonus_markers_array;
-						[client_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
-						if (count client_bonus_markers_array < _cnt) then { client_bonus_markers_timestamp = time; }; // set new timestamp
-					}; // first vehicle added
 					// register as recoverable vehicle
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
 					playSound "good_news";
@@ -983,36 +966,9 @@ XHandleNetStartScriptClient = {
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;
 					if ((name player) == (_this select 2)) then { (d_ranked_a select 31) call SYG_addBonusScore;}; // this player registered this bonus vehicle, add +2 to him
 				};
-
-				// bonus vehicle killed event
-				//  [ "bonus", _sub_command, _killer, _vehicle ]
-				case "DEL": {
-					hint localize format["+++ bonus.DEL: _this %1", _this];
-					private ["_killer","_name","_cnt"];
-					if (isNil "client_bonus_markers_array") then {
-						client_bonus_markers_array = [];
-						_cnt = count client_bonus_markers_array;
-						hint localize "--- bonus.DEL: nil marker array on DEL command!";
-					} else {
-						_cnt = count client_bonus_markers_array;
-						[client_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
-						if (count client_bonus_markers_array != _cnt) then { client_bonus_markers_timestamp = time;}; // markered vehicle killed
-					};
-					_killer = _this select 2;
-					_name = if (isPlayer _killer) then {name _killer} else {localize "STR_BONUS_DEL_1"};
-					hint localize format["+++ bonus.DEL: prev. cnt %1 -> new cnt %2", _cnt, count client_bonus_markers_array];
-					["msg_to_user", "", [[ localize "STR_BONUS_DEL", typeOf _veh, _name]], 0, 2, false, "losing_patience"] call XHandleNetStartScriptClient;
-				};
-
-				// [ "bonus", _sub_command, "", _veh_arr ]: replace whole bonus marker array
-				case "RESET": {
-					client_bonus_markers_array = _this select 3;
-					hint localize format["+++ bonus.RESET: new veh(s) added, count %1", count client_bonus_markers_array];
-					client_bonus_markers_timestamp = time;
-					["msg_to_user", "", [[ localize "STR_BONUS_6", count client_bonus_markers_array, _name]], 0, 105, false, "good_news"] call SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
-				};
-
 			};
+			hint localize format["+++ bonus.%1 on client: timestamp changed from server", _this select 1];
+			client_bonus_markers_timestamp = time; // set time stamp to start rrenewing of markers on each client
 		};
 #endif
 

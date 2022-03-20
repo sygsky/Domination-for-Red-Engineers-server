@@ -14,7 +14,7 @@ sleep 1;
 #include "x_macros.sqf"
 
 //#define __DEBUG__
-//#define __DEBUG_BONUS__
+#define __DEBUG_DOSAAF__
 //#define __DEBUG_JAIL__
 
 #define __MISSION_START__
@@ -1499,7 +1499,7 @@ if (__AIVer || d_para_at_base) then {
 };
 #endif
 
-#ifdef __DEBUG_BONUS__
+#ifdef __DEBUG_DOSAAF__
 FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
 player addScore 800;
 #endif
@@ -1700,7 +1700,7 @@ player call SYG_handlePlayerDammage; // handle hit events
         #endif
         #ifdef __BATTLEFIELD_BONUS__
         execVM "scripts\bonus\bonus_client.sqf";
-        [] execVM "scripts\bonus\bonus_markers.sqf"; // load markers on the base rectangle
+//        [] execVM "scripts\bonus\bonus_markers.sqf"; // not used: load markers on the base rectangle
         #endif
     };
 #endif

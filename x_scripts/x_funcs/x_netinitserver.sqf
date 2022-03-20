@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-//#define __DEBUG_BONUS__
+#define __DEBUG_DOSAAF__
 
 "d_nv_serv" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
@@ -16,11 +16,11 @@ XHandleNetStartScriptServer = {
 	private ["_this","_params"];
 	__DEBUG_NET("x_netinitserver.sqf XHandleNetStartScriptServer _this",_this)
 	switch (_this select 0) do {
-#ifdef __DEBUG_BONUS__
+#ifdef __DEBUG_DOSAAF__
 	    case "getbonus": {
 //	        hint localize "+++ x_netinitserver.sqf: [] execVM ""x_scripts\x_getbonus.sqf""";
 //	        side_mission_winner = 1;
-			[] execVM "scripts\bonus\createMTBonus.sqf";
+			[] execVM "scripts\bonus\createBFBonus.sqf";
 	    };
 #endif
 		case "ari_type": {
@@ -303,11 +303,6 @@ XHandleNetStartScriptServer = {
 			sleep 1.0;
 			["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
-#ifdef __BATTLEFIELD_BONUS__
-			sleep 1.0;
-			["bonus", "RESET", "", server_bonus_markers_array ] call XSendNetStartScriptClient;
-#endif
-
 			// log info  about logging
 			hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
 		};
@@ -466,16 +461,12 @@ XHandleNetStartScriptServer = {
 			switch (_this select 1) do {
 				// send vehicle to all players to draw and control marker on it
 				case "ADD": {
-					// add to the list of markered vehicles
-					if (!(_veh in server_bonus_markers_array)) then {
-						_veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable
-						// store vehicle to send list to the new player on connection.
-						// It is the only task for this list
-						server_bonus_markers_array set [count server_bonus_markers_array, _veh];
-						// TODO: send info to all clients
-						hint localize format["+++ server: bonus ADD %1 to all clients", typeOf _veh];
-						_this call XSendNetStartScriptClientAll; // to all clients
-					};
+					_veh setVehicleInit "this setVariable [""RECOVERABLE"", false];";
+					processInitCommands;
+					// mark to be markered vehicles
+					_veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable
+					hint localize format["+++ bonus.ADD on server: %1 to all clients", typeOf _veh];
+					_this call XSendNetStartScriptClientAll; // to all clients
 				};
 
 				// register vehicle as RECOVERABLE from now
@@ -484,11 +475,7 @@ XHandleNetStartScriptServer = {
 					_veh setVariable ["RECOVERABLE", true]; // allow to restore vehicle
 					_veh call SYG_removeVehicleHitDamKilEvents;
 					_veh call SYG_assignVehAsBonusOne;
-					if (_veh in server_bonus_markers_array) then {
-						// remove vehicle from the markered list
-						[server_bonus_markers_array, _veh] call SYG_removeObjectFromArray;
-					};
-					hint localize format["+++ server: bonus.REG %1 to all clients by %2", typeOf _veh, _this select 2];
+					hint localize format["+++ bonus.REG on server:  %1 to all clients by %2", typeOf _veh, _this select 2];
 					_this call XSendNetStartScriptClientAll; // to all clients
 				};
 

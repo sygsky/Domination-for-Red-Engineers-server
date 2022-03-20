@@ -24,16 +24,30 @@ if ( !isPLayer (_this select 1) ) exitWith {
 };
 
 if ( (getPos _veh) call SYG_pointIsOnBase ) exitWith {
-	["bonus", "REG", _name, _veh ] call XSendNetStartScriptServer;
-	hint localize format ["+++ bonusInspectAction.sqf: vehicle %1 is registered on the base, remove '%2' from command list and assign veh as bonus", typeOf _veh, localize "STR_CHECK_ITEM"];
-	// Vehicle is on base, print message about and assign vehicle to be reastoreable
+	// Vehicle is on base, print message about and assign vehicle to be restoreable
+	_id = _veh getVariable "INSPECT_ACTION_ID";
+	if (!isNil "_id") then {
+		_veh setVariable ["INSPECT_ACTION_ID", nil];
+		_veh removeAction _id;
+		hint localize format["+++ bonusInspectAction.sqf: inspect action removed from %1", typeOf _veh];
+		["bonus", "REG", _name, _veh ] call XSendNetStartScriptServer;  // send to server and it will return event to all clients
+		hint localize format ["+++ bonusInspectAction.sqf: vehicle %1 is registered on the base, remove '%2' from command list and assign veh as bonus", typeOf _veh, localize "STR_CHECK_ITEM"];
+	} else {format["--- bonusInspectAction.sqf: inspect action not expected but executed. Do nothing!"]};
 };
 
-if ( _veh in client_bonus_markers_array) exitWith { // Do nothing except inform about vehicle already marked
+_already_marked =  _veh in client_bonus_markers_array;
+if (!_already_marked) then {
+	_var = _veh getVariable "RECOVERABLE";
+	if (!isNil "_var") then { _already_marked = !_var };
+};
+
+if ( _already_marked ) exitWith { // Do nothing except inform about vehicle already marked
 	hint localize format["+++ Vehicle %1 is inspected by ""%2"" near ""%3"" already is marked known. Exit.", typeOf _veh, _name, _loc_name];
 	localize "STR_BONUS_4" hintC [format[localize "STR_BONUS_4_1", typeOf _veh ],
 						format[localize "STR_BONUS_4_2", typeOf _veh, localize "STR_CHECK_ITEM"]];
 };
 
-["bonus", "ADD", _name, _veh ] call XSendNetStartScriptServer;
+_veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable
+
+["bonus", "ADD", _name, _veh ] call XSendNetStartScriptServer; // send to server and it will return event to all clients
 hint localize format["+++ bonusInspectAction.sqf: Vehicle %1 inspected by '%2' near '%3'. Exit.", typeOf _veh, _name, _loc_name];

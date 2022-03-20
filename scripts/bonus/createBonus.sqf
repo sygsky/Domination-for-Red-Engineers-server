@@ -1,5 +1,5 @@
 /*
-	scripts\bonus\createBonus.sqf: debug script to test main functionality
+	scripts\bonus\createBonus.sqf: DEBUG script to test main functionality, NOT USED ANYMORE
 
     ...
 	author: Sygsky
@@ -39,7 +39,7 @@ if (isNil "mt_bonus_vehicle_array_COM") exitWith{
     conus_at_pos = objNull;
 
 	[] execVM "scripts\bonus\bonus_client.sqf";
-	[] execVM "scripts\bonus\bonus_server.sqf";
+//	[] execVM "scripts\bonus\bonus_server.sqf";
 
 	_str = "+++ test bonus module initiated";
     hint localize _str;

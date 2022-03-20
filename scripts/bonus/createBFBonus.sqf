@@ -1,5 +1,5 @@
 /*
-	scripts\bonus\createMTBonus.sqf : script to call from base flag when debug "BattleField Bonus"
+	scripts\bonus\createBFBonus.sqf : DEBUG script to call from base flag when debugging "BattleField Bonus"
 	Creates bonus vehicles (tank, car, heli, plane) on Rahmadi
 	author: Sygsky
 	description: none

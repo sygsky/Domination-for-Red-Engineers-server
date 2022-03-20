@@ -10,7 +10,7 @@
 #include "bonus_def.sqf"
 
 if (typeName _this == "OBJECT") then {_this = [_this]};
-if (typeName _this != "ARRAY") exitWith {hint localize format["--- assignAsBonus.sqf, found %1, exit!",typeName _this]};
+if (typeName _this != "ARRAY") exitWith {hint localize format["--- assignAsBonus.sqf, expected input type is ARRAY, detected %1, EXIT ON ERROR !!!",typeName _this]};
 _msg_arr = [];
 {
 	if ( ! (_x isKindOf "Landvehicle" || _x isKindOf "Air" || _x isKindOf "Ship") ) exitWith {
@@ -28,7 +28,8 @@ _msg_arr = [];
 	_x call SYG_addEventsAndDispose; // add all std mission-driven events here (not recoverable, may be killed and removed from the mission)
 
 	//  Passed array for "killed" event: [unit, killer]
-	_x addEventHandler [ "killed", {
+/**
+	_id = _x addEventHandler [ "killed", {
 			private ["_cnt"];
 			_cnt = count server_bonus_markers_array;
 			[server_bonus_markers_array, _this select 0] call SYG_removeObjectFromArray;
@@ -36,9 +37,10 @@ _msg_arr = [];
 			hint localize format["+++ assignAsBonus.sqf: killed _this %1, markers prev. cnt %2, new cnt %3", _this, _cnt, count server_bonus_markers_array];
 		}
 	];
+*/
 	_near_loc_name = text (_x call SYG_nearestLocation);
 	_msg_arr set [count _msg_arr, ["STR_BONUS", _near_loc_name, typeOf _x]];
-	hint localize format["+++ assignAsBonus.sqf: all events set, ""%1"" action  added to the %2 near %3", localize "STR_CHECK_ITEM", typeOf _x, _near_loc_name];
+	hint localize format["+++ assignAsBonus.sqf: all events set, ""%1"" action  added to the %2 near %3, killed_id = %4", localize "STR_CHECK_ITEM", typeOf _x, _near_loc_name, _id];
 } forEach _this;
 ["msg_to_user","*",_msg_arr,8,1,false,"good_news"] call XSendNetStartScriptClientAll;
 

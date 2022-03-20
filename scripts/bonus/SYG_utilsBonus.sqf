@@ -147,3 +147,90 @@ SYG_addBonusCone = {
 	_obj setVariable [ "bonus_veh", _x ];
 	_obj addAction[ localize "STR_CHECK_ITEM", "scripts\bonus\coneInfo.sqf" ];
 };
+
+
+//
+// Call as follows: _veh call SYG_addBonusCone;
+//
+SYG_addBonusCone = {
+	hint localize format[ "+++ SYG_addBonusCone: %1", _this ];
+	private ["_mt","_center","_scale","_new_center","_cone_type","_xc","_yc","_xn","_yn","_pos","_new_pos","_obj"];
+	_mt = "Corazol" call SYG_MTByName;
+	_center     = _mt select 0;
+	_scale      = DOSAAF_MAP_SCALE; // scale 1: 100 => 100 m in 1 m
+	_new_center = DOSAAF_MAP_POS; //getPos cone_map_center;
+	_cone_type  = "RoadCone";
+
+	_xc = _center select 0;
+	_yc = _center select 1;
+	_xn = _new_center select 0;
+	_yn = _new_center select 1;
+
+	_pos      = getPos _this;
+	_new_pos  = [_xn + (((_pos select 0) - _xc) * _scale), _yn + (((_pos select 1) - _yc) * _scale), 0.4];
+	hint localize format["+++ Cone added: dx %1, dy %2", (((_pos select 0) - _xc) * _scale), (((_pos select 1) - _yc) * _scale) ];
+	_obj = _cone_type createVehicleLocal _new_pos;
+	_obj setVehiclePosition [_new_pos, [], 0, "CAN_COLLIDE"];
+	_obj setVariable [ "bonus_veh", _this ];
+	_obj addAction[ localize "STR_CHECK_ITEM", "scripts\bonus\coneInfo.sqf" ];
+};
+
+//
+// Returns the list of vehicles that match the designated condition. Vehicle is accessed through the external variable _x
+// call as follows:
+// _code = { private ["_var"]; _x getVariable "INSPECT_ACTION_ID"; if ( isNil "_var") exitWith { false}; isAlive _var };
+// _list = _code call SYG_scanVehicles;
+// E.g.:
+//
+SYG_scanVehicles = {
+	private ["_arr","_x"];
+	_arr = [];
+	{
+		if ( _x call _this ) then { _arr set [ count _arr, _x ] };
+	} forEach vehicles;
+	_arr
+};
+
+//
+// Returns all alive non registered DOSAAF vehicles
+// 	_id = _x getVariable "INSPECT_ACTION_ID"; // check if vehicle is bonus with "Inspect" command on it
+SYG_scanDOSAAFVehicles = {
+	private ["_x","_var", "_arr","_cnt"];
+	_arr = [];
+	_cnt = 0;
+	{
+		if (alive _x) then {
+			_var = _x getVariable "RECOVERABLE";//  If inspected follow code is executed: "this setVariable [""RECOVERABLE"", false]"
+			if ( !( isNil "_var" ) ) then {
+				if (!_var) then {
+					_arr set [count _arr, _x]
+				};
+			};
+		};
+		_cnt = _cnt + 1;
+		if ((_cnt mod 20) == 0) then {sleep 0.01};
+	} forEach vehicles;
+	hint localize format["+++ SYG_scanDOSAAFVehicles whole vehicles counter = %1", _cnt];
+	_arr
+};
+
+//
+// Counts vehicles, returns array:
+// [_common count, _veh_count, DOSAAF_count, alive_count]
+// call as follows: _ret_arr = call SYG_countVehicles;
+//
+SYG_countVehicles = {
+	private ["_cnt","_cntv","_cntd","_cnta","_var","_x"];
+	_cnt = 0; _cntv = 0; _cntd = 0; _cnta = 0;
+	{
+		if ( (_x isKindOf "LandVehicle") || (_x isKindOf "Air") || (_x isKindOf "Ship") ) then { // DOSAAF
+			_cntv = _cntv + 1; // vehicle
+			_var = _this getVariable "INSPECT_ACTION_ID";
+			if ( !(isNil "_var") ) then { _cntd = _cntd + 1 };
+		};
+		if ( alive _x ) then { _cnta = _cnta + 1 }; // alive
+		_cnt = _cnt + 1; // all items count
+	} forEach vehicles;
+	[_cnt, _cntv, _cntd, _cnta]
+};
+

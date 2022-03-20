@@ -104,8 +104,8 @@ GRU_procServerMsg = {
 			_task = _task_id call GRU_getTask;
 			_agent_list = argp(_task,GRU_MAIN_LIST); 
 			if ( !(_player_name in _agent_list)) then {
-				_agent_list set [count _agent_list, _player_name];
-//				_task set [GRU_MAIN_LIST, _agent_list + [_player_name]];
+				_agent_list set [count _agent_list, _player_name]; // add next agent to the list
+				_task set [GRU_MAIN_LIST, _agent_list];
 				publicVariable "GRU_tasks";
 			};
 			_msg = ["STR_GRU_10", "STR_GRU_1", _task_name_id, _player_name, GRU_MAIN_GET_TOWN_NAME]; // "задачу %1 ""%2"" начал выполнять %3"
