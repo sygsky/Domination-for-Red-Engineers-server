@@ -16,7 +16,7 @@ client_bonus_markers_timestamp = time; // start marker drawing
 client_bonus_markers_array     = [];	// load all veh markers found in vehicles collection
 _bonus_markers                 = [];	// known vehs itself
 _next_id                       = 1;		// next free id for the bonus vehicle markers
-_bonus_timestamp               = -1;
+_bonus_timestamp               = 0;
 
 //
 // reset bonus markers system from the scratch
@@ -26,7 +26,7 @@ _reset_params = {
 	private [ "_veh","_mrk","_ind","_x","_mrk_type","_new_array","_del_arr","_add_arr","_update","_x" ];
 	_time = time;
 	_new_array = call SYG_scanDOSAAFVehicles; // load all alive DOSAAF vehicles
-	hint localize format["+++ SYG_scanDOSAAFVehicles executed in %1 secs ", time - _time];
+//	hint localize format["+++ SYG_scanDOSAAFVehicles executed in %1 secs ", time - _time];
 	if ( (_next_id == 1) && ( count _new_array > 0 )) then {
 		["msg_to_user", "", [[ localize "STR_BONUS_6", count _new_array]], 0, 105, false, "good_news"] call SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
 	};
@@ -59,7 +59,7 @@ _reset_params = {
 		if (!alive _veh) then { // killed or null
 			deleteMarkerLocal (_bonus_markers select _i);
 			_bonus_markers set [_i, "RM_ME"];
-			client_bonus_markers_array   set [_i, "RM_ME"];
+			client_bonus_markers_array set [_i, "RM_ME"];
 			_update = true;
 		};
 	};
@@ -90,6 +90,7 @@ _reset_params = {
 		_add_arr = nil;
 	};
 	_new_array = nil;
+	if ((count _bonus_markers) != (count client_bonus_markers_array)) then {format["--- _reset_params: markers cnt %1 != vehs cnt %2", count _bonus_markers, count client_bonus_markers_array]};
 };
 
 hint localize format["+++ _reset_params = %1", typeName _reset_params];
@@ -129,7 +130,7 @@ while { true } do {
 	if ( _update || ( client_bonus_markers_timestamp != _bonus_timestamp ) ) then {
 		call _reset_params; // reset markers for DOSAAF vehicles
 		_update = true; // update on list change
-		if ( client_bonus_markers_timestamp != _bonus_timestamp ) then {	_bonus_timestamp = client_bonus_markers_timestamp; };
+		if ( client_bonus_markers_timestamp != _bonus_timestamp ) then { _bonus_timestamp = client_bonus_markers_timestamp; };
 	};
 	if (_update ) then {
 //			hint localize format["+++ bonus_client: vehs moved %2", _moved_cnt];

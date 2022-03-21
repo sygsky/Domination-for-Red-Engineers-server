@@ -933,6 +933,7 @@ XHandleNetStartScriptClient = {
 				case "ADD": {
 					if (! (_veh in client_bonus_markers_array)) then {
 					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered
+					    _ret = call SYG_countVehicles; // _id = vehicles find _veh;
 						playSound "good_news";
 						(localize "STR_BONUS_1") hintC [
 							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
@@ -940,7 +941,7 @@ XHandleNetStartScriptClient = {
 							format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
 							];
 						//  send info to all players except author
-						hint localize format["+++ bonus.ADD on client: %1 to the markers list", typeOf _veh];
+						hint localize format["+++ bonus.ADD on client: %1 to the markers list, cnt/ vehs/ DOSAAF/alive /markers /bonus = %2 ", typeOf _veh,_ret];
 						// ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
 						if ((name player) == (_this select 2)) then { (d_ranked_a select 30) call SYG_addBonusScore;}; // this player found this bonus vehicle, add +2 to him
 					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
@@ -952,7 +953,8 @@ XHandleNetStartScriptClient = {
 					if (!isNil "_id") then {
 						_veh setVariable ["INSPECT_ACTION_ID", nil];
 						_veh removeAction _id;
-						hint localize format["+++ bonus.REG on client: inspect action removed from %1", typeOf _veh];
+						_ret = call SYG_countVehicles;
+						hint localize format["+++ bonus.REG on client: inspect action removed from %1, cnt/ vehs/ DOSAAF/alive /markers /bonus = %2", typeOf _veh, _ret];
 					};// else { hint localize format[ "--- bonus.REG: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 					// remove from markered vehs list register as recoverable vehicle
                     _veh setVariable ["RECOVERABLE", true];
@@ -968,7 +970,7 @@ XHandleNetStartScriptClient = {
 				};
 			};
 			hint localize format["+++ bonus.%1 on client: timestamp changed from server", _this select 1];
-			client_bonus_markers_timestamp = time; // set time stamp to start rrenewing of markers on each client
+			client_bonus_markers_timestamp = time; // set time stamp to start renewing of markers on each client
 		};
 #endif
 

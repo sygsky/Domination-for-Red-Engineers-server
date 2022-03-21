@@ -210,27 +210,34 @@ SYG_scanDOSAAFVehicles = {
 		_cnt = _cnt + 1;
 		if ((_cnt mod 20) == 0) then {sleep 0.01};
 	} forEach vehicles;
-	hint localize format["+++ SYG_scanDOSAAFVehicles whole vehicles counter = %1", _cnt];
+	hint localize format["+++ SYG_scanDOSAAFVehicles whole vehicles counter = %1, DOSAAF found %2", _cnt, count _arr];
 	_arr
 };
 
 //
 // Counts vehicles, returns array:
-// [_common count, _veh_count, DOSAAF_count, alive_count]
+// [_common count, _veh_count, DOSAAF_count, alive_count, markered_count, bonus_count]
 // call as follows: _ret_arr = call SYG_countVehicles;
 //
 SYG_countVehicles = {
-	private ["_cnt","_cntv","_cntd","_cnta","_var","_x"];
-	_cnt = 0; _cntv = 0; _cntd = 0; _cnta = 0;
+	private ["_cnt","_cntv","_cntd","_cnta","_cntm","_var","_x"];
+	_cnt = 0; _cntv = 0; _cntd = 0; _cnta = 0; _cntm = 0; _cntb = 0;
 	{
 		if ( (_x isKindOf "LandVehicle") || (_x isKindOf "Air") || (_x isKindOf "Ship") ) then { // DOSAAF
 			_cntv = _cntv + 1; // vehicle
-			_var = _this getVariable "INSPECT_ACTION_ID";
-			if ( !(isNil "_var") ) then { _cntd = _cntd + 1 };
+
+			_var = _x getVariable "INSPECT_ACTION_ID";
+			if ( !(isNil "_var") ) then { _cntd = _cntd + 1 }; // DOSAAF vehicle
+
+			_var = _x getVariable "RECOVERABLE";
+			if ( !isNil"_var" ) then {
+				if ( !_var ) then { _cntm = _cntm + 1 } else { _cntb = _cntb + 1 }; // bonus vehicle
+			};
+
+			if ( alive _x ) then { _cnta = _cnta + 1 }; // alive vehicle
 		};
-		if ( alive _x ) then { _cnta = _cnta + 1 }; // alive
 		_cnt = _cnt + 1; // all items count
 	} forEach vehicles;
-	[_cnt, _cntv, _cntd, _cnta]
+	[_cnt, _cntv, _cntd, _cnta, _cntm, _cntb]
 };
 
