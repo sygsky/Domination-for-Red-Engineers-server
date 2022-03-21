@@ -43,6 +43,7 @@ if (!isServer) exitWith {};
 _grp_array = _this;
 
 _grp = _grp_array select 0;
+_grp setVariable ["grp_array", _grp_array]; // save status array in the group itself
 
 // _rejoin_num means if group allowed to rejoin to bigger one is nearly destroyed (1 man in group canMove only)
 _rejoin_num      = 0;

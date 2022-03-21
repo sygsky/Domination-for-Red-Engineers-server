@@ -932,6 +932,7 @@ XHandleNetStartScriptClient = {
 				// send vehicle to players to control and re-draw its marker every few seconds
 				case "ADD": {
 					if (! (_veh in client_bonus_markers_array)) then {
+					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered
 						playSound "good_news";
 						(localize "STR_BONUS_1") hintC [
 							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
@@ -953,9 +954,8 @@ XHandleNetStartScriptClient = {
 						_veh removeAction _id;
 						hint localize format["+++ bonus.REG on client: inspect action removed from %1", typeOf _veh];
 					};// else { hint localize format[ "--- bonus.REG: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
-
-					// remove from markered vehs list
-					// register as recoverable vehicle
+					// remove from markered vehs list register as recoverable vehicle
+                    _veh setVariable ["RECOVERABLE", true];
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
 					playSound "good_news";
 					localize "STR_BONUS_3_1" hintC [

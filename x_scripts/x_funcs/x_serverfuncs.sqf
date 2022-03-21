@@ -498,7 +498,7 @@ x_makevgroup = {
 // Params:
 // position, unitlist, group, do_points (for TT mode)
 x_makemgroup = {
-	private ["_grp","_pos","_ret","_unitliste","_do_points","_x"];
+	private ["_grp","_pos","_ret","_unitliste","_one_unit","_do_points","_x"];
 	_pos = _this select 0;
 	_unitliste = _this select 1;
 	_grp = _this select 2;

@@ -461,8 +461,9 @@ XHandleNetStartScriptServer = {
 			switch (_this select 1) do {
 				// send vehicle to all players to draw and control marker on it
 				case "ADD": {
-					_veh setVehicleInit "this setVariable [""RECOVERABLE"", false];";
-					processInitCommands;
+				    // replace 1st initline (at vehicle creation) with second one (for markered vehicle)
+					_veh setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_CHECK_ITEM"", ""scripts\bonus\bonusInspectAction.sqf"",[]]];this setVariable [""RECOVERABLE"",false];";
+//					processInitCommands;
 					// mark to be markered vehicles
 					_veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable
 					hint localize format["+++ bonus.ADD on server: %1 to all clients", typeOf _veh];
@@ -472,7 +473,7 @@ XHandleNetStartScriptServer = {
 				// register vehicle as RECOVERABLE from now
 				case "REG": {
 					clearVehicleInit _veh;
-					_veh setVariable ["RECOVERABLE", true]; // allow to restore vehicle
+//					_veh setVariable ["RECOVERABLE", true]; // is set in call SYG_assignVehAsBonusOneto allow to restore vehicle
 					_veh call SYG_removeVehicleHitDamKilEvents;
 					_veh call SYG_assignVehAsBonusOne;
 					hint localize format["+++ bonus.REG on server:  %1 to all clients by %2", typeOf _veh, _this select 2];

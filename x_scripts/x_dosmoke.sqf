@@ -26,16 +26,18 @@ if ( vehicle _killed != _killed ) exitWith {
 };
 _has_smoke = false;
 
-if (_grp_killed in smoke_groups) exitWith {
+hint localize format["+++ x_dosmoke.sqf: %1 killed, combat mode %2, behaviour %3", typeOf _killed, combatMode _killed, behaviour _killed];
+
 #ifdef __DEBUG__
-	player groupChat "+++ x_dosmoke2.sqf: group of killed unit is already smoking, exit";
-#endif
+if (_grp_killed in smoke_groups) exitWith {
+	hint localize "+++ x_dosmoke2.sqf: group of killed unit is already smoking, exit";
 };
+#endif
 
 _grp_units = units _grp_killed;
 
 #ifdef __DEBUG__
-player groupChat format["x_dosmoke.sqf: units in group %1, alive units %2", count _grp_units, {alive _x} count _grp_units];
+hint localize format["x_dosmoke.sqf: units in group %1, alive units %2", count _grp_units, {alive _x} count _grp_units];
 #endif
 
 if (({alive _x} count _grp_units) > 0) then {
@@ -46,7 +48,7 @@ if (({alive _x} count _grp_units) > 0) then {
 	sleep 0.5123;
 	_leader = leader _grp_killed;
 #ifdef __DEBUG__
-	player groupChat format["+++ x_dosmoke.sqf: leader %1 knowsAbout %2", name _leader, _leader knowsAbout _killer];
+	hint localize format["+++ x_dosmoke.sqf: leader %1 knowsAbout %2", name _leader, _leader knowsAbout _killer];
 #endif
 	if ((!isNull _leader) && (_leader knowsAbout _killer >= 1.5)) then {
 		{
@@ -81,7 +83,7 @@ if (({alive _x} count _grp_units) > 0) then {
 		if ( ! isNull _nearest ) then {
 		    _shell_unit = _nearest;
 #ifdef __DEBUG__
-			player groupChat format["+++ x_scripts/x_dosmoke.sqf: shell %1, unit %2 selected to throw", _one_shell, _shell_unit];
+			hint localize format["+++ x_scripts/x_dosmoke.sqf: shell %1, unit %2 selected to throw", _one_shell, _shell_unit];
 #endif			
 			_one_shell_muzzle = (switch (_one_shell) do
 			{
@@ -99,7 +101,7 @@ if (({alive _x} count _grp_units) > 0) then {
 			});
 //			_one_shell_muzzle = (switch (_one_shell) do {case "SmokeShell": {"SmokeShellMuzzle"};case "SmokeShellGreen": {"SmokeShellGreenMuzzle"};case "SmokeShellRed": {"SmokeShellRedMuzzle"};});
 #ifdef __DEBUG__			
-			player groupChat format["+++ x_scripts/x_dosmoke.sqf: shell %1, muzzle %2, unit %3 selected to throw", _one_shell, _one_shell_muzzle, _shell_unit];
+			hint localize format["+++ x_scripts/x_dosmoke.sqf: shell %1, muzzle %2, unit %3 selected to throw", _one_shell, _one_shell_muzzle, _shell_unit];
 #endif			
 			_shell_unit selectWeapon _one_shell_muzzle;
 			sleep 0.121;
@@ -109,23 +111,23 @@ if (({alive _x} count _grp_units) > 0) then {
 				_shell_unit commandTarget _killer;
 			};
 #ifdef __DEBUG__			
-			player groupChat "+++ x_scripts/x_dosmoke.sqf: unit watch you now";
+			hint localize "+++ x_scripts/x_dosmoke.sqf: unit watch you now";
 #endif			
 			sleep 1.634;
 			_shell_unit fire _one_shell_muzzle;
 			_has_smoke = true;
-			smoke_groups = smoke_groups + [_grp_killed];
+			smoke_groups set [count smoke_groups, _grp_killed];
 			sleep 1.437;
 		    _shell_unit doWatch objNull;
 #ifdef __DEBUG__		
-			player groupChat "+++ x_scripts/x_dosmoke.sqf: unit stop watching you";
+			hint localize "+++ x_scripts/x_dosmoke.sqf: unit stop watching you";
 		} else {
-			player groupChat "+++ x_scripts/x_dosmoke.sqf: smoke shell not found";
+			hint localize "+++ x_scripts/x_dosmoke.sqf: smoke shell not found";
 #endif			
 		};
 #ifdef __DEBUG__
 	} else {
-		player groupChat format["+++ x_scripts/x_dosmoke.sqf: leader knowsAbout about %1 (too little)",_leader knowsAbout _killer];
+		hint localize format["+++ x_scripts/x_dosmoke.sqf: leader knowsAbout about %1 (too little)",_leader knowsAbout _killer];
 #endif		
 	};
 	if (_has_smoke ) then {
@@ -137,8 +139,7 @@ if (({alive _x} count _grp_units) > 0) then {
 			};
 		} forEach units _grp_killed;
 		
-		_grp_killed spawn
-		{
+		_grp_killed spawn {
 			private ["_grp_killed"];
 			_grp = _this;
 			sleep 18.123;
@@ -151,8 +152,7 @@ if (({alive _x} count _grp_units) > 0) then {
 			} forEach units _grp;
 		};
 	
-		_grp_killed spawn
-		{
+		_grp_killed spawn {
 			private ["_grp_killed"];
 			_grp = _this;
 #ifdef __DEBUG__
