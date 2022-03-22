@@ -2423,7 +2423,7 @@ SYG_getCompatibleMagazines = {
 //
 SYG_reammoTruck = {
 	if ( _this isKindOf "Truck5tReammo" ) then {
-		hint localize format["SYG_reammoTruck: called for %1", typeOf _this];
+		hint localize format["+++ SYG_reammoTruck: called for %1", typeOf _this];
 
 		_this call SYG_clearAmmoBox;
 

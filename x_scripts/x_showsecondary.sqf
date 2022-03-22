@@ -18,7 +18,7 @@ if ((current_target_index != -1) && (sec_kind > 0)) then
 		case 3:	 {// ammo truck is a secondary target in the town
 			_rearmed = [_target_array2 select 0] call SYG_reammoTruckAround;
 #ifdef __PRINT__
-			hint localize format[ "x_showsecondary.sqf: vehicles of 'Truck5tReammo' type rearmed %1", _rearmed ];
+			hint localize format[ "+++ x_showsecondary.sqf: vehicles of 'Truck5tReammo' type rearmed %1", _rearmed ];
 #endif				
 		}; 
  	    case 1;

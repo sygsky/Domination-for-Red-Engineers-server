@@ -241,3 +241,17 @@ SYG_countVehicles = {
 	[_cnt, _cntv, _cntd, _cnta, _cntm, _cntb]
 };
 
+//
+// Finds index for vehicle in vehicles collection. On error return -1
+//
+SYG_getVehIndexFromVehicles = {
+	private ["_id", "_ind", "_x"];
+	_id  = 0;
+	_ind = -1;
+	{
+		if (_x == _this) exitWith { _ind = _id };
+		_id = _id + 1;
+	} forEach vehicles;
+	_ind
+};
+

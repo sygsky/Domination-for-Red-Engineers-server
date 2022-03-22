@@ -35,7 +35,7 @@ d_sm_running = true;
 
 if (current_mission_index != -1) then {
 	_posi_array = x_sm_pos;
-	hint localize format[ "x_sm_pos=%1", x_sm_pos ];
+	hint localize format[ "+++ x_getsidemissionclient.sqf: x_sm_pos = %1", x_sm_pos ];
 	_posione = _posi_array select 0;
 	if (x_sm_type != "convoy") then {
 		_m_name = format ["XMISSIONM%1", current_mission_index + 1];

@@ -716,7 +716,7 @@ SYG_updateIntelBuilding = {
 		// add action
 		_comp addAction [ localize argp(_compArr,4), argp(_compArr,3) ];
 #else
-		hint localize "GRU_msg: GRU_MSG_COMP_CREATED sent to clients";
+		hint localize "+++ GRU_msg: GRU_MSG_COMP_CREATED sent to clients";
 		["GRU_msg", GRU_MSG_COMP_CREATED] call XSendNetStartScriptClient;
 #endif
 	} else {

@@ -70,7 +70,7 @@ while {true } do {
     if ((daytime < _nightSkipTo) || (daytime >= _nightSkipFrom)) then {// we are in real night after 21:00, simply skip time up to the morning twilight
         _skip = (( _nightSkipTo - daytime + 24 ) % 24);
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: night detected; daytime (%1)< _nightSkipTo (%2) || daytime >= _nightSkipFrom (%3), skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
+        _str = format["+++ SHORTNIGHT: night detected; daytime (%1)< _nightSkipTo (%2) || daytime >= _nightSkipFrom (%3), skip hours = %4",daytime, _nightSkipTo, _nightSkipFrom, _skip];
         // player groupChat _str;
         hint localize _str;
     #endif
@@ -84,7 +84,7 @@ while {true } do {
             // we are in Single on Player Execution mode (clent is running the server)
             // so simply wait until skip is completed after XSendNetStartScriptClient executed skip command
             // player groupChat _str;
-            hint localize "XPE SHORTNIGHT: wait some time to complete the night skip!!!";
+            hint localize "+++ XPE SHORTNIGHT: wait some time to complete the night skip!!!";
             sleep 10; // wait intil skip time is completed
         };
     };
@@ -92,7 +92,7 @@ while {true } do {
     // NIGHT up to the TWILIGHT continues
     if (daytime < _morningStart) then {// we are in night from 03:00 to the morning, sleep to morning
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: night after 03:00: daytime (%1)< _morningStart (%2), sleep to it", daytime, _morningStart];
+        _str = format["+++ SHORTNIGHT: night after 03:00: daytime (%1)< _morningStart (%2), sleep to it", daytime, _morningStart];
         //player groupChat _str;
         hint localize _str;
     #endif
@@ -106,7 +106,7 @@ while {true } do {
     if (daytime < _dayStart) then {// we are in morning twilight, sleep to day
         2 call _titleTime;// send msg on morning for all client
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: twilight: daytime (%1)< _dayStart, sleep to it",daytime];
+        _str = format["+++ SHORTNIGHT: twilight: daytime (%1)< _dayStart, sleep to it",daytime];
         //player groupChat _str;
         hint localize _str;
     #endif
@@ -117,7 +117,7 @@ while {true } do {
     if (daytime < _eveningStart) then {// we are in day time, sleep to evening
         1 call _titleTime; // send msg on day for all client
     #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: day: daytime (%1)< _eveningStart, sleep %2 to it", daytime, round ((_eveningStart - daytime) * 3600)];
+        _str = format["+++ SHORTNIGHT: day: daytime (%1)< _eveningStart, sleep %2 to it", daytime, round ((_eveningStart - daytime) * 3600)];
         //player groupChat _str;
         hint localize _str;
     #endif
@@ -128,7 +128,7 @@ while {true } do {
     if (daytime < _nightStart) then { // we are in evening twiligth period, sleep to night start
         3 call _titleTime; // send msg on evening for all client
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: evening twilight: daytime (%1)<  _nightStart (%2), sleep to it",daytime, _nightStart];
+        _str = format["+++ SHORTNIGHT: evening twilight: daytime (%1)<  _nightStart (%2), sleep to it",daytime, _nightStart];
         //player groupChat _str;
         hint localize _str;
 #endif
@@ -139,7 +139,7 @@ while {true } do {
     if (daytime < _nightSkipFrom) then { // we are in night, sleep to the skip moment
         0 call _titleTime;
 #ifdef __DEBUG__
-        _str = format["SHORTNIGHT: night before skip: daytime (%1)< _nightSkipFrom (%2), sleep to it",daytime, _nightSkipFrom];
+        _str = format["+++ SHORTNIGHT: night before skip: daytime (%1)< _nightSkipFrom (%2), sleep to it",daytime, _nightSkipFrom];
         //player groupChat _str;
         hint localize _str;
 #endif

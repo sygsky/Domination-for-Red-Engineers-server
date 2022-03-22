@@ -969,8 +969,8 @@ XHandleNetStartScriptClient = {
 					if ((name player) == (_this select 2)) then { (d_ranked_a select 31) call SYG_addBonusScore;}; // this player registered this bonus vehicle, add +2 to him
 				};
 			};
-			hint localize format["+++ bonus.%1 on client: timestamp changed from server", _this select 1];
-			client_bonus_markers_timestamp = time; // set time stamp to start renewing of markers on each client
+			hint localize format["+++ bonus.%1 on client: timestamp changed by server request, was %2, now %3", _this select 1,client_bonus_markers_timestamp, time ];
+			client_bonus_markers_timestamp = time;
 		};
 #endif
 
