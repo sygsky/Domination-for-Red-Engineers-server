@@ -7,16 +7,16 @@
 
 #include "bonus_def.sqf"
 
-// if (!isNil "client_bonus_markers_array") exitWith {hint localize format ["+++ As (!isNil client_bonus_markers_array), then exit"]}; // already run
-
-private ["_bonus_markers", "_bonus_timestamp", "_i", "_veh", "_mrk", "_last_id"];
+while {isNil "client_bonus_markers_array"} do {sleep 10 };
 hint localize "+++ bonus_client started";
 
-client_bonus_markers_timestamp = time; // start marker drawing
-client_bonus_markers_array     = [];	// load all veh markers found in vehicles collection
+private ["_bonus_markers", "_bonus_timestamp", "_i", "_veh", "_mrk", "_last_id"];
+
+//client_bonus_markers_timestamp = time; // start marker drawing
+//client_bonus_markers_array     = [];	// load all veh markers found in vehicles collection
 _bonus_markers                 = [];	// known vehs itself
 _next_id                       = 1;		// next free id for the bonus vehicle markers
-_bonus_timestamp               = 0;
+_bonus_timestamp               = 0;		// last time processed timestamp
 
 //
 // reset bonus markers system from the scratch
@@ -39,10 +39,10 @@ _reset_params = {
 
 	hint localize format["+++ _reset_params: old array[%1], new array[%2]", count client_bonus_markers_array, count _new_array];
 	_del_arr = client_bonus_markers_array - _new_array;	// array of vehs to remove (may contain killed vehicles)
-	if (count _del_arr > 0) then { // old veh array
+	if ( count _del_arr > 0 ) then { // old veh array
 		hint localize format["+++ _reset_params: delete %1 vehicle[s]", count _del_arr];
 		{
-			_ind = _x call SYG_getVehIndexFromVehicles;
+			_ind = client_bonus_markers_array find _x;
 			hint localize format["+++_reset_params: remove id %1", _ind];
 			if (_ind >= 0) then {
 				deleteMarkerLocal (_bonus_markers select _ind);
@@ -80,7 +80,7 @@ _reset_params = {
 		hint localize format["+++ _reset_params: add %1 vehicle[s]", count _add_arr];
 		{
 			if (alive _x) then { // only alive vehicles are markered
-				hint localize format["+++ bonus client: add %1", typeOf _x];
+				hint localize format["+++ bonus_client: add %1", typeOf _x];
 				_mrk = createMarkerLocal [ format[ "_marker_veh_%1", _next_id ], _x ];
 				_next_id = _next_id + 1;
 				_mrk setMarkerColorLocal MARKER_COLOR;
@@ -110,6 +110,7 @@ _last_id =  (count client_bonus_markers_array) - 1;
 while { true } do {
 	_moved_cnt = 0;
 	_update = false;
+	_redraw = false;
 	_last_id =  (count client_bonus_markers_array) - 1;
 	// re-draws moved markers, 0-based item is the time-stamp, not markered vehicle
 	for "_i" from 0 to _last_id do {
@@ -125,24 +126,22 @@ while { true } do {
 			if ( _dist > DIST_TO_REDRAW) then {
 				_mrk setMarkerPosLocal _vpos;
 				_moved_cnt = _moved_cnt + 1;
-				_update = true; // update on vehicle movement detected
+				_redraw = true; // update on vehicle movement detected
 				sleep 0.05;
 			} else { sleep 0.01};
 		} else {
 			// !alive vehicle detected, remove it from markers
+			hint localize format["+++ bonus_client: veh ""%1"" not alive", typeOf _veh];
 			_update = true; // update on killed vehicle detection
 		};
 	};
 	if ( _update || ( client_bonus_markers_timestamp != _bonus_timestamp ) ) then {
+		_bonus_timestamp = client_bonus_markers_timestamp;
 		call _reset_params; // reset markers for DOSAAF vehicles
-		if ( client_bonus_markers_timestamp != _bonus_timestamp ) then {
-			hint localize format["+++ bonus_client: timestamp changed old %1, new %2", _bonus_timestamp, client_bonus_markers_timestamp];
-			_bonus_timestamp = client_bonus_markers_timestamp;
-		};
-		_update = true; // update on list change
+		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" not alive found and updates"} else {""}];
 	};
-	if (_update ) then {
-		hint localize format[ "+++ bonus_client: sleep after update %1", DELAY_NORMAL ];
+	if (_redraw) then {
+		hint localize format[ "+++ bonus_client: sleep after redraw %1", DELAY_NORMAL ];
 		sleep DELAY_NORMAL;
 	} else {
 		hint localize format[ "+++ bonus_client: loop sleep %1", DELAY_LONG ];
