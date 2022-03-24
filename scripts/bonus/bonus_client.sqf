@@ -103,9 +103,7 @@ _reset_params = {
 // eternal loop to redraw moved markers
 //
 
-hint localize "+++ bonus_client: main loop started";
-_last_id =  (count client_bonus_markers_array) - 1;
-
+//hint localize "+++ bonus_client: main loop started";
 
 while { true } do {
 	_moved_cnt = 0;
@@ -141,10 +139,10 @@ while { true } do {
 		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" not alive found and updates"} else {""}];
 	};
 	if (_redraw) then {
-		hint localize format[ "+++ bonus_client: sleep after redraw %1", DELAY_NORMAL ];
+//		hint localize format[ "+++ bonus_client: sleep after redraw %1", DELAY_NORMAL ];
 		sleep DELAY_NORMAL;
 	} else {
-		hint localize format[ "+++ bonus_client: loop sleep %1", DELAY_LONG ];
+//		hint localize format[ "+++ bonus_client: loop sleep %1", DELAY_LONG ];
 		sleep DELAY_LONG
 	};
 };
