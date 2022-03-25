@@ -933,7 +933,7 @@ XHandleNetStartScriptClient = {
 				case "ADD": {
 					if (isNil "client_bonus_markers_array") then { client_bonus_markers_array = [];};
 					if (! (_veh in client_bonus_markers_array)) then {
-					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered
+					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
 					    _ret = call SYG_countVehicles; // _id = vehicles find _veh;
 						playSound "good_news";
 						(localize "STR_BONUS_1") hintC [
