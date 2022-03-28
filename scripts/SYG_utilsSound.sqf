@@ -590,4 +590,3 @@ SYG_powerDownSound = {
 };
 
 if (true) exitWith {};
-                         

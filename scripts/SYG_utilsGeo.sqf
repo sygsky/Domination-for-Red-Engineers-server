@@ -1024,4 +1024,4 @@ SYG_pointIsOnBase = {
 	[_this call SYG_getPos,d_base_array] call SYG_pointInRect
 };
 
-if (true) exitWith {};                                    
+if (true) exitWith {};
