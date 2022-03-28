@@ -394,7 +394,7 @@ SYG_msgToUserParser = {
         };
 
         _msg_formatted = format _msg_fmt; // whole message formatted
- //       hint localize format["+++ ""mag_to_user"": _x %1, _msg_fmt = %2", _x, _msg_fmt];
+ //       hint localize format["+++ ""msg_to_user"": _x %1, _msg_fmt = %2", _x, _msg_fmt];
         if ( _print_title ) then { // no title text disable parameter
             titleText[ _msg_formatted, "PLAIN DOWN" ];
         };
