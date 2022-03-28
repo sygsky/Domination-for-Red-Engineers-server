@@ -966,6 +966,8 @@ STR_SYS_1214,Rank needed to fly the wreck lift chopper:,"Rang benötigt, um den 
 STR_SYS_1215,Weapons limited:,Waffen limitiert:,Limitación de armas:,Ограничение вооружение:
 STR_SYS_1216,Air drop radius (0 = exact position):,Lufttropfenradius (0 = genaue Position):,Radio de reinicio de suministro (0 = posición exacta):,Радиус сброса снабжения (0 = точная позиция):
 STR_SYS_1217,Reload/refuel/repair time factor:,Faktor für das Nachladen / Auftanken / Reparieren:,Tiempo de ciclo de recarga/recarga/reparación:,Время цикла перезарядки/заправки/ремонта:
+STR_SYS_1218,Reload chaff and flare dispenser #%1,Chaff und Flare Dispenser nachladen #%1,Recarga del dispensador #%1 de chaff y flare ,Загрузка контейнера %1 с патронами ЛТЦ и ДО
+STR_SYS_1218_0,All chaff and flare dispensers are already full,Alle Chaff und Flare Dispenser sind bereits voll,Todos los contenedores de chaff y flare ya están llenos,Все контейнеры с патронами ЛТЦ и ДО уже заполнены
 
 STR_SYS_1220,"GRU reports that an enemy aircraft carrier seems to have gotten away with the paratroopers!",Die GRU berichtet, dass ein feindlicher Flugzeugträger anscheinend mit den Fallschirmjägern davongekommen ist!,"¡El portaaviones enemigo se ha ido, junto con los paracaidistas!","ГРУ сообщает, что вражеский авианосец, кажется, убрался восвояси, вместе с десантниками!"
 

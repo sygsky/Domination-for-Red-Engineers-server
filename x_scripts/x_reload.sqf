@@ -190,17 +190,29 @@ if (_count > 0) then {
 	};
 };
 
-// TODO: allow to restore flares here without need to find repair trucks
+//+++ #255: allow to restore flares here without need to be near repair trucks
+//+++ for CAE flares always loaded
+#ifndef __ACE__
 if (__MandoVer) then {
+#endif
 	if (_vehicle isKindOf "Air") then {
 		_fcleft = _vehicle getVariable "mando_flaresleft";
-		_maxfc = _vehicle getVariable "mando_maxflares";
+		_maxfc  = _vehicle getVariable "mando_maxflares";
 		if ( (format ["%1", _fcleft] != "<null>") && (format["%1", _maxfc] != "<null>")) then {
+		    if(_fcleft == _maxfc) exitWith{ titleText[ localize "STR_SYS_1218_0", "PLAIN DOWN" ]; }; // All chaff and flare dispensers are already full
+		    _fcleft = _fcleft + 1;
+		    for "_i" from _fcleft to _maxfc do  {
+		        // print info on the step to load flares/chaffles "STR_SYS_1218"
+		        titleText[ format[localize "STR_SYS_1218", _i], "PLAIN DOWN" ]; // Reload chaff and flare dispenser #%1
+        		sleep x_reload_time_factor;
+		    };
 			_vehicle setVariable ["mando_flaresleft", _maxfc];
 		};
 	};
+#ifndef __ACE__
 };
-sleep x_reload_time_factor;
+#endif
+
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 
 //++++++++++++ Repairing
