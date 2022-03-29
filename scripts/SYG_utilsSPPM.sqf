@@ -17,7 +17,7 @@
 #define SPPM_MIN_DISTANCE 80 // Minimum distance at which the nearest SPPM can be located
 #define SPPM_VEH_MIN_DISTANCE 40 // Minimum distance between marker of SPPM and vehicle to count it in SPPM
 #define SPPM_OBJ_TYPE "RoadCone" // SPPM object for search
-#define SPPM_MARKER_COLOR "ColorRed" // Color of any SPPM marker
+#define SPPM_DOSAAF_MARKER_COLOR "ColorRed" // Color of any SPPM marker
 #define SPPM_MARKER_NAME "SPPM_MARKER" // variable name of marker object with marker name
 
 #ifdef __ACE__
@@ -158,7 +158,7 @@ SYG_addSPPMMarker = {
 	};
 	if (_marker == "") exitWith { "STR_SPPM_ADD_ERR_1" }; // can't create marker name
 	hint localize format["+++ SPPM, created new marker ""%1"" for %2 vehicle[s]", _marker, count _arr];
-	_marker setMarkerColor SPPM_MARKER_COLOR;
+	_marker setMarkerColor SPPM_DOSAAF_MARKER_COLOR;
 	_marker setMarkerShape "ICON";
 	// TODO: find marker
 	_arr = _arr call SYG_generateSPPMText;

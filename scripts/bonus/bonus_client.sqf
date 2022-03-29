@@ -7,13 +7,15 @@
 
 #include "bonus_def.sqf"
 
-while {isNil "client_bonus_markers_array"} do {sleep 10 };
-hint localize "+++ bonus_client started";
+if (isNil "client_bonus_markers_array") then {
+    client_bonus_markers_array = [];
+    client_bonus_markers_timestamp = time;
+    sleep 10
+};
 
+hint localize "+++ bonus_client started";
 private ["_bonus_markers", "_bonus_timestamp", "_i", "_veh", "_mrk", "_last_id"];
 
-//client_bonus_markers_timestamp = time; // start marker drawing
-//client_bonus_markers_array     = [];	// load all veh markers found in vehicles collection
 _bonus_markers                 = [];	// known vehs itself
 _next_id                       = 1;		// next free id for the bonus vehicle markers
 _bonus_timestamp               = 0;		// last time processed timestamp
@@ -83,7 +85,7 @@ _reset_params = {
 				hint localize format["+++ bonus_client: add %1", typeOf _x];
 				_mrk = createMarkerLocal [ format[ "_marker_veh_%1", _next_id ], _x ];
 				_next_id = _next_id + 1;
-				_mrk setMarkerColorLocal MARKER_COLOR;
+				_mrk setMarkerColorLocal DOSAAF_MARKER_COLOR;
 				_mrk_type = _x call SYG_getVehicleMarkerType;
 				_mrk setMarkerTypeLocal _mrk_type;
 				hint localize format[ "+++ bonus_client_reset_params: created marker %1 (%2 for %3)", _mrk, _mrk_type, typeOf _x ];
@@ -121,7 +123,7 @@ while { true } do {
 			_mpos resize 2;
 			_dist =  _mpos distance _vpos;
 //				hint localize format["+++ bonus_client: veh #%1 moved dist %2", _i, _dist];
-			if ( _dist > DIST_TO_REDRAW) then {
+			if ( _dist > DOSAAF_DIST_TO_REDRAW) then {
 				_mrk setMarkerPosLocal _vpos;
 				_moved_cnt = _moved_cnt + 1;
 				_redraw = true; // update on vehicle movement detected
@@ -136,13 +138,17 @@ while { true } do {
 	if ( _update || ( client_bonus_markers_timestamp != _bonus_timestamp ) ) then {
 		_bonus_timestamp = client_bonus_markers_timestamp;
 		call _reset_params; // reset markers for DOSAAF vehicles
-		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" not alive found and updates"} else {""}];
+		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" detected dead markered vehicle[s], so change markers array"} else {""}];
 	};
 	if (_redraw) then {
-//		hint localize format[ "+++ bonus_client: sleep after redraw %1", DELAY_NORMAL ];
-		sleep DELAY_NORMAL;
+//		hint localize format[ "+++ bonus_client: sleep after redraw %1", DOSAAF_DELAY_NORMAL ];
+		sleep DOSAAF_DELAY_NORMAL;
 	} else {
-//		hint localize format[ "+++ bonus_client: loop sleep %1", DELAY_LONG ];
-		sleep DELAY_LONG
+        if ((count client_bonus_markers_array) == 0) exitWith {
+        //	hint localize format[ "+++ bonus_client: loop sleep %1", DOSAAF_DELAY_LONG ];
+            sleep DOSAAF_DELAY_LONG;
+        }; // wait more as no markers found at all
+        //	hint localize format[ "+++ bonus_client: loop sleep %1", DOSAAF_DELAY_STD ];
+		sleep DOSAAF_DELAY_STD // wait for an average time, since markers exist but do not move
 	};
 };

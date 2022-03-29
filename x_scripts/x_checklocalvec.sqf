@@ -1,4 +1,6 @@
-// by Xeno, x_scripts/x_checklocalvec.sqf. Time by time move all deleted vehicles to the common dead object list of the mission
+// by Xeno, x_scripts/x_checklocalvec.sqf.
+// Time by time move all deleted vehicles to the common dead object list of the mission.
+// Also checks and process "d_end_time" variable on dead vehicles
 private ["_check_vec_list", "_zz", "_dead", "_hastime"];
 if (!isServer) exitWith{};
 
@@ -36,22 +38,25 @@ while {true} do {
 			
 			if !(isNull _dead) then {
 				_hastime = _dead getVariable "d_end_time";
-				if (format["%1",_hastime] != "<null>") then {
+				if (format["%1",_hastime] != "<null>") exitWith {
 					if (time > _hastime) then {
 						if (({alive _x} count (crew _dead)) == 0) then {
 							deleteVehicle _dead;_check_vec_list set [_zz, "RM_ME"]
 						};
 					};
-				} else {
-					if (!alive _dead) then {
-					    {
-					       deleteVehicle _x; // remove unit immediately from vehicle crew group
-					    } forEach crew _dead;
-					    [_dead] call XAddDead;
-					    _check_vec_list set [_zz, "RM_ME"];
-					    sleep 10;
-					};
 				};
+                if (!alive _dead) then {
+                    _recoverable = _dead getVariable "RECOVERABLE";
+                    if (isNil "_recoverable") then {_recoverable = false};
+                    if (!_recoverable) then {
+                        { deleteVehicle _x; } forEach crew _dead;  // remove unit immediately from vehicle crew group
+                        [_dead] call XAddDead;
+                    } else {
+                         // remove vehicle from the dead list as it is recoverable
+                    };
+                    _check_vec_list set [_zz, "RM_ME"]; // simply remove vehicle from dead list
+                    sleep 10;
+                };
 			};
 			sleep 3.422;
 		};
@@ -60,7 +65,7 @@ while {true} do {
 	sleep 30.461;
 
 #ifdef __PRINT_STAT__
-// TODO: use method SYG_utilstext->SYG_objArrToTypeStr except lower code
+// TODO: use method SYG_utilsText->SYG_objArrToTypeStr except lower code
     if (time >_time_to_print) then  {
         _print_cnt = (count _check_vec_list) max 5; // print vehicles count
         if (  _print_cnt > 0 ) then // print only if there is some data to print
