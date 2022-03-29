@@ -18,7 +18,7 @@ private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", 
 #define __DEBUG__
 
 // 5 mins timeout will be good
-#define RESTORE_DELAY_NORMAL 420
+#define RESTORE_DOSAAF_DELAY_NORMAL 420
 #define RESTORE_DELAY_SHORT 30
 #define CYCLE_DELAY 15
 #define TIMEOUT_ZERO 0
@@ -65,8 +65,8 @@ sleep CYCLE_DELAY;
 #ifdef __DEBUG__
 
 hint localize format[
-	"+++ motorespawn.sqf:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_RETURN_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
-					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_RETURN_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
+	"+++ motorespawn.sqf:  RESTORE_DOSAAF_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_RETURN_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
+					       RESTORE_DOSAAF_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_RETURN_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
 ];
 
 {
@@ -114,14 +114,14 @@ while {true} do {
 			if (!alive _moto) exitWith {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)] };
 			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > MOTO_RETURN_DIST)  ) then {
 				if ( ( {alive _x} count (crew _moto)) == 0) then { // empty
-					if ( (canMove _moto) && ( ( fuel _moto ) > FUEL_MIN_VOLUME ) ) then  { _x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ] } // restore after normal delay
+					if ( (canMove _moto) && ( ( fuel _moto ) > FUEL_MIN_VOLUME ) ) then  { _x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DOSAAF_DELAY_NORMAL ) ] } // restore after normal delay
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened delay
 				};
 			};
 		} else { // time-out was already set
 			if ( time < _timeout) exitWith {};
 			if ( ( {alive _x} count (crew _moto)) > 0) exitWith { // not empty
-				_x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ];
+				_x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DOSAAF_DELAY_NORMAL ) ];
 			};
 
 			_objNearArr = _pos1 nearObjects [_driverType, DRIVER_NEAR_DIST];

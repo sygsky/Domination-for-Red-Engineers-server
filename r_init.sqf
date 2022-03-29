@@ -191,7 +191,7 @@ if (isServer) then
 	if (_NORRN_mission_end_function == 1) then {[NORRN_player_units] execVM "revive_sqf\mission_end.sqf"};
 	
 	//Initialise marker color script
-	if (_NORRN_no_enemy_sides > 0) then {execVM "revive_sqf\marker_color.sqf"};
+	if (_NORRN_no_enemy_sides > 0) then {execVM "revive_sqf\DOSAAF_MARKER_COLOR.sqf"};
 
 };
 
