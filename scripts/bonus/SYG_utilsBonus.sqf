@@ -254,4 +254,3 @@ SYG_getVehIndexFromVehicles = {
 	} forEach vehicles;
 	_ind
 };
-

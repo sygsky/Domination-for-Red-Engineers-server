@@ -29,7 +29,7 @@ _reset_params = {
 	_time = time;
 
 	_ret = call SYG_countVehicles;
-	hint localize format["+++ _reset_params: scan vehicles: cnt/ vehs/ DOSAAF/alive /markers /bonus = %2", typeOf _veh, _ret];
+	hint localize format["+++ _reset_params: scan vehicles: cnt/vehs/DOSAAF/alive/markers/bonus = %2", typeOf _veh, _ret];
 
 	_new_array = call SYG_scanDOSAAFVehicles; // load all alive DOSAAF vehicles
 //	hint localize format["+++ SYG_scanDOSAAFVehicles executed in %1 secs ", time - _time];

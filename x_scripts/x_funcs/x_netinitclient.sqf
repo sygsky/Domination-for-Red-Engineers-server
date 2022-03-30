@@ -933,6 +933,13 @@ XHandleNetStartScriptClient = {
 				case "ADD": {
 					if (isNil "client_bonus_markers_array") then { client_bonus_markers_array = [];};
 					if (! (_veh in client_bonus_markers_array)) then {
+						_id = _veh getVariable "INSPECT_ACTION_ID";
+						if (!isNil "_id") then {
+							_veh setVariable ["INSPECT_ACTION_ID", nil];
+							_veh removeAction _id;
+							// replace title with "Register" text
+							_veh setVariable ["INSPECT_ACTION_ID", _veh addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
+						};// else { hint localize format[ "--- bonus.REG: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
 					    _ret = call SYG_countVehicles; // _id = vehicles find _veh;
 						playSound "good_news";
@@ -940,10 +947,10 @@ XHandleNetStartScriptClient = {
 							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
 							format[localize "STR_BONUS_1_2", typeOf _veh],
 //							format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
-							format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
+							format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_REG_ITEM"]
 							];
 						//  send info to all players except author
-						hint localize format["+++ bonus.ADD on client: %1 to the markers list, cnt/ vehs/ DOSAAF/alive /markers /bonus = %2 ", typeOf _veh,_ret];
+						hint localize format["+++ bonus.ADD on client: %1 to the markers list, cnt/vehs/DOSAAF/alive/markers/bonus = %2 ", typeOf _veh,_ret];
 						// ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
 						if ((name player) == (_this select 2)) then { (d_ranked_a select 30) call SYG_addBonusScore;}; // this player found this bonus vehicle, add +2 to him
 					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
@@ -956,7 +963,7 @@ XHandleNetStartScriptClient = {
 						_veh setVariable ["INSPECT_ACTION_ID", nil];
 						_veh removeAction _id;
 						_ret = call SYG_countVehicles;
-						hint localize format["+++ bonus.REG on client: inspect action removed from %1, cnt/ vehs/ DOSAAF/alive /markers /bonus = %2", typeOf _veh, _ret];
+						hint localize format["+++ bonus.REG on client: inspect action removed from %1, cnt/vehs/DOSAAF/alive/markers/bonus = %2", typeOf _veh, _ret];
 					};// else { hint localize format[ "--- bonus.REG: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 					// remove from markered vehs list register as recoverable vehicle
                     _veh setVariable ["RECOVERABLE", true];

@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-#define __DEBUG_DOSAAF__
+//#define __DEBUG_DOSAAF__
 
 "d_nv_serv" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
@@ -461,9 +461,9 @@ XHandleNetStartScriptServer = {
 			switch (_this select 1) do {
 				// send vehicle to all players to draw and control marker on it
 				case "ADD": {
-				    // replace 1st initline (at vehicle creation) with second one (for markered vehicle)
-					_veh setVehicleInit "this setVariable [""RECOVERABLE"",false];";
-//					_veh setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_CHECK_ITEM"", ""scripts\bonus\bonusInspectAction.sqf"",[]]];this setVariable [""RECOVERABLE"",false];";
+				    // replace 1st init line commands (on vehicle creation) with second one (pn markered vehicle)
+				    clearVehicleInit _veh; // remove previous command and set new one (only title changed)
+					_veh setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_REG_ITEM"", ""scripts\bonus\bonusInspectAction.sqf"",[]]];this setVariable [""RECOVERABLE"",false];";
 //					processInitCommands;
 					// mark to be markered vehicles
 					_veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable

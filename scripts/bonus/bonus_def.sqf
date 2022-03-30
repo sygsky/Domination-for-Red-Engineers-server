@@ -5,7 +5,7 @@
 	returns: nothing
 */
 #define DOSAAF_DELAY_STD   5
-#define DOSAAF_DELAY_LONG  60
+#define DOSAAF_DELAY_LONG  30
 #define DOSAAF_DELAY_NORMAL 1
 #define DOSAAF_DIST_TO_REDRAW  10
 #define DOSAAF_MARKER_COLOR "ColorGreen"
@@ -16,3 +16,6 @@
 
 // code for detected DOSAAF vehicle initialization
 #define DOSAAF_INIT_CODE2 "this setVariable [""RECOVERABLE"",false];"
+
+// code for registering DOSAAF vehicle after "Inspect" action
+#define DOSAAF_INIT_CODE3 "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""REG_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]];"
