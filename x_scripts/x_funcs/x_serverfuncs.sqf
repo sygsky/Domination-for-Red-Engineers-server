@@ -815,8 +815,10 @@ XGetWreck = {
 			_obj = _x;
 		};
 	} forEach _no;
-//		hint localize format["+++ XGetWreck: %1 on recovery service, but vehicle is not "RECOVERABLE"", typeOf _no];
-	_obj
+	if (!isNull _obj) then {
+		hint localize format["+++ XGetWreck: %1 on recovery service, ""RECOVERABLE"" = %2", typeOf _obj, _obj getVariable "RECOVERABLE"];
+	};
+    _obj
 };
 
 //

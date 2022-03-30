@@ -1,10 +1,11 @@
 // by Xeno, x_scripts/x_checklocalvec.sqf.
 // Time by time move all deleted vehicles to the common dead object list of the mission.
 // Also checks and process "d_end_time" variable on dead vehicles
-private ["_check_vec_list", "_zz", "_dead", "_hastime"];
 if (!isServer) exitWith{};
 
+#include "x_setup.sqf"
 #include "x_macros.sqf"
+private ["_check_vec_list", "_zz", "_dead", "_hastime"];
 
 //#define __PRINT_STAT__
 
@@ -45,18 +46,19 @@ while {true} do {
 						};
 					};
 				};
-                if (!alive _dead) then {
-                    _recoverable = _dead getVariable "RECOVERABLE";
-                    if (isNil "_recoverable") then {_recoverable = false};
-                    if (!_recoverable) then {
-                        { deleteVehicle _x; } forEach crew _dead;  // remove unit immediately from vehicle crew group
-                        [_dead] call XAddDead;
-                    } else {
-                         // remove vehicle from the dead list as it is recoverable
-                    };
-                    _check_vec_list set [_zz, "RM_ME"]; // simply remove vehicle from dead list
-                    sleep 10;
-                };
+                if (alive _dead) exitWith {};
+#ifdef __BATTLEFIELD_BONUS__
+				_recoverable = _dead getVariable "RECOVERABLE";
+				if (isNil "_recoverable") then {_recoverable = false};
+				if (!_recoverable) then {
+#endif
+					{ deleteVehicle _x; } forEach crew _dead;  // remove all units immediately from vehicle crew group
+					[_dead] call XAddDead;
+#ifdef __BATTLEFIELD_BONUS__
+				};
+#endif
+				_check_vec_list set [_zz, "RM_ME"]; // remove vehicle from this dead list
+				sleep 10;
 			};
 			sleep 3.422;
 		};
@@ -68,8 +70,7 @@ while {true} do {
 // TODO: use method SYG_utilsText->SYG_objArrToTypeStr except lower code
     if (time >_time_to_print) then  {
         _print_cnt = (count _check_vec_list) max 5; // print vehicles count
-        if (  _print_cnt > 0 ) then // print only if there is some data to print
-        {
+        if (  _print_cnt > 0 ) then { // print only if there is some data to print
             _str = "";
             for "_i" from 0 to _print_cnt - 1 do {
                 if (_str == "") then  {_str = format["%1", typeOf (_check_vec_list select _i)];}

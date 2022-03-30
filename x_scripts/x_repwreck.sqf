@@ -29,7 +29,7 @@ while {true} do {
  	_player = ""; // name of player who delivered vehicle onto the recovery service
 #ifdef __RANKED__
 	// wreck vehicle detected on recovery service, lets find player who delivered it for award
-	_nearArr =   nearestObjects [getPos _rep_station, ["LandVehicle", "Helicopter"], 30];
+	_nearArr = nearestObjects [getPos _rep_station, ["LandVehicle", "Helicopter"], 30];
 	{
 		if (alive _x) then {
 			if (_x isKindOf "ParachuteBase") exitWith {};

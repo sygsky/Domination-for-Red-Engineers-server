@@ -109,7 +109,9 @@ STR_SYS_33,%1 MHQ %2 is available,%1 Respawn %2 verfügbar,%1 KSHM %2 está disp
 STR_SYS_34,Teleport,Teleport,Teletransporte,Телепорт
 STR_SYS_35,Lift vehicle,Fahrzeug anheben,Levantar la técnica,Поднять технику
 STR_SYS_36,Drop vehicle,Drop-fahrzeug,Restablecer la técnica,Сбросить технику
-STR_SYS_37,Vehicle (%1) is lifted...,Fahrzeug (%1) mit Hubschrauber gehoben ...,Técnica (%1) levantada por helicóptero...,Техника (%1) поднята вертолётом...
+STR_SYS_37,"Vehicle (%1, %2) is lifted...","Fahrzeug (%1, %2) mit Hubschrauber gehoben ...","Técnica (%1, %2) levantada por helicóptero...","Техника (%1, %2) поднята вертолётом..."
+STR_SYS_37_1,recoverable,wiederherstellbar,recuperable,восстановима
+STR_SYS_37_0,not recoverable,nicht erstattungsfähig,no recuperable,не восстановима
 STR_SYS_38,Overwhelming vehicle (%1)...,Sehr schwere Maschine (%1)...,La técnica es inamovible (%1)...,Техника неподъёмна (%1)...
 STR_SYS_38_1,The vehicle (%1) not in restore list...,Wir stellen solche Fahrzeuge nicht wieder her (%1)...,"Esta técnica (%1) no tiene instrucciones de reparación, consulte el manual de operación...","Такую технику (%1) нет указаний восстанавливать, обратитесь к руководству операцией..."
 STR_SYS_38_2,"This vehicle (%1) is too deep (%2 m.), we will not get it, alas...","Dieses Fahrzeug (%1) ist zu tief (%2 M.), wir werden es leider nicht bekommen...","Esta técnica (%1) es demasiado profunda (%2 m.), no podemos conseguirlo, por desgracia...","Эта техника (%1) слишком глубоко (%2 м.), не достанем, увы..."

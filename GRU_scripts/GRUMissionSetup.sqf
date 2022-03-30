@@ -108,7 +108,7 @@ while {current_counter < number_targets} do {
 					};
 				} forEach _agent_list;
 				_stop = _cnt1 == 0;
-   			} else { hint localize format["--- GRUMissionSetup.sqf: agent list is []"];  			};
+   			}; // else { hint localize format["--- GRUMissionSetup.sqf: agent list is []"]; };
 
 			if ( _stop )  exitWith {
 				GRU_CLEAR_MAIN_TASK_USER_LIST;

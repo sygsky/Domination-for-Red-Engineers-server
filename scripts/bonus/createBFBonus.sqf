@@ -11,7 +11,7 @@
 _mt = "Somato" call SYG_MTByName;
 if (count _mt  == 0 ) exitWith {hint localize format ["--- BFB: town %1 not found, exit", "Rahmadi"]};
 _pos = getPos FLAG_BASE;
-_pos set [1, (_pos select 1) - 500];
+_pos set [1, (_pos select 1) + 150];
 
 {
 //	hint localize format[ "+++ BFB: vehicle %1 creating at %2", _x,_mt ];

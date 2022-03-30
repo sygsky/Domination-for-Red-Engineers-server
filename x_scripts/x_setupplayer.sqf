@@ -13,8 +13,8 @@ sleep 1;
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+#define __DEBUG_DOSAAF__
 //#define __DEBUG__
-//#define __DEBUG_DOSAAF__
 //#define __DEBUG_JAIL__
 
 #define __MISSION_START__

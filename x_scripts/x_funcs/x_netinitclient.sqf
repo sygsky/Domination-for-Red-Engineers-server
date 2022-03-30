@@ -939,6 +939,7 @@ XHandleNetStartScriptClient = {
 						(localize "STR_BONUS_1") hintC [
 							format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
 							format[localize "STR_BONUS_1_2", typeOf _veh],
+//							format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
 							format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_CHECK_ITEM"]
 							];
 						//  send info to all players except author
@@ -963,6 +964,7 @@ XHandleNetStartScriptClient = {
 					playSound "good_news";
 					localize "STR_BONUS_3_1" hintC [
 						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
+//						format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
 						localize "STR_BONUS_3_3"
 						];
 					  //0              1,                  2,                                                          3, 4, 5      6
