@@ -17,10 +17,19 @@
 
 _center     = d_island_center;
 _scale      = 0.001; // scale 1: 100 => 100 m in 1 m
-_new_center = DOSAAF_CONE_MAP_SERVER;
+_new_center = DOSAAF_CONE_MAP_SERVER; // center of the map
 _cone_type  = "RoadCone";
 _xc = _center select 0;     _yc = _center select 1;
 _xn = _new_center select 0; _yn = _new_center select 1;
+
+// create base sign : "DangerEast"
+_pos      = getPos FLAG_BASE;
+_new_pos  = [_xn + (((_pos select 0) - _xc) * _scale), _yn + (((_pos select 1) - _yc) * _scale), 0];
+_obj      = "DangerEast" createVehicleLocal _new_pos;
+_obj setVehiclePosition [ _new_pos, [], 0, "CAN_COLLIDE" ];
+_id = _obj addAction[ localize "STR_BASE_TITLE_SHORT", "scripts\bonus\info.sqf", localize "STR_BASE_TITLE" ];
+hint localize format[ "+++ Action to the base point added = %1 (%2)", _id, localize "STR_BASE_TITLE_SHORT" ];
+
 
 {
 	_veh = objNull;
