@@ -132,5 +132,6 @@ _static = _cargo createVehicle _pos_to_set;
 _static setDir _dir_to_set;
 _static setPos [_pos_to_set select 0, _pos_to_set select 1, 0];
 
-hint format [localize "STR_SYS_540", _type_name]; // "%1 placed!"
-format [localize "STR_SYS_540", _type_name] call XfGlobalChat;
+_str = format [localize "STR_SYS_540", _type_name]; // "%1 placed!"
+hint _str;
+     _str call XfGlobalChat;
