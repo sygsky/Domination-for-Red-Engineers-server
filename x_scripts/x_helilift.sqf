@@ -97,21 +97,33 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 				if (Vehicle_Attached) then {
 				
 					// ++ Sygsky: checking again legal type of vehicle to lift here
-				  
-					if ( !((typeOf _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon"))) exitWith 	{
-                        // vehicle not in legal list
-                        //++ Sygsky: found that vehicle ready to lift isn't in legal list! Clear possible activity and report user about
-                        [_vehicle, format[localize "STR_SYS_38", typeOf _nearest]] call XfVehicleChat; // "Overwhelming vehicle (%1)..."
-                        Vehicle_Attached = false;
-                        Vehicle_Released = false;
-                        Attached_Vec = objNull;
+					_msg = "";
+					// _nearest not in legal list ?
+					if ( !((typeOf _nearest) in _possible_types || (_nearest isKindOf "StaticWeapon")) ) then {
+                        //++ Sygsky: found that vehicle ready to lift isn't in legal list!
+                        _msg = format[localize "STR_SYS_38", typeOf _nearest]; // "Overwhelming vehicle (%1)..."
                     };
+					if (_msg == "") then {
+						switch (_nearest) do {
+							case TR7: { if (("D30" in truck1_cargo_array) || ("M119" in truck1_cargo_array)) then {_msg = localize "STR_SYS_38_0"}};
+							case TR8: { if (("D30" in truck2_cargo_array) || ("M119" in truck2_cargo_array)) then {_msg = localize "STR_SYS_38_0"}};
+						};
+					};
+					if (_msg != "") exitWith {
+						// vehicle not in legal list
+						//++ Sygsky: found that vehicle ready to lift isn't in legal list! Clear possible activity and report user about
+						[_vehicle, _msg] call XfVehicleChat; // "The Mi-8 is not capable of lifting a truck with a cannon inside"
+						playSound "losing_patience";
+						Vehicle_Attached = false;
+						Vehicle_Released = false;
+						Attached_Vec = objNull;
+					};
 
                     if ( isNull Attached_Vec ) then {
                         //hint localize format["+++ x_helilift.sqf: vehicle %1 lifted", typeOf _nearest];
                         Attached_Vec = _nearest;
-						_release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
-                        [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName]] call XfVehicleChat;
+						_release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //	"Drop vehicle"
+                        [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName]] call XfVehicleChat; // "Vehicle (%1, %2) is lifted..."
 	  					_reveal_name = "";
 						switch (_nearest) do {
 							case MRR1: {

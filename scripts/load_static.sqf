@@ -54,7 +54,7 @@ if (_loading_allowed) then {
 			if (count truck1_cargo_array >= max_truck_cargo) then {
 				(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
 			} else {
-				truck1_cargo_array = truck1_cargo_array + [_cargo_type];
+				truck1_cargo_array set[count truck1_cargo_array, _cargo_type];
 				["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
 			};
 		};
@@ -62,7 +62,7 @@ if (_loading_allowed) then {
 			if (count truck2_cargo_array >= max_truck_cargo) then {
 				(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
 			} else {
-				truck2_cargo_array = truck2_cargo_array + [_cargo_type];
+				truck2_cargo_array set[count truck2_cargo_array, _cargo_type];
 				["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
 			};
 		};

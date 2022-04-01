@@ -149,12 +149,12 @@ while {true} do {
 
 			_vec_a set [0, _vehicle];
 			_vehicle setVariable ["D_OUT_OF_SPACE",-1];
+			_vehicle addRating -10000; // #451: enemy may prefer to kill it ASAP
 
 			_number_v = _vec_a select 1;
 
 			switch (_kind) do {
 				case "MR": {
-					_vehicle addRating -10000; // #451: enemy may prefer to kill it ASAP
 					_var = format["MRR%1",_number_v];
 					call compile format ["%1=_vehicle;publicVariable ""%1"";", _var];
 					[ "MHQ_respawned", _var ] call XSendNetStartScriptClient;
@@ -185,7 +185,7 @@ while {true} do {
 				case "TR": {
 					call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
-    				_vehicle call SYG_addHorn;
+    				_vehicle call SYG_addHorn; // add horn to all own trucks
 				#ifdef __TT__
 					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 					if (X_SPE) then {
