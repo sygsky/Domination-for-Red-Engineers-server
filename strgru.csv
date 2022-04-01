@@ -53,8 +53,8 @@ STR_GRU_46_0,Sahrani inhabitants inform: Enemy patrols disappeared!,Sahrani Bewo
 STR_GRU_46_1," near ""%1"""," in der Nähe von ""%1"""," cerca de "" %1"""," близ ""%1"""
 STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m."," a una distancia de aproximadamente %1 m."," на дист. примерно %1 м."
 STR_GRU_46_3," bearing %1"," Richtung %1"," acimut %1"," азимут %1"
-STR_GRU_46_4,num. %1 unit[s],die Num. %1 Fahrzeug[s],", num. %1 unidades.",", числ. %1 ед."
-STR_GRU_46_5,"type is ""%1""","Typ ist ""%1""","tipo - "" %1""","тип - ""%1"""
+STR_GRU_46_4, num. %1 unit[s], die Num. %1 Fahrzeug[s],", num. %1 unidades.",", числ. %1 ед."
+STR_GRU_46_5," type is ""%1"""," Typ ist ""%1"""," tipo - "" %1"""," тип - ""%1"""
 STR_GRU_46_6,"You have seized this car from the patrol. Make good use of it!",Sie haben dieses Fahrzeug von der Streife beschlagnahmt. Nutzen Sie es gut aus!,"Avete sequestrato quest'auto alla pattuglia. Fatene buon uso!","Вы захватили эту машину у патруля, используйте её с толком!"
 
 STR_GRU_47,No enemy activity detected near the base,Keine feindlichen Aktivitäten in der Nähe der Basis entdeckt,No se detecta actividad enemiga cerca de la base,Вражеская активность не обнаружена
