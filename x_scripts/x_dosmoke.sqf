@@ -29,7 +29,7 @@ _has_smoke = false;
 hint localize format["+++ x_dosmoke.sqf: %1 killed, combat mode %2, behaviour %3%4",
 	typeOf _killed,
 	combatMode _killed,
-	behaviour _killed
+	behaviour _killed,
 	if (alive _killer) then { format[", dist to killer (%1) %2 m.",typeOf _killer, round(_killer distance _killed) ] } else { ", no alive killer" }];
 
 #ifdef __DEBUG__
@@ -135,6 +135,8 @@ if (({alive _x} count _grp_units) > 0) then {
 #endif		
 	};
 	if (_has_smoke ) then {
+
+		// let the group to be lurked about 1 minute
 		sleep 0.512;
 		{
 			if (alive _x) then {
