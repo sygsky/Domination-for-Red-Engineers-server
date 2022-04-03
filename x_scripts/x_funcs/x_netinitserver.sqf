@@ -381,10 +381,11 @@ XHandleNetStartScriptServer = {
 		case "GRU_event_scores": {
 		    private ["_id","_playerName","_score"];
             _id = argopt(1, -1);
-            if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
+            if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores  error id: ")  + _id}; // error parameter
             _playerName = argopt(2, "" );
             if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: empty or absent player name"};
             _score = argpopt( GRU_specialBonusArr, _id, 0 ); // check for score available
+            hint localize format["+++ GRU_event_scores: id %1, player ""%2"", score %3", _id, _plaeyrName, _score];
             if( _score > 0 ) then { // this event score is available, clear it now
                 GRU_specialBonusArr set [ _id, 0 ]; // use it now
                 ["GRU_event_scores", _id, _score, _playerName] call XSendNetStartScriptClient;

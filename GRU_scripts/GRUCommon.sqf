@@ -3,8 +3,7 @@
 #include "x_setup.sqf"
 #include "GRU_setup.sqf"
 
-if ( isNil "GRU_tasks" ) then
-{
+if ( isNil "GRU_tasks" ) then {
 	GRU_tasks = [
 	//=========================
 	// Main task parameters:
@@ -13,7 +12,7 @@ if ( isNil "GRU_tasks" ) then
 		[], // main target (in towns): [target_town_info, initial_score, list_of_participants]
 		
 	//=========================
-	//   Secondary task parameters:
+	//   Secondary task was planned to be a copy of main target variant but SM rarely are executed in settlemets with hollow houses, parameters:
 	//   _sec_info = [50]; // radious of teleport zone
 	//=========================
 		[], // secondary target. In common case it is not valid as secondary missions are rarely situated at houses
@@ -53,8 +52,7 @@ GRU_mainTaskActive = {
 //
 // check main task to be valid, that if task can be continued
 //
-GRU_mainTaskNotValid = 
-{
+GRU_mainTaskNotValid =  {
 	// check if any of town sub-targets alreadycompleted
 	if ( target_clear || mt_radio_down || side_main_done ) exitWith { hint localize "+++ GRUCommon.sqf.GRU_mainTaskNotValid: sub-target(s) finished"; true };
 	
@@ -91,14 +89,12 @@ GRU_mainTaskDescription = {
 	private ["_task","_score_plus","_score_minus","_str"];
 	_task = GRU_GET_TASK(GRU_MAIN_TASK);
 	_str = "";
-	if ( TASK_IS_ACTIVE(_task) )then
-	{
+	if ( TASK_IS_ACTIVE(_task) )then {
 		_score_plus = GRU_MAIN_GET_SCORE_FROM_TASK(_task); // real score on town
 
 		_score_minus = d_ranked_a select 24;
 		_str = format [localize "STR_GRU_TASK_DESCR_0_INFO", GRU_MAIN_GET_TOWN_NAME_FROM_TASK(_task), localize "STR_GRU_26", _score_plus, _score_minus ];
-	}
-	else { _str = localize "STR_GRU_29";}; // "Главная задача не определена..."
+	} else { _str = localize "STR_GRU_29";}; // "Главная задача не определена..."
 	_str
 };
 
@@ -110,9 +106,9 @@ GRU_mainTaskDescription = {
 GRU_SpecialScores = {
     if (!X_Client) then {
         // todo: check for scores
-        hint localize format["Server-> GRU_specialScores: input %1", _this];
+        hint localize format["+++ Server-> GRU_specialScores: input %1", _this];
     } else {
-        hint localize format["Client-> GRU_specialScores: input %1", _this];
+        hint localize format["+++ Client-> GRU_specialScores: input %1", _this];
         if ( _this >= 0 && _this < (count GRU_specialBonusArr)) then {
             if ( argp(GRU_specialBonusArr, _this) > 0) then {
                 // todo: send info to user about scores for investigations etc

@@ -45,7 +45,7 @@ _reset_params = {
 		hint localize format["+++ _reset_params: delete %1 vehicle[s]", count _del_arr];
 		{
 			_ind = client_bonus_markers_array find _x;
-			hint localize format["+++_reset_params: remove id %1", _ind];
+			hint localize format["+++ _reset_params: remove id %1", _ind];
 			if (_ind >= 0) then {
 				deleteMarkerLocal (_bonus_markers select _ind);
 				_bonus_markers set [_ind, "RM_ME"];

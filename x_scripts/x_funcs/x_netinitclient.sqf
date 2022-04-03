@@ -807,20 +807,21 @@ XHandleNetStartScriptClient = {
 		// ["GRU_event_scores", _id, _score, _playerName] call XSendNetStartScriptClient;
 		case "GRU_event_scores": {
 			hint localize format["+++ Client ""GRU_event_scores"" event with %1", _this];
-            private [/*"GRU_event_scores",*/"_score","_id","_playerName"];
+            private [/*"GRU_event_scores",*/"_score","_id","_playerName","_msg"];
             _id = argopt(1, -1);
             if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
             _score = argopt(2,0);
+            _msg = "";
             if ( _score > 0 ) then {
                 _playerName = argopt(3, "" );
                 if ( _playerName == (name player)) then {
                     //player addScore _score;
                     _score call SYG_addBonusScore;
-                    format[localize argp(GRU_specialBonusStrArr,_id),_score] call XfGlobalChat; // "you've got a prize for your observation/curiosity"
+                    _msg = format[localize argp(GRU_specialBonusStrArr,_id),_score]; // "you've got a prize for your observation/curiosity"
                     ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClientAll;
-                    // playSound "no_more_waiting";
-                };
-            };
+                } else {_msg = localize "STR_MAP_11"};
+            } else {_msg = localize "STR_MAP_12"};
+            _msg call XfGlobalChat;
             GRU_specialBonusArr set [ _id, 0 ]; // never more this event could occure
 		};
 

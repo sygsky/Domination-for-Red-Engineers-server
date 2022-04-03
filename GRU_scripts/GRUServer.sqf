@@ -19,8 +19,7 @@ GRU_stopTask = {
 		// send info about it second
 		["GRU_msg", GRU_MSG_STOP_TASK, _this] call XSendNetStartScriptClient;
 		true
-	}
-	else {false};
+	} else {false};
 };
 
 //
@@ -35,7 +34,7 @@ GRU_startNewTask = {
 	_task_id = arg(GRU_TASK_KIND);
 	if ( TASK_ID_NOT_VALID(_task_id) ) exitWith {
 	 	hint localize format["+++ GRUServer.sqf.GRU_startNewTask: illegal task id %1, must be {0..%2}", _task_id, ((count GRU_tasks) -1)];
-	 	false;
+	 	false
 	};
 	if ( _task_id call GRU_stopTask ) then { sleep 2.63;};
 	GRU_tasks set[_task_id, arg(GRU_TASK_PARAMS)];
@@ -50,8 +49,7 @@ GRU_procServerMsg = {
 	if ( !(_task_id call GRU_taskActive) ) exitWith { hint localize format["Server GRU_msg designated task (%1) is not active %2",_task_id, _this];};
 	_msg = arg(1); // sub-id, e.g. ["GRU_msg", GRU_MSG_START_TASK, _task_id<<<,player_name>,score>,marker_arr>] call XSendNetStartScriptClient;
 	_task_name_id = "<UNKNOWN>";
-	_task_name = switch _task_id do 
-	{
+	_task_name = switch _task_id do {
 		case GRU_MAIN_TASK: { _task_name_id = "STR_GRU_2"; localize "STR_GRU_2"};
 		
 		case GRU_SECONDARY_TASK: { "<GRU_SECONDARY_TASK>" };
