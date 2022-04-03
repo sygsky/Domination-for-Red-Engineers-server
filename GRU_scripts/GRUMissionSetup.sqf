@@ -114,7 +114,7 @@ while {current_counter < number_targets} do {
 				GRU_CLEAR_MAIN_TASK_USER_LIST;
 				if ( _cnt > 0) then { hint localize format["--- GRUMissionSetup.sqf: all %1 agent[s] were logged out ",_cnt]; };
 			};
-		    hint localize format["--- GRUMissionSetup.sqf: %1 agent[s] from %2 are still active", _cnt1, _cnt];
+		    //hint localize format["--- GRUMissionSetup.sqf: %1 agent[s] from %2 are still active", _cnt1, _cnt];
 
 			// checks task to be invalid
 			if ( _task call GRU_mainTaskNotValid ) exitWith  {
