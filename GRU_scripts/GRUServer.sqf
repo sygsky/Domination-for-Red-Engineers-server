@@ -77,14 +77,14 @@ GRU_procServerMsg = {
 			//sleep 0.5 + (random 0.5);
 			// send user msg and map markers update
 			["GRU_msg", GRU_MSG_TASK_SOLVED, [["msg_to_user","",[_msg],4,4],arg(5)] ] call XSendNetStartScriptClient;
-			hint localize format["Server GRU_MSG_TASK_SOLVED:  from player ""%1"" ", _player_name];
+			hint localize format["+++ Server GRU_MSG_TASK_SOLVED:  from player ""%1"" ", _player_name];
 		};
 		case GRU_MSG_TASK_FAILED: {
 			// stop corresponding task and send info back to all clients
 			_task_id call GRU_stopTask; // done!!!
 			_msg = ["STR_GRU_8",  "STR_GRU_4", "STR_GRU_1",  _task_name_id, "STR_GRU_9"]; // "задача ГРУ ""доставить развединфо из города"" провалена (одним из вас)"
 			["msg_to_user","",[_msg],4,4] call XSendNetStartScriptClient;
-			hint localize format["Server GRU_MSG_TASK_FAILED:  from player ""%1"" ", _player_name];
+			hint localize format["+++ Server GRU_MSG_TASK_FAILED:  from player ""%1"" ", _player_name];
 		};
 		case GRU_MSG_TASK_SKIPPED: { // user mission was unsuccessfull but task can continue
 			_task = _task_id call GRU_getTask;
@@ -92,9 +92,9 @@ GRU_procServerMsg = {
 			if ( _player_name in _agent_list) then {
 				_task set [GRU_MAIN_LIST, _agent_list - [_player_name]];
 				publicVariable "GRU_tasks";
-				hint localize format["Server GRU_MSG_TASK_SKIPPED: ""%1"" removed from agent list", _player_name];
+				hint localize format["+++ Server GRU_MSG_TASK_SKIPPED: ""%1"" removed from agent list", _player_name];
 			} else {
-				hint localize format["Server GRU_MSG_TASK_SKIPPED: player ""%1"" isn't in list %2", _player_name, _agent_list];
+				hint localize format["+++ Server GRU_MSG_TASK_SKIPPED: player ""%1"" isn't in list %2", _player_name, _agent_list];
 			};
 		};
 		case GRU_MSG_TASK_ACCEPTED: {
@@ -108,7 +108,7 @@ GRU_procServerMsg = {
 			};
 			_msg = ["STR_GRU_10", "STR_GRU_1", _task_name_id, _player_name, GRU_MAIN_GET_TOWN_NAME]; // "задачу %1 ""%2"" начал выполнять %3"
 			["msg_to_user","",[_msg]] call XSendNetStartScriptClient; // send mesage to everybody
-			hint localize format["Server GRU_MSG_TASK_ACCEPTED: from ""%1""", _player_name];
+			hint localize format["+++ Server GRU_MSG_TASK_ACCEPTED: from ""%1""", _player_name];
 		};
 		
 		default {hint localize format["--- GRUClient.sqf: ""GRU_msg"" unknown sub-id %1", _this]};

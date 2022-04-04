@@ -34,30 +34,25 @@
 if (!isNil "player_is_on_town_raid") exitWith {};
 player_is_on_town_raid = [];
 
-if ( isNil "GRU_next_job_time") then 
-{ 
+if ( isNil "GRU_next_job_time") then {
 	GRU_next_job_time = 0;
 	publicVariable "GRU_next_job_time";
 }; // last time you got the GRU job
 
 _tt = [];
 
-for "_check" from 0 to 0 do
-{
+for "_check" from 0 to 0 do {
 	_tt = GRU_MAIN_GET_TOWN_INFO;
-	if ( count _tt < 3) exitWith
-	{
+	if ( count _tt < 3) exitWith {
 		sleep 1; (format[localize "STR_GRU_45", _tt, client_target_counter, number_targets, target_clear]) call GRU_msg2player; // "Ошибка Д-установки. Телеметрия: %1, %2"
 	};
 
-	if ( (!alive player) || (getDammage player >= 0.05) ) exitWith
-	{
+	if ( (!alive player) || (getDammage player >= 0.05) ) exitWith {
 		// if dead or health is <= 0.95, exit
 		sleep 1; (localize "STR_GRU_35") call GRU_msg2player; // "Вы отстранены от задания по состоянию здоровья" 
 	};
 
-	if ( time < GRU_next_job_time ) exitWith
-	{
+	if ( time < GRU_next_job_time ) exitWith {
 		_val = floor((GRU_next_job_time - time) /(GRU_BEFORE_NEXT_JOB_DELAY/3));
 		_str = format["STR_GRU_4%1", ((_val+1) min 3) max 1]; // раскалённый, горячий, тёплый
 		format[localize "STR_GRU_37", round((GRU_next_job_time - time)/60 + 0.5), localize _str] call GRU_msg2player; // "Деритринитатор ещё не остыл, подождите ещё (примерно %1 мин.)"
@@ -67,8 +62,7 @@ for "_check" from 0 to 0 do
 	GRU_next_job_time = time + GRU_BEFORE_NEXT_JOB_DELAY; // set next GRU PS entry time
 	publicVariable "GRU_next_job_time";
 
-	_rnd_port_msg = 
-	{
+	_rnd_port_msg = {
 //		private ["_str"];
 		"STR_GRU_TELE_NUM" call SYG_getLocalizedRandomText;
 //		call compile format["_cnt=%1;",localize "STR_GRU_TELE_NUM"];
@@ -86,8 +80,7 @@ for "_check" from 0 to 0 do
 	_wpnHolders = [];
 
 	_remove_weapon_holders = {
-		if ( count _wpnHolders > 0 ) then
-		{
+		if ( count _wpnHolders > 0 ) then {
 			{ deleteVehicle _x;} forEach _wpnHolders;
 			sleep 0.1;
 			_wpnHolders = [];
@@ -96,8 +89,7 @@ for "_check" from 0 to 0 do
 	
 	scopeName "main";
 
-	for "_main" from 0 to 0 do
-	{
+	for "_main" from 0 to 0 do {
 		GRU_docState =  -1; // undefined before start
 
 		// check if player is in good state
@@ -117,11 +109,9 @@ for "_check" from 0 to 0 do
 		cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
 		// define if gru-portal succeed or not
 		_rnd = random 10;
-		if ( _rnd >= 0.2) then 
-		{
+		if ( _rnd >= 0.2) then  {
 			_target_town = argp(target_names,current_target_index);
-			if ( (client_target_counter < number_targets) && (_rnd < 0.5) ) then
-			{
+			if ( (client_target_counter < number_targets) && (_rnd < 0.5) ) then {
 				// undefined D-porting, no real action, only type joke for player
 				// teleport to a random location
 				_rnd_town = + _target_town;
@@ -132,25 +122,20 @@ for "_check" from 0 to 0 do
 			};
 			// real gru-portal jump, do all we need for it
 			_ret = [_target_town,[/* 50,100, */150],4] call SYG_teleportToTown;
-			switch _ret do
-			{
+			switch _ret do {
 			    // bad params
-			    case 0:
-			    {
+			    case 0: {
                     (localize "STR_GRU_28_1") call GRU_msg2player;
     				breakTo "main";
 			    };
 			    // no good house found
-			    case -1:
-			    {
+			    case -1: {
                     (localize "STR_GRU_28_2") call GRU_msg2player;
     				breakTo "main";
 			    };
 			};
 			player_is_on_town_raid = [argp(_target_town,1),_score_plus,_score_minus,time]; // town name, score+, score-,start time
-		}
-		else 
-		{
+		} else {
 			// no gru-portal occured at all
 			// TODO: info about failure
 			sleep 2; (localize "STR_GRU_24") call GRU_msg2player; // ГРУ-портал не сработал
@@ -176,10 +161,8 @@ for "_check" from 0 to 0 do
 		GRU_docState = 0; // no doc
 		_str = localize "STR_GRU_19"; // "Вы нашли в городе нашего человека и установили с ним контакт"
 		// try to add the map to player inventory or rucksack (if already exist, do nothing)
-		if ( !(player call XCheckForMap) ) then 
-		{
-			if ( !(player call GRU_addDoc) ) then
-			{
+		if ( !(player call XCheckForMap) ) then {
+			if ( !(player call GRU_addDoc) ) then {
 				_str = format["%1. %2", _str, localize "STR_GRU_20"]; //"Но Вам некуда даже спрятать этот документ (нет места)!"
 				_str call GRU_msg2player; 
 				["GRU_msg", GRU_MSG_TASK_SKIPPED, GRU_MAIN_TASK, name player] call XSendNetStartScriptServer; 
@@ -220,19 +203,14 @@ for "_check" from 0 to 0 do
 		_search_cnt = 0;
 		_unc_msg_fired = false;
 
-		while { true } do
-		{
+		while { true } do {
 			sleep CYCLE_SLEEP_SEC;
-			if ( !alive player ) exitWith
-			{
-				if ( GRU_docState > 0 ) then
-				{
+			if ( !alive player ) exitWith {
+				if ( GRU_docState > 0 ) then {
 					[ localize "STR_GRU_12"] call GRU_msg2player; // "Вы погибли и враг прочтёт доверенное Вам разведдонесение. За это - штраф!"
 					[ "GRU_msg", GRU_MSG_TASK_FAILED, GRU_MAIN_TASK, name player ] call XSendNetStartScriptServer;
 					_score = _score_minus;
-				}
-				else
-				{
+				} else {
 					[localize "STR_GRU_13"] call GRU_msg2player; // "Вы погибли при исполнении задания ГРУ, но не допустили утечки информации. Сахранийцы не забудут героя!"
 					["GRU_msg", GRU_MSG_TASK_SKIPPED, GRU_MAIN_TASK, name player] call XSendNetStartScriptServer; 
 					sleep 1;
@@ -240,38 +218,29 @@ for "_check" from 0 to 0 do
 				call SYG_playRandomOFPTrack;
 			};
 			
-			if ( !TASK_ID_IS_ACTIVE(GRU_MAIN_TASK) ) exitWith
-			{
+			if ( !TASK_ID_IS_ACTIVE(GRU_MAIN_TASK) ) exitWith {
 				playSound "tune";
 				//(localize "STR_GRU_11") call GRU_msg2player; // "ГРУ отменило эту задачу, возвращайтесь к обычной боевой службе"
 			};
 			
-			if ( (player call SYG_ACEUnitUnconscious) && (!_unc_msg_fired)) then
-			{
+			if ( (player call SYG_ACEUnitUnconscious) && (!_unc_msg_fired)) then {
 				_unc_msg_fired = true;  // think it once per raid
 				[localize "STR_GRU_18"] call GRU_msg2player; // "...последняя ускользающая мысль: УНИЧТОЖИТЬ ... ДОКУМЕНТ ..."
 			}
-			else // user is alive and can stand
-			{
-				if ( GRU_docState == 0 ) then // document was deleted
-				{
+			else { // user is alive and can stand
+				if ( GRU_docState == 0 ) then { // document was deleted
 					playSound "tune";
-					if (player call SYG_ACEUnitUnconscious) then
-					{
+					if (player call SYG_ACEUnitUnconscious) then {
 						[(localize "STR_GRU_34")] call GRU_msg2player; //"Последним героическим усилием вы уничтожаете документ..."
-					}
-					else
-					{
+					} else {
 						[(localize "STR_GRU_30")] call GRU_msg2player; // "Уничтожив документ, придётся вернуться к обычной боевой службе"
 					};
 					// send message on server about skip 
 					["GRU_msg", GRU_MSG_TASK_SKIPPED, GRU_MAIN_TASK, name player,4,4] call XSendNetStartScriptServer; 
 					breakTo "main";
 				};
-				if ( ! (call XCheckForMap) ) then // you lost your map, try to search it in vicinity
-				{
-					if ( _search_cnt >= SEARCH_DURATION_STEPS ) then 
-					{
+				if ( ! (call XCheckForMap) ) then { // you lost your map, try to search it in vicinity
+					if ( _search_cnt >= SEARCH_DURATION_STEPS ) then {
 						// get WeaponHolders at some distance
 						call SYG_playRandomDefeatTrack;
 						call _remove_weapon_holders;
@@ -281,15 +250,11 @@ for "_check" from 0 to 0 do
 						_score = _score_minus;
 						breakTo "main";
 					};
-					if (_search_cnt != 0) then
-					{
-						if ( (_search_cnt % LOST_REMINDER_PERIOD_STEPS) == 0 ) then
-						{
+					if (_search_cnt != 0) then {
+						if ( (_search_cnt % LOST_REMINDER_PERIOD_STEPS) == 0 ) then {
 							(format[localize "STR_GRU_15", (SEARCH_DURATION_STEPS - _search_cnt) *CYCLE_SLEEP_SEC]) call GRU_msg2player; // "Найдите карту! У Вас осталось %1 сек. до провала задания!"
 						};
-					}
-					else
-					{
+					} else {
 						call SYG_playRandomOFPTrack;
 						_wpnHolders = nearestObjects [ player, ["WeaponHolder"], WEAPON_HOLDER_DIST_TO_SEARCH];
 #ifdef __DEBUG__		
@@ -300,11 +265,8 @@ for "_check" from 0 to 0 do
 						INTEL_MAP_TEMP_MARKERS_PREFIX call SYG_hideIntelMarkers;
 					};
 					_search_cnt = _search_cnt + 1;
-				}
-				else 
-				{
-					if ( (player distance _pos) < _dist ) then // you bring the map
-					{
+				} else {
+					if ( (player distance _pos) < _dist ) then { // you bring the map
 						// play sound of success, add score etc
 						playSound "fanfare";
 						_score = _score_plus;
@@ -313,8 +275,7 @@ for "_check" from 0 to 0 do
 						format[ localize "STR_GRU_7",localize "STR_GRU_4", localize "STR_GRU_1", localize "STR_GRU_2", localize "STR_GRU_36",_score] call XfHQChat; // "задача ГРУ ""доставить карту"" выполнена (вами), очки +NNN" 
 						breakTo "main";
 					};
-					if ( _search_cnt > 0 ) then // map was on ground before this step
-					{
+					if ( _search_cnt > 0 ) then { // map was on ground before this step
 						call _remove_weapon_holders;
 
 						(localize "STR_GRU_22") call GRU_msg2player; // "Ф-у-у-у, пронесло (вытирая пот со лба)..."

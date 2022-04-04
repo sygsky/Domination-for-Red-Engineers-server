@@ -48,7 +48,7 @@ GRU_hasDoc = {
 //
 // call on client only as follow: _msg call GRU_msg2player;
 GRU_msg2player = {
-	if (isNull player ) exitWith {hint localize "GRU_msg2player: player isNull"};
+	if (isNull player ) exitWith {hint localize "+++ GRU_msg2player: player isNull"};
 	
 	if ( typeName _this == "ARRAY" ) then {
 		titleText [_this select 0, "PLAIN DOWN"];
@@ -66,9 +66,9 @@ GRU_msg2player = {
 // or false if not (e.g. called on server or no doc found in inventory)
 //
 GRU_removeDoc = {
-	if ( isNull player ) exitWith {hint localize "GRU_removeDoc: isNull player";false}; // no player -> no docs
-	if ( player hasWeapon "ACE_Map") exitWith {hint localize "GRU_removeDoc: ACE_Map removed"; player removeWeapon "ACE_Map"; /* GRU_docState = 0;  */true};
-	private ["_removed"];
+	if ( isNull player ) exitWith {hint localize "+++ GRU_removeDoc: isNull player";false}; // no player -> no docs
+	if ( player hasWeapon "ACE_Map") exitWith {hint localize "+++ GRU_removeDoc: ACE_Map removed"; player removeWeapon "ACE_Map"; /* GRU_docState = 0;  */true};
+	private ["_removed","_x"];
 	_removed = false;
 	if ( player call ACE_Sys_Ruck_HasRucksack ) then {
 		{
@@ -100,7 +100,7 @@ GRU_lostDoc = {
 //
 GRU_addDoc = {
 	if ( isNull player ) exitWith {false}; // no player -> no docs
-	private ["_weapons","_cnt","_str","_ret"];
+	private ["_weapons","_cnt","_str","_ret","_x"];
 	_weapons = weapons player;
 	// check low slots filled
 	_cnt = 0;
@@ -115,7 +115,7 @@ GRU_addDoc = {
 		{
 			_str = _str + format["%1:%2, ", _x,_x call SYG_weaponClass];
 		} forEach (_weapons);
-		hint localize format["GRU_addDoc: inventory bottom slots are occupied, can't add to them %1",_str];
+		hint localize format["+++ GRU_addDoc: inventory bottom slots are occupied, can't add to them %1",_str];
 	};
 	
 	if ( player hasWeapon "ACE_Map") exitWith { /* GRU_docState = 1; */ true };
@@ -126,12 +126,12 @@ GRU_addDoc = {
 		{
 			[player, "ACE_Map_PDM"] call ACE_Sys_Ruck_AddRuckMagazine; _ret = true;
 #ifdef __DEBUG__
-			hint localize "GRU_addDoc: map added to rucksack";
+			hint localize "+++ GRU_addDoc: map added to rucksack";
 #endif	
 		};
 	};
 #ifdef __DEBUG__
-	hint localize format["GRU_addDoc: before exit weapons player == %1", weapons player];
+	hint localize format["+++ GRU_addDoc: before exit weapons player == %1", weapons player];
 #endif	
 	_ret
 };
@@ -154,7 +154,7 @@ GRU_procClientMsg = {
 		case GRU_PERSONAL_TASK: {"GRU_PERSONAL_TASK"};
 
 		case GRU_FIND_TASK: {"GRU_FIND_TASK"};
-		default {format ["Unknown GRU task kind %1",_kind]};
+		default {format ["+++ Unknown GRU task kind %1",_kind]};
 	};
 	_player_name = argopt(3,localize "STR_GRU_9");
 	switch _msg do {
@@ -180,7 +180,7 @@ GRU_procClientMsg = {
 				// show Deritrinitation effect corresponding to target distance but not less 3
 				_pwr = if (count _town == 0) then {3} else { 1.5 + (_comp distance (_town select 0)) / 1000}; // height of effect is eq to distance in km to target
 				[_comp, 5 , _pwr] call SYG_showTeleport;
-				hint localize format["GRUClient.sqf.GRU_procClientMsg.GRU_MSG_START_TASK: call to SYG_showTeleport for %1",_town];
+				hint localize format["+++ GRUClient.sqf.GRU_procClientMsg.GRU_MSG_START_TASK: call to SYG_showTeleport for %1",_town];
 			} else {
 				hint localize format["--- GRUClient.sqf.GRU_procClientMsg.GRU_MSG_START_TASK: _comp is null"];
 			};
@@ -277,14 +277,14 @@ GRU_procClientMsg = {
 		        };
    		        case GRU_MSG_INFO_KIND_MAP_CREATED: { // GRU wallmap created  (Sahrani or Rahmadi)
    		            sleep (2 + random 6);
-   		            hint localize "GRU_MSG_INFO_KIND_MAP_CREATED sent to client";
+   		            hint localize "+++ GRU_MSG_INFO_KIND_MAP_CREATED sent to client";
    		            _pos = call SYG_mapPos;
    		            _map = nearestObjects [_pos, ["Wallmap","RahmadiMap"], 100];
    		            if ( count _map > 0) then {
    		                _map = _map select 0;
                         _id = _map addAction [localize "STR_CHECK_ITEM","GRU_scripts\mapAction.sqf", typeOf _map]; // "Изучить"
-       		            hint localize format["GRU_MSG_INFO_KIND_MAP_CREATED: addAction == %1 added to the map", _id];
-                    } else {hint localize "GRU_MSG_INFO_KIND_MAP_CREATED: no map found!!!";};
+       		            hint localize format["+++ GRU_MSG_INFO_KIND_MAP_CREATED: addAction == %1 added to the map", _id];
+                    } else {hint localize "+++ GRU_MSG_INFO_KIND_MAP_CREATED: no map found!!!";};
    		        };
                 default {hint localize format ["--- unknown kind of [""GRU_msg"", ""GRU_MSG_INFO_TO_USER"", ""%1""] called", _kind]};
 		    };

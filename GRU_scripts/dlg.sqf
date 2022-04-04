@@ -93,7 +93,7 @@ if ( _cnt <= GRU_TASK_NUMBER ) then {
 		if ( !isNull _ctrl) then {
 			ctrlShow [_id, false]; 
 #ifdef __DEBUG__			
-			hint localize format[ "dlg.sqf: ctrl %1 shown = %2", _id, ctrlShown _ctrl];
+			hint localize format[ "+++ dlg.sqf: ctrl %1 shown = %2", _id, ctrlShown _ctrl];
 #endif			
 		};
 	};

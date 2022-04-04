@@ -24,13 +24,10 @@ d_sm_p_pos = nil;
 
 _nbarr = [];
 _center = [];
-if ( (random 1) <= 0.33333333) then // 1 of 3
-{
+if ( (random 1) <= 0.33333333) then { // 1 of 3
     _center = [10412.7,7732.9,0];
     _nbarr = nearestObjects [_center, ["Land_kulna"], SEARCH_DISTANCE]; // find new kulna
-}
-else
-{
+} else {
     _center = [10750,7363,0];
     _nbarr = nearestObjects [_center, ["Land_hlaska","Land_bouda2_vnitrek"], SEARCH_DISTANCE];// find any hlaska (brown village house) or iron tower
 };
@@ -54,8 +51,7 @@ king spawn {
     sleep (60 + random 60);
     ["play_music","OFP"] call XSendNetStartScriptClient;
     //call SYG_playRandomOFPTrack; // for more fun
-    if (alive king) then
-    {
+    if (alive king) then {
         /* inform players about king escape and his new approximate position */
         _dist = king distance _old_pos;
         _mgs = ["STR_GRU_48",call SYG_getLocalMenRandomName, (round(_dist /100) max 1)* 100];
