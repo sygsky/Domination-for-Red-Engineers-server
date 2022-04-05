@@ -25,10 +25,8 @@ call GRU_removeDocAction;
 // handle with GRU document state
 _val = GRU_docState;
 if (count _this == 1) then {GRU_docState = arg(0);}  // this is call from script: [0] execVM "GRU_scripts\GRU_removedoc.sqf";
-else
-{
-	if ( count _this >= 4 ) then // MUST be called from action (be carefull about this option)
-	{
+else {
+	if ( count _this >= 4 ) then { // MUST be called from action (be carefull about this option)
 		_this = arg(3);
 		if ( count _this > 0) then {GRU_docState = arg(0)};
 	};
