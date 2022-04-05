@@ -1024,4 +1024,26 @@ SYG_pointIsOnBase = {
 	[_this call SYG_getPos,d_base_array] call SYG_pointInRect
 };
 
+//
+// call: _isArtiForbidden = call isArtiForbidden;
+//
+isArtiForbidden = {
+    private ["_town_name","_exit"];
+    _town_name = call SYG_getTargetTownName;
+    if ( !isNil "player_is_on_town_raid" ) exitWith {
+       stop_arti_on_the_town = _town_name;
+        (localize "STR_GRU_38_0") call XfGlobalChat; // "Arti strikes are strictly forbidden during the GRU mission!"
+        playSound "losing_patience";
+    };
+    _exit = false;
+    if (!isNil "stop_arti_on_the_town") then {
+        _exit = stop_arti_on_the_town == _town_name;
+        if (!_exit) then { stop_arti_on_the_town = nil };
+    };
+    if (_exit) exitWith {
+        (localize "STR_GRU_38_1") call XfGlobalChat; // ""Command has temporarily denied you access to artillery. It seems the partisans have complained about you!""
+        playSound "losing_patience";
+    };
+};
+
 if (true) exitWith {};

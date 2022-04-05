@@ -402,6 +402,7 @@ SYG_mainTownBonusInfoStr = {
 		[format[localize "STR_SYS_MTBONUS_MAX", _best_str], localize "STR_SYS_MTBONUS_NOMIN"];
 	};
 	[format[localize "STR_SYS_MTBONUS_MAX", _best_str], format[localize "STR_SYS_MTBONUS_MIN", _worst_str]]
-}
+};
+
 
 // EOF

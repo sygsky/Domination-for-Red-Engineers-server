@@ -4,8 +4,11 @@ private ["_ok","_oldpos","_pos1","_pos2","_dist"];
 #include "x_setup.sqf"
 
 if (!ari2_available) exitWith {
-		(localize "STR_SYS_302") call XfHQChat; //"Вторая арт.батарея недоступна..."
+	(localize "STR_SYS_302") call XfHQChat; //"Вторая арт.батарея недоступна..."
 };
+
+// method prints all messages about forbiddance and return true if forbidden else false
+if (call isArtiForbidden) exitWith {};
 
 #ifdef __RANKED__
 _score = score player;

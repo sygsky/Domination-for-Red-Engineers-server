@@ -7,6 +7,9 @@ if (!ari_available) exitWith {
 	(localize "STR_SYS_301") call XfHQChat; // "Первая арт.батарея недоступна..."
 };
 
+// method prints all messages about forbiddance and return true if forbidden else false
+if (call isArtiForbidden) exitWith {};
+
 #ifdef __RANKED__
 _score = score player;
 if (_score < (d_ranked_a select 19)) exitWith {
