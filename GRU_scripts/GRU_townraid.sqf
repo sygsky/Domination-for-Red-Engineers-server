@@ -207,7 +207,7 @@ for "_check" from 0 to 0 do {
 			sleep CYCLE_SLEEP_SEC;
 			if ( !alive player ) exitWith {
 				if ( GRU_docState > 0 ) then {
-					[ localize "STR_GRU_12"] call GRU_msg2player; // "Вы погибли и враг прочтёт доверенное Вам разведдонесение. За это - штраф!"
+					[ format[localize "STR_GRU_12", _score_minus ]] call GRU_msg2player; // "Вы погибли и враг прочтёт доверенное Вам разведдонесение. За это - штраф!"
 					[ "GRU_msg", GRU_MSG_TASK_FAILED, GRU_MAIN_TASK, name player ] call XSendNetStartScriptServer;
 					_score = _score_minus;
 				} else {
