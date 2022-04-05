@@ -527,14 +527,22 @@ for "_xx" from 1 to 2 do { // 'Меню MHQ'
 };
 #endif
 
+#ifdef __NO_REAMMO_IN_SALVAGE__
+_load_static = "scripts\load_static1.sqf";
+_unload_static = "scripts\unload_static1.sqf";
+#else
+_load_static = "scripts\load_static.sqf";
+_unload_static = "scripts\unload_static.sqf";
+#endif
+
 #ifndef __TT__
 _addStat = /*__AIVer || */(_string_player in d_is_engineer);
 for "_xx" from 7 to 8 do { // 'Загрузить орудие', 'Разгрузить орудие'
 	call compile format ["
 		if (!(isNil 'TR%1')) then {
 			if (_addStat) then {
-				TR%1 addAction[localize 'STR_SYG_10','scripts\load_static.sqf',[],-1,false];
-				TR%1 addAction[localize 'STR_SYG_11','scripts\unload_static.sqf',[],-1,false];
+				TR%1 addAction[localize 'STR_SYG_10',"+_load_static+",[],-1,false];
+				TR%1 addAction[localize 'STR_SYG_11',"+_unload_static+",[],-1,false];
 			} else {
 				TR%1 addEventHandler ['getin', {_this execVM 'x_scripts\x_checktrucktrans.sqf';}];
 			};
@@ -542,8 +550,8 @@ for "_xx" from 7 to 8 do { // 'Загрузить орудие', 'Разгруз
 		};
 		'TR%1' addPublicVariableEventHandler {
 			if (str(player) in d_is_engineer) then {
-				(_this select 1) addAction[localize 'STR_SYG_10','scripts\load_static.sqf',[],-1,false];
-				(_this select 1) addAction[localize 'STR_SYG_11','scripts\unload_static.sqf',[],-1,false];
+				(_this select 1) addAction[localize 'STR_SYG_10',"+_load_static+",[],-1,false];
+				(_this select 1) addAction[localize 'STR_SYG_11',"+_unload_static+",[],-1,false];
 			} else {
 				(_this select 1) addEventHandler ['getin', {_this execVM 'x_scripts\x_checktrucktrans.sqf';}];
 			};

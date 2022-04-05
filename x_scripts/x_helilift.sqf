@@ -105,8 +105,21 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                     };
 					if (_msg == "") then {
 						switch (_nearest) do {
+#ifdef __NO_REAMMO_IN_SALVAGE__
+							case TR7: {
+									{
+										if (_x isKindOf "D30" || _x isKindOf "M119") exitWith { _msg = localize "STR_SYS_38_0" };
+									} forEach truck1_cargo_array;
+								};
+							case TR8: {
+									{
+										if (_x isKindOf "D30" || _x isKindOf "M119") exitWith { _msg = localize "STR_SYS_38_0" };
+									} forEach truck2_cargo_array;
+							};
+#else
 							case TR7: { if (("D30" in truck1_cargo_array) || ("M119" in truck1_cargo_array)) then {_msg = localize "STR_SYS_38_0"}};
 							case TR8: { if (("D30" in truck2_cargo_array) || ("M119" in truck2_cargo_array)) then {_msg = localize "STR_SYS_38_0"}};
+#endif
 						};
 					};
 					if (_msg != "") exitWith {

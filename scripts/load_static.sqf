@@ -54,7 +54,11 @@ if (_loading_allowed) then {
 			if (count truck1_cargo_array >= max_truck_cargo) then {
 				(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
 			} else {
+#ifdef __NO_REAMMO_IN_SALVAGE__
+				truck1_cargo_array set[count truck1_cargo_array, _cargo];
+#else
 				truck1_cargo_array set[count truck1_cargo_array, _cargo_type];
+#endif
 				["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
 			};
 		};
@@ -62,7 +66,11 @@ if (_loading_allowed) then {
 			if (count truck2_cargo_array >= max_truck_cargo) then {
 				(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
 			} else {
+#ifdef __NO_REAMMO_IN_SALVAGE__
+				truck2_cargo_array set[count truck2_cargo_array, _cargo];
+#else
 				truck2_cargo_array set[count truck2_cargo_array, _cargo_type];
+#endif
 				["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
 			};
 		};
@@ -71,7 +79,9 @@ if (_loading_allowed) then {
 		hint format [localize "STR_SYG_07", _type_name, _i]; // "%1 will be loaded in %2 sec."
 		sleep 1;
 	};
+#ifndef __NO_REAMMO_IN_SALVAGE__
 	deleteVehicle _cargo;
+#endif
 	hint format [localize "STR_SYG_08", _type_name]; // "%1 loaded and attached!"
 	currently_loading = false;
 } else {

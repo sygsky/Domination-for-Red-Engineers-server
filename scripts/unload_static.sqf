@@ -7,7 +7,11 @@
 
 _vehicle = _this select 0;
 _engineer = _this select 1;
+#ifdef __NO_REAMMO_IN_SALVAGE__
+_cargo = objNull;
+#else
 _cargo = "";
+#endif
 _do_exit = false;
 
 cargo_selected_index = -1;
@@ -71,7 +75,13 @@ call compile format ["
 ", current_truck_cargo_array];
 
 _pos_to_set = _engineer modelToWorld [0,5,0];
+
+#ifdef __NO_REAMMO_IN_SALVAGE__
+_static = _cargo;
+#else
 _static = _cargo createVehicleLocal _pos_to_set;
+#endif
+
 _static lock true;
 _dir_to_set = getDir _engineer;
 
@@ -104,11 +114,14 @@ while {e_placing_running == 0} do {
 	};
 };
 
+#ifndef __NO_REAMMO_IN_SALVAGE__
 deleteVehicle _static;
+#endif
 
-if (_place_error) exitWith {
+if (_place_error || (e_placing_running == 2)) exitWith {
+	if (e_placing_running == 2) then { (localize "STR_SYS_539") call XfGlobalChat;};  // "Static placement canceled..."
 	call compile format ["
-		truck%1_cargo_array = truck%1_cargo_array + [_cargo];
+		truck%1_cargo_array set[count truck%1_cargo_array, _cargo];
 		[""truck%1_cargo_array"",truck%1_cargo_array] call XSendNetVarAll;
 	", current_truck_cargo_array];
 };
@@ -116,22 +129,29 @@ if (_place_error) exitWith {
 if (e_placing_running == 2) exitWith {
 	(localize "STR_SYS_539") call XfGlobalChat; // "Static placement canceled..."
 	call compile format ["
-		truck%1_cargo_array = truck%1_cargo_array + [_cargo];
+		truck%1_cargo_array set[count truck%1_cargo_array, _cargo];
 		[""truck%1_cargo_array"",truck%1_cargo_array] call XSendNetVarAll;
 	", current_truck_cargo_array];
 };
 
+#ifdef __NO_REAMMO_IN_SALVAGE__
+_type_name = [typeOf _cargo,0] call XfGetDisplayName;
+#else
 _type_name = [_cargo,0] call XfGetDisplayName;
+#endif
 
 //for "_i" from 10 to 1 step -1 do {
 //	hint format ["%1 will be placed in %2 sec.", _type_name, _i];
 //	sleep 1;
 //};
-
+#ifdef __NO_REAMMO_IN_SALVAGE__
+_static = _cargo;
+#else
 _static = _cargo createVehicle _pos_to_set;
+#endif
 _static setDir _dir_to_set;
 _static setPos [_pos_to_set select 0, _pos_to_set select 1, 0];
 
 _str = format [localize "STR_SYS_540", _type_name]; // "%1 placed!"
 hint _str;
-     _str call XfGlobalChat;
+_str call XfGlobalChat;
