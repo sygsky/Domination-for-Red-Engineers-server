@@ -76,7 +76,7 @@ GRU_mainTaskInfo = {
 
 // count active tasks and return their count (from 0 to count (GRU_tasks-1))
 GRU_taskCount = {
-	private ["_cnt"];
+	private ["_cnt","_x"];
 	_cnt = 0;
 	{
 		if ( TASK_IS_ACTIVE( _x) ) then { _cnt = _cnt + 1;};

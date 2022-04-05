@@ -15,17 +15,15 @@ _dir = round([_comp, _unit] call XfDirToObj);
 _dir1 = round(getDir _comp);
 
 #ifdef __PRINT__
-hint localize format[ "computer.sqf: get intel task -> dir to player %1, comp dir %2, ", _dir, _dir1 ];
+hint localize format[ "+++ computer.sqf: get intel task -> dir to player %1, comp dir %2, ", _dir, _dir1 ];
 //player groupChat localize format["get intel task: dir to player %1, comp dir %2", round (_dir), round(getDir _comp)];
 #endif
 
 // check direction. TODO: add check for negative values
 _dir = _dir1 - _dir;
-_str = if ( _dir < 4 || _dir > 104 ) then {"STR_COMP_4"} else // bad access angle, use computer from front side
-{
+_str = if ( _dir < 4 || _dir > 104 ) then {"STR_COMP_4"} else { // bad access angle, use computer from front side
 	if ((call GRU_taskCount) == 0) then { "STR_COMP_2" } // no tasks
-	else
-	{
+	else {
 		[ _unit call SYG_hasWeapon4GRUMainTask/* SYG_hasOnlyPistol */ ] execVM "GRU_scripts\dlg.sqf";
 		""
 	};
