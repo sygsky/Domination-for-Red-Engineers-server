@@ -74,6 +74,8 @@ call compile format ["
 	[""truck%1_cargo_array"",truck%1_cargo_array] call XSendNetVarAll;
 ", current_truck_cargo_array];
 
+//hint localize format["++++ unload_static.sqf: cargo %1, damage %2, found at %3", typeOf _cargo, damage _cargo, getPos _cargo];
+
 _pos_to_set = _engineer modelToWorld [0,5,0];
 
 #ifdef __NO_REAMMO_IN_SALVAGE__
@@ -82,7 +84,7 @@ _static = _cargo;
 _static = _cargo createVehicleLocal _pos_to_set;
 #endif
 
-_static lock true;
+// _static lock true; // already locked in load procedure
 _dir_to_set = getDir _engineer;
 
 _place_error = false;
@@ -126,14 +128,6 @@ if (_place_error || (e_placing_running == 2)) exitWith {
 	", current_truck_cargo_array];
 };
 
-if (e_placing_running == 2) exitWith {
-	(localize "STR_SYS_539") call XfGlobalChat; // "Static placement canceled..."
-	call compile format ["
-		truck%1_cargo_array set[count truck%1_cargo_array, _cargo];
-		[""truck%1_cargo_array"",truck%1_cargo_array] call XSendNetVarAll;
-	", current_truck_cargo_array];
-};
-
 #ifdef __NO_REAMMO_IN_SALVAGE__
 _type_name = [typeOf _cargo,0] call XfGetDisplayName;
 #else
@@ -149,8 +143,12 @@ _static = _cargo;
 #else
 _static = _cargo createVehicle _pos_to_set;
 #endif
+
 _static setDir _dir_to_set;
 _static setPos [_pos_to_set select 0, _pos_to_set select 1, 0];
+_static lock false; // unloack before use
+["say_sound", _static, "return"] call XSendNetStartScriptClientAll;
+
 
 _str = format [localize "STR_SYS_540", _type_name]; // "%1 placed!"
 hint _str;

@@ -197,4 +197,4 @@
 #define __BATTLEFIELD_BONUS__
 
 // comment to allow reammo if loaf/unload static weapon to/from salvage tru	ck
-//#define __NO_REAMMO_IN_SALVAGE__
+#define __NO_REAMMO_IN_SALVAGE__

@@ -11,7 +11,7 @@ _control = _display displayCtrl 101115;
 
 call compile format ["
 {
-	_pic = getText(configFile>>""cfgVehicles"" >> _x >> ""picture"");
+	_pic = getText(configFile>>""cfgVehicles"" >> (typeOf _x) >> ""picture"");
 	_index = _control lbAdd ([typeOf _x,0] call XfGetDisplayName);
 	_control lbSetPicture [_index, _pic];
 	_control lbSetColor [_index, [1, 1, 0, 0.5]];

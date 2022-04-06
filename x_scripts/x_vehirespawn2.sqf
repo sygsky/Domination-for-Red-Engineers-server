@@ -1,4 +1,4 @@
-// by Xeno, x_scripts/x_vehirespawn2.sqf
+// by Xeno, x_scripts/x_vehirespawn2.sqf, not used?
 private ["_delay","_disabled","_newveh","_startdir","_startpos","_type","_vehicle"];
 if (!isServer) exitWith{};
 

@@ -401,7 +401,7 @@ STR_SM_TELEPORT_1,You realized that teleportation didn’t work with some of you
 STR_SYS_160,Select Viewdistance,Sichtweite,Distancia de visión,Зона обзора
 STR_SYS_161,Click on the number to change the VD,Wählen Sie aus der Liste,Seleccione de la lista,Выберите из списка
 STR_SYS_161_0,Select,Auswählen,Seleccione,Выберите
-STR_SYS_161_1,Select the vehicle to unload:,Wählen Sie das zu entladende Fahrzeug:,Elija el vehículo a descargar:,Выберите автомобиль для разгрузки:
+STR_SYS_161_1,Select to unload:,Wählen Sie zum Entladen:,Seleccione para descargar:,Выбор выгрузки:
 STR_SYS_162,Select Grass Layer,Wählen Sie Die Gras-Ebene,Dibujo de hierba,Прорисовка травы
 STR_SYS_163,Player Marker,Spieler-marker,Marcador de jugador,Маркер игрока
 STR_SYS_164,Points needed for,Punkte benötigt,Puntos necesarios para,Необходимо очков для
@@ -744,14 +744,14 @@ STR_SYS_525,The locals don't know anything about the king's location!!!,Die einh
 STR_SYS_526,The locals think that the king is in the hotel or its surroundings.,"Die einheimischen denken, dass der König in einem Hotel oder seiner Umgebung ist",Los locales piensan que el rey está en el hotel o cerca,"Местные думают, что король - в отеле или рядом"
 STR_SYS_527,The locals believe that the king has already died,"Lokale glauben, dass der König bereits gestorben ist",Los locales creen que el rey ya ha muerto,"Местные считают, что король уже помер"
 
-STR_SYS_530,Only engineers can place static weapons,Nur Ingenieure platzieren können statische Waffen,¡Solo el ingeniero puede descargar las armas!,Выгружать орудия может только инженер!
+STR_SYS_530,Only engineers can place static weapons,Nur Ingenieure platzieren können statische Waffen,¡Solo el ingeniero puede descargar las armas!,Выгружать оружие может только инженер!
 STR_SYS_531,You have to get out before you can place the static weapon!,"Sie müssen raus, bevor Sie die statische Waffe!",Para descargar el arma que necesita para salir del camión!,Для выгрузки орудия вам необходимо выйти из грузовика!
-STR_SYS_532,No static weapon loaded...,Keine statische Waffe geladen...,El arma no está cargada...,Орудие не погружено...
+STR_SYS_532,No static weapons loaded...,Keine statische Waffe geladen...,Las armas no están cargadas...,Нет загруженного оружия...
 STR_SYS_533,Unload canceled,Entladen abgebrochen,Descarga cancelada,Выгрузка отменена
 STR_SYS_534,Someone else unloaded already an item. Try again.,Jemand anderen abgeladen bereits ein Element. Versuchen Sie es erneut.,Este camión ya está descargando. Inténtalo de nuevo.,Этот грузовик уже кто-то разгружает. Попробуйте еще раз.
-STR_SYS_535,Static placement preview mode. Press Place Static to place the object. You may place the object 20 m around the Salvage truck,Statische Platzierung Vorschau-Modus. Drücken Sie Statt Statischen auf dem Objekt platzieren. Sie können das Objekt 20 m um die Bergung LKW,Indique la ubicación de la pistola en un Radio de 20 m. del camión!,Укажите место размещения орудия в радиусе 20 м. от грузовика!
-STR_SYS_536,Cancel Placing Static,Abbrechen Platzierung Statisch,Cancelar la colocación del dispositivo,Отмена размещения устройство
-STR_SYS_537,Place Static,Platz Statische,Colocar el dispositivo,Разместить устройство
+STR_SYS_535,Static weapon placement preview mode. Press 'Place Static' to place the object. You may place the object 20 m around the Salvage truck,Statische Platzierung Vorschau-Modus. Drücken Sie 'Platz Statische' auf dem Objekt platzieren. Sie können das Objekt 20 m um die Bergung LKW,Modo de vista previa de colocación de armas estáticas. Pulsa 'Colocar estática' para colocar el objeto. Puedes colocar el objeto a 20 m alrededor del camión de salvamento,Установка оружия. Скомандуйте 'Выгрузить оружие' и укажите нужное место в радиусе 20 м. от грузовика!
+STR_SYS_536,Cancel Placing Static,Abbrechen Platzierung Statisch,Cancelar la colocación del dispositivo,Отмена загрузки
+STR_SYS_537,Place Static,Platz Statische,Colocar estática,Выгрузить оружие
 STR_SYS_538,"You are too far away from the Salvage truck to place the static vehicle, placing canceled!","Sie sind zu weit Weg von der LKW-Bergung auf die statische-Fahrzeug, überführung abgebrochen!",¡Estás demasiado lejos del camión! Descarga cancelada!,Вы слишком удалились от грузовика! Выгрузка отменена!
 STR_SYS_539,Static placement canceled...,Statische Platzierung abgebrochen...,Descarga cancelada...,Выгрузка отменена...
 STR_SYS_540,%1 placed!,%1 platziert!,Ha descargado y colocado %1,Вы выгрузили и разместили %1

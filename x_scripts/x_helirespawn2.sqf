@@ -20,7 +20,7 @@ _heli_array = [];
     _ifdamage      = argp(_vec_a,2);
 	_empty_respawn = argpopt(_vec,3,0); // min dist to return
 	// offset in veh array:              0,        1,        2,  3,                 4,                 5,              6,        7
-	_heli_array = _heli_array + [[_vehicle,_number_v,_ifdamage,  0, position _vehicle,direction _vehicle,typeOf _vehicle,_empty_respawn]];
+	_heli_array set [count _heli_array, [_vehicle,_number_v,_ifdamage,  0, position _vehicle,direction _vehicle,typeOf _vehicle,_empty_respawn]];
 
 	// change cargo for Mi-17 only (USSR version). FIXME: do the same for non USSR version heli
 /*

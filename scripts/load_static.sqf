@@ -20,20 +20,16 @@ if (!(_str_p in d_is_engineer)) exitWith {hint localize "STR_SYG_02";}; // "Only
 _tr_full = false;
 switch (_vehicle) do {
 	case TR7: {
-		if (count truck1_cargo_array >= max_truck_cargo) then {
-			(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
-			_tr_full = true;
-		};
+		if (count truck1_cargo_array >= max_truck_cargo) then { _tr_full = true; };
 	};
 	case TR8: {
-		if (count truck2_cargo_array >= max_truck_cargo) then {
-			(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
-			_tr_full = true;
-		};
+		if (count truck2_cargo_array >= max_truck_cargo) then { _tr_full = true; };
 	};
 };
 
-if (_tr_full) exitWith {};
+if (_tr_full) exitWith {
+	(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
+};
 
 _cargo = nearestObject [_vehicle, "StaticWeapon"];
 if (isNull _cargo) exitWith {hint localize "STR_SYG_04"}; // "No static weapon in range."
@@ -47,41 +43,40 @@ if (_loading_allowed && currently_loading) exitWith {
 	localize "STR_SYG_06" call XfGlobalChat; // "You are already loading an item. Please wait until it is finished"
 };
 
+_cargo lock true; // lock loaded vehicle
+{ _x action ["Eject", _x] } forEach crew _cargo; // empty vehicle before loading
+
 if (_loading_allowed) then {
 	currently_loading = true;
 	switch (_vehicle) do {
 		case TR7: {
-			if (count truck1_cargo_array >= max_truck_cargo) then {
-				(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
-			} else {
 #ifdef __NO_REAMMO_IN_SALVAGE__
-				truck1_cargo_array set[count truck1_cargo_array, _cargo];
+			truck1_cargo_array set[count truck1_cargo_array, _cargo];
 #else
-				truck1_cargo_array set[count truck1_cargo_array, _cargo_type];
+			truck1_cargo_array set[count truck1_cargo_array, _cargo_type];
 #endif
-				["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
-			};
+			["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
 		};
 		case TR8: {
-			if (count truck2_cargo_array >= max_truck_cargo) then {
-				(format [localize "STR_SYG_03", max_truck_cargo]) call XfGlobalChat; // "Already %1 items loaded. Not possible to load more."
-			} else {
 #ifdef __NO_REAMMO_IN_SALVAGE__
-				truck2_cargo_array set[count truck2_cargo_array, _cargo];
+			truck2_cargo_array set[count truck2_cargo_array, _cargo];
 #else
-				truck2_cargo_array set[count truck2_cargo_array, _cargo_type];
+			truck2_cargo_array set[count truck2_cargo_array, _cargo_type];
 #endif
-				["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
-			};
+			["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
 		};
 	};
 	for "_i" from 10 to 1 step -1 do {
 		hint format [localize "STR_SYG_07", _type_name, _i]; // "%1 will be loaded in %2 sec."
 		sleep 1;
 	};
-#ifndef __NO_REAMMO_IN_SALVAGE__
+#ifdef __NO_REAMMO_IN_SALVAGE__
+	_cargo setVehiclePosition [[50000,50000],[],0,"CAN_COLLIDE"]; // hide in the middle of nowhere
+//	hint localize format["++++ load_static.sqf: cargo %1, alive %2, moved to %3", typeOf _cargo, alive _cargo, getPos _cargo];
+#else
 	deleteVehicle _cargo;
 #endif
+	["say_sound", _vehicle, "steal"] call XSendNetStartScriptClientAll;
 	hint format [localize "STR_SYG_08", _type_name]; // "%1 loaded and attached!"
 	currently_loading = false;
 } else {
