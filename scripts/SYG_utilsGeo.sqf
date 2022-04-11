@@ -1029,21 +1029,18 @@ SYG_pointIsOnBase = {
 //
 isArtiForbidden = {
     private ["_town_name","_exit"];
-    _town_name = call SYG_getTargetTownName;
     if ( !isNil "player_is_on_town_raid" ) exitWith {
-       stop_arti_on_the_town = _town_name;
         (localize "STR_GRU_38_0") call XfGlobalChat; // "Arti strikes are strictly forbidden during the GRU mission!"
         playSound "losing_patience";
+        true
     };
-    _exit = false;
-    if (!isNil "stop_arti_on_the_town") then {
-        _exit = stop_arti_on_the_town == _town_name;
-        if (!_exit) then { stop_arti_on_the_town = nil };
-    };
-    if (_exit) exitWith {
-        (localize "STR_GRU_38_1") call XfGlobalChat; // ""Command has temporarily denied you access to artillery. It seems the partisans have complained about you!""
+    _town_name = call SYG_getTargetTownName;
+    if (stop_arti_on_the_town == _town_name) exitWith {
+        (localize "STR_GRU_38_1") call XfGlobalChat; // ""Command has temporarily denied your access to artillery. It seems the partisans have complained about you!""
         playSound "losing_patience";
+        true
     };
+    false
 };
 
 if (true) exitWith {};

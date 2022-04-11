@@ -1851,7 +1851,7 @@ SYG_isMG = {
 // call: _isRadio = (secondaryWeapon player) call isRadio;
 //
 SYG_isRadio = {
-    //_wpn = secondaryWeapon _unit;
+    // _wpn = secondaryWeapon _unit;
     _this in SYG_RADIO_SET;
 };
 
@@ -1859,17 +1859,9 @@ SYG_isRadio = {
 // call: _isRadio = player call asRadio;
 //
 SYG_hasRadio = {
-    private ["_ret, _wpn, _ruck"];
-    _ret = false;
-    _wpn = weapons _this;
-    _ruck = _this call ACE_Sys_Ruck_FindRuck;
-    if (_ruck != "" ) then { _wpn = _wpn + [_ruck]; };
-
-    {
-        if  (_x in SYG_RADIO_SET) exitWith {_ret = true;}
-    } forEach _wpn;
-
-    _ret
+    if ( (player call ACE_Sys_Ruck_FindRuck) call SYG_isRadio) exitWith { true };
+    if ( (secondaryWeapon player) call SYG_isRadio) exitWith { true };
+    false
 };
 
 
@@ -1921,6 +1913,7 @@ SYG_weaponClass = {
 	_ret
 };
 
+// TODO: not used ANYWHERE
 // returns true if a unit posess only pistol or nothing
 SYG_hasOnlyPistol = {
 	private ["_ret", "_other_weapon", "_onback", "_weapons","_wob"];
@@ -1944,13 +1937,15 @@ SYG_hasOnlyPistol = {
 };
 
 GRU_allowedNonPistolList = ["ACE_MK13","ACE_M32","ACE_ShotgunBase"];
-// returns true if a unit posess only pistol or nothing
-// call: _only_pistols = _unit call SYG_hasWeapon4GRUMainTask;
 
+//
+// returns true if a unit posess only allowed armament or nothing
+// call: _only_pistols = _unit call SYG_hasWeapon4GRUMainTask;
+//
 SYG_hasWeapon4GRUMainTask = {
-	private ["_ret", "_other_weapon", "_onback", "_weapons","_wob"];
+	private ["_ret", "_bad_weapon", "_onback", "_weapons","_wob","_x"];
 	if ( (typeName _this != "OBJECT") || (! (_this isKindOf "CAManBase")) ) exitWith { false };
-	_other_weapon = false;
+	_bad_weapon = false;
 	_weapons = weapons _this;
 	if (format["%1",_this getVariable "ACE_weapononback"] != "<null>") then {
 		_wob = _this getVariable "ACE_weapononback";
@@ -1961,16 +1956,16 @@ SYG_hasWeapon4GRUMainTask = {
 
 	{
 		switch (_x call SYG_weaponClass) do {
-			case 1: { if ( !([_x, GRU_allowedNonPistolList] call SYG_isInList) ) then {_other_weapon = true;} };
-			case 2: { _other_weapon = true;};
+			case 1: { if ( !([_x, GRU_allowedNonPistolList] call SYG_isInList) ) then {_bad_weapon = true;} };
+			case 2: { _bad_weapon = true;};
 		};
 	}forEach (_weapons);
-	(!_other_weapon)
+	if ( _this call SYG_hasRadio ) then { _bad_weapon = true }; // exclude radio from allowed items
+	(!_bad_weapon)
 };
 
-
 SYG_isBattleHeli = {
-	private ["_type","_ret"];
+	private ["_type","_ret","_x"];
 	_type = typeOf _this;
 	if ( ! (_type isKindOf "Helicopter") ) exitWith { false };
 	_ret = false;
@@ -1980,6 +1975,7 @@ SYG_isBattleHeli = {
 	_ret
 };
 
+// TODO: NOT USED ANYWHERE
 // call as:
 // _allowed_only = [_unit, ["rks","rfl","smg","pst","rpg","lng"]] call SYG_unitHasOnlyAlloweWeapon;
 // where
@@ -2001,11 +1997,9 @@ SYG_unitHasOnlyAllowedWeapon = {
 	_list = arg(1);
 	_other_weapon = false;
 	_weapons = weapons _unit;
-	if (format["%1",_unit getVariable "ACE_weapononback"] != "<null>") then
-	{
+	if (format["%1",_unit getVariable "ACE_weapononback"] != "<null>") then {
 		_wob = _unit getVariable "ACE_weapononback";
-		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then
-		{
+		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then {
 			_weapons = _weapons + [_wob];
 		};
 	};
@@ -2016,29 +2010,23 @@ SYG_unitHasOnlyAllowedWeapon = {
 	scopeName "main";
 	{
 		switch (_x call SYG_weaponClass) do {
-			case 1: 	// rifle
-			{
+			case 1: {	// rifle
 				//detect if it is kind of: lng, rfl, smg
-				if ( !("lng" in _list) ) then  // no long muzzles in list so check for shorter ones
-				{
+				if ( !("lng" in _list) ) then { // no long muzzles in list so check for shorter ones
 					// check weapon to be smg
-					if ( [_x, SMG_WEAPON_LIST] call SYG_isInList ) then  // smg
-					{
+					if ( [_x, SMG_WEAPON_LIST] call SYG_isInList ) then { // smg
 						hint localize format["SYG_unitHasOnlyAllowedWeapon: SMG (%1) found",_x];
-						if (! (("smg" in _list) || ("rfl" in _list)) ) then
-						{
+						if (! (("smg" in _list) || ("rfl" in _list)) ) then {
 							hint localize format[ "SYG_unitHasOnlyAllowedWeapon: SMG (%1) not allowed", _x ];
 							_other_weapon = true; breakTo "main";
 						};
 					} else {
 						// may be long muzzle rifle?
-						if ( [_x, LONG_MUZZLE_WEAPON_LIST] call SYG_isInList ) then  // long muzzle detected
-						{
+						if ( [_x, LONG_MUZZLE_WEAPON_LIST] call SYG_isInList ) then{ // long muzzle detected
 							hint localize format["SYG_unitHasOnlyAllowedWeapon: LNG (%1) found",_x];
 							hint localize format[ "SYG_unitHasOnlyAllowedWeapon: LNG (%1) not allowed", _x ];
 							_other_weapon = true; breakTo "main";
-						} else // ordinal rifle detected
-						{
+						} else { // ordinal rifle detected
 							hint localize format["SYG_unitHasOnlyAllowedWeapon: RFL (%1) found",_x];
 							if (! ("rfl" in _list) ) then {
 								hint localize format[ "SYG_unitHasOnlyAllowedWeapon: RFL (%1) not allowed", _x ];
@@ -2048,22 +2036,19 @@ SYG_unitHasOnlyAllowedWeapon = {
 					};
 				};
 			};
-			case 2:	// Launcher
-			{
+			case 2:	{ // Launcher
 				if (! ("rpg" in _list) ) then {
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: LNC (%1) not allowed", _x ];
 					_other_weapon = true; breakTo "main";
 				};
 			};
-			case 3:	// Pistol
-			{
+			case 3:	{ // Pistol
 				if (! ("pst" in _list) ) then {
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: PST (%1) not allowed", _x ];
 					_other_weapon = true; breakTo "main";
 				};
 			};
-			case 4:	// Rucksack
-			{
+			case 4:	{ // Rucksack
 				if (! ("rks" in _list) ) then {
 					hint localize format[ "SYG_unitHasOnlyAllowedWeapon: RKS (%1) not allowed", _x ];
 					_other_weapon = true; breakTo "main";

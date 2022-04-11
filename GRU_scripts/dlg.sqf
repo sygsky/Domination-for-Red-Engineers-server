@@ -105,8 +105,8 @@ if ( alive player ) then {
 	switch  dialog_ret do {
 		case -1:  {	// cancel button clicked (or "Escape" btn pushed)
 			// -1: "ничего кроме пистолета!", any other: "Сеанс связи с ГРУ закончен"
-			_str = localize "STR_GRU_27"; 
-			if ( !_pistol_only ) then { _str = format["%1.\n%2",_str, localize "STR_COMP_3"];};
+			_str = localize "STR_GRU_27"; // "GRU session is over"
+			if ( !_pistol_only ) then { _str = format["%1.\n%2",_str, localize "STR_COMP_3"];}; // "Get rid of any surplus weapons! And try again..."
 			titleText[ _str, "PLAIN DOWN" ];  
 		};
 		case GRU_MAIN_TASK: {
@@ -122,9 +122,8 @@ if ( alive player ) then {
 			[ argp(argp(SYG_intelObjects,0),0), 10, _score_plus, -_score_minus ] execVM "GRU_scripts\GRU_townraid.sqf";
 #endif
 		};
-		default // "Непонятно что произошло..."
-		{
-			titleText [ format[localize "STR_GRU_28",_ret_code],"PLAIN DOWN" ];
+		default { // "Непонятно что произошло..."
+			titleText [ format[localize "STR_GRU_28",_ret_code],"PLAIN DOWN" ]; // "Illegal parameters detected!"
 		}; 
 	};
 };

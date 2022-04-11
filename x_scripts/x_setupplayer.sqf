@@ -13,7 +13,7 @@ sleep 1;
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG_DOSAAF__
+#define __DEBUG_DOSAAF__
 //#define __DEBUG__
 //#define __DEBUG_JAIL__
 
@@ -761,6 +761,15 @@ if (!(__ACEVer)) then {
 	player_can_call_drop = false;
 	[1] execVM "x_scripts\x_artiradiocheck.sqf";
 	execVM "x_scripts\x_dropradiocheck.sqf";
+
+	if (_string_player in d_can_use_artillery) then {
+		stop_arti_on_the_town = ""; // is dummy for all non-GRU roles
+		d_arti_trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
+		d_arti_trigger setTriggerArea [d_base_array select 1, d_base_array select 2, d_base_array select 3, true];
+		d_arti_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", true];
+		d_arti_trigger setTriggerStatements["stop_arti_on_the_town != ''", "stop_arti_on_the_town = ''; (localize 'STR_GRU_38_2') call XfGlobalChat;", ""]; // "Permission for an arti-strike has been granted again!"
+	};
+
 };
 _p addRating 20000;
 _units = units group player;
@@ -803,6 +812,13 @@ if (_string_player in d_can_use_artillery) then {
 		if (_artinum == 0) exitWith {};
 		[_artinum] execVM "x_scripts\x_artiradiocheck.sqf";
 	};
+
+	stop_arti_on_the_town = "";	// if set town name then arti is prohibited
+	d_arti_trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
+	d_arti_trigger setTriggerArea [d_base_array select 1, d_base_array select 2, d_base_array select 3, true];
+	d_arti_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", true];
+	d_arti_trigger setTriggerStatements["stop_arti_on_the_town != ''", "stop_arti_on_the_town = ''; (localize 'STR_GRU_38_2') call XfGlobalChat;", ""]; // "Permission for an arti-strike has been granted again!"
+
 };
 _strp = format ["%1",_p];
 player_can_call_drop = _strp in d_can_call_drop;
@@ -1110,7 +1126,7 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 	d_engineer_trigger = createTrigger["EmptyDetector" ,_dbase_a select 0];
 	d_engineer_trigger setTriggerArea [_dbase_a select 1, _dbase_a select 2, 0, false];
 #endif
-
+	
 	d_engineer_trigger setTriggerActivation [d_own_side_trigger, "PRESENT", true];
 	d_engineer_trigger setTriggerStatements["!d_eng_can_repfuel && player in thislist", "d_eng_can_repfuel = true;(localize 'STR_SYS_229') call XfGlobalChat;", ""]; // "Engineer repair/refuel capability restored..."
 

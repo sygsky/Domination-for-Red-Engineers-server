@@ -74,7 +74,7 @@ call compile format ["
 	[""truck%1_cargo_array"",truck%1_cargo_array] call XSendNetVarAll;
 ", current_truck_cargo_array];
 
-//hint localize format["++++ unload_static.sqf: cargo %1, damage %2, found at %3", typeOf _cargo, damage _cargo, getPos _cargo];
+hint localize format["++++ unload_static.sqf: cargo %1, damage %2, found at %3", typeOf _cargo, damage _cargo, getPos _cargo];
 
 _pos_to_set = _engineer modelToWorld [0,5,0];
 
@@ -148,7 +148,6 @@ _static setDir _dir_to_set;
 _static setPos [_pos_to_set select 0, _pos_to_set select 1, 0];
 _static lock false; // unloack before use
 ["say_sound", _static, "return"] call XSendNetStartScriptClientAll;
-
 
 _str = format [localize "STR_SYS_540", _type_name]; // "%1 placed!"
 hint _str;

@@ -51,7 +51,7 @@ if (_loading_allowed) then {
 	switch (_vehicle) do {
 		case TR7: {
 #ifdef __NO_REAMMO_IN_SALVAGE__
-			truck1_cargo_array set[count truck1_cargo_array, _cargo];
+			if ( !( _cargo in truck1_cargo_array ) ) then { truck1_cargo_array set[ count truck1_cargo_array, _cargo ] };
 #else
 			truck1_cargo_array set[count truck1_cargo_array, _cargo_type];
 #endif
@@ -59,7 +59,7 @@ if (_loading_allowed) then {
 		};
 		case TR8: {
 #ifdef __NO_REAMMO_IN_SALVAGE__
-			truck2_cargo_array set[count truck2_cargo_array, _cargo];
+			if ( !( _cargo in truck2_cargo_array ) ) then { truck2_cargo_array set[count truck2_cargo_array, _cargo] };
 #else
 			truck2_cargo_array set[count truck2_cargo_array, _cargo_type];
 #endif
@@ -71,12 +71,18 @@ if (_loading_allowed) then {
 		sleep 1;
 	};
 #ifdef __NO_REAMMO_IN_SALVAGE__
-	_cargo setVehiclePosition [[50000,50000],[],0,"CAN_COLLIDE"]; // hide in the middle of nowhere
-//	hint localize format["++++ load_static.sqf: cargo %1, alive %2, moved to %3", typeOf _cargo, alive _cargo, getPos _cargo];
+	if (local _cargo) then {
+		_cargo setVehiclePosition [[11239.3,9968.6],[],0,"CAN_COLLIDE"]; // hide in the middle of nowhere
+		["say_sound", _vehicle, "steal"] call XSendNetStartScriptClientAll;
+		sleep 0.1;
+		hint localize format["++++ load_static.sqf: cargo %1, alive %2, moved to %3", typeOf _cargo, alive _cargo, getPos _cargo];
+	} else {
+		["move_vehicle", _cargo, [11239.3,9968.6],_vehicle,"steal"] call XSendNetStartScriptAll
+	};
+	_cargo lock false;
 #else
 	deleteVehicle _cargo;
 #endif
-	["say_sound", _vehicle, "steal"] call XSendNetStartScriptClientAll;
 	hint format [localize "STR_SYG_08", _type_name]; // "%1 loaded and attached!"
 	currently_loading = false;
 } else {

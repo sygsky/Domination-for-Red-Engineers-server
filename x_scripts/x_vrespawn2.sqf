@@ -214,27 +214,26 @@ while {true} do {
 				#ifdef __TT__
 					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 				#endif
+				#ifdef __NO_REAMMO_IN_SALVAGE__
+					hint localize format["+++ Respawned salvage truck TTR%1", _number_v];
+					switch (_vehicle) do {
+						case TR7: {
+							{ deleteVehicle _x }forEach truck1_cargo_array;
+							truck1_cargo_array = [];
+							["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
+						};
+						case TR8: {
+							{ deleteVehicle _x }forEach truck2_cargo_array;
+							truck2_cargo_array = [];
+							["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
+						};
+					};
+				#endif
 					if (X_SPE) then {
 						if (/*__AIVer ||*/ str(player) in d_is_engineer) then {
 #ifdef __PRINT__				
-							hint localize format["x_vrespawn2.sqf: TTR vec %1, player %2, load static actions", _vehicle, str(player)];
+							hint localize format["x_vrespawn2.sqf, X_SPE : TTR%1, player %2, load static actions", _vehicle, str(player)];
 #endif
-					#ifdef __NO_REAMMO_IN_SALVAGE__
-//							hint localize format["+++ Respawned salvage truck TTR%1", _number_v, _vehicle == TR7];
-							switch (_vehicle) do {
-								case TR7: {
-									{ deleteVehicle _x }forEach truck1_cargo_array;
-									truck1_cargo_array = [];
-									["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
-								};
-								case TR8: {
-									{ deleteVehicle _x }forEach truck2_cargo_array;
-									truck2_cargo_array = [];
-									["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
-								};
-							};
-					#endif
-
 							_vehicle addAction[localize "STR_SYG_10","scripts\load_static.sqf",[],-1,false]; // "Загрузка орудия"
 							_vehicle addAction[localize "STR_SYG_11","scripts\unload_static.sqf",[],-1,false]; // "Выгрузка орудия"
 						};

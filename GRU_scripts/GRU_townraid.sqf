@@ -64,7 +64,7 @@ for "_check" from 0 to 0 do {
 
 	_rnd_port_msg = {
 //		private ["_str"];
-		"STR_GRU_TELE_NUM" call SYG_getLocalizedRandomText;
+//		"STR_GRU_TELE_NUM" call SYG_getLocalizedRandomText;
 //		call compile format["_cnt=%1;",localize "STR_GRU_TELE_NUM"];
 //		call compile format ["localize 'STR_GRU_TELE_%1'", floor(random _cnt)];
 	};
@@ -110,10 +110,11 @@ for "_check" from 0 to 0 do {
 		// define if gru-portal succeed or not
 		_rnd = random 10;
 		if ( _rnd >= 0.2) then  {
+			// send player to the town not to the Mars probability 98%
 			_target_town = argp(target_names,current_target_index);
 			if ( (client_target_counter < number_targets) && (_rnd < 0.5) ) then {
 				// undefined D-porting, no real action, only type joke for player
-				// teleport to a random location
+				// teleport to a random location with probability 5%
 				_rnd_town = + _target_town;
 				while { argp(_rnd_town,1) == argp(_target_town,1)} do {_rnd_town = target_names call XfRandomArrayVal;};
 				[_rnd_town, argp(_rnd_town,2),4] call SYG_teleportToTown;
@@ -125,16 +126,19 @@ for "_check" from 0 to 0 do {
 			switch _ret do {
 			    // bad params
 			    case 0: {
-                    (localize "STR_GRU_28_1") call GRU_msg2player;
+                    (localize "STR_GRU_28_1") call GRU_msg2player; // Illegal parameters detected!
     				breakTo "main";
 			    };
 			    // no good house found
 			    case -1: {
-                    (localize "STR_GRU_28_2") call GRU_msg2player;
+                    (localize "STR_GRU_28_2") call GRU_msg2player; // A meeting is not possible! The contact refused to meet due to the absence of a verified turnout
     				breakTo "main";
 			    };
 			};
 			player_is_on_town_raid = [argp(_target_town,1),_score_plus,_score_minus,time]; // town name, score+, score-,start time
+			stop_arti_on_the_town  = call SYG_getTargetTownName; // mark town with arti calls disabled for you as a GRU man only
+			(localize "STR_GRU_38_0") call GRU_msg2player; // "Arti strikes are strictly forbidden during the GRU mission!"
+
 		} else {
 			// no gru-portal occured at all
 			// TODO: info about failure
@@ -142,7 +146,6 @@ for "_check" from 0 to 0 do {
 #ifdef __DEBUG__	
 			hint localize format["--- GRU_townraid.sqf: (random 10 == %1) < 0.1; GRU portal not works!", _rnd];
 #endif		
-
 			breakTo "main";
 		};
 		
@@ -226,8 +229,7 @@ for "_check" from 0 to 0 do {
 			if ( (player call SYG_ACEUnitUnconscious) && (!_unc_msg_fired)) then {
 				_unc_msg_fired = true;  // think it once per raid
 				[localize "STR_GRU_18"] call GRU_msg2player; // "...последняя ускользающая мысль: УНИЧТОЖИТЬ ... ДОКУМЕНТ ..."
-			}
-			else { // user is alive and can stand
+			} else { // user is alive and can stand
 				if ( GRU_docState == 0 ) then { // document was deleted
 					playSound "tune";
 					if (player call SYG_ACEUnitUnconscious) then {
@@ -292,6 +294,8 @@ for "_check" from 0 to 0 do {
 	if ( _score != 0 ) then {
 		//player addScore _score ;
 		_score call SYG_addBonusScore;
+		stop_arti_on_the_town = "";
+		(localize "STR_GRU_57") call GRU_msg2player; // "The possibility of artillery strikes has been restored!"
 	};
 	[0] execVM "GRU_scripts\GRU_removedoc.sqf";
 }; //for "_check" from 0 to 0 do
@@ -300,4 +304,7 @@ INTEL_MAP_TEMP_MARKERS_PREFIX call  SYG_removeMarkers;
 
 call SYG_showDefaultIntelMarkers;
 
-if ( true) exitWith { player_is_on_town_raid = nil;};
+if ( true) exitWith {
+	player_is_on_town_raid = nil;
+	hint localize "+++ player_is_on_town_raid = nil";
+};

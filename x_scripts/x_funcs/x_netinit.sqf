@@ -43,8 +43,24 @@ XHandleNetStartScriptAll = {
 			(_this select 1) setVariable ["d_ammobox", (_this select 2)];
 			(_this select 1) setVariable ["d_ammobox_next", (_this select 3)];
 		};
-		case "d_say": {
-			(_this select 1) say (_this select 2);
+//		case "d_say": {
+//			(_this select 1) say (_this select 2);
+//		};
+		// ["move_vehicle", _veh, _pos,_vehicle,"steal"] call XSendNetStartScriptAll;
+		case "move_vehicle": {
+			if (local (_this select 1)) then {
+				(_this select 1) setVehiclePosition [ _this select 2, [], 0, "CAN_COLLIDE" ]; // e.g. hide in the middle of nowhere
+				sleep 0.1;
+				(_this select 1) lock false; // unlock loaded vehicle
+
+				hint localize format[
+					"+++ ""move_vehicle"": ""%2"" is local on %1 and moved to %3",
+					if ( isServer ) then { "server" } else { format["client(%1)", name player] },
+					typeOf (_this select 1),
+					_this select 2
+				];
+			};
+			if (X_Client) then { if (count _this > 4) then { (_this select 3) say (_this select 4) } };
 		};
 	};
 };

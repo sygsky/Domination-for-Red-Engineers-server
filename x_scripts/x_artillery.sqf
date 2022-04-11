@@ -1,4 +1,4 @@
-// by Xeno, x_scripts\x_artillery.sqf
+// by Xeno, x_scripts\x_artillery.sqf, called on client
 private ["_ok","_oldpos","_pos1","_pos2","_dist"];
 
 #include "x_setup.sqf"

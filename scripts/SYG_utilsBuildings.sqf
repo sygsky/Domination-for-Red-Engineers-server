@@ -23,22 +23,20 @@ SYG_illegalHouseList = ["Land_hut_old02","Land_podesta_1_mid_cornl","Land_podest
 // returns: 1 - good, 0 - bad input parameters, -1 - no house found in town to teleport to
 //
 SYG_teleportToTown = {	
-	private ["_town_params","_ret","_dist_arr","_town_center","_tname","_param"];
+	private ["_town_params","_ret","_dist_arr","_town_center","_tname","_param","_x"];
 	_ret = 1; // success return code
 	if ( typeName _this != "ARRAY") exitWith {0};
 	_town_params = arg(0);
 	if ( typeName _town_params != "ARRAY") exitWith {0};
 	private ["_dist","_town_center","_tname", "_nb","_cnt","_param","_pos_id","_dist_arr","_cnt","_dist","_nb"];
 	_dist_arr = argopt(1,[150]);
-	if ( typeName _dist_arr == "SCALAR") then
-	{
+	if ( typeName _dist_arr == "SCALAR") then {
 		if ( _dist_arr < 150) then { _dist_arr = [_dist_arr,150]; }
 		else { _dist_arr = [_dist_arr]; };
 	};
 	_town_center = argp( _town_params, 0 );
 	_tname = argp( _town_params, 1 );
-	_param = switch _tname do
-	{
+	_param = switch _tname do {
 		case "Somato": { [179675,429139]};
 		case "Ortego": {[535829,527178,535824,527163,527185,528302,135355,534199]};
 		case "Cayo": {[8465,9379,596469]};
@@ -54,7 +52,7 @@ SYG_teleportToTown = {
 		case "Corinto": {[62,66,171519,171520]};
 		case "Estrella": {[406184,406180,616895]};
 		case "Gulan": {[410198,410199]};
-
+		// TODO: add Paraiso houses too
 		default {SYG_illegalHouseList};
 	};
 	
@@ -106,18 +104,17 @@ SYG_housePosCount = {
 //  or to seek in house list
 //
 // call: _ngb = [_house_list<,_minPosCnt<,_minSearchDist<,_spec_list([])>>>] call SYG_nearestGoodHouse;
-//
+// call: _ngb = [_town_center, _cnt, _dist, _param] call SYG_nearestGoodHouse;
 // Where:
-//		_pos is a center position of search 
-//      _house_list is resulting array of buildings after call to nearestObjects [...,["House"],...]. No search will be produced, only filtering of this list
+//		_town_center is a center position of search
 //		_minPosCnt - minimal house positions count to take house into accounts, default 3
 //		_minSearchDist - maximum distance from search point, default 100
-//		_spec_list - list of strings with prohibited house types filtered out (never used as result), default []
-//		_spec_list - list of _id of Arma map objects, used as params to call to _pos nearestObject _id, to be used except of call to nearestObjects, default []
+//		_spec_list - list of strings with prohibited house types filtered out (never used as result), default [].
+//		Or _spec_list - list of _id of Arma map objects, used as params to call to _pos nearestObject _id, to be used except of call to nearestObjects, default []
 // returns: filtered in nearest house or objNull if no such one
 SYG_nearestGoodHouse = {
 	private ["_pos","_arr","_minPosCnt","_minSearchDist","_obj","_spec_list","_good_type","_type","_i","_cnt","_cnt1",
-	"_max", "_id"];
+	"_max", "_id", "_x"];
 	_pos           = arg(0);
 	_minPosCnt     = argopt(1,3); // default minimum positions
 	_minSearchDist = argopt(2,100); // default distance from search center
@@ -129,12 +126,12 @@ SYG_nearestGoodHouse = {
 			_obj = _pos select 0;
 			if ( typeName _obj == "OBJECT" ) then {
 				if ( _obj isKindOf "House" ) then {
-					_arr = _pos; // list of houses is detected not position
+					_arr = _pos; // list of houses is detected not houses id on the map
 				};
 			};
 		};
 	};
-	if ( count _pos == 0) exitWith {objNull}; // illegal search center/house list designated
+	if ( count _pos == 0) exitWith {hint localize "--- SYG_nearestGoodHouse(1): illegal _pos [], return null"; objNull}; // illegal search center/house list designated
 
 	_obj = objNull;
 	// check if spec list contains houses id
@@ -150,7 +147,7 @@ SYG_nearestGoodHouse = {
 					_cnt = _obj call SYG_housePosCount;
 					if ( (_cnt == 0) || (_obj isKindOf "Ruins") ) then{
 						_obj = objNull;
-						hint localize format["--- SYG_nearestGoodHouse: house ID == %1 (%2) has %3 positions", _id, typeOf _obj, _cnt];
+						hint localize format["--- SYG_nearestGoodHouse(2): house ID == %1 (%2) has %3 positions", _id, typeOf _obj, _cnt];
 						_spec_list = _spec_list - [ _id ];
 					};
 				};
@@ -166,7 +163,7 @@ SYG_nearestGoodHouse = {
 		sleep 0.01;
 	};
 	
-	if ( count _arr == 0 ) exitWith {objNull};
+	if ( count _arr == 0 ) exitWith {hint localize format["--- SYG_nearestGoodHouse(3): No houses found at pos %1, on dist %2, is it possible?", _pos, _minSearchDist];objNull};
 	// filter houses using prohibited house types array from _spec_list
 	_good_type = "";
 	_i = 0;
@@ -183,12 +180,14 @@ SYG_nearestGoodHouse = {
 		};
 		_i = _i + 1;
 	} forEach _arr;
+	_cnt = count _arr;
 	_arr = _arr - ["RM_ME"];
 #ifdef __DEBUG_PRINT___
 	hint localize format["SYG_nearestGoodHouse: good house type ""%1"" count %2 in radious %3", _good_type, count _arr, _dist];
 #endif			
-	if ( count _arr > 0) then { _arr call XfRandomArrayVal; }
-	else {objNull};
+	if ( count _arr > 0) exitWith { _arr call XfRandomArrayVal };
+	hint localize format["--- SYG_nearestGoodHouse(4): All houses (%1) filtered by max in house pos %2", _cnt, _minPosCnt];
+	objNull
 };
 
 //
