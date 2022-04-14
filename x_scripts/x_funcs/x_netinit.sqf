@@ -46,17 +46,21 @@ XHandleNetStartScriptAll = {
 //		case "d_say": {
 //			(_this select 1) say (_this select 2);
 //		};
-		// ["move_vehicle", _veh, _pos,_vehicle,"steal"] call XSendNetStartScriptAll;
+		// Call example["move_vehicle", _veh, _pos,_vehicle,"steal"] call XSendNetStartScriptAll;
 		case "move_vehicle": {
 			if (local (_this select 1)) then {
-				(_this select 1) setVehiclePosition [ _this select 2, [], 0, "CAN_COLLIDE" ]; // e.g. hide in the middle of nowhere
+				private ["_cargo","_cnt"];
+				_cargo = _this select 1;
+				_cnt = count crew _cargo;
+				{ _x action ["Eject", _x] } forEach crew _cargo; // empty vehicle before loading
+				if (_cnt > 0) then {sleep 0.3};
+				_cargo setVehiclePosition [ _this select 2, [], 0, "CAN_COLLIDE" ]; // e.g. hide in the middle of nowhere
 				sleep 0.1;
 				(_this select 1) lock false; // unlock loaded vehicle
-
 				hint localize format[
 					"+++ ""move_vehicle"": ""%2"" is local on %1 and moved to %3",
 					if ( isServer ) then { "server" } else { format["client(%1)", name player] },
-					typeOf (_this select 1),
+					typeOf _cargo,
 					_this select 2
 				];
 			};

@@ -13,11 +13,14 @@ STR_SYG_04,No stationary weapon in range,Keine stationäre Waffe in Reichweite,N
 STR_SYG_05,"You're too far from %1, max. dist. %2m!","Du bist zu weit von %1 entfernt, max. dist. %2m!","¡Estás demasiado lejos de %1, dist. máx. %2m!","Вы слишком далеко от %1, приблизьтесь на %2м!"
 STR_SYG_06,You're in the process of loading. Wait for the end of the procedure,Sie sind gerade beim laden. Warten Sie auf das Ende des Verfahrens,Está en proceso de carga. Espere a que termine el procedimiento,Вы в процессе погрузки. Дождитесь конца процедуры
 STR_SYG_07,%1 will be loaded in %2 sec.,%1 wird in %2 Sek. geladen.,%1 se cargará en %2 segundos.,%1 будет загружено через %2 сек.
-STR_SYG_08,%1 loaded and attached!,%1 loaded and attached!,¡%1 cargado y adjunto!,%1 загрузили и закрепили!
+STR_SYG_08,%1 loaded and attached!,%1 loaded and attached!,¡%1 cargado y adjunto!,Загружено и принайтовлено: %1!
 STR_SYG_09,You can't load a %1 into a %2!,Du kannst kein %1 in %2 laden!,¡No se puede cargar un %1 en un %2!,Вы не можете загрузить %1 в %2!
 STR_SYG_10,Load Stationary,Last Statische,Carguen las ametralladoras,Загрузить орудие
 STR_SYG_11,Unload Static,Entladen Statischer,Descarga Estática,Разгрузить орудие
 STR_SYG_12,%1 to Backpack,%1 in den Rucksack,%1 a Mochila,%1 в рюкзак
+STR_SYG_13,%1 cant be loaded (not empty),%1 kann nicht geladen werden (nicht leer),%1 no se puede cargar (no está vacío),Загрузка %1 не возможна (не пусто)
+STR_SYG_14,Loading %1 is possible,Laden von %1 ist bereits möglich,La carga de %1 ya es posible,Погрузка %1 уже возможна
+STR_SYG_15,"Loading canceled, some crew detected","Beladung abgebrochen, Besatzung entdeckt","Carga cancelada, se ha detectado una tripulación","Загрузка отменена, обнаружены люди"
 
 //----------------------------------------------------------------------------
 // Server.cfg strings:

@@ -386,7 +386,7 @@ execVM "x_scripts\x_delaiserv.sqf";
 			if (_num_p <= (_x select 0)) exitWith {true};
 		} forEach d_time_until_next_sidemission;
 	};
-    hint localize format["Wait %1 secs for 1st sidemission spawn", round(_waittime)];
+    hint localize format["+++ Wait %1 secs for 1st sidemission spawn", round(_waittime)];
 	sleep _waittime;
 #endif
 

@@ -188,28 +188,25 @@ if ( _equip == "" ) then {
 				};
 				// try to rearm predefined players (Yeti, EngineerACE etc)
 				_rearmed = true;
+				hint localize format["+++ x_setupplayer1.sqf: _rpg %1, _rifle %2, _pistol %3", _rpg, _rifle, _pistol];
 				switch (toUpper (name player)) do {
-					case "YETI":  // Yeti
-					{
+					case "YETI": { // Yeti
 						d_rebornmusic_index = 1; // no play std death sound
 						//SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
 						3000 call SYG_setViewDistance;
 						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
-						_rearmed = false; // if here, plyaer not rearmed
+						_rearmed = false; // if here, player not rearmed
 					};
-					case "ENGINEERACE":  // EngineerACE
-					{
-						// Viewdistance
-						3500 call SYG_setViewDistance;
+					case "ENGINEERACE": {  // EngineerACE
+						3500 call SYG_setViewDistance; // Viewdistance
 						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf"; };
-						_rearmed = false; // if here, plyaer not rearmed
+						_rearmed = false; // if here, player not rearmed
 					};
-					case "ROKSE [LT]" : // Rokse [LT]
-					{
+					case "ROKSE [LT]": { // Rokse [LT]
 						// Viewdistance
 						10000 call SYG_setViewDistance;
 						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf"; };
-						_rearmed = false; // if here, plyaer not rearmed
+						_rearmed = false; // if here, player not rearmed
 					};
 					// TODO: add more personal setting here (as for "Yeti" done)
 					default { _rearmed = false; }; // all other players are rearmed by standart
@@ -220,7 +217,7 @@ if ( _equip == "" ) then {
 					//+++ Sygsky: add largest ACE rucksack and fill it with mags
 					_p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
 					_p setVariable ["ACE_Ruckmagazines", _magp];
-					hint localize format["x_setupplayer.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
+					hint localize format["+++ x_setupplayer1.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
 							name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];
 					//--- Sygsky
 				};

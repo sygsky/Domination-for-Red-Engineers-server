@@ -8,7 +8,7 @@ if (!ari_available) exitWith {
 };
 
 // method prints all messages about forbiddance and return true if forbidden else false
-if (call isArtiForbidden) exitWith {};
+//if (call isArtiForbidden) exitWith {};
 
 #ifdef __RANKED__
 _score = score player;

@@ -13,7 +13,7 @@ sleep 1;
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __DEBUG_DOSAAF__
+//#define __DEBUG_DOSAAF__
 //#define __DEBUG__
 //#define __DEBUG_JAIL__
 
@@ -1520,7 +1520,7 @@ if (__AIVer || d_para_at_base) then {
 
 #ifdef __DEBUG_DOSAAF__
 FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
-player addScore 800;
+if ( ((name player) == "EngineerACE") && ((score player) < 800)) then { player addScore (800 - (score player)) };
 #endif
 
 #ifdef __DEBUG_FLARE__

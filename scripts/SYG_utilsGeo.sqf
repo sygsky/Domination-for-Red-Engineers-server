@@ -1027,6 +1027,7 @@ SYG_pointIsOnBase = {
 //
 // call: _isArtiForbidden = call isArtiForbidden;
 //
+/*
 isArtiForbidden = {
     private ["_town_name","_exit"];
     if ( !isNil "player_is_on_town_raid" ) exitWith {
@@ -1042,5 +1043,5 @@ isArtiForbidden = {
     };
     false
 };
-
+*/
 if (true) exitWith {};

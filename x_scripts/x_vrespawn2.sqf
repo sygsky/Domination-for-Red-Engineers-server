@@ -215,17 +215,19 @@ while {true} do {
 					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 				#endif
 				#ifdef __NO_REAMMO_IN_SALVAGE__
-					hint localize format["+++ Respawned salvage truck TTR%1", _number_v];
+					hint localize format["+++ Respawned salvage truck TTR%1, remove all loaded weapon", _number_v];
 					switch (_vehicle) do {
 						case TR7: {
 							{ deleteVehicle _x }forEach truck1_cargo_array;
 							truck1_cargo_array = [];
-							["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
+							publicVariable "truck1_cargo_array";
+//							["truck1_cargo_array",truck1_cargo_array] call XSendNetVarAll;
 						};
 						case TR8: {
 							{ deleteVehicle _x }forEach truck2_cargo_array;
 							truck2_cargo_array = [];
-							["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
+							publicVariable "truck2_cargo_array";
+//							["truck2_cargo_array",truck2_cargo_array] call XSendNetVarAll;
 						};
 					};
 				#endif

@@ -1,12 +1,13 @@
 /*
 	author: Sygsky, scripts\rearm_EngineerACE.sqf
-	description: none
+	description: load special equipment for the player as private only.
+	To load something special for higher ranks, please save your weapons of base flag menu command.
 	returns: nothing
 */
 
 _p     = _this; // player itself
 if (typeName _p == "ARRAY") then {_p = _p select 0}; // can be designated array [player, _rankIndex] for the future development
-
+hint localize "+++ execVM ""scripts\rearm_EngineerACE.sqf""";
 removeAllWeapons _p;
 
 _wpn  = "ACE_RPK47";

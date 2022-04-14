@@ -84,7 +84,6 @@ _static = _cargo;
 _static = _cargo createVehicleLocal _pos_to_set;
 #endif
 
-// _static lock true; // already locked in load procedure
 _dir_to_set = getDir _engineer;
 
 _place_error = false;
@@ -146,7 +145,6 @@ _static = _cargo createVehicle _pos_to_set;
 
 _static setDir _dir_to_set;
 _static setPos [_pos_to_set select 0, _pos_to_set select 1, 0];
-_static lock false; // unloack before use
 ["say_sound", _static, "return"] call XSendNetStartScriptClientAll;
 
 _str = format [localize "STR_SYS_540", _type_name]; // "%1 placed!"

@@ -152,9 +152,9 @@ if (isServer) then {
 //	_vec setDir 90;
 //	_vec = createVehicle ["ACE_Mi24D", [9678.247070,10020.545898,0], [], 0, "NONE"];
 //	_vec setDir 90;
-	_vec = createVehicle ["D30", [9678,10021], [], 0, "NONE"];
-	_vec = createVehicle ["Stinger_Pod_East", [9668,10021], [], 0, "NONE"];
-	_vec = createVehicle ["TOW_TriPod_East", [9664,10021], [], 0, "NONE"];
+//	_vec = createVehicle ["D30", [9678,10021], [], 0, "NONE"];
+//	_vec = createVehicle ["Stinger_Pod_East", [9668,10021], [], 0, "NONE"];
+//	_vec = createVehicle ["TOW_TriPod_East", [9664,10021], [], 0, "NONE"];
 #endif
 
 #ifdef __ADDITIONAL_BASE_VEHICLES__
@@ -374,20 +374,20 @@ if (isServer) then {
 
     	//+++ Sygsky: check New Year calendar period and create "Radio" object if yes
     	while {isNil "SYG_client_start"} do {sleep 60}; // wait for 1st user connection with known time and receiving real server time from him (this is Arma!!!)
-        hint localize format["init.sqf: New Year procedure, ""SYG_client_start"" detected %1", SYG_client_start];
+        hint localize format["+++ init.sqf: New Year procedure, ""SYG_client_start"" detected %1", SYG_client_start];
 
     	if ( (argp(SYG_client_start,1) > 1) && (argp(SYG_client_start,1) < 12) ) exitWith {
-    	    hint localize "init.sqf: New Year procedure completed, month not DEC or JAN";
+    	    hint localize "+++ init.sqf: New Year procedure completed, month not DEC or JAN";
     	    false
     	}; // new year expected if only december or january is current month
     	if ( (argp(SYG_client_start,1) == 1) && (argp(SYG_client_start,2) > 10) ) exitWith {
-            hint localize format["init.sqf: New Year procedure completed, JAN day (%1) > 10   is out of range", argp(SYG_client_start,2)];
+            hint localize format["+++ init.sqf: New Year procedure completed, JAN day (%1) > 10   is out of range", argp(SYG_client_start,2)];
             false
     	}; // out of January NE days
         while {true} do {
             // now check NewYear period
             if ( call SYG_isNewYear ) exitWith {// make gift for a player on a New Year event
-                hint localize format["init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
+                hint localize format["+++ init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
                 private ["_veh","_snd","_pos"];
                 _veh = "Radio" createVehicle [0, 0, 0];
                  // set radio on top of the table
@@ -762,4 +762,4 @@ SYG_playExtraSounds = {
 };
 
 
-if (true) exitWith {};
+if (tr
