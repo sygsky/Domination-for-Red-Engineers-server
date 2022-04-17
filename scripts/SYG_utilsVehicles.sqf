@@ -1995,7 +1995,7 @@ SYG_deviateTeleportPoint = {
 //
 SYG_assignVehAsBonusOne = {
 
-	private ["_vehicle"];
+	private ["_vehicle","_id"];
 	_vehicle = _this;
 	_vehicle setVariable ["RECOVERABLE", true];
 
@@ -2011,7 +2011,9 @@ SYG_assignVehAsBonusOne = {
 	};
 	#endif
 #endif
-
+	// just in case remove vehicle from the vehicle check list
+	_id = check_vec_list find _vehicle;
+	if (_id >= 0) then { check_vec_list set [_id, objNull] };
 	// set marker procedure for the newly created bonus vehicle
 	_vehicle execVM "x_scripts\x_wreckmarker.sqf";
 };

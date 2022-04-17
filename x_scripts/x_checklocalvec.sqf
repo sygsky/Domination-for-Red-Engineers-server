@@ -5,7 +5,7 @@ if (!isServer) exitWith{};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
-private ["_check_vec_list", "_zz", "_dead", "_hastime"];
+private ["_check_vec_list", "_zz", "_dead", "_hastime","_cnt","_cnt_null","_recoverable"];
 
 //#define __PRINT_STAT__
 
@@ -33,6 +33,7 @@ while {true} do {
 	};
 	sleep 10.723;
 	_cnt = count _check_vec_list;
+	_cnt_null = 0;
 	if ( _cnt > 0 ) then {
 		for "_zz" from 0 to (_cnt - 1) do {
 			_dead = _check_vec_list select _zz;
@@ -49,21 +50,24 @@ while {true} do {
                 if (alive _dead) exitWith {};
 #ifdef __BATTLEFIELD_BONUS__
 				_recoverable = _dead getVariable "RECOVERABLE";
-				if (isNil "_recoverable") then {_recoverable = false};
-				if (!_recoverable) then {
+				if (isNil "_recoverable") then { _recoverable = false };
+				if ( _recoverable ) then {
 #endif
 					{ deleteVehicle _x; } forEach crew _dead;  // remove all units immediately from vehicle crew group
 					[_dead] call XAddDead;
 #ifdef __BATTLEFIELD_BONUS__
+				} else {
+					hint localize format["+++ x_checklocalvec.sqf: recoverable vehicle %1 detected, remove procedure skipped", typeOf _dead];
 				};
 #endif
 				_check_vec_list set [_zz, "RM_ME"]; // remove vehicle from this dead list
 				sleep 10;
-			};
+			} else { _check_vec_list set [_zz, "RM_ME"]; _cnt_null = _cnt_null + 1 }; // remove null from list
 			sleep 3.422;
 		};
 	};
 	_check_vec_list call  SYG_cleanArray;
+	if (_cnt_null > 0 ) then {hint localize format["+++ x_checklocalvec.sqf: %1 null[s] removed", _cnt_null]};
 	sleep 30.461;
 
 #ifdef __PRINT_STAT__

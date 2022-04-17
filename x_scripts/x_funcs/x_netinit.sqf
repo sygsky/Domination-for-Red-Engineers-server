@@ -51,9 +51,10 @@ XHandleNetStartScriptAll = {
 			if (local (_this select 1)) then {
 				private ["_cargo","_cnt"];
 				_cargo = _this select 1;
-				_cnt = count crew _cargo;
-				{ _x action ["Eject", _x] } forEach crew _cargo; // empty vehicle before loading
-				if (_cnt > 0) then {sleep 0.3};
+				if ((count crew _cargo) > 0) then {
+					{ if (alive _x) then { _x action ["Eject", _x] } } forEach crew _cargo; // empty vehicle before loading
+					sleep 0.3;
+				};
 				_cargo setVehiclePosition [ _this select 2, [], 0, "CAN_COLLIDE" ]; // e.g. hide in the middle of nowhere
 				sleep 0.1;
 				(_this select 1) lock false; // unlock loaded vehicle

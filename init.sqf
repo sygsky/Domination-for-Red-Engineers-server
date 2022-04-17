@@ -762,4 +762,4 @@ SYG_playExtraSounds = {
 };
 
 
-if (tr
+if (true) exitWith {};
