@@ -11,11 +11,15 @@
 #define DOSAAF_MARKER_COLOR "ColorGreen"
 #define DOSAAF_CONE_MAP_SERVER [9844,10098,0]
 
+#define DOSAAF_MAP_POS [9844,10098,0]
+#define DOSAAF_MAP_SCALE 0.0025
+
+
 // code for initial DOSAAF vehicle initialization
-#define DOSAAF_INIT_CODE1 "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]];"
+#define DOSAAF_INIT_CODE1 "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]]; this setVariable ["DOSAAF", objNull]"
 
 // code for detected DOSAAF vehicle initialization
 #define DOSAAF_INIT_CODE2 "this setVariable [""RECOVERABLE"",false];"
 
 // code for registering DOSAAF vehicle after "Inspect" action
-#define DOSAAF_INIT_CODE3 "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""REG_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]];"
+#define DOSAAF_INIT_CODE3 "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_REG_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]];"

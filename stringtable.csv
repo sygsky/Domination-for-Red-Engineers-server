@@ -1489,6 +1489,18 @@ STR_BONUS_DEL,"Bonus vehicle (%1) killed (%2)","Bonusfahrzeug (%1) getötet (%2)
 STR_BONUS_DEL_1,in an unknown way,auf eine unbekannte Art und Weise,de forma desconocida,неизвестным образом
 STR_BONUS_6,"%1 vehicle of ДОСААФ detected on the island","%1 Fahrzeug[e] von ДОСААФ auf der Insel entdeckt","%1 vehículo[s] de ДОСААФ detectado en la isla","На острове Обнаружена техника ДОСААФ: %1 шт."
 
+STR_TOWN_INFO,DOSAAF map: Town %1,DOSAAF map: Town,DOSAAF map: Town %1,Карта ДОСААФ: Гoрод %1
+STR_TOWN_INFO_1,"DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","Карта ДОСААФ: гoрод %1, радиус %2"
+STR_BASE_TITLE,"DOSAAF map: Our base in the suburbs of Paraiso","DOSAAF map: Unsere Basis am Rande von Paraiso","DOSAAF map: Nuestra base en las afueras de Paraíso","Наша база в предместье Параисо"
+STR_BASE_TITLE_SHORT,"DOSAAF map: our base","DOSAAF map: Unsere Basis","DOSAAF map: Nuestra base","Карта ДОСААФ: наша база"
+STR_BONUS_INFO,"DOSAAF vehicle '%1' close to '%2'","DOSAAF '%1' Fahrzeug, in der Nähe von '%2'","Vehículo DOSAAF '%1', cerca de '%2'","Техника ДОСААФ '%1', близ '%2'"
+STR_BONUS_INFO_1,"Appropriate DOSAAF vehicle has not been found, this is a misunderstanding!","Es wurde kein geeignetes DOSAAF-Fahrzeug gefunden, das ist ein Missverständnis!","No se ha encontrado el equipo apropiado de DOSAAF, ¡es un malentendido!","Соответствующая техника ДОСААФ не найдена, это недоразумение!"
+
+STR_DOSAAF_MAP,"DOSAAF map created. Vehicles not used %1, used %2, broken %3, cleared %4","DOSAAF-Karte erstellt. Fahrzeuge nicht benutzt %1, benutzt %2, kaputt %3, verschwunden %4","Mapa DOSAAF creado. Vehículos no utilizados %1, utilizados %2, eliminados %3, borrados %4","Создана карта ДОСААФ. Техника не использована %1, использована %2, разбита %3, исчезла %4"
+STR_DOSAAF_ABOUT,"All-Union Voluntary Society for Assistance to the Army, Aviation, and Fleet of the USSR (since 1947). Originally OSOAVIACHIM (since 1927).","Die All-Union Freiwillige Gesellschaft für die Unterstützung von Armee, Luftfahrt und Marine der UdSSR (1947). Ursprünglich OSOAVIACHIM (1927).","Sociedad de Voluntarios de toda la Unión para la Asistencia al Ejército, la Aviación y la Marina de la URSS (desde 1947). Originalmente Osoaviachim (desde 1927).","Всесоюзное добровольное общество содействия армии, авиации и флоту СССР (с 1947), первоначально как ОСОАВИАХИМ (с 1927)."
+STR_DOSAAF_TITLE,What is DOSAAF,Was ist der DOSAAF,Qué es el DOSAAF,Что такое ДОСААФ
+STR_DOSAAF_UPDATE,Update the DOSAAF map,Aktualisierung der DOSAAF-Karte,Actualizar el mapa del DOSAAF,Обновить карту ДОСААФ
+
 STR_WPN_TITLE,Important information,,,Важное сообщение
 STR_WPN_INFO,"Remembering your armament is now done automatically when you exit the mission!","Das Speichern der Ausrüstung erfolgt jetzt automatisch, wenn man eine Mission beendet!","¡El recuerdo de tu equipo se hace ahora automáticamente al salir de una misión!","Запоминание Вашего снаряжение теперь производится автоматически, при выходе из миссии!"
 STR_WPN_EXIT,"press '%1' to exit from dialog","drücken Sie '%1', um den Dialog zu verlassen","pulse '%1' para salir del diálogo","для выхода из диалога нажмите '%1'"

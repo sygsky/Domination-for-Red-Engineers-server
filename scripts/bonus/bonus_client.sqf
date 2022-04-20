@@ -20,6 +20,7 @@ _bonus_markers                 = [];	// known vehs itself
 _next_id                       = 1;		// next free id for the bonus vehicle markers
 _bonus_timestamp               = 0;		// last time processed timestamp
 
+[] execVM "scripts/bonus/make_map.sqf";
 //
 // reset bonus markers system from the scratch
 //
@@ -29,7 +30,7 @@ _reset_params = {
 	_time = time;
 
 	_ret = call SYG_countVehicles;
-	hint localize format["+++ _reset_params: scan vehicles: cnt/vehs/DOSAAF/alive/markers/bonus = %2", typeOf _veh, _ret];
+	hint localize format["+++ _reset_params: scan vehicles: cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2", typeOf _veh, _ret];
 
 	_new_array = call SYG_scanDOSAAFVehicles; // load all alive DOSAAF vehicles
 //	hint localize format["+++ SYG_scanDOSAAFVehicles executed in %1 secs ", time - _time];

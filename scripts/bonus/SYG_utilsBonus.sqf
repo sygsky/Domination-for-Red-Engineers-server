@@ -215,30 +215,54 @@ SYG_scanDOSAAFVehicles = {
 };
 
 //
+// Returns all alive non registered DOSAAF vehicles
+// 	_id = _x getVariable "INSPECT_ACTION_ID"; // check if vehicle is bonus with "Inspect" command on it
+SYG_scanDOSAAF0Vehicles = {
+	private ["_x","_var", "_arr","_cnt"];
+	_arr = [];
+	_cnt = 0;
+	{
+		if (alive _x) then {
+			_var = _x getVariable "DOSAAF";//  If inspected follow code is executed: "this setVariable [""RECOVERABLE"", false]"
+			if ( !( isNil "_var" ) ) then {
+				_arr set [count _arr, _x]
+			};
+		};
+		_cnt = _cnt + 1;
+		if ((_cnt mod 20) == 0) then {sleep 0.01};
+	} forEach vehicles;
+	hint localize format["+++ SYG_scanDOSAAF0Vehicles whole vehicles counter = %1, DOSAAF0 found %2", _cnt, count _arr];
+	_arr
+};
+
+//
 // Counts vehicles, returns array:
-// [_common count, _veh_count, DOSAAF_count, alive_count, markered_count, bonus_count]
+// [_common count, _veh_count, not_inspected_DOSAAF_count, _inspected_DOSAAF_count, alive_count, markered_count, bonus_count]
 // call as follows: _ret_arr = call SYG_countVehicles;
 //
 SYG_countVehicles = {
-	private ["_cnt","_cntv","_cntd","_cnta","_cntm","_var","_x"];
-	_cnt = 0; _cntv = 0; _cntd = 0; _cnta = 0; _cntm = 0; _cntb = 0;
+	private ["_cnt","_cntv","_cntd","_cntnr","_cnta","_cntm","_var","_x"];
+	_cnt = 0; _cntv = 0; _cntd = 0; _cntnr = 0; _cnta = 0; _cntm = 0; _cntb = 0;
 	{
 		if ( (_x isKindOf "LandVehicle") || (_x isKindOf "Air") || (_x isKindOf "Ship") ) then { // DOSAAF
 			_cntv = _cntv + 1; // vehicle
 
 			_var = _x getVariable "INSPECT_ACTION_ID";
-			if ( !(isNil "_var") ) then { _cntd = _cntd + 1 }; // DOSAAF vehicle
+			if ( !(isNil "_var") ) then { _cntnr = _cntnr + 1 }; // DOSAAF vehicle not registered, may be inspected
 
 			_var = _x getVariable "RECOVERABLE";
 			if ( !isNil"_var" ) then {
-				if ( !_var ) then { _cntm = _cntm + 1 } else { _cntb = _cntb + 1 }; // bonus vehicle
+				if ( !_var ) then { _cntm = _cntm + 1 } else { _cntb = _cntb + 1 }; // not registered inspected bonus vehicle
 			};
+
+			_var = _x getVariable "DOSAAF";
+			if ( !isNil"_var" ) then { _cntd = _cntd + 1 }; // never inspected/registered DOSAAF vehicle
 
 			if ( alive _x ) then { _cnta = _cnta + 1 }; // alive vehicle
 		};
 		_cnt = _cnt + 1; // all items count
 	} forEach vehicles;
-	[_cnt, _cntv, _cntd, _cnta, _cntm, _cntb]
+	[_cnt, _cntv, _cntd, _cntnr, _cnta, _cntm, _cntb]
 };
 
 //

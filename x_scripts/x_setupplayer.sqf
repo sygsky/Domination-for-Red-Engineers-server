@@ -1719,7 +1719,7 @@ player call SYG_handlePlayerDammage; // handle hit events
         #endif
         #ifdef __BATTLEFIELD_BONUS__
         execVM "scripts\bonus\bonus_client.sqf";
-//        [] execVM "scripts\bonus\bonus_markers.sqf"; // not used: load markers on the base rectangle
+        execVM "scripts\bonus\make_map.sqf"; // not used: load markers on the base rectangle
         #endif
     };
 #endif

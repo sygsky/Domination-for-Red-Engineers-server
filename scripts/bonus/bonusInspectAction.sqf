@@ -28,6 +28,7 @@ if ( (getPos _veh) call SYG_pointIsOnBase ) exitWith {
 	_id = _veh getVariable "INSPECT_ACTION_ID";
 	if (!isNil "_id") then {
 		_veh setVariable ["INSPECT_ACTION_ID", nil];
+        _veh setVariable ["DOSAAF", nil];// just in case
 		_veh removeAction _id;
 		hint localize format["+++ bonusInspectAction.sqf: inspect action removed from %1", typeOf _veh];
 		["bonus", "REG", _name, _veh ] call XSendNetStartScriptServer;  // send to server and it will return event to all clients
@@ -50,6 +51,6 @@ if ( _already_marked ) exitWith { // Do nothing except inform about vehicle alre
 };
 
 _veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable
-
+_veh setVariable ["DOSAAF", nil]; // just in case
 ["bonus", "ADD", _name, _veh ] call XSendNetStartScriptServer; // send to server and it will return event to all clients
 hint localize format["+++ bonusInspectAction.sqf: Vehicle %1 inspected by '%2' near '%3'. Exit.", typeOf _veh, _name, _loc_name];
