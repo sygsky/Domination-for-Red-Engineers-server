@@ -109,7 +109,7 @@ SYG_createBonusVeh = {
 SYG_removeBonusCone = {
 	if (!X_Client) exitWith {};
 	private ["_cones", "_veh"];
-	_cones = DOSAAF_CONE_MAP_SERVER nearObjects ["RoadCone", 200];
+	_cones = DOSAAF_MAP_POS nearObjects ["RoadCone", 200];
 	{
 		_veh = _x getVariable "bonus_veh";
 		if (! (isNil "_veh")) then {
@@ -132,7 +132,7 @@ SYG_addBonusCone = {
 	_mt = "Corazol" call SYG_MTByName;
 	_center     = _mt select 0;
 	_scale      = 0.005; // scale 1: 100 => 100 m in 1 m
-	_new_center = DOSAAF_CONE_MAP_SERVER; //getPos cone_map_center;
+	_new_center = DOSAAF_MAP_POS; //getPos cone_map_center;
 	_cone_type  = "RoadCone";
 
 	_xc = _center select 0;

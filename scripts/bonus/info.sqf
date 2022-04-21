@@ -11,5 +11,5 @@
 	returns: nothing
 */
 
-["msg_to_user","*",[[_this select 3]],0,0,"received"] call SYG_msgToUserParser;
+["msg_to_user","*",[[_this select 3]],0,0,false,"message_received"] call SYG_msgToUserParser;
 

@@ -20,7 +20,7 @@ _bonus_markers                 = [];	// known vehs itself
 _next_id                       = 1;		// next free id for the bonus vehicle markers
 _bonus_timestamp               = 0;		// last time processed timestamp
 
-[] execVM "scripts/bonus/make_map.sqf";
+[] execVM "scripts\bonus\make_map.sqf";
 //
 // reset bonus markers system from the scratch
 //

@@ -19,7 +19,7 @@ _loc = _veh call SYG_nearestSettlement;
 _loc_name =  text  _loc;
 if ( !isPLayer (_this select 1) ) exitWith {
 	// "One of your local soldiers %1 inspected vehicle %2, which he discovered."
-	["msg_to_user","*",[["STR_BONUS_5"], _name, typeOf _veh],0,0,false,"received"] call XSendNetStartScriptClientAll;
+	["msg_to_user","*",[["STR_BONUS_5"], _name, typeOf _veh],0,0,false,"message_received"] call XSendNetStartScriptClientAll;
 	hint localize format["--- bonusInspectAction.sqf: Not player (%1) inspected bonus vehicle near %2. Exit.", typeOf (_this select 1), _loc_name];
 };
 
