@@ -42,5 +42,6 @@ _msg_arr = [];
 	_msg_arr set [count _msg_arr, ["STR_BONUS", _near_loc_name, typeOf _x]];
 	hint localize format["+++ assignAsBonus.sqf: all events set, ""%1"" action  added to the %2 near %3", localize "STR_CHECK_ITEM", typeOf _x, _near_loc_name];
 } forEach _this;
+
 ["msg_to_user","*",_msg_arr,8,1,false,"good_news"] call XSendNetStartScriptClientAll;
 

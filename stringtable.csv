@@ -1489,14 +1489,16 @@ STR_BONUS_DEL,"Bonus vehicle (%1) killed (%2)","Bonusfahrzeug (%1) getötet (%2)
 STR_BONUS_DEL_1,in an unknown way,auf eine unbekannte Art und Weise,de forma desconocida,неизвестным образом
 STR_BONUS_6,"%1 vehicle of ДОСААФ detected on the island","%1 Fahrzeug[e] von ДОСААФ auf der Insel entdeckt","%1 vehículo[s] de ДОСААФ detectado en la isla","На острове Обнаружена техника ДОСААФ: %1 шт."
 
-STR_TOWN_INFO,DOSAAF map: Town %1,DOSAAF map: Town,DOSAAF map: Town %1,Карта ДОСААФ: Гoрод %1
-STR_TOWN_INFO_1,"DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","Карта ДОСААФ: гoрод %1, радиус %2"
-STR_BASE_TITLE,"DOSAAF map: Our base in the suburbs of Paraiso","DOSAAF map: Unsere Basis am Rande von Paraiso","DOSAAF map: Nuestra base en las afueras de Paraíso","Наша база в предместье Параисо"
+// STR_TOWN_INFO,DOSAAF map: Town %1,DOSAAF map: Town,DOSAAF map: Town %1,Карта ДОСААФ: Гoрод %1
+// STR_TOWN_INFO_1,"DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","Карта ДОСААФ: гoрод %1, радиус %2"
+STR_BASE_TITLE,"DOSAAF map (scale 1:%1): Our base in the suburbs of Paraiso","DOSAAF-Karte (Maßstab 1:%1): Unser Stützpunkt in den Vororten von Paraiso","Mapa del DOSAAF (escala 1:%1): Nuestra base en los suburbios de Paraíso","Карта ДОСААФ (масштаб 1:%1)Наша база в предместье Параисо"
 STR_BASE_TITLE_SHORT,"DOSAAF map: our base","DOSAAF map: Unsere Basis","DOSAAF map: Nuestra base","Карта ДОСААФ: наша база"
-STR_BONUS_INFO,"DOSAAF vehicle '%1' close to '%2'","DOSAAF '%1' Fahrzeug, in der Nähe von '%2'","Vehículo DOSAAF '%1', cerca de '%2'","Техника ДОСААФ '%1', близ '%2'"
+STR_BONUS_INFO,"DOSAAF vehicle '%1' close to '%2', %3","DOSAAF '%1' Fahrzeug, in der Nähe von '%2', %3","Vehículo DOSAAF '%1', cerca de '%2', %3","Техника ДОСААФ '%1', близ '%2, %3'"
 STR_BONUS_INFO_1,"Appropriate DOSAAF vehicle has not been found, this is a misunderstanding!","Es wurde kein geeignetes DOSAAF-Fahrzeug gefunden, das ist ein Missverständnis!","No se ha encontrado el equipo apropiado de DOSAAF, ¡es un malentendido!","Соответствующая техника ДОСААФ не найдена, это недоразумение!"
+STR_BONUS_INFO_2,Distance less than 1 km,Abstand weniger als 1 km,Distancia inferior a 1 km,Дистанция менее 1 км
+STR_BONUS_INFO_3,The distance is about %1 km,Entfernung von etwa %1 km,Distancia de aproximadamente %1km,Дистанция около %1 км
 
-STR_DOSAAF_MAP,"DOSAAF map updated. Vehicles not used %1, used %2, broken %3, cleared %4","DOSAAF-Karte aktualisiert. Fahrzeuge nicht benutzt %1, benutzt %2, kaputt %3, geräumt %4","Mapa DOSAAF actualizado. Vehículos no utilizados %1, utilizados %2, rotos %3, despejados %4","Карта ДОСААФ обновлена. Техника не использована %1, использована %2, разбита %3, исчезла %4"
+STR_DOSAAF_MAP,"The DOSAAF map has been updated. Vehicles abandoned %1, found %2, burned %3, disappeared %4","Die DOSAF-Karte wurde aktualisiert. Ausrüstung aufgegeben %1, gefunden %2, verbrannt %3, verschwunden %4","El mapa del DOSAAF ha sido actualizado. Equipo abandonado %1, encontrado %2, quemado %3, desaparecido %4","Карта ДОСААФ обновлена. Техника брошена %1, найдена %2, сгорела %3, исчезла %4"
 STR_DOSAAF_ABOUT,"All-Union Voluntary Society for Assistance to the Army, Aviation, and Fleet of the USSR (since 1947). Originally OSOAVIACHIM (since 1927).","Die All-Union Freiwillige Gesellschaft für die Unterstützung von Armee, Luftfahrt und Marine der UdSSR (1947). Ursprünglich OSOAVIACHIM (1927).","Sociedad de Voluntarios de toda la Unión para la Asistencia al Ejército, la Aviación y la Marina de la URSS (desde 1947). Originalmente Osoaviachim (desde 1927).","Всесоюзное добровольное общество содействия армии, авиации и флоту СССР (с 1947), первоначально как ОСОАВИАХИМ (с 1927)."
 STR_DOSAAF_TITLE,What is DOSAAF,Was ist der DOSAAF,Qué es el DOSAAF,Что такое ДОСААФ
 STR_DOSAAF_UPDATE,Update the DOSAAF map,Aktualisierung der DOSAAF-Karte,Actualizar el mapa del DOSAAF,Обновить карту ДОСААФ

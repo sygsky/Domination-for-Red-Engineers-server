@@ -969,7 +969,6 @@ XHandleNetStartScriptClient = {
 					_id = _veh getVariable "INSPECT_ACTION_ID";
 					if (!isNil "_id") then {
 						_veh setVariable ["INSPECT_ACTION_ID", nil];
-						_veh setVariable ["DOSAAF", nil];
 						_veh removeAction _id;
 						_ret = call SYG_countVehicles;
 						hint localize format["+++ bonus.REG on client: inspect action removed from %1, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2", typeOf _veh, _ret];
