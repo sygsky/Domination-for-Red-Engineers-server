@@ -13,7 +13,7 @@ sleep 1;
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __DEBUG_DOSAAF__
+//#define __DEBUG_DOSAAF__
 //#define __DEBUG__
 //#define __DEBUG_JAIL__
 
@@ -1719,7 +1719,6 @@ player call SYG_handlePlayerDammage; // handle hit events
         #endif
         #ifdef __BATTLEFIELD_BONUS__
         execVM "scripts\bonus\bonus_client.sqf";
-        execVM "scripts\bonus\make_map.sqf"; // not used: load markers on the base rectangle
         #endif
     };
 #endif

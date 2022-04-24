@@ -22,7 +22,7 @@ _center_type = switch (d_own_side ) do {
 
 // Find all cones near and vehicles attached to tem
 _cone_type   = "RoadCone";
-_arr = DOSAAF_MAP_POS nearObjects [_cone_type, 55]; // find all conuses
+_arr = DOSAAF_MAP_POS nearObjects [_cone_type, 100]; // find all conuses
 hint localize format[ "+++ make_map.sqf: %1 on base found %2", _cone_type, count _arr ];
 _arr_old = [];
 _mapped_veh = objNull;
@@ -78,8 +78,8 @@ hint localize format[ "+++ make_map.sqf: DOSAAF vehicles unused %1, used %2, del
 //
 _map_marker	  = nearestObject [_new_center, _center_type];
 if (isNull _map_marker ) then { // create base sign : "DangerEast"
-	_map_marker = _center_type createVehicleLocal _pos;
-	_map_marker setVehiclePosition [ _pos, [], 0, "CAN_COLLIDE" ];
+	_map_marker = _center_type createVehicleLocal _new_center;
+	_map_marker setVehiclePosition [ _new_center, [], 0, "CAN_COLLIDE" ];
 	_map_marker addAction[ localize "STR_DOSAAF_UPDATE", "scripts\bonus\make_map.sqf", "" ]; // "Update the DOSAAF map"
 	_map_marker addAction[ localize "STR_BASE_TITLE_SHORT", "scripts\bonus\info.sqf", format[localize "STR_BASE_TITLE", 1.0 / DOSAAF_MAP_SCALE] ]; // "DOSAAF map (scale 1:%1): our base"
 	_map_marker addAction[ localize "STR_DOSAAF_TITLE", "scripts\bonus\info.sqf", localize "STR_DOSAAF_ABOUT" ]; // "What is DOSAAF"
@@ -108,7 +108,7 @@ _arr_new = [];
 // get new DOSAAF vehicles to add to the map
 //
 _arr_new = _arr_new - _arr_old; // vehicles to add to the map
-hint localize format[ "+++ make_map.sqf: vehicles to add %1", count _arr_new];
+//hint localize format[ "+++ make_map.sqf: vehicles to add %1", count _arr_new];
 {
 	_pos = getPos _x;
 	_new_pos  = [_xn + (((_pos select 0) - _xn) * _scale), _yn + (((_pos select 1) - _yn) * _scale), 0];
@@ -120,6 +120,6 @@ hint localize format[ "+++ make_map.sqf: vehicles to add %1", count _arr_new];
 	hint localize format[ "+++ make_map.sqf: Map item (%1) for veh at %2 added near map marker (%3) at dist %4", typeOf _cone, _pos, getPos _cone, [getPos _cone, _map_marker] call SYG_distance2D ];
 } forEach _arr_new;
 
-_arr = DOSAAF_MAP_POS nearObjects [_cone_type, 55];
-hint localize format[ "+++ make_map.sqf: %1 on map %2", _cone_type, count _arr];
+//_arr = DOSAAF_MAP_POS nearObjects [_cone_type, 55];
+//hint localize format[ "+++ make_map.sqf: %1 on map %2", _cone_type, count _arr];
 

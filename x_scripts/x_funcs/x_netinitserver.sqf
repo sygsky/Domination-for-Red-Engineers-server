@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-#define __DEBUG_DOSAAF__
+//#define __DEBUG_DOSAAF__
 
 "d_nv_serv" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
