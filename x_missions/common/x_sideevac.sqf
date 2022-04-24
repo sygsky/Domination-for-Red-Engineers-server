@@ -159,7 +159,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                         } forEach _pilots_arr;
                         _pos = [_x, "at %1 m. to %2 from %3",10] call SYG_MsgOnPosE;
                         hint localize format[ "--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, all pilots are moved to its own group at %2", _x,  _pos ];
-                        ["msg_to_user",name _rescue,[["STR_SYS_504_4",name _rescue, _pos]], 0, 7, false, "losing_patience"] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
+                        ["msg_to_user","",[["STR_SYS_504_4",name _rescue, _pos]], 0, 7, false, "losing_patience"] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
                     };
                     if ( vehicle _x != _x ) then    {// pilot in some vehicle
                         if ( (getPos _x) call SYG_pointIsOnBase ) then { // pilot  not so far from flag
