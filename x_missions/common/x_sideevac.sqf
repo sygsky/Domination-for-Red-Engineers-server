@@ -2,7 +2,7 @@
 private ["_pos_array", "_poss", "_endtime", "_side_crew", "_pilottype", "_wrecktype", "_wreck", "_owngroup",
          "_pilot1", "_owngroup2", "_pilot2", "_hideobject", "_is_dead", "_pilots_at_base", "_rescued", "_winner",
          "_time_over", "_enemy_created", "_nobjs", "_estart_pos", "_unit_array", "_ran", "_i", "_newgroup", "_units", "_leader",
-         "_pilots_arr", "_arr","_rescue"];
+         "_pilots_arr", "_arr","_rescue", "_escape_print_time"];
 if (!isServer) exitWith {};
 
 ["say_sound", "PLAY", format["pilots_resque%1", ceil (random(3))], 5 ] call XSendNetStartScriptClient; // playSound on all connected players computers
@@ -87,6 +87,7 @@ _soldier = (
 );
 
 _last_warn_said = 0;
+_escape_print_time = 0; // not print any escape info
 while {(!_pilots_at_base) && (!_is_dead)} do {
 	if (X_MP) then {
 		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
@@ -133,6 +134,8 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
             } forEach _pilots_arr;
             ["make_ai_friendly",_arr] call XSendNetStartScriptClientAll;
             ["msg_to_user","",[["STR_SYS_504_0", name _rescue]], 0, 2, false, "good_news"] call XSendNetStartScriptClientAll; // "Pilots detected, controlled by ""%1""!"
+            hint localize format[ "+++ x_sideevac.sqf: pilots joined to ""%1""", name _resque ];
+            _escape_print_time = 0; // stop info printing
             sleep 1;
             ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 0, 7] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
         };
@@ -158,8 +161,9 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 							};
                         } forEach _pilots_arr;
                         _pos = [_x, "at %1 m. to %2 from %3",10] call SYG_MsgOnPosE;
-                        hint localize format[ "--- x_sideevac.sqf: as one of pilots (%1) is found to be group leader, all pilots are moved to its own group at %2", _x,  _pos ];
+                        hint localize format[ "--- x_sideevac.sqf: one of pilots (%1) is found to be group leader, all pilots are moved to its own group at %2", _x,  _pos ];
                         ["msg_to_user","",[["STR_SYS_504_4",name _rescue, _pos]], 0, 7, false, "losing_patience"] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
+                        _escape_print_time = time; // start to print info on pilots pos
                     };
                     if ( vehicle _x != _x ) then    {// pilot in some vehicle
                         if ( (getPos _x) call SYG_pointIsOnBase ) then { // pilot  not so far from flag
@@ -196,6 +200,23 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
             } forEach _pilots_arr;
         };
 
+    };
+
+    if ( (_escape_print_time > 0) ) then {
+    	if ( (time - _escape_print_time)  > 600 ) then {
+		    // print pilots postion each 600 seconds
+		    _escape_print_time  = time;
+		    _pilot = objNull;
+		    {
+		    	if (alive _x) exitWith {_pilot = _x};
+		    } forEach _pilots_arr;
+		    _cnt = {alive _x} count _pilots_arr;
+		    if (isNull _pilot) then {
+		        hint localize "--- x_sideevac.sqf: All escaped pilots are dead";
+		    } else {
+		        hint localize format[ "--- x_sideevac.sqf: One of escaped pilots (cnt %1) pos %2", _cnt ,[_pilot, "at %1 m. to %2 from %3",10] call SYG_MsgOnPosE ];
+		    };
+    	};
     };
 
 	sleep 5.621;
