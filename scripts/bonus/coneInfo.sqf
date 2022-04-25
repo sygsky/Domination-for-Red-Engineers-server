@@ -22,7 +22,8 @@ if (isNil "_veh") exitWith {
 	deleteVehicle _cone;
 };
 _loc_name = _veh call SYG_nearestLocationName;
-_dist = round (_veh distance DOSAAF_MAP_POS);
+_town = call SYG_getTargetTown;
+_dist = round ((_veh distance (_town select 0))/1000);
 _slope = [0,0,1] distance ( vectorUp _cone );
 sleep 0.1;
 _str_dist = if (_dist == 0) then {localize "STR_BONUS_INFO_2"} else {format[localize "STR_BONUS_INFO_3", _dist]};

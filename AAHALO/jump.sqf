@@ -114,11 +114,11 @@ if ( _paratype == "" ) then {
 };
 
 deleteVehicle uh60p;
-if (__AIVer) then {
+#ifdef __AI__
 	if (alive player) then {
 		[position player, velocity player, direction player] execVM "x_scripts\x_moveai.sqf";
 	};
-};
+#endif
 
 // there are 3 possible states of alive jumper:
 // 1. free fall
