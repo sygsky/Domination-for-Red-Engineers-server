@@ -1512,8 +1512,7 @@ SYG_armPilotFull = {
 		[_this, call SYG_pilotEquipmentWest ] call SYG_armUnit;
 		true
 	};
-	if( _this isKindOf "SoldierEPilot") exitWith
-	{
+	if( _this isKindOf "SoldierEPilot") exitWith {
 		[_this, call SYG_pilotEquipmentEast ] call SYG_armUnit;
 		true
 	};
@@ -1544,8 +1543,7 @@ SYG_armUnit = {
 	if ( typeName _unit != "OBJECT") exitWith {hint localize format["--- SYG_armUnit: _this == %1", _this]; false};
 	_arr = arg(1); // main array
 
-	if ( (typeName _arr) != "ARRAY" ) exitWith
-	{
+	if ( (typeName _arr) != "ARRAY" ) exitWith {
 		hint localize format["--- SYG_armUnit: Expected array of equipment not detected (%1):%2", typeName _arr, _arr];
 		false
 	};
@@ -1555,55 +1553,44 @@ SYG_armUnit = {
 	_secondWpn = "";
 	_equipList = [];
 	//_wpnList = [];
-	if ( _itemCnt > 0 ) then
-	{
-		for "_i" from 0 to (_itemCnt - 1) do
-		{
+	if ( _itemCnt > 0 ) then {
+		for "_i" from 0 to (_itemCnt - 1) do {
 			_args = _arr select _i; // get _i-th array with item definition (<wpn_type, wpn_name,> mag_name <, mag_count>) to add to unti
-			if ( (typeName _args) != "ARRAY" ) exitWith
-			{
+			if ( (typeName _args) != "ARRAY" ) exitWith {
 				hint localize format["--- SYG_armUnit: Item at pos %1 must be ARRAY, found %2 (%3)", _i, typeName _args, _args];
 			};
 	//		player globalChat format["SYG_armUnit: add %1-th array[%2] = %3", _i, count _args, _args ];
 			_pos = 1;
 			_magCnt = 0;
 			// check 1st item of array, must be string in any case
-			if ( (typeName (_args select 0)) != "STRING" ) exitWith
-			{
+			if ( (typeName (_args select 0)) != "STRING" ) exitWith {
                 hint localize format["--- SYG_armUnit: 1st pos must be STRING, found '%1', skipped",  typeName (_args select  0) ];
 			};
-            switch ( toUpper( _args select 0 ) ) do
-            {
-                case "P": // Primary weapon, magazines + its optional count  (default 1)
-                {
+            switch ( toUpper( _args select 0 ) ) do {
+                case "P": { // Primary weapon, magazines + its optional count  (default 1)
                     if ( _primWpn != "" ) then { _unit addWeapon _primWpn;}; // add previous weapon
                     _primWpn = _args select _pos; _pos = _pos + 1; // accept next weapon
                 };
 
-                case "S": // Secondary weapon, magazines + its optional count  (default 1)
-                {
+                case "S": { // Secondary weapon, magazines + its optional count  (default 1)
                     if ( _secondWpn != "" ) then { _unit addWeapon _secondWpn;}; // add previous weapon
                     _secondWpn = _args select _pos; _pos = _pos + 1;
                 };
 
-                case "M"; // Magazine[s], simply skip this character
-                {};
+                case "M": {};  // Magazine[s], simply skip this character
 
-                case "E": // special Equipment, binocular etc as the list of equipment ["E", _eqipment_1, _equipment_2, ...]
-                {
+                case "E": { // special Equipment, binocular etc as the list of equipment ["E", _eqipment_1, _equipment_2, ...]
                     for "_i" from 1 to (count _args - 1) do { _equipList = _equipList + [_args select _i]; _pos = _pos + 1;};
                 };
 
                 default { _pos = 0; };
             };
             // it may be magazine sequence in follow form: [... "mag_name", mag_cnt]
-            if ( (count _args) > _pos ) then // read remaining items as magazine name and its count
-            {
+            if ( (count _args) > _pos ) then { // read remaining items as magazine name and its count
                 _mag = _args select _pos;
                 _pos = _pos + 1;
                 _magCnt = if ( (count _args) > _pos ) then { _args select _pos } else { 1 }; // get number of magazines
-                for "_j" from 1 to _magCnt do // adds all requested magazines directly now
-                {
+                for "_j" from 1 to _magCnt do { // adds all requested magazines directly now
                     _unit addMagazine _mag;
                 };
             };
@@ -1617,28 +1604,24 @@ SYG_armUnit = {
 	} forEach _equipList;
 
 	// add secondary weapon is exists
-	if ( _secondWpn != "" ) then
-	{
+	if ( _secondWpn != "" ) then{
 		_bsetWeapon = _secondWpn;
 		_unit addWeapon _secondWpn;
 	};
 	// add primary weapon (if exists) after secondary to allow it to autoload magazine in
-	if ( _primWpn != "" ) then
-	{
+	if ( _primWpn != "" ) then {
 		_bsetWeapon = _primWpn;
 		_unit addWeapon _primWpn;
 	};
 	// now select and reload best weapon in the list
-	if ( _bsetWeapon != "" ) then
-	{
+	if ( _bsetWeapon != "" ) then {
 //		player globalChat format["SYG_armUnit: select/reload %1", _bsetWeapon ];
 		//reload _unit;
 		_unit selectWeapon _bsetWeapon;
 		_muzzles = getArray( configFile>>"cfgWeapons" >> _bsetWeapon >> "muzzles" );
 		_unit selectWeapon ( _muzzles select 0 );
 	};
-	if ( ( count (weapons _unit) == 0 ) && ( count(magazines _unit) == 0 )) exitWith // was not armed, inform developer about it
-	{
+	if ( ( count (weapons _unit) == 0 ) && ( count(magazines _unit) == 0 )) exitWith { // was not armed, inform developer about it
 	    hint localize format["--- SYG_armUnit: %1 can't be armed with %2", typeOf _unit, _arr];
 	    false
 	};
@@ -1666,7 +1649,7 @@ SYG_armUnit = {
 //
 SYG_rearmUnit = {
 	private [ "_unit", "_list", "_mag", "_mags", "_cnt", "_i", "_wpn", "_muzzles", "_ruck", "_ruck_items",
-	 "_wpn", "_rifle","_gun", "_sidearm","_vdist"];
+	 "_wpn", "_rifle","_gun", "_sidearm","_vdist","_x"];
 	if ( typeName _this != "ARRAY") exitWith { false };
 	if ( (count _this) < 2 ) exitWith { false };
     if ( (typeName arg(1)) == "STRING") then {
@@ -1797,7 +1780,7 @@ SYG_hasOptics = {
  * Example: [_this,  ["DATSUN_PK1", "HILUX_PK1","LandroverMG"] ] call SYG_isKindOfList;
  */
 SYG_isKindOfList = {
-	private [ "_name", "_retval"];
+	private [ "_name", "_retval","_x"];
 	_name = _this select 0;
 	_retval = false;
 	{
@@ -1959,7 +1942,7 @@ SYG_hasWeapon4GRUMainTask = {
 			case 1: { if ( !([_x, GRU_allowedNonPistolList] call SYG_isInList) ) then {_bad_weapon = true;} };
 			case 2: { _bad_weapon = true;};
 		};
-	}forEach (_weapons);
+	} forEach (_weapons);
 	if ( _this call SYG_hasRadio ) then { _bad_weapon = true }; // exclude radio from allowed items
 	(!_bad_weapon)
 };
@@ -1990,7 +1973,7 @@ SYG_isBattleHeli = {
 // e.g. call function to unit with AK74 with param [_unit,["rfl"]] will return true and call with [_unit,["pst"]] will return false
 //
 SYG_unitHasOnlyAllowedWeapon = {
-	private ["_unit", "_list", "_other_weapon", "_weapons","_wob"];
+	private ["_unit", "_list", "_other_weapon", "_weapons","_wob","_x"];
 	if (typeName _this != "ARRAY")exitWith { false };
 	if ( count _this < 2) exitWith { false };
 	_unit = arg(0);
@@ -2055,7 +2038,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 				};
 			};
 		};
-	}forEach (_weapons);
+	} forEach (_weapons);
 
 	(!_other_weapon)
 };
@@ -2077,7 +2060,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 // e.g. call function to unit with AK74 with param [_unit,["rfl"]] will return "" and call with [_unit,["pst"]] return "ACE_AK74"
 //
 SYG_findExcessiveWeapon = {
-	private ["_unit", "_list", "_other_weapon", "_weapons","_wob","_volume"];
+	private ["_unit", "_list", "_other_weapon", "_weapons","_wob","_volume","_x"];
 	if (typeName _this != "ARRAY") exitWith { "RifleCore" };
 	if ( count _this < 2) exitWith { "RifleCore" };
 	_unit = arg(0);
@@ -2099,33 +2082,25 @@ SYG_findExcessiveWeapon = {
 
 	{
 		switch (_x call SYG_weaponClass) do {
-			case 1: 	// rifle
-			{
+			case 1: { 	// rifle
 				//detect if it is kind of: lng, rfl, smg
-				if ( !("lng" in _list) ) then  // no long muzzles in list so check for shorter ones
-				{
+				if ( !("lng" in _list) ) then {   // no long muzzles in list so check for shorter ones
 					// check weapon to be smg
-					if ( [_x, SMG_WEAPON_LIST] call SYG_isInList ) then  // smg
-					{
+					if ( [_x, SMG_WEAPON_LIST] call SYG_isInList ) then {  // smg
 						//hint localize format["SYG_findExcessiveWeapon: SMG (%1) found",_x];
-						if (! (("smg" in _list) || ("rfl" in _list)) ) then
-						{
+						if (! (("smg" in _list) || ("rfl" in _list)) ) then {
 							//hint localize format[ "SYG_findExcessiveWeapon: SMG (%1) not allowed", _x ];
 							_other_weapon = _x; breakTo "main";
 						};
-					} else
-					{
+					} else {
 						// may be long muzzle rifle?
-						if ( [_x, LONG_MUZZLE_WEAPON_LIST] call SYG_isInList ) then  // long muzzle detected
-						{
+						if ( [_x, LONG_MUZZLE_WEAPON_LIST] call SYG_isInList ) then { // long muzzle detected
 							//hint localize format["SYG_findExcessiveWeapon: LNG (%1) found",_x];
 							//hint localize format[ "SYG_findExcessiveWeapon: LNG (%1) not allowed", _x ];
 							_other_weapon = _x; breakTo "main";
-						} else // ordinal rifle detected
-						{
+						} else { // ordinal rifle detected
 							//hint localize format["SYG_findExcessiveWeapon: RFL (%1) found",_x];
-							if (! ("rfl" in _list) ) then
-							{
+							if (! ("rfl" in _list) ) then {
 								//hint localize format[ "SYG_findExcessiveWeapon: RFL (%1) not allowed", _x ];
 								_other_weapon = _x; breakTo "main";
 							};
@@ -2133,8 +2108,7 @@ SYG_findExcessiveWeapon = {
 					};
 				};
 			};
-			case 2:	// Launcher
-			{
+			case 2:	{ // Launcher
 				if (_x in LIGHT_LAUNCHER_WEAPON_LIST) then {
 					if (!(("rpg1" in _list) || ("rpg" in _list))) then {
 						//hint localize format[ "SYG_findExcessiveWeapon: LNC1 (%1) not allowed in list %2", _x, _list ];
@@ -2147,16 +2121,14 @@ SYG_findExcessiveWeapon = {
 					};
 				};
 			};
-			case 3:	// Pistol
-			{
+			case 3:	 { // Pistol
 /* 				if (! ("pst" in _list) ) then
 				{
 					//hint localize format[ "SYG_findExcessiveWeapon: PST (%1) not allowed", _x ];
 					_other_weapon = _x; breakTo "main";
 				};
  */			};
-			case 4:	// Rucksack
-			{
+			case 4:	{ // Rucksack
 /* 				_volume = getNumber ( configFile >> "CfgWeapons" >> _x >> "ACE_PackSize" );
 				//hint localize format[ "SYG_findExcessiveWeapon: volume  == %1", _volume ];
 				if ( _volume < 15000) then
@@ -2175,7 +2147,7 @@ SYG_findExcessiveWeapon = {
 				};
  */			};
 		};
-	}forEach (_weapons);
+	} forEach (_weapons);
 
 	_other_weapon
 };
@@ -2295,7 +2267,7 @@ SYG_isLauncher = {
 // call: _hasLauncher = _unit call SYG_hasLauncher;
 //
 SYG_hasLauncher =  {
-	private ["_res"];
+	private ["_res","_x"];
 	_res = false;
 	{
 		if (_x call SYG_isLauncher) exitWith { _res = true;};
@@ -2315,7 +2287,7 @@ SYG_isLongMizzle = {
 //
 SYG_hasLongMuzzle =
 {
-	private ["_res"];
+	private ["_res","_x"];
 	_res = false;
 	{
 		if (_x call SYG_isLongMizzle) exitWith { _res = true;};
@@ -2356,7 +2328,7 @@ SYG_getParent = {
 };
  */
 SYG_hasPistol = {
-	private ["_ret"];
+	private ["_ret","_x"];
 	_ret = false;
 	{
 		if ( _x call SYG_isPistol ) exitWith {_ret = true;};
@@ -2387,7 +2359,7 @@ SYG_hasSupressed = {
 // _compatibleMagazines = _weapon call SYG_getCompatibleMagazines;
 //
 SYG_getCompatibleMagazines = {
-   private ["_weapon", "_mags"];
+   private ["_weapon", "_mags", "_x"];
 
     _weapon = configFile >> "CfgWeapons" >> _this; // точка входа в самый верхний класс нашего ствола
     _mags = [];
@@ -2532,7 +2504,7 @@ SYG_reammoTruck = {
 // _dist is mandatory, default value is 400 meters
 //
 SYG_reammoTruckAround = {
-	private [ "_truck", "_center", "_dist", "_rearmed" ];
+	private [ "_truck", "_center", "_dist", "_rearmed", "_x" ];
 	_rearmed = 0;
 	if (d_enemy_side == "WEST") then {
 		_center = _this select 0;

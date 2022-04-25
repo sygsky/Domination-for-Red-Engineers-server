@@ -33,6 +33,7 @@ sleep 2;
 
 _owngroup = call SYG_createOwnGroup;
 _pilot1 = _owngroup createUnit [_pilottype, _poss, [], 30, "FORM"];
+_pilot1 call SYG_armPilot;
 [_pilot1] join _owngroup;
 _pilot1 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russian voice in the ACE
 sleep 0.5;
@@ -42,6 +43,7 @@ _owngroup2 = [_side_crew] call x_creategroup;
 */
 _owngroup2 = call SYG_createOwnGroup;
 _pilot2 = _owngroup2 createUnit [_pilottype, position _pilot1, [], 3, "FORM"];
+_pilot2 call SYG_armPilot;
 [_pilot2] join _owngroup2;
 _pilot2 setIdentity format["Rus%1", (floor (random 5)) + 1]; // there are only 5 russian voice in the ACE
 sleep 0.1;
