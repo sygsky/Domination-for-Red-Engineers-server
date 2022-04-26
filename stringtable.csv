@@ -1493,7 +1493,7 @@ STR_BONUS_6,"%1 vehicle of ДОСААФ detected on the island","%1 Fahrzeug[e] 
 // STR_TOWN_INFO_1,"DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","Карта ДОСААФ: гoрод %1, радиус %2"
 STR_BASE_TITLE,"DOSAAF map (scale 1:%1): our base in the suburbs of Paraiso","DOSAAF-Karte (Maßstab 1:%1): Unser Stützpunkt in den Vororten von Paraiso","Mapa del DOSAAF (escala 1:%1): nuestra base en los suburbios de Paraíso","Карта ДОСААФ (масштаб 1:%1): наша база в предместье Параисо"
 STR_BASE_TITLE_SHORT,"DOSAAF map: our base","DOSAAF map: Unsere Basis","DOSAAF map: Nuestra base","Карта ДОСААФ: наша база"
-STR_BONUS_INFO,"DOSAAF vehicle '%1' close to '%2', %3","DOSAAF '%1' Fahrzeug, in der Nähe von '%2', %3","Vehículo DOSAAF '%1', cerca de '%2', %3","Техника ДОСААФ '%1', близ '%2, %3'"
+STR_BONUS_INFO,"DOSAAF vehicle '%1' close to '%2', %3","DOSAAF '%1' Fahrzeug, in der Nähe von '%2', %3","Vehículo DOSAAF '%1', cerca de '%2', %3","Техника ДОСААФ '%1', близ '%2', %3"
 STR_BONUS_INFO_1,"Appropriate DOSAAF vehicle has not been found, this is a misunderstanding!","Es wurde kein geeignetes DOSAAF-Fahrzeug gefunden, das ist ein Missverständnis!","No se ha encontrado el equipo apropiado de DOSAAF, ¡es un malentendido!","Соответствующая техника ДОСААФ не найдена, это недоразумение!"
 STR_BONUS_INFO_2,Distance less than 1 km,Abstand weniger als 1 km,Distancia inferior a 1 km,Дистанция менее 1 км
 STR_BONUS_INFO_3,The distance is about %1 km,Entfernung von etwa %1 km,Distancia de aproximadamente %1km,Дистанция около %1 км
