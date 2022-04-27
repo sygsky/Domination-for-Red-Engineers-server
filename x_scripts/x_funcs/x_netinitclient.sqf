@@ -350,11 +350,10 @@ XHandleNetStartScriptClient = {
 		};
 		case "update_observers": {
 			__compile_to_var;
-			if (update_observers != -1) then {
+			if (update_observers > 0 ) then {
 				if ( count ("NO_DEBUG" call SYG_getTargetTown) == 0) then {	// still no town defined at this moment, skip town name usage
 					[format [localize "STR_SYS_40_0",(_this select 1)], "HQ"] call XHintChatMsg; // "Warning! On island discovered presence of enemy spotters, in total %1 men."
-				}
-				else {
+				} else {
 					[format [localize "STR_SYS_40",call SYG_getTargetTownName, (_this select 1)], "HQ"] call XHintChatMsg; // /* "Warning! In the %1 discovered the presence of enemy spotters, in total %2 men." */
 				};
 			} else {

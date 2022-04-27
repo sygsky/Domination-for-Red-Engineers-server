@@ -11,12 +11,12 @@
 	this method removes called action from vehicle
 	returns: nothing
 */
-hint localize format ["+++ bonusInspectAction.sqf: %1", _this];
 _veh = _this select 0;
 _name = name (_this select 1); // caller name (if a man)
 
 _loc = _veh call SYG_nearestSettlement;
 _loc_name =  text  _loc;
+hint localize format ["+++ bonusInspectAction.sqf: %1, pl ""%2"", loc %3, RECOVERABLE %4, DOSAAF %5", _this, _name, _loc_name, _veh getVariable "RECOVERABLE",_veh getVariable "DOSAAF"];
 if ( !isPLayer (_this select 1) ) exitWith {
 	// "One of your local soldiers %1 inspected vehicle %2, which he discovered."
 	["msg_to_user","*",[["STR_BONUS_5"], _name, typeOf _veh],0,0,false,"message_received"] call XSendNetStartScriptClientAll;
@@ -33,7 +33,10 @@ if ( (getPos _veh) call SYG_pointIsOnBase ) exitWith {
 		hint localize format["+++ bonusInspectAction.sqf: inspect action removed from %1", typeOf _veh];
 		["bonus", "REG", _name, _veh ] call XSendNetStartScriptServer;  // send to server and it will return event to all clients
 		hint localize format ["+++ bonusInspectAction.sqf: vehicle %1 is registered on the base, remove '%2' from command list and assign veh as bonus", typeOf _veh, localize "STR_CHECK_ITEM"];
-	} else {format["--- bonusInspectAction.sqf: inspect action not expected but executed. Do nothing!"]};
+	} else {
+		_veh removeAction (_this select 2);
+		hint format["--- bonusInspectAction.sqf: inspect action not expected but executed. Remove!"];
+	};
 };
 
 _already_marked =  _veh in client_bonus_markers_array;

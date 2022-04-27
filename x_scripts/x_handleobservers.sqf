@@ -14,12 +14,9 @@ if (!isServer) exitWith {};
 _enemy_ari_available = true;
 _nextaritime = 0;
 
-if (typeName _this == "STRING") then
-{
+if (typeName _this == "STRING") then {
     _observer_type = _this;
-}
-else
-{
+} else {
     _observer_type = "-"; // unknown
 };
 #ifndef __TT__
@@ -228,8 +225,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 	_observers call SYG_clearArray; // remove killed observers[s] if any
 //	_observers = _observers - ["RM_ME"];
 	sleep 5.123;
-	if (!_enemy_ari_available) then 
-	{
+	if (!_enemy_ari_available) then {
 		if ( time >= _nextaritime ) then { _enemy_ari_available = true; };
 	};
 };

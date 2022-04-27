@@ -1349,7 +1349,7 @@ STR_SET_3,Ranked,Ranked,Rangos,Ранговая
 STR_SET_4,With revive,Mit revive,Con la revitalización,С оживлением
 STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Uso De ""Javelin""","Использование ""Джавелин"""
 STR_SET_6,Simple side missions at the beginning,Einfache Nebenmissionen am Anfang,Tareas adicionales simples al principio,Простые дополнительные задания в начале
-STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Versteckte rostige Leichtfahrzeuge in der Basiszone am Anfang,Vehículos ligeros oxidados ocultos en la zona de la base al principio,Скрытая ржавая лёгкая техники в райное базы при старте
+STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Versteckte rostige Leichtfahrzeuge in der Basiszone am Anfang,Vehículos ligeros oxidados ocultos en la zona de la base al principio,Скрытая ржавая лёгкая техники в районе базы при старте
 STR_SET_8,Mandatory side missions,Obligatorischen Nebenmissionen,Misiones de terceros obligatorias,Обязательные сторонние миссии
 STR_SET_8_1,", towns per SM: %1",", Städte pro 1 SM: %1",", ciudades por 1 SM: %1",", городов за 1 доп.миссию: %1"
 STR_SET_9,Teleport works only when all services on the base are available,Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind,El teletransportador solo funciona con todos los servicios en la base,Телепорт действует только при всех исправных сервисах на базе
