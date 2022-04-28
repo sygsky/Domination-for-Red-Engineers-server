@@ -74,24 +74,6 @@ _nilCnt = 0; _ready_cnt = 0; _dead_cnt = 0; _cnt = 0;
 hint localize format[ "+++ make_map.sqf: DOSAAF vehicles unused %1, used %2, del %3, clr %4, cone cnt %5", _cnt, _ready_cnt, _dead_cnt, _nilCnt, count _arr ];
 
 //
-// create/find map center marker that designates the base
-//
-_map_marker	  = nearestObject [_new_center, _center_type];
-if (isNull _map_marker ) then { // create base sign : "DangerEast"
-	_map_marker = _center_type createVehicleLocal _new_center;
-	_map_marker setVehiclePosition [ _new_center, [], 0, "CAN_COLLIDE" ];
-	_map_marker addAction[ localize "STR_DOSAAF_UPDATE", "scripts\bonus\make_map.sqf", "" ]; // "Update the DOSAAF map"
-	_map_marker addAction[ localize "STR_BASE_TITLE_SHORT", "scripts\bonus\info.sqf", format[localize "STR_BASE_TITLE", 1.0 / DOSAAF_MAP_SCALE] ]; // "DOSAAF map (scale 1:%1): our base"
-	_map_marker addAction[ localize "STR_DOSAAF_TITLE", "scripts\bonus\info.sqf", localize "STR_DOSAAF_ABOUT" ]; // "What is DOSAAF"
-	hint localize format[ "+++ make_map.sqf: Base map center (%1) created: ""%2""", _center_type, localize "STR_BASE_TITLE_SHORT" ];
-//	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  _cnt, _ready_cnt, _dead_cnt, _nilCnt]], 0, 105, false, "good_news"] call SYG_msgToUserParser;
-} else {
-	hint localize format[ "+++ make_map.sqf: Base map center (%1) found", _center_type ];
-	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  count _arr_old, _ready_cnt, _dead_cnt, _nilCnt]], 0, 5, false, "good_news"] call SYG_msgToUserParser;
-};
-
-
-//
 // Get all unknown DOSAAF vehicles in mission list
 //
 _arr_new = [];
@@ -117,8 +99,25 @@ _arr_new = _arr_new - _arr_old; // vehicles to add to the map
 
 	_cone setVariable [ "bonus_veh", _x ];
 	_cone addAction[ localize "STR_CHECK_ITEM", "scripts\bonus\coneInfo.sqf" ];
-	hint localize format[ "+++ make_map.sqf: Map item (%1) for veh at %2 added near map marker (%3) at dist %4", typeOf _cone, _pos, getPos _cone, [getPos _cone, _map_marker] call SYG_distance2D ];
+	hint localize format[ "+++ make_map.sqf: Map item (%1) for veh at %2 added near map marker (%3) at dist %4", typeOf _cone, _pos, getPos _cone, [getPos _cone, _new_center] call SYG_distance2D ];
 } forEach _arr_new;
+
+//
+// create/find map center marker that designates the base
+//
+_map_marker	  = nearestObject [_new_center, _center_type];
+if (isNull _map_marker ) then { // create base sign : "DangerEast"
+	_map_marker = _center_type createVehicleLocal _new_center;
+	_map_marker setVehiclePosition [ _new_center, [], 0, "CAN_COLLIDE" ];
+	_map_marker addAction[ localize "STR_DOSAAF_UPDATE", "scripts\bonus\make_map.sqf", "" ]; // "Update the DOSAAF map"
+	_map_marker addAction[ localize "STR_BASE_TITLE_SHORT", "scripts\bonus\info.sqf", format[localize "STR_BASE_TITLE", 1.0 / DOSAAF_MAP_SCALE] ]; // "DOSAAF map (scale 1:%1): our base"
+	_map_marker addAction[ localize "STR_DOSAAF_TITLE", "scripts\bonus\info.sqf", localize "STR_DOSAAF_ABOUT" ]; // "What is DOSAAF"
+	hint localize format[ "+++ make_map.sqf: Base map center (%1) created: ""%2""", _center_type, localize "STR_BASE_TITLE_SHORT" ];
+//	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  _cnt, _ready_cnt, _dead_cnt, _nilCnt]], 0, 105, false, "good_news"] call SYG_msgToUserParser;
+} else {
+	hint localize format[ "+++ make_map.sqf: Base map center (%1) found", _center_type ];
+	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  count _arr_new, _ready_cnt, _dead_cnt, _nilCnt]], 0, 5, false, "good_news"] call SYG_msgToUserParser;
+};
 
 //_arr = DOSAAF_MAP_POS nearObjects [_cone_type, 55];
 //hint localize format[ "+++ make_map.sqf: %1 on map %2", _cone_type, count _arr];

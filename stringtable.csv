@@ -1349,7 +1349,7 @@ STR_SET_3,Ranked,Ranked,Rangos,Ранговая
 STR_SET_4,With revive,Mit revive,Con la revitalización,С оживлением
 STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Uso De ""Javelin""","Использование ""Джавелин"""
 STR_SET_6,Simple side missions at the beginning,Einfache Nebenmissionen am Anfang,Tareas adicionales simples al principio,Простые дополнительные задания в начале
-STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Versteckte rostige Leichtfahrzeuge in der Basiszone am Anfang,Vehículos ligeros oxidados ocultos en la zona de la base al principio,Скрытая ржавая лёгкая техники в райное базы при старте
+STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Versteckte rostige Leichtfahrzeuge in der Basiszone am Anfang,Vehículos ligeros oxidados ocultos en la zona de la base al principio,Скрытая ржавая лёгкая техники в районе базы при старте
 STR_SET_8,Mandatory side missions,Obligatorischen Nebenmissionen,Misiones de terceros obligatorias,Обязательные сторонние миссии
 STR_SET_8_1,", towns per SM: %1",", Städte pro 1 SM: %1",", ciudades por 1 SM: %1",", городов за 1 доп.миссию: %1"
 STR_SET_9,Teleport works only when all services on the base are available,Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind,El teletransportador solo funciona con todos los servicios en la base,Телепорт действует только при всех исправных сервисах на базе
@@ -1493,7 +1493,7 @@ STR_BONUS_6,"%1 vehicle of ДОСААФ detected on the island","%1 Fahrzeug[e] 
 // STR_TOWN_INFO_1,"DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","Карта ДОСААФ: гoрод %1, радиус %2"
 STR_BASE_TITLE,"DOSAAF map (scale 1:%1): our base in the suburbs of Paraiso","DOSAAF-Karte (Maßstab 1:%1): Unser Stützpunkt in den Vororten von Paraiso","Mapa del DOSAAF (escala 1:%1): nuestra base en los suburbios de Paraíso","Карта ДОСААФ (масштаб 1:%1): наша база в предместье Параисо"
 STR_BASE_TITLE_SHORT,"DOSAAF map: our base","DOSAAF map: Unsere Basis","DOSAAF map: Nuestra base","Карта ДОСААФ: наша база"
-STR_BONUS_INFO,"DOSAAF vehicle '%1' close to '%2', %3","DOSAAF '%1' Fahrzeug, in der Nähe von '%2', %3","Vehículo DOSAAF '%1', cerca de '%2', %3","Техника ДОСААФ '%1', близ '%2, %3'"
+STR_BONUS_INFO,"DOSAAF vehicle '%1' close to '%2', %3","DOSAAF '%1' Fahrzeug, in der Nähe von '%2', %3","Vehículo DOSAAF '%1', cerca de '%2', %3","Техника ДОСААФ '%1', близ '%2', %3"
 STR_BONUS_INFO_1,"Appropriate DOSAAF vehicle has not been found, this is a misunderstanding!","Es wurde kein geeignetes DOSAAF-Fahrzeug gefunden, das ist ein Missverständnis!","No se ha encontrado el equipo apropiado de DOSAAF, ¡es un malentendido!","Соответствующая техника ДОСААФ не найдена, это недоразумение!"
 STR_BONUS_INFO_2,Distance less than 1 km,Abstand weniger als 1 km,Distancia inferior a 1 km,Дистанция менее 1 км
 STR_BONUS_INFO_3,The distance is about %1 km,Entfernung von etwa %1 km,Distancia de aproximadamente %1km,Дистанция около %1 км
