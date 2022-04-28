@@ -804,7 +804,7 @@ XStealthPatrol = {
 // Wreck is defined as follow: vehicle has variable "RECOVERABLE" in personal variable space and has damage >= 1
 //
 XGetWreck = {
-	private ["_no","_obj"];
+	private ["_no","_obj","_x"];
 	_no = nearestObjects [position (_this select 0), _this select 1, 8];
 	if (count _no == 0) exitWith { objNull };
 	_obj = objNull;

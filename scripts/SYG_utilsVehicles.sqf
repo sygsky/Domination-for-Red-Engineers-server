@@ -1879,23 +1879,24 @@ SYG_getVehicleTypeMarkerName = {
 	};
 };
 
-// Finds if at least one of objects in array (or single object if designated) is "RECOVERABLE"
-// call as:
-// _isRecoverable = (<typeOf> _veh) call SYG_vehIsRecoverable; // single item
-// _isRecoverable = [<typeOf> _veh1,... <typeOf> _vehN ] call SYG_vehIsRecoverable; // array of items
+// Finds if at all vehicles in array (or single object if designated) are "RECOVERABLE".
+// Call as follows:
+// _isRecoverable = _veh call SYG_vehIsRecoverable; // single item
+// _isRecoverable = [_veh1,... _vehN ] call SYG_vehIsRecoverable; // array of items
 //
 SYG_vehIsRecoverable = {
 	if (typeName _this != "ARRAY") then { _this = [_this] };
 	if (count _this == 0) exitWith { false };
 	private ["_res", "_x"];
-	_res = nil;
+	_res = false;
 	{
-		if ( typeName _x != "OBJECT" ) exitWith {};
+		if ( typeName _x != "OBJECT" ) exitWith { _res = false }; // not vehicle, false, exit
+	    if ( isNull _x ) exitWith { _res = false }; // vehicle null, false, exit
 		_res = _x getVariable "RECOVERABLE";
-		if (!isNil "_res") exitWith {};
+		if ( isNil "_res" ) exitWith { _res = false }; // not RECOVERABLE, false, exit
+		if ( !_res ) exitWith {}; // not recoverable, false, exit
 	} forEach _this;
 //	hint localize format["+++ SYG_vehIsRecoverable: ""RECOVERABLE"" = %1", _res];
-	if (isNil "_res") exitWith {false};
 	_res
 };
 
