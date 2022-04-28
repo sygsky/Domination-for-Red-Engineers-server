@@ -2014,7 +2014,10 @@ SYG_assignVehAsBonusOne = {
 #endif
 	// just in case remove vehicle from the vehicle check list
 	_id = check_vec_list find _vehicle;
-	if (_id >= 0) then { check_vec_list set [_id, objNull] };
+	if (_id >= 0) then {
+		check_vec_list set [_id, objNull];
+		hint localize format[ "+++ Bonus veh %1 removed from check_vec_list", typeOf _vehicle ];
+	};
 	// set marker procedure for the newly created bonus vehicle
 	_vehicle execVM "x_scripts\x_wreckmarker.sqf";
 };

@@ -478,7 +478,7 @@ XHandleNetStartScriptServer = {
 //					_veh setVariable ["RECOVERABLE", true]; // is set in call SYG_assignVehAsBonusOneto allow to restore vehicle
 					_veh call SYG_removeVehicleHitDamKilEvents;
 					_veh call SYG_assignVehAsBonusOne;
-					hint localize format["+++ bonus.REG on server:  %1 to all clients from %2", typeOf _veh, _this select 2];
+					hint localize format["+++ bonus.REG on server:  %1 to all clients from %2, RECOVERABLE = %3", typeOf _veh, _this select 2,  _veh getVariable "RECOVERABLE"];
 					_this call XSendNetStartScriptClientAll; // to all clients
 				};
 

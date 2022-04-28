@@ -51,7 +51,7 @@ while {true} do {
 #ifdef __BATTLEFIELD_BONUS__
 				_recoverable = _dead getVariable "RECOVERABLE";
 				if (isNil "_recoverable") then { _recoverable = false };
-				if ( _recoverable ) then {
+				if ( !_recoverable ) then {
 #endif
 					{ deleteVehicle _x; } forEach crew _dead;  // remove all units immediately from vehicle crew group
 					[_dead] call XAddDead;
