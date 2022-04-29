@@ -27,7 +27,7 @@ _clearFootmen = {
 		{
 			if ( alive _x && (vehicle _x == _x) ) then
 			{	
-				_x setDammage 1.1; sleep 0.01; [_x] call XAddDead;
+				_x setDammage 1.1; sleep 0.01; _x call XAddDead0;
 			};
 		}forEach _this;
 	};

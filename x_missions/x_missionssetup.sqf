@@ -66,7 +66,7 @@ if (isServer) then {
 	// Passed array: [unit, killer]
 	XKilledSMTargetNormal = {
 		_this call XKilledSMTargetNormalNoDeadAdd;
-		[_this select 0] call XAddDead;
+		(_this select 0) call XAddDead0;
 	};
 
 	// Passed array: [unit, killer]
@@ -80,7 +80,7 @@ if (isServer) then {
 	// Passed array: [unit, killer]
 	XKilledSMTargetTT = {
 		_this call XKilledSMTargetTTNoDeadAdd;
-		[_this select 0] call XAddDead;
+		(_this select 0) call XAddDead0;
 	};
 
 	// Passed array: [unit, killer]
@@ -93,7 +93,7 @@ if (isServer) then {
 	// Passed array: [unit, killer]
 	XKilledSMTarget500 = {
 		-500 call XKilledSMTargetCodeNoDeadAdd;
-		[_this select 0] call XAddDead;
+		(_this select 0) call XAddDead0;
 		hint localize format["+++ SideMission #%1 (object: %1) aborted by %2 (%3)", current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 0))];
 	};
 

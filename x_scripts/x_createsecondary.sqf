@@ -64,7 +64,7 @@ switch (sec_kind) do {
 		//--- Sygsky
 #ifndef __TT__
 		_man addEventHandler ["killed", {
-			[_this select 0] call XAddDead;
+			(_this select 0) call XAddDead0;
 			side_main_done = true;
 			_sec_solved = "sec_over";
 			if (side (_this select 1) == d_side_player) then {_sec_solved = "gov_dead";};
@@ -93,7 +93,7 @@ switch (sec_kind) do {
 					["sec_solved", "gov_out"] call SYG_solvedMsg;
 				}; // he is out in some manner
 				if ( not alive _man ) exitWith  {// man is dead
-					_man call XAddDead;	side_main_done = true; ["sec_solved", "sec_over"] call SYG_solvedMsg;
+					_man call XAddDead0; side_main_done = true; ["sec_solved", "sec_over"] call SYG_solvedMsg;
 				}; // he is dead without event processing!
 				if ( (_man distance _center) >= _searchDist ) exitWith  {// man is alive but out of circle
 					_grp = group _man;
@@ -113,7 +113,7 @@ switch (sec_kind) do {
 		};
 		
 		#ifdef __TT__
-		_man addEventHandler ["killed", {[_this select 0] call XAddDead;side_main_done = true;_sec_solved = "sec_over";if (side (_this select 1) in [west,resistance]) then {_sec_solved = "gov_dead";};["sec_solved",_sec_solved] call SYG_solvedMsg;}];
+		_man addEventHandler ["killed", {(_this select 0) call XAddDead0;side_main_done = true;_sec_solved = "sec_over";if (side (_this select 1) in [west,resistance]) then {_sec_solved = "gov_dead";};["sec_solved",_sec_solved] call SYG_solvedMsg;}];
 		_man addEventHandler ["killed", {[1,_this select 1] call XAddKills;[3,_this select 1] call XAddPoints;_mt_sm_over = (_this select 1);["mt_sm_over",_mt_sm_over] call SYG_solvedMsg;}];
 		#endif
 		#ifdef __AI__
@@ -179,7 +179,7 @@ switch (sec_kind) do {
                 _unit setBehaviour "SAFE";
                 _unit setPos _pos;
                 _unit setSkill 1.0;
-                _unit addEventHandler ["killed", {[_this select 0] call XAddDead;}];
+                _unit addEventHandler ["killed", {(_this select 0) call XAddDead0;}];
             };
 		} else {  hint localize format["+++ x_scripts/x_createsecondary.sqf: secondary target is unguarded", _cnt];};
 		#endif
@@ -402,7 +402,7 @@ if ( _cnt > 0 ) then {
                 _unit setSkill 1.0;
                 //_unit setBehaviour "SAFE";
                 _unit disableAI "MOVE";
-                _unit addEventHandler ["killed", {[_this select 0] call XAddDead;}];
+                _unit addEventHandler ["killed", {(_this select 0) call XAddDead0;}];
             } else {
                 hint localize format["--- x_createsecondary.sqf: guard of type %1 created (group %2) on top of a main tower is NULL", _type, _newgroup];
             };

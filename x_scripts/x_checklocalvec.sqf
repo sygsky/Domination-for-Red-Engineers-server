@@ -39,30 +39,33 @@ while {true} do {
 			_dead = _check_vec_list select _zz;
 			
 			if !(isNull _dead) then {
+			    // check temp vehicles (bicycles and ATV from MHQ etc)
 				_hastime = _dead getVariable "d_end_time";
 				if (format["%1",_hastime] != "<null>") exitWith {
 					if (time > _hastime) then {
 						if (({alive _x} count (crew _dead)) == 0) then {
-							deleteVehicle _dead;_check_vec_list set [_zz, "RM_ME"]
+						    { deleteVehicle _x; } forEach crew _dead;
+							deleteVehicle _dead; // remove without standard delay
+							_check_vec_list set [_zz, "RM_ME"];   // remove item from the dead list
 						};
 					};
 				};
-                if (alive _dead) exitWith {};
+                if (alive _dead) exitWith {}; // Let it remain in the checklist
 #ifdef __BATTLEFIELD_BONUS__
 				_recoverable = _dead getVariable "RECOVERABLE";
 				if (isNil "_recoverable") then { _recoverable = false };
 				if ( !_recoverable ) then {
 #endif
 					{ deleteVehicle _x; } forEach crew _dead;  // remove all units immediately from vehicle crew group
-					[_dead] call XAddDead;
+					_dead call XAddDead0; // move to the common for vehicles and units delay list before delete
 #ifdef __BATTLEFIELD_BONUS__
 				} else {
 					hint localize format["+++ x_checklocalvec.sqf: recoverable vehicle %1 detected, remove procedure skipped", typeOf _dead];
 				};
 #endif
-				_check_vec_list set [_zz, "RM_ME"]; // remove vehicle from this dead list
+				_check_vec_list set [_zz, "RM_ME"]; // remove item from the dead list
 				sleep 10;
-			} else { _check_vec_list set [_zz, "RM_ME"]; _cnt_null = _cnt_null + 1 }; // remove null from list
+			} else { _check_vec_list set [_zz, "RM_ME"]; _cnt_null = _cnt_null + 1 }; // remove null from the dead list
 			sleep 3.422;
 		};
 	};

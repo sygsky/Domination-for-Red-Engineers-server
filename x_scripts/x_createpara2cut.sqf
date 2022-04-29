@@ -73,7 +73,7 @@ if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then { // Cr
 		_one_unit moveInCargo _chopper;
 		[_one_unit] join _paragrp;
 		_unit_array set [ count _unit_array, _one_unit];
-		_one_unit addEventHandler ["killed", {[_this select 0] call XAddDead;if (d_smoke) then {[_this select 0, _this select 1] spawn x_dosmoke}}];
+		_one_unit addEventHandler ["killed", {(_this select 0) call XAddDead0;if (d_smoke) then {[_this select 0, _this select 1] spawn x_dosmoke}}];
 		#ifdef __TT__
 		_one_unit addEventHandler ["killed", {[1,_this select 1] call XAddKills;}];
 		#endif

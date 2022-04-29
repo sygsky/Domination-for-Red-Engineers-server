@@ -97,7 +97,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 		_type = _real_units select _i;
 		_one_unit = _paragrp createunit [_type, [0,0,0], [], 300,"NONE"];
 		[_one_unit] join _paragrp;
-		_one_unit addEventHandler ["killed", {[_this select 0] call XAddDead;if (d_smoke) then {[_this select 0, _this select 1] spawn x_dosmoke}}];
+		_one_unit addEventHandler ["killed", {(_this select 0) call XAddDead0;if (d_smoke) then {[_this select 0, _this select 1] spawn x_dosmoke}}];
 		#ifdef __TT__
 		_one_unit addEventHandler ["killed", {[1,_this select 1] call XAddKills;}];
 		#endif

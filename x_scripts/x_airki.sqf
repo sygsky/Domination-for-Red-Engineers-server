@@ -69,7 +69,7 @@ if ( isNil "s_down_heli_arr" ) then {
  * returns: nothing
  */
 _killUnits = {
-	private ["_arr"];
+	private ["_arr","_x"];
 	if ( typeName _this == "GROUP") then { _this = units _this };
 	if ( typeName _this == "OBJECT") then { _arr = [_this] }; // single unit designated
 	if ( typeName _this != "ARRAY") exitWith {false};
@@ -77,7 +77,7 @@ _killUnits = {
 		if (!isNull _x ) then {
 			_x setDammage 1.1;
 			sleep 0.3;
-			[_x] call XAddDead;
+			_x call XAddDead0;
 			sleep 0.1;
 		};
 	} forEach _arr;
@@ -356,7 +356,7 @@ while { true } do {
 
 		{ // support each crew member
 			//__addDead(_x)
-			_x addEventHandler ["killed", {[_this select 0] call XAddDead;}];
+			_x addEventHandler ["killed", {(_this select 0) call XAddDead0;}];
 			#ifdef __TT__
 			_x addEventHandler ["killed", {[1,_this select 1] call XAddKills;}];
 			#endif

@@ -3,10 +3,16 @@
 #include "x_macros.sqf"
 
 // add dead object(vehicle, unit) to the common dead list
-XAddDead = {if (!((_this select 0) in dead_list)) then { dead_list set[ count dead_list,_this select 0] } };
+XAddDead  = {if (!((_this select 0) in dead_list)) then { dead_list set[ count dead_list,_this select 0] } };
+
+// simpler call with direct pointer to the vehicle, not array using
+XAddDead0 = {if (!(_this in dead_list)) then { dead_list set[ count dead_list,_this] } };
 
 // Adds vehicle to the check dead vehicles list
 XAddCheckDead = {if (!((_this select 0) in check_vec_list)) then { check_vec_list set [count check_vec_list, _this select 0] } };
+
+// simpler call with direct pointer to the vehicle, not array using
+XAddCheckDead0 = {if (!(_this in check_vec_list)) then { check_vec_list set [count check_vec_list, _this] } };
 
 #ifdef __TT__
 
@@ -506,7 +512,7 @@ x_makemgroup = {
 	{
         _one_unit = _grp createUnit [_x, _pos, [], 10,"NONE"];
         [_one_unit] join _grp;
-        _one_unit addEventHandler ["killed", {[_this select 0] call XAddDead;
+        _one_unit addEventHandler ["killed", {(_this select 0) call XAddDead0;
         if (d_smoke) then {[_this select 0, _this select 1] spawn x_dosmoke}}];
 #ifdef __TT__
     	_do_points = (if (count _this > 3) then {true} else {false});

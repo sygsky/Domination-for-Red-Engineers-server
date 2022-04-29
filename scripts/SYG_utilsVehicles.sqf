@@ -252,7 +252,7 @@ SYG_nearestSoldierGroups = {
 // _vecs_arr = [_unit || _pos, 500, ["LandVehicle"]] call Syg_findNearestVehicles;
 // may return [] if no vehicles found
 Syg_findNearestVehicles = {
-    private ["_unit","_dist","_types","_ret"];
+    private ["_unit","_dist","_types","_bad"];
 
 	_unit = arg(0);
 	_bad = false;
@@ -260,8 +260,7 @@ Syg_findNearestVehicles = {
 	    if (count _unit < 2) exitWith {_bad = true}; // can't be pos with empty array
 	};
 	if ( _bad ) exitWith {[]};
-	if ( typeName _unit == "OBJECT") then
-	{
+	if ( typeName _unit == "OBJECT") then {
     	if ( isNull _unit ) exitWith {_bad = true};
 	};
 	if (_bad) exitWith {[]};
