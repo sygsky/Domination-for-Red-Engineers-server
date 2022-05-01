@@ -6,6 +6,7 @@
  
 #include "x_macros.sqf"
 
+//#define __RESTORE_TREES__
 #define DEFAULT_RESURRECT_DIST 10
 #define DEFAULT_RADIOUS_STEP 5
 #define DEFAULT_RADIOUS_MAX 100
@@ -112,6 +113,9 @@ SYG_firesService = {
     } forEach d_base_sabotage_fires_array;
     hint localize format["+++ scripts/SYG_utilsEnv.sqf: Inspect actionEventHandler added to %1 created fires ", _cnt];
 };
+
+
+#ifdef __RESTORE_TREES__ // NOT USED ANYMORE in mission as server not support this  and is unable to propagate result to all clients
 
 //
 // Restores all killed embedded Arma island objects at designated radious around point or object
@@ -249,6 +253,8 @@ SYG_makeRestoreArray = {
      //player groupChat format["SYG_makeRestoreArray: returns %1", _res];
     _res
 };
+
+#endif
 
 ///
 // Sets grass level, example: 0 call  SYG_setGrassLevel; // sets full grass level

@@ -23,7 +23,6 @@ _center_type = switch (d_own_side ) do {
 // Find all cones near and vehicles attached to tem
 _cone_type   = "RoadCone";
 _arr = DOSAAF_MAP_POS nearObjects [_cone_type, 100]; // find all conuses
-hint localize format[ "+++ make_map.sqf: %1 on base found %2", _cone_type, count _arr ];
 _arr_old = [];
 _mapped_veh = objNull;
 _scale       = DOSAAF_MAP_SCALE; // 0.0025 scale 1: 400 => 400 m in 1 m

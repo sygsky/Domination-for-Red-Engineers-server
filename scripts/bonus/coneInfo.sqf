@@ -12,7 +12,6 @@
 #include "bonus_def.sqf"
 
 _cone = (_this select 0);
-hint localize format["+++ coneInfo.sqf: _this = %1", _cone];
 _veh  = _cone getVariable "bonus_veh";
 if (isNil "_veh") exitWith {
 	// "Appropriate DOSAAF vehicle has not been found, this is a misunderstanding!"
@@ -21,6 +20,7 @@ if (isNil "_veh") exitWith {
 	sleep 1;
 	deleteVehicle _cone;
 };
+hint localize format["+++ coneInfo.sqf: bonus_veh = %1", typeOf _veh];
 // prepare distance to the nearest location
 _loc = _veh call SYG_nearestLocation;
 _loc_name = text _loc;

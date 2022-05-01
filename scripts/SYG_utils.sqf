@@ -25,6 +25,7 @@
 if ( isNil "SYG_UTILS_COMPILED" ) then { // generate some static information
 	SYG_UTILS_COMPILED = true;
 	//hint localize "+++ SYG_utils initialization started";
+	call compile preprocessFileLineNumbers "scripts\SYG_utilsSys.sqf";		// Some system functions moved from x_netinit*.sqf scripts
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsWeapon.sqf";	// Weapons, re-arming etc
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsGeom.sqf";		// Geometry, mathematics
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsDateTime.sqf";	// Date-time
@@ -36,6 +37,7 @@ if ( isNil "SYG_UTILS_COMPILED" ) then { // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsBuildings.sqf";// Buildings
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsText.sqf";		// Text functions
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSound.sqf";	// Sound/music functions
+
 #ifdef __SPPM__
 	if (isServer) then {
 		call compile preprocessFileLineNumbers "scripts\SYG_utilsSPPM.sqf";	// SPPM markers

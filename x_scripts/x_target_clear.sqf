@@ -81,7 +81,7 @@ if (kill_points_west > kill_points_racs) then {
 _points_array = [points_west,points_racs,kill_points_west,kill_points_racs];
 ["points_array",_points_array] call XSendNetStartScriptClient;
 resolved_targets = resolved_targets + [[current_target_index,mt_winner]];
-["mt_winner",mt_winner] call XSendNetVarClient; // TODO: put under #ifdef __TT__ as it used only in this define
+["mt_winner",mt_winner] call XSendNetVarClient;
 
 
 sleep 0.5;
