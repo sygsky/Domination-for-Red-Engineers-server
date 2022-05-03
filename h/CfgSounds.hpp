@@ -545,7 +545,7 @@ class CfgSounds {
 	class robinson_crusoe { name=""; sound[] = {\sounds\intro\robinson_crusoe.ogg,db-1,1.0}; titles[] = {};}; // used in intro
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
     class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0}; titles[] = {};}; // used in  intro, only for resque players
-    class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
+//    class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
     class strelok { name=""; sound[] = {\sounds\strelok.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
     class bloody { name=""; sound[] = {\sounds\bloody.ogg,db-1,1.0}; titles[] = {};}; // intro music from "Bloody diamond" movie
     class total_recall_mountain { name=""; sound[] = {\sounds\total_recall_mountain.ogg,db-1,1.0}; titles[] = {};}; // intro music from "Total recall" movie (The Mountain)
@@ -571,8 +571,8 @@ class CfgSounds {
     class tovarich_moy { name=""; sound[] = {\sounds\tovarich_moy.ogg,db-1,1.0}; titles[] = {};};// intro music, Soviet song about comrade
     class sovest1 { name=""; sound[] = {\sounds\intro\sovest1.ogg,db-1,1.0}; titles[] = {};}; // intro music, Soviet song from film "consciousness"
     class sovest2 { name=""; sound[] = {\sounds\intro\sovest2.ogg,db-1,1.0}; titles[] = {};}; // intro music, Soviet song from film "consciousness"
+    class bond { name=""; sound[] = {\sounds\intro\bond.ogg,db-1,1.0}; titles[] = {};}; // intro music, one of the James Bond film main theme (don't remember)
     class bond1 { name=""; sound[] = {\sounds\intro\bond1.ogg,db-1,1.0}; titles[] = {};}; // intro music, one of the James Bond film main theme (don't remember)
-    class bond { name=""; sound[] = {\sounds\bond.ogg,db-1,1.0}; titles[] = {};}; // intro music, one of the James Bond film main theme (don't remember)
     class toccata { name="toccata-and-fugue-in-d-minor-by-kevin-macleod"; sound[] = {\sounds\intro\toccata.ogg,db-1,1.0}; titles[] = {};}; // intro music, J.S. Bach tocatta
     class del_vampiro1 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro1.ogg,db-1,1.0}; titles[] = {};}; // intro music, Italian film "L'amante del Vampiro"
     class del_vampiro2 { name="L'amante del Vampiro, Italian film, 1960"; sound[] = {\sounds\intro\del_vampiro2.ogg,db-1,1.0}; titles[] = {};}; // intro music, Italian film "L'amante del Vampiro"

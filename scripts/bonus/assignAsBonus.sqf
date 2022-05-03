@@ -1,5 +1,5 @@
 /*
-    scripts\bonus\assignAsBonus.sqf
+    scripts\bonus\assignAsBonus.sqfб called on server ONLY
 	author: Sygsky
 	description: handlers assigned to the vehicle to check bonus in/kill events
 		called on server (in debug SP mission it is emulated only)
@@ -19,12 +19,14 @@ _msg_arr = [];
 
 	// TODO: set according to the server or client code
 	if (X_Server) then { // MP server code
-		_x setVehicleInit "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]]; this setVariable [""DOSAAF"", """"]";
-		processInitCommands;
+//		_x setVehicleInit "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]]; this setVariable [""DOSAAF"", """"]";
+		_x setVehicleInit "[this,'INI'] call SYG_updateBonusStatus;";
+		 processInitCommands;
+		if (X_SPE) then { // Server Player eXecution on client computer
+			[_x, "INI"] call SYG_updateBonusStatus; // add event to the server run on the client computer too
+			_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_CHECK_ITEM", "scripts\bonus\bonusInspectAction.sqf", [] ]];
+		}; // process init command on all client connect at this moment
 	};
-//	if (X_SPE) then { // Server Player eXecution on client computer
-//		_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_CHECK_ITEM", "scripts\bonus\bonusInspectAction.sqf", [] ]];
-//	};
 	_x call SYG_addEventsAndDispose; // add all std mission-driven events here (not recoverable, may be killed and removed from the mission)
 
 	//  Passed array for "killed" event: [unit, killer]
@@ -40,7 +42,7 @@ _msg_arr = [];
 */
 	_near_loc_name = text (_x call SYG_nearestLocation);
 	_msg_arr set [count _msg_arr, ["STR_BONUS", _near_loc_name, typeOf _x]];
-	hint localize format["+++ assignAsBonus.sqf: all events set, ""%1"" action  added to the %2 near %3", localize "STR_CHECK_ITEM", typeOf _x, _near_loc_name];
+	hint localize format["+++ assignAsBonus.sqf: all events set, ""%1"" action will be added on clients to the %2 near %3", localize "STR_CHECK_ITEM", typeOf _x, _near_loc_name];
 } forEach _this;
 
 ["msg_to_user","*",_msg_arr,8,1,false,"good_news"] call XSendNetStartScriptClientAll;
