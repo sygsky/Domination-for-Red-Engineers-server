@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-//#define __DEBUG_DOSAAF__
+#define __DEBUG_DOSAAF__
 
 "d_nv_serv" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
@@ -339,18 +339,20 @@ XHandleNetStartScriptServer = {
 				case "ADD": { // add vehicle to the markered list of known vehicles
 				    // replace 1st init line commands (on vehicle creation) with second one (pn markered vehicle)
 				    clearVehicleInit _veh; // remove previous commands and set new one (only title changed)
-					_veh setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_REG_ITEM"", ""scripts\bonus\bonusInspectAction.sqf"",[]]];this setVariable [""RECOVERABLE"",false];this setVariable [""DOSAAF"",nil];";
+//					_veh setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_REG_ITEM"", ""scripts\bonus\bonusInspectAction.sqf"",[]]];this setVariable [""RECOVERABLE"",false];this setVariable [""DOSAAF"",nil];";
+					_veh setVehicleInit format["[this,'ADD','%1'] call SYG_updateBonusStatus;", _this select 2];
 //					processInitCommands;
 					// mark to be markered vehicles
 					_veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable
-					hint localize format["+++ bonus.ADD on server: %1 to all clients from %2", typeOf _veh, _this select 2];
+					hint localize format["+++ bonus.ADD on server: send info about %1 to all clients from %2", typeOf _veh, _this select 2];
 					_this call XSendNetStartScriptClientAll; // to all clients
 				};
 
 				// register vehicle as RECOVERABLE from now
 				case "REG": {
 					clearVehicleInit _veh;
-//					_veh setVariable ["RECOVERABLE", true]; // is set in call SYG_assignVehAsBonusOneto allow to restore vehicle
+//					_veh setVariable ["RECOVERABLE", true]; // is set in call SYG_assignVehAsBonusOne to allow to restore vehicle
+					_veh setVehicleInit format["[this,'REG','%1'] call SYG_updateBonusStatus;", _this select 2];
 					_veh call SYG_removeVehicleHitDamKilEvents;
 					_veh call SYG_assignVehAsBonusOne;
 					hint localize format["+++ bonus.REG on server:  %1 to all clients from %2, RECOVERABLE = %3", typeOf _veh, _this select 2,  _veh getVariable "RECOVERABLE"];

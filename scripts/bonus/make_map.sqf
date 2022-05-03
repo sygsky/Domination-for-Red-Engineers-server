@@ -114,7 +114,7 @@ if (isNull _map_marker ) then { // create base sign : "DangerEast"
 	hint localize format[ "+++ make_map.sqf: Base map center (%1) created: ""%2""", _center_type, localize "STR_BASE_TITLE_SHORT" ];
 //	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  _cnt, _ready_cnt, _dead_cnt, _nilCnt]], 0, 105, false, "good_news"] call SYG_msgToUserParser;
 } else {
-	hint localize format[ "+++ make_map.sqf: Base map center (%1) found", _center_type ];
+//	hint localize format[ "+++ make_map.sqf: Base map center (%1) found", _center_type ];
 	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  count _arr_new, _ready_cnt, _dead_cnt, _nilCnt]], 0, 5, false, "good_news"] call SYG_msgToUserParser;
 };
 

@@ -931,7 +931,8 @@ XHandleNetStartScriptClient = {
 			switch (_this select 1) do {
 				// send vehicle to players to control and re-draw its marker every few seconds
 				case "ADD": {
-					private ["_ret"];
+					[_veh, "ADD", _this select 2] call SYG_updateBonusStatus;
+/*					private ["_ret"];
 					if (isNil "client_bonus_markers_array") then { client_bonus_markers_array = [];};
 					if (! (_veh in client_bonus_markers_array)) then {
 						_id = _veh getVariable "INSPECT_ACTION_ID";
@@ -943,9 +944,10 @@ XHandleNetStartScriptClient = {
 						} else { hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
 	                    _veh setVariable ["DOSAAF", nil]; // no more to be DOSAAF unknown vehicle
-					    _ret = call SYG_countVehicles; // _id = vehicles find _veh;
+					    _ret = call SYG_countVehicles; // _id = vehicles find _veh; */
 						if ((name player) == (_this select 2)) then {
 							(d_ranked_a select 30) call SYG_addBonusScore; // this player found this bonus vehicle, add +2 to him
+							playSound "good_news";
 							(localize "STR_BONUS_1") hintC [
 								format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
 								format[localize "STR_BONUS_1_2", typeOf _veh], // "A temporary marker has been created, visible until '%1' registers with the recovery service."
@@ -960,13 +962,14 @@ XHandleNetStartScriptClient = {
 								["STR_BONUS_1_3", typeOf _veh, "STR_REG_ITEM"]
 							],5,0, false, "good_news"] call SYG_msgToUserParser;
 						};
-						hint localize format["+++ bonus.ADD on client: %1 to the markers list, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2 ", typeOf _veh,_ret];
+/*						hint localize format["+++ bonus.ADD on client: %1 to the markers list, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2 ", typeOf _veh,_ret];
 						// ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
 					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
-				};
+*/				};
 				// send vehicle to players to remove from re-draw list as vehicle now is recoverable
 				case "REG": { // register vehicle as recoverable
-					private ["_id","_cnt"];
+					[_veh, "REG", _this select 2] call SYG_updateBonusStatus;
+/*					private ["_id","_cnt"];
 					_id = _veh getVariable "INSPECT_ACTION_ID";
 					if (!isNil "_id") then {
 						_veh setVariable ["INSPECT_ACTION_ID", nil];
@@ -978,11 +981,11 @@ XHandleNetStartScriptClient = {
                     _veh setVariable ["RECOVERABLE", true];
                     _veh setVariable ["DOSAAF", nil];
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
-					playSound "good_news";
-					localize "STR_BONUS_3_1" hintC [
+*/					playSound "good_news";
+					localize "STR_BONUS_3_1" hintC [ // "Registering a new vehicle"
 						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
 //						format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
-						localize "STR_BONUS_3_3"
+						localize "STR_BONUS_3_3" // "This vehicle will be restored when it is destroyed."
 						];
 					  //0              1,                  2,                                                          3, 4, 5      6
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;
