@@ -19,7 +19,7 @@ _msg_arr = [];
 
 	// TODO: set according to the server or client code
 	if (X_Server) then { // MP server code
-		_x setVehicleInit DOSAAF_INIT_CODE1;
+		_x setVehicleInit "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]]; this setVariable [""DOSAAF"", """"]";
 		processInitCommands;
 	};
 //	if (X_SPE) then { // Server Player eXecution on client computer

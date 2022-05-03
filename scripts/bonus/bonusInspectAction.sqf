@@ -46,7 +46,7 @@ if (!_already_marked) then {
 };
 
 if ( _already_marked ) exitWith { // Do nothing except inform about vehicle already marked
-	hint localize format["+++ Vehicle %1 is inspected by ""%2"" near ""%3"" already is marked known. Exit.", typeOf _veh, _name, _loc_name];
+			hint localize format["+++ Vehicle %1 is inspected by ""%2"" near ""%3"" already is marked known. Exit.", typeOf _veh, _name, _loc_name];
 	localize "STR_BONUS_4" hintC [format[localize "STR_BONUS_4_1", typeOf _veh ],
 						format[localize "STR_BONUS_4_2", typeOf _veh, localize "STR_REG_ITEM"]
 //						,format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"]

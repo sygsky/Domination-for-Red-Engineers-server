@@ -336,9 +336,9 @@ XHandleNetStartScriptServer = {
 
 			switch (_this select 1) do {
 				// send vehicle to all players to draw and control marker on it
-				case "ADD": { // remove vehicle from markered list of bonus vehicles
+				case "ADD": { // add vehicle to the markered list of known vehicles
 				    // replace 1st init line commands (on vehicle creation) with second one (pn markered vehicle)
-				    clearVehicleInit _veh; // remove previous command and set new one (only title changed)
+				    clearVehicleInit _veh; // remove previous commands and set new one (only title changed)
 					_veh setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_REG_ITEM"", ""scripts\bonus\bonusInspectAction.sqf"",[]]];this setVariable [""RECOVERABLE"",false];this setVariable [""DOSAAF"",nil];";
 //					processInitCommands;
 					// mark to be markered vehicles

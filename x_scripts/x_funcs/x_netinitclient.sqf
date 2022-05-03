@@ -931,6 +931,7 @@ XHandleNetStartScriptClient = {
 			switch (_this select 1) do {
 				// send vehicle to players to control and re-draw its marker every few seconds
 				case "ADD": {
+					private ["_ret"];
 					if (isNil "client_bonus_markers_array") then { client_bonus_markers_array = [];};
 					if (! (_veh in client_bonus_markers_array)) then {
 						_id = _veh getVariable "INSPECT_ACTION_ID";

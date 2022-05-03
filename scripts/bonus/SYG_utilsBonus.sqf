@@ -102,6 +102,90 @@ SYG_createBonusVeh = {
 };
 
 //
+// Call as follows: [_veh, "INI || ""ADD" || "REG", _player_name] call SYG_updateBonusStatus;
+//
+SYG_updateBonusStatus = {
+	private ["_veh","_cmd","_id","_ret"];
+	if ( (typeName _this) != "ARRAY") exitWith { hint localize format["--- SYG_updateBonusStatus: expected input array, found %1",typeName _this] };
+	if ( (count _this) < 2 ) exitWith { hint localize format["--- SYG_updateBonusStatus: expected input array[2], found size %1", count _this] };
+	_veh = _this select 0;
+	if (typeName _veh != "OBJECT") exitWith {hint localize format["--- SYG_updateBonusStatus: expected 1st param as OBJECT, found %1, found size %1", typeName _veh]};
+	_cmd = _this select 1;
+	if ( (typeName _cmd) != "STRING") exitWith {hint localize format["--- SYG_updateBonusStatus: expected 2st param as STRING, found %1, found size %1", typeName _cmd]};
+	if ( _cmd == "ADD") exitWith {
+		// assigns as found vehicle, change menu from "Inspect" to the "Register"
+		if (isNil "client_bonus_markers_array") then { client_bonus_markers_array = [];};
+		if (! (_veh in client_bonus_markers_array)) then {
+			_id = _veh getVariable "INSPECT_ACTION_ID";
+			if (!isNil "_id") then {
+				_veh removeAction _id;
+				// replace title with "Register" text
+				_veh setVariable ["INSPECT_ACTION_ID", _veh addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
+			} else {
+				hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ]
+			};
+			_veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
+			_veh setVariable ["DOSAAF", nil]; // no more to be DOSAAF unknown vehicle
+			_ret = call SYG_countVehicles; // _id = vehicles find _veh;
+			if ((name player) == (_this select 2)) then {
+				(d_ranked_a select 30) call SYG_addBonusScore; // this player found this bonus vehicle, add +2 to him
+				playSound "good_news";
+				(localize "STR_BONUS_1") hintC [
+					format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
+					format[localize "STR_BONUS_1_2", typeOf _veh], // "A temporary marker has been created, visible until '%1' registers with the recovery service."
+//							format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
+					format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_REG_ITEM"] // "Registration: deliver %1 to the base and invoke the '%2' command"
+				];
+			} else { //  send info to all players except author
+				["msg_to_user","",[
+					["STR_BONUS_1"], // "ДОСААФ (Voluntary Society for Assistance to the Army, Aviation and Navy) News:"
+					["STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"],
+					["STR_BONUS_1_2", typeOf _veh], // "A temporary marker has been created, visible until '%1' registers with the recovery service."
+					["STR_BONUS_1_3", typeOf _veh, "STR_REG_ITEM"] // "Registration: deliver %1 to the base and invoke the '%2' command"
+				],5,0, false, "good_news"] call SYG_msgToUserParser;
+			};
+			hint localize format["+++ bonus.ADD on client: adds %1 to the markers list, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2 ", typeOf _veh,_ret];
+			// ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
+		} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
+	};
+
+	// REGister command processing
+	if ( _cmd == "REG" ) exitWith {
+		_id = _veh getVariable "INSPECT_ACTION_ID";
+		if (!isNil "_id") then {
+			_veh setVariable ["INSPECT_ACTION_ID", nil];
+			_veh removeAction _id;
+			_ret = call SYG_countVehicles;
+			hint localize format["+++ bonus.REG on client: inspect action removed from %1, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2", typeOf _veh, _ret];
+		} else {
+			hint localize format[ "--- bonus.REG: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ]
+		};
+		// remove from markered vehs list register as recoverable vehicle
+		_veh setVariable ["RECOVERABLE", true];
+		_veh setVariable ["DOSAAF", nil];
+		// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
+		playSound "good_news";
+		localize "STR_BONUS_3_1" hintC [
+			format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
+			localize "STR_BONUS_3_3"
+			];
+		if ((name player) == (_this select 2)) then { (d_ranked_a select 31) call SYG_addBonusScore;}; // this player registered this bonus vehicle, add +2 to him
+	};
+
+	if ( _cmd != "INI") exitWith { hint localize format["--- SYG_updateBonusStatus: expected command ['INI','ADD','REG'], detected unknown ""%1""", _cmd]; };
+
+	// INItiate command processing
+	private ["_id","_cnt"];
+	_id = _veh getVariable "INSPECT_ACTION_ID";
+	if (!isNil "_id") exitWith {
+		hint localize format["+++ bonus.INI on client: inspect action #%1 for %2 already exists, new one not added", _id, typeOf _veh];
+	};
+	_veh setVariable ["INSPECT_ACTION_ID", "this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]]; this setVariable [""DOSAAF"", """"]"];
+	hint localize format[ "--- bonus.INI: setVariable ""INSPECT_ACTION_ID"" == %1!!!", typeOf _veh ]
+
+};
+
+//
 // Find cone on base that contain designated vehicle. Remove if found.
 // Called on client ONLY
 // Call as: _veh call SYG_removeBonusCone;
@@ -242,7 +326,7 @@ SYG_scanDOSAAF0Vehicles = {
 //
 SYG_countVehicles = {
 	private ["_cnt","_cntv","_cntd","_cntnr","_cnta","_cntm","_var","_x"];
-	_cnt = 0; _cntv = 0; _cntd = 0; _cntnr = 0; _cnta = 0; _cntm = 0; _cntb = 0;
+	_cnt = 0; _cntv = 0; _cntd = 0; _cntnr = 0; _cnta = 0; _cntm = 0; _cntr = 0;
 	{
 		if ( (_x isKindOf "LandVehicle") || (_x isKindOf "Air") || (_x isKindOf "Ship") ) then { // DOSAAF
 			_cntv = _cntv + 1; // vehicle
@@ -252,7 +336,7 @@ SYG_countVehicles = {
 
 			_var = _x getVariable "RECOVERABLE";
 			if ( !isNil"_var" ) then {
-				if ( !_var ) then { _cntm = _cntm + 1 } else { _cntb = _cntb + 1 }; // not registered inspected bonus vehicle
+				if ( !_var ) then { _cntm = _cntm + 1 } else { _cntr = _cntr + 1 }; // not registered + recoverable vehicle
 			};
 
 			_var = _x getVariable "DOSAAF";
@@ -262,7 +346,7 @@ SYG_countVehicles = {
 		};
 		_cnt = _cnt + 1; // all items count
 	} forEach vehicles;
-	[_cnt, _cntv, _cntd, _cntnr, _cnta, _cntm, _cntb]
+	[_cnt, _cntv, _cntd, _cntnr, _cnta, _cntm, _cntr]
 };
 
 //
