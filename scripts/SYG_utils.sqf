@@ -605,6 +605,7 @@ SYG_AIPriceByRankId = {
     _start_rank_id = ( d_ranked_a select 28 ) call XGetRankIndex;
     if (_rank_id <_start_rank_id ) exitWith { 1000000 };
     if (_rank_id == _start_rank_id ) exitWith { d_ranked_a select 3 }; // first AI price is a system constant
+#ifdef __OLD__
     _max_id = ( count d_points_needed + count d_pseudo_ranks );
     if ( _rank_id >= _max_id ) exitWith { ( _max_id - 1 )  call SYG_AIPriceByRankId };
     _score = _rank_id call XGetScoreFromRank; // score for designated rank
@@ -612,7 +613,15 @@ SYG_AIPriceByRankId = {
 
     //hint localize format["+++ SYG_AIPriceByRankId(1): _rank_id %1, _start_rank_id %2, _score %3, _score1 %4", _rank_id, _start_rank_id, _score, _score1 ];
 
-    floor ((( (_score1 *.5)  / ( _rank_id - _start_rank_id + 1) ) / 5) * 5)
+    floor ((( (_score1 *.5)  / ( _rank_id - _start_rank_id + 1) ) / 5) * 5);
+#else
+    if (ai_counter <= 0) then {
+        d_ranked_a select 3 // first AI = 5
+    } else  {
+        (d_ranked_a select 3) * 2 * ai_counter // 2nd AI = 10, 3rd AI = 20, 34th AI = 30... etc
+    };
+
+#endif
 };
 
 SYG_AIPriceByRankString = {
