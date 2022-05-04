@@ -25,7 +25,7 @@ hint localize format["+++ coneInfo.sqf: bonus_veh = %1", typeOf _veh];
 _loc = _veh call SYG_nearestLocation;
 _loc_name = text _loc;
 _loc_pos = locationPosition _loc;
-_dist = round ((_veh distance _loc_pos)/1000);
+_dist = round ((_veh distance DOSAAF_MAP_POS)/1000);
 _str_dist = if (_dist == 0) then {localize "STR_BONUS_INFO_2"} else {format[localize "STR_BONUS_INFO_3", _dist]};
 ["msg_to_user","*",[[localize "STR_BONUS_INFO", typeOf _veh, _loc_name, _str_dist]],0,0,false,"good_news"] call SYG_msgToUserParser; // "DOSAAF vehicle '%1' close to '%2'", dist %3
 _slope = [0,0,1] distance ( vectorUp _cone );
