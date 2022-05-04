@@ -13,7 +13,7 @@ if (typeName _this == "OBJECT") then {_this = [_this]};
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- assignAsBonus.sqf, expected input type is ARRAY, detected %1, EXIT ON ERROR !!!",typeName _this]};
 _msg_arr = [];
 {
-	if ( ! (_x isKindOf "Landvehicle" || _x isKindOf "Air" || _x isKindOf "Ship") ) exitWith {
+	if ( ! (_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship") ) exitWith {
 		hint localize format["--- assignAsBonus.sqf: expected type LandVehicle|Air|Ship, detected ""%1"", EXIT ON ERROR !!!", typeOf _x];
 	};
 
@@ -21,11 +21,12 @@ _msg_arr = [];
 	if (X_Server) then { // MP server code
 //		_x setVehicleInit "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]]; this setVariable [""DOSAAF"", """"]";
 		_x setVehicleInit "[this,'INI'] call SYG_updateBonusStatus;";
-		 processInitCommands;
+		 processInitCommands; // must be executed on all currently connected computers
 		if (X_SPE) then { // Server Player eXecution on client computer
 			[_x, "INI"] call SYG_updateBonusStatus; // add event to the server run on the client computer too
 			_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_CHECK_ITEM", "scripts\bonus\bonusInspectAction.sqf", [] ]];
 		}; // process init command on all client connect at this moment
+		// TODO: send info to all connected clients too, may be processInitCommands not work!
 	};
 	_x call SYG_addEventsAndDispose; // add all std mission-driven events here (not recoverable, may be killed and removed from the mission)
 
