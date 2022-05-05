@@ -982,10 +982,10 @@ XHandleNetStartScriptClient = {
                     _veh setVariable ["DOSAAF", nil];
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
 */					playSound "good_news";
-					localize "STR_BONUS_3_1" hintC [ // "Registering a new vehicle"
+					localize "STR_BONUS_3_1" hintC [
 						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
 //						format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
-						localize "STR_BONUS_3_3" // "This vehicle will be restored when it is destroyed."
+						localize "STR_BONUS_3_3"
 						];
 					  //0              1,                  2,                                                          3, 4, 5      6
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;

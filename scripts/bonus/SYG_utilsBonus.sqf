@@ -120,11 +120,12 @@ SYG_updateBonusStatus = {
 		// assigns as found vehicle, change menu from "Inspect" to the "Register"
 		_id = _veh getVariable "INSPECT_ACTION_ID";
 		if (!isNil "_id") then {
-			_veh removeAction _id;
+			hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID detected in %1!!!", typeOf _veh ];
+//			_veh removeAction _id;
 			// replace title with "Register" text
-			_veh setVariable ["INSPECT_ACTION_ID", _veh addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
+//			_veh setVariable ["INSPECT_ACTION_ID", _veh addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
 		} else {
-			hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ]
+			hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID not detected in %1!!!", typeOf _veh ]
 		};
 		_veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
 		_veh setVariable ["DOSAAF", nil]; // no more to be DOSAAF unknown vehicle
@@ -154,7 +155,7 @@ SYG_updateBonusStatus = {
 	};
 	_veh setVariable ["INSPECT_ACTION_ID", _veh addAction [ localize "STR_CHECK_ITEM","scripts\bonus\bonusInspectAction.sqf",[]]];
 	_veh setVariable ["DOSAAF", ""];
-	hint localize format[ "--- bonus.INI: setVariable ""INSPECT_ACTION_ID"" => %1!!!", typeOf _veh ]
+	hint localize format[ "+++ bonus.INI: setVariable ""INSPECT_ACTION_ID"" => %1!!!", typeOf _veh ]
 };
 
 //
