@@ -21,9 +21,9 @@ _msg_arr = [];
 	// TODO: set according to the server or client code
 	if (X_Server) then { // MP server code
 //		_x setVehicleInit "this setVariable [""INSPECT_ACTION_ID"",this addAction [ localize ""STR_CHECK_ITEM"",""scripts\bonus\bonusInspectAction.sqf"",[]]]; this setVariable [""DOSAAF"", """"]";
-		_x setVehicleInit "[this,'INI'] call SYG_updateBonusStatus;";
+		_x setVehicleInit "[this,""INI""] spawn SYG_updateBonusStatus;";
 		 processInitCommands; // must be executed on all currently connected computers
-		if (X_SPE) then { // Server Player eXecution on client computer
+		if (X_SPE) then { // Server Player Execution on this computer from this computer with the client EXE
 			[_x, "INI"] call SYG_updateBonusStatus; // add event to the server run on the client computer too
 //			_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_CHECK_ITEM", "scripts\bonus\bonusInspectAction.sqf", [] ]];
 			hint localize format["+++ assignAsBonus.sqf: X_SPE detected, add local INSPECT_ACTION_ID to the %1", typeOf _x];
