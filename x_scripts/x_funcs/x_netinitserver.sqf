@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "global_vars.sqf"
 
-#define __DEBUG_DOSAAF__
+// #define __DEBUG_DOSAAF__
 
 "d_nv_serv" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
@@ -337,32 +337,25 @@ XHandleNetStartScriptServer = {
 			switch (_this select 1) do {
 				// send vehicle to all players to draw and control marker on it
 				case "ADD": { // add vehicle to the markered list of known vehicles
-				    // replace 1st init line commands (on vehicle creation) with second one (pn markered vehicle)
-				    clearVehicleInit _veh; // remove previous commands and set new one (only title changed)
-//					_veh setVehicleInit "this setVariable [""INSPECT_ACTION_ID"", this addAction [ localize ""STR_REG_ITEM"", ""scripts\bonus\bonusInspectAction.sqf"",[]]];this setVariable [""RECOVERABLE"",false];this setVariable [""DOSAAF"",nil];";
-					_veh setVehicleInit format["[this,""ADD"",""%1""] spawn SYG_updateBonusStatus;", _this select 2];
-//					processInitCommands;
-					// mark to be markered vehicles
+					// mark to be marked and monitored vehicle
 					_veh setVariable ["RECOVERABLE", false]; // mark vehicle as inspected, marked and not recoverable
-					hint localize format["+++ bonus.ADD on server: send info about %1 to all clients from %2", typeOf _veh, _this select 2];
+					_veh setVariable ["DOSAAF", nil];
+					hint localize format["+++ bonus.ADD on server: change from ""Inspect"" to ""Register"", send info on %1 to all clients from %2", typeOf _veh, _this select 2];
 					_this call XSendNetStartScriptClientAll; // to all clients
 				};
 
 				// register vehicle as RECOVERABLE from now
 				case "REG": {
-					clearVehicleInit _veh;
-//					_veh setVariable ["RECOVERABLE", true]; // is set in call SYG_assignVehAsBonusOne to allow to restore vehicle
-					_veh setVehicleInit format["[this,""REG"",""%1""] spawn SYG_updateBonusStatus;", _this select 2];
+					_veh setVariable ["RECOVERABLE", true]; // is set in call SYG_assignVehAsBonusOne to allow to restore vehicle
+					_veh setVariable ["DOSAAF", nil];
 					_veh call SYG_removeVehicleHitDamKilEvents;
 					_veh call SYG_assignVehAsBonusOne;
-					hint localize format["+++ bonus.REG on server:  %1 to all clients from %2, RECOVERABLE = %3", typeOf _veh, _this select 2,  _veh getVariable "RECOVERABLE"];
+					hint localize format["+++ bonus.REG on server:  register event about  %1 is send to all clients from %2, RECOVERABLE = %3", typeOf _veh, _this select 2, _veh getVariable "RECOVERABLE"];
 					_this call XSendNetStartScriptClientAll; // to all clients
 				};
-
 				default { player groupChat format["--- XHandleNetStartScriptServer: command '%1', unknown sub-command '%1'", _this select 0,_this select 0]};
 			};
 		};
-
 #endif
 
 //========================================================================================================== END OF CASES
@@ -376,3 +369,4 @@ XHandleNetStartScriptServer = {
 "d_ns_serv" addPublicVariableEventHandler {
 	(_this select 1) spawn XHandleNetStartScriptServer;
 };
+

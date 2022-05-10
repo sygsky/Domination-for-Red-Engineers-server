@@ -1516,7 +1516,7 @@ STR_KILLED_WALL,Attempt to kill base building ('%1' scores removed -%2),Versucht
 STR_GREETING_COMMON,"For his services in developing our mission, the chief engineer extends his thanks to fighters Rokse, Ceres, Snooper, gyury!!!","Der Chefingenieur bedankt sich bei den Rokse, Ceres, Snooper und gyuri Kämpfern für ihren Einsatz beim Aufbau unserer Mission!!!","Por su servicio en la construcción de nuestra misión, el ingeniero jefe extiende su agradecimiento a los combatientes de Rokse, Ceres, Snooper, gyuri!!!","За заслуги в деле построения нашей миссии главный инженер выносит благодарность бойцам Rokse, Ceres, Snooper, gyuri!!!"
 
 STR_CHECK_ITEM,Inspect,Überprüfen,Estudiar,Изучить
-STR_REG_ITEM,Register,Registrieren,Registrar,Регистрировать
+STR_REG_ITEM,Register on base,Anmeldung an der Basis,Regístrese en la base,Регистрировать на базе
 
 STR_LIB_ACE_MAP,A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it,"Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen",Mapa secreto arrugado de la ubicación de las fuerzas enemigas de Tamaño A0. Parece que los chicos tuvieron que trabajar duro fabricándola.,"Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"
 STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,Good but short and rather weak western rifle with excellent optics,"Gut, aber kurz und eher schwach western Gewehr mit hervorragender Optik","Un rifle occidental automático empinado, pero corto y débil, con lo mejor de las vistas. Si no fuera por un impacto débil en el objetivo..","Крутая, но короткая и слабенькая автоматическая западная винтовка с лучшим из прицелов. Если бы не слабое воздействие на цель..."
@@ -1536,6 +1536,7 @@ STR_DISP_INTEL_EAST_FRIENDLY,Comrades,Kameraden,Los nuestros,Наши
 
 STR_DISP_MPSETUP_ROLES_WEST,"Roles for NATO:","Rollen für die NATO:","funciones de la OTAN:","Роли для НАТО:"
 STR_DISP_MPSETUP_ROLES_EAST,"Roles for USSR:","Rollen für die UdSSR:","Funciones para el USSR:","Роли для СССР:"
+STR_PLAY_EAST,"Play for USSR","Spiel für die UdSSR","Juega para la URSS","Играть за СССР"
 
 STR_GUERRILA,Partisans,Partisanen,Guerrilleros,Партизаны
 STR_ACE_WOUND_EXAMINE_HE,He,Er,zombies,зомби

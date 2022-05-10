@@ -8,15 +8,15 @@
 #include "bonus_def.sqf"
 
 if (isNil "client_bonus_markers_array") then {
-    client_bonus_markers_array = [];
+    client_bonus_markers_array = []; // Never change it from external code!!!
     client_bonus_markers_timestamp = time;
     sleep 10
-};
+} else {sleep 2};
 
 hint localize "+++ bonus_client started";
 private ["_bonus_markers", "_bonus_timestamp", "_i", "_veh", "_mrk", "_last_id"];
 
-_bonus_markers                 = [];	// known vehs itself
+_bonus_markers                 = [];	// known veh markers itself
 _next_id                       = 1;		// next free id for the bonus vehicle markers
 _bonus_timestamp               = 0;		// last time processed timestamp
 
@@ -112,9 +112,8 @@ while { true } do {
 	_moved_cnt = 0;
 	_update = false;
 	_redraw = false;
-	_last_id =  (count client_bonus_markers_array) - 1;
-	// re-draws moved markers, 0-based item is the time-stamp, not markered vehicle
-	for "_i" from 0 to _last_id do {
+	// re-draws shifted markers, remove killed ones
+	for "_i" from 0 to ((count client_bonus_markers_array) - 1) do {
 		_veh = client_bonus_markers_array select _i;
 		if (alive _veh) then {
 			_mrk = _bonus_markers select _i;
@@ -139,7 +138,7 @@ while { true } do {
 	if ( _update || ( client_bonus_markers_timestamp != _bonus_timestamp ) ) then {
 		_bonus_timestamp = client_bonus_markers_timestamp;
 		call _reset_params; // reset markers for DOSAAF vehicles
-		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" detected dead markered vehicle[s], so change markers array"} else {""}];
+		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" detected dead markered vehicle[s], change markers array"} else {""}];
 	};
 	if (_redraw) then {
 //		hint localize format[ "+++ bonus_client: sleep after redraw %1", DOSAAF_DELAY_NORMAL ];

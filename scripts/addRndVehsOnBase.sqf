@@ -1,7 +1,7 @@
 /*
 	scripts\addRndVehsOnBase.sqf
 	author: Sygsky
-	description: Adds some vehicles on base at game start
+	description: Adds some vehicles on base at game start. Vehicles are not recoverable and wilд be removed from map on kill
 	returns: nothing
 */
 

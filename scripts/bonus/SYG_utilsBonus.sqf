@@ -199,23 +199,29 @@ SYG_scanDOSAAFVehicles = {
 
 //
 // Returns all alive non registered DOSAAF vehicles
-// 	_id = _x getVariable "INSPECT_ACTION_ID"; // check if vehicle is bonus with "Inspect" command on it
-SYG_scanDOSAAF0Vehicles = {
-	private ["_x","_var", "_arr","_cnt"];
-	_arr = [];
+// Call as follow: _ret_arr = call SYG_scanDOSAAFVehiclesAll;
+// where _ret_arr = [_dosaaf_arr,_marked_arr];
+SYG_scanDOSAAFVehiclesAll = {
+	private ["_x","_var", "_DOSAAF_arr","_marked_arr","_cnt"];
+	_DOSAAF_arr = [];
+	_marked_arr = [];
 	_cnt = 0;
 	{
-		if (alive _x) then {
+		if ( alive _x ) then {
 			_var = _x getVariable "DOSAAF";//  If inspected follow code is executed: "this setVariable [""RECOVERABLE"", false]"
 			if ( !( isNil "_var" ) ) then {
-				_arr set [count _arr, _x]
+				_DOSAAF_arr set [ count _DOSAAF_arr, _x ]
+			};
+			_var = _x getVariable "RECOVERABLE";//  If inspected follow code is executed: "this setVariable [""RECOVERABLE"", false]"
+			if ( ( !isNil "_var" ) ) then {
+				if ( !_var ) exitWith { _marked_arr set [ count _marked_arr, _x ] };
 			};
 		};
 		_cnt = _cnt + 1;
-		if ((_cnt mod 20) == 0) then {sleep 0.01};
+		if ( ( _cnt mod 20 ) == 0 ) then { sleep 0.01 };
 	} forEach vehicles;
-	hint localize format["+++ SYG_scanDOSAAF0Vehicles whole vehicles counter = %1, DOSAAF0 found %2", _cnt, count _arr];
-	_arr
+	hint localize format[ "+++ SYG_scanDOSAAFVehiclesAll whole vehicles counter = %1, found DOSAAF0 %2, DOSAAF_MARKED %3", _cnt, count _DOSAAF_arr, count _marked_arr ];
+	[_DOSAAF_arr,_marked_arr]
 };
 
 //

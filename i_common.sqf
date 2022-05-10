@@ -619,6 +619,9 @@ d_reload_engineoff = true;
 
 // these vehicles can be lifted by the wreck lift chopper (previous chopper 4), but only, if they are completely destroyed
 x_heli_wreck_lift_types = sm_bonus_vehicle_array + mt_bonus_vehicle_array;
+#ifdef __ACE__
+x_heli_wreck_lift_types = x_heli_wreck_lift_types + "ACE_UAZ";
+#endif
 
 // The "Choose Parachute Location" option at the flag at base is now disabled again as default
 // you can still bring it back by setting d_para_at_base to true

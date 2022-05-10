@@ -46,7 +46,8 @@ if ( count d_player_stuff >= 6) then { // equipment returned
 if ( _equip == "" ) then {
 	// give players a basic rifle/MG at start
 	_weapp = "";
-	_magp = "";
+	_magp = [];
+	_magp = [];
 	switch (d_own_side) do {
 		case "WEST": {
 			if (__ACEVer) then {
@@ -60,6 +61,7 @@ if ( _equip == "" ) then {
 		case "EAST": {
 			if (__ACEVer) then {
 				_old_rank = "";
+				_rpg = [];
 				while {true } do {
 					_old_rank = (score player) call XGetRankFromScore;
 					_index = _old_rank call XGetRankIndex;

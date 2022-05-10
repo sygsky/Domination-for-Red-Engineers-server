@@ -9,7 +9,7 @@
 
 //_new_veh = [[_x, _y<,_z>], _rad, _veh_type_name] call SYG_createBonusVeh;
 _mt = "Somato" call SYG_MTByName;
-if (count _mt  == 0 ) exitWith {hint localize format ["--- BFB: town %1 not found, exit", "Rahmadi"]};
+if (count _mt  == 0 ) exitWith {hint localize format ["--- BFB: town %1 not found, exit", "Somato"]};
 _pos = getPos FLAG_BASE;
 _pos set [1, (_pos select 1) + 150];
 

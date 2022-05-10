@@ -922,29 +922,29 @@ XHandleNetStartScriptClient = {
         };
 
 #ifdef __BATTLEFIELD_BONUS__
-		// adds vehicle to the player vehicle markers list
+		// Handle with DOSAAF vehicles events (ADD to monitoring process with dynamical re-draw , REGister as RECOVERABLE, INI as DOSAAF not detected vehicle
 		case "bonus" : { // [ "bonus", _sub_command, _player_name, _vehicle ]
 			hint localize format["+++ bonus: _this %1", _this ];
-//			if ( ! ( (_this select 2) in [""," ","*",name player]) ) exitWith {};
 			private ["_veh"];
 			_veh = _this select 3;
 			switch (_this select 1) do {
 				// send vehicle to players to control and re-draw its marker every few seconds
 				case "ADD": {
-					[_veh, "ADD", _this select 2] call SYG_updateBonusStatus;
-/*					private ["_ret"];
+					private ["_ret"];
 					if (isNil "client_bonus_markers_array") then { client_bonus_markers_array = [];};
 					if (! (_veh in client_bonus_markers_array)) then {
 						_id = _veh getVariable "INSPECT_ACTION_ID";
 						if (!isNil "_id") then {
 //							_veh setVariable ["INSPECT_ACTION_ID", nil];
 							_veh removeAction _id;
+							_id2 = _veh addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]];
 							// replace title with "Register" text
-							_veh setVariable ["INSPECT_ACTION_ID", _veh addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
+							_veh setVariable ["INSPECT_ACTION_ID", _id2];
+							hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID id %1 => %2 (REG) on %3!!!", _id, _id2, typeOf _veh ]
 						} else { hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
 	                    _veh setVariable ["DOSAAF", nil]; // no more to be DOSAAF unknown vehicle
-					    _ret = call SYG_countVehicles; // _id = vehicles find _veh; */
+					    _ret = call SYG_countVehicles; // _id = vehicles find _veh;
 						if ((name player) == (_this select 2)) then {
 							(d_ranked_a select 30) call SYG_addBonusScore; // this player found this bonus vehicle, add +2 to him
 							playSound "good_news";
@@ -962,38 +962,59 @@ XHandleNetStartScriptClient = {
 								["STR_BONUS_1_3", typeOf _veh, "STR_REG_ITEM"]
 							],5,0, false, "good_news"] call SYG_msgToUserParser;
 						};
-/*						hint localize format["+++ bonus.ADD on client: %1 to the markers list, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2 ", typeOf _veh,_ret];
+						hint localize format["+++ bonus.ADD on client: move %1 to the markers list, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2 ", typeOf _veh,_ret];
 						// ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
 					} else { hint localize format["--- bonus.ADD veh %1 already in marker list, exit", _veh]; };
-*/				};
+				};
 				// send vehicle to players to remove from re-draw list as vehicle now is recoverable
 				case "REG": { // register vehicle as recoverable
-					[_veh, "REG", _this select 2] call SYG_updateBonusStatus;
-/*					private ["_id","_cnt"];
+//					[_veh, "REG", _this select 2] call SYG_updateBonusStatus;
+					private ["_id","_cnt"];
 					_id = _veh getVariable "INSPECT_ACTION_ID";
 					if (!isNil "_id") then {
 						_veh setVariable ["INSPECT_ACTION_ID", nil];
 						_veh removeAction _id;
 						_ret = call SYG_countVehicles;
-						hint localize format["+++ bonus.REG on client: inspect action removed from %1, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2", typeOf _veh, _ret];
+						hint localize format["+++ bonus.REG on client: reg action id=%1 removed from %2, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %3", _id, typeOf _veh, _ret];
 					} else { hint localize format[ "--- bonus.REG: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 					// remove from markered vehs list register as recoverable vehicle
                     _veh setVariable ["RECOVERABLE", true];
                     _veh setVariable ["DOSAAF", nil];
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
-*/					playSound "good_news";
+					playSound "good_news";
 					localize "STR_BONUS_3_1" hintC [
 						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
 //						format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
 						localize "STR_BONUS_3_3"
 						];
-					  //0              1,                  2,                                                          3, 4, 5      6
+//					    0              1,                  2,                                                          3, 4, 5      6
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;
 					if ((name player) == (_this select 2)) then { (d_ranked_a select 31) call SYG_addBonusScore;}; // this player registered this bonus vehicle, add +2 to him
 				};
+				// Params: ["bonus","INI",[_veh1...,_vehN]] or ["bonus","INI", _veh]
+				case "INI": { // new DOSAAF vehicles are added to the unknown DOSAAF vehicles list
+					// first clean main array
+					_veh = _this select 2;
+					if (typeName _veh =="OBJECT") then { _veh = [_veh] };
+					if (typeName _veh !="ARRAY") exitWith {"--- bonus.INI client: 3rd param not array, exit"};
+                    // mark as DOSAAF vehicles (not detected by players)
+                    {
+                    	_x setVariable [ "DOSAAF","" ];
+						private [ "_id","_cnt" ];
+						_id = _x getVariable "INSPECT_ACTION_ID";
+						if (isNil "_id") then {
+							_id = _x addAction [ localize "STR_CHECK_ITEM","scripts\bonus\bonusInspectAction.sqf", [] ];
+							_x setVariable [ "INSPECT_ACTION_ID", _id ];
+							hint localize format[ "+++ bonus.INI: setVariable ""INSPECT_ACTION_ID"" (#%1) => %2!!!", _id, typeOf _x ];
+						} else{ hint localize format[ "+++ bonus.INI on client: inspect action #%1 for %2 already exists, new one not added", _id, typeOf _x ] };
+                    } forEach _veh;
+                    // TODO: create messages about vehicles added on the island, move here the code from the file "scripts\bonus\assignAsBonus.sqf"
+				};
 			};
-			hint localize format["+++ bonus.%1 on client: timestamp changed by server request, was %2, now %3", _this select 1,client_bonus_markers_timestamp, time ];
-			client_bonus_markers_timestamp = time;
+			if ((_this select 1) in ["ADD","REG"]) then {
+				hint localize format["+++ bonus.%1 on client: timestamp changed by server request, %2 => %3", _this select 1,client_bonus_markers_timestamp, time ];
+				client_bonus_markers_timestamp = time;
+			};
 		};
 #endif
 

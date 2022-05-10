@@ -26,7 +26,8 @@ _name call SYG_townScoresAdd; // register player as current town liberation part
 
 date_str = date;
 _tmp_a = [];
-_bit_array = [mt_radio_down,target_clear,all_sm_res,the_end,mr1_in_air,mr2_in_air,ari_available,ari2_available,d_jet_service_fac_rebuilding,d_chopper_service_fac_rebuilding,d_wreck_repair_fac_rebuilding];
+_bit_array = [mt_radio_down,target_clear,all_sm_res,the_end,mr1_in_air,mr2_in_air,ari_available,ari2_available,
+			  d_jet_service_fac_rebuilding,d_chopper_service_fac_rebuilding,d_wreck_repair_fac_rebuilding];
 {
 	_var = _x getVariable "d_ammobox";
 	if (format["%1",_var] == "<null>") then {
@@ -39,6 +40,11 @@ _bit_array = [mt_radio_down,target_clear,all_sm_res,the_end,mr1_in_air,mr2_in_ai
 	};
 	_tmp_a set [count _tmp_a, _var];
 } forEach [MRR1,MRR2,HR1,HR2,HR3,HR4];
+
+#ifdef __BATTLEFIELD_BONUS__
+_arr = call SYG_scanDOSAAFVehiclesAll; // all info about DOSAAF vehicles
+_tmp_a set [count _tmp_a, _arr];
+#endif
 
 #ifdef __TT__
 _bit_array = _bit_array + [mrr1_in_air,mrr2_in_air];

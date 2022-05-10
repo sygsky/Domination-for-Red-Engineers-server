@@ -644,6 +644,27 @@ if (!X_SPE) then {
 	HR2 setVariable ["d_ammobox_next", _time_next_a select 3];
 	HR3 setVariable ["d_ammobox_next", _time_next_a select 4];
 	HR4 setVariable ["d_ammobox_next", _time_next_a select 5];
+#ifdef __BATTLEFIELD_BONUS__
+	_arr = _time_next_a select 6; // all info about DOSAAF vehicles (not detected and markered as detected)
+
+	// 1st array contains original DOSAAF vehicles that are not detected
+	{
+		_x setVariable ["DOSAAF", ""];
+		_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_CHECK_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
+	} forEach (_arr select 0);
+	hint localize format[ "+++ init.sqf bonus.INIT on client: non-monitored DOSAAF veh count = %1, INSPECT is set as the command for them.", count (_arr select 0) ];
+
+	// 2nd array contains detected already markered and monitored DOSAAF vehicles
+	{
+		_x setVariable ["RECOVERABLE", false];
+		// replace title with "Register" text
+		_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
+	}forEach (_arr select 1);
+	hint localize format[ "+++init.sqf bonus.INIT on client: monitored DOSAAF veh count = %1, REGISTER is set as the command for them.", count (_arr select 1) ];
+
+	client_bonus_markers_timestamp = time; // init timestamp
+	_arr = []; sleep 0.01; _arr = nil;
+#endif
 
 	#ifdef __TT__
 	MRRR1 setVariable ["d_ammobox_next", _time_next_a select 6];
