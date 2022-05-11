@@ -1,7 +1,7 @@
 // by Xeno, x_scripts\x_dorecapture.sqf, server call only
 
-private ["_target_center", "_radius", "_recap_index", "_helih", "_unitslist", "_ulist", "_posran", "_grp", "_vecs",
-		 "_grp_array", "_i", "_units", "_vec","_veclist", "_arr","_xside"];
+private ["_target_center", "_radius", "_recap_index", "_helih", "_unitslist", "_ulist", "_posran", "_grp", "_vehs",
+		 "_grp_array", "_i", "_units", "_veh","_vehlist", "_arr","_xside","_var","_x"];
 
 if (!isServer) exitWith	{};
 
@@ -13,7 +13,7 @@ _radius = _this select 1;
 _recap_index = _this select 2;
 _helih = _this select 3;
 
-_veclist = [];
+_vehlist = [];
 _unitslist = [];
 
 _veccnt = 0; // vehicle cnt
@@ -29,20 +29,20 @@ _infcnt = 0; // infantry cnt
 	//__WaitForGroup
 	//_grp = [d_enemy_side] call x_creategroup;
 	_grp = call SYG_createEnemyGroup;
-	_vecs = [(2 call XfRandomCeil),_posran,(_ulist select 2), (_ulist select 1),_grp,0,-1.111,true] call x_makevgroup;
-	_veccnt = _veccnt + (count _vecs);
+	_vehs = [(2 call XfRandomCeil),_posran,(_ulist select 2), (_ulist select 1),_grp,0,-1.111,true] call x_makevgroup;
+	_veccnt = _veccnt + (count _vehs);
 #ifdef __LOCK_ON_RECAPTURE__
-	{_x lock true} forEach _vecs;
+	{_x lock true} forEach _vehs;
 #endif
 	sleep 1.012;
-	_veclist = _vecs;
+	_vehlist = _vehs;
 	{
 		{
 			_unitslist set [count _unitslist, _x];
 			sleep 0.01;
 		} forEach (crew _x);
 		sleep 0.01;
-	} forEach _vecs;
+	} forEach _vehs;
 	sleep 0.01;
 	_grp_array = [_grp, _posran, 0,[_target_center, _radius], [], -1, 0, [], _radius - random 50, -1];
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
@@ -107,9 +107,9 @@ if (d_own_side == "EAST") then {
 
 sleep 300;
 
-{
+{	// remove all vehicles (except of captured
 	if (!isNull _x) then {
-		_vec = _x;
+		_veh = _x;
 		_xside =  format["%1", side _x];
 		if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
 			(
@@ -118,23 +118,32 @@ sleep 300;
 			)
 		   )  then { // vehicle was captured by player
 			// re-assign vehicle to be ordinal ones
-#ifdef __SYG_ISLEDEFENCE_PRINT_SHORT__
-			hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
-#endif
+			hint localize format["+++ x_dorecapture.sqf: vec %1 captured. Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
 			// put vehicle under system control
 			[_x] call XAddCheckDead;
+			_x setVariable [ "CAPTURED_ITEM", "" ] ; // #525: mark captured vehicle to prevent  him to be wiped off by target cleaning script
+			["msg_to_user", _x,  [ ["STR_GRU_46_7"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the captured town. Make good use of it!"
 		} else {
-			{if (!isNull _x) then {deleteVehicle _x}} forEach ([_vec] + crew _vec);
+			{
+				if (!isNull _x) then {
+					_var = _x getVariable "PATROL_ITEM";
+					if (isNil "_var") then {
+						_var = _x getVariable "CAPTURED_ITEM";
+					};
+					if (isNil "_var") then {
+						deleteVehicle _x;
+					} else { hint localize format["+++ x_dorecapture.sqf: vehicle %1 not cleaned as being of patrol or recaptured", typeOf _x] };
+			} forEach ( (crew _veh) + [_veh]);
 		};
 	};
-} forEach _veclist;
+} forEach _vehlist;
 
-{
+{	// remove all units
 	if (!isNull _x) then {
 		if (!isNull _x) then {deleteVehicle _x};
 	};
 } forEach _unitslist;
 _unitslist = nil;
-_veclist = nil;
+_vehlist = nil;
 
 if (true) exitWith {};

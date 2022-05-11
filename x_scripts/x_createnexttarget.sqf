@@ -116,7 +116,48 @@ if (call SYG_getTargetTownName == "Rahmadi") then { /* todo: add island patrol o
     _dummy = target_names select _this;
     _target_pos = _dummy select 0;
     _target_radius = _dummy select 2;
+
     // find all dead bodies assuming than they always are long time dead
+
+    // first wait for absence of players/alive enemies in the town
+    while {true} do {
+    	_cnt = 0; _cnt1 = 0;
+
+		// check all enemy troops to be dead
+#ifdef __OWN_SIDE_EAST__
+				_list = _target_pos nearObjects ["SoldierWB", _target_radius + 50];
+#endif
+#ifdef __OWN_SIDE_WEST__
+				_list = _target_pos nearObjects ["SoldierEB", _target_radius + 50];
+#endif
+#ifdef __OWN_SIDE_RACS__
+				_list = _target_pos nearObjects ["SoldierEB", _target_radius + 50];
+#endif
+		_cnt1 = {alive _x} count _list; // number of alive enemy units
+
+		// check owners to be out during 300 seconds
+		if (_cnt1 > 0 ) then  {
+			{
+#ifdef __OWN_SIDE_EAST__
+				_list = _target_pos nearObjects ["SoldierEB", _target_radius + 50];
+#endif
+#ifdef __OWN_SIDE_WEST__
+				_list = _target_pos nearObjects ["SoldierWB", _target_radius + 50];
+#endif
+#ifdef __OWN_SIDE_RACS__
+				_list = _target_pos nearObjects ["SoldierGB", _target_radius + 50];
+#endif
+				_cnt = _cnt +  ({canStand _x} count _list);
+				sleep 60;
+			} forEach [1,2,3,4,5];
+		};
+
+		if ( ( _cnt1 +_cnt ) == 0) exitWith {
+			// all enemy dead or no players in town during 300 seconds period
+			hint localize format[ "+++ x_createnexttarget.sqf: alive enemy count %1, alive owner count %2, clean the town now!!!", _cnt, _cnt1 ];
+		};
+    };
+
     _list = _target_pos nearObjects ["CAManBase", _target_radius + 50];
     _man_cnt = count _list;
     sleep 300; // wait for a while to remove old dead corpses

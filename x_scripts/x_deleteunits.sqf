@@ -42,6 +42,12 @@ for "_i" from 0 to 6 do {
 				_plist set [count _plist, _x]; // mark as verified
 				hint localize format["+++ x_deleteunits.sqf: patrol veh %1 (#%2, alive crew %3) in %4, not removed", typeOf _x, count _plist, {alive _x} count crew _x, _town_name];
 			};
+			_captured = _x getVariable "CAPTURED_ITEM"; // check to be captured vehicle
+			if ( !isNil "_captured" ) exitWith {  // vehicle is patrol one, don't remove it now
+				if (_x in _plist) exitWith {}; // already verified
+				_plist set [count _plist, _x]; // mark as verified
+				hint localize format["+++ x_deleteunits.sqf: captured veh %1 (#%2, alive crew %3) in %4, not removed", typeOf _x, count _plist, {alive _x} count crew _x, _town_name];
+			};
 			if ( !(_x in _list) ) then { _list set [count _list,_x]; };
 		};
 		sleep 0.11;
@@ -68,7 +74,7 @@ for "_i" from 0 to 6 do {
 	sleep 1.021;
 };
 if (count _plist > 0 ) then {
-	hint localize format["+++ x_deleteunits.sqf: %1 patrol vehicles detected in %2 not removed", count _plist, _town_name];
+	hint localize format["+++ x_deleteunits.sqf: %1 patrol/captured vehicles detected in %2 not removed", count _plist, _town_name];
 };
 
 hint localize format["+++ x_deleteunits.sqf: deleted men %1 (alive %2), vehicles %3 in %4", _man_cnt, _alive_man_cnt, _veh_cnt, _town_name ];
