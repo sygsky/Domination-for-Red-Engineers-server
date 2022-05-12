@@ -92,9 +92,15 @@ SYG_getAllSPPMVehicles = {
 		// ) || _cargo) ) then {
 		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon") || (_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || (_veh isKindOf "ACE_ATV_HondaR") || (_veh isKindOf "Motorcycle") ) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
 	};
-	_arr call SYG_clearArrayB
+	_arr call SYG_clearArrayB;
+	// now make all SPPM vehicles to be captured ones
+	{ _x setVariable ["CAPTURED_ITEM",""] } forEach _arr;
+	_arr
 };
 
+//
+// Counts near SPPM (in linited range) vehicles
+//
 SYG_findNearSPPMCount = {
 	_this = _this call SYG_getPos;
 	if ( (_this select 0 == 0) && (_this select 1 == 0) ) exitWith {0};
@@ -102,7 +108,7 @@ SYG_findNearSPPMCount = {
 };
 
 //
-// Tries to add new SPPM at player position:
+// Tries to add new SPPM at player position, called on server only:
 // call: _result_str = _pos | obj call SYG_addSPPMMarker;
 // returns: result text string to localize
 //
