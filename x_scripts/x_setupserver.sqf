@@ -57,7 +57,9 @@ XClearSidemission = {
 				if ( alive _x ) then {
 					_was_captured = false;
 					{
-						if (isPlayer _x) exitWith {_was_captured = true;}; // if player is in vehicle, consider it to be captured
+						if (isPlayer _x) exitWith { // if player is in vehicle, consider it to be captured
+							_was_captured = true;
+						};
 					} forEach (crew _x);
 					// check vehicle being on base
 					if ( ! _was_captured ) then {
@@ -70,6 +72,7 @@ XClearSidemission = {
 					};
 					if (_was_captured ) then { // vehicle was captured by player
 						[_x] call XAddCheckDead;
+						_x setVariable ["CAPTURED_ITEM",""];
 					} else {
 						{deleteVehicle _x} forEach ([_x] + crew _x);
 					};
