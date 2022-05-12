@@ -16,9 +16,6 @@
 #define argopt(num,val) (if(count _this<=(num))then{val}else{arg(num)})
 #define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random (count ARR))))
 
-#define DEFAULT_MAX_DISTANCE_TO_TARGET 1500
-#define DEFAULT_MIN_GROUP_SIZE 5
-#define MIN_POSSIBLE_GROUP_SIZE 2
 
 /*
  * Answer to initiation message sent from client as follow:
@@ -28,12 +25,12 @@
 SYG_d_p_varname =  {
 	private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr",
 			 "_val","_date","_arr1","_arr2","_arr","_str"];
-	_index = d_player_array_names find arg(1);
+	_index = d_player_array_names find (_this select 1);
 	//hint localize format["***************** _index = %1 *********************", _index];
 	_parray = [];
 	if (_index >= 0) then {
 		_parray = d_player_array_misc select _index;
-		_parray set [4, arg(2)]; // set player role to the named entry
+		_parray set [4, (_this select 2)]; // set player role to the named entry
 	};
 
 	// Prepare 1st message for the new player
@@ -101,12 +98,12 @@ SYG_d_p_varname =  {
 			// check for distance view
 			_wpnArr = _equipment call SYG_unpackEquipmentFromStr;
 			if ( (count _wpnArr) >= 5 ) then {
-				if ( typeName argp(_wpnArr,4) == "SCALAR") then {
+				if ( typeName (_wpnArr select 4) == "SCALAR") then {
 					// old variant
 					_msg_arr set [ count _msg_arr, ["STR_SYS_618",_wpnArr select 4] ]; // "Viewdistance restore to %1 m."
 				} else {
-				// TODO: implement code for parsing array of user settings
-					if ( typeName argp(_wpnArr, 4) == "ARRAY") then {
+				    // TODO: implement code for parsing array of user settings
+					if ( typeName (_wpnArr select 4) == "ARRAY") then {
 						// new variant
 						_settingsArr = _wpnArr select 4;
 						_val = [_settingsArr, "VD"] call SYG_getParamFromSettingsArray;
@@ -119,7 +116,7 @@ SYG_d_p_varname =  {
 		};
 	};
 	if ( _equip_empty  && (_index >= 0)) then {
-		if ( argp(_parray,3) > 0) then {
+		if ( (_parray select 3) > 0) then {
 			// non-zero score? Report about record absence
 			_msg_arr set [ count _msg_arr, ["STR_SYS_614"] ]; // ammunition record not found
 		};
@@ -148,10 +145,115 @@ SYG_d_p_varname =  {
 
 	// TODO: add here more messages for the 1st greeting to user
 
-	["msg_to_user", arg(1), _msg_arr, 5, 10] call XSendNetStartScriptClient;
+	["msg_to_user", (_this select 1), _msg_arr, 5, 10] call XSendNetStartScriptClient;
 	sleep 1.0;
 	["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
 	// log info  about logging
-	hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", arg(1), arg(2), call SYG_missionTimeInfoStr ];
+	hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", (_this select 1), (_this select 1), call SYG_missionTimeInfoStr ];
 };
+
+
+
+//
+// _arr = [1,2,3];
+// _add_arr = [4,5,6];
+// _arr = [_arr, _add] call SYG_addArrayInPlace; // [1,2,3,4,5,6] and _arr is the same object as before addition!!!
+//
+SYG_addArrayInPlace = {
+    private ["_arr","_x"];
+    _arr = _this select 0;
+    { _arr set [ count _arr, _x ] } forEach (_this select 1);
+    _arr
+};
+
+// Remove all designated strings (e.g. "RM_ME") from input _arr not changing oreder of items
+// call: _cleaned_arr = [_cleaned_arr,"RM_ME"] call SYG_clearArray;
+// returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
+SYG_clearArrayA = {
+	if ( (typeName _this) != "ARRAY") exitWith {[]};
+	if ( count _this < 2) exitWith {[]};
+	if ( (typeName (_this select 0) ) != "ARRAY") exitWith {[]};
+	if ( (typeName (_this select 1) ) != "STRING") exitWith {_this select 0};
+
+	private ["_dst","_src","_arr","_rm","_cnt","_notRM_ME","_item"];
+	_arr = _this select 0;	// array of any items with possible "RM_ME" items inclusion!
+	_rm  = _this select 1; // must be string! E.g. "RM_ME"
+	_dst = _arr find _rm;	// find first item to remove if available
+	if (_dst < 0) exitWith{ _arr }; // nothing to remove, return to the caller
+	_src = _dst + 1;
+	_cnt = count _arr;
+//	hint localize "+";
+//	hint localize format["+++ orig: %1, _dst %2, _src %3", _arr, _dst, _src];
+	while { _src < _cnt } do {
+		_item = _arr select _src;
+		_notRM_ME = if ( typeName _item == "STRING" ) then { _item != _rm } else { true };
+		if ( _notRM_ME ) then {
+			_arr set [ _dst, _item ];
+			_dst = _dst + 1;
+		};
+//		hint localize format["+++ _arr: %1, _src %2", _arr, _src];
+		_src = _src + 1;
+	};
+	_arr resize _dst;
+	_arr
+};
+SYG_cleanArrayA = SYG_clearArrayA;
+
+// Remove all strings "RM_ME" from input _arr not changing oreder of items
+// call: _cleaned_arr = _cleaned_arr call SYG_clearArrayB;
+// returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
+SYG_clearArrayB = {
+	[_this, "RM_ME"] call SYG_clearArrayA
+};
+SYG_cleanArrayB = SYG_clearArrayB;
+SYG_clearArray  = SYG_cleanArrayB;
+SYG_cleanArray  = SYG_cleanArrayB;
+
+//
+// _arr = [1,2,3,4];
+// _arr = [_arr, 2] call SYG_removeFromArrayByIndex; // returns [1,3,4] and _arr is the same object as before subtraction!!!
+//
+SYG_removeFromArrayByIndex = {
+	private [ "_arr", "_ind", "_i" ];
+	_arr = _this select 0;
+	if (typeName _arr != "ARRAY") exitWith {[]};
+	_ind = _this select 1;
+	if (_ind < 0) exitWith { _arr};            // out of bounds
+	if (_ind >= (count _arr)) exitWith {_arr}; // out of bounds
+	for "_i" from _ind  to (count _arr) - 2 do { _arr set [_i, _arr select (_i + 1)]; };
+	_arr resize (count _arr) - 1;
+	_arr
+};
+
+//
+// _arr = [_obj1,_obj2,_obj3,_obj4];
+// _arr = [_arr, _obj2] call SYG_removeFromArrayByIndex; // returns [_obj1,_obj3,_obj4] and _arr is the same object as before subtraction!!!
+//
+SYG_removeObjectFromArray = {
+	private [ "_arr", "_ind", "_i" ];
+	_arr = _this select 0;
+	if (typeName _arr != "ARRAY") exitWith {[]};
+	_ind = _arr find (_this select 1);
+	if (_ind >= 0 ) exitWith {
+		_this set [1, _ind];
+		_this call SYG_removeFromArrayByIndex;
+	};
+	_arr
+};
+
+/**
+ * Rounds number to the nearest boundary of designated value
+ * call as: _roundedValue = [_value, BOUNDARY] call SYG_roundTo;
+ * e.g. [12.49, 5] call SYG_SYG_roundTo =  10
+ *      [12.51, 5] call SYG_SYG_roundTo =  15
+ *      [15.7,  5] call SYG_SYG_roundTo =  15
+ *      [17.51, 5] call SYG_SYG_roundTo =  20
+ */
+SYG_roundTo = {
+    private ["_bound"];
+    _bound = _this select 1;
+    (round((_this select 0)/_bound)) * _bound
+};
+
+

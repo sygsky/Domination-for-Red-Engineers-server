@@ -503,26 +503,6 @@ SYG_isPatrolGroup = {
     } forEach SYG_isle_grps;
     _ret
 };
-//
-// Handler for enemy vehicle "GetOut" event (under development)
-//
-SYG_hanldeGetOut = {
-
-};
-
-/**
- * Rounds number to the nearest boundary of designated value
- * call as: _roundedValue = [_value, BOUNDARY] call SYG_roundTo;
- * e.g. [12.49, 5] call SYG_SYG_roundTo =  10
- *      [12.51, 5] call SYG_SYG_roundTo =  15
- *      [15.7,  5] call SYG_SYG_roundTo =  15
- *      [17.51, 5] call SYG_SYG_roundTo =  20
- */
-SYG_roundTo = {
-    private ["_bound"];
-    _bound = _this select 1;
-    (round((_this select 0)/_bound)) * _bound
-};
 
 //
 // Call as: _isWoman = "WOMAN_CLASS_NAME" call SYG_isWoman;
@@ -629,93 +609,6 @@ SYG_AIPriceByRankString = {
     if (typeName _this != "STRING") exitWith {100000};
     _rank_id  = _this call XGetRankIndex;
     _rank_id call SYG_AIPriceByRankId
-};
-
-//
-// _arr = [1,2,3];
-// _add_arr = [4,5,6];
-// _arr = [_arr, _add] call SYG_addArrayInPlace; // [1,2,3,4,5,6] and _arr is the same object as before addition!!!
-//
-SYG_addArrayInPlace = {
-    private ["_arr","_x"];
-    _arr = _this select 0;
-    { _arr set [ count _arr, _x ] } forEach (_this select 1);
-    _arr
-};
-
-// Remove all designated strings (e.g. "RM_ME") from input _arr not changing oreder of items
-// call: _cleaned_arr = [_cleaned_arr,"RM_ME"] call SYG_clearArray;
-// returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
-SYG_clearArrayA = {
-	if ( (typeName _this) != "ARRAY") exitWith {[]};
-	if ( count _this < 2) exitWith {[]};
-	if ( (typeName (_this select 0) ) != "ARRAY") exitWith {[]};
-	if ( (typeName (_this select 1) ) != "STRING") exitWith {_this select 0};
-
-	private ["_dst","_src","_arr","_rm","_cnt","_notRM_ME","_item"];
-	_arr = _this select 0;	// array of any items with possible "RM_ME" items inclusion!
-	_rm  = _this select 1; // must be string! E.g. "RM_ME"
-	_dst = _arr find _rm;	// find first item to remove if available
-	if (_dst < 0) exitWith{ _arr }; // nothing to remove, return to the caller
-	_src = _dst + 1;
-	_cnt = count _arr;
-//	hint localize "+";
-//	hint localize format["+++ orig: %1, _dst %2, _src %3", _arr, _dst, _src];
-	while { _src < _cnt } do {
-		_item = _arr select _src;
-		_notRM_ME = if ( typeName _item == "STRING" ) then { _item != _rm } else { true };
-		if ( _notRM_ME ) then {
-			_arr set [ _dst, _item ];
-			_dst = _dst + 1;
-		};
-//		hint localize format["+++ _arr: %1, _src %2", _arr, _src];
-		_src = _src + 1;
-	};
-	_arr resize _dst;
-	_arr
-};
-SYG_cleanArrayA = SYG_clearArrayA;
-
-// Remove all strings "RM_ME" from input _arr not changing oreder of items
-// call: _cleaned_arr = _cleaned_arr call SYG_clearArrayB;
-// returns the same array without "RM_ME" items. Order of remained items in array NOT changed!!!
-SYG_clearArrayB = {
-	[_this, "RM_ME"] call SYG_clearArrayA
-};
-SYG_cleanArrayB = SYG_clearArrayB;
-SYG_clearArray  = SYG_cleanArrayB;
-SYG_cleanArray  = SYG_cleanArrayB;
-
-//
-// _arr = [1,2,3,4];
-// _arr = [_arr, 2] call SYG_removeFromArrayByIndex; // returns [1,3,4] and _arr is the same object as before subtraction!!!
-//
-SYG_removeFromArrayByIndex = {
-	private [ "_arr", "_ind", "_i" ];
-	_arr = _this select 0;
-	if (typeName _arr != "ARRAY") exitWith {[]};
-	_ind = _this select 1;
-	if (_ind < 0) exitWith { _arr};            // out of bounds
-	if (_ind >= (count _arr)) exitWith {_arr}; // out of bounds
-	for "_i" from _ind  to (count _arr) - 2 do { _arr set [_i, _arr select (_i + 1)]; };
-	_arr resize (count _arr) - 1;
-	_arr
-};
-
-//
-// _arr = [_obj1,_obj2,_obj3,_obj4];
-// _arr = [_arr, _obj2] call SYG_removeFromArrayByIndex; // returns [_obj1,_obj3,_obj4] and _arr is the same object as before subtraction!!!
-//
-SYG_removeObjectFromArray = {
-	private [ "_arr", "_ind", "_i" ];
-	_arr = _this select 0;
-	if (typeName _arr != "ARRAY") exitWith {[]};
-	_ind = _arr find (_this select 1);
-	if (_ind >= 0 ) exitWith {
-		_this set [1, _ind];
-		_this call SYG_removeFromArrayByIndex;
-	};
-	_arr
 };
 
 if (true) exitWith {};
