@@ -1,6 +1,6 @@
 // by Xeno, x_scripts/x_setvehiclemarker.sqf : for clients only
 // Totally transparent color: "ACE_ColorTransparent"
-private ["_ap","_as","_i","_marker","_p_DOSAAF_MARKER_COLOR"];
+private ["_ap","_as","_i","_marker","_p_marker_color"];
 if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
@@ -120,7 +120,7 @@ X_XMarkerPlayers = {
     SYG_markerRefreshTime = time + PLAYER_MARKERS_REFRESH_INTERVAL; // next time to refresh
 };
 
-_p_DOSAAF_MARKER_COLOR = "";
+_p_marker_color = "";
 
 /**
  * Markers for player creation
@@ -137,7 +137,7 @@ if (!d_dont_show_player_markers_at_all) then {
         if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm set[count _tmp_grpsm, _grpm];};
         _mindex = _tmp_grpsm find _grpm;
         [_as, [0,0],"ICON",(_colarray select _mindex),[0.4,0.4],"",0,d_p_marker] call XfCreateMarkerLocal;
-        if (player in (units _grpm)) then {_p_DOSAAF_MARKER_COLOR = _colarray select _mindex};
+        if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
 		sleep 0.01;
 	};
 
@@ -277,7 +277,7 @@ X_XMarkerPlayers = {
 	};
 };
 
-_p_DOSAAF_MARKER_COLOR = "";
+_p_marker_color = "";
 if (!d_dont_show_player_markers_at_all) then {
 	_tmp_grpsm = [];
 	_mindex = 0;
@@ -288,7 +288,7 @@ if (!d_dont_show_player_markers_at_all) then {
 			if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm = _tmp_grpsm + [_grpm];};
 			_mindex = _tmp_grpsm find _grpm;
 			[""%1"", [0,0],""ICON"",(_colarray select _mindex),[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
-			if (player in (units _grpm)) then {_p_DOSAAF_MARKER_COLOR = _colarray select _mindex};
+			if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
 		", d_entities_tt select _i];
 		sleep 0.01;
 	};
@@ -302,7 +302,7 @@ if (!d_dont_show_player_markers_at_all) then {
 #ifdef __AI__
 for "_abcdef" from 0 to 31 do {
 	call compile format ["
-		[""AI_X%1"", [0,0],""ICON"",_p_DOSAAF_MARKER_COLOR,[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
+		[""AI_X%1"", [0,0],""ICON"",_p_marker_color,[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
 	", _abcdef];
 };
 

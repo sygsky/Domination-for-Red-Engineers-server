@@ -8,10 +8,13 @@ if (isNil "Param1") then {
 	number_targets = Param1;
 };
 #ifdef __DEFAULT__
-_number_targets_h = number_targets;
+
+#ifdef __BATTLEFIELD_BONUS__
+deleteMarker "bonus_air";
+deleteMarker "bonus_vehicles";
 #endif
 
-#ifdef __DEFAULT__
+_number_targets_h = number_targets;
 
 d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma", "Eponia" ];
 
