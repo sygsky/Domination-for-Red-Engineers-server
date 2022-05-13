@@ -1,5 +1,4 @@
 // by Sygsky, x_missions\common\x_sidearti2.sqf - extended artillery side mission (on San-Esteban of Sahrani). Created 09-MAY-2021
-private [ "count_items" ];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
