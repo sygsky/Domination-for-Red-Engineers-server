@@ -134,7 +134,7 @@ XfRndRadious = {
 };
 
 //
-// Finds random point in designated radius
+// Finds 2D random point in designated radius
 //
 // Call: [_posint, _rad] call SYG_rndPointInRad
 SYG_rndPointInRad = {
@@ -176,6 +176,7 @@ XfGetClearPoint = {
 	if (([ _pos, 5] call XfGetSlope) >= 0.5) exitWith{ [] };
 	_pos
 };
+
 // get a random clear point inside a circle. Clear point is one not in water and not on steep slope
 // parameters:
 // center position, radius of the circle
