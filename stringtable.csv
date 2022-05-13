@@ -983,6 +983,9 @@ STR_SYS_1230,"H U R R A H!","H U R R A!","H U R R A - A - A!","У Р А !"
 
 STR_SYS_1231,"Command has forbidden you to use any combat vehicles until you deliver %1 to the base to replace what has been lost","Das Kommando hat dir verboten, jegliche Kampfausrüstung zu benutzen, bis du %1 an die Basis lieferst, um zu ersetzen, was verloren gegangen ist","El comando le ha prohibido usar cualquier equipo de combate hasta que entregue %1 a la base para reemplazar lo que se ha perdido","Командование запретило Вам использование любой боевой техники, пока Вы не доставите на базу %1 взамен утраченного"
 
+STR_SYS_1240,Not possible in a vehicle...,In einem Fahrzeug nicht möglich...,No es posible en un vehículo...,Не работает внутри техники...
+STR_SYS_1241,... Fixing head bug ...,... Kopf-Fehler beheben ...,... Arreglar el error de la cabeza ...,... Устранение бага головы ...
+
 STR_SYS_MAINBOX,Your personal equipment box. No one but You can use it,"Deine persönliche Waffenkiste. Niemand, aber Sie können es verwenden",Su cajón personal con equipo. Nadie más que Tú puede usarlo,"Ваш личный ящик со снаряжением. Никто, кроме Вас, не может его использовать"
 STR_SYS_GRUBOX,The GRU's public weapon box. Keep weapons that are not used on secret missions here,"Die öffentliche Waffenkiste der GRU. Bewahren Sie hier Waffen auf, die nicht für geheime Missionen verwendet werden",Caja de armas pública GRU. Guarda aquí armas que no se usan en misiones secretas,"Общедоступный оружейный ящик ГРУ. Храните здесь оружие, не используемое на секретных заданиях"
 
@@ -1244,9 +1247,9 @@ STR_MAP_12,"Someone studied the map before you did","Jemand hat die Karte vor Ih
 
 STR_ACE_VDN_SOLDIERECREW,Engineer,Ingenieur,ingeniero,инженер
 
-STR_ACE_HIT,%1 hit %2;,%1 Treffer %2;,%1 acierto %2;,%1 повреждение %2;
-STR_ACE_INDIRECT_HIT,%1 indir. hit %2;,%1 indir. Treffer %2;,%1 indirectamente golpear %2;,%1 косв. повреждение %2;
-STR_ACE_INDIRECT_HIT_RANGE,%1 indir. hit range %2;,%1 indir.Treffer Reichweite %2;,%1 Radio de impacto indirecto %2;,%1 радиус косв. повреждения %2;
+STR_ACE_HIT,%1 hit %2;,%1 Treffer %2;,%1 acierto %2;,%1 повр. %2;
+STR_ACE_INDIRECT_HIT,%1 indir. hit %2;,%1 indir. Treffer %2;,%1 indirectamente golpear %2;,%1 косв. повр. %2;
+STR_ACE_INDIRECT_HIT_RANGE,%1 indir. hit range %2;,%1 indir.Treffer Reichweite %2;,%1 Radio de impacto indirecto %2;,%1 радиус косв. повр. %2;
 
 //-----------------------------------------------------------------------------
 

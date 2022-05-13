@@ -4,7 +4,7 @@
 
 if (! isNil "x_repall") exitWith {};
 
-private ["_search_array"];
+private ["_search_array","_i"];
 _search_array = [];
 
 for "_i" from 0 to (count (configFile >> "cfgPatches") - 1) do {
@@ -130,13 +130,13 @@ _search_array = nil;
 // [ objectID2 <, _refuel_limit>] call x_repall;
 //
 x_repall = {
-	private ["_vec"];
-	_vec = _this select 0;
-	_vec setDamage 0;
+	private ["_veh"];
+	_veh = _this select 0;
+	_veh setDamage 0;
 #ifdef __LIMITED_REFUELING__
-	if ((count _this)>1)then{_vec setFuel(_this select 1);}else{_vec setFuel 1;};
+	if ((count _this)>1)then{_veh setFuel(_this select 1);}else{_veh setFuel 1;};
 #else
-	_vec setFuel 1;
+	_veh setFuel 1;
 #endif	
 };
 

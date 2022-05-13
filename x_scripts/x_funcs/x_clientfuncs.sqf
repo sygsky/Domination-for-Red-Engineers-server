@@ -266,12 +266,11 @@ XfHandleMessage = {
 // headbug fix
 // example: player spawn XsFixHeadbug;
 XsFixHeadBug = {
-	private ["_dir","_pos","_vehicle"];
+	private [ "_dir", "_pos", "_vehicle", "_unit" ];
+
 	_unit = _this;
-
-	if (vehicle _unit != _unit) exitWith {hint "Not possible in a vehicle...";};
-
-	titleCut ["... Fixing head bug ...","black faded", 0];
+	if ( vehicle _unit != _unit ) exitWith { localize "STR_SYS_1240" };
+	titleCut [ localize "STR_SYS_1241", 0 ];
 
 	_pos = position _unit;
 	_dir = direction _unit;
