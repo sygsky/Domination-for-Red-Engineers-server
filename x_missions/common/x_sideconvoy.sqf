@@ -146,6 +146,12 @@ _veh_arr = [_vehicles select 0];
 (_vehicles select 0) addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
 
+#ifndef __TT_
+    #ifdef __RANKED__
+    (_vehicles select 0) addEventHandler ["killed", { _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // mark neighbouring users to be at SM
+    #endif
+#endif
+
 extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _vehicles select 0 ];
 
 _leader = leader _convoyGroup;
