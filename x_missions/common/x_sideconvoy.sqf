@@ -162,6 +162,7 @@ _convoyGroup setFormation "COLUMN";
 _convoyGroup setSpeedMode "LIMITED";
 sleep 0.933;
 _vehicles = nil;
+dead_items = 0;
 
 //+++++++++++++++++++++++++++++++++++++++
 //          create vehicles
@@ -169,14 +170,26 @@ _vehicles = nil;
 for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
 	_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select _i), _convoyGroup, 0, _c_array select 1] call x_makevgroup;
 	(_vehicles select 0) lock true;
-	_veh_arr = _veh_arr + [_vehicles select 0];
+	_veh_arr set [count _veh_arr, _vehicles select 0];
 #ifdef __TT__
 	(_vehicles select 0) addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
 
 #ifndef __TT_
     #ifdef __RANKED__
-    (_vehicles select 0) addEventHandler ["killed", { _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // mark neighbouring users to be at SM
+    // mark neighbouring users to be at SM
+    (_vehicles select 0) addEventHandler ["killed", { // _this = [_unit, _killer]
+            dead_items = dead_items + 1;
+            _this execVM "x_missions\common\eventKilledAtSM.sqf";
+            // send info about next vehicle death to all players
+            sleep 1;
+            private ["killer"];
+            _killer = gunner( _this select 1);
+            _killer = if (isNull _killer) then {" (?)"} else { if ( isPlayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+            [ "msg_to_user", "", [ ["STR_SM_CONVOY_1", dead_items, _killer, (count d_sm_convoy_vehicles) - dead_items, count d_sm_convoy_vehicles] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Destroyed vehicles %1%2, left %3, total %4"
+            hint localize format["+++ x_sideconvoy.sqf: veh #%1 (of %2%3) destroyed.", dead_items, count d_sm_convoy_vehicles, _killer];
+        }
+    ];
     #endif
 #endif
 
@@ -207,7 +220,7 @@ _wps = _c_array select _way_id;
 	_wp=_convoyGroup addWaypoint[_x, 0];
 	_wp setWaypointBehaviour "SAFE";
 	_wp setWaypointSpeed "NORMAL";
-	_wp setwaypointtype "MOVE";
+	_wp setWaypointType "MOVE";
 	_wp setWaypointFormation "COLUMN";
 	_wp setWaypointTimeout [60,80,70];
 	sleep 0.001;
@@ -303,7 +316,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 				_footmen = [];
 				{ //  forEach units _convoyGroup;
 					if ( (alive _x) && (vehicle _x == _x)) then { // unit on feet
-						if ( !(_x call SYG_ACEUnitUnconscious ) ) then { _footmen = _footmen + [_x]; }; // unit is conscious
+						if ( !(_x call SYG_ACEUnitUnconscious ) ) then { _footmen set [count _footmen, _x]; }; // unit is conscious
 						if ( _x == leader _convoyGroup ) then {
 							// select other leader in a good vehicle
 							_veh = objNull;
@@ -339,21 +352,10 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 #ifdef __DEBUG_PRINT__
 					if ( count _footmen > 0 ) then {
 						if ( (count _footmen) < _cnt ) then {
-							hint localize format["+++ x_sideconvoy.sqf: %1 walking units were reassigned to other vehicles",_cnt - (count _footmen)];
+							hint localize format["+++ x_sideconvoy.sqf: %1 walking units of total %2 were reassigned to other vehicle[s]",_cnt - (count _footmen), _cnt];
 						};
-/*
-						// TODO: check the overturned cars and try to put them on the wheels
-						_footmen = [_footmen, _veh_arr] call _checkOverturnedVehicles;
-						// TODO: kill remained may be?
-
-						if (count _footmen > 0) then
-						{
-							hint localize format["+++ x_sideconvoy.sqf: %1 units still walking by feet", count _footmen];
-						}
-						else {hint localize "+++ x_sideconvoy.sqf: no more units walking by feet";};
-*/
 					} else {
-						hint localize "+++ x_sideconvoy.sqf: all walking units were reassigned to other vehicles";
+						hint localize "+++ x_sideconvoy.sqf: all walking units were reassigned to other vehicle[s]";
 					};
 #endif
 				};
@@ -374,7 +376,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 		_msg = if ((_pos distance _pos_end ) >= DISTANCE_BETWEEN_CTRL_POINT * 2) then {"STR_SYS_500_3"} else {"STR_SYS_500_4"};
 		// "Islanders report about convoy movement spotted" or
 		// "Islanders report about convoy movement spotted near the target"
-		["msg_to_user", _this,  [[_msg]], 0, 2, false, "message_received" ] call XSendNetStartScriptClient;
+		["msg_to_user", _this,  [[_msg]], 0, 2, false, "message_received" ] call XSendNetStartScriptClientAll;
 	};
 };
 

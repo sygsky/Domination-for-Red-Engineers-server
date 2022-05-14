@@ -311,6 +311,8 @@ STR_SYS_157,Side mission,Side mission,Tarea adicional,Доп.задание
 STR_SYS_158,Start,Start,Inicio de la ruta,Начало маршрута
 STR_SYS_159,Finish,Fertig stellen,Fin de la ruta,Конец маршрута
 
+STR_SM_CONVOY_1,"Destroyed vehicles %1%2, left %3, total %4","Zerstörte Fahrzeuge %1%2, links %3, gesamt %4","Vehículos destruidos %1%2, izquierda %3, total %4","Уничтожено техники %1%2, осталось %3, всего было %4"
+
 STR_SM_1,A high enemy officer arrives today in a ruin south of Tres Valles. He is responsible for the death of many civilians. Eliminate him!,Eine hohe feindlichen Offizier kommt heute in eine Ruine südlich von Tres Valles. Er ist verantwortlich für den Tod von vielen Zivilisten. Beseitigen Sie ihn!,"Hoy, un oficial enemigo, un pariente del ex presidente, llega a las ruinas de una iglesia en el valle de 'tres Valles'. Se rumorea que se está preparando para llevar a cabo sus rituales masónicos allí. Además, él ya es responsable de muchas muertes entre la población civil. ¡Elimínalo sin dañar las ruinas!","Сегодня к развалинам церкви в долине 'Tres Valles' прибывает вражеский офицер, родственник бывшего президента. По слухам, он готовится провести там свои масонские ритуалы. К тому-же, он уже в ответе за множество смертей среди мирного населения. Ликвидируйте его, не нанеся урона развалинам!"
 STR_SM_01,The enemy officer is dead. Good job.,Der feindliche Offizier ist tot. Gute Arbeit.,¡Misión cumplida! Un pariente del presidente eliminado!,Задание выполнено! Злонамеренный родственник президента ликвидирован!
 
@@ -333,7 +335,6 @@ STR_SM_9,At the airport Pita undergoing flight tests of the new helicopter. Task
 STR_SM_09,It's done! The helicopter was destroyed.,Es ist vollbracht! Der Hubschrauber wurde zerstört.,¡Misión cumplida! Helicóptero destruido.,Задание выполнено! Вертолёт уничтожен.
 
 STR_SM_10,"On top of mount San Esteban located the enemy artillery. Mission: destroy all guns. Keep in mind, there are several guns!","Auf dem Gipfel des mount San Esteban befindet sich die feindliche Artillerie. Mission: vernichten Sie alle Geschütze. Wohlgemerkt, es gibt mehr als eine Waffe!","En la cima del Monte San Esteban se encuentra la artillería enemiga. Tarea: destruir toda la maquinaria. Eso sí, ¡hay más de un arma!","На вершине горы San Esteban расположилась вражеская артиллерия. Задача: уничтожить все пушки. Учтите, их несколько!"
-STR_SM_10_1,Canon Nr. %1 destroyed %2.,Kanone Nr. %1 zerstört %2.,Cañón Nr. %1 destruido %2.,Уничтожена пушка #%1 %2.
 STR_SM_010,Good job. The artillery cannon is destroyed.,Gute Arbeit!. Die Artillerie zerstört wird.,¡Misión cumplida! Artillería destruida.,Задание выполнено! Артиллерия уничтожена.
 
 STR_SM_11,On the island Isla del Zorra enemy established radar on the lighthouse. Task - to destroy the building of the lighthouse. Pilots will thank you.,Auf der Insel Isla del Zorra Feind etabliert radar auf dem Leuchtturm. Aufgabe - zu zerstören das Gebäude des Leuchtturms. Piloten werden es Ihnen danken.,"En Isla del Zorro, el enemigo ha instalado un radar en el faro. La tarea es destruir el edificio del faro. Los aviadores se lo agradecerán.",На острове Isla del Zorra враг установил на маяк радиолокатор. Задача - уничтожить здание маяка. Авиаторы будут вам благодарны.
@@ -396,6 +397,7 @@ STR_SM_049,"The job is done! Captain Grant delivered to the base, to specialists
 
 STR_SM_50,Finally we've found the enemy artillery base. If you can destroy all artillery guns the artillery observers at main targets have nothing to call in artillery strikes anymore.,"Nach Angaben der Intelligenz bekannt wurde die Lage der wichtigsten Kräfte der feindlichen Artillerie. Ihre Aufgabe ist es, zu zerstören alle Geschütze.","Según la inteligencia, se supo la ubicación de las principales fuerzas de artillería enemiga. Su tarea es destruir todas las piezas de artillería. ¡Y entonces los correctores dejarán de molestarnos!",По данным разведки стало известно расположение основных сил вражеской артиллерии. Ваша задача уничтожить все артиллерийские орудия. И тогда корректоры перестанут нас донимать!
 STR_SM_050,Good job. All artillery guns are down. No artillery observers will appear at main targets anymore!!!,Gute Arbeit. Alle Geschütze sind down. Keine Artillerie-Beobachter erscheint am wichtigsten Ziele mehr!!!,¡Misión cumplida! Todas las piezas de artillería destruidas. ¡Los observadores han desaparecido!!!,Задание выполнено! Все артиллерийские орудия уничтожены. Корректировщики исчезли!!!
+STR_SM_50_CNT,"Guns destroyed %1%2, guns left %3, total was %4","Waffen zerstört %1%2, Waffen übrig %3, insgesamt war %4","Armas destruidas %1%2, armas dejadas %3, el total fue %4","Уничтожено орудий %1%2, осталось %3, всего было %4"
 
 STR_SM_55,An enemy officer is on a walk in the forest Selva de Caza. This is a good chance to arrest him and bring him to your base (only a rescue operator or group leader can do that). Note: he can be found at 50 meters of center point! Beware of local AA!,"Einer der Offiziere ging Pilze im Wald Selva de Caza. Ihre Aufgabe abzunehmen Pilze, die Verhaftung Offizier und liefern es an der Basis. (Eine Mission zu erfüllen, kann nur der Spieler in die Rolle der Retter). Hinweis: er kann gefunden werden, an 50 Metern der Mittelpunkt! Hüten Sie sich vor der lokalen AA!","Uno de los oficiales fue por setas al bosque Selva de Caza. Su tarea es seleccionar los hongos, arrestar al oficial y llevarlo a la base. ¡Atención! ¡El oficial puede estar a 50 metros del centro del área, y los tramperos locales en una cresta cercana fueron disparados desde una instalación antiaérea! (Solo el jugador en el papel de socorrista o líder del grupo puede completar la misión)","Один из офицеров отправился по грибы в лес Selva de Caza. Ваша задача отобрать грибы, арестовать офицера и доставить его на базу. Внимание! Офицер может находиться на расстоянии 50 метров от центра района, а местные трапперы на хребте неподалёку были обстреляны из зенитной установки! (Завершить миссию может только игрок в роли спасателя или лидер группы)"
 
@@ -981,6 +983,9 @@ STR_SYS_1230,"H U R R A H!","H U R R A!","H U R R A - A - A!","У Р А !"
 
 STR_SYS_1231,"Command has forbidden you to use any combat vehicles until you deliver %1 to the base to replace what has been lost","Das Kommando hat dir verboten, jegliche Kampfausrüstung zu benutzen, bis du %1 an die Basis lieferst, um zu ersetzen, was verloren gegangen ist","El comando le ha prohibido usar cualquier equipo de combate hasta que entregue %1 a la base para reemplazar lo que se ha perdido","Командование запретило Вам использование любой боевой техники, пока Вы не доставите на базу %1 взамен утраченного"
 
+STR_SYS_1240,Not possible in a vehicle...,In einem Fahrzeug nicht möglich...,No es posible en un vehículo...,Не работает внутри техники...
+STR_SYS_1241,... Fixing head bug ...,... Kopf-Fehler beheben ...,... Arreglar el error de la cabeza ...,... Устранение бага головы ...
+
 STR_SYS_MAINBOX,Your personal equipment box. No one but You can use it,"Deine persönliche Waffenkiste. Niemand, aber Sie können es verwenden",Su cajón personal con equipo. Nadie más que Tú puede usarlo,"Ваш личный ящик со снаряжением. Никто, кроме Вас, не может его использовать"
 STR_SYS_GRUBOX,The GRU's public weapon box. Keep weapons that are not used on secret missions here,"Die öffentliche Waffenkiste der GRU. Bewahren Sie hier Waffen auf, die nicht für geheime Missionen verwendet werden",Caja de armas pública GRU. Guarda aquí armas que no se usan en misiones secretas,"Общедоступный оружейный ящик ГРУ. Храните здесь оружие, не используемое на секретных заданиях"
 
@@ -1242,9 +1247,9 @@ STR_MAP_12,"Someone studied the map before you did","Jemand hat die Karte vor Ih
 
 STR_ACE_VDN_SOLDIERECREW,Engineer,Ingenieur,ingeniero,инженер
 
-STR_ACE_HIT,%1 hit %2;,%1 Treffer %2;,%1 acierto %2;,%1 повреждение %2;
-STR_ACE_INDIRECT_HIT,%1 indir. hit %2;,%1 indir. Treffer %2;,%1 indirectamente golpear %2;,%1 косв. повреждение %2;
-STR_ACE_INDIRECT_HIT_RANGE,%1 indir. hit range %2;,%1 indir.Treffer Reichweite %2;,%1 Radio de impacto indirecto %2;,%1 радиус косв. повреждения %2;
+STR_ACE_HIT,%1 hit %2;,%1 Treffer %2;,%1 acierto %2;,%1 повр. %2;
+STR_ACE_INDIRECT_HIT,%1 indir. hit %2;,%1 indir. Treffer %2;,%1 indirectamente golpear %2;,%1 косв. повр. %2;
+STR_ACE_INDIRECT_HIT_RANGE,%1 indir. hit range %2;,%1 indir.Treffer Reichweite %2;,%1 Radio de impacto indirecto %2;,%1 радиус косв. повр. %2;
 
 //-----------------------------------------------------------------------------
 

@@ -1972,7 +1972,7 @@ SYG_findTeleportError = {
 };
 
 //
-// [_pnt, _shift] call SYG_deviateTPPoint
+// [_pnt, _shift] call SYG_deviateTPPoint; // deviate telport point depending on near ferromagnetic mass or teleport damage.
 //
 SYG_deviateTeleportPoint = {
 	private ["_err","_pos","_rad","_ang","_dx","_dy"];

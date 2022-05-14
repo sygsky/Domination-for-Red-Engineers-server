@@ -98,12 +98,12 @@ XfIndexArrayWithPredefVals = {
 // parameters: bit array (without brackets)
 // example: _numfrombitarray = _myBitArray call XfBitArrayToNum;
 XfBitArrayToNum = {
-	private ["_ar","_ret"];
+	private ["_ar","_ret","_i"];
 	_ar = _this;_ret = 0;
 	if (count _ar > 0) then {
 		_xx = (count _ar - 1);
 		for "_i" from 0 to (count _ar - 1) do {
-			_ret = _ret + ((if (_ar select _i) then {1} else {0}) * 2 ^ _xx);
+			_ret set [count _ret, (if (_ar select _i) then {1} else {0}) * 2 ^ _xx];
 			_xx = _xx - 1;
 		};
 	};
@@ -114,13 +114,13 @@ XfBitArrayToNum = {
 // parameters: integer number, bit number (integer)
 // example: _bitArrayFromNum = [5000,16] call XfNumToBitArray;
 XfNumToBitArray2 = {
-	private ["_num","_bits","_ret"];
+	private ["_num","_bits","_ret","_i","_val"];
 	_num = _this select 0;
 	_bits = (_this select 1) - 1;
 	_ret = [];
 	for "_i" from _bits to 0 step -1 do {
 		_val = _num mod 2 ^ _i;
-		_ret = _ret + [(if (_val == _num) then {false} else {true})];
+		_ret set [ count _ret, if (_val == _num) then {false} else {true} ];
 		_num = _val;
 	};
 	_ret

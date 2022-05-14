@@ -14,7 +14,7 @@ SYG_localZones = [            0,          0,        0,    -4,           0,      
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
-	__DEBUG_NET("x_netinitserver.sqf XHandleNetStartScriptServer _this",_this)
+	//__DEBUG_NET("x_netinitserver.sqf XHandleNetStartScriptServer _this",_this)
 	switch (_this select 0) do {
 #ifdef __DEBUG_DOSAAF__
 	    case "getbonus": {
@@ -256,7 +256,7 @@ XHandleNetStartScriptServer = {
 		case "GRU_event_scores": {
 		    private ["_id","_playerName","_score"];
             _id = argopt(1, -1);
-            if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores  error id: ")  + _id}; // error parameter
+            if ( _id < 0) exitWith{hint (localize "--- GRU_event_scores  error id: "  + _id)}; // error parameter
             _playerName = argopt(2, "" );
             if (_playerName == "") exitWith{hint localize "--- GRU_event_scores error id: empty or absent player name"};
             _score = argpopt( GRU_specialBonusArr, _id, 0 ); // check for score available
