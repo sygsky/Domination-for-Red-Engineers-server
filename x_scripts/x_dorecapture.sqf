@@ -132,7 +132,8 @@ sleep 300;
 					};
 					if (isNil "_var") then {
 						deleteVehicle _x;
-					} else { hint localize format["+++ x_dorecapture.sqf: vehicle %1 not cleaned as being of patrol or recaptured", typeOf _x] };
+					} else { hint localize format["+++ x_dorecapture.sqf: vehicle %1 not cleaned as being of %2", typeOf _x, _var] };
+				};
 			} forEach ( (crew _veh) + [_veh]);
 		};
 	};
