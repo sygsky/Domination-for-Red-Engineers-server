@@ -270,11 +270,12 @@ XsFixHeadBug = {
 
 	_unit = _this;
 	if ( vehicle _unit != _unit ) exitWith { localize "STR_SYS_1240" };
-	titleCut [ localize "STR_SYS_1241", 0 ];
+	titleCut [ localize "STR_SYS_1241", "BLACK FADED", 0 ];
 
 	_pos = position _unit;
 	_dir = direction _unit;
 	_vehicle = "UAZ" createVehicleLocal _pos;
+	// TODO: try to create UAZ on the same height (if player is at building floor)
 	_unit moveInCargo _vehicle;
 	waitUntil {vehicle _unit != _unit};
 	unassignVehicle _unit;
@@ -284,5 +285,5 @@ XsFixHeadBug = {
 	_unit setPos _pos;
 	_unit setDir _dir;
 
-	titleCut["", "BLACK in",2];
+	titleCut["", "BLACK IN", 2];
 };
