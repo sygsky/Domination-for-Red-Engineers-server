@@ -437,13 +437,13 @@ d_f_check_trigger2 = objNull;
 d_f_check_trigger = createTrigger["EmptyDetector",_current_target_pos];
 d_f_check_trigger setTriggerArea [_current_target_radius + 1000, _current_target_radius + 1000, 0, false]; // increased by 1000 m. from 300
 d_f_check_trigger setTriggerActivation [d_own_side_trigger, _act2, false];
-d_f_check_trigger setTriggerStatements["this", "xhandle = [] spawn {if (!create_new_paras) then {create_new_paras = true;this execVM ""x_scripts\x_parahandler.sqf"";};mt_spotted = true;[""mt_spotted""] call XSendNetStartScriptClient;sleep 5;deleteVehicle d_f_check_trigger;if (!isNull d_f_check_trigger2) then {deleteVehicle d_f_check_trigger2}}", ""];
+d_f_check_trigger setTriggerStatements["this", "xhandle = [] spawn {if (!create_new_paras) then {create_new_paras = true;thislist execVM ""x_scripts\x_parahandler.sqf"";};mt_spotted = true;[""mt_spotted""] call XSendNetStartScriptClient;sleep 5;deleteVehicle d_f_check_trigger;if (!isNull d_f_check_trigger2) then {deleteVehicle d_f_check_trigger2}}", ""];
 
 #ifdef __TT__
 d_f_check_trigger2 = createTrigger["EmptyDetector",_current_target_pos];
 d_f_check_trigger2 setTriggerArea [_current_target_radius + 1000, _current_target_radius + 1000, 0, false];
 d_f_check_trigger2 setTriggerActivation ["GUER", _act2, false];
-d_f_check_trigger2 setTriggerStatements["this", "xhandle = [] spawn {if (!create_new_paras) then {create_new_paras = true;[] execVM ""x_scripts\x_parahandler.sqf"";};mt_spotted = true;[""mt_spotted""] call XSendNetStartScriptClient;sleep 5;deleteVehicle d_f_check_trigger2;if (!isNull d_f_check_trigger) then {deleteVehicle d_f_check_trigger}}", ""];
+d_f_check_trigger2 setTriggerStatements["this", "xhandle = [] spawn {if (!create_new_paras) then {create_new_paras = true;thislist execVM ""x_scripts\x_parahandler.sqf"";};mt_spotted = true;[""mt_spotted""] call XSendNetStartScriptClient;sleep 5;deleteVehicle d_f_check_trigger2;if (!isNull d_f_check_trigger) then {deleteVehicle d_f_check_trigger}}", ""];
 #endif
 
 sleep 10.213;

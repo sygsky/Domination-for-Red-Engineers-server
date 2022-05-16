@@ -47,14 +47,14 @@ The buildup of the sidemission on the server. Units, vehicles, whatever you want
 Example:
 if (isServer) then {
 	__Poss
-	_vehicle = "Land_radar" createVehicle (_poss);
+	_vehicle = "Land_vysilac_FM2" createVehicle (_poss);
 	_vehicle setVectorUp [0,0,1];
 	[_vehicle] spawn XCheckSMHardTarget;
 	sleep 3.21;
 	["specops", 1, "basic", 1, _poss,50,true] spawn XCreateInf;
 	__AddToExtraVec(_vehicle)
 };
-Creates a small radar tower and a specops and normal infantry group.
+Creates a middle radar tower and a specops and normal infantry group.
 Everything concerning the radio tower gets handled in XCheckSMHardTarget.
 
 5.

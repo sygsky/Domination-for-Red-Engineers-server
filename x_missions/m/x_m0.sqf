@@ -21,7 +21,7 @@ if (X_Client) then {
 
 if (isServer) then {
 	__Poss
-	_vehicle = "Land_radar" createVehicle (_poss);
+	_vehicle = "Land_vysilac_FM2" createVehicle (_poss);
 	_vehicle setVectorUp [0,0,1];
 	[_vehicle] spawn XCheckSMHardTarget;
 	// createGuardedPoint[d_side_enemy, position _vehicle, -1, _vehicle];

@@ -14,7 +14,7 @@
 
 // +++ find all map items on base (road cones with corresponding variable "DOSAAF"
 _center_type = switch (d_own_side ) do {
-	case "EAST": {"DangerEAST"};
+	case "EAST": {"DangerEAST"}; // "FlagCarrierNorth"
 	case "WEST": {"DangerWest"};
 	case "RACS": {"DangerGUE"};
 	default {"Danger"};

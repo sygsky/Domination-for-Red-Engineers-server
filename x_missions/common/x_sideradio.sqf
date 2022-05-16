@@ -16,7 +16,7 @@ if (!isServer) exitWith {};
 
 // 1. create antenna and truck on the base
 
-_radar =  createVehicle ["Land_radar", [9472.897461,9930.014648,0], [], 0, "CAN_COLLIDE"];
+_radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
 _pos1 = getPos _radar;
 _radar setPos [_pos select 0, _pos select 1, -5.7 ];this setVectorUp [1,0,0];
 
