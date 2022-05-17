@@ -389,6 +389,9 @@ SYG_vehIsUpsideDown = {
 	} else { false };
 };
 
+//
+// _angle = _obj call SYG_vehUpAngle; // _angle is from +90 (to zenith) to -90 (to nadir). Angle is measured from axis -Z to +Z
+//
 SYG_vehUpAngle = {
 	private ["_vUp","_L2"];
 	if ( isNull _this ) exitWith { -1000 };

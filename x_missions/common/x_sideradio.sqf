@@ -8,9 +8,23 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//private [""];
+#define RADAR_POINT = [13592,15591,0] // central point of the area to install radar
+#define INSTALL_RADIUS 2000 // how far from the RADE_POINT
+#define INSTALL_MIN_ALTITUDE 450 // minimal height above sea level to install
 
-// this setPos [(getPos this) select 0, (getPos this) select 1, -5.7 ];this setVectorUp [0,1,0];
+private ["_radar","_success"];
+//
+// Returns "" if radar is installed on correct height and place, else return MSG CSV error code
+//
+_destination_error = {
+	private ["_pos"];
+	if (radar_loaded) exitWith {"SYS_RADAR_0"}; // "Radar in loaded state, unload it before check"
+	_pos = getPosASL _radar;
+	if ( ([_pos, RADAR_POINT] call SYG_distance2D) > INSTALL_RADIUS) exitWith {"SYS_RADAR_1"}; // "You are too far from the installation zone"
+	if ( (_pos select 2) < INSTALL_MIN_ALTITUDE ) exitWith {"SYS_RADAR_2"}; // "Radar must be installed on height not lower than %1 m., now you at %2 m."
+	if ( (_radar call SYG_vehUpAngle) < 85 ) exitWith {"SYS_RADAR_3"}; // "The radar is set at a slope of %1 degree. Set it at an inclination of no more than 5 degrees"
+	"" // Reached, no error !!!
+};
 
 // 0. Inform about mission in the
 
@@ -18,7 +32,8 @@ if (!isServer) exitWith {};
 
 _radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
 _pos1 = getPos _radar;
-_radar setPos [_pos select 0, _pos select 1, -5.7 ];this setVectorUp [1,0,0];
+_radar setPos [_pos select 0, _pos select 1, -5.7 ];
+_radar setVectorUp [1,0,0];
 
 #ifdef __ACE__
 _ural = switch (d_own_side) do {
@@ -50,15 +65,22 @@ _vehs = [];
     #endif
 
     extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
-    _veh setVehicleInit "";
+    _veh setVehicleInit "this execVM ""x_missions\init_radio_truck.sqf""";
     processInitCommands;
 	_vehs set [count _vehs, _veh];
 }forEach[1,3];
 
 // 2. wait until antenna killed or truck get it, inform all about antenna damage
-while {} do {
+_truck, = objNull;
+while { (alive _radar) && (alive _truck) } do {
+	if (!radar_loaded) {
+		// check radio on the point
+		if (call _destination_reached) {
+			_success = true;
+		}
+	}
 	sleep 3;
-}
+};
 
 // 2.1. Check distance of the truck to the antenna center and if it is reached, add menu "Load antenna" to the track
 // 3. if killed, SM failed
