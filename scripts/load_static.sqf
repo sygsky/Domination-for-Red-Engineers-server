@@ -35,6 +35,7 @@ _cargo = nearestObject [_vehicle, "StaticWeapon"];
 if ( isNull _cargo ) exitWith { hint localize "STR_SYG_04" }; // "No static weapon in range."
 _cargo_type = typeOf _cargo;
 _type_name = [ _cargo_type, 0 ] call XfGetDisplayName;
+if ( !alive _cargo ) exitWith { hint format [ localize "STR_SYG_16", _type_name, typeOf _vehicle ] }; // "You can't load the dead %1 into a %2!"
 if ( _cargo distance _vehicle > 10 ) exitWith { hint format [ localize "STR_SYG_05", _type_name, 10 ] }; // "You're too far from %1, max. dist. %2!"
 
 _loading_allowed = true;
