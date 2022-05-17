@@ -58,7 +58,7 @@ Creates a middle radar tower and a specops and normal infantry group.
 Everything concerning the radio tower gets handled in XCheckSMHardTarget.
 
 5.
-To end a sidemission you have just to set the following variables...
+To end a sidemission successfully, you have just to set the following variables...
 
 side_mission_winner = 2;
 and
@@ -68,16 +68,17 @@ If side_mission_resolved gets set to true the sidemission will end and that will
 So be sure to set the correct side_mission_winner ;)
 In all normal version side_mission_winner is 2, so set side_mission_winner = 2; before you set side_mission_resolved to true.
 
-There are some other values for side_mission_winner:
+There are some failure codes for side_mission_winner:
 
 -1: The sidemission target died due to a tragic accident...
 -2: The enemy decided to destroy the sidemission target by itself...
--300: The convoy reached its destination..."
--400: None or less than 8 prisoners made it back to base..."
--500: The enemy officer was killed..."
--600: The prototype was destroyed before it reached your base..."
+-300: The convoy reached its destination...
+-400: None or less than 8 prisoners made it back to base...
+-500: The enemy officer was killed...
+-600: The prototype was destroyed before it reached your base...
 -700: All pilots were dead before returning to base
-
+-701: The future SM type - "Safely deliver a group of civilians by bus to their destination!" (bus is dead, all civilans are dead)
+-702: The future SM type - "Deliver the middle radio tower to the mointain regions to transmeet message to the Motherland" (tower is dead or all 1-2 trucks are dead)
 
 
 Some special functions and macros for sidemissions:
