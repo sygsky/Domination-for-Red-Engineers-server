@@ -51,14 +51,16 @@ while {true} do {
 			};
 		};
 	};
-	if ( (alive player) && (!( player call SYG_hasRadio ) ) ) then {
-		if (_ari1 != -8881) then {
-			player removeAction _ari1;
-			_ari1 = -8881;
-		};
-		if (_vec_id != -8882) then {
-			_vec removeAction _vec_id;
-			_vec_id = -8882;
+	if ( (alive player) ) then {
+		if (!( player call SYG_hasRadio ) ) then {
+			if (_ari1 != -8881) then {
+				player removeAction _ari1;
+				_ari1 = -8881;
+			};
+			if (_vec_id != -8882) then {
+				_vec removeAction _vec_id;
+				_vec_id = -8882;
+			};
 		};
 	};
 	sleep 1.021;

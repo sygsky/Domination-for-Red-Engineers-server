@@ -1842,6 +1842,7 @@ SYG_isRadio = {
 // call: _isRadio = player call asRadio;
 //
 SYG_hasRadio = {
+	if (!alive player) exitWith {false};
     if ( (player call ACE_Sys_Ruck_FindRuck) call SYG_isRadio) exitWith { true };
     if ( (secondaryWeapon player) call SYG_isRadio) exitWith { true };
     false

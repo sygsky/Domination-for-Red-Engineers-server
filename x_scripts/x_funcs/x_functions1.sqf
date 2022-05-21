@@ -103,7 +103,7 @@ XfBitArrayToNum = {
 	if (count _ar > 0) then {
 		_xx = (count _ar - 1);
 		for "_i" from 0 to (count _ar - 1) do {
-			_ret set [count _ret, (if (_ar select _i) then {1} else {0}) * 2 ^ _xx];
+			_ret = _ret + ((if (_ar select _i) then {1} else {0}) * 2 ^ _xx);
 			_xx = _xx - 1;
 		};
 	};

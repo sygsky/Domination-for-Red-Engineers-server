@@ -36,14 +36,16 @@ while {true} do {
 			};
 		};
 	};
-	if ( ( alive player ) && ( !( player call SYG_hasRadio ) ) ) then {
-		if (_dropaction != -8883) then {
-			player removeAction _dropaction;
-			_dropaction = -8883;
-		};
-		if (_vec_id != -8884) then {
-			_vec removeAction _vec_id;
-			_vec_id = -8884;
+	if ( ( alive player ) ) then {
+		if (!( player call SYG_hasRadio )) then {
+			if (_dropaction != -8883) then {
+				player removeAction _dropaction;
+				_dropaction = -8883;
+			};
+			if (_vec_id != -8884) then {
+				_vec removeAction _vec_id;
+				_vec_id = -8884;
+			};
 		};
 	};
 	sleep 1.021;
