@@ -12,7 +12,7 @@ if (!isServer) exitWith {};
 #define INSTALL_RADIUS 2000 // how far from the RADE_POINT
 #define INSTALL_MIN_ALTITUDE 450 // minimal height above sea level to install
 
-private ["_radar","_success"];
+private ["_radar"];
 //
 // Returns "" if radar is installed on correct height and place, else return MSG CSV error code
 //
@@ -26,14 +26,13 @@ _destination_error = {
 	"" // Reached, no error !!!
 };
 
-// 0. Inform about mission in the
-
-// 1. create antenna and truck on the base
+// 1. create antenna and trucks on the base
 
 _radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
 _pos1 = getPos _radar;
 _radar setPos [_pos select 0, _pos select 1, -5.7 ];
 _radar setVectorUp [1,0,0];
+_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\remove_radar.sqf" } ]; // remove killed radar after some delay
 
 #ifdef __ACE__
 _ural = switch (d_own_side) do {
@@ -53,36 +52,23 @@ _vehs = [];
 	_veh = _ural select _x;
 	_pos = _ural select (_x-1);
 	_veh = createVehicle [_veh, _pos, [], 0, "NONE"];
-
-	#ifdef __TT__
-    _veh addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
-    #endif
-
-    #ifndef __TT_
-        #ifdef __RANKED__
-        _veh addEventHandler ["killed", { _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // mark neighbouring users to be at SM
-        #endif
-    #endif
-
     extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
-    _veh setVehicleInit "this execVM ""x_missions\init_radio_truck.sqf""";
+    //_veh setVehicleInit "this execVM ""x_missions\init_radio_truck.sqf""";
     processInitCommands;
 	_vehs set [count _vehs, _veh];
 }forEach[1,3];
 
 // 2. wait until antenna killed or truck get it, inform all about antenna damage
-_truck, = objNull;
-while { (alive _radar) && (alive _truck) } do {
-	if (!radar_loaded) {
-		// check radio on the point
-		if (call _destination_reached) {
-			_success = true;
-		}
-	}
+while { ((alive _radar) && ( ({alive _x} count _vehs) > 0)) && (!radar_installed)} do {
 	sleep 3;
 };
+sleep 10 + random 5;
+// remove crew from trucks
+{
+	if (alive _x) then {
+		_x lock true;
+		{ if (alive _x) then { _x action ["Eject", _x]; }; } forEach (crew _x);
+	};
+} forEach _vehs;
 
-// 2.1. Check distance of the truck to the antenna center and if it is reached, add menu "Load antenna" to the track
-// 3. if killed, SM failed
-// 4. wait until antenna is set anywhere and is on the good height and stands stright enough, inform all about antenna damage
-// 5. play special melody, may be sound of "Mayak" radiostation and SM is successfull
+radar_installed = nil;
