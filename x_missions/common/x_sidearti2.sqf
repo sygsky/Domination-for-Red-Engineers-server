@@ -19,7 +19,7 @@ count_items = count _this;
 			_this execVM "x_missions\common\eventKilledAtSM.sqf";
 			sleep 1;
 			// send info about next canon death to all players
-            private ["killer"];
+            private ["_killer"];
             _killer = gunner( _this select 1);
             _killer = if (isNull _killer) then {" (?)"} else { if ( isPLayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
             [ "msg_to_user", "", [ ["STR_SM_50_CNT", dead_items, _killer, count_items - dead_items, count_items] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Guns destroyed %1%2, guns left %3, total was %4"
