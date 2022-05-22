@@ -220,6 +220,7 @@ if (isServer) then {
 #else
     _first_array = []; // no predefined towns at start, dont use optional town indexes here
 #endif
+    if ((count _first_array) > 0 ) then {hint localize format["+++ MT goes first: %1", _first_array]};
     maintargets_list = _first_array + (maintargets_list - _first_array);
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
@@ -241,15 +242,16 @@ if (isServer) then {
 #ifdef __EASY_SM_GO_FIRST__
         // adds easiest side missions to the head of common list
         [side_missions_random, easy_sm_array call XfRandomArrayInPlace] call SYG_addArrayInPlace;
-        hint localize format["SM goes first: %1", side_missions_random];
+        hint localize format["+++ __EASY_SM_GO_FIRST__, goes first: %1", side_missions_random];
 #endif
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special missions at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = []; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base, 29 - tanks at Cabo Juventudo, 40-41 - prisoners in Tiberia and Tandag, 50 - arti in field
+    _first_array = [10]; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base, 29 - tanks at Cabo Juventudo, 40-41 - prisoners in Tiberia and Tandag, 50 - arti in field
     if (count _first_array > 0) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
+        hint localize format["+++ SM _first_array: %1", _first_array];
     };
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
