@@ -15,13 +15,16 @@ count_items = count _this;
 {
 	/* Passed array: [unit, killer] */
 	_x addEventHandler ["killed", {
-			dead_items = dead_items + 1; _this spawn x_removevehi;
+			dead_items = dead_items + 1;
 			_this execVM "x_missions\common\eventKilledAtSM.sqf";
-			sleep 1;
+			_this spawn x_removevehi;
 			// send info about next canon death to all players
             private ["_killer"];
-            _killer = gunner( _this select 1);
-            _killer = if (isNull _killer) then {" (?)"} else { if ( isPLayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+            _killer = _this select 1;
+            if (isNull _killer) then {" (NULL)"} else {
+				_killer = gunner( _this select 1);
+				_killer = if (isNull _killer) then {" (?)"} else { if ( isPLayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+            };
             [ "msg_to_user", "", [ ["STR_SM_50_CNT", dead_items, _killer, count_items - dead_items, count_items] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Guns destroyed %1%2, guns left %3, total was %4"
 			hint localize format["+++ x_sidearti2.sqf: Gun Nr. %1 (of %2%3) destroyed.", dead_items, count_items, _killer];
 		}

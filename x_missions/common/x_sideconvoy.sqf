@@ -178,14 +178,17 @@ for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
 #ifndef __TT_
     #ifdef __RANKED__
     // mark neighbouring users to be at SM
-    (_vehicles select 0) addEventHandler ["killed", { // _this = [_unit, _killer]
+   	/* Passed array: [unit, killer] */
+    (_vehicles select 0) addEventHandler ["killed", {
             dead_items = dead_items + 1;
             _this execVM "x_missions\common\eventKilledAtSM.sqf";
             // send info about next vehicle death to all players
-            sleep 1;
             private ["_killer"];
-            _killer = gunner( _this select 1);
-            _killer = if (isNull _killer) then {" (?)"} else { if ( isPlayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+            _killer = _this select 1;
+            if (isNull _killer) then {" (NULL)"} else {
+				_killer = gunner( _this select 1);
+				_killer = if (isNull _killer) then {" (?)"} else { if ( isPLayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+            };
             [ "msg_to_user", "", [ ["STR_SM_CONVOY_1", dead_items, _killer, (count d_sm_convoy_vehicles) - dead_items, count d_sm_convoy_vehicles] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Destroyed vehicles %1%2, left %3, total %4"
             hint localize format["+++ x_sideconvoy.sqf: veh #%1 (of %2%3) destroyed.", dead_items, count d_sm_convoy_vehicles, _killer];
         }

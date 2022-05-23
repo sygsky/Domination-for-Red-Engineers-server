@@ -57,14 +57,18 @@ for "_i" from 0 to (count_items - 1) do {
 	_arti_pos_dir = _pos_array select _i;
 	_arti = _arti_type createVehicle (_arti_pos_dir select 0);
 	_arti setDir (_arti_pos_dir select 1);
+	/* Passed array: [unit, killer] */
 	_arti addEventHandler [ "killed", {
 	        dead_items = dead_items + 1;
-	        _this execVM "x_missions\common\eventKilledAtSM.sqf"; _this spawn x_removevehi;
+	        _this execVM "x_missions\common\eventKilledAtSM.sqf";
+	        _this spawn x_removevehi;
             // send info about next canon death to all players
-            sleep 1;
             private ["_killer"];
-            _killer = gunner( _this select 1);
-            _killer = if (isNull _killer) then {" (?)"} else { if ( isPlayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+            _killer = _this select 1;
+            if (isNull _killer) then {" (NULL)"} else {
+				_killer = gunner( _this select 1);
+				_killer = if (isNull _killer) then {" (?)"} else { if ( isPLayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+            };
             [ "msg_to_user", "", [ ["STR_SM_50_CNT", dead_items, _killer, count_items - dead_items, count_items] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Guns destroyed %1%2, guns left %3, total was %4"
 			hint localize format["+++ x_sidearti.sqf: Gun Nr. %1 (of %2%3) destroyed.", dead_items, count_items, _killer];
 	    }
