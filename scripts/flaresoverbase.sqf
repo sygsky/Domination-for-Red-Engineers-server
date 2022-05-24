@@ -172,7 +172,7 @@ while { true } do {
 				_grp = argp(_base_groups,_i);
 				// check group for wounded unconscious men
 				if ( !isNull _grp ) then {
-					if ( (typeName _grp) != "STRING" ) then { // item is not marked for remove
+					if ( (typeName _grp) == "GROUP" ) then { // item is not marked for remove
 						if ( ({alive _x} count units _grp) > 0 ) then {
 							if ( !(_grp in _on_base_groups) ) then {
 								_on_base_groups set [ count _on_base_groups, _grp ];
