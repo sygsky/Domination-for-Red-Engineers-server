@@ -301,7 +301,7 @@ for "_i" from 1 to _number_vehicles do {
 	
 	[_vgrp,_paragrp,_unit_array,_vehicle,_attackpoint,_heliendpoint] spawn _make_jump;
 	
-	sleep 40 + random 30;
+	sleep (40 + random 30);
 };
 
 if (_stop_it) exitWith {};

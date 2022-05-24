@@ -71,7 +71,7 @@ while {!mt_radio_down} do {
 				_vecs = 3;
 			};
 		};
- */		_vecs = ceil(_num_p / 6);
+ */		_vecs = ceil( _num_p / 6 ); // 1 heli per 6 players
 		create_new_paras = false;
 		_attack_pos = [_current_target_pos,200] call XfGetRanPointCircle;
 

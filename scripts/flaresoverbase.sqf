@@ -53,7 +53,7 @@ _illumination = {
 	_type       = argopt(3,"F_40mm_Red"); // default is "F_40mm_Red"
 #ifdef __PRINT__
 	//player groupChat format[ "flaresoverbase.sqf: [%1,%2,%3,%4] call _illumination ", _trg_center, _radius, _height, _type];
-	hint localize    format[ "flaresoverbase.sqf: [%1,%2,%3,%4] call _illumination ", _trg_center, _radius, _height, _type];
+	hint localize    format[ "+++ flaresoverbase.sqf: [%1,%2,%3,%4] call _illumination ", _trg_center, _radius, _height, _type];
 #endif				
 
 	_pos = [_trg_center, _radius] call SYG_rndPointInRad;
@@ -68,7 +68,7 @@ _on_base_groups = []; // array of active groups on base
 
 #ifdef __PRINT__
 if ( isNil "d_on_base_groups" ) then {
-	hint localize "flaresoverbase.sqf: d_on_base_groups is Nil";
+	hint localize "+++ flaresoverbase.sqf: d_on_base_groups is Nil";
 };
 #endif
 waitUntil {sleep 30.0; !(isNil "d_on_base_groups")}; // wait until global variable is initiated
@@ -76,7 +76,7 @@ waitUntil {sleep 30.0; !(isNil "d_on_base_groups")}; // wait until global variab
 #ifdef __PRINT__
 _delay = START_DELAY + random (START_DELAY/10);
 //player groupChat format["flaresoverbase.sqf:  d_on_base_groups %1, start delay %2 secs", d_on_base_groups, ROUND0(_delay)];
-hint localize format["flaresoverbase.sqf:  d_on_base_groups %1, start delay %2 secs", d_on_base_groups, ROUND0(_delay)];
+hint localize format["+++ flaresoverbase.sqf:  d_on_base_groups %1, start delay %2 secs", d_on_base_groups, ROUND0(_delay)];
 #else
 _delay = START_DELAY + random 1200;
 #endif	
@@ -103,12 +103,12 @@ while { true } do {
 	if ( X_MP && ((call XPlayersNumber) == 0) ) then {
 #ifdef __PRINT__
 //		player groupChat "flaresoverbase.sqf: waits for player";
-		hint localize  "flaresoverbase.sqf: waits for player";
+		hint localize  "+++ flaresoverbase.sqf: waits for player";
 #endif			
 		waitUntil {sleep (random CYCLE_DELAY);(call XPlayersNumber) > 0};
 #ifdef __PRINT__
 //		player groupChat "flaresoverbase.sqf: player entered";
-		hint localize  "flaresoverbase.sqf: player entered";
+		hint localize  "+++ flaresoverbase.sqf: player entered";
 #endif			
 	} else {
 #ifdef __DEBUG__
@@ -151,12 +151,12 @@ while { true } do {
 		_wounded = _wounded - ["RM_ME"];
 #ifdef __PRINT__
 		//player groupChat format["flaresoverbase.sqf: at check time wounded list cnt %1, flares launched %2", count _wounded, _flare_launched];
-		hint localize format["flaresoverbase.sqf: at check time wounded list cnt %1, flares launched %2", count _wounded, _flare_launched];
+		hint localize format["+++ flaresoverbase.sqf: at check time wounded list cnt %1, flares launched %2", count _wounded, _flare_launched];
 #endif			
 	} else {
 #ifdef __DEBUG__
 //		player groupChat "flaresoverbase.sqf: wounded list is empty, seek for more";
-		hint localize "flaresoverbase.sqf: wounded list is empty, seek for more";
+		hint localize "+++ flaresoverbase.sqf: wounded list is empty, seek for more";
 #endif			
 	};
 	
@@ -166,7 +166,7 @@ while { true } do {
 		_base_groups = [] + d_on_base_groups;
 		if ( count _base_groups > 0 ) then {
 #ifdef __DEBUG__
-			hint localize    format[ "flaresoverbase.sqf: check loop on %1 groups on base", count _base_groups ];
+			hint localize    format[ "+++ flaresoverbase.sqf: check loop on %1 groups on base", count _base_groups ];
 #endif			
 			for "_i" from 0 to count _base_groups - 1 do {
 				_grp = argp(_base_groups,_i);
@@ -175,13 +175,13 @@ while { true } do {
 					if ( (typeName _grp) != "STRING" ) then { // item is not marked for remove
 						if ( ({alive _x} count units _grp) > 0 ) then {
 							if ( !(_grp in _on_base_groups) ) then {
-								_on_base_groups = _on_base_groups + [_grp ];
+								_on_base_groups set [ count _on_base_groups, _grp ];
 							};
 						};
 					} else {
 #ifdef __PRINT__
 						//player groupChat format[ "flaresoverbase.sqf: typeName _grp %1 == ""STRING""", _i ];
-						hint localize    format[ "--- flaresoverbase.sqf: typeName _grp %1 == ""STRING"" ---", _i ];
+						hint localize    format[ "--- flaresoverbase.sqf: typeName _grp %1 == ""STRING"" (""%2"") ---", _i, _grp ];
 #endif				
 					};
 				} //if ( typeName _grp != "STRING" ) then // item is not marked for remove
@@ -192,7 +192,7 @@ while { true } do {
 		else {
 #ifdef __DEBUG__
 //					player groupChat "flaresoverbase.sqf: no groups at base";
-					hint localize    "flaresoverbase.sqf: no groups at base";
+					hint localize    "+++ flaresoverbase.sqf: no groups at base";
 #endif				
 		};
 		
@@ -224,7 +224,7 @@ while { true } do {
 #ifdef __PRINT__
 					if ( _wounded_found ) then {
 						//player groupChat format[ "flaresoverbase.sqf: group %1, new wounded found", _i ];
-						hint localize    format[ "flaresoverbase.sqf: group %1, new wounded added to flare launch queue", _i ];
+						hint localize    format[ "+++ flaresoverbase.sqf: group %1, new wounded added to flare launch queue", _i ];
 					};
 #endif			
 					sleep 0.1;
@@ -236,7 +236,7 @@ while { true } do {
 #ifdef __DEBUG__
 		if ( !_wounded_found ) then {
 //			player groupChat "flaresoverbase.sqf: no new wounded found";
-			hint localize    "flaresoverbase.sqf: no new wounded found";
+			hint localize    "+++ flaresoverbase.sqf: no new wounded found";
 		};
 #endif			
 	};
@@ -244,7 +244,7 @@ while { true } do {
 	if ( (_flare_launched == 0 ) && ( count _on_base_groups == 0 ) ) then {
 #ifdef __DEBUG__
 //		player groupChat "flaresoverbase.sqf: no groups on base, wait for more";
-		hint localize    "flaresoverbase.sqf: no groups on base, wait for more";
+		hint localize    "+++ flaresoverbase.sqf: no groups on base, wait for more";
 #endif			
 		sleep (random WAIT_FOR_SABOTAGE_DELAY); // wait for next group infiltrated
 	}; // nothing to do, wait for a long time
@@ -252,7 +252,7 @@ while { true } do {
 
 #ifdef __PRINT__
 //	player groupChat "flaresoverbase.sqf: EXIT";
-	hint localize    "flaresoverbase.sqf: EXIT";
+	hint localize    "+++ flaresoverbase.sqf: EXIT";
 #endif			
  
 if true exitWith{true};

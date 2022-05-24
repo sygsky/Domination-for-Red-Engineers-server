@@ -15,13 +15,13 @@ _allunits = [];
 
 sleep 1.2123;
 
-while {!mt_radio_down} do {
+while {!(mt_radio_down || create_new_paras)} do {
 	if (X_MP) then {
 		waitUntil {sleep (35.012 + random 1);(call XPlayersNumber) > 0};
 	};
-	// __DEBUG_NET("x_handleattackgroups.sqf",(call XPlayersNumber))
-	if (({alive _x} count _allunits) < 5) exitWith { create_new_paras = true; };
 	sleep 10.623;
+	// __DEBUG_NET("x_handleattackgroups.sqf",(call XPlayersNumber))
+	create_new_paras = ({alive _x  && canStand _x} count _allunits) < 5;
 };
 
 _allunits = nil;
