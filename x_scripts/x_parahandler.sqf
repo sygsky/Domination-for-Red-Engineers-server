@@ -1,10 +1,13 @@
 // by Xeno: x_scripts\x_parahandler.sqf
 //+++ Sygsky: from 2002-02-14 _this  contains trigger list with friendly unit[s] detected
-private ["_current_target_pos","_dummy","_end_pos","_start_pos","_vecs","_num_p","_attack_pos","_fly_height","_tmp"];
+private ["_current_target_pos","_dummy","_end_pos","_start_pos","_vecs","_num_p","_attack_pos","_fly_height","_tmp",
+		 "_tmp1","_x"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+
+//hint localize format["+++ x_parahandler.sqf: _this = %1", _this];
 
 _dummy = target_names select current_target_index;
 _current_target_pos = _dummy select 0;
@@ -23,12 +26,18 @@ _sleep = 333.325;
 #endif
 
 //+++ #513:
-_tmp = """""";
+_tmp = "<>";
 if (typeName _this == "ARRAY") then {
-	_tmp = format[ "%1 => %2", [ _this select 0, "at %1 m. to %2 from %3",50 ] call SYG_MsgOnPosE , _this call SYG_vehToType ];
+	{
+		if (true) exitWith {
+			_tmp = [ _x, "at %1 m. to %2 from %3",50 ] call SYG_MsgOnPosE;
+			_tmp1 = _this call SYG_vehToType;
+			_tmp = format[ "%1 => %2", _tmp , _tmp1 ];
+		};
+	} forEach _this;
 };
 
-hint localize format[ "+++ x_parahandler.sqf: %1", _tmp ];
+hint localize format[ "+++ x_parahandler.sqf: typeName thislist = %1, %2 ", typeName _this , _tmp];
 hint localize format[ "+++ x_parahandler.sqf: Enemy town %1 detects your presence by trigger and sleep %2 secs. now", _dummy select 1, _sleep ];
 sleep _sleep;
 hint localize format[ "+++ x_parahandler.sqf: Enemy town %1 desant procedure resumed after sleep", _dummy select 1 ];

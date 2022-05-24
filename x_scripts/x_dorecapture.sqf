@@ -110,7 +110,7 @@ sleep 300;
 {	// remove all vehicles (except of captured
 	if (!isNull _x) then {
 		_veh = _x;
-		_xside =  format["%1", side _x];
+		_xside = format["%1", side _x];
 		if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
 			(
 			 (_xside == d_own_side ) ||
