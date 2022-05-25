@@ -188,7 +188,7 @@ XHandleNetStartScriptServer = {
 #ifdef __SPPM__
 
 		// SPPM event handler on server (receive messages from client)
-		// // format: ["SPPM","COMMAND", player_name<,send_answer>]
+		// format:	["SPPM","ADD", _pos, name player] call XSendNetStartScriptServer;
 		case "SPPM": {
 			switch ( _this select 1 ) do {
 
@@ -205,7 +205,7 @@ XHandleNetStartScriptServer = {
 					[ "msg_to_user", arg(3), [_msg_arr], 5, random 4, false, "set_marker" ] call XSendNetStartScriptClient; // corresponding message after procedure execution
 				};
 
-				// format: ["SPPM","UPDATE", player_name<,send_answer>]
+				// format: ["SPPM", "UPDATE", name player<, false>] call XSendNetStartScriptServer;
 				case "UPDATE" : { // update all SPPM available
 					hint localize format["+++ SPPM UPDATE (ALL): player ""%1""", arg(2)];
 					private ["_cnt","_arr", "_send"];

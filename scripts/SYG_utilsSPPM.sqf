@@ -80,7 +80,7 @@ SYG_findNearestSPPM = {
 };
 
 //
-// call: _vehArr = _pos | _object(RaodCone) call  SYG_getAllSPPMVehicles;
+// call: _vehArr = _pos | _object(RoadCone) call  SYG_getAllSPPMVehicles;
 //
 SYG_getAllSPPMVehicles = {
 	private ["_pos", "_arr", "_i", "_veh"];

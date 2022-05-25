@@ -112,17 +112,6 @@ SYG_getVehicleType1 = {
     -1
 };
 
-/**
- * Returns an estimate of the difficulty of transporting the specified vehicle type to the base
- *
- */
-SYG_getVehicleTypeScore = {
-    _type = _this call SYG_getVehicleType1;
-    if (_type < 0 ) exitWith {0};
-    // return scores for 0 (tank),1(moto|car),2(static),3(heli),4(plane),5(ship)
-    [2,4,0,1,3,3] select _type
-};
-
 //
 // Finds near enemy "Man" or "LandVehicle"
 //
@@ -349,8 +338,8 @@ SYG_handlePlayerDammage = {
 	titleFadeOut 3;
 };
 
-// call: _turretNumber = _unit call SYG_turretNumber;
-SYG_turretNumber = {
+// call: _turretCount = _unit call SYG_turretCount;
+SYG_turretCount = {
 	count (configFile >> "CfgVehicles" >> typeOf _this >> "turrets")
 };
 
@@ -659,6 +648,17 @@ SYG_isMGCar = {
 };
 
 //
+// Returns original side of vehicle (made in side)
+// call as: _side = _veh || _veh_type call  SYG_getVehicleConfigSide;
+// if (_side == west) then {hint localize "side is west"} else {if (_side == east) then {hint localize "side is east"} else {hint localize "side is civilian"}};
+//
+SYG_getVehicleConfigSide = {
+    if (typeName _this == "OBJECT") then { _this = typeName _this };
+    if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_getVehicleConfigSide: expected input not OBJECT or STRING (%1)", typeName _this]; resistance };
+    east // TODO: finish it!
+}
+
+//
 // _fuelCapacity = _vehicle call SYG_fuelCapacity;
 // or
 // _fuelCapacity = (typeOf _vehicle) call SYG_fuelCapacity;
@@ -961,21 +961,17 @@ SYG_resetIntelMapMarkers = {
 	_prefix = argopt(1, DEFAULT_INTEL_MAP_MARKERS_PREFIX);
 	_ind = SYG_markerPrefixNames find _prefix;
 	_cnt = 0;
-	if ( _ind < 0 ) then
-	{
+	if ( _ind < 0 ) then {
 		_ind = count SYG_markerPrefixNames;
 		SYG_markerPrefixNames  set [ _ind, _prefix ];
 		SYG_markerPrefixCounts set [ _ind, 0 ];
-	}
-	else
-	{
+	} else {
 		_cnt = SYG_markerPrefixCounts select _ind;
 		_prefix call SYG_removeMarkers; // always clear all previous intel markers
 		_cnt = 0;
 	};
 //	for "_i" from 0 to 4 do // ["aa","at","mg","cn","gl","st"]
-	for "_i" from 0 to (count SYG_markerTypes - 2) do // last marker still not used
-	{
+	for "_i" from 0 to (count SYG_markerTypes - 2) do { // last marker still not used
 		_mrk_type = SYG_markerTypes select _i; // marker type
 		_scale    = SYG_markerScales select _i; // marker scale
 		_tarr     = _arr select _i;
@@ -985,7 +981,7 @@ SYG_resetIntelMapMarkers = {
 			_pos = position _x;
 			_marker = format["%1%2",_prefix,_cnt]; // marker unique name
 			[ _marker, _pos, "ICON", "ColorBlack", [_scale,_scale],"",0,_mrk_type] call XfCreateMarkerLocal;
-		}forEach _tarr;
+		} forEach _tarr;
 	};
 	SYG_markerPrefixCounts set[_ind, _cnt]; // store prefix markers count into existance list
 #ifdef __DEBUG_INTEL_MAP_MARKERS__	 
@@ -1026,8 +1022,7 @@ SYG_colorIntelMarkers = {
 	if ( _ind < 0 ) exitWith {false};
 	_color  = arg(1);
 	_cnt = SYG_markerPrefixCounts select _ind;
-	for "_i" from 1 to _cnt do
-	{
+	for "_i" from 1 to _cnt do {
 		format["%1%2",_prefix, _i] setMarkerColorLocal _color;
 	};
 	true
@@ -1046,10 +1041,8 @@ SYG_removeMarkers = {
 	hint localize format["SYG_removeMarkers: removed %1 marker[s] of %2", _cnt,_this];
 #endif		
 	
-	if ( _cnt > 0 ) then
-	{
-		for "_i" from 1 to _cnt do
-		{
+	if ( _cnt > 0 ) then {
+		for "_i" from 1 to _cnt do {
 			_marker = format["%1%2",_this,_i];
 			deleteMarkerLocal _marker;
 		};
@@ -2026,6 +2019,7 @@ SYG_assignVehAsBonusOne = {
 //
 SYG_getVelocityVector = {
 	private [ "_veh", "_pos" ];
+	velocity _veh;
 	_veh = _this select 0;
 	_pos = getPos _veh;
 	_pos set [ 2, 0 ];
