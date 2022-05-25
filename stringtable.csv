@@ -598,6 +598,12 @@ STR_SYS_284,Drop box,Entladen Kästchen,Descargar equipo,Выгрузить сн
 STR_SYS_285,Ammobox loaded:,Ammo box geladen:,Equipo cargado:,Снаряжение загружено:
 STR_SYS_286,Chopper 1,Chopper 1,Helicóptero 1,Вертолёт 1
 STR_SYS_287,Vehicle Dialog,Fahrzeug-Dialog,Diálogo T. S.,Диалог т.с.
+STR_SYS_288_1,"Too high! Get lower...","Zu hoch! Runter...","¡Demasiado alto! Baja...","Слишком высоко! Опуститесь ниже..."
+STR_SYS_288_2,"Vehicle moves! Loading impossible...","Fahrzeug bewegt sich! Beladen unmöglich...","¡El vehículo se mueve! Carga imposible...","Транспорт движется! Загрузка невозможна..."
+STR_SYS_288_3,"All ready to loading...","Alles bereit zum Laden...","Todo listo para cargar...","Все готово к загрузке..."
+STR_SYS_288_4,"The loading will be available again in %1 sec.","Keine Boxen zum Download verfügbar!!!","¡¡¡No hay cajas disponibles para descargar!!!","Нет доступных к загрузке ящиков!!!"
+STR_SYS_288_5,"Loading in progress...","Ladevorgang läuft...","Carga en curso...","Идёт загрузка..."
+STR_SYS_288_6,"The crate is loaded!!!","Die Kiste ist geladen!!!","¡El cajón está cargado!","Ящик загружен!!!"
 
 STR_MAIN_COMPLETED_NUM,7,7,7,7
 STR_MAIN_COMPLETED_0,Now the enemy spirit will fall without Facebook,Nun der Feind fällt der Geist ohne Facebook...,Ahora el enemigo se desanimará sin Facebook...,Теперь враг падёт духом без Фейсбука...
