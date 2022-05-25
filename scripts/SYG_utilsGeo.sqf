@@ -220,7 +220,7 @@ SYG_nearestMainTarget = {
 	_min_id = -1;
 	for "_i" from 0 to ( ( count target_names ) - 1 ) do {
 		_mt = target_names select _i;
-		if ( (_mt select 3) != _id ) then {
+		if ( (_mt select 3) != _id ) then { // skip MT, designated by name, from search procedure
 			_dist = ( _mt select 0 ) distance _pos;
 			if ( _dist < _min_dist ) then {
 				_min_id   = _i;

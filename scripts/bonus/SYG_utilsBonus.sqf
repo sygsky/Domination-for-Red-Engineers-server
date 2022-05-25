@@ -23,14 +23,14 @@ SYG_createBonusVeh = {
 	private ["_center","_rad","_type","_pos","_dir","_veh","_x","_name","_loc", "_mt"];
 	_center = _this select 0;
 	_center = [_center select 0, _center select 1, 0];
-	if (typeName _center != "ARRAY") exitWith { hint localize format["---SYG_createBonusVeh: Expected 1st param type is 'ARRAY', found %1", typeName (_this select 0)]; objNull };
+	if (typeName _center != "ARRAY") exitWith { hint localize format["--- SYG_createBonusVeh: Expected 1st param type is 'ARRAY', found %1", typeName (_this select 0)]; objNull };
 //	hint localize format[ "+++ SYG_createBonusVeh: _this = %1", _this ];
 	_rad    = _this select 1; // battle zone radious (e.g. town radious)
 	_type   = _this select 2; // vehicle type to create
 
 	hint localize format["+++ SYG_createBonusVeh: creating vehicle %1", _type];
 
-	// check if pont is on one of Sahrani islands
+	// check if point is on one of small Sahrani islands
 	if ( _center call SYG_pointOnIslet) then {
 		// we are on islet, move center to the main island
 		_loc  = _center call SYG_nearestSettlement;
@@ -46,10 +46,10 @@ SYG_createBonusVeh = {
 	};
 	// We may be on Rahmadi
 	if ( _center call SYG_pointOnRahmadi ) then {
-//		hint localize format["+++ SYG_createBonusVeh: MT is on Rahmadi, (_type in d_helilift1_types) = %1, (_type isKindOf ""Air"") = %2",_type in d_helilift1_types, _type isKindOf "Air"];
+		hint localize format["+++ SYG_createBonusVeh: MT is on Rahmadi, (%1 in d_helilift1_types) = %2, (%1 isKindOf ""Air"") = %3", _type, _type in d_helilift1_types, _type isKindOf "Air"];
 //		hint localize format["+++ SYG_createBonusVeh: d_helilift1_types = %1",d_helilift1_types];
 		if (! ((_type in d_helilift1_types) || (_type isKindOf "Air")) ) then {
-			// it is not heli lifted or air vehicle, so move center from this point to the main aisland
+			// it is not heli lifted or air vehicle, so move center from this point to the main island
 			_mt = "Rahmadi" call SYG_nearestMainTarget; // find nearest target on main island
 			if (count _mt > 0) then {
 				_center = _mt select 0;
@@ -80,7 +80,7 @@ SYG_createBonusVeh = {
     if ( !( _veh isKindOf "Ship" ) ) then {
     	_fuel = _veh call SYG_fuelCapacity;
     	if (_fuel == 0) then {
-    		hint localize format["--- SYG_utilsBonus.sqf: vehicle %1 has fuleCapacity = 0", _type];
+    		hint localize format["--- SYG_utilsBonus.sqf: vehicle %1 has fuelCapacity = 0", _type];
     		_fuels = 0.01
     	} else { _fuel = 30 / (_veh call SYG_fuelCapacity) }; // 30 liters in the vehicle
 	    _veh setFuel _fuel;
