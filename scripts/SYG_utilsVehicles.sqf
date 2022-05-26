@@ -650,14 +650,126 @@ SYG_isMGCar = {
 //
 // Returns original side of vehicle (made in side)
 // call as: _side = _veh || _veh_type call  SYG_getVehicleConfigSide;
-// if (_side == west) then {hint localize "side is west"} else {if (_side == east) then {hint localize "side is east"} else {hint localize "side is civilian"}};
-//
+// if (_side == west) then {hint localize "side is west"} else {if (_side == east) then {hint localize "side is east"} else {hint localize "side is not west or east"}};
+// May return: east, west, civilian, resistance
 SYG_getVehicleConfigSide = {
     if (typeName _this == "OBJECT") then { _this = typeName _this };
     if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_getVehicleConfigSide: expected input not OBJECT or STRING (%1)", typeName _this]; resistance };
-    east // TODO: finish it!
-}
+    if ( _this isKindOf "LandVehicle" ) exitWith {
+        if ( _this isKindOf "Truck" ) exitWith {
+            if  ( _this isKindOf "Truck5tMG" ) exitWith {west};
+            if  ( _this isKindOf "Ural" ) exitWith {east};
+        };
+        if ( _this isKindOf "HMMWV50" ) exitWith { west };
+        if ( _this isKindOf "StrykerBase" ) exitWith { west };
+        if ( _this isKindOf "UAZMG" ) exitWith { east };
+        if ( _this isKindOf "BRDM2" ) exitWith { east };
+        if ( _this isKindOf "Tank" ) exitWith {
+            if ( _this isKindOf "M1Abrams" ) exitWith { west };
+            if ( _this isKindOf "M113" ) exitWith { west };
+            if ( _this isKindOf "BMP2" ) exitWith { east };
+            if ( _this isKindOf "T72" ) exitWith { east };
+            if ( _this isKindOf "ZSU" ) exitWith { east };
+#ifdef __ACE__
+            if ( _this isKindOf "ACE_M60" ) exitWith { west };
+            if ( _this isKindOf "ACE_M2A1" ) exitWith { west };
+#endif
+        };
+        civilian // all cars are civilian (with or without MG on it)
+    };
+    if ( _this isKindOf "Helicopter" ) exitWith {
+        if ( _this isKindOf "AH1W" ) exitWith { west };
+        if ( _this isKindOf "UH60MG" ) exitWith { west };
+        if ( _this isKindOf "AH6" ) exitWith { west };
+#ifdef __ACE__
+        if ( _this isKindOf "ACE_AH64_AGM_HE" ) exitWith { west };
+        if ( _this isKindOf "ACE_Mi24" ) exitWith { east };
+#endif
+        if ( _this isKindOf "KA50" ) exitWith { east };
+        if ( _this isKindOf "Mi17_MG" ) exitWith { east };
+    };
+    if ( _this isKindOf "Plane" ) exitWith {
+        if ( _this isKindOf "AV8B" ) exitWith { west };
+        if ( _this isKindOf "A10" ) exitWith { west };
+        if ( _this isKindOf "Su34" ) exitWith { east };
+        if ( _this isKindOf "ACE_Su27_Fam" ) exitWith { east };
+        civilian // DC3, Camel
+    };
+    if ( _this isKindOf "RHIB") exitWith {west};
+    resistance // all unknown types are counted as resistance one
+};
 
+#ifdef __OWN_SIDE_EAST__
+//
+// Detects if designated vehicle is of Western type
+//
+SYG_isWestVehicle = {
+    if (typeName _this == "OBJECT") then { _this = typeName _this };
+    if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_isWestVehicle: expected input not OBJECT or STRING (%1)", typeName _this]; false };
+    if ( _this isKindOf "LandVehicle" ) exitWith {
+        if  ( _this isKindOf "Truck5tMG" ) exitWith {true};
+        if ( _this isKindOf "HMMWV50" ) exitWith { true };
+        if ( _this isKindOf "StrykerBase" ) exitWith { true };
+        if ( _this isKindOf "Tank" ) exitWith {
+            if ( _this isKindOf "M1Abrams" ) exitWith { true };
+            if ( _this isKindOf "M113" ) exitWith { true };
+#ifdef __ACE__
+            if ( _this isKindOf "ACE_M60" ) exitWith { true };
+            if ( _this isKindOf "ACE_M2A1" ) exitWith { true };
+#endif
+            false
+        };
+        false
+    };
+    if ( _this isKindOf "Helicopter" ) exitWith {
+        if ( _this isKindOf "AH1W" ) exitWith { true };
+        if ( _this isKindOf "UH60MG" ) exitWith { true };
+        if ( _this isKindOf "AH6" ) exitWith { true };
+#ifdef __ACE__
+        if ( _this isKindOf "ACE_AH64_AGM_HE" ) exitWith { true };
+#endif
+        false
+    };
+    if ( _this isKindOf "Plane" ) exitWith {
+        if ( _this isKindOf "AV8B" ) exitWith { true };
+        if ( _this isKindOf "A10" ) exitWith { true };
+        false
+    };
+    if ( _this isKindOf "RHIB") exitWith {true};
+    false
+};
+#endif
+#ifdef __OWN_SIDE_WEST__
+SYG_isEastVehicle = {
+    if (typeName _this == "OBJECT") then { _this = typeName _this };
+    if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_getVehicleConfigSide: expected input not OBJECT or STRING (%1)", typeName _this]; false };
+    if ( _this isKindOf "LandVehicle" ) exitWith {
+        if  ( _this isKindOf "Ural" ) exitWith {true};
+        if ( _this isKindOf "UAZMG" ) exitWith { true };
+        if ( _this isKindOf "BRDM2" ) exitWith { true };
+        if ( _this isKindOf "Tank" ) exitWith {
+            if ( _this isKindOf "BMP2" ) exitWith { true };
+            if ( _this isKindOf "T72" ) exitWith { true };
+            if ( _this isKindOf "ZSU" ) exitWith { true };
+            false
+        };
+        false // all cars are civilian
+    };
+    if ( _this isKindOf "Helicopter" ) exitWith {
+#ifdef __ACE__
+        if ( _this isKindOf "ACE_Mi24" ) exitWith { true };
+#endif
+        if ( _this isKindOf "KA50" ) exitWith { true };
+        if ( _this isKindOf "Mi17_MG" ) exitWith { true };
+    };
+    if ( _this isKindOf "Plane" ) exitWith {
+        if ( _this isKindOf "Su34" ) exitWith { true };
+        if ( _this isKindOf "ACE_Su27_Fam" ) exitWith { true };
+        false // DC3, Camel
+    };
+    false // all unknown types are counted as not East ones
+};
+#endif
 //
 // _fuelCapacity = _vehicle call SYG_fuelCapacity;
 // or

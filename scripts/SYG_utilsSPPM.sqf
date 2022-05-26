@@ -72,13 +72,14 @@ SYG_findNearestSPPM = {
 		_marker_name = _x getVariable SPPM_MARKER_NAME;
 		if (!isNil "_marker_name") exitWith {
 #ifdef __DEBUG__
-		    hint localize format[ "+++ SYG_utilsSPPM.sqf#SYG_findNearestSPPM: nearest SPPM (%1) at %2 m.", _marker_name, _x distance _this ];
+		    hint localize format[ "+++ SYG_utilsSPPM.sqf#SYG_findNearestSPPM: nearest SPPM (%1) at %2 m.", _marker_name, round(_x distance _this) ];
 #endif
 		}; // return marker name nearest to the designated object
 	} forEach _arr;
 	_marker_name
 };
 
+// Only western vehicles can be used for SPPM
 //
 // call: _vehArr = _pos | _object(RoadCone) call  SYG_getAllSPPMVehicles;
 //
@@ -88,9 +89,14 @@ SYG_getAllSPPMVehicles = {
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
 	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
 	for "_i" from 0 to count _arr - 1 do {
-		_veh = _arr select _i;
-		// ) || _cargo) ) then {
-		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon") || (_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || (_veh isKindOf "ACE_ATV_HondaR") || (_veh isKindOf "Motorcycle") ) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
+
+//		_veh = _arr select _i;
+//		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon") || (_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || (_veh isKindOf "ACE_ATV_HondaR") || (_veh isKindOf "Motorcycle") ) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
+#ifdef __OWN_SIDE_EAST__
+		if ( !((_arr select _i) call SYG_isWestVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only western vehicles can be SPPMed!
+#else
+		if ( !((_arr select _i) call SYG_isEastVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only eastern vehicles can be SPPMed!
+#endif
 	};
 	_arr call SYG_clearArrayB;
 	// now make all SPPM vehicles to be captured ones
