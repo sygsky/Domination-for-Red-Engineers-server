@@ -699,7 +699,6 @@ SYG_getVehicleConfigSide = {
     resistance // all unknown types are counted as resistance one
 };
 
-#ifdef __OWN_SIDE_EAST__
 //
 // Detects if designated vehicle is of Western type
 //
@@ -738,8 +737,7 @@ SYG_isWestVehicle = {
     if ( _this isKindOf "RHIB") exitWith {true};
     false
 };
-#endif
-#ifdef __OWN_SIDE_WEST__
+
 SYG_isEastVehicle = {
     if (typeName _this == "OBJECT") then { _this = typeName _this };
     if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_getVehicleConfigSide: expected input not OBJECT or STRING (%1)", typeName _this]; false };
@@ -769,7 +767,7 @@ SYG_isEastVehicle = {
     };
     false // all unknown types are counted as not East ones
 };
-#endif
+
 //
 // _fuelCapacity = _vehicle call SYG_fuelCapacity;
 // or
