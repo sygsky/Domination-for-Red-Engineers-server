@@ -100,7 +100,7 @@ SYG_getAllSPPMVehicles = {
 	};
 	_arr call SYG_clearArrayB;
 	// now make all SPPM vehicles to be captured ones
-	{ _x setVariable ["CAPTURED_ITEM",""] } forEach _arr;
+	{ _x setVariable ["CAPTURED_ITEM","SPPM"] } forEach _arr;
 	_arr
 };
 

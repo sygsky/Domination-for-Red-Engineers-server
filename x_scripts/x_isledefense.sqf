@@ -275,7 +275,7 @@ _remove_grp = {
 //					if (count _plist > 0) then { // inform player about
 //					    ["msg_to_user", _plist,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
 					["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the patrol. Make good use of it!"
-					_x setVariable ["CAPTURED_ITEM",""]; // #535 - don't clear captured  vehicle in the liberated town. Request by Rokse.
+					_x setVariable ["CAPTURED_ITEM","PATROL"]; // #535 - don't clear captured  vehicle in the liberated town. Request by Rokse.
 //					};
 				} else { // remove all units in vehicles. Todo: Why not delete them? May be they will append to any enemy group nearby?
 					{
