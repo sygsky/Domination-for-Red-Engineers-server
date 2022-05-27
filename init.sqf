@@ -240,19 +240,11 @@ if (isServer) then {
     };
 
 #ifdef __EASY_SM_GO_FIRST__
-        // adds easiest side missions to the head of common list
-        [side_missions_random, easy_sm_array call XfRandomArrayInPlace] call SYG_addArrayInPlace;
-        hint localize format["+++ __EASY_SM_GO_FIRST__, goes first: %1", side_missions_random];
+    // adds easiest side missions to the head of common list
+    side_missions_random = (easy_sm_array call XfRandomArrayInPlace) + side_missions_random;
+    hint localize format["+++ __EASY_SM_GO_FIRST__, goes first: %1", side_missions_random];
 #endif
 
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // insert special missions at the list head
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    _first_array = [10]; // 5 - king in hotel, 48 - transformer substations of Corazol, 54 - pilots at Hunapu, 10 - arti above the base, 29 - tanks at Cabo Juventudo, 40-41 - prisoners in Tiberia and Tandag, 50 - arti in field
-    if (count _first_array > 0) then {
-	    side_missions_random = _first_array + (side_missions_random - _first_array);
-        hint localize format["+++ SM _first_array: %1", _first_array];
-    };
 //+++ Sygsky: move ranked player missions out of the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
@@ -276,14 +268,16 @@ if (isServer) then {
     };
 #endif
 
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    //+ fill _first_array with sm numbers to go first in any case +
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // 10 - arti above base (SanSebastian), 32 - flag in Parato, 49 - captain Grant
-    // 5: king, 51: pilots, 21:Convoy Korazol-Estrella, 55: new officer mission in the forest, 40 - prisoners in Tiberia, 4 - water tank, 50 - arti big SM
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // insert special missions at the SM list head, may be used for the DEBUG purposes
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 29 - tanks at Cabo Juventudo,
+    // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 48 - transformer substations of Corazol, 49 - captain Grant
+    // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest
     _first_array = [];
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
+        hint localize format["+++ SM _first_array: %1", _first_array];
     };
 
 //    side_missions_random = side_missions_random - [40,41]; // nemporarily remove all SM with prisoners (not work!!)

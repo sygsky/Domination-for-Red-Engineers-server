@@ -121,7 +121,7 @@ sleep 300;
 			hint localize format["+++ x_dorecapture.sqf: vec %1 captured. Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, [getPos _x, d_base_array] call SYG_pointInRect, damage _x];
 			// put vehicle under system control
 			[_x] call XAddCheckDead;
-			_x setVariable [ "CAPTURED_ITEM", "" ] ; // #525: mark captured vehicle to prevent  him to be wiped off by target cleaning script
+			_x setVariable [ "CAPTURED_ITEM", "COUNTERATTACK" ] ; // #525: mark captured vehicle to prevent  him to be wiped off by target cleaning script
 			["msg_to_user", _x,  [ ["STR_GRU_46_7"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have seized this car from the captured town. Make good use of it!"
 		} else {
 			{

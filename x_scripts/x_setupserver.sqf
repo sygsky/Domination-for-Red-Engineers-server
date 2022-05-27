@@ -72,7 +72,7 @@ XClearSidemission = {
 					};
 					if (_was_captured ) then { // vehicle was captured by player
 						[_x] call XAddCheckDead;
-						_x setVariable ["CAPTURED_ITEM",""];
+						_x setVariable ["CAPTURED_ITEM","SM"];
 					} else {
 						{deleteVehicle _x} forEach ([_x] + crew _x);
 					};
