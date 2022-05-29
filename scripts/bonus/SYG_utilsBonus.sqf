@@ -208,7 +208,7 @@ SYG_scanDOSAAFVehiclesAll = {
 	_cnt = 0;
 	{
 		if ( alive _x ) then {
-			_var = _x getVariable "DOSAAF";//  If inspected follow code is executed: "this setVariable [""RECOVERABLE"", false]"
+			_var = _x getVariable "DOSAAF";//  If inspected follow code is executed: "this setVariable [""DOSAAF"", false]"
 			if ( !( isNil "_var" ) ) then {
 				_DOSAAF_arr set [ count _DOSAAF_arr, _x ]
 			};
