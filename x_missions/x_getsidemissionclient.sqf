@@ -39,7 +39,7 @@ if (current_mission_index != -1) then {
 	_posione = _posi_array select 0;
 	_m_name = format ["XMISSIONM%1", current_mission_index + 1]; // first (alone) marker
 	if (x_sm_type == "normal") exitWith {
-		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Доп.задание"
+		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Side mission"
         #ifdef __RANKED__
         _posione spawn {
             private ["_posione"];
@@ -56,14 +56,16 @@ if (current_mission_index != -1) then {
 	};
 
 	if (x_sm_type == "convoy") exitWith {
-		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_158",0,"Start"] call XfCreateMarkerLocal; // "Начало маршрута"
+		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_158",0,"Start"] call XfCreateMarkerLocal; // "Start"
 		_m_name = format ["XMISSIONM2%1", current_mission_index + 1];
 		_posione = _posi_array select 1;
-		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_159",0,"End"] call XfCreateMarkerLocal; // "Конец маршрута"
+		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_159",0,"End"] call XfCreateMarkerLocal; // "Finish"
 	};
 
-	// if (x_sm_type == "undefined") exitWith { <code> };
-	// draw the marker at the base center in form of the question sign
+	// draw the marker at the area center in form of the question sign
+	if (x_sm_type == "undefined") exitWith {
+		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
+	};
 
 
 };
