@@ -30,13 +30,13 @@ if (_is_swimmer) exitWith {
 
 #ifdef __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
 if (!isNull d_jet_service_fac) exitwith {
-	format[localize  "STR_SYS_75_1", localize "STR_SYS_220"] call XfGlobalChat;
+	format[localize  "STR_SYS_75_1", localize "STR_SYS_220"] call XfGlobalChat; // "Teleporting not possible while factory %1 is ruined !!!"
 };
 if (!isNull d_chopper_service_fac) exitwith {
-	format[localize  "STR_SYS_75_1", localize "STR_SYS_221"] call XfGlobalChat;
+	format[localize  "STR_SYS_75_1", localize "STR_SYS_221"] call XfGlobalChat; // ...
 };
 if (!isNull d_wreck_repair_fac) exitwith {
-	format[localize  "STR_SYS_75_1", localize "STR_SYS_222"] call XfGlobalChat;
+	format[localize  "STR_SYS_75_1", localize "STR_SYS_222"] call XfGlobalChat; // ...
 };
 #endif
 

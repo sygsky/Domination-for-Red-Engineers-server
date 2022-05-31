@@ -6,6 +6,7 @@ if (!isServer) exitWith {};
 
 private ["_rep_station","_name","_types","_wreck","_type","_dpos","_ddir","_new_vec"];
 
+// 	[d_wreck_rep,"STR_SYS_249"/* "Wreck Repair Point" */,x_heli_wreck_lift_types] execVM "x_scripts\x_repwreck.sqf";
 _rep_station = _this select 0;
 _name = _this select 1;
 _types = _this select 2;

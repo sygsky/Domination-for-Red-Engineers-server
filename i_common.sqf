@@ -879,7 +879,7 @@ d_base_array =
 #ifdef __TT__
 	[
 		[[2551.25,2709.68,0], 300, 100, 90], // West, Rahmadi
-		[[18092.4,18289.4,0], 300, 100, 80]  // Racs, Antigua or Pita, not sure
+		[[18092.4,18289.4,0], 300, 100, 80]  // Racs, Antigua
 	];
 #endif
 
