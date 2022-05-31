@@ -102,6 +102,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 #endif
                     _release_id = _vehicle addAction [localize "STR_SYS_36"/* "СБРОСИТЬ ТЕХНИКУ" */, "x_scripts\x_heli_release.sqf",-1,100000];
                     _rec_msg = localize (if (_nearest call SYG_vehIsRecoverable) then {"STR_SYS_37_1"} else {"STR_SYS_37_0"});
+                    hint localize ["+++ x_helilift_wreck: %1, ""RECOVERABLE""=%2 (%3)", typeOf _nearest, _nearest getVariable "RECOVERABLE", localize _rec_msg];
                     [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName, _rec_msg]] call XfVehicleChat;
                     Attached_Vec = _nearest;
 

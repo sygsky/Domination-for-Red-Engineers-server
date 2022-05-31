@@ -18,7 +18,7 @@ _current_target_name = _t_array select 1;
 // _radious = (_t_array select 2) max 300; // marker is create with radius minimum 300, in real active radius may be smaller (e.g. Somato is 230!!!)
 _radious = _t_array select 2; // real town radius
 
-[_current_target_name, _current_target_pos,"ELLIPSE","ColorRed",[_radious,_radious]] call XfCreateMarkerLocal;
+[_current_target_name, _current_target_pos,"ELLIPSE","ColorRedAlpha",[_radious,_radious]] call XfCreateMarkerLocal;
 "dummy_marker" setMarkerPosLocal _current_target_pos;
 
 "1" objStatus "DONE"; // Paraiso airport (future start target, under development)

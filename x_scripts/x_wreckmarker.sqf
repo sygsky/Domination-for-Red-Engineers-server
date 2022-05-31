@@ -124,7 +124,7 @@ if ( _sunk ) then {
     _dist = round ([FLAG_BASE, _vehicle] call SYG_distance2D);
     _time = ceil (((300 * _dist / (3754 / 2)) + 30) / 60); // new time in minutes, simplest formula: 100 seconds per 1 kilometers
     _part = (_time * 0.2) max 1.0; // one part in minutes
-    _marker_stage_arr = [ round(_part  * 60), [round(_part * 120), "ColorRed"], [round(_part * 120), "ColorRedAlpha"] ];
+    _marker_stage_arr = [ round(_part  * 60), [round(_part * 120), "ColorRed"], [round(_part * 120), "ColorRed"] ];
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     _back_counter = 0;
     {

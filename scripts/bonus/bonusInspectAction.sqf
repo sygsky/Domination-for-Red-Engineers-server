@@ -53,7 +53,7 @@ if ( _already_marked ) exitWith { // Do nothing except inform about vehicle alre
 	hint localize format["+++ bonus.INSPECT: %1 is inspected by ""%2"" near ""%3"", veh already is marked as known. Exit.", typeOf _veh, _name, _loc_name];
 	localize "STR_BONUS_4" hintC [format[localize "STR_BONUS_4_1", typeOf _veh ], // "Information:"
 		format[localize "STR_BONUS_4_2", typeOf _veh, localize "STR_REG_ITEM"] // ""Deliver '%1' to the base and call command '%2'"", "Register on base"
-		,format["""RECOVERABLE"" = %1, ""DOSAAF"" = %2", _veh getVariable "RECOVERABLE",_veh getVariable "RECOVERABLE"]
+		,format["""RECOVERABLE"" = %1, ""DOSAAF"" = %2", _veh getVariable "RECOVERABLE",_veh getVariable "DOSAAF"]
 	];
 };
 

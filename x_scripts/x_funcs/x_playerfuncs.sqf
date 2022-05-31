@@ -176,7 +176,7 @@ XRecapturedUpdate = {
 	_target_rad = (_target_array select 2) max 300; // visible radious of town
 	switch (_state) do {
 		case 0: { // shade with red slash hatching brush
-			_target_name setMarkerColorLocal "ColorRed";
+			_target_name setMarkerColorLocal "ColorRedAlpha";
 			_target_name setMarkerBrushLocal "FDiagonal";
 			_target_name setMarkerSizeLocal [_target_rad +100, _target_rad + 100];
 			call compile format ["""%1"" objStatus ""%2"";", _target_array select 3, "FAILED"];

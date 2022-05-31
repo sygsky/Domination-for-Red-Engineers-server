@@ -137,12 +137,12 @@ if ( count resolved_targets > 0) then {
         //hint localize format["+++ x_scripts/x_setupplayer.sqf: obj id %1",_obj_id];
         _rad = (_target_array select 2) max 300;
         _no = _current_target_pos nearestObject "HeliHEmpty";
-        _color = "ColorGreen";
+        _color = "ColorGreenAlpha";
         _objstatus = "DONE";
         if (!isNull _no) then {
             if (direction _no > 355) then {
                 _objstatus = "FAILED";
-                _color = "ColorRed";
+                _color = "ColorRedAlpha";
                 [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad + 100,_rad + 100],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal; // Mark occupied town (red diagonal shading)
             } else {
                 [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
@@ -174,7 +174,7 @@ if ( count resolved_targets > 0) then {
         if (!isNull _no) then {
             if (direction _no == 359) then {
                 _objstatus = "FAILED";
-                _color = "ColorRed";
+                _color = "ColorRedAlpha";
                 [_target_name, _current_target_pos,"ELLIPSE",_color,[300,300],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal;
             } else {
                 [_target_name, _current_target_pos,"ELLIPSE",_color,[300,300]] call XfCreateMarkerLocal;
@@ -192,7 +192,7 @@ if (current_target_index != -1 && !target_clear) then {
 	_current_target_pos = _target_array2 select 0;
 	_current_target_name = _target_array2 select 1;
 	_rad = (_target_array2 select 2) max 300;
-	_color = (if (current_target_index in resolved_targets) then {"ColorGreen"} else {"ColorRed"});
+	_color = (if (current_target_index in resolved_targets) then {"ColorGreenAlpha"} else {"ColorRedAlpha"});
 	[_current_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
 	"dummy_marker" setMarkerPosLocal _current_target_pos;
 	"1" objStatus "DONE"; // airport at Paraiso

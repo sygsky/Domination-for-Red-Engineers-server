@@ -129,15 +129,15 @@ _p_marker_color = "";
 if (!d_dont_show_player_markers_at_all) then {
 	_tmp_grpsm = [];
 	_mindex = 0;
-	_colarray = ["ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen"];
+	_colarray = ["ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha"];
 	for "_i" from 0 to ((count d_player_entities) - 1) do {
 	    _as = d_player_entities select _i; // name of a player
 	    _ap = call (SYG_players_arr select _i);   // player itself
         _grpm = group _ap;
         if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm set[count _tmp_grpsm, _grpm];};
         _mindex = _tmp_grpsm find _grpm;
-        [_as, [0,0],"ICON",(_colarray select _mindex),[0.4,0.4],"",0,d_p_marker] call XfCreateMarkerLocal;
-        if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
+        [_as, [0,0],"ICON",_colarray select (_mindex % (count _colarray)),[0.4,0.4],"",0,d_p_marker] call XfCreateMarkerLocal;
+        if (player in (units _grpm)) then {_p_marker_color = _colarray select (_mindex % (count _colarray))};
 		sleep 0.01;
 	};
 
@@ -281,14 +281,14 @@ _p_marker_color = "";
 if (!d_dont_show_player_markers_at_all) then {
 	_tmp_grpsm = [];
 	_mindex = 0;
-	_colarray = ["ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha","ColorBlue","ColorGreen"];
+	_colarray = ["ColorBlue","ColorGreen","ColorBlack","ColorYellow","ColorRed","ColorRedAlpha","ColorGreenAlpha"];
 	for "_i" from 0 to ((count d_entities_tt) - 1) do {
 		call compile format ["
 			_grpm = group %1;
 			if (!(_grpm in _tmp_grpsm)) then {_tmp_grpsm = _tmp_grpsm + [_grpm];};
 			_mindex = _tmp_grpsm find _grpm;
-			[""%1"", [0,0],""ICON"",(_colarray select _mindex),[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
-			if (player in (units _grpm)) then {_p_marker_color = _colarray select _mindex};
+			[""%1"", [0,0],""ICON"",_colarray select (_mindex % (count _colarray)),[0.4,0.4],"""",0,d_p_marker] call XfCreateMarkerLocal;
+			if (player in (units _grpm)) then {_p_marker_color = _colarray select (_mindex % (count _colarray))};
 		", d_entities_tt select _i];
 		sleep 0.01;
 	};
