@@ -543,6 +543,7 @@ _start spawn {
 			case 4: { format[localize "STR_INTRO_4", text (_this call SYG_nearestSettlement)] }; // settlement
 			case 5: {  // message and sound for current day period (morning,day,evening,night), if available
                 [] spawn {
+                    private ["_str"];
                     sleep (60 + (random 20));
                     _str = [] call SYG_getMsgForCurrentDayTime;
                     titleText[_str, "PLAIN DOWN"];

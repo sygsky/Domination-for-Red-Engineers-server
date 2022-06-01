@@ -1,4 +1,4 @@
-// by Sygsky, radar installation mission. x_missions/m/x_m56.sqf
+// by Sygsky, radar installation mission (#410, request by Rokse). x_missions/m/x_m56.sqf
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
@@ -49,7 +49,7 @@ _vehs = [];
 	_pos = _ural select (_x-1);
 	_veh = createVehicle [_veh, _pos, [], 0, "NONE"];
     extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
-    //_veh setVehicleInit "this execVM ""x_missions\init_radio_truck.sqf""";
+    _veh setVehicleInit "this execVM ""scripts\radio_truck_init.sqf""";
     processInitCommands;
 	_vehs set [count _vehs, _veh];
 }forEach[1,3];

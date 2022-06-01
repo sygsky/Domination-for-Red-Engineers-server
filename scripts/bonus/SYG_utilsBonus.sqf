@@ -6,8 +6,8 @@
 */
 #include "x_setup.sqf"
 
-// uncomment to allow upsidedown, no fuel, no ammo for all DOSAAF vehicles
-//#define ALLOW_HARD_MODE
+// uncomment to allow partial upsidedown, no fuel for land vehicles, and no ammo for all air DOSAAF vehicles
+#define ALLOW_HARD_MODE
 
 //
 // Creates bonus vehicle in the designated annulus or on the nearest spawn point for "Plane" vehicles
@@ -81,19 +81,28 @@ SYG_createBonusVeh = {
     	_fuel = _veh call SYG_fuelCapacity;
     	if (_fuel == 0) then {
     		hint localize format["--- SYG_utilsBonus.sqf: vehicle %1 has fuelCapacity = 0", _type];
-    		_fuels = 0.01
-    	} else { _fuel = 30 / (_veh call SYG_fuelCapacity) }; // 30 liters in the vehicle
+    		_fuel = 0.01
+    	} else { _fuel = 30 }; // 30 liters in the vehicle
 	    _veh setFuel _fuel;
-	    if (_veh isKindOf "Air" ) exitWith { _veh setVectorUp [0,0,1] };
+	    if (_veh isKindOf "Air" ) exitWith {
+	        _veh setVectorUp [0,0,1];
+#ifdef ALLOW_HARD_MODE
+            _mags = (typeOf _veh) call SYG_getConfigMags;
+            if ( (random 10 < 1) && ((count _mags) > 1) ) then { _mags resize ( round ( ( count _mags ) * 0.9 ) ) }; // remove 90% of magazines
+            { _veh removeMagazine _x } forEach _mags;	// remove magazines from Air vehicles only
+#endif
+/*
+	        // TODO: remove all magazines from plane or heli
+            {
+                _veh removeMagazine _x;
+	        }forEach (magazines _veh);
+*/	    };
 	    if ( ( _veh isKindOf "LandVehicle" ) && ( ( random 10 ) > 2 ) ) exitWith {
 	    	_veh setFuel 0;
 #ifdef ALLOW_HARD_MODE
-	    	_veh setVectorUp [0,0,-1]
+            if ((random 10) < 1) then{ _veh setVectorUp [0,0,-1] };
 #endif
 	    };
-#ifdef ALLOW_HARD_MODE
-	    { _veh removeMagazines _x } forEach magazines _veh;	// remove magazines from Air vehicles only
-#endif
     };
 	sleep 2;
 	_veh setDamage (0.4 + (random 0.1));
