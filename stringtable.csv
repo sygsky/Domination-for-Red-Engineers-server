@@ -474,7 +474,6 @@ STR_SYS_222,for vehicles recovery,für Fahrzeuge recovery,por la restauración d
 STR_SYS_223,Was destroyed service %1. Ask the engineers to repair it ...,Zerstört wurde Dienst %1. Fragen Ingenieure zu reparieren ...,Se ha destruido el Servicio %1. Pida a los ingenieros que lo reparen ...,Был уничтожен сервис %1. Просите инженеров отремонтировать его ...
 STR_SYS_224,Service %1 available,Service %1 verfügbar,El Servicio %1 está disponible,Сервис %1 доступен
 STR_SYS_225,Restore the tech. service,Erstellen Sie den Dienst,Reparar el edificio de servicios técnicos,Починить здание техсервиса
-STR_SYS_226,Inspect vehicle,Fahrzeug inspizieren,Inspeccionar el vehículo,Осмотреть технику
 STR_SYS_227,Repair/refill vehicle,Reparatur/Tanken des Fahrzeug,Reparar / repostar electrodomésticos,Починить/заправить технику
 STR_SYS_227_1,Repair vehicle only,Reparatur Fahrzeug nur,Sólo reparar el equipo,Только починить технику
 STR_SYS_228,Unflip Vehicle,Unflip Fahrzeug,Poner técnica,Поставить технику
@@ -1522,6 +1521,17 @@ STR_DOSAAF_UPDATE,Update the DOSAAF map,Aktualisierung der DOSAAF-Karte,Actualiz
 STR_WPN_TITLE,Important information,,,Важное сообщение
 STR_WPN_INFO,"Remembering your armament is now done automatically when you exit the mission!","Das Speichern der Ausrüstung erfolgt jetzt automatisch, wenn man eine Mission beendet!","¡El recuerdo de tu equipo se hace ahora automáticamente al salir de una misión!","Запоминание Вашего снаряжение теперь производится автоматически, при выходе из миссии!"
 STR_WPN_EXIT,"press '%1' to exit from dialog","drücken Sie '%1', um den Dialog zu verlassen","pulse '%1' para salir del diálogo","для выхода из диалога нажмите '%1'"
+
+STR_RADAR_0,Radio Mast,Funkmast,Radio Mast,Мачта радиосвязи
+STR_RADAR_01,"Radio communication mast - must be installed at a substantial height, on a horizontal surface.","Funkmast - muss in erheblicher Höhe auf einer horizontalen Fläche installiert werden","Mástil de radiocomunicación: debe instalarse a una altura considerable, sobre una superficie horizontal","Мачта радиосвязи - должна быть установлена на существенной высоте, на горизонтальной поверхности"
+STR_RADAR_1,Truck #1,Lkw Nr. 1,Camión #1,Грузовик №1
+STR_RADAR_11,"Truck #1, to carry the radio mast, take care of it!","Lastwagen №1, der den Funkmast transportiert, kümmere dich darum!","¡Camión número uno, para llevar el mástil de la radio, encárgate de ello!","Грузовик №1, для перевозки радиомачты, берегите его!"
+STR_RADAR_2,Truck #2,Lkw Nr. 2,Camión #2,Грузовик №2
+STR_RADAR_21,"Truck #2, to carry the radio mast, take care of it!","Lastwagen №2, der den Funkmast transportiert, kümmere dich darum!","¡Camión №2, para llevar el mástil de la radio, encárgate de ello!","Грузовик №2, для перевозки радиомачты, берегите его!"
+STR_RADAR_NO,Received unreliable message,Empfangene unzuverlässige Nachricht,Mensaje recibido no fiable,Получено невнятное сообщение
+STR_UNLOAD,Unload,Entladen,Descarga,Выгрузить
+STR_LOAD,Load,Laden Sie,Carga,Загрузить
+STR_INSPECT,Inspect vehicle,Fahrzeug inspizieren,Inspeccionar el vehículo,Осмотреть технику
 
 STR_TITLE,"Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2022 by EngineerACE\n          for Red-Engineers.ucoz.ru","Erstellt 2009 von Xeno\n  für www.germany-fun.de\n\nBearbeitet 2014-2022 von EngineerACE\n   für Red-Engineers.ucoz.ru","Hecho en 2009 por Xeno\n   para www.germany-fun.de\n\nEdit 2014-2022 por EngineerACE\n para     Red-Engineers.ucoz.ru","Автор 2009 Xeno\n  для www.germany-fun.de\n\nПереработка 2014-2022 EngineerACE\n  для Red-Engineers.ucoz.ru"
 

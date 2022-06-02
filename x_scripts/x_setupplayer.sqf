@@ -1150,7 +1150,7 @@ hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores
 	_trigger setTriggerArea [0, 0, 0, true];
 	_trigger setTriggerActivation ["NONE", "PRESENT", true];
 	// 'Analyze Vehicle', 'Repair/refill vehicle'
-	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_SYS_226', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"];
+	_trigger setTriggerStatements["call x_sfunc", "actionID6 = player addAction [localize 'STR_INSPECT', 'x_scripts\x_repanalyze.sqf',[],-1,false];actionID2 = player addAction [localize 'STR_SYS_227', 'x_scripts\x_repengineer.sqf',[],-1,false]", "player removeAction actionID6;player removeAction actionID2"];
 
 #ifndef __NON_ENGINEER_REPAIR_PENALTY__
 };
