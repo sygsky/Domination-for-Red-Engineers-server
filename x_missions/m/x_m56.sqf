@@ -29,6 +29,7 @@ _radar setPos [_pos select 0, _pos select 1, -5.7 ];
 _radar setVectorUp [1,0,0];
 _radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\remove_radar.sqf" } ]; // remove killed radar after some delay
 _radar setVariable ["RADAR",true];
+_radar setVehicleInit "[this,0] execVM ""scripts\radio_truck_init.sqf""";
 
 // 2. create trucks on the base
 #ifdef __ACE__
@@ -50,12 +51,12 @@ _vehs = [];
 	_pos = _ural select (_x-1);
 	_veh = createVehicle [_veh, _pos, [], 0, "NONE"];
     extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
-    _veh setVehicleInit format ["[this,%1] execVM ""scripts\radio_truck_init.sqf""", if (_x == 3) then {2} else {1}];
+    _veh setVehicleInit format ["[this,%1] execVM ""scripts\radio_truck_init.sqf""", (count _vehs) + 1 ];
     processInitCommands;
 	_vehs set [count _vehs, _veh];
 }forEach[1,3];
 
-[x_sm_pos,_radar, _vehs]  execVM "x_missions\common\x_sideradio.sqf";
+[x_sm_pos,_radar,_vehs]  execVM "x_missions\common\x_sideradio.sqf";
 
 // TODO: add enemy infantry patrols on the way to the destination point
 
