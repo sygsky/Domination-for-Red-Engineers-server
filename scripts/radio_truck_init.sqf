@@ -5,4 +5,4 @@
 	returns: nothing
 */
 
-player groupChat format["+++ "]
+player groupChat format["+++ "];
