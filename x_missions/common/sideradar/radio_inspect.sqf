@@ -1,5 +1,5 @@
 /*
-    scripts\radio_inspect.sqf
+    x_missions/common/sideradar/radio_inspect.sqf
     created 2022.06.01
 	author: Sygsky, on #410 request by Rokse
 	description: Inspect event handler for radio install SM
@@ -15,12 +15,13 @@
 */
 
 _id  = _this select 3;
-_str = "STR_RADAR_NO";
+_str = "STR_RADAR_NO";// "Received unreliable message"
 // Radar itself
+// "Radio communication mast - must be installed at a substantial height, on a horizontal surface."
 if (_id == 0) then { _str = "STR_RADAR_01"; } else {
-  	// first truck
+  	// first truck: "Truck #1, to carry the radio mast, take care of it!"
 	if (_id == 1) then { _str = "STR_RADAR_11"; } else {
-	 	// second truck
+	 	// second truck: "Truck #2, to carry the radio mast, take care of it!"
 		if (_id == 2) then { _str = "STR_RADAR_21"; };
 	};
 };
