@@ -140,8 +140,7 @@ if ( _sunk ) then {
         };
 
         // change marker timer
-        for "_i" from 1 to _x do
-        {
+        for "_i" from 1 to _x do {
             sleep 1;
             _back_counter = (_back_counter - 1) max 0;
             _depth = round((_vehicle modelToWorld [0,0,0]) select 2); // Error #372 (update depth of vehicle)
@@ -154,7 +153,7 @@ if ( _sunk ) then {
                 hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 isNull, exit", round(time - _time_stamp), _type_name ];
                 #endif
                 #ifdef __ACE__
-                _marker setMarkerType  "ACE_Icon_SoldierDead"; // mark dead player as skull
+                _marker setMarkerTypeLocal  "ACE_Icon_SoldierDead"; // mark dead player as skull
                 #endif
                 _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, localize "STR_MIS_18_2"] ;
                 sleep RIP_MARKER_TIME; // last farewell to sunk vehicle

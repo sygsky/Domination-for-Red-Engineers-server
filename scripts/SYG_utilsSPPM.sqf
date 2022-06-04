@@ -170,11 +170,11 @@ SYG_addSPPMMarker = {
 	};
 	if (_marker == "") exitWith { "STR_SPPM_ADD_ERR_1" }; // can't create marker name
 	hint localize format["+++ SPPM, created new marker ""%1"" for %2 vehicle[s]", _marker, count _arr];
-	_marker setMarkerColor SPPM_DOSAAF_MARKER_COLOR;
-	_marker setMarkerShape "ICON";
+	_marker setMarkerColorLocal SPPM_DOSAAF_MARKER_COLOR;
+	_marker setMarkerShapeLocal "ICON";
 	// TODO: find marker
 	_arr = _arr call SYG_generateSPPMText;
-	_marker setMarkerType (_arr select 0);
+	_marker setMarkerTypeLocal (_arr select 0);
 	_marker setMarkerText (_arr select 1);
 //	_marker setMarkerType SPPM_MARKER_TYPE;
 //	_marker setMarkerText (_arr call SYG_generateSPPMText);
@@ -221,7 +221,7 @@ SYG_updateSPPM = {
 	 // Cone, marker, vehicles found, let check center point
 	_new_pos = _arr call SYG_averPoint;
 	_arr = _arr call SYG_generateSPPMText;
-	_marker setMarkerType (_arr select 0);
+	_marker setMarkerTypeLocal (_arr select 0);
 	_marker setMarkerText (_arr select 1);
 
 	if ( [_pos, _new_pos] call SYG_distance2D > 1 ) exitWith { // SPPM center moved
@@ -327,9 +327,8 @@ SYG_updateAllSPPMMarkers = {
 //			hint localize format["+++ SPPM update: cnt %1, old pos %2, new pos %3", count _arr, _pos, _new_pos];
 			if ( [_pos, _new_pos] call SYG_distance2D > 1) then {
 					if ( _new_pos call SYG_findNearSPPMCount == 1) then {
-					_marker setMarkerPos _new_pos;
 					// move the mark object to a new pos
-					_marker setMarkerPos _new_pos;
+					_marker setMarkerPosLocal _new_pos;
 					_count_updated = _count_updated + 1;
 					_new_pos set [2, -1];
 					_cone setVectorUp [0,0,1];
@@ -340,7 +339,7 @@ SYG_updateAllSPPMMarkers = {
 				};
 			};
 			_arr = _arr call SYG_generateSPPMText;
-			_marker setMarkerType (_arr select 0);
+			_marker setMarkerTypeLocal (_arr select 0);
 			_marker setMarkerText (_arr select 1);
 		} else { _count_empty = _count_empty + 1 };
 	};
