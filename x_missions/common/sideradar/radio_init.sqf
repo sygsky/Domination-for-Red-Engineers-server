@@ -18,19 +18,19 @@ _veh = _this select 0;
 _id  = _this select 1;
 if (_id == 0) exitWith { // Radar itself
 	_veh setVariable ["RADAR",true]; // set for each vehicle
-	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar/radio_inspect.sqf",0]; // Inspect
+	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf",0]; // Inspect
 
 };
 if (_id == 1) exitWith { // first truck
 	_veh setVariable ["RADAR",true]; // set for each vehicle
-	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar/radio_inspect.sqf",1]; // Inspect
+	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf",1]; // Inspect
 	_veh addAction[localize "STR_UNLOAD",{}]; // Unload
 	_veh addAction[localize "STR_LOAD",{}]; // Load
 	_veh addEventHandler ["killed",{}]; // unlock 2nd vehicle if alive
 };
 if (_id == 2) exitWith { // second truck
 	_veh setVariable ["RADAR",true]; // set for each vehicle
-	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar/radio_inspect.sqf",2]; // Inspect
+	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf",2]; // Inspect
 	_veh addAction[localize "STR_UNLOAD",{}]; // Unload
 	_veh addAction[localize "STR_LOAD",{}]; // Load
 

@@ -92,7 +92,7 @@ while { sideradio_status == 0 } do {
 };
 sleep (10 + (random 5));
 
-// remove crew from trucks
+// Eject crew from trucks
 {
 	if (alive _x) then {
 		_x lock true;

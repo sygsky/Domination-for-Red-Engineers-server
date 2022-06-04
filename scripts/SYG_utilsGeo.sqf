@@ -967,6 +967,20 @@ SYG_getPosASL = {
 };
 
 //
+// Detects real height above/under ground level
+// call as follows: _agl = _obj call SYG_getPosAGL;
+//
+SYG_getPosAGL = {
+	private ["_asl", "_log", "_agl"];
+	if (typeName _this != "OBJECT") exitWith {[]};
+	_asl = getPosASL _this;
+	_log = "Logic" createVehicleLocal _asl;
+	_agl = (getPosASL _log) - _asl; // AGL
+	deleteVehicle _log;
+	_agl
+};
+
+//
 // Get random Way Point in designated annulus (between 2 designated radius)
 // call as: _wp = [_center,_rad1,_rad2] call SYG_getWPointInAnnulus
 // Returns: [x,y,z] point, or [] if can't create such point
