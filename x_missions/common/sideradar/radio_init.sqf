@@ -1,5 +1,5 @@
 /*
-    x_missions/common/sideradar/radio_truck_init.sqf
+    x_missions/common/sideradar/radio_init.sqf
     created 2022.06.01
 	author: Sygsky, on #410 request by Rokse
 
@@ -35,4 +35,4 @@ if (_id == 2) exitWith { // second truck
 	_veh addAction[localize "STR_LOAD",{}]; // Load
 
 };
-player groupChat format["--- radio_truck_init.sqf: expected _id must by 0, 1 or 2. Found %3, exit ", _id];
+player groupChat format["--- radio_init.sqf: expected _id must by 0, 1 or 2. Found %3, exit ", _id];

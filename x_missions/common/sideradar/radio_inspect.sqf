@@ -27,5 +27,5 @@ if (_id == 0) then { _str = "STR_RADAR_01"; } else {
 };
 ["msg_to_user", "", [_str], 0, 1, false] call SYG_msgToUserParser;
 if (_str == "STR_RADAR_NO") then {
-	player groupChat format["--- radio_truck_init.sqf: expected _id must by 0, 1 or 2. Found '%3', exit ", _id];
+	player groupChat format["--- radio_init.sqf: expected _id must by 0, 1 or 2. Found '%3', exit ", _id];
 };

@@ -1,4 +1,5 @@
 /*
+	x_missions\common\sideradar\radio_delete.sqf
 	author: Sygsky
 	description: none
 	_killed = _this select 0;
