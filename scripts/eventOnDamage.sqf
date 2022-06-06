@@ -19,7 +19,7 @@ if (!isServer) exitWith {};
 
 #define __PRINT__
 
-private ["_veh", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_x", "_dead", "_wpns", "_muzzle", "_shooter"];
+private ["_veh", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_x", "_dead", "_wpns", "_muzzle", "_name", "_gunner"];
 
 #ifdef __PRINT__
 hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2", _this, {alive _x} count crew (_this select 0)];
@@ -82,13 +82,15 @@ _muzzle = _wpns select (count _wpns - 1); // get last weapon (it should be a smo
 _veh selectWeapon _muzzle;
 _shooter = _veh findNearestEnemy _veh;
 if (alive _shooter) then {
+	_gunner = gunner _shooter;
+	_name = if (isPlayer _gunner) then {name _gunner} else { typeOf _shooter };
 #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to nearest enemy %2", typeOf _veh, typeOf _shooter];
+	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to the nearest enemy %2", typeOf _veh, _name];
 #endif
     _veh glanceAt _shooter; sleep 3.634;
 } else {
 #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: vec ""%1"" fires smoke curtain to random direction", typeOf _veh];
+	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to a random direction", typeOf _veh];
 #endif
     sleep 1
 };
