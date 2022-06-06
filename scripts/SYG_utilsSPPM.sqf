@@ -100,7 +100,12 @@ SYG_getAllSPPMVehicles = {
 	};
 	_arr call SYG_clearArrayB;
 	// now make all SPPM vehicles to be captured ones
-	{ _x setVariable ["CAPTURED_ITEM","SPPM"] } forEach _arr;
+	{
+	    if (isNil (_x getVariable "CAPTURED_ITEM")) then {
+	    	[_x] call XAddCheckDead;
+    	    _x setVariable ["CAPTURED_ITEM","SPPM"];
+	    }
+	} forEach _arr;
 	_arr
 };
 

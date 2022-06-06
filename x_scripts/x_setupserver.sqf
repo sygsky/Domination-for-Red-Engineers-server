@@ -70,6 +70,11 @@ XClearSidemission = {
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
+					if (! _was_captured) then {
+					    _was_captured = _x getVariable "CAPTURED_ITEM";
+					    _was_captured = !(isNil "_was_captured");
+					    // if (_was_captured == true) then { "vehicle was already captured by player[s]"};
+					};
 					if (_was_captured ) then { // vehicle was captured by player
 						[_x] call XAddCheckDead;
 						_x setVariable ["CAPTURED_ITEM","SM"];
