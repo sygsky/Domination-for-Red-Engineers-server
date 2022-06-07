@@ -55,7 +55,7 @@ _vehs = [];
     processInitCommands;
 	_vehs set [count _vehs, _veh];
 } forEach[ 1, 3 ];
-
+//      0,     1,    2
 [x_sm_pos,_radar,_vehs]  execVM "x_missions\common\x_sideradio.sqf";
 
 // TODO: add enemy infantry patrols on the way to the destination point

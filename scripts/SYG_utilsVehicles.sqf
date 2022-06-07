@@ -251,6 +251,7 @@ SYG_findNearestPlayer = {
 	    {
     	    if ( ( alive _x ) && ( isPLayer _x ) ) exitWith { _pl = _x };
 	    } forEach crew _x;
+	    if ( !isNull _pl ) exitWith {};
 	} forEach _nearArr;
 	_pl
 };

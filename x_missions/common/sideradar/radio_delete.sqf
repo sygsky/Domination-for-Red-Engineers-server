@@ -8,14 +8,22 @@
 */
 
 if (!isServer) exitWith{};
+sideradio_status = -1;
+publicVariable "sideradio_status";
+{
+	if (alive _x) then {_x lock true};
+} forEach (sideradio_info select 2);
+
 _cnt = 0;
 _killed = _this select 0;
+_pos = getPos _killed;
 while (true) do {
     sleep (60 + (random 60));
-    if ( {(alive _x) && (isPlayer _x)} count (_killed nearObjects ["SoldierEB", 300]) > 1) then {
+    _player =  [_pos, 300] call SYG_findNearestPlayer; // find any alive player in or out vehicles
+    if ( !alive _player ) then {
         _cnt = _cnt + 1;
+		if (_cnt > 9) exitWith { // 10 times with 60 seconds check if no players nearby
+			deleteVehicle _killed;
+		};
     } else {_cnt = 0;};
-    if (_cnt > 10) exitWith { // 10 times check shows no players innearby
-        deleteVehicle _killed;
-    };
 };

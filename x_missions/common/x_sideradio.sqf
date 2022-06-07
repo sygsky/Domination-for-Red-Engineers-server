@@ -1,4 +1,6 @@
 /*
+	x_missions\common\x_sideradio.sqf
+
 	author: Sygsky
 	description: controls the installation of an antenna for radio communication with the USSR.
 	params: [x_sm_pos,_radar,_vehs]
@@ -54,7 +56,7 @@ _truck_marker setMarkerColorLocal "ColorBlack";
 _truck_marker setMarkerTypeLocal TRUCK_MARKER;
 _truck_marker setMarkerSizeLocal [0.5, 0.5];
 
-_radar_marker = "sideradio_truck_marker";
+_radar_marker = "sideradio_radar_marker";
 createMarker [_radar_marker, _radar ];
 _radar_marker setMarkerColorLocal "ColorBlack";
 _radar_marker setMarkerTypeLocal RADAR_MARKER;
@@ -62,28 +64,43 @@ _radar_marker setMarkerSizeLocal [0.5, 0.5];
 
 while { sideradio_status == 0 } do {
     // check markers
+    _marker_pos = [];
     if (!alive _truck) then {
         // remove truck marker just in case
         _new_truck = _vehs select 1;
         if (alive _new_truck) then {
             _truck = _new_truck;
-            _truck_marker setMarkerPos (getPos _new_truck);
+            _marker_pos =getPos _new_truck;
         } else {
             deleteMarker _truck_marker;
         };
     };
     if (alive _truck ) then { // move marker if truck is shifted
         if ( ( [getMarkerPos _truck_marker, _truck] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-            _truck_marker setMarkerPos ( getPos _truck );
+            _marker_pos = getPos _truck;
         };
     };
+    if (count _marker_pos > 0) then { _truck_marker setMarkerPos (getPos _new_truck); };
+
     if (alive _radar) then { // move marker if
-        if ((_radar call _radarUnloaded)) then {
+    	_pos = getPosASL _radar;
+        if ( ( _pos select 2) >= 0) then {
             if ( ( [getMarkerPos _radar_marker, _radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-                _radar_marker setMarkerPos ( getPos _radar );
+            	if ( (getMarkerType _radar_marker) == "") then { // marker not exists, create it now
+            		_radar_marker = createMarker [_radar_marker, _pos]; //RADAR_MARKER;
+            		_radar_marker setMarkerTypeLocal RADAR_MARKER;
+            		_radar_marker setMarkerColor "ColorBlack";
+            	} else {
+            		_radar_marker setMarkerColorLocal "ColorBlack";
+	                _radar_marker setMarkerPos ( _pos );
+            	};
             };
         } else {
+#ifdef __ACE__
+        	_radar_marker setMarkerColorLocal "ACE_ColorTransparent";
+#else
             deleteMarker _radar_marker;
+#endif
         };
     } else {
         deleteMarker _radar_marker;

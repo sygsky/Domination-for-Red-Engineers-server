@@ -16,9 +16,33 @@
 
 _veh = _this select 0;
 _txt = localize (if (_veh isKindOf "Truck") then {
-		if (locked _veh) then {"STR_RADAR_TRUCK_LOCKED"} else { "STR_RADAR_TRUCK" }
-	} else {
-		if (isNil "sideradio_status") then {"STR_RADAR_MAST_INSTALLED"} else {"STR_RADAR_MAST"}
-	}
-);
+	if (locked _veh) then {"STR_RADAR_TRUCK_LOCKED"}
+	else {
+		if (isNil "sideradio_info") then {
+			"STR_RADAR_TRUCK";
+		} else {
+			_radar = sideradio_info select 0;
+			if (alive _radar) then {
+				_asl = getPosASL _radar;
+				if ((_asl select 2) < 0 ) then { "STR_RADAR_TRUCK_LOADED" } else {
+					// -1 - mission failured, 0 - mission not finished, 1 - succesfully finished
+					switch (sideradio_status) do {
+						case 0: { "STR_RADAR_TRUCK_NOT_LOADED" };
+						case 1: { "STR_RADAR_TRUCK_MAST_INSTALLED" };
+						default { "STR_RADAR_TRUCK" };
+					};
+				};
+			} else { // radar is dead
+				"STR_RADAR_TRUCK_MAST_FAILED"
+			};
+		};
+	};
+} else {
+	if (isNil "sideradio_status") exitWith {"STR_RADAR_MAST"};
+	switch (sideradio_status) do {
+		case 0: { "STR_RADAR_MAST_UNLOADED" };
+		case 1: { "STR_RADAR_MAST_INSTALLED" };
+		default { "STR_RADAR_MAST" };
+	};
+});
 (localize _txt) call XfGlobalChat;
