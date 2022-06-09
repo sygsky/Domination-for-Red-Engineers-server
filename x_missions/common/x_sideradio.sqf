@@ -39,6 +39,9 @@ _destination_error = {
 // 1. create antenna and trucks on the base
 
 _radar = _this select 1; // Radar
+d_radar = _radar;
+setVariable "d_radar";
+
 _vehs  = _this select 2; // two trucks to load/install radiomast
 
 sideradio_info = [ _radar, _vehs ];

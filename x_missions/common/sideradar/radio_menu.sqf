@@ -42,8 +42,8 @@ if (true) then {
 				_txt = "STR_RADAR_MAST_ALREADY_LOADED";
 				call _remove_ids;
 				_ids resize 0;
-				_ids set [0, _veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
-				_ids set [1, _veh addAction[localize "STR_UNLOAD","x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]]; // load
+				_ids set [0, _veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
+				_ids set [1, _veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]]; // load
 			};
 			_asl resize 2;
 			_radar = _asl nearObjects["Land_radar", 20];
@@ -65,6 +65,21 @@ if (true) then {
 
 		};
 		case "INSTALL": {
+			_asl = getPosASL d_radar;
+			if ( (_asl select 2) > 0) then {
+				_dist = _radar distance _truck;
+				if (_dist >
+			};
+			_backpos = _truck modelToWorld [0,-10,0]; // where set the radar
+
+			if ((_asl select 2) > 0 ) exitWith {
+				// already unloaded into this vehicle, so change all menu items
+				_txt = "STR_RADAR_MAST_ALREADY_UNLOADED";
+				call _remove_ids;
+				_ids resize 0;
+				_ids set [0, _veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
+				_ids set [1, _veh addAction[localize "STR_LOAD","x_missions\common\sideradar\radio_menu.sqf","LOAD"]]; // load
+			};
 
 		};
 	};

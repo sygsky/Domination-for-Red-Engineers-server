@@ -70,8 +70,7 @@ XHintChatMsg = {
 	hint _msg;
 	_msg_chat = _msg call XfRemoveLineBreak;
 	
-	_type_chat = toUpper _type_chat;
-	switch (_type_chat) do {
+	switch (toUpper _type_chat) do {
 		case "HQ": {
 			_msg_chat call XfHQChat;
 		};
@@ -94,7 +93,7 @@ XfHandleMessage = {
 	_receiver_type = toLower(_this select 1); // "unit", "grp", "all","vec"
 	_receiver = toLower(_this select 2); // only needed for "unit", "grp", "vec", otherwise objNull
 	_type = _this select 3; // "global", "vehicle", "side", "group", "hint", "hq"
-	switch (_type) do {
+	switch (toLower _type) do {
 		case "global": {
 			switch (_receiver_type) do {
 				case "unit": {

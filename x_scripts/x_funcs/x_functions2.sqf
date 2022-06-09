@@ -463,17 +463,28 @@ XfGetFlankPos = {
 // parameters: position, radius
 // example: _slope = [the_position, the_radius] call XfGetSlope;
 XfGetSlope = {
-	private ["_position", "_radius", "_slopeObject", "_centerHeight", "_height", "_direction", "_count"];
+	private ["_position", "_radius", "_slopeObject", "_centerHeight", "_height", /*"_direction",*/ "_count","_dxy","_xc","_yc","_x"];
 	_position = _this select 0;_radius = _this select 1;
 	_slopeObject = "Logic" createVehicleLocal [0,0,0];
 	_slopeObject setPos _position;
 	_centerHeight = getPosASL _slopeObject select 2;
-	_height = 0;_direction = 0;
+	_height = 0;//_direction = 0;
+	_xc  = _position select 0;
+	_yc  = _position select 1;
+	// Note: sin(45) == cos(45)
+	_dxy = 0.7071067812 * _radius; // (sin 45)*_radius;
+//	_dy = _dx; //(cos 45)*_radius;
+	{
+		_slopeObject setPos [ _xc + (_x select 0), _yc + (_x select 1)];
+		_height = _height + abs (_centerHeight - (getPosASL _slopeObject select 2)); // add deviation from the center point
+	} forEach [[_dxy,_dxy],[_radius,0],[_dxy,-_dxy],[0,-_radius],[-_dxy,-_dxy],[-_radius,0],[-_dxy,_dy],[0,_radius]];
+/*
 	for "_count" from 0 to 7 do {
 		_slopeObject setPos [(_position select 0)+((sin _direction)*_radius),(_position select 1)+((cos _direction)*_radius),0];
 		_direction = _direction + 45;
 		_height = _height + abs (_centerHeight - (getPosASL _slopeObject select 2));
 	};
+*/
 	deleteVehicle _slopeObject;
 	_height / 8
 };
@@ -530,17 +541,21 @@ XfCreateMarkerLocal = {
 	_marker
 };
 
-// send a text message over the network
+// send a text message over the network, not used
 // parameters: msg text, receiver ("unit","grp","all","vec"), receiver (unit, grp, vehicle), type ("global", "vehicle", "side", "group", "hint")
+/*
 XfSendMessage = {
 	["xmsg",_this] call XNTSendNetStartScriptClient;
 };
+*/
 
-// count all alive units in units or group {alive _x}
-// call: _cnt = units _grp call XfGetAliveUnits;
+// count all alive units in units or group or in vehicle with code  {alive _x}
+// call: _cnt = (units _grp) call XfGetAliveUnits;
+// call: _cnt = _veh call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetAliveUnits = {
-	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
+	private ["_x"];
+	if ( (typeName _this) == "GROUP" ) then { _this = units _this} else { if ((typeName _this) == "OBJECT") then {_this = crew _this}};
 	({alive _x} count _this)
 };
 
@@ -569,7 +584,7 @@ XfGetLeader = {
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetStandUnits = {
-	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
+	if ( (typeName _this) == "GROUP" ) then { _this = units _this} else { if ((typeName _this) == "OBJECT") then {_this = crew _this}};
 	({canStand _x} count _this)
 };
 
@@ -577,7 +592,7 @@ XfGetStandUnits = {
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetHealthyUnits = {
-	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
+	if ( (typeName _this) == "GROUP" ) then { _this = units _this} else { if ((typeName _this) == "OBJECT") then {_this = crew _this}};
 	({alive _x && (damage _x == 0)} count _this)
 };
 
@@ -585,8 +600,8 @@ XfGetHealthyUnits = {
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetUnitsOnFeet = {
-	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
-	({(alive _x) AND (vehicle _x == _x)} count _this)
+	if ( (typeName _this) == "GROUP" ) then { _this = units _this} else { if ((typeName _this) == "OBJECT") then {_this = crew _this}};
+	({(alive _x) && (vehicle _x == _x)} count _this)
 };
 
 // call: _cnt = _grp call XfGetAliveUnits; // count all alive units in group
