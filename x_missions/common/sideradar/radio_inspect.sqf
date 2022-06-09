@@ -38,7 +38,7 @@ _txt = localize (if (_veh isKindOf "Truck") then {
 		};
 	};
 } else {
-	if (isNil "sideradio_status") exitWith {"STR_RADAR_MAST"};
+	if (!alive d_radar) exitWith {"STR_RADAR_MAST"};
 	switch (sideradio_status) do {
 		case 0: { "STR_RADAR_MAST_UNLOADED" };
 		case 1: { "STR_RADAR_MAST_INSTALLED" };

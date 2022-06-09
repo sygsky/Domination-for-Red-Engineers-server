@@ -1524,15 +1524,20 @@ STR_WPN_EXIT,"press '%1' to exit from dialog","drücken Sie '%1', um den Dialog 
 
 STR_RADAR_NO,Received unreliable message,Empfangene unzuverlässige Nachricht,Mensaje recibido no fiable,Получено невнятное сообщение
 STR_RADAR_MAST,Radio-mast,Radio-mast,Radio-mast,Радио-мачта
+STR_RADAR_MAST_DEAD,Radio mast destroyed,Funkmast zerstört,Mástil de radio destruido,Радио-мачта уничтожена
 STR_RADAR_MAST_UNLOADED,Unloaded radio mast,Unbelasteter Funkmast,Mástil de radio sin carga,Выгруженная радио-мачта
+STR_RADAR_MAST_LOADED,Radio mast loaded,Funkmast geladen,Mástil de radio cargado,Радио-мачта загружена
 STR_RADAR_MAST_INSTALLED,"Installed radio repeater mast. The motherland will hear us!","Ein Funk-Repeater-Mast wird installiert. Das Mutterland wird uns hören!","Un mástil repetidor de radio instalado. La patria nos escuchará","Установленная радиомачта-ретранслятор. Родина услышит нас!"
+STR_RADAR_MAST_ALREADY_LOADED,Radio mast already loaded,Der Funkmast ist bereits geladen,El mástil de radio ya está cargado,Радиомачта уже загружена
 STR_RADAR_TRUCK,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Активный грузовик для радио-мачты
+STR_RADAR_TRUCK_NOT_DRIVER,You are not driver,Sie sind kein Fahrer,Usted no es conductor,Вы не водитель
 STR_RADAR_TRUCK_LOADED,"Active truck for transporting a radio mast, mast is loaded","Aktiver Lkw für den Transport eines Funkmastes, Mast geladen","Camión activo para transportar mástil de radio, mástil cargado","Активный грузовик для перевозки радио-мачты, мачта загружена"
 STR_RADAR_TRUCK_NOT_LOADED,"Active truck for transporting a radio mast, mast not loaded","Aktiver Lastwagen für den Transport eines Funkmastes, Mast nicht geladen","Camión activo para el transporte de un mástil de radio, mástil no cargado","Активный грузовик для перевозки радио-мачты, мачта не загружена"
 STR_RADAR_TRUCK_MAST_INSTALLED,"Active truck for transporting a radio mast, mast is installed","Aktiver Lastwagen für den Transport eines Funkmastes, Mast ist installiert","Camión activo para transportar un mástil de radio, el mástil está instalado","Активный грузовик для перевозки радио-мачты, мачта установлена"
 STR_RADAR_TRUCK_MAST_FAILED,"Active truck to transport radio mast, mission failed.","Aktiver Lkw zum Transport des Funkmastes, Mission gescheitert","Camión activo para transportar mástil de radio, misión fallida","Активный грузовик для перевозки радио-мачты, миссия провалена"
 STR_RADAR_TRUCK_LOCKED,"Spare Truck for the Mission","Spare Truck for the Mission","Spare Truck for the Mission","Запасной грузовик для миссии"
 STR_RADAR_TRUCK_UNLOCK,"There's only one truck left. Take care of it, it's our last chance to complete the mission!","Es gibt nur noch einen Lkw. Kümmert euch darum, es ist unsere letzte Chance, die Mission zu erfüllen!","Sólo queda un camión. Encárgate de ello, ¡es nuestra última oportunidad de completar la misión!","Осталось только один грузовик. Берегите его, он - наш последний шанс выполнить задание!"
+STR_RADAR_TRUCK_FAILED,"Last track destroyed, task failed!","Letzte Spur zerstört, Aufgabe gescheitert!","Última pista destruida, tarea fallida","Уничтожен последний грузовик, задача не выполнена!"
 STR_UNLOAD,Unload,Entladen,Descarga,Выгрузить
 STR_LOAD,Load,Laden Sie,Carga,Загрузить
 STR_INSPECT,Inspect vehicle,Fahrzeug inspizieren,Inspeccionar el vehículo,Осмотреть технику

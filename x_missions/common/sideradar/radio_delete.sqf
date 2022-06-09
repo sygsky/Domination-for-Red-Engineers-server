@@ -12,7 +12,7 @@ sideradio_status = -1;
 publicVariable "sideradio_status";
 {
 	if (alive _x) then {_x lock true};
-} forEach (sideradio_info select 2);
+} forEach (sideradio_info select 2); // remove all crew from all vehicles
 
 _cnt = 0;
 _killed = _this select 0;
