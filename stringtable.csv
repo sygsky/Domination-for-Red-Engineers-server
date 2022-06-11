@@ -1529,6 +1529,12 @@ STR_RADAR_MAST_UNLOADED,Unloaded radio mast,Unbelasteter Funkmast,Mástil de rad
 STR_RADAR_MAST_LOADED,Radio mast loaded,Funkmast geladen,Mástil de radio cargado,Радио-мачта загружена
 STR_RADAR_MAST_INSTALLED,"Installed radio repeater mast. The motherland will hear us!","Ein Funk-Repeater-Mast wird installiert. Das Mutterland wird uns hören!","Un mástil repetidor de radio instalado. La patria nos escuchará","Установленная радиомачта-ретранслятор. Родина услышит нас!"
 STR_RADAR_MAST_ALREADY_LOADED,Radio mast already loaded,Der Funkmast ist bereits geladen,El mástil de radio ya está cargado,Радиомачта уже загружена
+STR_RADAR_MAST_FAR_AWAY,Mast further than %1 meters (%2),Mast weiter als %1 Meter (%2),Mástil de más de %1 metros (%2),Мачта дальше %1 м. (%2)
+STR_RADAR_MAST_TOO_LOW,Mast below %1 m. (%2) above sea level,Mast unter %1 m. (%2) über dem Meeresspiegel,Mástil por debajo de %1 m. (%2) sobre el nivel del mar,Мачта ниже %1 м. (%2)
+STR_RADAR_MAST_BAD_SLOPE,The mast cannot be installed at this position,Der Mast kann in dieser Position nicht installiert werden,Der Mast kann in dieser Position nicht installiert werden,El mástil no puede instalarse en esta posición,Мачта не может быть здесь установлена
+STR_RADAR_MAST_NEAR_BASE,"The base is too close, take the mast farther away","Die Basis ist zu nah, bring den Mast weiter weg","La base está demasiado cerca, aleja el mástil","База слишком близко, отведите мачту подальше"
+STR_RADAR_MAST_NOT_FOUND,"No radio mast detected within %1 m.","Kein Funkmast im Umkreis von %1 m entdeckt","No se ha detectado ningún mástil de radio en un radio de %1 m","Радио-мачта не обнаружена в радиусе %1 м."
+
 STR_RADAR_TRUCK,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Активный грузовик для радио-мачты
 STR_RADAR_TRUCK_NOT_DRIVER,You are not driver,Sie sind kein Fahrer,Usted no es conductor,Вы не водитель
 STR_RADAR_TRUCK_LOADED,"Active truck for transporting a radio mast, mast is loaded","Aktiver Lkw für den Transport eines Funkmastes, Mast geladen","Camión activo para transportar mástil de radio, mástil cargado","Активный грузовик для перевозки радио-мачты, мачта загружена"
@@ -1538,9 +1544,11 @@ STR_RADAR_TRUCK_MAST_FAILED,"Active truck to transport radio mast, mission faile
 STR_RADAR_TRUCK_LOCKED,"Spare Truck for the Mission","Spare Truck for the Mission","Spare Truck for the Mission","Запасной грузовик для миссии"
 STR_RADAR_TRUCK_UNLOCK,"There's only one truck left. Take care of it, it's our last chance to complete the mission!","Es gibt nur noch einen Lkw. Kümmert euch darum, es ist unsere letzte Chance, die Mission zu erfüllen!","Sólo queda un camión. Encárgate de ello, ¡es nuestra última oportunidad de completar la misión!","Осталось только один грузовик. Берегите его, он - наш последний шанс выполнить задание!"
 STR_RADAR_TRUCK_FAILED,"Last track destroyed, task failed!","Letzte Spur zerstört, Aufgabe gescheitert!","Última pista destruida, tarea fallida","Уничтожен последний грузовик, задача не выполнена!"
-STR_UNLOAD,Unload,Entladen,Descarga,Выгрузить
+
 STR_LOAD,Load,Laden Sie,Carga,Загрузить
+STR_UNLOAD,Unload,Entladen,Descarga,Выгрузить
 STR_INSPECT,Inspect vehicle,Fahrzeug inspizieren,Inspeccionar el vehículo,Осмотреть технику
+STR_INSTALL,Сheck radio-mast,Сheck Funkmast,Сheck radio-mástil,Испытать мачту
 
 STR_TITLE,"Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2022 by EngineerACE\n          for Red-Engineers.ucoz.ru","Erstellt 2009 von Xeno\n  für www.germany-fun.de\n\nBearbeitet 2014-2022 von EngineerACE\n   für Red-Engineers.ucoz.ru","Hecho en 2009 por Xeno\n   para www.germany-fun.de\n\nEdit 2014-2022 por EngineerACE\n para     Red-Engineers.ucoz.ru","Автор 2009 Xeno\n  для www.germany-fun.de\n\nПереработка 2014-2022 EngineerACE\n  для Red-Engineers.ucoz.ru"
 

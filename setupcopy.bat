@@ -45,4 +45,7 @@ copy global_vars.sqf scripts\bonus /Y
 copy GRU_Scripts\GRU_Setup.sqf scripts /Y
 copy GRU_Scripts\GRU_Setup.sqf x_scripts /Y
 
+copy GRU_Scripts\GRU_Setup.sqf x_scripts /Y
+copy x_missions\common\sideradio_vars.sqf x_missions\common\sideradar\ /Y
+copy x_missions\common\sideradio_vars.sqf x_missions\m /Y
 rem cd ..

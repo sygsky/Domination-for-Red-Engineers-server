@@ -16,14 +16,14 @@
 
 _veh = _this select 0;
 _txt = localize (if (_veh isKindOf "Truck") then {
-	if (locked _veh) then {"STR_RADAR_TRUCK_LOCKED"}
+	if (locked _veh) then {"STR_RADAR_TRUCK_LOCKED"} // "Spare Truck for the Mission"
 	else {
-		if (isNil "sideradio_info") then {
-			"STR_RADAR_TRUCK";
+		if (isNil "sideradio_vehs") then {
+			"STR_RADAR_TRUCK"; // Active truck for transporting a radio mast
 		} else {
-			_radar = sideradio_info select 0;
-			if (alive _radar) then {
-				_asl = getPosASL _radar;
+			if (alive d_radar) then {
+				_asl = getPosASL d_radar;
+				// "Active truck for transporting a radio mast, mast is loaded"
 				if ((_asl select 2) < 0 ) then { "STR_RADAR_TRUCK_LOADED" } else {
 					// -1 - mission failured, 0 - mission not finished, 1 - succesfully finished
 					switch (sideradio_status) do {
@@ -45,4 +45,6 @@ _txt = localize (if (_veh isKindOf "Truck") then {
 		default { "STR_RADAR_MAST" };
 	};
 });
-(localize _txt) call XfGlobalChat;
+if (_txt != "") then {
+	(localize _txt) call XfGlobalChat;
+};

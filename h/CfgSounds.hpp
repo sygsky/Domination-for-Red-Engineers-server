@@ -633,5 +633,6 @@ class CfgSounds {
 
     class Oberon { name="Oberon (Yuri Vizbbor song)";                   sound[] = {\sounds\intro\players\Oberon.ogg,db-1,1.0}; titles[] = {};}; // Song for player "Oberon"
 
+    class radio_0 { name="radio 0";                                     sound[] = {\sounds\radio\radio_0.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
 
 };

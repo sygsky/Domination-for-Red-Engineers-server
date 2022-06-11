@@ -1,10 +1,7 @@
 // by Sygsky, radar installation mission (#410, request by Rokse). x_missions/m/x_m56.sqf
 #include "x_setup.sqf"
 #include "x_macros.sqf"
-
-#define RADAR_POINT = [13592,15591,0] // central point of the area to install radar
-#define INSTALL_RADIUS 2000 // how far from the RADAR_POINT
-#define INSTALL_MIN_ALTITUDE 450 // minimal height above sea level to install
+#include "sideradio_vars.sqf"
 
 x_sm_pos = [RADAR_POINT]; // index: 52,   Shot down chopper
 x_sm_type = "undefined"; // "normal", "convoy"
@@ -22,14 +19,14 @@ if (X_Client) then {
 
 if (!isServer) exitWith {};
 
-// 1. create antenna and trucks on the base
-_radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
-_pos1 = getPos _radar;
-_radar setPos [_pos select 0, _pos select 1, -5.7 ];
-_radar setVectorUp [1,0,0];
-_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
-_radar setVariable ["RADAR",true];
-_radar setVehicleInit "this execVM ""x_missions/common/sideradar/radio_init.sqf""";
+// 1. create antenna the base
+d_radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
+d_radar setVehicleInit "this execVM ""x_missions/common/sideradar/radio_init.sqf""";
+
+_pos1 = getPos d_radar;
+d_radar setPos [_pos select 0, _pos select 1, -5.7 ];
+d_radar setVectorUp [1,0,0];
+d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
 
 // 2. create trucks on the base
 #ifdef __ACE__
@@ -52,11 +49,11 @@ _vehs = [];
 	_veh = createVehicle [_veh, _pos, [], 0, "NONE"];
     extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
     _veh setVehicleInit format ["this execVM ""x_missions/common/sideradar/radio_init.sqf""", (count _vehs) + 1 ];
-    processInitCommands;
 	_vehs set [count _vehs, _veh];
 } forEach[ 1, 3 ];
+processInitCommands;
 //      0,     1,    2
-[x_sm_pos,_radar,_vehs]  execVM "x_missions\common\x_sideradio.sqf";
+_vehs  execVM "x_missions\common\x_sideradio.sqf";
 
 // TODO: add enemy infantry patrols on the way to the destination point
 
