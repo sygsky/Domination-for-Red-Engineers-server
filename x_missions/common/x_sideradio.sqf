@@ -33,17 +33,26 @@ publicVariable "sideradio_status"; // status of mission, is set on clients only
 _truck = _vehs select 0; // current (first) alive truck
 _truck_marker = "sideradio_truck_marker";
 createMarker [_truck_marker, _truck ];
-_truck_marker setMarkerColorLocal "ColorBlack";
+_truck_marker setMarkerColorLocal RADAR_SM_COLOR;
 _truck_marker setMarkerTypeLocal TRUCK_MARKER;
 _truck_marker setMarkerSizeLocal [0.5, 0.5];
 
 _radar_marker = "sideradio_radar_marker";
 createMarker [_radar_marker, d_radar ];
-_radar_marker setMarkerColorLocal "ColorBlack";
+_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
 _radar_marker setMarkerTypeLocal RADAR_MARKER;
 _radar_marker setMarkerSizeLocal [0.5, 0.5];
 
+//
+// Main loop, controls markers movement and end of the mission
+//
 while { sideradio_status == 0 } do {
+
+	if (X_MP && ((call XPlayersNumber) == 0)) then {
+		waitUntil {sleep (60 + (random 1)); (call XPlayersNumber) > 0};
+	};
+	_delay = 15;
+
     // check markers
     _marker_pos = [];
     if (!alive _truck) then {
@@ -52,6 +61,7 @@ while { sideradio_status == 0 } do {
         if (alive _new_truck) then {
             _truck = _new_truck;
             _marker_pos = getPos _new_truck;
+            _delay = 3;
         } else {
             deleteMarker _truck_marker;
         };
@@ -61,7 +71,8 @@ while { sideradio_status == 0 } do {
             _marker_pos = getPos _truck;
         };
     };
-    if (count _marker_pos > 0) then { _truck_marker setMarkerPos (getPos _new_truck); };
+    
+    if (count _marker_pos > 0) then { _truck_marker setMarkerPos (getPos _new_truck); _delay = 3; };
 
     if (alive d_radar) then { // move marker if
     	_pos = getPosASL d_radar;
@@ -70,11 +81,12 @@ while { sideradio_status == 0 } do {
             	if ( (getMarkerType _radar_marker) == "") then { // marker not exists, create it now
             		_radar_marker = createMarker [_radar_marker, _pos]; //RADAR_MARKER;
             		_radar_marker setMarkerTypeLocal RADAR_MARKER;
-            		_radar_marker setMarkerColor "ColorRed";
+            		_radar_marker setMarkerColor RADAR_SM_COLOR;
             	} else {
-            		_radar_marker setMarkerColorLocal "ColorRed";
+            		_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
 	                _radar_marker setMarkerPos ( _pos );
             	};
+            	_delay = 3;
             };
         } else {
 #ifdef __ACE__
@@ -86,9 +98,16 @@ while { sideradio_status == 0 } do {
     } else {
         deleteMarker _radar_marker;
     };
-	sleep 3;
+	sleep _delay;
 };
+
 sleep (5 + (random 5));
+
+//==================================================
+//=            Finish the mission                  =
+//==================================================
+
+// assign ecompleted codes etc
 
 // Eject crew from trucks
 {
