@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_scripts\x_create_vec.sqf
 private ["_display", "_control", "_index", "_which"];
 
 _display = findDisplay 11002;

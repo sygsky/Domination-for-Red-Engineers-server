@@ -1,16 +1,16 @@
-// by Xeno
+// by Xeno: x_scripts\x_bike.sqf
 private ["_create_bike", "_disp_name", "_str", "_pos", "_vehicle", "_exitit", "_dosearch", "_index", "_parray", "_rank"];
 if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
 
 _create_bike = (_this select 3) select 0;
-_b_mode = (_this select 3) select 1;
+_b_mode = (_this select 3) select 1; // 0 - created from the MHQ diallog, 1 - created from jump flag (d_jumpflag_vec != "")
 
 #ifdef __RANKED__
 _exitit = false;
 if (_create_bike in d_create_bike) then {
-	if (count d_create_bike > 1) then {
+	if (count d_create_bike > 0) then {
 		_index = d_create_bike find _create_bike;
 		if (_index != -1) then {
 			if (score player < d_points_needed select _index) then {
@@ -19,9 +19,7 @@ if (_create_bike in d_create_bike) then {
 				_exitit = true;
 			};
 		};
-	} // if (count d_create_bike > 1) then 
-	else
-	{
+	} else { // if (count d_create_bike > 1) then
 		(localize "STR_SYS_329_1"/* "Устройства для выгрузки не предусмотрены" */) call XfGlobalChat;
 		_exitit = true;
 	};
@@ -76,7 +74,7 @@ if (typeOf _vehicle != "ACE_Bicycle") then {
 #endif
 player moveInDriver _vehicle;
 #ifdef __ACE__
-};
+} else { ["say_sound", _unit, "bicycle_ring"] call XSendNetStartScriptClientAll; };
 #endif
 
 if (_b_mode == 1) then {
