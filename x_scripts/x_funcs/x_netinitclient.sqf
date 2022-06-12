@@ -710,8 +710,7 @@ XHandleNetStartScriptClient = {
 		case "GRU_msg_patrol_detected"; // TODO: check new patrol in the future, now simply inform player about
 		case "GRU_msg": {
 			hint localize format["+++ x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
-			if (arg(0) == "GRU_msg_patrol_detected") then
-			{
+			if (arg(0) == "GRU_msg_patrol_detected") then {
 //			    if ( __HasGVar(PATROL_COUNT) ) then
 //			    {
 //			        _cnt = __GetGVar(PATROL_COUNT);
@@ -723,9 +722,9 @@ XHandleNetStartScriptClient = {
 		};
 
 		//
-		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound, [,"-",_player_name]] or
-		//                                             ["say_sound","LIST", _arr, [,"-",_player_name]]  where _arr is array of [_object, _sound, sleep time] or
-		//                                             ["say_sound","PLAY", _sound]   - play sound with playSound Arma command
+		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound[, "-",_player_name]] or
+		//                                             ["say_sound","LIST", _arr[, "-",_player_name]]  where _arr is array of [_object, _sound, sleep time] or
+		//                                             ["say_sound","PLAY", _sound<_wait_period>]   - play sound with playSound Arma command
         case "say_sound": {
 
 			//
@@ -733,7 +732,7 @@ XHandleNetStartScriptClient = {
 			//
 			_say_proc = {
 				private ["_obj","_pos","_nil","_sound"];
-			    if ( ( argopt( 3, "" ) == "-" ) && ( argopt( 4, "" ) == ( name player ) ) ) exitWith {}; // This player not assigned to play this this sound
+			    if ( ( argopt( 3, "" ) == "-" ) && ( argopt( 4, "" ) == ( name player ) ) ) exitWith {}; // This player not assigned to play this sound
 				_obj = _this select 0;
 				if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
 				_pos = [];
@@ -778,7 +777,13 @@ XHandleNetStartScriptClient = {
 							sleep ( ( _this select 3 ) min 0 );
 						};
 					};
+					hint localize format["+++ say_sound PLAY ""%1""", (_this select 2)];
 					playSound ( _this select 2 ); // as _arr = [], nothing more will be played
+					if ( (count _this) > 3) ) then { // try to show music title
+						if (typeName (_this select 3) == "SCALAR") then {
+							[_this select 2, _this select 3] spawn SYG_showMusicTitle;
+						};
+					};
 		    	};
 				// it must be "LIST" sub-command
 				_arr = _this select 2
