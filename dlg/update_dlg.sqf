@@ -52,7 +52,7 @@ if (playerSide == west) then {
 //		hint localize  format["+++ update_dlg.sqf: mhq1 available = %1", _mr1_available];
 		if ( [MRR1, __TELEPORT_DEVIATION__] call SYG_isNearIronMass) exitWith { // "Teleport does not work near a large mass of iron!"
 //			hint localize  format["+++ update_dlg.sqf: large iron mass detected near MHQ1 %1",  [MRR1, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE];
-			_mr1text ctrlSetText (localize "STR_SYS_75_4");
+			_mr1text ctrlSetText (format[localize "STR_SYS_75_4", 1]);
 			};
 	#endif
 	};
@@ -89,7 +89,7 @@ if (playerSide == west) then {
 	#ifdef __TELEPORT_DEVIATION__
 		if ( [MRR2, __TELEPORT_DEVIATION__] call SYG_isNearIronMass ) exitWith {
 //			hint localize  format["+++ update_dlg.sqf: large iron mass detected near MHQ2 %1",  [MRR2, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE];
-			_mr2text ctrlSetText (localize "STR_SYS_75_4");  // "Teleport does not work near a large mass of iron!"
+			_mr2text ctrlSetText (format[localize "STR_SYS_75_4", 2]);  // "Teleport does not work near a large mass of iron!"
 		};
 	#endif
 };
