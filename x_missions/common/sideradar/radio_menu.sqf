@@ -17,6 +17,7 @@
 private ["_ids"];
 
 #include "sideradio_vars.sqf"
+
 _cmd = _this select 3; // must be "LOAD", "UNLOAD", "INSTALL"
 _veh = _this select 0;
 _pl  = _this select 1;
@@ -36,7 +37,8 @@ _remove_ids = {
 };
 if (true) then {
 
-	if ((vehicle _pl == _pl) ||  (_pl != driver (vehicle _pl)) ) exitWith  { _txt = "STR_RADAR_TRUCK_NOT_DRIVER" };
+	if ((vehicle _pl == _pl) ) exitWith  { _txt = "STR_RADAR_TRUCK_NOT_DRIVER" };
+	if (_pl != driver (vehicle _pl) ) exitWith  { _txt = "STR_RADAR_TRUCK_NOT_DRIVER" };
 
 	if (locked _veh) exitWith {
 		_veh say "radio_0";
@@ -80,9 +82,10 @@ if (true) then {
 				// STR_INSTALL
 			};
 
+
 		};
 
-		// Install radio mast on terrain behind truck current position to truck
+		// Install radio mast on terrain behind truck current position to truck. Mast
 		case "INSTALL": {
 			_asl = getPosASL d_radar;
 			_mast_loaded = (_asl select 2) < 0;
@@ -103,7 +106,7 @@ if (true) then {
 			};
 			if (_exit) exitWith {};
 
-			// Mast can't be intalled on the base
+			// Mast can't be installed on the base
 			if ( _truck call SYG_pointNearBase ) exitWith {
 				[vehicle player, localize "STR_RADAR_MAST_NEAR_BASE"] call XfVehicleChat;
 			};

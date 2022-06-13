@@ -3,6 +3,8 @@
 
 	author: Sygsky
 	description: controls the installation of an antenna for radio communication with the USSR.
+		Draws the markers for active truck and radio-mast,
+		check if mission is failed
 	params: [x_sm_pos,d_radar,_vehs]
 	returns: nothing
 */
@@ -60,6 +62,7 @@ while { sideradio_status == 0 } do {
         _new_truck = _vehs select 1;
         if (alive _new_truck) then {
             _truck = _new_truck;
+            _truck lock false;
             _marker_pos = getPos _new_truck;
             _delay = 3;
         } else {
@@ -101,19 +104,26 @@ while { sideradio_status == 0 } do {
 	sleep _delay;
 };
 
+if (sideradio_status < 0) then { side_mission_winner = -702 } else {side_mission_winner = 2};
+side_mission_resolved = false;
+
 sleep (5 + (random 5));
 
 //==================================================
 //=            Finish the mission                  =
 //==================================================
 
-// assign ecompleted codes etc
+// assign completed codes etc
+
+// remove markers
+deleteMarker _radar_marker;
+deleteMarkerLocal _truck_marker;
 
 // Eject crew from trucks
 {
 	if (alive _x) then {
 		_x lock true;
-		{ if (alive _x) then { _x action ["Eject", _x]; }; } forEach (crew _x);
+		{ _x action ["Eject", _x] } forEach (crew _x);
 	};
 } forEach _vehs;
 
@@ -121,3 +131,4 @@ sideradio_vehs = nil;
 publicVariable "sideradio_vehs";
 sideradio_status = nil;
 publicVariable "sideradio_status";
+// d_radar continue to exists for the future adventures
