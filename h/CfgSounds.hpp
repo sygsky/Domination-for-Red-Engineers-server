@@ -29,7 +29,7 @@ class CfgSounds {
 	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class bicycle {name="bicycle himn";sound[]={\sounds\bicycle.ogg,db+0,1.0};titles[] = {};};
-	class bicycle_ring {name="bicycle ring";sound[]={\ca\weapons\Data\Sound\bicycle_ring_v1.wss,db+0,1.0};titles[] = {};};
+	class bicycle_ring {name="bicycle ring";sound[]={\sounds\short\bicycle_ring_v1.ogg,db+0,1.0};titles[] = {};}; // From Arma-1 sound in weapons.pbo
 
 	class stalin_dal_prikaz {name="Soviet artillery himn";sound[]={\sounds\intro\vehicles\stalin_dal_prikaz.ogg,db+0,1.0};titles[] = {};};
 	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service

@@ -74,7 +74,7 @@ if (typeOf _vehicle != "ACE_Bicycle") then {
 #endif
 player moveInDriver _vehicle;
 #ifdef __ACE__
-} else { ["say_sound", _unit, "bicycle_ring"] call XSendNetStartScriptClientAll; };
+} else { ["say_sound", _vehicle, "bicycle_ring"] call XSendNetStartScriptClientAll; };
 #endif
 
 if (_b_mode == 1) then {
