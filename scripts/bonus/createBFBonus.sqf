@@ -9,16 +9,16 @@
 
 //_new_veh = [[_x, _y<,_z>], _rad, _veh_type_name] call SYG_createBonusVeh;
 _mt = "Somato" call SYG_MTByName;
-if (count _mt  == 0 ) exitWith {hint localize format ["--- BFB: town %1 not found, exit", "Somato"]};
+if (count _mt  == 0 ) exitWith {hint localize format ["--- DOSAAF: town %1 not found, exit", "Somato"]};
 _pos = getPos FLAG_BASE;
 _pos set [1, (_pos select 1) + 150];
 
 {
-//	hint localize format[ "+++ BFB: vehicle %1 creating at %2", _x,_mt ];
+//	hint localize format[ "+++ DOSAAF: vehicle %1 creating at %2", _x,_mt ];
 //	_veh = [+(_mt select 0), _mt select 2, _x] call SYG_createBonusVeh;
 	_veh = [_pos, 50, _x] call SYG_createBonusVeh;
-	if (isNull _veh) then {hint localize format["--- BFB: %1 not created!", _x ]};
-	hint localize format["+++ BFB: %1 created at %2!", _x, [_veh, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE ];
-//	player groupChat format["+++ BFB: %1 created at %2!", _x, [_veh, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE ];
+	if (isNull _veh) then {hint localize format["--- DOSAAF: %1 not created!", _x ]};
+	hint localize format["+++ DOSAAF: %1 created at %2!", _x, [_veh, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE ];
+//	player groupChat format["+++ DOSAAF: %1 created at %2!", _x, [_veh, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE ];
 	sleep 0.5;
 } forEach ["ACE_UAZ_MG","ACE_UAZ_AGS30","ACE_UAZ","ACE_Su27S2"];

@@ -137,7 +137,7 @@ hint localize format["+++ x_scripts\x_gettargetbonus.sqf: battlefield target bon
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 _vehicle setDir _dir;
 _vehicle call SYG_assignVehAsBonusOne;
-hint localize format["+++ x_scripts\x_gettargetbonus.sqf: BFB vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPos];
+hint localize format["+++ x_scripts\x_gettargetbonus.sqf: DOSAAF vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPos];
 #endif
 
 
