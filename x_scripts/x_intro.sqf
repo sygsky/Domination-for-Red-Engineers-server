@@ -627,7 +627,7 @@ player cameraEffect ["terminate","back"];
 camDestroy _camera;
 closeDialog 0;
 deleteVehicle _PS1;
-["say_sound", "", "gong_5"] call XHandleNetStartScriptClient; // play gong very low sound on the place for all players online
+["say_sound", player, "gong_5"] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
 
 enableRadio true;
 //player removeEventHandler ["hit", _phiteh];

@@ -1,5 +1,5 @@
 /*
-	x_missions\common\sideradar\sideradio_vars.sqf - include file for radio mast intalling side mission
+	x_missions\common\sideradio_vars.sqf - include file for radio mast intalling side mission
 	author: Sygsky
 	description: definition for the side-radio mast inatallation mission[s]
 	returns: nothing
@@ -14,3 +14,4 @@
 #define DIST_TO_SHIFT_MARKER 25         // shift size between marker and object to update marker position
 #define DIST_MAST_TO_TRUCK 15           // distance from truck to mast to allow handle mast from truck
 #define DIST_MAST_TO_INSTALL 10           // distance from truck to mast to allow handle mast from truck
+#define RADAR_SM_COLOR "ColorRed"

@@ -37,16 +37,16 @@ _remove_ids = {
 };
 if (true) then {
 
-	if ((vehicle _pl == _pl) ) exitWith  { _txt = "STR_RADAR_TRUCK_NOT_DRIVER" };
-	if (_pl != driver (vehicle _pl) ) exitWith  { _txt = "STR_RADAR_TRUCK_NOT_DRIVER" };
+	if ((vehicle _pl == _pl) ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
+	if (_pl != driver (vehicle _pl) ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
 
 	if (locked _veh) exitWith {
 		_veh say "radio_0";
-		_txt = "STR_RADAR_NO";
+		_txt = localize "STR_RADAR_NO";
 	};
 
 	if (!alive d_radar) exitWith {
-		_txt = "STR_RADAR_MAST_DEAD";
+		_txt = localize "STR_RADAR_MAST_DEAD";
 		_ids = d_radar call _remove_ids; // remove all menus
 	};
 
@@ -55,17 +55,17 @@ if (true) then {
 		case "LOAD": {
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) < 0 ) exitWith { // already loaded into this vehicle, so change all menu items
-				_txt = "STR_RADAR_MAST_ALREADY_LOADED";
+				_txt = localize "STR_RADAR_MAST_ALREADY_LOADED";
 				_ids = d_radar call _remove_ids;
 				_ids resize 0;
 				_ids set [0, _veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
 				_ids set [1, _veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]]; // load
 			};
 			_asl resize 2;
-			if (([_truck, d_radar] call SYG_distance2D) > DIST_MAST_TO_TRUCK) exitWith {
-				_txt = "STR_RADAR_MAST_NOT_FOUND";
+			if (([_veh, d_radar] call SYG_distance2D) > DIST_MAST_TO_TRUCK) exitWith {
+				_txt = format [localize "STR_RADAR_MAST_NOT_FOUND", DIST_MAST_TO_TRUCK];
 			};
-			_txt = "STR_RADAR_MAST_LOADED";
+			_txt = localize "STR_RADAR_MAST_LOADED";
 			_radar setPosASL [_asl select 0, _asl select 1, -50];
 		};
 
@@ -73,7 +73,7 @@ if (true) then {
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) > 0 ) exitWith {
 				// already unloaded into this vehicle, so change all menu items
-				_txt = "STR_RADAR_MAST_ALREADY_UNLOADED";
+				_txt = localize "STR_RADAR_MAST_ALREADY_UNLOADED";
 				_ids = d_radar call _remove_ids;
 				_ids resize 0;
 				_ids set [0, _veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
@@ -97,7 +97,7 @@ if (true) then {
 			_exit = false;
 			if ( !_mast_loaded ) then {
 				// test if mast is near truck
-				_dist = [_radar, _truck] call SYG_distance2D;
+				_dist = [_radar, _veh] call SYG_distance2D;
 				_exit = _dist > DIST_MAST_TO_TRUCK;
 				if ( _exit ) exitWith { // too far from truck
 					// "Mast further than %1 meters (%2)"
@@ -107,11 +107,11 @@ if (true) then {
 			if (_exit) exitWith {};
 
 			// Mast can't be installed on the base
-			if ( _truck call SYG_pointNearBase ) exitWith {
+			if ( _veh call SYG_pointNearBase ) exitWith {
 				[vehicle player, localize "STR_RADAR_MAST_NEAR_BASE"] call XfVehicleChat;
 			};
 
-			_mast_pos = if (_mast_loaded) then { _truck modelToWorld [0, -DIST_MAST_TO_INSTALL,0] }
+			_mast_pos = if (_mast_loaded) then { _veh modelToWorld [0, -DIST_MAST_TO_INSTALL,0] }
 						else {getPos d_radar};
 
 			// Mast in range, test it to be in good position (height ASL, slope) for the installation
@@ -128,7 +128,7 @@ if (true) then {
 			_logic = "Logic" createVehicle [0,0,0];
 			_logic setPos _mast_pos;
 			if (((getPos(_logic)) select 2) < INSTALL_MIN_ALTITUDE) exitWith {
-				_txt = "STR_RADAR_MAST_TOO_LOW";
+				_txt = localize "STR_RADAR_MAST_TOO_LOW";
 			};
 			deleteVehicle _logic;
 
@@ -142,5 +142,5 @@ if (true) then {
 
 };
 
-if (_txt != "") then { (localize _txt) call XfGlobalChat };
+if (_txt != "") then { _txt call XfGlobalChat };
 

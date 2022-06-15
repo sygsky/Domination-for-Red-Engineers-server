@@ -2,7 +2,7 @@
 // x_createsecondary.sqf: creating secondary target for the city
 //
 private ["_man","_newgroup","_poss","_unit_array","_units","_vehicle","_wp_array","_truck","_the_officer", "_unit", "_pos"];
-if (!isServer) exitWith {};
+if (!isServer) exitWith { hint localize "--- x_createsecondary.sqf on client failed" };
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"

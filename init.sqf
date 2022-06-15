@@ -245,7 +245,7 @@ if (isServer) then {
     hint localize format["+++ __EASY_SM_GO_FIRST__, goes first: %1", side_missions_random];
 #endif
 
-//+++ Sygsky: move ranked player missions out of the list beginning
+//+++ Sygsky: move ranked player missions from the list beginning
 #ifdef __DEFAULT__
     hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
     if (!isNil("ranked_sm_array") ) then {
@@ -273,8 +273,8 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 29 - tanks at Cabo Juventudo,
     // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 48 - transformer substations of Corazol, 49 - captain Grant
-    // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest
-    _first_array = [];
+    // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation
+    _first_array = [56];
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
         hint localize format["+++ SM _first_array: %1", _first_array];

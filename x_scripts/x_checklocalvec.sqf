@@ -5,7 +5,7 @@ if (!isServer) exitWith{};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
-private ["_check_vec_list", "_zz", "_dead", "_hastime","_cnt","_cnt_null","_recoverable"];
+private ["_check_vec_list", "_zz", "_dead", "_hastime","_cnt",/*"_cnt_null",*/"_recoverable"];
 
 //#define __PRINT_STAT__
 
@@ -33,7 +33,7 @@ while {true} do {
 	};
 	sleep 10.723;
 	_cnt = count _check_vec_list;
-	_cnt_null = 0;
+//	_cnt_null = 0;
 	if ( _cnt > 0 ) then {
 		for "_zz" from 0 to (_cnt - 1) do {
 			_dead = _check_vec_list select _zz;
@@ -65,12 +65,12 @@ while {true} do {
 #endif
 				_check_vec_list set [_zz, "RM_ME"]; // remove item from the dead list
 				sleep 10;
-			} else { _check_vec_list set [_zz, "RM_ME"]; _cnt_null = _cnt_null + 1 }; // remove null from the dead list
+			} else { _check_vec_list set [_zz, "RM_ME"];/* _cnt_null = _cnt_null + 1 */}; // remove null from the dead list
 			sleep 3.422;
 		};
 	};
 	_check_vec_list call  SYG_cleanArray;
-	if (_cnt_null > 0 ) then {hint localize format["+++ x_checklocalvec.sqf: %1 null[s] removed", _cnt_null]};
+//	if (_cnt_null > 0 ) then {hint localize format["+++ x_checklocalvec.sqf: %1 null[s] removed", _cnt_null]};
 	sleep 30.461;
 
 #ifdef __PRINT_STAT__

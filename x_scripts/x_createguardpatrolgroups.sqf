@@ -13,7 +13,7 @@ private ["_selectit", "_array", "_num", "_a_vng", "_num_ret", "_type_list_guard"
 
 if (!isServer ) exitWith{};
 
-//#define __DEBUG_PRINT__
+#define __DEBUG_PRINT__
 
 //#define __TOWN_WEAK_DEFENCE__
 
@@ -43,12 +43,9 @@ _radius  = _this select 1;
 _addnum   = if (_radius >= 300) then {1} else {0}; // how many to add to groups for big town
 
 _type_list_guard = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_guard, 0] call _selectit],["bmp",[d_vehicle_numbers_guard, 1] call _selectit],["brdm",[d_vehicle_numbers_guard, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_guard, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_guard, 4] call _selectit]];
-
 sleep 0.01;
 
 _type_list_guard_static = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_guard_static, 0] call _selectit],["bmp",[d_vehicle_numbers_guard_static, 1] call _selectit],["shilka",[d_vehicle_numbers_guard_static, 2] call _selectit]];
-
-
 sleep 0.01;
 
 _type_list_patrol = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_patrol, 0] call _selectit],["bmp",[d_vehicle_numbers_patrol, 1] call _selectit],["brdm",[d_vehicle_numbers_patrol, 2] call _selectit],["uaz_mg",[d_vehicle_numbers_patrol, 3] call _selectit],["uaz_grenade",[d_vehicle_numbers_patrol, 4] call _selectit]];
@@ -58,7 +55,6 @@ _type_list_guard_static2 = [
 ["D30",ceil (random 5)],
 #endif
 ["DSHKM",(ceil (random 2)) + _addnum],["AGS",(ceil (random 2)) + _addnum]];
-
 sleep 0.01;
 
 _selectit = nil;
@@ -72,6 +68,10 @@ d_vehicle_numbers_patrol = [
 ];
 [d_vehicle_numbers_patrol, 0] call _selectit;
 */
+#ifdef __DEBUG_PRINT__
+hint localize "+++ x_createguardpatrolgroups.sqf: type lists prepared";
+#endif
+
 _selectitmen = {
 	private ["_array","_num","_a_vng2","_num_ret"];
 	_array = _this select 0; // [[1,1], 1]
@@ -84,7 +84,6 @@ _selectitmen = {
 
 _number_basic_guard = _addnum + ([d_footunits_guard, 0] call _selectitmen);
 _number_specops_guard = _addnum + ([d_footunits_guard, 1] call _selectitmen);
-
 
 _selectitvec = {
 	private ["_array","_num","_a_vng","_a_vng2","_num_ret"];
@@ -167,6 +166,10 @@ for "_xx" from 0 to (count _type_list_guard_static - 1) do {
 };
 #endif
 
+#ifdef __DEBUG_PRINT__
+hint localize "+++ x_createguardpatrolgroups.sqf: guard static vehicles prepared";
+#endif
+
 // create common group of static weapons: mg, at, aa, canons etc
 //while {!can_create_group} do {sleep 0.1 + random (0.2)}; //__WaitForGroup
 //_grp = [d_enemy_side] call x_creategroup;
@@ -196,6 +199,10 @@ for "_xx" from 0 to (count _type_list_guard_static2 - 1) do {
 		};
 	",_typeidx select 0];
 };
+
+#ifdef __DEBUG_PRINT__
+hint localize "+++ x_createguardpatrolgroups.sqf: groups created";
+#endif
 
 //#define __PRINT__
 #ifdef __PRINT__
@@ -312,6 +319,9 @@ if (!no_more_observers) then {
 	(_unit_array select 0) execVM "x_scripts\x_handleobservers.sqf";
 	_unit_array = nil;
 	sleep 2.214;
+	#ifdef __DEBUG_PRINT__
+	hint localize "+++ x_createguardpatrolgroups.sqf: observers prepared";
+	#endif
 
 } else {
 //  inform about observer absence
@@ -320,19 +330,17 @@ if (!no_more_observers) then {
 	no_more_observers = false; // skip observers only for one town
 };
 
-[_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a)medic BMP  or b)super-reammo or с)radio-tower etc
+[_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a) medic BMP  or b) super-reammo or с) radio-tower etc
 
 d_run_illum = true;
 hint localize format["+++ x_createguardpatrolgroups.sqf: new x_illum.sqf executed for %1 at %2", _this select 2, call SYG_nowTimeToStr ];
 [_trg_center, _radius, _this select 2] execVM "x_scripts\x_illum.sqf";
 
-#define __DEBUG_STAT_SERVICE__
+//#define __DEBUG_STAT_SERVICE__
 #ifdef __DEBUG_STAT_SERVICE__
-
 waitUntil { sleep 10; main_target_ready };
-// _array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // this method is also called from GRUMissionSetup.sqf at line 64
-
+_array = [_trg_center, _radius + 50, true] call SYG_getScore4IntelTask; // this method is also called from GRUMissionSetup.sqf at line 64
 #endif
 
-if (true) exitWith {};
+if (true) exitWith {hint localize "+++ x_createguardpatrolgroups.sqf finished +++"};
 
