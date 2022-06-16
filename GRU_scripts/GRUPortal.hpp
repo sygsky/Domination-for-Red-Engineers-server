@@ -82,9 +82,9 @@ class GRU_RscText
 };
 
 class GRUPortalDialog {
-	idd = 12000;                   // set to -1, because we don't require a unique ID
+	idd = 12000;                   // set to -1, because we don't require an unique ID
 //	movingEnable = true;           // the dialog can be moved with the mouse (see "moving" below)
-	movingEnable = false;          // the dialog can be moved with the mouse (see "moving" below)
+	movingEnable = false;          // the dialog can't be moved with the mouse (see "moving" below)
 	enableSimulation = true;       // freeze the game
 	controlsBackground[] = { GRU_BackGround };    // no background controls needed
 	objects[] = { };               // no objects needed
@@ -241,7 +241,7 @@ class GRUPortalDialog {
 		lineSpacing = 1;
 		sizeEx = 0.02;
 		colorBackground[] = { 0.9, 0.9, 0.9, 0.4 };
-		text = $STR_GRU_32; //"(Текст задания отсутствует)";
+		text = $STR_GRU_32; //"(Click task title to select it and read info on)";
 	};
 
 };
