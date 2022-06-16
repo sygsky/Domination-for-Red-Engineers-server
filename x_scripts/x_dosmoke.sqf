@@ -26,11 +26,16 @@ if ( vehicle _killed != _killed ) exitWith {
 };
 _has_smoke = false;
 
-hint localize format["+++ x_dosmoke.sqf: %1 killed, combat mode %2, behaviour %3%4",
-	typeOf _killed,
-	combatMode _killed,
-	behaviour _killed,
-	if (alive _killer) then { format[", dist to killer (%1) %2 m.",typeOf _killer, round(_killer distance _killed) ] } else { ", no alive killer" }];
+// print unusual unit state when killed
+if ( combatMode _killed != "YELLOW" ) then {
+    if ( behaviour _killed != "COMBAT" ) then {
+        hint localize format["+++ x_dosmoke.sqf: %1 killed, combat mode %2, behaviour %3%4",
+            typeOf _killed,
+            combatMode _killed,
+            behaviour _killed,
+            if (alive _killer) then { format[", dist to killer (%1) %2 m.",typeOf _killer, round(_killer distance _killed) ] } else { ", no alive killer" }];
+    };
+};
 
 #ifdef __DEBUG__
 if (_grp_killed in smoke_groups) exitWith {
