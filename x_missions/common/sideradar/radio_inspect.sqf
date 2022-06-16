@@ -15,7 +15,7 @@
 */
 
 _veh = _this select 0;
-_txt = localize (if (_veh isKindOf "Truck") then {
+_txt = (if (_veh isKindOf "Truck") then {
 	if (locked _veh) then {"STR_RADAR_TRUCK_LOCKED"} // "Spare Truck for the Mission"
 	else {
 		if (isNil "sideradio_vehs") then {
@@ -46,5 +46,5 @@ _txt = localize (if (_veh isKindOf "Truck") then {
 	};
 });
 if (_txt != "") then {
-	(localize _txt) call XfGlobalChat;
+	(localize _txt) call XfGlobalChat; // _txt is already localized
 };

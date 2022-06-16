@@ -23,7 +23,6 @@ _veh = _this select 0;
 _pl  = _this select 1;
 _txt = "";
 
-
 _remove_ids = {
 	private ["_veh","_last","_id","_i","_ids"];
 	_veh = _this;
@@ -35,6 +34,30 @@ _remove_ids = {
 	};
 	_ids
 };
+
+// _veh call _unload_menu;
+_unload_menu = {
+	private ["_ids","_veh"];
+	_veh = _this;
+	_ids = _veh call _remove_ids;
+	_ids resize 0;
+	_ids set [0, _veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
+	_ids set [1, _veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]]; // load
+//	_veh setVariable ["IDS", _ids];
+};
+
+// _veh call _unload_menu;
+_load_menu = {
+	private ["_ids","_veh"];
+	_veh = _this;
+	_ids = _veh call _remove_ids;
+	_ids resize 0;
+	_ids set [0, _veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
+	_ids set [1, _veh addAction[localize    "STR_LOAD", "x_missions\common\sideradar\radio_menu.sqf","LOAD"]]; // load
+	_ids set [2, _veh addAction[localize "STR_INSTALL", "x_missions\common\sideradar\radio_menu.sqf","INSTALL"]]; // load
+//	_veh setVariable ["IDS", _ids];
+};
+
 if (true) then {
 
 	if ((vehicle _pl == _pl) ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
@@ -56,7 +79,7 @@ if (true) then {
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) < 0 ) exitWith { // already loaded into this vehicle, so change all menu items
 				_txt = localize "STR_RADAR_MAST_ALREADY_LOADED";
-				_ids = d_radar call _remove_ids;
+				_ids = _veh call _remove_ids;
 				_ids resize 0;
 				_ids set [0, _veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
 				_ids set [1, _veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]]; // load
@@ -97,7 +120,7 @@ if (true) then {
 			_exit = false;
 			if ( !_mast_loaded ) then {
 				// test if mast is near truck
-				_dist = [_radar, _veh] call SYG_distance2D;
+				_dist = [d_radar, _veh] call SYG_distance2D;
 				_exit = _dist > DIST_MAST_TO_TRUCK;
 				if ( _exit ) exitWith { // too far from truck
 					// "Mast further than %1 meters (%2)"

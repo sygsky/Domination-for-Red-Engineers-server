@@ -52,6 +52,7 @@ _vehs = [];
 	_vehs set [count _vehs, _veh];
 } forEach[ 1, 3 ];
 processInitCommands;
+(_vehs select 1) lock true; // Lock 2nd truck only
 //      0,     1,    2
 _vehs  execVM "x_missions\common\x_sideradio.sqf";
 

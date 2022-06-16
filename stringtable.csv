@@ -1532,7 +1532,7 @@ STR_RADAR_MAST_ALREADY_LOADED,Radio mast already loaded,Der Funkmast ist bereits
 STR_RADAR_MAST_FAR_AWAY,Mast further than %1 meters (%2),Mast weiter als %1 Meter (%2),Mástil de más de %1 metros (%2),Мачта дальше %1 м. (%2)
 STR_RADAR_MAST_TOO_LOW,Mast below %1 m. (%2) above sea level,Mast unter %1 m. (%2) über dem Meeresspiegel,Mástil por debajo de %1 m. (%2) sobre el nivel del mar,Мачта ниже %1 м. (%2)
 STR_RADAR_MAST_BAD_SLOPE,The mast cannot be installed at this position,Der Mast kann in dieser Position nicht installiert werden,Der Mast kann in dieser Position nicht installiert werden,El mástil no puede instalarse en esta posición,Мачта не может быть здесь установлена
-STR_RADAR_MAST_NEAR_BASE,"The base is too close, take the mast farther away","Die Basis ist zu nah, bring den Mast weiter weg","La base está demasiado cerca, aleja el mástil","База слишком близко, отведите мачту подальше"
+STR_RADAR_MAST_NEAR_BASE,"The base is too close, move the mast farther away","Die Basis ist zu nah, bring den Mast weiter weg","La base está demasiado cerca, aleja el mástil","База слишком близко, отвезите мачту подальше"
 STR_RADAR_MAST_NOT_FOUND,"No radio mast detected within %1 m.","Kein Funkmast im Umkreis von %1 m entdeckt","No se ha detectado ningún mástil de radio en un radio de %1 m","Радио-мачта не обнаружена в радиусе %1 м."
 
 STR_RADAR_TRUCK,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Активный грузовик для радио-мачты

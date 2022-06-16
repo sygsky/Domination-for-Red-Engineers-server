@@ -2,6 +2,7 @@
 	x_missions\common\sideradar\radio_delete.sqf
 	author: Sygsky
 	description: deletes the radar on mission failure
+	params: [_killed, _killer]
 	_killed = _this select 0;
 	_killer = _this select 1;
 	returns: nothing
