@@ -27,8 +27,11 @@ while {(alive _this) && ((vehicle player) != player) && ((player distance FLAG_B
                                     [_this, format[localize "STR_AI_14", round(_diff/5)*5 max 1]] call XfVehicleChat; // "Commander! Let's wait at least %1 sec. for decency"
                                 } else { // time to request
                                     if ( _x call SYG_isWoman ) then {
-                                        // 1/3 probability that woman AI will agree to be a gunner of battle heli
-                                        if ((random 9) < 3) then {
+                                        private ["_rnd"];
+                                        // ordinally a woman can't easily enter air vehicle as a pilot, but for Rokse it is possible))
+                                        _rnd = if ((name player) in ["Rokse [LT]"]) then {80} else {33.3};
+                                        // 1/3 probability that woman AI will agree to be a gunner of a battle heli
+                                        if ((random 100) < _rnd) then {
                                             //hint localize format["+++ checkAIEnterer: woman entered"];
                                             _msg = "STR_AI_13_NUM" call SYG_getRandomText;
                                             [_this, localize _msg] call XfVehicleChat;
