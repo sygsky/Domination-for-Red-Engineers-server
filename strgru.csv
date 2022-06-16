@@ -82,7 +82,7 @@ STR_GRU_54,GRU: One or more enemy pilots (of %1) have escaped and are on their w
 STR_GRU_54_1,"GRU: You can arrest them, and on resist You know what to do","GRU: Sie können Sie verhaften, und auf widerstehen Sie wissen, was zu tun ist","GRU: Pueden ser arrestados, y si se resisten, entonces usted sabe qué hacer","ГРУ: Их можно арестовать, а если будут сопротивляться, то Вы знаете, что делать"
 STR_GRU_54_2,the destroyed air target,einem zerstörten Luftziel,objetivo aéreo destruido,уничтоженной воздушной цели
 
-STR_GRU_55,GRU: the enemy landing party was sent from helicopter carrier in %1,GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1,GRU: salida de aterrizaje desde el portaaviones marcado %1,ГРУ: вылет десант с вертолётоносца отмечен %1
+STR_GRU_55,GRU: the enemy landing party was sent from helicopter carrier in %1,GRU: die feindliche Landung Partei geschickt wurde von der Hubschrauber-Träger in %1,GRU: salida de aterrizaje desde el portaaviones marcado %1,ГРУ: вылет десанта с вертолётоносца отмечен в %1
 STR_GRU_56,"GRU: last towns %1, last soldiers %2","GRU: Letzte Städte %1, Letzte Soldaten %2","GRU: últimas ciudades %1, últimos luchadores %2","ГРУ: последние города %1, последние бойцы %2"
 STR_GRU_57,"The possibility of artillery strikes has been restored!","Die Möglichkeit von Artillerieschlägen ist wieder gegeben!","¡Se ha restablecido la posibilidad de ataques de artillería!","Возможность нанесения артиллерийских ударов восстановлена!"
 
