@@ -29,21 +29,27 @@ sideradio_status = 0; // -1 - mission failured, 0 - mission not finished, 1 - su
 publicVariable "sideradio_vehs"; // initial information for clients
 publicVariable "sideradio_status"; // status of mission, is set on clients only
 
+// _marker_name = [_marker_name, _marker_type, _marker_pos, _marker_color<,_marker_size>] call _make_marker;
+_make_marker = {
+	private ["_mrk_name"];
+	_mrk_name = _this select 0;
+	createMarker [_mrk_name, _this select 2 ]; // create marker on pos
+	_mrk_name setMarkerColorLocal _this select 3; // set marker color
+
+	if (count _this > 4) then {
+		_mrk_name setMarkerTypeLocal  _this select 1;  // marker type
+		_mrk_name setMarkerSize  (_this select 4);  // marker size
+	} else {
+		_mrk_name setMarkerType  _this select 1; // only marker type
+	};
+	_mrk_name
+};
 // 2. wait until antenna or both trucks killed get it, inform all about antenna damage
 
 // create markers (truck + radiomast)
 _truck = _vehs select 0; // current (first) alive truck
-_truck_marker = "sideradio_truck_marker";
-createMarker [_truck_marker, _truck ];
-_truck_marker setMarkerColorLocal RADAR_SM_COLOR;
-_truck_marker setMarkerTypeLocal TRUCK_MARKER;
-_truck_marker setMarkerSizeLocal [0.5, 0.5];
-
-_radar_marker = "sideradio_radar_marker";
-createMarker [_radar_marker, d_radar ];
-_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
-_radar_marker setMarkerTypeLocal RADAR_MARKER;
-_radar_marker setMarkerSizeLocal [0.5, 0.5];
+_truck_marker = [ "sideradio_truck_marker", TRUCK_MARKER, _truck, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
 
 //
 // Main loop, controls markers movement and end of the mission
@@ -82,9 +88,7 @@ while { sideradio_status == 0 } do {
         if ( ( _pos select 2) >= 0) then {
             if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
             	if ( (getMarkerType _radar_marker) == "") then { // marker not exists, create it now
-            		_radar_marker = createMarker [_radar_marker, _pos]; //RADAR_MARKER;
-            		_radar_marker setMarkerTypeLocal RADAR_MARKER;
-            		_radar_marker setMarkerColor RADAR_SM_COLOR;
+	            	_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
             	} else {
             		_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
 	                _radar_marker setMarkerPos ( _pos );
@@ -117,7 +121,7 @@ sleep (5 + (random 5));
 
 // remove markers
 deleteMarker _radar_marker;
-deleteMarkerLocal _truck_marker;
+deleteMarker _truck_marker;
 
 // Eject crew from trucks
 {
