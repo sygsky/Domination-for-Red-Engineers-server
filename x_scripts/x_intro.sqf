@@ -452,7 +452,7 @@ if (typeName _camstart != "ARRAY" ) then {
 	_camera camCommit 18;
 } else { };
 
-// [_music_name, _wait_title_is_showed_in_secs] spawn SYG_showMusicTitle;
+// [_music_name<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle;
 SYG_showMusicTitle = {
 	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a"/*,"_sec"*/];
 	_XD_display = findDisplay 77043;
