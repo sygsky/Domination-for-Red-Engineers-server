@@ -324,6 +324,7 @@ class X_RscAnimatedLetters {
 		class L208: L1 {idc = __EVAL(idc + 207);};
 		class L209: L1 {idc = __EVAL(idc + 208);};
 
+        // title class for show intro comment about Xeno and EngineerACE
 		class titel1: XC_RscText
 		{
 			idc=66666;
@@ -339,6 +340,8 @@ class X_RscAnimatedLetters {
 			size=0.57;
 			sizeEx=0.026;
 		};
+
+		// title class to show intro/etc misic info text
 		class titel2: XC_RscText {
 			idc=66667;
 			style="16+2+512";
