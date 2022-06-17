@@ -63,7 +63,7 @@ SYG_getRumourText = {
     if ( _daytime <= SYG_startMorning || _daytime > SYG_startNight ) then { _str1 = localize "STR_RUM_NIGHT" }
     else {
         //call compile format["_counter=%1;", localize "STR_RUM_NUM"];
-        _counter = parseNumber (localize "STR_RUM_NUM");
+        _counter = parseNumber (localize "STR_RUM_NUM"); // number of rumors on the island
 
         if ( isNil "SYG_rumor_index" ) then {
             SYG_rumor_index = floor (random _counter); // start index for current player connection
@@ -74,7 +74,7 @@ SYG_getRumourText = {
         _index = (floor(daytime) - SYG_rumor_hour + 24) mod 24; // current offset in hours  since connection
         _index = _index * _counter / 24; // new offset according to rumor number
         _index = round(((_index + SYG_rumor_index) + _counter) mod _counter); // found the value of the current index around which rumors will be created
-        _rnd   = (random 2.0) - 1.0; // random offset each time, from +1 to -1
+        _rnd   = (random 2.0) - 1.0; // random offset each time, from -1 to +1
         _index = (_index + (floor((_rnd*_rnd*_rnd)*RUMOR_WIDTH)) + _counter) mod _counter ; // detected rumor index
         _index = (_index min (_counter - 1)) max 0; // to limit index with size of list
         _str1 = localize format["STR_RUM_%1",_index];
@@ -258,7 +258,6 @@ SYG_compactArray = {
 	_arr
 };
 
-
 // this procedure parse and processs "msg_to_user" server command or compound client message
 // In any message to user, param numbers are:
 // Offsets:     0,                      1,                 2,                        3,              4,             5,             6
@@ -412,19 +411,19 @@ SYG_msgToUserParser = {
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
-// Gets name of killer in any case, or direct unit of unit as gunner in some vehicle
+// Gets name of killer in any case, or direct name of unit as gunner in some vehicle
 // killer can be:
 // a man => name _killer
-// gunner of land vehicle/ heli > gunner _killer
-// pilot of plane => driver _killer
-// call as: _unti_name = call SYG_getUnitName;
+// a gunner of land vehicle/heli/plane => gunner _killer
+// a pilot of plane => driver _killer
+// call as: _unit_name = call SYG_getUnitName;
 //
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SYG_getUnitName = {
-	if (_this isKindOf "Man") exitWith { name _this };
-	if ( !(_this isKindOf "AllVehicles") ) exitWith { objNull };
+	if ( _this isKindOf "Man" ) exitWith { name _this };
+	if ( !(_this isKindOf "AllVehicles") ) exitWith { "<unknown>" };
 	if ( !(isNull (gunner _this) ) ) exitWith { name (gunner _this) };
 	if ( !(isNull (driver _this) ) ) exitWith { name (driver _this) };
 	if ( !(isNull (commander _this) ) ) exitWith { name (commander _this) };
-	objNull
+	"<unknown>"
 };
