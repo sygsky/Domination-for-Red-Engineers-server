@@ -315,3 +315,32 @@ SYG_getObjectHeight = {
 	_bb = boundingBox _this;
 	((_bb select 1) select 2) - ((_bb select 0) select 2)
 };
+
+//
+// Plays enemy radio signal, it is received only by players who are:
+// 1. On base with any antenna alive
+// 2. In any vehicle except ATV, motocycle, bike, parachute
+// 3. Has radio in inventory
+// Call as follows: "counterattack" call SYG_receiveRadio; // play sound "counterattack"
+//
+SYG_receiveRadio = {
+	private ["_radio"];
+	_radio = objNull;
+	if ( player call SYG_pointIsOnBase ) then {
+		private "_list";
+		_list = nearestObjects [player, ["WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "Land_Vysilac_FM","Vysilacka"], 200];
+		if (count _list > 0) exitWIth { _radio = _list select 0; };
+	};
+	if (!isNull _radio) exitWith {_radio say _this;};
+	if (vehicle player ! player) then {
+		if (vehicle player isKindOf "Motorcycle") exitWith {};
+		if (vehicle player isKindOf "ACE_ATV_HondaR") exitWith {};
+		if (vehicle player isKindOf "ACE_ATV_HondaR") exitWith {};
+		if (vehicle player isKindOf "ParachuteBase") exitWith {};
+		_radio = vehicle player;
+	};
+	if (! isNull _radio ) exitWith { _radio say _this; };
+	if (isNull _radio) then {
+		if (player call asRadio) then { player say _this;};
+	};
+};

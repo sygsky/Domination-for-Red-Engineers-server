@@ -18,6 +18,7 @@ _counter_rad = _current_target_radius + _outer_size;
 #ifdef __DEFAULT__
 switch (_dummy select 1 ) do { // change start pos for some special targets
 	case "Paraiso": {
+		// counterattack on Paraiso should not start on base territory!
 		_counter_pos = [[10299,8954,0],[11261,9341,0]] call XfRandomArrayVal;
 		_counter_rad = 100;
 	};
