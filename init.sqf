@@ -96,7 +96,7 @@ if (isServer) then {
 		fFogMore = 0.175 + random 0.825;
 		publicVariable "fFogMore";
 		
-		hint localize format["SYG_updateWeather: fRainLess %1, fRainMore %2, fFogLess %3, fFogMore %4", fRainLess, fRainMore, fFogLess, fFogMore];
+		hint localize format["+++ SYG_updateWeather: fRainLess %1, fRainMore %2, fFogLess %3, fFogMore %4", fRainLess, fRainMore, fFogLess, fFogMore];
 	};
 
 	call SYG_updateWeather;

@@ -20,7 +20,7 @@
 
 //#define __DEBUG__
 #ifdef __ALLOW_SHOTGUNS__
-hint localize "#define __ALLOW_SHOTGUNS__";
+hint localize "+++ #define __ALLOW_SHOTGUNS__";
 #endif
 
 if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static information

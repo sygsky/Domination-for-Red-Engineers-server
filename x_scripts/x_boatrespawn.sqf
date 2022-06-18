@@ -18,7 +18,7 @@ if (!isServer) exitWith{};
 #define CHECK_DELAY 1800 // 30 minutes interval
 #endif
 
-hint localize format["x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHECK_DELAY];
+hint localize format["+++ x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHECK_DELAY];
 
 #define DIST_TO_BE_OUT 5
 #define DIST_TO_OWN_TO_PLAYER 50
@@ -74,7 +74,7 @@ _restore_boat = {
 	SET_NEW_BOAT(_this,_boat);
 	CLEAR_CHANGE(_descr);
 #ifdef __DEBUG__
-	hint localize format["x_boatrespawn.sqf: boat %1 restored",_boat];
+	hint localize format["+++ x_boatrespawn.sqf: boat %1 restored",_boat];
 #endif	
 };
 
@@ -96,7 +96,7 @@ while {true} do {
 		
 		if (IS_BOAT_CHANGED(_descr)) then {
 #ifdef __DEBUG__
-	hint localize format["x_boatrespawn.sqf: boat %1 (%2) is marked to restore",_boat, _i];
+	hint localize format["+++ x_boatrespawn.sqf: boat %1 (%2) is marked to restore",_boat, _i];
 #endif	
 			// restore or repair on place
 			_change_cnt = _change_cnt + 1;
@@ -137,7 +137,7 @@ while {true} do {
 							}
 #ifdef __DEBUG__
 							else {
-								hint localize format["x_boatrespawn.sqf: boat %1 is near %2 vehicle, restore skipped", _boat, typeOf _vec];
+								hint localize format["+++ x_boatrespawn.sqf: boat %1 is near %2 vehicle, restore skipped", _boat, typeOf _vec];
 							}
 #endif
 							;
@@ -149,14 +149,14 @@ while {true} do {
 			// boat was not changed at last loop, check it at this one
 			if ( (!alive _boat) OR ((getDammage _boat) > 0.9)) then {
 #ifdef	__DEBUG__
-				hint localize format["x_boatrespawn.sqf: boat %1 (#%2) is dead, marked for restore", _boat,_i];
+				hint localize format["+++ x_boatrespawn.sqf: boat %1 (#%2) is dead, marked for restore", _boat,_i];
 #endif
 				SET_NEW_POS(_descr,getPos _boat);
 			} else {
 				_new_pos = position _boat;
 				if ( IS_BOAT_EMPTY(_boat) && (([_new_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) > DIST_TO_BE_OUT)) then {
 #ifdef	__DEBUG__
-				hint localize format["x_boatrespawn.sqf: boat %1 (%2) changed its position, marked for restore", _boat,_i];
+				hint localize format["+++ x_boatrespawn.sqf: boat %1 (%2) changed its position, marked for restore", _boat,_i];
 #endif
 				SET_NEW_POS(_descr,_new_pos);
 				};
@@ -164,6 +164,6 @@ while {true} do {
 		};
 	}; // for "_i" from 0 to count _boats_a do
 #ifdef	__DEBUG__
-	hint localize format["x_boatrespawn.sqf: time %3. Boats changed %2 from %1", count _boats_a, _change_cnt, floor(time)];
+	hint localize format["+++ x_boatrespawn.sqf: time %3. Boats changed %2 from %1", count _boats_a, _change_cnt, floor(time)];
 #endif
 }; // while {true} do 

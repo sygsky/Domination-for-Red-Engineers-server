@@ -66,6 +66,9 @@ _str call XfGlobalChat;
 sleep 3.123;
 bike_created = true;
 _pos = position player;
+#ifdef __ACE__
+if (_create_bike == "ACE_ATV_HondaR") then { if (_pos call SYG_isDesert) then {_create_bike = "ACE_ATV_HondaR_Desert"}}; // Ha-ha-ha
+#endif
 _vehicle = _create_bike createVehicle _pos;
 _vehicle setDir direction player;
 

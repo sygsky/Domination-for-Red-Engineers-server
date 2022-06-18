@@ -55,7 +55,8 @@ SYG_blinkingTexture = {
 // _nul = [_obj, _face, _texture] call SYG_setTexture;
 SYG_setTexture = {
 //	player groupChat format["[%1,%2,%3] call SYG_setTexture;", arg(0),arg(1),arg(2)];
-	arg(0) setObjectTexture [arg(1),arg(2)];
+	//arg(0) setObjectTexture [arg(1),arg(2)];
+	(_this select 0) setObjectTexture [_this select 1, _this select 2];
 };
 
 //
@@ -72,11 +73,13 @@ SYG_showTeleport = {
 // args == [_obj, _height_above_obj,_time_to_expire]
 
 	private ["_PS1", "_pos","_dur","_obj","_hgt","_pwr"];
-	_obj   = arg(0);
+	_obj   = _this select 0; //arg(0);
 	_pos = if ( (typeName _obj) == "ARRAY" ) then {_obj} else {position _obj};
-	_hgt   = argopt(1,6) max 6; // heigth from 6 meters
+//	_hgt   = argopt(1,6) max 6; // height from 6 meters
+	_hgt   = (if ( (count _this < 2) ) then {6} else {_this select 1}) max 6; // height from 6 meters
 	_dur   = 20; //argopt(2,) max 5; // duration from 5 seconds
-	_pwr   = argopt(3,3) max 3; // power of effect, from 3 (usually height of sparks tail)
+	//_pwr   = argopt(3,3) max 3; // power of effect, from 3 (usually height of sparks tail)
+	_pwr   = (if ((count _this < 3) ) then {3} else {_this select 2}) max 3; // height from 6 meters
 	_PS1 = "#particlesource" createVehicleLocal [_pos select 0, _pos select 1, _hgt];
 	_PS1 setParticleCircle [0, [0, 0, 0]];
 	_PS1 setParticleRandom [0, [0, 0, 0], [0,0,0], 0, 1, [0, 0, 0, 0], 0, 0];
@@ -85,9 +88,9 @@ SYG_showTeleport = {
 	
 	[_PS1,_dur] spawn {
 		// play corresponding sound
-		arg(0) say ["highvoltage",200];
-		sleep arg(1);
-		deleteVehicle arg(0);
+		(_this select 0) say ["highvoltage",200];
+		sleep (_this select 1);
+		deleteVehicle (_this select 0);
 		// stop sound if still on
 	};
 };
@@ -185,13 +188,18 @@ SYG_findRestorableObjects = {
 // default resurrect distance is 10 meters
 //
 SYG_countKilledIslandItems = {
-    private [ "_pos", "_dist"];
+    private [ "_pos", "_dist","_arr","_x"];
     if ( count _this == 0) exitWith {0};
     if ( count _this < 2) exitWith {0};
     private ["_pos"];
-    _pos = arg(0);
-    if (typeName _pos != "ARRAY") then {_pos = getPos (arg(0));};
-    {(getDammage _x) == 1} count (nearestObjects [_pos,[],argopt(1,DEFAULT_RESURRECT_DIST)])
+//    _pos = arg(0);
+    _pos = _this select 0;
+//    if (typeName _pos != "ARRAY") then {_pos = getPos (arg(0))};
+    if (typeName _pos != "ARRAY") then {_pos = getPos (_this select 0)};
+//     {(getDammage _x) == 1} count (nearestObjects [_pos,[],argopt(1,DEFAULT_RESURRECT_DIST)])
+	_dist = if ((count _this < 2) ) then {DEFAULT_RESURRECT_DIST} else {_this select 1};
+	_arr = [];
+    {(getDammage _x) == 1} count (nearestObjects [_pos,_arr, _dist]);
 };
 
 //
@@ -226,7 +234,7 @@ SYG_makeRestoreArray = {
     //player groupChat format["[pos %1, max cnt %2, step %3] call SYG_makeRestoreArray: max_cnt %4, %5 restoreable items", _pos, _num, _step, _max_cnt, count _list];
     //hint localize format["[pos %1, max cnt %2, step %3] call SYG_makeRestoreArray => found cnt %4", _pos, _num, _step, _max_cnt];
     for "_num" from 0 to _max_cnt - 1 do {
-        _dist = _pos distance (argp(_list,_num));
+        _dist = _pos distance (_list select _num);
         //hint localize format["%1: %2 %3 %4", _num + 1, _dist, _ring_rad, _filled_in_ring ];
         if ( _dist > _ring_rad ) then { // curent dist limit detected
             if ( _filled_in_ring > 0 ) then {
@@ -286,9 +294,8 @@ SYG_setViewDistance = {
     //hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2+++++", _this, isServer ];
     //if ( isServer ) exitWith {-1};
     private ["_selectedIndex"];
-    _selectedIndex = _this;
-    if ( typeName _this == "ARRAY") then {_selectedIndex = arg(0);};
-    if (_selectedIndex >= argp(SYG_viewDistanceArray, 0)) then {_selectedIndex = SYG_viewDistanceArray find _selectedIndex;};
+    _selectedIndex = if ( typeName _this == "ARRAY") then {_selectedIndex = (_this select 0)} else { _this };
+    if (_selectedIndex >= (SYG_viewDistanceArray select 0)) then {_selectedIndex = SYG_viewDistanceArray find _selectedIndex};
     _selectedIndex == (_selectedIndex max 0) min ((count SYG_viewDistanceArray) -1);
     //hint localize format["+++++ _selectedIndex = %1", _selectedIndex ];
     if (d_viewdistance != (SYG_viewDistanceArray select _selectedIndex)) then {
@@ -332,12 +339,13 @@ SYG_receiveRadio = {
 		if (count _list > 0) exitWIth { _radio = _list select 0; };
 	};
 	if (!isNull _radio) exitWith {_radio say _this;};
-	if (vehicle player ! player) then {
-		if (vehicle player isKindOf "Motorcycle") exitWith {};
-		if (vehicle player isKindOf "ACE_ATV_HondaR") exitWith {};
-		if (vehicle player isKindOf "ACE_ATV_HondaR") exitWith {};
-		if (vehicle player isKindOf "ParachuteBase") exitWith {};
-		_radio = vehicle player;
+	private ["_veh"];
+	_veh = vehicle player;
+	if ( _veh != player) then {
+		if (_veh isKindOf "Motorcycle") exitWith {};
+		if (_veh isKindOf "ACE_ATV_HondaR") exitWith {};
+		if (_veh isKindOf "ParachuteBase") exitWith {};
+		_radio = _veh;
 	};
 	if (! isNull _radio ) exitWith { _radio say _this; };
 	if (isNull _radio) then {

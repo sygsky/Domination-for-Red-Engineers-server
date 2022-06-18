@@ -23,7 +23,7 @@ _radious = _t_array select 2; // real town radius
 
 "1" objStatus "DONE"; // Paraiso airport (future start target, under development)
 call compile format ["""%1"" objStatus ""ACTIVE"";", OBJECT_ID];
-hint localize format ["""%1"" objStatus ""ACTIVE"";", OBJECT_ID];
+hint localize format ["+++ ""%1"" objStatus ""ACTIVE"";", OBJECT_ID];
 
 // if town is big type info about it:  "Текущая цель :Nnnn (большая)"
 if ( (_t_array select 2) >= big_town_radious) then { _current_target_name = format["%1 (%2)", _current_target_name, localize "STR_SYS_271_1"];};

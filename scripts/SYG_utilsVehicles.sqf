@@ -21,7 +21,7 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 
 if ( !isNil "SYG_utilsVehicles_INIT" )exitWith { hint "SYG_utilsVehicles already initialized"};
 SYG_utilsVehicles_INIT = false;
-hint localize "INIT of SYG_utilsVehicles";
+hint localize "+++ INIT of SYG_utilsVehicles";
 
 //
 // call: _veh_type call SYG_getVehicleType;
@@ -2180,5 +2180,5 @@ SYG_getConfigMags = {
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 SYG_utilsVehicles_INIT = true;
-hint localize "INIT of SYG_utilsVehicles completed";
+hint localize "+++ INIT of SYG_utilsVehicles completed";
 if ( true ) exitWith {};

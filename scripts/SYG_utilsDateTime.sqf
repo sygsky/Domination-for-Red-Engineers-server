@@ -278,7 +278,6 @@ SYG_isNewYear = {
 //
 // returns true if day is in a new year range (from 20-DEC to 10-JAN)
 //
-//
 // call as follow:
 //                _srvDate = call SYG_getServerDate;
 //                _isNewYear = _srvDate call SYG_isNewYear0;
@@ -648,7 +647,7 @@ SYG_getDaysSeconds = {
 };
 
 //
-// Апштвы and return difference between 2 date in seconds, ready to use result in the sleep command
+// Finds and return difference between 2 date in seconds, ready to use result in the sleep command
 // _date1 and _date2 may be in any relations (older, newer, equels), result is correct in any case
 // call as: _diff_in_seconds = [_date_old, _date_new] call SYG_getDateDiffInSeconds
 //

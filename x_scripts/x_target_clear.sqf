@@ -162,7 +162,10 @@ if (current_counter < number_targets) then {
     while { !((count d_recapture_indices == 0) && stop_sm) } do { sleep 2.543; };
     the_end = true;
     ["the_end",the_end] call XSendNetVarClient;
-    hint localize "+++ x_target_clear.sqf: the_end = true; !!!";
+    _str = call SYG_missionTimeInfoStr;
+    hint localize format["++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", _str];
+    hint localize format["+++ x_target_clear.sqf: the_end = true; Time to finish %1!!!", _str];
+    hint localize format["++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", _str];
 };
 
 if (true) exitWith {};

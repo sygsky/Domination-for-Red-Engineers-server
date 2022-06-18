@@ -35,12 +35,12 @@ _x_start = floor (_x / 13.1);
 _y_start = floor (_y / 5.87);
 //_y_ran = floor (_y / 2.21);
 _y_ran = floor (_y - _y_start);
-hint localize format["weathergen2.sqf: _x_max %1, _x_start %2, _y_start %3, _y_ran %4", _x_max, _x_start, _y_start, _y_ran];
+hint localize format["+++ weathergen2.sqf: _x_max %1, _x_start %2, _y_start %3, _y_ran %4", _x_max, _x_start, _y_start, _y_ran];
 
 _x_fog_start = floor (_x / 2.275);
 _x_fog_ran = floor (_x / 5);
 _y_fog_ran = floor (_y / 4);
-hint localize format["weathergen2.sqf: _x_fog_start %1, _x_fog_ran %2, _y_fog_ran %3", _x_fog_start, _x_fog_ran, _y_fog_ran];
+hint localize format["+++ weathergen2.sqf: _x_fog_start %1, _x_fog_ran %2, _y_fog_ran %3", _x_fog_start, _x_fog_ran, _y_fog_ran];
 
 _fogdx = 0;
 _fogdy = 0;
@@ -115,7 +115,7 @@ while { true } do {
 				if ( daytime > (FOG_ON_ISLAND_MAX_TIME+FOG_ON_ISLAND_MIN_TIME)/2 ) then {_randy = (FOG_DAY_Y_MAX+3000)-random 3000;_fogdy = -1.5;};
 				_foggy_helper = [_randx,_randy,0];
 				_counter = 200 + ceil(random 200); // set fog to spread on average about 300 turns of weather generator
-				//hint localize format["weathergen2.sqf: bump fog out of mainland during day, time %1, counter %2,[%3,%4]", daytime call SYG_daytimeToStr, _counter, _randx, _randy];
+				//hint localize format["+++ weathergen2.sqf: bump fog out of mainland during day, time %1, counter %2,[%3,%4]", daytime call SYG_daytimeToStr, _counter, _randx, _randy];
 			};
 		} else {
 			_foggy_helper = [(_foggy_helper select 0)+_fogdx,(_foggy_helper select 1)+ _fogdy,0];
