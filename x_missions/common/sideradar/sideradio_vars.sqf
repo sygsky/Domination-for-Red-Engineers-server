@@ -1,5 +1,5 @@
 /*
-	x_missions\common\sideradio_vars.sqf - include file for radio mast intalling side mission
+	x_missions\common\sideradio_vars.sqf, created at JUN 2022, include file for radio mast intalling side mission files
 	author: Sygsky
 	description: definition for the side-radio mast inatallation mission[s]
 	returns: nothing

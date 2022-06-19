@@ -1,5 +1,5 @@
 /*
-    x_missions\common\sideradar\radio_menu.sqf
+    x_missions\common\sideradar\radio_menu.sqf, created at JUN 2022
     created 2022.06.04
 	author: Sygsky, on #410 request by Rokse
 	description: Execute load/unload/install radiomast operation

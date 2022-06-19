@@ -1,5 +1,5 @@
 /*
-    x_missions/common/sideradar/radio_inspect.sqf
+    x_missions/common/sideradar/radio_inspect.sqf, created at JUN 2022
     created 2022.06.01
 	author: Sygsky, on #410 request by Rokse
 	description: Inspect event handler for radio install SM, may be used on 2 trucks and 1 radiomast

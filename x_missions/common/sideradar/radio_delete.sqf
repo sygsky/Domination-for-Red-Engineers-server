@@ -1,5 +1,5 @@
 /*
-	x_missions\common\sideradar\radio_delete.sqf
+	x_missions\common\sideradar\radio_delete.sqf, created at JUN 2022
 	author: Sygsky
 	description: deletes the radar on mission failure
 	params: [_killed, _killer]

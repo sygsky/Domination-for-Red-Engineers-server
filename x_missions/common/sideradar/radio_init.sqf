@@ -1,5 +1,5 @@
 /*
-    x_missions\common\sideradar\radio_init.sqf
+    x_missions\common\sideradar\radio_init.sqf, created at JUN 2022
     created 2022.06.01
 	author: Sygsky, on #410 request by Rokse
 

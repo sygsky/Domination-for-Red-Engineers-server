@@ -1,4 +1,5 @@
-// GRUCommon.sqf.sqf, created by Sygsky on 09-DEC-2015
+// GRUCommon.sqf, created by Sygsky on 09-DEC-2015, included in GRUClient.sqf code
+// and compiled on the server in GRUMissionSetup.sqf
 
 #include "x_setup.sqf"
 #include "GRU_setup.sqf"
