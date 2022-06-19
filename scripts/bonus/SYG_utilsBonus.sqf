@@ -87,7 +87,7 @@ SYG_createBonusVeh = {
 	    if (_veh isKindOf "Air" ) exitWith {
 	        _veh setVectorUp [0,0,1];
 #ifdef ALLOW_HARD_MODE
-            _mags = (typeOf _veh) call SYG_getConfigMags;
+            _mags = magazines _veh;
             if ( (random 10 < 1) && ((count _mags) > 1) ) then { _mags resize ( round ( ( count _mags ) * 0.9 ) ) }; // remove 90% of magazines
             { _veh removeMagazine _x } forEach _mags;	// remove magazines from Air vehicles only
 #endif

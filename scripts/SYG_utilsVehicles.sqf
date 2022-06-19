@@ -2158,23 +2158,28 @@ SYG_getVelocityVector = {
 // Read all magazines from vehicle config
 // call as follows: _mags = _veh_type call SYG_getConfigMags;
 //
+/*
 SYG_getConfigMags = {
     if (typeName _this == "OBJECT") then {_this = typeOf _this};
     if ( typeName _this != "STRING") exitWith { hint localize format["--- SYG_getConfigMags: expected vehicle type (%1) is not ""STRING"" or ""OBJECT"", exit", typeName _this] };
-    private ["_mags","_turrets","_x"];
+    private ["_mags","_turrets","_cnt","_i","_cls"];
     // magazines from base level
     _mags = getArray( configFile >> "CfgVehicles" >> _this >> "magazines" );
     // magazines from turrets of the 1st levels
     _turrets = ( configFile >> "CfgVehicles" >> _this >> "Turrets" );
-    {
-        _mags = _mags + ( getArray( _x >> "magazines" ) );
-        // sub-turrets mags
-        {
-            _mags = _mags + ( getArray( _x >> "magazines" ) );
-        } forEach ( _x >> "Turrets" );
-    } forEach _turrets;
+    _cnt = (count _turrets) - 1;
+    for "_i" from 0 to _cnt do {
+		_cls = _turrets select _i;
+		if (isClass _cls) then {
+			if ( isArray (_cls >> "magazines")) then {
+				// sub-turrets mags
+				_mags = _mags + ( getArray( _cls >> "magazines" ) );
+			};
+		};
+    };
     _mags
 };
+*/
 
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
