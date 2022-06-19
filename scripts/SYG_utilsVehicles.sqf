@@ -671,7 +671,7 @@ SYG_isMGCar = {
 // if (_side == west) then {hint localize "side is west"} else {if (_side == east) then {hint localize "side is east"} else {hint localize "side is not west or east"}};
 // May return: east, west, civilian, resistance
 SYG_getVehicleConfigSide = {
-    if (typeName _this == "OBJECT") then { _this = typeName _this };
+    if (typeName _this == "OBJECT") then { _this = typeOf _this };
     if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_getVehicleConfigSide: expected input not OBJECT or STRING (%1)", typeName _this]; resistance };
     if ( _this isKindOf "LandVehicle" ) exitWith {
         if ( _this isKindOf "Truck" ) exitWith {
@@ -721,7 +721,7 @@ SYG_getVehicleConfigSide = {
 // Detects if designated vehicle is of Western type
 //
 SYG_isWestVehicle = {
-    if (typeName _this == "OBJECT") then { _this = typeName _this };
+    if (typeName _this == "OBJECT") then { _this = typeOf _this };
     if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_isWestVehicle: expected input not OBJECT or STRING (%1)", typeName _this]; false };
     if ( _this isKindOf "LandVehicle" ) exitWith {
         if  ( _this isKindOf "Truck5tMG" ) exitWith {true};
@@ -757,7 +757,7 @@ SYG_isWestVehicle = {
 };
 
 SYG_isEastVehicle = {
-    if (typeName _this == "OBJECT") then { _this = typeName _this };
+    if (typeName _this == "OBJECT") then { _this = typeOf _this };
     if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_getVehicleConfigSide: expected input not OBJECT or STRING (%1)", typeName _this]; false };
     if ( _this isKindOf "LandVehicle" ) exitWith {
         if  ( _this isKindOf "Ural" ) exitWith {true};
