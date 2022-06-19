@@ -15,13 +15,13 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SYS_502"; // "Высший офицерский состав обосновался в городе Corazol. Выша задача взорвать пять трансформаторных подстанций на юго-западе города, оставив гадов без электричества.";
-	current_mission_resolved_text = localize "STR_SYS_503"; // "Задание выполнено! Трансформаторные подстанции уничтожены.";
+	current_mission_text = localize "STR_SM_48"; // "Senior officers settled in the city of Corazol. Your task is to blow up five transformer substations at the South-West of the city, leaving the bastards without electricity";
+	current_mission_resolved_text = localize "STR_SM_048"; // "The target is completed! Transformer substations are destroyed";
 };
 
 if (isServer) then {
 	_poss = x_sm_pos select 0;
-	[_poss] execVM "x_missions\common\x_sidecora.sqf"; // TODO: check why is can completed automatically in 1 minute
+	[_poss] execVM "x_missions\common\x_sidecora.sqf";
 };
 
 if (true) exitWith {};
