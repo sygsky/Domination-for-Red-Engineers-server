@@ -19,6 +19,7 @@ sleep random 0.5;
 _endtime = time + 60;
 // initial information on player connected
 _str = if (SYG_found_ACE) then {"ACE_found"} else {"ACE_not_found"};
+_str = _str + (if (SYG_found_EditorUpdate_v102) then { ", EditorUpdate_v102_found"} else {", EditorUpdate_v102_not_found"});
 ["d_p_a", name player, missionStart, localize "STR_LANG", _str ] call XSendNetStartScriptServer;
 waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
 #ifdef __DEBUG__
