@@ -38,13 +38,17 @@ _txt = (if (_veh isKindOf "Truck") then {
 		};
 	};
 } else {
-	if (!alive d_radar) exitWith {"STR_RADAR_MAST"};
+	if (!alive d_radar) exitWith {""};
+	if (isNil "sideradio_status") exitWith {""};
 	switch (sideradio_status) do {
 		case 0: { "STR_RADAR_MAST_UNLOADED" };
 		case 1: { "STR_RADAR_MAST_INSTALLED" };
 		default { "STR_RADAR_MAST" };
 	};
 });
-if (_txt != "") then {
-	(localize _txt) call XfGlobalChat; // _txt is already localized
+if (_txt == "") then {
+//	hint localize format["+++ radio_inspect.sqf: d_radar %1 (%2) ", if (alive d_radar) then {"alive"} else {"not alive"}, if (isNil "d_radar") then {"isNil"} else {"not isNil"}];
+	"radio_0" call SYG_receiveRadio;
+	(localize "STR_RADAR_NO") call XfGlobalChat; // Unknown message
 };
+(localize _txt) call XfGlobalChat; // _txt is already localized

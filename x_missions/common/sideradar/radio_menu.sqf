@@ -64,7 +64,7 @@ if (true) then {
 	if (_pl != driver (vehicle _pl) ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
 
 	if (locked _veh) exitWith {
-		_veh say "radio_0";
+		"radio_0" call SYG_receiveRadio;
 		_txt = localize "STR_RADAR_NO";
 	};
 

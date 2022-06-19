@@ -325,21 +325,18 @@ SYG_getObjectHeight = {
 
 //
 // Plays enemy radio signal, it is received only by players who are:
-// 1. On base with any antenna alive
+// 1. Has radio in inventory
 // 2. In any vehicle except ATV, motocycle, bike, parachute
-// 3. Has radio in inventory
-// Call as follows: "counterattack" call SYG_receiveRadio; // play sound "counterattack"
+// 3. Any antenna (radio set) is nearby
+// Call as follows: "radio_0" call SYG_receiveRadio; // play sound "counterattack"
 //
 SYG_receiveRadio = {
-	private ["_radio"];
+	// Check inventory
+//	hint localize format["+++ SYG_receiveRadio: ""%1""", _this];
+	if (player call SYG_hasRadio) exitWith { player say _this;};
+	// Check vehicle of player
+	private ["_veh","_radio","_x"];
 	_radio = objNull;
-	if ( player call SYG_pointIsOnBase ) then {
-		private "_list";
-		_list = nearestObjects [player, ["WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "Land_Vysilac_FM","Vysilacka"], 200];
-		if (count _list > 0) exitWIth { _radio = _list select 0; };
-	};
-	if (!isNull _radio) exitWith {_radio say _this;};
-	private ["_veh"];
 	_veh = vehicle player;
 	if ( _veh != player) then {
 		if (_veh isKindOf "Motorcycle") exitWith {};
@@ -347,8 +344,12 @@ SYG_receiveRadio = {
 		if (_veh isKindOf "ParachuteBase") exitWith {};
 		_radio = _veh;
 	};
+	if (!isNull _radio) exitWith {_radio say _this;};
+	// check nearby antennas near player, doent matter what it is
+	private ["_list","_x"];
+	_list = nearestObjects [player, ["WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "Land_Vysilac_FM","Vysilacka"], 200];
+	{
+		if (alive _x) exitWith { _radio = _x};
+	} forEach _list;
 	if (! isNull _radio ) exitWith { _radio say _this; };
-	if (isNull _radio) then {
-		if (player call asRadio) then { player say _this;};
-	};
 };

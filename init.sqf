@@ -520,8 +520,11 @@ if (isServer) then {
 #endif
 	};
 #endif
-	//+++ Sygsky: create and handle GRU computer on server
+	//+++ Sygsky: create and handle GRU items (computer, radiomast etc)  on server
 	[] spawn {
+		// create GRU radio mast on the Pico de Perez
+		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
+		publicVariable "d_radar";
 		waitUntil { sleep 10.737; current_target_index >= 0 };
 		while { true } do
 		{
@@ -558,9 +561,10 @@ if (isServer) then {
 
 #endif
 
+
 };  // if (isServer)
 
-// common code execution section
+// common (server + client ) code execution section
 
 #ifdef __ACE__
 ace_sys_network_WeatherSync_Disabled = true;
@@ -705,18 +709,22 @@ execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 	// remove map hardcoded bar gates
 	{
 		_zav = _pos nearestObject _x;
-		if ( !isNull _zav AND alive _zav) then
-		{
+		if ( !isNull _zav AND alive _zav) then {
 			_zav setDammage 1.1;
 			sleep 0.1;
 		};
 	}forEach [353,355,362/* ,367 */];
+	if (!isNil "d_radar") then {
+		if (alive d_radar) then {
+			d_radar execVM "x_missions\common\sideradar\radio_init.sqf"; // add menu to GRU radio mast if exists
+		};
+	};
+
 };
 #endif
 
 // this code ensured to be run on client computer ONLY
-if ( sec_kind == 3) then
-{
+if ( sec_kind == 3) then {
 	private ["_target_array2","_current_target_name"];
 	__TargetInfo
 	//_target_array2 = target_names select current_target_index;_current_target_name = _target_array2 select 1;

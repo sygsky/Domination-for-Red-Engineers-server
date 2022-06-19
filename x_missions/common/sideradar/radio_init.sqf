@@ -14,6 +14,7 @@
 	returns: nothing
 */
 private ["_ids"];
+hint localize format["+++ radio_init.sqf: %1, _this = %2", if (X_Client) then {"Client"} else {"Server"},typeOf _this];
 
 _remove_ids = {
 	private ["_veh","_last","_id","_i","_ids"];

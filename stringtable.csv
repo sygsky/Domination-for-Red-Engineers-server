@@ -1523,7 +1523,7 @@ STR_WPN_INFO,"Remembering your armament is now done automatically when you exit 
 STR_WPN_EXIT,"press '%1' to exit from dialog","drücken Sie '%1', um den Dialog zu verlassen","pulse '%1' para salir del diálogo","для выхода из диалога нажмите '%1'"
 
 STR_RADAR_NO,Received unreliable message,Empfangene unzuverlässige Nachricht,Mensaje recibido no fiable,Получено невнятное сообщение
-STR_RADAR_MAST,Radio-mast,Radio-mast,Radio-mast,Радио-мачта
+STR_RADAR_MAST,GRU Radio-mast,GRU-Funkmast,Radio-mástil del GRU,Радио-мачта ГРУ
 STR_RADAR_MAST_DEAD,Radio mast destroyed,Funkmast zerstört,Mástil de radio destruido,Радио-мачта уничтожена
 STR_RADAR_MAST_UNLOADED,Unloaded radio mast,Unbelasteter Funkmast,Mástil de radio sin carga,Выгруженная радио-мачта
 STR_RADAR_MAST_LOADED,Radio mast loaded,Funkmast geladen,Mástil de radio cargado,Радио-мачта загружена
