@@ -55,10 +55,9 @@ _day  = SYG_client_start select 2;
 _newyear = false;
 
 // ++++++++++++++++++++++ check if today is in soviet holiday list (in 1985)
-_holiday = SYG_client_start call SYG_getCountryDay;
-if ( count _holiday > 0 ) then {
-    _sound = _holiday select 1;
-} else { // some soviet holiday
+_holiday = SYG_client_start call SYG_getCountryDay; // country foundation day, if success, return array of 2 items: ["title","sound"]
+_sound = "";
+if ( count _holiday == 0 ) then { // check if some soviet holiday
     #ifdef __HOLIDAY_DEBUG__
         _date =  + SYG_client_start;
         _date set [1,11]; _date set [2, 7]; // 07-NOV-1985, 23-FEB-1985 etc
@@ -66,11 +65,10 @@ if ( count _holiday > 0 ) then {
     #else
         _holiday = SYG_client_start call SYG_getHoliday; // The same as follow: _holiday_arr = [_holiday, _music, _title ];
     #endif
-    _sound = "";
-    if (count _holiday > 0 ) then {
-        // Soviet holiday detected, show its info about soviet holiday and/or play correponding sound
-        _sound = _holiday select 1;
-    };
+};
+if (count _holiday > 0 ) then {
+    // Soviet/country holiday detected, show its info about soviet holiday and/or play correponding sound
+    _sound = _holiday select 1;
 };
 
 if (_sound != "") then {
@@ -539,8 +537,8 @@ SYG_showMusicTitle = {
 //
 // +++++++++++++ SHOW MAIL, TITLE and test messages ++++++++++++
 //
-_start spawn {
-	private ["_txt","_arr","_str","_date","_holiday"];
+_holiday spawn {
+	private ["_txt","_arr","_str"];
 	//sleep 2;
 	{
 		_txt = switch _x do {
@@ -561,21 +559,14 @@ _start spawn {
 			};
 			case 6: { // print info per holiday if available. Params example: [22,  4, ["lenin","lenin_1"],"STR_HOLIDAY_22_APR",0]
             	private ["_holiday","_date"];
-            	_holiday = SYG_client_start call SYG_getCountryDay;
-            	if (_holiday != "") then {
-            #ifdef __HOLIDAY_DEBUG__
-                    _date =  + SYG_client_start;
-                    _date set [1,11]; _date set [2, 7]; // 07-NOV-1985, 23-FEB-1985 etc
-                    _holiday = _date call SYG_getHoliday;
-            #else
-                    _holiday = SYG_client_start call SYG_getHoliday; // The same as follow: _holiday_arr = [_holiday, _music, _title ];
-            #endif
-            	};
-                if ( typeName _holiday == "STRING" ) then {
-                    format[ localize "STR_INTRO_5",localize _holiday,"" ]; // message output
+            	_holiday = _this;
+            	if (count _holiday == 2) then {
+                    format[ localize "STR_INTRO_5",localize (_holiday select 0),"" ]; // message output
                 } else { // some soviet holiday
-                    _str = if ( _holiday select 0 ) then { "STR_INTRO_5_1" } else { "STR_INTRO_5_0" };
-                    format[localize "STR_INTRO_5",localize (_holiday select 2),_str]; // message for the selebration
+                    if (count _holiday == 3) then {
+                        _str = if ( _holiday select 0 ) then { "STR_INTRO_5_1" } else { "STR_INTRO_5_0" };
+                        format[localize "STR_INTRO_5",localize (_holiday select 2),_str]; // message for the selebration
+                    } else {""};
                 };
 			};
 		};
