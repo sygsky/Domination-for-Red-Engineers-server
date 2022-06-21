@@ -1097,9 +1097,9 @@ STR_INTRO_1,Alternative reality,Alternative Realität,Realidad alternativa,Ал�
 STR_INTRO_2,Somewhere in North Atlantics not far from USA,Irgendwo in North Atlantics nicht weit von USA,"Atlántico Norte, 1000 km de la costa de los Estados Unidos","Северная Атлантика, 1000 км от побережья США"
 STR_INTRO_3,"%1. %2, %3, %4 mission day","%1. %2, %3, %4 mission Tag","%1. %2, %3, %4º día de la misión","%1. %2, %3, %4-й день миссии"
 STR_INTRO_4,Sahrani island. Nearest settlement - %1,Insel Sahrani. Nächste Siedlung - %1,Isla De Sahrani. El asentamiento más cercano es %1,Остров Сахрани. Ближайшее поселение - %1
-STR_INTRO_5,"Today in the USSR (in 1985) holiday: ""%1"" (%2)","Heute in der UdSSR (1985) ist ein Feiertag: ""%1"" (%2)","Hoy en la URSS (en 1985) vacaciones: ""%1 "" (%2)","Сегодня в СССР (в 1985 г.) праздник: ""%1"" (%2)"
-STR_INTRO_5_0,working day,Arbeitstag,día hábil,рабочий день
-STR_INTRO_5_1,holiday,arbeitsfreier Tag,día de descanso,выходной
+STR_INTRO_5,"Today in the USSR (in 1985) holiday: ""%1""%2","Heute in der UdSSR (1985) ist ein Feiertag: ""%1"" (%2)","Hoy en la URSS (en 1985) vacaciones: ""%1 "" (%2)","Сегодня в СССР (в 1985 г.) праздник: ""%1"" (%2)"
+STR_INTRO_5_0, (working day), (Arbeitstag), (día hábil), (рабочий день)
+STR_INTRO_5_1, (holiday), (arbeitsfreier Tag), (día de descanso), (выходной)
 STR_INTRO_SIDE,USSR,UdSSR,URSS,СССР
 STR_INTRO_TEAM,One team -,One team -,Parte -,Сторона -
 STR_INTRO_FULL,Domination! One team - A.C.E. East,Domination! One team - A.C.E. East,¡Liberación! Lado-URSS (mod A. C. E.),Освобождение! Сторона - СССР (мод A.C.E.)
@@ -1140,6 +1140,8 @@ STR_HOLIDAY_TANKIST_DAY,Tankman day,Tankwarttag,Día del hombre del tanque,Де�
 STR_HOLIDAY_7_OCT,Constitution day of the USSR/Anniversary of the DDR,Tag der Verfassung der UdSSR/Jahrestag der Gründung der DDR,Día de la Constitución de la URSS/aniversario de la fundación de la RDA,День Конституции СССР/День независимости DDR
 STR_HOLIDAY_7_NOV,The day of the Great October Socialist Revolution,Tag der großen Sozialistischen Oktoberrevolution,Día De La Gran Revolución Socialista De Octubre,День Великой Октябрьской Социалистической Революции
 STR_HOLIDAY_28_OCT,The day of the Komsomol (Communist Youth Union),Komsomol-Tag (Kommunistischer Jugendverband),Día del Komsomol (Unión de la Juventud Comunista),День Комсомола
+
+STR_HOLIDAY_HUNGARI,Foundation Day of the Hungarian People's Republic(Magyar Népköztársaság),Gründungstag der Ungarischen Volksrepublik (Magyar Népköztársaság),Día de la Fundación de la República Popular Húngara (Magyar Népköztársaság),День образования Венгерской Народной Республики
 
 STR_TIME_0,Night on Sahrani,Nacht auf Sahrani,en Sahrani-noche...,на Сахрани  - ночь...
 STR_TIME_1,Day on Sahrani,Tag auf Sahrani,en el día de Sahrani...,на Сахрани - день...

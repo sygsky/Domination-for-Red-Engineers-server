@@ -455,6 +455,10 @@ SYG_holidayTable = [
 
 ];
 
+SYG_CountryDays =   [
+    [20, 8, ["Hungari","hungarian_dances"],"STR_HOLIDAY_HUNGARI"] // "Magyar Népköztársaság"
+];
+
 // Checks current server date agains holiday list and return array of data if detected, or empty array [] if not
 // _retArr = _server_date call  SYG_getHoliday;
 // where:
@@ -495,6 +499,23 @@ SYG_getHoliday = {
         if (count _ret > 0 ) exitWith {}; // A holday coincided with current day and its data returned to caller
     } forEach SYG_holidayTable;
     _ret
+};
+
+//
+// Finds personal player country day (Foundation day of solialist country usually)
+// Call as follow: _holiday = SYG_client_start call SYG_getCountryDay; // call only on client (server is headless)
+//
+SYG_getCountryDay = {
+    private ["_holiday"];
+    _holiday = "";
+    switch ( toLower(name player) ) do {
+        case "gyuri": {
+            if ( ( ( SYG_client_start select 1) == 8 ) && ( (SYG_client_start select 2) == 20 ) ) then {
+                _holiday = ["STR_HOLIDAY_HUNGARI",["Hungari", "hungarian_dances"]];
+            };
+        };
+    };
+    _holiday
 };
 
 // Returns 0 for night, 1 for day, 2 for morning and 3 for evening
