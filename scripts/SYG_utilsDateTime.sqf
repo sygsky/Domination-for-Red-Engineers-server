@@ -455,10 +455,6 @@ SYG_holidayTable = [
 
 ];
 
-SYG_CountryDays =   [
-    [20, 8, ["Hungari","hungarian_dances"],"STR_HOLIDAY_HUNGARI"] // "Magyar Népköztársaság"
-];
-
 // Checks current server date agains holiday list and return array of data if detected, or empty array [] if not
 // _retArr = _server_date call  SYG_getHoliday;
 // where:
@@ -506,12 +502,13 @@ SYG_getHoliday = {
 // Call as follow: _holiday = SYG_client_start call SYG_getCountryDay; // call only on client (server is headless)
 //
 SYG_getCountryDay = {
-    private ["_holiday"];
-    _holiday = "";
-    switch ( toLower(name player) ) do {
+    private ["_holiday","_sound"];
+    _holiday = [];
+    switch ( name player ) do {
         case "gyuri": {
-            if ( ( ( SYG_client_start select 1) == 8 ) && ( (SYG_client_start select 2) == 20 ) ) then {
-                _holiday = ["STR_HOLIDAY_HUNGARI",["Hungari", "hungarian_dances"]];
+            if ( ( ( SYG_client_start select 1) == 8 ) && ( (SYG_client_start select 2) == 20 ) ) then { // 20-AUG-1849, Day of HPR
+            	_sound = ["Hungary", "hungarian_dances"] call _XfRandomArrayVal;
+                _holiday = ["STR_HOLIDAY_HUNGARY", _sound];
             };
         };
     };

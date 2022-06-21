@@ -55,29 +55,26 @@ _day  = SYG_client_start select 2;
 _newyear = false;
 
 // ++++++++++++++++++++++ check if today is in soviet holiday list (in 1985)
-_holiday = SYG_client_start call SYG_getCountryDay; // country foundation day, if success, return array of 2 items: ["title","sound"]
+_holiday = SYG_client_start call SYG_getCountryDay; // country foundation day, if success, return array of 2 items: ["title","music"]
 _sound = "";
-if ( count _holiday == 0 ) then { // check if some soviet holiday
+if ( count _holiday == 0 ) then { // check for some soviet holiday
     #ifdef __HOLIDAY_DEBUG__
         _date =  + SYG_client_start;
         _date set [1,11]; _date set [2, 7]; // 07-NOV-1985, 23-FEB-1985 etc
         _holiday = _date call SYG_getHoliday;
     #else
-        _holiday = SYG_client_start call SYG_getHoliday; // The same as follow: _holiday_arr = [_holiday, _music, _title ];
+        _holiday = SYG_client_start call SYG_getHoliday; // The same as follow: _holiday_arr = [_is_holiday, _music, _title ];
     #endif
 };
 if (count _holiday > 0 ) then {
     // Soviet/country holiday detected, show its info about soviet holiday and/or play correponding sound
     _sound = _holiday select 1;
-};
-
-if (_sound != "") then {
     _music = _sound;
     playSound _sound;
 };
 
 _music_cnt = 0;
-if (_sound == "") then { // select random music for ordinal day
+if (_sound == "") then { // select random music for an ordinal day
     if ( ( (_mon == 12) && (_day > 20) ) || ( (_mon == 1) && (_day < 11) ) ) then {
     	_music = ((SYG_holidayTable select 0) select 2) call _XfRandomArrayVal;
     	_sound = _music;
@@ -109,7 +106,7 @@ if (_sound == "") then { // select random music for ordinal day
                 ["Shelter", "Marcin"], // polyaks
                 ["Petigp", "gyuri", "Frosty"], // hungarian
                 ["Snooper" ] // Russian from Belorussia
-//                ["gyuri"] // Hungari People Republic, August 20, 1949
+//                ["gyuri"] // Hungary People Republic, August 20, 1949
             ];
             _sounds  =
             [
@@ -538,7 +535,9 @@ SYG_showMusicTitle = {
 // +++++++++++++ SHOW MAIL, TITLE and test messages ++++++++++++
 //
 _holiday spawn {
-	private ["_txt","_arr","_str"];
+	private ["_txt","_str","_holiday"];
+   	_holiday = _this;
+//	hint localize format["+++ spawn _holiday = %1", _holiday];
 	//sleep 2;
 	{
 		_txt = switch _x do {
@@ -558,10 +557,9 @@ _holiday spawn {
                 ""
 			};
 			case 6: { // print info per holiday if available. Params example: [22,  4, ["lenin","lenin_1"],"STR_HOLIDAY_22_APR",0]
-            	private ["_holiday","_date"];
-            	_holiday = _this;
-            	if (count _holiday == 2) then {
-                    format[ localize "STR_INTRO_5",localize (_holiday select 0),"" ]; // message output
+//            	hint localize format["+++ case 6 _holiday = %1", _holiday];
+            	if (count _holiday == 2) then { // one of socialist country holiday
+                    format[ localize "STR_INTRO_05",localize (_holiday select 0),"" ]; // message output
                 } else { // some soviet holiday
                     if (count _holiday == 3) then {
                         _str = if ( _holiday select 0 ) then { "STR_INTRO_5_1" } else { "STR_INTRO_5_0" };
@@ -629,7 +627,6 @@ if ( typeName _camstart != "ARRAY" ) then {
 player cameraEffect ["terminate","back"];
 camDestroy _camera;
 closeDialog 0;
-deleteVehicle _PS1;
 ["say_sound", player, "gong_5"] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
 
 enableRadio true;
@@ -637,7 +634,8 @@ enableRadio true;
 //player removeEventHandler ["dammaged", _pdamageeh];
 
 if ( !isNull _lobj ) then { deleteVehicle _lobj};
-
 d_still_in_intro = false;
+sleep 3;
+deleteVehicle _PS1;
 
 if (true) exitWith {};
