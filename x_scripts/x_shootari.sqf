@@ -41,7 +41,7 @@ while {count _wp_array < _number_shells} do {
 	_radius = random _radius;
 	_x1 = _center_x - (_radius * sin _angle);
 	_y1 = _center_y - (_radius * cos _angle);
-	_wp_array = _wp_array + [[_x1, _y1, _height]];
+	_wp_array set [count _wp_array , [_x1, _y1, _height]];
 	sleep 0.0153; // 0.2
 };
 sleep (5.25 + (random 5));
@@ -57,8 +57,7 @@ for "_i" from 0 to (_number_shells - 1) do {
 		};
 		#endif
 	};
-	_xo = ceil random 10;
-	 sleep (0.923 + (_xo / 10));
+	 sleep (0.923 + ((ceil (random 10)) / 10));
 };
 
 _wp_array = nil;

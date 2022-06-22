@@ -455,11 +455,11 @@ SYG_rearmSabotage = {
              "_smoke_grenade","_glMuzzle"];
 	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
 	{
-		_unit = arg(0);
-        _prob = argopt(1, 0.7);
-        _adv_rearm = argopt(2, 0.1); // do advanced rearming  (true) or not (false)
+		_unit = _this select 0; // argopt(num,val) (if((count _this)<=(num))then{val}else{arg(num)})
+        _prob = if((count _this)<=1) then { 0.7 } else { _this select 1 };// argopt(1, 0.7);
+        _adv_rearm = if((count _this)<=2) then { 0.1 } else { _this select 2 };//argopt(2, 0.1); // do advanced rearming  (true) or not (false)
 #ifdef __ALLOW_SHOTGUNS__
-        _allow_shotgun = argopt(3, true);
+        _allow_shotgun = if((count _this)<=3) then { true } else { _this select 3 }; // argopt(3, true);
 #endif
 	}else{
 		_unit = _this;
@@ -1652,10 +1652,10 @@ SYG_rearmUnit = {
 	 "_wpn", "_rifle","_gun", "_sidearm","_vdist","_x"];
 	if ( typeName _this != "ARRAY") exitWith { false };
 	if ( (count _this) < 2 ) exitWith { false };
-    if ( (typeName arg(1)) == "STRING") then {
-        _this = [arg(0)] + [arg(1) call SYG_equipStr2Arr];
+    if ( (typeName (_this select 1)) == "STRING") then {
+        _this = [_this select 0] + [(_this select 1) call SYG_equipStr2Arr];
     };
-	hint localize format["+++ SYG_rearmUnit: arr %1", arg(1) call SYG_compactArray];
+	hint localize format["+++ SYG_rearmUnit: arr %1", (_this select 1) call SYG_compactArray];
 //   	player groupChat format["arr %1", arg(1)];
 	_unit = arg(0);
 	removeAllWeapons _unit;
@@ -1668,8 +1668,7 @@ SYG_rearmUnit = {
 			if ( count _x == 2) then {
 				_mag = argp(_x,0);
 				_cnt = argp(_x,1);
-				for "_i" from 0 to _cnt - 1 do
-				{
+				for "_i" from 0 to _cnt - 1 do {
 					_unit addMagazine _mag;
 				};
 			};
@@ -2739,7 +2738,7 @@ SYG_unpackEquipmentFromStr = {
 //
 // call as: _param = [_settingsArr, PARAM_NAME] call SYG_getParamFromSettingsArray;
 //
-// where PARAM_NAME is in ["VD", "GI", "PI"]
+// where PARAM_NAME is in ["VD", "GI", "PI"<, "RM">]
 //  d_viewdistance = 1500;
 //  d_graslayer_index = 0;
 //  d_playermarker_index = 1;
@@ -2757,10 +2756,18 @@ SYG_getParamFromSettingsArray = {
     if (typeName _arr != "STRING" ) exitWith{-1};
     // return requested value
     switch toUpper(_prm) do {
-        case "VD": {argp(_arr, 0)}; // ViewDistance
-        case "GI": {argp(_arr, 1)}; // GrassIndex
-        case "PI": {argp(_arr, 2)}; // Player marker Index
-        case "RM": {argp(_arr, 3)}; // Reset defeat Music on/o
+        case "VD": {_arr select 0}; // ViewDistance
+        case "GI": {_arr select 1}; // GrassIndex
+        case "PI": {_arr select 2}; // Player marker Index
+        case "RM": {_arr select 3}; // Reset defeat Music on/o
         default {-1};
     }
+};
+
+//
+// Drop bomb onto designated position. Call as follows: [_obj || _pos, "BOMB_TYPE"] call SYG_bombPos;
+// returns created bomb
+//
+SYG_bombPos = {
+	(_this select 1) createVehicle ((_this select 0) call SYG_getPos);
 };

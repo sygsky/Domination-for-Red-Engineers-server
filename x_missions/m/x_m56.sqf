@@ -14,10 +14,15 @@ if (call SYG_isSMPosRequest) exitWith {RADAR_POINT}; // it is request for pos, n
 
 if (X_Client) then {
 	current_mission_text = localize "STR_SM_56"; // "Re-establish communication with the GRU center..."
-	current_mission_resolved_text = localize "STR_SM_56_0"; // "Mission accomplished, mast in place and communication operational!"
+	current_mission_resolved_text = localize "STR_SM_056"; // "Mission accomplished, mast in place and communication operational!"
 };
 
 if (!isServer) exitWith {};
+
+// 0. Enemy destroys GRU radio-must! before start of mission
+if (alive d_radar) then {
+// TODO: add code for radar destroy
+};
 
 // 1. create antenna the base
 d_radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
