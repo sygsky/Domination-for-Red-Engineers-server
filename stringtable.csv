@@ -1563,6 +1563,7 @@ STR_CHOP_LIFTING,Lifting %1,Steigender %1,Aumentar %1,Поднято %1
 STR_CHOP_DIST,Dist. to vehicle: %1,Entfernung zum Fahrzeug: %1,Dist. al vehículo: %1,Дист. до техники: %1
 STR_CHOP_HIGH,It's too high,Das ist zu hoch,Demasiado alto,Слишком высоко
 STR_CHOP_AGL,Dist. AGL: %1,Dist. AGL: %1,Dist. AGL: %1,Расст. до земли: %1
+STR_CHOP_ATTACHED,Attached,Es gibt einen Griff,Hay un agarre,Есть захват!
 STR_CHOP_WELCOME,"Welcome aboard, %1","Willkommen an Bord, %1","Bienvenido a bordo, %1","Добро пожаловать на борт, %1!"
 STR_CHOP_WELCOME_1,"This is the wreck lift chopper.","Das ist der Hubschrauber des Wracks.","Este es el helicóptero de elevación de los restos.","Вертолет для транспортировки подбитой техники."
 STR_CHOP_WELCOME_2,"Remember, it can only lift wrecks.","Denken Sie daran, dass es nur Wracks heben kann.","Recuerda que sólo puede levantar pecios.","Напоминаем, этот вертолёт используется только для транспортировки подбитой техники."

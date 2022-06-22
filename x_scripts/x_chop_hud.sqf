@@ -250,7 +250,7 @@ while {true} do {
 									_control = DCHOP_LIFT_HUD displayCtrl 64441;
 									_control ctrlSetText format [localize "STR_CHOP_AGL", (position _nearest) select 2];
 									_control = DCHOP_LIFT_HUD displayCtrl 64442;
-									_control ctrlSetText "Attached";
+									_control ctrlSetText localize "STR_CHOP_ATTACHED"; //"Attached";
 								};
 							} else {
 								cutRsc["chopper_lift_hud2", "PLAIN"];
