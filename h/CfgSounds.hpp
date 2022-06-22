@@ -619,6 +619,8 @@ class CfgSounds {
     class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; titles[] = {};}; // Day of School
     class march_of_soviet_tankmen { name="2nd Sunday of September ";    sound[] = {\sounds\intro\holidays\tankist_day\march_of_soviet_tankmen.ogg,db-1,1.0}; titles[] = {};}; // Day of School
     // march_of_soviet_tankmen.ogg
+    class Hungary    { name="Hungary day ";                             sound[] = {\sounds\intro\holidays\Hungary.ogg,db-1,1.0}; titles[] = {};}; // Day of Hungarian Peple Republic
+
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
     class money1 { name="Money by Pink Floyd";                          sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
