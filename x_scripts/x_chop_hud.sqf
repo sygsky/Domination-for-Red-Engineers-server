@@ -1,5 +1,5 @@
-// by Xeno
-private ["_control","_dam_str","_fuel_str","_vec","_X_Chopper_Welcome"];
+// by Xeno, x_scripts/x_chop_hud.sqf
+private ["_control","_veh","_X_Chopper_Welcome"];
 
 _X_Chopper_Welcome = nil;
 
@@ -9,32 +9,32 @@ if (d_show_chopper_welcome) then {
 	d_rsc_end = true;
 
 	_X_Chopper_Welcome = {
-		private ["_state","_vec"];
+		private ["_state","_veh"];
 		d_rsc_end = false;
 		_state = _this select 0;
-		_vec = _this select 1;
-		_welcome_str1 = format ["Добро пожаловать на борт, %1!", name player];
+		_veh = _this select 1;
+		_welcome_str1 = format [localize "STR_CHOP_WELCOME", name player]; // "Welcome aboard, %1"
 
 		_welcome_str2 = "";
 		_welcome_str3 = "";
-		if (format ["%1",_vec] in d_no_lift_chopper) then {
+		if (format ["%1",_veh] in d_no_lift_chopper) then {
 			_state = 2;
 		};
 		if (_state == 1) then {
-			_welcome_str2 = "Вертолет для транспортировки подбитой техники.";
-			_welcome_str3 = "Напоминаем, этот вертолёт используется только для транспортировки подбитой техники.";
+			_welcome_str2 = localize "STR_CHOP_WELCOME_1"; // "This is the wreck lift chopper."
+			_welcome_str3 = localize "STR_CHOP_WELCOME_2"; // "Remember, it can only lift wrecks."
 		} else {
 			if (_state == 0) then {
-				_welcome_str2 = "Это транспортный вертолет.";
-				_welcome_str3 = "Используется для транспортировки грузов и легкой техники.";
+				_welcome_str2 = localize "STR_CHOP_WELCOME_3";  // "This is a normal lift chopper."
+				_welcome_str3 = localize "STR_CHOP_WELCOME_4"; // "It can lift allmost any vehicle except wrecks."
 			} else {
-				_welcome_str2 = "Это транспортный вертолет.";
-				_welcome_str3 = "Не предназначен для транспортировки грузов.";
+				_welcome_str2 = localize "STR_CHOP_WELCOME_5"; // "This is a normal chopper."
+				_welcome_str3 = localize "STR_CHOP_WELCOME_6"; // "It is not able to lift anything."
 			};
 		};
 
 		_end_welcome = time + 14;
-		while {vehicle player != player && alive player && player == driver _vec} do {
+		while {((vehicle player) != player) && (alive player) && (player == driver _veh)} do {
 			cutRsc["chopper_hud", "PLAIN"];
 			_control = DCHOP_HUD displayCtrl 64438;
 			_control ctrlSetText _welcome_str1;
@@ -58,15 +58,15 @@ _ui_tohigh = "\CA\ui\data\ui_action_close_ca.paa";
 _ui_ok = "\CA\ui\data\ui_tankdir_tower_ca.paa";
 
 while {true} do {
-	waitUntil {sleep random 0.3;vehicle player != player};
-	_vec = vehicle player;
-	while {vehicle player != player} do {
-		if (player == driver _vec) then {
-			if (_vec isKindOf "Helicopter" && !(_vec isKindOf "ParachuteBase")) then {
+	waitUntil {sleep random 0.3;(vehicle player) != player};
+	_veh = vehicle player;
+	while { _veh != player} do {
+		if (player == driver _veh) then {
+			if (_veh isKindOf "Helicopter" && !(_veh isKindOf "ParachuteBase")) then {
 				_is_in_complete_list = false;
 				{
 					call compile format ["
-						if (%1 == _vec) exitWith {
+						if (%1 == _veh) exitWith {
 							_is_in_complete_list = true;
 						};
 					", _x];
@@ -74,7 +74,7 @@ while {true} do {
 				_is_in_lift_list = false;
 				{
 					call compile format ["
-						if (%1 == _vec) exitWith {
+						if (%1 == _veh) exitWith {
 							_is_in_lift_list = true;
 						};
 					", _x];
@@ -83,7 +83,7 @@ while {true} do {
 				if (!_is_in_lift_list) then {
 					{
 						call compile format ["
-							if (%1 == _vec) exitWith {
+							if (%1 == _veh) exitWith {
 								_is_in_wreck_lift_list = true;
 							};
 						", _x];
@@ -102,7 +102,7 @@ while {true} do {
 								}
 							}
 						);
-						[_state,_vec] spawn _X_Chopper_Welcome;
+						[_state,_veh] spawn _X_Chopper_Welcome;
 						sleep 0.321;
 						waitUntil {d_rsc_end};
 					};
@@ -119,7 +119,7 @@ while {true} do {
 #ifndef __TT__
 						{
 							call compile format ["
-								if (_vec == %1) exitWith {
+								if (_veh == %1) exitWith {
 									_possible_types = %2;
 								};
 							", _x select 0, _x select 3];
@@ -129,7 +129,7 @@ while {true} do {
 						if (playerSide == west) then {
 							{
 								call compile format ["
-									if (_vec == %1) exitWith {
+									if (_veh == %1) exitWith {
 										_possible_types = %2;
 									};
 								", _x select 0, _x select 3];
@@ -137,7 +137,7 @@ while {true} do {
 						} else {
 							{
 								call compile format ["
-									if (_vec == %1) exitWith {
+									if (_veh == %1) exitWith {
 										_possible_types = %2;
 									};
 								", _x select 0, _x select 3];
@@ -147,13 +147,13 @@ while {true} do {
 						_search_height = 50;
 						_lift_height = 50;
 					};
-					while {vehicle player != player && alive player && player == driver _vec} do {
+					while { (vehicle player != player) && (alive player) && (player == driver _veh)} do {
 						if (d_chophud_on) then {
-							_nobjects = nearestObjects [_vec, ["LandVehicle","Air"],_search_height];
+							_nobjects = nearestObjects [_veh, ["LandVehicle","Air"],_search_height];
 							_nearest = objNull;
 							if (count _nobjects > 0) then {
 								_dummy = _nobjects select 0;
-								if (_dummy == _vec) then {
+								if (_dummy == _veh) then {
 									if (count _nobjects > 1) then {
 										_nearest = _nobjects select 1;
 									};
@@ -165,9 +165,9 @@ while {true} do {
 
 							_check_cond = false;
 							if (_is_in_wreck_lift_list) then {
-								_check_cond = (!(isNull _nearest) && (damage _nearest >= 1) && ((typeof _nearest) in _possible_types));
+								_check_cond = (!(isNull _nearest) && (damage _nearest >= 1) && ((typeOf _nearest) in _possible_types));
 							} else {
-								_check_cond = (!isNull _nearest && ((typeof _nearest) in _possible_types) && ((position _vec) select 2 > 2.5));
+								_check_cond = (!isNull _nearest && ((typeOf _nearest) in _possible_types) && ((position _veh) select 2 > 2.5));
 							};
 
 							sleep 0.001;
@@ -175,49 +175,48 @@ while {true} do {
 							if (_check_cond) then {
 								cutRsc["chopper_lift_hud", "PLAIN"];
 								_control = DCHOP_LIFT_HUD displayCtrl 64440;
-								if (_vec == HR4) then {
-									_control ctrlSetText "Wreck Lift Chopper";
+								if (_veh == HR4) then {
+									_control ctrlSetText (localize "STR_CHOP_WRECK_HELI");
 								} else {
-									_control ctrlSetText "Lift Chopper";
+									_control ctrlSetText (localize "STR_CHOP_LIFT_HELI");
 								};
 								_control = DCHOP_LIFT_HUD displayCtrl 64438;
-								_type_name = [(typeof _nearest),0] call XfGetDisplayName;
+								_type_name = [(typeOf _nearest),0] call XfGetDisplayName;
 								if (!Vehicle_Attached) then {
-									_control ctrlSetText format ["Type: %1", _type_name];
+									_control ctrlSetText format [localize "STR_CHOP_TYPE", _type_name];
 								} else {
-									_control ctrlSetText format ["Lifting %1", _type_name];
+									_control ctrlSetText format [localize "STR_CHOP_LIFTING", _type_name];
 								};
 
-
 								_control = DCHOP_LIFT_HUD displayCtrl 64439;
-								if (getText (configFile >> "CfgVehicles" >> (typeof _nearest) >> "picture") != "picturestaticobject") then {
-									_control ctrlSetText getText (configFile >> "CfgVehicles" >> (typeof _nearest) >> "picture");
+								if (getText (configFile >> "CfgVehicles" >> (typeOf _nearest) >> "picture") != "picturestaticobject") then {
+									_control ctrlSetText getText (configFile >> "CfgVehicles" >> (typeOf _nearest) >> "picture");
 								} else {
 									_control ctrlSetText "";
 								};
 
 								if (!Vehicle_Attached) then {
 									_control = DCHOP_LIFT_HUD displayCtrl 64441;
-									_control ctrlSetText format ["Dist to vec: %1", _vec distance _nearest];
+									_control ctrlSetText format [localize "STR_CHOP_DIST", _veh distance _nearest];
 									_nearest_pos = position _nearest;
-									_pos_vec = position _vec;
-									_nx = _nearest_pos select 0;_ny = _nearest_pos select 1;_px = _pos_vec select 0;_py = _pos_vec select 1;
-									if ((_px <= _nx + 10 && _px >= _nx - 10) && (_py <= _ny + 10 && _py >= _ny - 10) && (_pos_vec select 2 < _lift_height)) then {
+									_pos_veh = position _veh;
+									_nx = _nearest_pos select 0;_ny = _nearest_pos select 1;_px = _pos_veh select 0;_py = _pos_veh select 1;
+									if ((_px <= _nx + 10 && _px >= _nx - 10) && (_py <= _ny + 10 && _py >= _ny - 10) && (_pos_veh select 2 < _lift_height)) then {
 										_control2 = DCHOP_LIFT_HUD displayCtrl 64448;
 										_control2 ctrlSetText _ui_ok;
 									} else {
 										_control = DCHOP_LIFT_HUD displayCtrl 64442;
-										if ((position _vec) select 2 >= _lift_height) then {
-											_control ctrlSetText "Too high";
+										if ((position _veh) select 2 >= _lift_height) then {
+											_control ctrlSetText localize ("STR_CHOP_HIGH");
 										} else {
 											_control ctrlSetText "";
 										};
 										_control2 = DCHOP_LIFT_HUD displayCtrl 64447;
 										_control2 ctrlSetText _ui_tohigh;
-										_angle = 0; _a = ((_nearest_pos select 0) - (_pos_vec select 0));_b = ((_nearest_pos select 1) - (_pos_vec select 1));
+										_angle = 0; _a = ((_nearest_pos select 0) - (_pos_veh select 0));_b = ((_nearest_pos select 1) - (_pos_veh select 1));
 										if (_a != 0 || _b != 0) then {_angle = _a atan2 _b};
 
-										_dif = (_angle - direction _vec);
+										_dif = (_angle - direction _veh);
 										if (_dif < 0) then {_dif = 360 + _dif;};
 										if (_dif > 180) then {_dif = _dif - 360;};
 										_angle = _dif;
@@ -249,18 +248,18 @@ while {true} do {
 									};
 								} else {
 									_control = DCHOP_LIFT_HUD displayCtrl 64441;
-									_control ctrlSetText format ["Dist attached to ground: %1", (position _nearest) select 2];
+									_control ctrlSetText format [localize "STR_CHOP_AGL", (position _nearest) select 2];
 									_control = DCHOP_LIFT_HUD displayCtrl 64442;
 									_control ctrlSetText "Attached";
 								};
 							} else {
 								cutRsc["chopper_lift_hud2", "PLAIN"];
 								_control = DCHOP_HUD2 displayCtrl 61422;
-								if (!(format ["%1",_vec] in d_no_lift_chopper)) then {
+								if (!(format ["%1",_veh] in d_no_lift_chopper)) then {
 									if (_is_in_wreck_lift_list) then {
-										_control ctrlSetText "Wreck Lift Chopper";
+										_control ctrlSetText "STR_CHOP_WRECK_HELI";
 									} else {
-										_control ctrlSetText "Lift Chopper";
+										_control ctrlSetText "STR_CHOP_LIFT_HELI";
 									};
 								};
 							};
@@ -269,10 +268,10 @@ while {true} do {
 					};
 					cutText["", "PLAIN"];
 				} else {
-					while {vehicle player != player && alive player && player == driver _vec} do {
+					while {((vehicle player) != player) && (alive player) && (player == driver _veh)} do {
 						cutRsc["chopper_lift_hud2", "PLAIN"];
 						_control = DCHOP_HUD2 displayCtrl 61422;
-						_control ctrlSetText "Normal Chopper";
+						_control ctrlSetText (localize "STR_CHOP_ORDINAL");
 						sleep 0.421;
 					};
 				};

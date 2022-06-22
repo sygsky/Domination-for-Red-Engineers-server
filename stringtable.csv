@@ -1554,6 +1554,22 @@ STR_UNLOAD,Unload,Entladen,Descarga,Выгрузить
 STR_INSPECT,Inspect vehicle,Fahrzeug inspizieren,Inspeccionar el vehículo,Осмотреть технику
 STR_INSTALL,Сheck radio-mast,Сheck Funkmast,Сheck radio-mástil,Испытать мачту
 
+STR_CHOP_WRECK_HELI,Wreck Lift Chopper,Wrackhebebühne Chopper,Chopper de elevación de restos,Аварийный верт.
+STR_CHOP_LIFT_HELI,Lift Chopper,Lift Chopper,Lift Chopper,Груз. верт.
+STR_CHOP_ORDINAL,Normal Chopper,Normaler Chopper,Un helicóptero normal,Обычный верт.
+STR_CHOP_TYPE,Type: %1,Typ: %1,Tipo: %1,Тип: %1
+STR_CHOP_LIFTING,Lifting %1,Steigender %1,Aumentar %1,Поднято %1
+STR_CHOP_DIST,Dist. to vehicle: %1,Entfernung zum Fahrzeug: %1,Dist. al vehículo: %1,Дист. до техники: %1
+STR_CHOP_HIGH,It's too high,Das ist zu hoch,Demasiado alto,Слишком высоко
+STR_CHOP_AGL,Dist. AGL: %1,Dist. AGL: %1,Dist. AGL: %1,Расст. до земли: %1
+STR_CHOP_WELCOME,"Welcome aboard, %1","Willkommen an Bord, %1","Bienvenido a bordo, %1","Добро пожаловать на борт, %1!"
+STR_CHOP_WELCOME_1,"This is the wreck lift chopper.","Das ist der Hubschrauber des Wracks.","Este es el helicóptero de elevación de los restos.","Вертолет для транспортировки подбитой техники."
+STR_CHOP_WELCOME_2,"Remember, it can only lift wrecks.","Denken Sie daran, dass es nur Wracks heben kann.","Recuerda que sólo puede levantar pecios.","Напоминаем, этот вертолёт используется только для транспортировки подбитой техники."
+STR_CHOP_WELCOME_3,"This is a normal lift chopper.",,,"Это транспортный вертолет."
+STR_CHOP_WELCOME_4,"It can lift allmost any vehicle except wrecks.","Es kann fast jedes Fahrzeug anheben, außer Wracks.","Puede levantar casi todos los vehículos, excepto los desechos.","Используется для транспортировки грузов и легкой техники."
+STR_CHOP_WELCOME_5,"This is a normal chopper.","Das ist ein normaler Hubschrauber.","Este es un helicóptero normal.","Это транспортный вертолет."
+STR_CHOP_WELCOME_6,"It is not able to lift anything.","Er ist nicht in der Lage, etwas zu heben.","No es capaz de levantar nada.","Не предназначен для транспортировки грузов."
+
 STR_TITLE,"Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2022 by EngineerACE\n          for Red-Engineers.ucoz.ru","Erstellt 2009 von Xeno\n  für www.germany-fun.de\n\nBearbeitet 2014-2022 von EngineerACE\n   für Red-Engineers.ucoz.ru","Hecho en 2009 por Xeno\n   para www.germany-fun.de\n\nEdit 2014-2022 por EngineerACE\n para     Red-Engineers.ucoz.ru","Автор 2009 Xeno\n  для www.germany-fun.de\n\nПереработка 2014-2022 EngineerACE\n  для Red-Engineers.ucoz.ru"
 
 STR_AVIAMARCH,aviamarch_eng,aviamarch_ger,aviamarch_rus,aviamarch_rus

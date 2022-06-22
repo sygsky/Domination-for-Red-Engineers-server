@@ -361,7 +361,7 @@ d_chop_all = [];
 				(_this select 1) addEventHandler ["getin", {_this execVM "x_scripts\x_checkhelipilot_wreck.sqf"}];
 				(_this select 1) addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
 			};
-			d_chop_wreck_lift_list = d_chop_wreck_lift_list + [_hstr];
+			d_chop_wreck_lift_list set [count d_chop_wreck_lift_list, _hstr];
 		};
 		case 2: {
 			_hstr addPublicVariableEventHandler {
@@ -410,7 +410,7 @@ d_chop_all = [];
 				(_this select 1) addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
 				(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
 			};
-			d_chop_wreck_lift_list = d_chop_wreck_lift_list + [_hstr];
+			d_chop_wreck_lift_list set [count d_chop_wreck_lift_list, _hstr];
 		};
 		case 2: {
 			_hstr addPublicVariableEventHandler {
@@ -418,7 +418,7 @@ d_chop_all = [];
 				(_this select 1) addEventHandler ["getin", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf"}];
 				(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf"}];
 			};
-			d_chop_normal_list = d_chop_normal_list + [_hstr];
+			d_chop_normal_list set [count d_chop_normal_list, _hstr];
 		};
 	};
 } forEach d_choppers_west;
@@ -450,7 +450,7 @@ d_chop_all = [];
 				(_this select 1) addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
 				(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf"}];
 			};
-			d_chop_lift_list = d_chop_lift_list + [_hstr];
+			d_chop_lift_list set [count d_chop_lift_list, _hstr];
 		};
 		case 1: {
 			_hstr addPublicVariableEventHandler {
@@ -459,7 +459,7 @@ d_chop_all = [];
 				(_this select 1) addEventHandler ["getout", {_this execVM "x_scripts\x_checkhelipilotout.sqf"}];
 				(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf"}];
 			};
-			d_chop_wreck_lift_list = d_chop_wreck_lift_list + [_hstr];
+			d_chop_wreck_lift_list set [count  d_chop_wreck_lift_list, _hstr];
 		};
 		case 2: {
 			_hstr addPublicVariableEventHandler {
@@ -467,7 +467,7 @@ d_chop_all = [];
 				(_this select 1) addEventHandler ["getin", {[_this,1] execVM "x_scripts\x_checkhelipilot.sqf"}];
 				(_this select 1) addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillracs.sqf"}];
 			};
-			d_chop_normal_list = d_chop_normal_list + [_hstr];
+			d_chop_normal_list set [count d_chop_normal_list, _hstr];
 		};
 	};
 } forEach d_choppers_racs;
