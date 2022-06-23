@@ -134,6 +134,7 @@ if ( _equip == "" ) then {
 
 					_pistol= switch _index do {
 						case 0: {["S", "ACE_Makarov", "ACE_8Rnd_9x18_B_Makarov", 4]};
+						case 1;
 						case 2: {["S", "ACE_TT", "ACE_8Rnd_762x25_B_Tokarev", 4]};
 						case 3: {["S", "ACE_MakarovSD", "ACE_8Rnd_9x18_SD_Makarov", 4]};
 						case 4;
