@@ -139,9 +139,9 @@ if ( _sound != "") then  { playSound _sound };
 
 	#ifdef __TELEPORT_DEVIATION__
 if ( ([_end_pos, __TELEPORT_DEVIATION__] call SYG_isNearIronMass) ) then {
-	[] spawn {
+	_target spawn {
 		// initial sound message on the destination teleport near iron mass
-		(format[localize "STR_SYS_75_4",_target]) call XfHQChat;
+		(format[localize "STR_SYS_75_4",_this]) call XfHQChat;
 		sleep 1;
 		playSound (call SYG_powerDownSound);
 	};
