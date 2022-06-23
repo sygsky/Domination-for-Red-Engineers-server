@@ -25,8 +25,8 @@ if (d_show_chopper_welcome) then {
 			_welcome_str3 = localize "STR_CHOP_WELCOME_2"; // "Remember, it can only lift wrecks."
 		} else {
 			if (_state == 0) then {
-				_welcome_str2 = localize "STR_CHOP_WELCOME_3";  // "This is a normal lift chopper."
-				_welcome_str3 = localize "STR_CHOP_WELCOME_4"; // "It can lift allmost any vehicle except wrecks."
+				_welcome_str2 = localize "STR_CHOP_WELCOME_3";  // "It's a transport helicopter."
+				_welcome_str3 = localize "STR_CHOP_WELCOME_4"; // "It can lift allmost any light vehicle except wrecks."
 			} else {
 				_welcome_str2 = localize "STR_CHOP_WELCOME_5"; // "This is a normal chopper."
 				_welcome_str3 = localize "STR_CHOP_WELCOME_6"; // "It is not able to lift anything."
