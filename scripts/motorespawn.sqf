@@ -171,7 +171,7 @@ while {true} do {
 #endif
 				} else {	// use current vehicle item
 #ifdef __DEBUG__
-					hint localize format[ "+++ motorespawn.sqf: alive moto%1(%2) returned", _id + 1, typeOf _moto ];
+					hint localize format[ "+++ motorespawn.sqf: alive moto%1(%2)%3 returned", _id + 1, typeOf _moto, if (local _moto) then {" local"} else {" remote"} ];
 #endif
 					_moto setDammage 0.0;
 					_moto setFuel 1.0;
