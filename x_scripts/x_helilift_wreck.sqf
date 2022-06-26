@@ -100,10 +100,10 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                          getPosASL _vehicle]
                     };
 #endif
-                    _release_id = _vehicle addAction [localize "STR_SYS_36"/* "СБРОСИТЬ ТЕХНИКУ" */, "x_scripts\x_heli_release.sqf",-1,100000];
-                    _rec_msg = localize (if (_nearest call SYG_vehIsRecoverable) then {"STR_SYS_37_1"} else {"STR_SYS_37_0"});
-                    hint localize ["+++ x_helilift_wreck: %1, ""RECOVERABLE""=%2 (%3)", typeOf _nearest, _nearest getVariable "RECOVERABLE", localize _rec_msg];
-                    [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName, _rec_msg]] call XfVehicleChat;
+                    _release_id = _vehicle addAction [localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; // "Drop vehicle"
+                    _rec_msg = localize (if (_nearest call SYG_vehIsRecoverable) then {"STR_SYS_37_1"} else {"STR_SYS_37_0"}); // "recoverable"/"not recoverable"
+                    hint localize format["+++ x_helilift_wreck: %1, ""RECOVERABLE""=%2 (%3)", typeOf _nearest, _nearest getVariable "RECOVERABLE", _rec_msg];
+                    [_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName, _rec_msg]] call XfVehicleChat; // "Vehicle (%1, %2) is lifted..."
                     Attached_Vec = _nearest;
 
                     _height = 15;
