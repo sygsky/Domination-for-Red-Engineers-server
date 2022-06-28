@@ -34,13 +34,13 @@ _make_marker = {
 	private ["_mrk_name"];
 	_mrk_name = _this select 0;
 	createMarker [_mrk_name, _this select 2 ]; // create marker on pos
-	_mrk_name setMarkerColorLocal _this select 3; // set marker color
+	_mrk_name setMarkerColorLocal (_this select 3); // set marker color
 
 	if (count _this > 4) then {
-		_mrk_name setMarkerTypeLocal  _this select 1;  // marker type
-		_mrk_name setMarkerSize  (_this select 4);  // marker size
+		_mrk_name setMarkerTypeLocal (_this select 1);  // marker type
+		_mrk_name setMarkerSize (_this select 4);  // marker size
 	} else {
-		_mrk_name setMarkerType  _this select 1; // only marker type
+		_mrk_name setMarkerType (_this select 1); // only marker type
 	};
 	_mrk_name
 };

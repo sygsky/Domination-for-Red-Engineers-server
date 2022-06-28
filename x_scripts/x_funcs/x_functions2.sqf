@@ -464,7 +464,8 @@ XfGetFlankPos = {
 // example: _slope = [the_position, the_radius] call XfGetSlope;
 XfGetSlope = {
 	private ["_position", "_radius", "_slopeObject", "_centerHeight", "_height", /*"_direction",*/ "_count","_dxy","_xc","_yc","_x"];
-	_position = _this select 0;
+	_position = + (_this select 0);
+	_position resize 2;
 	_radius = _this select 1;
 	_slopeObject = "Logic" createVehicleLocal [0,0,0];
 	_slopeObject setPos _position;

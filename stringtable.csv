@@ -1528,17 +1528,16 @@ STR_WPN_INFO,"Remembering your armament is now done automatically when you exit 
 STR_WPN_EXIT,"press '%1' to exit from dialog","drücken Sie '%1', um den Dialog zu verlassen","pulse '%1' para salir del diálogo","для выхода из диалога нажмите '%1'"
 
 STR_RADAR_NO,Received unreliable message,Empfangene unzuverlässige Nachricht,Mensaje recibido no fiable,Получено невнятное сообщение
-STR_RADAR_MAST,GRU Radio-mast,GRU-Funkmast,Radio-mástil del GRU,Радио-мачта ГРУ
+STR_RADAR_MAST,Rusty GRU Radio-mast,Rostiger GRU-Funkmast,Mástil de radio GRU oxidado,Ржавая радио-мачта ГРУ
 STR_RADAR_MAST_DEAD,Radio mast destroyed,Funkmast zerstört,Mástil de radio destruido,Радио-мачта уничтожена
-STR_RADAR_MAST_UNLOADED,Unloaded radio mast,Unbelasteter Funkmast,Mástil de radio sin carga,Выгруженная радио-мачта
+STR_RADAR_MAST_UNLOADED,"Rusty radio mast, what junkyard did you find it in?","Verrosteter Funkmast, auf welchem Schrottplatz hast du den gefunden?","Mástil de radio oxidado, ¿en qué chatarrería lo encontraste?","Ржавая радио-мачта, на какой свалке вы её нашли?"
 STR_RADAR_MAST_LOADED,Radio mast loaded,Funkmast geladen,Mástil de radio cargado,Радио-мачта загружена
 STR_RADAR_MAST_INSTALLED,"Installed radio repeater mast. The motherland will hear us!","Ein Funk-Repeater-Mast wird installiert. Das Mutterland wird uns hören!","Un mástil repetidor de radio instalado. La patria nos escuchará","Установленная радиомачта-ретранслятор. Родина услышит нас!"
 STR_RADAR_MAST_ALREADY_LOADED,Radio mast already loaded,Der Funkmast ist bereits geladen,El mástil de radio ya está cargado,Радиомачта уже загружена
 STR_RADAR_MAST_FAR_AWAY,Mast further than %1 meters (%2),Mast weiter als %1 Meter (%2),Mástil de más de %1 metros (%2),Мачта дальше %1 м. (%2)
-STR_RADAR_MAST_TOO_LOW,Mast below %1 m. (%2) above sea level,Mast unter %1 m. (%2) über dem Meeresspiegel,Mástil por debajo de %1 m. (%2) sobre el nivel del mar,Мачта ниже %1 м. (%2)
-STR_RADAR_MAST_BAD_SLOPE,The mast cannot be installed at this position,Der Mast kann in dieser Position nicht installiert werden,Der Mast kann in dieser Position nicht installiert werden,El mástil no puede instalarse en esta posición,Мачта не может быть здесь установлена
+STR_RADAR_MAST_TOO_LOW,Mast below %1 m. ASL. (%2),Mast unter %1 m. (%2) über dem Meeresspiegel,Mástil por debajo de %1 m. (%2) sobre el nivel del mar,Мачта ниже %1 м. над уровнем моря (%2)
+STR_RADAR_MAST_BAD_SLOPE,The mast cannot be installed at this position,Der Mast kann in dieser Position nicht installiert werden,El mástil no puede instalarse en esta posición,Мачта не может быть здесь установлена
 STR_RADAR_MAST_NEAR_BASE,"The base is too close, move the mast farther away","Die Basis ist zu nah, bring den Mast weiter weg","La base está demasiado cerca, aleja el mástil","База слишком близко, отвезите мачту подальше"
-STR_RADAR_MAST_NOT_FOUND,"No radio mast detected within %1 m.","Kein Funkmast im Umkreis von %1 m entdeckt","No se ha detectado ningún mástil de radio en un radio de %1 m","Радио-мачта не обнаружена в радиусе %1 м."
 
 STR_RADAR_TRUCK,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Active truck for transporting a radio mast,Активный грузовик для радио-мачты
 STR_RADAR_TRUCK_NOT_DRIVER,You are not driver,Sie sind kein Fahrer,Usted no es conductor,Вы не водитель
@@ -1546,7 +1545,7 @@ STR_RADAR_TRUCK_LOADED,"Active truck for transporting a radio mast, mast is load
 STR_RADAR_TRUCK_NOT_LOADED,"Active truck for transporting a radio mast, mast not loaded","Aktiver Lastwagen für den Transport eines Funkmastes, Mast nicht geladen","Camión activo para el transporte de un mástil de radio, mástil no cargado","Активный грузовик для перевозки радио-мачты, мачта не загружена"
 STR_RADAR_TRUCK_MAST_INSTALLED,"Active truck for transporting a radio mast, mast is installed","Aktiver Lastwagen für den Transport eines Funkmastes, Mast ist installiert","Camión activo para transportar un mástil de radio, el mástil está instalado","Активный грузовик для перевозки радио-мачты, мачта установлена"
 STR_RADAR_TRUCK_MAST_FAILED,"Active truck to transport radio mast, mission failed.","Aktiver Lkw zum Transport des Funkmastes, Mission gescheitert","Camión activo para transportar mástil de radio, misión fallida","Активный грузовик для перевозки радио-мачты, миссия провалена"
-STR_RADAR_TRUCK_LOCKED,"Spare Truck for the Mission","Spare Truck for the Mission","Spare Truck for the Mission","Запасной грузовик для миссии"
+STR_RADAR_TRUCK_LOCKED,"Spare Truck for the Mission. May come in handy!","Ersatz-LKW für die Mission. Könnte sich als nützlich erweisen!",Camión de repuesto para la Misión. Puede ser útil".,"Запасной грузовик для миссии. Может сильно пригодиться!"
 STR_RADAR_TRUCK_UNLOCK,"There's only one truck left. Take care of it, it's our last chance to complete the mission!","Es gibt nur noch einen Lkw. Kümmert euch darum, es ist unsere letzte Chance, die Mission zu erfüllen!","Sólo queda un camión. Encárgate de ello, ¡es nuestra última oportunidad de completar la misión!","Осталось только один грузовик. Берегите его, он - наш последний шанс выполнить задание!"
 STR_RADAR_TRUCK_FAILED,"Last track destroyed, task failed!","Letzte Spur zerstört, Aufgabe gescheitert!","Última pista destruida, tarea fallida","Уничтожен последний грузовик, задача не выполнена!"
 STR_RADAR_FAILED,"Mission failed, no help from GRU!","Mission gescheitert, keine Hilfe vom GRU!","¡Misión fallida, no hay ayuda de la GRU!","Миссия провалена, пмощи от ГРУ не будет!"

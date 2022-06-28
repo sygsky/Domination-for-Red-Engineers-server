@@ -6,7 +6,7 @@
 */
 
 
-#define RADAR_POINT = [13592,15591,0]   // central point of the area to install radar
+#define RADAR_POINT [13592,15591,0]   // central point of the area to install radar
 #define INSTALL_RADIUS 2000             // how far from the RADAR_POINT
 #define INSTALL_MIN_ALTITUDE 450        // minimal height above sea level to install
 #define RADAR_MARKER "Arrow"            // BIS marker for radar

@@ -586,7 +586,15 @@ SYG_prisonersSound = {
 };
 
 SYG_powerDownSound = {
-	format["powerdown%1", (ceil (random 6)) max 1]
+	format["powerdown%1", ceil (random 6)]
+};
+
+SYG_truckDoorCloseSound = {
+	format["truck_door_%1", ceil (random 4)]
+};
+
+SYG_rustyMastSound = {
+	format["rusty_mast_%1", ceil (random 7)]
 };
 
 if (true) exitWith {};

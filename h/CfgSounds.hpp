@@ -640,4 +640,18 @@ class CfgSounds {
     class radio_0 { name="radio 0";                                     sound[] = {\sounds\radio\radio_0.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
     class counterattack { name="counterattack";                         sound[] = {\sounds\radio\start_counterattack.ogg,db-1,1.0}; titles[] = {};}; // start counterattack
 
+    class truck_door_1 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_1.ogg,db-1,1.0}; titles[] = {};}; // truck door close 1
+    class truck_door_2 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_2.ogg,db-1,1.0}; titles[] = {};}; // 2
+    class truck_door_3 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_3.ogg,db-1,1.0}; titles[] = {};}; // 3
+    class truck_door_4 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_4.ogg,db-1,1.0}; titles[] = {};}; // 4
+
+    class rusty_mast_1 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_1.ogg,db-1,1.0}; titles[] = {};}; // rusty mast scrape 1
+    class rusty_mast_2 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_2.ogg,db-1,1.0}; titles[] = {};}; // 2
+    class rusty_mast_3 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_3.ogg,db-1,1.0}; titles[] = {};}; // 3
+    class rusty_mast_4 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_4.ogg,db-1,1.0}; titles[] = {};}; // 4
+    class rusty_mast_5 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_5.ogg,db-1,1.0}; titles[] = {};}; // 5
+    class rusty_mast_6 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_6.ogg,db-1,1.0}; titles[] = {};}; // 6
+    class rusty_mast_7 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_7.ogg,db-1,1.0}; titles[] = {};}; // 7
+	// short\rusty_mast\rusty_mast_1.og3g
+
 };
