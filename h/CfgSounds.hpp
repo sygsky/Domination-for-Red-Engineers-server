@@ -655,7 +655,6 @@ class CfgSounds {
     class rusty_mast_4 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_4.ogg,db-1,1.0}; titles[] = {};}; // 4
     class rusty_mast_5 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_5.ogg,db-1,1.0}; titles[] = {};}; // 5
     class rusty_mast_6 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_6.ogg,db-1,1.0}; titles[] = {};}; // 6
-    class rusty_mast_7 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_7.ogg,db-1,1.0}; titles[] = {};}; // 7
 	// short\rusty_mast\rusty_mast_1.og3g
 
 };
