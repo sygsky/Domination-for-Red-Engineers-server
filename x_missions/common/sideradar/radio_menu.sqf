@@ -14,8 +14,6 @@
 	returns: nothing
 */
 
-private ["_ids"];
-
 #include "sideradio_vars.sqf"
 
 _cmd = _this select 3; // must be "LOAD", "UNLOAD", "INSTALL"
@@ -24,16 +22,15 @@ _pl  = _this select 1;
 _txt = "";
 
 _remove_ids = {
-	private ["_veh","_last","_id","_i","_ids"];
+	private ["_veh","_ids","_x"];
 	_veh = _this;
 	_ids = _veh getVariable "IDS"; // get all id from menu
 	if (isNil "_ids") exitWith {hint localize format["--- _remove_ids: ""IDS"" is nil"]};
-	_last = (count _ids) - 1;
 	hint localize format["+++ _remove_ids: remove actions %1 from %2", _ids, typeOf _veh ];
-	for "_i" from _last to 0 do {
-		_id = _ids select _i;
-		_veh removeAction _id;
-	};
+	{
+		_veh removeAction _x;
+	} forEach _ids;
+	sleep 0.1;
 	_ids
 };
 
@@ -44,12 +41,11 @@ _unload_menu = {
 	_ids = _veh call _remove_ids;
 	if (isNil "_ids") then {
 		_ids = [];
-		_veh setVariable ["IDS", _ids];
 	} else { _ids resize 0 };
 	_ids set [0, _veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
-	_ids set [1, _veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]]; // load
-	hint localize format["+++set UNLOAD menu: add actions %1 to %2", _ids, typeOf _veh ];
-
+	_ids set [1, _veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]]; // Load
+	_veh setVariable ["IDS", _ids];
+	hint localize format["+++ set UNLOAD menu: add actions %1 to %2", _ids, typeOf _veh ];
 //	_veh setVariable ["IDS", _ids];
 };
 
@@ -60,11 +56,11 @@ _load_menu = {
 	_ids = _veh call _remove_ids;
 	if (isNil "_ids") then {
 		_ids = [];
-		_veh setVariable ["IDS", _ids];
 	} else { _ids resize 0 };
 	_ids set [0, _veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]]; // Inspect
-	_ids set [1, _veh addAction[localize    "STR_LOAD", "x_missions\common\sideradar\radio_menu.sqf","LOAD"]]; // load
-	_ids set [2, _veh addAction[localize "STR_INSTALL", "x_missions\common\sideradar\radio_menu.sqf","INSTALL"]]; // load
+	_ids set [1, _veh addAction[localize    "STR_LOAD", "x_missions\common\sideradar\radio_menu.sqf","LOAD"]]; // Load
+	_ids set [2, _veh addAction[localize "STR_INSTALL", "x_missions\common\sideradar\radio_menu.sqf","INSTALL"]]; // Install
+	_veh setVariable ["IDS", _ids];
 	hint localize format["+++ set LOAD menu: add actions %1 to %2", _ids, typeOf _veh ];
 //	_veh setVariable ["IDS", _ids];
 };
@@ -149,7 +145,7 @@ if (true) then {
 						else {getPos d_radar};
 
 			// Mast in range, test it to be in good position (height ASL, slope) for the installation
-			hint localize format["+++ mast (%1) pos : %2", if (_mast_loaded) then {"Loaded"} else {"UNLoaded"},_mast_pos];
+			hint localize format["+++ mast (%1) pos : %2", if (_mast_loaded) then {"Loaded"} else {"UnLoaded"},_mast_pos];
 			_slope = [_mast_pos, 3] call XfGetSlope;
 			hint localize format["+++ INSTALL: slope(3) = %1 ",_slope];
 			if (_slope >= 0.3) exitWith {
@@ -174,7 +170,7 @@ if (true) then {
 			sideradio_status = 1; // finished
 			publicVariable "sideradio_status";
 			_veh call _remove_ids;
-			_veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]; // Last option  - "Inspect"
+			_veh addAction[localize "STR_INSPECT", "x_missions\common\sideradar\radio_inspect.sqf"]; // Last option - "Inspect"
 		};
 		default {hint localize format["--- radio_menu.sqf: Expected command '%1' not parsed, must be LOAD, UNLOAD, INSTALL", _cmd]};
 	};
