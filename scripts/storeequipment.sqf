@@ -48,7 +48,7 @@ switch (toUpper (_this select 3) ) do {
         // store equipment
         _equip = if ( ( primaryWeapon player ) == "" ) then { "" }
                     else { player call SYG_getPlayerEquipAsStr };
-		_sound = format["armory%1", ceil(random 4)];
+		_sound = format["armory%1", (floor(random 4)) + 1 ];
         ["d_ad_wp", name player, _equip, _sound] call XSendNetStartScriptServer; // sent to server
         _args = if ( _equip == "" )
                     then  { ["STR_SYS_613"]} // Record is wiped off

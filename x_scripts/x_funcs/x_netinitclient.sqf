@@ -720,11 +720,17 @@ XHandleNetStartScriptClient = {
 			};
 			_this call GRU_procClientMsg;
 		};
+		// Receive radio sound if some radio is found near player
+		// ["say_radio","radio_sound"] ...
+		//
+        case "say_radio": {
+        	(_this select 1) call SYG_receiveRadio;
+        };
 
 		//
 		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound[, "-",_player_name]] or
 		//                                             ["say_sound","LIST", _arr[, "-",_player_name]]  where _arr is array of [_object, _sound, sleep time] or
-		//                                             ["say_sound","PLAY", _sound<_wait_period>]   - play sound with playSound Arma command
+		//                                             ["say_sound","PLAY", _sound<,_wait_before_period<,_title_show_period>>]   - play sound with playSound Arma command <and with titles>
 		// !!! Note: arg 1 (_this select 1) MUST be some object or predefined string ["LIST","PLAY"] !!!
         case "say_sound": {
 
@@ -780,9 +786,9 @@ XHandleNetStartScriptClient = {
 					};
 					hint localize format["+++ say_sound PLAY ""%1""", (_this select 2)];
 					playSound ( _this select 2 ); // as _arr = [], nothing more will be played
-					if ( (count _this) > 3 ) then { // try to show music title
-						if (typeName (_this select 3) == "SCALAR") then {
-							[_this select 2, _this select 3] spawn SYG_showMusicTitle;
+					if ( (count _this) > 4 ) then { // try to show music title
+						if (typeName (_this select 4) == "SCALAR") then {
+							[_this select 2, _this select 4] spawn SYG_showMusicTitle;
 						};
 					};
 		    	};

@@ -107,7 +107,7 @@ _startTime = time;
 if ( _paratype == "" ) then {
     (localize "STR_SYS_609_1") call XfHQChat; // "You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?"
     if ( player call SYG_isWoman ) then {
-        player say ("female_shout_of_pain_" + str(ceil (random 4)));  // 1-4
+        player say ("female_shout_of_pain_" + str( (floor (random 4)) + 1));  // 1-4
     } else {
         player say (call SYG_getSuicideScreamSound);
     };
@@ -158,7 +158,7 @@ if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize 
 // 2. para opening
 if ( (vehicle player) != player ) then {
     hint localize format["+++ jump.sqf: Player in parachute now, height AGL %1!", getPos player select 2];
-    playSound format["rippara%1", ceil(random 4)]; // short versions insteed of one long
+    playSound format["rippara%1", (floor(random 4)) + 1]; // short versions insteed of one long (1..4)
 };
 
 if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed emergency, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound

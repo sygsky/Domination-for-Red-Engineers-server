@@ -35,7 +35,7 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 
     // check for helicopter
     if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith {
-	    playSound format["heli_over_%1", ceil 4]; // play sound of heli fly over your poor remnants
+	    playSound format["heli_over_%1", (floor (random 4)) + 1]; // play sound of heli fly over your poor remnants
     };
 
     _unit call SYG_playRandomDefeatTrackByPos; // some music for poor dead man
@@ -111,7 +111,7 @@ if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith {
 _sound = "male_scream_0"; // default value
 // check if a woman is killed
 if ( _unit call SYG_isWoman ) then {
-	_sound = "female_shout_of_pain_" + str(ceil (random 4));  // 1-4
+	_sound = "female_shout_of_pain_" + str((floor (random 4)) + 1);  // 1-4
 } else {
 //#ifdef __ACE__
 //play 15 sounds from ACE collection for hard screams

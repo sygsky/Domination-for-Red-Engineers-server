@@ -25,7 +25,7 @@ _selectit = {
 	_array = _this select 0;
 	_num = _this select 1;
 	_a_vng = _array select _num;
-	_num_ret = ceil (random (_a_vng select 1));
+	_num_ret = (floor (random (_a_vng select 1))) + 1;
 	_num_ret
 };
 
@@ -52,9 +52,9 @@ _type_list_patrol = [["basic",0],["specops",0],[_tankName,[d_vehicle_numbers_pat
 
 _type_list_guard_static2 = [
 #ifndef __TOWN_WEAK_DEFENCE__
-["D30",ceil (random 5)],
+["D30",(floor (random 5)) + 1],
 #endif
-["DSHKM",(ceil (random 2)) + _addnum],["AGS",(ceil (random 2)) + _addnum]];
+["DSHKM",((floor (random 2)) + 1) + _addnum],["AGS",((floor (random 2)) + 1) + _addnum]];
 sleep 0.01;
 
 _selectit = nil;
@@ -136,9 +136,9 @@ _number_shilka_guardstatic = _addnum + ([d_vehicle_numbers_guard_static,2] call 
 sleep 0.01;
 _number_D30_guardstatic = 1;
 sleep 0.01;
-_number_DSHKM_guardstatic = ceil (random 4);
+_number_DSHKM_guardstatic = (floor (random 4)) + 1;
 sleep 0.01;
-_number_AGS_guardstatic = ceil (random 3);
+_number_AGS_guardstatic = (floor (random 3)) + 1;
 sleep 0.01;
 
 _selectitmen = nil;

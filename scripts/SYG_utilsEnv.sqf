@@ -328,12 +328,12 @@ SYG_getObjectHeight = {
 // 1. Has radio in inventory
 // 2. In any vehicle except ATV, motocycle, bike, parachute
 // 3. Any antenna (radio set) is nearby
-// Call as follows: "radio_0" call SYG_receiveRadio; // play sound "counterattack"
+// Call as follows: "radio_0" call SYG_receiveRadio; // play sound "radio_0"
 //
 SYG_receiveRadio = {
 	// Check inventory
-//	hint localize format["+++ SYG_receiveRadio: ""%1""", _this];
-	if (player call SYG_hasRadio) exitWith { player say _this;};
+	// hint localize format["+++ SYG_receiveRadio: ""%1""", _this];
+	if ( player call SYG_hasRadio ) exitWith { player say _this;};
 	// Check vehicle of player
 	private ["_veh","_radio","_x"];
 	_radio = objNull;

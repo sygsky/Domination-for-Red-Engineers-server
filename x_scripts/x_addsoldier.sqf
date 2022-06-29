@@ -151,7 +151,7 @@ _unit addEventHandler ["killed", {xhandle = [_this select 0] execVM "x_scripts\x
 #ifdef __ACE__
 if (d_own_side == "EAST") then {
 
-    _identity =  format["Rus%1", ceil (random 5)];
+    _identity =  format["Rus%1", (floor(random 5)) + 1];
     if (_ai_side_unit call SYG_isWoman) then { // woman
         _identity = "Irina";
         _unit spawn { sleep 1.5; _this say (call SYG_getFemaleExclamation);}

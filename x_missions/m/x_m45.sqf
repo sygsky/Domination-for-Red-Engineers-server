@@ -36,7 +36,12 @@ if (isServer) then {
 	["specops", 1, "basic", 2, _poss,90,true] spawn XCreateInf;
 	sleep 2.221;
 	["shilka", 1, "bmp", 1, "tank", 1, _poss,1,160,true] spawn XCreateArmor;
-	["say_sound", "PLAY", format["money%1", ceil (random 2)] ] call XSendNetStartScriptClient; // playSound on all connected players computers + titles
+	_snd = format["money%1", (floor (random 2)) + 1];
+	if (_snd == "money1") then {
+		["say_sound", "PLAY", _snd, 2, 26 ] call XSendNetStartScriptClient; // playSound on all connected players computers + show titles during 30 secs
+	} else  {
+		["say_sound", "PLAY", _snd ] call XSendNetStartScriptClient; // playSound on all connected players computers + titles
+	};
 
 };
 

@@ -34,7 +34,7 @@ _pos_array = [];
 #ifdef __DEBUG__
 count_items = 3;
 #else
-count_items = 5 + (ceil 3);
+count_items = 5 + (floor(random 3)) + 1;
 #endif
 _angle_plus = 360 / count_items;
 

@@ -25,7 +25,7 @@ if (!isServer) exitWith {};
 _vehs  = +_this; // two trucks to load/install radiomast
 
 sideradio_vehs = _vehs;
-sideradio_status = 0; // -1 - mission failured, 0 - mission not finished, 1 - succesfully finished
+sideradio_status = 0; // -1 - mission failured, 0 - mission in progress, 1 - succesfully finished
 publicVariable "sideradio_vehs"; // initial information for clients
 publicVariable "sideradio_status"; // status of mission, is set on clients only
 
@@ -44,6 +44,7 @@ _make_marker = {
 	};
 	_mrk_name
 };
+
 // 2. wait until antenna or both trucks killed get it, inform all about antenna damage
 
 // create markers (truck + radiomast)

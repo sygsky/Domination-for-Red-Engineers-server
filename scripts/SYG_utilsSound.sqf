@@ -160,7 +160,7 @@ SYG_MedievalDefeatTracks =
 
 SYG_getWaterDefeatTracks = {
     if (localize "STR_LANGUAGE" == "RUSSIAN" && (random 2) < 1 ) exitWith { "fish_man_song" };
-    format["under_water_%1", ceil 9];
+    format["under_water_%1", (floor (random 9)) + 1];
 };
 
 SYG_playWaterSound = {
@@ -168,7 +168,7 @@ SYG_playWaterSound = {
 };
 
 SYG_getSubmarineSound = {
-	format["submarine_sound_%1", ceil (random 6)]; // sounds from 1 to 6
+	format["submarine_sound_%1", (floor (random 6)) + 1]; // sounds from 1 to 6
 };
 
 // All available church types in the Arma (I think so)
@@ -199,7 +199,7 @@ SYG_playRandomDefeatTrackByPos = {
 	} else {
 	    if (( count _this >= 2) && ((_this select 1) isKindOf "Helicopter")) then {// called as: [_player, _killer] call SYG_playRandomDefeatTrackByPos;
 	        if (side (_this select 1) == d_enemy_side) then {
-    	        playSound format["heli_over_%1", ceil 4];
+    	        playSound format["heli_over_%1", (floor 4) + 1];
     	        _done = true;
 //  	            hint localize "+++ SYG_playRandomDefeatTrackByPos: helicopter_fly_over, done";
 	        };
@@ -512,7 +512,6 @@ SYG_playWeatherForecastMusic = {
     ["manchester_et_liverpool",  [0, 9.465], [10.092, 9.182], [ 18.42,   8.01], [ 26.74,   7.27], [ 34.006, 11.215], [ 45.221, -1] ];
 };
 
-
 //
 // play random sound about death in tank
 // returns: true if player is russian and sound played
@@ -555,7 +554,7 @@ SYG_getMaleFuckSpeech = {
 };
 
 SYG_captainRankSound = {
-    format["captain_rus_%1", ceil (random 2)]
+    format["captain_rus_%1", (floor (random 2)) + 1]
 };
 
 SYG_corporalRankSound = {
@@ -567,10 +566,10 @@ SYG_sergeantRankSound = {
 };
 
 SYG_colonelRankSound = {
-    format["colonel_rus_%1", ceil (random 2)]
+    format["colonel_rus_%1", (floor (random 2)) + 1]
 };
 
-SYG_exclamationSound = { format["exclamation%1", ceil (random 6)] };
+SYG_exclamationSound = { format["exclamation%1", (floor (random 6)) + 1] };
 
 SYG_fearSound = {["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence"] call XfRandomArrayVal};
 
@@ -582,19 +581,23 @@ SYG_prisonersSound = {
     private ["_rnd"];
     _rnd = random 10;
     if ( _rnd > 4) exitWith {call SYG_exclamationSound};
-    format[ "hisp%1", ceil _rnd]
+    format[ "hisp%1", (floor _rnd) + 1]
 };
 
 SYG_powerDownSound = {
-	format["powerdown%1", ceil (random 6)]
+	format["powerdown%1", (floor (random 6)) + 1] // powerdown1..6
 };
 
 SYG_truckDoorCloseSound = {
-	format["truck_door_%1", ceil (random 4)]
+	format["truck_door_%1", (floor (random 4)) + 1] // truck_door_1..4
 };
 
 SYG_rustyMastSound = {
-	format["rusty_mast_%1", ceil (random 7)]
+	format["rusty_mast_%1", (floor (random 7)) + 1] // rusty_mast_1..7
+};
+
+SYG_randomRadio = {
+	format["radio_%1", (floor (random 4)) + 1] // radio_1..4
 };
 
 if (true) exitWith {};

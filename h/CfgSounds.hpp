@@ -638,6 +638,10 @@ class CfgSounds {
     class Oberon { name="Oberon (Yuri Vizbbor song)";                   sound[] = {\sounds\intro\players\Oberon.ogg,db-1,1.0}; titles[] = {};}; // Song for player "Oberon"
 
     class radio_0 { name="radio 0";                                     sound[] = {\sounds\radio\radio_0.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+    class radio_1 { name="radio 1";                                     sound[] = {\sounds\radio\radio_1.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_2 { name="radio 2";                                     sound[] = {\sounds\radio\radio_2.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_3 { name="radio 3";                                     sound[] = {\sounds\radio\radio_3.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_4 { name="radio 4";                                     sound[] = {\sounds\radio\radio_4.ogg,db-1,1.0}; titles[] = {};}; //
     class counterattack { name="counterattack";                         sound[] = {\sounds\radio\start_counterattack.ogg,db-1,1.0}; titles[] = {};}; // start counterattack
 
     class truck_door_1 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_1.ogg,db-1,1.0}; titles[] = {};}; // truck door close 1

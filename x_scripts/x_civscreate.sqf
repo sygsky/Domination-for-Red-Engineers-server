@@ -12,9 +12,9 @@ _list = _this select 1;
 _target = target_names select _target_nr;
 _target_center = _target select 0;
 
-_ran_bus = ceil random 2;
-_ran_car = ceil random 3;
-_ran_ped = 2 + ceil random 3;
+_ran_bus = (floor(random 2)) + 1;
+_ran_car = (floor(random 3)) + 1;
+_ran_ped =  (floor(random 3)) + 3;
 
 _radius = _target select 2;
 
