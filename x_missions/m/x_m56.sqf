@@ -20,9 +20,26 @@ if (X_Client) then {
 if (!isServer) exitWith {};
 
 // 0. Enemy destroys GRU radio-must! before start of mission
+
 if (alive d_radar) then {
-// TODO: add code for radar destroy
+	hint localize format["+++ x_m56.sqf: initial radar alive, try to bomb it"];
+	// TODO: add code for radar destroy
+	_cnt = 10;
+	_type = if (d_enemy_side == "WEST") then { "Sh_120_HE" } else { "Sh_125_HE" };
+	_pos =  d_radar call SYG_getPos;
+	if ( (_pos select 0) == 0 ) exitWith {
+		hint localize format["+++ x_m56.sqf: initial radar (%1) pos is illegal (%2), exit destroy procedure!", typeOf d_radar, _pos];
+	};
+	for "_i" from 1 to _cnt do {
+		[_pos, _type] call SYG_bombPos;
+		sleep (0.923 + ((ceil (random 10)) / 10));
+		if (!alive d_radar) exitWith{
+			["msg_to_user", "",  [ ["STR_RADAR_BOMBED"] ], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient;
+		};
+	};
 };
+
+hint localize format["+++ x_m56.sqf: initial radar %1", if (alive d_radar) then {"alive"} else {"killed"}];
 
 // 1. create antenna the base
 d_radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];

@@ -593,11 +593,11 @@ SYG_truckDoorCloseSound = {
 };
 
 SYG_rustyMastSound = {
-	format["rusty_mast_%1", (floor (random 6)) + 1] // rusty_mast_1..6
+	format["rusty_mast_%1", (floor (random 5)) + 1] // rusty_mast_1..5
 };
 
 SYG_randomRadio = {
-	format["radio_%1", (floor (random 4)) + 1] // radio_1..4
+	format["radio_%1", (floor (random 9)) + 1] // radio_1..4
 };
 
 SYG_randomRadioNoise = {

@@ -2769,5 +2769,5 @@ SYG_getParamFromSettingsArray = {
 // returns created bomb
 //
 SYG_bombPos = {
-	(_this select 1) createVehicle ((_this select 0) call SYG_getPos);
+	(_this select 1) createVehicle (_this select 0);
 };

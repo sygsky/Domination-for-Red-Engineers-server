@@ -768,7 +768,7 @@ XHandleNetStartScriptClient = {
 				};
 				sleep (_this select 2);
 				_obj say (_this select 1); // this is done on the client only you remember?
-				hint localize format["+++ say_sound ""%1"" at object", (_this select 1)];
+				hint localize format["+++ say_sound ""%1"" at object %2", (_this select 1), typeOf _obj];
 			};
 
 		    private ["_arr"];

@@ -544,7 +544,7 @@ class CfgSounds {
 	class            on_thin_ice { name=""; sound[]= {\sounds\intro\on_thin_ice.ogg,db-1,1.0}; titles[] = {};  }; // from Soviet film "On thin ice"
 
 //    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0};} // used in intro
-	class robinson_crusoe { name=""; sound[] = {\sounds\intro\robinson_crusoe.ogg,db-1,1.0}; titles[] = {};}; // used in intro
+//	class robinson_crusoe { name=""; sound[] = {\sounds\intro\robinson_crusoe.ogg,db-1,1.0}; titles[] = {};}; // used in intro
     class dem_morgenrot_entgegen { name=""; sound[] = {\sounds\dem_morgenrot_entgegen.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
     class from_russia_with_love { name=""; sound[] = {\sounds\from_russia_with_love.ogg,db-1,1.0}; titles[] = {};}; // used in  intro, only for resque players
 //    class prince_negaafellaga { name=""; sound[] = {\sounds\prince_negaafellaga.ogg,db-1,1.0}; titles[] = {};}; // used in  intro
@@ -644,10 +644,16 @@ class CfgSounds {
     class radionoise_4 { name="";   	                                sound[] = {\sounds\radio\radionoise_4.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
     class radionoise_5 { name="";	                                    sound[] = {\sounds\radio\radionoise_5.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
 
-    class radio_1 { name="radio 1";                                     sound[] = {\sounds\radio\radio_1.ogg,db-1,1.0}; titles[] = {};}; //
-    class radio_2 { name="radio 2";                                     sound[] = {\sounds\radio\radio_2.ogg,db-1,1.0}; titles[] = {};}; //
-    class radio_3 { name="radio 3";                                     sound[] = {\sounds\radio\radio_3.ogg,db-1,1.0}; titles[] = {};}; //
-    class radio_4 { name="radio 4";                                     sound[] = {\sounds\radio\radio_4.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_1 { name="";                    	                    sound[] = {\sounds\radio\radio_1.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_2 { name="";                	                        sound[] = {\sounds\radio\radio_2.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_3 { name="";            	                            sound[] = {\sounds\radio\radio_3.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_4 { name="";        	                                sound[] = {\sounds\radio\radio_4.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_5 { name="";    	                                    sound[] = {\sounds\radio\radio_5.ogg,db-1,1.0}; titles[] = {};}; //
+	class radio_6 { name="";	                                        sound[] = {\sounds\radio\radio_6.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_7 { name="";                        	                sound[] = {\sounds\radio\radio_7.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_8 { name="";                        	                sound[] = {\sounds\radio\mayak_1.ogg,db-1,1.0}; titles[] = {};}; //
+    class radio_9 { name="";                        	                sound[] = {\sounds\radio\mayak_2.ogg,db-1,1.0}; titles[] = {};}; //
+
     class counterattack { name="counterattack";                         sound[] = {\sounds\radio\start_counterattack.ogg,db-1,1.0}; titles[] = {};}; // start counterattack
 
     class truck_door_1 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_1.ogg,db-1,1.0}; titles[] = {};}; // truck door close 1
@@ -660,7 +666,8 @@ class CfgSounds {
     class rusty_mast_3 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_3.ogg,db-1,1.0}; titles[] = {};}; // 3
     class rusty_mast_4 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_4.ogg,db-1,1.0}; titles[] = {};}; // 4
     class rusty_mast_5 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_5.ogg,db-1,1.0}; titles[] = {};}; // 5
-    class rusty_mast_6 { name="";                                       sound[] = {\sounds\short\rusty_mast\rusty_mast_6.ogg,db-1,1.0}; titles[] = {};}; // 6
-	// short\rusty_mast\rusty_mast_1.og3g
+
+    class button_1     { name="";                                       sound[] = {\sounds\short\button_1.ogg,db-1,1.0}; titles[] = {};}; //
+    class repair_short { name="";                                       sound[] = {\sounds\short\repair_short.ogg,db-1,1.0}; titles[] = {};}; //
 
 };

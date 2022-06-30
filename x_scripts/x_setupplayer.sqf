@@ -318,7 +318,7 @@ if (__ReviveVer || __AIVer || !d_with_respawn_dialog_after_death) then {
 	};
 #endif
 };
-//_p addEventHandler ["animChanged", { SYG_lastAnimationType = _this select 1 } ];
+//_p addEventHandler ["animChanged", { AinvPknlMstpSlayWrflDnon_healed = _this select 1 } ];
 //SYG_healAnimDoneHandler = compile preprocessFileLineNumbers "scripts\healAnimDone.sqf";
 //_p addEventHandler ["animDone", {_this spawn SYG_healAnimDoneHandler} ];
 

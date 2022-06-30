@@ -23,17 +23,31 @@ _txt = "";
 
 if (true) then {
 
-	if ((vehicle _pl == _pl) ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
-	if (_pl != driver (vehicle _pl) ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
-
-	if (locked _veh) exitWith {
+	if (sideradio_status != 0) exitWith {
+		hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2 ", sideradio_status, typeOf _veh];
+		_veh removeAction (_this select 2); // remove this action
 		(call SYG_randomRadioNoise) call SYG_receiveRadio;
+		if (sideradio_status > 0) exitWith {_txt = localize "STR_RADAR_FAILED"};
+		if (sideradio_status < 0) exitWith {_txt = localize "STR_RADAR_SUCCESSFUL"};
+	};
+	if ((vehicle _pl == _pl) && (_cmd != "INSTALL")) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
+	if ( (_pl != driver (vehicle _pl))  && (_cmd != "INSTALL") ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
+
+	if (!alive _veh) exitWith {
+		hint localize  format[ "+++ radio_menu.sqf: sideradio_status %1, veh %2 killed, remove action %3", sideradio_status, typeOf _veh, _this select 2 ];
+		if (_veh isKindOf "Truck") then {
+			_txt = localize "STR_RADAR_TRUCK_KILLED";
+		} else {_txt = localize "STR_RADAR_MAST_DEAD";};
+		_veh removeAction (_this select 2); // remove this action
+	};
+	if (locked _veh) exitWith {
+		playSound "losing_patience";
 		_txt = localize "STR_RADAR_NO";
 	};
 
 	if (!alive d_radar) exitWith {
+		playSound "losing_patience";
 		_txt = localize "STR_RADAR_MAST_DEAD";
-		_ids = d_radar call _remove_ids; // remove all menus
 	};
 
 	switch (_cmd) do {
@@ -41,9 +55,17 @@ if (true) then {
 		case "LOAD": {
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) < 0 ) exitWith { // already loaded into this vehicle, so change all menu items
+				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_ALREADY_LOADED";
 			};
-			// todo: remove msg "STR_RADAR_MAST_FAR_AWAY"
+			if ( round (speed _veh) > 0 ) exitWith {
+				playSound "losing_patience";
+				_txt = localize "STR_RADAR_TRUCK_MOVING";
+			};
+			_dist = [d_radar, player] call SYG_distance2D;
+			if ( _dist > DIST_MAST_TO_TRUCK ) exitWith {
+				_txt = format [localize "STR_RADAR_MAST_FAR_AWAY", DIST_MAST_TO_TRUCK, ceil _dist ];
+			};
 			_txt = localize "STR_RADAR_MAST_LOADED";
 			["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
 			d_radar setPosASL [_asl select 0, _asl select 1, -50];
@@ -56,6 +78,7 @@ if (true) then {
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) > 0 ) exitWith {
 				// already unloaded into this vehicle, so change all menu items
+				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_ALREADY_UNLOADED";
 			};
 			_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
@@ -71,34 +94,40 @@ if (true) then {
 			// ++++++++++++++++++++++++++++++++++++++++
 			// +      check conditions to install     +
 			// ++++++++++++++++++++++++++++++++++++++++
-// TODO: remove msg "STR_RADAR_MAST_FAR_AWAY";
 			_mast_pos = getPos d_radar;
 			if (surfaceIsWater _mast_pos) exitWith {
-				[vehicle player, localize "STR_RADAR_MAST_IN_WATER"] call XfVehicleChat;
+				playSound "losing_patience";
+				_txt = localize "STR_RADAR_MAST_IN_WATER";
 			};
 
 			// Mast can't be installed on the base
 			if ( _veh call SYG_pointNearBase ) exitWith {
-				[vehicle player, localize "STR_RADAR_MAST_NEAR_BASE"] call XfVehicleChat;
+				playSound "losing_patience";
+				_txt = localize "STR_RADAR_MAST_NEAR_BASE";
 			};
 
-			// Mast in range, test it to be in good position (height ASL, slope) for the installation
-			hint localize format["+++ mast (%1) pos : %2", if (_mast_loaded) then {"Loaded"} else {"UnLoaded"},_mast_pos];
+			// Mast is out of base, test it to be in good position (height ASL, slope) for the installation
 			_slope = [_mast_pos, 3] call XfGetSlope;
 			hint localize format["+++ INSTALL: slope(in 3 m.) = %1 ",_slope];
-			if (_slope >= 0.2) exitWith {
+			if (_slope >= 0.075) exitWith {
 				// "The mast cannot be installed at this position"
-				( format[localize "Der Mast kann auf einer so unebenen Fläche nicht wirkenThe mast cannot act on such an uneven surface", DIST_MAST_TO_TRUCK, ceil _dist]) call XfGlobalChat;
+				playSound "losing_patience";
+				_txt = localize "STR_RADAR_MAST_BAD_SLOPE";
 			};
 
-			// TODO: show animation of installing mast
+			playSound "button_1"; // click this button
+			player playMove "AinvPknlMstpSlayWrflDnon_medic";
+			sleep 0.5;
+			["say_sound", d_radar, "repair_short"] call XSendNetStartScriptClientAll;
+            sleep 2.5;
+            waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"};
 
 			// measure height ASL
 			_logic = "Logic" createVehicle [0,0,0];
 			_logic setPos _mast_pos;
-			_asl = getPosAsl _logic;
-				deleteVehicle _logic;
-			if ( (_pos select 2) < INSTALL_MIN_ALTITUDE ) exitWith {
+			_asl = getPosASL _logic;
+			deleteVehicle _logic;
+			if ( (_asl select 2) < INSTALL_MIN_ALTITUDE ) exitWith {
 				_txt = format[localize "STR_RADAR_MAST_TOO_LOW", INSTALL_MIN_ALTITUDE, ceil ((getPosAsl(_logic)) select 2)];
 				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
@@ -111,8 +140,9 @@ if (true) then {
 			// complete the mission itself
 			sideradio_status = 1; // finished
 			publicVariable "sideradio_status";
-			// TODO: play radio signal from "Mayak" radiostation
+			// play random radio signal (including from "Mayak" radiostation etc)
 			["say_radio", call SYG_randomRadio] call XSendNetStartScriptClientAll;
+			_txt = localize "STR_RADAR_SUCCESSFUL";
 		};
 		default {hint localize format["--- radio_menu.sqf: Expected command '%1' not parsed, must be LOAD, UNLOAD, INSTALL", _cmd]};
 	};
