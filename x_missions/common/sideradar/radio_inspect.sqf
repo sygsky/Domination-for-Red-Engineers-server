@@ -48,7 +48,7 @@ _txt = (if (_veh isKindOf "Truck") then {
 });
 if (_txt == "") then {
 //	hint localize format["+++ radio_inspect.sqf: d_radar %1 (%2) ", if (alive d_radar) then {"alive"} else {"not alive"}, if (isNil "d_radar") then {"isNil"} else {"not isNil"}];
-	"radio_0" call SYG_receiveRadio;
+	(call SYG_randomRadioNoise) call SYG_receiveRadio;
 	(localize "STR_RADAR_NO") call XfGlobalChat; // Unknown message
 };
 (localize _txt) call XfGlobalChat; // _txt is already localized

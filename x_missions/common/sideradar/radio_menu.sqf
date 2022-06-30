@@ -27,7 +27,7 @@ if (true) then {
 	if (_pl != driver (vehicle _pl) ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
 
 	if (locked _veh) exitWith {
-		"radio_0" call SYG_receiveRadio;
+		(call SYG_randomRadioNoise) call SYG_receiveRadio;
 		_txt = localize "STR_RADAR_NO";
 	};
 
@@ -100,12 +100,12 @@ if (true) then {
 				deleteVehicle _logic;
 			if ( (_pos select 2) < INSTALL_MIN_ALTITUDE ) exitWith {
 				_txt = format[localize "STR_RADAR_MAST_TOO_LOW", INSTALL_MIN_ALTITUDE, ceil ((getPosAsl(_logic)) select 2)];
-				["say_radio", "radio_0"] call XSendNetStartScriptClientAll;
+				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
 
 			if ( ([d_radar, RADAR_POINT] call SYG_distance2D) > INSTALL_RADIUS) exitWith {
 				_txt = localize "STR_RADAR_BAD_SIGNAL";
-				["say_radio", "radio_0"] call XSendNetStartScriptClientAll;
+				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
 
 			// complete the mission itself

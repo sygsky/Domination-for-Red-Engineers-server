@@ -637,7 +637,13 @@ class CfgSounds {
 
     class Oberon { name="Oberon (Yuri Vizbbor song)";                   sound[] = {\sounds\intro\players\Oberon.ogg,db-1,1.0}; titles[] = {};}; // Song for player "Oberon"
 
-    class radio_0 { name="radio 0";                                     sound[] = {\sounds\radio\radio_0.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+    class radionoise_0 { name="";                   	                sound[] = {\sounds\radio\radionoise_0.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+    class radionoise_1 { name="";               	                    sound[] = {\sounds\radio\radionoise_1.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+    class radionoise_2 { name="";           	                        sound[] = {\sounds\radio\radionoise_2.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+    class radionoise_3 { name="";       	                            sound[] = {\sounds\radio\radionoise_3.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+    class radionoise_4 { name="";   	                                sound[] = {\sounds\radio\radionoise_4.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+    class radionoise_5 { name="";	                                    sound[] = {\sounds\radio\radionoise_5.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
+
     class radio_1 { name="radio 1";                                     sound[] = {\sounds\radio\radio_1.ogg,db-1,1.0}; titles[] = {};}; //
     class radio_2 { name="radio 2";                                     sound[] = {\sounds\radio\radio_2.ogg,db-1,1.0}; titles[] = {};}; //
     class radio_3 { name="radio 3";                                     sound[] = {\sounds\radio\radio_3.ogg,db-1,1.0}; titles[] = {};}; //

@@ -328,7 +328,7 @@ SYG_getObjectHeight = {
 // 1. Has radio in inventory
 // 2. In any vehicle except ATV, motocycle, bike, parachute
 // 3. Any antenna (radio set) is nearby
-// Call as follows: "radio_0" call SYG_receiveRadio; // play sound "radio_0"
+// Call as follows: "radionoise_0" call SYG_receiveRadio; // play sound "radionoise_0"
 //
 SYG_receiveRadio = {
 	// Check inventory

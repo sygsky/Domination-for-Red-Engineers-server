@@ -600,4 +600,8 @@ SYG_randomRadio = {
 	format["radio_%1", (floor (random 4)) + 1] // radio_1..4
 };
 
+SYG_randomRadioNoise = {
+	format["radionoise_%1", floor (random 6)] // radio_0..5
+};
+
 if (true) exitWith {};
