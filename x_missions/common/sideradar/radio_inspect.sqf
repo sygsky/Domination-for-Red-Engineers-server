@@ -42,7 +42,10 @@ _txt = (if (_veh isKindOf "Truck") then {
 	if (isNil "sideradio_status") exitWith {""};
 	switch (sideradio_status) do {
 		case 0: { "STR_RADAR_MAST_UNLOADED" };
-		case 1: { "STR_RADAR_MAST_INSTALLED" };
+		case 1: {
+			["say_radio", call SYG_randomRadio] call XSendNetStartScriptClientAll;
+			"STR_RADAR_MAST_INSTALLED"
+		};
 		default { "STR_RADAR_MAST" };
 	};
 });

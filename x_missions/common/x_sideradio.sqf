@@ -55,7 +55,7 @@ _radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLO
 //
 // Main loop, controls markers movement and end of the mission
 //
-_truck_pos= [];
+
 while { sideradio_status == 0 } do {
 
 	if (X_MP && ((call XPlayersNumber) == 0)) then {
@@ -64,7 +64,6 @@ while { sideradio_status == 0 } do {
 	_delay = 15;
 
     // check markers
-    _truck_pos resize 0;
     if (!alive _truck) then {
         // remove truck marker just in case
         _new_truck = _vehs select 1;
@@ -78,21 +77,20 @@ while { sideradio_status == 0 } do {
     };
     if (alive _truck ) then { // move marker if truck is shifted
         if ( ( [getMarkerPos _truck_marker, _truck] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-            _truck_pos = getPos _truck;
+            _truck_marker setMarkerPos (getPos _truck); _delay = 3;
         };
     };
-    
-    if (count _truck_pos > 0) then { _truck_marker setMarkerPos _truck_pos; _delay = 3; };
+
 
     if (alive d_radar) then { // move marker if
-    	_pos = getPosASL d_radar;
-        if ( ( _pos select 2) >= 0) then {
+    	_asl = getPosASL d_radar;
+        if ( ( _asl select 2) >= 0) then {
             if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
             	if ( (getMarkerType _radar_marker) == "") then { // marker not exists, create it now
 	            	_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
             	} else {
             		_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
-	                _radar_marker setMarkerPos ( _pos );
+	                _radar_marker setMarkerPos ( _asl );
             	};
             	_delay = 3;
             };
@@ -110,7 +108,7 @@ while { sideradio_status == 0 } do {
 };
 
 if (sideradio_status < 0) then { side_mission_winner = -702 } else {side_mission_winner = 2};
-side_mission_resolved = false;
+side_mission_resolved = true;
 
 sleep (5 + (random 5));
 

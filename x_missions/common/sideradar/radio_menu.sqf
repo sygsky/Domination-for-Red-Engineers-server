@@ -27,11 +27,10 @@ if (true) then {
 		hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2 ", sideradio_status, typeOf _veh];
 		_veh removeAction (_this select 2); // remove this action
 		(call SYG_randomRadioNoise) call SYG_receiveRadio;
-		if (sideradio_status > 0) exitWith {_txt = localize "STR_RADAR_FAILED"};
-		if (sideradio_status < 0) exitWith {_txt = localize "STR_RADAR_SUCCESSFUL"};
+		if (sideradio_status > 0) exitWith {_txt = localize "STR_RADAR_SUCCESSFUL"};
+		if (sideradio_status < 0) exitWith {_txt = localize "STR_RADAR_FAILED"};
 	};
-	if ((vehicle _pl == _pl) && (_cmd != "INSTALL")) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
-	if ( (_pl != driver (vehicle _pl))  && (_cmd != "INSTALL") ) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
+	if (((vehicle _pl == _pl) || (_pl != driver (vehicle _pl))) && (_cmd in ["LOAD","UNLOAD"])) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
 
 	if (!alive _veh) exitWith {
 		hint localize  format[ "+++ radio_menu.sqf: sideradio_status %1, veh %2 killed, remove action %3", sideradio_status, typeOf _veh, _this select 2 ];
@@ -88,8 +87,23 @@ if (true) then {
 			hint localize format["+++ UNLOAD: mast pos %1, vUp %2", getPosASL d_radar, vectorUp d_radar];
 		};
 
+		// checks the radio-mast position
+		case "CHECK": {
+			_mast_pos = getPos d_radar;
+			_bad = false;
+			_str1 = if (surfaceIsWater _mast_pos) then { _bad = true;  "STR_RADAR_IN_WATER" } else {"STR_RADAR_ON_LAND"};
+			_str2 = if ( _veh call SYG_pointNearBase ) then { _bad = true; "STR_RADAR_IN_BASE" } else {"STR_RADAR_OUT_BASE"};
+			_slope = [_mast_pos, 3] call XfGetSlope;
+			_str3 = if (_slope > MAX_SLOPE) then {_bad = true; "STR_RADAR_ON_SL	OPE"} else {"STR_RADAR_ON_HORIZONTAL"};
+			hint localize format["+++ CHECK: slope(in 3 m.) = %1 ",_slope];
+			_ht   = _mast_pos call SYG_getLandASL;
+			_str4 = if ( _ht < INSTALL_MIN_ALTITUDE ) then { _bad = true; "STR_RADAR_MAST_TOO_LOW" } else {"STR_RADAR_MAST_HIGH"};
+
+			_str = if (_bad) then {"STR_RADAR_NOT_READY"} else {"STR_RADAR_READY"};
+			_txt = format[localize _str, localize _str1, localize _str2, localize _str3, format[localize _str4, INSTALL_MIN_ALTITUDE, ceil _ht]];
+		};
 		// Install radio mast on terrain behind truck current position to truck.
-		// Mast is already standing on the ground to be able to execute this command
+		// Mast must be standing on the ground to be able to execute this command
 		case "INSTALL": {
 			// ++++++++++++++++++++++++++++++++++++++++
 			// +      check conditions to install     +
@@ -109,26 +123,24 @@ if (true) then {
 			// Mast is out of base, test it to be in good position (height ASL, slope) for the installation
 			_slope = [_mast_pos, 3] call XfGetSlope;
 			hint localize format["+++ INSTALL: slope(in 3 m.) = %1 ",_slope];
-			if (_slope >= 0.075) exitWith {
+			if (_slope >= MAX_SLOPE) exitWith {
 				// "The mast cannot be installed at this position"
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_BAD_SLOPE";
 			};
 
-			playSound "button_1"; // click this button
 			player playMove "AinvPknlMstpSlayWrflDnon_medic";
 			sleep 0.5;
 			["say_sound", d_radar, "repair_short"] call XSendNetStartScriptClientAll;
             sleep 2.5;
             waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"};
+			sleep 0.25;
+			playSound "button_1"; // click this button
 
-			// measure height ASL
-			_logic = "Logic" createVehicle [0,0,0];
-			_logic setPos _mast_pos;
-			_asl = getPosASL _logic;
-			deleteVehicle _logic;
-			if ( (_asl select 2) < INSTALL_MIN_ALTITUDE ) exitWith {
-				_txt = format[localize "STR_RADAR_MAST_TOO_LOW", INSTALL_MIN_ALTITUDE, ceil ((getPosAsl(_logic)) select 2)];
+			// measure ASL height of the mast;
+			_asl = _mast_pos call SYG_getLandASL;
+			if ( _asl < INSTALL_MIN_ALTITUDE ) exitWith {
+				_txt = format[localize "STR_RADAR_MAST_TOO_LOW", INSTALL_MIN_ALTITUDE, ceil _asl];
 				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
 

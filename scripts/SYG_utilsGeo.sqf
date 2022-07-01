@@ -119,16 +119,21 @@ SYG_nearestLocationD = {
  */
 SYG_nearestLocationA = {
 	private ["_pos","_dist","_nearloc", "_loc","_lst","_ploc","_x"];
-	_pos = arg(0);
+	_pos = (_this select 0) call SYG_getPos;
+	if (count _pos > 2) then {
+		if (((_pos select 0) == 0) && ((_pos select 1) == 0)) then { _pos resize 0 };
+	};
+/*
 	switch (typeName _pos) do {
 		case "OBJECT": {_pos = position _pos;};
 		case "LOCATION": {_pos = locationPosition _pos;};
-		case "ARRAY": {/* already correct format */};
+		case "ARRAY": {};
 		case "GROUP": { _pos = if ( isNull leader _pos) then {[0,0,0]} else {position leader _pos};};
 		default {_pos = []};
 	};
+*/
 	if (count _pos < 3) exitWith {locationNull};
-	_lst = arg(1);
+	_lst = _this select 1;
 	switch (typeName _lst) do {
 		case "STRING": {_lst = [_lst];};
 		case "ARRAY": {/* correct */};
@@ -979,6 +984,20 @@ SYG_getPosAGL = {
 	_agl = (getPosASL _log) - _asl; // AGL
 	deleteVehicle _log;
 	_agl
+};
+
+//
+// Measures ASL on the land in center of designated object
+// call: _asl = _obj call SYG_getLandASL;
+SYG_getLandASL = {
+	private ["_logic","_asl"];
+	_logic = "Logic" createVehicle [0,0,0];
+	_asl = _this call SYG_getPos;
+	_asl resize 2;
+	_logic setPos _asl;
+	_asl = getPosASL _logic;
+	deleteVehicle _logic;
+	_asl select 2
 };
 
 //

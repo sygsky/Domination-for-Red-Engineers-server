@@ -21,6 +21,7 @@ _veh = _this;
 if (typeOf _veh  == "Land_radar") exitWith { // Radar itself
 	if (alive _veh) then {
 		_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf"]; // Inspect
+		_veh addAction[localize "STR_CHECK", "x_missions\common\sideradar\radio_menu.sqf","CHECK"]; // Check
 		_veh addAction[localize "STR_INSTALL", "x_missions\common\sideradar\radio_menu.sqf","INSTALL"]; // Install
 	};
 };
