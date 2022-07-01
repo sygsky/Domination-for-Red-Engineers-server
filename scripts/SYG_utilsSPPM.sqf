@@ -174,7 +174,7 @@ SYG_addSPPMMarker = {
 		if (_marker != "") exitWith {};
 	};
 	if (_marker == "") exitWith { "STR_SPPM_ADD_ERR_1" }; // can't create marker name
-	hint localize format["+++ SPPM, created new marker ""%1"" for %2 vehicle[s]", _marker, count _arr];
+	hint localize format["+++ SPPM, created new marker ""%1"" for %2 veh[s]: %3", _marker, count _arr, _arr call SYG_vehToType];
 	_marker setMarkerColorLocal SPPM_DOSAAF_MARKER_COLOR;
 	_marker setMarkerShapeLocal "ICON";
 	// TODO: find marker
