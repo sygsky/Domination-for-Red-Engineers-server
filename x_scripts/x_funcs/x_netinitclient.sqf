@@ -885,7 +885,8 @@ XHandleNetStartScriptClient = {
                 };
             };
         };
-        // mark user as participant of SM
+
+        // mark user as participant of SM. Params are: ["was_at_sm",_player_name_list<,"sound_name">]
         case "was_at_sm" : {
             if (count _this < 2) exitWith {hint localize ["--- x_netinitclient.sqf: %1", _this];};
             private ["_val"];
@@ -895,7 +896,7 @@ XHandleNetStartScriptClient = {
                 _val = [_val];
             };
 //          hint localize ["+++ %1 : %2", x_netinitclient.sqf];
-            if ( (name player) in (_val) ) then { d_was_at_sm = true; playSound "good_news" };
+            if ( (name player) in (_val) ) then { d_was_at_sm = true; if ( (count _this) > 2 ) then { playSound (_this select 2) } };
         };
 
         // response from server to confirm you request on illumination of base: [ "illum_over_base", _player_name]
