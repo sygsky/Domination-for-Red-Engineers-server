@@ -20,13 +20,25 @@ _cmd = _this select 3; // must be "LOAD", "UNLOAD", "INSTALL"
 _veh = _this select 0;
 _pl  = _this select 1;
 _txt = "";
-
+_send_was_at_sm = false;
 if (true) then {
-
-	if (sideradio_status != 0) exitWith {
+	if (!alive _veh) exitWith {
+		_txt = if (_veh isKindOf "Truck") then { "STR_RADAR_TRUCK_KILLED" } else {"STR_RADAR_MAST_DEAD"};
+		_veh removeAction (_this select 2); // remove this action
+	};
+	_exit = isNil "sideradio_status";
+	if (!_exit) then { _exit = sideradio_status != 0};
+	if (_exit) exitWith {
 		hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2 ", sideradio_status, typeOf _veh];
 		_veh removeAction (_this select 2); // remove this action
 		(call SYG_randomRadioNoise) call SYG_receiveRadio;
+		if (isNil "sideradio_status") exitWith {
+			_txt = if (_veh isKindOf "Truck") then {
+				["STR_RADAR_NO","STR_SYS_248"] call XfRandomArrayVal
+			} else {
+				["STR_RADAR_NO","STR_RADAR_MAST","STR_SYS_248"] call XfRandomArrayVal
+			};
+		};
 		if (sideradio_status > 0) exitWith {_txt = localize "STR_RADAR_SUCCESSFUL"};
 		if (sideradio_status < 0) exitWith {_txt = localize "STR_RADAR_FAILED"};
 	};
@@ -71,6 +83,7 @@ if (true) then {
 			d_radar setVectorUp [0,0,1];
 			sleep 0.2;
 			hint localize format["+++ LOAD: mast pos %1, vUp %2", getPosASL d_radar, vectorUp d_radar];
+			_send_was_at_sm = (_veh distance RADAR_POINT) < INSTALL_RADIUS;
 		};
 
 		case "UNLOAD": {
@@ -85,6 +98,7 @@ if (true) then {
 			d_radar setVectorUp [0,0,1];
 			["say_sound", d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
 			hint localize format["+++ UNLOAD: mast pos %1, vUp %2", getPosASL d_radar, vectorUp d_radar];
+			_send_was_at_sm = (_veh distance RADAR_POINT) < INSTALL_RADIUS;
 		};
 
 		// checks the radio-mast position
@@ -94,13 +108,14 @@ if (true) then {
 			_str1 = if (surfaceIsWater _mast_pos) then { _bad = true;  "STR_RADAR_IN_WATER" } else {"STR_RADAR_ON_LAND"};
 			_str2 = if ( _veh call SYG_pointNearBase ) then { _bad = true; "STR_RADAR_IN_BASE" } else {"STR_RADAR_OUT_BASE"};
 			_slope = [_mast_pos, 3] call XfGetSlope;
-			_str3 = if (_slope > MAX_SLOPE) then {_bad = true; "STR_RADAR_ON_SL	OPE"} else {"STR_RADAR_ON_HORIZONTAL"};
+			_str3 = if (_slope > MAX_SLOPE) then {_bad = true; "STR_RADAR_ON_SLOPE"} else {"STR_RADAR_ON_HORIZONTAL"};
 			hint localize format["+++ CHECK: slope(in 3 m.) = %1 ",_slope];
 			_ht   = _mast_pos call SYG_getLandASL;
 			_str4 = if ( _ht < INSTALL_MIN_ALTITUDE ) then { _bad = true; "STR_RADAR_MAST_TOO_LOW" } else {"STR_RADAR_MAST_HIGH"};
 
 			_str = if (_bad) then {"STR_RADAR_NOT_READY"} else {"STR_RADAR_READY"};
 			_txt = format[localize _str, localize _str1, localize _str2, localize _str3, format[localize _str4, INSTALL_MIN_ALTITUDE, ceil _ht]];
+			_send_was_at_sm = (_veh distance RADAR_POINT) < INSTALL_RADIUS;
 		};
 		// Install radio mast on terrain behind truck current position to truck.
 		// Mast must be standing on the ground to be able to execute this command
@@ -155,6 +170,7 @@ if (true) then {
 			// play random radio signal (including from "Mayak" radiostation etc)
 			["say_radio", call SYG_randomRadio] call XSendNetStartScriptClientAll;
 			_txt = localize "STR_RADAR_SUCCESSFUL";
+			_send_was_at_sm = (_veh distance RADAR_POINT) < INSTALL_RADIUS;
 		};
 		default {hint localize format["--- radio_menu.sqf: Expected command '%1' not parsed, must be LOAD, UNLOAD, INSTALL", _cmd]};
 	};
@@ -162,3 +178,9 @@ if (true) then {
 
 if (_txt != "") then { _txt call XfGlobalChat };
 
+if (_send_was_at_sm) then {
+	_plist = [RADAR_POINT, INSTALL_RADIUS] call SYG_findNearestPlayers;
+	if (count _plist > 0) then {
+		["was_at_sm", _plist, "good_news"] call XSendNetStartScriptClientAll;
+	};
+};

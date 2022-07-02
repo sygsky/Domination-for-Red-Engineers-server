@@ -73,11 +73,12 @@ _vehs = [];
 	_veh = _ural select _x;
 	_pos = _ural select (_x-1);
 	_veh = createVehicle [_veh, _pos, [], 0, "NONE"];
-    extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
+//    extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
     _veh setVehicleInit format ["this execVM ""x_missions\common\sideradar\radio_init.sqf""", (count _vehs) + 1 ];
 	_vehs set [count _vehs, _veh];
 	["say_sound",_veh, call SYG_truckDoorCloseSound] call XSendNetStartScriptClient; //SYG_rustyMastSound
 } forEach[ 1, 3 ];
+_vehs call SYG_addToExtraVec; // add both vehicles to the remover array (cleaned after SM finish)
 (_vehs select 1) lock true; // Lock 2nd truck only
 processInitCommands;
 //      0,     1,    2

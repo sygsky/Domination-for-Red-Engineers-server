@@ -256,6 +256,21 @@ SYG_findNearestPlayer = {
 	_pl
 };
 
+SYG_findNearestPlayers = {
+    private ["_pos","_dist","_nearArr","_plNames","_x"];
+    _pos  = _this select 0;
+    _dist = _this select 1;
+	_nearArr = nearestObjects [ _this, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
+	if ( (count _nearArr) == 0 ) exitWith { [] };
+	_plNames = [];
+	{
+	    {
+    	    if ( ( alive _x ) && ( isPLayer _x ) ) then { _plNames set [count _plNames, name_x] };
+	    } forEach crew _x;
+	} forEach _nearArr;
+	_plNames
+};
+
 // _vecs_arr = [_unit || _pos, 500, ["LandVehicle"]] call Syg_findNearestVehicles;
 // may return [] if no vehicles found
 Syg_findNearestVehicles = {

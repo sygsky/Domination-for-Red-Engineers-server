@@ -53,7 +53,7 @@ XClearSidemission = {
 	sleep _waittime;
 	{
 		if !(isNull _x) then {
-			if (_x isKindOf "LandVehicle" ) then {
+//			if (_x isKindOf "LandVehicle" ) then {
 				if ( alive _x ) then {
 					_was_captured = false;
 					{
@@ -79,13 +79,15 @@ XClearSidemission = {
 						[_x] call XAddCheckDead;
 						_x setVariable ["CAPTURED_ITEM","SM"];
 					} else {
-						{deleteVehicle _x} forEach ([_x] + crew _x);
+						{deleteVehicle _x} forEach ((crew _x) + [_x]);
 					};
+				} else {
+					deleteVehicle _x;
 				};
-			} else {
+//			} else {
 //				hint localize format["+++ XClearSidemission: deleteVehicle %1",typeOf _x ];
-				deleteVehicle _x;
-			};
+//				deleteVehicle _x;
+//			};
 		};
 		sleep 0.1;
 	} forEach extra_mission_vehicle_remover_array;
