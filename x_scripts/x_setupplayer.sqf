@@ -1106,7 +1106,7 @@ switch (d_own_side) do {
 #ifndef __NON_ENGINEER_REPAIR_PENALTY__
 if (_string_player in d_is_engineer /*|| __AIVer*/) then {
 #else
-hint localize "__NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores subtraction";
+hint localize "+++ __NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with scores subtraction";
 #endif
 	d_eng_can_repfuel = true;
 

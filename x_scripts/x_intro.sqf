@@ -129,7 +129,7 @@ if (_sound == "") then { // select random music for an ordinal day
             };
             if ( format["%1",player] in d_can_use_artillery ) then {
                 // add special music for GRU soldiers
-                { [ _personalSounds, ["from_russia_with_love","bond1","bond"] ] call SYG_addArrayInPlace } forEach [1,2,3];
+                { [ _personalSounds, ["from_russia_with_love",/*"bond1",*/"bond"] ] call SYG_addArrayInPlace } forEach [1,2,3];
             }; // as you are some kind of spy
 
             // add some rarely heard music now if no personal music set
@@ -137,10 +137,10 @@ if (_sound == "") then { // select random music for an ordinal day
 #ifdef __TIME_OF_DAY_MISIC__
             // music to play day and night
             _night_music = [
-                "bond","bond1","from_russia_with_love","adjutant","total_recall_mountain","adagio","morze","morze_3",
+                "bond",/*"bond1",*/"from_russia_with_love","adjutant","total_recall_mountain"/*,"adagio"*/,"morze","morze_3",
                 "treasure_island_intro","fear2","soviet_officers","cosmos","manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","del_vampiro1",
-                "del_vampiro2","zaratustra","bolivar","jrtheme",/*"vague",*/"enchanted_boy","bloody",
+                /*"del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
                 "peregrinus"
             ];
 
@@ -167,13 +167,13 @@ if (_sound == "") then { // select random music for an ordinal day
 #else
             _music = ((call compile format["[%1]", localize "STR_INTRO_MUSIC"]) +
             [	// most common sounds list
-                "bond","bond1","from_russia_with_love","grant","burnash","adjutant","lastdime","lastdime2","lastdime3",
-                "mission_impossible","bond1","strelok",
-                "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd","adagio",
+                "bond",/*"bond1",*/"from_russia_with_love","grant","burnash","adjutant","lastdime","lastdime2","lastdime3",
+                "mission_impossible",/*"bond1",*/"strelok",
+                "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd",/*"adagio",*/
                 "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                "del_vampiro1","del_vampiro2","zaratustra","bolivar","jrtheme",/*"vague",*/"travel_with_friends","on_thin_ice","peregrinus",
+                "del_vampiro1",/*"del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
                 "wild_geese","wild_geese","dangerous_chase"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
