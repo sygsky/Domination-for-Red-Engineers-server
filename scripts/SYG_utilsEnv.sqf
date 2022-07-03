@@ -346,10 +346,10 @@ SYG_receiveRadio = {
 	};
 	if (!isNull _radio) exitWith {_radio say _this;};
 	// check nearby antennas near player, doent matter what it is
-	private ["_list","_x"];
-	_list = nearestObjects [player, ["WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "Land_Vysilac_FM","Vysilacka"], 200];
+	private ["_list","_pos","_x"];
+	_list = nearestObjects [player, ["WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "Land_Vysilac_FM","Vysilacka","Radio"], 200];
 	{
-		if (alive _x) exitWith { _radio = _x};
+        if ( ((position _x) select 2) > -10) exitWith { _radio = _x}; // If beneath the ground, it is buired as dead (so work BIS game logic)
 	} forEach _list;
 	if (! isNull _radio ) exitWith { _radio say _this; };
 };

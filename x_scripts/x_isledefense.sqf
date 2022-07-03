@@ -237,12 +237,12 @@ _replace_grp =  {
 // Returns: nothing
 //
 _remove_grp = {
-	private ["_igrpa","_vecs","_igrp","_units","_crew","_plist","_x"];
+	private ["_igrpa","_igrp","_vecs","_units","_crew","_plist","_x","_vec_removed_cnt","_vec_captured_cnt","_var"];
 	_igrpa = _this;
 	_igrp  = argp(_igrpa,PARAM_GROUP);
 //	if ( !isNull _igrp ) then
 //	{
-		_vecs  = argp(_igrpa,PARAM_VEHICLES);
+		_vecs  = argp(_igrpa,PARAM_VEHICLES); // All patrol vehicles
 		_units = argp(_igrpa, PARAM_UNITS);
 #ifdef __PRINT_ACTIVITY__
 		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
@@ -250,52 +250,56 @@ _remove_grp = {
 		
 		// clean vehicles
 #ifdef __PRINT_ACTIVITY__
-		_vec_removed_cnt = 0;
+		_vec_removed_cnt  = 0;
+		_vec_captured_cnt = 0;
 #endif
 		{ // forEach _vecs;
-		    if (isNil (_x getVariable "CAPTURED_ITEM")) then { // if already captured, dont remove it
-                if ( isNull _x ) exitWith {};
-                _xside =  format["%1", side _x];
-                // check if the vehicle is captured directly now
-                if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
-                    (
-                     (_xside == d_own_side ) ||
-                     ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) )
-                    )
-                   )  then { // vehicle was captured by player
-                    // re-assign vehicle to be ordinal ones
-#ifdef __PRINT_ACTIVITY__
-    #ifdef __OWN_SIDE_EAST__
-                    hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
-    #else
-                    hint localize format["+++ x_isledefense: vec %1 is captured by Americans! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
-    #endif
-#endif
-                    // put vehicle under system control
-                    [_x] call XAddCheckDead;
-                    // added on #434 - inform players in trophy vehicles about
-                    ["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
-                    _x setVariable ["CAPTURED_ITEM","PATROL"]; // #535 - from now vehicle will not be cleared in the liberated town clean procedure. Request by Rokse.
-                } else { // Eject all units from the vehicle. Don't delete them here. Let them join any enemy group nearby, in the future.
-                    {
-                        _x action["Eject", vehicle _x];
-                    } forEach crew _x;
-                    sleep 0.3;
-                    deleteVehicle _x;
-#ifdef __PRINT_ACTIVITY__
-                    _vec_removed_cnt = _vec_removed_cnt + 1;
-#endif
-                };
+			if (!isNull _x) then { // if null, skip any test and go to the next vehicle
+				_var = _x getVariable "CAPTURED_ITEM";
+				if (isNil "_var") then { // if not already captured, check if it is captured now
+					_xside =  format["%1", side _x];
+					// check if the vehicle is captured directly now
+					if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
+						(
+						 (_xside == d_own_side ) ||
+						 ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) )
+						)
+					   )  then { // vehicle was captured by player
+						// re-assign vehicle to be ordinal ones
+	#ifdef __PRINT_ACTIVITY__
+		#ifdef __OWN_SIDE_EAST__
+						hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
+		#else
+						hint localize format["+++ x_isledefense: vec %1 is captured by Americans! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
+		#endif
+	#endif
+						// put vehicle under system control
+						_vec_captured_cnt = _vec_captured_cnt + 1;
+						[_x] call XAddCheckDead;
+						// added on #434 - inform players in trophy vehicles about
+						["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
+						_x setVariable ["CAPTURED_ITEM","PATROL"]; // #535 - from now vehicle will not be cleared in the liberated town clean procedure. Request by Rokse.
+					} else { // Eject all units from the vehicle. TODO: Don't delete them here. Let them join any enemy group nearby, in the future.
+						{
+							_x action["Eject", vehicle _x];
+						} forEach crew _x;
+						sleep 0.3;
+						deleteVehicle _x;
+	#ifdef __PRINT_ACTIVITY__
+						_vec_removed_cnt = _vec_removed_cnt + 1;
+	#endif
+					};
+   				};
 			};
 			sleep 0.1;
 		} forEach _vecs;
 		_vecs = nil;
 		sleep 1.06;
 #ifdef __PRINT_ACTIVITY__
-    _str = "isNull";
-    if ( !isNull _igrp) then { _str = format["is active and has %1(%2 not null) units", count units _igrp, {!(isNull _x)} count (units _igrp)] }
-    else { _str = format["isNull, had %1(%2 not null) units", count _units, {!(isNull _x)} count _units] };
-		hint localize format["+++ x_isledefense: start remove group: removed vecs %1, remained _units %2, grp %3", _vec_removed_cnt, count _units, _str];
+		_str = "isNull";
+		if ( !isNull _igrp) then { _str = format["is active and has %1(%2 not null) units", count units _igrp, {!(isNull _x)} count (units _igrp)] }
+		else { _str = format["isNull, had %1(%2 not null) units", count _units, {!(isNull _x)} count _units] };
+			hint localize format["+++ x_isledefense: start remove group: removed vehs %1,captured vehs%2, remained _units %2, grp %3", _vec_removed_cnt, _vec_captured_cnt, count _units, _str];
 #endif
 		// clean units
 #ifdef __PRINT_ACTIVITY__

@@ -275,7 +275,7 @@ if (isServer) then {
     // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 48 - transformer substations of Corazol, 49 - captain Grant
     // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation
     _first_array = [56];
-    if ( count _first_array > 0 ) then {
+    if ( (count _first_array) > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
         hint localize format["+++ SM _first_array: %1", _first_array];
     };
@@ -523,7 +523,7 @@ if (isServer) then {
 	//+++ Sygsky: create and handle GRU items (computer, radiomast etc)  on server
 	[] spawn {
 		// create GRU radio mast on the Pico de Perez
-		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
+		d_radar = createVehicle[RADAR_TYPE, [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
 		publicVariable "d_radar";
 		waitUntil { sleep 10.737; current_target_index >= 0 };
 		while { true } do {

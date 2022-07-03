@@ -14,8 +14,14 @@
 	returns: nothing
 */
 
+#include "sideradio_vars.sqf"
+
 _veh = _this select 0;
 _txt = (if (_veh isKindOf "Truck") then {
+	if (isNil "sideradio_status") exitWith {
+		deleteVehicle _veh;
+		"STR_SYS_248"
+	};
 	if (locked _veh) then {"STR_RADAR_TRUCK_LOCKED"} // "Spare Truck for the Mission"
 	else {
 		if (isNil "sideradio_vehs") then {
@@ -38,8 +44,8 @@ _txt = (if (_veh isKindOf "Truck") then {
 		};
 	};
 } else {
-	if (!alive d_radar) exitWith {""};
-	if (isNil "sideradio_status") exitWith {""};
+	if (!alive d_radar) exitWith {"STR_RADAR_MAST_DEAD"};
+	if (isNil "sideradio_status") exitWith {""}; // random radio sound
 	switch (sideradio_status) do {
 		case 0: { "STR_RADAR_MAST_UNLOADED" };
 		case 1: {

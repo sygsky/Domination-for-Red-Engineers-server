@@ -85,16 +85,16 @@ while { sideradio_status == 0 } do {
     if (alive d_radar) then { // move marker if
     	_asl = getPosASL d_radar;
         if ( ( _asl select 2) >= 0) then {
-            if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-            	if ( (getMarkerType _radar_marker) == "") then { // marker not exists, create it now
-	            	_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
-            	} else {
-            		_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
-	                _radar_marker setMarkerPos ( _asl );
-            	};
-            	_delay = 3;
-            };
-        } else {
+			if ( (getMarkerType _radar_marker) == "") exitWith { // marker not exists, create it now
+				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+			} else {
+				if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
+					_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
+					_radar_marker setMarkerPos ( _asl );
+					_delay = 3;
+				};
+			};
+        } else {	// radar is in truck, wipe it from map
 #ifdef __ACE__
         	_radar_marker setMarkerColorLocal "ACE_ColorTransparent";
 #else
@@ -125,8 +125,10 @@ deleteMarker _truck_marker;
 // Eject crew from trucks
 {
 	if (alive _x) then {
-		_x lock true;
-		{ _x action ["Eject", _x] } forEach (crew _x);
+//		_x lock true;
+		_veh = _x;
+		{ _x action ["Eject", _veh] } forEach (crew _veh);
+		_x setFuel 0;
 	};
 } forEach _vehs;
 

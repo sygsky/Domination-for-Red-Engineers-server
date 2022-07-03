@@ -13,7 +13,7 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {x_sm_pos select 0}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = format[localize "STR_SM_56",INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
+	current_mission_text = format[localize "STR_SM_56", RADAR_POINT call SYG_nearestLocationName, INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
 	current_mission_resolved_text = localize "STR_SM_056"; // "Mission accomplished, mast in place and communication operational!"
 };
 
@@ -45,7 +45,8 @@ if (alive d_radar) then {
 hint localize format["+++ x_m56.sqf: initial radar %1 after %2 bomb[s]", if (alive d_radar) then {"alive"} else {"killed"}, _cnt1];
 
 // 1. create antenna the base
-d_radar =  createVehicle ["Land_radar", [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
+d_radar =  createVehicle [RADAR_TYPE, [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
+publicVariable "d_radar";
 d_radar setVehicleInit "this execVM ""x_missions\common\sideradar\radio_init.sqf""";
 
 _pos = getPos d_radar;
@@ -73,7 +74,7 @@ _vehs = [];
 	_veh = _ural select _x;
 	_pos = _ural select (_x-1);
 	_veh = createVehicle [_veh, _pos, [], 0, "NONE"];
-//    extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
+    extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
     _veh setVehicleInit format ["this execVM ""x_missions\common\sideradar\radio_init.sqf""", (count _vehs) + 1 ];
 	_vehs set [count _vehs, _veh];
 	["say_sound",_veh, call SYG_truckDoorCloseSound] call XSendNetStartScriptClient; //SYG_rustyMastSound

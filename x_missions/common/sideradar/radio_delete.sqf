@@ -10,6 +10,8 @@
 
 if (!isServer) exitWith{};
 
+#include "sideradio_vars.sqf"
+
 sideradio_status = -1;
 publicVariable "sideradio_status";
 

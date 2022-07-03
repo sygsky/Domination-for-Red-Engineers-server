@@ -31,13 +31,19 @@ if (true) then {
 	if (_exit) exitWith {
 		hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2 ", sideradio_status, typeOf _veh];
 		_veh removeAction (_this select 2); // remove this action
+
+		if (_veh isKindOf "Truck") then {
+			{ _x action ["Eject", _veh] } forEach (crew _x);
+			_veh setFuel 0;
+		};
+
 		(call SYG_randomRadioNoise) call SYG_receiveRadio;
 		if (isNil "sideradio_status") exitWith {
-			_txt = if (_veh isKindOf "Truck") then {
+			_txt = localize (if (_veh isKindOf "Truck") then {
 				["STR_RADAR_NO","STR_SYS_248"] call XfRandomArrayVal
 			} else {
 				["STR_RADAR_NO","STR_RADAR_MAST","STR_SYS_248"] call XfRandomArrayVal
-			};
+			});
 		};
 		if (sideradio_status > 0) exitWith {_txt = localize "STR_RADAR_SUCCESSFUL"};
 		if (sideradio_status < 0) exitWith {_txt = localize "STR_RADAR_FAILED"};
@@ -108,13 +114,21 @@ if (true) then {
 			_str1 = if (surfaceIsWater _mast_pos) then { _bad = true;  "STR_RADAR_IN_WATER" } else {"STR_RADAR_ON_LAND"};
 			_str2 = if ( _veh call SYG_pointNearBase ) then { _bad = true; "STR_RADAR_IN_BASE" } else {"STR_RADAR_OUT_BASE"};
 			_slope = [_mast_pos, 3] call XfGetSlope;
-			_str3 = if (_slope > MAX_SLOPE) then {_bad = true; "STR_RADAR_ON_SLOPE"} else {"STR_RADAR_ON_HORIZONTAL"};
+			_str3 = if (_slope > MAX_SLOPE) then {
+				_bad = true;
+				"STR_RADAR_ON_SLOPE"
+			} else {
+				"STR_RADAR_ON_HORIZONTAL"
+			};
 			hint localize format["+++ CHECK: slope(in 3 m.) = %1 ",_slope];
 			_ht   = _mast_pos call SYG_getLandASL;
 			_str4 = if ( _ht < INSTALL_MIN_ALTITUDE ) then { _bad = true; "STR_RADAR_MAST_TOO_LOW" } else {"STR_RADAR_MAST_HIGH"};
 
 			_str = if (_bad) then {"STR_RADAR_NOT_READY"} else {"STR_RADAR_READY"};
-			_txt = format[localize _str, localize _str1, localize _str2, localize _str3, format[localize _str4, INSTALL_MIN_ALTITUDE, ceil _ht]];
+			_txt = format[localize _str, localize _str1, localize _str2,
+				format[localize _str3, round(_slope*100)],
+				format[localize _str4, INSTALL_MIN_ALTITUDE, round _ht]
+			];
 			_send_was_at_sm = (_veh distance RADAR_POINT) < INSTALL_RADIUS;
 		};
 		// Install radio mast on terrain behind truck current position to truck.

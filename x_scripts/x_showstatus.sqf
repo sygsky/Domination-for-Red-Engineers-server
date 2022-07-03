@@ -185,6 +185,10 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			};
 			_s = _s + "\n" + _s1;
 		};
+		// GRU radar mast deliverance and installation
+		case 56: {
+		};
+
 	};
     // check for big gun at one of the snipers of side mission team
     if (!isNil "SM_HeavySniperCnt") then {

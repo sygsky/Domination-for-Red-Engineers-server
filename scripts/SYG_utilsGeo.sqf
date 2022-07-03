@@ -132,7 +132,7 @@ SYG_nearestLocationA = {
 		default {_pos = []};
 	};
 */
-	if (count _pos < 3) exitWith {locationNull};
+	if (count _pos < 2) exitWith {locationNull};
 	_lst = _this select 1;
 	switch (typeName _lst) do {
 		case "STRING": {_lst = [_lst];};

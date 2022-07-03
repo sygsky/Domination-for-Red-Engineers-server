@@ -19,3 +19,4 @@
 #define DIST_MAST_TO_TRUCK 15           // distance from truck to mast to allow handle mast from truck
 #define DIST_MAST_TO_INSTALL 10           // distance from truck to mast to allow handle mast from truck
 #define RADAR_SM_COLOR "ColorRed"
+#define RADAR_TYPE "Land_radar"

@@ -19,8 +19,7 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 #define __NOT_POPULATE_LOADER_TO_TANK__
 #define __NOT_POPULATE_MANY_GUNNERS_IN_HMMW_SUPPORT__
 
-if ( !isNil "SYG_utilsVehicles_INIT" )exitWith { hint "SYG_utilsVehicles already initialized"};
-SYG_utilsVehicles_INIT = false;
+if ( !isNil "SYG_getVehicleType" )exitWith { hint "--- SYG_utilsVehicles already initialized"};
 hint localize "+++ INIT of SYG_utilsVehicles";
 
 //
@@ -244,7 +243,7 @@ SYG_findNearestPlayer = {
     private ["_pos","_dist","_nearArr","_pl","_x"];
     _pos  = _this select 0;
     _dist = _this select 1;
-	_nearArr = nearestObjects [ _this, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
+	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
 	if ( (count _nearArr) == 0 ) exitWith { objNull };
 	_pl = objNull;
 	{
@@ -260,7 +259,7 @@ SYG_findNearestPlayers = {
     private ["_pos","_dist","_nearArr","_plNames","_x"];
     _pos  = _this select 0;
     _dist = _this select 1;
-	_nearArr = nearestObjects [ _this, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
+	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
 	if ( (count _nearArr) == 0 ) exitWith { [] };
 	_plNames = [];
 	{
@@ -2199,6 +2198,5 @@ SYG_getConfigMags = {
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
-SYG_utilsVehicles_INIT = true;
 hint localize "+++ INIT of SYG_utilsVehicles completed";
 if ( true ) exitWith {};
