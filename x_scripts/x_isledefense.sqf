@@ -54,7 +54,7 @@ if (!isServer) exitWith {};
 //#define DELAY_FEETMEN_CHECK 120
 #define DELAY_NOT_SET 0
 
-//	[_agrp, _units, _last_pos, _vecs, time, _stat, _grp_array]
+//	[_agrp, _units, _last_pos, _vehs, time, _stat, _grp_array]
 #define PARAM_GROUP 0       // group itself
 #define PARAM_UNITS 1       // units of group
 #define PARAM_LAST_POS 2    // last position of patrol leader
@@ -101,7 +101,7 @@ _patrol_types = [       "HP",        "FP",         "SP",         "LP",        "H
 //
 //
 _make_isle_grp = {
-	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vecs", "_veh_arr", "_rand", "_leader", "_grp_array","_params","_x"];
+	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vehs", "_veh_arr", "_rand", "_leader", "_grp_array","_params","_x"];
 	_params = [d_with_isledefense select 0,d_with_isledefense select 1,d_with_isledefense select 2,d_with_isledefense select 3];
 	_start_point = []; //_params call XfGetRanPointSquare;
 	while {(count _start_point) == 0} do {
@@ -138,7 +138,7 @@ _make_isle_grp = {
 	_agrp = grpNull;
     _agrp = call SYG_createGroup;
 
-	_vecs = [];
+	_vehs = [];
 
 #ifdef __OWN_SIDE_EAST__
     _type_id      = _patrol_types call XfRandomFloorArray;
@@ -167,7 +167,7 @@ _make_isle_grp = {
     {
         _veh_arr = [1, _start_point, _crew_type, _x, _agrp, 0, -1.111] call x_makevgroup; // _veh_arr is an array with the vehicle type strings, count is 1st parameneter value (here is 1)
         sleep 0.73; // Magic)))
-        [_vecs, _veh_arr] call SYG_addArrayInPlace;
+        [_vehs, _veh_arr] call SYG_addArrayInPlace;
     } forEach _elist;
 
 #else
@@ -179,16 +179,16 @@ _make_isle_grp = {
 			_veh_arr = ([_rand,_start_point,_x select 1,_x select 0,_agrp,0,-1.111] call x_makevgroup);
 			sleep 0.73;
 			//{ _x lock true; } forEach _veh_arr;
-			[_vecs, _veh_arr] call SYG_addArrayInPlace;
+			[_vehs, _veh_arr] call SYG_addArrayInPlace;
 		};
 	} forEach _elist;
-//    hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vecs];
+//    hint localize format["+++ x_isledefense.sqf: %1 vehicles created", count _vehs];
 #endif
 
 	_elist = nil;
 	sleep 0.31;
 	_units = units _agrp;
-    hint localize format["+++ x_isledefense.sqf: %1 vehicle[s] created for patrol type %2, group %3, men %4", count _vecs, _patrol_type, _agrp, count _units]; // _pos call SYG_nearestLocationName
+    hint localize format["+++ x_isledefense.sqf: %1 vehicle[s] created for patrol type %2, group %3, men %4", count _vehs, _patrol_type, _agrp, count _units]; // _pos call SYG_nearestLocationName
 
 	if ( !(isNull (leader _agrp))) then {
         _leader = leader _agrp;
@@ -201,7 +201,7 @@ _make_isle_grp = {
 	};
 	_grp_array = [_agrp, _start_point, 0,_params,[],-1,0,[],400 + (random 100),1, [0,false,true,200,true]]; // param 10: [no rejoin,no debug print,prevent wp on islet generation, hills  dist 200, skip in base WP]
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
-	[_agrp, _units, [0,0,0], _vecs, DELAY_NOT_SET, STATUS_NORMAL, _grp_array, _patrol_type]
+	[_agrp, _units, [0,0,0], _vehs, DELAY_NOT_SET, STATUS_NORMAL, _grp_array, _patrol_type]
 }; // _make_isle_grp = {...};
 
 /**
@@ -237,15 +237,15 @@ _replace_grp =  {
 // Returns: nothing
 //
 _remove_grp = {
-	private ["_igrpa","_igrp","_vecs","_units","_crew","_plist","_x","_vec_removed_cnt","_vec_captured_cnt","_var"];
+	private ["_igrpa","_igrp","_vehs","_units","_crew","_plist","_x","_vec_removed_cnt","_vec_captured_cnt","_var","_xside"];
 	_igrpa = _this;
 	_igrp  = argp(_igrpa,PARAM_GROUP);
 //	if ( !isNull _igrp ) then
 //	{
-		_vecs  = argp(_igrpa,PARAM_VEHICLES); // All patrol vehicles
+		_vehs  = argp(_igrpa,PARAM_VEHICLES); // All patrol vehicles
 		_units = argp(_igrpa, PARAM_UNITS);
 #ifdef __PRINT_ACTIVITY__
-		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vecs, count _units];
+		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vehs, count _units];
 #endif						
 		
 		// clean vehicles
@@ -253,7 +253,7 @@ _remove_grp = {
 		_vec_removed_cnt  = 0;
 		_vec_captured_cnt = 0;
 #endif
-		{ // forEach _vecs;
+		{ // forEach _vehs;
 			if (!isNull _x) then { // if null, skip any test and go to the next vehicle
 				_var = _x getVariable "CAPTURED_ITEM";
 				if (isNil "_var") then { // if not already captured, check if it is captured now
@@ -292,8 +292,8 @@ _remove_grp = {
    				};
 			};
 			sleep 0.1;
-		} forEach _vecs;
-		_vecs = nil;
+		} forEach _vehs;
+		_vehs = nil;
 		sleep 1.06;
 #ifdef __PRINT_ACTIVITY__
 		_str = "isNull";
@@ -330,7 +330,6 @@ _remove_grp = {
 #ifdef __PRINT_ACTIVITY__
                 _grp_units_removed_cnt = _grp_units_removed_cnt + 1;
 #endif
-
 			};
 		} forEach units _igrp;
 		sleep 0.1;
@@ -345,15 +344,15 @@ _remove_grp = {
 
 /*
  * call:
- *     _arr2 = [_igrp,_vecs] call _getFeetmen;
+ *     _arr2 = [_igrp,_vehs] call _getFeetmen;
  * Where:
  *     _arr2 == [_feetmen,_invalid_men]; // _feetmen == [_unit1, _unit2 ...]; _invalid_men = [_unitN,_unitN1 ...];
  */
 _getFeetmen = {
-	private ["_igrp","_units","_vecs","_feetmen","_invalid_men","_veh","_leader","_x"];
+	private ["_igrp","_units","_vehs","_feetmen","_invalid_men","_veh","_leader","_x"];
 	_igrp  = arg(0);
 	_units = units _igrp;
-	_vecs  = arg(1);
+	_vehs  = arg(1);
 	if ( typeName _units == "GROUP" ) then {_units = units _this;}; // else it is already unit array
 	_feetmen = []; _invalid_men = [];
 	{ // forEach _this;
@@ -366,7 +365,7 @@ _getFeetmen = {
 				// select other leader in moveable vehicle
 				_veh = objNull;
 				
-				{  if ( (!isNull _x) && (canMove _x) && (count crew _x > 0) && (!isNull driver _x ) && (canStand driver _x) ) exitWith {_veh = _x;}; } forEach _vecs;
+				{  if ( (!isNull _x) && (canMove _x) && (count crew _x > 0) && (!isNull driver _x ) && (canStand driver _x) ) exitWith {_veh = _x;}; } forEach _vehs;
 				
 				if (!isNull _veh) then
 				{	
@@ -435,10 +434,10 @@ _setStateNormal = {
  * returns: nothing
  */
 _utilizeFeetmen = {
-	private  ["_feetmen","_invalid_men","_vecs","_goal_grp"];
+	private  ["_feetmen","_invalid_men","_vehs","_goal_grp"];
 	_feetmen = arg(0);
 	_invalid_men = arg(1);
-	_vecs = arg(2);
+	_vehs = arg(2);
 
 	// remove invalid men directly now
 	if ( count _invalid_men > 0 ) then {
@@ -468,7 +467,7 @@ _utilizeFeetmen = {
 			sleep 0.203;
 			_feetmen = [];
 		} else {// try to board feetmen into available vehicles
-			_feetmen = [_feetmen, _vecs] call SYG_findAndAssignAsCargo;
+			_feetmen = [_feetmen, _vehs] call SYG_findAndAssignAsCargo;
 		};
 	};
 	
@@ -542,7 +541,7 @@ while { true } do {
 		scopeName "main_loop";
 		_enemy_near     = false;
 		_may_be_stucked = false;
-		_vecs = [];
+		_vehs = [];
 		
 		_igrpa         = argp( SYG_isle_grps, _i ); // array of group parameters
 		_igrp          = argp( _igrpa, PARAM_GROUP ); // group itself
@@ -611,7 +610,7 @@ while { true } do {
 
             if ( _stat == STATUS_STUB ) then { breakTo "main_loop"};
 
-			_vecs = argp(_igrpa, PARAM_VEHICLES);
+			_vehs = argp(_igrpa, PARAM_VEHICLES);
 
 			// define real status of current patrol. According to previous state patrol was not dead
 			_dead = false;
@@ -621,10 +620,10 @@ while { true } do {
 			if (  isNull _igrp ) then {
 				_dead = true;
 			} else {
-				if ( ((_igrp call XfGetHealthyUnits) == 0) && (_vecs call _countNonEmptyVehicles) == 0 ) then {
+				if ( ((_igrp call XfGetHealthyUnits) == 0) && (_vehs call _countNonEmptyVehicles) == 0 ) then {
 					_dead = true; 
 				} else {// check vehicles
-					_veh =  _vecs call _firstGoodVehicle;
+					_veh =  _vehs call _firstGoodVehicle;
 					if ( isNull _veh ) then {
 						_dead = true;
 					};
@@ -639,14 +638,14 @@ while { true } do {
 				breakTo "main_loop"; // wait until patrol removed && replaced
 			};
 			
-			_ret              = [_igrp,_vecs] call _getFeetmen;
+			_ret              = [_igrp,_vehs] call _getFeetmen;
 			_feetmen          = argp(_ret,0);
 			_invalid_men      = argp(_ret,1);
 			
 			if ( isNull _veh ) then {// no more vehicles
 				if ( count _feetmen > 0 ) then {
 					if ( !_enemy_near ) then {
-						[_feetmen, _invalid_men, _vecs] call _utilizeFeetmen;
+						[_feetmen, _invalid_men, _vehs] call _utilizeFeetmen;
 						_igrpa set [   PARAM_STATUS, STATUS_DEAD];
 						_igrpa set [PARAM_TIMESTAMP, time + DELAY_REMOVE_DEAD];
 						_dead_patrols = (_dead_patrols + 1) min (_patrol_cnt - 1);
@@ -714,7 +713,7 @@ while { true } do {
 			//========== Some vehicles with alive driver can move. Play with feetmen =============
 			//
 			
-			[_feetmen, _invalid_men, _vecs] call _utilizeFeetmen;
+			[_feetmen, _invalid_men, _vehs] call _utilizeFeetmen;
 			
 		}; // for "_j" from 0 to 0 do - temp loop to allow external scope usage
 
@@ -738,7 +737,7 @@ while { true } do {
 
 	// ==================================== END OF LOOP ON PATROLS ======================================
 #ifdef __PRINT_ACTIVITY__
-	// igrpa: [_agrp, _units, [0,0,0], _vecs]
+	// igrpa: [_agrp, _units, [0,0,0], _vehs]
     _groups_arr_side = compile toLower (format["groups_%1", d_enemy_side]);
 	hint localize format["+++ x_isledefense.sqf: %1, target ""%2""(%3), groups on isle count %4(%5)",
 	    call SYG_missionTimeInfoStr,
@@ -763,14 +762,14 @@ while { true } do {
                 };
             }; // group/vehicles not exist more
 		} else {
-			_vecs = argp(_igrpa, PARAM_VEHICLES); // vehicles
-			_veccnt = count _vecs;
+			_vehs = argp(_igrpa, PARAM_VEHICLES); // vehicles
+			_veccnt = count _vehs;
 			_veccnta = 0; // count of alive vehicles with some crew on board
 			{
 				if (!isNull _x) then {
 					if ( ( count crew _x ) > 0 ) then { _veccnta = _veccnta + 1; };
 				};
-			} forEach _vecs;
+			} forEach _vehs;
 			
     		_stat = argp( _igrpa, PARAM_STATUS ); // status of patrol group
 			if ( _veccnta == 0 ) then {
