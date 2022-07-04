@@ -124,7 +124,7 @@ SYG_findNearSPPMCount = {
 // returns: result text string to localize
 //
 SYG_addSPPMMarker = {
-	private ["_pos", "_marker","_arr","_pnt","_cone","_marker","_ret"];
+	private ["_pos", "_marker","_arr","_arr1","_pnt","_cone","_marker","_ret"];
 	// get position of creation point (player or pos itself)
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith { ["STR_SPPM_ADD_ERR", _this] }; // "Error in the creation of the new SPPM: The parameters for the procedure were incorrect"
@@ -174,7 +174,8 @@ SYG_addSPPMMarker = {
 		if (_marker != "") exitWith {};
 	};
 	if (_marker == "") exitWith { "STR_SPPM_ADD_ERR_1" }; // can't create marker name
-	hint localize format["+++ SPPM, created new marker ""%1"" for %2 veh[s]: %3", _marker, count _arr, _arr call SYG_vehToType];
+	_arr1 = _arr call SYG_vehToType;
+	hint localize format["+++ SPPM, created new marker ""%1"" for %2 veh[s]: %3", _marker, count _arr1, _arr1];
 	_marker setMarkerColorLocal SPPM_DOSAAF_MARKER_COLOR;
 	_marker setMarkerShapeLocal "ICON";
 	// TODO: find marker
