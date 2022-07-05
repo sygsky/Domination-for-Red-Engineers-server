@@ -54,36 +54,13 @@ d_radar setPos [_pos select 0, _pos select 1, -5.7 ];
 d_radar setVectorUp [1,0,0];
 d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
 ["say_sound",d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
-// 2. create trucks on the base
-#ifdef __ACE__
-_ural = switch (d_own_side) do {
-	case "EAST": {[[9452.5,9930.5,0],"UralCivil",[9447.5,9930.5],"UralCivil2"]};
-	case "RACS";
-	case "WEST": {[[9452.5,9930.5,0],"ACE_Truck5t_Open",[9447.5,9930.5],"ACE_Truck5t_Open"]};
-};
-#else
-_ural = switch (d_own_side) do {
-	case "EAST": {[[9452.5,9930.5,0],"UralCivil",[9447.5,9930.5],"UralCivil2"]};
-	case "RACS";
-	case "WEST": {[[9452.5,9930.5,0],"Truck5tOpen",[9447.5,9930.5],"Truck5tOpen"]};
-};
-#endif
-_vehs = [];
-{
-	sleep 2 + (random 2);
-	_veh = _ural select _x;
-	_pos = _ural select (_x-1);
-	_veh = createVehicle [_veh, _pos, [], 0, "NONE"];
-    extra_mission_vehicle_remover_array set [ count extra_mission_vehicle_remover_array, _veh ];
-    _veh setVehicleInit format ["this execVM ""x_missions\common\sideradar\radio_init.sqf""", (count _vehs) + 1 ];
-	_vehs set [count _vehs, _veh];
-	["say_sound",_veh, call SYG_truckDoorCloseSound] call XSendNetStartScriptClient; //SYG_rustyMastSound
-} forEach[ 1, 3 ];
-_vehs call SYG_addToExtraVec; // add both vehicles to the remover array (cleaned after SM finish)
-(_vehs select 1) lock true; // Lock 2nd truck only
+// 2. create truck on the base
+"BASE" execVM "x_missions\common\sideradar\createTruck.sqf";
+d_radar_truck = objNull;
+while { !(alive d_radar_truck)} do {sleep 0.1};
 processInitCommands;
 //      0,     1,    2
-_vehs  execVM "x_missions\common\x_sideradio.sqf";
+execVM "x_missions\common\x_sideradio.sqf";
 
 // TODO: add enemy infantry patrols on the way to the destination point
 

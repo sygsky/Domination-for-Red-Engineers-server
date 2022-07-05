@@ -22,7 +22,7 @@ _txt = (if (_veh isKindOf "Truck") then {
 		deleteVehicle _veh;
 		"STR_SYS_248"
 	};
-	if (locked _veh) then {"STR_RADAR_TRUCK_LOCKED"} // "Spare Truck for the Mission"
+	if (locked _veh) then {_veh lock false;  "STR_RADAR_TRUCK_LOCKED"} // "Spare Truck for the Mission"
 	else {
 		if (isNil "sideradio_vehs") then {
 			"STR_RADAR_TRUCK"; // Active truck for transporting a radio mast

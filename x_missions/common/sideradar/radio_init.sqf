@@ -36,32 +36,5 @@ if (_veh isKindOf "Truck" ) exitWith { // first truck, second is in reserve
 	_veh addAction[localize    "STR_LOAD", "x_missions\common\sideradar\radio_menu.sqf","LOAD"]; // Load
 	_veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]; // Unload
 	hint localize "+++ radio_init.sqf: add 3 actions";
-
-	// ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
-	_veh addEventHandler ["killed", {
-		private ["_veh","_asl","_pos","_vehs","_veh1"];
-		_veh = _this select 0;
-		if (!alive d_radar) exitWith {};
-		_asl = getPosASL d_radar;
-		if ((_asl select 2) < 0) then { // unload must if veh0 is killed
-			_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
-			d_radar setPos _pos;
-			["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
-		};
-		// now prepare next alive truck for operation
-		_vehs = sideradio_vehs;
-		_veh = _vehs select 1;
-		if (alive _veh) then {
-			_veh lock false; // unlock 2nd vehicle if alive
-			// "There's only one truck left. Take care of it, it's our last chance to complete the mission!"
-			["msg_to_user", "",  [ ["STR_RADAR_TRUCK_UNLOCK"]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClientAll;
-		} else {
-			// "Last track destroyed, task failed!"
-			["msg_to_user", "",  [ ["STR_RADAR_TRUCK_FAILED"]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClientAll;
-			d_radar setDamage 1.1;
-			[d_radar, _veh] execVM "x_missions\common\sideradar\radio_delete.sqf";
-		};
-	}];
-
 };
 player groupChat format["--- radio_init.sqf: expected vehicle must by Truck or Land_radar. Found %1, exit!!!", typeOf _veh];

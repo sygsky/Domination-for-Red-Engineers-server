@@ -232,10 +232,11 @@ XfGetRanPointCircleOld = {
 // get a random point inside a circle for bigger objects (not less than 20 meters from nearest static object)
 // parameters:
 // center position, radius of the circle
-// example: _random_point = [position trigger1, 200] call XfGetRanPointCircleBig;
+// example: _random_point = [position trigger1, 200<,static_dist>] call XfGetRanPointCircleBig;
 XfGetRanPointCircleBig = {
-	private ["_center", "_radius", "_center_x", "_center_y", "_ret_val", "_co", "_angle", "_x1", "_y1", "_nobs", "_helper", "_dist"];
+	private ["_center", "_radius", "_center_x", "_center_y", "_ret_val", "_co", "_angle", "_x1", "_y1", "_nobs", "_helper", "_dist","_sdist"];
 	_center = _this select 0;_radius = _this select 1;
+	_sdist = if (count _this < 3) then {20} else {_this select 2}; // distance to the nearest static object
 	_center_x = _center select 0;_center_y = _center select 1;
 	_ret_val = [];_co = 0;
 	while {count _ret_val == 0 && _co < 50} do {
@@ -244,7 +245,7 @@ XfGetRanPointCircleBig = {
 		_x1 = _center_x - ( _dist * cos _angle);
 		_y1 = _center_y - ( _dist * sin _angle);
 		if (!(surfaceIsWater [_x1, _y1])) then {
-			_nobs = [_x1,_y1,0] nearObjects ["Static",20];
+			_nobs = [_x1,_y1,0] nearObjects ["Static",_sdist];
 			if (count _nobs == 0) then {
 				_helper = "RoadCone" createVehicleLocal [_x1,_y1,0];
 				if (!(surfaceIsWater [position _helper select 0, position _helper select 1])) then {
@@ -264,7 +265,7 @@ XfGetRanPointCircleBig = {
 	_ret_val
 };
 
-// get a random point inside a circle for bigger objects (not less than 20 meters from nearest static object)
+// get a random point inside an annulus for bigger objects (not less than 20 meters from nearest static object)
 // parameters:
 // center position, radius of the circle
 // example: _random_point = [position trigger1, rad1, rad2] call XfGetRanPointCircleBig;

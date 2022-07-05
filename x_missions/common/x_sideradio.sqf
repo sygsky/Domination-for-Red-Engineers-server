@@ -22,9 +22,6 @@ if (!isServer) exitWith {};
 
 // 1. create antenna and trucks on the base
 
-_vehs  = +_this; // two trucks to load/install radiomast
-
-sideradio_vehs = _vehs;
 sideradio_status = 0; // -1 - mission failured, 0 - mission in progress, 1 - succesfully finished
 publicVariable "sideradio_vehs"; // initial information for clients
 publicVariable "sideradio_status"; // status of mission, is set on clients only
@@ -49,57 +46,48 @@ _make_marker = {
 
 // create markers (truck + radiomast)
 _truck = _vehs select 0; // current (first) alive truck
-_truck_marker = [ "sideradio_truck_marker", TRUCK_MARKER, _truck, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+_truck_marker = "";
 _radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
 
 //
 // Main loop, controls markers movement and end of the mission
 //
 
-while { sideradio_status == 0 } do {
+while { sideradio_status in [0,1] } do {
 
 	if (X_MP && ((call XPlayersNumber) == 0)) then {
 		waitUntil {sleep (60 + (random 1)); (call XPlayersNumber) > 0};
 	};
 	_delay = 15;
 
-    // check markers
-    if (!alive _truck) then {
-        // remove truck marker just in case
-        _new_truck = _vehs select 1;
-        if (alive _new_truck) then {
-            _truck = _new_truck;
-            _truck lock false;
-            _delay = 3;
-        } else {
-            deleteMarker _truck_marker;
+    // check truck marker
+    if ( (!alive d_radar_truck) || (locked d_radar_truck) ) then {
+    	deleteMarker _truck_marker;
+    } else {
+	    // create radar marker if needed
+		if ((getMarkerType _truck_marker) == "") then {
+			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, d_radar_truck, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+			_delay = 3;
+		} else {
+			if ( ( [getMarkerPos _truck_marker, d_radar_truck] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
+				_truck_marker setMarkerPos (getPos _truck);
+				_delay = 3;
+			};
         };
     };
-    if (alive _truck ) then { // move marker if truck is shifted
-        if ( ( [getMarkerPos _truck_marker, _truck] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-            _truck_marker setMarkerPos (getPos _truck); _delay = 3;
-        };
-    };
-
-
-    if (alive d_radar) then { // move marker if
+    // check radar marker
+    if (alive d_radar) then { // move marker if needed
     	_asl = getPosASL d_radar;
         if ( ( _asl select 2) >= 0) then {
 			if ( (getMarkerType _radar_marker) == "") exitWith { // marker not exists, create it now
 				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
 			} else {
 				if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-					_radar_marker setMarkerColorLocal RADAR_SM_COLOR;
 					_radar_marker setMarkerPos ( _asl );
-					_delay = 3;
 				};
 			};
         } else {	// radar is in truck, wipe it from map
-#ifdef __ACE__
-        	_radar_marker setMarkerColorLocal "ACE_ColorTransparent";
-#else
             deleteMarker _radar_marker;
-#endif
         };
     } else {
         deleteMarker _radar_marker;
@@ -122,18 +110,13 @@ sleep (5 + (random 5));
 deleteMarker _radar_marker;
 deleteMarker _truck_marker;
 
-// Eject crew from trucks
-{
-	if (alive _x) then {
+// Eject crew from truck
+if (alive d_radar_truck) then {
 //		_x lock true;
-		_veh = _x;
-		{ _x action ["Eject", _veh] } forEach (crew _veh);
-		_x setFuel 0;
-	};
-} forEach _vehs;
+	{ d_radar_truck action ["Eject", d_radar_truck] } forEach (crew d_radar_truck);
+	_x setFuel 0;
+};
 
-sideradio_vehs = nil;
-publicVariable "sideradio_vehs";
 sideradio_status = nil;
 publicVariable "sideradio_status";
 // d_radar continue to exists for the future adventures

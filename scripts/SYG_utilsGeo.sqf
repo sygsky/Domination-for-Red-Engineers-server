@@ -981,7 +981,7 @@ SYG_getPosAGL = {
 	if (typeName _this != "OBJECT") exitWith {[]};
 	_asl = getPosASL _this;
 	_log = "Logic" createVehicleLocal _asl;
-	_agl = (getPosASL _log) - _asl; // AGL
+	_agl = _asl - (getPosASL _log); // AGL
 	deleteVehicle _log;
 	_agl
 };
