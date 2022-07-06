@@ -107,7 +107,7 @@ _startTime = time;
 if ( _paratype == "" ) then {
     (localize "STR_SYS_609_1") call XfHQChat; // "You finally realize that skydiving requires a parachute ! But it's late... Last question: - How about paid for jump points?"
     if ( player call SYG_isWoman ) then {
-        player say ("female_shout_of_pain_" + str( (floor (random 4)) + 1));  // 1-4
+        player say format ["female_shout_of_pain_%1",(floor (random 4)) + 1];  // 1-4
     } else {
         player say (call SYG_getSuicideScreamSound);
     };

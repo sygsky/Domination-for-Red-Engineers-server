@@ -27,64 +27,68 @@ _disable_teleport_list =
 
 _grp_player = group player;
 _units_player = units _grp_player;
-if (({alive _x} count _units_player) > 0) then {
-	_units_formation = formationMembers player;
-	if (count _this == 0) then { // called for teleport
-		_pos_p = position player;
-		_ntp_cnt = 0; // no teleport count
-		_pos_p = [_pos_p select 0, _pos_p select 1, 0];
-		{
-			if ( (alive _x) && !isPlayer _x && vehicle _x == _x && ( [_x,_pos_p] call SYG_distance2D) > 500 ) then {
-			    if ( (formationLeader _x == player) || (leader _x == player)) then {
-			        _ai = _x getVariable "AI_COST"; // AI of this player must have the variable
-			        _ai = !(isNil "_ai");
-			        if ( _ai && (!((typeOf _x) in _disable_teleport_list)) ) then { _x setPos _pos_p; } // teleport
-			            else  { _ntp_cnt = _ntp_cnt +1; }; // no teleport
-			    };
-			};
-		} forEach _units_formation;
-		if (_ntp_cnt > 0 ) then {
-		    (format[localize "STR_SM_TELEPORT_1", _ntp_cnt]) call XfHQChat; // "You realized that teleportation didn’t work with all your team members"
-//		    hint localize format["+++ x_moveai.sqf: teleport stopped for %1 civilians/officers", _ntp_cnt ];
-		    playSound "losing_patience";
-		};
-	} else { // called for parajump
-		 // params: [position _obj_jump, velocity _obj_jump, direction _obj_jump]
-		_pos_p = _this select 0;
-		_veloc = _this select 1;
-		_dir = _this select 2;
-		_parachute = (
+if (({alive _x} count _units_player) == 0) exitWith { };
 
-			switch (d_own_side) do {
-				case "RACS": {"ParachuteG"};
-				case "WEST": {"ParachuteWest"};
-				case "EAST": {"ParachuteEast"};
-			}
-		);
-		{
-            if (alive _x) then { // there were situations when dead AI was para-jumping :)
-                if (!isPlayer _x && vehicle _x == _x && ( [_x,_pos_p] call SYG_distance2D) > 500) then {
-                    if ( (formationLeader _x == player) || (leader _x == player)) then {
-                        _obj_para = _parachute createVehicle[ 0,0,0 ];
-                        _obj_para setPos _pos_p;
-                        _obj_para setDir _dir;
-                        _obj_para setVelocity _veloc;
-                        _x moveInDriver _obj_para;
-                        [_x] spawn {
-                            _unit = _this select 0;
-                            sleep 0.8321;
-                            waitUntil {sleep 0.111;(vehicle _unit == _unit || !alive _unit)};
-//                            if (alive _unit) then {
-                                if (position _unit select 2 > 1) then {
-                                    _unit setPos [position _unit select 0,position _unit select 1, 0];
-                                };
-//                            };
-                        };
-                    };
-                };
-			};
-		} forEach _units_formation;
-	};
+_units_formation = formationMembers player;
+// ++++++++++++++++++++++++ TELEPORT +++++++++++++++++++++++
+if (count _this == 0) exitWith { // called for teleport
+    _pos_p = position player;
+    _ntp_cnt = 0; // no teleport count
+    _pos_p = [_pos_p select 0, _pos_p select 1, 0];
+    {
+        if ( (alive _x) && !isPlayer _x && vehicle _x == _x && ( [_x,_pos_p] call SYG_distance2D) > 500 ) then {
+            if ( (formationLeader _x == player) || (leader _x == player)) then {
+                _ai = _x getVariable "AI_COST"; // AI of this player must have the variable
+                _ai = !(isNil "_ai");
+                if ( _ai && (!((typeOf _x) in _disable_teleport_list)) ) then { _x setPos _pos_p; } // teleport
+                    else  { _ntp_cnt = _ntp_cnt +1; }; // no teleport
+            };
+        };
+    } forEach _units_formation;
+    if (_ntp_cnt > 0 ) then {
+        (format[localize "STR_SM_TELEPORT_1", _ntp_cnt]) call XfHQChat; // "You realized that teleportation didn’t work with all your team members"
+//		    hint localize format["+++ x_moveai.sqf: teleport stopped for %1 civilians/officers", _ntp_cnt ];
+        playSound "losing_patience";
+    };
 };
+
+
+//++++++++++++++++++++++++++++++++++++ PARAJUMP ++++++++++++++++++++++++
+// params: [position _obj_jump, velocity _obj_jump, direction _obj_jump]
+_pos_p = _this select 0;
+_veloc = _this select 1;
+_dir = _this select 2;
+_parachute = (
+
+    switch (d_own_side) do {
+        case "RACS": {"ParachuteG"};
+        case "WEST": {"ParachuteWest"};
+        case "EAST": {"ParachuteEast"};
+    }
+);
+{
+    if (alive _x) then { // there were situations when dead AI was para-jumping :)
+        if (!isPlayer _x && vehicle _x == _x && ( [_x,_pos_p] call SYG_distance2D) > 500) then {
+            if ( (formationLeader _x == player) || (leader _x == player)) then {
+                _obj_para = _parachute createVehicle[ 0,0,0 ];
+                _obj_para setPos _pos_p;
+                _obj_para setDir _dir;
+                _obj_para setVelocity _veloc;
+                _x moveInDriver _obj_para;
+                [_x] spawn {
+                    _unit = _this select 0;
+                    sleep 0.8321;
+                    waitUntil {sleep 0.111;(vehicle _unit == _unit || !alive _unit)};
+//                            if (alive _unit) then {
+                        if (position _unit select 2 > 1) then {
+                            _unit setPos [position _unit select 0,position _unit select 1, 0];
+                        };
+//                            };
+                };
+            };
+        };
+    };
+} forEach _units_formation;
+
 
 if (true) exitWith {};

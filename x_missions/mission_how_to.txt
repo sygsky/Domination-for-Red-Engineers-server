@@ -78,7 +78,7 @@ There are some failure codes for side_mission_winner:
 -600: The prototype was destroyed before it reached your base...
 -700: All pilots were dead before returning to base
 -701: The future SM type - "Safely deliver a group of civilians by bus to their destination!" (bus is dead, all civilans are dead)
--702: The future SM type - "Deliver the middle radio tower to the mointain regions to transmeet message to the Motherland" (tower is dead or all 1-2 trucks are dead)
+-702: The future SM type - "Deliver the middle radio tower to the mointain regions to transmeet message to the Motherland" (tower is dead)
 
 
 Some special functions and macros for sidemissions:
