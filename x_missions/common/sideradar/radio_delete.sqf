@@ -19,10 +19,6 @@ _killer = _this select 1;
 _name = if ( isPlayer _killer ) then { name _killer } else { typeOf _killer };
 hint localize format[ "+++ radio_delete.sqf: radar deleted by %1", _name ];
 
-{
-	if (alive _x) then {_x lock true};
-} forEach sideradio_vehs; // remove all crew from all vehicles
-
 _cnt = 0;
 _killed = _this select 0;
 _pos = getPos _killed;

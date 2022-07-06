@@ -21,13 +21,16 @@ _veh = _this select 0;
 _pl  = _this select 1;
 _txt = "";
 _send_was_at_sm = false;
+if (locked _veh) then {_veh lock false};
+
 if (true) then {
 	if (!alive _veh) exitWith {
-		_txt = if (_veh isKindOf "Truck") then { "STR_RADAR_TRUCK_KILLED" } else {"STR_RADAR_MAST_DEAD"};
+		// "This truck isn't going anywhere anymore. Maybe there's another one somewhere?"
+		_txt = if (_veh isKindOf "Truck") then { "STR_RADAR_TRUCK_KILLED" } else {"STR_RADAR_MAST_DEAD"}; // "Radio mast destroyed"
 		_veh removeAction (_this select 2); // remove this action
 	};
 	_exit = isNil "sideradio_status";
-	if (!_exit) then { _exit = sideradio_status != 0};
+	if (!_exit) then { _exit = ! (sideradio_status in [0,1])};
 	if (_exit) exitWith {
 		hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2 ", sideradio_status, typeOf _veh];
 		_veh removeAction (_this select 2); // remove this action
@@ -45,8 +48,8 @@ if (true) then {
 				["STR_RADAR_NO","STR_RADAR_MAST","STR_SYS_248"] call XfRandomArrayVal
 			});
 		};
-		if (sideradio_status > 0) exitWith {_txt = localize "STR_RADAR_SUCCESSFUL"};
-		if (sideradio_status < 0) exitWith {_txt = localize "STR_RADAR_FAILED"};
+		if (sideradio_status > 1) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_SUCCESSFUL"};
+		if (sideradio_status < 0) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_FAILED"};
 	};
 	if (((vehicle _pl == _pl) || (_pl != driver (vehicle _pl))) && (_cmd in ["LOAD","UNLOAD"])) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
 

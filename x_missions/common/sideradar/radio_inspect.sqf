@@ -20,7 +20,7 @@ _veh = _this select 0;
 _txt = (if (_veh isKindOf "Truck") then {
 	if (isNil "sideradio_status") exitWith {
 		deleteVehicle _veh;
-		"STR_SYS_248"
+		"STR_SYS_248" // Secondary objective achieved...
 	};
 	if (locked _veh) then {_veh lock false;  "STR_RADAR_TRUCK_LOCKED"} // "Spare Truck for the Mission"
 	else {
