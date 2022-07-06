@@ -16,17 +16,16 @@ if (typeName _this == "STRING") then {
 	};
 };
 _places = [
-[[0,0], "Name",rad], // name
-	[[8133,9084],   "Chantico"  ,205], // container parameters: [[X,Y],NAME, RADIUS]
-	[[9170,8309],   "Somato"    ,200],
-	[[10550,9375],  "Paraiso"   ,350],
+	[[8133,9084],   "Chantico", 205], // container parameters: [[X,Y],NAME, RADIUS]
+	[[9170,8309],   "Somato",   200],
+	[[10550,9375],  "Paraiso",  350],
 	[[9758,8680],	"Yoro",		120],
 	[[10151,8381],	"Pesto", 	60],
 	[[11179,8839],	"Bonansa",	80],
 	[[8080,9331],	"Balmopan",	70],
 	[[8240,9562],	"Playa de Palomas",	50],
 	[[9732,11026],	"Rashidan",	60],
-	[[11502,9152,0],"Corinto"   ,150]
+	[[11502,9152],  "Corinto",  150]
 ];
 // find good point for the truck
 while { count _pos == 0 } do {
@@ -71,12 +70,13 @@ d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\
 
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
 _veh addEventHandler ["killed", {
-	hint localize format["+++ Radar truck killed by %1", if (isPlayer (_this select 0)) then{name (_this select 0)} else {typeof (_this select 0)}];
-	private ["_veh","_asl","_pos","_vehs","_veh1"];
+	hint localize format["+++ Radar truck killed by %1", if (isPlayer (_this select 1)) then{name (_this select 1)} else {typeof (_this select 1)}];
+	private ["_veh","_asl","_pos"];
+	private ["_veh","_asl","_pos"];
 	_veh = _this select 0;
 	if ((!alive d_radar) || (sideradio_status < 0) || (sideradio_status > 1)) exitWith {}; // mission finished/radar killed
 	_asl = getPosASL d_radar;
-	if ((_asl select 2) < 0) then { // unload must if truck is killed
+	if ((_asl select 2) < 0) then { // unload mast if truck is killed
 		_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
 		d_radar setPos _pos;
 		["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
