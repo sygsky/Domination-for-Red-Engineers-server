@@ -180,7 +180,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 					_dist   = (ceil(_dist/50))*50;
 					_angle  = [_pos, _leader] call XfDirToObj;
 					_s1     = format[ localize "STR_SYS_131", _dist, (ceil(_angle/10))*10, _s1 ]; // Is at dist %1 and angle %2 from %3
-				} else {_s1 = format[localize "STR_SYS_134", 1500];}; // "Офицер не обнаружен ни у точки задания, ни рядом с вашей Глонасс-позицией"
+				} else {_s1 = format[localize "STR_SYS_134", 1500];}; // "The officer was not detected neither at Side Mission point nor near Your Glonass-Position ((%1 m.)"
 				_units = nil;
 			};
 			_s = _s + "\n" + _s1;
@@ -190,9 +190,9 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			if (!alive d_radar_truck) exitWith {_s = _s + "\n" + (localize "STR_RADAR_TRUCK_WAIT")}; // "We have to look for a new truck. But where?"
 			if (locked d_radar_truck) exitWith {
 				_name = text(d_radar_truck call SYG_nearestSettlement);
-				_s = _s + "\n" + (format[localize "STR_RADAR_TRUCK_WAIT", _name]); // "We have to look for a new truck. But where?"
+				_s = _s + "\n" + (format[localize "STR_RADAR_TRUCK_INFO", _name]); // "Look for the yellow truck in the '%1' area"
 			};
-			if (!alive d_radar) exitWith {};
+			if (!alive d_radar) exitWith {_s = _s + "\n" + (localize "STR_RADAR_FAILED")};
 			if (sideradio_status < 0) exitWith {_s = _s + "\n" + (localize "STR_RADAR_FAILED")}; // "Mission failed, no help from GRU!"
 			if (sideradio_status in [1,2]) exitWith {_s = _s + (localize format["STR_RADAR_TASK%1",sideradio_status])}; // "Reconnect with the motherland!"
 		};

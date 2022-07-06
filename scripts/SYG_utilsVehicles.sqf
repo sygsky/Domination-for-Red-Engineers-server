@@ -264,7 +264,7 @@ SYG_findNearestPlayers = {
 	_plNames = [];
 	{
 	    {
-    	    if ( ( alive _x ) && ( isPLayer _x ) ) then { _plNames set [count _plNames, name_x] };
+    	    if ( ( alive _x ) && ( isPLayer _x ) ) then { _plNames set [count _plNames, name _x] };
 	    } forEach crew _x;
 	} forEach _nearArr;
 	_plNames
