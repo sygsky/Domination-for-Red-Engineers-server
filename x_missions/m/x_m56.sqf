@@ -56,7 +56,6 @@ d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\r
 ["say_sound",d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
 // 2. create truck on the base
 "BASE" execVM "x_missions\common\sideradar\createTruck.sqf";
-d_radar_truck = objNull;
 while { !(alive d_radar_truck)} do {sleep 0.1};
 processInitCommands;
 //      0,     1,    2

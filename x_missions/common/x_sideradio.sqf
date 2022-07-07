@@ -60,12 +60,17 @@ while { sideradio_status in [0,1] } do {
 	};
 	_delay = 15;
 
-    // check truck marker
-    if ( (!alive d_radar_truck) || (locked d_radar_truck) ) then {
-    	deleteMarker _truck_marker;
-    } else {
+	if (true) then {
+		// check if truck is killed now
+		if (!alive d_radar_truck) exitWith {
+	    	deleteMarker _truck_marker;
+	    	"BASE" execVM "x_missions\common\sideradar\createTruck.sqf";
+	    	processInitCommands;
+		};
+		if (alive _d_radar_truc && locked d_radar_truck) exitWith { deleteMarker _truck_marker };
+
 	    // create radar marker if needed
-		if ((getMarkerType _truck_marker) == "") then {
+		if ((getMarkerType _truck_marker) == "") exitWith {
 			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, d_radar_truck, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
 			_delay = 3;
 		} else {
@@ -74,22 +79,21 @@ while { sideradio_status in [0,1] } do {
 				_delay = 3;
 			};
         };
-    };
+	};
     // check radar marker
-    if (alive d_radar) then { // move marker if needed
+    if (alive d_radar) then { // radar alive
     	_asl = getPosASL d_radar;
-        if ( ( _asl select 2) >= 0) then {
+        if ( ( _asl select 2) >= 0) then { // unloaded
 			if ( (getMarkerType _radar_marker) == "") exitWith { // marker not exists, create it now
 				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
-			} else {
-				if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-					_radar_marker setMarkerPos ( _asl );
-				};
 			};
-        } else {	// radar is in truck, wipe it from map
+			if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
+				_radar_marker setMarkerPos ( _asl );
+			};
+        } else {// radar is load in the truck, wipe it from the map
             deleteMarker _radar_marker;
         };
-    } else {
+    } else { // radar dead or removed, wait until sideradio_status changes
         deleteMarker _radar_marker;
     };
 	sleep _delay;
