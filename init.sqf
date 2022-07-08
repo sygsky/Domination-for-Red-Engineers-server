@@ -524,6 +524,7 @@ if (isServer) then {
 	[] spawn {
 		// create GRU radio mast on the Pico de Perez
 		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
+		sideradio_status = 2; // radio-relay is online!
 		publicVariable "d_radar";
 		waitUntil { sleep 10.737; current_target_index >= 0 };
 		while { true } do {
