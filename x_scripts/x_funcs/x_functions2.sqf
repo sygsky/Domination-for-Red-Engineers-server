@@ -496,7 +496,6 @@ XfGetSlope = {
 // parameters: marker name, marker pos, marker shape, marker color, marker size;(optional) marker text, marker dir, marker type, marker brush
 // example: ["my marker",  position player, "ICON", "ColorBlue", [0.5,0.5]<,"AmmoBox",0,"Marker","SolidBorder">] call XfCreateMarkerLocal;
 XfCreateMarkerGlobal = {
-#ifdef __OLD__
 	private ["_m_name","_m_pos","_m_shape","_m_col","_m_size","_m_text","_m_dir","_m_type","_m_brush"];
 	_m_name = _this select 0;
 	_m_pos = _this select 1;
@@ -517,7 +516,7 @@ XfCreateMarkerGlobal = {
 	if (_m_dir != -888888888888) then {_marker setMarkerDir _m_dir};
 	if (_m_type != "") then {_marker setMarkerType _m_type};
 	if (_m_brush != "") then {_marker setMarkerBrush _m_brush};
-#else
+#ifdef __NEW__
 	private ["_m_shape","_m_col","_m_size","_m_text","_m_dir","_m_type","_m_brush"];
 	_marker = createMarker [ _this select 0, _this select 1 ];
 
@@ -534,7 +533,7 @@ XfCreateMarkerGlobal = {
 	if (count _m_size > 0) then       { if (_last == 4) then {_marker setMarkerSize _m_size}   else {_marker setMarkerSizeLocal _m_size} };
 	if (_m_text != "") then           { if (_last == 5) then {_marker setMarkerText _m_text}   else {_marker setMarkerTextLocal _m_text}};
 	if (_m_dir != -888888888888) then { if (_last == 6) then {_marker setMarkerDir _m_dir}     else {_marker setMarkerDirLocal _m_dir}};
-	if (_m_type != "") then           { if (_last == 7) then {_marker setMarkerType _m_type}   else {_marker setMarkerType _m_type}};
+	if (_m_type != "") then           { if (_last == 7) then {_marker setMarkerType _m_type}   else {_marker setMarkerTypeLocal _m_type}};
 	if (_m_brush != "") then          {_marker setMarkerBrush _m_brush}; // last chance to set global marker property, use always global operator
 #endif
     _marker
