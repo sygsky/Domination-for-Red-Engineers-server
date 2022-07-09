@@ -1,9 +1,11 @@
 /*
-	x_missions\common\sideradar\createTruck.sqf
+	x_missions\common\sideradar\createTruck.sqf, called on server only
 	author: Sygsky
 	description: none
 	returns: nothing
 */
+
+if (!isServer) exitWith {"--- createTruck.sqf called not from server! Exit!"};
 
 #include "sideradio_vars.sqf"
 
@@ -66,24 +68,36 @@ if (_name != "BASE") then {
 publicVariable "d_radar_truck";
 d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\radio_init.sqf"""];
 //["say_sound",d_radar_truck, call SYG_truckDoorCloseSound] call XSendNetStartScriptClient;
-[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]], 0, 0, false, call SYG_truckDoorCloseSound ] call XSendNetStartScriptClientAll;
+[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]], 0, 0, false, call SYG_truckDoorCloseSound ] call XSendNetStartScriptClient; // Look for the yellow truck in the '%1' area
 
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
 _veh addEventHandler ["killed", {
 	hint localize format["+++ Radar truck killed by %1", if (isPlayer (_this select 1)) then{name (_this select 1)} else {typeof (_this select 1)}];
 	private ["_veh","_asl","_pos"];
-	private ["_veh","_asl","_pos"];
 	_veh = _this select 0;
-	if ((!alive d_radar) || (sideradio_status < 0) || (sideradio_status > 1)) exitWith {}; // mission finished/radar killed
+	if (alive d_radar)  then  {
 	_asl = getPosASL d_radar;
-	if ((_asl select 2) < 0) then { // unload mast if truck is killed
-		_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
-		d_radar setPos _pos;
-		["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
+		if ((_asl select 2) < 0) then { // unload mast if truck is killed
+			_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
+			d_radar setPos _pos;
+			["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
+		};
 	};
-	// create new truck now somewhere in near settlement
-	execVM "x_missions\common\sideradar\createTruck.sqf";
-}];
 
-_msg = [d_radar_truck,"%1 m. to %2 from %3"] call SYG_MsgOnPosE;
-hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg]
+	_msg = [d_radar_truck, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
+	hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg];
+
+	// remove truck after 10 minutes of players absence around 300 meters of truck.
+	while (!(isNull _veh)) do {
+		sleep (60 + (random 60));
+		_player =  [_pos, 300] call SYG_findNearestPlayer; // find any alive player in/out vehicles
+		if ( !alive _player ) then {
+			_cnt = _cnt + 1;
+			if (_cnt > 9) exitWith { // 10 times with 60 seconds check if no players nearby
+				_pos = getPos _veh;
+				["say_sound", _pos, "steal"] call XSendNetStartScriptClient;
+				deleteVehicle _veh;
+			};
+		} else {_cnt = 0;};
+	};
+}];

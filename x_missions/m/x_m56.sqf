@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "sideradio_vars.sqf"
 
-x_sm_pos = [RADAR_POINT]; // index: 52,   Shot down chopper
+x_sm_pos = [RADAR_INSTALL_POINT]; // index: 52,   Shot down chopper
 x_sm_type = "undefined"; // "normal", "convoy"
 
 #ifdef __SMMISSIONS_MARKER__
@@ -13,7 +13,7 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {x_sm_pos select 0}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = format[localize "STR_SM_56", RADAR_POINT call SYG_nearestLocationName, INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
+	current_mission_text = format[localize "STR_SM_56", RADAR_INSTALL_POINT call SYG_nearestLocationName, INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
 	current_mission_resolved_text = localize "STR_SM_056"; // "Mission accomplished, mast in place and communication operational!"
 };
 
@@ -23,13 +23,13 @@ if (!isServer) exitWith {};
 _cnt1 = 0;
 if (alive d_radar) then {
 	hint localize format["+++ x_m56.sqf: initial radar alive, try to bomb it"];
-	if ( (_pos select 0) == 0 ) exitWith {
-		hint localize format["+++ x_m56.sqf: initial radar (%1) pos is illegal (%2), exit destroy procedure!", typeOf d_radar, _pos];
-	};
 	_cnt = 10;
 	_type = if (d_enemy_side == "WEST") then { "Sh_120_HE" } else { "Sh_125_HE" };
 	_pos =  d_radar call SYG_getPos;
-	// "Attention all! GRU radio relay mast is under attack!!!"
+
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//++ "Attention all! GRU radio relay mast is under attack!!!" ++
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	["msg_to_user", "",  [ ["STR_RADAR_UNDER_ATTACK"] ], 0, 0, false, "losing_patience" ] call XSendNetStartScriptClient;
 	for "_i" from 1 to _cnt do {
 		[_pos, _type] call SYG_bombPos;
@@ -40,6 +40,7 @@ if (alive d_radar) then {
 		};
 		_cnt1 = _cnt1 + 1;
 	};
+
 };
 
 hint localize format["+++ x_m56.sqf: initial radar %1 after %2 bomb[s]", if (alive d_radar) then {"alive"} else {"killed"}, _cnt1];
@@ -56,11 +57,13 @@ d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\r
 ["say_sound",d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
 // 2. create truck on the base
 "BASE" execVM "x_missions\common\sideradar\createTruck.sqf";
-while { !(alive d_radar_truck)} do {sleep 0.1};
+while { !( (alive d_radar_truck) && (alive d_radar) ) } do { sleep 1 };
 processInitCommands;
-//      0,     1,    2
+
+sideradio_status = 0;
 execVM "x_missions\common\x_sideradio.sqf";
 
 // TODO: add enemy infantry patrols on the way to the destination point
+publicVariable "sideradio_status";
 
 if (true) exitWith {};

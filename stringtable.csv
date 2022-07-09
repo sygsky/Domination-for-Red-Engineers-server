@@ -708,7 +708,7 @@ STR_SYS_371,"Artillery available again after 1, 2, 3 salvoes: %1, %2, %3 secs","
 STR_SYS_372,Check for friendly units near artillery target:,Überprüfen Sie für Verbündete Einheiten in der Nähe der Artillerie Ziel:,Inspeccionar la zona de destrucción de artillería aliada:,Проверять на наличие союзников зону поражения артиллерии:
 STR_SYS_373,Maximum distance player to airdrop point to call in an airdrop:,Maximale Entfernung von Spielern zu airdrop Punkt in einem airdrop anrufen:,Distancia máxima entre el jugador y el punto de descarga de suministro:,Максимальное расстояние между игроком и точкой сброса снабжения:
 STR_SYS_373_1,m.\n,m.\n,m.\n,м.\n
-STR_SYS_374,"Player autokick time (kicked out of tanks, planes, choppers for the first seconds):",,Tiempo de auto-expulsión del equipo cuando se conecta con el juego:,Время авто-выброса из техники при соединении с игрой:
+STR_SYS_374,"Player autokick time (kicked out of tanks, planes, choppers for the first seconds):","Spieler-Autokick-Zeit (aus Panzern, Flugzeugen, Hubschraubern in den ersten Sekunden rausgeschmissen):",Tiempo de auto-expulsión del equipo cuando se conecta con el juego:,Время авто-выброса из техники при соединении с игрой:
 
 STR_SYS_400,Yes\n,Ja\n,Sí\n,Да\n
 STR_SYS_400_1,Yes,Ja,Sí,Да
@@ -776,7 +776,7 @@ STR_SYS_540,%1 placed!,%1 platziert!,Ha descargado y colocado %1,Вы выгру
 
 STR_SYS_541,"It seems that the enemy doesn't want to give up %1 and starts a counterattack. Search defensive positions, the attack will start in a few minutes...","Es scheint, dass der Feind nicht aufgeben wollen, %1 und startet einen Gegenangriff. Suche defensive Positionen, der Angriff wird starten in wenigen Minuten...",Parece que el enemigo no va a regalar %1 y está preparando un contraataque. Ocúpate de la defensa y prepara la reunión...,Похоже что враг не собирается просто так отдавать %1 и готовит контратаку. Занимайте оборону и готовьте встречу...
 STR_SYS_541_1,The counterattack starts. Hold the current target. Good luck and god help us all...,Der Gegenangriff beginnt. Halten Sie das aktuelle Ziel. Viel Glück und Gott uns allen helfen...,Contraataque ha comenzado!!! Mantenga la ciudad actual. Suertes... ... ...,Контратака началась!!! Удержите текущий город. Удачи... ... ...
-STR_SYS_541_2,Good job. The counterattack was defeated.,,¡Tarea cumplida! Contraataque rechazado...,Задача выполнена! Контратака отбита...
+STR_SYS_541_2,Good job. The counterattack was defeated...,Gute Arbeit. Der Gegenangriff wurde abgewehrt...,¡Tarea cumplida! Contraataque rechazado...,Задача выполнена! Контратака отбита...
 
 STR_SYS_600,You were killed by %1. %1 looses %2 scores!,"Sie wurden getötet, von %1. %1 verliert %2 Punkte!",Lo mató %1. Está relegado a - %2 puntos.!,Вас убил %1. Он отштрафован на -%2 оч.!
 
@@ -1523,7 +1523,7 @@ STR_DOSAAF_ABOUT,"All-Union Voluntary Society for Assistance to the Army, Aviati
 STR_DOSAAF_TITLE,What is DOSAAF,Was ist der DOSAAF,Qué es el DOSAAF,Что такое ДОСААФ
 STR_DOSAAF_UPDATE,Update the DOSAAF map,Aktualisierung der DOSAAF-Karte,Actualizar el mapa del DOSAAF,Обновить карту ДОСААФ
 
-STR_WPN_TITLE,Important information,,,Важное сообщение
+STR_WPN_TITLE,Important information,Wichtige Nachricht,Mensaje importante,Важное сообщение
 STR_WPN_INFO,"Remembering your armament is now done automatically when you exit the mission!","Das Speichern der Ausrüstung erfolgt jetzt automatisch, wenn man eine Mission beendet!","¡El recuerdo de tu equipo se hace ahora automáticamente al salir de una misión!","Запоминание Вашего снаряжение теперь производится автоматически, при выходе из миссии!"
 STR_WPN_EXIT,"press '%1' to exit from dialog","drücken Sie '%1', um den Dialog zu verlassen","pulse '%1' para salir del diálogo","для выхода из диалога нажмите '%1'"
 
@@ -1541,7 +1541,11 @@ STR_RADAR_MAST_HIGH,"The mast installation height is sufficient, %1 m ASL","Die 
 STR_RADAR_MAST_BAD_SLOPE,The mast cannot act on such an uneven surface,Der Mast kann auf einer so unebenen Fläche nicht wirken,El mástil no puede actuar sobre una superficie tan irregular,Мачта не может действовать на такой неровной поверхности
 STR_RADAR_MAST_NEAR_BASE,"You can't put a mast in the base area! Take it farther away!","Sie können keinen Mast in der Basiszone aufstellen! Bringt es weiter weg!","¡No puedes poner un mástil en la zona de la base! Llévalo más lejos","В районе базы мачту устанавливать нельзя! Отвезите её подальше!"
 STR_RADAR_MAST_IN_WATER,"The mast is in the water! Are you crazy?","Der Mast ist im Wasser! Sind Sie verrückt?","¡El mástil está en el agua! ¿Estás loco?","Мачта в воде! Ты рехнулся?"
-STR_RADAR_BAD_SIGNAL,"The repeater doesn't seem to be working. Maybe it's not on the outermost ridge?","Der Repeater scheint nicht zu funktionieren. Vielleicht ist es nicht auf dem äußersten Kamm?","El repetidor no parece funcionar. ¿Quizás no está en la cresta más exterior?","Похоже, ретранслятор не работает. Возможно, он стоит не на самом крайнем хребте?"
+STR_RADAR_BAD_SIGNAL,"The relay-mast doesn't seem to be working. Maybe it's not on the outermost ridge?","Der Repeater scheint nicht zu funktionieren. Vielleicht ist es nicht auf dem äußersten Kamm?","El repetidor no parece funcionar. ¿Quizás no está en la cresta más exterior?","Похоже, ретранслятор не работает. Возможно, он стоит не на самом крайнем хребте?"
+STR_RADAR_INIT,"Look for%1%2 in the nearest localities to the base.","Suchen Sie%1%2 in den nächstgelegenen Ortschaften zur Basis.","Busca%1%2 en las localidades más cercanas a la base","Ищите%1%2 в ближайших к базе н.п."
+STR_RADAR_INIT1," relay mast"," Relaismast"," mástil de relevo"," радиорелейку"
+STR_RADAR_INIT2," yellow truck for relay mast"," gelber LKW für Relaismast"," camión amarillo para mástil de relé"," грузовик для радиорелейки"
+STR_RADAR_INFO,"The GRU requires a radio relay mast to work!","Damit die GRU funktioniert, ist ein Funkrelais erforderlich!",Se necesita un relé de radio para que la GRU funcione,Для работы ГРУ требуется радио-ретранслятор!
 
 STR_RADAR_TASK1,Reconnect with the motherland!,Die Verbindung zur Heimat wiederherstellen!,¡Para reconectar con la patria!,Восстановить связь с Родиной!
 STR_RADAR_TASK2,Return the truck to the GRU PC!,Bringen Sie den Lastwagen zum GRU PC zurück!,¡Devuelve el camión al PC del GRU!,Вернуть грузовик к ЭВМ ГРУ!
@@ -1561,12 +1565,12 @@ STR_RADAR_FAILED,"Mission failed, no help from GRU!","Mission gescheitert, keine
 STR_RADAR_SUCCESSFUL,"Mission accomplished! The GRU radio station has continued its work!","Mission erfüllt! Der Radiosender GRU hat seine Arbeit fortgesetzt!","¡Misión cumplida! La emisora del GRU ha continuado su trabajo","Задание выполнено! Радиостанция ГРУ продолжила свою работу!"
 STR_RADAR_UNDER_ATTACK,"Attention all! GRU radio relay mast is under attack!!!","Achtung an alle! GRU-Funkrelaismast wird angegriffen!!!","¡Atención a todos! ¡Mástil de retransmisión de radio del GRU bajo ataque!","Внимание всем! Радиорелейная мачта ГРУ под атакой!!!"
 STR_RADAR_BOMBED,"Attention all! GRU radio relay mast destroyed!","Achtung an alle! GRU-Relaismast zerstört!","¡Atención a todos! ¡Mástil de retransmisión de radio del GRU destruido!","Внимание всем! Уничтожена радирелейная мачта ГРУ!"
-STR_RADAR_READY,"Mast is ready: %1, %2, %3, %4!",,,"Мачта готова: %1, %2, %3, %4. Можно включать!"
-STR_RADAR_NOT_READY,"Mast not ready: %1, %2, %3, %4!",,,"Мачта не готова к включению: %1, %2, %3, %4!"
-STR_RADAR_IN_WATER,in the water,,,Мачта в воде
-STR_RADAR_ON_LAND,on the land,,,Мачта на суше
-STR_RADAR_IN_BASE,is not far enough from the base,,,Мачта недостаточно далека от базы
-STR_RADAR_OUT_BASE,is far enough from the base,,,Мачта достаточно далеко от базы
+STR_RADAR_READY,"Relay mast is ready: %1, %2, %3, %4!","Relaismast ist bereit: %1, %2, %3, %4!","¡El mástil de relevo está listo: %1, %2, %3, %4!","Мачта готова: %1, %2, %3, %4. Можно включать!"
+STR_RADAR_NOT_READY,"Relay mast not ready: %1, %2, %3, %4!","Relaismast nicht bereit: %1, %2, %3, %4!","¡Mástil de relé no listo: %1, %2, %3, %4!","Мачта не готова к включению: %1, %2, %3, %4!"
+STR_RADAR_IN_WATER,in the water,im Wasser,en el agua,в воде
+STR_RADAR_ON_LAND,on the land,auf dem Land,en la tierra,на суше
+STR_RADAR_IN_BASE,is not far enough from the base,nicht weit genug von der Basis entfernt ist,no está lo suficientemente lejos de la base,недостаточно далеко от базы
+STR_RADAR_OUT_BASE,is far enough from the base,ist weit genug von der Basis,está lo suficientemente lejos de la base,достаточно далеко от базы
 STR_RADAR_ON_SLOPE,the surface is not horizontal (%1),Die Oberfläche ist nicht horizontal (%1),La superficie no es horizontal (%1),Поверхность не горизонтальна (%1)
 STR_RADAR_ON_HORIZONTAL,the surface is horizontal (%1),Die Oberfläche ist horizontal (%1),La superficie es horizontal (%1),Поверхность горизонтальна (%1)
 STR_LOAD,Load,Laden Sie,Carga,Загрузить

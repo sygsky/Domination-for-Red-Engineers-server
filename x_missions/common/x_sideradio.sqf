@@ -53,7 +53,7 @@ _radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLO
 // Main loop, controls markers movement and end of the mission
 //
 
-while { sideradio_status in [0,1] } do {
+while { sideradio_status == 0 } do {
 
 	if (X_MP && ((call XPlayersNumber) == 0)) then {
 		waitUntil {sleep (60 + (random 1)); (call XPlayersNumber) > 0};
@@ -62,11 +62,7 @@ while { sideradio_status in [0,1] } do {
 
 	if (true) then {
 		// check if truck is killed now
-		if (!alive d_radar_truck) exitWith {
-	    	deleteMarker _truck_marker;
-	    	"BASE" execVM "x_missions\common\sideradar\createTruck.sqf";
-	    	processInitCommands;
-		};
+		if (!alive d_radar_truck) exitWith { deleteMarker _truck_marker };
 		if (alive _d_radar_truc && locked d_radar_truck) exitWith { deleteMarker _truck_marker };
 
 	    // create radar marker if needed
@@ -96,7 +92,13 @@ while { sideradio_status in [0,1] } do {
     } else { // radar dead or removed, wait until sideradio_status changes
         deleteMarker _radar_marker;
     };
+    if (sideradio_status == 1) exitWith {};
 	sleep _delay;
+};
+
+while { (sideradio_status == 1) && (alive d_radar) && (alive d_radar_truck) } do  {
+	sleep 3;
+	if ( (d_radar_truck distance FLAG_BASE) < 20 ) exitWith { sideradio_status = 2 };
 };
 
 if (sideradio_status < 0) then { side_mission_winner = -702 } else {side_mission_winner = 2};
@@ -113,13 +115,6 @@ sleep (5 + (random 5));
 // remove markers
 deleteMarker _radar_marker;
 deleteMarker _truck_marker;
-
-// Eject crew from truck
-if (alive d_radar_truck) then {
-//		_x lock true;
-	{ d_radar_truck action ["Eject", d_radar_truck] } forEach (crew d_radar_truck);
-	_x setFuel 0;
-};
 
 sideradio_status = nil;
 publicVariable "sideradio_status";

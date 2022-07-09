@@ -6,10 +6,10 @@
 */
 
 
-//#define RADAR_POINT [13592,15591,0]   // central point of the area to install radar
-//#define INSTALL_RADIUS 2000             // how far from the RADAR_POINT
-#define RADAR_POINT [10044,8030]       // debug radar point (near Somato at height 231)
-#define INSTALL_RADIUS 100             // how far from the debug RADAR_POINT
+//#define RADAR_INSTALL_POINT [13592,15591,0]   // central point of the area to install radar
+//#define INSTALL_RADIUS 2000             // how far from the RADAR_INSTALL_POINT
+#define RADAR_INSTALL_POINT [10044,8030]       // debug radar point (near Somato at height 231)
+#define INSTALL_RADIUS 100             // how far from the debug RADAR_INSTALL_POINT
 //#define INSTALL_MIN_ALTITUDE 450        // minimal height above sea level to install
 #define INSTALL_MIN_ALTITUDE 200        // minimal height above sea level to install
 #define MAX_SLOPE 0.15					// 0.15 m. per 3x3 m. area

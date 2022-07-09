@@ -12,7 +12,7 @@ if (!isServer) exitWith{};
 
 #include "sideradio_vars.sqf"
 
-sideradio_status = -1; // radar is down, no truck available
+sideradio_status = -1; // radar is dead
 publicVariable "sideradio_status";
 
 _killer = _this select 1;
@@ -30,6 +30,8 @@ while (!(isNull _killed)) do {
     if ( !alive _player ) then {
         _cnt = _cnt + 1;
 		if (_cnt > 9) exitWith { // 10 times with 60 seconds check if no players nearby
+			_pos = getPos _killed;
+			["say_sound", _pos, "steal"] call XSendNetStartScriptClient;
 			deleteVehicle _killed;
 		};
     } else {_cnt = 0;};
