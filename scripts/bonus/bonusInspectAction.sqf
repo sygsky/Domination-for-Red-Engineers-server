@@ -13,8 +13,8 @@
 */
 _veh = _this select 0;
 if (!alive _veh) exitWith {
-	hint localize format["*** bonus.INSPECT: %1 killed, action removed", typeOf _veh];
-	_veh removeAction (_this select  0);
+	hint localize format["*** bonus.INSPECT(%1): %2 killed, action removed",name (_this select 1), typeOf _veh];
+	_veh removeAction (_this select  2);
 };
 
 _name = name (_this select 1); // caller name (if a man)
