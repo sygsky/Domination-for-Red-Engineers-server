@@ -47,6 +47,7 @@ while {count _wp_array < _number_shells} do {
 sleep (5.25 + (random 5));
 for "_i" from 0 to (_number_shells - 1) do {
 	_shell = _type createVehicle (_wp_array select _i);
+	_shell setVectorUp [0,0,-1]; // experiment with realistic shell orientation
 	if (_kind == 2) then {
 		#ifdef __ACE__
 		[objNull,objNull,objNull,objNull,"SmokeShell",_shell] spawn ace_viewblock_fired;
