@@ -22,8 +22,7 @@ if (!isServer) exitWith {};
 
 // 1. create antenna and trucks on the base
 
-sideradio_status = 0; // -1 - mission failured, 0 - mission in progress, 1 - succesfully finished
-publicVariable "sideradio_vehs"; // initial information for clients
+sideradio_status = 0; // 0 - mission in progress, 1 - mast installed, 2- truck returned to the base
 publicVariable "sideradio_status"; // status of mission, is set on clients only
 
 // _marker_name = [_marker_name, _marker_type, _truck_pos, _marker_color<,_marker_size>] call _make_marker;
@@ -42,18 +41,18 @@ _make_marker = {
 	_mrk_name
 };
 
-// 2. wait until antenna or both trucks killed get it, inform all about antenna damage
+// 2. wait until antenna killed get it, inform all about antenna damage
 
 // create markers (truck + radiomast)
-_truck = _vehs select 0; // current (first) alive truck
+_truck = d_radar_truck; // current (first) alive truck
 _truck_marker = "";
 _radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
 
 //
 // Main loop, controls markers movement and end of the mission
 //
-
-while { sideradio_status == 0 } do {
+_truck = objNull;
+while { sideradio_status <= 0 } do {
 
 	if (X_MP && ((call XPlayersNumber) == 0)) then {
 		waitUntil {sleep (60 + (random 1)); (call XPlayersNumber) > 0};
@@ -63,7 +62,7 @@ while { sideradio_status == 0 } do {
 	if (true) then {
 		// check if truck is killed now
 		if (!alive d_radar_truck) exitWith { deleteMarker _truck_marker };
-		if (alive _d_radar_truc && locked d_radar_truck) exitWith { deleteMarker _truck_marker };
+		if (alive d_radar_truck && locked d_radar_truck) exitWith { deleteMarker _truck_marker }; // truck not found
 
 	    // create radar marker if needed
 		if ((getMarkerType _truck_marker) == "") exitWith {
@@ -92,17 +91,24 @@ while { sideradio_status == 0 } do {
     } else { // radar dead or removed, wait until sideradio_status changes
         deleteMarker _radar_marker;
     };
-    if (sideradio_status == 1) exitWith {};
+    if (sideradio_status == 1) exitWith {_truck = d_radar_truck}; // Mast installed, wait until curent truck returned to the base
 	sleep _delay;
 };
 
 while { (sideradio_status == 1) && (alive d_radar) && (alive d_radar_truck) } do  {
-	sleep 3;
+	sleep 5;
 	if ( (d_radar_truck distance FLAG_BASE) < 20 ) exitWith { sideradio_status = 2 };
 };
 
-if (sideradio_status < 0) then { side_mission_winner = -702 } else {side_mission_winner = 2};
-side_mission_resolved = true;
+if (sideradio_status < 0) then {
+	side_mission_winner = -702;
+	side_mission_resolved = true;
+} else {
+	if ( sideradio_status == 2 ) then {
+		side_mission_winner = 2;
+		side_mission_resolved = true;
+	};
+}
 
 sleep (5 + (random 5));
 
@@ -115,7 +121,4 @@ sleep (5 + (random 5));
 // remove markers
 deleteMarker _radar_marker;
 deleteMarker _truck_marker;
-
-sideradio_status = nil;
-publicVariable "sideradio_status";
 // d_radar continue to exists for the future adventures

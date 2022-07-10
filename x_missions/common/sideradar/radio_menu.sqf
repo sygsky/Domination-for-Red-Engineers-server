@@ -182,7 +182,7 @@ if (true) then {
 			};
 
 			// complete the mission itself
-			sideradio_status = 1; // finished
+			sideradio_status = 1; // installation done
 			publicVariable "sideradio_status";
 			// play random radio signal (including from "Mayak" radiostation etc)
 			["say_radio", call SYG_randomRadio] call XSendNetStartScriptClientAll;

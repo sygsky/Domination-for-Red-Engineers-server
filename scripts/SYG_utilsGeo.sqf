@@ -206,7 +206,7 @@ SYG_MTByName = {
 	target_names select _id
 };
 //
-// Finds MT center nearest to the desgnated one. E.g. find near MT to Rahmadi:
+// Finds MT center nearest to the designated one. E.g. find near MT to Rahmadi:
 // _near_MT_arr = "Rahmadi" call SYG_nearestMainTarget;
 // 	...
 // [[2826,2891,0],   "Rahmadi"   ,180, 22, ["detected_Rahmadi"]] // 20
@@ -586,14 +586,14 @@ SYG_pointInMarker = {
 			switch  count _mrk do {
 				//hint localize format["Marker for circle ""%1"" converted to a form [center,w,h,angle]",_mrk];
 				case 2: {_mrk = [argp(_mrk,0), argp(_mrk,1),0,0,"CIRCLE"];};
-				case 3: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),0,"RECTANGLE"];};
+				case 3: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),0,"RECTANGLE"];}; // rectangle withno rotation
 				case 4: {_mrk = [argp(_mrk,0), argp(_mrk,1),argp(_mrk,2),argp(_mrk,3),"RECTANGLE"];};
 			};
 		};
 		case "STRING": { // marker name, convert to Xeno array
 			//hint localize format["Marker ""%1"" converted to a form [center,w,h,angle]",_mrk];
 			_mrk = [_mrk,arg(2)] call SYG_readMarkerInfo;
-			hint localize format["%1",_mrk];
+			//hint localize format["+++ SYG_pointInMarker: %1",_mrk];
 		};
 	};
 	_pnt = arg(0);

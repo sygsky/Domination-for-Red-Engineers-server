@@ -45,25 +45,10 @@ if (alive d_radar) then {
 
 hint localize format["+++ x_m56.sqf: initial radar %1 after %2 bomb[s]", if (alive d_radar) then {"alive"} else {"killed"}, _cnt1];
 
-// 1. create antenna the base
-d_radar =  createVehicle [RADAR_TYPE, [9472.9,9930,0], [], 0, "CAN_COLLIDE"];
-publicVariable "d_radar";
-d_radar setVehicleInit "this execVM ""x_missions\common\sideradar\radio_init.sqf""";
-
-_pos = getPos d_radar;
-d_radar setPos [_pos select 0, _pos select 1, -5.7 ];
-d_radar setVectorUp [1,0,0];
-d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
-["say_sound",d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
-// 2. create truck on the base
-"BASE" execVM "x_missions\common\sideradar\createTruck.sqf";
+// 1. Wait for antenna and truck to be alive
 while { !( (alive d_radar_truck) && (alive d_radar) ) } do { sleep 1 };
-processInitCommands;
-
-sideradio_status = 0;
 execVM "x_missions\common\x_sideradio.sqf";
 
 // TODO: add enemy infantry patrols on the way to the destination point
-publicVariable "sideradio_status";
 
 if (true) exitWith {};
