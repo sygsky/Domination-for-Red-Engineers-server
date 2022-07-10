@@ -16,7 +16,7 @@ _height = (switch (_kind) do {case 1: {150}; case 2: {0};});
 _center_x = (_pos_enemy) select 0;
 _center_y = (_pos_enemy) select 1;
 
-_number_shells = 5 + (ceil random 5);
+_number_shells = 5 + (ceil random 5); // 5..10
 _type = "";
 
 if (d_enemy_side == "EAST") then {
