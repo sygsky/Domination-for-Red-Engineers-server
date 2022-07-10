@@ -125,9 +125,9 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 
             if ((_observer knowsAbout _enemy) <= 1.5) exitWith {};
 
-            // check if player in not landed air vehicl;
+            // check if player in flying landed air vehicle;
 
-			if (  (vehicle _enemy != _enemy) &&  (( (getPos _enemy) select 2 > 5 ) || ( ( speed _enemy  ) > 10 ) ) ) exitWith {
+			if (  (vehicle _enemy != _enemy) &&  (( (getPos _enemy) select 2 > 10 ) || ( ( speed _enemy  ) > 10 )) ) exitWith {
 			    hint localize format["*** x_handleobservers.sqf:  Exit on enemy (%1) height %2 or speed %3", typeOf(vehicle _enemy), round((getPos _enemy) select 2), round (speed _enemy) ];
 			    sleep 3.345
 			}; // lets help to observer to view detected enemy
