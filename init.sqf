@@ -714,6 +714,8 @@ execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 			sleep 0.1;
 		};
 	}forEach [353,355,362/* ,367 */];
+
+	// Process initial radar on the client computer
 	if (!isNil "d_radar") then {
 		if (alive d_radar) then {
 			d_radar execVM "x_missions\common\sideradar\radio_init.sqf"; // add menu to GRU radio mast if exists
@@ -780,15 +782,13 @@ if ( X_Client ) then {// runs only on client
 
     #endif
 
-
-
 };
 // No option to run any script on server as this code executed only on clients.
 // See exit condition in upper lines: if (!X_Client) exitWith {};
 
 #endif
 
-// play (true) or not play (false) some extra sounds, incleding reborn and multiple deaths music to player
+// play (true) or not play (false) some extra sounds, including reborn and multiple deaths music to player
 SYG_playExtraSounds = {
 	d_rebornmusic_index == 0
 };
