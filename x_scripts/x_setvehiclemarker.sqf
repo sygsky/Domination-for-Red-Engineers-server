@@ -39,7 +39,7 @@ SYG_activeMarkers = [];         // marker active during predefined interval
  * Draws all alive players markers on the client computer
  */
 X_XMarkerPlayers = {
-	private [ "_i", "_ap", "_as", "_text","_markers_changed" ];
+	private [ "_i", "_ap", "_as", "_text","_markers_changed","_x" ];
 	if (time < SYG_markerRefreshTime) exitWith  {
 	    // use existing markers, simply change their position
 	    _markers_changed = false;

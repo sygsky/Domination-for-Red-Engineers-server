@@ -134,7 +134,7 @@ SYG_townScoresInit = {
 // Returns all active playe nmames
 //
 SYG_getOnlineNames = {
-	private ["_names"];
+	private ["_names","_x"];
     _names = [];
     {
         _x = call _x;
@@ -147,7 +147,7 @@ SYG_getOnlineNames = {
 // add each new player connected while town siege process
 //
 SYG_townScoresAdd = {
-    private ["_id","_arr"];
+    private ["_id","_arr","_x"];
     if ( typeName _this != "ARRAY" ) then {
         if (typeName _this != "STRING") then {
             if (isPlayer _this) then { _this = name _this} else { _this = str _this};
@@ -185,8 +185,7 @@ SYG_townScoresPrint = {
     _sum = 0;
     _time_diff = time - (SYG_townScores select 2);
     if (count _arr > 0) then {
-        for "_i" from 0 to (count _arr)-1 do
-        {
+        for "_i" from 0 to (count _arr)-1 do {
             _id   = _arr select _i;
             _item = d_player_array_misc select _id;
             _diff =  (_item select 3) - (_arr1 select _i); // new score minus old one
