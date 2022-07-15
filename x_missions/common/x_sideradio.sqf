@@ -19,6 +19,16 @@ if (!isServer) exitWith {};
 #else
 #define TRUCK_MARKER "SalvageVehicle"
 #endif
+// wait antenna and trcu are ready
+_cnt = 0;
+while { !( (alive d_radar_truck) && (alive d_radar) && _cnt < 300 ) } do { sleep 1; _cnt = _cnt + 1 };
+
+if ( !( (alive d_radar_truck) && (alive d_radar) ) ) exitWith {
+    ["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClientAll;
+	side_mission_winner = -702;
+	side_mission_resolved = true;
+};
+
 
 // 1. create antenna and trucks on the base
 
@@ -91,6 +101,10 @@ while { sideradio_status <= 0 } do {
     } else { // radar dead or removed, wait until sideradio_status changes
         deleteMarker _radar_marker;
     };
+
+    // TODO: add random enemy infantry patrols on the way to the destination at certain time intervals,
+    // TODO: e.g. on each kilometer close to the mission finish
+
     if (sideradio_status == 1) exitWith {_truck = d_radar_truck}; // Mast installed, wait until curent truck returned to the base
 	sleep _delay;
 };
@@ -108,7 +122,7 @@ if (sideradio_status < 0) then {
 		side_mission_winner = 2;
 		side_mission_resolved = true;
 	};
-}
+};
 
 sleep (5 + (random 5));
 

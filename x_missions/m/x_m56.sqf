@@ -46,9 +46,8 @@ if (alive d_radar) then {
 hint localize format["+++ x_m56.sqf: initial radar %1 after %2 bomb[s]", if (alive d_radar) then {"alive"} else {"killed"}, _cnt1];
 
 // 1. Wait for antenna and truck to be alive
-while { !( (alive d_radar_truck) && (alive d_radar) ) } do { sleep 1 };
+_cnt = 0;
+while { !( (alive d_radar_truck) && (alive d_radar) && _cnt < 300 ) } do { sleep 1; _cnt = _cnt + 1 };
 execVM "x_missions\common\x_sideradio.sqf";
-
-// TODO: add enemy infantry patrols on the way to the destination point
 
 if (true) exitWith {};
