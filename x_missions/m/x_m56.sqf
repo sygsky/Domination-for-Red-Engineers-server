@@ -18,6 +18,7 @@ if (X_Client) then {
 };
 
 if (!isServer) exitWith {};
+"BASE" execVM "x_missions\common\sideradar\radio_service.sqf";
 
 // 0. Enemy destroys GRU radio-must! before start of mission
 _cnt1 = 0;

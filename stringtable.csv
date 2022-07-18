@@ -105,7 +105,6 @@ STR_SYS_26,Teleport on MHQ %1 is faulty (%2%3)...,Der TELEPORT auf MHQ %1 ist de
 STR_SYS_27,"MHQ/teleport %1 dmg %2%3!","MHQ/teleportiere %1 dmg %2%3!","¡KSHM/teletransportador dañado %1 %2%3!","Повр. КШМ/телепорта %1 %2%3!"
 STR_SYS_28,MHQ %1/teleport destroyed...,Teleporter/MHQ %1 wurde zerstört...,Teletransportador /KSHM %1 destruido...,Телепорт/КШМ %1 уничтожены...
 
-
 STR_SYS_30,Respawn,Respawn,Renacimiento,Возрождение
 STR_SYS_31,(last one),(die Letzte),(último),(последний)
 STR_SYS_32,%1 MHQ %2 is in air(lift),%1 MHQ %2 ist in Luft,%1 KSHM %2 en el aire,%1 КШМ %2 в воздухе
@@ -431,6 +430,8 @@ STR_SYS_171,With Names,Mit Namen,con nombre,С именем
 STR_SYS_172,Markers Only,Marker Nur,Sólo marcadores,Только маркеры
 STR_SYS_173,Role Only,Rolle Nur,Con el papel,С ролью
 STR_SYS_174,Health,Gesundheit,Con pantalla de salud,С отображением здоровья
+
+STR_SYS_AND, and, und, y, и
 
 STR_GRASS_1,No Grass,Kein Gras,Sin hierba,Без травы
 STR_GRASS_2,Medium Grass,Mittleres Gras,Promedio,Средняя
@@ -1543,7 +1544,7 @@ STR_RADAR_MAST_BAD_SLOPE,The mast cannot act on such an uneven surface,Der Mast 
 STR_RADAR_MAST_NEAR_BASE,"You can't put a mast in the base area! Take it farther away!","Sie können keinen Mast in der Basiszone aufstellen! Bringt es weiter weg!","¡No puedes poner un mástil en la zona de la base! Llévalo más lejos","В районе базы мачту устанавливать нельзя! Отвезите её подальше!"
 STR_RADAR_MAST_IN_WATER,"The mast is in the water! Are you crazy?","Der Mast ist im Wasser! Sind Sie verrückt?","¡El mástil está en el agua! ¿Estás loco?","Мачта в воде! Ты рехнулся?"
 STR_RADAR_BAD_SIGNAL,"The relay-mast doesn't seem to be working. Maybe it's not on the outermost ridge?","Der Repeater scheint nicht zu funktionieren. Vielleicht ist es nicht auf dem äußersten Kamm?","El repetidor no parece funcionar. ¿Quizás no está en la cresta más exterior?","Похоже, ретранслятор не работает. Возможно, он стоит не на самом крайнем хребте?"
-STR_RADAR_INIT,"Look for%1%2 in the nearest localities to the base.","Suchen Sie%1%2 in den nächstgelegenen Ortschaften zur Basis.","Busca%1%2 en las localidades más cercanas a la base","Ищите%1%2 в ближайших к базе н.п."
+STR_RADAR_INIT,"Look for%1%2%3 in the nearest localities to the base.","Suchen Sie%1%2%3 in den nächstgelegenen Ortschaften zur Basis.","Busca%1%2%3 en las localidades más cercanas a la base","Ищите%1%2%3 в ближайших к базе н.п."
 STR_RADAR_INIT1," relay mast"," Relaismast"," mástil de relevo"," радиорелейку"
 STR_RADAR_INIT2," yellow truck for relay mast"," gelber LKW für Relaismast"," camión amarillo para mástil de relé"," грузовик для радиорелейки"
 STR_RADAR_INFO,"The GRU requires a radio relay mast to work!","Damit die GRU funktioniert, ist ein Funkrelais erforderlich!",Se necesita un relé de radio para que la GRU funcione,Для работы ГРУ требуется радио-ретранслятор!
