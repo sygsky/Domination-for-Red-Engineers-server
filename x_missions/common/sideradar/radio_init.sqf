@@ -3,7 +3,7 @@
     works only on client computers
 	author: Sygsky, on #410 request by Rokse
 
-	description: handles object/vehicles for radar-on-hills SM type on any vehicle (radar or one of two trucks) init on
+	description: handles object/vehicles for radar-on-hills SM type on any vehicle (radar or truck) init on
 		the client when conection
 	1. Add the radio SM trucks actions "Inspect", "Install", "Load"/"Unload".
 	2. Add "killed" event handling to the first truck only, second one not need this as its death leads to the failure of the mission itself.

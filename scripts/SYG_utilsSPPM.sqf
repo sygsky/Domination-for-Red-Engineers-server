@@ -354,4 +354,5 @@ SYG_updateAllSPPMMarkers = {
 	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3, empty %4", count SYG_SPPMArr, _count_updated, _count_removed, _count_empty];
 	[_count_updated, _count_removed]
 };
+
 hint localize "+++ INIT of SYG_utilsSPPM completed";

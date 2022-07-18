@@ -692,7 +692,7 @@ SYG_getMainTaskTargetPos = { (call SYG_getTargetTown) select 0 };
 
 #define __DEBUG_COMP__
 //
-// TODO: replcae with more universal procedure
+// TODO: replace with more universal procedure
 //
 // Updates GRU house equipment. Call only from server if MP
 // 1. Check for the computer house presence,
@@ -1057,6 +1057,34 @@ SYG_nearestBoatMarker = {
 SYG_pointIsOnBase = {
 	[_this call SYG_getPos,d_base_array] call SYG_pointInRect
 };
+
+//
+// checks if designated point is in nearest town from the "target_names" borders
+// call:
+// _in_town = player call  SYG_pointInTownBorders;
+// _in_town = _veh call  SYG_pointInTownBorders;
+// _in_town = (getPos _veh) call  SYG_pointInTownBorders;
+//
+SYG_pointIsInTownBorders = {
+    private ["_dist","_pos","_town","_new_dist","_x"];
+    _dist = 9999999;
+    _pos = _this call SYG_getPos;
+    _town = [];
+    // find nearest town
+    {
+    	//[                                          // Indexes, not identifiers
+    	//	[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
+    	//	[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
+    	_new_dist = [_x select 0, _pos] call SYG_distance2D;
+    	if (_new_dist < _dist) then {
+    	    _dist= _new_dist;
+    	    _town = _x;
+    	};
+    } forEach target_names;
+    // return true if point is IN nearest town borders
+    (_town select 2) <= _dist
+};
+
 
 //
 // call: _isArtiForbidden = call isArtiForbidden;
