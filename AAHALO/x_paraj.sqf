@@ -94,6 +94,11 @@ if (d_cancelled) exitWith {
 
 // we are in air!!!
 sleep 2.56;
+#ifdef __ACE__
+// If jumper doesn't have a chute, then they're screwed.
+// Make them play the ACE animation of a falling person (idea from MP mission "Operation Mongoose").
+if (new_paratype == "") then {player switchMove "ACE_IC_ParaFail"}; // no parachute on player!!!
+#endif
 
 // detect for parachute to be on player and on the ground and remove it from magazines
 waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
