@@ -1256,7 +1256,7 @@ STR_MAP_8,with disgust,mit Ekel,con disgusto,с отвращением
 STR_MAP_PRIZE,You get the prize for curiosity (+%1),Sie erhalten den Preis für die Neugier (+%1),Obtienes un premio por curiosidad (+%1),Вы получаете приз за любопытство (+%1)
 
 STR_MAP_10,"%1 looking at the map, you shout: 'BA-Ah, Yes it is %2!'","%1 Blick auf die Karte, Sie Schreien: 'BA-Ah, ja, es ist %2!'","%1 al mirar el mapa, exclama: '¡sí, es %2!'","%1 всматриваясь в карту, вы воcклицаете: 'Да это-же %2!'"
-STR_MAP_11,"The GRU rewarded someone for something.","Der GRU hat jemanden für etwas belohnt","El GRU recompensó a alguien por algo","ГРУ наградило кого-то за что-то"
+STR_MAP_11,"The GRU rewarded %1 for something","Der GRU hat %1 für etwas belohnt","El GRU recompensó %1 por algo","ГРУ наградило %1 за что-то"
 STR_MAP_12,"Someone studied the map before you did","Jemand hat die Karte vor Ihnen studiert","Alguien estudió el mapa antes que tú","Кто-то изучил карту раньше Вас"
 
 //------------------------------------ EXTERNAL info strings overrides ------------------------------------

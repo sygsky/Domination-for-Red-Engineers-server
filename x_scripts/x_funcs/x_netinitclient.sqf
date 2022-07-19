@@ -815,28 +815,6 @@ XHandleNetStartScriptClient = {
 		    [arg(2)] execVM "scripts\barracks_add_actions.sqf"; // do this on clients only
 		};
 
-		// somebody requested GRU score
-		// ["GRU_event_scores", _id, _score, _playerName] call XSendNetStartScriptClient;
-		case "GRU_event_scores": {
-			hint localize format["+++ Client ""GRU_event_scores"" event with %1", _this];
-            private [/*"GRU_event_scores",*/"_score","_id","_playerName","_msg"];
-            _id = argopt(1, -1);
-            if ( _id < 0) exitWith{(hint localize "--- GRU_event_scores error id: ")  + _id}; // error parameter
-            _score = argopt(2,0);
-            _msg = "";
-            if ( _score > 0 ) then {
-                _playerName = argopt(3, "" );
-                if ( _playerName == (name player)) then {
-                    //player addScore _score;
-                    _score call SYG_addBonusScore;
-                    _msg = format[localize argp(GRU_specialBonusStrArr,_id),_score]; // "you've got a prize for your observation/curiosity"
-                    ["say_sound", player, "no_more_waiting"] call XSendNetStartScriptClientAll;
-                } else {_msg = localize "STR_MAP_11"};
-            } else {_msg = localize "STR_MAP_12"};
-            _msg call XfGlobalChat;
-            GRU_specialBonusArr set [ _id, 0 ]; // never more this event could occure
-		};
-
         // [ "sub_fac_score", _str, _param1, _param2 ]
         case "sub_fac_score": {
             [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call SYG_msgToUserParser;

@@ -270,7 +270,8 @@ SYG_compactArray = {
 // 3: _delay_between_messages is seconds number to sleep between multiple messages;
 // 4: _initial_delay is seconds before first message show;
 // 5: no_title_msg if true - no title shown, else shown if false or "" empty string, or scalar <= 0;
-// 6: sound_name is the name of the sound to play with first message show on 'say' command; no way to play sound on each message
+// 6: sound_name is the name of the sound to play with first message show on 'say' command; no way to play sound on each message.
+//		Or 6th  parameters is an array with follow items:	["say_sound", _object_to_play_sound, "sound_name" ]; // send sound from this player
 //
 // msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
 // msg additionally displayed as title in the middle of the screen
@@ -345,7 +346,14 @@ SYG_msgToUserParser = {
         // try to say sound on 1st text showing
         if ( (count _this) > 6 ) then {
             _sound = _this select 6;
-            if ( typeName _sound == "STRING" ) then { playSound _sound };
+            if ( typeName _sound == "STRING" ) exitWith { playSound _sound };
+            if (typeName _sound == "ARRAY") exitWith {
+            	if (count _sound > 2) then {
+            		if ( (_sound select 0) == "say_sound") then {
+            			_sound call XHandleNetStartScriptClient; // say sound on this client
+            		};
+            	};
+            };
         };
     };
     _delay = 4; // default delay between messages is 4 seconds

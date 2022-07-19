@@ -101,22 +101,34 @@ GRU_mainTaskDescription = {
 
 /*
     Scores for investigations of some special objects (fire, map, enemy plans paper etc).
-    If called from client computer, message is sent to server
-    if called on serveк computer, scores are checked and available information sent to user
+    If called from client computer, scores addded if found not-empty prize.
+    Call:
+    ...
+    _id = GRU_SPECIAL_SCORE_ON_FIRELIT_INFO;
+    _id call GRU_SpecialScores;
+	...
+    Returns: nothing
 */
 GRU_SpecialScores = {
     if (!X_Client) then {
         // todo: check for scores
-        hint localize format["+++ Server-> GRU_specialScores: input %1", _this];
+        hint localize format["--- illegal call for Server -> GRU_specialScores: input %1", _this];
     } else {
-        hint localize format["+++ Client-> GRU_specialScores: input %1", _this];
-        if ( _this >= 0 && _this < (count GRU_specialBonusArr)) then {
-            if ( argp(GRU_specialBonusArr, _this) > 0) then {
-                // todo: send info to user about scores for investigations etc
-                //hint format[ "Client-> In future you'll got %1 score", argp(GRU_specialBonusArr,_this) ];
-                // GRU_specialBonusArr set [_this, 0]; // no more scores available
-                // send request to the server for score prize if not already used
-                 ["GRU_event_scores", _this, name player] call XSendNetStartScriptServer;
+        if ( _this >= 0 && _this < ( count GRU_specialBonusArr ) ) then {
+	        hint localize format["+++ GRU_specialScores: for %1", GRU_specialBonusStrArr select _this];
+			private ["_score"];
+        	_score = GRU_specialBonusArr select _this;
+            if ( _score > 0) then {
+				_score call SYG_addBonusScore;
+				// "you've got a prize for your observation/curiosity"
+				[ "msg_to_user", name player, [GRU_specialBonusStrArr select _this, _score ], 0, 3, false, "no_more_waiting" ] call SYG_msgToUserParser;
+				GRU_specialBonusArr set [ _this, 0 ]; // never more this event could occure
+				publicVariable "GRU_specialBonusArr"; // clear scores
+				// send special message to other players: "The GRU rewarded %1 for something" and say sound from this player
+				[ "msg_to_user", "",  [ ["STR_MAP_11",name player ] ],0,0,false,["say_sound", player, "no_more_waiting" ]] call XSendNetStartScriptClient;
+            } else {
+				(localize "STR_MAP_12")  call XfGlobalChat; // show message only for you: "Someone studied the map before you did"
+				playSound "losing_patience";
             };
         };
     };
