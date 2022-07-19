@@ -47,12 +47,14 @@ _create_items = {
 		// remove dead truck
 		call _create_truck;
 		_createdTruck = true;
-		_msg set [2, "STR_RADAR_INIT2"];
-	} else { _msg set [2, ""] };
+		// STR_SYS_AND
+		_msg set [2,if (_createdMast) then {"STR_SYS_AND"} else {""}];
+		_msg set [3, "STR_RADAR_INIT2"];
+	} else { _msg set [2, ""]; _msg set [3, ""];};
 	if ( _createdMast || _createdTruck ) then {
 		processInitCommands;
 		sideradio_status = 0;
-//		["msg_to_user", "",  [ _msg ]] call XSendNetStartScriptClient; // "The GRU relay mast and the truck to transport it can be found in the nearest to the base settlements"
+//		["msg_to_user", "",  [ _msg ]] call XSendNetStartScriptClient; // "The GRU relay mast <and the truck to transport it> can be found in the nearest to the base settlements"
 	};
 	_created
 };
