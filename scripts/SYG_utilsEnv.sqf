@@ -99,12 +99,11 @@ SYG_showTeleport = {
 // Adds inspect action on airbase fires. Works once only on client computer
 //
 SYG_firesService = {
-    private ["_cnt","_fires"];
     hint localize format["+++ scripts/SYG_utilsEnv.sqf => SYG_firesService, isServer %1, isNil ""SYG_firesAreServed"" %2", isServer, isNil "SYG_firesAreServed"];
     if ( ! X_Client ) exitWith{0};
     if (!isNil "SYG_firesAreServed") exitWith {false};
     SYG_firesAreServed = 0;
-    private ["_cnt","_fire"];
+    private ["_cnt","_fires","_x"];
     // play with fires on base
     _cnt = 0;
     {
@@ -127,7 +126,7 @@ SYG_firesService = {
 //
 SYG_restoreIslandItems = {
     hint localize format["+++ SYG_restoreIslandItems %1",_this];
-    private ["_cnt", "_pos", "_dist", "_list", "_sleep_period"];
+    private ["_cnt", "_pos", "_dist", "_list", "_sleep_period","_x"];
     if ( typeName _this != "ARRAY") exitWith {0};
     if ( count _this < 2 ) exitWith {0};
     _pos = arg( 0 );
@@ -159,10 +158,10 @@ SYG_restoreIslandItems = {
 // default resurrect distance is 10 meters
 //
 SYG_findRestorableObjects = {
-    private [ "_pos", "_dist","_list","_i"];
+    private [ "_pos", "_dist","_list","_i","_x"];
     if ( typeName _this != "ARRAY") exitWith {[]};
     if ( count _this < 2) exitWith {[]};
-    _pos = arg(0);
+    _pos = _this select 0;
     if (typeName _pos == "OBJECT") then {_pos = getPos _pos;};
     if (typeName _pos != "ARRAY") exitWith {[]};
     _dist = arg(1);
@@ -188,10 +187,9 @@ SYG_findRestorableObjects = {
 // default resurrect distance is 10 meters
 //
 SYG_countKilledIslandItems = {
-    private [ "_pos", "_dist","_arr","_x"];
     if ( count _this == 0) exitWith {0};
     if ( count _this < 2) exitWith {0};
-    private ["_pos"];
+    private [ "_pos", "_dist","_arr","_x"];
 //    _pos = arg(0);
     _pos = _this select 0;
 //    if (typeName _pos != "ARRAY") then {_pos = getPos (arg(0))};
