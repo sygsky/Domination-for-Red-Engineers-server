@@ -526,6 +526,7 @@ if (isServer) then {
 		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
 		sideradio_status = 2; // radio-relay is online!
 		publicVariable "d_radar";
+
 		waitUntil { sleep 10.737; current_target_index >= 0 };
 		while { true } do {
 			sleep 150+(random 300); // average delay 5 minutes to update

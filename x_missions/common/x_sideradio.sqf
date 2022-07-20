@@ -19,21 +19,21 @@ if (!isServer) exitWith {};
 #else
 #define TRUCK_MARKER "SalvageVehicle"
 #endif
-// wait antenna and trcu are ready
+
+// wait (new) antenna and (new) truck to be alive
 _cnt = 0;
 while { !( (alive d_radar_truck) && (alive d_radar) && _cnt < 300 ) } do { sleep 1; _cnt = _cnt + 1 };
 
 if ( !( (alive d_radar_truck) && (alive d_radar) ) ) exitWith {
-    ["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClientAll;
+    ["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClient;
 	side_mission_winner = -702;
 	side_mission_resolved = true;
 };
 
-
 // 1. create antenna and trucks on the base
 
-sideradio_status = 0; // 0 - mission in progress, 1 - mast installed, 2- truck returned to the base
-publicVariable "sideradio_status"; // status of mission, is set on clients only
+sideradio_status = 0; // 0 - mission in progress, 1 - mast installed truck not reached the base, 2- truck reached the base
+publicVariable "sideradio_status"; // status of mission, after this setting can be changed on clients only
 
 // _marker_name = [_marker_name, _marker_type, _truck_pos, _marker_color<,_marker_size>] call _make_marker;
 _make_marker = {
@@ -56,13 +56,13 @@ _make_marker = {
 // create markers (truck + radiomast)
 _truck = d_radar_truck; // current (first) alive truck
 _truck_marker = "";
-_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+_radar_marker = ""; //
 
 //
 // Main loop, controls markers movement and end of the mission
 //
 _truck = objNull;
-while { sideradio_status <= 0 } do {
+while { sideradio_status <= 0 } do { // -1, 0 states are allowed
 
 	if (X_MP && ((call XPlayersNumber) == 0)) then {
 		waitUntil {sleep (60 + (random 1)); (call XPlayersNumber) > 0};
@@ -78,11 +78,10 @@ while { sideradio_status <= 0 } do {
 		if ((getMarkerType _truck_marker) == "") exitWith {
 			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, d_radar_truck, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
 			_delay = 3;
-		} else {
-			if ( ( [getMarkerPos _truck_marker, d_radar_truck] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-				_truck_marker setMarkerPos (getPos _truck);
-				_delay = 3;
-			};
+		};
+        if ( ( [getMarkerPos _truck_marker, d_radar_truck] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
+            _truck_marker setMarkerPos (getPos _truck);
+            _delay = 3;
         };
 	};
     // check radar marker
@@ -90,8 +89,9 @@ while { sideradio_status <= 0 } do {
     	_asl = getPosASL d_radar;
         if ( ( _asl select 2) >= 0) then { // unloaded
 			if ( (getMarkerType _radar_marker) == "") exitWith { // marker not exists, create it now
-				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR, [0.5, 0.5] ] call _make_marker;
 			};
+			// marker exists, move it needed
 			if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
 				_radar_marker setMarkerPos ( _asl );
 			};

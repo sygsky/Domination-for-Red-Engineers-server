@@ -31,7 +31,7 @@ _create_truck = {
 	while {!alive d_radar_truck} do {sleep 1};
 };
 
-// creates radar/truck somwhere, assign "killed" event to it etc
+// creates radar/truck somewhere, assign "killed" event to them etc
 _create_items = {
 	private ["_created","_pos"];
 	_createdMast = false;
