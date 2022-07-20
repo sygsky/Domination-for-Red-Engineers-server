@@ -28,8 +28,11 @@ if ( isNil "GRU_tasks" ) then {
 	];
 
 	// scores for successfull survey of fire object(0), map (1) etc
-	GRU_specialBonusArr    = [              5,               3];
-	GRU_specialBonusStrArr = ["STR_LIT_PRIZE", "STR_MAP_PRIZE"];
+	// Really it is not needed on the server,
+	if (isNil "GRU_specialBonusArr") then { // 	GRU_specialBonusArr still not defined with publicVariuable, so create it now
+    	GRU_specialBonusArr    = [              5,               3];
+	};
+	    GRU_specialBonusStrArr = ["STR_LIT_PRIZE", "STR_MAP_PRIZE"]; // This array is not used on the server at the moment, but may be used in the future.
 };
 
 // call: _task = _task_id call GRU_getTask;
