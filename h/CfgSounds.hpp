@@ -563,7 +563,7 @@ class CfgSounds {
     class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0}; titles[] = {};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
     class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0}; titles[] = {};}; // Some feat music
     class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0}; titles[] = {};}; // USSR film Chapaev
-    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0}; titles[] = {};}; // Cosmic music
+//    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0}; titles[] = {};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0}; titles[] = {};}; // Well known melody
     class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0}; titles[] = {};}; // Dean Reed song "Rider"
     class hound_baskervill { name=""; sound[] = {\sounds\hound_baskervill.ogg,db+0,1.0}; titles[] = {};}; // USSR famous film "Hound of Baskervill hall"

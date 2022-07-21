@@ -89,8 +89,8 @@ SYG_defeatTracks =
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
     ["sorcerie","melody","thefuture","moon_stone"],
-    ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]],
-    ["cosmos",[0,8.281],[14.25,9.25],[28.8,-1]]
+    ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]]//,
+//    ["cosmos",[0,8.281],[14.25,9.25],[28.8,-1]]
 
 ];
 
@@ -133,9 +133,9 @@ SYG_baseDefeatTracks =
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
     "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone","take_five",
-    ["cosmos", [0,8.281] ],
-    ["cosmos", [14.25,9.25] ],
-    ["cosmos", [28.8,-1] ],
+//    ["cosmos", [0,8.281] ],
+//    ["cosmos", [14.25,9.25] ],
+//    ["cosmos", [28.8,-1] ],
     ["ruffian",[0,10.27]],
     ["Vremia_vpered_Sviridov",[0.479,9.778]],
 	SYG_rammsteinDefeatTracks1,
@@ -376,7 +376,7 @@ SYG_playRandomTrack = {
         if ((typeName (_this select 1)) == "STRING") exitWith { // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
             _item = _this call SYG_checkLastSoundRepeated;
             _item call SYG_playRandomTrack;
-        }; // list of tracks, play any selected
+        }; // list of tracks, play one of selected
 
         //
         // ["ATrack12,[10,10]<,[20,15]>]

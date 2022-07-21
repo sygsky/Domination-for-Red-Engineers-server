@@ -63,7 +63,7 @@ class CfgMusic {
 	// this music remained is needed as partial tracks music
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some feat music
-    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
+//    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
     class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
 /** All music moveв to sounds

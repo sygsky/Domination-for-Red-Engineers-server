@@ -138,7 +138,7 @@ if (_sound == "") then { // select random music for an ordinal day
             // music to play day and night
             _night_music = [
                 "bond",/*"bond1",*/"from_russia_with_love","adjutant","total_recall_mountain"/*,"adagio"*/,"morze","morze_3",
-                "treasure_island_intro","fear2","soviet_officers","cosmos","manchester_et_liverpool","tovarich_moy",
+                "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","del_vampiro1",
                 /*"del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
                 "peregrinus"
@@ -170,7 +170,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "bond",/*"bond1",*/"from_russia_with_love","grant","burnash","adjutant","lastdime","lastdime2","lastdime3",
                 "mission_impossible",/*"bond1",*/"strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd",/*"adagio",*/
-                "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers","cosmos","manchester_et_liverpool",
+                "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
                 "del_vampiro1",/*"del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
