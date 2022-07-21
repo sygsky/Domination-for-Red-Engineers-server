@@ -54,6 +54,7 @@ _create_items = {
 	if ( _createdMast || _createdTruck ) then {
 		processInitCommands;
 		sideradio_status = 0;
+		publicVariable "sideradio_status";
 //		["msg_to_user", "",  [ _msg ]] call XSendNetStartScriptClient; // "The GRU relay mast <and the truck to transport it> can be found in the nearest to the base settlements"
 	};
 	_created

@@ -48,7 +48,7 @@ if (alive d_radar) then {
 		_cnt1 = _cnt1 + 1;
 	};
 
-};
+} else { hint localize format["+++ x_m56.sqf: initial radar is not alive, no need to bomb it"]; };
 
 hint localize format["+++ x_m56.sqf: initial radar %1 after %2 bomb[s]", if (alive d_radar) then {"alive"} else {"killed"}, _cnt1];
 
