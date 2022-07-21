@@ -46,7 +46,7 @@ if (!isNil "_this") then {
 
 // wait (new) antenna and (new) truck is alive or recreated by radio_service.sqf
 _cnt = 0;
-while { !( (alive d_radar_truck) && (alive d_radar) && _cnt < 60 ) } do { sleep 5; _cnt = _cnt + 1 };
+while { !( (alive d_radar_truck) && (alive d_radar) && (_cnt < 60) ) } do { sleep 5; _cnt = _cnt + 1 };
 
 if ( !( (alive d_radar_truck) && (alive d_radar) ) ) exitWith {
     ["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClient;
@@ -96,7 +96,11 @@ while { sideradio_status <= 0 } do { // -1, 0 states are allowed
 	_delay = 15;
 
 	if ( alive d_radar_truck ) then {
-		if ( locked d_radar_truck ) exitWith { deleteMarker _truck_marker; _truck_marker = ""  }; // truck is locked that means it is not found
+		if ( locked d_radar_truck ) exitWith {  // truck is locked that means it is not found
+			if (_truck_marker != "") then {
+				deleteMarker _truck_marker; _truck_marker = "";
+			};
+		};
 
 	    // create radar marker if needed
 		if ( _truck_marker == "" ) then {

@@ -28,7 +28,8 @@ XfRandomArray = {
 	_ran_array
 };
 
-// shuffles the content of an array in place (the same array returned)
+// shuffles the content of an array in place (the same array returned).
+// Fisher Yates Algorithm.
 // parameters: array
 // example: _myRandomArray = _myNormalArray call XfRandomArray;
 // Optimized by Sygsky at 12-JAN-2022
@@ -39,7 +40,7 @@ XfRandomArrayInPlace = {
 	_cnt = count _ar;
 	_cnt1 = _cnt - 1;
 	for "_i" from _cnt1 to 1 step -1 do {
-		_ran = floor ( random (_i + 1)); // get random index for exchange
+		_ran = floor ( random (_i + 1)); // get random index for exchange with arr[i]
 		if ( _ran != _i ) then {
 			_tmp = _ar select _i;
 			_ar set [ _i, _ar select _ran ];

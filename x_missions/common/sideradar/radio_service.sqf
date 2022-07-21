@@ -32,8 +32,9 @@ _create_truck = {
 };
 
 // creates radar/truck somewhere, assign "killed" event to them etc
+// returns true if something is created, else false
 _create_items = {
-	private ["_created","_pos"];
+	private ["_msg","_createdMast","_createdTruck"];
 	_createdMast = false;
 	_msg = ["STR_RADAR_INIT"];
 	if (!alive d_radar) then {
@@ -51,13 +52,14 @@ _create_items = {
 		_msg set [2,if (_createdMast) then {"STR_SYS_AND"} else {""}];
 		_msg set [3, "STR_RADAR_INIT2"];
 	} else { _msg set [2, ""]; _msg set [3, ""];};
-	if ( _createdMast || _createdTruck ) then {
-		processInitCommands;
+	if ( _createdMast || _createdTruck ) then {	processInitCommands; };
+
+	if ( _createdMast || (_createdTruck && (sideradio_status != 2)) ) then {
 		sideradio_status = 0;
 		publicVariable "sideradio_status";
 //		["msg_to_user", "",  [ _msg ]] call XSendNetStartScriptClient; // "The GRU relay mast <and the truck to transport it> can be found in the nearest to the base settlements"
 	};
-	_created
+	_createdMast || _createdTruck
 };
 
 while { isNil "d_radar" } do { sleep 120 };
