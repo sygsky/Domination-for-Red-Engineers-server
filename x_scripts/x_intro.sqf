@@ -147,7 +147,7 @@ if (_sound == "") then { // select random music for an ordinal day
             // music to play only in day time
             _daytime_music = [
                 "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
-                "Letyat_perelyotnye_pticy_2nd","ruffian","morze","morze_3","chapaev","rider","Vremia_vpered_Sviridov",
+                "Letyat_perelyotnye_pticy_2nd","ruffian","morze","morze_3"/*,"chapaev"*/,"rider","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","toccata","travel_with_friends","on_thin_ice","wild_geese","wild_geese",
                 "dangerous_chase"
             ];
@@ -170,7 +170,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "bond",/*"bond1",*/"from_russia_with_love","grant","burnash","adjutant","lastdime","lastdime2","lastdime3",
                 "mission_impossible",/*"bond1",*/"strelok",
                 "total_recall_mountain","capricorn1title","Letyat_perelyotnye_pticy_2nd",/*"adagio",*/
-                "ruffian","morze","morze_3","treasure_island_intro","fear2","chapaev","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool",
+                "ruffian","morze","morze_3","treasure_island_intro","fear2"/*,"chapaev"*/,"soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
                 "del_vampiro1",/*"del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
@@ -180,7 +180,7 @@ if (_sound == "") then { // select random music for an ordinal day
 #endif
 
 #ifdef __SOVIET_MUSIC_ONLY__
-			_music = ["strelok","Letyat_perelyotnye_pticy_2nd","chapaev","soviet_officers","tovarich_moy","Vremia_vpered_Sviridov",
+			_music = ["strelok","Letyat_perelyotnye_pticy_2nd"/*,"chapaev"*/,"soviet_officers","tovarich_moy","Vremia_vpered_Sviridov",
 				"Letyat_perelyotnye_pticy_end","bolivar","travel_with_friends","on_thin_ice","peregrinus"] call _XfRandomArrayVal;
 #endif
 
