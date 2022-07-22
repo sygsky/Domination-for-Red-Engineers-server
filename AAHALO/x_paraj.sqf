@@ -60,7 +60,7 @@ hint localize "";
 	}; // ACE_Para - main kind of parachute in game
 } forEach weapons player;
 
-if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
+if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609" call XfHQChat;}; // "!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!"
 
 if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith {
 	localize "STR_SYS_304" call XfHQChat; // "!!!!!!!!!!!! Нужна карта !!!!!!!!!!!"
@@ -72,7 +72,7 @@ if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith {
 	}; // ACE_Para - main kind of parachute in game
 } forEach weapons player;
 
-if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609"/*"!!! Вам нужен парашют !!!"*/ call XfHQChat;};
+if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609" call XfHQChat;}; // "!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!"
 
 #endif
 
@@ -88,7 +88,7 @@ onMapSingleClick "";
 
 if (d_cancelled) exitWith {
     hint localize "*** player cancelled parajump dialog";
-    (localize ("STR_SYS_JUMP_NUM" call SYG_getRandomText)) call XfHQChat; // "Because of your poor health, You decided not to jump"
+    (localize ("STR_SYS_JUMP_NUM" call SYG_getRandomText)) call XfHQChat; // "Because of a bad feeling, you decided not to jump..."
     playSound "return";
 };
 
@@ -116,7 +116,7 @@ if ( (vehicle player) != player ) then { // parachute still on!
         player action ["Eject", vehicle player];
         hint localize "+++ x_paraj.sqf: player ejected from parachute";
         playSound "steal";
-        (localize "STR_SYS_609_5") call XfHQChat;
+        (localize "STR_SYS_609_5") call XfHQChat; // "Thanks to your life experience (and rank!), you  got rid of your parachute."
     };
 //    }
 };
