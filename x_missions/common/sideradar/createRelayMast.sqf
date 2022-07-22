@@ -48,7 +48,7 @@ if (_base ) then {
 if (count _pos == 0) exitWith {hint localize "--- createRelayMast: can't find good point!!!"};
 
 //+++++++++++++++++++++
-// 1. create antenna on the base or in any sttlement
+// 1. create antenna on the base or in any near to base settlement
 d_radar =  createVehicle [RADAR_TYPE, _pos, [], 0, "CAN_COLLIDE"];
 publicVariable "d_radar";
 d_radar setVehicleInit "this execVM ""x_missions\common\sideradar\radio_init.sqf""";

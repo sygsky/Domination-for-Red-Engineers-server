@@ -6,7 +6,7 @@
 		Draws the markers for active truck and radio-mast,
 		check if mission is failed.
 		Really the flow of script is as follow:
-		Radar and truck are recreated after each destroy (see script radar-service.sqf logic)
+		Radar and truck are recreated after each destroy (while script radio_service.sqf is running)
 		1. Wait until radar is installed correctly (sideradio_status == 1).
 		2. Wait until last truck (used to install radar on correct position) is reached the base, then SM is finished successfully.
 		3. If last truck or radar is destroyed, mission is counted as failed.

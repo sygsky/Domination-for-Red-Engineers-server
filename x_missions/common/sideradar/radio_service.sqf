@@ -1,12 +1,13 @@
 /*
 	x_missions\common\sideradar\radio_service.sqf: started after first 56th SM completed
 	author: Sygsky
-	description: Handles the radio relay mast in good order
+	description: Handles the radio relay mast in good order during whole game period
 	sideradio_status is variable with radio-relay status value as follow:
 	-1 - radar is down, no truck
 	 0 - radar alive not set, truck exists
-	 1 - radar installed, truck not returned
-	 2 - radar installed, truck successfully returned to the base and removed
+	 1 - radar installed, truck still not returned to the base (to the FLAG_BASE).
+	    If truck is killed, you should to reinstall radiomast with new truck and again try to return to the FLAG_BASE
+	 2 - radar installed, truck successfully returned to the FLAG_BASE, and from now not needed (if killed etc)
 	returns: nothing
 */
 #define __DEBUG__
@@ -18,7 +19,7 @@ _create_radar = {
 #else
 	"" execVM "x_missions\common\sideradar\createRelayMast.sqf"; // "BASE" used for debug purposes
 #endif
-	while {!alive d_radar_truck} do {sleep 1};
+	while {!alive d_radar} do {sleep 1};
 };
 
 // Creates new truck in town near airbase, old one must be removed before this call
@@ -34,44 +35,45 @@ _create_truck = {
 // creates radar/truck somewhere, assign "killed" event to them etc
 // returns true if something is created, else false
 _create_items = {
-	private ["_msg","_createdMast","_createdTruck"];
-	_createdMast = false;
-	_msg = ["STR_RADAR_INIT"];
+	private ["_msg","_status"];
+	_msg = [];
+	_status = sideradio_status;
+	// Check if mast needs to be recreated
 	if (!alive d_radar) then {
 		// remove dead radar
 		call _create_radar;
-		_createdMast = true;
-		_msg set [1, "STR_RADAR_INIT1"];
-	} else { _msg set [1, ""] };
-	_createdTruck = false;
-	if (!alive d_radar_truck) then {
-		// remove dead truck
-		call _create_truck;
-		_createdTruck = true;
-		// STR_SYS_AND
-		_msg set [2,if (_createdMast) then {"STR_SYS_AND"} else {""}];
-		_msg set [3, "STR_RADAR_INIT2"];
-	} else { _msg set [2, ""]; _msg set [3, ""];};
-	if ( _createdMast || _createdTruck ) then {	processInitCommands; };
-
-	if ( _createdMast || (_createdTruck && (sideradio_status != 2)) ) then {
 		sideradio_status = 0;
-		publicVariable "sideradio_status";
-//		["msg_to_user", "",  [ _msg ]] call XSendNetStartScriptClient; // "The GRU relay mast <and the truck to transport it> can be found in the nearest to the base settlements"
+		_msg set [count _msg, ["STR_RADAR_INIT"] ]; // "Look for a replacement radio mast in one of the settlements closest to the base"
 	};
-	_createdMast || _createdTruck
+	// Check if we need to create truck now.
+	// If mast installation not completed (it is not installed or install truck still not returned to the FLAG_BASE),
+	//  we have to recreate the truck
+	if (sideradio_status < 2) then {
+        if (!alive d_radar_truck) then {
+            // create new truck
+            call _create_truck;
+            sideradio_status = 0;
+            _msg set [count _msg, ["STR_RADAR_INIT2"] ]; // "Look for an yellow truck to transport relay mast in one of the towns near the base"
+        };
+	};
+	if ( count _msg > 0 ) exitWith { // something was changed
+	    processInitCommands;
+	    // send messages to all players
+	    [ "msg_to_user", "",  _msg, 5, 5, false, "return" ] call XSendNetStartScriptClientAll; // Messages about mast and/or truck recreation
+	    if (_status != sideradio_status) then { publicVariable "sideradio_status" };
+	    true // mast and/or truck created
+	};
+	false // nothing created
 };
 
 while { isNil "d_radar" } do { sleep 120 };
-["msg_to_user", "",  [["STR_RADAR_INFO"]], 0, 15 ] call XSendNetStartScriptClient; // "The GRU requires a radio relay mast to work!"
 
 while { true } do {
+    ["msg_to_user", "",  [["STR_RADAR_INFO"]], 0, 15 ] call XSendNetStartScriptClient; // "The GRU requires a radio relay mast to work!"
 	// wait until radio-relay is ready
-	while {sideradio_status != 2} do { // We provide simultaneous availability of a mast and a truck
+	while {sideradio_status < 2} do { // Provide simultaneous availability of a mast and a truck
 		sleep 60;
 		if (!(alive d_radar && alive d_radar_truck) ) then { _create_items };
 	};
-	while {sideradio_status == 2} do { // if radio is working, do nothing
-		sleep 60;
-	};
+	while {sideradio_status == 2} do { sleep 60; }; // wwhile radio is workable, do nothing
 };
