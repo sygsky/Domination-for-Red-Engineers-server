@@ -808,13 +808,13 @@ STR_SYS_JUMP_0,"Because of a bad feeling, you decided not to jump...","Wegen ein
 STR_SYS_JUMP_1,"I don't feel like skydiving... I'd rather go to sleep.","Mir ist nicht nach Fallschirmspringen zumute... Ich würde lieber schlafen gehen.","No tengo ganas de hacer paracaidismo... prefiero ir a dormir","Что-то прыгать с парашютом расхотелось...лучше пойду посплю"
 STR_SYS_JUMP_2,"You're looking up at the sky and... don't dare to jump!","Du schaust in den Himmel und... traust dich nicht zu springen!","Estás mirando al cielo y... ¡no te atrevas a saltar!","Вы смотрите в небо и... не решаетесь прыгать!"
 
-STR_SYS_609_5,"Thanks to your life experience (and rank!), you  got rid of your parachute.","Dank deiner Lebenserfahrung bist du den Fallschirm losgeworden","Gracias a tu experiencia de vida, te deshiciste del paracaídas","Благодаря жизненному опыту (звания дают не зря!) Вы избавились таки от парашюта"
+STR_SYS_609_5,"Thanks to your life experience (they don't give ranks for nothing!) you dropped the parachute","Dank der Lebenserfahrung (Titel gibt es nicht umsonst!) haben Sie den Fallschirm abgeworfen","Gracias a la experiencia de la vida (¡no dan títulos por nada!) se te ha caído el paracaídas","Благодаря жизненному опыту (звания дают не зря!) Вы избавились таки от парашюта"
 
 STR_SYS_MTBONUS_MAX,Max bonus %1,Max. Bonus %1,Bono máximo %1,Макс. очки у %1
 STR_SYS_MTBONUS_MIN,Min bonus %1,Min. Bonus %1,Bono mínimo %1,Мин. очки у %1
 STR_SYS_MTBONUS_NOMIN,No min. pointsKeine Min.-Punkte,No hay puntos mínimos,Мин. очки отсутствуют
 
-STR_SYS_611,Your rig has been recorded and will be restored the next time,Ihre Bewaffnung aufgenommen worden und werden wieder das nächste mal,Su equipo está registrado y se emitirá la próxima vez,Ваше снаряжение записано и будет выдано в следующий раз
+STR_SYS_611,Your equipment is recorded and will be given out next time,Ihre Ausrüstung wird aufgezeichnet und beim nächsten Mal ausgehändigt,Su equipo queda registrado y se entregará la próxima vez,Ваше снаряжение записано и будет выдано в следующий раз
 STR_SYS_612,You've got the equipment recorded the last time,"Sie haben die Ausrüstung, erfasst der letzten Zeit",Se le dio el equipo de la Última vez,Вам выдано снаряжение с прошлого раза
 STR_SYS_613,Your recorded equipment wiped,Ihr Aufnahme-equipment gewischt,Su registro de equipo borrado,Ваша запись снаряжения стёрта
 STR_SYS_614,A record of the equipment not found,Eine Aufzeichnung der Ausstattung nicht gefunden,No se encontró registro de equipo,Запись о снаряжении не найдена
@@ -834,7 +834,7 @@ STR_SYS_630_2,%1 disappeared! %2,%1 ist verschwunden! %2,%1 ha desaparecido! %2,
 
 STR_SYS_630_2_NUM,4,4,4,4
 STR_SYS_630_2_0,There are strong undercurrents here,Hier sind starke Unterströmungen,Aquí hay fuertes corrientes submarinas,Здесь сильные подводные течения
-STR_SYS_630_2_1,A giant Kraken was spotted nearby,Ein riesiger Kraken ist in der Nähe zu sehen,Cerca se ve un Kraken gigante,Неподалёку замечен гигинтский кракен
+STR_SYS_630_2_1,A giant Kraken was spotted nearby,Ein riesiger Kraken ist in der Nähe zu sehen,Cerca se ve un Kraken gigante,Неподалёку замечен гигантский кракен
 STR_SYS_630_2_2,An unknown submarine was observed in the area of the fall,Im Herbst wurde ein unbekanntes U-Boot beobachtet,Se observó un submarino desconocido en el área de la caída,В районе падения наблюдалась неизвестная подводная лодка
 STR_SYS_630_2_3,A giant swell is recorded there from space,Dort wird eine riesige Dünung aus dem Weltraum aufgezeichnet,Desde el espacio se registra un oleaje gigante,Из космоса там зафиксирована гигантская зыбь
 
