@@ -568,7 +568,7 @@ while { true } do {
                 #endif
    					_igrpa set [PARAM_STATUS, STATUS_STUB];
 			        // TODO: Send remaining  groups to a certain point on the coast, with the goal of transporting them back to the United States
-			        // TODO: select this point from predefined ones set manually in the editor
+			        // TODO: select embark point from predefined ones set manually in the editor
 			        breakTo "main_loop";
 			    };
 
@@ -667,11 +667,12 @@ while { true } do {
 			
 			if ( _stat == STATUS_STOPPED  || _stat == STATUS_STOPPED1) then {
 				if ( time > _timestamp ) then {// patrol is near same point during long period of time, check around now
+					_leader = _igrp call SYG_getLeader;
 				    if ( _stat == STATUS_STOPPED) then {// patrol is stopped, but may be in chasm
                         // check patrol leader to be in chasm
-                        _pos = getPos (leader _igrp);
+                        _pos = getPos _leader;
                         _exitWP =  _pos call SYG_chasmExitWP;
-                        if ( (count _exitWP) == 3 ) then {// yes we are in chasm, try to find way out
+                        if ( (count _exitWP) > 0 ) then {// yes we are in chasm, try to find way out
 #ifdef __PRINT_ACTIVITY__
                             hint localize format[ "+++ %1 x_groupsm.sqf: %2 group %3 in chasm at %4, finding exit", call SYG_nowTimeToStr, argp(_igrpa,PARAM_TYPE), _igrp, _pos call SYG_nearestLocationName ];
 #endif
@@ -691,15 +692,22 @@ while { true } do {
     						breakTo "main_loop";
                         };
 				    };
-					if ( (_igrppos distance (leader _igrp)) > DISTANCE_TO_BE_STOPPED ) then {// clear stopped state as patrol move far enough from stop point
+					if ( (_igrppos distance _leader) > DISTANCE_TO_BE_STOPPED ) then {// clear stopped state as patrol move far enough from stop point
 						// stop status is broken by good movement
 						_igrpa call _setStateNormal;
 					} else {// it is really stopped, but if enemy near, let fun continue
 						if ( _enemy_near && (time < (_timestamp + DELAY_VERY_LONG_STOPPED) )) then {
 							breakTo "main_loop"; // let him more time to handle with players
 						};
-						_igrpa call  _remove_grp; // let them to disappear and restore in new patrol group later after designated delay
-						// TODO: send info to users about
+						_igrpa call  _remove_grp; // let them to disappear and create new patrol group later after designated delay
+						// TODO: send info to users about stubbed patrol removing
+						hint localize format[
+							"+++ x_isledefense.sqf: %1, patrol #%2 (%3) removed on STUB, pos %4 (%5)",
+							call SYG_missionTimeInfoStr,
+							_i,
+							_igrpa select PARAM_TYPE,
+							[_leader,50] call SYG_MsgOnPosE0
+						];
 						
 						_igrpa set [PARAM_STATUS, STATUS_WAIT_RESTORE];
 						_igrpa set [PARAM_TIMESTAMP, time + DELAY_RESPAWN_STOPPED];

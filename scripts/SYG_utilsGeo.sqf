@@ -913,6 +913,25 @@ SYG_MsgOnPosE = {
 	format[ _msg , _dist, _dir, _locname ]
 };
 
+//
+// Creates non-localized (only english) message about position,
+// distance_to_location,
+//
+// call as: _msg_eng = [_obj, <,roundTo> ] call SYG_MsgOnPosE0;
+//
+SYG_MsgOnPosE0 = {
+	private ["_arr"];
+	if (typeName _this == "ARRAY") then {
+		_arr = [_this select 0];
+		_arr set[1, localize "STR_SYS_POSE"];
+		if (count _this > 1) then { _arr set[2, _this select 1]; }
+	} else {
+		_arr  = [_this, localize "STR_SYS_POSE"];
+	};
+	_arr call SYG_MsgOnPosE
+};
+
+
 /*
  * Approximated distance to the base by feet in meters approximatelly
 
