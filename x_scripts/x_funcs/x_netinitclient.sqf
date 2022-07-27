@@ -738,10 +738,11 @@ XHandleNetStartScriptClient = {
 			// call as: [_x, _sound, _sleep <,"-",_name>] spawn say_proc;
 			//
 			_say_proc = {
-				private ["_obj","_pos","_nil","_sound"];
+				private ["_obj","_pos","_nil","_sound","_dist"];
 			    if ( ( argopt( 3, "" ) == "-" ) && ( argopt( 4, "" ) == ( name player ) ) ) exitWith {}; // This player not assigned to play this sound
 				_obj = _this select 0;
-				if ((_obj distance player) > 1000 ) exitWith{}; // too far from sound source
+				_dist = _obj distance player; // how far from the player is sound said
+				if (_dist > 1000 ) exitWith{}; // too far from sound source
 				_pos = [];
 				if (typeName _obj == "ARRAY") then {_pos = _obj} // position designated
 				else {  // it is position: e.g. player is dead but body  has position or position of teleport etc
@@ -768,7 +769,7 @@ XHandleNetStartScriptClient = {
 				};
 				sleep (_this select 2);
 				_obj say (_this select 1); // this is done on the client only you remember?
-				hint localize format["+++ say_sound ""%1"" at object %2", (_this select 1), typeOf _obj];
+				hint localize format["+++ say_sound ""%1"" at object %2 on dist %3", (_this select 1), typeOf _obj, round(_dist)];
 			};
 
 		    private ["_arr"];
