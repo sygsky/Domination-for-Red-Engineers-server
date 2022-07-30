@@ -100,18 +100,20 @@ sleep 2.56;
 if (new_paratype == "") then {player switchMove "ACE_IC_ParaFail"}; // no parachute on player!!!
 #endif
 
-// detect for parachute to be on player and on the ground and remove it from magazines
-waitUntil { sleep 0.132; (!alive player) || (vehicle player != player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
+// detect for parachute to be on player or player is on the ground and remove it from magazines
+waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
 
+_para_used = false; // was parachute used or not (default)
 if ( (vehicle player) != player ) then { // parachute still on!
-    // the parachute was just opened, so remove it from slot after landing/death
+	_para_used = true; // parachute was used
+    // The parachute was just opened, wait player to be on the gound, alive or dead
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
-    player removeWeapon new_paratype;
 //    if ( (player call XGetRankIndexFromScore) > 2 ) then {
     #ifdef __ACE __
     if (new_paratype != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
     #endif
     sleep 5.0; // Ensure  player to be on the ground
+    // Let's stop the parachute jumping on the ground
     if ( (vehicle player) != player ) then {
         player action ["Eject", vehicle player];
         hint localize "+++ x_paraj.sqf: player ejected from parachute";
@@ -120,6 +122,9 @@ if ( (vehicle player) != player ) then { // parachute still on!
     };
 //    }
 };
+// remove parachute from inventory in any case
+if ( (new_paratype != "") && _para_used) then {player removeWeapon new_paratype}; // The parachute was put on and used
+
 //hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
 
 if (true) exitWith {true};
