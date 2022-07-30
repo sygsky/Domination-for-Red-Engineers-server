@@ -1101,7 +1101,7 @@ SYG_pointIsInTownBorders = {
     	};
     } forEach target_names;
     // return true if point is IN nearest town borders
-    (_town select 2) <= _dist
+    (_town select 2) >= _dist
 };
 
 
