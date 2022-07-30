@@ -2,7 +2,7 @@
     x_missions\common\sideradar\radio_menu.sqf, created at JUN 2022
     created 2022.06.04
 	author: Sygsky, on #410 request by Rokse
-	description: Execute load/unload/install radiomast operation
+	description: Execute inspect/check/install on mast and inspect/load/unload on truck operation
 
 	Parameters array passed to the script upon activation in _this  variable is: [target, caller, ID, arguments]
     target (_this select 0): Object  - the object which the action is assigned to
@@ -21,23 +21,32 @@ _veh = _this select 0;
 _pl  = _this select 1;
 _txt = "";
 _send_was_at_sm = false;
-if (locked _veh) then {_veh lock false};
+_locked = false;
+_truck = _veh isKindOf "Truck";
+if (locked _veh) then {_veh lock false; _locked = true};
 
 if (true) then {
+	//
+	// is vehicle alive or not?
+	//
 	if (!alive _veh) exitWith {
 		// "This truck isn't going anywhere anymore. Maybe there's another one somewhere?"
-		_txt = if (_veh isKindOf "Truck") then { "STR_RADAR_TRUCK_KILLED" } else {"STR_RADAR_MAST_DEAD"}; // "Radio mast destroyed"
+		_txt = if (_truck) then { "STR_RADAR_TRUCK_KILLED" } else {"STR_RADAR_MAST_DEAD"}; // "Radio mast destroyed"
 		_veh removeAction (_this select 2); // remove this action
 	};
-	_exit = isNil "sideradio_status";
-	if (!_exit) then { _exit = ! (sideradio_status in [0,1])};
+
+	if (_truck) then {
+
+	};
+	// vehicle is alive
+	_exit = ! (sideradio_status in [0,1]);
 	if (_exit) exitWith {
 		hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2 ", sideradio_status, typeOf _veh];
 		_veh removeAction (_this select 2); // remove this action
 
-		if (_veh isKindOf "Truck") then {
+		if (_truck) then {
 			{ _x action ["Eject", _veh] } forEach (crew _x);
-			_veh setFuel 0;
+//			_veh setFuel 0;
 		};
 
 		(call SYG_randomRadioNoise) call SYG_receiveRadio;
@@ -52,18 +61,14 @@ if (true) then {
 		if (sideradio_status == 1) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_SUCCESSFUL"}; // "Relay mast installed, now return your truck to the base flag to finish SM!"
 		if (sideradio_status <= 0) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_FAILED"}; // "Mission failed, no help from GRU!"
 	};
-	if (((vehicle _pl == _pl) || (_pl != driver (vehicle _pl))) && (_cmd in ["LOAD","UNLOAD"])) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
 
-	if (!alive _veh) exitWith {
-		hint localize  format[ "+++ radio_menu.sqf: sideradio_status %1, veh %2 killed, remove action %3", sideradio_status, typeOf _veh, _this select 2 ];
-		if (_veh isKindOf "Truck") then {
-			_txt = localize "STR_RADAR_TRUCK_KILLED";
-		} else {_txt = localize "STR_RADAR_MAST_DEAD";};
-		_veh removeAction (_this select 2); // remove this action
+	if (((vehicle _pl == _pl) || (_pl != driver (vehicle _pl))) && (_cmd in ["LOAD","UNLOAD"])) exitWith  {
+		_txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" // "You are not driver"
 	};
+
 	if (locked _veh) exitWith {
 		playSound "losing_patience";
-		_txt = localize "STR_RADAR_NO";
+		_txt = localize "STR_RADAR_NO"; // "Received unreliable message"
 	};
 
 	if (!alive d_radar) exitWith {
@@ -72,8 +77,30 @@ if (true) then {
 	};
 
 	switch (_cmd) do {
+		case "INSPECT": {
+			//
+			// Truck
+			//
+			if ( _truck ) exitWith {
+				if ( _locked ) exitWith {	_txt = localize "STR_RADAR_TRUCK_LOCKED" }; // "A truck adapted to carry radio mast. You're in luck!"
+				// not locked, check mast status
+				if ( alive d_radar ) exitWith {
+					if ( ((getPosASL d_radar) select 2)  < 0 ) exitWith { _txt = localize "STR_RADAR_TRUCK_LOADED" }; // ""Active truck for transporting a radio mast, mast is loaded""
+					if ( sideradio_status == 2 ) exitWith { _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED" }; // "Active truck for transporting a radio mast, mast is installed"
+					_txt = localize format["STR_RADAR_TRUCK_NOT_LOADED", d_radar call SYG_nearestLocationName ]; // "Active truck for transporting a radio mast, which is  near ""%1"""
+				};
+			};
+			//
+			// radio-relay mast
+			//
+			if ( sideradio_status == 2 ) exitWith {	 // "Installed radio repeater mast. The motherland will hear us!"
+				_txt = localize "STR_RADAR_MAST_INSTALLED";
+				_veh removeAction (_this select 2);
+			};
+			_txt = localize "STR_RADAR_MAST_UNLOADED"; // "Rusty radio mast, what junkyard did you find it in?"
+		};
 
-		case "LOAD": {
+		case "LOAD": { // truck command
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) < 0 ) exitWith { // already loaded into this vehicle, so change all menu items
 				playSound "losing_patience";
@@ -96,7 +123,7 @@ if (true) then {
 			_send_was_at_sm = (_veh distance RADAR_INSTALL_POINT) < INSTALL_RADIUS;
 		};
 
-		case "UNLOAD": {
+		case "UNLOAD": { // truck command
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) > 0 ) exitWith {
 				// already unloaded into this vehicle, so change all menu items
@@ -112,7 +139,7 @@ if (true) then {
 		};
 
 		// checks the radio-mast position
-		case "CHECK": {
+		case "CHECK": { // radar command
 			_mast_pos = getPos d_radar;
 			_bad = false;
 			_str1 = if (surfaceIsWater _mast_pos) then { _bad = true;  "STR_RADAR_IN_WATER" } else {"STR_RADAR_ON_LAND"};
@@ -137,7 +164,7 @@ if (true) then {
 		};
 		// Install radio mast on terrain behind truck current position to truck.
 		// Mast must be standing on the ground to be able to execute this command
-		case "INSTALL": {
+		case "INSTALL": { // // radar command
 			// ++++++++++++++++++++++++++++++++++++++++
 			// +      check conditions to install     +
 			// ++++++++++++++++++++++++++++++++++++++++

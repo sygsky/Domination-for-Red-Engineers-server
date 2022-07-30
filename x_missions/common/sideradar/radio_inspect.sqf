@@ -18,11 +18,8 @@
 
 _veh = _this select 0;
 _txt = (if (_veh isKindOf "Truck") then {
-	if (isNil "sideradio_status") exitWith {
-		deleteVehicle _veh;
-		"STR_SYS_248" // Secondary objective achieved...
-	};
-	if (locked _veh) then {_veh lock false;  "STR_RADAR_TRUCK_LOCKED"} // "Spare Truck for the Mission"
+	if (!alive _veh) exitWith {"STR_RADAR_TRUCK_KILLED"}; // "This truck isn't going anywhere anymore. Maybe there's another one somewhere?"
+	if (locked _veh) then {_veh lock false;  "STR_RADAR_TRUCK_LOCKED"} // "A truck adapted to carry radio mast. You're in luck!"
 	else {
 		if (isNil "sideradio_vehs") then {
 			"STR_RADAR_TRUCK"; // Active truck for transporting a radio mast
@@ -31,11 +28,11 @@ _txt = (if (_veh isKindOf "Truck") then {
 				_asl = getPosASL d_radar;
 				// "Active truck for transporting a radio mast, mast is loaded"
 				if ((_asl select 2) < 0 ) then { "STR_RADAR_TRUCK_LOADED" } else {
-					// -1 - mission failured, 0 - mission not finished, 1 - succesfully finished
+					// 0 - mission not finished, 1 - mast installed, 2 - truck is on the way to the base, 3 - completed
 					switch (sideradio_status) do {
-						case 0: { "STR_RADAR_TRUCK_NOT_LOADED" };
+						case 0: { "STR_RADAR_TRUCK_LOADED" };
 						case 1: { "STR_RADAR_TRUCK_MAST_INSTALLED" };
-						default { "STR_RADAR_TRUCK" };
+						case 2: { "STR_RADAR_SUCCESSFUL" };
 					};
 				};
 			} else { // radar is dead
@@ -45,7 +42,6 @@ _txt = (if (_veh isKindOf "Truck") then {
 	};
 } else {
 	if (!alive d_radar) exitWith {"STR_RADAR_MAST_DEAD"};
-	if (isNil "sideradio_status") exitWith {""}; // random radio sound
 	switch (sideradio_status) do {
 		case 0: { "STR_RADAR_MAST_UNLOADED" };
 		case 2;
