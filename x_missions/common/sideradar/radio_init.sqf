@@ -35,7 +35,6 @@ if (typeOf _veh  == RADAR_TYPE) exitWith { // Radar itself
 };
 
 if (_veh isKindOf "Truck" ) exitWith { // first truck, second is in reserve
-	if (!alive d_radar) exitWith{};
 	if (!alive _veh) exitWith {};
 	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf"]; // Inspect
 	_veh addAction[localize    "STR_LOAD", "x_missions\common\sideradar\radio_menu.sqf","LOAD"]; // Load

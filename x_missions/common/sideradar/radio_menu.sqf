@@ -43,13 +43,14 @@ if (true) then {
 		(call SYG_randomRadioNoise) call SYG_receiveRadio;
 		if (isNil "sideradio_status") exitWith {
 			_txt = localize (if (_veh isKindOf "Truck") then {
-				["STR_RADAR_NO","STR_SYS_248"] call XfRandomArrayVal
+				["STR_RADAR_NO","STR_SYS_248"] call XfRandomArrayVal // "Received unreliable message" or "Secondary objective achieved..."
 			} else {
-				["STR_RADAR_NO","STR_RADAR_MAST","STR_SYS_248"] call XfRandomArrayVal
+				["STR_RADAR_NO","STR_RADAR_MAST","STR_SYS_248"] call XfRandomArrayVal // ..., "Rusty GRU Radio-mast", ...
 			});
 		};
-		if (sideradio_status > 1) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_SUCCESSFUL"};
-		if (sideradio_status < 0) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_FAILED"};
+		if (sideradio_status == 2) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED"}; // "Active truck for transporting a radio mast, mast is installed"
+		if (sideradio_status == 1) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_SUCCESSFUL"}; // "Relay mast installed, now return your truck to the base flag to finish SM!"
+		if (sideradio_status <= 0) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_FAILED"}; // "Mission failed, no help from GRU!"
 	};
 	if (((vehicle _pl == _pl) || (_pl != driver (vehicle _pl))) && (_cmd in ["LOAD","UNLOAD"])) exitWith  { _txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" };
 

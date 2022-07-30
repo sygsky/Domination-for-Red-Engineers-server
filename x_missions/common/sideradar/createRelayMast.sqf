@@ -30,22 +30,28 @@ if (_base ) then {
 		[[11502,9152],  "Corinto",  150]
 	];
 	// find good point for the truck
-	_MTName = call SYG_getTargetTownName; // name of the current town
+	_cnt = 0;
 	while { count _pos == 0 } do {
 		_ind = _places call XfRandomArrayVal; // find settlement to use
 		_info = _places select _ind;
 		_center = _info select 0;
+		_MTName = call SYG_getTargetTownName; // name of the current town
 		_name = _info select 1;
-		if (_pname != _MTName) then { // not main target
+    	if (_name != _MTName) then { // not main target
 			_pos = [_center, _info select 2, 25] call XfGetRanPointCircleBig; // find the point in the town to create the radar
 			if (count _pos == 0) then {
+				if (_cnt >= 100) exitWith {
+					hint localize "--- createRelayMast: can't find good point, use AirBase default point!!!";
+					_pos = [9472.9,9930,0];
+					_name = "AirBase";
+					_base = true;
+				};
 				sleep 0.3;
+				_cnt = _cnt +1;
 			};
 		};
-		sleep 1;
 	};
 };
-if (count _pos == 0) exitWith {hint localize "--- createRelayMast: can't find good point!!!"};
 
 //+++++++++++++++++++++
 // 1. create antenna on the base or in any near to base settlement

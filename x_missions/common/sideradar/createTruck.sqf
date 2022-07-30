@@ -30,34 +30,28 @@ _places = [
 	[[11502,9152],  "Corinto",  150]
 ];
 // find good point for the truck
-_MTName = call SYG_getTargetTownName; // name of the current town
+_cnt = 0;
 while { count _pos == 0 } do {
 	_ind = _places call XfRandomArrayVal; // find random settlement to use
 	_info = _places select _ind;
 	_center = _info select 0;
-	_pname = _info select 1;
-	if (_pname != _MTName) then { // not main target
+	_MTName = call SYG_getTargetTownName; // name of the current town
+	_name = _info select 1;
+	if (_name != _MTName) then { // not main target
 		_pos = [_center, _info select 2, 5] call XfGetRanPointCircleBig; // find random point in the town to create the truck
 		if (count _pos == 0) then {
+			if (_cnt  >= 100) exitWith {
+				_pos = [9452.5,9930.5,0];
+				_name = "AirBase";
+				hint localize "--- createTruck: can't find good point, use AirBase as default!";
+			};
+			_cnt = _cnt + 1;
 			sleep 0.3;
 		};
 	};
 };
-if (count _pos == 0) exitWith {hint localize "--- createTruck: can't find good point!!!"};
 
-#ifdef __ACE__
-_ural = switch (d_own_side) do {
-	case "EAST": {"UralCivil"};
-	case "RACS";
-	case "WEST": {"ACE_Truck5t_Open"};
-};
-#else
-_ural = switch (d_own_side) do {
-	case "EAST": {"UralCivil"};
-	case "RACS";
-	case "WEST": {"Truck5tOpen"};
-};
-#endif
+_ural = "UralCivil";
 
 d_radar_truck = createVehicle [_ural, _pos, [], 0, "NONE"];
 if (_name != "AirBase") then {
@@ -69,7 +63,7 @@ d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\
 
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
 _veh addEventHandler ["killed", {
-	hint localize format["+++ Radar truck killed by %1", if (isPlayer (_this select 1)) then{name (_this select 1)} else {typeof (_this select 1)}];
+	hint localize format["+++ Radar truck killed by %1", (_this select 1) call SYG_getKillerInfo];
 	private ["_veh","_asl","_pos","_msg","_cnt"];
 	_veh = _this select 0;
 	if (alive d_radar)  then  { // unload mast if truck is killed
@@ -83,6 +77,7 @@ _veh addEventHandler ["killed", {
 
 	_msg = [d_radar_truck, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
 	hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg];
+	[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the yellow truck in the '%1' area"
 
 	// remove truck after 10 minutes of players absence around 300 meters of truck.
 	_cnt = 0;
@@ -99,4 +94,3 @@ _veh addEventHandler ["killed", {
 		} else {_cnt = 0;}; // wait next period for player absence
 	};
 }];
-[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // Look for the yellow truck in the '%1' area

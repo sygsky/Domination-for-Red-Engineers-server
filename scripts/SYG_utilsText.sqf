@@ -424,7 +424,7 @@ SYG_msgToUserParser = {
 // a man => name _killer
 // a gunner of land vehicle/heli/plane => gunner _killer
 // a pilot of plane => driver _killer
-// call as: _unit_name = call SYG_getUnitName;
+// call as: _unit_name = _unit call SYG_getUnitName;
 //
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SYG_getUnitName = {
@@ -434,4 +434,16 @@ SYG_getUnitName = {
 	if ( !(isNull (driver _this) ) ) exitWith { name (driver _this) };
 	if ( !(isNull (commander _this) ) ) exitWith { name (commander _this) };
 	"<unknown>"
+};
+
+//
+// Gets string with killer info: {name of player/unit}<(vehicle type)>
+//
+SYG_getKillerInfo = {
+	private ["_veh","_name"];
+	if (isNull _this) exitWith {"<unknown>"};
+	_veh = vehicle _this;
+	_name = _veh call SYG_getUnitName;
+	if ( _veh == _this) exitWith { _name };
+	format["%1(%2)", _name, typeOf _veh];
 };

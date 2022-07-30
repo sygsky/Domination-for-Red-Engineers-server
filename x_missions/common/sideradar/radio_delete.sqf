@@ -12,7 +12,7 @@ if (!isServer) exitWith{};
 
 #include "sideradio_vars.sqf"
 
-sideradio_status = -1; // radar is dead
+sideradio_status = 0; // radar is dead
 publicVariable "sideradio_status";
 
 _killer = _this select 1;
