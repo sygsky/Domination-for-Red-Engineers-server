@@ -11,15 +11,6 @@
 
 if (isServer && ! X_SPE) exitWith{false};  // isDedicated
 
-#ifdef __NEW__
-
-localize "STR_WPN_TITLE" hintC [
-		composeText[ image "img\red_star_64x64.paa",lineBreak, localize "STR_WPN_INFO", lineBreak, lineBreak, parseText("<t align='center'><t color='#ffff0000'>" + (format[localize "STR_WPN_EXIT",localize "STR_DISP_INT_CONTINUE"]))]
-		//(localize _str) + "\n\n" + (localize "STR_COMP_0")
-];
-
-#else
-
 #include "x_macros.sqf"
 
 // comment next line to not create debug messages
@@ -50,16 +41,26 @@ switch (toUpper (_this select 3) ) do {
                     else { player call SYG_getPlayerEquipAsStr };
 		_sound = format["armory%1", (floor(random 4)) + 1 ];
         ["d_ad_wp", name player, _equip, _sound] call XSendNetStartScriptServer; // sent to server
+#ifdef __EQUIP_OPD_ONLY__
+
+		localize "STR_WPN_TITLE" hintC [
+			composeText[ image "img\red_star_64x64.paa",lineBreak, localize "STR_WPN_INFO", lineBreak, // "Remembering your armament is now done automatically when you exit the mission!"
+						localize "STR_WPN_INFO_1", lineBreak, lineBreak,  // "Only your backpack is now stored in the locker room!"
+						parseText("<t align='center'><t color='#ffff0000'>" + (format[localize "STR_WPN_EXIT",localize "STR_DISP_INT_CONTINUE"])) // "press '%1' to exit from dialog"
+		]
+		//(localize _str) + "\n\n" + (localize "STR_COMP_0")
+];
+#else
         _args = if ( _equip == "" )
-                    then  { ["STR_SYS_613"]} // Record is wiped off
-                    else {["STR_SYS_611"] }; // Record is stored
+                    then { ["STR_SYS_613"] } // "Your recorded equipment wiped"
+                    else { ["STR_SYS_611"] }; // "Your equipment is recorded and will be given out next time"
         ["msg_to_user", "", [_args]] call SYG_msgToUserParser; // message output
+#endif
 //        hint localize format["--- scripts/storeequipment.sqf: msg is %1", args ];
     };
     case "L": {
         // load equipment
     };
 };
-#endif
 
 if true exitWith{true};

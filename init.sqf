@@ -430,16 +430,16 @@ if (isServer) then {
 	// OnPlayer Connected DB
 	if (isNil "ace_sys_network_OPCB") then {ace_sys_network_OPCB = []};
 	ace_sys_network_OPCB set [count ace_sys_network_OPCB , {[_this select 0] execVM "x_scripts\x_serverOPC.sqf"} ];
-	hint localize format["ACE:ace_sys_network_OPCB = %1", ace_sys_network_OPCB];
+	hint localize format["ACE:ace_sys_network_OPCB count %1", count ace_sys_network_OPCB];
 
 	// On Player Disconnect
 	if (isNil "ace_sys_network_OPD") then {ace_sys_network_OPD = []};
 	ace_sys_network_OPD set [ count ace_sys_network_OPD, {[_this select 0] execVM "x_scripts\x_serverOPD.sqf"}];
-	hint localize format["ACE:ace_sys_network_OPD = %1", ace_sys_network_OPD];
+	hint localize format["ACE:ace_sys_network_OPD count %1", count ace_sys_network_OPD];
 
 #else
-	onPlayerConnected "xhandle = [_name] execVM ""x_scripts\x_serverOPC.sqf""";
-	onPlayerDisconnected "xhandle = [_name] execVM ""x_scripts\x_serverOPD.sqf""";
+	onPlayerConnected "xhandle = [_this select 0] execVM ""x_scripts\x_serverOPC.sqf""";
+	onPlayerDisconnected "xhandle = [_this select 0] execVM ""x_scripts\x_serverOPD.sqf""";
 #endif
 
 //#define __DEBUG_CREW_FILLING__
@@ -524,8 +524,9 @@ if (isServer) then {
 	[] spawn {
 		// create GRU radio mast on the Pico de Perez
 		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
-		sideradio_status = 2; // radio-relay is online!
 		publicVariable "d_radar";
+		sideradio_status = 2; // radio-relay is online!
+		publicVariable "sideradio_status";
 
 		waitUntil { sleep 10.737; current_target_index >= 0 };
 		while { true } do {
@@ -534,7 +535,7 @@ if (isServer) then {
 		};
 	};
 
-	["INIT"] call compile preprocessFileLineNumbers "GRU_scripts\GRUServer.sqf";
+	["INIT"] spawn compile preprocessFileLineNumbers "GRU_scripts\GRUServer.sqf"; // run in the scheduled envirinment
 
     //+++++++++++++++++++++++++++++++ SHORT NIGHT DEFINITIONS AND CODE SPAWN
 
@@ -557,7 +558,7 @@ if (isServer) then {
     ace_sys_missiles_incomingMissile = compile (preprocessFileLineNumbers ("scripts\ACE\ace_mando_replacemissile.sqf")); // replace mando guidance missile range
     mando_scorefunc                  = compile (preprocessFileLineNumbers ("scripts\ACE\mando_score.sqf")); // replace mando score calculation
     //mando_missile_handler            = compile (preprocessFileLineNumbers ("scripts\ACE\mando_missile.sqf"));
-    hint localize "*** mando_missile_replaced replaced by custom version";
+    hint localize "*** __MANDO_MISSILES_UPDATE__ replaces some Mando routines with custom versions";
     #endif
 
 #endif
@@ -581,7 +582,7 @@ waitUntil {X_Init};
 
 #include "i_client2.sqf"
 
-["INIT"] call compile preprocessFileLineNumbers "GRU_scripts\GRUClient.sqf";
+["INIT"] spawn compile preprocessFileLineNumbers "GRU_scripts\GRUClient.sqf";
 
 if (!X_SPE) then {
 	waitUntil {count d_vars_array > 0};
