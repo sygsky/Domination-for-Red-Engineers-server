@@ -938,18 +938,17 @@ XHandleNetStartScriptClient = {
 					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
 	                    _veh setVariable ["DOSAAF", nil]; // no more to be DOSAAF unknown vehicle
 					    _ret = call SYG_countVehicles; // _id = vehicles find _veh;
+						playSound "good_news";
 						if ((name player) == (_this select 2)) then {
 							(d_ranked_a select 30) call SYG_addBonusScore; // this player found this bonus vehicle, add +2 to him
-							playSound "good_news";
 							(localize "STR_BONUS_1") hintC [
 								format[localize "STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"
 								format[localize "STR_BONUS_1_2", typeOf _veh], // "A temporary marker has been created, visible until '%1' registers with the recovery service."
-	//							format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
 								format[localize "STR_BONUS_1_3", typeOf _veh, localize "STR_REG_ITEM"] // "Registration: deliver %1 to the base and invoke the '%2' command"
 								];
 						} else { //  send info to all players except author
 							["msg_to_user","",[
-								["%1 %2","STR_BONUS_1"],
+								["STR_BONUS_1"],
 								["STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"],
 								["STR_BONUS_1_2", typeOf _veh],
 								["STR_BONUS_1_3", typeOf _veh, "STR_REG_ITEM"]
@@ -975,14 +974,22 @@ XHandleNetStartScriptClient = {
                     _veh setVariable ["DOSAAF", nil];
 					// ["msg_to_user",_player_name,[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,_sound>>>]
 					playSound "good_news";
-					localize "STR_BONUS_3_1" hintC [
-						format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
-//						format["""RECOVERABLE"" = %1", _veh getVariable "RECOVERABLE"],
-						localize "STR_BONUS_3_3"
+					if ((name player) == (_this select 2)) then {  // this player registered this bonus vehicle, add +2 to himlocalize "STR_BONUS_3_1" hintC [
+						(d_ranked_a select 31) call SYG_addBonusScore;
+						localize "STR_BONUS_3_1" hintC [ // "Registering a new vehicle"
+							format [localize "STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
+							localize "STR_BONUS_3_3" // "This vehicle will be restored when it is destroyed"
 						];
+					} else {
+						["msg_to_user","",[
+							["STR_BONUS_3_1"], // "Registering a new vehicle"
+							["STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
+							["STR_BONUS_3_3"]
+						],5,0, false, "good_news"] call SYG_msgToUserParser;
+					};
 //					    0              1,                  2,                                                          3, 4, 5      6
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;
-					if ((name player) == (_this select 2)) then { (d_ranked_a select 31) call SYG_addBonusScore;}; // this player registered this bonus vehicle, add +2 to him
+
 				};
 				// Params: ["bonus","INI",[_veh1...,_vehN]] or ["bonus","INI", _veh]
 				case "INI": { // new DOSAAF vehicles are added to the unknown DOSAAF vehicles list
