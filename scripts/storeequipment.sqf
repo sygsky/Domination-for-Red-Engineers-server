@@ -11,6 +11,7 @@
 
 if (isServer && ! X_SPE) exitWith{false};  // isDedicated
 
+#include "x_setup.sqf"
 #include "x_macros.sqf"
 
 // comment next line to not create debug messages
