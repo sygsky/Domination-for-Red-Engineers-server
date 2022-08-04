@@ -14,7 +14,6 @@ damage: Number - Resulting level of damage
 */
 
 if (!isServer) exitWith {};
-
 #include "x_setup.sqf"
 
 #define __PRINT__
@@ -26,6 +25,7 @@ hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2", _this, {alive
 #endif
 
 _veh = _this select 0;
+if (side _veh == d_side_player) exitWith {format["+++ eventOnDamage.sqf: vehicle side is %1, exit", d_side_player]};
 
 _damage = _this select 2;
 if ( !(alive _veh)) exitWith { hint localize format["+++ eventOnDamage.sqf: attacked vec %1 is killed", typeOf _veh]; }; // End Of Life
