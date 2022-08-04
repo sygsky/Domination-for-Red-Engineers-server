@@ -1167,7 +1167,7 @@ XBaseEnemies = {
 				parseText("<t size='1'>" + (localize "STR_SYS_61")/* "Enemy troops on your base." */ + "</t>")
 			];
 //            hint localize format["+++ XBaseEnemies: %1", _this];
-        	private ["_alarm_obj","_no","_thislist","_height","_x","_pos","_sound"];
+        	private ["_alarm_obj","_no","_thislist","_height","_x","_pos","_sound","_unit"];
 //            hint localize format["+++ XBaseEnemies: %1", _this];
             _alarm_obj = FLAG_BASE;
             _height    = 250; // default flare start height
@@ -1186,11 +1186,12 @@ XBaseEnemies = {
                             	[ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM", "Land_hlaska","Land_vez","Land_strazni_vez"],
                             	1000
                             ];
-			            	hint localize format["+++ XBaseEnemies: nearestObjects count %1", count _no];
+			            	hint localize format["+++ XBaseEnemies: nearestObjects count %1, thislist %2", count _no, count _thislist];
+			            	_unit  = _x;
                             {
 								_pos  = position _x;
                                 if ( (typeName _x == "OBJECT") && (alive _x) && ((_pos select 2) > -10) ) exitWith {
-//                                	hint localize format["+++ XBaseEnemies: nearest alarm obj %1 (%2 m.), whole objs %2", typeOf _x, count _no ];
+                                	hint localize format["+++ XBaseEnemies: nearest alarm obj %1 (pos %2), enemy dist %3 m.", typeOf _x, getPos _x, _pos distance  _unit ];
                                 	_alarm_obj = _x
                                 };
                             } forEach _no;
@@ -1204,7 +1205,7 @@ XBaseEnemies = {
 			// if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
             if ( count ( _alarm_obj nearObjects ["F_40mm_Yellow", 400] ) == 0 ) then {
 	            [_alarm_obj, _height, "YELLOW", 400] execVM "scripts\emulateFlareFired.sqf";
-	           	hint localize format["+++ XBaseEnemies: throw yellow flare above %1", typeOf _alarm_obj];
+	           	hint localize format["+++ XBaseEnemies: throw yellow flare above %1, pos %2", typeOf _alarm_obj, getPos _alarm_obj ];
             } else { hint localize format["+++ XBaseEnemies: YELLOW flare near %1 already on", typeOf _alarm_obj]; };
 		};
 		case 1: {
