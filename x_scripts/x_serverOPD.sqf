@@ -1,6 +1,6 @@
 // Xeno, x_scripts\x_serverOPD.sqf, OnPlayerDisconnected
 if (!isServer) exitWith{};
-private ["_name", "_index", "_parray", "_oldwtime", "_connecttime", "_newwtime","_str","_arr","_equipment","_wpnArr"];
+private ["_name", "_index", "_parray", "_oldwtime", "_connecttime", "_newwtime","_str","_arr","_equipStr","_wpnArr"];
 
 _name = _this select 0;
 if (_name == "__SERVER__") exitWith {};
@@ -27,22 +27,18 @@ if (_index >= 0) exitWith {
     _parray set [0, _newwtime];
     (_parray select 4) execVM "x_scripts\x_markercheck.sqf"; // remove all player created markers
 	_player = call (compile (_parray select 4)); // find player object by his role name
+	_arr = _player call SYG_getPlayerEquiptArr; // real equipment array= = [ [weapons names], [magazines names]<, "",[]]
 #ifdef __EQUIP_OPD_ONLY__
 	// Note: server knows nothing  about ACE rucksack and distance and death sound on/off.
 	// These parameters are known only on client computers and must be saved by player with command on the flag base
-	_arr = _player call SYG_getPlayerEquiptArr; // real equipment array= = [ [weapons names], [magazines names]<, "",[]]
-	_equipment = _parray select 5; // read string with equipment array
-	_wpnArr = if ( _equipment != "" ) then { _equipment call SYG_unpackEquipmentFromStr } else { [] }; // stored weapon array
+	_equipStr = _parray select 5; // read string with equipment array
+	_wpnArr = if ( _equipStr != "" ) then { _equipStr call SYG_unpackEquipmentFromStr } else { [] }; // stored weapon array
 	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only valuable parts
-	_str = _wpnArr call SYG_equipArr2Str;
-	_parray set [5, _str]; // replace old eequipment list with one found in OPD procedure
-	_str = _arr call SYG_getPlayerEquipAsStr; // Get armament formatted array as string
-#else
-	_str = _player call SYG_equipArr2Str; // Get armament formatted array as string
+	_parray set [5, _wpnArr call SYG_equipArr2Str]; // replace old equipment list with one got from player in OPD procedure
 #endif
 #ifdef __DEBUG_PRINT__
     hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", old array  %2", _name, _parray call SYG_compactArray ];
-	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", new wpnarr %2", _name, _str ];
+	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", new wpnarr %2", _name, _arr call SYG_compactArray ];
 #endif
 
 //	_parray set [ 5, _str]; // set new armament in any case

@@ -124,14 +124,12 @@ XHandleNetStartScriptServer = {
 			_this call XAddPlayerScore;
 		};
 
-		// store player weapon list on server
-		// params: ["d_ad_wp", _player_name,_player_weapon_str_array]
+		// store player weapon list on the server
+		// params: ["d_ad_wp", _player_name,_player_weapon_str_array<,_sound<,_sound_object>>]
 		case "d_ad_wp": {
 			[(_this select 1),(_this select 2)] spawn SYG_storePlayerEquipmentAsStr;
-			if (!isNil "FLAG_BASE") then {
-				if ((count _this) > 3) then {
-					["say_sound", FLAG_BASE, _this select 3] call XSendNetStartScriptClientAll; // sent sound to all players
-				};
+			if ((count _this) > 4) then {
+				["say_sound", _this select 4, _this select 3] call XSendNetStartScriptClientAll; // send armory sound to all players
 			};
 		};
 
@@ -142,7 +140,7 @@ XHandleNetStartScriptServer = {
             SYG_server_time  = time;       // current server time at the synchonizaton moment
 
 			_this spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance, suicide sound...
-			if ( count _this > 2) then {// missionStart received
+			if ( count _this > 2) then { // missionStart received
 			    private ["_userLogin", "_ind"];
 			    _userLogin = arg(1);
 			    _ind = SYG_userNames find _userLogin;

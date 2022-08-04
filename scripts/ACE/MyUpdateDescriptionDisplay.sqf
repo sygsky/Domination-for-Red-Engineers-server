@@ -12,8 +12,7 @@ _ctrl = _disp displayCtrl ACE_DESCRIPTION_IDC;
 //The original gear menu doesn't store a data value for weapons.
 //We could read the displayName, and search through every weapon in the config until we find one that matches, but that would be really slow.
 //This simply uses the original description display if we don't know what we are supposed to describe.
-if (format["%1",_this select 1] == "") then
-{
+if (format["%1",_this select 1] == "") then {
 	//hint format["%1\n%2",_this];
 	_ctrl ctrlShow false;
 	(_disp displayCtrl CA_DESCRIPTION_IDC)ctrlShow true
@@ -27,32 +26,26 @@ _isPDM = false;
 _isWeapon = false;
 _isMagazine = false;
 _typeNum = getNumber(_conf >> "type");
-if (_typeNum == 4096) then
-{
+if (_typeNum == 4096) then {
 	_confTypeEUM = _conf >> "ACE_EndUseMag";
 	_confTypeEUW = _conf >> "ACE_EndUseWeapon";
-	if (isText(_confTypeEUM) || isText(_confTypeEUW)) then
-	{
+	if (isText(_confTypeEUM) || isText(_confTypeEUW)) then {
 		_isPDM = true;
 		_confPDM = _conf;
-		if (isText(_confTypeEUM)) then
-		{
+		if (isText(_confTypeEUM)) then {
 			_isMagazine = true;
 			_confEUM = configFile >> "CfgMagazines" >> getText(_confTypeEUM);
 			_conf = _confEUM;
 		};
-		if (isText(_confTypeEUW)) then
-		{
+		if (isText(_confTypeEUW)) then {
 			_isWeapon = true;
 			_confEUW = configFile >> "CfgWeapons" >> getText(_confTypeEUW);
 			_conf = _confEUW;
 		}
 	}
 };
-if (!_isPDM) then
-{
-	if (_typeNum == 1 || _typeNum == 2 || _typeNum == 4 || _typeNum == 4096) then
-	{
+if (!_isPDM) then {
+	if (_typeNum == 1 || _typeNum == 2 || _typeNum == 4 || _typeNum == 4096) then {
 		_isWeapon = true;
 		_confEUW = _conf;
 	} else {
@@ -60,8 +53,7 @@ if (!_isPDM) then
 		_confEUM = _conf;
 	};
 	_confTypePDM = _conf >> "ACE_PackDummyMag";
-	if (isText(_confTypePDM)) then
-	{
+	if (isText(_confTypePDM)) then {
 		_confPDM = configFile >> "CfgMagazines" >> getText(_confTypePDM);
 	}
 };
@@ -73,8 +65,7 @@ if (isText(_confDisplayName)) then { _displayName = getText(_confDisplayName); }
 
 _description = "";
 _confDescription = _conf >> "Library" >> "libTextDesc";
-if (isText(_confDescription)) then
-{
+if (isText(_confDescription)) then {
 	_description = getText(_confDescription);
 	if (_description == "") then { _description = localize "STR_LIB_INFO_NO_TEXT"; }
 };
@@ -83,20 +74,16 @@ _packSize = "";
 _magazines = "";
 _confMag = configFile >> "CfgMagazines";
 _magArr = []; // array of unique magaizine description
-if (!_isPDM) then
-{
+if (!_isPDM) then {
 	private["_confPackSize"];
 	_confPackSize = _confEUW >> "ACE_PackSize";
-	if (isNumber(_confPackSize)) then
-	{
+	if (isNumber(_confPackSize)) then {
 		_packSize = format["%1 %2 %3<br/>",localize "STR_ACE_SYS_RUCK_PACKSIZE",getNumber(_confPackSize),localize "STR_ACE_SYS_RUCK_CUBICCENTIMETERS"];
 	} else {
-		if (_typeNum != 4096) then
-		{
+		if (_typeNum != 4096) then {
 			private["_confMagazines"];
 			_confMagazines = _confEUW >> "magazines"; // process magazines placed in the weapon class itself
-			if (isArray(_confMagazines)) then
-			{
+			if (isArray(_confMagazines)) then {
 				private["_magArray","_magCount", "_magDescr"];
 				//_confMag = configFile >> "CfgMagazines";
 				_magArray = getArray(_confMagazines);
@@ -104,11 +91,9 @@ if (!_isPDM) then
 			    //hint localize format["--- Weapon %1: mag count %2", _displayName, _magCount];
 				if (_magCount > 0) then { _magazines = getText(_confMag >> (_magArray select 0) >> "displayName"); };
 				_magArr = [_magazines]; // // store 1st known magazine display name
-				for "_x" from 1 to _magCount step 1 do
-				{
+				for "_x" from 1 to _magCount step 1 do {
 				    _magDescr = getText(_confMag >> (_magArray select _x) >> "displayName");
-				    if ( !(_magDescr in _magArr) ) then
-				    {
+				    if ( !(_magDescr in _magArr) ) then {
     				    _magazines = format["%1, %2",_magazines, _magDescr];
     				    _magArr = _magArr + [_magDescr];
 				    };
@@ -116,38 +101,29 @@ if (!_isPDM) then
 			};
 			// process magazines from muzzles of weapon class if available
 			_muzzles = _confEUW >> "muzzles";
-			if (isArray(_muzzles)) then
-			{
+			if (isArray(_muzzles)) then {
 			    _muzzleArray = getArray(_muzzles);
 			    _muzzleCount = count _muzzleArray;
 			    // hint localize format["--- Weapon %1: muzzleCount = %2", _displayName, _muzzleCount];
-			    for "_i" from 0 to _muzzleCount - 1 do
-			    {
+			    for "_i" from 0 to _muzzleCount - 1 do {
                     // read found muzzle class if present and try to find magazines in it
       			    _confMagazines = _confEUW >> (_muzzleArray select _i) >> "magazines";
-                    if (isArray(_confMagazines)) then
-                    {
+                    if (isArray(_confMagazines)) then {
                         private["_magArray","_magCount","_magDescr"];
                         _magArray = getArray(_confMagazines);
                         _magCount = count _magArray;
-                        if (_magCount > 0) then // still no one magazine is in unique array
-                        {
+                        if (_magCount > 0) then  {// still no one magazine is in unique array
                             _magDescr = getText(_confMag >> (_magArray select 0) >> "displayName");
-                            if ( _magazines != "") then
-                            {
+                            if ( _magazines != "") then {
                                 _magazines = format["%1, %2",_magazines, _magDescr];
-                            }
-                            else
-                            {
+                            } else {
                                 _magazines = _magDescr;
                             };
                             _magArr = _magArr + [_magDescr]; // remember 1st known magazine display name
                         };
-                        for "_x" from 1 to _magCount step 1 do
-                        {
+                        for "_x" from 1 to _magCount step 1 do {
                             _magDescr = getText(_confMag >> (_magArray select _x) >> "displayName");
-                            if ( !(_magDescr in _magArr) ) then
-                            {
+                            if ( !(_magDescr in _magArr) ) then {
                                 _magazines = format["%1, %2",_magazines, _magDescr];
                                 _magArr = _magArr + [_magDescr];
                             };
@@ -162,8 +138,7 @@ if (!_isPDM) then
 
 _count = "";
 _velocity = "";
-if (_isMagazine) then
-{
+if (_isMagazine) then {
 	_confCount = _confEUM >> "count";
 	if (isNumber(_confCount)) then { _count = format["%1 %2<br/>",localize "STR_LIB_INFO_AMMO_COUNT",getNumber(_confCount)]; };
 	_confVelocity = _confEUM >> "initSpeed";
@@ -185,18 +160,15 @@ _statistics = format["%1%2%3%4%5",_velocity,_count,_packSize,_weight,_size];
 if (_statistics != "") then { _statistics = format["<t size = '1.35'><br/><br/>%1<br/></t><t size = '1'>%2</t>",localize "STR_LIB_LABEL_STATISTICS",_statistics]; };
 
 _params = "";
-if ( _isMagazine ) then
-{
+if ( _isMagazine ) then {
     _params = ">";
     // add more info on magazine
     _confParam = _conf >> "ammo";
-    if (isText(_confParam)) then
-    {
+    if (isText(_confParam)) then {
         _confAmmo = getText(_confParam);
         _param = format["> "];
         _confParam = configFile >> "CfgAmmo" >> _confAmmo >> "hit";
-        if (isNumber(_confParam) &&  getNumber(_confParam) >= 0.1) then // if less - it is dummy magazine (bandage etc)
-        {
+        if (isNumber(_confParam) &&  getNumber(_confParam) >= 0.1) then { // if less - it is dummy magazine (bandage etc)
             if (isNumber(_confParam) ) then { _params = format[ localize "STR_ACE_HIT", _params,  getNumber(_confParam) ]; };
             _confParam = configFile >> "CfgAmmo" >> _confAmmo >> "indirectHit";
             if (isNumber(_confParam) && getNumber(_confParam) > 0) then { _params = format[  localize "STR_ACE_INDIRECT_HIT", _params, getNumber(_confParam) ]; };

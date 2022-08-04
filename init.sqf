@@ -737,9 +737,18 @@ if ( sec_kind == 3) then {
 
 #ifdef __ACE__  // the section for ACE modified methods
 if ( X_Client ) then {// runs only on client
-    // store rucksack position (not move automatically it to the secondary gear slot)
-    ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
+
+    // Not change rucksack position (not move it automatically to the secondary gear slot)
+#ifdef __EQUIP_OPD_ONLY__
+	// store rucksack content each time on rucksacl update dialog call (if really changed)
+	SYG_playerRucksackContent = ""; // Player rucksack current content in text form changed on each rucksack update
+    ACE_Sys_Ruck_Switch_WOBCheck = compile preprocessFileLineNumbers "scripts\ACE\storeRucksackContent.sqf";
     hint localize "+++ ACE_Sys_Ruck_Switch_WOBCheck replaced by custom version";
+#endif
+#ifndef __EQUIP_OPD_ONLY__
+    ACE_Sys_Ruck_Switch_WOBCheck  = compile preprocessFileLineNumbers "nothing.sqf";
+    hint localize "+++ ACE_Sys_Ruck_Switch_WOBCheck replaced by dummy version";
+#endif
 
     // improve available magazines description
     ACE_Sys_Ruck_UI_UpdateDescriptionDisplay = compile preprocessFileLineNumbers "scripts\ACE\MyUpdateDescriptionDisplay.sqf";

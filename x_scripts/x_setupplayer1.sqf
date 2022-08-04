@@ -265,3 +265,7 @@ player call SYG_addBinocular;
 //		hint localize format["+++ rearm: after player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
 //    	d_player_stuff = nil;
 //__DEBUG_NET("x_setupplayer.sqf",d_player_stuff)
+
+#ifdef __EQUIP_OPD_ONLY__
+SYG_playerRucksackContent = player call SYG_getPlayerEquipAsStr; // initial player equipment in text form
+#endif

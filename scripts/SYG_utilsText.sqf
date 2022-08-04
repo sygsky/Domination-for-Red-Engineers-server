@@ -203,25 +203,21 @@ SYG_textAlign = {
 // NOTE: don't designate non-string array as input one as resulted array items all will be strings!
 // call as: _new_arr = _old_arr call SYG_compactArray;
 // E.g.:  _old_arr = [0,0,"lolport",170,"RESCUE",
-//	               [
-//                   ["Binocular","ACE_Dragon","ACE_SCAR_H_CQB_mk4"],
-//                     [
-//                       "ACE_Dragon","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB",
-//                       "ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB"
-//                     ],
-//                   "ACE_Rucksack_Alice",[["ACE_Dragon_PDM",2]],1500,0
-//                  ]
-//               ]
+//                    ["Binocular","ACE_Dragon","ACE_SCAR_H_CQB_mk4"],
+//                    [
+//                     "ACE_Dragon","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB",
+//                     "ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB"
+//                    ],
+//                    "ACE_Rucksack_Alice",[["ACE_Dragon_PDM",2]],1500,0
+//                   ]
 //     _ret is = [0,0,"lolport",170,"RESCUE",
-//                 [
 //                  ["Binocular","ACE_Dragon","ACE_SCAR_H_CQB_mk4"],
 //                  ["ACE_Dragon","ACE_20Rnd_762x51_SB_SCAR_CQB(6)"],
 //                  "ACE_Rucksack_Alice",[["ACE_Dragon_PDM",2]],1500,0
-//                ]
-//              ]
+//               ]
 //
 SYG_compactArray = {
-    // compact equipment array
+    // compact equipment array strings
     if (typeName _this != "ARRAY") exitWith {_this};
     private ["_items", "_counts","_i", "_arr", "_ind", "_x"];
     _items  = [];
@@ -247,8 +243,8 @@ SYG_compactArray = {
     	};
     } forEach _this;
 
-// 	hint localize format["SYG_compactArray: _items  = %1", _items];
-// 	hint localize format["SYG_compactArray: _counts = %1", _counts];
+// 	hint localize format["+++ SYG_compactArray: _items  = %1", _items];
+// 	hint localize format["+++ SYG_compactArray: _counts = %1", _counts];
 
 	_arr = [];
     for "_i" from 0 to count _items - 1 do {
