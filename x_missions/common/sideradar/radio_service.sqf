@@ -35,6 +35,7 @@ _create_truck = {
 // creates radar/truck somewhere, assign "killed" event to them etc
 // returns true if something is created, else false
 _create_items = {
+	hint localize format["+++ radio_service.sqf: create radio items, alive radar %1, alive truck %2",alive d_radar, alive d_radar_truck];
 	private ["_msg","_status"];
 	_msg = [];
 	_status = sideradio_status;
@@ -68,12 +69,23 @@ _create_items = {
 
 while { isNil "d_radar" } do { sleep 120 };
 
+sleep 2;
+
 while { true } do {
-    ["msg_to_user", "",  [["STR_RADAR_INFO"]], 0, 15 ] call XSendNetStartScriptClient; // "The GRU requires a radio relay mast to work!"
+	if (!alive d_radar) then {
+		// say radio and print message in the same time
+		["say_radio", call SYG_randomRadioNoise, ["msg_to_user", "",  [["STR_RADAR_INFO"]], 0, 15, false ]] call XSendNetStartScriptClientAll;
+		hint localize "+++ radio_service.sqf: radar killed";
+	};
+	hint localize format["+++ radio_service.sqf: wait while status < 2 (%1)",sideradio_status];
 	// wait until radio-relay is ready
 	while {sideradio_status < 2} do { // Provide simultaneous availability of a mast and a truck
-		sleep 60;
-		if (!(alive d_radar && alive d_radar_truck) ) then { _create_items };
+		sleep 30;
+		if ( !( (alive d_radar) && (alive d_radar_truck) ) ) then {call _create_items };
 	};
+	hint localize format["+++ radio_service.sqf: continue with status == %1", sideradio_status];
+
+	hint localize format["+++ radio_service.sqf: wait while status == 2 (%1)", sideradio_status];
 	while {sideradio_status == 2} do { sleep 60; }; // while radio is workable, do nothing
+	hint localize format["+++ radio_service.sqf: continue with status == %1", sideradio_status];
 };

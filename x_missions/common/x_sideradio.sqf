@@ -26,7 +26,6 @@
 */
 if ( !isServer ) exitWith {};
 
-hint localize format ["+++ x_sideradio.sqf: _this = %1", _this];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 #include "sideradio_vars.sqf"
@@ -47,12 +46,16 @@ if (!isNil "_this") then {
     };
 };
 
+hint localize (if (_mission) then { format["+++ x_sideradio.sqf: _this = %1, is it mission run !!!", _this] } else { format["+++ x_sideradio.sqf: _this = %1, is NOT mission run !!!", _this] });
+
 // wait (new) antenna to alive or recreated by radio_service.sqf
 _cnt = 0;
+_time  = time;
 while { ! ( (alive d_radar) && (_cnt >= 100) ) } do { sleep 5; _cnt = _cnt + 1 };
 
 // if no radar and it is mission, exit with failure code
 if (_mission && (!( (alive d_radar) && ( _cnt < 100) ) ) ) exitWith {
+	hint localize format["+++ x_sideradio.sqf: no radar created in %1 seconds, exit!!!", round (time - _time)];
 	["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClient; // "Not a single radio relay mast could be found on the entire island. That's sad!"
 	if (_mission) then {
 		side_mission_winner = -702;
@@ -98,6 +101,7 @@ _radar_marker = ""; //
 // Main loop, controls markers movement and end of the mission
 // Radar can't be destroyed else sidemission is failed
 //
+hint localize format["+++ x_sideradio.sqf: enter marker loop, status %1", sideradio_status];
 while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
 
 	if ( X_MP && ((call XPlayersNumber) == 0) ) then {
@@ -165,11 +169,14 @@ while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
     if (sideradio_status == 1 ) exitWith {_truck = d_radar_truck}; // Mast installed, wait until curent truck returned to the base
 	sleep _delay;
 };
+hint localize format["+++ x_sideradio.sqf: exit marker loop, status %1", sideradio_status];
 
+hint localize format["+++ x_sideradio.sqf: enter truck return loop, status %1", sideradio_status];
 while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 	sleep 5;
 	if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
 };
+hint localize format["+++ x_sideradio.sqf: exit truck return loop, status %1", sideradio_status];
 
 if (_mission) then { // check victory or failure
     if ( sideradio_status == 2 ) then { // Victory!

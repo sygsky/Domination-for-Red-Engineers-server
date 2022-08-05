@@ -274,7 +274,7 @@ if (isServer) then {
     // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 29 - tanks at Cabo Juventudo,
     // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 48 - transformer substations of Corazol, 49 - captain Grant
     // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation
-    _first_array = [/*56*/];
+    _first_array = [56];
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
         hint localize format["+++ SM _first_array: %1", _first_array];
@@ -524,10 +524,13 @@ if (isServer) then {
 	[] spawn {
 		// create GRU radio mast on the Pico de Perez
 		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
-		d_radar execVM "x_missions\common\sideradar\radio_init.sqf"; // add menu to GRU radio mast on clients
+		d_radar setVehicleInit "this execVM ""x_missions\common\sideradar\radio_init.sqf""";
+		d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
 		publicVariable "d_radar";
 		sideradio_status = 2; // radio-relay is online!
 		publicVariable "sideradio_status";
+		d_radar_truck = objNull;
+		publicVariable "d_radar_truck";
 
 		waitUntil { sleep 10.737; current_target_index >= 0 };
 		while { true } do {

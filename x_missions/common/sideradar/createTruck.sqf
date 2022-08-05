@@ -1,12 +1,12 @@
 /*
 	x_missions\common\sideradar\createTruck.sqf, called on server only
 	author: Sygsky
-	description: d_radar_trcuk must be not alive before call to this script
+	description: d_radar_truck must be not alive before call to this script
 	returns: nothing
 */
 
-if (!isServer) exitWith {"--- createTruck.sqf called not from server! Exit!"};
-
+if (!isServer) exitWith {hint localize "--- createTruck.sqf called not from server! Exit!"};
+hint localize format["+++ createTruck.sqf started, _this = %1 +++", _this];
 #include "sideradio_vars.sqf"
 
 _pos = [];
@@ -61,6 +61,11 @@ if (_name != "AirBase") then {
 publicVariable "d_radar_truck";
 d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\radio_init.sqf"""];
 
+_msg = [d_radar_truck, 50] call SYG_MsgOnPosE0;
+hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg];
+[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the yellow truck in the '%1' area"
+
+
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
 _veh addEventHandler ["killed", {
 	hint localize format["+++ Radar truck killed by %1", (_this select 1) call SYG_getKillerInfo];
@@ -75,13 +80,9 @@ _veh addEventHandler ["killed", {
 		};
 	};
 
-	_msg = [d_radar_truck, 50] call SYG_MsgOnPosE0;
-	hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg];
-	[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the yellow truck in the '%1' area"
-
 	// remove truck after 10 minutes of players absence around 300 meters of truck.
 	_cnt = 0;
-	while (!(isNull _veh)) do {
+	while {!(isNull _veh)} do {
 		sleep (60 + (random 60));  // wait next period for player absence
 		_player =  [_pos, 100] call SYG_findNearestPlayer; // find any alive player in/out vehicles
 		if ( (!(alive _player)) || (_cnt > 5)) exitWith { // 5 times with 90 seconds (on average) check if no players nearby

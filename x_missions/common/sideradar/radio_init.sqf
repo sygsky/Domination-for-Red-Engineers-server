@@ -5,8 +5,7 @@
 
 	description: handles object/vehicles for radar-on-hills SM type on any vehicle (radar or truck) init on
 		the client when conection
-	1. Add the radio SM trucks actions "Inspect", "Install", "Load"/"Unload".
-	2. Add "killed" event handling to the first truck only, second one not need this as its death leads to the failure of the mission itself.
+	1. Add SM radar and truck actions "Inspect", "Install", "Load"/"Unload".
 
     params: _veh
 
@@ -15,7 +14,7 @@
 	returns: nothing
 */
 
-if (!X_Client) exitWith {"--- radio_init.sqf called not on client, exit"};
+if (!X_Client) exitWith {hint localize "--- radio_init.sqf called not on client, exit" };
 
 #include "sideradio_vars.sqf"
 
@@ -26,12 +25,11 @@ hint localize format[ "+++ radio_init.sqf: %1, _this = %2, d_radar %3", if (X_Cl
 
 _veh = _this;
 if (typeOf _veh  == RADAR_TYPE) exitWith { // Radar itself
-	if (alive _veh) then {
-		_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf","INSPECT"]; // Inspect
-		_veh addAction[localize "STR_CHECK", "x_missions\common\sideradar\radio_menu.sqf","CHECK"]; // Check
-		_veh addAction[localize "STR_INSTALL", "x_missions\common\sideradar\radio_menu.sqf","INSTALL"]; // Install
-		hint localize "+++ radio_init.sqf: add 3 actions to the radar";
-	};
+	if (!alive _veh) exitWIth {};
+	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf","INSPECT"]; // Inspect
+	_veh addAction[localize "STR_CHECK", "x_missions\common\sideradar\radio_menu.sqf","CHECK"]; // Check
+	_veh addAction[localize "STR_INSTALL", "x_missions\common\sideradar\radio_menu.sqf","INSTALL"]; // Install
+	hint localize "+++ radio_init.sqf: add 3 actions to the radar";
 };
 
 if (_veh isKindOf "Truck" ) exitWith { // first truck, second is in reserve

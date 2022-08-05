@@ -24,18 +24,24 @@ _set_detected = {
 		d_radar setVariable ["DETECTED", true];
 		// copy detected status to the server
 		["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
-		hint localize format ["+++ radio_menu.sqf: radar is detected by %1!!!", name _pl];
+//		hint localize format ["+++ radio_menu.sqf: radar is detected by %1!!!", name _pl];
 	};
 };
 
-_cmd = _this select 3; // must be "LOAD", "UNLOAD", "INSTALL"
+_cmd = _this select 3; // must be "LOAD", "UNLOAD", "INSTALL", "CHECK"
 _veh = _this select 0;
 _pl  = _this select 1;
 _txt = "";
 _send_was_at_sm = false;
 _locked = false;
 _truck = _veh isKindOf "Truck";
-if (locked _veh) then {_veh lock false; _locked = true};
+if (_truck) then {
+	if (locked _veh) then {
+		_veh lock false;
+		_locked = true;
+		call _set_detected;
+	};
+};
 
 if (true) then {
 	//
@@ -47,9 +53,6 @@ if (true) then {
 		_veh removeAction (_this select 2); // remove this action
 	};
 
-	if (_truck) then {
-
-	};
 	// vehicle is alive
 	_exit = ! (sideradio_status in [0,1]);
 	if (_exit) exitWith {
@@ -89,7 +92,7 @@ if (true) then {
 	};
 
 	switch (_cmd) do {
-		case "INSPECT": {
+		case "INSPECT": { // TODO: remove as not used anywhere
 			//
 			// Truck
 			//
@@ -143,6 +146,10 @@ if (true) then {
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_ALREADY_UNLOADED";
 			};
+			if ( round (speed _veh) > 0 ) exitWith {
+				playSound "losing_patience";
+				_txt = localize "STR_RADAR_TRUCK_MOVING";
+			};
 			_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
 			d_radar setPos [_pos select 0, _pos select 1];
 			d_radar setVectorUp [0,0,1];
@@ -153,6 +160,8 @@ if (true) then {
 
 		// checks the radio-mast position
 		case "CHECK": { // radar command
+			if (sideradio_status == 1) exitWith { _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED" }; // "The mast is installed and working. It only remains to bring the truck to the PC GRU."
+			if (sideradio_status == 2) exitWith { _txt = localize "STR_RADAR_MAST_INSTALLED" }; // "Installed radio repeater mast. The motherland will hear us!"
 			_mast_pos = getPos d_radar;
 			_bad = false;
 			_str1 = if (surfaceIsWater _mast_pos) then { _bad = true;  "STR_RADAR_IN_WATER" } else {"STR_RADAR_ON_LAND"};
@@ -160,9 +169,9 @@ if (true) then {
 			_slope = [_mast_pos, 3] call XfGetSlope;
 			_str3 = if (_slope > MAX_SLOPE) then {
 				_bad = true;
-				"STR_RADAR_ON_SLOPE"
+				_txt = "STR_RADAR_ON_SLOPE"
 			} else {
-				"STR_RADAR_ON_HORIZONTAL"
+				_txt = "STR_RADAR_ON_HORIZONTAL"
 			};
 			hint localize format["+++ CHECK: slope(in 3 m.) = %1 ",_slope];
 			_ht   = _mast_pos call SYG_getLandASL;
@@ -178,6 +187,8 @@ if (true) then {
 		// Install radio mast on terrain behind truck current position to truck.
 		// Mast must be standing on the ground to be able to execute this command
 		case "INSTALL": { // // radar command
+			if (sideradio_status == 1) exitWith { _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED" }; // "The mast is installed and working. It only remains to bring the truck to the PC GRU."
+			if (sideradio_status == 2) exitWith { _txt = localize "STR_RADAR_MAST_INSTALLED" }; // "Installed radio repeater mast. The motherland will hear us!"
 			// ++++++++++++++++++++++++++++++++++++++++
 			// +      check conditions to install     +
 			// ++++++++++++++++++++++++++++++++++++++++
