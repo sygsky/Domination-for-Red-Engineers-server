@@ -16,6 +16,17 @@
 
 #include "sideradio_vars.sqf"
 
+// try to change radar detected status
+_set_detected = {
+	private ["_detected"];
+	_detected = d_radar getVariable "DETECTED";
+	if (isNil "_detected") then {
+		d_radar setVariable ["DETECTED", true];
+		// copy detected status to the server
+		["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+	};
+};
+
 _veh = _this select 0;
 _txt = (if (_veh isKindOf "Truck") then {
 	if (!alive _veh) exitWith {"STR_RADAR_TRUCK_KILLED"}; // "This truck isn't going anywhere anymore. Maybe there's another one somewhere?"
@@ -42,6 +53,8 @@ _txt = (if (_veh isKindOf "Truck") then {
 	};
 } else {
 	if (!alive d_radar) exitWith {"STR_RADAR_MAST_DEAD"};
+
+	call _set_detected;
 	switch (sideradio_status) do {
 		case 0: { "STR_RADAR_MAST_UNLOADED" };
 		case 2;

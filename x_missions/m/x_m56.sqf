@@ -13,7 +13,7 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {x_sm_pos select 0}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = format[localize "STR_SM_56", RADAR_INSTALL_POINT call SYG_nearestLocationName, INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
+	current_mission_text = format[localize "STR_SM_56", localize "STR_RADAR_TRUCK_FIRM_TITLE", RADAR_INSTALL_POINT call SYG_nearestLocationName, INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
 	current_mission_resolved_text = localize "STR_SM_056"; // "Mission accomplished, mast in place and communication operational!"
 };
 
@@ -39,8 +39,8 @@ if (alive d_radar) then {
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	["msg_to_user", "",  [ ["STR_RADAR_UNDER_ATTACK"] ], 0, 0, false, "losing_patience" ] call XSendNetStartScriptClient;
 	for "_i" from 1 to _cnt do {
-		[_pos, _type] call SYG_bombPos;
 		sleep (0.923 + ((ceil (random 10)) / 10));
+		[_pos, _type] call SYG_bombPos;
 		if (!alive d_radar) exitWith{
 			// "Attention all! GRU radio relay mast destroyed!"
 			["msg_to_user", "",  [ ["STR_RADAR_BOMBED"] ], 0, 2, false, "tvpowerdown" ] call XSendNetStartScriptClient;

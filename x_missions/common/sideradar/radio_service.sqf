@@ -75,5 +75,5 @@ while { true } do {
 		sleep 60;
 		if (!(alive d_radar && alive d_radar_truck) ) then { _create_items };
 	};
-	while {sideradio_status == 2} do { sleep 60; }; // wwhile radio is workable, do nothing
+	while {sideradio_status == 2} do { sleep 60; }; // while radio is workable, do nothing
 };

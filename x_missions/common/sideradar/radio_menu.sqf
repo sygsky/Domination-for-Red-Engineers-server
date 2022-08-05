@@ -16,6 +16,18 @@
 
 #include "sideradio_vars.sqf"
 
+// try to change radar detected status
+_set_detected = {
+	private ["_detected"];
+	_detected = d_radar getVariable "DETECTED";
+	if (isNil "_detected") then {
+		d_radar setVariable ["DETECTED", true];
+		// copy detected status to the server
+		["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+		hint localize format ["+++ radio_menu.sqf: radar is detected by %1!!!", name _pl];
+	};
+};
+
 _cmd = _this select 3; // must be "LOAD", "UNLOAD", "INSTALL"
 _veh = _this select 0;
 _pl  = _this select 1;
@@ -117,6 +129,7 @@ if (true) then {
 			_txt = localize "STR_RADAR_MAST_LOADED";
 			["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
 			d_radar setPosASL [_asl select 0, _asl select 1, -50];
+			if (([0,0,1] distance (vectorUp d_radar )) < 0.05) then { call _set_detected; }; // if angle between radar and vertical is > 3 degrees
 			d_radar setVectorUp [0,0,1];
 			sleep 0.2;
 			hint localize format["+++ LOAD: mast pos %1, vUp %2", getPosASL d_radar, vectorUp d_radar];

@@ -51,7 +51,7 @@ while { count _pos == 0 } do {
 	};
 };
 
-_ural = "UralCivil";
+_ural = "UralCivil2"; // Blue truck "Camionaje Juares Puerto del Dolores"
 
 d_radar_truck = createVehicle [_ural, _pos, [], 0, "NONE"];
 if (_name != "AirBase") then {
@@ -64,7 +64,7 @@ d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
 _veh addEventHandler ["killed", {
 	hint localize format["+++ Radar truck killed by %1", (_this select 1) call SYG_getKillerInfo];
-	private ["_veh","_asl","_pos","_msg","_cnt"];
+	private ["_veh","_asl","_pos","_msg","_cnt","_player"];
 	_veh = _this select 0;
 	if (alive d_radar)  then  { // unload mast if truck is killed
 		_asl = getPosASL d_radar;
@@ -75,22 +75,20 @@ _veh addEventHandler ["killed", {
 		};
 	};
 
-	_msg = [d_radar_truck, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE;
+	_msg = [d_radar_truck, 50] call SYG_MsgOnPosE0;
 	hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg];
 	[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the yellow truck in the '%1' area"
 
 	// remove truck after 10 minutes of players absence around 300 meters of truck.
 	_cnt = 0;
 	while (!(isNull _veh)) do {
-		sleep (60 + (random 60));
+		sleep (60 + (random 60));  // wait next period for player absence
 		_player =  [_pos, 100] call SYG_findNearestPlayer; // find any alive player in/out vehicles
-		if ( !alive _player ) then {
-			_cnt = _cnt + 1;
-			if (_cnt > 5) exitWith { // 5 times with 90 seconds (on average) check if no players nearby
-				_pos = getPos _veh;
-				["say_sound", _pos, "steal"] call XSendNetStartScriptClient;
-				deleteVehicle _veh;
-			};
-		} else {_cnt = 0;}; // wait next period for player absence
+		if ( (!(alive _player)) || (_cnt > 5)) exitWith { // 5 times with 90 seconds (on average) check if no players nearby
+			_pos = getPos _veh;
+			["say_sound", _pos, "steal"] call XSendNetStartScriptClient;
+			deleteVehicle _veh;
+		};
+		_cnt = _cnt + 1;
 	};
 }];

@@ -26,6 +26,7 @@
 */
 if ( !isServer ) exitWith {};
 
+hint localize format ["+++ x_sideradio.sqf: _this = %1", _this];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 #include "sideradio_vars.sqf"
@@ -36,7 +37,7 @@ if ( !isServer ) exitWith {};
 #define TRUCK_MARKER "SalvageVehicle"
 #endif
 
-_mission = true; // (>0) is mission; (<= 0) not mission
+_mission = true; // (!= 0) is mission; (== 0) not mission
 if (!isNil "_this") then {
     switch (typeName _this) do {
         case   "BOOL": { _mission = _this };
@@ -50,21 +51,25 @@ if (!isNil "_this") then {
 _cnt = 0;
 while { ! ( (alive d_radar) && (_cnt >= 100) ) } do { sleep 5; _cnt = _cnt + 1 };
 
-if ( !( (alive _radar) && ( _cnt < 100) ) ) exitWith {
-    ["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClient;
-    if (_mission) then {
-        side_mission_winner = -702;
-        side_mission_resolved = true;
-    };
+// if no radar and it is mission, exit with failure code
+if (_mission && (!( (alive d_radar) && ( _cnt < 100) ) ) ) exitWith {
+	["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClient; // "Not a single radio relay mast could be found on the entire island. That's sad!"
+	if (_mission) then {
+		side_mission_winner = -702;
+		side_mission_resolved = true;
+	};
 };
 
 // radar is alive now
 _radar = d_radar;
 
-// 1. create antenna and trucks on the base
-
-sideradio_status = 0; // 0 - mission in progress, 1 - mast installed truck not reached the base, 2- truck reached the base
-publicVariable "sideradio_status"; // status of mission, after this setting can be changed on clients only
+if (sideradio_status == 2) then {
+	hint localize "+++ x_sideradio.sqf: sideradio_status == 2, wait status change";
+	_time = time;
+	waitUntil {sleep 60; sideradio_status != 2};
+	_str = [ time,_time] call SYG_timeDiffToStr;
+	hint localize format["+++ x_sideradio.sqf: sideradio_status == %1, changed after %2", sideradio_status, _str];
+};
 
 // _marker_name = [_marker_name, _marker_type, _truck_pos, _marker_color<,_marker_size>] call _make_marker;
 _make_marker = {
@@ -82,17 +87,17 @@ _make_marker = {
 	_mrk_name
 };
 
-// 2. wait until antenna killed get it, inform all about antenna damage
+// Antenna/trucks are recreated in rado_service.sqf running during whole misssion
 
-// create markers (truck + radiomast)
+// prepare markers (truck + radiomast)
 _truck = d_radar_truck; // current (first) alive truck
 _truck_marker = "";
 _radar_marker = ""; //
 
 //
 // Main loop, controls markers movement and end of the mission
+// Radar can't be destroyed else sidemission is failed
 //
-_truck = objNull;
 while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
 
 	if ( X_MP && ((call XPlayersNumber) == 0) ) then {
@@ -100,6 +105,7 @@ while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
 	};
 	_delay = 15;
 
+	// check truck marker
 	if ( alive d_radar_truck ) then {
 		if ( locked d_radar_truck ) exitWith {  // truck is locked that means it is not found
 			if (_truck_marker != "") then {
@@ -124,24 +130,30 @@ while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
 	    };
 	};
 
-    // check radar marker
-    if (alive _radar) then { // radar alive
+	//
+    // process markers of this side mission
+    //
+    if ((alive _radar) && (sideradio_status != 2)) then { // radar alive
     	_asl = getPosASL _radar;
-        if ( ( _asl select 2) >= 0) then { // radar is unloaded, so it stands on the land somewhere
-			if ( _radar_marker == "") then { // marker not exists, create it now
-				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_SM_COLOR, [0.5, 0.5] ] call _make_marker;
-			} else {
-                // marker exists, move it if needed
-                if ( ( [getMarkerPos _radar_marker, _radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-                    _radar_marker setMarkerPos ( _asl );
-                };
+        if ( ( _asl select 2) >= 0) then { // radar is unloaded, so it stands/lays on the land somewhere
+			// check if radar is already detected
+			_detected = _radar getVariable "DETECTED";
+			if (!isNil "_detected") then { // alive, not installed, detected
+				if ( _radar_marker == "") then { // marker not exists, create it now
+					_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_SM_COLOR, [0.5, 0.5] ] call _make_marker;
+				} else {
+					// marker exists, move it if needed
+					if ( ( [getMarkerPos _radar_marker, _radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
+						_radar_marker setMarkerPos ( _asl );
+					};
+				};
 			};
         } else {    // radar is load into the truck, wipe it from the map
             if ( _radar_marker != "" ) then {
                 deleteMarker _radar_marker; _radar_marker = ""
             };
         };
-    } else { // radar dead or removed, wait until sideradio_status changes
+    } else { // radar dead or installed, wait until sideradio_status changes
         if ( _radar_marker != "" ) then {
             deleteMarker _radar_marker; _radar_marker = ""
         };
@@ -150,13 +162,13 @@ while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
     // TODO: add random enemy infantry patrols on the way to the destination at certain time intervals,
     // TODO: e.g. on each kilometer close to the mission finish
 
-    if (sideradio_status == 1) exitWith {_truck = d_radar_truck}; // Mast installed, wait until curent truck returned to the base
+    if (sideradio_status == 1 ) exitWith {_truck = d_radar_truck}; // Mast installed, wait until curent truck returned to the base
 	sleep _delay;
 };
 
 while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 	sleep 5;
-	if ( (_truck distance FLAG_BASE) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" };
+	if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
 };
 
 if (_mission) then { // check victory or failure
@@ -167,11 +179,6 @@ if (_mission) then { // check victory or failure
         side_mission_winner = -702;
         side_mission_resolved = true;
     };
-    // now start the main loop, because there should be no more missions with the radio relay
-    while {true} do {
-        _handle  = "NO_MISSION" execVM "x_missions\common\x_sideradio.sqf";
-        while {!scriptDone _handle} do { sleep 60 };
-    }
 };
 
 sleep (5 + (random 5));
@@ -186,3 +193,14 @@ sleep (5 + (random 5));
 deleteMarker _radar_marker;
 deleteMarker _truck_marker;
 // d_radar continue to exists for the future adventures
+if (_mission) then {
+    // start the main loop, because there should be no more missions with the radio relay
+    [] spawn {
+		private [ "_handle" ];
+		while {true} do {
+			_handle  = "NOT_MISSION" execVM "x_missions\common\x_sideradio.sqf";
+			while {!scriptDone _handle} do { sleep 60 };
+		}
+    };
+
+};

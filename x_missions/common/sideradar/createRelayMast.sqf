@@ -69,8 +69,8 @@ if (_base) then {
 	d_radar setVectorUp [cos _angle,sin _angle,0]
 };
 d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
-["say_sound",d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
+["say_sound", d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
 // processInitCommands; // called in radio_service.sqf
 
-_msg = [d_radar,"%1 m. to %2 from %3",50] call SYG_MsgOnPosE;
+_msg = [d_radar, 50] call SYG_MsgOnPosE0;
 hint localize format["+++ createRelayMast: radar created at ""%1"" (%2)", _name, _msg]

@@ -524,6 +524,7 @@ if (isServer) then {
 	[] spawn {
 		// create GRU radio mast on the Pico de Perez
 		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
+		d_radar execVM "x_missions\common\sideradar\radio_init.sqf"; // add menu to GRU radio mast on clients
 		publicVariable "d_radar";
 		sideradio_status = 2; // radio-relay is online!
 		publicVariable "sideradio_status";
@@ -717,12 +718,6 @@ execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 		};
 	}forEach [353,355,362/* ,367 */];
 
-	// Process initial radar on the client computer
-	if (!isNil "d_radar") then {
-		if (alive d_radar) then {
-			d_radar execVM "x_missions\common\sideradar\radio_init.sqf"; // add menu to GRU radio mast if exists
-		};
-	};
 
 };
 #endif

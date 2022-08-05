@@ -1019,7 +1019,7 @@ XHandleNetStartScriptClient = {
 #endif
 
         //
-        // remove execute command sent as string on all client except caller one
+        // remote execute command sent as string on all client except caller one
         // call as:		["remote_execute", format["%1 setPos %2", _reveal_name, getPos _nearest]] call XSendNetStartScriptClient;
         //
 		case "remote_execute" : {
