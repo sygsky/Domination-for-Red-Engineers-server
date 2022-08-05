@@ -43,7 +43,7 @@ while { count _pos == 0 } do {
 			if (_cnt  >= 100) exitWith {
 				_pos = [9452.5,9930.5,0];
 				_name = "AirBase";
-				hint localize "--- createTruck: can't find good point, use AirBase as default!";
+				hint localize "--- createTruck: can't find good point among designated towns, use ""AirBase"" as default!";
 			};
 			_cnt = _cnt + 1;
 			sleep 0.3;

@@ -7,13 +7,15 @@
 		check if mission is failed.
 		Really the flow of script is as follow:
 		Radar and truck are recreated after each destroy (while script radio_service.sqf is running)
-		1. Wait until radar is installed correctly (sideradio_status == 1).
-		2. Wait until last truck (used to install radar on correct position) is reached the base, then SM is finished successfully.
-		3. If last truck or radar is destroyed, mission is counted as failed.
+		The truck can be destroyed/found an arbitrary number of times until the radio mast is intalled
+
+		1. If current radar is killed, mission is counted is failed
+		2. If current radar is installed, wait until current truck is reached GRU PC.
+		3. If last truck or current radar are destroyed, mission is counted as failed.
 
 		Markers:
 		All the time markers are drown for radar (if unloaded) and truck.
-		After point 1 is reached radar marker is cleared.
+		If punkt 1 is reached radar marker is cleared.
 		After success or failure all markers are cleared.
 
 		The need for the radio relay does not disappear after completing a mission.
@@ -44,17 +46,20 @@ if (!isNil "_this") then {
     };
 };
 
-// wait (new) antenna and (new) truck is alive or recreated by radio_service.sqf
+// wait (new) antenna to alive or recreated by radio_service.sqf
 _cnt = 0;
-while { !( (alive d_radar_truck) && (alive d_radar) && (_cnt < 60) ) } do { sleep 5; _cnt = _cnt + 1 };
+while { ! ( (alive d_radar) && (_cnt >= 100) ) } do { sleep 5; _cnt = _cnt + 1 };
 
-if ( !( (alive d_radar_truck) && (alive d_radar) ) ) exitWith {
+if ( !( (alive _radar) && ( _cnt < 100) ) ) exitWith {
     ["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClient;
     if (_mission) then {
         side_mission_winner = -702;
         side_mission_resolved = true;
     };
 };
+
+// radar is alive now
+_radar = d_radar;
 
 // 1. create antenna and trucks on the base
 
@@ -88,7 +93,7 @@ _radar_marker = ""; //
 // Main loop, controls markers movement and end of the mission
 //
 _truck = objNull;
-while { sideradio_status <= 0 } do { // -1, 0 states are allowed
+while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
 
 	if ( X_MP && ((call XPlayersNumber) == 0) ) then {
 		waitUntil {sleep (60 + (random 1)); (call XPlayersNumber) > 0};
@@ -120,14 +125,14 @@ while { sideradio_status <= 0 } do { // -1, 0 states are allowed
 	};
 
     // check radar marker
-    if (alive d_radar) then { // radar alive
-    	_asl = getPosASL d_radar;
+    if (alive _radar) then { // radar alive
+    	_asl = getPosASL _radar;
         if ( ( _asl select 2) >= 0) then { // radar is unloaded, so it stands on the land somewhere
 			if ( _radar_marker == "") then { // marker not exists, create it now
-				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, d_radar, RADAR_SM_COLOR, [0.5, 0.5] ] call _make_marker;
+				_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_SM_COLOR, [0.5, 0.5] ] call _make_marker;
 			} else {
                 // marker exists, move it if needed
-                if ( ( [getMarkerPos _radar_marker, d_radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
+                if ( ( [getMarkerPos _radar_marker, _radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
                     _radar_marker setMarkerPos ( _asl );
                 };
 			};
@@ -149,7 +154,7 @@ while { sideradio_status <= 0 } do { // -1, 0 states are allowed
 	sleep _delay;
 };
 
-while { (sideradio_status == 1) && (alive d_radar) && (alive _truck) } do  {
+while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 	sleep 5;
 	if ( (_truck distance FLAG_BASE) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" };
 };
