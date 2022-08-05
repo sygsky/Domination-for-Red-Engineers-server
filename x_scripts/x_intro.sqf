@@ -139,8 +139,8 @@ if (_sound == "") then { // select random music for an ordinal day
             _night_music = [
                 "bond",/*"bond1",*/"from_russia_with_love","adjutant","total_recall_mountain"/*,"adagio"*/,"morze","morze_3",
                 "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
-                "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2","del_vampiro1",
-                /*"del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
+                "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2",/*"del_vampiro1",
+                "del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
                 "peregrinus"
             ];
 
@@ -173,7 +173,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "ruffian","morze","morze_3","treasure_island_intro","fear2"/*,"chapaev"*/,"soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                "del_vampiro1",/*"del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
+                /*"del_vampiro1","del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
                 "wild_geese","wild_geese","dangerous_chase"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
@@ -534,9 +534,9 @@ SYG_showMusicTitle = {
 //
 // +++++++++++++ SHOW MAIL, TITLE and test messages ++++++++++++
 //
-_holiday spawn {
+[_holiday,_start] spawn {
 	private ["_txt","_str","_holiday"];
-   	_holiday = _this;
+   	_holiday = _this select 0;
 //	hint localize format["+++ spawn _holiday = %1", _holiday];
 	//sleep 2;
 	{
@@ -544,7 +544,7 @@ _holiday spawn {
 			case 1: { localize "STR_INTRO_1" }; // Alternative reality
 			case 2: { localize "STR_INTRO_2" }; // North Atlantic
 			case 3: { format[localize "STR_INTRO_3", date call SYG_humanDateStr, (date call SYG_weekDay) call SYG_weekDayLocalName, call SYG_nowHourMinToStr, ceil(call SYG_missionDayToNum)] }; // landing time / week day 
-			case 4: { format[localize "STR_INTRO_4", text (_this call SYG_nearestSettlement)] }; // settlement
+			case 4: { format[localize "STR_INTRO_4", text ((_this select 1) call SYG_nearestSettlement)] }; // settlement
 			case 5: {  // message and sound for current day period (morning,day,evening,night), if available
                 [] spawn {
                     private ["_str"];
