@@ -23,7 +23,6 @@ SYG_lighthouse_handled = true;
 
 //#define __PRINT_MAJAKS__
 
-
 #ifdef __PRINT_MAJAKS__
 
 sleep 60;
@@ -59,17 +58,21 @@ _wholer_data = [
 //_diff_pos = [1.06738,-0.278809,-8.07489];
 //_diff_dir = -66.116;
 
-//
+//  offsets:  0,      1,    2,    3,           4
 // [_lighthouse, _start, _end, _ind, _howler_arr] call _howler_work;
 //
 #define __FUTURE__
 
 _howler_work = {
-	private ["_id","_i", "_arr", "_sound","_majak","_start","_end","_last_ind","_pos"];
+	private ["_id","_i", "_arr", "_sound","_majak","_siren","_start","_end","_last_ind","_pos"];
 	_majak = _this select 0;
 #ifdef __FUTURE__
-	_id = _majak addAction [ localize "STR_LIGHTHOUSE_SIREN", "scripts\sirenSwitch.sqf" ];
-	_majak setVariable ["siren", true]; // By default siren in on
+	_siren = _majak getVariable "siren";
+    if ( isNil "_siren" ) then {
+		_id = _majak addAction [ localize "STR_LIGHTHOUSE_SIREN", "scripts\sirenSwitch.sqf" ];
+		_siren = true;
+		_majak setVariable ["siren", _siren]; // By default siren in on
+    };
 #endif
 	_pos   = getPos _majak;
 	_start = _this select 1;
@@ -78,6 +81,7 @@ _howler_work = {
 	_last_ind = ( count _arr ) - 1;
 	_sound =  _arr select 0;
 	hint localize format[ "+++ SYG_lighthouses: spawned service #%1 for the majak(%2) #%3, daytime %4, _start %5, _end %6, sound %7", _id, _majak, _this select 3, daytime, _start, _end, _sound ];
+	_printed = false;
 	while { if (_start > _end) then { (daytime > _start) || (daytime < _end) }  else { (daytime > _start) &&  (daytime < _end) } } do  {
 		// while it is the night do
 		for "_i" from 1 to _last_ind do {
@@ -87,7 +91,19 @@ _howler_work = {
 				_majak = _pos call SYG_nearestSettlement;
 				["msg_to_user", "", ["STR_LIGHTHOUSE_KILLED", _majak ], 0, 3, false, "return"] call SYG_msgToUserParser;
 			};
-			if ((player distance _majak) < LH_HEARING_DISTANCE) then { _majak say _sound; };
+			if ((player distance _majak) < LH_HEARING_DISTANCE) then {
+#ifdef __FUTURE__
+				_siren = _majak getVariable "siren";
+				if ( !_siren ) exitWith {
+					if (!_printed) then {
+						hint localize format["+++ SYG_lighthouses.sqf: lighthouse #%1 howler is swithed off", (_this select 3)];
+						_printed = true;
+					};
+				};
+				_printed = false;
+#endif
+				_majak say _sound;
+			};
 			sleep (_arr select _i);
 		};
 		if (!alive _majak) exitWith {};
@@ -101,8 +117,8 @@ _howler_work = {
 _lh_arr = [];
 _i = 1;
 {
-//	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
-	_arr = _x nearObjects ["Land_majak", LH_DISTANCE]; // may be 8-9 lighthouses on Sahrani island
+//	_arr = nearestObjects [_x, ["Land_majak"], LH_DISTANCE]; // may be 11 lighthouses on Sahrani island
+	_arr = _x nearObjects ["Land_majak", LH_DISTANCE]; // may be 11 lighthouses on Sahrani island
 #ifdef __PRINT_MAJAKS__
 	sleep 1;
 #else

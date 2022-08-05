@@ -20,17 +20,23 @@
 
 if (!X_Client) exitWith { hint localize "--- scripts\sirenSwitcher.sqf: called not on client computer" };
 _majak = _this select 0;
-if (!alive _majak) exitWith {hint localize format[ "--- SYG_lighthouseSirenSwitch: call with dead object %1", typeOf _majak ]; false };
-if ( !(_majak isKindOf "Land_majak") ) exitWith { hint localize format[ "--- SYG_lighthouseSirenSwitch: call with dead object %1", typeOf _majak ]; false };
+if (!alive _majak) exitWith {
+	hint localize format[ "--- SYG_lighthouseSirenSwitch: call with dead object %1", typeOf _majak ];
+	_majak removeAction (_this select 2);
+	false
+};
+if ( !(_majak isKindOf "Land_majak") ) exitWith {
+	hint localize format[ "--- SYG_lighthouseSirenSwitch: call with dead object %1", typeOf _majak ];
+	_majak removeAction (_this select 2);
+	false
+};
 _siren = _majak getVariable "siren";
 if ( isNil "_siren" ) then { _siren = false };
+_majak setVariable ["siren", _siren];
 if ( _siren ) exitWith {
-	_majak setVariable ["siren", false];
 	["msg_to_user", "", ["STR_LIGHTHOUSE_OFF"], 0, 0, false, "off"] call SYG_msgToUserParser;
 	false
 };
-
-_majak setVariable ["siren", true];
 ["msg_to_user", "", ["STR_LIGHTHOUSE_ON"], 0, 0, false, "on"] call SYG_msgToUserParser;
 true
 
