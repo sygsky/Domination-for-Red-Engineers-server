@@ -825,18 +825,18 @@ SYG_distance2D = {
 	};
 
 	private ["_pos1", "_pos2"];
-	_pos1 = _this select 0;
-	if ( typeName _pos1 == "OBJECT") then { _pos1 = position _pos1;};
-	if (typeName _pos1 != "ARRAY") exitWith {
-		hint localize format["--- SYG_distance2D: _this =  %1", _this];
-		9999999.0 // assign maximum distance available
-	};
-	_pos2 = _this select 1;
-	if ( typeName _pos2 == "OBJECT") then { _pos2 = position _pos2;};
-	if (typeName _pos2 != "ARRAY") exitWith {
-		hint localize format["--- SYG_distance2D: _this =  %1", _this];
-		9999999.0 // assign maximum distance available
-	};
+	_pos1 = (_this select 0) call SYG_getPos;
+//	if ( typeName _pos1 == "OBJECT") then { _pos1 = position _pos1;};
+//	if (typeName _pos1 != "ARRAY") exitWith {
+//		hint localize format["--- SYG_distance2D: _this =  %1", _this];
+//		9999999.0 // assign maximum distance available
+//	};
+	_pos2 = (_this select 1) call SYG_getPos;
+//	if ( typeName _pos2 == "OBJECT") then { _pos2 = position _pos2;};
+//	if (typeName _pos2 != "ARRAY") exitWith {
+//		hint localize format["--- SYG_distance2D: _this =  %1", _this];
+//		9999999.0 // assign maximum distance available
+//	};
 	[_pos1 select 0, _pos1 select 1] distance [_pos2 select 0, _pos2 select 1]
 };
 
@@ -904,10 +904,11 @@ SYG_MsgOnPosE = {
 	_roundTo = argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = position _loc;
-	_pos1 set [2,0];
-	if ( (typeName _obj) == "ARRAY") then { _pos2 = _obj } else { _pos2 = position _obj };
-	_pos2 set [2,0];
-	_dist = (round ((_pos1 distance _pos2)/_roundTo)) * _roundTo;
+//	_pos1 set [2,0];
+//	if ( (typeName _obj) == "ARRAY") then { _pos2 = _obj } else { _pos2 = position _obj };
+	_pos2 = _obj call SYG_getPos;
+//	_pos2 set [2,0];// SYG_getPos
+	_dist = (round (([_pos1, _pos2] call SYG_distance2D)/_roundTo)) * _roundTo;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
 	format[ _msg , _dist, _dir, _locname ]
@@ -924,7 +925,7 @@ SYG_MsgOnPosE0 = {
 	if (typeName _this == "ARRAY") then {
 		_arr = [_this select 0];
 		_arr set[1, localize "STR_SYS_POSE"];
-		if (count _this > 1) then { _arr set[2, _this select 1]; }
+		if (count _this > 1) then { _arr set[2, _this select 1] }
 	} else {
 		_arr  = [_this, localize "STR_SYS_POSE"];
 	};

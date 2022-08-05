@@ -339,6 +339,14 @@ XHandleNetStartScriptServer = {
 			};
 		};
 #endif
+		//
+		// remote execute command sent as string to the server
+		// call as:		["remote_execute", format["%1 setPos %2", _reveal_name, getPos _nearest]] call XSendNetStartScriptServer;
+		//
+		case "remote_execute" : {
+			hint localize format["+++ x_netinitserver.sqf ""remote_execute"": ""%1""", _this select 1 ];
+			call (compile (_this select 1));
+		};
 
 //========================================================================================================== END OF CASES
 
