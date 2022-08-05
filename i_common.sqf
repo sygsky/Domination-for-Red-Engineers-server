@@ -237,7 +237,7 @@ for "_xxxxx" from ((target_names select 0) select 3) to 35  do {
 	_size = _x select 2;
 	_marker= createMarkerLocal [_name, _pos];
 	_marker setMarkerShapeLocal "ELLIPSE";
-	_name setMarkerColorLocal "ColorGreen";
+	_name setMarkerColorLocal "ColorGreenAlpha";
 	_name setMarkerSizeLocal [_size,_size];
 	_name = _name + "xx";
 	_marker= createMarkerLocal [_name, _pos];

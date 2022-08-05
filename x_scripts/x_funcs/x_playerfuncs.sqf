@@ -188,7 +188,7 @@ XRecapturedUpdate = {
 		};
 		case 1: {  // fill with green solid brush
 			#ifndef __TT__
-			_target_name setMarkerColorLocal "ColorGreen";
+			_target_name setMarkerColorLocal "ColorGreenAlpha";
 			#endif
 			#ifdef __TT__
 			_winner = -1;

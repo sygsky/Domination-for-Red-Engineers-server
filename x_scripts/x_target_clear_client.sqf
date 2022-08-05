@@ -14,7 +14,7 @@ private ["_current_target_name","_target_array2"];
 //__TargetInfo
 _target_array2 = target_names select current_target_index;_current_target_name = _target_array2 select 1;
 
-_current_target_name setMarkerColorLocal "ColorGreen";
+_current_target_name setMarkerColorLocal "ColorGreenAlpha";
 
 _current_target_pos = _target_array2 select 0;
 
