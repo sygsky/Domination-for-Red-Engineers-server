@@ -837,6 +837,7 @@ SYG_distance2D = {
 //		hint localize format["--- SYG_distance2D: _this =  %1", _this];
 //		9999999.0 // assign maximum distance available
 //	};
+//	hint localize format["+++ SYG_distance2D: _pos1=%1, _pos2=%2", _pos1, _pos2];
 	[_pos1 select 0, _pos1 select 1] distance [_pos2 select 0, _pos2 select 1]
 };
 
@@ -908,7 +909,8 @@ SYG_MsgOnPosE = {
 //	if ( (typeName _obj) == "ARRAY") then { _pos2 = _obj } else { _pos2 = position _obj };
 	_pos2 = _obj call SYG_getPos;
 //	_pos2 set [2,0];// SYG_getPos
-	_dist = (round (([_pos1, _pos2] call SYG_distance2D)/_roundTo)) * _roundTo;
+	_dist = [_pos1, _pos2] call SYG_distance2D;
+	_dist = (round (_dist/_roundTo)) * _roundTo;
 	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
 	format[ _msg , _dist, _dir, _locname ]

@@ -721,10 +721,11 @@ XHandleNetStartScriptClient = {
 			_this call GRU_procClientMsg;
 		};
 		// Receive radio sound if some radio is found near player
-		// ["say_radio","radio_sound"] ...
+		// ["say_radio","radio_sound"<,_other_full_command_to_clients>] ...
 		//
         case "say_radio": {
         	(_this select 1) call SYG_receiveRadio;
+        	if (count _this > 2) then { (_this select 2) call XHandleNetStartScriptClient};
         };
 
 		//

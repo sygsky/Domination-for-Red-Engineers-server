@@ -26,8 +26,7 @@ procWP = {
 	
 	player globalChat format["procWP, %1 WPs", count _wplist];
 
-	for "_wpIndex" from 0 to ((count _wplist) - 1) do
-	{
+	for "_wpIndex" from 0 to ((count _wplist) - 1) do {
 		_wpPos = _wplist select _wpIndex; // next way point position
 		hint localize format[ "WP %1, dist %2", _wpIndex, _boat distance _wpPos ];
 		_wp setWaypointPosition [ _wpPos, 0 ];
@@ -36,8 +35,7 @@ procWP = {
 		_wp setWaypointType "HOLD";
 		_wp setWaypointSpeed "FULL";
 		_lastPos = position _boat; // original position 
-		while ( !stopBoat ) do
-		{
+		while { !stopBoat } do {
 			sleep BOAT_CHECK_PERIOD;
 			player globalChat format["procWP:sleeped %1 sec", BOAT_CHECK_PERIOD];
 			_cupPos = position _boat;
