@@ -667,6 +667,19 @@ if ( isNil "player_is_on_town_raid" ) then {
 		if (_cnt == 0) exitWith {
 	        _str = _str + localize "STR_GRU_47" + "\n";
 		};
+		switch (sideradio_status)  do {
+			case 0: {
+				_str = _str + localize "STR_RADAR_INFO" + "\n";
+				if (alive d_radar_truck) then {
+					if (locked d_radar_truck) then { _str = _str + localize "STR_RADAR_INIT2" + "\n"; };
+				};
+				if (alive d_radar) then {
+					if ( (vectorUp d_radar_truck) distance [0,0,1] > 0.1) then { _str = _str + localize "STR_RADAR_INIT" + "\n"; };
+				};
+			};
+			case 1: { _str = _str + localize "STR_RADAR_TRUCK_MAST_INSTALLED" + "\n" };
+			case 2: { _str = _str + localize "STR_RADAR_SUCCESSFUL" + "\n" };
+		};
 	    if ( _cnt < 3 ) exitWith {
 	        _str = _str + localize "STR_GRU_47_0" + "\n";
 	    };

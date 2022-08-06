@@ -36,42 +36,47 @@ if ( !isServer ) exitWith {};
 #define TRUCK_MARKER "SalvageVehicle"
 #endif
 
-_mission = true; // (!= 0) is mission; (== 0) not mission
+hint localize format["+++ x_sideradio.sqf: _this = %1", _this];
+
+_mission = true;
 if (!isNil "_this") then {
     switch (typeName _this) do {
         case   "BOOL": { _mission = _this };
-        case "STRING": { _mission =  !((toUpper this) in ["NO_MISSION","NOT_MISSION"]); };
-        case "SCALAR": { _mission =  _this != 0 };
+        case "STRING": { _mission = !((toUpper _this) in ["NO_MISSION","NOT_MISSION"]); };
+        case "SCALAR": { _mission = _this != 0 };  // (!= 0) is mission; (== 0) not mission
         default {};
     };
 };
 
-hint localize (if (_mission) then { format["+++ x_sideradio.sqf: _this = %1, is it mission run !!!", _this] } else { format["+++ x_sideradio.sqf: _this = %1, is NOT mission run !!!", _this] });
+hint localize ( if (_mission) then { format[ "+++ x_sideradio.sqf: mission, _this = %1, d_radar alive = %2 !!!", _this, alive d_radar ] } else { format[ "+++ x_sideradio.sqf: NOT misssion _this = %1, d_radar alive = %2 !!!", _this, alive d_radar ] } );
 
-// wait (new) antenna to alive or recreated by radio_service.sqf
+// wait (new) antenna to be alive or recreated by radio_service.sqf
 _cnt = 0;
 _time  = time;
-while { ! ( (alive d_radar) && (_cnt >= 100) ) } do { sleep 5; _cnt = _cnt + 1 };
+while { (!(alive d_radar)) && (_cnt < 100) } do { sleep 5; _cnt = _cnt + 1 };
+//waitUntil {sleep 5; _cnt = _cnt + 1; (alive d_radar) || (_cnt > 100)};
+
 
 // if no radar and it is mission, exit with failure code
-if (_mission && (!( (alive d_radar) && ( _cnt < 100) ) ) ) exitWith {
-	hint localize format["+++ x_sideradio.sqf: no radar created in %1 seconds, exit!!!", round (time - _time)];
+if ( _mission && ( !alive d_radar ) ) exitWith {
+	hint localize format["--- x_sideradio.sqf: no radar created in %1 seconds, exit!!!", round (time - _time)];
 	["msg_to_user","",[["STR_RADAR_FAILED1"]]] call XSendNetStartScriptClient; // "Not a single radio relay mast could be found on the entire island. That's sad!"
 	if (_mission) then {
 		side_mission_winner = -702;
 		side_mission_resolved = true;
 	};
 };
+hint localize format["+++ x_sideradio.sqf: found alive d_radar, cnt = %1, continue...", _cnt];
 
-// radar is alive now
+// radar is alive now, store current object and check only it
 _radar = d_radar;
 
-if (sideradio_status == 2) then {
-	hint localize "+++ x_sideradio.sqf: sideradio_status == 2, wait status change";
+if ( (sideradio_status == 2) && (!_mission)) then {
+	hint localize "+++ x_sideradio.sqf: not mission, sideradio_status == 2, wait status change";
 	_time = time;
 	waitUntil {sleep 60; sideradio_status != 2};
 	_str = [ time,_time] call SYG_timeDiffToStr;
-	hint localize format["+++ x_sideradio.sqf: sideradio_status == %1, changed after %2", sideradio_status, _str];
+	hint localize format["+++ x_sideradio.sqf: not mission, sideradio_status == %1, changed after %2", sideradio_status, _str];
 };
 
 // _marker_name = [_marker_name, _marker_type, _truck_pos, _marker_color<,_marker_size>] call _make_marker;
@@ -102,7 +107,7 @@ _radar_marker = ""; //
 // Radar can't be destroyed else sidemission is failed
 //
 hint localize format["+++ x_sideradio.sqf: enter marker loop, status %1", sideradio_status];
-while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
+while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 
 	if ( X_MP && ((call XPlayersNumber) == 0) ) then {
 		waitUntil {sleep (60 + (random 1)); (call XPlayersNumber) > 0};
@@ -137,7 +142,7 @@ while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
 	//
     // process markers of this side mission
     //
-    if ((alive _radar) && (sideradio_status != 2)) then { // radar alive
+    if ((alive _radar) && (sideradio_status < 1)) then { // radar alive
     	_asl = getPosASL _radar;
         if ( ( _asl select 2) >= 0) then { // radar is unloaded, so it stands/lays on the land somewhere
 			// check if radar is already detected
@@ -166,17 +171,20 @@ while { (alive _radar) && (sideradio_status <= 0) } do { // 0 state is allowed
     // TODO: add random enemy infantry patrols on the way to the destination at certain time intervals,
     // TODO: e.g. on each kilometer close to the mission finish
 
-    if (sideradio_status == 1 ) exitWith {_truck = d_radar_truck}; // Mast installed, wait until curent truck returned to the base
 	sleep _delay;
 };
-hint localize format["+++ x_sideradio.sqf: exit marker loop, status %1", sideradio_status];
+hint localize format["+++ x_sideradio.sqf: exit marker loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive d_radar_truck];
 
-hint localize format["+++ x_sideradio.sqf: enter truck return loop, status %1", sideradio_status];
+// wait truck to be alive
+while {  (sideradio_status == 1) && (alive _radar) && (!alive d_radar_truck) } do {sleep 1};
+_truck = d_radar_truck;
+
+hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive _truck];
 while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 	sleep 5;
 	if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
 };
-hint localize format["+++ x_sideradio.sqf: exit truck return loop, status %1", sideradio_status];
+hint localize format["+++ x_sideradio.sqf: exit truck return loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive _truck];
 
 if (_mission) then { // check victory or failure
     if ( sideradio_status == 2 ) then { // Victory!

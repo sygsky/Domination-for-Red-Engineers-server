@@ -18,13 +18,20 @@
 
 // try to change radar detected status
 _set_detected = {
-	private ["_detected"];
-	_detected = d_radar getVariable "DETECTED";
-	if (isNil "_detected") then {
-		d_radar setVariable ["DETECTED", true];
+	private ["_detected","_veh"];
+	_veh = _this;
+	_detected = _veh getVariable "DETECTED";
+	if (isNil "_detected") exitWith {
+		_veh setVariable ["DETECTED", true];
 		// copy detected status to the server
-		["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+		if (_veh isKindOf "Truck") then {
+			["remote_execute", "d_radar_truck setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+		} else {
+			["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+		};
+		true
 	};
+	false
 };
 
 _veh = _this select 0;
@@ -35,39 +42,37 @@ _txt = (if (_veh isKindOf "Truck") then {
 	};
 	if (locked _veh) then {
 		_veh lock false;
-		call _set_detected;
+		_veh call _set_detected;
 		("STR_RADAR_TRUCK_LOCKED_NUM" call SYG_getRandomText) // "A truck adapted to carry radio mast. You're in luck!" etc
 	} else {
-		if (isNil "sideradio_status") then {
-			call _set_detected;
-			"STR_RADAR_TRUCK"; // Active truck for transporting a radio mast
-		} else {
-			if (alive d_radar) then {
-				_asl = getPosASL d_radar;
-				// "Active truck for transporting a radio mast, mast is loaded"
-				if ((_asl select 2) < 0 ) then { "STR_RADAR_TRUCK_LOADED" } else {
-					// 0 - mission not finished, 1 - mast installed, 2 - truck is on the way to the base, 3 - completed
-					switch (sideradio_status) do {
-						case 0: { "STR_RADAR_TRUCK_NOT_LOADED" };
-						case 1: { "STR_RADAR_TRUCK_MAST_INSTALLED" };
-						case 2: { "STR_RADAR_SUCCESSFUL" };
-					};
+		if (alive d_radar) then {
+			_asl = getPosASL d_radar;
+			// "Active truck for transporting a radio mast, mast is loaded"
+			if ((_asl select 2) < 0 ) then { "STR_RADAR_TRUCK_LOADED" } else {
+				// 0 - mission not finished, 1 - mast installed, 2 - truck is on the way to the base, 3 - completed
+				switch (sideradio_status) do {
+					case 0: { "STR_RADAR_TRUCK_NOT_LOADED" };
+					case 1: { "STR_RADAR_TRUCK_MAST_INSTALLED" };
+					case 2: { "STR_RADAR_TRUCK_NOT_NEEDED" };
 				};
-			} else { // radar is dead
-				"STR_RADAR_TRUCK_MAST_FAILED"
 			};
+		} else { // radar is dead
+			"STR_RADAR_TRUCK_MAST_FAILED"
 		};
 	};
-} else {
+} else { // it is radar
 	if (!alive d_radar) exitWith {"STR_RADAR_MAST_DEAD"};
 
-	call _set_detected;
+	d_radar call _set_detected;
 	switch (sideradio_status) do {
 		case 0: { "STR_RADAR_MAST_UNLOADED" };
-		case 2;
 		case 1: {
 			["say_radio", call SYG_randomRadio] call XSendNetStartScriptClientAll;
 			"STR_RADAR_MAST_INSTALLED"
+		};
+		case 2: {
+			["say_radio", call SYG_randomRadio] call XSendNetStartScriptClientAll;
+			"STR_RADAR_SUCCESSFUL"
 		};
 		default { "STR_RADAR_MAST" };
 	};

@@ -51,7 +51,6 @@ if (alive d_radar) then {
 } else { hint localize format["+++ x_m56.sqf: initial radar is not alive, no need to bomb it"]; };
 
 hint localize format["+++ x_m56.sqf: initial radar %1 after %2 bomb[s]", if (alive d_radar) then {"alive"} else {"killed"}, _cnt1];
-
 // 1. Wait for antenna and truck to be alive (is provided by radio_service.sqf)
 execVM "x_missions\common\x_sideradio.sqf";
 

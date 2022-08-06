@@ -57,6 +57,7 @@ d_radar_truck = createVehicle [_ural, _pos, [], 0, "NONE"];
 if (_name != "AirBase") then {
 	d_radar_truck setDir (random 360);
 };
+d_radar_truck lock true;
 ["say_sound", d_radar_truck,  call SYG_truckDoorCloseSound ] call XSendNetStartScriptClient;
 publicVariable "d_radar_truck";
 d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\radio_init.sqf"""];
@@ -67,9 +68,10 @@ hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _ms
 
 
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
-_veh addEventHandler ["killed", {
-	hint localize format["+++ Radar truck killed by %1", (_this select 1) call SYG_getKillerInfo];
-	private ["_veh","_asl","_pos","_msg","_cnt","_player"];
+d_radar_truck addEventHandler ["killed", { // _this = [_killed, _killer];
+	private ["_veh","_asl","_pos","_msg"];
+	_msg = (_this select 1) call SYG_getKillerInfo;
+	hint localize format["+++ Radar truck killed by %1", _msg];
 	_veh = _this select 0;
 	if (alive d_radar)  then  { // unload mast if truck is killed
 		_asl = getPosASL d_radar;
@@ -81,15 +83,19 @@ _veh addEventHandler ["killed", {
 	};
 
 	// remove truck after 10 minutes of players absence around 300 meters of truck.
-	_cnt = 0;
-	while {!(isNull _veh)} do {
-		sleep (60 + (random 60));  // wait next period for player absence
-		_player =  [_pos, 100] call SYG_findNearestPlayer; // find any alive player in/out vehicles
-		if ( (!(alive _player)) || (_cnt > 5)) exitWith { // 5 times with 90 seconds (on average) check if no players nearby
+	_veh spawn {
+		private ["_veh","_player","_cnt","_pos"];
+		_veh = _this;
+		_cnt = 0;
+		while {!(isNull _veh)} do {
+			sleep (60 + (random 60));  // wait next period for player absence
 			_pos = getPos _veh;
-			["say_sound", _pos, "steal"] call XSendNetStartScriptClient;
-			deleteVehicle _veh;
+			_player =  [_pos, 100] call SYG_findNearestPlayer; // find any alive player in/out vehicles
+			if ( (!(alive _player)) || (_cnt > 5)) exitWith { // 5 times with 90 seconds (on average) check if no players nearby
+ 				["say_sound", _pos, "steal"] call XSendNetStartScriptClient;
+				deleteVehicle _veh;
+			};
+			_cnt = _cnt + 1;
 		};
-		_cnt = _cnt + 1;
 	};
 }];

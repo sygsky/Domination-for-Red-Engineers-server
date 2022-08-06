@@ -130,7 +130,7 @@ GRU_SpecialScores = {
 				// send special message to other players: "The GRU rewarded %1 for something" and say sound from this player
 				[ "msg_to_user", "",  [ ["STR_MAP_11",name player ] ],0,0,false,["say_sound", player, "no_more_waiting" ]] call XSendNetStartScriptClient;
             } else {
-				(localize "STR_MAP_12")  call XfGlobalChat; // show message only for you: "Someone studied the map before you did"
+				(localize "STR_MAP_12")  call XfGlobalChat; // show message only for you: "Someone studied the situation before you did"
 				playSound "losing_patience";
             };
         };

@@ -7,7 +7,6 @@ _do_hint = _this select 0;
 
 if (current_mission_index == -1) exitWith {};
 
-
 if (!X_SPE) then {
 
 #ifdef __DEFAULT__
@@ -35,11 +34,11 @@ d_sm_running = true;
 
 if (current_mission_index != -1) then {
 	_posi_array = x_sm_pos;
-	hint localize format[ "+++ x_getsidemissionclient.sqf: x_sm_pos = %1", x_sm_pos ];
 	_posione = _posi_array select 0;
-	_m_name = format ["XMISSIONM%1", current_mission_index + 1]; // first (alone) marker
+	sm_marker_name = format ["XMISSIONM%1", current_mission_index + 1]; // first (alone) marker
+	hint localize format[ "+++ x_getsidemissionclient.sqf: x_sm_pos = %1, marker name = %2", x_sm_pos, sm_marker_name ];
 	if (x_sm_type == "normal") exitWith {
-		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Side mission"
+		[sm_marker_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Side mission"
         #ifdef __RANKED__
         _posione spawn {
             private ["_posione"];
@@ -49,24 +48,23 @@ if (current_mission_index != -1) then {
                     d_was_at_sm = true;
                     d_sm_running = false;
                 };
-                sleep (3.012 + (random 3));
+                sleep (10.012 + (random 3));
             };
         };
         #endif
 	};
 
 	if (x_sm_type == "convoy") exitWith {
-		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_158",0,"Start"] call XfCreateMarkerLocal; // "Start"
-		_m_name = format ["XMISSIONM2%1", current_mission_index + 1];
+		[sm_marker_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_158",0,"Start"] call XfCreateMarkerLocal; // "Start"
+		sm_marker_name2 = format ["XMISSIONM2%1", current_mission_index + 1];
 		_posione = _posi_array select 1;
-		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_159",0,"End"] call XfCreateMarkerLocal; // "Finish"
+		[sm_marker_name2, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_159",0,"End"] call XfCreateMarkerLocal; // "Finish"
 	};
 
 	// draw the marker at the area center in form of the question sign
 	if (x_sm_type == "undefined") exitWith {
-		[_m_name, _posione,"ICON","ColorRed",[1,1],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
+		[sm_marker_name, _posione,"ICON","ColorRed",[0.5,0.5],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
 	};
-
 
 };
 

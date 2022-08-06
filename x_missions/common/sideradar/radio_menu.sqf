@@ -18,14 +18,20 @@
 
 // try to change radar detected status
 _set_detected = {
-	private ["_detected"];
-	_detected = d_radar getVariable "DETECTED";
-	if (isNil "_detected") then {
-		d_radar setVariable ["DETECTED", true];
+	private ["_detected","_veh"];
+	_veh = _this;
+	_detected = _veh getVariable "DETECTED";
+	if (isNil "_detected") exitWith {
+		_veh setVariable ["DETECTED", true];
 		// copy detected status to the server
-		["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
-//		hint localize format ["+++ radio_menu.sqf: radar is detected by %1!!!", name _pl];
+		if (_veh isKindOf "Truck") then {
+			["remote_execute", "d_radar_truck setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+		} else {
+			["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+		};
+		true
 	};
+	false
 };
 
 _cmd = _this select 3; // must be "LOAD", "UNLOAD", "INSTALL", "CHECK"
@@ -35,12 +41,17 @@ _txt = "";
 _send_was_at_sm = false;
 _locked = false;
 _truck = _veh isKindOf "Truck";
-if (_truck) then {
+
+hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2, truck = %3 ", sideradio_status, typeOf _veh, _truck];
+
+if (_truck) then { // check truck for detection
 	if (locked _veh) then {
 		_veh lock false;
 		_locked = true;
-		call _set_detected;
+		_veh call _set_detected;
 	};
+} else { // check radar for detection
+	if (([0,0,1] distance (vectorUp d_radar )) > 0.05) then { d_radar call _set_detected; }; // if angle between radar and vertical is > 3 degrees
 };
 
 if (true) then {
@@ -53,42 +64,24 @@ if (true) then {
 		_veh removeAction (_this select 2); // remove this action
 	};
 
-	// vehicle is alive
-	_exit = ! (sideradio_status in [0,1]);
-	if (_exit) exitWith {
-		hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2 ", sideradio_status, typeOf _veh];
-		_veh removeAction (_this select 2); // remove this action
+	// vehicle is alive and mission completed
+	if (sideradio_status == 2) exitWith {
+//		don't remove action as it can be used next time if radio mast again killed
+//		_veh removeAction (_this select 2); // remove this action
 
 		if (_truck) then {
 			{ _x action ["Eject", _veh] } forEach (crew _x);
-//			_veh setFuel 0;
+			_txt = localize "STR_RADAR_TRUCK_NOT_NEEDED"; // "The mast is installed and working"
+		} else {
+			(call SYG_randomRadioNoise) call SYG_receiveRadio;
+			_txt = localize "STR_RADAR_SUCCESSFUL"; // "The mast is installed and working"
 		};
 
-		(call SYG_randomRadioNoise) call SYG_receiveRadio;
-		if (isNil "sideradio_status") exitWith {
-			_txt = localize (if (_veh isKindOf "Truck") then {
-				["STR_RADAR_NO","STR_SYS_248"] call XfRandomArrayVal // "Received unreliable message" or "Secondary objective achieved..."
-			} else {
-				["STR_RADAR_NO","STR_RADAR_MAST","STR_SYS_248"] call XfRandomArrayVal // ..., "Rusty GRU Radio-mast", ...
-			});
-		};
-		if (sideradio_status == 2) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED"}; // "Active truck for transporting a radio mast, mast is installed"
-		if (sideradio_status == 1) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_SUCCESSFUL"}; // "Relay mast installed, now return your truck to the base flag to finish SM!"
-		if (sideradio_status <= 0) exitWith {_veh removeAction (_this select 2); _txt = localize "STR_RADAR_FAILED"}; // "Mission failed, no help from GRU!"
 	};
 
-	if (((vehicle _pl == _pl) || (_pl != driver (vehicle _pl))) && (_cmd in ["LOAD","UNLOAD"])) exitWith  {
+	if ( _truck && ( (_pl != driver (vehicle _pl)) && (_cmd in ["LOAD","UNLOAD"]) ) ) exitWith  {
+		// LOAD and UNLOAD must be oredered only by driver
 		_txt = localize "STR_RADAR_TRUCK_NOT_DRIVER" // "You are not driver"
-	};
-
-	if (locked _veh) exitWith {
-		playSound "losing_patience";
-		_txt = localize "STR_RADAR_NO"; // "Received unreliable message"
-	};
-
-	if (!alive d_radar) exitWith {
-		playSound "losing_patience";
-		_txt = localize "STR_RADAR_MAST_DEAD";
 	};
 
 	switch (_cmd) do {
@@ -97,31 +90,28 @@ if (true) then {
 			// Truck
 			//
 			if ( _truck ) exitWith {
-				if ( _locked ) exitWith {	_txt = localize "STR_RADAR_TRUCK_LOCKED" }; // "A truck adapted to carry radio mast. You're in luck!"
+				if ( _locked ) exitWith {	_txt = localize ("STR_RADAR_TRUCK_LOCKED_NUM"  call SYG_getRandomText ) }; // "A truck adapted to carry radio mast. You're in luck!"
 				// not locked, check mast status
 				if ( alive d_radar ) exitWith {
-					if ( ((getPosASL d_radar) select 2)  < 0 ) exitWith { _txt = localize "STR_RADAR_TRUCK_LOADED" }; // ""Active truck for transporting a radio mast, mast is loaded""
-					if ( sideradio_status == 2 ) exitWith { _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED" }; // "Active truck for transporting a radio mast, mast is installed"
+					if ( ((getPosASL d_radar) select 2)  < 0 ) exitWith { _txt = localize "STR_RADAR_TRUCK_LOADED" }; // "The truck for transporting a radio mast, mast is loaded"
 					_txt = localize format["STR_RADAR_TRUCK_NOT_LOADED", d_radar call SYG_nearestLocationName ]; // "Active truck for transporting a radio mast, which is  near ""%1"""
 				};
+			} else { // radio-relay mast
+				_txt = localize "STR_RADAR_MAST_UNLOADED"; // "Rusty radio mast, what junkyard did you find it in?"
 			};
-			//
-			// radio-relay mast
-			//
-			if ( sideradio_status == 2 ) exitWith {	 // "Installed radio repeater mast. The motherland will hear us!"
-				_txt = localize "STR_RADAR_MAST_INSTALLED";
-				_veh removeAction (_this select 2);
-			};
-			_txt = localize "STR_RADAR_MAST_UNLOADED"; // "Rusty radio mast, what junkyard did you find it in?"
 		};
 
 		case "LOAD": { // truck command
+			if (!alive d_radar) exitWith {
+				playSound "losing_patience";
+				_txt = localize "STR_RADAR_MAST_DEAD";
+			};
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) < 0 ) exitWith { // already loaded into this vehicle, so change all menu items
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_ALREADY_LOADED";
 			};
-			if ( round (speed _veh) > 0 ) exitWith {
+			if ( round (speed _veh) > 0.5 ) exitWith {
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_TRUCK_MOVING";
 			};
@@ -132,7 +122,6 @@ if (true) then {
 			_txt = localize "STR_RADAR_MAST_LOADED";
 			["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
 			d_radar setPosASL [_asl select 0, _asl select 1, -50];
-			if (([0,0,1] distance (vectorUp d_radar )) < 0.05) then { call _set_detected; }; // if angle between radar and vertical is > 3 degrees
 			d_radar setVectorUp [0,0,1];
 			sleep 0.2;
 			hint localize format["+++ LOAD: mast pos %1, vUp %2", getPosASL d_radar, vectorUp d_radar];
@@ -140,13 +129,17 @@ if (true) then {
 		};
 
 		case "UNLOAD": { // truck command
+			if (!alive d_radar) exitWith {
+				playSound "losing_patience";
+				_txt = localize "STR_RADAR_MAST_DEAD";
+			};
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) > 0 ) exitWith {
 				// already unloaded into this vehicle, so change all menu items
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_ALREADY_UNLOADED";
 			};
-			if ( round (speed _veh) > 0 ) exitWith {
+			if ( round (speed _veh) > 0.5 ) exitWith {
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_TRUCK_MOVING";
 			};
@@ -167,13 +160,13 @@ if (true) then {
 			_str1 = if (surfaceIsWater _mast_pos) then { _bad = true;  "STR_RADAR_IN_WATER" } else {"STR_RADAR_ON_LAND"};
 			_str2 = if ( _veh call SYG_pointNearBase ) then { _bad = true; "STR_RADAR_IN_BASE" } else {"STR_RADAR_OUT_BASE"};
 			_slope = [_mast_pos, 3] call XfGetSlope;
+			hint localize format["+++ CHECK: slope(in 3 m.) = %1 ",_slope];
 			_str3 = if (_slope > MAX_SLOPE) then {
 				_bad = true;
-				_txt = "STR_RADAR_ON_SLOPE"
+				"STR_RADAR_ON_SLOPE"
 			} else {
-				_txt = "STR_RADAR_ON_HORIZONTAL"
+				"STR_RADAR_ON_HORIZONTAL"
 			};
-			hint localize format["+++ CHECK: slope(in 3 m.) = %1 ",_slope];
 			_ht   = _mast_pos call SYG_getLandASL;
 			_str4 = if ( _ht < INSTALL_MIN_ALTITUDE ) then { _bad = true; "STR_RADAR_MAST_TOO_LOW" } else {"STR_RADAR_MAST_HIGH"};
 
@@ -237,8 +230,7 @@ if (true) then {
 			sideradio_status = 1; // installation done
 			publicVariable "sideradio_status";
 			// play random radio signal (including from "Mayak" radiostation etc)
-			["say_radio", call SYG_randomRadio] call XSendNetStartScriptClientAll;
-			_txt = localize "STR_RADAR_SUCCESSFUL";
+			[ "say_radio", call SYG_randomRadio, [ "msg_to_user","", [["STR_RADAR_TRUCK_MAST_INSTALLED"]] ] ] call XSendNetStartScriptClientAll;
 			_send_was_at_sm = (_veh distance RADAR_INSTALL_POINT) < INSTALL_RADIUS;
 		};
 		default {hint localize format["--- radio_menu.sqf: Expected command '%1' not parsed, must be LOAD, UNLOAD, INSTALL", _cmd]};

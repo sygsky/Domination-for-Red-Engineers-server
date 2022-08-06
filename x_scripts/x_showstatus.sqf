@@ -192,12 +192,13 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 				_name = text(d_radar_truck call SYG_nearestSettlement);
 				_s = _s + "\n" + (format[localize "STR_RADAR_TRUCK_INFO", _name]); // "Look for the blue truck in the '%1' area"
 			};
-			if (!alive d_radar) exitWith {_s = _s + "\n" + (localize "STR_RADAR_FAILED0")};
-			if (sideradio_status in [1,2]) exitWith {_s = _s + (localize format["STR_RADAR_TASK%1",sideradio_status])}; // "Reconnect with the motherland!"
+			if (!alive d_radar) then {_s = _s + "\n" + (localize "STR_RADAR_FAILED0")}; // "No relay must found - no help from GRU!"
+			if (sideradio_status == 1) exitWith {_s = _s + (localize "STR_RADAR_TASK1")}; // "Return the truck to the GRU PC!"
+			if (sideradio_status == 2) exitWith {_s = _s + (localize "STR_RADAR_TASK2")}; // "The side mission is practically done! Wait for the task to be completed!"
 		};
 
 	};
-    // check for big gun at one of the snipers of side mission team
+    // check for big gun at one of the snipers of side mission teMam
     if (!isNil "SM_HeavySniperCnt") then {
 //        hint localize format["SM_HeavySniperCnt = %1", SM_HeavySniperCnt];
         if (SM_HeavySniperCnt > 0) then {

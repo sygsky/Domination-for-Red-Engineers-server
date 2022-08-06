@@ -13,12 +13,15 @@ sleep 1;
 // clear finished side mission markers
 //deleteMarkerLocal format["XMISSIONM%1",current_mission_index + 1];
 //_s = getMarkerType format["XMISSIONM%1",current_mission_index + 1];
-call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
+//call compile format ["deleteMarkerLocal ""XMISSIONM%1"";",current_mission_index + 1];
+deleteMarkerLocal sm_marker_name;
+
 //hint localize format["+++ x_sidemissionwinner.sqf: deleteMarkerLocal ""XMISSIONM%1"" (found as ""%2"")", current_mission_index + 1, _s];
 if (x_sm_type == "convoy") then {
 //	deleteMarkerLocal format["XMISSIONM2%1",current_mission_index + 1];
 //	_s = getMarkerType format["XMISSIONM2%1",current_mission_index + 1];
-	call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];
+//call compile format ["deleteMarkerLocal ""XMISSIONM2%1"";",current_mission_index + 1];
+deleteMarkerLocal sm_marker_name2;
 //	hint localize format["+++ x_sidemissionwinner.sqf: deleteMarkerLocal ""XMISSIONM2%1"" (found as ""%2"")", current_mission_index + 1, _s];
 };
 
