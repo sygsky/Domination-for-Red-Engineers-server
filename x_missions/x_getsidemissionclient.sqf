@@ -69,10 +69,11 @@ if (current_mission_index != -1) then {
 };
 
 if (_do_hint) then {
+	_msg = current_mission_text call XfRemoveLineBreak;
 	hint  composeText[
 		parseText("<t color='#f000ffff' size='1'>" + (localize "STR_SYS_181") + "</t>"), lineBreak,lineBreak,
-		current_mission_text
-	]; // "Новое задание:"
+		_msg
+	]; // "New order:"
 };
 
 if (true) exitWith {};
