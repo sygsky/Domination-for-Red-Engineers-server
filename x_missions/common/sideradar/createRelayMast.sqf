@@ -36,8 +36,7 @@ if (_base ) then {
 	// find good point for the truck
 	_cnt = 0;
 	while { count _pos == 0 } do {
-		_ind = _places call XfRandomArrayVal; // find settlement to use
-		_info = _places select _ind;
+		_info = _places call XfRandomArrayVal; // find settlement to use
 		_center = _info select 0;
 		_MTName = call SYG_getTargetTownName; // name of the current town
 		_name = _info select 1;
@@ -72,7 +71,7 @@ if (_base) then {
 	_angle = random 360;
 	d_radar setVectorUp [cos _angle,sin _angle,0]
 };
-d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
+d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_killed.sqf" } ]; // remove killed radar after some delay
 ["say_sound", d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
 // processInitCommands; // called in radio_service.sqf
 

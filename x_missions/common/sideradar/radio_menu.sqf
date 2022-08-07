@@ -16,7 +16,8 @@
 
 #include "sideradio_vars.sqf"
 
-// try to change radar detected status
+// try to change object status:
+// Call as: __set_as_detected = _obj call _set_detected; // return true is flag set, else false (flag already was set)
 _set_detected = {
 	private ["_detected","_veh"];
 	_veh = _this;
@@ -106,19 +107,25 @@ if (true) then {
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_DEAD";
 			};
+			if (sideradio_status == 1) exitWith { _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED"}; // "The mast is installed and working. It only remains to bring the truck to the PC GRU."
+			if (sideradio_status == 2) exitWith { _txt = localize "STR_RADAR_TRUCK_NOT_NEEDED"}; // "Mission accomplished. The truck should be hidden in a safe place",
+
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) < 0 ) exitWith { // already loaded into this vehicle, so change all menu items
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_ALREADY_LOADED";
 			};
+
 			if ( round (speed _veh) > 0.5 ) exitWith {
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_TRUCK_MOVING";
 			};
+
 			_dist = [d_radar, player] call SYG_distance2D;
 			if ( _dist > DIST_MAST_TO_TRUCK ) exitWith {
 				_txt = format [localize "STR_RADAR_MAST_FAR_AWAY", DIST_MAST_TO_TRUCK, ceil _dist ];
 			};
+
 			_txt = localize "STR_RADAR_MAST_LOADED";
 			["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
 			d_radar setPosASL [_asl select 0, _asl select 1, -50];
@@ -133,6 +140,9 @@ if (true) then {
 				playSound "losing_patience";
 				_txt = localize "STR_RADAR_MAST_DEAD";
 			};
+			if (sideradio_status == 1) exitWith { _txt = localize "STR_RADAR_TRUCK_MAST_INSTALLED"}; // "The mast is installed and working. It only remains to bring the truck to the PC GRU."
+			if (sideradio_status == 2) exitWith { _txt = localize "STR_RADAR_TRUCK_NOT_NEEDED"}; // "Mission accomplished. The truck should be hidden in a safe place",
+
 			_asl = getPosASL d_radar;
 			if ((_asl select 2) > 0 ) exitWith {
 				// already unloaded into this vehicle, so change all menu items

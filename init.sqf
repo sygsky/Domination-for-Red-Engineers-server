@@ -274,11 +274,23 @@ if (isServer) then {
     // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 29 - tanks at Cabo Juventudo,
     // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 48 - transformer substations of Corazol, 49 - captain Grant
     // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation
-    _first_array = [56];
+    _first_array = [];
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
         hint localize format["+++ SM _first_array: %1", _first_array];
     };
+    // Move radiomast SM #56 to the beginning of SM list at pos 2..3
+    // ranked_sm_array = [ 5, [3,44,2,53] ];
+    _ind56 = side_missions_random find 56;
+	if (_ind56 >= 0) then { // set it 2nd-3rd SM in the sequence
+		if ((_ind56 == 0) || (_ind56 > 2) ) then { // move 56th SM to the 2..3 position in array (so index will be  1..2)
+			_ind = floor(random 2) + 1; // 1..2 = new index for 56th SM
+			side_missions_random set[_ind56, side_missions_random select _ind]; // move SM from new 56th SM index to the current 56th SM index
+			side_missions_random set[_ind, 56]; // put 56th SM to the 1..2 index in array
+		    hint localize format["+++ SM array: 56th SM (radiomast installation) exchanged index from %1 to the %2",_ind56, _ind];
+		} else { hint localize format["+++ SM array: 56th SM (radiomast installation) is at index %1",_ind56, _ind]; };
+	} else { hint localize "+++ SM array: 56th SM (radiomast installation) not used in the mission" };
+
 
 //    side_missions_random = side_missions_random - [40,41]; // nemporarily remove all SM with prisoners (not work!!)
 
@@ -525,7 +537,7 @@ if (isServer) then {
 		// create GRU radio mast on the Pico de Perez
 		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
 		d_radar setVehicleInit "this execVM ""x_missions\common\sideradar\radio_init.sqf""";
-		d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_delete.sqf" } ]; // remove killed radar after some delay
+		d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_killed.sqf" } ]; // remove killed radar after some delay
 		publicVariable "d_radar";
 		sideradio_status = 2; // radio-relay is online!
 		publicVariable "sideradio_status";

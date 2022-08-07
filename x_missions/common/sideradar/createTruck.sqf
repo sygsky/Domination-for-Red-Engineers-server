@@ -32,8 +32,7 @@ _places = [
 // find good point for the truck
 _cnt = 0;
 while { count _pos == 0 } do {
-	_ind = _places call XfRandomArrayVal; // find random settlement to use
-	_info = _places select _ind;
+	_info = _places call XfRandomArrayVal; // find random settlement to use
 	_center = _info select 0;
 	_MTName = call SYG_getTargetTownName; // name of the current town
 	_name = _info select 1;
@@ -68,34 +67,4 @@ hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _ms
 
 
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
-d_radar_truck addEventHandler ["killed", { // _this = [_killed, _killer];
-	private ["_veh","_asl","_pos","_msg"];
-	_msg = (_this select 1) call SYG_getKillerInfo;
-	hint localize format["+++ Radar truck killed by %1", _msg];
-	_veh = _this select 0;
-	if (alive d_radar)  then  { // unload mast if truck is killed
-		_asl = getPosASL d_radar;
-		if ((_asl select 2) < 0) then {
-			_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
-			d_radar setPos _pos;
-			["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
-		};
-	};
-
-	// remove truck after 10 minutes of players absence around 300 meters of truck.
-	_veh spawn {
-		private ["_veh","_player","_cnt","_pos"];
-		_veh = _this;
-		_cnt = 0;
-		while {!(isNull _veh)} do {
-			sleep (60 + (random 60));  // wait next period for player absence
-			_pos = getPos _veh;
-			_player =  [_pos, 100] call SYG_findNearestPlayer; // find any alive player in/out vehicles
-			if ( (!(alive _player)) || (_cnt > 5)) exitWith { // 5 times with 90 seconds (on average) check if no players nearby
- 				["say_sound", _pos, "steal"] call XSendNetStartScriptClient;
-				deleteVehicle _veh;
-			};
-			_cnt = _cnt + 1;
-		};
-	};
-}];
+d_radar_truck addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\truck_killed.sqf" }]; // _this = [_killed, _killer];

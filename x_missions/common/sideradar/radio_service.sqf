@@ -10,7 +10,7 @@
 	 2 - radar installed, truck successfully returned to the FLAG_BASE, and from now not needed (if killed etc)
 	returns: nothing
 */
-#define __DEBUG__
+//#define __DEBUG__
 
 // Creates new radar in towns near airbase, old one must be removed before this call
 _create_radar = {
@@ -54,7 +54,7 @@ _create_items = {
             // create new truck
             call _create_truck;
             sideradio_status = 0;
-            _msg set [count _msg, ["STR_RADAR_INIT2"] ]; // "Look for an yellow truck to transport relay mast in one of the towns near the base"
+            _msg set [count _msg, ["STR_RADAR_INIT2"] ]; // "Look for an blue truck to transport relay mast in one of the towns near the base"
         };
 	};
 	if ( count _msg > 0 ) exitWith { // something was changed

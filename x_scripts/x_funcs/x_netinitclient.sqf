@@ -876,7 +876,8 @@ XHandleNetStartScriptClient = {
                 _val = [_val];
             };
 //          hint localize ["+++ %1 : %2", x_netinitclient.sqf];
-            if ( (name player) in (_val) ) then { d_was_at_sm = true; if ( (count _this) > 2 ) then { playSound (_this select 2) } };
+			// play sound only if state was not set before
+            if ( ((name player) in (_val)) && (! d_was_at_sm)) then { d_was_at_sm = true; if ( (count _this) > 2 ) then { playSound (_this select 2) } };
         };
 
         // response from server to confirm you request on illumination of base: [ "illum_over_base", _player_name]

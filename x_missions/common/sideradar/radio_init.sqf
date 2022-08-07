@@ -37,5 +37,9 @@ if (_veh isKindOf "Truck" ) exitWith { // first truck, second is in reserve
 	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf","INSPECT"]; // Inspect
 	_veh addAction[localize    "STR_LOAD", "x_missions\common\sideradar\radio_menu.sqf","LOAD"]; // Load
 	_veh addAction[localize  "STR_UNLOAD", "x_missions\common\sideradar\radio_menu.sqf","UNLOAD"]; // Unload
+	if (!X_SPE) then {
+		_veh addEventHandler ["killed", { ["remote_execute","[d_radar_truck, objNull] execVM ""x_missions\common\sideradar\truck_killed.sqf"""] call XSendNetStartScriptServer }]; // _this = [_killed, _killer];
+		hint localize "+++ radio_init.sqf: add remote killed event to the server";
+	};
 	hint localize "+++ radio_init.sqf: add 3 actions to the truck";
 };

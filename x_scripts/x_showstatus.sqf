@@ -187,14 +187,22 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 		};
 		// GRU radar mast deliverance and installation
 		case 56: {
-			if (!alive d_radar_truck) exitWith {_s = _s + "\n" + (localize "STR_RADAR_TRUCK_WAIT")}; // "We have to look for a new truck. But where?"
-			if (locked d_radar_truck) exitWith {
-				_name = text(d_radar_truck call SYG_nearestSettlement);
-				_s = _s + "\n" + (format[localize "STR_RADAR_TRUCK_INFO", _name]); // "Look for the blue truck in the '%1' area"
+			if (!alive d_radar) then {
+				_s = _s + "\n" + (localize "STR_RADAR_FAILED0")  // "No relay must found - no help from GRU!"
+			} else {
+				if ( ([0,0,1] distance (vectorUp d_radar)) > 0.1) then {_s = _s + "\n" + (localize "STR_RADAR_INIT")}; // "Look for a replacement radio mast in one of the settlements closest to the base"
 			};
-			if (!alive d_radar) then {_s = _s + "\n" + (localize "STR_RADAR_FAILED0")}; // "No relay must found - no help from GRU!"
-			if (sideradio_status == 1) exitWith {_s = _s + (localize "STR_RADAR_TASK1")}; // "Return the truck to the GRU PC!"
-			if (sideradio_status == 2) exitWith {_s = _s + (localize "STR_RADAR_TASK2")}; // "The side mission is practically done! Wait for the task to be completed!"
+			if (!alive d_radar_truck) then {
+				_s = _s + "\n" + (localize "STR_RADAR_TRUCK_WAIT")  // "We have to look for a new truck. But where?"
+			} else {
+				if (locked d_radar_truck) then {
+					_name = text(d_radar_truck call SYG_nearestLocation);
+					_s = _s + "\n" + (format[localize "STR_RADAR_TRUCK_INFO", _name]); // "Look for the blue truck in the '%1' area"
+				};
+			};
+			if (sideradio_status == 1) exitWith {_s = _s + "\n" + (localize "STR_RADAR_TASK1")}; // "Return the truck to the GRU PC!"
+			if (sideradio_status == 2) exitWith {_s = _s + "\n" + (localize "STR_RADAR_TASK2")}; // "The side mission is practically done! Wait for the task to be completed!"
+			_s = _s + "\n" + localize "STR_RADAR_FAILURE_CONDITION";
 		};
 
 	};

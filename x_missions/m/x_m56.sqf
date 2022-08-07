@@ -21,7 +21,7 @@ if (!isServer) exitWith {};
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Start the service of radar+truck restoration
 //
-"BASE" execVM "x_missions\common\sideradar\radio_service.sqf";
+/*"BASE"*/ execVM "x_missions\common\sideradar\radio_service.sqf";
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

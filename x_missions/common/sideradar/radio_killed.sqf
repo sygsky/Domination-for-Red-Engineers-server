@@ -1,5 +1,5 @@
 /*
-	x_missions\common\sideradar\radio_delete.sqf, created at JUN 2022
+	x_missions\common\sideradar\radio_killed.sqf, created at JUN 2022
 	author: Sygsky
 	description: deletes the radar on mission failure
 	params: [_killed, _killer]
@@ -17,7 +17,7 @@ publicVariable "sideradio_status";
 
 _killer = _this select 1;
 _name = if ( isPlayer _killer ) then { name _killer } else { if (isNull _killer) then {"<unknown>"} else {typeOf _killer} };
-hint localize format[ "+++ radio_delete.sqf: radar deleted by %1, status = %2", _name, sideradio_status];
+hint localize format[ "+++ radio_killed.sqf: radar deleted by %1, status = %2", _name, sideradio_status];
 
 _cnt = 1;
 _killed = _this select 0;

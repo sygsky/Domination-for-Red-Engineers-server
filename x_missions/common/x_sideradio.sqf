@@ -98,7 +98,6 @@ _make_marker = {
 // Antenna/trucks are recreated in rado_service.sqf running during whole misssion
 
 // prepare markers (truck + radiomast)
-_truck = d_radar_truck; // current (first) alive truck
 _truck_marker = "";
 _radar_marker = ""; //
 
@@ -173,29 +172,41 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 
 	sleep _delay;
 };
+_truck = d_radar_truck; // truck to deliver to the GRU PC position
 hint localize format["+++ x_sideradio.sqf: exit marker loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive d_radar_truck];
-
-// wait truck to be alive
-while {  (sideradio_status == 1) && (alive _radar) && (!alive d_radar_truck) } do {sleep 1};
-_truck = d_radar_truck;
 
 hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive _truck];
 while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 	sleep 5;
 	if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
 };
-hint localize format["+++ x_sideradio.sqf: exit truck return loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive _truck];
 
 if (_mission) then { // check victory or failure
     if ( sideradio_status == 2 ) then { // Victory!
+		hint localize format["+++ x_sideradio.sqf:   mission SUCCESS, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
         side_mission_winner = 2;
         side_mission_resolved = true;
     } else {    // Failure
+		hint localize format["+++ x_sideradio.sqf:   mission FAILURE, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
         side_mission_winner = -702;
         side_mission_resolved = true;
     };
-};
+} else { hint localize format["+++ x_sideradio.sqf: exit NOT MISSION, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar] };
 
+// Compose the message about problem on mission failure
+_msg = [""];
+if ((sideradio_status ==2) && (alive _radar) && (alive _truck) ) then {
+	_msg = ["STR_RADAR_TRUCK_NOT_NEEDED"]; // "Mission accomplished. The truck should be hidden in a safe place"
+} else {
+	_msg = ["STR_RADAR_FAILURE","",""]; // "Something went wrong and the GRU radio relay could not be restored. %1%2"
+	if (!alive _radar) then { _msg set [1,"STR_RADAR_MAST_DEAD"]; }; // "Radio mast destroyed"
+	if (!alive _truck) then {
+		_msg set [2, "STR_RADAR_TRUCK_DEAD"]; // "Truck was killed"
+	}; // "Radio mast destroyed"
+	sideradio_status = 0;
+	publicVariable "sideradio_status";
+};
+["msg_to_user","",[_msg],0,10, false,"losing_patience"] call XSendNetStartScriptClient; // show message 10 seconds later this SM finished
 sleep (5 + (random 5));
 
 //==================================================
