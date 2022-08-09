@@ -5,6 +5,7 @@
 /*
 	author: Sygsky
 	description:
+		if called from command on FLAG_BASE, _this is as follows:
         Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]
         target (_this select 0): Object - the object which the action is assigned to
         caller (_this select 1): Object - the unit that activated the action
@@ -17,7 +18,7 @@
 
 hint localize "+++ JAIL SCRIPT called +++";
 
-if ( isServer && !X_SPE ) exitWith {"--- jail called on server, exit!"};
+if ( isServer && !X_SPE ) exitWith {"--- jail called on dedicated server, exit!"};
 
 #define JAIL_START_PERIOD 60
 
