@@ -291,8 +291,7 @@ if (isServer) then {
 		} else { hint localize format["+++ SM array: 56th SM (radiomast installation) is at index %1",_ind56, _ind]; };
 	} else { hint localize "+++ SM array: 56th SM (radiomast installation) not used in the mission" };
 
-
-//    side_missions_random = side_missions_random - [40,41]; // nemporarily remove all SM with prisoners (not work!!)
+//    side_missions_random = side_missions_random - [40,41]; // temporarily remove all SM with prisoners (not work!!)
 
     hint localize format["+++ SM array: %1", side_missions_random];
 

@@ -239,7 +239,7 @@ _str = _str + (localize "STR_SET_38");
 #ifdef __VEH_1985__
 _str = _str + (localize "STR_SET_39"); // "Only vehicles BEFORE 1985 inclusivelly allowed\n"
 #else
-_str = _str + (localize "STR_SET_39_0"); // "Only vehicles BEFORE 1985 inclusivelly allowed\n"
+_str = _str + (localize "STR_SET_39_0"); // "The mission uses all available equipment\n"
 #endif
 
 

@@ -63,7 +63,7 @@ d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\
 
 _msg = [d_radar_truck, 50] call SYG_MsgOnPosE0;
 hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg];
-[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the yellow truck in the '%1' area"
+[ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the blue truck in the '%1' area"
 
 
 // ++++++++++++++++++++++++ KILLED EVENT ++++++++++++++++++++
