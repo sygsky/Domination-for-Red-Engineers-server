@@ -317,7 +317,7 @@ SYG_islandDefeatTracks = [ SYG_chorusDefeatTracks ] + SYG_OFPTracks + ["treasure
 SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[28.546,9.575],[48.083,11.627],[59.709,13.203],[83.721,-1]];
 
 // additional sound, when base is under attack
-SYG_onBaseAttackSound = {"enemy_attacks_base"};
+SYG_onBaseAttackSound = {["enemy_attacks_base","enemy_attacks_base","enemy_attacks_base","enemy_attacks_base_robot"] call XfRandomArrayVal};
 
 //
 // NOTE: play music by playMusic call, not playSound, so use sections only from CfgMusic, never from CfgSounds
@@ -356,14 +356,13 @@ SYG_playRandomTrack = {
 
     // count >= 1
     if ( (typeName (_this select 0)) == "ARRAY" ) exitWith { // array of array
-        _item = _this call SYG_checkLastSoundRepeated;
-        _item call SYG_playRandomTrack; // find random array and try to play from it
+    	(_this call XfRandomArrayVal) call SYG_playRandomTrack; // play from any array item (which is also array of items)
     };
 
     //
     // if here it is some ARRAY
     //
-    if (count _this == 1) exitWith {
+    if (count _this == 1) exitWith { // single string array
         if (  typeName (_this select 0) == "STRING") exitWith {
             playMusic arg(0); arg(0)
         };
@@ -371,7 +370,8 @@ SYG_playRandomTrack = {
         ""
     };
 
-    // Check to be array of size > 1 and with special items sequence ["cosmos",[0, 10]]
+	// count > 1
+    // Check to be array with special items sequence ["cosmos",[0, 10]...]
     if ( (typeName (_this select 0)) == "STRING") exitWith {// ordinal array may be,  mandatory with size > 1
         if ((typeName (_this select 1)) == "STRING") exitWith { // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
             _item = _this call SYG_checkLastSoundRepeated;
@@ -380,7 +380,8 @@ SYG_playRandomTrack = {
 
         //
         // ["ATrack12,[10,10]<,[20,15]>]
-        // first is track name (STRING), others are part descriptors [start, length], ...
+        // first is track name (STRING), other items are part descriptors [start, length], ...
+        // so it is surely not short track
         //
         if ((typeName (_this select 1)) == "ARRAY") exitWith {
             // list of track parts

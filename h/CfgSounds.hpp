@@ -171,7 +171,8 @@ class CfgSounds {
 
     class losing_patience  {name = ""; sound[] = {\sounds\short\losing_patience.ogg,db-1,1.0}; titles[] = {};};
     class good_news        {name = ""; sound[] = {\sounds\short\good_news.ogg, db+10, 1.0}; titles[] = {}; };
-    class message_received {name = ""; sound[] = {\sounds\short\received.ogg, db+10, 1.0}; titles[] = {}; };
+//    class message_received {name = ""; sound[] = {\sounds\short\received.ogg, db+10, 1.0}; titles[] = {}; };
+//    class message_received_robot {name = ""; sound[] = {\sounds\short\message_received.ogg, db+10, 1.0}; titles[] = {}; };
     class drum_fanfare     {name = ""; sound[] = {\sounds\short\drum_fanfare.ogg, db+10, 1.0}; titles[] = {}; };
     class hound_chase      {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0}; titles[] = {};}; // chase from "Hound of Baskerville" Soviet film
 
@@ -415,8 +416,12 @@ class CfgSounds {
     class under_water_9   {name = ""; sound[] = {\sounds\defeat\water\under_water9.ogg, db+10, 1.0}; titles[] = {};};
     class fish_man_song   {name = ""; sound[] = {\sounds\defeat\water\fish_man_song.ogg, db+10, 1.0}; titles[] = {};};
 
-    class enemy_attacks_base   {name = "On base attack event in Russian"; sound[] = {\sounds\onbase\enemy_attack.ogg, db+10, 1.0}; titles[] = {};};    // base attack additional sound
+    class enemy_attacks_base {     name = "On base attack event in Russian"; sound[] = {\sounds\onbase\enemy_attack.ogg, db+10, 1.0}; titles[] = {};};    // base attack additional sound
+    class enemy_attacks_base_robot {name = "On base attack event by female robot"; sound[] = {\sounds\onbase\enemy_attack_robot_voice.ogg, db+10, 1.0}; titles[] = {};};    // ...
 
+    class tuman {name = "Fog has fallen on airfiled runway"; sound[] = {\sounds\weather\tuman.ogg, db+10, 1.0}; titles[] = {};};    // Sonf of and by Yuri Vizbor
+
+//
 	// Lighthouse sounds
     class lighthouse_1    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v01.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 1
     class lighthouse_2    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 2
