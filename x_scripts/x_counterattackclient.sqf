@@ -19,8 +19,16 @@ switch (_reason) do {
 		"counterattack" call SYG_receiveRadio;
 		sleep 5;
 
-    	// Play relevant music
-    	SYG_counterAttackTracks call SYG_playRandomTrack;
+    	// Play relevant music. TODO: show music title if possible
+    	_sound = SYG_counterAttackTracks call XfRandomArrayVal;
+		_str = localize format["STR_%1", _sound];
+		if ( _str != "") then { // title defined and found
+    		["say_sound","PLAY","tuman",0,30] call XHandleNetStartScriptClient; // show music title on playing
+		} else {
+			_sound call SYG_playRandomTrack;
+		};
+
+
 
 		[_s, "HQ"] call XHintChatMsg;
 	};

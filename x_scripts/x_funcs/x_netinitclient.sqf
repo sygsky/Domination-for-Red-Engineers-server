@@ -730,13 +730,13 @@ XHandleNetStartScriptClient = {
 
 		//
 		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound[, "-",_player_name]] or
-		//                                             ["say_sound","LIST", _arr[, "-",_player_name]]  where _arr is array of [_object, _sound, sleep time] or
-		//                                             ["say_sound","PLAY", _sound<,_wait_before_period<,_title_show_period>>]   - play sound with playSound Arma command <and with titles>
+		//                                             ["say_sound","LIST", _arr[, "-",_player_name]] : where _arr is array of [_object, _sound, sleep time] or
+		//                                             ["say_sound","PLAY", _sound<,_wait_before_period<,_title_show_period>>] : play sound with playSound Arma command <and with titles>
 		// !!! Note: arg 1 (_this select 1) MUST be some object or predefined string ["LIST","PLAY"] !!!
         case "say_sound": {
 
 			//
-			// call as: [_x, _sound, _sleep <,"-",_name>] spawn say_proc;
+			// call as: [_name | "" , _sound, _sleep <,"-",_name>] spawn say_proc;
 			//
 			_say_proc = {
 				private ["_obj","_pos","_nil","_sound","_dist"];
@@ -780,7 +780,7 @@ XHandleNetStartScriptClient = {
 		    if ( typeName (_this select 1) != "STRING") then {
 		    	_arr = [[_this select 1, _this select 2, 0, argopt(3,""), argopt(4,"")]]; // array of 1 sound to play
 		    } else { // 2nd arg is string and may be "PLAY" sub-command: ["say_sound", "PLAY", "money", 5 ] call XSendNetStartScriptClient;
-		    	if ( ( _this select 1 ) == "PLAY" ) exitWith {
+		    	if ( ( _this select 1 ) == "PLAY" ) exitWith { // ["say_sound","PLAY", _sound<,_wait_before_period<,_title_show_period>>]
 					if ( count _this > 3 ) then {
 						if ( typeName ( _this select 3 ) == "SCALAR" ) then {
 							sleep ( ( _this select 3 ) min 0 );
