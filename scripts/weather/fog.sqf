@@ -1,6 +1,6 @@
 // fog.sqf : to draw fogged environment around player on client computer
 #include "x_setup.sqf"
-
+_next_fog_sound = time - 1;
 while {true} do {
 	#ifndef __REVIVE__
 	waitUntil {sleep random 0.3;vehicle player in list foggy};
@@ -21,17 +21,19 @@ while {true} do {
 	};
 	#endif
 
-	// we are entering foggy zone
-
-	if ((speed vehicle player) > 100) then {
-		10 setFog fFogMore;
+	// we are entering foggy zone, try to play corresponding sound
+	if (time > _next_for_sound) then { // it is time to play fog sound
+		["say_sound","PLAY","tuman",0,30] call XHandleNetStartScriptClient; // show music title on playing
+		_next_fog_sound = time + 10800; // three hours interval for the next fog sound
+	};
+    _speed = speed vehicle player;
+	if (_speed > 100) then {
+		10 setFog fFogMore; // 100..
 	} else {
-		if ((speed vehicle player) > 25) then {
-			20 setFog fFogMore;
+		if (_speed > 25) then {
+			20 setFog fFogMore; // 25..100
 		} else {
-			if ((speed vehicle player) < 25) then {
-				30 setFog fFogMore;
-			};
+			30 setFog fFogMore; // .. 25
 		};
 	};
 	#ifndef __REVIVE__
@@ -56,17 +58,14 @@ while {true} do {
 	if (not alive player) then {
 		10 setFog fFogLess;
 	} else {
-	    _speed = (((speed vehicle player) max 25) min 100);
-	    //_tmo   = (_speed - 25) / 100 * 20 + 10; // TODO: time to use for the foggy to change max
-		if ((speed vehicle player) > 100 or not alive player) then {
-			10 setFog fFogLess;
+	    _speed = speed vehicle player;
+		if (_speed > 100) then {
+			10 setFog fFogLess; // 100..
 		} else {
-			if ((speed vehicle player) > 25) then {
-				20 setFog fFogLess;
+			if (_speed > 25) then {
+				20 setFog fFogLess; // 25..100
 			} else {
-				if ((speed vehicle player) < 25) then {
-					30 setFog fFogLess;
-				};
+				30 setFog fFogLess; // .. 25
 			};
 		};
 	};
