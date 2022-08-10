@@ -10,7 +10,7 @@ if (!X_Client) exitWith {};
 if (isNil "d_show_player_marker") then {d_show_player_marker = 0;};
 sleep 1.012;
 
-p_uncon = false; // TODO: works only for revive options, may be removed in the future
+p_uncon = false; // works on weather settings in many scripts
 
 #ifndef __TT__
 X_XMarkerVehicles = {
