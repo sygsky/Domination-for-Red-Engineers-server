@@ -396,9 +396,9 @@ if (isServer) then {
             if ( call SYG_isNewYear ) exitWith {// make gift for a player on a New Year event
                 hint localize format["+++ init.sqf: %1 -> New Year detected, give some musical present for players on base", (call SYG_getServerDate) call SYG_humanDateStr];
                 private ["_veh","_snd","_pos"];
-                _veh = "Radio" createVehicle [0, 0, 0];
+                _veh = "Vysilacka" createVehicle [0, 0, 0]; // "Radio" is deletable, Vysilacka is not deletable
                  // set radio on top of the table
-                 _pos = if (random 2 > 1) then { [ 9384.3, 9972.8, 1.5] } else { [ 9384.3, 9971.6, 1.5] };
+                _pos = if (random 2 > 1) then { [ 9384.3, 9972.8, 1.5] } else { [ 9384.3, 9971.6, 1.5] };
                 _veh setPos _pos;
                 _veh setDir 90;
                 sleep 5.512;	// wait until dropped to the underlying surface
