@@ -305,7 +305,7 @@ STR_SYS_146,Good job. The enemy officer is dead.,Gute Arbeit. Der feindliche Off
 STR_SYS_147,The North prime minister visits some troops in Valle Azul. Eliminate him !,Der Norden Ministerpräsident besucht einige Truppen in Valle Azul. Beseitigen Sie ihn !,El primer ministro Sahrani llegó a Estrella para negociar por la OTAN. Su tarea es eliminar al primer ministro.,Премьер-министр Сахрани прибыл в Estrella договариваться за НАТО. Ваша задача - ликвидация премьер-министра.
 STR_SYS_148,Good job. The prime minister is dead.,Gute Arbeit. Der Ministerpräsident ist tot.,¡Misión cumplida! El primer ministro ha sido destruido.,Задание выполнено! Премьер-министр уничтожен.
 
-STR_SYS_151,%1 m. to %2 from %3,%1 m. nach %2 von %3,%1 m. a %2 de %3,%1 м. до %2 на %3
+STR_SYS_POS,%1 m. to %2 from %3,%1 m. nach %2 von %3,%1 m. a %2 de %3,%1 м. на %2 от %3
 STR_SYS_POSE,%1 m. to %2 from %3,%1 m. to %2 from %3,%1 m. to %2 from %3,%1 m. to %2 from %3
 STR_SYS_152,Still working (score %1)...,Im Prozess (punkte %1)...,Arreglo (puntos %1)...,Починка (очков %1)...
 
