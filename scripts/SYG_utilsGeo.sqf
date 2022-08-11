@@ -386,23 +386,13 @@ SYG_nearestZoneOfInterest = {
  *    _part = _getPos player call SYG_whatPartOfIsland; // "NORTH", "SOUTH", "CENTER" for Corazol area
  */
 SYG_whatPartOfIsland = {
-	private ["_pos","_str","_res"];
-	_pos = [];
-	switch toUpper(typeName _this) do {
-		case "OBJECT": {_pos = getPos _this;};
-		case "LOCATION": {_pos = locationPosition _this;};
-		case "GROUP": {_pos = getPos leader _this;};
-		case "ARRAY": {_pos = _this;};
-	};
-	_str = "<ERROR DETECTED>";
-	if ( count _pos > 0 ) then {
-		_res = _pos distance SYG_Sahrani_p0;
-		if ( _res < 500 ) then {_str = "CENTER";} else {
-			_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel; // vector comes approximately from S-E to N-W through Corazol
-			_str = if (_res >= 0) then {"NORTH"} else {"SOUTH"};
-		};
-	};
-	_str
+	private ["_pos","_res"];
+	_pos = _this call SYG_getPos;
+	if ( (_pos select 0) == 0 ) exitWith { "<ERROR DETECTED>" };
+	_res = _pos distance SYG_Sahrani_p0;
+	if ( _res < 500 ) exitWith {"CENTER"};
+	_res = [SYG_Sahrani_p1,SYG_Sahrani_p2,_pos] call SYG_pointToVectorRel; // vector comes approximately from S-E to N-W through Corazol
+	if (_res >= 0) then {"NORTH"} else {"SOUTH"}
 };
 
 /**
@@ -412,14 +402,8 @@ SYG_whatPartOfIsland = {
  */
 SYG_isDesert = {
 	private ["_pos","_ret","_x"];
-	_pos = [];
-	switch toUpper(typeName _this) do {
-		case "OBJECT": {_pos = getPos _this;};
-		case "LOCATION": {_pos = locationPosition _this;};
-		case "GROUP": {_pos = getPos (leader _this);};
-		case "ARRAY": {_pos = _this;};
-	};
-	if ( (count _pos) < 2 ) exitWith {false};
+	_pos = _this call SYG_getPos;
+	if (  (_pos select 0) == 0 ) exitWith {false};
 	// this is a max Y coordinate of desert region on Sahrani (by my estimation)
 	//argp(_pos,1) < SYG_Sahrani_desert_max_Y
 	_ret = false;
@@ -433,10 +417,10 @@ SYG_isDesert = {
  *    _bool = (getPos player) call SYG_pointOnIslet; // true or false is returned
  */
 SYG_pointOnIslet = {
-	private ["_ret","_x"];
+	private ["_ret","_pos","_x"];
+	_pos = _this call SYG_getPos;
+	if ( _pos select 0 == 0 ) exitWith {false};
 	_ret = false;
-	if (typeName _this != "ARRAY") then {_this = position _this;};
-	if (count _this < 2) exitWith {false};
 	{
 		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = true;};
 	} forEach SYG_SahraniIsletCircles;
@@ -465,7 +449,6 @@ SYG_pointNearBase = {
 	if (count _this < 2) exitWith {false};
     [_this, [[9913,10385,0],1300,800]] call SYG_pointInRect // only for Sahrani island
 };
-
 
 /**
  * call: 
@@ -551,7 +534,7 @@ SYG_getSideMissionIndex = {
 //       angle - rotation in right system (from X axis to clockwise)
 //       type for marker is one of Arma's ones - "RECTANGLE", "ELLIPSE" or "ICON"
 //
-// call: _descr = ["marker_name",SHAPE] call SYG_readMarkerInfo; // SHAPE if of follow types: "RECTANGLE,"ELLIPSE"
+// call: _descr = ["marker_name",SHAPE] call SYG_readMarkerInfo; // SHAPE is of follow types: "RECTANGLE,"ELLIPSE"
 // 
 // if marker not exists or bad parameter designated, empty array returned: []
 //
@@ -849,7 +832,7 @@ SYG_distance2D = {
 // или "Вы на расстоянии " + "1400 м. к северу от Bagango"
 //
 SYG_MsgOnPos = {
-	[_this, localize "STR_SYS_151"] call SYG_MsgOnPosA // "from %1 %2 m. to %3"
+	[_this, localize "STR_SYS_POS"] call SYG_MsgOnPosA // "from %1 %2 m. to %3"
 };
 
 //
@@ -947,7 +930,8 @@ SYG_distByCar = {
 };
 
 /*
- * Distance from 1st point to 2nd by land. To make it distance by car multiply result by 1.4.
+ * Distance from 1st point to 2nd by land path. The path always goes through center of island (if Sahrani)
+ To make it distance by car multiply result by 1.4.
 
   Calls:
         _dist = [player, FLAG_BASE] call SYG_distByCar;
@@ -959,19 +943,22 @@ SYG_distByCar = {
 SYG_geoDist = {
     if (typeName _this != "ARRAY") exitWith {-1};
     if (count _this != 2) exitWith{-1};
-    private ["_pos1","_pos2","_pn1","_pn2","_part1","_part2","_onSamePart"];
-    _pos1 = arg(0);
-    _pos2 = arg(1);
-    if (typeName _pn1 == "OBJECT") then {_pos1 = getPos _pos1;};
-    if (typeName _pn1 != "ARRAY") then {-1};
-    if (typeName _pn2 == "OBJECT") then {_pos2 = getPos _pos2;};
-    if (typeName _pn2 != "ARRAY") then {-1};
+    private ["_pos1","_pos2","_pn1","_pn2","_part1","_part2","_onCenter"];
+    _pos1 = (_this select 0) call SYG_getPos;
+    if ( (_pos1 select 0) == 0) exitWith {-1};
+    _pos2 = (_this select 0) call SYG_getPos;
+    if ( (_pos2 select 0) == 0) exitWith {-1};
+
     // "NORTH", "SOUTH", "CENTER"
+#ifdef __DEFAULT__
     _part1 = _pos1 call SYG_whatPartOfIsland;
     _part2 = _pos2 call SYG_whatPartOfIsland;
-    _onSamePart = (_part1 == "CENTER" || _part2 == "CENTER");
-    if ((_part1 == _part2) || _onSamePart) exitWith {_pos1 distance _pos1};
-    ((_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0))
+    _onCenter = (_part1 == "CENTER" || _part2 == "CENTER"); // if one or both are on center part (Carazol if Sahrani)
+    if ((_part1 == _part2) || _onCenter) exitWith {_pos1 distance _pos2};
+    ((_pos1 distance SYG_Sahrani_p0) + (_pos2 distance SYG_Sahrani_p0));
+#else
+	_pos1 distance _pos2
+#endif
 };
 
 //
