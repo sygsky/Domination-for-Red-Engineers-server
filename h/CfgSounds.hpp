@@ -419,9 +419,8 @@ class CfgSounds {
     class enemy_attacks_base {     name = "On base attack event in Russian"; sound[] = {\sounds\onbase\enemy_attack.ogg, db+10, 1.0}; titles[] = {};};    // base attack additional sound
     class enemy_attacks_base_robot {name = "On base attack event by female robot"; sound[] = {\sounds\onbase\enemy_attack_robot_voice.ogg, db+10, 1.0}; titles[] = {};};    // ...
 
-    class tuman {name = "Fog has fallen on airfiled runway"; sound[] = {\sounds\weather\tuman.ogg, db+10, 1.0}; titles[] = {};};    // Sonf of and by Yuri Vizbor
+    class tuman {name = "Fog has fallen on airfield runway"; sound[] = {\sounds\weather\tuman.ogg, db+10, 1.0}; titles[] = {};};    // Sonf of and by Yuri Vizbor
 
-//
 	// Lighthouse sounds
     class lighthouse_1    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v01.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 1
     class lighthouse_2    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 2

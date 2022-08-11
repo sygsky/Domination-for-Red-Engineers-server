@@ -1,6 +1,6 @@
 // fog.sqf : to draw fogged environment around player on client computer
 #include "x_setup.sqf"
-_next_fog_sound = time - 1;
+_next_fog_sound = time;
 while {true} do {
 	#ifndef __REVIVE__
 	waitUntil {sleep random 0.3;vehicle player in list foggy};
@@ -22,7 +22,7 @@ while {true} do {
 	#endif
 
 	// we are entering foggy zone, try to play corresponding sound
-	if (time > _next_for_sound) then { // it is time to play fog sound
+	if (time > _next_fog_sound) then { // it is time to play fog sound
 		["say_sound","PLAY","tuman",0,30] call XHandleNetStartScriptClient; // show music title on playing
 		_next_fog_sound = time + 10800; // three hours interval for the next fog sound
 	};
