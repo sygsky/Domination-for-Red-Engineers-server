@@ -443,3 +443,43 @@ SYG_getKillerInfo = {
 	if ( _veh == _this) exitWith { _name };
 	format["%1(%2)", _name, typeOf _veh];
 };
+
+//
+// _text call SYG_typeWriter;
+// or: [_text,_sound, _sound_len<,_whole_time_in_secs>] call SYG_typeWriter;
+//
+SYG_typeWriter = {
+	private ["_text","_sound","_dur","_arr","_chars","_time","_napis","_i","_last_id","_dt"];
+	if ( typeName _this == "STRING") then {
+		_text  = _this;
+		_sound = "typewriter2";
+		_dur   =  0.337;
+	} else {
+		_text  = _this select 0;
+		_sound = _this select 1;
+		_dur   =  _this select 2;
+	};
+	_dur = _dur + 0.1;
+	_arr = toArray _text;
+//	_text = ["M","o","n","d","a","y",","," ","0","1"," ","A","u","g","u","s","t",","," ","1","9","8","5","\n","\n","N","e","a","r"," ","A","n","t","i","g","u","a"];
+	_chars = [];
+	_time = time;
+	cutText ["", "BLACK FADED", 1];
+	_napis = "";
+	sleep 1;
+	_last_id = count _arr - 1;
+	for "_i" from 0 to _last_id do {
+		_chars set [_i, _arr select _i];
+		_napis = toString(_chars);
+		//;hint format ["%1", _napis]
+		titleText [_napis, "PLAIN",_dur];
+		playsound _sound;
+		sleep     _dur;
+	};
+	if (count _this > 3) then {
+		_dt = (_this select 3) - (time - _time); // sleep more time ot not?
+		if (_dt > 0) then {sleep _dt};
+	};
+//	sleep 15;
+    cutText ["", "BLACK IN", 1];
+};
