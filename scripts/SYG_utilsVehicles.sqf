@@ -2169,6 +2169,31 @@ SYG_getVelocityVector = {
 };
 
 //
+// _speed = _veh call SYG_synchroSpeed;
+// Returns synchronized real speed along the movement vector of the vehicle (3D).
+// Check real speed not Arma value for the vehicle, that can be not synchronized
+//
+SYG_synchroSpeed = {
+/*
+	private ["_pos1","_pos2"];
+	if ((speed _this) == 0) exitWith {0};
+	// check if velocity is correct
+	_pos1 = getPosASL _this;
+	sleep 0.05;
+	_pos2 = getPosASL _this;
+	if ((_pos1 distance _pos2) == 0) exitWith {0};
+	speed  _this
+*/
+//	if ( (speed _this) == 0 ) exitWith { 0 }; //return zero speed
+	private ["_pos1"];
+	if ( ((velocity _this) distance [0,0,0]) == 0 ) exitWith { 0 };
+	// check non-zero velocity to be synchronized or not
+	_pos1 = getPos _this;
+	sleep 0.1;
+	if ( (_pos1 distance (getPos _this)) == 0) exitWith { 0 }; // position not
+	(((velocity _this) distance [0,0,0]) * 3.6)
+};
+//
 // Read all magazines from vehicle config
 // call as follows: _mags = _veh_type call SYG_getConfigMags;
 //

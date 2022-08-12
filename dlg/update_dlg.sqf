@@ -27,7 +27,8 @@ if (playerSide == west) then {
 			_mr1text ctrlSetText format[localize "STR_SYS_21", 1];//"Mobile respawn %1 gets transported by airlift..."
 			_mr1_available = false;
 		};
-		if (speed MRR1 > 4) exitWith {
+//		if (speed MRR1 > 4) exitWith {
+		if ((MRR1 call SYG_synchroSpeed) > 4) exitWith {
 			_mr1text ctrlSetText format[localize "STR_SYS_22",1]; //"Mobile respawn %1 currently driving..."
 			_mr1_available = false;
 		};
@@ -65,7 +66,8 @@ if (playerSide == west) then {
 			_mr2text ctrlSetText format[localize "STR_SYS_21",2];  //"Mobile respawn %1 gets transported by airlift..."
 			_mr2_available = false;
 		};
-		if (speed MRR2 > 4) exitWith {
+//		if (speed MRR2 > 4) exitWith {
+		if ((MRR2 call SYG_synchroSpeed) > 4) exitWith {
 			_mr2text ctrlSetText format[localize "STR_SYS_22",2]; //"Mobile respawn 2 currently driving..."
 			_mr2_available = false;
 		};
@@ -99,7 +101,8 @@ if (playerSide == west) then {
 		_mr1text ctrlSetText format[localize "STR_SYS_21", 1]; // "Мобильный респаун %1 в воздухе...";
 		_mr1_available = false;
 	} else {
-		if (speed MRRR1 > 4) then {
+//		if (speed MRRR1 > 4) then {
+		if ((MRRR1 call SYG_synchroSpeed) > 4) exitWith {
 			_mr1text ctrlSetText format[localize "STR_SYS_22",1]; // "Мобильный респаун %1 в движении...";
 			_mr1_available = false;
 		} else {
@@ -113,7 +116,8 @@ if (playerSide == west) then {
 		_mr2text ctrlSetText format[localize "STR_SYS_21",2];  //"Мобильный респаун %1 в воздухе...";
 		_mr2_available = false;
 	} else {
-		if (speed MRRR2 > 4) then {
+//		if (speed MRRR2 > 4) then {
+		if ((MRRR2 call SYG_synchroSpeed) > 4) exitWith {
 			_mr2text ctrlSetText format[localize "STR_SYS_22",2]; //"Мобильный респаун 2 в движении...";
 			_mr2_available = false;
 		} else {
