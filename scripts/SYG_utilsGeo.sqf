@@ -903,7 +903,7 @@ SYG_MsgOnPosE = {
 // Creates non-localized (only english) message about position,
 // distance_to_location,
 //
-// call as: _msg_eng = [_obj, <,roundTo> ] call SYG_MsgOnPosE0;
+// call as: _msg_eng = [_obj, _msg <,roundTo> ] call SYG_MsgOnPosE0;
 //
 SYG_MsgOnPosE0 = {
 	private ["_arr"];
