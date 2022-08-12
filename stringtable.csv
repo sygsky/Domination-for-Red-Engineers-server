@@ -1528,8 +1528,9 @@ STR_DOSAAF_UPDATE,Update the DOSAAF map,Aktualisierung der DOSAAF-Karte,Actualiz
 
 STR_WPN_TITLE,Important information,Wichtige Nachricht,Mensaje importante,Важное сообщение
 STR_WPN_INFO,"Remembering your armament is now done automatically when you exit the mission!","Das Speichern der Ausrüstung erfolgt jetzt automatisch, wenn man eine Mission beendet!","¡El recuerdo de tu equipo se hace ahora automáticamente al salir de una misión!","Запоминание Вашего снаряжение теперь производится автоматически, при выходе из миссии!"
-STR_WPN_INFO_1,"Your backpack is saved every time you change its contents. Your equipment is saved when you leave a mission","Ihr Rucksack wird jedes Mal gespeichert, wenn Sie seinen Inhalt ändern. Die Ausrüstung wird gespeichert, wenn Sie eine Mission verlassen","Tu mochila se guarda cada vez que cambias su contenido. El equipo se guarda cuando se abandona una misión","Ваш рюкзак сохраняется каждый раз при изменении его содержимого. Оружие сохраняется в момент выхода из миссии."
-STR_WPN_EXIT,"press '%1' to exit from dialog","drücken Sie '%1', um den Dialog zu verlassen","pulse '%1' para salir del diálogo","для выхода из диалога нажмите '%1'"
+STR_WPN_INFO_1,"Your backpack is saved every time you change its contents.","Ihr Rucksack wird jedes Mal gespeichert, wenn Sie seinen Inhalt ändern.","Tu mochila se guarda cada vez que cambias su contenido.","Ваш рюкзак сохраняется автоматически при любом изменении его содержимого."
+STR_WPN_INFO_2,Weapons are saved at the moment you exit the mission.,"Die Waffen bleiben erhalten, wenn Sie eine Mission beenden.","Las armas se conservan al salir de una misión.","Оружие сохраняется в момент выхода из миссии."
+STR_WPN_EXIT,"click '%1' to exit from dialog","drücken Sie '%1', um den Dialog zu verlassen","pulse '%1' para salir del diálogo","для выхода из диалога выберите '%1'"
 
 STR_RADAR_NO,Received unreliable message,Empfangene unzuverlässige Nachricht,Mensaje recibido no fiable,Получено невнятное сообщение
 STR_RADAR_MAST,Rusty GRU Radio-mast,Rostiger GRU-Funkmast,Mástil de radio GRU oxidado,Ржавая радио-мачта ГРУ

@@ -45,7 +45,8 @@ switch (toUpper (_this select 3) ) do {
 
 		localize "STR_WPN_TITLE" hintC [
 			composeText[ image "img\red_star_64x64.paa",lineBreak, localize "STR_WPN_INFO"],  // "Remembering your armament is now done automatically when you exit the mission!"
-			parseText  (localize "STR_WPN_INFO_1"),  // "Your backpack is saved every time you change its contents. Your equipment is saved when you leave a mission"
+			localize "STR_WPN_INFO_1",  // "Your backpack is saved every time you change its contents.
+			localize "STR_WPN_INFO_2",	// "Weapons are saved at the moment you exit the mission."
 			parseText  ("<t align='center'><t color='#ffff0000'>" + (format[localize "STR_WPN_EXIT",localize "STR_DISP_INT_CONTINUE"])) // "press '%1' to exit from dialog"
 		];
 		//(localize _str) + "\n\n" + (localize "STR_COMP_0")
