@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_scripts\x_weaponcargo_ace.sqf
 // called if ACE non RANKED version (really both loads are equal)
 private ["_ve"];
 
@@ -363,7 +363,7 @@ _ve spawn {
 				_ve addmagazinecargo ["ACE_30Rnd_545x39_BT_AK",100];
 				_ve addmagazinecargo ["ACE_30Rnd_545x39_SD_AK",100];
 				_ve addmagazinecargo ["ACE_30Rnd_762x39_B_RPK",100];
-				_ve addmagazinecargo ["ACE_30Rnd_762x39_B_AK",100];
+//				_ve addmagazinecargo ["ACE_30Rnd_762x39_B_AK",100];
 				_ve addmagazinecargo ["ACE_30Rnd_762x39_BT_AK",100];
 				_ve addmagazinecargo ["ACE_30Rnd_762x39_SD_AK",100];
 				_ve addmagazinecargo ["ACE_64Rnd_9x18_B_Bizon",100];
