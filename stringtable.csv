@@ -1243,7 +1243,7 @@ STR_COMP_6,This option is under development,This option is under development,"Es
 STR_Wallmap,map of Sahrani,Landkarte Von Sahrani,mapa de Sahrani,карта Сахрани
 STR_RahmadiMap,map of Rahmadi,Landkarte Von Rahmadi,mapa de Rahmadi,карта Рахмади
 
-STR_MAP_NUM,9,9,9,9
+STR_MAP_NUM,11,11,11,11
 STR_MAP_0,myopically,kurzsichtig,miope,близоруко
 STR_MAP_1,puzzled,verdutzt,con desconcierto,с недоумением
 STR_MAP_2,vigilantly,wachsam,atentamente,зорко
@@ -1253,6 +1253,8 @@ STR_MAP_5,stupidly,dumm,torpe,тупо
 STR_MAP_6,wrinkling your forehead and,und verzog seine Stirn,frente morsa y,морща лоб и
 STR_MAP_7,with a sudden understanding,mit einem plötzlichen Verständnis,con una comprensión repentina,с внезапным пониманием
 STR_MAP_8,with disgust,mit Ekel,con disgusto,с отвращением
+STR_MAP_9,with a faint hope,mit einer schwachen Hoffnung,con una débil esperanza,со слабой надеждой
+STR_MAP_10,delightedly,überglücklich,sobre la luna,с восхищением
 
 STR_MAP_PRIZE,You get the prize for curiosity (+%1),Sie erhalten den Preis für die Neugier (+%1),Obtienes un premio por curiosidad (+%1),Вы получаете приз за любопытство (+%1)
 
