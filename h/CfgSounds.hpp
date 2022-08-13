@@ -629,14 +629,14 @@ class CfgSounds {
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
     class money1 { name="Money by Pink Floyd";                          sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
-    class money2 { name="The sound of coins dropping";                  sound[] = {\sounds\sm\45\money1.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
+    class money2 { name="Money by Pink Floyd prelude";                  sound[] = {\sounds\sm\45\money1.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping, by Pink Floyd
 
     class pilots_resque1 { name="Resque mission sound intro";           sound[] = {\sounds\sm\pilots\pilots_resque1.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
     class pilots_resque2 { name="Resque mission sound intro";           sound[] = {\sounds\sm\pilots\pilots_resque2.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
     class pilots_resque3 { name="Resque mission sound intro";           sound[] = {\sounds\sm\pilots\pilots_resque3.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
 
     class flag_captured { name="Captured flag";                         sound[] = {\sounds\sm\flag\flag_captured.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
-    class flag_lost     { name="Lostd flag";                            sound[] = {\sounds\sm\flag\flag_lost.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
+    class flag_lost     { name="Lost flag";                            sound[] = {\sounds\sm\flag\flag_lost.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
 
     class usa_desant_heli { name="Babyyyyyyy";                          sound[] = {\sounds\intro\vehicles\usa_desant_heli.ogg,db-1,1.0}; titles[] = {};}; // Baby-y-y-y-y...
 
@@ -674,5 +674,7 @@ class CfgSounds {
 
     class button_1     { name="";                                       sound[] = {\sounds\short\button_1.ogg,db-1,1.0}; titles[] = {};}; //
     class repair_short { name="";                                       sound[] = {\sounds\short\repair_short.ogg,db-1,1.0}; titles[] = {};}; //
+
+    class typewriter   { name="";                                       sound[] = {\sounds\short\typewriter.ogg,db-1,1.0}; titles[] = {};}; // typewriter click
 
 };
