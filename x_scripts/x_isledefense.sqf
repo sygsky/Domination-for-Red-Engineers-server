@@ -670,45 +670,54 @@ while { true } do {
 					_leader = _igrp call SYG_getLeader;
 				    if ( _stat == STATUS_STOPPED) then {// patrol is stopped, but may be in chasm
                         // check patrol leader to be in chasm
-                        _pos = getPos _leader;
-                        _exitWP =  _pos call SYG_chasmExitWP;
-                        if ( (count _exitWP) > 0 ) then {// yes we are in chasm, try to find way out
+                        if (!isNull _leader) then {
+							_pos = getPos _leader;
+							_exitWP =  _pos call SYG_chasmExitWP;
+							if ( (count _exitWP) > 0 ) then {// yes we are in chasm, try to find way out
 #ifdef __PRINT_ACTIVITY__
-                            hint localize format[ "+++ %1 x_groupsm.sqf: %2 group %3 in chasm at %4, finding exit", call SYG_nowTimeToStr, argp(_igrpa,PARAM_TYPE), _igrp, _pos call SYG_nearestLocationName ];
+								hint localize format[ "+++ %1 x_groupsm.sqf: %2 group %3 in chasm at %4, finding exit", call SYG_nowTimeToStr, argp(_igrpa,PARAM_TYPE), _igrp, _pos call SYG_nearestLocationName ];
 #endif
-                            // redirect patrol to exit from the chasm
-                            // Let's get the hell out of here.
-                   			_igrp setCombatMode "GREEN";
-							_igrp setFormation "COLUMN";
-							_igrp setSpeedMode "FULL"; // go-go-go
-							_igrp setBehaviour "CARELESS";
-                            (units _igrp) doMove _exitWP;
-                            _grp_array set [4, _exitWP]; // current assigned wp
-                            _grp_array set [5, time];  // current time when wp was assigned
-                            _grp_array set [7, _pos]; // start position before assigning wp
-                            _grp_array set [2, 0]; // initial mode of group, will be changed in progress of group engaging
-               				_igrpa set [ PARAM_STATUS, STATUS_STOPPED1 ];
-	    					_igrpa set [ PARAM_TIMESTAMP, time + DELAY_REMOVE_STOPPED ];
-    						breakTo "main_loop";
+								// redirect patrol to exit from the chasm
+								// Let's get the hell out of here.
+								_igrp setCombatMode "GREEN";
+								_igrp setFormation "COLUMN";
+								_igrp setSpeedMode "FULL"; // go-go-go
+								_igrp setBehaviour "CARELESS";
+								(units _igrp) doMove _exitWP;
+								_grp_array set [4, _exitWP]; // current assigned wp
+								_grp_array set [5, time];  // current time when wp was assigned
+								_grp_array set [7, _pos]; // start position before assigning wp
+								_grp_array set [2, 0]; // initial mode of group, will be changed in progress of group engaging
+								_igrpa set [ PARAM_STATUS, STATUS_STOPPED1 ];
+								_igrpa set [ PARAM_TIMESTAMP, time + DELAY_REMOVE_STOPPED ];
+								breakTo "main_loop";
+							};
                         };
 				    };
-					if ( (_igrppos distance _leader) > DISTANCE_TO_BE_STOPPED ) then {// clear stopped state as patrol move far enough from stop point
-						// stop status is broken by good movement
-						_igrpa call _setStateNormal;
-					} else {// it is really stopped, but if enemy near, let fun continue
-						if ( _enemy_near && (time < (_timestamp + DELAY_VERY_LONG_STOPPED) )) then {
-							breakTo "main_loop"; // let him more time to handle with players
+
+					_remove_as_stub = true;
+					if (!isNull _leader) then {
+						if ( (_igrppos distance _leader) > DISTANCE_TO_BE_STOPPED ) then {// clear stopped state as patrol move far enough from stop point
+							// stop status is broken by good movement
+							_igrpa call _setStateNormal;
+							_remove_as_stub = false;
+						} else {// it is really stopped, but if enemy near, let fun continue (during additional 30 minutes may be)
+							if ( _enemy_near && (time < (_timestamp + DELAY_VERY_LONG_STOPPED) )) then {
+								breakTo "main_loop"; // let him more time to handle with players
+							};
 						};
-						_igrpa call  _remove_grp; // let them to disappear and create new patrol group later after designated delay
+					};
+					if (_remove_as_stub) then { // --------------------------- remove this group as stub one
 						// TODO: send info to users about stubbed patrol removing
 						hint localize format[
-							"+++ x_isledefense.sqf: %1, patrol #%2 (%3) removed on STUB, pos %4 (%5)",
+							"+++ x_isledefense.sqf: %1, patrol #%2 (%3) removed on STUB, pos %4",
 							call SYG_missionTimeInfoStr,
 							_i,
 							_igrpa select PARAM_TYPE,
-							[_leader,50] call SYG_MsgOnPosE0
+							if (isNull _leader) then {"<undef as crew dead>"} else {[_leader,50] call SYG_MsgOnPosE0}
 						];
 						
+						_igrpa call  _remove_grp; // let them to disappear and create new patrol group later after designated delay
 						_igrpa set [PARAM_STATUS, STATUS_WAIT_RESTORE];
 						_igrpa set [PARAM_TIMESTAMP, time + DELAY_RESPAWN_STOPPED];
 			

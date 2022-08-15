@@ -882,19 +882,19 @@ SYG_MsgOnPosA2B = {
 // call as: _msg_eng = [_obj, _localized_format_msg<,roundTo> ] call SYG_MsgOnPosE;
 //
 SYG_MsgOnPosE = {
-	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
+	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname","_roundTo"];
 	_obj = arg(0);
 	_msg = arg(1);
 	_roundTo = argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
-	_pos1 = position _loc;
+	_pos1 = locationPosition _loc;
 //	_pos1 set [2,0];
 //	if ( (typeName _obj) == "ARRAY") then { _pos2 = _obj } else { _pos2 = position _obj };
 	_pos2 = _obj call SYG_getPos;
 //	_pos2 set [2,0];// SYG_getPos
 	_dist = [_pos1, _pos2] call SYG_distance2D;
 	_dist = (round (_dist/_roundTo)) * _roundTo;
-	_dir = ([locationPosition _loc, _obj] call XfDirToObj) call SYG_getDirNameEng;
+	_dir = ([_pos1, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
 	format[ _msg , _dist, _dir, _locname ]
 };
@@ -903,7 +903,8 @@ SYG_MsgOnPosE = {
 // Creates non-localized (only english) message about position,
 // distance_to_location,
 //
-// call as: _msg_eng = [_obj, _msg <,roundTo> ] call SYG_MsgOnPosE0;
+// call as: _msg_eng = [_obj <,roundTo> ] call SYG_MsgOnPosE0;
+// or     : _msg_eng = _obj call SYG_MsgOnPosE0;
 //
 SYG_MsgOnPosE0 = {
 	private ["_arr"];

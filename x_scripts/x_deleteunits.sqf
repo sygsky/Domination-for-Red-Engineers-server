@@ -92,13 +92,15 @@ for "_i" from 0 to 6 do {
 	{
 		if (((position _x) select 2) < 20) then { // vehicle may be in air
 		    // Check to be the captured vehicle
-			if ( !isNil (_x getVariable "CAPTURED_ITEM") ) exitWith {  // vehicle is patrol/SM etc one, don't remove it now
+			_var = _x getVariable "CAPTURED_ITEM";
+			if ( !isNil "_var" ) exitWith {  // vehicle is captured one, don't remove it now
 				if (_x in _plist) exitWith {}; // already verified
 				_plist set [count _plist, _x]; // mark as verified
 				hint localize format["+++ x_deleteunits.sqf: captured (%1) veh %2 (#%3, alive crew %4) in %5, not removed", _x getVariable "CAPTURED_ITEM", typeOf _x, count _plist, {alive _x} count crew _x, _town_name];
 			};
 			// check to be in patrol list
-			if ( !isNil (_x getVariable "PATROL_ITEM") ) exitWith {  // vehicle is patrol one, don't remove it now
+			_var = _x getVariable "PATROL_ITEM";
+			if ( !isNil "_var" ) exitWith {  // vehicle is patrol one, don't remove it now
 				if (_x in _plist) exitWith {}; // already verified
 				_plist set [count _plist, _x]; // mark as verified
 				hint localize format["+++ x_deleteunits.sqf: patrol veh %1 (#%2, alive crew %3) in %4, not removed", typeOf _x, count _plist, {alive _x} count crew _x, _town_name];
