@@ -17,7 +17,7 @@ _ftype = (
 
 _flag = _ftype createVehicle _posi;
 sleep 0.05;
-jump_flags = jump_flags + [_flag];
+jump_flags set [ count jump_flags, _flag];
 if (d_own_side == "EAST") then {//+++Sygsky: add more fun with the flag
     _flag setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag
 };

@@ -227,13 +227,14 @@ _counterxx = 0;
 		_x addAction [_text,"x_scripts\x_bike.sqf",[d_jumpflag_vec,1]];
 	};
 	_x addAction [localize "STR_FLAG_5"/* "{Rumours}" */,"scripts\rumours.sqf",""];
-	#ifdef __ACE__
+#ifdef __ACE__
 	if (d_jumpflag_vec == "") then {
 		_box = "ACE_RuckBox" createVehicleLocal _pos;
 		_box call SYG_clearAmmoBox;
-		_box addWeaponCargo ["ACE_ParachutePack",10];
+		_box addWeaponCargo ["ACE_ParachutePack",50];
+		_box addWeaponCargo ["ACE_ParachuteRoundPack",50]; // more parachute types, by Rokse request on 15-AUG-2022
 	};
-	#endif
+#endif
 } forEach jump_flags;
 
 if (!mt_radio_down) then {
