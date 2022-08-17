@@ -641,7 +641,7 @@ XHandleNetStartScriptClient = {
 		    private ["_pname"];
 		    _pname = argp(arg(1),2);
 			if (name player == _pname) then {
-				__compile_to_var;
+				__compile_to_var; // d_player_staff = [];
 				SYG_dateStart = arg(2); // set server start date
 				if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
 				SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server

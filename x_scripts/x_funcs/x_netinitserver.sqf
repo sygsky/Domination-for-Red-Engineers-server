@@ -133,7 +133,8 @@ XHandleNetStartScriptServer = {
 			};
 		};
 
-		// info from user about his name and missionStart value
+		// It is 1st message from client, info from user about his name, missionStart, language, addons found etc.
+		// This message is answered with  user score, weapons etc
 		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN"<,"ACE_found">>>]
 		case "d_p_a": {
             // store server time directly now for better accuracy
@@ -174,6 +175,7 @@ XHandleNetStartScriptServer = {
 		 * Answer to initiation message sent from client as follow:
 		 * _name = name player;
 		 * ["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
+		 * Is answered to client with messages to describe current situation in the mission
 		 */
 		case "d_p_varname": {
 			_this call SYG_d_p_varname;
