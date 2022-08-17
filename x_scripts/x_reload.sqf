@@ -22,6 +22,7 @@ if (isNil "SYG_DA_NAMES") then {// men allowed to load double ammunition on this
 
 #define PLAYER_CAN_LOAD_DOUBLE_AMMO false
 
+
 #endif
 
 
@@ -199,7 +200,7 @@ if (__MandoVer) then {
 		_fcleft = _vehicle getVariable "mando_flaresleft";
 		_maxfc  = _vehicle getVariable "mando_maxflares";
 		if ( (format ["%1", _fcleft] != "<null>") && (format["%1", _maxfc] != "<null>")) then {
-		    if(_fcleft == _maxfc) exitWith{ titleText[ localize "STR_SYS_1218_0", "PLAIN DOWN" ]; }; // All chaff and flare dispensers are already full
+		    if(_fcleft == _maxfc) exitWith{ titleText[ format[localize "STR_SYS_1218_0", typeOf _vehicle], "PLAIN DOWN" ]; }; // All chaff and flare dispensers are already full
 		    _fcleft = _fcleft + 1;
 		    for "_i" from _fcleft to _maxfc do  {
 		        // print info on the step to load flares/chaffles "STR_SYS_1218"
