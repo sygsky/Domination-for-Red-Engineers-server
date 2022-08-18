@@ -81,7 +81,9 @@ while {(alive _vehicle) && (alive player) && (vehicle player == _vehicle)} do {
                 if ((typeOf _nearest) in _possible_types) then {
                     //hint localize format["+++ x_helilift.sqf: vehicle %1 lifted", typeOf _nearest];
                     _release_id = _vehicle addAction [ localize "STR_SYS_36", "x_scripts\x_heli_release.sqf",-1,100000]; //"Сбросить технику"
-					[_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName]] call XfVehicleChat;
+					_rec_msg = localize (if (_nearest call SYG_vehIsRecoverable) then {"STR_SYS_37_1"} else {"STR_SYS_37_0"}); // "recoverable"/"not recoverable"
+					hint localize format["+++ x_helilift_wreck: %1, ""RECOVERABLE""=%2 (%3)", typeOf _nearest, _nearest getVariable "RECOVERABLE", _rec_msg];
+					[_vehicle, format[localize "STR_SYS_37",[typeOf (_nearest),0] call XfGetDisplayName, _rec_msg]] call XfVehicleChat; // "Vehicle (%1, %2) is lifted..."
                     Attached_Vec = _nearest;
 
                     _height = 15;
