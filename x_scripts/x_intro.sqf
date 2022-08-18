@@ -563,7 +563,7 @@ SYG_showMusicTitle = {
                 } else { // some soviet holiday
                     if (count _holiday == 3) then {
                         _str = if ( _holiday select 0 ) then { "STR_INTRO_5_1" } else { "STR_INTRO_5_0" };
-                        format[localize "STR_INTRO_5",localize (_holiday select 2),_str]; // message for the selebration
+                        format[localize "STR_INTRO_5",localize (_holiday select 2),localize _str]; // message for the selebration
                     } else {""};
                 };
 			};
