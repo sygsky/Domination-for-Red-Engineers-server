@@ -78,6 +78,7 @@ class CfgSounds {
 	class sinbad_sckeleton { name=""; sound[]=   {\sounds\fear\sinbad_sckeleton.ogg,db-1,1.0}; titles[] = {}; }; // from "7th voyage of Sinbad "
 	class fear4     { name=""; sound[]=   {\sounds\fear\fear4.ogg,db-1,1.0}; titles[] = {}; };
 	class fear_Douce_Violence     { name=""; sound[]=   {\sounds\fear\fear_Douce_Violence.ogg,db-1,1.0}; titles[] = {}; };
+	class boom      { name=""; sound[]=   {\sounds\fear\boom.ogg,db-1,1.0}; titles[] = {}; };
 
 	class teleport_from { name=""; sound[]=   {\sounds\short\teleport_from.ogg,db-1,1.0}; titles[] = {}; };
 	class teleport_to   { name=""; sound[]=   {\sounds\short\teleport_to.ogg,db-1,1.0}; titles[] = {}; };
@@ -660,6 +661,8 @@ class CfgSounds {
     class radio_9 { name="";                        	                sound[] = {\sounds\radio\mayak_2.ogg,db-1,1.0}; titles[] = {};}; //
 
     class counterattack { name="counterattack";                         sound[] = {\sounds\radio\start_counterattack.ogg,db-1,1.0}; titles[] = {};}; // start counterattack
+    class enemy_spotted { name="";                                      sound[] = {\sounds\radio\enemy_spotted.ogg,db-1,1.0}; titles[] = {};}; // typewriter click
+    class enemy_activity { name="";                                     sound[] = {\sounds\radio\enemy_activity.ogg,db-1,1.0}; titles[] = {};}; // typewriter click
 
     class truck_door_1 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_1.ogg,db-1,1.0}; titles[] = {};}; // truck door close 1
     class truck_door_2 { name="";                                       sound[] = {\sounds\short\door_close\truck_door_close_2.ogg,db-1,1.0}; titles[] = {};}; // 2

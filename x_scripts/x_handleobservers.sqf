@@ -146,7 +146,8 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                 _near_targets_cnt = count _near_targets;
                 _near_targets = [];
                 if ( (count _pos_nearest > 0) && ( (name _enemy) != "Error: No unit") ) then {
-                    // don't shoot too far if player is not in vehicle as he can teleport from battle field but Arma updates its real coordinates in the nearTargets array
+                    // don't shoot too far if player is not in vehicle as he can teleport from battle field
+                    // but Arma updates its real coordinates in the nearTargets array
                     // Arti strike is not allowed if player is teleported far away (user is on base, on feet || close to flag)
 
                     _dist_between_pos = round( _pos_nearest distance _enemy );
@@ -167,6 +168,8 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 //                        hint localize format["+++ x_handleobservers.sqf: Arti strike on player %1 cancelled due to big dist between the obs and player who is not in vehilce (dist %2 m), up to %3 m is permitted",
 //                        					name _enemy, _dist_obs_pos, MAX_SHOOT_DIST * 10];
 //                    };
+
+					["say_radio", "enemy_activity"] call XSendNetStartScriptServer;
 
                     _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
                     _own_cnt       = {alive _x} count _own_arr;
@@ -209,6 +212,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                         _dist_between_pos,
                         _near_targets_cnt
                     ];
+					["say_radio", "enemy_spotted"] call XSendNetStartScriptServer;
 
                     _nextaritime  = time + d_arti_reload_time + (random 40);
                     [_pos_nearest,_type,KILL_RADIOUS] spawn x_shootari;

@@ -112,7 +112,7 @@ if (!(__ACEVer)) then {
 // Xoartimsg params : [_pos_enemy,_hit_radius]
 Xoartimsg = {
 	if ( ( (player distance (_this select 0) ) <= (_this select 1) ) ) then {  // always inform by sound
-	    playSound(["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence"] call XfRandomArrayVal);
+	    playSound( /*["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence","boom"] call XfRandomArrayVal*/ call SYG_fearSound);
 	    if (( random 10 ) > 1  ) then { // 9 of 10 times inform about the death approaching by text too
 			("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
 	    };
