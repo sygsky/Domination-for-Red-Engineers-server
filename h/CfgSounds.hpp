@@ -173,7 +173,7 @@ class CfgSounds {
     class losing_patience  {name = ""; sound[] = {\sounds\short\losing_patience.ogg,db-1,1.0}; titles[] = {};};
     class good_news        {name = ""; sound[] = {\sounds\short\good_news.ogg, db+10, 1.0}; titles[] = {}; };
 //    class message_received {name = ""; sound[] = {\sounds\short\received.ogg, db+10, 1.0}; titles[] = {}; };
-//    class message_received_robot {name = ""; sound[] = {\sounds\short\message_received.ogg, db+10, 1.0}; titles[] = {}; };
+    class message_received {name = ""; sound[] = {\sounds\short\message_received.ogg, db+10, 1.0}; titles[] = {}; };
     class drum_fanfare     {name = ""; sound[] = {\sounds\short\drum_fanfare.ogg, db+10, 1.0}; titles[] = {}; };
     class hound_chase      {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0}; titles[] = {};}; // chase from "Hound of Baskerville" Soviet film
 
