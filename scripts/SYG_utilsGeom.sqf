@@ -231,7 +231,7 @@ SYG_addDiff2Pos = {
 
 //
 // _newpos = [_basePos, _diffPos, _angle] call SYG_calcPosRotation;
-// where _diffPos is vectoк of difference between _basePos and second point
+// where _diffPos is vector of difference between _basePos and second point
 //
 SYG_calcPosRotation = {
     [ arg(0), ([[0,0,0], arg(1), -arg(2)] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;

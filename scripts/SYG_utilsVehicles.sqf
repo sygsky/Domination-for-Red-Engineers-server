@@ -2161,7 +2161,7 @@ SYG_assignVehAsBonusOne = {
 //
 SYG_getVelocityVector = {
 	private [ "_veh", "_pos" ];
-	velocity _veh;
+//	velocity _veh;
 	_veh = _this select 0;
 	_pos = getPos _veh;
 	_pos set [ 2, 0 ];
@@ -2174,25 +2174,16 @@ SYG_getVelocityVector = {
 // Check real speed not Arma value for the vehicle, that can be not synchronized
 //
 SYG_synchroSpeed = {
-/*
-	private ["_pos1","_pos2"];
-	if ((speed _this) == 0) exitWith {0};
-	// check if velocity is correct
-	_pos1 = getPosASL _this;
-	sleep 0.05;
-	_pos2 = getPosASL _this;
-	if ((_pos1 distance _pos2) == 0) exitWith {0};
-	speed  _this
-*/
-//	if ( (speed _this) == 0 ) exitWith { 0 }; //return zero speed
-	private ["_pos1"];
 	if ( ((velocity _this) distance [0,0,0]) == 0 ) exitWith { 0 };
+	private ["_pos1", "_len"];
 	// check non-zero velocity to be synchronized or not
-	_pos1 = getPos _this;
+	_pos1 = getPosASL _this;
 	sleep 0.1;
-	if ( (_pos1 distance (getPos _this)) == 0) exitWith { 0 }; // position not
-	(((velocity _this) distance [0,0,0]) * 3.6)
+	_len = _pos1 distance (getPosASL _this);
+	if (_len == 0) exitWith { 0 }; // position not changed, so speed 3D is zero
+	_len * 36
 };
+
 //
 // Read all magazines from vehicle config
 // call as follows: _mags = _veh_type call SYG_getConfigMags;
