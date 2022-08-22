@@ -1,7 +1,8 @@
+// x_scripts\x_intro_new.sqf
 // by Sygsky for Xeno Domination
 //
 // Mode identificators:
-// "PLANE" - 1st time in the mission player is dropped with parachute from the plane on the Antigua island.
+// "PLANE" - 1st time in the mission player is dropped with parachute from the plane over the Antigua island.
 //			After jumping from the plane, the player is revived in the hills of Antigua until he reaches base territory.
 //			After reaching the base mode changed to the "BASE" (see next lines)
 //
@@ -12,9 +13,13 @@
 if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
+
+#ifdef __OLD_INTRO__
+if (true) exitWith{ execVM "x_scripts\x_intro_old.sqf"};
+#endif
+
 #ifndef __DEFAULT__
-// TODO: start intro with flight above the map
-if (true) exitWith{};
+if (true) exitWith{ execVM "x_scripts\x_intro.sqf"};
 #endif
 
 d_still_in_intro = true;
