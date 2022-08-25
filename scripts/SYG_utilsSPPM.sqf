@@ -100,12 +100,17 @@ SYG_getAllSPPMVehicles = {
 	};
 	_arr call SYG_clearArrayB;
 	// now make all SPPM vehicles to be captured ones
-	{
-	    if (isNil (_x getVariable "CAPTURED_ITEM")) then {
-	    	[_x] call XAddCheckDead;
-    	    _x setVariable ["CAPTURED_ITEM","SPPM"];
-	    }
-	} forEach _arr;
+	if (count _arr > 0) then {
+		private ["_txt"];
+		_txt = [_pos,50 ] call SYG_MsgOnPosE0;
+		{
+			if (isNil (_x getVariable "CAPTURED_ITEM")) then {
+				[_x] call XAddCheckDead;
+				_x setVariable ["CAPTURED_ITEM","SPPM"];
+				hint localize format["+++ Veh ""%1"" is captured on SPPM at %2", typeOf _x, _txt];
+			}
+		} forEach _arr;
+	};
 	_arr
 };
 

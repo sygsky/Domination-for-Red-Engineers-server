@@ -900,8 +900,8 @@ SYG_MsgOnPosE = {
 };
 
 //
-// Creates non-localized (only english) message about position,
-// distance_to_location,
+// Creates non-localized (only english) message about object distance and direction from the nearest location,
+// e.g. "%1 m. to %2 from %3" ("150 m. to W from Pita")
 //
 // call as: _msg_eng = [_obj <,roundTo> ] call SYG_MsgOnPosE0;
 // or     : _msg_eng = _obj call SYG_MsgOnPosE0;
