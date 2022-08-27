@@ -199,5 +199,5 @@
 // comment to allow reammo if loaf/unload static weapon to/from salvage tru	ck
 #define __NO_REAMMO_IN_SALVAGE__
 
-// comment to allow storing full equipment on base flag, eslse only rucksack is stored on flag base, all other equipment is stored OnPlayerDisconnecting
+// comment to allow storing full equipment on base flag, else only rucksack is stored on flag base, all other equipment is stored OnPlayerDisconnecting
 #define __EQUIP_OPD_ONLY__

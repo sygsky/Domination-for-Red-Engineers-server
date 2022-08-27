@@ -637,7 +637,7 @@ XGetRankPic = {
 
 #ifdef __ACE__
 XCheckForMap = {
-	private ["_retval", "_ruckmags"];
+	private ["_retval", "_ruckmags", "_x"];
 	_retval = false;
 	if (player hasWeapon "ACE_Map") then {
 		_retval = true;
