@@ -1106,6 +1106,7 @@ STR_INTRO_5_1, (holiday), (arbeitsfreier Tag), (día de descanso), (выходн
 STR_INTRO_SIDE,USSR,UdSSR,URSS,СССР
 STR_INTRO_TEAM,One team -,One team -,Parte -,Сторона -
 STR_INTRO_FULL,Domination! One team - A.C.E. East,Domination! One team - A.C.E. East,¡Liberación! Lado-URSS (mod A. C. E.),Освобождение! Сторона - СССР (мод A.C.E.)
+STR_INTRO_PARAJUMP,Get to the base any way you want!,Erreichen Sie die Basis mit allen nötigen Mitteln!,¡Llega a la base por cualquier medio!,Доберитесь до базы любым способом!
 
 STR_MON_1,January,Januar,enero,января
 STR_MON_2,February,Februar,febrero,февраля

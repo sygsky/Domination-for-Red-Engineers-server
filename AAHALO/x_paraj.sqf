@@ -97,7 +97,10 @@ sleep 2.56;
 #ifdef __ACE__
 // If jumper doesn't have a chute, then they're screwed.
 // Make them play the ACE animation of a falling person (idea from MP mission "Operation Mongoose").
-if (new_paratype == "") then {player switchMove "ACE_IC_ParaFail"}; // no parachute on player!!!
+if (new_paratype == "") then {  // no parachute on player!!!
+	hint localize format["+++ x_paraj.sqf: no parachute detected, animated freefall as ""ACE_IC_ParaFail"""];
+	player switchMove "ACE_IC_ParaFail"
+};
 #endif
 
 // detect for parachute to be on player or player is on the ground and remove it from magazines

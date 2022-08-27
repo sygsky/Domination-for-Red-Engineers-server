@@ -69,12 +69,6 @@ _pilot = (
 	}
 );
 
-// Sabotage drop zone array
-_drop_zone_arr = [
-	[ [ 9536, 9134, 0 ], 450, 300, 25, -2000],
-	[ [ 10034, 10485, 0 ], 700, 200, 8.5, 2000 ]
-];
-
 //
 // Returns count of alive sobatages in all known groups
 //
@@ -261,9 +255,9 @@ while { true } do {
 	if ( _alive_cnt <  MIN_SABOTAGE_LIMIT_TO_START_NEXT_GROUP ) then {
 		hint localize format["+++ x_infiltrate: %1 sabotage[s] found, next infiltration STARTED", _alive_cnt];
 		// Sabotage drop zones array
-		_ind = floor random (count _drop_zone_arr); // 0 or 1 is used
-		_rect =  _drop_zone_arr select _ind; // call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
-		_delta = _rect select 4; // start point offset to south or north
+		_ind = floor random (count drop_zone_arr); // 0 or 1 is used
+		_rect =  drop_zone_arr select _ind; // call XfRandomArrayVal; // 1st rect is south to airbase, 2nd is north to airbase
+		_delta = _rect select 4; // start point offset to south (+) or north (-)
 		//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
 		_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
 		_msg = [_attack_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;

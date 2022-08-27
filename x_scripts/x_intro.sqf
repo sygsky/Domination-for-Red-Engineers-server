@@ -581,6 +581,31 @@ SYG_showMusicTitle = {
 _cnt = count _camstart;
 //	hint localize format["%1 x_intro.sqf: start commits for %2", call SYG_daytimeToStr, _camstart];
 
+//++++++++++++ daemon to fade out while not i plane
+_camera spawn {
+	private ["_time"];
+	// BLACK OUT in 0.7 sec when close to the base <= 100 m.
+	// Wait until in plane
+	// BLACK IN in 0.7 sec
+	// 		cutText["","WHITE OUT",FADE_OUT_DURATION];  // blind him fast
+	_time = time;
+	while { ((_this distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
+	if (!alive player) exitWith {
+		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
+	};
+	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
+	cutText["Придётся ещё раз прыгнуть. А что делать?","BLACK OUT",20];  // black out for 20 seconds or less
+	_time = time;
+	// wait while player in the plane
+	while { ((vehicle player) == player) && (alive player) } do {sleep 0.1};
+	if (!alive player) exitWith {
+		hint localize format["+++ x_intro.sqf: player dead on FADE IN in %1 secs", time - _time];
+	};
+	sleep 3;
+	hint localize format["+++ x_intro.sqf: FADE IN after %1 secs", time - _time];
+	cutText["Поехали-и-и-и...","BLACK IN",0.7];  // black in again
+};
+
 for "_i" from 1 to (_cnt-1) do {
     _pos = _camstart select _i; // next point to look and go to it
     if ( (_pos select 2)  < 0 ) then {
@@ -589,12 +614,12 @@ for "_i" from 1 to (_cnt-1) do {
         _pos set [2, abs(_pos select 2)]; // point above the ground
         hint localize format["+++ _xintro.sqf: spec point[%1] tgt %2, pnt %3", _i, _tgt, _pos];
     } else {
-        // TODO: shift X and Y coordinates slightly, for more native behaviour
-        if ( _x < (_cnt-1)) then {
+        // for not last point shift X and Y coordinates slightly, for more native behaviour
+        if ( _i < (_cnt-1)) then {
             _pos set [0, (_pos select 0) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along X
             _pos set [1, (_pos select 1) - RANDOM_POS_OFFSET +  (2 * (random RANDOM_POS_OFFSET))]; // shift along Y
         };
-        _tgt = [_start, _pos, 30000.0] call SYG_elongate2Z;
+        _tgt = [ _start, _pos, 30000.0 ] call SYG_elongate2Z;
     };
 
     _camera camPrepareTarget _tgt; // let look to over there
@@ -605,7 +630,7 @@ for "_i" from 1 to (_cnt-1) do {
 
     _camera camPreparePos _pos;	// let go to over there
     _camera camCommitPrepared (_arr select (_i - 1)); // set time to go
-    waitUntil {camCommitted _camera}; // wait until come
+    waitUntil { camCommitted _camera }; // wait until come
 //    hint localize format["+++ x_intro.sqf: step %1, duration %2, to pos %3", _i, _arr select (_i - 1), _pos	]; //if ( _i == 2 ) then {sleep 5;};
 //		hint localize format["_x_init.sqf: %2, pos       at %1", getPos _camera, time];
 
@@ -624,16 +649,37 @@ if ( typeName _camstart != "ARRAY" ) then {
 	waitUntil {camCommitted _camera};
 };
 
+#ifdef __DEFAULT__
+// Move player to the point of rect between Somato and base on the parachute
+// first find/put parachute in his inventory
+_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
+if (!(player call SYG_hasParachute)) then {
+	#ifdef __ACE__
+	player addWeapon _para;
+	#endif
+	#ifndef __ACE__
+	player addWeapon
+		switch (d_own_side) do {
+			case "RACS": {"ParachuteG"};
+			case "WEST": {"ParachuteWest"};
+			case "EAST": {"ParachuteEast"};
+       	};
+	#endif
+};
+[ (drop_zone_arr select 0) call XfGetRanPointSquareOld, _para, "DC3"] execVM "AAHALO\jump.sqf";
+// Inform player about new order
+["msg_to_user", "", [["STR_INTRO_PARAJUMP"]], 0, 3, false ] call SYG_msgToUserParser; // "Get to the base any way you want!"
+sleep 3;
+#endif
+
 player cameraEffect ["terminate","back"];
 camDestroy _camera;
 closeDialog 0;
-["say_sound", player, "gong_5"] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
+[ "say_sound", player, "gong_5" ] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
 
 enableRadio true;
-//player removeEventHandler ["hit", _phiteh];
-//player removeEventHandler ["dammaged", _pdamageeh];
 
-if ( !isNull _lobj ) then { deleteVehicle _lobj};
+if ( !(isNull _lobj) ) then { deleteVehicle _lobj};
 d_still_in_intro = false;
 sleep 3;
 deleteVehicle _PS1;

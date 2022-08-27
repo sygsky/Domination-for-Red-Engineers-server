@@ -14,15 +14,20 @@ if (d_para_timer_base > 0) then {
 };
 
 #ifndef __ACE__
-_jump_helo = "uh60MG";
-if (playerSide == east) then {
-	_jump_helo = "Mi17_MG";
+if (typeName _jump_score == "STRING") then {
+	_jump_helo = _jump_score;
+	_jump_score = 0;
+} else  {
+	 _jump_helo =  if (playerSide == east) then {"Mi17_MG" } else { "uh60MG" };
 };
+
 #endif
 #ifdef __ACE__
-_jump_helo = "ACE_UH60MG_M240C";
-if (playerSide == east) then {
-	_jump_helo = "ACE_Mi17_MG";
+if (typeName _jump_score == "STRING") then {
+	_jump_helo = _jump_score;
+	_jump_score = 0;
+} else  {
+	_jump_helo = if (playerSide == east) then { "ACE_Mi17_MG" } else { "ACE_UH60MG_M240C" };
 };
 #endif
 
@@ -81,6 +86,7 @@ enableRadio false;
 #endif
 titleText ["","Plain"];
 uh60p = createVehicle [_jump_helo, _StartLocation, [], 0, "FLY"];
+uh60p setDir (random 360);
 _halo_height = d_halo_height;
 #ifdef __ACE__
 switch _paratype do {
@@ -93,6 +99,7 @@ switch _paratype do {
 uh60p setPos [_StartLocation select 0,_StartLocation select 1, _halo_height];
 uh60p engineOn true;
 player moveInCargo uh60p;
+hint localize format["+++ jump.sqf: vehicle %1 created on height %2 m, player move to it", typeOf uh60p, round _halo_height];
 _obj_jump = player;
 if(vehicle player == player)exitWith {};
 
@@ -113,7 +120,7 @@ if ( _paratype == "" ) then {
     };
 };
 
-deleteVehicle uh60p;
+[] spawn { sleep 10; deleteVehicle uh60p };
 #ifdef __AI__
 	if (alive player) then {
 		[position player, velocity player, direction player] execVM "x_scripts\x_moveai.sqf";

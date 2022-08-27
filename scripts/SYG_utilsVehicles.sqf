@@ -1960,7 +1960,7 @@ SYG_getVehicleMarkerType = {
         "ACE_Icon_Tank" //, "ACE_Icon_ArmourTrackedIFV", "ACE_Icon_ArmourTrackedAPC", "ACE_Icon_ArmourTrackedAirDefence"]
     };
     if (_this isKindOf "Helicopter") exitWith {
-    	if (_this isKindOf "ParachuteBase") exitWith{ "Parachute" };
+    	if (_this isKindOf "ParachuteBase"|| ( _vec isKindOf "RAS_Parachute")) exitWith{ "Parachute" };
     	"ACE_Icon_Helo"
     };
     if (_this isKindOf "Plane") exitWith { "ACE_Icon_AirFixedWing" };
@@ -2210,6 +2210,20 @@ SYG_getConfigMags = {
     _mags
 };
 */
+
+/**
+ * Detects if unit has parachute in his inventory
+ *
+ */
+SYG_hasParachute = {
+	if (!(_this isKindOf "CAManBase")) exitWith {false};
+	private ["_ret","_x"];
+	_ret = false;
+	{
+    	if (_this isKindOf "ParachuteBase"|| ( _vec isKindOf "RAS_Parachute")) exitWith{ _ret = true };
+	} forEach weapons _this;
+	_ret
+};
 
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT
