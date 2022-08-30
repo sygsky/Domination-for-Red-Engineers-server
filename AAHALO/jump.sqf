@@ -1,6 +1,6 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
-private ["_StartLocation","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime","_pos"];
-_StartLocation = _this select 0;
+private ["_start_location","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime","_pos","_pilot"];
+_start_location = _this select 0;
 _paratype      = _this select 1;
 _jump_score    = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
 
@@ -49,11 +49,11 @@ _water_count = 0;
 _offsets = [-JUMP_DISPERSION,0, +JUMP_DISPERSION]; // offsets on X and Y to create check matrix 3 x 3 of dimension
 // _offsets = [-JUMP_DISPERSION,-JUMP_DISPERSION/2,0, +JUMP_DISPERSION/2,+JUMP_DISPERSION]; // offsets on X and Y to create check matrix 5 x 5 on dimensiono
 for "_x" from 0 to (count _offsets)-1 do {
-    _pos set [0, (_StartLocation select 0) + (_offsets select _x)];
+    _pos set [0, (_start_location select 0) + (_offsets select _x)];
     for "_y" from 0 to (count _offsets)-1 do {
         // skip central point from counting
         if (_x != 1 || _y != 1) then {
-            _pos set [1, (_StartLocation select 1) + (_offsets select _y)];
+            _pos set [1, (_start_location select 1) + (_offsets select _y)];
             if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
         };
     };
@@ -67,9 +67,9 @@ if (_water_count >= ((count _offsets) ^ 2 - 2) ) then { // player jumps over sea
     _dx = ((_wind_arr select 0) / _len) * _shift;
     _dy = ((_wind_arr select 1) / _len) * _shift;
     _dz = ((_wind_arr select 2) / _len) * _shift;
-    _StartLocation set [0, (_StartLocation select 0) + _dx];
-    _StartLocation set [1, (_StartLocation select 1) + _dy];
-    _StartLocation set [2, (_StartLocation select 2) + _dz];
+    _start_location set [0, (_start_location select 0) + _dx];
+    _start_location set [1, (_start_location select 1) + _dy];
+    _start_location set [2, (_start_location select 2) + _dz];
     _str_dir = ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirName;
     if ( _shift > 50 ) then {
         format[localize "STR_SYS_76", round(_shift / 20) * 20, _str_dir] call XfHQChat; // “A strong ocean wind blew the parachute off”
@@ -81,12 +81,23 @@ if (_water_count >= ((count _offsets) ^ 2 - 2) ) then { // player jumps over sea
 };
 #endif
 
-#ifndef __ACE__
-enableRadio false;
-#endif
-titleText ["","Plain"];
-uh60p = createVehicle [_jump_helo, _StartLocation, [], 0, "FLY"];
+uh60p = createVehicle [_jump_helo, _start_location, [], 0, "FLY"];
 uh60p setDir (random 360);
+/**
+_pilot = (
+	switch (d_side_player) do {
+		case east: {d_pilot_E};
+		case west: {d_pilot_W};
+		case resistance: {d_pilot_G};
+	}
+);
+_grp = call SYG_createOwnGroup;
+_pilot = _grp createUnit [_pilot, position uh60p, [], 0, "FORM"];
+hint localize format["+++ jump.sqf: _grp = %1, _pilot = %2", _grp, _pilot];
+[_pilot] join _grp; _pilot setSkill 1; _pilot assignAsDriver uh60p; _pilot moveInDriver uh60p;
+*/
+uh60p setSpeedMode "FULL";
+
 _halo_height = d_halo_height;
 #ifdef __ACE__
 switch _paratype do {
@@ -96,11 +107,18 @@ switch _paratype do {
 };
 #endif
 
-uh60p setPos [_StartLocation select 0,_StartLocation select 1, _halo_height];
+uh60p setPos [_start_location select 0,_start_location select 1, _halo_height];
 uh60p engineOn true;
 player moveInCargo uh60p;
+
+#ifndef __ACE__
+enableRadio false;
+#endif
+titleText ["","Plain"];
+
 hint localize format["+++ jump.sqf: vehicle %1 created on height %2 m, player move to it", typeOf uh60p, round _halo_height];
 _obj_jump = player;
+
 if(vehicle player == player)exitWith {};
 
 #ifdef __ACE__
@@ -120,7 +138,8 @@ if ( _paratype == "" ) then {
     };
 };
 
-[] spawn { sleep 10; deleteVehicle uh60p };
+[] spawn { sleep 4; deleteVehicle uh60p };
+
 #ifdef __AI__
 	if (alive player) then {
 		[position player, velocity player, direction player] execVM "x_scripts\x_moveai.sqf";

@@ -581,7 +581,7 @@ SYG_showMusicTitle = {
 _cnt = count _camstart;
 //	hint localize format["%1 x_intro.sqf: start commits for %2", call SYG_daytimeToStr, _camstart];
 
-//++++++++++++ daemon to fade out while not i plane
+//++++++++++++ daemon to FADE OUT while not in plane and FADE IN in if in parachute
 _camera spawn {
 	private ["_time"];
 	// BLACK OUT in 0.7 sec when close to the base <= 100 m.
@@ -594,7 +594,8 @@ _camera spawn {
 		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
 	};
 	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
-	cutText["Придётся ещё раз прыгнуть. А что делать?","BLACK OUT",20];  // black out for 20 seconds or less
+	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}];
+	cutText[_str,"BLACK OUT",20];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	_time = time;
 	// wait while player in the plane
 	while { ((vehicle player) == player) && (alive player) } do {sleep 0.1};
@@ -603,7 +604,7 @@ _camera spawn {
 	};
 	sleep 3;
 	hint localize format["+++ x_intro.sqf: FADE IN after %1 secs", time - _time];
-	cutText["Поехали-и-и-и...","BLACK IN",0.7];  // black in again
+	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
 };
 
 for "_i" from 1 to (_cnt-1) do {
@@ -652,19 +653,19 @@ if ( typeName _camstart != "ARRAY" ) then {
 #ifdef __DEFAULT__
 // Move player to the point of rect between Somato and base on the parachute
 // first find/put parachute in his inventory
-_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
-if (!(player call SYG_hasParachute)) then {
+_para = player call SYG_getParachute;
+if ( _para == "") then {
 	#ifdef __ACE__
-	player addWeapon _para;
+	_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
 	#endif
 	#ifndef __ACE__
-	player addWeapon
-		switch (d_own_side) do {
-			case "RACS": {"ParachuteG"};
-			case "WEST": {"ParachuteWest"};
-			case "EAST": {"ParachuteEast"};
-       	};
+	_para = switch (d_own_side) do {
+		case "RACS": {"ParachuteG"};
+		case "WEST": {"ParachuteWest"};
+		case "EAST": {"ParachuteEast"};
+	};
 	#endif
+	player addWeapon _para;
 };
 [ (drop_zone_arr select 0) call XfGetRanPointSquareOld, _para, "DC3"] execVM "AAHALO\jump.sqf";
 // Inform player about new order

@@ -1107,6 +1107,9 @@ STR_INTRO_SIDE,USSR,UdSSR,URSS,СССР
 STR_INTRO_TEAM,One team -,One team -,Parte -,Сторона -
 STR_INTRO_FULL,Domination! One team - A.C.E. East,Domination! One team - A.C.E. East,¡Liberación! Lado-URSS (mod A. C. E.),Освобождение! Сторона - СССР (мод A.C.E.)
 STR_INTRO_PARAJUMP,Get to the base any way you want!,Erreichen Sie die Basis mit allen nötigen Mitteln!,¡Llega a la base por cualquier medio!,Доберитесь до базы любым способом!
+STR_INTRO_PARAJUMP_1,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Придётся прыгнуть%1. А что делать?"
+STR_INTRO_PARAJUMP_1_1, once again, wieder, de nuevo, ещё раз
+STR_INTRO_PARAJUMP_2,"Let's go-o-o-o...","Lass uns gehen...","Vamos...","Поехали-и-и-и..."
 
 STR_MON_1,January,Januar,enero,января
 STR_MON_2,February,Februar,febrero,февраля
@@ -1259,7 +1262,7 @@ STR_MAP_10,delightedly,überglücklich,sobre la luna,с восхищением
 
 STR_MAP_PRIZE,You get the prize for curiosity (+%1),Sie erhalten den Preis für die Neugier (+%1),Obtienes un premio por curiosidad (+%1),Вы получаете приз за любопытство (+%1)
 
-STR_MAP_10,"%1 looking at the map, you shout: 'BA-Ah, Yes it is %2!'","%1 Blick auf die Karte, Sie Schreien: 'BA-Ah, ja, es ist %2!'","%1 al mirar el mapa, exclama: '¡sí, es %2!'","%1 всматриваясь в карту, вы воcклицаете: 'Да это-же %2!'"
+STR_MAP,"%1 looking at the map, you shout: - 'BA-Ah, Yes it is %2!'","%1 Blick auf die Karte, Sie Schreien: 'BA-Ah, ja, es ist %2!'","%1 al mirar el mapa, exclama: - '¡sí, es %2!'","%1 всматриваясь в карту, вы воcклицаете: - 'Да это-же %2!'"
 STR_MAP_11,"The GRU rewarded %1 for something","Der GRU hat %1 für etwas belohnt","El GRU recompensó %1 por algo","ГРУ наградило %1 за что-то"
 STR_MAP_12,"Someone studied the situation before you did","Jemand hat die Situation vor Ihnen erkundet","Alguien ha investigado la situación antes que tú","Кто-то изучил обстановку раньше Вас"
 
