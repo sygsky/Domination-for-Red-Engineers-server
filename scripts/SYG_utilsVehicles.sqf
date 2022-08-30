@@ -2216,11 +2216,19 @@ SYG_getConfigMags = {
  *
  */
 SYG_hasParachute = {
-	if (!(_this isKindOf "CAManBase")) exitWith {false};
+	(_this call SYG_getParachute) != ""
+};
+
+/**
+ * Detects if unit has parachute in his inventory
+ *
+ */
+SYG_getParachute = {
+	if (!(_this isKindOf "CAManBase")) exitWith {""};
 	private ["_ret","_x"];
-	_ret = false;
+	_ret = "";
 	{
-    	if (_this isKindOf "ParachuteBase"|| ( _vec isKindOf "RAS_Parachute")) exitWith{ _ret = true };
+    	if ( (_x isKindOf "ParachuteBase") || ( _x isKindOf "RAS_Parachute")) exitWith{ _ret = _x };
 	} forEach weapons _this;
 	_ret
 };
