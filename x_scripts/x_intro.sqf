@@ -1,7 +1,8 @@
 // x_intro.sqf, by Xeno
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
-         "_Sahrani_island","_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
-		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date","_music"];
+         "_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
+		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date","_music",
+		 "_spawn_point"];
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
@@ -11,6 +12,7 @@ d_still_in_intro = true;
 
 #define __DEBUG__
 #define __TIME_OF_DAY_MISIC__
+#define __USE_PARACHUTE__
 // #define __SOVIET_MUSIC_ONLY__
 
 // uncomment next line to test how 23-FEB-1985, 7-NOV-1985 etc are processed as Soviet holiday
@@ -198,12 +200,6 @@ if ((daytime > (SYG_startNight + 0.5)) || (daytime < (SYG_startMorning - 0.5))) 
 hint localize format["+++ x_intro.sqf: music/cnt %1, time is %2, daytime is %3, nowtime is %4, missionStart is %5", format["""%1""/%2", _sound, _music_cnt ], time, daytime, call SYG_nowTimeToStr, SYG_client_start call SYG_dateToStr];
 #endif
 
-#ifdef __DEFAULT__
-_Sahrani_island = true;
-#else
-_Sahrani_island = false;
-#endif
-
 #ifdef __TT__
 
 d_intro_color = (
@@ -301,7 +297,16 @@ if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm &&
 
 _pos = [];
 _lobjpos = [];
-if (_Sahrani_island ) then {
+
+#ifdef __USE_PARACHUTE__
+waitUntil {!isNil "XfGetRanPointSquareOld"};
+_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
+_spawn_point set [2, 100]; // spawn at parachute pos
+#else
+_spawn_point  = getPos player;
+#endif
+//hint localize format["+++ x_intro.sqf: _spawn_point = %1", _spawn_point];
+#ifdef __DEFAULT__
     // 7703.5,7483.2, 0
 	// array of camera turn points. Last point is for illusion object creation point.If it is NUMBER in range {0..last_turn_point_index-1>} designated index turn point is used for illusion
   _camstart = 
@@ -325,10 +330,10 @@ if (_Sahrani_island ) then {
 //	  _camstart resize (count _camstart - 1); // remove illusion index from the end of list
   };
 //  _lobjpos = if (typeName _lobjpos == "ARRAY") then {_lobjpos} else { _camstart select _lobjpos};
-} else {
+#else
 	_camstart = [[(position camstart select 0),(position camstart select 1),175]];
 	_pos = _camstart select 0;
-};
+#endif
 
 _lobj = (
     ["LODy_test", "Barrels", "Land_kulna","misc01", "Land_helfenburk","FireLit",
@@ -342,7 +347,13 @@ switch typeOf _lobj do {
 //_lobj setDirection (random 360);
   
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_POINT 20
+
+#ifdef __USE_PARACHUTE__
+#define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 5
+#else
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 2
+#endif
+
 #define DEFAULT_SHOW_TIME 20
  
 //hint localize format["x_intro.sqf: _camstart %1 (cnt %2)", _camstart, count _camstart];
@@ -353,6 +364,9 @@ _start = _camstart select 0; // start point
 _tgt = position player;
 _tgt set [2, DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD];
 _camstart set [count _camstart -1, _tgt]; // replace illusion position with end point (player pos)
+#ifdef __USE_PARACHUTE__
+_camstart set [count _camstart, _spawn_point]; // replace illusion position with end point (player pos)
+#endif
 
 // calc whole path length/partial segments commit times
 _plen = 0; // whole path length
@@ -364,16 +378,16 @@ for "_i" from 1 to ((count _camstart) - 1) do { // skip start (1st) point
 	_plen = _plen + _dist;
 	_arr set [count _arr, _dist];
 };
-hint localize format["+++ x_intro.sqf: campath          [%1] %2", count _camstart, _camstart];
-hint localize format["+++ x_intro.sqf: len %1, segments [%2] %3", _plen, count _arr, _arr];
+//hint localize format["+++ x_intro.sqf: campath          [%1] %2", count _camstart, _camstart];
+//hint localize format["+++ x_intro.sqf: len %1, segments [%2] %3", _plen, count _arr, _arr];
 for "_i" from 0 to ((count _arr) - 1) do {_arr set[_i, (_arr select _i) / _plen * DEFAULT_SHOW_TIME]}; // durations
-hint localize format["+++ x_intro.sqf: time array       [%1] %2", count _arr, _arr];
+//hint localize format["+++ x_intro.sqf: time array       [%1] %2", count _arr, _arr];
 //hint localize format["x_intro.sqf: updated  camstart is %1", _camstart];
 //hint localize format["x_intro.sqf: duration array %1", _arr];
 
 #endif
 
-_PS1 = "#particlesource" createVehicleLocal [position player select 0, position player select 1, 5]; // raise the spark above the player, as the base building became higher
+_PS1 = "#particlesource" createVehicleLocal [position player select 0, position player select 1, DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD]; // raise the spark above the player, as the base building became higher
 _PS1 setParticleCircle [0, [0, 0, 0]];
 _PS1 setParticleRandom [0, [0, 0, 0], [0,0,0], 0, 1, [0, 0, 0, 0], 0, 0];
 _PS1 setParticleParams [["\Ca\Data\ParticleEffects\SPARKSEFFECT\SparksEffect.p3d", 8, 3, 1], "", "spaceobject", 1, 0.2, [0, 0, 1], [0,0,0], 1, 10/10, 1, 0.2, [2, 2], [[1, 1, 1 ,1], [1, 1, 1, 1], [1, 1, 1, 1]], [0, 1], 1, 0, "", "", _this];
@@ -583,28 +597,32 @@ _cnt = count _camstart;
 
 //++++++++++++ daemon to FADE OUT while not in plane and FADE IN in if in parachute
 _camera spawn {
-	private ["_time"];
+	private ["_time","_para","_str"];
 	// BLACK OUT in 0.7 sec when close to the base <= 100 m.
 	// Wait until in plane
 	// BLACK IN in 0.7 sec
 	// 		cutText["","WHITE OUT",FADE_OUT_DURATION];  // blind him fast
 	_time = time;
+	_para = player call SYG_getParachute;
 	while { ((_this distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
 	if (!alive player) exitWith {
 		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
+		if (_para != "") then { player removeWeapon _para };
 	};
 	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
 	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}];
-	cutText[_str,"BLACK OUT",20];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
+	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	_time = time;
-	// wait while player in the plane
+	// wait while player in any vehicle (plane or parachute)
 	while { ((vehicle player) == player) && (alive player) } do {sleep 0.1};
 	if (!alive player) exitWith {
 		hint localize format["+++ x_intro.sqf: player dead on FADE IN in %1 secs", time - _time];
+		if (_para != "") then { player removeWeapon _para };
 	};
 	sleep 3;
 	hint localize format["+++ x_intro.sqf: FADE IN after %1 secs", time - _time];
 	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
+	if (_para != "") then { player removeWeapon _para };
 };
 
 for "_i" from 1 to (_cnt-1) do {
@@ -650,8 +668,9 @@ if ( typeName _camstart != "ARRAY" ) then {
 	waitUntil {camCommitted _camera};
 };
 
-#ifdef __DEFAULT__
+#ifdef __USE_PARACHUTE__
 // Move player to the point of rect between Somato and base on the parachute
+
 // first find/put parachute in his inventory
 _para = player call SYG_getParachute;
 if ( _para == "") then {
@@ -667,7 +686,7 @@ if ( _para == "") then {
 	#endif
 	player addWeapon _para;
 };
-[ (drop_zone_arr select 0) call XfGetRanPointSquareOld, _para, "DC3"] execVM "AAHALO\jump.sqf";
+[ _spawn_point, _para, "DC3"] execVM "AAHALO\jump.sqf";
 // Inform player about new order
 ["msg_to_user", "", [["STR_INTRO_PARAJUMP"]], 0, 3, false ] call SYG_msgToUserParser; // "Get to the base any way you want!"
 sleep 3;
