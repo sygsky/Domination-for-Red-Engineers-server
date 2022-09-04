@@ -101,6 +101,31 @@ _make_marker = {
 _truck_marker = "";
 _radar_marker = ""; //
 
+_check_truck_marker = 	{ // check truck marker
+	if ( alive _this ) then {
+		if ( locked _this ) exitWith {  // truck is locked that means it is not found
+			if (_truck_marker != "") then {
+				deleteMarker _truck_marker; _truck_marker = "";
+			};
+		};
+
+		// create radar marker if needed
+		if ( _truck_marker == "" ) then {
+			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, _this, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+			_delay = 3;
+		} else {
+			  // move existing truck marker if needed
+			  if ( ( [getMarkerPos _truck_marker, _this] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
+				  _truck_marker setMarkerPos (getPos _this);
+				  _delay = 3;
+			  };
+		};
+	} else { // truck dead, remove marker while new truck will be created
+		if ( _truck_marker != "" ) then {
+			deleteMarker _truck_marker; _truck_marker = ""
+		};
+	};
+};
 //
 // Main loop, controls markers movement and end of the mission
 // Radar can't be destroyed else sidemission is failed
@@ -113,31 +138,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 	};
 	_delay = 15;
 
-	// check truck marker
-	if ( alive d_radar_truck ) then {
-		if ( locked d_radar_truck ) exitWith {  // truck is locked that means it is not found
-			if (_truck_marker != "") then {
-				deleteMarker _truck_marker; _truck_marker = "";
-			};
-		};
-
-	    // create radar marker if needed
-		if ( _truck_marker == "" ) then {
-			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, d_radar_truck, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
-			_delay = 3;
-		} else {
-            // move existing truck marker if needed
-            if ( ( [getMarkerPos _truck_marker, d_radar_truck] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
-                _truck_marker setMarkerPos (getPos d_radar_truck);
-                _delay = 3;
-            };
-		};
-	} else { // truck dead, remove marker while new truck will be created
-	    if ( _truck_marker != "" ) then {
-	        deleteMarker _truck_marker; _truck_marker = ""
-	    };
-	};
-
+	d_radar_truck call _check_truck_marker;
 	//
     // process markers of this side mission
     //
@@ -178,7 +179,9 @@ hint localize format["+++ x_sideradio.sqf: exit marker loop, status %1, alive tr
 hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive _truck];
 while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 	sleep 5;
+	_truck call _check_truck_marker;
 	if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
+	// move truck marker
 };
 
 if (_mission) then { // check victory or failure

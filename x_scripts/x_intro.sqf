@@ -474,11 +474,14 @@ SYG_showMusicTitle = {
 	_XD_display = findDisplay 77043;
 	// Check if music has title defined
 	_str = localize format["STR_%1", _this select 0];
+	if (isNull _XD_display) exitWith {
+		hint localize format[ "+++ SYG_showMusicTitle: _XD_display(77043) isNull, music title for ""%1""(%2) can't be shown, exit.", _str, _this select 0 ];
+	};
 	if ( _str != "") then { // title defined and found
 		_control1 = _XD_display displayCtrl 66667;
 		_control1 ctrlSetText _str;
 		_control1 ctrlShow true;
-		hint localize format[ "+++ SYG_showMusicTitle: music text control = (%1)", ctrlText _control1 ];
+		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) for title ""%2""", ctrlText _control1, _str ];
 	} else  { // to title found
 		_control1 = displayNull;
 		hint localize format[ "--- SYG_showMusicTitle: music text control for ""%1"" not found", _this select 0 ];
