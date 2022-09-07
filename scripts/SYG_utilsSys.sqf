@@ -65,7 +65,7 @@ SYG_d_p_varname =  {
 		case "Elia";
 		case "Moe"        : {"Gli isolani sono lieti di darvi il benvenuto nella loro lingua madre italiana !"}; // Italian language
 		case "Oberon";		// русский
-		case "Axmed"      : { "Ахмед! Островитяне, желая добра, советуют: купи лицензионный ключ (копеек 50 на советские деньги). Этим ключом пользуешься не только ты." }; // Русский Ахмед
+		case "Axmed"      : { "Боец! Островитяне, желая добра, советуют: купи лицензионный ключ (копеек 50 на советские деньги). Этим ключом пользуешься не только ты." }; // Русский Ахмед
 		default           { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
 	};
 
@@ -150,7 +150,7 @@ SYG_d_p_varname =  {
 	["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
 	// log info  about logging
-	hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", (_this select 1), (_this select 1), call SYG_missionTimeInfoStr ];
+	hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", (_this select 1), (_this select 2), call SYG_missionTimeInfoStr ];
 };
 
 
