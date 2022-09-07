@@ -1518,6 +1518,7 @@ STR_BONUS_DEL,"Bonus vehicle (%1) killed (%2)","Bonusfahrzeug (%1) getötet (%2)
 STR_BONUS_DEL_1,in an unknown way,auf eine unbekannte Art und Weise,de forma desconocida,неизвестным образом
 STR_BONUS_6,"%1 vehicle of ДОСААФ detected on the island","%1 Fahrzeug[e] von ДОСААФ auf der Insel entdeckt","%1 vehículo[s] de ДОСААФ detectado en la isla","На острове обнаружена техника ДОСААФ: %1 шт."
 STR_BONUS_7,"When in doubt about an aircraft's ability to take off from the plane pad, use afterburner (Shift) on takeoff!","Wenn Sie Zweifel an Ihrer Fähigkeit haben, mit einem Flugzeug von der Startrampe abzuheben, benutzen Sie beim Start den Nachbrenner (Shift)!","Cuando tenga dudas sobre su capacidad para despegar en un avión desde su plataforma, ¡utilice el postquemador (Shift) al despegar!","При сомнениях в своей способности поднять самолёт с его площадки используйте при взлёте форсаж (Shift)!"
+STR_BONUS_8,%1 is located in %2,%1 liegt in %2,%1 está en %2,%1 расположен в %2
 
 // STR_TOWN_INFO,DOSAAF map: Town %1,DOSAAF map: Town,DOSAAF map: Town %1,Карта ДОСААФ: Гoрод %1
 // STR_TOWN_INFO_1,"DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","DOSAAF map: Town %1, radius %2","Карта ДОСААФ: гoрод %1, радиус %2"

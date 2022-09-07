@@ -28,15 +28,21 @@ _bonus_timestamp               = 0;		// last time processed timestamp
 _reset_params = {
 	private [ "_veh","_mrk","_ind","_x","_mrk_type","_new_array","_del_arr","_add_arr","_update","_x","_cnt" ];
 	_time = time;
-
 	_ret = call SYG_countVehicles;
-	hint localize format["+++ _reset_params: scan vehicles: cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2", typeOf _veh, _ret];
+	hint localize format["+++ _reset_params: scan vehicles: cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %1", _ret];
 
 	_new_array = call SYG_scanDOSAAFVehicles; // load all alive DOSAAF vehicles
 //	hint localize format["+++ SYG_scanDOSAAFVehicles executed in %1 secs ", time - _time];
 	if ( (_next_id == 1) ) then {
 		if ( count _new_array > 0 ) then {
-			["msg_to_user", "", [[ localize "STR_BONUS_6", count _new_array]], 0, 105, false, "good_news"] call SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
+			private ["_arr"];
+			// TODO: add info for posittion of random vehicle in the _new_array
+			_arr = [[ localize "STR_BONUS_6", count _new_array]];
+			if (count _new_arr > 2) then { // add info about random vehicle from array of size larger than two
+				_veh = _new_arr call XfRandomArrayVal;
+				_arr set [count _arr, [localize "STR_FORMAT_8",typeOf _veh,  _veh call SYG_MsgOnPos]] ;
+			};
+			["msg_to_user", "", _arr, 5, 105, false, "good_news"] call SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
 		};
 	};
 
