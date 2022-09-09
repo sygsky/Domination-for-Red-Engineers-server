@@ -7,8 +7,23 @@ sleep d_respawn_delay;
 
 if (dialog) then {closeDialog 0};
 
-[-1] execVM "GRU_Scripts\GRU_removedoc.sqf"; // remove map just in case
+#include "x_setup.sqf"
 
+#ifdef __CONNECT_ON_PARA__
+if (!was_at_base) exitWith { // player killed before it reached the base
+	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
+	if ( !d_still_in_intro) then {
+		[ "msg_to_user", "*", ["localize", "STR_INTRO_PARAJUMP"], 0, 0, false ] call SYG_msgToUserParser;
+	};
+	// respawn him at random point between base and Somato
+	player setPos _spawn_point;
+	player setDir (random 360);
+	hint localize format["+++ open.sqf: not was_at_base, respawn at %1", [round (_spawn_point select 0), round (_spawn_point select 1)] ];
+	[] execVM "scripts\SYG_checkPlayerAtBase.sqf";
+};
+#endif
+
+[-1] execVM "GRU_Scripts\GRU_removedoc.sqf"; // remove map just in case
 
 beam_target = -1;
 tele_dialog = 0; // 0 = respawn, 1 = teleport
@@ -16,8 +31,6 @@ tele_dialog = 0; // 0 = respawn, 1 = teleport
 private ["_ok","_unit", "_killer","_display","_ctrl"];
 _killer = _this select 1;
 _unit = _this select 0; // player
-
-#include "x_setup.sqf"
 
 _ok = createDialog "TeleportModule";
 

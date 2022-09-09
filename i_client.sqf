@@ -119,7 +119,9 @@ if (X_Client) then {
     max_number_ammoboxes = 20;
     #endif
 
-    tele_array = [];
+	#ifdef __CONNECT_ON_PARA__
+    was_at_base = false;
+    #endif
     player_is_driver = false;
     client_target_counter = 0;
     current_mission_text = localize "STR_SYS_120"; // "Дополнительное задание ещё не получено..."

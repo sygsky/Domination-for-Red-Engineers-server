@@ -1110,6 +1110,8 @@ STR_INTRO_PARAJUMP,Get to the base any way you want!,Erreichen Sie die Basis mit
 STR_INTRO_PARAJUMP_1,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Придётся прыгнуть%1. А что делать?"
 STR_INTRO_PARAJUMP_1_1, once again, wieder, de nuevo, ещё раз
 STR_INTRO_PARAJUMP_2,"Let's go-o-o-o...","Lass uns gehen...","Vamos...","Поехали-и-и-и..."
+STR_INTRO_WAS_AT_BASE,You have reached the base! Life will get easier from here.,Sie haben die Basis erreicht! Das Leben wird von nun an einfacher werden.,¡Has llegado a la base! La vida será más fácil a partir de ahora.,Вы добрались до базы! Теперь будет полегче.
+STR_INTRO_NOT_AT_BASE,You have not reached the base this time...,Du hast es dieses Mal nicht bis zur Basis geschafft...,No llegaste a la base esta vez...,Вам на удалось добраться до базы в этот раз...
 
 STR_MON_1,January,Januar,enero,января
 STR_MON_2,February,Februar,febrero,февраля

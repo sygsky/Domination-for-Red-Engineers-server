@@ -12,7 +12,6 @@ d_still_in_intro = true;
 
 #define __DEBUG__
 #define __TIME_OF_DAY_MISIC__
-#define __USE_PARACHUTE__
 // #define __SOVIET_MUSIC_ONLY__
 
 // uncomment next line to test how 23-FEB-1985, 7-NOV-1985 etc are processed as Soviet holiday
@@ -298,7 +297,7 @@ if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm &&
 _pos = [];
 _lobjpos = [];
 
-#ifdef __USE_PARACHUTE__
+#ifdef __CONNECT_ON_PARA__
 waitUntil {!isNil "XfGetRanPointSquareOld"};
 _spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
 _spawn_point set [2, 100]; // spawn at parachute pos
@@ -348,7 +347,7 @@ switch typeOf _lobj do {
   
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_POINT 20
 
-#ifdef __USE_PARACHUTE__
+#ifdef __CONNECT_ON_PARA__
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 5
 #else
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 2
@@ -364,7 +363,8 @@ _start = _camstart select 0; // start point
 _tgt = position player;
 _tgt set [2, DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD];
 _camstart set [count _camstart -1, _tgt]; // replace illusion position with end point (player pos)
-#ifdef __USE_PARACHUTE__
+#ifdef __CONNECT_ON_PARA__
+// last-1 pointy is player pos, last is special one
 _camstart set [count _camstart, _spawn_point]; // replace illusion position with end point (player pos)
 #endif
 
@@ -610,22 +610,21 @@ _camera spawn {
 	while { ((_this distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
 	if (!alive player) exitWith {
 		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
-		if (_para != "") then { player removeWeapon _para };
 	};
 	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
 	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}];
-	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
+//	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
+	cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	_time = time;
 	// wait while player in any vehicle (plane or parachute)
 	while { ((vehicle player) == player) && (alive player) } do {sleep 0.1};
 	if (!alive player) exitWith {
 		hint localize format["+++ x_intro.sqf: player dead on FADE IN in %1 secs", time - _time];
-		if (_para != "") then { player removeWeapon _para };
 	};
 	sleep 3;
 	hint localize format["+++ x_intro.sqf: FADE IN after %1 secs", time - _time];
-	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
-	if (_para != "") then { player removeWeapon _para };
+//	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
+	cutText[localize "STR_INTRO_PARAJUMP_2","PLAIN",5];  // "Let's go-o-o-o...". black in again
 };
 
 for "_i" from 1 to (_cnt-1) do {
@@ -634,7 +633,7 @@ for "_i" from 1 to (_cnt-1) do {
         _tgt = + _pos;
         _tgt set [2, 0]; // point on the ground
         _pos set [2, abs(_pos select 2)]; // point above the ground
-        hint localize format["+++ _xintro.sqf: spec point[%1] tgt %2, pnt %3", _i, _tgt, _pos];
+//        hint localize format["+++ _xintro.sqf: spec point[%1] tgt %2, pnt %3", _i, _tgt, _pos];
     } else {
         // for not last point shift X and Y coordinates slightly, for more native behaviour
         if ( _i < (_cnt-1)) then {
@@ -654,15 +653,6 @@ for "_i" from 1 to (_cnt-1) do {
     _camera camCommitPrepared (_arr select (_i - 1)); // set time to go
     waitUntil { camCommitted _camera }; // wait until come
 //    hint localize format["+++ x_intro.sqf: step %1, duration %2, to pos %3", _i, _arr select (_i - 1), _pos	]; //if ( _i == 2 ) then {sleep 5;};
-//		hint localize format["_x_init.sqf: %2, pos       at %1", getPos _camera, time];
-
-/*  		if ( _wait == 0) then 
-    {
-        playSound "ACE_VERSION_DING";
-        sleep 2.0;
-    };
-*/
-
     _start = _pos;
 };
 //	hint localize format["%1 x_intro.sqf: last camera commit completed",call SYG_daytimeToStr];
@@ -671,9 +661,9 @@ if ( typeName _camstart != "ARRAY" ) then {
 	waitUntil {camCommitted _camera};
 };
 
-#ifdef __USE_PARACHUTE__
-// Move player to the point of rect between Somato and base on the parachute
+#ifdef __CONNECT_ON_PARA__
 
+// Move player to the point of rect between Somato and base on the parachute
 // first find/put parachute in his inventory
 _para = player call SYG_getParachute;
 if ( _para == "") then {
@@ -691,8 +681,22 @@ if ( _para == "") then {
 };
 [ _spawn_point, _para, "DC3"] execVM "AAHALO\jump.sqf";
 // Inform player about new order
-["msg_to_user", "", [["STR_INTRO_PARAJUMP"]], 0, 3, false ] call SYG_msgToUserParser; // "Get to the base any way you want!"
-sleep 3;
+["msg_to_user", "", [["STR_INTRO_PARAJUMP"]], 0, 3, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
+
+// move camera to the DC3 cargo player
+waitUntil { (FLAG_BASE distance player) > 100 };
+
+_tgt = [_camera, player, 30000.0] call SYG_elongate2Z;
+
+if (vehicle player != player) then {
+	_camera camSetTarget (vehicle player)
+} else { _camera camSetTarget player};
+
+_camera camSetRelPos [0,1.5, 0.5];
+// let look to over there
+_camera camCommit 1; // set time to go
+waitUntil { camCommitted _camera }; // wait until come
+sleep 2;
 #endif
 
 player cameraEffect ["terminate","back"];
@@ -707,4 +711,13 @@ d_still_in_intro = false;
 sleep 3;
 deleteVehicle _PS1;
 
-if (true) exitWith {};
+#ifdef __CONNECT_ON_PARA__
+waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
+_para = player call SYG_getParachute;
+if ( _para != "") then {player removeWeapon _para}; // The parachute is used, remove it from inventory
+
+#endif
+
+if (true) exitWith {
+	if ( (alive player) && (!was_at_base) ) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" };
+};

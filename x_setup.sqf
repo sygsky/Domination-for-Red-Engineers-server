@@ -201,3 +201,6 @@
 
 // comment to allow storing full equipment on base flag, else only rucksack is stored on flag base, all other equipment is stored OnPlayerDisconnecting
 #define __EQUIP_OPD_ONLY__
+
+// comment to disable player parajump on connection and base reach procedure
+#define __CONNECT_ON_PARA__

@@ -286,7 +286,7 @@ SYG_msgToUserParser = {
         _str = toArray(toUpper(_this)); // e.g. [83,84,82,95,83,89,83,95,54,48,52] for  "STR_SYS_604"
         if ( count _str <= 4) exitWith {_this};
         // [83,84,82]
-        if ( (_str select 0 == 83) && (_str select 1 == 84) && (_str select 2 == 82) ) exitWith {localize _this };
+        if ( (_str select 0 == 83) && (_str select 1 == 84) && (_str select 2 == 82) && (_str select 3 == 95) ) exitWith {localize _this };
         _this
     };
 
