@@ -612,19 +612,21 @@ _camera spawn {
 		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
 	};
 	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
-	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}];
+	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}]; .. "I'll have to jump%1. What else can I do?"
 //	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	_time = time;
 	// wait while player in any vehicle (plane or parachute)
 	while { ((vehicle player) == player) && (alive player) } do {sleep 0.1};
 	if (!alive player) exitWith {
-		hint localize format["+++ x_intro.sqf: player dead on FADE IN in %1 secs", time - _time];
+		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs", time - _time];
 	};
 	sleep 3;
-	hint localize format["+++ x_intro.sqf: FADE IN after %1 secs", time - _time];
-//	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
-	cutText[localize "STR_INTRO_PARAJUMP_2","PLAIN",5];  // "Let's go-o-o-o...". black in again
+	if (alive player ) then {
+		hint localize format["+++ x_intro.sqf: alive on jump after %1 secs", time - _time];
+		//	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
+		cutText[localize "STR_INTRO_PARAJUMP_2","PLAIN",5];  // "Let's go-o-o-o...". black in again
+	} else { hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs", time - _time];};
 };
 
 for "_i" from 1 to (_cnt-1) do {
@@ -696,6 +698,9 @@ _camera camSetRelPos [0,1.5, 0.5];
 // let look to over there
 _camera camCommit 1; // set time to go
 waitUntil { camCommitted _camera }; // wait until come
+
+if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" };
+
 sleep 2;
 #endif
 
@@ -715,9 +720,7 @@ deleteVehicle _PS1;
 waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
 _para = player call SYG_getParachute;
 if ( _para != "") then {player removeWeapon _para}; // The parachute is used, remove it from inventory
-
 #endif
 
 if (true) exitWith {
-	if ( (alive player) && (!was_at_base) ) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" };
 };
