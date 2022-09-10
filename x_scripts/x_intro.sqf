@@ -741,7 +741,28 @@ sleep 3;
 deleteVehicle _PS1;
 
 #ifdef __CONNECT_ON_PARA__
+// wait any of : death, landing, parachute opening
 waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
+if ( (vehicle player) != player ) then { // parachute is on!
+    // The parachute still is opened, wait player to be on the ground, out of parachute or dead
+    waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
+    #ifdef __ACE __
+    if (_para == "ACE_ParachutePack") exitWith {}; // this parachute not need to be removed by the script
+    #endif
+    sleep 5.0; // Ensure  player to be on the ground
+    // Let's stop the parachute jumping on the ground
+    if ( (vehicle player) != player ) then {
+        player action ["Eject", vehicle player];
+        hint localize "+++ x_intro.sqf: player ejected from parachute";
+        playSound "steal";
+        (localize "STR_SYS_609_5") call XfHQChat; // "Thanks to your life experience (and rank!), you  got rid of your parachute."
+    };
+//    }
+};
+if (alive player) then {
+	["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 5, false ] call SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
+};
+
 hint localize format["+++ x_intro.sqf: removing parachute ""%1""", _para];
 if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory
 #endif

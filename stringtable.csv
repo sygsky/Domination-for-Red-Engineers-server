@@ -1113,6 +1113,7 @@ STR_INTRO_PARAJUMP_1_1, once again, wieder, de nuevo, ещё раз
 STR_INTRO_PARAJUMP_2,"Let's go-o-o-o...","Lass uns gehen...","Vamos...","Поехали-и-и-и..."
 STR_INTRO_PARAJUMP_3,"Fuck-k-k.k...","Scheiß-ß.ß...","Jodido-o-o.o...","Й-о-п-п-п.п..."
 STR_INTRO_PARAJUMP_5,We have to get to the base. The native walls will help!,Wir müssen zur Basis gelangen. Die einheimischen Mauern werden helfen!,Tenemos que llegar a la base. ¡Los muros nativos ayudarán!,Надо добраться до базы. Там и стены помогут!
+STR_INTRO_PARAJUMP_6,I'm gonna go to the blue flares... distance %1 m,Ich entscheide mich für die blauen Flares... entfernung %1 m.,Voy a ir por las bengalas azules... distancia %1 m.,Пойду-ка я на синие ракеты... расстояние %1 м.
 STR_INTRO_WAS_AT_BASE,You have reached the base! Life will get easier from here.,Sie haben die Basis erreicht! Das Leben wird von nun an einfacher werden.,¡Has llegado a la base! La vida será más fácil a partir de ahora.,Вы добрались до базы! Теперь будет полегче.
 STR_INTRO_NOT_AT_BASE,You didn't manage to get to the base this time...,"Du hast es diesmal nicht geschafft, zur Basis zu gelangen...",Esta vez no lograste llegar a la base...,Вам не удалось добраться до базы в этот раз...
 
@@ -1195,9 +1196,9 @@ STR_CAMP_3,new,die neue,nueva,новая
 STR_CAMP_4,nearly new,fast neu,casi nuevo,почти новая
 STR_CAMP_5,rather old,ziemlich alt,viejo,старенькая
 STR_CAMP_6,of weird age,wird auf unbestimmte Alterunverständlich Alter,edad incomprensible,непонятного возраста
-STR_CAMP_7,'Ярославская фабрика турснаряжения','Ярославская фабрика турснаряжения','Fábrica de equipos turísticos de Yaroslavl','Ярославская фабрика турснаряжения'
+STR_CAMP_7,'Ярославская фабрика турснаряжения','Ярославская фабрика турснаряжения','Ярославская фабрика турснаряжения','Ярославская фабрика турснаряжения'
 STR_CAMP_8,'филиал з-да им. Ленина','филиал з-да им. Ленина','rama de la planta de Lenin','филиал з-да им. Ленина'
-STR_CAMP_9,'артель 'Красный артельщик'','артель 'Красный артельщик'',artel 'Красный артельщик'','артель 'Красный артельщик''
+STR_CAMP_9,'артель 'Красный артельщик'','артель 'Красный артельщик'',артель 'Красный артельщик'','артель 'Красный артельщик''
 STR_CAMP_10,... almost erased,... fast gelöscht,... prácticamente borrado,... практически стёрся
 STR_CAMP_11,impossible to read,lesen ist unmöglich,no se puede desmontar,разобрать невозможно
 STR_CAMP_12,'The Union of young sahranians','Die Vereinigung von Jungen sahranians','Unión de jóvenes sahrianos','Союз молодых сахранийцев'

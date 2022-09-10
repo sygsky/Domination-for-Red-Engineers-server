@@ -1,3 +1,4 @@
+// By Xeno, x_scripts\x_createdrop.sqf - weapon box drop
 private ["_chopper","_doit","_drop_pos","_drop_type","_grp","_para","_the_chopper","_the_chute_type","_the_pilot","_unit","_vehicle","_wp","_starttime","_dist_to_drop","_exit_it","_wp2","_end_pos","_delete_chop","_may_exit"];
 if (!isServer) exitWith {};
 

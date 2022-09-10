@@ -16,19 +16,19 @@ _factor = (400 / 1600) max 12.5;
 
 if (isNil "was_at_base") then {was_at_base = false};
 while { !was_at_base } do {
-	if ( alive player ) then {
-		if ( ( getPos player ) call SYG_pointIsOnBase ) then {
-			was_at_base = (vehicle player == player);
-		};
-	};
 	sleep 5;
 	// launch a yellow flare over the base to attract the player's attention (to tell him where to go)
 	if (!alive _flare) then {
-		_flag_pos set [ 0, (_pos select 0) + (random 2) ];
-		_flag_pos set [ 1, (_pos select 1) + (random 2) ];
-		_flag_pos set [ 2, 250 + (random 2) ]; // flare spawn height AGL
+		_flag_pos set [ 0, (_pos select 0) + (random 5) ];
+		_flag_pos set [ 1, (_pos select 1) + (random 5) ];
+		_flag_pos set [ 2, 250 + (random 5) ]; // flare spawn height AGL
 		_flare = "F_40mm_Yellow" createVehicleLocal _flag_pos;
 		[ _flare, "BLUE", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
+	};
+	if ( alive player ) then {
+		if (vehicle player == player) then { // only on feet player is counted to be on base
+			was_at_base = ( getPos player ) call SYG_pointIsOnBase; // player is in base rect or not?
+		};
 	};
 };
 
@@ -40,3 +40,4 @@ while { alive _flare } do { sleep 0.1 };
 _flare = "F_40mm_Green" createVehicleLocal _flag_pos;
 [ _flare, "GREEN", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
 
+5
