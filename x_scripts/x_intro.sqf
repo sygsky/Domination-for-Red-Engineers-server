@@ -686,7 +686,7 @@ if ( _para == "") then {
 };
 [ _spawn_point, _para, "DC3"] execVM "AAHALO\jump.sqf";
 // Inform player about new order
-["msg_to_user", "", [["STR_INTRO_PARAJUMP"]], 0, 3, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
+["msg_to_user", "", [["STR_INTRO_PARAJUMP"]], 0, 5, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
 
 // move camera to the DC3 cargo player
 waitUntil { (FLAG_BASE distance player) > 100 };
