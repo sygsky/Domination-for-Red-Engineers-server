@@ -2,24 +2,33 @@
 _this execVM "scripts\deathSound.sqf";
 
 //hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
+#include "x_setup.sqf"
 
+#ifdef __CONNECT_ON_PARA__
+if ( !was_at_base ) then {
+	[ "msg_to_user", "*", ["localize", "STR_INTRO_NOT_AT_BASE"], 0, 2, false, "losing_patience" ] spawn SYG_msgToUserParser; // "You have not reached the base this time..."
+};
+#endif
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++ wait predefined delay before respawn ++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 sleep d_respawn_delay;
 
 if (dialog) then {closeDialog 0};
 
-#include "x_setup.sqf"
-
 #ifdef __CONNECT_ON_PARA__
 if (!was_at_base) exitWith { // player killed before it reached the base
 	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
+	_str = "";
 	if ( !d_still_in_intro) then {
-		[ "msg_to_user", "*", ["localize", "STR_INTRO_PARAJUMP"], 0, 0, false ] call SYG_msgToUserParser;
+		_str = if ((score player) != 0) then { "STR_INTRO_PARAJUMP" } else { "STR_INTRO_PARAJUMP_5" };
+		[ "msg_to_user", "*", ["localize", _str], 0, 0, false ] spawn SYG_msgToUserParser;
 	};
 	// respawn him at random point between base and Somato
 	player setPos _spawn_point;
 	player setDir (random 360);
 	hint localize format["+++ open.sqf: not was_at_base, respawn at %1", [round (_spawn_point select 0), round (_spawn_point select 1)] ];
-	[] execVM "scripts\SYG_checkPlayerAtBase.sqf";
 };
 #endif
 

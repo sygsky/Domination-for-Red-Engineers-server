@@ -679,5 +679,6 @@ class CfgSounds {
     class repair_short { name="";                                       sound[] = {\sounds\short\repair_short.ogg,db-1,1.0}; titles[] = {};}; //
 
     class typewriter   { name="";                                       sound[] = {\sounds\short\typewriter.ogg,db-1,1.0}; titles[] = {};}; // typewriter click
+    class atmos        { name="";                                       sound[] = {\sounds\short\atmos.ogg,db-1,1.0}; titles[] = {};}; // atmospheric drums
 
 };

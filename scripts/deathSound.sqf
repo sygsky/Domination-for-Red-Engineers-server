@@ -11,8 +11,8 @@ private ["_killer","_man","_men", "_unit","_exit","_churchArr","_TVTowerArr","_c
 
 #define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random(count ARR))))
 
-_killer = _this select 1;
 _unit = _this select 0; // player
+_killer = _this select 1;
 
 _killer_name = if (isNull _killer) then {"<null>"} else {typeOf _killer};
 hint localize format["+++ deathSound.sqf runs for killed %1 and killer %2 +++", name _unit, _killer_name];
@@ -22,8 +22,12 @@ if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSoun
 
 SYG_deathCountCnt = SYG_deathCountCnt + 1; // total death count bump
 
+#ifdef __CONNECT_ON_PARA__
+if (!was_at_base) exitWith { playSound  "atmos" }; // if we today still never visit the base, atmospheric sound is played
+#endif
+
 if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// Play ordinal sound if KIA or alone
-    if ( !(call SYG_playExtraSounds) ) exitWith{false}; // yeti doesn't like such sounds
+    if ( !(call SYG_playExtraSounds) ) exitWith { false }; // yeti doesn't like such sounds
 
     // if killed in tank
     _exit = false;

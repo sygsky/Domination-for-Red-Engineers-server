@@ -612,7 +612,7 @@ _camera spawn {
 		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
 	};
 	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
-	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}]; .. "I'll have to jump%1. What else can I do?"
+	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
 //	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	_time = time;
@@ -623,10 +623,13 @@ _camera spawn {
 	};
 	sleep 3;
 	if (alive player ) then {
-		hint localize format["+++ x_intro.sqf: alive on jump after %1 secs", time - _time];
 		//	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
 		cutText[localize "STR_INTRO_PARAJUMP_2","PLAIN",5];  // "Let's go-o-o-o...". black in again
-	} else { hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs", time - _time];};
+		hint localize format["+++ x_intro.sqf: alive on jump after %1 secs", time - _time];
+	} else {
+		cutText[localize "STR_INTRO_PARAJUMP_3","PLAIN",5];  // "Fuck-k-k.k..."
+		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs", time - _time];
+	};
 };
 
 for "_i" from 1 to (_cnt-1) do {
@@ -699,8 +702,29 @@ _camera camSetRelPos [0,1.5, 0.5];
 _camera camCommit 1; // set time to go
 waitUntil { camCommitted _camera }; // wait until come
 
-if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" };
+if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
 
+_para spawn {
+	// detect for parachute to be on player or player is on the ground and remove it from magazines
+	waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
+	if ( (vehicle player) != player ) then { // parachute still on!
+
+		waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
+	//    if ( (player call XGetRankIndexFromScore) > 2 ) then {
+		#ifdef __ACE __
+		if (_para != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
+		#endif
+		sleep 5.0; // Ensure  player to be on the ground
+		// Let's stop the parachute jumping on the ground
+		if ( (vehicle player) != player ) then {
+			player action ["Eject", vehicle player];
+			hint localize "+++ x_paraj.sqf: player ejected from parachute";
+			playSound "steal";
+			(localize "STR_SYS_609_5") call XfHQChat; // "Thanks to your life experience (and rank!), you  got rid of your parachute."
+		};
+	};
+
+};
 sleep 2;
 #endif
 
@@ -718,9 +742,8 @@ deleteVehicle _PS1;
 
 #ifdef __CONNECT_ON_PARA__
 waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
-_para = player call SYG_getParachute;
-if ( _para != "") then {player removeWeapon _para}; // The parachute is used, remove it from inventory
+hint localize format["+++ x_intro.sqf: removing parachute ""%1""", _para];
+if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory
 #endif
 
-if (true) exitWith {
-};
+if (true) exitWith {};
