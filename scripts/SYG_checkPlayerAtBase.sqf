@@ -28,7 +28,7 @@ while { !was_at_base } do {
 		_flag_pos set [ 1, (_pos select 1) + (random 2) ];
 		_flag_pos set [ 2, 250 + (random 2) ]; // flare spawn height AGL
 		_flare = "F_40mm_Yellow" createVehicleLocal _flag_pos;
-		[ _flare, "YELLOW", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
+		[ _flare, "BLUE", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
 	};
 };
 
