@@ -38,9 +38,9 @@ _reset_params = {
 			private ["_arr"];
 			// TODO: add info for posittion of random vehicle in the _new_array
 			_arr = [[ localize "STR_BONUS_6", count _new_array]];
-			if (count _new_arr > 2) then { // add info about random vehicle from array of size larger than two
+			if (count _new_arr > 2) then { // add info about random DOSAAF vehicle if count is larger than two
 				_veh = _new_arr call XfRandomArrayVal;
-				_arr set [count _arr, [localize "STR_FORMAT_8",typeOf _veh,  _veh call SYG_MsgOnPos]] ;
+				_arr set [count _arr, [localize "STR_BONUS_8",typeOf _veh,  _veh call SYG_MsgOnPos]] ;
 			};
 			["msg_to_user", "", _arr, 5, 105, false, "good_news"] call SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
 		};
