@@ -29,7 +29,7 @@ if ( ( _this select 1 ) in ["AinvPknlMstpSnonWnonDnon_medic_1" ])  then { // You
 
     _friend_healed = false;
     {
-        if ( ( alive _x ) && ( _x != player ) && ( isPlayer _x ) && (damage _x > 0.05) && (side _x == side player)) exitWith {
+        if ( ( alive _x ) && ( _x != player ) && ( isPlayer _x ) && (damage _x > 0.05) && (side _x == playerSide)) exitWith {
             // add score, send information
             _points = d_ranked_a select 7;
             (format [localize "STR_MED_8", _points, name _x, damage _x ] ) call XfHQChat; // "You get +%1 points for healing %2!"

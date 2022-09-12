@@ -439,7 +439,7 @@ STR_GRASS_2,Medium Grass,Mittleres Gras,Promedio,Средняя
 STR_GRASS_3,Full Grass,Voll Gras,llena,Полная
 
 STR_SYS_180,According to the reports of the weather Bureau of USSR...,Nach berichten des wetterbüros der UdSSR...,De acuerdo con los informes del centro Hidrometeocentro de la URSS...,По сводкам Гидрометеоцентра СССР...
-STR_SYS_181,New order:,Die neue Aufgabe:,Nueva tarea:,Новое задание:
+STR_SYS_181,New side order:,Neue Nebenmission:,Nueva misión secundaria:,Новое побочное задание:
 STR_SYS_182,The enemy troops will be at place in less than %1 minutes,Die feindlichen Truppen werden am Ort in weniger als %1 Minuten,Las tropas enemigas estarán en el lugar del accidente en menos de %1 minutos[s],Вражеские войска будут на месте крушения менее чем через %1 минут[ы]
 
 STR_SYS_199,Secondary target not available...,Sekundäre Aufgabe nicht zur Verfügung...,La tarea secundaria no está disponible...,Второстепенная задача не доступна...
@@ -1112,8 +1112,8 @@ STR_INTRO_PARAJUMP_1,"I'll have to jump%1. What else can I do?","Ich werde sprin
 STR_INTRO_PARAJUMP_1_1, once again, wieder, de nuevo, ещё раз
 STR_INTRO_PARAJUMP_2,"Let's go-o-o-o...","Lass uns gehen...","Vamos...","Поехали-и-и-и..."
 STR_INTRO_PARAJUMP_3,"Fuck-k-k.k...","Scheiß-ß.ß...","Jodido-o-o.o...","Й-о-п-п-п.п..."
-STR_INTRO_PARAJUMP_5,We have to get to the base. The native walls will help!,Wir müssen zur Basis gelangen. Die einheimischen Mauern werden helfen!,Tenemos que llegar a la base. ¡Los muros nativos ayudarán!,Надо добраться до базы. Там и стены помогут!
-STR_INTRO_PARAJUMP_6,I'm gonna go to the blue flares... distance %1 m,Ich entscheide mich für die blauen Flares... entfernung %1 m.,Voy a ir por las bengalas azules... distancia %1 m.,Пойду-ка я на синие ракеты... расстояние %1 м.
+STR_INTRO_PARAJUMP_5,We have to get to the base. They promised to launch flares!,Wir müssen zur Basis kommen. Sie haben versprochen, Leuchtraketen abzufeuern!Tenemos que llegar a la base. ¡Prometieron disparar bengalas!,Надо добраться до базы. Они обещали пускать осветительные ракеты!
+STR_INTRO_PARAJUMP_6,I'm gonna go to the violet flares... distance %1 m,Ich werde zu den violetten Fackeln gehen... Entfernung %1 m,Voy a ir a las bengalas violetas... distancia %1 m,Пойду-ка я на фиолетовые ракеты... расстояние %1 м.
 STR_INTRO_WAS_AT_BASE,You have reached the base! Life will get easier from here.,Sie haben die Basis erreicht! Das Leben wird von nun an einfacher werden.,¡Has llegado a la base! La vida será más fácil a partir de ahora.,Вы добрались до базы! Теперь будет полегче.
 STR_INTRO_NOT_AT_BASE,You didn't manage to get to the base this time...,"Du hast es diesmal nicht geschafft, zur Basis zu gelangen...",Esta vez no lograste llegar a la base...,Вам не удалось добраться до базы в этот раз...
 
