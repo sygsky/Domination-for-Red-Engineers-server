@@ -612,7 +612,7 @@ _camera spawn {
 		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
 	};
 	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
-	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {"STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
+	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
 //	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	_time = time;
