@@ -30,25 +30,28 @@ SYG_createBonusVeh = {
 
 	hint localize format["+++ SYG_createBonusVeh: creating vehicle %1", _type];
 
-	// check if point is on one of small Sahrani islands
+	// check if point is on one of small Sahrani islands.
+	// In such places we allow to spawn only small vehicles, which can be pick up with one of transport helis.
 	if ( _center call SYG_pointOnIslet) then {
 		// we are on islet, move center to the main island
-		_loc  = _center call SYG_nearestSettlement;
-		_name = text _loc;
-		_mt  = _name call SYG_MTByName;
-		if (count _mt > 0) then {
-			_center = _mt select 0;
-			_center = [_center select 0, _center select 1, 0];
-			_rad = _mt select 2;
+		if (!(_type in (HR1 call SYG_typesVehCanLift))) then {
+			_loc  = _center call SYG_nearestSettlement;
+			_name = text _loc;
+			_mt  = _name call SYG_MTByName;
+			if (count _mt > 0) then {
+				_center = _mt select 0;
+				_center = [_center select 0, _center select 1, 0];
+				_rad = _mt select 2;
+			};
+//			_center = _center call  SYG_nearestSettlement; // nearest settlement for the islet
+			hint localize format["+++ SYG_createBonusVeh: MT is on islet, place changed to ""%1""", _name];
 		};
-//		_center = _center call  SYG_nearestSettlement; // nearest settlement for the islet
-		hint localize format["+++ SYG_createBonusVeh: MT is on islet, place changed to ""%1""", _name];
 	};
 	// We may be on Rahmadi
 	if ( _center call SYG_pointOnRahmadi ) then {
-		hint localize format["+++ SYG_createBonusVeh: MT is on Rahmadi, (%1 in d_helilift1_types) = %2, (%1 isKindOf ""Air"") = %3", _type, _type in d_helilift1_types, _type isKindOf "Air"];
-//		hint localize format["+++ SYG_createBonusVeh: d_helilift1_types = %1",d_helilift1_types];
-		if (! ((_type in d_helilift1_types) || (_type isKindOf "Air")) ) then {
+		hint localize format["+++ SYG_createBonusVeh: MT is on Rahmadi, (%1 in lift_vehicles) = %2, (%1 isKindOf ""Air"") = %3", _type, HR1 call SYG_typesVehCanLift, _type isKindOf "Air"];
+//		hint localize format["+++ SYG_createBonusVeh: lift_vehicles = %1",HR1 call SYG_typesVehCanLift];
+		if (! ((_type in (HR1 call SYG_typesVehCanLift)) || (_type isKindOf "Air")) ) then {
 			// it is not heli lifted or air vehicle, so move center from this point to the main island
 			_mt = "Rahmadi" call SYG_nearestMainTarget; // find nearest target on main island
 			if (count _mt > 0) then {
@@ -91,16 +94,11 @@ SYG_createBonusVeh = {
             if ( (random 10 < 1) && ((count _mags) > 1) ) then { _mags resize ( round ( ( count _mags ) * 0.9 ) ) }; // remove 90% of magazines
             { _veh removeMagazine _x } forEach _mags;	// remove magazines from Air vehicles only
 #endif
-/*
-	        // TODO: remove all magazines from plane or heli
-            {
-                _veh removeMagazine _x;
-	        }forEach (magazines _veh);
-*/	    };
+    	};
 	    if ( ( _veh isKindOf "LandVehicle" ) && ( ( random 10 ) > 2 ) ) exitWith {
 	    	_veh setFuel 0;
 #ifdef ALLOW_HARD_MODE
-            if ((random 10) < 1) then{ _veh setVectorUp [0,0,-1] };
+            if ((random 10) < 1) then { _veh setVectorUp [0,0,-1] };
 #endif
 	    };
     };

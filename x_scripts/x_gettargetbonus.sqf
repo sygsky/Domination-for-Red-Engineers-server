@@ -84,7 +84,7 @@ SYG_players_online = []; // collector for online player names
 // assing bonus scores to offline players
 _bonus_score_arr spawn {
 	sleep 10; // wait until all online clients send confirmation messages
-	private ["_offline_arr","_arr","_add_arr","_ind","_item","_add"];
+	private ["_offline_arr","_arr","_add_arr","_ind","_item","_add","_x"];
 
 	_arr = (_this select 0); // all town player names array
 	_add_arr = (_this select 1); // all town player town bonus score array
@@ -132,12 +132,12 @@ _bonus_score_arr spawn {
 
 #ifdef __BATTLEFIELD_BONUS__
 _vehicle = [_town select 0, _town select 2, mt_bonus_vehicle_array select extra_bonus_number] call SYG_createBonusVeh;
-hint localize format["+++ x_scripts\x_gettargetbonus.sqf: battlefield target bonus vehicle created ""%1""", typeOf _vehicle];
+hint localize format["+++ x_scripts\x_gettargetbonus.sqf: main target DOSAAF vehicle ""%1"" created ", typeOf _vehicle];
 #else
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 _vehicle setDir _dir;
 _vehicle call SYG_assignVehAsBonusOne;
-hint localize format["+++ x_scripts\x_gettargetbonus.sqf: DOSAAF vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPos];
+hint localize format["+++ x_scripts\x_gettargetbonus.sqf: bonus vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPos];
 #endif
 
 
@@ -160,7 +160,7 @@ hint localize format["+++ x_scripts\x_gettargetbonus.sqf: DOSAAF vehicle created
             _mash setDir argp(_x,1);
             ADD_HIT_EH(_mash)
             ADD_DAM_EH(_mash)
-            hint localize format["+++ x_scripts\x_gettargetbonus.sqf: MASH created near plane service at %2 with target bonus %1", typeOf _vehicle, argp(_x,0) call SYG_nearestLocationName];
+            hint localize format["+++ x_scripts\x_gettargetbonus.sqf: MASH [re]created near plane service at %2, main target bonus plane %1", typeOf _vehicle, argp(_x,0) call SYG_nearestLocationName];
         };
     };
 
