@@ -1,6 +1,6 @@
 // траектория снаряда при наличии сопротивления воздуха
 // Use it for tracing shell firing from the artillery muzzle.
-// The shell itself found after shoot, must be presaved somewhere, e.g. in the point with Y = 10000 m.
+// The shell itself found after shoot, must be presaved somewhere, e.g. in the point with Z/X/Y = 10000 m.
 // get shell speed vector  [_VX, _VY, _VZ] and weight
 _t  = 0;//									t:=0 {c} {время};
 _tt = 0.05;//								tt:=0.001 {c} {шаг интегрирования};
@@ -16,11 +16,12 @@ _Y  = 0;//									Y:=0 {м} {начальные координаты снаря
 _m  = 6.3; //								m:=6.3{кг} {масса снаряда};
 _ks = _k * _p0 / (2*m);//					ks:=k*p0/(2*m){результирующий коэффициент сопротивления};
 for "_i" from 1 to 500000 do {//			For i:=1 to 500000 do begin
-	if (_Y > 0) then {// 						if Y<0 then Goto 5;
+	if (_Y < 0) exitWith {};// 						if Y<0 then Goto 5;
 		_VX = _VX - (_g - _ks * abs(_VX) * _VX) * _VX * _tt;//		VX:=VX-ks*Abs(VX)*VX*tt;
 		_VY = _VY - (_g + _ks * abs(_VY) * _VY) * _tt; //			VY:=VY-(g+ks*Abs(VY)*VY)*tt;
 		_X = _X + _VX * _tt;//										X:=X+VX*tt;
 		_Y = _Y + _VY * _tt;//										Y:=Y+VY*tt;
+		sleep 0.05;//							5:t:=t+tt;
 		//										SetPixel(X0+round(X*40*MasX),Y0-round(Y*40*MasY), clBlack);
-    }; //										5:t:=t+tt;
-}; //											end;
+
+}; //										end;
