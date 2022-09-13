@@ -806,8 +806,10 @@ SYG_isEastVehicle = {
 // _fuelCapacity = (typeOf _vehicle) call SYG_fuelCapacity;
 //
 SYG_fuelCapacity = {
-	if ((typeName _this)=="OBJECT")then{_this=(typeOf _this)};
-	getNumber(configFile >> "CfgVehicles" >> _this >> "fuelCapacity")
+	private ["_type"];
+	_type = _this;
+	if ((typeName _type)=="OBJECT")then{_type=(typeOf _type)};
+	getNumber(configFile >> "CfgVehicles" >> _type >> "fuelCapacity")
 };
 
 // TODO: use anywhere
