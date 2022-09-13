@@ -19,6 +19,7 @@
 //
 SYG_createBonusVeh = {
 	if (!X_Server) exitWith {};
+	hint localize format["+++ SYG_createBonusVeh: _this = %1", this];
 	if (count _this < 3) exitWith { hint localize format["--- SYG_createBonusVeh: Expected params count 3, found %1", count _this]; objNull };
 	private ["_center","_rad","_type","_pos","_dir","_veh","_x","_name","_loc", "_mt"];
 	_center = _this select 0;
@@ -28,13 +29,11 @@ SYG_createBonusVeh = {
 	_rad    = _this select 1; // battle zone radious (e.g. town radious)
 	_type   = _this select 2; // vehicle type to create
 
-	hint localize format["+++ SYG_createBonusVeh: creating vehicle %1", _type];
-
 	// check if point is on one of small Sahrani islands.
 	// In such places we allow to spawn only small vehicles, which can be pick up with one of transport helis.
 	if ( _center call SYG_pointOnIslet) then {
-		// we are on islet, move center to the main island
-		if (!(_type in (HR1 call SYG_typesVehCanLift))) then {
+		// we are on islet, move center to the main island if vehicle is not heli or is big enough not to be lifted by heli
+		if (!( (_type in (HR1 call SYG_typesVehCanLift) ) || (_type isKindOf "Helicopter") ) ) then {
 			_loc  = _center call SYG_nearestSettlement;
 			_name = text _loc;
 			_mt  = _name call SYG_MTByName;
