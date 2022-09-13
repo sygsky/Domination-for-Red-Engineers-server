@@ -31,9 +31,9 @@ SYG_createBonusVeh = {
 
 	// check if point is on one of small Sahrani islands.
 	// In such places we allow to spawn only small vehicles, which can be pick up with one of transport helis.
-	if ( _center call SYG_pointOnIslet) then {
+	if ( _center call SYG_pointOnIslet ) then {
 		// we are on islet, move center to the main island if vehicle is not heli or is big enough not to be lifted by heli
-		if (!( (_type in (HR1 call SYG_typesVehCanLift) ) || (_type isKindOf "Helicopter") ) ) then {
+		if ( !( (_type in (HR1 call SYG_typesVehCanLift) ) || (_type isKindOf "Helicopter") ) ) then {
 			_loc  = _center call SYG_nearestSettlement;
 			_name = text _loc;
 			_mt  = _name call SYG_MTByName;
