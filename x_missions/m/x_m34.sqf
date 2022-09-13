@@ -16,7 +16,7 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SM_34"; // "Высший офицерский состав расслабляется в городе Paraiso. Выша задача взорвать электростанцию на востоке города, тем самым оставив их бордель без электричества.";
+	current_mission_text = localize "STR_SM_34"; // "Высший офицерский состав расслабляется в городе Paraiso. Ваша задача взорвать электростанцию на востоке города, тем самым оставив их бордель без электричества.";
 	current_mission_resolved_text = localize "STR_SM_034";//"Задание выполнено! Электростанция уничтожена, бордель закрылся.";
 };
 
