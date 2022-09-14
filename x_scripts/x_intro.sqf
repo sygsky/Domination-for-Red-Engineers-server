@@ -59,13 +59,13 @@ _newyear = false;
 _holiday = SYG_client_start call SYG_getCountryDay; // country foundation day, if success, return array of 2 items: ["title","music"]
 _sound = "";
 if ( count _holiday == 0 ) then { // check for some soviet holiday
-    #ifdef __HOLIDAY_DEBUG__
-        _date =  + SYG_client_start;
-        _date set [1,11]; _date set [2, 7]; // 07-NOV-1985, 23-FEB-1985 etc
-        _holiday = _date call SYG_getHoliday;
-    #else
-        _holiday = SYG_client_start call SYG_getHoliday; // The same as follow: _holiday_arr = [_is_holiday, _music, _title ];
-    #endif
+#ifdef __HOLIDAY_DEBUG__
+	_date =  + SYG_client_start;
+	_date set [1,11]; _date set [2, 7]; // 07-NOV-1985, 23-FEB-1985 etc
+	_holiday = _date call SYG_getHoliday;
+#else
+	_holiday = SYG_client_start call SYG_getHoliday; // The same as follow: _holiday_arr = [_is_holiday, _music, _title ];
+#endif
 };
 if (count _holiday > 0 ) then {
     // Soviet/country holiday detected, show its info about soviet holiday and/or play correponding sound
@@ -216,6 +216,7 @@ _camstart = (
 	}
 );
 
+//#ifdef __TT__
 #else
 
 d_intro_color = (
@@ -298,9 +299,44 @@ _pos = [];
 _lobjpos = [];
 
 #ifdef __CONNECT_ON_PARA__
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++
+//      define parachute type (round of square)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++
+_para = player call SYG_getParachute;
+hint localize format["+++ x_intro.sqf: BEFORE player (alive %1) has parachute ""%2""", alive player,  _para];
+if ( _para == "") then {
+	#ifdef __ACE__
+	_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
+	#endif
+	#ifndef __ACE__
+	_para = switch (d_own_side) do {
+		case "RACS": {"ParachuteG"};
+		case "WEST": {"ParachuteWest"};
+		case "EAST": {"ParachuteEast"};
+	};
+	#endif
+	player addWeapon _para;
+};
+hint localize format["+++ x_intro.sqf: AFTER  player (alive %1) has parachute ""%2""", alive player,  _para];
+
 waitUntil {!isNil "XfGetRanPointSquareOld"};
-_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
-_spawn_point set [2, 100]; // spawn at parachute pos
+
+//++++++++++++++++++++++++++++++
+//      find spawn point
+//+++++++++++++++++++++++++++++
+_spawn_rect = drop_zone_arr select 0;
+	#ifdef __ACE__
+if (_para == "ACE_ParachutePack") then {  // find point in the rectangle above Sierra Madre
+	_spawn_rect = [ [11306,8386,0], 600,150, -45 ];
+	hint localize "+++ x_intro.sqf: jump point is set above mountines";
+} else {
+		hint localize "+++ x_intro.sqf: jump point is set above plain";
+};
+	#endif
+_spawn_point  = _spawn_rect call XfGetRanPointSquareOld;
+_spawn_point set [2, 150]; // spawn at parachute pos
+
 #else
 _spawn_point  = getPos player;
 #endif
@@ -349,8 +385,6 @@ switch typeOf _lobj do {
 
 #ifdef __CONNECT_ON_PARA__
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 5
-#else
-#define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 2
 #endif
 
 #define DEFAULT_SHOW_TIME 20
@@ -385,6 +419,7 @@ for "_i" from 0 to ((count _arr) - 1) do {_arr set[_i, (_arr select _i) / _plen 
 //hint localize format["x_intro.sqf: updated  camstart is %1", _camstart];
 //hint localize format["x_intro.sqf: duration array %1", _arr];
 
+//#ifdef __TT__
 #endif
 
 _PS1 = "#particlesource" createVehicleLocal [position player select 0, position player select 1, DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD]; // raise the spark above the player, as the base building became higher
@@ -670,29 +705,16 @@ if ( typeName _camstart != "ARRAY" ) then {
 
 // Move player to the point of rect between Somato and base on the parachute
 // first find/put parachute in his inventory
-_para = player call SYG_getParachute;
-if ( _para == "") then {
-	#ifdef __ACE__
-	_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
-	#endif
-	#ifndef __ACE__
-	_para = switch (d_own_side) do {
-		case "RACS": {"ParachuteG"};
-		case "WEST": {"ParachuteWest"};
-		case "EAST": {"ParachuteEast"};
-	};
-	#endif
-	player addWeapon _para;
-};
-[ _spawn_point, _para, "DC3"] execVM "AAHALO\jump.sqf";
+hint localize format["+++ x_intro.sqf: call to jump.sqf, player has ""%1""", player call SYG_getParachute];
+[ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
 // Inform player about new order
-["msg_to_user", "", [["STR_INTRO_PARAJUMP"]], 0, 5, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
+["msg_to_user", "", [[ format[localize "STR_INTRO_PARAJUMP", (round ((_spawn_point distance FLAG_BASE)/50)) * 50 ] ]], 0, 5, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
 
 // move camera to the DC3 cargo player
 waitUntil { (FLAG_BASE distance player) > 100 };
 
 _tgt = [_camera, player, 30000.0] call SYG_elongate2Z;
-
+sleep 0.2;
 if (vehicle player != player) then {
 	_camera camSetTarget (vehicle player)
 } else { _camera camSetTarget player};
@@ -704,11 +726,15 @@ waitUntil { camCommitted _camera }; // wait until come
 
 if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
 
+// remove round parachute after landing
 _para spawn {
+	private ["_para"];
+	_para = _this;
 	// detect for parachute to be on player or player is on the ground and remove it from magazines
 	waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
+	if (!alive player) exitWith{};
+	// TODO: type some messages for the player orientation
 	if ( (vehicle player) != player ) then { // parachute still on!
-
 		waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
 	//    if ( (player call XGetRankIndexFromScore) > 2 ) then {
 		#ifdef __ACE __
@@ -718,9 +744,11 @@ _para spawn {
 		// Let's stop the parachute jumping on the ground
 		if ( (vehicle player) != player ) then {
 			player action ["Eject", vehicle player];
-			hint localize "+++ x_paraj.sqf: player ejected from parachute";
+			hint localize "+++ x_intro.sqf: player ejected from parachute";
 			playSound "steal";
-			(localize "STR_SYS_609_5") call XfHQChat; // "Thanks to your life experience (and rank!), you  got rid of your parachute."
+			if (alive player) then {
+				(localize "STR_SYS_609_5") call XfHQChat; // "Thanks to your life experience (and rank!), you  got rid of your parachute."
+			};
 		};
 	};
 
@@ -731,7 +759,7 @@ sleep 2;
 player cameraEffect ["terminate","back"];
 camDestroy _camera;
 closeDialog 0;
-[ "say_sound", player, "gong_5" ] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
+[ "say_sound", FLAG_BASE, "gong_5" ] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
 
 enableRadio true;
 
@@ -760,10 +788,12 @@ if ( (vehicle player) != player ) then { // parachute is on!
 //    }
 };
 if (alive player) then {
-	["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 5, false ] call SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
+	if (!was_at_base) then {
+		["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 5, false ] call SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
+	};
 };
 
-hint localize format["+++ x_intro.sqf: removing parachute ""%1""", _para];
+hint localize format["+++ x_intro.sqf: removing parachute ""%1"", has ""%2""", _para, player call SYG_getParachute];
 if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory
 #endif
 

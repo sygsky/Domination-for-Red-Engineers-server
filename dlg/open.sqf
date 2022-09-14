@@ -22,8 +22,8 @@ if (!was_at_base) exitWith { // player killed before it reached the base
 	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
 	_str = "";
 	if ( !d_still_in_intro) then {
-		_str = if ((score player) != 0) then { "STR_INTRO_PARAJUMP" } else { "STR_INTRO_PARAJUMP_5" };
-		[ "msg_to_user", "*", ["localize", _str], 0, 0, false ] spawn SYG_msgToUserParser;
+		_str = if ((score player) != 0) then { format[localize "STR_INTRO_PARAJUMP", (round ((_spawn_point distance FLAG_BASE)/50)) * 50 ] } else { "STR_INTRO_PARAJUMP_5" };
+		[ "msg_to_user", "*", [[_str]], 0, 0, false ] spawn SYG_msgToUserParser;
 	};
 	// respawn him at random point between base and Somato
 	player setPos _spawn_point;

@@ -9,7 +9,7 @@
 
 */
 _flare = objNull;
-_pos = getPos FLAG_BASE;
+_pos = [9529.5,9759.2,0]; // point near central gate to the base
 _flag_pos = [];
 _factor = (400 / 1600) max 12.5;
 // set flare position as slightly random one
@@ -22,11 +22,12 @@ while { !was_at_base } do {
 		_flag_pos set [ 0, (_pos select 0) + (random 5) ];
 		_flag_pos set [ 1, (_pos select 1) + (random 5) ];
 		_flag_pos set [ 2, 250 + (random 5) ]; // flare spawn height AGL
-//		_flare = "F_40mm_Yellow" createVehicleLocal _flag_pos;
 		_flare = "F_40mm_White" createVehicleLocal _flag_pos;
+//		_flare = "F_40mm_Yellow" createVehicleLocal _flag_pos;
+//		_flare = "F_40mm_Green" createVehicleLocal _flag_pos;
 //		[ _flare, "YELLOW", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
-//		[ _flare, "BLUE", _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // VIOLET
-		[ _flare, "VIOLET", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
+//		[ _flare, "BLUE", _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; //
+		[ _flare, "VIOLET", _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // not works
 	};
 	if ( alive player ) then {
 		if (vehicle player == player) then { // only on feet player is counted to be on base

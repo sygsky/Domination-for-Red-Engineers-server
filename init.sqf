@@ -469,8 +469,10 @@ if (isServer) then {
 
 #ifdef __DEFAULT__
 	//+++ Sygsky: remove map Zavora objects etc
+	// hide default bargates on base on server only
+
 	[] spawn {
-        private ["_obj"];
+        private ["_obj","_x"];
 		// Create new Zavoras on server ONLY
 		// add animated bar gates somewhere on clients ONLY
 		{
@@ -719,16 +721,17 @@ if (X_SPE) then {
 execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 
 #ifdef __DEFAULT__
-// hide default bargates on base on all client computers etc
+// add new bargates at base on client comps only
 [] spawn {
-	private ["_pos","_zav","_arr"];
+	private ["_pos","_zav","_x"];
 	_pos = [9621,9874,0];
 	// remove map hardcoded bar gates
 	{
 		_zav = _pos nearestObject _x;
-		if ( !isNull _zav AND alive _zav) then {
+		if ( !isNull _zav && alive _zav) then {
 			_zav setDammage 1.1;
 			sleep 0.1;
+			deleteCollection _zav;
 		};
 	}forEach [353,355,362/* ,367 */];
 
