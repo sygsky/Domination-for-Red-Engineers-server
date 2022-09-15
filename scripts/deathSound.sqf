@@ -23,7 +23,7 @@ if ( !( isPlayer _unit ) ) exitWith {hint localize format["--- scripts/deathSoun
 SYG_deathCountCnt = SYG_deathCountCnt + 1; // total death count bump
 
 #ifdef __CONNECT_ON_PARA__
-if (!was_at_base) exitWith { playSound  "atmos" }; // if we today still never visit the base, atmospheric sound is played
+if (base_visit_status <= 0) exitWith { playSound  "atmos" }; // if we today still never visit the base, atmospheric sound is played
 #endif
 
 if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// Play ordinal sound if KIA or alone

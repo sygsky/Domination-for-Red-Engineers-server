@@ -131,15 +131,13 @@ if(vehicle player == player)exitWith {};	// ?
 
 #ifdef __ACE__
 
-if (_plane && (_paratype == "ACE_ParachutePack")) then { // not jump from plane as this usully leads to the wounds
+if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 	// Put player 5 meters out of the plane if he is not in heli
 	player setPos ( uh60p modelToWorld [-5, -5, -5] );
 	player setDir _dir;
 	player setVelocity  [ (sin _dir) * 20, (cos _dir) * 20, 0 ]; // set speed 20 m/s in direction of plane flight
+	if (((getPos (vehicle player)) select 2) < 10) exitWith {};
 	[ player ] execVM "ace_sys_eject\s\ace_jumpOut_cord.sqf";
-} else {
-	hint localize format["+++ jump.sqf: call to ""\ace_sys_eject\s\ace_jumpout.sqf"", player has ""%1""", player call SYG_getParachute];
-	[uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf"; // Go to ACE code to complete jump
 };
 
 // Limit speed after plane else you are always get  damage to your health

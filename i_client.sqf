@@ -120,7 +120,7 @@ if (X_Client) then {
     #endif
 
 	#ifdef __CONNECT_ON_PARA__
-    was_at_base = false;
+    base_visit_status = 0;
     #endif
     player_is_driver = false;
     client_target_counter = 0;

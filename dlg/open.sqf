@@ -1,11 +1,14 @@
 // open.sqf, called on player respawn on client side only
+_base_visit_status = base_visit_status;
+base_visit_status = -1; // mark player to be respawning
+
 _this execVM "scripts\deathSound.sqf";
 
 //hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
 #include "x_setup.sqf"
 
 #ifdef __CONNECT_ON_PARA__
-if ( !was_at_base ) then {
+if ( _base_visit_status <= 0 ) then {
 	[ "msg_to_user", "*", ["localize", "STR_INTRO_NOT_AT_BASE"], 0, 2, false, "losing_patience" ] spawn SYG_msgToUserParser; // "You have not reached the base this time..."
 };
 #endif
@@ -18,7 +21,7 @@ sleep d_respawn_delay;
 if (dialog) then {closeDialog 0};
 
 #ifdef __CONNECT_ON_PARA__
-if (!was_at_base) exitWith { // player killed before it reached the base
+if (_base_visit_status <= 0) exitWith { // player killed before it reached the base
 	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
 	_str = "";
 	if ( !d_still_in_intro) then {
@@ -28,7 +31,8 @@ if (!was_at_base) exitWith { // player killed before it reached the base
 	// respawn him at random point between base and Somato
 	player setPos _spawn_point;
 	player setDir (random 360);
-	hint localize format["+++ open.sqf: not was_at_base, respawn at %1", [round (_spawn_point select 0), round (_spawn_point select 1)] ];
+	hint localize format["+++ open.sqf: base_visit_status <= 0, respawn at %1", [round (_spawn_point select 0), round (_spawn_point select 1)] ];
+	base_visit_status = _base_visit_status;
 };
 #endif
 
