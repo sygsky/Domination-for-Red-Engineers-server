@@ -726,6 +726,40 @@ waitUntil { camCommitted _camera }; // wait until come
 
 if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
 
+// print informative messages while in air
+#define MSG_DELAY 12
+
+_para spawn {
+	private ["_msg_arr","_i","_last","_time"];
+	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5"];
+	_town_name = call SYG_getTargetTownName;
+	hint localize format[ "+++ x_intro.sqf: target town detected ""%1""", _town_name ];
+	_msg_arr set [0, switch (_town_name) do {
+		case "Paraiso": {"STR_INTRO_INFO_2"};
+		case "Somato":  {"STR_INTRO_INFO_1"};
+		default         {"STR_INTRO_INFO_0"};
+		}
+	];
+	_i = 0;
+	_last = (count _msg_arr) - 1;
+	scopeName "main";
+	_time = time + MSG_DELAY;
+	for "_i" from 0 to _last do {
+		while { time < _time} do {  // wait to print
+			if ( base_visit_status != 0 ) then { breakTo "main" }; // Exit on status -1 (dead) or 1 (reached the base)
+		};
+#ifdef __ACE__
+		_glide = _para == "ACE_ParachutePack";
+#else
+		_glide = false;
+#endif
+		if ( (!(_i in [1,2,3])) || _glide ) then {
+			cutText [localize (_msg_arr select _i),"PLAIN"];
+			_time = time + MSG_DELAY;
+		};
+	};
+};
+
 // remove round parachute after landing
 _para spawn {
 	private ["_para"];

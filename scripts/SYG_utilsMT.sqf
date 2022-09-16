@@ -43,11 +43,11 @@ SYG_isMainTargetAllowed =
 // Detects if designated point[s] of object[s] are in main target boundaries (red circle on map)
 // call as: _inMT = <[>_pnt|_obj|_location<,...]> call SYG_areObjsInMainTarget;
 //
-// if parameter is array, method retruns true only if all array items (positions, objects, locations, groups) are in MT circle, else false
+// if parameter is array, method returns true only if all array items (positions, objects, locations, groups) are in MT circle, else false
 //
 SYG_areObjsInMainTarget = {
 	if(current_target_index < 0) exitWith {false};
-	private ["_dummy","_mt_pos","_mt_rad","_res"];
+	private ["_dummy","_mt_pos","_mt_rad","_res","_x"];
 	_dummy = target_names select current_target_index;
     _mt_pos = _dummy select 0;
     _mt_rad = _dummy select 2;

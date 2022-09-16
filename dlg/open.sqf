@@ -1,6 +1,8 @@
 // open.sqf, called on player respawn on client side only
 _base_visit_status = base_visit_status;
-base_visit_status = -1; // mark player to be respawning
+if (base_visit_status == 0) then {
+	base_visit_status = -1; // mark player to be respawning
+};
 
 _this execVM "scripts\deathSound.sqf";
 
@@ -32,7 +34,9 @@ if (_base_visit_status <= 0) exitWith { // player killed before it reached the b
 	player setPos _spawn_point;
 	player setDir (random 360);
 	hint localize format["+++ open.sqf: base_visit_status <= 0, respawn at %1", [round (_spawn_point select 0), round (_spawn_point select 1)] ];
-	base_visit_status = _base_visit_status;
+	if (base_visit_status < 0) then { // if not changed, restore status to original vqlue
+		base_visit_status = _base_visit_status;
+	};
 };
 #endif
 

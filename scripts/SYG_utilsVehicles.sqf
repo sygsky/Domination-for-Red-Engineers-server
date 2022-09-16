@@ -1901,22 +1901,24 @@ SYG_addHorn = {
  * call: _leader = _grp call _get_leader;
  */
 SYG_getLeader = {
-	private ["_leader", "_x"];
-	if (isNull _this) exitWith { objNull };
-	if (typeName _this == "OBJECT") then { _this = group _this; };
-	if (isNull _this) exitWith { objNull };
-	if (typeName _this != "GROUP" )  exitWith { objNull };
-	_leader = leader _this;
+	private ["_grp","_leader", "_x"];
+	_grp = _this;
+	if (isNull _grp) exitWith { objNull };
+	if (typeName _grp == "OBJECT") then { _grp = group _grp; };
+	if (isNull _grp) exitWith { objNull };
+	if (typeName _grp != "GROUP" )  exitWith { objNull };
+	_leader = leader _grp;
 	if ( !isNull _leader ) exitWith {_leader};
 	{
 		if ( alive _x ) exitWith {_leader = _x };
-	} forEach units _this;
+	} forEach units _grp;
 	_leader
 };
 
 //
 // Removes from _heli array weapons first found item from array of string _weaponListToRemove
 // call: _removedFromVehicle = [_heli, _weaponListToRemove] call SYG_hasAnyWeapon;
+// or _removedFromVehicle = [_heli, _weapon] call SYG_hasAnyWeapon;
 // returns true if some weapon is removed, else false (no designated weapons found on vehicle)
 //
 SYG_removeAnyWeapon = {
@@ -1926,7 +1928,7 @@ SYG_removeAnyWeapon = {
     _heli = _this select 0;
     if ( typeName _heli != "OBJECT") exitWith {false};
     _sampleArr = _this select 1;
-    if ((typeName (_this select 1)) == "STRING") then {_sampleArr = [_sampleArr];};
+    if ((typeName (_sampleArr select 1)) == "STRING") then {_sampleArr = [_sampleArr];};
     _wpn = [weapons _heli, _sampleArr] call SYG_findItemInArray;
     if (_wpn != "") exitWith { _heli removeWeapon _wpn; true};
     false
@@ -1936,48 +1938,50 @@ SYG_removeAnyWeapon = {
 // _type = _veh call SYG_getMarkerType;
 // _marker_obj setMarkerType _type;
 SYG_getVehicleMarkerType = {
-    if (typeName _this == "ARRAY") then {_this = _this select 0};
+	private ["_veh"];
+	_veh = _this;
+    if (typeName _veh == "ARRAY") then {_veh = _veh select 0};
 #ifdef __ACE__
-    if(typeName _this != "OBJECT") exitWith {"ACE_Icon_Unknown"};
-    if (_this isKindOf "LandVehicle") exitWith {
-        if ( _this isKindOf "StaticWeapon") exitWith {
-            if ( _this isKindOf "D30" || _this isKindOf "M119" ) exitWith {"ACE_Icon_Howitzer"};
-            if ( _this isKindOf "AGS" || _this isKindOf "MK19_TriPod" ) exitWith {"ACE_Icon_GrenadeLauncher"};
-            if ( (typeOf _this) in (STATIC_WEAPONS_TYPE_ARR select 0) ) exitWith {"ACE_Icon_AirDefenceGun"};
-            if ( (typeOf _this) in (STATIC_WEAPONS_TYPE_ARR select 1) ) exitWith {"ACE_Icon_AntiTank"};
+    if(typeName _veh != "OBJECT") exitWith {"ACE_Icon_Unknown"};
+    if (_veh isKindOf "LandVehicle") exitWith {
+        if ( _veh isKindOf "StaticWeapon") exitWith {
+            if ( _veh isKindOf "D30" || _veh isKindOf "M119" ) exitWith {"ACE_Icon_Howitzer"};
+            if ( _veh isKindOf "AGS" || _veh isKindOf "MK19_TriPod" ) exitWith {"ACE_Icon_GrenadeLauncher"};
+            if ( (typeOf _veh) in (STATIC_WEAPONS_TYPE_ARR select 0) ) exitWith {"ACE_Icon_AirDefenceGun"};
+            if ( (typeOf _veh) in (STATIC_WEAPONS_TYPE_ARR select 1) ) exitWith {"ACE_Icon_AntiTank"};
             "ACE_Icon_Machinegun" // unknown type is default machinegun one
         };
-        if ( _this isKindOf "M113") exitWith {"ACE_Icon_ArmourTrackedAPC"};
-        if (_this isKindOf "ZSU") exitWith {"ACE_Icon_ArmourTrackedAirDefence"}; // Shilka, Tunguska
-        if (_this isKindOf "BMP2" || _this isKindOf "ACE_M2A1" ) exitWith {"ACE_Icon_ArmourTrackedIFV"}; // Bradley, Linebacker, BMP
-        if (_this isKindOf "Car") exitWith {
-            if (_this isKindOf "Truck") exitWith {
-            	if ( typeOf _this == "ACE_Truck5t_Reammo") exitWith {"ACE_Icon_TruckSupport"};
+        if ( _veh isKindOf "M113") exitWith {"ACE_Icon_ArmourTrackedAPC"};
+        if (_veh isKindOf "ZSU") exitWith {"ACE_Icon_ArmourTrackedAirDefence"}; // Shilka, Tunguska
+        if (_veh isKindOf "BMP2" || _veh isKindOf "ACE_M2A1" ) exitWith {"ACE_Icon_ArmourTrackedIFV"}; // Bradley, Linebacker, BMP
+        if (_veh isKindOf "Car") exitWith {
+            if (_veh isKindOf "Truck") exitWith {
+            	if ( typeOf _veh == "ACE_Truck5t_Reammo") exitWith {"ACE_Icon_TruckSupport"};
             	"ACE_Icon_Truck"
             };
-            if (_this isKindOf "StrykerBase" || _this isKindOf  "BRDM2") exitWith {"ACE_Icon_ArmourWheeled"}; // Striker, BRDM2
-            if (_this isKindOf "Motorcycle") exitWith {"ACE_Icon_Motorbike"};
+            if (_veh isKindOf "StrykerBase" || _veh isKindOf  "BRDM2") exitWith {"ACE_Icon_ArmourWheeled"}; // Striker, BRDM2
+            if (_veh isKindOf "Motorcycle") exitWith {"ACE_Icon_Motorbike"};
             "ACE_Icon_Car"
         };
         "ACE_Icon_Tank" //, "ACE_Icon_ArmourTrackedIFV", "ACE_Icon_ArmourTrackedAPC", "ACE_Icon_ArmourTrackedAirDefence"]
     };
-    if (_this isKindOf "Helicopter") exitWith {
-    	if (_this isKindOf "ParachuteBase"|| ( _vec isKindOf "RAS_Parachute")) exitWith{ "Parachute" };
+    if (_veh isKindOf "Helicopter") exitWith {
+    	if (_veh isKindOf "ParachuteBase"|| ( _veh isKindOf "RAS_Parachute")) exitWith{ "Parachute" };
     	"ACE_Icon_Helo"
     };
-    if (_this isKindOf "Plane") exitWith { "ACE_Icon_AirFixedWing" };
-    if (_this isKindOf "Ship") exitWith { "ACE_Icon_Boat" };
+    if (_veh isKindOf "Plane") exitWith { "ACE_Icon_AirFixedWing" };
+    if (_veh isKindOf "Ship") exitWith { "ACE_Icon_Boat" };
     "ACE_Icon_Unknown";
 #else
-    if(typeName _this != "OBJECT") exitWith {"Vehicle"};
-    if (_this isKindOf "LandVehicle") exitWith {
-        if (_this isKindOf "Tank") exitWith { "HeavyTeam" };
+    if(typeName _veh != "OBJECT") exitWith {"Vehicle"};
+    if (_veh isKindOf "LandVehicle") exitWith {
+        if (_veh isKindOf "Tank") exitWith { "HeavyTeam" };
         "Dot" // square point
     };
     //["Dot","Vehicle"] // Square, Round
-    if (_this isKindOf "Helicopter") exitWith { "LightTeam" };
-    if (_this isKindOf "Plane") exitWith { "AirTeam" };
-    if (_this isKindOf "Ship") exitWith { "Empty" };
+    if (_veh isKindOf "Helicopter") exitWith { "LightTeam" };
+    if (_veh isKindOf "Plane") exitWith { "AirTeam" };
+    if (_veh isKindOf "Ship") exitWith { "Empty" };
     "Vehicle" // Round point
 #endif
 };
@@ -1988,13 +1992,16 @@ SYG_getVehicleMarkerType = {
 // _markerName = _id call SYG_getVehicleTypeMarker;
 //
 SYG_getVehicleTypeMarkerName = {
-	if ( ((typeName _this) != "SCALAR") && ( (typeName _this) in ["STRING","OBJECT"] ) )  then {_this = _this call SYG_getVehicleType1};
+	private ["_veh"];
+	_veh = _this;
+    if (typeName _veh == "ARRAY") then {_veh = _veh select 0};
+	if ( ((typeName _veh) != "SCALAR") && ( (typeName _veh) in ["STRING","OBJECT"] ) )  then {_veh = _veh call SYG_getVehicleType1};
 #ifdef __ACE__
-	if (typeName _this != "SCALAR") exitWith { "ACE_Icon_Unknown" };
+	if (typeName _veh != "SCALAR") exitWith { "ACE_Icon_Unknown" };
 #else
-	if (typeName _this != "SCALAR") exitWith { "Vehicle" };
+	if (typeName _veh != "SCALAR") exitWith { "Vehicle" };
 #endif
-	switch (_this) do {
+	switch (_veh) do {
 #ifdef __ACE__
 		case 0: {"ACE_Icon_Tank"};
 		case 1: {"ACE_Icon_Truck"};
@@ -2021,8 +2028,10 @@ SYG_getVehicleTypeMarkerName = {
 // _isRecoverable = [_veh1,... _vehN ] call SYG_vehIsRecoverable; // array of items
 //
 SYG_vehIsRecoverable = {
-	if (typeName _this != "ARRAY") then { _this = [_this] };
-	if (count _this == 0) exitWith { false };
+	private ["_veh"];
+	_veh = _this;
+	if (typeName _veh != "ARRAY") then { _veh = [_veh] };
+	if (count _veh == 0) exitWith { false };
 	private ["_res", "_x"];
 	_res = false;
 	{
@@ -2031,7 +2040,7 @@ SYG_vehIsRecoverable = {
 		_res = _x getVariable "RECOVERABLE";
 		if ( isNil "_res" ) exitWith { _res = false }; // not RECOVERABLE, false, exit
 		if ( !_res ) exitWith {}; // not recoverable, false, exit
-	} forEach _this;
+	} forEach _veh;
 //	hint localize format["+++ SYG_vehIsRecoverable: ""RECOVERABLE"" = %1", _res];
 	_res
 };
@@ -2039,14 +2048,16 @@ SYG_vehIsRecoverable = {
 // Converts objects in input array to their types and return new array with types, on error return input array.
 // If single object is used as parameter, its type is returned
 SYG_vehToType = {
-	if ( typeName _this == "OBJECT" ) exitWith { typeOf _this };
-	if ( typeName _this == "ARRAY" ) exitWith {
+	private ["_veh","_x"];
+	_veh = _this;
+	if ( typeName _veh == "OBJECT" ) exitWith { typeOf _veh };
+	if ( typeName _veh == "ARRAY" ) exitWith {
 		private ["_arr", "_x"];
 		_arr = [];
-		{ _arr set [count _arr, typeOf _x]} forEach _this;
+		{ _arr set [count _arr, typeOf _x]} forEach _veh;
 		_arr
 	};
-	_this
+	_veh
 };
 
 #ifdef __TELEPORT_DEVIATION__
@@ -2061,11 +2072,13 @@ SYG_isNearIronMass = {
 // Call as: _nearPosArr = [_veh | _pos<, _dist = 20>] call  isNearIronMass;
 //
 SYG_ironMassNear = {
-	if ((typeName _this) != "ARRAY") exitWith  { [] };
+	private ["_veh"];
+	_veh = _this;
+	if ((typeName _veh) != "ARRAY") exitWith  { [] };
 	private ["_dist","_arr","_ret","_x"];
 	// check if big metal mass is near teleporter
-	_dist = if ((count _this) > 1) then { _this select 1} else { __TELEPORT_DEVIATION__ };
-	_arr = nearestObjects [ _this select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119","RHIB" ], _dist ];
+	_dist = if ((count _veh) > 1) then { _veh select 1} else { __TELEPORT_DEVIATION__ };
+	_arr = nearestObjects [ _veh select 0, [ "Tank","StrykerBase","BRDM2","Bus_city","Truck","D30","M119","RHIB" ], _dist ];
 	if (count _arr == 0) exitWith { [] };
 	_ret = [];
 #ifdef __OWN_SIDE_EAST__
@@ -2164,8 +2177,8 @@ SYG_assignVehAsBonusOne = {
 SYG_getVelocityVector = {
 	private [ "_veh", "_vel", "_pos" ];
 	_veh = _this select 0;
-	_pos = getPos _veh;
 	_vel = _this select 1;
+	_pos = getPos _veh;
 	_pos set [ 2, 0 ];
     [ _veh modelToWorld [ 0, _vel, 0 ], _pos ] call SYG_vectorSub3D; // bump velocity vector
 };
