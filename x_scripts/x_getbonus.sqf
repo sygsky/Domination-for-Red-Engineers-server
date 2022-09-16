@@ -53,7 +53,7 @@ if (side_mission_winner == 2) then {
 
 _vec_type = sm_bonus_vehicle_array select bonus_number;
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 _pos = x_sm_pos select 0;
 _vehicle = [_pos, 250, _vec_type] call SYG_createBonusVeh;
 hint localize format["+++ x_scripts\x_getbonus.sqf: DOSAAF vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPosE0];

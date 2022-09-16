@@ -423,7 +423,7 @@ if ( d_with_wind_effect ) then {
 //hint localize format["x_setupserver.sqf: d_with_wind_effect == %1",d_with_wind_effect];
 #endif
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 server_bonus_markers_array = [];
 #endif
 

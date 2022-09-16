@@ -194,7 +194,7 @@
 //#define __VEH_1985__
 
 // uncomment to get bonuses not on base but near finished towns or SM
-#define __BATTLEFIELD_BONUS__
+#define __DOSAAF_BONUS__
 
 // comment to allow reammo if loaf/unload static weapon to/from salvage tru	ck
 #define __NO_REAMMO_IN_SALVAGE__

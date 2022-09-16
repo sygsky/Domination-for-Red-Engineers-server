@@ -312,7 +312,7 @@ XHandleNetStartScriptServer = {
             hint localize format["+++ Log from ""%1"": %2", _this select 1, _this select 2];
         };
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 		// [ "bonus", _sub_command, _player_name, _vehicle ]
 		case "bonus" : {
 			private ["_veh"];

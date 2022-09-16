@@ -1430,6 +1430,8 @@ STR_SET_38,Teleport is influenced by ferromagnetic masses on dist <= %1 m. and d
 STR_SET_39,Only vehicles BEFORE 1985 inclusivelly allowed\n,Nur Maschinen bis einschließlich 1985 sind zugelassen\n,Sólo están autorizadas las máquinas hasta 1985 inclusive\n,Разрешены только машины до 1985 года включительно\n
 STR_SET_39_0,The mission uses all available equipment\n,Die Mission nutzt alle verfügbaren Geräte\n,La misión utiliza todo el equipo disponible\n,В миссии используется все доступная техника\n
 STR_SET_40,Parajumps without parachute are allowed)))\n,Fallschirmsprünge ohne Fallschirm sind erlaubt)))\n,Los saltos en paracaídas sin paracaídas están permitidos)))\n,Прыжки без парашюта разрешены)))
+STR_SET_41,DOSAAF vehicles allowed\n,DOSAAF-Fahrzeuge präsentieren\n,Vehículos DOSAAF presentes\n,Присутствуют ДОСААФ машины\n
+STR_SET_41,Arrival at the mission - by parachute\n,Ankunft bei der Mission - mit dem Fallschirm\n,Llegada a la misión - por paracaídas\n,Vehículos DOSAAF presentes\n,Заход в миссию на парашюте\n
 
 STR_SPPM,SPPM :,SPPM :,SPPM :,СППМ :
 STR_SPPM_ADD,Add,Erstellen,Crear,Создать

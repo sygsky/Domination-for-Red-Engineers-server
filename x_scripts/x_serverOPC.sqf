@@ -41,7 +41,7 @@ _bit_array = [mt_radio_down,target_clear,all_sm_res,the_end,mr1_in_air,mr2_in_ai
 	_tmp_a set [count _tmp_a, _var];
 } forEach [MRR1,MRR2,HR1,HR2,HR3,HR4];
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 _arr = call SYG_scanDOSAAFVehiclesAll; // all info about DOSAAF vehicles
 _tmp_a set [count _tmp_a, _arr];
 #endif

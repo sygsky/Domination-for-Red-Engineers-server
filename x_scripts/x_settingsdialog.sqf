@@ -187,10 +187,6 @@ _str = _str + format[localize "STR_SET_30_0", __NON_ENGINEER_REPAIR_PENALTY__]  
 _str = _str + (localize "STR_SET_30") + "\n"; // "Can repair only engineers"
 #endif
 
-#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
-_str = _str + (localize "STR_SET_40");
-#endif
-
 #ifdef __PREVENT_OVERTURN__
 _str = _str + format[localize "STR_SET_31",_strYesCR]; //
 #else
@@ -233,7 +229,7 @@ _str = _str + (localize "STR_SET_37_0"); // Sahrani lighthouse howler sounds off
 
 // teleport is infuenced by ferro-magnetic masses and damagein designated distance
 #ifdef __TELEPORT_DEVIATION__
-_str = _str + (localize "STR_SET_38");
+_str = _str + (localize format["STR_SET_38", __TELEPORT_DEVIATION__]);
 #endif
 
 #ifdef __VEH_1985__
@@ -242,6 +238,17 @@ _str = _str + (localize "STR_SET_39"); // "Only vehicles BEFORE 1985 inclusivell
 _str = _str + (localize "STR_SET_39_0"); // "The mission uses all available equipment\n"
 #endif
 
+#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+_str = _str + (localize "STR_SET_40");
+#endif
+
+#ifdef __DOSAAF_BONUS__
+_str = _str + (localize format["STR_SET_41"]);
+#endif
+
+#ifdef __CONNECT_ON_PARA__
+_str = _str + (localize format["STR_SET_41"]);
+#endif
 
 //--- new non-Xeno defines stops here
 

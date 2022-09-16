@@ -9,7 +9,7 @@ if (isNil "Param1") then {
 };
 #ifdef __DEFAULT__
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 deleteMarker "bonus_air";
 deleteMarker "bonus_vehicles";
 #endif

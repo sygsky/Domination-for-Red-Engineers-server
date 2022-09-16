@@ -28,7 +28,7 @@ deleteMarkerLocal sm_marker_name2;
 current_mission_text = localize "STR_SYS_120"; // "Дополнительное задание ещё не назначено...";
 
 if (side_mission_winner != 0 && bonus_number != -1) then {
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 	_bonus_pos = localize "STR_SYS_309_1";//"near last side mission.";
 #else
 	_bonus_pos = localize "STR_SYS_309";//"on the base.";

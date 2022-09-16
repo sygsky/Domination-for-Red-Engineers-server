@@ -916,7 +916,7 @@ XHandleNetStartScriptClient = {
 			if ( ( count _this ) > 3 ) exitWith { ( _this select 3 ) call SYG_msgToUserParser}; // try to print message if exists
         };
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 		// Handle with DOSAAF vehicles events (ADD to monitoring process with dynamical re-draw , REGister as RECOVERABLE, INI as DOSAAF not detected vehicle
 		case "bonus" : { // [ "bonus", _sub_command, _player_name, _vehicle ]
 			hint localize format["+++ bonus: _this %1", _this ];

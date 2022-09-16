@@ -48,7 +48,7 @@ if ( isNil "SYG_UTILS_COMPILED" ) then { // generate some static information
 	call compile preprocessFileLineNumbers "scripts\SYG_eventGetOut.sqf";	// anti-overturn method
 #endif
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 	call compile preprocessFileLineNumbers "scripts\bonus\SYG_utilsBonus.sqf";// BattleField bonus methods
 #endif
 	//hint localize "--- SYG_utils initialization finished";

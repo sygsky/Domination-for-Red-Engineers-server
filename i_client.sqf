@@ -248,7 +248,7 @@ if (X_Client) then {
         9,          //27 scores added for observer kill +1 for ordinal frag
         "Sergeant", //28 lowest rank abled to call the recruit
         1			//29 score for vehicle respawn
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
         ,2  	    //30 score for detection of bonus vehicle near the battle field
         ,2			//31 score for registration of bonus vehicle on the base territory
 #endif

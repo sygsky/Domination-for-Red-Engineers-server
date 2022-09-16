@@ -51,14 +51,14 @@ while {true} do {
 					};
 				};
                 if (alive _dead) exitWith {}; // Let it remain in the checklist
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 				_recoverable = _dead getVariable "RECOVERABLE";
 				if (isNil "_recoverable") then { _recoverable = false };
 				if ( !_recoverable ) then {
 #endif
 					{ deleteVehicle _x; } forEach crew _dead;  // remove all units immediately from vehicle crew group
 					_dead call XAddDead0; // move to the common for vehicles and units delay list before delete
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 				} else {
 					hint localize format["+++ x_checklocalvec.sqf: recoverable vehicle %1 detected, remove procedure skipped", typeOf _dead];
 				};

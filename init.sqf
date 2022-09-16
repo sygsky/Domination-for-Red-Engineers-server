@@ -670,7 +670,7 @@ if (!X_SPE) then {
 	HR2 setVariable ["d_ammobox_next", _time_next_a select 3];
 	HR3 setVariable ["d_ammobox_next", _time_next_a select 4];
 	HR4 setVariable ["d_ammobox_next", _time_next_a select 5];
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 	_arr = _time_next_a select 6; // all info about DOSAAF vehicles (not detected and markered as detected)
 
 	// 1st array contains original DOSAAF vehicles that are not detected

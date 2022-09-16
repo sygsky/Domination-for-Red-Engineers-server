@@ -130,7 +130,7 @@ _bonus_score_arr spawn {
 	SYG_players_online = nil;
 };
 
-#ifdef __BATTLEFIELD_BONUS__
+#ifdef __DOSAAF_BONUS__
 _vehicle = [_town select 0, _town select 2, mt_bonus_vehicle_array select extra_bonus_number] call SYG_createBonusVeh;
 hint localize format["+++ x_scripts\x_gettargetbonus.sqf: main target DOSAAF vehicle ""%1"" created ", typeOf _vehicle];
 #else
