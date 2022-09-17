@@ -303,9 +303,10 @@ _lobjpos = [];
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //      define parachute type (round of square)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
+waitUntil { !( (isNil "SYG_getParachute") || (isNil "XfRandomArrayVal") || (isNil "XfGetRanPointSquareOld" ) ) };
 _para = player call SYG_getParachute;
 hint localize format["+++ x_intro.sqf: BEFORE player (alive %1) has parachute ""%2""", alive player,  _para];
-if ( _para == "") then {
+if ( (_para == "") || (isNil "_para")) then {
 	#ifdef __ACE__
 	_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
 	#endif
@@ -319,8 +320,6 @@ if ( _para == "") then {
 	player addWeapon _para;
 };
 hint localize format["+++ x_intro.sqf: AFTER  player (alive %1) has parachute ""%2""", alive player,  _para];
-
-waitUntil {!isNil "XfGetRanPointSquareOld"};
 
 //++++++++++++++++++++++++++++++
 //      find spawn point

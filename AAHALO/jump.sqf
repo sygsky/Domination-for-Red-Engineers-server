@@ -111,7 +111,7 @@ switch _paratype do {
 #endif
 // check parachute presence
 if (_plane) then { // this is intro jump, not flag/heli one
-	if ( (player call SYG_getParachute) == "" ) then { player addWeapon _paratype; hint localize format["+++ x_jump.sqf: parachute absent, ""%1"" added"] };
+	if ( (player call SYG_getParachute) == "" ) then { player addWeapon _paratype; hint localize format["+++ x_jump.sqf: parachute absent, ""%1"" added", _paratype] };
 };
 
 hint localize format[ "+++ jump.sqf: halo height set to %1 m, player has ""%""", round _halo_height, player call SYG_getParachute ];
