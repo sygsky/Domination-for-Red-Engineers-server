@@ -303,7 +303,7 @@ _lobjpos = [];
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //      define parachute type (round of square)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
-waitUntil { !( (isNil "SYG_getParachute") || (isNil "XfRandomArrayVal") || (isNil "XfGetRanPointSquareOld" ) ) };
+waitUntil { !( (isNil "SYG_getParachute") || (isNil "XfRandomArrayVal"))  }; // wait until functions are loaded
 _para = player call SYG_getParachute;
 hint localize format["+++ x_intro.sqf: BEFORE player (alive %1) has parachute ""%2""", alive player,  _para];
 if ( (_para == "") || (isNil "_para")) then {
@@ -727,18 +727,18 @@ if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" }; // ru
 
 // print informative messages while in air
 _para spawn {
-	private ["_msg_arr","_i","_last","_time","_town_name","_glide","_msg_delay","_msg_delay","_sleep"];
+	private ["_para","_msg_arr","_i","_last","_time","_town_name","_glide","_msg_delay","_msg_delay","_sleep"];
+	_para = _this;
 	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
 	_town_name = call SYG_getTargetTownName;
-	hint localize format[ "+++ x_intro.sqf: print thread, target town detected ""%1""", _town_name ];
-	_msg_arr set [0, switch (_town_name) do {
-		case "Paraiso": {"STR_INTRO_INFO_2"};
-		case "Somato":  {"STR_INTRO_INFO_1"};
-		default         {"STR_INTRO_INFO_0"};
-		}
-	];
+	_town_msg = switch ( _town_name ) do {
+    		case "Paraiso": {"STR_INTRO_INFO_2"};
+    		case "Somato":  {"STR_INTRO_INFO_1"};
+    		default         {"STR_INTRO_INFO_0"};
+    		};
+	_msg_arr set [0, _town_msg];
+	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
 	_last = (count _msg_arr) - 1;
-	_time = time + MSG_DELAY;
 #ifdef __ACE__
 	_glide = _para == "ACE_ParachutePack";
 #else
@@ -747,7 +747,14 @@ _para spawn {
 	_cnt = if (_glide) then {count _msg_arr} else {(count _msg_arr) - 3}; // number of strings to show
 	_msg_delay = 60 / ( _cnt -1 ); // delay between strings
 	_sleep = _msg_delay / 3.05; // status check delay (to exit etc)
-
+	_time = time + _msg_delay;
+	hint localize format[ "+++ x_intro.sqf: print thread, target town detected ""%1"", print cnt %2, msg delay %3, sleep each %4, glide %5",
+		_town_name,
+		_cnt,
+		_msg_delay,
+		_sleep,
+		_glide];
+	_i = 0;
 	scopeName "main";
 	for "_i" from 0 to _last do {
 		if ( (!(_i in [1,2,3])) || _glide ) then {
