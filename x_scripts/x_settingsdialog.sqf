@@ -247,7 +247,7 @@ _str = _str + (localize format["STR_SET_41"]);
 #endif
 
 #ifdef __CONNECT_ON_PARA__
-_str = _str + (localize format["STR_SET_41"]);
+_str = _str + (localize format["STR_SET_42"]);
 #endif
 
 //--- new non-Xeno defines stops here
