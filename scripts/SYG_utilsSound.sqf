@@ -81,8 +81,8 @@ SYG_defeatTracks =
 [
     ["Delerium_Wisdom","pimbompimbom","vendetta","take_five"],
     ["Gandalf_Simades","whold","end","radionanny"],
-    ["ATrack9","ATrack10","ATrack14"],
-    ["ATrack16","ATrack17","ATrack18"],
+    ["ATrack9","ATrack10","ATrack14","upbeat"],
+    ["ATrack16","ATrack17","ATrack18","kk_jungles"],
     ["ATrack20","ATrack21","ATrack22","thetrembler"],
     ["arroyo","ATrack15","ATrack19","sinbad_baghdad"],
     ["ATrack1",[0,8.412],[9.349,5.911],[15.254,10.407],[30.272,9.157]],

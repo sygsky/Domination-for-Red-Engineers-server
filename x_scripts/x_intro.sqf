@@ -726,13 +726,11 @@ waitUntil { camCommitted _camera }; // wait until come
 if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
 
 // print informative messages while in air
-#define MSG_DELAY 10
-
 _para spawn {
-	private ["_msg_arr","_i","_last","_time","_town_name","_glide"];
-	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5"];
+	private ["_msg_arr","_i","_last","_time","_town_name","_glide","_msg_delay","_msg_delay","_sleep"];
+	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
 	_town_name = call SYG_getTargetTownName;
-	hint localize format[ "+++ x_intro.sqf: info thread, target town detected ""%1""", _town_name ];
+	hint localize format[ "+++ x_intro.sqf: print thread, target town detected ""%1""", _town_name ];
 	_msg_arr set [0, switch (_town_name) do {
 		case "Paraiso": {"STR_INTRO_INFO_2"};
 		case "Somato":  {"STR_INTRO_INFO_1"};
@@ -740,24 +738,29 @@ _para spawn {
 		}
 	];
 	_last = (count _msg_arr) - 1;
-	scopeName "main";
 	_time = time + MSG_DELAY;
 #ifdef __ACE__
 	_glide = _para == "ACE_ParachutePack";
 #else
 	_glide = false;
 #endif
+	_cnt = if (_glide) then {count _msg_arr} else {(count _msg_arr) - 3}; // number of strings to show
+	_msg_delay = 60 / ( _cnt -1 ); // delay between strings
+	_sleep = _msg_delay / 3.05; // status check delay (to exit etc)
+
+	scopeName "main";
 	for "_i" from 0 to _last do {
-		while { time < _time} do {  // wait to print
-			if ( base_visit_status != 0 ) then { breakTo "main" }; // Exit on status -1 (dead) or 1 (reached the base)
-			sleep 3;
-		};
 		if ( (!(_i in [1,2,3])) || _glide ) then {
 			cutText [localize (_msg_arr select _i),"PLAIN"];
-			_time = time + MSG_DELAY;
+			_time = time + _msg_delay;
+		};
+		while { time < _time} do {  // wait to print
+			if ( base_visit_status != 0 ) then { breakTo "main" }; // Exit on status -1 (dead) or 1 (reached the base)
+			sleep _sleep;
 		};
 	};
-	hint localize format[ "+++ x_intro.sqf: info thread returned after step #%1", _i ];
+
+	hint localize format[ "+++ x_intro.sqf: print thread returned after step #%1", _i ];
 };
 
 // remove round parachute after landing

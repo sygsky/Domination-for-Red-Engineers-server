@@ -359,6 +359,8 @@ class CfgSounds {
 
     class whatsapp       {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
     class unbeat         {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\upbeat.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
+    class kk_jungles     {name = "King-Kong"; sound[] = {\sounds\defeat\kk-jungles.ogg, db+10, 1.0}; titles[] = {}; }; // Sound from film "King-Kong" (1976)
+
 
     // Ranks messages
     // for Russian language only
@@ -625,7 +627,8 @@ class CfgSounds {
     class uchat_v_shkole { name="1st September - School day";           sound[] = {\sounds\intro\holidays\sep_1\uchat_v_shkole.ogg,db-1,1.0}; titles[] = {};}; // Day of School
     class march_of_soviet_tankmen { name="2nd Sunday of September ";    sound[] = {\sounds\intro\holidays\tankist_day\march_of_soviet_tankmen.ogg,db-1,1.0}; titles[] = {};}; // Day of School
     // march_of_soviet_tankmen.ogg
-    class Hungary    { name="Hungary day ";                             sound[] = {\sounds\intro\holidays\Hungary.ogg,db-1,1.0}; titles[] = {};}; // Day of Hungarian Peple Republic
+    class Hungary    { name="Hungary day";                              sound[] = {\sounds\intro\holidays\Hungary.ogg,db-1,1.0}; titles[] = {};}; // Day of Hungarian Peple Republic
+    class kk_the_hole { name="King-Kong film, the hole";                sound[] = {\sounds\intro\holidays\kk_the_hole.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
 
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------

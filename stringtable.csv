@@ -1110,7 +1110,7 @@ STR_INTRO_FULL,Domination! One team - A.C.E. East,Domination! One team - A.C.E. 
 STR_INTRO_PARAJUMP,Get to the base any way you want (%1 m)!,Erreichen Sie die Basis mit allen nötigen Mitteln (%1 m)!,¡Llega a la base por cualquier medio (%1 m)!,Доберитесь до базы любым способом (%1 м.)!
 STR_INTRO_PARAJUMP_1,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Придётся прыгнуть%1. А что делать?"
 STR_INTRO_PARAJUMP_1_1, once again, wieder, de nuevo, ещё раз
-STR_INTRO_PARAJUMP_2,"Let's go-o-o-o...","Lass uns gehen...","Vamos...","Поехали-и-и-и..."
+STR_INTRO_PARAJUMP_2,"Let's go-o-o-o...","Lass uns gehen-n-n-n...","Vamos-s-s-s...","Поехали-и-и-и..."
 STR_INTRO_PARAJUMP_3,"Fuck-k-k.k...","Scheiß-ß.ß...","Jodido-o-o.o...","Й-о-п-п-п.п..."
 STR_INTRO_PARAJUMP_5,We have to get to the base. They promised to launch flares!,Wir müssen zur Basis kommen. Sie haben versprochen, Leuchtraketen abzufeuern!Tenemos que llegar a la base. ¡Prometieron disparar bengalas!,Надо добраться до базы. Они обещали пускать осветительные ракеты!
 STR_INTRO_PARAJUMP_6,I'm gonna go to the violet flares... distance %1 m,Ich werde zu den violetten Fackeln gehen... Entfernung %1 m,Voy a ir a las bengalas violetas... distancia %1 m,Пойду-ка я на фиолетовые ракеты... расстояние %1 м.
@@ -1127,7 +1127,8 @@ STR_INTRO_MSG_1,"'W' - acceleration and descent, 'S' - braking, 'Q' and 'E' - di
 STR_INTRO_MSG_2,"When landing, watch your rate of descent. It must be <= 6 m/s, or you will meet your local trauma surgeon","Achten Sie bei der Landung auf Ihre Sinkgeschwindigkeit. Sie muss <= 6 m/s sein, sonst treffen Sie Ihren örtlichen Unfallchirurgen","Al aterrizar, vigila la velocidad de descenso. Debe ser <= 6 m/s o se encontrará con su traumatólogo local","При приземлении следите за скоростью снижения. Она должна быть <= 6 м/c, или Вы познакомитесь с местным травматологом"
 STR_INTRO_MSG_3,"By arrangement with the GRU, a smuggling plane took you to the vicinity of the GRU base.","Wie mit dem GRU vereinbart, brachte Sie ein Schmuggelflugzeug in die Nähe der GRU-Basis","Según lo acordado con el GRU, un avión de contrabando le llevó a las cercanías de la base del GRU","По договорённости с ГРУ, самолёт контрабандистов доставил Вас в окрестности базы ГРУ"
 STR_INTRO_MSG_4,"The order is to arrive at the base and report for arrival. After that, you will be respawned at the base itself","Der Befehl lautet, am Stützpunkt einzutreffen und sich zu melden. Sie werden dann in der Basis selbst wiederbelebt","Las órdenes son llegar a la base y reportarse. Entonces serás revivido en la propia base","Приказ: прибыть на базу и доложить о прибытии. После этого вы будете возрождаться на самой базе"
-STR_INTRO_MSG_5,"Follow the course for the purple rockets (almost white in the daytime)","Folgen Sie dem Kurs für die lila Raketen (tagsüber fast weiß)","Siga el curso de los cohetes púrpura (casi blanco en el día)","Следуйте курсом на фиолетовые ракеты (днём почти белые)"
+STR_INTRO_MSG_5,"Follow the course for the purple flares (almost white in the daytime)","Folgen Sie dem Kurs für die lila Flares (tagsüber fast weiß)","Siga el curso de los flares púrpura (casi blanco en el día)","Следуйте курсом на фиолетовые ракеты (днём почти белые)"
+STR_INTRO_MSG_6,Will I be back from this island?,Werde ich von der Insel zurückkehren?,¿Volveré de la isla?,Вернусь ли я этого острова?
 
 STR_MON_1,January,Januar,enero,января
 STR_MON_2,February,Februar,febrero,февраля
