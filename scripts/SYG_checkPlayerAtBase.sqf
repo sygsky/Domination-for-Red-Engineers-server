@@ -9,7 +9,7 @@
 
 */
 _flare = objNull;
-_pos = [9529.5,9759.2,0]; // point near central gate to the base
+_pos = getPos FLAG_BASE; // [9529.5,9759.2,0]; // point near central gate to the base
 _flag_pos = [];
 _factor = (400 / 1600) max 12.5;
 // set flare position as slightly random one

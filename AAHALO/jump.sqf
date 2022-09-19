@@ -11,7 +11,7 @@ _jump_score     = if (count _this > 2) then  {_this select 2} else { 0 }; // how
 _use_wind       = if (count _this > 3) then  {_this select 3} else { true }; // Emulate wind above sea (true) or not (false)
 #endif
 
-hint localize format["+++ jump.sqf: _this = %1, player has ""%2""", _this, player call SYG_getParachute ];
+hint localize format[ "+++ jump.sqf: _this = %1, player para = ""%2""", _this, player call SYG_getParachute ];
 
 if (d_para_timer_base > 0) then {
 	d_next_jump_time = time + d_para_timer_base;
@@ -99,7 +99,7 @@ _pilot = _grp createUnit [_pilot, position uh60p, [], 0, "FORM"];
 hint localize format["+++ jump.sqf: _grp = %1, _pilot = %2", _grp, _pilot];
 [_pilot] join _grp; _pilot setSkill 1; _pilot assignAsDriver uh60p; _pilot moveInDriver uh60p;
 */
-uh60p setSpeedMode ( if (_plane) then {"LIMITED"} else {"FULL"} );
+uh60p setSpeedMode ( if (_plane) then {"FULL"} else {"LIMITED"} );
 
 _halo_height = d_halo_height;
 #ifdef __ACE__
@@ -132,15 +132,16 @@ if(vehicle player == player)exitWith {};	// ?
 #ifdef __ACE__
 
 if ( _plane ) then { // not jump from plane as this usully leads to the wounds
-	// Put player 5 meters out of the plane if he is not in heli
+	// Put player 5 meters out of the plane/heli as he is out of vehicle
 	player setPos ( uh60p modelToWorld [-5, -5, -5] );
 	player setDir _dir;
-	player setVelocity  [ (sin _dir) * 20, (cos _dir) * 20, 0 ]; // set speed 20 m/s in direction of plane flight
+	player setVelocity  [ (sin _dir) * 20, (cos _dir) * 20, 0 ]; // set speed 20 m/s in direction of plane flight else you are always get  damage to your health
 	if (((getPos (vehicle player)) select 2) < 10) exitWith {};
 	[ player ] execVM "ace_sys_eject\s\ace_jumpOut_cord.sqf";
+} else {
+	[uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf"; // Go to ACE code to complete jump
 };
 
-// Limit speed after plane else you are always get  damage to your health
 sleep 3;
 
 if (!_plane) then {

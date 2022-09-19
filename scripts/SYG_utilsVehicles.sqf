@@ -2175,12 +2175,11 @@ SYG_assignVehAsBonusOne = {
 // _vel_vector = [_veh, _velocity_m_sec] call SYG_getVelocityVector;
 //
 SYG_getVelocityVector = {
-	private [ "_veh", "_vel", "_pos" ];
+	private [ "_veh", "_vel", "_dir" ];
 	_veh = _this select 0;
 	_vel = _this select 1;
-	_pos = getPos _veh;
-	_pos set [ 2, 0 ];
-    [ _veh modelToWorld [ 0, _vel, 0 ], _pos ] call SYG_vectorSub3D; // bump velocity vector
+	_dir  = getDir _veh;
+	[(sin _dir) * _vel, (cos _dir) * _vel, 0 ];
 };
 
 //
@@ -2239,11 +2238,11 @@ SYG_hasParachute = {
  *
  */
 SYG_getParachute = {
-	if (!(_this isKindOf "CAManBase")) exitWith {""};
+	if (!(_this isKindOf "CAManBase")) exitWith {"<not a man>"};
 	private ["_ret","_x"];
 	_ret = "";
 	{
-    	if ( (_x isKindOf "ParachuteBase") || ( _x isKindOf "RAS_Parachute")) exitWith{ _ret = _x };
+    	if ( (_x isKindOf "ParachuteBase") || ( _x isKindOf "RAS_Parachute") || (_x in ["ACE_ParachuteRoundPack","ACE_ParachutePack"])) exitWith { _ret = _x };
 	} forEach weapons _this;
 	_ret
 };

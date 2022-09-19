@@ -18,7 +18,6 @@ d_still_in_intro = true;
 //#define __HOLIDAY_DEBUG__
 
 #define RANDOM_POS_OFFSET 5 // 5 meters to offset any point except last one
-
 // get a random number, floored, from count array
 // parameters: array
 // example: _randomarrayint = _myarray call XfRandomFloorArray;
@@ -305,7 +304,7 @@ _lobjpos = [];
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 waitUntil { !( (isNil "SYG_getParachute") || (isNil "XfRandomArrayVal"))  }; // wait until functions are loaded
 _para = player call SYG_getParachute;
-hint localize format["+++ x_intro.sqf: BEFORE player (alive %1) has parachute ""%2""", alive player,  _para];
+//hint localize format["+++ x_intro.sqf: BEFORE player (alive %1) has parachute ""%2""", alive player,  _para];
 if ( (_para == "") || (isNil "_para")) then {
 	#ifdef __ACE__
 	_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
@@ -319,7 +318,7 @@ if ( (_para == "") || (isNil "_para")) then {
 	#endif
 	player addWeapon _para;
 };
-hint localize format["+++ x_intro.sqf: AFTER  player (alive %1) has parachute ""%2""", alive player,  _para];
+//hint localize format["+++ x_intro.sqf: AFTER  player (alive %1) has parachute ""%2""", alive player,  _para];
 
 //++++++++++++++++++++++++++++++
 //      find spawn point
@@ -704,7 +703,7 @@ if ( typeName _camstart != "ARRAY" ) then {
 
 // Move player to the point of rect between Somato and base on the parachute
 // first find/put parachute in his inventory
-hint localize format["+++ x_intro.sqf: call to jump.sqf, player has ""%1""", player call SYG_getParachute];
+hint localize format["+++ x_intro.sqf: call to jump.sqf, player para = ""%1""", player call SYG_getParachute];
 [ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
 // Inform player about new order
 ["msg_to_user", "", [[ format[localize "STR_INTRO_PARAJUMP", (round ((_spawn_point distance FLAG_BASE)/50)) * 50 ] ]], 0, 5, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"

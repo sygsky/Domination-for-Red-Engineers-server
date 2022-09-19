@@ -1,5 +1,9 @@
 ﻿// Xeno, AAHALO\x_paraj.sqf - flag pole action "parajump"
 // e.g.: FLAG_BASE addaction [localize "STR_SYS_76","AAHALO\x_paraj.sqf"];
+_unit = _this select 1;
+new_paratype = _unit call SYG_getParachute; // find parachute of player (if any)
+
+hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2", _this, weapons _unit];
 
 private ["_do_exit","_wait_score","_jump_score","_full_score"];
 
@@ -43,8 +47,7 @@ if ( d_para_timer_base > 0 ) then { // pass time interval to jump
 };
 if (_do_exit) exitWith {};
 
-//hint localize format["x_paraj.sqf: weapons are %1", weapons player];
-new_paratype = "";
+//hint localize format["+++ x_paraj.sqf: weapons are %1", weapons player];
 
 #ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
     _disableFreeDropping = true;
@@ -52,40 +55,23 @@ new_paratype = "";
     _disableFreeDropping = false;
 #endif
 
-hint localize "";
-#ifdef __ACE__
-{
-	if (_x  in ["ACE_ParachutePack","ACE_ParachuteRoundPack"]) exitWith {
-	    new_paratype = _x;
-	}; // ACE_Para - main kind of parachute in game
-} forEach weapons player;
-
 if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609" call XfHQChat;}; // "!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!"
 
+#ifdef __ACE__
 if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith {
 	localize "STR_SYS_304" call XfHQChat; // "!!!!!!!!!!!! Нужна карта !!!!!!!!!!!"
 };
-#else
-{
-	if (_x isKindOf "ParachuteBase" ) exitWith {
-	    new_paratype = _x;
-	}; // ACE_Para - main kind of parachute in game
-} forEach weapons player;
-
-if ( _disableFreeDropping && new_paratype == "" ) exitWith { localize "STR_SYS_609" call XfHQChat;}; // "!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!"
-
 #endif
 
 d_cancelled = true; // to detect if "Cancel" button was clicked
 _ok = createDialog "XD_ParajumpDialog";
 onMapSingleClick format[ "_StartLocation = _pos;closeDialog 0;[_StartLocation, new_paratype, %1] execVM ""AAHALO\jump.sqf"";d_cancelled=false;onMapSingleClick """"", _full_score ];
 
-// TODO: handle if player clicks "Cancel" button on dialog
-
 waitUntil {!dialog}; // wait for dialog to be closed by any mean: or by click on map or "Cancel" baton on dialog
 sleep 0.112;
 onMapSingleClick "";
 
+// handle if player clicks "Cancel" button on dialog
 if (d_cancelled) exitWith {
     hint localize "*** player cancelled parajump dialog";
     (localize ("STR_SYS_JUMP_NUM" call SYG_getRandomText)) call XfHQChat; // "Because of a bad feeling, you decided not to jump..."
@@ -99,7 +85,7 @@ sleep 2.56;
 // Make them play the ACE animation of a falling person (idea from MP mission "Operation Mongoose").
 if (new_paratype == "") then {  // no parachute on player!!!
 	hint localize format["+++ x_paraj.sqf: no parachute detected, animated freefall as ""ACE_IC_ParaFail"""];
-	player switchMove "ACE_IC_ParaFail"
+	player playMove "ACE_IC_ParaFail"
 };
 #endif
 
@@ -113,9 +99,9 @@ if ( (vehicle player) != player ) then { // parachute still on!
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
 //    if ( (player call XGetRankIndexFromScore) > 2 ) then {
     #ifdef __ACE __
-    if (new_paratype != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
+    if (new_paratype == "ACE_ParachutePack") exitWith {}; // only round packs need auto cut
     #endif
-    sleep 5.0; // Ensure  player to be on the ground
+    sleep 6.0; // Ensure  player to be on the ground
     // Let's stop the parachute jumping on the ground
     if ( (vehicle player) != player ) then {
         player action ["Eject", vehicle player];
@@ -127,7 +113,7 @@ if ( (vehicle player) != player ) then { // parachute still on!
 };
 // remove parachute from inventory in any case
 if ( (new_paratype != "") && _para_used) then {player removeWeapon new_paratype}; // The parachute was put on and used
-
+hint localize "+++ x_paraj.sqf: parachute removed from player weapons!";
 //hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
 
 if (true) exitWith {true};
