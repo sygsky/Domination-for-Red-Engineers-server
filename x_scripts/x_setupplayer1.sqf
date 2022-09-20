@@ -41,9 +41,18 @@ _p = player;
 #ifdef __RANKED__
 _equip = "";
 if ( count d_player_stuff >= 6) then { // equipment returned
-	_equip = d_player_stuff select 5;
+	_equip = d_player_stuff select 5; // string with all equipment
 };
 // generate common weapon set
+if (_equip != "") then {
+	//hint localize format["d_player_stuff with equipment: %1", _equip];
+	[player, _equip] call SYG_rearmUnit;
+	// now check if player have primary and secondary weapons
+	if ((primaryWeapon player == "") && (secondaryWeapon player == "")) then {
+		hint localize format["+++ x_setupplayer1.sqf: as no primary and secondary weapons detected, unit is rearmed by std weapons!"];
+		_equip = ""
+	};
+};
 if ( _equip == "" ) then {
 	// give players a basic rifle/MG at start
 	_weapp = "";
@@ -252,9 +261,6 @@ if ( _equip == "" ) then {
 			_p selectWeapon (_muzzles select 0);
 		};
 	};
-} else {// _equip != "";
-	//hint localize format["d_player_stuff with equipment: %1", _equip];
-	[player, _equip] call SYG_rearmUnit;
 };
 #endif
 //		hint localize format["+++ rearm: before player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
