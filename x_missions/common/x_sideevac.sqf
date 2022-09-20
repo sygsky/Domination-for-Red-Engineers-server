@@ -90,9 +90,20 @@ _soldier = (
 
 _last_warn_said = 0;
 _escape_print_time = 0; // not print any escape info
+
+// TODO: store all payers active, also store all newly etntered player too.
+
 while {(!_pilots_at_base) && (!_is_dead)} do {
 	if (X_MP) then {
-		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+		if ((call XPlayersNumber) == 0) then {
+			_time = time;
+			hint localize format["+++ x_sideevac.sqf: players absent from %1, wait any... ... ...", _time call SYG_secondsToStr];
+			_end_diff = _endtime - time; // store delta to bump end time when players is detected
+			waitUntil {sleep (30 + random 1);(call XPlayersNumber) > 0};
+			waitUntil {sleep 1; !d_still_in_intro};
+			_endtime = time + _end_diff + 30; // bump end time as if all players not were absent
+			hint localize format["+++ x_sideevac.sqf: player  detected at %1, time spent = %2 ", _time  call SYG_secondsToStr, [time, _time] call SYG_timeDiffToStr];
+		};
 	};
 
 	if ( ({alive _x} count _pilots_arr) == 0 ) exitWith {
@@ -212,11 +223,11 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 		    {
 		    	if (alive _x) exitWith {_pilot = _x};
 		    } forEach _pilots_arr;
-		    _cnt = {alive _x} count _pilots_arr;
 		    if (isNull _pilot) then {
 		        hint localize "--- x_sideevac.sqf: All escaped pilots are dead";
 		    } else {
-		        hint localize format[ "--- x_sideevac.sqf: One of escaped pilots (cnt %1) pos %2", _cnt ,[_pilot, "at %1 m. to %2 from %3",10] call SYG_MsgOnPosE ];
+			    _cnt = {alive _x} count _pilots_arr;
+		        hint localize format[ "--- x_sideevac.sqf: One of escaped pilots (alive cnt %1) pos %2", _cnt ,[_pilot, "at %1 m. to %2 from %3",10] call SYG_MsgOnPosE ];
 		    };
     	};
     };
