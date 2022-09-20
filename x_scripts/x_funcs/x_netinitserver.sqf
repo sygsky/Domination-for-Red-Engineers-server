@@ -89,7 +89,7 @@ XHandleNetStartScriptServer = {
 			[(_this select 1),(_this select 2)] execVM "x_scripts\x_createdrop.sqf";
 		};
 		case "d_placed_obj_add": {
-			d_placed_objs = d_placed_objs + [(_this select 1)];
+			d_placed_objs set [count d_placed_objs, _this select 1];
 		};
 		case "d_air_taxi": {
 			(_this select 1) execVM "x_scripts\x_airtaxiserver.sqf";

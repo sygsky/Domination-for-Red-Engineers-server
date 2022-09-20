@@ -352,10 +352,10 @@ if (isServer) then {
 	mt_spotted = false;
 	execVM "x_scripts\x_setupserver.sqf";
 //	execVM "x_scripts\x_createnexttarget.sqf"; // start first town
-	execVM "scripts\takeAirfield.sqf"; // first take airfield
-	d_player_array_names = [];
-	d_player_array_misc = []; // [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
-	d_placed_objs = [];
+	execVM "scripts\takeAirfield.sqf"; // first take airfield and only after its completion first town
+	d_player_array_names = []; // ["EngineerACE",...] - known players list
+	d_player_array_misc = []; // [[d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str],...] - known players data list
+	d_placed_objs = []; // player's obejcts placed on the map
 	
 	[] spawn {
 		//private ["_hnd","_srvDate"];

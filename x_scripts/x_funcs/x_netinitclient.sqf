@@ -637,6 +637,7 @@ XHandleNetStartScriptClient = {
 
 		// to inform player about his server stored data
 		// sent as follows: ["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
+		// _staff ==  [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
 		case "d_player_stuff": {
 		    private ["_pname"];
 		    _pname = argp(arg(1),2);

@@ -1604,7 +1604,7 @@ if (d_player_air_autokick > 0) then {
 	if score changed, send info about it to the server
 */
 [] spawn {
-	waitUntil {!d_still_in_intro};
+	waitUntil {sleep 5; !d_still_in_intro};
 #ifdef __SPPM__
 	hint localize "+++ SPPM UPDATE initiated for markers";
 	["SPPM", "UPDATE", name player, false] call XSendNetStartScriptServer; // allow SPPM markers visibility at the start
