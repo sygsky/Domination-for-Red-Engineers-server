@@ -891,6 +891,7 @@ STR_SYS_1126,"You don't have enough scores to call in an air drop. You need %2 s
 STR_SYS_1127,"You are to far away from the drop point, no line of sight !!! Get closer (<%1 m).","Sie sind zu weit Weg von der drop-point, keine Sichtlinie !!! Näher (<%1 m).",¡Estás lejos del punto de reinicio! Debe acercarse (<%1 m),Вы далеко от точки сброса! Следует приблизиться (<%1 м)
 STR_SYS_1128,Calling in %1 air drop,Berufung in %1 air drop,Suministro %1 activado!,Доставка (%1) вызвана!
 STR_SYS_1129,Air drop canceled,Air drop canceled,Llamada cancelada...,Вызов отменён...
+STR_SYS_1129_0,Air drop failed...,Luftabwurf fehlgeschlagen...,El lanzamiento aéreo falló...,Доставка снаряжения сорвана...
 
 STR_SYS_1131,one volley,eine Salve,una volea,одним залпом
 STR_SYS_1132,two volleys,zwei Salven,dos voleas,двумя залпами

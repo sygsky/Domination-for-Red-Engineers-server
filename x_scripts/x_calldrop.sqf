@@ -12,7 +12,7 @@ if (!para_available) exitWith {
 #ifdef __RANKED__
 _score = score player;
 if (_score < (d_ranked_a select 16)) exitWith {
-	(format [localize "STR_SYS_1126", _score,(d_ranked_a select 16)]) call XfHQChat; // You don't have enough points to call in an air drop. You need %2 points for an air drop, your current score is %1
+	(format [localize "STR_SYS_1126", _score,(d_ranked_a select 16)]) call XfHQChat; // "You don't have enough points to call in an air drop. You need %2 points for an air drop, your current score is %1"
 };
 #endif
 
@@ -73,7 +73,7 @@ if (x_drop_type != "") then {
 	//player addScore (d_ranked_a select 22) * -1;
 	((d_ranked_a select 22) * -1) call SYG_addBonusScore;
 	#endif
-	["x_drop_type",x_drop_type,markerPos "x_drop_zone"] call XSendNetStartScriptServer;
+	["x_drop_type",x_drop_type,markerPos "x_drop_zone",name player] call XSendNetStartScriptServer;
 } else {
 	deleteMarkerLocal "arti1_marker_1";
 	(localize "STR_SYS_1129") call XfHQChat; // "Air drop canceled"
