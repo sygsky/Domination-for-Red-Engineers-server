@@ -104,9 +104,9 @@ uh60p setSpeedMode ( if (_plane) then {"FULL"} else {"LIMITED"} );
 _halo_height = d_halo_height;
 #ifdef __ACE__
 switch _paratype do {
-    case "ACE_ParachuteRoundPack": {_halo_height = d_halo_height / 7};
-    case "ACE_ParachutePack";
-    default {_halo_height = d_halo_height * 2};
+    case "ACE_ParachutePack" : {_halo_height = d_halo_height * 2};
+    case "ACE_ParachuteRoundPack";
+    default  {_halo_height = d_halo_height / 7};
 };
 #endif
 // check parachute presence

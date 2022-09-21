@@ -317,8 +317,8 @@ if ( (_para == "") || (isNil "_para")) then {
 	};
 	#endif
 	player addWeapon _para;
-};
-//hint localize format["+++ x_intro.sqf: AFTER  player (alive %1) has parachute ""%2""", alive player,  _para];
+	hint localize format["+++ x_intro.sqf: player has no parachute, assign him ""%1""", alive player,  _para];
+} else { hint localize format["+++ x_intro.sqf: player already has parachute ""%1""", alive player,  _para]};
 
 //++++++++++++++++++++++++++++++
 //      find spawn point
@@ -329,7 +329,7 @@ if (_para == "ACE_ParachutePack") then {  // find point in the rectangle above S
 	_spawn_rect = [ [11306,8386,0], 600,150, -45 ];
 	hint localize "+++ x_intro.sqf: jump point is set above mountines";
 } else {
-		hint localize "+++ x_intro.sqf: jump point is set above plain";
+	hint localize "+++ x_intro.sqf: jump point is set above plain";
 };
 	#endif
 _spawn_point  = _spawn_rect call XfGetRanPointSquareOld;
@@ -642,9 +642,9 @@ _camera spawn {
 	_para = player call SYG_getParachute;
 	while { ((_this distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
 	if (!alive player) exitWith {
-		hint localize format["+++ x_intro.sqf: player dead on FADE OUT in %1 secs", time - _time];
+		hint localize format["+++ x_intro.sqf: player dead in %1 secs (%2)", time - _time, _para];
 	};
-	hint localize format["+++ x_intro.sqf: FADE OUT after %1 secs", time - _time];
+	hint localize format["+++ x_intro.sqf: player alive after %1 secs (%2)", time - _time, _para];
 	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
 //	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
@@ -652,16 +652,16 @@ _camera spawn {
 	// wait while player in any vehicle (plane or parachute)
 	while { ((vehicle player) == player) && (alive player) } do {sleep 0.1};
 	if (!alive player) exitWith {
-		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs", time - _time];
+		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs (%2)", time - _time, _para];
 	};
 	sleep 3;
 	if (alive player ) then {
 		//	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
 		cutText[localize "STR_INTRO_PARAJUMP_2","PLAIN",5];  // "Let's go-o-o-o...". black in again
-		hint localize format["+++ x_intro.sqf: alive on jump after %1 secs", time - _time];
+		hint localize format["+++ x_intro.sqf: alive on jump after %1 secs (%2)", time - _time, _para];
 	} else {
 		cutText[localize "STR_INTRO_PARAJUMP_3","PLAIN",5];  // "Fuck-k-k.k..."
-		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs", time - _time];
+		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs (%2)", time - _time, _para];
 	};
 };
 
@@ -736,14 +736,14 @@ _para spawn {
     		default         {"STR_INTRO_INFO_0"};
     		};
 	_msg_arr set [0, _town_msg];
-	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
+//	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
 	_last = (count _msg_arr) - 1;
 #ifdef __ACE__
 	_glide = _para == "ACE_ParachutePack";
 #else
 	_glide = false;
 #endif
-	_cnt = if (_glide) then {count _msg_arr} else {(count _msg_arr) - 3}; // number of strings to show
+	_cnt = if ( _glide ) then { count _msg_arr } else { (count _msg_arr) - 3 }; // number of strings to show
 	_msg_delay = 60 / ( _cnt -1 ); // delay between strings
 	_sleep = _msg_delay / 3.05; // status check delay (to exit etc)
 	_time = time + _msg_delay;
@@ -773,6 +773,9 @@ _para spawn {
 _para spawn {
 	private ["_para"];
 	_para = _this;
+#ifdef __ACE __
+	if (_para == "ACE_ParachutePack") exitWith {}; // only round pack need auto cut
+#endif
 	// detect for parachute to be on player or player is on the ground and remove it from magazines
 	waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
 	if (!alive player) exitWith{};
@@ -780,9 +783,6 @@ _para spawn {
 	if ( (vehicle player) != player ) then { // parachute still on!
 		waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
 	//    if ( (player call XGetRankIndexFromScore) > 2 ) then {
-		#ifdef __ACE __
-		if (_para != "ACE_ParachuteRoundPack") exitWith {}; // only round pack need auto cut
-		#endif
 		sleep 5.0; // Ensure  player to be on the ground
 		// Let's stop the parachute jumping on the ground
 		if ( (vehicle player) != player ) then {
@@ -794,7 +794,6 @@ _para spawn {
 			};
 		};
 	};
-
 };
 sleep 2;
 #endif
