@@ -776,7 +776,7 @@ if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" }; // ru
 _para spawn {
 	private ["_para","_msg_arr","_i","_last","_time","_town_name","_glide","_msg_delay","_msg_delay","_sleep"];
 	_para = _this;
-	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
+	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
 	_town_name = call SYG_getTargetTownName;
 	_town_msg = switch ( _town_name ) do {
     		case "Paraiso": {"STR_INTRO_INFO_2"};
@@ -804,7 +804,7 @@ _para spawn {
 	_i = 0;
 	scopeName "main";
 	for "_i" from 0 to _last do {
-		if ( (!(_i in [1,2,3,4])) || _glide ) then {
+		if ( (!(_i in [1,2,3,4,5])) || _glide ) then {
 			cutText [localize (_msg_arr select _i),"PLAIN"];
 			_time = time + _msg_delay;
 		};

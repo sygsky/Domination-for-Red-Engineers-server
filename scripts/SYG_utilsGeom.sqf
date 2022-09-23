@@ -436,7 +436,7 @@ SYG_angleBetweenVectors3D = {
 // or:   [_obj1<,...,_objN>] call SYG_averPoint; // or
 //
 SYG_averPoint = {
-	private [ "_pnt", "_posX", "_posY", "_posZ", "_cnt" ];
+	private [ "_pnt", "_posX", "_posY", "_posZ", "_cnt", "_x" ];
 	if ( typeName _this != "ARRAY" ) then { _this = [ _this ] };
 	_posX = 0.0;
 	_posY = 0.0;
@@ -449,4 +449,15 @@ SYG_averPoint = {
 	} forEach _this;
 	_cnt = count _this;
 	[_posX/_cnt, _posY/_cnt, _posZ/_cnt]
-}
+};
+
+//
+// Return size of the object as [dx,dy,dz]
+// Call: _size = _obj call SYG_size3D;
+SYG_objectSize3D = {
+	private ["_vol","_p1","_p2"];
+	_vol = boundingBox _this;
+	_p1 = _vol select 0;
+	_p2 = _vol select 1;
+	[abs ( (_p1 select 0) - (_p0 select 0) ), abs ( (_p1 select 1) - (_p0 select 1) ), abs ( (_p1 select 2) - (_p0 select 2) )]
+};
