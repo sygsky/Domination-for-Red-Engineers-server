@@ -23,7 +23,7 @@ if ( alive _unit ) then {
 		_dist = [_pos1, _pos2] call SYG_distance2D;
 		hint localize format ["+++ event_para_dropped.sqf: landed on dist to circle %1 m", _dist];
 		_arr = [];
-		if ( _dist < ((_volume select 0) / 2) ) exitWith {
+		if ( _dist < ((_volume select 0) / 2) ) exitWith {a
 			// we are in circle!
 			_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8", 10]], 0, 5, false, "no_more_waiting" ]; // "You've landed in base territory, which isn't too bad"
 		};

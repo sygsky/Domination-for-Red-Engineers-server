@@ -165,7 +165,7 @@ for "_i" from 1 to _total_steps do {
         waitUntil {animationState player != "AinvPknlMstpSlayWrflDnon_medic"}; // this animation cycle duration is approximatelly 6 seconds
 	};
 
-	if (!alive player) exitWith { _break_str = "STR_SYS_142_3"; }; // "You are dead, service is cancelled..."
+	if (!alive player) exitWith { _break_str = "STR_SYS_DEAD_BEFORE"; }; // "You are dead, service is cancelled..."
 
 	if (d_cancelled) exitWith { _break_str = "STR_SYS_136"; }; // The service is cancelled...
 

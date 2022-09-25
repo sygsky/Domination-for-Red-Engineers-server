@@ -1,4 +1,5 @@
 /*
+	Runs only on server!
 	x_missions\common\sideradar\radio_service.sqf: started after first 56th SM completed
 	author: Sygsky
 	description: Handles the radio relay mast in good order during whole game period

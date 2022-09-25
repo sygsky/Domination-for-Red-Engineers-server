@@ -2,7 +2,7 @@
     x_missions\common\sideradar\radio_menu.sqf, created at JUN 2022
     created 2022.06.04
 	author: Sygsky, on #410 request by Rokse
-	description: Execute inspect/check/install on mast and inspect/load/unload on truck operation
+	description: Only on the client execute inspect/check/install on mast and inspect/load/unload on truck operation
 
 	Parameters array passed to the script upon activation in _this  variable is: [target, caller, ID, arguments]
     target (_this select 0): Object  - the object which the action is assigned to
@@ -17,7 +17,7 @@
 #include "sideradio_vars.sqf"
 
 // try to change object status:
-// Call as: __set_as_detected = _obj call _set_detected; // return true is flag set, else false (flag already was set)
+// Call as: _set_as_detected = _obj call _set_detected; // return true is flag set, else false (flag already was set)
 _set_detected = {
 	private ["_detected","_veh"];
 	_veh = _this;
@@ -26,8 +26,11 @@ _set_detected = {
 		_veh setVariable ["DETECTED", true];
 		// copy detected status to the server
 		if (_veh isKindOf "Truck") then {
+			// Print message on the server now
+			["log2server", name player,format["radar truck detected at %1", _veh call SYG_nearestLocationName]];
 			["remote_execute", "d_radar_truck setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
 		} else {
+		 	["log2server", name player,format["radar mast detected at %1", _veh call SYG_nearestLocationName]];
 			["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
 		};
 		true
@@ -86,10 +89,8 @@ if (true) then {
 	};
 
 	switch (_cmd) do {
-		case "INSPECT": { // TODO: remove as not used anywhere
-			//
-			// Truck
-			//
+		case "INSPECT": {
+			// Truck ?
 			if ( _truck ) exitWith {
 				if ( _locked ) exitWith {	_txt = localize ("STR_RADAR_TRUCK_LOCKED_NUM"  call SYG_getRandomText ) }; // "A truck adapted to carry radio mast. You're in luck!"
 				// not locked, check mast status
@@ -97,7 +98,7 @@ if (true) then {
 					if ( ((getPosASL d_radar) select 2)  < 0 ) exitWith { _txt = localize "STR_RADAR_TRUCK_LOADED" }; // "The truck for transporting a radio mast, mast is loaded"
 					_txt = localize format["STR_RADAR_TRUCK_NOT_LOADED", d_radar call SYG_nearestLocationName ]; // "Active truck for transporting a radio mast, which is  near ""%1"""
 				};
-			} else { // radio-relay mast
+			} else { // radio-relay mast!
 				_txt = localize "STR_RADAR_MAST_UNLOADED"; // "Rusty radio mast, what junkyard did you find it in?"
 			};
 		};
@@ -236,6 +237,7 @@ if (true) then {
 				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
 
+			if (!alive player) exitWith { _txt = "STR_SYS_DEAD_BEFORE" }; // "You are dead, service is cancelled..."
 			// complete the mission itself
 			sideradio_status = 1; // installation done
 			publicVariable "sideradio_status";
