@@ -23,15 +23,24 @@ if ( alive _unit ) then {
 		_dist = [_pos1, _pos2] call SYG_distance2D;
 		hint localize format ["+++ event_para_dropped.sqf: landed on dist to circle %1 m", _dist];
 		_arr = [];
-		if ( _dist < ((_volume select 0) / 2) ) exitWith {a
+
+		_sc = d_ranked_a select 32;
+		if ( _dist < ((_volume select 0) / 2) ) then {
 			// we are in circle!
-			_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8", 10]], 0, 5, false, "no_more_waiting" ]; // "You've landed in base territory, which isn't too bad"
+			// "You hit the circle and are rewarded for this: +%1"
+			_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8", _sc]], 0, 1, false, "no_more_waiting" ];
+			_sc call SYG_addBonusScore; // score to the player
 		};
 
 		if ( _pos1 call SYG_pointIsOnBase) then {
 			// we are on base but not in circle
-			[ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7"]], 0, 5, false, "good_news" ] spawn SYG_msgToUserParser; // "You hit the circle and are rewarded for this: +%1"
+			// "You have landed in the base area, which is not bad. Try to land on the yellow circle near the barracs (points: +%1)"
+			[ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7",_sc]], 0, 1, false, "good_news" ] spawn SYG_msgToUserParser;
+		} else {
+			// "You have landed outside the base area (to the flag %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"
+			[ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7_1",round (_dist),_sc]], 0, 1, false, "good_news" ] spawn SYG_msgToUserParser;
 		};
+
 		if (damage player > 0.1) then {
 			_arr2 = _arr select 2;
 			_arr set [count _arr2, ["STR_INTRO_PARAJUMP_9"]];
