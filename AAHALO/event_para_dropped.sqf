@@ -35,10 +35,10 @@ if ( alive _unit ) then {
 		if ( _pos1 call SYG_pointIsOnBase) then {
 			// we are on base but not in circle
 			// "You have landed in the base area, which is not bad. Try to land on the yellow circle near the barracs (points: +%1)"
-			[ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7",_sc]], 0, 1, false, "good_news" ] spawn SYG_msgToUserParser;
+			_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7",_sc]], 0, 1, false, "good_news" ];
 		} else {
-			// "You have landed outside the base area (to the flag %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"
-			[ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7_1",round (_dist),_sc]], 0, 1, false, "good_news" ] spawn SYG_msgToUserParser;
+			// "You have landed outside the base area (to the circle %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"
+			_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7_1",round (_dist),_sc]], 0, 1, false, "losing_patience" ];
 		};
 
 		if (damage player > 0.1) then {
