@@ -162,7 +162,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2",/*"del_vampiro1",
                 "del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
-                "peregrinus"
+                "peregrinus","kk_the_hole"
             ];
 
             // music to play only in day time
@@ -195,7 +195,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
                 /*"del_vampiro1","del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
-                "wild_geese","wild_geese","dangerous_chase"
+                "wild_geese","wild_geese","dangerous_chase","kk_the_hole"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
