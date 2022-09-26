@@ -328,7 +328,8 @@ _para = player call SYG_getParachute;
 hint localize format["+++ x_intro.sqf: player (alive %1) weapons %2, para %3", alive player,  weapons player, if (_para == "") then {"not found"} else {"found"} ];
 if ( _para == "" ) then {
 	#ifdef __ACE__
-	_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
+//	_para = ["ACE_ParachutePack","ACE_ParachuteRoundPack"] call XfRandomArrayVal;
+	_para = "ACE_ParachutePack";
 	#endif
 	#ifndef __ACE__
 	_para = switch (d_own_side) do {
