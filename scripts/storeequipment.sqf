@@ -38,8 +38,8 @@ if ( ( typeName (_this select 3) ) != "STRING" ) exitWith {
 switch (toUpper (_this select 3) ) do {
     case "S": {
         // store equipment
-        _equip = if ( ( primaryWeapon player ) == "" ) then { "" }  else { player call SYG_getPlayerEquipAsStr };
-        ["d_ad_wp", name player, _equip, format["armory%1", (floor(random 4)) + 1 ], FLAG_BASE] call XSendNetStartScriptServer; // sent to server
+        _equip = if ( (( primaryWeapon player ) == "") && (( secondaryWeapon player ) == "") ) then { "" }  else { player call SYG_getPlayerRucksackAsStr };
+        ["d_ad_wp", name player, _equip, format["armory%1", (floor(random 4)) + 1 ], FLAG_BASE] call XSendNetStartScriptServer; // sent to the server
 
 #ifdef __EQUIP_OPD_ONLY__
 

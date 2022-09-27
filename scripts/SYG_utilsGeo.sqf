@@ -445,7 +445,7 @@ SYG_pointOnRahmadi = {
  * _bool = (_pos || _obj) call SYG_pointInRect
  */
 SYG_pointNearBase = {
-    if (typeName _this != "ARRAY") then {_this = position _this};
+    if (typeName _this == "OBJECT") then {_this = position _this};
 	if (count _this < 2) exitWith {false};
     [_this, [[9913,10385,0],1300,800]] call SYG_pointInRect // only for Sahrani island
 };

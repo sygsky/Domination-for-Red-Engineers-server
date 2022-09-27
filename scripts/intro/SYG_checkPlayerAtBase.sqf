@@ -1,11 +1,11 @@
 /*
-	scripts\SYG_checkPlayerAtBase.sqf
+	scripts\intro\SYG_checkPlayerAtBase.sqf
 	author: Sygsky
 	description: checks if player visited base rectangle. If yes, set variable base_visit_status to 1 and exit
 	returns: nothing
 
     Checks if alive player was at base.
-	Call as: [] execVM  SYG_checkPLayerAtBase;
+	Call as: [] execVM  "scripts\intro\SYG_checkPlayerAtBase.sqf";
 
 */
 _flare = objNull;
@@ -37,12 +37,21 @@ while { base_visit_status <= 0 } do {
 };
 
 // inform player that he reached the base
-
 [ "msg_to_user", "*", [["STR_INTRO_ON_BASE"],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] call SYG_msgToUserParser; // "You have reached the base! Life will get easier from here."
+
+// rearm to original equipment
+hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
+
+[player, SYG_initialEquipmentStr] call SYG_rearmUnit;
+playSound format["armory%1", (floor(random 4)) + 1 ]; // random armory sound
+SYG_initialEquipmentStr = nil; // not needed more
+
+// remove parachute
+_para = player call SYG_getParachute;
+if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory
 
 // throw last GREEN flare
 while { alive _flare } do { sleep 0.1 };
 _flare = "F_40mm_Green" createVehicleLocal _flag_pos;
 [ _flare, "GREEN", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
 
-5

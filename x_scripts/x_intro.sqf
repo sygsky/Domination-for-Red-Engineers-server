@@ -771,7 +771,7 @@ _camera camSetRelPos [0,1.5, 0.5];
 _camera camCommit 1; // set time to go
 waitUntil { camCommitted _camera }; // wait until come
 
-if ( alive player) then { [] execVM "scripts\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
+if ( alive player) then { [] execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
 
 // print informative messages while in air
 _para spawn {
@@ -779,10 +779,12 @@ _para spawn {
 	_para = _this;
 	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
 	_town_name = call SYG_getTargetTownName;
+	_saboteurs = !isNil "d_on_base_groups";
 	_town_msg = switch ( _town_name ) do {
     		case "Paraiso": {"STR_INTRO_INFO_2"};
     		case "Somato":  {"STR_INTRO_INFO_1"};
-    		default         {"STR_INTRO_INFO_0"};
+    		// "Nearby towns are free, beware of patrols[ and saboteurs]"
+    		default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
     		};
 	_msg_arr set [0, _town_msg];
 //	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
@@ -849,6 +851,33 @@ sleep 2;
 
 player cameraEffect ["terminate","back"];
 camDestroy _camera;
+
+#ifdef __ACE__
+// TODO: replace weapon with drop pack to restore it after base visit
+SYG_initialEquipmentStr = player call SYG_getPlayerEquipAsStr; // store original equipment in string
+hint localize "+++ x_into: replace server equipment with para-jump set";
+// [["ACE_RPG7","ACE_RPK47","Binocular","ACE_ParachuteRoundPack"],["ACE_Bandage(3)","ACE_Morphine(5)","ACE_75Rnd_762x39_BT_AK(5)","ACE_RPG7_PG7VL"],"",[]]
+// replace with initial one
+
+// remove rucksack as not needed
+_unit setVariable [  "ACE_weapononback", nil ];
+_unit setVariable [ "ACE_Ruckmagazines", nil ];
+
+[ player,
+	[
+		["ACE_AK74",_para],
+		["ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_Bandage","ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine"],
+		"",	[]
+	]
+] call SYG_rearmUnit;
+
+if (call isDarkness) then {
+	player call SYG_addNVGoggles; // add NVG as knight is on
+} else {
+	player call SYG_addBinocular; // add binocular
+};
+
+#endif
 closeDialog 0;
 [ "say_sound", FLAG_BASE, "gong_5" ] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
 

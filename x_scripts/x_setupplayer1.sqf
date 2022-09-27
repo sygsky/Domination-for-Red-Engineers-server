@@ -40,7 +40,7 @@ player addScore (d_player_stuff select 3); // set saved scores
 _p = player;
 #ifdef __RANKED__
 _equip = "";
-if ( count d_player_stuff >= 6) then { // equipment returned
+if ( count d_player_stuff > 6) then { // equipment returned
 	_equip = d_player_stuff select 5; // string with all equipment
 };
 // generate common weapon set
@@ -226,6 +226,7 @@ if ( _equip == "" ) then {
 				};
 				if (!_rearmed ) then {
 					[_p, _weapp] call SYG_armUnit;
+					// TODO: send info to the server about new equipment
 
 					//+++ Sygsky: add largest ACE rucksack and fill it with mags
 					_p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
@@ -273,5 +274,5 @@ player call SYG_addBinocular;
 //__DEBUG_NET("x_setupplayer.sqf",d_player_stuff)
 
 #ifdef __EQUIP_OPD_ONLY__
-SYG_playerRucksackContent = player call SYG_getPlayerEquipAsStr; // initial player equipment in text form
+SYG_playerRucksackContent = player call SYG_getPlayerRucksackAsStr; // initial player rucksack content in text form
 #endif

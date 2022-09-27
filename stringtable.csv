@@ -1128,6 +1128,7 @@ STR_INTRO_ON_BASE1,You are enrolled for the respawn at the SpecNaz GRU unit on S
 STR_INTRO_NOT_AT_BASE,You didn't manage to get to the base this time...,"Du hast es diesmal nicht geschafft, zur Basis zu gelangen...",Esta vez no lograste llegar a la base...,Вам не удалось добраться до базы в этот раз...
 
 STR_INTRO_INFO_0,"Nearby towns are free, beware of patrols","Die umliegenden Städte sind frei, achten Sie auf die Patrouillen","Los pueblos cercanos son libres, tengan cuidado con las patrullas","Ближайшие города свободны, опасайтесь патрулей"
+STR_INTRO_INFO_0_1,"Nearby towns are free, beware of patrols and saboteurs","Die umliegenden Städte sind frei, hüten Sie sich vor Patrouillen und Saboteuren","Las ciudades cercanas son libres, ten cuidado con las patrullas y los saboteadores","Ближайшие города свободны, опасайтесь патрулей и диверсантов"
 STR_INTRO_INFO_1,"The nearby Somato is occupied by the enemy, beware of encounters with him","Das nahe gelegene Somato ist vom Feind besetzt, hüten Sie sich vor Konfrontationen mit ihm","El Somato cercano está ocupado por el enemigo, ten cuidado con los enfrentamientos con él","Близлежащий Сомато занят врагом, опасайтесь столкновений с ним"
 STR_INTRO_INFO_2,"Paraiso is occupied by the enemy, manoeuvre by parachute to avoid meeting him.","Paraiso ist vom Feind besetzt, manövrieren Sie mit dem Fallschirm, um nicht auf ihn zu treffen","Paraíso está ocupado por el enemigo, maniobra en paracaídas para evitar su encuentro","Параисо занят врагом, маневрируйте на парашюте, чтобы избежать встречи с ним"
 

@@ -458,6 +458,7 @@ if ( !isNil "d_on_base_groups") then {
         };
     };
     d_on_base_groups call SYG_clearArrayB;
+    publicVariable "d_on_base_groups";
 };
 
 if ( _debug ) then

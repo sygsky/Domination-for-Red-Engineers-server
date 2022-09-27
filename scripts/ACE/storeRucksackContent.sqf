@@ -5,9 +5,9 @@
 	returns: nothing
 */
 private ["_str"];
-_str = player call SYG_getPlayerEquipAsStr;
+_str = player call SYG_getPlayerRucksackAsStr;
 if (SYG_playerRucksackContent != _str) then { // As content was changed, send new one to the server to store over there without informative sound
-    ["d_ad_wp", name player, _str] call XSendNetStartScriptServer; // whole bunch of equipment (weapons+magazines+backpack_content)
+    ["d_ad_wp", name player, _str] call XSendNetStartScriptServer; // reduced bunch of equipment (backpack_type+backpack_content+some_props)
 	SYG_playerRucksackContent = _str; // store new content
-	hint localize format["+++ storeRucksackContent.sqf: player equip = %1", _str];
+	hint localize format["+++ storeRucksackContent.sqf: rucksack content = %1", _str];
 };

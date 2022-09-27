@@ -33,7 +33,7 @@ if (_index >= 0) exitWith {
 	// These parameters are known only on client computers and must be saved by player with command on the flag base
 	_equipStr = _parray select 5; // read string with equipment array
 	_wpnArr = if ( _equipStr != "" ) then { _equipStr call SYG_unpackEquipmentFromStr } else { [] }; // stored weapon array
-	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only valuable parts
+	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only weapon/magszines
 	_parray set [5, _wpnArr call SYG_equipArr2Str]; // replace old equipment list with one got from player in OPD procedure
 #endif
 #ifdef __DEBUG_PRINT__
