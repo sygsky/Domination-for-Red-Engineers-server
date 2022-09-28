@@ -38,8 +38,9 @@ if ( ( typeName (_this select 3) ) != "STRING" ) exitWith {
 switch (toUpper (_this select 3) ) do {
     case "S": {
         // store equipment
-        _equip = if ( (( primaryWeapon player ) == "") && (( secondaryWeapon player ) == "") ) then { "" }  else { player call SYG_getPlayerRucksackAsStr };
-        ["d_ad_wp", name player, _equip, format["armory%1", (floor(random 4)) + 1 ], FLAG_BASE] call XSendNetStartScriptServer; // sent to the server
+//        _equip = if ( (( primaryWeapon player ) == "") && (( secondaryWeapon player ) == "") ) then { "" }  else { player call SYG_getPlayerRucksackAsStr };
+        _equip = player call SYG_getPlayerRucksackAsStr;
+        ["d_ad_wp", name player, _equip, call SYG_armorySound, FLAG_BASE] call XSendNetStartScriptServer; // sent to the server
 
 #ifdef __EQUIP_OPD_ONLY__
 
@@ -54,7 +55,7 @@ switch (toUpper (_this select 3) ) do {
         _args = if ( _equip == "" )
                     then { ["STR_SYS_613"] } // "Your recorded equipment wiped"
                     else { ["STR_SYS_611"] }; // "Your equipment is recorded and will be given out next time"
-        ["msg_to_user", "", [_args]] call SYG_msgToUserParser; // message output
+        ["msg_to_user", "", [_args]] spawn SYG_msgToUserParser; // message output
 #endif
 
 //        hint localize format["--- scripts/storeequipment.sqf: msg is %1", args ];

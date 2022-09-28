@@ -921,7 +921,7 @@ _local_msg_arr spawn {
             "",
             [ ["За заслуги в деле построения миссии главный инженер выносит Вам благодарность, за внимание и глубокий поиск ошибок!!!" ] ],
             0, 5, false, "drum_fanfare"
-        ] call SYG_msgToUserParser;
+        ] spawn SYG_msgToUserParser;
     };
 
 	// Khabarovsk: 2-feb is the Soviet aviation day
@@ -932,7 +932,7 @@ _local_msg_arr spawn {
             "",
             [ ["Командование ОК ГРУ поздравляет с профессиональным праздником, благодарит за верность долгу и храбрость в бою!" ] ],
             0, 5, false, "drum_fanfare"
-        ] call SYG_msgToUserParser;
+        ] spawn SYG_msgToUserParser;
     };
 
 	// Latvia
@@ -943,7 +943,7 @@ _local_msg_arr spawn {
 			"",
 			[ ["Renton! Nepieskarieties СППМ! Tas ir nošaušanas komanda! Bet nākotnē)))))" ] ],
 			0, 5, false, "armory4"
-		] call SYG_msgToUserParser;
+		] spawn SYG_msgToUserParser;
 	};
     // Argentina
 	if ( (name player) == "lolport" ) exitWith {
@@ -953,7 +953,7 @@ _local_msg_arr spawn {
 			"",
 			[ ["Recordamos al Che Guevara, ¡fue nuestro invitado una vez!" ] ],
 			0, 5, false, "drum_fanfare"
-		] call SYG_msgToUserParser;
+		] spawn SYG_msgToUserParser;
 	};
 
 	// "АЛЕКС МЭЙСОН"
@@ -964,7 +964,7 @@ _local_msg_arr spawn {
 			"",
 			[ ["Боец! Командование местного отряда ГРУ МО СССР предлагает сменить позывной с имени агента ЦРУ на более адекватный нашей задаче" ] ],
 			0, 5, false, "losing_patience"
-		] call SYG_msgToUserParser;
+		] spawn SYG_msgToUserParser;
 	};
 
 	// "Oberon"
@@ -975,7 +975,7 @@ _local_msg_arr spawn {
 			"",
 			[ ["Мы построим лестницу до звёзд, Мы пройдём сквозь чёрные циклоны, От смоленских солнечных берёз, До туманных далей Оберона." ] ],
 			0, 5, false, "Oberon"
-		] call SYG_msgToUserParser;
+		] spawn SYG_msgToUserParser;
 	};
 
 //	hint localize format["+++ DEBUG: if ( ((name player) == ""EngineerACE:"")) == %1", ((name player) == "EngineerACE")];
@@ -1007,7 +1007,7 @@ _local_msg_arr spawn {
 			"",
 			[ [ _str ] ],
 			0, 5, false, _sound
-		] call SYG_msgToUserParser;
+		] spawn SYG_msgToUserParser;
 		_hour = _date select 3;
 		_week_day = _date call SYG_weekDay; // Monday returns 0, for Sunday 6
 		if ( ( (_week_day < 4) || (_week_day > 5) ) && (_hour < (SYG_nightSkipFrom - 10)) && (_hour >= 8) ) then { // Not week day and not night
@@ -1020,7 +1020,7 @@ _local_msg_arr spawn {
 					"",
 					[ [ "Завтра в школу, завтра в школу, завтра в школу-у-у-у..." ] ],
 					0, 5, false, "school_ring"
-				] call SYG_msgToUserParser;
+				] spawn SYG_msgToUserParser;
 			};
 		};
 	};
@@ -1033,7 +1033,7 @@ _local_msg_arr spawn {
 		"",
 		[ ["STR_GREETING_COMMON" ] ],
 		0, 5, false, "drum_fanfare"
-	] call SYG_msgToUserParser;
+	] spawn SYG_msgToUserParser;
 //	hint localize "+++ STR_GREETING_COMMON printed"; // DEBUG
 };
 

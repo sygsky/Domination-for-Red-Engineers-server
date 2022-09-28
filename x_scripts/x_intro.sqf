@@ -776,8 +776,6 @@ if ( alive player) then { [] execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" };
 // print informative messages while in air
 _para spawn {
 	private ["_para","_msg_arr","_i","_last","_time","_town_name","_glide","_msg_delay","_msg_delay","_sleep"];
-	_para = _this;
-	_msg_arr = ["", "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
 	_town_name = call SYG_getTargetTownName;
 	_saboteurs = !isNil "d_on_base_groups";
 	_town_msg = switch ( _town_name ) do {
@@ -786,7 +784,8 @@ _para spawn {
     		// "Nearby towns are free, beware of patrols[ and saboteurs]"
     		default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
     		};
-	_msg_arr set [0, _town_msg];
+	_msg_arr = [_town_msg, "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
+	_para = _this;
 //	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
 	_last = (count _msg_arr) - 1;
 #ifdef __ACE__
@@ -860,8 +859,8 @@ hint localize "+++ x_into: replace server equipment with para-jump set";
 // replace with initial one
 
 // remove rucksack as not needed
-_unit setVariable [  "ACE_weapononback", nil ];
-_unit setVariable [ "ACE_Ruckmagazines", nil ];
+player setVariable [  "ACE_weapononback", nil ];
+player setVariable [ "ACE_Ruckmagazines", nil ];
 
 [ player,
 	[
@@ -909,7 +908,7 @@ if ( (vehicle player) != player ) then { // parachute is on!
 };
 if (alive player) then {
 	if (base_visit_status <= 0) then {
-		["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 5, false ] call SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
+		["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 5, false ] spawn SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
 	};
 };
 

@@ -29,19 +29,23 @@ if (_index >= 0) exitWith {
 	_player = call (compile (_parray select 4)); // find player object by his role name
 	_arr = _player call SYG_getPlayerEquiptArr; // real equipment array= = [ [weapons names], [magazines names]<, "",[]]
 #ifdef __EQUIP_OPD_ONLY__
-	// Note: server knows nothing  about ACE rucksack and distance and death sound on/off.
-	// These parameters are known only on client computers and must be saved by player with command on the flag base
+	// Note: server knows nothing about ACE rucksack and distance and death sound on/off.
+	// These parameters are known only on client computers and must be send to server with "d_ad_wp" command
 	_equipStr = _parray select 5; // read string with equipment array
-	_wpnArr = if ( _equipStr != "" ) then { _equipStr call SYG_unpackEquipmentFromStr } else { [] }; // stored weapon array
-	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only weapon/magszines
+	_wpnArr = if ( _equipStr != "" ) then { _equipStr call SYG_unpackEquipmentFromStr } else { [] }; // stored full equipments array
+#ifdef __DEBUG_PRINT__
+	// print old weapon array
+    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", old wpnarr %2", _name, _wpnArr call SYG_compactArray ];
+#endif
+
+	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only weapon/magazines
 	_parray set [5, _wpnArr call SYG_equipArr2Str]; // replace old equipment list with one got from player in OPD procedure
 #endif
 #ifdef __DEBUG_PRINT__
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", old array  %2", _name, _parray call SYG_compactArray ];
-	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", new wpnarr %2", _name, _arr call SYG_compactArray ];
+	// print new weapon array
+	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", new wpnarr %2", _name, _wpnArr call SYG_compactArray ];
 #endif
 
-//	_parray set [ 5, _str]; // set new armament in any case
 #ifdef __AI__
     // TODO: try to remove all AI of the disconnected player
     // orphaned AI must be now local to server, not to any player as only single group player can recruit AI from barracks

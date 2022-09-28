@@ -2645,7 +2645,9 @@ SYG_findPlayerEquipmentAsStr = {
 };
 
 // Note: called only on server
-// [_name,_wpn_arr_str] call SYG_storePlayerEquipmentAsStr;
+// [_name,_wpn_arr_str] call SYG_storePlayerEquipmentAsStr; // Unpack and store whole player equipment
+// Now input weapon array contains ONLY rucksack content, no real weapon,
+// so d_player_array_misc items contains also ONLY rucksack itmes, not any weapons
 SYG_storePlayerEquipmentAsStr = {
     if ( (typeName _this) != "ARRAY" ) exitWith {hint localize format["--- SYG_storePlayerEquipmentAsStr: expected param isn't array: %1",_this];};
     if ( (count _this) < 2 ) exitWith {
@@ -2664,11 +2666,11 @@ SYG_storePlayerEquipmentAsStr = {
             //  player array is: [d_player_air_autokick, time, _name, 0, "", eqp_list_as_str]
             _parray = argp( d_player_array_misc,_index);
             _parray set [ 5, arg(1)];
-            hint localize format ["+++ equipment re-written for the player ""%1"": %2", _name, arg(1)];
+//            hint localize format ["+++ equipment re-written for the player ""%1"": %2", _name, arg(1)];
         } else {
             d_player_array_names set [count d_player_array_names, _name];
             d_player_array_misc set [ count d_player_array_misc, [d_player_air_autokick, time, _name, 0, "", arg(1)]];
-            hint localize format ["+++ equipment stored for the new player ""%1"": %2", _name, arg(1)];
+//            hint localize format ["+++ equipment stored for the new player ""%1"": %2", _name, arg(1)];
         };
     };
 };
@@ -2743,11 +2745,11 @@ SYG_getPlayerRucksackArr = {
 	if ( isNil "_ruck") then  {_ruck = "";};
 	_ruckMags = _this getVariable "ACE_Ruckmagazines";
 	if ( isNil "_ruckMags") then  {_ruckMags = [];};
-    [_ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
+    [[],[],_ruck, _ruckMags, d_viewdistance, d_rebornmusic_index] // [ no weapons, no mags, rucksack, rucksack items,...]
 	//hint localize format["_ruck %1, _ruckMags %2", _ruck, _ruckMags];
 #else
 	// no rucksack if no ACE
-    ["", [], d_viewdistance, d_rebornmusic_index]
+    [[],[],"", [], d_viewdistance, d_rebornmusic_index]
 #endif
 
 };

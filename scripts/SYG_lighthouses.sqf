@@ -87,9 +87,9 @@ _howler_work = {
 		for "_i" from 1 to _last_ind do {
 			if (!alive _majak) exitWith {
 				hint localize format["--- SYG_lighthouses: service for the dead majak #%1 stopping...", _this select 3];
-				// ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>] call SYG_msgToUserParser
+				// ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>] spawn SYG_msgToUserParser
 				_majak = _pos call SYG_nearestSettlement;
-				["msg_to_user", "", ["STR_LIGHTHOUSE_KILLED", _majak ], 0, 3, false, "return"] call SYG_msgToUserParser;
+				["msg_to_user", "", ["STR_LIGHTHOUSE_KILLED", _majak ], 0, 3, false, "return"] spawn SYG_msgToUserParser;
 			};
 			if ((player distance _majak) < LH_HEARING_DISTANCE) then {
 #ifdef __FUTURE__

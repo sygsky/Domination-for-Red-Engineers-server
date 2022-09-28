@@ -16,7 +16,7 @@ _cone = (_this select 0);
 _veh  = _cone getVariable "bonus_veh";
 if (isNil "_veh") exitWith {
 	// "Appropriate DOSAAF vehicle has not been found, this is a misunderstanding!"
-	["msg_to_user","*",[[localize "STR_BONUS_INFO_1"]],0,0,false,"message_received"] call SYG_msgToUserParser;
+	["msg_to_user","*",[[localize "STR_BONUS_INFO_1"]],0,0,false,"message_received"] spawn SYG_msgToUserParser;
 	_cone say "losing_patience";
 	sleep 1;
 	deleteVehicle _cone;
@@ -28,7 +28,7 @@ _loc_name = text _loc;
 _loc_pos = locationPosition _loc;
 _dist = round ((_veh distance DOSAAF_MAP_POS)/1000);
 _str_dist = if (_dist == 0) then {localize "STR_BONUS_INFO_2"} else {format[localize "STR_BONUS_INFO_3", _dist]};
-["msg_to_user","*",[[localize "STR_BONUS_INFO", typeOf _veh, _loc_name, _str_dist]],0,0,false,"good_news"] call SYG_msgToUserParser; // "DOSAAF vehicle '%1' close to '%2'", dist %3
+["msg_to_user","*",[[localize "STR_BONUS_INFO", typeOf _veh, _loc_name, _str_dist]],0,0,false,"good_news"] spawn SYG_msgToUserParser; // "DOSAAF vehicle '%1' close to '%2'", dist %3
 _slope = [0,0,1] distance ( vectorUp _cone );
 if ( _slope < 0.2 )  exitWith{};
 

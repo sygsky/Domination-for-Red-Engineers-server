@@ -290,7 +290,7 @@ XHandleNetStartScriptClient = {
 		};
 		case "stop_sm": {
 			current_mission_text = localize "STR_SYS_121_2"; // "The enemy has fled! Forget about his sorties!"
-		    [ "msg_to_user", "*", [ [ "STR_SYS_121_1" ] ], 0, 2, false, "fanfare" ] call SYG_msgToUserParser; // The enemy escaped! ..."
+		    [ "msg_to_user", "*", [ [ "STR_SYS_121_1" ] ], 0, 2, false, "fanfare" ] spawn SYG_msgToUserParser; // The enemy escaped! ..."
 		    hint localize "+++ stop_sm == true. No more SM allowed";
 		};
 		#ifndef __TT__
@@ -642,14 +642,15 @@ XHandleNetStartScriptClient = {
 		    private ["_pname"];
 		    _pname = argp(arg(1),2);
 			if (name player == _pname) then {
-				__compile_to_var; // d_player_staff = [];
+				__compile_to_var; // d_player_staff = _this select 1;
 				SYG_dateStart = arg(2); // set server start date
 				if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
 				SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server
-				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, SYG_suicideScreamSound %2, SYG_playerID %3",
+				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, SYG_suicideScreamSound %2, SYG_playerID %3,equip %4",
 				SYG_dateStart,
 				call SYG_getSuicideScreamSound,
-				SYG_playerID];
+				SYG_playerID,
+				d_player_stuff];
 				if (SYG_playerID == 0) then { // Im FIRST player in the game
 					SYG_townMaxScore = (d_ranked_a select 9); // 02-APR-2021 value was +40
 					publicVariable "SYG_townMaxScore"; // set public variable with the maximum scores bonus per town
@@ -820,7 +821,7 @@ XHandleNetStartScriptClient = {
 
         // [ "sub_fac_score", _str, _param1, _param2 ]
         case "sub_fac_score": {
-            [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] call SYG_msgToUserParser;
+            [ "msg_to_user", name player, [ [ _this select 1, _this select 2, _this select 3 ] ] ] spawn SYG_msgToUserParser;
             if (name player == _this select 3) then {
                 _score = (d_ranked_a select 20);
                 if ( _score > 0 ) then { _score = - _score };
@@ -890,12 +891,12 @@ XHandleNetStartScriptClient = {
                 _rank_id = player call XGetRankIndexFromScore; // rank index in any case (extended system (may returns value > 6 (colonel rank index)) or not)
                 _score = (_rank_id max 1)* 10; // How costs the illumination above base, for Private as for Corporal
                 // "Over the base, a regular launch of flares began. Points taken: -%1"
-                [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
+                [ "msg_to_user", "",  [ ["STR_ILLUM_3", _score ] ], 0, 2, false, "good_news" ] spawn SYG_msgToUserParser;
                 //player addScore -_score;
                 (-_score) call SYG_addBonusScore;
             #else
                 // "Over the base, a regular launch of flares began"
-                [ "msg_to_user", "",  [ ["STR_ILLUM_3_1" ] ], 0, 2, false, "good_news" ] call SYG_msgToUserParser;
+                [ "msg_to_user", "",  [ ["STR_ILLUM_3_1" ] ], 0, 2, false, "good_news" ] spawn SYG_msgToUserParser;
             #endif
             };
             // inform others about illumination start
@@ -914,7 +915,7 @@ XHandleNetStartScriptClient = {
         		//player addScore ( _this select 2 );
         		( _this select 2 ) call SYG_addBonusScore;
         	};
-			if ( ( count _this ) > 3 ) exitWith { ( _this select 3 ) call SYG_msgToUserParser}; // try to print message if exists
+			if ( ( count _this ) > 3 ) exitWith { ( _this select 3 ) spawn SYG_msgToUserParser}; // try to print message if exists
         };
 
 #ifdef __DOSAAF_BONUS__
@@ -955,7 +956,7 @@ XHandleNetStartScriptClient = {
 								["STR_BONUS_1_1", _this select 2, typeOf _veh, (d_ranked_a select 30) ], // "'%1' found '%2' (+%3 score)"],
 								["STR_BONUS_1_2", typeOf _veh],
 								["STR_BONUS_1_3", typeOf _veh, "STR_REG_ITEM"]
-							],5,0, false, "good_news"] call SYG_msgToUserParser;
+							],5,0, false, "good_news"] spawn SYG_msgToUserParser;
 						};
 						hint localize format["+++ bonus.ADD on client: move %1 to the markers list, cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %2 ", typeOf _veh,_ret];
 						// ["msg_to_user",["-", name player],[["'%1' обнаружил %2", _this select 2, typeOf _veh]],0,0, false, "good_news"] call XHandleNetStartScriptClient;
@@ -988,7 +989,7 @@ XHandleNetStartScriptClient = {
 							["STR_BONUS_3_1"], // "Registering a new vehicle"
 							["STR_BONUS_3_2", typeOf _veh,  _this select 2, (d_ranked_a select 31) ], // "Check-in '%1' is done, recovery service is allowed (responsible '%2', +%3 points)"
 							["STR_BONUS_3_3"]
-						],5,0, false, "good_news"] call SYG_msgToUserParser;
+						],5,0, false, "good_news"] spawn SYG_msgToUserParser;
 					};
 //					    0              1,                  2,                                                          3, 4, 5      6
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;

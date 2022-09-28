@@ -22,7 +22,7 @@ _sleep = _nysecs - _time - 600; // how to sleep to awake 10 minutes before NY
 // how many seconds to sleep up to 600 seconds before the NY
 if (_sleep <= 0) exitWith {format["+++ new_year_check.sqf: you are %1 seconds late to be checked on the NY event", _sleep]};
 // STR_SYS_NEW_YEAR_START
-["msg_to_user", "", ["STR_SYS_NEW_YEAR_START" ], 0, 0, false, "drum_fanfare"] call SYG_msgToUserParser; // ""The New Year's Eve Combat Check Procedure has begun!""
+["msg_to_user", "", ["STR_SYS_NEW_YEAR_START" ], 0, 0, false, "drum_fanfare"] spawn SYG_msgToUserParser; // ""The New Year's Eve Combat Check Procedure has begun!""
 sleep _sleep; // wait up to the 10 minutes before NY
 _score = score player; // remember current score befoe NY
 playSound "drum_fanfare"; // NY check procedure started
@@ -30,7 +30,7 @@ _sleep =  900; // sleep period to the 5 minutes after NY
 sleep _sleep; // slip to the 5 minutes after NY
 if ((score player) != _score ) exitWith { // Combat activity detected!!! Score changed during 15 minute interval over NY
 	10 call  SYG_addBonusScore;
-	["msg_to_user", "", ["STR_SYS_NEW_YEAR", 10 ], 0, 0, false, "good_news"] call SYG_msgToUserParser; // ""For combat activity on New Year's Eve, the chief engineer awards you +%1 points.""
+	["msg_to_user", "", ["STR_SYS_NEW_YEAR", 10 ], 0, 0, false, "good_news"] spawn SYG_msgToUserParser; // ""For combat activity on New Year's Eve, the chief engineer awards you +%1 points.""
 	[ "log2server", name player, format[ "+++ new_year_check.sqf: For combat activity on New Year's Eve, the chief engineer awards %1 with +%2 points", name player, 10] ] call XSendNetStartScriptServer;
 };
 hint localize "-- new_year_check.sqf: The test of New Year's activity did not yield results";

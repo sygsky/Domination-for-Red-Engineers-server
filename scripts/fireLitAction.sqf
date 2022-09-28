@@ -17,7 +17,7 @@ _msg = switch _type do {
     case "Fire": {"STR_FIRE_NUM" call SYG_getRandomText};
     default {"STR_FIRE_UNKNOWN"};
 };
-["msg_to_user", [_name], [[_msg]]] call SYG_msgToUserParser; // message output
+["msg_to_user", [_name], [[_msg]]] spawn SYG_msgToUserParser; // message output
 hint localize format["scripts/fireLitAction.sqf message on fireAction: %1", localize _msg];
 if ( _msg == "STR_FIRELIT_1" || _msg == "STR_FIRE_1" ) then {
 	hint localize format["scripts/fireLitAction.sqf msg on fireAction, add score: %1", _msg];

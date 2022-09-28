@@ -1,6 +1,6 @@
 /*
 	x_scripts\x_setupplayer1.sqf, created by Sygsky on 30th of Jul 2021.
-	Helper for the x_setupplayer.sqf
+	Helper for the x_setupplayer1.sqf
 
 	author: Sygsky
 	description: assign weapon/ammo for the new player
@@ -22,11 +22,8 @@ _str = if (SYG_found_ACE) then {"ACE_found"} else {"ACE_not_found"};
 _str = _str + (if (SYG_found_EditorUpdate_v102) then { ", EditorUpdate_v102_found"} else {", EditorUpdate_v102_not_found"});
 ["d_p_a", name player, missionStart, localize "STR_LANG", _str ] call XSendNetStartScriptServer;
 waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
-#ifdef __DEBUG__
-if (!(isNil "d_player_stuff")) then {
-	if (count d_player_stuff >= 6) then { if ( (d_player_stuff select 5) != "" ) then {_equip = "has items";}; };
-};
-hint localize format["+++ x_setupplayer.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { format["has %1 item[s]", count d_player_stuff]}];
+
+hint localize format["+++ x_setupplayer1.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { d_player_stuff }];
 #endif
 if ( (isNil "d_player_stuff") || (time > _endtime) ) exitWith {
 	player_autokick_time = d_player_air_autokick;
@@ -40,8 +37,11 @@ player addScore (d_player_stuff select 3); // set saved scores
 _p = player;
 #ifdef __RANKED__
 _equip = "";
-if ( count d_player_stuff > 6) then { // equipment returned
+if ( count d_player_stuff > 5) then { // equipment returned
 	_equip = d_player_stuff select 5; // string with all equipment
+	hint localize format["+++ x_setupplayer1.sqf: equipment read as %1", _equip];
+} else {
+	hint localize "+++ x_setupplayer1.sqf: equipment not detected in the d_player_stuff variable"
 };
 // generate common weapon set
 if (_equip != "") then {
@@ -226,11 +226,12 @@ if ( _equip == "" ) then {
 				};
 				if (!_rearmed ) then {
 					[_p, _weapp] call SYG_armUnit;
-					// TODO: send info to the server about new equipment
-
 					//+++ Sygsky: add largest ACE rucksack and fill it with mags
 					_p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
 					_p setVariable ["ACE_Ruckmagazines", _magp];
+					// send info to the server about new equipment, note that weapons will be read from player in OPD callback
+					_equip = player call SYG_getPlayerRucksackAsStr;
+					["d_ad_wp", name player, _equip] call XSendNetStartScriptServer; // sent to the server 1st time player armamaent
 					hint localize format["+++ x_setupplayer1.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
 							name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];
 					//--- Sygsky
@@ -271,7 +272,7 @@ if ( (daytime < SYG_startMorning) || (daytime > (SYG_startNight - 3)) || (toUppe
 player call SYG_addBinocular;
 //		hint localize format["+++ rearm: after player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
 //    	d_player_stuff = nil;
-//__DEBUG_NET("x_setupplayer.sqf",d_player_stuff)
+//__DEBUG_NET("x_setupplayer1.sqf",d_player_stuff)
 
 #ifdef __EQUIP_OPD_ONLY__
 SYG_playerRucksackContent = player call SYG_getPlayerRucksackAsStr; // initial player rucksack content in text form

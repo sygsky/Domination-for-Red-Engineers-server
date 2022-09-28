@@ -8,7 +8,7 @@
 //
 // // Usage from code: ammobox1 addAction[localize "STR_CHECK_ITEM","scripts\info_ammobox.sqf"]; // "Inspect"
 
-["msg_to_user", "", [ [_this select 3] ] ] call SYG_msgToUserParser; // message output
+["msg_to_user", "", [ [_this select 3] ] ] spawn SYG_msgToUserParser; // message output
 (_this select 0) removeAction (_this select 2); // Remove action
 playSound "losing_patience"; // he-he
 if (true) exitWith {};

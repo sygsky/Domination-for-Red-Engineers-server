@@ -459,5 +459,5 @@ SYG_objectSize3D = {
 	_vol = boundingBox _this;
 	_p1 = _vol select 0;
 	_p2 = _vol select 1;
-	[abs ( (_p1 select 0) - (_p0 select 0) ), abs ( (_p1 select 1) - (_p0 select 1) ), abs ( (_p1 select 2) - (_p0 select 2) )]
+	[abs ( (_p1 select 0) - (_p2 select 0) ), abs ( (_p1 select 1) - (_p2 select 1) ), abs ( (_p1 select 2) - (_p2 select 2) )]
 };

@@ -26,10 +26,10 @@ if ((call SYG_getDayTimeId) != 0) exitWith {
     // this is not night
 #ifdef __RANKED__
     // "Come again at night (after message). And don't forget the points (%1)"
-    [ "msg_to_user", "",  [ ["STR_ILLUM_2", _score] ], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
+    [ "msg_to_user", "",  [ ["STR_ILLUM_2", _score] ], 0, 0, false, "losing_patience" ] spawn SYG_msgToUserParser;
 #else
     // "Come again at night (after message)"
-    [ "msg_to_user", "",  [ ["STR_ILLUM_2_0"] ], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
+    [ "msg_to_user", "",  [ ["STR_ILLUM_2_0"] ], 0, 0, false, "losing_patience" ] spawn SYG_msgToUserParser;
 #endif
 };
 
@@ -37,7 +37,7 @@ if ((call SYG_getDayTimeId) != 0) exitWith {
 // Check if player have enough scores to launch illumination
 if (score player < _score ) exitWith {
     // "You don't have enough points. Required, with your rank, %1"
-    ["msg_to_user", "",  [ [ "STR_ILLUM_1", _score] ], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
+    ["msg_to_user", "",  [ [ "STR_ILLUM_1", _score] ], 0, 0, false, "losing_patience" ] spawn SYG_msgToUserParser;
 };
 #endif
 // send request message "illum_over_base" to the server , it will response with refuse text message ("STR_ILLUM"), or by event "illum_over_base" to confirm and subtract your scores
