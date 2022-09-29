@@ -369,25 +369,34 @@ XfGetRanPointSquare = {
 };
 
 // no slope check, only water check for patrolling
+// _pos = [  9386,  8921, 0 ], 600, 200, -5,...];
+// _new_pos = _pos call XfGetRanPointSquareOld;
 XfGetRanPointSquareOld = {
-	private ["_pos", "_a", "_b", "_angle", "_centerx", "_centery", "_leftx", "_lefty", "_width", "_height", "_ret_val", "_co", "_px1", "_py1", "_radius", "_atan", "_x1", "_y1"];
+#ifdef __OLD__
+	private ["_i", "_pos", "_a", "_b", "_angle", "_centerx", "_centery", "_leftx", "_lefty", "_width", "_height", "_ret_val", "_px1", "_py1", "_radius", "_atan", "_x1", "_y1"];
+#else
+	private ["_i", "_pos", "_a", "_b", "_angle", "_centerx", "_centery", "_leftx", "_lefty", "_width", "_height", "_ret_val", "_px1", "_py1", "_rotpnt" ];
+#endif
+
 	_pos = _this select 0;_a = _this select 1;_b = _this select 2;_angle = _this select 3;
 	_centerx = _pos select 0;_centery = _pos select 1;_leftx = _centerx - _a;_lefty = _centery - _b;
-	_width = 2 * _a;_height = 2 * _b;_ret_val = [];_co = 0;
-	while {count _ret_val == 0 && _co < 50} do {
+	_width = 2 * _a;_height = 2 * _b;_ret_val = [];
+	for "_i" from 1 to 50 do {
 		_px1 = _leftx + random _width;
 		_py1 = _lefty + random _height;
+#ifdef __OLD__
 		_radius = _pos distance [_px1,_py1];
 		_atan = (_centerx - _px1) atan2 (_centery - _py1);
 		_x1 = _centerx - (_radius * cos (_atan + _angle));
 		_y1 = _centery - (_radius * sin (_atan + _angle));
-		if (!(surfaceIsWater [_x1, _y1])) then {
-			_ret_val = [_x1, _y1, 0];
-		};
-		if (count _ret_val == 0) then {
-			_co = _co + 1;
-			sleep .01;
-		};
+		if ( !( surfaceIsWater [_x1, _y1] ) ) exitWith { _ret_val = [_x1, _y1, 0] };
+#else
+		// E.g.:  _rect = [[  9386,  8921, 0 ], 600, 200, -5, ...]; // Parachute drop rectangle
+		// _rotpnt = [_center_pnt, _pnt2rot, _angle] call SYG_rotatePoint;
+		_rotpnt = [_pos, [_px1,_py1], -_angle] call SYG_rotatePointAroundPoint; // rotate in inverse direction as directions are different in algebra (ccw) and in Arma (cw)
+		if ( !( surfaceIsWater _rotpnt ) ) exitWith { _ret_val = _rotpnt };
+#endif
+		sleep .01;
 	};
 	_ret_val
 };

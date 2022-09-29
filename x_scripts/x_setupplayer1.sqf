@@ -24,7 +24,7 @@ _str = _str + (if (SYG_found_EditorUpdate_v102) then { ", EditorUpdate_v102_foun
 waitUntil { sleep 0.1; ( (!(isNil "d_player_stuff")) || (time > _endtime)) };
 
 hint localize format["+++ x_setupplayer1.sqf: d_player_stuff %1 +++", if (isNil "d_player_stuff") then { "isNil" } else { d_player_stuff }];
-#endif
+
 if ( (isNil "d_player_stuff") || (time > _endtime) ) exitWith {
 	player_autokick_time = d_player_air_autokick;
 };

@@ -210,9 +210,8 @@ SYG_rotatePointAroundPoint = {
 	_ang  = arg(2);
 	_sin = sin _ang;
 	_cos = cos _ang;
-	_pnt2 = [ (_dx * _cos - _dy * _sin) + _x, (_dx * _sin + _dy * _cos) + _y, 0];
+	[ (_dx * _cos - _dy * _sin) + _x, (_dx * _sin + _dy * _cos) + _y, 0]
 	//player groupChat format["SYG_rotatePointAroundPoint: pnt %1 rot by %2 to %3", _pnt, _ang, _pnt2];
-	_pnt2
 };
 
 // Position are in 3D format [X,Y,Z]
@@ -323,8 +322,9 @@ SYG_pointInEllipse = {
 
 // =======================================
 //
-// call : _in_rect = [_pnt, _rect] call SYG_pointInRect;
-// Rect format: [[center x, center y<, center z>], a, b<, angle>], with or without rotation
+// call : _in_rect = [_pnt, _rect_descr] call SYG_pointInRect;
+// _rect_descr format: [[center x, center y<, center z>], a, b<, angle>], with or without rotation,
+// Note: angle in Arma counted in CLOCKWISE direction!!!
 // returns: true if point is in rect or false if out of rect
 //
 SYG_pointInRect = {

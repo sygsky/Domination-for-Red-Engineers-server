@@ -442,7 +442,7 @@ SYG_pointOnRahmadi = {
  * Detects if point is in base circumstances (near area is designated by predefined rectange)
  * Real base rectangle is as follows: [[9821.47,9971.04,0], 600, 200, 0];
  * call:
- * _bool = (_pos || _obj) call SYG_pointInRect
+ * _bool = (_pos || _obj) call SYG_pointNearBase
  */
 SYG_pointNearBase = {
     if (typeName _this == "OBJECT") then {_this = position _this};
