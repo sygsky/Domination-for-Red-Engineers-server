@@ -80,10 +80,12 @@ if (_use_wind) then { // emulate sea wind if jump above sea
 };
 #endif
 
+_plane = _jump_helo isKindOf "Plane";
+//if (_plane) then { playSound "hard_landing" }; // play atmospheric sound of plane landing
+
 uh60p = createVehicle [_jump_helo, _start_location, [], 0, "FLY"];
 _dir = random 360;
 uh60p setDir _dir;
-_plane = _jump_helo isKindOf "Plane";
 _speed = if (_plane) then {60} else {35};
 uh60p setVelocity  [(sin _dir) * _speed, (cos _dir) * _speed, 0 ];
 /**

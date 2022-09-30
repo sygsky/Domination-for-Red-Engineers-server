@@ -910,7 +910,7 @@ _local_msg_arr spawn {
               ["Groß-/Kleinschreibung beachten Skype-Anmeldung: sygsky"] //
             ],
             7, 5, false, "drum_fanfare"
-        ] call SYG_msgToUserParser;
+        ] spawn SYG_msgToUserParser;
     };
 
     // Litva
@@ -1200,7 +1200,7 @@ XBaseEnemies = {
                     } forEach _thislist;
                 };
             };
-            _sound = if ( (random 10) < 1 ) then { call SYG_onBaseAttackSound } else { "alarm" };
+            _sound = if ( (random 10) < 1 ) then { call SYG_getBaseAttackSound } else { "alarm" };
             if ( player call SYG_pointIsOnBase ) then { _alarm_obj say _sound } else { playSound _sound };
             // throw flare above alarm object
 			// if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
