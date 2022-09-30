@@ -42,7 +42,9 @@ sleep 15.111;
 _ownedPrev = false; // at start mission flag is on pole and not owned by anybody
 while {true} do {
 	if (X_MP) then {
-		waitUntil {sleep (1.012 + random 1);( call XPlayersNumber) > 0 };
+	    if (( call XPlayersNumber) == 0) then {
+    		waitUntil {sleep (10.012 + random 1);( call XPlayersNumber) > 0 };
+	    };
 	};
 	_owner = flagOwner _flag;
 	#ifndef __TT__
@@ -64,28 +66,24 @@ while {true} do {
 		deleteVehicle _flag;
 		side_mission_winner=2;
 		side_mission_resolved = true;
+        //+++ added on issue # 562
+        [ "say_sound", position FLAG_BASE, "flag_captured" ] call XSendNetStartScriptClient; // play sound of "flag capture" event everywhere
 	};
 	#else
-	if ((alive _owner) && (_owner distance RFLAG_BASE < 20)) exitWith {
-		if (__RankedVer) then {
-			["d_sm_p_pos", position RFLAG_BASE] call XSendNetVarClient;
-		};
-		_flag setFlagOwner objNull;
-		clearVehicleInit _flag;
-		deleteVehicle _flag;
-		side_mission_winner = 1;
-		side_mission_resolved = true;
-	};
-	if ((alive _owner) && (_owner distance WFLAG_BASE < 20)) exitWith {
-		if (__RankedVer) then {
-			["d_sm_p_pos", position WFLAG_BASE] call XSendNetVarClient;
-		};
-		_flag setFlagOwner objNull;
-		clearVehicleInit _flag;
-		deleteVehicle _flag;
-		side_mission_winner = 2;
-		side_mission_resolved = true;
-	};
+	{
+        if ((alive _owner) && (_owner distance _x < 20)) exitWith {
+            if (__RankedVer) then {
+                ["d_sm_p_pos", position _x] call XSendNetVarClient;
+            };
+            _flag setFlagOwner objNull;
+            clearVehicleInit _flag;
+            deleteVehicle _flag;
+            side_mission_winner = 2;
+            side_mission_resolved = true;
+            //+++ added on issue # 562
+            [ "say_sound", position _x, "flag_captured" ] call XSendNetStartScriptClient; // play sound of "flag capture" event everywhere
+        };
+	} forEach [RFLAG_BASE,WFLAG_BASE];
 	#endif
 	sleep 5.123;
 };
