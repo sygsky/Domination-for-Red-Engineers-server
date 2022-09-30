@@ -528,21 +528,23 @@ if (typeName _camstart != "ARRAY" ) then {
 
 // [_music_name<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle;
 SYG_showMusicTitle = {
-	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a"/*,"_sec"*/];
-	_XD_display = findDisplay 77043;
+	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a","_dlg"];
+	_dlg = createDialog "S_RscIntroTitles";
+	_XD_display = findDisplay 77044;
 	// Check if music has title defined
 	_str = localize format["STR_%1", _this select 0];
 	if (isNull _XD_display) exitWith {
-		hint localize format[ "+++ SYG_showMusicTitle: _XD_display(77043) isNull, music title for ""%1""(%2) can't be shown, exit.", _str, _this select 0 ];
+		hint localize format[ "+++ SYG_showMusicTitle: _XD_display(77044) isNull, music title ""%1"" (%2) can't be shown, exit.", _str, _this select 0 ];
+		if (dialog) then { closeDialog 0 };
 	};
 	if ( _str != "") then { // title defined and found
 		_control1 = _XD_display displayCtrl 66667;
 		_control1 ctrlSetText _str;
 		_control1 ctrlShow true;
-		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) for title ""%2""", ctrlText _control1, _str ];
+		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) created", _control1 ];
 	} else  { // to title found
 		_control1 = displayNull;
-		hint localize format[ "--- SYG_showMusicTitle: music text control for ""%1"" not found", _this select 0 ];
+		hint localize format[ "--- SYG_showMusicTitle: music text not found, skip control for ""%1"" creation", _this select 0 ];
 	};
 
 	if (d_still_in_intro) then { // then show logo of the mission (Author, modified by etc)
@@ -602,6 +604,7 @@ SYG_showMusicTitle = {
 	};
 
 	if (!isNull _control1) then { _control1 ctrlShow false };
+	if (dialog) then { closeDialog 0 };
 };
 
 [_music, 30] spawn SYG_showMusicTitle;
@@ -877,7 +880,9 @@ if (call isDarkness) then {
 };
 
 #endif
-closeDialog 0;
+
+if (dialog) then { closeDialog 0 };
+
 [ "say_sound", FLAG_BASE, "gong_5" ] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
 
 enableRadio true;

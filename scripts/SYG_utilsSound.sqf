@@ -280,7 +280,7 @@ SYG_OFPTracks =
 /*
     Music for town counter attacks
 */
-SYG_counterAttackTracks =
+SYG_getCounterAttackTrack = {
     [
         ["ATrack24",[0,59.76]],
         ["ATrack24",[60,73]],
@@ -289,8 +289,9 @@ SYG_counterAttackTracks =
         ["ATrack25",[0,71]],
         ["ATrack25",[71,-1]],
 
-        "ATrack1","ATrack23","fear2","ruffian","mission_impossible"
-    ];
+		"ATrack1","ATrack23","fear2","ruffian","mission_impossible","kk_the_hole"
+    ] call XfRandomArrayVal;
+};
 
 SYG_playRandomOFPTrack = {
     SYG_OFPTracks call SYG_playRandomTrack;

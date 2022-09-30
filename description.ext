@@ -101,6 +101,47 @@ class CfgIdentities {
 
 #include "h\CfgSounds.hpp"
 
+class S_RscIntroTitles {
+	idd = 77044;
+	movingEnable = false;
+	class ControlsBackground {};
+
+	class Controls {
+		// title class for show intro comment about Xeno and EngineerACE
+		class titel1: XC_RscText
+		{
+			idc=66666;
+			style="16+2+512";
+			lineSpacing=0.950000;
+			text=$STR_TITLE;
+			x=0.39000000;
+			y=0.8100000;
+			w=0.900000;
+			h=0.700000;
+			colorBackground[]={0,0,0,0};
+			colorText[]={0.8,0.9,0.9,0.7};
+			size=0.57;
+			sizeEx=0.026;
+		};
+
+		// title class to show intro/etc misic info text
+		class titel2: XC_RscText {
+			idc=66667;
+			style="16+2+512";
+			lineSpacing=0.950000;
+			text="";
+			x=0.0.0;
+			y=0.8100000;
+			w=0.300000;
+			h=0.500000;
+			colorBackground[]={0,0,0,0};
+			colorText[]={1,1,0.5,1};
+			size=0.5;
+			sizeEx=0.026;
+		};
+	};
+};
+
 class X_RscAnimatedLetters {
 	idd = 77043;
 	movingEnable = false;
@@ -324,38 +365,6 @@ class X_RscAnimatedLetters {
 		class L208: L1 {idc = __EVAL(idc + 207);};
 		class L209: L1 {idc = __EVAL(idc + 208);};
 
-        // title class for show intro comment about Xeno and EngineerACE
-		class titel1: XC_RscText
-		{
-			idc=66666;
-			style="16+2+512";
-			lineSpacing=0.950000;
-			text=$STR_TITLE;
-			x=0.39000000;
-			y=0.8100000;
-			w=0.900000;
-			h=0.700000;
-			colorBackground[]={0,0,0,0};
-			colorText[]={0.8,0.9,0.9,0.7};
-			size=0.57;
-			sizeEx=0.026;
-		};
-
-		// title class to show intro/etc misic info text
-		class titel2: XC_RscText {
-			idc=66667;
-			style="16+2+512";
-			lineSpacing=0.950000;
-			text="";
-			x=0.0.0;
-			y=0.8100000;
-			w=0.300000;
-			h=0.500000;
-			colorBackground[]={0,0,0,0};
-			colorText[]={1,1,0.5,1};
-			size=0.5;
-			sizeEx=0.026;
-		};
 	};
 };
 

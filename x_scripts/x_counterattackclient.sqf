@@ -1,36 +1,38 @@
 // by Xeno, x_scripts\x_counterattackclient.sqf: counter attack execution
+//
+// call: ["an_countera", "start_real" <,_sound>] execVM "x_scripts\x_counterattackclient.sqf";
+//
 private ["_reason"];
 
 if (!X_Client) exitWith {};
 
 #include "x_macros.sqf"
 
-_reason = _this select 0;
+_reason = _this select 1;
+_sound  = if (count _this > 2) then {_this select 2} else {""};
 
 switch (_reason) do {
 	case "start" : {
 		_current_target_name = call SYG_getTargetTownName; // __TargetInfo
-		_s = format [localize "STR_SYS_541", _current_target_name]; // "It seems that the enemy doesn't want to give up %1 and starts a counterattack. Search defensive positions, the attack will start in a few minutes..."
 
-		// Todo: first play special radio signal, it is received only player who are:
-		// 1. On base with any antenna alive
+		// first play special radio signal, it is received only player who are:
+		// 1. Near any antenna alive
 		// 2. In any vehicle except ATV, motocycle, bike
 		// 3. Has radio in inventory
 		"counterattack" call SYG_receiveRadio;
 		sleep 5;
 
     	// Play relevant music. TODO: show music title if possible
-    	_sound = SYG_counterAttackTracks call XfRandomArrayVal;
-		_str = localize format["STR_%1", _sound];
-		if ( _str != "") then { // title defined and found
-    		["say_sound","PLAY",_sound,0,30] call XHandleNetStartScriptClient; // show music title on playing
-		} else {
-			_sound call SYG_playRandomTrack;
-		};
+    	if (_sound != "") then {
+			_str = localize format["STR_%1", _sound];
+			if ( _str != "") then { // title defined and found
+				["say_sound","PLAY",_sound,0,30] call XHandleNetStartScriptClient; // show music title on playing
+			} else {
+				_sound call SYG_playRandomTrack;
+			};
+    	};
 
-
-
-		[_s, "HQ"] call XHintChatMsg;
+		[format [localize "STR_SYS_541", _current_target_name], "HQ"] call XHintChatMsg; // "It seems that the enemy doesn't want to give up %1 and starts a counterattack. Search defensive positions, the attack will start in a few minutes..."
 	};
 	case "start_real": {
 		[localize "STR_SYS_541_1", "HQ"] call XHintChatMsg; // "The counterattack starts. Hold the current target. Good luck and god help us all...

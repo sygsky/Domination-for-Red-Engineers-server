@@ -211,7 +211,7 @@ XHandleNetStartScriptClient = {
 			execVM "x_scripts\x_sidemissionwinner.sqf";
 		};
 		case "an_countera": {
-			[_this select 1] execVM "x_scripts\x_counterattackclient.sqf";
+			_this execVM "x_scripts\x_counterattackclient.sqf";
 		};
 		case "sec_kind": {
 			__compile_to_var;

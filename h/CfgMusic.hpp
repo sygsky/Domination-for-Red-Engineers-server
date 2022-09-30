@@ -32,7 +32,6 @@ class CfgMusic {
     class enchanted_boy     { name="";        sound[]=   {\sounds\intro\enchanted_boy.ogg,db-1,1.0}; };
 
     class          ahead_friends { name=""; sound[]= {\sounds\ahead_friends.ogg,db-1,1.0}; };
-    class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
     class               lastdime { name=""; sound[]= {\sounds\intro\lastdime.ogg,db-1,1.0};    };
 //    class              lastdime1 { name=""; sound[]= {\sounds\intro\lastdime1.ogg,db-1,1.0};    };
     class              lastdime2 { name=""; sound[]= {\sounds\intro\lastdime2.ogg,db-1,1.0};    };
@@ -61,11 +60,15 @@ class CfgMusic {
 */
 
 	// this music remained is needed as partial tracks music
+    class     mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
-    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some feat music
+    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some fear music
+    class kk_the_hole { name="King-Kong film, the hole"; sound[] = {\sounds\intro\holidays\kk_the_hole.ogg,db-1,1.0};}; // Kin-Kong 1976 film, The hole eposode
+
 //    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\weather\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
     class Vremia_vpered_Sviridov { name=""; sound[] = {\sounds\Vremia_vpered_Sviridov.ogg,db+0,1.0};}; // melody from Soviet film "Way to dock" ("Дорога к причалу")
+
 /** All music moveв to sounds
 //    class ipanoram { name=""; sound[] = {\sounds\ipanoram.ogg,db+0,1.0};}; // Soviet political review Telecast "International panoram"
     class rider { name=""; sound[] = {\sounds\rider.ogg,db+0,1.0};}; // Dean Reed song "Rider"

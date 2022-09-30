@@ -41,7 +41,7 @@ if (number_targets >= 15 /* && current_target_index != 5 */ && (current_counter 
 	if (_rnd < (number_targets  * 0.05) ) then {
 		counterattack = true;
 		_counter_attack = true;
-		["an_countera", "start"] call XSendNetStartScriptClient;
+		[ "an_countera", "start", call SYG_getCounterAttackTrack ] call XSendNetStartScriptClient;
 		execVM "x_scripts\x_counterattack.sqf";
 	};
 #endif

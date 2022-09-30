@@ -104,10 +104,26 @@ XClearSidemission = {
 	execVM "x_missions\x_getsidemission.sqf"; // start next SM
 };
 
+#ifdef __OLD__
+
 _trigger = createTrigger["EmptyDetector" ,_pos];
 _trigger setTriggerArea [0, 0, 0, false];
 _trigger setTriggerActivation ["NONE", "PRESENT", true];
 _trigger setTriggerStatements["side_mission_resolved", "xhandle = [] spawn XSideMissionResolved", ""];
+
+#else
+// new version of the missions resulution
+[] spawn {
+	while { true } do {
+		if ( side_mission_resolved ) then {
+			_xhandle = call XSideMissionResolved;
+			waitUntil {sleep 8; !side_mission_resolved }; // wait end of finish processing
+		};
+		sleep 2;
+	};
+};
+
+#endif
 
 // check mr
 x_checktransport = compile preprocessFileLineNumbers "x_scripts\x_checktransport.sqf";

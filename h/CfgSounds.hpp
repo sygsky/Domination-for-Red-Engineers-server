@@ -628,8 +628,8 @@ class CfgSounds {
     class march_of_soviet_tankmen { name="2nd Sunday of September ";    sound[] = {\sounds\intro\holidays\tankist_day\march_of_soviet_tankmen.ogg,db-1,1.0}; titles[] = {};}; // Day of School
     // march_of_soviet_tankmen.ogg
     class Hungary    { name="Hungary day";                              sound[] = {\sounds\intro\holidays\Hungary.ogg,db-1,1.0}; titles[] = {};}; // Day of Hungarian Peple Republic
-    class kk_the_hole { name="King-Kong film, the hole";                sound[] = {\sounds\intro\holidays\kk_the_hole.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
-    class jimmy_dont_miss { name="";                					sound[] = {\sounds\intro\holidays\jimmy_dont_miss.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
+    class kk_the_hole { name="King-Kong film, the hole";                sound[] = {\sounds\intro\kk_the_hole.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
+    class jimmy_dont_miss { name="";                					sound[] = {\sounds\intro\jimmy_dont_miss.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
 
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
