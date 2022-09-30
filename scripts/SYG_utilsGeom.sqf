@@ -210,9 +210,8 @@ SYG_rotatePointAroundPoint = {
 	_ang  = arg(2);
 	_sin = sin _ang;
 	_cos = cos _ang;
-	_pnt2 = [ (_dx * _cos - _dy * _sin) + _x, (_dx * _sin + _dy * _cos) + _y, 0];
+	[ (_dx * _cos - _dy * _sin) + _x, (_dx * _sin + _dy * _cos) + _y, 0]
 	//player groupChat format["SYG_rotatePointAroundPoint: pnt %1 rot by %2 to %3", _pnt, _ang, _pnt2];
-	_pnt2
 };
 
 // Position are in 3D format [X,Y,Z]
@@ -323,8 +322,9 @@ SYG_pointInEllipse = {
 
 // =======================================
 //
-// call : _in_rect = [_pnt, _rect] call SYG_pointInRect;
-// Rect format: [[center x, center y<, center z>], a, b<, angle>], with or without rotation
+// call : _in_rect = [_pnt, _rect_descr] call SYG_pointInRect;
+// _rect_descr format: [[center x, center y<, center z>], a, b<, angle>], with or without rotation,
+// Note: angle in Arma counted in CLOCKWISE direction!!!
 // returns: true if point is in rect or false if out of rect
 //
 SYG_pointInRect = {
@@ -436,7 +436,7 @@ SYG_angleBetweenVectors3D = {
 // or:   [_obj1<,...,_objN>] call SYG_averPoint; // or
 //
 SYG_averPoint = {
-	private [ "_pnt", "_posX", "_posY", "_posZ", "_cnt" ];
+	private [ "_pnt", "_posX", "_posY", "_posZ", "_cnt", "_x" ];
 	if ( typeName _this != "ARRAY" ) then { _this = [ _this ] };
 	_posX = 0.0;
 	_posY = 0.0;
@@ -449,4 +449,15 @@ SYG_averPoint = {
 	} forEach _this;
 	_cnt = count _this;
 	[_posX/_cnt, _posY/_cnt, _posZ/_cnt]
-}
+};
+
+//
+// Return size of the object as [dx,dy,dz]
+// Call: _size = _obj call SYG_size3D;
+SYG_objectSize3D = {
+	private ["_vol","_p1","_p2"];
+	_vol = boundingBox _this;
+	_p1 = _vol select 0;
+	_p2 = _vol select 1;
+	[abs ( (_p1 select 0) - (_p2 select 0) ), abs ( (_p1 select 1) - (_p2 select 1) ), abs ( (_p1 select 2) - (_p2 select 2) )]
+};

@@ -112,10 +112,10 @@ if (isNull _map_marker ) then { // create base sign : "DangerEast"
 	_map_marker addAction[ localize "STR_BASE_TITLE_SHORT", "scripts\bonus\info.sqf", format[localize "STR_BASE_TITLE", 1.0 / DOSAAF_MAP_SCALE] ]; // "DOSAAF map (scale 1:%1): our base"
 	_map_marker addAction[ localize "STR_DOSAAF_TITLE", "scripts\bonus\info.sqf", localize "STR_DOSAAF_ABOUT" ]; // "What is DOSAAF"
 	hint localize format[ "+++ make_map.sqf: Base map center (%1) created: ""%2""", _center_type, localize "STR_BASE_TITLE_SHORT" ];
-//	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  _cnt, _ready_cnt, _dead_cnt, _nilCnt]], 0, 105, false, "good_news"] call SYG_msgToUserParser;
+//	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  _cnt, _ready_cnt, _dead_cnt, _nilCnt]], 0, 105, false, "good_news"] spawn SYG_msgToUserParser;
 } else {
 //	hint localize format[ "+++ make_map.sqf: Base map center (%1) found", _center_type ];
-	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  count _arr_new, _ready_cnt, _dead_cnt, _nilCnt]], 0, 5, false, "good_news"] call SYG_msgToUserParser;
+	["msg_to_user", "", [[ localize "STR_DOSAAF_MAP",  count _arr_new, _ready_cnt, _dead_cnt, _nilCnt]], 0, 5, false, "good_news"] spawn SYG_msgToUserParser;
 };
 
 //_arr = DOSAAF_MAP_POS nearObjects [_cone_type, 55];

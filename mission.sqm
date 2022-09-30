@@ -1684,18 +1684,18 @@ class Mission
 		};
 		class Item96
 		{
-			position[]={9696.599609,134.000000,9950.000000};
+			position[]={9696.6,134.000000,9945.000000};
 			special="NONE";
 			id=131;
 			side="EMPTY";
-			vehicle="HeliHEmpty";
+			vehicle="Heli_H_civil";
 			leader=1;
 			skill=0.600000;
 			text="AISPAWN";
 		};
 		class Item97
 		{
-			position[]={10112.375000,139.994995,10077.583008};
+			position[]={10112.4,139.994995,10077.6};
 			id=132;
 			side="EMPTY";
 			vehicle="Heli_H_civil";

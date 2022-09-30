@@ -25,8 +25,11 @@ _set_detected = {
 		_veh setVariable ["DETECTED", true];
 		// copy detected status to the server
 		if (_veh isKindOf "Truck") then {
+			// Print message on the server now
+		 	["log2server", name player,format["radar truck detected at %1", _veh call SYG_nearestLocationName]];
 			["remote_execute", "d_radar_truck setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
 		} else {
+		 	["log2server", name player,format["radar mast detected at %1", _veh call SYG_nearestLocationName]];
 			["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
 		};
 		true

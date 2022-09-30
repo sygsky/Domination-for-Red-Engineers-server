@@ -104,9 +104,9 @@ uh60p setSpeedMode ( if (_plane) then {"FULL"} else {"LIMITED"} );
 _halo_height = d_halo_height;
 #ifdef __ACE__
 switch _paratype do {
-    case "ACE_ParachuteRoundPack": {_halo_height = d_halo_height / 7};
-    case "ACE_ParachutePack";
-    default {_halo_height = d_halo_height * 2};
+    case "ACE_ParachutePack" : {_halo_height = d_halo_height * 2};
+    case "ACE_ParachuteRoundPack";
+    default  {_halo_height = d_halo_height / 7};
 };
 #endif
 // check parachute presence
@@ -138,9 +138,21 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 	player setVelocity  [ (sin _dir) * 20, (cos _dir) * 20, 0 ]; // set speed 20 m/s in direction of plane flight else you are always get  damage to your health
 	if (((getPos (vehicle player)) select 2) < 10) exitWith {};
 	[ player ] execVM "ace_sys_eject\s\ace_jumpOut_cord.sqf";
+	[] spawn {
+		waitUntil { (!(alive player)) || (vehicle player != player) || ((getPos player select 2) < 5) };
+		if ((getPos player select 2) < 5) exitWith {};
+		if (!(alive player)) exitWith {};
+		if ( vehicle player != player) then {
+			if  ((vehicle player) call SYG_isParachute) then {
+				_id = (vehicle player) addEventHandler ["getout", {_this execVM "AAHALO\event_para_dropped.sqf"}];
+				(vehicle player) setVariable ["PARA_GETOUT", _id];
+			};
+		};
+	};
 } else {
 	[uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf"; // Go to ACE code to complete jump
 };
+
 
 sleep 3;
 

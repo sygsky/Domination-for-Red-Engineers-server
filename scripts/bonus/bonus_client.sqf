@@ -42,7 +42,7 @@ _reset_params = {
 				_veh = _new_arr call XfRandomArrayVal;
 				_arr set [count _arr, [localize "STR_BONUS_8",typeOf _veh,  _veh call SYG_MsgOnPos]] ;
 			};
-			["msg_to_user", "", _arr, 5, 105, false, "good_news"] call SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
+			["msg_to_user", "", _arr, 5, 105, false, "good_news"] spawn SYG_msgToUserParser; // "%1 vehicle of ДОСААФ detected on the island"
 		};
 	};
 

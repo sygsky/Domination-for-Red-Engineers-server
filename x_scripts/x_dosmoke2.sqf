@@ -24,15 +24,6 @@ if (!isServer) exitWith {};
 #define __PRINT__
 //#define __FULL_PRINT__
 
-//
-#ifdef __PRINT__
-hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4",
-    typeOf (_this select 0),
-    (_this select 1) call SYG_getKillerInfo,
-    _this select 2,
-    count crew (_this select 0)];
-#endif
-
 _veh = _this select 0;
 
 _issmoking = _veh getVariable "D_IS_SMOKING";
@@ -51,6 +42,15 @@ if (isNull _shooter) exitWith {
 #endif
 };
 _damage = _this select 2;
+
+//
+#ifdef __PRINT__
+hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4",
+    typeOf _veh,
+    _shooter call SYG_getKillerInfo,
+    _damage,
+    count crew _veh];
+#endif
 
 _name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
 if ( _damage >= 1) exitWith { hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is killed by %2", typeOf _veh, _name]; }; // End Of Life

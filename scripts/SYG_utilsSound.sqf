@@ -605,4 +605,11 @@ SYG_randomRadioNoise = {
 	format["radionoise_%1", floor (random 6)] // radio_0..5
 };
 
+//
+// Return random armory activity sound
+// call: _asnd = call SYG_armorySound;
+//
+SYG_armorySound = {
+	format["armory%1", (floor(random 4)) + 1]
+};
 if (true) exitWith {};

@@ -11,7 +11,7 @@
 // Usage from code: AI_HUT addAction[localize "STR_CHECK_ITEM","scripts\info_barracks.sqf"]; // "Inspect"
 _args = [localize "STR_AI_10"];
 // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
-["msg_to_user", "", [_args],4,0,false,"losing_patience"] call SYG_msgToUserParser; // message output
+["msg_to_user", "", [_args],4,0,false,"losing_patience"] spawn SYG_msgToUserParser; // message output
 
 (_this select 0) removeAction (_this select 2); // Remove action
 if (true) exitWith {};

@@ -85,8 +85,8 @@ XHandleNetStartScriptServer = {
 			if (!isNull mrr2_lift_chopper) then {[mrr2_lift_chopper] spawn x_checktransport2;};
 		};
 #endif
-		case "x_drop_type": {
-			[(_this select 1),(_this select 2)] execVM "x_scripts\x_createdrop.sqf";
+		case "x_drop_type": { // 	["x_drop_type",x_drop_type,markerPos "x_drop_zone",name player] call XSendNetStartScriptServer;
+			[_this select 1,_this select 2,_this select 3] execVM "x_scripts\x_createdrop.sqf";
 		};
 		case "d_placed_obj_add": {
 			d_placed_objs set [count d_placed_objs, _this select 1];

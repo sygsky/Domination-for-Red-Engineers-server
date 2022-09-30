@@ -2226,6 +2226,18 @@ SYG_getConfigMags = {
 */
 
 /**
+ * call: _isPara = _veh call SYG_isParachute;
+ *
+ */
+SYG_isParachute = {
+#ifdef __ACE__
+	 ( _this in ["ACE_ParachuteRoundPack","ACE_ParachutePack"] ) || ( _this isKindOf "ParachuteBase" ) || ( _this isKindOf "RAS_Parachute" );
+#else
+	 ( _this isKindOf "ParachuteBase") || ( _this isKindOf "RAS_Parachute");
+#endif
+};
+
+/**
  * Detects if unit has parachute in his inventory
  *
  */
@@ -2238,11 +2250,11 @@ SYG_hasParachute = {
  *
  */
 SYG_getParachute = {
-	if (!(_this isKindOf "CAManBase")) exitWith {"<not a man>"};
+	if (!(_this isKindOf "CAManBase")) exitWith { "<not a man>" };
 	private ["_ret","_x"];
 	_ret = "";
 	{
-    	if ( (_x isKindOf "ParachuteBase") || ( _x isKindOf "RAS_Parachute") || (_x in ["ACE_ParachuteRoundPack","ACE_ParachutePack"])) exitWith { _ret = _x };
+    	if ( _x call SYG_isParachute ) exitWith { _ret = _x };
 	} forEach weapons _this;
 	_ret
 };

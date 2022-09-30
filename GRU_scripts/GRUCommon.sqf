@@ -124,7 +124,7 @@ GRU_SpecialScores = {
             if ( _score > 0) then {
 				_score call SYG_addBonusScore;
 				// "you've got a prize for your observation/curiosity"
-				[ "msg_to_user", name player, [GRU_specialBonusStrArr select _this, _score ], 0, 3, false, "no_more_waiting" ] call SYG_msgToUserParser;
+				[ "msg_to_user", name player, [GRU_specialBonusStrArr select _this, _score ], 0, 3, false, "no_more_waiting" ] spawn SYG_msgToUserParser;
 				GRU_specialBonusArr set [ _this, 0 ]; // never more this event could occure
 				publicVariable "GRU_specialBonusArr"; // clear scores
 				// send special message to other players: "The GRU rewarded %1 for something" and say sound from this player

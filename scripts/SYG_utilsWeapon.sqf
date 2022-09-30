@@ -1452,9 +1452,7 @@ SYG_replacePrimaryWeapon = {
 			if ( _x in _cmags and _x != _mag) then
 				{_magCnt = _magCnt + 1; _unit removeMagazine _x };
 		} forEach _mags;
-	}
-	else
-	{
+	} else {
 		if ( count _this > 3 ) then { _magCnt = arg(3); };
 	};
 	//_magCnt = _magCnt max 1; // at last 1 magazine must be present
@@ -1493,6 +1491,14 @@ SYG_addNVGoggles = {
     if (_this hasWeapon "NVGoggles") exitWith {true};
     _this addWeapon "NVGoggles";
     _this hasWeapon "NVGoggles"
+};
+
+SYG_isDarkness = {
+	(daytime < SYG_startMorning) || (daytime > SYG_startEvening)
+};
+
+SYG_addNVGogglesOnDarkness = {
+	if (call SYG_isDarkness) then { _this call SYG_addNVGoggles };
 };
 
 //
@@ -1629,8 +1635,6 @@ SYG_armUnit = {
 	true
 };
 
-#define  __REARM_FULL__
-#ifdef __REARM_FULL__
 //
 // New version or rearm. It uses new simpler scheme of parameters in array of 2-5 embed arrays:
 //
@@ -1654,13 +1658,13 @@ SYG_rearmUnit = {
 	if ( typeName _this != "ARRAY") exitWith { false };
 	if ( (count _this) < 2 ) exitWith { false };
     if ( (typeName (_this select 1)) == "STRING") then {
-        _this = [_this select 0] + [(_this select 1) call SYG_equipStr2Arr];
+        _this = [_this select 0, (_this select 1) call SYG_equipStr2Arr];
     };
 	hint localize format["+++ SYG_rearmUnit: arr %1", (_this select 1) call SYG_compactArray];
 //   	player groupChat format["arr %1", arg(1)];
 	_unit = arg(0);
 	removeAllWeapons _unit;
-	_this = arg(1);
+	_this = arg(1); // load equipment array
 	// at least unit, magazines and weapons are defined
 	_list = arg(1); // read magazine list and add them to unit
 	{
@@ -1728,21 +1732,22 @@ SYG_rearmUnit = {
         };
 	};
 	// argopt(4) is value for player stored view distance
-	_vdist = argopt(4, 1500);
-	//hint localize format["++++++ SYG_rearmUnit: _vdist = %1 +++++++", _vdist];
-	_vdist call SYG_setViewDistance;
+	_vdist = argopt(4, 0);
+	if (_vdist > 0 ) then {
+		//hint localize format["++++++ SYG_rearmUnit: _vdist = %1 +++++++", _vdist];
+		_vdist call SYG_setViewDistance;
+	};
 
 	// argopt(5) is value for player reborn music play/not play
-	_vdist = argopt(5, 0);
+	_vdist = argopt(5, -1);
 	if ( (typeName _vdist == "SCALAR") && (_vdist != d_rebornmusic_index) && (_vdist in [0,1]) ) then {
         d_rebornmusic_index = _vdist;
         _msg = ["STR_REBORN_1","STR_REBORN_0"] select _vdist; // "On", "Off"
-        ( format [ "%1 -> %2", localize "STR_SYS_168", localize _msg ] ) call XfGlobalChat;
+        ( format [ "%1 -> %2", localize "STR_SYS_168", localize _msg ] ) call XfGlobalChat; // "Respawn music"
 	};
 
 	true
 };
-#endif
 
 /**
  * Fills pilot with submachinegun and 6 magazines. Unit MUST be pilot, that is not armed with machinegun
@@ -2621,6 +2626,7 @@ SYG_fastReload = {
 	_ret
 };
 
+// Note: called only on server
 // _eqip_list_as_str = _name call SYG_getPlayerEquipment;
 SYG_findPlayerEquipmentAsStr = {
     private ["_index", "_parray"];
@@ -2638,11 +2644,14 @@ SYG_findPlayerEquipmentAsStr = {
     ""
 };
 
-// [_name,_wpn_arr_str] call SYG_storePlayerEquipmentAsStr;
+// Note: called only on server
+// [_name,_wpn_arr_str] call SYG_storePlayerEquipmentAsStr; // Unpack and store whole player equipment
+// Now input weapon array contains ONLY rucksack content, no real weapon,
+// so d_player_array_misc items contains also ONLY rucksack itmes, not any weapons
 SYG_storePlayerEquipmentAsStr = {
     if ( (typeName _this) != "ARRAY" ) exitWith {hint localize format["--- SYG_storePlayerEquipmentAsStr: expected param isn't array: %1",_this];};
     if ( (count _this) < 2 ) exitWith {
-        hint localize format["--- SYG_storePlayerEquipmentAsStr: expected params are not 2 item array: %1", _this ];
+        hint localize format["--- SYG_storePlayerEquipmentAsStr: expected params is not array with 2+ items: %1", _this ];
     };
     if ( (typeName arg(0)) == "OBJECT") then {_this set[0,name arg(0)];};
 
@@ -2657,11 +2666,11 @@ SYG_storePlayerEquipmentAsStr = {
             //  player array is: [d_player_air_autokick, time, _name, 0, "", eqp_list_as_str]
             _parray = argp( d_player_array_misc,_index);
             _parray set [ 5, arg(1)];
-            hint localize format ["+++ equipment re-written for the player ""%1"": %2", _name, arg(1)];
+//            hint localize format ["+++ equipment re-written for the player ""%1"": %2", _name, arg(1)];
         } else {
             d_player_array_names set [count d_player_array_names, _name];
             d_player_array_misc set [ count d_player_array_misc, [d_player_air_autokick, time, _name, 0, "", arg(1)]];
-            hint localize format ["+++ equipment stored for the new player ""%1"": %2", _name, arg(1)];
+//            hint localize format ["+++ equipment stored for the new player ""%1"": %2", _name, arg(1)];
         };
     };
 };
@@ -2687,9 +2696,10 @@ SYG_isRucksack = {
     isNumber(configFile >> "CfgWeapons" >> _this >> "ACE_PackSize")
 };
 
+// Note: call always on client!
 //
 // gets unit whole equipment and store it into array
-// _eqp_arr = player call SYG_unitEquipment;
+// _eqp_arr = player call SYG_getPlayerEquiptArr;
 // returns array [ [weapons names], [magazines names]<, rucksack_name<, [mags_in_rucksack_names]<, d_viewdistance<, d_rebornmusic_index>>>> ]
 SYG_getPlayerEquiptArr = {
     private ["_wpn", "_ruck", "_ruckMags"];
@@ -2722,10 +2732,36 @@ SYG_getPlayerEquiptArr = {
 #endif
 
 };
+// Note: call always on client!
+//
+// gets unit whole equipment and store it into array
+// _eqp_arr = player call SYG_getPlayerEquiptArr;
+// returns array [ [weapons names], [magazines names]<, rucksack_name<, [mags_in_rucksack_names]<, d_viewdistance<, d_rebornmusic_index>>>> ]
+// may return ["",[]] if player has no rucksack
+SYG_getPlayerRucksackArr = {
+    private ["_ruck", "_ruckMags"];
+#ifdef __ACE__
+	_ruck = _this getVariable "ACE_weapononback";
+	if ( isNil "_ruck") then  {_ruck = "";};
+	_ruckMags = _this getVariable "ACE_Ruckmagazines";
+	if ( isNil "_ruckMags") then  {_ruckMags = [];};
+    [[],[],_ruck, _ruckMags, d_viewdistance, d_rebornmusic_index] // [ no weapons, no mags, rucksack, rucksack items,...]
+	//hint localize format["_ruck %1, _ruckMags %2", _ruck, _ruckMags];
+#else
+	// no rucksack if no ACE
+    [[],[],"", [], d_viewdistance, d_rebornmusic_index]
+#endif
+
+};
+
+// Create strirng with rucksack content
+SYG_getPlayerRucksackAsStr = {
+	(_this call SYG_getPlayerRucksackArr) call SYG_equipArr2Str
+};
 
 //
 // gets unit whole equipment and store it into string
-// _eqp_arr = player call SYG_unitEquipment;
+// _eqp_arr = player call SYG_getPlayerEquipAsStr;
 // returns String "[[weapons names],[magazines names]<,rucksack_name<,[mags_in_rucksack_names]<,d_viewdistance<,d_rebornmusic_index>>>>]"
 SYG_getPlayerEquipAsStr = {
     (call SYG_getPlayerEquiptArr) call SYG_equipArr2Str;

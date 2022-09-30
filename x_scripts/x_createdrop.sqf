@@ -1,4 +1,4 @@
-// By Xeno, x_scripts\x_createdrop.sqf - weapon box drop
+// By Xeno, x_scripts\x_createdrop.sqf - weapon box drop, executed on server, initiated on client
 private ["_chopper","_doit","_drop_pos","_drop_type","_grp","_para","_the_chopper","_the_chute_type","_the_pilot","_unit","_vehicle","_wp","_starttime","_dist_to_drop","_exit_it","_wp2","_end_pos","_delete_chop","_may_exit"];
 if (!isServer) exitWith {};
 
@@ -6,7 +6,8 @@ if (!isServer) exitWith {};
 #include "x_macros.sqf"
 
 _drop_type = _this select 0;
-_drop_pos = _this select 1;
+_drop_pos  = _this select 1;
+_pl_name   = _this select 1;
 _drop_pos = [_drop_pos select 0, _drop_pos select 1, 120];
 
 para_available = false;
@@ -25,8 +26,14 @@ _delete_chop = {
 	deleteVehicle _chopper;deleteVehicle _unit;
 };
 
-__WaitForGroup
-_grp = ["CIV"] call x_creategroup;
+//send message about drop failure
+_drop_failed = { // "Air drop failed..."
+	[ "msg_to_user", _pl_name,  [ ["STR_SYS_1129_0" ] ], 0, 5,false,["say_sound", player, "no_more_waiting" ]] call XSendNetStartScriptClient;
+};
+
+//__WaitForGroup
+//_grp = ["CIV"] call x_creategroup;
+_grp = call SYG_createCivGroup;
 _the_chopper = x_drop_aircraft;
 _the_pilot = "";
 _the_chute_type = "";
@@ -84,14 +91,14 @@ while {_chopper distance _drop_pos > 1000} do {
 	sleep 0.512;
 	if (!alive _unit || !alive _chopper || !canMove _chopper) exitWith {[_unit,_chopper] spawn _delete_chop;_may_exit = true};
 };
-if (_may_exit) exitWith {};
+if (_may_exit) exitWith { call _drop_failed };
 while {_chopper distance _drop_pos > _dist_to_drop} do {
 	//sleep 0.512;
 	sleep 1.012;
 	if (!alive _unit || !alive _chopper || !canMove _chopper) exitWith {[_unit,_chopper] spawn _delete_chop;_may_exit = true};
 	_unit doMove _drop_pos;
 };
-if (_may_exit) exitWith {};
+if (_may_exit) exitWith { call _drop_failed };
 
 [_the_chute_type,_chopper,_drop_type,_drop_pos] spawn {
 	private ["_para","_the_chute_type","_chopper","_doit","_vehicle","_drop_type","_drop_posx"];

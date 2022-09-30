@@ -167,7 +167,7 @@ if (d_own_side == "EAST") then {
         _msg_arr set [count _msg_arr, [["STR_SYS_1175_1", name _unit] ]]; // "Your recruit (%1) speaks only Russian. Can use idioms in an enemy language"
     };
     _msg_arr set [count _msg_arr, [["STR_SYS_1175_2"] ]]; // "The command of the detachment issued an order: return your soldiers before leaving the game!..."
-    ["msg_to_user", "", _msg_arr ] call SYG_msgToUserParser;
+    ["msg_to_user", "", _msg_arr ] spawn SYG_msgToUserParser;
     playSound "losing_patience";
 };
 #endif
