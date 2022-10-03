@@ -13,6 +13,7 @@ copy x_setup.sqf x_missions\m /Y
 copy x_setup.sqf x_missions\common /Y
 copy x_setup.sqf scripts\baseillum /Y
 copy x_setup.sqf scripts\bonus /Y
+copy x_setup.sqf scripts\intro\
 
 copy x_macros.sqf x_scripts /Y
 copy x_macros.sqf x_scripts\x_funcs /Y

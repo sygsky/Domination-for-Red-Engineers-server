@@ -8,6 +8,9 @@
 	Call as: [] execVM  "scripts\intro\SYG_checkPlayerAtBase.sqf";
 
 */
+
+#include "x_setup.sqf"
+
 _flare = objNull;
 _pos = getPos AISPAWN; // FLAG_BASE; // [9529.5,9759.2,0]; // point near central gate to the base
 _flag_pos = [];
@@ -39,13 +42,13 @@ while { base_visit_status <= 0 } do {
 // inform player that he reached the base
 [ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE"],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // "You have reached the base! Life will get easier from here."
 
+#ifdef __ACE__
 // rearm to original equipment
 hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
-
 [player, SYG_initialEquipmentStr] call SYG_rearmUnit;
 playSound (call SYG_armorySound); // random armory sound
 SYG_initialEquipmentStr = nil; // not needed more
-
+#endif
 // remove parachute
 _para = player call SYG_getParachute;
 if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory

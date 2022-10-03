@@ -859,10 +859,6 @@ XHandleNetStartScriptClient = {
                         _str = _id call SYG_getDayTimeIdRandomSound;
                         if ( _str != "" ) then {playSound _str};
                     };
-                    if (_id == 0) then {	// night detected, run lighthouse hawler
-						// TODO: #450: add lighthouse night hawler sounds
-						//[] execVM "\nothing.sqf";
-                    };
                     //-------------------------------------------------------
                 };
             };

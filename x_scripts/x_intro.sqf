@@ -604,7 +604,8 @@ SYG_showMusicTitle = {
 	};
 
 	if (!isNull _control1) then { _control1 ctrlShow false };
-	if (dialog) then { closeDialog 0 };
+	if (dialog) then { closeDialog 0; hint localize "+++ SYG_showMusicTitle: dialog at end of method removed" }
+		else {hint localize "+++ SYG_showMusicTitle: no dialog at end of method"};
 };
 
 [_music, 30] spawn SYG_showMusicTitle;
