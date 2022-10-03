@@ -45,16 +45,13 @@ _damage = _this select 2;
 
 //
 #ifdef __PRINT__
-hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4",
-    typeOf _veh,
-    _shooter call SYG_getKillerInfo,
-    _damage,
-    count crew _veh];
+_name = _shooter call SYG_getKillerInfo;
+hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4", typeOf _veh, _name, _damage, count crew _veh];
 #endif
 
-_name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
+//_name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
 if ( _damage >= 1) exitWith { hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is killed by %2", typeOf _veh, _name]; }; // End Of Life
-if (!local _veh) exitWith {  hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is commanded by player %2", typeOf _veh, _name]; }; // It is player commanded vehicle, don't handle it
+if ((!local _veh)) exitWith { hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is not local to the server (captured = %2)", _veh getVariable "CAPTURED_ITEM"]; }; // It is player commanded vehicle, don't handle it
 
 if ( _veh == _shooter) exitWith{/* collision, not hit by enemy weapon */
     #ifdef __PRINT__
@@ -92,8 +89,8 @@ if (side _shooter == side _veh) exitWith {
 // TODO: smoke with ACE_GMV (support humwee) too. But how?
 
 if (!("ACE_LVOSS_Magazine" in (magazines _veh))) exitWith {
-_veh setVariable ["D_IS_SMOKING",nil]; // remove just in case
-// TODO: try to find ammo and reload smoke grenades from it
+    _veh setVariable ["D_IS_SMOKING",nil]; // remove just in case
+    // TODO: try to find ammo and reload smoke grenades from it
 #ifdef __PRINT__
 	hint localize format["+++ x_dosmoke2.sqf: veh %1 has no more smoke shells against ""%2""!!!", typeOf _veh, _name];
 #endif
