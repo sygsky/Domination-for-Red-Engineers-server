@@ -114,9 +114,10 @@ _trigger setTriggerStatements["side_mission_resolved", "xhandle = [] spawn XSide
 #else
 // new version of the missions resulution
 [] spawn {
+	private ["_xhandle"];
 	while { true } do {
 		if ( side_mission_resolved ) then {
-			_xhandle = call XSideMissionResolved;
+			_xhandle = [] call XSideMissionResolved;
 			waitUntil {sleep 8; !side_mission_resolved }; // wait end of finish processing
 		};
 		sleep 2;
