@@ -64,7 +64,7 @@ if (true) then {
 	//
 	if (!alive _veh) exitWith {
 		// "This truck isn't going anywhere anymore. Maybe there's another one somewhere?"
-		_txt = if (_truck) then { "STR_RADAR_TRUCK_KILLED" } else {"STR_RADAR_MAST_DEAD"}; // "Radio mast destroyed"
+		_txt = localize (if (_truck) then { "STR_RADAR_TRUCK_KILLED" } else {"STR_RADAR_MAST_DEAD"}); // "Radio mast destroyed"
 		_veh removeAction (_this select 2); // remove this action
 	};
 
