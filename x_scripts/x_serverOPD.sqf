@@ -35,7 +35,7 @@ if (_index >= 0) exitWith {
 	_wpnArr = if ( _equipStr != "" ) then { _equipStr call SYG_unpackEquipmentFromStr } else { [] }; // stored full equipments array
 #ifdef __DEBUG_PRINT__
 	// print old weapon array
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", old wpnarr %2", _name, _wpnArr call SYG_compactArray ];
+    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", score %2, old wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
 #endif
 
 	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only weapon/magazines
@@ -43,7 +43,7 @@ if (_index >= 0) exitWith {
 #endif
 #ifdef __DEBUG_PRINT__
 	// print new weapon array
-	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", new wpnarr %2", _name, _wpnArr call SYG_compactArray ];
+	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", score %2, new wpnarr %2", _name, _parray select 3, _wpnArr call SYG_compactArray ];
 #endif
 
 #ifdef __AI__
