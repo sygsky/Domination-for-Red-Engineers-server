@@ -23,6 +23,10 @@ private ["_veh", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_x"
 #ifdef __PRINT__
 hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2", _this, {alive _x} count crew (_this select 0)];
 #endif
+if ( (_this select 2) >= 0) then {
+	(_this select 0) removeAllEventHandlers "dammaged";
+	hint localize format["+++ eventOnDamage.sqf: damage detected >= 1, remove ""Damage"" event", (_this select 2)];
+};
 
 _veh = _this select 0;
 if (side _veh == d_side_player) exitWith {format["+++ eventOnDamage.sqf: vehicle side is %1, exit", d_side_player]};
