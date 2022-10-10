@@ -338,6 +338,8 @@ XHandleNetStartScriptClient = {
 				deleteMarkerLocal "main_target_radiotower";
 				[ format[localize "STR_SYS_311", _msg], "HQ"] call XHintChatMsg; // "TV-tower destroyed... %1"
 				playSound "tvpowerdown";
+				sleep 4;
+				"towerdown" call SYG_receiveRadio;
 			};
 		};
 		case "mt_radio": {
