@@ -1,5 +1,5 @@
 ﻿// Xeno, AAHALO\x_paraj.sqf - flag pole action "parajump"
-// e.g.: FLAG_BASE addaction [localize "STR_SYS_76","AAHALO\x_paraj.sqf"];
+// e.g.: FLAG_BASE addaction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
 _unit = _this select 1;
 new_paratype = _unit call SYG_getParachute; // find parachute of player (if any)
 

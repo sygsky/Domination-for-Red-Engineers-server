@@ -1117,9 +1117,13 @@ STR_INTRO_PARAJUMP_5,We have to get to the base. They promised to launch flares!
 STR_INTRO_PARAJUMP_6,I'm gonna go to the violet flares... distance %1 m,Ich werde zu den violetten Fackeln gehen... Entfernung %1 m,Voy a ir a las bengalas violetas... distancia %1 m,Пойду-ка я на фиолетовые ракеты... расстояние %1 м.
 STR_INTRO_PARAJUMP_7,"You have landed in the base area, which is not bad. Try to land on the yellow circle near tent of barracs (points: +%1)","Du bist im Basisbereich gelandet, was nicht schlecht ist. Versuche, auf dem gelben Kreis beim Militärbüro zu landen (Punkte: +%1)","Has aterrizado en la zona de la base, lo que no está mal. Intenta aterrizar en el círculo amarillo cerca de la oficina militar (puntos: +%1)","Вы приземлились на территории базы, что уже неплохо. Пытайтесь приземлиться на жёлтый круг у военкомата (очки: +%1)"
 STR_INTRO_PARAJUMP_7_1,"You have landed outside the base area (to the circle %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2","Du bist außerhalb der Grundfläche gelandet (im Kreis %1 m). Wenn du auf dem gelben Kreis beim Militärmeldeamt landest, erhältst du Punkte: +%2","Has aterrizado fuera de la zona base (al círculo %1 m.). Si aterrizas en el círculo amarillo de la oficina de registro militar, recibirás puntos: +%2","Вы приземлились вне территории базы (до круга %1 м.). При приземлении на жёлтый круг у военкомата вы получите очки: +%2"
+STR_INTRO_PARAJUMP_7_1_0,"You have landed outside the base area (to the circle %1 m.).","Du bist außerhalb der Grundfläche gelandet (im Kreis %1 m).","Has aterrizado fuera de la zona base (al círculo %1 m.).","Вы приземлились вне территории базы (до круга %1 м.)."
 STR_INTRO_PARAJUMP_8,You hit the circle and are rewarded for this: +%1,Du triffst den Kreis und wirst dafür belohnt: +%1,Golpeas el círculo y eres recompensado por ello: +%1,Вы попали в круг и награждены за это: +%1
+STR_INTRO_PARAJUMP_8_0,You hit the circle,Sie sind in einem Kreis gefangen,Estás atrapado en un círculo,Вы попали в круг
 STR_INTRO_PARAJUMP_8_1,"You hit the circle, but not the right one and you don't get points (+%1)","Du hast den Kreis getroffen, aber nicht den richtigen und bekommst keine Punkte (+%1)","Le das al círculo, pero no al correcto y no obtienes puntos (+%1)","Вы попали в круг, но не тот, что нужно и не получаете очки (+%1)"
+STR_INTRO_PARAJUMP_8_1_0,"You hit the circle, but not the right one.","Du bist in den Kreis gekommen, aber nicht in den richtigen.","Te metiste en el círculo, pero no en el correcto.","Вы попали в круг, но не тот, что нужно."
 STR_INTRO_PARAJUMP_8_2,"You landed outside the nearest circle (distance %1 m.) and do not get points (+%2)","Du bist außerhalb des Kreises (Entfernung %1 m) gelandet und erhältst keine Punkte (+%2)","Has aterrizado fuera del círculo (dist. %1 m.) y no recibes puntos (+%2)","Вы приземлились вне ближайшего круга (дист. %1 м.) и очки (+%2) не получаете"
+STR_INTRO_PARAJUMP_8_2_0,"You landed outside the nearest circle (distance %1 m.)","Du bist außerhalb des Kreises (Entfernung %1 m) gelandet","Has aterrizado fuera del círculo (dist. %1 m.)","Вы приземлились вне ближайшего круга (дист. %1 м.)"
 STR_INTRO_PARAJUMP_9,"You are slightly injured on landing","Sie sind bei der Landung leicht verletzt.","Estás ligeramente herido al aterrizar","Вы слегка травмированы при приземлении"
 STR_INTRO_PARAJUMP_10,"You are badly injured when you land","Sie sind bei der Landung schwer verletzt","Estás malherido cuando aterrizas","Вы сильно травмированы при приземлении"
 
@@ -1214,6 +1218,7 @@ STR_FLAG_5,{Rumours},{Gerücht},{Rumores},{Слухи}
 // Actions on jump flags in liberated towns
 STR_FLAG_6,(Choose Parachute location),(Die Wahl des Ortes Fallschirm),(Selección del sitio de paracaídas),(Выбор места парашютирования)
 STR_FLAG_7,(Create %1),(Anlegen %1),(Crear %1),(Создать %1)
+STR_FLAG_8,)Practice parajump(,)Fallschirmsprung üben(,)Practicar paracaidismo(,)Пробный прыжок(
 
 //------------------------------------ CAMP common strings ------------------------------------
 STR_CAMP_1,"H-m-m, it seems that the partisans are already!","H-m-m, es scheint, die Partisanen wirkt schon!",¡Parece que los guerrilleros ya están actuando!,"Х-м-м, похоже, партизаны уже действуют!"

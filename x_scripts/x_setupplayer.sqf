@@ -1516,7 +1516,8 @@ FLAG_BASE addAction [localize "STR_FLAG_0","dlg\teleport.sqf"];
 //FLAG_BASE addAction ["За допку","test.sqf"];
 //FLAG_BASE addAction ["За город","test2.sqf"];
 if (__AIVer || d_para_at_base) then {
-	FLAG_BASE addAction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
+	FLAG_BASE addAction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"]; // "(Choose Parachute location)"
+	FLAG_BASE addAction [localize "STR_FLAG_8","AAHALO\SYG_parap.sqf"]; // "Practice parajump)"
 };
 #endif
 

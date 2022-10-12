@@ -11,6 +11,8 @@ _jump_score     = if (count _this > 2) then  {_this select 2} else { 0 }; // how
 _use_wind       = if (count _this > 3) then  {_this select 3} else { true }; // Emulate wind above sea (true) or not (false)
 #endif
 
+_add_score       = if (count _this > 4) then  {_this select 4} else { true }; // Add score if hit the circle (true) or not (false)
+
 hint localize format[ "+++ jump.sqf: _this = %1, player para = ""%2""", _this, player call SYG_getParachute ];
 
 if (d_para_timer_base > 0) then {
@@ -146,8 +148,13 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 		if (!(alive player)) exitWith {};
 		if ( vehicle player != player) then {
 			if  ((vehicle player) call SYG_isParachute) then {
-				_id = (vehicle player) addEventHandler ["getout", {_this execVM "AAHALO\event_para_dropped.sqf"}];
-				(vehicle player) setVariable ["PARA_GETOUT", _id];
+				if (_add_score) then {
+					_id = (vehicle player) addEventHandler ["getout", {_this execVM "AAHALO\event_para_dropped.sqf"}];
+//					(vehicle player) setVariable ["PARA_GETOUT", _id];
+				} else {
+					_id = (vehicle player) addEventHandler ["getout", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
+//					(vehicle player) setVariable ["PARA_GETOUT", _id];
+				};
 			};
 		};
 	};
