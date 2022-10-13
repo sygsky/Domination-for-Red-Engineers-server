@@ -238,7 +238,7 @@ _str = _str + (localize "STR_SET_39"); // "Only vehicles BEFORE 1985 inclusivell
 _str = _str + (localize "STR_SET_39_0"); // "The mission uses all available equipment\n"
 #endif
 
-#ifdef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
+#ifndef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
 _str = _str + (localize "STR_SET_40");
 #endif
 

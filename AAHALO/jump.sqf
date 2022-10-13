@@ -2,7 +2,8 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-private ["_start_location","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime","_pos","_pilot"];
+private ["_start_location","_paratype","_jump_score","_jump_helo","_halo_height","_obj_jump","_startTime","_pos","_pilot",
+	"_use_wind", "_check_circle_hit"];
 _start_location = _this select 0;
 _paratype       = _this select 1;
 _jump_score     = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
@@ -11,9 +12,9 @@ _jump_score     = if (count _this > 2) then  {_this select 2} else { 0 }; // how
 _use_wind       = if (count _this > 3) then  {_this select 3} else { true }; // Emulate wind above sea (true) or not (false)
 #endif
 
-_add_score       = if (count _this > 4) then  {_this select 4} else { true }; // Add score if hit the circle (true) or not (false)
+_check_circle_hit = if (count _this > 4) then  {_this select 4} else { true }; // Add score if hit the circle (true) or not (false)
 
-hint localize format[ "+++ jump.sqf: _this = %1, player para = ""%2""", _this, player call SYG_getParachute ];
+hint localize format[ "+++ jump.sqf: _this = %1, player para = ""%2"", _check_circle_hit = %3", _this, player call SYG_getParachute, _check_circle_hit ];
 
 if (d_para_timer_base > 0) then {
 	d_next_jump_time = time + d_para_timer_base;
@@ -77,7 +78,6 @@ if (_use_wind) then { // emulate sea wind if jump above sea
 		hint localize format["+++ jump.sqf: wind %1 (dir %2), dispersion is %3 [%4,%5,%6] m, water count %7 of %8",
 			_wind_arr, ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirNameEng,
 			round(_shift), round(_dx), round(_dy), round(_dz), _water_count, ((count _offsets) * (count _offsets) - 1) ];
-
 	};
 };
 #endif
@@ -115,7 +115,7 @@ switch _paratype do {
 #endif
 // check parachute presence
 if (_plane) then { // this is intro jump, not flag/heli one
-	if ( (player call SYG_getParachute) == "" ) then { player addWeapon _paratype; hint localize format["+++ x_jump.sqf: parachute absent, ""%1"" added", _paratype] };
+	if ( (player call SYG_getParachute) == "" ) then { player addWeapon _paratype; hint localize format["+++ jump.sqf: parachute absent, ""%1"" added", _paratype] };
 };
 
 hint localize format[ "+++ jump.sqf: halo height set to %1 m, player has ""%""", round _halo_height, player call SYG_getParachute ];
@@ -142,18 +142,21 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 	player setVelocity  [ (sin _dir) * 20, (cos _dir) * 20, 0 ]; // set speed 20 m/s in direction of plane flight else you are always get  damage to your health
 	if (((getPos (vehicle player)) select 2) < 10) exitWith {};
 	[ player ] execVM "ace_sys_eject\s\ace_jumpOut_cord.sqf";
-	[] spawn {
+	_check_circle_hit spawn {
+		private ["_check_circle_hit","_id"];
+		_check_circle_hit = _this;
 		waitUntil { (!(alive player)) || (vehicle player != player) || ((getPos player select 2) < 5) };
 		if ((getPos player select 2) < 5) exitWith {};
 		if (!(alive player)) exitWith {};
 		if ( vehicle player != player) then {
 			if  ((vehicle player) call SYG_isParachute) then {
-				if (_add_score) then {
-					_id = (vehicle player) addEventHandler ["getout", {_this execVM "AAHALO\event_para_dropped.sqf"}];
-//					(vehicle player) setVariable ["PARA_GETOUT", _id];
+//				hint localize "+++ jump.sqf: player has parachute!";
+				if (_check_circle_hit) then {
+					hint localize format["+++ jump.sqf: getOut event execVM _script = ""event_para_dropped.sqf""", _script];
+					_id = (vehicle player) addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped.sqf"}];
 				} else {
-					_id = (vehicle player) addEventHandler ["getout", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
-//					(vehicle player) setVariable ["PARA_GETOUT", _id];
+					hint localize format["+++ jump.sqf: getOut event execVM _script = ""AAHALO\event_para_dropped_practice.sqf""", _script];
+					_id = (vehicle player) addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
 				};
 			};
 		};
@@ -161,7 +164,6 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 } else {
 	[uh60p,_obj_jump] execVM "\ace_sys_eject\s\ace_jumpout.sqf"; // Go to ACE code to complete jump
 };
-
 
 sleep 3;
 

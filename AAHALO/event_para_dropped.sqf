@@ -4,8 +4,10 @@
 	author: Sygsky
 	description: Event handler to check if player landed on base/circle/etc
 			Variants are:
-			1. On base
-			2. On "AISPAWN" circle
+			1. Out of base territory
+			2. On base territory
+			3. On one of base circles
+			4. On "AISPAWN" circle! Main target hit!
 
             Passed array: [vehicle, role, unit]
 
@@ -51,10 +53,11 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 				hint localize format ["+++ event_para_dropped.sqf: landed on dist to the one of the side circles %1 m", _dist];
 			};
 		};
+	} else {
+		// "You landed outside the circle (distance %1 m.) and do not get points (+%2)"
+		_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_2", round(_dist), _sc]], 0, 1, false, "no_more_waiting" ];
+		hint localize format ["+++ event_para_dropped.sqf: landed on dist to the one of the side circles %1 m", _dist];
 	};
-	// "You landed outside the circle (distance %1 m.) and do not get points (+%2)"
-	_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_2", round(_dist), _sc]], 0, 1, false, "no_more_waiting" ];
-	hint localize format ["+++ event_para_dropped.sqf: landed on dist to the one of the side circles %1 m", _dist];
 } else {
 	// "You have landed outside the base area (to the circle %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"
 	_arr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7_1",round (_dist),_sc]], 0, 1, false, "losing_patience" ];
@@ -72,4 +75,4 @@ if (damage player > 0.26) then {
 	};
 };
 hint localize format["+++ event_para_dropped.sqf: msg arr %1", _arr];
-_arr spawn SYG_msgToUserParser;
+_arr call SYG_msgToUserParser;
