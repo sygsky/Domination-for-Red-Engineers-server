@@ -2261,18 +2261,17 @@ SYG_getParachute = {
 
 //
 // Returns all vehicle types able to be lifted by one of transport helis.
-// Runs only on client computer if __TT__ is defined !
 //
-// call as follow: _types_arr = _heli call SYG_typesVehCanLift;
+// call as follow: _types_arr = "HR1" call SYG_typesVehCanLift;
 //
 SYG_typesVehCanLift = {
-	private ["_arr","_heli","_x","_list"];
-	_heli = _this;
-	if (typeName _heli != "OBJECT") exitWith {[]};
+	private ["_arr","_heli_type","_x","_list"];
+	_heli_type = _this;
+	if (typeName _heli_type != "STRING") exitWith {[]};
 	_arr = [];
 #ifndef __TT__
 	{
-		if (_x select 0 == _heli) exitWith { _arr = _x select 3; };
+		if ((_x select 0) == _heli_type) exitWith { _arr = _x select 3; };
 	} forEach d_choppers;
 #endif
 #ifdef __TT__
@@ -2282,7 +2281,7 @@ SYG_typesVehCanLift = {
 		_list = d_choppers_racs;
 	};
 	{
-		if (_x select 0 == _heli) exitWith { _arr = _x select 3; };
+		if ((_x select 0) == _heli_type) exitWith { _arr = _x select 3; };
 	} forEach _list;
 #endif
 	_arr

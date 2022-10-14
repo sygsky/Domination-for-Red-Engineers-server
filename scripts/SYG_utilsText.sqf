@@ -274,6 +274,7 @@ SYG_compactArray = {
 
 SYG_msgToUserParser = {
 
+	if ((count _this) == 0) exitWith {"--- SYG_msgToUserParser: input array is empty!!!"};
     private [ "_msg_arr","_msg_fmt","_name","_np","_delay","_localize","_vehicle_chat","_print_title","_msg_formatted","_sound",
      "_msg_target_found","_ind","_SYG_processSingleStr","_str","_no_negate","_x"];
 

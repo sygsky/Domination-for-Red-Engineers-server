@@ -272,7 +272,7 @@ if (isServer) then {
     // insert special missions at the SM list head, may be used for the DEBUG purposes
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 29 - tanks at Cabo Juventudo,
-    // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 48 - transformer substations of Corazol, 49 - captain Grant
+    // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 44 - heli prototype on San Tomas, 48 - transformer substations of Corazol, 49 - captain Grant
     // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation
     _first_array = [];
     if ( count _first_array > 0 ) then {
@@ -293,7 +293,7 @@ if (isServer) then {
 
 //    side_missions_random = side_missions_random - [40,41]; // temporarily remove all SM with prisoners (not work!!)
 
-    hint localize format["+++ SM array: %1", side_missions_random];
+    hint localize format["+++ final SM array: %1", side_missions_random];
 
 	__DEBUG_SERVER("init.sqf",side_missions_random)
 
@@ -686,7 +686,7 @@ if (!X_SPE) then {
 		// replace title with "Register" text
 		_x setVariable ["INSPECT_ACTION_ID", _x addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]]];
 	}forEach (_arr select 1);
-	hint localize format[ "+++init.sqf bonus.INIT on client: monitored DOSAAF veh count = %1, REGISTER is set as the command for them.", count (_arr select 1) ];
+	hint localize format[ "+++ init.sqf bonus.INIT on client: monitored DOSAAF veh count = %1, REGISTER is set as the command for them.", count (_arr select 1) ];
 
 	client_bonus_markers_timestamp = time; // init timestamp
 	_arr = []; sleep 0.01; _arr = nil;
@@ -817,4 +817,4 @@ SYG_playExtraSounds = {
 };
 
 
-if (true) exitWith {};
+if (true) exitWith {}

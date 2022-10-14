@@ -215,14 +215,28 @@ SYG_MTByName = {
 //
 SYG_nearestMainTarget = {
 	private ["_i","_id","_pos","_mt","_min_dist","_min_id","_dist"];
+	_min_dist = 999999.0; // initial distance
+	_min_id = -1;
+	if ( (typeName _this) == "ARRAY") exitWith {
+		// input is point, not name, so find any main target nearest to the designated point
+		_pos = +_this;
+		_pos set [2,0];
+		for "_i" from 0 to ( ( count target_names ) - 1 ) do {
+			_dist = _pos distance ((target_names select _i) select 0);
+			if (_dist < _min_dist) then {
+				_min_dist = _dist;
+				_min_id   = _i;
+			};
+		};
+		target_names select _min_id // returns minimal distance item from main targets list
+	};
 	_mt = _this call SYG_MTByName;
 	if (count _mt == 0) exitWith {[]};
 	// find designated target
-	_id  = _mt select 3;  // id of town in list
-	_pos = _mt select 0;  // position
+	_id  = _mt select 3;  // id of designated town
+	_pos = +(_mt select 0);  // position
+	_pos set [2,0];
 	// find nearest to designated target
-	_min_dist = 999999.0;
-	_min_id = -1;
 	for "_i" from 0 to ( ( count target_names ) - 1 ) do {
 		_mt = target_names select _i;
 		if ( (_mt select 3) != _id ) then { // skip MT, designated by name, from search procedure
@@ -417,12 +431,20 @@ SYG_isDesert = {
  *    _bool = (getPos player) call SYG_pointOnIslet; // true or false is returned
  */
 SYG_pointOnIslet = {
+	(_this call SYG_isleAtPoint) != ""
+};
+
+//
+// Returns islet containing designated point
+// _islet = _pnt call SYG_isleAtPoint; // Returns "" if point not in some islet circle, else name (e.g. "острова в заливе Abra de Boca")
+//
+SYG_isleAtPoint = {
 	private ["_ret","_pos","_x"];
 	_pos = _this call SYG_getPos;
-	if ( _pos select 0 == 0 ) exitWith {false};
-	_ret = false;
+	_ret = "";
+	if ( _pos select 0 == 0 ) exitWith { _ret }; // point not found
 	{
-		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = true;};
+		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = _x select 3;}; // name of islet of point
 	} forEach SYG_SahraniIsletCircles;
 	_ret
 };
@@ -433,9 +455,9 @@ SYG_pointOnIslet = {
  *    _bool = (getPos player) call SYG_pointOnRahmadi; // true or false is returned
  */
 SYG_pointOnRahmadi = {
-	if (typeName _this != "ARRAY") then {_this = position _this;};
-	if (count _this < 2) exitWith {false};
-	[_this,SYG_RahmadiIslet select 1, SYG_RahmadiIslet select 2] call SYG_pointInCircle
+	if ( typeName _this != "ARRAY" ) then { _this = position _this };
+	if ( count _this < 2 ) exitWith { false };
+	[ _this, SYG_RahmadiIslet select 1, SYG_RahmadiIslet select 2 ] call SYG_pointInCircle
 };
 
 /*

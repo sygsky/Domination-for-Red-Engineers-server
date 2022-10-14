@@ -1,4 +1,4 @@
-// x_scripts/x_getbonus.sqf : by Xeno
+// x_scripts\x_getbonus.sqf : by Xeno
 // creates bonus vehicle for side missions and place it to the ground
 // Called on server!
 private ["_dir","_pos","_posa","_vehicle", "_vec_number", "_resurrect"];
@@ -56,11 +56,11 @@ _vec_type = sm_bonus_vehicle_array select bonus_number;
 #ifdef __DOSAAF_BONUS__
 _pos = x_sm_pos select 0;
 _vehicle = [_pos, 250, _vec_type] call SYG_createBonusVeh;
-hint localize format["+++ x_scripts\x_getbonus.sqf: DOSAAF vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPosE0];
+hint localize format["+++ x_getbonus.sqf: DOSAAF vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPosE0];
 #else
 _vehicle = (_vec_type) createVehicle (_pos);
 _vehicle setDir _dir;
-hint localize format["+++ x_scripts/x_getbonus.sqf: type index %1, pos %2, veh %3", bonus_number, _pos, typeOf _vehicle];
+hint localize format["+++ x_getbonus.sqf: type index %1, pos %2, veh %3", bonus_number, _pos, typeOf _vehicle];
 
 /**
 _vehicle setVariable ["RECOVERABLE", true];

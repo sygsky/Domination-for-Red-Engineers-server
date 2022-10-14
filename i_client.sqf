@@ -260,7 +260,7 @@ if (X_Client) then {
     d_wreck_lift_rank = "Private"; //+++Sygsky: was "Lieutenant", "Major" , "Colonel"
     #endif
 
-    d_viewdistance = 1500; // default view distance diameter
+    d_viewdistance = 3500; // 1500; // default view distance diameter
     d_graslayer_index = 0; // default graas level (no grass at all)
     d_playermarker_index = 1; // default player marker: marker with name
     d_rebornmusic_index = 0; // default reborn music: play

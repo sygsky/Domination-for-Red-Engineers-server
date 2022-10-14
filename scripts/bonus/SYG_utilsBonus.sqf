@@ -19,38 +19,41 @@
 //
 SYG_createBonusVeh = {
 	if (!X_Server) exitWith {};
-	hint localize format["+++ SYG_createBonusVeh: _this = %1", this];
+	hint localize format["+++ SYG_createBonusVeh: _this = %1", _this];
 	if (count _this < 3) exitWith { hint localize format["--- SYG_createBonusVeh: Expected params count 3, found %1", count _this]; objNull };
-	private ["_center","_rad","_type","_pos","_dir","_veh","_x","_name","_loc", "_mt"];
-	_center = _this select 0;
-	_center = [_center select 0, _center select 1, 0];
+	private ["_center","_rad","_type","_pos","_dir","_veh","_x","_name","_loc","_mt","_hnd","_isle","liftedVehs"];
+	_center = +(_this select 0);
 	if (typeName _center != "ARRAY") exitWith { hint localize format["--- SYG_createBonusVeh: Expected 1st param type is 'ARRAY', found %1", typeName (_this select 0)]; objNull };
+	_center set [2, 0];
 //	hint localize format[ "+++ SYG_createBonusVeh: _this = %1", _this ];
-	_rad    = _this select 1; // battle zone radious (e.g. town radious)
+	_rad    = _this select 1; // battle zone radious (e.g. town/sidemission active radious)
 	_type   = _this select 2; // vehicle type to create
 
 	// check if point is on one of small Sahrani islands.
 	// In such places we allow to spawn only small vehicles, which can be pick up with one of transport helis.
-	if ( _center call SYG_pointOnIslet ) then {
+	_isle = _center call SYG_isleAtPoint;
+	_liftedVehs = ("HR1" call SYG_typesVehCanLift); // vehs to lift
+	hint localize format[ "+++ SYG_createBonusVeh: lifted vehs list = %1", _liftedVehs ];
+	if ( _isle != "" ) then {
 		// we are on islet, move center to the main island if vehicle is not heli or is big enough not to be lifted by heli
-		if ( !( (_type in (HR1 call SYG_typesVehCanLift) ) || (_type isKindOf "Helicopter") ) ) then {
-			_loc  = _center call SYG_nearestSettlement;
-			_name = text _loc;
-			_mt  = _name call SYG_MTByName;
+		hint localize format["+++ SYG_createBonusVeh: veh (%1) is on islet (%2), test it is possible to put it here", _type, _isle];
+		if ( !( (_type in _liftedVehs ) || (_type isKindOf "Helicopter") ) ) then {
+			_mt = _center call SYG_nearestMainTarget; // find nearest main target by distance to the MT center
+			_name = _mt select 1; // MT name is at offset 1
 			if (count _mt > 0) then {
 				_center = _mt select 0;
 				_center = [_center select 0, _center select 1, 0];
 				_rad = _mt select 2;
 			};
 //			_center = _center call  SYG_nearestSettlement; // nearest settlement for the islet
-			hint localize format["+++ SYG_createBonusVeh: MT is on islet, place changed to ""%1""", _name];
+			hint localize format["+++ SYG_createBonusVeh: veh is on islet, place changed to ""%1""", _name];
 		};
 	};
 	// We may be on Rahmadi
 	if ( _center call SYG_pointOnRahmadi ) then {
-		hint localize format["+++ SYG_createBonusVeh: MT is on Rahmadi, (%1 in lift_vehicles) = %2, (%1 isKindOf ""Air"") = %3", _type, HR1 call SYG_typesVehCanLift, _type isKindOf "Air"];
-//		hint localize format["+++ SYG_createBonusVeh: lift_vehicles = %1",HR1 call SYG_typesVehCanLift];
-		if (! ((_type in (HR1 call SYG_typesVehCanLift)) || (_type isKindOf "Air")) ) then {
+		hint localize format["+++ SYG_createBonusVeh: veh is on Rahmadi, is in lift_vehicles, isKindOf ""Air"" = %1",  _type isKindOf "Air"];
+//		hint localize format["+++ SYG_createBonusVeh: lift_vehicles = %1","HR1" call SYG_typesVehCanLift];
+		if (! ((_type in _liftedVehs) || (_type isKindOf "Air")) ) then {
 			// it is not heli lifted or air vehicle, so move center from this point to the main island
 			_mt = "Rahmadi" call SYG_nearestMainTarget; // find nearest target on main island
 			if (count _mt > 0) then {
