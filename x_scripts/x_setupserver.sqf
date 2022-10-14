@@ -28,7 +28,7 @@ XSideMissionResolved = {
 			case 2: {points_west = points_west + 7;};
 		};
 		#endif
-		execVM "x_scripts\x_getbonus.sqf";
+		[] execVM "x_scripts\x_getbonus.sqf";
 	};
 	if (side_mission_winner < 0 /*in [-1,-2,-300,-400,-500,-600,-700,-701,-702]*/ ) then {
 		["sm_res_client",side_mission_winner,-1] call XSendNetStartScriptClient;
@@ -117,7 +117,7 @@ _trigger setTriggerStatements["side_mission_resolved", "xhandle = [] spawn XSide
 	private ["_xhandle"];
 	while { true } do {
 		if ( side_mission_resolved ) then {
-			_xhandle = [] call XSideMissionResolved;
+			call XSideMissionResolved;
 			waitUntil {sleep 8; !side_mission_resolved }; // wait end of finish processing
 		};
 		sleep 2;
