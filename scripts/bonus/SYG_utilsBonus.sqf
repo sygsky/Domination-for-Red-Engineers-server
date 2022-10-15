@@ -21,7 +21,7 @@ SYG_createBonusVeh = {
 	if (!X_Server) exitWith {};
 	hint localize format["+++ SYG_createBonusVeh: _this = %1", _this];
 	if (count _this < 3) exitWith { hint localize format["--- SYG_createBonusVeh: Expected params count 3, found %1", count _this]; objNull };
-	private ["_center","_rad","_type","_pos","_dir","_veh","_x","_name","_loc","_mt","_hnd","_isle","liftedVehs"];
+	private ["_center","_rad","_type","_pos","_dir","_veh","_x","_name","_loc","_mt","_hnd","_isle","_liftedVehs"];
 	_center = +(_this select 0);
 	if (typeName _center != "ARRAY") exitWith { hint localize format["--- SYG_createBonusVeh: Expected 1st param type is 'ARRAY', found %1", typeName (_this select 0)]; objNull };
 	_center set [2, 0];
