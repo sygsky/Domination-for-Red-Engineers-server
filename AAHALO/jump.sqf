@@ -89,8 +89,7 @@ uh60p = createVehicle [_jump_helo, _start_location, [], 0, "FLY"];
 _dir = random 360;
 uh60p setDir _dir;
 if (_plane) then { // set speed only for plane, not for heli!
-	_speed = if (_plane) then {60} else {35};
-	uh60p setVelocity  [(sin _dir) * _speed, (cos _dir) * _speed, 0 ];
+	uh60p setVelocity  [(sin _dir) * 60, (cos _dir) * 60, 0 ];
 	uh60p setSpeedMode ( "FULL" );
 };
 /**
