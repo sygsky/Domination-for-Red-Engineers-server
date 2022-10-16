@@ -88,8 +88,11 @@ _plane = _jump_helo isKindOf "Plane";
 uh60p = createVehicle [_jump_helo, _start_location, [], 0, "FLY"];
 _dir = random 360;
 uh60p setDir _dir;
-_speed = if (_plane) then {60} else {35};
-uh60p setVelocity  [(sin _dir) * _speed, (cos _dir) * _speed, 0 ];
+if (_plane) then { // set speed only for plane, not for heli!
+	_speed = if (_plane) then {60} else {35};
+	uh60p setVelocity  [(sin _dir) * _speed, (cos _dir) * _speed, 0 ];
+	uh60p setSpeedMode ( "FULL" );
+};
 /**
 _pilot = (
 	switch (d_side_player) do {
@@ -103,7 +106,6 @@ _pilot = _grp createUnit [_pilot, position uh60p, [], 0, "FORM"];
 hint localize format["+++ jump.sqf: _grp = %1, _pilot = %2", _grp, _pilot];
 [_pilot] join _grp; _pilot setSkill 1; _pilot assignAsDriver uh60p; _pilot moveInDriver uh60p;
 */
-uh60p setSpeedMode ( if (_plane) then {"FULL"} else {"LIMITED"} );
 
 _halo_height = d_halo_height;
 #ifdef __ACE__
