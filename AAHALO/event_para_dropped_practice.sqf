@@ -52,12 +52,12 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 				hint localize format ["+++ event_para_dropped_practice.sqf: landed on dist to the one of the side circles %1 m", _dist];
 			};
 		};
-		// "You have landed in the base area, which is not bad. Try to land on the yellow circle near tent of barracs (points: +%1)"
-		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7", _sc]], 0, 1, false, "no_more_waiting" ];
-	} else {
 		// "You landed outside the nearest circle (distance %1 m.)"
 		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_2_0", round(_dist)]], 0, 1, false, "no_more_waiting" ];
 		hint localize format ["+++ event_para_dropped_practice.sqf: landed on dist to the one of the side circles %1 m", _dist];
+	} else {
+		// "You have landed in the base area, which is not bad. Try to land on the yellow circle near tent of barracs (points: +%1)"
+		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7", _sc]], 0, 1, false, "no_more_waiting" ];
 	};
 } else {
 	// "You have landed outside the base area (to the circle %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"
