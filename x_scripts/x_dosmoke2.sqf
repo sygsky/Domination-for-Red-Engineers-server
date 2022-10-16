@@ -1,4 +1,4 @@
-// by Xeno; x_dosmoke2.sqf; launch smokes for vehicles
+// by Xeno: x_dosmoke2.sqf; launch smokes for vehicles
 /*
 
 Triggered when the unit is hit/damaged.
@@ -16,7 +16,7 @@ causedBy: Object - Object that caused the damage. Contains the unit itself in ca
   damage: Number - Level of damage caused by the hit
 */
 
-hint localize format["+++ x_dosmoke2.sqf: _this = %1", _this];
+// hint localize format["+++ x_dosmoke2.sqf: _this = %1", _this];
 
 private ["_veh", "_shooter", "_damage", "_crew", "_issmoking", "_hideobject", "_name", "_dead", "_wpns", "_muzzle", "_x"];
 if (!isServer) exitWith {};
