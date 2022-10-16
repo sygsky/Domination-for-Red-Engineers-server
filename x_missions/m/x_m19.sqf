@@ -33,7 +33,7 @@ if (isServer) then {
 		_grp_ret = _this call XCreateInf;
 		_cnt = (_grp_ret select 0) call SYG_rearmSpecopsGroup;
 #ifdef __DEBUG__		
-		hint localize format["%1 x_m19.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grp_ret select 0)];
+		hint localize format["+++ %1 x_m19.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grp_ret select 0)];
 #endif
 	};
 	

@@ -65,7 +65,7 @@ if (isServer) then {
         _cnt1 = _cnt1 + ((units (_grp_ret select 2)) call SYG_rearmBasicGroup); // _res = [_unit1,... , _unitN] call SYG_rearmBasicGroup;
         _cnt1 = _cnt1 + ((units (_grp_ret select 3)) call SYG_rearmBasicGroup); // _res = [_unit1,... , _unitN] call SYG_rearmBasicGroup;
 #ifdef __DEBUG__
-        hint localize format["%1 x_m9.sqf: %2 of %3 specops, %4 of %5 basic rearmed",
+        hint localize format["+++ %1 x_m9.sqf: %2 of %3 specops, %4 of %5 basic rearmed",
         					 call SYG_nowTimeToStr,
         					 _cnt,
         					 count units (_grp_ret select 0),

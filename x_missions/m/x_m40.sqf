@@ -48,7 +48,7 @@ if (isServer) then {
 	_grp_array = [_newgroup, _pos, 0, [], [], -1, 0, [], 100, -1];
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 
-	hint localize format["%1 x_m40.sqf: AA defence on Tiberia is created (%2 static vehicles)", call SYG_missionTimeInfoStr, count units _newgroup ];
+	hint localize format["+++ %1 x_m40.sqf: AA defence on Tiberia is created (%2 static vehicles)", call SYG_missionTimeInfoStr, count units _newgroup ];
 #endif
 
 	[x_sm_pos, 400] execVM "x_missions\common\x_sideprisoners.sqf";

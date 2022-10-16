@@ -64,9 +64,9 @@ if (d_enemy_side == "WEST") then
         private ["_grp_ret","_cnt"];
         _grp_ret = _this call XCreateInf;
         _cnt = (_grp_ret select 0) call SYG_rearmSpecopsGroup;
-//#ifdef __DEBUG__
-//			hint localize format["%1 x_m49.sqf: %2 of %3 specops rearmed", call SYG_nowTimeToStr, _cnt, count units (_grp_ret select 0)];
-//#endif
+#ifdef __DEBUG__
+		hint localize format["+++ %1 x_m49.sqf: %2 of %3 specops rearmed", call SYG_nowTimeToStr, _cnt, count units (_grp_ret select 0)];
+#endif
     };
 }
 else

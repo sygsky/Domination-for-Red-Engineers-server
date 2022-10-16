@@ -52,7 +52,7 @@ if (isServer) then {
     	_grp_array = [_newgroup, _pos, 0, [], [], -1, 0, [], 100, -1];
     	_grp_array execVM "x_scripts\x_groupsm.sqf";
 
-    	hint localize format["%1 x_m30.sqf: AA defence on Isla del Zorra is created (%2 vehicles)", call SYG_missionTimeInfoStr, count units _newgroup ];
+    	hint localize format["+++ %1 x_m30.sqf: AA defence on Isla del Zorra is created (%2 vehicles)", call SYG_missionTimeInfoStr, count units _newgroup ];
 #endif
 };
 

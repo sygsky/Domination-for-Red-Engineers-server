@@ -35,7 +35,7 @@ if (isServer) then {
 	sleep 2.123;
 
 #ifdef __DEBUG__		
-	hint localize format["%1 x_m30.sqf: mission started, scientist type is ""%2"", armors created", call SYG_missionTimeInfoStr, _officer];
+	hint localize format["+++ %1 x_m30.sqf: mission started, scientist type is ""%2"", armors created", call SYG_missionTimeInfoStr, _officer];
 #endif
 
 	["specops", 0, "basic", 2, _pos_other, 100, true]  spawn XCreateInf;
@@ -44,7 +44,7 @@ if (isServer) then {
 		private ["_grps"];
 		_grps = _this call ;
 #ifdef __DEBUG__		
-		hint localize format["%1 x_m30.sqf: %2 basic groups created", call SYG_missionTimeInfoStr, count _grps];
+		hint localize format["+++ %1 x_m30.sqf: %2 basic groups created", call SYG_missionTimeInfoStr, count _grps];
 #endif
 	};
  */
@@ -57,7 +57,7 @@ if (isServer) then {
 		_grps = _this call XCreateInf;
 		_cnt = (_grps select 0) call SYG_rearmSpecopsGroup;
 #ifdef __DEBUG__		
-		hint localize format["%1 x_m30.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grps select 0)];
+		hint localize format["+++ %1 x_m30.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grps select 0)];
 #endif
 	};
 	
@@ -112,7 +112,7 @@ if (isServer) then {
 	_grp_array = [_newgroup, _pos, 0, [], [], -1, 0, [], 100, -1];
 	_grp_array execVM "x_scripts\x_groupsm.sqf";
 
-	hint localize format["%1 x_m30.sqf: AA defence on Asharan is created (%2 vehicles)", call SYG_missionTimeInfoStr, count units _newgroup ];
+	hint localize format["+++ %1 x_m30.sqf: AA defence on Asharan is created (%2 vehicles)", call SYG_missionTimeInfoStr, count units _newgroup ];
 #endif
 	
 	
