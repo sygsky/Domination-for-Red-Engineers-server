@@ -13,8 +13,9 @@ _use_wind       = if (count _this > 3) then  {_this select 3} else { true }; // 
 #endif
 
 _check_circle_hit = if (count _this > 4) then  {_this select 4} else { true }; // Add score if hit the circle (true) or not (false)
+_parawear       = player call SYG_getParachute; // the parachute is put on the player
 
-hint localize format[ "+++ jump.sqf: _this = %1, player para = ""%2"", _check_circle_hit = %3", _this, player call SYG_getParachute, _check_circle_hit ];
+hint localize format[ "+++ jump.sqf: _this = %1, player para = ""%2"", _check_circle_hit = %3", _this, _parawear, _check_circle_hit ];
 
 if (d_para_timer_base > 0) then {
 	d_next_jump_time = time + d_para_timer_base;
@@ -114,12 +115,8 @@ switch _paratype do {
     default  {_halo_height = d_halo_height / 7};
 };
 #endif
-// check parachute presence
-if (_plane) then { // this is intro jump, not flag/heli one
-	if ( (player call SYG_getParachute) == "" ) then { player addWeapon _paratype; hint localize format["+++ jump.sqf: parachute absent, ""%1"" added", _paratype] };
-};
 
-hint localize format[ "+++ jump.sqf: halo height set to %1 m, player has ""%""", round _halo_height, player call SYG_getParachute ];
+hint localize format[ "+++ jump.sqf: halo height set to %1 m, player has ""%""", round _halo_height, _parawear ];
 uh60p setPos [_start_location select 0,_start_location select 1, _halo_height];
 uh60p engineOn true;
 player moveInCargo uh60p;
@@ -129,7 +126,7 @@ enableRadio false;
 #endif
 titleText ["","Plain"];
 
-hint localize format["+++ jump.sqf: vehicle %1 created on height %2 m, player (has ""%3"") move to it", typeOf uh60p, round _halo_height, player call SYG_getParachute];
+hint localize format["+++ jump.sqf: vehicle %1 created on height %2 m, player (has ""%3"") move to it", typeOf uh60p, round _halo_height, _parawear];
 _obj_jump = player;
 
 if(vehicle player == player)exitWith {};	// ?
@@ -137,6 +134,10 @@ if(vehicle player == player)exitWith {};	// ?
 #ifdef __ACE__
 
 if ( _plane ) then { // not jump from plane as this usully leads to the wounds
+	// check parachute presence
+    // this is intro jump, add him parachute in any case!
+   	if ( (_parawear == "") && (_check_circle_hit)) then { player addWeapon _paratype; hint localize format["+++ jump.sqf: intro jump detected, parachute absent, ""%1"" added", _paratype] };
+
 	// Put player 5 meters out of the plane/heli as he is out of vehicle
 	player setPos ( uh60p modelToWorld [-5, -5, -5] );
 	player setDir _dir;
