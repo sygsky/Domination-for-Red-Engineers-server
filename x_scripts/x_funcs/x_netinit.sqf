@@ -125,7 +125,7 @@ XSendNetVarServer = {
 };
 
 ///////////////////////////////////
-
+// Send to all except sender. If sender is server and client alltogether, send to it also.
 XSendNetStartScriptClient = {
 	private ["_this"];
 	//__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClient",_this)
@@ -133,7 +133,7 @@ XSendNetStartScriptClient = {
 	if (X_SPE) then {_this spawn XHandleNetStartScriptClient}; // if Server on Player is Executed (not dedicated)
 };
 
-// To ensure all clients receive this message
+// To ensure all clients including sender receive this message
 XSendNetStartScriptClientAll = {
 	private ["_this"];
 	//__DEBUG_NET("x_netinit.sqf XSendNetStartScriptClientAll",_this)
