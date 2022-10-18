@@ -48,16 +48,16 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 				hint localize format ["+++ event_para_dropped_practice.sqf: landed on dist to the main circle %1 m", _dist];
 			} else {
 				// "You hit the circle, but not the right one."
-				_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_1_0"]], 0, 1, false, "no_more_waiting" ];
+				_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_1_0"]], 0, 1, false, "losing_patience" ];
 				hint localize format ["+++ event_para_dropped_practice.sqf: landed on dist to the one of the side circles %1 m", _dist];
 			};
 		};
 		// "You landed outside the nearest circle (distance %1 m.)"
-		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_2_0", round(_dist)]], 0, 1, false, "no_more_waiting" ];
+		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_2_0", round(_dist)]], 0, 1, false, "losing_patience" ];
 		hint localize format ["+++ event_para_dropped_practice.sqf: landed on dist to the one of the side circles %1 m", _dist];
 	} else {
 		// "You have landed in the base area, which is not bad. Try to land on the yellow circle near tent of barracs (points: +%1)"
-		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7", _sc]], 0, 1, false, "no_more_waiting" ];
+		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7", _sc]], 0, 1, false, "losing_patience" ];
 	};
 } else {
 	// "You have landed outside the base area (to the circle %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"
