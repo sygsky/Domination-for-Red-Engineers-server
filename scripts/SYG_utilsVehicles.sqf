@@ -2266,13 +2266,12 @@ SYG_getParachute = {
 //
 SYG_typesVehCanLift = {
 	private ["_arr","_heli_type","_x","_list"];
+	hint localize format["+++ SYG_typesVehCanLift: _this = %1", _this];
 	_heli_type = _this;
 	if (typeName _heli_type != "STRING") exitWith {[]};
 	_arr = [];
 #ifndef __TT__
-	{
-		if ((_x select 0) == _heli_type) exitWith { _arr = _x select 3; };
-	} forEach d_choppers;
+	_list = d_choppers;
 #endif
 #ifdef __TT__
 	if (playerSide == west) then {
