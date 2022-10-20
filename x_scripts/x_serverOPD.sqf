@@ -35,7 +35,7 @@ if (_index >= 0) exitWith {
 	_wpnArr = if ( _equipStr != "" ) then { _equipStr call SYG_unpackEquipmentFromStr } else { [] }; // stored full equipments array
 #ifdef __DEBUG_PRINT__
 	// print old weapon array
-    hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", score %2, old wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
+    hint localize format[ "+++ x_serverOPD.sqf: player ""%1"", score %2, old wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
 #endif
 
 	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only weapon/magazines
@@ -43,16 +43,20 @@ if (_index >= 0) exitWith {
 #endif
 #ifdef __DEBUG_PRINT__
 	// print new weapon array
-	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", score %2, new wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
+	hint localize format[ "+++ x_serverOPD.sqf: player ""%1"", score %2, new wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
 #endif
 
 #ifdef __AI__
     // TODO: try to remove all AI of the disconnected player
     // orphaned AI must be now local to server, not to any player as only single group player can recruit AI from barracks
+   _cnt = count units _player;
+   if (_cnt > 0 ) then {
+	   hint localize format["+++ x_serverOPD.sqf: %1 units count %2, 1st is %3", _name, _cnt, typeOf (units player select 0)];// ;
+   };
 #endif
     //__DEBUG_NET("x_serverOPD player disconnected _parray",_parray)
     _parray set[4, ""]; // mark player to be logged out (empty role name in player array)
 };
 
-hint localize format[ "--- x_scripts\x_serverOPD.sqf: unknown player name detected ""%1""", _name];
+hint localize format[ "--- x_serverOPD.sqf: unknown player name detected ""%1""", _name];
 if (true) exitWith {};
