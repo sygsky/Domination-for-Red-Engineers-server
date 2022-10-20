@@ -43,7 +43,7 @@ if (_index >= 0) exitWith {
 #endif
 #ifdef __DEBUG_PRINT__
 	// print new weapon array
-	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", score %2, new wpnarr %2", _name, _parray select 3, _wpnArr call SYG_compactArray ];
+	hint localize format[ "+++ x_scripts\x_serverOPD.sqf: player ""%1"", score %2, new wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
 #endif
 
 #ifdef __AI__
