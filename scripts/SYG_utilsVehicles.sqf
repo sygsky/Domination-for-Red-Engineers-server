@@ -2279,10 +2279,10 @@ SYG_typesVehCanLift = {
 	} else {
 		_list = d_choppers_racs;
 	};
+#endif
 	{
 		if ((_x select 0) == _heli_type) exitWith { _arr = _x select 3; };
 	} forEach _list;
-#endif
 	_arr
 };
 
