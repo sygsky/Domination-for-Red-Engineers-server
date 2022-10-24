@@ -28,6 +28,10 @@ if ( !isPLayer (_this select 1) ) exitWith {
 };
 
 if ( (getPos _veh) call SYG_pointIsOnBase ) exitWith {
+	if (isEngineOn _veh) exitWith {
+		["msg_to_user","*",[["STR_BONUS_9"]],0,0.5,false,"losing_patience"] call XSendNetStartScriptClientAll;
+	};
+
 	// Vehicle is on base, print message about and assign vehicle to be restoreable
 	_id = _veh getVariable "INSPECT_ACTION_ID";
 	if (!isNil "_id") then {
