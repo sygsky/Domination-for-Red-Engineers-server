@@ -18,7 +18,9 @@ if (!X_Client) exitWith {hint localize "--- radio_init.sqf called not on client,
 
 #include "sideradio_vars.sqf"
 
-hint localize format[ "+++ radio_init.sqf: %1, _this = %2, d_radar %3", if (X_Client) then {"Client"} else {"Server"},
+_msg = if (X_Client) then {"Client"} else {"Server"};
+hint localize format[ "+++ radio_init.sqf: %1, _this = %2, d_radar %3",
+    _msg,
 	typeOf _this,
 	if (alive d_radar) then {"alive"} else {"NOT alive"}
 ];

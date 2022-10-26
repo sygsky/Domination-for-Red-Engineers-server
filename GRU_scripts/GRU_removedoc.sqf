@@ -23,6 +23,11 @@ call GRU_removeDoc;
 call GRU_removeDocAction;
 
 // handle with GRU document state
+if (isNil "GRU_docState") exitWith {
+#ifdef __DEBUG__
+    hint localize "+++ GRU_removedoc.sqf: GRU_docState isNil = true, exit";
+#endif
+};
 _val = GRU_docState;
 if (count _this == 1) then {GRU_docState = arg(0);}  // this is call from script: [0] execVM "GRU_scripts\GRU_removedoc.sqf";
 else {
@@ -33,7 +38,7 @@ else {
 };
 
 #ifdef __DEBUG__
-hint localize format[ "GRU_removedoc.sqf: Action and Var removed, GRU_docState %1", if (GRU_docState == _val) then {format["not changed (%1)",GRU_docState]} else {format["changed from %1 to %2",_val,GRU_docState]}];
+hint localize format[ "+++ GRU_removedoc.sqf: Action and Var removed, GRU_docState %1", if (GRU_docState == _val) then {format["not changed (%1)",GRU_docState]} else {format["changed from %1 to %2",_val,GRU_docState]}];
 #endif
 
 
