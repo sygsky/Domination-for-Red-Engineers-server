@@ -46,9 +46,9 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 			if ( (_arr select 0) == AISPAWN ) then  {
 				// we are in AISPAWN circle!
 				// "You hit the circle and are rewarded for this: +%1"
-				_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8", _sc]], 0, 5, false, "no_more_waiting" ];
+				_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8", _sc]], 0, 8, false, "no_more_waiting" ];
 				_sc call SYG_addBonusScore; // score to the player
-				hint localize format ["+++ event_para_dropped.sqf: landed on dist to the main circle %1 m", _dist];
+				hint localize format ["+++ event_para_dropped.sqf: landed in circle on dist to the main circle %1 m", _dist];
 			} else {
 				// "You hit the circle, but not the right one and you don't get points (+%1)"
 				_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_1", _sc]], 0, 5, false, "losing_patience" ];
@@ -61,6 +61,7 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 	} else {
 		// "You have landed in the base area, which is not bad. Try to land on the yellow circle near tent of barracs (points: +%1)"
 		_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_7", _sc]], 0, 5, false, "losing_patience" ];
+		hint localize "+++ event_para_dropped.sqf: landed on base far from circles";
 	};
 } else {
 	// "You have landed outside the base area (to the circle %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"

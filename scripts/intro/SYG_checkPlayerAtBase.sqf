@@ -39,10 +39,10 @@ while { base_visit_status <= 0 } do {
 	};
 };
 
-// inform player that he reached the base
-[ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE"],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // "You have reached the base! Life will get easier from here."
 
 #ifdef __ACE__
+// inform player that he reached the base
+[ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE"],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // "You have reached the base! Life will get easier from here."
 // rearm to original equipment
 hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
 [player, SYG_initialEquipmentStr] call SYG_rearmUnit;
