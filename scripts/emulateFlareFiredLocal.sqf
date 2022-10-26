@@ -2,7 +2,7 @@
 //
 // call on client as: [ "flare_launched", [ _flare, _flare_color (may be "Red","Green","Yellow","White"), _factor] ] call XSendNetStartScriptClient;
 //
-hint localize format["+++ emulateFlareFiredLocal.sqf: _this = %1, flare is %2", _this, if (local (_this select 0)) then {"local"} else {"global"}];
+//hint localize format["+++ emulateFlareFiredLocal.sqf: _this = %1, flare is %2", _this, if (local (_this select 0)) then {"local"} else {"global"}];
 
 private ["_col","_fx_flare","_fx_smoke","_factor","_pos","_flare","_pos","_flare_type","_die_away_height"];
 
