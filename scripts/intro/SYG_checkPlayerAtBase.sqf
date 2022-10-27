@@ -17,7 +17,7 @@ _flag_pos = [];
 _factor = (400 / 1600) max 12.5;
 // set flare position as slightly random one
 
-if (isNil "base_visit_status") then {base_visit_status = 0};
+if (isNil "base_visit_status") then { base_visit_status = 0 }; // init visit status
 while { base_visit_status <= 0 } do {
 	sleep 5;
 	// launch a yellow flare over the base to attract the player's attention (to tell him where to go)
@@ -46,15 +46,18 @@ while { base_visit_status <= 0 } do {
 // rearm to original equipment
 hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
 [player, SYG_initialEquipmentStr] call SYG_rearmUnit;
-playSound (call SYG_armorySound); // random armory sound
 SYG_initialEquipmentStr = nil; // not needed more
+
+sleep 0.5;
+playSound (call SYG_armorySound); // random armory sound
 #endif
 // remove parachute
 _para = player call SYG_getParachute;
 if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory
 
-// throw last GREEN flare
-while { alive _flare } do { sleep 0.1 };
+// stop last VIOLET flare, throw one GREEN flare
+if (alive _flare) then { deleteVehicle _flare };
+sleep 0.3;
 _flare = "F_40mm_Green" createVehicleLocal _flag_pos;
 [ _flare, "GREEN", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
 

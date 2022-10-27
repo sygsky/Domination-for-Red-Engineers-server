@@ -1,6 +1,6 @@
 // Xeno, x_scripts\x_serverOPD.sqf, OnPlayerDisconnected
 if (!isServer) exitWith{};
-private ["_name", "_index", "_parray", "_oldwtime", "_connecttime", "_newwtime","_str","_arr","_equipStr","_wpnArr"];
+private ["_name", "_index", "_parray", "_oldwtime", "_connecttime", "_newwtime","_str","_arr","_equipStr","_wpnArr","_player","_cnt"];
 
 _name = _this select 0;
 if (_name == "__SERVER__") exitWith {};
@@ -50,8 +50,9 @@ if (_index >= 0) exitWith {
     // TODO: try to remove all AI of the disconnected player
     // orphaned AI must be now local to server, not to any player as only single group player can recruit AI from barracks
    _cnt = count units _player;
-   if (_cnt > 0 ) then {
-	   hint localize format["+++ x_serverOPD.sqf: %1 units count %2, 1st is %3", _name, _cnt, typeOf (units player select 0)];// ;
+   if ( _cnt > 0 ) then {
+   		_str = 	(units _player) call SYG_vehToType;
+		hint localize format["+++ x_serverOPD.sqf: %1 units count %2, 1st is %3", _name, _cnt, _str];// ;
    };
 #endif
     //__DEBUG_NET("x_serverOPD player disconnected _parray",_parray)
