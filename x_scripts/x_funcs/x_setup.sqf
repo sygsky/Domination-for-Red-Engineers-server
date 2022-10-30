@@ -204,3 +204,6 @@
 
 // comment to disable player parajump on connection and base reach procedure
 #define __CONNECT_ON_PARA__
+
+// please not comment lower line, only change it to any of follow values: 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000
+#define DEFAULT_VIEW_DISTANCE 3500

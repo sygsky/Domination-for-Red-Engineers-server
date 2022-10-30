@@ -1644,7 +1644,7 @@ SYG_armUnit = {
 // 4th optional array is names of rucksack items
 // 5th is optional value for player stored view distance, default value is 1500
 //
-//  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]><, view_distance>>] ] call SYG_rearmUnit;
+//  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]><, view_distance<,reborn_music>>>] ] call SYG_rearmUnit;
 //
 //  or
 //
@@ -1733,7 +1733,8 @@ SYG_rearmUnit = {
 	};
 	// argopt(4) is value for player stored view distance
 	_vdist = argopt(4, 0);
-	if (_vdist > 0 ) then {
+	if ( (_vdist > 0)) then { // change only if user not set it before
+		if ( _vdist == DEFAULT_VIEW_DISTANCE ) exitWith { hint localize format["*** SYG_ RearmUnit: attempt to set back default view distance (%1 m) denied", DEFAULT_VIEW_DISTANCE] };
 		//hint localize format["++++++ SYG_rearmUnit: _vdist = %1 +++++++", _vdist];
 		_vdist call SYG_setViewDistance;
 	};
@@ -2806,5 +2807,4 @@ SYG_getParamFromSettingsArray = {
 // returns created bomb
 //
 SYG_bombPos = {
-	(_this select 1) createVehicle (_this select 0);
-};
+	(_this select 1) createVehicle (_this

@@ -286,10 +286,10 @@ SYG_viewDistanceArray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8
 // _dist = 0 call SYG_setViewDistance; // equivalent to: (SYG_viewDistance select 0) call SYG_setViewDistance
 // _dist = [0] call SYG_setViewDistance; // equivalent to: (SYG_viewDistance select 0) call SYG_setViewDistance
 // _dist = 1200 call SYG_setViewDistance; // equivalent to: (SYG_viewDistance select 0) call SYG_setViewDistance; // due to designated value not found in SYG_viewDistanceArray
-// _dist = [10000] call SYG_setViewDistance; // equivalent to: (SYG_viewDistanceArray select 10) call SYG_setViewDistance; // due to designated value found in SYG_viewDistanceArray
+// _dist = [10000] call SYG_setViewDistance; // equivalent to: (SYG_viewDistanceArray select 11) call SYG_setViewDistance; // due to designated value found in SYG_viewDistanceArray
 //
 SYG_setViewDistance = {
-    hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2+++++", _this, isServer ];
+    hint localize format["+++++ %1 call SYG_setViewDistance; isServer = %2 +++++", _this, isServer ];
     //if ( isServer ) exitWith {-1};
     private ["_selectedIndex"];
     _selectedIndex = if ( typeName _this == "ARRAY") then {_selectedIndex = (_this select 0)} else { _this };
