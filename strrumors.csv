@@ -4,7 +4,7 @@
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc)
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,88,88,88,88
+STR_RUM_NUM,89,89,89,89
 STR_RUM_NIGHT,They are sleeping in %3,Alle schlafen in %3,"En %3, todos duermen, sin embargo","В %3 все спят, однако"
 STR_RUM_0,Rumors are absent! It's weird...,Gerüchte sind nicht vorhanden! Es ist seltsam...,¡No hay rumores! Lo cual es extraño...,Слухи отсутствуют! Что странно...
 STR_RUM_1,Enemy refuel truck will help only if your vehicle engine is on,"Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf",El camión cisterna enemigo repostará con el motor del equipo encendido,Вражеский бензовоз заправляет при включенном двигателе техники
@@ -93,3 +93,4 @@ STR_RUM_84,"The GRU radio mast, installed somewhere on the island, helps us rece
 STR_RUM_85,"You will always feel that an artillery strike is about to take place. But it's not always the inner voice that says it out loud","Sie werden immer spüren, dass ein Artillerieschlag bevorsteht. Aber es ist nicht immer die innere Stimme, die es laut ausspricht","Siempre sentirás que está a punto de producirse un ataque de artillería. Pero no siempre es la voz interior la que lo dice en voz alta","Вы всегда почувствуете, что сейчас будет нанесён атрудар. Но не всегда внутренний голос произнесет это вслух"
 STR_RUM_86,"The pilot can have any submachine gun available on the island.","Der Pilot kann jede auf der Insel verfügbare Maschinenpistole haben","El piloto puede tener cualquier subfusil disponible en la isla","Пилот может иметь любой пистолет-пулемёт из имеющихся на острове"
 STR_RUM_87,"The parachute's rate of descent depends on the weight of the equipment","Die Sinkgeschwindigkeit des Fallschirms hängt vom Gewicht der Ausrüstung ab","La velocidad de descenso del paracaídas depende del peso del equipo","Скорость снижения парашюта зависит от веса снаряжения"
+STR_RUM_88,"Exploring the campfires is only possible at the beginning of a mission. This can give you curiosity points","Das Erkunden der Lagerfeuer ist nur zu Beginn einer Mission möglich. Das kann Ihnen Neugierpunkte bringen","Explorar las hogueras sólo es posible al principio de una misión. Esto puede darte puntos de curiosidad","Изучение костров возможно только в начале миссии. Это может принести очки за любознательность"
