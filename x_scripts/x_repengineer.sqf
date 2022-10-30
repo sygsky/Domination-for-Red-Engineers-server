@@ -196,8 +196,11 @@ if (_break_str != "") exitWith {
 	if ( alive player ) then { playSound "losing_patience" }; // death usually have special sounds
 	(localize _break_str) call XfGlobalChat;
 };
-
-d_eng_can_repfuel = false; // Well, refuel ability is exhausted
+if (_addscore > 0 ) then {
+	d_eng_can_repfuel = false; // Well, refuel ability is exhausted
+} else {
+	(localize "STR_SYS_137_0") call XfHQChat; // "You have not lost the ability to repair ..."
+};
 
 #ifdef __RANKED__
 
