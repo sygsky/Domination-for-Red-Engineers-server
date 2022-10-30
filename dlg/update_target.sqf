@@ -3,7 +3,7 @@
 
 private ["_target","_display","_textctrl","_text","_end_pos","_veh","_sound"];
 
-_target = _this select 0;
+_target = _this select 0; // 0 = base, 1 = MHQ1, 2= MHQ2
 
 _display = findDisplay 100001;
 _textctrl = _display displayCtrl 100110;
@@ -141,7 +141,15 @@ if ( _sound != "") then  { playSound _sound };
 if ( ([_end_pos, __TELEPORT_DEVIATION__] call SYG_isNearIronMass) ) then {
 	_target spawn {
 		// initial sound message on the destination teleport near iron mass
-		(format[localize "STR_SYS_75_4",_this]) call XfHQChat;
+		switch	_this do {
+			case 0: {
+				(localize "STR_SYS_75_BASE") call XfHQChat;
+			};
+			case 1;
+			case 2: {
+				(format[localize "STR_SYS_75_4",_this]) call XfHQChat;
+			};
+		};
 		sleep 1;
 		playSound (call SYG_powerDownSound);
 	};

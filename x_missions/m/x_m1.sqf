@@ -6,7 +6,8 @@ private ["_vehicle"];
 #define __Poss _poss = x_sm_pos select 0;
 #define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
 
-x_sm_pos = [[17763.2,12139.8,0], [17717.1,12040.1,0]]; // Officer, Tres Valles, second array = position Shilka
+x_sm_pos = [[17763.2,12139.8,0], [17717.1,12040.1,0]]; // 0 = Officer at Tres Valles, 1 = position Shilka
+// TODO: add more 2-3 shilka places
 x_sm_type = "normal"; // "convoy"
 
 #ifdef __SMMISSIONS_MARKER__
@@ -15,8 +16,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SM_1"; //"Сегодня к развалинам церкви в долине 'Tres Valles' прибывает офицер, родственник бывшего президента. По слухам, он готовится провести там свои масонские ритуалы. К тому-же, он уже в ответе за множество смертей среди мирного населения. Ликвидируйте его!";
-	current_mission_resolved_text = localize "STR_SM_01"; //"Задание выполнено! Родственник президента ликвидирован!";
+	current_mission_text = localize "STR_SM_1"; //"A high enemy officer arrives today in a ruin south of Tres Valles. He is responsible for the death of many civilians. Eliminate him!";
+	current_mission_resolved_text = localize "STR_SM_01"; //"The enemy officer is dead. Good job.";
 };
 
 if (isServer) then {
@@ -62,13 +63,14 @@ if (isServer) then {
 	
 //	["specops", 1, "basic", 1, _poss, 100,true] spawn XCreateInf;
 	
-	// as this group is near officer, rearm it with some special specops weapons
-	["specops", 1, "basic", 1, _poss, 100,true]  spawn 
+	// as some groups are near officer, rearm it with some special specops weapons
+	["specops", 2, "basic", 1, _poss, 200,true]  spawn
 	{
 		private ["_grps","_cnt"];
 		_grps = _this call XCreateInf;
 		_cnt = (_grps select 0) call SYG_rearmSpecopsGroup;
-#ifdef __DEBUG__		
+		_cnt = _cnt + ((_grps select 1) call SYG_rearmSpecopsGroup);
+#ifdef __DEBUG__
 		hint localize format["+++ %1 x_m1.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grps select 0)];
 #endif
 	};

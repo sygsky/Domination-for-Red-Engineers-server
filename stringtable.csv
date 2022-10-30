@@ -174,6 +174,7 @@ STR_SYS_75_2,Teleporting not possible while MHQ has damage (%1%2)!!!,"Teleportie
 STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport will stop working!","MHQ %1%2 Schaden, sofort reparieren, sonst funktioniert der Teleport nicht mehr!","Dañado KSHM %1%2, reparar inmediatamente, de lo contrario el teletransportador dejará de funcionar!","Повр. КШМ %1%2, немедленно почините, иначе перестанет работать телепорт!"
 STR_SYS_75_4,MHQ #%1. A large mass of iron was found nearby!,MHQ #%1. In der Nähe - eine Masse aus Eisen!,"MHQ #%1. Cerca, una masa de hierro!",КШМ #%1. Рядом обнаружена большая масса железа!
 STR_SYS_75_40,MHQ #%1. A mass of ferromagnetic was found nearby!,MHQ #%1. Eine Masse von ferromagnetischen wurde in der Nähe gefunden!,MHQ #%1. ¡Se encontró una masa de ferromagnéticos cerca!,КШМ #%1. Рядом ферро-магнитная масса!
+STR_SYS_75_BASE,Base. A large mass of iron was found nearby!,Base. In der Nähe - eine Masse aus Eisen!,"MHQ #%1. Cerca, una masa de hierro!",База. Рядом обнаружена большая масса железа!
 STR_SYS_75_5,Dest. point is %1 off due to ferro-magnetic mass and/or MHQ damage!,Der Zielpunkt ist aufgrund der Eisenmasse und/oder des MHQ-Schadens um 1 % verschoben!,El punto de destino está %1 fuera debido a la masa de hierro y/o al daño del MHQ!,Точка назначения %1 смещена из-за массы железа и/или повреждения КШМ!
 STR_SYS_75_5_2,slightly,leicht,ligeramente,слегка
 STR_SYS_75_5_5,a little,ein wenig,un poco,ненамного
