@@ -78,7 +78,7 @@ if (isNull _hotel) exitWith {
 #ifdef __JAIL_DEBUG__
     hint localize format["--- jail.sqf: No jail buildings found, remained pos array %1", jail_buildings];
 #endif
-	["log2server", name player, "--- jail building not found"] call XSendNetStartScriptServer;
+	["log2server", name player, "jail building not found"] call XSendNetStartScriptServer;
 };
 
 //hint localize format[ "jail: %1", _jailArr ];
@@ -155,7 +155,7 @@ _str = format["+++jail.sqf: pos %1, hld %2, model %3", getPos player, getPos _we
 //player groupChat _str;
 hint localize _str;
 #endif
-["log2server", name player, format["+++ jail process started for %1 seconds", _score]] call XSendNetStartScriptServer;
+["log2server", name player, format["jail process started for %1 seconds", _score]] call XSendNetStartScriptServer;
 
 //if (bancount > 2) exitWith {hint "press Alt + F4 to exit"};
 

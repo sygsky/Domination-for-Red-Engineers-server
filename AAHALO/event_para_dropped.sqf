@@ -2,7 +2,7 @@
 	AAHALO\event_para_dropped.sqf
 
 	author: Sygsky
-	description: Event handler to check if player landed on base/circle/etc
+	description: Event handler to check if player landed on base/circle/etc at intro
 			Variants are:
 			1. Out of base territory
 			2. On base territory
@@ -13,8 +13,9 @@
 
 	returns: nothing
 */
+if (!isServer) exitWith {"--- event_para_dropped.sqf illegally called on server"};
 
-hint localize format["+++ event_para_dropped.sqf: Get out of parachute _this %1, pos %2", _this, getPos (_this select 2)];
+hint localize format["+++ event_para_dropped.sqf: Landed with parachute _this %1, pos %2", _this, getPos (_this select 2)];
 _veh  = _this select 0;
 _unit = _this select 2;
 _arr = [];
@@ -34,7 +35,7 @@ _pos1 set [2,0];
 _dist = [[AISPAWN, _pos1] call SYG_distance2D, 0.1] call SYG_roundTo;
 _arr = nearestObjects[ _pos1, ["HeliH"], 100]; // find nearest circle of any type near the landing point
 _msgArr = [];
-_send_to_all = false;
+_send_to_server = false;
 hint localize format["+++ event_para_dropped.sqf: landed on the base, nearest circle count %1", count _arr];
 
 if ( _pos1 call SYG_pointIsOnBase ) then {
@@ -49,6 +50,7 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 				_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8", _sc]], 0, 8, false, "no_more_waiting" ];
 				_sc call SYG_addBonusScore; // score to the player
 				hint localize format ["+++ event_para_dropped.sqf: landed in circle on dist to the main circle %1 m", _dist];
+				_send_to_server = true; // mark to send info to server
 			} else {
 				// "You hit the circle, but not the right one and you don't get points (+%1)"
 				_msgArr = [ "msg_to_user", "*", [["STR_INTRO_PARAJUMP_8_1", _sc]], 0, 5, false, "losing_patience" ];
@@ -70,23 +72,36 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 };
 
 _arr2 = _msgArr select 2;
-if (_send_to_all) then { // send first message to all players
-	_msgArr spawn XSendNetStartScriptClientAll;
+if (_send_to_server) then { // send message about circle hit to all players and print this on server
+    // print to this player
+	_msgArr spawn SYG_msgToUserParser;
+	// print to all other players if any
+	_arr2 set [0, ["STR_INTRO_PARAJUMP_8_ALL", name player, _sc]];
+	_msgArr spawn XSendNetStartScriptClient;
+	hint localize format["+++ event_para_dropped.sqf: print to all players %1", _msgArr];
+    // Write to RPT log file
+    ["log2server", name player, "I hit the circle on intro!"] call XSendNetStartScriptServer;
 	// now remove message from the list as it is already sent
 	_arr2 resize 0;
 };
 
-// print health status if plaeyr was wounded
-if (damage player > 0.26) then {
-	_arr2 set [count _arr2, ["STR_INTRO_PARAJUMP_10"]]; //  "You are badly injured when you land"
-	hint localize format["+++ event_para_dropped.sqf: damage detected = %1", damage player];
-} else  {
-	if (damage player > 0.1) then {
-		_arr2 set [count _arr2, ["STR_INTRO_PARAJUMP_9"]]; // "You are slightly injured on landing"
-		hint localize format["+++ event_para_dropped.sqf: damage detected = %1", damage player];
-	};
+// print health status if player was wounded
+_damage = damage player;
+if (_damage > 0 ) then {
+    _str = "";
+    if ( _damage > 0.26) then {
+        _str = "STR_INTRO_PARAJUMP_10"; //  "You are badly injured when you land"
+    } else  {
+        if (_damage > 0.05) then {
+            _str =  "STR_INTRO_PARAJUMP_9"; // "You are slightly injured on landing"
+        };
+    };
+    if (_str != "" ) then {
+        _arr2 set [count _arr2, [_str]]; //  "You are badly injured when you land"
+        hint localize format["+++ event_para_dropped.sqf: damage detected = %1", _damage];
+    };
 };
 
-hint localize format["+++ event_para_dropped.sqf: msg arr %1", _msgArr];
 if (count _arr2 == 0) exitWith {};
-_msgArr call SYG_msgToUserParser;
+hint localize format["+++ event_para_dropped.sqf: msg arr %1", _msgArr];
+_msgArr spawn SYG_msgToUserParser;

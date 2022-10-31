@@ -31,6 +31,6 @@ sleep _sleep; // slip to the 5 minutes after NY
 if ((score player) != _score ) exitWith { // Combat activity detected!!! Score changed during 15 minute interval over NY
 	10 call  SYG_addBonusScore;
 	["msg_to_user", "", ["STR_SYS_NEW_YEAR", 10 ], 0, 0, false, "good_news"] spawn SYG_msgToUserParser; // ""For combat activity on New Year's Eve, the chief engineer awards you +%1 points.""
-	[ "log2server", name player, format[ "+++ new_year_check.sqf: For combat activity on New Year's Eve, the chief engineer awards %1 with +%2 points", name player, 10] ] call XSendNetStartScriptServer;
+	[ "log2server", name player, format[ "new_year_check.sqf: For combat activity on New Year's Eve, the chief engineer awards %1 with +%2 points", name player, 10] ] call XSendNetStartScriptServer;
 };
 hint localize "-- new_year_check.sqf: The test of New Year's activity did not yield results";

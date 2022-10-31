@@ -16,7 +16,7 @@ if (!isNull _killer && side _killer == d_side_player && !isPlayer _killer) then 
 		[_s, "GLOBAL"] call XHintChatMsg;
 		_unit_killer = [name _leader_killer, name _killed];
 		["unit_killer",_unit_killer] call XSendNetStartScriptClient;
-		["log2server", name player, format["+++ player killed by AI of ""%1"" %2", name _leader_killer, [player, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE ]] call  XSendNetStartScriptServer;
+		["log2server", name player, format["player killed by AI of ""%1"" %2", name _leader_killer, [player, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE ]] call  XSendNetStartScriptServer;
 	};
 	_killedfriendly = true;
 };
@@ -30,7 +30,7 @@ if ( !isNull _killer && isPlayer _killer && _killer != _killed ) then {
 	[ _s, "GLOBAL" ] call XHintChatMsg;
 	_unit_killer = [ name _killer, name _killed ];
 	[ "unit_killer",_unit_killer ] call XSendNetStartScriptClient;
-	[ "log2server", name player, format[ "+++ player killed by ""%1"" %2", name _killer, [player, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE ] ] call XSendNetStartScriptServer;
+	[ "log2server", name player, format[ "player killed by ""%1"" %2", name _killer, [player, "at %1 m. to %2 from %3",1] call SYG_MsgOnPosE ] ] call XSendNetStartScriptServer;
 	_killedfriendly = true;
 };
 
