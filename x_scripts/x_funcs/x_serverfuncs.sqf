@@ -38,11 +38,12 @@ SAddObserverKillScores = {
     _observer = _this select 0;
     _killer =  _this select 1;
     if ( isPlayer _killer ) then {
-        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
+        hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4) on dist %5",
             primaryWeapon _observer,
             name _killer,
             if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
-            [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE
+            [_killer, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
+            round (_observer distance _killer)
         ];
     } else {
         if (isNull _killer) then {
@@ -193,23 +194,28 @@ SYG_allGroupsCount = {
 };
 
 
-// Gets array of 100(or desinated N) base point in circle of designated radious
-// call: _wp_arr = [_pnt, _radius <, _pnt_num>] call x_getwparray
+// Gets array of 100(or designated N) spawn map points in circle of designated radious.
+// If _out_of_building == true, only points out of building are returned
+// call: _wp_arr = [_pnt, _radius <, _pnt_num<,_out_of_building>>] call x_getwparray
 x_getwparray = {
-	private["_tc", "_radius","_wp_a","_point","_pnt_num"];
-	_tc = _this select 0;
-	_radius = _this select 1;
-	_wp_a = [];
+	private["_tc", "_radius","_wp_a","_point","_pnt_num","_out_of_building"];
+	_tc = _this select 0; _radius = _this select 1; _wp_a = [];
 	if ( (count _this) > 2) then { _pnt_num = _this select 2 } else {_pnt_num = 100};
+	if ( (count _this) > 3) then { _out_of_building = _this select 3 } else {_out_of_building = false};
 	_pnt_num = _pnt_num max 1; // not less than 1 point created
 	for "_i" from 1 to _pnt_num do {
 		_point = [_tc, _radius] call XfGetRanPointCircle;
 		while {count _point == 0} do {
 			_point = [_pos_center, _radius] call XfGetRanPointCircle;
+            if (_out_of_building) then {
+                if ( _point call SYG_isInHouseRect ) then {
+                    _point resize 0;
+                };
+            };
 			sleep 0.04;
 		};
-		_wp_a set [ count _wp_a, _point];
-		sleep 0.032
+        _wp_a set [ count _wp_a, _point];
+        sleep 0.032
 	};
 	_wp_a
 };
@@ -225,7 +231,7 @@ x_getwparray2 = {
 			_point = [_tc, _radius] call XfGetRanPointCircleOuter;
 			sleep 0.04;
 		};
-		_wp_a = _wp_a + [_point];
+		_wp_a set [ count _wp_a, _point];
 		sleep 0.032
 	};
 	_wp_a
@@ -242,7 +248,7 @@ x_getwparray3 = {
 			_point = [_pos, _a, _b, _angle] call XfGetRanPointSquare;
 			sleep 0.04;
 		};
-		_wp_a = _wp_a + [_point];
+		_wp_a set[count _wp_a, [_point];
 		sleep 0.032
 	};
 	_wp_a
