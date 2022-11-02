@@ -85,7 +85,7 @@ class GRUPortalDialog {
 	idd = 12000;                   // set to -1, because we don't require an unique ID
 //	movingEnable = true;           // the dialog can be moved with the mouse (see "moving" below)
 	movingEnable = false;          // the dialog can't be moved with the mouse (see "moving" below)
-	enableSimulation = true;       // freeze the game
+	enableSimulation = true;       // Not freeze the game
 	controlsBackground[] = { GRU_BackGround };    // no background controls needed
 	objects[] = { };               // no objects needed
 	controls[] = { GRU_Map, GRU_AcceptButton, GRU_EscapeButton, GRU_Picture, GRU_MainText, GRU_info, GRU_Task1Text, GRU_Task2Text, GRU_Task3Text};

@@ -541,10 +541,10 @@ SYG_showMusicTitle = {
 		_control1 = _XD_display displayCtrl 66667;
 		_control1 ctrlSetText _str;
 		_control1 ctrlShow true;
-		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) created", _control1 ];
+		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) created, music title ""%2""", _control1, _this select 0 ];
 	} else  { // to title found
 		_control1 = displayNull;
-		hint localize format[ "--- SYG_showMusicTitle: music text not found, skip control for ""%1"" creation", _this select 0 ];
+		hint localize format[ "--- SYG_showMusicTitle: music text not found, skip control for music ""%1"" creation", _this select 0 ];
 	};
 
 	if (d_still_in_intro) then { // then show logo of the mission (Author, modified by etc)
