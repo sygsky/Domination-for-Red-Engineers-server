@@ -101,47 +101,6 @@ class CfgIdentities {
 
 #include "h\CfgSounds.hpp"
 
-class S_RscIntroTitles {
-	idd = 77044;
-//	movingEnable = true;
-	enableSimulation = true;       // Not freeze the game
-	class ControlsBackground {};
-
-	class Controls {
-		// title class for show intro comment about Xeno and EngineerACE
-		class titel1: XC_RscText
-		{
-			idc=66666;
-			style="16+2+512";
-			lineSpacing=0.950000;
-			text=$STR_TITLE;
-			x=0.39000000;
-			y=0.8100000;
-			w=0.900000;
-			h=0.700000;
-			colorBackground[]={0,0,0,0};
-			colorText[]={0.8,0.9,0.9,0.7};
-			size=0.57;
-			sizeEx=0.026;
-		};
-
-		// title class to show intro/etc misic info text
-		class titel2: XC_RscText {
-			idc=66667;
-			style="16+2+512";
-			lineSpacing=0.950000;
-			text="";
-			x=0.0.0;
-			y=0.8100000;
-			w=0.300000;
-			h=0.500000;
-			colorBackground[]={0,0,0,0};
-			colorText[]={1,1,0.5,1};
-			size=0.5;
-			sizeEx=0.026;
-		};
-	};
-};
 
 class X_RscAnimatedLetters {
 	idd = 77043;
@@ -375,4 +334,50 @@ class RscTitles
 	#include "mando_missiles\mando_missiletitles.h"
 #endif
 	#include "x_dlg\IntroText.hpp"
+
+	class S_RscIntroTitles {
+    	idd = 77044;
+    	movingEnable = true;
+		fadein       =  0;
+		fadeout      =  0;
+		duration     =  120; // to fit any musics time. Will be cleared fromt he script by code: cutRsc ["Defaul", "PLAIN"];
+    	name="S_RscIntroTitles";
+    	controls[]={"titel1","titel2"};
+    	onLoad="INTRO_HUD = _this select 0"; // to know the is for dialog loaded by rscCut
+//    	class Controls {
+		// title class for show intro comment about Xeno and EngineerACE
+		class titel1: XC_RscText
+		{
+			idc=66666;
+			style="16+2+512";
+			lineSpacing=0.950000;
+			text="";
+			x=0.39000000;
+			y=0.8100000;
+			w=0.900000;
+			h=0.700000;
+			colorBackground[]={0,0,0,0};
+			colorText[]={0.8,0.9,0.9,0.7};
+			size=0.57;
+			sizeEx=0.026;
+		};
+
+		// title class to show intro/etc misic info text
+		class titel2: XC_RscText {
+			idc=66667;
+			style="16+2+512";
+			lineSpacing=0.950000;
+			text="";
+			x=0.0;
+			y=0.8100000;
+			w=0.300000;
+			h=0.500000;
+			colorBackground[]={0,0,0,0};
+			colorText[]={1,1,0.5,1};
+			size=0.5;
+			sizeEx=0.026;
+		};
+//    	};
+    };
+
 };

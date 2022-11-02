@@ -1,5 +1,6 @@
 // by Xeno: x_scripts\x_vec_hud.sqf
 private ["_speed_str", "_fuel_str", "_dam_str", "_dir_str", /* "_gendirlist", */ "_welcome_message", "_vec", "_welcome_str", "_vec_msg1", "_struct_text", "_endtime", "_type_name", "_vec_string", "_vdir", "_gendir", "_dstr", "_count", "_control", "_type_weap", "_dirtmp"];
+_type_str = localize "STR_SYS_324_1"; // Speed
 _speed_str = localize "STR_SYS_324_1"; // Speed
 _fuel_str =  localize "STR_SYS_324_2"; // Fuel
 _dam_str =   localize "STR_SYS_324_3"; // Damage
@@ -66,7 +67,7 @@ while {true} do {
 		while {vehicle player != player} do {
 			if (player == driver _vec || player == gunner _vec || player == commander _vec) then {
 				_type_name = [typeOf _vec,0] call XfGetDisplayName;
-				_vec_string = format ["Vec: %1", _type_name];
+				_vec_string = format [_type_str, _type_name];
 				while {vehicle player != player && alive player && player == driver _vec} do {
 					cutRsc["xvehicle_hud", "PLAIN"];
 					_control = DVEC_HUD displayCtrl 64432;
@@ -86,7 +87,7 @@ while {true} do {
 				};
 				cutText["", "PLAIN"];
 			};
-			sleep 0.532;
+			sleep 1.532;
 		};
 		#ifdef __ACE__
 		};
@@ -97,7 +98,7 @@ while {true} do {
 			while {vehicle player != player} do {
 				if (player == gunner _vec) then {
 					_type_name = [typeOf _vec,0] call XfGetDisplayName;
-					_vec_string = format ["Vec: %1", _type_name];
+					_vec_string = format [_type_str, _type_name];
 					_type_weap = (getArray(configFile>>"CfgVehicles" >> (typeOf _vec) >> "Turrets" >> "MainTurret" >> "weapons")) select 0; //always the case for statics which have only one gun
 					while {vehicle player != player && alive player && player == gunner _vec} do {
 						cutRsc["xvehicle_hud", "PLAIN"];

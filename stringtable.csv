@@ -656,6 +656,7 @@ STR_SYS_321,"Says the second art.battery. Roger, over.","Sagt die zweite Art.die
 STR_SYS_322,"Says the first art.battery. Charging %1. Roger, over.","Sagt die erste Art.Batterie, lädt %1. Die Aufnahme.","Habla el primer Art.batería, carga %1. Recepción.","Говорит первая арт.батарея, заряжаем %1. Прием."
 STR_SYS_323,"Says the second art.battery. Charging %1. Roger, over.","Sagt die zweite Art.Batterie, lädt %1. Die Aufnahme.","Habla el segundo Art.batería, carga %1. Recepción.","Говорит вторая арт.батарея, заряжаем %1. Прием."
 STR_SYS_324,"Welcome on board, %1","Willkommen an Bord, %1","Bienvenido a bordo, %1","Добро пожаловать на борт, %1"
+STR_SYS_324_0,Type: %1,Typ: %1,Tipo: %1,Тип: %1
 STR_SYS_324_1,Speed: %1 km/h,Geschwindigkeit: %1 km/h,Velocidad: %1 km/h,Скорость: %1 км/ч
 STR_SYS_324_2,Fuel: %1,Kraftstoff: %1,Combustible: %1,Топливо: %1
 STR_SYS_324_3,Damage: %1,Störungen: %1,Daños: %1,Повреждения: %1

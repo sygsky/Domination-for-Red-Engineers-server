@@ -248,7 +248,7 @@ x_getwparray3 = {
 			_point = [_pos, _a, _b, _angle] call XfGetRanPointSquare;
 			sleep 0.04;
 		};
-		_wp_a set[count _wp_a, [_point];
+		_wp_a set[count _wp_a, _point];
 		sleep 0.032
 	};
 	_wp_a

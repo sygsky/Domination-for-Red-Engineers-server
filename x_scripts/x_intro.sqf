@@ -526,6 +526,7 @@ if (typeName _camstart != "ARRAY" ) then {
 	_camera camCommit 18;
 } else { };
 
+#ifdef __OLD__
 // [_music_name<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle;
 SYG_showMusicTitle = {
 	private [ "_str", "_XD_display", "_control", "_control1", "_endtime", "_r", "_g", "_b", "_a","_dlg"];
@@ -607,6 +608,83 @@ SYG_showMusicTitle = {
 	if (dialog) then { closeDialog 0; hint localize "+++ SYG_showMusicTitle: dialog at end of method removed" }
 		else {hint localize "+++ SYG_showMusicTitle: no dialog at end of method"};
 };
+#else
+
+// [_music_name<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle;
+SYG_showMusicTitle = {
+	private [ "_str", "_control", "_endtime", "_r", "_g", "_b", "_a", "_start"];
+	// load both comtrols
+	_start = time;
+	cutRsc ["S_RscIntroTitles","PLAIN"];
+	_control = INTRO_HUD displayCtrl 66667; // find music title
+	// Check if music has title defined
+	_str = localize format["STR_%1", _this select 0];
+	if ( _str != "") then { // title defined and found
+		_control ctrlSetText _str;
+		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) created, _this = %2", _control, _this ];
+	} else {
+		hint localize format[ "--- SYG_showMusicTitle: music title not found, _this = %1", _this ];
+	};
+
+	_control = INTRO_HUD displayCtrl 66666;
+	hint localize format["+++ SYG_showMusicTitle: d_still_in_intro = %1", d_still_in_intro];
+	if (d_still_in_intro) then { // show logo of the mission (Author, modified by etc)
+		_control ctrlSetText (localize "STR_TITLE"); // set intro text on the doen left side of the screen
+		_endtime = time + 30; // how long to show mission title (if exists)
+		hint localize format["+++ SYG_showMusicTitle: start to print intro text control (%1) during %2 secs", _control, _endtime - time];
+		_r = 0.2; _a = 0.008; _g = 0.2; _b = 0.2; // new
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,_b], time];
+		//+++++++++++++++++++++++++++ PRINT TEXT FADING TO THE BLUE ++++++++++++++++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,_b];
+			if ( _b > 1 ) exitWith {};
+			_b = _b + _a;
+			sleep .01;
+		};
+		if ( (_endtime > time) && d_still_in_intro ) then { sleep 1};
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,_b], time];
+		//+++++++++++++++++++++++++++ PRINT TEXT FADING TO THE  GREEN ++++++++++++++++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,1];
+			if ( _g > 1 ) exitWith {};
+			_g = _g + _a;
+			_b = (_b - _a) max 0.2;
+			sleep .01;
+		};
+		if ( (_endtime > time) && d_still_in_intro ) then { sleep 1};
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+		//+++++++++++++++++++++++++++ PRINT TEXT FADING TO THE RED ++++++++++++++++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,1];
+			if ( _r > 1 ) exitWith {};
+			_r = _r + _a;
+			_g = (_g - _a) max 0.2;
+			sleep .01;
+		};
+		if ( (_endtime > time) && d_still_in_intro ) then { sleep 1};
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+		//+++++++++ PRINT TEXT FADING TO THE WHITE +++++++++++
+		while { (_endtime > time) && d_still_in_intro } do {
+			_control ctrlSetTextColor [_r,_g,_b,1];
+			if ( _g > 1 ) exitWith {};
+			_b = _b + _a;
+			_g = _g + _a;
+			sleep .01;
+		};
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+		while { (_endtime > time) && d_still_in_intro } do { sleep 0.5 };
+//		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
+	} else {
+		if ( _str != "") then {
+			if (count _this > 1) then {	sleep (_this select 1)} else {sleep 30 };
+		};
+		hint localize "+++ SYG_showMusicTitle: no intro text shown, only music title is displayed";
+	};
+//	cutText["", "PLAIN"];      // remove intro/music cut controls
+	cutRsc["Default","PLAIN"]; // remove intro/music cut controls
+	hint localize format["+++ SYG_showMusicTitle: finished, duration = %1 secs,d_still_in_intro= %2", time - _start, d_still_in_intro];
+};
+#endif
 
 [_music, 30] spawn SYG_showMusicTitle;
 

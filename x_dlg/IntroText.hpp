@@ -28,6 +28,8 @@ class XDomLabel {
 	idd=-1;
 	movingEnable=0;
 	duration=10;
+	fadeIn=2;
+	fadeOut=2;
 	name="XDomLabel";
 	sizeEx = 256;
 
@@ -44,6 +46,8 @@ class XDomLabelNewYear {
 	idd=-1;
 	movingEnable=0;
 	duration=10;
+	fadeIn=2;
+	fadeOut=2;
 	name="XDomLabelNewYear";
 	sizeEx = 256;
 
