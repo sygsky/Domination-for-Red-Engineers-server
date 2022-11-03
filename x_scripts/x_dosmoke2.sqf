@@ -18,8 +18,8 @@ causedBy: Object - Object that caused the damage. Contains the unit itself in ca
 
 // hint localize format["+++ x_dosmoke2.sqf: _this = %1", _this];
 
-private ["_veh", "_shooter", "_damage", "_crew", "_issmoking", "_hideobject", "_name", "_dead", "_wpns", "_muzzle", "_x"];
 if (!isServer) exitWith {};
+private ["_veh", "_shooter", "_damage", "_crew", "_issmoking", "_hideobject", "_name", "_dead", "_wpns", "_muzzle", "_x"];
 
 #include "x_setup.sqf"
 
@@ -27,7 +27,6 @@ if (!isServer) exitWith {};
 //#define __FULL_PRINT__
 
 _veh = _this select 0;
-
 _issmoking = _veh getVariable "D_IS_SMOKING";
 if (isNil "_issmoking") then { _issmoking = false };
 
@@ -66,21 +65,17 @@ if ( _veh == _shooter) exitWith{/* collision, not hit by enemy weapon */
 // TODO: if attacker is a man, and veh is damaged, then load with HE and then shoot it to bastard.
 // TODO: If attacker is alive after HE shoot, shoot it again and change ammo to sabot again
 
-_dead = true;
+#ifdef __FULL_PRINT__
 _crew = crew _veh;
-while { _dead } do {
-    if (count _crew == 0) exitWith {
-    #ifdef __FULL_PRINT__
-        hint localize format["+++ x_dosmoke2.sqf: vec %1 crew is out", typeOf _veh];
-    #endif
-    };
+if (count _crew == 0) then {
+    hint localize format["+++ x_dosmoke2.sqf: vec %1 crew is out", typeOf _veh];
+} else {
     if ((_crew call XfGetAliveUnits) == 0) exitWith {
-    #ifdef __FULL_PRINT__
         hint localize format["+++ x_dosmoke2.sqf: vec %1 crew is dead", typeOf _veh];
-    #endif
     };
-    _dead = false;
+    hint localize format["+++ x_dosmoke2.sqf: vec %1 has %2 alive crew in", typeOf _veh, (_crew call XfGetAliveUnits)];
 };
+#endif
 
 if (side _shooter == side _veh) exitWith {
     #ifdef __PRINT__
