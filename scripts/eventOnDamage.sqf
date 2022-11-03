@@ -18,17 +18,24 @@ if (!isServer) exitWith {};
 
 #define __PRINT__
 
-private ["_veh", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_x", "_dead", "_wpns", "_muzzle", "_name", "_gunner"];
-
-#ifdef __PRINT__
-hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2", _this, {alive _x} count crew (_this select 0)];
-#endif
-if ( (_this select 2) >= 1) then {
-	(_this select 0) removeAllEventHandlers "dammaged";
-	hint localize format["+++ eventOnDamage.sqf: damage detected >= 1, remove ""Damage"" event", (_this select 2)];
-};
+private ["_veh", "_shooter", "_damage", "_crew", "_hasshell", "_issmoking", "_x", "_dead", "_wpns", "_muzzle", "_name", "_gunner", "_exit"];
 
 _veh = _this select 0;
+_exit = false;
+if (!isNil "last_killed_veh") then {
+    _exit = _veh == last_killed_veh;
+};
+if (_exit) exitWith {}; // skip any processing for the dead vehicle
+
+#ifdef __PRINT__
+hint localize format["+++ eventOnDamage.sqf: _this = %1, crew %2, veh %3", _this, {alive _x} count crew _veh, typeOf _veh];
+#endif
+if ( (_this select 2) >= 1) then {
+    last_killed_veh = _veh;
+	_veh removeAllEventHandlers "dammaged";
+	hint localize format["+++ eventOnDamage.sqf: damage detected %1 >= 1, stop ""Damage"" event processing", (_this select 2)];
+};
+
 if (side _veh == d_side_player) exitWith {format["+++ eventOnDamage.sqf: vehicle side is %1, exit", d_side_player]};
 
 _damage = _this select 2;
