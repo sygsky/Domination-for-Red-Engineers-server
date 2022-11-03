@@ -17,9 +17,7 @@ _id = -1;
 
 sleep 10.123;
 
-#ifdef __NEW__
-_possible_types = _vehicle call SYG_typesVehCanLift;
-#else
+//_possible_types = "HR1" call SYG_typesVehCanLift; // all transport heli have the same vehs list to lift
 _possible_types = [];
 #ifndef __TT__
 {
@@ -48,7 +46,6 @@ if (playerSide == west) then {
 		", _x select 0, _x select 3];
 	} forEach d_choppers_racs;
 };
-#endif
 #endif
 
 while {(alive _vehicle) && (alive player) && player_is_driver} do {

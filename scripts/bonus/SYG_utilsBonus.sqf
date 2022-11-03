@@ -46,7 +46,7 @@ SYG_createBonusVeh = {
 				_rad = _mt select 2;
 			};
 //			_center = _center call  SYG_nearestSettlement; // nearest settlement for the islet
-			hint localize format["+++ SYG_createBonusVeh: veh is on islet, place changed to ""%1""", _name];
+			hint localize format["+++ SYG_createBonusVeh: point is on islet, place changed to ""%1""", _name];
 		};
 	};
 	// We may be on Rahmadi
@@ -66,21 +66,27 @@ SYG_createBonusVeh = {
 	};
 	_pos = [ _center, _rad * 1.5, _rad * 2.5 ] call XfGetRanPointAnnulusBig; // position for the land bonus vehicle
 	_dir = random 360; // random direction
+	hint localize format["+++ SYG_createBonusVeh: random pos in annulus %1 = %2, dir = %3", [ _center, _rad * 1.5, _rad * 2.5 ], _pos, _dir];
 #ifdef __DEFAULT__
 	if ( _type isKindOf "Plane" ) then {
 //		_pos = _center call _find_air_pos; // find nearest position
 		_time = time;
-		_hnd = _pos execVM "scripts\bonus\bonus_air_pos.sqf"; //pos and dir are returned in _pos array
+		_hnd = _pos execVM "scripts\bonus\bonus_air_pos.sqf"; //pos and dir are returned in _pos array as [_pos, _dir]
 		waitUntil {sleep 0.1; scriptDone _hnd};
 		hint localize format["+++ SYG_createBonusVeh: plane %1, delta time %2, new pos data %3", typeOf _veh, time - _time, _pos];
-		_dir = _pos select 1;
 		_pos = _pos select 0;
+		_dir = _pos select 1;
 	};
 #endif
 
 //	_veh = _type createVehicle  [0,0,0];
 //	_veh setPos _pos;
 	_veh = _type createVehicle  _pos;
+	if ( (typeName _veh) != "OBJECT" ) exitWith {
+		hint localize format["--- SYG_createBonusVeh: veh created is not ""OBJECT"" = %1, EXIT", _veh];
+		["msg_to_user","*",[["STR_BONUS_ERR"]],2,2,false,"good_news"] call XSendNetStartScriptClientAll; // "DOSAAF vehicle is not detected. Can we expect to see it at all?"
+		objNull
+	};
 	_veh setDir _dir;
     if ( !( _veh isKindOf "Ship" ) ) then {
     	_fuel = _veh call SYG_fuelCapacity;

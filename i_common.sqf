@@ -861,6 +861,21 @@ if (d_enemy_side == "EAST") then {
 	};
 };
 
+#ifdef __ACE__
+//+++ Sygsky: added on heli wind effect. Set to false if wind effect is not desired
+d_with_wind_effect = true;
+
+// list of strong heli for WEST with ACE
+SYG_HELI_BIG_LIST_ACE_W =
+    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I",/*"ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",*/
+     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE",
+     "ACE_AH64_HE_F","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
+// list of weak heli for WEST with ACE
+SYG_SMALL_HELI_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_AH6_AGM"];
+SYG_HELI_LITTLE_LIST_ACE_W = SYG_SMALL_HELI_LIST_ACE_W + ["ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_UH60MG_M2"];
+
+#endif
+
 // different vehicles collections now are in common section, not on client only
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ moved here from i_client2.sqf
 _bmp_list =
@@ -871,13 +886,14 @@ _bmp_list =
 #endif
 			["ACE_Stryker_M2","ACE_Stryker_MK19","ACE_Stryker_MGS","ACE_Stryker_MGS_SLAT"]; // bmp+
 
-if (X_Client) then {
-
 #ifdef __OWN_SIDE_EAST__
 _armor = (if (!d_lock_ai_armor) then {if (__ACEVer) then {
     _bmp_list + ["ACE_M113","ACE_M113_A1","ACE_M113_A3","ACE_M2A1","ACE_M2A3","ACE_PIVADS","ACE_Vulcan","ACE_M6A1"]
 } else {["Stryker_ICV_M2","Stryker_ICV_MK19","Vulcan","Stryker_TOW"]}} else {[]});
-_car = (if (!d_lock_ai_car) then {if (__ACEVer) then {["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t","ACE_Truck5t_MG","ACE_HMMWV_GMV","ACE_HMMWV_GMV2"]} else {["HMMWV50","HMMWVMK","HMMWVTOW"]}} else {[]});
+_car = (if (!d_lock_ai_car) then {
+	if (__ACEVer) then {
+		["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t","ACE_Truck5t_MG","ACE_HMMWV_GMV","ACE_HMMWV_GMV2"]
+} else {["HMMWV50","HMMWVMK","HMMWVTOW"]}} else {[]});
 
 _enemy_heli_list =
     ( if ((!d_lock_ai_air) && (__ACEVer)) then { SYG_HELI_BIG_LIST_ACE_W + SYG_HELI_LITTLE_LIST_ACE_W }
@@ -941,6 +957,10 @@ for "_i" from 0 to (count d_choppers - 1) do {
 	_elem = d_choppers select _i;
 	_elem set [3, d_helilift1_types];
 };
+hint localize format["+++ d_helilift1_types = %1, cnt %2. isNil d_helilift1_types => %3",
+	d_helilift1_types,
+	count d_helilift1_types,
+	isNil "d_helilift1_types"];
 // also possible:
 // _element = d_choppers select 2; // third chopper
 // _elem set [3, d_helilift_types_custom];
@@ -1023,21 +1043,6 @@ ClearWeaponCargo MEDIC_TENT1;
 ClearMagazineCargo MEDIC_TENT1;
 ClearWeaponCargo MEDIC_TENT2;
 ClearMagazineCargo MEDIC_TENT2;
-
-#ifdef __ACE__
-//+++ Sygsky: added on heli wind effect. Set to false if wind effect is not desired
-d_with_wind_effect = true;
-
-// list of strong heli for WEST with ACE
-SYG_HELI_BIG_LIST_ACE_W =
-    ["ACE_AH1Z_HE","ACE_AH1Z_HE_F","ACE_AH1Z_HE_S_I",/*"ACE_AH1W_AGM_HE","ACE_AH1Z_AGM_HE_F_S_I","ACE_AH1Z_AGM_HE_F",*/
-     "ACE_AH1W_TOW_HE_F_S_I","ACE_AH1W_TOW2","ACE_AH1W_TOW_TOW_HE",
-     "ACE_AH64_HE_F","ACE_AH64_AGM_HE_F","ACE_AH64_AGM_HE_F_S_I"/*,"ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM","ACE_AH64_AGM_AIM"*/];
-// list of weak heli for WEST with ACE
-SYG_SMALL_HELI_LIST_ACE_W = ["ACE_AH6_GAU19","ACE_AH6_TwinM134","ACE_AH6_AGM"];
-SYG_HELI_LITTLE_LIST_ACE_W = SYG_SMALL_HELI_LIST_ACE_W + ["ACE_UH60MG_M134","ACE_UH60MG_M240C","ACE_UH60MG_M2"];
-
-#endif
 
 d_gwp_formations = ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","DIAMOND"];
 
