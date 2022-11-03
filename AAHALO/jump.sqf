@@ -65,7 +65,8 @@ if (_use_wind) then { // emulate sea wind if jump above sea
 	_wind_arr = wind;
 	if (_water_count >= ((count _offsets) ^ 2 - 2) ) then { // player jumps over sea surface, add strong wind effect
 		_len = _wind_arr distance [0,0,0]; // scalar vector length
-		_shift = MIN_SHIFT max (random ( _shift min MAX_SHIFT) ); //  shift 300 to 3500 meters from the original start point
+		//  shift 300 to 3500 meters from the original start point for gliding para or 300 to 1000 for round one
+		_shift = MIN_SHIFT max (random ( _shift min MAX_SHIFT) );
 		_dx = ((_wind_arr select 0) / _len) * _shift;
 		_dy = ((_wind_arr select 1) / _len) * _shift;
 		_dz = ((_wind_arr select 2) / _len) * _shift;
