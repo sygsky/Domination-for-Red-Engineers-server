@@ -2266,7 +2266,7 @@ SYG_getParachute = {
 //
 SYG_typesVehCanLift = {
 	private ["_arr","_heli_type","_x","_list"];
-	hint localize format["+++ SYG_typesVehCanLift: _this = %1", _this];
+//	hint localize format["+++ SYG_typesVehCanLift: _this = %1", _this];
 	_heli_type = _this;
 	if (typeName _heli_type != "STRING") exitWith {[]};
 	_arr = [];
@@ -2281,6 +2281,7 @@ SYG_typesVehCanLift = {
 	};
 #endif
 	{
+//		hint localize format["+++ SYG_typesVehCanLift: _x (%1) == %2 is %3", (_x select 0), _heli_type, (_x select 0) == _heli_type];
 		if ((_x select 0) == _heli_type) exitWith { _arr = _x select 3; };
 	} forEach _list;
 	_arr

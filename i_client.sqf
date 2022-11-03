@@ -1,4 +1,4 @@
-﻿// init include client
+﻿// i_client.sqf: init include client
 if (X_Client) then {
     // 0 = player markers turned off
     // 1 = player markers with player names and healthess
