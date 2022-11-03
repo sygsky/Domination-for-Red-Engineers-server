@@ -84,7 +84,7 @@ while { _dead } do {
 
 if (side _shooter == side _veh) exitWith {
     #ifdef __PRINT__
-    hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is under friendly fire from ""%2""", typeOf _veh, _name];
+    hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is under friendly fire from ""%2"" (%3 m)", typeOf _veh, _name, round( _shooter distance _veh )];
     #endif
 };
 
@@ -94,7 +94,7 @@ if (!("ACE_LVOSS_Magazine" in (magazines _veh))) exitWith {
     _veh setVariable ["D_IS_SMOKING",nil]; // remove just in case
     // TODO: try to find ammo and reload smoke grenades from it
 #ifdef __PRINT__
-	hint localize format["+++ x_dosmoke2.sqf: veh %1 has no more smoke shells against ""%2""!!!", typeOf _veh, _name];
+	hint localize format["+++ x_dosmoke2.sqf: veh %1 has no more smoke shells against ""%2"" (%3 m)!!!", typeOf _veh, _name, round( _shooter distance _veh )];
 #endif
 };
 
@@ -122,6 +122,7 @@ sleep 0.512;
 if (alive (driver _veh ) && (canMove _veh) ) then {
 	_hideobject = _veh findCover [position _veh, position _shooter, 180];
 	if (!isNull _hideobject) then {
+	    hint localize format["+++ x_dosmoke2.sqf: %1 has cover %2 found, dist %3 m", typeOf _veh, typeOf _hideobject, round( _hideobject distance _veh )];
 		{
 			if (alive _x) then {
 				_x disableAI "TARGET";
