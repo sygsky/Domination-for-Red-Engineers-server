@@ -40,7 +40,7 @@ XSideMissionResolved = {
 // Clear all side missions vehicles and start next SM
 //
 XClearSidemission = {
-	private ["_waittime", "_num_p", "_was_captured", "_man", "_vehicle","_x"];
+	private ["_waittime", "_num_p", "_was_captured", "_already_captured", "_man", "_vehicle","_x"];
 	_waittime = 200 + random 20;
 	_num_p = call XPlayersNumber;
 	if (_num_p > 0) then {
@@ -70,14 +70,18 @@ XClearSidemission = {
 #endif
 						_was_captured = _was_captured && (!(_x call SYG_vehIsUpsideDown));
 					};
+					_already_captured = false;
 					if (! _was_captured) then {
 					    _was_captured = _x getVariable "CAPTURED_ITEM";
 					    _was_captured = !(isNil "_was_captured");
+					    _already_captured = _was_captured;
 					    // if (_was_captured == true) then { "vehicle was already captured by player[s]"};
 					};
 					if (_was_captured ) then { // vehicle was captured by player
-						[_x] call XAddCheckDead;
-						_x setVariable ["CAPTURED_ITEM","SM"];
+						if (!_already_captured) then {
+							[_x] call XAddCheckDead;
+							_x setVariable ["CAPTURED_ITEM","SM"];
+						};
 					} else {
 						{deleteVehicle _x} forEach ((crew _x) + [_x]);
 					};

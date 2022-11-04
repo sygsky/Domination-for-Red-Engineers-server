@@ -107,7 +107,7 @@ SYG_getAllSPPMVehicles = {
 			if (isNil (_x getVariable "CAPTURED_ITEM")) then {
 				[_x] call XAddCheckDead;
 				_x setVariable ["CAPTURED_ITEM","SPPM"];
-				hint localize format["+++ Veh ""%1"" is captured on SPPM at %2", typeOf _x, _txt];
+				hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", typeOf _x, count _arr, _txt];
 			}
 		} forEach _arr;
 	};

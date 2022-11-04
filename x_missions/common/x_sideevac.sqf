@@ -97,12 +97,11 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 	if (X_MP) then {
 		if ((call XPlayersNumber) == 0) then {
 			_time = time;
-			hint localize format["+++ x_sideevac.sqf: players absent from %1, wait any... ... ...", _time call SYG_secondsToStr];
-			_end_diff = _endtime - time; // store delta to bump end time when players is detected
+			hint localize format["+++ x_sideevac.sqf: players absence started at %1, wait any... ... ...", _time call SYG_secondsToStr];
+			_end_diff = _endtime - _time; // store delta to bump end time when players is detected
 			waitUntil {sleep (30 + random 1);(call XPlayersNumber) > 0};
-			waitUntil {sleep 1; !d_still_in_intro};
 			_endtime = time + _end_diff + 30; // bump end time as if all players not were absent
-			hint localize format["+++ x_sideevac.sqf: player  detected at %1, time spent = %2 ", _time  call SYG_secondsToStr, [time, _time] call SYG_timeDiffToStr];
+			hint localize format["+++ x_sideevac.sqf: first player detected on %1, time spent = %2 ", _time  call SYG_secondsToStr, [time, _time] call SYG_timeDiffToStr];
 		};
 	};
 
@@ -132,7 +131,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
         } forEach _pilots_arr;
         ////////////////////////////////////////////
 
-        if (_dist < 20) then {
+        if ((_dist < 20) && (alive _rescue)) then {
             _rescued = true;
             _arr = []; // captive pilots array
             {
@@ -145,12 +144,12 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 				_arr set [count _arr, _x]; // add joined pilot to the captive array
 				};
             } forEach _pilots_arr;
-            ["make_ai_friendly",_arr] call XSendNetStartScriptClientAll;
-            ["msg_to_user","",[["STR_SYS_504_0", name _rescue]], 0, 2, false, "good_news"] call XSendNetStartScriptClientAll; // "Pilots detected, controlled by ""%1""!"
+            ["make_ai_friendly",_arr] call XSendNetStartScriptClient;
+            ["msg_to_user","",[["STR_SYS_504_0", name _rescue]], 0, 2, false, "good_news"] call XSendNetStartScriptClient; // "Pilots detected, controlled by ""%1""!"
             hint localize format[ "+++ x_sideevac.sqf: pilots joined to ""%1""", name _resque ];
-            _escape_print_time = 0; // stop info printing
+            _escape_print_time = 0; // stop escape info printing
             sleep 1;
-            ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 0, 7] call XSendNetStartScriptClientAll; // "Pilots: - Take us to the flag, commander!"
+            ["msg_to_user",name _rescue,[["STR_SYS_504_3"]], 0, 7] call XSendNetStartScriptClient; // "Pilots: - Take us to the flag, commander!"
         };
         ////////////////////////////////////////////
     } else { // _rescued!!!

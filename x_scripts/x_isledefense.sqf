@@ -254,30 +254,29 @@ _remove_grp = {
 		_vec_captured_cnt = 0;
 #endif
 		{ // forEach _vehs;
-			if (!isNull _x) then { // if null, skip any test and go to the next vehicle
+			if (alive _x) then { // if null, skip any test and go to the next vehicle
 				_var = _x getVariable "CAPTURED_ITEM";
 				if (isNil "_var") then { // if not already captured, check if it is captured now
 					_xside =  format["%1", side _x];
 					// check if the vehicle is captured directly now
-					if ( alive _x && (!(_x call SYG_vehIsUpsideDown)) &&
+					if ( !(_x call SYG_vehIsUpsideDown) &&
 						(
 						 (_xside == d_own_side ) ||
 						 ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) )
 						)
 					   )  then { // vehicle was captured by player
+						_x setVariable [ "PATROL_ITEM",nil ];
 						// re-assign vehicle to be ordinal ones
-	#ifdef __PRINT_ACTIVITY__
-		#ifdef __OWN_SIDE_EAST__
+#ifdef __OWN_SIDE_EAST__
 						hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
-		#else
+#else
 						hint localize format["+++ x_isledefense: vec %1 is captured by Americans! Now side is %2, pos on base %3, damage %4", typeOf _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
-		#endif
-	#endif
+#endif
 						// put vehicle under system control
 						_vec_captured_cnt = _vec_captured_cnt + 1;
-						[_x] call XAddCheckDead;
 						// added on #434 - inform players in trophy vehicles about
 						["msg_to_user", _x,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
+						[_x] call XAddCheckDead;
 						_x setVariable ["CAPTURED_ITEM","PATROL"]; // #535 - from now vehicle will not be cleared in the liberated town clean procedure. Request by Rokse.
 					} else { // Eject all units from the vehicle. TODO: Don't delete them here. Let them join any enemy group nearby, in the future.
 						{
