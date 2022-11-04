@@ -8,7 +8,8 @@ _dlg = createDialog "X_RscAnimatedLetters";
 _line = 0;
 i = 0;
 //playMusic "ATrack8";
-playSound "farewell_slavs";
+//playSound "farewell_slavs";
+["farewell_slavs",40] spawn SYG_showMusicTitle;
 _display = findDisplay 11098;
 _control = _display displayCtrl 101113;
 
@@ -25,7 +26,7 @@ waitUntil {camCommitted _camera};
 		_vec = vehicle player;
 		if (_vec isKindOf "Air") then {
 			_posp = position player;
-			_is_driver = (if (driver _vec == player) then {true} else {false});
+			_is_driver = driver _vec == player;
 			player action["EJECT",_vec];
 			waitUntil {vehicle player == player};
 			player setPos [_posp select 0, _posp select 1, 0];
