@@ -153,7 +153,7 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 		if (!(alive player)) exitWith {};
 		if ( vehicle player != player) then {
 			if  ((vehicle player) call SYG_isParachute) then {
-//				hint localize "+++ jump.sqf: player has parachute!";
+				hint localize format["+++ jump.sqf: player parachute detected (%1)!", typeOf (vehicle player)];
 				if (_check_circle_hit) then {
 					hint localize format["+++ jump.sqf: getOut event execVM _script = ""event_para_dropped.sqf""", _script];
 					_id = (vehicle player) addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped.sqf"}];
@@ -162,6 +162,8 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 					_id = (vehicle player) addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
 				};
 			};
+		} else {
+			hint localize format["--- jump.sqf: expected player vehicle is not a parachute (%1), no getout script assigned", typeOf (vehicle player)];
 		};
 	};
 } else {
