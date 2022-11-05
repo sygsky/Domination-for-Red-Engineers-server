@@ -91,20 +91,21 @@ _soldier = (
 _last_warn_said = 0;
 _escape_print_time = 0; // not print any escape info
 
-// TODO: store all payers active, also store all newly etntered player too.
+// TODO: store all payers active, also store all newly entered player too.
 
 while {(!_pilots_at_base) && (!_is_dead)} do {
+/**
 	if (X_MP) then {
 		if ((call XPlayersNumber) == 0) then {
 			_time = time;
-			hint localize format["+++ x_sideevac.sqf: players absence started at %1, wait any... ... ...", _time call SYG_secondsToStr];
+			hint localize format["+++ x_sideevac.sqf: players absence detected at %1, wait any... ... ...", _time call SYG_secondsToStr];
 			_end_diff = _endtime - _time; // store delta to bump end time when players is detected
 			waitUntil {sleep (30 + random 1);(call XPlayersNumber) > 0};
 			_endtime = time + _end_diff + 30; // bump end time as if all players not were absent
 			hint localize format["+++ x_sideevac.sqf: first player detected on %1, time spent = %2 ", _time  call SYG_secondsToStr, [time, _time] call SYG_timeDiffToStr];
 		};
 	};
-
+*/
 	if ( ({alive _x} count _pilots_arr) == 0 ) exitWith {
 		_is_dead = true;
 	};
@@ -277,6 +278,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 				sleep 1.012;
 			};
 			_unit_array = nil;
+	        hint localize "+++ x_sideevac.sqf: enemy created  near helicrash place";
 		};
 	};
 };
