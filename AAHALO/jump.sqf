@@ -146,24 +146,25 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 	if (((getPos (vehicle player)) select 2) < 10) exitWith {};
 	[ player ] execVM "ace_sys_eject\s\ace_jumpOut_cord.sqf";
 	_check_circle_hit spawn {
-		private ["_check_circle_hit","_id"];
+		private ["_check_circle_hit","_id","_veh"];
 		_check_circle_hit = _this;
 		waitUntil { (!(alive player)) || (vehicle player != player) || ((getPos player select 2) < 5) };
 		if ((getPos player select 2) < 5) exitWith {};
 		if (!(alive player)) exitWith {};
-		if ( vehicle player != player) then {
-			if  ((vehicle player) call SYG_isParachute) then {
-				hint localize format["+++ jump.sqf: player parachute detected (%1)!", typeOf (vehicle player)];
+		_veh = vehicle player;
+		if ( _veh != player) then {
+			if  (_veh call SYG_isParachute) then {
+				hint localize format["+++ jump.sqf: player parachute detected (%1)!", typeOf _veh];
 				if (_check_circle_hit) then {
-					hint localize format["+++ jump.sqf: getOut event execVM _script = ""event_para_dropped.sqf""", _script];
-					_id = (vehicle player) addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped.sqf"}];
+					_id = _veh addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped.sqf"}];
+					hint localize format["+++ jump.sqf: getOut event execVM _id (%1) => ""event_para_dropped.sqf""", _id];
 				} else {
-					hint localize format["+++ jump.sqf: getOut event execVM _script = ""AAHALO\event_para_dropped_practice.sqf""", _script];
-					_id = (vehicle player) addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
+					_id = _veh addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
+					hint localize format["+++ jump.sqf: getOut event execVM _id (%1) => ""AAHALO\event_para_dropped_practice.sqf""", _id];
 				};
 			};
 		} else {
-			hint localize format["--- jump.sqf: expected player vehicle is not a parachute (%1), no getout script assigned", typeOf (vehicle player)];
+			hint localize format["--- jump.sqf: expected player vehicle is not a parachute (%1), no getout script assigned", typeOf _veh];
 		};
 	};
 } else {
