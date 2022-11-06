@@ -13,7 +13,6 @@
 
 	returns: nothing
 */
-if (!isServer) exitWith {"--- event_para_dropped_practice.sqf illegally called on server"};
 hint localize format["+++ event_para_dropped_practice.sqf: Landed on parachute _this %1, pos %2", _this, getPos (_this select 2)];
 _veh  = _this select 0;
 _unit = _this select 2;

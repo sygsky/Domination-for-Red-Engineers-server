@@ -2,10 +2,10 @@
 	AAHALO\event_para_dropped.sqf
 
 	author: Sygsky
-	description: Event handler to check if player landed on base/circle/etc at intro
+	description: Event handler to check if player landed on base/circle/etc after intro procedure
 			Variants are:
 			1. Out of base territory
-			2. On base territory
+			2. On base territory far from any circle
 			3. On one of base circles
 			4. On "AISPAWN" circle! Main target hit!
 
@@ -13,7 +13,6 @@
 
 	returns: nothing
 */
-if (!isServer) exitWith {"--- event_para_dropped.sqf illegally called on server"};
 
 hint localize format["+++ event_para_dropped.sqf: Landed with parachute _this %1, pos %2", _this, getPos (_this select 2)];
 _veh  = _this select 0;

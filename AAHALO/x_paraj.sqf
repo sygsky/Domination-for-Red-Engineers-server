@@ -95,7 +95,7 @@ waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( 
 _para_used = false; // was parachute used or not (default)
 if ( (vehicle player) != player ) then { // parachute still on!
 	_para_used = true; // parachute was used
-    // The parachute was just opened, wait player to be on the gound, alive or dead
+    // The parachute was just opened, wait player to be on the ground, alive or dead
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
 //    if ( (player call XGetRankIndexFromScore) > 2 ) then {
     #ifdef __ACE __

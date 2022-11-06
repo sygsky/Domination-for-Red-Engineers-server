@@ -156,10 +156,10 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 			if  (_veh call SYG_isParachute) then {
 				hint localize format["+++ jump.sqf: player parachute detected (%1)!", typeOf _veh];
 				if (_check_circle_hit) then {
-					_id = _veh addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped.sqf"}];
+					_id = _veh addEventHandler ["GetOut", {_this execVM "AAHALO\event_para_dropped.sqf"}];
 					hint localize format["+++ jump.sqf: getOut event execVM _id (%1) => ""event_para_dropped.sqf""", _id];
 				} else {
-					_id = _veh addEventHandler ["getOut", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
+					_id = _veh addEventHandler ["GetOut", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
 					hint localize format["+++ jump.sqf: getOut event execVM _id (%1) => ""AAHALO\event_para_dropped_practice.sqf""", _id];
 				};
 			};
