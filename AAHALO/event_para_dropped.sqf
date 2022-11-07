@@ -74,12 +74,12 @@ _arr2 = _msgArr select 2;
 if (_send_to_server) then { // send message about circle hit to all players and print this on server
     // print to this player
 	_msgArr spawn SYG_msgToUserParser;
-	// print to all other players if any
-	_arr2 set [0, ["STR_INTRO_PARAJUMP_8_ALL", name player, _sc]];
+	// print to all other players if any: "%1 hit the circle (%2 m) and is rewarded for this: +%3"
+	_arr2 set [0, ["STR_INTRO_PARAJUMP_8_ALL", name player, _dist, _sc]];
 	_msgArr spawn XSendNetStartScriptClient;
 	hint localize format["+++ event_para_dropped.sqf: print to all players %1", _msgArr];
     // Write to RPT log file
-    ["log2server", name player, "I hit the circle on intro!"] call XSendNetStartScriptServer;
+    ["log2server", name player, format["I hit the circle on intro! Dist. %2 m", _dist]] call XSendNetStartScriptServer;
 	// now remove message from the list as it is already sent
 	_arr2 resize 0;
 };
