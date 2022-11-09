@@ -33,7 +33,7 @@ SYG_createBonusVeh = {
 	// In such places we allow to spawn only small vehicles, which can be pick up with one of transport helis.
 	_isle = _center call SYG_isleAtPoint;
 	_liftedVehs = ("HR1" call SYG_typesVehCanLift); // vehs to lift
-	hint localize format[ "+++ SYG_createBonusVeh: lifted vehs list = %1", _liftedVehs ];
+//	hint localize format[ "+++ SYG_createBonusVeh: lifted vehs list = %1", _liftedVehs ];
 	if ( _isle != "" ) then {
 		// we are on islet, move center to the main island if vehicle is not heli or is big enough not to be lifted by heli
 		hint localize format["+++ SYG_createBonusVeh: veh (%1) is on islet (%2), test it is possible to put it here", _type, _isle];
@@ -66,7 +66,7 @@ SYG_createBonusVeh = {
 	};
 	_pos = [ _center, _rad * 1.5, _rad * 2.5 ] call XfGetRanPointAnnulusBig; // position for the land bonus vehicle
 	_dir = random 360; // random direction
-	hint localize format["+++ SYG_createBonusVeh: random pos in annulus %1 = %2, dir = %3", [ _center, _rad * 1.5, _rad * 2.5 ], _pos, _dir];
+//	hint localize format["+++ SYG_createBonusVeh: random pos in annulus %1 = %2, dir = %3", [ _center, _rad * 1.5, _rad * 2.5 ], _pos, _dir];
 #ifdef __DEFAULT__
 	if ( _type isKindOf "Plane" ) then {
 //		_pos = _center call _find_air_pos; // find nearest position
