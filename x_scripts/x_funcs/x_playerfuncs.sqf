@@ -112,10 +112,25 @@ if (!(__ACEVer)) then {
 // Xoartimsg params : [_pos_enemy,_hit_radius]
 Xoartimsg = {
 	if ( ( (player distance (_this select 0) ) <= (_this select 1) ) ) then {  // always inform by sound
-	    playSound( /*["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence","boom"] call XfRandomArrayVal*/ call SYG_fearSound);
-	    if (( random 10 ) > 1  ) then { // 9 of 10 times inform about the death approaching by text too
-			("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
-	    };
+		_veh = vehicle player;
+		if (_veh != player) then {
+			// check if player in closed vehicle (not in bicycle, moto or atv)
+#ifdef __ACE__
+			{
+				if ( _veh isKindOf _x) exitWith {_veh = objNull}; // open vehicle
+			} forEach  ["Motorcycle","ACE_ATV_HondaR"];
+#else
+			if ( _veh isKindOf "Motorcycle") then {_veh = objNull}; // open vehicle
+#endif
+			hint localize format["+++ Xoartimsg: player is in %1, music %2 played",
+				typeName (vehicle player), if (isNull _veh) then {"not"} else {""}];
+		} else {_veh = objNull}; // human creature
+		if (isNull _veh) then  { // for human or open vehicle play sound about danger revealed
+			if (( random 15 ) > 1  ) then { // 14 of 15 times inform about the death approaching by text too
+				playSound( call SYG_fearSound);
+				("STR_DANGER_NUM" call SYG_getLocalizedRandomText) call XfHQChat; // "You suddenly became terribly..."
+			};
+		};
 	};
 };
 
