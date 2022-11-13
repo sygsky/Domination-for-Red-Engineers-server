@@ -76,7 +76,7 @@ _day  = SYG_client_start select 2;
 _newyear = false;
 
 // ++++++++++++++++++++++ check if today is in soviet holiday list (in 1985)
-_holiday = SYG_client_start call SYG_getCountryDay; // country foundation day, if success, return array of 2 items: ["title","music"]
+_holiday = SYG_client_start call SYG_getCountryDay; // country foundation day, if success, return array of 2 items: ["PLAY","music"]
 _sound = "";
 if ( count _holiday == 0 ) then { // check for some soviet holiday
 #ifdef __HOLIDAY_DEBUG__
@@ -205,8 +205,16 @@ if (_sound == "") then { // select random music for an ordinal day
 				"Letyat_perelyotnye_pticy_end","bolivar","travel_with_friends","on_thin_ice","peregrinus"] call _XfRandomArrayVal;
 #endif
 
+
+			// _sound = call SYG_getCounterAttackTrack;
+			// DEBUG code, remove ASAP
+			//_music = ["ATrack24",[0,59.76]]; // one ot tracks
+			//waitUntil { !isNil "XHandleNetStartScriptClient"};
+			//["say_sound","PLAY",_music,0,30] call XHandleNetStartScriptClient; // show music title on playing
+
 			_sound = _music;
-            playSound _music; //playSound "ATrack25"; // oldest value by Xeno
+			playSound _music; //playSound "ATrack25"; // oldest value by Xeno
+
          };
     };
 };
@@ -610,18 +618,26 @@ SYG_showMusicTitle = {
 };
 #else
 
-// [_music_name<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle;
+// there are two variants of sound parameter:
+//  [_music_name<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle; // Sound from CfgSounds
+//  [[_music_name,...]<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle; // Sound from CfgMusic
 SYG_showMusicTitle = {
-	private [ "_str", "_control", "_endtime", "_r", "_g", "_b", "_a", "_start"];
+	hint localize format["+++ SYG_showMusicTitle: _this = %1", _this];
+	private [ "_str", "_sound", "_control", "_endtime", "_r", "_g", "_b", "_a", "_start"];
 	// load both comtrols
 	_start = time;
 	cutRsc ["S_RscIntroTitles","PLAIN"];
 	_control = INTRO_HUD displayCtrl 66667; // find music title
 	// Check if music has title defined
-	_str = localize format["STR_%1", _this select 0];
+	_sound = _this select 0;
+	if (typeName _sound == "ARRAY") then {
+		_sound = _sound select 0;  // ["sound_name",[...]] // Arma sounds
+	}; // else e.g. "STR_condor"
+
+	_str = localize format[ "STR_%1", _sound ]; // e.g. "STR_ATrack24" from Arma CfgMusic section
 	if ( _str != "") then { // title defined and found
 		_control ctrlSetText _str;
-		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) created, _this = %2", _control, _this ];
+		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) created for ""%2"", _this = %3", _control, _sound, _this ];
 	} else {
 		hint localize format[ "--- SYG_showMusicTitle: music title not found, _this = %1", _this ];
 	};

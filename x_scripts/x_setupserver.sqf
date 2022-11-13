@@ -184,6 +184,7 @@ XCheckSMHardTarget = {
 
 	#ifndef __TT__
 	if (typeOf _vehicle == "Land_telek1") then {
+		// sound on player not on object, no title is printed as sound hasnt such one
 		_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true; ["say_sound", "PLAY", "tvpowerdown"] call XSendNetStartScriptClientAll}];
 	} else {
 		_vehicle addEventHandler ["killed", {side_mission_winner = 2;side_mission_resolved = true;}];

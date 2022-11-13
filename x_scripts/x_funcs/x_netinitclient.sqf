@@ -790,8 +790,11 @@ XHandleNetStartScriptClient = {
 							sleep ( ( _this select 3 ) min 0 );
 						};
 					};
-					hint localize format["+++ say_sound PLAY ""%1""", (_this select 2)];
-					playSound ( _this select 2 ); // as _arr = [], nothing more will be played
+//					hint localize format["+++ say_sound PLAY ""%1""", (_this select 2)];
+
+//					playSound ( _this select 2 ); // as _arr = [], nothing more will be played
+					( _this select 2 ) call SYG_playRandomTrack; // as _arr = [], nothing more will be played
+
 					if ( (count _this) > 4 ) then { // try to show music title
 						if (typeName (_this select 4) == "SCALAR") then {
 							[_this select 2, _this select 4] spawn SYG_showMusicTitle;

@@ -22,15 +22,16 @@ switch (_reason) do {
 		"counterattack" call SYG_receiveRadio;
 		sleep 5;
 
-    	// Play relevant music. TODO: show music title if possible
-    	if (_sound != "") then {
-			_str = localize format["STR_%1", _sound];
-			if ( _str != "") then { // title defined and found
-				["say_sound","PLAY",_sound,0,30] call XHandleNetStartScriptClient; // show music title on playing
-			} else {
-				_sound call SYG_playRandomTrack;
-			};
-    	};
+    	// Play relevant music.
+    	// Show music title if possible
+    	_str = if (typeName _sound == "ARRAY") then { // Arma internal soundtrack
+    		_str = localize format["STR_%1", _sound select 0];
+    	} else { _str = localize format["STR_%1", _sound]};
+		if ( _str != "") then { // title defined and found
+			["say_sound","PLAY",_sound,0,30] call XHandleNetStartScriptClient; // show music title on playing
+		} else {
+			_sound call SYG_playRandomTrack;
+		};
 
 		[format [localize "STR_SYS_541", _current_target_name], "HQ"] call XHintChatMsg; // "It seems that the enemy doesn't want to give up %1 and starts a counterattack. Search defensive positions, the attack will start in a few minutes..."
 	};

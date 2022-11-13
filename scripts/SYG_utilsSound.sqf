@@ -325,21 +325,26 @@ SYG_getBaseAttackSound = {["enemy_attacks_base","enemy_attacks_base","enemy_atta
 // Plays random track or track part depends on input array kind (see below)
 // NOTE: This procedure use only playMusic operator and player items from CfgMisic sections
 //
-// call: _arr call SYG_playRandomTrack;
+// call: _sound = _arr call SYG_playRandomTrack;
 // where _arr may be:
 // 1. _arr = ["ATrack9","ATrack10","ATrack14"]; // play full random track
 // 2. _arr = ["ATrack24",[8.269,5.388],[49.521,7.320],[158.644,6.417],[234.663,-1]]; // play random part of the track
-// 3. _arr = "ATrack24"; // play full track
-// 4. _arr = ["ATrack24"]; // play full track
+// 3. _arr = "ATrack24"; // play full track, the simplest case
+// 4. _arr = ["ATrack24"]; // play full track, also very simple case
 //
 SYG_playRandomTrack = {
     private ["_this","_item","_trk"];
 
     //hint localize format["+++ scripts/SYG_utilsSound.sqf: input %1 +++",_this];
     if (typeName _this == "STRING") exitWith {// 3. _arr = "ATrack24"; // play full track
+    	private ["_arr"];
 #ifdef __DEBUG__
-        hint localize format["+++ ""%1"" call SYG_playRandomTrack;",_this];
+        hint localize format[ "+++ ""%1"" call SYG_playRandomTrack;",_this ];
 #endif
+		// check to be from CfgMusic ("ATrack#") or CfgSounds
+		_arr = toArray _this;
+		if ( (count _arr) < 7 ) exitWith { playSound _this; _this }; // short name means not music from CfgMusic
+		if ( (toUpper( toString ( _arr resize 6 ))) != "ATRACK" ) exitWith { playSound _this; _this };
         playMusic _this;
         _this
     }; // full track
@@ -357,15 +362,15 @@ SYG_playRandomTrack = {
 
     // count >= 1
     if ( (typeName (_this select 0)) == "ARRAY" ) exitWith { // array of array
-    	(_this call XfRandomArrayVal) call SYG_playRandomTrack; // play from any array item (which is also array of items)
+    	( _this call XfRandomArrayVal ) call SYG_playRandomTrack; // play from any array item (which is also array of items)
     };
 
     //
     // if here it is some ARRAY
     //
-    if (count _this == 1) exitWith { // single string array
-        if (  typeName (_this select 0) == "STRING") exitWith {
-            playMusic arg(0); arg(0)
+    if (count _this == 1) exitWith { // single string array ?
+        if ( typeName (_this select 0) == "STRING" ) exitWith {
+            playMusic (_this select 0); _this select 0
         };
         hint localize format["--- 1: ""%1"" call SYG_playRandomTrack;",_this ];
         ""

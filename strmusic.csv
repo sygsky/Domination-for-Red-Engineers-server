@@ -80,3 +80,33 @@ STR_tuman,"'Weather', lyrics (1955) by Y. Vizbor,\nthe USSR,\n performed by Y. V
 STR_kk_the_hole,"Film 'King-Kong',\nUSA 1976,\ncomposer John Barry,\nepisode 'The hole'","Film 'King-Kong',\nUSA 1976,\nKomponist John Barry,\nEpisode 'Das Loch'","Película 'King-Kong',\nEE.UU. 1976, compositor John Barry,\nepisodio 'The hole'","Фильм 'Кинг-Конг',\nСША 1976,\nкомпозитор Джон Барри,\nэпизод 'Дыра'"
 STR_jimmy_dont_miss,"'Jimmy, Don't Miss',\nRussian Federation, November 3, 2020,\nby O. Medvedev,\n performed by Alexandra Hersonskaya","'Jimmy, Don't Miss',\nRussische Föderation, 3. November 2020,\n von O. Medvedev,\nvorgetragen von Alexandra Hersonskaya","'Jimmy, Don't Miss', Federación Rusa, 3 de noviembre de 2020,\npor O. Medvedev,\ninterpretado por Alexandra Hersonskaya","'Джимми, не промахнись',\nРФ, 3 нояб. 2020 г.\nсл. и муз. О. Медведева,\nисп. Александра Херсонская"
 STR_farewell_slavs,"The march 'Farewell of Slav',\n1912, Tsarist Russia,\nVasily Agapkin,\nwas popular in the USSR","Der Marsch 'Abschied von Slawjanka',\n1912, zaristisches Russland,\nWassili Agapkin,\nwar in der UdSSR populär","La marcha 'Adiós a Slavyanka',\n1912, Rusia zarista, Vasily Agapkin,\nfue popular en la URSS","Марш 'Прощание славянки',\n1912 год, царская Россиия,\nВасилий Агапкин,\nбыл популярен в СССР"
+
+// All Tracks from Arma-1' CfgMusic. All music names start from 'ATrack'
+STR_ATrack1,Arma: 03 Primo In Mortis\naa_death_theme_i,Arma: 03 Primo In Mortis\naa_death_theme_i,Arma: 03 Primo In Mortis\naa_death_theme_i,Arma: 03 Primo In Mortis\naa_death_theme_i
+STR_ATrack2,Arma: 13 Team Alpha\n13 Team Alpha,Arma: 13 Team Alpha\n13 Team Alpha,Arma: 13 Team Alpha\n13 Team Alpha,Arma: 13 Team Alpha\n13 Team Alpha
+STR_ATrack3,Arma: 05 Dogs Of War\naa_rock_theme_iii,Arma: 05 Dogs Of War\naa_rock_theme_iii,Arma: 05 Dogs Of War\naa_rock_theme_iii,Arma: 01 05 Dogs Of War\naa_rock_theme_iii
+STR_ATrack4,Arma: 07 Seventh Company\naa_rock_theme_iv,Arma: 07 Seventh Company\naa_rock_theme_iv,Arma: 07 Seventh Company\naa_rock_theme_iv,Arma: 07 Seventh Company\naa_rock_theme_iv
+STR_ATrack5,Arma: 08 Field Track\naa_rock_theme_v,Arma: 08 Field Track\naa_rock_theme_v,Arma: 08 Field Track\naa_rock_theme_v,Arma: 08 Field Track\naa_rock_theme_v
+STR_ATrack6,Arma: 01 Street Combat\naa_rock_theme_vi,Arma: 01 Street Combat\naa_rock_theme_vi,Arma: 01 Street Combat\naa_rock_theme_vi,Arma: 01 Street Combat\naa_rock_theme_vi
+STR_ATrack7,Arma: 10 Arma Vera\naa_north_island,Arma: 10 Arma Vera\naa_north_island,Arma: 10 Arma Vera\naa_north_island,Arma: 10 Arma Vera\naa_north_island,
+STR_ATrack8,Arma: 12 Paradise On Earth\naa_south_island,Arma: 12 Paradise On Earth\naa_south_island,Arma: 12 Paradise On Earth\naa_south_island,Arma: 12 Paradise On Earth\naa_south_island
+STR_ATrack9,Arma: Crescendo 1\naa_crescendo_ii,Arma: Crescendo 1\naa_crescendo_ii,Arma: Crescendo 1\naa_crescendo_ii,Arma: Crescendo 1\naa_crescendo_ii
+STR_ATrack10,Arma: Crescendo 2\naa_crescendo_i,Arma: Crescendo 2\naa_crescendo_i,Arma: Crescendo 2\naa_crescendo_i,Arma: Crescendo 2\naa_crescendo_i
+STR_ATrack11,Arma: Short: Sahrani 1\naa_death_01_south,Arma: Short: Sahrani 1\naa_death_01_south,Arma: Short: Sahrani 1\naa_death_01_south,Arma: Short: Sahrani 1\naa_death_01_south
+STR_ATrack12,Arma: Short: Sahrani 2\naa_death_02_south,Arma: Short: Sahrani 2\naa_death_02_south,Arma: Short: Sahrani 2\naa_death_02_south,Arma: Short: Sahrani 2\naa_death_02_south
+STR_ATrack13,Arma: Short: Sahrani 3\naa_death_03_south,Arma: Short: Sahrani 3\naa_death_03_south,Arma: Short: Sahrani 3\naa_death_03_south,Arma: Short: Sahrani 3\naa_death_03_south
+STR_ATrack14,Arma: Short: Combat\naa_death_04_rocktheme_vi,Arma: Short: Combat/naa_death_04_rocktheme_vi,Arma: Short: Combat/naa_death_04_rocktheme_vi,Arma: Short: Combat/naa_death_04_rocktheme_vi
+STR_ATrack15,Arma: Short: Riff\naa_death_05_rocktheme_iv,Arma: Short: Riff\naa_death_05_rocktheme_iv,Arma: Short: Riff\naa_death_05_rocktheme_iv,Arma: Short: Riff\naa_death_05_rocktheme_iv
+STR_ATrack16,Arma: Short: Bells\naa_death_06_rocktheme_iii,Arma: Short: Bells\naa_death_06_rocktheme_iii,Arma: Short: Bells\naa_death_06_rocktheme_iii,Arma: Short: Bells\naa_death_06_rocktheme_iii
+STR_ATrack17,Arma: Short: Casaulties Of War\naa_death_07_rocktheme_iii,Arma: Short: Casaulties Of War\naa_death_07_rocktheme_iii,Arma: Short: Casaulties Of War\naa_death_07_rocktheme_iii,Arma: Short: Casaulties Of War\naa_death_07_rocktheme_iii
+STR_ATrack18,Arma: 04 Arma Magna\naa_death_08_north,Arma: 04 Arma Magna\naa_death_08_north,Arma: 04 Arma Magna\naa_death_08_north,Arma: 04 Arma Magna\naa_death_08_north
+STR_ATrack19,Arma: Short: Arma Magna Rock 1\naa_death_09_north,Arma: Short: Arma Magna Rock 1\naa_death_09_north,Arma: Short: Arma Magna Rock 1\naa_death_09_north,Arma: Short: Arma Magna Rock 1\naa_death_09_north
+STR_ATrack20,Arma: Short: Arma Magna Rock 2\naa_death_10_north,Arma: Short: Arma Magna Rock 2\naa_death_10_north,Arma: Short: Arma Magna Rock 2\naa_death_10_north,Arma: Short: Arma Magna Rock 2\naa_death_10_north
+STR_ATrack21,Arma: Short: Arma Magna\naa_death_11_north,Arma: Short: Arma Magna\naa_death_11_north,Arma: Short: Arma Magna\naa_death_11_north,Arma: Short: Arma Magna\naa_death_11_north
+STR_ATrack22,Arma: Short: Street Combat\naa_death_12_rocktheme_vi,Arma: 01 Street Combat,Arma: 01 Street Combat,Arma: 01 Street Combat
+STR_ATrack23,Arma: 11 Second Assault\naa_death_theme_ii,Arma: 11 Second Assault\naa_death_theme_ii,Arma: 11 Second Assault\naa_death_theme_ii,Arma: 11 Second Assault\naa_death_theme_ii
+STR_ATrack23b,Arma: 14 First Assault\naa_death_II,Arma: 14 First Assault\naa_death_II,Arma: 14 First Assault\naa_death_II,Arma: 14 First Assault\naa_death_II
+STR_ATrack24,OFP: 06 Black Ops\naa_ofp1_remix1,OFP: 06 Black Ops\naa_ofp1_remix1,OFP: 06 Black Ops\naa_ofp1_remix1,OFP: 06 Black Ops\naa_ofp1_remix1
+STR_ATrack25,OFP: 02 Flashpoint Rearmed\naa_ofp1_remix2,OFP: 02 Flashpoint Rearmed\naa_ofp1_remix2,OFP: 02 Flashpoint Rearmed\naa_ofp1_remix2,OFP: 02 Flashpoint Rearmed\naa_ofp1_remix2
+STR_ATrack26,Arma: Semper Fidelis\naa_chorus_I,Arma: Semper Fidelis\naa_chorus_I,Arma: Semper Fidelis\naa_chorus_I,Arma: Semper Fidelis\naa_chorus_I
+STR_ATrack27,Arma: 09 Team Bravo\naa_rock_theme_iib,Arama: 09 Team Bravo\naa_rock_theme_iib,Arama: 09 Team Bravo\naa_rock_theme_iib,Arama: 09 Team Bravo\naa_rock_theme_ii,
