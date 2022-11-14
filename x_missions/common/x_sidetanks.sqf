@@ -60,7 +60,7 @@ while { dead_tanks < 6 } do {
 			sleep (2 + (random 2));
 			_sound = SYG_tanks_sounds call XfRandomArrayVal;
 			 // Sound + titles about song
-			["say_sound", "PLAY", _sound, 15] call XSendNetStartScriptClient; // playSound and title on all players compters
+			["say_sound", "PLAY", _sound, 2, 15] call XSendNetStartScriptClient; // playSound and title on all players compters
 		};
 	};
 	sleep 5.321;
