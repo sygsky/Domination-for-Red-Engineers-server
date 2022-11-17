@@ -17,11 +17,11 @@ _ok = createDialog "XD_SettingsDialog";
 _XD_display = findDisplay 11251;
 
 _ctrl = _XD_display displayCtrl 1000;
-//_rarray = [900, 1000, 1200, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 10000];
-_rarray = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
+
+// View distance show
 _vdindex = -1;
-for "_i" from 0 to (count _rarray - 1) do {
-	call compile format ["_index = _ctrl lbAdd ""%1"";if (d_viewdistance == %1) then {_vdindex = _index};",_rarray select _i];
+for "_i" from 0 to (count SYG_viewDistanceArray - 1) do {
+	call compile format ["_index = _ctrl lbAdd ""%1"";if (d_viewdistance == %1) then {_vdindex = _index};",SYG_viewDistanceArray select _i];
 };
 _ctrl lbSetCurSel _vdindex;
 

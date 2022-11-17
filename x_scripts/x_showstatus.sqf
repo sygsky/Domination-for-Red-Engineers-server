@@ -162,7 +162,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			_s1 = localize "STR_SYS_135"; //"Side Mission marker is absent"  - default message
 			// find side mission marker and its coordinates
 			if (format["%1",_pos] != "[0,0,0]") then {
-				// find officer. He must be alone or rarely may be dead
+				// find officer. He must be alive or rarely may be dead
 				_units = nearestObjects [_pos, ["ACE_USMC0302"], 500];
 				if ( count _units > 0 ) then {
 					_s1 = localize "STR_SYS_133"; // "точки задания"
@@ -205,6 +205,51 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 				if (sideradio_status == 2) then { _s = _s + "\n" + (localize "STR_RADAR_TASK2") }; // "The side mission is practically done! Wait for the task to be completed!"
 			};
 			_s = _s + "\n" + localize "STR_RADAR_FAILURE_CONDITION";
+		};
+// Pilots rescue (sideevac) sidemission
+		case 52;  // heli crash at Bagango
+		case 54: { // heli crash at Mataredo
+			_town_name = switch ( current_mission_index ) do {
+				case 52: {"Bagango"};
+				case 54: {"Mataredo"};
+				default  {"<unknown>"};
+			};
+			_s1 = localize "STR_SYS_135"; // "Side Mission marker is absent from map!!!"  - default message
+			// find side mission marker and its coordinates
+#ifdef __OWN_SIDE_EAST__
+			_pilottype = d_pilot_E;
+#else
+			_pilottype = d_pilot_W;
+#endif
+			if (format["%1",_pos] != "[0,0,0]") then {
+				// find pilots. They must be alive or rarely may be dead
+				_units = nearestObjects [_pos, [_pilottype], 500];
+				_near = objNull;
+				{
+					if ( (alive _x) && (!isNil (_x getVariable "SIDEMISSION") ) ) exitWith {
+						_near = _x;
+						_s1 = localize "STR_SYS_133"; // "точки задания"
+					};
+				} forEach _units;
+				if ( isNull _near ) then { // search around player
+				    _pos = getPos player;
+					_units = nearestObjects [_pos, [_pilottype], 1500];
+					{
+						if ( (alive _x) && (!isNil (_x getVariable "SIDEMISSION") ) ) exitWith {
+							_near = _x;
+							_s1 = localize "STR_SYS_132"; // "вашей Глонасс-позицией"
+						};
+					} forEach _units;
+				}; // Not found near side mission position
+				if ( !isNull _near ) then {
+					_dist   = _pos distance _near;
+					_dist   = (ceil(_dist/50))*50;
+					_angle  = [ _pos, _near ] call XfDirToObj;
+					_s1     = format[ localize "STR_SYS_131_1", _dist, (ceil(_angle/10))*10, _s1 ]; // "Pilot[s] about %1 m. of %3, azimuth search %2 gr. "
+				} else { _s1 = format[localize "STR_SYS_134_1", 1500]; }; // "There are no pilots at either the mission point or near your Glonass position (%1 m)."
+				_units = nil;
+			};
+			_s = _s + "\n" + _s1;
 		};
 
 	};

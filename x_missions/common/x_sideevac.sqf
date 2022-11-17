@@ -55,6 +55,7 @@ _pilots_arr = [_pilot1,_pilot2];
     if (!isNull _hideobject) then {
         _x doMove (position _hideobject);
     };
+    _x setVariable ["SIDEMISSION", true]; // #574: Mark this pilot as sidemission one
 } forEach _pilots_arr;
 
 // enough time for the pilots to hide
