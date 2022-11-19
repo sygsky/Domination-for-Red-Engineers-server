@@ -256,4 +256,12 @@ SYG_roundTo = {
     (round((_this select 0)/_bound)) * _bound
 };
 
+/**
+ * Handles with waypoints:
+ * "SET" to set, "REMOVE" to remove
+ *
+ */
+SYG_handleWP = {
+
+};
 
