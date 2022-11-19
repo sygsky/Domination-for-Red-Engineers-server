@@ -204,7 +204,7 @@ SYG_getOutEvent = {
     _udState = _veh call SYG_vehIsUpsideDown;
 
     //
-    // Cheсk if first man retuned to nor,mally staying vehicle by himself
+    // Cheсk if first man retuned to normally staying vehicle by himself
     //
     if ( !_udState && vehicle _first_man_out == _veh ) exitWith {
         hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", typeOf _veh, _veh, damage _veh];
