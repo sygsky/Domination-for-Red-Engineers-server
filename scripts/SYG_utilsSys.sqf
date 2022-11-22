@@ -257,11 +257,96 @@ SYG_roundTo = {
 };
 
 /**
- * Handles with waypoints:
- * "SET" to set, "REMOVE" to remove
+ * Added on 22-11-2022 by Rokse [LT] request
+ * Handles with waypoints, call it on the client ONLY:
+ * to set WP: ["SET", getPos AISPAWN] call SYG_handleWP;
+ * to remove WP: ("REMOVE" || ["REMOVE"]) call SYG_handleWP;
+ * to get WP count: ("COUNT" || ["COUNT"]) call SYG_handleWP;
  *
  */
 SYG_handleWP = {
+//	if (isServer) exitWith {"--- SYG_handleWP: called on server, exit"};
+	if (!X_Client) exitWith { hint localize "--- SYG_handleWP: called not on client, exit" };
+	private ["_cmd","_wpa","_wp","_grp","_str"];
+	_cmd = _this;
+	hint localize format["+++ SYG_handleWP: cmd = ""%1""", _cmd];
+	if (typeName _cmd == "ARRAY") then {
+		if (count _cmd == 0) exitWith {hint localize "--- SYG_handleWP: expected parameters array size 1 or 2, detected 0"};
+		if ( (toUpper(_cmd select 0)) in ["REMOVE","COUNT"]) then {_cmd = _cmd select 0};
+	};
 
+	if ((typeName _cmd) == "STRING") exitWith {
+		if ( !((toUpper _cmd) in ["REMOVE","COUNT"]) ) exitWith {
+			hint localize format["--- SYG_handleWP: expected ""REMOVE"" or ""COUNT"" parameter, detected ""%1""", _cmd];
+		};
+		_grp = group player;
+		_wpa = waypoints _grp;
+		if ((toUpper _cmd) == "COUNT") exitWith {
+//			player groupChat format["+++ Waypoints count = %1", count _wpa];
+			count _wpa; // Count of waypoints returned
+		};
+		// "REMOVE" detected
+		if (count _wpa > 0) then {
+			_wp = _wpa select 0;
+//			hint localize format["+++ SYG_handleWP: REMOVE, wp = %1", _wp];
+			_grp setCurrentWaypoint _wp;
+			_wp setWPPos (getPos player);
+			sleep 0.5;
+			deleteWaypoint _wp;
+		} else {
+			hint localize "*** SYG_handleWP: no waypoint to  REMOVE";
+		};
+	};
+	if (typeName _cmd == "ARRAY") exitWith {
+		if (count _cmd < 2) exitWith {hint localize format["--- SYG_handleWP: expected parameters array size  2, detected %1", count _cmd]};
+		_str = _cmd select 0;
+		if ((typeName _str) != "STRING") exitWith {hint localize format["--- SYG_handleWP: expected [STRING,POS], found [%1,...]", typeName _str]};
+		if (count _cmd < 2) exitWith { hint localize "--- SYG_handleWP: expected SET command array size 2, detected 1"};
+		private ["_pos","_i"];
+		_pos = _cmd select 1; // Position where to assign WP
+		if ((toUpper _str) != "SET") exitWith { hint localize format["--- SYG_handleWP: expected [""SET"",POS] found [""%1"",%2]", _str, _pos] };
+		_grp = group player;
+		_wpa = waypoints _grp;
+//		hint localize format["+++ SYG_handleWP: SET, wpa = %1", _wpa];
+		if ( count _wpa == 0) then { // add WP as no one exists
+			_wp = _grp addWaypoint [[0,0,0], 0];
+			_wpa set [0, _wp];
+//			hint localize format["+++ SYG_handleWP: waypoint added = %1", _wpa];
+		} else {
+			if (count _wpa > 1) then {
+				for "_i" from 1 to count _wpa do {
+					deleteWaypoint (_wpa select _i);
+				};
+			};
+			_wp = _wpa select 0;
+		};
+//		hint localize format["+++ SYG_handleWP: wpa = %1, wp = %2", _wpa, _wp];
+		_wp setWaypointPosition [ _pos,0];
+		_wp setWaypointType "MOVE";
+		_grp setCurrentWaypoint _wp;
+	};
+};
+
+//
+// Shows destination point after intro until player is not landed on base
+// Spawn as: [] spawn SYG_showDestinationWPUntilOnBase;
+//
+SYG_showDestWPIfNotOnBase = {
+	private ["_pos"];
+	_pos = getPos AISPAWN;
+	["SET", _pos] call SYG_handleWP; // set intitial destiantion point
+	hint localize "+++ SYG_showDestWPIfNotOnBase: first WP created";
+	while { base_visit_status < 1 }  do { // player stil not visited base, so check WP existance
+	 	// each 10 seconds check if WP is wiped out by some circumstances
+		sleep 10;
+		if (alive player) then { // check only for alive player
+			// undate WP just in case
+			["SET", _pos] call SYG_handleWP; // set intitial destiantion point
+			// print information abot WP creaed
+			hint localize "+++ SYG_showDestWPIfNotOnBase: refresh WP";
+		};
+	};
+	"REMOVE" call SYG_handleWP; // set intitial destiantion point
+	hint localize "+++ SYG_showDestWPIfNotOnBase: WP removed";
 };
 

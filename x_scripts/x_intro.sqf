@@ -854,6 +854,9 @@ if (_para1 != "") then {
 [ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
 // Inform player about new order
 ["msg_to_user", "", [[ format[localize "STR_INTRO_PARAJUMP", (round ((_spawn_point distance FLAG_BASE)/50)) * 50 ] ]], 0, 5, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
+// #579: add destination point on yellow circle of the base barracs tent
+// Start routine to set the destinatioin point and check it until player is on base
+[] spawn SYG_showDestWPIfNotOnBase;
 
 // move camera to the DC3 cargo player
 waitUntil { (FLAG_BASE distance player) > 100 };

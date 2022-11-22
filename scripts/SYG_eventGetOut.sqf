@@ -83,12 +83,12 @@ SYG_getOutEvent = {
 
     if ( (_veh isKindOf "Air") /*|| (_veh isKindOf "Ship")*/) exitWith {
         _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // prevent event on air vehicles
-        hint localize format["--- SYG_getOutEvent: REMOVE GetOut EVENT on invalid vehicle %1, exit", _veh];
+        hint localize format["--- SYG_getOutEvent: REMOVE GetOut EVENT on invalid air vehicle %1, exit", _veh];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
     };
     _start_time = time; // remember start time of the event processing
-    _start_dmg  = damage _veh; // remember inital damage
+    _start_dmg  = damage _veh; // remember initial damage
 
     _crew = crew _veh; // crew still in vehicle
     _first_man_out = _this select 2;
@@ -217,14 +217,24 @@ SYG_getOutEvent = {
     if (!_udState) exitWith  {// Vehicle stands on wheels, exit mow
         // not overturned, exit
         _veh setVariable [EVENT_ID_VAR_NAME, _getOutEventInd]; // restore event handling
-
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
+
+		//
+		// Cheсk if first man retuned to normally staying vehicle by himself
+		//
+		if ( vehicle _first_man_out == _veh ) exitWith {
+			hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", typeOf _veh, _veh, damage _veh];
+			_veh setDamage 0;
+			true
+		};
+
     #ifdef __DEBUG_PRINT__
         hint localize format["<<< SYG_getOutEvent: veh %1(%2) not overturned (%3), dmg %4, role %5, crew %6 -> %7, evnts %8/%9, %10 >>>",
                             typeOf _veh, _veh, round(_veh call SYG_vehUpAngle), _start_dmg, _role, _whole_crew, count crew _veh,
                             SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt,
                             [_veh, "at %1 m. to %2 from %3",50] call SYG_MsgOnPosE ];
     #endif
+    	// TODO: #576: add here flash thrown to signal about empty damaged vehicle appeared in the world.
         true
     };
 
@@ -254,7 +264,6 @@ SYG_getOutEvent = {
     sleep 0.1;
     _veh setDamage 0; // remove any vehicle damage
     _pos = position _veh;
-
     _veh setVectorUp [0,0,1];
 
 /*
@@ -427,12 +436,13 @@ SYG_getOutEvent = {
     } forEach crew _veh;
     SYG_TrueGetOutsCnt = SYG_TrueGetOutsCnt + 1;
 // 2020/12/09,  1:19:22 String [[[ SYG_getOutEvent: turned back (<NULL-object>) in 1.1, ini dmg 0, roles [], crew 0/alive 0, calls 116/1260, at 2250 m. to SW from Isla de la Caja ]]] not found
-    hint localize format["[[[ SYG_getOutEvent: turned back %1(%2) in %3, ini dmg %4, roles %5, crew %6/alive %7, calls %8/%9, %10 ]]]",
+    hint localize format["[[[ SYG_getOutEvent: turned back %1(%2) in %3, init dmg %4, roles %5%6, crew %7/alive %8, calls %9/%10, %11 ]]]",
         _veh_type,
         _veh,
         (round((time - _start_time) *10))/10,
         _start_dmg,
         count _tlist,
+        if (count _rem_roles > 0) then {format[" vacant %1", _rem_roles]} else {""}, // 6th param (vacant roles)
         count crew _veh,
         {alive _x} count crew _veh,
         SYG_TrueGetOutsCnt,
