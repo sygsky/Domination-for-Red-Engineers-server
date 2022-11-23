@@ -259,7 +259,7 @@ SYG_roundTo = {
 /**
  * Added on 22-11-2022 by Rokse [LT] request
  * Handles with waypoints, call it on the client ONLY:
- * to set WP: ["SET", getPos AISPAWN] call SYG_handleWP;
+ * to set WP: ["SET", getPos AISPAWN<,"WP description">] call SYG_handleWP;
  * to remove WP: ("REMOVE" || ["REMOVE"]) call SYG_handleWP;
  * to get WP count: ("COUNT" || ["COUNT"]) call SYG_handleWP;
  *
@@ -308,22 +308,18 @@ SYG_handleWP = {
 		_grp = group player;
 		_wpa = waypoints _grp;
 //		hint localize format["+++ SYG_handleWP: SET, wpa = %1", _wpa];
-		if ( count _wpa == 0) then { // add WP as no one exists
-			_wp = _grp addWaypoint [[0,0,0], 0];
-			_wpa set [0, _wp];
-//			hint localize format["+++ SYG_handleWP: waypoint added = %1", _wpa];
-		} else {
-			if (count _wpa > 1) then {
-				for "_i" from 1 to count _wpa do {
-					deleteWaypoint (_wpa select _i);
-				};
-			};
-			_wp = _wpa select 0;
+		_cnt = count _wpa;
+		for "_i" from 0 to _cnt - 1 do {
+			deleteWaypoint (_wpa select _i);
 		};
-//		hint localize format["+++ SYG_handleWP: wpa = %1, wp = %2", _wpa, _wp];
-		_wp setWaypointPosition [ _pos,0];
+		_wp = _grp addWaypoint [_pos, 0];
+//		hint localize format["+++ SYG_handleWP: wp = %1",  _wp];
+//		_wp setWaypointPosition [ _pos, 0];
 		_wp setWaypointType "MOVE";
 		_grp setCurrentWaypoint _wp;
+		if (count _cmd > 2) then {
+		_wp setWaypointDescription (_cmd select 2);
+		}
 	};
 };
 
@@ -342,7 +338,7 @@ SYG_showDestWPIfNotOnBase = {
 		if (alive player) then { // check only for alive player
 			// undate WP just in case
 			["SET", _pos] call SYG_handleWP; // set intitial destiantion point
-			// print information abot WP creaed
+			// print information about WP creaed
 			hint localize "+++ SYG_showDestWPIfNotOnBase: refresh WP";
 		};
 	};
