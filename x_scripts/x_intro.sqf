@@ -214,6 +214,7 @@ if (_sound == "") then { // select random music for an ordinal day
 
 			_sound = _music;
 			playSound _music; //playSound "ATrack25"; // oldest value by Xeno
+			["log2server", name player, format["intro sound: ""%1""", _sound]] call XSendNetStartScriptServer;
 
          };
     };
