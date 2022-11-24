@@ -90,7 +90,7 @@ _alive_man_cnt = 0;
 for "_i" from 0 to 6 do {
 	_list = [];
 	{
-		if (((position _x) select 2) < 20) then { // vehicle may be in air
+		if ( (((position _x) select 2) < 20) && (_x isKindOf "LandVehicle")) then { // vehicle may be in air
 		    // Check to be the captured vehicle
 			_var = _x getVariable "CAPTURED_ITEM";
 			if ( !isNil "_var" ) exitWith {  // vehicle is captured one, don't remove it now
@@ -112,7 +112,7 @@ for "_i" from 0 to 6 do {
 	sleep 0.12;
 	{
 		if (!(_x isKindOf "Man")) then { // vehicle, empty or filled in
-			// patrol vehicles can't be in this list
+			// patrol/sppm vehicles can't be in this list
 			_man_cnt = _man_cnt + (count (crew _x));
 			_veh_cnt = _veh_cnt + 1;
 			{
