@@ -314,13 +314,14 @@ SYG_generateSPPMText = {
 // Updates all markers on map removing empty ones
 SYG_updateAllSPPMMarkers = {
 //	hint localize format["+++ SYG_updateAllSPPMMarkers +++"];
-	private ["_marker","_count_updated","_count_removed","_count_empty","_pos","_arr","_new_pos","_i","_cone"];
+	private ["_marker","_count_updated","_count_removed","_count_empty","_pos","_arr","_new_pos","_i","_cone","_mrk_name"];
 	_count_updated = 0; // how many mark objects were corrected
 	_count_removed = 0; // how many mark objects were removed
 	_count_empty = 0; // how many mark objects were empty (not attached to markers)
 	for "_i" from 0 to count SYG_SPPMArr - 1 do  {
 		_cone =  SYG_SPPMArr select _i; // road cone linked with SPPM marker
 		_marker = _cone getVariable SPPM_MARKER_NAME;
+		_mrk_name = markerText _marker;
 		if ( !isNil "_marker" ) then {
 			_pos = getMarkerPos _marker;
 			_arr = _pos call SYG_getAllSPPMVehicles;
@@ -344,14 +345,17 @@ SYG_updateAllSPPMMarkers = {
 					_new_pos set [2, -1];
 					_cone setVectorUp [0,0,1];
 					_cone setVehiclePosition  [_new_pos, [], 0, "CAN_COLLIDE"]; // update name just in case
-					hint localize format["*** SPPM ""%1"" position changed by %2 m.", _marker, round( [_pos, _new_pos] call SYG_distance2D ) ];
+					hint localize format["+++ SPPM ""%1"" position changed by %2 m.", _marker, round( [_pos, _new_pos] call SYG_distance2D ) ];
 				} else {
-					hint localize format["*** SPPM ""%1"" position could be changes by %2 m. but is closer then 50 m. to other SPPM", _marker, [_pos, _new_pos] call SYG_distance2D];
+					hint localize format["+++ SPPM ""%1"" position could be changes by %2 m. but is closer then 50 m. to other SPPM", _marker, [_pos, _new_pos] call SYG_distance2D];
 				};
 			};
 			_arr = _arr call SYG_generateSPPMText;
 			_marker setMarkerTypeLocal (_arr select 0);
 			_marker setMarkerText (_arr select 1);
+			if ( _mrk_name != (_arr select 1) ) then {
+				hint localize format["+++ SPPM ""%1"" structure changed from ""%1"" to ""%2""", _mrk_name, (_arr select 1)];
+			};
 		} else { _count_empty = _count_empty + 1 };
 	};
 	SYG_SPPMArr call SYG_clearArrayB;
