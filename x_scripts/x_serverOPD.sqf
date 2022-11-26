@@ -15,7 +15,7 @@ if (_name == "__SERVER__") exitWith {};
 
 _index = d_player_array_names find _name;
 if (_index >= 0) exitWith {
-    _parray = d_player_array_misc select _index;
+    _parray = d_player_array_misc select _index; // [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
     _oldwtime = _parray select 0;
     _connecttime = _parray select 1;
     _newwtime = time - _connecttime;

@@ -19,6 +19,7 @@ hint localize format[ "+++ x_scripts\x_serverOPC.sqf: player name is ""%1""", _n
 
 if (!(_name in d_player_array_names)) then {
 	d_player_array_names set [ count d_player_array_names, _name];
+	// [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
 	d_player_array_misc set [count d_player_array_misc,[d_player_air_autokick, time, _name, 0,"",""]];
 };
 

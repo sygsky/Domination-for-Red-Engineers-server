@@ -879,6 +879,11 @@ if ( _rank < 6 ) then { // you are Major or lower, send info about ranks
 			(_ranks select 3) call XGetRankStringLocalized
 		]
 	];
+	if ( (d_player_stuff select 3) != 0) then {
+		// Output time of absence
+		// TODO: #579 send a message about the time since the last login
+		_delta = 0;
+	};
 
 };
 //+++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -973,7 +978,7 @@ _local_msg_arr spawn {
 		[
 			"msg_to_user",
 			"",
-			[ ["Мы построим лестницу до звёзд, Мы пройдём сквозь чёрные циклоны, От смоленских солнечных берёз, До туманных далей Оберона." ] ],
+			[ ["Мы построим лестницу до звёзд Мы пройдём сквозь чёрные циклоны От смоленских солнечных берёз До туманных далей Оберона." ] ],
 			0, 5, false, "Oberon"
 		] spawn SYG_msgToUserParser;
 	};

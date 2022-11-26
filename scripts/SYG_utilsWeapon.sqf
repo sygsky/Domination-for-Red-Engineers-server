@@ -2634,6 +2634,7 @@ SYG_findPlayerEquipmentAsStr = {
     if ( (typeName _this) == "OBJECT") then {_this = name _this;};
     if ( (typeName _this) != "STRING" ) exitWith {
         hint localize format["--- SYG_findPlayerEquipmentAsStr: expected param isn't string: %1", _this ];
+        ""
     };
     //hint localize format["--- %1 call SYG_findPlayerEquipmentAsStr;", _this ];
     _index = d_player_array_names find _this;
@@ -2648,7 +2649,7 @@ SYG_findPlayerEquipmentAsStr = {
 // Note: called only on server
 // [_name,_wpn_arr_str] call SYG_storePlayerEquipmentAsStr; // Unpack and store whole player equipment
 // Now input weapon array contains ONLY rucksack content, no real weapon,
-// so d_player_array_misc items contains also ONLY rucksack itmes, not any weapons
+// so d_player_array_misc items contains also ONLY rucksack items, not all weapons
 SYG_storePlayerEquipmentAsStr = {
     if ( (typeName _this) != "ARRAY" ) exitWith {hint localize format["--- SYG_storePlayerEquipmentAsStr: expected param isn't array: %1",_this];};
     if ( (count _this) < 2 ) exitWith {

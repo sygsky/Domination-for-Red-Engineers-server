@@ -142,10 +142,9 @@ XHandleNetStartScriptServer = {
 
 			_this spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance, suicide sound...
 			if ( count _this > 2) then { // missionStart received
-			    private ["_userLogin", "_ind"];
+			    private ["_userLogin", "_ind","_localDate", "_timeOffset"];
 			    _userLogin = arg(1);
 			    _ind = SYG_userNames find _userLogin;
-				private ["_localDate", "_timeOffset"];
 				_localDate  = arg(2);
 			    if (_ind >= 0 ) then {
 			        _timeOffset = SYG_localZones select _ind;

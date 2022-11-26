@@ -644,15 +644,17 @@ XHandleNetStartScriptClient = {
 		    private ["_pname"];
 		    _pname = argp(arg(1),2);
 			if (name player == _pname) then {
-				__compile_to_var; // d_player_staff = _this select 1;
+				__compile_to_var; // d_player_stuff = _this select 1;
 				SYG_dateStart = arg(2); // set server start date
 				if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
 				SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server
-				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, SYG_suicideScreamSound %2, SYG_playerID %3,equip %4",
-				SYG_dateStart,
-				call SYG_getSuicideScreamSound,
-				SYG_playerID,
-				d_player_stuff];
+				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, suicide sound %2, SYG_playerID %3, OPD time %4, equip %5",
+					SYG_dateStart,
+					call SYG_getSuicideScreamSound,
+					SYG_playerID,
+					d_player_stuff select 1,
+					d_player_stuff
+				];
 				if (SYG_playerID == 0) then { // Im FIRST player in the game
 					SYG_townMaxScore = (d_ranked_a select 9); // 02-APR-2021 value was +40
 					publicVariable "SYG_townMaxScore"; // set public variable with the maximum scores bonus per town
