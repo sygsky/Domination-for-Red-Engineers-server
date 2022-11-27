@@ -8,7 +8,7 @@ _dlg = createDialog "X_RscAnimatedLetters";
 _line = 0;
 i = 0;
 //playMusic "ATrack8";
-//playSound "farewell_slavs";
+playSound "farewell_slavs";
 ["farewell_slavs",40] spawn SYG_showMusicTitle;
 _display = findDisplay 11098;
 _control = _display displayCtrl 101113;
@@ -43,7 +43,7 @@ waitUntil {camCommitted _camera};
 	};
 };
 
-_camera camSetRelPos [80.80,120.29,633.07];
+_camera camSetRelPos [80.80,120.29,633.07];event_para_dropped
 _camera camCommit 20;
 #ifndef __TT__
 [5, localize "STR_SYS_100" /* "CONGRATULATIONS" */, 2] execVM "IntroAnim\animateLettersX.sqf";_line = _line + 1; waitUntil {i == _line};
@@ -84,6 +84,4 @@ camDestroy _camera;
 
 3 fadeMusic 0;
 
-if (true) exitWith {};
-
-
+if (true) 
