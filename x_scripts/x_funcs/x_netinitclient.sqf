@@ -572,7 +572,10 @@ XHandleNetStartScriptClient = {
             _townName = _townArr select 1;
             _soundName = "";
             _soundName = call SYG_getTargetTownDetectedSound;
-            if (_soundName != "" ) then {playSound _soundName};
+            if (_soundName != "" ) then {
+            	playSound _soundName;
+            	[_soundName, 20] call SYG_showMusicTitle; // It may be titled music, so try to show it
+            };
 		};
 
 		#ifdef __AI__
