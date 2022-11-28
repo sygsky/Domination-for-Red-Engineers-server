@@ -277,3 +277,7 @@ player call SYG_addBinocular;
 #ifdef __EQUIP_OPD_ONLY__
 SYG_playerRucksackContent = player call SYG_getPlayerRucksackAsStr; // initial player rucksack content in text form
 #endif
+
+#ifdef __AI__
+ai_counter = 0;
+#endif

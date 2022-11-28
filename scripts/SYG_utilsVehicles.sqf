@@ -2032,14 +2032,13 @@ SYG_vehIsRecoverable = {
 	_veh = _this;
 	if (typeName _veh != "ARRAY") then { _veh = [_veh] };
 	if (count _veh == 0) exitWith { false };
-	private ["_res", "_x"];
+	private ["_x","_res"];
 	_res = false;
 	{
-		if ( typeName _x != "OBJECT" ) exitWith { _res = false }; // not vehicle, false, exit
-	    if ( isNull _x ) exitWith { _res = false }; // vehicle null, false, exit
+		if ( typeName _x != "OBJECT" ) exitWith { }; // not vehicle, false, exit
+	    if ( isNull _x ) exitWith { }; // vehicle null, false, exit
 		_res = _x getVariable "RECOVERABLE";
-		if ( isNil "_res" ) exitWith { _res = false }; // not RECOVERABLE, false, exit
-		if ( !_res ) exitWith {}; // not recoverable, false, exit
+		if ( isNil "_res" ) exitWith {_res = false }; // not RECOVERABLE, false, exit
 	} forEach _veh;
 //	hint localize format["+++ SYG_vehIsRecoverable: ""RECOVERABLE"" = %1", _res];
 	_res
@@ -2048,7 +2047,7 @@ SYG_vehIsRecoverable = {
 // Converts objects in input array to their types and return new array with types, on error return input array.
 // If single object is used as parameter, its type is returned
 SYG_vehToType = {
-	private ["_veh","_x"];
+	private ["_veh"];
 	_veh = _this;
 	if ( typeName _veh == "OBJECT" ) exitWith { typeOf _veh };
 	if ( typeName _veh == "ARRAY" ) exitWith {

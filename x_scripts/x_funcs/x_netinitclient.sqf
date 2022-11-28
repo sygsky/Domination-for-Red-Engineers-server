@@ -867,7 +867,10 @@ XHandleNetStartScriptClient = {
 
                     if (_playSound ) then {
                         _str = _id call SYG_getDayTimeIdRandomSound;
-                        if ( _str != "" ) then {playSound _str};
+                        if ( _str != "" ) then {
+                        	playSound _str;
+                        	[_str, 35] call SYG_showMusicTitle; // It may be titled music, so try to show it
+                       	};
                     };
                     //-------------------------------------------------------
                 };

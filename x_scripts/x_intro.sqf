@@ -726,7 +726,9 @@ SYG_showMusicTitle = {
                     _str = [] call SYG_getMsgForCurrentDayTime;
                     titleText[_str, "PLAIN DOWN"];
                     _str = ([] call SYG_getCurrentDayTimeRandomSound);
-                    if (_str != "") then { playSound _str; };
+                    if (_str != "") then {
+                    	playSound _str;
+                    };
                 };
                 ""
 			};
