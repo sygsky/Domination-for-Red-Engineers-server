@@ -336,21 +336,35 @@ SYG_playRandomTrack = {
     private ["_this","_item","_trk"];
 
     //hint localize format["+++ scripts/SYG_utilsSound.sqf: input %1 +++",_this];
-    if (typeName _this == "STRING") exitWith {// 3. _arr = "ATrack24"; // play full track
+    if (typeName _this == "STRING") exitWith {
     	private ["_arr"];
 #ifdef __DEBUG__
         hint localize format[ "+++ ""%1"" call SYG_playRandomTrack;",_this ];
 #endif
 		// check to be from CfgMusic ("ATrack#") or CfgSounds
 		_arr = toArray _this;
-		if ( (count _arr) < 7 ) exitWith { playSound _this; _this }; // short name means not music from CfgMusic
-		if ( (toUpper( toString ( _arr resize 6 ))) != "ATRACK" ) exitWith { playSound _this; _this };
+//		hint localize format["+++ SYG_playRandomTrack: arr = %1", _arr];
+		if ( (count _arr) < 7 ) exitWith { playSound _this; _this }; // short name means it is not internal music from CfgMusic
+		_arr resize 6;
+		_arr = +_arr; // It is needed else stinrg will be empty (bug of BIS)
+		_trk = toUpper( toString ( _arr ));
+		if ( _trk != "ATRACK" ) exitWith {
+			playSound _this;
+#ifdef __DEBUG__
+        	hint localize format[ "+++ SYG_playRandomTrack: playSound %1, arr %2, trk ""%3"" ...",_this, _arr, _trk ];
+#endif
+			_this
+		};
+		// 3. _arr = "ATrack24"; // play full track
         playMusic _this;
+#ifdef __DEBUG__
+        hint localize format[ "+++ SYG_playRandomTrack: playMusic %1, arr %2, trk ""%3"" ...",_this, _arr, _trk ];
+#endif
         _this
     }; // full track
 
     if ( typeName _this != "ARRAY") exitWith {// must be array or string
-        hint localize format["--- SYG_playRandomTrack: unknown params %1",_this];
+        hint localize format["--- SYG_playRandomTrack: expected array, found %1", typeName _this];
         ""
     };
 
@@ -382,6 +396,7 @@ SYG_playRandomTrack = {
         if ((typeName (_this select 1)) == "STRING") exitWith { // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
             _item = _this call SYG_checkLastSoundRepeated;
             _item call SYG_playRandomTrack;
+            _item
         }; // list of tracks, play one of selected
 
         //
@@ -399,7 +414,7 @@ SYG_playRandomTrack = {
 #endif
                 SYG_deathCountCnt = 0; // wait next 50-60 deaths to again play full track)))
                 if (call SYG_playExtraSounds) exitWith { playMusic arg(0); arg(0)};
-                ""
+                arg(0))
             };
 
             // play partial random sub-track
@@ -411,14 +426,13 @@ SYG_playRandomTrack = {
                 hint localize format["*** SYG_playPartialTrack: %1",[arg(0),argp(_trk,0),argp(_trk,1)]];
 #endif
                 [arg(0),argp(_trk,0),argp(_trk,1)] spawn SYG_playPartialTrack;
-                ""
             } else {
 #ifdef __DEBUG__
                 hint localize format["*** SYG_playRandomTrack: %1",[arg(0),argp(_trk,0)]];
 #endif
                 playMusic [arg(0),argp(_trk,0)];
-                ""
             };
+			arg(0)
         };
         hint localize format["--- 2: ""%1"" call SYG_playRandomTrack;",_this ];
         ""

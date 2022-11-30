@@ -1547,6 +1547,11 @@ if (d_own_side == "WEST") then {
 };
 #endif
 
+//#define __TEST_PLAY_MUSIC__
+#ifdef __TEST_PLAY_MUSIC__
+FLAG_BASE addAction [">>> Music test", "scripts\testPlayMusic.sqf"];
+#endif
+
 //+++ Sygsky: add bar gates functionality
 #ifdef 	__BARGATE_ANIM__
 // find all bargates

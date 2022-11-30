@@ -63,7 +63,7 @@ _cnt = 0;
         if ( count _units > 0) then {_side = side _newgroup;};
         hint localize format[ "+++ takeAirfield.sqf: unit type list of ""%1"" %11, men %3, side %4 [%5:%6], d_base_arr %7, 1st unit side %8, group %9, pos %10, ",
             _x, count _type_unit_array, _units, side _newgroup, d_enemy_side, _side_str, _arr, _side, _newgroup, _pos, _type_unit_array ];
-    } else {hint localize "--- scripts/takeAirfield.sqf: initial pos for group not created in 10 steps!!!"};
+    } else {hint localize "--- takeAirfield.sqf: initial pos for group not created in 10 steps!!!"};
 } forEach ["airteam1","airteam2"];
 
 hint localize format["+++ takeAirfield.sqf: air base team (%1 men) created", _cnt];
