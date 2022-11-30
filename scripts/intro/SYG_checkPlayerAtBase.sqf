@@ -49,7 +49,8 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_
 SYG_initialEquipmentStr = nil; // not needed more
 
 sleep 0.5;
-playSound (call SYG_armorySound); // random armory sound
+["say_sound", player, call SYG_armorySound] call XSendNetStartScriptClientAll; // playSound on all connected player computers immediately
+//playSound (call SYG_armorySound); // random armory sound
 #endif
 // remove parachute
 _para = player call SYG_getParachute;
