@@ -194,7 +194,8 @@ while {true} do {
 				//_x set [MOTO_ORIG_POS, getPos _moto];
 				sleep (0.5 + (random 0.5));
 #ifdef __DEBUG__
-                _posReal = (getPos _moto) resize 2;
+                _posReal = (getPos _moto);
+                _posReal resize 2;
 				hint localize format[ "+++ motorespawn.sqf: moto%1(%2) returned, dir %3, dist %4, new pos %5, engine %6", _id,
                     typeOf _moto,
                     direction _moto,
