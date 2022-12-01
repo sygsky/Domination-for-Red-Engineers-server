@@ -4,7 +4,7 @@
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc)
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,89,89,89,89
+STR_RUM_NUM,90,90,90,90
 STR_RUM_NIGHT,They are sleeping in %3,Alle schlafen in %3,"En %3, todos duermen, sin embargo","В %3 все спят, однако"
 STR_RUM_0,Rumors are absent! It's weird...,Gerüchte sind nicht vorhanden! Es ist seltsam...,¡No hay rumores! Lo cual es extraño...,Слухи отсутствуют! Что странно...
 STR_RUM_1,Enemy refuel truck will help only if your vehicle engine is on,"Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf",El camión cisterna enemigo repostará con el motor del equipo encendido,Вражеский бензовоз заправляет при включенном двигателе техники
@@ -95,3 +95,4 @@ STR_RUM_85,"The pilot can have any submachine gun available on the island.","Der
 STR_RUM_86,"The parachute's rate of descent depends on the weight of the equipment","Die Sinkgeschwindigkeit des Fallschirms hängt vom Gewicht der Ausrüstung ab","La velocidad de descenso del paracaídas depende del peso del equipo","Скорость снижения парашюта зависит от веса снаряжения"
 STR_RUM_87,"Exploring the campfires is only possible at the beginning of a mission. This can give you curiosity points","Das Erkunden der Lagerfeuer ist nur zu Beginn einer Mission möglich. Das kann Ihnen Neugierpunkte bringen","Explorar las hogueras sólo es posible al principio de una misión. Esto puede darte puntos de curiosidad","Изучение костров возможно только в начале миссии. Это может принести очки за любознательность"
 STR_RUM_88,"Being in a closed car, you won't feel the danger of artillery fire","In einem geschlossenen Auto spürt man die Gefahr von Artilleriebeschuss nicht","Al estar en un vagón cerrado, no sentirás el peligro del fuego de artillería","Находясь в закрытой машине, вы не почувствует опасность артобстрела"
+STR_RUM_89,"A hit to the circle counts only on the first open parachute","Ein Überrundungstreffer zählt nur für den ersten offenen Fallschirm","Un golpe de vuelta sólo cuenta en el primer paracaídas abierto","Попадание в круг защитывается только на первом открытом парашютом"
