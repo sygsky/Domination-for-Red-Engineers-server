@@ -49,9 +49,11 @@ hint localize format["+++ x_illum: start in %1+++", _this select 2];
 
 // script stoppeв by main target change from x_target_clear.sqf by setting d_run_illum= false or if (_current_counter != current_counter)
 while {d_run_illum && (_current_counter == current_counter) } do {
-	if (X_MP) then {
-		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+
+	if (X_MP && ((call XPlayersNumber) == 0) ) then {
+		waitUntil {sleep (25.012 + random 1);(call XPlayersNumber) > 0};
 	};
+
 	//__DEBUG_NET("x_illum.sqf",(call XPlayersNumber))
 	_flare = "";
 	/*  SYG_shortNightEnd    =  4.60;
