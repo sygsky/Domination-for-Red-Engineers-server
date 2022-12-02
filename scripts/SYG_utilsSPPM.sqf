@@ -354,7 +354,7 @@ SYG_updateAllSPPMMarkers = {
 			_marker setMarkerTypeLocal (_arr select 0);
 			_marker setMarkerText (_arr select 1);
 			if ( _mrk_name != (_arr select 1) ) then {
-				hint localize format["+++ SPPM ""%1"" structure changed from ""%1"" to ""%2""", _mrk_name, (_arr select 1)];
+				hint localize format["+++ SPPM ""%1"" structure changed from ""%2"" to ""%3"" (near %4)",_marker,  _mrk_name, (_arr select 1), _cone call SYG_nearestLocationName];
 			};
 		} else { _count_empty = _count_empty + 1 };
 	};
