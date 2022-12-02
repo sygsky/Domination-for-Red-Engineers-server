@@ -1091,12 +1091,15 @@ STR_RESTORE_DLG_8,%1 item[s] on dist to %2 m.,%1 item[s] bis zum %2 m.,objetos %
 STR_RESTORE_DLG_9,list is empty,Liste ist leer,la lista está vacía,список пуст
 STR_RESTORE_DLG_10,"required rank is ""%1""","benötigt Rang ""%1""","se requiere un rango no inferior a ""%1""","требуется звание не ниже ""%1"""
 
+STR_ACE_EJECT0,<t color='#FF0000'>Eject</t>,<t color='#FF0000'>Auswerfen</t>,<t color = '# FF0000 ' >Catapultar< / t>,<t color='#FF0000'>Катапультироваться</t>
+STR_ACE_EJECT1,<t color='#FF0000'>Jump Out</t>,<t color='#FF0000'>Springen</t>,<t color = '# FF0000' >Saltar< / t>,<t color='#FF0000'>Выпрыгнуть</t>
+
 STR_AAHALO_0,Altitude (A.G.L.):,Höhe (A. G. L.):,Altura relativa al Suelo:,Высота отн. земли:
 STR_AAHALO_1,Heading:,Überschrift:,Cursos:,Курс:
-STR_AAHALO_2,"degrees,","degrees,","gr.,","гр.,"
+STR_AAHALO_2,"degrees,","Grad,","grados,","градусов,"
 STR_AAHALO_3,Ground Speed:,Ground Speed:,Pendiente horizontal:,Гориз. ск.:
 STR_AAHALO_4," m/s"," m/s"," m/s"," м/с"
-STR_AAHALO_5,Descent Rate:,Descent Rate:,Pendiente vertical:,Верт. ск.:
+STR_AAHALO_5,Descent Rate:,Descent Rate:,Pendiente vertical:,Вертик. ск.:
 STR_AAHALO_6,Brakes amount:,Brakes amount:,Frenado:,Торможение:
 
 STR_INTRO_MUSIC,"""johnny"",""mission_impossible"",""capricorn1title"",""rider"",""strelok""","""amigohome_ernst_bush"",""druzba"",""dem_morgenrot_entgegen""","""ahead_friends"",""Varshavianka"",""Varshavianka_eng"",""warschawyanka_german""","""tovarich_moy"", ""Letyat_perelyotnye_pticy_2nd"",""jimmy_dont_miss"""
@@ -1687,8 +1690,7 @@ STR_ACE_VDN_ACE_AH1Z_AGM_HE_F,AH-1Z AGM114/HEx38,AH-1Z AGM114/HEx38,AH-1Z AGM114
 
 STR_ACE_VDN_SU34B,"Su-34B Kh29L,FAB500,S13","Su-34B Kh29L,FAB500,S13","Su-34B Kh29L,FAB500,S13","Су-34Б Х-29Л,С-13,ФАБ-500,"
 STR_ACE_VDN_SU34,"Su-34 FAB500,KAB500,S8","Su-34 FAB500,KAB500,S8","Su-34 FAB500,KAB500,S8","Су-34 ФАБ-500,КАБ-500КР,C-8Т"
-STR_ACE_EJECT0,<t color='#FF0000'>Eject</t>,<t color='#FF0000'>Auswerfen</t>,<t color = '# FF0000 ' >Catapultar< / t>,<t color='#FF0000'>Катапультироваться</t>
-STR_ACE_EJECT1,<t color='#FF0000'>Jump Out</t>,<t color='#FF0000'>Springen</t>,<t color = '# FF0000' >Saltar< / t>,<t color='#FF0000'>Выпрыгнуть</t>
+
 STR_ACE_VDN_UAZ_MG,UAZ-469 (Yak-B),UAZ-469 (Yak-B),UAZ-469 (Yak-B),УАЗ-469 Як-Б
 STR_WEST,NATO,NATO,NATO,НАТО
 STR_EAST,Comrades,Kameraden,Los nuestros,Наши
