@@ -192,22 +192,20 @@ if (_mission) then { // check victory or failure
     	{
     		if (alive _x) then {
     			if (isPlayer _x) then {
-    				_cnt_pl = _cnt_pl  1;
+    				_cnt_pl = _cnt_pl + 1;
     				_pl set [ count pl,  name _x ];
-    			} else { _cnt_ai = _cnt_ai  1 };
+    			} else { _cnt_ai = _cnt_ai + 1 };
     		};
     	} forEach crew _truck;
-    	if (_cnt_pl > 0) then {
-			hint localize format["+++ x_sideradio.sqf: mission SUCCESS, status %1, truck %2, radar %3, pl. %4%5, ai %6",
-				sideradio_status,
-				if (alive _truck) then {"alive"} else {"dead"},
-				if (alive _radar)  then {"alive"} else {"dead"},
-				_cnt_pl,
-				if ( count _pl > 0) then { _pl } else { "" },
-				_cnt_ai
-			];
-    	};
-		hint localize format["+++ x_sideradio.sqf:   mission SUCCESS, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
+		hint localize format["+++ x_sideradio.sqf: mission SUCCESS, status %1, truck %2, radar %3, pl. %4%5, ai %6",
+			sideradio_status,
+			if (alive _truck) then {"alive"} else {"dead"},
+			if (alive _radar) then {"alive"} else {"dead"},
+			_cnt_pl,
+			if ( count _pl > 0) then { _pl } else { "" },
+			_cnt_ai
+		];
+//		hint localize format["+++ x_sideradio.sqf:   mission SUCCESS, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
         side_mission_winner = 2;
         side_mission_resolved = true;
     } else {    // Failure
