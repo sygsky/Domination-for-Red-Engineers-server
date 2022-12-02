@@ -788,6 +788,7 @@ if ( X_Client ) then {// runs only on client
     ace_sys_eject_ace_init_eject    = compile preprocessFileLineNumbers "scripts\ACE\ace_init_eject.sqf";
     ace_sys_eject_ace_getin_jumpout = compile preprocessFileLineNumbers "scripts\ACE\ace_getin_jumpout.sqf";
     ace_sys_eject_ace_init_jumpout  = compile preprocessFileLineNumbers "scripts\ACE\ace_init_jumpout.sqf";
+//    call compile preprocessFileLineNumbers "scripts\ACE\ace_sys_eject.sqf"; // still not used, need to investigate more
 
     #endif
 
