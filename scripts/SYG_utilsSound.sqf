@@ -414,7 +414,7 @@ SYG_playRandomTrack = {
 #endif
                 SYG_deathCountCnt = 0; // wait next 50-60 deaths to again play full track)))
                 if (call SYG_playExtraSounds) exitWith { playMusic arg(0); arg(0)};
-                arg(0))
+                arg(0)
             };
 
             // play partial random sub-track
