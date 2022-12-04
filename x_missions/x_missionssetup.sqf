@@ -94,7 +94,7 @@ if (isServer) then {
 	XKilledSMTarget500 = {
 		-500 call XKilledSMTargetCodeNoDeadAdd;
 		(_this select 0) call XAddDead0;
-		hint localize format["+++ SideMission #%1 (object: %2 aborted by %3 (%4)", current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 0))];
+		hint localize format["+++ SideMission #%1 (object: %2, aborted by %3 (%4)", current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 0))];
 	};
 
 	// _this: negative code to complete this sm -1,-1 etc
