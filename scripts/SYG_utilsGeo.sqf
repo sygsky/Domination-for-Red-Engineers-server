@@ -913,9 +913,11 @@ SYG_MsgOnPosE = {
 	_roundTo = argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = locationPosition _loc;
+	if (isNil "_pos1") exitWith {format[_msg, "<null>??? ","???","???"]};
 //	_pos1 set [2,0];
 //	if ( (typeName _obj) == "ARRAY") then { _pos2 = _obj } else { _pos2 = position _obj };
 	_pos2 = _obj call SYG_getPos;
+	if (isNil "_pos2") exitWith {format[_msg, "<null>??? ","???","???"]};
 //	_pos2 set [2,0];// SYG_getPos
 	_dist = [_pos1, _pos2] call SYG_distance2D;
 	_dist = (round (_dist/_roundTo)) * _roundTo;
