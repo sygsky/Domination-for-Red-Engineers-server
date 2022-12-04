@@ -831,12 +831,14 @@ SYG_distance2D = {
 
 	private ["_pos1", "_pos2"];
 	_pos1 = (_this select 0) call SYG_getPos;
+	if (isNil "_pos1") exitWith { -1000 };
 //	if ( typeName _pos1 == "OBJECT") then { _pos1 = position _pos1;};
 //	if (typeName _pos1 != "ARRAY") exitWith {
 //		hint localize format["--- SYG_distance2D: _this =  %1", _this];
 //		9999999.0 // assign maximum distance available
 //	};
 	_pos2 = (_this select 1) call SYG_getPos;
+	if (isNil "_pos2") exitWith { -2000 };
 //	if ( typeName _pos2 == "OBJECT") then { _pos2 = position _pos2;};
 //	if (typeName _pos2 != "ARRAY") exitWith {
 //		hint localize format["--- SYG_distance2D: _this =  %1", _this];
@@ -906,6 +908,7 @@ SYG_MsgOnPosA2B = {
 SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname","_roundTo"];
 	_obj = arg(0);
+	if (isNull _obj) exitWith {format[_msg, "<null>??? ","???","???"]};
 	_msg = arg(1);
 	_roundTo = argopt(2,100);
 	_loc = _obj call SYG_nearestLocation;
