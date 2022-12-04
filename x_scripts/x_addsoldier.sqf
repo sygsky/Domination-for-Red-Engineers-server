@@ -135,7 +135,7 @@ if (_ai_cost > 0) then {
     playSound "steal";
     //player addScore -_ai_cost;
     (-_ai_cost) call SYG_addBonusScore;
-    _str = if (_pilot) then {_str = "STR_AI_11_PILOT"} else {"STR_AI_11"}; // A local glider club pilot costs twice as much: - %1! Refund of half - after demobilization in full health
+    _str = if (_pilot) then {"STR_AI_11_PILOT"} else {"STR_AI_11"}; // A local glider club pilot costs twice as much: - %1! Refund of half - after demobilization in full health
     (format[localize _str, _ai_cost]) call XfHQChat; // "You paid %1 for one AI, points will be returned when he is fired"
 };
 
