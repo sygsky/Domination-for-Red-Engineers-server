@@ -49,10 +49,12 @@ _majak_data = [
 #endif
 // Description for each lighthouse sound sequences
 _wholer_data = [
-	["lighthouse_1",  6, 13],		// length 18, 2 buzz
-	["lighthouse_2",  8, 15],		// length 21, 2 buzz
-	["lighthouse_3", 10, 18],		// lemgth 28, 2 buzz
-	["lighthouse_4", 10, 10, 25]	// length 45, 3 buzz
+	["lighthouse_1",  6, 13],		// sound len 3, total pause 19, 2 buzz
+	["lighthouse_2",  8, 15],		// sound len 4, total pause 23, 2 buzz
+	["lighthouse_3", 10, 18],		// sound len 5, total pause 28, 2 buzz
+	["lighthouse_4", 10, 10, 25],	// sound len 5, total pause 45, 3 buzz
+	["lighthouse_5",  5, 12],		// sound len 3, total pause 17, 2 buzz
+	["lighthouse_6",  3, 5, 7]		// sound len 3, total pause 15, 3 buzz
 ];
 
 //_diff_pos = [1.06738,-0.278809,-8.07489];

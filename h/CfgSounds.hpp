@@ -426,9 +426,11 @@ class CfgSounds {
 
 	// Lighthouse sounds
     class lighthouse_1    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v01.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 1
-    class lighthouse_2    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 2
-    class lighthouse_3    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v03.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 3
-    class lighthouse_4    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v04.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 4
+    class lighthouse_2    {name = "Lighthouse 2"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 2
+    class lighthouse_3    {name = "Lighthouse 3"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v03.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 3
+    class lighthouse_4    {name = "Lighthouse 4"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v04.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 4
+    class lighthouse_5    {name = "Lighthouse 5"; sound[] = {\sounds\timeofday\night\lighthouse\lhhorn01.ogg.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 5
+    class lighthouse_6    {name = "Lighthouse 6"; sound[] = {\sounds\timeofday\night\lighthouse\lhhorn02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 6
 
     // power down sounds
     class powerdown1    {name = ""; sound[] = {\sounds\short\power_down\PowerDown1.ogg, db+10, 1.0}; titles[] = {};};
