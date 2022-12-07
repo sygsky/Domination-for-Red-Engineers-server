@@ -13,4 +13,4 @@
 
 	returns: nothing
 */
-[_this select 0, _this _select 1, _this select 2, false] execVM "AAHALO\event_para_dropped.sqf";
+[_this select 0, _this select 1, _this select 2, false] execVM "AAHALO\event_para_dropped.sqf";

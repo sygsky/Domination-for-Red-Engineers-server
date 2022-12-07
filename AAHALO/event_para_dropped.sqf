@@ -2,7 +2,7 @@
 	AAHALO\event_para_dropped.sqf
 
 	author: Sygsky
-	description: Event handler to check if player landed on base/circle/etc after intro procedure
+	description: Event handler to check if player landed on base/circle/etc after intro/practice procedure
 			Variants are:
 			1. Out of base territory
 			2. On base territory far from any circle
@@ -18,7 +18,7 @@ private ["_fmt","_sub_name"];
 hint localize format["+++ event_para_dropped.sqf: Landed with parachute _this %1, pos %2", _this, getPos (_this select 2)];
 _veh  = _this select 0;
 _unit = _this select 2;
-_add_score = count _this == 3; // don't add score if count of params > 3
+_add_score =  if (count _this < 4) then {true} else {_add_score = _this select 3}; // add score if count of params < 4
 if (_add_score) then {
 	_fmt= "";
 	_sub_name = "";

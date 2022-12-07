@@ -22,20 +22,21 @@ _camera camSetFOV 1;
 _camera camCommit 0.0;
 waitUntil {camCommitted _camera};
 [] spawn {
+	private ["_vec","_posp","_is_in_veh"];
 	if (vehicle player != player) then {
 		_vec = vehicle player;
 		if (_vec isKindOf "Air") then {
 			_posp = position player;
-			_is_driver = driver _vec == player;
+			_is_in_veh = (vehicle player) == player;
 			player action["EJECT",_vec];
 			waitUntil {vehicle player == player};
 			player setPos [_posp select 0, _posp select 1, 0];
 			player setVelocity [0,0,0];
-			if (_is_driver) then {
+			if (_is_in_veh) then {
 				_vec spawn {
 					private ["_vec"];
 					_vec = _this;
-					waitUntil {count crew _vec == 0};
+					waitUntil {(!alive _vec) || (count crew _vec == 0)};
 					deleteVehicle _vec;
 				};
 			};
@@ -43,7 +44,7 @@ waitUntil {camCommitted _camera};
 	};
 };
 
-_camera camSetRelPos [80.80,120.29,633.07];event_para_dropped
+_camera camSetRelPos [81,120,633];
 _camera camCommit 20;
 #ifndef __TT__
 [5, localize "STR_SYS_100" /* "CONGRATULATIONS" */, 2] execVM "IntroAnim\animateLettersX.sqf";_line = _line + 1; waitUntil {i == _line};
