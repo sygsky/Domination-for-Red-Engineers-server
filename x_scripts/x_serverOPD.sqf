@@ -49,11 +49,12 @@ if (_index >= 0) exitWith {
 #ifdef __AI__
     // TODO: try to remove all AI of the disconnected player
     // orphaned AI must be now local to server, not to any player as only single group player can recruit AI from barracks
-   _cnt = count units _player;
-   if ( _cnt > 0 ) then {
-   		_str = 	(units _player) call SYG_vehToType;
-		hint localize format["+++ x_serverOPD.sqf: %1 units count %2, 1st is %3", _name, _cnt, _str];// ;
-   };
+    _arr = (units _player) - [_player];
+	_cnt = count _arr;
+	if ( _cnt > 0 ) then {
+		_arr = 	_arr call SYG_vehToType;
+		hint localize format["+++ x_serverOPD.sqf: %1 units count %2 %3", _name, _cnt, _arr];// ;
+	};
 #endif
     //__DEBUG_NET("x_serverOPD player disconnected _parray",_parray)
     _parray set[4, ""]; // mark player to be logged out (empty role name in player array)
