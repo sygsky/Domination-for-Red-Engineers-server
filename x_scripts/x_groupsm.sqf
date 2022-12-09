@@ -412,7 +412,17 @@ while {true} do {
 					    [_jleader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
 #endif				
 					if ( rank _leader != "PRIVATE" ) then {_leader setRank "PRIVATE"};
-					(units _grp) join _joingrp; sleep 1.111;
+					// filter only alive units to re-group
+					_units = units _grp;
+					for "_i" from 0 to count _units - 1 do  {
+						if (!alive (_units select _i)) then {
+							_units set [_i, "RM_ME"];
+						};
+					};
+					_units = _units - ["RM_ME"];
+					if (count _units > 0) then {
+						_units join _joingrp; sleep 1.111;
+					};
 				};
 				
 			}; // if ( vehicle _leader == _leader) then // try re-join only for feetman
