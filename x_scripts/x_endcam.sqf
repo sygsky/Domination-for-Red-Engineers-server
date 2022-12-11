@@ -77,7 +77,7 @@ waitUntil {camCommitted _camera};
 _camera camSetFOV 5;
 
 _camera camCommit 20;
-[2, localize "STR_SYS_102" /* "Мирной жизни!!!" */, 6] execVM "IntroAnim\animateLettersX.sqf";_line = _line + 1; waitUntil {i == _line};
+[2, localize "STR_SYS_102" /* "Peace to YOU!!!" */, 6] execVM "IntroAnim\animateLettersX.sqf";_line = _line + 1; waitUntil {i == _line};
 waitUntil {camCommitted _camera};
 
 _camera cameraEffect ["terminate","front"];
