@@ -78,7 +78,7 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
 			if ( alive _veh ) exitWith { _correct_kill = true; };
 			if ( ( _veh distance _killer ) > 20) exitWith { _correct_kill = true; };
 		};
-		_correct_kill = alive _killer; // if killer is alive and is in vehicle - town is killed correctly
+		_correct_kill = alive _killer; // if killer is alive and is in vehicle - tower is killed correctly
 	};
 	if (_correct_kill ) exitWith{}; // not restore target
      hint localize format["*** MTTarget: resurrect tower, killer %1, veh %2, dist %3 m.", typeOf _killer, typeOf (vehicle _killer), round(_killer distance _house)];
