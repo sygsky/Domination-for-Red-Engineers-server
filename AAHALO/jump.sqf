@@ -8,6 +8,15 @@ _start_location = _this select 0;
 _paratype       = _this select 1;
 _jump_score     = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
 
+#define __SPECIAL_JUMP_OVER_SEA__ // special condition of strong wind over sea surface
+#ifdef __SPECIAL_JUMP_OVER_SEA__
+
+#define JUMP_DISPERSION 1000        // max. dispersion due to wind in ocean
+#define MAX_SHIFT 3500
+#define MIN_SHIFT 300
+
+#endif
+
 #ifdef __SPECIAL_JUMP_OVER_SEA__
 _use_wind       = if (count _this > 3) then  {_this select 3} else { true }; // Emulate wind above sea (true) or not (false)
 #endif
