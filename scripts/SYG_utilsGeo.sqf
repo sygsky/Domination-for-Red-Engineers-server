@@ -907,19 +907,20 @@ SYG_MsgOnPosA2B = {
 //
 SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname","_roundTo"];
-	_obj = arg(0);
-	if (isNull _obj) exitWith {format[_msg, "<null>??? ","???","???"]};
-	_msg = arg(1);
-	_roundTo = argopt(2,100);
+	_obj = _this select 0;
+	_msg = _this select 1;
+	hint localize format["+++ SYG_MsgOnPosE: _this = %1", _this];
+	if (isNull _obj) exitWith {format[_msg, "<null 0>??? ","???","???"]};
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = locationPosition _loc;
-	if (isNil "_pos1") exitWith {format[_msg, "<null>??? ","???","???"]};
+	if (isNil "_pos1") exitWith {format[_msg, "<null 1>??? ","???","???"]};
 //	_pos1 set [2,0];
 //	if ( (typeName _obj) == "ARRAY") then { _pos2 = _obj } else { _pos2 = position _obj };
 	_pos2 = _obj call SYG_getPos;
-	if (isNil "_pos2") exitWith {format[_msg, "<null>??? ","???","???"]};
+	if (isNil "_pos2") exitWith {format[_msg, "<null 2>??? ","???","???"]};
 //	_pos2 set [2,0];// SYG_getPos
 	_dist = [_pos1, _pos2] call SYG_distance2D;
+	_roundTo = if (count _this > 2) then { _this select 2 } else {100};
 	_dist = (round (_dist/_roundTo)) * _roundTo;
 	_dir = ([_pos1, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
