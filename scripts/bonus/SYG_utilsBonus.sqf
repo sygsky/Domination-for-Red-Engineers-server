@@ -82,9 +82,9 @@ SYG_createBonusVeh = {
 //	_veh = _type createVehicle  [0,0,0];
 //	_veh setPos _pos;
 	_veh = _type createVehicle  _pos;
-	if ( (typeName _veh) != "OBJECT" ) exitWith {
+	if ( ( !( _veh isKindOf "AllVehicles" )) || ( isNull _veh ) ) exitWith {
 		hint localize format["--- SYG_createBonusVeh: veh created is not ""OBJECT"" = %1, EXIT", _veh];
-		["msg_to_user","*",[["STR_BONUS_ERR"]],2,2,false,"good_news"] call XSendNetStartScriptClientAll; // "DOSAAF vehicle is not detected. Can we expect to see it at all?"
+		["msg_to_user","*",[["STR_BONUS_ERR"]],2,2,false,"losing_patience"] call XSendNetStartScriptClientAll; // "DOSAAF vehicle is not detected. Can we expect to see it at all?"
 		objNull
 	};
 	_veh setDir _dir;

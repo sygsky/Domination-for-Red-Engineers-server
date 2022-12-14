@@ -270,11 +270,13 @@ XfGetRanPointCircleBig = {
 // center position, radius of the circle
 // example: _random_point = [position trigger1, rad1, rad2] call XfGetRanPointCircleBig;
 XfGetRanPointAnnulusBig = {
-	private ["_center", "_radius1", "_radius2", "_center_x", "_center_y", "_ret_val", "_co", "_angle", "_x1", "_y1", "_nobs", "_helper", "_dist"];
+	private ["_center", "_radius1", "_radius2", "_center_x", "_center_y", "_ret_val", "_co", "_angle", "_x1", "_y1",
+		"_nobs", "_helper", "_dist","_more_call"];
 	_center = _this select 0; _radius1 = _this select 1; _radius2 = _this select 2;
+	_more_call = if (count _this == 3 ) then { true } else {false};
 	_center_x = _center select 0; _center_y = _center select 1;
 	_ret_val = [];_co = 0;
-	while { ((count _ret_val) == 0) && (_co < 50) } do {
+	while { ((count _ret_val) == 0) && (_co < 100) } do { // add counter as place of SM may be not flat!!!
 		_angle = random 360;
         _dist = [_radius1, _radius2] call XfRndRadiousInAnnulus;
 		_x1 = _center_x - ( _dist * cos _angle);
@@ -297,6 +299,17 @@ XfGetRanPointAnnulusBig = {
 		if (count _ret_val == 0) then {
 			_co = _co + 1;
 			sleep .01;
+		};
+	};
+	if ( (count _ret_val == 0) && _more_call) then {
+		hint localize format["--- XfGetRanPointAnnulusBig: 1 step not found valid pos, loops cnt = %1", _co ];
+		_ret_val = [_center, _radius1 ] call XfGetRanPointCircleBig; // try to find in inner circle
+		if (count _ret_val == 0) then {
+			hint localize format["--- XfGetRanPointAnnulusBig: 2 step not found valid pos, loops cnt = %1", _co ];
+			_ret_val = [_center, _radius2, _radius2 * 1.5, false ] call XfGetRanPointAnnulusBig; // try to find in outer annulus
+			if (count _ret_val == 0) then {
+				hint localize "--- XfGetRanPointAnnulusBig: all 3 steps not found valid pos, exit!!!";
+			};
 		};
 	};
 	_ret_val
