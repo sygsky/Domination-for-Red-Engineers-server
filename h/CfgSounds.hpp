@@ -230,12 +230,9 @@ class CfgSounds {
     class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0}; titles[] = {}; }; // defeat music from Fallout-2
 
     class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg,db+10,1.0}; titles[] = {}; }; // defeat sound
-    class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0}; titles[] = {}; }; // defeat sound
-    class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0}; titles[] = {}; }; // defeat sound by Kevin MacLeod
     class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0}; titles[] = {}; }; // defeat sound from Radio-nanny sign call
     class sinbad_baghdad { name=""; sound[] = {\sounds\defeat\sinbad_baghdad.ogg,db+10,1.0}; titles[] = {}; }; // defeat sound from film "7th voyage of Sinbad "
     class moon_stone {name = ""; sound[] = {\sounds\defeat\moon_stone.ogg, db+10,1.0}; titles[] = {}; }; // Famous Soviet singer Edvard Hill: "Moon stone" song
-    class hound_chase    {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10,1.0}; titles[] = {}; }; // chase from "Hound of Baskerville" Soviet film
     class take_five    {name = "Dave Brubeck"; sound[] = {\sounds\take_five.ogg, db+10,1.0}; titles[] = {}; }; // "Take Five" by Dave Brubeck
 
     class metel       { name=""; sound[] = {\sounds\metel.ogg,db+0,1.0}; titles[] = {}; }; // defeat music from "Metel" of Pushkin novel
