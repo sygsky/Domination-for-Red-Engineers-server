@@ -60,10 +60,10 @@ class CfgMusic {
 */
 
 	// this music remained is needed as partial tracks music
-    class mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
+//    class mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
     class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
     class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some fear music
-    class kk_the_hole { name="King-Kong film, the hole"; sound[] = {\sounds\intro\holidays\kk_the_hole.ogg,db-1,1.0};}; // Kin-Kong 1976 film, The hole eposode
+//    class kk_the_hole { name="King-Kong film, the hole"; sound[] = {\sounds\intro\holidays\kk_the_hole.ogg,db-1,1.0};}; // Kin-Kong 1976 film, The hole eposode
 
 //    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\weather\manchester_et_liverpool.ogg,db+0,1.0};}; // Well known melody
@@ -132,44 +132,45 @@ class CfgMusic {
 
 //+++++++++++++++++++++++ Defeat music track list
 
-    class thetrembler { name=""; sound[]=   {\sounds\thetrembler.ogg,db-1,1.0}; };
-    class thefuture { name=""; sound[]=   {\sounds\thefuture.ogg,db-1,1.0}; };
-    class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
+//    class thetrembler { name=""; sound[]=   {\sounds\thetrembler.ogg,db-1,1.0}; };
+//    class thefuture { name=""; sound[]=   {\sounds\thefuture.ogg,db-1,1.0}; };
+//    class vendetta { name=""; sound[] = {\sounds\vendetta.ogg,db-1,1.0}; };
 
-    class aztecs { name=""; sound[] = {\sounds\aztecs.ogg,db-1,1.0}; };
-    class aztecs2 { name=""; sound[] = {\sounds\aztecs2.ogg,db-1,1.0}; };
-    class aztecs3 { name=""; sound[] = {\sounds\aztecs3.ogg,db-1,1.0}; };
-    class aztecs4 { name=""; sound[] = {\sounds\aztecs4.ogg,db-1,1.0}; };
-    class aztecs5 { name=""; sound[] = {\sounds\aztecs5.ogg,db-1,1.0}; };
-    class aztecs6 { name=""; sound[] = {\sounds\aztecs6.ogg,db-1,1.0}; };
-    class betrayed { name=""; sound[] = {\sounds\betrayed.ogg,db-1,1.0}; };
-    class bolero { name=""; sound[] = {\sounds\bolero.ogg,db-1,1.0}; };
-    class musicbox_silent_night { name=""; sound[] = {\sounds\musicbox_silent_night.ogg,db-1,1.0}; };
+//    class aztecs { name=""; sound[] = {\sounds\aztecs.ogg,db-1,1.0}; };
+//    class aztecs2 { name=""; sound[] = {\sounds\aztecs2.ogg,db-1,1.0}; };
+//    class aztecs3 { name=""; sound[] = {\sounds\aztecs3.ogg,db-1,1.0}; };
+//    class aztecs4 { name=""; sound[] = {\sounds\aztecs4.ogg,db-1,1.0}; };
+//    class aztecs5 { name=""; sound[] = {\sounds\aztecs5.ogg,db-1,1.0}; };
+//    class aztecs6 { name=""; sound[] = {\sounds\aztecs6.ogg,db-1,1.0}; };
+//    class betrayed { name=""; sound[] = {\sounds\betrayed.ogg,db-1,1.0}; };
+//    class bolero { name=""; sound[] = {\sounds\bolero.ogg,db-1,1.0}; };
+//    class musicbox_silent_night { name=""; sound[] = {\sounds\musicbox_silent_night.ogg,db-1,1.0}; };
 
-    class tezcatlipoca { name=""; sound[] = {\sounds\tezcatlipoca.ogg,db-1,1.0}; };
-    class yma_sumac { name=""; sound[] = {\sounds\yma_sumac.ogg,db-1,1.0}; };
-    class yma_sumac_2 { name=""; sound[] = {\sounds\yma_sumac_2.ogg,db-1,1.0}; };
-    class village_ruins { name=""; sound[] = {\sounds\village_ruins.ogg,db-1,1.0}; };
+//    class tezcatlipoca { name=""; sound[] = {\sounds\tezcatlipoca.ogg,db-1,1.0}; };
+//    class yma_sumac { name=""; sound[] = {\sounds\yma_sumac.ogg,db-1,1.0}; };
+//    class yma_sumac_2 { name=""; sound[] = {\sounds\yma_sumac_2.ogg,db-1,1.0}; };
+//    class village_ruins { name=""; sound[] = {\sounds\village_ruins.ogg,db-1,1.0}; };
 
-    class pimbompimbom { name=""; sound[] = {\sounds\pimbompimbom.ogg,db-1,1.0};} // defeat music
-    class Delerium_Wisdom { name=""; sound[] = {\sounds\Delerium_Wisdom.ogg,db-1,1.0};} // defeat music
-    class mountains { name=""; sound[] = {\sounds\mountains.ogg,db-1,1.0};} // defeat music
-    class Gandalf_Simades { name=""; sound[] = {\sounds\Gandalf_Simades.ogg,db-1,1.0};} // defeat music
+//    class pimbompimbom { name=""; sound[] = {\sounds\pimbompimbom.ogg,db-1,1.0};} // defeat music
+//    class Delerium_Wisdom { name=""; sound[] = {\sounds\Delerium_Wisdom.ogg,db-1,1.0};} // defeat music
+//    class mountains { name=""; sound[] = {\sounds\mountains.ogg,db-1,1.0};} // defeat music
+//    class Gandalf_Simades { name=""; sound[] = {\sounds\Gandalf_Simades.ogg,db-1,1.0};} // defeat music
 
-    class end { name=""; sound[] = {\sounds\end.ogg,db-1,1.0};} // defeat music
-    class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
-    class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
+//    class end { name=""; sound[] = {\sounds\end.ogg,db-1,1.0};} // defeat music
+//    class whold { name=""; sound[] = {\sounds\whold.ogg,db-1,1.0};} // defeat music
+//    class arroyo { name=""; sound[] = {\sounds\arroyo.ogg,db-1,1.0};} // defeat music from Fallout-2
 
-    class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg,db+10,1.0};} // defeat sound
-    class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
-    class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0};} // defeat sound by Kevin MacLeod
-    class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0};} // defeat sound from Radio-nanny sign call
-    class sinbad_baghdad { name=""; sound[] = {\sounds\defeat\sinbad_baghdad.ogg,db+10,1.0};} // defeat sound from film "7th voyage of Sinbad "
-    class moon_stone {name = ""; sound[] = {\sounds\defeat\moon_stone.ogg, db+10, 1.0};}; // Famous Soviet singer Edvard Hill: "Moon stone" song
-    class hound_chase    {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0};}; // chase from "Hound of Baskerville" Soviet film
-    class take_five    {name = "Dave Brubeck"; sound[] = {\sounds\take_five.ogg, db+10, 1.0};}; // "Take Five" by Dave Brubeck
+//    class defeat2 { name=""; sound[] = {\sounds\defeat2.ogg,db+10,1.0};} // defeat sound
+//    class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0};} // defeat sound
+//    class the_complex { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0};} // defeat sound by Kevin MacLeod
+//    class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0};} // defeat sound from Radio-nanny sign call
+//    class sinbad_baghdad { name=""; sound[] = {\sounds\defeat\sinbad_baghdad.ogg,db+10,1.0};} // defeat sound from film "7th voyage of Sinbad "
+//    class moon_stone {name = ""; sound[] = {\sounds\defeat\moon_stone.ogg, db+10, 1.0};}; // Famous Soviet singer Edvard Hill: "Moon stone" song
+//    class hound_chase    {name = ""; sound[] = {\sounds\hound_chase.ogg, db+10, 1.0};}; // chase from "Hound of Baskerville" Soviet film
+//    class take_five    {name = "Dave Brubeck"; sound[] = {\sounds\take_five.ogg, db+10, 1.0};}; // "Take Five" by Dave Brubeck
 
 //+++++++++++++++++++++++ medieval defeats (death near castles)
+/*
     class medieval_defeat  { name=""; sound[] = {\sounds\medieval_defeat.ogg,db+10,1.0};} // medieval defeat sound
     class medieval_defeat1 { name=""; sound[] = {\sounds\medieval\bard-melody.ogg,db+10,1.0};} // medieval defeat sound
     class medieval_defeat2 { name=""; sound[] = {\sounds\medieval\dark-magic.ogg,db+10,1.0};} // medieval defeat sound
@@ -248,5 +249,6 @@ class CfgMusic {
     class submarine_sound_4   {name = ""; sound[] = {\sounds\submarine\submarine_sound_4.ogg, db+10, 1.0};};
     class submarine_sound_5   {name = ""; sound[] = {\sounds\submarine\submarine_sound_5.ogg, db+10, 1.0};};
     class submarine_sound_6   {name = ""; sound[] = {\sounds\submarine\submarine_sound_6.ogg, db+10, 1.0};};
+*/
 
 };
