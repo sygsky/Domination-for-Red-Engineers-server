@@ -910,7 +910,7 @@ SYG_MsgOnPosE = {
 	_obj = _this select 0;
 	_msg = _this select 1;
 	hint localize format["+++ SYG_MsgOnPosE: _this = %1", _this];
-	if (isNull _obj) exitWith {format[_msg, "<null 0>??? ","???","???"]};
+//	if (isNull _obj) exitWith {format[_msg, "<null 0>??? ","???","???"]};
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = locationPosition _loc;
 	if (isNil "_pos1") exitWith {format[_msg, "<null 1>??? ","???","???"]};
