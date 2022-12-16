@@ -146,7 +146,7 @@ _make_isle_grp = {
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
     _elist        = _patrol_type call SYG_generatePatrolList; // list of vehicle type names
 #ifdef __DEBUG__
-    hint localize format["+++ patrol veh list %1 created at %2", _elist, [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+    hint localize format["+++ patrol veh list %1 created at %2", _elist, [_start_point,localize "STR_SYS_POSE"] call SYG_MsgOnPosE];
 #endif
 
 // if in desert region, replace  tanks with desert camouflage
@@ -155,7 +155,7 @@ _make_isle_grp = {
             sleep 0.01;
             _elist = _elist call SYG_makeDesertAbrams;
 #ifdef __DEBUG__
-            hint localize format["+++ HP patrol (vehs %1) created with desert camouflaged Abrams at %2", count _elist, [_start_point,"%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+            hint localize format["+++ HP patrol (vehs %1) created with desert camouflaged Abrams at %2", count _elist, [_start_point,localize "STR_SYS_POSE"] call SYG_MsgOnPosE];
 #endif
         };
     };
@@ -802,7 +802,7 @@ while { true } do {
 					_units = units _igrp;
 					// initial  units, conscious units, out of vehicles alive
 					_men_info = format["{%1/%2/%3}",_units call XfGetAliveUnits, _units call SYG_getAllConsciousUnits, _units call XfGetUnitsOnFeet ];
-					_pos_msg = [_leader,"%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+					_pos_msg = [_leader,localize "STR_SYS_POSE"] call SYG_MsgOnPosE;
 				};
 				_grp_array   = argp(_igrpa,PARAM_GRP_ARRAY);
 				_enemy_near  = if ((_grp_array select 2) in [0,2]) then {""} else { if ((_grp_array select 2) == 9) then {"!"} else {"*"}};

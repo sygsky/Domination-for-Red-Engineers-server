@@ -395,7 +395,7 @@ while {true} do {
 				    count units _grp,
 				    _rejoin_num,
 //				    (getPos (leader _grp)) call SYG_nearestLocationName,
-				    [_leader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE,
+				    [_leader, localize "STR_SYS_POSE"] call SYG_MsgOnPosE,
 				    typeOf _leader
 				    ];
 #endif				
@@ -409,7 +409,7 @@ while {true} do {
 					hint localize format["+++ %5 x_groupsm.sqf: Re-join grp %1(of %2) to grp %3(of %4), leader %6, dist %7; %8",
 					    _grp, count units _grp, _joingrp, count units _joingrp, call SYG_missionTimeInfoStr,
 					    typeOf _jleader, round(_jleader distance _leader),
-					    [_jleader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE];
+					    [_jleader, localize "STR_SYS_POSE"] call SYG_MsgOnPosE];
 #endif				
 					if ( rank _leader != "PRIVATE" ) then {_leader setRank "PRIVATE"};
 					// filter only alive units to re-group

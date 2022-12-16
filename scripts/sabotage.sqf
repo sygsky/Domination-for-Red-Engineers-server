@@ -144,13 +144,13 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 	if ( _debug ) then 	{ player globalChat format["+++ sabotage.sqf: WarfareBEastAircraftFactory %1, grp (%2) leader at %3",
 	    count _no,
 	    {alive _x} count units _grp,
-	    [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
+	    [_leader, localize "STR_SYS_POSE", 50] call SYG_MsgOnPosE];
     };
 #ifdef __PRINT__
     hint localize format["+++ sabotage.sqf: WarfareBEastAircraftFactory cnt = %1, grp (%2), leader at %3",
     count _no,
     { alive _x } count units _grp,
-    [_leader, "%1 m. to %2 from %3", 50] call SYG_MsgOnPosE];
+    [_leader, localize "STR_SYS_POSE", 50] call SYG_MsgOnPosE];
 #endif
 
 	//--------------
@@ -409,7 +409,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 		if ( _debug ) then {player globalChat "--- sabotage.sqf: No alive factories, script is sleeping for 2-3 minutes"};
 #ifdef __PRINT__
 		if (alive _leader ) then {
-		    _msg1 = [_leader, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+		    _msg1 = [_leader, localize "STR_SYS_POSE"] call SYG_MsgOnPosE;
 		    if ( _msg1 != _msgPrev) then {
     			hint localize format["--- sabotage.sqf: No alive factories, <group[%2] is at %1>, script is sleeping for 2-3 minutes", _msg1, count units _grp];
     			_msgPrev = _msg1;

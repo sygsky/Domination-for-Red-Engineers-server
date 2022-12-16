@@ -260,7 +260,7 @@ while { true } do {
 		_delta = _rect select 4; // start point offset to south (+) or north (-)
 		//  _random_point  = [position trigger2, 200, 300, 30] call XfGetRanPointSquareOld;
 		_attack_pos = _rect call XfGetRanPointSquareOld; //[position FLAG_BASE,600] call XfGetRanPointCircle;
-		_msg = [_attack_pos, "%1 m. to %2 from %3"] call SYG_MsgOnPosE;
+		_msg = [_attack_pos, localize "STR_SYS_POSE"] call SYG_MsgOnPosE;
 	//	_attack_pos  = position FLAG_BASE;
 	//	_attack_pos set [ 1, (_attack_pos select 1) - 50]; // drop near player
 

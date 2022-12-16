@@ -861,12 +861,12 @@ SYG_MsgOnPos = {
 
 //
 // Creates message based on user format string with 3 params %1, %2, %3 in follow order:
-// distance_to_location, direction_to_location, location_name
+// distance_to_location, direction_to_location, location_name. E.g. "%1 m. from %2 m. to %3"
 //
 // call as: _msg_localized = [_obj|_pos, _localized_format_msg<,roundTo>] call SYG_MsgOnPosA;
 //
 SYG_MsgOnPosA = {
-	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname"];
+	private ["_obj","_msg","_roundTo","_pos1","_pos2","_loc","_dir","_dist","_locname"];
 	_obj = arg(0);
 	_msg = arg(1);
 	_roundTo = argopt(2,100);
@@ -889,6 +889,7 @@ SYG_MsgOnPosA = {
 // call as: _msg_localized = [_obj1, _obj2, _localized_format_msg<, roundTo>] call SYG_MsgOnPosA2B;
 //
 SYG_MsgOnPosA2B = {
+	private ["_obj1","_obj2","_msg","_roundTo","_dir","_dist"];
 	_obj1 = arg(0);
 	_obj2 = arg(1);
   	_msg  = arg(2);
@@ -909,7 +910,9 @@ SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname","_roundTo"];
 	_obj = _this select 0;
 	_msg = _this select 1;
-	hint localize format["+++ SYG_MsgOnPosE: _this = %1", _this];
+	if ( (typeName _obj) == "ARRAY") then {
+		hint localize format["+++ SYG_MsgOnPosE: _this = %1", _this];
+	};
 //	if (isNull _obj) exitWith {format[_msg, "<null 0>??? ","???","???"]};
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = locationPosition _loc;
@@ -932,13 +935,12 @@ SYG_MsgOnPosE = {
 // e.g. "%1 m. to %2 from %3" ("150 m. to W from Pita")
 //
 // call as: _msg_eng = [_obj <,roundTo> ] call SYG_MsgOnPosE0;
-// or     : _msg_eng = _obj call SYG_MsgOnPosE0;
+// or     : _msg_eng = _obj call SYG_MsgOnPosE0; // default roundTo == 100
 //
 SYG_MsgOnPosE0 = {
 	private ["_arr"];
 	if (typeName _this == "ARRAY") then {
-		_arr = [_this select 0];
-		_arr set[1, localize "STR_SYS_POSE"];
+		_arr = [_this select 0, localize "STR_SYS_POSE"];
 		if (count _this > 1) then { _arr set[2, _this select 1] }
 	} else {
 		_arr  = [_this, localize "STR_SYS_POSE"];

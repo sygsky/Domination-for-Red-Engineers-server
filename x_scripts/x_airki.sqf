@@ -617,7 +617,7 @@ while { true } do {
             _heli = _vehicles select 0;
             hint localize format["+++ x_airki: %1 at %2, h %3, s %4, dmg %5, dir %6",
                 typeOf _heli,
-                [_heli,"%1 m. to %2 from %3"] call SYG_MsgOnPosE,
+                [_heli,localize "STR_SYS_POSE"] call SYG_MsgOnPosE,
                 round((getPos _heli) select 2),
                 round(speed _heli),
                 damage _heli,

@@ -208,7 +208,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                         _observer_cnt,  // observers in non-save zone
                         count _observers, // observers array length
                         _own_cnt,
-                        [_enemy, "%1 m to %2 from %3", 10] call SYG_MsgOnPosE,
+                        [_enemy, localize "STR_SYS_POSE", 10] call SYG_MsgOnPosE,
                         _dist_between_pos,
                         _near_targets_cnt
                     ];

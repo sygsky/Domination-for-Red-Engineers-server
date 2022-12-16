@@ -195,7 +195,7 @@ XHandleNetStartScriptServer = {
 				case "ADD": { // add SPPM at designated position by known player
 					hint localize format["+++ SPPM ADD: pos %1 (%2), player ""%3""",
 						arg(2),
-						[arg(2),"%1 m. to %2 from %3",10] call SYG_MsgOnPosE,
+						[arg(2),localize "STR_SYS_POSE",10] call SYG_MsgOnPosE,
 						arg(3)
 						];
 					private [ "_msg_arr" ];

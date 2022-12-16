@@ -166,7 +166,7 @@ while {!_offz_at_base && !_is_dead} do {
 			_rescued = false;
 			sleep 0.01;
 			// ""Officer lost by %1 at pos %2""
-			["msg_to_user", "", [ ["STR_SM_042_1", _leader_name, [_officer, "%1 m. to %2 from %3"] call SYG_MsgOnPosE]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "Officer is lost (%1), lost pos is %2"
+			["msg_to_user", "", [ ["STR_SM_042_1", _leader_name, [_officer, localize "STR_SYS_POSE"] call SYG_MsgOnPosE]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "Officer is lost (%1), lost pos is %2"
 		};
     };
 #endif
