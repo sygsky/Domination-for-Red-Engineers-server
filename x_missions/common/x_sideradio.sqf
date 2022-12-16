@@ -66,7 +66,7 @@ if ( _mission && ( !alive d_radar ) ) exitWith {
 		side_mission_resolved = true;
 	};
 };
-hint localize format["+++ x_sideradio.sqf: found alive d_radar, cnt = %1, continue...", _cnt];
+hint localize format["+++ x_sideradio.sqf: found alive d_radar in %1 seconds after the destruction of the previous one, continue...", _cnt * 5];
 
 // radar is alive now, store current object and check only it
 _radar = d_radar;
@@ -221,10 +221,8 @@ if ((sideradio_status ==2) && (alive _radar) && (alive _truck) ) then {
 	_msg = ["STR_RADAR_TRUCK_NOT_NEEDED"]; // "Mission accomplished. The truck should be hidden in a safe place"
 } else {
 	_msg = ["STR_RADAR_FAILURE","",""]; // "Something went wrong and the GRU radio relay could not be restored. %1%2"
-	if (!alive _radar) then { _msg set [1,"STR_RADAR_MAST_DEAD"]; }; // "Radio mast destroyed"
-	if (!alive _truck) then {
-		_msg set [2, "STR_RADAR_TRUCK_DEAD"]; // "Truck was killed"
-	}; // "Radio mast destroyed"
+	if (!alive _radar) then { _msg set [count _msg,"STR_RADAR_MAST_DEAD"];  }; // "Radio mast destroyed"
+	if (!alive _truck) then { _msg set [count _msg, "STR_RADAR_TRUCK_DEAD"];}; // "Truck was killed"
 	sideradio_status = 0;
 	publicVariable "sideradio_status";
 };
