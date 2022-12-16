@@ -74,7 +74,7 @@ sleep 2;
 
 while { true } do {
 	if (!alive d_radar) then {
-		// say radio and print message in the same time
+		// say radio and print message in the same time: "The GRU requires a radio relay mast to work!"
 		["say_radio", call SYG_randomRadioNoise, ["msg_to_user", "",  [["STR_RADAR_INFO"]], 0, 15, false ]] call XSendNetStartScriptClientAll;
 		hint localize "+++ radio_service.sqf: radar killed";
 	};
@@ -84,9 +84,7 @@ while { true } do {
 		sleep 30;
 		if ( !( (alive d_radar) && (alive d_radar_truck) ) ) then {call _create_items };
 	};
-	hint localize format["+++ radio_service.sqf: continue with status == %1", sideradio_status];
-
-	hint localize format["+++ radio_service.sqf: wait while status == 2 (%1)", sideradio_status];
+	hint localize format["+++ radio_service.sqf: wait while status == 2 (now %1)", sideradio_status];
 	while {sideradio_status == 2} do { sleep 60; }; // while radio is workable, do nothing
 	hint localize format["+++ radio_service.sqf: continue with status == %1", sideradio_status];
 };
