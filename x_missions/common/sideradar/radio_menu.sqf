@@ -184,7 +184,7 @@ if (true) then {
 			_str = if (_bad) then {"STR_RADAR_NOT_READY"} else {"STR_RADAR_READY"};
 			_txt = format[localize _str, localize _str1, localize _str2,
 				format[localize _str3, round(_slope*100)],
-				format[localize _str4, INSTALL_MIN_ALTITUDE, round _ht]
+				format[localize _str4, INSTALL_MIN_ALTITUDE, floor _ht]
 			];
 			_send_was_at_sm = (_veh distance RADAR_INSTALL_POINT) < INSTALL_RADIUS;
 		};
@@ -228,7 +228,7 @@ if (true) then {
 			// measure ASL height of the mast;
 			_asl = _mast_pos call SYG_getLandASL;
 			if ( _asl < INSTALL_MIN_ALTITUDE ) exitWith {
-				_txt = format[localize "STR_RADAR_MAST_TOO_LOW", INSTALL_MIN_ALTITUDE, ceil _asl];
+				_txt = format[localize "STR_RADAR_MAST_TOO_LOW", INSTALL_MIN_ALTITUDE, floor _asl];
 				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
 
