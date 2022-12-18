@@ -73,7 +73,8 @@ if (_base) then {
 };
 d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\radio_killed.sqf" } ]; // remove killed radar after some delay
 ["say_sound", d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClient;
-// processInitCommands; // called in radio_service.sqf
 
-_msg = [d_radar, 50] call SYG_MsgOnPosE0;
+_msg = [d_radar, 50] call SYG_MsgOnPos0;
+[ "msg_to_user", "",  [ ["STR_RADAR_MAST_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the blue truck in the '%1' area"
+
 hint localize format["+++ createRelayMast: radar created at ""%1"" (%2)", _name, _msg]
