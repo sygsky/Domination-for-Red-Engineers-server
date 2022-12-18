@@ -807,7 +807,12 @@ XHandleNetStartScriptClient = {
 					};
 		    	};
 				// it must be "LIST" sub-command
-				_arr = _this select 2
+				_arr = _this select 2; // remember said sounds for AI men if possible
+				{	// _x = [_object, _sound, sleep time]
+					if ((_x select 0) isKindOf "CAManBase") then {
+						(_x select 0) setVariable ["killer_sound", _x select 1];
+					};
+				} forEach _arr;
 			};
 //			if (typeName _arr != "ARRAY") then { hint localize format["--- say_sound: array expected, found ""%1"" (%2)", _arr, typeName _arr] };
 			{

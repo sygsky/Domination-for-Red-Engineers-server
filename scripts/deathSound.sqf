@@ -52,27 +52,20 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 	_men =  [_killer]  + (_men - [_unit, _killer]); // killer shoul be first to say
 
 	{
-		if ( (count _sounds) >= 3 ) exitWith {}; // not more than 3 men can exclamate now
+		if ( (count _sounds) >= 4 ) exitWith {}; // not more than 4 men can exclamate now
 #ifdef __ACE__
 		if ( (_x  call SYG_ACEUnitConscious) && ( ( side _killer) == (side _x) )) then {
 #else
 		if ( (canStand _x) && ( ( side _killer) == (side _x) )) then {
 #endif
 			_sound = _x getVariable "killer_sound"; // has already some sound sayed?
-			if (!isNil "_sound") then {
+			if (isNil "_sound") then { // create new war sound now as it was not sayed by this AI before
+				_sound = call SYG_getLaughterSound; // prepare new war cry sound 10% of times
 				while { _sound in _sounds } do { _sound = call SYG_getLaughterSound;};
-				_sounds set [count _sounds, _sound];
-				_x setVariable ["killer_sound", _sound];
-				_arr set [count _arr, [_x, _sound, random 1.5]]; // next exclamation cry added
-			} else {
-				if ( (random 3) <= 2 ) then {
-					_sound = call SYG_getLaughterSound; // prepare new war cry sound 66% of times
-					while { _sound in _sounds } do { _sound = call SYG_getLaughterSound;};
-					_sounds set [count _sounds, _sound];
-					_x setVariable ["killer_sound", _sound];
-					_arr set [count _arr, [_x, _sound, random 1.5]];
-				};
 			};
+			_sounds set [count _sounds, _sound];
+			_x setVariable ["killer_sound", _sound];
+			_arr set [count _arr, [_x, _sound, random 1.5]];
 		};
 	} forEach _men;
 
