@@ -956,7 +956,7 @@ player cameraEffect ["terminate","back"];
 camDestroy _camera;
 
 #ifdef __ACE__
-// TODO: replace weapon with drop pack to restore it after base visit
+// replace weapon with drop pack to restore it after base visit
 SYG_initialEquipmentStr = player call SYG_getPlayerEquipAsStr; // store original equipment in string
 hint localize "+++ x_into: replace server equipment with para-jump set";
 // [["ACE_RPG7","ACE_RPK47","Binocular","ACE_ParachuteRoundPack"],["ACE_Bandage(3)","ACE_Morphine(5)","ACE_75Rnd_762x39_BT_AK(5)","ACE_RPG7_PG7VL"],"",[]]
