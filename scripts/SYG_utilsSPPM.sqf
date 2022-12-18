@@ -98,7 +98,7 @@ SYG_getAllSPPMVehicles = {
 		if ( !((_arr select _i) call SYG_isEastVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only eastern vehicles can be SPPMed!
 #endif
 	};
-	_arr call SYG_clearArrayB;
+	_arr call SYG_clearArrayB; // remove all "RM_ME" items from the list
 	// now make all SPPM vehicles to be captured ones
 	if (count _arr > 0) then {
 		private ["_txt"];

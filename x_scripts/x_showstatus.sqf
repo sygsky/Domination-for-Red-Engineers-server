@@ -190,7 +190,8 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			if (!alive d_radar) then {
 				_s = _s + "\n" + (localize "STR_RADAR_FAILED0")  // "No relay must found - no help from GRU!"
 			} else {
-				if ( ([0,0,1] distance (vectorUp d_radar)) > 0.1 ) then { _s = _s + "\n" + (localize "STR_RADAR_INIT") }; // It is first touch of the mast: "Look for a replacement radio mast in one of the settlements closest to the base"
+				// It is first touch of the mast: "Look for a replacement radio mast in one of the settlements closest to the base"
+				if ( ([0,0,1] distance (vectorUp d_radar)) > 0.1 ) then { _s = _s + "\n" + (localize "STR_RADAR_INIT") };
 			};
 			if (!alive d_radar_truck) then {
 				_s = _s + "\n" + (localize "STR_RADAR_TRUCK_WAIT")  // "We have to look for a new truck. But where?"
@@ -198,7 +199,8 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 				if (locked d_radar_truck) then {
 //					_name = text(d_radar_truck call SYG_nearestLocation);
 //					_s = _s + "\n" + (format[localize "STR_RADAR_TRUCK_INFO", _name]); // "Look for the blue truck in the '%1' area"
-					_s = _s + "\n" + localize "STR_RADAR_INIT2"; // "Look for a blue truck to transport relay mast in one of the settlements near the base"
+					// "Look for a blue truck to transport relay mast in one of the settlements near the base"
+					_s = _s + "\n" + localize "STR_RADAR_INIT2";
 				};
 			};
 			if (sideradio_status == 1) then { _s = _s + "\n" + (localize "STR_RADAR_TASK1") } else { // "Return the truck to the GRU PC!"
