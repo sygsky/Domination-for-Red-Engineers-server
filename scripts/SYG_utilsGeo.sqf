@@ -860,6 +860,25 @@ SYG_MsgOnPos = {
 };
 
 //
+// Creates localized message about object distance and direction from the nearest location,
+// e.g. "%1 m. to %2 from %3" ("150 m. to W from Pita")
+//
+// call as: _msg = [_obj <,roundTo> ] call SYG_MsgOnPos0;
+// or     : _msg = _obj call SYG_MsgOnPos0; // default roundTo == 100
+//
+SYG_MsgOnPos0 = {
+	private ["_arr"];
+	if (typeName _this == "ARRAY") then {
+		_arr = [_this select 0, localize "STR_SYS_POS"];
+		if (count _this > 1) then { _arr set[2, _this select 1] }
+	} else {
+		_arr  = [_this, localize "STR_SYS_POS"];
+	};
+	_arr call SYG_MsgOnPosA
+};
+
+
+//
 // Creates message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location, direction_to_location, location_name. E.g. "%1 m. from %2 m. to %3"
 //
@@ -913,7 +932,7 @@ SYG_MsgOnPosE = {
 	if ( (typeName _obj) == "ARRAY") then {
 		hint localize format["+++ SYG_MsgOnPosE: _this = %1", _this];
 	};
-//	if (isNull _obj) exitWith {format[_msg, "<null 0>??? ","???","???"]};
+	if (isNil "_obj") exitWith {format[_msg, "<null 0>??? ","???","???"]};
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = locationPosition _loc;
 	if (isNil "_pos1") exitWith {format[_msg, "<null 1>??? ","???","???"]};
@@ -947,7 +966,6 @@ SYG_MsgOnPosE0 = {
 	};
 	_arr call SYG_MsgOnPosE
 };
-
 
 /*
  * Approximated distance to the base by feet in meters approximatelly
