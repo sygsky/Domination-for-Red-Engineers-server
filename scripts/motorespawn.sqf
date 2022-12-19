@@ -103,7 +103,7 @@ while {true} do {
 	{
 		_moto    = _x select MOTO_ITSELF; //
 		_timeout = _x select MOTO_TIMEOUT;
-		_posMain     = _x select MOTO_ORIG_POS; // base pos (where it must be!)
+		_posMain = _x select MOTO_ORIG_POS; // base pos (where it must be!)
 		_id      = _x select MOTO_ID;
 
 		_posReal = getPos _moto; // real pos
@@ -171,15 +171,15 @@ while {true} do {
 					_x set[MOTO_ITSELF, _moto];
 					if ( !(_moto hasWeapon "CarHorn")) then {
 						_moto addWeapon "CarHorn"; // add horn for motorcycle
-						hint localize format["+++ moto%1(%2) restored, CarHorn added", _id + 1, _type];
-					} else {hint localize format["+++ moto%1(%2) restored, has CarHorn", _id + 1, _type]};
+						hint localize format["+++ moto%1(%2) restored, CarHorn added", _id, _type];
+					} else {hint localize format["+++ moto%1(%2) restored, has CarHorn", _id, _type]};
 
 #ifdef __DEBUG__
-					hint localize format["+++ motorespawn.sqf: moto%1(%2) recreated after breakdown", _id + 1, _type];
+					hint localize format["+++ motorespawn.sqf: moto%1(%2) recreated after breakdown", _id, _type];
 #endif
 				} else {	// use current vehicle item
 #ifdef __DEBUG__
-					hint localize format[ "+++ motorespawn.sqf: alive moto%1(%2)%3 returned", _id + 1, typeOf _moto, if (local _moto) then {" local"} else {" remote"} ];
+					hint localize format[ "+++ motorespawn.sqf: alive moto%1(%2)%3 returned", _id, typeOf _moto, if (local _moto) then {" local"} else {" remote"} ];
 #endif
 					_moto setDammage 0.0;
 					_moto setFuel 1.0;
