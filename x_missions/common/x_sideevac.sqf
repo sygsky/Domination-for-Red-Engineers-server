@@ -108,6 +108,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 	};
 */
 	if ( ({alive _x} count _pilots_arr) == 0 ) exitWith {
+		hint localize "--- x_sideevac.sqf: All pilots are dead!";
 		_is_dead = true;
 	};
 
@@ -228,7 +229,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 		        hint localize "--- x_sideevac.sqf: All escaped pilots are dead";
 		    } else {
 			    _cnt = {alive _x} count _pilots_arr;
-		        hint localize format[ "--- x_sideevac.sqf: One of escaped pilots (alive cnt %1) pos %2", _cnt ,[_pilot, "at %1 m. to %2 from %3",10] call SYG_MsgOnPosE ];
+		        hint localize format[ "--- x_sideevac.sqf: One of escaped pilots (alive cnt %1) pos %2", _cnt ,[_pilot, localize "STR_SYS_POSE",10] call SYG_MsgOnPosE ];
 		    };
     	};
     };
@@ -279,7 +280,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 				sleep 1.012;
 			};
 			_unit_array = nil;
-	        hint localize "+++ x_sideevac.sqf: enemy created  near helicrash place";
+	        hint localize "+++ x_sideevac.sqf: enemy created near helicrash place";
 		};
 	};
 };
