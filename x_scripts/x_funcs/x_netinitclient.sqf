@@ -675,6 +675,7 @@ XHandleNetStartScriptClient = {
 				}
 			);
 			_msg call XfHQChat;
+			playSound (["countdown_alarm","countdown","countdown10"] select (_this select 1)); // add sounds to alarm events to attract the player's attention
 		};
 
 		case "MHQ_respawned": {
