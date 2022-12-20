@@ -9,8 +9,6 @@ if (!X_Client) exitWith {};
 #include "x_macros.sqf"
 
 _reason = _this select 1;
-_sound  = if (count _this > 2) then {_this select 2} else {""};
-
 switch (_reason) do {
 	case "start" : {
 		_current_target_name = call SYG_getTargetTownName; // __TargetInfo
@@ -22,16 +20,16 @@ switch (_reason) do {
 		"counterattack" call SYG_receiveRadio;
 		sleep 5;
 
-    	// Play relevant music.
-    	// Show music title if possible
-    	if (_sound != "") then {
+    	// Play relevant music if any set (_this select 2) and show music title if possible
+    	if ((count _this) > 2) then { // sound is present
+    		_sound = _this select 2;
 			if ((typeName _sound) == "ARRAY") then { // Arma internal soundtrack
 				_str = localize format["STR_%1", _sound select 0];
 			} else {
 				_str = localize format["STR_%1", _sound]
 			};
 			if ( _str != "") then { // title defined and found
-				["say_sound","PLAY",_sound,0,30] call XHandleNetStartScriptClient; // show music title on playing
+				["say_sound","PLAY",_sound,0,30] call XHandleNetStartScriptClient; // show known music title on this client computer
 			} else {
 				_sound call SYG_playRandomTrack;
 			};
