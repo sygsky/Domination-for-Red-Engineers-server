@@ -25,7 +25,8 @@ if ( (random 10) <= 5 ) then { // find position in a house
 	_list  = (_this select 0) nearObjects ["House", _this select 1];
 	if ( count _list == 0 ) exitWith { hint localize format["--- SYG_sabotage_stash.sqf: no houses in radius %1 found, find pos in empty areas", _this select 1] };
 	_cnt = 0;
-	while { _cnt == 0 } do {
+	_steps = 20;
+	while { (_cnt < 2) && (_steps > 0) } do { // try only 20 random houses with 2 or more stand positions
 		_house = _list call XfRandomArrayVal; // get random house
 		_cnt   = _house call SYG_housePosCount; // count positions in this house
 		if ( _cnt  > 1) then { // use houses with more than 1 positions
@@ -34,8 +35,10 @@ if ( (random 10) <= 5 ) then { // find position in a house
 				while { _ind in _no_list } do { _ind = floor ( random _cnt ); };
 			};
 			_pos   = _house buildingPos ( _ind ); // get random position in the house to set the stash
-			if ( ( _pos select 2) < 0 ) then { _cnt = 0 }; // avoid negative Z values in position
+			if ( ( _pos select 2) < 0 ) then { _cnt = 0 }; // avoid negative Z values in position. Whether such houses exist at all?
 		};
+		_steps = _steps - 1;
+		sleep 0.04;
 	};
 	_spec = "CAN_COLLIDE";
 	// small boxes for houses
@@ -60,6 +63,7 @@ if ( (random 10) <= 5 ) then { // find position in a house
 };
 
 if ( count _pos == 0 ) then { // find position in the town area
+    _house = objNull; // No house used so put box in town area
 	_spec = "NONE";
 	_pos = [(_this select 0), (_this select 1)] call XfGetRanPointCircle;
 	// big boxes for the open areas
