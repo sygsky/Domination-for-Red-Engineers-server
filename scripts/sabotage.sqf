@@ -406,16 +406,16 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 			sleep random (DELAY_BETWEEN_BOMBS + DELAY_BETWEEN_BOMBS); // wait before send other man to bomb place
 		}; // while { ( ((position _obj) select 2) > -10.0) and (!(isNull _grp)) and  _continue }
 	} /* if ( _obj_pos >= 0 ) then */ else {
-		if ( _debug ) then {player globalChat "--- sabotage.sqf: No alive factories, script is sleeping for 2-3 minutes"};
+		if ( _debug ) then {player globalChat "*** sabotage.sqf: No alive factories, script is sleeping for 2-3 minutes"};
 #ifdef __PRINT__
 		if (alive _leader ) then {
 		    _msg1 = [_leader, localize "STR_SYS_POSE"] call SYG_MsgOnPosE;
 		    if ( _msg1 != _msgPrev) then {
-    			hint localize format["--- sabotage.sqf: No alive factories, <group[%2] is at %1>, script is sleeping for 2-3 minutes", _msg1, count units _grp];
+    			hint localize format["*** sabotage.sqf: No alive factories, <group[%2] is at %1>, script is sleeping for 2-3 minutes", _msg1, count units _grp];
     			_msgPrev = _msg1;
 		    };
 		} else {
-			hint localize format["--- sabotage.sqf: No alive factories, <group(%1) leader is absent>, script is sleeping for 2-3 minutes",count units _grp];
+			hint localize format["(*** sabotage.sqf: No alive factories, <group(%1) leader is absent>, script is sleeping for 2-3 minutes",count units _grp];
 		};
 #endif	
 	};

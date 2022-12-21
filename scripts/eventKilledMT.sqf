@@ -125,7 +125,7 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
     _restored = true;
 };
 if (_restored) exitWith {}; // continue with the same assignments
-hint localize "--- MTTarget: killed finalization -> destroyed by human or unrecognized means -> follow  the path of Xeno";
+hint localize "+++ MTTarget: killed finalization -> destroyed by human or unrecognized means -> follow  the path of Xeno";
 // 2. Killed by man or by unknown cause, allow continue in natural way
 mt_spotted = false;
 mt_radio_down = true;
