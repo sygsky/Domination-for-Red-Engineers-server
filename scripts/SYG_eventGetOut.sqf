@@ -442,7 +442,7 @@ SYG_getOutEvent = {
         (round((time - _start_time) *10))/10,
         _start_dmg,
         count _tlist,
-        if (count _rem_roles > 0) then {format[" vacant %1", _rem_roles]} else {""}, // 6th param (vacant roles)
+        if (count _rem_roles > 0) then {format[", vacant %1", _rem_roles]} else {""}, // 6th param (vacant roles)
         count crew _veh,
         {alive _x} count crew _veh,
         SYG_TrueGetOutsCnt,

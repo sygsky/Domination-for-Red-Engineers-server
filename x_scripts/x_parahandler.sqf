@@ -22,7 +22,7 @@ _end_pnt_arr    = [ d_para_end_positions select 0, d_para_end_positions select 1
 #ifdef __TOWN_WEAK_DEFENCE__
 _sleep =  3600; // sleep 1 hour if defence is weak
 #else
-_sleep = 333.325;
+_sleep = 300 + (random 120);
 #endif
 
 //+++ #513:
@@ -30,7 +30,7 @@ _tmp = "<>";
 if (typeName _this == "ARRAY") then {
 	{
 		if (true) exitWith {
-			_tmp = [ _x, "at %1 m. to %2 from %3",50 ] call SYG_MsgOnPosE;
+			_tmp = [ _x, 50 ] call SYG_MsgOnPosE0;
 			_tmp1 = _this call SYG_vehToType;
 			_tmp = format[ "%1 => %2", _tmp , _tmp1 ];
 		};
