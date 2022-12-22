@@ -297,7 +297,7 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 					terminate _bombScript;
 					sleep 1;
 #ifdef __PRINT__
-					hint localize format["--- sabotage.sqf: DropScrip terminated after %1 seconds waiting, shell_unit dist %2", round(_timeout - _time), round(_shell_unit distance  _obj)];
+					hint localize format["*** sabotage.sqf: DropScrip terminated after %1 seconds waiting, shell_unit dist %2", round(_timeout - _time), round(_shell_unit distance  _obj)];
 #endif	
 				};
                 if ( damage _obj > _obj_prev_dmg ) then {
@@ -397,9 +397,9 @@ while { (({ (alive _x) && (canStand _x) } count units _grp) > 0) && _continue } 
 				}; // if ( alive _shell_unit) then
 			} /* if ( !(isNull _shell_unit))  then */ else  { // no unit with bomb found, so exit now
 			    // TODO: try to find bomb on dead bodies or somewhere else (MHQ, ammotrack, ammo boxes, rucksack[s] etc)
-				if (_debug ) then { player globalChat format["--- sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp]; };
+				if (_debug ) then { player globalChat format["*** sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp]; };
 #ifdef __PRINT__
-				hint localize format["--- sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp];
+				hint localize format["((( sabotage.sqf: Group (%1 men) has no more bombs, exiting", count units _grp];
 #endif	
 				_continue = false; // exit as no more bombs/men found
 			};

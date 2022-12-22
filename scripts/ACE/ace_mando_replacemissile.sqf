@@ -259,8 +259,8 @@ if ( local _shooter ) then {
     _ind = _rocketNamesArr find _type;
     if (_ind >= 0) then {
         _replaced = true;
-        _dropped = false;
-        _ra = _rocketParamsArr select _ind;
+        _dropped  = false;
+        _ra       = _rocketParamsArr select _ind;
         switch (_ind) do {
             case 0;
             case 1: {
