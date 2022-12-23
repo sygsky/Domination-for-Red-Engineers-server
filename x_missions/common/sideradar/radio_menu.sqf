@@ -133,7 +133,7 @@ if (true) then {
 			d_radar setVectorUp [0,0,1];
 			sleep 0.2;
 			hint localize format["+++ LOAD: mast pos %1, vUp %2", getPosASL d_radar, vectorUp d_radar];
-			_send_was_at_sm = (_veh distance RADAR_INSTALL_POINT) < INSTALL_RADIUS;
+			_send_was_at_sm = (_veh distance RADAR_ZONE_CENTER) < INSTALL_RADIUS;
 		};
 
 		case "UNLOAD": { // truck command
@@ -159,7 +159,7 @@ if (true) then {
 			d_radar setVectorUp [0,0,1];
 			["say_sound", d_radar, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
 			hint localize format["+++ UNLOAD: mast pos %1, vUp %2", getPosASL d_radar, vectorUp d_radar];
-			_send_was_at_sm = (_veh distance RADAR_INSTALL_POINT) < INSTALL_RADIUS;
+			_send_was_at_sm = (_veh distance RADAR_ZONE_CENTER) < INSTALL_RADIUS;
 		};
 
 		// checks the radio-mast position
@@ -186,7 +186,7 @@ if (true) then {
 				format[localize _str3, round(_slope*100)],
 				format[localize _str4, INSTALL_MIN_ALTITUDE, floor _ht]
 			];
-			_send_was_at_sm = (_veh distance RADAR_INSTALL_POINT) < INSTALL_RADIUS;
+			_send_was_at_sm = (_veh distance RADAR_ZONE_CENTER) < INSTALL_RADIUS;
 		};
 		// Install radio mast on terrain behind truck current position to truck.
 		// Mast must be standing on the ground to be able to execute this command
@@ -232,7 +232,7 @@ if (true) then {
 				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
 
-			if ( ([d_radar, RADAR_INSTALL_POINT] call SYG_distance2D) > INSTALL_RADIUS) exitWith {
+			if ( ([d_radar, RADAR_ZONE_CENTER] call SYG_distance2D) > INSTALL_RADIUS) exitWith {
 				_txt = localize "STR_RADAR_BAD_SIGNAL";
 				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
 			};
@@ -243,7 +243,7 @@ if (true) then {
 			publicVariable "sideradio_status";
 			// play random radio signal (including from "Mayak" radiostation etc)
 			[ "say_radio", call SYG_randomRadio, [ "msg_to_user","", [["STR_RADAR_TRUCK_MAST_INSTALLED"]] ] ] call XSendNetStartScriptClientAll;
-			_send_was_at_sm = (_veh distance RADAR_INSTALL_POINT) < INSTALL_RADIUS;
+			_send_was_at_sm = (_veh distance RADAR_ZONE_CENTER) < INSTALL_RADIUS;
 		};
 		default {hint localize format["--- radio_menu.sqf: Expected command '%1' not parsed, must be LOAD, UNLOAD, INSTALL", _cmd]};
 	};
@@ -252,7 +252,7 @@ if (true) then {
 if (_txt != "") then { _txt call XfGlobalChat };
 
 if (_send_was_at_sm) then {
-	_plist = [RADAR_INSTALL_POINT, INSTALL_RADIUS] call SYG_findNearestPlayers;
+	_plist = [RADAR_ZONE_CENTER, INSTALL_RADIUS] call SYG_findNearestPlayers;
 	if (count _plist > 0) then {
 		["was_at_sm", _plist, "good_news"] call XSendNetStartScriptClientAll;
 	};

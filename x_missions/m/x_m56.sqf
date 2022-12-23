@@ -3,7 +3,7 @@
 #include "x_macros.sqf"
 #include "sideradio_vars.sqf"
 
-x_sm_pos = [RADAR_INSTALL_POINT]; // index: 52,   Shot down chopper
+x_sm_pos = [RADAR_INSTALL_POINT]; // index: 56,   Radiomast restoration
 x_sm_type = "undefined"; // "normal", "convoy"
 
 #ifdef __SMMISSIONS_MARKER__
@@ -13,7 +13,7 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {x_sm_pos select 0}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = format[localize "STR_SM_56", localize "STR_RADAR_TRUCK_FIRM_TITLE", RADAR_INSTALL_POINT call SYG_nearestLocationName, INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
+	current_mission_text = format[localize "STR_SM_56", localize "STR_RADAR_TRUCK_FIRM_TITLE", RADAR_ZONE_CENTER call SYG_nearestLocationName, INSTALL_MIN_ALTITUDE]; // "Re-establish communication with the GRU center..."
 	current_mission_resolved_text = localize "STR_SM_056"; // "Mission accomplished, mast in place and communication operational!"
 };
 
