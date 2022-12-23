@@ -267,7 +267,7 @@ SYG_roundTo = {
 SYG_handleWP = {
 //	if (isServer) exitWith {"--- SYG_handleWP: called on server, exit"};
 	if (!X_Client) exitWith { hint localize "--- SYG_handleWP: called not on client, exit" };
-	private ["_cmd","_wpa","_wp","_grp","_str"];
+	private ["_cmd","_wpa","_wp","_grp","_str","_last"];
 	_cmd = _this;
 	hint localize format["+++ SYG_handleWP: cmd = ""%1""", _cmd];
 	if (typeName _cmd == "ARRAY") then {
@@ -308,8 +308,8 @@ SYG_handleWP = {
 		_grp = group player;
 		_wpa = waypoints _grp;
 //		hint localize format["+++ SYG_handleWP: SET, wpa = %1", _wpa];
-		_cnt = count _wpa;
-		for "_i" from 0 to _cnt - 1 do {
+		_last = count _wpa - 1;
+		for "_i" from 0 to _last do {
 			deleteWaypoint (_wpa select _i);
 		};
 		_wp = _grp addWaypoint [_pos, 0];
@@ -318,7 +318,7 @@ SYG_handleWP = {
 		_wp setWaypointType "MOVE";
 		_grp setCurrentWaypoint _wp;
 		if (count _cmd > 2) then {
-		_wp setWaypointDescription (_cmd select 2);
+			_wp setWaypointDescription (_cmd select 2);
 		}
 	};
 };
