@@ -283,10 +283,10 @@ if (isServer) then {
     // ranked_sm_array = [ 5, [3,44,2,53] ];
     _ind56 = side_missions_random find 56;
 	if (_ind56 >= 0) then { // set it 2nd-3rd SM in the sequence
-		if ((_ind56 == 0) || (_ind56 > 2) ) then { // move 56th SM to the 2..3 position in array (so index will be  1..2)
-			_ind = floor(random 2) + 1; // 1..2 = new index for 56th SM
+		if ((_ind56 == 0) || (_ind56 > 9) ) then { // move 56th SM to the 2..3 position in array (so index will be  1..2)
+			_ind = floor(random 9) + 1; // 1..9 = new index for 56th SM
 			side_missions_random set[_ind56, side_missions_random select _ind]; // move SM from new 56th SM index to the current 56th SM index
-			side_missions_random set[_ind, 56]; // put 56th SM to the 1..2 index in array
+			side_missions_random set[_ind, 56]; // put 56th SM to the 1..9 index in array
 		    hint localize format["+++ SM array: 56th SM (radiomast installation) exchanged index from %1 to the %2",_ind56, _ind];
 		} else { hint localize format["+++ SM array: 56th SM (radiomast installation) is at index %1",_ind56, _ind]; };
 	} else { hint localize "+++ SM array: 56th SM (radiomast installation) not used in the mission" };
