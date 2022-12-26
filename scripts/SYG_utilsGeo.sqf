@@ -929,9 +929,9 @@ SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname","_roundTo"];
 	_obj = _this select 0;
 	_msg = _this select 1;
-	if ( (typeName _obj) == "ARRAY") then {
-		hint localize format["+++ SYG_MsgOnPosE: _this = %1", _this];
-	};
+//	if ( (typeName _obj) == "ARRAY") then {
+//		hint localize format["+++ SYG_MsgOnPosE: _this = %1", _this];
+//	};
 	if (isNil "_obj") exitWith {format[_msg, "<null 0>??? ","???","???"]};
 	_loc = _obj call SYG_nearestLocation;
 	_pos1 = locationPosition _loc;
