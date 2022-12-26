@@ -934,7 +934,7 @@ XHandleNetStartScriptClient = {
         };
 
 #ifdef __DOSAAF_BONUS__
-		// Handle with DOSAAF vehicles events (ADD to monitoring process with dynamical re-draw , REGister as RECOVERABLE, INI as DOSAAF not detected vehicle
+		// Handle with DOSAAF vehicles events (ADD to monitoring process with dynamical re-draw , REGister as RECOVERABLE, INI as DOSAAF not inspected vehicle
 		case "bonus" : { // [ "bonus", _sub_command, _player_name, _vehicle ]
 			hint localize format["+++ bonus: _this %1", _this ];
 			private ["_veh"];
@@ -1010,7 +1010,7 @@ XHandleNetStartScriptClient = {
 //                    [ "msg_to_user", ["-", name player], [["'%1' зарегистрировал %2", _this select 2, typeOf _veh]], 0, 0, false, "good_news" ] call XHandleNetStartScriptClient;
 
 				};
-				// Params: ["bonus","INI",[_veh1...,_vehN]] or ["bonus","INI", _veh]
+				// Params: ["bonus","INI",[_veh1...,_vehN] | _veh <,_msg_arr>]
 				case "INI": { // new DOSAAF vehicles are added to the unknown DOSAAF vehicles list
 					// first clean main array
 					_veh = _this select 2;
@@ -1027,7 +1027,9 @@ XHandleNetStartScriptClient = {
 							hint localize format[ "+++ bonus.INI: setVariable ""INSPECT_ACTION_ID"" (#%1) => %2!!!", _id, typeOf _x ];
 						} else{ hint localize format[ "+++ bonus.INI on client: inspect action #%1 for %2 already exists, new one not added", _id, typeOf _x ] };
                     } forEach _veh;
-                    // TODO: create messages about vehicles added on the island, move here the code from the file "scripts\bonus\assignAsBonus.sqf"
+                    // force all clients to refresh DOSAAF vehs map on airbase
+                    [] execVM "scripts\bonus\make_map.sqf"; // update DOSAAF map with new vehicle
+                    if( count _this > 3) then {(_this select 3) call SYG_msgToUserParser}; // print message about it to the player
 				};
 			};
 			if ((_this select 1) in ["ADD","REG"]) then {

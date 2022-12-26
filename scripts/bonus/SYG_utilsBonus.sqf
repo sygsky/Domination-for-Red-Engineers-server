@@ -190,30 +190,14 @@ SYG_scanVehicles = {
 };
 
 //
-// Returns all alive non registered DOSAAF vehicles
+// Returns all alive inspected non registered (so markered) DOSAAF vehicles
 // 	_id = _x getVariable "INSPECT_ACTION_ID"; // check if vehicle is bonus with "Inspect" command on it
 SYG_scanDOSAAFVehicles = {
-	private ["_x","_var", "_arr","_cnt"];
-	_arr = [];
-	_cnt = 0;
-	{
-		if (alive _x) then {
-			_var = _x getVariable "RECOVERABLE";//  If inspected follow code is executed: "this setVariable [""RECOVERABLE"", false]"
-			if ( !( isNil "_var" ) ) then {
-				if (!_var) then {
-					_arr set [count _arr, _x]
-				};
-			};
-		};
-		_cnt = _cnt + 1;
-		if ((_cnt mod 20) == 0) then {sleep 0.01};
-	} forEach vehicles;
-	hint localize format["+++ SYG_scanDOSAAFVehicles whole vehicles counter = %1, DOSAAF found %2", _cnt, count _arr];
-	_arr
+	(call SYG_scanDOSAAFVehiclesAll)select 0; // return only non-inspected vehicles array
 };
 
 //
-// Returns all alive non registered DOSAAF vehicles
+// Returns all alive non registered DOSAAF (not inspected true DOSAAF and inspected) vehicles
 // Call as follow: _ret_arr = call SYG_scanDOSAAFVehiclesAll;
 // where _ret_arr = [_dosaaf_arr,_marked_arr];
 SYG_scanDOSAAFVehiclesAll = {
@@ -223,7 +207,7 @@ SYG_scanDOSAAFVehiclesAll = {
 	_cnt = 0;
 	{
 		if ( alive _x ) then {
-			_var = _x getVariable "DOSAAF";//  If inspected follow code is executed: "this setVariable [""DOSAAF"", false]"
+			_var = _x getVariable "DOSAAF";//  If not inspected follow code is executed: "this setVariable [""DOSAAF"", ""]"
 			if ( !( isNil "_var" ) ) then {
 				_DOSAAF_arr set [ count _DOSAAF_arr, _x ]
 			};

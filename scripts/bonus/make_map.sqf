@@ -1,10 +1,11 @@
 /*
-	scripts\bonus\make_map.sqf
+	scripts\bonus\make_map.sqf, run on client one time on player connection
 
 	author: Sygsky
 
 	description: searches for all still not found bonus vehicles
-				 and generates markers for found ones in the form of the road cones on the base
+				 and generates markers for found ones in the form of the road cones on the base.
+				 May be used to refresh information after vehicle found event.
 
 	returns: nothing
 */
@@ -98,7 +99,7 @@ _arr_new = _arr_new - _arr_old; // vehicles to add to the map
 
 	_cone setVariable [ "bonus_veh", _x ];
 	_cone addAction[ localize "STR_CHECK_ITEM", "scripts\bonus\coneInfo.sqf" ];
-	hint localize format[ "+++ make_map.sqf: Map item (%1) for veh at %2 added near map marker (%3) at dist %4", typeOf _cone, _pos, getPos _cone, [getPos _cone, _new_center] call SYG_distance2D ];
+	hint localize format[ "+++ make_map.sqf: Map item (%1) for veh (%2) at %3 added near map marker (%4) at dist %5", typeOf _cone, typeOf _x, _pos, getPos _cone, [getPos _cone, _new_center] call SYG_distance2D ];
 } forEach _arr_new;
 
 //

@@ -55,10 +55,15 @@ if (!_already_marked) then {
 
 if ( _already_marked ) exitWith { // Do nothing except inform about vehicle already marked
 	hint localize format["+++ bonus.INSPECT: %1 is inspected by ""%2"" near ""%3"", veh already is marked as known. Exit.", typeOf _veh, _name, _loc_name];
-	localize "STR_BONUS_4" hintC [format[localize "STR_BONUS_4_1", typeOf _veh ], // "Information:"
-		format[localize "STR_BONUS_4_2", typeOf _veh, localize "STR_REG_ITEM"] // ""Deliver '%1' to the base and call command '%2'"", "Register on base"
-//		,format["""RECOVERABLE"" = %1, ""DOSAAF"" = %2", _veh getVariable "RECOVERABLE",_veh getVariable "DOSAAF"]
+	_arr = [
+        format[localize "STR_BONUS_4_1", typeOf _veh ], // "Information:"
+        format[localize "STR_BONUS_4_2", typeOf _veh, localize "STR_REG_ITEM"] // ""Deliver '%1' to the base and call command '%2'"", "Register on base"
 	];
+	if (_veh isKindOf "Plane") then { // add special message for the planes to ake off better on them.
+	    _arr set [count _arr, localize "STR_BONUS_7"]; // "When in doubt about an aircraft's ability to take off from the plane pad, use afterburner (Shift) on takeoff!"
+	};
+	localize "STR_BONUS_4" hintC [ _arr ];
+//		,format["""RECOVERABLE"" = %1, ""DOSAAF"" = %2", _veh getVariable "RECOVERABLE",_veh getVariable "DOSAAF"]
 };
 
 // Vehicle not on base and not marked (inspected) before
