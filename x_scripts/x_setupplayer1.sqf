@@ -208,18 +208,18 @@ if ( _equip == "" ) then {
 						//SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
 						3000 call SYG_setViewDistance;
 						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
-						_rearmed = false; // if here, player not rearmed
+//						_rearmed = true; // if here, player not rearmed
 					};
 					case "ENGINEERACE": {  // EngineerACE
 						3500 call SYG_setViewDistance; // Viewdistance
 						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf"; };
-						_rearmed = false; // if here, player not rearmed
+//						_rearmed = true; // if here, player not rearmed
 					};
 					case "ROKSE [LT]": { // Rokse [LT]
 						// Viewdistance
 						10000 call SYG_setViewDistance;
 						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf"; };
-						_rearmed = false; // if here, player not rearmed
+//						_rearmed = true; // if here, player not rearmed
 					};
 					// TODO: add more personal setting here (as for "Yeti" done)
 					default { _rearmed = false; }; // all other players are rearmed by standart
@@ -229,13 +229,13 @@ if ( _equip == "" ) then {
 					//+++ Sygsky: add largest ACE rucksack and fill it with mags
 					_p setVariable ["ACE_weapononback","ACE_Rucksack_Alice"];
 					_p setVariable ["ACE_Ruckmagazines", _magp];
-					// send info to the server about new equipment, note that weapons will be read from player in OPD callback
-					_equip = player call SYG_getPlayerRucksackAsStr;
-					["d_ad_wp", name player, _equip] call XSendNetStartScriptServer; // sent to the server 1st time player armamaent
-					hint localize format["+++ x_setupplayer1.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
-							name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];
 					//--- Sygsky
 				};
+				// send info to the server about new equipment (rucksack), note that weapons will will be stored on server from player stuff in OPD callback
+				_equip = player call SYG_getPlayerRucksackAsStr;
+				["d_ad_wp", name player, _equip] call XSendNetStartScriptServer; // sent to the server 1st time player armamaent
+				hint localize format["+++ x_setupplayer1.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
+						name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];
 			} else {  // if (__ACEVer) then
 				if (__CSLAVer) then {
 					_weapp = "CSLA_Sa58P";
