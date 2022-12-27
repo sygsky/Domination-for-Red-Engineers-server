@@ -863,7 +863,7 @@ XAddPlayerScore = {
 // Sends info about player score etc if found it in server cache
 // input params: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 XGetPlayerPoints = {
-	private ["_name", "_index", "_staff", "_sound"];
+	private ["_name", "_index", "_staff", "_sound","_time"];
 	_name = (_this select 1);
 	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
@@ -882,8 +882,28 @@ XGetPlayerPoints = {
 	    	_sound = _index call SYG_getSuicideScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
 	    };
 	};
-	["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
+#ifdef __RANKED__
+    #ifdef __CONNECT_ON_PARA__
+	// calculate time after last disconnection
+	if (count _stuff > 0 ) then {
+	    _time = _stuff select 1; // on first connection _time < 0!
+	    if (_time > 0) then {
+            _time = time - _time; // how long has it been since the disconnection
+            _stuff set [1, _time]; // set it to send to the player
+	    };
+	};
+	#endif
+#endif
+
+	["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient; // send disconnect time to the player
 	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg for ""%1"" received,  staff (scores %2) sent to the client, suicide snd ""%3"" +++", _name, _staff select 3, _sound];
+#ifdef __RANKED__
+	// set current connection time
+	if (count _stuff > 0 ) then {
+	    _stuff set [1, time]; // set connectiion time
+	};
+#endif
+
 };
 
 // calls as follow: _near_enemy_arr = _grp_array call x_get_nenemy

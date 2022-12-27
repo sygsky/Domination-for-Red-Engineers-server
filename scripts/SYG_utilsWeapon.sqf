@@ -2671,7 +2671,7 @@ SYG_storePlayerEquipmentAsStr = {
 //            hint localize format ["+++ equipment re-written for the player ""%1"": %2", _name, arg(1)];
         } else {
             d_player_array_names set [count d_player_array_names, _name];
-            d_player_array_misc set [ count d_player_array_misc, [d_player_air_autokick, time, _name, 0, "", arg(1)]];
+            d_player_array_misc set [ count d_player_array_misc, [d_player_air_autokick, -1, _name, 0, "", arg(1)]];
 //            hint localize format ["+++ equipment stored for the new player ""%1"": %2", _name, arg(1)];
         };
     };

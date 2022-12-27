@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_scripts/x_autokick.sqf
 //+++ Sygsky: this script for not Ranked version only
 if (!XClient) exitWith {};
 private ["_nomercyendtime", "_vec", "_type", "_type_name", "_wtime", "_minutes","_was_engineon"];

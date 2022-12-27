@@ -1607,11 +1607,11 @@ if (d_player_air_autokick > 0) then {
 	execVM "x_scripts\x_autokick.sqf";
 };
 #else
-	execVM "x_scripts\x_playerveccheck.sqf";
+	execVM "x_scripts\x_playerveccheck.sqf"; // Prevents player from entering vehicles not allowed by his rank (or weapon).
 //	if (_string_player in d_is_medic) then {
-	execVM "x_scripts\x_mediccheck.sqf";
+	execVM "x_scripts\x_mediccheck.sqf"; // allows little medicine help for any player
 //	};
-	execVM "x_scripts\x_playervectrans.sqf";
+	execVM "x_scripts\x_playervectrans.sqf"; // allows check for other players transportations score
 #endif
 
 /*

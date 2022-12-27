@@ -16,6 +16,14 @@ if (_name == "__SERVER__") exitWith {};
 _index = d_player_array_names find _name;
 if (_index >= 0) exitWith {
     _parray = d_player_array_misc select _index; // [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
+
+#ifdef __RANKED__
+    #ifdef __CONNECT_ON_PARA__
+    if (( _parray select 1)  < __CONNECT_ON_PARA__)
+    #endif
+    _parray set [1, time]; // set player disconnect time if ranked mission
+#else
+    //*** calculate time to autokick if player is re-entered soon
     _oldwtime = _parray select 0;
     _connecttime = _parray select 1;
     _newwtime = time - _connecttime;
@@ -25,6 +33,8 @@ if (_index >= 0) exitWith {
         _newwtime = _oldwtime - _newwtime;
     };
     _parray set [0, _newwtime];
+#endif
+
     (_parray select 4) execVM "x_scripts\x_markercheck.sqf"; // remove all player created markers
 	_player = call (compile (_parray select 4)); // find player object by his role name
 	_arr = _player call SYG_getPlayerEquiptArr; // real equipment array= = [ [weapons names], [magazines names]<, "",[]]

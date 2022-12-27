@@ -19,8 +19,16 @@ hint localize format[ "+++ x_scripts\x_serverOPC.sqf: player name is ""%1""", _n
 
 if (!(_name in d_player_array_names)) then {
 	d_player_array_names set [ count d_player_array_names, _name];
-	// [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
-	d_player_array_misc set [count d_player_array_misc,[d_player_air_autokick, time, _name, 0,"",""]];
+	// [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str] :
+	//
+	// d_player_air_autokick ?
+	// time - first connect time
+	// "EngineerACE" - player name
+	// _score - current player score
+	// "delta_1" - current player identity if player active, if not active = ""
+	// _equipment_list_str - full inventory stored as a string
+	//
+	d_player_array_misc set [count d_player_array_misc,[d_player_air_autokick, -1, _name, 0,"",""]];
 };
 
 _name call SYG_townScoresAdd; // register player as current town liberation participant
