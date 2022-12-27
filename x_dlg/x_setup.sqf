@@ -202,8 +202,9 @@
 // comment to allow storing full equipment on base flag, else only rucksack is stored on flag base, all other equipment is stored OnPlayerDisconnecting
 #define __EQUIP_OPD_ONLY__
 
-// comment to disable player parajump on connection and base reach procedure
-#define __CONNECT_ON_PARA__
+// comment to disable player parajump on connection and base reach procedure, number is delta time after last disconnection to allow next parajump.
+// If current delta time is greater then this number, jump is produced, is less not produced
+#define __CONNECT_ON_PARA__ 9000
 
 // please not comment lower line, only change it to any of follow values: 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000
 #define DEFAULT_VIEW_DISTANCE 3500

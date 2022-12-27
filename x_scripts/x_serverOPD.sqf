@@ -18,10 +18,9 @@ if (_index >= 0) exitWith {
     _parray = d_player_array_misc select _index; // [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
 
 #ifdef __RANKED__
-    #ifdef __CONNECT_ON_PARA__
-    if (( _parray select 1)  < __CONNECT_ON_PARA__)
-    #endif
-    _parray set [1, time]; // set player disconnect time if ranked mission
+    if (( _parray select 1)  < __CONNECT_ON_PARA__) then {
+	    _parray set [1, time]; // set player disconnect time if ranked mission
+    };
 #else
     //*** calculate time to autokick if player is re-entered soon
     _oldwtime = _parray select 0;

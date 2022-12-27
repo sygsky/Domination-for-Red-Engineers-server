@@ -863,12 +863,12 @@ XAddPlayerScore = {
 // Sends info about player score etc if found it in server cache
 // input params: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
 XGetPlayerPoints = {
-	private ["_name", "_index", "_staff", "_sound","_time"];
+	private ["_name", "_index", "_stuff", "_sound","_time"];
 	_name = (_this select 1);
 	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
 	//__DEBUG_NET("XGetPlayerPoints",_index)
-	_staff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
+	_stuff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
 	// prepare also semi-unical (up to 15 users) suicide sound for this player as parameter index 3
 	if ( (toUpper (_name)) == "YETI") then {
 	    _sound = format["suicide_yeti_%1", floor (random 5)]; // personal suicide sound for yeti (0..4);
@@ -895,8 +895,8 @@ XGetPlayerPoints = {
 	#endif
 #endif
 
-	["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient; // send disconnect time to the player
-	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg for ""%1"" received,  staff (scores %2) sent to the client, suicide snd ""%3"" +++", _name, _staff select 3, _sound];
+	["d_player_stuff", _stuff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient; // send disconnect time to the player
+	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg for ""%1"" received,  staff (scores %2) sent to the client, suicide snd ""%3"" +++", _name, _stuff select 3, _sound];
 #ifdef __RANKED__
 	// set current connection time
 	if (count _stuff > 0 ) then {

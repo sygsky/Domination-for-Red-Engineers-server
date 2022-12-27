@@ -2,7 +2,7 @@
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
 		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date","_music",
-		 "_spawn_point"];
+		 "_spawn_point","_para"];
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
@@ -328,16 +328,20 @@ _pos = [];
 _lobjpos = [];
 
 #ifdef __CONNECT_ON_PARA__
-_dt = d_player_stuff select 1;
+waitUntil { !(isNil "d_player_stuff") }; // wait info about time elapsed between last exit and this entrance
+_dt = d_player_stuff select 1; // #587
+hint localize format["+++ x_intro: disconnect time == %1", _dt];
 _doJump = (_dt <= 0) || (_dt > __CONNECT_ON_PARA__); // to do jump or not to do (depends on the time spent afted last disconnect. delta == 0 if it is first connection
 
+hint localize format[ "+++ x_intro: disconnect time == %1, _doJump %2", _dt, _doJump ];
+
+_para = player call SYG_getParachute;
 if (_doJump) then {
-    format["+++ x+intro: last disconnect was %1 secs ago, so no jump now (need %2 to jump)", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
+    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now (need %2 to jump)", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     waitUntil { !( (isNil "SYG_getParachute") || (isNil "XfRandomArrayVal"))  }; // wait until functions are loaded
-    _para = player call SYG_getParachute;
     hint localize format["+++ x_intro.sqf: player (alive %1) weapons %2, para %3", alive player,  weapons player, if (_para == "") then {"not found"} else {"found"} ];
     if ( _para == "" ) then {
         #ifdef __ACE__
@@ -967,28 +971,30 @@ player cameraEffect ["terminate","back"];
 camDestroy _camera;
 
 #ifdef __ACE__
-// replace weapon with drop pack to restore it after base visit
-SYG_initialEquipmentStr = player call SYG_getPlayerEquipAsStr; // store original equipment in string
-hint localize "+++ x_into: replace server equipment with para-jump set";
-// [["ACE_RPG7","ACE_RPK47","Binocular","ACE_ParachuteRoundPack"],["ACE_Bandage(3)","ACE_Morphine(5)","ACE_75Rnd_762x39_BT_AK(5)","ACE_RPG7_PG7VL"],"",[]]
-// replace with initial one
+if (_doJump) then {
+	SYG_initialEquipmentStr = player call SYG_getPlayerEquipAsStr; // store original equipment in string
+	// replace weapon with drop pack to restore it after base visit
+	hint localize "+++ x_into: replace server equipment with para-jump set";
+	// [["ACE_RPG7","ACE_RPK47","Binocular","ACE_ParachuteRoundPack"],["ACE_Bandage(3)","ACE_Morphine(5)","ACE_75Rnd_762x39_BT_AK(5)","ACE_RPG7_PG7VL"],"",[]]
+	// replace with initial one
 
-// remove rucksack as not needed
-player setVariable [  "ACE_weapononback", nil ];
-player setVariable [ "ACE_Ruckmagazines", nil ];
+	// remove rucksack as not needed
+	player setVariable [  "ACE_weapononback", nil ];
+	player setVariable [ "ACE_Ruckmagazines", nil ];
 
-[ player,
-	[
-		["ACE_AK74",_para],
-		["ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_Bandage","ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine"],
-		"",	[]
-	]
-] call SYG_rearmUnit;
+	[ player,
+		[
+			["ACE_AK74",_para],
+			["ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_Bandage","ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine"],
+			"",	[]
+		]
+	] call SYG_rearmUnit;
 
-if (call isDarkness) then {
-	player call SYG_addNVGoggles; // add NVG as knight is on
-} else {
-	player call SYG_addBinocular; // add binocular
+	if (call isDarkness) then {
+		player call SYG_addNVGoggles; // add NVG as knight is on
+	} else {
+		player call SYG_addBinocular; // add binocular
+	};
 };
 
 #endif
