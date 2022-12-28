@@ -2,7 +2,7 @@
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
 		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date","_music",
-		 "_spawn_point","_para"];
+		 "_spawn_point","_para","_doJump"];
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
@@ -326,6 +326,7 @@ if ( (current_target_index != -1 && !target_clear) && !all_sm_res && !stop_sm &&
 
 _pos = [];
 _lobjpos = [];
+_doJump = false;
 
 #ifdef __CONNECT_ON_PARA__
 waitUntil { !(isNil "d_player_stuff") }; // wait info about time elapsed between last exit and this entrance
@@ -337,7 +338,7 @@ hint localize format[ "+++ x_intro: disconnect time == %1, _doJump %2", _dt, _do
 
 _para = player call SYG_getParachute;
 if (_doJump) then {
-    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now (need %2 to jump)", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
+    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now, set base_visit_status = 1, no jump if less than %2 secs", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -376,6 +377,8 @@ if (_doJump) then {
     _spawn_point  = _spawn_rect call XfGetRanPointSquareOld;
     */
     _spawn_point set [2, 150]; // spawn at parachute pos
+} else {
+	base_visit_status = 1; // stop respawn out of the base area
 };
 
 #else
@@ -788,8 +791,10 @@ _camera spawn {
 //	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 	_time = time;
+
 	// wait while player in any vehicle (plane or parachute)
-	while { ((vehicle player) == player) && (alive player) } do {sleep 0.1};
+
+	while { ((vehicle player) != player) && (alive player) } do {sleep 0.5};
 	if (!alive player) exitWith {
 		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs (%2)", time - _time, _para];
 	};
@@ -974,7 +979,7 @@ camDestroy _camera;
 if (_doJump) then {
 	SYG_initialEquipmentStr = player call SYG_getPlayerEquipAsStr; // store original equipment in string
 	// replace weapon with drop pack to restore it after base visit
-	hint localize "+++ x_into: replace server equipment with para-jump set";
+	hint localize "+++ x_intro: replace server equipment with para-jump set";
 	// [["ACE_RPG7","ACE_RPK47","Binocular","ACE_ParachuteRoundPack"],["ACE_Bandage(3)","ACE_Morphine(5)","ACE_75Rnd_762x39_BT_AK(5)","ACE_RPG7_PG7VL"],"",[]]
 	// replace with initial one
 
@@ -1000,8 +1005,9 @@ if (_doJump) then {
 #endif
 
 if (dialog) then { closeDialog 0 };
-
-[ "say_sound", FLAG_BASE, "gong_5" ] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
+if (!_doJump) then {
+	[ "say_sound", FLAG_BASE, "gong_5" ] call XSendNetStartScriptClientAll; // play gong very low sound on the place for all players online
+};
 
 enableRadio true;
 

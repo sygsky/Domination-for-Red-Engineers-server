@@ -28,7 +28,6 @@ _para = player call SYG_getParachute; // find parachute of player (if any)
 if ( _para == "" ) exitWith { localize "STR_SYS_609" call XfHQChat;}; // "!!!!!!!!!!!! You need a parachute pack first !!!!!!!!!!!"
 #endif
 
-
 if( _para == "" ) then {
 	#ifdef __ACE__
 	_para == "ACE_ParachutePack";
@@ -45,6 +44,7 @@ if( _para == "" ) then {
 
 _spawn_point = _para call _makeSpawnPoint;
 
+// [ pnt, parachute type, veh, wind, circle_hit ]
 [ _spawn_point, _para, "DC3", false, false] execVM "AAHALO\jump.sqf"; // J-u-m-p-p-p!!! It is not intro jump!
 
 // we are in air!!!

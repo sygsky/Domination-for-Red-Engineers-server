@@ -2739,7 +2739,7 @@ SYG_getPlayerEquiptArr = {
 // gets unit whole equipment and store it into array
 // _eqp_arr = player call SYG_getPlayerEquiptArr;
 // returns array [ [weapons names], [magazines names]<, rucksack_name<, [mags_in_rucksack_names]<, d_viewdistance<, d_rebornmusic_index>>>> ]
-// may return ["",[]] if player has no rucksack
+// may return ["",[],"",[],view_dist,reborn_music] if player has no rucksack
 SYG_getPlayerRucksackArr = {
     private ["_ruck", "_ruckMags"];
 #ifdef __ACE__

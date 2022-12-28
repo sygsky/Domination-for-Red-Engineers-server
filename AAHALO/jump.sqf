@@ -1,4 +1,7 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
+//
+// Example call: [ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
+//
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
@@ -6,7 +9,7 @@ private ["_start_location","_paratype","_jump_score","_jump_helo","_halo_height"
 	"_use_wind", "_check_circle_hit"];
 _start_location = _this select 0;
 _paratype       = _this select 1;
-_jump_score     = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute
+_jump_score     = if (count _this > 2) then  {_this select 2} else { 0 }; // how many score to return if player forget his parachute (number)/vehicle type (string)
 
 #define __SPECIAL_JUMP_OVER_SEA__ // special condition of strong wind over sea surface
 #ifdef __SPECIAL_JUMP_OVER_SEA__

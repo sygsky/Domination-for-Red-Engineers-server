@@ -13,7 +13,7 @@
 #define __DEBUG__
 
 private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant",
-		 "_pistol","_equip","_rearmed"];
+		 "_pistol","_equip","_rearmed","_handle"];
 // ask the server for the client score etc
 sleep random 0.5;
 _endtime = time + 60;
