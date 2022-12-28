@@ -202,26 +202,36 @@ if ( _equip == "" ) then {
 				// try to rearm predefined players (Yeti, EngineerACE etc)
 				_rearmed = true;
 				hint localize format["+++ x_setupplayer1.sqf: _rpg %1, _rifle %2, _pistol %3", _rpg, _rifle, _pistol];
+				// try special rearming for some players with rank 0 (zero)
 				switch (toUpper (name player)) do {
 					case "YETI": { // Yeti
 						d_rebornmusic_index = 1; // no play std death sound
-						//SYG_suicideScreamSound = ["suicide_yeti","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
+						//SYG_suicideScreamSound = ["suicide_yeti_0","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
 						3000 call SYG_setViewDistance;
-						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { _p execVM "scripts\rearm_Yeti.sqf"; };
-//						_rearmed = true; // if here, player not rearmed
+						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith {
+						    _handle = _p execVM "scripts\rearm_Yeti.sqf";
+						    waitUntil {scriptDone _handle};
+						};
+						_rearmed = false; // if here, player not rearmed as rank is != 0
 					};
 					case "ENGINEERACE": {  // EngineerACE
 						3500 call SYG_setViewDistance; // Viewdistance
-						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_EngineerACE.sqf"; };
-//						_rearmed = true; // if here, player not rearmed
+						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith {
+						    _handle = [_p,_index] execVM "scripts\rearm_EngineerACE.sqf";
+						    waitUntil {scriptDone _handle};
+						};
+						_rearmed = false; // if here, player not rearmed as rank is != 0
 					};
 					case "ROKSE [LT]": { // Rokse [LT]
 						// Viewdistance
 						10000 call SYG_setViewDistance;
-						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith { [_p,_index] execVM "scripts\rearm_Rokse.sqf"; };
-//						_rearmed = true; // if here, player not rearmed
+						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith {
+						    _handle = [_p,_index] execVM "scripts\rearm_Rokse.sqf";
+						    waitUntil {scriptDone _handle};
+						};
+						_rearmed = false; // if here, player not rearmed as rank is != 0
 					};
-					// TODO: add more personal setting here (as for "Yeti" done)
+					// TODO: add more personal setting here (as for "Yeti" and others done)
 					default { _rearmed = false; }; // all other players are rearmed by standart
 				};
 				if (!_rearmed ) then {
@@ -231,9 +241,12 @@ if ( _equip == "" ) then {
 					_p setVariable ["ACE_Ruckmagazines", _magp];
 					//--- Sygsky
 				};
-				// send info to the server about new equipment (rucksack), note that weapons will will be stored on server from player stuff in OPD callback
+				// send info to the server about new equipment (rucksack), note that weapons will be stored on server from player stuff during OPD callback
+			#ifdef __EQUIP_OPD_ONLY__
 				_equip = player call SYG_getPlayerRucksackAsStr;
-				["d_ad_wp", name player, _equip] call XSendNetStartScriptServer; // sent to the server 1st time player armamaent
+				["d_ad_wp", name player, _equip] call XSendNetStartScriptServer; // sent to the server player armament 1st time
+                SYG_playerRucksackContent = _equip; // initial player rucksack content in text form
+            #endif
 				hint localize format["+++ x_setupplayer1.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
 						name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];
 			} else {  // if (__ACEVer) then
@@ -273,10 +286,6 @@ player call SYG_addBinocular;
 //		hint localize format["+++ rearm: after player hasWeapon %1 = %2, hasWeapon %3 = %4","NVGoggles", player hasWeapon "NVGoggles","Binocular", player hasWeapon "Binocular"];
 //    	d_player_stuff = nil;
 //__DEBUG_NET("x_setupplayer1.sqf",d_player_stuff)
-
-#ifdef __EQUIP_OPD_ONLY__
-SYG_playerRucksackContent = player call SYG_getPlayerRucksackAsStr; // initial player rucksack content in text form
-#endif
 
 #ifdef __AI__
 ai_counter = 0;

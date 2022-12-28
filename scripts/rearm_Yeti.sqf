@@ -10,7 +10,9 @@
 //"ACE_Rucksack_MOLLE_Green_Miner",
 //[],
 //3000]
-_p = _this;
+
+_p     = _this; // player itself
+if (typeName _p == "ARRAY") then {_p = _p select 0}; // can be designated array [player, _rankIndex] for the future development
 
 removeAllWeapons _p;
 // add magazines first to reload weapon later
