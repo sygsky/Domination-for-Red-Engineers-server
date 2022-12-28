@@ -1,13 +1,15 @@
 // by Xeno, x_scripts/x_airtaxiserver.sqf, air taxi script on server
-private ["_player", "_sidep", "_crew_member", "_sidestr", "_grp", "_vehicle", "_unit"];
+
 if (!isServer) exitWith {};
+
+private ["_player", "_sidep", "_crew_member", "_sidestr", "_grp", "_vehicle", "_unit"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
 _player = _this;
 _sidep = side _player;
 
-hint localize format["+++ AirTaxi called by %1 at %2", name _player, [player, localize "STR_SYS_POSE"] call SYG_MsgOnPosE];
+hint localize format["+++ AirTaxi called by %1 at %2", name _player, [_player, localize "STR_SYS_POSE"] call SYG_MsgOnPosE];
 _crew_member = (
 	switch (_sidep) do {
 		case east: {d_pilot_E};
