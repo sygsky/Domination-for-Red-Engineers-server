@@ -50,10 +50,6 @@ hint localize format["+++ x_illum: start in %1+++", _this select 2];
 // script stoppeв by main target change from x_target_clear.sqf by setting d_run_illum= false or if (_current_counter != current_counter)
 while {d_run_illum && (_current_counter == current_counter) } do {
 
-	if (X_MP && ((call XPlayersNumber) == 0) ) then {
-		waitUntil {sleep (25.012 + random 1);(call XPlayersNumber) > 0};
-	};
-
 	//__DEBUG_NET("x_illum.sqf",(call XPlayersNumber))
 	_flare = "";
 	/*  SYG_shortNightEnd    =  4.60;
@@ -132,6 +128,13 @@ while {d_run_illum && (_current_counter == current_counter) } do {
 	    if (!isNull _flare) then {deleteVehicle _flare};
 	}
 	else {sleep 300}; // check night come every 300 seconds (5 minutes) to not skip it during main target change
+
+	if (X_MP && ((call XPlayersNumber) == 0) ) then {
+		hint localize format["+++ x_illum: %1, suspend as mission is empty (no players)", call SYG_nowTimeToStr];
+		waitUntil {sleep (25.012 + random 1);(call XPlayersNumber) > 0};
+		hint localize format["+++ x_illum: %1, resumed as new player was detected", call SYG_nowTimeToStr];
+	};
+
 };
 
 #ifdef __ILLUM_BY_ALIVE__
