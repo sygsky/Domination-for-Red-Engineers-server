@@ -1,4 +1,6 @@
 // by Sygsky, works only on server
+// scripts\motorespawn.sqf
+//
 // script to restore vehicles from designated list
 // independently of their type and position
 // restore delay may be user-defined too.
@@ -8,11 +10,13 @@
 //
 // Where motoN - reference to device with position to keep it here
 //
+// Each auto-movement is accompanied by special sounds for get and put events for the moto being moved.
+//
 
 if (!isServer) exitWith{};
 
 #include "x_macros.sqf"
-private ["_motoarr", "_mainCnt", "_moto", "_timeout", "_pos", "_pos1", "_type", "_nobj", "_driver_near","_driverType"];
+private ["_motoarr", "_moto", "_timeout", "_pos", "_pos1", "_type", "_nobj", "_driver_near","_driverType"];
 
 // comment next line to not create debug messages
 #define __DEBUG__
@@ -90,7 +94,6 @@ _driverType = switch playerSide do {
     default {"SoldierEB"};
 };
 
-//_mainCnt = 1;
 while {true} do {
 
 	if (X_MP && ((call XPlayersNumber) == 0) ) then {
@@ -129,9 +132,9 @@ while {true} do {
 				_x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ];
 			};
 
-			_objNearArr = _posReal nearObjects [_driverType, DRIVER_NEAR_DIST];
+			_objNearArr = _posReal nearObjects [_driverType, DRIVER_NEAR_DIST]; //  //nearestObject [ _posReal, "CAManBase" ];
 
-			_nobj = objNull; //nearestObject [ _pos1, "CAManBase" ];
+			_nobj = objNull;
 			{
 				if (alive _x && isPlayer _x) exitWith {_nobj = _x};
 			} forEach _objNearArr;
@@ -192,7 +195,6 @@ while {true} do {
 				if ( isEngineOn _moto) then { _moto engineOn false; };
 				if ( _say ) then { ["say_sound", _moto, "return"] call XSendNetStartScriptClientAll };
 
-				//_x set [MOTO_ORIG_POS, getPos _moto];
 				sleep (0.5 + (random 0.5));
 #ifdef __DEBUG__
 				hint localize format[ "+++ motorespawn.sqf: moto%1(%2) returned, dir %3, dist %4, new pos %5, engine %6", _id,
@@ -208,7 +210,6 @@ while {true} do {
 		};
 		sleep CYCLE_DELAY; // main cycle time-out
 	} forEach _motoarr;
-	//_mainCnt = _mainCnt +1;
 };
 _motoarr = nil;
 hint localize "--- scripts/motorespawn.sqf is exiting due to any fatal error ----"
