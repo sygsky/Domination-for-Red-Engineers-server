@@ -109,6 +109,7 @@ while {true} do {
 		_posReal = getPos _moto; // real pos
 		_posReal set [2,0]; // zero Z coordinate
 		_dist = _posReal distance _posMain; // get 2D distance
+		_posReal0 = + _posReal; // save position to print it later
 
 		if ( _timeout == TIMEOUT_ZERO ) then { // check conditions for moto position restoring
 			if (!alive _moto) exitWith {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)] };
@@ -144,7 +145,7 @@ while {true} do {
 			} else {  hint localize format["+++ motorespawn.sqf: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _posReal]; };
 
 			if ( ! (_driver_near && (alive _moto))) then { // if empty and no man nearby (10 meters circle)
-				_say = (_posReal distance _posMain) >= SOUND_MIN_DIST_TO_SAY; // sound only if long dist teleport to the place
+				_say = _dist >= SOUND_MIN_DIST_TO_SAY; // sound only if distance between moto and origin point is long enough
 				if (_say ) then {["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll;
 				_posReal = getPosASL _moto;
 				_posReal set [2,-15];
@@ -152,14 +153,14 @@ while {true} do {
 			};
 
 #ifdef __DEBUG__
-					hint localize format["+++ motorespawn.sqf: %1 (#%2) returned, %3canMove, fuel %4, dir %5, dist %6 (min %7)",
-						typeOf _moto,
-						_id,
-						if (canMove _moto) then {""} else {"!"},
-						fuel _moto,
-						round ( direction _moto),
-						_dist,
-						MOTO_RETURN_DIST];
+				hint localize format["+++ motorespawn.sqf: %1 (#%2) returned, %3canMove, fuel %4, dir %5, dist %6 (min %7)",
+					typeOf _moto,
+					_id,
+					if (canMove _moto) then {""} else {"!"},
+					fuel _moto,
+					round ( direction _moto),
+					_dist,
+					MOTO_RETURN_DIST];
 #endif
 
 				if ( !alive _moto ) then { // recreate vehicle
@@ -194,13 +195,11 @@ while {true} do {
 				//_x set [MOTO_ORIG_POS, getPos _moto];
 				sleep (0.5 + (random 0.5));
 #ifdef __DEBUG__
-                _posReal = (getPos _moto);
-                _posReal resize 2;
 				hint localize format[ "+++ motorespawn.sqf: moto%1(%2) returned, dir %3, dist %4, new pos %5, engine %6", _id,
                     typeOf _moto,
                     direction _moto,
                     _dist,
-                    _posReal,
+                    _posReal0,
                     if (isEngineOn _moto) then {"on"} else {"off"}
 				];
 #endif
