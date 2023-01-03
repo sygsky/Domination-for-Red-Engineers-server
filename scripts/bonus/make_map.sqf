@@ -81,7 +81,7 @@ _arr_new = [];
 	_veh = objNull;
 	if (alive _x) then {
 		_id = _x getVariable "DOSAAF";
-		if ( isNil "_id" ) exitWith { }; // not vehicle, not bonus vehicle of already registered bonus vehicle
+		if ( isNil "_id" ) exitWith { }; // not vehicle or not bonus vehicle or already registered bonus vehicle
 		_arr_new set [count _arr_new, _x];
 	};
 } forEach vehicles;

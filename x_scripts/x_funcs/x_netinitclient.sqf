@@ -952,7 +952,7 @@ XHandleNetStartScriptClient = {
 							_id2 = _veh addAction [ localize "STR_REG_ITEM", "scripts\bonus\bonusInspectAction.sqf",[]];
 							// replace title with "Register" text
 							_veh setVariable ["INSPECT_ACTION_ID", _id2];
-							hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID id %1 => %2 (REG) on %3!!!", _id, _id2, typeOf _veh ]
+							hint localize format[ "+++ bonus.ADD on client: variable INSPECT_ACTION_ID id %1 => %2 (REG) on %3!!!", _id, _id2, typeOf _veh ]
 						} else { hint localize format[ "--- bonus.ADD on client: variable INSPECT_ACTION_ID not found at %1!!!", typeOf _veh ] };
 					    _veh setVariable ["RECOVERABLE",false]; // mark vehicle as detected not registered for already created vehicle in client copy
 	                    _veh setVariable ["DOSAAF", nil]; // no more to be DOSAAF unknown vehicle

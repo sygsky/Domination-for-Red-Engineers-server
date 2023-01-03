@@ -8,7 +8,7 @@
 #include "bonus_def.sqf"
 
 if (isNil "client_bonus_markers_array") then {
-    client_bonus_markers_array = []; // Never change it from external code!!!
+    client_bonus_markers_array = []; // Never change it from external code!!! Markered DOSAAF vehicles array.
     client_bonus_markers_timestamp = time;
     sleep 10
 } else {sleep 2};
@@ -16,9 +16,9 @@ if (isNil "client_bonus_markers_array") then {
 hint localize "+++ bonus_client started";
 private ["_bonus_markers", "_bonus_timestamp", "_i", "_veh", "_mrk", "_last_id"];
 
-_bonus_markers                 = [];	// known veh markers itself
-_next_id                       = 1;		// next free id for the bonus vehicle markers
-_bonus_timestamp               = 0;		// last time processed timestamp
+_bonus_markers   = [];	// drawn vehicles markers array
+_next_id         = 1;	// next free id for the bonus vehicle markers
+_bonus_timestamp = 0;	// last time processed timestamp
 
 [] execVM "scripts\bonus\make_map.sqf";
 //
@@ -31,12 +31,12 @@ _reset_params = {
 	_ret = call SYG_countVehicles;
 	hint localize format["+++ _reset_params: scan vehicles: cnt/vehs/DOSAAF_0/DOSAAF_NOTREG/alive/markers/bonus = %1", _ret];
 
-	_new_array = call SYG_scanDOSAAFVehicles; // load all alive DOSAAF vehicles
+	_new_array = call SYG_scanDOSAAFVehicles; // return only non-inspected vehicles array
 //	hint localize format["+++ SYG_scanDOSAAFVehicles executed in %1 secs ", time - _time];
-	if ( (_next_id == 1) ) then {
+	if ( (_next_id == 1) ) then { // first vehicle to mark found
 		if ( count _new_array > 0 ) then {
 			private ["_arr"];
-			// TODO: add info for posittion of random vehicle in the _new_array
+			// TODO: add info for position of random vehicle in the _new_array
 			_arr = [[ localize "STR_BONUS_6", count _new_array]];
 			if (count _new_arr > 2) then { // add info about random DOSAAF vehicle if count is larger than two
 				_veh = _new_arr call XfRandomArrayVal;
@@ -47,7 +47,7 @@ _reset_params = {
 	};
 
 	hint localize format["+++ _reset_params: old array[%1], new array[%2]", count client_bonus_markers_array, count _new_array];
-	_del_arr = client_bonus_markers_array - _new_array;	// array of vehs to remove (may contain killed vehicles)
+	_del_arr = client_bonus_markers_array - _new_array;	// array of vehs to remove (may contain registered and/or killed vehicles)
 	if ( count _del_arr > 0 ) then { // old veh array
 		hint localize format["+++ _reset_params: delete %1 vehicle[s]", count _del_arr];
 		{
@@ -89,13 +89,13 @@ _reset_params = {
 		hint localize format["+++ _reset_params: add %1 vehicle[s]", count _add_arr];
 		{
 			if (alive _x) then { // only alive vehicles are markered
-				hint localize format["+++ bonus_client: add %1", typeOf _x];
+				hint localize format["+++ _reset_params: add marker for %1", typeOf _x];
 				_mrk = createMarkerLocal [ format[ "_marker_veh_%1", _next_id ], _x ];
 				_next_id = _next_id + 1;
 				_mrk setMarkerColorLocal DOSAAF_MARKER_COLOR;
 				_mrk_type = _x call SYG_getVehicleMarkerType;
 				_mrk setMarkerTypeLocal _mrk_type;
-				hint localize format[ "+++ bonus_client_reset_params: created marker %1 (%2 for %3)", _mrk, _mrk_type, typeOf _x ];
+				hint localize format[ "+++ _reset_params: created marker %1 (%2 for %3)", _mrk, _mrk_type, typeOf _x ];
 				_mrk setMarkerSizeLocal [ 0.75, 0.75 ];
 				_bonus_markers set [ count _bonus_markers, _mrk ];
 				client_bonus_markers_array   set [ count client_bonus_markers_array,     _x ];
@@ -144,7 +144,7 @@ while { true } do {
 	if ( _update || ( client_bonus_markers_timestamp != _bonus_timestamp ) ) then {
 		_bonus_timestamp = client_bonus_markers_timestamp;
 		call _reset_params; // reset markers for DOSAAF vehicles
-		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" detected dead markered vehicle[s], change markers array"} else {""}];
+		hint localize format["+++ bonus_client: timestamp %1%2", _bonus_timestamp, if(_update) then {" detected dead markered vehicle[s], change markers array"} else {" marker added"}];
 	};
 	if (_redraw) then {
 //		hint localize format[ "+++ bonus_client: sleep after redraw %1", DOSAAF_DELAY_NORMAL ];
