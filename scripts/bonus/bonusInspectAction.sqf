@@ -28,7 +28,7 @@ if ( !isPLayer (_this select 1) ) exitWith {
 };
 
 if ( (getPos _veh) call SYG_pointIsOnBase ) exitWith {
-	if (isEngineOn _veh) exitWith {
+	if (isEngineOn _veh) exitWith { // "The vehicle engine must be stopped to register"
 		["msg_to_user","*",[["STR_BONUS_9"]],0,0.5,false,"losing_patience"] call XSendNetStartScriptClientAll;
 	};
 
@@ -62,7 +62,7 @@ if ( _already_marked ) exitWith { // Do nothing except inform about vehicle alre
 	if (_veh isKindOf "Plane") then { // add special message for the planes to ake off better on them.
 	    _arr set [count _arr, localize "STR_BONUS_7"]; // "When in doubt about an aircraft's ability to take off from the plane pad, use afterburner (Shift) on takeoff!"
 	};
-	localize "STR_BONUS_4" hintC [ _arr ];
+	localize "STR_BONUS_4" hintC _arr;
 //		,format["""RECOVERABLE"" = %1, ""DOSAAF"" = %2", _veh getVariable "RECOVERABLE",_veh getVariable "DOSAAF"]
 };
 
