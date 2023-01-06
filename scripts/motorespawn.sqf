@@ -125,7 +125,7 @@ while {true} do {
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened delay
 				};
 			};
-			if ( isEngineOn _moto) then { _moto engineOn false; };
+			if ( isEngineOn _moto) then { _moto engineOn false; }; // #584. 2022-12-19 23:13:50
 		} else { // time-out was already set
 		
 			if ( time < _timeout) exitWith {};
