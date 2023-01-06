@@ -125,7 +125,7 @@ while {true} do {
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened delay
 				};
 			};
-			// TODO: #584 - check if moto is at base position with engine on to switch it off
+			if ( isEngineOn _moto) then { _moto engineOn false; };
 		} else { // time-out was already set
 		
 			if ( time < _timeout) exitWith {};
@@ -150,11 +150,12 @@ while {true} do {
 
 			if ( ! (_driver_near && (alive _moto))) then { // if empty and no man nearby (10 meters circle)
 				_say = _dist >= SOUND_MIN_DIST_TO_SAY; // sound only if distance between moto and origin point is long enough
-				if (_say ) then {["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll;
-				_posReal = getPosASL _moto;
-				_posReal set [2,-15];
-				_moto setPosASL _posReal; // move vehicle underground before return
-			};
+				if (_say ) then {
+				["say_sound", _moto, "steal"] call XSendNetStartScriptClientAll;
+					_posReal = getPosASL _moto;
+					_posReal set [2,-15];
+					_moto setPosASL _posReal; // move vehicle underground before return
+				};
 
 #ifdef __DEBUG__
 				hint localize format["+++ motorespawn.sqf: %1 (#%2) returned, %3canMove, fuel %4, dir %5, dist %6 (min %7)",
