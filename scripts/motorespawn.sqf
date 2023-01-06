@@ -119,12 +119,13 @@ while {true} do {
 
 			// ++++++++++++++++++ MAIN CHECK STATEMENT +++++++++++++++++++
 
-			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > MOTO_RETURN_DIST)  ) then {
+			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > MOTO_RETURN_DIST)  ) exitWith {
 				if ( ( {alive _x} count (crew _moto)) == 0) then { // empty
 					if ( (canMove _moto) && ( ( fuel _moto ) > FUEL_MIN_VOLUME ) ) then  { _x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ] } // restore after normal delay
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened delay
 				};
 			};
+			// TODO: #584 - check if moto is at base position with engine on to switch it off
 		} else { // time-out was already set
 		
 			if ( time < _timeout) exitWith {};

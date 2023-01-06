@@ -108,7 +108,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 	};
 */
 	if ( ({alive _x} count _pilots_arr) == 0 ) exitWith {
-		hint localize "--- x_sideevac.sqf: All pilots are dead!";
+		hint localize "*** x_sideevac.sqf: All pilots are dead!";
 		_is_dead = true;
 	};
 
