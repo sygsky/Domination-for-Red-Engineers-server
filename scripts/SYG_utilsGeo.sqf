@@ -955,12 +955,17 @@ SYG_MsgOnPosE = {
 //
 // call as: _msg_eng = [_obj <,roundTo> ] call SYG_MsgOnPosE0;
 // or     : _msg_eng = _obj call SYG_MsgOnPosE0; // default roundTo == 100
+// or     : _msg_eng = _pos2or3D call SYG_MsgOnPosE0; // default roundTo == 100
 //
 SYG_MsgOnPosE0 = {
 	private ["_arr"];
 	if (typeName _this == "ARRAY") then {
-		_arr = [_this select 0, localize "STR_SYS_POSE"];
-		if (count _this > 1) then { _arr set[2, _this select 1] }
+		if ( (typeName (_this select 0)) == "SCALAR") then {
+			_arr = [_this, localize "STR_SYS_POSE"];
+		} else {
+			_arr = [_this select 0, localize "STR_SYS_POSE"];
+			if (count _this > 1) then { _arr set[2, _this select 1] }
+		};
 	} else {
 		_arr  = [_this, localize "STR_SYS_POSE"];
 	};

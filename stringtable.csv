@@ -1684,6 +1684,8 @@ STR_GREETING_COMMON,"For their service in building the mission, the chief engine
 
 STR_CHECK_ITEM,Inspect,Überprüfen,Estudiar,Изучить
 STR_REG_ITEM,Register on base,Anmeldung an der Basis,Regístrese en la base,Регистрировать на базе
+STR_ON,On,Auf,En,Вкл.
+STR_OFF,Off,Aus,Off,Выкл.
 
 STR_LIB_ACE_MAP,A secret map of location of enemy forces size A0. Looks like the guys had a hard time making it,"Die geheime Karte der Lage der feindlichen Kräfte der Größe A0. Es scheint, die Jungs mussten hart arbeiten, herstellen",Mapa secreto arrugado de la ubicación de las fuerzas enemigas de Tamaño A0. Parece que los chicos tuvieron que trabajar duro fabricándola.,"Помятая секретная карта размещения сил противника размера А0. Похоже, ребятам пришлось потрудиться, изготовляя её"
 STR_ACE_LIB_ACE_SCAR_L_CQB_MK4_SD,Good but short and rather weak western rifle with excellent optics,"Gut, aber kurz und eher schwach western Gewehr mit hervorragender Optik","Un rifle occidental automático empinado, pero corto y débil, con lo mejor de las vistas. Si no fuera por un impacto débil en el objetivo..","Крутая, но короткая и слабенькая автоматическая западная винтовка с лучшим из прицелов. Если бы не слабое воздействие на цель..."

@@ -105,6 +105,7 @@ _check_truck_marker = 	{ // check truck marker
 	if ( alive _this ) then {
 		if ( locked _this ) exitWith {  // truck is locked that means it is not found
 			if (_truck_marker != "") then {
+				hint localize format["+++ x_sideradio.sqf: delete _truck_marker at %1", (markerPos _truck_marker) call SYG_MsgOnPosE0];
 				deleteMarker _truck_marker; _truck_marker = "";
 			};
 		};
@@ -112,6 +113,7 @@ _check_truck_marker = 	{ // check truck marker
 		// create radar marker if needed
 		if ( _truck_marker == "" ) then {
 			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, _this, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+			hint localize format["+++ x_sideradio.sqf: create _truck_marker at %1", (markerPos _truck_marker) call SYG_MsgOnPosE0];
 			_delay = 3;
 		} else {
 			  // move existing truck marker if needed
@@ -122,6 +124,7 @@ _check_truck_marker = 	{ // check truck marker
 		};
 	} else { // truck dead, remove marker while new truck will be created
 		if ( _truck_marker != "" ) then {
+			hint localize format["+++ x_sideradio.sqf: truck dead, delete marker at %1", (markerPos _truck_marker) call SYG_MsgOnPosE0];
 			deleteMarker _truck_marker; _truck_marker = ""
 		};
 	};
@@ -150,6 +153,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 			if (!isNil "_detected") then { // alive, not installed, detected
 				if ( _radar_marker == "") then { // marker not exists, create it now
 					_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_SM_COLOR, [0.5, 0.5] ] call _make_marker;
+	       			hint localize format["+++ x_sideradio.sqf: create _radar_marker at %1", (markerPos _radar_marker) call SYG_MsgOnPosE0];
 				} else {
 					// marker exists, move it if needed
 					if ( ( [getMarkerPos _radar_marker, _radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {
@@ -159,11 +163,13 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 			};
         } else {    // radar is load into the truck, wipe it from the map
             if ( _radar_marker != "" ) then {
+       			hint localize format["+++ x_sideradio.sqf: delete _radar_marker at %1", (markerPos _radar_marker) call SYG_MsgOnPosE0];
                 deleteMarker _radar_marker; _radar_marker = ""
             };
         };
     } else { // radar dead or installed, wait until sideradio_status changes
         if ( _radar_marker != "" ) then {
+   			hint localize format["+++ x_sideradio.sqf: delete _radar_marker at %1, radar %2, sideradio_status %3, ", (markerPos _radar_marker) call SYG_MsgOnPosE, if (alive _radar) then {"alive"} else {"dead"}, sideradio_status];
             deleteMarker _radar_marker; _radar_marker = ""
         };
     };
@@ -176,12 +182,22 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 _truck = d_radar_truck; // truck to deliver to the GRU PC position
 hint localize format["+++ x_sideradio.sqf: exit marker loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive d_radar_truck];
 
-hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, alive radar %3", sideradio_status, alive _radar, alive _truck];
-while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
-	sleep 5;
-	_truck call _check_truck_marker;
-	if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
-	// move truck marker
+if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
+
+	// set radar marker to be green
+
+	if (_radar_marker !=  "") then {
+		deleteMarker _radar_marker;
+	};
+	_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_ON_COLOR, [0.5, 0.5] ] call _make_marker;
+	_radar_marker setMarkerText (localize "STR_ON");
+	hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, alive radar %3, radar color is green now", sideradio_status, alive _radar, alive _truck];
+	while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
+		sleep 5;
+		_truck call _check_truck_marker;
+		if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
+		// move truck marker
+	};
 };
 
 if (_mission) then { // check victory or failure
@@ -209,7 +225,7 @@ if (_mission) then { // check victory or failure
         side_mission_winner = 2;
         side_mission_resolved = true;
     } else {    // Failure
-		hint localize format["+++ x_sideradio.sqf:   mission FAILURE, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
+		hint localize format["+++ x_sideradio.sqf: mission FAILURE, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
         side_mission_winner = -702;
         side_mission_resolved = true;
     };
@@ -217,8 +233,10 @@ if (_mission) then { // check victory or failure
 
 // Compose the message about problem on mission failure
 _msg = [""];
+_sound = "losing_patience";
 if ((sideradio_status ==2) && (alive _radar) && (alive _truck) ) then {
 	_msg = ["STR_RADAR_TRUCK_NOT_NEEDED"]; // "Mission accomplished. The truck should be hidden in a safe place"
+	_sound = "no_more_waiting";
 } else {
 	_msg = ["STR_RADAR_FAILURE","",""]; // "Something went wrong and the GRU radio relay could not be restored. %1%2"
 	if (!alive _radar) then { _msg set [count _msg,"STR_RADAR_MAST_DEAD"];  }; // "Radio mast destroyed"
@@ -226,7 +244,7 @@ if ((sideradio_status ==2) && (alive _radar) && (alive _truck) ) then {
 	sideradio_status = 0;
 	publicVariable "sideradio_status";
 };
-["msg_to_user","",[_msg],0,10, false,"losing_patience"] call XSendNetStartScriptClient; // show message 10 seconds later this SM finished
+["msg_to_user","",[_msg],0,10, false,_sound] call XSendNetStartScriptClient; // show message 10 seconds later this SM finished
 sleep (5 + (random 5));
 
 //==================================================
@@ -238,6 +256,8 @@ sleep (5 + (random 5));
 // remove markers
 deleteMarker _radar_marker;
 deleteMarker _truck_marker;
+hint localize "+++ x_sideradio.sqf:   radar and truck markes are deleted";
+
 // d_radar continue to exists for the future adventures
 if (_mission) then {
     // start the main loop, because there should be no more missions with the radio relay
