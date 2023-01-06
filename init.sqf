@@ -401,9 +401,9 @@ if (isServer) then {
                 private ["_veh","_snd","_pos"];
                 _veh = "Vysilacka" createVehicle [0, 0, 0]; // "Radio" is deletable, Vysilacka is not deletable
                  // set radio on top of the table
-                _pos = if (random 2 > 1) then { [ 9384.3, 9972.8, 1.5] } else { [ 9384.3, 9971.6, 1.5] };
+                _pos = [ [ 9384.3, 9972.8, 1.6], [ 9384.3, 9971.6, 1.6] ] select (floor (random 2));
                 _veh setPos _pos;
-                _veh setDir 90;
+//                _veh setDir 90;
                 sleep 5.512;	// wait until dropped to the underlying surface
                 _snd = createSoundSource ["Music", (getpos _veh), [], 0];// only one source on the server should be created
 
