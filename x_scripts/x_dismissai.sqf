@@ -11,7 +11,8 @@ _dmg_cnt = 0;
 if (_ai_cnt > 0) then {
 	_ai_cnt = 0;
 	_ai_low_cost = d_ranked_a select 3; // constant cost for the 1st soldier
-	_refund = 0;
+	_refund = 0; // score to return to the player
+	_lost   = 0; // score to subtract due to AI wounds
 	{
 		if (!isPlayer _x) then {
 			_ai_cnt = _ai_cnt + 1;
@@ -21,16 +22,22 @@ if (_ai_cnt > 0) then {
                 _refund = _refund + _ai_low_cost;
             } else {
                 _dmg = damage _x;
-                _refund = _refund + ceil (_ai_cost * 0.5 * (1 - _dmg));
+//                _refund = _refund + ceil (_ai_cost * 0.5 * (1 - _dmg));
+				_dmg_cost = ceil (_ai_cost * (1 - _dmg)); // refund score minus AI damage
+                _refund = _refund + _dmg_cost; // summary refund scores
+                _lost = _lost + (_ai_cost - _dmg_cost);  // summary lost scores
                 if (_dmg > 0 ) then {_dmg_cnt = _dmg_cnt + 1};
             };
 			if (vehicle _x == _x) then {
-				deleteVehicle _x;
-				sleep 0.1;
+				_x say "steal";
+				sleep 0.3;
+    			deleteVehicle _x;
 			} else {
 				_x action ["eject", vehicle _x];
 				unassignVehicle _x;
-				sleep 0.532;
+				sleep 0.232;
+				_x say "steal";
+				sleep 0.3;
 				deleteVehicle _x;
 			};
 		};
@@ -43,7 +50,7 @@ if (_ai_cnt > 0) then {
 	};
 	_str = "";
 	if ( _dmg_cnt  > 0) then {
-	    _str = format[localize "STR_AI_9_1", _dmg_cnt]; // ". Take care of your soldiers better (injured %1)!"
+	    _str = format[localize "STR_AI_9_1", _dmg_cnt, _lost]; // ". Take care of your soldiers better (injured %1, score lost %2)!"
 	    playSound "losing_patience";
 	}; // "Treat your soldiers better (wounded %1)"
 	(format[localize "STR_AI_9", _ai_cnt, _refund, _str])  call XfHQChat; // "All (%1) AI soldiers dismissed !!! Points returned %2%3"
