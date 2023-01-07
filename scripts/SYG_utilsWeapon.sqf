@@ -1967,7 +1967,7 @@ SYG_isBattleHeli = {
 
 // TODO: NOT USED ANYWHERE
 // call as:
-// _allowed_only = [_unit, ["rks","rfl","smg","pst","rpg","lng"]] call SYG_unitHasOnlyAlloweWeapon;
+// _allowed_only = [_unit, ["rks","rfl","smg","pst","rpg","lng"]] call SYG_unitHasOnlyAllowedWeapon;
 // where
 //       lng for long-muzzle rifle, including sniper and mg
 //       rfl stands for normal rifle,
@@ -1976,7 +1976,7 @@ SYG_isBattleHeli = {
 //       rpg for launcher,
 //       rks for rucksack
 //
-// if unit has any weapon not in allowed litd, function retunds true and false if vice versa
+// if unit has any weapon not in allowed list, function returns true and false if vice versa
 // e.g. call function to unit with AK74 with param [_unit,["rfl"]] will return true and call with [_unit,["pst"]] will return false
 //
 SYG_unitHasOnlyAllowedWeapon = {
@@ -2052,7 +2052,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 
 // return name for excessive weapon or empty string "" if no such weapon detected
 // call as:
-// _excessive = [_unit, ["rks","rfl","smg","pst","rpg","lng"]] call SYG_unitHasOnlyAlloweWeapon;
+// _excessive = [_unit, ["rks","rfl","smg","pst","rpg","lng"]] call SYG_findExcessiveWeapon;
 // where array of weapons is list of allowed weapons with means as follow:
 //       lng for long-muzzle rifle, including sniper and mg,
 //       rfl stands for normal rifle,
@@ -2063,7 +2063,7 @@ SYG_unitHasOnlyAllowedWeapon = {
 //       rks for rucksack,
 //       rks1 for small rucksack (ALICE OLD)
 //
-// if unit has any weapon not in allowed litd, function return its name or "" if vice versa
+// if unit has any weapon not in allowed list, function return its name or "" if vice versa
 // e.g. call function to unit with AK74 with param [_unit,["rfl"]] will return "" and call with [_unit,["pst"]] return "ACE_AK74"
 //
 SYG_findExcessiveWeapon = {
@@ -2077,7 +2077,7 @@ SYG_findExcessiveWeapon = {
 	if (format["%1",_unit getVariable "ACE_weapononback"] != "<null>") then {
 		_wob = _unit getVariable "ACE_weapononback";
 		if (_wob != "" && isClass (configFile >> "cfgWeapons" >> _wob)) then {
-			_weapons = _weapons + [_wob];
+			_weapons set [ count _weapons, _wob];
 		};
 	};
 	if ((count _weapons) == 0) exitWith {""}; // no weapon - always returns ""
@@ -2166,16 +2166,16 @@ SYG_getVecRoleBulkyWeapon = {
 	private ["_vec", "_role_arr", "_driver","_turret",/*"_cargo",*/"_bulky_weapon"];
 	_vec = vehicle _this;
 	if ( _vec == _this ) exitWith {""};
-	if ( _vec isKindOf "Motorcycle")  exitWith {""};
-	if ( _vec isKindOf "StaticWeapon" ) exitWith {""};
-	if ( _vec isKindOf "ACE_ATV_HondaR" ) exitWith {""};
-	if ( _vec isKindOf "Ship" ) exitWith {""};
-	if ( _vec isKindOf "Land" ) exitWith {""};
+//	if ( _vec isKindOf "Motorcycle")  exitWith {""};
+//	if ( _vec isKindOf "StaticWeapon" ) exitWith {""};
+//	if ( _vec isKindOf "ACE_ATV_HondaR" ) exitWith {""};
+	if ( _vec isKindOf "Land" ) exitWith {""}; // all land vehicles allowed for any weapons
+	if ( _vec isKindOf "Ship" ) exitWith {""}; // all ships allowed too
 
 	_role_arr = assignedVehicleRole player;
 	//hint localize format["x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _vec];
 	if (count _role_arr == 0 ) exitWith {""}; // no role
-	if ( (_role_arr select 0) == "Cargo" ) exitWith  {""};
+	if ( (_role_arr select 0) == "Cargo" ) exitWith  {""}; // any weapon allowed
 	_driver = false;
 	_turret = false;
 	//_cargo  = false;
@@ -2198,7 +2198,7 @@ SYG_getVecRoleBulkyWeapon = {
 //		if (_vec isKindOf "LandVehicle" ) exitWith {_bulky_weapon = ["rfl","rpg1"];};
 
 		if (_vec isKindOf "Air") then {
-		    if (!((_vec isKindOf "ParachuteBase") || ( _vec isKindOf "RAS_Parachute"))) then {
+		    if ( !(_vec call SYG_isParachute) ) then {
                 if (_vec isKindOf "Helicopter") then {
                     //["rks","rfl","smg","pst","rpg","lng"]
 //                    if (_driver || (_vec call SYG_isBattleHeli) ) then {_bulky_weapon = ["smg"]; breakTo "main";}
@@ -2211,7 +2211,7 @@ SYG_getVecRoleBulkyWeapon = {
 		if (true) exitWith {};
 	};
 #ifdef __DEBUG__
-	hint localize format["SYG_getVecRoleBulkyWeapon: bulky weapon %1", _bulky_weapon];
+	hint localize format["+++ SYG_getVecRoleBulkyWeapon: bulky weapon %1", _bulky_weapon];
 #endif
 	if ( (count _bulky_weapon) == 0 ) exitWith { "" }; // all is allowed
 	[player, _bulky_weapon] call SYG_findExcessiveWeapon;
