@@ -601,7 +601,7 @@ SYG_AIPriceByRankId = {
     if (ai_counter <= 0) then {
         d_ranked_a select 3 // first AI = 5
     } else  {
-        (d_ranked_a select 3) * 2 * ai_counter // 2nd AI = 10, 3rd AI = 20, 34th AI = 30... etc
+        (d_ranked_a select 3) * 2 * ai_counter // 2nd AI = 10, 3rd AI = 20, 4th AI = 30... etc
     };
 
 #endif
