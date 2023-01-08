@@ -52,7 +52,7 @@ class Rus5
 class Eng1
 {
 	name = "Timofei Produnov";
-	face = "Face52";
+	face = "Face1";
 	glasses = "Sunglasses";
 	speaker = "Peter";
 	pitch = 1;
@@ -60,7 +60,7 @@ class Eng1
 class Eng2
 {
 	name = "Maksim Bychovskay";
-	face = "Face48";
+	face = "Face2";
 	glasses = "None";
 	speaker = "Greg";
 	pitch = 1.070935;
@@ -68,7 +68,7 @@ class Eng2
 class Eng3
 {
 	name = "Gennadi Pakhomov";
-	face = "Face50";
+	face = "Face3";
 	glasses = "None";
 	speaker = "Rob";
 	pitch = 1.020398;
@@ -76,7 +76,7 @@ class Eng3
 class Eng4
 {
 	name = "Vladimir Spaseniev";
-	face = "Face44";
+	face = "Face4";
 	glasses = "None";
 	speaker = "Jonah";
 	pitch = 1.035809;
@@ -84,7 +84,7 @@ class Eng4
 class Eng5
 {
 	name = "Dimitri Drygin";
-	face = "Face52";
+	face = "Face5";
 	glasses = "Sunglasses";
 	speaker = "Adam";
 	pitch = 0.968085;
