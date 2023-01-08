@@ -16,9 +16,9 @@
 
 private ["_fmt","_sub_name"];
 hint localize format["+++ event_para_dropped.sqf: Landed with parachute _this %1, pos %2", _this, getPos (_this select 2)];
-_veh  = _this select 0;
+_veh  = _this select 0; // usually is NULL
 _unit = _this select 2;
-_add_score =  if (count _this < 4) then {true} else {_add_score = _this select 3}; // add score if count of params < 4
+_add_score =  if ((count _this) < 4) then {true} else {_add_score = _this select 3}; // add score if count of params < 4
 if (_add_score) then {
 	_fmt= "";
 	_sub_name = "";
@@ -46,9 +46,9 @@ _dist = [[AISPAWN, _pos1] call SYG_distance2D, 0.1] call SYG_roundTo;
 _arr = nearestObjects[ _pos1, ["HeliH"], 100]; // find nearest circle of any type near the landing point
 _msgArr = [];
 _send_to_server = false;
-hint localize format["+++ event_para_dropped%1.sqf: landed on the base, nearest circle count %2", _sub_name, count _arr];
 
 if ( _pos1 call SYG_pointIsOnBase ) then {
+	hint localize format["+++ event_para_dropped%1.sqf: landed on the base, nearest circle count %2", _sub_name, count _arr];
 	if ( (count _arr) > 0 ) then {
 		_pos2 = getPosASL (_arr select 0); // AISPAWN or other base circle?
 		_dist = [[_pos1, _pos2] call SYG_distance2D, 0.1] call SYG_roundTo;
