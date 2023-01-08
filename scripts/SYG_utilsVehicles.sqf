@@ -2229,6 +2229,7 @@ SYG_getConfigMags = {
  *
  */
 SYG_isParachute = {
+	if (typeName _this == "OBJECT") then {_this = typeOf _this};
 #ifdef __ACE__
 	 ( _this in ["ACE_ParachuteRoundPack","ACE_ParachutePack"] ) || ( _this isKindOf "ParachuteBase" ) || ( _this isKindOf "RAS_Parachute" );
 #else
