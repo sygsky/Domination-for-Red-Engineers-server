@@ -214,14 +214,17 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // insert special towns at the list head
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // Town ids =  2: Arcadia, 3: Chantico, 5: Paraiso, 8: Corazol, 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo, 14: Eponia, 4: Somato
+    // Town ids =  2: Arcadia, 3: Chantico, 4: Somato, 5: Paraiso, 6: Ortego, 7: Dolores, 8: Corazol, 9: Obregan, 14: Eponia,
+    // 20: Rahmadi, 21: Gaula, 22: Estrella, 28: Geraldo
 #ifdef __TOWN_WEAK_DEFENCE__
     _first_array = [4]; // set some predefined towns at start, dont use optional town indexes here
 #else
-    _first_array = []; // no predefined towns at start, dont use optional town indexes here
+    _first_array = [6]; // no predefined town[s] at start, dont use optional town indexes here
 #endif
-    if ((count _first_array) > 0 ) then {hint localize format["+++ MT goes first: %1", _first_array]};
-    maintargets_list = _first_array + (maintargets_list - _first_array);
+    if ((count _first_array) > 0 ) then {
+	    maintargets_list = _first_array + (maintargets_list - _first_array);
+    	hint localize format["+++ MT goes first: %1", _first_array]
+    };
 
     _str = format["+++ generated maintargets_list: %1",maintargets_list ];
     number_targets = count maintargets_list; // most correct definition of target towns is here!
