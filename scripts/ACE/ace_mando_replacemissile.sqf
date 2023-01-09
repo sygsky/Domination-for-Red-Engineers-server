@@ -133,9 +133,7 @@ _applyStingerParams = {
      _TargetISLandVehicle = _target isKindOf "LandVehicle";
      if (_TargetISLandVehicle) then {
         _this set [9,  mando_missile_path+"s\warheads\ace_mando_warhead_stinger_vs_ground.sqf"];
-     }
-     else
-     {
+     } else {
         _this set [9, mando_missile_path + (_this select 9)]; // boomscript
      };
      // TODO: disable guidance if target on land and has engine off #342
@@ -199,8 +197,7 @@ _applyStrelaParams1 = {
      };
 };
 
-_rocketDefault =
-[
+_rocketDefault = [
      0,
      0,
      250,
@@ -229,7 +226,7 @@ _rocketDefault =
      65,
      65,
      0
-];
+	];
 
 _rocketNamesArr  = [
     "M_Javelin_AT", "ACE_Missile_Javelin",
@@ -237,21 +234,24 @@ _rocketNamesArr  = [
      "M_Strela_AA",  "ACE_Missile_Strela"
     ];
 _rocketParamsArr = [
-    _rocketJavelin,       _rocketJavelin,
+	_rocketJavelin,       _rocketJavelin,
     _rocketStinger,       _rocketStinger, _rocketStinger,
-     _rocketStrela,       _rocketStrela
+    _rocketStrela,       _rocketStrela
     ];
 
-_target  = _this select 0;
-_type    = _this select 1;
-_shooter = _this select 2;
+_target   = _this select 0;	// To whom missile is launhed
+_type     = _this select 1;	// Missile type (STRING)
+_shooter  = _this select 2;	// Who launched missile
 _replaced = false;
+_local    = false;
+_ind      = -1;
 
 //hint localize format["+++ ACE_MANDO_REPLACE_MISSILE: %1", _this];
 
 if ( local _shooter ) then {
 // hint format["M:%1", _this];
     _missile = nearestObject [_shooter, _type];
+    _local = true;
     sleep 0.4;
     _posfire = _shooter worldToModel (getPos _missile);
     _vdir = vectorDir _missile;
@@ -294,7 +294,9 @@ if (!_replaced) exitWith {
     _name  =  call _makeNameShooter;
     _name1 =  call _makeNameTarget;
 
-    hint localize format["+++ MANDO Missile not replaced: from %1.%2(s. %3) -> %4, dmg %5, dst %6 m., h %7, spd %8, near %9, exit",
+    hint localize format["+++ MANDO Missile not replaced (local %1, id %2): from %3.%4(s. %5) -> %6, dmg %7, dst %8 m., h %9, spd %10, near %11, exit",
+    	_local,
+    	_ind,
         _name,
         _type,
         round(speed _shooter),
@@ -308,6 +310,11 @@ if (!_replaced) exitWith {
 
 _missile setPos [ 0,0,(getPos _missile select 2) + 5000];
 deleteVehicle _missile;
+
+//#ifdef __FUTURE__
+// Prevent attacking parachutes as they are not damageable
+if (_target call SYG_isParachute) exitWith { _this execVM "scripts\ACE\MyFalseMissile.sqf"}; // restore missile in shooter inventory
+//#endif
 
 //[_launcher, _missilebody, _posfire, _dir, _vangle, _speedini, _speedmax, _acceleration, _target, _boomrange, _activerange, _modeinit, _cruisealt, _boomscript, _smokescript, _soundrsc, _sounddur, _endurance, _terrainavoidance, _updatefreq, _delayinit, _controltime, _detectable, _debug, _launchscript, _hagility, _vagility, _accuracy, _intercept, _scanarch, _scanarcv] call mando_missile_handler;
 _arr = [
@@ -350,7 +357,7 @@ _name  = call _makeNameShooter;
 _name1 = call _makeNameTarget;
 _arr call mando_missile_handler; // variable in ACE code
 //2020/04/04, 16:33:28 +++ MANDO Missile: from ACE_SoldierWAA.ACE_Missile_Stinger spd 0 m/s -> Виталий(ACE_Mi17_MG) dmg 0.01, h 12 d 88 spd 255 m/s, near Gulan
-hint localize format[ "+++ MANDO Missile: from %1.%2 spd %3 km/h -> %4 dmg %5, h %6 d %7 spd %8 km/h, near %9",
+hint localize format[ "+++ MANDO Missile: from %1.%2, spd %3 km/h -> %4, dmg %5, h %6, d %7, spd %8 km/h, near %9",
     _name,
     format["%1%2",_type,if((_arr select 20) > 0) then {format["/delay=%1",_arr select 20]} else {""}],
     round(((velocity _shooter ) distance [0,0,0])*3.6), // round (speed _shooter),
