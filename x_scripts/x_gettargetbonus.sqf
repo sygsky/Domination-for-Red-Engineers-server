@@ -137,7 +137,7 @@ hint localize format["+++ x_scripts\x_gettargetbonus.sqf: main target DOSAAF veh
 _vehicle = (mt_bonus_vehicle_array select extra_bonus_number) createVehicle (_pos);
 _vehicle setDir _dir;
 _vehicle call SYG_assignVehAsBonusOne;
-hint localize format["+++ x_scripts\x_gettargetbonus.sqf: bonus vehicle created ""%1"" at %2", typeOf _vehicle, _vehicle call SYG_MsgOnPos];
+hint localize format["+++ x_scripts\x_gettargetbonus.sqf: bonus vehicle created ""%1"" at %2, pos %3", typeOf _vehicle, _vehicle call SYG_MsgOnPos, getPos _vehicle];
 #endif
 
 
@@ -171,5 +171,9 @@ _pos = nil;
 _dir = nil;
 _posa = nil;
 
+[_vehicle] spawn {
+	sleep 60; // wait a minute to report position after this delay
+	hint localize format["+++ x_scripts\x_gettargetbonus.sqf: main target bonus after 1 munute is at pos %1", getPos (_this select 0)];
+}
 
 if (true) exitWith {};

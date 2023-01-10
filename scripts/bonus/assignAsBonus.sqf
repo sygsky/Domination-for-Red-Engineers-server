@@ -40,3 +40,4 @@ if (_plane) then { _msg_arr set [count _msg_arr, ["STR_BONUS_7"]]; }; // "When i
 
 // send info about new DOSAAF vehicle and print corresponding message on all active clients
 ["bonus", "INI", _this, ["msg_to_user","*",_msg_arr,8,8,false,"good_news"]] call XSendNetStartScriptClientAll;
+

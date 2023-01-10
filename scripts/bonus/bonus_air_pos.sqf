@@ -1,4 +1,5 @@
 /*
+	scripts\bonus\bonus_air_pos.sqf
 	author: Sygsky
 	description: find bonus plane position on the island Sahrani
 	call as follows: [_x,_y<,_z>] execVM "scripts\bonus\bonus_air_pos.sqf";
