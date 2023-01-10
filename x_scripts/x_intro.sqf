@@ -92,6 +92,7 @@ if (count _holiday > 0 ) then {
     _sound = _holiday select 1;
     _music = _sound;
     playSound _sound;
+    hint localize format["+++ x_intro.sqf: holiday detected %1", _holiday];
 };
 
 _music_cnt = 0;
@@ -100,6 +101,7 @@ if (_sound == "") then { // select random music for an ordinal day
     	_music = ((SYG_holidayTable select 0) select 2) call _XfRandomArrayVal;
     	_sound = _music;
         playSound _music; //music for New Year period from 21 December to 10 January
+	    hint localize format["+++ x_intro.sqf: New Year music set ""%1""", _music];
         _newyear = true;
     } else {
         // music normally played on intro
@@ -108,6 +110,7 @@ if (_sound == "") then { // select random music for an ordinal day
             _sound = (call compile format["[%1]", localize "STR_INTRO_MUSIC_VOSR"]) call _XfRandomArrayVal;
             _music = _sound;
             playSound  _sound;
+		    hint localize format["+++ x_intro.sqf: 7th November period detected, music set ""%1""", _music];
         } else {
 
 #ifdef __TEST__
@@ -995,11 +998,10 @@ if (_doJump) then {
 		]
 	] call SYG_rearmUnit;
 
-	if (call isDarkness) then {
+	if (call SYG_isDarkness) then {
 		player call SYG_addNVGoggles; // add NVG as knight is on
-	} else {
-		player call SYG_addBinocular; // add binocular
 	};
+	player call SYG_addBinocular; // add binocular
 };
 
 #endif
