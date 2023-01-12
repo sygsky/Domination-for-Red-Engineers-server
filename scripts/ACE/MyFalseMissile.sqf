@@ -13,12 +13,16 @@ _shooter  = _this select 2;	// Who launched missile
 
 if (! (alive _shooter)) exitWith {
 	hint localize format[ "+++ MyFalseMissile.sqf: _shooter is %1, exit",
-		if ( isNull _shooter ) then { "null"} else { format[ "dead(%1)", typeOf _shooter ] }
+		if ( isNull _shooter ) then { "<null>"} else { format[ "dead(%1)", typeOf _shooter ] }
 	];
 };
 
-_name = if (isNull _target) then { "null" } else {name (driver _target)};
-hint localize format[ "+++ MyFalseMissile.sqf: shooter %1, missile %2, parachute %3 is worn by player ""%4"", skip it now, TODO in future...",
+_name = if (isNull _target) then { "<null>" } else {
+    _crew = crew _target;
+    if (count _crew == 0) exitWith {"<null>"};
+    name (_crew select 0)
+};
+hint localize format[ "+++ MyFalseMissile.sqf: shooter %1, missile %2, parachute %3 is worn by player ""%4"", skip it now...",
 	typeOf _shooter,
 	_type,
 	typeOf _target,
@@ -28,12 +32,16 @@ hint localize format[ "+++ MyFalseMissile.sqf: shooter %1, missile %2, parachute
 // Restore lost missiles for vehicle/AI unit
 if (_shooter isKindOf "CAManBase") then {
 	_shooter addMagazine _type;
-	_shooter removeWeapon "ACE_FIM92A";
-	_shooter addWeapon "ACE_FIM92A";
-	hint localize format["+++ MyFalseMissile.sqf: restore 1 %1 for %2", _type, typeOf _shooter];
-
+	if (_shooter hasWeapon "ACE_FIM92A") then {
+        _shooter removeWeapon "ACE_FIM92A";
+        _shooter addWeapon "ACE_FIM92A"; // this reloads Stringer for a AA soldier
+        hint localize format["+++ MyFalseMissile.sqf: restore 1 %1 for %2", _type, typeOf _shooter];
+	} else {
+	    hint localize format["--- MyFalseMissile.sqf: shooter %1(%2) has no Stinger launcher ""ACE_FIM92A"", skip reload", _name, typeOf _shooter];
+	};
 } else {
-	// TODO: full add Stinger/etc ammo to the inventory of launchng  vehicle
+	// TODO: full add Stinger/etc ammo to the inventory of launchng  vehicles
+	// TODO: now only "Linebaker" and "Stringer_Pod" arу known as Stringer vehicle launchers
 	if (_shooter isKindOf "ACE_M6A1") exitWith { // Linebacker
 		_cnt = {_x isKindOf "ACE_M6_FIM92"} count (weapons _shooter);
 		if (_cnt < 3) then {
@@ -55,4 +63,4 @@ if (_shooter isKindOf "CAManBase") then {
 			hint localize format["+++ MyFalseMissile.sqf: restore %1 2Rnd_Stinger for Stinger_Pod", 10 - _cnt];
 		};
 	};
-}
+};
