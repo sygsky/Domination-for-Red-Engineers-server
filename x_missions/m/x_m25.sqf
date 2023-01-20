@@ -1,4 +1,7 @@
-// by Xeno
+//
+// by Xeno: x_missions\m\x_m25.sqf
+// SM number: 25, enemy officer on Isla del Vasal or Isla del Vida
+//
 private ["_vehicle"];
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -9,10 +12,13 @@ private ["_vehicle"];
 #define ISLAS_SEPARATE_VERTICAL_LINE_X 4730
 
 x_sm_pos = [
-    // officer positions
-    [4726.85,15689,0],[4385.75,15825.4,0],[4415.64,15790.9,0],[4375.74,15790.8,0],[4392.87,15521.3,0],[4532.88,15304.8,0],[4585.08,15287.2,0],[4978.4,15466.1,0],[4855.92,15535.1,0],[4930.69,15514.1,0],[4956.34,15760.8,0],[4949.85,15827.9,0],[4964.33,16067,0],[4987.25,15717.1,0],[4395.8,15350.6,0],
-    // defence group positions (start at #16)
-   [4574.74,15374.2,0],[4368.82,15737,0],[5044.83,15799.3,0],[4860.15,15679.2,0]]; // index: 25,   enemy officer on Isla del Vasal or Isla del Vida
+    // 0 pos is flag one, 1-14 are officer positions
+    [4726.85,15689,0],[4385.75,15825.4,0],[4415.64,15790.9,0],[4375.74,15790.8,0],[4392.87,15521.3,0],
+    [4532.88,15304.8,0],[4585.08,15287.2,0],[4978.4,15466.1,0],[4855.92,15535.1,0],[4930.69,15514.1,0],
+    [4956.34,15760.8,0],[4949.85,15827.9,0],[4964.33,16067,0],[4987.25,15717.1,0],[4395.8,15350.6,0],
+    // pos 15-18 are defence group positions
+    [4574.74,15374.2,0],[4368.82,15737,0],[5044.83,15799.3,0],[4860.15,15679.2,0]
+];
 x_sm_type = "normal"; // "convoy"
 
 #ifdef __SMMISSIONS_MARKER__
@@ -24,7 +30,6 @@ if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for p
 #define __SUPER_AA_DEFENSE__
 #define __DEBUG__
 #define DELAY_BEFORE_NEXT_CREATION 120
-
 
 if (X_Client) then {
 	current_mission_text = localize "STR_SYS_508"; //"Стало известно, что виновный в развязывании войны офицер, возглавивший агрессию на Сахрани, прячется на одном из этих островов Isla del Vasal или Isla del Vida. Ликвидируйте негодяя!";
@@ -38,7 +43,7 @@ if (isServer) then {
     _officer = (if (d_enemy_side == "EAST") then {"OfficerE"} else {"OfficerW"});
 #endif
 
-	_ranside = floor random 15; // 0-14 - officer positions
+	_ranside = 1 + (floor random 14); // 1-14 - officer positions
 	_poss = x_sm_pos select _ranside;
 	//_fortress = "Fortress2" createVehicle _poss;
 	//_fortress setDir 290.789;
