@@ -250,8 +250,8 @@ if (isServer) then {
 
 //+++ Sygsky: move ranked player missions from the list beginning
 #ifdef __DEFAULT__
-    hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
     if (!isNil("ranked_sm_array") ) then {
+        hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
         private ["_lowestPos","_rankedSMArr","_ind", "_newInd","_val"];
         _lowestPos = ranked_sm_array select 0; // first allowed position for missions that need some rank (to drive tanks, helis, airplanes)
         _rankedSMArr = ranked_sm_array select 1; // mission ids
@@ -268,6 +268,8 @@ if (isServer) then {
                 side_missions_random set [_newInd, _x];
             }
         } forEach _rankedSMArr;
+    } else {
+        hint localize "+++ ranked_sm_array = nil";
     };
 #endif
 
@@ -288,7 +290,7 @@ if (isServer) then {
     if (! (56 in _first_array) ) then {
 		_ind56 = side_missions_random find 56;
 		if (_ind56 >= 0) then { // set it 2nd-3rd SM in the sequence
-			if ((_ind56 == 0) || (_ind56 > 9) ) then { // move 56th SM to the 2..3 position in array (so index will be  1..2)
+			if ((_ind56 == 0) || (_ind56 > 9) ) then { // move 56th SM to the 2..10 position in array (so index will be  1..9)
 				_ind = floor(random 9) + 1; // 1..9 = new index for 56th SM
 				side_missions_random set[_ind56, side_missions_random select _ind]; // move SM from new 56th SM index to the current 56th SM index
 				side_missions_random set[_ind, 56]; // put 56th SM to the 1..9 index in array
