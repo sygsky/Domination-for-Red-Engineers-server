@@ -17,7 +17,14 @@ if (! (alive _shooter)) exitWith {
 	];
 };
 
-_name = if (isNull _target) then { "null" } else {name (driver _target)};
+_name = if (isNull _target) then { "<null>" } else {
+	_crew = crew _target;
+	if (count _crew > 0) then {
+		name (_crew select 0)
+	} else {
+	 	"<null>"
+	};
+};
 hint localize format[ "+++ MyFalseMissile.sqf: shooter %1, missile %2, parachute %3 is worn by player ""%4"", skip it now, TODO in future...",
 	typeOf _shooter,
 	_type,
