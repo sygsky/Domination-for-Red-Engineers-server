@@ -219,7 +219,7 @@ if (isServer) then {
 #ifdef __TOWN_WEAK_DEFENCE__
     _first_array = [4]; // set some predefined towns at start, dont use optional town indexes here
 #else
-    _first_array = [6]; // no predefined town[s] at start, dont use optional town indexes here
+    _first_array = []; // no predefined town[s] at start, dont use optional town indexes here
 #endif
     if ((count _first_array) > 0 ) then {
 	    maintargets_list = _first_array + (maintargets_list - _first_array);
