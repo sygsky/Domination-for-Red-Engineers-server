@@ -209,9 +209,11 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			_s = _s + "\n" + localize "STR_RADAR_FAILURE_CONDITION";
 		};
 // Pilots rescue (sideevac) sidemission
-		case 52;  // heli crash at Bagango
-		case 54: { // heli crash at Mataredo
+		case 51;	//  heli crash at Hunapu
+		case 52;	// heli crash at Bagango
+		case 54: {	// heli crash at Mataredo
 			_town_name = switch ( current_mission_index ) do {
+				case 52: {"Hunapu"};
 				case 52: {"Bagango"};
 				case 54: {"Mataredo"};
 				default  {"<unknown>"};
@@ -223,8 +225,8 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 #else
 			_pilottype = d_pilot_W;
 #endif
-			if (format["%1",_pos] != "[0,0,0]") then {
-				// find pilots. They must be alive or rarely may be dead
+			if (format["%1",_pos] != "[0,0,0]") then { // _pos is a mission marker position
+				// find pilots. They would be alive and rarely dead
 				_units = nearestObjects [_pos, [_pilottype], 500];
 				_near = objNull;
 				{

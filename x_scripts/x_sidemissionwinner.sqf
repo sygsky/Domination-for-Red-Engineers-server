@@ -1,5 +1,5 @@
 ﻿// by Xeno, x_scripts/x_sidemissionwinner.sqf. Called from x_scripts\x_funcs\x_netinitclient.sqf on "sm_res_client" event
-// sent from call to XSideMissionResolved on server
+// sent from call to XSideMissionResolved on server, on client net come with code "sm_res_client"
 private ["_bonus_pos","_bonus_string","_bonus_vehicle","_s"];
 
 if (!X_Client) exitWith {};
@@ -43,11 +43,11 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 	if ( ( isNil "d_sm_p_pos") && (!d_was_at_sm)) then {
 		_posi_array = x_sm_pos;
 		_posione = _posi_array select 0;
-		_get_points = (player distance _posione < (d_ranked_a select 12));
+		_get_points = (player distance _posione < (d_ranked_a select 12)); // 250 m
 	} else { // not is nil
 		_get_points =  d_was_at_sm;
 		if (!_get_points) then {
-			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12));
+			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12)); // 250 m
 		};
 	};
     hint localize format["+++ x_sidemissionwinner.sqf : d_sm_p_pos %1, d_was_at_sm %2, x_sm_pos %3",
@@ -99,7 +99,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
         case -600 : {"STR_SYS_129_6"/*"Образец захваченной у врага техники развалился до того, как попал в руки ГРУ на базе..."*/};
         case -700 : {"STR_SYS_129_7"/*"Пилоты скончались от столбняка до прибытия на базу..."*/};
         case -701 : {"STR_SYS_129_8"/*"Bus is destroyed or all civilians are dead"*/}; // the future SM type - "Safely deliver a group of civilians by bus to their destination!"
-        case -702 : {"STR_RADAR_FAILED"/*"Mission failed, no help from GRU!"*/}; // the future SM type - "Safely deliver a group of civilians by bus to their destination!"
+        case -702 : {"STR_RADAR_FAILED"/*"Mission failed, no help from GRU!"*/}; // the new SM type (GRu radiorelay) - "Safely deliver a new radio mast to the north mountine top and return truck to the base!"
         default {"STR_SYS_129_100"}; // "You lost a fortune..."
     };
 	_s = localize _s;
@@ -116,7 +116,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 			];
 		_s = format [localize "STR_SYS_130"/* ""For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!" */, _penalty];
 		_s call XfHQChat;
-		hint localize ("--- SideMission: " + (localize "STR_SYS_129"));
+		hint localize ("--- SideMission: " + (localize "STR_SYS_129") +  " #" + str(current_mission_index));
 	};
 };
 

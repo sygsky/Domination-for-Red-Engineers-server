@@ -66,7 +66,7 @@ if ( _mission && ( !alive d_radar ) ) exitWith {
 		side_mission_resolved = true;
 	};
 };
-hint localize format["+++ x_sideradio.sqf: found alive d_radar in %1 seconds after the destruction of the previous one, continue...", _cnt * 5];
+hint localize format["+++ x_sideradio.sqf: found alive d_radar in %1 seconds after the destruction of the previous one, continue...", floor(time - _time)];
 
 // radar is alive now, store current object and check only it
 _radar = d_radar;

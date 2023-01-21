@@ -28,7 +28,7 @@ if (isServer) then {
         d_sm_p_pos = nil;
 #endif
 	    x_sm_pos set [0, x_sm_pos select 1];
-	    publicVariable "x_sm_pos";
+//	    publicVariable "x_sm_pos"; // dont use this line as x_sm_pos is modified with server-client network exchange
 	};
 	__Poss
 #ifdef __RANKED__
