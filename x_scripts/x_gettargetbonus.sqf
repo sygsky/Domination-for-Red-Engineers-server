@@ -174,6 +174,6 @@ _posa = nil;
 [_vehicle] spawn {
 	sleep 60; // wait a minute to report position after this delay
 	hint localize format["+++ x_scripts\x_gettargetbonus.sqf: main target bonus after 1 munute is at pos %1", getPos (_this select 0)];
-}
+};
 
 if (true) exitWith {};
