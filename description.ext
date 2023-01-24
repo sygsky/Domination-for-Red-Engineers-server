@@ -343,7 +343,7 @@ class RscTitles
 		duration     =  120; // to fit any musics time. Will be cleared fromt he script by code: cutRsc ["Defaul", "PLAIN"];
     	name="S_RscIntroTitles";
     	controls[]={"titel1","titel2"};
-    	onLoad="INTRO_HUD = _this select 0"; // to know the is for dialog loaded by rscCut
+    	onLoad="INTRO_HUD = _this select 0"; // to know the id for the dialog loaded by rscCut
 //    	class Controls {
 		// title class for show intro comment about Xeno and EngineerACE
 		class titel1: XC_RscText

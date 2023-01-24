@@ -8,6 +8,8 @@ if (!X_Client) exitWith {};
 
 //#define __DEBUG__
 
+#define PENALTY_PRESENCE_TIME 600 // (10 minutes) the time spent on the island, after which the player is penalized for not completing the SM mission
+
 sleep 1;
 
 if (x_sm_type == "undefined") then { // remove all possible markers
@@ -107,16 +109,24 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 	if (_s != "") then {
         _penalty = d_ranked_a select 11; // todo: lower all players in rank on such bad event!!!
         //player addScore (-_penalty);
-        (-_penalty) call SYG_addBonusScore;
-		hint composeText[ 
+        _time = floor (time);
+        if (_time >= PENALTY_PRESENCE_TIME) then {
+            (-_penalty) call SYG_addBonusScore;
+            playSound "whold"; // report failure and score reducing
+        };
+		hint composeText[
 			parseText("<t color='#f0ff00ff' size='1'>" + localize "STR_SYS_129"/* "Side mission failed!!!" */ + "</t>"),
 			lineBreak,
 			lineBreak,
 			_s
 			];
-		_s = format [localize "STR_SYS_130"/* ""For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!" */, _penalty];
+        if (time >= PENALTY_PRESENCE_TIME) then {
+    		_s = format [localize "STR_SYS_130", _penalty]; // /* ""For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!" */
+        } else {
+    		_s = format [localize "STR_SYS_130_0", _time, _penalty]; // "You have been on the island for less than %1 minutes, so you have not had your points reduced (-%2)."
+        };
 		_s call XfHQChat;
-		hint localize ("--- SideMission: " + (localize "STR_SYS_129") +  " #" + str(current_mission_index));
+		hint localize ("*** SideMission: " + (localize "STR_SYS_129") +  " #" + str(current_mission_index));
 	};
 };
 

@@ -156,7 +156,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			};
 		};
 		//case 25; Officer on Isla da Voda and isla da Vassal
-		case 42;
+		case 42; // officer arrest
 		case 49; // officer Grant
 		case 55: {// officer arrest
 			_s1 = localize "STR_SYS_135"; //"Side Mission marker is absent"  - default message

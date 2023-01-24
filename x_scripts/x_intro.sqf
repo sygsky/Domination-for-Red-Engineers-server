@@ -657,7 +657,7 @@ SYG_showMusicTitle = {
 	_str = localize format[ "STR_%1", _sound ]; // e.g. "STR_ATrack24" from Arma CfgMusic section
 	if ( _str != "") then { // title defined and found
 		_control ctrlSetText _str;
-		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1) created for ""%2"", _this = %3", _control, _sound, _this ];
+		hint localize format[ "+++ SYG_showMusicTitle: music text control (%1/%2) created for ""%3"", _this = %4", INTRO_HUD, _control, _sound, _this ];
 	} else {
 		hint localize format[ "--- SYG_showMusicTitle: music title not found, _this = %1", _this ];
 	};
