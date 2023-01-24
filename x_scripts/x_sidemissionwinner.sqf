@@ -120,7 +120,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 			lineBreak,
 			_s
 			];
-        if (time >= PENALTY_PRESENCE_TIME) then {
+        if (_time >= PENALTY_PRESENCE_TIME) then {
     		_s = format [localize "STR_SYS_130", _penalty]; // /* ""For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!" */
         } else {
     		_s = format [localize "STR_SYS_130_0", _time, _penalty]; // "You have been on the island for less than %1 minutes, so you have not had your points reduced (-%2)."
