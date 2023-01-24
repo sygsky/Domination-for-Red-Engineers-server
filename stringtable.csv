@@ -1473,7 +1473,7 @@ STR_SET_39,Only vehicles BEFORE 1985 inclusivelly allowed\n,Nur Maschinen bis ei
 STR_SET_39_0,The mission uses all available equipment\n,Die Mission nutzt alle verfügbaren Geräte\n,La misión utiliza todo el equipo disponible\n,В миссии используется все доступная техника\n
 STR_SET_40,Parajumps without parachute are allowed)))\n,Fallschirmsprünge ohne Fallschirm sind erlaubt)))\n,Los saltos en paracaídas sin paracaídas están permitidos)))\n,Прыжки без парашюта разрешены)))
 STR_SET_41,DOSAAF vehicles allowed\n,DOSAAF-Fahrzeuge präsentieren\n,Vehículos DOSAAF presentes\n,Присутствуют ДОСААФ машины\n
-STR_SET_42,Arrival at the mission - by parachute\n,Ankunft bei der Mission - mit dem Fallschirm\n,Llegada a la misión - por paracaídas\n,Заход в миссию на парашюте\n
+STR_SET_42,"Parachute into the mission if the time of absence exceeds %1 min.\n","Eintritt mit Fallschirm zur Basis, wenn die Abwesenheitszeit %1 min überschreitet.\n","Entrada con paracaídas a la base si el tiempo de ausencia supera %1 min.\n","Заход в миссию на парашюте, если отсутствие долее %1 мин.\n"
 
 STR_SPPM,SPPM :,SPPM :,SPPM :,СППМ :
 STR_SPPM_ADD,Add,Erstellen,Crear,Создать
@@ -1682,6 +1682,7 @@ STR_AVIAMARCH,aviamarch_eng,aviamarch_ger,aviamarch_rus,aviamarch_rus
 STR_KILLED_WALL,Attempt to kill base building ('%1' scores removed -%2),Versuchte Basiszerstörung ('%1' Punkte entfernt -%2),Intento de destrucción de la base ('%1' puntos removidos -%2),Попытка уничтожения базы ('%1' снято очков -%2)
 
 STR_GREETING_COMMON,"For their service in building the mission, the chief engineer extends his thanks to fighters Rokse, Ceres, Snooper and gyuri!!!","Für ihre Dienste beim Bau unserer Mission dankt der Chefingenieur den Kämpfern Rokse, Ceres, Snooper und gyuri!!!","Por sus servicios en la construcción de nuestra misión, el ingeniero jefe da las gracias a los cazas Rokse, Ceres, Snooper y gyuri!!!","За заслуги в деле построения миссии главный инженер выносит благодарность бойцам Rokse, Ceres, Snooper и gyuri!!!"
+STR_GREETING_WARN,"Soldier! The headquarters of the local detachment of the SpN GRU of the USSR Ministry of Defense offers you to change your call sign to a more human call sign!","Soldat! Das Hauptquartier der örtlichen Abteilung des SpN GRU des Verteidigungsministeriums der UdSSR bietet Ihnen an, Ihr Rufzeichen in ein menschlicheres Rufzeichen zu ändern!","¡Soldado! El cuartel general del destacamento local del SpN GRU del Ministerio de Defensa de la URSS le ofrece cambiar su indicativo por otro más humano.","Боец! Командование местного отряда СпН ГРУ МО СССР предлагает тебе сменить позывной на человеческий!"
 
 STR_CHECK_ITEM,Inspect,Überprüfen,Estudiar,Изучить
 STR_REG_ITEM,Register on base,Anmeldung an der Basis,Regístrese en la base,Регистрировать на базе

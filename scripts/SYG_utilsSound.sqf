@@ -346,7 +346,7 @@ SYG_playRandomTrack = {
 //		hint localize format["+++ SYG_playRandomTrack: arr = %1", _arr];
 		if ( (count _arr) < 7 ) exitWith { playSound _this; _this }; // short name means it is not internal music from CfgMusic
 		_arr resize 6;
-		_arr = +_arr; // It is needed else stinrg will be empty (bug of BIS)
+		_arr = +_arr; // It is needed else sting will be empty (bug of BIS)
 		_trk = toUpper( toString ( _arr ));
 		if ( _trk != "ATRACK" ) exitWith {
 			playSound _this;

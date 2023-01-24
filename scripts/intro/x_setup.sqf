@@ -204,7 +204,7 @@
 
 // comment to disable player parajump on connection and base reach procedure, number is delta time after last disconnection to allow next parajump.
 // If current delta time is greater then this number, jump is produced, is less not produced
-#define __CONNECT_ON_PARA__ 9000
+#define __CONNECT_ON_PARA__ 1800
 
 // please not comment lower line, only change it to any of follow values: 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000
 #define DEFAULT_VIEW_DISTANCE 3500

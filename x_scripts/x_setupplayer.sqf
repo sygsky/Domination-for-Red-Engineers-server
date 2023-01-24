@@ -901,9 +901,9 @@ _local_msg_arr spawn {
              _x call XfGlobalChat;
         } forEach _this;
     };
-
+	_pl_name = _pl_name;
     // West Germany
-    if ( (name player) in ["Ceres-de","CERES de","Ceres.","CERES"]) exitWith {
+    if ( (toUpper _pl_name) in ["CERES-DE","CERES DE","CERES.","CERES"]) exitWith {
         sleep 6;
         // "For numerous military services, the command and the grateful citizens declare you an honorary citizen of Sahrani Island."
         [
@@ -920,7 +920,7 @@ _local_msg_arr spawn {
     };
 
     // Litva
-    if ( (name player) == "Rokse [LT]") exitWith {
+    if ( (_pl_name) == "Rokse [LT]") exitWith {
         sleep 6;
         [
             "msg_to_user",
@@ -931,7 +931,7 @@ _local_msg_arr spawn {
     };
 
 	// Khabarovsk: 2-feb is the Soviet aviation day
-    if ( ((name player) == "HRUN") && ( ((SYG_client_start select 1) == 2) && ((SYG_client_start select 2) == 9) ) ) exitWith {
+    if ( ((_pl_name) == "HRUN") && ( ((SYG_client_start select 1) == 2) && ((SYG_client_start select 2) == 9) ) ) exitWith {
         sleep 6;
         [
             "msg_to_user",
@@ -942,7 +942,7 @@ _local_msg_arr spawn {
     };
 
 	// Latvia
-	if ( (name player) == "Renton J. Junior" ) exitWith { // "Рентон! Не трожь СППМ! За это - расстрел! Но в будущем)))"
+	if ( (_pl_name) == "Renton J. Junior" ) exitWith { // "Рентон! Не трожь СППМ! За это - расстрел! Но в будущем)))"
 		sleep 6;
 		[
 			"msg_to_user",
@@ -952,7 +952,7 @@ _local_msg_arr spawn {
 		] spawn SYG_msgToUserParser;
 	};
     // Argentina
-	if ( (name player) == "lolport" ) exitWith {
+	if ( (_pl_name) == "lolport" ) exitWith {
 		sleep 6;
 		[
 			"msg_to_user",
@@ -963,7 +963,7 @@ _local_msg_arr spawn {
 	};
 
 	// "АЛЕКС МЭЙСОН"
-	if ( (name player) in ["АЛЕКС МЭЙСОН","David Armstrong"] ) exitWith {
+	if ( (toUpper _pl_name) in ["АЛЕКС МЭЙСОН","DAVID aRMSTRONG", "ALEX mASON"] ) exitWith {
 		sleep 6;
 		[
 			"msg_to_user",
@@ -973,8 +973,22 @@ _local_msg_arr spawn {
 		] spawn SYG_msgToUserParser;
 	};
 
+	// "PLAYER 1"
+	// check if name starts from "PLAYER " ...
+	_arr = toArray (_pl_name);
+	_exit = (size _arr) < 8;
+	if ((toUpper _pl_name) in ["PLAYER 1", "PLAYER 2", "PLAYER 3", "ADMIN", "USER"] ) exitWith {
+		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ [localize "STR_GREETING_WARN" ] ],
+			0, 5, false, "losing_patience"
+		] spawn SYG_msgToUserParser;
+	};
+
 	// "Oberon"
-	if ( (name player) == "Oberon" ) exitWith {
+	if ( (_pl_name) == "Oberon" ) exitWith {
 		sleep 6;
 		[
 			"msg_to_user",
@@ -986,7 +1000,7 @@ _local_msg_arr spawn {
 
 //	hint localize format["+++ DEBUG: if ( ((name player) == ""EngineerACE:"")) == %1", ((name player) == "EngineerACE")];
 //	if ( ((name player) == "EngineerACE")) exitWith {
-	if ( ((name player) == "SarDELKA122")) exitWith {
+	if ( ((_pl_name) == "SarDELKA122")) exitWith {
 		private ["_date","_str","_sound","_hour","_week_day"];
 		_date = + SYG_client_start; // real date+time
 		_str = "Остров приветствует бойца Горьковского спецназа!";
@@ -1531,7 +1545,7 @@ if (__AIVer || d_para_at_base) then {
 FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
 #endif
 #ifdef __DEBUG_800_SCORE__
-if ( ((name player) == "EngineerACE") && ((score player) < 800)) then { player addScore (800 - (score player)) };
+if ( ((_pl_name) == "EngineerACE") && ((score player) < 800)) then { player addScore (800 - (score player)) };
 #endif
 
 #ifdef __DEBUG_FLARE__
@@ -1621,7 +1635,7 @@ if (d_player_air_autokick > 0) then {
 	waitUntil {sleep 5; !d_still_in_intro};
 #ifdef __SPPM__
 	hint localize "+++ SPPM UPDATE initiated for markers";
-	["SPPM", "UPDATE", name player, false] call XSendNetStartScriptServer; // allow SPPM markers visibility at the start
+	["SPPM", "UPDATE", _pl_name, false] call XSendNetStartScriptServer; // allow SPPM markers visibility at the start
 #endif
 	private ["_oldscore","_newscore","_mtkills","_oldkills","_newkills","_player"];
 	_oldscore  = 0;
@@ -1635,7 +1649,7 @@ if (d_player_air_autokick > 0) then {
 			// real player kills in the town
 			_mtkills = if (call SYG_playerIsAtTown) then { _newkills - _oldkills } else { -1 };
 			// send full score (_newscore), in town real kills score (_mtkills)
-			_player = if (SYG_playerID < 0) then {name player} else {SYG_playerID};
+			_player = if (SYG_playerID < 0) then {_pl_name} else {SYG_playerID};
 			["d_ad_sc", _player, _newscore, _mtkills] call XSendNetStartScriptServer;
 
 //			hint localize format["+++ send %1, bon %2, ded %3", ["d_ad_sc", _player, _newscore, _mtkills], SYG_bonusScore, SYG_deathCount];
@@ -1700,7 +1714,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 [] spawn {
 	private ["_name"/* , "_identity" */, "_pos", "_target", "_targets","_var","_comp","_cnt"];
 	sleep random 2;
-	_name = name player;
+	_name = _pl_name;
 	["d_p_varname",_name,str(player), localize "STR_LANG"] call XSendNetStartScriptServer;
 
 /*
@@ -1828,7 +1842,7 @@ player addAction["score -15","scripts\addScore.sqf",-15];
 //#define __DEBUG_ADD_VEHICLES__
 
 #ifdef __DEBUG_ADD_VEHICLES__
-if (name player == "EngineerACE") then {
+if (_pl_name == "EngineerACE") then {
     // teleport player to the hills above Bagango valley
     hint localize format["+++ x_setupplayer.sqf: EngineerACE (score %1) && __DEBUG_ADD_VEHICLES__", score player];
     //player setPos [14531,9930,0];
@@ -1844,7 +1858,7 @@ if (name player == "EngineerACE") then {
 #endif
 
 #ifdef __SCUD__
-if (name player == "HE_MACTEP") then {
+if (_pl_name == "HE_MACTEP") then {
     hint localize "+++ x_setupplayer.sqf: __SCUD__";
     waitUntil { sleep 0.5;(!isNil "d_player_stuff")};
     if ( score player < 1000 ) then { player addScore (1000 - (score player) ) };

@@ -76,6 +76,8 @@ _ctrl ctrlSetText str(d_points_needed select 4);
 _ctrl = _XD_display displayCtrl 2006;
 _ctrl ctrlSetText str(d_points_needed select 5);
 
+//++++++++++++++++++++++++++++++++++++ MAIN LIST BOX WITH SETTINGS +++++++++++++++++++++
+
 _ctrl = _XD_display displayCtrl 2007;
 
 _strYesCR = localize "STR_SYS_400";   // "Yes\n"

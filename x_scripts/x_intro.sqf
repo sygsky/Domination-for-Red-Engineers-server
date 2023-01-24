@@ -429,7 +429,7 @@ switch typeOf _lobj do {
 };
 //_lobj setDirection (random 360);
   
-#define DEFAULT_EXCESS_HEIGHT_ABOVE_POINT 20
+#define DEFAULT_EXCESS_HEIGHT_ABOVE_POINT 30
 
 #ifdef __CONNECT_ON_PARA__
 #define DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD 5
