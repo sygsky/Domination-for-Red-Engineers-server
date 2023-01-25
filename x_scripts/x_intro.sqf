@@ -388,6 +388,12 @@ if (_doJump) then {
 _spawn_point  = getPos player;
 #endif
 
+if (  (name player) in ["Snooper"] ) then {
+	player setPos  [17351,17943,0];
+	_spawn_point = getPos player;
+
+};
+
 //hint localize format["+++ x_intro.sqf: _spawn_point = %1", _spawn_point];
 #ifdef __DEFAULT__
     // 7703.5,7483.2, 0

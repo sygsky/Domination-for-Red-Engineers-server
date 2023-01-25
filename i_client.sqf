@@ -120,7 +120,7 @@ if (X_Client) then {
     #endif
 
 	#ifdef __CONNECT_ON_PARA__
-    base_visit_status = 0;
+    base_visit_status = 0; // -1: player dead (in open.sqf), 0: player not visited dead, 1: player visited base
     #endif
     player_is_driver = false;
     client_target_counter = 0;

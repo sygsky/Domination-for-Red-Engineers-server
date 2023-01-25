@@ -1654,7 +1654,7 @@ SYG_armUnit = {
 //
 SYG_rearmUnit = {
 	private [ "_unit", "_list", "_mag", "_mags", "_cnt", "_i", "_wpn", "_muzzles", "_ruck", "_ruck_items",
-	 "_wpn", "_rifle","_gun", "_sidearm","_vdist","_x"];
+	 "_wpn", "_rifle","_gun", "_sidearm","_param","_x"];
 	if ( typeName _this != "ARRAY") exitWith { false };
 	if ( (count _this) < 2 ) exitWith { false };
     if ( (typeName (_this select 1)) == "STRING") then {
@@ -1732,18 +1732,18 @@ SYG_rearmUnit = {
         };
 	};
 	// argopt(4) is value for player stored view distance
-	_vdist = argopt(4, 0);
-	if ( (_vdist > 0)) then { // change only if user not set it before
-		if ( _vdist == DEFAULT_VIEW_DISTANCE ) exitWith { hint localize format["*** SYG_ RearmUnit: attempt to set back default view distance (%1 m) denied", DEFAULT_VIEW_DISTANCE] };
+	_param = argopt(4, 0);
+	if ( (_param > 0)) then { // change only if user not set it before
+		if ( _param == DEFAULT_VIEW_DISTANCE ) exitWith { hint localize format["*** SYG_ RearmUnit: attempt to set back default view distance (%1 m) denied", DEFAULT_VIEW_DISTANCE] };
 		//hint localize format["++++++ SYG_rearmUnit: _vdist = %1 +++++++", _vdist];
-		_vdist call SYG_setViewDistance;
+		_param call SYG_setViewDistance;
 	};
 
 	// argopt(5) is value for player reborn music play/not play
-	_vdist = argopt(5, -1);
-	if ( (typeName _vdist == "SCALAR") && (_vdist != d_rebornmusic_index) && (_vdist in [0,1]) ) then {
-        d_rebornmusic_index = _vdist;
-        _msg = ["STR_REBORN_1","STR_REBORN_0"] select _vdist; // "On", "Off"
+	_param = argopt(5, -1);
+	if ( (typeName _param == "SCALAR") && (_param != d_rebornmusic_index) && (_param in [0,1]) ) then {
+        d_rebornmusic_index = _param;
+        _msg = ["STR_REBORN_1","STR_REBORN_0"] select _param; // "On", "Off"
         ( format [ "%1 -> %2", localize "STR_SYS_168", localize _msg ] ) call XfGlobalChat; // "Respawn music"
 	};
 
