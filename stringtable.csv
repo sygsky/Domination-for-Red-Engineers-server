@@ -1595,6 +1595,7 @@ STR_WPN_EXIT,"click '%1' to exit from dialog","drücken Sie '%1', um den Dialog 
 
 STR_RADAR_NO,Received unreliable message,Empfangene unzuverlässige Nachricht,Mensaje recibido no fiable,Получено невнятное сообщение
 STR_RADAR_MAST,Rusty GRU Radio-mast,Rostiger GRU-Funkmast,Mástil de radio GRU oxidado,Ржавая радио-мачта ГРУ
+STR_RADAR_MAST_RED,The nearest GRU marker is repainted red,Die nächstgelegene GRU-Markierung wird rot umgestrichen,El marcador GRU más cercano está repintado de rojo,Ближайший маркер ГРУ помечен красным
 STR_RADAR_MAST_INFO,Look for a radio relay mast in the '%1' area.,Suchen Sie nach einem Richtfunkmast im Bereich '%1'.,Busca un mástil de radioenlace en la zona '%1'.,Ищите запасную радио-мачту в районе '%1'.
 STR_RADAR_MAST_DEAD,Radio mast destroyed.,Funkmast zerstört.,Mástil de radio destruido.,Радио-мачта уничтожена.
 STR_RADAR_MAST_UNLOADED,"Rusty radio mast, what junkyard did you find it in?","Verrosteter Funkmast, auf welchem Schrottplatz hast du den gefunden?","Mástil de radio oxidado, ¿en qué chatarrería lo encontraste?","Ржавая радио-мачта, на какой свалке вы её нашли?"

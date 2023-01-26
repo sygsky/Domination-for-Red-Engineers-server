@@ -235,6 +235,25 @@ if (true) then {
 			if ( ([d_radar, RADAR_ZONE_CENTER] call SYG_distance2D) > INSTALL_RADIUS) exitWith {
 				_txt = localize "STR_RADAR_BAD_SIGNAL";
 				["say_radio", call SYG_randomRadioNoise] call XSendNetStartScriptClientAll;
+
+				(getPos d_radar) spawn {
+					private ["_pos","_i","_cnt"];
+					_i = 1;
+					_pos = _this;
+					_pos set [2,0];
+					_cnt = 0;
+					{
+						if ( (_x distance _pos) < 100 ) then {
+							format["%1_%2",sm_marker_name, _i] setMarkerColor  "ColorRedAlpha";
+							_cnt = _cnt + 1;
+						};
+						_i = _i + 1;
+					} forEach x_sm_pos;
+					if (_cnt > 0) then {
+						sleep 10;
+						(localize "STR_RADAR_MAST_RED") call XfGlobalChat; // "The nearest GRU marker is repainted red"
+					};
+				};
 			};
 
 			if (!alive player) exitWith { _txt = "STR_SYS_DEAD_BEFORE" }; // "You are dead, service is cancelled..."

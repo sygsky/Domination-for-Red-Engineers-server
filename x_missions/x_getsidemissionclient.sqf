@@ -65,7 +65,8 @@ if (current_mission_index != -1) then {
 	if (x_sm_type == "undefined") exitWith {
 		_i = 1;
 		{
-			[format["%1_%2",sm_marker_name, _i], _x,"ICON","ColorRedAlpha",[0.5,0.5],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
+//			[format["%1_%2",sm_marker_name, _i], _x,"ICON","ColorRedAlpha",[0.5,0.5],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
+			[format["%1_%2",sm_marker_name, _i], _x,"ICON","ColorGreenAlpha",[0.5,0.5],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
 			_i = _i + 1;
 		}forEach _posi_array;
 	};
