@@ -14,7 +14,7 @@ private ["_killer","_man","_men", "_unit","_exit","_churchArr","_TVTowerArr","_c
 _unit = _this select 0; // player
 _killer = _this select 1;
 
-_killer_name = if (isNull _killer) then {"<null>"} else {typeOf _killer};
+_killer_name = if (isNull _killer) then {"<null>"} else { if (isPlayer _killer) then { name _killer} else {typeOf _killer} };
 hint localize format["+++ deathSound.sqf runs for killed %1 and killer %2 +++", name _unit, _killer_name];
 
 if ( !( local _unit ) ) exitWith {hint localize format["--- scripts/deathSound.sqf, params not allow to play sound (!local): %1", _this]};

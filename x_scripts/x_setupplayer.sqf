@@ -1773,13 +1773,13 @@ player call SYG_handlePlayerDammage; // handle hit events
 		}
 #ifdef __DEBUG__
 		else {
-			hint localize "x_setupplayer.sqf: Action on GRU PC is set already!!!";
+			hint localize "+++ x_setupplayer.sqf: Action on GRU PC is set already!!!";
 		}
 #endif
 		;
 	}
 #ifdef __DEBUG__
-	else { hint localize "x_setupplayer.sqf: GRU PC isNull"; }
+	else { hint localize "+++ x_setupplayer.sqf: GRU PC isNull"; }
 #endif
 	;
 	// Play about all fires

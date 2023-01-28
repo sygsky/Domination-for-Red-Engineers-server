@@ -67,16 +67,16 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
     _tele_pos = _veh modelToWorld [0,-5,0]; // initial (not deviated) teleport position
     // if teleport is near iron mass add some deviation to the position
     _diff = [_veh, __TELEPORT_DEVIATION__] call SYG_findTeleportError; // deviation in meters due to magnetic mass in vicinity
-    _dmg = (damage _veh) * __TELEPORT_DEVIATION__ / 2; // deviation due to damage
+    _dmg = (damage _veh) * __TELEPORT_DEVIATION__ / 2; // deviation due to veh damage is halv of mass one
     _dist = _diff + _dmg;
     if ( _dist > 0.2 ) then {
 	   	// if there is an error on teleport, calculate shifted position now
-     	_global_pos = [_tele_pos, _dist] call SYG_deviateTeleportPoint; // real teleport position
+     	_global_pos = [_tele_pos, _dist] call SYG_deviateTeleportPoint; // real teleport position with error counted
      	_dist = [_global_pos, _tele_pos] call SYG_distance2D;
 		hint localize format["+++ teleport deviated to %1 m, shift %2", (round(_dist*10))/10, [ _global_pos, _tele_pos ] call  SYG_vectorSub];
-		_str = if ( _dist < 2 ) then {"STR_SYS_75_5_2"} else {
-			if ( _dist < 5 ) then {"STR_SYS_75_5_5"} else {
-				if ( _dist < 10 ) then {"STR_SYS_75_5_10"} else {"STR_SYS_75_5_MORE"};
+		_str = if ( _dist < 2 ) then {"STR_SYS_75_5_2"} else { // slightly
+			if ( _dist < 5 ) then {"STR_SYS_75_5_5"} else { // a little
+				if ( _dist < 10 ) then {"STR_SYS_75_5_10"} else {"STR_SYS_75_5_MORE"}; // significantly/has very much
 			};
 		};
 	    format [localize "STR_SYS_75_5", localize _str ]  call XfHQChat; // "Dest. point is %1 off due to iron mass and/or MHQ damage!"

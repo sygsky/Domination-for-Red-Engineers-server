@@ -153,7 +153,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 			if (!isNil "_detected") then { // alive, not installed, detected
 				if ( _radar_marker == "") then { // marker not exists, create it now
 					_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_SM_COLOR, [0.5, 0.5] ] call _make_marker;
-	       			hint localize format["+++ x_sideradio.sqf: create _radar_marker at %1", (markerPos _radar_marker) call SYG_MsgOnPosE0];
+	       			hint localize format["+++ x_sideradio.sqf: create _radar_marker at %1", [(markerPos _radar_marker),10] call SYG_MsgOnPosE0];
 				} else {
 					// marker exists, move it if needed
 					if ( ( [getMarkerPos _radar_marker, _radar] call SYG_distance2D ) > DIST_TO_SHIFT_MARKER ) then {

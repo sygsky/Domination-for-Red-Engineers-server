@@ -1,7 +1,6 @@
 // by Xeno
-if (isNil "SYG_resurrect_array") exitWith
-{
-    hint localize "dlg/res_radselchanged.sqf: SYG_resurrect_array isNil";
+if (isNil "SYG_resurrect_array") exitWith {
+    hint localize "+++ dlg/res_radselchanged.sqf: SYG_resurrect_array isNil";
 };
 
 private ["_selection", "_control", "_selectedIndex", "_dist"];

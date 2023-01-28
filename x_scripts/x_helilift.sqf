@@ -239,7 +239,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
 
                         // reveal to all players new position of MHQ. It can help!
                         sleep 1;
-                        hint localize format["_reveal_name = ""%1""", _reveal_name];
+                        hint localize format["+++ _reveal_name = ""%1""", _reveal_name];
                         if (_reveal_name != "") then {
                         	_str  = format["hint localize format[""+++ %1(1) %2"", getPos %1]", _reveal_name, "%1" ];
                         	_str1 = format["hint localize format[""+++ %1(2) %2"", getPos %1]", _reveal_name, "%1" ];

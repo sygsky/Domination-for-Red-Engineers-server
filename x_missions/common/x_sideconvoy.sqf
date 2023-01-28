@@ -408,9 +408,9 @@ if (_convoy_reached_dest) then {
 
 #ifdef __DEBUG_PRINT__
 if (_convoy_reached_dest) then {
-	hint localize "x_sideconvoy.sqf: Конвой достиг пункта назначения! Вы проиграли!";
+	hint localize "+++ x_sideconvoy.sqf: Конвой достиг пункта назначения! Вы проиграли!";
 } else {
-	hint localize "x_sideconvoy.sqf: Конвой уничтожен бойцами Советской Армии!";
+	hint localize "+++ x_sideconvoy.sqf: Конвой уничтожен бойцами Советской Армии!";
 };
 #endif
 

@@ -2116,7 +2116,7 @@ SYG_findTeleportError = {
 		_dist = [_pos, _x] call SYG_distance2D;
 		if (_dist < _mindist) then { _sum = _sum + __TELEPORT_DEVIATION__ - _dist };
 	} forEach _arr;
-	hint localize  format[ "+++ Found %1 vehicle[s] in radious %2 m, sum %3, %4", count _arr, _mindist, _sum, [_pos, localize "STR_SYS_POSE"] call SYG_MsgOnPosE ];
+	hint localize  format[ "+++ TeleportError: found veh[s] %1, in radious %2 m, err sum %3, %4", count _arr, _mindist, _sum, [_pos, localize "STR_SYS_POSE"] call SYG_MsgOnPosE ];
 	sqrt (_sum *  5)
 };
 
@@ -2132,7 +2132,7 @@ SYG_deviateTeleportPoint = {
 	_ang = random 360;
 	_dx = (cos _ang) * _rad;
 	_dy = (sin _ang) * _rad;
-//	hint localize format["+++ deviate: sinr %1, cosr %2, dx %3, dy %4", sin _rad, cos _rad, _dx, _dy];
+//	hint localize format["+++ deviate: sin_rad %1, cos_rad %2, dx %3, dy %4", sin _rad, cos _rad, _dx, _dy];
 	[(_pos select 0) + _dx, (_pos select 1) + _dy, 0]
 };
 

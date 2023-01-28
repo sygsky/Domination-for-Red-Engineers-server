@@ -184,7 +184,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 	else
 	{
 #ifdef	__DEBUG__
-		hint localize "x_createpara2.sqf: sabotage.sqf isn't started as no bomb were found";
+		hint localize "+++ x_createpara2.sqf: sabotage.sqf isn't started as no bomb were found";
 		//"x_createpara2.sqf: sabotage.sqf can't be started as no bomb were found" call XfGlobalChat;
 #endif		
 	};
