@@ -256,7 +256,7 @@ sleep (5 + (random 5));
 // remove markers
 deleteMarker _radar_marker;
 deleteMarker _truck_marker;
-hint localize "+++ x_sideradio.sqf:   radar and truck markes are deleted";
+hint localize "+++ x_sideradio.sqf: radar and truck markers deleted at side mission finish";
 
 // d_radar continue to exists for the future adventures
 if (_mission) then {

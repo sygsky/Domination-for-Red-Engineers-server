@@ -363,7 +363,7 @@ if (isServer) then {
 	execVM "scripts\takeAirfield.sqf"; // first take airfield and only after its completion first town
 	d_player_array_names = []; // ["EngineerACE",...] - known players list
 	d_player_array_misc = []; // [[d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str],...] - known players data list
-	d_placed_objs = []; // player's obejcts placed on the map
+	d_placed_objs = []; // player's objects placed on the map
 	
 	[] spawn {
 		//private ["_hnd","_srvDate"];
@@ -438,7 +438,7 @@ if (isServer) then {
             hint localize format["init.sqf: server date/time %1 -> New Year not detected, next check after 6 hours", (call SYG_getServerDate) call SYG_dateToStr];
             sleep 21600; // wait 6 hours to check new year next time after
         };
-        hint localize "init.sqf: New Year procedure completed";
+        hint localize "+++ init.sqf: New Year procedure completed";
 	};
 	
 #ifdef __ACE__

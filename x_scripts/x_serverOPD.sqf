@@ -48,7 +48,7 @@ if (_index >= 0) exitWith {
 #endif
 
 	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only weapon/magazines
-	_parray set [5, _wpnArr call SYG_equipArr2Str]; // replace old equipment list with one got from player in OPD procedure
+	_parray set [5, _wpnArr call SYG_arr2Str]; // replace old equipment list with one got from player in OPD procedure
 #endif
 #ifdef __DEBUG_PRINT__
 	// print new weapon array
