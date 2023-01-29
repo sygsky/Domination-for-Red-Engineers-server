@@ -203,24 +203,27 @@ if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
 if (_mission) then { // check victory or failure
     if ( sideradio_status == 2 ) then { // Victory!
     	_cnt_ai = 0;
-    	_cnt_pl = 0;
     	_pl = [];
     	{
     		if (alive _x) then {
     			if (isPlayer _x) then {
-    				_cnt_pl = _cnt_pl + 1;
-    				_pl set [ count pl,  name _x ];
+    				_pl set [ count _pl,  name _x ];
     			} else { _cnt_ai = _cnt_ai + 1 };
     		};
     	} forEach crew _truck;
-		hint localize format["+++ x_sideradio.sqf: mission SUCCESS, status %1, truck %2, radar %3, pl. %4%5, ai %6",
+		hint localize format["+++ x_sideradio.sqf: mission SUCCESS, status %1, truck %2, radar %3, pl in truck %4%5, ai %6",
 			sideradio_status,
 			if (alive _truck) then {"alive"} else {"dead"},
 			if (alive _radar) then {"alive"} else {"dead"},
-			_cnt_pl,
-			if ( count _pl > 0) then { _pl } else { "" },
+			count _pl,
+			_pl,
 			_cnt_ai
 		];
+		_pl1 = call SYG_findPlayersOnBase;
+		_pl = _pl - _pl1; // remove non unique players in both arrays
+		_pl = _pl + _pl1; // all players on base
+		// add also all players on base to the list
+		["was_at_sm", _pl, "good_news"] call XSendNetStartScriptClientAll;
 //		hint localize format["+++ x_sideradio.sqf:   mission SUCCESS, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
         side_mission_winner = 2;
         side_mission_resolved = true;

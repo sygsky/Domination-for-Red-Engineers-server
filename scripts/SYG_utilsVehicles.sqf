@@ -255,6 +255,34 @@ SYG_findNearestPlayer = {
 	_pl
 };
 
+//
+// d_base_array = [[9821.47,9971.04,0], 600, 200, 0];
+//
+// Finds all player names found on base, alive or dear: _players_on_base = call SYG_findPlayersOnBase;
+// Returns [pl1,...] with players at base or [] is none found
+//
+SYG_findPlayersOnBase = {
+    private ["_pos","_dist","_nearArr","_plNames","_x"];
+    _x = d_base_array select 1;
+    _dist =  _x * _x;
+    _x = d_base_array select 2;
+    _dist = sqrt(_dist + (_x * _x));
+    _pos = d_base_array select 0;
+	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
+	if ( (count _nearArr) == 0 ) exitWith { []};
+	_plNames = [];
+	{
+	    {
+    	    if ( isPLayer _x ) then {
+    	    	if (_x call SYG_pointIsOnBase) then {
+	    	    	_plNames set [count _plNames, name _x];
+    	    	};
+    	    };
+	    } forEach crew _x;
+	} forEach _nearArr;
+	_plNames
+};
+
 SYG_findNearestPlayers = {
     private ["_pos","_dist","_nearArr","_plNames","_x"];
     _pos  = _this select 0;
