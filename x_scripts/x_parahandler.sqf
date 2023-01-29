@@ -1,5 +1,5 @@
 // by Xeno: x_scripts\x_parahandler.sqf
-//+++ Sygsky: from 2002-02-14 _this  contains trigger list with friendly unit[s] detected
+//+++ Sygsky: from 2022-02-14 _this  contains trigger list with friendly unit[s] detected
 private ["_current_target_pos","_dummy","_end_pos","_start_pos","_vecs","_num_p","_attack_pos","_fly_height","_tmp",
 		 "_tmp1","_x"];
 if (!isServer) exitWith {};
