@@ -974,9 +974,7 @@ _local_msg_arr spawn {
 	};
 
 	// "PLAYER 1"
-	// check if name starts from "PLAYER " ...
-	_arr = toArray (_pl_name);
-	_exit = (size _arr) < 8;
+	// check if name starts from "PLAYER #" ...
 	if ((toUpper _pl_name) in ["PLAYER 1", "PLAYER 2", "PLAYER 3", "ADMIN", "USER"] ) exitWith {
 		sleep 6;
 		[

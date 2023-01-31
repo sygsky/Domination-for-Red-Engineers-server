@@ -332,17 +332,28 @@ _lobjpos = [];
 _doJump = false;
 
 #ifdef __CONNECT_ON_PARA__
+waitUntil { !(isNil "base_visit_status") }; // wait info about time elapsed between last exit and this entrance
 _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
-waitUntil { !(isNil "base_visit_status") }; // wait info about time elapsed between last exit and this entrance
+// Do jump if ((max disconnect period is large enough) and ((player has rank not "private") or (player visited the base))
 
-// Do jump if ((max diconnect period is large enough) and ((player has rank not "private") or (player visited the base))
-_doJump = ((_dt <= 0) || (_dt > __CONNECT_ON_PARA__)) &&
-		  ( ( base_visit_status_local < 1 ) || ( ( (score player) call XGetRankIndexFromScore ) < 1) ); // to do jump or not to do (depends on the time spent afted last disconnect. delta == 0 if it is first connection
+_doJump = (base_visit_status_local <= 0) || (_dt > __CONNECT_ON_PARA__);  // to do jump or not to do (depends on the time spent afted last disconnect. delta == 0 if it is first connection
+waitUntil { !(isNil "XGetRankIndexFromScore") }; // wait info about time elapsed between last exit and this entrance
+_rank = (score player) call XGetRankIndexFromScore;
+_jump_needed = ( base_visit_status_local < 1 ) || ( _rank < 1);
+_doJump = _doJump && _jump_needed;	// add check on rank and status of base previously visited
 
-hint localize format[ "+++ x_intro: _doJump %1, disconnect duration %2,  base visit %3, rank index %4", _doJump, _dt, base_visit_status_local, ((score player) call XGetRankIndexFromScore) ];
+hint localize format["+++ _doJump %1, _rank %2, base_visit_status_local %3, __CONNECT_ON_PARA__ %4", str(_doJump), _rank, base_visit_status_local, __CONNECT_ON_PARA__];
 
+/**
+hint localize format[ "+++ x_intro: _doJump %1, disconnect duration %2,  base visit %3, rank index %4",
+	_doJump,
+	_dt,
+	base_visit_status_local,
+	((score player) call XGetRankIndexFromScore)
+];
+*/
 _para = player call SYG_getParachute;
 if (_doJump) then {
     format["+++ x+intro: last disconnect was %1 secs ago, so do jump now, set base_visit_status_local = 1, no jump if less than %2 secs", d_player_stuff select 1, __CONNECT_ON_PARA__ ];

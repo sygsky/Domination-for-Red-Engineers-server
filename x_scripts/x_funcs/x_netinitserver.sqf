@@ -349,13 +349,14 @@ XHandleNetStartScriptServer = {
 			call (compile (_this select 1));
 		};
 
+		// Set new value for the variable base_visit_status in payer array
 		// ["base_visit_status", _name | _id, 1] call XSendNetStartScriptServer;
 		case "base_visit_status": {
 			private ["_id","_parray","_equip","_equip_arr"];
 			_id = _this select 1;
 			if ( (typeName _id == "STRING") ) then { _id = d_player_array_names find _id; };
 			if ( (_id < 0) || (_id >= (count d_player_array_names)) ) exitWith {format["--- x_netinitserver.sqf ""base_visit_status"": id unknown/out of range, _this %1", _this ]};
-			hint localize format["+++ x_netinitserver.sqf ""base_visit_status"": _this %1", _this ]};
+			hint localize format["+++ x_netinitserver.sqf ""base_visit_status"": _this %1", _this ];
 			_parray = d_player_array_misc select _id; // _player array
 			_equip  = _parray select 5; // player equipment
 			if (typeName _equip == "STRING") then {

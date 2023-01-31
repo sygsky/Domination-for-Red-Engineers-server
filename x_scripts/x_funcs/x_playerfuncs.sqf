@@ -524,7 +524,7 @@ XIsRankFromScoreExtended =  {
 // call as follow: _rank = (score player) call XGetRankFromScoreExt
 //
 XGetRankFromScoreExt = {
-    private ["_index"];
+    private ["_index","_x"];
     if ( typeName _this == "OBJECT") then  {
         if (isPlayer _this) then { _this = score _this;};
     };
@@ -549,7 +549,7 @@ XGetRankFromScoreExt = {
 //                  _rank_id = (score player) call XGetRankIndexFromScoreExt;
 //
 XGetRankIndexFromScoreExt = {
-    private ["_index"];
+    private ["_index","_x"];
     if ( typeName _this == "OBJECT") then {
         if (isPlayer _this) then { _this = score _this;};
     };
@@ -591,7 +591,7 @@ XGetRankFromScore = {
 
 // gets player rank index (0 - private ... 6 - colonel)
 XGetRankIndexFromScore = {
-    private ["_index"];
+    private ["_index","_x"];
     if ( typeName _this == "OBJECT") then { if (isPlayer _this) then { _this = score _this;}; };
     if ( typeName _this != "SCALAR") exitWith {0};
     _index = 0;

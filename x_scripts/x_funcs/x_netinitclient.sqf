@@ -673,7 +673,7 @@ XHandleNetStartScriptClient = {
 					base_visit_status = if (count _equip > 5) then { _equip select 6 } else {0};
 				};
 			} else { base_visit_status = 0 };
-			base_visit_status_local = base__visit_status;
+			base_visit_status_local = base_visit_status;
 		};
 
 		case "d_hq_sm_msg": {
