@@ -332,16 +332,20 @@ _lobjpos = [];
 _doJump = false;
 
 #ifdef __CONNECT_ON_PARA__
-waitUntil { !(isNil "d_player_stuff") }; // wait info about time elapsed between last exit and this entrance
 _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
-_doJump = (_dt <= 0) || (_dt > __CONNECT_ON_PARA__); // to do jump or not to do (depends on the time spent afted last disconnect. delta == 0 if it is first connection
 
-hint localize format[ "+++ x_intro: disconnect time == %1, _doJump %2", _dt, _doJump ];
+waitUntil { !(isNil "base_visit_status") }; // wait info about time elapsed between last exit and this entrance
+
+// Do jump if ((max diconnect period is large enough) and ((player has rank not "private") or (player visited the base))
+_doJump = ((_dt <= 0) || (_dt > __CONNECT_ON_PARA__)) &&
+		  ( ( base_visit_status_local < 1 ) || ( ( (score player) call XGetRankIndexFromScore ) < 1) ); // to do jump or not to do (depends on the time spent afted last disconnect. delta == 0 if it is first connection
+
+hint localize format[ "+++ x_intro: _doJump %1, disconnect duration %2,  base visit %3, rank index %4", _doJump, _dt, base_visit_status_local, ((score player) call XGetRankIndexFromScore) ];
 
 _para = player call SYG_getParachute;
 if (_doJump) then {
-    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now, set base_visit_status = 1, no jump if less than %2 secs", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
+    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now, set base_visit_status_local = 1, no jump if less than %2 secs", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -381,7 +385,7 @@ if (_doJump) then {
     */
     _spawn_point set [2, 150]; // spawn at parachute pos
 } else {
-	base_visit_status = 1; // stop respawn out of the base area
+	base_visit_status_local = 1; // stop respawn out of the base area if disconnect period is short
 };
 
 #else
@@ -391,7 +395,7 @@ _spawn_point  = getPos player;
 if (  (name player) in ["Snooper"] ) then {
 	player setPos  [17351,17943,0];
 	_spawn_point = getPos player;
-
+	(_equip select 1) call SYG_str2Arr;
 };
 
 //hint localize format["+++ x_intro.sqf: _spawn_point = %1", _spawn_point];
@@ -943,7 +947,7 @@ if (_doJump) then {
                 _time = time + _msg_delay;
             };
             while { time < _time} do {  // wait to print
-                if ( base_visit_status != 0 ) then { breakTo "main" }; // Exit on status -1 (dead) or 1 (reached the base)
+                if ( base_visit_status_local != 0 ) then { breakTo "main" }; // Exit on status -1 (dead) or 1 (reached the base)
                 sleep _sleep;
             };
         };
@@ -1046,7 +1050,7 @@ if (_doJump) then {
     //    }
     };
     if (alive player) then {
-        if (base_visit_status <= 0) then {
+        if (base_visit_status_local <= 0) then {
             ["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 0, false ] spawn SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
         };
     };

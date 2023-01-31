@@ -332,7 +332,7 @@ SYG_showDestWPIfNotOnBase = {
 	_pos = getPos AISPAWN;
 	["SET", _pos] call SYG_handleWP; // set intitial destiantion point
 	hint localize "+++ SYG_showDestWPIfNotOnBase: first WP created";
-	while { base_visit_status < 1 }  do { // player stil not visited base, so check WP existance
+	while { base_visit_status_local < 1 }  do { // player stil not visited base, so check WP existance
 	 	// each 10 seconds check if WP is wiped out by some circumstances
 		sleep 10;
 		if (alive player) then { // check only for alive player

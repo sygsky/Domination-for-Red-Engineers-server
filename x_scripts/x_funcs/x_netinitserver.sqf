@@ -349,6 +349,27 @@ XHandleNetStartScriptServer = {
 			call (compile (_this select 1));
 		};
 
+		// ["base_visit_status", _name | _id, 1] call XSendNetStartScriptServer;
+		case "base_visit_status": {
+			private ["_id","_parray","_equip","_equip_arr"];
+			_id = _this select 1;
+			if ( (typeName _id == "STRING") ) then { _id = d_player_array_names find _id; };
+			if ( (_id < 0) || (_id >= (count d_player_array_names)) ) exitWith {format["--- x_netinitserver.sqf ""base_visit_status"": id unknown/out of range, _this %1", _this ]};
+			hint localize format["+++ x_netinitserver.sqf ""base_visit_status"": _this %1", _this ]};
+			_parray = d_player_array_misc select _id; // _player array
+			_equip  = _parray select 5; // player equipment
+			if (typeName _equip == "STRING") then {
+				_equip_arr = _equip call SYG_str2Arr;
+			} else {
+				_equip_arr = _equip;
+			};
+			 // [_wpn, _magazines, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status]
+			_equip_arr set [6, _this select 2]; // set player visit status
+			if (typeName _equip == "STRING") then { // restore new string
+				_parray set[5, _equip_arr call SYG_arr2Str];
+			};
+		};
+
 //========================================================================================================== END OF CASES
 
         default {

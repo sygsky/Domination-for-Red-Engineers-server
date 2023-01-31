@@ -1643,6 +1643,8 @@ SYG_armUnit = {
 // 3rd optional array is rucksack name
 // 4th optional array is names of rucksack items
 // 5th is optional value for player stored view distance, default value is 1500
+// 6th is optional value for death sound playing
+// 7th is base_visit_status value in range of [-1,0,1]
 //
 //  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]><, view_distance<,reborn_music>>>] ] call SYG_rearmUnit;
 //
@@ -1658,7 +1660,7 @@ SYG_rearmUnit = {
 	if ( typeName _this != "ARRAY") exitWith { false };
 	if ( (count _this) < 2 ) exitWith { false };
     if ( (typeName (_this select 1)) == "STRING") then {
-        _this = [_this select 0, (_this select 1) call SYG_equipStr2Arr];
+        _this = [_this select 0, (_this select 1) call SYG_str2Arr];
     };
 	hint localize format["+++ SYG_rearmUnit: arr %1", (_this select 1) call SYG_compactArray];
 //   	player groupChat format["arr %1", arg(1)];
@@ -2678,16 +2680,16 @@ SYG_storePlayerEquipmentAsStr = {
 };
 
 //
-// call: _eq_arr = _eq_str call SYG_equipStr2Arr;
+// call: _arr = _arr_str call SYG_str2Arr;
 //
-SYG_equipStr2Arr = {
-    call compile format["%1", _this]
+SYG_str2Arr = {
+    call compile _this
 };
 
 //
-// call: _eq_str = _eq_arr call SYG_equipArr2Str;
+// call: _arr = _arr_str call SYG_arr2Str;
 //
-SYG_equipArr2Str = {
+SYG_arr2Str = {
     format["%1", _this]
 };
 
@@ -2723,13 +2725,13 @@ SYG_getPlayerEquiptArr = {
 	if (isNil "d_viewdistance") then {
 	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags]
 	} else {
-	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
+	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status]
 	};
 #else
 	if (isNil "d_viewdistance") then {
 	    [_wpn, magazines _this, _ruck, _ruckMags]
 	} else {
-	    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index]
+	    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status]
 	};
 #endif
 
@@ -2747,18 +2749,18 @@ SYG_getPlayerRucksackArr = {
 	if ( isNil "_ruck") then  {_ruck = "";};
 	_ruckMags = _this getVariable "ACE_Ruckmagazines";
 	if ( isNil "_ruckMags") then  {_ruckMags = [];};
-    [[],[],_ruck, _ruckMags, d_viewdistance, d_rebornmusic_index] // [ no weapons, no mags, rucksack, rucksack items,...]
+    [[],[],_ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status] // [ no weapons, no mags, rucksack, rucksack items,...]
 	//hint localize format["_ruck %1, _ruckMags %2", _ruck, _ruckMags];
 #else
 	// no rucksack if no ACE
-    [[],[],"", [], d_viewdistance, d_rebornmusic_index]
+    [[],[],"", [], d_viewdistance, d_rebornmusic_index, base_visit_status ]
 #endif
 
 };
 
 // Create strirng with rucksack content
 SYG_getPlayerRucksackAsStr = {
-	(_this call SYG_getPlayerRucksackArr) call SYG_equipArr2Str
+	(_this call SYG_getPlayerRucksackArr) call SYG_arr2Str
 };
 
 //
@@ -2766,7 +2768,7 @@ SYG_getPlayerRucksackAsStr = {
 // _eqp_arr = player call SYG_getPlayerEquipAsStr;
 // returns String "[[weapons names],[magazines names]<,rucksack_name<,[mags_in_rucksack_names]<,d_viewdistance<,d_rebornmusic_index>>>>]"
 SYG_getPlayerEquipAsStr = {
-    (call SYG_getPlayerEquiptArr) call SYG_equipArr2Str;
+    (call SYG_getPlayerEquiptArr) call SYG_arr2Str;
 };
 
 // _wpn_arr = _str_wpn call SYG_unpackEquipmentFromStr;

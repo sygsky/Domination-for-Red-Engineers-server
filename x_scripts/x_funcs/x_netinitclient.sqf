@@ -641,28 +641,39 @@ XHandleNetStartScriptClient = {
 		};
 
 		// to inform player about his server stored data
-		// sent as follows: ["d_player_stuff", _staff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
-		// _staff ==  [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
+		// sent as follows: ["d_player_stuff", _stuff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
+		// _stuff ==  [ d_player_air_autokick, time, "EngineerACE", _score, "delta_1", _equipment_list_str ];
 		case "d_player_stuff": {
 		    private ["_pname"];
 		    _pname = argp(arg(1),2);
-			if (name player == _pname) then {
-				__compile_to_var; // d_player_stuff = _this select 1;
-				SYG_dateStart = arg(2); // set server start date
-				if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
-				SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server
-				hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, suicide sound %2, SYG_playerID %3, OPD time %4, equip %5",
-					SYG_dateStart,
-					call SYG_getSuicideScreamSound,
-					SYG_playerID,
-					d_player_stuff select 1,
-					d_player_stuff
-				];
-				if (SYG_playerID == 0) then { // Im FIRST player in the game
-					SYG_townMaxScore = (d_ranked_a select 9); // 02-APR-2021 value was +40
-					publicVariable "SYG_townMaxScore"; // set public variable with the maximum scores bonus per town
-				};
+			if (name player != _pname) exitWith {};
+			__compile_to_var; // d_player_stuff = _this select 1;
+			SYG_dateStart = arg(2); // set server start date
+			if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
+			SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server
+			hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, suicide sound %2, SYG_playerID %3, OPD time %4, equip %5",
+				SYG_dateStart,
+				call SYG_getSuicideScreamSound,
+				SYG_playerID,
+				d_player_stuff select 1,
+				d_player_stuff
+			];
+			if (SYG_playerID == 0) then { // I'm FIRST player in the game
+				SYG_townMaxScore = (d_ranked_a select 9); // 02-APR-2021 value was +40
+				publicVariable "SYG_townMaxScore"; // set public variable with the maximum scores bonus per town
 			};
+			if (count d_player_stuff > 5 ) then { // Equipment found in stuff, use is now
+				private ["_equip"];
+				_equip = d_player_stuff select 5;
+				if (typeName _equip == "STRING") then {
+					if (_equip == "") exitWith { base_visit_status = 0 };
+					_equip = _equip call SYG_str2Arr;
+				} else { _equip = _equip call SYG_str2Arr };
+				if (typeName _equip == "ARRAY") then {
+					base_visit_status = if (count _equip > 5) then { _equip select 6 } else {0};
+				};
+			} else { base_visit_status = 0 };
+			base_visit_status_local = base__visit_status;
 		};
 
 		case "d_hq_sm_msg": {
