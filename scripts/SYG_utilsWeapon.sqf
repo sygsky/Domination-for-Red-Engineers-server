@@ -1644,7 +1644,7 @@ SYG_armUnit = {
 // 4th optional array is names of rucksack items
 // 5th is optional value for player stored view distance, default value is 1500
 // 6th is optional value for death sound playing
-// 7th is base_visit_status value in range of [-1,0,1]
+// 7th is base_visit_status value in range of [<-1,>0,1]
 //
 //  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]><, view_distance<,reborn_music>>>] ] call SYG_rearmUnit;
 //

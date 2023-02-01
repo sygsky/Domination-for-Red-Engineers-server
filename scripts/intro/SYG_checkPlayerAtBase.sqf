@@ -18,7 +18,7 @@ _factor = (400 / 1600) max 12.5;
 // set flare position as slightly random one
 
 // if (isNil "base_visit_status_local") then { base_visit_status_local = 0 }; // init visit status
-while { base_visit_status <= 0 } do {
+while { base_visit_status_local <= 0 } do {
 	sleep 5;
 	// launch a yellow flare over the base to attract the player's attention (to tell him where to go)
 	if (!alive _flare) then {
@@ -32,10 +32,11 @@ while { base_visit_status <= 0 } do {
 	};
 	if ( alive player ) then {
 		if (vehicle player == player) then { // only on feet player is counted to be on base
-			if (base_visit_status == 0) then {
+			if (base_visit_status_local == 0) then {
 				if (( getPos player ) call SYG_pointIsOnBase) then {  // player is in base rect!
 					base_visit_status = 1;
-					["base_visit_status", name player, 1] call XSendNetStartScriptServer; // store new value on the server
+					["base_visit_status", name player, base_visit_status] call XSendNetStartScriptServer; // store new value on the server
+					base_visit_status_local = base_visit_status;
 				};
 			};
 		};

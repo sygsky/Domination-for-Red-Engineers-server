@@ -666,14 +666,14 @@ XHandleNetStartScriptClient = {
 				private ["_equip"];
 				_equip = d_player_stuff select 5;
 				if (typeName _equip == "STRING") then {
-					if (_equip == "") exitWith { base_visit_status = 0 };
+					if (_equip == "") exitWith { base_visit_status_local = 0 };
 					_equip = _equip call SYG_str2Arr;
 				} else { _equip = _equip call SYG_str2Arr };
 				if (typeName _equip == "ARRAY") then {
-					base_visit_status = if (count _equip > 5) then { _equip select 6 } else {0};
+					base_visit_status_local = if (count _equip > 5) then { _equip select 6 } else {0};
 				};
-			} else { base_visit_status = 0 };
-			base_visit_status_local = base_visit_status;
+			} else { base_visit_status_local = 0 };
+			base_visit_status = base_visit_status_local;
 		};
 
 		case "d_hq_sm_msg": {
