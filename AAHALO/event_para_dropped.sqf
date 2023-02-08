@@ -27,13 +27,13 @@ if (_add_score) then {
 	_sub_name = "_practice";
 };
 _arr = [];
-_volume = AISPAWN call SYG_objectSize3D; // [length,width,height]
-_radius = [(_volume select 0) / 2, 0.1] call SYG_roundTo;
+_volume  = AISPAWN call SYG_objectSize3D; // [length,width,height]
+_radius  = [(_volume select 0) / 2, 0.1] call SYG_roundTo;
 _on_base = false;
-_sc = d_ranked_a select 32; // prize score value
-_dmg = round(damage player); // damage to subtract
-_sc = _sc - _dmg; // score are proportional to the health
-hint localize format ["+++ event_para_dropped%1.sqf: d_ranked_a select 32 = %2, count = %3, volume %4, rad %5, dmg %6",_sub_name, _sc, count d_ranked_a, _volume, _radius, _dmg ];
+_sc      = d_ranked_a select 32; // prize score value
+_dmg     = round( _sc * (damage player)) min _sc; // damage to subtract, #595
+_sc      = _sc - _dmg; // score is proportional to the health
+hint localize format ["+++ event_para_dropped%1.sqf: d_ranked_a select 32 = %2, alive %3, volume %4, rad %5, sub dmg %6", _sub_name, _sc, alive _unit, _volume, _radius, _dmg ];
 if ( !alive _unit ) exitWith {};
 
 if ( ( ( getPos _unit ) select 2 ) > 3 ) exitWith {};
