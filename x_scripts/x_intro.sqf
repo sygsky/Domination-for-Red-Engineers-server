@@ -332,7 +332,7 @@ _lobjpos = [];
 _doJump = false;
 
 #ifdef __CONNECT_ON_PARA__
-waitUntil { !(isNil "base_visit_status") }; // wait info about time elapsed between last exit and this entrance
+waitUntil { !(isNil "base_visit_status_local") }; // wait info about local base visiting state and time
 _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
@@ -375,7 +375,7 @@ if (_doJump) then {
         };
         #endif
         player addWeapon _para;
-        hint localize format["+++ x_intro.sqf: player has no parachute, assign him ""%1""",  _para];
+        hint localize format["+++ x_intro.sqf: player has no parachute, assign him with ""%1""",  _para];
     } else { hint localize format["+++ x_intro.sqf: player already has parachute ""%1""", _para]};
 
     //++++++++++++++++++++++++++++++
@@ -396,7 +396,7 @@ if (_doJump) then {
     */
     _spawn_point set [2, 150]; // spawn at parachute pos
 } else {
-	base_visit_status_local = 1; // stop respawn out of the base area if disconnect period is short
+	base_visit_status_local = 1; // temporarily stop respawn out of the base area if disconnect period is short
 };
 
 #else
