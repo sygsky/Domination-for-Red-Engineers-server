@@ -338,10 +338,10 @@ hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
 // Do jump if ((max disconnect period is large enough) and ((player has rank not "private") or (player visited the base))
 
-_doJump = (base_visit_status_local <= 0) || (_dt > __CONNECT_ON_PARA__);  // to do jump or not to do (depends on the time spent afted last disconnect. delta == 0 if it is first connection
+_doJump = (_dt <= 0) || (_dt > __CONNECT_ON_PARA__);  // to jump or not to jump (depends on the time spent afted last disconnect). delta == 0 if it is first connection
 waitUntil { !(isNil "XGetRankIndexFromScore") }; // wait info about time elapsed between last exit and this entrance
 _rank = (score player) call XGetRankIndexFromScore;
-_jump_needed = ( base_visit_status_local < 1 ) || ( _rank < 1);
+_jump_needed = ( base_visit_status < 1 ) || ( _rank < 1); // base not visited or rank is too low
 _doJump = _doJump && _jump_needed;	// add check on rank and status of base previously visited
 
 hint localize format["+++ _doJump %1, _rank %2, base_visit_status_local %3, __CONNECT_ON_PARA__ %4", str(_doJump), _rank, base_visit_status_local, __CONNECT_ON_PARA__];
