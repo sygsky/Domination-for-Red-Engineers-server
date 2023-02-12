@@ -1081,3 +1081,28 @@ drop_zone_arr = [
 	[ [  9386,  8921, 0 ], 600, 200, -5, -2000], // rectangle between Paraiso airfield and Somato
 	[ [ 10034, 10485, 0 ], 700, 200, 8.5, 2000 ] // rectangle between Rashidan and Paraiso airfield
 ];
+
+d_pilot_E = (
+	if (__ACEVer) then {
+// TODO: ACE_SoldierEPilot_IRAQ_RG - can be used too
+		"ACE_SoldierEPilot"
+	} else {
+		"SoldierEPilot"
+	}
+);
+d_pilot_W = (
+	if (__ACEVer) then {
+
+// Pilot
+//##############################################################################
+"ACE_SoldierWPilot_WDL"
+
+	} else {
+		if (__CSLAVer) then {
+			"CSLA_USplt"
+		} else {
+			"SoldierWPilot"
+		}
+	}
+);
+d_pilot_G = "SoldierGPilot";
