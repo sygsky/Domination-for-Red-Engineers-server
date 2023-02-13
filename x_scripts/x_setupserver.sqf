@@ -41,7 +41,11 @@ XSideMissionResolved = {
 //
 XClearSidemission = {
 	private ["_waittime", "_num_p", "_was_captured", "_already_captured", "_man", "_vehicle","_x"];
-	_waittime = 200 + random 20;
+	if (all_sm_res || stop_sm) then {
+    	_waittime = 20;
+	} else {
+    	_waittime = 200 + random 20;
+	};
 	_num_p = call XPlayersNumber;
 	if (_num_p > 0) then {
 		{

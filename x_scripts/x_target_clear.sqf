@@ -151,8 +151,10 @@ if (current_counter < number_targets) then {
     // side mission completed (implemented)
     hint localize "+++ x_target_clear.sqf: run stop new target town creation system process as all target towns are liberated !!!";
     _str = "";
-    if ( (count d_recapture_indices > 0) && (!stop_sm) ) then { _str = "STR_SYS_121_3_FULL" }
+    if ( (count d_recapture_indices > 0) && (!stop_sm) ) then { _str = "STR_SYS_121_3_FULL" } // "For the complete liberation of the island, complete the SM and destroy the invaders"
     else {
+        // "For the complete liberation of the island, complete the SM"
+        // "For the complete liberation of the island, free the recaptured town"
         if ( !stop_sm ) then { _str = "STR_SYS_121_3_SM" } else { _str = "STR_SYS_121_3_RECAPTURED"};
     };
     if (_str != "") then {
