@@ -257,31 +257,32 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 			};
 		};
 	} else {
-		if (!_enemy_created) then {
-			_enemy_created = true;
-			_estart_pos = [_poss,250] call XfGetRanPointCircleOuter;
-			_unit_array = ["basic", d_enemy_side] call x_getunitliste;
-			_ran = [3,5] call XfGetRandomRangeInt;
-			for "_i" from 1 to _ran do {
-			    /**
-				__WaitForGroup
-				_newgroup = [d_enemy_side] call x_creategroup;
-				*/
-                _newgroup = call SYG_createEnemyGroup;
+	    if ( _endtime < time ) then {
+            if (!_enemy_created) then {
+                _enemy_created = true;
+                _estart_pos = [_poss,250] call XfGetRanPointCircleOuter;
+                _unit_array = ["basic", d_enemy_side] call x_getunitliste;
+                _ran = [3,5] call XfGetRandomRangeInt;
+                for "_i" from 1 to _ran do {
+                    /**
+                    __WaitForGroup
+                    _newgroup = [d_enemy_side] call x_creategroup;
+                    */
+                    _newgroup = call SYG_createEnemyGroup;
 
-				_units = [_estart_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
-				sleep 1.045;
-				_leader = leader _newgroup;
-				_leader setRank "LIEUTENANT";
-				_newgroup allowFleeing 0;
-				[_newgroup, _poss] call XAttackWP;
-                {extra_mission_remover_array set [ count extra_mission_remover_array, _x ] } foreach _units;
-
-				sleep 1.012;
-			};
-			_unit_array = nil;
-	        hint localize "+++ x_sideevac.sqf: enemy created near helicrash place";
-		};
+                    _units = [_estart_pos, (_unit_array select 0), _newgroup] call x_makemgroup;
+                    sleep 1.045;
+                    _leader = leader _newgroup;
+                    _leader setRank "LIEUTENANT";
+                    _newgroup allowFleeing 0;
+                    [_newgroup, _poss] call XAttackWP;
+                    {extra_mission_remover_array set [ count extra_mission_remover_array, _x ] } foreach _units;
+                    sleep 1.012;
+                };
+                _unit_array = nil;
+                hint localize "+++ x_sideevac.sqf: enemy created near helicrash place";
+            };
+	    };
 	};
 };
 

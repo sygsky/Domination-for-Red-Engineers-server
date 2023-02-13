@@ -763,11 +763,9 @@ XGuardWP = {
 XGovernorWP = {
 	private ["_ggrp"];
 	_ggrp = _this;
-	_ggrp setCombatMode "YELLOW";
+	call XStealthPatrol;
 	_ggrp setFormation ("DIAMOND");
 	_ggrp setFormDir (floor random 360);
-	_ggrp setSpeedMode "LIMITED";
-	_ggrp setBehaviour "STEALTH";
 };
 
 XAttackWP = {
@@ -802,10 +800,9 @@ XCombatPatrol = {
 };
 
 XStealthPatrol = {
-	private ["_grp","_gwpf"];
+	private ["_grp"];
 	_grp = _this select 0;
-	_gwpf = ["LINE","WEDGE","FILE"];
-	_grp setFormation (_gwpf call XfRandomArrayVal);
+	_grp setFormation ( ["LINE","WEDGE","FILE"] call XfRandomArrayVal);
 	_grp setCombatMode "YELLOW";
 	_grp setSpeedMode "LIMITED";
 	_grp setBehaviour "STEALTH";
