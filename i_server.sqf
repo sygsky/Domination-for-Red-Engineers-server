@@ -278,30 +278,7 @@ d_crewman2_W = (
 d_crewman_G = "SoldierGCrew";
 d_crewman2_G = "SoldierGB";
 
-d_pilot_E = (
-	if (__ACEVer) then {
-// TODO: ACE_SoldierEPilot_IRAQ_RG - can be used too
-		"ACE_SoldierEPilot"
-	} else {
-		"SoldierEPilot"
-	}
-);
-d_pilot_W = (
-	if (__ACEVer) then {
-
-// Pilot
-//##############################################################################
-"ACE_SoldierWPilot_WDL"
-
-	} else {
-		if (__CSLAVer) then {
-			"CSLA_USplt"
-		} else {
-			"SoldierWPilot"
-		}
-	}
-);
-d_pilot_G = "SoldierGPilot";
+// Sygsky: 2023-02-12 variable definitions for d_pilot_E, d_pilot_W and d_pilot_G moved to the "i_common.sqf"
 
 d_allmen_E = (
 	if (__ACEVer) then {

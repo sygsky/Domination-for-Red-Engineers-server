@@ -893,7 +893,7 @@ XGetPlayerPoints = {
 #endif
 
 	["d_player_stuff", _stuff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient; // send disconnect time to the player
-	hint localize format["+++ server->XGetPlayerPoints: ""d_p_a"" msg for ""%1"" received,  staff (scores %2) sent to the client, suicide snd ""%3"" +++", _name, _stuff select 3, _sound];
+	hint localize format["+++ server->XGetPlayerPoints: ""d_player_stuff"" sent for ""%1"", scores %2, suicide snd ""%3"", time delta %4+++", _name, _stuff select 3, _sound, round(_time)];
 #ifdef __RANKED__
 	// set current connection time
 	if (count _stuff > 0 ) then {
