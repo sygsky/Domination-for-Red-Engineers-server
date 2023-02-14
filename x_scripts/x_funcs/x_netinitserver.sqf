@@ -189,6 +189,7 @@ XHandleNetStartScriptServer = {
 		// SPPM event handler on server (receive messages from client)
 		// format:	["SPPM","ADD", _pos, name player] call XSendNetStartScriptServer;
 		case "SPPM": {
+			hint localize format["+++ x_netinitserver.sqf: _this = %1", _this];
 			switch ( _this select 1 ) do {
 
 				// format: ["SPPM","ADD", _pos, player_name]
@@ -206,7 +207,6 @@ XHandleNetStartScriptServer = {
 
 				// format: ["SPPM", "UPDATE", name player<, false>] call XSendNetStartScriptServer;
 				case "UPDATE" : { // update all SPPM available
-					hint localize format["+++ SPPM UPDATE (ALL): player ""%1""", arg(2)];
 					private ["_cnt","_arr", "_send"];
 					_cnt = count SYG_SPPMArr;
 					_send = if (count _this > 3) then { _this select 3 } else {true};
@@ -367,7 +367,9 @@ XHandleNetStartScriptServer = {
 			 // [_wpn, _magazines, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status]
 			_equip_arr set [6, _this select 2]; // set player visit status
 			if (typeName _equip == "STRING") then { // restore new string
-				_parray set[5, _equip_arr call SYG_arr2Str];
+				_equip = _equip_arr call SYG_arr2Str;
+				_parray set[5, _equip];
+				hint localize format["+++ x_netinitserver.sqf: set _parray[5] = %1", _equip_arr call SYG_arr2Str ];
 			};
 		};
 

@@ -901,7 +901,7 @@ _local_msg_arr spawn {
              _x call XfGlobalChat;
         } forEach _this;
     };
-	_pl_name = _pl_name;
+	_pl_name = name player;
     // West Germany
     if ( (toUpper _pl_name) in ["CERES-DE","CERES DE","CERES.","CERES"]) exitWith {
         sleep 6;
@@ -1629,13 +1629,14 @@ if (d_player_air_autokick > 0) then {
 /*
 	if score changed, send info about it to the server
 */
-[] spawn {
+[_pl_name] spawn {
 	waitUntil {sleep 5; !d_still_in_intro};
+	private ["_oldscore","_newscore","_mtkills","_oldkills","_newkills","_player","_pl_name"];
+	_pl_name = _this select  0;
 #ifdef __SPPM__
 	hint localize "+++ SPPM UPDATE initiated for markers";
 	["SPPM", "UPDATE", _pl_name, false] call XSendNetStartScriptServer; // allow SPPM markers visibility at the start
 #endif
-	private ["_oldscore","_newscore","_mtkills","_oldkills","_newkills","_player"];
 	_oldscore  = 0;
 	_oldkills = (score player) - SYG_bonusScore + SYG_deathCount;
 	call SYG_townStatInit; // init town kills stat for the player on connection
@@ -1712,7 +1713,7 @@ player call SYG_handlePlayerDammage; // handle hit events
 [] spawn {
 	private ["_name"/* , "_identity" */, "_pos", "_target", "_targets","_var","_comp","_cnt"];
 	sleep random 2;
-	_name = _pl_name;
+	_name = name player;
 	["d_p_varname",_name,str(player), localize "STR_LANG"] call XSendNetStartScriptServer;
 
 /*

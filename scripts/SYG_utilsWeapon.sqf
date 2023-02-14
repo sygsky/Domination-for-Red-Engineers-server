@@ -2704,7 +2704,7 @@ SYG_isRucksack = {
 //
 // gets unit whole equipment and store it into array
 // _eqp_arr = player call SYG_getPlayerEquiptArr;
-// returns array [ [weapons names], [magazines names]<, rucksack_name<, [mags_in_rucksack_names]<, d_viewdistance<, d_rebornmusic_index>>>> ]
+// returns array [ [weapons names], [magazines names]<, rucksack_name<, [mags_in_rucksack_names]<, d_viewdistance<, d_rebornmusic_index<,base_vist_status>>>>> ]
 SYG_getPlayerEquiptArr = {
     private ["_wpn", "_ruck", "_ruckMags"];
     _wpn = weapons _this;

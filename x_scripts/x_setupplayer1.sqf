@@ -39,7 +39,7 @@ _p = player;
 _equip = "";
 if ( count d_player_stuff > 5) then { // equipment returned
 	_equip = d_player_stuff select 5; // string with all equipment
-	hint localize format["+++ x_setupplayer1.sqf: equipment read as %1", _equip];
+	hint localize format["+++ x_setupplayer1.sqf: equipment (%1) = %1", typeName(_equip), _equip];
 } else {
 	hint localize "+++ x_setupplayer1.sqf: equipment not detected in the d_player_stuff variable"
 };

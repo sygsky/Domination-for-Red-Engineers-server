@@ -25,7 +25,8 @@
 SYG_d_p_varname =  {
 	private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr",
 			 "_val","_date","_arr1","_arr2","_arr","_str"];
-	_index = d_player_array_names find (_this select 1);
+	_name = _this select 1;
+	_index = d_player_array_names find _name;
 	//hint localize format["***************** _index = %1 *********************", _index];
 	_parray = [];
 	if (_index >= 0) then {
@@ -42,7 +43,6 @@ SYG_d_p_varname =  {
 		d_connection_number = d_connection_number + 1;
 		_msg_arr = [["STR_SYS_604",d_connection_number]]; // "Sahrani People welcome the %1 of the warrior-internationalist in their troubled land"
 	};
-	_name = _this select 1;
 	// add user language specific message if available
 	_msg = switch (_name) do {
 		case "Comrad (LT)";
@@ -65,7 +65,7 @@ SYG_d_p_varname =  {
 		case "Elia";
 		case "Moe"        : {"Gli isolani sono lieti di darvi il benvenuto nella loro lingua madre italiana !"}; // Italian language
 		case "Oberon";		// русский
-		case "Axmed"      : { "Боец! Островитяне, желая добра, советуют: купи лицензионный ключ (копеек 50 на советские деньги). Этим ключом пользуешься не только ты." }; // Русский Ахмед
+		case "Axmed"      : { "Боец! Островитяне советуют: купи лицензионный ключ (копеек 50 на советские деньги). Этим ключом пользуешься не только ты." }; // Русский Ахмед
 		default           { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
 	};
 
@@ -145,12 +145,12 @@ SYG_d_p_varname =  {
 
 	// TODO: add here more messages for the 1st greeting to user
 
-	["msg_to_user", (_this select 1), _msg_arr, 5, 10] call XSendNetStartScriptClient;
+	["msg_to_user", _name, _msg_arr, 5, 10] call XSendNetStartScriptClient;
 	sleep 1.0;
 	["current_mission_counter",current_mission_counter] call XSendNetVarClient; // inform about side mission counter
 
 	// log info  about logging
-	hint localize format["+++ x_netinitserver.sqf: %3 User %1 (role %2) logged in", (_this select 1), (_this select 2), call SYG_missionTimeInfoStr ];
+	hint localize format["+++ x_netinitserver.sqf: %1 User %2 (role %3) logged in", call SYG_missionTimeInfoStr, _name, (_this select 2) ];
 };
 
 

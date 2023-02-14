@@ -743,7 +743,6 @@ execVM "x_scripts\x_jip.sqf"; // call for player intro and setup scripts
 		};
 	}forEach [353,355,362/* ,367 */];
 
-
 };
 #endif
 

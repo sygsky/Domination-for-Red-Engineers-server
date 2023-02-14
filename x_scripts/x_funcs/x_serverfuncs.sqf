@@ -858,9 +858,9 @@ XAddPlayerScore = {
 };
 
 // Sends info about player score etc if found it in server cache
-// input params: ["d_p_a", name player<, missionStart<,"RUSSIAN">>]
+// input params: ["d_p_a", name player<, missionStart<,"RUSSIAN|GERMAN|ENGLISH|SPANISH">>]
 XGetPlayerPoints = {
-	private ["_name", "_index", "_stuff", "_sound","_time"];
+	private ["_name", "_index", "_stuff", "_sound","_dt"];
 	_name = (_this select 1);
 	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
@@ -879,27 +879,24 @@ XGetPlayerPoints = {
 	    	_sound = _index call SYG_getSuicideScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
 	    };
 	};
-#ifdef __RANKED__
-    #ifdef __CONNECT_ON_PARA__
-	// calculate time after last disconnection
+
+	// calculate delata time after last disconnection
 	if (count _stuff > 0 ) then {
-	    _time = _stuff select 1; // on first connection _time < 0!
-	    if (_time > 0) then {
-            _time = time - _time; // how long has it been since the disconnection
-            _stuff set [1, _time]; // set it to send to the player
+	    _dt = _stuff select 1; // on first connection _dt < 0, else contains last disconnect time!
+	    if (_dt > 0) then {
+            _dt = round(time - _dt); // how long has it been since the disconnection (delta time)
+            _stuff set [1, _dt]; // set it to send to the player stuff
 	    };
 	};
-	#endif
-#endif
 
 	["d_player_stuff", _stuff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient; // send disconnect time to the player
-	hint localize format["+++ server->XGetPlayerPoints: ""d_player_stuff"" sent for ""%1"", scores %2, suicide snd ""%3"", time delta %4+++", _name, _stuff select 3, _sound, round(_time)];
 #ifdef __RANKED__
 	// set current connection time
 	if (count _stuff > 0 ) then {
 	    _stuff set [1, time]; // set connectiion time
 	};
 #endif
+	hint localize format["+++ server->XGetPlayerPoints: ""d_player_stuff"" sent for ""%1""(ind %2), snd ""%3"", _stuff %4 +++", _name, _index, _sound, _stuff ];
 
 };
 

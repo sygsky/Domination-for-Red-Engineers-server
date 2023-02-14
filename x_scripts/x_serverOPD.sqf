@@ -10,7 +10,6 @@ if (_name == "__SERVER__") exitWith {};
 
 #define __DEBUG_PRINT__
 
-
 // __DEBUG_NET("x_serverOPD player disconnected",_name)
 
 _index = d_player_array_names find _name;
@@ -18,9 +17,7 @@ if (_index >= 0) exitWith {
     _parray = d_player_array_misc select _index; // [d_player_air_autokick, time, "EngineerACE", _score,"delta_1",_equipment_list_str]
 
 #ifdef __RANKED__
-    if (( _parray select 1)  < __CONNECT_ON_PARA__) then {
-	    _parray set [1, time]; // set player disconnect time if ranked mission
-    };
+    _parray set [1, time]; // set player disconnect time for ranked mission
 #else
     //*** calculate time to autokick if player is re-entered soon
     _oldwtime = _parray select 0;
@@ -36,7 +33,7 @@ if (_index >= 0) exitWith {
 
     (_parray select 4) execVM "x_scripts\x_markercheck.sqf"; // remove all player created markers
 	_player = call (compile (_parray select 4)); // find player object by his role name
-	_arr = _player call SYG_getPlayerEquiptArr; // real equipment array= = [ [weapons names], [magazines names]<, "",[]]
+	_arr = _player call SYG_getPlayerEquiptArr; // _arr = [ [weapons names], [magazines names]<, rucksack_name<, [mags_in_rucksack_names]<, d_viewdistance<, d_rebornmusic_index<,base_vist_status>>>>> ]
 #ifdef __EQUIP_OPD_ONLY__
 	// Note: server knows nothing about ACE rucksack and distance and death sound on/off.
 	// These parameters are known only on client computers and must be send to server with "d_ad_wp" command
@@ -44,7 +41,7 @@ if (_index >= 0) exitWith {
 	_wpnArr = if ( _equipStr != "" ) then { _equipStr call SYG_unpackEquipmentFromStr } else { [] }; // stored full equipments array
 #ifdef __DEBUG_PRINT__
 	// print old weapon array
-    hint localize format[ "+++ x_serverOPD.sqf: player ""%1"", score %2, old wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
+    hint localize format[ "+++ x_serverOPD.sqf: player ""%1"", score %2, old wpnarr(cnt %3) %4", _name, _parray select 3, count _wpnArr, _wpnArr call SYG_compactArray ];
 #endif
 
 	{ _wpnArr set [_x, _arr select _x] } forEach [ 0, 1 ]; // copy only weapon/magazines
@@ -52,7 +49,8 @@ if (_index >= 0) exitWith {
 #endif
 #ifdef __DEBUG_PRINT__
 	// print new weapon array
-	hint localize format[ "+++ x_serverOPD.sqf: player ""%1"", score %2, new wpnarr %3", _name, _parray select 3, _wpnArr call SYG_compactArray ];
+	hint localize format[ "+++ x_serverOPD.sqf: player ""%1"", score %2, new wpnarr(cnt %3) = %4", _name, _parray select 3, count _wpnArr, _wpnArr call SYG_compactArray ];
+	hint localize format[ "+++ x_serverOPD.sqf: player ""%1"", score %2,           _parray = %3", _name, _parray select 3, _parray ];
 #endif
 
 #ifdef __AI__

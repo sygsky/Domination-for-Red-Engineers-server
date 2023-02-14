@@ -209,12 +209,12 @@ SYG_textAlign = {
 //                     "ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB","ACE_20Rnd_762x51_SB_SCAR_CQB"
 //                    ],
 //                    "ACE_Rucksack_Alice",[["ACE_Dragon_PDM",2]],1500,0
-//                   ]
-//     _ret is = [0,0,"lolport",170,"RESCUE",
+//                   ];
+//     _new_arr = [0,0,"lolport",170,"RESCUE",
 //                  ["Binocular","ACE_Dragon","ACE_SCAR_H_CQB_mk4"],
 //                  ["ACE_Dragon","ACE_20Rnd_762x51_SB_SCAR_CQB(6)"],
 //                  "ACE_Rucksack_Alice",[["ACE_Dragon_PDM",2]],1500,0
-//               ]
+//               ];
 //
 SYG_compactArray = {
     // compact equipment array strings

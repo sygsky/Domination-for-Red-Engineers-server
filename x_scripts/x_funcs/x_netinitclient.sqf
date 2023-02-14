@@ -662,17 +662,18 @@ XHandleNetStartScriptClient = {
 				SYG_townMaxScore = (d_ranked_a select 9); // 02-APR-2021 value was +40
 				publicVariable "SYG_townMaxScore"; // set public variable with the maximum scores bonus per town
 			};
+			base_visit_status_local = 0;
 			if (count d_player_stuff > 5 ) then { // Equipment found in stuff, use is now
 				private ["_equip"];
 				_equip = d_player_stuff select 5;
 				if (typeName _equip == "STRING") then {
-					if (_equip == "") exitWith { base_visit_status_local = 0 };
+					if (_equip == "") exitWith {};
 					_equip = _equip call SYG_str2Arr;
 				} else { _equip = _equip call SYG_str2Arr };
 				if (typeName _equip == "ARRAY") then {
-					base_visit_status_local = if (count _equip > 5) then { _equip select 6 } else {0};
+					if (count _equip > 5) then { base_visit_status_local = _equip select 6 };
 				};
-			} else { base_visit_status_local = 0 };
+			};
 			base_visit_status = base_visit_status_local;
 		};
 
