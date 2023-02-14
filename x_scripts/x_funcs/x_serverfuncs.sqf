@@ -866,6 +866,7 @@ XGetPlayerPoints = {
 	//__DEBUG_NET("XGetPlayerPoints",_name)
 	//__DEBUG_NET("XGetPlayerPoints",_index)
 	_stuff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
+	hint localize format["+++ XGetPlayerPoints: _this = %1, _stuff = %2", _this, _stuff];
 	// prepare also semi-unical (up to 15 users) suicide sound for this player as parameter index 3
 	if ( (toUpper (_name)) == "YETI") then {
 	    _sound = format["suicide_yeti_%1", floor (random 5)]; // personal suicide sound for yeti (0..4);

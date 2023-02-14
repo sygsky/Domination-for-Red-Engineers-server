@@ -332,7 +332,7 @@ _lobjpos = [];
 _doJump = false;
 
 #ifdef __CONNECT_ON_PARA__
-waitUntil { !(isNil "base_visit_status_local") }; // wait info about local base visiting state and time
+waitUntil { !(isNil "base_visit_session") }; // wait info about local base visiting state and time
 _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
@@ -341,22 +341,22 @@ hint localize format["+++ x_intro: disconnect time == %1", _dt];
 _doJump = (_dt <= 0) || (_dt > __CONNECT_ON_PARA__);  // to jump or not to jump (depends on the time spent afted last disconnect). delta == 0 if it is first connection
 waitUntil { !(isNil "XGetRankIndexFromScore") }; // wait info about time elapsed between last exit and this entrance
 _rank = (score player) call XGetRankIndexFromScore;
-_jump_needed = ( base_visit_status < 1 ) || ( _rank < 1); // base not visited or rank is too low
+_jump_needed = _rank < 1; // Rank is too low
 _doJump = _doJump && _jump_needed;	// add check on rank and status of base previously visited
 
-hint localize format["+++ _doJump %1, _rank %2, base_visit_status_local %3, __CONNECT_ON_PARA__ %4", str(_doJump), _rank, base_visit_status_local, __CONNECT_ON_PARA__];
+hint localize format["+++ _doJump %1, _rank %2, base_visit_session %3, __CONNECT_ON_PARA__ %4", str(_doJump), _rank, base_visit_session, __CONNECT_ON_PARA__];
 
 /**
 hint localize format[ "+++ x_intro: _doJump %1, disconnect duration %2,  base visit %3, rank index %4",
 	_doJump,
 	_dt,
-	base_visit_status_local,
+	base_visit_session,
 	((score player) call XGetRankIndexFromScore)
 ];
 */
 _para = player call SYG_getParachute;
 if (_doJump) then {
-    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now, set base_visit_status_local = 1, no jump if less than %2 secs", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
+    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now, set base_visit_session = 1, no jump if less than %2 secs", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -396,7 +396,7 @@ if (_doJump) then {
     */
     _spawn_point set [2, 150]; // spawn at parachute pos
 } else {
-	base_visit_status_local = 1; // temporarily stop respawn out of the base area if disconnect period is short
+	base_visit_session = 1; // temporarily stop respawn out of the base area if disconnect period is short
 };
 
 #else
@@ -798,39 +798,44 @@ _cnt = count _camstart;
 //	hint localize format["%1 x_intro.sqf: start commits for %2", call SYG_daytimeToStr, _camstart];
 
 //++++++++++++ daemon to print something before and at jump
-_camera spawn {
-	private ["_time","_para","_str"];
-	// BLACK OUT in 0.7 sec when close to the base <= 100 m.
-	// Wait until in plane
-	// BLACK IN in 0.7 sec
-	// 		cutText["","WHITE OUT",FADE_OUT_DURATION];  // blind him fast
-	_time = time;
-	_para = player call SYG_getParachute;
-	while { ((_this distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
-	if (!alive player) exitWith {
-		hint localize format["+++ x_intro.sqf: player dead in %1 secs (%2)", time - _time, _para];
-	};
-	hint localize format["+++ x_intro.sqf: player alive after %1 secs (%2)", time - _time, _para];
-	_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
-//	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
-	cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
-	_time = time;
+if ( _doJump ) then {
+	_camera spawn {
+		private ["_time","_para","_str"];
+		// BLACK OUT in 0.7 sec when close to the base <= 100 m.
+		// Wait until in plane
+		// BLACK IN in 0.7 sec
+		// 		cutText["","WHITE OUT",FADE_OUT_DURATION];  // blind him fast
+		_time = time;
+		_para = player call SYG_getParachute;
+		while { ((_this distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
+		if (!alive player) exitWith {
+			hint localize format["+++ x_intro.sqf: player dead in %1 secs (%2)", time - _time, _para];
+		};
+		hint localize format["+++ x_intro.sqf: player alive after %1 secs (%2)", time - _time, _para];
+		_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
+	//	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
+		cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
+		_time = time;
 
-	// wait while player in any vehicle (plane or parachute)
+		// wait while player in any vehicle (plane or parachute)
 
-	while { ((vehicle player) != player) && (alive player) } do {sleep 0.5};
-	if (!alive player) exitWith {
-		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs (%2)", time - _time, _para];
+		while { ((vehicle player) != player) && (alive player) } do {sleep 0.5};
+		if (!alive player) exitWith {
+			hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs (%2)", time - _time, _para];
+		};
+		sleep 3;
+		if (alive player ) then {
+			//	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
+			cutText[localize "STR_INTRO_PARAJUMP_2","PLAIN",5];  // "Let's go-o-o-o...". black in again
+			hint localize format["+++ x_intro.sqf: alive on jump after %1 secs (%2)", time - _time, _para];
+		} else {
+			cutText[localize "STR_INTRO_PARAJUMP_3","PLAIN",5];  // "Fuck-k-k.k..."
+			hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs (%2)", time - _time, _para];
+		};
 	};
-	sleep 3;
-	if (alive player ) then {
-		//	cutText[localize "STR_INTRO_PARAJUMP_2","BLACK IN",0.7];  // "Let's go-o-o-o...". black in again
-		cutText[localize "STR_INTRO_PARAJUMP_2","PLAIN",5];  // "Let's go-o-o-o...". black in again
-		hint localize format["+++ x_intro.sqf: alive on jump after %1 secs (%2)", time - _time, _para];
-	} else {
-		cutText[localize "STR_INTRO_PARAJUMP_3","PLAIN",5];  // "Fuck-k-k.k..."
-		hint localize format["+++ x_intro.sqf: player dead on jump in %1 secs (%2)", time - _time, _para];
-	};
+} else {
+	// TODO: no jump, say something about
+
 };
 
 for "_i" from 1 to (_cnt-1) do {
@@ -958,7 +963,7 @@ if (_doJump) then {
                 _time = time + _msg_delay;
             };
             while { time < _time} do {  // wait to print
-                if ( base_visit_status_local != 0 ) then { breakTo "main" }; // Exit on status -1 (dead) or 1 (reached the base)
+                if ( base_visit_session != 0 ) then { breakTo "main" }; // Exit on status -1 (dead) or 1 (reached the base)
                 sleep _sleep;
             };
         };
@@ -1061,7 +1066,7 @@ if (_doJump) then {
     //    }
     };
     if (alive player) then {
-        if (base_visit_status_local <= 0) then {
+        if (base_visit_session <= 0) then {
             ["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 0, false ] spawn SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
         };
     };

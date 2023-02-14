@@ -1644,7 +1644,7 @@ SYG_armUnit = {
 // 4th optional array is names of rucksack items
 // 5th is optional value for player stored view distance, default value is 1500
 // 6th is optional value for death sound playing
-// 7th is base_visit_status value in range of [<-1,>0,1]
+// 7th is base_visit_mission value in range of [<-1,>0,1]
 //
 //  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]><, view_distance<,reborn_music>>>] ] call SYG_rearmUnit;
 //
@@ -2725,13 +2725,13 @@ SYG_getPlayerEquiptArr = {
 	if (isNil "d_viewdistance") then {
 	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags]
 	} else {
-	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status]
+	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_mission]
 	};
 #else
 	if (isNil "d_viewdistance") then {
 	    [_wpn, magazines _this, _ruck, _ruckMags]
 	} else {
-	    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status]
+	    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_mission]
 	};
 #endif
 
@@ -2749,11 +2749,11 @@ SYG_getPlayerRucksackArr = {
 	if ( isNil "_ruck") then  {_ruck = "";};
 	_ruckMags = _this getVariable "ACE_Ruckmagazines";
 	if ( isNil "_ruckMags") then  {_ruckMags = [];};
-    [[],[],_ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_status] // [ no weapons, no mags, rucksack, rucksack items,...]
+    [[],[],_ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_mission] // [ no weapons, no mags, rucksack, rucksack items,...]
 	//hint localize format["_ruck %1, _ruckMags %2", _ruck, _ruckMags];
 #else
 	// no rucksack if no ACE
-    [[],[],"", [], d_viewdistance, d_rebornmusic_index, base_visit_status ]
+    [[],[],"", [], d_viewdistance, d_rebornmusic_index, base_visit_mission ]
 #endif
 
 };
