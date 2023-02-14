@@ -835,7 +835,16 @@ if ( _doJump ) then {
 	};
 } else {
 	// TODO: no jump, say something about
-
+	if (base_visit_mission > 0) exitWith {
+		cutText[localize "STR_INTRO_NOJUMP_BYVISIT","PLAIN",5];  // "The smugglers blabbed you straight to the base."
+	};
+	if (_dt >  0 && _dt < __CONNECT_ON_PARA__) exitWith {
+		cutText[localize "STR_INTRO_NOJUMP_BYTIME","PLAIN",5];  // "You came back quickly, so no jump."
+	};
+	if ( _rank  > 0)  exitWith {
+		cutText[localize "STR_INTRO_NOJUMP_BYRANK","PLAIN",5];  // "The smugglers delivered you to the base out of respect for your rank."
+	};
+	// TODO: for the future
 };
 
 for "_i" from 1 to (_cnt-1) do {

@@ -1139,9 +1139,9 @@ STR_INTRO_PARAJUMP_8_2_0,"You landed outside the nearest circle (distance %1 m.)
 STR_INTRO_PARAJUMP_9,"You are slightly injured on landing","Sie sind bei der Landung leicht verletzt.","Estás ligeramente herido al aterrizar","Вы слегка травмированы при приземлении"
 STR_INTRO_PARAJUMP_10,"You are badly injured when you land","Sie sind bei der Landung schwer verletzt","Estás malherido cuando aterrizas","Вы сильно травмированы при приземлении"
 
-STR_INTRO_NOJUMP_BYVISIT,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Контрабандисты по блату доставили Вас прямо на базу"
-STR_INTRO_NOJUMP_BYTIME,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Вы быстро вернулись обратно, прыжок не нужен"
-STR_INTRO_NOJUMP_BYRANK,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Контрабандисты доставили Вас на базу из уважения к званию"
+STR_INTRO_NOJUMP_BYVISIT,"The smugglers blabbed you straight to the base.","Die Schmuggler haben Sie direkt an die Basis verraten","Los contrabandistas te han delatado directamente a la base","Контрабандисты по блату доставили Вас прямо на базу"
+STR_INTRO_NOJUMP_BYTIME,"You came back quickly, so no jump.","Du bist schnell zurückgekommen, also kein Fallschirmsprung.","Volviste rápido, así que nada de saltar en paracaídas.","Вы быстро вернулись обратно, прыжок не нужен."
+STR_INTRO_NOJUMP_BYRANK,"The smugglers delivered you to the base out of respect for your rank.","Die Schmuggler haben dich aus Respekt vor deinem Rang in die Basis gebracht.","Los contrabandistas te llevaron a la base por respeto a tu rango.","Контрабандисты доставили Вас на базу из уважения к званию"
 
 
 STR_INTRO_ON_BASE,You have reached the base! Life will get easier from here.,Sie haben die Basis erreicht! Das Leben wird von nun an einfacher werden.,¡Has llegado a la base! La vida será más fácil a partir de ahora.,Вы добрались до базы! Теперь будет полегче.
