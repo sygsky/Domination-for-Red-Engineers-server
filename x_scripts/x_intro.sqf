@@ -1,4 +1,31 @@
 // x_intro.sqf, by Xeno
+/*
+	All variants of this script usage.
+
+	Arrival on:
+	1.Base
+		1.1. Visited in mission
+			1.1.1. Reconnect time is low or rank is high
+*                  Spawn in base depot at player pos
+			1.1.2. All other cases:
+*                  Spawn in air with parachute above near ridge at ramdom pos
+		1.2. Not visited in mission and session
+			1.2.1. Rank is high
+*                  Spawn in base depot at player pos
+			1.2.2. Rank is low
+*                  Spawn in air with parachute above near ridge at ramdom pos
+		1.3. Spawned
+			1.3.1. Visited in session
+*                  Spawn in base depot at player pos
+			1.3.2. Not visited in session
+*,                 Spawn in rect on random position at Somato
+	2. Antigua
+		2.1. Visited in mission
+*                  Spawn in base depot at player pos or in DC-3 cabin on air-strip
+		2.2. Not visited in mission and session
+		2.3. Spawned
+
+*/
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
          "_plpos","_i","_XfRandomFloorArray","_XfRandomArrayVal","_cnt","_lobj", "_lobjpos",
 		 "_year","_mon","_day","_newyear","_holiday","_camera","_start","_pos","_tgt","_sound","_date","_music",
