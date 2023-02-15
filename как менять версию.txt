@@ -16,7 +16,7 @@
   
 	Версия Domination! 3.81 for Red Engineers ARMA server, ACE1.09
 	
-3. briefing.Russian.html - там же
+3. briefing.Russian.html, briefing.German.html, briefing.Spanish.html - там же
 
 5. server.cfg на сервере - в нижней части файла, в имени миссии, чтобы к ней правильно обратиться при очередном запуске,
    например: template = domination_3_821_east_ace_ra.sara;
