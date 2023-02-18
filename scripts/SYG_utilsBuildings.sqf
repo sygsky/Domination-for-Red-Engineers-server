@@ -276,8 +276,8 @@ SYG_setObjectInHousePos = {
 // call: _isInHouseRect = _unit call SYG_isInHouseRect;
 //
 SYG_isInHouseRect = {
-	if (typeName _this != "OBJECT") exitWith {false};
     private ["_near","_bb","_po"];
+	if (typeName _this != "ARRAY") then { _this = _this call SYG_getPos };
     _near  = nearestObject [_this, "Building"];
     if (isNull _near) exitWith {false};
     _bb = boundingBox _near;

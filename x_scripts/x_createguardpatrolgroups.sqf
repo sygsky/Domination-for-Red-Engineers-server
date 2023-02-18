@@ -144,7 +144,7 @@ sleep 0.01;
 _selectitmen = nil;
 _selectitvec = nil;
 
-_wp_array = [_trg_center, _radius] call x_getwparray;
+_wp_array = [_trg_center, _radius, 100, true] call x_getwparray; // 100 points
 
 sleep 0.112;
 
@@ -326,9 +326,16 @@ if (!no_more_observers) then {
 } else {
 //  inform about observer absence
 //	hint localize "x_scripts\x_createguardpatrolgroups.sqf: no_more_observers = true";
+// "All artillery guns are down. No artillery observers will appear now. But they can appear later"
 	["msg_to_user", "*", [["STR_SYS_316_1"]], 0, 10, 0] call XSendNetStartScriptClient; // not print message as title text, only as chat
 	no_more_observers = false; // skip observers only for one town
 };
+
+_ind = (count _wp_arr) call XfRandomFloor;
+_pos = _wp_arr select _ind;
+_wp_arr set [_ind, "X_RM_ME"];
+_wp_arr = _wp_arr - ["X_RM_ME"];
+_pos execVM "scripts\addMedTent.sqf"; // add medic test
 
 [_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a) medic BMP  or b) super-reammo or с) radio-tower etc
 
