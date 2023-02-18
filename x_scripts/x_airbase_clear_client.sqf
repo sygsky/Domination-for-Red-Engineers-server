@@ -1,4 +1,4 @@
-﻿// by Xeno
+﻿// by Xeno: TODO - not used, may be DELETE ASAP
 private ["_current_target_name","_target_array2"];
 
 #include "x_setup.sqf"

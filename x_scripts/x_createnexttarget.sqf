@@ -85,7 +85,10 @@ check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_f
 (_dummy select 1) call SYG_lastTownsAdd;   // add town name to queue to inform about last towns on OPC event
 (_dummy select 1) call SYG_townScoresInit; // start score statistics for this town
 
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 [_current_target_pos, _current_target_radius, _dummy select 1] execVM "x_scripts\x_createguardpatrolgroups.sqf";
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 while {!update_target} do {sleep 2.123};
 current_trigger = createTrigger["EmptyDetector",_current_target_pos];
@@ -106,7 +109,7 @@ _emptyH setDir 0;
 
 [] execVM "GRU_scripts\GRUMissionSetup.sqf";
 
-if (call SYG_getTargetTownName == "Rahmadi") then { /* todo: add island patrol on Rahmadi */ };
+if (call SYG_getTargetTownName == "Rahmadi") then { /* TODO: add island patrol on Rahmadi */ };
 
 [] spawn {
     if ( (count resolved_targets) < COUNT_DELAY) exitWith {}; // start on Nth town to clean it
@@ -155,8 +158,21 @@ if (call SYG_getTargetTownName == "Rahmadi") then { /* todo: add island patrol o
 #ifdef __DEBUG__
     hint localize format[ "+++ x_createnexttarget.sqf: Bodies cleaned in %1: men %2 (alive %3, east %4, dead %5), holders %6(water %7)", _dummy select 1, _man_cnt, _acnt, _ecnt, _cnt, count _list, _cnt1 ];
 #endif
-     _list = nil;
-     sleep 2.56;
+	// #598: remove town's Mash if found
+    _list = _target_pos nearObjects ["MASH", _target_radius + 50];
+    {
+    	_var = _x getVariable "TOWN";
+    	if (!isNil "_var") then {
+    		if (_var) then {
+				["say_sound", getPos _x, "steal"] call XSendNetStartScriptClientAll; // play steal sound on mash removing
+				deleteVehicle _x;
+				sleep 1;
+    		};
+    	};
+    } forEach _list;
+
+    _list = nil;
+    sleep 2.56;
 };
 
 #ifdef __AI__
