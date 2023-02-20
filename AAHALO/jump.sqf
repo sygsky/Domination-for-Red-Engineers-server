@@ -1,6 +1,12 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
 //
-// Example call: [ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
+// 0: spawn point
+// 1: parachute type (string)
+// 2: vehicle type (string) or jump score (scalar)
+// 3: use wind (true) or not (false)
+// 4: check circle hit (true) or not (1)
+// 5: ...
+// Example call: [ _spawn_point, _para<, "DC3" | 1<, false<, true>>>] execVM "AAHALO\jump.sqf";
 //
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -256,14 +262,17 @@ if ((localize "STR_LANG") == "RUSSIAN") then {
 	if (!_plane) then {
 		if ( (vehicle player) != player ) then {
 			hint localize format["+++ jump.sqf: Player in parachute now, height AGL %1!", getPos player select 2];
-			playSound format["rippara%1", (floor(random 4)) + 1]; // short versions insteed of one long (1..4)
+			playSound format["rippara%1", (floor(random 4)) + 1]; // short versions instead of one long (1..4)
 		};
 	};
 };
 if ( !alive player || ((getPos player select 2) <= 5)) exitWith { hint localize format["+++ jump.sqf: Parajump completed emergency, alive %1, height AGL %2", alive player, round(getPos player select 2)] }; // can't play sound
 
 hint localize format["+++ jump.sqf: Normal exit from script, alive %1, height AGL %2", alive player, round(getPos player select 2)];
-if (true) exitWith {}; // ++++++++++++++++ end of script
+if (true) exitWith {};
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ end of script +++++++++++++++++++++++++++++++++++++++++
+
 #else
 
 //===================CONFIG========================
@@ -299,7 +308,7 @@ if( getPos vehicle player select 2 <
 (
 	_float_time*(_float_ctrlVSpeedStart + _float_startVel)+
 	0.5*(_float_ctrlVSpeedEnd + _float_startVel - _float_ctrlVSpeedEnd - _float_startVel)*_float_time
-))exitWith{_obj_jump action["EJECT",vehicle _obj_jump];};
+)) exitWith {_obj_jump action["EJECT",vehicle _obj_jump];};
 
 //----------EJECTING SEQUENCE, INDEPENDENT AND DEPENDENT ADAPTATION----------
 

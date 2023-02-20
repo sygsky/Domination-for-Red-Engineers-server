@@ -359,31 +359,19 @@ _lobjpos = [];
 _doJump = false;
 
 #ifdef __CONNECT_ON_PARA__
+
 waitUntil { !(isNil "base_visit_session") }; // wait info about local base visiting state and time
 _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
-// Do jump if ((max disconnect period is large enough) and ((player has rank not "private") or (player visited the base))
-
-_doJump = (_dt <= 0) || (_dt > __CONNECT_ON_PARA__);  // to jump or not to jump (depends on the time spent afted last disconnect). delta == 0 if it is first connection
 waitUntil { !(isNil "XGetRankIndexFromScore") }; // wait info about time elapsed between last exit and this entrance
 _rank = (score player) call XGetRankIndexFromScore;
-_jump_needed = _rank < 1; // Rank is too low
-_doJump = _doJump && _jump_needed;	// add check on rank and status of base previously visited
+_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1);	// check the rank only
 
-hint localize format["+++ _doJump %1, _rank %2, base_visit_session %3, __CONNECT_ON_PARA__ %4", str(_doJump), _rank, base_visit_session, __CONNECT_ON_PARA__];
-
-/**
-hint localize format[ "+++ x_intro: _doJump %1, disconnect duration %2,  base visit %3, rank index %4",
-	_doJump,
-	_dt,
-	base_visit_session,
-	((score player) call XGetRankIndexFromScore)
-];
-*/
-_para = player call SYG_getParachute;
+_para = player call SYG_getParachute; // we need this statement here!!! Don't move it to the parenthesis
+hint localize format["+++ _doJump %1, _rank %2, base_visit_mission %3, parachute %4", str(_doJump), _rank call XGetRankFromIndex, base_visit_mission, _para ];
 if (_doJump) then {
-    format["+++ x+intro: last disconnect was %1 secs ago, so do jump now, set base_visit_session = 1, no jump if less than %2 secs", d_player_stuff select 1, __CONNECT_ON_PARA__ ];
+    format["+++ x_intro: Do jump now, _dt %1 secs ago", _dt ];
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -430,12 +418,13 @@ if (_doJump) then {
 _spawn_point  = getPos player;
 #endif
 
+/*
 if (  (name player) in ["Snooper"] ) then {
 	player setPos  [17351,17943,0];
 	_spawn_point = getPos player;
 	(_equip select 1) call SYG_str2Arr;
 };
-
+*/
 //hint localize format["+++ x_intro.sqf: _spawn_point = %1", _spawn_point];
 #ifdef __DEFAULT__
     // 7703.5,7483.2, 0
@@ -861,15 +850,14 @@ if ( _doJump ) then {
 		};
 	};
 } else {
-	// TODO: no jump, say something about
 	if (base_visit_mission > 0) exitWith {
-		cutText[localize "STR_INTRO_NOJUMP_BYVISIT","PLAIN",5];  // "The smugglers blabbed you straight to the base."
+		cutText[ format[localize"STR_INTRO_NOJUMP_BYVISIT", _rank call XGetRankFromIndex],"PLAIN",5];  // "You have been to the base, but rank (%1) is low, the smugglers will parachute you down before you reach the base"
 	};
-	if (_dt >  0 && _dt < __CONNECT_ON_PARA__) exitWith {
-		cutText[localize "STR_INTRO_NOJUMP_BYTIME","PLAIN",5];  // "You came back quickly, so no jump."
+	if ( (_dt >  0) && (_dt < __CONNECT_ON_PARA__) ) exitWith {
+		cutText[ format[localize "STR_INTRO_NOJUMP_BYTIME", _rank call XGetRankFromIndex],"PLAIN",5];  // "You came back quickly, but rank %1 is not enough to arrive at the base."
 	};
-	if ( _rank  > 0)  exitWith {
-		cutText[localize "STR_INTRO_NOJUMP_BYRANK","PLAIN",5];  // "The smugglers delivered you to the base out of respect for your rank."
+	if ( _rank  < 0)  exitWith {
+		cutText[ format[localize "STR_INTRO_NOJUMP_BYRANK", _rank call XGetRankFromIndex],"PLAIN",5];  // "The smugglers delivered you to the base out of respect for your rank (%1)."
 	};
 	// TODO: for the future
 };
@@ -924,18 +912,6 @@ if (_doJump) then {
             //      reset spawn point
             //+++++++++++++++++++++++++++++
             _spawn_point = _para1 call _makeSpawnPoint;
-    /*
-            _spawn_rect = drop_zone_arr select 0;
-    #ifdef __ACE__
-            if (_para == "ACE_ParachutePack") then {  // find point in the rectangle above Sierra Madre
-                _spawn_rect = [ [11306,8386,0], 600,150, -45 ];
-                hint localize "+++ x_intro.sqf: jump point is set above mountines";
-            } else {
-                hint localize "+++ x_intro.sqf: jump point is set above plain";
-            };
-    #endif
-            _spawn_point  = _spawn_rect call XfGetRanPointSquareOld;
-    */
         }; // replace jump type with para type/
     };
     [ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
@@ -959,11 +935,15 @@ if (_doJump) then {
     _camera camCommit 1; // set time to go
     waitUntil { camCommitted _camera }; // wait until come
 
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     if ( alive player) then { [] execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	if (!alive player) exitWith {}; // Exit ALL follow animations and messages
 
     // print informative messages while in air
     _para spawn {
         private ["_para","_msg_arr","_i","_last","_time","_town_name","_glide","_msg_delay","_msg_delay","_sleep"];
+        _para = _this;
         _town_name = call SYG_getTargetTownName;
         _saboteurs = !isNil "d_on_base_groups";
         _town_msg = switch ( _town_name ) do {
@@ -973,7 +953,6 @@ if (_doJump) then {
                 default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
                 };
         _msg_arr = [_town_msg, "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
-        _para = _this;
     //	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
         _last = (count _msg_arr) - 1;
     #ifdef __ACE__
@@ -991,9 +970,11 @@ if (_doJump) then {
             _msg_delay,
             _sleep,
             _glide];
+
         _i = 0;
         scopeName "main";
         for "_i" from 0 to _last do {
+        	if ( !alive player) exitWith {};
             if ( (!(_i in [1,2,3,4,5])) || _glide ) then {
                 cutText [localize (_msg_arr select _i),"PLAIN"];
                 _time = time + _msg_delay;

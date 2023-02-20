@@ -662,7 +662,6 @@ XHandleNetStartScriptClient = {
 				SYG_townMaxScore = (d_ranked_a select 9); // 02-APR-2021 value was +40
 				publicVariable "SYG_townMaxScore"; // set public variable with the maximum scores bonus per town
 			};
-			base_visit_session = 0;	// base visit in this session
 			base_visit_mission = 0;	// base visit in whole mission
 			if (count d_player_stuff > 5 ) then { // Equipment found in stuff, use is now
 				private ["_equip"];
@@ -675,6 +674,7 @@ XHandleNetStartScriptClient = {
 					if (count _equip > 5) then { base_visit_mission = _equip select 6 }; // base is already visited in previous session[s]
 				};
 			};
+			base_visit_session = 0;	// base always is not visited in this session
 		};
 
 		case "d_hq_sm_msg": {
