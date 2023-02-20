@@ -108,15 +108,10 @@ if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith {
 _sound = "male_scream_0"; // default value
 // check if a woman is killed
 if ( _unit call SYG_isWoman ) then {
-	_sound = "female_shout_of_pain_" + str((floor (random 4)) + 1);  // 1-4
+	        player say (call SYG_getSuicideFemaleScreamSound); //_sound = "female_shout_of_pain_" + str((floor (random 4)) + 1);  // 1-4
 } else {
-//#ifdef __ACE__
-//play 15 sounds from ACE collection for hard screams
-//_sound = format["ACE_BrutalScream%1", ceil(random 15)]; // 1-15
-//        hint localize format["ACE sound is %1", _sound];
-//#else
-	_sound = call SYG_getSuicideScreamSound;
-//#endif
+	//
+	_sound = call SYG_getSuicideMaleScreamSound;
 };
 
 hint localize format["deathSound: suicide assumed, dmg %1, sound ""%2""", damage _unit, _sound ];

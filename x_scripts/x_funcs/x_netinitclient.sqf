@@ -644,16 +644,23 @@ XHandleNetStartScriptClient = {
 		// sent as follows: ["d_player_stuff", _stuff, SYG_dateStart, _sound, _index] call XSendNetStartScriptClient;
 		// _stuff ==  [ d_player_air_autokick, time, "EngineerACE", _score, "delta_1", _equipment_list_str ];
 		case "d_player_stuff": {
-		    private ["_pname"];
+		    private ["_pname","_sound"];
 		    _pname = argp(arg(1),2);
 			if (name player != _pname) exitWith {};
 			__compile_to_var; // d_player_stuff = _this select 1;
 			SYG_dateStart = arg(2); // set server start date
-			if (count _this > 3) then {SYG_suicideScreamSound = arg(3)}; // suicide sound sent to player
+			_sound = "";
+			if (count _this > 3) then {  // suicide sound sent to player
+				if (player call SYG_isWoman) then {
+					SYG_suicideFemaleScreamSound = _this select 3; _sound = SYG_suicideFemaleScreamSound;
+				} else {
+					SYG_suicideMaleScreamSound = _this select 3; _sound = SYG_suicideMaleScreamSound;
+				};
+			};
 			SYG_playerID = if (count _this > 4) then {_this select 4} else {-1}; // // index in player list on server
 			hint localize format["+++ x_netinitclient.sqf: ""d_player_stuff"", SYG_dateStart = %1, suicide sound %2, SYG_playerID %3, OPD time %4, equip %5",
 				SYG_dateStart,
-				call SYG_getSuicideScreamSound,
+				_sound,
 				SYG_playerID,
 				d_player_stuff select 1,
 				d_player_stuff

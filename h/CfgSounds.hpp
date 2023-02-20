@@ -98,11 +98,6 @@ class CfgSounds {
     class male_sorry_2 {name = ""; sound[] = {\sounds\fuck\man-sorry-english.ogg, db+0, 1.0}; titles[] = {}; };
     class male_sorry_3 {name = ""; sound[] = {\sounds\fuck\man-sorry-english-1.ogg, db+0, 1.0}; titles[] = {}; };
 
-// woman self-killed
-    class female_shout_of_pain_1 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_1.ogg, db+0, 1.0}; titles[] = {}; };
-    class female_shout_of_pain_2 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_2.ogg, db+0, 1.0}; titles[] = {}; };
-    class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_3.ogg, db+0, 1.0}; titles[] = {}; };
-    class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_4.ogg, db+0, 1.0}; titles[] = {}; };
 // woman fucking  speech
     class woman_fuck {name = ""; sound[] = {\sounds\fuck\woman_fuck.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_fuck_2 {name = ""; sound[] = {\sounds\fuck\woman_fuck_2.ogg, db+0, 1.0}; titles[] = {}; };
@@ -141,7 +136,7 @@ class CfgSounds {
     class sorry_13 {name = "Female so sorry"; sound[] = {\sounds\women\sorry\female-my-fault.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_14 {name = "Female going to bed time"; sound[] = {\sounds\women\sorry\female-it-s-getting-close-to-bedtime.ogg, db+0, 1.0}; titles[] = {}; };
 
-// man self-killed. If append next scream, don't forget to edit method SYG_getSuicideScreamSound() in file SYG_utilsSound.sqf (increase harcoded number of screams)
+// man self-killed. If append next scream, don't forget to edit method SYG_getSuicideMaleScreamSound() in file SYG_utilsSound.sqf (increase harcoded number of screams)
     class male_scream_0  {name = ""; sound[] = {\sounds\suicide\male_scream_0.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_1  {name = ""; sound[] = {\sounds\suicide\male_scream_1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_2  {name = ""; sound[] = {\sounds\suicide\male_scream_2.ogg, db+0, 1.0}; titles[] = {}; };
@@ -157,6 +152,25 @@ class CfgSounds {
     class male_scream_12 {name = ""; sound[] = {\sounds\suicide\male_scream_12.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_13 {name = ""; sound[] = {\sounds\suicide\scream1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_14 {name = "Demonic woman scream on suicide"; sound[] = {\sounds\suicide\demonic_woman_scream.ogg, db+0, 1.0}; titles[] = {}; }; // demonic scream
+
+// woman self-killed
+//    class female_shout_of_pain_1 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_1.ogg, db+0, 1.0}; titles[] = {}; };
+//    class female_shout_of_pain_2 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_2.ogg, db+0, 1.0}; titles[] = {}; };
+//    class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_3.ogg, db+0, 1.0}; titles[] = {}; };
+//    class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_4.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_0 {name = ""; sound[] = {\sounds\suicide\woman_suicide_0.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_1 {name = ""; sound[] = {\sounds\suicide\woman_suicide_1.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_2 {name = ""; sound[] = {\sounds\suicide\woman_suicide_2.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_3 {name = ""; sound[] = {\sounds\suicide\woman_suicide_3.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_4 {name = ""; sound[] = {\sounds\suicide\woman_suicide_4.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_5 {name = ""; sound[] = {\sounds\suicide\woman_suicide_5.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_6 {name = ""; sound[] = {\sounds\suicide\woman_suicide_6.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_7 {name = ""; sound[] = {\sounds\suicide\woman_suicide_7.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_8 {name = ""; sound[] = {\sounds\suicide\woman_suicide_8.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_9 {name = ""; sound[] = {\sounds\suicide\woman_suicide_9.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_10 {name = ""; sound[] = {\sounds\suicide\woman_suicide_10.ogg, db+0, 1.0}; titles[] = {}; };
+    class suicide_female_11 {name = ""; sound[] = {\sounds\suicide\woman_suicide_11.ogg, db+0, 1.0}; titles[] = {}; };
+
 
     class suicide_yeti_0 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_yeti_1 {name = "Special Yeti's scream on suicide"; sound[] = {\sounds\suicide\suicide_yeti_1.ogg, db+0, 1.0}; titles[] = {}; };

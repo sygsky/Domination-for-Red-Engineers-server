@@ -206,7 +206,7 @@ if ( _equip == "" ) then {
 				switch (toUpper (name player)) do {
 					case "YETI": { // Yeti
 						d_rebornmusic_index = 1; // no play std death sound
-						//SYG_suicideScreamSound = ["suicide_yeti_0","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
+						//SYG_suicideMaleScreamSound = ["suicide_yeti_0","suicide_yeti_1","suicide_yeti_2","suicide_yeti_3"] call XfRandomArrayVal; // personal suicide sound for yeti
 						3000 call SYG_setViewDistance;
 						if (_index == 0 && !(player isKindOf "SoldierEMedic")) exitWith {
 						    _handle = _p execVM "scripts\rearm_Yeti.sqf";

@@ -481,7 +481,8 @@ SYG_ensureOfficerInGroup = {
 };
 
 /**
-  * Detects if designated group belongs to patrol or convoy group
+  * Detects if designated group belongs to patrol or convoy group.
+  * Works only on server)))
   * call: _isPatrolGrp = _grp call SYG_isPatrolGroup;
  */
 SYG_isPatrolGroup = {

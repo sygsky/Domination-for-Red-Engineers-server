@@ -858,7 +858,7 @@ XAddPlayerScore = {
 // Sends info about player score etc if found it in server cache
 // input params: ["d_p_a", name player<, missionStart<,"RUSSIAN|GERMAN|ENGLISH|SPANISH">>]
 XGetPlayerPoints = {
-	private ["_name", "_index", "_stuff", "_sound","_dt"];
+	private ["_name", "_index", "_stuff", "_sound","_dt","_woman"];
 	_name = (_this select 1);
 	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
@@ -871,12 +871,18 @@ XGetPlayerPoints = {
 	} else {
 		// try to find special sound for german players
 		_sound = "";
+		_woman = d_player_entities find (_stuff select 4);
+		if (_woman < 0) then {_woman = false} else {_woman = (call (SYG_players_arr select _woman)) call SYG_isWoman};
+
+		if ( _woman ) exitWith {
+			_sound = _index call SYG_getSuicideFemaleScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
+		};
 		if (count _this > 3 ) then {
 			if ( (_this select 3) == "GERMAN") exitWith {_sound = format["suicide_german_%1", _index mod 5 ]}; // German player suicide screams (0..4)
 		};
 		if (_sound == "") then { // get ordinal sound, not special
-	    	_sound = _index call SYG_getSuicideScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
-	    };
+			_sound = _index call SYG_getSuicideMaleScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)
+		};
 	};
 
 	// calculate delata time after last disconnection

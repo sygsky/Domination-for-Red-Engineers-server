@@ -514,15 +514,29 @@ SYG_getMusicName = {
 };
 
 // static randomized sound assigned on the first call to this fanction
-SYG_getSuicideScreamSound  = {
-    if (isNil "SYG_suicideScreamSound") then {SYG_suicideScreamSound = "male_scream_" + str(floor(random 15))};  // 0-14
-    SYG_suicideScreamSound
+SYG_getSuicideMaleScreamSound  = {
+    if (isNil "SYG_suicideMaleScreamSound") then {SYG_suicideMaleScreamSound = "male_scream_" + str(floor(random 15))};  // 0-14
+    SYG_suicideMaleScreamSound
 };
 
-// call: _sound = _id call SYG_getSuicideScreamSoundById; // return sound according to the designated _id (must be in range[0..N]
-SYG_getSuicideScreamSoundById  = {
-    if (_this < 0) exitWith {call SYG_getSuicideScreamSound};
-    format ["male_scream_%1",  str( _this % 15)] //  returns sound from the range {0.. 14}
+// static randomized sound assigned on the first call to this fanction
+SYG_getSuicideFemaleScreamSound  = {
+    if (isNil "SYG_suicideFemaleScreamSound") then {SYG_suicideFemaleScreamSound = "suicide_female_" + str(floor(random 12))};  // 0-11
+    SYG_suicideFemaleScreamSound
+};
+
+// call: _sound = _id call SYG_getSuicideMaleScreamSoundById; // return sound according to the designated _id (must be in range[0..N]
+SYG_getSuicideMaleScreamSoundById  = {
+    if (_this < 0) exitWith {call SYG_getSuicideMaleScreamSound};
+    SYG_suicideMaleScreamSound = format ["male_scream_%1",  str( _this % 15)]; //  returns sound from the range {0.. 14}
+    SYG_suicideMaleScreamSound
+};
+
+// call: _sound = _id call SYG_getSuicideFemaleScreamSoundById; // return woman sound according to the designated _id (must be in range[0..N]
+SYG_getSuicideFemaleScreamSoundById  = {
+    if (_this < 0) exitWith {call SYG_getSuicideFemaleScreamSound};
+    SYG_suicideFemaleScreamSound = format ["suicide_female_%1",  str( _this % 12)]; //  returns sound from the range {0.. 11}
+    SYG_suicideFemaleScreamSound
 };
 
 /**
