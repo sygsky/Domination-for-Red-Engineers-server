@@ -21,6 +21,7 @@ sleep 1;
 #define __MISSION_START__
 
 _p = player;
+_pl_name = name player;
 _pos = position _p;
 _type = typeOf _p;
 _string_player = format ["%1",_p];
@@ -901,7 +902,6 @@ _local_msg_arr spawn {
              _x call XfGlobalChat;
         } forEach _this;
     };
-	_pl_name = name player;
     // West Germany
     if ( (toUpper _pl_name) in ["CERES-DE","CERES DE","CERES.","CERES"]) exitWith {
         sleep 6;
@@ -963,7 +963,7 @@ _local_msg_arr spawn {
 	};
 
 	// "АЛЕКС МЭЙСОН"
-	if ( (toUpper _pl_name) in ["АЛЕКС МЭЙСОН","DAVID aRMSTRONG", "ALEX mASON"] ) exitWith {
+	if ( (toUpper _pl_name) in ["АЛЕКС МЭЙСОН","DAVID ARMSTRONG", "ALEX MASON"] ) exitWith {
 		sleep 6;
 		[
 			"msg_to_user",
