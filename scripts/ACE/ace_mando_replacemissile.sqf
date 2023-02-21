@@ -8,6 +8,7 @@ You may add here more missile types to be replaced by mando ones, as well as cha
 
 +++ 10-JUN-2019, Sygsky: code is compacted and flight distance increased for Javelins and Stingers
 +++ 14-SEP-2019, Sygsky: added reveal shooter procedure
++++ 09-JAN-2023, Sygsky: prevent missile targeting to the parachutes with any man in
 
 */
 
