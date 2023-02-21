@@ -828,7 +828,8 @@ if ( _doJump ) then {
 			hint localize format["+++ x_intro.sqf: player dead in %1 secs (%2)", time - _time, _para];
 		};
 		hint localize format["+++ x_intro.sqf: player alive after %1 secs (%2)", time - _time, _para];
-		_str = format[localize "STR_INTRO_PARAJUMP_1", if ((d_player_stuff select 3) < 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
+		// Check jump number not 1st time with delta time. If it is >= 0 it is not 1st time, else 1st.
+		_str = format[localize "STR_INTRO_PARAJUMP_1", if ((d_player_stuff select 1) >= 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
 	//	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 		cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 		_time = time;
