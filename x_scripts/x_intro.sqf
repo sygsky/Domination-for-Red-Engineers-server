@@ -365,7 +365,7 @@ _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
 waitUntil { !(isNil "XGetRankIndexFromScore") }; // wait info about time elapsed between last exit and this entrance
-_rank = (score player) call XGetRankIndexFromScore;
+_rank = (d_player_stuff select 3) call XGetRankIndexFromScore; // score may be not set еще player, so get it from player stuff array
 _doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1);	// check the rank only
 
 _para = player call SYG_getParachute; // we need this statement here!!! Don't move it to the parenthesis
@@ -828,7 +828,7 @@ if ( _doJump ) then {
 			hint localize format["+++ x_intro.sqf: player dead in %1 secs (%2)", time - _time, _para];
 		};
 		hint localize format["+++ x_intro.sqf: player alive after %1 secs (%2)", time - _time, _para];
-		_str = format[localize "STR_INTRO_PARAJUMP_1", if ((score player) != 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
+		_str = format[localize "STR_INTRO_PARAJUMP_1", if ((d_player_stuff select 3) < 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
 	//	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 		cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
 		_time = time;
