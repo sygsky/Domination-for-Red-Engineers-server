@@ -56,7 +56,7 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 		if ( _dist < _radius ) exitWith {
 			if ( (_arr select 0) == AISPAWN ) then  {
 				// we are in AISPAWN circle!
-				// "You hit the circle[ and are rewarded for this: +%1]"
+				// "You hit the circle and are rewarded for this: +%1, off for damage %2"
 				_msgArr = [ "msg_to_user", "*", [[format["STR_INTRO_PARAJUMP_8%1",_fmt], _sc, _dmg]], 0, 8, false, "no_more_waiting" ];
 				if (_add_score) then {
 					_sc call SYG_addBonusScore; // score to the player
@@ -87,7 +87,7 @@ _arr2 = _msgArr select 2;
 if (_send_to_server) then { // send message about circle hit to all players and print this on server
     // print to this player
 	_msgArr spawn SYG_msgToUserParser;
-	// print to all other players if any: "%1 hit the circle (%2 m)[ and is rewarded for this: +%3]"
+	// print to all other players if any: "%1 hit the circle (%2 m) and is rewarded for this: +%3, off for damage %4"
 	_msgArr1 = [ "msg_to_user", "*", [[format["STR_INTRO_PARAJUMP_8_ALL%1",_fmt], name player, _dist, _sc, _dmg]], 0, 3, false, "no_more_waiting" ];
 	_msgArr1 spawn XSendNetStartScriptClient;
 	hint localize format["+++ event_para_dropped%1.sqf: print to all players %2", _sub_name, _msgArr1];
