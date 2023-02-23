@@ -7,7 +7,7 @@ private ["_vehicle"];
 #define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
 
 x_sm_pos = [[11300.6,16870.3,0]]; // index: 37,   Prison, Isla de Victoria, marker center
-_sm_building_pos=[[11199.715820,16965.199219,0],[11151.6,16973.599609,0]];
+_sm_building_pos=[[11199.72,16965.2,0],[11151.6,16973.6,0]];
 /*
 	position[]=[11199.715820,16965.199219,0];
 	azimut=270.000000;
@@ -34,6 +34,8 @@ if (X_Client) then {
 if (isServer) then {
 	__Poss;
 	_id = _sm_building_pos call XfRandomFloorArray;
+	x_sm_pos set[0,_sm_building_pos select _id ];
+	publicVariable "x_sm_pos";
 	_vehicle = "Land_dum_mesto3_istan" createVehicle (_sm_building_pos select _id); //  Old building was "Land_OrlHot"
 //	hint localize format["+++ mission 37: veh = %1, id = %2, pos = %3", _vehicle, _id,  _sm_building_pos select _id];
 	_pos = getPos _vehicle;
