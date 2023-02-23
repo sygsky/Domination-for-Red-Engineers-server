@@ -1,5 +1,5 @@
 ﻿// Xeno, AAHALO\x_paraj.sqf - flag pole action "parajump"
-// e.g.: FLAG_BASE addaction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
+// e.g.: FLAG_BASE addAction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
 _unit = _this select 1;
 new_paratype = _unit call SYG_getParachute; // find parachute of player (if any)
 
@@ -94,6 +94,7 @@ waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( 
 
 _para_used = false; // was parachute used or not (default)
 if ( (vehicle player) != player ) then { // parachute still on!
+	hint localize format["+++ x_paraj.sqf: parachute %1 is opened!", new_paratype];
 	_para_used = true; // parachute was used
     // The parachute was just opened, wait player to be on the ground, alive or dead
     waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
@@ -105,7 +106,7 @@ if ( (vehicle player) != player ) then { // parachute still on!
     // Let's stop the parachute jumping on the ground
     if ( (vehicle player) != player ) then {
         player action ["Eject", vehicle player];
-        hint localize "+++ x_paraj.sqf: player ejected from parachute";
+        hint localize "+++ x_paraj.sqf: player ejected out of parachute being on the ground";
         playSound "steal";
         (localize "STR_SYS_609_5") call XfHQChat; // "Thanks to your life experience (and rank!), you  got rid of your parachute."
     };
@@ -113,7 +114,8 @@ if ( (vehicle player) != player ) then { // parachute still on!
 };
 // remove parachute from inventory in any case
 if ( (new_paratype != "") && _para_used) then {player removeWeapon new_paratype}; // The parachute was put on and used
-hint localize "+++ x_paraj.sqf: parachute removed from player weapons!";
+hint localize format["+++ x_paraj.sqf: parachute removed from %1 player weapons! Para %2, was opened %3",
+						if (alive player) then {"alive"} else {"dead"} ,new_paratype, _para_used];
 //hint localize format["x_paraj.sqf: alive %1, vehicle player %2, getPos player %3", alive player, vehicle player, getPos player];
 
 if (true) exitWith {true};
