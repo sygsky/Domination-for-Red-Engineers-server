@@ -16,7 +16,7 @@ _rects = [ // rectangles for boats to be available
 
 // call as: _at_shore =  _boat call _is_near_shore;
 _is_near_shore = {
-	private ["_pos","_res"];
+	private ["_pos","_res","_x"];
 	_pos = _this call SYG_getPos;
 	_res = false;
 	{
@@ -24,6 +24,9 @@ _is_near_shore = {
 	} forEach _rects;
 	_res
 };
+// create point in the water near Antigus
+_create_point_near_Antigua = {
 
+};
 
-// 1. DC3 flight to the Antigua
+// 1. DC3 flight to the Antigua or simple drop from a plane

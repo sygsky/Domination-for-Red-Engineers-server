@@ -424,23 +424,32 @@ XfGetRanPointSquareOuter = {
 	_centerx = _pos select 0;_centery = _pos select 1;_leftx = _centerx - _a;_lefty = _centery - _b;
 	_width = 2 * _a;_height = 2 * _b;_ret_val = [];_co = 0;
 	while {count _ret_val == 0 && _co < 50} do {
-		_rside = floor (random 4);
-		_px1 = (
-			switch (_rside) do {
-				case 0: {_leftx + random _width};
-				case 1: {_leftx + _width};
-				case 2: {_leftx + random _width};
-				case 3: {_leftx};
-			}
-		);
-		_py1 = (
-			switch (_rside) do {
-				case 0: {_lefty + _height};
-				case 1: {_lefty + random _height};
-				case 2: {_lefty};
-				case 3: {_lefty + random _height};
-			}
-		);
+		if (true) then {
+			_rside = floor (random 4);
+			_px1 = (
+				switch (_rside) do {
+					case 0: {_leftx + random _width};
+					case 1: {_leftx + _width};
+					case 2: {_leftx + random _width};
+					case 3: {_leftx};
+				}
+			);
+			_py1 = (
+				switch (_rside) do {
+					case 0: {_lefty + _height};
+					case 1: {_lefty + random _height};
+					case 2: {_lefty};
+					case 3: {_lefty + random _height};
+				}
+			);
+		} else {
+			_rnd = random((_width + _height) * 2);
+			if (_rnd < _height) exitWith {};
+			if (_rnd < (_height + _width)) exitWith {};
+			if (_rnd < (_height * 2 + _width)) exitWith {};
+			_px1 = _leftx + _width - (_rnd - (_height * 2 + _width));
+			_py1 = _lefty;
+		};
 		_radius = _pos distance [_px1,_py1];
 		_atan = (_centerx - _px1) atan2 (_centery - _py1);
 		_x1 = _centerx - (_radius * cos (_atan + _angle));
