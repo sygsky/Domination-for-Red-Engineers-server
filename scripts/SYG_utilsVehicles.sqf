@@ -1373,8 +1373,8 @@ SYG_boatRearmTable =
     ["RHIB2Turret"], // boat names
     [ // boat params
         [
-            ["ACE_M230"],//["ACE_VulcanMgun20"], // weapon(s)
-            ["ACE_M789_1200","ACE_M789_1200"] //["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+            ["ACE_VulcanMgun20","MK49"], // weapon(s)
+            ["ACE_20mm_M168","ACE_20mm_M168", "48Rnd_40mm_MK19", "48Rnd_40mm_MK19", "48Rnd_40mm_MK19", "48Rnd_40mm_MK19"] // magazine(s)
         ]
     ]
 ];
