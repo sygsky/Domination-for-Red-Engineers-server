@@ -6,6 +6,7 @@
 	returns: nothing
 */
 
+#include "x_macros.sqf"
 
 _mash = createVehicle ["MASH", _this, [], 0, "NONE"];
 _mash setVariable ["TOWN", true]; // mark it to belong to the town
@@ -14,5 +15,5 @@ _mash setDir (random 360);
 ADD_HIT_EH(_mash)
 ADD_DAM_EH(_mash)
 
-hint localize format["+++ scripts\addMedTent.sqf: MASH created in town at %1", _pos];
+hint localize format[ "+++ scripts\addMedTent.sqf: MASH created in town at %1", _this ];
 
