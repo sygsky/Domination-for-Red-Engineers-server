@@ -84,14 +84,12 @@ SYG_findNearestSPPM = {
 // call: _vehArr = _pos | _object(RoadCone) call  SYG_getAllSPPMVehicles;
 //
 SYG_getAllSPPMVehicles = {
-	private ["_pos", "_arr", "_i", "_veh"];
+	private ["_pos", "_arr", "_i", "_var"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
 	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
 	for "_i" from 0 to count _arr - 1 do {
 
-//		_veh = _arr select _i;
-//		if ( (!alive _veh) || (_veh isKindOf "ParachuteBase") || (_veh isKindOf "StaticWeapon") || (_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || (_veh isKindOf "ACE_ATV_HondaR") || (_veh isKindOf "Motorcycle") ) then { _arr set [_i, "RM_ME"] }; /// dead vehicle is not SPPM one
 #ifdef __OWN_SIDE_EAST__
 		if ( !((_arr select _i) call SYG_isWestVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only western vehicles can be SPPMed!
 #else
@@ -101,21 +99,22 @@ SYG_getAllSPPMVehicles = {
 	_arr call SYG_clearArrayB; // remove all "RM_ME" items from the list
 	// now make all SPPM vehicles to be captured ones
 	if (count _arr > 0) then {
-		private ["_txt"];
-		_txt = [_pos,50 ] call SYG_MsgOnPosE0;
+		private ["_txt","_x"];
+		_txt = [_pos,10 ] call SYG_MsgOnPosE0;
 		{
-			if (isNil (_x getVariable "CAPTURED_ITEM")) then {
+			_var = _x getVariable "CAPTURED_ITEM";
+			if (isNil "_var") then {
 				[_x] call XAddCheckDead;
 				_x setVariable ["CAPTURED_ITEM","SPPM"];
-				hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", typeOf _x, count _arr, _txt];
-			}
+				hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", _x, count _arr, _txt];
+			};
 		} forEach _arr;
 	};
 	_arr
 };
 
 //
-// Counts near SPPM (in linited range) vehicles
+// Counts near SPPM (in limited range) vehicles
 //
 SYG_findNearSPPMCount = {
 	_this = _this call SYG_getPos;
@@ -161,6 +160,8 @@ SYG_addSPPMMarker = {
 	_arr = _pos call SYG_getAllSPPMVehicles;
 	if (count _arr == 0) exitWith{ "STR_SPPM_ADD_ERR_2" }; // no vehicles in vicinity
 
+	_arr call SYG_checkSMVehsOnSPPM;
+
 	_pnt = _arr call SYG_averPoint; // found average point
 	_marker = _pnt call SYG_findNearestSPPM;
 	if (_marker != "") exitWith {
@@ -184,11 +185,9 @@ SYG_addSPPMMarker = {
 	_marker setMarkerColorLocal SPPM_DOSAAF_MARKER_COLOR;
 	_marker setMarkerShapeLocal "ICON";
 	// TODO: find marker
-	_arr = _arr call SYG_generateSPPMText;
-	_marker setMarkerTypeLocal (_arr select 0);
-	_marker setMarkerText (_arr select 1);
-//	_marker setMarkerType SPPM_MARKER_TYPE;
-//	_marker setMarkerText (_arr call SYG_generateSPPMText);
+	_arr1 = _arr call SYG_generateSPPMText;
+	_marker setMarkerTypeLocal (_arr1 select 0);
+	_marker setMarkerText (_arr1 select 1);
 
 	// create mark object (e.g. road cone) for this SPPM
 	_pnt set [2, -1]; // attempt to put underground to keep forever, but it is not possible by any means(((
@@ -229,6 +228,9 @@ SYG_updateSPPM = {
 		deleteVehicle _this; // remove cone from system too
 	 	"STR_SPPM_6"   // The empty SPPM removed
 	 };
+
+ 	_arr call SYG_checkSMVehsOnSPPM; // check to be SM vehicle on SPPM
+
 	 // Cone, marker, vehicles found, let check center point
 	_new_pos = _arr call SYG_averPoint;
 	_arr = _arr call SYG_generateSPPMText;
@@ -314,7 +316,7 @@ SYG_generateSPPMText = {
 // Updates all markers on map removing empty ones
 SYG_updateAllSPPMMarkers = {
 //	hint localize format["+++ SYG_updateAllSPPMMarkers +++"];
-	private ["_marker","_count_updated","_count_removed","_count_empty","_pos","_arr","_new_pos","_i","_cone","_mrk_name"];
+	private ["_marker","_count_updated","_count_removed","_count_empty","_pos","_arr","_arr1","_new_pos","_i","_cone","_mrk_name"];
 	_count_updated = 0; // how many mark objects were corrected
 	_count_removed = 0; // how many mark objects were removed
 	_count_empty = 0; // how many mark objects were empty (not attached to markers)
@@ -338,7 +340,7 @@ SYG_updateAllSPPMMarkers = {
 			_new_pos = _arr call SYG_averPoint;
 //			hint localize format["+++ SPPM update: cnt %1, old pos %2, new pos %3", count _arr, _pos, _new_pos];
 			if ( [_pos, _new_pos] call SYG_distance2D > 1) then {
-					if ( _new_pos call SYG_findNearSPPMCount == 1) then {
+					if ( (_new_pos call SYG_findNearSPPMCount) > 0) then {
 					// move the mark object to a new pos
 					_marker setMarkerPosLocal _new_pos;
 					_count_updated = _count_updated + 1;
@@ -350,18 +352,43 @@ SYG_updateAllSPPMMarkers = {
 					hint localize format["+++ SPPM ""%1"" position could be changes by %2 m. but is closer then 50 m. to other SPPM", _marker, [_pos, _new_pos] call SYG_distance2D];
 				};
 			};
-			_arr = _arr call SYG_generateSPPMText;
-			_marker setMarkerTypeLocal (_arr select 0);
-			_marker setMarkerText (_arr select 1);
-			if ( _mrk_name != (_arr select 1) ) then {
-				hint localize format["+++ SPPM ""%1"" structure changed from ""%2"" to ""%3"" (near %4)",_marker,  _mrk_name, (_arr select 1), _cone call SYG_nearestLocationName];
+			_arr1 = _arr call SYG_generateSPPMText;
+			_marker setMarkerTypeLocal (_arr1 select 0);
+			_marker setMarkerText (_arr1 select 1);
+			if ( _mrk_name != (_arr1 select 1) ) then {
+				hint localize format["+++ SPPM ""%1"" structure changed from ""%2"" to ""%3"" (near %4)",_marker,  _mrk_name, (_arr1 select 1), _cone call SYG_nearestLocationName];
+
+				_arr call SYG_checkSMVehsOnSPPM; // #602:  try to remove SM vehicles from SM remover array
+
 			};
 		} else { _count_empty = _count_empty + 1 };
 	};
 	SYG_SPPMArr call SYG_clearArrayB;
 	//player groupChat format["+++  count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];
-	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3, empty %4", count SYG_SPPMArr, _count_updated, _count_removed, _count_empty];
+	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3, noname %4", count SYG_SPPMArr, _count_updated, _count_removed, _count_empty];
 	[_count_updated, _count_removed]
+};
+
+//
+// #602:  try to remove SM vehicles from SM remover array
+// Call: _sppmVehsArr call SYG_checkSMVehsOnSPPM
+//
+SYG_checkSMVehsOnSPPM = {
+	if ( isNil "extra_mission_vehicle_remover_array") exitWith {};
+	if (count extra_mission_vehicle_remover_array == 0) exitWith {};
+	private ["_arr","_x"];
+	if ( typeName _this == "OBJECT" ) then {_this = [_this]};
+	_arr = [];
+	{
+		if ( _x in extra_mission_vehicle_remover_array ) then {
+			_x call XAddCheckDead;
+			_arr set [count _arr, _x];
+		};
+	} forEach _this;
+	if (count _arr > 0) then {
+		extra_mission_vehicle_remover_array = extra_mission_vehicle_remover_array - _arr;
+		hint localize format["+++ SYG_checkSMVehsOnSPPM: some SPPM vehicle[s] found in SM remover %1", _arr call SYG_vehToType];
+	};
 };
 
 hint localize "+++ INIT of SYG_utilsSPPM completed";
