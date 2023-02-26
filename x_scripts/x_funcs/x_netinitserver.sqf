@@ -205,7 +205,7 @@ XHandleNetStartScriptServer = {
 					[ "msg_to_user", arg(3), [_msg_arr], 5, random 4, false, "set_marker" ] call XSendNetStartScriptClient; // corresponding message after procedure execution
 				};
 
-				// format: ["SPPM", "UPDATE", name player<, false>] call XSendNetStartScriptServer;
+				// format: ["SPPM", "UPDATE", name player<, true>] call XSendNetStartScriptServer;
 				case "UPDATE" : { // update all SPPM available
 					private ["_cnt","_arr", "_send"];
 					_cnt = count SYG_SPPMArr;

@@ -14,7 +14,7 @@ private ["_index", "_dummy", "_current_target_pos", "_current_target_rad", "_old
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // load list of all the units in the town at the start of the scropt
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-_index = _this;
+_index = _this; //last town index in the list
 _old_units_trigger = "";
 _town_name = "(???)";
 if ( _index >= 0) then {
@@ -50,7 +50,7 @@ if ( _index >= 0) then { // wait for absence of players/alive enemies in the tow
 #else
         _list = _current_target_pos nearObjects ["SoldierEB", _current_target_rad + 50];
 #endif
-        _cnt1 = {canStand _x} count _list; // number of alive enemy units
+        _cnt1 = {canStand _x} count _list; // number of conscious enemy units
 
         // check owners to be out during 300 seconds
         if (_cnt1 > 0 ) then  { // not all enemy are laying on the land, check for players absence in the town
@@ -71,7 +71,7 @@ if ( _index >= 0) then { // wait for absence of players/alive enemies in the tow
 
         if ( ( (_cnt1 * _cnt) ) == 0) exitWith {
             // all enemy dead or no players in town during 300 seconds period
-            hint localize "+++ x_deleteunits.sqf: alive/canStand enemy and/or owner counters are ZERO, clean the town now!!!";
+            hint localize format["+++ x_deleteunits.sqf: canStand enemy (%1) and/or owner (%2) counters are ZERO, clean the town now!!!", _cnt1, _cnt];
         };
     };
     hint localize format["+++ x_deleteunits.sqf: start units remove proc. in %1 after sleep during %2 secs.", _town_name, round (time- _time)];
@@ -83,7 +83,7 @@ sleep ( (240 - (time-_time)) max 0 ); // sleep 0 or delta between 240 and smalle
 // remove all found enemy units from the town
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-_plist = []; // town vehicle list
+_plist = []; // not town vehicle list (patrols/captured)
 _veh_cnt = 0;
 _man_cnt = 0;
 _alive_man_cnt = 0;
@@ -105,7 +105,7 @@ for "_i" from 0 to 6 do {
 				_plist set [count _plist, _x]; // mark as verified
 				hint localize format["+++ x_deleteunits.sqf: patrol veh %1 (#%2, alive crew %3) in %4, not removed", typeOf _x, count _plist, {alive _x} count crew _x, _town_name];
 			};
-			if ( !(_x in _list) ) then { _list set [count _list,_x]; };
+			if ( !(_x in _list) ) then { _list set [count _list,_x]; }; // add man to the man list
 		};
 		sleep 0.11;
 	} forEach (list _old_units_trigger);
@@ -132,6 +132,7 @@ for "_i" from 0 to 6 do {
 };
 if (count _plist > 0 ) then {
 	hint localize format["+++ x_deleteunits.sqf: %1 patrol/captured vehicles detected in %2 not removed", count _plist, _town_name];
+//	hint localize format["+++ x_deleteunits.sqf: patrol/captured vehs %1", _plist call SYG_objArrToTypeStr]; // not needed all муры are already printed
 };
 
 hint localize format["+++ x_deleteunits.sqf: deleted men %1 (alive %2), vehicles %3 in %4", _man_cnt, _alive_man_cnt, _veh_cnt, _town_name ];

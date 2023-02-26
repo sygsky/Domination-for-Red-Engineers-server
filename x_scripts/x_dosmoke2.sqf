@@ -52,7 +52,7 @@ hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4", type
 
 //_name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
 if ( _damage >= 1) exitWith { hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is killed by %2", typeOf _veh, _name]; }; // End Of Life
-if ((!local _veh)) exitWith { hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is not local to the server (captured = %2)", _veh getVariable "CAPTURED_ITEM"]; }; // It is player commanded vehicle, don't handle it
+if ((!local _veh)) exitWith { hint localize format["+++ x_dosmoke2.sqf: attacked vec %1 is not local to the server (captured = %2)", typeOf _veh, _veh getVariable "CAPTURED_ITEM"]; }; // It is player commanded vehicle, don't handle it
 
 if ( _veh == _shooter) exitWith{/* collision, not hit by enemy weapon */
     #ifdef __PRINT__
