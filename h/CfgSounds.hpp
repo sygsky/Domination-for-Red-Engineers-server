@@ -153,11 +153,7 @@ class CfgSounds {
     class male_scream_13 {name = ""; sound[] = {\sounds\suicide\scream1.ogg, db+0, 1.0}; titles[] = {}; };
     class male_scream_14 {name = "Demonic woman scream on suicide"; sound[] = {\sounds\suicide\demonic_woman_scream.ogg, db+0, 1.0}; titles[] = {}; }; // demonic scream
 
-// woman self-killed
-//    class female_shout_of_pain_1 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_1.ogg, db+0, 1.0}; titles[] = {}; };
-//    class female_shout_of_pain_2 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_2.ogg, db+0, 1.0}; titles[] = {}; };
-//    class female_shout_of_pain_3 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_3.ogg, db+0, 1.0}; titles[] = {}; };
-//    class female_shout_of_pain_4 {name = ""; sound[] = {\sounds\pain\female_shout_of_pain_4.ogg, db+0, 1.0}; titles[] = {}; };
+// woman self-killed event
     class suicide_female_0 {name = ""; sound[] = {\sounds\suicide\woman_suicide_0.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_female_1 {name = ""; sound[] = {\sounds\suicide\woman_suicide_1.ogg, db+0, 1.0}; titles[] = {}; };
     class suicide_female_2 {name = ""; sound[] = {\sounds\suicide\woman_suicide_2.ogg, db+0, 1.0}; titles[] = {}; };
