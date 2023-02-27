@@ -15,7 +15,7 @@
 #define RANDOM_ARR_ITEM(ARR) ((ARR)select(floor(random(count(ARR)))))
 
 #define SPPM_MIN_DISTANCE 80 // Minimum distance at which the nearest SPPM can be located
-#define SPPM_VEH_MIN_DISTANCE 40 // Minimum distance between marker of SPPM and vehicle to count it in SPPM
+#define SPPM_VEH_MIN_DISTANCE __SPPM__ // Minimum distance between marker of SPPM and vehicle to count it in SPPM
 #define SPPM_OBJ_TYPE "RoadCone" // SPPM object for search
 #define SPPM_DOSAAF_MARKER_COLOR "ColorRed" // Color of any SPPM marker
 #define SPPM_MARKER_NAME "SPPM_MARKER" // variable name of marker object with marker name
@@ -106,7 +106,7 @@ SYG_getAllSPPMVehicles = {
 			if (isNil "_var") then {
 				[_x] call XAddCheckDead;
 				_x setVariable ["CAPTURED_ITEM","SPPM"];
-				hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", _x, count _arr, _txt];
+				hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", vehicle _x, count _arr, _txt];
 			};
 		} forEach _arr;
 	};
@@ -160,7 +160,7 @@ SYG_addSPPMMarker = {
 	_arr = _pos call SYG_getAllSPPMVehicles;
 	if (count _arr == 0) exitWith{ "STR_SPPM_ADD_ERR_2" }; // no vehicles in vicinity
 
-	_arr call SYG_checkSMVehsOnSPPM;
+//	_arr call SYG_checkSMVehsOnSPPM;
 
 	_pnt = _arr call SYG_averPoint; // found average point
 	_marker = _pnt call SYG_findNearestSPPM;
@@ -229,7 +229,7 @@ SYG_updateSPPM = {
 	 	"STR_SPPM_6"   // The empty SPPM removed
 	 };
 
- 	_arr call SYG_checkSMVehsOnSPPM; // check to be SM vehicle on SPPM
+// 	_arr call SYG_checkSMVehsOnSPPM; // check to be SM vehicle on SPPM
 
 	 // Cone, marker, vehicles found, let check center point
 	_new_pos = _arr call SYG_averPoint;
@@ -358,7 +358,7 @@ SYG_updateAllSPPMMarkers = {
 			if ( _mrk_name != (_arr1 select 1) ) then {
 				hint localize format["+++ SPPM ""%1"" structure changed from ""%2"" to ""%3"" (near %4)",_marker,  _mrk_name, (_arr1 select 1), _cone call SYG_nearestLocationName];
 
-				_arr call SYG_checkSMVehsOnSPPM; // #602:  try to remove SM vehicles from SM remover array
+//				_arr call SYG_checkSMVehsOnSPPM; // #602:  try to remove SM vehicles from SM remover array
 
 			};
 		} else { _count_empty = _count_empty + 1 };
@@ -373,6 +373,7 @@ SYG_updateAllSPPMMarkers = {
 // #602:  try to remove SM vehicles from SM remover array
 // Call: _sppmVehsArr call SYG_checkSMVehsOnSPPM
 //
+/**
 SYG_checkSMVehsOnSPPM = {
 	if ( isNil "extra_mission_vehicle_remover_array") exitWith {};
 	if (count extra_mission_vehicle_remover_array == 0) exitWith {};
@@ -390,5 +391,5 @@ SYG_checkSMVehsOnSPPM = {
 		hint localize format["+++ SYG_checkSMVehsOnSPPM: some SPPM vehicle[s] found in SM remover %1", _arr call SYG_vehToType];
 	};
 };
-
+*/
 hint localize "+++ INIT of SYG_utilsSPPM completed";

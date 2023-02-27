@@ -408,9 +408,8 @@ SYG_vehUpAngle = {
  * ...
  */
 SYG_ACEUnitUnconscious = {
-    if (isNull _this ) exitWith {true};
-    if ( typeName _this != "OBJECT") exitWith {true};
 	if ( !alive _this ) exitWith {true};
+    if ( typeName _this != "OBJECT") exitWith {true};
 	if (!(_this isKindof "CAManBase") ) exitWith {true};
     private ["_var"];
 	_var = _this getVariable "ACE_unconscious";

@@ -55,7 +55,7 @@ XClearSidemission = {
 		} forEach d_time_until_next_sidemission;
 	};
 	sleep _waittime;
-	{
+	{ //   } forEach extra_mission_vehicle_remover_array;
 		if !(isNull _x) then {
 //			if (_x isKindOf "LandVehicle" ) then {
 				if ( alive _x ) then {
@@ -81,6 +81,24 @@ XClearSidemission = {
 					    _already_captured = _was_captured;
 					    // if (_was_captured == true) then { "vehicle was already captured by player[s]"};
 					};
+
+#ifdef __SPPM__
+					// check vehicle to be near any SPPM
+					if (! _was_captured) then {
+						private [ "_items","_marker_name", "_loc_name" ];
+						_items = _x nearObjects ["RoadCone", __SPPM__];
+						if (count _items == 0) exitWith {};
+						_marker_name = (_items select 0) getVariable "SPPM_MARKER";
+						if (!isNil "_marker_name") exitWith {
+						    _was_captured = true; // found SPPN near, so veh is captured
+							hint localize format[ "+++ SM vehicle remover: veh %1 is captured near SPPM (%2) at %3", typeName _x, markerText _marker_name, (markerPos _marker_name) call SYG_MsgOnPosE0 ];
+
+							// Inform all about SM vehicle captured on SPPM
+							_loc_name = (markerPos _marker_name) call SYG_nearestLocationName;
+							["msg_to_user", "*", [["STR_SPPM_VEH_CAPTURED", typeName _x, markerText _marker_name, _loc_name]], 0, 4, false, "good_news" ] call XSendNetStartScriptClient;
+						};
+					};
+#endif
 					if (_was_captured ) then { // vehicle was captured by player
 						if (!_already_captured) then {
 							[_x] call XAddCheckDead;

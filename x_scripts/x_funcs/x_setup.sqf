@@ -174,7 +174,8 @@
 // add some Vehicles and ammoBoxes on hills near Corazol and on base
 // #define __DEBUG_ADD_VEHICLES__
 
-#define __SPPM__ // support for SPPM markers
+// support for SPPM markers and options
+#define __SPPM__ 40
 
 #define __NO_AI_IN_PLANE__ // prevents AI to enter plane as driver/pilot, gunner or commaner. Cargo role is allowed
 

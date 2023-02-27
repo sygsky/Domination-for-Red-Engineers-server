@@ -489,7 +489,12 @@ XGetRankIndexExt = {
 XGetRankStringLocalized = {
     if ( typeName _this == "OBJECT") then {
         if (isPlayer _this) then { _this = _this call XGetRankFromScore;};
+    } else {
+    	if ( typeName _this == "SCALAR") then { // rank index designated
+    		_this = _this call XGetRankFromIndex;
+    	};
     };
+   	if ( typeName _this != "STRING") exitWith {format["<UNKNOWN:%1>", _this]};
 	switch (toUpper(_this)) do {                     // indexes of rank array
 		case "PRIVATE":    {localize "STR_TSD9_26"}; // 0
 		case "CORPORAL":   {localize "STR_TSD9_27"}; // 1
