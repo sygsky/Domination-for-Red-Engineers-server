@@ -636,7 +636,7 @@ SYG_randomRadio = {
 };
 
 SYG_randomRadioNoise = {
-	format["radionoise_%1", floor (random 6)] // radio_0..5
+	format["radionoise_%1", floor (random 6)] // radionoise_0..5
 };
 
 //
@@ -644,6 +644,6 @@ SYG_randomRadioNoise = {
 // call: _asnd = call SYG_armorySound;
 //
 SYG_armorySound = {
-	format["armory%1", (floor(random 4)) + 1]
+	format["armory%1", (floor(random 4)) + 1] // armory1-4
 };
 if (true) exitWith {};
