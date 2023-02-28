@@ -254,15 +254,18 @@ _remove_grp = {
 		_vec_captured_cnt = 0;
 #endif
 		{ // forEach _vehs;
-			if (alive _x) then { // if null, skip any test and go to the next vehicle
+			if (alive _x) then { // if !alive, skip any test and go to the next vehicle
 				_var = _x getVariable "CAPTURED_ITEM";
 				if (isNil "_var") then { // if not already captured, check if it is captured now
 					_xside =  format["%1", side _x];
 					// check if the vehicle is captured directly now
 					if ( !(_x call SYG_vehIsUpsideDown) &&
 						(
-						 (_xside == d_own_side ) ||
-						 ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) )
+						    (_xside == d_own_side ) // owned by our side (some player in vehicle)
+						 || ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) ) // veh is at base and not damaged
+#ifdef __SPPM__
+						 ||	( (_x call SYG_getVehSPPMMarker) != "")  // vehicle is on SPPM
+#endif
 						)
 					   )  then { // vehicle was captured by player
 						_x setVariable [ "PATROL_ITEM",nil ];

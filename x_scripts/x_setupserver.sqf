@@ -85,11 +85,10 @@ XClearSidemission = {
 #ifdef __SPPM__
 					// check vehicle to be near any SPPM
 					if (! _was_captured) then {
-						private [ "_items","_marker_name", "_loc_name" ];
-						_items = _x nearObjects ["RoadCone", __SPPM__];
-						if (count _items == 0) exitWith {};
-						_marker_name = (_items select 0) getVariable "SPPM_MARKER";
-						if (!isNil "_marker_name") exitWith {
+//					    if (_x call SYG_vehIsUpsideDown) exitWith{}; // The vehicle lies on its side or on the roof
+						private ["_marker_name", "_loc_name" ];
+						_marker_name = _x call SYG_getVehSPPMMarker;
+						if (_marker_name != "") exitWith {
 						    _was_captured = true; // found SPPN near, so veh is captured
 							hint localize format[ "+++ SM vehicle remover: veh %1 is captured near SPPM (%2) at %3", typeName _x, markerText _marker_name, (markerPos _marker_name) call SYG_MsgOnPosE0 ];
 

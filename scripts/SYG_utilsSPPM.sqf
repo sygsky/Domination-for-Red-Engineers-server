@@ -370,6 +370,31 @@ SYG_updateAllSPPMMarkers = {
 };
 
 //
+// call: _isOnSPP = _veh call SYG_isVehAtSPPM;
+// returns: true if _veh is on SPPM, else false
+//
+SYG_isVehAtSPPM = {
+    private [ "_marker_name" ];
+    _marker_name = _this call SYG_getVehSPPMMarker;
+    _marker_name != ""
+};
+
+//
+// calls: _marker_name = _veh call SYG_getVehSPPMMarker;
+// returns: veh SPPM marker name or "" if veh is not on SPPM
+//
+SYG_getVehSPPMMarker = {
+    private [ "_veh","_items","_marker_name" ];
+    _veh = _this;
+    if (typeName _veh != "OBJECT") exitWith {""}; // not vehicle etc, exit
+    _items = _veh nearObjects ["RoadCone", __SPPM__];
+    if (count _items == 0) exitWith {""}; // No SPPM found near veh
+    _marker_name = (_items select 0) getVariable "SPPM_MARKER";
+    if ( isNil "_marker_name") exitWith {""};
+    _marker_name
+};
+
+//
 // #602:  try to remove SM vehicles from SM remover array
 // Call: _sppmVehsArr call SYG_checkSMVehsOnSPPM
 //
