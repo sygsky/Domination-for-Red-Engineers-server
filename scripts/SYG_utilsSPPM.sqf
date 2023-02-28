@@ -374,9 +374,7 @@ SYG_updateAllSPPMMarkers = {
 // returns: true if _veh is on SPPM, else false
 //
 SYG_isVehAtSPPM = {
-    private [ "_marker_name" ];
-    _marker_name = _this call SYG_getVehSPPMMarker;
-    _marker_name != ""
+    (_this call SYG_getVehSPPMMarker) != ""
 };
 
 //
@@ -389,7 +387,7 @@ SYG_getVehSPPMMarker = {
     if (typeName _veh != "OBJECT") exitWith {""}; // not vehicle etc, exit
     _items = _veh nearObjects ["RoadCone", __SPPM__];
     if (count _items == 0) exitWith {""}; // No SPPM found near veh
-    _marker_name = (_items select 0) getVariable "SPPM_MARKER";
+    _marker_name = (_items select 0) getVariable "SPPM_MARKER"; // SPPM conus must have variable "SPPM_MARKER"
     if ( isNil "_marker_name") exitWith {""};
     _marker_name
 };
