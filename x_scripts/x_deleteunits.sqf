@@ -33,6 +33,7 @@ if ( _index >= 0) then {
 _old_units_trigger setTriggerActivation [d_enemy_side, "PRESENT", false]; // list only alive enemy side vehicles (with crew in it) and men
 _old_units_trigger setTriggerStatements["this", "", ""];
 
+sleep 3;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // wait until no players/enemy units in the town  during last 300 seconds
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,9 +47,9 @@ if ( _index >= 0) then { // wait for absence of players/alive enemies in the tow
         _cnt = 0; _cnt1 = 0;
         // check all enemy troops to be dead
 #ifdef __OWN_SIDE_EAST__
-        _list = _current_target_pos nearObjects ["SoldierWB", _current_target_rad + 50];
+        _list = _current_target_pos nearObjects ["SoldierWB", _current_target_rad];
 #else
-        _list = _current_target_pos nearObjects ["SoldierEB", _current_target_rad + 50];
+        _list = _current_target_pos nearObjects ["SoldierEB", _current_target_rad];
 #endif
         _cnt1 = {canStand _x} count _list; // number of conscious enemy units
 
@@ -56,13 +57,13 @@ if ( _index >= 0) then { // wait for absence of players/alive enemies in the tow
         if (_cnt1 > 0 ) then  { // not all enemy are laying on the land, check for players absence in the town
             {
 #ifdef __OWN_SIDE_EAST__
-                _list = _current_target_pos nearObjects ["SoldierEB", _current_target_rad + 50];
+                _list = _current_target_pos nearObjects ["SoldierEB", _current_target_rad];
 #endif
 #ifdef __OWN_SIDE_WEST__
-                _list = _current_target_pos nearObjects ["SoldierWB", _current_target_rad + 50];
+                _list = _current_target_pos nearObjects ["SoldierWB", _current_target_rad];
 #endif
 #ifdef __OWN_SIDE_RACS__
-                _list = _current_target_pos nearObjects ["SoldierGB", _current_target_rad + 50];
+                _list = _current_target_pos nearObjects ["SoldierGB", _current_target_rad];
 #endif
                 _cnt = _cnt +  ({(isPlayer _x) || (canStand _x)} count _list);
                 sleep 60;

@@ -1112,15 +1112,15 @@ STR_INTRO_3,"%1. %2, %3, %4 mission day","%1. %2, %3, %4 mission Tag","%1. %2, %
 STR_INTRO_4,Sahrani island. Nearest settlement - %1,Insel Sahrani. Nächste Siedlung - %1,Isla De Sahrani. El asentamiento más cercano es %1,Остров Сахрани. Ближайшее поселение - %1
 STR_INTRO_5,"Today in the USSR (in 1985) holiday: ""%1""%2","Heute in der UdSSR (1985) ist ein Feiertag: ""%1"" (%2)","Hoy en la URSS (en 1985) vacaciones: ""%1 "" (%2)","Сегодня в СССР (в 1985 г.) праздник: ""%1"" (%2)"
 STR_INTRO_05,"Today is an internationalist holiday: ""%1""%2","Heute ist ein internationalistischer Feiertag: ""%1""%2","Hoy es fiesta internacionalista: ""%1""%2","Сегодня праздник интернационалистов: ""%1""%2"
-STR_INTRO_5_0, (working day), (Arbeitstag), (día hábil), (рабочий день)
-STR_INTRO_5_1, (holiday), (arbeitsfreier Tag), (día de descanso), (выходной)
+STR_INTRO_5_0," (working day)"," (Arbeitstag)"," (día hábil)"," (рабочий день)"
+STR_INTRO_5_1," (holiday)"," (arbeitsfreier Tag)"," (día de descanso)"," (выходной)"
 STR_INTRO_SIDE,USSR,UdSSR,URSS,СССР
 STR_INTRO_TEAM,One team -,One team -,Parte -,Сторона -
 STR_INTRO_FULL,Domination! One team - A.C.E. East,Domination! One team - A.C.E. East,¡Liberación! Lado-URSS (mod A. C. E.),Освобождение! Сторона - СССР (мод A.C.E.)
 
 STR_INTRO_PARAJUMP,Get to the base any way you want (%1 m)!,Erreichen Sie die Basis mit allen nötigen Mitteln (%1 m)!,¡Llega a la base por cualquier medio (%1 m)!,Доберитесь до базы любым способом (%1 м.)!
 STR_INTRO_PARAJUMP_1,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Придётся прыгнуть%1. А что делать?"
-STR_INTRO_PARAJUMP_1_1, once again, wieder, de nuevo, ещё раз
+STR_INTRO_PARAJUMP_1_1," once again"," wieder"," de nuevo"," ещё раз"
 STR_INTRO_PARAJUMP_2,"Let's go-o-o-o...","Lass uns gehen-n-n-n...","Vamos-s-s-s...","Поехали-и-и-и..."
 STR_INTRO_PARAJUMP_3,"Fuck-k-k.k...","Scheiß-ß.ß...","Jodido-o-o.o...","Й-о-п-п-п.п..."
 STR_INTRO_PARAJUMP_5,We have to get to the base. They promised to launch flares!,Wir müssen zur Basis kommen. Sie haben versprochen, Leuchtraketen abzufeuern!Tenemos que llegar a la base. ¡Prometieron disparar bengalas!,Надо добраться до базы. Они обещали пускать осветительные ракеты!

@@ -1068,6 +1068,13 @@ if (_doJump) then {
     // wait any of : death, landing, parachute opening
     waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
     if ( (vehicle player) != player ) then { // parachute is on!
+
+		hint localize format["+++ x_intro.sqf: removing parachute ""%1"", has ""%2""", _para, player call SYG_getParachute];
+		if ( _para != "") then {
+			waitUntil {alive player};
+			player removeWeapon _para;
+		}; // The parachute is used, remove it from inventory
+
         // The parachute still is opened, wait player to be on the ground, out of parachute or dead
         waitUntil { sleep 0.132; (!alive player) || (vehicle player == player)  || ( ( ( getPos player ) select 2 ) < 5 ) };
         #ifdef __ACE __
@@ -1089,8 +1096,6 @@ if (_doJump) then {
         };
     };
 
-    hint localize format["+++ x_intro.sqf: removing parachute ""%1"", has ""%2""", _para, player call SYG_getParachute];
-    if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory
 };
 #endif
 

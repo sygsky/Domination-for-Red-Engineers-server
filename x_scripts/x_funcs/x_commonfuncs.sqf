@@ -57,7 +57,7 @@ SYG_found_ECS               = "ECS_Core" in _search_array; // on server
 SYG_found_SCUD               = "GIG_Scud" in _search_array; // on server and client
 #endif
 
-hint localize format["+++ GL3 = %1, ai_spotting = %2, Grenade fix = %3 ", SYG_found_GL3, SYG_found_ai_spotting, SYG_found_TCN_GrenadeFix];
+hint localize format["+++ GL3 = %1, ai_spotting = %2, Grenade fix = %3, VopSound = %4 ", SYG_found_GL3, SYG_found_ai_spotting, SYG_found_TCN_GrenadeFix, "VopSound" in _search_array];
 #ifdef __ACE__
 if (SYG_found_ACE) then {hint localize "+++ ACE found!"} else { "--- ACE not found!"};
 if ((d_enemy_side == "WEST")  && isServer && SYG_found_GL3) then {
