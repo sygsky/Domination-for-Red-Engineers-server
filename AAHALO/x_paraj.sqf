@@ -28,9 +28,9 @@ if ( d_para_timer_base > 0 ) then { // pass time interval to jump
 #endif
     ) then {
         _miss_mins = (d_next_jump_time - time)/60; // how many mins before next jump
-        if ( _miss_mins > 0 ) then { // paid for all (and partial) munutes to wait from next free jump
+        if ( _miss_mins >= 0 ) then { // paid for all (and partial) munutes to wait from next free jump
             _miss_mins = ceil _miss_mins;
-            _wait_score = (_miss_mins*(_miss_mins + 1)) / 2 ; //  Natural series 1,2,3,4,5 of an arithmetic progression is { SUM_{i=1}^{n}i=1+2+3+...+n={Frac {n(n+1)}{2}}}
+            _wait_score = ceil ((_miss_mins*(_miss_mins + 1)) / 2) ; //  Natural series 1,2,3,4,5 of an arithmetic progression is { SUM_{i=1}^{n}i=1+2+3+...+n={Frac {n(n+1)/2}}}
             if ( score player  < (_jump_score  + _wait_score)) exitWith {
                 // "You need more points, now wait %1 minutes for a free jump (or %2 points), the jump itself requires another %3 points. You only have %4"
                 (format [localize "STR_SYS_608", _miss_mins, _wait_score, _jump_score, score player]) call XfHQChat; 
@@ -38,8 +38,16 @@ if ( d_para_timer_base > 0 ) then { // pass time interval to jump
             };
             _full_score = _jump_score + _wait_score;
             hint localize format["+++ x_paraj.sqf: assign full score %1, jump score %2, wait score %3", _full_score, _jump_score, _wait_score];
-            // STR_SYS_608_1,"You spent points on this jump: %1, %2 for jump and %3 for impatience to free jump (%4 min.)"
-            (format [localize "STR_SYS_608_1", _full_score, _jump_score, _wait_score, _miss_mins]) call XfHQChat;
+			if (_wait_score > 0) then { // Inform player about high cost of non-free jump
+				localize "STR_WPN_TITLE" hintC [
+					composeText[ image "img\red_star_64x64.paa",lineBreak, localize "STR_SYS_608_INFO"],  // "This parajump is not scheduled!"
+					format [localize "STR_SYS_608_1", _full_score, _jump_score, _wait_score, d_para_timer_base/60, _miss_mins], // "Your total cost (points) for the jump: %1, %2 for the jump itself and %3 for impatience. Free jump - every %4 min., the next one in %5 min."
+					parseText  ("<t align='center'><t color='#ffff0000'>" + (format[localize "STR_WPN_EXIT",localize "STR_DISP_INT_CONTINUE"])) // "press '%1' to exit from dialog"
+				];
+			} else {
+				// "Your costs (points) for a parachute jump: %1. Free parachute jump - every %2 min."
+				(format [localize "STR_SYS_608_0", _full_score, d_para_timer_base/60]) call XfHQChat;
+			};
         } else {
             (format [localize "STR_SYS_607", score player,_jump_score]) call XfHQChat; // "You need %2 point[s] for parajump. Your current scores are %1"
         };
