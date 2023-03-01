@@ -2,7 +2,8 @@
 // Removes all alive enemy units only (men+vecs) in the range around town/airbase
 // Procedure is as follows:
 // 1. if all anemy dead, wait 240 seconds and start town clean proc
-// 2. if during 300 seconds town is free of players, start town clean proc
+// 2. if town is free of players, start town clean proc
+// 3. After 300 seconds start clean proc in any case
 
 if (!isServer) exitWith{};
 //hint localize format["+++ x_deleteunits.sqf: _this  = %1", _this]; // debug printing
@@ -12,7 +13,7 @@ private ["_index", "_dummy", "_current_target_pos", "_current_target_rad", "_old
 //#define __DEBUG__
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// load list of all the units in the town at the start of the scropt
+// load list of all the units in the town at the start of the script
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _index = _this; //last town index in the list
 _old_units_trigger = "";
@@ -33,17 +34,17 @@ if ( _index >= 0) then {
 _old_units_trigger setTriggerActivation [d_enemy_side, "PRESENT", false]; // list only alive enemy side vehicles (with crew in it) and men
 _old_units_trigger setTriggerStatements["this", "", ""];
 
-sleep 3;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // wait until no players/enemy units in the town  during last 300 seconds
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 _dummy = target_names select _index;
 _town_name = _dummy select 1;
 _current_target_pos = _dummy select 0;
 _current_target_rad = (_dummy select 2) + 50; // search radious is TOWN_RAD+50
 _time = time; // start of script time
 if ( _index >= 0) then { // wait for absence of players/alive enemies in the town
-    while {true} do {
+    while {true} do { // period to clean town is undefined, only if players are out or all enemy dead
         _cnt = 0; _cnt1 = 0;
         // check all enemy troops to be dead
 #ifdef __OWN_SIDE_EAST__
@@ -53,7 +54,7 @@ if ( _index >= 0) then { // wait for absence of players/alive enemies in the tow
 #endif
         _cnt1 = {canStand _x} count _list; // number of conscious enemy units
 
-        // check owners to be out during 300 seconds
+        // check plyers to be out during 300 seconds
         if (_cnt1 > 0 ) then  { // not all enemy are laying on the land, check for players absence in the town
             {
 #ifdef __OWN_SIDE_EAST__
@@ -67,7 +68,7 @@ if ( _index >= 0) then { // wait for absence of players/alive enemies in the tow
 #endif
                 _cnt = _cnt +  ({(isPlayer _x) || (canStand _x)} count _list);
                 sleep 60;
-            } forEach [1,2,3,4,5];
+            } forEach [1,2,3,4,5]; // 5 times for 60 seconds = 300 seconds
         };
 
         if ( ( (_cnt1 * _cnt) ) == 0) exitWith {
@@ -78,7 +79,7 @@ if ( _index >= 0) then { // wait for absence of players/alive enemies in the tow
     hint localize format["+++ x_deleteunits.sqf: start units remove proc. in %1 after sleep during %2 secs.", _town_name, round (time- _time)];
 };
 
-sleep ( (240 - (time-_time)) max 0 ); // sleep 0 or delta between 240 and smaller delay due to all enemy dead
+sleep ( 240 - ((time-_time) min 240) ); // sleep 0 or delta between 240 and smaller delay if all enemy dead
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // remove all found enemy units from the town
