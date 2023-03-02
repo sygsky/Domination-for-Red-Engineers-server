@@ -9,12 +9,28 @@ private ["_do_exit","_wait_score","_jump_score","_full_score"];
 
 #include "x_setup.sqf"
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++
+// + call as follows: _user_msg call _showHintC;   +
+// +++++++++++++++++++++++++++++++++++++++++++++++++
+_showHintC = {
+	localize "STR_WPN_TITLE" hintC [ // "Important information"
+		composeText[ image "img\red_star_64x64.paa"], // Small red star
+		composeText[ localize "STR_SYS_607_TXT_COMMON1"],	// "Jumping no more than once every 5 minutes you spend a minimum of points per jump: -1."
+		composeText[ localize "STR_SYS_607_TXT_COMMON2"],	// "Jumping faster than 5 minutes is more costly."
+		composeText[ localize "STR_SYS_607_TXT_COMMON3"],	// "Around 5 minutes -2, after 4 minutes -4, after 3 minutes -7, after 2 minutes -11, after 1 minute -16. The choice is yours!"
+		composeText[ localize "STR_SYS_607_TXT_COMMON4",lineBreak],   // "The choice is yours!"
+		_this, // custom message
+		parseText  ("<t align='center'><t color='#ffff0000'>" + (format[localize "STR_WPN_EXIT",localize "STR_DISP_INT_CONTINUE"])) // "press '%1' to exit from dialog"
+	];
+};
+
 #ifdef __RANKED__
 _jump_score = d_ranked_a select 4; // score to jump in ranked version
 if ( score player < _jump_score ) exitWith {
-	(format [localize "STR_SYS_607", score player,_jump_score]) call XfHQChat; // "You need %2 point[s] for parajump. Your current scores are %1"
+	(format[localize "STR_SYS_607_TXT_NO_SCORE", score player, _jump_score]) call _showHintC; // "You need %2 point[s] for parajump. Your current scores are %1"
 };
 #endif
+
 
 _do_exit = false;
 _wait_score = 0;
@@ -28,22 +44,19 @@ if ( d_para_timer_base > 0 ) then { // pass time interval to jump
 #endif
     ) then {
         _miss_mins = (d_next_jump_time - time)/60; // how many mins before next jump
-        if ( _miss_mins >= 0 ) then { // paid for all (and partial) munutes to wait from next free jump
+        if ( _miss_mins > 0 ) then { // paid for all (and partial) munutes to wait from next free jump
             _miss_mins = ceil _miss_mins;
             _wait_score = ceil ((_miss_mins*(_miss_mins + 1)) / 2) ; //  Natural series 1,2,3,4,5 of an arithmetic progression is { SUM_{i=1}^{n}i=1+2+3+...+n={Frac {n(n+1)/2}}}
-            if ( score player  < (_jump_score  + _wait_score)) exitWith {
+            _full_score = _jump_score + _wait_score;
+            if ( score player  < _full_score ) exitWith {
+
                 // "You need more points, now wait %1 minutes for a free jump (or %2 points), the jump itself requires another %3 points. You only have %4"
-                (format [localize "STR_SYS_608", _miss_mins, _wait_score, _jump_score, score player]) call XfHQChat; 
+                (format [localize "STR_SYS_607_TXT_WAIT", _miss_mins, _wait_score, _jump_score, score player]) call _showHintC;
                 _do_exit = true;
             };
-            _full_score = _jump_score + _wait_score;
             hint localize format["+++ x_paraj.sqf: assign full score %1, jump score %2, wait score %3", _full_score, _jump_score, _wait_score];
 			if (_wait_score > 0) then { // Inform player about high cost of non-free jump
-				localize "STR_WPN_TITLE" hintC [
-					composeText[ image "img\red_star_64x64.paa",lineBreak, localize "STR_SYS_608_INFO"],  // "This parajump is not scheduled!"
-					format [localize "STR_SYS_608_1", _full_score, _jump_score, _wait_score, d_para_timer_base/60, _miss_mins], // "Your total cost (points) for the jump: %1, %2 for the jump itself and %3 for impatience. Free jump - every %4 min., the next one in %5 min."
-					parseText  ("<t align='center'><t color='#ffff0000'>" + (format[localize "STR_WPN_EXIT",localize "STR_DISP_INT_CONTINUE"])) // "press '%1' to exit from dialog"
-				];
+				format [localize "STR_SYS_607_WARNING", _full_score, _jump_score, _wait_score, d_para_timer_base/60, _miss_mins] call _showHintC; // "Your total cost (points) for the jump: %1, %2 for the jump itself and %3 for impatience. Free jump - every %4 min., the next one in %5 min."
 			} else {
 				// "Your costs (points) for a parachute jump: %1. Free parachute jump - every %2 min."
 				(format [localize "STR_SYS_608_0", _full_score, d_para_timer_base/60]) call XfHQChat;
