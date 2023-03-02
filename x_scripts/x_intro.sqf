@@ -365,11 +365,16 @@ _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
 waitUntil { !(isNil "XGetRankIndexFromScore") }; // wait info about time elapsed between last exit and this entrance
-_rank = (d_player_stuff select 3) call XGetRankIndexFromScore; // score may be not set еще player, so get it from player stuff array
-_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1);	// check the rank only
 
 _para = player call SYG_getParachute; // we need this statement here!!! Don't move it to the parenthesis
 hint localize format["+++ _doJump %1, _rank %2, base_visit_mission %3, parachute %4", str(_doJump), _rank call XGetRankFromIndex, base_visit_mission, _para ];
+_rank = (d_player_stuff select 3) call XGetRankIndexFromScore; // score may be not set еще player, so get it from player stuff array
+_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_para != "");	// check the rank only
+
+if (_para != "") then {
+	(format[localize "STR_INTRO_PARAJUMP_11",_para]) call XfHQChat; // "You found a parachute (%1) on your back and decided to use it to please the smugglers."
+};
+
 if (_doJump) then {
     format["+++ x_intro: Do jump now, _dt %1 secs ago", _dt ];
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
