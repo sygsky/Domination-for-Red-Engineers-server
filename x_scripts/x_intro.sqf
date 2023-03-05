@@ -367,11 +367,15 @@ hint localize format["+++ x_intro: disconnect time == %1", _dt];
 waitUntil { !(isNil "XGetRankIndexFromScore") }; // wait info about time elapsed between last exit and this entrance
 
 _para = player call SYG_getParachute; // we need this statement here!!! Don't move it to the parenthesis
-hint localize format["+++ _doJump %1, _rank %2, base_visit_mission %3, parachute %4", str(_doJump), _rank call XGetRankFromIndex, base_visit_mission, _para ];
+_owned_para = _para;
 _rank = (d_player_stuff select 3) call XGetRankIndexFromScore; // score may be not set еще player, so get it from player stuff array
-_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_para != "");	// check the rank only
+_rname = _rank call XGetRankFromIndex; // rank name
+//hint localize format["+++ _rank %1, _rname %2", _rank, _rname ];
 
-if (_para != "") then {
+_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_owned_para != "");	// check the rank and para weared on user at visit
+hint localize format["+++ _doJump %1, _rank %2(%3), base_visit_mission %4, parachute %5", str(_doJump), _rank, _rname, base_visit_mission, _para ];
+
+if (_owned_para != "") then {
 	(format[localize "STR_INTRO_PARAJUMP_11",_para]) call XfHQChat; // "You found a parachute (%1) on your back and decided to use it to please the smugglers."
 };
 
@@ -820,23 +824,31 @@ _cnt = count _camstart;
 
 //++++++++++++ daemon to print something before and at jump
 if ( _doJump ) then {
-	_camera spawn {
-		private ["_time","_para","_str"];
+	[_camera, _rank, _owned_para] spawn {
+		private [ "_time", "_camera", "_rank", "_owned_para", "_para", "_str" ];
 		// BLACK OUT in 0.7 sec when close to the base <= 100 m.
 		// Wait until in plane
 		// BLACK IN in 0.7 sec
 		// 		cutText["","WHITE OUT",FADE_OUT_DURATION];  // blind him fast
 		_time = time;
+		_camera = _this select 0;
+		_rank = _this select 1;
+		_owned_para = _this select 2;
 		_para = player call SYG_getParachute;
-		while { ((_this distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
+		while { ((_camera distance FLAG_BASE) > 200) && (alive player) } do {sleep 0.1};
 		if (!alive player) exitWith {
 			hint localize format["+++ x_intro.sqf: player dead in %1 secs (%2)", time - _time, _para];
 		};
 		hint localize format["+++ x_intro.sqf: player alive after %1 secs (%2)", time - _time, _para];
-		// Check jump number not 1st time with delta time. If it is >= 0 it is not 1st time, else 1st.
-		_str = format[localize "STR_INTRO_PARAJUMP_1", if ((d_player_stuff select 1) >= 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
-	//	cutText[ _str, "BLACK OUT", 20 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
+		_str = "";
+		if ( (_rank < 1) || (_owned_para == "") ) then {
+			_str = format[localize "STR_INTRO_PARAJUMP_1", if ((d_player_stuff select 1) >= 0) then {localize "STR_INTRO_PARAJUMP_1_1"} else {""}]; // "I'll have to jump%1. What else can I do?"
+		} else {
+			// _rank > 0 so user have had some parachute weared on him
+			_str = format[localize "STR_INTRO_PARAJUMP_11",_owned_para]; // "You found a parachute (%1) on your back and decided to use it to please the smugglers."
+		};
 		cutText[ _str, "PLAIN", 10 ];  // "I'll have to jump%1. What else can I do?". black out for 20 seconds or less
+
 		_time = time;
 
 		// wait while player in any vehicle (plane or parachute)
@@ -856,16 +868,10 @@ if ( _doJump ) then {
 		};
 	};
 } else {
-	if (base_visit_mission > 0) exitWith {
-		cutText[ format[localize"STR_INTRO_NOJUMP_BYVISIT", _rank call XGetRankFromIndex],"PLAIN",5];  // "You have been to the base, but rank (%1) is low, the smugglers will parachute you down before you reach the base"
+	if ( _rank  > 0)  exitWith {
+		cutText[ format[localize "STR_INTRO_NOJUMP_BYRANK", _rname],"PLAIN",5];  // "The smugglers delivered you to the base out of respect for your rank (%1)."
 	};
-	if ( (_dt >  0) && (_dt < __CONNECT_ON_PARA__) ) exitWith {
-		cutText[ format[localize "STR_INTRO_NOJUMP_BYTIME", _rank call XGetRankFromIndex],"PLAIN",5];  // "You came back quickly, but rank %1 is not enough to arrive at the base."
-	};
-	if ( _rank  < 0)  exitWith {
-		cutText[ format[localize "STR_INTRO_NOJUMP_BYRANK", _rank call XGetRankFromIndex],"PLAIN",5];  // "The smugglers delivered you to the base out of respect for your rank (%1)."
-	};
-	// TODO: for the future
+	// TODO: for the future messages
 };
 
 for "_i" from 1 to (_cnt-1) do {

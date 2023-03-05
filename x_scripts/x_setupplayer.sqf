@@ -16,7 +16,7 @@ sleep 1;
 //#define __DEBUG_DOSAAF__
 //#define __DEBUG__
 //#define __DEBUG_JAIL__
-// #define __DEBUG_800_SCORE__
+#define __DEBUG_SCORE__ 1500
 
 #define __MISSION_START__
 
@@ -1542,8 +1542,8 @@ if (__AIVer || d_para_at_base) then {
 #ifdef __DEBUG_DOSAAF__
 FLAG_BASE addAction [">>> Бонус", "scripts\testbonus.sqf"];
 #endif
-#ifdef __DEBUG_800_SCORE__
-if ( ((_pl_name) == "EngineerACE") && ((score player) < 800)) then { player addScore (800 - (score player)) };
+#ifdef __DEBUG_SCORE__
+if ( ((_pl_name) == "EngineerACE") && ((score player) < __DEBUG_SCORE__)) then { player addScore (__DEBUG_SCORE__ - (score player)) };
 #endif
 
 #ifdef __DEBUG_FLARE__

@@ -39,7 +39,7 @@ _p = player;
 _equip = "";
 if ( count d_player_stuff > 5) then { // equipment returned
 	_equip = d_player_stuff select 5; // string with all equipment
-	hint localize format["+++ x_setupplayer1.sqf: equipment (%1) = %1", typeName(_equip), _equip];
+	hint localize format["+++ x_setupplayer1.sqf: equipment (%1) = %2", typeName(_equip), _equip];
 } else {
 	hint localize "+++ x_setupplayer1.sqf: equipment not detected in the d_player_stuff variable"
 };
@@ -76,6 +76,7 @@ if ( _equip == "" ) then {
 					_old_rank = (score player) call XGetRankFromScore;
 					_index = _old_rank call XGetRankIndex;
 					_rpg   = if (_index == 0 ) then { ["P","ACE_RPG7","ACE_RPG7_PG7VL",1] } else { ["P","ACE_RPG7_PGO7","ACE_RPG7_PG7VL",1]};
+					hint localize format["+++ x_setupplayer1.sqf: _old_rank %1, _index = %2, _rpg = %3", _old_rank, _index, _rpg];
 
 					_rifle = switch _index do {
 						case 0;
@@ -195,6 +196,7 @@ if ( _equip == "" ) then {
 					};
 
 					if ( true ) exitWith {
+						hint localize "+++ x_setupplayer1.sqf: _p kind not detected";
 						_weapp =  [_rpg,_rifle,_pistol,["ACE_Bandage",2],["ACE_Morphine",2]];
 						_magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VL_PDM",1]];
 					};
