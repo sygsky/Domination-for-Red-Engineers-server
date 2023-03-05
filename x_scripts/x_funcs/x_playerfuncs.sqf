@@ -447,15 +447,15 @@ XPlayerRank = {
 // Finds rank index by rank name
 XGetRankIndex = {
     private ["_rank_id"];
-    hint localize format["+++ XGetRankIndex: _this = %1, d_rank_names[%2], d_pseudo_rank_names[%3], d_points_needed[%4]", _this, count d_rank_names, count d_pseudo_rank_names, count d_points_needed];
+//    hint localize format["+++ XGetRankIndex: _this = %1, d_rank_names[%2], d_pseudo_rank_names[%3], d_points_needed[%4]", _this, count d_rank_names, count d_pseudo_rank_names, count d_points_needed];
 	_rank_id = d_rank_names find (toUpper (_this));
-    hint localize format["+++ XGetRankIndex: d_rank_names[_this] = %1", _rank_id];
+//    hint localize format["+++ XGetRankIndex: d_rank_names[_this] = %1", _rank_id];
 #ifdef __SUPER_RANKING__
 	if ( _rank_id < 0 ) exitWith {
 //	["BRIGADIER-GENERAL","LIEUTENANT-GENERAL","COLONEL-GENERAL","GENERAL-OF-THE-ARMY","MARSHAL","GENERALISSIMO"] find (toUpper (_this));
 		_rank_id = d_pseudo_rank_names find (toUpper (_this));
-	    hint localize format["+++ XGetRankIndex: d_pseudo_rank_names[_this] = %1", _rank_id];
-		if ( _rank_id >= 0 ) then { _rank_id = _rank_id + (count d_rank_names) };
+//	    hint localize format["+++ XGetRankIndex: d_pseudo_rank_names[_this] = %1", _rank_id];
+		if ( _rank_id >= 0 ) then { _rank_id = _rank_id + (count d_points_needed) };
 		if ( _rank_id < 0 ) then { 0 }; // return PRIVATE rank (0)
 		_rank_id
 	};
