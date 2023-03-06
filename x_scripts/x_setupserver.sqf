@@ -102,12 +102,13 @@ XClearSidemission = {
 						if (!_already_captured) then {
 							[_x] call XAddCheckDead;
 							_x setVariable ["CAPTURED_ITEM","SM"];
+							{ sleep 0.05; deleteVehicle _x; } forEach (crew _x); // remove only team not vehicle
 						};
 					} else {
-						{deleteVehicle _x} forEach ((crew _x) + [_x]);
+						{  sleep 0.05; deleteVehicle _x;} forEach ((crew _x) + [_x]);
 					};
 				} else {
-					deleteVehicle _x;
+					deleteVehicle _x; // delete dead vehicle
 				};
 //			} else {
 //				hint localize format["+++ XClearSidemission: deleteVehicle %1",typeOf _x ];

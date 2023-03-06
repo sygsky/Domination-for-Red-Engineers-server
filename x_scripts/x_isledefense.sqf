@@ -262,10 +262,15 @@ _remove_grp = {
 					if ( !(_x call SYG_vehIsUpsideDown) &&
 						(
 						    (_xside == d_own_side ) // owned by our side (some player in vehicle)
-						 || ( (_xside != d_enemy_side) && ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) ) // veh is at base and not damaged
+						 || (
+						      (_xside != d_enemy_side)
+						   && (
+						        ( ( (getPos _x) call SYG_pointIsOnBase ) && ((getDammage _x) < 0.000001) ) // veh is at base and not damaged
 #ifdef __SPPM__
-						 ||	( (_x call SYG_getVehSPPMMarker) != "")  // vehicle is on SPPM
+						        || ( _x call SYG_isVehAtSPPM )  // vehicle is on SPPM
 #endif
+                              )
+                            )
 						)
 					   )  then { // vehicle was captured by player
 						_x setVariable [ "PATROL_ITEM",nil ];

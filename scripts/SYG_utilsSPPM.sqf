@@ -393,7 +393,7 @@ SYG_getVehSPPMMarker = {
 };
 
 //
-// #602:  try to remove SM vehicles from SM remover array
+
 // Call: _sppmVehsArr call SYG_checkSMVehsOnSPPM
 //
 /**
