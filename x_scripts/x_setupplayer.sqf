@@ -16,7 +16,7 @@ sleep 1;
 //#define __DEBUG_DOSAAF__
 //#define __DEBUG__
 //#define __DEBUG_JAIL__
-#define __DEBUG_SCORE__ 1500
+//#define __DEBUG_SCORE__ 1500
 
 #define __MISSION_START__
 
@@ -1851,6 +1851,11 @@ if (_pl_name == "EngineerACE") then {
     waitUntil { sleep 0.5; (!isNil "d_player_stuff")};
     if ( (score player) < 1500 ) then { player addScore (1500 - (score player) ) };
     hint localize format["+++ x_setupplayer.sqf: EngineerACE score %1", score player];
+    _arr = FLAG_BASE nearObjects ["HMMWV50", 100];
+    {
+    	_x addAction ["Check SPPM", "scripts\debug\debug_SMPP.sqf", "CHECK" ];
+    } forEach _arr;
+    hint localize format["+++ x_setupplayer.sqf: added ""Check SPPM"" action to %1 veh[s][", count _arr];
 };
 #else
     hint localize "+++ x_setupplayer.sqf: __DEBUG_ADD_VEHICLES__ not defined";

@@ -346,7 +346,7 @@ XHandleNetStartScriptServer = {
 		//
 		case "remote_execute" : {
 			hint localize format["+++ x_netinitserver.sqf ""remote_execute"": ""%1""", _this select 1 ];
-			call (compile (_this select 1));
+			_this call (compile (_this select 1));
 		};
 
 		// Set new value for the variable base_visit_mission in payer array

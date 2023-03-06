@@ -308,7 +308,7 @@ XHandleNetStartScriptClient = {
 		case "mt_radio_down": {
 			__compile_to_var;
 			private ["_msg","_name"];
-			if (mt_radio_down && ( argp(mt_radio_pos,0) != 0)) then {
+			if ( mt_radio_down && ( (mt_radio_pos select 0) != 0) ) then {
 				private ["_msg","_ind"];
 //				_msg = [localize "STR_SYS_300",localize "STR_SYS_301",localize "STR_SYS_302",localize "STR_SYS_303",localize "STR_SYS_303"] call XfRandomArrayVal;
                 _msg = "STR_MAIN_COMPLETED_NUM" call SYG_getLocalizedRandomText; // _msg must be localized
@@ -739,7 +739,7 @@ XHandleNetStartScriptClient = {
 		case "GRU_msg_patrol_detected"; // TODO: check new patrol in the future, now simply inform player about
 		case "GRU_msg": {
 			hint localize format["+++ x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
-			if (arg(0) == "GRU_msg_patrol_detected") then {
+			if ( (_this select 0 ) == "GRU_msg_patrol_detected") then {
 //			    if ( __HasGVar(PATROL_COUNT) ) then
 //			    {
 //			        _cnt = __GetGVar(PATROL_COUNT);
@@ -1065,7 +1065,7 @@ XHandleNetStartScriptClient = {
         //
 		case "remote_execute" : {
 			hint localize format["+++ x_netinitclient.sqf ""remote_execute"": ""%1""", _this select 1 ];
-			call (compile (_this select 1));
+			_this call (compile (_this select 1));
 		};
 
 //========================================================================================================== END OF CASES
