@@ -331,10 +331,10 @@ if (!no_more_observers) then {
 	no_more_observers = false; // skip observers only for one town
 };
 
-_ind = (count _wp_arr) call XfRandomFloor;
-_pos = _wp_arr select _ind;
-_wp_arr set [_ind, "X_RM_ME"];
-_wp_arr = _wp_arr - ["X_RM_ME"];
+_ind = (count _wp_array) call XfRandomFloor;
+_pos = _wp_array select _ind;
+_wp_array set [_ind, "X_RM_ME"];
+_wp_array = _wp_array - ["X_RM_ME"];
 _pos execVM "scripts\addMedTent.sqf"; // add medic test
 
 [_wp_array, _ammotruck select 0] execVM "x_scripts\x_createsecondary.sqf"; // a) medic BMP  or b) super-reammo or с) radio-tower etc
