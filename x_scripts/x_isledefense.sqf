@@ -276,9 +276,9 @@ _remove_grp = {
 						_x setVariable [ "PATROL_ITEM",nil ];
 						// re-assign vehicle to be ordinal ones
 #ifdef __OWN_SIDE_EAST__
-						hint localize format["+++ x_isledefense: vec %1 is captured by Russians! Now side is %2, pos on base %3, damage %4", _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
+						hint localize format["+++ x_isledefense: vec %1(%2) is captured by Russians! Now side is %3, pos on base %4, damage %5", _x, typeName _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
 #else
-						hint localize format["+++ x_isledefense: vec %1 is captured by Americans! Now side is %2, pos on base %3, damage %4", _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
+						hint localize format["+++ x_isledefense: vec %1(%2) is captured by Americans! Now side is %3, pos on base %4, damage %5", _x, typeName _x, side _x, (getPos _x) call SYG_pointIsOnBase, damage _x];
 #endif
 						// put vehicle under system control
 						_vec_captured_cnt = _vec_captured_cnt + 1;
