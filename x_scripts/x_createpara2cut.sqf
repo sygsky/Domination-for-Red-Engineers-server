@@ -307,8 +307,7 @@ if ( !alive _chopper || !canMove _chopper || !alive driver _chopper) exitWith {
 
 // REVEAL known to flying chopper enemies to the landed saboteurs
 _nenemy = (driver _chopper) call SYG_nearestEnemy;
-if ( !isNull _nenemy) then
-{
+if ( !isNull _nenemy) then {
     _grp reveal _nenemy;
 #ifdef __DEBUG_PRINT__
     hint localize format["+++ x_scripts/x_createpara2.sqf: %1 (knowledge %2) revealed to paratroopers at dist. %2 m", typeOf _nenemy, (driver _chopper) knowsAbout _nenemy, round(_chopper distance _nenemy)];

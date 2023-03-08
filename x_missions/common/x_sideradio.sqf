@@ -134,6 +134,8 @@ _check_truck_marker = 	{ // check truck marker
 // Radar can't be destroyed else sidemission is failed
 //
 hint localize format["+++ x_sideradio.sqf: enter marker loop, status %1", sideradio_status];
+
+_last_pos = [0,0,0]; // last pos of truck, for printing 1 km steps
 while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 
 	if ( X_MP && ((call XPlayersNumber) == 0) ) then {
@@ -173,7 +175,21 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
             deleteMarker _radar_marker; _radar_marker = ""
         };
     };
-
+	// check if the position of the truck has changed by more than 1 km and print the new position
+	if (alive d_radar_truck) then {
+		if ( ([d_radar_truck,_last_pos] call SYG_distance2D) >= 1000) then {
+			_last_pos = getPosASL d_radar_truck;
+			_pl = [];
+			{
+				if (alive _x) then {
+					if (isPlayer _x) then {
+						_pl set [ count _pl,  name _x ];
+					} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
+				};
+			} forEach crew d_radar_truck;
+			hint localize format["+++ x_sideradio.sqf: radar truck now at %1, %2", d_radar_truck call SYG_MsgOnPosE, _pl];
+		}
+	};
     // TODO: add random enemy infantry patrols on the way to the destination at certain time intervals,
     // TODO: e.g. on each kilometer close to the mission finish
 
@@ -192,10 +208,28 @@ if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
 	_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_ON_COLOR, [0.5, 0.5] ] call _make_marker;
 	_radar_marker setMarkerText (localize "STR_ON");
 	hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, alive radar %3, radar color is green now", sideradio_status, alive _radar, alive _truck];
+	_last_pos = [0,0,0]; // last pos of truck, for printing 1 km steps
 	while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 		sleep 5;
 		_truck call _check_truck_marker;
-		if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" }; // may be use point of FLAG_BASE as finish one?
+
+		if ( (_truck distance (call SYG_computerPos)) < 20 ) exitWith { sideradio_status = 2; publicVariable "sideradio_status" };
+
+		// check if the position of the truck has changed by more than 1 km and print the new position
+		if (alive d_radar_truck) then {
+			if ( ([d_radar_truck,_last_pos] call SYG_distance2D) >= 1000) then {
+				_last_pos = getPosASL d_radar_truck;
+				_pl = [];
+				{
+					if (alive _x) then {
+						if (isPlayer _x) then {
+							_pl set [ count _pl,  name _x ];
+						} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
+					};
+				} forEach crew d_radar_truck;
+				hint localize format["+++ x_sideradio.sqf: radar truck now at %1, %2", d_radar_truck call SYG_MsgOnPosE, _pl];
+			}
+		};
 		// move truck marker
 	};
 };

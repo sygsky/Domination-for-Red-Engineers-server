@@ -831,14 +831,14 @@ SYG_distance2D = {
 
 	private ["_pos1", "_pos2"];
 	_pos1 = (_this select 0) call SYG_getPos;
-	if (isNil "_pos1") exitWith { -1000 };
+//	if (isNil "_pos1") exitWith { -1000 };
 //	if ( typeName _pos1 == "OBJECT") then { _pos1 = position _pos1;};
 //	if (typeName _pos1 != "ARRAY") exitWith {
 //		hint localize format["--- SYG_distance2D: _this =  %1", _this];
 //		9999999.0 // assign maximum distance available
 //	};
 	_pos2 = (_this select 1) call SYG_getPos;
-	if (isNil "_pos2") exitWith { -2000 };
+//	if (isNil "_pos2") exitWith { -2000 };
 //	if ( typeName _pos2 == "OBJECT") then { _pos2 = position _pos2;};
 //	if (typeName _pos2 != "ARRAY") exitWith {
 //		hint localize format["--- SYG_distance2D: _this =  %1", _this];
@@ -923,7 +923,7 @@ SYG_MsgOnPosA2B = {
 // Creates non-localized (usually english) message based on user format string with 3 params %1, %2, %3 in follow order:
 // distance_to_location, direction_to_location, location_name
 //
-// call as: _msg_eng = [_obj, _localized_format_msg<,roundTo> ] call SYG_MsgOnPosE;
+// call as: _msg_eng = [_obj, _localized_format_msg<,roundTo=50> ] call SYG_MsgOnPosE;
 //
 SYG_MsgOnPosE = {
 	private ["_obj","_msg","_pos1","_pos2","_loc","_dir","_dist","_locname","_roundTo"];
@@ -942,7 +942,7 @@ SYG_MsgOnPosE = {
 	if (isNil "_pos2") exitWith {format[_msg, "<null 2>??? ","???","???"]};
 //	_pos2 set [2,0];// SYG_getPos
 	_dist = [_pos1, _pos2] call SYG_distance2D;
-	_roundTo = if (count _this > 2) then { _this select 2 } else {100};
+	_roundTo = if (count _this > 2) then { _this select 2 } else {50};
 	_dist = (round (_dist/_roundTo)) * _roundTo;
 	_dir = ([_pos1, _obj] call XfDirToObj) call SYG_getDirNameEng;
 	_locname = text _loc;
