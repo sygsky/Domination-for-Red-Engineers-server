@@ -28,7 +28,7 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 	x_sfunc = {
 		private ["_objs"];
 		if ((vehicle player) == player && (player call ACE_Sys_Ruck_HasRucksack))then {
-		    _objs = nearestObjects [player,["LandVehicle","Air","Ship"],5];
+		    _objs = nearestObjects [player,["Car"/*"LandVehicle"*/,"Air","Ship"],5];
 		    if (count _objs > 0) then {
 		        objectID2 = _objs select 0;
 		        if (alive objectID2) then {

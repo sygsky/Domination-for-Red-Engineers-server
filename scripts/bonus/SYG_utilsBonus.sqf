@@ -231,7 +231,7 @@ SYG_countVehicles = {
 	private ["_cnt","_cntv","_cntd","_cntnr","_cnta","_cntm","_var","_x"];
 	_cnt = 0; _cntv = 0; _cntd = 0; _cntnr = 0; _cnta = 0; _cntm = 0; _cntr = 0;
 	{
-		if ( (_x isKindOf "LandVehicle") || (_x isKindOf "Air") || (_x isKindOf "Ship") ) then { // DOSAAF
+		if ( (_x isKindOf "Car"/*"LandVehicle"*/) || (_x isKindOf "Air") || (_x isKindOf "Ship") ) then { // DOSAAF
 			_cntv = _cntv + 1; // vehicle
 
 			_var = _x getVariable "INSPECT_ACTION_ID";

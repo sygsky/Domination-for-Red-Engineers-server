@@ -377,7 +377,7 @@ SYG_findAndAssignAsCargo = {
  */
 SYG_vehIsUpsideDown = {
 	private ["_l","_vUp","_angle"];
-	if ( (alive _this) && (_this isKindOf "LandVehicle") ) then {
+	if ( (alive _this) && (_this isKindOf "Car"/*"LandVehicle"*/) ) then {
 		_vUp = vectorUp _this;	// vector up for the goal
 		if((_vUp select 2) < 0 )then {true} else { // vehicle still can lay on one of its side
 			_l = sqrt((_vUp select 0)^2+(_vUp select 1)^2);

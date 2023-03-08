@@ -87,7 +87,7 @@ SYG_getAllSPPMVehicles = {
 	private ["_pos", "_arr", "_i", "_var"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
-	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
+	_arr = nearestObjects [_pos, ["Car" /*"LandVehicle"*/, "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
 	for "_i" from 0 to count _arr - 1 do {
 
 #ifdef __OWN_SIDE_EAST__
@@ -102,11 +102,13 @@ SYG_getAllSPPMVehicles = {
 		private ["_txt","_x"];
 		_txt = [_pos,10 ] call SYG_MsgOnPosE0;
 		{
-			_var = _x getVariable "CAPTURED_ITEM";
-			if (isNil "_var") then {
-				[_x] call XAddCheckDead;
-				_x setVariable ["CAPTURED_ITEM","SPPM"];
-				hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", vehicle _x, count _arr, _txt];
+			if (!_x isKindOf "Man") then {
+				_var = _x getVariable "CAPTURED_ITEM";
+				if (isNil "_var") then {
+					[_x] call XAddCheckDead;
+					_x setVariable ["CAPTURED_ITEM","SPPM"];
+					hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", vehicle _x, count _arr, _txt];
+				};
 			};
 		} forEach _arr;
 	};

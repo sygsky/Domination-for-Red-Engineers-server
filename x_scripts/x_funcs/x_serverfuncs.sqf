@@ -373,7 +373,7 @@ SYG_addEventsAndDispose = {
 SYG_removeAllVehicleStdEvents = {
 	if (typeName _this != "OBJECT") exitWith {};
 	if (_this call SYG_removeVehicleHitDamKilEvents) then {
-		if ( _this isKindOf "LandVehicle" || _this isKindOf "Air" || _this isKindOf "Ship") then  {
+		if ( _this isKindOf "Car"/*"LandVehicle"*/ || _this isKindOf "Air" || _this isKindOf "Ship") then  {
 			_this removeAllEventHandlers "getin";
 			_this removeAllEventHandlers "getout";
 		#ifdef __AI__
