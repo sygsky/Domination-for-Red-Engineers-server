@@ -47,7 +47,7 @@ _damage = _this select 2;
 //
 #ifdef __PRINT__
 _name = _shooter call SYG_getKillerInfo;
-hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4", typeOf _veh, _name, _damage, count crew _veh];
+hint localize format["+++ x_dosmoke2.sqf: _this = [%1,%2,%3], crew cnt %4, dist %5", typeOf _veh, _name, _damage, count crew _veh, round(_shooter distance _veh)];
 #endif
 
 //_name = if ( isPlayer _shooter) then {name _shooter} else {typeOf _shooter};
