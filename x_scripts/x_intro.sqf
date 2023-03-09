@@ -60,7 +60,7 @@ _XfRandomArrayVal = {
 };
 
 //++++++++++++++++++++++++++++++
-//      find spawn point depeding on parachute used
+//      find spawn point depending on parachute used
 // call: _spawn_point = _paratype call _makeSpawnPoint;
 //+++++++++++++++++++++++++++++
 _makeSpawnPoint = {

@@ -171,7 +171,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
         };
     } else { // radar dead or installed, wait until sideradio_status changes
         if ( _radar_marker != "" ) then {
-   			hint localize format["+++ x_sideradio.sqf: delete _radar_marker at %1, radar %2, sideradio_status %3, ", (markerPos _radar_marker) call SYG_MsgOnPosE, if (alive _radar) then {"alive"} else {"dead"}, sideradio_status];
+   			hint localize format["+++ x_sideradio.sqf: delete _radar_marker at %1, radar %2, sideradio_status %3, ", (markerPos _radar_marker) call SYG_MsgOnPosE0, if (alive _radar) then {"alive"} else {"dead"}, sideradio_status];
             deleteMarker _radar_marker; _radar_marker = ""
         };
     };
@@ -187,7 +187,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 					} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
 				};
 			} forEach crew d_radar_truck;
-			hint localize format["+++ x_sideradio.sqf: radar truck now at %1, %2", d_radar_truck call SYG_MsgOnPosE, _pl];
+			hint localize format["+++ x_sideradio.sqf: radar truck now at %1, %2", d_radar_truck call SYG_MsgOnPosE0, _pl];
 		}
 	};
     // TODO: add random enemy infantry patrols on the way to the destination at certain time intervals,
@@ -227,7 +227,7 @@ if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
 						} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
 					};
 				} forEach crew d_radar_truck;
-				hint localize format["+++ x_sideradio.sqf: radar truck now at %1, %2", d_radar_truck call SYG_MsgOnPosE, _pl];
+				hint localize format["+++ x_sideradio.sqf: radar truck now at %1, %2", d_radar_truck call SYG_MsgOnPosE0, _pl];
 			}
 		};
 		// move truck marker
