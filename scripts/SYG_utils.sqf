@@ -377,7 +377,7 @@ SYG_findAndAssignAsCargo = {
  */
 SYG_vehIsUpsideDown = {
 	private ["_l","_vUp","_angle"];
-	if ( (alive _this) && (_this isKindOf "Car"/*"LandVehicle"*/) ) then {
+	if ( (alive _this) && (_this isKindOf "LandVehicle") ) then {
 		_vUp = vectorUp _this;	// vector up for the goal
 		if((_vUp select 2) < 0 )then {true} else { // vehicle still can lay on one of its side
 			_l = sqrt((_vUp select 0)^2+(_vUp select 1)^2);
@@ -390,15 +390,15 @@ SYG_vehIsUpsideDown = {
 };
 
 //
-// _angle = _obj call SYG_vehUpAngle; // _angle is from +90 (to zenith) to -90 (to nadir). Angle is measured from axis -Z to +Z
+// _angle = _obj call SYG_vehUpAngle; // _angle is from +90 (to zenith) to -90 (to nadir). Angle is measured from axis -Z (from bootom) to +Z (to top)
 //
 SYG_vehUpAngle = {
-	private ["_vUp","_L2"];
-	if ( isNull _this ) exitWith { -1000 };
+	if ((typeName _this) != "OBJECT") exitWith {-1000};
+	private ["_vUp","_L1"];
     _vUp = vectorUp _this;	// vector up for the goal
-    _L2 = [_vUp,[ 0, 0, 0 ]] call SYG_distance2D;
-    if ( _L2 == 0 ) exitWith { 0 };
-    ( _vUp select 2 ) atan2 _L2
+    _L1 = [_vUp,[ 0, 0, 0 ]] call SYG_distance2D;
+    if ( _L1 == 0 ) exitWith { 0 };
+    _L1 atan2 ( _vUp select 2 );
 };
 
 /**

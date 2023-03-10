@@ -87,7 +87,7 @@ SYG_getAllSPPMVehicles = {
 	private ["_pos", "_arr", "_i", "_var"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
-	_arr = nearestObjects [_pos, ["Car" /*"LandVehicle"*/, "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
+	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
 	for "_i" from 0 to count _arr - 1 do {
         if (_x isKindOf "CAManBase") then { _arr set [_i, "RM_ME"] } else { //+++ Sygsky: Sometimes a man gets on this list!!!
 #ifdef __OWN_SIDE_EAST__

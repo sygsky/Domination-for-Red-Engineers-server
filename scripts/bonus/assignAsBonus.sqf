@@ -20,7 +20,7 @@ _msg_arr = [];
 _plane = false;
 _error = false;
 {
-	if (!(_x isKindOf "Car"/*"LandVehicle"*/ || _x isKindOf "Air" || _x isKindOf "Ship") ) exitWith {
+	if (!(_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship") ) exitWith {
 		hint localize format["--- assignAsBonus.sqf: expected type LandVehicle|Air|Ship, detected ""%1"", EXIT ON ERROR !!!", typeOf _x];
 		_error = true;
 	};
