@@ -4,26 +4,9 @@
 
 	Arrival on:
 	1.Base
-		1.1. Visited in mission
-			1.1.1. Reconnect time is low or rank is high
-*                  Spawn in base depot at player pos
-			1.1.2. All other cases:
-*                  Spawn in air with parachute above near ridge at ramdom pos
-		1.2. Not visited in mission and session
-			1.2.1. Rank is high
-*                  Spawn in base depot at player pos
-			1.2.2. Rank is low
-*                  Spawn in air with parachute above near ridge at ramdom pos
-		1.3. Spawned
-			1.3.1. Visited in session
-*                  Spawn in base depot at player pos
-			1.3.2. Not visited in session
-*,                 Spawn in rect on random position at Somato
+		1.1. You are private: jump over ridge near base
 	2. Antigua
-		2.1. Visited in mission
-*                  Spawn in base depot at player pos or in DC-3 cabin on air-strip
-		2.2. Not visited in mission and session
-		2.3. Spawned
+		2.1. Flight on DC-3 and jump above Antigao west hill part
 
 */
 private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro_path_arr",
@@ -687,17 +670,19 @@ SYG_showMusicTitle = {
 // there are two variants of sound parameter:
 //  [_music_name<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle; // Sound from CfgSounds
 //  [[_music_name,...]<, _wait_title_is_showed_in_secs>] spawn SYG_showMusicTitle; // Sound from CfgMusic
+// The sound/music itself is player in outside code
 SYG_showMusicTitle = {
 	hint localize format["+++ SYG_showMusicTitle: _this = %1", _this];
 	private [ "_str", "_sound", "_control", "_endtime", "_r", "_g", "_b", "_a", "_start"];
 	// load both comtrols
 	_start = time;
 	cutRsc ["S_RscIntroTitles","PLAIN"];
+	sleep 0.1;
 	_control = INTRO_HUD displayCtrl 66667; // find music title
 	// Check if music has title defined
 	_sound = _this select 0;
 	if (typeName _sound == "ARRAY") then {
-		_sound = _sound select 0;  // ["sound_name",[...]] // Arma sounds
+		_sound = _sound select 0;  // ["sound_name",{...}] // Arma music format, not sound
 	}; // else e.g. "STR_condor"
 
 	_str = localize format[ "STR_%1", _sound ]; // e.g. "STR_ATrack24" from Arma CfgMusic section
