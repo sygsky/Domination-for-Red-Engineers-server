@@ -401,7 +401,7 @@ if (_doJump) then {
         #endif
     _spawn_point  = _spawn_rect call XfGetRanPointSquareOld;
     */
-    _spawn_point set [2, 150]; // spawn at parachute pos
+    _spawn_point set [2, 500]; // spawn at parachute pos
 } else {
 	base_visit_session = 1; // temporarily stop respawn out of the base area if disconnect period is short
 };
@@ -900,18 +900,22 @@ if (_doJump) then {
     // first find/put parachute in his inventory
     hint localize format["+++ x_intro.sqf: call to jump.sqf, player para = ""%1""", player call SYG_getParachute];
     // now check if player parachute already changed due to rearm procedure in x_setupserver1.sqf
-    _para1 = player call SYG_getParachute;
-    if (_para1 != "") then {
-        if (_para1 != _para) then {
-            hint localize format["+++ x_intro.sqf: the assigned type %1 is replaced by the existing type %2", _para, _para1];
-            _para = _para1;
+    if (_owned_para != "") then {
+        if (_owned_para != _para) then {
+            hint localize format["+++ x_intro.sqf: the assigned type %1 is replaced by the existing type %2", _para, _owned_para];
+            _para = _owned_para;
             //++++++++++++++++++++++++++++++
             //      reset spawn point
             //+++++++++++++++++++++++++++++
-            _spawn_point = _para1 call _makeSpawnPoint;
+            _spawn_point = _owned_para call _makeSpawnPoint;
         }; // replace jump type with para type/
     };
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //                               JUMP
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     [ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
+
     // Inform player about new order
     ["msg_to_user", "", [[ format[localize "STR_INTRO_PARAJUMP", (round ((_spawn_point distance FLAG_BASE)/50)) * 50 ] ]], 0, 5, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
     // #579: add destination point on yellow circle of the base barracs tent
