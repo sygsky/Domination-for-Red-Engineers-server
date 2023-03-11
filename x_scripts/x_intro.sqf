@@ -42,6 +42,23 @@ _XfRandomArrayVal = {
 	_this select (_this call _XfRandomFloorArray);
 };
 
+// Structure of inof is as follows:
+// [[Parashute names list],{Code to decide is jump needed or not},[Respawn rectangles for all parachutes]]
+#ifdef __ARRIVAL_ON_ANTIGUA__
+SPAWN_INFO = [
+	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
+	{base_visit_mission == 1},
+	[]
+];
+#else
+SPAWN_INFO = [
+	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
+	{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
+	[[[11306,8386,0], 600,150, -45], drop_zone_arr select 0 ] // 1 - Above ridge near base. 2 - near Somato (the same rect as  desant one)
+];
+#endif
+
+
 //++++++++++++++++++++++++++++++
 //      find spawn point depending on parachute used
 // call: _spawn_point = _paratype call _makeSpawnPoint;
