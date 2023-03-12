@@ -107,7 +107,7 @@ SYG_getAllSPPMVehicles = {
 		private ["_txt","_x"];
 		_txt = [_pos,10 ] call SYG_MsgOnPosE0;
 		{
-			if (!_x isKindOf "Man") then {
+			if (!(_x isKindOf "Man")) then {
 				_var = _x getVariable "CAPTURED_ITEM";
 				if (isNil "_var") then {
 					[_x] call XAddCheckDead;
