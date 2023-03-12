@@ -47,14 +47,14 @@ _XfRandomArrayVal = {
 #ifdef __ARRIVAL_ON_ANTIGUA__
 SPAWN_INFO = [
 	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
-	{base_visit_mission == 1},
-	[]
+	{base_visit_mission < 1},
+	[ [[17337,17882.6,0], 360, 280, 25 ],[[17351.8,17931], 140, 140] ] // rect + circle
 ];
 #else
 SPAWN_INFO = [
 	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
 	{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
-	[[[11306,8386,0], 600,150, -45], drop_zone_arr select 0 ] // 1 - Above ridge near base. 2 - near Somato (the same rect as  desant one)
+	[[[11306,8386,0], 600,150, -45], drop_zone_arr select 0 ] // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
 ];
 #endif
 
@@ -406,19 +406,7 @@ if (_doJump) then {
     //      find spawn point
     //+++++++++++++++++++++++++++++
     _spawn_point = _para call _makeSpawnPoint;
-    /**
-    drop_zone_arr select 0;
-        #ifdef __ACE__
-    if (_para == "ACE_ParachutePack") then {  // find point in the rectangle above Sierra Madre
-        _spawn_rect = [ [11306,8386,0], 600,150, -45 ];
-        hint localize "+++ x_intro.sqf: jump point is set above mountines";
-    } else {
-        hint localize "+++ x_intro.sqf: jump point is set above plain";
-    };
-        #endif
-    _spawn_point  = _spawn_rect call XfGetRanPointSquareOld;
-    */
-    _spawn_point set [2, 500]; // spawn at parachute pos
+    _spawn_point set [2, 500]; // spawn near to the real parachute jump pos
 } else {
 	base_visit_session = 1; // temporarily stop respawn out of the base area if disconnect period is short
 };
