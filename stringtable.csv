@@ -66,8 +66,10 @@ STR_MG_8,Remove MG Nest,Entfernen MG-Nest,Retire el nido de ametralladoras,Уб�
 STR_MED_01,Mash,Med.Zelt,Tienda médica,Мед.палатка
 STR_MED_1,You have already build a mash. You have to remove it to build a new one.,"Sie haben schon bauen einen Brei. Sie haben, um es zu entfernen, um ein neues bauen.",Ya tienes una tienda médica. Enróllelo antes de instalar uno nuevo.,"У вас уже есть мед.палатка. Cверните её перед тем, как устанавливать новую."
 STR_MED_2,It is not possible to place a medic tent into water.,"Es ist nicht möglich, eine medic-Zelt ins Wasser.",La instalación en el agua no es posible...,Установка в воду невозможна...
-STR_MED_3,You died before your Mash was ready.,"Er starb, bevor medizinische Zelt brachte.",Falleció antes de instalar una carpa médica...,"Скончался до того, как установил мед.палатку..."
+STR_MED_3,You died before your Mash was ready...,"Er starb, bevor medizinische Zelt brachte...",Falleció antes de instalar una carpa médica...,"Скончался до того, как установил мед.палатку..."
+STR_MED_3_1,You died before your MASH was deleted...,"Du bist gestorben, bevor dein MASH gelöscht wurde...",Moriste antes de que se borrara tu MASH...,"Скончался до того, как убрал мед.палатку..."
 STR_MED_4,Mash is ready.,Die medizinische Abteilung ist bereit.,La unidad sanitaria está lista.,Санчасть готова.
+STR_MED_4_1,MASH deleted.,MASH gelöscht.,MASH eliminado.,Санчасть удалена.
 STR_MED_5,Mash %1,Med.Zelt %1.,Sanchart %1,Санчасть %1
 STR_MED_6,Remove Mash,Entfernen Sie die Med.Zelt,Eliminar el saneamiento,Убрать санчасть
 STR_MED_7,You get %1 points because other units used your mash for healing!,"Sie bekommen %1 Punkte, da andere Einheiten verwendet werden, Ihre Maische für die Heilung!",Usted obtiene %1 puntos. por tratar a los combatientes en su tienda...,Вы получаете %1 очк. за лечение бойцов в вашей палатке...
