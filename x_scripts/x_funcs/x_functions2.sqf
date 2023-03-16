@@ -490,7 +490,7 @@ XfGetFlankPos = {
 };
 
 // from warfare, optimized by Sygsky at May-2022, trigonometric functions removed
-// Returns an average slope value of terrain within passed radius.
+// Returns an average slope difference value of terrain from center to each of 8 points on circle with passed radius.
 // a little bit modified. no need to create a "global" logic, local is enough, etc
 // parameters: position, radius
 // example: _slope = [the_position, the_radius] call XfGetSlope;

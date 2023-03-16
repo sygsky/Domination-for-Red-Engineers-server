@@ -1,12 +1,12 @@
 // AAHALO\jump.sqf: Parachute jump pre/post processing
 //
+// Params
 // 0: spawn point
 // 1: parachute type (string)
-// 2: vehicle type (string) or jump score (scalar)
+// 2: vehicle type (string) or jump score (scalar, default vehicle is heli)
 // 3: use wind (true) or not (false)
 // 4: check circle hit (true) or not (1)
-// 5: jump height (default d_halo_height value)
-// 6: ...
+// 5: ...
 // Example call: [ _spawn_point, _para<, "DC3" | 1<, false<, true>>>] execVM "AAHALO\jump.sqf";
 //
 #include "x_setup.sqf"
@@ -128,15 +128,19 @@ hint localize format["+++ jump.sqf: _grp = %1, _pilot = %2", _grp, _pilot];
 [_pilot] join _grp; _pilot setSkill 1; _pilot assignAsDriver uh60p; _pilot moveInDriver uh60p;
 */
 
-_halo_height = if ((count _this) > 5) then {_this select 5}  else { d_halo_height };
+_halo_height = d_halo_height ;
 
-#ifdef __ACE__
-switch _paratype do {
-    case "ACE_ParachutePack" : {_halo_height = (d_halo_height * 2) max 500}; // not less than 500 meters
-    case "ACE_ParachuteRoundPack";
-    default  {_halo_height = (d_halo_height / 7) max 100 }; // not less than 100 метеры
+if ((count _this) > 5) then {
+	_halo_height = _this select 5
+}  else {
+	#ifdef __ACE__
+	switch _paratype do {
+		case "ACE_ParachutePack" : {_halo_height = (d_halo_height * 2) max 500}; // not less than 500 meters
+		case "ACE_ParachuteRoundPack";
+		default  {_halo_height = (d_halo_height / 7) max 100 }; // not less than 100 метеры
+	};
+	#endif
 };
-#endif
 
 hint localize format[ "+++ jump.sqf: halo height set to %1 m, player has ""%""", round _halo_height, _parawear ];
 uh60p setPos [_start_location select 0,_start_location select 1, _halo_height];
@@ -454,7 +458,7 @@ cutText["","BLACK IN"];
 	_v__int_reqKeysNew =[];
 	while{true}do {
 		while{(count v__int_reqKeys)> 0}do {
-			if((v__int_reqKeys select 0)in(actionKeys "nightVision") && "NVGoggles" in(_this select 2))then {
+			if ( ((v__int_reqKeys select 0)in(actionKeys "nightVision")) && ("NVGoggles" in(_this select 2)) )then {
 				_bool_NVOn = !_bool_NVOn;
 				camUseNVG _bool_NVOn;
 			};

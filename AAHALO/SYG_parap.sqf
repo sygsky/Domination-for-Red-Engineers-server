@@ -44,7 +44,7 @@ if( _para == "" ) then {
 
 _spawn_point = _para call _makeSpawnPoint;
 
-// [ pnt, parachute type, veh, wind, circle_hit ]
+// [ pnt, parachute type, veh, use_wind | scores_used<, circle_hitM> ]
 [ _spawn_point, _para, "DC3", false, false] execVM "AAHALO\jump.sqf"; // J-u-m-p-p-p!!! It is not intro jump!
 
 // we are in air!!!

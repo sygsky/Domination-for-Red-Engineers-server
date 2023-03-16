@@ -45,16 +45,32 @@ _XfRandomArrayVal = {
 // Structure of inof is as follows:
 // [[Parashute names list],{Code to decide is jump needed or not},[Respawn rectangles for all parachutes]]
 #ifdef __ARRIVAL_ON_ANTIGUA__
-SPAWN_INFO = [
-	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
-	{base_visit_mission < 1},
-	[ [[17337,17882.6,0], 360, 280, 25 ],[[17351.8,17931], 140, 140] ] // rect + circle
-];
-#else
-SPAWN_INFO = [
+if ((name player) in ["Snooper"]) then {
+	_arr1 = [[17337,17882.6,500], 360, 280, 25 ]; // Big rect on Antigua hills
+	_arr2 = [[17351.8,17931,100], 140, 140]; 		// Small rect on Antigua hills
+	SPAWN_INFO = [
+	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // papachute types
+	{base_visit_mission < 1},						// Code rturns true if jump, else return false
+	[ _arr1, _arr2], // rect + circle
+	_arr2 // on dead teleport area
+	];
+} else {
+	_arr1 = [[11306,8386,2000], 600,150, -45];	// Rect on ridge above Paraiso
+	SPAWN_INFO = [ // AirBase
 	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
 	{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
-	[[[11306,8386,0], 600,150, -45], drop_zone_arr select 0 ] // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
+	[_arr1, drop_zone_arr select 0 ], // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
+	drop_zone_arr select 0 // on dead teleport area
+	]
+};
+#else
+	_arr1 = [[11306,8386,0], 600,150, -45];
+	SPAWN_INFO = [ // AirBase
+	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
+	[2000, 500],
+	{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
+	[_arr1, drop_zone_arr select 0 ], // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
+	drop_zone_arr select 0
 ];
 #endif
 
