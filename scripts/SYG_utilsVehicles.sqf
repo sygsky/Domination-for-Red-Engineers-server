@@ -2229,7 +2229,6 @@ SYG_synchroSpeed = {
 // Read all magazines from vehicle config
 // call as follows: _mags = _veh_type call SYG_getConfigMags;
 //
-/*
 SYG_getConfigMags = {
     if (typeName _this == "OBJECT") then {_this = typeOf _this};
     if ( typeName _this != "STRING") exitWith { hint localize format["--- SYG_getConfigMags: expected vehicle type (%1) is not ""STRING"" or ""OBJECT"", exit", typeName _this] };
@@ -2250,7 +2249,6 @@ SYG_getConfigMags = {
     };
     _mags
 };
-*/
 
 /**
  * call: _isPara = _veh call SYG_isParachute;
