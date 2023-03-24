@@ -230,7 +230,8 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 				_units = nearestObjects [_pos, [_pilottype], 500];
 				_near = objNull;
 				{
-					if ( (alive _x) && (!isNil (_x getVariable "SIDEMISSION") ) ) exitWith {
+					_var = _x getVariable "SIDEMISSION";
+					if ( (alive _x) && (!isNil "_var" ) ) exitWith {
 						_near = _x;
 						_s1 = localize "STR_SYS_133"; // "точки задания"
 					};
@@ -239,7 +240,8 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 				    _pos = getPos player;
 					_units = nearestObjects [_pos, [_pilottype], 1500];
 					{
-						if ( (alive _x) && (!isNil (_x getVariable "SIDEMISSION") ) ) exitWith {
+						_var = _x getVariable "SIDEMISSION";
+						if ( (alive _x) && (!isNil "_var" ) ) exitWith {
 							_near = _x;
 							_s1 = localize "STR_SYS_132"; // "вашей Глонасс-позицией"
 						};

@@ -45,54 +45,53 @@ _XfRandomArrayVal = {
 // Structure of inof is as follows:
 // [[Parashute names list],{Code to decide is jump needed or not},[Respawn rectangles for all parachutes]]
 #ifdef __ARRIVAL_ON_ANTIGUA__
-if ((name player) in ["Snooper"]) then {
-	_arr1 = [[17337,17882.6,500], 360, 280, 25 ]; // Big rect on Antigua hills
-	_arr2 = [[17351.8,17931,100], 140, 140]; 		// Small rect on Antigua hills
+if ((name player) in ["Snooper","EngineerACE"]) then {
+	_arr1 = [[17337,17883,500], 360, 280, 25 ]; // Big rect on Antigua hills
+	_arr2 = [[17352,17931,100], 140, 140, 0]; 	 // Small rect on Antigua hills
+
 	SPAWN_INFO = [
 	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // papachute types
 	{base_visit_mission < 1},						// Code rturns true if jump, else return false
 	[ _arr1, _arr2], // rect + circle
 	_arr2 // on dead teleport area
 	];
+	// create all environment for Antigua arrival (boats/marine patrols/ammobox/transport vehicles etc
+	[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
 } else {
-	_arr1 = [[11306,8386,2000], 600,150, -45];	// Rect on ridge above Paraiso
-	SPAWN_INFO = [ // AirBase
-	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
-	{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
-	[_arr1, drop_zone_arr select 0 ], // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
-	drop_zone_arr select 0 // on dead teleport area
-	]
-};
-#else
-	_arr1 = [[11306,8386,0], 600,150, -45];
-	SPAWN_INFO = [ // AirBase
-	["ACE_ParachutePack","ACE_ParachuteRoundPack"],
-	[2000, 500],
-	{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
-	[_arr1, drop_zone_arr select 0 ], // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
-	drop_zone_arr select 0
-];
 #endif
-
+	// Old variant of paradropping above ridge near Paraiso (on planning para) and near Somato (on round para)
+	SPAWN_INFO = [ // AirBase
+		["ACE_ParachutePack","ACE_ParachuteRoundPack"],
+		{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
+		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
+		drop_zone_arr select 0 // on dead teleport area
+	]
+#ifdef __ARRIVAL_ON_ANTIGUA__
+};
+#endif
 
 //++++++++++++++++++++++++++++++
 //      find spawn point depending on parachute used
 // call: _spawn_point = _paratype call _makeSpawnPoint;
 //+++++++++++++++++++++++++++++
 _makeSpawnPoint = {
-	private ["_spawn_rect","_para"];
-	_para = _this;
-	_spawn_rect = drop_zone_arr select 0; // drop rect for ordinal parachute
+	private ["_spawn_rect","_para","_id"];
 #ifdef __ACE__
-	if (_para == "ACE_ParachutePack") then {  // find point in the rectangle above Sierra Madre
-		_spawn_rect = [ [11306,8386,0], 600,150, -45 ]; // drop rect for planning parachute
-		hint localize "+++ x_intro.sqf: jump point is set on mountines";
+	_para = _this;
+	_id = (SPAWN_INFO select 0) find _para;
+//	hint localize format["+++ x_intro/_makeSpawnPoint: _para %1, _id %2, SPAWN_INFO %3", _para, _id, SPAWN_INFO];
+	if ( _id >= 0) then {  // find point according to the parachute type (0 - planning one, 1 - round)
+		_spawn_rect = +((SPAWN_INFO select 2) select _id); // drop rect for planning parachute
+		hint localize "+++ x_intro/_makeSpawnPoint: jump point is set on mountines";
 	} else {
 #endif
-		hint localize "+++ x_intro.sqf: jump point is set on plains";
+		_spawn_rect = +((SPAWN_INFO select 2) select 1);
+		hint localize "+++ x_intro/_makeSpawnPoint: jump point is set on plains";
 #ifdef __ACE__
 	};
 #endif
+//	hint localize format["+++ x_intro/_makeSpawnPoint: _spawn_rect %1", _spawn_rect ];
+//	waitUntil {!(isNil "XfGetRanPointSquareOld")};
 	_spawn_rect call XfGetRanPointSquareOld
 };
 
@@ -388,7 +387,9 @@ _rank = (d_player_stuff select 3) call XGetRankIndexFromScore; // score may be n
 _rname = _rank call XGetRankFromIndex; // rank name
 //hint localize format["+++ _rank %1, _rname %2", _rank, _rname ];
 
-_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_owned_para != "");	// check the rank and para weared on user at visit
+//_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_owned_para != "");	// check the rank and para weared on user at visit
+_doJump = call (SPAWN_INFO select 1);	// check the jump condition
+
 hint localize format["+++ _doJump %1, _rank %2(%3), base_visit_mission %4, parachute %5", str(_doJump), _rank, _rname, base_visit_mission, _para ];
 
 if (_owned_para != "") then {
@@ -935,7 +936,15 @@ if (_doJump) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //                               JUMP
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    [ _spawn_point, _para, "DC3", false] execVM "AAHALO\jump.sqf";
+    #ifdef __ARRIVAL_ON_ANTIGUA__
+    if ((name player) in ["Snooper","EngineerACE"]) then {
+    	[ _spawn_point, _para, "DC3", false, false] execVM "AAHALO\jump.sqf";
+    } else {
+    #endif
+	    [ _spawn_point, _para, "DC3", false, true] execVM "AAHALO\jump.sqf";
+    #ifndef __ARRIVAL_ON_ANTIGUA__
+    };
+    #endif
 
     // Inform player about new order
     ["msg_to_user", "", [[ format[localize "STR_INTRO_PARAJUMP", (round ((_spawn_point distance FLAG_BASE)/50)) * 50 ] ]], 0, 5, false ] spawn SYG_msgToUserParser; // "Get to the base any way you want!"
