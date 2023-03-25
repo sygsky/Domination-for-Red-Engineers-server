@@ -24,16 +24,18 @@ hint localize format["+++ x_boatrespawn.sqf: CHECK_DELAY set to %1 seconds",CHEC
 #define DIST_TO_OWN_TO_PLAYER 50
 
 _boats_a = [];
-for "_i" from 1 to 40 do { // set max counter to value more or equal max boat index. 15-AUG-2020 ther are 35 separate boats in the mission
+for "_i" from 1 to 100 do { // set max counter to value more or equal max boat index. 15-AUG-2020 ther are 35 separate boats in the mission
 	call compile format ["
 	if (!isNil ""boat%1"") then {
 		_one_boat = [boat%1, position boat%1, direction boat%1,[]];
 		_boats_a set [count _boats_a, _one_boat];
 	};
-	",_i]
+	",_i];
+	sleep 0.1;
 };
 
-if ( count _boats_a == 0 ) exitWith {hint localize "x_boatrespawn.sqf: no boats detected in mission, exit"};
+if ( count _boats_a == 0 ) exitWith {hint localize "+++ x_boatrespawn.sqf: no boats detected in mission, exit"};
+hint localize format["+++ x_boatrespawn.sqf: %1 boat[s] detected and will be serviced in mission"];
 
 #define IND_BOAT 0
 #define IND_POS  1
@@ -107,7 +109,7 @@ while {true} do {
 					_pos = position _boat; // current pos
 					_old_pos = GET_BOAT_NEW_POS(_descr);
 					if (([_pos, _old_pos] call SYG_distance2D) > DIST_TO_BE_OUT) then {
-						// boat moved from new position, set new pos and remain boat to the next loop
+						// boat moved from new position, set new pos and remain boat for the next loop
 						SET_NEW_POS(_descr,_pos);
 					} else {// empty, alive, not moved from previous place during check period
 						if ( ([_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) < DIST_TO_BE_OUT) then {
@@ -147,7 +149,7 @@ while {true} do {
 			};
 		} else {// if (IS_BOAT_CHANGED(_descr)) then
 			// boat was not changed at last loop, check it at this one
-			if ( (!alive _boat) OR ((getDammage _boat) > 0.9)) then {
+			if ( (!alive _boat) /* || ((getDammage _boat) > 0.9) */ ) then {
 #ifdef	__DEBUG__
 				hint localize format["+++ x_boatrespawn.sqf: boat %1 (#%2) is dead, marked for restore", _boat,_i];
 #endif
@@ -156,12 +158,13 @@ while {true} do {
 				_new_pos = position _boat;
 				if ( IS_BOAT_EMPTY(_boat) && (([_new_pos, GET_BOAT_POS(_descr)] call SYG_distance2D) > DIST_TO_BE_OUT)) then {
 #ifdef	__DEBUG__
-				hint localize format["+++ x_boatrespawn.sqf: boat %1 (%2) changed its position, marked for restore", _boat,_i];
+					hint localize format["+++ x_boatrespawn.sqf: boat %1 (%2) changed its position, marked for restore", _boat,_i];
 #endif
-				SET_NEW_POS(_descr,_new_pos);
+					SET_NEW_POS(_descr,_new_pos);
 				};
 			};
 		};
+		sleep 0.1;
 	}; // for "_i" from 0 to count _boats_a do
 #ifdef	__DEBUG__
 	hint localize format["+++ x_boatrespawn.sqf: time %3. Boats changed %2 from %1", count _boats_a, _change_cnt, floor(time)];
