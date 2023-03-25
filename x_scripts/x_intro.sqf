@@ -55,8 +55,6 @@ if ((name player) in ["Snooper","EngineerACE"]) then {
 	[ _arr1, _arr2], // rect + circle
 	_arr2 // on dead teleport area
 	];
-	// create all environment for Antigua arrival (boats/marine patrols/ammobox/transport vehicles etc
-	[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
 } else {
 #endif
 	// Old variant of paradropping above ridge near Paraiso (on planning para) and near Somato (on round para)
@@ -398,6 +396,8 @@ if (_owned_para != "") then {
 
 if (_doJump) then {
     format["+++ x_intro: Do jump now, _dt %1 secs ago", _dt ];
+	// create all environment for Antigua arrival (boats/marine patrols/ammobox/transport vehicles etc
+	[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
