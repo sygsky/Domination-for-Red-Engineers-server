@@ -8,9 +8,9 @@
 "d_nv_serv" addPublicVariableEventHandler {
 	(_this select 1) call XHandleNetVar;
 };
-// Yeti has variable time offset, so I commented him
-SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", /*"Aron",*/"White Jaguar","Renton J. Junior","HRUN"/*,"GREY."*/];
-SYG_localZones = [            0,          0,        0,    -4,           0,        +1,        +1,      +1,     +1,     +1,       +1, /*    +1,*/            -4,                +1,    -7/*,     +2*/];
+// Time offsets for known player timezones
+SYG_userNames  = ["EngineerACE","HE_MACTEP","Snooper","yeti","denis24011982","Rokse [LT]","Ceres-de","CERES de","Ceres.","CERES","gyuri", "Frosty", /*"Aron",*/"White Jaguar","Renton J. Junior","HRUN","ihatelife"];
+SYG_localZones = [            0,          0,        0,    -4,             -4,          +1,        +1,        +1,      +1,     +1,     +1,       +1, /*    +1,*/            -4,                +1,    -7,         +7];
 
 XHandleNetStartScriptServer = {
 	private ["_this","_params"];
@@ -143,9 +143,9 @@ XHandleNetStartScriptServer = {
 			_this spawn XGetPlayerPoints; // response with user scores, equipment, viewdistance, suicide sound...
 			if ( count _this > 2) then { // missionStart received
 			    private ["_userLogin", "_ind","_localDate", "_timeOffset"];
-			    _userLogin = arg(1);
+			    _userLogin = _this select 1;
 			    _ind = SYG_userNames find _userLogin;
-				_localDate  = arg(2);
+				_localDate  = _this select 2;
 			    if (_ind >= 0 ) then {
 			        _timeOffset = SYG_localZones select _ind;
 
