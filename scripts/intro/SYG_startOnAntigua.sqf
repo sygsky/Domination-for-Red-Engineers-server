@@ -31,6 +31,48 @@ _create_water_point_near_Antigua = {
 
 };
 
+/*
+		class Item5
+		{
+			position[]={17451.333984,1.074218,18643.750000};
+			name="isle4";
+			text="Antigua";
+			markerType="ELLIPSE";
+			type="Flag";
+			colorName="ColorRedAlpha";
+			a=1500.000000;
+			b=1500.000000;
+		};
+*/
+_find_civilian = {
+	private ["_civ","_newgroup"];
+	_arr = nearestObjects [[17451,18644,0], ["Civilian"], 1500];
+	_civ = objNull;
+	{
+		if (alive _x) exitWith {
+			_x setDamage 0;
+			_civ      = _x;
+		};
+		deleteVehicle _x; sleep 0.1;
+	} forEach _arr;
+
+	if (isNull _civ) then { // create civilian
+	    _newgroup = ["CIV"] call x_creategroup;
+		_unit_array = ["civilian", "CIV"] call x_getunitliste; // returned [_unit_list, _vec_type, _crewtype]
+		_type = _unit_array select 0;
+		_pos = ((SPAWN_INFO select 2) select 1) call XfGetRanPointSquareOld;
+		[_pos, [_type], _newgroup] call x_makemgroup;
+		_civ = (units _newgroup) select 0;
+	} else {_newgrpoup = group _civ};
+
+	// TODO: add follow sub-menus to the civilian
+	// 1. "Ask about boats"
+	// 2. "Ask about cars"
+	// 3. "Ask about weapons"
+	// 4. "Ask about soviet soldiers"
+	// 5. "Ask about rumors"
+};
+
 _createAmmoBox = {
 	if (!alive spawn_tent) exitWith  {
 		hint localize "--- SYG_startOnAntigua: ammobox on Antigua not created as tent is dead";
@@ -70,11 +112,16 @@ _createAmmoBox = {
     } forEach ["ACE_AK74","ACE_AKS74U","ACE_Bizon","ACE_AKM"];
 
     {
-    	_box addMagazineCargo [_x, 100];
+    	_box addMagazineCargo [_x, 50];
+    	sleep 0.1;
     } forEach ["ACE_30Rnd_545x39_BT_AK","ACE_30Rnd_545x39_SD_AK",
-    		   "ACE_30Rnd_762x39_B_RPK","ACE_30Rnd_762x39_BT_AK","ACE_30Rnd_762x39_SD_AK","ACE_40Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK"
-    	       ,"ACE_64Rnd_9x18_B_Bizon"];
-	hint localize "+++ scripts/intro/SYG_startOnAntigua.sqf: simple ammo box created"
+    		   "ACE_30Rnd_762x39_B_RPK","ACE_30Rnd_762x39_BT_AK","ACE_30Rnd_762x39_SD_AK","ACE_40Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK",
+    	       "ACE_64Rnd_9x18_B_Bizon",
+    		   "ACE_Bandage","ACE_Morphine","ACE_Epinephrine","ACE_Flashbang",
+			   "ACE_HandGrenadeRGN","ACE_HandGrenadeRGO"
+			];
+
+	hint localize "+++ scripts/intro/SYG_startOnAntigua.sqf: simple ammo box created";
 };
 
 call _createAmmoBox;
