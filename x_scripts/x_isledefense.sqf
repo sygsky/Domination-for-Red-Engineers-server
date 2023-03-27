@@ -110,7 +110,7 @@ _make_isle_grp = {
 		sleep 0.4;
 	};
 #ifdef __PRINT_ACTIVITY__
-    hint localize format["+++ x_isledefense.sqf: make isle group, start point %1", _start_point];
+    hint localize format["+++ x_isledefense.sqf: make isle group, start point %1", [_start_point, 10] call SYG_MsgOnPosE0];
 #endif
 #ifdef __TT__
 	sleep 0.753;
