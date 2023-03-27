@@ -1689,6 +1689,15 @@ STR_CHOP_WELCOME_4,"It can lift allmost any light vehicle except wrecks.","Er ka
 STR_CHOP_WELCOME_5,"This is a normal chopper.","Das ist ein normaler Hubschrauber.","Este es un helicóptero normal.","Это обычный вертолет."
 STR_CHOP_WELCOME_6,"It is not able to lift anything.","Er ist nicht in der Lage, etwas zu heben.","No es capaz de levantar nada.","Не предназначен для транспортировки грузов."
 
+// "BOAT", "CAR", "WEAPON", "MEN", "RUMORS"
+STR_ABORIGEN_BOAT,The nearest boat is %1 m away direction %2,Nächstes Boot ist %1 m Richtung %2,El barco más cercano está a %1 m en dirección %2,Ближайшая лодка находится на расстоянии %1 м. напр. %2
+STR_ABORIGEN_BOAT_NONE,The nearest boat is %1 m away direction %2,Nächstes Boot ist %1 m Richtung %2,El barco más cercano está a %1 m en dirección %2,"Все лодки разобрали, вам придётся подождать"
+STR_ABORIGEN_CAR,"Sorry. I don't know anything about cars. We live here.","Tut mir leid, ich kenne mich nicht mit Autos aus. Wir wohnen hier.","Lo siento. No sé nada de coches. Vivimos aquí".,"Извините. но я ничего не знаю про машины. Живём мы тут."
+STR_ABORIGEN_WEAPON,,,,
+STR_ABORIGEN_MEN,,,,
+STR_ABORIGEN_RUMORS,,,,
+STR_ABORIGEN_UNKNOWN,"I don't understand what you mean by the word '%1'","Ich verstehe nicht, was Sie mit '%1' meinen","No estoy seguro de lo que quiere decir con '%1'","Не понял, что вы имеете ввиду под словом '%1'"
+
 STR_TITLE,"Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2022 by EngineerACE\n          for Red-Engineers.ucoz.ru","Erstellt 2009 von Xeno\n  für www.germany-fun.de\n\nBearbeitet 2014-2022 von EngineerACE\n   für Red-Engineers.ucoz.ru","Hecho en 2009 por Xeno\n   para www.germany-fun.de\n\nEdit 2014-2022 por EngineerACE\n para     Red-Engineers.ucoz.ru","Автор 2009 Xeno\n  для www.germany-fun.de\n\nПереработка 2014-2022 EngineerACE\n  для Red-Engineers.ucoz.ru"
 
 STR_AVIAMARCH,aviamarch_eng,aviamarch_ger,aviamarch_rus,aviamarch_rus

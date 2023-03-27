@@ -1,4 +1,4 @@
-// scripts\c: by Sygsky
+// scripts\rumours.sqf: by Sygsky
 // script to find rumours for player
 // Example:
 // [...] execVM "scripts\rumours.sqf";

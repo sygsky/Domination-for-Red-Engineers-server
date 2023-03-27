@@ -107,12 +107,12 @@ SYG_getAllSPPMVehicles = {
 		private ["_txt","_x"];
 		_txt = [_pos,10 ] call SYG_MsgOnPosE0;
 		{
-			if (!(_x isKindOf "Man")) then {
+			if ( !(_x isKindOf "CAManBase") ) then {
 				_var = _x getVariable "CAPTURED_ITEM";
 				if (isNil "_var") then {
 					[_x] call XAddCheckDead;
 					_x setVariable ["CAPTURED_ITEM","SPPM"];
-					hint localize format["+++ Veh ""%1"" is captured on SPPM (veh count %2) at %3", vehicle _x, count _arr, _txt];
+					hint localize format["+++ Veh ""%1""(%2) is captured on SPPM (veh count %3) at %4", vehicle _x,typeOf _x,count _arr, _txt];
 				};
 			};
 		} forEach _arr;

@@ -7,30 +7,7 @@
 
 #include "x_setup.sqf"
 #define __DEBUG__
-
-_rects = [ // rectangles for boats to be available
-[ [17170.4,18146.9,0], 120, 50, 12.8  ],
-[ [17169.0,17860.3,0], 240, 50, 107.7 ],
-[ [17241.5,17750.3,0], 160, 50, -36.75 ],
-[ [17672.8,17830.5,0], 240, 50, 107.7 ]
-];
-
-// call as: _at_shore =  _boat call _is_near_shore;
-_is_near_shore = {
-	private ["_pos","_res","_x"];
-	_pos = _this call SYG_getPos;
-	_res = false;
-	{
-		if ([_pos, _x] call SYG_pointInRect  ) exitWith {_res = true};
-	} forEach _rects;
-	_res
-};
-
-// create point in the water near Antigus
-_create_water_point_near_Antigua = {
-
-};
-
+#define ABORIGEN "ABORIGEN"
 /*
 		class Item5
 		{
@@ -49,28 +26,34 @@ _find_civilian = {
 	_arr = nearestObjects [[17451,18644,0], ["Civilian"], 1500];
 	_civ = objNull;
 	{
-		if (alive _x) exitWith {
+
+		if (alive _x) then {
+			 (isPlayer _x) exitWith {};
+			 _var = _x getVariable ABORIGEN;
+			 if (isNil "_var") exitWith {};
 			_x setDamage 0;
 			_civ      = _x;
+		} else {
+			player action ["hideBody", _x];
+			sleep 0.1;
 		};
-		deleteVehicle _x; sleep 0.1;
+		if ( !isNull _civ ) exitWith {};
 	} forEach _arr;
 
 	if (isNull _civ) then { // create civilian
 	    _newgroup = ["CIV"] call x_creategroup;
 		_unit_array = ["civilian", "CIV"] call x_getunitliste; // returned [_unit_list, _vec_type, _crewtype]
 		_type = _unit_array select 0;
-		_pos = ((SPAWN_INFO select 2) select 1) call XfGetRanPointSquareOld;
-		[_pos, [_type], _newgroup] call x_makemgroup;
-		_civ = (units _newgroup) select 0;
+		_pos = ((SPAWN_INFO select 2) select 1) call XfGetRanPointSquare;
+		_civ = _type createVehicleLocal _pos;
+		_civ setVariable [ABORIGEN, true];
 	} else {_newgrpoup = group _civ};
 
-	// TODO: add follow sub-menus to the civilian
-	// 1. "Ask about boats"
-	// 2. "Ask about cars"
-	// 3. "Ask about weapons"
-	// 4. "Ask about soviet soldiers"
-	// 5. "Ask about rumors"
+	// TODO: add follow sub-menus to the civilian:
+	// 1. "Ask about boats". 2. "Ask about cars". 3. "Ask about weapons". 4. "Ask about soviet soldiers". 5. "Ask about rumors"
+	{
+		_civ addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
+	} forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS"];
 };
 
 _createAmmoBox = {
@@ -107,8 +90,7 @@ _createAmmoBox = {
 	_box call SYG_clearAmmoBox;
 
 	{ // fill created items into the box at each client ( so Arma-1 need, only items added manually on clients during gameplay are propagated through network to all clients )
-    	_cnt = 10 + floor (random 10);
-    	_box addMagazineCargo [_x, _cnt];
+    	_box addMagazineCargo [_x, 5];
     } forEach ["ACE_AK74","ACE_AKS74U","ACE_Bizon","ACE_AKM"];
 
     {

@@ -1,3 +1,6 @@
+// SYG_utilsBoat.sqf
+//
+//
 private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_startPos", "_procWP", "_wpIndex", "_unittype", "_stopBoat" ];
 
 if ( !isNil "boat_trip_is_in_progress" )exitWith { hint "SYG_utilsBoat already initialized"};

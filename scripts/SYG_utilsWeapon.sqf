@@ -645,7 +645,7 @@ SYG_rearmSabotage = {
 			    _addWpn = ["ACE_M136"];
 			    _addMags = ["ACE_AT4_HP", "ACE_AT4_HP", "ACE_AT4_HP"];
 			};
-			default {   hint localize format["+++ SYG_rearmSabotage partial rearming not available for %1",_unit_type ];};
+			default {   hint localize format["+++ SYG_rearmSabotage: partial rearming not defined for %1",_unit_type ];};
 		};
 
         { _unit removeMagazine _x; } forEach _removeMags;
