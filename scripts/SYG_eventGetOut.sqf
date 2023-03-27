@@ -79,8 +79,9 @@ SYG_getOutEvent = {
     // only enemy is allowed for auto revert back
     _first_man_out = _this select 2;
     if ( (side _first_man_out) != d_side_enemy ) exitwith {
-        hint localize format["--- SYG_getOutEvent: unit ""%1"" has illegal side %2, skipped, exit",
+        hint localize format["--- SYG_getOutEvent: unit ""%1""(%2) has illegal side %3, skipped, exit",
         	if (isPlayer _first_man_out) then {name _first_man_out} else {typeOf _first_man_out},
+        	_veh_type,
         	side _veh];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
     };
