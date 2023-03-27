@@ -3,19 +3,22 @@
 
 #include "x_setup.sqf"
 
-// create jump point.
-// Call as : _spwn_point = "ACE_ParachutePack" call _makeSpawnPoint;
+//++++++++++++++++++++++++++++++
+//      find spawn point depending on parachute used
+// call: _spawn_point = _paratype call _makeSpawnPoint;
+//+++++++++++++++++++++++++++++
 _makeSpawnPoint = {
 	private ["_spawn_rect","_para"];
-	_para = _this;
-	_spawn_rect = drop_zone_arr select 0; // drop rect for ordinal parachute
 #ifdef __ACE__
-	if (_para == "ACE_ParachutePack") then {  // find point in the rectangle above Sierra Madre
-		_spawn_rect = [ [11306,8386,0], 600,150, -45 ]; // drop rect for planning parachute
-		hint localize "+++ SYG_parap.sqf: jump point is set on mountines";
+	_para = _this;
+	_id = (SPAWN_INFO select 0) find _para;
+	if ( _d >= 0) then {  // find point according to the parachute type (0 - planning one, 1 - round)
+		_spawn_rect = +((SPAWN_INFO select 2) select _id); // drop rect for planning parachute
+		hint localize "+++ x_intro.sqf: jump point is set on mountines";
 	} else {
 #endif
-		hint localize "+++ SYG_parap.sqf: jump point is set on plains";
+		_spawn_rect = +((SPAWN_INFO select 2) select 1);
+		hint localize "+++ x_intro.sqf: jump point is set on plains";
 #ifdef __ACE__
 	};
 #endif
@@ -44,7 +47,7 @@ if( _para == "" ) then {
 
 _spawn_point = _para call _makeSpawnPoint;
 
-// [ pnt, parachute type, veh, wind, circle_hit ]
+// [ pnt, parachute type, veh, use_wind | scores_used<, circle_hitM> ]
 [ _spawn_point, _para, "DC3", false, false] execVM "AAHALO\jump.sqf"; // J-u-m-p-p-p!!! It is not intro jump!
 
 // we are in air!!!

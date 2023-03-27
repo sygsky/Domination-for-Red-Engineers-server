@@ -113,7 +113,7 @@ if (call SYG_getTargetTownName == "Rahmadi") then { /* TODO: add island patrol o
 
 [] spawn {
     if ( (count resolved_targets) < COUNT_DELAY) exitWith {}; // start on Nth town to clean it
-    private ["_dummy","_target_pos","_target_radius","_list","_man_cnt","_cnt","_acnt","_ecnt","_cnt1"];
+    private [ "_dummy", "_target_pos", "_target_radius", "_list", "_man_cnt", "_cnt", "_acnt", "_ecnt", "_cnt1", "_var" ];
     sleep random 30;
     _this = resolved_targets select ((current_counter - 1) - COUNT_DELAY); // index of town to clean; current_counter is already bumped by +1
     _dummy = target_names select _this;
@@ -160,6 +160,7 @@ if (call SYG_getTargetTownName == "Rahmadi") then { /* TODO: add island patrol o
 #endif
 	// #598: remove town's Mash if found
     _list = _target_pos nearObjects ["MASH", _target_radius + 50];
+    _cnt = 0;
     {
     	_var = _x getVariable "TOWN";
     	if (!isNil "_var") then {
@@ -167,9 +168,13 @@ if (call SYG_getTargetTownName == "Rahmadi") then { /* TODO: add island patrol o
 				["say_sound", getPos _x, "steal"] call XSendNetStartScriptClientAll; // play steal sound on mash removing
 				deleteVehicle _x;
 				sleep 1;
+				_cnt = _cnt + 1;
     		};
     	};
     } forEach _list;
+#ifdef __DEBUG__
+    hint localize format[ "+++ x_createnexttarget.sqf: MASH removing. Found %1, detected as TOWN mash and removed %2", count _list, _cnt ];
+#endif
 
     _list = nil;
     sleep 2.56;

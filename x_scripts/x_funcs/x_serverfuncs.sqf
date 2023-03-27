@@ -373,7 +373,7 @@ SYG_addEventsAndDispose = {
 SYG_removeAllVehicleStdEvents = {
 	if (typeName _this != "OBJECT") exitWith {};
 	if (_this call SYG_removeVehicleHitDamKilEvents) then {
-		if ( _this isKindOf "Car"/*"LandVehicle"*/ || _this isKindOf "Air" || _this isKindOf "Ship") then  {
+		if ( _this isKindOf "LandVehicle" || _this isKindOf "Air" || _this isKindOf "Ship") then  {
 			_this removeAllEventHandlers "getin";
 			_this removeAllEventHandlers "getout";
 		#ifdef __AI__
@@ -507,6 +507,7 @@ x_makevgroup = {
 // Makes infantry enemy group
 // Params:
 // position, unitlist, group, do_points (for TT mode)
+// return units of new group
 x_makemgroup = {
 	private ["_grp","_pos","_ret","_unitliste","_one_unit","_do_points","_x"];
 	_pos = _this select 0;
@@ -528,7 +529,7 @@ x_makemgroup = {
         };
 #endif
         _one_unit setUnitAbility ((d_skill_array select 0) + (random (d_skill_array select 1)));
-        _ret = _ret + [_one_unit];
+        _ret set [count _ret, _one_unit];
         sleep 0.012
 	} forEach _unitliste;
 	_ret

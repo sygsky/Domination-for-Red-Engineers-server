@@ -2229,7 +2229,6 @@ SYG_synchroSpeed = {
 // Read all magazines from vehicle config
 // call as follows: _mags = _veh_type call SYG_getConfigMags;
 //
-/*
 SYG_getConfigMags = {
     if (typeName _this == "OBJECT") then {_this = typeOf _this};
     if ( typeName _this != "STRING") exitWith { hint localize format["--- SYG_getConfigMags: expected vehicle type (%1) is not ""STRING"" or ""OBJECT"", exit", typeName _this] };
@@ -2250,7 +2249,6 @@ SYG_getConfigMags = {
     };
     _mags
 };
-*/
 
 /**
  * call: _isPara = _veh call SYG_isParachute;
@@ -2315,6 +2313,73 @@ SYG_typesVehCanLift = {
 	_arr
 };
 
+/*
+	Added: 13-MAR-2023
+	For this script follow params are needed:
+	[ vehicle, launcher type, magazine ammo type, realod weapon] call SYG_reloadAmmo;
+	e.g.
+	[_x,"ACE_M6_Stinger_Launcher", "ACE_M6_FIM92"<, true>] call SYG_reloadAmmo; // Ammo itself in this exmple is "ACE_FIM92round" and is not used
+*/
+SYG_reloadAmmo = {
+	private ["_veh", "_wpnType", "_magType", "_ammoCnt", "_magCntCfg", "_magCntVeh", "_addMagCnt", "_ammoCntCfg"];
+	_veh = _this select 0;
+	if (typeName _veh != "OBJECT") exitWith {-1}; // not vehicle
+	_wpnType = _this select 1; // weapon type
+	_magType = _this select 2;	// magazine type
+	_ammoCnt = _veh ammo _wpnType; // it is muzzle of weapon, so only this can be used from Arma 'ammo' command
+	_magCntCfg = {_x == _magType} count (_veh call SYG_getConfigMags);	// Count mags (not ammo) in config
+	_magCntVeh = {_x == _magType} count (magazines _veh); 				// Count mags (not ammo) in vehicle
+	_addMagCnt = (_magCntCfg - _magCntVeh) max 0;						// Count how many ammo exhaused in the current magazine
+	_ammoCntCfg = ( configFile >> "CfgMagazines" >> _magType >> "count" ); // Config ammo count in the full magazine
+	if (!(isNumber _ammoCntCfg)) exitWith { // This is not magazine with 'count' property, so exit with error message
+		hint localize format["--- SYG_reloadFiredAmmo: ""CfgMagazines"" >> ""%1"" >> ""count"" is not number, %2 not reloaded !", _wpnType, typeOf _veh];
+		-1 // return error state
+	};
+	_ammoCntCfg = getNumber _ammoCntCfg; // Number of ammo in full magazine
+
+#define __DEBUG_PRINT__
+
+#ifdef __DEBUG_PRINT__
+	private ["_str"];
+    _str = format["+++ SYG_reloadAmmo: _ammoCnt %1, _ammoCntCfg %2, _magCntVeh %3, _magCntCfg %4", _ammoCnt, _ammoCntCfg, _magCntVeh, _magCntCfg];
+	player groupChat _str; hint localize _str;
+
+	_str = format["+++ SYG_reloadAmmo: %1 weapons %2", typeOf _veh, (weapons _veh) call SYG_compactArray];
+	player groupChat _str; hint localize _str;
+
+	_str = if (_ammoCnt != _ammoCntCfg) then {	format[" ammo %1(%2),", _magType, _ammoCnt] } else {""};
+    _str = format["+++ SYG_reloadAmmo: %1,%2 magazines %3", typeOf _veh, _str, (magazines _veh) call SYG_compactArray];
+	player groupChat _str; hint localize _str;
+#endif
+
+	if (_ammoCntCfg != _ammoCnt ) then { // Current magazine is not full
+		_veh removeMagazine _magType;	// remove not full magazine
+		_addMagCnt = _addMagCnt + 1;	// One more full magazine to load
+	};
+	for "_i" from 1 to _addMagCnt do {
+		_veh addMagazine _magType;
+	};
+
+#ifdef __DEBUG_PRINT__
+	_str = format["+++ SYG_reloadAmmo: %1, added %2 %3", typeOf _veh, _addMagCnt, _magType];
+#endif
+
+	if ( if (count _this > 3) then {_this select 3} else {true} ) then { // reload weapon option set
+		if (_addMagCnt > 0) then { // There are mags added, do weapon reloading
+			_veh removeWeapon _wpnType;
+			sleep 0.05;
+			_veh addWeapon _wpnType;
+#ifdef __DEBUG_PRINT__
+			_str = format["%1, reloaded %2", _str, _wpnType];
+#endif
+		};
+	};
+
+#ifdef __DEBUG_PRINT__
+	player groupChat _str; hint localize _str;
+#endif
+	_addMagCnt
+};
 
 //------------------------------------------------------------- END OF INIT
 //------------------------------------------------------------- END OF INIT

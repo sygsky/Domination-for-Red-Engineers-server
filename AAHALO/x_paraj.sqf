@@ -2,8 +2,14 @@
 // e.g.: FLAG_BASE addAction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
 _unit = _this select 1;
 new_paratype = _unit call SYG_getParachute; // find parachute of player (if any)
+new_height = (SPAWN_INFO select 0) find new_paratype;
+if (new_paratype < 0 ) then {
+	new_height = ((SPAWN_INFO select 2) select 1) select 2;
+} else {
+	new_height = ((SPAWN_INFO select 2) select new_height) select 2;
+};
 
-hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2", _this, weapons _unit];
+hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2, height is %3", _this, weapons _unit, new_height];
 
 private ["_do_exit","_wait_score","_jump_score","_full_score"];
 
@@ -86,7 +92,7 @@ if (d_with_ace_map && (!(call XCheckForMap)) ) exitWith {
 
 d_cancelled = true; // to detect if "Cancel" button was clicked
 _ok = createDialog "XD_ParajumpDialog";
-onMapSingleClick format[ "_StartLocation = _pos;closeDialog 0;[_StartLocation, new_paratype, %1] execVM ""AAHALO\jump.sqf"";d_cancelled=false;onMapSingleClick """"", _full_score ];
+onMapSingleClick format[ "_StartLocation = _pos;_StartLocation set [2, new_height];closeDialog 0;[_StartLocation, new_paratype, %1] execVM ""AAHALO\jump.sqf"";d_cancelled=false;onMapSingleClick """"", _full_score ];
 
 waitUntil {!dialog}; // wait for dialog to be closed by any mean: or by click on map or "Cancel" baton on dialog
 sleep 0.112;

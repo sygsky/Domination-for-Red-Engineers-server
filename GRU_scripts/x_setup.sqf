@@ -209,3 +209,6 @@
 
 // please not comment lower line, only change it to any of follow values: 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000
 #define DEFAULT_VIEW_DISTANCE 3500
+
+// Uncomment to disable first time arrival on the Antigua island, not on the base or do paradrops near it
+#define __ARRIVAL_ON_ANTIGUA__

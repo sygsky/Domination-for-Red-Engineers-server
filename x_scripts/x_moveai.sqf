@@ -1,6 +1,6 @@
-// by Xeno, x_scripts\x_moveai.sqf, move  AI together with player, by parachute and by telepot
+// by Xeno, x_scripts\x_moveai.sqf, move  AI together with player, by parachute and by teleport
 // +++ 06-МАР-2019: Sygsky  changes:
-// AI is moved to player if 2D distance  is more them 500 m.
+// AI is moved to player if 2D distance is more them 500 m.
 // AI is moved if player is leader of his group or is formation leader of his formation
 // prevent teleport of some units if special SM is executing, parajump is still allowed for such persons
 // ---
@@ -8,7 +8,7 @@ private ["_grp_player","_units_player","_ntp_cnt","_ai"];
 
 #include "x_setup.sqf"
 
-_disable_teleport_list =
+_disable_teleport_list = // needed to prevent special cases on some SM (officers/spawn resque etec),
     if (d_enemy_side == "EAST") then {
         [
 #ifdef __ACE__
@@ -38,16 +38,20 @@ if (count _this == 0) exitWith { // called for teleport
     {
         if ( (alive _x) && !isPlayer _x && vehicle _x == _x && ( [_x,_pos_p] call SYG_distance2D) > 500 ) then {
             if ( (formationLeader _x == player) || (leader _x == player)) then {
-                _ai = _x getVariable "AI_COST"; // AI of this player must have the variable
+                _ai = _x getVariable "AI_COST"; // AI of this player must have this variable
                 _ai = !(isNil "_ai");
-                if ( _ai && (!((typeOf _x) in _disable_teleport_list)) ) then { _x setPos _pos_p; } // teleport
-                    else  { _ntp_cnt = _ntp_cnt +1; }; // no teleport
+                if ( _ai && (!((typeOf _x) in _disable_teleport_list)) ) then {
+                	_x setPos _pos_p; // teleport unit
+                	hint localize format["+++ x_moveai: %1 IA teleported with player", typeOf _x];
+                	// inform GRU about AI telepotation
+                }
+                else  { _ntp_cnt = _ntp_cnt +1; }; // no teleport
             };
         };
     } forEach _units_formation;
     if (_ntp_cnt > 0 ) then {
         (format[localize "STR_SM_TELEPORT_1", _ntp_cnt]) call XfHQChat; // "You realized that teleportation didn’t work with all your team members"
-//		    hint localize format["+++ x_moveai.sqf: teleport stopped for %1 civilians/officers", _ntp_cnt ];
+//		    hint localize format["+++ x_moveai.sqf: teleport stopped for %1 civilians/officers/pilots", _ntp_cnt ];
         playSound "losing_patience";
     };
 };

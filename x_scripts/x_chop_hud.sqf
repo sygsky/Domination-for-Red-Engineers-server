@@ -149,7 +149,7 @@ while {true} do {
 					};
 					while { (vehicle player != player) && (alive player) && (player == driver _veh)} do {
 						if (d_chophud_on) then {
-							_nobjects = nearestObjects [_veh, ["Car"/*"LandVehicle"*/,"Air"],_search_height];
+							_nobjects = nearestObjects [_veh, ["LandVehicle","Air"],_search_height];
 							_nearest = objNull;
 							if (count _nobjects > 0) then {
 								_dummy = _nobjects select 0;

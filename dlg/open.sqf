@@ -1,4 +1,5 @@
 // open.sqf, called on player respawn on client side only
+
 _base_visit_status = base_visit_session;
 if (base_visit_session == 0) then {
 	base_visit_session = -1; // mark player to be respawning
@@ -24,7 +25,21 @@ if (dialog) then {closeDialog 0};
 
 #ifdef __CONNECT_ON_PARA__
 if (_base_visit_status <= 0) exitWith { // player killed before it reached the base
-	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
+//	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
+	_spawn_point = [0,0,0];
+	#ifdef __ARRIVAL_ON_ANTIGUA__
+	if (alive spawn_tent) then {
+		_spawn_point = spawn_tent call SYG_housePosCount;
+		_spawn_point = spawn_tent buildingPos ( floor (random _spawn_point) );
+	};
+	#endif
+	if ((_spawn_point select 0 == 0) && (_spawn_point select 1 == 0)) then {
+		_spawn_point = [];
+		_rect = ((SPAWN_INFO select 2) select 2);
+		while {(count _spawn_point) == 0} do {
+			_spawn_point  =  call XfGetRanPointSquare;
+		};
+	};
 	_str = "";
 	if ( !d_still_in_intro) then {
 		_str = if ((score player) != 0) then { format[localize "STR_INTRO_PARAJUMP", (round ((_spawn_point distance FLAG_BASE)/50)) * 50 ] } else { "STR_INTRO_PARAJUMP_5" };

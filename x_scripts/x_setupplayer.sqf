@@ -904,7 +904,7 @@ _local_msg_arr spawn {
     };
     // West Germany
     if ( (toUpper _pl_name) in ["CERES-DE","CERES DE","CERES.","CERES"]) exitWith {
-        sleep 6;
+//        sleep 6;
         // "For numerous military services, the command and the grateful citizens declare you an honorary citizen of Sahrani Island."
         [
             "msg_to_user",
@@ -915,13 +915,13 @@ _local_msg_arr spawn {
               ["Anfragen zum Einschalten des Servers sollten auf WhatsApp/Vyber/Telegram 8(916)136-2219 gesendet werden."], // "Requests to turn on the server should be sent to WhatsApp 8(916)136-2219."
               ["Groß-/Kleinschreibung beachten Skype-Anmeldung: sygsky"] //
             ],
-            7, 5, false, "drum_fanfare"
+            7, 6, false, "drum_fanfare"
         ] spawn SYG_msgToUserParser;
     };
 
     // Litva
     if ( (_pl_name) == "Rokse [LT]") exitWith {
-        sleep 6;
+//        sleep 6;
         [
             "msg_to_user",
             "",
@@ -932,18 +932,18 @@ _local_msg_arr spawn {
 
 	// Khabarovsk: 2-feb is the Soviet aviation day
     if ( ((_pl_name) == "HRUN") && ( ((SYG_client_start select 1) == 2) && ((SYG_client_start select 2) == 9) ) ) exitWith {
-        sleep 6;
+//        sleep 6;
         [
             "msg_to_user",
             "",
             [ ["Командование ОК ГРУ поздравляет с профессиональным праздником, благодарит за верность долгу и храбрость в бою!" ] ],
-            0, 5, false, "drum_fanfare"
+            0, 5, false, "message_received"
         ] spawn SYG_msgToUserParser;
     };
 
 	// Latvia
 	if ( (_pl_name) == "Renton J. Junior" ) exitWith { // "Рентон! Не трожь СППМ! За это - расстрел! Но в будущем)))"
-		sleep 6;
+//		sleep 6;
 		[
 			"msg_to_user",
 			"",
@@ -953,7 +953,7 @@ _local_msg_arr spawn {
 	};
     // Argentina
 	if ( (_pl_name) == "lolport" ) exitWith {
-		sleep 6;
+//		sleep 6;
 		[
 			"msg_to_user",
 			"",
@@ -964,7 +964,7 @@ _local_msg_arr spawn {
 
 	// "АЛЕКС МЭЙСОН"
 	if ( (toUpper _pl_name) in ["АЛЕКС МЭЙСОН","DAVID ARMSTRONG", "ALEX MASON"] ) exitWith {
-		sleep 6;
+//		sleep 6;
 		[
 			"msg_to_user",
 			"",
@@ -975,8 +975,8 @@ _local_msg_arr spawn {
 
 	// "PLAYER 1"
 	// check if name starts from "PLAYER #" ...
-	if ((toUpper _pl_name) in ["PLAYER 1", "PLAYER 2", "PLAYER 3", "ADMIN", "USER"] ) exitWith {
-		sleep 6;
+	if ((toUpper _pl_name) in ["PLAYER", "PLAYER 1", "PLAYER 2", "PLAYER 3", "ADMIN", "USER"] ) exitWith {
+//		sleep 6;
 		[
 			"msg_to_user",
 			"",
@@ -987,7 +987,7 @@ _local_msg_arr spawn {
 
 	// "Oberon"
 	if ( (_pl_name) == "Oberon" ) exitWith {
-		sleep 6;
+//		sleep 6;
 		[
 			"msg_to_user",
 			"",
@@ -1019,7 +1019,7 @@ _local_msg_arr spawn {
 				};
 			}
 		};
-		sleep 6;
+//		sleep 6;
 		[
 			"msg_to_user",
 			"",
@@ -1043,14 +1043,25 @@ _local_msg_arr spawn {
 		};
 	};
 
+	if ( (toUpper(_pl_name)) == "IHATELIFE" ) exitWith {
+//		sleep 6;
+		[
+			"msg_to_user",
+			"",
+			[ ["Comrades say your nickname  should be IHitCircle!" ] ],
+			0, 5, false, "message_received"
+		] spawn SYG_msgToUserParser;
+
+	};
+
     // if no special message, type common one
     //"For his services in developing our mission, the chief engineer extends his thanks to fighters Rokse and Ceres!!!"
-    sleep 10;
+//    sleep 10;
 	[
 		"msg_to_user",
 		"",
 		[ ["STR_GREETING_COMMON" ] ],
-		0, 5, false, "drum_fanfare"
+		0, 10, false, "drum_fanfare"
 	] spawn SYG_msgToUserParser;
 //	hint localize "+++ STR_GREETING_COMMON printed"; // DEBUG
 };

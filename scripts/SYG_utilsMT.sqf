@@ -304,7 +304,11 @@ SYG_townStatReport = {
     private ["_arr","_arr1","_sum", "_id","_kills","_kills_sum","_num","_onlineNames","_name"];
     //hint localize format["++++++ Town ""%1"" personal players score:",_this];
     hint localize "[";
-    hint localize format[ "++++++ Town ""%1"" #%2 real kills report ++++++", _this, current_counter];
+    hint localize format[ "++++++ Town ""%1"" #%2 real kills report, %3 ++++++",
+    	_this,
+    	current_counter,
+    	(call SYG_getServerDate) call SYG_dateToStr // Real server time, e.g. 2023 year, not Arma misson internal one, e.g. 1985 year
+    ];
     _kills_sum = 0;
     _num = 0;
    	_onlineNames = call SYG_getOnlineNames; // all active player names (to print their stats)
@@ -316,19 +320,20 @@ SYG_townStatReport = {
 			_name = d_player_array_names select _id;
 			// print true kills (calculated from total-bonus+dead), dead сount, bonus score, total score accumulated
 			hint localize format[ "++++++ %1: %2,%3",
-					[17, format["""%1""",d_player_array_names select _id]] call SYG_textAlign,  // player name
-					[6, str(_kills)] call SYG_textAlign,										// in game kill count (as in Arma itself)
-					if ( _name in _onlineNames ) then { "  online" } else { " offline" }		// satus in game (online/offline)
+					[17, format["""%1""",d_player_array_names select _id]] call SYG_textAlign,  // Player name
+					[6, str(_kills)] call SYG_textAlign,										// In game kill count (as in Arma itself)
+					if ( _name in _onlineNames ) then { "  online" } else { " offline" }		// Status in game (online/offline)
 				];
 			_kills_sum = _kills_sum + _kills;
 			_num = _num + 1;
 		};
 	};
 //    hint localize format["+++ [time, SYG_townScores select 2] %1", [time, SYG_townScores select 2]];
-    hint localize format["++++++ Town ""%1"" real players kills summary: %2, avg. %3",
+    hint localize format["++++++ Town ""%1"" real players kills summary: %2, avg. %3, dur. %4",
         _this,
         _kills_sum,
-        if (_num == 0) then {"0"} else {(round( _kills_sum / _num * 10)) / 10 }
+        if (_num == 0) then {"0"} else {(round( _kills_sum / _num * 10)) / 10 },
+        [time, SYG_townScores select 2] call SYG_timeDiffToStr // Duration of existence of the Main Target
     ];
     hint localize "]";
 

@@ -36,7 +36,7 @@ x_dosmoke = {};
 #endif
 
 SYG_FalseGetOutsCnt = 0; // number of false "GetOut" events (vehicle is not overturned)
-SYG_TrueGetOutsCnt = 0; // number of false "GetOut" events (vehicle is not overturned)
+SYG_TrueGetOutsCnt = 0; // number of true "GetOut" events (vehicle is overturned to normal state)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++ SYG_preventTurnOut
 // call: _success = _veh call SYG_preventTurnOut;
 SYG_preventTurnOut = {
@@ -67,18 +67,23 @@ SYG_getOutEvent = {
 	_veh_type = typeOf _veh;
     _getOutEventInd = _veh getVariable EVENT_ID_VAR_NAME;
     if ( isNil "_getOutEventInd" ) exitWith {
-        #ifdef __DEBUG_PRINT__
+//        #ifdef __DEBUG_PRINT__
         hint localize format["<<< SYG_getOutEvent: no ""%1"" event id found for %2 (on %3 got out), exiting >>>",
         EVENT_NAME,
         _this select 0,
         _this select 1
         ];
-        #endif
+//        #endif
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
-        false
     };
     // only enemy is allowed for auto revert back
-    if ( str(side (_this select 2)) != d_enemy_side ) exitwith {false};
+    _first_man_out = _this select 2;
+    if ( (side _first_man_out) != d_side_enemy ) exitwith {
+        hint localize format["--- SYG_getOutEvent: unit ""%1"" has illegal side %2, skipped, exit",
+        	if (isPlayer _first_man_out) then {name _first_man_out} else {typeOf _first_man_out},
+        	side _veh];
+        SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
+    };
     _veh setVariable [EVENT_ID_VAR_NAME, nil]; // remove event number to prevent other processing for
 
     if ( (_veh isKindOf "Air") /*|| (_veh isKindOf "Ship")*/) exitWith {
@@ -91,7 +96,6 @@ SYG_getOutEvent = {
     _start_dmg  = damage _veh; // remember initial damage
 
     _crew = crew _veh; // crew still in vehicle
-    _first_man_out = _this select 2;
 
     // continue here only for land vehicles
 
@@ -110,16 +114,15 @@ SYG_getOutEvent = {
 
     _dmgstr = "";
 
-    if ( !alive _veh ) exitWith // vehicle is dead, nothing to do with it
-    {
+    if ( !alive _veh ) exitWith { // vehicle is dead, nothing to do with it
         _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // prevent event on dead vehicles
-        hint localize format["--- SYG_getOutEvent: REMOVE EVENT vehicle %1(%2) is dead, exit", typeOf _veh, _veh];
+        hint localize format["--- SYG_getOutEvent: REMOVE EVENT vehicle %1(%2) is dead, exit", _veh_type, _veh];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
     };
 
     #ifdef __DEBUG_PRINT__
-    if (damage _veh != 0 ) then {hint localize format["+++ SYG_getOutEvent: %1(%2) has damage %3", typeof _veh, _veh, damage _veh]};
+    if (damage _veh != 0 ) then {hint localize format["+++ SYG_getOutEvent: %1(%2) has damage %3", _veh_type, _veh, damage _veh]};
     #endif
 
     ////////////////////////////////////////////////////////////////////// PROCS start
@@ -135,13 +138,13 @@ SYG_getOutEvent = {
 
     //----------------------------------------
     _assignUnit2Vehicle = {
-        _man = _this select 0;
-        _veh = _this select 1;
+    	private ["_man","_veh","_newrole","_ret"];
+        _man     = _this select 0;
+        _veh     = _this select 1;
         _newrole = _this select 2;
-        _ret = true;
+        _ret     = true;
 
-        switch (_newrole ) do
-        {
+        switch (_newrole ) do {
             case "driver":    {
                 if (_veh emptyPositions _newrole == 0) exitWith {_ret = false};
                 _man assignAsDriver    _veh; _man moveInDriver    _veh;
@@ -164,6 +167,7 @@ SYG_getOutEvent = {
 
     //----------------------------------------
     _getVehicleMainRoles = {
+    	private ["_required_roles"];
         _required_roles = [];
         if ( _this emptyPositions "driver" > 0)    then { _required_roles set [ count _required_roles,    "driver" ] };
         if ( _this emptyPositions "gunner" > 0)    then { _required_roles set [ count _required_roles,    "gunner" ] };
@@ -177,7 +181,7 @@ SYG_getOutEvent = {
     hint localize format["+++ SYG_getOutEvent: vehicle crew of %1 has %2 alive men, wait for vehicle to be empty", count crew _veh, {alive _x} count crew _veh];
 #endif
 
-    // Wait while all AI are jumped out
+    // Wait 15 seconds while all AI are jumped out
     for "_i" from 1 to 15 do {
         if ( !alive _veh ) exitWith { false };
         if ( { alive _x } count ( crew _veh ) == 0) exitWith {
@@ -190,9 +194,8 @@ SYG_getOutEvent = {
         if (!(_veh call SYG_vehIsUpsideDown)) exitWith {true};
     };
 
-
     if ( !alive _veh ) exitWith {
-        hint localize format["<<< SYG_getOutEvent:  veh ""%1""(%2) is dead in %3, exit >>>", typeOf _veh, _veh, (round((time - _start_time) *10))/10];
+        hint localize format["<<< SYG_getOutEvent: veh ""%1""(%2) is dead in %3, exit >>>", _veh_type, _veh, (round((time - _start_time) *10))/10];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // remove event at all
         false
@@ -204,10 +207,10 @@ SYG_getOutEvent = {
     _udState = _veh call SYG_vehIsUpsideDown;
 
     //
-    // Cheсk if first man retuned to normally staying vehicle by himself
+    // Cheсk if first man returned to the normally staying vehicle by himself
     //
     if ( !_udState && vehicle _first_man_out == _veh ) exitWith {
-        hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", typeOf _veh, _veh, damage _veh];
+        hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", _veh_type, _veh, damage _veh];
         _veh setDamage 0;
         _veh setVariable [EVENT_ID_VAR_NAME, _getOutEventInd]; // restore event handling
         true
@@ -223,14 +226,13 @@ SYG_getOutEvent = {
 		// Cheсk if first man retuned to normally staying vehicle by himself
 		//
 		if ( vehicle _first_man_out == _veh ) exitWith {
-			hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", typeOf _veh, _veh, damage _veh];
+			hint localize format["<<< SYG_getOutEvent: got out man moved in %1(%2), repair dmg (%3) and exit >>>", _veh_type, _veh, damage _veh];
 			_veh setDamage 0;
-			true
 		};
 
     #ifdef __DEBUG_PRINT__
         hint localize format["<<< SYG_getOutEvent: veh %1(%2) not overturned (%3), dmg %4, role %5, crew %6 -> %7, evnts %8/%9, %10 >>>",
-                            typeOf _veh, _veh, round(_veh call SYG_vehUpAngle), _start_dmg, _role, _whole_crew, count crew _veh,
+                            _veh_type, _veh, round(_veh call SYG_vehUpAngle), _start_dmg, _role, _whole_crew, count crew _veh,
                             SYG_TrueGetOutsCnt, SYG_FalseGetOutsCnt,
                             [_veh, "at %1 m. to %2 from %3",50] call SYG_MsgOnPosE ];
     #endif
@@ -243,11 +245,11 @@ SYG_getOutEvent = {
             if (!alive _x) then {
                 _x setPos [(getPos _x select 0) + 3 + (random 3),(getPos _x select 1) + 3 + (random 3), 0];
             #ifdef __DEBUG_PRINT__
-                hint localize format["+++ SYG_getOutEvent: ejecting detected dead (role %1) from %2", assignedVehicleRole _x, typeOf _veh];
+                hint localize format["+++ SYG_getOutEvent: ejecting detected dead (role %1) from %2", assignedVehicleRole _x, _veh_type];
             #endif
             } else {
             #ifdef __DEBUG_PRINT__
-                hint localize format["+++ SYG_getOutEvent: ejecting next crew (role %1) from %2", assignedVehicleRole _x, typeOf _veh];
+                hint localize format["+++ SYG_getOutEvent: ejecting next crew (role %1) from %2", assignedVehicleRole _x, _veh_type];
             #endif
             };
             unassignVehicle _x;
@@ -368,7 +370,7 @@ SYG_getOutEvent = {
     };
 
     #ifdef __DEBUG_PRINT__
-    hint localize format["+++ SYG_getOutEvent: vehicle %1 populated with %2 of crew (alive %6, orig dmg %5), outer crew size now %3, vacant roles %4", typeOf _veh, count crew _veh, (count _crew) - (count crew _veh), _required_roles, _dmgstr, {alive _x} count crew _veh];
+    hint localize format["+++ SYG_getOutEvent: vehicle %1 populated with %2 of crew (alive %6, orig dmg %5), outer crew size now %3, vacant roles %4", _veh_type, count crew _veh, (count _crew) - (count crew _veh), _required_roles, _dmgstr, {alive _x} count crew _veh];
     #endif
 
     //

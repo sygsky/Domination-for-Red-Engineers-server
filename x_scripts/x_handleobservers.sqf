@@ -212,7 +212,8 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                         _dist_between_pos,
                         _near_targets_cnt
                     ];
-					["say_radio", "enemy_spotted"] call XSendNetStartScriptServer;
+
+                    [] spawn { sleep 3; ["say_radio", "enemy_spotted"] call XSendNetStartScriptServer; };
 
                     _nextaritime  = time + d_arti_reload_time + (random 40);
                     [_pos_nearest,_type,KILL_RADIOUS] spawn x_shootari;

@@ -33,35 +33,37 @@ hint localize format[ "+++ MyFalseMissile.sqf: shooter %1, missile %2, parachute
 ];
 
 // Restore lost missiles for vehicle/AI unit
-if (_shooter isKindOf "CAManBase") then {
-	_shooter addMagazine _type;
+if (_shooter isKindOf "CAManBase") exitWith {
+	_stingerAmmo = -1;
+	_mags0 = [];
 	if (_shooter hasWeapon "ACE_FIM92A") then {
+		_stingerAmmo = _shooter ammo "ACE_FIM92A";
+		_mags0 = magazines _shooter;
+
         _shooter removeWeapon "ACE_FIM92A";
-        _shooter addWeapon "ACE_FIM92A"; // this reloads Stringer for a AA soldier
-        hint localize format["+++ MyFalseMissile.sqf: restore 1 %1 for %2", _type, typeOf _shooter];
+        _shooter addMagazine "ACE_Stinger";
+        _shooter addWeapon "ACE_FIM92A"; // this reloads Stringer for an AA soldier
+		_mags01= magazines _shooter;
+
+        hint localize format["+++ MyFalseMissile.sqf: restore ammo for %3:", typeOf _shooter];
+        hint localize format["+++ MyFalseMissile.sqf: initial %1", _mags0 call SYG_compactArray];
+        hint localize format["+++ MyFalseMissile.sqf: result  %1", _mags1 call SYG_compactArray];
 	} else {
 	    hint localize format["--- MyFalseMissile.sqf: shooter %1(%2) has no Stinger launcher ""ACE_FIM92A"", skip reload", _name, typeOf _shooter];
 	};
-} else {
-	if (_shooter isKindOf "ACE_M6A1") exitWith { // Linebacker
-		_cnt = {_x isKindOf "ACE_M6_FIM92"} count (weapons _shooter);
-		if (_cnt < 3) then {
-			// restore 1..3 rounds for Linebacker
-			for "_i" from _cnt to 2 do {
-				_shooter addMagazine "ACE_M6_FIM92";
-			};
-			hint localize format["+++ MyFalseMissile.sqf: restore %1 ACE_M6_FIM92 for ACE_M6A1", 3 - _cnt];
-		};
-	};
+};
 
-	if (_shooter isKindOf "Stinger_Pod") exitWIth {
-		_cnt = {_x isKindOf "2Rnd_Stinger"} count (weapons _shooter);
-		if (_cnt < 10) then {
-			// restore 1..10 rounds for Stinger pod
-			for "_i" from _cnt to 9 do {
-				_shooter addMagazine "2Rnd_Stinger";
-			};
-			hint localize format["+++ MyFalseMissile.sqf: restore %1 2Rnd_Stinger for Stinger_Pod", 10 - _cnt];
-		};
+if (_shooter isKindOf "ACE_M6A1") exitWith { // Linebacker reloading is tested correctly
+	// replace exhaused  magazines and reload launcher by default
+	_cnt =[_shooter,"ACE_M6_Stinger_Launcher", "ACE_M6_FIM92"] call SYG_reloadAmmo; // Stinger ammo type is "ACE_FIM92round" and is not used here
+	hint localize format["+++ MyFalseMissile.sqf: replace %1 mags (ACE_M6_FIM92) for ACE_M6A1", _cnt];
+};
+
+if (_shooter isKindOf "Stinger_Pod") exitWIth {  // TODO: need test all weapon/mags names
+	_cnt = {_x isKindOf "2Rnd_Stinger"} count (weapons _shooter);
+	if (_cnt < 10) then {
+		// restore 1..10 rounds for Stinger pod
+		for "_i" from _cnt to 9 do { _shooter addMagazine "2Rnd_Stinger"; };
+		hint localize format["+++ MyFalseMissile.sqf: restore %1 2Rnd_Stinger for Stinger_Pod", 10 - _cnt];
 	};
 };

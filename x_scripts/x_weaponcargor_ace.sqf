@@ -361,7 +361,7 @@ _ve spawn {
    				//_ve addMagazineCargo ["ACE_30Rnd_545x39_B_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_545x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_545x39_SD_AK",100];
-				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_RPK",100];
+//				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_RPK",100];
 //				_ve addMagazineCargo ["ACE_30Rnd_762x39_B_AK",100]; // removeв as prev is suitable for AK-47 too and is better
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_BT_AK",100];
 				_ve addMagazineCargo ["ACE_30Rnd_762x39_SD_AK",100];

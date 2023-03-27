@@ -87,14 +87,18 @@ SYG_getAllSPPMVehicles = {
 	private ["_pos", "_arr", "_i", "_var"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
-	_arr = nearestObjects [_pos, ["Car" /*"LandVehicle"*/, "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
+	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
 	for "_i" from 0 to count _arr - 1 do {
         if (_x isKindOf "CAManBase") then { _arr set [_i, "RM_ME"] } else { //+++ Sygsky: Sometimes a man gets on this list!!!
+        	if (!alive _x) then {
+        		_arr set [_i, "RM_ME"];
+        	} else {
 #ifdef __OWN_SIDE_EAST__
-    		if ( !((_arr select _i) call SYG_isWestVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only western vehicles can be SPPMed!
+	    		if ( !((_arr select _i) call SYG_isWestVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only western vehicles can be SPPMed!
 #else
-    		if ( !((_arr select _i) call SYG_isEastVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only eastern vehicles can be SPPMed!
+    			if ( !((_arr select _i) call SYG_isEastVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only eastern vehicles can be SPPMed!
 #endif
+        	};
         };
 	};
 	_arr call SYG_clearArrayB; // remove all "RM_ME" items from the list
@@ -103,7 +107,7 @@ SYG_getAllSPPMVehicles = {
 		private ["_txt","_x"];
 		_txt = [_pos,10 ] call SYG_MsgOnPosE0;
 		{
-			if (!_x isKindOf "Man") then {
+			if (!(_x isKindOf "Man")) then {
 				_var = _x getVariable "CAPTURED_ITEM";
 				if (isNil "_var") then {
 					[_x] call XAddCheckDead;
