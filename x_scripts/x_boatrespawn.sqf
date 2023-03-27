@@ -34,7 +34,7 @@ for "_i" from 1 to 100 do { // set max counter to value more or equal max boat i
 	sleep 0.1;
 };
 
-if ( count _boats_a == 0 ) exitWith {hint localize "+++ x_boatrespawn.sqf: no boats detected in mission, exit"};
+if ( count _boats_a == 0 ) exitWith {hint localize "--- x_boatrespawn.sqf: no boats detected in mission, exit"};
 hint localize format["+++ x_boatrespawn.sqf: %1 boat[s] detected and will be serviced in mission"];
 
 #define IND_BOAT 0

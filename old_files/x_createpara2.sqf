@@ -80,7 +80,7 @@ while {_helifirstpoint distance (leader _vgrp) > 250} do {
 	if ( alive _chopper  && _chopper isKindOf "ACE_CH47D" ) then
 	{
 		_chopper animate ["ramp", 1]; // open ramp
-		// hint localize "x_createpara2.sqf: _chopper animate [""ramp"", 1] executed";
+		// hint localize "+++ x_createpara2.sqf: _chopper animate [""ramp"", 1] executed";
 	};
 	sleep 5.123;
 #endif
