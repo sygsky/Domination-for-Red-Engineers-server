@@ -86,14 +86,36 @@ SYG_teleportToTown = {
 // returns number of building positions (LOD), 0 (zero) if no such one
 // call: _posCnt = _house call SYG_housePosCount;
 SYG_housePosCount = {
-	private ["_pos","_ret"];
-	_pos = [1, 1, 1];
+	private ["_pos","_ret","_i"];
 	_ret = 0;
 	for "_i" from 0 to 1000 do {
 		_pos = _this buildingPos _i;
 		if (format["%1", _pos] == "[0,0,0]" ) exitWith {_ret = _i;};
 	};
 	_ret
+};
+
+/**
+ *
+ * Get the random position of the desiganted building
+ * Call: _pos3D = _building call  SYG_putObjToRandomBuildingPos;
+ * Returns position for random  building position
+ */
+SYG_getRndBuildingPos = {
+    _this buildingPos (floor (random (_this call SYG_housePosCount)))
+};
+
+/**
+ * Set designated object to the random building position
+ * Call: [_building, _obj] call SYG_putObjToRndBuildingPos;
+ * Returns true on success or false on error
+ */
+SYG_putObjToRndBuildingPos = {
+    private ["_pos"];
+    _pos = (_this select 0) call SYG_getRndBuildingPos;
+    if ((_pos select 0 == 0) && (_pos select 1 == 0)) exitWith { false };
+    (_this select 1) setPos _pos;
+    true
 };
 
 //
