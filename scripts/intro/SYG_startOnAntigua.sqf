@@ -57,8 +57,8 @@ _find_civilian = {
 };
 
 _createAmmoBox = {
-	if (!alive spawn_tent) exitWith  {
-		hint localize "--- SYG_startOnAntigua: ammobox on Antigua not created as tent is dead";
+	if (!alive spawn_tent) then  {
+		hint localize "--- SYG_startOnAntigua: tent on Antigua is dead, create ammo in any case";
 	};
 	_spawn_point = spawn_tent call SYG_housePosCount;
 	_spawn_point = spawn_tent buildingPos ( floor (random _spawn_point) );
