@@ -85,7 +85,7 @@ _createAmmoBox = {
     #endif
 
 	_box = _boxname createVehicleLocal _spawn_point;
-	hint localize format["+++ _createAmmoBox: box (%1) created %2", _boxname, _box];
+	hint localize format["+++ _createAmmoBox: box (%1) created %2 at %3", _boxname, _box, _spawn_point];
 	_box setDir (random 360);
 	_box setPos _spawn_point;
 	_box call SYG_clearAmmoBox;
