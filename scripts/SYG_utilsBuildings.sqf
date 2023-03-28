@@ -97,6 +97,27 @@ SYG_housePosCount = {
 };
 
 //
+// _pos_ind = _building call SYG_getBuildingRndPosInd;
+//
+SYG_getBuildingRndPosInd = {
+	private ["_cnt"];
+	_cnt = _this call SYG_housePosCount;
+	if (_cnt == 0 ) exitWith {-1};
+	floor (random _cnt)
+};
+
+//
+// call: _pos = _building call SYG_getBuildingRndPos;
+// _unit setPos _pos;
+//
+SYG_getBuildingRndPos = {
+	private ["_ind"];
+	_ind = _this call SYG_getBuildingRndPosInd;
+	if (_ind < 0) exitWith {[0,0,0]};
+	_this buildingPos _ind
+};
+
+//
 // Finds building nearest to designated position with number of positions >= minPosCnt value
 //
 // call: _ngb = [_pos<,_minPosCnt(5)<,_minSearchDist(100)<,_spec_list([])>>>] call SYG_nearestGoodHouse;

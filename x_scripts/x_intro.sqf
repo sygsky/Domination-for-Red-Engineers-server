@@ -938,11 +938,11 @@ if (_doJump) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #ifdef __ARRIVAL_ON_ANTIGUA__
     if ((name player) in ["Snooper","EngineerACE"]) then {
-    	[ _spawn_point, _para, "DC3", false, false] execVM "AAHALO\jump.sqf";
+    	[ _spawn_point, _para, "DC3", false, "ADD_PARA"] execVM "AAHALO\jump.sqf";
     } else {
     #endif
-	    [ _spawn_point, _para, "DC3", false, true] execVM "AAHALO\jump.sqf";
-    #ifndef __ARRIVAL_ON_ANTIGUA__
+	    [ _spawn_point, _para, "DC3", false, true] execVM "AAHALO\jump.sqf"; // last true means "check circle hit"
+    #ifdef __ARRIVAL_ON_ANTIGUA__
     };
     #endif
 

@@ -6,6 +6,7 @@
 */
 
 #include "x_setup.sqf"
+
 #define __DEBUG__
 #define ABORIGEN "ABORIGEN"
 /*
@@ -57,11 +58,11 @@ _find_civilian = {
 };
 
 _createAmmoBox = {
-	if (!alive spawn_tent) exitWith  {
-		hint localize "--- SYG_startOnAntigua: ammobox on Antigua not created as tent is dead";
+	hint localize "+++ call _createAmmoBox;";
+	if (!alive spawn_tent) then  {
+		hint localize "--- SYG_startOnAntigua: tent is dead, create ammobox as is";
 	};
-	_spawn_point = spawn_tent call SYG_housePosCount;
-	_spawn_point = spawn_tent buildingPos ( floor (random _spawn_point) );
+	_spawn_point = spawn_tent call SYG_getBuildingRndPos;
 
 	#ifndef __TT__
     _boxname = (
@@ -71,7 +72,6 @@ _createAmmoBox = {
     		case "EAST": {if (__ACEVer) then {"ACE_WeaponBox_East"} else {"AmmoBoxEast"}};
     	}
     );
-    _box_array = d_player_ammobox_pos;
     #endif
 
     #ifdef __TT__
@@ -85,6 +85,7 @@ _createAmmoBox = {
     #endif
 
 	_box = _boxname createVehicleLocal _spawn_point;
+	hint localize format["+++ _createAmmoBox: box (%1) created %2", _boxname, _box];
 	_box setDir (random 360);
 	_box setPos _spawn_point;
 	_box call SYG_clearAmmoBox;

@@ -33,6 +33,11 @@ _use_wind       = if (count _this > 3) then  {_this select 3} else { true }; // 
 #endif
 
 _check_circle_hit = if (count _this > 4) then  {_this select 4} else { false }; // Add score if hit the circle (true) or not (false)
+_add_para = "";
+if ((typeName _check_circle_hit) == "STRING") then {
+	_add_para = _check_circle_hit;
+	_check_circle_hit = false;
+};
 _parawear         = player call SYG_getParachute; // the parachute is put on the player
 
 hint localize format[ "+++ jump.sqf: _this = %1, player para = ""%2"", _check_circle_hit = %3", _this, _parawear, _check_circle_hit ];
@@ -146,7 +151,7 @@ if(vehicle player == player)exitWith {};	// ?
 if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 	// check parachute presence
     // this is intro jump, add him parachute in any case!
-   	if ( (_parawear == "") && (_check_circle_hit)) then {
+   	if ( _add_para != "") then {
    		player addWeapon _paratype;
    		hint localize format["+++ jump.sqf: intro jump detected, parachute absent, ""%1"" added", _paratype]
    	};
