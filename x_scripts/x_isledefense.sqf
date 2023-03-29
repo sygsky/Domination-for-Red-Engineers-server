@@ -245,7 +245,12 @@ _remove_grp = {
 		_vehs  = argp(_igrpa,PARAM_VEHICLES); // All patrol vehicles
 		_units = argp(_igrpa, PARAM_UNITS);
 #ifdef __PRINT_ACTIVITY__
-		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2, vecs %3, men %4", call SYG_missionTimeInfoStr, _igrp, count _vehs, count _units];
+		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2 (%3), vecs %4, men %5",
+				call SYG_missionTimeInfoStr,
+				_igrp,
+				_igrp select PARAM_TYPE,
+				count _vehs,
+				count _units];
 #endif						
 		
 		// clean vehicles
