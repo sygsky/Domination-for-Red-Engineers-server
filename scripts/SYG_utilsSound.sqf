@@ -89,15 +89,14 @@ SYG_defeatTracks =
     ["ATrack23",[0,8.756],[28.472,8.031],[49.637,9.939],[91.435,5.302]],
     ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
     ["sorcerie","melody","thefuture","moon_stone"],
-    ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314],[40.124,8.882]]//,
-//    ["cosmos",[0,8.281],[14.25,9.25],[28.8,-1]]
-
+    ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314]],
+    [["fear2",[40.124,8.882]],"troshin"]
 ];
 
 // Play music from partial track (Arma-1 embed music and some long custom sounds may be)
 // call as:
 // [name, start, length (seconds)] call SYG_playPartialTrack;
-SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1;};
+SYG_playPartialTrack = {playMusic [_this select 0,_this select 1];sleep ((_this select 2)-1); 1 fadeMusic 0; sleep 1; playMusic ""; 0 fadeMusic 1; _this select 0};
 
 SYG_playRandomDefeatTrack = {
     SYG_defeatTracks call SYG_playRandomTrack;
@@ -133,6 +132,7 @@ SYG_baseDefeatTracks =
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
     "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone","take_five",
+    "troshin",
 //    ["cosmos", [0,8.281] ],
 //    ["cosmos", [14.25,9.25] ],
 //    ["cosmos", [28.8,-1] ],
@@ -321,7 +321,7 @@ SYG_RahmadiDefeatTracks = ["ATrack23",[0,9.619],[9.619,10.218],[19.358,9.092],[2
 SYG_getBaseAttackSound = {["enemy_attacks_base","enemy_attacks_base","enemy_attacks_base","enemy_attacks_base_robot"] call XfRandomArrayVal};
 
 //
-// NOTE: play music by playMusic call, not playSound, so use sections only from CfgMusic, never from CfgSounds
+// NOTE: play music by playMusic call, or playSound for single sound name, so use sections not only from CfgMusic, but CfgSounds too.
 // Plays random track or track part depends on input array kind (see below)
 // NOTE: This procedure use only playMusic operator and player items from CfgMisic sections
 //
@@ -332,6 +332,7 @@ SYG_getBaseAttackSound = {["enemy_attacks_base","enemy_attacks_base","enemy_atta
 // 3. _arr = "ATrack24"; // play full track, the simplest case
 // 4. _arr = ["ATrack24"]; // play full track, also very simple case
 //
+// Returns player track
 SYG_playRandomTrack = {
     private ["_this","_item","_trk"];
 
@@ -376,34 +377,33 @@ SYG_playRandomTrack = {
 
     // count >= 1
     if ( (typeName (_this select 0)) == "ARRAY" ) exitWith { // array of array
-    	( _this call XfRandomArrayVal ) call SYG_playRandomTrack; // play from any array item (which is also array of items)
+        // May be: [ ["music",[12,10]],"sound"... ] or [ ["music1",[12,10]], ["music2",[22,10]]... ] or ["sound1","sound2","sound3"...]
+    	( _this call XfRandomArrayVal ) call SYG_playRandomTrack; // play from any array item
     };
 
     //
     // if here it is some ARRAY
     //
-    if (count _this == 1) exitWith { // single string array ?
+    if (count _this == 1) exitWith { // single string array ? Check in next call
         if ( typeName (_this select 0) == "STRING" ) exitWith {
-            playMusic (_this select 0); _this select 0
+            (_this select 0) call SYG_playRandomTrack
         };
         hint localize format["--- 1: ""%1"" call SYG_playRandomTrack;",_this ];
         ""
     };
 
 	// count > 1
-    // Check to be array with special items sequence ["cosmos",[0, 10]...]
+    // Check to be array with string items sequence [ "sound1", "sound2"... ]
     if ( (typeName (_this select 0)) == "STRING") exitWith {// ordinal array may be,  mandatory with size > 1
         if ((typeName (_this select 1)) == "STRING") exitWith { // _arr = ["ATrack9","ATrack10", ..., ["ATrack12,[10,10]]...];
             _item = _this call SYG_checkLastSoundRepeated;
             _item call SYG_playRandomTrack;
-            _item
         }; // list of tracks, play one of selected
 
         //
         // ["ATrack12,[10,10]<,[20,15]>]
         // first is track name (STRING), other items are part descriptors [start, length], ...
         // so it is surely not short track
-        //
         if ((typeName (_this select 1)) == "ARRAY") exitWith {
             // list of track parts
             // check if death count is too big and play long-long music for this case
@@ -432,42 +432,13 @@ SYG_playRandomTrack = {
 #endif
                 playMusic [arg(0),argp(_trk,0)];
             };
-			arg(0)
+			_this select 0
         };
         hint localize format["--- 2: ""%1"" call SYG_playRandomTrack;",_this ];
         ""
     };
     hint localize format["--- 3: ""%1"" call SYG_playRandomTrack;",_this ];
     ""
-};
-
-// NOT IN USE AT ALL
-// Changes position for sound created with call to createSoundSource function
-//
-// Example:
-// _sndArr = [_sound];
-// [ _caller, _sndArr] call SYG_moveSoundSource; // 1st sound ar index 0 from _sndArr is changed place to the _caller position
-//
-SYG_moveSoundSource = {
-	private ["_caller", "_id", "_args", "_snd", "_pos","_arr"];
-
-	_caller = _this select 0;
-	_args = _this select 1; // [ [snd1, snd2 ...], pos ]
-	_arr = _args select 0; // array with sounds
-	_pos = 0; // pos in array
-	if ( count _this > 2 ) then
-	{
-		_pos = _this select 2; // special pos in array, not zero one
-	};
-	_snd = _arr select _pos; // sound to move to
-	if ( !isNull snd ) then
-	{
-		deleteVehicle _snd;
-		sleep 0.1;
-		_snd = createSoundSource ["Music", getPosASL _caller, [], 0];
-		_arr set [ _pos, _snd];
-		_caller globalChat format["Movesnd: snd pos: %2, new pos is %1", getPosASL _caller, getPosASL _snd];
-	};
 };
 
 /**

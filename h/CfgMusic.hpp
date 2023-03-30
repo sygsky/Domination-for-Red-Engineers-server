@@ -61,7 +61,7 @@ class CfgMusic {
 
 	// this music remained is needed as partial tracks music
 //    class mission_impossible { name=""; sound[]= {\sounds\mission_impossible.ogg,db-1,1.0}; };
-    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0};}; // Intro music from the French film
     class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0};}; // Some fear music
 //    class kk_the_hole { name="King-Kong film, the hole"; sound[] = {\sounds\intro\holidays\kk_the_hole.ogg,db-1,1.0};}; // Kin-Kong 1976 film, The hole eposode
 

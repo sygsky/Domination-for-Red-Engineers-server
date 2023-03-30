@@ -255,6 +255,7 @@ class CfgSounds {
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {}; };;
 
     class stripped_voyage    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\stripped_voyage, db+10,1.0}; titles[] = {}; }; // Some sound from Soviet film "Stripped Voyage" (196)
+    class troshin    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\troshin, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
 
     class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10,1.0}; titles[] = {}; };
     class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10,1.0}; titles[] = {}; };
@@ -637,10 +638,10 @@ class CfgSounds {
     class Letyat_perelyotnye_pticy_end { name=""; sound[] = {\sounds\Letyat_perelyotnye_pticy_end.ogg,db+20,1.0}; titles[] = {};}; // intro music #2 (final verse) from the same Soviet great song (1950)
 
 //    class adagio { name=""; sound[] = {\sounds\adagio.ogg,db+20,1.0}; titles[] = {};}; // intro music from Soviet great film Gussar Ballad (1962)
-    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0}; titles[] = {};}; // intro music from Soviet great film Gussar Ballad (1962)
+    class ruffian { name=""; sound[] = {\sounds\ruffian.ogg,db+20,1.0}; titles[] = {};}; // Intro music from the French film
     class amigohome_ernst_bush { name=""; sound[] = {\sounds\amigohome_ernst_bush.ogg,db+0,1.0}; titles[] = {};}; // Ami go home by Ernsh Busch, DDR communust and great singer!
     class treasure_island_intro { name=""; sound[] = {\sounds\treasure_island_intro.ogg,db+0,1.0}; titles[] = {};}; // treasure island intro theme (from the eponymous soviet  film of 1971)
-    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0}; titles[] = {};}; // Some feat music
+    class fear2 { name=""; sound[] = {\sounds\fear2.ogg,db+0,1.0}; titles[] = {};}; // Some fear music
 //    class chapaev { name=""; sound[] = {\sounds\chapaev.ogg,db+0,1.0}; titles[] = {};}; // USSR film Chapaev
 //    class cosmos { name=""; sound[] = {\sounds\cosmos.ogg,db+0,1.0}; titles[] = {};}; // Cosmic music
     class manchester_et_liverpool { name=""; sound[] = {\sounds\weather\manchester_et_liverpool.ogg,db+0,1.0}; titles[] = {};}; // Well known melody
