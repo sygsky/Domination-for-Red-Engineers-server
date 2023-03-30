@@ -106,36 +106,19 @@ switch ( _arg ) do {
             if (count _arr > 1) then {
                 if (alive (_arr1 select 0)) then {
                     //  TODO: continue coding
+                    if ((count crew (_arr select 0)) == 0) then {
+                    	_boat = _arr select 0;
+                    };
                 };
             };
+            if (alive _boat) exitWith {};
         };
-
-        // TODO: continue coding
-
-        _boat_arr = [];
-		if (isNull _boat) then { // found any empty one and move it here
-            for "_i" from 1 to 100 do { // set max counter to value more or equal max boat index. 15-AUG-2020 ther are 35 separate boats in the mission
-                call compile format [
-                "if (!isNil ""boat%1"") then {
-                    if (alive boat%1) then {
-                        if ( (count crew boat%1) == 0 ) {_boat_arr set [count _boat_arr, boat%1]};
-                    };
-                };",_i];
-                sleep 0.05;
-            };
-
-            for "_i" from 1 to count _boat_arr - 1 do {
-					_pl = [ getPos _x, 100 ] call SYG_findNearestPlayer;
-					if ( !isNull _pl ) then { // no players within 50 meters of the boat
-						_arr set[ count _arr, _x ];
-					};
-				};
-			} forEach vehicles;
-			_boat = _arr call XfRandomArrayVal;
-		};
+        if (!(alive _boat)) exitWith {
+        	(localize "STR_ABORIGEN_BOAT_NONE") call XfGroupChat; // "All the boats are taken apart, I don't know what to do!"
+        };
 		_pnt = call _create_water_point_near_Antigua;
 		_boat setPos _pnt;
-		player groupChat format[localize "STR_ABORIGEN_BOAT", round(player distance _boat), ([player, _boat] call XfDirToObj) call SYG_getDirName]; // "The nearest boat is %1 m away direction %2"
+		player groupChat format[localize "STR_ABORIGEN_BOAT_INFO", round(player distance _boat), ([player, _boat] call XfDirToObj) call SYG_getDirName]; // "The nearest boat is %1 m away direction %2"
 		(_this select 0) lookAt _boat;
 		(_this select 0) spawn {sleep 5; _this doWatch objNull};
 	};
@@ -148,7 +131,13 @@ switch ( _arg ) do {
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "WEAPON": { // ask about weapon box
 		// TODO: find any "ReammoBox" type object and say about nearest
-
+		_isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
+		_pos = _isle select 1;
+		_arr = nearestObjects [ player, ["ReammoBox","WeaponHolder"], _isle select 2 ];
+		if ( (count _arr) == 0) exitWith {
+			(localize "STR_ABORIGEN_WEAPON_NONE") call XFGroupChat;
+		};
+		// TODO: continue coding here
 	};
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++

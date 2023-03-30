@@ -36,7 +36,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static informatio
 		["isle1",[12322.5,10609.7,0],600,"острова в заливе Abra de Boca"],	// 0
 		["isle2",[14005.7,8008.81,0],220,"Islas Gatunas"],	// 1
 		["isle3",[17485.8,4014.21,0],1550,"Юго-восточные острова (Asharah)"],	// 2
-		["isle4",[17368.9,18636.7,0],1300,"Северо-восточные острова (Антигуа)"],	// 3
+		["isle4",[17368.9,18636.7,0],1300,"Северо-восточные острова (Антигуа)"],	// 3  Antigua
 		["isle5",[7805.58,14350.3,0],400,"Trelobada"],	// 4
 		["isle6",[5134.54,15489.3,0],1000,"Isla de Vassal 1"],	// 5
 		["isle7",[1984.43,17968.6,0],1100,"Isla de Vassal 2"],	// 6
@@ -455,9 +455,19 @@ SYG_isleAtPoint = {
  *    _bool = (getPos player) call SYG_pointOnRahmadi; // true or false is returned
  */
 SYG_pointOnRahmadi = {
-	if ( typeName _this != "ARRAY" ) then { _this = position _this };
-	if ( count _this < 2 ) exitWith { false };
-	[ _this, SYG_RahmadiIslet select 1, SYG_RahmadiIslet select 2 ] call SYG_pointInCircle
+	_this = _this call SYG_getPos;
+	[ _this call SYG_getPos, SYG_RahmadiIslet select 1, SYG_RahmadiIslet select 2 ] call SYG_pointInCircle
+};
+
+/**
+ * Detects if point is on Rahmadi isles group, not on main Island Sahrani
+ * call:
+ *    _bool = (getPos player) call SYG_pointOnRahmadi; // true or false is returned
+ */
+SYG_pointOnAntigua = {
+	private ["_isle"];
+	_isle = SYG_SahraniIsletCircles select 3;
+	[ _this call SYG_getPos, _isle select 1, _isle select 2 ] call SYG_pointInCircle
 };
 
 /*

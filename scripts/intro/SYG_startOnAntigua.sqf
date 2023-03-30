@@ -23,11 +23,14 @@
 		};
 */
 _find_civilian = {
+	if (!(player call SYG_pointOnAntigua)) exitWith {false};
+
 	private ["_civ","_newgroup"];
-	_arr = nearestObjects [[17451,18644,0], ["Civilian"], 1500];
+	_isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
+	_pos = _isle select 1;
+	_arr = nearestObjects [ _pos, ["Civilian"], _isle select 2];
 	_civ = objNull;
 	{
-
 		if (alive _x) then {
 			 (isPlayer _x) exitWith {};
 			 _var = _x getVariable ABORIGEN;
@@ -38,7 +41,7 @@ _find_civilian = {
 			player action ["hideBody", _x];
 			sleep 0.1;
 		};
-		if ( !isNull _civ ) exitWith {};
+		if ( alive _civ ) exitWith {};
 	} forEach _arr;
 
 	if (isNull _civ) then { // create civilian
@@ -47,6 +50,7 @@ _find_civilian = {
 		_type = _unit_array select 0;
 		_pos = ((SPAWN_INFO select 2) select 1) call XfGetRanPointSquare;
 		_civ = _type createVehicleLocal _pos;
+		_civ join _newgroup;
 		_civ setVariable [ABORIGEN, true];
 	} else {_newgrpoup = group _civ};
 
@@ -55,6 +59,11 @@ _find_civilian = {
 	{
 		_civ addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
 	} forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS"];
+	if (alive _civ) then {
+		[player, format [localize "STR_ABORIGEN_INFO", round (player distance _civ), ([player,_civ] call XfDirToObj) call SYG_getDirName]] call XfGroupChat; // "Aborigen is on dist. %1 to %2"
+	} else {
+		[player, localize "STR_ABORIGEN_INFO_NONE"] call XfGroupChat; // "Aborigen is on dist. %1 to %2"
+	};
 };
 
 _createAmmoBox = {
