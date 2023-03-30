@@ -58,11 +58,12 @@ _find_civilian = {
 };
 
 _createAmmoBox = {
-	hint localize "+++ call _createAmmoBox;";
+	hint localize "+++ _createAmmoBox: Call start";
 	if (!alive spawn_tent) then  {
 		hint localize "--- SYG_startOnAntigua: tent on Antigua is dead, create ammo in any case";
 	};
-	_spawn_point = spawn_tent call SYG_getBuildingRndPos;
+	_spawn_point = spawn_tent call SYG_getRndBuildingPos;
+	hint localize format["+++ _createAmmoBox: _spawn_point %1",_spawn_point];
 
 	#ifndef __TT__
     _boxname = (

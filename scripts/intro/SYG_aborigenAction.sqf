@@ -88,11 +88,44 @@ switch ( _arg ) do {
 			};
 		} forEach _arr;
 
+
+        // find all boat markers
+        _marker_arr = [];
+        for "_i" from 1 to 100 do {
+            if (_i != 13) then {
+                _marker = format["boats%1", _i];
+                if ( (MarkerType _marker) == "") exitWith {};
+                _marker_arr set [count _marker_arr, _marker];
+            };
+        };
+
+        // find random alive empty boat from group of boats near any boat marker
+        for "_i" from 1 to count _marker_arr do {
+            _marker = _marker_arr call XfRandomArrayVal;
+            _arr = (getPos _marker) nearObjects ["Zodiac", 50];
+            if (count _arr > 1) then {
+                if (alive (_arr1 select 0)) then {
+                    //  TODO: continue coding
+                };
+            };
+        };
+
+        // TODO: continue coding
+
+        _boat_arr = [];
 		if (isNull _boat) then { // found any empty one and move it here
-			_arr = [];
-			{
-				if (_x isKindOf "Zodiac") then {
-					_pl = [ getPos _x, 50 ] call SYG_findNearestPlayer;
+            for "_i" from 1 to 100 do { // set max counter to value more or equal max boat index. 15-AUG-2020 ther are 35 separate boats in the mission
+                call compile format [
+                "if (!isNil ""boat%1"") then {
+                    if (alive boat%1) then {
+                        if ( (count crew boat%1) == 0 ) {_boat_arr set [count _boat_arr, boat%1]};
+                    };
+                };",_i];
+                sleep 0.05;
+            };
+
+            for "_i" from 1 to count _boat_arr - 1 do {
+					_pl = [ getPos _x, 100 ] call SYG_findNearestPlayer;
 					if ( !isNull _pl ) then { // no players within 50 meters of the boat
 						_arr set[ count _arr, _x ];
 					};
@@ -119,11 +152,11 @@ switch ( _arg ) do {
 	};
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
-	case "MEN": { // ask about boats
+	case "MEN": { // ask about men
 
 	};
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
-	case "RUMORS": { // ask about boats
+	case "RUMORS": { // ask about rumors
 		[] execVM "scripts\rumours.sqf";
 	};
 	default {

@@ -90,14 +90,14 @@ SYG_housePosCount = {
 	_ret = 0;
 	for "_i" from 0 to 1000 do {
 		_pos = _this buildingPos _i;
-		if (format["%1", _pos] == "[0,0,0]" ) exitWith {_ret = _i;};
+		if ( format["%1", _pos] == "[0,0,0]" ) exitWith {_ret = _i};
 	};
 	_ret
 };
 
 /**
  *
- * Get the random position of the desiganted building
+ * Get the random position of the designated building
  * Call: _pos3D = _building call  SYG_putObjToRandomBuildingPos;
  * Returns position for random  building position
  */
@@ -116,27 +116,6 @@ SYG_putObjToRndBuildingPos = {
     if ((_pos select 0 == 0) && (_pos select 1 == 0)) exitWith { false };
     (_this select 1) setPos _pos;
     true
-};
-
-//
-// _pos_ind = _building call SYG_getBuildingRndPosInd;
-//
-SYG_getBuildingRndPosInd = {
-	private ["_cnt"];
-	_cnt = _this call SYG_housePosCount;
-	if (_cnt == 0 ) exitWith {-1};
-	floor (random _cnt)
-};
-
-//
-// call: _pos = _building call SYG_getBuildingRndPos;
-// _unit setPos _pos;
-//
-SYG_getBuildingRndPos = {
-	private ["_ind"];
-	_ind = _this call SYG_getBuildingRndPosInd;
-	if (_ind < 0) exitWith {[0,0,0]};
-	_this buildingPos _ind
 };
 
 //
