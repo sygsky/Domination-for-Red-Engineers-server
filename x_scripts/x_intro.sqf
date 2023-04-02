@@ -51,9 +51,9 @@ if ((name player) in ["Snooper","EngineerACE"]) then {
 
 	SPAWN_INFO = [
 	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // papachute types
-	{base_visit_mission < 1},						// Code rturns true if jump, else return false
+	{base_visit_mission < 1},						// Code returns true if jump, else return false
 	[ _arr1, _arr2], // rect + circle
-	_arr2 // on dead teleport area
+	_arr2 // Teleport area on kill event
 	];
 } else {
 #endif
@@ -62,7 +62,7 @@ if ((name player) in ["Snooper","EngineerACE"]) then {
 		["ACE_ParachutePack","ACE_ParachuteRoundPack"],
 		{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
 		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
-		drop_zone_arr select 0 // on dead teleport area
+		drop_zone_arr select 0 // Teleport area on kill event
 	]
 #ifdef __ARRIVAL_ON_ANTIGUA__
 };

@@ -28,6 +28,7 @@ copy x_macros.sqf x_missions\m /Y
 copy x_macros.sqf x_missions\common /Y
 copy x_macros.sqf scripts\baseillum /Y
 copy x_macros.sqf scripts\bonus /Y
+copy x_macros.sqf scripts\intro\
 
 copy global_vars.sqf x_scripts /Y
 copy global_vars.sqf x_scripts\x_funcs /Y

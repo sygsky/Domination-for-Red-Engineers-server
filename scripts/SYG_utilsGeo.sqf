@@ -465,9 +465,11 @@ SYG_pointOnRahmadi = {
  *    _bool = (getPos player) call SYG_pointOnRahmadi; // true or false is returned
  */
 SYG_pointOnAntigua = {
-	private ["_isle"];
+	private ["_isle","_pos"];
 	_isle = SYG_SahraniIsletCircles select 3;
-	[ _this call SYG_getPos, _isle select 1, _isle select 2 ] call SYG_pointInCircle
+	_pos = _this call SYG_getPos;
+	hint localize format["+++ SYG_pointOnAntigua: isle %1, typeOf _this = %2, _pos %3", _isle, typeOf _this, str(_pos) ];
+	[ _pos, _isle select 1, _isle select 2 ] call SYG_pointInCircle
 };
 
 /*

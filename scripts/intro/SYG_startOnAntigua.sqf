@@ -6,6 +6,7 @@
 */
 
 #include "x_setup.sqf"
+#include "x_macros.sqf"
 
 #define __DEBUG__
 #define ABORIGEN "ABORIGEN"
@@ -23,12 +24,14 @@
 		};
 */
 _find_civilian = {
-	if (!(player call SYG_pointOnAntigua)) exitWith {false};
+	hint localize "+++ _find_civilian: Call start";
+//	if (!(player call SYG_pointOnAntigua)) exitWith {false};
 
 	private ["_civ","_newgroup"];
 	_isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
 	_pos = _isle select 1;
 	_arr = nearestObjects [ _pos, ["Civilian"], _isle select 2];
+	hint localize format["+++ _find_civilian: found %1 civ[s]", count _arr];
 	_civ = objNull;
 	{
 		if (alive _x) then {
@@ -36,7 +39,8 @@ _find_civilian = {
 			 _var = _x getVariable ABORIGEN;
 			 if (isNil "_var") exitWith {};
 			_x setDamage 0;
-			_civ      = _x;
+			_civ = _x;
+			hint localize format["+++ _find_civilian: found civ %1 at %2", typeOf _civ, getPos _civ];
 		} else {
 			player action ["hideBody", _x];
 			sleep 0.1;
@@ -44,26 +48,62 @@ _find_civilian = {
 		if ( alive _civ ) exitWith {};
 	} forEach _arr;
 
-	if (isNull _civ) then { // create civilian
+	if ( isNull _civ ) then { // create civilian
 	    _newgroup = ["CIV"] call x_creategroup;
+//		hint localize format["+++ _find_civilian: group created %1", _newgroup];
 		_unit_array = ["civilian", "CIV"] call x_getunitliste; // returned [_unit_list, _vec_type, _crewtype]
-		_type = _unit_array select 0;
-		_pos = ((SPAWN_INFO select 2) select 1) call XfGetRanPointSquare;
-		_civ = _type createVehicleLocal _pos;
-		_civ join _newgroup;
+		_type = (_unit_array select 0) select 0;
+//		hint localize format["+++ _find_civilian: civ not found, create unit with type %1", _type];
+		_pos = (SPAWN_INFO select 3) call XfGetRanPointSquareOld; // No flat position requested
+//		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];
+		_civ = _type createVehicle _pos;
+		hint localize format["+++ _find_civilian: created unit %1, pos %2", typeOf _civ, _pos];
+		[_civ] join _newgroup;
 		_civ setVariable [ABORIGEN, true];
-	} else {_newgrpoup = group _civ};
+		// TODO: debug lower code line: move code to the server sonehow... not use it on client!
+		_civ addEventHandler ["killed", {(_this select 0) call XAddDead0;
+				if (isPlayer (_this select 1)) then {
+					if ((_this select 1) == player) then {-20 call SYG_addBonusScore} else {
+						["remote_execute", format["if (name player == ""%1"") then { -20 call SYG_addBonusScore };", name (_this select 1)]] call XSendNetStartScriptClientAll
+					};
+				};
+			} ]
+	} else {
+		hint localize format["+++ _find_civilian: civ found, unit %1", typeOf _civ];
+		_newgrpoup = group _civ
+	};
 
+	hint localize format["+++ _find_civilian: created unit %1 (%2) at %3", typeOf _civ, _civ, _pos];
 	// TODO: add follow sub-menus to the civilian:
 	// 1. "Ask about boats". 2. "Ask about cars". 3. "Ask about weapons". 4. "Ask about soviet soldiers". 5. "Ask about rumors"
 	{
 		_civ addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
-	} forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS"];
-	if (alive _civ) then {
-		[player, format [localize "STR_ABORIGEN_INFO", round (player distance _civ), ([player,_civ] call XfDirToObj) call SYG_getDirName]] call XfGroupChat; // "Aborigen is on dist. %1 to %2"
+	} forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS","GO"];
+
+	while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // while out of Antigua
+
+	while {((getPos player) select 2) > 5} do { sleep 1}; // while in air
+
+	if (alive _civ) then { // show info
+		player groupChat format [localize "STR_ABORIGEN_INFO", round (player distance _civ), ([player,_civ] call XfDirToObj) call SYG_getDirName]; // "Aborigen is on dist. %1 to %2"
 	} else {
-		[player, localize "STR_ABORIGEN_INFO_NONE"] call XfGroupChat; // "Aborigen is on dist. %1 to %2"
+		player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"
 	};
+
+	// Giggle while not closer than 10 meters
+	while {(player distance _civ) > 10} do {
+		sleep (random 3 + 2);
+		_civ setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
+		_civ say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
+		_civ setDir (getDir _civ) + ((random 20) - 10);
+	};
+
+	_civ setMimic "Normal";
+	// Do watch while alive or near
+	_civ commandWatch player;
+	while { (alive _civ) && (alive player) && ((player distance _civ) < 40)} do { sleep 5};
+	_civ commandWatch objNull;
+	// exit this humorescue
 };
 
 _createAmmoBox = {
@@ -73,35 +113,36 @@ _createAmmoBox = {
 	};
 	_spawn_point = spawn_tent call SYG_getRndBuildingPos;
 	hint localize format["+++ _createAmmoBox: _spawn_point %1",_spawn_point];
+	private ["_boxname"];
 
 	#ifndef __TT__
-    _boxname = (
-    	switch (d_own_side) do {
-    		case "RACS": {"AmmoBoxGuer"};
-    		case "WEST": {"AmmoBoxWest"};
-    		case "EAST": {if (__ACEVer) then {"ACE_WeaponBox_East"} else {"AmmoBoxEast"}};
-    	}
-    );
+	hint localize format["+++ #ifndef __TT__, playerSide %1, east %2, playerSide == east = %3", playerSide, east, playerSide == east];
+    _boxname = switch (playerSide) do {
+					case west: {"AmmoBoxWest"};
+					case east: { if (__ACEVer) then {"ACE_WeaponBox_East"} else {"AmmoBoxEast"} };
+					case resistance;
+					default {"AmmoBoxGuer"};
+				};
     #endif
 
     #ifdef __TT__
-    _boxname = (
-    	if (playerSide == west) then {
-    		"AmmoBoxWest"
-    	} else {
-    		"AmmoBoxGuer"
-    	}
-    );
+	hint localize format["+++ #ifndef __TT__, playerSide %1", playerSide];
+    _boxname = if (playerSide == west) then {
+					"AmmoBoxWest"
+				} else {
+					"AmmoBoxGuer"
+				};
     #endif
+	hint localize format["+++ _createAmmoBox: _spawn_point %1, _boxname %2",_spawn_point, _boxname];
 
 	_box = _boxname createVehicleLocal _spawn_point;
-	hint localize format["+++ _createAmmoBox: box (%1) created %2 at %3", _boxname, _box, _spawn_point];
+	hint localize format["+++ _createAmmoBox: %1 createVehicleLocal %2", _boxname, _box, _spawn_point];
 	_box setDir (random 360);
 	_box setPos _spawn_point;
 	_box call SYG_clearAmmoBox;
 
 	{ // fill created items into the box at each client ( so Arma-1 need, only items added manually on clients during gameplay are propagated through network to all clients )
-    	_box addMagazineCargo [_x, 5];
+    	_box addWeaponCargo [_x, 5];
     } forEach ["ACE_AK74","ACE_AKS74U","ACE_Bizon","ACE_AKM"];
 
     {
@@ -117,5 +158,7 @@ _createAmmoBox = {
 	hint localize "+++ scripts/intro/SYG_startOnAntigua.sqf: simple ammo box created";
 };
 
-call _createAmmoBox;
+[] spawn _createAmmoBox;
+[] spawn _find_civilian;
+[[car1,car2,car3,car4,car5,car6,car7,car8,car9],600, 90, "antigua_vehs"] execVM "scripts\motorespawn.sqf"; // as moto!!!
 // 1. DC3 flight to the Antigua or simple drop from a plane

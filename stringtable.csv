@@ -1689,17 +1689,38 @@ STR_CHOP_WELCOME_4,"It can lift allmost any light vehicle except wrecks.","Er ka
 STR_CHOP_WELCOME_5,"This is a normal chopper.","Das ist ein normaler Hubschrauber.","Este es un helicóptero normal.","Это обычный вертолет."
 STR_CHOP_WELCOME_6,"It is not able to lift anything.","Er ist nicht in der Lage, etwas zu heben.","No es capaz de levantar nada.","Не предназначен для транспортировки грузов."
 
-// "BOAT", "CAR", "WEAPON", "MEN", "RUMORS"
+// "BOAT", "CAR", "WEAPON", "MEN", "RUMORS", "GO"
 STR_ABORIGEN_INFO,"The islander is %1 m away in the %2 direction.","Der Inselbewohner ist %1 m in die Richtung %2 entfernt","El isleño está a %1 m en la dirección %2","Местный житель находится на расстоянии %1 м. на %2"
 STR_ABORIGEN_INFO_NONE,"Locals are not observed","Einheimische werden nicht beobachtet","Los locales no son observados","Местные жители не наблюдаются"
-STR_ABORIGEN_BOAT,Wrere find boat?,Wo finde ich ein Boot?,¿Dónde encontrar el barco?,Где найти лодку?
+STR_ABORIGEN_KILLED,"You killed an aborigine, that was our friend!","Ihr habt einen Aborigine getötet, der unser Freund war!","¡Mataste a un aborigen, que era nuestro amigo!","Вы убили аборигена, это был наш друг!"
+
+STR_ABORIGEN_BOAT,Where find boat?,Wo finde ich ein Boot?,¿Dónde encontrar el barco?,Где найти лодку?
 STR_ABORIGEN_BOAT_INFO,The nearest boat is %1 m away direction %2,Nächstes Boot ist %1 m Richtung %2,El barco más cercano está a %1 m en dirección %2,Ближайшая лодка находится на расстоянии %1 м. к %2 от вас
 STR_ABORIGEN_BOAT_NONE,"All the boats are taken apart, I don't know what to do!","Alle Boote sind zerlegt, ich weiß nicht, was ich tun soll!","Todos los barcos están desmontados, ¡qué hacer, no lo sé!".,"Все лодки разобрали, как быть, непонятно"
-STR_ABORIGEN_CAR,"Sorry. I don't know anything about cars. We live here.","Tut mir leid, ich kenne mich nicht mit Autos aus. Wir wohnen hier.","Lo siento. No sé nada de coches. Vivimos aquí".,"Извините. но я ничего не знаю про машины. Живём мы тут."
-STR_ABORIGEN_WEAPON,,,,
-STR_ABORIGEN_WEAPON_NONE,,,,"Кажись, оружия тут нигде нет"
-STR_ABORIGEN_MEN,,,,
-STR_ABORIGEN_RUMORS,,,,
+
+STR_ABORIGEN_CAR,The car?,Das Auto?,¿El coche?,Машина?
+STR_ABORIGEN_CAR_INFO_1,"A car? Why did I put a marker on your map? Uh, you have geographical cretinism)))","Ein Auto? Warum habe ich eine Markierung auf deine Karte gesetzt? Du hast einen geografischen Kretinismus)))","¿Un coche? ¿Por qué he puesto un marcador en tu mapa? Tienes un cretinismo geográfico)))","Машина? Так на карте твоей маркер-то зачем я обозначил? Э-э-э, да у тебя географический кретинизм)))"
+STR_ABORIGEN_CAR_INFO_2,"The car? So... here I'm drawing you a marker on the map where there's something similar. It's about %1.","Das Auto? Also ... hier zeichne ich dir eine Markierung auf die Karte, wo es etwas Ähnliches gibt. Es ist ungefähr %1.","¿El coche? Pues... aquí te estoy dibujando un marcador en el mapa donde hay algo parecido. Está cerca de %1.", "Машина? Так... вот я тебе на карте рисую маркер, где есть что-то похожее. Это около %1"
+
+STR_ABORIGEN_CAR_NONE_NUM,3,3,3,3
+STR_ABORIGEN_CAR_NONE_0,"Sorry. I don't know anything about cars. We live here.","Tut mir leid, ich kenne mich nicht mit Autos aus. Wir wohnen hier.","Lo siento. No sé nada de coches. Vivimos aquí","Извините, но я ничего не знаю про машины. Живём мы тут."
+STR_ABORIGEN_CAR_NONE_1,"Alas, everyone needs a car. You have to wait ten minutes and see if they show up.","Ach, jeder braucht ein Auto. Du musst 10 Minuten warten und sehen, ob sie auftauchen","Ay, todo el mundo necesita un coche. Hay que esperar 10 minutos a ver si aparecen","Увы, машины всем нужны. Надо подождать минут 10, авось и появятся"
+STR_ABORIGEN_CAR_NONE_2,"Bullshit! All the cars are gone! Go have a smoke!","Blödsinn! Die Autos sind alle weg! Geh eine rauchen!","¡Y una mierda! ¡Todos los coches se han ido! ¡Ve a fumar!","Фигня! Все машины куда то пропали! Пойди и покури!"
+
+STR_ABORIGEN_WEAPON,What about guns?,Was ist mit Waffen?,¿Y las armas?,"Как тут с оружием?"
+STR_ABORIGEN_WEAPON_INFO,I saw some kind of weapon at %1 m towards %2%3,Ich sah eine Art Waffe bei %1 m in Richtung %2%3,Vi algún tipo de arma en %1 m hacia %2%3,Я видел оружие в %1 м на %2%3
+STR_ABORIGEN_WEAPON_INFO_BOX,", in a box",", in einer Schachtel.","en una caja".,", в ящике"
+STR_ABORIGEN_WEAPON_INFO_HOLDER,", thrown in.",", eingeworfen.",", tirado".,", брошенное."
+STR_ABORIGEN_WEAPON_NONE,"Looks like there aren't any guns here, hehe","Sieht aus, als gäbe es hier keine Waffen, hehe","Parece que aquí no hay armas, jeje","Кажись, оружия тут нигде нет, хе-хе"
+
+STR_ABORIGEN_MEN,Men?,Menschen?,¿Gente?,Люди?
+STR_ABORIGEN_MEN_INFO,"There are some people! Our %1, the Americans %2, Soviets %3, unknown %4. So what?","Da sind einige Leute! Unsere %1, die Amerikaner %2, Sowjets %3, unbekannte %4. Was soll's?","¡Hay gente! Nuestros %1, los americanos %2, soviéticos %3, desconocidos %4. ¿Y qué?","Есть люди! Наших %1, амеров %2, советских %3, непонятных %4. И что?"
+STR_ABORIGEN_MEN_NONE,"Who's there, people? There are no men!","Wer ist da, Leute? Es sind keine Männer da!","¿Quién está ahí, gente? ¡No hay hombres!",Люди? Ну какие тут люди! нету!
+
+STR_ABORIGEN_RUMORS,Rumors?,Gerüchte?,¿Rumores?,"Что слышно?"
+
+STR_ABORIGEN_GO,Will you go with me?,Kommst du mit mir?,¿Vendrás conmigo?,Пойдёшь со мной?
+
 STR_ABORIGEN_UNKNOWN,"I don't understand what you mean by the word '%1'","Ich verstehe nicht, was Sie mit '%1' meinen","No estoy seguro de lo que quiere decir con '%1'","Не понял, что вы имеете ввиду под словом '%1'"
 
 STR_TITLE,"Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2022 by EngineerACE\n          for Red-Engineers.ucoz.ru","Erstellt 2009 von Xeno\n  für www.germany-fun.de\n\nBearbeitet 2014-2022 von EngineerACE\n   für Red-Engineers.ucoz.ru","Hecho en 2009 por Xeno\n   para www.germany-fun.de\n\nEdit 2014-2022 por EngineerACE\n para     Red-Engineers.ucoz.ru","Автор 2009 Xeno\n  для www.germany-fun.de\n\nПереработка 2014-2022 EngineerACE\n  для Red-Engineers.ucoz.ru"

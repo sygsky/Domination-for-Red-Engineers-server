@@ -8,9 +8,7 @@ x_funcs2_compiled = false;
 //         _dir = [tank1, ATPod] call XfDirToObj; // dir from tank to pod
 XfDirToObj = {
 	private ["_o1","_o2""_deg"];
-	_o1 = _this select 0;_o2 = _this select 1;
-	if ( typeName _o1 != "ARRAY" ) then { _o1 = position _o1;};
-	if ( typeName _o2 != "ARRAY" ) then { _o2 = position _o2;};
+	_o1 = (_this select 0) call SYG_getPos;_o2 = (_this select 1) call SYG_getPos;
 	_deg = ((_o2 select 0) - (_o1 select 0)) atan2 ((_o2 select 1) - (_o1 select 1));
 	if (_deg < 0) then {_deg = _deg + 360;};
 	_deg

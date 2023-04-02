@@ -351,11 +351,9 @@ SYG_pointInRect = {
  */
 SYG_elongate2 = {
 	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
-	_pnt1 = arg(0);
-	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1;};
+	_pnt1 = (_this select 0) call SYG_getPos;
 	_pnt1 set [2, 0];
-	_pnt2 = arg(1);
-	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
+	_pnt2 = (_this select 1) call SYG_getPos;
 	_pnt2 set [2, 0];
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
