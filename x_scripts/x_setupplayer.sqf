@@ -1164,7 +1164,7 @@ hint localize "+++ __NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with sc
 	d_last_base_repair = -1;
 #endif
 
-#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
     if (_string_player in d_is_engineer) then  // only for engineers in any case !!!
     {
 #endif
@@ -1172,7 +1172,7 @@ hint localize "+++ __NON_ENGINEER_REPAIR_PENALTY__: everybody can repair with sc
         _trigger setTriggerArea [0, 0, 0, false];
         _trigger setTriggerActivation ["NONE", "PRESENT", true];
         _trigger setTriggerStatements["call x_ffunc", "actionID1=player addAction [localize 'STR_SYS_228', 'scripts\unflipVehicle.sqf',[objectID1],-1,false];", "player removeAction actionID1"]; // 'Поставить технику'
-#ifdef __NON_ENGINEER_REPAIR_PENALTY__
+#ifndef __NON_ENGINEER_REPAIR_PENALTY__
     };
 #endif
 
