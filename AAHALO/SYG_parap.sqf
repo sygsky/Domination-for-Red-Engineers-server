@@ -22,7 +22,9 @@ _makeSpawnPoint = {
 #ifdef __ACE__
 	};
 #endif
-	_spawn_rect call XfGetRanPointSquareOld
+	_pnt = _spawn_rect call XfGetRanPointSquareOld;
+	_pnt set [2, ((_spawn_rect select 0) select 2)]; // set point height the same as in rect
+	_pnt
 };
 
 _para = player call SYG_getParachute; // find parachute of player (if any)

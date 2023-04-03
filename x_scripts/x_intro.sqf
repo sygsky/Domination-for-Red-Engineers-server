@@ -45,12 +45,14 @@ _XfRandomArrayVal = {
 // Structure of inof is as follows:
 // [[Parashute names list],{Code to decide is jump needed or not},[Respawn rectangles for all parachutes]]
 #ifdef __ARRIVAL_ON_ANTIGUA__
-if ((name player) in ["Snooper","EngineerACE"]) then {
+// Arrivalk on Antigua only if base not visited during mission and user is Snooper or EngineerACE.
+// Later after debugging all players will go through Antigua trip
+if ((name player) in ["Snooper","EngineerACE"] && (base_visit_mission < 1)) then {
 	_arr1 = [[17337,17883,500], 360, 280, 25 ]; // Big rect on Antigua hills
 	_arr2 = [[17352,17931,100], 140, 140, 0]; 	 // Small rect on Antigua hills
 
 	SPAWN_INFO = [
-	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // papachute types
+	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // parachute types
 	{base_visit_mission < 1},						// Code returns true if jump, else return false
 	[ _arr1, _arr2], // rect + circle
 	_arr2 // Teleport area on kill event
@@ -58,10 +60,11 @@ if ((name player) in ["Snooper","EngineerACE"]) then {
 } else {
 #endif
 	// Old variant of paradropping above ridge near Paraiso (on planning para) and near Somato (on round para)
+	// Used as old variant or as variant for players who visited base after Antigua jump but with parachute in inventory on connection
 	SPAWN_INFO = [ // AirBase
 		["ACE_ParachutePack","ACE_ParachuteRoundPack"],
 		{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
-		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect, rect, 1 - above ridge near base. 2 - near Somato (the same rect as desant one)
+		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect 1 - above ridge near base, rect 2 - near Somato (the same rect as desant one)
 		drop_zone_arr select 0 // Teleport area on kill event
 	]
 #ifdef __ARRIVAL_ON_ANTIGUA__
@@ -73,7 +76,7 @@ if ((name player) in ["Snooper","EngineerACE"]) then {
 // call: _spawn_point = _paratype call _makeSpawnPoint;
 //+++++++++++++++++++++++++++++
 _makeSpawnPoint = {
-	private ["_spawn_rect","_para","_id"];
+	private ["_spawn_rect","_para","_id","_pnt"];
 #ifdef __ACE__
 	_para = _this;
 	_id = (SPAWN_INFO select 0) find _para;
@@ -90,7 +93,9 @@ _makeSpawnPoint = {
 #endif
 //	hint localize format["+++ x_intro/_makeSpawnPoint: _spawn_rect %1", _spawn_rect ];
 //	waitUntil {!(isNil "XfGetRanPointSquareOld")};
-	_spawn_rect call XfGetRanPointSquareOld
+	_pnt = _spawn_rect call XfGetRanPointSquareOld;
+	_pnt set [2, ((_spawn_rect select 0) select 2)]; // set point height the same as in rect
+	_pnt
 };
 
 enableRadio false;
@@ -423,22 +428,15 @@ if (_doJump) then {
     //      find spawn point
     //+++++++++++++++++++++++++++++
     _spawn_point = _para call _makeSpawnPoint;
-    _spawn_point set [2, 500]; // spawn near to the real parachute jump pos
+//    _spawn_point set [2, 500]; // spawn near to the real parachute jump pos
 } else {
-	base_visit_session = 1; // temporarily stop respawn out of the base area if disconnect period is short
+	base_visit_session = 1;
 };
 
 #else
 _spawn_point  = getPos player;
 #endif
 
-/*
-if (  (name player) in ["Snooper"] ) then {
-	player setPos  [17351,17943,0];
-	_spawn_point = getPos player;
-	(_equip select 1) call SYG_str2Arr;
-};
-*/
 //hint localize format["+++ x_intro.sqf: _spawn_point = %1", _spawn_point];
 #ifdef __DEFAULT__
     // 7703.5,7483.2, 0
@@ -450,7 +448,7 @@ if (  (name player) in ["Snooper"] ) then {
     [[19684.6,14128.7,25],[17681.2,13076.8,40],[15397.76,11924.51,50],[11420,8570,20],[10869,9172,40],[19356,14018,0]], // Pita (3)
     [[1224,1391,1],[1580,1711,20],[8971,8170,70],1], // Rahmadi (4)
     [[18534,2730,1],[18259,2978,10],[11420,8570,20],[10628,9328,40],1], // vulcano Asharan (5)
-	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,9],[11642,6336,9],[11480,6658,10],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0]], // Dolores (6)
+	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,15],[11642,6336,15],[11480,6658,15],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0]], // Dolores (6)
 	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777,150],[12270,15217,0]], // Cabo Valiente (7)
 	[[19682,12457,1],[19454,11893,20],[17985,9733,20],[16713,8909,20],[15541,8262,20],[13968,7852,20],[13222,8655,30],[12746,9138,10],[12490,10850,30],[9369,11208,10],[8981,10777,40], 7]// 1.5 км to south of Pita near the shore in open sea (8)
   ] call _SYG_selectIntroPath;
@@ -937,7 +935,7 @@ if (_doJump) then {
     //                               JUMP
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #ifdef __ARRIVAL_ON_ANTIGUA__
-    if ((name player) in ["Snooper","EngineerACE"]) then {
+    if ((name player) in ["Snooper","EngineerACE"] && (base_visit_mission < 1)) then {
     	[ _spawn_point, _para, "DC3", false, "ADD_PARA"] execVM "AAHALO\jump.sqf";
     } else {
     #endif
