@@ -117,7 +117,7 @@ sleep 0.512;
 if (alive (driver _veh ) && (canMove _veh) ) then {
 	_hideobject = _veh findCover [position _veh, position _shooter, 180];
 	if (!isNull _hideobject) then {
-	    hint localize format["+++ x_dosmoke2.sqf: %1 has cover %2 found, dist %3 m", typeOf _veh, typeOf _hideobject, round( _hideobject distance _veh )];
+	    hint localize format["+++ x_dosmoke2.sqf: %1 found cover %2 found, dist %3 m", typeOf _veh, typeOf _hideobject, round( _hideobject distance _veh )];
 		{
 			if (alive _x) then {
 				_x disableAI "TARGET";

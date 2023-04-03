@@ -116,9 +116,9 @@ _find_civilian = {
 			"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
 		];
 		while {canStand _civ } do {
-			sleep ((random 5) + 10);
 			_move = _list call XfRandomArrayVal;
 			_civ playMove _move;
+			sleep ((random 5) + 10);
 		};
 	};
 	// set marker on civ
