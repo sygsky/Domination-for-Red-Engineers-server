@@ -58,7 +58,9 @@ _arg = _this select 3;
 _isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
 _pos = _isle select 1; // ialse center
 _rad = _isle select 2;
+_civ = _this select 0;
 
+hint localize format["+++ ABORIGEN STAT: is aborigen local %1", local (_this select 0)];
 switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++

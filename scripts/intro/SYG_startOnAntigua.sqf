@@ -92,7 +92,7 @@ _find_civilian = {
 
 	// Giggle while not closer than 10 meters
 	while {(player distance _civ) > 10} do {
-		sleep (random 3 + 2);
+		sleep (random 5 + 2);
 		_civ setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
 		_civ say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
 		_civ setDir (getDir _civ) + ((random 20) - 10);
@@ -103,6 +103,30 @@ _find_civilian = {
 	_civ commandWatch player;
 	while { (alive _civ) && (alive player) && ((player distance _civ) < 40)} do { sleep 5};
 	_civ commandWatch objNull;
+	_civ spawn {
+		private ["_list","_civ"];
+		_civ = _this;
+		_list = [
+			"AmovPercMstpSnonWnonDnon_exerciseKata",	//		Martial arts moves
+			"AmovPercMstpSnonWnonDnon_exercisePushup",	//	Pushups
+			"AmovPercMstpSnonWnonDnon_Ease",	//	"At ease"
+			"AmovPercMstpSnonWnonDnon_AmovPsitMstpSnonWnonDnon_ground",	//	Sits on the ground
+			"AmovPercMstpSnonWnonDnon",	//	Stand without weapon
+			"AmovPercMstpSlowWrflDnon_seeWatch",	//	Checks watch with weapon in other hand
+			"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
+		];
+		while {canStand _civ } do {
+			sleep ((random 5) + 10);
+			_move = _list call XfRandomArrayVal;
+			_civ playMove _move;
+		};
+	};
+	// set marker on civ
+	_marker = createMarkerLocal["aborigen_marker", getPos _civ];
+	_marker setMarkerTypeLocal  "Vehicle";
+	_marker setMarkerColorLocal "ColorGreen";
+	_marker setMarkerTextLocal "?";
+
 	// exit this humorescue
 };
 
