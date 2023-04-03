@@ -126,7 +126,7 @@ STR_SYS_39,Vehicle was dropped...,Fahrzeug ist gelöscht...,Técnica descartada.
 STR_SYS_40,"Attention! There are %2 enemy spotter[s] in %1","Achtung! Es gibt %2 feindliche Späher in %1","¡Atención! Hay %2 observadores enemigos en %1","Внимание! В %1 действуют вражеские корректировщики, %2 чел."
 STR_SYS_40_0,"Attention! There are %1 enemy spotter[s] on the island","Achtung! Es befinden sich %1 feindliche Späher auf der Insel","¡Atención! Hay %1 observadores enemigos en la isla","Внимание! На острове действуют вражеские корректировщики, %1 чел."
 STR_SYS_41,All enemy spotters are killed...,Alle feindlichen Aufklärer zerstört ...,Todos los observadores enemigos han sido destruidos...,Все вражеские корректировщики уничтожены...
-STR_SYS_42,Teleport/Parajump,Teleport/Parajump,Teletransporte / Paracaídas,Телепорт/Парашют
+STR_SYS_42,Teleport/Parajump,Teleport/Parajump,Teletransporte/Paracaídas,Телепорт/Парашют
 
 STR_SYS_43,"You were demoted from the rank of %1 to %2! Alas, farewell to high rank in the Homeland...","Sie verbannt wurden in den Rang von %1 und %2! Ach, verzeihe, einen hohen Rang in der Heimat...","¡Ha sido degradado de %1 a %2! Adiós, alta pensión en Casa...","Вы разжалованы со звания %1 до %2! Прощай, высокая пенсия на Родине..."
 STR_SYS_44,"You were promoted in rank from %1 to %2, and be assigned to it in the Homeland!","Sie sind im Rang erhöht mit %1 bis %2, die zugewiesen wird, in der Heimat!","¡Has sido ascendido de %1 a %2, con una pensión elevada en tu país de Origen!","Вы повышены в звании с %1 до %2, с повышенной пенсией на Родине!"
@@ -685,6 +685,7 @@ STR_SYS_339,New flag for parajump created at current target.,Neues flag für par
 STR_SYS_339_1,A new parajump flag was created at a secret base.,Eine neue Parajump-Flagge wurde in einer geheimen Basis erstellt.,Se ha creado una nueva bandera de parajump en una base secreta.,На секретной базе появился новый пункт десантирования.
 STR_SYS_340,New vehicle call flag created at current target.,Neues Fahrzeug anlegen-flag erstellt am aktuellen Ziel.,En la ciudad se ha creado un punto de llamada técnica.,В городе создан пункт вызова техники.
 STR_SYS_340_1,New vehicle call flag created at a secret base.,Neue Fahrzeug-Rufflagge wurde in einer geheimen Basis erstellt.,Se creó una nueva bandera de llamada de vehículos en una base secreta.,На секретной базе появился пункт вызова техники.
+STR_SYS_341,"The flag starts working only after you visit the base","Die Fahne funktioniert erst nach einem Besuch in der Basis","La bandera empieza a funcionar sólo después de una visita a la base","Флаг начинает работать только после посещения базы"
 
 STR_SYS_343,Show player marker names:,Show player marker Namen:,Mostrar marcadores de jugador:,Отображение маркеров игроков:
 STR_SYS_344,Show player marker direction:,Show player Markierung Richtung:,Mostrar la dirección de los marcadores de jugador:,Отображение направления у маркеров игроков:
@@ -1700,7 +1701,7 @@ STR_ABORIGEN_BOAT_NONE,"All the boats are taken apart, I don't know what to do!"
 
 STR_ABORIGEN_CAR,The car?,Das Auto?,¿El coche?,Машина?
 STR_ABORIGEN_CAR_INFO_1,"A car? Why did I put a marker on your map? Uh, you have geographical cretinism)))","Ein Auto? Warum habe ich eine Markierung auf deine Karte gesetzt? Du hast einen geografischen Kretinismus)))","¿Un coche? ¿Por qué he puesto un marcador en tu mapa? Tienes un cretinismo geográfico)))","Машина? Так на карте твоей маркер-то зачем я обозначил? Э-э-э, да у тебя географический кретинизм)))"
-STR_ABORIGEN_CAR_INFO_2,"The car? So... here I'm drawing you a marker on the map where there's something similar. It's about %1.","Das Auto? Also ... hier zeichne ich dir eine Markierung auf die Karte, wo es etwas Ähnliches gibt. Es ist ungefähr %1.","¿El coche? Pues... aquí te estoy dibujando un marcador en el mapa donde hay algo parecido. Está cerca de %1.", "Машина? Так... вот я тебе на карте рисую маркер, где есть что-то похожее. Это около %1"
+STR_ABORIGEN_CAR_INFO_2,"The car? Well... Here I'm drawing you a green marker on the map where you'll find something like a car. It's near %1.","Das Auto? Na ja... Hier zeichne ich dir eine grüne Markierung auf die Karte, wo du so etwas wie ein Auto finden wirst. Es ist in der Nähe von %1.","¿El coche? Bueno... Aquí te dibujo un marcador verde en el mapa donde encontrarás algo parecido a un coche. Está cerca de %1","Машина? Так... вот я тебе на карте рисую зелёный маркер, где найдёшь что-то вроде машины. Это около %1"
 
 STR_ABORIGEN_CAR_NONE_NUM,3,3,3,3
 STR_ABORIGEN_CAR_NONE_0,"Sorry. I don't know anything about cars. We live here.","Tut mir leid, ich kenne mich nicht mit Autos aus. Wir wohnen hier.","Lo siento. No sé nada de coches. Vivimos aquí","Извините, но я ничего не знаю про машины. Живём мы тут."

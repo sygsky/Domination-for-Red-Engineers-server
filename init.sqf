@@ -518,6 +518,7 @@ if (isServer) then {
         } forEach [172902,64642,555078];
         sleep 0.5;
 */
+		// Disable jump flag on Antigua as it is too easy to reach base with it on initial jump
         // build flag on Antigua (by Yeti request)
         sleep 60; // wait 1 minute to ensure user to build flag on map
         [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box

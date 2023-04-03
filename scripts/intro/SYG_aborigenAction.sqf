@@ -231,9 +231,9 @@ switch ( _arg ) do {
 		hint localize "+++ Aborigen GO!!!";
 		player groupChat (localize "STR_SYS_400_1"); // "Yes"
 		_civ say "hisp3"; // "Bolo" ?
-		_civ commandFollow player;
-		_time = time + 40;
-		while {(alive _civ) && (alive player) && (time > _time)} do {sleep 3};
+		_civ doFollow player;
+		_time = time + 40; // follow only 40 seconds then stop again
+		while {(alive _civ) && (alive player) && (time < _time)} do {sleep 3};
 		_civ doFollow _civ;
 	};
 	default {

@@ -42,35 +42,6 @@ _XfRandomArrayVal = {
 	_this select (_this call _XfRandomFloorArray);
 };
 
-// Structure of inof is as follows:
-// [[Parashute names list],{Code to decide is jump needed or not},[Respawn rectangles for all parachutes]]
-#ifdef __ARRIVAL_ON_ANTIGUA__
-// Arrivalk on Antigua only if base not visited during mission and user is Snooper or EngineerACE.
-// Later after debugging all players will go through Antigua trip
-if ((name player) in ["Snooper","EngineerACE"] && (base_visit_mission < 1)) then {
-	_arr1 = [[17337,17883,500], 360, 280, 25 ]; // Big rect on Antigua hills
-	_arr2 = [[17352,17931,100], 140, 140, 0]; 	 // Small rect on Antigua hills
-
-	SPAWN_INFO = [
-	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // parachute types
-	{base_visit_mission < 1},						// Code returns true if jump, else return false
-	[ _arr1, _arr2], // rect + circle
-	_arr2 // Teleport area on kill event
-	];
-} else {
-#endif
-	// Old variant of paradropping above ridge near Paraiso (on planning para) and near Somato (on round para)
-	// Used as old variant or as variant for players who visited base after Antigua jump but with parachute in inventory on connection
-	SPAWN_INFO = [ // AirBase
-		["ACE_ParachutePack","ACE_ParachuteRoundPack"],
-		{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
-		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect 1 - above ridge near base, rect 2 - near Somato (the same rect as desant one)
-		drop_zone_arr select 0 // Teleport area on kill event
-	]
-#ifdef __ARRIVAL_ON_ANTIGUA__
-};
-#endif
-
 //++++++++++++++++++++++++++++++
 //      find spawn point depending on parachute used
 // call: _spawn_point = _paratype call _makeSpawnPoint;
@@ -379,6 +350,40 @@ _doJump = false;
 #ifdef __CONNECT_ON_PARA__
 
 waitUntil { !(isNil "base_visit_session") }; // wait info about local base visiting state and time
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Structure of info is as follows:
+// [[Parashute names list],{Code to decide is jump needed or not},[Respawn rectangles for all parachutes]]
+#ifdef __ARRIVED_ON_ANTIGUA__
+// Arrival on Antigua only if base not visited during mission and user is Snooper or EngineerACE.
+// Later after debugging all players will go through Antigua trip
+hint localize format["+++ x_intro: __ARRIVED_ON_ANTIGUA__ = %1", __ARRIVED_ON_ANTIGUA__ ];
+if ( ((name player) in __ARRIVED_ON_ANTIGUA__) && (base_visit_mission < 1)) then {
+	_arr1 = [[17337,17883,500], 360, 280, 25 ]; // Big rect on Antigua hills
+	_arr2 = [[17352,17931,100], 140, 140, 0]; 	 // Small rect on Antigua hills
+
+	SPAWN_INFO = [
+	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // parachute types
+	{base_visit_mission < 1},						// Code returns true if jump, else return false
+	[ _arr1, _arr2], // rect + circle
+	_arr2 // Teleport area on kill event
+	];
+} else {
+#endif
+	// Old variant of paradropping above ridge near Paraiso (on planning para) and near Somato (on round para)
+	// Used as old variant or as variant for players who visited base after Antigua jump but with parachute in inventory on connection
+	SPAWN_INFO = [ // AirBase
+		["ACE_ParachutePack","ACE_ParachuteRoundPack"],
+		{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
+		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect 1 - above ridge near base, rect 2 - near Somato (the same rect as desant one)
+		drop_zone_arr select 0 // Teleport area on kill event
+	];
+#ifdef __ARRIVED_ON_ANTIGUA__
+};
+#endif
+
+hint localize format["+++ x_intro/SPAWN_INFO: %1", SPAWN_INFO];
+
 _dt = d_player_stuff select 1; // #587
 hint localize format["+++ x_intro: disconnect time == %1", _dt];
 
@@ -393,7 +398,7 @@ _rname = _rank call XGetRankFromIndex; // rank name
 //_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_owned_para != "");	// check the rank and para weared on user at visit
 _doJump = call (SPAWN_INFO select 1);	// check the jump condition
 
-hint localize format["+++ _doJump %1, _rank %2(%3), base_visit_mission %4, parachute %5", str(_doJump), _rank, _rname, base_visit_mission, _para ];
+hint localize format["+++ x_intro: _doJump %1, _rank %2(%3), base_visit_mission %4, parachute %5", str(_doJump), _rank, _rname, base_visit_mission, _para ];
 
 if (_owned_para != "") then {
 	(format[localize "STR_INTRO_PARAJUMP_11",_para]) call XfHQChat; // "You found a parachute (%1) on your back and decided to use it to please the smugglers."
@@ -401,8 +406,13 @@ if (_owned_para != "") then {
 
 if (_doJump) then {
     format["+++ x_intro: Do jump now, _dt %1 secs ago", _dt ];
+
+    #ifdef __ARRIVED_ON_ANTIGUA__
 	// create all environment for Antigua arrival (boats/marine patrols/ammobox/transport vehicles etc
-	[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
+	if ((name player) in __ARRIVED_ON_ANTIGUA__) then {
+		[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
+	};
+	#endif
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -431,6 +441,7 @@ if (_doJump) then {
 //    _spawn_point set [2, 500]; // spawn near to the real parachute jump pos
 } else {
 	base_visit_session = 1;
+	_spawn_point  = getPos player;
 };
 
 #else
@@ -497,7 +508,7 @@ _camstart set [count _camstart -1, _tgt]; // replace illusion position with end 
 
 #ifdef __CONNECT_ON_PARA__
 if (_doJump) then {
-    // last-1 pointy is player pos, last is special one
+    // last-1 point is player pos, last is special one
     _camstart set [count _camstart, _spawn_point]; // replace illusion position with end point (player pos)
 };
 #endif
@@ -934,13 +945,13 @@ if (_doJump) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //                               JUMP
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    #ifdef __ARRIVAL_ON_ANTIGUA__
-    if ((name player) in ["Snooper","EngineerACE"] && (base_visit_mission < 1)) then {
+    #ifdef __ARRIVED_ON_ANTIGUA__
+    if (((name player) in __ARRIVED_ON_ANTIGUA__) && (base_visit_mission < 1)) then {
     	[ _spawn_point, _para, "DC3", false, "ADD_PARA"] execVM "AAHALO\jump.sqf";
     } else {
     #endif
 	    [ _spawn_point, _para, "DC3", false, true] execVM "AAHALO\jump.sqf"; // last true means "check circle hit"
-    #ifdef __ARRIVAL_ON_ANTIGUA__
+    #ifdef __ARRIVED_ON_ANTIGUA__
     };
     #endif
 

@@ -49,7 +49,8 @@ _find_civilian = {
 	} forEach _arr;
 
 	if ( isNull _civ ) then { // create civilian
-	    _newgroup = ["CIV"] call x_creategroup;
+//	    _newgroup = ["CIV"] call x_creategroup;
+		_newgroup = call SYG_createCivGroup;
 //		hint localize format["+++ _find_civilian: group created %1", _newgroup];
 		_unit_array = ["civilian", "CIV"] call x_getunitliste; // returned [_unit_list, _vec_type, _crewtype]
 		_type = (_unit_array select 0) select 0;
@@ -67,7 +68,9 @@ _find_civilian = {
 						["remote_execute", format["if (name player == ""%1"") then { -20 call SYG_addBonusScore };", name (_this select 1)]] call XSendNetStartScriptClientAll
 					};
 				};
-			} ]
+			} ];
+			_civ setBehaviour "Careless";
+			_civ setCombatMode "BLUE";
 	} else {
 		hint localize format["+++ _find_civilian: civ found, unit %1", typeOf _civ];
 		_newgrpoup = group _civ
@@ -100,9 +103,9 @@ _find_civilian = {
 
 	_civ setMimic "Normal";
 	// Do watch while alive or near
-	_civ commandWatch player;
+	_civ doWatch player;
 	while { (alive _civ) && (alive player) && ((player distance _civ) < 40)} do { sleep 5};
-	_civ commandWatch objNull;
+	_civ doWatch objNull;
 	_civ spawn {
 		private ["_list","_civ"];
 		_civ = _this;
@@ -126,6 +129,7 @@ _find_civilian = {
 	_marker setMarkerTypeLocal  "Vehicle";
 	_marker setMarkerColorLocal "ColorGreen";
 	_marker setMarkerTextLocal "?";
+	_marker setMarkerSizeLocal [0.5, 0.5];
 
 	// exit this humorescue
 };

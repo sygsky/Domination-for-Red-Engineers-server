@@ -211,4 +211,4 @@
 #define DEFAULT_VIEW_DISTANCE 3500
 
 // Uncomment to disable first time arrival on the Antigua island, not on the base or do paradrops near it
-#define __ARRIVAL_ON_ANTIGUA__
+#define __ARRIVED_ON_ANTIGUA__ ["Snooper","EngineerACE"]

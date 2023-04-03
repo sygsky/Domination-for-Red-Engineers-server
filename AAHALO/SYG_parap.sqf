@@ -1,7 +1,13 @@
 ﻿// Xeno, AAHALO\SYG_parap.sqf -  parachute jump practice
 // e.g.: FLAG_BASE addaction [localize "STR_FLAG_8","AAHALO\SYG_parap.sqf"];
 
+
 #include "x_setup.sqf"
+
+// first of all check if player visited the base before use the jump flag
+if (!base_visit_mission) exitWith {
+	player groupChat (localize "STR_SYS_341"); // "The flag starts working only after you visit the base"
+};
 
 //++++++++++++++++++++++++++++++
 //      find spawn point depending on parachute used
@@ -12,7 +18,7 @@ _makeSpawnPoint = {
 #ifdef __ACE__
 	_para = _this;
 	_id = (SPAWN_INFO select 0) find _para;
-	if ( _d >= 0) then {  // find point according to the parachute type (0 - planning one, 1 - round)
+	if ( _id >= 0) then {  // find point according to the parachute type (0 - planning one, 1 - round)
 		_spawn_rect = +((SPAWN_INFO select 2) select _id); // drop rect for planning parachute
 		hint localize "+++ x_intro.sqf: jump point is set on mountines";
 	} else {

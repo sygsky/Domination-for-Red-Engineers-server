@@ -11,6 +11,8 @@
 
 #include "x_setup.sqf"
 
+hint localize "+++ SYG_checkPlayerAtBase.sqf: Started";
+
 _flare = objNull;
 _pos = getPos AISPAWN; // FLAG_BASE; // [9529.5,9759.2,0]; // point near central gate to the base
 _flag_pos = [];
@@ -37,12 +39,13 @@ while { base_visit_session <= 0 } do {
 					base_visit_mission = 1;
 					["base_visit_mission", name player, base_visit_mission] call XSendNetStartScriptServer; // store new value on the server
 					base_visit_session = base_visit_mission;
+					hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
 				};
 			};
 		};
 	};
 };
-
+hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, base_visit_session = %1", base_visit_session];
 
 #ifdef __ACE__
 // inform player that he reached the base

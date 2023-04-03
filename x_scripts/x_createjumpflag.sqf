@@ -34,7 +34,7 @@ if (count _posi > 0) then {
 	);
 
 	_flag = _ftype createVehicle _posi;
-	jump_flags = jump_flags + [_flag];
+	jump_flags set [ count jump_flags, _flag ];
 	if (d_own_side == "EAST") then  { //+++Sygsky: add more fun with flags
 		_flag setFlagTexture "\ca\misc\data\rus_vlajka.pac"; // set USSR flag
 	};

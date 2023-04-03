@@ -73,9 +73,9 @@ _bit_array = _bit_array + [mrr1_in_air,mrr2_in_air];
 
 _bitasnum = _bit_array call XfBitArrayToNum;
 
-d_vars_array = [_bitasnum,date_str,current_target_index,current_mission_index,ammo_boxes,sec_kind,resolved_targets];
-d_vars_array = d_vars_array + [jump_flags,truck1_cargo_array,truck2_cargo_array,mt_radio_pos,d_ammo_boxes,d_wreck_marker];
-d_vars_array = d_vars_array + [d_jet_service_fac,d_chopper_service_fac,d_wreck_repair_fac,fRainLess,fRainMore,fFogLess,fFogMore,_tmp_a];
+d_vars_array = [_bitasnum,date_str,current_target_index,current_mission_index,ammo_boxes,sec_kind,resolved_targets,
+				jump_flags,truck1_cargo_array,truck2_cargo_array,mt_radio_pos,d_ammo_boxes,d_wreck_marker,
+				d_jet_service_fac,d_chopper_service_fac,d_wreck_repair_fac,fRainLess,fRainMore,fFogLess,fFogMore,_tmp_a];
 
 #ifdef __TT__
 	points_array = [points_west,points_racs,kill_points_west,kill_points_racs];
