@@ -95,7 +95,7 @@ _make_marker = {
 	_mrk_name
 };
 
-// Antenna/trucks are recreated in rado_service.sqf running during whole misssion
+// Antenna/trucks are recreated in radio_service.sqf running during whole misssion
 
 // prepare markers (truck + radiomast)
 _truck_marker = "";
@@ -110,7 +110,7 @@ _check_truck_marker = 	{ // check truck marker
 			};
 		};
 
-		// create radar marker if needed
+		// create truck marker if needed
 		if ( _truck_marker == "" ) then {
 			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, _this, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
 			hint localize format["+++ x_sideradio.sqf: create _truck_marker at %1", (markerPos _truck_marker) call SYG_MsgOnPosE0];
@@ -187,11 +187,12 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 					} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
 				};
 			} forEach crew d_radar_truck;
-			hint localize format["+++ x_sideradio.sqf: radar truck(%1) now at %2, %3, %4",
+			hint localize format["+++ x_sideradio.sqf: radar truck(%1) now at %2, %3, %4, marker pos %5",
 				if ( ((getPosASL d_radar) select 2) < 0) then {"+"} else {"-"},
 				d_radar_truck call SYG_MsgOnPosE0,
 				_pl,
-				getPosASL _truck
+				getPosASL _truck,
+				getMarkerPos _truck_marker
 			];
 		}
 	};
@@ -232,11 +233,12 @@ if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
 						} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
 					};
 				} forEach crew d_radar_truck;
-				hint localize format["+++ x_sideradio.sqf: radar truck(%1) now at %2, %3, %4",
+				hint localize format["+++ x_sideradio.sqf: radar truck(%1) now at %2, %3, %4, marker pos %5",
 					if ( ((getPosASL d_radar) select 2) < 0) then {"+"} else {"-"},
 					d_radar_truck call SYG_MsgOnPosE0,
 					_pl,
-					getPosASL _truck
+					getPosASL _truck,
+					getMarkerPos _truck_marker
 				];
 			}
 		};
