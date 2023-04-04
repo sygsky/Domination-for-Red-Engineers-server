@@ -248,7 +248,7 @@ _remove_grp = {
 		hint localize format["+++ %1 x_isledefense.sqf: remove patrol group %2 (%3), vecs %4, men %5",
 				call SYG_missionTimeInfoStr,
 				_igrp,
-				_igrp select PARAM_TYPE,
+				_igrpa select PARAM_TYPE,
 				count _vehs,
 				count _units];
 #endif						

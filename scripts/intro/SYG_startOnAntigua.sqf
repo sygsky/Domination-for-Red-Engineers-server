@@ -53,7 +53,7 @@ _find_civilian = {
 		_newgroup = call SYG_createCivGroup;
 //		hint localize format["+++ _find_civilian: group created %1", _newgroup];
 		_unit_array = ["civilian", "CIV"] call x_getunitliste; // returned [_unit_list, _vec_type, _crewtype]
-		_type = (_unit_array select 0) select 0;
+		_type = format ["Civilian%1", (floor (random 19)) + 2];
 //		hint localize format["+++ _find_civilian: civ not found, create unit with type %1", _type];
 		_pos = (SPAWN_INFO select 3) call XfGetRanPointSquareOld; // No flat position requested
 //		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];

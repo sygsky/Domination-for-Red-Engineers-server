@@ -1715,8 +1715,9 @@ STR_ABORIGEN_WEAPON_INFO_HOLDER,", thrown in.",", eingeworfen.",", tirado".,", �
 STR_ABORIGEN_WEAPON_NONE,"Looks like there aren't any guns here, hehe","Sieht aus, als gäbe es hier keine Waffen, hehe","Parece que aquí no hay armas, jeje","Кажись, оружия тут нигде нет, хе-хе"
 
 STR_ABORIGEN_MEN,Men?,Menschen?,¿Gente?,Люди?
-STR_ABORIGEN_MEN_INFO,"There are some people! Our %1, the Americans %2, Soviets %3, unknown %4. So what?","Da sind einige Leute! Unsere %1, die Amerikaner %2, Sowjets %3, unbekannte %4. Was soll's?","¡Hay gente! Nuestros %1, los americanos %2, soviéticos %3, desconocidos %4. ¿Y qué?","Есть люди! Наших %1, амеров %2, советских %3, непонятных %4. И что?"
-STR_ABORIGEN_MEN_NONE,"Who's there, people? There are no men!","Wer ist da, Leute? Es sind keine Männer da!","¿Quién está ahí, gente? ¡No hay hombres!",Люди? Ну какие тут люди! нету!
+STR_ABORIGEN_MEN_INFO,"There are some people! Our %1, the Americans %2, Soviets %3, unknown %4. So what?","Da sind einige Leute! Unsere %1, die Amerikaner %2, Sowjets %3, unbekannte %4. Was soll's?","¡Hay gente! Nuestros %1, los americanos %2, soviéticos %3, desconocidos %4. ¿Y qué?","Есть люди! Наших %1, амеров %2, советских %3, непонятных %4%5. И что?"
+STR_ABORIGEN_MEN_DEAD," А! Yes! There are also dead men, numbering about %1."," А! Ja! Es gibt auch tote Männer, etwa %1."," ¡А! ¡Sí! También hay hombres muertos, que suman alrededor de %1."," Да! Ещё мертвяков примерно %1"
+STR_ABORIGEN_MEN_NONE,"People? Where do people come from? There aren't any! Just you and me, that's all!","Menschen? Woher kommen die Menschen? Es gibt keine! Nur du und ich, das ist alles!","¿Gente? ¿De dónde viene la gente? No hay ninguna. Sólo tú y yo, ¡eso es todo!",Люди? Ну откуда тут люди? Нету! Вот ты да я - и всё!
 
 STR_ABORIGEN_RUMORS,Rumors?,Gerüchte?,¿Rumores?,"Что слышно?"
 

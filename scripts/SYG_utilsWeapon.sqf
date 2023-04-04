@@ -2653,6 +2653,7 @@ SYG_findPlayerEquipmentAsStr = {
 // Now input weapon array contains ONLY rucksack content, no real weapon,
 // so d_player_array_misc items contains also ONLY rucksack items, not all weapons
 SYG_storePlayerEquipmentAsStr = {
+	hint localize format["+++ SYG_storePlayerEquipmentAsStr: _this = %1", _this ];
     if ( (typeName _this) != "ARRAY" ) exitWith {hint localize format["--- SYG_storePlayerEquipmentAsStr: expected param isn't array: %1",_this];};
     if ( (count _this) < 2 ) exitWith {
         hint localize format["--- SYG_storePlayerEquipmentAsStr: expected params is not array with 2+ items: %1", _this ];
@@ -2664,16 +2665,16 @@ SYG_storePlayerEquipmentAsStr = {
     if ( (typeName arg(0)) == "STRING" && (typeName arg(1)) == "STRING" )  then {
         //hint localize "SYG_storePlayerEquipmentAsStr: enter store code";
         private ["_index", "_parray", "_name"];
-        _name = arg(0);
+        _name = _this select 0;
         _index = d_player_array_names find _name;
         if (_index >= 0) then {
             //  player array is: [d_player_air_autokick, time, _name, 0, "", eqp_list_as_str]
-            _parray = argp( d_player_array_misc,_index);
-            _parray set [ 5, arg(1)];
+            _parray = d_player_array_misc select _index;
+            _parray set [ 5, _this select 1];
 //            hint localize format ["+++ equipment re-written for the player ""%1"": %2", _name, arg(1)];
         } else {
             d_player_array_names set [count d_player_array_names, _name];
-            d_player_array_misc set [ count d_player_array_misc, [d_player_air_autokick, -1, _name, 0, "", arg(1)]];
+            d_player_array_misc set [ count d_player_array_misc, [d_player_air_autokick, -1, _name, 0, "", _this select 1]];
 //            hint localize format ["+++ equipment stored for the new player ""%1"": %2", _name, arg(1)];
         };
     };

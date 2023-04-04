@@ -864,15 +864,15 @@ XGetPlayerPoints = {
 	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
 	//__DEBUG_NET("XGetPlayerPoints",_index)
-	_stuff = if (_index >= 0) then { d_player_array_misc select _index } else { [] };
+	_stuff = if (_index >= 0) then { d_player_array_misc select _index } else { [] }; // whole stuff, full player_array_misc item
 	hint localize format["+++ XGetPlayerPoints: _this = %1, _stuff = %2", _this, _stuff];
-	// prepare also semi-unical (up to 15 users) suicide sound for this player as parameter index 3
+	// prepare also semi-unique (up to 15 users) suicide sound for this player as parameter index 3
 	if ( (toUpper (_name)) == "YETI") then {
 	    _sound = format["suicide_yeti_%1", floor (random 5)]; // personal suicide sound for yeti (0..4);
 	} else {
 		// try to find special sound for german players
 		_sound = "";
-		_woman = d_player_entities find (_stuff select 4);
+		_woman = d_player_entities find (_stuff select 4); // player_id in SQM, e.g. "bravo_3"
 		if (_woman < 0) then {_woman = false} else {_woman = (call (SYG_players_arr select _woman)) call SYG_isWoman};
 
 		if ( _woman ) exitWith {
@@ -886,7 +886,7 @@ XGetPlayerPoints = {
 		};
 	};
 
-	// calculate delata time after last disconnection
+	// calculate delta time after last disconnection
 	if (count _stuff > 0 ) then {
 	    _dt = _stuff select 1; // on first connection _dt < 0, else contains last disconnect time!
 	    if (_dt > 0) then {

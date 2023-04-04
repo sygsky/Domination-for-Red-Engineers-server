@@ -114,11 +114,12 @@ switch ( _arg ) do {
         if (!(alive _boat)) exitWith {
         	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
         };
-        _pnt = getPos _boat;
+        _pnt = getPos _boat; // Not reset this value as it allows to point where boat was at this check!
         if ( (_boat distance _pos) > _rad) then {
 			_pnt = call _create_water_point_near_Antigua;
 			_boat setDir (random 360);
 			_boat setPos _pnt;
+			_boat say "return";
 			hint localize format["+++ Boat: moved to the point near Antigua %1", _pnt];
         };
 		player groupChat format[localize "STR_ABORIGEN_BOAT_INFO",
@@ -210,18 +211,20 @@ switch ( _arg ) do {
 		_civcnt = 0; _eastcnt = 0; _westcnt = 0; _dead = 0; _other = 0;
 		{
 
-			if (side _x == west) then {_westcnt = _westcnt + 1} else {
-				if (! alive _x) exitWith {_dead = _dead + 1};
+			if (! alive _x) then {_dead = _dead + 1} else {
+				if (side _x == west) exitWith {_westcnt = _westcnt + 1};
 				if (side _x == east) exitWith {_eastcnt = _eastcnt + 1};
 				if (side _x == civilian) exitWith {_civcnt = _civcnt + 1};
 				_other = _other + 1;
 			};
+		} forEach _arr;
+		if  ( (_civcnt + _westcnt + _eastcnt + _other) == 2) then {
+			player groupChat (localize format["STR_ABORIGEN_MEN_NONE", if (_dead > 0) then { localize format["STR_ABORIGEN_MEN_DEAD", _dead ] } else { ""}]);
+		} else   {
 			player groupChat (format[localize "STR_ABORIGEN_MEN_INFO",
 				_civcnt, _westcnt,
-				_eastcnt, _other ]); // "There are some people! Our %1, the Americans %2, Soviets %3, unknown %4. So what?"
-
-		} forEach _arr;
-
+				_eastcnt, _other, _dead ]); // "There are some people! Our %1, the Americans %2, Soviets %3, unknown %4. So what?"
+			};
 	};
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "RUMORS": { // ask about rumors
