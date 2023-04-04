@@ -95,7 +95,7 @@ _find_civilian = {
 
 	// Giggle while not closer than 10 meters
 	while {(player distance _civ) > 10} do {
-		sleep (random 5 + 2);
+		sleep (random 5 + (random 2));
 		_civ setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
 		_civ say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
 		_civ setDir (getDir _civ) + ((random 20) - 10);
