@@ -109,6 +109,12 @@ _find_civilian = {
 	_civ spawn {
 		private ["_list","_civ"];
 		_civ = _this;
+		/*
+		"ActsPercMstpSlowWrflDnon_Lolling",  // Stretches, as if the unit has just woken up
+        "ActsPercMstpSnonWnonDnon_DancingDuoIvan", // Does various dance moves
+        "ActsPercMstpSnonWnonDnon_DancingDuoStefan", // Dances
+        "ActsPercMstpSnonWnonDnon_DancingStefan",	// As above
+		*/
 		_list = [
 			"AmovPercMstpSnonWnonDnon_exerciseKata",	//		Martial arts moves
 			"AmovPercMstpSnonWnonDnon_exercisePushup",	//	Pushups
@@ -119,9 +125,17 @@ _find_civilian = {
 			"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
 		];
 		while {canStand _civ } do {
-			_move = _list call XfRandomArrayVal;
-			_civ playMove _move;
-			sleep ((random 5) + 10);
+		    _arr = _civ nearObjects [ "CAManBase", 50];
+		    _cnt = {(canStand _x) && (isPlayer _x)} count _arr;
+		    if (_cnt  == 1) then { // only for single player
+                _move = _list call XfRandomArrayVal;
+                _civ doWatch player;
+                sleep 1;
+                _civ playMove _move;
+                sleep 9;
+                _civ doWatch objNull;
+		    };
+			sleep (random 5);
 		};
 	};
 	// set marker on civ
