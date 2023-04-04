@@ -169,7 +169,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
 //                        					name _enemy, _dist_obs_pos, MAX_SHOOT_DIST * 10];
 //                    };
 
-					["say_radio", "enemy_activity"] call XSendNetStartScriptServer;
+					["say_radio", "enemy_activity"] call XSendNetStartScriptClientAll;
 
                     _own_arr       =  nearestObjects [_pos_nearest, _own_vehicles, KILL_RADIOUS]; // any alive owner (players) vehicles in kill zone to kill them immediatelly
                     _own_cnt       = {alive _x} count _own_arr;
@@ -213,7 +213,7 @@ while { ((nr_observers > 0) && (count _observers > 0))&& !target_clear } do {
                         _near_targets_cnt
                     ];
 
-                    [] spawn { sleep 3; ["say_radio", "enemy_spotted"] call XSendNetStartScriptServer; };
+                    [] spawn { sleep 3; ["say_radio", "enemy_spotted"] call XSendNetStartScriptClientAll; };
 
                     _nextaritime  = time + d_arti_reload_time + (random 40);
                     [_pos_nearest,_type,KILL_RADIOUS] spawn x_shootari;
