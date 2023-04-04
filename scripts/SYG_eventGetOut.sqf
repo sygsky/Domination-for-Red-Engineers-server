@@ -61,7 +61,7 @@ SYG_getOutEvent = {
 
     _veh  = _this select 0;
     if (isNull _veh) exitWith {
-    	hint localize format["--- (0)SYG_getOutEvent: vehicle is null, _this = %1", _this ];
+    	hint localize format["--- SYG_getOutEvent: vehicle is null, _this = %1", _this ];
     };
 
 	_veh_type = typeOf _veh;
@@ -89,7 +89,7 @@ SYG_getOutEvent = {
 
     if ( (_veh isKindOf "Air") /*|| (_veh isKindOf "Ship")*/) exitWith {
         _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // prevent event on air vehicles
-        hint localize format["--- SYG_getOutEvent: REMOVE GetOut EVENT on invalid air vehicle %1, exit", _veh];
+        hint localize format["--- SYG_getOutEvent: REMOVE GetOut EVENT on invalid air vehicle %1, exit", _veh_type];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         false
     };
@@ -187,7 +187,7 @@ SYG_getOutEvent = {
         if ( !alive _veh ) exitWith { false };
         if ( { alive _x } count ( crew _veh ) == 0) exitWith {
             #ifdef __DEBUG_PRINT__
-            hint localize format["+++ SYG_getOutEvent: vehicle empty by itself"];
+            hint localize format["+++ SYG_getOutEvent: vehicle %1 is empty by itself", _veh_type];
             #endif
             true
         };
