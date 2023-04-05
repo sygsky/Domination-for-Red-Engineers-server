@@ -7,6 +7,10 @@
 #define Y_POS 1
 #define Z_POS 2
 
+#define x(a) ((a) select 0)
+#define y(a) ((a) select 1)
+#define z(a) (if((count (a))>2) then {a select 2} else {0})
+
 /**
  *
  * call:
@@ -18,7 +22,7 @@ SYG_vectorAdd = {
     private [ "_pnt1", "_pnt2" ];
 	_pnt1 = arg(0);
 	_pnt2 = arg(1);
-	[argp(_pnt1,X_POS) + argp(_pnt2,X_POS), argp(_pnt1,Y_POS) + argp(_pnt2,Y_POS), 0]
+	[x(_pnt1) + x(_pnt2), y(_pnt1) + y(_pnt2), 0]
 };
 
 /**
@@ -33,7 +37,7 @@ SYG_vectorSub = {
     private [ "_pnt1", "_pnt2" ];
 	_pnt1 = arg(0);
 	_pnt2 = arg(1);
-	[argp(_pnt1,X_POS) - argp(_pnt2,X_POS), argp(_pnt1,Y_POS) - argp(_pnt2,Y_POS), 0]
+	[x(_pnt1) - x(_pnt2), y(_pnt1) - y(_pnt2), 0]
 };
 
 /**
@@ -48,7 +52,7 @@ SYG_vectorSub3D = {
     private [ "_pnt1", "_pnt2" ];
 	_pnt1 = arg(0);
 	_pnt2 = arg(1);
-	[argp(_pnt1,X_POS) - argp(_pnt2,X_POS), argp(_pnt1,Y_POS) - argp(_pnt2,Y_POS), argp(_pnt1,Z_POS) - argp(_pnt2,Z_POS)]
+	[x(_pnt1) - x(_pnt2), y(_pnt1) - y(_pnt2), z(_pnt1) - z(_pnt2)]
 };
 
 /**

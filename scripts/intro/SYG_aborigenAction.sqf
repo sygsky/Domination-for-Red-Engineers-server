@@ -148,7 +148,12 @@ switch ( _arg ) do {
 			};
 		};
 		if (alive _veh) exitWith { // Veh found near marker, say info outrageously
-			player groupChat (localize "STR_ABORIGEN_CAR_INFO_1"); // "A car? Why did I put a marker on your map? Uh, you have geographical cretinism)))"
+		    player groupChat (localize "STR_ABORIGEN_CAR_INFO_1"); // "A car? Why did I put a marker on your map? Uh, you have geographical cretinism)))"
+		    if ( locked _veh ) then {
+		        (localize "STR_ABORIGEN_CAR_UNLOCK_1") spawn {player groupChat _this}; "... when you find it, unblock it!"
+		    } else {
+		        (localize "STR_ABORIGEN_CAR_UNLOCK_3") spawn {player groupChat _this}; // "... it doesn't seem to be blocked"
+		    };
 		};
 
 		// Vehicle not found near main marker or marker in absent. So find all vehicles near transparent markers now and select random one
@@ -177,7 +182,12 @@ switch ( _arg ) do {
 			} else {
 				_marker setMarkerPosLocal (getPos _veh);
 			};
-			player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "The car? So... here I'm drawing you a marker on the map where there's something similar. It's about %1."
+			player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "The car? So... here I'm drawing you a green marker on the map where there's something similar. It's about %1."
+			if (!(locked _veh)) then {
+			    _veh lock true;
+			    _veh addAction [localize "STR_ABORIGEN_CAR_UNLOCK","scripts\intro\unlock_veh.sqf"]; // "Unlock"
+			};
+		    [] spawn {sleep 3; player groupChat (localize "STR_ABORIGEN_CAR_UNLOCK_1")}; // "When you find it, unblock it!"
 		};
 		// remove main marker as nothing to mark with it
 		deleteMarkerLocal _marker;

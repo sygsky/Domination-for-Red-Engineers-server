@@ -757,6 +757,10 @@ class CfgSounds {
 
     class typewriter   { name="";                                       sound[] = {\sounds\short\typewriter.ogg,db-1,1.0}; titles[] = {};}; // typewriter click
     class atmos        { name="";                                       sound[] = {\sounds\short\atmos.ogg,db-1,1.0}; titles[] = {};}; // atmospheric drums
+
+    class unlock1      { name = "";                                     sound[] = {\sounds\short\unlock1.ogg,db-1,1.0}; titles[] = {};}; // unlock sound 1
+    class unlock2      { name = "";                                     sound[] = {\sounds\short\unlock2.ogg,db-1,1.0}; titles[] = {};}; // unlock sound 2
+    class unlock3      { name = "";                                     sound[] = {\sounds\short\unlock3.ogg,db-1,1.0}; titles[] = {};}; // unlock sound 3
 //    class hard_landing { name="";                                       sound[] = {\sounds\intro\hard_landing.ogg,db-1,1.0}; titles[] = {};}; // atmospheric landing douns
 
 };

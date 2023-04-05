@@ -1701,7 +1701,12 @@ STR_ABORIGEN_BOAT_NONE,"All the boats are taken apart, I don't know what to do!"
 
 STR_ABORIGEN_CAR,The car?,Das Auto?,¿El coche?,Машина?
 STR_ABORIGEN_CAR_INFO_1,"A car? Why did I put a marker on your map? Uh, you have geographical cretinism)))","Ein Auto? Warum habe ich eine Markierung auf deine Karte gesetzt? Du hast einen geografischen Kretinismus)))","¿Un coche? ¿Por qué he puesto un marcador en tu mapa? Tienes un cretinismo geográfico)))","Машина? Так на карте твоей маркер-то зачем я обозначил? Э-э-э, да у тебя географический кретинизм)))"
-STR_ABORIGEN_CAR_INFO_2,"The car? Well... Here I'm drawing you a green marker on the map where you'll find something like a car. It's near %1.","Das Auto? Na ja... Hier zeichne ich dir eine grüne Markierung auf die Karte, wo du so etwas wie ein Auto finden wirst. Es ist in der Nähe von %1.","¿El coche? Bueno... Aquí te dibujo un marcador verde en el mapa donde encontrarás algo parecido a un coche. Está cerca de %1","Машина? Так... вот я тебе на карте рисую зелёный маркер, где найдёшь что-то вроде машины. Это около %1"
+STR_ABORIGEN_CAR_INFO_2,"The car? Well... Here I'm drawing you a green marker on the map where you'll find something like a car. It's near %1...","Das Auto? Na ja... Hier zeichne ich dir eine grüne Markierung auf die Karte, wo du so etwas wie ein Auto finden wirst. Es ist in der Nähe von %1...","¿El coche? Bueno... Aquí te dibujo un marcador verde en el mapa donde encontrarás algo parecido a un coche. Está cerca de %1...","Машина? Так... вот я тебе на карте рисую зелёный маркер, где найдёшь что-то вроде машины. Это около %1..."
+
+STR_ABORIGEN_CAR_UNLOCK,Unlock,Freischaltung,Desbloquear,Разблокировать
+STR_ABORIGEN_CAR_UNLOCK_1,"... when you find it, unblock it!","... wenn du es findest, schließe es auf!","... ¡cuando lo encuentres, ábrelo!","... как найдёшь, разблокируй!"
+STR_ABORIGEN_CAR_UNLOCK_2,"Vehicle unlocked, you're good to go.","Fahrzeug entriegelt, Sie können losfahren.","Vehículo desbloqueado, puedes irte.","Техника разблокирована, можно ехать."
+STR_ABORIGEN_CAR_UNLOCK_3,"... it doesn't seem to be blocked","... no parece que deba bloquearse","... es sieht nicht so aus, als sollte es blockiert werden","... вроде не заблокировано должно быть"
 
 STR_ABORIGEN_CAR_NONE_NUM,3,3,3,3
 STR_ABORIGEN_CAR_NONE_0,"Sorry. I don't know anything about cars. We live here.","Tut mir leid, ich kenne mich nicht mit Autos aus. Wir wohnen hier.","Lo siento. No sé nada de coches. Vivimos aquí","Извините, но я ничего не знаю про машины. Живём мы тут."
@@ -1718,6 +1723,7 @@ STR_ABORIGEN_MEN,Men?,Menschen?,¿Gente?,Люди?
 STR_ABORIGEN_MEN_INFO,"There are some people! Our %1, the Americans %2, Soviets %3, unknown %4. So what?","Da sind einige Leute! Unsere %1, die Amerikaner %2, Sowjets %3, unbekannte %4. Was soll's?","¡Hay gente! Nuestros %1, los americanos %2, soviéticos %3, desconocidos %4. ¿Y qué?","Есть люди! Наших %1, амеров %2, советских %3, непонятных %4%5. И что?"
 STR_ABORIGEN_MEN_DEAD," А! Yes! There are also dead men, numbering about %1."," А! Ja! Es gibt auch tote Männer, etwa %1."," ¡А! ¡Sí! También hay hombres muertos, que suman alrededor de %1."," Да! Ещё мертвяков примерно %1"
 STR_ABORIGEN_MEN_NONE,"People? Where do people come from? There aren't any! Just you and me, that's all!","Menschen? Woher kommen die Menschen? Es gibt keine! Nur du und ich, das ist alles!","¿Gente? ¿De dónde viene la gente? No hay ninguna. Sólo tú y yo, ¡eso es todo!",Люди? Ну откуда тут люди? Нету! Вот ты да я - и всё!
+
 
 STR_ABORIGEN_RUMORS,Rumors?,Gerüchte?,¿Rumores?,"Что слышно?"
 

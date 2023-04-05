@@ -6,7 +6,16 @@
 // restore delay may be user-defined too.
 // First position in the array are stored and looked as main position to return vehicles after position change
 // Example:
-// [moto1, ... ,motoN] execVM "motorespawn.sqf";
+// [_veh_arr, _big_delay, _small_delay, "service_name_in_RPT", _lock_vehs_or_not] - description in lower lines
+// ...
+// [
+//  [moto1, ... ,motoN], - vehicles array (0)
+//  big_delay,           - return moved/killed vehicle  big delay (1)
+//  small_delay,         - return moved/killed vehicle  small delay (2)
+//  "service_name"       - name for RPT file messages (3)
+//  lock_or_not           - lock new/returned vehicles (true) or not (false) (4)
+// ] execVM "motorespawn.sqf";
+// ...
 //
 // Where motoN - reference to device with position to keep it here
 //
@@ -16,7 +25,7 @@
 if (!isServer) exitWith{};
 
 #include "x_macros.sqf"
-private ["_motoarr", "_moto", "_timeout", "_pos", "_pos1", "_type", "_nobj", "_driver_near","_driverType"];
+private ["_motoarr", "_moto", "_timeout","_lock", "_pos", "_pos1", "_type", "_nobj", "_driver_near","_driverType"];
 
 // comment next line to not create debug messages
 #define __DEBUG__
@@ -41,18 +50,22 @@ RESTORE_DELAY_SHORT   = 30;
 #define TIMEOUT(addval) (time+(addval))
 
 SERVICE_NAME  = "motorespawn.sqf";
+_lock = false;
 
 _motoarr = []; // create array of vehicles to return to original position after some delay
 sleep 2;
 
+// +++++++++++++++++++++++++++++++++++++++ READ call PARAMS +++++++++++++++++++++++++++++++++++++++++
 // check is special parameters are set (for Antigua as example
 if ( (typeName (_this select 0)) == "ARRAY") then { // [[moto1, moto2...], DELAY_NORM, DELAY_SHORT, service_name]
 	RESTORE_DELAY_NORMAL = _this select 1;
 	RESTORE_DELAY_SHORT  = _this select 2;
 	SERVICE_NAME         = _this select 3;
+	_lock = if (count _this > 4) then {_this select 4} else {false}; // lock (true) or not lock (false) new or moved vehicle when put it to the original position
 	_this = _this select 0;
 };
-// read all vehicles and store their inintial positon and angles
+
+// read all vehicles and store their initial position and angles
 for "_i" from 0 to count _this -1 do { // list all motocyrcles/automobiles
 	_x = _this select _i;
 //	_motoarr = _motoarr + [[_x, getPos _x, direction _x, TIMEOUT_ZERO]];
@@ -69,7 +82,7 @@ for "_i" from 0 to count _this -1 do { // list all motocyrcles/automobiles
 		_x addWeapon "CarHorn"; // add horn for motorcycle
 		hint localize format["+++ moto%1 (%2): CarHorn added", _i + 1, typeOf _x];
 	} else {hint localize format["+++ moto%1 (%2): already has CarHorn", _i + 1, typeOf _x]};
-
+    hint localize  format["+++ moto%1 ini pos %2, real %3, diff %4", _i + 1, _posMain, _posReal, [_posReal,_posMain] call SYG_vectorSub3D ];
 //	_x addWeapon "CarHorn";  // add horn for motorcycle: not work in MP
 };
 
@@ -184,6 +197,7 @@ while {true} do {
 					_moto = objNull;
 					sleep 1.375;
 					_moto = _type createVehicle [0,0,0];
+					_mote lock _lock;
 					_x set[MOTO_ITSELF, _moto];
 					if ( !(_moto hasWeapon "CarHorn")) then {
 						_moto addWeapon "CarHorn"; // add horn for motorcycle
