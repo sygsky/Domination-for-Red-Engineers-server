@@ -2234,7 +2234,10 @@ SYG_getConfigMags = {
     if ( typeName _this != "STRING") exitWith { hint localize format["--- SYG_getConfigMags: expected vehicle type (%1) is not ""STRING"" or ""OBJECT"", exit", typeName _this] };
     private ["_mags","_turrets","_cnt","_i","_cls"];
     // magazines from base level
-    _mags = getArray( configFile >> "CfgVehicles" >> _this >> "magazines" );
+    _mags = [];
+	if ( isArray (configFile >> "CfgVehicles" >> _this >> "magazines")) then {
+		_mags = getArray( configFile >> "CfgVehicles" >> _this >> "magazines" );
+	};
     // magazines from turrets of the 1st levels
     _turrets = ( configFile >> "CfgVehicles" >> _this >> "Turrets" );
     _cnt = (count _turrets) - 1;
