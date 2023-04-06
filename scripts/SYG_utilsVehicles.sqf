@@ -2272,7 +2272,7 @@ SYG_hasParachute = {
 };
 
 /**
- * Detects if unit has parachute in his inventory
+ * Retunrs unit has parachute in his inventory
  *
  */
 SYG_getParachute = {
