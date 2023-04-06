@@ -1646,6 +1646,8 @@ SYG_armUnit = {
 // 6th is optional value for death sound playing
 // 7th is base_visit_mission value in range of [<-1,>0,1]
 //
+// if unit has parachute before rearming and is still in intro, parachute or is saved or replaced with new one in ream set if any
+//
 //  _success = [_unit, [ [_wpn1,_wpn2,...,_wpnN], [_mag1, _mag2,..., _magM] <, _rucksack_name <, [_ruck_item_1, ... , _ruck_item_L]><, view_distance<,reborn_music>>>] ] call SYG_rearmUnit;
 //
 //  or
@@ -1656,7 +1658,7 @@ SYG_armUnit = {
 //
 SYG_rearmUnit = {
 	private [ "_unit", "_list", "_mag", "_mags", "_cnt", "_i", "_wpn", "_muzzles", "_ruck", "_ruck_items",
-	 "_wpn", "_rifle","_gun", "_sidearm","_param","_x"];
+	 "_wpn", "_rifle","_gun", "_sidearm","_param","_x","_para"];
 	if ( typeName _this != "ARRAY") exitWith { false };
 	if ( (count _this) < 2 ) exitWith { false };
     if ( (typeName (_this select 1)) == "STRING") then {
@@ -1664,11 +1666,12 @@ SYG_rearmUnit = {
     };
 	hint localize format["+++ SYG_rearmUnit: arr %1", (_this select 1) call SYG_compactArray];
 //   	player groupChat format["arr %1", arg(1)];
-	_unit = arg(0);
+	_unit = _this select 0;
+	_para = _unit call SYG_getParachute; // Get user parachute if any, "" is absent
 	removeAllWeapons _unit;
-	_this = arg(1); // load equipment array
+	_this = _this select 1; // load equipment array
 	// at least unit, magazines and weapons are defined
-	_list = arg(1); // read magazine list and add them to unit
+	_list = _this select 1; // read magazine list and add them to unit
 	{
 		// check if it is array: ["MAG_NAME", count]
 		if ( typeName _x == "ARRAY") then {
@@ -1687,7 +1690,7 @@ SYG_rearmUnit = {
 	} forEach _list;
 
 	// read weapon list and select best in order of value: rifle, gun, pistol
-	_list = arg(0);
+	_list = _this select 0;
 	_rifle = ""; _sidearm = "";
 	{
 		if ( typeName _x == "STRING") then {
@@ -1723,16 +1726,17 @@ SYG_rearmUnit = {
 	if ( _ruck != "") then {
 	    if ( typeName _ruck == "STRING" ) then {
 	        _unit setVariable [ "ACE_weapononback", _ruck ];
+
+            // add rucksack items from array of type: [ [MAG_NAME_1,MAG_CNT_1], ... [MAG_NAME_N,MAG_CNT_N] ]
+            _ruck_items = argopt( 3, [] );
+            if ( typeName _ruck_items == "ARRAY") then {
+                if ( count _ruck_items > 0) then {
+                    _unit setVariable [ "ACE_Ruckmagazines", _ruck_items ];
+                };
+            };
 	    };
 	};
 
-	// add rucksack items from array of type: [ [MAG_NAME_1,MAG_CNT_1], ... [MAG_NAME_N,MAG_CNT_N] ]
-	_ruck_items = argopt( 3, [] );
-	if ( typeName _ruck_items == "ARRAY") then {
-        if ( count _ruck_items > 0) then {
-            _unit setVariable [ "ACE_Ruckmagazines", _ruck_items ];
-        };
-	};
 	// argopt(4) is value for player stored view distance
 	_param = argopt(4, 0);
 	if ( (_param > 0)) then { // change only if user not set it before
@@ -1749,6 +1753,15 @@ SYG_rearmUnit = {
         ( format [ "%1 -> %2", localize "STR_SYS_168", localize _msg ] ) call XfGlobalChat; // "Respawn music"
 	};
 
+    // now check if new parachute found, nothing to do, else restore old para if still_in_intro
+    if (X_Client) then {
+        if ((_unit call SYG_getParachute) == "") then { // no new parachute in new armament set
+            if (still_in_intro && (_para != "")) then { // restore old parachute as it may be needed for parajump
+                hint localize format["+++ SYG_unitRearm: old parachute %1 restored for new armament set while in intro", _para];
+                _unit addWeapon _para;
+            };
+        };
+    };
 	true
 };
 

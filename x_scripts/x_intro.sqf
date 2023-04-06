@@ -1075,9 +1075,10 @@ if (_doJump) then {
 
 	[ player,
 		[
-			["ACE_AK74",_para],
-			["ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_45Rnd_545x39_BT_AK","ACE_Bandage","ACE_Bandage","ACE_Bandage","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine","ACE_Morphine"],
-			"",	[]
+			["ACE_AK74",_para], // weapons
+			[["ACE_45Rnd_545x39_BT_AK",3],["ACE_Bandage",3],["ACE_Morphine",5]], // magazines
+			"", // No rucksack
+			[] // No rucsack items
 		]
 	] call SYG_rearmUnit;
 
