@@ -548,7 +548,7 @@ if (isServer) then {
 #endif
 	};
 #endif
-	//+++ Sygsky: create and handle GRU items (computer, radiomast etc)  on server
+	//+++ Sygsky: create and handle GRU items (computer, radiomast etc) on server
 	[] spawn {
 		// create GRU radio mast on the Pico de Perez
 		d_radar = createVehicle["Land_radar", [14257.2,15166.2], [], 0, "CAN_COLLIDE"];
@@ -593,6 +593,12 @@ if (isServer) then {
     hint localize "*** __MANDO_MISSILES_UPDATE__ replaces some Mando routines with custom versions";
     #endif
 
+#endif
+
+#ifdef __ARRIVED_ON_ANTIGUA__
+	if ( (count __ARRIVED_ON_ANTIGUA__) > 0) then { // some men are spawn on ANtigua
+		[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
+	};
 #endif
 
 

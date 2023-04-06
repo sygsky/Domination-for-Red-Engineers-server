@@ -197,7 +197,7 @@ while {true} do {
 					_moto = objNull;
 					sleep 1.375;
 					_moto = _type createVehicle [0,0,0];
-					_mote lock _lock;
+					_moto lock _lock;
 					_x set[MOTO_ITSELF, _moto];
 					if ( !(_moto hasWeapon "CarHorn")) then {
 						_moto addWeapon "CarHorn"; // add horn for motorcycle

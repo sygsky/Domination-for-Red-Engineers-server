@@ -1,5 +1,5 @@
 /*
-	aborigenInit
+	aborigenInit.sqf
 	author: Sygsky
 	description: add all actions and events to the aborigen on player client
 	returns: nothing

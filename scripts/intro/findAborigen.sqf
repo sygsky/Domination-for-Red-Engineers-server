@@ -1,5 +1,5 @@
 /*
-	findAborigen.sqf
+	findAborigen.sqf, called on server only
 	author: Sygsky
 	description:
 		finds or creates aborigen on Antigua on request atserver from new player client.
@@ -31,7 +31,7 @@ _civ = objNull;
 	if ( alive _civ ) exitWith {};
 } forEach _arr;
 
-if ( !isNull _civ ) then {}; // Already found, nothing to do
+if ( alive _civ ) then {}; // Already found, nothing to do
 
 _newgroup = call SYG_createCivGroup;
 //		hint localize format["+++ findAborigen.sqf: group created %1", _newgroup];
