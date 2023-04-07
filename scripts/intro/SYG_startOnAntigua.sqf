@@ -87,4 +87,5 @@ _arr = [car1,car2,car3,car4,car5,car6,car7,car8,car9];
 { _x lock true} forEach _arr;
 // [_veh_arr, _big_delay, _small_delay, "service_name_in_RPT", _lock_vehs_or_not]
 [_arr, 600, 90, "antigua_vehs", true] execVM "scripts\motorespawn.sqf"; // as moto!!!
+
 // 1. DC3 flight to the Antigua or simple drop from a plane

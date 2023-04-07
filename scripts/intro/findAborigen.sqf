@@ -1,5 +1,5 @@
 /*
-	findAborigen.sqf, called on server only
+	scripts\intro\findAborigen.sqf, called on server only
 	author: Sygsky
 	description:
 		finds or creates aborigen on Antigua on request atserver from new player client.
@@ -7,6 +7,9 @@
 
 	returns: nothing
 */
+
+#define ABORIGEN "ABORIGEN"
+
 hint localize "+++ findAborigen.sqf: started";
 //	if (!(player call SYG_pointOnAntigua)) exitWith {false};
 
@@ -17,16 +20,17 @@ _arr = nearestObjects [ _pos, ["Civilian"], _isle select 2];
 hint localize format["+++ _find_civilian: found %1 civ[s]", count _arr];
 _civ = objNull;
 {
-	if (alive _x) then {
-		 (isPlayer _x) exitWith {};
-		 _var = _x getVariable ABORIGEN;
-		 if (isNil "_var") exitWith {};
-		_x setDamage 0;
-		_civ = _x;
-		hint localize format["+++ findAborigen.sqf: found civ %1 at %2", typeOf _civ, getPos _civ];
-	} else {
-		player action ["hideBody", _x];
-		sleep 0.1;
+	_var = _x getVariable ABORIGEN;
+	if (!isNil "_var") then {
+		if (alive _x) then {
+			 (isPlayer _x) exitWith {};
+			_x setDamage 0;
+			_civ = _x;
+			hint localize format["+++ findAborigen.sqf: found civ %1 at %2", typeOf _civ, getPos _civ];
+		} else {
+			deleteVehicle _x;
+			sleep 0.1;
+		};
 	};
 	if ( alive _civ ) exitWith {};
 } forEach _arr;
@@ -41,6 +45,18 @@ _pos = [[17352,17931,100], 100, 100, 0] call XfGetRanPointSquareOld; // No flat 
 //		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];
 _civ = _type createVehicle _pos;
 _civ setVehicleInit format ["this execVM ""scripts\intro\aborigenInit.sqf"""];
+processInitCommands;
 _civ setBehaviour "Careless";
 _civ setCombatMode "BLUE";
+_civ setVariable [ABORIGEN, true];
 
+// restore aborigen if dead
+while {alive _civ} do {
+	sleep 120;
+	if (!alive _civ) exitWith {
+		["say_sound", getPos _civ, "steal"] call XSendNetStartScriptClientAll;
+		sleep 1;
+		deleteVehicle _civ;
+		[] execVM "scripts\intro\findAborigen.sqf"; // restart new aborigen
+	};
+};

@@ -407,12 +407,12 @@ if (_owned_para != "") then {
 if (_doJump) then {
     format["+++ x_intro: Do jump now, _dt %1 secs ago", _dt ];
 
-    #ifdef __ARRIVED_ON_ANTIGUA__
+//    #ifdef __ARRIVED_ON_ANTIGUA__
 	// create all environment for Antigua arrival (boats/marine patrols/ammobox/transport vehicles etc
-	if ((name player) in __ARRIVED_ON_ANTIGUA__) then {
-		[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
-	};
-	#endif
+//	if ((name player) in __ARRIVED_ON_ANTIGUA__) then {
+//		[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
+//	};
+//	#endif
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
