@@ -49,7 +49,7 @@ RESTORE_DELAY_SHORT   = 30;
 #define inc(val) (val=val+1)
 #define TIMEOUT(addval) (time+(addval))
 
-SERVICE_NAME  = "motorespawn.sqf";
+_service_name  = "motorespawn.sqf";
 _lock = false;
 
 _motoarr = []; // create array of vehicles to return to original position after some delay
@@ -57,14 +57,15 @@ sleep 2;
 
 // +++++++++++++++++++++++++++++++++++++++ READ call PARAMS +++++++++++++++++++++++++++++++++++++++++
 // check is special parameters are set (for Antigua as example
-if ( (typeName (_this select 0)) == "ARRAY") then { // [[moto1, moto2...], DELAY_NORM, DELAY_SHORT, service_name]
+if ( (typeName (_this select 0)) == "ARRAY") then { // [[moto1, moto2...], DELAY_NORM, DELAY_SHORT, _service_name]
 	RESTORE_DELAY_NORMAL = _this select 1;
 	RESTORE_DELAY_SHORT  = _this select 2;
-	SERVICE_NAME         = _this select 3;
+	_service_name         = _this select 3;
 	_lock = if (count _this > 4) then {_this select 4} else {false}; // lock (true) or not lock (false) new or moved vehicle when put it to the original position
 	_this = _this select 0;
 };
 
+hint localize format["+++ motorespawn.sqf: service started with name '%1;", _service_name];
 // read all vehicles and store their initial position and angles
 for "_i" from 0 to count _this -1 do { // list all motocyrcles/automobiles
 	_x = _this select _i;
@@ -92,12 +93,12 @@ sleep CYCLE_DELAY;
 
 hint localize format[
 	"+++ %7:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_RETURN_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
-					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_RETURN_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME, SERVICE_NAME
+					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_RETURN_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME, _service_name
 ];
 
 {
 	hint localize format[
-	"+++ %2:  %1", _x, SERVICE_NAME];
+	"+++ %2:  %1", _x, _service_name];
 } forEach _motoarr;
 
 #endif
@@ -133,7 +134,7 @@ while {true} do {
 
 		_posReal = getPos _moto; // real pos
 		_posReal set [2,0]; // zero Z coordinate
-		_dist = _posReal distance _posMain; // get 2D distance
+		_dist = round (_posReal distance _posMain); // get 2D distance
 		_posReal0 = + _posReal; // save position to print it later
 
 		if ( _timeout == TIMEOUT_ZERO ) then { // check conditions for moto position restoring
@@ -166,9 +167,9 @@ while {true} do {
 			if (! _driver_near ) then {
 				_driver_near = ( {alive _x} count (crew _moto) ) > 0; // is some man in moto crew?
 				if (_driver_near) then {
-					hint localize format["+++ %2: alive crew on moto count %1", {alive _x} count (crew _moto), SERVICE_NAME];
+					hint localize format["+++ %2: alive crew on moto count %1", {alive _x} count (crew _moto), _service_name];
 				};
-			} else {  hint localize format["+++ %3: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _posReal, SERVICE_NAME]; };
+			} else {  hint localize format["+++ %3: alive %1 detected at dist %2", typeOf _nobj, (getPos _nobj) distance _posReal, _service_name]; };
 
 			if ( ! (_driver_near && (alive _moto))) then { // if empty and no man nearby (10 meters circle)
 				_say = _dist >= SOUND_MIN_DIST_TO_SAY; // sound only if distance between moto and origin point is long enough
@@ -180,15 +181,16 @@ while {true} do {
 				};
 
 #ifdef __DEBUG__
-				hint localize format["+++ %8: %1 (#%2) returned, %3canMove, fuel %4, dir %5, dist %6 (min %7)",
-					typeOf _moto,
+				hint localize format["+++ %9: moto%1(%2) returned, %3canMove, dmg %4, fuel %5, dir %6, dist %7 (min %8)",
 					_id,
+					typeOf _moto,
 					if (canMove _moto) then {""} else {"!"},
+					damage _moto,
 					fuel _moto,
 					round ( direction _moto),
 					_dist,
 					MOTO_RETURN_DIST,
-					SERVICE_NAME];
+					_service_name];
 #endif
 
 				if ( !alive _moto ) then { // recreate vehicle
@@ -205,11 +207,11 @@ while {true} do {
 					} else {hint localize format["+++ moto%1(%2) restored, has CarHorn", _id, _type]};
 
 #ifdef __DEBUG__
-					hint localize format["+++ %3: moto%1(%2) recreated after breakdown", _id, _type,SERVICE_NAME];
+					hint localize format["+++ %3: moto%1(%2) recreated after breakdown", _id, _type,_service_name];
 #endif
 				} else {	// use current vehicle item
 #ifdef __DEBUG__
-					hint localize format[ "+++ %4: alive moto%1(%2)%3 returned", _id, typeOf _moto, if (local _moto) then {" local"} else {" remote"}, SERVICE_NAME ];
+					hint localize format[ "+++ %4: alive moto%1(%2)%3 returned", _id, typeOf _moto, if (local _moto) then {" local"} else {" remote"}, _service_name ];
 #endif
 					_moto setDammage 0.0;
 					_moto setFuel 1.0;
@@ -223,13 +225,14 @@ while {true} do {
 
 				sleep (0.5 + (random 0.5));
 #ifdef __DEBUG__
-				hint localize format[ "+++ %7: moto%1(%2) returned, dir %3, dist %4, new pos %5, engine %6", _id,
+				hint localize format[ "+++ %8: moto%1(%2) returned, dir %3, dist %4, before off %5, after off %6, engine %7", _id,
                     typeOf _moto,
                     direction _moto,
                     _dist,
-                    _posReal0,
+                    [_posReal0,_posMain] call SYG_vectorSub3D, // offset before returning
+                    [getPos _moto, _posReal0] call SYG_vectorSub3D, // offset after returning to origial
                     if (isEngineOn _moto) then {"on"} else {"off"},
-                    SERVICE_NAME
+                    _service_name
 				];
 #endif
 			};
@@ -239,4 +242,4 @@ while {true} do {
 	} forEach _motoarr;
 };
 _motoarr = nil;
-hint localize format["--- scripts/motorespawn.sqf(service %1) is exiting due to any fatal error ---", SERVICE_NAME]
+hint localize format["--- scripts/motorespawn.sqf(service %1) is exiting due to any fatal error ---", _service_name]
