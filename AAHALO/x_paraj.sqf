@@ -1,13 +1,13 @@
 ﻿// Xeno, AAHALO\x_paraj.sqf - flag pole action "parajump"
 // e.g.: FLAG_BASE addAction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
 _unit = _this select 1;
-new_paratype = _unit call SYG_getParachute; // find parachute of player (if any)
-new_height = (SPAWN_INFO select 0) find new_paratype;
-if (new_paratype < 0 ) then {
-	new_height = ((SPAWN_INFO select 2) select 1) select 2;
-} else {
-	new_height = ((SPAWN_INFO select 2) select new_height) select 2;
+new_paratype = _unit call SYG_getParachute; // Find parachute of player (if no parachute weared, "" returned)
+_ind = (SPAWN_INFO select 0) find new_paratype;
+_rect = (SPAWN_INFO select 2) select 1; // Second spawn rectangle with height of central point as default
+if (_ind < 0 ) then { 		// So parachute is absent
+	_rect = (SPAWN_INFO select 2) select _ind; // get rect assgned to this para type
 };
+new_height = _rect select 2;
 
 hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2, height is %3", _this, weapons _unit, new_height];
 

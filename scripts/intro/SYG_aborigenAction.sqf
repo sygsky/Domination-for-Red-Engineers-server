@@ -183,9 +183,9 @@ switch ( _arg ) do {
 				_marker setMarkerPosLocal (getPos _veh);
 			};
 			player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "The car? So... here I'm drawing you a green marker on the map where there's something similar. It's about %1."
-			if (!(locked _veh)) then {
-			    _veh lock true;
-			    _veh addAction [localize "STR_ABORIGEN_CAR_UNLOCK","scripts\intro\unlock_veh.sqf"]; // "Unlock"
+			if (locked _veh) then {
+//			    _veh lock true;
+//			    _veh addAction [localize "STR_ABORIGEN_CAR_UNLOCK","scripts\intro\unlock_veh.sqf"]; // "Unlock"
 			};
 		    [] spawn {sleep 3; player groupChat (localize "STR_ABORIGEN_CAR_UNLOCK_1")}; // "When you find it, unblock it!"
 		};
@@ -202,12 +202,12 @@ switch ( _arg ) do {
 		_pos = _isle select 1;
 
 //		_arr = nearestObjects [ player, ["WeaponHolder","AmmoBoxWest","WeaponBoxWest","SpecialBoxWest","AmmoBoxEast","WeaponBoxEast","SpecialBoxEast","AmmoBoxGuer"], 2000 ];
-		_arr = nearestObjects [ player, ["REammoBox"], 2000 ];
+		_arr = nearestObjects [ player, ["ReammoBox"], 2500 ];
 		if ( (count _arr) == 0) exitWith {
 			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat;
 		};
 		_txt = format[ localize "STR_ABORIGEN_WEAPON_INFO",
-               				(round (([player,_arr select 0] call SYG_distance2D) / 10)) *10,
+               				(round (([player,_arr select 0] call SYG_distance2D) * 10)) / 10,
                				([player, _arr select 0] call XfDirToObj) call SYG_getDirName,
                				if ((_arr select 0) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
 
@@ -248,6 +248,11 @@ switch ( _arg ) do {
 		_time = time + 40; // follow only 40 seconds then stop again
 		while {(alive _civ) && (alive player) && (time < _time)} do {sleep 3};
 		_civ doFollow _civ;
+	};
+	case "NAME": {
+		_name = name _civ;
+		if (_name in [ "" ,"Error: No unit"]) then { _name = localize "STR_ABORIGEN_NAME_UNKNOWN"; }; // "doesn't matter"
+		player groupChat format[localize "STR_ABORIGEN_NAME_1", _name]; // "My name %1. What's yours?"
 	};
 	default {
 		format[localize "STR_ABORIGEN_UNKNOWN", _arg] call XfGroupChat;

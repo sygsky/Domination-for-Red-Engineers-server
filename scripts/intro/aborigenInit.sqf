@@ -15,16 +15,17 @@ _civ addEventHandler ["killed", {(_this select 0) call XAddDead0;
 } ];
 _civ setVariable [ABORIGEN, true];
 
+waitUntil {!isNull player};
 // not all players can use Antigua items except killed event
-if (!(name player in __ARRIVED_ON_ANTIGUA__)) exitWith {format["+++ You '%1' cant to arrive at Antigua, exit.", name player]};
+if (!((name player) in __ARRIVED_ON_ANTIGUA__)) exitWith {format["+++ You '%1' cant to arrive at Antigua, exit.", name player]};
 
-hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf _civ, _pos];
+hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf _civ, [_civ, 10] call SYG_MsgOnPosE0];
 
 // TODO: add follow sub-menus to the civilian:
 // 1. "Ask about boats". 2. "Ask about cars". 3. "Ask about weapons". 4. "Ask about soldiers". 5. "Ask about rumors"
 {
 	_civ addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
-} forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS","GO"];
+} forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS","GO","NAME"];
 
 while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // while out of Antigua
 
@@ -36,7 +37,7 @@ if (alive _civ) then { // show info
 	player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"
 };
 
-// Giggle while not closer than 5 meters
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Giggle while not closer than 5 meters
 while {(player distance _civ) > 5} do {
 	sleep (5 + (random 2));
 	_civ setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
@@ -45,11 +46,14 @@ while {(player distance _civ) > 5} do {
 };
 
 // set marker on civ
-_marker = createMarkerLocal["aborigen_marker", getPos _civ];
-_marker setMarkerTypeLocal  "Vehicle";
-_marker setMarkerColorLocal "ColorGreen";
-_marker setMarkerTextLocal "?";
-_marker setMarkerSizeLocal [0.5, 0.5];
+_marker = "aborigen_marker";
+if ((markerType "aborigen_marker") == "") then {
+	_marker = createMarkerLocal[_marker, getPosASL _civ];
+	_marker setMarkerTypeLocal  "Vehicle";
+	_marker setMarkerColorLocal "ColorGreen";
+	_marker setMarkerTextLocal (name _civ);
+	_marker setMarkerSizeLocal [0.5, 0.5];
+};
 
 _civ setMimic "Normal";
 // Do watch while alive or near
@@ -75,18 +79,19 @@ _civ spawn {
 		"AmovPercMstpSlowWrflDnon_seeWatch",	//	Checks watch with weapon in other hand
 		"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
 	];
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
 	while { (canStand _civ) && ((player distance _civ) > 30)} do {
 		_arr = _civ nearObjects [ "CAManBase", 50];
 		_cnt = {(canStand _x) && (isPlayer _x)} count _arr;
 		if (_cnt  == 1) then { // only for single player
 			_civ doWatch player;
 			sleep 1;
-			_civ playMove _x;
+			_civ switchMove (_list select _i);
 			sleep 9;
 			_civ doWatch objNull;
 		};
 		sleep (random 5);
-	} forEach _list;
+	};
 };
 
 while {alive _civ} do {

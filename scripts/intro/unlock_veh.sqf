@@ -14,7 +14,8 @@
 _veh = _this select 0;
 if (locked _veh ) exitWith {
     _veh lock false;
-    _veh say (format["unlock%1", (floor 3) + 1]); // play 1 of 3 unlock sounds
+    hint localize format["+++ unlock_veh.sqf: veh %1 is %2", typeOf _veh, if (locked _veh) then {"locked"} else {"unlocked"}];
+    _veh say (format["unlock%1", (floor (round 3)) + 1]); // play 1 of 3 unlock sounds
     _veh groupChat (localize "STR_ABORIGEN_CAR_UNLOCK_2"); // ""Vehicle unlocked, you're good to go.""
     _veh removeAction (_this select 2); // remove this action
 };

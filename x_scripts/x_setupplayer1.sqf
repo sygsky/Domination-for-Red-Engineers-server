@@ -292,3 +292,33 @@ player call SYG_addBinocular;
 #ifdef __AI__
 ai_counter = 0;
 #endif
+
+#ifdef __ARRIVED_ON_ANTIGUA__
+if (!isNil "spawn_tent") then {
+	_box = nearestObject [getPos spawn_tent, "ReammoBox"];
+	if ( alive _box ) then {
+		_box spawn {
+			private ["_box"];
+			_box = _this;
+			_box call SYG_clearAmmoBox;
+
+			{ // fill created items into the box at each client ( so Arma-1 need, only items added manually on clients during gameplay are propagated through network to all clients )
+				_box addWeaponCargo [_x, 5];
+			} forEach ["ACE_AK74","ACE_AKS74U","ACE_Bizon","ACE_AKM"];
+
+			{
+				_box addMagazineCargo [_x, 50];
+				sleep 0.1;
+			} forEach ["ACE_30Rnd_545x39_BT_AK","ACE_30Rnd_545x39_SD_AK",
+					   "ACE_30Rnd_762x39_B_RPK","ACE_30Rnd_762x39_BT_AK","ACE_30Rnd_762x39_SD_AK","ACE_40Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK",
+					   "ACE_64Rnd_9x18_B_Bizon",
+					   "ACE_Bandage","ACE_Morphine","ACE_Epinephrine","ACE_Flashbang",
+					   "ACE_HandGrenadeRGN","ACE_HandGrenadeRGO"
+					];
+
+			hint localize "+++ Antigua ammoBox: simple ammo box cleared and filled with custom weapons";
+
+		};
+	} else { hint localize "+++ Antigua ammoBox: simple ammo box is dead or absent near spawn_tent."; };
+};
+#endif

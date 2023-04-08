@@ -49,14 +49,15 @@ processInitCommands;
 _civ setBehaviour "Careless";
 _civ setCombatMode "BLUE";
 _civ setVariable [ABORIGEN, true];
+_civ playMove "AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"; // Seat on the gound
 
-// restore aborigen if dead
+// Restore aborigen if dead
 while {alive _civ} do {
 	sleep 120;
 	if (!alive _civ) exitWith {
 		["say_sound", getPos _civ, "steal"] call XSendNetStartScriptClientAll;
-		sleep 1;
 		deleteVehicle _civ;
+		sleep 5;
 		[] execVM "scripts\intro\findAborigen.sqf"; // restart new aborigen
 	};
 };

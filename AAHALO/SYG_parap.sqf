@@ -1,32 +1,35 @@
-﻿// Xeno, AAHALO\SYG_parap.sqf -  parachute jump practice
+﻿// Xeno, AAHALO\SYG_parap.sqf - parachute jump practice
 // e.g.: FLAG_BASE addaction [localize "STR_FLAG_8","AAHALO\SYG_parap.sqf"];
 
 
 #include "x_setup.sqf"
 
 // first of all check if player visited the base before use the jump flag
-if (!base_visit_mission) exitWith {
+if (base_visit_mission < 1) exitWith {
 	player groupChat (localize "STR_SYS_341"); // "The flag starts working only after you visit the base"
 };
 
+/*
+	SPAWN_INFO = [ // AirBase
+		["ACE_ParachutePack","ACE_ParachuteRoundPack"],
+		{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
+		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect 1 - above ridge near base, rect 2 - near Somato (the same rect as desant one)
+		drop_zone_arr select 0 // Teleport area on kill event
+	];
+*/
 //++++++++++++++++++++++++++++++
-//      find spawn point depending on parachute used
+// Find spawn point depending on parachute used. Area always is near base, never on Antigua
 // call: _spawn_point = _paratype call _makeSpawnPoint;
 //+++++++++++++++++++++++++++++
 _makeSpawnPoint = {
 	private ["_spawn_rect","_para"];
 #ifdef __ACE__
 	_para = _this;
-	_id = (SPAWN_INFO select 0) find _para;
-	if ( _id >= 0) then {  // find point according to the parachute type (0 - planning one, 1 - round)
-		_spawn_rect = +((SPAWN_INFO select 2) select _id); // drop rect for planning parachute
-		hint localize "+++ x_intro.sqf: jump point is set on mountines";
-	} else {
-#endif
-		_spawn_rect = +((SPAWN_INFO select 2) select 1);
-		hint localize "+++ x_intro.sqf: jump point is set on plains";
-#ifdef __ACE__
-	};
+	_spawn_rect = [[11306,8386,2000], 600,150, -45]; // drop rect for planning parachute
+	hint localize "+++ x_intro.sqf: jump point is set on mountines";
+#else
+	_spawn_rect = drop_zone_arr select 0;
+	hint localize "+++ x_intro.sqf: jump point is set on plains";
 #endif
 	_pnt = _spawn_rect call XfGetRanPointSquareOld;
 	_pnt set [2, ((_spawn_rect select 0) select 2)]; // set point height the same as in rect

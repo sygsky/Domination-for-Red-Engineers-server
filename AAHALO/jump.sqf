@@ -36,7 +36,7 @@ _check_circle_hit = if (count _this > 4) then  {_this select 4} else { false }; 
 
 _add_para = false;
 if ((typeName _check_circle_hit) == "STRING") then { _check_circle_hit = false;  _add_para = true }; // add absent para if param is not empty string, but not check circle hit
-
+if (_check_circle_hit) then {_add_para = true};
 
 _parawear         = player call SYG_getParachute; // the parachute is put on the player
 
