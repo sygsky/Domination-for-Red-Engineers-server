@@ -207,7 +207,7 @@ switch ( _arg ) do {
 			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat;
 		};
 		_txt = format[ localize "STR_ABORIGEN_WEAPON_INFO",
-               				(round (([player,_arr select 0] call SYG_distance2D) * 10)) / 10,
+               				(round (([player,_arr select 0] call SYG_distance2D) / 10)) * 10,
                				([player, _arr select 0] call XfDirToObj) call SYG_getDirName,
                				if ((_arr select 0) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
 
