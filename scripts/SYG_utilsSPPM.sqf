@@ -84,19 +84,20 @@ SYG_findNearestSPPM = {
 // call: _vehArr = _pos | _object(RoadCone) call  SYG_getAllSPPMVehicles;
 //
 SYG_getAllSPPMVehicles = {
-	private ["_pos", "_arr", "_i", "_var"];
+	private ["_pos", "_arr", "_i", "_x"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
 	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
-	for "_i" from 0 to count _arr - 1 do {
+	for "_i" from 0 to (count _arr) - 1 do {
+		_x = _arr select _i;
         if (_x isKindOf "CAManBase") then { _arr set [_i, "RM_ME"] } else { //+++ Sygsky: Sometimes a man gets on this list!!!
         	if (!alive _x) then {
         		_arr set [_i, "RM_ME"];
         	} else {
 #ifdef __OWN_SIDE_EAST__
-	    		if ( !((_arr select _i) call SYG_isWestVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only western vehicles can be SPPMed!
+	    		if ( !(_x call SYG_isWestVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only western vehicles can be SPPMed!
 #else
-    			if ( !((_arr select _i) call SYG_isEastVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only eastern vehicles can be SPPMed!
+    			if ( !(_x call SYG_isEastVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only eastern vehicles can be SPPMed!
 #endif
         	};
         };
@@ -104,7 +105,7 @@ SYG_getAllSPPMVehicles = {
 	_arr call SYG_clearArrayB; // remove all "RM_ME" items from the list
 	// now make all SPPM vehicles to be captured ones
 	if (count _arr > 0) then {
-		private ["_txt","_x"];
+		private ["_txt", "_var"];
 		_txt = [_pos,10 ] call SYG_MsgOnPosE0;
 		{
 			if ( !(_x isKindOf "CAManBase") ) then {
@@ -276,8 +277,7 @@ SYG_generateSPPMText = {
 #endif
 	// clean array
 	for "_i" from 0 to count _this -1 do {
-		_x = _this select _i;
-		if (typeName _x != "OBJECT") then { _this set [_i, "RM_ME"] };
+		if (typeName (_this select _i) != "OBJECT") then { _this set [_i, "RM_ME"] };
 	};
 	_this call SYG_clearArrayB;
 #ifdef __ACE__
@@ -369,6 +369,7 @@ SYG_updateAllSPPMMarkers = {
 
 			};
 		} else { _count_empty = _count_empty + 1 };
+		sleep 0.05;
 	};
 	SYG_SPPMArr call SYG_clearArrayB;
 	//player groupChat format["+++  count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];

@@ -727,13 +727,13 @@ SYG_getVehicleConfigSide = {
         if ( _this isKindOf "Tank" ) exitWith {
             if ( _this isKindOf "M1Abrams" ) exitWith { west };
             if ( _this isKindOf "M113" ) exitWith { west };
-            if ( _this isKindOf "BMP2" ) exitWith { east };
-            if ( _this isKindOf "T72" ) exitWith { east };
-            if ( _this isKindOf "ZSU" ) exitWith { east };
 #ifdef __ACE__
             if ( _this isKindOf "ACE_M60" ) exitWith { west };
             if ( _this isKindOf "ACE_M2A1" ) exitWith { west };
 #endif
+            if ( _this isKindOf "BMP2" ) exitWith { east };
+            if ( _this isKindOf "T72" ) exitWith { east };
+            if ( _this isKindOf "ZSU" ) exitWith { east };
         };
         civilian // all cars are civilian (with or without MG on it)
     };
