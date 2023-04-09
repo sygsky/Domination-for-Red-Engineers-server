@@ -3,6 +3,10 @@
 	author: Sygsky
 	description: add all actions and events to the aborigen on player client
 	returns: nothing
+	todo:
+		move ammobox creation and arming in this file to make it local and fully available!!!
+		create ammobox always on far position from the tent entrance
+		loading the ammo proc is situated at line 284 , file stupplayer1.sqf: _box = nearestObject [getPos spawn_tent, "ReammoBox"];
 */
 #include "x_setup.sqf"
 
@@ -51,7 +55,10 @@ if ((markerType "aborigen_marker") == "") then {
 	_marker = createMarkerLocal[_marker, getPosASL _civ];
 	_marker setMarkerTypeLocal  "Vehicle";
 	_marker setMarkerColorLocal "ColorGreen";
-	_marker setMarkerTextLocal (name _civ);
+	if ( (name _civ) == "Error: No unit") then {
+		_marker setMarkerTextLocal ("*");
+	} else { _marker setMarkerTextLocal (name _civ); };
+
 	_marker setMarkerSizeLocal [0.5, 0.5];
 };
 
