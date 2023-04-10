@@ -30,8 +30,10 @@ _createAmmoBox = {
 	if (!alive spawn_tent) then  {
 		hint localize "--- SYG_startOnAntigua: tent on Antigua is dead, create ammo in any case";
 	};
-	_spawn_point = spawn_tent call SYG_getRndBuildingPos;
-	hint localize format["+++ _createAmmoBox: _spawn_point %1(%2), tent at % 3",_spawn_point, [_spawn_point,10 ] call SYG_MsgOnPosE0, [spawn_tent,10 ] call SYG_MsgOnPosE0];
+	_posCnt = _house call SYG_housePosCount;
+	_id = floor (random _posCnt);
+	_spawn_point = spawn_tent buildingPos _id;
+	hint localize format["+++ _createAmmoBox: _spawn_point #%1 %2(%3), tent at % 4",_id, _spawn_point, [_spawn_point,10 ] call SYG_MsgOnPosE0, [spawn_tent,10 ] call SYG_MsgOnPosE0];
 	private ["_boxname"];
 
 	#ifndef __TT__
