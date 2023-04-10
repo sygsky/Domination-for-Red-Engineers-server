@@ -3,12 +3,15 @@
 	author: Sygsky
 	description: add all actions and events to the aborigen on player client
 	returns: nothing
-	todo:
-		move ammobox creation and arming in this file to make it local and fully available!!!
-		create ammobox always on far position from the tent entrance
-		loading the ammo proc is situated at line 284 , file stupplayer1.sqf: _box = nearestObject [getPos spawn_tent, "ReammoBox"];
+	TODO:
+		Move ammobox creation and re-arming in this file to make it local and fully available!!!
+		Create ammobox always on far position from the tent entrance.
+		Loading the ammo proc is situated at line 284 , file stupplayer1.sqf: _box = nearestObject [getPos spawn_tent, "ReammoBox"];
 */
 #include "x_setup.sqf"
+
+// not all players can use Antigua items except killed event
+if (!((name player) in __ARRIVED_ON_ANTIGUA__)) exitWith {format["+++ Antigua: you '%1' cant to arrive at Antigua, exit.", name player]};
 
 #define ABORIGEN "ABORIGEN"
 
@@ -16,13 +19,12 @@ _civ = _this;
 _civ setVariable [ABORIGEN, true];
 
 waitUntil {!isNull player};
-// not all players can use Antigua items except killed event
-if (!((name player) in __ARRIVED_ON_ANTIGUA__)) exitWith {format["+++ You '%1' cant to arrive at Antigua, exit.", name player]};
 
 hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf _civ, [_civ, 10] call SYG_MsgOnPosE0];
 
 // TODO: add follow sub-menus to the civilian:
 // 1. "Ask about boats". 2. "Ask about cars". 3. "Ask about weapons". 4. "Ask about soldiers". 5. "Ask about rumors"
+
 {
 	_civ addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
 } forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS","GO","NAME"];
@@ -41,7 +43,9 @@ if (alive _civ) then { // show info
 while {(player distance _civ) > 5} do {
 	sleep (5 + (random 2));
 	_civ setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
+
 	_civ say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
+
 	_civ setDir (getDir _civ) + ((random 20) - 10);
 };
 

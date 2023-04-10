@@ -2,7 +2,7 @@
 	scripts\intro\findAborigen.sqf, called on server only
 	author: Sygsky
 	description:
-		finds or creates aborigen on Antigua on request atserver from new player client.
+		finds or creates aborigen on Antigua on request at server from new player client.
 		If fborigen exists, nothing done, if killed or absent, he is re-created
 
 	returns: nothing
@@ -16,7 +16,8 @@ hint localize "+++ findAborigen.sqf: started";
 private ["_civ","_newgroup"];
 _isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
 _pos = _isle select 1;
-_arr = nearestObjects [ _pos, ["Civilian"], _isle select 2];
+//_arr = nearestObjects [ _pos, ["Civilian"], _isle select 2];
+_arr = _pos nearObjects ["Civilian", _isle select 2];
 hint localize format["+++ _find_civilian: found %1 civ[s]", count _arr];
 _civ = objNull;
 {
@@ -37,6 +38,8 @@ _civ = objNull;
 
 if ( alive _civ ) then {}; // Already found, nothing to do
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Create new group for the next civilian
+
 _newgroup = call SYG_createCivGroup;
 //		hint localize format["+++ findAborigen.sqf: group created %1", _newgroup];
 _type = format ["Civilian%1", (floor (random 19)) + 2];
@@ -49,7 +52,7 @@ processInitCommands;
 _civ setBehaviour "Careless";
 _civ setCombatMode "BLUE";
 _civ setVariable [ABORIGEN, true];
-_civ playMove "AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"; // Seat on the gound
+_civ playMove "AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"; // Sit on the ground
 _civ addEventHandler ["killed", {(_this select 0) call XAddDead0;
     private ["_name"];
 	if (isPlayer (_this select 1)) then {
