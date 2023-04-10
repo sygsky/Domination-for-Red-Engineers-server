@@ -4,6 +4,7 @@
 
 	author: Sygsky
 	description: assign weapon/ammo for the new player
+	todo: build ammo box on Antigua in the same point for all players
 	returns: nothing
 */
 
@@ -294,31 +295,61 @@ ai_counter = 0;
 #endif
 
 #ifdef __ARRIVED_ON_ANTIGUA__
+if (! (name player in __ARRIVED_ON_ANTIGUA__)) exitWith {"*** x_setupplayer1.sqf: player doesn't need ammo-box on Antigus, skipped"};
 if (!isNil "spawn_tent") then {
 	_box = nearestObject [getPos spawn_tent, "ReammoBox"];
-	if ( alive _box ) then {
-		_box spawn {
-			private ["_box"];
-			_box = _this;
-			_box call SYG_clearAmmoBox;
+	// create personal ammobox
+    hint localize "+++ x_setupplayer1.sqf: Call start";
+    if (!alive spawn_tent) then  {
+        hint localize "--- x_setupplayer1.sqf: tent on Antigua is dead, create ammo in any case";
+    };
+    _spawn_point = spawn_tent call SYG_getRndBuildingPos;
+    hint localize format["+++ x_setupplayer1.sqf: Antigua _spawn_point %1(%2), tent at % 3",_spawn_point, [_spawn_point,10 ] call SYG_MsgOnPosE0, [spawn_tent,10 ] call SYG_MsgOnPosE0];
+    private ["_boxname"];
 
-			{ // fill created items into the box at each client ( so Arma-1 need, only items added manually on clients during gameplay are propagated through network to all clients )
-				_box addWeaponCargo [_x, 5];
-			} forEach ["ACE_AK74","ACE_AKS74U","ACE_Bizon","ACE_AKM"];
+    #ifndef __TT__
+    hint localize format["+++ #ifndef __TT__, playerSide %1, east %2, playerSide == east = %3", playerSide, east, playerSide == east];
+    _boxname = switch (playerSide) do {
+                    case west: {"AmmoBoxWest"};
+                    case east: { if (__ACEVer) then {"ACE_WeaponBox_East"} else {"AmmoBoxEast"} };
+                    case resistance;
+                    default {"AmmoBoxGuer"};
+                };
+    #endif
 
-			{
-				_box addMagazineCargo [_x, 50];
-				sleep 0.1;
-			} forEach ["ACE_30Rnd_545x39_BT_AK","ACE_30Rnd_545x39_SD_AK",
-					   "ACE_30Rnd_762x39_B_RPK","ACE_30Rnd_762x39_BT_AK","ACE_30Rnd_762x39_SD_AK","ACE_40Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK",
-					   "ACE_64Rnd_9x18_B_Bizon",
-					   "ACE_Bandage","ACE_Morphine","ACE_Epinephrine","ACE_Flashbang",
-					   "ACE_HandGrenadeRGN","ACE_HandGrenadeRGO"
-					];
+    #ifdef __TT__
+    hint localize format["+++ #ifdef __TT__, playerSide %1", playerSide];
+    _boxname = if (playerSide == west) then {
+                    "AmmoBoxWest"
+                } else {
+                    "AmmoBoxGuer"
+                };
+    #endif
+    hint localize format["+++ x_setupplayer1.sqf: Antigua _spawn_point %1, _boxname %2",_spawn_point, _boxname];
 
-			hint localize "+++ Antigua ammoBox: simple ammo box cleared and filled with custom weapons";
+    _box = _boxname createVehicleLocal _spawn_point;
+    hint localize format["+++ x_setupplayer1.sqf: Antigua %1 createVehicleLocal %2 at %3", _boxname, _box, [_spawn_point,10 ] call SYG_MsgOnPosE0];
+    _box setDir (random 360);
+    _box setPos _spawn_point;
 
-		};
-	} else { hint localize "+++ Antigua ammoBox: simple ammo box is dead or absent near spawn_tent."; };
+    _box call SYG_clearAmmoBox;
+
+    if (playerSide == east) then {
+        { // fill created items into the box at each client ( so Arma-1 need, only items added manually on clients during gameplay are propagated through network to all clients )
+            _box addWeaponCargo [_x, 5];
+        } forEach ["ACE_AK74","ACE_AKS74U","ACE_Bizon","ACE_AKM"];
+
+        {
+            _box addMagazineCargo [_x, 50];
+            sleep 0.1;
+        } forEach ["ACE_30Rnd_545x39_BT_AK","ACE_30Rnd_545x39_SD_AK",
+                   "ACE_30Rnd_762x39_B_RPK","ACE_30Rnd_762x39_BT_AK","ACE_30Rnd_762x39_SD_AK","ACE_40Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK",
+                   "ACE_64Rnd_9x18_B_Bizon",
+                   "ACE_Bandage","ACE_Morphine","ACE_Epinephrine","ACE_Flashbang",
+                   "ACE_HandGrenadeRGN","ACE_HandGrenadeRGO"
+                ];
+
+        hint localize "+++ x_setupplayer1.sqf: Antigua simple ammo box cleared and filled with custom weapons";
+    };
 };
 #endif

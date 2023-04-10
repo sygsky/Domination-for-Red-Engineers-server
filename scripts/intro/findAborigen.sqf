@@ -50,14 +50,19 @@ _civ setBehaviour "Careless";
 _civ setCombatMode "BLUE";
 _civ setVariable [ABORIGEN, true];
 _civ playMove "AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"; // Seat on the gound
-
-// Restore aborigen if dead
-while {alive _civ} do {
-	sleep 120;
-	if (!alive _civ) exitWith {
-		["say_sound", getPos _civ, "steal"] call XSendNetStartScriptClientAll;
-		deleteVehicle _civ;
-		sleep 5;
-		[] execVM "scripts\intro\findAborigen.sqf"; // restart new aborigen
+_civ addEventHandler ["killed", {(_this select 0) call XAddDead0;
+    private ["_name"];
+	if (isPlayer (_this select 1)) then {
+	    _name = name (_this select 1);
+	    //-20 call SYG_addBonusScore;
+	    // "%1 killed a wonderful man, an Aborigen with a capital letter. He will be punished! For now, just -20 points."
+	    [ "change_score", _name, -20, ["msg_to_user", [ ["STR_ABORIGEN_KILLER", _name ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClient;
+	} else {
+	    // "Just now a wonderful man was killed, the Aborigen with a capital letter. But the enemy made a wrong move. And another will take his place!"
+	    ["msg_to_user", [ ["STR_ABORIGEN_KILLER_0"] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClient;
 	};
-};
+	hint localize  format["--- aborigen killed by %1(%2)!", _name, typeOf (_this select 1) ];
+	// TODO: add new aborigen
+	sleep 100 + (random 20);
+	[] execVM "scripts\intro\findAborigen.sqf";
+} ];

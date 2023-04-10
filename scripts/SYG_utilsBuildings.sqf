@@ -106,6 +106,29 @@ SYG_getRndBuildingPos = {
 };
 
 /**
+
+    Find and returns fathest building pos from orientation axis.
+    _pos = _house call SYG_getFathestPos;
+
+SYG_getFathestPos = {
+    if ( !(_this isKindOf "House") ) exitWith {[]};
+    _cnt = _this call SYG_housePosCount;
+    if (_cnt == 0) exitWith {[]};
+    _pos = _this worldToModel [0,-100,0]; // far point
+    _dist = 0;
+    _id = 0;
+    for "_i" from 0 to _сте -1 do {
+        _x = _this buildingPos _i;
+        _pos1 = _this worldToModel _x;
+        if ( (_pos distance _pos) > _dist ) then {
+            _id = _i; _dist = _pos distance _pos;
+        };
+    };
+    _this select _id
+};
+ */
+
+/**
  * Set designated object to the random building position
  * Call: [_building, _obj] call SYG_putObjToRndBuildingPos;
  * Returns true on success or false on error

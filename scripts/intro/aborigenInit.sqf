@@ -13,10 +13,6 @@
 #define ABORIGEN "ABORIGEN"
 
 _civ = _this;
-_civ addEventHandler ["killed", {(_this select 0) call XAddDead0;
-	if (isPlayer (_this select 1)) then { -20 call SYG_addBonusScore; };
-	["log2server", name player, "--- aborigen killed by me!" ]  call XSendNetStartScriptServer;
-} ];
 _civ setVariable [ABORIGEN, true];
 
 waitUntil {!isNull player};

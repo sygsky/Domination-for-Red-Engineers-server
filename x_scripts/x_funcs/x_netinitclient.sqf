@@ -940,7 +940,7 @@ XHandleNetStartScriptClient = {
         };
 
         // Change score of the player
-        // [ "change_score", "" || "*" || "name" || [ _name1, _name2..., _nameN ], _score_to_add_subtract<, _msg_parser_arr> ] execVM...
+        // [ "change_score", "" || "*" || "name" || [ _name1, _name2..., _nameN ], _score_to_add_subtract<, _msg_parser_arr> ] call XSendNetStartScriptClient[All];
         case "change_score" : {
         	private [ "_name", "_found" ];
         	hint localize format["*** change_score _this: %1", _this];

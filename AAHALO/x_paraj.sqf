@@ -5,7 +5,7 @@ new_paratype = _unit call SYG_getParachute; // Find parachute of player (if no p
 _ind = (SPAWN_INFO select 0) find new_paratype;
 _rect = (SPAWN_INFO select 2) select 1; // Second spawn rectangle with height of central point as default
 if (_ind < 0 ) then { 		// So parachute is absent
-	_rect = (SPAWN_INFO select 2) select _ind; // get rect assgned to this para type
+	_rect = (SPAWN_INFO select 2) select _ind; // get rect assigned to this para type
 };
 new_height = _rect select 2;
 
