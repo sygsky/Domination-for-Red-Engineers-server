@@ -4,8 +4,8 @@
 // 0: spawn point including height (needed)
 // 1: parachute type (string)
 // 2: vehicle type (if string) or jump score (if scalar, default vehicle is heli)
-// 3: use wind (true) or not (false)
-// 4: check circle hit (true) or not (1)
+// 3: optional use wind (true) or not (default false)
+// 4: optional check circle hit (true) or not (default false)
 // 5: ...
 // Example call: [ _spawn_point, _para<, "DC3" | 1<, false<, true| "ADD_PARA" >>>] execVM "AAHALO\jump.sqf";
 //
