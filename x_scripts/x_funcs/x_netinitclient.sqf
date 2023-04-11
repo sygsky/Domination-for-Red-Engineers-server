@@ -295,7 +295,7 @@ XHandleNetStartScriptClient = {
 		};
 		#ifndef __TT__
 		// creates markers for jump flags (it is possible to create them on server of course. But this is the decision of Xeno)
-		// call as: ["new_jump_flag",_flag, false] call XSendNetStartScriptClient;
+		// call as: ["new_jump_flag",_flag, is_town] call XSendNetStartScriptClient;
 		case "new_jump_flag": {
 			if (!d_no_para_at_all) then {
 				__compile_to_var;

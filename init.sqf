@@ -521,7 +521,7 @@ if (isServer) then {
 		// Disable jump flag on Antigua as it is too easy to reach base with it on initial jump
         // build flag on Antigua (by Yeti request)
         sleep 60; // wait 1 minute to ensure user to build flag on map
-        [17935.5,18920,0] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box
+        [[17935.5,18920,0],false] execVM "x_scripts\x_createjumpflag1.sqf"; // build soviet flag + ammo box on antigua
 
         // create outdoor toilet ("Land_KBud")
 		_obj = createVehicle ["Land_KBud", [0,0,0],[],0, "CAN_COLLIDE"];

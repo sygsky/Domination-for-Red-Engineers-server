@@ -1,10 +1,11 @@
 // by Xeno, x_newflagclient.sqf - executed on client comp only
-// Params: _this = ["new_jump_flag",_flag, false]
+// Params: _this = ["new_jump_flag",_flag, _is_town]
+// 3rd parameter is to inform players about town (if true) or secret place (if false) flag creation
 if (!X_Client) exitWith {};
 
-private ["_marker","_marker_name"];
-
 #include "x_setup.sqf"
+
+private ["_marker","_marker_name"];
 
 _marker_name = "";
 call compile format ["_marker_name = ""paraflag%1"";", client_target_counter];
@@ -24,9 +25,9 @@ if (d_jumpflag_vec == "") then {
 };
 #endif
 
-if (d_jumpflag_vec == "") then {
+if (d_jumpflag_vec == "") then { // no vehicles created near jump flag
 	new_jump_flag addAction [localize "STR_FLAG_1"/* "(Выбор места десантирования)" */,"AAHALO\x_paraj.sqf"];
-} else {
+} else { // Vehicles created at flag, not parajump option
 	_text = format [localize "STR_FLAG_7"/* "(Create %1)" */,d_jumpflag_vec];
 	new_jump_flag addAction [_text,"x_scripts\x_bike.sqf",[d_jumpflag_vec,1]];
 };

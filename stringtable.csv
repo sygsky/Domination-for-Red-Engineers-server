@@ -685,7 +685,7 @@ STR_SYS_339,New flag for parajump created at current target.,Neues flag für par
 STR_SYS_339_1,A new parajump flag was created at a secret base.,Eine neue Parajump-Flagge wurde in einer geheimen Basis erstellt.,Se ha creado una nueva bandera de parajump en una base secreta.,На секретной базе появился новый пункт десантирования.
 STR_SYS_340,New vehicle call flag created at current target.,Neues Fahrzeug anlegen-flag erstellt am aktuellen Ziel.,En la ciudad se ha creado un punto de llamada técnica.,В городе создан пункт вызова техники.
 STR_SYS_340_1,New vehicle call flag created at a secret base.,Neue Fahrzeug-Rufflagge wurde in einer geheimen Basis erstellt.,Se creó una nueva bandera de llamada de vehículos en una base secreta.,На секретной базе появился пункт вызова техники.
-STR_SYS_341,"The flag starts working only after you visit the base","Die Fahne funktioniert erst nach einem Besuch in der Basis","La bandera empieza a funcionar sólo después de una visita a la base","Флаг начинает работать только после посещения базы"
+STR_SYS_341,"This flag starts working only after you visit the base","Die Fahne funktioniert erst nach einem Besuch in der Basis","La bandera empieza a funcionar sólo después de una visita a la base","Флаг начинает работать только после посещения базы"
 
 STR_SYS_343,Show player marker names:,Show player marker Namen:,Mostrar marcadores de jugador:,Отображение маркеров игроков:
 STR_SYS_344,Show player marker direction:,Show player Markierung Richtung:,Mostrar la dirección de los marcadores de jugador:,Отображение направления у маркеров игроков:
