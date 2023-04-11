@@ -1,5 +1,13 @@
-﻿// Xeno, AAHALO\x_paraj.sqf - flag pole action "parajump"
+﻿//
+// Xeno, AAHALO\x_paraj.sqf - flag pole action "parajump"
 // e.g.: FLAG_BASE addAction [localize "STR_FLAG_1","AAHALO\x_paraj.sqf"];
+// +++ Sygsky: 2023-APR-11 stop using if player is not registered on base visited
+
+// first of all check if player visited the base before use the jump flag
+if (base_visit_mission < 1) exitWith {
+	player groupChat (localize "STR_SYS_341"); // "The flag starts working only after you visit the base"
+};
+
 _unit = _this select 1;
 new_paratype = _unit call SYG_getParachute; // Find parachute of player (if no parachute weared, "" returned)
 _ind = (SPAWN_INFO select 0) find new_paratype;
