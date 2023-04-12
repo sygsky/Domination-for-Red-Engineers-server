@@ -131,7 +131,7 @@ SYG_townScoresInit = {
 };
 
 //
-// Returns all active playe nmames
+// Returns all active players names
 //
 SYG_getOnlineNames = {
 	private ["_names","_x"];

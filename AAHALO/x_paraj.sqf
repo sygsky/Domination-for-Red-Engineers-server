@@ -17,7 +17,7 @@ if (_ind < 0 ) then { 		// So parachute is absent
 };
 new_height = _rect select 2;
 
-hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2, height is %3", _this, weapons _unit, new_height];
+hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2, height is %3, pos %4", _this, weapons _unit, new_height, (_this select 1) call SYG_msgOnPosE0];
 
 private ["_do_exit","_wait_score","_jump_score","_full_score"];
 
@@ -50,13 +50,13 @@ _do_exit = false;
 _wait_score = 0;
 _full_score = _jump_score;
 if ( d_para_timer_base > 0 ) then { // pass time interval to jump
-    if (
 #ifndef __TT__
-	position player distance FLAG_BASE < 15
+    _dist = position player distance FLAG_BASE;
 #else
-	position player distance RFLAG_BASE < 15 || position player distance WFLAG_BASE < 15
+    _dist = position player distance RFLAG_BASE < 15;
+    _dist = _dist min (position player distance WFLAG_BASE);
 #endif
-    ) then {
+    if ( _dist <= 15 ) then {
         _miss_mins = (d_next_jump_time - time)/60; // how many mins before next jump
         if ( _miss_mins > 0 ) then { // paid for all (and partial) munutes to wait from next free jump
             _miss_mins = ceil _miss_mins;
@@ -78,7 +78,7 @@ if ( d_para_timer_base > 0 ) then { // pass time interval to jump
         } else {
             (format [localize "STR_SYS_607", score player,_jump_score]) call XfHQChat; // "You need %2 point[s] for parajump. Your current scores are %1"
         };
-    } else {hint localize "--- x_paraj.sqf: player too far (> 15 m) from flag"};
+    } else {hint localize format["--- x_paraj.sqf: player too far (%1 > 15 m) from flag", _dist]};
 };
 if (_do_exit) exitWith {};
 
