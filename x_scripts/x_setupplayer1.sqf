@@ -304,7 +304,7 @@ if (!isNil "spawn_tent") then {
     if (!alive spawn_tent) then  {
         hint localize "--- x_setupplayer1.sqf: tent on Antigua is dead, create ammo in any case";
     };
-    _spawn_point = spawn_tent call SYG_getRndBuildingPos;
+    _spawn_point = spawn_tent buildingPos ([2,3] call XfRandomArrayVal);
     hint localize format["+++ x_setupplayer1.sqf: Antigua _spawn_point %1(%2), tent at % 3",_spawn_point, [_spawn_point,10 ] call SYG_MsgOnPosE0, [spawn_tent,10 ] call SYG_MsgOnPosE0];
     private ["_boxname"];
 
@@ -330,7 +330,7 @@ if (!isNil "spawn_tent") then {
 
     _box = _boxname createVehicleLocal _spawn_point;
     hint localize format["+++ x_setupplayer1.sqf: Antigua %1 createVehicleLocal %2 at %3", _boxname, _box, [_spawn_point,10 ] call SYG_MsgOnPosE0];
-    _box setDir (random 360);
+//    _box setDir (random 360); // no rotation, default is good enough
     _box setPos _spawn_point;
 
     _box call SYG_clearAmmoBox;

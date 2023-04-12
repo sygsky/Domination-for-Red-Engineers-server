@@ -56,9 +56,10 @@ _create_water_point_near_Antigua = {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _arg = _this select 3;
 _isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
-_pos = _isle select 1; // ialse center
+_pos = _isle select 1; // isle center
 _rad = _isle select 2;
 _civ = _this select 0;
+_civ setDir ([_civ, player] call XfDirToObj);
 
 hint localize format["+++ ABORIGEN STAT: is aborigen local %1", local (_this select 0)];
 switch ( _arg ) do {
@@ -99,7 +100,7 @@ switch ( _arg ) do {
 					_marker_arr set [count _marker_arr, _marker];
 				};
 			};
-
+			_marker = "";
 			// find random alive empty boat from group of boats near any boat marker
 			for "_i" from 1 to count _marker_arr do {
 				_marker = _marker_arr call XfRandomArrayVal;
@@ -120,14 +121,24 @@ switch ( _arg ) do {
 			_boat setDir (random 360);
 			_boat setPos _pnt;
 			_boat say "return";
-			hint localize format["+++ Boat: moved to the point near Antigua %1", _pnt];
+			hint localize format["+++ Boat: moved to the point near Antigua %1 !", getPos _boat];
         };
 		player groupChat format[localize "STR_ABORIGEN_BOAT_INFO",
 			(round((player distance _boat)/10)) * 10,
 			([player, _boat] call XfDirToObj) call SYG_getDirName
 			]; // "The nearest boat is %1 m away direction %2"
-		(_this select 0) doWatch _boat;
-		(_this select 0) spawn {sleep 5; _this doWatch objNull};
+        // Set marker for the detected boat
+		_type =  getMarkerType _marker;
+		_marker = "aborigen_boat";
+		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent
+			_marker = createMarkerLocal[_marker, getPos _boat];
+			_marker setMarkerTypeLocal _type;
+			_marker setMarkerColorLocal "ColorGreen";
+			hint localize format["+++ Boat: created marker (%1) set to the point near Antigua %2", _type, getPos _boat];
+		} else {
+			hint localize format["+++ Boat: existed marker (%1) moved to the point near Antigua %2", _type, getPos _boat];
+		};
+		_marker setMarkerPosLocal (getPos _boat);
 	};
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
