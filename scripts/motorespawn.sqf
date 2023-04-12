@@ -65,7 +65,7 @@ if ( (typeName (_this select 0)) == "ARRAY") then { // [[moto1, moto2...], DELAY
 	_this = _this select 0;
 };
 
-hint localize format["+++ motorespawn.sqf: service started with name '%1;", _service_name];
+hint localize format["+++ motorespawn.sqf: service started with name '%1';", _service_name];
 // read all vehicles and store their initial position and angles
 for "_i" from 0 to count _this -1 do { // list all motocyrcles/automobiles
 	_x = _this select _i;

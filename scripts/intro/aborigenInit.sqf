@@ -64,9 +64,8 @@ if ((markerType "aborigen_marker") == "") then {
 
 _civ setMimic "Normal";
 // Do watch while alive or near
-_civ doWatch player;
+_civ setDir ([_civ, player] call XfDirToObj);
 while { (alive _civ) && (alive player) && ((player distance _civ) < 40)} do { sleep 5};
-_civ doWatch objNull;
 _civ spawn {
 	private ["_list","_civ"];
 	_civ = _this;
@@ -91,11 +90,8 @@ _civ spawn {
 		_arr = _civ nearObjects [ "CAManBase", 50];
 		_cnt = {(canStand _x) && (isPlayer _x)} count _arr;
 		if (_cnt  == 1) then { // only for single player
-			_civ doWatch player;
-			sleep 1;
-			_civ switchMove (_list select _i);
-			sleep 9;
-			_civ doWatch objNull;
+			_civ setDir ([_civ, player] call XfDirToObj);
+			sleep 10;
 		};
 		sleep (random 5);
 	};
