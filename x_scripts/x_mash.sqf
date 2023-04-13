@@ -1,5 +1,5 @@
 // x_mash.sqf, by Xeno
-// TODO: localize this file, stringtable items from STR_SYS_07
+
 private ["_dir_to_set","_m_name","_marker"];
 
 #include "x_setup.sqf"

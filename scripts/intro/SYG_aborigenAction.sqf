@@ -1,5 +1,5 @@
 /*
-	SYG_aborigenAction.sqf
+	scripts\intro\SYG_aborigenAction.sqf
 	author: Sygsky
 	description:
 		Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]
@@ -15,6 +15,7 @@
 
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenAction.sqf: unknown _this = %1", _this]};
 
+if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"
 // create point in the water near Antigus
 _create_water_point_near_Antigua = {
 
@@ -58,19 +59,24 @@ _arg = _this select 3;
 _isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
 _pos = _isle select 1; // isle center
 _rad = _isle select 2;
-_civ = _this select 0;
-_civ setDir ([_civ, player] call XfDirToObj);
 
-hint localize format["+++ ABORIGEN STAT: is aborigen local %1", local (_this select 0)];
+// Rotate aborigen to player, try server command
+if (!local aborigen) then {
+	["remote_execute", format ["aborigen setDir %1;", ([aborigen, player] call XfDirToObj)]] call XSendNetStartScriptServer;
+} else { aborigen setDir ([aborigen, player] call XfDirToObj) };
+
+hint localize format["+++ ABORIGEN STAT: aborigen locality %1", local (_this select 0)];
 switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "BOAT": { // ask about boats
-		// TODO: find distance to the boat type "Zodiac" ( small boats )
+		if (base_visit_mission > 0) exitWith {player groupChat (localize "STR_ABORIGEN_BOAT_INFO_0")}; // "Boats? There are a lot of them... on every kilometer of the coast of the Main Sahrani."
+		// find distance to the boat type "Zodiac" ( small boats )
 		_boat = objNull;
 		_arr = nearestObjects [_pos, ["Zodiac"], _rad];
 		// Check nearest boats to be out of "boats13" marker
 		_pos = markerPos "boats13";
+		_marker = "";  // It will be marker of selected boat
 		{
 			if (alive _x) then {
 				if ( ( _x distance _pos ) > 50 ) then {
@@ -94,26 +100,29 @@ switch ( _arg ) do {
 			// Find a boat from a group of more than 1, near one of the markers
 			_marker_arr = [];
 			for "_i" from 1 to 100 do {
-				if (_i != 13) then {
+				if (_i != 13) then { // skip boat on Antigua from calculations
 					_marker = format["boats%1", _i];
 					if ( (MarkerType _marker) == "") exitWith {};
-					_marker_arr set [count _marker_arr, _marker];
+					_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
+					if ({(alive _x) && (({alive _x} count crew _x) == 0) } count _arr > 1) exitWith {
+						_marker_arr set [count _marker_arr, _marker];
+					};
 				};
 			};
-			_marker = "";
+			sleep 0.1;
+			hint localize format["+++ Boat: found good markered groups %1", count _arr];
 			// find random alive empty boat from group of boats near any boat marker
 			for "_i" from 1 to count _marker_arr do {
 				_marker = _marker_arr call XfRandomArrayVal;
 				_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
-				if ({alive _x} count _arr > 1) exitWith {
-					_boat = _arr select 0;
-					hint localize format["+++ Boat: found at marker %1, pos %2", _marker, getPos _x];
-				};
+				_boat = _arr select 0;
+				hint localize format["+++ Boat: found at marker ""%1"", pos %2", _marker, (markerPos _marker) call SYG_MsgOnPosE0];
 			};
 		};
 
         if (!(alive _boat)) exitWith {
         	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
+			hint localize "--- Boat: no good markered boat groups found at all, skip...";
         };
         _pnt = getPos _boat; // Not reset this value as it allows to point where boat was at this check!
         if ( (_boat distance _pos) > _rad) then {
@@ -123,17 +132,19 @@ switch ( _arg ) do {
 			_boat say "return";
 			hint localize format["+++ Boat: moved to the point near Antigua %1 !", getPos _boat];
         };
-		player groupChat format[localize "STR_ABORIGEN_BOAT_INFO",
+		player groupChat format[localize "STR_ABORIGEN_BOAT_INFO", // "The nearest boat (%1) is %2 m away direction %3"
+			typeOf _boat,
 			(round((player distance _boat)/10)) * 10,
 			([player, _boat] call XfDirToObj) call SYG_getDirName
-			]; // "The nearest boat is %1 m away direction %2"
+		];
         // Set marker for the detected boat
-		_type =  getMarkerType _marker;
+		_type =  getMarkerType _marker; // boat marker
 		_marker = "aborigen_boat";
 		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent
 			_marker = createMarkerLocal[_marker, getPos _boat];
 			_marker setMarkerTypeLocal _type;
 			_marker setMarkerColorLocal "ColorGreen";
+			_marker setMarkerSizeLocal [0.5,0.5];
 			hint localize format["+++ Boat: created marker (%1) set to the point near Antigua %2", _type, getPos _boat];
 		} else {
 			hint localize format["+++ Boat: existed marker (%1) moved to the point near Antigua %2", _type, getPos _boat];
@@ -143,8 +154,11 @@ switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "CAR": { // ask about boats
+		if (base_visit_mission > 0) exitWith {player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText))}; // "Sorry. I don't know anything about cars. We live here."}; // "Boats? There are a lot of them... on every kilometer of the coast of the Main Sahrani."
+
 //		player groupChat format[localize "STR_ABORIGEN_CAR_NONE"]; // "Sorry. I don't know anything about cars. We live here."
 //		if (true) exitWith{};
+
 		private ["_veh", "_marker_veh"];
 		
 		// find best vehicle to mark it for this player
@@ -215,9 +229,9 @@ switch ( _arg ) do {
 //		_arr = nearestObjects [ player, ["WeaponHolder","AmmoBoxWest","WeaponBoxWest","SpecialBoxWest","AmmoBoxEast","WeaponBoxEast","SpecialBoxEast","AmmoBoxGuer"], 2000 ];
 		_arr = nearestObjects [ player, ["ReammoBox"], 2500 ];
 		if ( (count _arr) == 0) exitWith {
-			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat;
+			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat; // "Looks like there aren't any guns here, hehe"
 		};
-		_txt = format[ localize "STR_ABORIGEN_WEAPON_INFO",
+		_txt = format[ localize "STR_ABORIGEN_WEAPON_INFO", // I saw some kind of weapon at %1 m towards %2%3
                				(round (([player,_arr select 0] call SYG_distance2D) / 10)) * 10,
                				([player, _arr select 0] call XfDirToObj) call SYG_getDirName,
                				if ((_arr select 0) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
@@ -254,15 +268,21 @@ switch ( _arg ) do {
 	case "GO" : {
 		hint localize "+++ Aborigen GO!!!";
 		player groupChat (localize "STR_SYS_400_1"); // "Yes"
-		_civ say "hisp3"; // "Bolo" ?
-		_civ doFollow player;
-		_time = time + 40; // follow only 40 seconds then stop again
-		while {(alive _civ) && (alive player) && (time < _time)} do {sleep 3};
-		_civ doFollow _civ;
+		aborigen say "hisp3"; // "Bolo" ?
+		if (local aborigen) then {
+			aborigen doFollow player;
+			_time = time + 40; // follow only 40 seconds then stop again
+			while {(alive aborigen) && (alive player) && (time < _time)} do {sleep 3};
+			aborigen doFollow aborigen;
+		} else {
+			_str = format["+++ GO: str(%1), format[%2]", str (player), format["%1", player]];
+			player groupChat _str;
+			hint localize _str;
+		};
 	};
 	case "NAME": {
-		_name = name _civ;
-		if (_name in [ "" ,"Error: No unit"]) then { _name = localize "STR_ABORIGEN_NAME_UNKNOWN"; }; // "doesn't matter"
+		_name = name aborigen;
+		if (_name in [ "Error: No unit", "" ]) then { _name = localize "STR_ABORIGEN_NAME_UNKNOWN"; }; // "doesn't matter"
 		player groupChat format[localize "STR_ABORIGEN_NAME_1", _name]; // "My name %1. What's yours?"
 	};
 	default {

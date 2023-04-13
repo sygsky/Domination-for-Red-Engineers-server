@@ -1,5 +1,5 @@
 /*
-	aborigenInit.sqf
+	scripts\intro\aborigenInit.sqf
 	author: Sygsky
 	description: add all actions and events to the aborigen on player client
 	returns: nothing
@@ -10,65 +10,68 @@
 */
 #include "x_setup.sqf"
 
+if (isNil "aborigen") exitWith {"--- aborigenInit.sqf: ""aborigen"" var is nil, exit"};
+while {!alive aborigen} do {sleep 5};
+
 // not all players can use Antigua items except killed event
-if (!((name player) in __ARRIVED_ON_ANTIGUA__)) exitWith {format["+++ Antigua: you '%1' cant to arrive at Antigua, exit.", name player]};
+//if (!((name player) in __ARRIVED_ON_ANTIGUA__)) exitWith {format["+++ Antigua: you '%1' cant to arrive at Antigua, exit.", name player]};
 
 #define ABORIGEN "ABORIGEN"
 
-_civ = _this;
-_civ setVariable [ABORIGEN, true];
+_val = aborigen getVariable ABORIGEN;
+if ( !isNil "_val" ) exitWith { hint localize "*** Aborigen alive and already intialized!" };
+aborigen setVariable [ABORIGEN, true];
 
 waitUntil {!isNull player};
 
-hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf _civ, [_civ, 10] call SYG_MsgOnPosE0];
+hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf aborigen, [aborigen, 10] call SYG_MsgOnPosE0];
 
 // TODO: add follow sub-menus to the civilian:
 // 1. "Ask about boats". 2. "Ask about cars". 3. "Ask about weapons". 4. "Ask about soldiers". 5. "Ask about rumors"
 
 {
-	_civ addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
-} forEach ["BOAT", "CAR", "WEAPON", "MEN", "RUMORS","GO","NAME"];
+	aborigen addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
+} forEach ["NAME", "BOAT", "CAR", "WEAPON", "MEN", "RUMORS","GO"];
 
 while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // while out of Antigua
 
 while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
 
-if (alive _civ) then { // show info
-	player groupChat format [localize "STR_ABORIGEN_INFO", round (player distance _civ), ([player,_civ] call XfDirToObj) call SYG_getDirName]; // "Aborigen is on dist. %1 to %2"
+if (alive aborigen) then { // show info
+	player groupChat format [localize "STR_ABORIGEN_INFO", round (player distance aborigen), ([player,aborigen] call XfDirToObj) call SYG_getDirName]; // "Aborigen is on dist. %1 to %2"
 } else {
 	player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Giggle while not closer than 5 meters
-while {(player distance _civ) > 5} do {
+while {(player distance aborigen) > 5} do {
 	sleep (5 + (random 2));
-	_civ setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
+	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
 
-	_civ say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
+	aborigen say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
 
-	_civ setDir (getDir _civ) + ((random 20) - 10);
+	aborigen setDir (getDir aborigen) + ((random 20) - 10);
 };
 
 // set marker on civ
 _marker = "aborigen_marker";
 if ((markerType "aborigen_marker") == "") then {
-	_marker = createMarkerLocal[_marker, getPosASL _civ];
+	_marker = createMarkerLocal[_marker, getPosASL aborigen];
 	_marker setMarkerTypeLocal  "Vehicle";
 	_marker setMarkerColorLocal "ColorGreen";
-	if ( (name _civ) == "Error: No unit") then {
+	if ( (name aborigen) == "Error: No unit") then {
 		_marker setMarkerTextLocal ("*");
-	} else { _marker setMarkerTextLocal (name _civ); };
+	} else { _marker setMarkerTextLocal (name aborigen); };
 
 	_marker setMarkerSizeLocal [0.5, 0.5];
 };
 
-_civ setMimic "Normal";
+aborigen setMimic "Normal";
 // Do watch while alive or near
-_civ setDir ([_civ, player] call XfDirToObj);
-while { (alive _civ) && (alive player) && ((player distance _civ) < 40)} do { sleep 5};
-_civ spawn {
-	private ["_list","_civ"];
-	_civ = _this;
+aborigen setDir ([aborigen, player] call XfDirToObj);
+while { (alive aborigen) && (alive player) && ((player distance aborigen) < 40)} do { sleep 5};
+aborigen spawn {
+	private ["_list","_arr","_cnt"];
 	_list = [
 		"ActsPercMstpSlowWrflDnon_Lolling",  // Stretches, as if the unit has just woken up
 		"ActsPercMstpSnonWnonDnon_DancingDuoIvan", // Does various dance moves
@@ -86,21 +89,30 @@ _civ spawn {
 		"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
 	];
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
-	while { (canStand _civ) && ((player distance _civ) > 30)} do {
-		_arr = _civ nearObjects [ "CAManBase", 50];
+	while { (canStand aborigen) && ((player distance aborigen) > 30)} do {
+		_arr = aborigen nearObjects [ "CAManBase", 50];
 		_cnt = {(canStand _x) && (isPlayer _x)} count _arr;
 		if (_cnt  == 1) then { // only for single player
-			_civ setDir ([_civ, player] call XfDirToObj);
+			if (local aborigen) then {
+				aborigen setDir ([aborigen, player] call XfDirToObj);
+				aborigen playMove (_list call XfRandomArrayVal);
+			} else {
+				["remote_execute",
+					format["aborigen setDir %1; aborigen playMove ""%2"";",
+						[aborigen, player] call XfDirToObj, _list call XfRandomArrayVal
+					]
+				] call XSendNetStartScriptServer;
+			};
 			sleep 10;
 		};
 		sleep (random 5);
 	};
 };
 
-while {alive _civ} do {
+while {alive aborigen} do {
 	sleep 10;
-	if ( ([getMarkerPos _marker, getPosASL _civ] call SYG_distance2D) > 10) then {
-		_marker setMarkerPosLocal (getPosASL _civ);
+	if ( ([getMarkerPos _marker, getPosASL aborigen] call SYG_distance2D) > 10) then {
+		_marker setMarkerPosLocal (getPosASL aborigen);
 	};
 };
 deleteMarkerLocal _marker;

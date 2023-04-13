@@ -297,7 +297,8 @@ ai_counter = 0;
 #ifdef __ARRIVED_ON_ANTIGUA__
 if (! (name player in __ARRIVED_ON_ANTIGUA__)) exitWith {"*** x_setupplayer1.sqf: player doesn't need ammo-box on Antigus, skipped"};
 if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already visited base, no need for aborigen/ammo-box, skipped"};
-if (!isNil "spawn_tent") then {
+[] spawn {
+	private ["_box","_spawn_point","_boxname",""];
 	_box = nearestObject [getPos spawn_tent, "ReammoBox"];
 	// create personal ammobox
     hint localize "+++ x_setupplayer1.sqf: Call start";
@@ -350,7 +351,8 @@ if (!isNil "spawn_tent") then {
                    "ACE_HandGrenadeRGN","ACE_HandGrenadeRGO"
                 ];
 
-        hint localize "+++ x_setupplayer1.sqf: Antigua simple ammo box cleared and filled with custom weapons";
+        hint localize "+++ x_setupplayer1.sqf: Antigua simple ammo box loaded with custom weapons";
     };
+	[] execVM "scripts\intro\aborigenInit.sqf";
 };
 #endif
