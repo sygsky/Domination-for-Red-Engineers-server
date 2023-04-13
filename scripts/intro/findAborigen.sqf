@@ -29,14 +29,16 @@ if (_alive) exitWith {
 if (typeName _this == "SCALAR") then { // sleep needed period
 	if (_this > 0 ) then {sleep _this};
 };
-_newgroup = call SYG_createCivGroup;
-//		hint localize format["+++ findAborigen.sqf: group created %1", _newgroup];
 _type = format ["Civilian%1", (floor (random 19)) + 2];
 //		hint localize format["+++ findAborigen.sqf: civ not found, create unit with type %1", _type];
 _pos = [[17352,17931,100], 100, 100, 0] call XfGetRanPointSquareOld; // No flat position requested, use smallest rect
 //		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];
-aborigen = _type createVehicle _pos;
+_newgroup = call SYG_createCivGroup;
+hint localize format["+++ findAborigen.sqf: group created %1", _newgroup];
+aborigen = _newgroup createunit [_type, _pos, [], 0,"NONE"];
+[aborigen] join _newgroup;
 publicVariable "aborigen";
+hint localize format["+++ findAborigen.sqf: aborigen group is %1", group aborigen];
 
 // assign all events for new aborigen
 sleep 3;

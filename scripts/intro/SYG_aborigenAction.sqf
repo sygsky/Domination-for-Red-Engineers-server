@@ -55,15 +55,17 @@ _create_water_point_near_Antigua = {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+                       START HERE                          +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-_arg = _this select 3;
+_arg = toUpper(_this select 3);
 _isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
 _pos = _isle select 1; // isle center
 _rad = _isle select 2;
 
 // Rotate aborigen to player, try server command
-if (!local aborigen) then {
-	["remote_execute", format ["aborigen setDir %1;", ([aborigen, player] call XfDirToObj)]] call XSendNetStartScriptServer;
-} else { aborigen setDir ([aborigen, player] call XfDirToObj) };
+if ( !(_arg in ["GO"])) then {
+	if (!local aborigen) then {
+		["remote_execute", format ["aborigen setDir %1;", ([aborigen, player] call XfDirToObj)]] call XSendNetStartScriptServer;
+	} else { aborigen setDir ([aborigen, player] call XfDirToObj) };
+};
 
 hint localize format["+++ ABORIGEN STAT: aborigen locality %1", local (_this select 0)];
 switch ( _arg ) do {
@@ -144,7 +146,7 @@ switch ( _arg ) do {
 			_marker = createMarkerLocal[_marker, getPos _boat];
 			_marker setMarkerTypeLocal _type;
 			_marker setMarkerColorLocal "ColorGreen";
-			_marker setMarkerSizeLocal [0.5,0.5];
+			_marker setMarkerSizeLocal [0.7,0.7];
 			hint localize format["+++ Boat: created marker (%1) set to the point near Antigua %2", _type, getPos _boat];
 		} else {
 			hint localize format["+++ Boat: existed marker (%1) moved to the point near Antigua %2", _type, getPos _boat];
@@ -270,14 +272,10 @@ switch ( _arg ) do {
 		player groupChat (localize "STR_SYS_400_1"); // "Yes"
 		aborigen say "hisp3"; // "Bolo" ?
 		if (local aborigen) then {
-			aborigen doFollow player;
-			_time = time + 40; // follow only 40 seconds then stop again
-			while {(alive aborigen) && (alive player) && (time < _time)} do {sleep 3};
-			aborigen doFollow aborigen;
+			player execVM "scripts\intro\follow.sqf";
 		} else {
-			_str = format["+++ GO: str(%1), format[%2]", str (player), format["%1", player]]; // str(player) gives text form of the player role in the session
-			player groupChat _str;
-			hint localize _str;
+			["remote_execute", format ["%1 execVM ""scripts\intro\follow.sqf""", str(player)]] call XSendNetStartScriptServer;
+//			["remote_execute", format ["aborigen doWatch %1;", str(player)]] call XSendNetStartScriptServer;
 		};
 	};
 	case "NAME": {

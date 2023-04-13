@@ -108,7 +108,7 @@ x_createGroupA = {
 	};
 	if (typeName _side != "SIDE") exitWith{ hint localize format["--- x_createGroup error: Expected side unknown, typeName  ""%1"", value %2", typeName _side, _side]};
 	_grp = grpNull;
-	_side_arr = switch (toUpper(str(_side))) do {case east: {groups_east};case west: {groups_west};case resistance: {groups_resistance};case civilian: {groups_civilian};};
+	_side_arr = switch (_side) do {case east: {groups_east};case west: {groups_west};case resistance: {groups_resistance};case civilian: {groups_civilian};};
 	_found_empty = false;
 	// 1. Clear all groups array from empty items
 	if ( count _side_arr > 0 ) then {

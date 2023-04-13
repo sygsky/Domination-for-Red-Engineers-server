@@ -1729,6 +1729,8 @@ STR_ABORIGEN_MEN_NONE,"People? Where do people come from? There aren't any! Just
 STR_ABORIGEN_RUMORS,Rumors?,Gerüchte?,¿Rumores?,"Что слышно?"
 
 STR_ABORIGEN_GO,Will you go with me?,Kommst du mit mir?,¿Vendrás conmigo?,Пойдёшь со мной?
+STR_ABORIGEN_GO_TIMEOUT,"That's all. I'm  tired to follow you, %1...","Das ist alles. Ich bin es leid, dir zu folgen, %1...","Eso es todo. Estoy cansado de seguirte, %1...","Всё. Я устал ходить за тобой, %1..."
+STR_ABORIGEN_GO_DISTOUT,"That's it. I'm not going any further, got tired, %1...","Das war's. Ich gehe nicht mehr weiter, bin müde, %1...","Se acabó. No voy a ir más lejos, me cansé, %1...","Всё. Дальше не пойду, устал, %1..."
 
 STR_ABORIGEN_NAME,What's your name?,Ihr Name?,¿Su nombre?,Ваше имя?
 STR_ABORIGEN_NAME_1,My name %1. What's yours?,,,Моё имя %1. A Ваше?

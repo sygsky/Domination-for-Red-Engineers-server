@@ -269,7 +269,7 @@ SYG_handleWP = {
 	if (!X_Client) exitWith { hint localize "--- SYG_handleWP: called not on client, exit" };
 	private ["_cmd","_wpa","_wp","_grp","_str","_last"];
 	_cmd = _this;
-	hint localize format["+++ SYG_handleWP: cmd = ""%1""", _cmd];
+//	hint localize format["+++ SYG_handleWP: cmd = ""%1""", _cmd];
 	if (typeName _cmd == "ARRAY") then {
 		if (count _cmd == 0) exitWith {hint localize "--- SYG_handleWP: expected parameters array size 1 or 2, detected 0"};
 		if ( (toUpper(_cmd select 0)) in ["REMOVE","COUNT"]) then {_cmd = _cmd select 0};
