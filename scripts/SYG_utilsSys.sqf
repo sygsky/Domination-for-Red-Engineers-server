@@ -20,7 +20,7 @@
 /*
  * Answer to initiation message sent from client as follow:
  * _name = name player;
- * ["d_p_varname",_name,str(player)] call XSendNetStartScriptServer;
+ * ["d_p_varname",_name,str(player)<,"LANGUAGE">] call XSendNetStartScriptServer;
  */
 SYG_d_p_varname =  {
 	private ["_index","_parray", "_msg_arr","_name","_msg","_equip_empty","_equipment","_wpnArr","_settingsArr",

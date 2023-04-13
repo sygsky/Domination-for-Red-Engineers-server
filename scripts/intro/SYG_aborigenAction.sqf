@@ -275,7 +275,7 @@ switch ( _arg ) do {
 			while {(alive aborigen) && (alive player) && (time < _time)} do {sleep 3};
 			aborigen doFollow aborigen;
 		} else {
-			_str = format["+++ GO: str(%1), format[%2]", str (player), format["%1", player]];
+			_str = format["+++ GO: str(%1), format[%2]", str (player), format["%1", player]]; // str(player) gives text form of the player role in the session
 			player groupChat _str;
 			hint localize _str;
 		};
