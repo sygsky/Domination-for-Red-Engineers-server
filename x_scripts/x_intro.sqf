@@ -452,8 +452,7 @@ _spawn_point  = getPos player;
 #ifdef __DEFAULT__
     // 7703.5,7483.2, 0
 	// array of camera turn points. Last point is for illusion object creation point.If it is NUMBER in range {0..last_turn_point_index-1>} designated index turn point is used for illusion
-  _camstart = 
-  [
+  _lines = [
     [[1947,19059,1],[2260,18839,10],[4979,15480,40],[8982.5,10777,150],1], // Island Parvulo (1)
     [[18361,18490,1],[14260,15170,30],[11141,13340,50],[18127,18337,0]], // Isle Antigua (2)
     [[19684.6,14128.7,25],[17681.2,13076.8,40],[15397.76,11924.51,50],[11420,8570,20],[10869,9172,40],[19356,14018,0]], // Pita (3)
@@ -462,7 +461,8 @@ _spawn_point  = getPos player;
 	[[12113,5833,1],[11820,6059,6],[11717.1,6068.6,15],[11642,6336,15],[11480,6658,15],[11147,7138,11],[10992,7749,21],[11014,7990,31],[11121,8155,51],[11420,8570,46],[10869,9172,41],[12025,6082,0]], // Dolores (6)
 	[[6111,17518,1],[7355,17182,60],[12221,15217,50],[12000,14618,50],[10719,14222,70],[8982.5,10777,150],[12270,15217,0]], // Cabo Valiente (7)
 	[[19682,12457,1],[19454,11893,20],[17985,9733,20],[16713,8909,20],[15541,8262,20],[13968,7852,20],[13222,8655,30],[12746,9138,10],[12490,10850,30],[9369,11208,10],[8981,10777,40], 7]// 1.5 км to south of Pita near the shore in open sea (8)
-  ] call _SYG_selectIntroPath;
+  ];
+  _camstart = _lines call _SYG_selectIntroPath;
   _pos = _camstart select 1;
   // last pos is illusion object one. If number found it means index of point to use as pos, else it means pos3D to build illusion
   _lobjpos = _camstart select ((count _camstart) - 1);
@@ -508,8 +508,9 @@ _camstart set [count _camstart -1, _tgt]; // replace illusion position with end 
 
 #ifdef __CONNECT_ON_PARA__
 if (_doJump) then {
-    // last-1 point is player pos, last is special one
-    _camstart set [count _camstart, _spawn_point]; // replace illusion position with end point (player pos)
+    // last-1 point is player pos, last and last+1 are special ones
+	_camstart set [count _camstart, (_lines select 1) select 1]; // add Pico de Perez as next WP for the camera
+    _camstart set [count _camstart, _spawn_point]; // add Antigua WP for the camera
 };
 #endif
 
