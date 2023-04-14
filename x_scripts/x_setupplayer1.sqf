@@ -295,7 +295,6 @@ ai_counter = 0;
 #endif
 
 #ifdef __ARRIVED_ON_ANTIGUA__
-if (! (name player in __ARRIVED_ON_ANTIGUA__)) exitWith {"*** x_setupplayer1.sqf: player doesn't need ammo-box on Antigus, skipped"};
 if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already visited base, no need for aborigen/ammo-box, skipped"};
 [] spawn {
 	private ["_box","_spawn_point","_boxname",""];

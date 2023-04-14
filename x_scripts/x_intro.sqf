@@ -357,8 +357,8 @@ waitUntil { !(isNil "base_visit_session") }; // wait info about local base visit
 #ifdef __ARRIVED_ON_ANTIGUA__
 // Arrival on Antigua only if base not visited during mission and user is Snooper or EngineerACE.
 // Later after debugging all players will go through Antigua trip
-hint localize format["+++ x_intro: __ARRIVED_ON_ANTIGUA__ = %1", __ARRIVED_ON_ANTIGUA__ ];
-if ( ((name player) in __ARRIVED_ON_ANTIGUA__) && (base_visit_mission < 1)) then {
+hint localize "+++ x_intro: __ARRIVED_ON_ANTIGUA__ defined";
+if (base_visit_mission < 1) then {
 	_arr1 = [[17337,17883,500], 360, 280, 25 ]; // Big rect on Antigua hills
 	_arr2 = [[17352,17931,100], 140, 140, 0]; 	 // Small rect on Antigua hills
 
@@ -407,12 +407,6 @@ if (_owned_para != "") then {
 if (_doJump) then {
     format["+++ x_intro: Do jump now, _dt %1 secs ago", _dt ];
 
-//    #ifdef __ARRIVED_ON_ANTIGUA__
-	// create all environment for Antigua arrival (boats/marine patrols/ammobox/transport vehicles etc
-//	if ((name player) in __ARRIVED_ON_ANTIGUA__) then {
-//		[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
-//	};
-//	#endif
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     //      define parachute type (round of square)
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -947,7 +941,7 @@ if (_doJump) then {
     //                               JUMP
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #ifdef __ARRIVED_ON_ANTIGUA__
-    if (((name player) in __ARRIVED_ON_ANTIGUA__) && (base_visit_mission < 1)) then {
+    if ( base_visit_mission < 1 ) then {
     	[ _spawn_point, _para, "DC3", false, "ADD_PARA"] execVM "AAHALO\jump.sqf";
     } else {
     #endif

@@ -62,12 +62,13 @@ _rad = _isle select 2;
 
 // Rotate aborigen to player, try server command
 if ( !(_arg in ["GO"])) then {
+	aborigen doWatch player;
 	if (!local aborigen) then {
 		["remote_execute", format ["aborigen setDir %1;", ([aborigen, player] call XfDirToObj)]] call XSendNetStartScriptServer;
 	} else { aborigen setDir ([aborigen, player] call XfDirToObj) };
 };
 
-hint localize format["+++ ABORIGEN STAT: aborigen locality %1", local (_this select 0)];
+//hint localize format["+++ ABORIGEN STAT: aborigen locality %1", local (_this select 0)];
 switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -89,22 +90,12 @@ switch ( _arg ) do {
 			if (alive _boat) exitWith {};
 		} forEach _arr;
 
-		// Don't search boats at Antigua marker
-/**		{
-			if (alive _boat) exitWith {
-				_boat = _x;
-				_x setDamage 0;
-				_x setFuel (0.333333 max (fuel _x)) ;
-			};
-		} forEach _arr;
-*/
-		if (!alive _boat) then {
-			// Find a boat from a group of more than 1, near one of the markers
+		if (!alive _boat) then { // Find a boat from a group of more than 1 boats, near any of the boats markers
 			_marker_arr = [];
 			for "_i" from 1 to 100 do {
-				if (_i != 13) then { // skip boat on Antigua from calculations
+				if (_i != 13) then { // skip boats on Antigua from calculations
 					_marker = format["boats%1", _i];
-					if ( (MarkerType _marker) == "") exitWith {};
+					if ( (markerType _marker) == "") exitWith {};
 					_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 					if ({(alive _x) && (({alive _x} count crew _x) == 0) } count _arr > 1) exitWith {
 						_marker_arr set [count _marker_arr, _marker];
@@ -112,20 +103,21 @@ switch ( _arg ) do {
 				};
 			};
 			sleep 0.1;
-			hint localize format["+++ Boat: found good markered groups %1", count _arr];
+			hint localize format["+++ Boat: last checked marker %1 of groups of %2 boats", _marker, count _arr];
 			// find random alive empty boat from group of boats near any boat marker
 			for "_i" from 1 to count _marker_arr do {
 				_marker = _marker_arr call XfRandomArrayVal;
-				_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
+				_arr_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 				_boat = _arr select 0;
-				hint localize format["+++ Boat: found at marker ""%1"", pos %2", _marker, (markerPos _marker) call SYG_MsgOnPosE0];
+				hint localize format["+++ Boat: found on marker %1, pos %2", _marker, (markerPos _marker) call SYG_MsgOnPosE0];
 			};
-		};
+		} else {_marker = "boats13"}; // use nearest marker to get marker type
 
         if (!(alive _boat)) exitWith {
         	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
 			hint localize "--- Boat: no good markered boat groups found at all, skip...";
         };
+
         _pnt = getPos _boat; // Not reset this value as it allows to point where boat was at this check!
         if ( (_boat distance _pos) > _rad) then {
 			_pnt = call _create_water_point_near_Antigua;
@@ -140,18 +132,50 @@ switch ( _arg ) do {
 			([player, _boat] call XfDirToObj) call SYG_getDirName
 		];
         // Set marker for the detected boat
-		_type =  getMarkerType _marker; // boat marker
-		_marker = "aborigen_boat";
-		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent
-			_marker = createMarkerLocal[_marker, getPos _boat];
-			_marker setMarkerTypeLocal _type;
+		_boat_marker_type =  getMarkerType _marker; // mission boat marker, use it for antigua
+		_marker = "aborigen_boat";	// Antigua boat marker name (not type)
+		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent, create it now
+			_marker = createMarkerLocal[_marker, getPosASL _boat];
+			_marker setMarkerTypeLocal _boat_marker_type;
 			_marker setMarkerColorLocal "ColorGreen";
 			_marker setMarkerSizeLocal [0.7,0.7];
-			hint localize format["+++ Boat: created marker (%1) set to the point near Antigua %2", _type, getPos _boat];
+			hint localize format["+++ Boat: new marker created %1", _boat_marker_type];
 		} else {
-			hint localize format["+++ Boat: existed marker (%1) moved to the point near Antigua %2", _type, getPos _boat];
+			hint localize format["+++ Boat: existed marker found %1 near Antigua", _boat_marker_type];
 		};
-		_marker setMarkerPosLocal (getPos _boat);
+		hint localize format["+++ Boat: marker %1(type %2) set to the point near Antigua %3", _marker, _boat_marker_type, (getPos _boat) call SYG_MsgOnPosE0];
+		_marker setMarkerPosLocal (getPosASL _boat);
+
+		if (isNil "BOAT_MARKER_CHECK_ON") then {
+			BOAT_MARKER_CHECK_ON = true;
+			// move marker with boat and remove it on boat kill or leaving Antigua area
+			[_boat, _marker, _pos, _rad] spawn {
+				private ["_boat","_marker","_area_center","_area_rad","_boat_pos","_delay","_dist","_do_it"];
+				_boat  = _this select 0; _marker = _this select 1; _area_center = _this select 2; _area_rad = _this select 3;
+				_boat_pos  = getPosASL _boat;
+				_marker setMarkerPosLocal _boat_pos;
+				_delay = 10;
+				_do_it = true;
+				while { (alive _boat) && _do_it } do {
+					sleep _delay;
+					_dist = [_boat, _boat_pos] call SYG_distance2D;
+					if ( _dist > 25 ) then {
+						_boat_pos = getPosASL _boat;
+						_marker setMarkerPosLocal _boat_pos;
+						if ( !([_boat, _area_center, _area_rad] call SYG_pointInCircle) ) exitWith {
+							// Information about going out of bounds
+							playSound (["fish_man_song","under_water_2"] call XfRandomArrayVal); // sound about leaving Antigua
+							player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
+							_do_it = false;
+						};
+					};
+					if ( _dist < 2.5 ) then { _delay = 10 } else { _delay = ((25 / _dist) max 3) min 10; };
+				};
+				deleteMarkerLocal _marker; // remove boat marker if dead or out of aquatory
+				BOAT_MARKER_CHECK_ON = nul;
+			};
+		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON already run, not start it again..."};
+
 	};
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -214,7 +238,7 @@ switch ( _arg ) do {
 //			    _veh lock true;
 //			    _veh addAction [localize "STR_ABORIGEN_CAR_UNLOCK","scripts\intro\unlock_veh.sqf"]; // "Unlock"
 			};
-		    [] spawn {sleep 3; player groupChat (localize "STR_ABORIGEN_CAR_UNLOCK_1")}; // "When you find it, unblock it!"
+		    [] spawn {sleep 5; player groupChat (localize "STR_ABORIGEN_CAR_UNLOCK_1")}; // "When you find it, unblock it!"
 		};
 		// remove main marker as nothing to mark with it
 		deleteMarkerLocal _marker;
@@ -288,4 +312,6 @@ switch ( _arg ) do {
 		playSound "losing_patience";
 	};
 };
+sleep 10;
+aborigen doWatch objNull;
 

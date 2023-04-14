@@ -28,7 +28,7 @@ if (_base_visit_status <= 0) exitWith { // player killed before it reached the b
 //	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
 	_spawn_point = [];
 	#ifdef __ARRIVED_ON_ANTIGUA__
-	if ( ( (name player) in __ARRIVED_ON_ANTIGUA__) && (base_visit_mission < 1) ) then {
+	if ( base_visit_mission < 1 ) then {
 		_spawn_point = spawn_tent call SYG_housePosCount;
 		_spawn_point = spawn_tent buildingPos ( floor (random _spawn_point) );
 	};

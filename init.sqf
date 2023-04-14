@@ -596,9 +596,7 @@ if (isServer) then {
 #endif
 
 #ifdef __ARRIVED_ON_ANTIGUA__
-	if ( (count __ARRIVED_ON_ANTIGUA__) > 0) then { // some men are spawn on ANtigua
-		[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
-	};
+	[] execVM "scripts\intro\SYG_startOnAntigua.sqf";
 #endif
 
 

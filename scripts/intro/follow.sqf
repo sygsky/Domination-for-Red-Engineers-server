@@ -14,12 +14,13 @@ hint localize format["+++ follow.sqf: aborigen (grp %1) follow player %2 ", grou
 
 aborigen doFollow _player;
 
+#define __OLD__
+
 #ifdef __OLD __
 
 _pos = getPos aborigen;	// Initial position, abo can move no further than 40 meters away from it.
 _time = time + 40; // follow only 40 seconds then stop again
-while {(alive aborigen) && (alive _player) && (time < _time) && ((_pos distance (getPos aborigen)) > 40)} do {sleep 3};
-
+while {(alive aborigen) && (alive _player) && (time < _time) && (((getPos _player) distance (getPos aborigen)) < 40)} do {sleep 3};
 
 #else
 
@@ -33,12 +34,13 @@ while {	(alive aborigen) && (alive _player) && (time < _time) && ((_pos distance
 		sleep 3;
 	};
 };
+doStop aborigen;
+#endif
+
 if ( (alive aborigen) && (alive _player) ) then {
+	//                       "That's all. I'm  tired to follow you, %1..." || "That's it. I'm not going any further, got tired, %1..."
 	if (time < _time) then { _msg =  "STR_ABORIGEN_GO_TIMEOUT" } else { _msg =  "STR_ABORIGEN_GO_DISTOUT" };
 	["msg_to_user", [ [ _msg, name _player ] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClient;
 };
-doStop aborigen;
-
-#endif
 
 aborigen doFollow aborigen;

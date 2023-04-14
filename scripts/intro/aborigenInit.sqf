@@ -13,9 +13,6 @@
 if (isNil "aborigen") exitWith {"--- aborigenInit.sqf: ""aborigen"" var is nil, exit"};
 while {!alive aborigen} do {sleep 5};
 
-// not all players can use Antigua items except killed event
-//if (!((name player) in __ARRIVED_ON_ANTIGUA__)) exitWith {format["+++ Antigua: you '%1' cant to arrive at Antigua, exit.", name player]};
-
 #define ABORIGEN "ABORIGEN"
 
 _val = aborigen getVariable ABORIGEN;
@@ -47,9 +44,7 @@ if (alive aborigen) then { // show info
 while {(player distance aborigen) > 5} do {
 	sleep (5 + (random 2));
 	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
-
 	aborigen say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
-
 	aborigen setDir (getDir aborigen) + ((random 20) - 10);
 };
 
@@ -70,43 +65,46 @@ aborigen setMimic "Normal";
 // Do watch while alive or near
 aborigen setDir ([aborigen, player] call XfDirToObj);
 while { (alive aborigen) && (alive player) && ((player distance aborigen) < 40)} do { sleep 5};
-aborigen spawn {
-	private ["_list","_arr","_cnt"];
-	_list = [
-		"ActsPercMstpSlowWrflDnon_Lolling",  // Stretches, as if the unit has just woken up
-		"ActsPercMstpSnonWnonDnon_DancingDuoIvan", // Does various dance moves
-		"ActsPercMstpSnonWnonDnon_DancingDuoStefan", // Dances
-		"ActsPercMstpSnonWnonDnon_DancingStefan",	// As above
-		"TestDance",
-		"TestFlipflop",
-		"TestJabbaFun",
-		"AmovPercMstpSnonWnonDnon_exerciseKata",	//		Martial arts moves
-		"AmovPercMstpSnonWnonDnon_exercisePushup",	//	Pushups
-		"AmovPercMstpSnonWnonDnon_Ease",	//	"At ease"
-		"AmovPercMstpSnonWnonDnon_AmovPsitMstpSnonWnonDnon_ground",	//	Sits on the ground
-		"AmovPercMstpSnonWnonDnon",	//	Stand without weapon
-		"AmovPercMstpSlowWrflDnon_seeWatch",	//	Checks watch with weapon in other hand
-		"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
-	];
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
-	while { (canStand aborigen) && ((player distance aborigen) > 30)} do {
-		_arr = aborigen nearObjects [ "CAManBase", 50];
-		_cnt = {(canStand _x) && (isPlayer _x)} count _arr;
-		if (_cnt  == 1) then { // only for single player
-			if (local aborigen) then {
-				aborigen setDir ([aborigen, player] call XfDirToObj);
-				aborigen playMove (_list call XfRandomArrayVal);
-			} else {
-				["remote_execute",
-					format["aborigen setDir %1; aborigen playMove ""%2"";",
-						[aborigen, player] call XfDirToObj, _list call XfRandomArrayVal
-					]
-				] call XSendNetStartScriptServer;
+if (alive aborigen) then {
+	aborigen spawn {
+		private ["_list","_arr","_cnt"];
+		_list = [
+			"ActsPercMstpSlowWrflDnon_Lolling",  // Stretches, as if the unit has just woken up
+			"ActsPercMstpSnonWnonDnon_DancingDuoIvan", // Does various dance moves
+			"ActsPercMstpSnonWnonDnon_DancingDuoStefan", // Dances
+			"ActsPercMstpSnonWnonDnon_DancingStefan",	// As above
+			"TestDance",
+			"TestFlipflop",
+			"TestJabbaFun",
+			"AmovPercMstpSnonWnonDnon_exerciseKata",	//		Martial arts moves
+			"AmovPercMstpSnonWnonDnon_exercisePushup",	//	Pushups
+			"AmovPercMstpSnonWnonDnon_Ease",	//	"At ease"
+			"AmovPercMstpSnonWnonDnon_AmovPsitMstpSnonWnonDnon_ground",	//	Sits on the ground
+			"AmovPercMstpSnonWnonDnon",	//	Stand without weapon
+			"AmovPercMstpSlowWrflDnon_seeWatch",	//	Checks watch with weapon in other hand
+			"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
+		];
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
+		while { (canStand aborigen) && ((player distance aborigen) > 30)} do {
+			_arr = aborigen nearObjects [ "CAManBase", 50];
+			_cnt = {(canStand _x) && (isPlayer _x)} count _arr;
+			if (_cnt  == 1) then { // only for single player
+				if (local aborigen) then {
+					aborigen setDir ([aborigen, player] call XfDirToObj);
+					aborigen playMove (_list call XfRandomArrayVal);
+				} else {
+					["remote_execute",
+						format["aborigen setDir %1; aborigen playMove ""%2"";",
+							[aborigen, player] call XfDirToObj, _list call XfRandomArrayVal
+						]
+					] call XSendNetStartScriptServer;
+				};
+				sleep 10;
 			};
-			sleep 10;
+			sleep (random 5);
 		};
-		sleep (random 5);
 	};
+
 };
 
 while {alive aborigen} do {
