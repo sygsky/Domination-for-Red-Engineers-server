@@ -92,15 +92,17 @@ switch ( _arg ) do {
 
 		if (!alive _boat) then { // Find a boat from a group of more than 1 boats, near any of the boats markers
 			_marker_arr = [];
+			_exit = false;
 			for "_i" from 1 to 100 do {
 				if (_i != 13) then { // skip boats on Antigua from calculations
 					_marker = format["boats%1", _i];
-					if ( (markerType _marker) == "") exitWith {};
+					if ( (markerType _marker) == "") exitWith {_exit = true; _marker = format["boats%1",_i-1]};
 					_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 					if ({(alive _x) && (({alive _x} count crew _x) == 0) } count _arr > 1) exitWith {
 						_marker_arr set [count _marker_arr, _marker];
 					};
 				};
+				if (_exit) exitWith {};
 			};
 			sleep 0.1;
 			hint localize format["+++ Boat: last checked marker %1 of groups of %2 boats", _marker, count _arr];
