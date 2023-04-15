@@ -3229,8 +3229,8 @@ class Mission
 		};
 		class Item250
 		{
-			position[]={18606.642578,11.586273,14496.560547};
-			azimut=65.000000;
+			position[]={18661.9,5.260743,14580};
+			azimut=270;
 			id=290;
 			side="EMPTY";
 			vehicle="TT650C";
@@ -3240,8 +3240,7 @@ class Mission
 		};
 		class Item251
 		{
-			position[]={19227.330078,12.791113,13572.625977};
-			azimut=65.000000;
+			position[]={19207.4,4.995000,13563};
 			id=291;
 			side="EMPTY";
 			vehicle="TT650C";
@@ -3273,8 +3272,8 @@ class Mission
 		};
 		class Item254
 		{
-			position[]={17181.777344,41.234219,13574.060547};
-			azimut=65.000000;
+			position[]={17163.068359,41.738605,13578.949219};
+			azimut=175.000000;
 			id=294;
 			side="EMPTY";
 			vehicle="TT650C";

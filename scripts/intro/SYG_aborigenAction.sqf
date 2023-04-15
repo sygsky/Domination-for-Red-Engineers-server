@@ -105,14 +105,12 @@ switch ( _arg ) do {
 				if (_exit) exitWith {};
 			};
 			sleep 0.1;
-			hint localize format["+++ Boat: last checked marker %1 of groups of %2 boats", _marker, count _arr];
+			hint localize format["+++ Boat: last existed marker %1, group cnt %2", _marker, count _arr];
 			// find random alive empty boat from group of boats near any boat marker
-			for "_i" from 1 to count _marker_arr do {
-				_marker = _marker_arr call XfRandomArrayVal;
-				_arr_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
-				_boat = _arr select 0;
-				hint localize format["+++ Boat: found on marker %1, pos %2", _marker, (markerPos _marker) call SYG_MsgOnPosE0];
-			};
+			_marker = _marker_arr call XfRandomArrayVal;
+			_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
+			_boat = _arr select 0;
+			hint localize format["+++ Boat: found on marker %1[%2], pos %3", _marker, count _arr, (markerPos _marker) call SYG_MsgOnPosE0];
 		} else {_marker = "boats13"}; // use nearest marker to get marker type
 
         if (!(alive _boat)) exitWith {
@@ -143,7 +141,7 @@ switch ( _arg ) do {
 			_marker setMarkerSizeLocal [0.7,0.7];
 			hint localize format["+++ Boat: new marker created %1", _boat_marker_type];
 		} else {
-			hint localize format["+++ Boat: existed marker found %1 near Antigua", _boat_marker_type];
+			hint localize format["+++ Boat: existed marker %1 found near Antigua", _boat_marker_type];
 		};
 		hint localize format["+++ Boat: marker %1(type %2) set to the point near Antigua %3", _marker, _boat_marker_type, (getPos _boat) call SYG_MsgOnPosE0];
 		_marker setMarkerPosLocal (getPosASL _boat);
