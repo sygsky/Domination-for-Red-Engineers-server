@@ -18,7 +18,7 @@ if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenA
 if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"
 // create point in the water near Antigus
 _create_water_point_near_Antigua = {
-
+	private ["_lines","_sum","_cnt","_rnd","_len","_pos","_i","_p1","_p2","_x"];
 	_lines = [
 		[[17092,18177],[17255,18131],[17215,18047],[17093,17698]],	// line1
 		[[17154,17661],[17355,17819],[17447,17827]],				// line2
@@ -57,7 +57,7 @@ _create_water_point_near_Antigua = {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _arg = toUpper(_this select 3);
 _isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
-_pos = _isle select 1; // isle center
+_isle_pos = _isle select 1; // isle center
 _rad = _isle select 2;
 
 // Rotate aborigen to player, try server command
@@ -76,7 +76,7 @@ switch ( _arg ) do {
 		if (base_visit_mission > 0) exitWith {player groupChat (localize "STR_ABORIGEN_BOAT_INFO_0")}; // "Boats? There are a lot of them... on every kilometer of the coast of the Main Sahrani."
 		// find distance to the boat type "Zodiac" ( small boats )
 		_boat = objNull;
-		_arr = nearestObjects [_pos, ["Zodiac"], _rad];
+		_arr = nearestObjects [_isle_pos, ["Zodiac"], _rad];
 		// Check nearest boats to be out of "boats13" marker
 		_pos = markerPos "boats13";
 		_marker = "";  // It will be marker of selected boat
@@ -119,7 +119,7 @@ switch ( _arg ) do {
         };
 
         _pnt = getPos _boat; // Not reset this value as it allows to point where boat was at this check!
-        if ( (_boat distance _pos) > _rad) then {
+        if ( (_boat distance _isle_pos) > _rad) then {
 			_pnt = call _create_water_point_near_Antigua;
 			_boat setDir (random 360);
 			_boat setPos _pnt;
@@ -148,8 +148,9 @@ switch ( _arg ) do {
 
 		if (isNil "BOAT_MARKER_CHECK_ON") then {
 			BOAT_MARKER_CHECK_ON = true;
+			hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON run first time.";
 			// move marker with boat and remove it on boat kill or leaving Antigua area
-			[_boat, _marker, _pos, _rad] spawn {
+			[_boat, _marker, _isle_pos, _rad] spawn {
 				private ["_boat","_marker","_area_center","_area_rad","_boat_pos","_delay","_dist","_do_it"];
 				_boat  = _this select 0; _marker = _this select 1; _area_center = _this select 2; _area_rad = _this select 3;
 				_boat_pos  = getPosASL _boat;
@@ -172,9 +173,10 @@ switch ( _arg ) do {
 					if ( _dist < 2.5 ) then { _delay = 10 } else { _delay = ((25 / _dist) max 3) min 10; };
 				};
 				deleteMarkerLocal _marker; // remove boat marker if dead or out of aquatory
-				BOAT_MARKER_CHECK_ON = nul;
+				BOAT_MARKER_CHECK_ON = nil;
+				hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON stopped for next time...";
 			};
-		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON already run, not start it again..."};
+		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON already run, not start it again."};
 
 	};
 
@@ -248,9 +250,6 @@ switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "WEAPON": { // ask about weapon box
-		// TODO: find any "ReammoBox" type object and say about nearest
-		_isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
-		_pos = _isle select 1;
 
 //		_arr = nearestObjects [ player, ["WeaponHolder","AmmoBoxWest","WeaponBoxWest","SpecialBoxWest","AmmoBoxEast","WeaponBoxEast","SpecialBoxEast","AmmoBoxGuer"], 2000 ];
 		_arr = nearestObjects [ player, ["ReammoBox"], 2500 ];
@@ -268,7 +267,7 @@ switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "MEN": { // ask about men
-		_arr = _pos nearObjects ["CAManBase", _rad];
+		_arr = _isle_pos nearObjects ["CAManBase", _rad];
 		_civcnt = 0; _eastcnt = 0; _westcnt = 0; _dead = 0; _other = 0;
 		{
 

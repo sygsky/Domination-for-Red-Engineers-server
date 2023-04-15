@@ -12,9 +12,9 @@ if (!local aborigen) exitWith {hint localize format["--- follow.sqf: aborigen is
 if (!alive aborigen) exitWith {hint localize "--- follow.sqf: aborigen is dead, exit..."};
 hint localize format["+++ follow.sqf: aborigen (grp %1) follow player %2 ", group aborigen, _player];
 
-aborigen doFollow _player;
+//aborigen doFollow _player;
 
-#define __OLD__
+//#define __OLD__
 
 #ifdef __OLD __
 
@@ -24,9 +24,10 @@ while {(alive aborigen) && (alive _player) && (time < _time) && (((getPos _playe
 
 #else
 
+aborigen setSpeedMode "LIMITED";
+aborigen enableAI "MOVE";
 _pos = getPos aborigen;	// Initial position, abo can move no further than 40 meters away from it.
 _time = time + 40; // follow only 40 seconds then stop again
-aborigen setSpeedMode "NORMAL";
 while {	(alive aborigen) && (alive _player) && (time < _time) && ((_pos distance (getPos _player)) < 50) } do {
 	_pos = getPos aborigen;
 	if ( (_pos distance (getPos _player)) > 2 ) then {
@@ -34,6 +35,8 @@ while {	(alive aborigen) && (alive _player) && (time < _time) && ((_pos distance
 		sleep 3;
 	};
 };
+
+aborigen disableAI "MOVE";
 doStop aborigen;
 #endif
 
@@ -43,4 +46,4 @@ if ( (alive aborigen) && (alive _player) ) then {
 	["msg_to_user", [ [ _msg, name _player ] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClient;
 };
 
-aborigen doFollow aborigen;
+// aborigen doFollow aborigen;
