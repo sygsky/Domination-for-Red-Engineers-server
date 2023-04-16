@@ -1152,9 +1152,9 @@ STR_INTRO_PARAJUMP_11,"You found a parachute (%1) on your back and decided to us
 
 STR_INTRO_NOJUMP_BYRANK,"The smugglers took you to the base because they liked your rank (%1)","Die Schmuggler haben dich in den Stützpunkt gebracht, weil sie deinen Rang mochten (%1)","Los contrabandistas te llevaron a la base porque les gustaba tu rango (%1)","Контрабандисты доставили Вас до базы, т.к. ваше звание (%1) им понравилось"
 
-STR_INTRO_ON_BASE,You have reached the base! Life will get easier from here.,Sie haben die Basis erreicht! Das Leben wird von nun an einfacher werden.,¡Has llegado a la base! La vida será más fácil a partir de ahora.,Вы добрались до базы! Теперь будет полегче.
+STR_INTRO_ON_BASE,%1 have reached the base! Life will get easier from here.,%1 hat die Basis erreicht! Jetzt wird es einfacher.,¡%1 ha llegado a la base! Ahora será más fácil.,%1 добрался до базы! Теперь будет полегче.
 STR_INTRO_ON_BASE1,You are enrolled for the respawn at the SpecNaz GRU unit on Sahrani.,Sie sind für den Respawn bei der SpecNaz GRU-Einheit auf Sahrani eingeschrieben.,Estás inscrito para la reaparición en la unidad GRU de SpecNaz en Sahrani.,Вы зачислены на довольствие и возрождение в отряде СпН ГРУ на Сахрани.
-STR_INTRO_NOT_AT_BASE,You didn't manage to get to the base this time...,"Du hast es diesmal nicht geschafft, zur Basis zu gelangen...",Esta vez no lograste llegar a la base...,Вам не удалось добраться до базы в этот раз...
+STR_INTRO_NOT_AT_BASE,%1 didn't manage to get to the base this time...,"%1 konnte dieses Mal nicht zur Basis gelangen...",%1 no pudo llegar a la base esta vez...,%1 не удалось добраться до базы в этот раз...
 STR_INTRO_REARMED,You have been given a weapon. Take care of it!,Sie sind mit einer Waffe ausgestattet worden. Kümmern Sie sich darum!,Se le ha entregado un arma. ¡Cuidado!,Вам выдали оружие. Берегите его!
 
 STR_INTRO_INFO_0,"Nearby towns are free, beware of patrols","Die umliegenden Städte sind frei, achten Sie auf die Patrouillen","Los pueblos cercanos son libres, tengan cuidado con las patrullas","Ближайшие города свободны, опасайтесь патрулей"
