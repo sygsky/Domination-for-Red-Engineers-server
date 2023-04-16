@@ -27,9 +27,9 @@ _current_target_pos = nil;
 
 if (count _posi > 0) then {
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ FLAG creation procedure +++++++++++++++++++++++++++++
-    [_fposi, true] execVM "x_scripts\x_createjumpflag1.sqf";
+    [_posi, true] execVM "x_scripts\x_createjumpflag1.sqf";
 } else {
-	hint localize "--- x_createjumpflag.sqf: position for jumpflag not found!";
+	hint localize "--- x_createjumpflag.sqf: position for jumpflag is empty arr []!";
 };
 
 if (true) exitWith {};

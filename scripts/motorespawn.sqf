@@ -229,8 +229,8 @@ while {true} do {
                     typeOf _moto,
                     direction _moto,
                     _dist,
-                    [_posReal0,_posMain] call SYG_vectorSub3D, // offset before returning
-                    [getPos _moto, _posReal0] call SYG_vectorSub3D, // offset after returning to origial
+                    [_posMain, _posReal0] call SYG_vectorSub, // offset before returning
+                    [_posMain, getPos _moto] call SYG_vectorSub, // offset after returning to original
                     if (isEngineOn _moto) then {"on"} else {"off"},
                     _service_name
 				];

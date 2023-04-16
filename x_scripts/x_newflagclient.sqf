@@ -3,6 +3,8 @@
 // 3rd parameter is to inform players about town (if true) or secret place (if false) flag creation
 if (!X_Client) exitWith {};
 
+hint localize format["+++ x_newflagclient.sqf: _this = %1", _this];
+
 #include "x_setup.sqf"
 
 private ["_marker","_marker_name"];
