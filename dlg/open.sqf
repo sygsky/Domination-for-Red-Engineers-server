@@ -10,9 +10,13 @@ _this execVM "scripts\deathSound.sqf";
 //hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
 #include "x_setup.sqf"
 
+private ["_ok","_unit", "_killer","_display","_ctrl"];
+_killer = _this select 1;
+_unit = _this select 0; // player
+
 #ifdef __CONNECT_ON_PARA__
 if ( _base_visit_status <= 0 ) then {
-	[ "msg_to_user", "*", ["localize", "STR_INTRO_NOT_AT_BASE"], 0, 2, false, "losing_patience" ] spawn SYG_msgToUserParser; // "You have not reached the base this time..."
+	[ "msg_to_user", "*", ["localize", "STR_INTRO_NOT_AT_BASE", name _unit], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "%1 have not reached the base this time..."
 };
 #endif
 
@@ -24,7 +28,7 @@ sleep d_respawn_delay;
 if (dialog) then {closeDialog 0};
 
 #ifdef __CONNECT_ON_PARA__
-if (_base_visit_status <= 0) exitWith { // player killed before it reached the base
+if (_base_visit_status < 1) exitWith { // player killed before it reached the base
 //	_spawn_point  = (drop_zone_arr select 0) call XfGetRanPointSquareOld;
 	_spawn_point = [];
 	#ifdef __ARRIVED_ON_ANTIGUA__
@@ -58,10 +62,6 @@ if (_base_visit_status <= 0) exitWith { // player killed before it reached the b
 
 beam_target = -1;
 tele_dialog = 0; // 0 = respawn, 1 = teleport
-
-private ["_ok","_unit", "_killer","_display","_ctrl"];
-_killer = _this select 1;
-_unit = _this select 0; // player
 
 _ok = createDialog "TeleportModule";
 

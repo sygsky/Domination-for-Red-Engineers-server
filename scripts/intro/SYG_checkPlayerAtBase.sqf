@@ -50,7 +50,8 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, bas
 #ifdef __ACE__
 // inform player that he reached the base
 if (!isNil "SYG_initialEquipmentStr") then {
-	[ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE"],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // "You have reached the base! Life will get easier from here."
+	[ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE",name player],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // Send to client:"%1 have reached the base! Life will get easier from here."
+	[ "msg_to_user", "*", [["STR_INTRO_ON_BASE",name player]], 5, 0, false, "no_more_waiting" ] call XSendNetStartScriptClient; // Send to all others: "%1 have reached the base! Life will get easier from here."
 	// rearm from parajump set to the original equipment from last exit
 	hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
 	[player, SYG_initialEquipmentStr] call SYG_rearmUnit;
