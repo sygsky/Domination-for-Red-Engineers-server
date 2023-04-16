@@ -85,7 +85,8 @@ _strYes = localize "STR_SYS_400_1";// "Yes"
 _strNoCR = localize "STR_SYS_401";    // "No\n"
 _strNo = localize "STR_SYS_401_1"; // "No"
 
-_str = format[localize "STR_SYS_254", d_own_side, d_enemy_side, getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
+_str = format[localize "STR_SYS_254_0", missionName];
+_str = _str + format[localize "STR_SYS_254", d_own_side, d_enemy_side, getText(configFile>>"CfgWorlds">>worldName>>"description")]; // "Ваша сторона: %1. Враги: %2. Остров: %3\n"
 
 if (__ACEVer || __CSLAVer) then {
 	if (__ACEVer) then {
