@@ -343,11 +343,12 @@ if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already v
         {
             _box addMagazineCargo [_x, 50];
             sleep 0.1;
-        } forEach ["ACE_30Rnd_545x39_BT_AK","ACE_30Rnd_545x39_SD_AK",
+        } forEach ["ACE_30Rnd_545x39_BT_AK",
                    "ACE_30Rnd_762x39_B_RPK","ACE_30Rnd_762x39_BT_AK","ACE_30Rnd_762x39_SD_AK","ACE_40Rnd_762x39_BT_AK","ACE_75Rnd_762x39_BT_AK",
                    "ACE_64Rnd_9x18_B_Bizon",
-                   "ACE_Bandage","ACE_Morphine","ACE_Epinephrine","ACE_Flashbang",
-                   "ACE_HandGrenadeRGN","ACE_HandGrenadeRGO"
+                   "ACE_Bandage","ACE_Morphine","ACE_Epinephrine",
+                   "ACE_Flashbang","ACE_HandGrenadeRGN","ACE_HandGrenadeRGO",
+                   "ACE_SmokeGrenade_Red","ACE_SmokeGrenade_Green" // +++ Sygsky: #611.6
                 ];
 
         hint localize "+++ x_setupplayer1.sqf: Antigua simple ammo box loaded with custom weapons";

@@ -7,8 +7,8 @@
 // 3: optional use wind (true) or not (default false)
 // 4: optional check circle hit (true) or not (default false)
 // 5: ...
-//                 0              1,      2,         2,      4
-// Example call: [ _spawn_point, _para<, "DC3" | 1<, false<, true| "ADD_PARA" >>>] execVM "AAHALO\jump.sqf";
+//                 0              1,      2,         2,     4
+// Example call: [ _spawn_point, _para<, "DC3" | 1<, true<, false | "ADD_PARA" >>>] execVM "AAHALO\jump.sqf";
 //
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -184,7 +184,7 @@ if ( _plane ) then { // not jump from plane as this usully leads to the wounds
 					_id = _veh addEventHandler ["GetOut", {_this execVM "AAHALO\event_para_dropped_practice.sqf"}];
 					hint localize format["+++ jump.sqf: getOut event execVM _id (%1) => ""AAHALO\event_para_dropped_practice.sqf""", _id];
 				};
-			};
+			} else { hint localize "--- jump.sqf: player has no parachute in inventory, no getout script assigned" };
 		} else {
 			hint localize format["--- jump.sqf: expected player vehicle is not a parachute (%1), no getout script assigned", typeOf _veh];
 		};
