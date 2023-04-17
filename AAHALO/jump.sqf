@@ -7,6 +7,7 @@
 // 3: optional use wind (true) or not (default false)
 // 4: optional check circle hit (true) or not (default false)
 // 5: ...
+//                 0              1,      2,         2,      4
 // Example call: [ _spawn_point, _para<, "DC3" | 1<, false<, true| "ADD_PARA" >>>] execVM "AAHALO\jump.sqf";
 //
 #include "x_setup.sqf"
