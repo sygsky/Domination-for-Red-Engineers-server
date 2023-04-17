@@ -942,7 +942,7 @@ if (_doJump) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #ifdef __ARRIVED_ON_ANTIGUA__
     if ( base_visit_mission < 1 ) then {
-    	[ _spawn_point, _para, "DC3", false, "ADD_PARA"] execVM "AAHALO\jump.sqf";
+    	[ _spawn_point, _para, "DC3", false, "ADD_PARA"] execVM "AAHALO\jump.sqf"; // no circle to hit on Antigua
     } else {
     #endif
 	    [ _spawn_point, _para, "DC3", false, true] execVM "AAHALO\jump.sqf"; // last true means "check circle hit"
@@ -981,13 +981,29 @@ if (_doJump) then {
         _para = _this;
         _town_name = call SYG_getTargetTownName;
         _saboteurs = !isNil "d_on_base_groups";
+    #ifdef __ARRIVED_ON_ANTIGUA__
         _town_msg = switch ( _town_name ) do {
-                case "Paraiso": {"STR_INTRO_INFO_2"};
-                case "Somato":  {"STR_INTRO_INFO_1"};
-                // "Nearby towns are free, beware of patrols[ and saboteurs]"
-                default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
-                };
+			case "Corazol": {"STR_INTRO_INFO1_2"}; // "Corazol is occupied by the enemy, go around it by water, look for boats at Mercallilo."
+			case "Masbete":  {"STR_INTRO_INFO1_1"}; // "The city right in the way, Masbete, is occupied by the enemy, beware of clashing with him!"
+			// "Nearby towns are free, beware of patrols[ and saboteurs]"
+			default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
+		};
+    	// "Rip the cord near the ground and glide toward the tent..
+    	// "'W' - acceleration and descent, 'S' - ...
+    	// "When landing, watch your rate of descent...
+    	// "Smugglers, in violation of agreements with the GRU, have dropped above Antigua...
+    	// "The order is to arrive at the base and...
+		// "Will I be back from this misterios island?"
+        _msg_arr = [_town_msg, "STR_INTRO_MSG1_0","STR_INTRO_MSG_1","STR_INTRO_MSG_2","STR_INTRO_MSG1_3","STR_INTRO_MSG_4","STR_INTRO_MSG_6"];
+    #else
+        _town_msg = switch ( _town_name ) do {
+			case "Paraiso": {"STR_INTRO_INFO_2"}; // "Paraiso is occupied by the enemy, manoeuvre by parachute to avoid meeting them."
+			case "Somato":  {"STR_INTRO_INFO_1"}; // "The nearby Somato is occupied by the enemy, beware of encounters with him!"
+			// "Nearby towns are free, beware of patrols[ and saboteurs]"
+			default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
+		};
         _msg_arr = [_town_msg, "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
+	#endif
     //	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
         _last = (count _msg_arr) - 1;
     #ifdef __ACE__
@@ -1070,8 +1086,8 @@ if (_doJump) then {
 
 	[ player,
 		[
-			["ACE_AK74",_para], // weapons
-			[["ACE_45Rnd_545x39_BT_AK",3],["ACE_Bandage",3],["ACE_Morphine",5]], // magazines
+			["ACE_AK74",_para], // weapons, "ACE_SmokeGrenade_Green" added on task #611.6
+			[["ACE_45Rnd_545x39_BT_AK",3],["ACE_SmokeGrenade_Green",3],["ACE_Bandage",3],["ACE_Morphine",5]], // magazines
 			"", // No rucksack
 			[] // No rucsack items
 		]
