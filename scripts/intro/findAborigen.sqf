@@ -48,6 +48,7 @@ aborigen setVariable [ABORIGEN, true]; // ??? Do we need this statement?
 aborigen setBehaviour "Careless";
 aborigen setCombatMode "BLUE";
 aborigen playMove "AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"; // Sit on the ground
+aborigen disableAI "MOVE";
 
 aborigen addEventHandler ["killed", {
     private ["_name"];

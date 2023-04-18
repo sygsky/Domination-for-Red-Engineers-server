@@ -248,6 +248,42 @@ switch ( _arg ) do {
 		player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText)); // "Sorry. I don't know anything about cars. We live here."
 	};
 
+	case "PLANE" : { // ask about plane
+		// check if plane is on place
+		#define PLANE_TYPE "Camel2"
+		#define PLANE_POS [18089.39,18170.92, 0]
+		#define PLANE_DIR 80
+		_ask_server = isNil "aborigen_plane";
+		if ( !_ask_server ) then{ _ask_server = !alive aborigen_plane; };
+		if ( _ask_server ) then {
+			["remote_execute","[] execVM ""scripts\intro\camel.sqf"""] call XSendNetStartScriptServer;
+			sleep 3; // wait 3 seconds
+			hint localize format["+++ ABO PLANE: server request completed, plane isNil %1", isNil "aborigen_plane"];
+		};
+		if (isNil "aborigen_plane") exitWIth {hint localize "--- ABO PLANE: isNil, so exit"};
+
+		_exit = false;
+		if ( ([aborigen_plane, PLANE_POS] call SYG_distance2D) > 1) then { // plane not on place
+			if ( ((velocity aborigen_plane) distance [0,0,0] > 1) && ( alive (driver aborigen_plane) ) && (((getPos aborigen_plane) select 2) > 3) ) exitWith {
+				player groupChat (format[localize "STR_ABORIGEN_PLANE_BUSY", name (driver aborigen_plane)]); // "The plane flew away, with the pilot '%1'."
+				playSound "losing_patience";
+				hint localize format["+++ ABO PLANE: plane is occupied by %1, exit!!!", name (driver aborigen_plane)];
+				_exit = true;
+			};
+			if ( !isNull (driver aborigen_plane) ) then {
+				(driver aborigen_plane) action ["EJECT", aborigen_plane];
+			};
+			["say_sound", aborigen_plane, "steal"] call XSendNetStartScriptClientAll;
+			sleep 0.5;
+			aborigen_plane setVelocity [0,0,0];
+			aborigen_plane setDir PLANE_DIR;
+			aborigen_plane setVehiclePosition [PLANE_POS,[], 0, "CAN_COLLIDE"];
+			["say_sound", aborigen_plane, "return"] call XSendNetStartScriptClientAll;
+			hint localize "+++ ABO PLANE: positioned on the place!!!"
+		};
+		if (_exit) exitWith {};
+		player groupChat (localize "STR_ABORIGEN_PLANE_INFO"); // "An airplane? There's a Sopwich (WWI) standing on the runway. I don't know about the fuel or the pilot..."
+	};
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "WEAPON": { // ask about weapon box
 
