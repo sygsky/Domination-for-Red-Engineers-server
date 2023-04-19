@@ -207,11 +207,12 @@ while {true} do {
 					} else {hint localize format["+++ moto%1(%2) restored, has CarHorn", _id, _type]};
 
 #ifdef __DEBUG__
-					hint localize format["+++ %3: moto%1(%2) recreated after breakdown", _id, _type,_service_name];
+					hint localize format["+++ %3: moto%1(%2) dead, recreated after breakdown", _id, _type,_service_name];
 #endif
 				} else {	// use current vehicle item
 #ifdef __DEBUG__
-					hint localize format[ "+++ %4: alive moto%1(%2)%3 returned", _id, typeOf _moto, if (local _moto) then {" local"} else {" remote"}, _service_name ];
+                    //  +++ antigua_vehs: alive moto9(TT650C) local returned
+					hint localize format[ "+++ %4: moto%1(%2) alive/%3 returned", _id, typeOf _moto, if (local _moto) then {" local"} else {" remote"}, _service_name ];
 #endif
 					_moto setDammage 0.0;
 					_moto setFuel 1.0;
