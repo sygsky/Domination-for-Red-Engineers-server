@@ -1,5 +1,5 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ water patrol WayPointS ++++++++++++++++++++++++++
-waterPatrolWPS = [
+_waterPatrolWPS = [
   // warboat1, wp 18, Zachary Garcia
   "shp1(18)", [
   [4080.89,15966.7,0],
