@@ -13,7 +13,8 @@
 
 private ["_newleader","_units"];
 
-_newleader = _this select 0;
+if ((typeName _this) == "OBJECT") then { _newleader = _this } else { _newleader = _this select 0 };
+
 _units = units (group _newleader);
 _units = _units - [_newleader];
 _units join grpNull;
