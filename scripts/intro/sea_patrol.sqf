@@ -107,6 +107,65 @@ _refit_boat = {
 	// TODO: reammo vehicle
 };
 
+// _unit = _boat call _get_cargo;
+// if ( isNull unit) then ...
+_get_cargo = {
+	private ["_unit", "_role", "_x"];
+	_unit = objNull;
+	{
+		_role = assignedVehicleRole _x;
+		if (count _role == 0) exitWIth {};
+		if ((_role select 0) == "CARGO") exitWith {_unit = _x;};
+	}forEach crew _this;
+	_unit
+};
+// As: _usable_ship = _ship call _fill_empty_roles;
+_fill_empty_roles = {
+	_driver_cnt = 0;
+	_no_cnt = 0;
+	_cargo = [];
+	_gun_ids = [0,1]; // all gunners
+	_gunners = [];
+	_no_guns = 2;
+	// find absent seats in vehilce
+	for "_i" from 0 to  _crew_cnt - 1 do {
+		_role = assignedVehicleRole _x;
+		if ( (count _role) > 0) then {
+			if ( (_role select 0) == "Driver") exitWith {_driver_cnt = 1};
+			if ( (_role select 0) == "Turret") exitWith {
+				_id = (_role select 1) select 0;
+				_gun_ids = _gun_ids - [_id]; // remove not empty seat of gunner
+				_no_guns  = _no_guns - 1;
+			};
+			if ( (_role select 0) == "Cargo") exitWith {_cargo set [count _cargo, _x]};
+			_no_cnt = _no_cnt + 1;
+		};
+	};
+	// driver fill
+	_cargo_ind = (count _cargo) - 1;
+	if ( _cargo_ind < 0) exitWIth {};
+	if (_driver_cnt == 0) then {
+		_unit = _cargo select (_cargo_ind);
+		_unit assignAsDriver _this;
+		_unit moveInDriver _this;
+		_cargo_ind = _cargo_ind - 1;
+	};
+	// turret fill
+	if (_cargo_ind < 0) exitWith {};
+	{
+		_unit = _cargo select (_cargo_ind);
+		_unit assignAsTurret _this;
+		_unit moveInTurret [_this, [_x]];
+		_cargo_ind = _cargo_ind - 1;
+		if (_cargo_ind == 0) exitWith {};
+	} forEach _gun_ids;
+
+	if ( (_no_guns == 0)  && isNull driver __this) then {
+		
+	};
+	// If both guns not used, boat can't be used
+};
+
 while {true} do {
 	sleep _PATROL_DELAY; // step sleep
 	{
@@ -114,12 +173,19 @@ while {true} do {
 		_ship = _x select OFFSET_BOAT;
 		_grp  = _x select OFFSET_GRP;
 		if ( ({alive _x} count (crew _ship)) == 0 ) then {
-			if (alive _ship) exitWith {
-				// TODO: repair, populate, set next waypoint as active.
+			if (alive _ship) then {
+				// TODO: repair, re-populate crew from cargomen etc
 			};
 			_x call _replace_patrol;
 		} else { // There are alive crew in the boat
-			// repair, exchange if neeeded
+			// repair, exchange seats from cargo to gunner or driver if possible
+			// Driver and one of gunners are 2 obligatory seats
+			_cargo_cnt =  _ship emptyPositions "Cargo";
+			if (_ship call _fill_empty_roles) then {
+
+			} else { // replace this boat
+				_x call _replace_patrol;
+			};
 		};
 
 	} forEach _patrol_arr;
