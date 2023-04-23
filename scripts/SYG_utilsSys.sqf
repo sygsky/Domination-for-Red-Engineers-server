@@ -312,7 +312,7 @@ SYG_handleWP = {
 		for "_i" from 0 to _last do {
 			deleteWaypoint (_wpa select _i);
 		};
-		_wp = _grp addWaypoint [_pos, 0, 0];
+		_wp = _grp addWaypoint [_pos, 0];
 //		hint localize format["+++ SYG_handleWP: wp = %1",  _wp];
 //		_wp setWaypointPosition [ _pos, 0];
 		_wp setWaypointType "MOVE";
