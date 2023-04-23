@@ -1041,7 +1041,7 @@ SYG_getPos = {
 };
 
 //
-// Get correct ASL position
+// Get correct ASL position, but it is` not workig correctly(((
 //
 SYG_getPosASL = {
     _this modelToWorld [0, 0, ((getPosASL _this) select 2)- ((getPos _this) select 2)]

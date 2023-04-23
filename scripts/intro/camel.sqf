@@ -23,11 +23,12 @@
 
 hint localize "+++ camel.sqf: start";
 _isNil = isNil "aborigen_plane";
-_create = _isNil;
-_delete = if (!_isNil) then {!(isNull aborigen_plane)} else { false };
+_delete = if (!_isNil) then {!(alive aborigen_plane)} else { false };
+_create = _isNil || _delete;
 hint localize format["+++ camel.sqf: _delete is %1, isNull %2", _delete, isNull aborigen_plane];
 
 if ( _delete ) then { // delete plane
+	if (isNull aborigen_plane) exitWith {};
 	_del_pos = getPos aborigen_plane;
 	["say_sound", _del_pos, "steal"] call XSendNetStartScriptClient;
 	deleteVehicle aborigen_plane;
@@ -35,7 +36,7 @@ if ( _delete ) then { // delete plane
 	hint localize "+++ camel.sqf: plane deleted";
 };
 
-if ( _isNil || _delete ) then { // create
+if ( _create  ) then { // create
 	aborigen_plane = createVehicle [ PLANE_TYPE, [0,0,1000], [], 0, "NONE"];
 	sleep 0.1;
 	hint localize format["+++ camel.sqf: %1 plane created alive %2", PLANE_TYPE, alive aborigen_plane];

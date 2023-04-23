@@ -258,21 +258,38 @@ switch ( _arg ) do {
 		if ( _ask_server ) then {
 			["remote_execute","[] execVM ""scripts\intro\camel.sqf"""] call XSendNetStartScriptServer;
 			sleep 3; // wait 3 seconds
-			hint localize format["+++ ABO PLANE: server request completed, plane isNil %1", isNil "aborigen_plane"];
+			if (isNil "aborigen_plane") exitWIth {
+				player groupChat (localize "STR_ABORIGEN_PLANE_UNKNOWN"); // "An airplane? А... No, it's not here, maybe it'll come later?"
+				hint localize "--- ABO PLANE: isNil 3 seconds later after call to camel.sqf on server, so exit"
+			};
+			hint localize "+++ ABO PLANE: server request completed, plane found";
 		};
-		if (isNil "aborigen_plane") exitWIth {hint localize "--- ABO PLANE: isNil, so exit"};
 
 		_exit = false;
 		if ( ([aborigen_plane, PLANE_POS] call SYG_distance2D) > 1) then { // plane not on place
-			if ( ((velocity aborigen_plane) distance [0,0,0] > 1) && ( alive (driver aborigen_plane) ) && (((getPos aborigen_plane) select 2) > 3) ) exitWith {
+			// plane must be not occupied by player and be on base - in this case we can move it to island
+			_plane_busy = true;
+			if (alive (driver aborigen_plane)) then { // pilot is in plane
+				if (isPLayer (driver aborigen_plane)) exitWith {
+					// Is plane is standing on base
+					if ( ((velocity aborigen_plane) distance [0,0,0] < 5) && (((getPos aborigen_plane) select 2) < 3) && (aborigen_plane call SYG_pointisOnBase) ) exitWIth {
+						// player in plane and is on ground of base, eject it now
+						(driver aborigen_plane) action["Eject", aborigen_plane];
+						_plane_busy = false;
+					};
+					// not on base of not on ground, so is busy by player in plane
+				};
+				// not player in plane, eject it now
+				(driver aborigen_plane) action["Eject", aborigen_plane];
+				_plane_busy = false;
+			};
+			if (_plane_busy) exitWith {
 				player groupChat (format[localize "STR_ABORIGEN_PLANE_BUSY", name (driver aborigen_plane)]); // "The plane flew away, with the pilot '%1'."
 				playSound "losing_patience";
 				hint localize format["+++ ABO PLANE: plane is occupied by %1, exit!!!", name (driver aborigen_plane)];
 				_exit = true;
 			};
-			if ( !isNull (driver aborigen_plane) ) then {
-				(driver aborigen_plane) action ["EJECT", aborigen_plane];
-			};
+			// Plane is free and can be moved to the Antigas airstrip
 			["say_sound", aborigen_plane, "steal"] call XSendNetStartScriptClientAll;
 			sleep 0.5;
 			aborigen_plane setVelocity [0,0,0];
