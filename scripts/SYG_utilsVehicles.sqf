@@ -1464,7 +1464,7 @@ SYG_boatRearmTable =
     [ // boat params
         [
             ["ACE_M230","ACE_M230"],//["ACE_VulcanMgun20"], // weapon(s)
-            ["ACE_M789_1200","ACE_M789_1200"б"ACE_M789_1200"б"ACE_M789_1200"] //["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+            ["ACE_M789_1200","ACE_M789_1200","ACE_M789_1200","ACE_M789_1200"] //["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
         ]
     ]
 ];
@@ -1599,23 +1599,23 @@ SYG_rearmAnyHeli = {
 SYG_ACEDamageReportStr = {
     if ( (typeName _this) != "OBJECT" ) exitWith {""};
     if ( !(_this isKindOf "Tank")) exitWith {""};
-    private ["_varTurret","_varEngine","_varHull","_varTracks","_ret"];
-    _ret = "";
-    _varTurret = _veh getVariable "ACE_TurretHit";
-    if ( !isNil "_varTurret") then {
-        if (_varTurret == "1") then {_ret = "башня"};
+    private ["_var","_ret"];
+    _ret = [];
+    _var = _veh getVariable "ACE_TurretHit";
+    if ( !isNil "_var") then {
+        if (_var == "1") then {_ret = ["tower"]};
     };
-    _varEngine = _veh getVariable "ACE_EngineHit";
-    if ( !isNil "_varEngine") then {
-        if (_varEngine == "1") then {_ret = _ret + " двигатель"};
+    _var = _veh getVariable "ACE_EngineHit";
+    if ( !isNil "_var") then {
+        if (_var == "1") then {_ret set [count _ret, " engine"]};
     };
-    _varHull = _veh getVariable "ACE_HullHit";
-    if ( !isNil "_varHull") then {
-        if (_varHull == "1") then {_ret = _ret + " корпус"};
+    _var = _veh getVariable "ACE_HullHit";
+    if ( !isNil "_var") then {
+        if (_var == "1") then {_ret set [count _ret, "body"]};
     };
-    _varTracks = _veh getVariable "ACE_TracksHit";
-    if ( !isNil "_varTracks") then {
-        if (_varTracks == "1") then {_ret = _ret + " гусениц[а|ы]"};
+    _var = _veh getVariable "ACE_TracksHit";
+    if ( !isNil "_var") then {
+        if (_var == "1") then {_ret set [count _ret, "track[s]"]};
     };
     //hint localize format["ACE_TurretHit=%1, ACE_EngineHit=%2, ACE_HullHit=%3, ACE_TracksHit=%4",_varTurret,_varEngine,_varHull,_varTracks ];
     _ret
