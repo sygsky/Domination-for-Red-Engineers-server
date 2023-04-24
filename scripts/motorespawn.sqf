@@ -81,9 +81,9 @@ for "_i" from 0 to count _this -1 do { // list all motocyrcles/automobiles
 
 	if ( !(_x hasWeapon "CarHorn")) then {
 		_x addWeapon "CarHorn"; // add horn for motorcycle
-		hint localize format["+++ moto%1 (%2): CarHorn added", _i + 1, typeOf _x];
-	} else {hint localize format["+++ moto%1 (%2): already has CarHorn", _i + 1, typeOf _x]};
-    hint localize  format["+++ moto%1 ini pos %2, real %3, diff %4", _i + 1, _posMain, _posReal, [_posReal,_posMain] call SYG_vectorSub3D ];
+		hint localize format["+++ %1 moto%2 (%3): CarHorn added", _service_name, _i + 1, typeOf _x];
+	} else {hint localize format["+++ %1 moto%2 (%3): already has CarHorn", _service_name, _i + 1, typeOf _x]};
+    hint localize  format["+++ %1 moto%2 ini pos %3, real %4, diff %5", _service_name, _i + 1, _posMain, _posReal, [_posReal,_posMain] call SYG_vectorSub3D ];
 //	_x addWeapon "CarHorn";  // add horn for motorcycle: not work in MP
 };
 
