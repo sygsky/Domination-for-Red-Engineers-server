@@ -119,32 +119,40 @@ _get_cargo = {
 	}forEach crew _this;
 	_unit
 };
+
 // As: _usable_ship = _ship call _fill_empty_roles;
+// Try to fill driver and at least 1 gunner from corgo or driver from two gunners
 _fill_empty_roles = {
-	_driver_cnt = 0;
+	_driver = objNull;
 	_no_cnt = 0;
 	_cargo = [];
-	_gun_ids = [0,1]; // all gunners
-	_gunners = [];
-	_no_guns = 2;
-	// find absent seats in vehilce
-	for "_i" from 0 to  _crew_cnt - 1 do {
-		_role = assignedVehicleRole _x;
-		if ( (count _role) > 0) then {
-			if ( (_role select 0) == "Driver") exitWith {_driver_cnt = 1};
-			if ( (_role select 0) == "Turret") exitWith {
-				_id = (_role select 1) select 0;
-				_gun_ids = _gun_ids - [_id]; // remove not empty seat of gunner
-				_no_guns  = _no_guns - 1;
+	_gun_ids = [0,1]; // all gunners id in config
+	_gunner_ids = [];
+	// find absent seats in vehicle
+//	for "_i" from 0 to  _crew_cnt - 1 do
+	{
+		if (alive _x) then {
+			_x setDamage 0;
+			_role = assignedVehicleRole _x;
+			if ( (count _role) > 0) then {
+				if ( (_role select 0) == "Driver") exitWith {_driver = _x};
+				if ( (_role select 0) == "Turret") exitWith {
+					_id = (_role select 1) select 0;
+					_gunner_ids set[count _gunner_ids, _id]; // remove not empty seat of gunner
+				};
+				if ( (_role select 0) == "Cargo") exitWith {_cargo set [count _cargo, _x]};
+				_no_cnt = _no_cnt + 1;
 			};
-			if ( (_role select 0) == "Cargo") exitWith {_cargo set [count _cargo, _x]};
-			_no_cnt = _no_cnt + 1;
 		};
-	};
-	// driver fill
+	} forEach crew _this;
+
+	// check too small crew, less then 2 (driver + 1gunner)
+	if ( ((count _cargo) + (count _gunner_ids) + (if (alive _driver) then {1} else {0}))  < 2 )exitWith {};
+
+	_gun_ids = _gun_ids - _gunner_ids; // define not filled turrets [0] and [1]
 	_cargo_ind = (count _cargo) - 1;
-	if ( _cargo_ind < 0) exitWIth {};
-	if (_driver_cnt == 0) then {
+	// Fill driver if absent
+	if (!alive _driver) then {
 		_unit = _cargo select (_cargo_ind);
 		_unit assignAsDriver _this;
 		_unit moveInDriver _this;
@@ -160,9 +168,7 @@ _fill_empty_roles = {
 		if (_cargo_ind == 0) exitWith {};
 	} forEach _gun_ids;
 
-	if ( (_no_guns == 0)  && isNull driver __this) then {
-		
-	};
+	 ((count _gun_ids) == 2)  || (!alive driver _this) // bad vehicle , no driver of no any gunners
 	// If both guns not used, boat can't be used
 };
 
