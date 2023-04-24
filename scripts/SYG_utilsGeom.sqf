@@ -7,9 +7,9 @@
 #define Y_POS 1
 #define Z_POS 2
 
-#define x(a) ((a) select 0)
-#define y(a) ((a) select 1)
-#define z(a) (if((count (a))>2) then {a select 2} else {0})
+#define x(a) ((a)select 0)
+#define y(a) ((a)select 1)
+#define z(a) (if((count (a))>2)then{a select 2}else{0})
 
 /**
  *
@@ -44,7 +44,7 @@ SYG_vectorSub = {
  * Calculates in 3-D dimension
  * =====================================================
  * call:
- *      pnt3 = [pnt1,pnt2] call SYG_vectorSub;
+ *      pnt3 = [pnt1,pnt2] call SYG_vectorSub; // Creates vector pnt2 -> pnt1
  *
  *
  */
