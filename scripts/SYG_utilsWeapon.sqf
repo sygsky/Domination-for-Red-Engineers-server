@@ -2720,9 +2720,11 @@ SYG_isRucksack = {
 // _eqp_arr = player call SYG_getPlayerEquiptArr;
 // returns array [ [weapons names], [magazines names]<, rucksack_name<, [mags_in_rucksack_names]<, d_viewdistance<, d_rebornmusic_index<,base_vist_status>>>>> ]
 SYG_getPlayerEquiptArr = {
-    private ["_wpn", "_ruck", "_ruckMags"];
+    private ["_wpn", "_mags","_ruck", "_ruckMags"];
     _wpn = weapons _this;
-
+    if (isNil "_wpn") then {_wpn = []} else {if (isNull _wpn) then {_wpn = []}}; // just in case, sometimes _wpn is in unknown state (null or nil)
+    _mags = magazines _this;
+    if (isNil "_mags") then {_mags = []} else {if (isNull _mags) then {_mags = []}}; // just in case, sometimes _mags is in unknown state (null or nil)
 #ifdef __ACE__
 	_ruck = _this getVariable "ACE_weapononback";
 	if ( isNil "_ruck") then  {_ruck = "";};
@@ -2737,15 +2739,15 @@ SYG_getPlayerEquiptArr = {
 
 #ifdef __JAVELIN__
 	if (isNil "d_viewdistance") then {
-	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags]
+	    [_wpn, _mags - ["ACE_Javelin"], _ruck, _ruckMags]
 	} else {
-	    [_wpn, (magazines _this) - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_mission]
+	    [_wpn, _mags - ["ACE_Javelin"], _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_mission]
 	};
 #else
 	if (isNil "d_viewdistance") then {
-	    [_wpn, magazines _this, _ruck, _ruckMags]
+	    [_wpn, _mags, _ruck, _ruckMags]
 	} else {
-	    [_wpn, magazines _this, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_mission]
+	    [_wpn, _mags, _ruck, _ruckMags, d_viewdistance, d_rebornmusic_index, base_visit_mission]
 	};
 #endif
 

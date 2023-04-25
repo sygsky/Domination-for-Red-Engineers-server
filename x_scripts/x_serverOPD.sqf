@@ -59,7 +59,19 @@ if (_index >= 0) exitWith {
     _arr = (units _player) - [_player];
 	_cnt = count _arr;
 	if ( _cnt > 0 ) then {
-		_arr = 	_arr call SYG_vehToType;
+	    for "_i" from 0 to count _arr -1 do {
+	        _unit = _arr select _i;
+	        _arr set [_i,
+	            format[ "+++ x_serverOPD.sqf: %1",
+                        if (isPlayer _unit) then {
+                            format["player name %1 (%2)", name _unit,typeName _unit]
+                        } else {
+                            format["not player (%1)",typeName _unit]
+                        }
+                    ]
+            ];
+	    };
+//		_arr = 	_arr call SYG_vehToType;
 		hint localize format["+++ x_serverOPD.sqf: %1 units count %2 %3", _name, _cnt, _arr];// ;
 	};
 #endif
