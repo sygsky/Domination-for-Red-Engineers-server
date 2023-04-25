@@ -67,6 +67,7 @@ if ( !(_arg in ["GO"])) then {
 		["remote_execute", format ["aborigen setDir %1;", ([aborigen, player] call XfDirToObj)]] call XSendNetStartScriptServer;
 	} else { aborigen setDir ([aborigen, player] call XfDirToObj) };
 };
+aborigen say (["surprize","disagreement","disagreement_tongue","horks_and_spits"] call XfRandomArrayVal);
 
 //hint localize format["+++ ABORIGEN STAT: aborigen locality %1", local (_this select 0)];
 switch ( _arg ) do {
@@ -111,7 +112,7 @@ switch ( _arg ) do {
 			_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 			_boat = _arr select 0;
 			hint localize format["+++ Boat: found on marker %1[%2], pos %3", _marker, count _arr, (markerPos _marker) call SYG_MsgOnPosE0];
-		} else {_marker = "boats13"}; // use nearest marker to get marker type
+		} else {_marker = "boats13"}; // use nearest marker on Antigua to get marker type
 
         if (!(alive _boat)) exitWith {
         	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
@@ -151,26 +152,28 @@ switch ( _arg ) do {
 			hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON run first time.";
 			// move marker with boat and remove it on boat kill or leaving Antigua area
 			[_boat, _marker, _isle_pos, _rad] spawn {
-				private ["_boat","_marker","_area_center","_area_rad","_boat_pos","_delay","_dist","_do_it"];
+				private ["_boat","_marker","_area_center","_area_rad","_boat_pos","_delay","_dist","_do_it","_empty_time"];
 				_boat  = _this select 0; _marker = _this select 1; _area_center = _this select 2; _area_rad = _this select 3;
 				_boat_pos  = getPosASL _boat;
 				_marker setMarkerPosLocal _boat_pos;
-				_delay = 10;
+				_delay = 15;
 				_do_it = true;
-				while { (alive _boat) && _do_it } do {
+				_empty_time = 0;
+				while { (alive _boat) && (_empty_time < 300)} do {
 					sleep _delay;
+					if ( ({alive _x} count (crew _boat) == 0 ) ) then {_empty_time = _empty_time + _delay} else {_empty_time = 0;}; // check if boat is empty more than 5 mins
 					_dist = [_boat, _boat_pos] call SYG_distance2D;
 					if ( _dist > 25 ) then {
 						_boat_pos = getPosASL _boat;
 						_marker setMarkerPosLocal _boat_pos;
-						if ( !([_boat, _area_center, _area_rad] call SYG_pointInCircle) ) exitWith {
+						if ( !([_boat, _area_center, _area_rad] call SYG_pointInCircle) && _do_it) exitWith {
 							// Information about going out of bounds
 							playSound (["fish_man_song","under_water_2"] call XfRandomArrayVal); // sound about leaving Antigua
 							player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
 							_do_it = false;
 						};
 					};
-					if ( _dist < 2.5 ) then { _delay = 10 } else { _delay = ((25 / _dist) max 3) min 10; };
+					if ( _dist < 2.5 ) then { _delay = 15 } else { _delay = ((25 / _dist) max 3) min 15; };
 				};
 				deleteMarkerLocal _marker; // remove boat marker if dead or out of aquatory
 				BOAT_MARKER_CHECK_ON = nil;
@@ -257,7 +260,8 @@ switch ( _arg ) do {
 		if ( !_ask_server ) then{ _ask_server = !alive aborigen_plane; };
 		if ( _ask_server ) then {
 			["remote_execute","[] execVM ""scripts\intro\camel.sqf"""] call XSendNetStartScriptServer;
-			sleep 3; // wait 3 seconds
+			_time = time + 5;
+			while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
 			if (isNil "aborigen_plane") exitWIth {
 				player groupChat (localize "STR_ABORIGEN_PLANE_UNKNOWN"); // "An airplane? А... No, it's not here, maybe it'll come later?"
 				hint localize "--- ABO PLANE: isNil 3 seconds later after call to camel.sqf on server, so exit"
