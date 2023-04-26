@@ -7,7 +7,7 @@
 // 3: optional use wind (true) or not (default false)
 // 4: optional check circle hit (true) or not (default false)
 // 5: ...
-//                 0              1,      2,         2,     4
+//                 0              1,      2,         3,     4
 // Example call: [ _spawn_point, _para<, "DC3" | 1<, true<, false | "ADD_PARA" >>>] execVM "AAHALO\jump.sqf";
 //
 #include "x_setup.sqf"
@@ -37,7 +37,7 @@ _check_circle_hit = if (count _this > 4) then  {_this select 4} else { false }; 
 
 _add_para = false;
 if ((typeName _check_circle_hit) == "STRING") then { _check_circle_hit = false;  _add_para = true }; // add absent para if param is not empty string, but not check circle hit
-if (_check_circle_hit) then {_add_para = true};
+if (_check_circle_hit) then {_add_para = true}; // add parachute on intro (1st connection on session)
 
 _parawear         = player call SYG_getParachute; // the parachute is put on the player
 
