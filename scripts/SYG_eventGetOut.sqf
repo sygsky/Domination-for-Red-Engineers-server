@@ -68,10 +68,11 @@ SYG_getOutEvent = {
     _getOutEventInd = _veh getVariable EVENT_ID_VAR_NAME;
     if ( isNil "_getOutEventInd" ) exitWith {
 //        #ifdef __DEBUG_PRINT__
-        hint localize format["<<< SYG_getOutEvent: no ""%1"" event id found for %2 (on %3 got out), exiting >>>",
+        hint localize format["<<< SYG_getOutEvent: no ""%1"" event id found for %2 (on %3 got out), dmg %4, exiting >>>",
         EVENT_NAME,
-        _this select 0,
-        _this select 1
+        _veh_type,
+        _this select 1,
+        damage _veh
         ];
 //        #endif
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
