@@ -166,10 +166,15 @@ switch ( _arg ) do {
 					if ( _dist > 25 ) then {
 						_boat_pos = getPosASL _boat;
 						_marker setMarkerPosLocal _boat_pos;
-						if ( !([_boat, _area_center, _area_rad] call SYG_pointInCircle) && _do_it) exitWith {
+						if ( !([_boat_pos, _area_center, _area_rad] call SYG_pointInCircle) && _do_it) exitWith {
 							// Information about going out of bounds
-							playSound (["fish_man_song","under_water_2"] call XfRandomArrayVal); // sound about leaving Antigua
-							player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
+							if ( (_boat_pos distance _area_center) > 1000 ) then { // boat is returned to the marker
+								playSound "losing_patience"; // sound about boat leaving Antigua
+								player groupChat localize "STR_ABORIGEN_BOAT_RETURNED"; // "The boat off Antigua seems to have disappeared somewhere"
+							} else { // boat out of Antigua area
+								playSound (["fish_man_song","under_water_2"] call XfRandomArrayVal); // sound about boat leaving Antigua
+								player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
+							};
 							_do_it = false;
 						};
 					};
