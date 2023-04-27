@@ -7,7 +7,7 @@ if (!isServer) exitWith {};
 
 #define KILL_RADIOUS 30 // radious to be hit directly by arti shoots
 #define HIT_RADIOUS 45 // radious to be hit indirectly by arti shoots
-#define SAVE_RADIOUS 60 // radious to he save by arti shoots
+#define SAVE_RADIOUS 60 // radious to be save by arti shoots
 #define MIN_FRIENDLY_COUNT_TO_STRIKE 3 // maximum number of enemy vehilce in zone to allow strike onto them
 #define MAX_SHOOT_DIST 300 // maximum distance between known and real player pos observer can shoot on
 
