@@ -331,9 +331,10 @@ SYG_getObjectHeight = {
 SYG_receiveRadio = {
 	// Check inventory
 	// hint localize format["+++ SYG_receiveRadio: ""%1""", _this];
+	if (!alive player) exitWith {hint localize format["+++ SYG_receiveRadio: player not alive , sound '%1' skipped...", _this]};
 	if ( player call SYG_hasRadio ) exitWith { player say _this;};
 	// Check vehicle of player
-	private ["_veh","_radio","_x"];
+	private ["_veh","_radio"];
 	_radio = objNull;
 	_veh = vehicle player;
 	if ( _veh != player) then {
