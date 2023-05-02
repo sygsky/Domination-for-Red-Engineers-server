@@ -2722,9 +2722,9 @@ SYG_isRucksack = {
 SYG_getPlayerEquiptArr = {
     private ["_wpn", "_mags","_ruck", "_ruckMags"];
     _wpn = weapons _this;
-    if (isNil "_wpn") then {_wpn = []} else {if (isNull _wpn) then {_wpn = []}}; // just in case, sometimes _wpn is in unknown state (null or nil)
+    if (isNil "_wpn") then {_wpn = []}; // just in case, sometimes _wpn is in unknown state (null or nil)
     _mags = magazines _this;
-    if (isNil "_mags") then {_mags = []} else {if (isNull _mags) then {_mags = []}}; // just in case, sometimes _mags is in unknown state (null or nil)
+    if (isNil "_mags") then {_mags = []}; // just in case, sometimes _mags is in unknown state (null or nil)
 #ifdef __ACE__
 	_ruck = _this getVariable "ACE_weapononback";
 	if ( isNil "_ruck") then  {_ruck = "";};
