@@ -62,13 +62,11 @@ if (_index >= 0) exitWith {
 	    for "_i" from 0 to count _arr -1 do {
 	        _unit = _arr select _i;
 	        _arr set [_i,
-	            format[ "+++ x_serverOPD.sqf: %1",
-                        if (isPlayer _unit) then {
-                            format["player name %1 (%2)", name _unit,typeName _unit]
-                        } else {
-                            format["not player (%1)",typeName _unit]
-                        }
-                    ]
+                if (isPlayer _unit) then {
+                    format["player name %1 (%2)", name _unit,typeOf _unit]
+                } else {
+                    format["not player (%1)",typeOf _unit]
+                }
             ];
 	    };
 //		_arr = 	_arr call SYG_vehToType;
