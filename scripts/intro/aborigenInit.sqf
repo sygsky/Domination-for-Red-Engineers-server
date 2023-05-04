@@ -41,10 +41,18 @@ if (alive aborigen) then { // show info
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Giggle while not closer than 5 meters
+_prevSound = ""; // No sound still
+_sound = "";
 while {(player distance aborigen) > 5} do {
 	sleep (5 + (random 2));
 	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
-	aborigen say format["laughter_%1", (floor (random 12)) + 1]; // 1..12
+
+	// Prevent the same sound from playing twice in a row
+	while {_sound == _prevSound} do {
+	    _sound = format["laughter_%1", (floor (random 12)) + 1]; // laughter_1..12
+	};
+	aborigen say _sound;
+	_prevSound = _sound;
 	aborigen setDir (getDir aborigen) + ((random 20) - 10);
 };
 
