@@ -21,6 +21,23 @@
 #define PLANE_POS [18089.39,18170.92, 0]
 #define PLANE_DIR 80
 
+//
+// Gets new dir and pos for the plane: _dir_pos =  PLANE_POS call _getDirAndPos; // _dir_pos = [80, [18089.39,18170.92, 0]]
+//
+_getDirAndPos = {
+	private ["_rnd","_house","_rel"];
+	if (typeName _this == "OBJECT") then {_this  = getPos _this};
+	_rnd    = floor (random 4); // 0..3
+	if (_rnd == 0) exitWith { [80, _this] }; // Use init poin as result
+	_house = nearestObject [ _this, "House"];
+	_rel   = _house worldToModel _this; // find 1st point
+	if (_rnd < 3) exitWith { // 1..2
+		[80, _house modelToWorld [_rel select 0, (_rel select 1) + 4 * _rnd, 0]] // pos along long side of house, +4 or +8 meters on Y init pos
+	};
+	// pos on the front side
+	[350, [18078.5,18182.6,0]]
+};
+
 hint localize "+++ camel.sqf: start";
 _isNil = isNil "aborigen_plane";
 _delete = if (!_isNil) then {!(alive aborigen_plane)} else { false };
@@ -44,9 +61,11 @@ if ( _create  ) then { // create
 
 aborigen_plane setDir PLANE_DIR;
 
-if ( ((getPos aborigen_plane) distance PLANE_POS) > 0.5) then {
+if ( ((getPos aborigen_plane) distance PLANE_POS) > 20) then {
 	aborigen_plane setVelocity [0,0,0];
-	aborigen_plane setVehiclePosition [ PLANE_POS, [], 0, "CAN_COLLIDE"];
+	_dir_pos = PLANE_POS call _getDirAndPos; // get new dir and pos for the plane
+	aborigen_plane setDir (_dir_pos select 0);
+	aborigen_plane setVehiclePosition [ _dir_pos select 1, [], 0, "CAN_COLLIDE"];
 	publicVariable "aborigen_plane";
 	sleep 0.3;
 	["say_sound", aborigen_plane, "return"] call XSendNetStartScriptClient;
