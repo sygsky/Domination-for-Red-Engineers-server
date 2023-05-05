@@ -96,12 +96,12 @@ if (alive _shooter) then {
 	_gunner = gunner _shooter;
 	_name = if (isPlayer _gunner) then {name _gunner} else { typeOf _shooter };
 #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to the nearest enemy %2", typeOf _veh, _name];
+	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to the nearest enemy %2 (%3 m)", typeOf _veh, _name, round(_gunner distance _veh)];
 #endif
     _veh glanceAt _shooter; sleep 3.634;
 } else {
 #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to a random direction", typeOf _veh];
+	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to a random direction as no shooter is found", typeOf _veh];
 #endif
     sleep 1
 };
