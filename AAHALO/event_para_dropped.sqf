@@ -93,9 +93,9 @@ if (_send_to_server) then { // send message about circle hit to all players and 
 	hint localize format["+++ event_para_dropped%1.sqf: print to all players %2", _sub_name, _msgArr1];
     // Write to the server RPT log file
     if (_add_score) then {
-	    ["log2server", name player, format["I hit the circle on intro: dist. %1 m, dmg %2", _dist, _dmg]] call XSendNetStartScriptServer;
+	    ["log2server", name player, format["I hit the circle on intro: dist. %1 m, dmg %2, score %3", _dist, _dmg, score player]] call XSendNetStartScriptServer;
     } else {
-    	["log2server", name player, format["I hit the circle on practice: dist. %1 m, dmg %2", _dist, _dmg]] call XSendNetStartScriptServer;
+    	["log2server", name player, format["I hit the circle on practice: dist. %1 m, dmg %2, score %3", _dist, _dmg, score player]] call XSendNetStartScriptServer;
     };
 	// now remove message from the list as it is already sent
 	_arr2 resize 0;
