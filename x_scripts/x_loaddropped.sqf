@@ -59,7 +59,7 @@ _the_box = (
 
 _nobjs = nearestObjects [_unit, [_the_box], 20];
 if (count _nobjs == 0) exitWith {
-	[_unit,localize "STR_SYS_288_4"] call XfVehicleChat; // ""No boxes available for load!!!""
+	[_unit,localize "STR_SYS_288_7"] call XfVehicleChat; // ""No boxes available for load!!!""
 };
 _box = _nobjs select 0;
 [_unit,localize "STR_SYS_288_5"] call XfVehicleChat; // "Loading in progress..."
