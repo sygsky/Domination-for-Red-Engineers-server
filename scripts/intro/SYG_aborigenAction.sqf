@@ -13,6 +13,7 @@
 
 #include "x_setup.sqf"
 
+_search_list = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","ACE_UAZ","DATSUN_PK1","HILUX_PK1"];
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenAction.sqf: unknown _this = %1", _this]};
 
 if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"
@@ -189,7 +190,7 @@ switch ( _arg ) do {
 	};
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
-	case "CAR": { // ask about boats
+	case "CAR": { // ask about cars/motorcycles
 		if (base_visit_mission > 0) exitWith {player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText))}; // "Sorry. I don't know anything about cars. We live here."}; // "Boats? There are a lot of them... on every kilometer of the coast of the Main Sahrani."
 
 //		player groupChat format[localize "STR_ABORIGEN_CAR_NONE"]; // "Sorry. I don't know anything about cars. We live here."
@@ -202,53 +203,69 @@ switch ( _arg ) do {
 		_marker = "antigua_veh_marker"; // Well known marker name
 		if ( (markerType _marker) != "") then {
 			// TODO: print info on marker
-			_veh = nearestObject [getMarkerPos _marker, "Motorcycle"];
-			if (alive _veh) then {
-				_veh setDamage 0;
-				hint localize format["+++ Aborigen: car (%1) found near car marker", typeOf _veh];
-			};
+			hint localize format["+++ Aborigen: car marker found"];
+			_vehs = nearestObjects [getMarkerPos _marker, _search_list, 50];
+			{
+				if (alive _x) exitWith {
+					_veh = _x;
+					_veh setDamage 0;
+					_veh setFuel ((fuel _veh) max 0.5);
+					hint localize format["+++ Aborigen: car (%1) found near car marker", typeOf _veh];
+				};
+			} forEach _vehs;
 		};
-		if (alive _veh) exitWith { // Veh found near marker, say info outrageously
+		if (alive _veh) exitWith { // Veh found near marker, angrily declare about it
 		    player groupChat (localize "STR_ABORIGEN_CAR_INFO_1"); // "A car? Why did I put a marker on your map? Uh, you have geographical cretinism)))"
 		    if ( locked _veh ) then {
-		        (localize "STR_ABORIGEN_CAR_UNLOCK_1") spawn {player groupChat _this}; "... when you find it, unblock it!"
+		        (localize "STR_ABORIGEN_CAR_UNLOCK_1") spawn {player groupChat _this}; "... when you find it, unlock it!"
 		    } else {
 		        (localize "STR_ABORIGEN_CAR_UNLOCK_3") spawn {player groupChat _this}; // "... it doesn't seem to be blocked"
 		    };
 		};
 
-		// Vehicle not found near main marker or marker in absent. So find all vehicles near transparent markers now and select random one
+		// Vehicle not found near main marker or marker in absent. So get all vehicles near transparent markers now and select random one
 		_arr = [];
-		for "_i" from 1 to 100 do {
+		for "_i" from 1 to 100 do { // for each antigua arrival markers...
 			_marker_veh = format["antigua_veh%1",_i];
 			if (markerType _marker_veh == "") exitWith {/* hint localize format ["+++ ABORIGEN CAR: stop moto count on id %1", _i]*/}; // no more markers in sqm
-			_obj = nearestObject [getMarkerPos _marker_veh, "Motorcycle"];
-			if (alive _obj) then { // add found vehicle to the found list
-				_arr set [count _arr, _obj];
-				_obj setDamage 0;
-			} else { hint localize format ["+++ ABORIGEN CAR: moto id %1 not found at marker", _i] };
+			_vehs = nearestObjects [ getMarkerPos _marker_veh, _search_list, 50 ];
+			{
+				if (alive _x) exitWith {
+					_veh = _x;
+					_veh setDamage 0;
+					_veh setFuel ((fuel _veh) max 0.5);
+					hint localize format[ "+++ Aborigen: car (marker %1 type %2) found near car marker", _marker_veh, typeOf _veh ];
+				};t
+			} forEach _vehs;
+
+			if (alive _veh) then { // add found vehicle to the found list
+				_arr set [count _arr, _veh];
+				_veh setDamage 0;
+			} else { hint localize format [ "+++ ABORIGEN CAR: moto id %1 not found at marker", _i ] };
 		};
 
 		hint localize format["+++ ABORIGEN CAR: found %1 vehs at markers", count _arr];
 		if ( (count _arr) > 0) exitWith {
 			_veh = _arr call XfRandomArrayVal;
-			if ( (markerType _marker) == "") then { // Create new marker at found vehicle place
+			_marker_type = _veh call SYG_getVehicleMarkerType;
+			hint localize format["+++ +++ ABORIGEN CAR: selected veh %1, its marker type %2", typeOf _veh, _marker_type];
+			if ( (markerType _marker) != _marker_type) then { // Create new marker at found vehicle place
+				deleteMarkerLocal _marker;
 				_marker = createMarkerLocal[_marker, getPos _veh];
-				#ifdef __ACE__
-				_marker setMarkerTypeLocal "ACE_Icon_Motorbike";
-				#else
-				_marker setMarkerTypeLocal  "Vehicle";
-				#endif
+				_marker setMarkerTypeLocal _marker_type;
 				_marker setMarkerColorLocal "ColorGreen";
+				hint localize format["+++ +++ ABORIGEN CAR: marker %1(%2) created at %3", _marker, _marker_type, markerPos _marker];
 			} else {
+				hint localize format["+++ +++ ABORIGEN CAR: marker %1(%2) moved to %3", _marker, _marker_type, markerPos _marker];
 				_marker setMarkerPosLocal (getPos _veh);
 			};
 			player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "The car? So... here I'm drawing you a green marker on the map where there's something similar. It's about %1."
-			if (locked _veh) then {
+			if (!locked _veh) then {
 //			    _veh lock true;
 //			    _veh addAction [localize "STR_ABORIGEN_CAR_UNLOCK","scripts\intro\unlock_veh.sqf"]; // "Unlock"
+			} else {
+			    [] spawn {sleep 5; player groupChat (localize "STR_ABORIGEN_CAR_UNLOCK_1")}; // "When you find it, unblock it!"
 			};
-		    [] spawn {sleep 5; player groupChat (localize "STR_ABORIGEN_CAR_UNLOCK_1")}; // "When you find it, unblock it!"
 		};
 		// remove main marker as nothing to mark with it
 		deleteMarkerLocal _marker;
@@ -275,21 +292,23 @@ switch ( _arg ) do {
 		};
 
 		_exit = false;
-		if ( ([aborigen_plane, PLANE_POS] call SYG_distance2D) > 1) then { // plane not on place
+		if ( ([aborigen_plane, PLANE_POS] call SYG_distance2D) > 15) then { // plane not on place
 			// plane must be not occupied by player and be on base - in this case we can move it to island
-			_plane_busy = true;
-			if (alive (driver aborigen_plane)) then { // pilot is in plane
+			_plane_busy = alive (driver aborigen_plane);
+			if ( _plane_busy ) then { // pilot is in plane
 				if (isPLayer (driver aborigen_plane)) exitWith {
 					// Is plane is standing on base
-					if ( ((velocity aborigen_plane) distance [0,0,0] < 5) && (((getPos aborigen_plane) select 2) < 3) && (aborigen_plane call SYG_pointisOnBase) ) exitWIth {
+					if ( ((velocity aborigen_plane) distance [0,0,0] < 5) && (((getPos aborigen_plane) select 2) < 3) && (aborigen_plane call SYG_pointIsOnBase) ) exitWIth {
 						// player in plane and is on ground of base, eject it now
 						(driver aborigen_plane) action["Eject", aborigen_plane];
+						sleep 0.5;
 						_plane_busy = false;
 					};
 					// not on base of not on ground, so is busy by player in plane
 				};
 				// not player in plane, eject it now
 				(driver aborigen_plane) action["Eject", aborigen_plane];
+				sleep 0.5;
 				_plane_busy = false;
 			};
 			if (_plane_busy) exitWith {
@@ -313,7 +332,6 @@ switch ( _arg ) do {
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "WEAPON": { // ask about weapon box
 
-//		_arr = nearestObjects [ player, ["WeaponHolder","AmmoBoxWest","WeaponBoxWest","SpecialBoxWest","AmmoBoxEast","WeaponBoxEast","SpecialBoxEast","AmmoBoxGuer"], 2000 ];
 		_arr = nearestObjects [ player, ["ReammoBox"], 2500 ];
 		if ( (count _arr) == 0) exitWith {
 			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat; // "Looks like there aren't any guns here, hehe"
@@ -322,8 +340,7 @@ switch ( _arg ) do {
                				(round (([player,_arr select 0] call SYG_distance2D) / 10)) * 10,
                				([player, _arr select 0] call XfDirToObj) call SYG_getDirName,
                				if ((_arr select 0) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
-
-               				hint localize format["+++ WEAPON: %1", _txt];
+		hint localize format["+++ WEAPON: %1", _txt];
 		player groupChat _txt; // "I saw some kind of weapon at %1 m towards %2%3"
 	};
 

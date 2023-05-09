@@ -1988,9 +1988,9 @@ SYG_getVehicleMarkerType = {
             	"ACE_Icon_Truck"
             };
             if (_veh isKindOf "StrykerBase" || _veh isKindOf  "BRDM2") exitWith {"ACE_Icon_ArmourWheeled"}; // Striker, BRDM2
-            if (_veh isKindOf "Motorcycle") exitWith {"ACE_Icon_Motorbike"};
             "ACE_Icon_Car"
         };
+        if (_veh isKindOf "Motorcycle") exitWith {"ACE_Icon_Motorbike"};
         "ACE_Icon_Tank" //, "ACE_Icon_ArmourTrackedIFV", "ACE_Icon_ArmourTrackedAPC", "ACE_Icon_ArmourTrackedAirDefence"]
     };
     if (_veh isKindOf "Helicopter") exitWith {
@@ -2056,7 +2056,7 @@ SYG_getVehicleTypeMarkerName = {
 // _isRecoverable = [_veh1,... _vehN ] call SYG_vehIsRecoverable; // array of items
 //
 SYG_vehIsRecoverable = {
-	private ["_veh","_res"];
+	private ["_veh"];
 	_veh = _this;
 	if (typeName _veh != "ARRAY") then { _veh = [_veh] };
 	if (count _veh == 0) exitWith { false };

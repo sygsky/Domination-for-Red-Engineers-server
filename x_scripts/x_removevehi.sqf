@@ -36,6 +36,7 @@ _velocity = velocity _aunit;
     _ace_trh = _aunit getVariable "ACE_TracksHit";
 #endif
 	_recoverable = _aunit getVariable "RECOVERABLE";
+	if ( isNil "_recoverable" ) then {_recoverable = false};
 {
 	_x removeAllEventHandlers "killed";
 	_x removeAllEventHandlers "hit";

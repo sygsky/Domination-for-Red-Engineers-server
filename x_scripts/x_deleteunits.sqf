@@ -134,7 +134,7 @@ for "_i" from 0 to 6 do {
 };
 if (count _plist > 0 ) then {
 	hint localize format["+++ x_deleteunits.sqf: %1 patrol/captured vehicles detected in %2 not removed", count _plist, _town_name];
-//	hint localize format["+++ x_deleteunits.sqf: patrol/captured vehs %1", _plist call SYG_objArrToTypeStr]; // not needed all муры are already printed
+//	hint localize format["+++ x_deleteunits.sqf: patrol/captured vehs %1", _plist call SYG_objArrToTypeStr]; // not needed as all vehs are already printed
 };
 
 hint localize format["+++ x_deleteunits.sqf: deleted men %1 (alive %2), vehicles %3 in %4", _man_cnt, _alive_man_cnt, _veh_cnt, _town_name ];
