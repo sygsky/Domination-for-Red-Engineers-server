@@ -3295,7 +3295,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=62;
+		items=63;
 		class Item0
 		{
 			position[]={9511.406250,139.994995,9995.546875};
@@ -3768,6 +3768,16 @@ class Mission
 			name="antigua_veh9";
 			type="ACE_Icon_Motorbike";
 			colorName="ACE_ColorTransparent";
+		};
+		class Item62
+		{
+			position[]={17869.847656,17.785877,18134.925781};
+			name="Antigua";
+			text="Antigua mission start point";
+			type="Dot";
+			colorName="ACE_ColorTransparent";
+			a=0.500000;
+			b=0.500000;
 		};
 	};
 	class Sensors
