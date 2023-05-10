@@ -141,6 +141,10 @@ if (current_counter < number_targets) then {
 #endif
 // todo: #437 - count number of new riuns in town and inform all players abpout
 	_last_town_index execVM "scripts\countTargetRuins.sqf";
+
+    _dummy = target_names select (maintargets_list select _last_town_index);
+    (_dummy select 1) spawn SYG_townScoresPrint; // print  statistics on finished town
+
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
     d_max_recaptures = 0;

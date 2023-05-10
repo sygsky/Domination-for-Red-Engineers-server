@@ -10,12 +10,13 @@ if (!isServer) exitWith{};
 
 private ["_current_target_pos","_current_target_radius","_emptyH","_dummy"];
 
+/**
 if (current_counter > 0) then {
     // at last first town is already completed
     _dummy = target_names select (maintargets_list select (current_counter - 1));
     (_dummy select 1) call SYG_townScoresPrint; // print common statistics on finished town
-//    (_dummy select 1) call SYG_townStatReport;  // print real kills statistics on finished town
 };
+*/
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 private ["_time","_msg"];
