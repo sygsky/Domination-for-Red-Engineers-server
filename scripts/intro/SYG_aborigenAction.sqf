@@ -292,7 +292,9 @@ switch ( _arg ) do {
 		};
 
 		_exit = false;
-		if ( ([aborigen_plane, PLANE_POS] call SYG_distance2D) > 15) then { // plane not on place
+		_dist = [aborigen_plane, PLANE_POS] call SYG_distance2D;
+		hint localize format["+++ ABO PLANE: plane dist to the main point is %1, allowed 20 m.", round _dist];
+		if ( _dist > 20) then { // plane not on place
 			// plane must be not occupied by player and be on base - in this case we can move it to island
 			_plane_busy = alive (driver aborigen_plane);
 			if ( _plane_busy ) then { // pilot is in plane
