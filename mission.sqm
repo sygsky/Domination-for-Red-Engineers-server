@@ -692,7 +692,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=256;
+		items=259;
 		class Item0
 		{
 			position[]={9660.000000,139.994995,9992.799805};
@@ -3292,6 +3292,39 @@ class Mission
 			text="car9";
 			description="this setDir (random 360)";
 		};
+		class Item256
+		{
+			position[]={17400.667969,49.969200,17980.093750};
+			azimut=30.000000;
+			special="NONE";
+			id=296;
+			side="EMPTY";
+			vehicle="ACE_Bicycle";
+			skill=0.600000;
+			text="bicycle1";
+		};
+		class Item257
+		{
+			position[]={18054.554688,8.700000,18173.609375};
+			azimut=255.000000;
+			special="NONE";
+			id=297;
+			side="EMPTY";
+			vehicle="ACE_Bicycle";
+			skill=0.600000;
+			text="bicycle2";
+		};
+		class Item258
+		{
+			position[]={17984.220703,8.012321,18885.505859};
+			azimut=170.000000;
+			special="NONE";
+			id=298;
+			side="EMPTY";
+			vehicle="ACE_Bicycle";
+			skill=0.600000;
+			text="bicycle3";
+		};
 	};
 	class Markers
 	{
@@ -3710,64 +3743,82 @@ class Mission
 		{
 			position[]={16643.488281,52.430000,13735.930664};
 			name="antigua_veh1";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="1";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item54
 		{
 			position[]={16981.087891,13.385666,14111.841797};
 			name="antigua_veh2";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="2";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item55
 		{
 			position[]={17364.875000,13.455000,14286.830078};
 			name="antigua_veh3";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="3";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item56
 		{
 			position[]={18606.935547,11.580609,14496.877930};
 			name="antigua_veh4";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="4";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item57
 		{
 			position[]={19228.492188,12.635431,13573.742188};
 			name="antigua_veh5";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="5";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item58
 		{
 			position[]={14237.216797,21.657978,16236.711914};
 			name="antigua_veh6";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="6";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item59
 		{
 			position[]={11119.686523,19.749798,17403.693359};
 			name="antigua_veh7";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="7";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item60
 		{
 			position[]={17182.169922,41.208305,13574.213867};
 			name="antigua_veh8";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="8";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item61
 		{
 			position[]={12416.376953,59.400002,17440.058594};
 			name="antigua_veh9";
-			type="ACE_Icon_Motorbike";
-			colorName="ACE_ColorTransparent";
+			text="9";
+			type="Empty";
+			a=0.500000;
+			b=0.500000;
 		};
 		class Item62
 		{

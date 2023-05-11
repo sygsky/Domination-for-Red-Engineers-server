@@ -35,7 +35,7 @@ RESTORE_DELAY_NORMAL  = 420;
 RESTORE_DELAY_SHORT   = 30;
 #define CYCLE_DELAY 15
 #define TIMEOUT_ZERO 0
-#define MOTO_RETURN_DIST 3.5
+_moto_ret_dist  = 3.5;
 #define DRIVER_NEAR_DIST 10
 #define SOUND_MIN_DIST_TO_SAY 5 // Min shift in meters to play sound on moto teleport
 #define FUEL_MIN_VOLUME 0.2
@@ -57,17 +57,18 @@ sleep 2;
 
 // +++++++++++++++++++++++++++++++++++++++ READ call PARAMS +++++++++++++++++++++++++++++++++++++++++
 // check is special parameters are set (for Antigua as example
-if ( (typeName (_this select 0)) == "ARRAY") then { // [[moto1, moto2...], DELAY_NORM, DELAY_SHORT, _service_name]
+if ( (typeName (_this select 0)) == "ARRAY") then { // [[moto1, moto2...], DELAY_NORM, DELAY_SHORT, _service_name<, _lock_veh_or_not<,_ret_dist>]
 	RESTORE_DELAY_NORMAL = _this select 1;
 	RESTORE_DELAY_SHORT  = _this select 2;
 	_service_name         = _this select 3;
 	_lock = if (count _this > 4) then {_this select 4} else {false}; // lock (true) or not lock (false) new or moved vehicle when put it to the original position
+	_moto_ret_dist = if (count _this > 5) then {(_this select 5) max _moto_ret_dist} else {_moto_ret_dist}; // dist to decide return vehicle to the place or not
 	_this = _this select 0;
 };
 
 hint localize format["+++ motorespawn.sqf: service started with name '%1';", _service_name];
 // read all vehicles and store their initial position and angles
-for "_i" from 0 to count _this -1 do { // list all motocyrcles/automobiles
+for "_i" from 0 to count _this - 1 do { // list all motocyrcles/automobiles
 	_x = _this select _i;
 //	_motoarr = _motoarr + [[_x, getPos _x, direction _x, TIMEOUT_ZERO]];
 	_posMain = getPos _x;
@@ -92,8 +93,8 @@ sleep CYCLE_DELAY;
 #ifdef __DEBUG__
 
 hint localize format[
-	"+++ %7:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, MOTO_RETURN_DIST %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
-					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   MOTO_RETURN_DIST ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME, _service_name
+	"+++ %7:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, _moto_ret_dist %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
+					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   _moto_ret_dist ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME, _service_name
 ];
 
 {
@@ -142,7 +143,7 @@ while {true} do {
 
 			// ++++++++++++++++++ MAIN CHECK STATEMENT +++++++++++++++++++
 
-			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > MOTO_RETURN_DIST)  ) exitWith {
+			if ( (!(canMove _moto)) || ((fuel _moto) < FUEL_MIN_VOLUME) || ( _dist > _moto_ret_dist)  ) exitWith {
 				if ( ( {alive _x} count (crew _moto)) == 0) then { // empty
 					if ( (canMove _moto) && ( ( fuel _moto ) > FUEL_MIN_VOLUME ) ) then  { _x set [ MOTO_TIMEOUT, TIMEOUT( RESTORE_DELAY_NORMAL ) ] } // restore after normal delay
 					else {_x set [MOTO_TIMEOUT, TIMEOUT(RESTORE_DELAY_SHORT)]}; // restore after shortened delay
@@ -189,7 +190,7 @@ while {true} do {
 					fuel _moto,
 					round ( direction _moto),
 					_dist,
-					MOTO_RETURN_DIST,
+					_moto_ret_dist,
 					_service_name];
 #endif
 

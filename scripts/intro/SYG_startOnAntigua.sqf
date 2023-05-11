@@ -55,14 +55,18 @@ for "_i" from 1 to 4 do {
 
 	// replace moto[_ind] with car
 	_moto = _arr select _ind;
+	_moto_name = vehicleVarName _moto; // "car1" or "" if no name was assigned to the vehicle in the editor
 	_pos = getPos _moto;
 	deleteVehicle _moto;
 	sleep 0.1;
-	_arr set [_ind, createVehicle [_car, _pos,[],3,"NONE"]];
+	_car = createVehicle [_car, _pos,[],3,"NONE"];
+	_arr set [_ind, _car];
+	if (_name != "") then {_car setVehicleVarName _moto_name}; // store the same name of the orignal vehicle
 };
+_arr = _arr + [bicycle1,bicycle2,bicycle3];
 hint localize format["+++ SYG_startOnAntigua.sqf: vehs are [%1]", _arr call SYG_objArrToTypeStr];
 // { _x lock true} forEach _arr;
-// [_veh_arr, _big_delay, _small_delay, "service_name_in_RPT", _lock_vehs_or_not]
-[   _arr,     600,        90,           "antigua_vehs"     /*, true*/] execVM "scripts\motorespawn.sqf"; // as moto!!!
+// [_veh_arr, _big_delay, _small_delay, "service_name_in_RPT", _lock_vehs_or_not, _ret_dist]
+[   _arr,     600,        90,           "antigua_vehs"       , true             , 50 ] execVM "scripts\motorespawn.sqf"; // as moto!!!
 
 // 1. DC3 flight to the Antigua or simple drop from a plane
