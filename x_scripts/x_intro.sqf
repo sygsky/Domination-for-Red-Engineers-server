@@ -366,7 +366,8 @@ if (base_visit_mission < 1) then {
 	["ACE_ParachutePack","ACE_ParachuteRoundPack"], // parachute types
 	{base_visit_mission < 1},						// Code returns true if jump, else return false
 	[ _arr1, _arr2], // rect + circle
-	_arr2 // Teleport area on kill event
+	_arr2, // Teleport area on kill event
+	"ANTIGUA" // name of drop zone
 	];
 } else {
 #endif
@@ -376,7 +377,8 @@ if (base_visit_mission < 1) then {
 		["ACE_ParachutePack","ACE_ParachuteRoundPack"],
 		{ ( ( ( d_player_stuff select 3 ) call XGetRankIndexFromScore ) < 1) || ( (player call SYG_getParachute) != "") },
 		[ [[11306,8386,2000], 600,150, -45], drop_zone_arr select 0 ], // Rect 1 - above ridge near base, rect 2 - near Somato (the same rect as desant one)
-		drop_zone_arr select 0 // Teleport area on kill event
+		drop_zone_arr select 0, // Teleport area on kill event
+		"BASE" // name of drop zone
 	];
 #ifdef __ARRIVED_ON_ANTIGUA__
 };

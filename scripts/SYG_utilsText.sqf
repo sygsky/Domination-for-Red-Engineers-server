@@ -18,8 +18,7 @@
 // prefix is used to select random string in the list from stringtable.csv
 // the list of strings consists of names with first suffix 0 and last suffix (_NUM-1), e.g.
 // if initial string in stringtable.csv is "_STR_NUM","6","6","6" so its first string MUST be  "STR_0" and last one "STR_5"
-// E.g.: _txt = "STR_RUM_NUM" call SYG_getLocalizedRandomText;
-//       _txt = "STR_SYS_252_NUM" call SYG_getLocalizedRandomText;
+// E.g.: _txt = "STR_RUM_NUM" call SYG_getLocalizedRandomText;//       _txt = "STR_SYS_252_NUM" call SYG_getLocalizedRandomText;
 //       _txt = "STR_MAIN_COMPLETED_NUM" call SYG_getLocalizedRandomText;
 //       _txt = "STR_CAMP_INFO_NUM" call SYG_getLocalizedRandomText;
 //       _txt = "STR_CAMP_TEAM_NUM" call SYG_getLocalizedRandomText;
@@ -345,9 +344,10 @@ SYG_msgToUserParser = {
             if ( typeName _sound == "STRING" ) exitWith { playSound _sound };
             if (typeName _sound == "ARRAY") exitWith {
             	if (count _sound > 2) then {
-            		if ( (_sound select 0) == "say_sound") then {
+            		if ( (_sound select 0) == "say_sound") exitWith {
             			_sound call XHandleNetStartScriptClient; // say sound on this client
             		};
+            		// TODO: Or it is any other client message to player
             	};
             };
         };
