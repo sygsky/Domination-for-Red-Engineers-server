@@ -28,14 +28,14 @@ aborigen setSpeedMode "LIMITED";
 aborigen enableAI "MOVE";
 _pos = getPos aborigen;	// Initial position, abo can move no further than 40 meters away from it.
 _time = time + 40; // follow only 40 seconds then stop again
-while {	(alive aborigen) && (alive _player) && (time < _time) && ((_pos distance (getPos _player)) < 50) } do {
+while {	(alive aborigen) && (alive _player) && (time < _time) && ((_pos distance (getPos _player)) < 50)  && ([aborigen, [[17352,17931,100], 100, 100, 0]] call SYG_pointInRect)} do {
 	_pos = getPos aborigen;
 	if ( (_pos distance (getPos _player)) > 2 ) then {
 		aborigen doMove _pos;
 		sleep 3;
 	};
 };
-
+if ( alive _aborigen ) then { player groupChat (localize "STR_ABORIGEN_INFO_OUT") }; // "I can't follow you anymore"
 aborigen disableAI "MOVE";
 doStop aborigen;
 #endif

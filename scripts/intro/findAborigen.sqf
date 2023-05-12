@@ -35,7 +35,7 @@ _pos = [[17352,17931,100], 100, 100, 0] call XfGetRanPointSquareOld; // No flat 
 //		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];
 _newgroup = call SYG_createCivGroup;
 hint localize format["+++ findAborigen.sqf: group created %1", _newgroup];
-aborigen = _newgroup createunit [_type, _pos, [], 0,"NONE"];
+aborigen = _newgroup createUnit [_type, _pos, [], 0,"NONE"];
 [aborigen] join _newgroup;
 publicVariable "aborigen";
 hint localize format["+++ findAborigen.sqf: aborigen group is %1", group aborigen];
