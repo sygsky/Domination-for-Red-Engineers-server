@@ -14,6 +14,8 @@
 	returns: nothing
 */
 
+#include "x_setup.sqf"
+
 private ["_fmt","_sub_name"];
 hint localize format["+++ event_para_dropped.sqf: Landed with parachute _this %1, pos %2", _this, getPos (_this select 2)];
 _veh  = _this select 0; // usually is NULL
@@ -121,3 +123,11 @@ if (_damage > 0 ) then {
 if (count _arr2 == 0) exitWith {};
 hint localize format["+++ event_para_dropped%1.sqf: msg arr %2", _sub_name, _msgArr];
 _msgArr spawn SYG_msgToUserParser;
+
+#ifdef __ARRIVED_ON_ANTIGUA__
+// Inform other players about this player arrival to the Antigua!
+if ( player call SYG_pointOnAntigua ) then {
+	// "%1 has been dropped on Antigua! Help a brother in arms get to base territory."
+	[ "msg_to_user", name player,  [ ["STR_ABORIGEN_INFO_HELP", name player]], 6, 2, false, "gong_5" ] call XSendNetStartScriptClient;
+}; // while out of Antigua
+#endif
