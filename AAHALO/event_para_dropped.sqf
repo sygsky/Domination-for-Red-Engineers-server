@@ -126,8 +126,10 @@ _msgArr spawn SYG_msgToUserParser;
 
 #ifdef __ARRIVED_ON_ANTIGUA__
 // Inform other players about this player arrival to the Antigua!
-if ( player call SYG_pointOnAntigua ) then {
-	// "%1 has been dropped on Antigua! Help a brother in arms get to base territory."
-	[ "msg_to_user", name player,  [ ["STR_ABORIGEN_INFO_HELP", name player]], 6, 2, false, "gong_5" ] call XSendNetStartScriptClient;
-}; // while out of Antigua
+if (base_visit_mission < 1) then { // Player still not visited base
+	if ( player call SYG_pointOnAntigua ) then { // And player dropped on Antigua
+		// "%1 has been dropped on Antigua! Help a brother in arms get to base territory."
+		[ "msg_to_user", name player,  [ ["STR_ABORIGEN_INFO_HELP", name player]], 6, 2, false, "gong_5" ] call XSendNetStartScriptClient;
+	}; // while out of Antigua
+};
 #endif
