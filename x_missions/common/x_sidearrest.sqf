@@ -142,12 +142,22 @@ while {!_offz_at_base && !_is_dead} do {
 				sleep 0.01;
 			};
 			// info message
-			hint localize format["+++ x_sidearrest.sqf: control of the officer lost by %1 at pos %2%3, %4",
+			hint localize format[ "+++ x_sidearrest.sqf: control of the officer lost by %1 at %2%3",
 					_leader_name,
-					(getPos _officer) call SYG_nearestSettlement,
-					if (surfaceIsWater (getPos _officer)) then { " (in water)"} else {" (on land)"},
-					_officer call SYG_MsgOnPos
+					_officer call SYG_MsgOnPosE0,
+					if (surfaceIsWater (getPos _officer)) then { " (in water)"} else {" (on land)"}
 				];
+			_officer spawn {
+				private ["_officer"];
+				_officer = _this;
+				while { (leader _officer) == _officer } do {
+					sleep 300;
+					hint localize format[ "+++ x_sidearrest.sqf: GRU inform that officer now at %1%2",
+						_officer call SYG_MsgOnPosE0,
+						if (surfaceIsWater (getPos _officer)) then { " (in water)"} else {" (on land)"}
+					];
+				};
+			};
 
 			if (vehicle _officer != _officer) then {
 				_officer action ["eject", vehicle _officer];
@@ -166,7 +176,7 @@ while {!_offz_at_base && !_is_dead} do {
 			_rescued = false;
 			sleep 0.01;
 			// ""Officer lost by %1 at pos %2""
-			["msg_to_user", "", [ ["STR_SM_042_1", _leader_name, [_officer, localize "STR_SYS_POSE"] call SYG_MsgOnPosE]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "Officer is lost (%1), lost pos is %2"
+			["msg_to_user", "", [ ["STR_SM_042_1", _leader_name, [_officer, 10] call SYG_MsgOnPos0]], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClient; // "Officer is lost (%1), lost pos is %2"
 		};
     };
 #endif
