@@ -126,10 +126,40 @@ _msgArr spawn SYG_msgToUserParser;
 
 #ifdef __ARRIVED_ON_ANTIGUA__
 // Inform other players about this player arrival to the Antigua!
+// Check if somebody helps player to visit the base
 if (base_visit_mission < 1) then { // Player still not visited base
 	if ( player call SYG_pointOnAntigua ) then { // And player dropped on Antigua
-		// "%1 has been dropped on Antigua! Help a brother in arms get to base territory."
-		[ "msg_to_user", name player,  [ ["STR_ABORIGEN_INFO_HELP", name player]], 6, 2, false, "gong_5" ] call XSendNetStartScriptClient;
+		// Print 2 times "%1 has been dropped on Antigua! Help a brother in arms get to base territory."
+		[ "msg_to_user", name player,  [ ["STR_ABORIGEN_INFO_HELP", name player],["STR_ABORIGEN_INFO_HELP", name player]], 15, 2, false, "gong_5" ] call XSendNetStartScriptClient;
+		// Wait until player is on base, skip dead state or in some air vehicle
+		if (true) exitWith {};
+		while { base_visit_mission < 1 } do {
+			sleep 15;
+			if ( alive player ) then {
+				if ( (vehicle player) != player ) then { // Player is in vehicle
+					if ( (vehicle player) isKindOf "Air" ) then { // Player is in some air vehicle now
+						_veh = vehicle player;
+						// Wait until this air veh is in air
+						while { (alive player) && ((vehicle player) == _veh) && (((getPos (vehicle player)) select 2) < 5) } do { sleep 1 };
+						if ( (alive player) && ((vehicle player) == _veh) && (((getPos (vehicle player)) select 2) > 5) ) then {
+							// veh is in air with player in it, now store names of all players in the air vehicle
+							_names = [];
+							{ // laod list of players involved
+								if ( (isPLayer _x) && (_x != player) ) then { if ( alive _x ) then { _names set [ count _names, name _x ] } };
+							} forEach crew _veh;
+							if ( (count _names) == 0 ) exitWith {}; // it is not multi-seat vehicle
+							while { (_veh == vehicle player) && (alive player)} do { sleep 5 };
+							if (alive player) then {
+								sleep 6;
+								if (base_visit_mission > 0) then {
+									hint localize format["+++ %1 visited the base with help of %2", name player, _names];
+								};
+							};
+						};
+					};
+				};
+			};
+		};
 	}; // while out of Antigua
 };
 #endif
