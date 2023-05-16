@@ -11,10 +11,10 @@ if (base_visit_mission < 1) exitWith {
 _unit = _this select 1;
 new_paratype = _unit call SYG_getParachute; // Find parachute of player (if no parachute weared, "" returned)
 _ind = (SPAWN_INFO select 0) find new_paratype;
-_rect = (SPAWN_INFO select 2) select 1; // Second spawn rectangle with height of central point as default
-if (_ind < 0 ) then { 		// So parachute is absent
-	_rect = (SPAWN_INFO select 2) select _ind; // get rect assigned to this para type
-};
+
+// Check if parachute  is absent or is unknown
+if (_ind < 0 ) then { _ind = 1 }; // "ACE_ParachuteRoundPack" is default
+_rect = (SPAWN_INFO select 2) select _ind; // Second spawn rectangle with height of central point as default
 new_height = _rect select 2;
 
 hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2, height is %3, pos %4", _this, weapons _unit, new_height, (_this select 1) call SYG_msgOnPosE0];
