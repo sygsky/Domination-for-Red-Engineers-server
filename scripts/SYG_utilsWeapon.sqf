@@ -1740,7 +1740,7 @@ SYG_rearmUnit = {
 	// argopt(4) is value for player stored view distance
 	_param = argopt(4, 0);
 	if ( (_param > 0)) then { // change only if user not set it before
-		if ( _param == DEFAULT_VIEW_DISTANCE ) exitWith { hint localize format["*** SYG_ RearmUnit: attempt to set back default view distance (%1 m) denied", DEFAULT_VIEW_DISTANCE] };
+		if ( _param == DEFAULT_VIEW_DISTANCE ) exitWith { hint localize format["*** SYG_rearmUnit: attempt to set back default view distance (%1 m) denied", DEFAULT_VIEW_DISTANCE] };
 		//hint localize format["++++++ SYG_rearmUnit: _vdist = %1 +++++++", _vdist];
 		_param call SYG_setViewDistance;
 	};

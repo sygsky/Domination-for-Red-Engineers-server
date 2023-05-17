@@ -62,7 +62,7 @@ _isle_pos = _isle select 1; // isle center
 _rad = _isle select 2;
 
 _abo_dir = getDir aborigen;
-if (isNil _abo_dir) then {_abo_dir = 0};
+if (isNil "_abo_dir") then {_abo_dir = 0};
 // Rotate aborigen to player, try server command
 if ( !(_arg in ["GO"])) then {
 	aborigen doWatch player;
@@ -260,11 +260,10 @@ switch ( _arg ) do {
 				_marker = createMarkerLocal[_marker, getPos _veh];
 				_marker setMarkerTypeLocal _marker_type;
 				_marker setMarkerColorLocal "ColorGreen";
-				hint localize format["+++ +++ ABORIGEN CAR: marker %1(%2) created at %3", _marker, _marker_type, markerPos _marker];
 			} else {
-				hint localize format["+++ +++ ABORIGEN CAR: marker %1(%2) moved to %3", _marker, _marker_type, markerPos _marker];
 				_marker setMarkerPosLocal (getPos _veh);
 			};
+			hint localize format["+++ +++ ABORIGEN CAR: marker %1(%2) created near %3", _marker, _marker_type, (markerPos _marker) call SYG_nearestSettlementName]; // SYG_nearest
 			player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "The car? So... here I'm drawing you a green marker on the map where there's something similar. It's about %1."
 			if (!locked _veh) then {
 //			    _veh lock true;
