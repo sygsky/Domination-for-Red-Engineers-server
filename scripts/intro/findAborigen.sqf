@@ -31,7 +31,7 @@ if (typeName _this == "SCALAR") then { // sleep needed period
 };
 _type = format ["Civilian%1", (floor (random 19)) + 2];
 //		hint localize format["+++ findAborigen.sqf: civ not found, create unit with type %1", _type];
-_pos = [[17352,17931,100], 100, 100, 0] call XfGetRanPointSquareOld; // No flat position requested, use smallest rect
+_pos = [getPos spawn_tent, 60, 60, 0] call XfGetRanPointSquareOld; // No flat position requested, use smallest rect
 //		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];
 _newgroup = call SYG_createCivGroup;
 hint localize format["+++ findAborigen.sqf: group created %1", _newgroup];

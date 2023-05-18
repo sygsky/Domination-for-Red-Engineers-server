@@ -29,28 +29,28 @@ if (!isNil "antigua_initiated") exitWith {};
 
 antigua_initiated = true;
 
-_veh_list =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
+_car_type_list =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 			  "hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open",
 			  "datsun1_civil_1_open","datsun1_civil_2_covered","datsun1_civil_3_open",
 			  "Landrover","Landrover_Closed","Landrover_Police",
 			  "car_sedan","car_hatchback"];
-_moto_list = ["M1030","TT650G","TT650C"];
+// _moto_type_list = ["M1030","TT650G","TT650C"]; // Not needed
 
 hint localize "+++ SYG_startOnAntigua.sqf: started...";
 [] execVM "scripts\intro\findAborigen.sqf";
 _arr = [car1,car2,car3,car4,car5,car6,car7,car8,car9];
-// TODO: replace some motorcycles with cars now
-_rep_list = [];
-_car_list = [];
+// Replace some motorcycles with cars now
+_rep_list = []; // Vehicles replaced index list
+_car_list = []; // Car types list to replace vehs with
 _cnt = count _arr;
-for "_i" from 1 to 4 do {
+for "_i" from 0 to 3 do {
 
-	_ind = random _cnt;
+	_ind = floor(random _cnt);
 	while {(_ind in _rep_list)} do { _ind = random _cnt };
 	_rep_list set [count _rep_list, _ind];
 
-	_car = _veh_list call XfRandomArrayVal;
-	while {(_car in _car_list)} do { _car = _veh_list call XfRandomArrayVal };
+	_car = _car_type_list call XfRandomArrayVal; // Car type name
+	while {(_car in _car_list)} do { _car = _car_type_list call XfRandomArrayVal };
 	_car_list set [count _car_list, _car];
 
 	// replace moto[_ind] with car
@@ -59,9 +59,10 @@ for "_i" from 1 to 4 do {
 	_pos = getPos _moto;
 	deleteVehicle _moto;
 	sleep 0.1;
-	_car = createVehicle [_car, _pos,[],3,"NONE"];
+	_car = createVehicle [_car, _pos, [], 0,"NONE"];
 	_arr set [_ind, _car];
-	if (_name != "") then {_car setVehicleVarName _moto_name}; // store the same name of the orignal vehicle
+	if (_moto_name != "") then {_car setVehicleVarName _moto_name}; // store the same name of the orignal vehicle
+	hint localize format["+++ SYG_startOnAntigua.sqf: moto #%1(%2) replaced with %3", _ind, _moto_name, typeOf _car ];
 };
 _arr = _arr + [bicycle1,bicycle2,bicycle3];
 hint localize format["+++ SYG_startOnAntigua.sqf: vehs are [%1]", _arr call SYG_objArrToTypeStr];

@@ -54,11 +54,11 @@ _makeSpawnPoint = {
 //	hint localize format["+++ x_intro/_makeSpawnPoint: _para %1, _id %2, SPAWN_INFO %3", _para, _id, SPAWN_INFO];
 	if ( _id >= 0) then {  // find point according to the parachute type (0 - planning one, 1 - round)
 		_spawn_rect = +((SPAWN_INFO select 2) select _id); // drop rect for planning parachute
-		hint localize "+++ x_intro/_makeSpawnPoint: jump point is set on mountines";
+		hint localize "+++ x_intro/_makeSpawnPoint: jump point is set for gliding parachute";
 	} else {
 #endif
 		_spawn_rect = +((SPAWN_INFO select 2) select 1);
-		hint localize "+++ x_intro/_makeSpawnPoint: jump point is set on plains";
+		hint localize "+++ x_intro/_makeSpawnPoint: jump point is set for round parachute";
 #ifdef __ACE__
 	};
 #endif

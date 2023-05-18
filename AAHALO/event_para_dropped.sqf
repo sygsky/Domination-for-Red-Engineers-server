@@ -16,6 +16,8 @@
 
 #include "x_setup.sqf"
 
+#define __DEBUG__
+
 private ["_fmt","_sub_name"];
 hint localize format["+++ event_para_dropped.sqf: Landed with parachute _this %1, pos %2", _this, getPos (_this select 2)];
 _veh  = _this select 0; // usually is NULL
@@ -124,8 +126,13 @@ if (count _arr2 == 0) exitWith {};
 hint localize format["+++ event_para_dropped%1.sqf: msg arr %2", _sub_name, _msgArr];
 _msgArr spawn SYG_msgToUserParser;
 
-hint localize "+++ event_para_dropped.sqf: start check helpers for the player next second";
+
 #ifdef __ARRIVED_ON_ANTIGUA__
+
+#ifdef __DEBUG__
+hint localize "+++ event_para_dropped.sqf: start check helpers for the player next second";
+#endif
+
 // Inform other players about this player arrival to the Antigua!
 // Check if somebody helps player to visit the base
 if (base_visit_mission < 1) then { // Player still not visited base
@@ -134,16 +141,22 @@ if (base_visit_mission < 1) then { // Player still not visited base
 		// Print 2 times "%1 has been dropped on Antigua! Help a brother in arms get to base territory."
 		[ "msg_to_user", name player,  [ ["STR_ABORIGEN_INFO_HELP", name player],["STR_ABORIGEN_INFO_HELP", name player]], 15, 2, false, "gong_5" ] call XSendNetStartScriptClient;
 		// Wait until player is on base, skip dead state or in some air vehicle
-		if (true) exitWith {};
 		while { base_visit_mission < 1 } do {
 			sleep 15;
 			if ( alive player ) then {
-				if ( !((vehicle player) isKindOf "Air") ) exitWith {}; // Player not is in some air vehicle now
+				if ( !((vehicle player) isKindOf "Air") ) exitWith {
+				}; // Player not is in some air vehicle now
 				_veh = vehicle player;
 				// store vehicle crew for the future usage
 				_crew = crew _veh;
 				// Wait until this air veh is in air
+			#ifdef __DEBUG__
+				hint localize format["+++ event_para_dropped.sqf: payer entered vehicle %1 with crew of %2", typeOf _veh, count _crew ];
+			#endif
 				while { player in _veh } do { sleep 10; _crew = _crew + ( ( crew _veh ) -  _crew ) };
+			#ifdef __DEBUG__
+				hint localize format["+++ event_para_dropped.sqf: payer exited vehicle %1 with crew of %2", typeOf _veh, count _crew ];
+			#endif
 				sleep 5; // wait visit base to finish
 				if ( base_visit_mission > 0 ) then { // base was visited!!!
 					for "_i" from 0 to  (count _crew - 1) do {
@@ -151,13 +164,24 @@ if (base_visit_mission < 1) then { // Player still not visited base
 						_crew set [ _i, if ( ( isPlayer _x ) && ( player != _x ) ) then { name _x } else { "RM_ME" } ];
 					};
 					_crew  = _crew - [ "RM_ME" ];
+				#ifdef __DEBUG__
 					hint localize format["+++ event_para_dropped.sqf: %1 visited the base with help of %2", name player, _crew];
+				#endif
 					if ( ( count _crew ) == 0) exitWith {};
 					// "The officers of our limited party would like to thank the following Soldiers for their assistance to %1: %2"
 					[ "msg_to_user", "*", [ [ format["STR_ABORIGEN_INFO_THX", name player, _crew] ] ], 0, 2, false, "no_more_waiting" ] call XSendNetStartScriptClientAll;
+				}
+				#ifdef __DEBUG__
+				else {
+					hint localize "+++ event_para_dropped.sqf: %1 not visited base now, tyr next loop";
 				};
+				#endif
 			};
 		};
 	}; // while out of Antigua
 };
+#ifdef __DEBUG__
+hint localize "+++ event_para_dropped.sqf: finish check helpers for the player";
+#endif
+
 #endif

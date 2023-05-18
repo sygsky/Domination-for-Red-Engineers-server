@@ -74,6 +74,7 @@ for "_i" from 0 to count _this - 1 do { // list all motocyrcles/automobiles
 	_posMain = getPos _x;
 	_posMain set[2,0]; // zero Z coordinate
 	_x setPos _posMain;
+	_x setVectorUp [0,0,1];
 	sleep 0.2;
 	_posReal = getPos _x;
 	_posReal set [2,0];
@@ -93,14 +94,15 @@ sleep CYCLE_DELAY;
 #ifdef __DEBUG__
 
 hint localize format[
-	"+++ %7:  RESTORE_DELAY_NORMAL %1, RESTORE_DELAY_SHORT %2, CYCLE_DELAY %3, _moto_ret_dist %4, DRIVER_NEAR_DIST %5, FUEL_MIN_VOLUME %6",
-					       RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   _moto_ret_dist ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME, _service_name
+	"+++ %1:  RESTORE_DELAY_NORMAL %2, RESTORE_DELAY_SHORT %3, CYCLE_DELAY %4, _moto_ret_dist %5, DRIVER_NEAR_DIST %6, FUEL_MIN_VOLUME %7",
+_service_name,RESTORE_DELAY_NORMAL,    RESTORE_DELAY_SHORT,    CYCLE_DELAY ,   _moto_ret_dist ,   DRIVER_NEAR_DIST ,   FUEL_MIN_VOLUME
 ];
 
 {
-	hint localize format[
-	"+++ %2:  %1", _x, _service_name];
-} forEach _motoarr;
+	_name = vehicleVarName _x;
+	if (_name == "") then {_name = typeOf _x};
+	hint localize format["+++ %2:  %1", _name, _service_name];
+} forEach _this;
 
 #endif
 
