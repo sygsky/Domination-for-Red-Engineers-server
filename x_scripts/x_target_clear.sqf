@@ -131,6 +131,10 @@ if (d_do_delete_empty_main_target_vecs) then {
 
 d_run_illum = false;
 
+// Put 2 lower lines here to get all town statistics printed, including last one
+_dummy = target_names select (maintargets_list select _last_town_index);
+(_dummy select 1) spawn SYG_townScoresPrint; // print  statistics on finished town
+
 // now decide what to do next
 if (current_counter < number_targets) then {
 	sleep 15; // TODO: sleep (60 + random(60)); // explore this variant, it may be very dangerous
@@ -141,9 +145,6 @@ if (current_counter < number_targets) then {
 #endif
 // todo: #437 - count number of new riuns in town and inform all players abpout
 	_last_town_index execVM "scripts\countTargetRuins.sqf";
-
-    _dummy = target_names select (maintargets_list select _last_town_index);
-    (_dummy select 1) spawn SYG_townScoresPrint; // print  statistics on finished town
 
 	execVM "x_scripts\x_createnexttarget.sqf";
 } else {
