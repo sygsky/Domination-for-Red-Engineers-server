@@ -132,7 +132,7 @@ if (d_do_delete_empty_main_target_vecs) then {
 d_run_illum = false;
 
 // Put 2 lower lines here to get all town statistics printed, including last one
-_dummy = target_names select (maintargets_list select _last_town_index);
+_dummy = target_names select _last_town_index;
 (_dummy select 1) spawn SYG_townScoresPrint; // print  statistics on finished town
 
 // now decide what to do next
