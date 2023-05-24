@@ -20,8 +20,9 @@ _factor = (400 / 1600) max 12.5;
 // set flare position as slightly random one
 
 // if (isNil "base_visit_session") then { base_visit_session = 0 }; // init visit status
+_delay = 5;
 while { base_visit_session <= 0 } do {
-	sleep 5;
+	sleep _delay;
 	// launch a yellow flare over the base to attract the player's attention (to tell him where to go)
 	if (!alive _flare) then {
 		_flag_pos set [ 0, (_pos select 0) + (random 5) ];
@@ -34,17 +35,16 @@ while { base_visit_session <= 0 } do {
 	};
 	if ( alive player ) then {
 		if (vehicle player == player) then { // only on feet player is counted to be on base
-			if (base_visit_session < 1) then {
-				if (( getPos player ) call SYG_pointIsOnBase) then {  // player is in base rect!
-					base_visit_mission = 1;
-					_veh = nearestObjects [player,["LandVehicle","Air","Ship"],15];// Any nearest vehicle
-					["base_visit_mission", name player, base_visit_mission, if ((count _veh) == 0) then {"<no veh>"} else {typeOf (_veh select 0)} ] call XSendNetStartScriptServer; // store new value on the server
-					base_visit_session = base_visit_mission;
-					hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
-				};
+			if (( getPos player ) call SYG_pointIsOnBase) then {  // player is in base rect!
+				base_visit_mission = 1;
+				_veh = nearestObjects [player,["LandVehicle","Air","Ship"],15];// Any nearest vehicle
+				["base_visit_mission", name player, base_visit_mission, if ((count _veh) == 0) then {"<no veh>"} else {typeOf (_veh select 0)} ] call XSendNetStartScriptServer; // store new value on the server
+				base_visit_session = base_visit_mission;
+				hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
 			};
-		};
-	};
+			_delay = 5; // Player is on his own, slow check on base frequence
+		}  else {_delay = 1}; // player in vehicle, up the check on base frequence
+	} else { _delay = 10; };
 };
 hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, base_visit_session = %1", base_visit_session];
 
