@@ -106,11 +106,12 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
     };
 	_s = localize _s;
 
-	if (_s != "") then {
-        _penalty = d_ranked_a select 11; // todo: lower all players in rank on such bad event!!!
+	if ( _s != "") then {
+        _penalty = d_ranked_a select 11; // Lower all players who are on island enough time in rank on such bad event!!!
         //player addScore (-_penalty);
         _time = floor (time);
-        if (_time >= PENALTY_PRESENCE_TIME) then {
+        _guilty = (_time >= PENALTY_PRESENCE_TIME) && base_visit_mission;
+        if ( _guilty ) then {
             (-_penalty) call SYG_addBonusScore;
             playSound "whold"; // report failure and score reducing
         };
@@ -120,10 +121,14 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 			lineBreak,
 			_s
 			];
-        if (_time >= PENALTY_PRESENCE_TIME) then {
+        if ( _guilty ) then {
     		_s = format [localize "STR_SYS_130", _penalty]; // /* ""For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!" */
         } else {
-    		_s = format [localize "STR_SYS_130_0", _time, _penalty]; // "You have been on the island for less than %1 minutes, so you have not had your points reduced (-%2)."
+        	if (base_visit_mission) then {
+	    		_s = format [localize "STR_SYS_130_0", _time, _penalty]; // "You have been on the island for less than %1 minutes, so you have not had your points reduced (-%2)."
+        	} else {
+				_s = localize "STR_SYS_130_1"; // "You haven't reached the base until you are a SpecNaz GRU soldier, and you are not guilty of missing the convoy."
+        	};
         };
 		_s call XfHQChat;
 		hint localize ("*** SideMission: " + (localize "STR_SYS_129") +  " #" + str(current_mission_index));
