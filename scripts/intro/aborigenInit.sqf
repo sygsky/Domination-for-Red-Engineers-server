@@ -6,7 +6,7 @@
 	TODO:
 		Move ammobox creation and re-arming in this file to make it local and fully available!!!
 		Create ammobox always on far position from the tent entrance.
-		Loading the ammo proc is situated at line 284 , file stupplayer1.sqf: _box = nearestObject [getPos spawn_tent, "ReammoBox"];
+		Loading the ammo proc is situated at line 301 , file setupplayer1.sqf: _box = nearestObject [getPos spawn_tent, "ReammoBox"];
 */
 #include "x_setup.sqf"
 
@@ -28,7 +28,7 @@ hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf a
 
 {
 	aborigen addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
-} forEach ["NAME", "BOAT", "CAR","PLANE", "WEAPON", "MEN", "RUMORS","GO"];
+} forEach ["NAME", "BOAT", "CAR", "PLANE", "WEAPON", "MEN", "RUMORS","GO"];
 
 while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // while out of Antigua
 

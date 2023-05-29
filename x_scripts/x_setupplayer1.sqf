@@ -295,7 +295,7 @@ ai_counter = 0;
 #endif
 
 #ifdef __ARRIVED_ON_ANTIGUA__
-if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already visited base, no need for aborigen/ammo-box, skipped"};
+if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already visited base, no need for ammo-box, skipped"};
 [] spawn {
 	private ["_box","_spawn_point","_boxname",""];
 	_box = nearestObject [getPos spawn_tent, "ReammoBox"];
