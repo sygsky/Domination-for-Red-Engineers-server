@@ -50,7 +50,7 @@ if ( _delete ) then { // delete plane
 	["say_sound", _del_pos, "steal"] call XSendNetStartScriptClient;
 	deleteVehicle aborigen_plane;
 	aborigen_plane = objNull;
-	hint localize "+++ camel.sqf: plane deleted";
+	hint localize format["+++ camel.sqf: plane deleted at %1", _del_pos call SYG_MsgOnPosE0];
 };
 
 if ( _create  ) then { // create
