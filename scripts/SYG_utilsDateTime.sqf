@@ -105,8 +105,9 @@ SYG_nowTimeToStr = {
 };
 
 /**
- * Returns user designated time info (in hours) to string format as follow: "hh:mm:ss"
+ * Returns user designated time info (IN HOURS!!! Not in seconds!!! convert to hours from seconds please) to string format as follow: "hh:mm:ss"
  * call: _timestr = daytime call SYG_userTimeToStr;
+ *	_timestr = (time/3600)  call SYG_userTimeToStr;
  */
 SYG_userTimeToStr = {
 	private ["_hour", "_minute","_second"];

@@ -51,7 +51,7 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, bas
 #ifdef __ACE__
 // inform players that I've reached the base
 if (!isNil "SYG_initialEquipmentStr") then {
-	_str = time call SYG_userTimeToStr;
+	_str = (time/3600) call SYG_userTimeToStr; // Let's convert it to hours to match the parameter of this method
 	// "You have been given a weapon. Take care of it!",
 	// "%1 have reached the base in %2! Life will get easier from here.",
 	// "You are assigned to the SpecNaz GRU detachment at Sahrani and to the local flying club, for the use of jump flags."
