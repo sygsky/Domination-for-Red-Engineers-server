@@ -110,7 +110,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
         _penalty = d_ranked_a select 11; // Lower all players who are on island enough time in rank on such bad event!!!
         //player addScore (-_penalty);
         _time = floor (time);
-        _guilty = (_time >= PENALTY_PRESENCE_TIME) && base_visit_mission;
+        _guilty = (_time >= PENALTY_PRESENCE_TIME) && (base_visit_mission > 0); // Is guilty if in mission predefined period and was on base before it.
         if ( _guilty ) then {
             (-_penalty) call SYG_addBonusScore;
             playSound "whold"; // report failure and score reducing
@@ -124,7 +124,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
         if ( _guilty ) then {
     		_s = format [localize "STR_SYS_130", _penalty]; // /* ""For failure of the side mission You are personally held accountable. Deducted %1 points. So will be with everyone!" */
         } else {
-        	if (base_visit_mission) then {
+        	if (base_visit_mission > 0) then {
 	    		_s = format [localize "STR_SYS_130_0", _time, _penalty]; // "You have been on the island for less than %1 minutes, so you have not had your points reduced (-%2)."
         	} else {
 				_s = localize "STR_SYS_130_1"; // "You haven't reached the base until you are a SpecNaz GRU soldier, and you are not guilty of missing the convoy."
