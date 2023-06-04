@@ -202,7 +202,7 @@ while { true } do {
                                 };
                             };
                             if ( _vehicle isKindOf "Car") exitWith {
-                                _found = !(alive _vehicle || (_vehicle in d_helilift1_types) ); // don't clean alive and ressurrectable vehicles
+                                _found = !(alive _vehicle || (_vehicle in d_helilift1_types) ); // don't clean alive and resurrectable vehicles
                             };
 
                             // check if holder is on the ground or is hanging in air (some Arma bug)

@@ -895,9 +895,11 @@ _car = (if (!d_lock_ai_car) then {
 		["ACE_HMMWV_GAU19","ACE_HMMWV_50","ACE_HMMWV_GL","ACE_HMMWV_TOW","WarfareWestSalvageTruck","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_Truck5t_Open","ACE_Truck5t","ACE_Truck5t_MG","ACE_HMMWV_GMV","ACE_HMMWV_GMV2"]
 } else {["HMMWV50","HMMWVMK","HMMWVTOW"]}} else {[]});
 
+/** remove ASAP
 _enemy_heli_list =
     ( if ((!d_lock_ai_air) && (__ACEVer)) then { SYG_HELI_BIG_LIST_ACE_W + SYG_HELI_LITTLE_LIST_ACE_W }
         else {[]});
+*/
 #endif
 
 #ifdef __OWN_SIDE_WEST__
