@@ -181,7 +181,10 @@ if (isServer) then {
 
 #endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
-	[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
+	[] spawn {
+		sleep 120; // spawn motocycles on base after arrival ones
+		[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
+	};
 
 	if (d_weather) then {execVM "scripts\weather\weathergen2.sqf";};
 

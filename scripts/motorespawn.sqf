@@ -49,7 +49,7 @@ _moto_ret_dist  = 3.5;
 #define inc(val) (val=val+1)
 #define TIMEOUT(addval) (time+(addval))
 
-_service_name  = "motorespawn.sqf";
+_service_name  = "motorespawn.sqf"; // default name for base motos sevice
 _lock = false;
 
 _motoarr = []; // create array of vehicles to return to original position after some delay
@@ -66,7 +66,7 @@ if ( (typeName (_this select 0)) == "ARRAY") then { // [[moto1, moto2...], DELAY
 	_this = _this select 0;
 };
 
-hint localize format["+++ motorespawn.sqf: service started with name '%1';", _service_name];
+hint localize format["+++ motorespawn.sqf: service started with name '%1', moto count %2;", _service_name, count _this];
 // read all vehicles and store their initial position and angles
 for "_i" from 0 to count _this - 1 do { // list all motocyrcles/automobiles
 	_x = _this select _i;
@@ -217,7 +217,7 @@ while {true} do {
                     //  +++ antigua_vehs: alive moto9(TT650C) local returned
 					hint localize format[ "+++ %4: moto%1(%2) alive/%3 returned", _id, typeOf _moto, if (local _moto) then {" local"} else {" remote"}, _service_name ];
 #endif
-					_moto setDammage 0.0;
+					_moto setDamage 0.0;
 					_moto setFuel 1.0;
 				};
 				sleep 1.11;
