@@ -135,6 +135,7 @@ hint localize "+++ event_para_dropped.sqf: start check helpers for the player ne
 
 // Inform other players about this player arrival to the Antigua!
 // Check if somebody helps player to visit the base
+_crew = [];
 if (base_visit_mission < 1) then { // Player still not visited base
 	hint localize "+++ event_para_dropped.sqf: started check helpers for the player";
 	if ( player call SYG_pointOnAntigua ) then { // And player dropped on Antigua
@@ -144,20 +145,19 @@ if (base_visit_mission < 1) then { // Player still not visited base
 		while { base_visit_mission < 1 } do {
 			sleep 15;
 			if ( alive player ) then {
-				if ( !((vehicle player) isKindOf "Air") ) exitWith {
-				}; // Player not is in some air vehicle now
+				if ( !((vehicle player) isKindOf "Air") ) exitWith {}; // Player not is in some air vehicle now
 				_veh = vehicle player;
 				// store vehicle crew for the future usage
 				_crew = crew _veh;
 				// Wait until this air veh is in air
 			#ifdef __DEBUG__
-				hint localize format["+++ event_para_dropped.sqf: payer entered vehicle %1 with crew of %2", typeOf _veh, count _crew ];
+				hint localize format["+++ event_para_dropped.sqf: player entered vehicle %1 with crew of %2", typeOf _veh, count _crew ];
 			#endif
 				while { player in _veh } do { sleep 10; _crew = _crew + ( ( crew _veh ) -  _crew ) };
 			#ifdef __DEBUG__
-				hint localize format["+++ event_para_dropped.sqf: payer exited vehicle %1 with crew of %2", typeOf _veh, count _crew ];
+				hint localize format["+++ event_para_dropped.sqf: player exited ""%1"" with crew of %2", typeOf _veh, count _crew ];
 			#endif
-				sleep 5; // wait visit base to finish
+				sleep 10; // wait visit base to finish
 				if ( base_visit_mission > 0 ) then { // base was visited!!!
 					for "_i" from 0 to  (count _crew - 1) do {
 						_x = _crew select _i;
@@ -173,7 +173,7 @@ if (base_visit_mission < 1) then { // Player still not visited base
 				}
 				#ifdef __DEBUG__
 				else {
-					hint localize "+++ event_para_dropped.sqf: %1 not visited base now, tyr next loop";
+					hint localize "+++ event_para_dropped.sqf: player not visited base now, try next loop";
 				};
 				#endif
 			};

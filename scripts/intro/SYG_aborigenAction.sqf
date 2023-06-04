@@ -291,7 +291,7 @@ switch ( _arg ) do {
 			while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
 			if (isNil "aborigen_plane") exitWIth {
 				player groupChat (localize "STR_ABORIGEN_PLANE_UNKNOWN"); // "An airplane? А... No, it's not here, maybe it'll come later?"
-				hint localize "--- ABO PLANE: isNil 3 seconds later after call to camel.sqf on server, so exit"
+				hint localize "--- ABO PLANE: biplan isNil 5 seconds later after call to camel.sqf on server, so exit"
 			};
 			hint localize "+++ ABO PLANE: server request completed, plane found";
 		};
@@ -324,7 +324,7 @@ switch ( _arg ) do {
 				hint localize format["+++ ABO PLANE: plane is occupied by %1, exit!!!", name (driver aborigen_plane)];
 				_exit = true;
 			};
-			// Plane is free and can be moved to the Antigas airstrip
+			// Plane is free and can be moved to the Antigua airstrip
 			["say_sound", aborigen_plane, "steal"] call XSendNetStartScriptClientAll;
 			sleep 0.5;
 			aborigen_plane setVelocity [0,0,0];

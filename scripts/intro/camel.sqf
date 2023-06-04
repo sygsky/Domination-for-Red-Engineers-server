@@ -59,8 +59,6 @@ if ( _create  ) then { // create
 	hint localize format["+++ camel.sqf: %1 plane created alive %2", PLANE_TYPE, alive aborigen_plane];
 };
 
-aborigen_plane setDir PLANE_DIR;
-
 if ( ((getPos aborigen_plane) distance PLANE_POS) > 20) then {
 	aborigen_plane setVelocity [0,0,0];
 	_dir_pos = PLANE_POS call _getDirAndPos; // get new dir and pos for the plane
@@ -69,7 +67,8 @@ if ( ((getPos aborigen_plane) distance PLANE_POS) > 20) then {
 	publicVariable "aborigen_plane";
 	sleep 0.3;
 	["say_sound", aborigen_plane, "return"] call XSendNetStartScriptClient;
-	hint localize "+++ camel.sqf: plane positioned on Antigua";
+	_str = [ aborigen_plane , 10 ] call SYG_MsgOnPosE0;
+	hint localize format["+++ camel.sqf: plane positioned on Antigua at %1", _str];
 };
 
 hint localize format["+++ camel.sqf: final plane status isNil %1, alive %2, type %3",isNil "aborigen_plane", alive aborigen_plane, typeOf aborigen_plane];
