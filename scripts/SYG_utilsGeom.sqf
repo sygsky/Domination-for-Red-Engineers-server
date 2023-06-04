@@ -307,7 +307,7 @@ SYG_pointInEllipse = {
 		//player groupChat "SYG_pointInEllipse: call SYG_pointInCircle";
 		_this call SYG_pointInCircle
 	};
-    _pnt = arg(0);
+    _pnt = (_this select 0) call SYG_getPos; // Point
     //player groupChat format["SYG_pointInEllipse: elli %1, pnt %2, rot %3", _elli,_pnt, argp(_elli,3)];
     _ellic = argp(_elli,0);
     if ( count _elli > 3) then {// ellipse may be rotated
@@ -333,9 +333,9 @@ SYG_pointInEllipse = {
 //
 SYG_pointInRect = {
 	private ["_pnt", "_rect","_rpnt"];
-	_pnt  = arg(0);
-	_rect = arg(1);
-	_rpnt = argp(_rect,0);
+	_pnt  = (_this select 0) call SYG_getPos; // Point/object/ect to test be  in rect
+	_rect = _this select 1;	// Rectangle description
+	_rpnt = _rect select 0; // Rectangle central point
 	//player groupChat format["SYG_pointInRect: rect %1, pnt %2, rot %3", _rect,_pnt, argp(_rect,3)];
 	if ( count _rect > 3 ) then {// may be rotated
 		if ( argp(_rect,3) != 0) then {

@@ -390,7 +390,7 @@ XfGetRanPointSquareOld = {
 	private ["_i", "_pos", "_a", "_b", "_angle", "_centerx", "_centery", "_leftx", "_lefty", "_width", "_height", "_ret_val", "_px1", "_py1", "_rotpnt" ];
 #endif
 //	hint localize format["+++ XfGetRanPointSquareOld: _this = %1", _this];
-	_pos = _this select 0;_a = _this select 1;_b = _this select 2;_angle = _this select 3;
+	_pos = (_this select 0) call SYG_getPos;_a = _this select 1;_b = _this select 2;_angle = _this select 3;
 	_centerx = _pos select 0;_centery = _pos select 1;_leftx = _centerx - _a;_lefty = _centery - _b;
 	_width = 2 * _a;_height = 2 * _b;_ret_val = [];
 	for "_i" from 1 to 50 do {
