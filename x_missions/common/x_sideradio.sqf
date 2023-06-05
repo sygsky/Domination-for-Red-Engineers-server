@@ -113,7 +113,12 @@ _check_truck_marker = 	{ // check truck marker
 		// create truck marker if needed
 		if ( _truck_marker == "" ) then {
 			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, _this, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
-			hint localize format["+++ x_sideradio.sqf: create _truck_marker at %1", (markerPos _truck_marker) call SYG_MsgOnPosE0];
+			_crew = crew _this;
+			for "_i" from 0 to ( (count _crew) -1 ) do {
+				_x = _crew select _i;
+				_crew set [_i, if (isPlayer _x) then {name _x} else {typeOf _x}];
+			};
+			hint localize format["+++ x_sideradio.sqf: create _truck_marker at %1, crew %2", (markerPos _truck_marker) call SYG_MsgOnPosE0, _crew];
 			_delay = 3;
 		} else {
 			  // move existing truck marker if needed
