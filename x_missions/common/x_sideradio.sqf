@@ -196,7 +196,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 				if ( ((getPosASL d_radar) select 2) < 0) then {"+"} else {"-"},
 				d_radar_truck call SYG_MsgOnPosE0,
 				_pl,
-				getPosASL d_radar_truck
+				(getPosASL d_radar_truck) call SYG_roundPos // print rounded meters in position
 			];
 		}
 	};

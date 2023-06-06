@@ -1164,25 +1164,12 @@ SYG_pointIsInTownBorders = {
     (_town select 2) >= _dist
 };
 
-
 //
-// call: _isArtiForbidden = call isArtiForbidden;
+// _asl = getPosAL _truck;             //       _asl = [9298.02, 10145.2, 139.992]
+// _round_pos = () call SYG_roundPos;  // _round_pos = [9298,    10145,   140]
 //
-/*
-isArtiForbidden = {
-    private ["_town_name","_exit"];
-    if ( !isNil "player_is_on_town_raid" ) exitWith {
-        (localize "STR_GRU_38_0") call XfGlobalChat; // "Arti strikes are strictly forbidden during the GRU mission!"
-        playSound "losing_patience";
-        true
-    };
-    _town_name = call SYG_getTargetTownName;
-    if (stop_arti_on_the_town == _town_name) exitWith {
-        (localize "STR_GRU_38_1") call XfGlobalChat; // ""Command has temporarily denied your access to artillery. It seems the partisans have complained about you!""
-        playSound "losing_patience";
-        true
-    };
-    false
+SYG_roundPos = {
+    [ round (_this select 0), round (_this select 1), round (_this select 2) ]
 };
-*/
+
 if (true) exitWith {};
