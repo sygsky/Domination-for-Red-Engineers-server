@@ -189,7 +189,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
 				if (alive _x) then {
 					if (isPlayer _x) then {
 						_pl set [ count _pl,  name _x ];
-					} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
+					} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, format["AI:%1", typeOf _x]] };
 				};
 			} forEach crew d_radar_truck;
 			hint localize format["+++ x_sideradio.sqf: radar truck(%1) now at %2, %3, %4",
@@ -234,14 +234,14 @@ if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
 					if (alive _x) then {
 						if (isPlayer _x) then {
 							_pl set [ count _pl,  name _x ];
-						} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, "AI"] };
+						} else { _cnt_ai = _cnt_ai + 1; _pl set [count _pl, format["AI:%1",typeOf _x]] };
 					};
 				} forEach crew d_radar_truck;
 				hint localize format["+++ x_sideradio.sqf: radar truck(%1) now at %2, %3, %4",
 					if ( ((getPosASL d_radar) select 2) < 0) then {"+"} else {"-"},
 					d_radar_truck call SYG_MsgOnPosE0,
 					_pl,
-					getPosASL d_radar_truck
+					(getPosASL d_radar_truck) call SYG_roundPos
 				];
 			}
 		};
