@@ -193,6 +193,5 @@ while {true} do {
 				_x call _replace_patrol;
 			};
 		};
-
 	} forEach _patrol_arr;
 };
