@@ -348,7 +348,7 @@ XHandleNetStartScriptServer = {
 			_this call (compile (_this select 1));
 		};
 
-		// Set new value for the variable base_visit_mission in payer array
+		// Set new value for the variable base_visit_mission in the player array
 		// ["base_visit_mission", _name | _id, 1] call XSendNetStartScriptServer;
 		case "base_visit_mission": {
 			private ["_id","_parray","_equip","_equip_arr"];

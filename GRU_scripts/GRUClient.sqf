@@ -233,34 +233,39 @@ GRU_procClientMsg = {
 		        case GRU_MSG_INFO_KIND_PATROL_DETECTED: { // patrol detected by locals somewhere
 		            //playSound "patrol"; // removed by Yeti request
                     _arr = arg(3); // array: [ _alias,_pos,_size,_patrol_type ]
-                    _rank = (rank player) call XGetRankIndex;
+                    _rank = if (base_visit_mission < 1) then { 6 } else {(rank player) call XGetRankIndex}; // #623: full info if not registered on base
                     //_rank = 6; // debug
-                    // create base message text
+                    // Create basic message text
                     _alias = argp(_arr, 0); // name of the observer
                     _args = ["STR_GRU_46",_alias,"","","","",""]; // message visible for any rank: "The landing of the enemy patrol spotted by %1%2%3%4%5%6"
                     _pos = argp(_arr, 1);   // spawn position
                     _loc = (_pos call SYG_nearestLocation);
-                    if ( _rank > 1) then { // sergeant, location name
-                        _args set[2, format[localize "STR_GRU_46_1", text _loc]];
+                    if ( _rank > 1) then { // sergeant, location name, rank 2
+                        // Add more info beginning from sergeant rank
+                        _args set[2, format[localize "STR_GRU_46_1", text _loc]]; // " near ""%1"""
 
                         if ( _rank > 2) then { // leutenant, distance
                             _detail_scale = ([500,250,200,100,50] select ( ( _rank min 6 ) - 2 ) ); // position accuracy depends on the rank of player
-                            _dist = format[localize "STR_GRU_46_2", ( ceil(( (position _loc) distance _pos )/_detail_scale) ) * _detail_scale];
+                            _dist = format[localize "STR_GRU_46_2", ( ceil(( (position _loc) distance _pos )/_detail_scale) ) * _detail_scale]; // " at a dist. of about %1 m."
                             //hint localize format["GRUClient GRU_MSG_INFO_KIND_PATROL_DETECTED: _dist == %1", _dist];
                             _args set[3, _dist];
 
                             if ( _rank > 3) then { // captain, patrol direction from location
                                 _dir = ([position _loc, _pos] call XfDirToObj) call SYG_getDirName;
-                                _args set[4, format[localize "STR_GRU_46_3", _dir]];
+                                _args set[4, format[localize "STR_GRU_46_3", _dir]]; // " bearing %1"
 
                                 if ( _rank > 4) then { // major, patrol vehicle numbering
                                     _num = argp(_arr, 2);
-                                    _args set[5, format[localize "STR_GRU_46_4", _num]];
+                                    _args set[5, format[localize "STR_GRU_46_4", _num]]; // " num. %1 unit[s]"
 
                                     if ( _rank > 5) then { // colonel, patrol type
                                         _pattype = argp(_arr, 3);
-                                        _pattype = localize ("STR_PATROL_TYPE_" + toUpper(_pattype));
-                                        _args set[6, format[localize "STR_GRU_46_5", _pattype]];
+                                        /*  STR_PATROL_TYPE_HP,heavy patrol // 2 Abrams+Linebakers
+                                            STR_PATROL_TYPE_AP,АА patrol //  2 bredley + Linebakers
+                                            STR_PATROL_TYPE_FP,floating patrol //  Vilcanoes
+                                            STR_PATROL_TYPE_SP,speedy patrol // Strikers
+                                            STR_PATROL_TYPE_LP,light patrol  // hammers  */
+                                        _args set[6, format[localize "STR_GRU_46_5", localize ("STR_PATROL_TYPE_" + toUpper(_pattype))]]; // " type is ""%1"""
                                     };
                                 };
                             };
