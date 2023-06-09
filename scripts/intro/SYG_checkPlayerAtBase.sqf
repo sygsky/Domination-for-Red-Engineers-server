@@ -38,7 +38,13 @@ while { base_visit_session <= 0 } do {
 			if (( getPos player ) call SYG_pointIsOnBase) then {  // player is in base rect!
 				base_visit_mission = 1;
 				_veh = nearestObjects [player,["LandVehicle","Air","Ship"],50];// Any nearest vehicle
-				["base_visit_mission", name player, base_visit_mission, if ((count _veh) == 0) then {"<no veh>"} else {typeOf (_veh select 0)} ] call XSendNetStartScriptServer; // store new value on the server
+				[
+				    "base_visit_mission",
+				    name player,
+				    base_visit_mission,
+				    if ((count _veh) == 0) then {"<no veh>"} else {typeOf (_veh select 0)},
+				    time // time spent to reach the base from Antigua
+				] call XSendNetStartScriptServer; // store new value on the server
 				base_visit_session = base_visit_mission;
 				hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
 			};

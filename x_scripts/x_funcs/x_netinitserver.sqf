@@ -348,13 +348,16 @@ XHandleNetStartScriptServer = {
 			_this call (compile (_this select 1));
 		};
 
-		// Set new value for the variable base_visit_mission in payer array
+		// Set new value for the variable base_visit_mission in the player array
 		// ["base_visit_mission", _name | _id, 1] call XSendNetStartScriptServer;
 		case "base_visit_mission": {
 			private ["_id","_parray","_equip","_equip_arr"];
 			_id = _this select 1;
 			if ( (typeName _id == "STRING") ) then { _id = d_player_array_names find _id; };
 			if ( (_id < 0) || (_id >= (count d_player_array_names)) ) exitWith {format["--- x_netinitserver.sqf ""base_visit_mission"": id unknown/out of range, _this %1", _this ]};
+			if (count _this > 4) then {
+			    _this set [4, ((_this select 4)/3600) call SYG_userTimeToStr] // Print time as "HH:MM:SS", that is the time it took the player to reach the base
+			};
 			hint localize format["+++ x_netinitserver.sqf ""base_visit_mission"": _this %1", _this ];
 			_parray = d_player_array_misc select _id; // _player array
 			_equip  = _parray select 5; // player equipment
