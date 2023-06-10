@@ -11,6 +11,7 @@
 	returns: nothing
 */
 
+#define POS_BICYCLE [17401,17980,0]
 #include "x_setup.sqf"
 
 _search_list = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","ACE_UAZ","DATSUN_PK1","HILUX_PK1"];
@@ -334,6 +335,49 @@ switch ( _arg ) do {
 			hint localize "+++ ABO PLANE: positioned on the place!!!"
 		};
 		if (_exit) exitWith {};
+#ifdef __ACE__
+		// #624: Bicycle request joined with plane one.
+		// check if bicycle is near tent
+		hint localize "+++ ABO PLANE: bicycle search";
+		_bicycle = nearestObject [spawn_tent,"ACE_Bicycle"];
+		if (!(isNull _bicycle)) then {
+			if (alive _bicycle) then {
+				hint localize "+++ ABO PLANE: ALIVE near spawn_tent bicycle found";
+				player groupChat (localize "STR_ABORIGEN_BICYCLE_1"); // "Use the bike to get to the plane. It's somewhere near the tent...".
+			} else {
+				hint localize "+++ ABO PLANE: DEAD near spawn_tent bicycle found";
+				player groupChat (localize "STR_ABORIGEN_BICYCLE_2"); // "Walk to the plane. My bicycle is broken..."
+			};
+		} else {
+			hint localize "+++ ABO PLANE: near spawn_tent bicycle NOT found, search on whole islet";
+			_arr = nearestObjects [_isle_pos, ["ACE_Bicycle"],_rad];
+			if (count _arr > 0) then { // some bicycle found near
+				// Move nearest alive bicycle
+				_bicycle = objNull;
+				{
+					if ((alive _x) && (isNull driver _x)) exitWith {
+						_bicycle = _x;
+					};
+				} forEach _arr;
+				if (alive _bicycle) then {
+					hint localize "+++ ABO PLANE: bicycle on island found, moved to the spawn_tent position";
+					if (_bicycle setVehiclePosition [ POS_BICYCLE, [], 3, "NONE"]) then {
+						_bicycle say "return";
+						player groupChat (localize "STR_ABORIGEN_BICYCLE_1"); // "Use the bike to get to the plane. It's somewhere near the tent...".
+					} else {
+						hint localize "--- ABO PLANE: but bicycle cant' be moved to the pos near spawn_tent";
+						player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+					};
+				} else {
+					hint localize "--- ABO PLANE: NO alive bicycle on island found";
+					player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+				};
+			} else {
+					hint localize "--- ABO PLANE: NO ANY bicycle on island found, that is very strange!!!";
+				player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+			};
+		};
+#endif
 		player groupChat (localize "STR_ABORIGEN_PLANE_INFO"); // "An airplane? There's a Sopwich (WWI) standing on the runway. I don't know about the fuel or the pilot..."
 	};
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
