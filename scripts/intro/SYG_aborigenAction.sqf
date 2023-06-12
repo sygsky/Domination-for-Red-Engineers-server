@@ -342,10 +342,10 @@ switch ( _arg ) do {
 		_bicycle = nearestObject [spawn_tent,"ACE_Bicycle"];
 		if (!(isNull _bicycle)) then {
 			if (alive _bicycle) then {
-				hint localize "+++ ABO PLANE: ALIVE near spawn_tent bicycle found";
+				hint localize "+++ ABO PLANE: ALIVE bicycle found near spawn_tent ";
 				player groupChat (localize "STR_ABORIGEN_BICYCLE_1"); // "Use the bike to get to the plane. It's somewhere near the tent...".
 			} else {
-				hint localize "+++ ABO PLANE: DEAD near spawn_tent bicycle found";
+				hint localize "+++ ABO PLANE: DEAD bicycle found near spawn_tent";
 				player groupChat (localize "STR_ABORIGEN_BICYCLE_2"); // "Walk to the plane. My bicycle is broken..."
 			};
 		} else {
@@ -354,12 +354,10 @@ switch ( _arg ) do {
 			if (count _arr > 0) then { // some bicycle found near
 				// Move nearest alive bicycle
 				_bicycle = objNull;
-				{
-					if ((alive _x) && (isNull driver _x)) exitWith {
-						_bicycle = _x;
-					};
+				{	// find nearest alive bicycle without driver
+					if ((alive _x) && (isNull driver _x)) exitWith { _bicycle = _x; };
 				} forEach _arr;
-				if (alive _bicycle) then {
+				if (alive _bicycle) then { // Empty bicycle found, try to move close to the tent
 					hint localize "+++ ABO PLANE: bicycle on island found, moved to the spawn_tent position";
 					if (_bicycle setVehiclePosition [ POS_BICYCLE, [], 3, "NONE"]) then {
 						_bicycle say "return";
@@ -373,7 +371,7 @@ switch ( _arg ) do {
 					player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
 				};
 			} else {
-					hint localize "--- ABO PLANE: NO ANY bicycle on island found, that is very strange!!!";
+					hint localize "--- ABO PLANE: NO ANY bicycle found on island, that is very strange!!!";
 				player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
 			};
 		};
