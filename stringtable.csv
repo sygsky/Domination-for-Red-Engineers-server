@@ -1755,6 +1755,10 @@ STR_ABORIGEN_NAME_1,My name %1. What's yours?,,,Моё имя %1. A Ваше?
 STR_ABORIGEN_NAME_UNKNOWN,doesn't matter,ist unwichtig,no es importante,не имеет значения
 STR_ABORIGEN_UNKNOWN,"I don't understand what you mean by the word '%1'","Ich verstehe nicht, was Sie mit '%1' meinen","No estoy seguro de lo que quiere decir con '%1'","Не понял, что вы имеете ввиду под словом '%1'"
 
+STR_ABORIGEN_BICYCLE_1,"Use the bike to get to the plane. It's somewhere near the tent...","Benutzt das Fahrrad, um zum Flugzeug zu gelangen. Es ist irgendwo in der Nähe des Zeltes...","Usa la bici para llegar al avión. Está en algún lugar cerca de la tienda...","Используйте велосипед, чтобы добраться до самолета. Он где-то рядом с палаткой...".
+STR_ABORIGEN_BICYCLE_2,"Walk to the plane. My bicycle is broken...",Zu Fuß zum Flugzeug gehen. Mein Fahrrad ist kaputt gegangen...,Caminar hasta el avión a pie. Mi bicicleta se averió...,Идите к самолётику пешком. Мой велосипед сломался...
+STR_ABORIGEN_BICYCLE_3,"Walk to the biplane. Some bastard stole my grandfather's bike...",Zu Fuß zum Doppeldecker. Irgendein Bastard hat das Fahrrad meines Großvaters gestohlen,Caminar hasta el biplano a pie. Algún cabrón robó la bici de mi abuelo,Идите к биплану пешком. Какая-то сволочь спёрла мой дедов велосипед
+
 STR_TITLE,"Made 2009 by Xeno\n          for www.germany-fun.de\n\nEdit 2014-2022 by EngineerACE\n          for Red-Engineers.ucoz.ru","Erstellt 2009 von Xeno\n  für www.germany-fun.de\n\nBearbeitet 2014-2022 von EngineerACE\n   für Red-Engineers.ucoz.ru","Hecho en 2009 por Xeno\n   para www.germany-fun.de\n\nEdit 2014-2022 por EngineerACE\n para     Red-Engineers.ucoz.ru","Автор 2009 Xeno\n  для www.germany-fun.de\n\nПереработка 2014-2022 EngineerACE\n  для Red-Engineers.ucoz.ru"
 
 STR_AVIAMARCH,aviamarch_eng,aviamarch_ger,aviamarch_rus,aviamarch_rus
