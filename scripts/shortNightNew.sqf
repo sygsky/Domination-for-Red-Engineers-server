@@ -1,17 +1,10 @@
 // scripts\shortNightNew.sqf: created by Dupa, modified by Sygsky
-// syntax: _temp = [nightStart, nightEnd, nightSpan, twilightDuration] execVM shortNight.sqf
-// nightStart MUST BE GREATER than nightEnd e.g. [21,6,2].
-// Values such as [1,6,2] will lead to unexpected behavior.
-// run on server and client simultaneously
+// syntax: [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
 //
-// Parameters:
-// nightStart : used designated night period start in hours, e.g. 19.5 stand for 19:30
-// nightEnd : used designated night period end, e.g. 3.5 stands for 03:30
-// nightSpan : wanted night duration in real hours. E.g. 0.5 means 30 minutes for whole night length
-// twilightDuration: optional (default 0) value for smoothed shift period before and after night (sun rise and sun down)
-// e.g. 0.5 means that real life twilight would be 0.5 hour long, in virtual time of short night it will be 0.5/speed_of_night
+// Runs on server and client simultaneously
 //
-//     [SYG_startMorning, SYG_startDay, SYG_startEvening, SYG_startNight, SYG_nightSkipFrom, SYG_nightSkipTo] execVM "scripts\shortNightNew.sqf";
+// Parameters are self documented.
+//
 //
 // +++++++++++++++++++++++++++++++++++++++++ NEW version comments block +++++++++++++++++++++++++++++
 //
