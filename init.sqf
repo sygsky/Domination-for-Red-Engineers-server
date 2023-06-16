@@ -185,7 +185,7 @@ if (isServer) then {
 		sleep 120; // spawn motocycles on base after arrival ones
 		[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 	};
-	[] spawn "scripts\intro\sea_patrol.sqf";
+	[] execVM "scripts\intro\sea_patrol.sqf";
 
 	if (d_weather) then {execVM "scripts\weather\weathergen2.sqf";};
 
