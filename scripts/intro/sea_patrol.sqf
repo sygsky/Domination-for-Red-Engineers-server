@@ -124,11 +124,10 @@ _create_patrol = {
 	_grp setCombatMode "RED";
 
 #ifdef __INFO__
-	hint localize format["+++ sea_patrol.sqf _create_patrol: ship#%1, driver %2, gunner %3, commander %4",
+	hint localize format["+++ sea_patrol.sqf _create_patrol: ship#%1, driver %2, gunner %3, commander not designed",
 		_this select OFFSET_ID,
 		assignedVehicleRole ( driver _boat),
-		assignedVehicleRole ( gunner _boat),
-		assignedVehicleRole ( commander _boat)
+		assignedVehicleRole ( gunner _boat)
 		];
 #endif
 };
@@ -218,9 +217,9 @@ _resupply_boat = {
 	if (!alive _this) exitWith {};
 	_this setFuel 1;
 	_this setDamage 0;
-#ifdef __INFO__
-	hint localize format[ "+++ sea_patrol.sqf _resupply_boat: ship crew count %1", {alive _x} count (crew _this) ];
-#endif
+//#ifdef __INFO__
+//	hint localize format[ "+++ sea_patrol.sqf _resupply_boat: ship crew count %1", {alive _x} count (crew _this) ];
+//#endif
 	{
 		if (alive _x) then { _x setDamage 0};
 	} forEach crew _this;

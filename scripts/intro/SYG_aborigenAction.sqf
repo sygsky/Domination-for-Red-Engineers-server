@@ -133,7 +133,7 @@ switch ( _arg ) do {
 			_boat setDir (random 360);
 			_boat setPos _pnt;
 			_boat say "return";
-			hint localize format["+++ Boat: moved to the point near Antigua %1 !", getPos _boat];
+			hint localize format["+++ Boat: found at %1 !", _boat call SYG_MsgOnPosE0];
         };
 		player groupChat format[localize "STR_ABORIGEN_BOAT_INFO", // "The nearest boat (%1) is %2 m away direction %3"
 			typeOf _boat,

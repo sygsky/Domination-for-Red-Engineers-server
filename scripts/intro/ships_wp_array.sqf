@@ -102,5 +102,5 @@ _waterPatrolWPS = [
   [4103.86,14816.3,0],
   [3674.99,16056,0],
   [7577.31,19268.1,0]
-],
+]
 ]; // _waterPatrolWPS array[7] end, empty boats[8]
