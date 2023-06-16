@@ -19,7 +19,7 @@
 #define OFFSET_ID   3
 #define OFFSET_STAT 4
 
-#define __DEBUG__
+// #define __DEBUG__
 #define __INFO__
 
 #include "x_setup.sqf"
@@ -44,9 +44,7 @@
 	#define BOAT_UNIT d_crewman_W
 #endif
 
-#ifdef __DEBUG__
 hint localize "+++ sea_patrol.sqf: STARTED";
-#endif
 
 #define DIST_TO_BE_STUCK 10
 
@@ -125,7 +123,7 @@ _create_patrol = {
 	_grp setBehaviour "SAFE";
 	_grp setCombatMode "RED";
 
-#ifdef __DEBUG__
+#ifdef __INFO__
 	hint localize format["+++ sea_patrol.sqf _create_patrol: ship#%1, driver %2, gunner %3, commander %4",
 		_this select OFFSET_ID,
 		assignedVehicleRole ( driver _boat),
@@ -164,7 +162,7 @@ _remove_patrol = {
 // [_ship, _grp, _wp_arr, _id, _state...] call _replace_patrol
 _replace_patrol = {
 
-#ifdef __DEBUG__
+#ifdef __INFO__
 //	player groupCHat format["+++ boat#%1 replaced", _this select OFFSET_ID];
 	hint localize format[ "+++ sea_patrol.sqf _replace_patrol: %1 ship#%2(%3) (alive crew %4), _this = %5",
 		if (alive (_this select OFFSET_BOAT)) then {"alive"} else {"dead"},
@@ -181,7 +179,7 @@ _replace_patrol = {
 
 _patrol_arr = [];
 
-#ifdef __DEBUG__
+#ifdef __INFO__
 // _str = [_ship, _grp, _wp_arr, _id, _state...] call _item2str;
 _item2str = {
 //	if (typeName _this != "ARRAY") exitWith { format["--- Expected _item2str _this <> ""ARRAY"" (%1)", typeName _this] };
@@ -193,7 +191,7 @@ _item2str = {
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // +          fill initial array with empty patrol description items                  +
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#ifdef __DEBUG__
+#ifdef __INFO__
 hint localize  "+++ sea_patrol.sqf fill initial  patrols +++";
 #endif
 
@@ -203,7 +201,7 @@ _i = 0;
 	if (typeName _x == "ARRAY") then {
 		_arr = [objNull, grpNull, _x, _i, [ [0,0,0], time] ];
 		_patrol_arr set [ _i, _arr ]; // [_boat, _group, _wpa, _id, _state]
-#ifdef __DEBUG__
+#ifdef __INFO__
 		_str = format ["+++ sea_patrol.sqf patrol #%1 params = %2", _i, _arr call _item2str];
 		hint localize  _str;
 #endif
@@ -220,7 +218,7 @@ _resupply_boat = {
 	if (!alive _this) exitWith {};
 	_this setFuel 1;
 	_this setDamage 0;
-#ifdef __DEBUG__
+#ifdef __INFO__
 	hint localize format[ "+++ sea_patrol.sqf _resupply_boat: ship crew count %1", {alive _x} count (crew _this) ];
 #endif
 	{
@@ -275,13 +273,13 @@ _reset_roles = {
 
 	// check too small crew, less then 2 (driver + gunner)
 	if (  _cnt < 2 ) exitWith {
-#ifdef __DEBUG__
+#ifdef __INFO__
 		hint localize format[ "+++ sea_patrol.sqf _reset_roles: boat crew count (%1) < 2, exit...", _cnt ];
 #endif
 		false
 	};
 	_gun_empty_ids = _gun_empty_ids - _gunner_ids; // define not filled turrets from list [0,1]
-#ifdef __DEBUG__
+#ifdef __INFO__
 	hint localize format["+++ sea_patrol.sqf _reset_roles: common count (%1), gunner_ids %2, _gun_empty_ids %3 ...", _cnt, _gunner_ids, _gun_empty_ids ];
 #endif
 	_cargo_cnt = count _cargo;
@@ -295,7 +293,7 @@ _reset_roles = {
 			_unit moveInDriver _this;
 			_cargo resize (_cargo_cnt - 1);
 			sleep 0.1;
-#ifdef __DEBUG__
+#ifdef __INFO__
 			hint localize format["+++ sea_patrol.sqf _reset_roles: cargo [%1] assigned as driver (%2), ...", count _cargo, alive (driver _this)];
 #endif
 		};
@@ -308,7 +306,7 @@ _reset_roles = {
 		_unit moveInDriver _this;
 		_gunner_units resize 1; // remove 2nd gunner
 		sleep 0.1;
-#ifdef __DEBUG__
+#ifdef __INFO__
 		hint localize format["+++ sea_patrol.sqf _reset_roles: 2nd gunner assigned as driver (%1)...", assignedVehicleRole _unit ];
 #endif
 	};
@@ -326,7 +324,7 @@ _reset_roles = {
 			_cargo_ind = _cargo_ind - 1;
 			if (_cargo_ind < 0) exitWith { };
 			sleep 0.1;
-#ifdef __DEBUG__
+#ifdef __INFO__
 			hint localize format["+++ sea_patrol.sqf _reset_roles: cargo assigned as gunner#%1 (%2)...", _x, assignedVehicleRole _unit];
 #endif
 		} forEach _gun_empty_ids;
@@ -338,12 +336,12 @@ _reset_roles = {
 		_unit setPos [0,0,0];
 		_unit moveInGunner _this;
 		sleep 0.1;
-#ifdef __DEBUG__
+#ifdef __INFO__
 		hint localize format[ "+++ sea_patrol.sqf _reset_roles: gunner#1 moved to gunner#0 (%1)...", assignedVehicleRole _unit ];
 #endif
 	};
 
-#ifdef __DEBUG__
+#ifdef __INFO__
 	hint localize format["+++ sea_patrol.sqf _reset_roles: gunners %1, %2 driver...",
 	count _gunner_units,
 	if (alive driver _this) then {"alive"} else {"dead"}];
@@ -361,7 +359,7 @@ while { true } do {
 		_ship = _arr select OFFSET_BOAT;
 		if (alive _ship) then {
 /**
-#ifdef __DEBUG__
+#ifdef __INFO__
 			hint localize format["+++ sea_patrol.sqf BOAT LOOP: ship#%1 has crew %2, at %3",
 				_arr select OFFSET_ID,
 				{alive _x} count (crew _ship),
@@ -371,7 +369,7 @@ while { true } do {
 */
 			if ( ({alive _x} count (crew _ship)) < 2 ) then { // crew is not ready to struggle
 				_arr call _replace_patrol;
-#ifdef __DEBUG__
+#ifdef __INFO__
 				hint localize format["+++ sea_patrol.sqf BOAT LOOP: replaced patrol, ship#%1, driver %2, gunner1 %3",
 					_arr select OFFSET_ID,
 					if (alive (driver _ship)) then {"alive"} else {"dead"},
@@ -388,14 +386,14 @@ while { true } do {
 				if (_ship call _reset_roles) then {
 					_ship call _resupply_boat; // reload, refuel, repair
 				} else { // replace this boat
-#ifdef __DEBUG__
+#ifdef __INFO__
 			hint localize format["+++ sea_patrol.sqf BOAT LOOP: ship#%1 crew not fit!",_arr select OFFSET_ID ];
 #endif
 					_arr call _replace_patrol;
 				};
 			};
 		} else {
-#ifdef __DEBUG__
+#ifdef __INFO__
 			hint localize format["+++ sea_patrol.sqf BOAT LOOP: ship#%1 is dead!",_arr select OFFSET_ID ];
 #endif
 			_arr call _replace_patrol;
