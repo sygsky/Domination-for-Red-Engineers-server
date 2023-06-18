@@ -318,11 +318,11 @@ _reset_roles = {
 			_unit = _cargo select (_cargo_cnt -1);
 			unassignVehicle _unit;
 			_unit setPos [0,0,0];
-			_unit moveInDriver _this;
+			_unit moveInDriver _ship;
 			_cargo resize (_cargo_cnt - 1);
 			sleep 0.1;
 #ifdef __INFO__
-			hint localize format["+++ sea_patrol.sqf _reset_roles: cargo [%1] assigned as driver (%2), ...", count _cargo, alive (driver _this)];
+			hint localize format["+++ sea_patrol.sqf _reset_roles: cargo [%1] assigned as driver (%2), ...", count _cargo, alive (driver _ship)];
 #endif
 		};
 		// no more cargo, try 2nd gunner of 2 available
@@ -331,7 +331,7 @@ _reset_roles = {
 		_unit = _gunner_units select 1;
 		unassignVehicle _unit;
 		_unit setPos [0,0,0];
-		_unit moveInDriver _this;
+		_unit moveInDriver _ship;
 		_gunner_units resize 1; // remove 2nd gunner
 		sleep 0.1;
 #ifdef __INFO__
@@ -346,7 +346,7 @@ _reset_roles = {
 			_unit = _cargo select _cargo_ind;
 			unassignVehicle _unit;
 			_unit setPos [0,0,0];
-			_unit moveInTurret [_this, [_x]];
+			_unit moveInTurret [_ship, [_x]];
 			_gunner_ids set [count _gunner_ids, _x]; // to count seats occupied by gunner[s]];
 			_gunner_units set [count _gunner_units, _unit]; // to handle seats occupied by gunner[s]];
 			_cargo_ind = _cargo_ind - 1;
@@ -358,11 +358,11 @@ _reset_roles = {
 		} forEach _gun_empty_ids;
 	};
 	// check if single gunner is not a front one
-	if ( (!alive (gunner _this)) &&  ((count _gunner_units) == 1) ) then {
+	if ( (!alive (gunner _ship)) &&  ((count _gunner_units) == 1) ) then {
 		_unit = _gunner_units select 0;
 		unassignVehicle _unit;
 		_unit setPos [0,0,0];
-		_unit moveInGunner _this;
+		_unit moveInGunner _ship;
 		sleep 0.1;
 #ifdef __INFO__
 		hint localize format[ "+++ sea_patrol.sqf _reset_roles: gunner#1 moved to gunner#0 (%1)...", assignedVehicleRole _unit ];
@@ -372,9 +372,9 @@ _reset_roles = {
 #ifdef __INFO__
 	hint localize format["+++ sea_patrol.sqf _reset_roles: gunners %1, %2 driver...",
 	count _gunner_units,
-	if (alive driver _this) then {"alive"} else {"dead"}];
+	if (alive driver _ship) then {"alive"} else {"dead"}];
 #endif
-	(alive (driver _this)) && (alive (gunner _this)) // Good vehicle: alive driver and at last 1 gunner is alive
+	(alive (driver _ship)) && (alive (gunner _ship)) // Good vehicle: alive driver and at last 1 gunner is alive
 };
 
 //
