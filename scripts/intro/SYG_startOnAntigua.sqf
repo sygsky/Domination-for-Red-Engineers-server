@@ -68,6 +68,6 @@ _arr = _arr + [bicycle1,bicycle2,bicycle3];
 hint localize format["+++ SYG_startOnAntigua.sqf: vehs are [%1]", _arr call SYG_objArrToTypeStr];
 // { _x lock true} forEach _arr;
 // [_veh_arr, _big_delay, _small_delay, "service_name_in_RPT", _lock_vehs_or_not, _ret_dist]
-[   _arr,     600,        90,           "antigua_vehs"       , true             , 50 ] execVM "scripts\motorespawn.sqf"; // as moto!!!
+[   _arr,     600,        90,           "antigua_vehs"       , false            , 50 ] execVM "scripts\motorespawn.sqf"; // as moto!!!
 
 // 1. DC3 flight to the Antigua or simple drop from a plane
