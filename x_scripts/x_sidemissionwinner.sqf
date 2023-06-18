@@ -42,18 +42,18 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 
 #ifdef __RANKED__
 	_get_points = false;
-	if ( ( isNil "d_sm_p_pos") && (!d_was_at_sm)) then {
-		_posi_array = x_sm_pos;
-		_posione = _posi_array select 0;
-		_get_points = (player distance _posione < (d_ranked_a select 12)); // 250 m
+	if ( isNil "d_sm_p_pos") then {d_sm_p_pos = [sm_p_pos select 0]};
+	if ( !d_was_at_sm ) then {
+		_posione = d_sm_p_pos;
+		_get_points = ((player distance _posione) < (d_ranked_a select 12)); // 250 m
 	} else { // not is nil
 		_get_points =  d_was_at_sm;
 		if (!_get_points) then {
-			_get_points = (player distance d_sm_p_pos < (d_ranked_a select 12)); // 250 m
+			_get_points = (player distance d_sm_p_pos)< (d_ranked_a select 12); // 250 m
 		};
 	};
     hint localize format["+++ x_sidemissionwinner.sqf : d_sm_p_pos %1, d_was_at_sm %2, x_sm_pos %3",
-        if (isNil "d_sm_p_pos") then {"nil"} else {d_sm_p_pos},
+    	d_sm_p_pos,
         if (isNil "d_was_at_sm") then {"nil"} else {d_was_at_sm},
         if (isNil "x_sm_pos") then {"nil"} else {x_sm_pos}
     ];
@@ -64,6 +64,7 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 		playSound "good_news";
 	};
 	d_sm_p_pos = nil;
+    publicVariable "d_sm_p_pos";
 #endif
 	_bonus_string = "<template>";
 #ifndef __TT__

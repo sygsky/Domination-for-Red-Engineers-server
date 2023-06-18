@@ -6,7 +6,8 @@ private ["_vehicle"];
 #define __Poss _poss = x_sm_pos select 0;
 #define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
 
-x_sm_pos = [[7767.34,7500.25,0],[7453.12,7506.08,0]]; // index: 24,   Fuel station in camp near Arcadia
+//
+x_sm_pos = [[7767.34,7500.25,0],[7703.4,7483,0]]; // index: 24,   Any of two fuel stations in desert to North of Arcadia
 // One more option  
 x_sm_type = "normal"; // "convoy"
 
@@ -17,22 +18,20 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = localize "STR_SYS_516"; //"The enemy uses a fuelstation located in a camp north of Arcadia to refuel its vehicles. Simple task, destroy it to cut down fuel supplies.";
-	current_mission_resolved_text = localize "STR_SYS_517"; //"Good job. The fuelstation is down.";
+	current_mission_text = localize "STR_SM_24"; //"The enemy uses a fuelstation located in a camp north of Arcadia to refuel its vehicles. Simple task, destroy it to cut down fuel supplies.";
+	current_mission_resolved_text = localize "STR_SM_024"; //"Good job. The fuelstation is down.";
 };
 
 if (isServer) then {
-    _reselect_pos = (random 1) < 0.5;
-	if ( _reselect_pos ) then {
-#ifdef __RANKED__
-        d_sm_p_pos = nil;
-#endif
+    _select_ind = floor(random 2); // 0 is original point, 1 is other point
+	if ( _select_ind != 0 ) then {
+        d_sm_p_pos = [x_sm_pos select 1];
+        publicVariable "d_sm_p_pos";
 	    x_sm_pos set [0, x_sm_pos select 1];
-//	    publicVariable "x_sm_pos"; // dont use this line as x_sm_pos is modified with server-client network exchange
 	};
 	__Poss
 #ifdef __RANKED__
-    if ( _reselect_pos ) then {
+    if ( _select_ind != 0 ) then {
     	["d_sm_p_pos", _poss] call XSendNetVarClient;
     };
 #endif

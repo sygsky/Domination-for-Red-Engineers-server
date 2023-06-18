@@ -33,14 +33,13 @@ d_sm_running = true;
 #endif
 
 if (current_mission_index != -1) then {
-	_posi_array = x_sm_pos;
-	_posione = _posi_array select 0;
+	if (isNil "d_sm_p_pos") then {d_sm_p_pos = x_sm_pos select 0};
 	sm_marker_name = format ["XMISSIONM%1", current_mission_index + 1]; // first (alone) marker
 	hint localize format[ "+++ x_getsidemissionclient.sqf: x_sm_pos = %1, marker name = %2", x_sm_pos, sm_marker_name ];
 	if (x_sm_type == "normal") exitWith {
-		[sm_marker_name, _posione,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Side mission"
+		[sm_marker_name, d_sm_p_pos,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Side mission"
         #ifdef __RANKED__
-        _posione spawn {
+        d_sm_p_pos spawn {
             private ["_posione"];
             _posione = _this;
             while {d_sm_running} do {

@@ -937,26 +937,25 @@ x_get_nenemy = {
 	_ret
 };
 
-// calls as follow: _near_enemy_arr = [_grp, _dist] call x_get_nenemy
-//              or: _near_enemy_arr = [_unit,_dist] call x_get_nenemy
+// calls as follow: _near_enemy_arr = [_grp<,_dist=1000>] call grp_getnenemy
+//              or: _near_enemy_arr = [_unit<,_dist=1000>] call grp_getnenemy
 // returns: known nearest enemy units array [_nearest_enemy,_pos_nearest,_leader knowsAbout _nearest_enemy]
 //or empty array []  if no enemy known to the designated unit
 grp_getnenemy = {
 	private ["_grp", "_leader", "_nearest_enemy", "_ret", "_pos_nearest", "_near_targets","_dist","_x"];
 	if ( typeName _this != "ARRAY" ) exitWith{[]};
-	if ( count _this < 2 ) exitWith{[]};
 	_grp = _this select 0;
 	if ( typeName _grp == "OBJECT" ) then {_grp = group _grp;};
 	if ( typeName _grp != "GROUP") exitWith {[]};
 	if (isNull _grp || ({alive _x} count units _grp) == 0) exitWith {[]};
-	_dist = _this select 1;
+
+	_dist = if ( count _this < 2 ) then { 1000 } else  { _this select 1 };
 	_leader = _grp call SYG_getLeader;
 	if (isNull _leader ) exitWith{[]};
 	_nearest_enemy = _leader findNearestEnemy (position _leader);
 	if ((_leader distance _nearest_enemy) <_dist) exitWith {[]};
 	_ret = [];
-	if (!isNull _nearest_enemy) then
-	{
+	if (!isNull _nearest_enemy) then {
 		_pos_nearest = [];
         if (_leader knowsAbout _nearest_enemy > 0.2) then {
             _near_targets = _leader nearTargets ((_leader distance _nearest_enemy) + 10);
@@ -972,7 +971,6 @@ grp_getnenemy = {
 		_ret = if (count _pos_nearest > 0) then {[_nearest_enemy,_pos_nearest,_leader knowsAbout _nearest_enemy]} else {[]};
 	};
 	_ret
-
 };
 
 // return true if nearest enemy exists, false if no enemy or enemy at distance more than 70 meters from original enemy position

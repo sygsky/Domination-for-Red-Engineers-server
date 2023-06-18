@@ -916,7 +916,7 @@ SYG_sideStaticWeapons = {
 
 #define EMPTY_RETURN_ARRAY [[],[],[],[],[],objNull]
 
-	private ["_mgs","_aas","_ats","_gls","_cns",/* "_wpa", */"_ret","_unk","_side","_pos","_dist","_arr","_vec","_type","_found","_i", "_x"];
+	private ["_mgs","_aas","_ats","_gls","_cns",/* "_wpa", */"_ret","_unk","_side","_pos","_dist","_arr","_veh","_type","_found","_i", "_x"];
 
     _ret = EMPTY_RETURN_ARRAY;
 	_unk = []; // unknown type objects array
@@ -942,15 +942,15 @@ SYG_sideStaticWeapons = {
 	_arr = _pos nearObjects [ "StaticWeapon", _dist];
 	{ // forEach _arr;
 		if ( (side _x) == _side ) then {
-			_vec = _x;
+			_veh = _x;
 			_type = typeOf _x;
 			_found = false;
 			for "_i" from 0 to (count STATIC_WEAPONS_TYPE_ARR) - 1 do {
 				if ( _type in (STATIC_WEAPONS_TYPE_ARR select _i) ) exitWith {
-					_rar = _ret select _i; _rar set [count _rar, _vec]; _found = true;
+					_rar = _ret select _i; _rar set [count _rar, _veh]; _found = true;
 				};
 			};
-			if ( !_found ) then {_unk set [count _unk, _vec];};
+			if ( !_found ) then {_unk set [count _unk, _veh];};
 		};
 		sleep 0.01;
 	} forEach _arr; // _aas,_ats,_mgs,_cns,_gls
@@ -1252,7 +1252,7 @@ SYG_removeIntelLegend = {
 //
 // set smoke throwed to the shooter side for "hit"/"dammaged"(tanks) event if vehicle has a smoke magazines in base inventory
 //
-// Call: _isAssingedToSmoke = _vec call SYG_assignVecToSmokeOnHit;
+// Call: _isAssingedToSmoke = _veh call SYG_assignVecToSmokeOnHit;
 //
 SYG_assignVecToSmokeOnHit = {
     if (!d_smoke) exitWith {false}; // not allowed in setup
@@ -1460,12 +1460,17 @@ SYG_carRearmTable =
 
 SYG_boatRearmTable =
 [
-    ["RHIB2Turret"], // boat names
+    ["RHIB2Turret","RHIB"], // boat names
     [ // boat params
         [
-            ["ACE_M230","ACE_M230"],//["ACE_VulcanMgun20"], // weapon(s)
-            ["ACE_M789_1200","ACE_M789_1200","ACE_M789_1200","ACE_M789_1200"] //["ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+            ["ACE_VulcanMgun20"], // weapon(s)
+            ["ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168"] // magazines (1 weapon)
+        ],
+        [
+            ["ACE_VulcanMgun20"], // weapon(s)
+            ["ACE_20mm_M168","ACE_20mm_M168"] // magazines
         ]
+
     ]
 ];
 
@@ -1506,18 +1511,18 @@ SYG_getHeliTable = {
 };
 
 // gets any table for designated vehicle/type
-// call: _vtbl = [_vec,table] call SYG_getVehicleTable;
+// call: _vtbl = [_veh,table] call SYG_getVehicleTable;
 // returns array: [[vec_wpn1,...,vec_wpn#],[vec_mgz1,...,vec_mgz#]]
 //   or [] if vehicle not found in rearm table
 SYG_getAnyTable = {
-    private ["_list", "_table", "_pos","_vec"];
-    _vec = arg(0);
-    if ( typeName _vec == "OBJECT") then {_vec = typeOf _vec};
-    if (typeName _vec != "STRING") exitWith {[]};
+    private ["_list", "_table", "_pos","_veh"];
+    _veh = arg(0);
+    if ( typeName _veh == "OBJECT") then {_veh = typeOf _veh};
+    if (typeName _veh != "STRING") exitWith {[]};
     _table = arg(1);
     _list = argp(_table,0);
-    //player groupChat format["SYG_getTable: %1", _vec];
-    _pos =  _list find _vec;
+    //player groupChat format["SYG_getTable: %1", _veh];
+    _pos =  _list find _veh;
     if ( _pos < 0) exitWith {[]}; // no such vehicle
     _list = argp(argp(_table,1),_pos);
     [argp(_list,0), argp(_list,1)]
@@ -1541,23 +1546,28 @@ SYG_getVehicleTable = {
 
 //
 // call:
-//      _vecTbl = _vec call SYG_getVehicleTable;
-//      _res = ([_vec] + _vecTbl) call SYG_rearmVehicle;
+//      _vecTbl = _veh call SYG_getVehicleTable;
+//      _res = ([_veh] + _vecTbl) call SYG_rearmVehicle;
 //
 SYG_rearmVehicle = {
     if ( typeName _this != "ARRAY") exitWith {false};
     if ( count _this < 3) exitWith {false};
-    private ["_vec", "_x"];
+    private ["_veh", "_x"];
     //player groupChat format["SYG_rearmVehicle: %1", _this];
-    _vec = arg(0);
-    {_vec removeMagazines _x} forEach magazines _vec;
-    {_vec removeWeapon _x} forEach weapons _vec;
+    _veh = arg(0);
+	if ((typeOf _veh) == "RHIB2Turret") then { // Special case as "M49" can't be replaced with "Vulcan canon"
+		_veh removeMagazines "100Rnd_127x99_M2"; // Remove all 100Rnd_127x99_M2
+		_veh removeWeapon "M2";	// remove ahead M2
+	} else {
+		{_veh removeMagazines _x} forEach magazines _veh;
+		{_veh removeWeapon _x} forEach weapons _veh;
+	};
 	{
 	    if (typeName _x == "STRING") then {_x = [_x]}; // convert single string to an array with single string item
-	    {_vec addMagazine _x} forEach _x;
+	    {_veh addMagazine _x} forEach _x;
 	} forEach arg(2); // magazines
 	{
-		_vec addWeapon _x;
+		_veh addWeapon _x;
 	} forEach arg(1);  // weapons
 	true
 };
@@ -2321,7 +2331,7 @@ SYG_typesVehCanLift = {
 	For this script follow params are needed:
 	[ vehicle, launcher type, magazine ammo type, realod weapon] call SYG_reloadAmmo;
 	e.g.
-	[_x,"ACE_M6_Stinger_Launcher", "ACE_M6_FIM92"<, true>] call SYG_reloadAmmo; // Ammo itself in this exmple is "ACE_FIM92round" and is not used
+	[_x,"ACE_M6_Stinger_Launcher", "ACE_M6_FIM92"<, true>] call SYG_reloadAmmo; // Ammo itself for this example will be "ACE_FIM92round" and is not used
 */
 SYG_reloadAmmo = {
 	private ["_veh", "_wpnType", "_magType", "_ammoCnt", "_magCntCfg", "_magCntVeh", "_addMagCnt", "_ammoCntCfg"];

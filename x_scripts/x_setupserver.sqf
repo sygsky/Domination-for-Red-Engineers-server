@@ -126,7 +126,8 @@ XClearSidemission = {
 
     SM_HeavySniperCnt = 0;
     publicVariable "SM_HeavySniperCnt"; // set SM heavy sniper being wiped out status
-
+	d_sm_p_pos = nil;
+	publicVariable "d_sm_p_pos";
 	execVM "x_missions\x_getsidemission.sqf"; // start next SM
 };
 

@@ -99,7 +99,7 @@ while {true} do {
 		//hint localize format["x_groupsm.sqf: call XPlayersNumber == %1",(call XPlayersNumber)];
 		sleep (1.012 + random 1);
 		if ((call XPlayersNumber) == 0) then {
-            waitUntil {sleep (5.012 + random 1);(call XPlayersNumber) > 0};
+            waitUntil {sleep (25.012 + random 1);(call XPlayersNumber) > 0};
 			_units = units _grp;
 			// refuel all vehicles after player wait periods
             {
