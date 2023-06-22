@@ -13,6 +13,7 @@
 
 hint localize "+++ SYG_checkPlayerAtBase.sqf: Started";
 
+_start_time = _this; // Session start time
 _flare = objNull;
 _pos = getPos AISPAWN; // FLAG_BASE; // [9529.5,9759.2,0]; // point near central gate to the base
 _flag_pos = [];
@@ -46,7 +47,7 @@ while { base_visit_session <= 0 } do {
 						name player,
 						base_visit_mission,
 						if ((count _veh) == 0) then {"<no veh>"} else {typeOf (_veh select 0)},
-						time // time spent to reach the base from Antigua
+						time  - _start_time // Time spent to reach the base from Antigua
 					] call XSendNetStartScriptServer; // store new value on the server
 					base_visit_session = base_visit_mission;
 					hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
