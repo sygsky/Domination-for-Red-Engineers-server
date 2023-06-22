@@ -16,6 +16,7 @@ private ["_s","_str","_dlg","_XD_display","_control","_line","_camstart","_intro
 if (!X_Client) exitWith {hint localize "--- x_intro run not on client!!!";};
 //hint localize "+++ x_intro started!!!";
 d_still_in_intro = true;
+_start_time = time; // to calculate time to visit base
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
@@ -973,7 +974,7 @@ if (_doJump) then {
     waitUntil { camCommitted _camera }; // wait until come
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    if ( alive player) then { [] execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
+    if ( alive player) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	if (!alive player) exitWith {}; // Exit ALL follow animations and messages
 
