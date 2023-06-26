@@ -559,12 +559,13 @@ SYG_populateVehicle = {
 	// well, lets look if we should fill some cargo places in trucks and canons, may be in M113, MG strikes, AT humwee
 
 #ifdef __ADD_1CARGO_TO_TRUCKS_AND_HMMW__
-// for WEST enemy only
-	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50" /*"ACE_HMMWV_TOW"*/) /*OR (_veh isKindOf "ACE_Stryker_TOW") */) then {
+	// for small vehicles and trucks
+	if ( (_veh isKindOf "Truck") || (_veh isKindOf "HMMWV50") || (_veh isKindOf "UAZMG") ) then {
         // add "ACE_SoldierWMAT_A" as a passenger
         _emptypos = _veh emptyPositions "Cargo";
         if ( _emptypos > 0 ) then {
-            _unit=_grp createUnit ["ACE_SoldierWMAT_A", _pos, [], 0, "FORM"];
+			_unit = if (d_enemy_side == "WEST") then { "ACE_SoldierWMAT_A" } else { "ACE_SoldierERPG_VDV" };
+			_unit = _grp createUnit [_unit, _pos, [], 0, "FORM"];
             _unit setSkill _grpskill + random (_grprndskill );
             [_unit] joinSilent _grp;
             _unit moveInCargo _veh;
@@ -573,7 +574,7 @@ SYG_populateVehicle = {
 	};
 #endif
 #ifdef __PREVENT_OVERTURN__
-    _veh call SYG_preventTurnOut; // add anti-overturn proc
+    _veh call SYG_preventTurnOut; // Add anti-overturn proc
 #endif
 	_grp
 };
