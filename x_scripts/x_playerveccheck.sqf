@@ -79,11 +79,14 @@ while { true } do {
         _enemy_vec = false; // if vehicle is enemy trophy one
         if ( _player_not_in_GRU_mission ) then {
 //            hint localize "x_playerveccheck.sqf: _player_not_in_GRU_mission true";
-            #ifndef __TT__
+
+
+        #ifndef __TT__
             if (!((_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo) ) then {
-            #else
+        #endif
+        #ifdef __TT__
             if (!(_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2,HRR1,HRR2,HRR3,HRR4,MRRR1,MRRR2])) then {
-            #endif
+        #endif
 //                hint localize "x_playerveccheck.sqf: !((_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo)";
                 _index = (rank player) call XGetRankIndex;
                 _vrs = d_ranked_a select 8;								 // ranks for:
@@ -108,9 +111,9 @@ while { true } do {
                         if (_veh isKindOf "Tank") then {
                             _veh say "Tank_GetIn";
                             if (_veh isKindOf "M1Abrams"
-    #ifdef __ACE__
+    		#ifdef __ACE__
                                 || _veh isKindOf "ACE_M60" || _veh isKindOf "ACE_M2A1"
-    #endif
+    		#endif
                                 ) then {
                                 _indexta = _indexta - 1; // Entering enemy vehicle requires a lower rank
                                 _enemy_vec = true;
@@ -124,7 +127,7 @@ while { true } do {
                 } else {
                     if (_veh isKindOf "Air") then {
 //                        hint localize "!((_veh in [HR1,HR2,HR3,HR4,MRR1,MRR2]) || _cargo)";
-                        if (_veh isKindOf "Helicopter" && !(_veh isKindOf "ParachuteBase")) then {
+                        if ( (_veh isKindOf "Helicopter") && !(_veh call SYG_isParachute) ) then {
                             if (_veh isKindOf "AH6" || _veh isKindOf "ACE_Mi17" || _veh isKindOf "UH60MG") then {
                                 if (_veh isKindOf "ACE_Mi17" && (_index < _indexta)) then { // always allowed to enter into "AH6" descendants
                                     _not_allowed = true;
@@ -136,9 +139,9 @@ while { true } do {
                                 _battle_heli = true;
                                 // Western heli allowed to enter for any rank drivers
                                 if ( !((_veh isKindof "AH1W"
-    #ifdef __ACE__
+    		#ifdef __ACE__
                                     || _veh isKindOf "ACE_AH64_AGM_HE")
-    #endif
+    		#endif
                                      && (_role == "Driver"))
                                     ) then { // follow check for soviet helicopters only, any western ones are allowed
                                         if (_index < _indexheli) then {
@@ -148,7 +151,8 @@ while { true } do {
                                     };
                             };
                         } else {
-                            if ( (_veh isKindOf "Plane") && (typeOf _veh != "RAS_Parachute") && !(_veh isKindOf "Camel")) then {
+							// Allow Camel and DC3 to be visited with any weapons and at any rank
+                            if ( (_veh isKindOf "Plane") && (! ( (_veh call SYG_isParachute) || (_veh isKindOf "Camel") ) ) ) then {
                                 _air_battle = true;
                                 if (_index < _indexplane) then {
                                     _not_allowed = true;
@@ -165,12 +169,12 @@ while { true } do {
             };
             _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
 
-    #ifdef __DEBUG_PRINT__
+   		#ifdef __DEBUG_PRINT__
             if ( _bulky_weapon != "" ) then {
                 hint localize format["+++ x_playerveccheck.sqf: bulky weapon is ""%1""",_bulky_weapon];
             };
-    #endif
-    #ifdef __FUTURE__
+    	#endif
+    	#ifdef __FUTURE__
             while { _cargo || ((((!_not_allowed) && (_bulky_weapon == "") ) ) && (vehicle player != player)) } do {
                 sleep 0.666;
                 _role_arr = assignedVehicleRole player;
@@ -181,7 +185,7 @@ while { true } do {
                     _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
                 };
             };
-    #endif
+		#endif
         } else { // not in native vehicle on base, is player is in executing GRU mission? check his options!
             // check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
             _not_allowed =  !(_veh isKindOf "Motorcycle" || _veh isKindOf "ACE_ATV_HondaR" || _veh isKindOf "Truck5t" || _veh isKindOf "Ural" || _veh isKindOf "Zodiac");
