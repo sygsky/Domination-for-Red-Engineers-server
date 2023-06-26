@@ -2178,17 +2178,17 @@ SYG_findExcessiveWeapon = {
 //         _bulky_weapon = player call SYG_getVecRoleBulkyWeapon;
 //
 SYG_getVecRoleBulkyWeapon = {
-	private ["_vec", "_role_arr", "_driver","_turret",/*"_cargo",*/"_bulky_weapon"];
-	_vec = vehicle _this;
-	if ( _vec == _this ) exitWith {""};
-//	if ( _vec isKindOf "Motorcycle")  exitWith {""};
-//	if ( _vec isKindOf "StaticWeapon" ) exitWith {""};
-//	if ( _vec isKindOf "ACE_ATV_HondaR" ) exitWith {""};
-	if ( _vec isKindOf "Land" ) exitWith {""}; // all land vehicles allowed for any weapons
-	if ( _vec isKindOf "Ship" ) exitWith {""}; // all ships allowed too
+	private ["_veh", "_role_arr", "_driver","_turret",/*"_cargo",*/"_bulky_weapon"];
+	_veh = vehicle _this;
+	if ( _veh == _this ) exitWith {""};
+//	if ( _veh isKindOf "Motorcycle")  exitWith {""};
+//	if ( _veh isKindOf "StaticWeapon" ) exitWith {""};
+//	if ( _veh isKindOf "ACE_ATV_HondaR" ) exitWith {""};
+	if ( _veh isKindOf "Land" ) exitWith {""}; // all land vehicles allowed for any weapons
+	if ( _veh isKindOf "Ship" ) exitWith {""}; // all ships allowed too
 
 	_role_arr = assignedVehicleRole player;
-	//hint localize format["x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _vec];
+	//hint localize format["x_playerveccheck.sqf: player assigned as %1 to %2", _role_arr, typeOf _veh];
 	if (count _role_arr == 0 ) exitWith {""}; // no role
 	if ( (_role_arr select 0) == "Cargo" ) exitWith  {""}; // any weapon allowed
 	_driver = false;
@@ -2207,19 +2207,26 @@ SYG_getVecRoleBulkyWeapon = {
 		// first add allowed weapon in bulky_weapon array
 		//if ( _cargo) exitWith {};
 		// check pre-defined vehicles
-//		if ( _vec in [HR1,HR2,HR3,HR4] ) exitWith { if (_driver) then {_bulky_weapon = ["smg"];} else {_bulky_weapon = ["rfl","rpg1"];};};
-		if ( _vec in [HR1,HR2,HR3,HR4] ) exitWith { if (_driver) then {_bulky_weapon = ["lng"];};}; // Mi-17 transport heli on base
-//		if ( _vec in [MRR1,MRR2] ) exitWith { _bulky_weapon = ["rfl","rpg1"];};
-//		if (_vec isKindOf "LandVehicle" ) exitWith {_bulky_weapon = ["rfl","rpg1"];};
+//		if ( _veh in [HR1,HR2,HR3,HR4] ) exitWith { if (_driver) then {_bulky_weapon = ["smg"];} else {_bulky_weapon = ["rfl","rpg1"];};};
+		#ifndef __TT__
+		if ( _veh in [HR1,HR2,HR3,HR4] ) exitWith { if (_driver) then { _bulky_weapon = ["lng"]; }; }; // Mi-17 transport heli on base
+		#else
+		if (_veh in [HR1,HR2,HR3,HR4,HRR1,HRR2,HRR3,HRR4]) exitWith { if (_driver) then { _bulky_weapon = ["lng"]; }; };
+		#endif
 
-		if (_vec isKindOf "Air") then {
-		    if ( !(_vec call SYG_isParachute) ) then {
-                if (_vec isKindOf "Helicopter") then {
+//		if ( _veh in [MRR1,MRR2] ) exitWith { _bulky_weapon = ["rfl","rpg1"];};
+//		if (_veh isKindOf "LandVehicle" ) exitWith {_bulky_weapon = ["rfl","rpg1"];};
+
+		if (_veh isKindOf "Air") then {
+		    if ( !(_veh call SYG_isParachute) ) then {
+                if (_veh isKindOf "Helicopter") then {
                     //["rks","rfl","smg","pst","rpg","lng"]
-//                    if (_driver || (_vec call SYG_isBattleHeli) ) then {_bulky_weapon = ["smg"]; breakTo "main";}
-                    if (_driver || (_vec call SYG_isBattleHeli) ) then {_bulky_weapon = ["lng"]; breakTo "main";};
+//                    if (_driver || (_veh call SYG_isBattleHeli) ) then {_bulky_weapon = ["smg"]; breakTo "main";}
+                    if (_driver || (_veh call SYG_isBattleHeli) ) then {_bulky_weapon = ["lng"]; breakTo "main";};
                 } else {
-                    if (_vec isKindOf "Plane") then { _bulky_weapon = ["smg"]; breakTo "main"; };
+                    if ( (_veh isKindOf "Plane") ) then {
+                    	if (! (typeOf _veh) in ["Camel","Camel2","DC3"])  then { _bulky_weapon = ["smg"]; breakTo "main";
+                    };
                 };
 			};
 		};
