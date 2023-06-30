@@ -19,7 +19,7 @@
 #define OFFSET_ID   3
 #define OFFSET_STAT 4
 
-// #define __DEBUG__	// Debug settings with shortened delays etc
+#define __DEBUG__	// Debug settings with shortened delays etc
 
 #define __INFO__ // Print info about each patrol status
 
@@ -34,10 +34,12 @@
 	#define PATROL_CHECK_DELAY 15
 	#define POS_DIST 20
 	#define PATROL_STALL_DELAY 60
+	#define COMBAT_STALL_DELAY 120
 #else
 	#define PATROL_CHECK_DELAY 120 // Full check cycle delay
 	#define POS_DIST 20  		   // Distance to previous position to regard the boat as stalled in place
 	#define PATROL_STALL_DELAY 360 // Max time to decide stalled or not
+	#define COMBAT_STALL_DELAY 600 // Max time to decide stalled or not if in combat
 #endif
 
 
@@ -51,51 +53,95 @@ hint localize "+++ sea_patrol.sqf: STARTED";
 
 #define DIST_TO_BE_STUCK 10
 
+// Call as:
+// _modes = _unit call _get_modes;
+// Or:
+// _modes = _group call _get_modes;
+_get_modes = {
+	private ["_modes"];
+	if ( typeName _this == "OBJECT" ) exitWith {
+		[behaviour _this, combatMode (group _this)]
+	};
+	if ( typeName _this == "GROUP" ) exitWith {
+		_modes = ["NO", "UNIT>"];
+		{ if (alive _x) exitWIth { _modes = [behaviour _x, combatMode _this] } } forEach units _this;
+		_modes
+	};
+	["<UNKN/TYPE", typeName _this]
+};
 //
 // Checks ship to be stuck or on shore
 // Call: _good = [_ship, _grp, _wp_arr, _id, _state...] call _is_ship_stuck;
 //
 _is_ship_stuck = {
-	private [ "_boat", "_stat", "_dist", "_res", "_pos", "_time", "_near_enemy_arr" ];
+	private [ "_boat", "_stat", "_dist", "_stucked", "_pos", "_time", "_near_enemy_arr", "_beh", "_unit" ];
 	// Check to be stucked
 	_boat = _this select OFFSET_BOAT;
 	if (!alive _boat) exitWith {
-	 	hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1 is dead itself", _this select OFFSET_ID];
+	 	hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1 is dead itself%2, return FALSE",
+			_this select OFFSET_ID,
+			if (isNull _boat) then {" <null>"} else {format[" (%1)",_boat call SYG_MsgOnPosE0]}
+		];
+		true
+	};
+	_grp = _this select OFFSET_GRP;
+	if ( ({alive _x} count units _grp) < 2) exitWith {
+	 	hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1, the list of group members is too short (%2<2), return TRUE",
+	 		_this select OFFSET_ID,
+			{alive _x} count units _grp
+		];
 		true
 	};
 	_stat = _this select OFFSET_STAT;
-	_res = false;
-	if ( true  ) then {
-		_grp = _this select OFFSET_GRP;
-		_near_enemy_arr = [_grp, 1000] call grp_getnenemy;
-		if ( (count _near_enemy_arr) > 0 ) exitWith {
-			_near_enemy_arr set [0, (_near_enemy_arr select 0) call SYG_getKillerInfo]; // replace object with its type or player name
-			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1, nearest enemy %2",
-			_this select OFFSET_ID,
-			_near_enemy_arr
-			];
-		}; // some enemy detected
-		_pos  = _stat select 0;
-		_dist = _pos distance _boat;
-		if ( _dist > POS_DIST) exitWith {}; // Distance from last point is far enought for boat to be not stalled
-		_time = _stat select 1;
-		if ( _time > time ) exitWith {}; // Timeout still not completed to be stalled
-#ifdef __INFO__
-		hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1 is stuck, pos %2, time %3, dist = %4, enemy = %5, delay = %6, _this = %7",
-			_this select OFFSET_ID,
-			getPos _boat,
-			time,
-			_dist,
-			_near_enemy_arr call SYG_objArrToTypeStr,
-			round(PATROL_STALL_DELAY + round(time - _time)),
-			_this call _item2str
+	_pos  = _stat select 0;
+	_time = _stat select 1;
+	_dist = _pos distance _boat;
+	_stucked = false;
+
+#ifdef __DEBUG__
+		hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1, params real(crit): dist %2(%3), time %4(%5), crew/units %6(%7)",
+		_this select OFFSET_ID,
+		_dist, POS_DIST,
+		 time, _time,
+		{alive _x} count crew _boat, {alive _x} count units _grp
 		];
 #endif
-		_res = true
+	if ( true ) then {
+		_modes = _grp call _get_modes;
+		_in_combat = (_modes select 0) in ["COMBAT","STEALTH"];
+		if ( _in_combat ) exitWith { // If in battle, can't be stucked
+			if ( _dist > POS_DIST ) exitWith {
+				_stat set[ 0, getPosASL _boat ]; _stat set [1, time + COMBAT_STALL_DELAY ];
+			};
+#ifdef __INFO__
+			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1 in battle at %2, mode %3, return FALSE",
+			_this select OFFSET_ID,
+			_boat call SYG_MsgOnPosE0,
+			_modes select 0
+			];
+#endif
+		}; // some enemy detected
+
+		if ( _dist > POS_DIST ) exitWith {
+			_stat set[ 0, getPosASL _boat ]; _stat set [1, time + PATROL_STALL_DELAY ];
+/*
+#ifdef __INFO__
+			hint localize format["+++ sea_patrol.sqf _is_ship_stuck: the boat#%1, dist too short, return FALSE", _this select OFFSET_ID ];
+#endif
+*/
+		}; // Distance from last point is far enough for boat to be not stalled
+
+		if ( time > _time ) exitWith {
+#ifdef __INFO__
+			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat#%1 is stuck by timeout on dist at %2, return TRUE",
+				_this select OFFSET_ID,
+				_boat call SYG_MsgOnPosE0
+			];
+#endif
+			_stucked = true
+		};
 	};
-	// Not stuck, update  check next time
-	if ( !_res ) then { _stat set[ 0, getPosASL _boat ]; _stat set [1, time + PATROL_STALL_DELAY ] }; // Update status for the next loop
-	_res
+	_stucked
 };
 
 //  [_ship, _grp, _wp_arr, _id, _state...] call _create_patrol
@@ -104,9 +150,9 @@ _create_patrol = {
 	_boat = createVehicle [BOAT_TYPE, [0,0,0], [], 25, "NONE"];
 
 	if ( _boat call SYG_rearmVehicleA ) then {
-		hint localize format["+++ sea_patrol.sqf _create_patrol: %1 created and rearmed", typeOf _boat];
+		hint localize format["+++ sea_patrol.sqf _create_patrol: %1 recreated and rearmed", typeOf _boat];
 	} else {
-		hint localize format["--- sea_patrol.sqf _create_patrol: %1 created but NOT rearmed", typeOf _boat];
+		hint localize format["--- sea_patrol.sqf _create_patrol: %1 recreated but NOT rearmed", typeOf _boat];
 	}; // try to rearm  upgraded vehicle
 
 	_boat lock true;
@@ -137,8 +183,8 @@ _create_patrol = {
 
 	_grp setBehaviour "SAFE";
 	_grp setCombatMode "RED";
-	_this set [OFFSET_STAT,[getPos _boat, time + PATROL_STALL_DELAY]];
-#ifdef __INFO__
+	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY]];
+#ifdef __DEBUG__
 	hint localize format["+++ sea_patrol.sqf _create_patrol: ship#%1 (%2), driver %3, gunner %4, %5",
 		_this select OFFSET_ID,
 		typeOf _boat,
@@ -179,7 +225,7 @@ _remove_patrol = {
 _replace_patrol = {
 
 #ifdef __INFO__
-//	player groupCHat format["+++ boat#%1 replaced", _this select OFFSET_ID];
+//	player groupCHat format["+++ boat#%1 replacing", _this select OFFSET_ID];
 	hint localize format[ "+++ sea_patrol.sqf _replace_patrol: %1 ship#%2(%3) (alive crew %4), _this = %5",
 		if (alive (_this select OFFSET_BOAT)) then {"alive"} else {"dead"},
 		_this select OFFSET_ID,
@@ -199,14 +245,12 @@ _replace_patrol = {
 
 _patrol_arr = [];
 
-#ifdef __INFO__
 // _str = [_ship, _grp, _wp_arr, _id, _state...] call _item2str;
 _item2str = {
 //	if (typeName _this != "ARRAY") exitWith { format["--- Expected _item2str _this <> ""ARRAY"" (%1)", typeName _this] };
 //	if (count _this != 5) exitWith { format["--- Expected _item2str _this count <> 5 (%1)", count _this] };
 	format["[type %1, side %2, _wpa[%3], id %4, stat %5]", typeOf (_this select 0), side (_this select 1), count (_this select 2), _this select 3, _this select 4];
 };
-#endif
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // +          fill initial array with empty patrol description items                  +
@@ -215,13 +259,13 @@ _item2str = {
 hint localize  "+++ sea_patrol.sqf fill initial  patrols +++";
 #endif
 
-_cnt = count _waterPatrolWPS; // how many patrols to implement
+// how many patrols to implement
 _i = 0;
 {
 	if (typeName _x == "ARRAY") then {
 		_arr = [objNull, grpNull, _x, _i, [ [0,0,0], time + PATROL_STALL_DELAY] ];
 		_patrol_arr set [ _i, _arr ]; // [_boat, _group, _wpa, _id, _state]
-#ifdef __INFO__
+#ifdef __DEBUG__
 		_str = format ["+++ sea_patrol.sqf patrol #%1 params = %2", _i, _arr call _item2str];
 		hint localize  _str;
 #endif
@@ -243,7 +287,7 @@ _resupply_boat = {
 //#endif
 	{
 		if (alive _x) then { _x setDamage 0};
-	} forEach crew _this;
+	} forEach units (group driver _this);
 	// TODO: reammo vehicle
 };
 
@@ -265,16 +309,20 @@ _get_cargo = {
 // Try to fill driver and at least 1 gunner from cargo or driver from two gunners
 _reset_roles = {
 	_ship = _this select OFFSET_BOAT;
-	if ( (alive (driver _ship)) && (alive (gunner _ship)) ) exitWith {true}; // Only the driver and the front gunner are needed, to reduce inspections
+	_grp = _this select OFFSET_GRP;
+	_cnt = {alive _x} count units _grp; // Alive cnt (units, not crew)
+	// Check if driver and gunner are in place and units count is 2
+	if ( (alive (driver _ship)) && (alive (gunner _ship)) && (_cnt == 2) ) exitWith { true }; // Only the driver and the front gunner are needed, to reduce follow checks
 	_grp = _this select OFFSET_GRP;
 	_driver = objNull;
 	_gun_empty_ids = [0,1]; // all gunners id in config
 	_gunner_ids = [];
 	_gunner_units = [];
 	_cargo = []; // men in cargo + men of the group near ship
+	_out_units = [];
 	// Detect all roles of the crew in vehicle
 	_cnt = 0;
-#ifdef __DEBUG__
+#ifdef __INFO__
 	_cargo_dists = []; // distances for alive units of the group not in ship
 #endif
 	{
@@ -288,27 +336,37 @@ _reset_roles = {
 					_gunner_ids set[count _gunner_ids, _id]; // Count seats occupied by gunner[s]
 					_gunner_units set [count _gunner_units, _x]; // To handle seats occupied by gunner[s]
 				};
-				if ( (_role select 0) == "Cargo") exitWith {_cargo set [count _cargo, _x]};
+				// must be in cargo but may be out of ship!
+				if ( (_role select 0) == "Cargo") exitWith { _cargo set [ count _cargo, _x ] };
 			} else {
-				_cargo set [count _cargo, _x];
-#ifdef __DEBUG__
-				_cargo_dists  set [count _cargo, round(_ship distance _x)];
+				if ( ! (_x in crew _ship) ) then {
+					_cargo set [ count _cargo, _x ];
+					_out_units set [ count _out_units, _x ];
+#ifdef __INFO__
+					_cargo_dists  set [ count _cargo_dists, round(_ship distance _x) ];
 #endif
+					unassignVehicle _x ;
+					_x assignAsCargo _ship;
+				};
 			};
-			_cnt = _cnt + 1; // Count alive units inthe group
+			_cnt = _cnt + 1; // Count alive units in the group
 		};
 	} forEach units _grp;
+	if (count _out_units > 0) then { _out_units orderGetIn true };
 
 	// check too small crew, less then 2 (driver + gunner)
 	if (  _cnt < 2 ) exitWith {
 #ifdef __INFO__
-		hint localize format[ "+++ sea_patrol.sqf _reset_roles: boat grp untis count (%1) < 2, dists %2 exit...", _cnt, _cargo_dists ];
+		hint localize format[ "+++ sea_patrol.sqf _reset_roles: boat#%1 grp units %2 < 2, dists %3 exit...", _this select OFFSET_ID, _cnt, _cargo_dists ];
 #endif
 		false
 	};
+	if ( (alive _driver) && ((count _gunner_ids) == 2)) exitWith { true }; // critical crew is on seats
 	_gun_empty_ids = _gun_empty_ids - _gunner_ids; // define not filled turrets from list [0,1]
-#ifdef __INFO__
-	hint localize format["+++ sea_patrol.sqf _reset_roles: common count (%1), gunner_ids %2, _gun_empty_ids %3 ...", _cnt, _gunner_ids, _gun_empty_ids ];
+#ifdef __DEBUG__
+	_beh = _grp call _get_modes;
+	hint localize format["+++ sea_patrol.sqf _reset_roles: common count (%1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
+		_cnt, count _out_units, _beh, _gunner_ids, _gun_empty_ids ];
 #endif
 	_cargo_cnt = count _cargo;
 
@@ -321,12 +379,12 @@ _reset_roles = {
 			_unit moveInDriver _ship;
 			_cargo resize (_cargo_cnt - 1);
 			sleep 0.1;
-#ifdef __INFO__
+#ifdef __DEBUG__
 			hint localize format["+++ sea_patrol.sqf _reset_roles: cargo [%1] assigned as driver (%2), ...", count _cargo, alive (driver _ship)];
 #endif
 		};
 		// no more cargo, try 2nd gunner of 2 available
-		if ((count _gunner_ids) < 2) exitWith{}; // no 2nd gunner to use him as driver
+		if ( (count _gunner_ids) < 2 ) exitWith{}; // no 2nd gunner to use him as driver
 		// put 2nd gunner as driver
 		_unit = _gunner_units select 1;
 		unassignVehicle _unit;
@@ -334,7 +392,7 @@ _reset_roles = {
 		_unit moveInDriver _ship;
 		_gunner_units resize 1; // remove 2nd gunner
 		sleep 0.1;
-#ifdef __INFO__
+#ifdef __DEBUG__
 		hint localize format["+++ sea_patrol.sqf _reset_roles: 2nd gunner assigned as driver (%1)...", assignedVehicleRole _unit ];
 #endif
 	};
@@ -352,7 +410,7 @@ _reset_roles = {
 			_cargo_ind = _cargo_ind - 1;
 			if (_cargo_ind < 0) exitWith { };
 			sleep 0.1;
-#ifdef __INFO__
+#ifdef __DEBUG__
 			hint localize format["+++ sea_patrol.sqf _reset_roles: cargo assigned as gunner#%1 (%2)...", _x, assignedVehicleRole _unit];
 #endif
 		} forEach _gun_empty_ids;
@@ -364,15 +422,16 @@ _reset_roles = {
 		_unit setPos [0,0,0];
 		_unit moveInGunner _ship;
 		sleep 0.1;
-#ifdef __INFO__
+#ifdef __DEBUG__
 		hint localize format[ "+++ sea_patrol.sqf _reset_roles: gunner#1 moved to gunner#0 (%1)...", assignedVehicleRole _unit ];
 #endif
 	};
 
-#ifdef __INFO__
+#ifdef __DEBUG__
 	hint localize format["+++ sea_patrol.sqf _reset_roles: gunners %1, %2 driver...",
-	count _gunner_units,
-	if (alive driver _ship) then {"alive"} else {"dead"}];
+		count _gunner_units,
+		if (alive driver _ship) then {"alive"} else {"dead"}
+	];
 #endif
 	(alive (driver _ship)) && (alive (gunner _ship)) // Good vehicle: alive driver and at last 1 gunner is alive
 };
