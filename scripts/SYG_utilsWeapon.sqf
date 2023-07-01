@@ -2225,17 +2225,17 @@ SYG_getVecRoleBulkyWeapon = {
                     if (_driver || (_veh call SYG_isBattleHeli) ) then {_bulky_weapon = ["lng"]; breakTo "main";};
                 } else {
                     if ( (_veh isKindOf "Plane") ) then {
-                    	if (! (typeOf _veh) in ["Camel","Camel2","DC3"])  then { _bulky_weapon = ["smg"]; breakTo "main";
+                    	if (! ((typeOf _veh) in ["Camel","Camel2","DC3"]))  then { _bulky_weapon = ["smg"]; breakTo "main";};
                     };
                 };
 			};
 		};
 		if (true) exitWith {};
 	};
+	if ( (count _bulky_weapon) == 0 ) exitWith { "" }; // all is allowed
 #ifdef __DEBUG__
 	hint localize format["+++ SYG_getVecRoleBulkyWeapon: bulky weapon %1", _bulky_weapon];
 #endif
-	if ( (count _bulky_weapon) == 0 ) exitWith { "" }; // all is allowed
 	[player, _bulky_weapon] call SYG_findExcessiveWeapon;
 };
 
