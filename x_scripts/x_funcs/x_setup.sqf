@@ -127,7 +127,7 @@
 // uncomment follow line if you want teleport available only if all services on base are valid
 // #define __TELEPORT_ONLY_WHEN_ALL_SERVICES_ARE_VALID__
 
-// uncomment follow line to enable jail system if: a) player has score less of equal .LE. then define value, b) new score value is lower than last score value
+// uncomment follow line to enable jail system if score are negative enough (-15) and lowered by more then -1 value (not personal death occured)
 #define __JAIL_MAX_SCORE__ -15
 
 // uncoment follow line if you don't want users to clone RPG and so on missiles using their rucksacks
@@ -154,7 +154,7 @@
 // comment it out to use the new score system, with lower values per rank
 #define __OLD_SCORES__
 
-// uncomment to disable GRU specalist to be pilot for battle air vehicles ( "SU", "Ka-50" etc), allow only "Mi-17 PKT" etc
+// uncomment to disable AI GRU specialist to be pilot for battle air vehicles ( "SU", "Ka-50" etc), allow only "Mi-17 PKT" etc
 #define __DISABLE_GRU_BE_PILOTS__
 
 // uncomment to allow shotgun armed AI soldiers
@@ -197,7 +197,7 @@
 // uncomment to get bonuses not on base but near finished towns or SM
 #define __DOSAAF_BONUS__
 
-// comment to allow reammo if loaf/unload static weapon to/from salvage tru	ck
+// comment to allow reammo if load/unload static weapon to/from salvage trucks
 #define __NO_REAMMO_IN_SALVAGE__
 
 // comment to allow storing full equipment on base flag, else only rucksack is stored on flag base, all other equipment is stored OnPlayerDisconnecting

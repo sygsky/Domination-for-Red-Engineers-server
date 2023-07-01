@@ -25,6 +25,8 @@
 		};
 */
 
+#define __JOKE__
+
 if (!isNil "antigua_initiated") exitWith {};
 
 antigua_initiated = true;
@@ -33,7 +35,14 @@ _car_type_list =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 			  "hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open",
 			  "datsun1_civil_1_open","datsun1_civil_2_covered","datsun1_civil_3_open",
 			  "Landrover","Landrover_Closed","Landrover_Police",
-			  "car_sedan","car_hatchback"];
+			  "car_sedan","car_hatchback"
+#ifdef __JOKE__
+			  ,"tractor" // This is for a joke only :o)
+#endif
+#ifdef __ACE__
+			  ,"ACE_HMMWV","ACE_UAZ"
+#endif
+			  ];
 // _moto_type_list = ["M1030","TT650G","TT650C"]; // Not needed
 
 hint localize "+++ SYG_startOnAntigua.sqf: started...";

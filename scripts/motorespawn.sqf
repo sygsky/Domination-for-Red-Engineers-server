@@ -49,7 +49,7 @@ _moto_ret_dist  = 3.5;
 #define inc(val) (val=val+1)
 #define TIMEOUT(addval) (time+(addval))
 
-_service_name  = "motorespawn.sqf"; // default name for base motos sevice
+_service_name  = "base_vehs"; // default name for base motos sevice
 _lock = false;
 
 _motoarr = []; // create array of vehicles to return to original position after some delay

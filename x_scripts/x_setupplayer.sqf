@@ -1673,7 +1673,7 @@ if (d_player_air_autokick > 0) then {
 
 #ifdef __JAIL_MAX_SCORE__
 //    	    hint localize format[ "--- oldscore %1, newscore %2", _oldscore, _newscore ];
-			// Jail is assigned if score are negative and lowered by more then -1 value (not personal death occured)
+			// Jail is assigned if score are negative enough (-15) and lowered by more then -1 value (not personal death occured)
 			if ( (_oldscore <= __JAIL_MAX_SCORE__) && (_newscore < (_oldscore - 1)) ) then {
 			    [_newscore] execVM "scripts\jail.sqf"; // send him to jail for (_newscore + 60) seconds
 			};
