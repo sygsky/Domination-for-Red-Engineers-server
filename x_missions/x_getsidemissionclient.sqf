@@ -35,17 +35,19 @@ d_sm_running = true;
 if (current_mission_index != -1) then {
 	if (isNil "d_sm_p_pos") then {d_sm_p_pos = x_sm_pos select 0};
 	sm_marker_name = format ["XMISSIONM%1", current_mission_index + 1]; // first (alone) marker
-	hint localize format[ "+++ x_getsidemissionclient.sqf: x_sm_pos = %1, marker name = %2", x_sm_pos, sm_marker_name ];
+	hint localize format[ "+++ x_getsidemissionclient.sqf: x_sm_pos = %1, d_sm_p_pos = %2, marker name = %3", x_sm_pos, d_sm_p_pos, sm_marker_name ];
 	if (x_sm_type == "normal") exitWith {
 		[sm_marker_name, d_sm_p_pos,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_157",0,"Destroy"] call XfCreateMarkerLocal; // "Side mission"
         #ifdef __RANKED__
         d_sm_p_pos spawn {
-            private ["_posione"];
-            _posione = _this;
+            private ["_pos","_dist"];
+            _pos = _this;
+            _dist = d_ranked_a select 12; // dist from side mission point
             while {d_sm_running} do {
-                if (player distance _posione < (d_ranked_a select 12)) exitWith {
+                if (player distance _pos < _dist) exitWith {
                     d_was_at_sm = true;
                     d_sm_running = false;
+					hint localize "+++ x_getsidemissionclient.sqf: player assigned to be was at SM";
                 };
                 sleep (10.012 + (random 3));
             };
@@ -54,10 +56,9 @@ if (current_mission_index != -1) then {
 	};
 
 	if (x_sm_type == "convoy") exitWith {
-		[sm_marker_name, _posione,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_158",0,"Start"] call XfCreateMarkerLocal; // "Start"
+		[sm_marker_name, x_sm_pos select 0,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_158",0,"Start"] call XfCreateMarkerLocal; // "Start"
 		sm_marker_name2 = format ["XMISSIONM2%1", current_mission_index + 1];
-		_posione = _posi_array select 1;
-		[sm_marker_name2, _posione,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_159",0,"End"] call XfCreateMarkerLocal; // "Finish"
+		[sm_marker_name2, x_sm_pos select 1,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_159",0,"End"] call XfCreateMarkerLocal; // "Finish"
 	};
 
 	// draw the marker at the area center in form of the question sign
