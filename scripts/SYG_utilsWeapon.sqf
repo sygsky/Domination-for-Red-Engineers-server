@@ -2486,8 +2486,8 @@ SYG_reammoTruck = {
 
 		_this addMagazineCargo ["ACE_9Rnd_12Ga_Slug",20];
 		_this addMagazineCargo ["ACE_9Rnd_12Ga_Buck00",20];
-		_this addMagazineCargo ["ACE_8Rnd_12Ga_Slug"];
-		_this addMagazineCargo ["ACE_8Rnd_12Ga_Buck00"];
+		_this addMagazineCargo ["ACE_8Rnd_12Ga_Slug",20];
+		_this addMagazineCargo ["ACE_8Rnd_12Ga_Buck00",20];
 
 		_this addMagazineCargo ["ACE_1Rnd_Flare_Red", 20];
 		_this addMagazineCargo ["ACE_1Rnd_Flare_Green", 20];
@@ -2584,7 +2584,7 @@ SYG_reammoMHQ = {
 		_this addMagazineCargo ["ACE_Bandage",     3];
 		_this addMagazineCargo ["ACE_Morphine",    5];
 		_this addMagazineCargo ["ACE_Epinephrine", 1];
-		_this addmagazinecargo ["ACE_MineE",       5];
+		_this addMagazineCargo ["ACE_MineE",       5];
 		true
 	} else {
 		hint localize format["--- SYG_reammoMHQ: --- Expected input vehicle type BMP2_MHQ, detected %1 ---", typeOf _this ];
@@ -2698,20 +2698,6 @@ SYG_storePlayerEquipmentAsStr = {
 //            hint localize format ["+++ equipment stored for the new player ""%1"": %2", _name, arg(1)];
         };
     };
-};
-
-//
-// call: _arr = _arr_str call SYG_str2Arr;
-//
-SYG_str2Arr = {
-    call compile _this
-};
-
-//
-// call: _arr = _arr_str call SYG_arr2Str;
-//
-SYG_arr2Str = {
-    format["%1", _this]
 };
 
 //
