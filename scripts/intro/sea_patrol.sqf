@@ -46,12 +46,12 @@
 
 
 #ifdef __OWN_SIDE_EAST__
-	#define BOAT_UNIT d_crewman_E
-#else
 	#define BOAT_UNIT d_crewman_W
+#else
+	#define BOAT_UNIT d_crewman_E
 #endif
 
-hint localize "+++ sea_patrol.sqf: STARTED";
+hint localize format["+++ sea_patrol.sqf: STARTED, crewman %1", typeOf BOAT_UNIT];
 
 #define DIST_TO_BE_STUCK 10
 
@@ -62,31 +62,35 @@ hint localize "+++ sea_patrol.sqf: STARTED";
 _get_modes = {
 	private ["_modes"];
 	if ( typeName _this == "OBJECT" ) exitWith {
-		[behaviour _this, combatMode (group _this)]
+		[behaviour _this, combatMode (group _this), _this findNearestEnemy _this]
 	};
 	if ( typeName _this == "GROUP" ) exitWith {
-		_modes = ["NO", "UNIT>"];
-		{ if (alive _x) exitWIth { _modes = [behaviour _x, combatMode _this] } } forEach units _this;
+		_modes = ["NO", "UNIT","<NULL>"];
+		{ if (alive _x) exitWith { _modes = [behaviour _x, combatMode _this, _x findNearestEnemy _this] } } forEach units _this;
 		_modes
 	};
-	["<UNKN/TYPE", typeName _this]
+	["<UNKN/TYPE", typeName _this, objNull]
 };
 //
 // Checks ship to be stuck or on shore
 // Call: _good = [_ship, _grp, _wp_arr, _id, _state...] call _is_ship_stuck;
 //
 _is_ship_stuck = {
-	private [ "_boat", "_stat", "_dist", "_stucked", "_pos", "_time", "_near_enemy_arr", "_beh", "_unit" ];
+	private [ "_boat", "_stat", "_dist", "_stucked", "_pos", "_time", "_near_enemy", "_beh", "_unit" ];
 	// Check to be stucked
 	_boat = _this select OFFSET_BOAT;
 	if (!alive _boat) exitWith {
-	 	hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 is dead itself%2, return FALSE",
+	 	hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 is dead (%2), return TRUE",
 			_this select OFFSET_ID,
-			if (isNull _boat) then {" <null>"} else {format[" (%1)",_boat call SYG_MsgOnPosE0]}
+			if (isNull _boat) then {"<null>"} else {_boat call SYG_MsgOnPosE0}
 		];
 		true
 	};
 	_grp = _this select OFFSET_GRP;
+	if (isNull _grp) exitWith {
+		hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 group is null, return TRUE", _this select OFFSET_ID ];
+		true
+	};
 	if ( ({alive _x} count units _grp) < 2) exitWith {
 	 	hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1, the list of group members is too short (%2<2), return TRUE",
 	 		_this select OFFSET_ID,
@@ -108,30 +112,29 @@ _is_ship_stuck = {
 		{alive _x} count crew _boat, {alive _x} count units _grp
 		];
 #endif
+
 	if ( true ) then {
+
+		//++++++++++++ Check to be in battle ++++++++++++++++
 		_modes = _grp call _get_modes;
-		_in_combat = (_modes select 0) in ["COMBAT","STEALTH"];
+		_beh = _modes select 0;
+		_in_combat = _beh in ["COMBAT","STEALTH"];
 		if ( _in_combat ) exitWith { // If in battle, can't be stucked
+#ifdef __INFO__
+			_near_enemy = _modes select 2;
+			if (isNull _near_enemy) then { _modes set [2, "<null>"]} else {_modes set [2, typeOf _near_enemy]};
+			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 in battle at %2, modes %3; return FALSE",
+			_this select OFFSET_ID,
+			_boat call SYG_MsgOnPosE0,
+			_modes
+			];
+#endif
 			if ( _dist > POS_DIST ) exitWith {
 				_stat set[ 0, getPosASL _boat ]; _stat set [1, time + COMBAT_STALL_DELAY ];
 			};
-#ifdef __INFO__
-			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 in battle at %2, mode %3, return FALSE",
-			_this select OFFSET_ID,
-			_boat call SYG_MsgOnPosE0,
-			_modes select 0
-			];
-#endif
-		}; // some enemy detected
+		}; // Some enemy detected, not stuacked
 
-		if ( _dist > POS_DIST ) exitWith {
-			_stat set[ 0, getPosASL _boat ]; _stat set [1, time + PATROL_STALL_DELAY ];
-/*
-#ifdef __INFO__
-			hint localize format["+++ sea_patrol.sqf _is_ship_stuck: the boat_%1, dist too short, return FALSE", _this select OFFSET_ID ];
-#endif
-*/
-		}; // Distance from last point is far enough for boat to be not stalled
+		if ( _dist > POS_DIST ) exitWith { _stat set[ 0, getPosASL _boat ]; _stat set [1, time + PATROL_STALL_DELAY ]; }; // Distance from last point is far enough for boat to be not stalled
 
 		if ( time > _time ) exitWith {
 #ifdef __INFO__
@@ -177,16 +180,23 @@ _create_patrol = {
 	hint localize format["+++ sea_patrol.sqf _create_patrol: boat_%1 at %2", _this select OFFSET_ID, _boat call SYG_MsgOnPosE0];
 	_last = (count _wpa) - 1;
 	for "_i" from 1 to _last do {
-		_wp = _grp addWaypoint [_wpa select _i, 20];
+		_wp = _grp addWaypoint [_wpa select _i, 50];
 		_wp setWaypointType "MOVE";
-		_wp setWaypointBehaviour "SAFE";
-		_wp setWaypointCombatMode "YELLOW";
+		if (_i == 1) then {
+			_wp setWaypointBehaviour "SAFE";
+			_wp setWaypointCombatMode "YELLOW";
+		} else {
+			_wp setWaypointBehaviour "UNCHANGED";
+			_wp setWaypointCombatMode "NO CHANGE";
+		};
 		_wp setWaypointSpeed "FULL";
 	}; // forEach _waterPatrolWPS select (_this select 3);
+	// for last WP set special type
 	_wp setWaypointType "CYCLE"; // loop it now from last to the first WP!
 
-	_grp setBehaviour "SAFE";
-	_grp setCombatMode "YELLOW";
+	_grp setBehaviour "CARELESS"; // Start as careless, change on first WP to "SAFE"
+	_grp setCombatMode "WHITE";
+	_grp setSpeedMode "FULL";
 	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY]];
 #ifdef __DEBUG__
 	hint localize format["+++ sea_patrol.sqf _create_patrol: ship#%1 (%2), driver %3, gunner %4, %5",
