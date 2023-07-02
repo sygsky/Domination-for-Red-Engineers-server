@@ -217,7 +217,7 @@ if (__MandoVer) then {
 if (!alive _vehicle) exitWith {_vehicle setVariable ["already_on_load", nil];};
 
 //++++++++++++ Repairing
-if ((getDammage _vehicle) > 0) then {
+if (( damage _vehicle) > 0.001) then {
     [_vehicle, localize "STR_SYS_258"] call XfVehicleChat; // "Repairing..."
     _vehicle setDamage 0;
     sleep x_reload_time_factor;
