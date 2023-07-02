@@ -216,22 +216,27 @@ SYG_textAlign = {
 //
 SYG_compactArray = {
     // compact equipment array strings
-    if (typeName _this != "ARRAY") exitWith {_this};
-    private ["_items", "_counts","_i", "_arr", "_ind", "_x"];
+    if (typeName _this != "ARRAY") exitWith {
+    	hint localize format["--- SYG_compactArray: _this is not ARRAY (%1), exit!", typeName _this];
+    	_this
+    };
+    private ["_items", "_counts","_i", "_arr", "_type", "_ind", "_x"];
     _items  = [];
     _counts = [];
 
     {
-    	if (typeName _x == "ARRAY") then {
+    	_type = typeName _x;
+    	if ( _type == "ARRAY") then {
 			_items  set [count _items, _x call SYG_compactArray];
 			_counts set [count _counts, 1];
     	} else {
+    		if (_type == "") then {_x = "<nil>"; _type = "STRING"};
 			_ind = _items find _x;
 			if (_ind < 0) then { // uknown item, add it to the list
 				_items  set [count _items, _x];
 				_counts set [count _counts, 1];
 			} else { // item known, compact if string else copy to output
-				if (typeName _x != "STRING") then { // non-string items (arrays, scalar, object etc
+				if ( _type != "STRING") then { // non-string items (arrays, scalar, object etc
 					_items  set [count _items, _x];
 					_counts set [count _counts, 1];
 				} else { // count item
@@ -250,6 +255,43 @@ SYG_compactArray = {
     	if (_x > 1) then { _arr set [_i, format["%1(%2)", _items select _i, _x]]} else { _arr set [_i, _items select _i]};
     };
 	_arr
+};
+
+//
+// call: _arr = _arr_str call SYG_str2Arr;
+//
+SYG_str2Arr = {
+    call compile _this
+};
+
+//
+// call: _arr = _arr_str call SYG_arr2Str;
+//
+SYG_arr2Str = {
+	if (typeName _this == "") exitWith {"nil"}; // nil => "nil" must be 1st in procedure or follow condition if will give unpredictable results!
+	if (typeName _this == "ARRAY") exitWith {
+		private ["_str","_str1","_x"];
+		_str = "";
+		{
+//			hint localize format["+++ _x = %1", _x];
+			if (isNil "_x") then { // this is <nil>
+				if (_str == "") then  {_str = "nil"} else {_str = format["%1,nil", _str]};
+			} else {
+				if (typeName _x == "ARRAY") exitWith {
+					if (_str == "") then  {_str = _x call SYG_arr2Str} else { _str1 = _x call SYG_arr2Str; _str = format["%1,%2", _str, _str1]};
+				};
+				if (typeName _x == "STRING") exitWith {
+					if (_str == "") then  {_str = format["""%1""", _x]} else {_str = format["%1,""%2""", _str, _x]};
+				};
+				// any other value found
+				if (_str == "") then  {_str = format["%1", _x]} else {_str = format["%1,%2", _str, _x]};
+			};
+//			hint localize format["+++ _str = %1", _str];
+		} forEach _this;
+		format["[%1]", _str]
+	};
+	if (typeName _this == "STRING") exitWith {format["""%1""", _this]};
+    format["%1", _this]
 };
 
 // this procedure parse and processs "msg_to_user" server command or compound client message
