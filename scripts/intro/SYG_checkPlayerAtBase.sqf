@@ -42,7 +42,7 @@ while { base_visit_session <= 0 } do {
 				sleep 2;
 				if (( getPos player ) call SYG_pointIsOnBase) then {
 					base_visit_mission = 1;
-					_veh = nearestObjects [player,["LandVehicle","Air","Ship"],50];// Any nearest vehicle
+					_veh = nearestObjects [player,["LandVehicle","Air"/*,"Ship"*/],50];// Any nearest vehicle
 					_spent_time = time  - _start_time;
 					[
 						"base_visit_mission",
