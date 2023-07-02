@@ -159,14 +159,14 @@ if ( _equip == "" ) then {
 					};
 					if ( _p isKindOf "SoldierEMG") exitWith {
 						_weapp =  [["P","ACE_RPG22","ACE_RPG22",1],_mg, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
-						_magp = [/* ["ACE_40Rnd_762x39_BT_AK_PDM",6], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
+						_magp = [["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
 					};
 
 					if ( _p isKindOf "SoldierEAT" ) exitWith {
 						_rpg set [2, "ACE_RPG7_PG7VR"];
 						_rifle set [3, 9]; // 9 magazines
 						_weapp =  [_rpg, _rifle ,_pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
-						_magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VR_PDM",1]];
+						_magp = [["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VR_PDM",1]];
 					};
 
 					if ( _p isKindOf "SoldierEAA" ) exitWith {
@@ -177,7 +177,7 @@ if ( _equip == "" ) then {
 
 					if ( _p isKindOf "SoldierESniper") exitWith {
 						_weapp =  [_rpg, _sniper, _pistol, ["ACE_Bandage",2],["ACE_Morphine",2]];
-						_magp = [/* ["ACE_40Rnd_762x39_BT_AK_PDM",6], */["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
+						_magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
 					};
 
 					if ( _p isKindOf "SoldierEMedic") exitWith {
@@ -197,9 +197,9 @@ if ( _equip == "" ) then {
 					};
 
 					if ( true ) exitWith {
-						hint localize "+++ x_setupplayer1.sqf: _p kind not detected";
+						hint localize format["*** x_setupplayer1.sqf: player type (%1) unknown", typeOf _p];
 						_weapp =  [_rpg,_rifle,_pistol,["ACE_Bandage",2],["ACE_Morphine",2]];
-						_magp = [/* ["ACE_45Rnd_545x39_BT_AK_PDM",4], */["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3],["ACE_RPG7_PG7VL_PDM",1]];
+						_magp = [["ACE_RPG7_PG7VL_PDM",1],["ACE_Bandage_PDM",3],["ACE_Morphine_PDM",5],["ACE_Epinephrine_PDM",1],["ACE_PipeBomb_PDM",1],["ACE_SmokeGrenade_Red_PDM",3]];
 					};
 				};
 				// try to rearm predefined players (Yeti, EngineerACE etc)

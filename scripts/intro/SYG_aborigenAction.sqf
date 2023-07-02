@@ -314,7 +314,7 @@ switch ( _arg ) do {
 					};
 					// not on base or not on ground, so plane is busy by some player
 				};
-				// not player in plane, eject it now
+				// plane isoocupied not by player, so eject it out
 				(driver aborigen_plane) action["Eject", aborigen_plane];
 				sleep 0.5;
 				_plane_busy = false;
@@ -332,7 +332,7 @@ switch ( _arg ) do {
 			aborigen_plane setDir PLANE_DIR;
 			aborigen_plane setVehiclePosition [PLANE_POS,[], 0, "CAN_COLLIDE"];
 			["say_sound", aborigen_plane, "return"] call XSendNetStartScriptClientAll;
-			hint localize "+++ ABO PLANE: positioned on the place!!!"
+			hint localize format["+++ ABO PLANE: positioned on the place. Pos %1, dist %2", getPos aborigen_plane, round(aborigen_plane distance PLANE_POS) ];
 		};
 		if (_exit) exitWith {};
 #ifdef __ACE__
@@ -340,14 +340,14 @@ switch ( _arg ) do {
 		// check if bicycle is near tent
 		hint localize "+++ ABO PLANE: bicycle search";
 		_bicycle = nearestObject [spawn_tent,"ACE_Bicycle"];
-		if (!(isNull _bicycle)) then {
-			if (alive _bicycle) then {
+		if (!(isNull _bicycle)) then { // Found bicycle
+			if (alive _bicycle) then { // Alive bicycle
 				hint localize format["+++ ABO PLANE: ALIVE (damage %1) bicycle found near spawn_tent ", damage _bicycle];
 				_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
 						else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
 				player groupChat ( localize _msg );
 				if (damage _bicycle > 0.01) then {
-					_bicycle setDamage 0; // Repair thew bicycle, play heal sound
+					_bicycle setDamage 0; // Repair the bicycle, play heal sound
 					_bicycle say "healing";
 				};
 			} else {
@@ -356,36 +356,50 @@ switch ( _arg ) do {
 			};
 		} else {
 			hint localize "+++ ABO PLANE: near spawn_tent bicycle NOT found, search on whole islet";
-			_arr = nearestObjects [_isle_pos, ["ACE_Bicycle"],_rad];
-			if (count _arr > 0) then { // some bicycle found near
-				// Move nearest alive bicycle
+			_arr = nearestObjects [aborigen, ["ACE_Bicycle"],2000];
+			if (count _arr > 0) then { // some bicycle found on island
+				// find nearest alive bicycle and move it to the tent if needed
 				_bicycle = objNull;
 				{	// find nearest alive bicycle without driver
-					if ((alive _x) && (isNull driver _x)) exitWith { _bicycle = _x; };
+					if ((alive _x) && (isNull driver _x)) exitWith { _bicycle = _x };
 				} forEach _arr;
 				if (alive _bicycle) then { // Empty bicycle found, try to move close to the tent
-					hint localize "+++ ABO PLANE: bicycle on island found, moved to the spawn_tent position";
-					_bicycle setPos POS_BICYCLE;
-					sleep 0.5;
-					if ( (_bicycle distance POS_BICYCLE) < 5) then {
-						_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
-								else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
-						player groupChat ( localize _msg );
+					hint localize "+++ ABO PLANE: bicycle alive found, check if need to move it to the spawn_tent position";
+					_sound = "";
+					if ((_bicycle distance aborigen) < 15) then {
+						hint localize "+++ ABO PLANE: bicycle alive found near aborigen no need to move it to the spawn_tent position";
+						player groupChat ( localize "STR_ABORIGEN_BICYCLE_1_1"); // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
 						if (damage _bicycle > 0.01) then {
 							_bicycle setDamage 0; // Repair thew bicycle, play heal sound
-							_bicycle say "healing";
-						} else  { _bicycle say "return" };
-						player groupChat (localize _msg); // ???
+							_sound = "healing";
+						};
 					} else {
-						hint localize "--- ABO PLANE: but bicycle cant' be moved to the pos near spawn_tent";
-						player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+						if ( (_bicycle distance POS_BICYCLE) > 5) then {
+							_bicycle setPos POS_BICYCLE;
+							sleep 0.2;
+							_sound = "return";
+						};
+						if ( (_bicycle distance POS_BICYCLE) < 5) then {
+							_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
+									else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
+							player groupChat ( localize _msg );
+							if (damage _bicycle > 0.01) then {
+								_bicycle setDamage 0; // Repair thew bicycle, play heal sound
+								_sound = "healing";
+							};
+							player groupChat (localize _msg); // ???
+						} else {
+							hint localize "--- ABO PLANE: bicycle cant' be moved to the pos near spawn_tent";
+							player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+						};
 					};
+					if (_sound != "") then {_bicycle say _sound;};
 				} else {
-					hint localize "--- ABO PLANE: NO alive bicycle on island found";
+					hint localize "--- ABO PLANE: bicycle alive NOT found on island";
 					player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
 				};
 			} else {
-				hint localize "--- ABO PLANE: NO ANY bicycle found on island, that is very strange!!!";
+				hint localize "--- ABO PLANE: bicycle (alive or dead) NOT FOUND on Antigua, that is very strange!!!";
 				player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
 			};
 		};

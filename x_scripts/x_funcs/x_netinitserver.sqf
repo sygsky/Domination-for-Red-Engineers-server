@@ -371,7 +371,7 @@ XHandleNetStartScriptServer = {
 			if (typeName _equip == "STRING") then { // restore new string
 				_equip = _equip_arr call SYG_arr2Str;
 				_parray set[5, _equip];
-				hint localize format["+++ x_netinitserver.sqf: set _parray[5] = %1", _equip_arr call SYG_arr2Str ];
+				hint localize format["+++ x_netinitserver.sqf: set _parray[5] = %1", _equip ];
 			};
 		};
 

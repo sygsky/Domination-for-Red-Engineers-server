@@ -479,7 +479,7 @@ SYG_getUnitName = {
 //
 SYG_getKillerInfo = {
 	private ["_veh","_name"];
-	if (isNull _this) exitWith {"<unknown>"};
+	if (isNull _this) exitWith {"<null>"};
 	_veh = vehicle _this;
 	_name = _veh call SYG_getUnitName;
 	if ( _veh == _this) exitWith { _name };
