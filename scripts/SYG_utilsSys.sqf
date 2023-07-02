@@ -52,8 +52,11 @@ SYG_d_p_varname =  {
 		case "Frosty";
 		case "Petigp"     : { "Üdvözöljük az alap a 'Vörös mérnökök'!" }; // Hungarian // "A szigetlakok orommel udvozoljuk ont a sajat anyanyelven!";
 		case "Marco"      : { "Marco, vehicles at the airbase are forbidden to destroy! Only you see this message :o)" };// // veh. killer
+		case "ihatelife"  : { "Islanders welcome our man from Richmond!"}; // An American Negro?
 		case "Shelter";
 		case "Marcin"     : { "Nasz oddział spełnia polskiego brata!" }; // Poland
+		case "Oberon";		// русский
+		case "Axmed"      : { "Боец! Островитяне советуют: купи лицензионный ключ (копеек 50 на советские деньги). Этим ключом пользуешься не только ты." }; // Русский Ахмед
 		case "Nushrok";
 		case "Klich";
 		case "dupa";
@@ -64,8 +67,6 @@ SYG_d_p_varname =  {
 		case "Lt. Jay"    :{"Les habitants de l'île sont heureux de vous accueillir dans votre langue maternelle !"}; // Le francais
 		case "Elia";
 		case "Moe"        : {"Gli isolani sono lieti di darvi il benvenuto nella loro lingua madre italiana !"}; // Italian language
-		case "Oberon";		// русский
-		case "Axmed"      : { "Боец! Островитяне советуют: купи лицензионный ключ (копеек 50 на советские деньги). Этим ключом пользуешься не только ты." }; // Русский Ахмед
 		default           { "STR_SERVER_MOTD0" }; // "The islanders are happy to welcome you in your native language!"
 	};
 
@@ -339,7 +340,7 @@ SYG_showDestWPIfNotOnBase = {
 			// undate WP just in case
 			["SET", _pos] call SYG_handleWP; // set intitial destiantion point
 			// print information about WP creaed
-			hint localize "+++ SYG_showDestWPIfNotOnBase: refresh WP";
+			// hint localize "+++ SYG_showDestWPIfNotOnBase: refresh WP";
 		};
 	};
 	"REMOVE" call SYG_handleWP; // set intitial destiantion point
