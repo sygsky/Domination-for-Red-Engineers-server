@@ -14,6 +14,7 @@
 hint localize "+++ SYG_checkPlayerAtBase.sqf: Started";
 
 _start_time = _this; // Session start time
+_spent_time = 0; // Time to reach the base
 _flare = objNull;
 _pos = getPos AISPAWN; // FLAG_BASE; // [9529.5,9759.2,0]; // point near central gate to the base
 _flag_pos = [];
@@ -42,12 +43,13 @@ while { base_visit_session <= 0 } do {
 				if (( getPos player ) call SYG_pointIsOnBase) then {
 					base_visit_mission = 1;
 					_veh = nearestObjects [player,["LandVehicle","Air","Ship"],50];// Any nearest vehicle
+					_spent_time = time  - _start_time;
 					[
 						"base_visit_mission",
 						name player,
 						base_visit_mission,
 						if ((count _veh) == 0) then {"<no veh>"} else {typeOf (_veh select 0)},
-						time  - _start_time // Time spent to reach the base from Antigua
+						_spent_time // Time spent to reach the base from Antigua
 					] call XSendNetStartScriptServer; // store new value on the server
 					base_visit_session = base_visit_mission;
 					hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
@@ -64,7 +66,7 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, bas
 #ifdef __ACE__
 // inform players that I've reached the base
 if (!isNil "SYG_initialEquipmentStr") then {
-	_str = (time/3600) call SYG_userTimeToStr; // Let's convert it to hours to match the parameter of this method
+	_str = (_spent_time/3600) call SYG_userTimeToStr; // Let's convert it to hours to match the parameter of this method
 	// "You have been given a weapon. Take care of it!",
 	// "%1 have reached the base in %2! Life will get easier from here.",
 	// "You are assigned to the SpecNaz GRU detachment at Sahrani and to the local flying club, for the use of jump flags."
