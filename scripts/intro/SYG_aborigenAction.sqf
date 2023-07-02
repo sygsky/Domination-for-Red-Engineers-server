@@ -342,8 +342,14 @@ switch ( _arg ) do {
 		_bicycle = nearestObject [spawn_tent,"ACE_Bicycle"];
 		if (!(isNull _bicycle)) then {
 			if (alive _bicycle) then {
-				hint localize "+++ ABO PLANE: ALIVE bicycle found near spawn_tent ";
-				player groupChat (localize "STR_ABORIGEN_BICYCLE_1"); // "Use the bike to get to the plane. It's somewhere near the tent...".
+				hint localize format["+++ ABO PLANE: ALIVE (damage %1) bicycle found near spawn_tent ", damage _bicycle];
+				_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
+						else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
+				player groupChat ( localize _msg );
+				if (damage _bicycle > 0.01) then {
+					_bicycle setDamage 0; // Repair thew bicycle, play heal sound
+					_bicycle say "healing";
+				};
 			} else {
 				hint localize "+++ ABO PLANE: DEAD bicycle found near spawn_tent";
 				player groupChat (localize "STR_ABORIGEN_BICYCLE_2"); // "Walk to the plane. My bicycle is broken..."
@@ -362,8 +368,14 @@ switch ( _arg ) do {
 					_bicycle setPos POS_BICYCLE;
 					sleep 0.5;
 					if ( (_bicycle distance POS_BICYCLE) < 5) then {
-						_bicycle say "return";
-						player groupChat (localize "STR_ABORIGEN_BICYCLE_1"); // "Use the bike to get to the plane. It's somewhere near the tent...".
+						_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
+								else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
+						player groupChat ( localize _msg );
+						if (damage _bicycle > 0.01) then {
+							_bicycle setDamage 0; // Repair thew bicycle, play heal sound
+							_bicycle say "healing";
+						} else  { _bicycle say "return" };
+						player groupChat (localize _msg); // ???
 					} else {
 						hint localize "--- ABO PLANE: but bicycle cant' be moved to the pos near spawn_tent";
 						player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
