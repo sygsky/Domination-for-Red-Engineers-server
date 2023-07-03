@@ -330,7 +330,8 @@ switch ( _arg ) do {
 			sleep 0.5;
 			aborigen_plane setVelocity [0,0,0];
 			aborigen_plane setDir PLANE_DIR;
-			aborigen_plane setVehiclePosition [PLANE_POS,[], 0, "CAN_COLLIDE"];
+//			aborigen_plane setVehiclePosition [PLANE_POS,[], 0, "CAN_COLLIDE"];
+			aborigen_plane setPos PLANE_POS;
 			["say_sound", aborigen_plane, "return"] call XSendNetStartScriptClientAll;
 			hint localize format["+++ ABO PLANE: positioned on the place. Pos %1, dist %2", getPos aborigen_plane, round(aborigen_plane distance PLANE_POS) ];
 		};
