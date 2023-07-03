@@ -1464,14 +1464,17 @@ SYG_boatRearmTable =
     ["RHIB2Turret","RHIB"], // boat names
     [ // boat params
         [
-            ["ACE_VulcanMgun20"], // weapon(s)
-            ["ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168"] // magazines (1 weapon)
+//            ["ACE_VulcanMgun20"], // weapon(s)
+//            ["ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168"] // magazines (1 weapon)
+			["ACE_GAU8"],
+			["1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10"]
         ],
         [
-            ["ACE_VulcanMgun20"], // weapon(s)
-            ["ACE_20mm_M168","ACE_20mm_M168"] // magazines
+//            ["ACE_VulcanMgun20"], // weapon(s)
+//            ["ACE_20mm_M168","ACE_20mm_M168"] // magazines
+			["ACE_GAU8"],
+			["1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10"]
         ]
-
     ]
 ];
 
@@ -1557,7 +1560,7 @@ SYG_rearmVehicle = {
     //player groupChat format["SYG_rearmVehicle: %1", _this];
     _veh = arg(0);
 	if ((typeOf _veh) == "RHIB2Turret") then { // Special case as "M49" can't be replaced with "Vulcan canon"
-		_veh removeMagazines "100Rnd_127x99_M2"; // Remove all 100Rnd_127x99_M2
+		_veh removeMagazines "100Rnd_127x99_M2"; // Remove only 100Rnd_127x99_M2
 		_veh removeWeapon "M2";	// remove ahead M2
 	} else {
 		{_veh removeMagazines _x} forEach magazines _veh;
