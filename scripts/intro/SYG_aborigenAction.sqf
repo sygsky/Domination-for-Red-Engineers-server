@@ -81,9 +81,14 @@ aborigen say (["surprize","disagreement","disagreement_tongue","horks_and_spits"
 switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//                    B O A T
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "BOAT": { // ask about boats
 		if (base_visit_mission > 0) exitWith {player groupChat (localize "STR_ABORIGEN_BOAT_INFO_0")}; // "Boats? There are a lot of them... on every kilometer of the coast of the Main Sahrani."
+
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// find distance to the boat type "Zodiac" ( small boats )
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		_boat = objNull;
 		_arr = nearestObjects [_isle_pos, ["Zodiac"], _rad];
 		// Check nearest boats to be out of "boats13" marker
@@ -93,38 +98,43 @@ switch ( _arg ) do {
 			if (alive _x) then {
 				if ( ( _x distance _pos ) > 50 ) then {
 					_boat = _x;
-					hint localize format["+++ Boat: found at Antigua, pos %1", getPos _x];
+					hint localize format["+++ Boat: found at Antigua, ""boats13"" marker pos %1, boat pos %2, dist %3", _pos, getPos _x, round(_x distance _pos)];
 				};
 			};
 			if (alive _boat) exitWith {};
 		} forEach _arr;
 
-		if (!alive _boat) then { // Find a boat from a group of more than 1 boats, near any of the boats markers
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Search boat on boat markers, last one will be Antigua's "boats13"
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		if ( !alive _boat ) then { // Find a boat from a group of more than 1 boats, near any of the boats markers
 			_marker_arr = [];
 			_exit = false;
 			for "_i" from 1 to 100 do {
 				if (_i != 13) then { // skip boats on Antigua from calculations
 					_marker = format["boats%1", _i];
-					if ( (markerType _marker) == "") exitWith {_exit = true; _marker = format["boats%1",_i-1]};
+					if ( (markerType _marker) == "" ) then { _marker = "boats13" }; // try last one
 					_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 					if ({(alive _x) && (({alive _x} count crew _x) == 0) } count _arr > 1) exitWith {
 						_marker_arr set [count _marker_arr, _marker];
 					};
 				};
-				if (_exit) exitWith {};
+				if (_marker == "boats13") exitWith {}; // this is last available marker, it is situated on Antigua
 			};
 			sleep 0.1;
-			hint localize format["+++ Boat: last existed marker %1, group cnt %2", _marker, count _arr];
+			hint localize format["+++ Boat: last used marker %1, group cnt %2", _marker, count _arr];
 			// find random alive empty boat from group of boats near any boat marker
 			_marker = _marker_arr call XfRandomArrayVal;
 			_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 			_boat = _arr select 0;
-			hint localize format["+++ Boat: found on marker %1[%2], pos %3", _marker, count _arr, (markerPos _marker) call SYG_MsgOnPosE0];
-		} else {_marker = "boats13"}; // use nearest marker on Antigua to get marker type
+			hint localize format["+++ Boat: found on marker %1[%2 boats], pos %3", _marker, count _arr, (markerPos _marker) call SYG_MsgOnPosE0];
+		} else {
+			hint localize "+++ Boat: free boat found near Antigua (not boats near marker13!)";
+		}; // use nearest marker on Antigua to get marker type
 
         if (!(alive _boat)) exitWith {
         	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
-			hint localize "--- Boat: no good markered boat groups found at all, skip...";
+			hint localize "--- Boat: no good markered boat groups found at all, skip player request...";
         };
 
         _pnt = getPos _boat; // Not reset this value as it allows to point where boat was at this check!
@@ -133,14 +143,16 @@ switch ( _arg ) do {
 			_boat setDir (random 360);
 			_boat setPos _pnt;
 			_boat say "return";
-			hint localize format["+++ Boat: found at %1 !", _boat call SYG_MsgOnPosE0];
+			hint localize format["+++ Boat: found out of Antigua at %1 !", _boat call SYG_MsgOnPosE0];
         };
 		player groupChat format[localize "STR_ABORIGEN_BOAT_INFO", // "The nearest boat (%1) is %2 m away direction %3"
 			typeOf _boat,
 			(round((player distance _boat)/10)) * 10,
 			([player, _boat] call XfDirToObj) call SYG_getDirName
 		];
-        // Set marker for the detected boat
+		//++++++++++++++++++++++++++++++++++++++++++++++++++
+        //       Set marker for the detected boat
+        //++++++++++++++++++++++++++++++++++++++++++++++++++
 		_boat_marker_type =  getMarkerType _marker; // mission boat marker, use it for antigua
 		_marker = "aborigen_boat";	// Antigua boat marker name (not type)
 		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent, create it now
@@ -148,13 +160,16 @@ switch ( _arg ) do {
 			_marker setMarkerTypeLocal _boat_marker_type;
 			_marker setMarkerColorLocal "ColorGreen";
 			_marker setMarkerSizeLocal [0.7,0.7];
-			hint localize format["+++ Boat: new marker created %1", _boat_marker_type];
+			hint localize format["+++ Boat: new marker %1 created", _boat_marker_type];
 		} else {
 			hint localize format["+++ Boat: existed marker %1 found near Antigua", _boat_marker_type];
 		};
-		hint localize format["+++ Boat: marker %1(type %2) set to the point near Antigua %3", _marker, _boat_marker_type, (getPos _boat) call SYG_MsgOnPosE0];
+		hint localize format["+++ Boat: marker %1(type %2) set to the point near Antigua at %3", _marker, _boat_marker_type, (getPos _boat) call SYG_MsgOnPosE0];
 		_marker setMarkerPosLocal (getPosASL _boat);
 
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//        Let's control on boat prepared for this player, or previous one
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		if (isNil "BOAT_MARKER_CHECK_ON") then {
 			BOAT_MARKER_CHECK_ON = true;
 			hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON run first time.";
@@ -192,7 +207,7 @@ switch ( _arg ) do {
 				BOAT_MARKER_CHECK_ON = nil;
 				hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON stopped for next time...";
 			};
-		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON already run, not start it again."};
+		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON already run, marker exists and is under control"};
 
 	};
 
