@@ -86,7 +86,6 @@ SYG_createStaticWeaponGroup = {
 // Find nearest enemy unit at designated distance from point
 //
 // call: [_side,_pos,_dist,["LandVehicle","Air","Ship"]] call SYG_findEnemyAt;
-//        
 //
 SYG_findEnemyAt = {
 	private ["_side","_pos","_dist","_types","_arr","_ret","_x"];

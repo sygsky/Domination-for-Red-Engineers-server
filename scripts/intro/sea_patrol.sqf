@@ -76,7 +76,7 @@ _get_modes = {
 // Call: _good = [_boat, _grp, _wp_arr, _id, _state...] call _is_ship_stuck;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _is_ship_stuck = {
-	private [ "_boat", "_stat", "_dist", "_stucked", "_pos", "_time", "_near_enemy", "_beh", "_unit" ];
+	private [ "_boat", "_stat", "_dist", "_stucked", "_pos", "_time", "_enemy", "_beh", "_unit" ];
 	// Check to be stucked
 	_boat = _this select OFFSET_BOAT;
 	if (!alive _boat) exitWith {
@@ -119,14 +119,12 @@ _is_ship_stuck = {
 		_modes = _grp call _get_modes;
 		_beh = _modes select 0;
 		_enemy = _modes select 2;
-		if ( !isNull _enemy) then {
 
-		};
-		_in_combat = (_beh in ["COMBAT","STEALTH"]) || (_enemyalive(_modes select 2)); // In combat or enemв detected
+		if ( !isNull _enemy) then {	if (_enemy isKindOf "Building") exitWith { _enemy = objNull }};
+		_in_combat = (_beh in ["COMBAT","STEALTH"]) && (alive _enemy); // In combat or enemв detected
 		if ( _in_combat ) exitWith { // If in battle, can't be stucked
 #ifdef __INFO__
-			_near_enemy = _modes select 2;
-			if (isNull _near_enemy) then { _modes set [2, "<null>"]} else {_modes set [2, typeOf _near_enemy]};
+			if (isNull _enemy) then { _modes set [2, "<null>"]} else {_modes set [2, typeOf _enemy]};
 			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 in battle at %2, modes %3; return FALSE",
 			_this select OFFSET_ID,
 			_boat call SYG_MsgOnPosE0,
@@ -155,7 +153,7 @@ _is_ship_stuck = {
 
 //  [_boat, _grp, _wp_arr, _id, _state...] call _create_patrol
 _create_patrol = {
-	private [ "_boat", "_grp", "_x", "_i", "_wpa", "_arr", "_last", "_wp","_cnt1","_ex_cnt"];
+	private [ "_boat", "_grp", "_x", "_i", "_wpa", "_arr", "_last", "_wp", "_cnt1", "_ex_cnt", "_speed_vec", "_dir"];
 	_boat = createVehicle [BOAT_TYPE, [0,0,0], [], 25, "NONE"];
 
 	if ( _boat call SYG_rearmVehicleA ) then {
@@ -205,12 +203,20 @@ _create_patrol = {
 //	_grp setSpeedMode "FULL"; // "LIMITED", "NORMAL"
 	_grp setSpeedMode "LIMITED";
 	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY]];
+
+	// Push boat to the 1st WP on speed 30 kph
+	_dir = [_boat,  _wpa select 1] call SYG_dirToObj;
+	_boat setDir _dir;
+	_speed_vec = [getPos _boat, _wpa select 1, 30] call SYG_elongate2Z; // set speed 30 kph
+	_boat setVelocity _speed_vec;
+
 #ifdef __DEBUG__
-	hint localize format["+++ sea_patrol.sqf _create_patrol: boat_%1 (%2), driver %3, gunner %4, %5",
+	hint localize format["+++ sea_patrol.sqf _create_patrol: boat_%1 (%2), driver %3, gunner %4, dir %5, %6",
 		_this select OFFSET_ID,
 		typeOf _boat,
 		assignedVehicleRole ( driver _boat),
 		assignedVehicleRole ( gunner _boat),
+		_speed_vec,
 		_this call _item2str
 	];
 #endif
