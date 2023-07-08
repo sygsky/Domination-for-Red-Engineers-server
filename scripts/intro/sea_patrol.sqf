@@ -188,12 +188,11 @@ _create_patrol = {
 		if (_i == 1) then {
 			_wp setWaypointBehaviour "SAFE";
 			_wp setWaypointCombatMode "YELLOW";
-			_wp setWaypointSpeed "FULL";
+			_wp setWaypointSpeed "LIMITED";
 		} else {
 			_wp setWaypointBehaviour "UNCHANGED";
 			_wp setWaypointCombatMode "NO CHANGE";
-			_wp setWaypointSpeed "UNCHANGED";
-		};
+NORMAL		};
 	}; // forEach _waterPatrolWPS select (_this select 3);
 	// for last WP set special type
 	_wp setWaypointType "CYCLE"; // loop it now from last to the first WP!
@@ -201,21 +200,19 @@ _create_patrol = {
 	_grp setBehaviour "SAFE"; // Start as careless, change on first WP to "SAFE"
 	_grp setCombatMode "YELLOW";
 //	_grp setSpeedMode "FULL"; // "LIMITED", "NORMAL"
-	_grp setSpeedMode "LIMITED";
+	_grp setSpeedMode "NORMAL";
 	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY]];
 
 	// Push boat to the 1st WP on speed 30 kph
-	_dir = [_boat,  _wpa select 1] call SYG_dirToObj;
+	_dir = [_boat,  _wpa select 1] call XfDirToObj;
 	_boat setDir _dir;
 	_speed_vec = [getPos _boat, _wpa select 1, 30] call SYG_elongate2Z; // set speed 30 kph
 	_boat setVelocity _speed_vec;
 
 #ifdef __DEBUG__
-	hint localize format["+++ sea_patrol.sqf _create_patrol: boat_%1 (%2), driver %3, gunner %4, dir %5, %6",
+	hint localize format["+++ sea_patrol.sqf _create_patrol: boat_%1 (%2), speed vector %3, arr %4",
 		_this select OFFSET_ID,
 		typeOf _boat,
-		assignedVehicleRole ( driver _boat),
-		assignedVehicleRole ( gunner _boat),
 		_speed_vec,
 		_this call _item2str
 	];
