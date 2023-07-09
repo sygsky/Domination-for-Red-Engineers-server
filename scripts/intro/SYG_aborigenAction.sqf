@@ -398,7 +398,6 @@ switch ( _arg ) do {
 						if ( (_bicycle distance POS_BICYCLE) < 5) then {
 							_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
 									else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
-							player groupChat ( localize _msg );
 							if (damage _bicycle > 0.01) then {
 								_bicycle setDamage 0; // Repair thew bicycle, play heal sound
 								_sound = "healing";

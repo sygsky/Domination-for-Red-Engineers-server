@@ -390,6 +390,26 @@ SYG_elongate2Z = {
 };
 
 /**
+ * call: [_pnt1, _pnt2, speed(м/с)] call SYG_elongate2Z;
+ * returns 3D vector of speed directed from pnt1 to pnt2
+ * _pnt1: initial point of vector, may be some object/marker etc
+ * _pnt2: ending point of vector, may be some object/marker etc
+ * speend in meters per second, must be positive
+ */
+SYG_speedBetweenPoints2D = {
+	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
+	_pnt1 = arg(0);
+	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1;};
+	_pnt2 = arg(1);
+	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
+	_speed = (_this select 2)/(_pnt1 distance _pnt2);
+
+	_dx = x(_pnt2) - x(_pnt1);
+	_dy = y(_pnt2) - y(_pnt1);
+	[_speed *_dx, _speed * _dy, 0] // calculated speed vector 3D
+};
+
+/**
  * call: [_pnt1, _pnt2, _dist] call SYG_elongate1;
  * returns end point of vector [_pnt1, _pnt2] elongated with _dist from _pnt1 in back direction (from _pnt2 to _pnt1)
  * _pnt1: initial point of vector
