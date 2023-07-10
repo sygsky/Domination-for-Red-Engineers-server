@@ -151,17 +151,18 @@ _is_ship_stuck = {
 					_boat call SYG_MsgOnPosE0
 				];
 #endif
-			_stucked = true
+				_stucked = true
 			};
 			// Here if not near land/shore
 			_next_wp = _this call _get_next_wp;
 			[_boat, _next_wp, 10] call _push_boat; // Push boat with speed 10 mps to the next point
 #ifdef __INFO__
-				hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 is stuck by timeout on dist at %2, pushed on speed %3 mps",
-					_this select OFFSET_ID,
-					_boat call SYG_MsgOnPosE0,
-					speed _boat
-				];
+			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 is stuck by timeout on dist at %2, pushed on speed %3 mph, dir %4",
+				_this select OFFSET_ID,
+				_boat call SYG_MsgOnPosE0,
+				round(speed _boat),
+				round(getDir _boat)
+			];
 #endif
 		};
 	};
@@ -209,9 +210,9 @@ _get_next_wp = {
 	_next_i = -1; // No next point defined
 	_str = "";
 	if (true) then {
+		_prev_i = (_min_i -1) min 0;
 		if ( _min_i == 0 ) exitWith { _next_i = 1 }; // On movement from 0 to 1.
 		_next_i = ( ( _min_i + 1 ) mod _cnt ) min 1;
-		_prev_i = _min_i -1;
 		if (_min_dist < 20) exitWith {}; // Assume the _min_i  point is already reached, skip it and go
 		_pos_near_point = _wpa select _min_i;
 		_next_dist = [ _wpa select _next_i, _pos ] call SYG_distance2D; 			// Dist from boat and next point

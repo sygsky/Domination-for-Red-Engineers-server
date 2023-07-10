@@ -12,6 +12,8 @@
 */
 
 #define POS_BICYCLE [17401,17980,0]
+#define __DEBUG__
+
 #include "x_setup.sqf"
 
 _search_list = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","ACE_UAZ","DATSUN_PK1","HILUX_PK1"];
@@ -90,9 +92,18 @@ switch ( _arg ) do {
 		// find distance to the boat type "Zodiac" ( small boats )
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		_boat = objNull;
-		_arr = nearestObjects [_isle_pos, ["Zodiac"], _rad];
+		_arr = nearestObjects [ _isle_pos, ["Zodiac"], _rad ];
 		// Check nearest boats to be out of "boats13" marker
 		_pos = markerPos "boats13";
+
+#ifdef __DEBUG__
+		_arr1 = _pos nearObjects [ "Zodiac", 150 ];
+		for "_i" from 0 to ( (count _arr1) -1 ) do {
+			_arr1 set [ _i, str (_arr1 select _i) ];
+		};
+		hint localize format[ "+++ Boat: found at Antigua on marker ""boats13"" follow boats %1", _arr1 ];
+#endif
+
 		_marker = "";  // It will be marker of selected boat
 		{
 			if (alive _x) then {
@@ -153,7 +164,7 @@ switch ( _arg ) do {
 		//++++++++++++++++++++++++++++++++++++++++++++++++++
         //       Set marker for the detected boat
         //++++++++++++++++++++++++++++++++++++++++++++++++++
-		_boat_marker_type =  getMarkerType _marker; // mission boat marker, use it for antigua
+		_boat_marker_type =  getMarkerType _marker; // Mission boat marker, use it for Antigua
 		_marker = "aborigen_boat";	// Antigua boat marker name (not type)
 		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent, create it now
 			_marker = createMarkerLocal[_marker, getPosASL _boat];
