@@ -20,8 +20,8 @@
  */
 SYG_vectorAdd = {
     private [ "_pnt1", "_pnt2" ];
-	_pnt1 = arg(0);
-	_pnt2 = arg(1);
+	_pnt1 = _this select 0;
+	_pnt2 = _this select 1;
 	[x(_pnt1) + x(_pnt2), y(_pnt1) + y(_pnt2), 0]
 };
 
@@ -35,8 +35,8 @@ SYG_vectorAdd = {
  */
 SYG_vectorSub = {
     private [ "_pnt1", "_pnt2" ];
-	_pnt1 = arg(0);
-	_pnt2 = arg(1);
+	_pnt1 = _this select 0;
+	_pnt2 = _this select 1;
 	[x(_pnt1) - x(_pnt2), y(_pnt1) - y(_pnt2), 0]
 };
 
@@ -50,8 +50,8 @@ SYG_vectorSub = {
  */
 SYG_vectorSub3D = {
     private [ "_pnt1", "_pnt2" ];
-	_pnt1 = arg(0);
-	_pnt2 = arg(1);
+	_pnt1 = _this select 0;
+	_pnt2 = _this select 1;
 	[x(_pnt1) - x(_pnt2), y(_pnt1) - y(_pnt2), z(_pnt1) - z(_pnt2)]
 };
 
@@ -70,9 +70,9 @@ SYG_vectorSub3D = {
  */
 SYG_distPoint2Vector1 = {
 	private ["_p0","_p1","_p2","_a","_b","_cross","_len"];
-	_p0 = arg(0);
-	_p1 = arg(1);
-	_p2 = arg(2);
+	_p0 = _this select 0;
+	_p1 = _this select 1;
+	_p2 = _this select 2;
 //    _a = (argp(_p0,Y_POS) - argp(_p1,Y_POS)) * argp(_p2,X_POS) +
 //         (argp(_p1,X_POS) - argp(_p0,X_POS)) * argp(_p2,Y_POS) +
 //         argp(_p0,X_POS) * argp(_p1,Y_POS) - argp(_p1,X_POS)*argp(_p0,Y_POS);
@@ -110,8 +110,8 @@ SYG_distPoint2Vector = {
  */
 SYG_3pntDotProduct={
     private ["_v1", "_v2"];
-    _v1 = [arg(1),arg(0)] call SYG_vectorSub;
-    _v2 = [arg(2),arg(0)] call SYG_vectorSub;
+    _v1 = [_this select 1,_this select 0] call SYG_vectorSub;
+    _v2 = [_this select 2,_this select 0] call SYG_vectorSub;
     argp(_v1,X_POS) * argp(_v2,X_POS) +  argp(_v1,Y_POS) * argp(_v2,Y_POS)
 };
 
@@ -123,8 +123,8 @@ SYG_3pntDotProduct={
  */
 SYG_vectorDotProduct={
     private ["_v1", "_v2"];
-    _v1 = arg(0);
-    _v2 = arg(1);
+    _v1 = _this select 0;
+    _v2 = _this select 1;
     argp(_v1,X_POS) * argp(_v2,X_POS) +  argp(_v1,Y_POS) * argp(_v2,Y_POS)
 };
 
@@ -133,8 +133,8 @@ SYG_vectorDotProduct={
  */
 SYG_multiplyPoint = {
     private ["_pnt", "_coeff"];
-    _pnt = arg(0);
-    _coeff = arg(1);
+    _pnt = _this select 0;
+    _coeff = _this select 1;
     [argp(_pnt,X_POS) * _coeff, argp(_pnt,Y_POS) * _coeff, 0]
 };
 /**
@@ -162,18 +162,18 @@ SYG_multiplyPoint = {
  */
 SYG_closestPointOnLineSegment = {
     private [ "_v1", "_v2","_dot","_sqr","_percAlongLine" ];
-    _v1 = [arg(1),arg(0)] call SYG_vectorSub; // main vector (p0,p1)
-    _v2 = [arg(2),arg(0)] call SYG_vectorSub; // vector from point (p0,p2)
+    _v1 = [_this select 1,_this select 0] call SYG_vectorSub; // main vector (p0,p1)
+    _v2 = [_this select 2,_this select 0] call SYG_vectorSub; // vector from point (p0,p2)
     _dot = [_v1, _v2] call SYG_vectorDotProduct;
     _sqr = _v1 distance [0,0,0];
     _sqr = _sqr * _sqr;
     _percAlongLine = _dot / _sqr;
-    // _str = format["p1 %6, p2 %7, p3 %8; v1 %4, v2 %5; dot %1, sqr %2, perc %3 ",_dot, _sqr, _percAlongLine, _v1, _v2, arg(0),arg(1),arg(2)];
+    // _str = format["p1 %6, p2 %7, p3 %8; v1 %4, v2 %5; dot %1, sqr %2, perc %3 ",_dot, _sqr, _percAlongLine, _v1, _v2, _this select 0,_this select 1,_this select 2];
     // player groupChat _str;
     // hint localize _str;
-    if ( _percAlongLine <= 0 ) exitWith {arg(0)};
-    if ( _percAlongLine >= 1 ) exitWith {arg(1)};
-    [arg(0), [_v1, _percAlongLine ] call SYG_multiplyPoint] call SYG_vectorAdd
+    if ( _percAlongLine <= 0 ) exitWith {_this select 0};
+    if ( _percAlongLine >= 1 ) exitWith {_this select 1};
+    [_this select 0, [_v1, _percAlongLine ] call SYG_multiplyPoint] call SYG_vectorAdd
 };
 /**
  * =======================================================
@@ -205,13 +205,13 @@ SYG_pointToVectorRel = {
  */
 SYG_rotatePointAroundPoint = {
 	private ["_pnt1","_pnt2","_x","_y","_dx","_dy","_ang","_sin","_cos"];
-	_pnt1 = arg(0); // zero point
-	_pnt2 = arg(1); // rotated point
+	_pnt1 = _this select 0; // zero point
+	_pnt2 = _this select 1; // rotated point
 	_x = argp(_pnt1,0);
 	_y = argp(_pnt1,1);
 	_dx = argp(_pnt2,0)- _x;
 	_dy = argp(_pnt2,1)- _y;
-	_ang  = arg(2);
+	_ang  = _this select 2;
 	_sin = sin _ang;
 	_cos = cos _ang;
 	[ (_dx * _cos - _dy * _sin) + _x, (_dx * _sin + _dy * _cos) + _y, 0]
@@ -223,8 +223,8 @@ SYG_rotatePointAroundPoint = {
 // _newPos = [_basePos, _posOff] call SYG_addDiff2Pos;
 SYG_addDiff2Pos = {
     private [ "_pos", "_offs", "_newPos" ];
-    _pos =  arg(0);
-    _offs = arg(1);
+    _pos =  _this select 0;
+    _offs = _this select 1;
     _newPos = [];
     {
         _newPos set [_x, argp(_pos,_x) + argp(_offs, _x)];
@@ -237,7 +237,7 @@ SYG_addDiff2Pos = {
 // where _diffPos is vector of difference between _basePos and second point
 //
 SYG_calcPosRotation = {
-    [ arg(0), ([[0,0,0], arg(1), -arg(2)] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
+    [ _this select 0, ([[0,0,0], _this select 1, -(_this select 2)] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
 };
 
 //
@@ -248,9 +248,9 @@ SYG_calcPosRotation = {
 //
 SYG_calcRelArr = {
     private ["_house","_houseDir","_thingObjArr","_thingRelPos","_thingAng","_thingPos","_thingDir"];
-    _house = arg(0);
+    _house = _this select 0;
     _houseDir = getDir _house;
-    _thingObjArr = arg(1);
+    _thingObjArr = _this select 1;
     _thingRelPos = argp(_thingObjArr,0);
     _thingAng = argp(_thingObjArr,1);
     _thingPos = [_house modelToWorld [0,0,0], ([[0,0,0], _thingRelPos, -_houseDir] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
@@ -300,7 +300,7 @@ SYG_pointInCircle = {
 // (x-x0)^2/a^2+(y-y0)^2/b^2 <= 1
 SYG_pointInEllipse = { 
 	private ["_pnt","_elli","_ellic","_dx","_dy","_a","_b","_ret"];
-	_elli = arg(1);
+	_elli = _this select 1;
 	_ret = false;
 	if ( count _elli == 2 ) exitWith  // it is circle
 	{
@@ -376,9 +376,9 @@ SYG_elongate2 = {
  */
 SYG_elongate2Z = {
 	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
-	_pnt1 = arg(0);
+	_pnt1 = _this select 0;
 	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1;};
-	_pnt2 = arg(1);
+	_pnt2 = _this select 1;
 	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
@@ -398,10 +398,9 @@ SYG_elongate2Z = {
  */
 SYG_speedBetweenPoints2D = {
 	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
-	_pnt1 = arg(0);
-	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1;};
-	_pnt2 = arg(1);
-	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
+	_pnt1 = _this select 0;
+	_pnt1 = (_this select 0) call SYG_getPos;
+	_pnt2 = (_this select 1) call SYG_getPos;
 	_speed = (_this select 2)/(_pnt1 distance _pnt2);
 
 	_dx = x(_pnt2) - x(_pnt1);
@@ -417,7 +416,7 @@ SYG_speedBetweenPoints2D = {
  * dist in meters, may be negative
  */
 SYG_elongate1 = {
-	[arg(1),arg(0),arg(2)] call SYG_elongate2
+	[_this select 1,_this select 0,_this select 2] call SYG_elongate2
 };
 
 /**
@@ -426,7 +425,7 @@ SYG_elongate1 = {
  * _res = [_num, _root_degree] call SYG_anyRoot;
  */
 SYG_anyRoot = {
-	exp(ln(arg(0))/arg(1))
+	exp(ln(_this select 0)/_this select 1)
 };
 
 /**

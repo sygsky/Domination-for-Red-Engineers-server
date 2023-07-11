@@ -22,11 +22,11 @@
 #define OFFSET_ID   3
 #define OFFSET_STAT 4
 
-#define __DEBUG__	// Debug settings with shortened delays etc
+//#define __DEBUG__	// Debug settings with shortened delays etc
 
 #define __INFO__ // Print info about each patrol status
 
-//#define __STOP_IF_NO_PLAYERS__	// only delete patrols if no players, not restore them
+#define __STOP_IF_NO_PLAYERS__	// only delete patrols if no players, not restore them
 
 #include "x_setup.sqf"
 
@@ -207,7 +207,8 @@ _get_next_wp = {
 		}
 	};
 	// now detect if we already passes nearest point
-	_next_i = -1; // No next point defined
+	_next_i = 1; // 1st WP is next at start
+	_prev_i = 0; // Spawn point is pevious on start
 	_str = "";
 	if (true) then {
 		_prev_i = (_min_i -1) min 0;
@@ -587,9 +588,10 @@ while { true } do {
 #ifdef __STOP_IF_NO_PLAYERS__
 	if (X_MP && ((call XPlayersNumber) == 0) ) then { // Not recreate patrol if no players
 		_printInfo = false;
-		hint localize "+++ sea_patrol.sqf MAIN loop suspend due to players absent";
+		hint localize "+++ sea_patrol.sqf: MAIN loop suspend due to players absent";
 		_time = time;
 
+		hint localize"+++ sea_patrol.sqf: all patrols removed";
 		{ _x call _remove_patrol } forEach _patrol_arr;
 
 		while {((call XPlayersNumber) == 0)} do { sleep 60 };

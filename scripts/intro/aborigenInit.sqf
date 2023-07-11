@@ -35,6 +35,13 @@ while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // while out of Ant
 while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
 
 if (alive aborigen) then { // show info
+	// "STR_ABORIGEN_INFO_1" Syg_parse
+	["msg_to_user", "",
+		[
+			["STR_ABORIGEN_INFO", round (player distance aborigen), [player,aborigen]call XfDirToObj],
+			["STR_ABORIGEN_INFO_1"]
+		],	0, 6, false,"adios"
+	] spawn SYG_msgToUserParser;
 	player groupChat format [localize "STR_ABORIGEN_INFO", round (player distance aborigen), ([player,aborigen] call XfDirToObj) call SYG_getDirName]; // "Aborigen is on dist. %1 to %2"
 } else {
 	player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"

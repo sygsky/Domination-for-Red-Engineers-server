@@ -763,4 +763,8 @@ class CfgSounds {
     class unlock3      { name = "";                                     sound[] = {\sounds\short\unlock3.ogg,db-1,1.0}; titles[] = {};}; // unlock sound 3
 //    class hard_landing { name="";                                       sound[] = {\sounds\intro\hard_landing.ogg,db-1,1.0}; titles[] = {};}; // atmospheric landing douns
 
+	// Spanish speech
+    class adios       { name = "";                                     sound[] = {\sounds\men\excl\spain\adios.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Adios"
+
+
 };
