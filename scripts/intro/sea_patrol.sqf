@@ -148,7 +148,7 @@ _is_ship_stuck = {
 #ifdef __INFO__
 				hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 is stuck by timeout on dist at %2, land is NEAR, return TRUE",
 					_this select OFFSET_ID,
-					_boat call SYG_MsgOnPosE0
+					[_boat,10] call SYG_MsgOnPosE0
 				];
 #endif
 				_stucked = true
@@ -159,7 +159,7 @@ _is_ship_stuck = {
 #ifdef __INFO__
 			hint localize format[ "+++ sea_patrol.sqf _is_ship_stuck: the boat_%1 is stuck by timeout on dist at %2, pushed on speed %3 mph, dir %4",
 				_this select OFFSET_ID,
-				_boat call SYG_MsgOnPosE0,
+				[_boat,10] call SYG_MsgOnPosE0,
 				round(speed _boat),
 				round(getDir _boat)
 			];
@@ -292,13 +292,15 @@ _create_patrol = {
 	_speed_vec = [getPos _boat, _wpa select 1, 10] call SYG_speedBetweenPoints2D; // set speed 10 meters per second (36 kph)
 	_boat setVelocity _speed_vec;
 	sleep 0.01;
-#ifdef __DEBUG__
-	hint localize format["+++ sea_patrol.sqf _create_patrol: boat_%1 at %2, speed = %3, dir %4",
-		_this select OFFSET_ID,
-		_boat call SYG_MsgOnPosE0,
-		speed _boat,
-		_dir
-	];
+#ifdef __INFO__
+	if (_printInfo) then {
+		hint localize format["*** sea_patrol.sqf _create_patrol: boat_%1 at %2, speed = %3, dir %4",
+			_this select OFFSET_ID,
+			_boat call SYG_MsgOnPosE0,
+			speed _boat,
+			_dir
+		];
+	};
 #endif
 };
 
@@ -586,18 +588,14 @@ _reset_roles = {
 while { true } do {
 
 #ifdef __STOP_IF_NO_PLAYERS__
-	if (X_MP && ((call XPlayersNumber) == 0) ) then { // Not recreate patrol if no players
+	if ( X_MP && ( (call XPlayersNumber) == 0 ) ) then { // Not recreate patrol if no players
 		_printInfo = false;
-		hint localize "+++ sea_patrol.sqf: MAIN loop suspend due to players absent";
-		_time = time;
-
-		hint localize"+++ sea_patrol.sqf: all patrols removed";
+		hint localize format[ "*** sea_patrol.sqf: MAIN loop suspend due to players absent, all %1 patrols removed", count _patrol_arr ];
 		{ _x call _remove_patrol } forEach _patrol_arr;
 
 		while {((call XPlayersNumber) == 0)} do { sleep 60 };
 		_time = (round (time - _time)) call SYG_secondsToStr; // "hh:mm:ss"
-		hint localize format["+++ sea_patrol.sqf: MAIN loop resumed after players absent during %1", _time];
-		_printInfo = true;
+		hint localize format[ "*** sea_patrol.sqf: MAIN loop resumed after players absent during %1. all %2 boats will be re-created", _time, count _patrol_arr ];
 	};
 #endif
 
@@ -625,5 +623,6 @@ while { true } do {
 		};
 
 	} forEach _patrol_arr;
+	_printInfo = true;
 	sleep PATROL_CHECK_DELAY; // step sleep
 };
