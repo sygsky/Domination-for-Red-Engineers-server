@@ -765,6 +765,9 @@ class CfgSounds {
 
 	// Spanish speech
     class adios       { name = "";                                     sound[] = {\sounds\men\excl\spain\adios.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Adios"
+    class hola       { name = "";                                      sound[] = {\sounds\men\excl\spain\hola.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hola"
+    class pamal       { name = "";                                     sound[] = {\sounds\men\excl\spain\pamal.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Pamal"
+    class porque       { name = "";                                    sound[] = {\sounds\men\excl\spain\porque.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Porque"
 
 
 };

@@ -584,10 +584,12 @@ SYG_invasionSound = {
 };
 
 SYG_prisonersSound = {
-    private ["_rnd"];
-    _rnd = random 10;
-    if ( _rnd > 4) exitWith {call SYG_exclamationSound};
-    format[ "hisp%1", (floor _rnd) + 1]
+    private ["_rnd","_arr","_cnt"];
+    _arr = [ "hisp1","hisp2","hisp3","hisp4","adios","porque","hola","pamal"];
+    _cnt = count _arr;
+    _rnd = floor (random (_cnt * 2)); // 50% probability to say and 50% for exclamation, 0.. 15
+    if ( _rnd >= _cnt ) exitWith { call SYG_exclamationSound };
+    _arr select _rnd
 };
 
 SYG_powerDownSound = {
