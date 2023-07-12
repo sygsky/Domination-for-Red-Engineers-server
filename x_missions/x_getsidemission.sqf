@@ -81,7 +81,7 @@ side_mission_winner = 0;
 #ifdef __DEBUG__
 //hint localize format["x_getsidemission.sqf: side_missions_random is %1", side_missions_random];
 sleep 10; // Allow time for the script to execute? to get relevant counts in SM clean arrays
-hint localize format["+++ x_getsidemission.sqf: Started next Side Mission; sm index %1, sm counter %2, units %3, vehs %4",
+hint localize format["+++ x_getsidemission.sqf: Started next Side Mission, sm index %1, sm counter %2, units %3, vehs %4",
 	current_mission_index, current_mission_counter, count extra_mission_remover_array, count extra_mission_vehicle_remover_array];
 //hint localize format["+++ x_getsidemission.sqf: SM text '%1'", current_mission_text];
 #endif
