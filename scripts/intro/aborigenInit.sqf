@@ -38,11 +38,11 @@ if (alive aborigen) then { // show info
 	// "STR_ABORIGEN_INFO_1" Syg_parse
 	["msg_to_user", "",
 		[
-			["STR_ABORIGEN_INFO", round (player distance aborigen), [player,aborigen]call XfDirToObj],
-			["STR_ABORIGEN_INFO_1"]
+			[ "STR_ABORIGEN_INFO", round (player distance aborigen),  ([ player, aborigen ] call XfDirToObj) call SYG_getDirNameEng ],
+			[ "STR_ABORIGEN_INFO_1" ]
 		],	0, 6, false
 	] spawn SYG_msgToUserParser;
-	aborigen say ([ "hisp4","adios","porque","hola","pamal"] call XfRandomArrayVal);
+	aborigen say ([ "hisp1","hisp2","hisp3","hisp4","adios","porque","hola","pamal"] call XfRandomArrayVal);
 } else {
 	player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"
 };
