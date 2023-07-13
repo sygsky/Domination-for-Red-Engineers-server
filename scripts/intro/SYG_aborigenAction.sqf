@@ -12,6 +12,7 @@
 */
 
 #define POS_BICYCLE [17401,17980,0]
+#define ABO_BOAT_MARKER "aborigen_boat"
 #define __DEBUG__
 
 #include "x_setup.sqf"
@@ -94,22 +95,23 @@ switch ( _arg ) do {
 		_boat = objNull;
 		_arr = nearestObjects [ _isle_pos, ["Zodiac"], _rad ];
 		// Check nearest boats to be out of "boats13" marker
-		_pos = markerPos "boats13";
+		_pos13 = markerPos "boats13";
 
+/**
 #ifdef __DEBUG__
-		_arr1 = _pos nearObjects [ "Zodiac", 150 ];
+		_arr1 = _pos13 nearObjects [ "Zodiac", 150 ];
 		for "_i" from 0 to ( (count _arr1) -1 ) do {
 			_arr1 set [ _i, str (_arr1 select _i) ];
 		};
 		hint localize format[ "+++ Boat: found at Antigua on marker ""boats13"" follow boats %1", _arr1 ];
 #endif
-
+*/
 		_marker = "";  // It will be marker of selected boat
 		{
 			if (alive _x) then {
-				if ( ( _x distance _pos ) > 50 ) then {
+				if ( ( _x distance _pos13 ) > 100 ) exitWith {
 					_boat = _x;
-					hint localize format["+++ Boat: found at Antigua, ""boats13"" marker pos %1, boat pos %2, dist %3", _pos, getPos _x, round(_x distance _pos)];
+					hint localize format["+++ Boat: free one found at Antigua, dist to marker ""boats13"" = %1 m.", round(_x distance _pos13)];
 				};
 			};
 			if (alive _boat) exitWith {};
@@ -118,19 +120,19 @@ switch ( _arg ) do {
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// Search boat on boat markers, last one will be Antigua's "boats13"
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		if ( !alive _boat ) then { // Find a boat from a group of more than 1 boats, near any of the boats markers
+		if ( !alive _boat ) then { // Assign boat among boat markers groups containing  more than 1 boat
 			_marker_arr = [];
 			_exit = false;
 			for "_i" from 1 to 100 do {
 				if (_i != 13) then { // skip boats on Antigua from calculations
 					_marker = format["boats%1", _i];
-					if ( (markerType _marker) == "" ) then { _marker = "boats13" }; // try last one
+					if ( (markerType _marker) == "" ) exitWith {}; // try last one
 					_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 					if ({(alive _x) && (({alive _x} count crew _x) == 0) } count _arr > 1) exitWith {
 						_marker_arr set [count _marker_arr, _marker];
 					};
 				};
-				if (_marker == "boats13") exitWith {}; // this is last available marker, it is situated on Antigua
+				if ( (markerType _marker) == "" ) exitWith {}; // No more boat markers found
 			};
 			sleep 0.1;
 			hint localize format["+++ Boat: last used marker %1, group cnt %2", _marker, count _arr];
@@ -138,14 +140,24 @@ switch ( _arg ) do {
 			_marker = _marker_arr call XfRandomArrayVal;
 			_arr = (markerPos _marker) nearObjects ["Zodiac", 50];
 			_boat = _arr select 0;
-			hint localize format["+++ Boat: found on marker %1[%2 boats], pos %3", _marker, count _arr, (markerPos _marker) call SYG_MsgOnPosE0];
+			hint localize format["+++ Boat: found on marker %1[%2 boats], pos %3", _marker, count _arr, [(markerPos _marker),10] call SYG_MsgOnPosE0];
 		} else {
 			hint localize "+++ Boat: free boat found near Antigua (not boats near marker13!)";
 		}; // use nearest marker on Antigua to get marker type
 
         if (!(alive _boat)) exitWith {
-        	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
+			_arr = _pos13 nearObjects [ "Zodiac", 75 ];
+			{
+				if ((alive _x) && (!locked _x)) exitWith { _boat = _x };
+			} forEach _arr;
+			if (alive _boat) exitWith {
+	        	player groupChat (localize "STR_ABORIGEN_BOAT_INFO_1"); // "Boats? They're all gone all of a sudden. But look, honey, at the boat marker off Antigua."
+				hint localize "+++ Boat: last boat found at Antigua, on marker ""boats13""!";
+			};
+
+        	// Time to check boats on marker "boats13" near island!
 			hint localize "--- Boat: no good markered boat groups found at all, skip player request...";
+        	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
         };
 
         _pnt = getPos _boat; // Not reset this value as it allows to point where boat was at this check!
@@ -164,8 +176,8 @@ switch ( _arg ) do {
 		//++++++++++++++++++++++++++++++++++++++++++++++++++
         //       Set marker for the detected boat
         //++++++++++++++++++++++++++++++++++++++++++++++++++
-		_boat_marker_type =  getMarkerType _marker; // Mission boat marker, use it for Antigua
-		_marker = "aborigen_boat";	// Antigua boat marker name (not type)
+		_boat_marker_type =  getMarkerType _marker; // Mission boat marker, use it for Antigua (""aborigen_boat"")
+		_marker = ABO_BOAT_MARKER;	// Antigua boat marker name (not type)
 		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent, create it now
 			_marker = createMarkerLocal[_marker, getPosASL _boat];
 			_marker setMarkerTypeLocal _boat_marker_type;
