@@ -7,7 +7,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ waterPatrols ++++++++++++++++++++++++++
 _waterPatrolWPS = [
-// warboat1, wp 18, William Wright
+// warboat1, wp 18, William Wright, Isla del Vida
 "warboat1(#1, wp 18)", [
   [3393.72,16290.5,0],
   [3651.27,16043.2,0],
@@ -28,7 +28,7 @@ _waterPatrolWPS = [
   [4422.66,16146.6,0],
   [3648.1,16129.8,0]
 ],
-// ship1, wp 7, Christopher Robinson
+// ship1, wp 7, Christopher Robinson, Antigua
 "ship1(#2, wp 7)", [
   [17523.8,21134.1,0],
   [15672.3,19570,0],
@@ -38,7 +38,7 @@ _waterPatrolWPS = [
   [19582.3,17712,0],
   [17530.9,20694.9,0]
 ],
-// ship1_1, wp 6, Austin Wright
+// ship1_1, wp 6, Austin Wright, Cabo Santa Lucia
 "ship1_1(#3, wp 6)", [
   [12716.1,20887.1,0],
   [12743.9,20358.4,0],
@@ -47,7 +47,7 @@ _waterPatrolWPS = [
   [10892.1,18532.5,0],
   [12284.9,20482,0]
 ],
-// ship1_2, wp 13, James Smith
+// ship1_2, wp 13, James Smith, Pita
 "ship1_2(#4, wp 13)", [
   [23466.4,14366.8,0],
   [19910.9,16917,0],
@@ -63,7 +63,7 @@ _waterPatrolWPS = [
   [17146.2,6121.61,0],
   [23200.7,15012.5,0]
 ],
-// ship1_3, wp 12, James Robinson
+// ship1_3, wp 12, James Robinson, Iguana - Rahmadi
 "ship1_3(#5, wp 12)", [
   [14038.3,2173.64,0],
   [14938.8,6245.36,0],
@@ -78,7 +78,7 @@ _waterPatrolWPS = [
   [9669.23,2814.16,0],
   [13989.4,6062.49,0]
 ],
-// ship1_4, wp 14, John Jones
+// ship1_4, wp 14, John Jones, Arcadia - Abra da Boca
 "ship1_4(#6, wp 14)", [
   [5636.13,5658.25,0],
   [5638.01,6568.44,0],
@@ -95,7 +95,7 @@ _waterPatrolWPS = [
   [5092.96,8758.49,0],
   [5265.57,6014.66,0]
 ],
-// ship1_5, wp 12, Matthew Thompson
+// ship1_5, wp 12, Matthew Thompson, Cabo Uventida
 "ship1_5(#7, wp 12)", [
   [8122.93,19505.7,0],
   [7978.14,18835.6,0],
