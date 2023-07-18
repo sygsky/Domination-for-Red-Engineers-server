@@ -137,15 +137,14 @@ GRU_addDoc = {
 };
 
 //
-// Processing unit for client commands receiver
-//
+// Processing unit for client commands receiver ("GRU_msg" item in x_netinitclient.sqf)
 //
 GRU_procClientMsg = {
 	private ["_msg","_kind","_task_name","_player_name","_obj","_comp"];
 	_msg = arg(1); // sub-id, e.g. ["GRU_msg", GRU_MSG_START_TASK, _kind<,player_name>] call XSendNetStartScriptClient;
 	_kind = arg(2);
 	_task_name = switch _kind do {
-		case GRU_MAIN_TASK: { localize "STR_GRU_2"};
+		case GRU_MAIN_TASK: { localize "STR_GRU_2"}; // 'deliver the map"
 		
 		case GRU_SECONDARY_TASK: { "GRU_SECONDARY_TASK"};
 		
@@ -154,15 +153,15 @@ GRU_procClientMsg = {
 		case GRU_PERSONAL_TASK: {"GRU_PERSONAL_TASK"};
 
 		case GRU_FIND_TASK: {"GRU_FIND_TASK"};
-		default {format ["+++ Unknown GRU task kind %1",_kind]};
+		default {format ["--- GRU_procClientMsg: Unknown GRU task kind %1",_kind]};
 	};
 	_player_name = argopt(3,localize "STR_GRU_9");
 	switch _msg do {
 		case GRU_MSG_STOP_TASK: {
-			titleText[ format[localize "STR_GRU_5", localize "STR_GRU_4",localize "STR_GRU_1",_task_name,localize "STR_GRU_3" ],"PLAIN DOWN"]; // "Задача ГРУ ""доставить карту"" отменена"
+			titleText[ format[localize "STR_GRU_5", localize "STR_GRU_4",localize "STR_GRU_1",_task_name,localize "STR_GRU_3" ],"PLAIN DOWN"]; // STR_GRU_5 = "%1 %2 ""%3"" %4" / STR_GRU_4="task" / STR_GRU_3 = "discontinued"
 		};
 		case GRU_MSG_START_TASK: {
-			titleText[ format[localize "STR_GRU_6", localize "STR_GRU_4",localize "STR_GRU_1", _task_name ],"PLAIN DOWN"]; // "Поступила новая задача ГРУ ""доставить карту"""
+			titleText[ format[localize "STR_GRU_6", localize "STR_GRU_4",localize "STR_GRU_1", _task_name ],"PLAIN DOWN"]; // "New %2 %1 ""%3"" arrived"
 			sleep (1 + random 1);
 			private ["_town","_comp","_pwr"];
 			_town = [];
@@ -190,16 +189,16 @@ GRU_procClientMsg = {
 #endif		
 */
 		};
-		// sent from clien ta as: ["GRU_msg", GRU_MSG_TASK_SOLVED, [["msg_to_user","",[_msg],4,4],_array_of_objects_array] ] call XSendNetStartScriptClient;
+		// sent to the client as folows: ["GRU_msg", GRU_MSG_TASK_SOLVED, [["msg_to_user","",[_msg],4,4],_array_of_marker_arrays] ] call XSendNetStartScriptClient;
 		case GRU_MSG_TASK_SOLVED: {
 			playSound "tune"; // playSound "fanfare"; // information already sent to user
-			//titleText[ format[localize "STR_GRU_7", localize "STR_GRU_4",localize "STR_GRU_1", _task_name, _player_name ],"PLAIN DOWN"]; // "задача ГРУ ""доставить развединфо из города"" выполнена (одним из вас)"
+			//titleText[ format[localize "STR_GRU_7", localize "STR_GRU_4",localize "STR_GRU_1", _task_name, _player_name ],"PLAIN DOWN"]; // "%1 %2 ""%3"" completed (by %4), scores +%5" / STR_GRU_4 = ""
 			private ["_params","_mgs_arr","_markers"];
 			_params  = arg(2);
-			_mgs_arr = argp(_params,0);
-			_markers = argp(_params,1);
-			_msg_arr spawn XHandleNetStartScriptClient; // emulate message sent from server
-			sleep 0.5 + (random 0.5);
+			_mgs_arr = _params select 0;
+			_markers = _params select 1;
+			_msg_arr spawn SYG_msgToUserParser; // emulate message sent from server
+			sleep (0.5 + (random 0.5));
 			[_markers] call SYG_resetIntelMapMarkers; //reset default markers set
 		};
 		case GRU_MSG_TASK_FAILED: {

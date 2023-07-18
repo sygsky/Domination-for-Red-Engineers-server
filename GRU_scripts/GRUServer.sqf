@@ -50,7 +50,7 @@ GRU_procServerMsg = {
 	_msg = arg(1); // sub-id, e.g. ["GRU_msg", GRU_MSG_START_TASK, _task_id<<<,player_name>,score>,marker_arr>] call XSendNetStartScriptClient;
 	_task_name_id = "<UNKNOWN>";
 	_task_name = switch _task_id do {
-		case GRU_MAIN_TASK: { _task_name_id = "STR_GRU_2"; localize "STR_GRU_2"};
+		case GRU_MAIN_TASK: { _task_name_id = "STR_GRU_2"; localize "STR_GRU_2"}; // STR_GRU_2 = "deliver the map"
 		
 		case GRU_SECONDARY_TASK: { "<GRU_SECONDARY_TASK>" };
 		
@@ -66,17 +66,17 @@ GRU_procServerMsg = {
 		case GRU_MSG_STOP_TASK;
 		case GRU_MSG_COMP_CREATED;
 		case GRU_MSG_START_TASK: {
-			hint localize "--- GRU_MSG_START_TASK/GRU_MSG_STOP_TASK/GRU_MSG_COMP_CREATED can't be send from client to server";
+			hint localize "--- GRU_MSG_START_TASK/GRU_MSG_STOP_TASK/GRU_MSG_COMP_CREATED still not developed and can't be send from client to server";
 		};
 		case GRU_MSG_TASK_SOLVED: {
 			// stop corresponding task and send info back to all clients
 			_task_id call GRU_stopTask; // done!!!
-			_msg = ["STR_GRU_7","STR_GRU_4",  "STR_GRU_1",  _task_name_id, "STR_GRU_9", argopt(4,"???")]; // задача ГРУ доставить развединфо из города выполнена (одним  из вас), очки +135
+			_msg = ["STR_GRU_7", "STR_GRU_4", "STR_GRU_1",  _task_name_id, "STR_GRU_9", argopt(4,"???")]; // "%1 %2 "%3" completed (by %4), scores +%5" / STR_GRU_4 = "task" /  STR_GRU_1= "GRU" / STR_GRU_9 = "one of you"
 
 			// ["msg_to_user","",[_msg],4,4] call XSendNetStartScriptClient;
 			//sleep 0.5 + (random 0.5);
 			// send user msg and map markers update
-			["GRU_msg", GRU_MSG_TASK_SOLVED, [["msg_to_user","",[_msg],4,4],arg(5)] ] call XSendNetStartScriptClient;
+			["GRU_msg", GRU_MSG_TASK_SOLVED, [ ["msg_to_user","",[_msg],4,4],arg(5)] ] call XSendNetStartScriptClientAll;
 			hint localize format["+++ Server GRU_MSG_TASK_SOLVED:  from player ""%1"" ", _player_name];
 		};
 		case GRU_MSG_TASK_FAILED: {

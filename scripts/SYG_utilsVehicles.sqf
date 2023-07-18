@@ -1224,8 +1224,7 @@ SYG_removeMarkers = {
 	true
 };
 
-SYG_removeIntelStatWpnMarkers = 
-{
+SYG_removeIntelStatWpnMarkers =  {
 	DEFAULT_INTEL_MAP_MARKERS_PREFIX call SYG_removeMarkers;
 };
 

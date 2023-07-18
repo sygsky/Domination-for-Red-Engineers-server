@@ -272,9 +272,9 @@ for "_check" from 0 to 0 do {
 						// play sound of success, add score etc
 						playSound "fanfare";
 						_score = _score_plus;
-						// send message to server about completion and map markers for all users
+						// send message to server about completion and map markers for all other players
 						["GRU_msg", GRU_MSG_TASK_SOLVED, GRU_MAIN_TASK, name player, _score, _tt] call XSendNetStartScriptServer; 
-						format[ localize "STR_GRU_7",localize "STR_GRU_4", localize "STR_GRU_1", localize "STR_GRU_2", localize "STR_GRU_36",_score] call XfHQChat; // "задача ГРУ ""доставить карту"" выполнена (вами), очки +NNN" 
+						format[ localize "STR_GRU_7",localize "STR_GRU_4", localize "STR_GRU_1", localize "STR_GRU_2", localize "STR_GRU_36",_score] call XfHQChat; // STR_GRU_4 = "task"
 						breakTo "main";
 					};
 					if ( _search_cnt > 0 ) then { // map was on ground before this step
