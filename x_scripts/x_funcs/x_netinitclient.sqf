@@ -736,17 +736,9 @@ XHandleNetStartScriptClient = {
 //		{
 //			__SetGVar(PATROL_COUNT, __GetGVar(PATROL_COUNT)-1 max 0);
 //		}; // TODO: message about patrol killed
-		case "GRU_msg_patrol_detected"; // TODO: check new patrol in the future, now simply inform player about
+//		case "GRU_msg_patrol_detected"; // TODO: check new patrol in the future, now simply inform player about
 		case "GRU_msg": {
 			hint localize format["+++ x_netinitclient.sqf: ""GRU_msg"" params %1", _this ];
-			if ( (_this select 0 ) == "GRU_msg_patrol_detected") then {
-//			    if ( __HasGVar(PATROL_COUNT) ) then
-//			    {
-//			        _cnt = __GetGVar(PATROL_COUNT);
-//        			//hint localize format["Patrol count is %1", _cnt ];
-//				};
-                _this set[0, "GRU_msg"];
-			};
 			_this call GRU_procClientMsg;
 		};
 		// Receive radio sound if some radio is found near player

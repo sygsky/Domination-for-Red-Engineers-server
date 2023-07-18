@@ -596,7 +596,7 @@ while { true } do {
                                 _size    = count argp(_igrpa, PARAM_VEHICLES);
                                 _pattype = argp(_igrpa, PARAM_TYPE); // get patrol type for colonel
 
-                                ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_DETECTED, [_witness, _pos, _size, _pattype]] call XSendNetStartScriptClient;
+                                ["GRU_msg", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_DETECTED, [_witness, _pos, _size, _pattype]] call XSendNetStartScriptClient;
                             };
                         } forEach argp(_igrpa, PARAM_VEHICLES); // this lopp check if patrol created has at least one vehicle
 					};
@@ -840,7 +840,7 @@ while { true } do {
 	} else  { // send info about patrol absence
 	    if ( _show_absence && (_last_cnt != 0)) then {
 	        if ((random 1) <= SHOW_ABSENCE_PROBABILITY ) then { // inform users about patrol absence
-                ["GRU_msg_patrol_detected", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
+                ["GRU_msg", GRU_MSG_INFO_TO_USER, GRU_MSG_INFO_KIND_PATROL_ABSENCE ] call XSendNetStartScriptClient;
         	    if ( (current_counter >= number_targets) /** && (!main_target_ready) */ ) then { _exit = true };
 	        };
             _show_absence = false; // disable patrol absence message
