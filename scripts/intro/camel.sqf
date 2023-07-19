@@ -17,9 +17,7 @@
 	returns: nothing
 */
 
-#define PLANE_TYPE "Camel2"
-#define PLANE_POS [18089.39,18170.92, 0]
-#define PLANE_DIR 80
+#include "camel_setup.sqf"
 
 //
 // Gets new dir and pos for the plane: _dir_pos =  PLANE_POS call _getDirAndPos; // _dir_pos = [80, [18089.39,18170.92, 0]]
@@ -54,9 +52,9 @@ if ( _delete ) then { // delete plane
 };
 
 if ( _create  ) then { // create
-	aborigen_plane = createVehicle [ PLANE_TYPE, [0,0,1000], [], 0, "NONE"];
+	aborigen_plane = createVehicle [ PLANE_TYPE call XfRandomArrayVal, [0,0,1000], [], 0, "NONE"];
 	sleep 0.1;
-	hint localize format["+++ camel.sqf: %1 plane created alive %2", PLANE_TYPE, alive aborigen_plane];
+	hint localize format["+++ camel.sqf: %1 plane created alive %2", typeOf aborigen_plane, alive aborigen_plane];
 };
 
 if ( ((getPos aborigen_plane) distance PLANE_POS) > 20) then {
