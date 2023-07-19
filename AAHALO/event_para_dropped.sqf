@@ -147,8 +147,6 @@ if (base_visit_mission < 1) then { // Player still not visited base
 			if ( alive player ) then {
 				if ( !((vehicle player) isKindOf "Air") ) exitWith {}; // Player not is in some air vehicle now
 				_veh = vehicle player;
-				// store vehicle crew for the future usage
-				_crew = crew _veh;
 				// Wait until this air veh is in air
 			#ifdef __DEBUG__
 				hint localize format["+++ event_para_dropped.sqf: player entered vehicle %1 with crew of %2", typeOf _veh, count _crew ];

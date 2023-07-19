@@ -1,5 +1,5 @@
 /*
-	scripts\intro\SYG_checkPlayerAtBase.sqf
+	scripts\intro\SYG_checkPlayerAtBase.sqf run on client only
 	author: Sygsky
 	description: checks if player visited base rectangle. If yes, set variable base_visit_session to 1 and exit
 	returns: nothing
@@ -21,6 +21,14 @@ _flag_pos = [];
 _factor = (400 / 1600) max 12.5;
 // set flare position as slightly random one
 
+// Array of vehiles ised
+_vehs_used_arr = [];
+_active_veh = objNull; // Last vehicle in use by this player
+_veh_exit_cnt = 0; // Number of consecutive visits to this transport by a player
+_in_time_sum = 0;
+_get_in_time = 0;
+_was_in_veh = false;
+
 // if (isNil "base_visit_session") then { base_visit_session = 0 }; // init visit status
 _delay = 5;
 while { base_visit_session <= 0 } do {
@@ -36,19 +44,29 @@ while { base_visit_session <= 0 } do {
 		[ _flare, "VIOLET", _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // not works
 	};
 	if ( alive player ) then {
-		if (vehicle player == player) then { // only on feet player is counted to be on base
+		_player_veh = vehicle player;
+		if ( _player_veh == player ) then { // only on feet player is counted to be on base
+			if ( _was_in_veh ) then { // player get out of vehicle
+				_veh_exit_cnt = _veh_exit_cnt + 1;	// bump in vehicle exit counters
+				_in_time_sum  = _in_time_sum + (time - _get_in_time);	// bump in vehicle time
+				_was_in_veh   = false;
+			};
 			if (( getPos player ) call SYG_pointIsOnBase) then {  // player is in base rect!
 				// Ensure player being on base 2 seconds
 				sleep 2;
 				if (( getPos player ) call SYG_pointIsOnBase) then {
+					// add last visited vehicle to the history array
+					if (!isNull _active_veh) then {
+						_vehs_used_arr set [count _vehs_used_arr, format["%1(c=%2,s=%3)", typeOf _active_veh, _veh_exit_cnt, round(_in_time_sum)]]; // store visited vehicle type to print afer visit
+					};
+
 					base_visit_mission = 1;
-					_veh = nearestObjects [player,["LandVehicle","Air"/*,"Ship"*/],50];// Any nearest vehicle
 					_spent_time = time  - _start_time;
 					[
 						"base_visit_mission",
 						name player,
 						base_visit_mission,
-						if ((count _veh) == 0) then {"<no veh>"} else {typeOf (_veh select 0)},
+						format["%1", _vehs_used_arr], // history of vehicles
 						_spent_time // Time spent to reach the base from Antigua
 					] call XSendNetStartScriptServer; // store new value on the server
 					base_visit_session = base_visit_mission;
@@ -58,10 +76,34 @@ while { base_visit_session <= 0 } do {
 				};
 			};
 			_delay = 5; // Player is on his own, slow check on base frequence
-		}  else {_delay = 1}; // player in vehicle, up the check on base frequence
-	} else { _delay = 10; };
+		}  else { // player in vehicle, up the frequence of on base checks
+			// Handle with last used and newly visited vehicles
+			if ( !_was_in_veh ) then { // player entered vehicle 1-5 seconds ago
+				_was_in_veh  = true;
+				_get_in_time = time; // Time when player get in the vehicle (it doesn't matter, if first time or if next one)
+				// check if player vehicle is the same as old one
+				if ( _player_veh != _active_veh ) then { // Other vehicle visited
+					if (!isNull _active_veh) then {
+						_vehs_used_arr set [count _vehs_used_arr, format["%1(c=%2,s=%3)", typeOf _active_veh, _veh_exit_cnt, round(_in_time_sum)]]; // store visited vehicle type to print after get out
+					};
+					_active_veh   = _player_veh; // store as last vehicle visited
+					_veh_exit_cnt = 0;	// Init exit count
+					_in_time_sum  = 0; // start new time sum calcuulation of player being in the vehicle
+				};
+			};
+			_delay = 1;
+		};
+	} else {
+		// remove all used vehicles list on player death
+		_vehs_used_arr resize 0;
+		_active_veh  = objNull;
+		_was_in_veh  = false;
+		_in_time_sum = 0;
+		_delay       = 10;
+	};
 };
-hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, base_visit_session = %1", base_visit_session];
+
+hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, base_visit_session = %1, veh history = %2", base_visit_session, _vehs_used_arr];
 
 #ifdef __ACE__
 // inform players that I've reached the base
