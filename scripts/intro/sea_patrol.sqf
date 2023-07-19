@@ -245,12 +245,12 @@ _get_next_wp = {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _create_patrol = {
 	private [ "_boat", "_grp", "_x", "_i", "_wpa", "_arr", "_last", "_wp", "_cnt1", "_ex_cnt", "_speed_vec", "_dir"];
-	_boat = createVehicle [BOAT_TYPE, [0,0,0], [], 25, "NONE"];
+	_boat = createVehicle [BOAT_TYPE, [0,0,0], [], 50, "NONE"];
 //	_boat setVehicleInit "this call SYG_rearmVehicleA";
 	if ( _boat call SYG_rearmVehicleA ) then {
-		hint localize format["+++ sea_patrol.sqf create_patrol: boat_%1 recreated and rearmed. V. 1", _this select OFFSET_ID, typeOf _boat];
+		hint localize format["+++ sea_patrol.sqf create_patrol: boat_%1 created and rearmed.", _this select OFFSET_ID, typeOf _boat];
 	} else {
-		hint localize format["--- sea_patrol.sqf create_patrol: boat_%1 recreated but NOT rearmed. V. 1", _this select OFFSET_ID, typeOf _boat];
+		hint localize format["--- sea_patrol.sqf create_patrol: boat_%1 created but NOT rearmed.", _this select OFFSET_ID, typeOf _boat];
 	}; // try to rearm  upgraded vehicle
 
 	_boat lock true;
@@ -452,13 +452,18 @@ _resupply_boat = {
 // Try to fill driver and at least 1 gunner from cargo or driver from two gunners
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _reset_roles = {
-	  _stat = _this select OFFSET_STAT;
-	 _units = _stat select OFFSET_STAT_UNITS;
-	if ( ( { alive _x } count _units ) == 0 ) exitWith { false }; // Nobody alive, kill boat too
-      _boat = _this select OFFSET_BOAT;
-       _grp = _this select OFFSET_GRP;
+	_stat = _this select OFFSET_STAT;
+	_units = _stat select OFFSET_STAT_UNITS;
+	if ( ( { alive _x } count _units ) == 0 ) exitWith {  // Nobody alive crew, kill boat too
+#ifdef __DEBUG__
+    	hint localize "+++ sea_patrol.sqf reset_roles: now alive crew return FALSE";
+#endif
+		false
+	};
+    _boat = _this select OFFSET_BOAT;
+    _grp = _this select OFFSET_GRP;
 	_driver = objNull;
-			  _ind = ["RHIB2Turret","RHIB"] find (typeOf _boat);
+	_ind = ["RHIB2Turret","RHIB"] find (typeOf _boat);
 	_gun_empty_ids = [[0,1],[0]] select _ind; // All gunner[s] id from the boat config
 	   _gunner_cnt = count _gun_empty_ids; // Official gunner count in the config team
 	   _gunner_ids = [];
@@ -496,7 +501,7 @@ _reset_roles = {
 	_gun_empty_ids = _gun_empty_ids - _gunner_ids; // define not filled turrets from list [0<,1>]
 #ifdef __DEBUG__
 	_beh = _grp call _get_modes;
-	hint localize format["+++ sea_patrol.sqf _reset_roles: common count (%1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
+	hint localize format["+++ sea_patrol.sqf reset_roles: common count (%1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
 		_i, count _outers, _beh, _gunner_ids, _gun_empty_ids ];
 #endif
 
@@ -509,14 +514,14 @@ _reset_roles = {
 			unassignVehicle _unit;
 			_unit setPos [0,0,0];
 			_outers resize (_cnt - 1);
-#ifdef __DEBUG__
-			hint localize "+++ sea_patrol.sqf _reset_roles: outer assigned as driver...";
+#ifdef __INFO__
+			hint localize "+++ sea_patrol.sqf reset_roles: outer assigned as driver...";
 #endif
 		} else {
 			_unit = _grp createUnit [ BOAT_UNIT, [0,0,0], [], 0, "NONE"];
 			[_unit] joinSilent _grp;
 #ifdef __DEBUG__
-			hint localize "+++ sea_patrol.sqf _reset_roles: new unit assigned as driver...";
+			hint localize "+++ sea_patrol.sqf reset_roles: new unit assigned as driver...";
 #endif
 		};
 		_unit assignAsDriver _boat;
@@ -541,8 +546,8 @@ _reset_roles = {
 		unassignVehicle _unit;
 		_unit setPos [0,0,0];
 		_unit moveInTurret [_boat, [_x]];
-#ifdef __DEBUG__
-		hint localize format["+++ sea_patrol.sqf _reset_roles: gunner#%1 (%2) assigned from %3", _x, assignedVehicleRole _unit, _str];
+#ifdef __INFO__
+		hint localize format["+++ sea_patrol.sqf reset_roles: gunner#%1 (%2) assigned from %3", _x, assignedVehicleRole _unit, _str];
 #endif
 		sleep 0.1;
 	} forEach _gun_empty_ids;
@@ -551,9 +556,9 @@ _reset_roles = {
 		if ( !isNull _x )  then { deleteVehicle _x };
 	} forEach _outers;
 	_units = units _grp;
-#ifdef __DEBUG__
+#ifdef __INFO__
 	if ( (count _units)  != 3 ) then {
-		hint localize format["+++ sea_patrol.sqf _reset_roles: Expected units count = %1, must be 3", count _units];
+		hint localize format["+++ sea_patrol.sqf reset_roles: Expected units count = %1, must be 3", count _units];
 	};
 #endif
 

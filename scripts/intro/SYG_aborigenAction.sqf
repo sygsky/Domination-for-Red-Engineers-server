@@ -15,9 +15,11 @@
 #define ABO_BOAT_MARKER "aborigen_boat"
 #define __DEBUG__
 
+#include "camel_setup.sqf"
+
 #include "x_setup.sqf"
 
-_search_list = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","ACE_UAZ","DATSUN_PK1","HILUX_PK1"];
+_search_list = ["Motorcycle","hilux1_civil_1_open","LandroverMG","SkodaBase","ACE_UAZ"/*,"DATSUN_PK1","HILUX_PK1"*/,"ACE_HMMWV","tractor"];
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenAction.sqf: unknown _this = %1", _this]};
 
 if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"
@@ -319,9 +321,6 @@ switch ( _arg ) do {
 
 	case "PLANE" : { // ask about plane
 		// check if plane is on place
-		#define PLANE_TYPE "Camel2"
-		#define PLANE_POS [18089.39,18170.92, 0]
-		#define PLANE_DIR 80
 		_ask_server = isNil "aborigen_plane";
 		if ( !_ask_server ) then{ _ask_server = !alive aborigen_plane; };
 		if ( _ask_server ) then {
