@@ -1,7 +1,7 @@
 /*
 	scripts\intro\SYG_checkPlayerAtBase.sqf run on client only
 	author: Sygsky
-	description: checks if player visited base rectangle. If yes, set variable base_visit_session to 1 and exit
+	description: checks if player visited base rectangle. If yes, set variable base_visit_session = 1 and exit
 	returns: nothing
 
     Checks if alive player was at base.

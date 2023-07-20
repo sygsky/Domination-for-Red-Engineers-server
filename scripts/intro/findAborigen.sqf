@@ -3,7 +3,7 @@
 	author: Sygsky
 	description:
 		finds or creates aborigen on Antigua on request at server from new player client.
-		If fborigen exists, nothing done, if killed or absent, he is re-created
+		If alive aborigen found, nothing done, if killed or absent, he is re-created
 	params:
 		100 execVM "scripts\intro\findAborigen.sqf"; // 100 = sleep interval
 	returns: nothing
