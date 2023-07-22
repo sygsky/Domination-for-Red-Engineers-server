@@ -361,10 +361,10 @@ SYG_elongate2 = {
 	_pnt2 set [2, 0];
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
-	_dx = argp(_pnt2,X_POS) - argp(_pnt1,X_POS); // (_pnt2 select 0) - (_pnt1 select 0);
-	_dy = argp(_pnt2,Y_POS) - argp(_pnt1,Y_POS); //(_pnt2 select 1) - (_pnt1 select 1);
+	_dx = x(_pnt2) - y(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
+	_dy = y(_pnt2) - y(_pnt1); //(_pnt2 select 1) - (_pnt1 select 1);
 
-	[argp(_pnt1,X_POS) + _elongate *_dx, argp(_pnt1,Y_POS) + _elongate * _dy, 0] // new point coordinates
+	[x(_pnt2) + _elongate *_dx, y(_pnt2) + _elongate * _dy, 0] // new point coordinates
 };
 
 /**
@@ -382,11 +382,11 @@ SYG_elongate2Z = {
 	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
-	_dx = argp(_pnt2,X_POS) - argp(_pnt1,X_POS); // (_pnt2 select 0) - (_pnt1 select 0);
-	_dy = argp(_pnt2,Y_POS) - argp(_pnt1,Y_POS); //(_pnt2 select 1) - (_pnt1 select 1);
-	_dz = argp(_pnt2,Z_POS) - argp(_pnt1,Z_POS); //(_pnt2 select 2) - (_pnt1 select 2);
+	_dx = x(_pnt2) - x(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
+	_dy = y(_pnt2) - y(_pnt1); //(_pnt2 select 1) - (_pnt1 select 1);
+	_dz = z(_pnt2) - z(_pnt1); //(_pnt2 select 2) - (_pnt1 select 2);
 //	[(_pnt1 select 0) + _elongate *_dx, (_pnt1 select 1) + _elongate * _dy, (_pnt1 select 2) + _elongate * _dz] // new point coordinates
-	[argp(_pnt1,X_POS) + _elongate *_dx, argp(_pnt1,Y_POS) + _elongate * _dy, argp(_pnt2,Z_POS)+ _elongate * _dz] // new point coordinates
+	[x(_pnt2) + _elongate *_dx, y(_pnt2) + _elongate * _dy, z(_pnt2)+ _elongate * _dz] // new point coordinates
 };
 
 /**
@@ -397,8 +397,7 @@ SYG_elongate2Z = {
  * speend in meters per second, must be positive
  */
 SYG_speedBetweenPoints2D = {
-	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
-	_pnt1 = _this select 0;
+	private ["_pnt1","_pnt2","_elongate","_dx","_dy","_speed"];
 	_pnt1 = (_this select 0) call SYG_getPos;
 	_pnt2 = (_this select 1) call SYG_getPos;
 	_speed = (_this select 2)/(_pnt1 distance _pnt2);
@@ -410,13 +409,23 @@ SYG_speedBetweenPoints2D = {
 
 /**
  * call: [_pnt1, _pnt2, _dist] call SYG_elongate1;
- * returns end point of vector [_pnt1, _pnt2] elongated with _dist from _pnt1 in back direction (from _pnt2 to _pnt1)
+ * returns point on vector [_pnt1, _pnt2] with designated _dist from _pnt1 in the same direction as the vector from _pnt1 to _pnt2
  * _pnt1: initial point of vector
  * _pnt2: ending point of vector
  * dist in meters, may be negative
  */
 SYG_elongate1 = {
-	[_this select 1,_this select 0,_this select 2] call SYG_elongate2
+	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
+	_pnt1 = (_this select 0) call SYG_getPos;
+	_pnt1 set [2, 0];
+	_pnt2 = (_this select 1) call SYG_getPos;
+	_pnt2 set [2, 0];
+	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
+
+	_dx = x(_pnt2) - y(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
+	_dy = y(_pnt2) - y(_pnt1); //(_pnt2 select 1) - (_pnt1 select 1);
+
+	[x(_pnt1) + _elongate *_dx, y(_pnt1) + _elongate * _dy, 0] // new point coordinates
 };
 
 /**
