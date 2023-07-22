@@ -261,6 +261,11 @@ _create_patrol = {
 	[_boat, _grp, BOAT_UNIT, 1.0] call SYG_populateVehicle;
 	if ( alive (driver _boat) ) then { (driver _boat) setUnitRank "CORPORAL"}; // just in case
 
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//+  Experimental setting to try to disable enemy radar targeting +
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	_boat setCaptive true;
+
 	_wpa = _this select OFFSET_WPA; // waypoint description array
 	_boat setPos (_wpa select 0); // 1st WP position
 	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY, units _grp]];
