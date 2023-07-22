@@ -34,7 +34,7 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
         if (isNull _vehicle ) then {
             _vehicle = _x;
         } else {
-            if (!(_vehicle isKindOf "ParachuteBase")) then {
+            if (!(_vehicle call SYG_isParachute)) then {
                 if ( ((velocity _x) distance [0,0,0]) > ((velocity _vehicle) distance [0,0,0]) ) then {// find fastest of vehicles available
                     _vehicle = _x;
                 };
@@ -44,6 +44,8 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
 } forEach arg(0); // for each thislist item do
 
 if (!alive _vehicle) exitWith {};
+
+hint localize format["+++ x_reload.sqf: isServer=%1, isPlayer=%2(%3), veh %4, dmg %5", isServer, isPlayer (driver _vehicle), name player, typeOf _vehicle, damage _veh];
 
 #ifdef __DOUBLE_AMMUNITION__
 
