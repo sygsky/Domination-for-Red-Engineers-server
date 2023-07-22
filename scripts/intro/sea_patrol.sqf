@@ -126,20 +126,21 @@ _is_ship_stuck = {
 		_enemy = _modes select 2;
 
 		if ( !isNull _enemy) then {	if (_enemy isKindOf "Building") exitWith { _enemy = objNull }};
-		_dist = round (_boat distance _enemy);
-		if ( (alive _enemy) && (_dist < MAX_DIST_TO_ENEMY) ) exitWith { // If in battle, can't be stucked
+		_edist = round (_boat distance _enemy);
+		if ( (alive _enemy) && (_edist < MAX_DIST_TO_ENEMY) ) exitWith { // If in battle, can't be stucked
 #ifdef __INFO__
 			_modes set [2, typeOf _enemy];
 			hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 in battle at %2, enemy dist %3, modes %4; return FALSE",
 			_this select OFFSET_ID,
 			[_boat, 10] call SYG_MsgOnPosE0,
-			_dist,
+			_edist,
 			_modes
 			];
 #endif
 			if ( _dist > POS_DIST ) exitWith {
 				_stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ]; _stat set [OFFSET_STAT_LAST_TIME, time + COMBAT_STALL_DELAY ]; // in battle time-out is longer
 			};
+			if (_edist < (MAX_DIST_TO_ENEMY / 3)) then { ["say_sound", _boat, "naval"] call XSendNetStartScriptClient; }; // Say fear sound to the player )))
 		}; // Some near enemy detected, not stuacked
 
 		if ( _dist > POS_DIST ) exitWith { _stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ]; _stat set [OFFSET_STAT_LAST_TIME, time + PATROL_STALL_DELAY ]; }; // Distance from last point is far enough for boat to be not stalled
@@ -356,8 +357,8 @@ _remove_patrol = {
 				// remove after some delay
 				//++++++++++++++++++++++++++++
 				[_this select OFFSET_ID, _del_arr, _pos] spawn {
-					hint localize format["--- sea_patrol.sqf remove_patrol: boat_%1 remove proc left %2 units not deleted, prepare to delete them after 300 seconds", _this select 0, count (_this select 1)];
-					sleep 300;
+					hint localize format["--- sea_patrol.sqf remove_patrol: boat_%1 remove proc left %2 units not deleted, prepare to delete them after 60 seconds", _this select 0, count (_this select 1)];
+					sleep 60;
 					private ["_x","_cnt"];
 					{
 						if (!isNull _x) then {
@@ -408,6 +409,9 @@ _item2str = {
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // +          fill initial array with empty patrol description items                  +
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+sleep (80 + (random 20)); // sleep ~90 seconds (1.5 minutes) before to start, it is enought
+["msg_to_user","",["STR_SEA_PATROL_START"], 0, 0, false, "naval"] call XSendNetStartScriptClient; // "GRU reports that the appearance of naval patrols is quite possible."
+
 #ifdef __INFO__
 hint localize  "+++ sea_patrol.sqf: fill initial patrols +++";
 #endif
@@ -575,7 +579,7 @@ while { true } do {
 	if ( X_MP && ( (call XPlayersNumber) == 0 ) ) then { // Not recreate patrol if no players
 		_printInfo = false;
 		hint localize format[ "*** sea_patrol.sqf: MAIN loop suspend due to players absent, all %1 patrols removed", count _patrol_arr ];
-		{ _x call _remove_patrol } forEach _patrol_arr;
+		{ sleep 1; _x call _remove_patrol } forEach _patrol_arr;
 
 		while {((call XPlayersNumber) == 0)} do { sleep 60 };
 		_time = (round (time - _time)) call SYG_secondsToStr; // "hh:mm:ss"
@@ -583,6 +587,36 @@ while { true } do {
 		_printInfo = true;
 	};
 #endif
+
+	// stop sea patrol system on the end of mission
+	if ( current_counter >= number_targets ) exitWith {
+		hint localize "*** _sea_patrol: remove patrols (move them out) due to the all towns are liberated !!!";
+		["msg_to_user","",["STR_SEA_PATROL_LEAVE"], 0, 0, false, "no_more_waiting"] call XSendNetStartScriptClient; // "GRU reports that enemy naval patrols are heading away from Sahrani."
+		// set last WP to the big distance from island center
+		{
+			_boat = _x select OFFSET_BOAT;
+			// For not null boat
+			if (!isNull _boat) then {
+				_grp  = _x select OFFSET_GRP;
+				_units = (_x select OFFSET_STAT) select OFFSET_STAT_UNITS;
+				// If patrol is not alive, skip it
+				if ( (isNull _grp) || ( ({alive _x} count _units) == 0 ) || !(alive (driver _boat) ) ) exitWith {
+					_x call _remove_patrol;
+				};
+                for "_i" from ( (count (waypoints _grp)) - 1) to 0 step -1 do {
+                	deleteWaypoint [_grp, _i];
+                };
+				_pos = [d_island_center, _boat, 100000] call SYG_elongate2; // get pos 100 km out of boat pos in direction from island center
+				(driver _boat) moveTo _pos;
+				_grp setSpeedMode "FULL";
+			};
+		} forEach _patrol_arr;
+		//
+		sleep 600; // Wait 10 minutes
+		{
+			_x call _remove_patrol;
+		} forEach _patrol_arr;
+	};
 
 	{
 		_arr = _x; // _x = [_boat, _grp, _wp_arr, _id, _state...]
@@ -611,3 +645,6 @@ while { true } do {
 	_printInfo = true;
 	sleep PATROL_CHECK_DELAY; // step sleep
 };
+
+hint localize "*** _sea_patrol: all boats are removed, service is finished";
+
