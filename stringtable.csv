@@ -1094,6 +1094,10 @@ STR_PATROL_TYPE_FP,floating patrol,schwimmende Patrouille,patrulla flotante,пл
 STR_PATROL_TYPE_SP,speedy patrol,schnelle Patrouille,patrulla de velocidad,скоростной патруль
 STR_PATROL_TYPE_LP,light patrol,leichte Patrouille,patrulla ligera,лёгкий	патруль
 
+STR_SEA_PATROL_START,"GRU reports that the appearance of naval patrols is quite possible.","Der GRU berichtet, dass das Auftauchen von Seepatrouillen durchaus möglich ist.","El GRU informa que la aparición de patrullas marítimas es muy posible.","ГРУ сообщает, что появление морских патрулей вполне возможно"
+
+STR_SEA_PATROL_LEAVE,"GRU reports that enemy naval patrols are heading away from Sahrani.","Der GRU meldet, dass sich die feindlichen Marinepatrouillen von Sahrani entfernen.","GRU informa que patrullas navales enemigas se alejan de Sahrani.","ГРУ сообщает, что вражеские морские патрули направляются прочь от Сахрани."
+
 STR_RESTORE_DLG_1,To restore,Wiederherstellen,Restaurar,Восстановить
 STR_RESTORE_DLG_2,Select from list,Wählen Sie aus der Liste aus,Seleccionar de la lista,Выбрать из списка
 STR_RESTORE_DLG_3,Execute,Ausführen,Ejecutar,Выполнить
