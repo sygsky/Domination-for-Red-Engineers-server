@@ -762,10 +762,10 @@ XHandleNetStartScriptClient = {
 			//
 			_say_proc = {
 				private ["_obj","_pos","_nil","_sound","_dist"];
-			    if ( ( argopt( 3, "" ) == "-" ) && ( argopt( 4, "" ) == ( name player ) ) ) exitWith {}; // This player not assigned to play this sound
+			    if ( ( argopt( 3, "" ) == "-" ) && ( argopt( 4, "" ) == ( name player ) ) ) exitWith {0}; // This player not assigned to play this sound
 				_obj = _this select 0;
 				_dist = _obj distance player; // how far from the player is sound said
-				if (_dist > 1000 ) exitWith{}; // too far from sound source
+				if (_dist > 1000 ) exitWith{0}; // too far from sound source
 				_pos = [];
 				if (typeName _obj == "ARRAY") then {_pos = _obj} // position designated
 				else {  // it is position: e.g. player is dead but body  has position or position of teleport etc
@@ -789,10 +789,12 @@ XHandleNetStartScriptClient = {
 						waitUntil {isNull _sound};
 					};
 					deleteVehicle _nil;
+					round(_dist)
 				};
 				sleep (_this select 2);
 				_obj say (_this select 1); // this is done on the client only you remember?
-				hint localize format["+++ say_sound ""%1"" at object %2 on dist %3", (_this select 1), typeOf _obj, round(_dist)];
+//				hint localize format["+++ say_sound ""%1"" at object %2 on dist %3", (_this select 1), typeOf _obj, round(_dist)];
+				round(_dist)
 			};
 
 		    private ["_arr"];
@@ -828,9 +830,12 @@ XHandleNetStartScriptClient = {
 				} forEach _arr;
 			};
 //			if (typeName _arr != "ARRAY") then { hint localize format["--- say_sound: array expected, found ""%1"" (%2)", _arr, typeName _arr] };
+			_arr = [];
 			{
-				_x spawn _say_proc;
+				_dist = _x spawn _say_proc;
+				if (_dist > 0) then {_arr set [count _arr, _dist];
 			}forEach _arr;
+			hint localize format["+++ say_sound on my death at distance of %1", _arr)];
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
