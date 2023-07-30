@@ -23,7 +23,6 @@
 // ACE_Binocular, ACE_LaserDesignator, ACE_LaserDesignatorMag, ACE_Laserbatteries
 
 if ( isNil "SYG_UTILS_COMPILED" ) then { // generate some static information
-	SYG_UTILS_COMPILED = true;
 	//hint localize "+++ SYG_utils initialization started";
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsSys.sqf";		// Some system functions moved from x_netinit*.sqf scripts
 	call compile preprocessFileLineNumbers "scripts\SYG_utilsWeapon.sqf";	// Weapons, re-arming etc
@@ -52,6 +51,7 @@ if ( isNil "SYG_UTILS_COMPILED" ) then { // generate some static information
 	call compile preprocessFileLineNumbers "scripts\bonus\SYG_utilsBonus.sqf";// BattleField bonus methods
 #endif
 	//hint localize "--- SYG_utils initialization finished";
+	SYG_UTILS_COMPILED = true;
 };
 
 /**

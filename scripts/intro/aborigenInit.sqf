@@ -1,5 +1,5 @@
 /*
-	scripts\intro\aborigenInit.sqf
+	scripts\intro\aborigenInit.sqf: called on player client
 	author: Sygsky
 	description: add all actions and events to the aborigen on player client
 	returns: nothing
@@ -19,18 +19,18 @@ _val = aborigen getVariable ABORIGEN;
 if ( !isNil "_val" ) exitWith { hint localize "*** Aborigen alive and already intialized!" };
 aborigen setVariable [ABORIGEN, true];
 
-waitUntil {!isNull player};
-
+while { (isNull player) || (isNil "SYG_UTILS_COMPILED")} do {sleep 0.2};
 hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf aborigen, [aborigen, 10] call SYG_MsgOnPosE0];
 
-// TODO: add follow sub-menus to the civilian:
-// 1. "Ask about boats". 2. "Ask about cars". 3. "Ask about weapons". 4. "Ask about soldiers". 5. "Ask about rumors"
+// 1. "Ask about boats". 2. "Ask about cars". 3. "Ask about weapons". 4. "Ask about soldiers". 5. "Ask about rumors". 6. "Go with me"
 
 {
 	aborigen addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
 } forEach ["NAME", "BOAT", "CAR", "PLANE", "WEAPON", "MEN", "RUMORS","GO"];
 
-while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // while out of Antigua
+["msg_to_user","","STR_ABORIGEN_CREATED", 0,0,true] call SYG_msgToUserParser; // "There's an Aborigen %1 in Antigua"
+
+while { !(player call SYG_pointOnAntigua) } do { sleep 60; }; // While out of Antigua
 
 while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
 

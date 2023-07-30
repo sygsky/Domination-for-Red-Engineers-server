@@ -54,7 +54,7 @@ if ( _delete ) then { // delete plane
 if ( _create  ) then { // create
 	aborigen_plane = createVehicle [ PLANE_TYPE call XfRandomArrayVal, [0,0,1000], [], 0, "NONE"];
 	sleep 0.1;
-	hint localize format["+++ camel.sqf: %1 plane created alive %2", typeOf aborigen_plane, alive aborigen_plane];
+	hint localize format["+++ camel.sqf: %1 plane created (alive %2) at ASL pos %3", typeOf aborigen_plane, alive aborigen_plane, getPosASL aborigen_plane];
 };
 
 if ( ((getPos aborigen_plane) distance PLANE_POS) > 20) then {

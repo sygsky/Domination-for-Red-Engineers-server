@@ -762,7 +762,9 @@ XHandleNetStartScriptClient = {
 			//
 			_say_proc = {
 				private ["_obj","_pos","_nil","_sound","_dist"];
-			    if ( ( argopt( 3, "" ) == "-" ) && ( argopt( 4, "" ) == ( name player ) ) ) exitWith {0}; // This player not assigned to play this sound
+				_obj = if (count _this < 4) then {""} else { _this select 3};
+				_pos = if (count _this < 5) then {""} else { _this select 4};
+				if (( _obj == "-" ) && ( _pos == ( name player ) ) ) exitWith {-1}; // Not play for this player
 				_obj = _this select 0;
 				_dist = _obj distance player; // how far from the player is sound said
 				if (_dist > 1000 ) exitWith{0}; // too far from sound source
@@ -833,9 +835,9 @@ XHandleNetStartScriptClient = {
 			_arr = [];
 			{
 				_dist = _x spawn _say_proc;
-				if (_dist > 0) then {_arr set [count _arr, _dist];
+				if (_dist > 0) then { _arr set [count _arr, _dist] };
 			}forEach _arr;
-			hint localize format["+++ say_sound on my death at distance of %1", _arr)];
+			if (count _arr > 0) then { hint localize format["+++ say_sound on my death at distance of %1", _arr] };
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)

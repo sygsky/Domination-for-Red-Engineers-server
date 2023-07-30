@@ -17,9 +17,9 @@ hint localize "+++ findAborigen.sqf: started";
 private ["_newgroup"];
 
 _nil = isNil "aborigen";
-_nul = if (!_nil) then { isNull aborigen } else {false};
-_alive = if (!_nul) then {alive aborigen} else {false};
-if ( ! (_nul || _alive) ) then { deleteVehicle aborigen };
+_null = if (!_nil) then { isNull aborigen } else {false};
+_alive = if (!_null) then {alive aborigen} else {false};
+if ( ! _null ) then { deleteVehicle aborigen };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Create new group for the next civilian
 if (_alive) exitWith {
@@ -44,19 +44,20 @@ hint localize format["+++ findAborigen.sqf: aborigen group is %1", group aborige
 sleep 3;
 ["remote_execute","[] execVM ""scripts\intro\aborigenInit.sqf"""] call XSendNetStartScriptClient; // Assign abo action on all client computers
 
-aborigen setVariable [ABORIGEN, true]; // ??? Do we need this statement?
+//aborigen setVariable [ABORIGEN, true]; // ??? Do we need this statement? No we don't!
 aborigen setBehaviour "Careless";
 aborigen setCombatMode "BLUE";
 aborigen playMove "AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"; // Sit on the ground
 aborigen disableAI "MOVE";
 
+// _this = [_killed, _killer];
 aborigen addEventHandler ["killed", {
     private ["_name"];
 	(_this select 0) call XAddDead0;
 	if (isPlayer (_this select 1)) then {
 	    _name = name (_this select 1);
 	    //-20 call SYG_addBonusScore;
-	    // "%1 killed the wonderful man, an Aborigen with a capital letter. He will be punished! For now, just -20 points."
+	    // "%1 killed the wonderful man, an Aborigen with a capital letter. %1 will be punished! For now, just -20 points."
 	    [ "change_score", _name, -20, ["msg_to_user", [ ["STR_ABORIGEN_KILLER", _name ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClient;
 	} else {
 	    // "Just now the wonderful man was killed, the Aborigen with a capital letter. But the enemy made a wrong move. And another will take his place!"

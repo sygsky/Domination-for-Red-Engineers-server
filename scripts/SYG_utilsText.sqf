@@ -404,10 +404,10 @@ SYG_msgToUserParser = {
     hint localize format["+++ SYG_msgToUserParser: %1", _this];
 #endif
 
-	if ( typeName (_msg_arr select 0) != "ARRAY") then { // allow to use single message without array envelope
-		_msg_arr = [_msg_arr]
+	if ( typeName _msg_arr == "STRING") then { // allow to use single message with direct string (no arrays at all) designated
+		_msg_arr = [_msg_arr];
 	};
-	//
+
 	{
         if (typeName _x == "STRING") then { // it is not array but single string, put it to array and process as usuall
             _x = [_x]; // emulate as array with single item

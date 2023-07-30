@@ -504,8 +504,8 @@ _tgt set [2, DEFAULT_EXCESS_HEIGHT_ABOVE_HEAD];
 _camstart set [count _camstart -1, _tgt]; // replace illusion position with end point (player pos)
 
 #ifdef __CONNECT_ON_PARA__
-if (_doJump) then {
-    // last-1 point is player pos, last and last+1 are special ones
+if (_doJump && (base_visit_mission < 0)) then {
+    // last-1 point is the player pos, last and last+1 are special ones
 	_camstart set [count _camstart, (_lines select 1) select 1]; // add Pico de Perez as next WP for the camera
     _camstart set [count _camstart, _spawn_point]; // add Antigua WP for the camera
 };
@@ -724,9 +724,9 @@ SYG_showMusicTitle = {
 
 	_control = INTRO_HUD displayCtrl 66666;
 	hint localize format["+++ SYG_showMusicTitle: d_still_in_intro = %1", d_still_in_intro];
-	if (d_still_in_intro) then { // show logo of the mission (Author, modified by etc)
-		_control ctrlSetText (localize "STR_TITLE"); // set intro text on the doen left side of the screen
-		_endtime = time + 30; // how long to show mission title (if exists)
+	if (d_still_in_intro) then { // Show logo of the mission (Author, modified by etc)
+		_control ctrlSetText (localize "STR_TITLE"); // Set intro text on the bottom left side of the screen
+		_endtime = time + 30; // How long to show mission title (if exists)
 		hint localize format["+++ SYG_showMusicTitle: start to print intro text control (%1) during %2 secs", _control, _endtime - time];
 		_r = 0.2; _a = 0.008; _g = 0.2; _b = 0.2; // new
 //		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,_b], time];
@@ -984,28 +984,40 @@ if (_doJump) then {
         _para = _this;
         _town_name = call SYG_getTargetTownName;
         _saboteurs = !isNil "d_on_base_groups";
+        if (base_visit_mission < 1) then { // Then you are at Antigua
+			_town_msg = switch ( _town_name ) do {
+				case "Corazol": {"STR_INTRO_INFO1_2"}; // "Corazol is occupied by the enemy, go around it by water, look for boats at Mercallilo."
+				case "Masbete":  {"STR_INTRO_INFO1_1"}; // "The city right in the way, Masbete, is occupied by the enemy, beware of clashing with him!"
+				// "Nearby towns are free, beware of patrols[ and saboteurs]"
+				default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
+			};
+			// "Rip the cord near the ground and glide toward the tent..
+			// "'W' - acceleration and descent, 'S' - ...
+			// "When landing, watch your rate of descent...
+			// "Smugglers, in violation of agreements with the GRU, have dropped above Antigua...
+			// "The order is to arrive at the base and...
+			// "Will I be back from this misterios island?"
+			_msg_arr = [_town_msg, "STR_INTRO_MSG1_0","STR_INTRO_MSG_1","STR_INTRO_MSG_2","STR_INTRO_MSG1_3","STR_INTRO_MSG_4","STR_INTRO_MSG_6"];
+        } else { // Then you are above the ridge near to the base
+			_town_msg = switch ( _town_name ) do {
+				case "Paraiso": {"STR_INTRO_INFO_2"}; // "Paraiso is occupied by the enemy, manoeuvre by parachute to avoid meeting them."
+				case "Somato":  {"STR_INTRO_INFO_1"}; // "The nearby Somato is occupied by the enemy, beware of encounters with him!"
+				// "Nearby towns are free, beware of patrols[ and saboteurs]"
+				default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
+			};
+			// "Rip the cord right off and glide towards the base, flying around enemy concentrations"
+			// "'W' - acceleration and descent, 'S' - ...
+			// "At top speed (pressed 'W') you will fly 1.5 times farther in distance and 1.5 times less in time."
+			// "Try to land on the yellow circle (under the flares), points: +10"
+			// "When landing, watch your rate of descent...
+			// "By arrangement with the GRU, a smuggling plane took you to the vicinity of the GRU base."
+			// "The order is to arrive at the base and...
+			// "Follow the course for the purple flares (almost white in the daytime)"
+			// "Will I be back from this misterios island?"
+			_msg_arr = [_town_msg, "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
+        };
     #ifdef __ARRIVED_ON_ANTIGUA__
-        _town_msg = switch ( _town_name ) do {
-			case "Corazol": {"STR_INTRO_INFO1_2"}; // "Corazol is occupied by the enemy, go around it by water, look for boats at Mercallilo."
-			case "Masbete":  {"STR_INTRO_INFO1_1"}; // "The city right in the way, Masbete, is occupied by the enemy, beware of clashing with him!"
-			// "Nearby towns are free, beware of patrols[ and saboteurs]"
-			default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
-		};
-    	// "Rip the cord near the ground and glide toward the tent..
-    	// "'W' - acceleration and descent, 'S' - ...
-    	// "When landing, watch your rate of descent...
-    	// "Smugglers, in violation of agreements with the GRU, have dropped above Antigua...
-    	// "The order is to arrive at the base and...
-		// "Will I be back from this misterios island?"
-        _msg_arr = [_town_msg, "STR_INTRO_MSG1_0","STR_INTRO_MSG_1","STR_INTRO_MSG_2","STR_INTRO_MSG1_3","STR_INTRO_MSG_4","STR_INTRO_MSG_6"];
     #else
-        _town_msg = switch ( _town_name ) do {
-			case "Paraiso": {"STR_INTRO_INFO_2"}; // "Paraiso is occupied by the enemy, manoeuvre by parachute to avoid meeting them."
-			case "Somato":  {"STR_INTRO_INFO_1"}; // "The nearby Somato is occupied by the enemy, beware of encounters with him!"
-			// "Nearby towns are free, beware of patrols[ and saboteurs]"
-			default         { if (_saboteurs &&  (count d_on_base_groups > 0)) then { "STR_INTRO_INFO_0_1" } else { "STR_INTRO_INFO_0" } };
-		};
-        _msg_arr = [_town_msg, "STR_INTRO_MSG_0","STR_INTRO_MSG_1","STR_INTRO_MSG_1_1","STR_INTRO_MSG_1_2","STR_INTRO_MSG_2","STR_INTRO_MSG_3","STR_INTRO_MSG_4","STR_INTRO_MSG_5","STR_INTRO_MSG_6"];
 	#endif
     //	hint localize format[ "+++ x_intro.sqf: print array %1", _msg_arr];
         _last = (count _msg_arr) - 1;
