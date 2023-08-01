@@ -81,7 +81,7 @@ _get_modes = {
 	_modes
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Checks ship to be stuck or on shore
+// Checks ship to be stuck or on shore or be catured by players
 // Call: _good = [_boat, _grp, _wp_arr, _id, _state...] call _is_ship_stuck;
 // Use SYG_isNearLand method to detect if boat near land
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -95,6 +95,10 @@ _is_ship_stuck = {
 			if (isNull _boat) then {"<null>"} else {_boat call SYG_MsgOnPosE0}
 		];
 		true
+	};
+	if ( (side _boat) == d_side_player ) then {
+		hint localize format[ "+++ boat_%1 captured by %2 at %3", _this select OFFSET_ID, side _boat, [_boat,10] call SYG_MsgOnPosE0 ];
+		// TODO: remove boat from this list, add to the common vehicle list
 	};
 	_grp = _this select OFFSET_GRP;
 	if (isNull _grp) exitWith {
