@@ -80,16 +80,25 @@ XfIndexArrayWithPredefVals = {
 
     _arrIn = [];
 
-    for "_i" from 0 to _cnt - 1 do { _arrIn set [count _arrIn, _i]}; // add all valide indexes
-
+    for "_i" from 0 to _cnt - 1 do { _arrIn set [_i, _i] }; // add all valid indexes
+	_all_idx = + _arrIn;
     _arrIn = _arrIn - _importantArr -_unimportantArr; // remove predefined indexes to create intermediate list
 
-    _importantArr  = _importantArr call XfRandomArray; // shuffe important just in case (if they can be cut also)
+    _importantArr  = _importantArr call XfRandomArray; // shuffle important indexes (not ids) just in case (if they can be cut also)
     _arrIn call XfRandomArrayInPlace; // shuffle ordinal list to cut random items
     _unimportantArr call XfRandomArrayInPlace; // shuffle unimportant to cut random iteems
 
     _arrIn = _importantArr + _arrIn + _unimportantArr ;
     _arrIn resize _outCnt;
+
+    // Print town names not used in the missions
+    hint localize "+++ Mission unused town names:";
+    _id = 1;
+    {
+		hint localize format [ "+++ %1 (%2)", (target_names select _x) select 1, _id];
+		_id = _id + 1;
+    } forEach (_all_idx - _arrIn);
+
     _arrIn call XfRandomArray
 };
 

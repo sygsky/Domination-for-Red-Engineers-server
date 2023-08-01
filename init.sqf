@@ -163,22 +163,20 @@ if (isServer) then {
 //	_vec = createVehicle ["TOW_TriPod_East", [9664,10021], [], 0, "NONE"];
 #endif
 
-#ifdef __ADDITIONAL_BASE_VEHICLES__
 
 #ifdef __DEFAULT__
+#ifdef __ADDITIONAL_BASE_VEHICLES__
     [] execVM "scripts\addRndVehsOnBase.sqf"; // all positions in file are set for Sahrani only
+#endif
 
- #ifdef __SCUD__
+#ifdef __SCUD__
     if (SYG_found_SCUD) then {
         hint localize "+++ SCUD addon gig_scud.sqf installed";
         [] execVM "scripts\addSCUD.sqf";
     } else {
-        hint localize "--- SCUD addon gig_scud.sqf not installed";
+        hint localize "*** SCUD addon gig_scud.sqf not installed";
     };
- #endif
-
 #endif
-
 #endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[] spawn {
@@ -194,8 +192,8 @@ if (isServer) then {
 	if (_number_targets_h < 50) then { // random number of towns is already defined in number_targets
         // As many as possible big towns should be included into resulting array
         // And some small ones also may be randomly preselected or be totally absent if output count is too low (< 9)
-        // created cnt, whole number, important indexes, unimportant indexes
-        _params = [_number_targets_h, count target_names, d_big_towns_inds, d_small_towns_inds]; //
+        //               created cnt,       whole number, important indexes, unimportant indexes
+        _params = [_number_targets_h, count target_names,  d_big_towns_inds,  d_small_towns_inds]; //
         _str = format["+++ init target town params: %1",_params ];
         hint localize _str;
         _arr = _params call XfIndexArrayWithPredefVals;

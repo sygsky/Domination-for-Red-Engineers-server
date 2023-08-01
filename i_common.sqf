@@ -21,8 +21,8 @@ d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma", "Eponia" ];
 // Big town indexes. Should be present in list when play with not maximum number of towns
 d_big_towns_inds = [5,6,7,8,11]; // array of indexes, not ids
 
-// Small towns indexes. Can be absent from list when playing not minimum number of towns
-d_small_towns_inds = [3,13,15,16,17,18,19,21,22,23,24,25,26,27,28]; // +++ Chantico (offset 3, not index) moved to the list of small towns as it is too easy to seize it from base (if there are tanks in it)
+// Small towns indexes. Can be abse nt from list when playing not minimum number of towns
+d_small_towns_inds = [3,13,15,16,17,18,19,21,22,23,24,25,26,27,28]; // +++ Chantico (offset 3, not id) moved to the list of small towns as it is too easy to seize it from base (if there are tanks in it)
 
 #endif
 
@@ -181,7 +181,7 @@ target_names =
 		[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
 		[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
 		[[7613,6424,0],   "Arcadia"   ,235, 4, ["detected_Arcadia"]],  //  2
-		[[8133,9084,0],   "Chantico"  ,275, 5],  //  3
+		[[8133,9084,0],   "Chantico"  ,275, 5],  //  3 -  minus stands for a small (ont-important) town
 		[[9170,8309,0],   "Somato"    ,230, 6],  //  4
 		[[10550,9375,0],  "Paraiso"   ,405, 7, ["detected_Paraiso"]],  //  5 * for big town
 		[[12399,7141,0],  "Ortego"    ,280, 8],  //  6 *
@@ -191,13 +191,13 @@ target_names =
 		[[13172,11320,0], "Mercalillo",210, 12], // 10
 		[[14233,12545,0], "Bagango"   ,350, 13], // 11 *
 		[[17271,14193,0], "Masbete"   ,180, 14], // 12
-		[[18984,13764,0], "Pita"      ,250, 15], // 13
+		[[18984,13764,0], "Pita"      ,250, 15], // 13 -
 		[[12508,15004,0], "Eponia"    ,270, 16, ["detected_Eponia","dangerous_chase"]], // 14
-		[[16596,9358,0],  "Everon"    ,200, 17], // 15
+		[[16596,9358,0],  "Everon"    ,200, 17], // 15 -
 		[[9773,14436,0],  "Pacamac"   ,150, 18], // 16 -
-		[[7722,15802,0],  "Hunapu"    ,150, 19], // 17
-		[[10593,16194,0], "Mataredo"  ,150, 20], // 18 - for small town
-		[[12387,13388,0], "Carmen"    ,200, 21, ["detected_Carmen"]], // 19
+		[[7722,15802,0],  "Hunapu"    ,150, 19], // 17 -
+		[[10593,16194,0], "Mataredo"  ,150, 20], // 18 -
+		[[12387,13388,0], "Carmen"    ,200, 21, ["detected_Carmen"]], // 19 -
 		[[2826,2891,0],   "Rahmadi"   ,180, 22, ["detected_Rahmadi"]], // 20
 		[[14444,8554,0],  "Gaula"     ,180, 23], // 21 -
 		[[6812,8108,0],   "Estrella"  ,210, 24], // 22 -
