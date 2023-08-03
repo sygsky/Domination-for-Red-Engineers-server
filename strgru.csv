@@ -58,8 +58,8 @@ STR_GRU_46_2," at a dist. of about %1 m."," in einer Entfernung von ca. %1 m.","
 STR_GRU_46_3," bearing %1"," Richtung %1"," acimut %1"," азимут %1"
 STR_GRU_46_4, num. %1 unit[s], die Num. %1 Fahrzeug[s],", num. %1 unidades.",", числ. %1 ед."
 STR_GRU_46_5," type is ""%1"""," Typ ist ""%1"""," tipo - "" %1"""," тип - ""%1"""
-STR_GRU_46_6,"You have captured this vehicle from the patrol. Use it to your advantage!","Sie haben dieses Fahrzeug von der Patrouille erbeutet. Nutzt es zu eurem Vorteil!","Has capturado este vehículo de la patrulla. Utilízalo en tu beneficio","Вы захватили эту машину у патруля, используйте её с толком!"
-STR_GRU_46_7,"You captured this vehicle in an occupied city, use it wisely!","Sie haben dieses Vehicle in einer besetzten Stadt erbeutet, nutzen Sie es weise!","Has capturado este vehicle en una ciudad ocupada, ¡úsalo sabiamente!","Вы захватили эту машину в оккупированном городе, используйте её с толком!"
+STR_GRU_46_6,"You have captured this vehicle from the patrol. Use it to your advantage!","Sie haben dieses Fahrzeug von der Patrouille erbeutet. Nutzt es zu eurem Vorteil!","Has capturado este vehículo de la patrulla. Utilízalo en tu beneficio","Вы захватили эту технику у патруля, используйте её с толком!"
+STR_GRU_46_7,"You captured this vehicle in an occupied city, use it wisely!","Sie haben dieses Vehicle in einer besetzten Stadt erbeutet, nutzen Sie es weise!","Has capturado este vehicle en una ciudad ocupada, ¡úsalo sabiamente!","Вы захватили эту технику в оккупированном городе, используйте её с толком!"
 
 STR_GRU_47,No enemy activity detected near the base.,Keine feindlichen Aktivitäten in der Nähe der Basis entdeckt.,No se detecta actividad enemiga cerca de la base,Вражеская активность не обнаружена.
 STR_GRU_47_0,Weak enemy activity detected near the base.,Schwache feindliche Aktivitäten in der Nähe des Stützpunkts entdeckt.,Actividad débil del enemigo detectada cerca de la base.,Слабая вражеская активность обнаружена неподалёку от базы.

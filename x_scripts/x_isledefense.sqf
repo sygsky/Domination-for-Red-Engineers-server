@@ -721,6 +721,7 @@ while { true } do {
 					};
 					if (_remove_as_stub) then { // --------------------------- remove this group as stub one
 						// TODO: send info to users about stubbed patrol removing
+						// TODO: try to change leader vehicle before removing, use last vehicle in patrol
 						hint localize format[
 							"+++ x_isledefense.sqf: %1, patrol #%2 (%3) removed on STUB, pos %4",
 							call SYG_missionTimeInfoStr,

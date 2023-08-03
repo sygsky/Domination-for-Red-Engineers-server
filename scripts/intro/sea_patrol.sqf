@@ -64,6 +64,23 @@ hint localize format["+++ sea_patrol.sqf: STARTED, crewman type = ""%1""", BOAT_
 
 #define DIST_TO_BE_STUCK 10
 
+// #639: allow boat, capture
+// Move boat from seviced list tp the player vehicles list
+//
+_capture_boat = {
+	_boat = _this select OFFSET_BOAT;
+	_crew = [];
+	{
+		if (isPlayer _x) then _crew set [count _crew, name _x];
+	} forEach crew _boat;
+	_boat setVariable ["CAPTURED_ITEM", "SEA_PATROL"];
+	_boat setVariable ["PATROL_ITEM", nil];
+	[_x] call XAddCheckDead;
+	hint localize format[ "+++ sea_patrol.sqf boat_%1 captured by %2 (%3) at %4", _this select OFFSET_ID, side _boat, _crew, [_boat,10] call SYG_MsgOnPosE0 ];
+	_this set [OFFSET_BOAT, objNull];
+	["msg_to_user", _boat,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
+};
+
 // Call as:
 // _modes = _unit call _get_modes;
 // Or:
@@ -80,6 +97,7 @@ _get_modes = {
 	};
 	_modes
 };
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Checks ship to be stuck or on shore or be catured by players
 // Call: _good = [_boat, _grp, _wp_arr, _id, _state...] call _is_ship_stuck;
@@ -96,10 +114,15 @@ _is_ship_stuck = {
 		];
 		true
 	};
-	if ( (side _boat) == d_side_player ) then {
-		hint localize format[ "+++ boat_%1 captured by %2 at %3", _this select OFFSET_ID, side _boat, [_boat,10] call SYG_MsgOnPosE0 ];
-		// TODO: remove boat from this list, add to the common vehicle list
+
+	// #639: Allow naval boat capturing
+	if ( (side _boat) == d_side_player ) exitWith {
+		// Move boat from serviced list to the common vehicle list
+		_this call _capture_boat;
+//		_this call _remove_patrol; // this method wil be called in main loop directly after returning from _is_ship_stuck with result true
+		true
 	};
+
 	_grp = _this select OFFSET_GRP;
 	if (isNull _grp) exitWith {
 		hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 group is null, return TRUE", _this select OFFSET_ID ];
@@ -258,7 +281,10 @@ _create_patrol = {
 		hint localize format["--- sea_patrol.sqf create_patrol: boat_%1 created but NOT rearmed.", _this select OFFSET_ID, typeOf _boat];
 	}; // try to rearm  upgraded vehicle
 
-	_boat lock true;
+//+++ #639
+//	_boat lock true;
+	_boat setVariable ["PATROL_ITEM", _this select OFFSET_ID]; // Mark vehicle to be patrol one with some id
+//--- #639
 	_this set [OFFSET_BOAT, _boat];
 	_grp = call SYG_createEnemyGroup;
 	_this set [OFFSET_GRP, _grp];
@@ -393,7 +419,7 @@ _remove_patrol = {
 _replace_patrol = {
 
 #ifdef __INFO__
-//	player groupCHat format["+++ boat_%1 replacing", _this select OFFSET_ID];
+//	player groupCHat format["+++ sea_patrol.sqf boat_%1 replacing", _this select OFFSET_ID];
 	hint localize format[ "+++ sea_patrol.sqf replace_patrol: boat_%1 %2 (alive units %4), _this = %5",
 		_this select OFFSET_ID,
 		if (alive (_this select OFFSET_BOAT)) then {"alive"} else {"dead"},
@@ -599,7 +625,7 @@ while { true } do {
 
 	// stop sea patrol system on the end of mission
 	if ( current_counter >= number_targets ) exitWith {
-		hint localize "*** _sea_patrol: remove patrols (move them out) due to the all towns are liberated !!!";
+		hint localize "*** sea_patrol: stop sea patrols (move them out) due to the all towns are liberated !!!";
 		["msg_to_user","",["STR_SEA_PATROL_LEAVE"], 0, 0, false, "no_more_waiting"] call XSendNetStartScriptClient; // "GRU reports that enemy naval patrols are heading away from Sahrani."
 		// set last WP to the big distance from island center
 		{
