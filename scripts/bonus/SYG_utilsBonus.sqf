@@ -93,7 +93,7 @@ SYG_createBonusVeh = {
     	if (_fuel == 0) then {
     		hint localize format["--- SYG_utilsBonus.sqf: vehicle %1 has fuelCapacity = 0", _type];
     		_fuel = 0.01
-    	} else { _fuel = 30 }; // 30 liters in the vehicle
+    	} else { _fuel = 0.25 }; // 30 liters in the vehicle
 	    _veh setFuel _fuel;
 	    if (_veh isKindOf "Air" ) exitWith {
 	        _veh setVectorUp [0,0,1];
