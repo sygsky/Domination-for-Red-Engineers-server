@@ -6,7 +6,7 @@
 	returns: the input array contains result
 */
 
-#define AIR_POINT_SEARCH_RANGE 2500
+#define AIR_POINT_SEARCH_RANGE 3000
 //++++++++++++++++++
 // Finds best air bonus position for the designated center point
 // call: _pos = _center_pos call _find_air_pos;
@@ -42,7 +42,8 @@ _find_air_pos  = {
 	   [[6976.53,8380.28,0],55],
 	   [[13396.3,7073.32,0],30],
 	   [[12197.1,6100.8,0],45],
-	   [[17987,19002,0],150] // Antigua
+	   [[17987,19002,0],150], // Antigua
+	   [[14101,10960,0], 287] // Obregan
 	];
 
 	_distMin = 9999999;
@@ -59,6 +60,7 @@ _find_air_pos  = {
 				} else { hint localize format[ "+++ bonus_air_pos.sqf:  point %1 has air %2 near", _x select 0, typeOf _veh ]; };
 			};
 		} forEach _points;
+		sleep 0.1;
 	};
     // select random air point
     _posArr = _posArr call XfRandomArrayVal;
