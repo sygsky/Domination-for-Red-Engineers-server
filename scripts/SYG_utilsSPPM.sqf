@@ -323,10 +323,11 @@ SYG_generateSPPMText = {
 // Updates all markers on map removing empty ones
 SYG_updateAllSPPMMarkers = {
 //	hint localize format["+++ SYG_updateAllSPPMMarkers +++"];
-	private ["_marker","_count_updated","_count_removed","_count_empty","_pos","_arr","_arr1","_new_pos","_i","_cone","_mrk_name","_dist","_cnt"];
+	private ["_marker","_count_updated","_count_removed","_count_moved","_count_empty","_pos","_arr","_arr1","_new_pos","_i","_cone","_mrk_name","_dist","_cnt"];
 	_count_updated = 0; // how many mark objects were corrected
 	_count_removed = 0; // how many mark objects were removed
-	_count_empty = 0; // how many mark objects were empty (not attached to markers)
+	_count_moved   = 0; // how many mark objects were removed
+	_count_empty   = 0; // how many mark objects were empty (not attached to markers)
 	for "_i" from 0 to count SYG_SPPMArr - 1 do  {
 		_cone =  SYG_SPPMArr select _i; // road cone linked with SPPM marker
 		_marker = _cone getVariable SPPM_MARKER_NAME;
@@ -354,7 +355,7 @@ SYG_updateAllSPPMMarkers = {
 				};
 				// move the mark object to a new pos
 				_marker setMarkerPosLocal _new_pos;
-				_count_updated = _count_updated + 1;
+				_count_moved = _count_moved + 1;
 				_new_pos set [2, -1];
 				_cone setVectorUp [0,0,1];
 				_cone setVehiclePosition  [_new_pos, [], 0, "CAN_COLLIDE"]; // update name just in case
@@ -364,13 +365,14 @@ SYG_updateAllSPPMMarkers = {
 			_marker setMarkerTypeLocal (_arr1 select 0);
 			_marker setMarkerText (_arr1 select 1);
 			if ( _mrk_name != (_arr1 select 1) ) then {
-				hint localize format["+++ SPPM ""%1"" structure changed from ""%2"" to ""%3""(%4) (near %5)",
+				hint localize format["+++ SPPM ""%1"" structure uupdated from ""%2"" to ""%3""(%4) (near %5)",
 					_marker,
 					_mrk_name,
 					_arr1 select 1,
 					markerType (_arr1 select 1),
 					_cone call SYG_nearestLocationName
 				];
+				_count_updated = _count_updated + 1;
 
 //				_arr call SYG_checkSMVehsOnSPPM; // #602:  try to remove SM vehicles from SM remover array
 
@@ -380,7 +382,13 @@ SYG_updateAllSPPMMarkers = {
 	};
 	SYG_SPPMArr call SYG_clearArrayB;
 	//player groupChat format["+++  count %1, updated %2, removed %3", count SYG_SPPMArr, _count_updated, _count_removed];
-	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, removed %3, noname %4", count SYG_SPPMArr, _count_updated, _count_removed, _count_empty];
+	hint localize format["+++ SYG_updateAllSPPMMarkers: count %1, updated %2, moved %3, removed %4, noname %5",
+		count SYG_SPPMArr,
+		_count_updated,
+		_count_moved,
+		_count_removed,
+		_count_empty
+	];
 	[_count_updated, _count_removed]
 };
 
