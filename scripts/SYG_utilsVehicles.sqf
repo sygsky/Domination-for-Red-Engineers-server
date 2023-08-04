@@ -1992,12 +1992,19 @@ SYG_getVehicleMarkerType = {
             if ( (typeOf _veh) in (STATIC_WEAPONS_TYPE_ARR select 1) ) exitWith {"ACE_Icon_AntiTank"};
             "ACE_Icon_Machinegun" // unknown type is default machinegun one
         };
-        if ( _veh isKindOf "M113") exitWith {"ACE_Icon_ArmourTrackedAPC"};
-        if (_veh isKindOf "ZSU") exitWith {"ACE_Icon_ArmourTrackedAirDefence"}; // Shilka, Tunguska
-        if (_veh isKindOf "BMP2" || _veh isKindOf "ACE_M2A1" ) exitWith {"ACE_Icon_ArmourTrackedIFV"}; // Bradley, Linebacker, BMP
+        if ( _veh isKindOf "M113") exitWith {
+        	if (_veh isKindOf "Vulcan") exitWith {"ACE_Icon_ArmourTrackedAirDefence"}; // Vulcan
+        	if (_veh isKindOf "M113Ambul") exitWIth {"ACE_Icon_ArmourTrackedMedic"};
+        	"ACE_Icon_ArmourTrackedAPC"
+        };
+        if (_veh isKindOf "BMP2" || _veh isKindOf "ACE_M2A1" ) exitWith {
+        	if (_veh isKindOf "BMP2Ambul") exitWIth {"ACE_Icon_ArmourTrackedMedic"};
+        	"ACE_Icon_ArmourTrackedIFV"
+        }; // Bradley, Linebacker, BMP
+        if (_veh isKindOf "ZSU") exitWith {"ACE_Icon_ArmourTrackedAirDefence"}; // Shilka, Tunguska, Vulcan
         if (_veh isKindOf "Car") exitWith {
             if (_veh isKindOf "Truck") exitWith {
-            	if ( typeOf _veh == "ACE_Truck5t_Reammo") exitWith {"ACE_Icon_TruckSupport"};
+            	if ( typeOf _veh == "ACE_Truck5t_Reammo") exitWith {"ACE_Icon_TruckSupport"}; // Special icon type for important reammo truck
             	"ACE_Icon_Truck"
             };
             if (_veh isKindOf "StrykerBase" || _veh isKindOf  "BRDM2") exitWith {"ACE_Icon_ArmourWheeled"}; // Striker, BRDM2
@@ -2007,7 +2014,7 @@ SYG_getVehicleMarkerType = {
         "ACE_Icon_Tank" //, "ACE_Icon_ArmourTrackedIFV", "ACE_Icon_ArmourTrackedAPC", "ACE_Icon_ArmourTrackedAirDefence"]
     };
     if (_veh isKindOf "Helicopter") exitWith {
-    	if (_veh isKindOf "ParachuteBase"|| ( _veh isKindOf "RAS_Parachute")) exitWith{ "Parachute" };
+    	if (_veh call SYG_isParachute) exitWith{ "Parachute" };
     	"ACE_Icon_Helo"
     };
     if (_veh isKindOf "Plane") exitWith { "ACE_Icon_AirFixedWing" };

@@ -144,19 +144,20 @@ if ( _sunk ) then {
             sleep 1;
             _back_counter = (_back_counter - 1) max 0;
             _depth = round((_vehicle modelToWorld [0,0,0]) select 2); // Error #372 (update depth of vehicle)
-            _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, format[localize "STR_MIS_18_3", _back_counter] ];
+            _marker setMarkerTextLocal format [localize "STR_MIS_18_1", _type_name, _depth, format[localize "STR_MIS_18_3", _back_counter] ];
 
             // check any changes in marked vehicle status
-
             if ( isNull _vehicle ) exitWith{ // vehicle is deleted from memory, mark it for 5 seconds and exit
                 #ifdef __PRINT__
                 hint localize format[ "+++ x_wreckmarker.sqf(%1): %2 isNull, exit", round(time - _time_stamp), _type_name ];
                 #endif
                 #ifdef __ACE__
-                _marker setMarkerTypeLocal  "ACE_Icon_SoldierDead"; // mark dead player as skull
+                _marker setMarkerTypeLocal  "ACE_Icon_SoldierDead"; // Mark dead player as skull
+                _marker setMarkerColorLocal  "ColorBlack";          // Black scull
+                _marker setMarkerSizeLocal [2.5,2.5];               // Big black scull
                 #endif
-                _marker setMarkerText format [localize "STR_MIS_18_1", _type_name, _depth, localize "STR_MIS_18_2"] ;
-                sleep RIP_MARKER_TIME; // last farewell to sunk vehicle
+                _marker setMarkerTextLocal format [localize "STR_MIS_18_1", _type_name, _depth, localize "STR_MIS_18_2"] ;
+                sleep RIP_MARKER_TIME; // Last farewell to sunk vehicle
                 _sunk = false;
             }; // the vehicle removed
             // if vehicle moved (by user may be)

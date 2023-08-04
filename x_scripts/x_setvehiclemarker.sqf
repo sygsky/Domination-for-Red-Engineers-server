@@ -56,7 +56,8 @@ X_XMarkerPlayers = {
                 } else {
                     // this marker is dead
 #ifdef __ACE__
-                    _as setMarkerTypeLocal  "ACE_Icon_SoldierDead"; // mark dead player as skull
+		            _as setMarkerSizeLocal [0.4,0.4];
+                    _as setMarkerTypeLocal  "ACE_Logo"; // mark dead player as skull
 #else
                     _as setMarkerTypeLocal "DestroyedVehicle";  // mark to be abstractly dead
 #endif
@@ -85,6 +86,7 @@ X_XMarkerPlayers = {
         _as = d_player_entities select _i; // name
         _ap = call (SYG_players_arr select _i); // object
         if ( isPlayer _ap && alive _ap) then {
+            _as setMarkerSizeLocal [1,1];
             _as setMarkerPosLocal position _ap;
 
             // 0 = player markers turned off
@@ -109,8 +111,9 @@ X_XMarkerPlayers = {
 //#ifdef __ACE__
 //            _as setMarkerColorLocal "ACE_ColorTransparent"; // that's all for ACE
 //#else
-            _as setMarkerTypeLocal d_p_marker;
+            _as setMarkerSizeLocal [1,1];
             _as setMarkerPosLocal [0,0];
+            _as setMarkerTypeLocal d_p_marker;
             _as setMarkerTextLocal "";
 //#endif
         };
