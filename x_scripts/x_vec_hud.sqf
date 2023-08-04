@@ -44,13 +44,13 @@ _welcome_message = {
 };
 
 while {true} do {
-	waitUntil {sleep (0.2 + random 0.2);vehicle player != player};
+	waitUntil {sleep (0.5 + random 0.2);vehicle player != player};
 	_vec = vehicle player;
 	#ifndef __ACE__
 	if (_vec isKindOf "LandVehicle" && !(_vec isKindOf "StaticWeapon")) then {
 	#endif
 	#ifdef __ACE__
-	if (_vec isKindOf "LandVehicle" && !(_vec isKindOf "StaticWeapon") && !(_vec isKindOf "SLX_Dragger")) then {
+	if ( (_vec isKindOf "Ship") || ( (_vec isKindOf "LandVehicle") && ( !((_vec isKindOf "StaticWeapon") || (_vec isKindOf "SLX_Dragger")) )) ) then {
 	#endif
 		if (d_show_vehicle_welcome) then {
 #ifndef __TT__
@@ -62,7 +62,7 @@ while {true} do {
 			};
 		};
 		#ifdef __ACE__
-		if (!(_vec isKindOf "Tank") && !(_vec isKindOf "StrykerBase")) then {
+		if ( !( (_vec isKindOf "Tank") || (_vec isKindOf "StrykerBase") ) ) then {
 		#endif
 		while {vehicle player != player} do {
 			if (player == driver _vec || player == gunner _vec || player == commander _vec) then {
