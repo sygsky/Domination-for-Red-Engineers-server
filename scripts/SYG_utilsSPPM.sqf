@@ -364,7 +364,13 @@ SYG_updateAllSPPMMarkers = {
 			_marker setMarkerTypeLocal (_arr1 select 0);
 			_marker setMarkerText (_arr1 select 1);
 			if ( _mrk_name != (_arr1 select 1) ) then {
-				hint localize format["+++ SPPM ""%1"" structure changed from ""%2"" to ""%3"" (near %4)",_marker,  _mrk_name, (_arr1 select 1), _cone call SYG_nearestLocationName];
+				hint localize format["+++ SPPM ""%1"" structure changed from ""%2"" to ""%3""(%4) (near %5)",
+					_marker,
+					_mrk_name,
+					_arr1 select 1,
+					markerType (_arr1 select 1),
+					_cone call SYG_nearestLocationName
+				];
 
 //				_arr call SYG_checkSMVehsOnSPPM; // #602:  try to remove SM vehicles from SM remover array
 
