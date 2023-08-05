@@ -361,7 +361,7 @@ SYG_elongate2 = {
 	_pnt2 set [2, 0];
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
-	_dx = x(_pnt2) - y(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
+	_dx = x(_pnt2) - x(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
 	_dy = y(_pnt2) - y(_pnt1); //(_pnt2 select 1) - (_pnt1 select 1);
 
 	[x(_pnt2) + _elongate *_dx, y(_pnt2) + _elongate * _dy, 0] // new point coordinates
@@ -422,7 +422,7 @@ SYG_elongate1 = {
 	_pnt2 set [2, 0];
 	_elongate = 1.0 + (_this select 2)/(_pnt1 distance _pnt2);
 
-	_dx = x(_pnt2) - y(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
+	_dx = x(_pnt2) - x(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
 	_dy = y(_pnt2) - y(_pnt1); //(_pnt2 select 1) - (_pnt1 select 1);
 
 	[x(_pnt1) + _elongate *_dx, y(_pnt1) + _elongate * _dy, 0] // new point coordinates
