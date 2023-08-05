@@ -25,7 +25,7 @@ if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenA
 if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"
 // create point in the water near Antigus
 _create_water_point_near_Antigua = {
-	private ["_lines","_sum","_cnt","_rnd","_len","_pos","_i","_p1","_p2","_x"];
+	private ["_lines","_sum","_last","_rnd","_len","_pos","_i","_p1","_p2","_x"];
 	_lines = [
 		[[17092,18177],[17255,18131],[17215,18047],[17093,17698]],	// line1
 		[[17154,17661],[17355,17819],[17447,17827]],				// line2
@@ -34,8 +34,8 @@ _create_water_point_near_Antigua = {
 
 	_sum = 0; // common length of all lines
 	{
-		_cnt = count _x; // point count
-		for "_i" from 1 to (_cnt - 1) do {
+		_last = (count _x) - 1; // point count
+		for "_i" from 1 to _last do {
 			_sum = _sum + ( (_x select (_i-1)) distance (_x select _i) );
 		};
 	} forEach _lines;
@@ -43,9 +43,8 @@ _create_water_point_near_Antigua = {
 	_len = 0;
 	_pos = [];
 	{
-
-		_cnt = count _x;
-		for "_i" from 1 to (_cnt - 1) do {
+		_last = (count _x) - 1;
+		for "_i" from 1 to _last do {
 			_len = _len + ( (_x select (_i-1)) distance (_x select _i) );
 			if (_len >= _rnd) exitWith { // line segment with point found
 				_size = _rnd - _len;
