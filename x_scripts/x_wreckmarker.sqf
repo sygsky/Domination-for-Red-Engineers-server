@@ -135,7 +135,7 @@ if ( _sunk ) then {
     {
         // change marker
         if ( typeName _x == "ARRAY") then {
-            if ( count _x > 1) then {_marker setMarkerColor (_x select 1)};
+            if ( count _x > 1) then {_marker setMarkerColorLocal (_x select 1)};
             _x = _x select 0; // prepare sleep period value
         };
 
