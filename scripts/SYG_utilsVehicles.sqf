@@ -1558,7 +1558,7 @@ SYG_rearmVehicle = {
     private ["_veh", "_x"];
     //player groupChat format["SYG_rearmVehicle: %1", _this];
     _veh = arg(0);
-	if ((typeOf _veh) == "RHIB2Turret") then { // Special case as "M49" can't be replaced with "Vulcan canon"
+	if ((typeOf _veh) == "RHIB2Turret") then { // Special case as "M49" can't be replaced with "Vulcan/A-10 canon"
 		_veh removeMagazines "100Rnd_127x99_M2"; // Remove only 100Rnd_127x99_M2
 		_veh removeWeapon "M2";	// remove ahead M2
 	} else {
