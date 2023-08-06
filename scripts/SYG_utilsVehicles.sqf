@@ -2070,7 +2070,7 @@ SYG_getVehicleTypeMarkerName = {
 	};
 };
 
-// Finds if at all vehicles in array (or single object if designated) are "RECOVERABLE".
+// Finds if all vehicles in array (or single object if designated) are "RECOVERABLE".
 // Call as follows:
 // _isRecoverable = _veh call SYG_vehIsRecoverable; // single item
 // _isRecoverable = [_veh1,... _vehN ] call SYG_vehIsRecoverable; // array of items

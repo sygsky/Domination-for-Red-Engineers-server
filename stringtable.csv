@@ -114,9 +114,9 @@ STR_SYS_33,%1 MHQ %2 is available,%1 Respawn %2 verfügbar,%1 KSHM %2 está disp
 STR_SYS_34,Teleport,Teleport,Teletransporte,Телепорт
 STR_SYS_35,Lift vehicle,Fahrzeug anheben,Levantar la técnica,Поднять технику
 STR_SYS_36,Drop vehicle,Drop-fahrzeug,Restablecer la técnica,Сбросить технику
-STR_SYS_37,"Vehicle (%1, %2) is lifted...","Fahrzeug (%1, %2) mit Hubschrauber gehoben ...","Técnica (%1, %2) levantada por helicóptero...","Техника (%1, %2) поднята вертолётом..."
-STR_SYS_37_1,recoverable,wiederherstellbar,recuperable,восстановима
-STR_SYS_37_0,not recoverable,nicht erstattungsfähig,no recuperable,не восстановима
+STR_SYS_37,"Vehicle (%1%2) is lifted...","Fahrzeug (%1%2) mit Hubschrauber gehoben ...","Técnica (%1%2) levantada por helicóptero...","Техника (%1%2) поднята вертолётом..."
+STR_SYS_37_1,", probably recoverable",", wahrscheinlich verwertbar",", probablemente recuperable",", условно восстановима"
+STR_SYS_37_0,", not recoverable",", nicht erstattungsfähig",", no recuperable",", не восстановима"
 STR_SYS_38,Overwhelming vehicle (%1)...,Sehr schwere Maschine (%1)...,La técnica es inamovible (%1)...,Техника неподъёмна (%1)...
 STR_SYS_38_0,"The Mi-8 is not capable of lifting a truck with a cannon inside","Der Mi-8 ist nicht in der Lage, einen Lastwagen mit einer Kanone darin zu heben.","El Mi-8 no es capaz de levantar un camión con un cañón dentro","Ми-8 просто не способен поднять грузовик с пушкой!"
 STR_SYS_38_1,The vehicle (%1) not in restore list...,Wir stellen solche Fahrzeuge nicht wieder her (%1)...,"Esta técnica (%1) no tiene instrucciones de reparación, consulte el manual de operación...","Такую технику (%1) нет указаний восстанавливать, обратитесь к руководству операцией..."
