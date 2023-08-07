@@ -63,8 +63,6 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 		(d_ranked_a select 11) call SYG_addBonusScore;
 		playSound "good_news";
 	};
-	d_sm_p_pos = nil;
-    publicVariable "d_sm_p_pos";
 #endif
 	_bonus_string = "<template>";
 #ifndef __TT__
@@ -135,6 +133,10 @@ if (side_mission_winner != 0 && bonus_number != -1) then {
 		hint localize ("*** SideMission: " + (localize "STR_SYS_129") +  " #" + str(current_mission_index));
 	};
 };
+//+++ Sygsky: fix a bug that did not clear variable in the next two lines if a mission failed.
+// Var will be set again in the next mission.
+d_sm_p_pos = nil;
+publicVariable "d_sm_p_pos";
 
 sleep 1;
 side_mission_winner = 0;
