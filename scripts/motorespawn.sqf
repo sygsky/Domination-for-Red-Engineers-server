@@ -221,7 +221,7 @@ while {true} do {
 					_moto setFuel 1.0;
 				};
 				sleep 1.11;
-
+				_moto setVelocity [0,0,0]; // try to prevent a vehicle stange movements on returning to the abse postions
 				_moto setDir (_x select MOTO_ORIG_DIR);
 				_moto setPos (_posMain);
 				if ( isEngineOn _moto) then { _moto engineOn false; };
