@@ -1373,8 +1373,8 @@ SYG_boatRearmTable =
     ["RHIB2Turret"], // boat names
     [ // boat params
         [
-            ["ACE_VulcanMgun20","MK49"], // weapon(s)
-            ["ACE_20mm_M168","ACE_20mm_M168", "48Rnd_40mm_MK19", "48Rnd_40mm_MK19", "48Rnd_40mm_MK19", "48Rnd_40mm_MK19"] // magazine(s)
+            ["ACE_VulcanMgun20"], // weapon(s)
+            ["ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
         ]
     ]
 ];
@@ -1460,20 +1460,37 @@ SYG_carRearmTable =
 
 SYG_boatRearmTable =
 [
-    ["RHIB2Turret","RHIB"], // boat names
+    ["-RHIB2Turret","-RHIB"], // boat names are set invalid to prevent rearming of boats
     [ // boat params
+    	// Most lethal weapon
         [
-//            ["ACE_VulcanMgun20"], // weapon(s)
-//            ["ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168"] // magazines (1 weapon)
 			["ACE_GAU8"],
 			["1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10"]
         ],
-        [
-//            ["ACE_VulcanMgun20"], // weapon(s)
-//            ["ACE_20mm_M168","ACE_20mm_M168"] // magazines
+		[
 			["ACE_GAU8"],
 			["1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10","1350Rnd_30mmAP_A10"]
-        ]
+       	],
+
+    	// Medium lethality weapon
+        [
+            ["ACE_VulcanMgun20"], // weapon(s)
+            ["ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+        ],
+		[
+            ["ACE_VulcanMgun20"], // weapon(s)
+            ["ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168","ACE_20mm_M168"] // magazine(s)
+       	],
+
+    	// Lowest lethality weapon
+        [
+            ["M2"], // weapon(s)
+            ["100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2"] // magazine(s)
+        ],
+		[
+            ["M2"], // weapon(s)
+            ["100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","ACE_20mm_M168"] // magazine(s)
+       	]
     ]
 ];
 
@@ -1549,8 +1566,9 @@ SYG_getVehicleTable = {
 
 //
 // call:
-//      _vecTbl = _veh call SYG_getVehicleTable;
+//      _vecTbl = _veh call SYG_getVehicleTable; // [[_weapon1,...],[_mag1,...] ]
 //      _res = ([_veh] + _vecTbl) call SYG_rearmVehicle;
+// 		_res = [_veh, [_weapon1,...],[_mag1,...] ] + _vecTbl) call SYG_rearmVehicle;
 //
 SYG_rearmVehicle = {
     if ( typeName _this != "ARRAY") exitWith {false};
@@ -1558,7 +1576,7 @@ SYG_rearmVehicle = {
     private ["_veh", "_x"];
     //player groupChat format["SYG_rearmVehicle: %1", _this];
     _veh = arg(0);
-	if ((typeOf _veh) == "RHIB2Turret") then { // Special case as "M49" can't be replaced with "Vulcan/A-10 canon"
+	if ((typeOf _veh) == "RHIB2Turret") then { // Special case as "M49" can't be replaced at all (Arma-1 API problem)
 		_veh removeMagazines "100Rnd_127x99_M2"; // Remove only 100Rnd_127x99_M2
 		_veh removeWeapon "M2";	// remove ahead M2
 	} else {
@@ -2342,9 +2360,10 @@ SYG_typesVehCanLift = {
 	[ vehicle, launcher type, magazine ammo type, realod weapon] call SYG_reloadAmmo;
 	e.g.
 	[_x,"ACE_M6_Stinger_Launcher", "ACE_M6_FIM92"<, true>] call SYG_reloadAmmo; // Ammo itself for this example will be "ACE_FIM92round" and is not used
+	Note: can reload only statdart weapon set, existed on config/ No custom weapon sets are supported/
 */
 SYG_reloadAmmo = {
-	private ["_veh", "_wpnType", "_magType", "_ammoCnt", "_magCntCfg", "_magCntVeh", "_addMagCnt", "_ammoCntCfg"];
+	private ["_veh", "_wpnType", "_magType", "_ammoCnt", "_magCntCfg", "_magCntVeh", "_addMagCnt", "_ammoCntCfg","_str"];
 	_veh = _this select 0;
 	if (typeName _veh != "OBJECT") exitWith {-1}; // not vehicle
 	_wpnType = _this select 1; // weapon type
