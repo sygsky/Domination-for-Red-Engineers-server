@@ -300,7 +300,8 @@ _create_patrol = {
 	_boat setPos (_wpa select 0); // 1st WP position
 	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY, units _grp]];
 
-	_grp setBehaviour "CARELESS"; // Start as careless, change on first WP to "SAFE"
+//	_grp setBehaviour "YELLOW"; // Start as careless, change on first WP to "SAFE"
+	_grp setBehaviour "SAFE"; // Start as careless, change on first WP to "SAFE"
 	_grp setCombatMode "GREEN";
 //	_grp setSpeedMode "FULL"; // "LIMITED", "NORMAL"
 	_grp setSpeedMode "LIMITED"; //"FULL",  "NORMAL"
@@ -310,7 +311,8 @@ _create_patrol = {
 		_wp = _grp addWaypoint [_wpa select _i, 50];
 		_wp setWaypointType "MOVE";
 		if (_i == 1) then {
-			_wp setWaypointBehaviour "CARELESS";
+//			_wp setWaypointBehaviour "CARELESS";
+			_wp setWaypointBehaviour "SAFE";
 			_wp setWaypointCombatMode "GREEN";
 			_wp setWaypointSpeed "LIMITED";
 		} else {
