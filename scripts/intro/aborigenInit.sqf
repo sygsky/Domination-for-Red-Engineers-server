@@ -29,8 +29,10 @@ hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf a
 } forEach ["NAME", "BOAT", "CAR", "PLANE", "WEAPON", "MEN", "INFO", "RUMORS", "GO"];
 
 //  Add actions for some objects around the tent
-_arr = nearestObjects [spawn_tent, ["Land_NavigLight","Land_hlaska"], 100];
-{} forEach _arr;
+_arr = nearestObjects [spawn_tent, ["Land_NavigLight","Land_hlaska"], 50];
+{
+	_x addAction [localize "STR_CHECK_ITEM", "scripts\intro\SYG_aborigenAction.sqf", "INFO"];
+} forEach _arr;
 
 ["msg_to_user","","STR_ABORIGEN_CREATED", 0,0,true] call SYG_msgToUserParser; // "There's an Aborigen %1 in Antigua"
 
