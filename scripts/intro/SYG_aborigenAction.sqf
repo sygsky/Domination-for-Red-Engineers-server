@@ -482,6 +482,10 @@ switch ( _arg ) do {
 			};
 	};
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
+	case "FAQ": { // Whte to get more info?
+		["msg_to_user","",["STR_ABORIGEN_INFO_1"]] call SYG_msgToUserParser; // "Look in the Arma diary by clicking on the words 'island of Antigua'."
+	};
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "RUMORS": { // ask about rumors
 		[] execVM "scripts\rumours.sqf";
 	};
