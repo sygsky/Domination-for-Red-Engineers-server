@@ -26,12 +26,13 @@ hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf a
 
 {
 	aborigen addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
-} forEach ["NAME", "BOAT", "CAR", "PLANE", "WEAPON", "MEN", "INFO", "RUMORS", "GO"];
+} forEach ["NAME", "BOAT", "CAR", "PLANE", "WEAPON", "MEN", "FAQ", "RUMORS", "GO"];
 
 //  Add actions for some objects around the tent
-_arr = nearestObjects [spawn_tent, ["Land_NavigLight","Land_hlaska"], 50];
+_arr = nearestObjects [spawn_tent, ["CampEast","Land_hlaska","BarrelBase","ReammoBox"], 50];
+hint localize format["+++ aborigenInit.sqf: found %1 items to add action 'Inspect': %2", count _arr, _arr call SYG_objArrToTypeStr];
 {
-	_x addAction [localize "STR_CHECK_ITEM", "scripts\intro\SYG_aborigenAction.sqf", "INFO"];
+	_x addAction [localize "STR_CHECK_ITEM", "scripts\intro\SYG_aborigenAction.sqf", "FAQ"];
 } forEach _arr;
 
 ["msg_to_user","","STR_ABORIGEN_CREATED", 0,0,true] call SYG_msgToUserParser; // "There's an Aborigen %1 in Antigua"
@@ -41,11 +42,10 @@ while { !(player call SYG_pointOnAntigua) } do { sleep 60; }; // While out of An
 while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
 
 if (alive aborigen) then { // show info
-	// "STR_ABORIGEN_INFO_1" Syg_parse
 	["msg_to_user", "",
 		[
-			[ "STR_ABORIGEN_INFO", round (player distance aborigen),  ([ player, aborigen ] call XfDirToObj) call SYG_getDirNameEng ],
-			[ "STR_ABORIGEN_INFO_1" ]
+			[ "STR_ABORIGEN_INFO", round (player distance aborigen),  ([ player, aborigen ] call XfDirToObj) call SYG_getDirNameEng ],  // "The islander is %1 m away in the %2 direction."
+			[ "STR_ABORIGEN_INFO_1" ] // "Find him, question him a few times until you understand everything."
 		],	0, 6, false
 	] spawn SYG_msgToUserParser;
 	aborigen say ([ "hisp1","hisp2","hisp3","hisp4","adios","porque","hola","pamal"] call XfRandomArrayVal);

@@ -1460,7 +1460,7 @@ SYG_carRearmTable =
 
 SYG_boatRearmTable =
 [
-    ["-RHIB2Turret","-RHIB"], // boat names are set invalid to prevent rearming of boats
+    ["RHIB2Turret","RHIB"], // boat names are set invalid to prevent rearming of boats
     [ // boat params
     	// Most lethal weapon
         [

@@ -46,7 +46,13 @@ _send_was_at_sm = false;
 _locked = false;
 _truck = _veh isKindOf "Truck";
 
-hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2, truck = %3 ", sideradio_status, typeOf _veh, _truck];
+hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2, truck = %3, mast is %4loaded, cmd ""%5""",
+	sideradio_status,
+	typeOf _veh,
+	_truck,
+	if (getPosASL d_radar < 0) then {"un"} else {""},
+	_cmd
+	];
 
 if (_truck) then { // check truck for detection
 	if (locked _veh) then {

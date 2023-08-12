@@ -6,7 +6,7 @@
 */
 
 if (!isServer) exitWith {hint localize "--- createTruck.sqf called not from server! Exit!"};
-hint localize format["+++ createTruck.sqf started, _this = %1 +++", _this];
+hint localize format["+++ createTruck.sqf started, _this = ""%1""", _this];
 #include "sideradio_vars.sqf"
 
 _pos = [];

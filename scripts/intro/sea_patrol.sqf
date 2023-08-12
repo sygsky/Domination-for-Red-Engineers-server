@@ -26,6 +26,13 @@
 #define OFFSET_STAT_LAST_TIME 1
 #define OFFSET_STAT_UNITS 2
 
+// Time to create a new vehicle to replace the captured one in seconds (600 == 10 mins)
+#define TIME_TO_REPLACE_CAPTURED_VEH 600
+
+// Time to create a new vehicle to replace the killed one in seconds (600 == 10 mins)
+#define TIME_TO_REPLACE_KIA_VEH 600
+
+
 #define MAX_DIST_TO_ENEMY 2500
 
 //#define __DEBUG__	// Debug settings with shortened delays etc
@@ -65,7 +72,7 @@ hint localize format["+++ sea_patrol.sqf: STARTED, crewman type = ""%1""", BOAT_
 #define DIST_TO_BE_STUCK 10
 
 // #639: allow boat, capture
-// Move boat from seviced list tp the player vehicles list
+// Move boat from script serviced list to the common server vehicles list
 //
 _capture_boat = {
 	_boat = _this select OFFSET_BOAT;
@@ -75,10 +82,11 @@ _capture_boat = {
 	} forEach crew _boat;
 	_boat setVariable ["CAPTURED_ITEM", "SEA_PATROL"];
 	_boat setVariable ["PATROL_ITEM", nil];
-	[_x] call XAddCheckDead;
+	[_boat] call XAddCheckDead;
 	hint localize format[ "+++ sea_patrol.sqf boat_%1 captured by %2 (%3) at %4", _this select OFFSET_ID, side _boat, _crew, [_boat,10] call SYG_MsgOnPosE0 ];
-	_this set [OFFSET_BOAT, objNull];
+	_this set [OFFSET_BOAT, objNull]; // mark boat be absent
 	["msg_to_user", _boat,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
+	 (_this select OFFSET_STAT) set [OFFSET_STAT_LAST_TIME, time + TIME_TO_REPLACE_CAPTURED_VEH];
 };
 
 // Call as:
@@ -108,10 +116,17 @@ _is_ship_stuck = {
 	// Check to be stucked
 	_boat = _this select OFFSET_BOAT;
 	if (!alive _boat) exitWith {
-	 	hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 is dead (%2), return TRUE",
+	 	hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 is dead (%2), damage %3, return TRUE",
 			_this select OFFSET_ID,
-			if (isNull _boat) then {"<null>"} else {_boat call SYG_MsgOnPosE0}
+			if (isNull _boat) then {"<null>"} else {_boat call SYG_MsgOnPosE0},
+			damage _boat
 		];
+
+		if ( (!isNull _boat) ) then {
+			if ( (damage _boat) >= 1) then { // Mark killed in action vehicle to replace
+				(_this select OFFSET_STAT) set [OFFSET_STAT_LAST_TIME, time + TIME_TO_REPLACE_KIA_VEH];
+			};
+		};
 		true
 	};
 
@@ -119,7 +134,7 @@ _is_ship_stuck = {
 	if ( (side _boat) == d_side_player ) exitWith {
 		// Move boat from serviced list to the common vehicle list
 		_this call _capture_boat;
-//		_this call _remove_patrol; // this method wil be called in main loop directly after returning from _is_ship_stuck with result true
+//		_this call _remove_patrol; // this method will be called in main loop directly after returning from _is_ship_stuck with result true
 		true
 	};
 
@@ -495,7 +510,7 @@ _resupply_boat = {
 _reset_roles = {
 	_stat = _this select OFFSET_STAT;
 	_units = _stat select OFFSET_STAT_UNITS;
-	if ( ( { alive _x } count _units ) == 0 ) exitWith {  // Nobody alive crew, kill boat too
+	if ( ( { alive _x } count _units ) == 0 ) exitWith {  // Nobody alive in crew, boat can't be supported more
 #ifdef __DEBUG__
     	hint localize "+++ sea_patrol.sqf reset_roles: now alive crew return FALSE";
 #endif
@@ -536,11 +551,11 @@ _reset_roles = {
 		_i = _i + 1;
 	} forEach _units;
 
-	if ( (alive (driver _boat)) && ( (count _gunner_ids) == _gunner_cnt) ) exitWith { true }; // Driver and 1 (RHIB) or 2 (RHIB2Turret) are on the place
+	if ( (alive (driver _boat)) && ( (count _gunner_ids) == _gunner_cnt) ) exitWith { true }; // Driver and 1 (RHIB) or 2 (RHIB2Turret) gunner[s] are on the place
 
 	// check too small crew, less then 2 (driver + gunner)
 	_gun_empty_ids = _gun_empty_ids - _gunner_ids; // define not filled turrets from list [0<,1>]
-#ifdef __DEBUG__
+#ifdef __INFO__
 	_beh = _grp call _get_modes;
 	hint localize format["+++ sea_patrol.sqf reset_roles: common count (%1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
 		_i, count _outers, _beh, _gunner_ids, _gun_empty_ids ];
@@ -561,7 +576,7 @@ _reset_roles = {
 		} else {
 			_unit = _grp createUnit [ BOAT_UNIT, [0,0,0], [], 0, "NONE"];
 			[_unit] joinSilent _grp;
-#ifdef __DEBUG__
+#ifdef __INFO__
 			hint localize "+++ sea_patrol.sqf reset_roles: new unit assigned as driver...";
 #endif
 		};
@@ -637,10 +652,11 @@ while { true } do {
 				_grp  = _x select OFFSET_GRP;
 				_units = (_x select OFFSET_STAT) select OFFSET_STAT_UNITS;
 				// If patrol is not alive, skip it
-				if ( (isNull _grp) || ( ({alive _x} count _units) == 0 ) || !(alive (driver _boat) ) ) exitWith {
+				if ( (isNull _grp) || ( ({alive _x} count _units) == 0 ) || (!alive (driver _boat))) exitWith {
 					_x call _remove_patrol;
 				};
-                for "_i" from ( (count (waypoints _grp)) - 1) to 0 step -1 do {
+				_last = (count (waypoints _grp)) - 1;
+                for "_i" from _last to 0 step -1 do {
                 	deleteWaypoint [_grp, _i];
                 };
 				_pos = [d_island_center, _boat, 100000] call SYG_elongate2; // get pos 100 km out of boat pos in direction from island center
@@ -659,13 +675,16 @@ while { true } do {
 		_arr = _x; // _x = [_boat, _grp, _wp_arr, _id, _state...]
 		_boat = _arr select OFFSET_BOAT;
 		if (isNull _boat ) then {
-			_arr call _create_patrol
+			_time = (_x select OFFSET_STAT) select OFFSET_STAT_LAST_TIME;
+			if (time >= _time) then {
+				_arr call _create_patrol // create now as time is out
+			};
 		} else {
 			// Check last position
 			// Repair, exchange seats from cargo to driver and at last first gunner if possible
 			// Driver and one of gunners are 2 obligatory seats
 			if ( _arr call _is_ship_stuck) then {
-				_arr call _remove_patrol; // remove this step, to re-create it on the next step
+				_arr call _remove_patrol; // remove veh this step, to re-create it on the next step
 			} else {
 				// Check if crew is still operable and on duty
 				if (_arr call _reset_roles) then {

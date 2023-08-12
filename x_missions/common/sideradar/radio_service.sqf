@@ -54,7 +54,7 @@ _create_items = {
         if (!alive d_radar_truck) then {
             // create new truck
             call _create_truck;
-            sideradio_status = 0;
+            sideradio_status = 0;  // Do we need it?
             _msg set [count _msg, ["STR_RADAR_INIT2"] ]; // "Look for an blue truck to transport relay mast in one of the towns near the base"
         };
 	};

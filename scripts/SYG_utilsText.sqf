@@ -121,19 +121,19 @@ SYG_objArrToTypeStr = {
 
     private ["_arr","_print_cnt","_str","_i"];
     _arr = _this select 0;
-    _print_cnt = _this select 1;
-    _print_cnt = (count _arr) min _print_cnt; // print vehicles count
+    _print_cnt = (count _arr) min (_this select 1); // print vehicles count
+    _str = "";
     if (  _print_cnt > 0 ) then { // print only if there is some data to print
-        _str = "";
         for "_i" from 0 to _print_cnt - 1 do {
             if (_str == "") then  {_str = format["%1", typeOf (_check_vec_list select _i)];}
             else {_str = format["%1,%2",_str, typeOf (_check_vec_list select _i)]};
         };
         if ( ( count _check_vec_list ) > _print_cnt ) then {
-            _str = format["%1,...%2",count _arr];
+            _str = format["%1,...(%2)", _str, count _arr];
+            _str = format["%1,...(%2)", _str, count _arr];
         };
-        _str
     };
+    _str
 };
 
 

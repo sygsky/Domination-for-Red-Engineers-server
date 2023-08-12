@@ -1751,8 +1751,8 @@ STR_ABORIGEN_MEN_INFO,"There are some people! Our %1, the Americans %2, Soviets 
 STR_ABORIGEN_MEN_DEAD," А! Yes! There are also dead men, numbering about %1."," А! Ja! Es gibt auch tote Männer, etwa %1."," ¡А! ¡Sí! También hay hombres muertos, que suman alrededor de %1."," Да! Ещё мертвяков примерно %1"
 STR_ABORIGEN_MEN_NONE,"People? Where do people come from? There aren't any! Just you and me, that's all!","Menschen? Woher kommen die Menschen? Es gibt keine! Nur du und ich, das ist alles!","¿Gente? ¿De dónde viene la gente? No hay ninguna. Sólo tú y yo, ¡eso es todo!",Люди? Ну откуда тут люди? Нету! Вот ты да я - и всё!
 
-STR_ABORIGEN_INFO,FAQ,FAQ,FAQ,Главные вопросы!
-STR_ABORIGEN_INFO_1,"Look in the Arma-1 diary by clicking on the words 'island of Antigua'.","Schauen Sie im Tagebuch nach, indem Sie auf die Worte 'Insel Antigua' klicken.","Busca en la agenda haciendo clic en las palabras 'isla de Antigua'.","Посмотри в дневнике Arma-1, кликнув на слова 'остров Антигуа'."
+STR_ABORIGEN_FAQ,FAQ!,FAQ!,FAQ!,Главные вопросы!
+STR_ABORIGEN_FAQ_1,"Details are in the mission diary, click on the words 'Antigua Island'.","Einzelheiten finden Sie im Missionstagebuch, klicken Sie auf die Worte 'Antigua Island'.","Los detalles están en el diario de la misión, haz clic en las palabras 'Isla Antigua'","Подробная информация в дневнике миссии, кликнуть на слова 'остров Антигуа'."
 
 STR_ABORIGEN_RUMORS,Rumors?,Gerüchte?,¿Rumores?,"Что слышно?"
 
