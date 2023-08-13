@@ -31,14 +31,27 @@ if (typeName _this == "SCALAR") then { // sleep needed period
 };
 _type = format ["Civilian%1", (floor (random 19)) + 2];
 //		hint localize format["+++ findAborigen.sqf: civ not found, create unit with type %1", _type];
-_pos = [getPos spawn_tent, 60, 60, 0] call XfGetRanPointSquareOld; // No flat position requested, use smallest rect
+_house = nearestObject [spawn_tent, "Land_hlaska"];
+_pos = [];
+if (alive _house) then {
+	if ( (random 10) < 1) then { // 1 of 10 aborigen is created on the tower top
+		_pos = _house call SYG_getRndBuildingPos;
+	};
+};
+if (count _pos == 0) then {
+	_pos = [getPos spawn_tent, 60, 60, 0] call XfGetRanPointSquareOld; // No flat position requested, use smallest rect
+};
 //		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];
 _newgroup = call SYG_createCivGroup;
-hint localize format["+++ findAborigen.sqf: group created %1", _newgroup];
 aborigen = _newgroup createUnit [_type, _pos, [], 0,"NONE"];
+sleep 0.05;
 [aborigen] join _newgroup;
+sleep 0.05;
+aborigen setPos _pos;
+hint localize format["+++ findAborigen.sqf: group %1, _pos %2, pos %3 ", group aborigen, _pos, getPos aborigen];
+//aborigen setVehiclePosition [_pos, [], 0, "CAN_COLLIDE"];
+
 publicVariable "aborigen";
-hint localize format["+++ findAborigen.sqf: aborigen group is %1", group aborigen];
 
 // assign all events for new aborigen
 sleep 3;

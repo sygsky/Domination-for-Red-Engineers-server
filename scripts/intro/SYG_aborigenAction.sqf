@@ -203,7 +203,7 @@ switch ( _arg ) do {
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		if (isNil "BOAT_MARKER_CHECK_ON") then {
 			BOAT_MARKER_CHECK_ON = true;
-			hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON run first time.";
+			hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON procedure";
 			// move marker with boat and remove it on boat kill or leaving Antigua area
 			[_boat, _marker, _isle_pos, _rad] spawn {
 				private ["_boat","_marker","_area_center","_area_rad","_boat_pos","_delay","_dist","_do_it","_empty_time"];
@@ -213,16 +213,16 @@ switch ( _arg ) do {
 				_delay = 15;
 				_do_it = true;
 				_empty_time = 0;
-				while { (alive _boat) && (_empty_time < 300)} do {
+				while { (alive _boat) && (_empty_time < 600)} do {
 					sleep _delay;
-					if ( ({alive _x} count (crew _boat) == 0 ) ) then {_empty_time = _empty_time + _delay} else {_empty_time = 0;}; // check if boat is empty more than 5 mins
-					_dist = [_boat, _boat_pos] call SYG_distance2D;
+					if ( ({alive _x} count (crew _boat) == 0 ) ) then {_empty_time = _empty_time + _delay} else {_empty_time = 0;}; // check if boat is empty more than 10 mins
+					_dist = [_boat, _boat_pos] call SYG_distance2D; // how far boat moved between last checks
 					if ( _dist > 25 ) then {
 						_boat_pos = getPosASL _boat;
 						_marker setMarkerPosLocal _boat_pos;
 						if ( !([_boat_pos, _area_center, _area_rad] call SYG_pointInCircle) && _do_it) exitWith {
 							// Information about going out of bounds
-							if ( (_boat_pos distance _area_center) > 1000 ) then { // boat is returned to the marker
+							if ( _dist > 500 ) then { // boat was returned to its original marker
 								playSound "losing_patience"; // sound about boat leaving Antigua
 								player groupChat localize "STR_ABORIGEN_BOAT_RETURNED"; // "The boat off Antigua seems to have disappeared somewhere"
 							} else { // boat out of Antigua area
@@ -236,9 +236,13 @@ switch ( _arg ) do {
 				};
 				deleteMarkerLocal _marker; // remove boat marker if dead or out of aquatory
 				BOAT_MARKER_CHECK_ON = nil;
-				hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON stopped for next time...";
+				hint localize format["+++ BOAT: stop BOAT_MARKER_CHECK_ON procedure, boat %1, empty time %2, dist %3",
+					if (alive _boat) then {"alive"} else {"dead"},
+					_empty_time,
+					round(_boat distance _isle_pos)
+				];
 			};
-		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON already run, marker exists and is under control"};
+		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON is on, marker alive and is under control"};
 
 	};
 

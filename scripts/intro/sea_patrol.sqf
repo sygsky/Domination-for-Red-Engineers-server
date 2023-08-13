@@ -78,12 +78,18 @@ _capture_boat = {
 	_boat = _this select OFFSET_BOAT;
 	_crew = [];
 	{
-		if (isPlayer _x) then _crew set [count _crew, name _x];
+		if (isPlayer _x) then { _crew set [count _crew, name _x]};
 	} forEach crew _boat;
 	_boat setVariable ["CAPTURED_ITEM", "SEA_PATROL"];
 	_boat setVariable ["PATROL_ITEM", nil];
 	[_boat] call XAddCheckDead;
-	hint localize format[ "+++ sea_patrol.sqf boat_%1 captured by %2 (%3) at %4", _this select OFFSET_ID, side _boat, _crew, [_boat,10] call SYG_MsgOnPosE0 ];
+	hint localize format[ "+++ sea_patrol.sqf boat_%1 captured by %2 (%3) at %4, will be re-created after %5 sec.",
+		_this select OFFSET_ID,
+		side _boat,
+		_crew,
+		[_boat,10] call SYG_MsgOnPosE0,
+		TIME_TO_REPLACE_CAPTURED_VEH
+	];
 	_this set [OFFSET_BOAT, objNull]; // mark boat be absent
 	["msg_to_user", _boat,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
 	 (_this select OFFSET_STAT) set [OFFSET_STAT_LAST_TIME, time + TIME_TO_REPLACE_CAPTURED_VEH];
