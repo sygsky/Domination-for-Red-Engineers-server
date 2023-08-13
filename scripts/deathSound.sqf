@@ -9,8 +9,6 @@ private ["_killer","_man","_men", "_unit","_exit","_churchArr","_TVTowerArr","_c
 		 "_i"];
 #include "x_setup.sqf"
 
-#define RANDOM_ARR_ITEM(ARR) (ARR select(floor(random(count ARR))))
-
 _unit = _this select 0; // player
 _killer = _this select 1;
 
@@ -50,14 +48,16 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 
 	_men = nearestObjects [player, ["CAManBase"], 60];
 	_men =  [_killer]  + (_men - [_unit, _killer]); // killer shoul be first to say
-
+	_killer_side = side _killer;
 	{
 		if ( (count _sounds) >= 4 ) exitWith {}; // not more than 4 men can exclamate now
+		// AI can say sound?
 #ifdef __ACE__
-		if ( (_x  call SYG_ACEUnitConscious) && ( ( side _killer) == (side _x) )) then {
+			_can_say = (_x  call SYG_ACEUnitConscious) && ( _killer_side == (side _x) );
 #else
-		if ( (canStand _x) && ( ( side _killer) == (side _x) )) then {
+			_can_say = (canStand _x) && ( _killer_side == (side _x) );
 #endif
+			if ( _can_say ) then {
 			_sound = _x getVariable "killer_sound"; // has already some sound sayed?
 			if (isNil "_sound") then { // create new war sound now as it was not sayed by this AI before
 				_sound = call SYG_getLaughterSound; // prepare new war cry sound 10% of times
@@ -87,7 +87,7 @@ if (surfaceIsWater (getPos _unit) ) exitWith {
 _churchArr = nearestObjects [ getPos _unit, SYG_religious_buildings, 50];
 if ( (count _churchArr > 0) && ((random 9) > 1)) exitWith {
 	// let all to hear this sound, not only current player
-	["say_sound", _churchArr select 0, RANDOM_ARR_ITEM(SYG_liturgyDefeatTracks)] call XSendNetStartScriptClientAll;
+	["say_sound", _churchArr select 0, SYG_liturgyDefeatTracks call XfRandomArrayVal] call XSendNetStartScriptClientAll;
 };
 
 // check if we are near TV-Tower
@@ -100,7 +100,7 @@ if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith {
 // check if we are near castle
 _castleArr = _unit nearObjects [ "Land_helfenburk", 800];
 if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith {
-	_sound =  RANDOM_ARR_ITEM(SYG_MedievalDefeatTracks);
+	_sound =  SYG_MedievalDefeatTracks call XfRandomArrayVal;
 	["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // medieval music if suicide near castle
 };
 
@@ -113,6 +113,6 @@ if ( _unit call SYG_isWoman ) then {
 	_sound = call SYG_getSuicideMaleScreamSound; // _sound = "male_scream_" + str(floor(random 15))};  // 0-14
 };
 
-hint localize format["deathSound: suicide assumed, dmg %1, sound ""%2""", damage _unit, _sound ];
+hint localize format["+++ deathSound: suicide assumed, dmg %1, sound ""%2""", damage _unit, _sound ];
 // let all to hear this sound, not only current player
 ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll;

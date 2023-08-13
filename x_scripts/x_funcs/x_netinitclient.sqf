@@ -799,8 +799,8 @@ XHandleNetStartScriptClient = {
 				round(_dist)
 			};
 
-		    private ["_arr"];
-		    // hint localize format["+++ open.sqf _sound %1, player %2", _sound, player];
+		    private ["_arr","_arr1"];
+		    // hint localize format["+++ ""say_sound"" _this %1", _this];
 
 		    _arr = [];
 		    if ( typeName (_this select 1) != "STRING") then {
@@ -832,12 +832,12 @@ XHandleNetStartScriptClient = {
 				} forEach _arr;
 			};
 //			if (typeName _arr != "ARRAY") then { hint localize format["--- say_sound: array expected, found ""%1"" (%2)", _arr, typeName _arr] };
-			_arr = [];
+			_arr1 = [];
 			{
 				_dist = _x spawn _say_proc;
-				if (_dist > 0) then { _arr set [count _arr, _dist] };
+				if (_dist > 0) then { _arr set [count _arr1, _dist] };
 			}forEach _arr;
-			if (count _arr > 0) then { hint localize format["+++ say_sound on my death at distance of %1", _arr] };
+			if (count _arr > 0) then { hint localize format["+++ say_sound on my death at distance of %1", _arr1] };
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
