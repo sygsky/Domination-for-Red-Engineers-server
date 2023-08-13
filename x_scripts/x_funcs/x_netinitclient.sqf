@@ -758,7 +758,7 @@ XHandleNetStartScriptClient = {
         case "say_sound": {
 
 			//
-			// call as: [_name | "" , _sound, _sleep <,"-",_name>] spawn say_proc;
+			// call as: [_obj | "" , _sound, _sleep <,"-",_name>] spawn say_proc;
 			//
 			_say_proc = {
 				private ["_obj","_pos","_nil","_sound","_dist"];
@@ -782,7 +782,7 @@ XHandleNetStartScriptClient = {
 					sleep (0.01 max (_this select 2));
 					_nil = "Logic" createVehicleLocal _pos; // use temp object to play sound
 					_nil say (_this select 1);
-					hint localize format["+++ say_sound ""%1"" at pos", (_this select 1)];
+					hint localize format["+++ say_sound '%1' from logic at pos  %2", (_this select 1), _pos];
 					sleep 0.01;
 					_sound = nearestObject [position _nil, "#soundonvehicle"];
 					if (isNull _sound) then {
@@ -813,8 +813,6 @@ XHandleNetStartScriptClient = {
 						};
 					};
 //					hint localize format["+++ say_sound PLAY ""%1""", (_this select 2)];
-
-//					playSound ( _this select 2 ); // as _arr = [], nothing more will be played
 					( _this select 2 ) call SYG_playRandomTrack; // as _arr = [], nothing more will be played
 
 					if ( (count _this) > 4 ) then { // try to show music title
@@ -824,20 +822,22 @@ XHandleNetStartScriptClient = {
 					};
 		    	};
 				// it must be "LIST" sub-command
-				_arr = _this select 2; // remember said sounds for AI men if possible
+				_arr = _this select 2; // Get array of sound sources
+				// calculate distances for sounds around center
+				_arr1 = [];
 				{	// _x = [_object, _sound, sleep time]
 					if ((_x select 0) isKindOf "CAManBase") then {
 						(_x select 0) setVariable ["killer_sound", _x select 1];
+						_dist = (_x select 0) distance player;
+						if (_dist < 100000) then { _arr1 set [count _arr1, round(_dist)] };
 					};
 				} forEach _arr;
+				if (count _arr1 > 0) then { hint localize format["+++ say_sound multi-source, cmd %1, dist list %2", _this select 1, _arr1] };
 			};
 //			if (typeName _arr != "ARRAY") then { hint localize format["--- say_sound: array expected, found ""%1"" (%2)", _arr, typeName _arr] };
-			_arr1 = [];
 			{
-				_dist = _x spawn _say_proc;
-				if (_dist > 0) then { _arr set [count _arr1, _dist] };
-			}forEach _arr;
-			if (count _arr > 0) then { hint localize format["+++ say_sound on my death at distance of %1", _arr1] };
+				_x spawn _say_proc;
+			} forEach _arr;
 		};
 
 		case "play_music": { // FIXME: is it called anywhere? Yes, in king quest (hotel SM)
