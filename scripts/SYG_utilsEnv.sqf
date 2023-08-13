@@ -165,8 +165,9 @@ SYG_findRestorableObjects = {
     if (typeName _pos == "OBJECT") then {_pos = getPos _pos;};
     if (typeName _pos != "ARRAY") exitWith {[]};
     _dist = arg(1);
-    hint localize format["+++ SYG_findRestorableObjects %1",[_pos, _dist]];
-    _list = nearestObjects [ _pos, [], _dist ];
+    hint localize format["+++ SYG_findRestorableObjects pos %1, dist %2",[_pos, _dist]];
+    _list = [];
+    _list = nearestObjects [ _pos, _list, _dist ];
     hint localize format["+++ SYG_findRestorableObjects found %1 items",count _list];
     for "_i" from 0 to ((count _list) - 1) do {
         _x = argp(_list, _i);

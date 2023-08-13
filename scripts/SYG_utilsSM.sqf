@@ -83,17 +83,14 @@ SYG_createStaticWeaponGroup = {
 };
 
 //
-// Find nearest enemy unit at designated distance from point
+// Find nearest enemy unit at designated distance from point, or objNull if not found
 //
 // call: [_side,_pos,_dist,["LandVehicle","Air","Ship"]] call SYG_findEnemyAt;
 //
 SYG_findEnemyAt = {
-	private ["_side","_pos","_dist","_types","_arr","_ret","_x"];
-	_side = arg(0);
-	_pos  = arg(1);
-	_dist = arg(2);
-	_types= arg(3);
-	_arr = nearestObjects [_pos, _types, _dist];
+	private ["_side","_arr","_ret","_x"];
+	_side = _this select 0;
+	_arr = nearestObjects [_this select 1, _this select 2, _this select 3]; // Pos, types, dist
 	_ret = objNull;
 	{
 		if ((side _x) == _side) exitWith { _ret = _x };
@@ -102,6 +99,7 @@ SYG_findEnemyAt = {
 };
 
 //
+// NOT USED!!!
 // Finds all SM near to the designated point. May be used to create new SM near the main target town
 // call as: _near_sm_arr = [_sm_array, _point, _dist] call SYG_findNearSM;
 // where: _sm_array = sm id array, _point = [x,y,z] as search center, _dist = search radious around the _point

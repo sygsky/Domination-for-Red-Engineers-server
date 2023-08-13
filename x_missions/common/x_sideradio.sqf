@@ -277,7 +277,25 @@ if (_mission) then { // check victory or failure
         side_mission_winner = 2;
         side_mission_resolved = true;
     } else {    // Failure
-		hint localize format["+++ x_sideradio.sqf: mission FAILURE, status %1, alive truck %2, alive radar %3", sideradio_status, alive _truck, alive _radar];
+    	_arr = nearestObjects [_truck, ["CAManBase"], 50];
+    	_players  = [];
+    	 {
+    	 	if ( isPLayer _x) then {
+    	 		_players set [ count _players,
+    	 			format ["%1(%2,dist %3 m.)",
+						name _x,
+						if(alive _x) then {"alive"} else {"dead"},
+						round (_truck distance _x)
+					]
+    	 		]
+    	 	}
+    	 } forEach _arr;
+		hint localize format["+++ x_sideradio.sqf: mission FAILURE, status %1, truck is %2, radar is %3, players near %4",
+			sideradio_status,
+			if (alive _truck) then {"alive"} else {"dead"},
+			if (alive _radar) then {"alive"} else {"dead"},
+			_players
+		];
         side_mission_winner = -702;
         side_mission_resolved = true;
     };
