@@ -45,7 +45,7 @@ _type = arg(1); // "Plane", "Helicopter", "LandVehicle" etc
 
 if (!alive _veh) exitWith {};
 
-hint localize format["+++ x_reload.sqf: isServer=%1, isPlayer=%2(%3), _veh %4, dmg %5", isServer, isPlayer (driver _veh), name player, typeOf _veh, damage _veh];
+// hint localize format["+++ x_reload.sqf: isServer=%1, isPlayer=%2(%3), _veh %4, dmg %5", isServer, isPlayer (driver _veh), name player, typeOf _veh, damage _veh];
 
 #ifdef __DOUBLE_AMMUNITION__
 
