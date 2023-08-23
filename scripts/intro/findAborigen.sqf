@@ -77,6 +77,10 @@ aborigen addEventHandler ["killed", {
 	    ["msg_to_user", [ ["STR_ABORIGEN_KILLER_0"] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClient;
 	    _name = str (_this select 1);
 	};
-	hint localize  format["--- aborigen killed by %1(%2)!", _name, typeOf (_this select 1) ];
+	hint localize  format["--- aborigen killed by %1(%2), dist %3, at %4!",
+		_name,
+		typeOf (vehicle (_this select 1)),
+		round((_this select 0) distance (_this select 1)),
+		[(_this select 1),10] call SYG_MsgOnPos0];
 	100 execVM "scripts\intro\findAborigen.sqf"; // add new aborigen except killed one after 100 seconds
 } ];
