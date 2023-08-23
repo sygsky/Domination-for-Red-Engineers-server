@@ -14,7 +14,7 @@
 // on any error return empty array: (count _pos == 0)
 //------------------
 _find_air_pos  = {
-	private ["_distMin","_posArr","_dist","_veh","_points","_search_range","_x"];
+	private ["_posArr","_dist","_veh","_points","_search_range","_x","_cnt"];
 	_points = [
 	   [[2547.39,2403.39,0],0],
 	   [[2819.55,2637.53,0],0],
@@ -46,7 +46,6 @@ _find_air_pos  = {
 	   [[14101,10960,0], 287] // Obregan
 	];
 
-	_distMin = 9999999;
 	_posArr = [];
 	_search_range = 0;
 	while {count _posArr == 0} do { // while not found any point for the air bonus
@@ -63,8 +62,9 @@ _find_air_pos  = {
 		sleep 0.1;
 	};
     // select random air point
+    _cnt = count _pos_arr;
     _posArr = _posArr call XfRandomArrayVal;
-    hint localize format[ "+++ bonus_air_pos.sqf:  %1 call _find_air_pos -> %2", _this, _posArr ];
+    hint localize format[ "+++ bonus_air_pos.sqf:  %1 call _find_air_pos -> %2 from %3 points", _this, _posArr, _cnt ];
 	_posArr
 };
 
