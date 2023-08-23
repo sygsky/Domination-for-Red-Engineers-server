@@ -768,7 +768,10 @@ SYG_isWestVehicle = {
     if (typeName _this != "STRING") exitWith { hint localize format["--- SYG_isWestVehicle: expected input not OBJECT or STRING (%1)", typeName _this]; false };
     if ( _this isKindOf "LandVehicle" ) exitWith {
         if  ( _this isKindOf "Truck5tMG" ) exitWith {true};
-        if ( _this isKindOf "HMMWV50" ) exitWith { true };
+        if ( _this isKindOf "HMMWV50" ) exitWith {
+        	if (_this isKindOf "ACE_ATV_HondaR")exitWith {false};
+        	true
+        };
         if ( _this isKindOf "StrykerBase" ) exitWith { true };
         if ( _this isKindOf "Tank" ) exitWith {
             if ( _this isKindOf "M1Abrams" ) exitWith { true };
