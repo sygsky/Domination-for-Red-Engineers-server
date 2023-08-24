@@ -50,7 +50,7 @@ hint localize format["+++ radio_menu.sqf: sideradio_status %1, veh %2, truck = %
 	sideradio_status,
 	typeOf _veh,
 	_truck,
-	if (getPosASL d_radar < 0) then {"un"} else {""},
+	if ( ((getPosASL d_radar) select 2) < 0) then {"un"} else {""},
 	_cmd
 	];
 
