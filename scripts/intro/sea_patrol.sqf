@@ -419,11 +419,9 @@ _remove_patrol = {
 					sleep 60;
 					private ["_x","_cnt"];
 					{
-						if (!isNull _x) then {
-							deleteVehicle _x;
-						};
+						if (!isNull _x) then { deleteVehicle _x };
 					} forEach (_this select 1);
-					_cnt = {!isNull _x} forEach (_this select 1);
+					_cnt = {!isNull _x} count (_this select 1);
 					if (_cnt > 0 ) then {
 						hint localize format["--- sea_patrol.sqf remove_patrol: boat_%1 clean proc still left %2 units in water not deleted", _this select 0, _cnt];
 					} else {
