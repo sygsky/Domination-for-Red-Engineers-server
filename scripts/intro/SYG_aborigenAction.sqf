@@ -13,7 +13,7 @@
 
 #define POS_BICYCLE [17401,17980,0]
 #define ABO_BOAT_MARKER "aborigen_boat"
-#define __DEBUG__
+#define BOAT_EMPTY_TIME 600
 
 #include "camel_setup.sqf"
 
@@ -98,15 +98,6 @@ switch ( _arg ) do {
 		// Check nearest boats to be out of "boats13" marker
 		_pos13 = markerPos "boats13";
 
-/**
-#ifdef __DEBUG__
-		_arr1 = _pos13 nearObjects [ "Zodiac", 150 ];
-		for "_i" from 0 to ( (count _arr1) -1 ) do {
-			_arr1 set [ _i, str (_arr1 select _i) ];
-		};
-		hint localize format[ "+++ Boat: found at Antigua on marker ""boats13"" follow boats %1", _arr1 ];
-#endif
-*/
 		_marker = "";  // It will be marker of selected boat
 		{
 			if (alive _x) then {
@@ -143,6 +134,7 @@ switch ( _arg ) do {
 			_boat = _arr select 0;
 			hint localize format["+++ Boat: found on marker %1[%2 boats], pos %3", _marker, count _arr, [(markerPos _marker),10] call SYG_MsgOnPosE0];
 		} else {
+			_marker = "boats13"; // Use Antigua boats marker as default one
 			hint localize "+++ Boat: free boat found near Antigua (not boats near marker13!)";
 		}; // use nearest marker on Antigua to get marker type
 
@@ -185,7 +177,7 @@ switch ( _arg ) do {
         //       Set marker for the detected boat
         //++++++++++++++++++++++++++++++++++++++++++++++++++
 		_boat_marker_type =  getMarkerType _marker; // Mission boat marker, use it for Antigua (""aborigen_boat"")
-		_marker = ABO_BOAT_MARKER;	// Antigua boat marker name (not type)
+		_marker = ABO_BOAT_MARKER;	// Antigua boat marker name "aborigen_boat" (not type)
 		if ( (getMarkerType _marker) == "" ) then { // Antigua boat marker is absent, create it now
 			_marker = createMarkerLocal[_marker, getPosASL _boat];
 			_marker setMarkerTypeLocal _boat_marker_type;
@@ -213,7 +205,7 @@ switch ( _arg ) do {
 				_delay = 15;
 				_do_it = true;
 				_empty_time = 0;
-				while { (alive _boat) && (_empty_time < 600)} do {
+				while { (alive _boat) && (_empty_time < BOAT_EMPTY_TIME)} do {
 					sleep _delay;
 					if ( ({alive _x} count (crew _boat) == 0 ) ) then {_empty_time = _empty_time + _delay} else {_empty_time = 0;}; // check if boat is empty more than 10 mins
 					_dist = [_boat, _boat_pos] call SYG_distance2D; // how far boat moved between last checks
