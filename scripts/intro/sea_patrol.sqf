@@ -387,7 +387,7 @@ _remove_patrol = {
 	if (_printInfo) then {
 		hint localize format["+++ sea_patrol.sqf remove_patrol: boat_%1 (%2), units alive %3, dead %4, null %5; grp %6",
 			_this select OFFSET_ID,
-			if (isNull _boat) then {"<null>"} else { if (alive _boat) then {"alive"} else {"dead"} },
+			if (isNull _boat) then {"<null>"} else { format["%1, at %2",if (alive _boat) then {"alive"} else {"dead"}, _boat call SYG_MsgOnPosE0] },
 			_cnt_alive, _cnt_dead, _cnt_null,
 			_grp_state
 		];
@@ -645,7 +645,7 @@ while { true } do {
 #endif
 
 	// stop sea patrol system on the end of mission
-	if ( current_counter >= number_targets ) exitWith {
+	if ( current_counter > number_targets ) exitWith {
 		hint localize "*** sea_patrol: stop sea patrols (move them out) due to the all towns are liberated !!!";
 		["msg_to_user","",["STR_SEA_PATROL_LEAVE"], 0, 0, false, "no_more_waiting"] call XSendNetStartScriptClient; // "GRU reports that enemy naval patrols are heading away from Sahrani."
 		// set last WP to the big distance from island center
@@ -706,5 +706,5 @@ while { true } do {
 	sleep PATROL_CHECK_DELAY; // step sleep
 };
 
-hint localize "*** _sea_patrol: all boats are removed, service is finished";
+hint localize "*** sea_patrol: all boats are removed, service is finished";
 
