@@ -646,7 +646,7 @@ while { true } do {
 
 	// stop sea patrol system on the end of mission
 	if ( current_counter > number_targets ) exitWith {
-		hint localize "*** sea_patrol: stop sea patrols (move them out) due to the all towns are liberated !!!";
+		hint localize "*** sea_patrol.sqf: stop sea patrols (move them out) due to the all towns are liberated !!!";
 		["msg_to_user","",["STR_SEA_PATROL_LEAVE"], 0, 0, false, "no_more_waiting"] call XSendNetStartScriptClient; // "GRU reports that enemy naval patrols are heading away from Sahrani."
 		// set last WP to the big distance from island center
 		{
@@ -706,5 +706,5 @@ while { true } do {
 	sleep PATROL_CHECK_DELAY; // step sleep
 };
 
-hint localize "*** sea_patrol: all boats are removed, service is finished";
+hint localize "*** sea_patrol.sqf: all boats are removed, service is finished";
 
