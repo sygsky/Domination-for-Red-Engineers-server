@@ -17,11 +17,11 @@ publicVariable "sideradio_status";
 
 _killer = _this select 1;
 _name = if ( isPlayer _killer ) then { name _killer } else { if (isNull _killer) then {"<unknown>"} else {typeOf _killer} };
-hint localize format[ "+++ radio_killed.sqf: radar deleted by %1, status = %2", _name, sideradio_status];
-
 _cnt = 1;
 _killed = _this select 0;
 _pos = getPos _killed;
+
+hint localize format[ "+++ radio_killed.sqf: radar deleted by %1 at %2; status = %3", _name, [_this select 0, 10] call SYG_MsgOnPosE0, sideradio_status ];
 
 // remove radar after 10 minutes of players absence around 300 meters of radar.
 while {!(isNull _killed)} do {
