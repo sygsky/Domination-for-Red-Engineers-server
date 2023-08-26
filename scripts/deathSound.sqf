@@ -24,7 +24,7 @@ SYG_deathCountCnt = SYG_deathCountCnt + 1; // total death count bump
 if (base_visit_session <= 0) exitWith { playSound  "atmos" }; // if we today still never visit the base, atmospheric sound is played
 #endif
 
-if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// Play ordinal sound if KIA or alone
+if ( (_unit != _killer) /*|| (X_MP && (call XPlayersNumber) == 1)*/ ) exitWith {// Play ordinal sound if KIA or alone
     if ( !(call SYG_playExtraSounds) ) exitWith { false }; // yeti doesn't like such sounds
 
     // if killed in tank
@@ -76,24 +76,29 @@ if ( (_unit != _killer) || (X_MP && (call XPlayersNumber) == 1) ) exitWith {// P
 };
 
 // some kind of suicide? Say something about...
+hint localize "+++ deathSound: suicide assumed, assigning sound for it";
 
 // check if we are in water
 if (surfaceIsWater (getPos _unit) ) exitWith {
 	_sound = call SYG_getWaterDefeatTracks;
+	hint localize format["+++ deathSound: suicide at church, dmg %1, sound ""%2""", damage _unit, _sound ];
 	["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // in water  sounds if suicide in water
  };
 
 // check if you are near church etc
 _churchArr = nearestObjects [ getPos _unit, SYG_religious_buildings, 50];
 if ( (count _churchArr > 0) && ((random 9) > 1)) exitWith {
+	_sound = SYG_liturgyDefeatTracks call XfRandomArrayVal;
+	hint localize format["+++ deathSound: suicide at church, dmg %1, sound ""%2""", damage _unit, _sound ];
 	// let all to hear this sound, not only current player
-	["say_sound", _churchArr select 0, SYG_liturgyDefeatTracks call XfRandomArrayVal] call XSendNetStartScriptClientAll;
+	["say_sound", _churchArr select 0, _sound] call XSendNetStartScriptClientAll;
 };
 
 // check if we are near TV-Tower
 _TVTowerArr = _unit nearObjects [ "Land_telek1", 50];
 if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith {
 	_sound =  call SYG_getTVTowerGong;
+	hint localize format["+++ deathSound: suicide nearTVTower, dmg %1, sound ""%2""", damage _unit, _sound ];
 	["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
 };
 
@@ -101,6 +106,7 @@ if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith {
 _castleArr = _unit nearObjects [ "Land_helfenburk", 800];
 if ( ((count _castleArr) > 0) && ((random 5) > 1)) exitWith {
 	_sound =  SYG_MedievalDefeatTracks call XfRandomArrayVal;
+	hint localize format["+++ deathSound: suicide near medieval building, dmg %1, sound ""%2""", damage _unit, _sound ];
 	["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // medieval music if suicide near castle
 };
 
@@ -113,6 +119,6 @@ if ( _unit call SYG_isWoman ) then {
 	_sound = call SYG_getSuicideMaleScreamSound; // _sound = "male_scream_" + str(floor(random 15))};  // 0-14
 };
 
-hint localize format["+++ deathSound: suicide assumed, dmg %1, sound ""%2""", damage _unit, _sound ];
+hint localize format["+++ deathSound: ordinal suicide assumed, dmg %1, sound ""%2""", damage _unit, _sound ];
 // let all to hear this sound, not only current player
 ["say_sound", _unit, _sound] call XSendNetStartScriptClientAll;
