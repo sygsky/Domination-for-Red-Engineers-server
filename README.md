@@ -1,4 +1,4 @@
-reXeno Domination for Red-Engineers Server. Heavily modified.
+Xeno Domination for Red-Engineers Server. Heavily modified.
 === Last adds:
 47. The first arrival in the mission is done via parachute drop to the islet of Antigua. The aborigine gives you comprehensive information on how to get to the base, namely: a) by boat, b) by car, c) by a biplane from the time of World War I. Your task is to arrive at the base in order to get into the army and not on the island. Your task is to arrive at the base to get on the food supply and further arrive at the base, not on the islet. If you enter the mission with the rank of private, although you have been to the base, you will be dropped off near the base, over the nearest mountain range. You can reach the base on a gliding parachute and even get +10 if you hit the yellow circle, from which purple rockets are launched.
 46. Fixed the system of transportation of stationary weapons in salvage truck. Weapons are now not repaired or reloaded when loading and unloading them into the truck and back.

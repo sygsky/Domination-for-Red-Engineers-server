@@ -40,7 +40,7 @@ if (number_targets >= 50) then {
 	);
 	number_targets = _h;
 };
-hint localize format["+++ Param1 %1, number_targets %2", Param1, number_targets];
+hint localize format["+++ Param1 %1, number_targets %2, version 5.5.1", Param1, number_targets];
 #ifndef __WITH_GRASS_AT_START__
 setTerrainGrid 50;
 #endif
