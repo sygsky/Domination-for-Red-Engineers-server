@@ -32,8 +32,8 @@
 // Time to create a new vehicle to replace the killed one in seconds (600 == 10 mins)
 #define TIME_TO_REPLACE_KIA_VEH 600
 
-
 #define MAX_DIST_TO_ENEMY 2500
+#define DIST_TO_REVEAL 10000
 
 //#define __DEBUG__	// Debug settings with shortened delays etc
 
@@ -68,6 +68,7 @@
 #endif
 
 hint localize format["+++ sea_patrol.sqf: STARTED, crewman type = ""%1""", BOAT_UNIT];
+_known_enemy_arr = []; // Array for known enemies
 
 #define DIST_TO_BE_STUCK 10
 
@@ -188,7 +189,11 @@ _is_ship_stuck = {
 			if ( _dist > POS_DIST ) exitWith {
 				_stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ]; _stat set [OFFSET_STAT_LAST_TIME, time + COMBAT_STALL_DELAY ]; // in battle time-out is longer
 			};
-			if (_edist < (MAX_DIST_TO_ENEMY / 3)) then { ["say_sound", _boat, "naval"] call XSendNetStartScriptClient; }; // Say fear sound to the player )))
+			if (! (_enemy in _known_enemy_arr)) then {
+				hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: enemy %1 added to the reveal list (size after is %2)", typeOf _enemy, count _known_enemy_arr ];
+				_known_enemy_arr set [count _known_enemy_arr, _enemy]
+			};
+			["say_sound", _boat, "naval"] call XSendNetStartScriptClientAll; // Say fear sound to the player )))
 		}; // Some near enemy detected, not stuacked
 
 		if ( _dist > POS_DIST ) exitWith { _stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ]; _stat set [OFFSET_STAT_LAST_TIME, time + PATROL_STALL_DELAY ]; }; // Distance from last point is far enough for boat to be not stalled
@@ -675,6 +680,10 @@ while { true } do {
 		} forEach _patrol_arr;
 	};
 
+	if ( {alive _x } count _known_enemy_arr == 0) then { // No enemies detected
+		_known_enemy_arr resize 0;
+	};
+
 	{
 		_arr = _x; // _x = [_boat, _grp, _wp_arr, _id, _state...]
 		_boat = _arr select OFFSET_BOAT;
@@ -693,6 +702,26 @@ while { true } do {
 				// Check if crew is still operable and on duty
 				if (_arr call _reset_roles) then {
 					_boat call _resupply_boat; // reload, refuel, repair
+
+					// Inform all boats  about possible enemy around
+					_cnt = count _known_enemy_arr - 1;
+					if (_cnt >= 0 ) then {
+						_changed = false;
+						for "_i" from 0 to _cnt do {
+							_enemy = _known_enemy_arr select _i;
+							if (alive _enemy) then {
+								if ( (_enemy distance _boat) < DIST_TO_REVEAL) then {(_arr select OFFSET_GRP) reveal _enemy};
+							} else  {
+								_known_enemy_arr set [_i, "RM_ME"];
+								_changed = true;
+							};
+						};
+						if (_changed) then {
+							_cnt = count _known_enemy_arr;
+							_known_enemy_arr call SYG_clearArray;
+							hint localize format[ "+++ sea_patrol.sqf: reveal list resized down from %1 to %2", _cnt, count _known_enemy_arr ];
+						};
+					};
 				} else {
 					// This boat is inoperable, so remove it now
 					_arr call _remove_patrol; // remove this step, to re-create it on the next step
