@@ -284,7 +284,7 @@ switch ( _arg ) do {
 					_veh setDamage 0;
 					_veh setFuel ((fuel _veh) max 0.5);
 					hint localize format[ "+++ Aborigen: car (marker %1 type %2) found near car marker", _marker_veh, typeOf _veh ];
-				};t
+				};
 			} forEach _vehs;
 
 			if (alive _veh) then { // add found vehicle to the found list
