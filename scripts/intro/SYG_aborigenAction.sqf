@@ -238,10 +238,12 @@ switch ( _arg ) do {
 
 	};
 
+#define __OLD__
+
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "CAR": { // ask about cars/motorcycles
 		if (base_visit_mission > 0) exitWith {player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText))}; // "Sorry. I don't know anything about cars. We live here."}; // "Boats? There are a lot of them... on every kilometer of the coast of the Main Sahrani."
-
+#ifdef __OLD__
 //		player groupChat format[localize "STR_ABORIGEN_CAR_NONE"]; // "Sorry. I don't know anything about cars. We live here."
 //		if (true) exitWith{};
 
@@ -319,6 +321,9 @@ switch ( _arg ) do {
 		deleteMarkerLocal _marker;
 		// Inform about failure to find vehicle on place
 		player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText)); // "Sorry. I don't know anything about cars. We live here."
+#else
+	// New version
+#endif
 	};
 
 	case "PLANE" : { // ask about plane

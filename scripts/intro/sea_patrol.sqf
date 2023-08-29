@@ -639,12 +639,13 @@ while { true } do {
 #ifdef __STOP_IF_NO_PLAYERS__
 	if ( X_MP && ( (call XPlayersNumber) == 0 ) ) then { // Not recreate patrol if no players
 		_printInfo = false;
+		_time = time;
 		hint localize format[ "*** sea_patrol.sqf: MAIN loop suspend due to players absent, all %1 patrols removed", count _patrol_arr ];
 		{ sleep 1; _x call _remove_patrol } forEach _patrol_arr;
 
 		while {((call XPlayersNumber) == 0)} do { sleep 60 };
 		_time = (round (time - _time)) call SYG_secondsToStr; // "hh:mm:ss"
-		hint localize format[ "*** sea_patrol.sqf: MAIN loop resumed after players absent during %1. all %2 boats will be re-created", _time, count _patrol_arr ];
+		hint localize format[ "*** sea_patrol.sqf: MAIN loop resumed after players absent during %1. All %2 boat[s] will be re-created", _time, count _patrol_arr ];
 		_printInfo = true;
 	};
 #endif
