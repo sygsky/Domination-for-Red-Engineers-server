@@ -19,7 +19,7 @@
 
 #include "x_setup.sqf"
 
-_search_list = ["Motorcycle","hilux1_civil_1_open","LandroverMG","SkodaBase","ACE_UAZ"/*,"DATSUN_PK1","HILUX_PK1"*/,"ACE_HMMWV","tractor"];
+_search_list = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ"/*,"DATSUN_PK1","HILUX_PK1"*/,"ACE_HMMWV","tractor"];
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenAction.sqf: unknown _this = %1", _this]};
 
 if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"
@@ -238,7 +238,7 @@ switch ( _arg ) do {
 
 	};
 
-#define __OLD__
+//#define __OLD__
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "CAR": { // ask about cars/motorcycles
@@ -276,7 +276,7 @@ switch ( _arg ) do {
 
 		// Vehicle not found near main marker or marker in absent. So get all vehicles near transparent markers now and select random one
 		_arr = [];
-		for "_i" from 1 to 100 do { // for each antigua arrival markers...
+		for "_i" from 1 to 100 do { // for each antigua arrival vehicle markers...
 			_marker_veh = format["antigua_veh%1",_i];
 			if (markerType _marker_veh == "") exitWith {/* hint localize format ["+++ ABORIGEN CAR: stop moto count on id %1", _i]*/}; // no more markers in sqm
 			_vehs = nearestObjects [ getMarkerPos _marker_veh, _search_list, 50 ];
@@ -322,7 +322,69 @@ switch ( _arg ) do {
 		// Inform about failure to find vehicle on place
 		player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText)); // "Sorry. I don't know anything about cars. We live here."
 #else
-	// New version
+		// New version
+		private ["_veh", "_marker_veh"];
+
+		// Loop around all Antigua vehicle unvisible markers to create or update visible markers
+		_cnt_veh  = 0;
+		_cnt_mrk = 0;
+		_cnt_locked = 0;
+		for "_i" from 1 to 100 do {
+			_marker_type = "";
+			_marker = format["antigua_veh%1", _i]; // Unvisible static marker type
+			if ( (markerType _marker) == "" ) exitWith { };// Last maker already parsed, exit
+			_marker1 = format["antigua_veh_vis%1", _i];	// Vehicle marker
+			_marker_pos = getMarkerPos _marker;
+			_vehs = nearestObjects [ _marker_pos, _search_list, 50 ];
+			_marker_type = "";
+			_veh = objNull;
+			// Find vehicle near this marker
+			{
+				if ( alive _x ) exitWith {
+					_marker_type  = _x call SYG_getVehicleMarkerType;
+					_marker_color =  "ColorGreen";
+					_marker_pos = getPos _veh; // Set marker pos on the nearest vehicle detected
+					_veh = _x;
+					_cnt_veh = _cnt_veh + 1;
+					if (locked _x) then { _cnt_locked = _cnt_locked + 1 };
+					_veh setDamage 0;
+					_veh setFuel ((fuel _veh) max 0.5);
+					hint localize format[ "+++ Aborigen: car (%1) found near marker %2 (%3:%4)", typeOf _veh, _marker1, _marker_type, _marker_color ];
+				};
+			} forEach  _vehs;
+			if ( ! alive _veh ) then { // No vehicle found, set undefined marker
+				#ifdef __ACE__
+				_marker_type  = "ACE_Icon_Unknown";
+				_marker_color = "ColorRedAlpha";
+				#else
+				_marker_type  = "Vehicle";
+				_marker_color = "ColorRed";
+				#endif
+			};
+			if ( (markerType _marker1) == "" ) then { // No visible marker found, create new one
+				_cnt_mrk = _cnt_mrk + 1;
+				_marker1 = createMarkerLocal [ _marker1, _marker_pos ];
+				_marker1 setMarkerSizeLocal [0.6, 0.6];
+			};
+			_marker1 setMarkerType       _marker_type;
+			_marker1 setMarkerColorLocal _marker_color;
+		};
+
+		if ( _cnt_mrk == 0) exitWith { // All markers already detected, angrily declare about it
+			hint localize format["+++ ABORIGEN CAR: found %1 vehs at markers", _cnt_veh];
+		    player groupChat (localize "STR_ABORIGEN_CAR_INFO_1"); // "A cars? Why did I put markers on your map? Uh, you have geographical cretinism)))"
+		};
+
+		if ( _cnt_veh == 0 ) exitWith { // Vehs not found near any markers
+			// Inform about failure to find vehicle on place
+			player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText)); // "Sorry. I don't know anything about cars. We live here."
+		};
+		player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "Cars? Okay... here I'm drawing markers on the map for you where you'll find some cars..."
+		if ( _cnt_locked > 0 ) then {
+			(localize "STR_ABORIGEN_CAR_UNLOCK_1") spawn {sleep 1; player groupChat _this}; // "... when you find it, unlock it!"
+		} else {
+			(localize "STR_ABORIGEN_CAR_UNLOCK_3") spawn {sleep 1; player groupChat _this}; // "... it doesn't seem to be blocked"
+		};
 #endif
 	};
 

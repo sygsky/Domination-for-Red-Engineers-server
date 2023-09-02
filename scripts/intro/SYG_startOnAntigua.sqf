@@ -31,7 +31,7 @@ if (!isNil "antigua_initiated") exitWith {};
 
 antigua_initiated = true;
 
-_car_type_list =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
+CAR_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 			  "hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open",
 			  "datsun1_civil_1_open","datsun1_civil_2_covered","datsun1_civil_3_open",
 			  "Landrover","Landrover_Closed","Landrover_Police",
@@ -41,6 +41,8 @@ _car_type_list =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 #endif
 #ifdef __ACE__
 			  ,"ACE_HMMWV","ACE_UAZ"
+#else
+			  ,"HMMWV","UAZ"
 #endif
 			  ];
 // _moto_type_list = ["M1030","TT650G","TT650C"]; // Not needed
@@ -58,8 +60,8 @@ for "_i" from 0 to 4 do {  // replace moto with 5 cars(0..4)
 	while {(_ind in _rep_list)} do { _ind = floor (random _cnt) }; // make it unique
 	_rep_list set [count _rep_list, _ind];
 
-	_car = _car_type_list call XfRandomArrayVal; // Select unique car type to replace select index of moto
-	while {(_car in _car_list)} do { _car = _car_type_list call XfRandomArrayVal }; // find unique type among already selected
+	_car = CAR_TYPE_LIST call XfRandomArrayVal; // Select unique car type to replace select index of moto
+	while {(_car in _car_list)} do { _car = CAR_TYPE_LIST call XfRandomArrayVal }; // find unique type among already selected
 	_car_list set [count _car_list, _car];
 
 	// replace moto[_ind] with car

@@ -3842,7 +3842,7 @@ class Mission
 		};
 		class Item56
 		{
-			position[]={18606.935547,11.580609,14496.877930};
+			position[]={18661.900391,5.260743,14580.000000};
 			name="antigua_veh4";
 			text="4";
 			type="Empty";
