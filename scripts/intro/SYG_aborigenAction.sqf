@@ -329,11 +329,12 @@ switch ( _arg ) do {
 		_cnt_veh  = 0;
 		_cnt_mrk = 0;
 		_cnt_locked = 0;
+		_marker_color = "";
 		for "_i" from 1 to 100 do {
 			_marker_type = "";
 			_marker = format["antigua_veh%1", _i]; // Unvisible static marker type
 			if ( (markerType _marker) == "" ) exitWith { };// Last maker already parsed, exit
-			_marker1 = format["antigua_veh_vis%1", _i];	// Vehicle marker
+			_marker_name = format["antigua_veh_vis%1", _i];	// Vehicle marker
 			_marker_pos = getMarkerPos _marker;
 			_vehs = nearestObjects [ _marker_pos, _search_list, 50 ];
 			_marker_type = "";
@@ -343,13 +344,13 @@ switch ( _arg ) do {
 				if ( alive _x ) exitWith {
 					_marker_type  = _x call SYG_getVehicleMarkerType;
 					_marker_color =  "ColorGreen";
-					_marker_pos = getPos _veh; // Set marker pos on the nearest vehicle detected
 					_veh = _x;
 					_cnt_veh = _cnt_veh + 1;
 					if (locked _x) then { _cnt_locked = _cnt_locked + 1 };
 					_veh setDamage 0;
 					_veh setFuel ((fuel _veh) max 0.5);
-					hint localize format[ "+++ Aborigen: car (%1) found near marker %2 (%3:%4)", typeOf _veh, _marker1, _marker_type, _marker_color ];
+//					hint localize format[ "+++ Aborigen: car (%1 at %2) found near (dist %3 м.), marker %4 (%5:%6)", typeOf _veh, _veh call SYG_MsgOnPosE0,round (_veh distance (_marker_pos)), _marker_name, _marker_type, _marker_color ];
+					_marker_pos = getPos _veh; // Set marker pos on the nearest vehicle detected
 				};
 			} forEach  _vehs;
 			if ( ! alive _veh ) then { // No vehicle found, set undefined marker
@@ -361,13 +362,15 @@ switch ( _arg ) do {
 				_marker_color = "ColorRed";
 				#endif
 			};
-			if ( (markerType _marker1) == "" ) then { // No visible marker found, create new one
+			if ( (markerType _marker_name) == "" ) then { // No visible marker found, create new one
 				_cnt_mrk = _cnt_mrk + 1;
-				_marker1 = createMarkerLocal [ _marker1, _marker_pos ];
-				_marker1 setMarkerSizeLocal [0.6, 0.6];
+				_marker_name = createMarkerLocal [ _marker_name, _marker_pos ];
+				_marker_name setMarkerSizeLocal [0.6, 0.6];
 			};
-			_marker1 setMarkerType       _marker_type;
-			_marker1 setMarkerColorLocal _marker_color;
+			_marker_name setMarkerTypeLocal  _marker_type;
+			_marker_name setMarkerColorLocal _marker_color;
+			// hint localize format["+++ aborigen: create car marker %1(%2) %3", _marker_type, _marker_name, _marker_color ];
+			// ["Player_Track", position player,"ICON","ColorGreen",[0.5,0.5],"",0,"Arrow"] call XfCreateMarkerLocal;
 		};
 
 		if ( _cnt_mrk == 0) exitWith { // All markers already detected, angrily declare about it
