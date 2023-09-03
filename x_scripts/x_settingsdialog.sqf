@@ -27,7 +27,12 @@ _ctrl lbSetCurSel _vdindex;
 
 _ctrl = _XD_display displayCtrl 1001;
 // Трава "Без травы"  "Средняя" "Полная"
-_rarray = ["STR_GRASS_1", "STR_GRASS_2", "STR_GRASS_3"];
+_rarray = [
+#ifndef __WITH_GRASS_AT_START__
+	"STR_GRASS_1",
+#endif
+	"STR_GRASS_2", "STR_GRASS_3"
+];
 _glindex = -1;
 for "_i" from 0 to (count _rarray - 1) do {
 	call compile format ["_index = _ctrl lbAdd ""%1"";if (d_graslayer_index == _index) then {_glindex = _index};",localize (_rarray select _i)];
@@ -119,7 +124,6 @@ _str = _str + _strYesCR;
 _str = _str + _strNoCR;
 #endif
 
-
 _str = _str + (localize "STR_SET_6") + ": "; // "Simple side missions at the beginning"
 #ifdef __EASY_SM_GO_FIRST__
 _str = _str + _strYesCR;
@@ -142,13 +146,12 @@ _str = _str + format["%1\n",SYG_engineering_fund];
 _str = _str + _strNoCR;
 #endif
 
-_str = _str +
 #ifdef __ADD_SCORE_FOR_FACTORY_SUPPORT__
-format[localize "STR_SET_12",__ADD_SCORE_FOR_FACTORY_SUPPORT__ ]  // "Score added for service support "
+_str = _str + format[localize "STR_SET_12",__ADD_SCORE_FOR_FACTORY_SUPPORT__ ] + "\n"; // "Score added for service support "
 #else
-format[localize "STR_SET_12_1",d_ranked_a select 20] // "Score subrtracted for service support"
+_str = _str +  format[localize "STR_SET_12_1",d_ranked_a select 20] + "\n"; // "Score subrtracted for service support"
 #endif
- + "\n";
+
 
 _str = _str + (localize "STR_SET_8") ; // "Mandatory side missions"
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
@@ -251,6 +254,12 @@ _str = _str + (localize "STR_SET_41");
 
 #ifdef __CONNECT_ON_PARA__
 _str = _str + (localize format["STR_SET_42", 1 call XGetRankStringLocalized]);
+#endif
+
+#ifdef __WITH_GRASS_AT_START__
+_str = _str + (localize "STR_SET_43"); // "No grass: disabled.\n"
+#else
+_str = _str + (localize "STR_SET_43_0"); // "No grass: allowed.\n"
 #endif
 
 //--- new non-Xeno defines stops here
@@ -436,13 +445,6 @@ _str = _str + (localize "STR_SYS_1213") + str(d_ranked_a select 18) + "\n";     
 _str = _str + (localize "STR_SYS_359") + str(d_transport_distance) + "\n"; // "Transport distance to get points: "
 _str = _str + (localize "STR_SYS_1214") + (d_wreck_lift_rank call XGetRankStringLocalized) + "\n"; //"Rank needed to fly the wreck lift chopper: "
 #endif
-
-_str = _str + (localize "STR_SYS_1215"); // "Weapons limited: "
-if (d_limit_weapons) then {
-	_str = _str + _strYesCR;
-} else {
-	_str = _str + _strNoCR;
-};
 
 _str = _str + (localize "STR_SYS_1216") + str(d_drop_radius) + " м.\n";           // "Air drop radius (0 = exact position): "
 

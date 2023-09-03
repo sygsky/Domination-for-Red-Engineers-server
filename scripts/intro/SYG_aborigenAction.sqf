@@ -19,7 +19,6 @@
 
 #include "x_setup.sqf"
 
-_search_list = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ"/*,"DATSUN_PK1","HILUX_PK1"*/,"ACE_HMMWV","tractor"];
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenAction.sqf: unknown _this = %1", _this]};
 
 if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"
@@ -255,7 +254,7 @@ switch ( _arg ) do {
 		if ( (markerType _marker) != "") then {
 			// TODO: print info on marker
 			hint localize format["+++ Aborigen: car marker found"];
-			_vehs = nearestObjects [getMarkerPos _marker, _search_list, 50];
+			_vehs = nearestObjects [getMarkerPos _marker, ALL_CAR_ONLY_SEARCH_LIST, 50];
 			{
 				if (alive _x) exitWith {
 					_veh = _x;
@@ -279,7 +278,7 @@ switch ( _arg ) do {
 		for "_i" from 1 to 100 do { // for each antigua arrival vehicle markers...
 			_marker_veh = format["antigua_veh%1",_i];
 			if (markerType _marker_veh == "") exitWith {/* hint localize format ["+++ ABORIGEN CAR: stop moto count on id %1", _i]*/}; // no more markers in sqm
-			_vehs = nearestObjects [ getMarkerPos _marker_veh, _search_list, 50 ];
+			_vehs = nearestObjects [ getMarkerPos _marker_veh, ALL_CAR_ONLY_SEARCH_LIST, 50 ];
 			{
 				if (alive _x) exitWith {
 					_veh = _x;
@@ -336,7 +335,7 @@ switch ( _arg ) do {
 			if ( (markerType _marker) == "" ) exitWith { };// Last maker already parsed, exit
 			_marker_name = format["antigua_veh_vis%1", _i];	// Vehicle marker
 			_marker_pos = getMarkerPos _marker;
-			_vehs = nearestObjects [ _marker_pos, _search_list, 50 ];
+			_vehs = nearestObjects [ _marker_pos, ALL_CAR_ONLY_SEARCH_LIST, 50 ];
 			_marker_type = "";
 			_veh = objNull;
 			// Find vehicle near this marker

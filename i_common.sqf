@@ -43,68 +43,9 @@ if (number_targets >= 50) then {
 hint localize format["+++ Param1 %1, number_targets %2, version 5.5.1", Param1, number_targets];
 #ifndef __WITH_GRASS_AT_START__
 setTerrainGrid 50;
+#else
+setTerrainGrid 25;
 #endif
-
-// true = weapons and ammo is only available per player type, false = all weapons and ammo available for everyone
-d_limit_weapons = false;
-#ifdef __AI__
-d_limit_weapons = false;
-#endif
-if (!isServer) then {
-	if (d_limit_weapons) then {
-		d_ltd_weapons_array =
-			#ifdef __OWN_SIDE_WEST__
-					[
-					[["TeamLeaderW","SoldierWMedic","SquadLeaderW"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10],["M136",10]] ],
-					[["SoldierWMiner"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["Handgrenade",30],["PipeBomb",10],["Mine",10]] ],
-					[["SoldierWMG"],[["M9",5],["M4AIM",5],["M240",5],["M249",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["100Rnd_762x51_M240",30],["200Rnd_556x45_M249",30],["Handgrenade",30]] ],
-					[["SoldierWAT"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5],["M136",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["M136",30],["Handgrenade",30]] ],
-					[["SoldierWG"],[["M4AIM",5],["M16A2GL",5],["M16A4_GL",5],["M16A4_ACG_GL",5],["M4GL",5],["M4A1GL",5]], [["30Rnd_556x45_Stanag",30],["1Rnd_HE_M203",30],["FlareWhite_M203",30],["FlareGreen_M203",30],["FlareRed_M203",30],["FlareYellow_M203",30],["Handgrenade",30]] ],
-					[["SoldierWSniper","SoldierWSaboteurMarksman"],[["M9",5],["M4AIM",5],["M16A4_ACG",5],["M4SPR",5],["M107",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["5Rnd_762x51_M24",30],["10Rnd_127x99_M107",30]] ],
-					[["SoldierWSaboteurAssault"],[["M9SD",5],["M4AIM",5],["M4A1GL",5],["M4A1SD",5],["MP5SD",5],["Laserdesignator",5]],[["15Rnd_9x19_M9SD",30],["30Rnd_556x45_Stanag",30],["30Rnd_556x45_StanagSD",30],["30Rnd_9x19_MP5SD",30],["1Rnd_HE_M203",30],["FlareWhite_M203",30],["FlareGreen_M203",30],["FlareRed_M203",30],["FlareYellow_M203",30],["Handgrenade",30],["Pipebomb",30],["Laserbatteries",10]] ],
-					[["SoldierWSaboteurPipe","SoldierWSaboteurRecon","SoldierWSaboteurPipe2"],[["M4AIM",5],["M4A1SD",5],["MP5SD",5],["Laserdesignator",5]],[["30Rnd_556x45_Stanag",30],["30Rnd_556x45_StanagSD",30],["30Rnd_9x19_MP5SD",30],["Pipebomb",30],["Laserbatteries",10]] ],
-					[["OfficerW"],[["M9",5],["M4AIM",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10]] ]
-					];
-			#endif
-			#ifdef __OWN_SIDE_RACS__
-					[
-					[["TeamLeaderG","SoldierGMedic","SquadLeaderG"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10],["M136",10]] ],
-					[["SoldierGMiner"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["Handgrenade",30],["PipeBomb",10],["Mine",10]] ],
-					[["SoldierGMG"],[["M9",5],["M4AIM",5],["M240",5],["M249",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["100Rnd_762x51_M240",30],["200Rnd_556x45_M249",30],["Handgrenade",30]] ],
-					[["SoldierGAT"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5],["M136",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["M136",30],["Handgrenade",30]] ],
-					[["SoldierGG"],[["M4AIM",5],["M16A2GL",5],["M16A4_GL",5],["M16A4_ACG_GL",5],["M4GL",5],["M4A1GL",5]], [["30Rnd_556x45_Stanag",30],["1Rnd_HE_M203",30],["FlareWhite_M203",30],["FlareGreen_M203",30],["FlareRed_M203",30],["FlareYellow_M203",30],["Handgrenade",30]] ],
-					[["SoldierGSniper","SoldierGMarksman"],[["M9",5],["M4AIM",5],["M16A4_ACG",5],["M4SPR",5],["M107",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["5Rnd_762x51_M24",30],["10Rnd_127x99_M107",30]] ],
-					[["SoldierGCommando","SoldierGGuard"],[["M9SD",5],["M4AIM",5],["G36k",5],["M4A1GL",5],["M4A1SD",5],["MP5SD",5],["Laserdesignator",5]],[["15Rnd_9x19_M9SD",30],["30Rnd_556x45_Stanag",30],["30Rnd_556x45_StanagSD",30],["30Rnd_556x45_G36",30],["30Rnd_9x19_MP5SD",30],["1Rnd_HE_M203",30],["FlareWhite_M203",30],["FlareGreen_M203",30],["FlareRed_M203",30],["FlareYellow_M203",30],["Handgrenade",30],["Pipebomb",30],["Laserbatteries",10]] ],
-					[["OfficerG"],[["M9",5],["M4AIM",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10]] ]
-					];
-			#endif
-			#ifdef __OWN_SIDE_EAST__
-					[
-					[["TeamLeaderE","SoldierEMedic","SquadLeaderE"],[["Makarov",5],["AK74",5]],[["8Rnd_9x18_Makarov",30],["30Rnd_545x39_AK",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10],["PG7V",10]] ],
-					[["SoldierEMiner"],[["Makarov",5],["AK74",5]],[["8Rnd_9x18_Makarov",30],["30Rnd_545x39_AK",30],["Handgrenade",30],["PipeBomb",10],["Mine",10]] ],
-					[["SoldierEMG"],[["Makarov",5],["AK74",5],["PK",5]],[["8Rnd_9x18_Makarov",30],["30Rnd_545x39_AK",30],["100Rnd_762x54_PK",30],["Handgrenade",30]] ],
-					[["SoldierEAT"],[["Makarov",5],["AK74",5],["RPG7V",5]],[["8Rnd_9x18_Makarov",30],["30Rnd_545x39_AK",30],["PG7V",30],["PG7VR",30],["Handgrenade",30]] ],
-					[["SoldierEG"],[["AK74",5],["AK74GL",5]], [["30Rnd_545x39_AK",30],["1Rnd_HE_GP25",30],["FlareWhite_GP25",30],["FlareGreen_GP25",30],["FlareRed_GP25",30],["FlareYellow_GP25",30],["Handgrenade",30]] ],
-					[["SoldierESniper","SoldierESaboteurMarksman"],[["Makarov",5],["AK74",5],["SVD",5],["AKS74PSO",5],["KSVK",5]],[["8Rnd_9x18_Makarov",30],["30Rnd_545x39_AK",30],["10Rnd_762x54_SVD",30],["5Rnd_127x108_KSVK",30]] ],
-					[["SoldierESaboteur","SoldierESaboteurPipe","SoldierESaboteurBizon"],[["MakarovSD",5],["AK74",5],["AK74GL",5],["AKS74UN",5],["AKS74UN",5],["Laserdesignator",5]],[["8Rnd_9x18_MakarovSD",30],["30Rnd_545x39_AK",30],["30Rnd_545x39_AKSD",30],["1Rnd_HE_GP25",30],["FlareWhite_GP25",30],["FlareGreen_GP25",30],["FlareRed_GP25",30],["FlareYellow_GP25",30],["Handgrenade",30],["Pipebomb",30],["Laserbatteries",10]] ],
-					[["OfficerE"],[["Makarov",5],["AK74",5]],[["8Rnd_9x18_Makarov",30],["30Rnd_545x39_AK",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10]] ]
-					];
-			#endif
-			#ifdef __TT__
-					[
-					[["TeamLeaderW","SoldierWMedic","SquadLeaderW","TeamLeaderG","SoldierGMedic","SquadLeaderG"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10],["M136",10]] ],
-					[["SoldierWMiner","SoldierGMiner"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["Handgrenade",30],["PipeBomb",10],["Mine",10]] ],
-					[["SoldierWMG","SoldierGMG"],[["M9",5],["M4AIM",5],["M240",5],["M249",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["100Rnd_762x51_M240",30],["200Rnd_556x45_M249",30],["Handgrenade",30]] ],
-					[["SoldierWAT","SoldierGAT"],[["M9",5],["M16A2",5],["M16A4",5],["M4",5],["M4A1",5],["M4AIM",5],["MP5A5",5],["M136",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["30Rnd_9x19_MP5",30],["M136",30],["Handgrenade",30]] ],
-					[["SoldierWG","SoldierGG"],[["M4AIM",5],["M16A2GL",5],["M16A4_GL",5],["M16A4_ACG_GL",5],["M4GL",5],["M4A1GL",5]], [["30Rnd_556x45_Stanag",30],["1Rnd_HE_M203",30],["FlareWhite_M203",30],["FlareGreen_M203",30],["FlareRed_M203",30],["FlareYellow_M203",30],["Handgrenade",30]] ],
-					[["SoldierWSniper","SoldierWSaboteurMarksman","SoldierGSniper"],[["M9",5],["M4AIM",5],["M16A4_ACG",5],["M4SPR",5],["M107",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["5Rnd_762x51_M24",30],["10Rnd_127x99_M107",30]] ],
-					[["SoldierWSaboteurAssault"],[["M9SD",5],["M4AIM",5],["M4A1GL",5],["M4A1SD",5],["MP5SD",5],["Laserdesignator",5]],[["15Rnd_9x19_M9SD",30],["30Rnd_556x45_Stanag",30],["30Rnd_556x45_StanagSD",30],["30Rnd_9x19_MP5SD",30],["1Rnd_HE_M203",30],["FlareWhite_M203",30],["FlareGreen_M203",30],["FlareRed_M203",30],["FlareYellow_M203",30],["Handgrenade",30],["Pipebomb",30],["Laserbatteries",10]] ],
-					[["SoldierWSaboteurPipe","SoldierWSaboteurRecon","SoldierWSaboteurPipe2","SoldierGCommando"],[["M4AIM",5],["M4A1SD",5],["MP5SD",5],["Laserdesignator",5]],[["30Rnd_556x45_Stanag",30],["30Rnd_556x45_StanagSD",30],["30Rnd_9x19_MP5SD",30],["Pipebomb",30],["Laserbatteries",10]] ],
-					[["OfficerW","OfficerG"],[["M9",5],["M4AIM",5]],[["15Rnd_9x19_M9",30],["30Rnd_556x45_Stanag",30],["Handgrenade",30],["Smokeshell", 10],["Smokeshellred",10],["Smokeshellgreen",10]] ]
-					];
-			#endif
-	};
-};
 
 // WEST, EAST or RACS for own side, setup in x_setup.sqf
 #ifdef __OWN_SIDE_WEST__
@@ -943,6 +884,13 @@ d_helilift1_types =
 #ifdef __TT__
 	["M113_MHQ","M113Ambul","WarfareWestSalvageTruck","Truck5tRepair","Truck5tRefuel","Truck5tReammo","Truck5tOpen","Truck5tMG","Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","Stryker_TOW","HMMWVTOW","M113_RACS","Vulcan_RACS","Vulcan"] + _armor + _car;
 #endif
+
+// Allows to find all civilian vehicles (no trucks)
+ALL_CAR_ONLY_SEARCH_LIST = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ","ACE_HMMWV","tractor"
+#ifdef __ACE__
+,"ACE_Bicycle"
+#endif
+];
 
 #ifdef __TT__
 for "_i" from 0 to (count d_choppers_west - 1) do {

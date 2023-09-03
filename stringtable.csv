@@ -1006,7 +1006,7 @@ STR_SYS_1211,Points needed to build a NG nest:,"Punkte benötigt, um ein MG nest
 STR_SYS_1212,Points needed to call in an air drop:,"Punkte, die benötigt werden, um einen Lufttropfen einzuholen:",Puntos necesarios para la llamada de suministro:,Очков необходимо для вызова снабжения:
 STR_SYS_1213,Points for transporting other players:,Punkte für den Transport anderer Spieler:,Puntos por transporte de jugadores:,Очков за транспортировку игроков:
 STR_SYS_1214,Rank needed to fly the wreck lift chopper:,"Rang benötigt, um den Wracklift-Hubschrauber zu fliegen:",Rango que permite el pilotaje de un helicóptero para transportar equipo dañado:,"Звание, разрешающее пилотирование вертолёта для переноски подбитой техники:"
-STR_SYS_1215,Weapons limited:,Waffen limitiert:,Limitación de armas:,Ограничение вооружение:
+
 STR_SYS_1216,Air drop radius (0 = exact position):,Lufttropfenradius (0 = genaue Position):,Radio de reinicio de suministro (0 = posición exacta):,Радиус сброса снабжения (0 = точная позиция):
 STR_SYS_1217,Reload/refuel/repair time factor:,Faktor für das Nachladen / Auftanken / Reparieren:,Tiempo de ciclo de recarga/recarga/reparación:,Время цикла перезарядки/заправки/ремонта:
 STR_SYS_1218,Reload chaff and flare dispenser #%1,Chaff und Flare Dispenser nachladen #%1,Recarga del dispensador #%1 de chaff y flare ,Загрузка контейнера #%1 с патронами ЛТЦ и ДО
@@ -1498,6 +1498,8 @@ STR_SET_39_0,The mission uses all available equipment\n,Die Mission nutzt alle v
 STR_SET_40,Parajumps without parachute are allowed)))\n,Fallschirmsprünge ohne Fallschirm sind erlaubt)))\n,Los saltos en paracaídas sin paracaídas están permitidos)))\n,Прыжки без парашюта разрешены)))
 STR_SET_41,DOSAAF vehicles allowed\n,DOSAAF-Fahrzeuge präsentieren\n,Vehículos DOSAAF presentes\n,Присутствуют ДОСААФ машины\n
 STR_SET_42,"Parachute into the mission if your rank is lower than %1.\n","Fallschirmabsprung in eine Mission, wenn der Rang niedriger ist als %1.\n","Saltar en paracaídas en una misión si el rango es inferior a %1.\n","Заход в миссию на парашюте, если звание ниже чем %1.\n"
+STR_SET_43,"No grass: disabled.\n","Fallschirmabsprung in eine Mission, wenn der Rang niedriger ist als %1.\n","Saltar en paracaídas en una misión si el rango es inferior a %1.\n","Без травы: запрещено.\n"
+STR_SET_43_0,"No grass: allowed.\n","Kein Gras: erlaubt. \n","No hierba: permitido.\n","Без травы: разрешено.\n"
 
 STR_SPPM,SPPM :,SPPM :,SPPM :,СППМ :
 STR_SPPM_ADD,Add,Erstellen,Crear,Создать

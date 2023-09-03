@@ -4,6 +4,7 @@
  *
  */
  
+#include "x_setup.sqf"
 #include "x_macros.sqf"
 
 //#define __RESTORE_TREES__
@@ -268,8 +269,19 @@ SYG_makeRestoreArray = {
 //
 SYG_setGrassLevel = {
     private ["_real_list","_vlist"];
-    _real_list = [50, 25, 12.5];
-    _vlist = ["STR_GRASS_1","STR_GRASS_2","STR_GRASS_3"]; // "No Grass", "Medium Grass", "Full Grass"
+
+	_real_list = [
+#ifndef __WITH_GRASS_AT_START__
+	50,
+#endif
+//	25, 12.5];
+	25, 3.125];
+    _vlist = [
+#ifndef __WITH_GRASS_AT_START__
+    "STR_GRASS_1",
+#endif
+    "STR_GRASS_2","STR_GRASS_3"
+    ]; // <"No Grass",> "Medium Grass", "Full Grass"
     _this = (_this max 0) min ((count _real_list) - 1);
     if (d_graslayer_index != _this) then {
         d_graslayer_index = _this;

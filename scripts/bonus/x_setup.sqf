@@ -58,8 +58,8 @@
 //#define __D_VER_NAME__ "Domination! One Team - East Uhao"
 //#define __D_VER_NAME__ "Domination! Two Teams"
 
-// uncomment, if you want grass at mission start
-//#define __WITH_GRASS_AT_START__
+// uncomment, if you want grass at mission start and disable no grass setting
+#define __WITH_GRASS_AT_START__
 
 // uncomment, if you want the old intro
 //#define __OLD_INTRO__

@@ -261,7 +261,7 @@ if (X_Client) then {
     #endif
 
     d_viewdistance = 3500; // 1500; // default view distance diameter
-    d_graslayer_index = 0; // default graas level (no grass at all)
+    d_graslayer_index = 0; // default grass level (no grass at all)
     d_playermarker_index = 1; // default player marker: marker with name
     d_rebornmusic_index = 0; // default reborn music: play
 

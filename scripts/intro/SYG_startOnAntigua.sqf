@@ -27,11 +27,9 @@
 
 #define __JOKE__
 
-if (!isNil "antigua_initiated") exitWith {};
+if (!isNil "ALL_CAR_ONLY_TYPE_LIST") exitWith {};
 
-antigua_initiated = true;
-
-CAR_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
+ALL_CAR_ONLY_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 			  "hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open",
 			  "datsun1_civil_1_open","datsun1_civil_2_covered","datsun1_civil_3_open",
 			  "Landrover","Landrover_Closed","Landrover_Police",
@@ -60,8 +58,8 @@ for "_i" from 0 to 4 do {  // replace moto with 5 cars(0..4)
 	while {(_ind in _rep_list)} do { _ind = floor (random _cnt) }; // make it unique
 	_rep_list set [count _rep_list, _ind];
 
-	_car = CAR_TYPE_LIST call XfRandomArrayVal; // Select unique car type to replace select index of moto
-	while {(_car in _car_list)} do { _car = CAR_TYPE_LIST call XfRandomArrayVal }; // find unique type among already selected
+	_car = ALL_CAR_ONLY_TYPE_LIST call XfRandomArrayVal; // Select unique car type to replace select index of moto
+	while {(_car in _car_list)} do { _car = ALL_CAR_ONLY_TYPE_LIST call XfRandomArrayVal }; // find unique type among already selected
 	_car_list set [count _car_list, _car];
 
 	// replace moto[_ind] with car
