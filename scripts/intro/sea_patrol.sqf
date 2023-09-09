@@ -514,14 +514,14 @@ _resupply_boat = {
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // As: _usable_ship =[_boat, _grp, _wp_arr, _id, _state...] call _reset_roles; // true is ship is good, else bad
-// Try to fill driver and at least 1 gunner from cargo or driver from two gunners
+// Try to fill driver and at least 1 gunner from cargo or driver from any gunners
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _reset_roles = {
 	_stat = _this select OFFSET_STAT;
 	_units = _stat select OFFSET_STAT_UNITS;
 	if ( ( { alive _x } count _units ) == 0 ) exitWith {  // Nobody alive in crew, boat can't be supported more
 #ifdef __DEBUG__
-    	hint localize "+++ sea_patrol.sqf reset_roles: now alive crew return FALSE";
+    	hint localize "+++ sea_patrol.sqf reset_roles: all units are dead, return FALSE";
 #endif
 		false
 	};
@@ -640,7 +640,13 @@ while { true } do {
 	if ( X_MP && ( (call XPlayersNumber) == 0 ) ) then { // Not recreate patrol if no players
 		_printInfo = false;
 		_time = time;
-		hint localize format[ "*** sea_patrol.sqf: MAIN loop suspend due to players absent, all %1 patrols removed", count _patrol_arr ];
+		// Wait for the server to be empty for at least 30 minutes
+		_time_to_clear = _time + 1800;
+		while {( (call XPlayersNumber) == 0 ) && (time < _time_to_clear)} do {sleep 60};
+		if ( (call XPlayersNumber) != 0 ) exitWith {
+			hint localize format[ "*** sea_patrol.sqf: mission was empty too short period of %1 secs, no boats removed", round(time - time) ];
+		};
+		hint localize format[ "*** sea_patrol.sqf: MAIN loop suspended due to players absent, all %1 patrols removed", count _patrol_arr ];
 		{ sleep 1; _x call _remove_patrol } forEach _patrol_arr;
 
 		while {((call XPlayersNumber) == 0)} do { sleep 60 };
@@ -661,7 +667,7 @@ while { true } do {
 			if (!isNull _boat) then {
 				_grp  = _x select OFFSET_GRP;
 				_units = (_x select OFFSET_STAT) select OFFSET_STAT_UNITS;
-				// If patrol is not alive, skip it
+				// If patrol is not alive, skip it directly now
 				if ( (isNull _grp) || ( ({alive _x} count _units) == 0 ) || (!alive (driver _boat))) exitWith {
 					_x call _remove_patrol;
 				};
@@ -669,7 +675,7 @@ while { true } do {
                 for "_i" from _last to 0 step -1 do {
                 	deleteWaypoint [_grp, _i];
                 };
-				_pos = [d_island_center, _boat, 100000] call SYG_elongate2; // get pos 100 km out of boat pos in direction from island center
+				_pos = [d_island_center, _boat, 10000] call SYG_elongate2; // get pos 10 km out of boat pos in direction from island center
 				(driver _boat) moveTo _pos;
 				_grp setSpeedMode "FULL";
 			};
