@@ -83,11 +83,11 @@ _winner = 0;
 _say_time = time + SAY_INTERVAL;
 
 #ifndef __AI__
+// NO AI enabled
 while {!_hostages_reached_dest && !_all_dead} do {
     if (X_MP) then {
-        if ((call XPlayersNumber) == 0) then
-        {
-            waitUntil { sleep (10.0123 + random 1);(call XPlayersNumber) > 0 };
+        if ((call XPlayersNumber) == 0) then {
+            waitUntil { sleep (30.0123 + random 1);(call XPlayersNumber) > 0 };
         };
     };
 	if (({alive _x} count _units) == 0) then {
@@ -98,7 +98,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
 			_nobjs = nearestObjects [_leader, ["Man"], 15];
 			if (count _nobjs > 0) then {
 				{
-					if ((isPlayer _x) AND ((format ["%1", _x] in d_can_use_artillery) OR (leader group _x == _x))) exitWith {
+					if ((isPlayer _x) && ((format ["%1", _x] in d_can_use_artillery) OR (leader group _x == _x))) exitWith {
 						_rescued = true;
 						_retter = _x;
 						{
@@ -153,11 +153,14 @@ while {!_hostages_reached_dest && !_all_dead} do {
 	sleep 5.123;
 };
 #else
+// AI is enabled
 _retter = objNull;
 
 while {! (_hostages_reached_dest || _all_dead) } do {
 	if (X_MP) then {
-		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+		if ((call XPlayersNumber) == 0) then {
+			waitUntil {sleep (30 + random 1);(call XPlayersNumber) > 0};
+		};
 	};
 	if (({alive _x} count _units) == 0) exitWith {
 	    _all_dead = true;
@@ -177,6 +180,8 @@ while {! (_hostages_reached_dest || _all_dead) } do {
                     #ifdef __DEBUG_SM__
                      hint localize format["+++ x_sideprisoners.sqf: civilians resсued by %1", name _retter];
                     #endif
+                    // Print locality of the hostages before assigning to the player group
+                     hint localize format[ "+++ x_sideprisoners.sqf: civilian leader is%1 local to server just before resque", if (local _x) then {""} else {" not"} ];
                 };
                 sleep 0.01;
             } forEach _nobjs;
@@ -194,6 +199,14 @@ while {! (_hostages_reached_dest || _all_dead) } do {
     } else { // they are rescued
         {
             if ( (alive _x) && (_x distance FLAG_BASE < 20) ) exitWith {
+				// Print locality of the first hostages before mission finishing
+				{
+					if (alive _x) exitWith {
+						// Print locality of the hostages before assigning to the player group
+						hint localize format[ "+++ x_sideprisoners.sqf: 1st of civilian units is%1 local to server just before sidemission finishing", if (local _x) then {""} else {" not"} ];
+					};
+				} forEach _units;
+
                 _hostages_reached_dest = true;
                 if (__RankedVer) then {
                         ["d_sm_p_pos", position FLAG_BASE] call XSendNetVarClient;
