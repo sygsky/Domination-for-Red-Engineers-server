@@ -152,7 +152,7 @@ while { true } do {
                             };
                         } else {
 							// Allow Camel and DC3 to be visited with any weapons and at any rank
-                            if ( (_veh isKindOf "Plane") && (! ( (_veh call SYG_isParachute) || (_veh isKindOf "Camel") ) ) ) then {
+                            if ( (_veh isKindOf "Plane") && (! ((_veh isKindOf "Camel") || (_veh isKindOf "DC3")) ) ) then {
                                 _air_battle = true;
                                 if (_index < _indexplane) then {
                                     _not_allowed = true;
