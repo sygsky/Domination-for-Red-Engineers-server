@@ -80,6 +80,31 @@ hint localize format["+++ x_sideprisoners.sqf: civilians created %1", count _uni
 _winner = 0;
 #endif
 
+#ifndef __TT__
+#ifdef __RANKED__
+// Add "killed" event to each citizen to remove -5 on his killing
+{
+	if (alive _x) then {
+		_x addEventHandler ["killed",
+			{
+				private ["_score","_killer"];
+				_killer = _this select 1;
+				if (! (isNull _killer)) then { // killer known
+					if (isPlayer _killer) exitWith {
+						_score = -(d_ranked_a select 24); // -5 for killing of sidemission civilian
+						// "Soldier %1 killed a civilian from the current sidemission. The soldier is penalized for %2 points."
+						[ "change_score", name _killer, _score, ["msg_to_user", [ ["STR_SM_HOSTAGES_1", name _killer, _score ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClient;
+						hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1", name _killer];
+					};
+					hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1", name _killer];
+				};
+			}
+		];
+	};
+} forEach _units;
+#endif
+#endif
+
 _say_time = time + SAY_INTERVAL;
 
 #ifndef __AI__
