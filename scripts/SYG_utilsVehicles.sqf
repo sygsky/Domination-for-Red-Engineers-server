@@ -282,7 +282,7 @@ SYG_findPlayersOnBase = {
 	} forEach _nearArr;
 	_plNames
 };
-
+// _found_names = [_pos, _dist] call SYG_findNearestPlayers; // Include players in vehicles
 SYG_findNearestPlayers = {
     private ["_pos","_dist","_nearArr","_plNames","_x"];
     _pos  = _this select 0;

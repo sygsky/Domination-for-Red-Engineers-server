@@ -1,5 +1,5 @@
 /*
-	scripts\addMedTent.sqf: #598: add Mash to the new town
+	scripts\addMedTent.sqf: #598: add Mash to the new town, runs only on server
 	author: Sygsky
 	description: adds Medical text to the town/SM (in future)
 	call: (_wp_arr select _ind) execVM "scripts\addMedTent.sqf";
