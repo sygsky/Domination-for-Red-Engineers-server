@@ -12,11 +12,9 @@
 #define z(a) (if((count (a))>2)then{a select 2}else{0})
 
 /**
- *
+ * Calculates in 2-D dimension, new vector returned
  * call:
  *      pnt3 = [pnt1,pnt2] call SYG_vectorAdd;
- *
- *
  */
 SYG_vectorAdd = {
     private [ "_pnt1", "_pnt2" ];
@@ -26,12 +24,23 @@ SYG_vectorAdd = {
 };
 
 /**
- * Calculates in 2-D dimension
+ * Calculates in 3-D dimension, new vector returned
+ * call:
+ *      pnt3 = [pnt1,pnt2] call SYG_vectorAdd3D;
+ */
+SYG_vectorAdd3D = {
+    private [ "_pnt1", "_pnt2" ];
+	_pnt1 = _this select 0;
+	_pnt2 = _this select 1;
+	[x(_pnt1) + x(_pnt2), y(_pnt1) + y(_pnt2), z(_pnt1) + z(_pnt2)]
+};
+
+
+/**
+ * Calculates in 2-D dimension, new vector returned
  * =====================================================
  * call:
  *      pnt3 = [pnt1,pnt2] call SYG_vectorSub;
- *
- *
  */
 SYG_vectorSub = {
     private [ "_pnt1", "_pnt2" ];
@@ -41,12 +50,10 @@ SYG_vectorSub = {
 };
 
 /**
- * Calculates in 3-D dimension
+ * Calculates in 3-D dimension, new vector returned
  * =====================================================
  * call:
  *      pnt3 = [pnt1,pnt2] call SYG_vectorSub; // Creates vector pnt2 -> pnt1
- *
- *
  */
 SYG_vectorSub3D = {
     private [ "_pnt1", "_pnt2" ];
@@ -129,14 +136,26 @@ SYG_vectorDotProduct={
 };
 
 /**
- * _pnt = [_pnt , coeff] call SYG_multiplyPoint;
+ *  * Calculate in 2D, new vector returned
+ * _pnt = [_pnt , coeff] call SYG_multiplyVector;
  */
-SYG_multiplyPoint = {
+SYG_multiplyVector = {
     private ["_pnt", "_coeff"];
     _pnt = _this select 0;
     _coeff = _this select 1;
-    [argp(_pnt,X_POS) * _coeff, argp(_pnt,Y_POS) * _coeff, 0]
+    [x(_pnt) * _coeff, y(_pnt) * _coeff,  0]
 };
+/**
+ * Calculate in 3D, new vector returned
+ * _pnt = [_pnt , coeff] call SYG_multiplyVector3D;
+ */
+SYG_multiplyVector3D = {
+    private ["_pnt", "_coeff"];
+    _pnt = _this select 0;
+    _coeff = _this select 1;
+    [x(_pnt) * _coeff, y(_pnt) * _coeff,  z(_pnt) * _coeff]
+};
+
 /**
     https://nic-gamedev.blogspot.ru/2011/11/using-vector-mathematics-and-bit-of_08.html
 
@@ -173,7 +192,7 @@ SYG_closestPointOnLineSegment = {
     // hint localize _str;
     if ( _percAlongLine <= 0 ) exitWith {_this select 0};
     if ( _percAlongLine >= 1 ) exitWith {_this select 1};
-    [_this select 0, [_v1, _percAlongLine ] call SYG_multiplyPoint] call SYG_vectorAdd
+    [_this select 0, [_v1, _percAlongLine ] call SYG_multiplyVector] call SYG_vectorAdd
 };
 /**
  * =======================================================
@@ -222,7 +241,7 @@ SYG_rotatePointAroundPoint = {
 // adds difference point [dx,dy,dz] to the base point [X,Y,Z]
 // _newPos = [_basePos, _posOff] call SYG_addDiff2Pos;
 SYG_addDiff2Pos = {
-    private [ "_pos", "_offs", "_newPos" ];
+    private [ "_pos", "_offs", "_newPos", "_x" ];
     _pos =  _this select 0;
     _offs = _this select 1;
     _newPos = [];

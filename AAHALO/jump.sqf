@@ -71,36 +71,42 @@ if (_use_wind) then { // emulate sea wind if jump above sea
 	_water_count = 0;
 	_offsets = [-JUMP_DISPERSION,0, +JUMP_DISPERSION]; // offsets on X and Y to create check matrix 3 x 3 of dimension
 	// _offsets = [-JUMP_DISPERSION,-JUMP_DISPERSION/2,0, +JUMP_DISPERSION/2,+JUMP_DISPERSION]; // offsets on X and Y to create check matrix 5 x 5 on dimensiono
-	for "_x" from 0 to (count _offsets)-1 do {
-		_pos set [0, (_start_location select 0) + (_offsets select _x)];
-		for "_y" from 0 to (count _offsets)-1 do {
+	_last = (count _offsets)-1;
+	_start_x = (_start_location select 0);
+	_start_y = (_start_location select 1);
+	for "_x" from 0 to _last do {
+		_pos set [0, _start_x + (_offsets select _x)];
+		for "_y" from 0 to _last do {
 			// skip central point from counting
 			if (_x != 1 || _y != 1) then {
-				_pos set [1, (_start_location select 1) + (_offsets select _y)];
+				_pos set [1, _start_y + (_offsets select _y)];
 				if (surfaceIsWater _pos) then { _water_count = _water_count + 1};
 			};
 		};
 	};
 
-	// if 2 or more points in 3x3 grid with 1 km sides are on land, no ocean wind effect will be applied, else wind is very-very strong))
+	// if 2 or more points in 3x3 (except central point) grid with 1 km sides are on land, no ocean wind effect will be applied, else wind is very-very strong))
 	_wind_arr = wind;
 	if (_water_count >= ((count _offsets) ^ 2 - 2) ) then { // player jumps over sea surface, add strong wind effect
 		_len = _wind_arr distance [0,0,0]; // scalar vector length
 		//  shift 300 to 3500 meters from the original start point for gliding para or 300 to 1000 for round one
 		_shift = MIN_SHIFT max (random ( _shift min MAX_SHIFT) );
-		_dx = ((_wind_arr select 0) / _len) * _shift;
-		_dy = ((_wind_arr select 1) / _len) * _shift;
-		_dz = ((_wind_arr select 2) / _len) * _shift;
-		_start_location set [0, (_start_location select 0) + _dx];
-		_start_location set [1, (_start_location select 1) + _dy];
-		_start_location set [2, (_start_location select 2) + _dz];
+//		_dx = ((_wind_arr select 0) / _len) * _shift;
+//		_dy = ((_wind_arr select 1) / _len) * _shift;
+//		_dz = ((_wind_arr select 2) / _len) * _shift;
+		_shift_vec = [_use_wind, _shift / _len] call SYG_multiplyVector3D;
+//		_start_location set [0, (_start_location select 0) + _dx];
+//		_start_location set [1, (_start_location select 1) + _dy];
+//		_start_location set [2, (_start_location select 2) + _dz];
+		_start_location = [_start_location, _shift_vec] call SYG_vectorAdd3D;
 		_str_dir = ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirName;
 		if ( _shift > 50 ) then {
-			format[localize "STR_SYS_76", round(_shift / 20) * 20, _str_dir] call XfHQChat; // “A strong ocean wind blew the parachute off”
+			format[localize "STR_SYS_76", [_shift, 20] call SYG_roundTo, _str_dir] call XfHQChat; // "Due to the strong wind over the ocean, you jumped a little wrong: %1 m. to %2"
 		};
 		hint localize format["+++ jump.sqf: wind %1 (dir %2), dispersion is %3 [%4,%5,%6] m, water count %7 of %8",
 			_wind_arr, ([[0,0,0],_wind_arr] call XfDirToObj) call SYG_getDirNameEng,
-			round(_shift), round(_dx), round(_dy), round(_dz), _water_count, ((count _offsets) * (count _offsets) - 1) ];
+//			round(_shift), round(_dx), round(_dy), round(_dz), _water_count, ((count _offsets) * (count _offsets) - 1) ];
+			round(_shift), round(_shift_vec select 0), round(_shift_vec select 1), round(_shift_vec select 1), _water_count, ((count _offsets) * (count _offsets) - 1) ];
 	};
 };
 #endif
