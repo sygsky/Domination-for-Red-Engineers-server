@@ -41,10 +41,14 @@ if ( !alive player ) then {
 #include "x_macros.sqf"
 
 _test = false; // defines if this is test call or real one
+_msg1 = localize "STR_JAIL_1"; //"Hint: You have been punished for having a negitive score",
 if ( typeName _this == "ARRAY") then {
     if ( count _this > 3) then { // test call from test action at flag
         _test = (typeName (_this select 3) == "STRING") && ((_this select 3) == "TEST");
     };
+} else {
+	// May replace the 1st message with custom one
+	if (typeName _this == "STRING") then {_msg1 = localize "STR_RADAR_KILLED"}; // "Hint: You're being punished for destroying a GRU mast. Are you not a spy?"
 };
 _playerPos = getPos player;
 _playerDir = getDir player;
@@ -95,13 +99,14 @@ player setDamage 0;
 player setVelocity [0,0,0];
 player playMove "AmovPercMstpSnonWnonDnon"; // stand up!
 
-_score = -((score player)-JAIL_START_PERIOD);
+_score = [ (abs((score player)-JAIL_START_PERIOD)) min 80, 10 ] call SYG_roundTo; // Minimum 80 seconds, max has no limits
 
 _wpn = weapons player;
 _mags = magazines player;
 if (!_test) then {
-    removeAllWeapons player; // TODO: remove ACE backpack too
+    removeAllWeapons player;
 #ifdef __ACE__
+ 	// remove ACE backpack too
     player setVariable ["ACE_weapononback",nil];
     player setVariable ["ACE_Ruckmagazines", nil];
 #endif
@@ -160,9 +165,9 @@ hint localize _str;
 //if (bancount > 2) exitWith {hint "press Alt + F4 to exit"};
 
 _msg_arr = [
-   localize "STR_JAIL_1",//"Hint: You have been punished for having a negitive score",
+   _mag1,                                //"Hint: You have been punished for having a negitive score",
    format[localize "STR_JAIL_2",_score], //format["You will regain control after you have served your sentence of %1 seconds",
-   localize "STR_JAIL_3"//"Or you can press  Alt + F4 to exit"
+   localize "STR_JAIL_3"                 //"Or you can press  Alt + F4 to exit"
 ];
 
 //================================= select sound for this day

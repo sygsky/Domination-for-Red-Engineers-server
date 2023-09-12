@@ -1,4 +1,5 @@
 /*
+	By Sygsky: scripts\addScore.sqf
 	author: Sygsky, called only for debug purposes
 	description:
         Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]

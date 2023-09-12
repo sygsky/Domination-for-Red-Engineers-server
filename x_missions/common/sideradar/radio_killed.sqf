@@ -21,7 +21,13 @@ _cnt = 1;
 _killed = _this select 0;
 _pos = getPos _killed;
 
-hint localize format[ "+++ radio_killed.sqf: radar deleted by %1 at %2; status = %3", _name, [_this select 0, 10] call SYG_MsgOnPosE0, sideradio_status ];
+hint localize format[ "+++ radio_killed.sqf: radar deleted by %1 at %2; status = %3, send %1 to the jail", _name, [_this select 0, 10] call SYG_MsgOnPosE0, sideradio_status ];
+//#648 - handle with mast killed. In future - restart mission from the scratch, now - sen dkilled to the jail
+if (isPlayer _killer) then {
+	while { !alive _killer } do { sleep 0.1 };
+	sleep 0.2;
+	[localize "STR_RADAR_KILLED"] execVM "scripts\jail.sqf"; // "Hint: You're being punished for destroying a GRU mast. Are you not a spy?"
+};
 
 // remove radar after 10 minutes of players absence around 300 meters of radar.
 while {!(isNull _killed)} do {
