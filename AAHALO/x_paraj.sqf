@@ -14,8 +14,8 @@ _ind = (SPAWN_INFO select 0) find new_paratype;
 
 // Check if parachute  is absent or is unknown
 if (_ind < 0 ) then { _ind = 1 }; // "ACE_ParachuteRoundPack" is default
-_rect = (SPAWN_INFO select 2) select _ind; // Second spawn rectangle with height of central point as default
-new_height = _rect select 2;
+_rect = ((SPAWN_INFO select 2) select _ind) select 0; // Second spawn rectangle with height of central point as default
+new_height = _rect select 2; // Use Z as height
 
 hint localize format["+++ x_paraj.sqf: _this = %1, weapons = %2, height is %3, pos %4", _this, weapons _unit, new_height, (_this select 1) call SYG_msgOnPosE0];
 
