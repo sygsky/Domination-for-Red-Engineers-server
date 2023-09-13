@@ -237,7 +237,7 @@ while {fuel _veh < 0.9} do {
 
     _pos1 = getPos _veh;
 	if ( (_pos distance _pos1) > 0.5) exitWith {// vehicle moved from service, so stop refueling
-	    hint localize format["+++ x_reload.sqf: %1 refueling aborted, fuel %12 (pos_orig %3) distance (pos_now %4) = %5", typeOf _veh, fuel _veh, _pos, getPos _veh, _pos distance _veh];
+//	    hint localize format["+++ x_reload.sqf: %1 refueling aborted, fuel %12 (pos_orig %3) distance (pos_now %4) = %5", typeOf _veh, fuel _veh, _pos, getPos _veh, _pos distance _veh];
         [_veh, format [localize "STR_SYS_257_1", _type_name]] call XfVehicleChat; // "Refueling is interrupted, the hose came off"
 	};
 	sleep 0.3;
