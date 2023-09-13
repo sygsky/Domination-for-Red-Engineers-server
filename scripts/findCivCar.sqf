@@ -11,6 +11,25 @@
 
 	returns: nothing
 */
+
+if (!X_Server) exitWith { // Client
+	// Search for cars nearby
+	_arr = nearestObjects [_pos, ALL_CAR_ONLY_SEARCH_LIST, RADIUS_TO_FIND_CAR];
+	_car = objNull;
+	{
+		if ( (alive _x) && ( (speed _x) < 1 ) ) exitWith { // Send message to the player about car found
+			_car  = _x;
+			// "The car (%1) is detected at %2"
+			["msg_to_user","*",[["localize", "STR_CAR_FOUND", typeOf _car, [_car, 50] call SYG_MsgOnPos0], 0, 0, false, "losing_patience" ]] call SYG_msgToUserParser;
+		};
+	} forEach _arr;
+	if ( !isNull _car ) exitWith {};
+	// Execute remote command to create/move free car
+	["remote_execute", format ["[""CREATE"",%1] execVM ""scripts\findCivCar.sqf""", getPos _car]] call XSendNetStartScriptServer;
+	// Send message about cars absence and run car creation/search on server
+	["msg_to_user","*",[["localize", "STR_CAR_FOUND", typeOf _car, [_car, 50] call SYG_MsgOnPos0], 0, 0, false, "losing_patience" ]] call XHandleNetStartScriptClient;
+};
+
 if (isNil "FREE_CAR_LIST") then { FREE_CAR_LIST = [] };
 
 #include "x_setup.sqf"

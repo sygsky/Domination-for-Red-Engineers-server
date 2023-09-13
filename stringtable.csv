@@ -1039,6 +1039,9 @@ STR_SYS_SERVICE_DMG_1,One of the services of the base was damaged by saboteurs!,
 STR_SYS_NEW_YEAR,"For combat activity on New Year's Eve, the chief engineer awards you +%1 points.","Für die Kampftätigkeit in der Silvesternacht erhalten Sie vom Chefingenieur +%1 Punkte.","Por la actividad de combate en la víspera de Año Nuevo, el ingeniero jefe le otorga +%1 puntos","За боевую активность в Новый Год главный инженер вручает Вам +%1 очков"
 STR_SYS_NEW_YEAR_START,"The New Year's Eve Combat Check Procedure has begun!","Das Verfahren zur Überprüfung des Silvesterkampfes hat begonnen","¡El procedimiento de selección para el combate de Año Nuevo ha comenzado!","Процедура новогодней проверки боевой активности началась!"
 
+STR_CAR_FOUND,"The car (%1) is detected at %2","Fahrzeug entdeckt (%1), Position bei %2","Vehículo detectado (%1), posición en %2","Машина (%1) обнаружена, поз. %2"
+STR_CAR_NOT_FOUND,"No cars found in the vicinity. Try again... a little later","Keine Autos in der Nähe gefunden. Versuchen Sie es später noch einmal...","No se han encontrado coches en los alrededores. Inténtelo de nuevo... un poco más tarde","Машин поблизости не найдено. Попробуйте ещё раз... чуть позже"
+
 STR_AI_0,Call in Air Taxi,Rufen Sie in Luft-Taxi,Llamar a un helicóptero,Вызвать вертолёт
 STR_AI_1,Recruit Soldier,Rekrut Soldat,Llamar a la infantería,Призвать в пехоту
 STR_AI_2,Recruit AT Soldier,Der Rekrut AUF Soldat,Llamar a un especialista en RPG,Призвать РПГ-специалиста
