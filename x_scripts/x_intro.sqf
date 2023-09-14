@@ -1135,7 +1135,7 @@ if (_doJump) then {
     waitUntil { sleep 0.132; (!alive player) || (vehicle player != player) || ( ( ( getPos player ) select 2 ) < 5 ) };
     if ( (vehicle player) != player ) then { // parachute is on!
 
-		hint localize format["+++ x_intro.sqf: removing parachute ""%1"", has ""%2""", _para, player call SYG_getParachute];
+		hint localize format["+++ x_intro.sqf: at jump end will remove parachute ""%1"", has ""%2""", _para, player call SYG_getParachute];
 		if ( _para != "") then {
 			waitUntil {alive player};
 			player removeWeapon _para;

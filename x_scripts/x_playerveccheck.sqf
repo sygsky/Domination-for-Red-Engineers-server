@@ -152,7 +152,7 @@ while { true } do {
                             };
                         } else {
 							// Allow Camel and DC3 to be visited with any weapons and at any rank
-                            if ( (_veh isKindOf "Plane") && (! ((_veh isKindOf "Camel") || (_veh isKindOf "DC3")) ) ) then {
+                            if ( (_veh isKindOf "Plane") && (! (( _veh call SYG_isParachute) || (_veh isKindOf "Camel") || (_veh isKindOf "DC3") ) ) ) then {
                                 _air_battle = true;
                                 if (_index < _indexplane) then {
                                     _not_allowed = true;
@@ -186,7 +186,7 @@ while { true } do {
                 };
             };
 		#endif
-        } else { // not in native vehicle on base, is player is in executing GRU mission? check his options!
+        } else { // not in native vehicle on base, is player on executing GRU mission? check his options!
             // check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
             _not_allowed =  !(_veh isKindOf "Motorcycle" || _veh isKindOf "ACE_ATV_HondaR" || _veh isKindOf "Truck5t" || _veh isKindOf "Ural" || _veh isKindOf "Zodiac");
         };
