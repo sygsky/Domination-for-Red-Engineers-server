@@ -165,7 +165,7 @@ hint localize _str;
 //if (bancount > 2) exitWith {hint "press Alt + F4 to exit"};
 
 _msg_arr = [
-   _mag1,                                //"Hint: You have been punished for having a negitive score",
+   _msg1,                                //"Hint: You have been punished for having a negitive score",
    format[localize "STR_JAIL_2",_score], //format["You will regain control after you have served your sentence of %1 seconds",
    localize "STR_JAIL_3"                 //"Or you can press  Alt + F4 to exit"
 ];

@@ -26,7 +26,7 @@ hint localize format[ "+++ radio_killed.sqf: radar deleted by %1 at %2; status =
 if (isPlayer _killer) then {
 	while { !alive _killer } do { sleep 0.1 };
 	sleep 0.2;
-	[localize "STR_RADAR_KILLED"] execVM "scripts\jail.sqf"; // "Hint: You're being punished for destroying a GRU mast. Are you not a spy?"
+	(localize "STR_RADAR_KILLED") execVM "scripts\jail.sqf"; // "Hint: You're being punished for destroying a GRU mast. Are you not a spy?"
 };
 
 // remove radar after 10 minutes of players absence around 300 meters of radar.
