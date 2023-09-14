@@ -12,7 +12,9 @@
 	returns: nothing
 */
 
-if (!X_Server) exitWith { // Client
+_pos = _this;
+
+if (X_Client) exitWith { // Pure Client
 	// Search for cars nearby
 	_arr = nearestObjects [_pos, ALL_CAR_ONLY_SEARCH_LIST, RADIUS_TO_FIND_CAR];
 	_car = objNull;
@@ -30,6 +32,7 @@ if (!X_Server) exitWith { // Client
 	["msg_to_user","*",[["localize", "STR_CAR_FOUND", typeOf _car, [_car, 50] call SYG_MsgOnPos0], 0, 0, false, "losing_patience" ]] call XHandleNetStartScriptClient;
 };
 
+// Server side code
 if (isNil "FREE_CAR_LIST") then { FREE_CAR_LIST = [] };
 
 #include "x_setup.sqf"
@@ -38,13 +41,13 @@ if (isNil "FREE_CAR_LIST") then { FREE_CAR_LIST = [] };
 #define RADIUS_TO_CREATE_CAR 400
 #define            MAX_COUNT 5
 
-_pos = _this;
 
 // 1. Clear lits just in case
 private ["_car"];
 
 _removed = false;
-for "_i" from 0 to _cnt do {
+_end = (count FREE_CAR_LIST) -1;
+for "_i" from 0 to _end do {
 	_car = FREE_CAR_LIST select _i;
 		if (!alive _car) then {
 			if (!isNull _car) then {
@@ -54,7 +57,7 @@ for "_i" from 0 to _cnt do {
 			};
 		};
 };
-if (_removed) then {FREE_CAR_LIST call SYG_cleanArray};
+if (_removed) then { FREE_CAR_LIST call SYG_cleanArray };
 
 // 2. Find nearest car
 _arr = nearestObjects [_pos, ALL_CAR_ONLY_SEARCH_LIST, RADIUS_TO_FIND_CAR];

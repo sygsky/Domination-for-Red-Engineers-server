@@ -257,6 +257,14 @@ SYG_roundTo = {
     (round((_this select 0)/_bound)) * _bound
 };
 
+SYG_distRoundTo = {
+    private ["_dist","_bound"];
+    _dist = _this select 0;
+    _bound = _this select 1;
+    if ( _dist < _bound) exitWith { round _dist }; // Return meters if distance less then bound size
+    (round( _dist /_bound)) * _bound
+};
+
 /**
  * Added on 22-11-2022 by Rokse [LT] request
  * Handles with waypoints, call it on the client ONLY:

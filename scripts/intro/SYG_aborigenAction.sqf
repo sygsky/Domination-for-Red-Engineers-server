@@ -518,7 +518,7 @@ switch ( _arg ) do {
 			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat; // "Looks like there aren't any guns here, hehe"
 		};
 		_txt = format[ localize "STR_ABORIGEN_WEAPON_INFO", // I saw some kind of weapon at %1 m towards %2%3
-               				(round (([player,_arr select 0] call SYG_distance2D) / 10)) * 10,
+               				round ([player,_arr select 0] call SYG_distance2D),
                				([player, _arr select 0] call XfDirToObj) call SYG_getDirName,
                				if ((_arr select 0) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
 		hint localize format["+++ WEAPON: %1", _txt];
