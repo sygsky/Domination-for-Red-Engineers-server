@@ -353,8 +353,12 @@ if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already v
 
 	//+++ Added by #644, request by Yeti: AA missiles are very needed if any enemy plane is in air near Antigua
 	_box addWeaponCargo ["ACE_Strela",3];
-	_box addMagazineCargo ["ACE_Strela",5];
+	_box addMagazineCargo ["ACE_Strela",15];
 	//--- Added by #644, request by Yeti
+	//+++ Added by #649, request by Rokse: AT missiles are very needed if enemy armours are on Antigua.
+	_box addWeaponCargo ["ACE_RPG7",3];
+	_box addMagazineCargo ["ACE_RPG7_PG7VL",15];
+	//--- Added by #649, request by Rokse
 
 	[] execVM "scripts\intro\aborigenInit.sqf";
 };
