@@ -62,7 +62,7 @@ _find_air_pos  = {
 		sleep 0.1;
 	};
     // select random air point
-    _cnt = count _pos_arr;
+    _cnt = count _posArr;
     _posArr = _posArr call XfRandomArrayVal;
     hint localize format[ "+++ bonus_air_pos.sqf:  %1 call _find_air_pos -> %2 from %3 points", _this, _posArr, _cnt ];
 	_posArr
