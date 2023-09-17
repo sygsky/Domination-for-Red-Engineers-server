@@ -73,7 +73,7 @@ SYG_createBonusVeh = {
 		_time = time;
 		_hnd = _pos execVM "scripts\bonus\bonus_air_pos.sqf"; //pos and dir are returned in _pos array as [_pos, _dir]
 		waitUntil {sleep 0.1; scriptDone _hnd};
-		hint localize format["+++ SYG_createBonusVeh: plane %1, delta time %2, new pos data %3", typeOf _veh, time - _time, _pos];
+		hint localize format["+++ SYG_createBonusVeh: plane %1, delta time %2, new pos data %3", _type, time - _time, _pos];
 		_pos = _pos select 0;
 		_dir = _pos select 1;
 	};
@@ -88,6 +88,7 @@ SYG_createBonusVeh = {
 		objNull
 	};
 	_veh setDir _dir;
+	_veh setPos (getPos _veh);
     if ( !( _veh isKindOf "Ship" ) ) then {
     	_fuel = _veh call SYG_fuelCapacity;
     	if (_fuel == 0) then {
