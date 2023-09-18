@@ -94,7 +94,7 @@ if (_use_wind) then { // emulate sea wind if jump above sea
 //		_dx = ((_wind_arr select 0) / _len) * _shift;
 //		_dy = ((_wind_arr select 1) / _len) * _shift;
 //		_dz = ((_wind_arr select 2) / _len) * _shift;
-		_shift_vec = [_use_wind, _shift / _len] call SYG_multiplyVector3D;
+		_shift_vec = [_wind_arr, _shift / _len] call SYG_multiplyVector3D;
 //		_start_location set [0, (_start_location select 0) + _dx];
 //		_start_location set [1, (_start_location select 1) + _dy];
 //		_start_location set [2, (_start_location select 2) + _dz];
