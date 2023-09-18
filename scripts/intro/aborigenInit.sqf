@@ -26,7 +26,7 @@ hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf a
 
 {
 	aborigen addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
-} forEach ["NAME", "BOAT", "CAR", "PLANE", "WEAPON", "MEN", "FAQ", "RUMORS", "GO"];
+} forEach ["NAME", "BOAT", "CAR", "AIR", "WEAPON", "MEN", "FAQ", "RUMORS", "GO"];
 
 //  Add actions for some objects around the tent
 _arr = nearestObjects [spawn_tent, ["CampEast","Land_hlaska","BarrelBase","ReammoBox"], 50];

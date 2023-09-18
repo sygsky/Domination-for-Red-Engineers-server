@@ -15,9 +15,8 @@
 #define ABO_BOAT_MARKER "aborigen_boat"
 #define BOAT_EMPTY_TIME 600
 
-#include "camel_setup.sqf"
-
 #include "x_setup.sqf"
+#include "air_setup.sqf"
 
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenAction.sqf: unknown _this = %1", _this]};
 
@@ -113,7 +112,6 @@ switch ( _arg ) do {
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		if ( !alive _boat ) then { // Assign boat among boat markers groups containing  more than 1 boat
 			_marker_arr = [];
-			_exit = false;
 			for "_i" from 1 to 100 do {
 				if (_i != 13) then { // skip boats on Antigua from calculations
 					_marker = format["boats%1", _i];
@@ -390,14 +388,18 @@ switch ( _arg ) do {
 #endif
 	};
 
-	case "PLANE" : { // ask about plane
+	case "AIR" : { // ask about plane and heli
 		// check if plane is on place
 		_ask_server = isNil "aborigen_plane";
-		if ( !_ask_server ) then{ _ask_server = !alive aborigen_plane; };
+		if ( !_ask_server ) then { _ask_server = !alive aborigen_plane; };
 		if ( _ask_server ) then {
 			["remote_execute","[] execVM ""scripts\intro\camel.sqf"""] call XSendNetStartScriptServer;
 			_time = time + 5;
-			while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
+			if (isNil "aborigen_plane") then {
+				while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
+			} else {
+				while {(! alive aborigen_plane) && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
+			};
 			if (isNil "aborigen_plane") exitWIth {
 				player groupChat (localize "STR_ABORIGEN_PLANE_UNKNOWN"); // "An airplane? А... No, it's not here, maybe it'll come later?"
 				hint localize "--- ABO PLANE: biplan isNil 5 seconds later after call to camel.sqf on server, so exit"
@@ -405,7 +407,6 @@ switch ( _arg ) do {
 			hint localize "+++ ABO PLANE: server request completed, plane found";
 		};
 
-		_exit = false;
 		_dist = [aborigen_plane, PLANE_POS] call SYG_distance2D;
 		hint localize format["+++ ABO PLANE: plane dist to the main point is %1, allowed 20 m.", round _dist];
 		if ( _dist > 20) then { // plane not on place
@@ -431,7 +432,6 @@ switch ( _arg ) do {
 				player groupChat (format[localize "STR_ABORIGEN_PLANE_BUSY", name (driver aborigen_plane)]); // "The plane flew away, with the pilot '%1'."
 				playSound "losing_patience";
 				hint localize format["+++ ABO PLANE: plane is occupied by %1, exit!!!", name (driver aborigen_plane)];
-				_exit = true;
 			};
 			// Plane is free and can be moved to the Antigua airstrip
 			["say_sound", aborigen_plane, "steal"] call XSendNetStartScriptClientAll;
@@ -443,85 +443,130 @@ switch ( _arg ) do {
 			["say_sound", aborigen_plane, "return"] call XSendNetStartScriptClientAll;
 			hint localize format["+++ ABO PLANE: positioned on the place. Pos %1, dist %2", getPos aborigen_plane, round(aborigen_plane distance PLANE_POS) ];
 		};
-		if (_exit) exitWith {};
-
+		if (!_plane_busy) then {
 #ifdef __ACE__
-		// #624: Bicycle request joined with plane one.
-		// check if bicycle is near tent
-		hint localize "+++ ABO PLANE: bicycle search";
-		_bicycle = nearestObject [spawn_tent,"ACE_Bicycle"];
-		_sound = "";
-		if (!(isNull _bicycle)) then { // Found bicycle
-			if (alive _bicycle) then { // Alive bicycle
-				hint localize format["+++ ABO PLANE: ALIVE (damage %1) bicycle found near spawn_tent ", damage _bicycle];
-				_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
-						else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
-				player groupChat ( localize _msg );
-			} else {
-				hint localize "+++ ABO PLANE: DEAD bicycle found near spawn_tent";
-				player groupChat (localize "STR_ABORIGEN_BICYCLE_2"); // "Walk to the plane. My bicycle is broken..."
-			};
-		} else {
-			hint localize "+++ ABO PLANE: near spawn_tent bicycle NOT found, search on whole islet";
-			_arr = nearestObjects [aborigen, ["ACE_Bicycle"],2000];
-			if (count _arr > 0) then { // some bicycle found on island
-				// find nearest alive bicycle and move it to the tent if needed
-				_bicycle = objNull;
-				{	// find nearest alive bicycle without driver
-					if ((alive _x) && (isNull driver _x)) exitWith { _bicycle = _x };
-				} forEach _arr;
-				if (alive _bicycle) then { // Empty bicycle found, try to move close to the tent
-					hint localize "+++ ABO PLANE: bicycle alive found, check if need to move it to the spawn_tent position";
-					if ((_bicycle distance aborigen) < 15) then {
-						hint localize "+++ ABO PLANE: bicycle alive found near aborigen no need to move it to the spawn_tent position";
-						player groupChat ( localize "STR_ABORIGEN_BICYCLE_1_1"); // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
-					} else {
-						if ( (_bicycle distance POS_BICYCLE) > 5) then {
-							_bicycle setPos POS_BICYCLE;
-							sleep 0.2;
-							_sound = "return";
-						};
-						if ( (_bicycle distance POS_BICYCLE) < 5) then {
-							_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
-									else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
-							player groupChat (localize _msg); // ???
-						} else {
-							hint localize "--- ABO PLANE: bicycle cant' be moved to the pos near spawn_tent";
-							player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
-						};
-					};
+			// #624: Bicycle request joined with plane one.
+			// check if bicycle is near tent
+			hint localize "+++ ABO PLANE: bicycle search";
+			_bicycle = nearestObject [spawn_tent,"ACE_Bicycle"];
+			_sound = "";
+			if (!(isNull _bicycle)) then { // Found bicycle
+				if (alive _bicycle) then { // Alive bicycle
+					hint localize format["+++ ABO PLANE: ALIVE (damage %1) bicycle found near spawn_tent ", damage _bicycle];
+					_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
+							else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
+					player groupChat ( localize _msg );
 				} else {
-					hint localize "--- ABO PLANE: bicycle alive NOT found on island";
-					player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+					hint localize "+++ ABO PLANE: DEAD bicycle found near spawn_tent";
+					player groupChat (localize "STR_ABORIGEN_BICYCLE_2"); // "Walk to the plane. My bicycle is broken..."
 				};
 			} else {
-				hint localize "--- ABO PLANE: bicycle (alive or dead) NOT FOUND on Antigua, that is very strange!!!";
-				player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+				hint localize "+++ ABO PLANE: near spawn_tent bicycle NOT found, search on whole islet";
+				_arr = nearestObjects [aborigen, ["ACE_Bicycle"],2000];
+				if (count _arr > 0) then { // some bicycle found on island
+					// find nearest alive bicycle and move it to the tent if needed
+					_bicycle = objNull;
+					{	// find nearest alive bicycle without driver
+						if ((alive _x) && (isNull driver _x)) exitWith { _bicycle = _x };
+					} forEach _arr;
+					if (alive _bicycle) then { // Empty bicycle found, try to move close to the tent
+						hint localize "+++ ABO PLANE: bicycle alive found, check if need to move it to the spawn_tent position";
+						if ((_bicycle distance aborigen) < 15) then {
+							hint localize "+++ ABO PLANE: bicycle alive found near aborigen no need to move it to the spawn_tent position";
+							player groupChat ( localize "STR_ABORIGEN_BICYCLE_1_1"); // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
+						} else {
+							if ( (_bicycle distance POS_BICYCLE) > 5) then {
+								_bicycle setPos POS_BICYCLE;
+								sleep 0.2;
+								_sound = "return";
+							};
+							if ( (_bicycle distance POS_BICYCLE) < 5) then {
+								_msg = if ((_bicycle distance aborigen) < 15) then {"STR_ABORIGEN_BICYCLE_1_1"} // "Ride my bike (there it is, there) to get to the plane... Don't fall down (with a kind smile)"
+										else {"STR_ABORIGEN_BICYCLE_1"}; // "Use the bike to get to the plane. It's somewhere near the tent...".
+								player groupChat (localize _msg); // ???
+							} else {
+								hint localize "--- ABO PLANE: bicycle cant' be moved to the pos near spawn_tent";
+								player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+							};
+						};
+					} else {
+						hint localize "--- ABO PLANE: bicycle alive NOT found on island";
+						player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+					};
+				} else {
+					hint localize "--- ABO PLANE: bicycle (alive or dead) NOT FOUND on Antigua, that is very strange!!!";
+					player groupChat (localize "STR_ABORIGEN_BICYCLE_3"); // "Walk to the plane. Someone stole my bicycle that my grandfather gave me..."
+				};
 			};
-		};
-		// Repair and say sound if needed
-		if (alive _bicycle) then {
-			if (damage _bicycle > 0.01) then {
-				_bicycle setDamage 0; // Repair the bicycle, play heal sound
-				if (_sound == "") then { _sound = "healing";};
+			// Repair and say sound if needed
+			if (alive _bicycle) then {
+				if (damage _bicycle > 0.01) then {
+					_bicycle setDamage 0; // Repair the bicycle, play heal sound
+					if (_sound == "") then { _sound = "healing";};
+				};
+				if (_sound != "") then {_bicycle say _sound;};
 			};
-			if (_sound != "") then {_bicycle say _sound;};
-		};
 #endif
-		player groupChat (localize "STR_ABORIGEN_PLANE_INFO"); // "An airplane? There's a Sopwich (WWI) standing on the runway. I don't know about the fuel or the pilot..."
+			player groupChat (localize "STR_ABORIGEN_PLANE_INFO"); // "An airplane? There's a Sopwich (WWI) standing on the runway. I don't know about the fuel or the pilot..."
+		};
+
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++       We'll play with the abo helicopter the same way         +++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		_wait_heli  = false;
+		if ((isNil "aborigen_heli") || (!alive aborigen_heli)) then {
+			["remote_execute","[] execVM ""scripts\intro\heli.sqf"""] call XSendNetStartScriptServer;
+			_wait_heli = true;
+		};
+		_ready_to_mark = true;
+		if (_wait_heli) then {
+			_time = time + 5;
+			if (isNil "aborigen_plane") then {
+				while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
+			} else {
+				while {(! alive aborigen_plane) && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
+			};
+			if ( (isNil "aborigen_plane") || (!(alive  aborigen_plane)) ) exitWith {
+				player groupChat (localize "STR_ABORIGEN_HELI_UNKNOWN"); // "A heli? А... No, it's not here, maybe it'll come later?"
+				hint localize "--- ABO HELI: isNil 5 seconds later after call to heli.sqf on server, so exit";
+				_ready_to_mark = false;
+			};
+		} else { // check heli to be busy: is it flying, is it out of base rectangle?
+			if ( ( {alive _x} count  (crew aborigen_heli) > 0) && ( ((getPos aborigen_heli) select 2) > 2 ) ) exitWith  {
+				player groupChat (localize "STR_ABORIGEN_HELI_BUSY"); // "Chopper's gone, with pilot '%1'. We'll have to wait."
+				_ready_to_mark = false;
+			};
+			if ( !(aborigen_heli call SYG_pointOnAntigua) ) then { // move heli to the points
+				_arr = HELI_POINT_ARR call XfRandomArrayVal;
+				aborigen_heli setDir (_arr select 1);
+				aborigen_heli setPos (_arr select 0);
+			};
+		};
+		if (_ready_to_mark) then {
+			if ( (getMarkerType HELI_MARKER_NAME) == "" ) then { // create marker now
+				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.5,0.5],"",0,HELI_MARKER_NAME] call XfCreateMarkerLocal;
+			} else {
+				HELI_MARKER_NAME setMarkerColorLocal "ColorBlack";
+				HELI_MARKER_NAME setMarkerPosLocal (getPos aborigen_heli);
+			};
+			player groupChat (localize "STR_ABORIGEN_HELI_INFO"); // "Helicopter? There's one of those... helicopter. See the black marker on the map. I don't know about fuel and a pilot..."
+		};
 	};
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "WEAPON": { // ask about weapon box
 
 		_arr = nearestObjects [ player, ["ReammoBox"], 2500 ];
-		if ( (count _arr) == 0) exitWith {
+		_ammo = objNull;
+		{ if ( alive _x ) exitWith { _ammo = _x } } forEach _arr;
+		if ( !(alive _ammo) ) exitWith {
 			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat; // "Looks like there aren't any guns here, hehe"
 		};
 		_txt = format[ localize "STR_ABORIGEN_WEAPON_INFO", // I saw some kind of weapon at %1 m towards %2%3
-               				round ([player,_arr select 0] call SYG_distance2D),
-               				([player, _arr select 0] call XfDirToObj) call SYG_getDirName,
-               				if ((_arr select 0) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
-		hint localize format["+++ WEAPON: %1", _txt];
+               				round ([player,_ammo] call SYG_distance2D),
+               				([player, _ammo] call XfDirToObj) call SYG_getDirName,
+               				if ((_ammo) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
+		hint localize format["+++ WEAPON: found %1 at %2 m.", typeOf _ammo, round (player distance _ammo)];
 		player groupChat _txt; // "I saw some kind of weapon at %1 m towards %2%3"
 	};
 

@@ -1,5 +1,5 @@
 /*
-	scripts\intro\camel.sqf : only on server
+	scripts\intro\camel.sqf : aborigen biplane creation, run only on server
 	author: Sygsky
 	description:
 		"Camel2" plane normalization: delete if killed, create if deleted, create if not alive, move existed to the Antigua camel point.
@@ -17,7 +17,7 @@
 	returns: nothing
 */
 
-#include "camel_setup.sqf"
+#include "air_setup.sqf"
 
 //
 // Gets new dir and pos for the plane: _dir_pos =  PLANE_POS call _getDirAndPos; // _dir_pos = [80, [18089.39,18170.92, 0]]
