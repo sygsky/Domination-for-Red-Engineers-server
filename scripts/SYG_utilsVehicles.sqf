@@ -1997,7 +1997,7 @@ SYG_removeAnyWeapon = {
 };
 
 //
-// _type = _veh call SYG_getMarkerType;
+// _type = _veh call SYG_getVehicleMarkerType;
 // _marker_obj setMarkerType _type;
 SYG_getVehicleMarkerType = {
 	private ["_veh"];

@@ -404,11 +404,12 @@ switch ( _arg ) do {
 				player groupChat (localize "STR_ABORIGEN_PLANE_UNKNOWN"); // "An airplane? А... No, it's not here, maybe it'll come later?"
 				hint localize "--- ABO PLANE: biplan isNil 5 seconds later after call to camel.sqf on server, so exit"
 			};
-			hint localize "+++ ABO PLANE: server request completed, plane found";
+			hint localize format["+++ ABO PLANE: server request completed, plane found in %1 secs", _time - time];
 		};
 
 		_dist = [aborigen_plane, PLANE_POS] call SYG_distance2D;
 		hint localize format["+++ ABO PLANE: plane dist to the main point is %1, allowed 20 m.", round _dist];
+		_plane_busy = alive (driver aborigen_plane);
 		if ( _dist > 20) then { // plane not on place
 			// plane must be not occupied by player and be on base - in this case we can move it to island
 			_plane_busy = alive (driver aborigen_plane);
@@ -515,25 +516,26 @@ switch ( _arg ) do {
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		_wait_heli  = false;
-		if ((isNil "aborigen_heli") || (!alive aborigen_heli)) then {
+		if (isNil "aborigen_heli") then {_wait_heli = true; } else { if (!(alive aborigen_heli)) then {_wait_heli = true; } };
+		if ( _wait_heli) then {
 			["remote_execute","[] execVM ""scripts\intro\heli.sqf"""] call XSendNetStartScriptServer;
-			_wait_heli = true;
 		};
 		_ready_to_mark = true;
 		if (_wait_heli) then {
 			_time = time + 5;
-			if (isNil "aborigen_plane") then {
-				while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
+			if (isNil "aborigen_heli") then {
+				while {(isNil "aborigen_heli") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
 			} else {
-				while {(! alive aborigen_plane) && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
+				while {(! alive aborigen_heli) && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
 			};
-			if ( (isNil "aborigen_plane") || (!(alive  aborigen_plane)) ) exitWith {
+			hint localize format["+++ ABO HELI: waited for heli created %1 seconds after call to heli.sqf on server, so exit", _time - time];
+			if ( (isNil "aborigen_heli") || (!(alive  aborigen_heli)) ) exitWith {
 				player groupChat (localize "STR_ABORIGEN_HELI_UNKNOWN"); // "A heli? А... No, it's not here, maybe it'll come later?"
-				hint localize "--- ABO HELI: isNil 5 seconds later after call to heli.sqf on server, so exit";
+				hint localize "--- ABO HELI: isNil/dead 5 seconds later after call to heli.sqf on server, so exit";
 				_ready_to_mark = false;
 			};
 		} else { // check heli to be busy: is it flying, is it out of base rectangle?
-			if ( ( {alive _x} count  (crew aborigen_heli) > 0) && ( ((getPos aborigen_heli) select 2) > 2 ) ) exitWith  {
+			if ( ( {alive _x} count  (crew aborigen_heli) > 0) && ( ((getPos aborigen_heli) select 2) > 2 ) && (isEngineOn aborigen_heli) ) exitWith  {
 				player groupChat (localize "STR_ABORIGEN_HELI_BUSY"); // "Chopper's gone, with pilot '%1'. We'll have to wait."
 				_ready_to_mark = false;
 			};
@@ -544,14 +546,24 @@ switch ( _arg ) do {
 			};
 		};
 		if (_ready_to_mark) then {
+			_type = aborigen_heli call SYG_getVehicleMarkerType;
+			hint localize format["+++ ABO HELI: marker type to create %1 for %2", _type, typeOf aborigen_heli];
 			if ( (getMarkerType HELI_MARKER_NAME) == "" ) then { // create marker now
-				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.5,0.5],"",0,HELI_MARKER_NAME] call XfCreateMarkerLocal;
+				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.7,0.7],"",0, _type] call XfCreateMarkerLocal;
 			} else {
-				HELI_MARKER_NAME setMarkerColorLocal "ColorBlack";
 				HELI_MARKER_NAME setMarkerPosLocal (getPos aborigen_heli);
+				HELI_MARKER_NAME setMarkerTypeLocal _type;
 			};
 			player groupChat (localize "STR_ABORIGEN_HELI_INFO"); // "Helicopter? There's one of those... helicopter. See the black marker on the map. I don't know about fuel and a pilot..."
+			aborigen_heli setDamage 0;
+			aborigen_heli setFuel 0.5;
+		} else {
+			// hide marker if exists
+			if ( (getMarkerType HELI_MARKER_NAME) != "" ) then { // create marker now
+				HELI_MARKER_NAME setMarkerTypeLocal "Empty";
+			};
 		};
+		hint localize format["+++ ABO HELI: fuel %1, dmg %2", fuel aborigen_heli, damage aborigen_heli];
 	};
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "WEAPON": { // ask about weapon box
