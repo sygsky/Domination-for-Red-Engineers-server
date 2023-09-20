@@ -1040,6 +1040,7 @@ STR_SYS_NEW_YEAR,"For combat activity on New Year's Eve, the chief engineer awar
 STR_SYS_NEW_YEAR_START,"The New Year's Eve Combat Check Procedure has begun!","Das Verfahren zur Überprüfung des Silvesterkampfes hat begonnen","¡El procedimiento de selección para el combate de Año Nuevo ha comenzado!","Процедура новогодней проверки боевой активности началась!"
 
 STR_CAR_FOUND,"The car (%1) is detected at %2","Fahrzeug entdeckt (%1), Position bei %2","Vehículo detectado (%1), posición en %2","Машина (%1) обнаружена, поз. %2"
+STR_CAR_MAPPED,"Car (%1) has been mapped.","Auto (%1) ist zugeordnet.","Машина (%1) нанесена на карту","Машина (%1) нанесена на карту"
 STR_CAR_NOT_FOUND,"No cars found in the vicinity. Try again... a little later","Keine Autos in der Nähe gefunden. Versuchen Sie es später noch einmal...","No se han encontrado coches en los alrededores. Inténtelo de nuevo... un poco más tarde","Машин поблизости не найдено. Попробуйте ещё раз... чуть позже"
 
 STR_AI_0,Call in Air Taxi,Rufen Sie in Luft-Taxi,Llamar a un helicóptero,Вызвать вертолёт
