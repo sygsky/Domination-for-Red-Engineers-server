@@ -4,6 +4,9 @@ if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
 
+// Uncomment to eneble teleport with turning accodring to the MHQ, else direction not changes after teleport
+//#define __TELEPORT_WITH_TURNING__
+
 if (beam_target < 0) exitWith{};
 
 if (x_loop_end) exitWith {};
@@ -14,8 +17,12 @@ if (vehicle player != player) then {
 	unassignVehicle player;
 };
 
+
 _global_pos = [];
+
+#ifdef __TELEPORT_WITH_TURNING__
 _global_dir = 180;
+#endif
 _typepos = 0;
 _veh = objNull;
 
@@ -23,7 +30,8 @@ switch (beam_target) do {
 	case 0: { // teleport to the base
 #ifndef __REVIVE__
         //hint localize format["+++ d_side_player_str=%1, markerpos ""respawn_east""=%2",d_side_player_str, markerpos "respawn_east"];
-		call compile format ["_global_pos = markerpos ""respawn_%1"";", d_side_player_str];
+//		call compile format ["_global_pos = markerpos ""respawn_%1"";", d_side_player_str];
+		_global_pos = markerPos format["respawn_%1", d_side_player_str];
 #endif
 #ifdef __REVIVE__
 		_global_pos = markerPos "base_spawn_1";
@@ -86,7 +94,9 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
     _global_pos = _veh modelToWorld [0,-5,0]; // real teleport position (no deviation allowed at this mission)
 #endif
     // TODO: if teleport point is in house, prevent teleport ("You can't teleport to non-empty space!!!")
+#ifdef __TELEPORT_WITH_TURNING__
     _global_dir = direction _veh;
+#endif
     ["addVehicle", (group player), _veh] call XSendNetStartScriptServer; // try to inform enemy about MHQ position
     sleep 1.0; // (round(_err*10))/10, (round((_global_pos distance _new_pos)*10))/10
 };
@@ -95,7 +105,9 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
 _pos = getPos player; // start positon
 _global_pos resize 2;
 player setPos _global_pos;
+#ifdef __TELEPORT_WITH_TURNING__
 player setDir _global_dir;
+#endif
 ["say_sound", _pos, "teleport_from"] call XSendNetStartScriptClientAll; // play sound of teleport out event everywhere
 sleep 0.2;
 ["say_sound", player, _sound_to] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
