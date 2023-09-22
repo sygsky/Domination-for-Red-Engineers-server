@@ -26,7 +26,9 @@ _mode = if (count _this == 0) then { "CHECK"} else { _this select 0};
 // call as: _car call _set_marker
 
 if (_mode == "CHECK") exitWith { // Client code
-	hint localize "+++ findCivCar.sqf on client run";
+	hint localize format["+++ findCivCar.sqf on client run, player is %1",
+	if (vehicle player != player)  then { format["in %1", typeOf vehicle player] } else {"on feet"}];
+	if (vehicle player != player) exitWith {["msg_to_user","*",[["STR_CAR_GO_OUT"]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
 
 	_set_marker = {
 		_marker_type = _this call SYG_getVehicleMarkerType;
@@ -114,7 +116,7 @@ _create_car = {
 	_pos1 = [ _pos, RADIUS_TO_CREATE_CAR] call XfGetRanPointCircleBig;
 	_car = createVehicle [ _type, _pos1, [], 0, "NONE" ];
 	FREE_CAR_LIST set [count FREE_CAR_LIST, _car];
-	hint localize format["+++ findCivCar.sqf(server): car (%1) created at %2", _type, _pos1 call SYG_MsgOnPosE0];
+	hint localize format["+++ findCivCar.sqf(server): car #%1 (%2) created at %3", (count FREE_CAR_LIST) + 1, _type, _pos1 call SYG_MsgOnPosE0];
 };
 
 if (typeName _this != "ARRAY") exitWith { hint localize format["--- findCivCar.sqf(server): _this not ARRAY (%1), exit!", typeName _this] };
@@ -137,7 +139,9 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 		_x = FREE_CAR_LIST select _i;
 		if (alive _x) then { // Car ready
 			if ( !(alive _car) ) then { // Car not selected
-				if ( ({alive _x} count (crew _x)) == 0 ) then { _car == _x; FREE_CAR_LIST set [_i, "RM_ME"]; _removed = true }; // Select empty alive car
+				_car == _x;  // Select any alive car
+				FREE_CAR_LIST set [_i, "RM_ME"];
+				_removed = true;
 			};
 		} else { // Mark to remove dead car
 			FREE_CAR_LIST set [_i, "RM_ME"];
@@ -155,7 +159,7 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 	};
 };
 allow_car_list_changes = true;
-if (!alive _car) exitWith {  // No car found for the palyer call
+if (!alive _car) then {  // No car found for the palyer call
 	hint localize format["--- findCivCar.sqf(server): no car found for the player%1!",
 		if (count _this > 2) then { format[" %1", _this select 2]} else {""} ]
 } else {

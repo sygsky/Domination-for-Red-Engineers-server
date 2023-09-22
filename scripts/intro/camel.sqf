@@ -69,7 +69,7 @@ if ( ((getPos aborigen_plane) distance PLANE_POS) > 20) then {
 	hint localize format["+++ camel.sqf: plane positioned on Antigua at %1", _str];
 };
 
-hint localize format["+++ camel.sqf: final plane status isNil %1, alive %2, type %3",isNil "aborigen_plane", alive aborigen_plane, typeOf aborigen_plane];
+//hint localize format["+++ camel.sqf: final plane status isNil %1, alive %2, type %3",isNil "aborigen_plane", alive aborigen_plane, typeOf aborigen_plane];
 
 // set std damage and low fuel
 aborigen_plane setFuel 0.3;

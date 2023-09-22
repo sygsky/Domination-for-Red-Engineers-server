@@ -531,7 +531,7 @@ switch ( _arg ) do {
 			hint localize format["+++ ABO HELI: waited for heli created %1 seconds after call to heli.sqf on server, so exit", _time - time];
 			if ( (isNil "aborigen_heli") || (!(alive  aborigen_heli)) ) exitWith {
 				player groupChat (localize "STR_ABORIGEN_HELI_UNKNOWN"); // "A heli? А... No, it's not here, maybe it'll come later?"
-				hint localize "--- ABO HELI: isNil/dead 5 seconds later after call to heli.sqf on server, so exit";
+				hint localize "--- ABO HELI: isNil or dead 5 seconds after call to heli.sqf on server, so exit";
 				_ready_to_mark = false;
 			};
 		} else { // check heli to be busy: is it flying, is it out of base rectangle?
@@ -559,7 +559,7 @@ switch ( _arg ) do {
 			aborigen_heli setFuel 0.5;
 		} else {
 			// hide marker if exists
-			if ( (getMarkerType HELI_MARKER_NAME) != "" ) then { // create marker now
+			if ( (getMarkerType HELI_MARKER_NAME) != "" ) then { // hide marker now
 				HELI_MARKER_NAME setMarkerTypeLocal "Empty";
 			};
 		};

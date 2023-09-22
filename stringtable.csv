@@ -1041,6 +1041,7 @@ STR_SYS_NEW_YEAR_START,"The New Year's Eve Combat Check Procedure has begun!","D
 
 STR_CAR_TITLE,"Free cars","Freie Autos","Coches gratis","Гр. Машины"
 STR_CAR_FIND,Find,Finde,Encuentre,Найти
+STR_CAR_GO_OUT,"It doesn't work in the vehicle!","Im Fahrzeug funktioniert es nicht!","¡No funciona en el vehículo!","В транспорте это не работает!"
 STR_CAR_HELP,Help,Hilfe,Ayuda,Описание
 STR_CAR_FOUND,"Vehicle (%1) is detected at %2","Fahrzeug entdeckt (%1), Position bei %2","Vehículo detectado (%1), posición en %2","Транспорт (%1) обнаружена, поз. %2"
 STR_CAR_MAPPED,"Vehicle (%1) has been mapped.","Auto (%1) ist zugeordnet.","Машина (%1) нанесена на карту","Транспорт (%1) нанесена на карту"
