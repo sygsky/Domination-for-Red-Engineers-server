@@ -114,6 +114,12 @@ class XD_StatusDialog
 		XD_SPPMButton,  // SPPM action button
 		XD_SPPMHelpButton, // show SPPM short help
 #endif
+#ifdef __FREE_CAR_SEVICE__
+		XD_FreeCarText,	// SPPM text
+		XD_FreeCarButton,  // SPPM action button
+		XD_FreeCarHelpButton, // show SPPM short help
+#endif
+
 		XD_PlayerHealth,
 		XD_PlayerFatigue,
 		XD_SecondaryCaption,
@@ -225,11 +231,93 @@ class XD_StatusDialog
 		y = 0.21;
 		w = 0.09;
 		h = 0.033;
-		text = $STR_SPPM_HELP; // "Add" or "Check out";
+		text = $STR_SPPM_HELP; // "SPPM help"
 		action = "CloseDialog 0;xhandle = player execVM ""scripts\sppmhelp.sqf"";";
 	};
 
 #endif
+
+#ifdef __FREE_CAR_SEVICE__
+	class XD_FreeCarText : XC_RscText {
+		x = 0.58;
+		y = 0.275;
+		w = 0.25;
+		h = 0.1;
+		sizeEx = 0.03;
+		colorText[] = { 1, 1, 1, 1 };
+		colorBackground[] = {1, 1, 1, 0.0};
+		text = $STR_CAR_TITLE; // "Free cars"
+	};
+
+	class XD_FreeCarButton
+	{
+		idc = 11023;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = false;
+		font = FontM;
+		sizeEx = 0.02;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.2 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.58;
+		y = 0.34;
+		w = 0.09;
+		h = 0.033;
+		text = $STR_CAR_FIND; // "Find"
+		action = "CloseDialog 0;xhandle = ""CHECK"" execVM ""scripts\findCivCar.sqf"";";
+	};
+
+	class XD_FreeCarHelpButton
+	{
+		idc = 11024;
+		type = CT_BUTTON;
+		style = ST_CENTER;
+		default = false;
+		font = FontM;
+		sizeEx = 0.02;
+		colorText[] = { 0, 0, 0, 1 };
+		colorFocused[] = { 1, 0, 0, 1 }; // border color for focused state
+		colorDisabled[] = { 0, 0, 1, 0.7 }; // text color for disabled state
+		colorBackground[] = { 1, 1, 1, 0.2 };
+		colorBackgroundDisabled[] = { 1, 1, 1, 0.5 }; // background color for disabled state
+		colorBackgroundActive[] = { 1, 1, 1, 0.4 }; // background color for active state
+		offsetX = 0.003;
+		offsetY = 0.003;
+		offsetPressedX = 0.002;
+		offsetPressedY = 0.002;
+		colorShadow[] = { 0, 0, 0, 0.5 };
+		colorBorder[] = { 0, 0, 0, 1 };
+		borderSize = 0;
+		soundEnter[] = { "", 0, 1 }; // no sound
+		soundPush[] = { "\ca\ui\data\sound\new1", 0.1, 1 };
+		soundClick[] = { "", 0, 1 }; // no sound
+		soundEscape[] = { "", 0, 1 }; // no sound
+		x = 0.58;
+		y = 0.38;
+		w = 0.09;
+		h = 0.033;
+		text = $STR_CAR_HELP; // "SPPM help"
+		action = "CloseDialog 0;xhandle = ""HELP"" execVM ""scripts\findCivCar.sqf"";";
+	};
+
+#endif
+
+
 	class XD_TeamStatusButton
 	{
 		idc = 11009;

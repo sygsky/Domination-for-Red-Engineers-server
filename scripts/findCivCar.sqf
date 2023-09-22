@@ -57,28 +57,34 @@ if (_mode == "CHECK") exitWith { // Client code
 		if ( (alive _x) && ( (speed _x) < 1 ) ) exitWith { // Send message to the player about car found
 			_car  = _x;
 			// "The car (%1) is detected at %2"
-			["msg_to_user","*",[["localize", "STR_CAR_FOUND", typeOf _car, [_car, 50] call SYG_MsgOnPos0], 0, 0, false, "no_more_waiting" ]] call SYG_msgToUserParser;
+			["msg_to_user","*",[["STR_CAR_FOUND", typeOf _car, [_car, 50] call SYG_MsgOnPos0]], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
 
 			_marker_type = _car call SYG_getVehicleMarkerType;
 			_pos = getPos _car;
 			_mrk_type = markerType CAR_MARKER_NAME;
-			if ( (_mrk_type == "") ) exitWith { // Marker not exists, create it now
+			if ( (_mrk_type == "") ) then { // Marker not exists, create it now
 				[ CAR_MARKER_NAME,  _pos, "ICON", CAR_MARKER_COLOR, [0.7,0.7],"",0, _marker_type] call XfCreateMarkerLocal;
+				["msg_to_user","*",[[ "STR_CAR_MAPPED", typeOf _car]], 0, 0, false, "no_more_waiting"] call SYG_msgToUserParser; // "Car (%1) has been mapped."
+			} else {
+				// Update marker pos and type
+				if (_mrk_type != _marker_type) then { CAR_MARKER_NAME setMarkerTypeLocal _marker_type };
+				CAR_MARKER_NAME setMarkerPosLocal _pos;
+				["msg_to_user","*",[[ "STR_CAR_MAPPED_1", typeOf _car]], 0, 0, false, "no_more_waiting"] call SYG_msgToUserParser; // "Car (%1) has been mapped."
 			};
-			// Update marker pos and typ
-		//	CAR_MARKER_NAME setMarkerColorLocal CAR_MARKER_COLOR;
-			if (_mrk_type != _marker_type) then { CAR_MARKER_NAME setMarkerTypeLocal _marker_type };
-			CAR_MARKER_NAME setMarkerPosLocal _pos;
 
-			["msg_to_user","*",[["localize", "STR_CAR_MAPPED", typeOf _car], 0, 0, false, "no_more_waiting" ]] call SYG_msgToUserParser; // "Car (%1) has been mapped."
 		};
+
 	} forEach _arr;
 	if ( !isNull _car ) exitWith {};
 	CAR_MARKER_NAME setMarkerTypeLocal "Empty"; // Hide free car marker
-	["msg_to_user","*",[["localize", "STR_CAR_NOT_FOUND"], 0, 0, false, "losing_patience" ]] call SYG_msgToUserParser; // "No cars found in the vicinity. Try again... a little later"
+	["msg_to_user","*",[[ "STR_CAR_NOT_FOUND"]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser; // "No cars found in the vicinity. Try again... a little later"
 
 	// Execute remote command to create/move free car at designated position
 	["remote_execute", format ["[""CREATE"",%1] execVM ""scripts\findCivCar.sqf""", _pos]] call XSendNetStartScriptServer;
+};
+
+if (_mode == "HELP") exitWith {
+
 };
 
 hint localize "+++ findCivCar.sqf on server run";

@@ -212,3 +212,6 @@
 
 // Uncomment to disable first time arrival on the Antigua island, not on the base or do paradrops near it
 #define __ARRIVED_ON_ANTIGUA__
+
+// Uncomment to enable free car service in "STATUS"  dialog, along with SPPM one
+#define __FREE_CAR_SEVICE__

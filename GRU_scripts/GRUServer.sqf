@@ -71,7 +71,8 @@ GRU_procServerMsg = {
 		case GRU_MSG_TASK_SOLVED: {
 			// stop corresponding task and send info back to all clients
 			_task_id call GRU_stopTask; // done!!!
-			_msg = ["STR_GRU_7", "STR_GRU_4", "STR_GRU_1",  _task_name_id, "STR_GRU_9", argopt(4,"???")]; // "%1 %2 "%3" completed (by %4), scores +%5" / STR_GRU_4 = "task" /  STR_GRU_1= "GRU" / STR_GRU_9 = "one of you"
+			// "%1 %2 ""%3"" completed (by %4), scores +%5" / STR_GRU_4 = "task" /  STR_GRU_1= "GRU" / STR_GRU_9 = "one of you"
+			_msg = ["STR_GRU_7", "STR_GRU_4", "STR_GRU_1",  _task_name_id, "STR_GRU_9", argopt(4,"???")];
 
 			// ["msg_to_user","",[_msg],4,4] call XSendNetStartScriptClient;
 			//sleep 0.5 + (random 0.5);
