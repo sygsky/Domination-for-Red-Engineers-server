@@ -140,12 +140,13 @@ if (count _pos1 > 0) then {
 				FREE_CAR_LIST set [_i, "RM_ME"]
 			} else {
 				if (typeName _x == "OBJECT") then {
-					if (alive _x) then { // Car ready
-						if ( isNull _car ) then { // Car not selected
-							_car = _x;  // Select oldest used alive car
-							FREE_CAR_LIST set [_i, "RM_ME"];
-							hint localize format["+++ findCivCar.sqf(server): veh at list.get(%1) wiLl be used, _car is %2null",
-							_i, if (alive _car) then {""} else {"not "}];
+					if ( alive _x) then { // Car ready and is empty
+						if ( ({alive _x} count (crew _x)) == 0 ) then {
+							if ( isNull _car ) then { // Car not selected
+								_car = _x;  // Select oldest used empty alive car
+								FREE_CAR_LIST set [_i, "RM_ME"];
+								hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) wiLl be used", _i ];
+							};
 						};
 					} else {  // Delete dead vehicle
 						deleteVehicle _x;
