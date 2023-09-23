@@ -1043,10 +1043,10 @@ STR_CAR_TITLE,"Free cars","Freie Autos","Coches gratis","Гр. Машины"
 STR_CAR_FIND,Find,Finde,Encuentre,Найти
 STR_CAR_GO_OUT,"It doesn't work in the vehicle!","Im Fahrzeug funktioniert es nicht!","¡No funciona en el vehículo!","В транспорте это не работает!"
 STR_CAR_HELP,Help,Hilfe,Ayuda,Описание
-STR_CAR_FOUND,"Vehicle (%1) is detected at %2","Fahrzeug entdeckt (%1), Position bei %2","Vehículo detectado (%1), posición en %2","Транспорт (%1) обнаружена, поз. %2"
-STR_CAR_MAPPED,"Vehicle (%1) has been mapped.","Auto (%1) ist zugeordnet.","Машина (%1) нанесена на карту","Транспорт (%1) нанесена на карту"
-STR_CAR_MAPPED_1,"Vehicle (%1) already has been mapped.","Das Fahrzeug (%1) wurde bereits zugeordnet.","El vehículo (%1) ya ha sido asignado.","Транспорт (%1) уже был нанесён на карту"
-STR_CAR_NOT_FOUND,"No vehicles found in the vicinity. Try again... a little later","Keine Autos in der Nähe gefunden. Versuchen Sie es später noch einmal...","No se han encontrado coches en los alrededores. Inténtelo de nuevo... un poco más tarde","Транспорта поблизости не найдено. Попробуйте ещё раз... чуть позже"
+STR_CAR_FOUND,"Vehicle (%1) is detected at %2%3","Fahrzeug entdeckt (%1), Position bei %2%3","Vehículo detectado (%1), posición en %2%3","Транспорт (%1) обнаружен, поз. %2%3"
+STR_CAR_MAPPED,". Marker has been mapped.",". Die Markierung ist auf der Karte.",". El marcador está en el mapa.",". Маркер нанесён на карту."
+STR_CAR_MAPPED_1,". Marker already has been mapped.",". Die Markierung wurde bereits zugewiesen.",". El marcador ya ha sido mapeado.",". Маркер уже был нанесён на карту."
+STR_CAR_NOT_FOUND,"No vehicles found in the vicinity (%1 m). Try again... a little later","Keine Autos in der Nähe gefunden (%1 m.). Versuchen Sie es später noch einmal...","No se han encontrado coches en los alrededores (%1 m.). Inténtelo de nuevo... un poco más tarde","Транспорта поблизости не найдено (%1 м.). Попробуйте ещё раз... чуть позже"
 
 STR_CAR_HELP_TITLE,What is 'Free car'?,Was ist 'Freie Autos'?,¿Qué es el 'Coches gratis'?,Что такое 'Гр. Машины'?
 STR_CAR_HELP_1,"'Free сars' - search for civilian cars around the player","'Autos' - Suche nach zivilen Autos in der Umgebung des Spielers","'Autos' - Suche nach zivilen Autos in der Umgebung des Spielers","'Гр. Машины' - поиск гражданских машин вокруг игрока"

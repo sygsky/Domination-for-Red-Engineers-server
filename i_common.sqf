@@ -886,9 +886,12 @@ d_helilift1_types =
 #endif
 
 // Allows to find all civilian vehicles (no trucks)
-ALL_CAR_ONLY_SEARCH_LIST = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ","ACE_HMMWV","tractor"
+ALL_CAR_ONLY_SEARCH_LIST = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ","tractor"
 #ifdef __ACE__
+,"ACE_HMMWV"
 ,"ACE_Bicycle"
+#else
+,"HMMWV50"
 #endif
 ];
 

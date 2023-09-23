@@ -2115,17 +2115,25 @@ SYG_vehIsRecoverable = {
 
 // Converts objects in input array to their types and return new array with types, on error return input array.
 // If single object is used as parameter, its type is returned
+// Call: _type_arr = [_veh1,... _vehN] call SYG_vehToType; // ["Bicycle", "tractor"...]
+// or: _type_obj = _veh call SYG_vehToType; // "Bicycle"
 SYG_vehToType = {
-	private ["_veh"];
-	_veh = _this;
-	if ( typeName _veh == "OBJECT" ) exitWith { typeOf _veh };
-	if ( typeName _veh == "ARRAY" ) exitWith {
+	private ["_arr"];
+	_arr = _this;
+	if ( typeName _arr == "OBJECT" ) exitWith { typeOf _arr };
+	if ( typeName _arr == "ARRAY" ) exitWith {
 		private ["_arr", "_x"];
 		_arr = [];
-		{ _arr set [count _arr, typeOf _x]} forEach _veh;
+		{
+			if (isNull _x) then {
+				_arr set [count _arr, "<null>"]
+			} else {
+				_arr set [count _arr, typeOf _x]
+			};
+		} forEach _arr;
 		_arr
 	};
-	_veh
+	_arr
 };
 
 #ifdef __TELEPORT_DEVIATION__

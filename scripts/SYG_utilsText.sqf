@@ -115,7 +115,7 @@ SYG_joinArr = {
  * Input: _result = [_veh_arr, _max_num_to_print] call SYG_objArrToTypeStr; // result = "ACE_Abrams,ACE_UAZ,ACE_Mi24P,...25"
  */
 SYG_objArrToTypeStr = {
-    if (typeName _this != "ARRAY") exitWith {"--- SYG_objArrToTypeStr: typeOf _this != ""ARRAY"""};
+    if (typeName _this != "ARRAY") exitWith { hint localize format["--- SYG_objArrToTypeStr: typename _this (%1) != ""ARRAY""", typeName _this]};
     if (typeName (_this select 0) == "OBJECT") then { _this = [_this, count _this]};
     if (count _this < 2) then {_this set[1, 10]};
 
@@ -129,7 +129,6 @@ SYG_objArrToTypeStr = {
             else {_str = format["%1,%2",_str, typeOf (_check_vec_list select _i)]};
         };
         if ( ( count _check_vec_list ) > _print_cnt ) then {
-            _str = format["%1,...(%2)", _str, count _arr];
             _str = format["%1,...(%2)", _str, count _arr];
         };
     };
