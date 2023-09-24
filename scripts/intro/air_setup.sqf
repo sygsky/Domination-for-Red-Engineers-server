@@ -1,5 +1,5 @@
 /*
-	camel_setup
+	air_setup.sqf
 	author: Sygsky
 	description: none
 	returns: nothing
@@ -9,9 +9,9 @@
 #define PLANE_DIR 80
 
 #ifdef __ACE__
-	#define HELI_TYPE ["MH6"]
+	#define HELI_TYPE  ["ACE_MH6"]
 #else
-	#define HELI_TYPE ["ACE_MH6"]
+	#define HELI_TYPE ["MH6"]
 #endif
 
 #define HELI_POINT_ARR [[[17332,19337.5,0],315],[[16874,19675,0],280]]
