@@ -95,7 +95,9 @@ if ( _mode == "CHECK") exitWith { // Client code
 //+++++++++++++++++++++++++++ HELP +++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (_mode == "HELP") exitWith {
-	// TODO: show hintC dialog with help on vehicle near player
+	// Show hintC dialog with help on vehicle near player
+	localize "STR_CAR_HELP_TITLE" hintC [localize "STR_CAR_HELP_1",localize "STR_CAR_HELP_2",localize "STR_CAR_HELP_3",
+    					localize "STR_CAR_HELP_4",localize "STR_CAR_HELP_5"];
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
