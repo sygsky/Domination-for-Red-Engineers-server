@@ -16,7 +16,7 @@
 
 #define   RADIUS_TO_FIND_CAR 500
 #define RADIUS_TO_CREATE_CAR 400
-#define            MAX_COUNT 3
+#define            MAX_COUNT 5
 // #define PLAYER_SEARCH_RADIUS 200
 #define CAR_MARKER_NAME      "free_car_marker_name"
 #define CAR_MARKER_COLOR     "ColorBlack"
@@ -79,17 +79,23 @@ if ( _mode == "CHECK") exitWith { // Client code
 
 	} forEach _arr;
 	if ( !isNull _car ) exitWith {}; // Car found ann marker, exit
+
+	// Try to define position for the vehicle near player (or in near town radious)
 	CAR_MARKER_NAME setMarkerTypeLocal "Empty"; // Hide free car marker
 	["msg_to_user","*",[[ "STR_CAR_NOT_FOUND", RADIUS_TO_FIND_CAR]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser; // "No cars found in the vicinity. Try again... a little later"
-
-	// Execute remote command to create/move free car at designated position
-	["remote_execute", format ["[""CREATE"",%1, ""%2""] execVM ""scripts\findCivCar.sqf""", _pos, name player]] call XSendNetStartScriptServer;
+	_pos1 = [ _pos, RADIUS_TO_CREATE_CAR] call XfGetRanPointCircleBig;
+	if (count _pos1 == 0) exitWith { // No vehicle can be found around
+		["msg_to_user","*",[[ "STR_CAR_NOT_FOUND", RADIUS_TO_FIND_CAR]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser; // "No cars found in the vicinity. Try again... a little later"
+	};
+	// Execute remote command to create/move free car to the designated position
+	["remote_execute", format ["[""CREATE"",%1, ""%2""] execVM ""scripts\findCivCar.sqf""", _pos1, name player]] call XSendNetStartScriptServer;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++ HELP +++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (_mode == "HELP") exitWith {
+	// TODO: show hintC dialog with help on vehicle near player
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -115,72 +121,63 @@ _create_car = {
 
 if (typeName _this != "ARRAY") exitWith { hint localize format["--- findCivCar.sqf(server): _this not ARRAY (%1), exit!", typeName _this] };
 
-_pos = _this select 1; // pos to set car
+_pos1 = _this select 1; // pos to set car
 
-// Find nearest cars
-_arr = nearestObjects [_pos, ALL_CAR_ONLY_SEARCH_LIST, RADIUS_TO_FIND_CAR];
-if (count _arr > 0 ) exitWith  { hint localize format["*** findCivCar.sqf(server): car already exists at search radius %2, exit", RADIUS_TO_FIND_CAR] };
-
-// Find positon to place car to the close area
-_pos1 = [ _pos, RADIUS_TO_CREATE_CAR] call XfGetRanPointCircleBig;
 hint localize format["*** findCivCar.sqf(server): _pos1 = %1", _pos1];
-if (count _pos1 > 0) then {
 
-	waitUntil {allow_car_list_changes};
-	allow_car_list_changes = false;
-	if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
-		_car = _pos1  call _create_car;
-	} else {
-		// Find oldest empty car with no players nearby to the random position near designated pos
-		_car = objNull;
-		_end = (count FREE_CAR_LIST) - 1;
-		for "_i" from 0 to _end do { // Check all vehs in the list
-			_x = FREE_CAR_LIST select _i;
-			if (isNull _x) then {
-				FREE_CAR_LIST set [_i, "RM_ME"]
-			} else {
-				if (typeName _x == "OBJECT") then {
-					if ( alive _x) then { // Car ready and is empty
+waitUntil {allow_car_list_changes};
+allow_car_list_changes = false;
+
+if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
+	_car = _pos1  call _create_car;
+} else {
+	// Find oldest empty car with no players nearby to the random position near designated pos
+	_car = objNull;
+	_end = (count FREE_CAR_LIST) - 1;
+	for "_i" from 0 to _end do { // Check all vehs in the list
+		_x = FREE_CAR_LIST select _i;
+		if (isNull _x) then {
+			FREE_CAR_LIST set [_i, "RM_ME"]
+		} else {
+			if (typeName _x == "OBJECT") then {
+				if ( alive _x) then { // Car ready and is empty
+					if ( isNull _car ) then { // Car not selected
 						if ( ({alive _x} count (crew _x)) == 0 ) then {
-							if ( isNull _car ) then { // Car not selected
-								_car = _x;  // Select oldest used empty alive car
-								FREE_CAR_LIST set [_i, "RM_ME"];
-								hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) wiLl be used", _i ];
-							};
+							_car = _x;  // Select oldest used empty alive car
+							FREE_CAR_LIST set [_i, "RM_ME"];
+							hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) wiLl be used", _i ];
 						};
-					} else {  // Delete dead vehicle
-						deleteVehicle _x;
-						FREE_CAR_LIST set [_i, "RM_ME"];
 					};
+				} else {  // Delete dead vehicle
+					deleteVehicle _x;
+					FREE_CAR_LIST set [_i, "RM_ME"];
 				};
 			};
 		};
-		// No car found but some item[s] were removed, try to create new car
-		if ("RM_ME" in FREE_CAR_LIST ) then {
-			_cnt = count FREE_CAR_LIST;
-			FREE_CAR_LIST call SYG_cleanArray;
-			hint localize format["+++ findCivCar.sqf(server): free car list cleaned from size %1 to  %2", _cnt, count FREE_CAR_LIST];
-		};
-		if (alive _car) then {
-			_car setDir (random 360);
-			_car setPos _pos1;
-			FREE_CAR_LIST set [count FREE_CAR_LIST, _car]; // Add this car to the end of list as last used one
-		} else { // No car found, create new one if list is not full
-			if (count FREE_CAR_LIST < MAX_COUNT) then {
-				_car = _pos1 call _create_car;
-				_car setDir (random 360);
-				_car setPos (getPos _car);
-				hint localize format["--- findCivCar.sqf(server): new car created for list of final size %1", count FREE_CAR_LIST];
-			} else {
-				hint localize format["--- findCivCar.sqf(server): no veh found in list of size %1, LIST = %2", count FREE_CAR_LIST, FREE_CAR_LIST call SYG_vehToType];
-			}
-		};
 	};
-	allow_car_list_changes = true;
-	hint localize format["+++ findCivCar.sqf(server): car %1 found for the player%2!",
-		typeOf _car, if (count _this > 2) then { format[" %1", _this select 2]} else {""} ]
-} else {
-	hint localize format["--- findCivCar.sqf(server): no car found for the player%1!",
-		if (count _this > 2) then { format[" %1", _this select 2]} else {""} ]
+	// No car found but some item[s] were removed, try to create new car
+	if ("RM_ME" in FREE_CAR_LIST ) then {
+		_cnt = count FREE_CAR_LIST;
+		FREE_CAR_LIST call SYG_cleanArray;
+		hint localize format["+++ findCivCar.sqf(server): free car list cleaned from size %1 to  %2", _cnt, count FREE_CAR_LIST];
+	};
+	if (alive _car) then {
+		_car setDir (random 360);
+		_car setPos _pos1;
+		FREE_CAR_LIST set [count FREE_CAR_LIST, _car]; // Add this car to the end of list as last used one
+	} else { // No car found, create new one if list is not full
+		if (count FREE_CAR_LIST < MAX_COUNT) then {
+			_car = _pos1 call _create_car;
+			_car setVectorUp [0,0,1];
+			_car setDir (random 360);
+			_car setPos (getPos _car);
+			hint localize format["+++ findCivCar.sqf(server): new car created for list of final size %1", count FREE_CAR_LIST];
+		} else {
+			hint localize format["--- findCivCar.sqf(server): no veh found in list of size %1, LIST = %2", count FREE_CAR_LIST, FREE_CAR_LIST call SYG_vehToType];
+		}
+	};
 };
+allow_car_list_changes = true;
+hint localize format["+++ findCivCar.sqf(server): car %1 found for the player%2!",
+	typeOf _car, if (count _this > 2) then { format[" %1", _this select 2]} else {""} ]
 
