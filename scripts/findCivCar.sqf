@@ -114,6 +114,9 @@ _create_car = {
 	// create a new car from the list: ALL_CAR_ONLY_TYPE_LIST
 	_type = ALL_CAR_ONLY_TYPE_LIST call XfRandomArrayVal;
 	_car = createVehicle [ _type, _pos1, [], 0, "NONE" ];
+	_car setVectorUp [0,0,1];
+	_car setDir (random 360);
+	_car setPos (getPos _car);
 	FREE_CAR_LIST set [count FREE_CAR_LIST, _car];
 	hint localize format["+++ findCivCar.sqf(server): car #%1 (%2) created at %3", (count FREE_CAR_LIST) - 1, _type, _pos1 call SYG_MsgOnPosE0];
 	_car
@@ -162,15 +165,13 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 		hint localize format["+++ findCivCar.sqf(server): free car list cleaned from size %1 to  %2", _cnt, count FREE_CAR_LIST];
 	};
 	if (alive _car) then {
+		_car setVectorUp [0,0,1];
 		_car setDir (random 360);
 		_car setPos _pos1;
 		FREE_CAR_LIST set [count FREE_CAR_LIST, _car]; // Add this car to the end of list as last used one
 	} else { // No car found, create new one if list is not full
 		if (count FREE_CAR_LIST < MAX_COUNT) then {
 			_car = _pos1 call _create_car;
-			_car setVectorUp [0,0,1];
-			_car setDir (random 360);
-			_car setPos (getPos _car);
 			hint localize format["+++ findCivCar.sqf(server): new car created for list of final size %1", count FREE_CAR_LIST];
 		} else {
 			hint localize format["--- findCivCar.sqf(server): no veh found in list of size %1, LIST = %2", count FREE_CAR_LIST, FREE_CAR_LIST call SYG_vehToType];
