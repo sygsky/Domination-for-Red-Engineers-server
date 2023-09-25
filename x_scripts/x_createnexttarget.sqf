@@ -32,7 +32,7 @@ if ( !( call SYG_isMainTargetAllowed ) ) then {
 while { !(call SYG_isMainTargetAllowed) } do {
 		if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
 		sleep (4 + random 2);
-	};
+};
 
 if ( ((time - _time) > 60) ) then {
 		_msg = [ "localize", "STR_SYS_1152" ]; // "The people of Sahrani thank you for your liberation mission!"

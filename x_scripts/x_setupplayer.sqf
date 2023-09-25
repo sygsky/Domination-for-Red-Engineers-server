@@ -1213,7 +1213,7 @@ XBaseEnemies = {
                             // find allowed objects on base to play sounds
                             _no = nearestObjects [
                             	_x,
-                            	[ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM", "Land_hlaska","Land_vez","Land_strazni_vez"],
+                            	[ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrierWest", "Land_Vysilac_FM", "Land_hlaska","Land_vez","Land_strazni_vez"],
                             	1000
                             ];
 			            	hint localize format["+++ XBaseEnemies: nearestObjects count %1, thislist %2", count _no, count _thislist];

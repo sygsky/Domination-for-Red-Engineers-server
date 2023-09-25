@@ -20,9 +20,9 @@ if (!isServer) exitWith{}; // only for server
     d_jet_service_fac = objNull;
     d_chopper_service_fac = objNull;
     d_wreck_repair_fac = objNull;
-    #define FLARE_POINT_TYPES ["WarfareBEastAircraftFactory","WarfareBWestAircraftFactory","FlagCarrier","Land_Vysilac_FM","Land_telek1"]
+    #define FLARE_POINT_TYPES ["WarfareBEastAircraftFactory","WarfareBWestAircraftFactory","FlagCarrierWest","Land_Vysilac_FM","Land_telek1"]
 */
-#define FLARE_POINT_TYPES [ "FlagCarrier","Land_Vysilac_FM","Land_telek1" ]
+#define FLARE_POINT_TYPES [ "FlagCarrierWest","Land_Vysilac_FM","Land_telek1" ]
 #define FLARE_OBJ_CHECK_INTERVAL 120         // interval in seconds to check launch flare objects (e.g. towers on base)
 
 //#define PERSISTENT_POINT_DIST 20             // max allowed distance of launch object to any persistent point
