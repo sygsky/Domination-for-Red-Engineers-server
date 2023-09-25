@@ -46,7 +46,7 @@ if ( _mode == "CHECK") exitWith { // Client code
 	// Search for cars nearby
 	_pos = getPos player;
 	_arr = nearestObjects [_pos, ALL_CAR_ONLY_SEARCH_LIST, RADIUS_TO_FIND_CAR];
-	if (count _arr == 0) then {
+	if ({alive _x}count _arr == 0) then {
 		// Search in nearest town
 		_loc = player call SYG_nearestSettlement;
 		_pos1 = position _loc;
