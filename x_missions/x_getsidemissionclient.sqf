@@ -61,14 +61,14 @@ if (current_mission_index != -1) then {
 		[sm_marker_name2, x_sm_pos select 1,"ICON","ColorRedAlpha",[1,1],localize "STR_SYS_159",0,"End"] call XfCreateMarkerLocal; // "Finish"
 	};
 
-	// draw the marker at the area center in form of the question sign
+	// draw the markers around map to mark possible places to resolve this SM
 	if (x_sm_type == "undefined") exitWith {
 		_i = 1;
 		{
 //			[format["%1_%2",sm_marker_name, _i], _x,"ICON","ColorRedAlpha",[0.5,0.5],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
 			[format["%1_%2",sm_marker_name, _i], _x,"ICON","ColorGreenAlpha",[0.5,0.5],localize "STR_SYS_156",0,"Unknown"] call XfCreateMarkerLocal; // "Radiomast install"
 			_i = _i + 1;
-		}forEach _posi_array;
+		} forEach x_sm_pos;
 	};
 
 };
