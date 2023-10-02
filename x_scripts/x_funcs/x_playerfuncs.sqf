@@ -524,7 +524,7 @@ XIsRankFromScoreExtended =  {
 //
 // returns rank overall name, from "Private" to "Generalissimus"
 //
-// call as follow: _rank = (score player) call XGetRankFromScoreExt
+// call as follow: _rank = ([score] player) call XGetRankFromScoreExt
 //
 XGetRankFromScoreExt = {
     private ["_index","_x"];

@@ -186,7 +186,7 @@ if (X_Client) then {
     // gets subtracted for killing others (not negative)
     d_sub_tk_points = 20;
 
-    // points needed to get a specific rank
+    // points needed to get a specific rank. Start (private) rank is 0!
     // gets even used in the unranked versions, though it's just cosmetic there
     d_points_needed = [
     #ifdef __OLD_SCORES__
