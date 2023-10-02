@@ -537,12 +537,12 @@ x_drop_array =
 	#endif
 	#ifdef __OWN_SIDE_EAST__
 		if (__CSLAVer) then {
-			[["Drop Artillery", "D30"], ["Drop Uaz","UAZ"], ["Drop Ammo", "CSLA_ammoBedna2"]]
+			[["Drop Artillery", "D30"], ["Drop UAZ","UAZ"], ["Drop Ammo", "CSLA_ammoBedna2"]]
 		} else {
 			if (__ACEVer) then {
 				[[localize "STR_SYS_335", "WeaponBoxEast"], [localize "STR_SYS_336","D30"], [localize "STR_SYS_337","ACE_BRDM2"]] //[["Пушка", "D30"], ["БРДМ","ACE_BRDM2"], ["Ящик снабжения", "WeaponBoxEast"]]
 			} else {
-				[["Drop Artillery", "D30"], ["Drop Uaz","UAZ"], ["Drop Ammo", "SpecialBoxEast"]]
+				[["Drop Artillery", "D30"], ["Drop UAZ","UAZ"], ["Drop Ammo", "SpecialBoxEast"]]
 			}
 		};
 	#endif
