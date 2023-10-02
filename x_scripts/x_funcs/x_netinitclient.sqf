@@ -604,10 +604,10 @@ XHandleNetStartScriptClient = {
 		// [ "syg_observer_kill", _killer, primaryWeapon _observer, _observer] call XSendNetStartScriptClient;
 		case "syg_observer_kill" : {
             private ["_score","_str","_sound_obj","_killer","_dist","_msg"];
-            _score = argp( d_ranked_a, 27 );
-            _killer = arg(1);
+            _score = d_ranked_a select 27;
+            _killer = _this select 1;
 		    if( isNull _killer ) then { // killer unknown
-                _sound_obj = arg(3); // play sound at observer position
+                _sound_obj = _this select 3; // play sound at observer position
                 (format[localize "STR_SYS_1162","STR_SYS_COR_NUM" call SYG_getLocalizedRandomText]) call XfHQChat; // "Spotter died..."
 		    } else {
                 _sound_obj = _killer; // play sound on sutable position
@@ -616,13 +616,16 @@ XHandleNetStartScriptClient = {
                     //player addScore _score;
 		            _observer = _this select 3;
                     _score call SYG_addBonusScore;
-                	_str  = if (count _this > 2) then { format[" (%1)", arg(2)]} else { (" (no WPN)"); };
-                    _dist = round( _killer distance (_this select 3));
-                    _str1 = if (count _this > 3) then { format[ localize "STR_SYS_1163", _dist ] } else { "" }; // " from a distance of %1 m."
-                    _msg = if (_dist < 10) then {"STR_SYS_1160_1"} else { if (_dist < 100) then {"STR_SYS_1160_0"} else {"STR_SYS_1160_2"} };
+                	_str  = if (count _this > 2) then { format[" (%1)", arg(2)]} else { (" (no WPN)"); }; // Weapon type
+                    _dist = round( _killer distance _observer);
+                    _str1 = if ((count _this) > 3) then { format[ localize "STR_SYS_1163", _dist ] } else { "" }; // " from a distance of %1 m."
+                    _msg = if (_dist < 10) then { "STR_SYS_1160_1" // "You breath out in relief - it was an spotter (+%1%2)!"
+                    } else { if (_dist < 100) then {"STR_SYS_1160_0"
+                             } else {"STR_SYS_1160_2"} };
                     hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you%2", _str, _str1 ];
+                    if (_dist < 20) then { _str1 = _str1  + _str }; // #632
                     (format[localize _msg, _score + 1, _str1]) call XfHQChat; // T'was a spotter (+%1%2)!
-                };
+            	};
                	// Other player/AI killed an observer
 				if (side _killer != d_side_player) exitWith {
 					(format[localize "STR_SYS_1162",localize "STR_SYS_COR_5"]) call XfHQChat; //  "Spotter died... in an accident"};

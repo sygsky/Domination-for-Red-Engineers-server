@@ -42,14 +42,14 @@ SAddObserverKillScores = {
             primaryWeapon _observer,
             name _killer,
             if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {""},
-            [_killer, localize "STR_SYS_POSE", 10] call SYG_MsgOnPosE,
+            [_killer, 10] call SYG_MsgOnPosE0,
             round (_observer distance _killer)
         ];
     } else {
         if (isNull _killer) then {
             hint localize format["+++ SAddObserverKillScores: observer (%1) killed with unclear circumstances (killer is null) at %2",
                 primaryWeapon _observer,
-                [_observer, localize "STR_SYS_POSE", 10] call SYG_MsgOnPosE
+                [_observer, 10] call SYG_MsgOnPosE0
             ];
         } else {
             hint localize format["+++ SAddObserverKillScores: observer (%1) killed by %2%3 (pos %4)",
@@ -58,7 +58,7 @@ SAddObserverKillScores = {
                 if( vehicle _killer != _killer) then { format["(%1)", typeOf (vehicle _killer)] } else {
                 	if ( _observer == _killer) then {"(himself)"} else {""}
                 },
-                [_killer, localize "STR_SYS_POSE", 10] call SYG_MsgOnPosE
+                [_killer, 10] call SYG_MsgOnPosE0
             ];
         };
     };
