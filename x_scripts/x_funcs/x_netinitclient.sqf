@@ -622,7 +622,7 @@ XHandleNetStartScriptClient = {
                     _msg = if (_dist < 10) then { "STR_SYS_1160_1" // "You breath out in relief - it was an spotter (+%1%2)!"
                     							} else { if (_dist < 100) then {"STR_SYS_1160_0" } else {"STR_SYS_1160_2"} };
                     hint localize format["+++ x_netinitclient.sqf: Observer%1 killed by you%2", _str, _str1 ];
-                    if (_dist < ((player call XGetRankFromScore) * 10 + 10)) then { _str1 = _str1  + _str }; // #632
+                    if (_dist < ((player call XGetRankIndexFromScore) * 10 + 10)) then { _str1 = _str1  + _str }; // #632
                     (format[localize _msg, _score + 1, _str1]) call XfHQChat; // T'was a spotter (+%1%2)!
             	};
                	// Other player/AI killed an observer
