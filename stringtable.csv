@@ -1502,7 +1502,7 @@ STR_SET_30_0,"Anyone can repair everything, with a %1 penalty per step. Engineer
 STR_SET_31,Checking the overturns of enemy vehicles: %1,Kontrolle der umgestürzten Fahrzeuge des Gegners: %1,Comprobación de los vuelcos de los vehículos enemigos: %1,Слежение за переворотом вражеской техники: %1
 STR_SET_32,Only recruited pilots can pilot air vehicles: %1,Nur rekrutierte Piloten können Luftfahrzeuge steuern: %1,Sólo los pilotos reclutados pueden pilotar vehículos aéreos: %1,Только призывники-пилоты могут пилотировать авиатехнику: %1
 STR_SET_33,Enemy has shotguns\n,Der Feind hat Schrotflinten\n,El enemigo tiene escopetas\n,У врагов можно найти дробовики\n
-STR_SET_34,The teleport stops working when taking damage %1%2\n,"Der Teleport funktioniert nicht mehr, wenn er Schaden nimmt %1%2\n","El teletransporte deja de funcionar al recibir daño %1%2\n",Телепорт перестаёт работать после повреждения %1%2\n
+
 STR_SET_35,"Enemy armored vehicles engaged in counterattacks are blocked from entering\n","Feindliche gepanzerte Fahrzeuge, die einen Gegenangriff starten, werden am Eindringen gehindert\n","Los vehículos blindados enemigos que participan en contraataques están bloqueados para entrar\n","Бронемашины врага, участвующие в контратаках, заблокированы от доступа\n"
 STR_SET_SPPM,SPPM service is on\n,Der SPPM-Dienst ist eingeschaltet\n,El servicio SPPM es on\n,Сервис СППМ включен\n
 STR_SET_SPPM_OFF,SPPM service is off\n,Der SPPM-Dienst ist ausgeschaltet\n,El servicio SPPM está desactivado\n,Сервис СППМ выключен\n

@@ -170,7 +170,7 @@ _str = _str + _strNoCR;
 #ifdef __NO_TELEPORT_ON_DAMAGE__
     _str = _str + (format[localize "STR_SET_9_2", __NO_TELEPORT_ON_DAMAGE__ * 100,"%" ]) + "\n"; // "Teleport works until the MHQ damage %1%2"
 #else
-    _str = _str + (localize "STR_SET_9_1") + "\n"; // "Teleport shuts off when MHQ is damaged at %1 percents"
+    _str = _str + (localize "STR_SET_9_1") + "\n"; // "Teleport works until the destruction of MHQ"
 #endif
 
 _str = _str + (localize "STR_SET_10") ; // "Jail"
@@ -207,10 +207,6 @@ _str = _str + format[localize "STR_SET_32",_strNoCR]; //
 
 #ifdef __ALLOW_SHOTGUNS__
 _str = _str + (localize "STR_SET_33"); //
-#endif
-
-#ifdef __NO_TELEPORT_ON_DAMAGE__
-_str = _str + format[localize "STR_SET_34", __NO_TELEPORT_ON_DAMAGE__ *100, "%"]; // "The teleport stops working when taking damage %1%2"
 #endif
 
 #ifdef __LOCK_ON_RECAPTURE__
