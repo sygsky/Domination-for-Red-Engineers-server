@@ -552,26 +552,17 @@ XGetRankFromScoreExt = {
 //                  _rank_id = (score player) call XGetRankIndexFromScoreExt;
 //
 XGetRankIndexFromScoreExt = {
-    private ["_index","_x"];
-    if ( typeName _this == "OBJECT") then {
-        if (isPlayer _this) then { _this = score _this;};
+    private [ "_index","_x" ];
+    if ( typeName _this == "OBJECT" ) then {
+        if ( isPlayer _this ) then { _this = score _this };
     };
-    if ( typeName _this != "SCALAR") exitWith {0};
-
-    if (!(_this call XIsRankFromScoreExtended)) exitWith {
-        _index = 0;
-        {
-            if ( _this  < _x ) exitWith {_index};
-            _index = _index +  1;
-        } forEach d_points_needed;
-        _index
-    };
-    _index = (count d_points_needed) - 1; // Colonel (index 6)
-    {
-        if ( _this < _x ) exitWith { _index };
-        _index = _index + 1;
-    } forEach d_pseudo_ranks;
-    _index // returns from 7("Brigadier-General") to 12("Generalissimo")
+    if ( typeName _this != "SCALAR" ) exitWith {0};
+	_index = 0;
+	{
+		if ( _this  < _x ) exitWith { _index };
+		_index = _index +  1;
+	} forEach ( d_points_needed + d_pseudo_ranks );
+	_index
 };
 
 XGetRankFromScore = XGetRankFromScoreExt;

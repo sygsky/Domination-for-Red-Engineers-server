@@ -81,9 +81,9 @@ hint localize "+++ deathSound: suicide assumed, assigning sound for it";
 // check if we are in water
 if (surfaceIsWater (getPos _unit) ) exitWith {
 	_sound = call SYG_getWaterDefeatTracks;
-	hint localize format["+++ deathSound: suicide at church, dmg %1, sound ""%2""", damage _unit, _sound ];
+	hint localize format["+++ deathSound: suicide at WATER, dmg %1, sound ""%2""", damage _unit, _sound ];
 	["say_sound", _unit, _sound] call XSendNetStartScriptClientAll; // in water  sounds if suicide in water
- };
+};
 
 // check if you are near church etc
 _churchArr = nearestObjects [ getPos _unit, SYG_religious_buildings, 50];
