@@ -1,0 +1,314 @@
+displayCredits = findDisplay 70324;
+
+0 fadeMusic 0.6
+playMusic "QGTrack6"
+
+;//CONTROLS DEFINITION
+;//Project Leader
+_TL_Title = displayCredits displayCtrl 1001;
+_TL_Name = displayCredits displayCtrl 2001;
+;//Lead Designer
+_D_Title = displayCredits displayCtrl 1002;
+_D_Name1 = displayCredits displayCtrl 2002;
+;//Designers
+_D1_Title = displayCredits displayCtrl 1010;
+_D1_Name1 = displayCredits displayCtrl 2010;
+_D1_Name2 = displayCredits displayCtrl 2011;
+_D1_Name3 = displayCredits displayCtrl 2012;
+_D1_Name4 = displayCredits displayCtrl 2013;
+;//Artists
+_G_Title = displayCredits displayCtrl 1020;
+_G_Name1 = displayCredits displayCtrl 2020;
+_G_Name2 = displayCredits displayCtrl 2021;
+_G_Name3 = displayCredits displayCtrl 2022;
+
+;//SCREENWRITTER
+_SP_Title = displayCredits displayCtrl 1030;
+_SP_Name1 = displayCredits displayCtrl 2030;
+;//Support Programmer
+_SP1_Title = displayCredits displayCtrl 1040;
+_SP1_Name1 = displayCredits displayCtrl 2040;
+
+;//Sound and Music
+_S_Title = displayCredits displayCtrl 1050;
+_S_Name1 = displayCredits displayCtrl 2050;
+_S_Name2 = displayCredits displayCtrl 2051;
+_S_Name3 = displayCredits displayCtrl 2052;
+
+;//SCRIPT PROGRAMMERS
+_SP2_Title = displayCredits displayCtrl 1060;
+_SP2_Name1 = displayCredits displayCtrl 2060;
+_SP2_Name2 = displayCredits displayCtrl 2061;
+
+;//CINEMA DIRECTOR
+_CN_Title = displayCredits displayCtrl 1070;
+_CN_Name1 = displayCredits displayCtrl 2070;
+;//MOTION CAPTURE ANIMATION OPERATOR  
+_CN1_Title = displayCredits displayCtrl 1080;
+_CN1_Name1 = displayCredits displayCtrl 2080;
+;//CINEMATICS CAMERA AND EDITING
+_CN2_Title = displayCredits displayCtrl 1090;
+_CN2_Name1 = displayCredits displayCtrl 2090;
+;//CINEMATICS CAMERA AND EDITING
+_CN3_Title = displayCredits displayCtrl 3000;
+_CN3_Name1 = displayCredits displayCtrl 4000;
+
+;//Cast
+_C_Title = displayCredits displayCtrl 3010;
+_C_Name1 = displayCredits displayCtrl 4010;
+_C_Name2 = displayCredits displayCtrl 4011;
+_C_Name3 = displayCredits displayCtrl 4012;
+_C_Name4 = displayCredits displayCtrl 4013;
+_C_Name5 = displayCredits displayCtrl 4014;
+_C_Name6 = displayCredits displayCtrl 4015;
+_C_Name7 = displayCredits displayCtrl 4016;
+_C_Name8 = displayCredits displayCtrl 4017;
+
+;//TESTING
+_T_Title = displayCredits displayCtrl 3070;
+_T_Name1 = displayCredits displayCtrl 4070;
+_T_Name2 = displayCredits displayCtrl 4071;
+_T_Name3 = displayCredits displayCtrl 4072;
+_T_Name4 = displayCredits displayCtrl 4073;
+_T_Name5 = displayCredits displayCtrl 4074;
+
+;//CEO
+_CEO_Title = displayCredits displayCtrl 3050;
+_CEO_Name1 = displayCredits displayCtrl 4050;
+
+;//DTP
+_DTP_Title = displayCredits displayCtrl 3060;
+_DTP_Name1 = displayCredits displayCtrl 4060;
+
+;//IDEA
+_ID_Title = displayCredits displayCtrl 3222;
+_ID1_Title = displayCredits displayCtrl 3020;
+_ID1_Name1 = displayCredits displayCtrl 4020;
+_ID2_Title = displayCredits displayCtrl 3030;
+_ID2_Name1 = displayCredits displayCtrl 4030;
+_ID3_Title = displayCredits displayCtrl 3040;
+_ID3_Name1 = displayCredits displayCtrl 4040;
+
+;//ADMINI
+_A_Title = displayCredits displayCtrl 3080;
+_A_Name1 = displayCredits displayCtrl 4080;
+_A_Name2 = displayCredits displayCtrl 4081;
+
+;//SPECIAL
+_SPEC_Title = displayCredits displayCtrl 3090;
+_SPEC_Name1 = displayCredits displayCtrl 4090;
+_SPEC_Name2 = displayCredits displayCtrl 4091;
+_SPEC_Name3 = displayCredits displayCtrl 4092;
+
+;//Bes
+_BES_Title = displayCredits displayCtrl 15551;
+
+;//END OF CONTROL DEFINITION
+
+_TL_Title ctrlSetPosition [0,-1];
+_TL_Title ctrlCommit 40;
+~0.4
+_TL_Name ctrlSetPosition [0,-1];
+_TL_Name ctrlCommit 40;
+~0.8
+
+_D_Title ctrlSetPosition [0,-1];
+_D_Title ctrlCommit 40;
+~0.4
+_D_Name1 ctrlSetPosition [0,-1];
+_D_Name1 ctrlCommit 40;
+~0.8
+
+_D1_Title ctrlSetPosition [0,-1];
+_D1_Title ctrlCommit 40;
+~0.4
+_D1_Name1 ctrlSetPosition [0,-1];
+_D1_Name1 ctrlCommit 40;
+~0.4
+_D1_Name2 ctrlSetPosition [0,-1];
+_D1_Name2 ctrlCommit 40;
+~0.4
+_D1_Name3 ctrlSetPosition [0,-1];
+_D1_Name3 ctrlCommit 40;
+~0.4
+_D1_Name4 ctrlSetPosition [0,-1];
+_D1_Name4 ctrlCommit 40;
+~0.8
+
+_G_Title ctrlSetPosition [0,-1];
+_G_Title ctrlCommit 40;
+~0.4
+_G_Name1 ctrlSetPosition [0,-1];
+_G_Name1 ctrlCommit 40;
+~0.4
+_G_Name2 ctrlSetPosition [0,-1];
+_G_Name2 ctrlCommit 40;
+~0.4
+_G_Name3 ctrlSetPosition [0,-1];
+_G_Name3 ctrlCommit 40;
+~0.8
+
+
+_S_Title ctrlSetPosition [0,-1];
+_S_Title ctrlCommit 40;
+~0.4
+_S_Name1 ctrlSetPosition [0,-1];
+_S_Name1 ctrlCommit 40;
+~0.4
+_S_Name2 ctrlSetPosition [0,-1];
+_S_Name2 ctrlCommit 40;
+~0.4
+_S_Name3 ctrlSetPosition [0,-1];
+_S_Name3 ctrlCommit 40;
+~0.8
+
+_SP_Title ctrlSetPosition [0,-1];
+_SP_Title ctrlCommit 40;
+~0.4
+_SP_Name1 ctrlSetPosition [0,-1];
+_SP_Name1 ctrlCommit 40;
+~0.8
+
+
+;_SP1_Title ctrlSetPosition [0,-1];
+;_SP1_Title ctrlCommit 40;
+;~0.4
+;_SP1_Name1 ctrlSetPosition [0,-1];
+;_SP1_Name1 ctrlCommit 40;
+;~0.8
+
+_CN_Title ctrlSetPosition [0,-1];
+_CN_Title ctrlCommit 40;
+~0.4
+_CN_Name1 ctrlSetPosition [0,-1];
+_CN_Name1 ctrlCommit 40;
+~0.8
+_CN1_Title ctrlSetPosition [0,-1];
+_CN1_Title ctrlCommit 40;
+~0.4
+_CN1_Name1 ctrlSetPosition [0,-1];
+_CN1_Name1 ctrlCommit 40;
+~0.8
+_CN2_Title ctrlSetPosition [0,-1];
+_CN2_Title ctrlCommit 40;
+~0.4
+_CN2_Name1 ctrlSetPosition [0,-1];
+_CN2_Name1 ctrlCommit 40;
+~0.8
+_CN3_Title ctrlSetPosition [0,-1];
+_CN3_Title ctrlCommit 40;
+~0.4
+_CN3_Name1 ctrlSetPosition [0,-1];
+_CN3_Name1 ctrlCommit 40;
+~0.8
+
+_C_Title ctrlSetPosition [0,-1];
+_C_Title ctrlCommit 40;
+~0.4
+_C_Name1 ctrlSetPosition [0,-1];
+_C_Name1 ctrlCommit 40;
+~0.4
+_C_Name2 ctrlSetPosition [0,-1];
+_C_Name2 ctrlCommit 40;
+~0.4
+_C_Name3 ctrlSetPosition [0,-1];
+_C_Name3 ctrlCommit 40;
+~0.4
+_C_Name4 ctrlSetPosition [0,-1];
+_C_Name4 ctrlCommit 40;
+~0.4
+_C_Name5 ctrlSetPosition [0,-1];
+_C_Name5 ctrlCommit 40;
+~0.4
+_C_Name6 ctrlSetPosition [0,-1];
+_C_Name6 ctrlCommit 40;
+~0.4
+_C_Name7 ctrlSetPosition [0,-1];
+_C_Name7 ctrlCommit 40;
+~0.8
+;_C_Name8 ctrlSetPosition [0,-1];
+;_C_Name8 ctrlCommit 40;
+;~0.01
+
+_T_Title ctrlSetPosition [0,-1];
+_T_Title ctrlCommit 40;
+~0.4
+_T_Name1 ctrlSetPosition [0,-1];
+_T_Name1 ctrlCommit 40;
+~0.4
+_T_Name2 ctrlSetPosition [0,-1];
+_T_Name2 ctrlCommit 40;
+~0.4
+_T_Name3 ctrlSetPosition [0,-1];
+_T_Name3 ctrlCommit 40;
+~0.4
+_T_Name4 ctrlSetPosition [0,-1];
+_T_Name4 ctrlCommit 40;
+~0.4
+_T_Name5 ctrlSetPosition [0,-1];
+_T_Name5 ctrlCommit 40;
+~0.8
+
+_CEO_Title ctrlSetPosition [0,-1];
+_CEO_Title ctrlCommit 40;
+~0.4
+_CEO_Name1 ctrlSetPosition [0,-1];
+_CEO_Name1 ctrlCommit 40;
+~0.8
+
+_ID_Title ctrlSetPosition [0,-1];
+_ID_Title ctrlCommit 40;
+~0.8
+_ID1_Title ctrlSetPosition [0,-1];
+_ID1_Title ctrlCommit 40;
+~0.4
+_ID1_Name1 ctrlSetPosition [0,-1];
+_ID1_Name1 ctrlCommit 40;
+~0.8
+_ID2_Title ctrlSetPosition [0,-1];
+_ID2_Title ctrlCommit 40;
+~0.4
+_ID2_Name1 ctrlSetPosition [0,-1];
+_ID2_Name1 ctrlCommit 40;
+~0.8
+_DTP_Title ctrlSetPosition [0,-1];
+_DTP_Title ctrlCommit 40;
+~0.4
+_DTP_Name1 ctrlSetPosition [0,-1];
+_DTP_Name1 ctrlCommit 40;
+~0.8
+_ID3_Title ctrlSetPosition [0,-1];
+_ID3_Title ctrlCommit 40;
+~0.4
+_ID3_Name1 ctrlSetPosition [0,-1];
+_ID3_Name1 ctrlCommit 40;
+~0.8
+
+_A_Title ctrlSetPosition [0,-1];
+_A_Title ctrlCommit 40;
+~0.4
+_A_Name1 ctrlSetPosition [0,-1];
+_A_Name1 ctrlCommit 40;
+~0.4
+_A_Name2 ctrlSetPosition [0,-1];
+_A_Name2 ctrlCommit 40;
+~0.8
+
+_SPEC_Title ctrlSetPosition [0,-1];
+_SPEC_Title ctrlCommit 40;
+~0.4
+_SPEC_Name1 ctrlSetPosition [0,-1];
+_SPEC_Name1 ctrlCommit 40;
+~0.4
+_SPEC_Name2 ctrlSetPosition [0,-1];
+_SPEC_Name2 ctrlCommit 40;
+~0.4
+_SPEC_Name3 ctrlSetPosition [0,-1];
+_SPEC_Name3 ctrlCommit 40;
+~4
+_BES_Title ctrlSetPosition [0,-1];
+_BES_Title ctrlCommit 40;
+~20
+10 fadeMusic 0
+~10
+titulkyDojely = true;
