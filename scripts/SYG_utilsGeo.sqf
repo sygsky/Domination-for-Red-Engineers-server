@@ -93,14 +93,14 @@ SYG_chasmExitWP = {
  *      location : nearest location of designated settlement types
  * to get position of location, call _pos = position _loc;
  * to get text of location call _text = text  _loc;
- * if no such location found, returns locationNull
+ * if no such location found, returns objNull
  */
 SYG_nearestLocationD = {
-    if ( (count _this) < 3 ) exitWith {locationNull};
+    if ( (count _this) < 3 ) exitWith {objNull};
 	private ["_loc"];
 	_loc = [arg(0),arg(1)] call SYG_nearestLocationA;
 	if ( ( (position _loc) distance (_this select 0)) <= (_this select 2) )  exitWith { _loc };
-	locationNull
+	objNull
 };
 
 /**
@@ -112,7 +112,7 @@ SYG_nearestLocationD = {
  *     _ret = [_location, _locTypeList] call SYG_nearestLocationA;
  * returns:
  *      location : nearest location with designated in _locTypeList names or
- *      locationNull if bad parameters used or  empty list is designated
+ *      objNull if bad parameters used or  empty list is designated
  *
  * to get position of location, call: _pos = position _loc;
  * to text of location call: _text = text  _loc;
@@ -132,7 +132,7 @@ SYG_nearestLocationA = {
 		default {_pos = []};
 	};
 */
-	if (count _pos < 2) exitWith {locationNull};
+	if (count _pos < 2) exitWith {objNull};
 	_lst = _this select 1;
 	switch (typeName _lst) do {
 		case "STRING": {_lst = [_lst];};
@@ -141,7 +141,7 @@ SYG_nearestLocationA = {
 	};
 	
 	_dist = 9999999.9;
-	_nearloc = locationNull; // default value
+	_nearloc = objNull; // default value
 	{
 		_loc = nearestLocation [_pos, _x];
 		_ploc = locationPosition _loc;
