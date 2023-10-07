@@ -509,6 +509,7 @@ class CfgSounds {
     class powerdown4    {name = ""; sound[] = {\sounds\short\power_down\PowerDown4.ogg, db+10, 1.0}; titles[] = {};};
     class powerdown5    {name = ""; sound[] = {\sounds\short\power_down\PowerDown5.ogg, db+10, 1.0}; titles[] = {};};
     class powerdown6    {name = ""; sound[] = {\sounds\short\power_down\PowerDown6.ogg, db+10, 1.0}; titles[] = {};};
+    class teleport_dmg  {name = ""; sound[] = {\sounds\short\power_down\teleport_dmg.ogg, db+10, 1.0}; titles[] = {};};
     class tvpowerdown   {name = ""; sound[] = {\sounds\short\power_down\tvtower_powerdown.ogg, db+10, 1.0}; titles[] = {};};
     class towerdown     {name = ""; sound[] = {\sounds\radio\towerDown.ogg, db+10, 1.0}; titles[] = {};};
 

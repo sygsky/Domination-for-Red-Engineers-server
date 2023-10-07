@@ -593,7 +593,7 @@ SYG_prisonersSound = {
 };
 
 SYG_powerDownSound = {
-	format["powerdown%1", (floor (random 6)) + 1] // powerdown1..6
+	format["powerdown%1", (floor (random 5)) + 1] // powerdown1..5
 };
 
 SYG_truckDoorCloseSound = {

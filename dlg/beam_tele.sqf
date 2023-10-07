@@ -88,7 +88,11 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
 			};
 		};
 	    format [localize "STR_SYS_75_5", localize _str ]  call XfHQChat; // "Dest. point is %1 off due to iron mass and/or MHQ damage!"
-     	_sound_to = call SYG_powerDownSound; // play specific sound for this case
+	    if (_dist < 2) then {
+	     	_sound_to = "teleport_dmg"; // play specific sound for this case
+	    } else {
+	     	_sound_to = call SYG_powerDownSound; // play specific sound for this case
+	    };
      } else { _global_pos = _tele_pos };
 #else
     _global_pos = _veh modelToWorld [0,-5,0]; // real teleport position (no deviation allowed at this mission)
