@@ -311,8 +311,8 @@ if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already v
     #ifndef __TT__
     hint localize format["+++ #ifndef __TT__, playerSide %1, east %2, playerSide == east = %3", playerSide, east, playerSide == east];
     _boxname = switch (playerSide) do {
-                    case west: {"AmmoBoxWest"};
-                    case east: { if (__ACEVer) then {"ACE_WeaponBox_East"} else {"AmmoBoxEast"} };
+                    case west: { "AmmoBoxWest" };
+                    case east: { "AmmoBoxEast" };
                     case resistance;
                     default {"AmmoBoxGuer"};
                 };

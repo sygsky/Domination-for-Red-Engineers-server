@@ -15,4 +15,4 @@
 #endif
 
 #define HELI_POINT_ARR [[[17332,19337.5,0],315],[[16874,19675,0],280]]
-#define HELI_MARKER_NAME "abo_heli_Imarker"
+#define HELI_MARKER_NAME "abo_heli_marker"
