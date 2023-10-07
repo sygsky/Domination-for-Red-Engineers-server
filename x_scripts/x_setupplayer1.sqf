@@ -338,7 +338,7 @@ if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already v
     if (playerSide == east) then {
         { // fill created items into the box at each client ( so Arma-1 need, only items added manually on clients during gameplay are propagated through network to all clients )
             _box addWeaponCargo [_x, 5];
-        } forEach ["ACE_AK74","ACE_AKS74U","ACE_Bizon","ACE_AK47","ACE_AKM","ACE_M1014","ACE_Makarov"];
+        } forEach ["ACE_AKS74SD","ACE_AKS74U","ACE_Bizon","ACE_AK47","ACE_AKM","ACE_M1014","ACE_Makarov"];
         {
             _box addMagazineCargo [_x, 50];
             sleep 0.1;
