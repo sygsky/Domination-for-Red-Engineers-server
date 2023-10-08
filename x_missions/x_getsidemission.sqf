@@ -83,7 +83,9 @@ side_mission_winner = 0;
 sleep 10; // Allow time for the script to execute? to get relevant counts in SM clean arrays
 hint localize format["+++ x_getsidemission.sqf: Started next Side Mission, sm index %1, sm counter %2, units %3, vehs %4",
 	current_mission_index, current_mission_counter, count extra_mission_remover_array, count extra_mission_vehicle_remover_array];
-//hint localize format["+++ x_getsidemission.sqf: SM text '%1'", current_mission_text];
+// Print position of the 1st point of this sidemission. May be incorrect if 1st point is not base point for some SM.
+hint localize format["+++ x_getsidemission.sqf: kind is ""%1"", position %2", x_sm_type, [x_sm_pos select 0, 10 ] call SYG_MsgOnPosE0];
+//hint localize format["+++ x_getsidemission.sqf: SM text '%1'", current_mission_text]; // Useless on server as current_mission_text is defined only for clients
 #endif
 
 if (true) exitWith {};

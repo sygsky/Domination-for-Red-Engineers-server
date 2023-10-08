@@ -4,7 +4,7 @@ private ["_vehicle"];
 #include "x_macros.sqf"
 
 #define __Poss _poss = x_sm_pos select 0;
-#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
+#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1
 
 x_sm_pos = [[2582.7,2427.4,0], [2555.0,2497.1,0]]; //  steal plane prototype, Rahmadi, second array position armor
 x_sm_type = "normal"; // "convoy"
@@ -30,10 +30,11 @@ if (isServer) then {
 	else { ["AV8", "AV8B2"] }; //+++ Sygsky: for more fun
 #endif
 	_xplane = _planes call XfRandomArrayVal; //+++ Sygsky: for more fun
-	__PossAndOther
+	__PossAndOther;
 	_hangar = "Land_SS_hangar" createVehicle (_poss);
 	_hangar setDir 180.000000;
-	__AddToExtraVec(_hangar)
+//	__AddToExtraVec(_hangar)
+	_hangar call SYG_addToExtraVec;
 	sleep 1.0123;
 	
 	_vehicle = objNull;
