@@ -187,10 +187,10 @@ for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
             _killer = _this select 1;
             if (isNull _killer) then {" (NULL)"} else {
 				_killer = gunner( _this select 1);
-				_killer = if (isNull _killer) then {" (?)"} else { if ( isPLayer _killer) then { format[" (%1)", name _killer] } else { " (?)" } };
+				_killer = if (isNull _killer) then {"(null)"} else { if ( isPLayer _killer) then { format["(%1)", name _killer] } else { "(?)" } };
             };
             [ "msg_to_user", "", [ ["STR_SM_CONVOY_1", dead_items, _killer, (count d_sm_convoy_vehicles) - dead_items, count d_sm_convoy_vehicles] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Destroyed vehicles %1%2, left %3, total %4"
-            hint localize format["+++ x_sideconvoy.sqf: veh #%1 (of %2%3) destroyed.", dead_items, count d_sm_convoy_vehicles, _killer];
+            hint localize format["+++ x_sideconvoy.sqf: veh %1 #%2 (of %3) destroyed by %4.", typeOf (_this select 0), dead_items, count d_sm_convoy_vehicles, _killer];
         }
     ];
     #endif
@@ -256,7 +256,14 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
                     _pos2 set [2,0];
                     _dist = (round ((_pos1 distance _pos2)/100)) * 100;
                     _dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
-                    hint localize format["%6 x_sideconvoy.sqf (wait players): alive vecs %1/%5(%7), pos. %3 m to %4 from %2", {alive _x} count _veh_arr, text _loc, (round (_dist/50))*50, _dir, count _veh_arr, call SYG_nowTimeToStr, typeOf (vehicle _leader) ];
+                    hint localize format["%6 x_sideconvoy.sqf (wait players): alive vecs %1/%5(%7), pos. %3 m to %4 from %2",
+                    	{alive _x} count _veh_arr,			// 1
+                    	text _loc,							// 2
+                    	(round (_dist/50))*50, 				// 3
+                    	_dir, 								// 4
+                    	count _veh_arr, 					// 5
+                    	call SYG_nowTimeToStr, 				// 6
+                    	typeOf (vehicle _leader) ];			// 7
                 } else {
                 		hint localize format["--- x_sideconvoy.sqf (wait players): no leader exists, %1 units ", {alive _x } count (units _convoyGroup)];
                 };
