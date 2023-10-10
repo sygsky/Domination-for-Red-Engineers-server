@@ -25,11 +25,12 @@ _clearFootmen = {
 	    if (typeName _this != "ARRAY") exitWith { false };
 
 		{
-			if ( alive _x && (vehicle _x == _x) ) then
-			{	
-				_x setDammage 1.1; sleep 0.01; _x call XAddDead0;
+			if ( alive _x && (vehicle _x == _x) ) then{
+				_x setDammage 1.1;
+				sleep 0.01;
+				_x call XAddDead0
 			};
-		}forEach _this;
+		} forEach _this;
 	};
 };
 
@@ -220,7 +221,7 @@ _way_id = 2 + floor(random ((count _c_array) - 2)); // 2 .. n  - the ways id var
 
 _wps = _c_array select _way_id;
 {
-	_wp=_convoyGroup addWaypoint[_x, 0];
+	_wp = _convoyGroup addWaypoint[_x, 0];
 	_wp setWaypointBehaviour "SAFE";
 	_wp setWaypointSpeed "NORMAL";
 	_wp setWaypointType "MOVE";
@@ -256,7 +257,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
                     _pos2 set [2,0];
                     _dist = (round ((_pos1 distance _pos2)/100)) * 100;
                     _dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
-                    hint localize format["%6 x_sideconvoy.sqf (wait players): alive vecs %1/%5(%7), pos. %3 m to %4 from %2",
+                    hint localize format["+++ %6 x_sideconvoy.sqf (wait players): alive vecs %1/%5(%7), pos. %3 m to %4 from %2",
                     	{alive _x} count _veh_arr,			// 1
                     	text _loc,							// 2
                     	(round (_dist/50))*50, 				// 3
@@ -265,7 +266,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
                     	call SYG_nowTimeToStr, 				// 6
                     	typeOf (vehicle _leader) ];			// 7
                 } else {
-                		hint localize format["--- x_sideconvoy.sqf (wait players): no leader exists, %1 units ", {alive _x } count (units _convoyGroup)];
+                	hint localize format["--- x_sideconvoy.sqf (wait players): no leader exists, %1 units ", {alive _x } count (units _convoyGroup)];
                 };
                 // TODO: check for any overturned vehicles and turn it on while no players on island
                 _time2print = time + PRINT_DELAY;
@@ -277,25 +278,14 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 
 #ifdef __DEBUG_PRINT__
 	if ( _time2print <= time ) then {
-		if (!isNull (_convoyGroup call SYG_getLeader)) then {
-			_loc = (_convoyGroup call SYG_getLeader) call SYG_nearestLocation;
-			_pos1 = position _loc;
-			_pos1 set [2,0];
-			_pos2 = position _leader;
-			_pos2 set [2,0];
-			_dist = (round ((_pos1 distance _pos2)/100)) * 100;
-			_dir = ([_loc,_leader] call XfDirToObj) call SYG_getDirNameEng;
-//					hint localize format["+++ %1 x_groupsm.sqf: grp %2, count (_grp_array select 4) == %3 ",call SYG_nowTimeToStr, _grp,count (_grp_array select 4)];
-
-			hint localize format["+++ %6 x_sideconvoy.sqf: vecs a%1/m%8/c%5(%7), pos. %3 m to %4 from %2",
-				{alive _x} count _veh_arr,
-				text _loc,
-				(round (_dist/10))*10,
-				_dir,
-				count _veh_arr,
-				call SYG_nowTimeToStr,
-				typeOf (vehicle _leader),
-				{alive driver _x}  count _veh_arr
+		_leader = _convoyGroup call SYG_getLeader;
+		if (!(isNull _leader)) then {
+			hint localize format["+++ %1 x_sideconvoy.sqf: vehs alive %2/drived %3/leader veh %4, pos. %5",
+				call SYG_nowTimeToStr,				// 1
+				{alive _x} count _veh_arr,			// 2
+				{alive driver _x}  count _veh_arr,	// 3
+				typeOf (vehicle _leader),			// 4
+				[_convoyGroup, 10] call SYG_MsgOnPosE0 // 5
 			];
 		} else { hint localize format["--- x_sideconvoy.sqf: no leader exists, %1 alive units ", {alive _x } count (units _convoyGroup)]; };
 		_time2print = time + PRINT_DELAY;
@@ -314,63 +304,70 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 		};
 	};
 #endif							
-	if ( ({ !isNull _x && alive _x } count _veh_arr) == 0 ) then {
+	if ( ({ !isNull _x && alive _x } count _veh_arr) == 0 ) exitWith {
+		hint localize "--- x_sideconvoy.sqf: convoy has no alive vehicles, exit SM!";
 		_convoy_destroyed = true;
-		//_convoyGroup call _clearFeetmen;
+	};
+	if (isNull _convoyGroup) exitWith {
+		hint localize "--- x_sideconvoy.sqf: convoy group is null, exit SM!";
+		_convoy_destroyed = true;
+	};
+	_cnt = {alive _x} count (units _convoyGroup);
+	if (_cnt == 0) exitWith {
+		hint localize format["--- x_sideconvoy.sqf: no alive units found in thenconvoy group, dead count is %1, exit SM!", {!(isNull _x)} count (units _convoyGroup)];
+		_convoy_destroyed = true;
+	};
+	_leader = _convoyGroup call SYG_getLeader;
+	if ((position _leader) distance _pos_end < 20) then {
+		_convoy_reached_dest = true;
 	} else {
-		_leader = leader _convoyGroup;
-		if ((position _leader) distance _pos_end < 20) then {
-			_convoy_reached_dest = true;
-		} else {
-			if ( time > _footmen_check_time ) then {
-				_footmen = [];
-				{ //  forEach units _convoyGroup;
-					if ( (alive _x) && (vehicle _x == _x)) then { // unit on feet
-						if ( !(_x call SYG_ACEUnitUnconscious ) ) then { _footmen set [count _footmen, _x]; }; // unit is conscious
-						if ( _x == leader _convoyGroup ) then {
-							// select other leader in a good vehicle
-							_veh = objNull;
-							{  if ( !isNull _x && canMove _x && !isNull driver _x)  exitWith {_veh = _x} } forEach _veh_arr;
-							if (!isNull _veh) then {
-								_x setRank "PRIVATE";
+		if ( time > _footmen_check_time ) then {
+			_footmen = [];
+			{ //  forEach units _convoyGroup;
+				if ( (alive _x) && (vehicle _x == _x)) then { // unit on feet
+					if ( !(_x call SYG_ACEUnitUnconscious ) ) then { _footmen set [count _footmen, _x]; }; // unit is conscious
+					if ( _x == leader _convoyGroup ) then {
+						// select other leader in any alive vehicle with driver
+						_veh = objNull;
+						{  if ( alive _x && canMove _x && alive driver _x)  exitWith {_veh = _x} } forEach _veh_arr;
+						if (!isNull _veh) then {
+							_x setRank "PRIVATE";
+							sleep 0.01;
+							_leader = _convoyGroup selectLeader (effectiveCommander _veh);
+							if ( alive _leader ) then {
 								sleep 0.01;
-								_leader = _convoyGroup selectLeader (effectiveCommander _veh);
-								if (!isNull _leader && alive _leader ) then
-								{
-									sleep 0.01;
-									_leader setRank "LIEUTENANT";
-									sleep 0.01;
+								_leader setRank "LIEUTENANT";
+								sleep 0.01;
 #ifdef __DEBUG_PRINT__							
-									hint localize format["+++ x_sideconvoy.sqf: Re-assign leadership from feetman %1 to a crewmen %2 [%3]", _x, _leader, typeOf _veh];
+								hint localize format["+++ x_sideconvoy.sqf: Re-assign leadership from feetman %1 to a crewmen %2 [%3]", _x, _leader, typeOf _veh];
 #endif							
-								};
 							};
 						};
-						// kill all man now
+					};
+					// kill all man now
 //							_x setDammage 1.1; sleep 0.3; [_unit] call XAddDead;
 #ifdef __DEBUG_PRINT__
 //							hint localize format["+++ x_sideconvoy.sqf: feetman unit %1 is deleted",_unit];
 #endif
-					};
-				} forEach units _convoyGroup;
-
-				if ( count _footmen > 0 ) then { // try to assign as cargo in other moveable vehicle
-#ifdef __DEBUG_PRINT__
-					_cnt = count _footmen;
-#endif
-					_footmen = [_footmen, _veh_arr] call SYG_findAndAssignAsCargo;
-#ifdef __DEBUG_PRINT__
-					if ( count _footmen > 0 ) then {
-						if ( (count _footmen) < _cnt ) then {
-							hint localize format["+++ x_sideconvoy.sqf: %1 walking units of total %2 were reassigned to other vehicle[s]",_cnt - (count _footmen), _cnt];
-						};
-					} else {
-						hint localize "+++ x_sideconvoy.sqf: all walking units were reassigned to other vehicle[s]";
-					};
-#endif
 				};
-				_footmen_check_time = time + CHECK_DELAY;
+			} forEach units _convoyGroup;
+
+			if ( count _footmen > 0 ) then { // try to assign as cargo in other moveable vehicle
+#ifdef __DEBUG_PRINT__
+				_cnt = count _footmen;
+#endif
+				_footmen = [_footmen, _veh_arr] call SYG_findAndAssignAsCargo;
+#ifdef __DEBUG_PRINT__
+				if ( count _footmen > 0 ) then {
+					if ( (count _footmen) < _cnt ) then {
+						hint localize format["+++ x_sideconvoy.sqf: %1 walking unit[s] of total %2 were reassigned to other vehicle[s]",_cnt - (count _footmen), _cnt];
+					};
+				} else {
+					hint localize "+++ x_sideconvoy.sqf: all walking units were reassigned to other vehicle[s]";
+				};
+#endif
 			};
+			_footmen_check_time = time + CHECK_DELAY;
 		};
 	};
 #ifdef __RANKED__
@@ -386,7 +383,7 @@ while {!_convoy_reached_dest && !_convoy_destroyed} do {
 		_msg = if ((_pos distance _pos_end ) >= DISTANCE_BETWEEN_CTRL_POINT * 2) then {"STR_SYS_500_3"} else {"STR_SYS_500_4"};
 		// "Islanders report about convoy movement spotted" or
 		// "Islanders report about convoy movement spotted near the target"
-		["msg_to_user", _this,  [[_msg]], 0, 2, false, "message_received" ] call XSendNetStartScriptClientAll;
+		["msg_to_user", "",  [[_msg]], 0, 2, false, "message_received" ] call XSendNetStartScriptClientAll;
 	};
 };
 
@@ -420,7 +417,6 @@ if (_convoy_reached_dest) then {
 	hint localize "+++ x_sideconvoy.sqf: Конвой уничтожен бойцами Советской Армии!";
 };
 #endif
-
 
 side_mission_resolved = true;
 
