@@ -139,12 +139,12 @@ if (isServer) then {
 	#ifndef __ACE__
 	d_sm_convoy_vehicles = (
 		switch (d_enemy_side) do {
-			case "EAST": {["BRDM2","BMP2", "ZSU", "UralRepair", "UralRefuel", "UralReammo", "T72"]};
+			case "EAST": {["T72","T72", "ZSU", "UralRepair", "UralRefuel", "UralReammo", "T72"]};
 			case "WEST": {
 				if (__CSLAVer) then {
-					["CSLA_USHMMWV_M2","CSLA_USM113", "CSLA_USM163", "CSLA_USTruck5tRepair", "CSLA_USTruck5tRefuel", "CSLA_USTruck5tReammo", "CSLA_USM1A1"]
+					["CSLA_USHMMWV_M2","CSLA_USM1A1", "CSLA_USM1A1", "CSLA_USTruck5tRepair", "CSLA_USTruck5tRefuel", "CSLA_USTruck5tReammo", "CSLA_USM1A1"]
 				} else {
-					["Stryker_ICV_M2","M113", "Vulcan", "Truck5tRepair", "Truck5tRefuel", "Truck5tReammo", "M1Abrams"]
+					["Stryker_ICV_M2","M1Abrams", "Stryker_ICV_MK19", "Truck5tRepair", "Truck5tRefuel", "Truck5tReammo", "M1Abrams"]
 				}
 			};
 		}
@@ -153,11 +153,11 @@ if (isServer) then {
 	#ifdef __ACE__
 	d_sm_convoy_vehicles = (
 		switch (d_enemy_side) do {
-			case "EAST": {["BRDM2","ACE_BMP2", "ACE_ZSU", "UralRepair", "UralRefuel", "UralReammo", "ACE_T90"]};
+			case "EAST": {["ACE_T90","ACE_ZSU", "ACE_ZSU", "UralRepair", "UralRefuel", "UralReammo", "ACE_T90"]};
 //			case "WEST": {["ACE_Stryker_MGS","ACE_M2A2","ACE_PIVADS","ACE_M6A1","ACE_Stryker_MGS","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_PIVADS","ACE_M1A2_SEP_TUSK"]};
 			case "WEST": 
 			{
-			["ACE_M1A2_SEP_TUSK","ACE_PIVADS","ACE_Stryker_MK19","ACE_M6A1","ACE_Truck5t_Repair"/*"ACE_Truck5t_Refuel"*/,"ACE_Truck5t_Reammo",/*"ACE_PIVADS",*/"ACE_M1A2_SEP_TUSK"]
+			["ACE_M1A2_SEP_TUSK","ACE_M6A1","ACE_M6A1","ACE_M6A1","ACE_Truck5t"/*"ACE_Truck5t_Refuel"*/,"ACE_Truck5t_MG",/*"ACE_PIVADS",*/"ACE_M1A2_SEP_TUSK"]
 			};
 		}
 	);
