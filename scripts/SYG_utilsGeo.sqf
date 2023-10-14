@@ -416,10 +416,11 @@ SYG_whatPartOfIsland = {
 /**
  * Decides if point is in desert region or no
  * call:
- *    _amIInDesert = _getPos player call SYG_isDesert; // TRUE or FALSE
+ *    _isInDesert = _getPos player call SYG_isDesert; // TRUE or FALSE
  */
 SYG_isDesert = {
 	private ["_pos","_ret","_x"];
+	hint localize format["+++ SYG_isDesert: _this = %1",_this];
 	_pos = _this call SYG_getPos;
 	if (  (_pos select 0) == 0 ) exitWith {false};
 	// this is a max Y coordinate of desert region on Sahrani (by my estimation)

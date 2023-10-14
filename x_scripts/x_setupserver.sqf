@@ -199,6 +199,7 @@ if (!d_old_ammobox_handling) then {
  */
 XCheckSMHardTarget = {
 	private ["_vehicle","_trigger","_trigger2"];
+	if ( typeName _this == "OBJECT" ) then { _this = [_this]};
 	_vehicle = _this select 0;
 
 	#ifdef __TT__

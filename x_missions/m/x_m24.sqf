@@ -23,21 +23,18 @@ if (X_Client) then {
 };
 
 if (isServer) then {
-    _select_ind = floor(random 2); // 0 is original point, 1 is other point
-	if ( _select_ind != 0 ) then {
-        d_sm_p_pos = [x_sm_pos select 1];
-        publicVariable "d_sm_p_pos";
-	    x_sm_pos set [0, d_sm_p_pos];
-	};
-	__Poss;
-	_vehicle = "Land_fuelstation_army" createVehicle (_poss);
+    _pos_ind =x_sm_pos call XfRandomFloorArray; // 0 is original point, 1 is other point
+	d_sm_p_pos = x_sm_pos select _pos_ind;
+	publicVariable "d_sm_p_pos";
+	if ( _pos_ind > 0 ) then { x_sm_pos set [0, d_sm_p_pos] };
+	_vehicle = "Land_fuelstation_army" createVehicle d_sm_p_pos;
 	[_vehicle] spawn XCheckSMHardTarget;
 	//createGuardedPoint[d_side_enemy, position _vehicle, -1, _vehicle];
 	sleep 2.22;
-	["shilka", 1, "bmp", 2, "tank", 1, _poss, 1, 120,true] spawn XCreateArmor;
+	["shilka", 1, "bmp", 2, "tank", 1, d_sm_p_pos, 1, 120,true] spawn XCreateArmor;
 	sleep 2.123;
-	["specops", 1, "basic", 2, _poss, 150,true] spawn XCreateInf;
-//	__AddToExtraVec(_vehicle)
+	["specops", 1, "basic", 2, d_sm_p_pos, 150,true] spawn XCreateInf;
+	//	__AddToExtraVec(_vehicle)
 	// TODO replace all __AddToExtraVec(_vehicle) with _vehicle call SYG_addToExtraVec;
 	_vehicle call SYG_addToExtraVec;
     sleep 10;

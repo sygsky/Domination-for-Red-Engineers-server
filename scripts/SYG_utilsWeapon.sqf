@@ -416,7 +416,7 @@ _hardMounted     = { floor((_this call _readSlots) / WeaponHardMounted ) % 2 };
  * Values 4096, 65536 (see SYG_readWeaponType comments) not used here and is skipped
  */
 SYG_readWeapons = {
-	private ["_arr", "_type"];
+	private ["_arr", "_type","_x"];
 	_arr = [];
 	{
 		_type = _x call SYG_readWeaponType;
@@ -453,15 +453,14 @@ SYG_rearmSabotage = {
 #endif
     private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_i","_allow_shotgun",
              "_smoke_grenade","_glMuzzle"];
-	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
-	{
+	if ( typeName _this == "ARRAY" ) then {// [_unit<, prob1<, prob2>>] call
 		_unit = _this select 0; // argopt(num,val) (if((count _this)<=(num))then{val}else{arg(num)})
         _prob = if((count _this)<=1) then { 0.7 } else { _this select 1 };// argopt(1, 0.7);
         _adv_rearm = if((count _this)<=2) then { 0.1 } else { _this select 2 };//argopt(2, 0.1); // do advanced rearming  (true) or not (false)
 #ifdef __ALLOW_SHOTGUNS__
         _allow_shotgun = if((count _this)<=3) then { true } else { _this select 3 }; // argopt(3, true);
 #endif
-	}else{
+	} else {
 		_unit = _this;
 		_prob = 0.7;
         _adv_rearm = 0.1; // do advanced rearming  (true) or not (false)
@@ -483,15 +482,11 @@ SYG_rearmSabotage = {
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] + SYG_STD_MEDICAL_SET;
 
 		_ret = true;
-		switch (_unit_type) do
-		{
-			case "ACE_SquadLeaderW_A":
-			{
+		switch (_unit_type) do {
+			case "ACE_SquadLeaderW_A": {
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher + high penetration rocket
-				if ( _super_rearm ) then
-				{
-					switch (floor (random 4)) do
-					{
+				if ( _super_rearm ) then {
+					switch (floor (random 4)) do {
 						//case 0: {_wpn = RAR(SYG_HK416_WPN_SET_STD_SD_OPTICS);};
 						//case 0: {_wpn = RAR(SYG_HK417_WPN_SET_STD_SD_OPTICS);};
 						case 0: {_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);};
@@ -499,15 +494,10 @@ SYG_rearmSabotage = {
 						case 2: {_wpn = RAR(SYG_G36_WPN_SET_STD);};
 						case 3: {_wpn = RAR(SYG_SCARH_WPN_SET_STD);};
 					};
-				}
-				else
-				{
-					if ( _adv_rearm ) then
-					{
+				} else {
+					if ( _adv_rearm ) then {
 						_wpn = RAR(SYG_HK417_WPN_SET_STD);
-					}
-					else
-					{
+					} else {
 //						_wpn = RAR(SYG_HK416_WPN_SET_STD);
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 #ifdef __DEBUG_SYG_rearmSabotage__
@@ -521,15 +511,11 @@ SYG_rearmSabotage = {
 				if (_glMuzzle) then {_equip set [0, SYG_GL_SET]}; // replace pistol with GL items
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]]+ [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
-			case "ACE_SoldierWMAT_A":
-			{
+			case "ACE_SoldierWMAT_A": {
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher + 2 high penetration rocket2
-				if ( _super_rearm ) then
-				{
+				if ( _super_rearm ) then {
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
-				}
-				else
-				{
+				} else {
 //					_wpn = RAR(SYG_HK416_WPN_SET_STD);
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 #ifdef __DEBUG_SYG_rearmSabotage__
@@ -538,8 +524,7 @@ SYG_rearmSabotage = {
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],[_smoke_grenade]];
 			};
-			case "ACE_SoldierWDemo_A": // TODO: add WOB with 2 "ACE_PipeBomb"
-			{
+			case "ACE_SoldierWDemo_A": { // TODO: add WOB with 2 "ACE_PipeBomb"
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 3]]; // average launcher+ high penetration rocket
 //				_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
@@ -548,21 +533,14 @@ SYG_rearmSabotage = {
 #endif
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] + [["ACE_PipeBomb"],[_smoke_grenade]]; // special mine
 			};
-			case "ACE_SoldierWAA": // TODO: add ACE rucksack with 1 "ACE_Stinger"
-			{
+			case "ACE_SoldierWAA": { // TODO: add ACE rucksack with 1 "ACE_Stinger"
 				_equip = _equip + [["P", "ACE_FIM92A", "ACE_Stinger"]]; // AA missile launcher
-				if (_super_rearm) then
-				{
+				if (_super_rearm) then {
 					_wpn = RAR(SYG_M16_WPN_SET_ALL_OPTICS);
-				}
-				else
-				{
-					if (_adv_rearm ) then
-					{
+				} else {
+					if (_adv_rearm ) then {
 						_wpn = RAR(SYG_M16_WPN_SET_STD);
-					}
-					else
-					{
+					} else {
 //						_wpn = RAR(SYG_HK416_WPN_SET_STD);
     					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 #ifdef __DEBUG_SYG_rearmSabotage__
@@ -572,15 +550,12 @@ SYG_rearmSabotage = {
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 4]] + [[_smoke_grenade,2]];
 			};
-			case "ACE_SoldierWDemo_USSF_LRSD": // TODO: add ACE rucksack with 1 "ACE_PipeBomb"
-			{
+			case "ACE_SoldierWDemo_USSF_LRSD": { // TODO: add ACE rucksack with 1 "ACE_PipeBomb"
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP",2]]; // average launcher + high penetration rocket
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				}
-				else
-				{
+				else {
 //					_wpn = RAR(SYG_HK416_WPN_SET_STD_SD);
 					_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
 #ifdef __DEBUG_SYG_rearmSabotage__
@@ -589,8 +564,7 @@ SYG_rearmSabotage = {
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 3]] +	[[_smoke_grenade],["ACE_Claymore_M"], ["ACE_PipeBomb"]]; // special mine
 			};
-			case "ACE_SoldierWDemo_USSF_ST": // TODO: add ACE rucksack with 2 "ACE_PipeBomb"
-			{
+			case "ACE_SoldierWDemo_USSF_ST": { // TODO: add ACE rucksack with 2 "ACE_PipeBomb"
 				_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket
 //				_wpn = RAR(SYG_HK416_WPN_SET_STD);
 				_wpn = RAR(SYG_ORDINAL_WPNSET_SD);
@@ -605,16 +579,13 @@ SYG_rearmSabotage = {
 		};
 		//player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, equip %5", _unit_type, _prob, _adv_rearm, _rnd, _equip];
 
-		if ( _ret ) then
-		{
+		if ( _ret ) then {
 			_ret = [_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {	_unit addWeapon "NVGoggles"; };
 			//if (!(_unit hasWeapon "Binocular")) then {	_unit addWeapon "Binocular"; };
-		}
-		else{ hint localize format["+++ SYG_rearmSabotage full rearming failed due to unknown soldier type %1", _unit_type]; };
+		} else{ hint localize format["+++ SYG_rearmSabotage full rearming failed due to unknown soldier type %1", _unit_type]; };
 	}
-	else // AI is not rearmed (used standart equipment)
-	{
+	else { // AI is not rearmed (used standart equipment)
 		/*
 			men to replace some weapons:
 			"ACE_SquadLeaderW_A": nothing to replace (leader has no bombs)
@@ -632,14 +603,12 @@ SYG_rearmSabotage = {
 		_removeWpn    = ""; // remove weapon
 		_addWpn       = []; // add weapons
 		_addMags      = []; // add mags
-		switch (_unit_type) do
-		{
+		switch (_unit_type) do {
 			case "ACE_SquadLeaderW_A": {_removeMags = ["ACE_SmokeGrenade_White"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_AT4_HP",_smoke_grenade];}; // He has 2 empty slots!!!
 			case "ACE_SoldierWDemo_A":  {_removeMags = ["ACE_TimeBomb"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_PipeBomb", "ACE_AT4_HP"];};
 			case "ACE_SoldierWDemo_USSF_LRSD":  {_removeMags = ["ACE_Claymore_M"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_PipeBomb", "ACE_AT4_HP"];};
 			case "ACE_SoldierWDemo_USSF_ST":  {_removeMags = ["ACE_Claymore_M"]; _addWpn = ["ACE_M136"]; _addMags = ["ACE_PipeBomb", "ACE_AT4_HP"];};
-			case "ACE_SoldierWMAT_A":
-			{
+			case "ACE_SoldierWMAT_A": {
 			    _removeWpn = "ACE_M136";
 			    _removeMags = ["ACE_AT4_HEAT","ACE_30Rnd_556x45_B_Stanag","ACE_30Rnd_556x45_B_Stanag","ACE_30Rnd_556x45_B_Stanag","ACE_30Rnd_556x45_B_Stanag"];
 			    _addWpn = ["ACE_M136"];
@@ -669,8 +638,7 @@ SYG_rearmSabotage = {
 SYG_rearmSabotageGroup = {
 	private ["_cnt"];
 	_cnt = 0;
-	switch typeName _this do
-	{
+	switch typeName _this do {
 		case "ARRAY": { { if (_x call SYG_rearmSabotage) then {_cnt = _cnt + 1; } } forEach _this };
 		case "GROUP": { { if (_x call SYG_rearmSabotage) then {_cnt = _cnt + 1; } } forEach units _this };
 		case "OBJECT": { if (_x call SYG_rearmSabotage) then {_cnt = _cnt + 1; } };
@@ -699,15 +667,12 @@ SYG_rearmSabotageGroup = {
 SYG_rearmSpecops = {
 
     private ["_unit","_unit_type","_prob","_adv_rearm","_super_rearm","_rnd","_equip", "_ret","_wpn","_smoke_grenade"];
-	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
-	{
+	if ( typeName _this == "ARRAY" ) then {// [_unit<, prob1<, prob2>>] call
 		_unit = arg(0);
 		_unit_type = typeOf _unit;
 		_prob = argopt(1, 0.5);
 		_adv_rearm = argopt(2, 0.1); // do advanced rearming
-	}
-	else	// _this call
-	{
+	} else	{ // _this call
 		_unit = _this;
 		_unit_type = typeOf _this;
 		_prob = 0.5;
@@ -716,8 +681,7 @@ SYG_rearmSpecops = {
 	_ret = false;
 	_rnd = random 1.0;
 	_smoke_grenade = "ACE_SmokeGrenade_Green";
-	if ( _rnd < _prob) then  // do ordinal rearming
-	{
+	if ( _rnd < _prob) then { // do ordinal rearming
 #ifdef __SYG_rearmSpecops_DEBUG__
         hint localize format["+++ SYG_rearmSpecops: %1 full rearming", _unit_type];
 #endif
@@ -726,59 +690,43 @@ SYG_rearmSpecops = {
 		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] + SYG_STD_MEDICAL_SET;
 		_ret = true;
-		switch (_unit_type) do
-		{
-			case "ACE_SoldierWSniper2_A": // M21
-			{
+		switch (_unit_type) do {
+			case "ACE_SoldierWSniper2_A": { // M21
 				_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_SD)] + SYG_STD_MEDICAL_SET;
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_SCARH_WPN_SET_SNIPER);
-				}
-				else
-				{
+				} else {
 					_wpn = RAR(SYG_M21_WPN_SET + SYG_SCARL_WPN_SET_SNIPER + SYG_SCARL_WPN_SET_SNIPER_SD);
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]];
 				_equip = _equip + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			};
 
-			case "ACE_USMC8541A1A": // M40A3
-			{
+			case "ACE_USMC8541A1A":  { // M40A3
 				_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_SD)] + SYG_STD_MEDICAL_SET;
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_M110_WPN_SET_WHOLE);
-				}
-				else
-				{
+				} else {
 					_wpn = RAR(SYG_M24_WPN_SET);
 				};
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]];
 				_equip = _equip + [[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			};
 
-			case "ACE_SoldierW_Spotter_A":
-			{
+			case "ACE_SoldierW_Spotter_A": {
 				_equip =  _equip + [["P","ACE_ANPRC77_Alice"], ["P","LaserDesignator"]] ;
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 				    _wpn = ([SYG_SCARH_WPN_SET_STD_OPTICS, SYG_SCARL_WPN_SET_STD_OPTICS, SYG_SCARH_WPN_SET_STD, SYG_G36_WPN_SET_STD] call XfRandomArrayVal) call XfRandomArrayVal;
-				}
-				else { _wpn = RAR(SYG_HK417_WPN_SET_STD_OPTICS); };
+				} else { _wpn = RAR(SYG_HK417_WPN_SET_STD_OPTICS); };
 				_equip = _equip + [["P", _wpn, _wpn call SYG_defaultMagazine, 9]] + [[_smoke_grenade,2],["LaserBatteries"]];
 			};
 
 		    case "ACE_TeamLeaderW_USSF_ST_DCUL"; // leader, arms as a lower soldier
-			case "ACE_SoldierWB_USSF_ST_BDUL":
-			{
-				if ( _adv_rearm ) then
-				{
+			case "ACE_SoldierWB_USSF_ST_BDUL": {
+				if ( _adv_rearm ) then {
 					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HP", 1]]; // small launcher
 					_wpn = RAR(SYG_SCARH_WPN_SET_STD);
-				}
-				else
-				{
+				} else {
 					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HEAT", 1]]; // small launcher
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
 				};
@@ -786,74 +734,54 @@ SYG_rearmSpecops = {
 				_equip = _equip + [[_smoke_grenade,1],["ACE_HandGrenadeTimed",2]];
 			};
 
-			case "ACE_SoldierWAA":
-			{
+			case "ACE_SoldierWAA": {
 				_equip = _equip + [["P", "ACE_FIM92A", "ACE_Stinger"]]; // AA missile launcher
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_SCARH_WPN_SET_STD);
-				}
-				else
-				{
+				} else {
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]];
 			};
 
-			case "ACE_SoldierWAT2_A":
-			{
+			case "ACE_SoldierWAT2_A": {
 				_equip = _equip + [["P", "ACE_Dragon", "ACE_Dragon"]]; // AT missile launcher
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
-				}
-				else
-				{
+				} else {
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 6]] + [[_smoke_grenade,2]];
 			};
 
 #ifdef __JAVELIN__
-			case "ACE_SoldierWHAT_A": // Javelin specialist
-			{
+			case "ACE_SoldierWHAT_A": {// Javelin specialist
 				_equip = _equip + [["P", "ACE_Javelin", "ACE_Javelin"]]; // AT missile launcher
-				if ( _adv_rearm ) then
-				{
+				if ( _adv_rearm ) then {
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD);
-				}
-				else
-				{
+				} else {
 					_wpn = RAR(SYG_HK417_WPN_SET_STD);
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 5]] + [[_smoke_grenade,1]];
 			};
 #endif
 
-			case "ACE_SoldierWMAT_USSF_ST_BDUL":
-			{
-				if ( _adv_rearm ) then
-				{
-					if ( _super_rearm ) then
-					{
+			case "ACE_SoldierWMAT_USSF_ST_BDUL": {
+				if ( _adv_rearm ) then {
+					if ( _super_rearm ) then {
 						_equip = _equip + [["P", "ACE_M136", "ACE_AT4_HP", 2]]; // average launcher + high penetration rocket
-					}
-					else
-					{
+					} else {
 						_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HP", 2]]; // small launcher + high penetration rocket
 					};
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
-				}
-				else
-				{
+				} else {
 					_equip = _equip + [["P", "ACE_M72", "ACE_LAW_HEAT", 2]]; // small launcher ACE LAW
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
 				};
 				_equip = _equip + [["P", _wpn,_wpn call SYG_defaultMagazine, 7]] + [[_smoke_grenade,1]];
 			};
 
-			case "ACE_SoldierWMedic_A":
-			{
+			case "ACE_SoldierWMedic_A": {
 				_equip = SYG_MEDIC_SET + [[_smoke_grenade,2]];
 				if ( _adv_rearm ) then
 				{
@@ -871,13 +799,11 @@ SYG_rearmSpecops = {
 		};
 		//player globalChat format["unit %1, prob %2, adv prob %3, rnd %4, equip %5", _unit_type, _prob, _adv_rearm, _rnd, _equip];
 
-		if ( _ret ) then
-		{
+		if ( _ret ) then {
 			_ret = [_unit,_equip] call SYG_armUnit;
 		};
 	};
-    if (!_ret) then
-    {
+    if (!_ret) then {
 #ifdef __ALLOW_SHOTGUNS__
         private ["_mags"];
         switch (_unit_type) do
@@ -885,8 +811,7 @@ SYG_rearmSpecops = {
             case "ACE_TeamLeaderW_USSF_ST_DCUL";
             case "ACE_SoldierWB_USSF_ST_BDUL";
             case "ACE_SoldierWG_R";
-            case "ACE_SoldierWMAT_USSF_ST_BDUL":
-            {
+            case "ACE_SoldierWMAT_USSF_ST_BDUL": {
                 // average launcher + high penetration rocket
                 _equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_NO_GLOCK)] +
                 SYG_STD_MEDICAL_SET + [[_smoke_grenade,1]] +
@@ -927,8 +852,7 @@ SYG_rearmSpecops = {
 SYG_rearmSpecopsGroup = {
 	private ["_cnt"];
 	_cnt = 0;
-	switch typeName _this do
-	{
+	switch typeName _this do {
 		case "ARRAY": { { if (_x call SYG_rearmSpecops) then {_cnt = _cnt + 1; } } forEach _this };
 		case "GROUP": { { if (_x call SYG_rearmSpecops) then {_cnt = _cnt + 1; } } forEach (units _this) };
 		case "OBJECT": { if (_this call SYG_rearmSpecops) then {_cnt = _cnt + 1; } };
@@ -943,7 +867,7 @@ SYG_rearmSpecopsGroup = {
  *
  */
 SYG_rearmSpecopsGroupA = {
-	private ["_cnt","_units","_prob","_aprob"];
+	private ["_cnt","_units","_prob","_aprob","_x"];
 	_units = arg(0); // array of separate units
 	_prob  = arg(1); // simple rearm probability
 	_aprob = arg(2); // advanced ream probability
@@ -969,14 +893,11 @@ SYG_rearmSpecopsGroupA = {
  */
 SYG_rearmBasic = {
 	private ["_unit","_prob","_adv_rearm","_super_rearm","_ret","_rnd","_wpn","_equip","_i","_smoke_grenade","_magnum"];
-	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
-	{
+	if ( typeName _this == "ARRAY" ) then { // [_unit<, prob1<, prob2>>] call
 		_unit = arg(0);
 		_prob = argopt(1, 0.5);
 		_adv_rearm = argopt(2, 0.1); // do advanced rearming
-	}
-	else	// _this call
-	{
+	} else	{ // _this call
 		_unit = _this;
 		_prob = 0.5;
 		_adv_rearm = 0.1;
@@ -985,8 +906,7 @@ SYG_rearmBasic = {
 	_rnd = random 1.0;
 	_smoke_grenade= "ACE_SmokeGrenade_White";
 	//_probArr = _probArr + [format["%1%2:%3;",typeOf _unit, (typeOf _unit) isKindOf "SoldierWMG",  round(_rnd * 100) / 100]];
-	if ( _rnd < _prob ) then
-	{
+	if ( _rnd < _prob ) then {
 		//_super_rearm = _rnd < (_adv_rearm / 2.0);
 		_adv_rearm = _rnd < _adv_rearm;
 		scopeName "main";
@@ -1058,8 +978,7 @@ SYG_rearmBasic = {
 #endif
 
 		};
-		if ( _ret )  then
-		{
+		if ( _ret )  then {
 //			_equip = _equip + [["P",_wpn, _wpn call SYG_defaultMagazine,_magnum],[_smoke_grenade],["ACE_HandGrenadeTimed",2]];
 			_ret = [_unit,_equip] call SYG_armUnit;
 			if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
@@ -1078,8 +997,7 @@ SYG_rearmBasic = {
 SYG_rearmBasicGroup = {
 	private ["_cnt"];
 	_cnt = 0;
-	switch typeName _this do
-	{
+	switch typeName _this do {
 		case "ARRAY": { { if (_x call SYG_rearmBasic) then {_cnt = _cnt + 1; } } forEach _this };
 		case "GROUP": { { if (_x call SYG_rearmBasic) then {_cnt = _cnt + 1; } } forEach units _this };
 		case "OBJECT": { if (_x call SYG_rearmBasic) then {_cnt = _cnt + 1; } };
@@ -1091,14 +1009,11 @@ SYG_rearmBasicGroup = {
 // Spotter
 SYG_rearmSpotter = {
 	private ["_unit","_prob","_adv_rearm","_rnd","_equip", "_wpn"];
-	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
-	{
+	if ( typeName _this == "ARRAY" ) then { // [_unit<, prob1<, prob2>>] call
 		_unit = arg(0);
 		_prob = argopt(1,0.666);
 		_adv_rearm = argopt(2,0.333); // do advanced rearming
-	}
-	else	// _this call
-	{
+	} else {	// _this call
 		_unit = _this;
 		_prob = 0.666;
 		_adv_rearm = 0.333;
@@ -1106,29 +1021,22 @@ SYG_rearmSpotter = {
 	_rnd = random 1.0;
     if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 
-	if ( _rnd < _prob) then  // do ordinal rearming
-	{
+	if ( _rnd < _prob) then  { // do ordinal rearming
 		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD)] + SYG_STD_MEDICAL_SET;
 		_equip =  _equip + [["P","ACE_ANPRC77_Alice"], ["P","LaserDesignator"]] ;
-		if ( _adv_rearm ) then
-		{
-			switch ( floor(random 4)) do
-			{
-				case 0:
-				{
+		if ( _adv_rearm ) then {
+			switch ( floor(random 4)) do {
+				case 0: {
 					_wpn = RAR(SYG_SCARH_WPN_SET_STD_OPTICS);
 				};
-				case 1:
-				{
+				case 1: {
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
 				};
-				case 2:
-				{
+				case 2: {
 					_wpn = RAR(SYG_SCARL_WPN_SET_STD_OPTICS);
 				};
-				case 3:
-				{
+				case 3: {
 					_wpn = RAR(SYG_SCARH_WPN_SET_STD_OPTICS);
 				};
 			};
@@ -1145,26 +1053,21 @@ SYG_rearmSpotter = {
 // Governor: let him be a very bad boy
 SYG_rearmGovernor = {
 	private ["_unit","_prob","_adv_rearm","_rnd","_equip", "_wpn","_magnum"];
-	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
-	{
+	if ( typeName _this == "ARRAY" ) then {// [_unit<, prob1<, prob2>>] call
 		_unit = arg(0);
 		_prob = argopt(1,1.0);
 		_adv_rearm = argopt(2,0.95); // do advanced rearming
-	}
-	else	// _this call
-	{
+	} else { // _this call
 		_unit = _this;
 		_prob = 1.0;
 		_adv_rearm = 0.95;
 	};
 	_rnd = random 1.0;
 	_magnum = 10;
-	if ( _rnd < _prob ) then  // do ordinal rearming
-	{
+	if ( _rnd < _prob ) then { // do ordinal rearming
 //		_adv_rearm = _rnd < _adv_rearm; // do advanced rearming  (true) or not (false)
 		_equip = [RAR(SYG_PISTOL_WPN_SET_WEST_STD_GLOCK)] + SYG_STD_MEDICAL_SET;
-        switch (floor (random 4)) do
-        {
+        switch (floor (random 4)) do {
             case 0;
             case 1: {_wpn = RAR(SYG_M14_WPN_SET_WHOLE);};
             case 2: {_wpn = RAR(SYG_G36_WHOLE);};
@@ -1175,11 +1078,8 @@ SYG_rearmGovernor = {
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
         // remove useless binocular from inventory
         if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
-
 		true
-	}
-	else
-	{
+	}  else {
         // remove useless binocular from inventory
         if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
         false
@@ -1190,20 +1090,16 @@ SYG_rearmGovernor = {
 // call: _ret = _unit call SYG_rearmHeavySniper;
 SYG_rearmHeavySniper = {
 	private ["_unit","_prob","_rnd","_equip", "_wpn"];
-	if ( typeName _this == "ARRAY" ) then // [_unit<, prob>] call
-	{
+	if ( typeName _this == "ARRAY" ) then { // [_unit<, prob>] call
 		_unit = arg(0);
 		_prob = argopt(1,1.0);
-	}
-	else	// _this call
-	{
+	} else {	// _this call
 		_unit = _this;
 		_prob = 1.0;
 	};
     if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 	_rnd = random 1.0;
-	if ( _rnd < _prob ) then  // do ordinal rearming
-	{
+	if ( _rnd < _prob ) then {  // do ordinal rearming
 		_wpn = RAR(SYG_HEAVYSNIPER_WPN_SET);
 		_mag = RAR(_wpn select 1);
 		_wpn = _wpn select 0;
@@ -1211,8 +1107,7 @@ SYG_rearmHeavySniper = {
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
 		true
-	}
-	else {false};
+	} else { false };
 };
 
 //
@@ -1223,7 +1118,7 @@ SYG_rearmHeavySniper = {
 // _num >= 1, default 1
 //
 SYG_rearmAroundAsHeavySniper = {
-    private ["_pos","_dist","_num","_cnt","_str"];
+    private ["_pos","_dist","_num","_cnt","_str","_x"];
 	if ( typeName _this != "ARRAY") exitWith { hint localize format["--- SYG_rearmAsHeavySniper: expected _this != ARRAY (%1)",_this] ;-1};
 	_pos  = arg(0);
 	_dist = argopt(1,200);
@@ -1232,8 +1127,7 @@ SYG_rearmAroundAsHeavySniper = {
 	_cnt = 0;
 	_list = _pos nearObjects ["SoldierWSniper", _dist];
 	{
-		if ((alive _x) && ((damage _x) < 0.01)) then
-		{
+		if ((alive _x) && ((damage _x) < 0.01)) then {
 			if (_x call SYG_rearmHeavySniper ) then
 			{
 			    sleep 0.1;
@@ -1248,8 +1142,7 @@ SYG_rearmAroundAsHeavySniper = {
 			    _cnt = _cnt + 1;
 			};
 		};
-		if ( _cnt >= _num ) exitWith
-		{
+		if ( _cnt >= _num ) exitWith {
 		    true
 		};
 	} forEach _list;
@@ -1271,30 +1164,25 @@ SYG_rearmAroundAsHeavySniper = {
 //        weapon_list is list of user designated M14 list, e.g. SYG_M14_WPN_SET_STD_OPTICS. Optional, default is SYG_M14_WPN_SET_WHOLE
 //
 SYG_rearmM14 = {
-	private ["_unit","_prob","_rnd","_equip", "_wpn","_wplist"];
-	if ( typeName _this == "ARRAY" ) then // [_unit<, prob1<, prob2>>] call
-	{
+	private ["_unit","_prob","_rnd","_equip", "_wpn","_wplist","_x"];
+	if ( typeName _this == "ARRAY" ) then  {// [_unit<, prob1<, prob2>>] call
 		_unit = arg(0);
 		_prob = argopt(1,1.0);
 		_wplist = argopt(2,SYG_M14_WPN_SET_WHOLE); //
-	}
-	else	// _this call
-	{
+	} else	{// _this call
 		_unit = _this;
 		_prob = 1.0;
 		_wplist = SYG_M14_WPN_SET_WHOLE; //
 	};
 	_rnd = random 1.0;
-	if ( _rnd < _prob ) then  // do ordinal rearming
-	{
+	if ( _rnd < _prob ) then { // do ordinal rearming
 		_wpn = RAR(_wplist);
 		_equip = SYG_STD_MEDICAL_SET + [RAR(SYG_PISTOL_WPN_SET_WEST_STD_GLOCK),["P", _wpn, _wpn call SYG_defaultMagazine, 9],["ACE_SmokeGrenade_Yellow",1],["ACE_HandGrenade",2]];
 		[_unit,_equip] call SYG_armUnit;
 		if (!(_unit hasWeapon "NVGoggles")) then {_unit addWeapon "NVGoggles"};
 		if (_unit hasWeapon "Binocular") then {_unit removeWeapon "Binocular"};
 		true
-	}
-	else {false};
+	} else {false};
 };
 
 // Some pistolero. Rearm any unit with pistol only
@@ -2652,12 +2540,12 @@ SYG_fastReload = {
 // Note: called only on server
 // _eqip_list_as_str = _name call SYG_getPlayerEquipment;
 SYG_findPlayerEquipmentAsStr = {
-    private ["_index", "_parray"];
     if ( (typeName _this) == "OBJECT") then {_this = name _this;};
     if ( (typeName _this) != "STRING" ) exitWith {
         hint localize format["--- SYG_findPlayerEquipmentAsStr: expected param isn't string: %1", _this ];
         ""
     };
+    private ["_index", "_parray"];
     //hint localize format["--- %1 call SYG_findPlayerEquipmentAsStr;", _this ];
     _index = d_player_array_names find _this;
     if (_index >= 0) exitWith {
@@ -2678,11 +2566,11 @@ SYG_storePlayerEquipmentAsStr = {
     if ( (count _this) < 2 ) exitWith {
         hint localize format["--- SYG_storePlayerEquipmentAsStr: expected params is not array with 2+ items: %1", _this ];
     };
-    if ( (typeName arg(0)) == "OBJECT") then {_this set[0,name arg(0)];};
+    if ( (typeName (_this select 0)) == "OBJECT") then {_this set[0,name arg(0)];};
 
     //hint localize format["SYG_storePlayerEquipmentAsStr(%1 param[s]);",count _this];
 
-    if ( (typeName arg(0)) == "STRING" && (typeName arg(1)) == "STRING" )  then {
+    if ( (typeName (_this select 0)) == "STRING" && (typeName (_this select 1)) == "STRING" )  then {
         //hint localize "SYG_storePlayerEquipmentAsStr: enter store code";
         private ["_index", "_parray", "_name"];
         _name = _this select 0;
