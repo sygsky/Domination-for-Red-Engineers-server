@@ -293,7 +293,7 @@ if (isServer) then {
         hint localize format["+++ SM _first_array: %1", _first_array];
     };
     // Move radiomast SM #56 to the beginning of SM list at pos 2..3
-    // ranked_sm_array = [ 5, [3,44,2,53] ];
+    // ranked_sm_array = [ 5, [2,3,53] ];
 
     if (! (56 in _first_array) ) then {
 		_ind56 = side_missions_random find 56;

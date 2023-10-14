@@ -139,7 +139,8 @@ _convoyGroup = call SYG_createEnemyGroup;
 //[d_sm_convoy_vehicles select 0, _side] call x_getunitliste;
 
 // first vehicle created separatedly, to assign the leader correctly
-_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select 0), _convoyGroup, 0, _c_array select 1] call x_makevgroup; // vehicle type
+_ind      = if ( (typeName (d_sm_convoy_vehicles select 0)) == "ARRAY" ) then { 1 } else {0};
+_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select _ind), _convoyGroup, 0, _c_array select 1] call x_makevgroup; // vehicle type
 (_vehicles select 0) lock true;
 _veh_arr = [_vehicles select 0];
 
@@ -168,30 +169,51 @@ dead_items = 0;
 //+++++++++++++++++++++++++++++++++++++++
 //          create vehicles
 //+++++++++++++++++++++++++++++++++++++++
-for "_i" from 1 to (count d_sm_convoy_vehicles - 1) do {
-	_vehicles = [1, _c_array select 0, "", (d_sm_convoy_vehicles select _i), _convoyGroup, 0, _c_array select 1] call x_makevgroup;
-	(_vehicles select 0) lock true;
-	_veh_arr set [count _veh_arr, _vehicles select 0];
+// Prepare list of vehicles if item #0 is array (wuth truck types to use),
+// and truck positions in follow type list are marked with "TRUCK" string templete[s]
+_list = [];
+if ( _ind == 1 ) then { // #0 item is array with truck types to use and "TRUCK" items in list to replace them with type selected from zero based array
+	_truck_type  = (d_sm_convoy_vehicles select 0) call XfRandomArrayVal; // Select random type of truck in convoy
+	for "_i" from 2 to (count d_sm_convoy_vehicles) - 1 do {
+		_type = d_sm_convoy_vehicles select _i;
+		if (_type == "TRUCK") then {
+			_list set [count _list, _truck_type ] // Replace "TRUCK" template with preselected truck type
+		} else {
+			_list set [ count _list, _type ]
+		};
+	};
+} else {
+	_list = d_sm_convoy_vehicles; // use existed type list
+};
+// hint localize format["+++ x_sideconvoy.sqf: Convoy vehs: %1", _list];
+
+for "_i" from 0 to (count _list) - 1 do {
+	_type = _list select _i;
+	_vehicles = [1, _c_array select 0, "",_type, _convoyGroup, 0, _c_array select 1] call x_makevgroup;
+	_veh = _vehicles select 0;
+	_veh lock true;
+	_veh_arr set [ count _veh_arr, _veh ];
 #ifdef __TT__
-	(_vehicles select 0) addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
+	_veh addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
 #endif
 
 #ifndef __TT_
     #ifdef __RANKED__
     // mark neighbouring users to be at SM
    	/* Passed array: [unit, killer] */
-    (_vehicles select 0) addEventHandler ["killed", {
+    _veh addEventHandler ["killed", {
             dead_items = dead_items + 1;
             _this execVM "x_missions\common\eventKilledAtSM.sqf";
             // send info about next vehicle death to all players
-            private ["_killer"];
+            private ["_killer","_cnt"];
             _killer = _this select 1;
             if (isNull _killer) then {" (NULL)"} else {
 				_killer = gunner( _this select 1);
 				_killer = if (isNull _killer) then {"(null)"} else { if ( isPLayer _killer) then { format["(%1)", name _killer] } else { "(?)" } };
             };
-            [ "msg_to_user", "", [ ["STR_SM_CONVOY_1", dead_items, _killer, (count d_sm_convoy_vehicles) - dead_items, count d_sm_convoy_vehicles] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Destroyed vehicles %1%2, left %3, total %4"
-            hint localize format["+++ x_sideconvoy.sqf: veh %1 #%2 (of %3) destroyed by %4.", typeOf (_this select 0), dead_items, count d_sm_convoy_vehicles, _killer];
+            _cnt = if ( (typeName (d_sm_convoy_vehicles select 0)) == "ARRAY" ) then { (count d_sm_convoy_vehicles) - 1 } else {count d_sm_convoy_vehicles};
+            [ "msg_to_user", "", [ ["STR_SM_CONVOY_1", dead_items, _killer, _cnt - dead_items, _cnt] ], 0, 2, false ] call XSendNetStartScriptClientAll; // "Destroyed vehicles %1%2, left %3, total %4"
+            hint localize format["+++ x_sideconvoy.sqf: veh %1 #%2 (of %3) destroyed by %4.", typeOf (_this select 0), dead_items, _cnt, _killer];
         }
     ];
     #endif

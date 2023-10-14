@@ -79,6 +79,7 @@ if (_do_hint) then {
 		parseText("<t color='#f000ffff' size='1'>" + (localize "STR_SYS_181") + "</t>"), lineBreak,lineBreak,
 		_msg
 	]; // "New order:"
+	playSound "desant";
 };
 
 if (true) exitWith {};

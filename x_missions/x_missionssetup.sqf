@@ -151,13 +151,13 @@ if (isServer) then {
 	);
 	#endif
 	#ifdef __ACE__
-	d_sm_convoy_vehicles = (
+	 d_sm_convoy_vehicles = (
 		switch (d_enemy_side) do {
 			case "EAST": {["ACE_T90","ACE_ZSU", "ACE_ZSU", "UralRepair", "UralRefuel", "UralReammo", "ACE_T90"]};
 //			case "WEST": {["ACE_Stryker_MGS","ACE_M2A2","ACE_PIVADS","ACE_M6A1","ACE_Stryker_MGS","ACE_Truck5t_Repair","ACE_Truck5t_Refuel","ACE_Truck5t_Reammo","ACE_PIVADS","ACE_M1A2_SEP_TUSK"]};
 			case "WEST": 
 			{
-			["ACE_M1A2_SEP_TUSK","ACE_M6A1","ACE_M6A1","ACE_M6A1","ACE_Truck5t"/*"ACE_Truck5t_Refuel"*/,"ACE_Truck5t_MG",/*"ACE_PIVADS",*/"ACE_M1A2_SEP_TUSK"]
+			[["ACE_Truck5t_MG","ACE_Truck5t_MG","ACE_Truck5t","ACE_Truck5t_Open","ACE_Truck5t_Reammo","ACE_Truck5t_Repair"],"ACE_M1A2_SEP_TUSK","ACE_M2A2","ACE_M6A1","ACE_M6A1","TRUCK","TRUCK","ACE_M1A2_SEP_TUSK"]
 			};
 		}
 	);
