@@ -8,7 +8,7 @@
 
 // uncomment to allow partial upsidedown, no fuel for land vehicles, and no ammo for all air DOSAAF vehicles
 #define ALLOW_HARD_MODE
-
+#define __DEBUG_PRINT__
 //
 // Creates bonus vehicle in the designated annulus or on the nearest spawn point for "Plane" vehicles
 // Called on server only
@@ -67,7 +67,7 @@ SYG_createBonusVeh = {
 	_pos = [ _center, _rad * 1.5, _rad * 2.5 ] call XfGetRanPointAnnulusBig; // position for the land bonus vehicle
 	_dir = random 360; // random direction
 //	hint localize format["+++ SYG_createBonusVeh: random pos in annulus %1 = %2, dir = %3", [ _center, _rad * 1.5, _rad * 2.5 ], _pos, _dir];
-#ifdef __DEFAULT__
+#ifdef __DEBUG_PRINT__
 	if ( _type isKindOf "Plane" ) then {
 //		_pos = _center call _find_air_pos; // find nearest position
 		_time = time;
@@ -89,6 +89,8 @@ SYG_createBonusVeh = {
 	};
 	_veh setDir _dir;
 	_veh setPos (getPos _veh);
+	hint localize format["+++ SYG_createBonusVeh: plane %1, set at pos %2", _type, _pos];
+
     if ( !( _veh isKindOf "Ship" ) ) then {
     	_fuel = _veh call SYG_fuelCapacity;
     	if (_fuel == 0) then {
