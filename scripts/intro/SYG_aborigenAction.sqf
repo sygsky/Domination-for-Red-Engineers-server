@@ -195,9 +195,10 @@ switch ( _arg ) do {
 			hint localize "+++ BOAT: run BOAT_MARKER_CHECK_ON procedure";
 			// move marker with boat and remove it on boat kill or leaving Antigua area
 			[_boat, _marker, _isle_pos, _rad] spawn {
-				private ["_boat","_marker","_area_center","_area_rad","_boat_pos","_delay","_dist","_do_it","_empty_time"];
+				private ["_boat","_marker","_area_center","_area_rad","_boat_pos","_delay","_dist","_do_it","_empty_time","_driver","_name", "_init_pos"];
 				_boat  = _this select 0; _marker = _this select 1; _area_center = _this select 2; _area_rad = _this select 3;
 				_boat_pos  = getPosASL _boat;
+				_init_pos = getPos _boat;
 				_marker setMarkerPosLocal _boat_pos;
 				_delay = 15;
 				_do_it = true;
@@ -209,22 +210,25 @@ switch ( _arg ) do {
 					if ( _dist > 25 ) then {
 						_boat_pos = getPosASL _boat;
 						_marker setMarkerPosLocal _boat_pos;
-						if ( !([_boat_pos, _area_center, _area_rad] call SYG_pointInCircle) && _do_it) exitWith {
-							// Information about going out of bounds
-							if ( _dist > 500 ) then { // boat was returned to its original marker
-								playSound "losing_patience"; // sound about boat leaving Antigua
-								player groupChat localize "STR_ABORIGEN_BOAT_RETURNED"; // "The boat off Antigua seems to have disappeared somewhere"
-							} else { // boat out of Antigua area
-								playSound (["fish_man_song","under_water_2"] call XfRandomArrayVal); // sound about boat leaving Antigua
-								if (vehicle player == _boat) then {
-									player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
-								} else {
-									_driver = driver _boat;
-									_name = if (alive _driver && isPlayer _driver) then {name _driver} else { localize "STR_SOMEONE"}; // "Someone"
-									player groupChat localize format[ "STR_ABORIGEN_BOAT_DISTOUT_1", _name ]; // "%1 is leaving Antigua territorial waters"
+						if (_do_it) then {
+							if ( !([_boat_pos, _area_center, _area_rad] call SYG_pointInCircle)) exitWith {
+								// Information about going out of bounds
+								if ( _dist > 500 ) then { // boat was returned to its original marker
+									playSound "losing_patience"; // sound about boat leaving Antigua
+									player groupChat localize "STR_ABORIGEN_BOAT_RETURNED"; // "The boat off Antigua seems to have disappeared somewhere"
+								} else { // boat out of Antigua area
+									if (localize "STR_LANGUAGE" == "RUSSIAN") then { playSound "fish_man_song"} else { playSound "under_water_2"}; // sound about boat leaving Antigua
+									if (vehicle player == _boat) then { // You are in this boat
+										player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
+									} else { // Some other player[s] uses the boat with your marker, so stop it now!
+										_driver = driver _boat;
+										_name = if (alive _driver && isPlayer _driver) then {name _driver} else { localize "STR_SOMEONE"}; // "Someone"
+										player groupChat localize format[ "STR_ABORIGEN_BOAT_DISTOUT_1", _name ]; // "%1 is leaving Antigua territorial waters"
+										_empty_time = BOAT_EMPTY_TIME + 1; // emulate exit from mail loop on marker update
+									};
 								};
+								_do_it = false;
 							};
-							_do_it = false;
 						};
 					};
 					if ( _dist < 2.5 ) then { _delay = 15 } else { _delay = ((25 / _dist) max 3) min 15; };
@@ -234,7 +238,7 @@ switch ( _arg ) do {
 				hint localize format["+++ BOAT: stop BOAT_MARKER_CHECK_ON procedure, boat %1, empty time %2, dist %3",
 					if (alive _boat) then {"alive"} else {"dead"},
 					_empty_time,
-					round(_boat distance _isle_pos)
+					round(_boat distance _init_pos)
 				];
 			};
 		} else { hint localize "+++ BOAT: BOAT_MARKER_CHECK_ON is on, marker alive and is under control"};
