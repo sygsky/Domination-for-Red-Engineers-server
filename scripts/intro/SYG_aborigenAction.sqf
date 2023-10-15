@@ -216,7 +216,13 @@ switch ( _arg ) do {
 								player groupChat localize "STR_ABORIGEN_BOAT_RETURNED"; // "The boat off Antigua seems to have disappeared somewhere"
 							} else { // boat out of Antigua area
 								playSound (["fish_man_song","under_water_2"] call XfRandomArrayVal); // sound about boat leaving Antigua
-								player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
+								if (vehicle player == _boat) then {
+									player groupChat localize "STR_ABORIGEN_BOAT_DISTOUT"; // "You are leaving Antigua territorial waters"
+								} else {
+									_driver = driver _boat;
+									_name = if (alive _driver && isPlayer _driver) then {name _driver} else { localize "STR_SOMEONE"}; // "Someone"
+									player groupChat localize format[ "STR_ABORIGEN_BOAT_DISTOUT_1", _name ]; // "%1 is leaving Antigua territorial waters"
+								};
 							};
 							_do_it = false;
 						};
