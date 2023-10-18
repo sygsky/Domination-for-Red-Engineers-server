@@ -215,3 +215,10 @@
 
 // Uncomment to enable free car service in "STATUS"  dialog, along with SPPM one
 #define __FREE_CAR_SEVICE__
+
+#ifdef __FREE_CAR_SEVICE__
+
+// Uncommend to allow use of tractors and bicycles among civic cars
+#define __CAR_JOKE__
+
+#endif

@@ -885,13 +885,11 @@ d_helilift1_types =
 	["M113_MHQ","M113Ambul","WarfareWestSalvageTruck","Truck5tRepair","Truck5tRefuel","Truck5tReammo","Truck5tOpen","Truck5tMG","Stryker_ICV_M2","Stryker_ICV_MK19","HMMWV50","HMMWVMK","Stryker_TOW","HMMWVTOW","M113_RACS","Vulcan_RACS","Vulcan"] + _armor + _car;
 #endif
 
-// Allows to find all civilian vehicles (no trucks)
-ALL_CAR_ONLY_SEARCH_LIST = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ","tractor"
-#ifdef __ACE__
-,"ACE_HMMWV"
-,"ACE_Bicycle"
-#else
-,"HMMWV50"
+// Allows to find any vanilla civilian vehicles (no trucks). See: https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_CfgVehicles for inheritance
+// Note: "Bicycle" inherits from "Motocycle", "ACE_Bicycle" inherits from "Motocycle" too.
+ALL_CAR_ONLY_SEARCH_LIST = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ","HMMWV"
+#ifdef __CAR_JOKE__
+    ,"tractor"
 #endif
 ];
 

@@ -273,8 +273,13 @@ XsFixHeadBug = {
 
 	_pos = position _unit;
 	_dir = direction _unit;
+	// TODO: try to create UAZ on the same height (if player is at building floor),
+	// todo it, we need the method to detect height of player above ground level, that is very hard(((
+#ifdef __ACE__
+	_vehicle = "ACE_Headbug_Fix" createVehicleLocal _pos; // Use ACE special vehicle
+#else
 	_vehicle = "UAZ" createVehicleLocal _pos;
-	// TODO: try to create UAZ on the same height (if player is at building floor)
+#endif
 	_unit moveInCargo _vehicle;
 	waitUntil {vehicle _unit != _unit};
 	unassignVehicle _unit;

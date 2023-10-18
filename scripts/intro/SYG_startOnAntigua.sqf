@@ -1,6 +1,6 @@
 /*
 	scripts\intro\SYG_startOnAntigua.sqf:
-		process arrival on Antigua while you not visited the base. Runs only on server
+		process arrival on Antigua while you not visited the base. Runs once only on server!
 	author: Sygsky
 	description: creates ammobox, aborigen, prepare aborigen to meet player
 	returns: nothing
@@ -25,16 +25,17 @@
 		};
 */
 
-#define __JOKE__
+#define __CAR_JOKE__
 
 if (!isNil "ALL_CAR_ONLY_TYPE_LIST") exitWith {};
 
+// Lisy of car types allowed to be used as civilic cars to create
 ALL_CAR_ONLY_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 			  "hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open",
 			  "datsun1_civil_1_open","datsun1_civil_2_covered","datsun1_civil_3_open",
 			  "Landrover","Landrover_Closed","Landrover_Police",
 			  "car_sedan","car_hatchback"
-#ifdef __JOKE__
+#ifdef __CAR_JOKE__
 			  ,"tractor" // This is for a joke only :o)
 #endif
 #ifdef __ACE__
