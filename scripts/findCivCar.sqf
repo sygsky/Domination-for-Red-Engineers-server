@@ -29,6 +29,7 @@ if ( _mode == "CHECK") exitWith { // Client code
 	hint localize format["+++ findCivCar.sqf on client run, player is %1, _this = %2",
 		if (vehicle player != player)  then { format["in %1", typeOf vehicle player] } else {"on feet"}, _this];
 
+	// "It doesn't work in the vehicle!"
 	if (vehicle player != player) exitWith { ["msg_to_user","*",[["STR_CAR_GO_OUT"]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser };
 
 	_set_marker = {
@@ -37,16 +38,16 @@ if ( _mode == "CHECK") exitWith { // Client code
 		if ( (markerType CAR_MARKER_NAME == "") ) exitWith { // Marker not exists, create it now
 			[ CAR_MARKER_NAME,  _pos, "ICON", CAR_MARKER_COLOR, [0.7,0.7],"",0, _marker_type] call XfCreateMarkerLocal;
 		};
-		// Update marker pos type and color
-	//	CAR_MARKER_NAME setMarkerColorLocal CAR_MARKER_COLOR;
-		CAR_MARKER_NAME setMarkerTypeLocal _type;
+		// Update marker type and _pos
+		//	CAR_MARKER_NAME setMarkerColorLocal CAR_MARKER_COLOR;
+		CAR_MARKER_NAME setMarkerTypeLocal _marker_type; // Just in case
 		CAR_MARKER_NAME setMarkerPosLocal _pos;
 	};
 
-	// Search for cars nearby
+	// Search for alive cars nearby and in nearest townif it is not far
 	_pos = getPos player;
 	_arr = nearestObjects [_pos, ALL_CAR_ONLY_SEARCH_LIST, RADIUS_TO_FIND_CAR];
-	if ({alive _x}count _arr == 0) then {
+	if ({ alive _x } count _arr == 0) then {
 		// Search in nearest town
 		_loc = player call SYG_nearestSettlement;
 		_pos1 = position _loc;
@@ -57,7 +58,7 @@ if ( _mode == "CHECK") exitWith { // Client code
 	};
 	_car = objNull;
 	{
-		if ( (alive _x) && ( (speed _x) < 1 ) ) exitWith { // Send message to the player about car found
+		if ( alive _x ) exitWith { // Send message to the player about car found
 			_car  = _x;
 			_str = "";
 			_marker_type = _car call SYG_getVehicleMarkerType;
@@ -73,13 +74,12 @@ if ( _mode == "CHECK") exitWith { // Client code
 				_str = format[ "STR_CAR_MAPPED_1", typeOf _car]; // ". Marker already has been mapped."
 			};
 			// "Vehicle (%1) is detected at %2%3"
-			["msg_to_user","*",[["STR_CAR_FOUND", typeOf _car, [_car, 50] call SYG_MsgOnPos0],_str], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
-
+			["msg_to_user","*",[["STR_CAR_FOUND", typeOf _car, [_car, 50] call SYG_MsgOnPos0,_str]], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
 		};
-
 	} forEach _arr;
-	if ( !isNull _car ) exitWith {}; // Car found ann marker, exit
 
+	if ( !isNull _car ) exitWith {}; // Car found and marker too, exit
+	// Not found
 	// Try to define position for the vehicle near player (or in near town radious)
 	CAR_MARKER_NAME setMarkerTypeLocal "Empty"; // Hide free car marker
 	["msg_to_user","*",[[ "STR_CAR_NOT_FOUND", RADIUS_TO_FIND_CAR]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser; // "No cars found in the vicinity. Try again... a little later"
@@ -95,7 +95,12 @@ if ( _mode == "CHECK") exitWith { // Client code
 //+++++++++++++++++++++++++++ HELP +++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (_mode == "HELP") exitWith {
-	// Show hintC dialog with help on vehicle near player
+	// Show hintC dialog with help on vehicle near player:
+	// "'Vehicles' - search for civilian cars around the player"
+	// "On this command, the nearest (within 500 meters) civilian vehicle is searched for."
+	// "The found vehicle is marked with a black marker (by type) and the direction and distance to it is reported"
+	// "If the vehicle is missing, a message is displayed and an invitation to press the button again."
+	// "<To continue, click the 'Continue' button at the very bottom of the dialog box (or 'Escape').>"
 	localize "STR_CAR_HELP_TITLE" hintC [localize "STR_CAR_HELP_1",localize "STR_CAR_HELP_2",localize "STR_CAR_HELP_3",
     					localize "STR_CAR_HELP_4",localize "STR_CAR_HELP_5"];
 };
@@ -134,7 +139,7 @@ waitUntil {allow_car_list_changes};
 allow_car_list_changes = false;
 
 if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
-	_car = _pos1  call _create_car;
+	_car = _pos1  call _create_car; // Simply add new car if list is incomplete
 } else {
 	// Find oldest empty car with no players nearby to the random position near designated pos
 	_car = objNull;
@@ -160,22 +165,22 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 			};
 		};
 	};
-	// No car found but some item[s] were removed, try to create new car
-	if ("RM_ME" in FREE_CAR_LIST ) then {
+
+	if ("RM_ME" in FREE_CAR_LIST ) then { // Some car[s] were removed, clear them from the list
 		_cnt = count FREE_CAR_LIST;
 		FREE_CAR_LIST call SYG_cleanArray;
 		hint localize format["+++ findCivCar.sqf(server): free car list cleaned from size %1 to  %2", _cnt, count FREE_CAR_LIST];
 	};
-	if (alive _car) then {
+	if (alive _car) then {	// Exsiting car is found, add it to the end of list
 		_car setVectorUp [0,0,1];
 		_car setDir (random 360);
 		_car setPos _pos1;
 		FREE_CAR_LIST set [count FREE_CAR_LIST, _car]; // Add this car to the end of list as last used one
 	} else { // No car found, create new one if list is not full
-		if (count FREE_CAR_LIST < MAX_COUNT) then {
+		if (count FREE_CAR_LIST < MAX_COUNT) then { // there is aplce in laist, add new car
 			_car = _pos1 call _create_car;
 			hint localize format["+++ findCivCar.sqf(server): new car created for list of final size %1", count FREE_CAR_LIST];
-		} else {
+		} else { // no place in list for a new car, print info about this to player (in client)
 			hint localize format["--- findCivCar.sqf(server): no veh found in list of size %1, LIST = %2", count FREE_CAR_LIST, FREE_CAR_LIST call SYG_vehToType];
 		}
 	};
