@@ -48,6 +48,7 @@ ALL_CAR_ONLY_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 
 hint localize "+++ SYG_startOnAntigua.sqf: started...";
 [] execVM "scripts\intro\findAborigen.sqf";
+
 _arr = [car1,car2,car3,car4,car5,car6,car7,car8,car9];
 // Replace some motorcycles with cars now
 _rep_list = []; // Vehicles replaced index list
