@@ -152,7 +152,7 @@ XfRndRadiousInAnnulus = {
         _r1 = _r2;
         _r2 = _this select 0;
     };
-    sqrt(random( _r2 * _r2 - _r1 * _r1 ) + _r1 * _r1)
+    sqrt(random( _r2 * _r2 - _r1 * _r1 ) + _r1 * _r1) // TODO: check correctness of this solution
 };
 
 //
