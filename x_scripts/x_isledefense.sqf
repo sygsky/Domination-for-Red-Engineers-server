@@ -309,9 +309,9 @@ _remove_grp = {
 		sleep 1.06;
 #ifdef __PRINT_ACTIVITY__
 		_str = "isNull";
-		if ( !isNull _igrp) then { _str = format["is active and has %1(%2 not null) units", count units _igrp, {!(isNull _x)} count (units _igrp)] }
-		else { _str = format["isNull, had %1(%2 not null) units", count _units, {!(isNull _x)} count _units] };
-			hint localize format["+++ x_isledefense: start remove group: vehs removed %1,captured %2; remained _units %3, grp %4", _vec_removed_cnt, _vec_captured_cnt, count _units, _str];
+		if ( !isNull _igrp) then { _str = format["is active and has %1(%2 not null) units", count units _igrp, {!(isNull _x)} count (units _igrp), { alive _x} count (units _igrp)] }
+		else { _str = format["isNull, had %1(%2 not null, %3 alive) units", count _units, {!(isNull _x)} count _units, { alive _x} count _units] };
+		hint localize format["+++ x_isledefense: start remove group: vehs removed %1,captured %2; remained _units %3, grp %4", _vec_removed_cnt, _vec_captured_cnt, count _units, _str];
 #endif
 		// clean units
 #ifdef __PRINT_ACTIVITY__
