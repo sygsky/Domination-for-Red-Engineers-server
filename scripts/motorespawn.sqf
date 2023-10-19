@@ -82,7 +82,7 @@ for "_i" from 0 to count _this - 1 do { // list all motocyrcles/automobiles
 	_motoarr set [count _motoarr , [_x, _posReal, getDir _x, TIMEOUT_ZERO, _i +1]];
 
 	if ( !(_x hasWeapon "CarHorn")) then {
-		_x addWeapon "CarHorn"; // add horn for motorcycle
+		_x addWeapon "CarHorn"; // add horn for motorcycle. Do we really need it? Not sure!
 		hint localize format["+++ %1 moto%2 (%3): CarHorn added", _service_name, _i + 1, typeOf _x];
 	} else {hint localize format["+++ %1 moto%2 (%3): already has CarHorn", _service_name, _i + 1, typeOf _x]};
     hint localize  format["+++ %1 moto%2 ini pos %3, real %4, diff %5", _service_name, _i + 1, _posMain, _posReal, [_posReal,_posMain] call SYG_vectorSub3D ];

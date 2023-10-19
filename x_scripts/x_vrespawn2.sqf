@@ -37,7 +37,7 @@ _vec_array = [];
 		{
 			call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 			_vehicle setAmmoCargo 0;
-			_vehicle call SYG_addHorn;
+			_vehicle call SYG_truckAddHorn;
 	#ifdef __TT__
 			_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 	#endif
@@ -189,7 +189,7 @@ while {true} do {
 						,_number_v
 					];
 					_vehicle setAmmoCargo 0;
-    				_vehicle call SYG_addHorn; // add horn to all own trucks
+    				_vehicle call SYG_truckAddHorn; // add horn to all own trucks
 				#ifdef __TT__
 					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 					if (X_SPE) then {
@@ -210,7 +210,7 @@ while {true} do {
 				case "TTR": {
 					call compile format ["TR%1=_vehicle;publicVariable ""TR%1"";", _number_v];
 					_vehicle setAmmoCargo 0;
-    				_vehicle call SYG_addHorn; // add horn to all own trucks
+    				_vehicle call SYG_truckAddHorn; // add horn to all own trucks
 				#ifdef __TT__
 					_vehicle addEventHandler ["killed", {_this execVM "x_scripts\x_checkveckillwest.sqf";}];
 				#endif

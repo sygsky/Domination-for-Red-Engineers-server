@@ -1950,8 +1950,9 @@ SYG_makeColoredMen = {
     _men
 };
 
-// call: _horn_added = _this call SYG_addHorn;
-SYG_addHorn = {
+// Adds signal to the trucks only
+// call: _horn_added = _this call SYG_truckAddHorn;
+SYG_truckAddHorn = {
     if ( !(_this isKindOf "Truck")) exitWith {false};
     if ((count weapons _this) > 0) exitWith {false};
     _this addWeapon "TruckHorn";
