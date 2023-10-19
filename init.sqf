@@ -107,6 +107,7 @@ if (isServer) then {
 //
 //SYG_client_start = missionStart;
 
+//#define __DEBUG_ADD_VEHICLES__
 #ifdef __DEBUG_ADD_VEHICLES__
     // create vehicle to help isle defence activity debugging
 
@@ -121,7 +122,10 @@ if (isServer) then {
         ["ACE_Truck5t_Reammo", [14539,9925,0], -75],
         ["ACE_Truck5t_Repair", [14545,9928,0], -75],
         ["ACE_WeaponBox", [14539,9922,0], -75],
-        ["ACE_WeaponBox", [9672,9991,0], 270]
+        ["ACE_WeaponBox", [9672,9991,0], 270],
+
+        ["ACE_UAZ",[9670,10000,0], 90],
+        ["ACE_Bicycle",[9680,10000,0],90]
     ];
 /*
     _vec = createVehicle ["ACE_Su30Mk_Kh29T", [9658,10021,0], [], 0, "NONE"];
@@ -132,27 +136,6 @@ if (isServer) then {
 //	_vec addEventHandler ["getin", {_this execVM "scripts\SYG_eventPlaneGetIn.sqf"}];
 //	#endif
 //#endif
-/*
-    if ( _vec call SYG_rearmAnySu34 ) then {hint localize "+++ ACE_Su34B rearmed"}
-    else {hint localize "--- ACE_Su34B NOT rearmed !!!"};
-
-    _vec  execVM "x_scripts\x_wreckmarker.sqf";
-
-    _vec = createVehicle ["ACE_Mi24D", [9720,10040,0], [], 0, "NONE"]; // ACE_Mi24P, ACE_AH64_AGM_HE
-    _vec setDir 90;
-    _vec  execVM "x_scripts\x_wreckmarker.sqf";
-*/
-    _vec = createVehicle ["ACE_UAZ_MG", [9740,10040,0], [], 0, "NONE"];
-    _vec setDir 90;
-    _vec  execVM "x_scripts\x_wreckmarker.sqf";
-
-    _vec = createVehicle ["ACE_HMMWV_GAU19", [9700,10015,0], [], 0, "NONE"];
-    _vec addAction ["Check SPPM", "scripts\debug\debug_SMPP.sqf", "CHECK" ];
-
-    _medic_tent = createVehicle ["MASH", [9359.86, 10047.63,0], [], 0, "NONE"];
-    _medic_tent setDir 189;
-    ADD_HIT_EH(_medic_tent)
-    ADD_DAM_EH(_medic_tent)
 #else
 //	_vec = createVehicle ["ACE_AH1W_AGM_HE", [9658.247070,10020.545898,0], [], 0, "NONE"];
 //	_vec setDir 90;
