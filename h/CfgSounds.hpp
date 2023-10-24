@@ -774,8 +774,10 @@ class CfgSounds {
     class come_again_eng   { name = "";                                sound[] = {\sounds\men\excl\spain\Come_again_eng.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
     class buenos_dias_amigo { name = "";                               sound[] = {\sounds\men\excl\spain\Buenos_dias_amigo.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
     class local_partisan_spa { name = "";                              sound[] = {\sounds\men\excl\spain\local_partisan_spa.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
-    class local_partisan_eng { name = "";                              sound[] = {\sounds\men\excl\spain\local_partisan_emg.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+    class local_partisan_eng { name = "";                              sound[] = {\sounds\men\excl\spain\local_partisan_eng.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
 
+    class cantar1 { name = "";                              sound[] = {\sounds\men\excl\spain\cantar1.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+    class no_way_jose { name = "";                              sound[] = {\sounds\men\excl\spain\no_way_jose.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
 
     class naval       { name = "";                                     sound[] = {\sounds\short\Naval-Patrol-Horn.ogg,db-1,1.0}; titles[] = {};}; // Sea patrol detected sound
 
