@@ -36,11 +36,11 @@
 #define DIST_TO_REVEAL 10000
 
 //#define __DEBUG__	// Debug settings with shortened delays etc
-
 #define __INFO__ // Print info about each patrol status
-
 #define __STOP_IF_NO_PLAYERS__	// only delete patrols if no players, not restore them
 
+// Comment to prevent boats to be unlocked by owner radars
+// #define __CAPTURED_BOATS___
 #include "x_setup.sqf"
 
 #include "ships_wp_array.sqf"
@@ -320,7 +320,9 @@ _create_patrol = {
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//+  Experimental setting to try to disable enemy radar targeting +
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifdef __CAPTURED_BOATS__
 	_boat setCaptive true;
+#endif	
 
 	_wpa = _this select OFFSET_WPA; // waypoint description array
 	_boat setPos (_wpa select 0); // 1st WP position
