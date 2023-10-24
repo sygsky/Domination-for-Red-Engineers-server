@@ -762,15 +762,22 @@ class CfgSounds {
     class unlock1      { name = "";                                     sound[] = {\sounds\short\unlock1.ogg,db-1,1.0}; titles[] = {};}; // unlock sound 1
     class unlock2      { name = "";                                     sound[] = {\sounds\short\unlock2.ogg,db-1,1.0}; titles[] = {};}; // unlock sound 2
     class unlock3      { name = "";                                     sound[] = {\sounds\short\unlock3.ogg,db-1,1.0}; titles[] = {};}; // unlock sound 3
-//    class hard_landing { name="";                                       sound[] = {\sounds\intro\hard_landing.ogg,db-1,1.0}; titles[] = {};}; // atmospheric landing douns
 
-	// Spanish speech
+	// Spanish/English speech from aborigen on Antigua
     class adios       { name = "";                                     sound[] = {\sounds\men\excl\spain\adios.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Adios"
     class hola        { name = "";                                     sound[] = {\sounds\men\excl\spain\hola.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hola"
     class pamal       { name = "";                                     sound[] = {\sounds\men\excl\spain\pamal.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Pamal"
     class porque      { name = "";                                     sound[] = {\sounds\men\excl\spain\porque.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Porque"
 
-    class naval       { name = "";                                     sound[] = {\sounds\short\Naval-Patrol-Horn.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Porque"
+    class hey_chico   { name = "";                                     sound[] = {\sounds\men\excl\spain\Hey_chico.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+    class come_again_spa   { name = "";                                sound[] = {\sounds\men\excl\spain\Come_again_spa.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+    class come_again_eng   { name = "";                                sound[] = {\sounds\men\excl\spain\Come_again_eng.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+    class buenos_dias_amigo { name = "";                               sound[] = {\sounds\men\excl\spain\Buenos_dias_amigo.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+    class local_partisan_spa { name = "";                              sound[] = {\sounds\men\excl\spain\local_partisan_spa.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+    class local_partisan_eng { name = "";                              sound[] = {\sounds\men\excl\spain\local_partisan_emg.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+
+
+    class naval       { name = "";                                     sound[] = {\sounds\short\Naval-Patrol-Horn.ogg,db-1,1.0}; titles[] = {};}; // Sea patrol detected sound
 
 // Naval-Patrol-Horn.ogg
 

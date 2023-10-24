@@ -48,7 +48,18 @@ if (alive aborigen) then { // show info
 			[ "STR_ABORIGEN_INFO_1" ] // "Find him, question him a few times until you understand everything."
 		],	0, 6, false
 	] spawn SYG_msgToUserParser;
-	aborigen say ([ "hisp1","hisp2","hisp3","hisp4","adios","porque","hola","pamal"] call XfRandomArrayVal);
+	/*
+	    class hey_chico   { name = "";                                     sound[] = {\sounds\men\excl\spain\Hey_chico.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+        class come_again_spa   { name = "";                                sound[] = {\sounds\men\excl\spain\Come_again_spa.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+        class come_again_eng   { name = "";                                sound[] = {\sounds\men\excl\spain\Come_again_eng.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+        class buenos_dias_amigo { name = "";                               sound[] = {\sounds\men\excl\spain\Buenos_dias_amigo.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+        class local_partisan_spa { name = "";                              sound[] = {\sounds\men\excl\spain\local_partisan_spa.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+        class local_partisan_eng { name = "";                              sound[] = {\sounds\men\excl\spain\local_partisan_emg.ogg,db-1,1.0}; titles[] = {};}; // Spain islander says "Hey chico"
+
+	*/
+	_say1= "come_again_spa"; _say2 = "local_partisan_spa";
+	if (localize "STR_LANG" == "ENGLISH") then { _say1= "come_again_eng"; _say2 = "local_partisan_eng"};
+	aborigen say ([ _say1, _say2, "come_again_spa","hey_chico","adios","porque","hola","pamal"] call XfRandomArrayVal);
 } else {
 	player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"
 };

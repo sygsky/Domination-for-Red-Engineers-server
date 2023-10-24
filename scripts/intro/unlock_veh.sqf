@@ -1,4 +1,5 @@
 /*
+    IS NOT USED! Was created for an early version of Antigua, but its use was abandoned. Sounds (unlock%1) also not implemented
     scripts\intro\unlock_veh.sqf
 	author: Sigolaev.v.a
     description:
