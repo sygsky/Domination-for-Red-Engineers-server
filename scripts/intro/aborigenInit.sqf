@@ -65,12 +65,12 @@ while {(alive aborigen) && ((player distance aborigen) > 5) } do {
 	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
 	// Prevent the same sound from playing twice in a row
 	while {_sound == _prevSound} do {
-	   _ind = floor(random _cnt) *2;
+	   _ind = floor(random _cnt) * 2;
 	   _sound = _arr select _ind;
 	   _delay = _arr select (_ind + 1);
 	};
 	aborigen say _sound;
-	sleep _delay;
+	sleep _delay + ((random 5) + 2);
 	_prevSound = _sound;
 //	aborigen setDir (getDir aborigen) + ((random 20) - 10); // It is not working really
 };
