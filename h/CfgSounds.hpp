@@ -254,8 +254,10 @@ class CfgSounds {
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0}; titles[] = {}; };
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0}; titles[] = {}; };;
 
-    class stripped_voyage    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\stripped_voyage, db+10,1.0}; titles[] = {}; }; // Some sound from Soviet film "Stripped Voyage" (196)
-    class troshin    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\troshin, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
+    class stripped_voyage    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\stripped_voyage.ogg, db+10,1.0}; titles[] = {}; }; // Some sound from Soviet film "Stripped Voyage" (196)
+    class troshin    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\troshin.ogg, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
+    class corrida_shaov    {name = ""; sound[] = {\sounds\defeat\corrida_shaov.ogg, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
+
 
     class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10,1.0}; titles[] = {}; };
     class sorrow_1        {name = "sorrow_1"; sound[] = {\sounds\church\sorrow_1.ogg, db+10,1.0}; titles[] = {}; };

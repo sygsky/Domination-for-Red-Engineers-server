@@ -90,7 +90,7 @@ SYG_defeatTracks =
     ["i_new_a_guy","decisions","treasure_island_defeat","hound_chase"],
     ["sorcerie","melody","thefuture","moon_stone"],
     ["fear2",[0, 10.45],[10.45,7.4],[17.641,7.593],[25.34,7.314]],
-    [["fear2",[40.124,8.882]],"troshin"]
+    [["fear2",[40.124,8.882]],"troshin","corrida_shaov"]
 ];
 
 // Play music from partial track (Arma-1 embed music and some long custom sounds may be)
@@ -132,7 +132,7 @@ SYG_baseDefeatTracks =
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
     "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone","take_five",
-    "troshin",
+    "troshin", "corrida_shaov",
 //    ["cosmos", [0,8.281] ],
 //    ["cosmos", [14.25,9.25] ],
 //    ["cosmos", [28.8,-1] ],
