@@ -74,6 +74,8 @@ while { base_visit_session <= 0 } do {
 				} else {
 					hint localize "+++ SYG_checkPlayerAtBase.sqf: false base_visit_session/mission detectedm skipped";
 				};
+			} else { // We are on feet
+
 			};
 			_delay = 5; // Player is on his own, slow check on base frequence
 		}  else { // player in vehicle, up the frequence of on base checks
