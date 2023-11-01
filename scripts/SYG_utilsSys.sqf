@@ -64,6 +64,7 @@ SYG_d_p_varname =  {
 		case "nejcg";
 		case "Nejc"       : { "Otočani vas z veseljem pozdravljajo v vašem maternem jeziku!" }; // Словенец
 		case "Renton J. Junior" : {"Salinieki ir priecīgi sveikt Jūs savā dzimtajā valodā!"}; // Латыш
+		case "R2D2";      // Le francais
 		case "Lt. Jay"    :{"Les habitants de l'île sont heureux de vous accueillir dans votre langue maternelle !"}; // Le francais
 		case "Elia";
 		case "Moe"        : {"Gli isolani sono lieti di darvi il benvenuto nella loro lingua madre italiana !"}; // Italian language
