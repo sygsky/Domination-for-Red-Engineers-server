@@ -755,7 +755,7 @@ if ( X_Client ) then {// runs only on client
 
     // Not change rucksack position (not move it automatically to the secondary gear slot)
 #ifdef __EQUIP_OPD_ONLY__
-	// store rucksack content each time on rucksacl update dialog call (if really changed)
+	// store rucksack content each time on rucksack update dialog call (if really changed)
 	SYG_playerRucksackContent = ""; // Player rucksack current content in text form changed on each rucksack update
     ACE_Sys_Ruck_Switch_WOBCheck = compile preprocessFileLineNumbers "scripts\ACE\storeRucksackContent.sqf";
     hint localize "+++ ACE_Sys_Ruck_Switch_WOBCheck replaced by custom version";
