@@ -299,7 +299,7 @@ SYG_leapYear = {
 	( ( (_this%4) + (_this%400) ) == 0 ) && ( (_this%100) > 0)
 };
 
-// returns deignated month length
+// returns designated month length
 // call:
 //  _monlen = [2018,12] call SYG_monthLength; // returns 31
 //
@@ -557,7 +557,7 @@ SYG_getCurrentDayTimeRandomSound = {
 // Updates date with designated hours
 // _oldDT = [ 1985, 8, 1, 12, 25]; // 01-AUG-1985 12:25:00
 // _newDT = [_oldDT, +12.2] call  SYG_updateDTByHours; // [ 1985, 8, 2, 0, 37] // 02-AUG-1985 00:37:00
-//  hour value to add can't be more than 28*24 hours
+//  hour value to add must be positive and and cannot exceed 28 days (28*24 in hours)
 //--------------------------------------------------
 SYG_bumpDateByHours = {
 	private ["_dt","_addhr","_min","_hour","_day","_mon","_year","_new","_monlen"];
@@ -568,14 +568,18 @@ SYG_bumpDateByHours = {
         _dt
     };
 
-	// TODO: process seconds too
-	if (count _dt > 5) then {
-		_sec = _dt select DT_SEC_OFF;
-	    _new = _sec  + (((_addhr mod 1) * 3600) mod 60); // seconds in new value
-	    _min = _new * 60;
+	// Process seconds too if available
+	// Process seconds too if available
+	_min = 0;
+	if (count _dt > DT_SEC_OFF) then {
+		_sec = _dt select DT_SEC_OFF; // Secs in date
+	    _new = _sec  + (((_addhr mod 1) * 3600) mod 60); // seconds in added value
+	    _sec = _sec + _new;
+	    _min = floor (_sec / 60);
+	    _sec = round (_sec mod 60);
 	};
 
-    _min  = _dt select DT_MIN_OFF;
+    _min  = _min + (_dt select DT_MIN_OFF);
     _hour = _dt select DT_HOUR_OFF;
     _day  = _dt select DT_DAY_OFF;
     _mon  = _dt select DT_MONTH_OFF;
@@ -583,7 +587,11 @@ SYG_bumpDateByHours = {
 
     // MINUTES
 
-    _new  = _min + round((_addhr mod 1) * 60);
+	if (count _dt > DT_SEC_OFF) then { // Считаем только полные минуты, т.к. секунды существуют и обработаны отдельно
+        _new  = _min + floor((_addhr mod 1) * 60);
+    } else {  // Пытаемся учесть остаток в секундах, если они >= 30
+        _new  = _min + round((_addhr mod 1) * 60);
+    };
     // hint localize format["SYG_bumpDateByHours: new minutes = %1", _new];
     if ( _new >= 60 ) then {
         _dt set [DT_MIN_OFF, _new - 60];
