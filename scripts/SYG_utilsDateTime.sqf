@@ -16,6 +16,7 @@
 
 #define DAY_SECS 86400
 #define HOUR_SECS 3600
+#define DAY_MINS 1440
 
 #define DAY_SECONDS(st) (argp(st,3)*HOUR_SECS+argp(st,4)*60+argp(st,5))
 
@@ -219,25 +220,6 @@ SYG_NthWeekday = {
 	(_weekDayOff + 1) // 1st day has offset zero
 };
 
-// call: _mlen = [_mon, _year] call SYG_monthLen;
-SYG_monthLen = {
-	private ["_mon", "_year", "_len"];
-	if ( (typeName _this) != "ARRAY") exitWith {localize format["--- SYG_monthLen: expected input array[_mon,_year], found %1", _this]; -1};
-	if ( (count _this) < 2) exitWith {localize format["--- SYG_monthLen: expected input array[_mon,_year], found %1", _this]; -1};
-	_mon  = arg(0);
-	_year = arg(1);
-	if ( _mon < 1 || _mon > 12 ) exitWith { localize format["--- SYG_monthLen: expected month number must be in range 1..12, found %1", _this]; -1 };
-	_len = if ( _mon == 2 ) then {
-		if ( (_year  mod 4) == 0 ) then {
-			if ( (_year mod 100) == 0 ) then {
-				if ( (_year mod 400) == 0 ) then { 29 }
-				else {28};
-			} else {28};
-		} else {28};
-	} else {argp(MONTH_LEN_ARR,_mon)};
-	_len
-};
-
 //
 // returns name of designated day of week. For 0 return "Monday", for 6 return "Sunday" etc
 // calls: _weekdayname = (date call SYG_weekDay) call SYG_weekDayLocalName;
@@ -375,7 +357,7 @@ SYG_getServerDate = {
 // Works only in MP on client computer, return start of Arma.exe on client computer
 //
 SYG_getClientStatDate = {
-	_start = missionStart;
+	SYG_client_start
 };
 
 // gets day count in month sequence from m1 to m2 (e.g. from jan to mar if 1, 3 used) at designated year
@@ -560,7 +542,7 @@ SYG_getCurrentDayTimeRandomSound = {
 //  hour value to add must be positive and and cannot exceed 28 days (28*24 in hours)
 //--------------------------------------------------
 SYG_bumpDateByHours = {
-	private ["_dt","_addhr","_min","_hour","_day","_mon","_year","_new","_monlen"];
+	private ["_dt","_addhr","_min","_hour","_day","_mon","_year","_new","_monlen", "_sec"];
     _dt    = + (_this select 0);
     _addhr =    _this select 1;
     if ( _addhr == 0) exitWith {
@@ -568,7 +550,6 @@ SYG_bumpDateByHours = {
         _dt
     };
 
-	// Process seconds too if available
 	// Process seconds too if available
 	_min = 0;
 	if (count _dt > DT_SEC_OFF) then {
@@ -649,6 +630,72 @@ SYG_bumpDateByHours = {
 
     _dt
 };
+
+//
+//++++++++++++++++++++++++++++++++++++++++++++++++++
+// Updates date with designated hours version #1
+// _oldDT = [ 1985, 8, 1, 12, 25]; // 01-AUG-1985 12:25:00
+// _newDT = [_oldDT, +12.2] call  SYG_updateDTByHours; // [ 1985, 8, 2, 0, 37] // 02-AUG-1985 00:37:00
+//  hour value to add must be positive and and cannot exceed 28 days (28*24 in hours)
+//--------------------------------------------------
+SYG_bumpDateByHours1 = {
+	private ["_dt","_addhr","_min","_hour","_day","_mon","_year","_new","_monlen"];
+    _dt    = + (_this select 0);
+    _addhr =    _this select 1;
+    if ( _addhr == 0) exitWith {
+        hint localize "+++ SYG_bumpDateByHours: called with 0 hour change, accepted as is";
+        _dt
+    };
+
+    _year = _dt select DT_YEAR_OFF;
+    _mon  = _dt select DT_MONTH_OFF;
+    _day  = _dt select DT_DAY_OFF;
+
+    // Find original full hours with mins and secs
+    _hour = _dt select DT_HOUR_OFF;
+    _hour = _hour + ( (_dt select DT_MIN_OFF) / 60 );
+    if (count _dt > DT_SEC_OFF) then {
+        _hour = _hour + ((_dt select DT_SEC_OFF) / HOUR_SECS);
+    };
+    _newDT   = _hour + _addhr; // New datetime in hours, convert then to days/hours/mins/secs
+    _newDAY  = floor (_newDT / 24); // New full day count [0..##]
+    _newHOUR = floor (_newDT mod 24); // New full hour count [0..23]
+    _newMIN  = floor ((_newDT mod 1) * 60); // Full mins count [0.. 59]
+    _newSEC  = round( (_newDT mod 1) * 3600 ) - _newMIN * 60; // Full secs count [0..59]
+
+    _continue = true;
+    while { _continue } do { //
+        if (_newDAY < 0) then { // Bump to back
+            if ( _mon == 1 ) then {
+                _mon = 12;
+                _year = _year - 1;
+            } else {
+                _mon = _mon - 1;
+            };
+            _monLen = [_year, _mon] call SYG_monthLength; // Number of days in current mon
+            _newDAY = _monLen + _newDAY;
+            if (_newDAY > 0) then { // We reached new date definition
+                _continue = false;
+                _newHOUR = 24 + _newHOUR;
+                _newMIN  = 60 + _newMIN;
+                _newSEC  = 60 + _newSEC;
+            };
+        } else { // Positive addition, bump to forward
+            _monLen = [_year, _mon] call SYG_monthLength; // Number of days in current mon
+            if (_newDAY > _monLen) then { // bump month to future one
+                _newDAY = _newDAY - _monLen;
+                _mon = _mon + 1;
+                if (_mon > 12) then { // Bump from DEC to JAN, and ++year
+                    _mon = 1;
+                    _year = _year + 1;
+                }
+            } else {_continue = false };
+        }
+    };
+    _newDay = _newDAY + 1; // As it is a natural number, not arithmetic counter, month starts at 1 day, not 0 (zero)
+    [_year,_mon,_newDAY, _newHOUR, _newMIN, _newSEC];
+};
+
 
 //
 // _days = [40,15,36,8]; // 40 days, 15 hours, 36 mins, 8 seconds
