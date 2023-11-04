@@ -9,8 +9,8 @@
 		Radar and truck are recreated after each destroy (while script radio_service.sqf is running)
 		The truck can be destroyed/found an arbitrary number of times until the radio mast is intalled
 
-		1. If current radar is killed, mission is counted is failed
-		2. If current radar is installed, wait until current truck is reached GRU PC.
+		1. If current radar is killed, mission is counted as failed
+		2. If current radar is installed, wait until current truck reached GRU PC.
 		3. If last truck or current radar are destroyed, mission is counted as failed.
 
 		Markers:

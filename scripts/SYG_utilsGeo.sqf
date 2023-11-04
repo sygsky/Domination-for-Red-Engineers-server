@@ -189,7 +189,7 @@ SYG_nearestSettlement = {
 //
 // Returns nearest settlement name
 // Call: _settlement_name = player call SYG_nearestSettlementName;
-SYG_nearestSettlementName = {text (_this call nearestSettlement)};
+SYG_nearestSettlementName = {text (_this call SYG_nearestSettlement)};
 //
 // Finds MT item array by target name (case sensitive). Call as follow:
 // _mt_item = "Rahmadi" call SYG_MTByName; // [[2826,2891,0],   "Rahmadi"   ,180, 22, ["detected_Rahmadi"]] or [] if error name used e.g. "rahmado"

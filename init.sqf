@@ -166,7 +166,7 @@ if (isServer) then {
 		sleep 120; // spawn motocycles on base after arrival ones
 		[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 	};
-	[] execVM "scripts\intro\sea_patrol.sqf";
+	[] execVM "scripts\intro\sea_patrol.sqf"; // NOTE: if disable/remove this service, remove sidemission #57 too, as it depends on that
 
 	if (d_weather) then {execVM "scripts\weather\weathergen2.sqf";};
 
@@ -269,8 +269,9 @@ if (isServer) then {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 24 - gazstation near Arcadia, 29 - tanks at Cabo Juventudo,
     // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 44 - heli prototype on San Tomas, 48 - transformer substations of Corazol, 49 - captain Grant
-    // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation
-    _first_array = [];
+    // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation,
+    // 57 - sea devil boat capturing
+    _first_array = [57];
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
         hint localize format["+++ SM _first_array: %1", _first_array];

@@ -1,6 +1,6 @@
 /*
 	author: Sygsky
-	description: find house and capture the officer in
+	description: find house and capture the officer in it
 	returns: nothing
 */
 

@@ -11,7 +11,7 @@ d_mission_filename = "x_m";
 // to remove a specific side mission just remove the index from sm_array
 
 #ifdef __DEFAULT__
-sm_array = [56,44,53,54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0];
+sm_array = [57,56,44,53,54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0];
 ranked_sm_array = [ 5, [2,3,53] ]; //+++ Sygsky: [_lowest_allowed_index, [plane, tank, plain]] - steal missions to run with already ranked players
 nonstatic_sm_array = [20,21,22,51,52,54,56]; // indexes for no static mission objectives (сonvoy, pilots, radiomast etc)
 #endif

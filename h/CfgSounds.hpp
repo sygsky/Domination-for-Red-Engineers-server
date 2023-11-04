@@ -469,7 +469,7 @@ class CfgSounds {
 
 
 // SM hostages
-    class hisp1   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_1.ogg,db-1,1.0}; titles[] = {};};
+    class hisp1   { name=""; sound[] = {\sounds4\sm\hostages\hisp_excl_1.ogg,db-1,1.0}; titles[] = {};};
     class hisp2   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_2.ogg,db-1,1.0}; titles[] = {};};
     class hisp3   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_3.ogg,db-1,1.0}; titles[] = {};};
     class hisp4   { name=""; sound[] = {\sounds\sm\hostages\hisp_excl_4.ogg,db-1,1.0}; titles[] = {};};
@@ -479,6 +479,20 @@ class CfgSounds {
     class ger_grant_surrend { name=""; sound[] = {\sounds\sm\49\ger_grant_surrend.ogg,db-1,1.0}; titles[] = {};};
     class eng_grant_intro   { name=""; sound[] = {\sounds\sm\49\eng_grant_intro.ogg,db-1,1.0}; titles[] = {};};
     class ger_grant_intro   { name=""; sound[] = {\sounds\sm\49\ger_grant_intro.ogg,db-1,1.0}; titles[] = {};};
+
+    class money1 { name="Money by Pink Floyd";                sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
+    class money2 { name="Money by Pink Floyd prelude";        sound[] = {\sounds\sm\45\money1.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping, by Pink Floyd
+
+    class pilots_resque1 { name="Resque mission sound intro"; sound[] = {\sounds\sm\pilots\pilots_resque1.ogg,db-1,1.0}; titles[] = {};};
+    class pilots_resque2 { name="Resque mission sound intro"; sound[] = {\sounds\sm\pilots\pilots_resque2.ogg,db-1,1.0}; titles[] = {};};
+    class pilots_resque3 { name="Resque mission sound intro"; sound[] = {\sounds\sm\pilots\pilots_resque3.ogg,db-1,1.0}; titles[] = {};};
+
+    class flag_captured  { name="Captured flag";              sound[] = {\sounds\sm\flag\flag_captured.ogg,db-1,1.0}; titles[] = {};};
+    class flag_lost      { name="Lost flag";                  sound[] = {\sounds\sm\flag\flag_lost.ogg,db-1,1.0}; titles[] = {};};
+
+// SM 57: capturing sea devil
+    class sea_devil1     { name=""; sound[] = {\sounds\sm\57\sailing_too_long.ogg,db-1,1.0}; titles[] = {};}; // Song about "Sea devil" from USSR film "The Amphibian man"
+    class sea_devil2     { name=""; sound[] = {\sounds\sm\57\sea_devil.ogg,db-1,1.0}; titles[] = {};}; // "Sea devil" exclamation
 
     // water splash effects
     class under_water_1   {name = ""; sound[] = {\sounds\defeat\water\under_water1.ogg, db+10, 1.0}; titles[] = {};};
@@ -495,15 +509,15 @@ class CfgSounds {
     class enemy_attacks_base {     name = "On base attack event in Russian"; sound[] = {\sounds\onbase\enemy_attack.ogg, db+10, 1.0}; titles[] = {};};    // base attack additional sound
     class enemy_attacks_base_robot {name = "On base attack event by female robot"; sound[] = {\sounds\onbase\enemy_attack_robot_voice.ogg, db+10, 1.0}; titles[] = {};};    // ...
 
-    class tuman {name = "Fog has fallen on airfield runway"; sound[] = {\sounds\weather\tuman.ogg, db+10, 1.0}; titles[] = {};};    // Sonf of and by Yuri Vizbor
+    class tuman {name = "Fog has fallen on airfield runway"; sound[] = {\sounds\weather\tuman.ogg, db+10, 1.0}; titles[] = {};};    // Song of and by Yuri Vizbor
 
 	// Lighthouse sounds
     class lighthouse_1    {name = "Lighthouse 1"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v01.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 1
     class lighthouse_2    {name = "Lighthouse 2"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 2
     class lighthouse_3    {name = "Lighthouse 3"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v03.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 3
     class lighthouse_4    {name = "Lighthouse 4"; sound[] = {\sounds\timeofday\night\lighthouse\Lighthouse_v04.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 4
-    class lighthouse_5    {name = "Lighthouse 5"; sound[] = {\sounds\timeofday\night\lighthouse\lhhorn01.ogg.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 5
-    class lighthouse_6    {name = "Lighthouse 6"; sound[] = {\sounds\timeofday\night\lighthouse\lhhorn02.ogg, db+10, 1.0}; titles[] = {};};    // Lighthouse 6
+    class lighthouse_5    {name = "Lighthouse 5"; sound[] = {\sounds\timeofday\night\lighthouse\lhhorn01.ogg.ogg, db+10, 1.0}; titles[] = {};};      // Lighthouse 5
+    class lighthouse_6    {name = "Lighthouse 6"; sound[] = {\sounds\timeofday\night\lighthouse\lhhorn02.ogg, db+10, 1.0}; titles[] = {};};    		 // Lighthouse 6
 
     // power down sounds
     class powerdown1    {name = ""; sound[] = {\sounds\short\power_down\PowerDown1.ogg, db+10, 1.0}; titles[] = {};};
@@ -710,15 +724,6 @@ class CfgSounds {
 
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
-    class money1 { name="Money by Pink Floyd";                          sound[] = {\sounds\sm\45\money.ogg,db-1,1.0}; titles[] = {};}; // Money by Pink Floyd
-    class money2 { name="Money by Pink Floyd prelude";                  sound[] = {\sounds\sm\45\money1.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping, by Pink Floyd
-
-    class pilots_resque1 { name="Resque mission sound intro";           sound[] = {\sounds\sm\pilots\pilots_resque1.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
-    class pilots_resque2 { name="Resque mission sound intro";           sound[] = {\sounds\sm\pilots\pilots_resque2.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
-    class pilots_resque3 { name="Resque mission sound intro";           sound[] = {\sounds\sm\pilots\pilots_resque3.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
-
-    class flag_captured { name="Captured flag";                         sound[] = {\sounds\sm\flag\flag_captured.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
-    class flag_lost     { name="Lost flag";                            sound[] = {\sounds\sm\flag\flag_lost.ogg,db-1,1.0}; titles[] = {};}; // Coins dropping
 
     class usa_desant_heli { name="Babyyyyyyy";                          sound[] = {\sounds\intro\vehicles\usa_desant_heli.ogg,db-1,1.0}; titles[] = {};}; // Baby-y-y-y-y...
 

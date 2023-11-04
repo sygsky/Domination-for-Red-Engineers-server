@@ -651,38 +651,36 @@ SYG_bumpDateByHours1 = {
     _mon  = _dt select DT_MONTH_OFF;
     _day  = _dt select DT_DAY_OFF;
 
-    // Find original full hours with mins and secs
-    _hour = _dt select DT_HOUR_OFF;
-    _hour = _hour + ( (_dt select DT_MIN_OFF) / 60 );
-    if (count _dt > DT_SEC_OFF) then {
-        _hour = _hour + ((_dt select DT_SEC_OFF) / HOUR_SECS);
-    };
-    _newDT   = _hour + _addhr; // New datetime in hours, convert then to days/hours/mins/secs
-    _newDAY  = floor (_newDT / 24); // New full day count [0..##]
+    // Find original full hours with mins (and optional secs)
+    _hour    = (_dt select DT_HOUR_OFF) + ( (_dt select DT_MIN_OFF) / 60 );
+    if (count _dt > DT_SEC_OFF) then { _hour = _hour + ((_dt select DT_SEC_OFF) / HOUR_SECS) };
+    _newDT   = _hour + _addhr; // Result hours, convert them to the corresponding days/hours/mins/secs
+    _newDAY  = floor (_newDT / 24); // How many full days are in result hours count [0..##]
     _newHOUR = floor (_newDT mod 24); // New full hour count [0..23]
     _newMIN  = floor ((_newDT mod 1) * 60); // Full mins count [0.. 59]
     _newSEC  = round( (_newDT mod 1) * 3600 ) - _newMIN * 60; // Full secs count [0..59]
 
     _continue = true;
     while { _continue } do { //
-        if (_newDAY < 0) then { // Bump to back
-            if ( _mon == 1 ) then {
-                _mon = 12;
-                _year = _year - 1;
-            } else {
-                _mon = _mon - 1;
-            };
-            _monLen = [_year, _mon] call SYG_monthLength; // Number of days in current mon
-            _newDAY = _monLen + _newDAY;
-            if (_newDAY > 0) then { // We reached new date definition
-                _continue = false;
-                _newHOUR = 24 + _newHOUR;
-                _newMIN  = 60 + _newMIN;
-                _newSEC  = 60 + _newSEC;
-            };
+        if ( _newDT < 0 ) then { // Distribute the resulting hours by day, hours, minutes and seconds
+			_monLen = [_year, _mon] call SYG_monthLength; // Number of days in current month
+			_newDAY = _monLen + _newDAY; // Remove subtracted hours
+			if (_newDAY >= 0) then { // We found result year/month and now define positive remained itmes: hours, mins, secs
+				_continue = false;
+				_newHOUR  = 23 + _newHOUR;
+				_newMIN   = 59 + _newMIN;
+				_newSEC   = 59 + _newSEC;
+			} else {	// As _newDAY is still negative, month number must be lowered
+				if ( _mon == 1 ) then { // If current month is JAN, bump to the previous DEC of previous year
+					_mon = 12;
+					_year = _year - 1;
+				} else { // Bump to some previous month of the same year
+					_mon = _mon - 1;
+				};
+			};
         } else { // Positive addition, bump to forward
             _monLen = [_year, _mon] call SYG_monthLength; // Number of days in current mon
-            if (_newDAY > _monLen) then { // bump month to future one
+            if (_newDAY >= _monLen) then { // bump month to future one
                 _newDAY = _newDAY - _monLen;
                 _mon = _mon + 1;
                 if (_mon > 12) then { // Bump from DEC to JAN, and ++year
@@ -692,8 +690,8 @@ SYG_bumpDateByHours1 = {
             } else {_continue = false };
         }
     };
-    _newDay = _newDAY + 1; // As it is a natural number, not arithmetic counter, month starts at 1 day, not 0 (zero)
-    [_year,_mon,_newDAY, _newHOUR, _newMIN, _newSEC];
+    // As it is a natural number, not arithmetic counter, month starts at 1 day, not 0 (zero)
+    [_year,_mon,_newDAY + 1, _newHOUR, _newMIN, _newSEC];
 };
 
 

@@ -61,7 +61,7 @@ _sound = "";
 _delay = 0;
 _arr = ["no_way_jose",1,"cantar1",13,"local_partisan_spa",4, "pamal", 3,"porque", 1,"adios", 2]; // Sound array for initial aborigen activity
 _cnt = (count _arr) / 2;
-while {(alive aborigen) && ((player distance aborigen) > 5) } do {
+while {(alive aborigen) && ((player distance aborigen) > 10) } do {
 	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
 	// Prevent the same sound from playing twice in a row
 	while {_sound == _prevSound} do {
@@ -70,9 +70,11 @@ while {(alive aborigen) && ((player distance aborigen) > 5) } do {
 	   _delay = _arr select (_ind + 1);
 	};
 	aborigen say _sound;
-	sleep _delay + ((random 5) + 2);
+	_delay = _delay + ((random 2) + 5);
+	hint localize format["+++ aborigenInit.sqf: abo say '%1', prev '%2', delay %3", _sound, _prevSound, _delay ];
 	_prevSound = _sound;
-//	aborigen setDir (getDir aborigen) + ((random 20) - 10); // It is not working really
+	sleep _delay;
+	//	aborigen setDir (getDir aborigen) + ((random 20) - 10); // It is not working really
 };
 
 // set marker on civ
