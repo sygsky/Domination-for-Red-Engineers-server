@@ -197,7 +197,7 @@ SYG_getOutEvent = {
     };
 
     if ( !alive _veh ) exitWith {
-        hint localize format["<<< SYG_getOutEvent: veh ""%1""(%2) is dead in %3, exit >>>", _veh_type, _veh, (round((time - _start_time) *10))/10];
+        hint localize format["<<< SYG_getOutEvent: veh ""%1"" is dead in %2, exit >>>", _veh_type, (round((time - _start_time) *10))/10];
         SYG_FalseGetOutsCnt = SYG_FalseGetOutsCnt + 1;
         _veh removeEventHandler [EVENT_NAME, _getOutEventInd]; // remove event at all
         false
