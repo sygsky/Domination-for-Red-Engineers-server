@@ -84,10 +84,11 @@ SYG_findNearestSPPM = {
 // call: _vehArr = _pos | _object(RoadCone) call  SYG_getAllSPPMVehicles;
 //
 SYG_getAllSPPMVehicles = {
-	private ["_pos", "_arr", "_i", "_x"];
+	private ["_pos", "_arr", "_i", "_x", "_cnt0"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
 	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
+	_cnt0= count _arr;
 	for "_i" from 0 to (count _arr) - 1 do {
 		_x = _arr select _i;
         if (_x isKindOf "CAManBase") then { _arr set [_i, "RM_ME"] } else { //+++ Sygsky: Sometimes a man gets on this list!!!
@@ -105,7 +106,8 @@ SYG_getAllSPPMVehicles = {
 	_arr call SYG_clearArrayB; // remove all "RM_ME" items from the list
 	// now make all SPPM vehicles to be captured ones
 	if (count _arr > 0) then {
-		private ["_txt", "_var"];
+		private ["_txt", "_var", "_arr1"];
+		_arr1 = [];
 		_txt = [_pos,10 ] call SYG_MsgOnPosE0;
 		{
 			if ( !(_x isKindOf "CAManBase") ) then {
@@ -113,10 +115,11 @@ SYG_getAllSPPMVehicles = {
 				if (isNil "_var") then {
 					[_x] call XAddCheckDead;
 					_x setVariable ["CAPTURED_ITEM","SPPM"];
-					hint localize format["+++ Veh ""%1""(%2) is captured on SPPM (veh count %3) at %4", vehicle _x,typeOf _x,count _arr, _txt];
+					_arr1 set [count _arr1, typeOf _x];
 				};
 			};
 		} forEach _arr;
+		hint localize format[ "+++ SPPM: Veh[s] ""%1"" captured, counters are: raw %2, filtered %3, true veh[s] %4, at %5", _arr1, _cnt0, count _arr, count _arr1, _txt ];
 	};
 	_arr
 };
