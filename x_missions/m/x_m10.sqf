@@ -67,6 +67,7 @@ _canon_arr = [];
 	_unit disableAI "MOVE";
 	_unit setUnitPos "DOWN";
 	_unit setDir (_x select 1);
+	extra_mission_remover_array set[ count extra_mission_remover_array, _unit ];
 } forEach [ // items format:[_spotter_pos[x,y,x],_spotter_azimuth]
 	[ [11030.88,9853.52,0], 280 ],
 	[ [11039.85,9934.06,0], 280 ],
@@ -90,4 +91,5 @@ sleep 2.045;
 
 _canon_arr execVM "x_missions\common\x_sidearti2.sqf";
 
+hint localize format["+++ x_m10.sqf: arty above Paraiiso, created units %1, canons %2", count extra_mission_remover_array, count extra_mission_vehicle_remover_array];
 if (true) exitWith {};

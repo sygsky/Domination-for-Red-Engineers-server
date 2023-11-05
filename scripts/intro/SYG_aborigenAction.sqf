@@ -18,6 +18,13 @@
 #include "x_setup.sqf"
 #include "air_setup.sqf"
 
+//#define __DEBUG_SM_57__
+
+#ifdef __DEBUG_SM_57__
+	player setPos (getPos FLAG_BASE);
+	player groupChat "+++ You are teleported to the base for DEBUG purposes. Long live Red Engineers!!!";
+#endif
+
 if (typeName _this != "ARRAY") exitWith {hint localize format["--- SYG_aborigenAction.sqf: unknown _this = %1", _this]};
 
 if (!alive aborigen) exitWith {localize "STR_ABORIGEN_KILLED"}; // "Dead Aborigen... what bastard killed our informant?"

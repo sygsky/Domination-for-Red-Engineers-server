@@ -337,7 +337,7 @@ SYG_msgToUserParser = {
     _no_negate = false;
 
     // hint localize format["msg_to_user ""%1"":%2", _name, _this select 2];
-    if  (typeName _name == "ARRAY") then { // list of names is expected
+    if  (typeName _name == "ARRAY") then { // list of names is expected ["name1","name2",...,"nameN"]
         if ( count _name == 0) then {_name = "";} // all players are addressed
         else {
 //        	_str = _name select 0;
