@@ -268,10 +268,11 @@ if (isServer) then {
     // insert special missions at the SM list head, may be used for the DEBUG purposes
     //++++++++++++++++++++++++++++++++++++++++++++++++++++
     // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 24 - gazstation near Arcadia, 29 - tanks at Cabo Juventudo,
-    // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 44 - heli prototype on San Tomas, 48 - transformer substations of Corazol, 49 - captain Grant
-    // 50 - arti big SM in field, 51: pilots, 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation,
-    // 57 - sea devil boat capturing
-    _first_array = [7, 57]; // Allow testing SM #57
+    // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 44 - heli prototype on San Tomas, 47 - factory near Somato,
+    // 48 - transformer substations of Corazol, 49 - captain Grant, 50 - arti big SM in field, 51: pilots,
+    // 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation, 57 - sea devil boat capturing
+    //
+    _first_array = [47,57]; // Allow testing SM #57
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
         hint localize format["+++ SM _first_array: %1", _first_array];

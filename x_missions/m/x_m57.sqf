@@ -2,10 +2,9 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-// #define BOAT_TYPE "RHIB2Turret"
+//#define __DEBUG_SM_57__
+#define BOAT_TYPE "RHIB2Turret"
 #define POINT_TYPE "Heli_H_civil"
-
-#define __DEBUG_SM_57__
 
 x_sm_pos = [[8586.3,10103.2,0]]; // index: 57,   Capturing the sea devil boat, point near base shore on the west side of airbase
 x_sm_type = "normal"; // "normal", "convoy", "undefined"
@@ -48,8 +47,9 @@ _list = [];
 	_cnt = _cnt + 1; // Vehicles (and objects created im mission) count
 	if ( (_cnt mod 20) == 0) then { sleep 0.3}; // Just in case of a very long vehicle list sleep on each 20th vehicle
 } forEach vehicles;
-hint localize format["+++ x_m57.sqf: global coll vehicles (size %1) scanned for '%2', found %3 and set is old alive %4", _cnt, BOAT_TYPE, _cnt_boat, count _list ];
-["say_sound","PLAY", "sea_devil1", 15] call call XSendNetStartScriptClient;
+hint localize format["+++ x_m57.sqf: global coll vehicles (size %1) scanned for '%2', found %3 and set as old alive %4", _cnt, BOAT_TYPE, _cnt_boat, count _list ];
+
+["remote_execute", "sleep 30; playSound 'sea_devil1'; ['sea_devil1', 22] call SYG_showMusicTitle"] call XSendNetStartScriptClientAll; // Sent to all clients only
 
 _pos    = + _circle_pos;
 _sites = [
@@ -110,10 +110,11 @@ while { _do } do {
 _list resize 0;
 _list = nil;
 
-["say_sound","PLAY", "sea_devil2"] call call XSendNetStartScriptClient;
-
 // Delete all created vehicles
-{ deleteVehicle _x; sleep 1 } forEach _sites;
+sleep 30;
+["say_sound", getPos (_sites select 0), "steal"] call XSendNetStartScriptClientAll; // Play sound on circle center
+{ deleteVehicle _x  } forEach _sites;
+_sites resize 0;
 _sites = nil;
 
 if (true) exitWith {};

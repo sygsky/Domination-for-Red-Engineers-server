@@ -755,7 +755,7 @@ XHandleNetStartScriptClient = {
 
 		//
 		// say user sound from predefined vehicle/unit ["say_sound",_object | [x,y,z],_sound[, "-",_player_name]] or
-		//                                             ["say_sound","LIST", _arr[, "-",_player_name]] : where _arr is array of [_object, _sound, sleep time] or
+		//                                             ["say_sound","LIST", _arr<, "-",_player_name>] : where _arr is array of [_object, _sound, sleep time] or
 		//                                             ["say_sound","PLAY", _sound<,_wait_before_period<,_title_show_period>>] : play sound with playSound Arma command <and with titles>
 		// !!! Note: arg 1 (_this select 1) MUST be some object or predefined string ["LIST","PLAY"] !!!
         case "say_sound": {
@@ -781,7 +781,7 @@ XHandleNetStartScriptClient = {
 					};
 				};
 
-				if ( count _pos > 0 ) exitWith { // emulate object to say sound
+				if ( count _pos > 0 ) exitWith { // emulate temp object to say sound
 					sleep (0.01 max (_this select 2));
 					_nil = "Logic" createVehicleLocal _pos; // use temp object to play sound
 					_nil say (_this select 1);

@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno: x_missions\common\x_sideflag.sqf
 private ["_flag","_owner","_posi_array","_ran","_ran_pos","_flagtype","_ini_str","_msg","_sound"];
 if (!isServer) exitWith {};
 

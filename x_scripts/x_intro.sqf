@@ -772,13 +772,13 @@ SYG_showMusicTitle = {
 //		hint localize format["+++ x_intro: %1, time %2", [_r,_g,_b,1], time];
 	} else {
 		if ( _str != "") then {
+			hint localize "+++ SYG_showMusicTitle: no intro text shown, only music title is displayed";
 			if (count _this > 1) then {	sleep (_this select 1)} else {sleep 30 };
 		};
-		hint localize "+++ SYG_showMusicTitle: no intro text shown, only music title is displayed";
 	};
 //	cutText["", "PLAIN"];      // remove intro/music cut controls
 	cutRsc["Default","PLAIN"]; // remove intro/music cut controls
-	hint localize format["+++ SYG_showMusicTitle: finished, duration = %1 secs,d_still_in_intro= %2", time - _start, d_still_in_intro];
+	hint localize format["+++ SYG_showMusicTitle: finished, duration = %1 secs, d_still_in_intro= %2", time - _start, d_still_in_intro];
 };
 #endif
 
