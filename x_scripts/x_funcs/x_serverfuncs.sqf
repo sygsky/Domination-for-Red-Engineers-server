@@ -632,7 +632,7 @@ XCreateArmor = {
 	_arr = [ [ _numbergroups1, _type1 ],[ _numbergroups2, _type2 ],[_numbergroups3, _type3 ] ];
 //	_arr = [ [ _this select 1, _this select 0 ],[ _this select 3, _this select 2 ],[ _this select 5, _this select 4 ] ];
 
-	_numvehicles = _this select 7; // number of vehicles in separatу group
+	_numvehicles = _this select 7; // number of vehicles in separate group
 	_radius      = _this select 8;
 	_do_patrol   = (if (count _this == 10) then {_this select 9} else {false});
 	if (_radius < 50) then {_do_patrol = false;};
@@ -649,8 +649,9 @@ XCreateArmor = {
         // (_grpArr select 0) is number of vehicles in group
         if ((_grpArr select 0) > 0) then {
             for "_i" from 1 to (_grpArr select 0) do {
-                while {!can_create_group} do {sleep (0.1 + (random (0.2))) };
-                _newgroup = [_side] call x_creategroup;
+                //while {!can_create_group} do {sleep (0.1 + (random (0.2))) };
+                //_newgroup = [_side] call x_creategroup;
+                _newgroup = call SYG_createEnemyGroup;
                 if (_radius > 0) then {
                     _pos = [_pos_center, _radius] call XfGetRanPointCircle;
                     while {count _pos == 0} do {
@@ -681,7 +682,7 @@ XCreateArmor = {
                     _newgroup setFormDir (floor random 360);
                     _newgroup setSpeedMode "NORMAL";
                 };
-                _ret_grps = _ret_grps + [_newgroup];
+                _ret_grps set [count _ret_grps, _newgroup];
                 _grp_array = (if (_do_patrol) then {[_newgroup, _pos, 0, _patrol_area, [], -1, 0, [], 300 + (random 50),1]} else {[_newgroup, _pos, 0,[],[],-1,0,[],300 + (random 50),-1]});
                 _grp_array execVM "x_scripts\x_groupsm.sqf";
                 sleep 2.011;
