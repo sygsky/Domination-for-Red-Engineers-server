@@ -368,7 +368,7 @@ SYG_updateAllSPPMMarkers = {
 			_marker setMarkerTypeLocal (_arr1 select 0);
 			_marker setMarkerText (_arr1 select 1);
 			if ( _mrk_name != (_arr1 select 1) ) then {
-				hint localize format["+++ SPPM ""%1"" structure uupdated from ""%2"" to ""%3""(%4) (near %5)",
+				hint localize format["+++ SPPM ""%1"" structure updated from ""%2"" to ""%3""(%4) (near %5)",
 					_marker,
 					_mrk_name,
 					_arr1 select 1,
