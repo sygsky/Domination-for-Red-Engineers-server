@@ -106,8 +106,10 @@ _make_isle_grp = {
 	_start_point = []; //_params call XfGetRanPointSquare;
 	while {(count _start_point) == 0} do {
 		_start_point = _params call XfGetRanPointSquare;
-		if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];};  // try next, skip islet point
-		sleep 0.4;
+		if (count _start_point > 0) then {
+			if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];};  // try next, skip islet point
+			sleep 0.4;
+		};
 	};
 #ifdef __PRINT_ACTIVITY__
     hint localize format["+++ x_isledefense.sqf: make isle group, start point %1", [_start_point, 10] call SYG_MsgOnPosE0];

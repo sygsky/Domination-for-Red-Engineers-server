@@ -44,7 +44,7 @@ _grp_array = _this;
 
 _grp = _grp_array select 0;
 
-// _rejoin_num means if group allowed to rejoin to bigger one is nearly destroyed (1 man in group canMove only)
+// _rejoin_num means if group allowed to rejoin to bigger one if nearly destroyed (1 man in group canMove only)
 _rejoin_num      = 0;
 _rejoin_time     = 0; // time for next re-join
 _debug_print     = false;

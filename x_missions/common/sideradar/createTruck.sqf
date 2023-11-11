@@ -5,8 +5,8 @@
 	returns: nothing
 */
 
-if (!isServer) exitWith {hint localize "--- createTruck.sqf called not from server! Exit!"};
-hint localize format["+++ createTruck.sqf started, _this = ""%1""", _this];
+if (!isServer) exitWith {hint localize "--- radio_service.sqf: createTruck.sqf called not from server! Exit!"};
+hint localize format["+++ radio_service: createTruck.sqf started, _this = ""%1""", _this];
 #include "sideradio_vars.sqf"
 
 _pos = [];
@@ -42,7 +42,7 @@ while { count _pos == 0 } do {
 			if (_cnt  >= 100) exitWith {
 				_pos = [9452.5,9930.5,0];
 				_name = "AirBase";
-				hint localize "--- createTruck: can't find good point among designated towns, use ""AirBase"" as default!";
+				hint localize "--- radio_service: createTruck.sqf can't find good point among designated towns, use ""AirBase"" as default!";
 			};
 			_cnt = _cnt + 1;
 			sleep 0.3;
@@ -62,7 +62,7 @@ publicVariable "d_radar_truck";
 d_radar_truck setVehicleInit format ["this execVM ""x_missions\common\sideradar\radio_init.sqf"""];
 
 _msg = [d_radar_truck, 50] call SYG_MsgOnPosE0;
-hint localize format["+++ createTruck: truck created in ""%1"" (%2)", _name, _msg];
+hint localize format["+++ radio_service: createTruck.sqf truck created in ""%1"" (%2)", _name, _msg];
 [ "msg_to_user", "",  [ ["STR_RADAR_TRUCK_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the blue truck in the '%1' area"
 
 

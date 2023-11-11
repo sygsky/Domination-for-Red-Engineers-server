@@ -8,7 +8,7 @@
 	returns: nothing
 */
 
-if (!isServer) exitWith{};
+if (!isServer) exitWith{hint localize "--- radio_killed.sqf called on server!"};
 
 #include "sideradio_vars.sqf"
 
@@ -21,8 +21,8 @@ _cnt = 1;
 _killed = _this select 0;
 _pos = getPos _killed;
 
-hint localize format[ "+++ radio_killed.sqf: radar deleted by %1 at %2; status = %3, send %1 to the jail", _name, [_this select 0, 10] call SYG_MsgOnPosE0, sideradio_status ];
-//#648 - handle with mast killed. In future - restart mission from the scratch, now - sen dkilled to the jail
+hint localize format[ "+++ radio_service: radio_killed.sqf radar deleted by %1 at %2; status = %3, send %1 to the jail", _name, [_this select 0, 10] call SYG_MsgOnPosE0, sideradio_status ];
+//#648 - handle with mast killed. In future - restart mission from the scratch, now - send killer to the jail
 if (isPlayer _killer) then {
 	while { !alive _killer } do { sleep 0.1 };
 	sleep 0.2;

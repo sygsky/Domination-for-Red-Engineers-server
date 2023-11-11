@@ -18,7 +18,7 @@
 
 hint localize "+++ JAIL SCRIPT called +++";
 
-if ( isServer && !X_SPE ) exitWith {"--- jail called on dedicated server, exit!"};
+if ( isServer && !X_SPE ) exitWith {hint localize "--- jail called on dedicated server, exit!"};
 
 #define JAIL_START_PERIOD 60
 

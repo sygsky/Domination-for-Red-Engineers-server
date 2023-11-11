@@ -2,7 +2,7 @@
     x_missions/common/sideradar/radio_inspect.sqf, created at JUN 2022
     created 2022.06.01
 	author: Sygsky, on #410 request by Rokse
-	description: Inspect event handler for radio install SM, may be used on 2 trucks and 1 radiomast
+	description: Inspect event handler for radio re-install SM, may be used on 2 trucks and 1 radiomast, called on client only
 
 	Parameters array passed to the script upon activation in _this  variable is: [target, caller, ID, arguments]
     target (_this select 0): Object  - the object which the action is assigned to
@@ -26,11 +26,11 @@ _set_detected = {
 		// copy detected status to the server
 		if (_veh isKindOf "Truck") then {
 			// Print message on the server now
-		 	["log2server", name player,format["radar truck detected at %1", _veh call SYG_nearestLocationName]];
-			["remote_execute", "d_radar_truck setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+			_str = format["hint localize ""+++ radio_service: radar truck detected by ""%1"" at %2""", name player, [_veh,10] call SYG_MsgOnPosE0];
+			["remote_execute", format["%1;d_radar_truck setVariable[""DETECTED"", true];", _str]] call XSendNetStartScriptServer;
 		} else {
-		 	["log2server", name player,format["radar mast detected at %1", _veh call SYG_nearestLocationName]];
-			["remote_execute", "d_radar setVariable[""DETECTED"", true];"] call XSendNetStartScriptServer;
+			_str = format["hint localize ""+++ radio_service: radar mast detected by ""%1"" at %2""", name player, [_veh,10] call SYG_MsgOnPosE0];
+			["remote_execute", format["%1;d_radar setVariable[""DETECTED"", true];", _str]] call XSendNetStartScriptServer;
 		};
 		true
 	};

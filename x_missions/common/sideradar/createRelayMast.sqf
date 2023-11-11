@@ -5,8 +5,8 @@
 	returns: nothing
 */
 
-if (!isServer) exitWith {hint localize "--- createRelayMast.sqf called not from server! Exit!"};
-hint localize format["+++ createRelayMast.sqf started, _this = %1 +++", _this];
+if (!isServer) exitWith {hint localize "--- radio_service: createRelayMast.sqf called not from server! Exit!"};
+hint localize format["+++ radio_service: createRelayMast.sqf started, _this = %1 +++", _this];
 
 
 #include "sideradio_vars.sqf"
@@ -44,7 +44,7 @@ if (_base ) then {
 			_pos = [_center, _info select 2, 25] call XfGetRanPointCircleBig; // find the point in the town to create the radar
 			if (count _pos == 0) then {
 				if (_cnt >= 100) exitWith {
-					hint localize "--- createRelayMast: can't find good point, use AirBase default point!!!";
+					hint localize "--- radio_service: createRelayMast: can't find good point, use AirBase default point!!!";
 					_pos = [9472.9,9930,0];
 					_name = "AirBase";
 					_base = true;
@@ -76,4 +76,4 @@ d_radar addEventHandler ["killed", { _this execVM "x_missions\common\sideradar\r
 [ "msg_to_user", "",  [ ["STR_RADAR_MAST_INFO", _name]] ] call XSendNetStartScriptClient; // "Look for the blue truck in the '%1' area"
 
 _msg = d_radar call SYG_MsgOnPosE0;
-hint localize format["+++ createRelayMast: radar created at ""%1"" (%2)", _name, _msg]
+hint localize format["+++ radio_service: createRelayMast: radar created at ""%1"" (%2)", _name, _msg]
