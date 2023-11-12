@@ -2,7 +2,7 @@
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-//#define __DEBUG_SM_57__
+#define __DEBUG_SM_57__
 #define BOAT_TYPE "RHIB2Turret"
 #define POINT_TYPE "Heli_H_civil"
 
