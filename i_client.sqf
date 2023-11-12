@@ -183,7 +183,7 @@ if (X_Client) then {
     d_sub_kill_points = -1;
 
 
-    // gets subtracted for killing others (not negative)
+    // gets subtracted for team killing others (not negative)
     d_sub_tk_points = 20;
 
     // points needed to get a specific rank. Start (private) rank is 0!

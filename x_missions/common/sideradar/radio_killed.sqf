@@ -26,7 +26,11 @@ hint localize format[ "+++ radio_service: radio_killed.sqf radar deleted by %1 a
 if (isPlayer _killer) then {
 	while { !alive _killer } do { sleep 0.1 };
 	sleep 0.2;
-	(localize "STR_RADAR_KILLED") execVM "scripts\jail.sqf"; // "Hint: You're being punished for destroying a GRU mast. Are you not a spy?"
+	// Example: ["msg_to_user", "", ["STR_RADAR_KILLER", _majak ], 0, 3, false, "return"] spawn SYG_msgToUserParser;
+	_demote_score = (score _killer) call SYG_demoteByScore;
+	// "Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
+	_str = format["if ((name player) == '%1') then {'STR_RADAR_KILLED' execVM 'scripts\jail.sqf'} else {['msg_to_user', '', [['STR_RADAR_KILLER','%1',%2]],0,0,false,'losing_patience'] call SYG_msgToUserParser};", name _killer, _demote_score];
+	[ "remote_execute", _str ] call XSendNetStartScriptClient; // Sent to all clients only
 };
 
 // remove radar after 10 minutes of players absence around 300 meters of radar.

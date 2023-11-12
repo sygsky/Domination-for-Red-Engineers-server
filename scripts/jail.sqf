@@ -42,24 +42,27 @@ if ( !alive player ) then {
 
 _test = false; // defines if this is test call or real one
 _msg1 = localize "STR_JAIL_1"; //"Hint: You have been punished for having a negitive score",
+_score_to_demote = 0;
 if ( typeName _this == "ARRAY") then {
     if ( count _this > 3) then { // test call from test action at flag
         _test = (typeName (_this select 3) == "STRING") && ((_this select 3) == "TEST");
     };
 } else {
 	// May replace the 1st message with custom one
-	if (typeName _this == "STRING") then {_msg1 = localize "STR_RADAR_KILLED"}; // "Hint: You're being punished for destroying a GRU mast. Are you not a spy?"
+	_score_to_demote = - ( ((score player) call SYG_demoteByScore) min d_sub_tk_points);
+	_score_to_demote call SYG_addBonusScore;
+	if (typeName _this == "STRING") then {_msg1 = format[localize _this, _score_to_demote]}; // STR_RADAR_KILLED:"Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
 };
 _playerPos = getPos player;
 _playerDir = getDir player;
 
 //============================================ INIT JAIL PLACES ===========================
 if (isNil "jail_places") then {
-    jail_buildings = [[10270.2,7384.86,8.01088],[8274.52,9045.37,7.85906],[7610.99,6363.07,7.86087]]; // all 3 Sahrani hotels model center coordinates
+    jail_buildings = [[10270,7385,8],[8275,9045,7.86],[7611,6363,7.86]]; // all 3 Sahrani hotels model center coordinates
     // jail rooms, array items: [offset point for jail position, jail pos dir, hotel search point]
     jail_places = [
-        [[-5.26367,-6.39551,-7.74754],0], // behind the logotype of the hotel
-        [[-2.8457,2.97168,-7.73003],-270] // in the lift cabine
+        [[-5.26,-6.36,-7.75],0], // behind the logotype of the hotel
+        [[-2.85,2.97,-7.73],-270] // in the lift cabine
     ];
 };
 
@@ -72,11 +75,11 @@ for "_i" from 0 to count jail_buildings -1 do {
     //_id = jail_buildings call  XfRandomFloorArray;
     _hotel_pos = jail_buildings select _i;
     _hotel = _hotel_pos nearestObject "Land_Hotel";
-    if (  !isNull _hotel) exitWith {};
+    if (  alive _hotel) exitWith {};
     jail_buildings set [_i, "RM_ME"];
 };
 
-jail_buildings = jail_buildings - ["RM_ME"];
+jail_buildings call SYG_clearArray;
 
 if (isNull _hotel) exitWith {
 #ifdef __JAIL_DEBUG__

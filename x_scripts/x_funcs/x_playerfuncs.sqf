@@ -137,7 +137,7 @@ Xoartimsg = {
 #ifndef __ACE__
 XFindObstacle = {
 	private ["_objs", "_strlist", "_list", "_retval"];
-	_objs = nearestObjects [player,[],2];
+	_objs = nearestObjects [player,[""],2];
 	_strlist = []; {_strlist = _strlist + [str(_x)];}forEach _objs;
 	_list = "";
 	_retval = false;
@@ -583,7 +583,7 @@ XGetRankFromScore = {
 	if (_this < (d_points_needed select 5)) then {"Major"} else {"Colonel"};
 };
 
-// gets player ordinal (Arma) rank index (0 - private ... 6 - colonel
+// gets player ordinal (Arma) rank index (0 - private ... 6 - colonel...) or
 XGetRankIndexFromScore = {
     private ["_index","_x"];
     if ( typeName _this == "OBJECT") then { if (isPlayer _this) then { _this = score _this;}; };
@@ -630,6 +630,17 @@ XGetScoreFromRank = {
 #endif
     //hint localize format["+++ XGetScoreFromRank(3) _this %1", _this];
     d_points_needed select (_this - 1)
+};
+
+//
+// Find velu to subtruct from current score (_this) to demote rank of the unit by 1, if rank already 1,  returns 0
+// Calls: _score_to_subtruct = (score player) call SYG_demoteByScore;
+//
+SYG_demoteByScore = {
+	private ["_ind"];
+	_ind = _this call XGetRankIndexFromScore;
+	if ( _ind == 0 ) exitWith { 0 };
+	_this - ((_ind call XGetScoreFromRank) + (( _ind - 1 ) call XGetScoreFromRank)) / 2 // Retun value to suctract from designated score to set previous rank
 };
 
 XGetRankPic = {
