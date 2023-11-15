@@ -386,6 +386,7 @@ class RscTitles
 		fadein = 0;
 		fadeout = 0;
 		duration = 0;
+		movingEnable = true;
 	};
 
 };
