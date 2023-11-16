@@ -7,18 +7,18 @@ x_do_sandstorm = false;
 
 while {true} do {
 	if (!x_with_revive) then {
-		waitUntil {sleep random 0.3;vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3};
+		waitUntil {sleep random 0.3;(vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)};
 		_object = vehicle player;
 	} else {
 		_do_loop = true;
 		while {_do_loop} do {
 			if (!p_uncon) then {
-				if (vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3) then {
+				if ((vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)) then {
 					_object = vehicle player;
 					_do_loop = false;
 				};
 			} else {
-				if (unconscious_body in list rainy or unconscious_body in list rainy2 or unconscious_body in list rainy3) then {
+				if ((unconscious_body in list rainy) or (unconscious_body in list rainy2) or (unconscious_body in list rainy3)) then {
 					_object = unconscious_body;
 					_do_loop = false;
 				};
@@ -73,16 +73,16 @@ while {true} do {
 		};
 	};
 	if (!x_with_revive) then {
-		waitUntil {sleep random 0.3;not (vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3) or not alive player};
+		waitUntil {sleep random 0.3;not ((vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)) or not alive player};
 	} else {
 		_do_loop = true;
 		while {_do_loop} do {
 			if (!p_uncon) then {
-				if (not (vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3) or not alive player) then {
+				if (not ((vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)) or not alive player) then {
 					_do_loop = false;
 				};
 			} else {
-				if (not (unconscious_body in list rainy or unconscious_body in list rainy2 or unconscious_body in list rainy3) or isNull unconscious_body) then {
+				if (not ((unconscious_body in list rainy) or (unconscious_body in list rainy2) or (unconscious_body in list rainy3)) or isNull unconscious_body) then {
 					_do_loop = false;
 				};
 			};

@@ -7,13 +7,13 @@ x_do_sandstorm = false;
 
 while {true} do {
 	if (!x_with_revive) then {
-		waitUntil {sleep random 0.3;vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3};
+		waitUntil {sleep random 0.3;(vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)};
 		_object = vehicle player;
 	} else {
 		_do_loop = true;
 		while {_do_loop} do {
 			if (!p_uncon) then {
-				if (vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3) then {
+				if ((vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)) then {
 					_object = vehicle player;
 					_do_loop = false;
 				};
@@ -73,12 +73,12 @@ while {true} do {
 		};
 	};
 	if (!x_with_revive) then {
-		waitUntil {sleep random 0.3;not (vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3) or not alive player};
+		waitUntil {sleep random 0.3;not ((vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)) or not alive player};
 	} else {
 		_do_loop = true;
 		while {_do_loop} do {
 			if (!p_uncon) then {
-				if (not (vehicle player in list rainy or vehicle player in list rainy2 or vehicle player in list rainy3) or not alive player) then {
+				if (not ((vehicle player in list rainy) or (vehicle player in list rainy2) or (vehicle player in list rainy3)) or not alive player) then {
 					_do_loop = false;
 				};
 			} else {
