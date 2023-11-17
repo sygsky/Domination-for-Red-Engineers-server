@@ -563,13 +563,13 @@ switch ( _arg ) do {
 			};
 		};
 		if (_ready_to_mark) then {
-			_type = aborigen_heli call SYG_getVehicleMarkerType;
-			hint localize format["+++ ABO HELI: marker type to create %1 for %2", _type, typeOf aborigen_heli];
+			_heli_type = aborigen_heli call SYG_getVehicleMarkerType;
+			hint localize format["+++ ABO HELI: marker type to create %1 for %2", _heli_type, typeOf aborigen_heli];
 			if ( (getMarkerType HELI_MARKER_NAME) == "" ) then { // create marker now
-				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.7,0.7],"",0, _type] call XfCreateMarkerLocal;
+				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.7,0.7],"",0, _heli_type] call XfCreateMarkerLocal;
 			} else {
 				HELI_MARKER_NAME setMarkerPosLocal (getPos aborigen_heli);
-				HELI_MARKER_NAME setMarkerTypeLocal _type;
+				HELI_MARKER_NAME setMarkerTypeLocal _heli_type;
 			};
 			player groupChat (localize "STR_ABORIGEN_HELI_INFO"); // "Helicopter? There's one of those... helicopter. See the black marker on the map. I don't know about fuel and a pilot..."
 			aborigen_heli setDamage 0;
