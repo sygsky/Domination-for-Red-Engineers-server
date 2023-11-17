@@ -342,11 +342,11 @@ while { (_dropItemPosIdx < _dropArrCount) and (!_error) } do {
 		} forEach _arr;
 		_dropRealPos = _dropItemPos;
 //#ifdef __DEBUG__
-			hint localize format["DropScript (%2): %1 pipeBombs placed to the center", _pipeBombCount, ELAPSED_TIME ]; // have to understand it works or not
+			hint localize format["+++ DropScript (%2): %1 pipeBombs placed to the center", _pipeBombCount, ELAPSED_TIME ]; // have to understand it works or not
 //#endif
 	} else {
 #ifdef __DEBUG__
-		hint localize format["DropScript (%2): PipeBomb placed at dist %1 m. from targeted point", _dropRealPos distance _dropItemPos, ELAPSED_TIME ];
+		hint localize format["+++ DropScript (%2): PipeBomb placed at dist %1 m. from targeted point", _dropRealPos distance _dropItemPos, ELAPSED_TIME ];
 #endif		
 	};
 	sleep 0.3;
