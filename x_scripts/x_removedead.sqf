@@ -38,17 +38,15 @@ while {true} do {
 				if !(isNull _x) then {
 						_x removeAllEventHandlers "killed";
 						_x removeAllEventHandlers "hit";
-						_x removeAllEventHandlers "dammaged"; //+++ Sygsky: just in case
-						_x removeAllEventHandlers "getin"; //+++ Sygsky: just in case
-						_x removeAllEventHandlers "getout"; //+++ Sygsky: just in case
+						_x removeAllEventHandlers "dammaged";   //+++ Sygsky: just in case
+						_x removeAllEventHandlers "getin";      //+++ Sygsky: just in case
+						_x removeAllEventHandlers "getout";     //+++ Sygsky: just in case
 						deleteVehicle _x;
 				};
 				sleep 2.622;
 			} foreach _remove_dead_list;
-			
-			_remove_dead_list = nil;
 			sleep 2.878;
-			_remove_dead_list = [];
+			_remove_dead_list resize 0;
 		};
 	};
 
