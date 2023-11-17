@@ -1904,8 +1904,13 @@ SYG_makeDesertAbrams = {
 // ...
 // _negro_list = [_man1, _man2, ..., _manN] call SYG_makeNegroMen
 //
-WHITE_LIST = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,"R01"];
-NEGRO_LIST = [26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,"R02","R03","R04"];
+
+SKIN_COLORED_FACES = [
+    // White list (select 0)
+    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,"R01"],
+    // Negro list (select 1)
+    [26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,"R02","R03","R04"]
+];
 
 // call:
 //      _man = _man call SYG_makeNegroMen;
@@ -1913,7 +1918,7 @@ NEGRO_LIST = [26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,"R02","R03","R04"];
 //      _man_list = _man_list call SYG_makeNegroMen; // list items are not changed, only faces for men replaced with Negro ones
 //
 SYG_makeNegroMen = {
-    [NEGRO_LIST, _this] call SYG_makeColoredMen;
+    [SKIN_COLORED_FACES select 1, _this] call SYG_makeColoredMen;
 };
 
 // call:
@@ -1922,13 +1927,15 @@ SYG_makeNegroMen = {
 //      _man_list = _man_list call SYG_makeWhiteMen; // list items are not changed, only faces for men replaced with White ones
 //
 SYG_makeWhiteMen = {
-    [WHITE_LIST, _this] call SYG_makeColoredMen;
+    [SKIN_COLORED_FACES select 0, _this] call SYG_makeColoredMen;
 };
 
 // call:
 //      _man = [_colorArr, _man] call SYG_makeColoredMen;
 // or
 //      _man_list = [_colorArr, _man_list] call SYG_makeColoredMen;
+//
+// Returns: no changes for men, only faces are changed
 //
 SYG_makeColoredMen = {
 	private ["_men","_clr_arr","_x"];
