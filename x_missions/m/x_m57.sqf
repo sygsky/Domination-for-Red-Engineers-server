@@ -113,7 +113,14 @@ _list = nil;
 // Delete all created vehicles
 sleep 30;
 ["say_sound", getPos (_sites select 0), "steal"] call XSendNetStartScriptClientAll; // Play sound on circle center
-{ deleteVehicle _x  } forEach _sites;
+_ind = 0;
+{
+	if ( !alive _x ) then {
+		hint localize format[ "+++ x_m57.sqf: when try to remove house %1 (ind %2), detected that it is already dead!", typeOf _x, _ind ];
+		_ind = _ind + 1;
+	};
+	deleteVehicle _x;
+} forEach _sites;
 _sites resize 0;
 _sites = nil;
 
