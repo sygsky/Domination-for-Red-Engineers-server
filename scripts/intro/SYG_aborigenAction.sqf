@@ -569,11 +569,12 @@ switch ( _arg ) do {
 				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.7,0.7],"",0, _heli_type] call XfCreateMarkerLocal;
 			} else {
 				HELI_MARKER_NAME setMarkerPosLocal (getPos aborigen_heli);
-				HELI_MARKER_NAME setMarkerTypeLocal _heli_type;
+				HELI_MARKER_NAME setMarkerTypeLocal _heli_type; // Show marker in case it is invisible being of type "Empty"
 			};
 			player groupChat (localize "STR_ABORIGEN_HELI_INFO"); // "Helicopter? There's one of those... helicopter. See the black marker on the map. I don't know about fuel and a pilot..."
 			aborigen_heli setDamage 0;
 			aborigen_heli setFuel 1;
+			publicVariable "aborigen_heli";
 		} else {
 			// hide marker if exists
 			if ( (getMarkerType HELI_MARKER_NAME) != "" ) then { // hide marker now

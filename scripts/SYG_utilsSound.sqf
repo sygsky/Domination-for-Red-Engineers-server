@@ -240,7 +240,7 @@ SYG_playRandomDefeatTrackByPos = {
     if ( ((count _TVTowerArr) > 0) && ((random 10) > 1)) exitWith {
         // let gong play sequentially on one client (in MP it will be randomized)
         _sound =  format["gong_%1", SYG_gongNextIndex];
-        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod 16; // number of gong sounds
+        SYG_gongNextIndex = (SYG_gongNextIndex + 1) mod 17; // number of gong sounds: 0..16
         ["say_sound", _TVTowerArr select 0, _sound] call XSendNetStartScriptClientAll; // gong from tower
         hint localize "+++ SYG_playRandomDefeatTrackByPos: gong, say_sound, done";
     };

@@ -203,6 +203,7 @@ class CfgSounds {
     class gong_13       {name = ""; sound[] = {\sounds\gong\gong-15.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_14       {name = "oriental game over"; sound[] = {\sounds\gong\oriental-game-over.ogg, db+10, 1.0}; titles[] = {}; };
     class gong_15       {name = ""; sound[] = {\sounds\gong\Startlet.ogg, db+10, 1.0}; titles[] = {}; };
+    class gong_16       {name = ""; sound[] = {\sounds\gong\sansula.ogg, db+10, 1.0}; titles[] = {}; };
     class school_ring   {name = ""; sound[] = {\sounds\gong\school-ring.ogg, db+10, 1.0}; titles[] = {}; };
 
     class liturgy_1     {name = ""; sound[] = {\sounds\liturgy\diamon_hand.ogg, db+10, 1.0}; titles[] = {}; };
