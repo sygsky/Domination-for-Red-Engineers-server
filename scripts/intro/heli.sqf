@@ -49,7 +49,7 @@ if ( _create  ) exitWith { // create and set pos on islands
 };
 // set zero damage and not full fuel
 aborigen_heli setDamage 0;
-aborigen_heli setFuel 0.7;
+aborigen_heli setFuel 1;
 sleep 0.1;
 hint localize format["+++ heli.sqf: final heli status isNil %1, alive %2, type %3, fuel %4, dmg %5, is %6local",
 	isNil "aborigen_heli", alive aborigen_heli, typeOf aborigen_heli, fuel aborigen_heli, damage aborigen_heli,

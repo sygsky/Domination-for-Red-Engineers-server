@@ -535,7 +535,7 @@ switch ( _arg ) do {
 		_wait_heli  = false;
 		if (isNil "aborigen_heli") then {_wait_heli = true; } else { if (!(alive aborigen_heli)) then {_wait_heli = true; } };
 		if ( _wait_heli) then {
-			["remote_execute","[] execVM ""scripts\intro\heli.sqf"""] call XSendNetStartScriptServer;
+				["remote_execute","[] execVM ""scripts\intro\heli.sqf"""] call XSendNetStartScriptServer;
 		};
 		_ready_to_mark = true;
 		if (_wait_heli) then {
@@ -573,7 +573,7 @@ switch ( _arg ) do {
 			};
 			player groupChat (localize "STR_ABORIGEN_HELI_INFO"); // "Helicopter? There's one of those... helicopter. See the black marker on the map. I don't know about fuel and a pilot..."
 			aborigen_heli setDamage 0;
-			aborigen_heli setFuel 0.5;
+			aborigen_heli setFuel 1;
 		} else {
 			// hide marker if exists
 			if ( (getMarkerType HELI_MARKER_NAME) != "" ) then { // hide marker now
