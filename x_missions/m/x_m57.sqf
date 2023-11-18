@@ -112,7 +112,16 @@ _list = nil;
 
 // Delete all created vehicles
 sleep 30;
-["say_sound", getPos (_sites select 0), "steal"] call XSendNetStartScriptClientAll; // Play sound on circle center
+// _found_names = [_pos, _dist] call SYG_findNearestPlayers;
+_names = [];
+_cnt = 60;
+while { // Waiting for players to move away from the SM by a designated distance, up to a maximum of 10 minutes (600 seconds)
+	_names = [_circle_pos, 60] call SYG_findNearestPlayers;
+	_cnt = _cnt - 1;
+	( count _names > 0 ) && ( _cnt >=0 )
+} do { sleep 10; };
+[ "say_sound", getPos (_sites select 0), "steal" ] call XSendNetStartScriptClientAll; // Play sound on circle center
+
 _ind = 0;
 {
 	if ( !alive _x ) then {
