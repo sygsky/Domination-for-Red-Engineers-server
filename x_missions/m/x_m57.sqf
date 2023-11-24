@@ -76,35 +76,44 @@ for "_i" from 0 to ((count _sites) - 1) do {
 // Await end of this SM
 _do = true;
 _pos = + _circle_pos; // Check for the circle position, not any other object
+_delay = 5;
 while { _do } do {
-	sleep 5;
-	_arr = _pos nearObjects [ BOAT_TYPE, 2 ];
-	{
-		if (alive _x) then {
-			if (  (side _x) != d_side_enemy  ) then {
-				_arr1 = [];
-				// Prepare list of alive crew in SM finished boat
-				{
-					if (alive _x) then { _arr1 set [count _arr1, name _x] };
-				} forEach crew _x;
+	sleep _delay;
+	_delay = 5;
+	_boat = nearestObject [ _pos, BOAT_TYPE ];
+	if ( (_boat distance _circle_pos) <= 2) then {
+        if ( alive _boat ) then {
+            if (  (side _boat) != d_side_enemy  ) then {
+                if ( !(_boat in _list) ) then { // New alive non-enemy vehicle is on circle, mission completed!!!
+                    _crew = [];
+                    // Prepare list of alive crew in SM finished boat
+                    {
+                        if (alive _x) then { _crew set [count _crew, name _x] };
+                    } forEach crew _boat;
 
-				if ( !(_x in _list) ) then { // New alive non-enemy vehicle is on circle, mission completed!!!
-					[ "msg_to_user", "*", [["STR_SM_57_INFO", _arr1]], 0, 0, false, "sea_devil2" ] call XSendNetStartScriptClientAll; // "OUR boat crew: %1"
-					[] spawn {	// Wait 1st message shown
-						sleep 5;
-						side_mission_winner = 2;
-						side_mission_resolved = true;
-					};
-					hint localize format["+++ x_m57.sqf completed, captured %1 with crew of %2 unit[s]", count _arr1];
-					_do = false
-				} else { // This boat is in older list, refuse it now. Inform all players closer 50 meters to the circle pos
-					[ "msg_to_user", [50, _circle_pos], [["STR_SM_57_BAD_INFO"]], 0, 0, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "The GRU is not interested in this boat, we need a newer one!"
-				};
-			};
-		};
-		if (!_do) exitWith {};
-		sleep 1;
-	} forEach _arr;
+                    [ "msg_to_user", "*", [["STR_SM_57_INFO", _crew]], 0, 0, false, "sea_devil2" ] call XSendNetStartScriptClientAll; // "Sea devil! OUR boat crew: %1"
+                    [] spawn {	// Wait 1st message shown
+                        sleep 5;
+                        side_mission_winner = 2;
+                        side_mission_resolved = true;
+                    };
+                    hint localize format["+++ x_m57.sqf completed, captured %1 with crew: %2", typeOf _boat, _crew];
+                    _do = false
+                } else { // This boat is in older list, refuse it now. Inform all players closer 50 meters to the circle pos
+                    [ "msg_to_user", [100, _circle_pos], [["STR_SM_57_BAD_INFO"]], 0, 0, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "The GRU is not interested in this boat, they need a newer one!"
+                    _delay = 10;
+                };
+            } else {
+                // "Enemy boat at the mission point! Hurry up and capture it!"
+                [ "msg_to_user", "*", [["STR_SM_57_ENEMY_INFO"]], 0, 0, false, "naval" ] call XSendNetStartScriptClientAll;
+                _delay = 10;
+            };
+        } else { // Nearest boat is dead, refuse it
+            // "The detected enemy boat has been destroyed! Urgently find a new one, the GRU is very unhappy!"
+            [ "msg_to_user", [100, _circle_pos], [["STR_SM_57_DEAD_INFO"]], 0, 0, false, "losing_patience" ] call XSendNetStartScriptClientAll;
+        };
+	};
+
 };
 
 _list resize 0;
