@@ -129,7 +129,7 @@ while { // Waiting for players to move away from the SM by a designated distance
 	_cnt = _cnt - 1;
 	( count _names > 0 ) && ( _cnt >=0 )
 } do { sleep 10; };
-( count _names == 0 ) then {
+if ( count _names == 0 ) then {
 	[ "say_sound", getPos (_sites select 0), "steal" ] call XSendNetStartScriptClientAll; // Play sound on circle center
 };
 
