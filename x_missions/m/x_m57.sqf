@@ -134,10 +134,12 @@ while { // Waiting for players to move away from the SM by a designated distance
 _ind = 0;
 {
 	if ( !alive _x ) then {
-		hint localize format[ "+++ x_m57.sqf: when try to remove house %1 (ind %2), detected that it is already dead!", typeOf _x, _ind ];
+		hint localize format[ "--- x_m57.sqf: when try to remove house %1, detected that it is not alive", typeOf _x];
 		_ind = _ind + 1;
+	} else {
+		hint localize format[ "+++ x_m57.sqf: remove house %1 at pos %2!", typeOf _x, position _x ];
+		deleteVehicle _x;
 	};
-	deleteVehicle _x;
 } forEach _sites;
 _sites resize 0;
 _sites = nil;
