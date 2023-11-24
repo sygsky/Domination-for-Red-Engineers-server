@@ -6,7 +6,7 @@
 #define BOAT_TYPE "RHIB2Turret"
 #define POINT_TYPE "Heli_H_civil"
 
-x_sm_pos = [[8586.3,10103.2,0]]; // index: 57,   Capturing the sea devil boat, point near base shore on the west side of airbase
+x_sm_pos = [[8585.3,10103.7,0]]; // index: 57,   Capturing the sea devil boat, point near base shore on the west side of airbase
 x_sm_type = "normal"; // "normal", "convoy", "undefined"
 
 #ifdef __SMMISSIONS_MARKER__
