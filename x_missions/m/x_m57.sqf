@@ -71,7 +71,7 @@ for "_i" from 0 to ((count _sites) - 1) do {
 	_pos set [2,0];
 	_item setPos _pos;
 	_sites set [_i, _item]; // Store created item in the place of its data
-	hint localize format["+++ x_m57.sqf: %1 created, pos %2", typeOf _item, getPos _item];
+	hint localize format["+++ x_m57.sqf: %1 created, pos %2, vUp %3", typeOf _item, getPos _item, vectorUp _item];
 };
 // Await end of this SM
 _do = true;
