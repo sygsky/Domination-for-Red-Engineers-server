@@ -81,7 +81,7 @@ _s = current_mission_text;
 
 //+++ Sygsky: added more info about hostages, officer, snipers etc
 if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm) ) then {
-	call compile format ["_pos = markerPos ""XMISSIONM%1"";", current_mission_index + 1];
+	_pos = markerPos format["XMISSIONM%1", current_mission_index + 1]; // Find marker position
 	switch current_mission_index do {
 		case 5: {// king in hotel
 			if (! isNil "king" ) then {
@@ -105,7 +105,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 				// find civilians
 				_units = nearestObjects [_pos, ["Civilian"], 300];
 				_cnt = count _units;
-				if ( _cnt == 0 ) exitwith {_str = format[localize "STR_SM_30_1", 500]}; // "GRU: civilians not found in radius %1 m."
+				if ( _cnt == 0 ) exitWith {_str = format[localize "STR_SM_30_1", 500]}; // "GRU: civilians not found in radius %1 m."
 				for "_i" from 0 to (_cnt - 1) do {
 				    _x = _units select 0;
                     _dist = format["%1 %2", [ [_x, _pos ] call SYG_distance2D, 10] call SYG_roundTo, localize "STR_SM_30_4"];
@@ -128,31 +128,55 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 		};
 		case 40;
 		case 41: {// hostages
-			// find side mission marker and its coordinates
-			if (format ["%1",_pos] != "[0,0,0]") then {
-				// find civilians
-				_units = nearestObjects [_pos, ["Civilian"], 1000];
+			// Check leader and civilians at Side Mission marker or player position
+
+			// Finds leader of the group and max distance from the designated position to any of civ group units
+			// Call: _ret = [_marker_pos, _dist] call _get_info;
+			// _ret => [_leader, _rad, _whole_cnt, _alive_cnt]; // Where leader == civilians leader, _rad == radius of the outermost civilian positions
+			// _ret => [] if no civilians detected at designated radius
+			_get_info = { // Get info about civilians and their leader near designated point)
+				private ["_pos", "_dist", "_units", "_unit", "_cnt", "_alive_cnt", "_leader", "_i"];
+				_pos = (_this select 0) call SYG_getPos;
+				if ( (_pos distance [0,0,0]) < 1 ) exitWith { [] }; // No point/marker detected
+				_dist = _this select 1;
+				_units = nearestObjects [ _pos, ["Civilian"], _dist ];
 				_cnt = count _units;
-				if ( _cnt > 0 ) then {
-					for "_i" from 0 to _cnt - 1 do {
-						_x = _units select _i; 
-						if (!alive _x) then {_units set [_i, "RM_ME"]};
-					};
-					_units = _units - ["RM_ME"];
-					_alive_cnt = count _units;
-					_dist = -1;
-					_s1 = localize "STR_SYS_123"; // "Лидер не обнаружен"
-					if (_alive_cnt > 0) then {
-						_dist   = _pos distance(_units select(_alive_cnt-1));
-						_dist   = (ceil(_dist/50))*50;
-						_leader = leader (group(_units select 0));
-						_s1     = format[localize "STR_SYS_124",(ceil((_leader distance _pos)/10))*10]; //"Лидер примерно на расстоянии %1 м"
-					};
-					//"Заложники (в живых %1 из %2) находятся в примерном радиусе %3 м от точки задания. %4"
-					_s = _s + format["\n" + localize "STR_SYS_117", _alive_cnt, _cnt, _dist, _s1 ];
-				}
-				else {	_s = _s + "\n" + (localize "STR_SYS_122");}; //"Заложники не обнаружены"
-				_units = nil;
+				if ( _cnt == 0 ) exitWith { [] };
+
+				for "_i" from 0 to _cnt - 1 do {
+					_x = _units select _i;
+					if ( !alive _x ) then { _units set [ _i, "RM_ME" ] };
+				};
+				_units call SYG_clearArray;
+				_alive_cnt = count _units;
+				if ( _alive_cnt == 0 ) exitWith { [] }; // No alive civilians - exit without result
+				_unit = _units select ( (count _units) -1 ); // Use last man ib the list sorted by distance from position (see nearestObjects description)
+				_dist = _unit distance _pos;
+				_unit = _units select  0;	// Use man nearest to the designated position
+				_leader =  leader group _unit;
+				if (isNull _leader) then {sleep 0.3; _leader =  group _unit}; // Try after small delay
+				[_leader, _dist, _cnt, _alive_cnt]
+			};
+			// First check around SM marker position
+			_msg = "";
+			_ret = [_pos, 1500] call _get_info;
+			if ((_ret select 1) > 0)  then { // Some civilians (with or without leader) are near SM center
+				_msg = "STR_SYS_117"; // "The Hostages (alive %1 of %2) are within a %3 m radius from the center of side mission. %4"
+			} else {
+				_ret = [_pos, 1500] call _get_info;
+				if ((_ret select 1) > 0) then { // Some civilians (with or without leader) are near player
+					_msg = "STR_SYS_117_P"; // "The Hostages (alive %1 of %2) are within a %3 m radius from the... " "SM marker" or "your GLONASS position"
+				};
+			};
+
+			if (_msg != "") then {
+				_s1 = if (alive (_ret select 0)) then {
+					format[localize "STR_SYS_117_1", [(_ret select 0), 50] call SYG_MsgOnPos0] // "Their leader is %1"
+				} else {localize "STR_SYS_117_0"}; // "But the leader of this group of civilians has not been located"
+				_s = _s + "\n" + format[ localize _msg, _ret select 3 /*_alive_cnt*/, _ret select 2 /*_whole_cnt*/, round( _ret select 1 /*_dist*/), _s1 ];
+			} else {
+			// Nothing detected around SM center and your postion, try again from other point
+			_s  = _s + "\n" + format[localize "STR_SYS_117_ABSENCE", 1500]; // "No civilians have been detected within %1 meter of the mission marker and your GLONASS position. Continue searching!"
 			};
 		};
 		//case 25; Officer on Isla da Voda and isla da Vassal
@@ -161,7 +185,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 		case 55: {// officer arrest
 			_s1 = localize "STR_SYS_135"; //"Side Mission marker is absent"  - default message
 			// find side mission marker and its coordinates
-			if (format["%1",_pos] != "[0,0,0]") then {
+			if ( (_pos distance [0,0,0] ) > 1) then {
 				// find officer. He must be alive or rarely may be dead
 				_units = nearestObjects [_pos, ["ACE_USMC0302"], 500];
 				if ( count _units > 0 ) then {

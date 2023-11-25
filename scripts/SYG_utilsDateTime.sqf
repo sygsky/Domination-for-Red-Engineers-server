@@ -11,14 +11,14 @@
  
 #define arg(x) (_this select(x))
 #define argp(param,x) ((param)select(x))
-#define argopt(num,val) if (count _this<=num)then{val}else{arg(num)}
-#define RAR(ARR) (ARR select(floor(random(count ARR ))))
+#define argopt(num,val) if(count _this<=(num))then{val}else{arg(num)}
+#define RAR(ARR) ((ARR) select(floor(random(count (ARR) ))))
 
 #define DAY_SECS 86400
 #define HOUR_SECS 3600
 #define DAY_MINS 1440
 
-#define DAY_SECONDS(st) (argp(st,3)*HOUR_SECS+argp(st,4)*60+argp(st,5))
+#define DAY_SECONDS(st) (argp(st,3)*HOUR_SECS+argp(st,4)*60+(if((count (st))<=5)then{0}else{argp(st,5)}))
 
 #define ONLY_SECONDS(secs) (round((secs)%60))
 #define ONLY_MINS(secs) (floor((secs)%HOUR_SECS))
@@ -75,12 +75,11 @@ SYG_dateToStr = {
 //
 // Example call:
 // _oldtime = time;
-// sleep random 600;
-// _str = [ time,_oldtime] call SYG_timeDiffToStr; // "hh:mm:ss" as always positive difference between two times
+// sleep 600;
+// _str = [ time,_oldtime] call SYG_timeDiffToStr; // "00:10:00" as always positive difference between two times
 //
 SYG_timeDiffToStr = {
 	private ["_diff","_hours","_mins","_secs"];
-//	_diff  = abs(arg(0) - arg(1));
 	_diff  = abs((_this select 0) - (_this select 1));
 	_hours = floor(_diff/HOUR_SECS);
 	_mins  = floor((_diff - _hours * HOUR_SECS)/60);

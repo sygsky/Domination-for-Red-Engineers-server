@@ -94,9 +94,12 @@ _winner = 0;
 						_score = -(d_ranked_a select 24); // -5 for killing of sidemission civilian
 						// "Soldier %1 killed a civilian from the current sidemission. The soldier is penalized for %2 points."
 						[ "change_score", name _killer, _score, ["msg_to_user", [ ["STR_SM_HOSTAGES_1", name _killer, _score ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClient;
-						hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1", name _killer];
+						hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1 (%2 player)", name _killer, if (alive _killer) then {"alive"} else {"dead"}];
 					};
-					hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1", name _killer];
+					hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1 (%2, AI, %3)" ,
+						name _killer,
+						side _killer,
+						if (alive _killer) then {"alive"} else {"dead"}];
 				};
 			}
 		];
@@ -182,15 +185,19 @@ while {!_hostages_reached_dest && !_all_dead} do {
 _retter = objNull;
 
 while {! (_hostages_reached_dest || _all_dead) } do {
+
 	if (X_MP) then {
+		_time = time;
 		if ((call XPlayersNumber) == 0) then {
+			_time = time;
 			waitUntil {sleep (30 + random 1);(call XPlayersNumber) > 0};
+			hint localize format["*** x_sideprisoners.sqf: players have been gone for %1", (time -_time) call SYG_timeDiffToStr];
 		};
 	};
 	if (({alive _x} count _units) == 0) exitWith {
 	    _all_dead = true;
         #ifdef __DEBUG_SM__
-        hint localize format["+++ x_sideprisoners.sqf: all civilians dead, grp count %1", count _units];
+        hint localize format["+++ x_sideprisoners.sqf: all civilians dead, whole grp count %1", count _units];
         #endif
 	};
 
@@ -224,13 +231,13 @@ while {! (_hostages_reached_dest || _all_dead) } do {
     } else { // they are rescued
         {
             if ( (alive _x) && (_x distance FLAG_BASE < 20) ) exitWith {
-				// Print locality of the first hostages before mission finishing
-				{
+				// Units are not local to the server at this moment!
+/*				{
 					if (alive _x) exitWith {
 						// Print locality of the hostages before assigning to the player group
 						hint localize format[ "+++ x_sideprisoners.sqf: 1st of civilian units is%1 local to server just before sidemission finishing", if (local _x) then {""} else {" not"} ];
 					};
-				} forEach _units;
+				} forEach _units; */
 
                 _hostages_reached_dest = true;
                 if (__RankedVer) then {

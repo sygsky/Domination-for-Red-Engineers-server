@@ -1037,11 +1037,11 @@ SYG_geoDist = {
 // Call as: _pos = _obj call SYG_getPos;
 //
 SYG_getPos = {
-    if ( typeName _this == "ARRAY"    ) exitWith { _this };
-    if ( typeName _this == "OBJECT"   ) exitWith { getPos _this };
-    if ( typeName _this == "GROUP"    ) exitWith { getPos (_this call SYG_getLeader) };
-    if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this };
-    if ( typeName _this == "STRING"   ) exitWith { getMarkerPos _this };
+    if ( typeName _this == "ARRAY"    ) exitWith { _this }; // It must be 2D or 3D position itself
+    if ( typeName _this == "OBJECT"   ) exitWith { getPos _this };	// Try as any object
+    if ( typeName _this == "GROUP"    ) exitWith { getPos (_this call SYG_getLeader) }; // Use leader  or any group unit as source
+    if ( typeName _this == "LOCATION" ) exitWith { locationPosition _this }; // Location used
+    if ( typeName _this == "STRING"   ) exitWith { getMarkerPos _this }; // Try as marker name
     [ 0,0,0 ]
 };
 

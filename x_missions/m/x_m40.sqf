@@ -1,4 +1,4 @@
-// by Xeno
+// by Xeno, x_missions\m\x_m40.sqf, resque hostages
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
@@ -17,7 +17,8 @@ if (true) exitWith {};
 if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
 
 if (X_Client) then {
-	current_mission_text = format[localize "STR_SYS_118", "Tiberia"];//	"В Tiberia расположен лагерь, где незаконно удерживается и подвергается различным пыткам гражданское население. Ваша задача - освободить гражданских и доставить их на базу. Для выполнения задания хотя бы один заложник должен добраться до базы живым. (Завершить миссию может только игрок в роли спасателя).";
+	// "%1 now is the camp where our civilians are illegally held and subjected to torture. Your task: liberate the civilians and bring them to the base. To perform the job at least one hostage has to get to the base alive. (The mission can be completed only by a player in the role of rescuer)."
+	current_mission_text = format[localize "STR_SYS_118", "Tiberia"];
 	current_mission_resolved_text = localize "STR_SYS_119"; //"Задание выполнено! Пленные освобождены.";
 };
 
