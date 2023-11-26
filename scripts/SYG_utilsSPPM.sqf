@@ -119,7 +119,9 @@ SYG_getAllSPPMVehicles = {
 				};
 			};
 		} forEach _arr;
-		hint localize format[ "+++ SPPM: Veh[s] ""%1"" captured, counters are: raw %2, filtered %3, true veh[s] %4, at %5", _arr1, _cnt0, count _arr, count _arr1, _txt ];
+		if (count _arr1 > 0 ) then {
+			hint localize format[ "+++ SPPM: Veh[s] ""%1"" captured, counters are: raw %2, filtered %3, true veh[s] %4, at %5", _arr1, _cnt0, count _arr, count _arr1, _txt ];
+		};
 	};
 	_arr
 };
