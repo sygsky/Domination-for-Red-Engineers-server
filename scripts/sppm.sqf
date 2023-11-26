@@ -33,8 +33,11 @@ if ((vehicle player != player) && (!((vehicle player) isKindOf "ParachuteBase") 
     };
 
     // in town borders you can't add SPPM markers
-    if ( _pos call SYG_pointIsInTownBorders ) exitWith {
-        (localize "STR_SPPM_2_1") call XfHQChat; // "SPPM markers are not used in towns"
+    _town = _pos call SYG_townWithPoint;
+    if ( count _town > 0 ) exitWith {
+        format[ (localize "STR_SPPM_2_1"), _town select 1] call XfHQChat; // "SPPM markers are not used in towns (%1 is at distance %2 m, boundary radius %3 m)"
+        // Todo: показать бы маркер... да окно сразу же и закрывается, но можно на 15 секунд показать, а потом убрать,
+        // а ты сразу смотри на карту и убедишься что  и как
     };
 
     // Add SPPM marker now  (all vehicle checks are done on server)
@@ -42,9 +45,9 @@ if ((vehicle player != player) && (!((vehicle player) isKindOf "ParachuteBase") 
 	SYG_recentSPPMCmdUseTime = time; // store last update time
 };
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++    You are on your feet so UPDATE SPPM command can be applyed  +++
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++  You are on your feet so UPDATE SPPM command should be applyed  +++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Update all markers on server
 ["SPPM", "UPDATE", name player] call XSendNetStartScriptServer;

@@ -1139,31 +1139,42 @@ SYG_pointIsOnBase = {
 };
 
 //
-// checks if designated point is in nearest town from the "target_names" borders
+// Checks if designated point is in borders of some town listed in the "target_names" list.
 // call:
 // _in_town = player call  SYG_pointInTownBorders;
 // _in_town = _veh call  SYG_pointInTownBorders;
 // _in_town = (getPos _veh) call  SYG_pointInTownBorders;
+// Returns true if yes, point is within some town from main targets list ot false if not
 //
 SYG_pointIsInTownBorders = {
-    private ["_dist","_pos","_town","_new_dist","_x"];
-    _dist = 9999999;
+	(count ( _this call SYG_townWithPoint )) != 0
+};
+
+//
+// Returns 1st town record from the main target list (not nearest one) that contains designated point is its boundaries.
+// If no such town found, empty array [] is returned
+// call:
+// _town_with_point = player call  SYG_townWithPoint;
+// _town_with_point = _veh call  SYG_townWithPoint;
+// _town_with_point = (getPos _veh) call  SYG_townWithPoint;
+// Returns found town record if point is within some town from main targets list or empty [] arry if not
+//
+SYG_townWithPoint = {
+    private ["_dist","_pos","_town","_x"];
     _pos = _this call SYG_getPos;
     _town = [];
-    // find nearest town
+    // find town that contains designated point in its boundaries
     {
-    	//[                                          // Indexes, not identifiers
+    	//[                                     Id   // Index, not identifier
     	//	[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
     	//	[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
-    	_new_dist = [_x select 0, _pos] call SYG_distance2D;
-    	if (_new_dist < _dist) then {
-    	    _dist= _new_dist;
-    	    _town = _x;
-    	};
+    	_dist = [_x select 0, _pos] call SYG_distance2D; // Dist to the town center
+    	if ( (_x select 2) >= _dist) exitWith { _town = _x };	// Point is in town boundaries
     } forEach target_names;
     // return true if point is IN nearest town borders
-    (_town select 2) >= _dist
+    _town
 };
+
 
 //
 // _asl = getPosAL _truck;             //       _asl = [9298.02, 10145.2, 139.992]
