@@ -25,7 +25,7 @@ hint localize format[ "+++ radio_init.sqf: Client, _this = %1, d_radar %2",
 
 _veh = _this;
 if (typeOf _veh  == RADAR_TYPE) exitWith { // Radar itself
-	if (!alive _veh) exitWIth {};
+	if (!alive _veh) exitWith {};
 	_veh addAction[localize "STR_INSPECT","x_missions\common\sideradar\radio_inspect.sqf","INSPECT"]; // Inspect
 	_veh addAction[localize "STR_CHECK", "x_missions\common\sideradar\radio_menu.sqf","CHECK"]; // Check
 	_veh addAction[localize "STR_INSTALL", "x_missions\common\sideradar\radio_menu.sqf","INSTALL"]; // Install
