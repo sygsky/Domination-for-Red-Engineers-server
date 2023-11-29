@@ -1,4 +1,4 @@
-// by Sygsky, radar installation mission (#410, request by Rokse). x_missions/m/x_m56.sqf
+// by Sygsky, sea devil capture mission (#655, Sygsky proposal). x_missions/m/x_m57.sqf
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
@@ -135,13 +135,16 @@ if ( count _names == 0 ) then {
 
 _ind = 0;
 {
-	if ( !alive _x ) then {
-		hint localize format[ "--- x_m57.sqf: when try to remove house %1, detected that it is not alive", typeOf _x];
-		_ind = _ind + 1;
-	} else {
-		hint localize format[ "+++ x_m57.sqf: remove house %1 at pos %2!", typeOf _x, position _x ];
-		deleteVehicle _x;
-	};
+    // Remove only buildings, not heli landing circle
+    if (typeOf _x != POINT_TYPE) then {
+        if ( !alive _x ) then {
+            hint localize format[ "--- x_m57.sqf: when try to remove house %1, detected that it is not alive", typeOf _x];
+            _ind = _ind + 1;
+        } else {
+            hint localize format[ "+++ x_m57.sqf: remove house %1 at pos %2!", typeOf _x, position _x ];
+            deleteVehicle _x;
+        };
+    };
 } forEach _sites;
 _sites resize 0;
 _sites = nil;
