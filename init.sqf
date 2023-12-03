@@ -221,7 +221,7 @@ if (isServer) then {
     number_targets = count maintargets_list; // most correct definition of target towns is here!
     hint localize _str;
 
-	__DEBUG_SERVER("init.sqf", maintargets_list)
+	//__DEBUG_SERVER("init.sqf", maintargets_list)
 	// create random list of side missions
 #ifdef __EASY_SM_GO_FIRST__
     sm_array = sm_array - easy_sm_array; // remove easiest side mission from common list
@@ -270,9 +270,9 @@ if (isServer) then {
     // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 24 - gazstation near Arcadia, 29 - tanks at Cabo Juventudo,
     // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 44 - heli prototype on San Tomas, 47 - factory near Somato,
     // 48 - transformer substations of Corazol, 49 - captain Grant, 50 - arti big SM in field, 51: pilots,
-    // 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation, 57 - sea devil boat capturing
+    // 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation, 57 - sea devil boat capturing (november of 2023)
     //
-    _first_array = [47,57]; // Allow testing SM #57
+    _first_array = []; // Allow testing SM #57
     if ( count _first_array > 0 ) then {
 	    side_missions_random = _first_array + (side_missions_random - _first_array);
         hint localize format["+++ SM _first_array: %1", _first_array];
@@ -280,23 +280,60 @@ if (isServer) then {
     // Move radiomast SM #56 to the beginning of SM list at pos 2..3
     // ranked_sm_array = [ 5, [2,3,53] ];
 
-    if (! (56 in _first_array) ) then {
-		_ind56 = side_missions_random find 56;
-		if (_ind56 >= 0) then { // set it 2nd-3rd SM in the sequence
-			if ((_ind56 == 0) || (_ind56 > 9) ) then { // move 56th SM to the 2..10 position in array (so index will be  1..9)
-				_ind = floor(random 9) + 1; // 1..9 = new index for 56th SM
-				side_missions_random set[_ind56, side_missions_random select _ind]; // move SM from new 56th SM index to the current 56th SM index
-				side_missions_random set[_ind, 56]; // put 56th SM to the 1..9 index in array
-				hint localize format["+++ SM array: 56th SM (radiomast installation) exchanged index from %1 to the %2",_ind56, _ind];
-			} else { hint localize format["+++ SM array: 56th SM (radiomast installation) is at index %1",_ind56, _ind]; };
-		} else { hint localize "+++ SM array: 56th SM (radiomast installation) not used in the mission" };
-    };
+	_first_sm_array = [ [ [56],[1,10] ], [ [57],[3,12] ] ]; 	// SM to place at first part of SM list between designated indexes, e.g. SM#56 must be at pos [1..10] ect
+	if (count _first_sm_array > 0) then {
+		_fixed_id = [];
+		{
+			{ _fixed_id set [count _fixed_id, _x ] }forEach  (_x select 0);
+		} forEach _first_sm_array + _first_array;
+		{	// For each item in set of [[SM_list],[_list_range_start,_list_range_end]]
+			_arr       = _first_sm_array select _i;
+			_fsm_arr   = _arr select 0; // Next SM id list
+			_fsm_range = _arr select 1; // The range for all id of SM in _fsm_arr list
+			for "_i" from 0 to (count _fsm_arr) - 1 do {
+				_sm_id       = _fsm_arr select _i;
+				_range_start = (_fsm_range select _i) select 0;
+				_range_end   = (_fsm_range select _i) select 1;
+				hint localize format["+++ init.sqf: FirstSMArray - move SM#%1 to the range %2:", _sm_id, _fsm_range select _i];
+
+				_sm_pos = side_missions_random find _sm_id; // Current pos of SM to from ones to be in range
+				if (_sm_pos >= 0) then { // Found, put to the designated sub-range, e.g. [1..10] (indexes startS from 0)
+					if ((_sm_pos >= _range_start) && (_sm_pos <= _range_end) ) exitWith { // Already in range, skip exchange
+						hint localize format["+++ init.sqf: FirstSMArray - SM#%1 is already at pos %2 so already is in designated range, skip this step", _sm_id, _sm_pos ];
+					};
+					// Find new position for the SM id in the designated range
+					while { true } do {
+						_new_pos = floor(random (_range_end-_range_start) + 1) + _range_start; // Get random position in the range, e.g. 5 in [1..10]
+						_moved_id = side_missions_random select _new_pos; // Get id of SM to exchange with current first one
+						if (! (_moved_id in _fixed_id )) exitWith { // If found id not in first SM list, echange it
+							side_missions_random set [_new_pos, _sm_id]; // Move first  SM to  the pos inro designated range
+							side_missions_random set [_sm_pos, _moved_id]; // Put found SM to first SM pos
+							hint localize format["+++ init.sqf: FirstSMArray - SM#%1 exchanged index from %2 to the ranged %3", _sm_id, _sm_pos, _new_pos ];
+						};
+					};
+				} else { hint localize format["*** init.sqf: FirstSMArray - SM#%1 not found in the mission SM list", _sm_id] };
+			};
+		} forEach _first_sm_array;
+	};
+/**
+	    if (! (56 in _first_array) ) then {
+    		_ind56 = side_missions_random find 56;
+    		if (_ind56 >= 0) then { // set it 2nd-3rd SM in the sequence
+    			if ((_ind56 == 0) || (_ind56 > 9) ) then { // move 56th SM to the 2..10 position in array (so index will be  1..9)
+    				_ind = floor(random 9) + 1; // 1..9 = new index for 56th SM
+    				side_missions_random set[_ind56, side_missions_random select _ind]; // move SM from new 56th SM index to the current 56th SM index
+    				side_missions_random set[_ind, 56]; // put 56th SM to the 1..9 index in array
+    				hint localize format["+++ SM array: 56th SM (radiomast installation) exchanged index from %1 to the %2",_ind56, _ind];
+    			} else { hint localize format["+++ SM array: 56th SM (radiomast installation) is at index %1",_ind56, _ind]; };
+    		} else { hint localize "+++ SM array: 56th SM (radiomast installation) not used in the mission" };
+        };
+*/
 
 //    side_missions_random = side_missions_random - [40,41]; // temporarily remove all SM with prisoners (not work!!)
 
     hint localize format["+++ final SM array: %1", side_missions_random];
 
-	__DEBUG_SERVER("init.sqf",side_missions_random)
+	//__DEBUG_SERVER("init.sqf",side_missions_random)
 
 	current_target_index = -1; // main target index, not defined at start
 	current_counter = 0;
