@@ -15,6 +15,8 @@ while {!alive aborigen} do {sleep 5};
 
 #define ABORIGEN "ABORIGEN"
 
+#define __DO_SMOKE__
+
 _val = aborigen getVariable ABORIGEN;
 if ( !isNil "_val" ) exitWith { hint localize "*** Aborigen alive and already intialized!" };
 aborigen setVariable [ABORIGEN, true];
@@ -37,9 +39,31 @@ hint localize format["+++ aborigenInit.sqf: found %1 items to add action 'Inspec
 
 ["msg_to_user","","STR_ABORIGEN_CREATED", 0,0,true] call SYG_msgToUserParser; // "There's an Aborigen %1 in Antigua"
 
-while { !(player call SYG_pointOnAntigua) } do { sleep 60; }; // While out of Antigua
+while { !(player call SYG_pointOnAntigua) } do { sleep 10; }; // While out of Antigua
+
+#ifdef __DO_SMOKE__
+// Add red smoke grenade near aborigen
+_pos = aborigen modelToWorld [0,5,0]; //
+
+#ifdef __ACE__
+_grenade = "ACE_SmokeGrenade_Red";
+#endif
+
+#ifndef __ACE__
+_grenade = "SmokeShellRed";
+#endif
+_grenade = _grenade createVehicleLocal _pos;
+hint localize format["+++ aborigenInit.sqf: smoke grenade created near aborigen", typeOf _grenade];
+#endif
 
 while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
+/*
+#ifdef __ACE__
+			    case "ACE_SmokeGrenade_Red"
+#endif
+			    case "SmokeShellRed"
+#endif
+*/
 
 if (alive aborigen) then { // show info
 	["msg_to_user", "",
@@ -76,6 +100,10 @@ while {(alive aborigen) && ((player distance aborigen) > 10) } do {
 	sleep _delay;
 	//	aborigen setDir (getDir aborigen) + ((random 20) - 10); // It is not working really
 };
+
+#ifdef __DO_SMOKE__
+deleteVehicle _grenade;
+#endif
 
 // set marker on civ
 _marker = "aborigen_marker";
@@ -133,7 +161,6 @@ if (alive aborigen) then {
 			sleep (random 5);
 		};
 	};
-
 };
 
 while {alive aborigen} do {
