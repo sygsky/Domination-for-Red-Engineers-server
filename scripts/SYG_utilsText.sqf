@@ -112,7 +112,7 @@ SYG_joinArr = {
 
 /*
  * Prepare string to print from vehicles array by converting them into type strings (typeOf _vehicle_obj)
- * Input: _result = [_veh_arr, _max_num_to_print] call SYG_objArrToTypeStr; // result = "ACE_Abrams,ACE_UAZ,ACE_Mi24P,...25"
+ * Input: _result = [[_veh#,..., _veh#]<, _max_num_to_print>] call SYG_objArrToTypeStr; // result = "ACE_Abrams,ACE_UAZ,ACE_Mi24P,...25"
  */
 SYG_objArrToTypeStr = {
     if (typeName _this != "ARRAY") exitWith { hint localize format["--- SYG_objArrToTypeStr: typename _this (%1) != ""ARRAY""", typeName _this]};
