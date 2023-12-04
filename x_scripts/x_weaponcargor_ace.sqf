@@ -310,7 +310,7 @@ _ve spawn {
 	private ["_ve", "_old_rank", "_index", "_weapons", "_i", "_rk"];
 	_ve = _this;
 	_old_rank = "";
-	while {!isNull _ve && alive _ve} do {
+	while { alive _ve } do {
 		if (_old_rank != rank player) then {
 			_ve call SYG_clearAmmoBox;
 			_old_rank = rank player;
@@ -434,7 +434,7 @@ _ve spawn {
 				_ve addMagazineCargo ["ACE_MineE",100];
 			};
 		};
-		sleep 5;
+		sleep 15;
 	};
 };
 
