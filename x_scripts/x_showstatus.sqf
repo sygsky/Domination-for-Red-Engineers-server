@@ -160,12 +160,17 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			// First check around SM marker position
 			_msg = "";
 			_ret = [_pos, 1500] call _get_info;
-			if ((_ret select 1) > 0)  then { // Some civilians (with or without leader) are near SM center
-				_msg = "STR_SYS_117"; // "The Hostages (alive %1 of %2) are within a %3 m radius from the center of side mission. %4"
-			} else {
-				_ret = [_pos, 1500] call _get_info;
-				if ((_ret select 1) > 0) then { // Some civilians (with or without leader) are near player
-					_msg = "STR_SYS_117_P"; // "The Hostages (alive %1 of %2) are within a %3 m radius from the... " "SM marker" or "your GLONASS position"
+			if (count _ret > 0) then {
+                if ((_ret select 1) > 0)  then { // Some civilians (with or without leader) are near SM center
+                    _msg = "STR_SYS_117"; // "The Hostages (alive %1 of %2) are within a %3 m radius from the center of side mission. %4"
+                };
+			};
+			if (_msg == "") then {
+				_ret = [player, 1500] call _get_info;
+				if (count _ret > 0) then {
+                    if ((_ret select 1) > 0) then { // Some civilians (with or without leader) are near player
+                        _msg = "STR_SYS_117_P"; // "The Hostages (alive %1 of %2) are within a %3 m radius from the... " "SM marker" or "your GLONASS position"
+                    };
 				};
 			};
 
@@ -175,8 +180,8 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 				} else {localize "STR_SYS_117_0"}; // "But the leader of this group of civilians has not been located"
 				_s = _s + "\n" + format[ localize _msg, _ret select 3 /*_alive_cnt*/, _ret select 2 /*_whole_cnt*/, round( _ret select 1 /*_dist*/), _s1 ];
 			} else {
-			// Nothing detected around SM center and your postion, try again from other point
-			_s  = _s + "\n" + format[localize "STR_SYS_117_ABSENCE", 1500]; // "No civilians have been detected within %1 meter of the mission marker and your GLONASS position. Continue searching!"
+                // Nothing detected around SM center and your postion, try again from other point
+                _s  = _s + "\n" + format[localize "STR_SYS_117_ABSENCE", 1500]; // "No civilians have been detected within %1 meter of the mission marker and your GLONASS position. Continue searching!"
 			};
 		};
 		//case 25; Officer on Isla da Voda and isla da Vassal

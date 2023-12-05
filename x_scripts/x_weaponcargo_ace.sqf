@@ -307,7 +307,7 @@ _ve spawn {
 	private ["_ve", "_old_rank", "_index", "_weapons", "_i", "_rk"];
 	_ve = _this;
 	_old_rank = "";
-	while {!isNull _ve && alive _ve} do {
+	while { alive _ve } do {
 		if (_old_rank != rank player) then {
 			_ve call SYG_clearAmmoBox;
 			_old_rank = rank player;
@@ -318,8 +318,8 @@ _ve spawn {
 				_ve addweaponcargo ["Binocular",5];
 				_ve addweaponcargo ["LaserDesignator",5];
 				_ve addweaponcargo ["ACE_ANPRC77_Alice",5];
-				_ve addweaponcargo ["ACE_ParachutePack",5]; // western planning new styled shute
-				_ve addweaponcargo ["ACE_ParachuteRoundPack",5]; // Ordinal round old style shute
+				_ve addweaponcargo ["ACE_ParachutePack",5]; // Western planning new style chute
+				_ve addweaponcargo ["ACE_ParachuteRoundPack",5]; // Ordinal round old style chute
 
 				// ranked stuff
 				{
@@ -428,7 +428,7 @@ _ve spawn {
 				_ve addmagazinecargo ["ACE_MineE",100];
 			};
 		};
-		sleep 2.32;
+		sleep 15;
 	};
 };
 

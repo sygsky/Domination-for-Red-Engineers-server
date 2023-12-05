@@ -5,8 +5,8 @@
 
 #define __DEBUG__
 
-#define __Poss _poss = x_sm_pos select 0;
-#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1;
+#define __Poss _poss = x_sm_pos select 0
+#define __PossAndOther _poss = x_sm_pos select 0;_pos_other = x_sm_pos select 1
 
 x_sm_pos = [[9863.37,16260.47,0],[10076.68,16521.42,0]]; // index: 55,   Officer on the east edge or the forest Selva de Caza
 x_sm_type = "normal"; // "convoy"
@@ -30,9 +30,10 @@ if (isServer) then {
 #endif
 
 
-	__PossAndOther
-	__WaitForGroup
-	__GetEGrp(_ogroup)
+	__PossAndOther;
+	_ogroup = call SYG_createEnemyGroup;
+//	__WaitForGroup
+//	__GetEGrp(_ogroup)
 	_sm_vehicle = _ogroup createUnit [_officer, _poss, [], 0, "FORM"]; // TODO: set him in the circle with radious 100 m. around center
 	[_sm_vehicle] join _ogroup;
 	_sm_vehicle addEventHandler ["killed", {_this call XKilledSMTarget500}];
@@ -42,8 +43,8 @@ if (isServer) then {
     if (!isNull _hideobject) then {
         [_sm_vehicle, _hideobject, _pos] spawn {
             arg(0) doMove (position arg(1)); // order officer to move
-            sleep 120; // wait enoght until officer reaches his cover
-            hint localize format["+++ SM 55: cover (%4) found at pos %1 on initial dist %2, after 120 secs officer was on dist %3 to cover place", getPos arg(1), arg(2) distance arg(1), arg(1) distance arg(0), typeOf arg(1)];
+            sleep 120; // wait enough until officer reaches his cover
+            hint localize format["+++ SM 55: cover found at pos %1 on initial dist %2, after 120 secs officer was on dist %3 to the cover place (%4)", getPos (_this select 1), round((_this select 2) distance (_this select 1)),  (_this select 1) distance  (_this select 0), _this select 1];
         };
 /*
     	_sm_vehicle setBehaviour "STEALTH";
@@ -51,8 +52,7 @@ if (isServer) then {
         _sm_vehicle setDamage 0.5;
         _sm_vehicle setUnitPos "DOWN";
 */
-    }
-    else{hint localize format["+++ SM 55: cover not found, officer pos %1", getPos _sm_vehicle];};
+    } else{hint localize format["+++ SM 55: cover not found, officer pos %1", getPos _sm_vehicle];};
 
 	removeAllWeapons _sm_vehicle;
 	sleep 2.123;
@@ -80,8 +80,9 @@ if (isServer) then {
 	sleep 2.123;
 	
 
-	__WaitForGroup
-	__GetEGrp(_grp)
+//	__WaitForGroup
+//	__GetEGrp(_grp)
+	_grp = call SYG_createEnemyGroup;
 	_AAr_Pod_arr =
 	[
 	    [9412.82,15794.6,0.00357056],[9929.38,15904.5,0.002],[8919.56,15988.4,0.00058],
