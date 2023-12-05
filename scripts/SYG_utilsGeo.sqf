@@ -114,7 +114,7 @@ SYG_nearestLocationD = {
  *      location : nearest location with designated in _locTypeList names or
  *      objNull if bad parameters used or  empty list is designated
  *
- * to get position of location, call: _pos = position _loc;
+ * to get position of location, call: _pos = locationPosition _loc;
  * to text of location call: _text = text  _loc;
  */
 SYG_nearestLocationA = {
