@@ -467,7 +467,9 @@ SYG_pointOnRahmadi = {
 /**
  * Detects if point is on Rahmadi isles group, not on main Island Sahrani
  * call:
+ * ["isle4",[17368.9,18636.7,0],1300,"Северо-восточные острова (Антигуа)"]
  *    _bool = (getPos player) call SYG_pointOnRahmadi; // true or false is returned
+ *
  */
 SYG_pointOnAntigua = {
 	private ["_isle","_pos"];

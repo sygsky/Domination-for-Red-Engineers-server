@@ -560,7 +560,7 @@ switch ( _arg ) do {
 				_arr = HELI_POINT_ARR call XfRandomArrayVal;
 				aborigen_heli setDir (_arr select 1);
 				aborigen_heli setPos (_arr select 0);
-				hint localize format["+++ ABO HELI: heli is out of Antigua area, move it on pos %1", _arr];
+				hint localize format["+++ ABO HELI: heli is out of Antigua area, move it on a new pos %1", _arr];
 			};
 		};
 		if (_ready_to_mark) then {
