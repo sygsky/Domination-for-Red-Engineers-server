@@ -68,17 +68,18 @@ class CfgSounds {
     class heli_over_4 { name=""; sound[] = {\sounds\defeat\heli\3d_heli_sound_4.ogg,db-1,1.0}; titles[] = {};};
 
     // Fear sounds
-	class fear      { name=""; sound[]=   {\sounds\fear.ogg,db-1,1.0}; titles[] = {}; };
+	class fear      { name=""; sound[]=  {\sounds\fear.ogg,db-1,1.0}; titles[] = {}; };
 	class bestie    { name="";  sound[]= {\sounds\bestie.ogg,db-1,1.0}; titles[] = {}; };
 	class gamlet    { name=""; sound[] = {\sounds\gamlet.ogg,db+0,1.0}; titles[] = {}; };
-	class fear3     { name=""; sound[]=   {\sounds\fear3.ogg,db-1,1.0}; titles[] = {}; };
-	class heartbeat { name=""; sound[]=   {\sounds\heartbeat.ogg,db-1,1.0}; titles[] = {}; };
-	class the_trap  { name=""; sound[]=   {\sounds\the_trap.ogg,db-1,1.0}; titles[] = {}; };
-	class koschei   { name=""; sound[]=   {\sounds\koschei.ogg,db-1,1.0}; titles[] = {}; }; // from Soviet multfilm "The princess Frog"
-	class sinbad_skeleton { name=""; sound[]=   {\sounds\fear\sinbad_skeleton.ogg,db-1,1.0}; titles[] = {}; }; // from "7th voyage of Sinbad "
-	class fear4     { name=""; sound[]=   {\sounds\fear\fear4.ogg,db-1,1.0}; titles[] = {}; };
-	class fear_Douce_Violence     { name=""; sound[]=   {\sounds\fear\fear_Douce_Violence.ogg,db-1,1.0}; titles[] = {}; };
-	class boom      { name=""; sound[]=   {\sounds\fear\boom.ogg,db-1,1.0}; titles[] = {}; };
+	class fear3     { name=""; sound[]=  {\sounds\fear3.ogg,db-1,1.0}; titles[] = {}; };
+	class heartbeat { name=""; sound[]=  {\sounds\heartbeat.ogg,db-1,1.0}; titles[] = {}; };
+	class the_trap  { name=""; sound[]=  {\sounds\the_trap.ogg,db-1,1.0}; titles[] = {}; };
+	class koschei   { name=""; sound[]=  {\sounds\koschei.ogg,db-1,1.0}; titles[] = {}; }; // from Soviet multfilm "The princess Frog"
+	class sinbad_skeleton { name=""; sound[]= {\sounds\fear\sinbad_skeleton.ogg,db-1,1.0}; titles[] = {}; }; // from "7th voyage of Sinbad "
+	class fear4     { name=""; sound[]=  {\sounds\fear\fear4.ogg,db-1,1.0}; titles[] = {}; };
+	class fear_Douce_Violence { name=""; sound[]= {\sounds\fear\fear_Douce_Violence.ogg,db-1,1.0}; titles[] = {}; };
+	class boom      { name=""; sound[]=  {\sounds\fear\boom.ogg,db-1,1.0}; titles[] = {}; };
+	class ihtiandr  { name=""; sound[]=  {\sounds\fear\fear_ihtiandr_capture.ogg,db-1,1.0}; titles[] = {}; };
 
 	class teleport_from { name=""; sound[]=   {\sounds\short\teleport_from.ogg,db-1,1.0}; titles[] = {}; };
 	class teleport_to   { name=""; sound[]=   {\sounds\short\teleport_to.ogg,db-1,1.0}; titles[] = {}; };

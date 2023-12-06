@@ -577,11 +577,9 @@ SYG_colonelRankSound = {
 
 SYG_exclamationSound = { format["exclamation%1", (floor (random 6)) + 1] };
 
-SYG_fearSound = {["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_skeleton","fear4","fear_Douce_Violence","boom"] call XfRandomArrayVal};
+SYG_fearSound = {["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_skeleton","fear4","fear_Douce_Violence","boom","ihtiandr"] call XfRandomArrayVal};
 
-SYG_invasionSound = {
-    ["invasion","kwai","starwars","radmus","enemy","ortegogr"] call XfRandomArrayVal
-};
+SYG_invasionSound = { ["invasion","kwai","starwars","radmus","enemy","ortegogr"] call XfRandomArrayVal };
 
 SYG_prisonersSound = {
     private ["_rnd","_arr","_cnt"];
@@ -592,31 +590,20 @@ SYG_prisonersSound = {
     _arr select _rnd
 };
 
-SYG_powerDownSound = {
-	format["powerdown%1", (floor (random 5)) + 1] // powerdown1..5
-};
+SYG_powerDownSound = { format["powerdown%1", (floor (random 5)) + 1] }; // powerdown1..5
 
-SYG_truckDoorCloseSound = {
-	format["truck_door_%1", (floor (random 4)) + 1] // truck_door_1..4
-};
+SYG_truckDoorCloseSound = { format["truck_door_%1", (floor (random 4)) + 1] }; // truck_door_1..4
 
-SYG_rustyMastSound = {
-	format["rusty_mast_%1", (floor (random 5)) + 1] // rusty_mast_1..5
-};
+SYG_rustyMastSound = { format["rusty_mast_%1", (floor (random 5)) + 1] }; // rusty_mast_1..5
 
-SYG_randomRadio = {
-	format["radio_%1", (floor (random 9)) + 1] // radio_1..4
-};
+SYG_randomRadio = { format["radio_%1", (floor (random 9)) + 1] }; // radio_1..4
 
-SYG_randomRadioNoise = {
-	format["radionoise_%1", floor (random 6)] // radionoise_0..5
-};
+SYG_randomRadioNoise = { format["radionoise_%1", floor (random 6)] }; // radionoise_0..5
 
 //
 // Return random armory activity sound
 // call: _asnd = call SYG_armorySound;
 //
-SYG_armorySound = {
-	format["armory%1", (floor(random 4)) + 1] // armory1-4
-};
+SYG_armorySound = { format["armory%1", (floor(random 4)) + 1] }; // armory1-4
+
 if (true) exitWith {};
