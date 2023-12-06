@@ -306,6 +306,60 @@ if (isNil "x_ranked_weapons") then {
 ];
 };
 
+
+// New format to add weapon.ьфпфяшт cargo to the main ammobox without many statements, only by array using
+#ifdef __NEW__
+
+// call: [_ammo_box, ["wpn#",...,",wpn#",###]] call _addWeaponCargo;
+_addWeaponCargo = {
+    private ["_ammo","_arr","_start","_last_i","_i","_j"];
+    _ammo  = _this select 0;
+    _arr   = _this select 1;
+    _start = 0;
+    _last_i  = (count _arr) - 1;
+    for "_i" from 0 to _last_i do {
+        _item = _arr select _i;
+        if (typeOf _item == "SCALAR") then { // It is number, add all previously weapons a number times
+            _last_j = _i - 1;
+            for "_j" from _start to _last_j do {
+                _ammo addWeaponCargo [_arr select _j, _item];
+            };
+            _start = _i + 1; // Resume from the next item
+        };
+    };
+};
+
+// call: [_ammo_box, ["mag#",...,",mag#",###]] call _addMagazineCargo;
+_addMagazineCargo = {
+    private ["_ammo","_arr","_start","_last_i","_i","_j"];
+    _ammo  = _this select 0;
+    _arr   = _this select 1;
+    _start = 0;
+    _last_i  = (count _arr) - 1;
+    for "_i" from 0 to _last_i do {
+        _item = _arr select _i;
+        if (typeOf _item == "SCALAR") then { // It is number, add all previously found magazines a number times
+            _last_j = _i - 1;
+            for "_j" from _start to _last_j do {
+                _ammo addMagazineCargo [_arr select _j, _item];
+            };
+            _start = _i + 1; // Resume from the next item
+        };
+    };
+};
+
+
+_cargo = [
+    "NVGoggles","Binocular","LaserDesignator","ACE_ParachutePack","ACE_ParachuteRoundPack"
+#ifdef __OWN_SIDE_EAST__
+    ,"ACE_ANPRC77_Alice"
+#endif
+    ,5
+];
+
+
+#endif
+
 _ve spawn {
 	private ["_ve", "_old_rank", "_index", "_weapons", "_i", "_rk"];
 	_ve = _this;
@@ -337,9 +391,7 @@ _ve spawn {
 
 			} else {
 				//_ve addWeaponCargo ["ACE_ANPRC77_Alice",100];
-
-
-				// ranked stuff
+				// Ranked stuff
 				{
 					_weapons = _x;
 					for "_i" from 0 to _index do {
