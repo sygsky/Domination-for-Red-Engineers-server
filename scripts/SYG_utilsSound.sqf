@@ -577,7 +577,7 @@ SYG_colonelRankSound = {
 
 SYG_exclamationSound = { format["exclamation%1", (floor (random 6)) + 1] };
 
-SYG_fearSound = {["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_sckeleton","fear4","fear_Douce_Violence","boom"] call XfRandomArrayVal};
+SYG_fearSound = {["fear","bestie","gamlet","fear3","heartbeat","the_trap","koschei","sinbad_skeleton","fear4","fear_Douce_Violence","boom"] call XfRandomArrayVal};
 
 SYG_invasionSound = {
     ["invasion","kwai","starwars","radmus","enemy","ortegogr"] call XfRandomArrayVal
