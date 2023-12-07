@@ -2123,23 +2123,24 @@ SYG_vehIsRecoverable = {
 
 // Converts objects in input array to their types and return new array with types, on error return input array.
 // If single object is used as parameter, its type is returned
-// Call: _type_arr = [_veh1,... _vehN] call SYG_vehToType; // ["Bicycle", "tractor"...]
+// Call: _type_arr = [_veh1,... _vehN] call SYG_vehToType; // ["Bicycle", "tractor"... "vehTypeN"]
 // or: _type_obj = _veh call SYG_vehToType; // "Bicycle"
 SYG_vehToType = {
 	private ["_arr"];
 	_arr = _this;
 	if ( typeName _arr == "OBJECT" ) exitWith { typeOf _arr };
 	if ( typeName _arr == "ARRAY" ) exitWith {
-		private ["_arr", "_x"];
-		_arr = [];
-		{
-			if (isNull _x) then {
-				_arr set [count _arr, "<null>"]
+		private ["_arr1", "_x"];
+		_arr1 = [];
+		for "_i" from ((count _arr) - 1) to 0 step-1 do {
+		    _x = _arr select _i;
+			if ( isNull _x ) then {
+				_arr1 set [ _i, "<null>" ]
 			} else {
-				_arr set [count _arr, typeOf _x]
+				_arr1 set [ _i, typeOf _x ]
 			};
 		} forEach _arr;
-		_arr
+		_arr1
 	};
 	_arr
 };
