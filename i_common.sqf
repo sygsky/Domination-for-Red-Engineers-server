@@ -92,6 +92,18 @@ d_version = d_version + ["P85"]; // P85 version
 d_version = d_version + ["RANKED"]; // Ranked version
 #endif
 
+#ifdef __NEW__
+SYG_islands_arr = [
+	[	// Island #1 (Main)
+	],
+	[	// Island #2 Rahmadi, just in case, to demonstrate all features of the new structure
+		target_names, // All towns on this island as in lower real veriants
+		[SINGLE_RECT_OR_ELLIPSE OR RECT_ARRAY_OF_RECTS_OR_ELLIPSES], // Patrols rectangle[s] / ellipse[s]
+		[[WPS_SEA_DEVIL1],[WPS_SEA_DEVIL2],[WPS_SEA_DEVIL_N]] // Sea patrol routes
+	]
+];
+#endif
+
 target_names =
 	#ifdef __SCHMALFELDEN__
 	[

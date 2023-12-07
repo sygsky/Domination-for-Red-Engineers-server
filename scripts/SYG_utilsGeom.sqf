@@ -318,24 +318,25 @@ SYG_pointInCircle = {
 // call : _in_ellipse = [_pnt, _elli] call SYG_pointInEllipse;
 // (x-x0)^2/a^2+(y-y0)^2/b^2 <= 1
 SYG_pointInEllipse = { 
-	private ["_pnt","_elli","_ellic","_dx","_dy","_a","_b","_ret"];
+	private ["_pnt","_elli","_elli_center","_dx","_dy","_a","_b","_ret"];
 	_elli = _this select 1;
 	_ret = false;
-	if ( count _elli == 2 ) exitWith  // it is circle
-	{
+	if ( count _elli == 2 ) exitWith { // it is circle
 		//player groupChat "SYG_pointInEllipse: call SYG_pointInCircle";
 		_this call SYG_pointInCircle
 	};
     _pnt = (_this select 0) call SYG_getPos; // Point
     //player groupChat format["SYG_pointInEllipse: elli %1, pnt %2, rot %3", _elli,_pnt, argp(_elli,3)];
-    _ellic = argp(_elli,0);
-    if ( count _elli > 3) then {// ellipse may be rotated
-        if ( argp(_elli,3) != 0 ) then  { // ellipse is rotated
-            _pnt = [ _ellic,_pnt, argp(_elli,3)] call SYG_rotatePointAroundPoint;
+    _elli_center = _elli select 0;
+    if ( count _elli > 3) then { // ellipse may be rotated
+        if ( typeName (_elli select 3) == "SCALAR" ) then  { // Ellipse is rotated
+			if ( _elli select 3 != 0 ) then  { // Ellipse is rotated, rotete point around ellipse center too
+				_pnt = [ _elli_center, _pnt, _elli select 3] call SYG_rotatePointAroundPoint;
+			};
         };
     };
-    _dx = argp(_ellic,0)- argp(_pnt,0);
-    _dy = argp(_ellic,1)- argp(_pnt,1);
+    _dx = argp(_elli_center,0)- argp(_pnt,0);
+    _dy = argp(_elli_center,1)- argp(_pnt,1);
     _a = argp(_elli,1);
     _b = argp(_elli,2);
     _ret = (((_dx*_dx)/(_a*_a)+(_dy*_dy)/(_b*_b))<=1.0);
