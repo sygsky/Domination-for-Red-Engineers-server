@@ -604,6 +604,7 @@ class CfgSounds {
     class detected_Carmen  { name=""; sound[] = {\sounds\locations\toreador.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Carmen)
     class detected_Rahmadi { name=""; sound[] = {\sounds\locations\Rahmadi.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Rahmadi)
     class detected_Eponia  { name="Banzai, 1983"; sound[] = {\sounds\locations\Banzai.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Eponia)
+    class detected_Cayo    { name="Cayo"; sound[] = {\sounds\locations\Cayo_Hottabych.ogg,db-1,1.0}; titles[] = {}; }; // town detected music (Cayo, from soviet film "Old man Hottabych", 1958)
 
 // Revolution day intro music
 	class Varshavianka         { name = "";sound[] = {\sounds\Varshavianka.ogg, db+20, 1.0}; titles[] = {};}; // russian

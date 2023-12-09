@@ -130,8 +130,8 @@ target_names =
 	];
 	#endif
 	#ifdef __DEFAULT__
-	[                                            // Indexes, not identifiers
-		[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
+	[                                            // Indexes, not identifiers, see SYG_getTargetTownDetectedSound for detected town sounds
+		[[9349,5893,0],   "Cayo"      ,210, 2, "detected_Cayo"],  //  0
 		[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
 		[[7613,6424,0],   "Arcadia"   ,235, 4, ["detected_Arcadia"]],  //  2
 		[[8133,9084,0],   "Chantico"  ,275, 5],  //  3 -  minus stands for a small (ont-important) town
