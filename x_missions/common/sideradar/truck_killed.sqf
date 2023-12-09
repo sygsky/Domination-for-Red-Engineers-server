@@ -17,7 +17,7 @@ if (alive d_radar)  then  { // unload mast if truck is killed
 	};
 };
 
-// remove truck after 10 minutes of players absence around 300 meters of truck.
+// remove truck after 10 minutes of players absence around 100 meters of truck.
 _cnt = 0;
 while {!(isNull _veh)} do {
 	sleep (60 + (random 60));  // wait next period for player absence

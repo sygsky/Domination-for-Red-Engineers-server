@@ -474,11 +474,13 @@ SYG_getUnitName = {
 };
 
 //
-// Gets string with killer info: {name of player/unit}<(vehicle type)>
+// Call: _str = _killer call SYG_getKillerInfo;
+// Retruns string with killer info: "unit/player<(vehicle type)>"
 //
 SYG_getKillerInfo = {
 	private ["_veh","_name"];
 	if (isNull _this) exitWith {"<null>"};
+	if (typeName _this != "OBJECT") exitWith {str _this};
 	_veh = vehicle _this;
 	_name = _veh call SYG_getUnitName;
 	if ( _veh == _this) exitWith { _name };

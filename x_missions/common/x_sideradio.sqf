@@ -217,7 +217,10 @@ if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
 	};
 	_radar_marker = [ "sideradio_radar_marker", RADAR_MARKER, _radar, RADAR_ON_COLOR, [0.5, 0.5] ] call _make_marker;
 	_radar_marker setMarkerText (localize "STR_ON");
-	hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, alive radar %3, radar color is green now", sideradio_status, alive _radar, alive _truck];
+	hint localize format["+++ x_sideradio.sqf: enter waiting track to be on base loop, status %1, alive truck %2, radar installed at %3, marker color is green now",
+		sideradio_status,
+		typeOf _truck,
+		[_radar, 1] call SYG_MsgOnPosE0];
 	_last_pos = [0,0,0]; // last pos of truck, for printing 1 km steps
 	while { (sideradio_status == 1) && (alive _radar) && (alive _truck) } do  {
 		sleep 5;
@@ -321,10 +324,10 @@ sleep (5 + (random 5));
 //=            Finish the mission                  =
 //==================================================
 
-// assign completed codes etc
+// Assign completed codes etc
 
-// remove markers
-deleteMarker _radar_marker;
+// Remove markers
+deleteMarker _radar_marker; // TODO: may be we have to remain radar marker on
 deleteMarker _truck_marker;
 hint localize "+++ x_sideradio.sqf: radar and truck markers deleted at side mission finish";
 
