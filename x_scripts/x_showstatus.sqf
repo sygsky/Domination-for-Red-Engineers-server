@@ -287,14 +287,6 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			_s = _s + "\n" + localize "STR_RADAR_FAILURE_CONDITION";
 		};
 
-		if (!isNil "d_radar_truck") then {
-			if (alive d_radar_truck) then {
-				if (locked d_radar_truck) exitWith {
-					_s = _s + "\n" + localize "STR_RADAR_FAILURE_CONDITION";
-				};
-			};
-		};
-
 	};
     // check for big gun at one of the snipers of side mission teMam
     if (!isNil "SM_HeavySniperCnt") then {
