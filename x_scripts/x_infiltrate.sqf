@@ -172,7 +172,7 @@ while { true } do {
 //		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]); // why this is added? Don't know :o(
 		_arr = [_arr, (_base_center nearObjects ["Car",_search_radious])] call SYG_addArrayInPlace;
 
-		if ( ! isNull aborigen_heli ) then { // #667: request by EngineerACE in December of 2023, delete the aborigen heli if empty and on base
+		if ( ! isNull aborigen_heli ) then { // #666: request by EngineerACE in December of 2023, delete the aborigen heli if empty and on base
 			if ( aborigen_heli  call SYG_pointIsOnBase ) then {
 				if ( ({alive _x} count crew aborigen_heli) == 0 ) then {
 					hint localize format[ "+++ %1 aborigen_heli (%2) removed from the base during clean procedure", if (alive aborigen_heli) then {"Alive "} else {"Dead"}, typeOf aborigen_heli ];
@@ -219,6 +219,11 @@ while { true } do {
 
 					if ( _vehicle isKindOf "Car" ) exitWith {
 						_found = !(alive _vehicle || (_vehicle in d_helilift1_types) ); // don't clean alive and resurrectable vehicles
+					};
+
+					// #667: request by EngineerACE in December of 2023
+					if ( _vehicle call SYG_isParachute ) exitWith {
+						_found = isNull (driver _vehicle); // don't clean parachute with man
 					};
 
 					// check if holder is on the ground or is hanging in air (some Arma bug)
