@@ -160,51 +160,55 @@ while { true } do {
 
 		_arr = _base_center nearObjects ["CAManBase",_search_radious];
 		sleep 0.5;
-		_arr = _arr + (_base_center nearObjects ["WeaponHolder",_search_radious]);
+//		_arr = _arr + (_base_center nearObjects ["WeaponHolder",_search_radious]);
+		_arr = [_arr, (_base_center nearObjects ["WeaponHolder",_search_radious])] call SYG_addArrayInPlace;
 		sleep 0.5;
-		_arr = _arr + (_base_center nearObjects ["PipeBomb",_search_radious]);
+//		_arr = _arr + (_base_center nearObjects ["PipeBomb",_search_radious]);
+		_arr = [_arr, (_base_center nearObjects ["PipeBomb",_search_radious])] call SYG_addArrayInPlace;
 		sleep 0.5;
-		_arr = _arr + (_base_center nearObjects ["Land_MAP_AH64_Wreck",_search_radious]);
+//		_arr = _arr + (_base_center nearObjects ["Land_MAP_AH64_Wreck",_search_radious]);
+		_arr = [_arr, (_base_center nearObjects ["Land_MAP_AH64_Wreck",_search_radious])] call SYG_addArrayInPlace;
 		sleep 0.5;
-		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]); // why this is added? Don't know :o(
+//		_arr = _arr + (_base_center nearObjects ["Car",_search_radious]); // why this is added? Don't know :o(
+		_arr = [_arr, (_base_center nearObjects ["Car",_search_radious])] call SYG_addArrayInPlace;
 		sleep 0.5;
 		_cnt_dead = 0;
 		if (count _arr > 0) then {
-            for "_i" from 0 to count _arr - 1 do {
+            for "_i" from 0 to (count _arr) - 1 do {
                 _vehicle = _arr select _i;
                 if ( _vehicle call SYG_pointIsOnBase ) then { // in rect of base
-                    if ( !isNull _vehicle ) then
-                    {
+                    if ( !isNull _vehicle ) then {
                         _found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
                         if (!_found) then {
                             if ( _vehicle isKindOf "CAManBase") exitWith { // check if dead man not player
                                 _found = !((alive _vehicle) || (isPlayer _vehicle)); // add dead bodies only
-
-                                if ( _found ) then {
+                                if ( _found ) exitWith {
                                     // dead body
                                     _cnt_dead = _cnt_dead + 1;
-                                } else {
-                                    // check for zombies found (not player and alive)
-                                    if ( primaryWeapon _vehicle == "") then { // may be zombi or AI at rearming progress
-                                        if (name _vehicle == "Error: No unit") then {
-                                            // Yesss, he is ZOMBIiiiii..... try to remove him in any way
-                                            //_vehicle setPos [ 0, 0, 0 ];
-                                            _vehicle setDamage 1.1;
-                                            _name = name _vehicle;
-                                            hint localize format["+++ x_infiltrate.sqf: zombi (no prim weapon) ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
-                                            sleep 0.1;
-                                            //hideBody _vehicle;
-                                            deleteVehicle _vehicle;
-                                            sleep 0.5;
-                                            _found = !isNull _vehicle;
-                                        };
-                                    };
-                                };
+                                }
+								// check for zombies found (not player and alive)
+								if ( primaryWeapon _vehicle == "") then { // may be zombi or AI at rearming progress
+									if (name _vehicle == "Error: No unit") then {
+										// Yesss, he is ZOMBIiiiii..... try to remove him in any way
+										//_vehicle setPos [ 0, 0, 0 ];
+										_vehicle setDamage 1.1;
+										_name = name _vehicle;
+										hint localize format["+++ x_infiltrate.sqf: zombi (no prim weapon) ""%1"" detected in clean proc, name ""%2""", _vehicle, _name];
+										sleep 0.1;
+										//hideBody _vehicle;
+										deleteVehicle _vehicle;
+										sleep 0.5;
+										_found = !isNull _vehicle;
+									};
+								};
                             };
                             if ( _vehicle isKindOf "Car") exitWith {
                                 _found = !(alive _vehicle || (_vehicle in d_helilift1_types) ); // don't clean alive and resurrectable vehicles
                             };
-
+                            // #667: request by EngineerACE in December of 2023
+							if ( _vehicle call SYG_isParachute ) exitWith {
+                                _found = isNull (driver _vehicle); // don't clean parachute with man
+							};
                             // check if holder is on the ground or is hanging in air (some Arma bug)
                             _found = (((_vehicle modelToWorld [0,0,0]) select 2) < 0.7) || (((getPos _vehicle) select 2) > 4); // if z > 4, item is hanging in air
                         };
