@@ -889,17 +889,17 @@ d_static_count_for_target_clear = 1;
 // first element = center position, second element = a, third element = b, fourth element = angle, fifth element = number of groups
 d_with_isledefense =
 #ifdef __SCHMALFELDEN__
-	[[2535.49,3112,0], 2000, 2000, 0, 3];
+	[[[2535.49,3112,0], 2000, 2000, 0], 3];
 #endif
 #ifdef __UHAO__
-	[[12422.8,11518.5,0], 6850, 6850, 0, 4];
+	[[[12422.8,11518.5,0], 6850, 6850, 0], 4];
 #endif
 #ifdef __DEFAULT__
-	[[12422.8,11518.5,0], 6850, 6850, 0, 5];
+	[[[12422.8,11518.5,0], 6850, 6850, 0], 5];
 d_preferred_isledefence_spawn_points = []; // Future feature to spawn at predefined areas, not random point as is now
 #endif
 #ifdef __TT__
-	[[12422.8,11518.5,0], 6850, 6850, 0, 4];
+	[[[12422.8,11518.5,0], 6850, 6850, 0], 4];
 #endif
 
 // if set to false, empty vehicles will not get deleted after the main target gets cleared. true = empty vehicles will get deleted after 25-30 minutes

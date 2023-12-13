@@ -68,7 +68,7 @@ d_own_side = "";
 // setup in x_setup.sqf
 d_version = [];
 #ifdef __AI__
-d_version = d_version + ["AI"]; // AI version
+d_version set [ count d_version, "AI" ]; // AI version
 #endif
 #ifdef __MANDO__
 d_version = d_version + ["MANDO"]; // MANDO version
@@ -80,26 +80,32 @@ d_version = d_version + ["REVIVE"]; // Revive version
 d_version = d_version + ["TT"]; // Two Teams version
 #endif
 #ifdef __ACE__
-d_version = d_version + ["ACE"]; // A.C.E. version
+d_version set [ count d_version, "ACE" ]; // A.C.E. version
 #endif
 #ifdef __CSLA__
 d_version = d_version + ["CSLA"]; // CSLA version
 #endif
 #ifdef __P85__
-d_version = d_version + ["P85"]; // P85 version
+d_version set [ count d_version, "P85"]; // P85 version
 #endif
 #ifdef __RANKED__
-d_version = d_version + ["RANKED"]; // Ranked version
+d_version set [ count d_version, "RANKED"]; // Ranked version
 #endif
 
 #ifdef __NEW__
 SYG_islands_arr = [
 	[	// Island #1 (Main)
+		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28], // Towns
+		// Add some random patrols on the island
+        // If the array is empty, no patrols
+        // If not empty: first element = center position, second element = a, third element = b, fourth element = angle, fifth element = number of groups
+		d_with_isledefense, // Patrol params: first element = center position, second element = a, third element = b, fourth element = angle, fifth element = number of groups
+		getArray(configFile>>"CfgWorlds">>worldName>>"centerPosition") // Center of the Sahrani
 	],
 	[	// Island #2 Rahmadi, just in case, to demonstrate all features of the new structure
-		target_names, // All towns on this island as in lower real veriants
-		[SINGLE_RECT_OR_ELLIPSE OR RECT_ARRAY_OF_RECTS_OR_ELLIPSES], // Patrols rectangle[s] / ellipse[s]
-		[[WPS_SEA_DEVIL1],[WPS_SEA_DEVIL2],[WPS_SEA_DEVIL_N]] // Sea patrol routes
+		[ 20  ], // 20 => index for Rahmadi in the common list only
+		[ [[2928,2732, 0], 900], 2], // Patrols circle for the Rahmadi
+		[2928,2732, 0] // Center of Rahmadi
 	]
 ];
 #endif

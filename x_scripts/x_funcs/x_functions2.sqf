@@ -177,7 +177,7 @@ XfGetClearPoint = {
 
 // get a random clear point inside a circle. Clear point is one not in water and not on steep slope
 // parameters:
-// center position, radius of the circle
+// area structure [center position, radius of the circle]
 // example: _random_point = [position trigger1, 200] call XfGetRanPointCircle;
 XfGetRanPointCircle = {
 	private ["_center", "_radius", "_center_x", "_center_y", "_ret_val", "_co", "_angle", "_x1", "_y1", "_helper", "_dist"];

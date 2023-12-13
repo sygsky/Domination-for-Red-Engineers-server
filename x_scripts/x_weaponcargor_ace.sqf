@@ -307,7 +307,7 @@ if (isNil "x_ranked_weapons") then {
 };
 
 
-// New format to add weapon.ьфпфяшт cargo to the main ammobox without many statements, only by array using
+// New format to add weapon/magazine cargo to the main ammobox without many statements, only by array using
 #ifdef __NEW__
 
 // call: [_ammo_box, ["wpn#",...,",wpn#",###]] call _addWeaponCargo;

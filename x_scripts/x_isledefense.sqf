@@ -102,9 +102,14 @@ _patrol_types = [       "HP",        "FP",         "SP",         "LP",        "H
 //
 _make_isle_grp = {
 	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vehs", "_veh_arr", "_rand", "_leader", "_grp_array","_params","_x"];
-	_params = [d_with_isledefense select 0,d_with_isledefense select 1,d_with_isledefense select 2,d_with_isledefense select 3];
+	_params = d_with_isledefense select 0;
 	_start_point = []; //_params call XfGetRanPointSquare;
 	while {(count _start_point) == 0} do {
+		if (count _params > 2) then { // Rectangle [_center, _a, _b, _ang]
+			_start_point = _params call XfGetRanPointSquare;
+		} else { // Circle [_center, _rad]
+			_start_point = _params call XfGetRanPointCircle;
+		};
 		_start_point = _params call XfGetRanPointSquare;
 		if (count _start_point > 0) then {
 			if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];};  // try next, skip islet point
@@ -510,7 +515,7 @@ SYG_patrolGroupNumber = {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // if this is re-run of script, count already existing patrol groups
-_patrol_cnt = d_with_isledefense select 4;
+_patrol_cnt = d_with_isledefense select 1;
 _patrol_cnt = (_patrol_cnt - (count SYG_isle_grps)) max 0; // how many patrol to add to normal count
 if ( _patrol_cnt > 0) then {
     for "_i" from 1 to _patrol_cnt do {
