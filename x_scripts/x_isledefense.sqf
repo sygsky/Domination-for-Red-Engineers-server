@@ -103,16 +103,11 @@ _patrol_types = [       "HP",        "FP",         "SP",         "LP",        "H
 _make_isle_grp = {
 	private ["_units", "_start_point", "_dummycounter", "_agrp", "_elist", "_vehs", "_veh_arr", "_rand", "_leader", "_grp_array","_params","_x"];
 	_params = d_with_isledefense select 0;
-	_start_point = []; //_params call XfGetRanPointSquare;
+	_start_point = [];
 	while {(count _start_point) == 0} do {
-		if (count _params > 2) then { // Rectangle [_center, _a, _b, _ang]
-			_start_point = _params call XfGetRanPointSquare;
-		} else { // Circle [_center, _rad]
-			_start_point = _params call XfGetRanPointCircle;
-		};
-		_start_point = _params call XfGetRanPointSquare;
+		_start_point = _params call SYG_getRanPointInShape;
 		if (count _start_point > 0) then {
-			if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];};  // try next, skip islet point
+			if ( _start_point call SYG_pointOnIslet ) then { _start_point resize 0 };  // try next, skip islet point
 			sleep 0.4;
 		};
 	};
@@ -124,9 +119,9 @@ _make_isle_grp = {
 #else
 	_dummycounter = 0;
 	while {_start_point distance FLAG_BASE < 1200 && _dummycounter < 99} do  { // TODO - find start points far from active war zones (airbase, targets etc)
-		_start_point = []; //_params call XfGetRanPointSquare;
+		_start_point = [];
 		 while {count _start_point == 0} do {
-			_start_point = _params call XfGetRanPointSquare;
+			_start_point = _params call SYG_getRanPointInShape;
 			// check point be on any islet
 			if ( _start_point call SYG_pointOnIslet ) then {_start_point = [];}; // try next, skip islet point
 			sleep 0.1;
@@ -153,7 +148,7 @@ _make_isle_grp = {
     _crew_type    = _patrol_type call SYG_crewTypeByPatrolW;
     _elist        = _patrol_type call SYG_generatePatrolList; // list of vehicle type names
 #ifdef __DEBUG__
-    hint localize format["+++ patrol veh list %1 created at %2", _elist, [_start_point,localize "STR_SYS_POSE"] call SYG_MsgOnPosE];
+    hint localize format["+++ patrol veh list %1 created at %2", _elist, [_start_point,10] call SYG_MsgOnPosE0];
 #endif
 
 // if in desert region, replace  tanks with desert camouflage
@@ -162,7 +157,7 @@ _make_isle_grp = {
             sleep 0.01;
             _elist = _elist call SYG_makeDesertAbrams;
 #ifdef __DEBUG__
-            hint localize format["+++ HP patrol (vehs %1) created with desert camouflaged Abrams at %2", count _elist, [_start_point,localize "STR_SYS_POSE"] call SYG_MsgOnPosE];
+            hint localize format["+++ HP patrol (vehs %1) created with desert camouflaged Abrams at %2", count _elist, [_start_point, 10] call SYG_MsgOnPosE0];
 #endif
         };
     };
@@ -823,7 +818,7 @@ while { true } do {
 					_units = units _igrp;
 					// initial  units, conscious units, out of vehicles alive
 					_men_info = format["{%1/%2/%3}",_units call XfGetAliveUnits, _units call SYG_getAllConsciousUnits, _units call XfGetUnitsOnFeet ];
-					_pos_msg = [_leader,localize "STR_SYS_POSE"] call SYG_MsgOnPosE;
+					_pos_msg = [_leader, 10] call SYG_MsgOnPosE0;
 				};
 				_grp_array   = argp(_igrpa,PARAM_GRP_ARRAY);
 				_enemy_near  = if ((_grp_array select 2) in [0,2]) then {""} else { if ((_grp_array select 2) == 9) then {"!"} else {"*"}};

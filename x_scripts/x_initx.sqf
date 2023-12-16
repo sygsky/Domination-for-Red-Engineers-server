@@ -8,14 +8,14 @@ groups_east = [];
 groups_west = [];
 groups_resistance = [];
 groups_civilian = [];
-can_create_group = true;
+can_create_group = true; //--- Not used anymore
 
 if (d_smoke) then {smoke_groups = [];};
-can_add_patrol_group = true;
+can_add_patrol_group = true; // Not used anymore
 check_vec_list = [];
 
 // arma can create a maximum of 144 groups per side
-d_max_groups = 144;
+d_max_groups = 144; //--- Not used anymore
 
 if (isNil "d_lock_ai_armor") then {d_lock_ai_armor = false;};
 if (isNil "d_lock_ai_car") then {d_lock_ai_car = false;};

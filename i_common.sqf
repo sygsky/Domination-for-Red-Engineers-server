@@ -105,7 +105,7 @@ SYG_islands_arr = [
 	[	// Island #2 Rahmadi, just in case, to demonstrate all features of the new structure
 		[ 20  ], // 20 => index for Rahmadi in the common list only
 		[ [[2928,2732, 0], 900], 2], // Patrols circle for the Rahmadi
-		[2928,2732, 0] // Center of Rahmadi
+		[2928, 2732, 0] // Center of Rahmadi
 	]
 ];
 #endif

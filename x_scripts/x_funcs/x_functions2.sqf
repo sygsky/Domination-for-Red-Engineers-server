@@ -345,6 +345,20 @@ XfGetRanPointCircleOuter = {
 	_ret_val
 };
 
+// get a random point inside a shape (rectangle or circle) not on slope and not in water
+// parameters:
+// [center position, a, b<, angle>] call SYG_getRanPointInShape; // For (optionally rotated) rectangles
+// or
+// [center position, radius] call SYG_getRanPointInShape; // For circles
+// example: _random_point  = [position trigger2, 200, 300, 30] call SYG_getRanPointInShape;
+
+SYG_getRanPointInShape = {
+	if (count _this > 2) exitWith { // Rectangle [_center, _a, _b, _ang]
+		_this call XfGetRanPointSquare;
+	};
+	// Circle [_center, _rad]
+	_this call XfGetRanPointCircle;
+};
 // get a random point inside a square not on slope and not in water
 // parameters:
 // center position, a and b (like in triggers), angle

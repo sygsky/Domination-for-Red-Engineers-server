@@ -280,12 +280,14 @@ if (isServer) then {
     // Move radiomast SM #56 to the beginning of SM list at pos 2..3
     // ranked_sm_array = [ 5, [2,3,53] ];
 
-	_first_sm_array = [ [ [56],[1,10] ], [ [57],[3,12] ] ]; 	// SM to place at first part of SM list between designated indexes, e.g. SM#56 must be at pos [1..10] ect
+	// SM to place at first part of SM list between designated indexes, e.g. SM#56 must be at pos [1..10], and SM#2 will be at pos [1..57(maxind)] etc
+	_first_sm_array = [ [ [56],[1,10] ], [ [57],[3,12] ], [[2,3,53], [5, 1000]] ];
 	hint localize format["+++ init.sqf: FirstSMArray(%1)= %2", count _first_sm_array, _first_sm_array];
 	_fixed_id = [];
 	{
-		{ _fixed_id set [count _fixed_id, _x] } forEach (_x select 0);
-//			_fixed_id  = _fixed_id + (_x select 0);
+		_x = _x select 0;
+		if (typeName _x == "SCALAR") then { _x = [_x] };
+		{ _fixed_id set [count _fixed_id, _x] } forEach _x;
 	} forEach _first_sm_array;
 
 	_fixed_id = _fixed_id + _first_array;
@@ -293,22 +295,22 @@ if (isServer) then {
 	for "_i" from 0 to (count _first_sm_array) -1 do {	// For each item in set of [[SM_list],[_list_range_start,_list_range_end]]
 		_arr       = _first_sm_array select _i;
 		_fsm_arr   = _arr select 0; // Next SM id list
-		_fsm_range = _arr select 1; // The range for all id of SM in _fsm_arr list
+		if (typeName _fsm_arr == "SCALAR") then { _fsm_arr = [_fsm_arr]}; // If single Id, pack it into array
+		_fsm_range = _arr select 1; // The range for all id of SM in _fsm_arr
 		hint localize format["+++ init.sqf: FirstSMArray - step %1, _fsm_arr %2, _fsm_range %3", _i + 1, _fsm_arr, _fsm_range];
+		_range_start = (_fsm_range select 0) min ( (count side_missions_random) - 1 ); // Just in case prevent overflow of id
+		_range_end   = (_fsm_range select 1) min ( (count side_missions_random) - 1 ); // Use array last index as max possible one
 		for "_i" from 0 to (count _fsm_arr) - 1 do {
 			_sm_id       = _fsm_arr select _i;
-			_range_start = _fsm_range select 0;
-			_range_end   = _fsm_range select 1;
-			hint localize format["+++ init.sqf: FirstSMArray - move SM#%1 to the range %2:", _sm_id, _fsm_range];
-
+			hint localize format["+++ init.sqf: FirstSMArray - ensure SM#%1 to be in the range %2:", _sm_id, _fsm_range];
 			_sm_pos = side_missions_random find _sm_id; // Current pos of SM to from ones to be in range
-			if (_sm_pos >= 0) then { // Found, put to the designated sub-range, e.g. [1..10] (indexes startS from 0)
+			if (_sm_pos >= 0) then { // Found, put to the designated sub-range, e.g. [1..10] (indexes start from 0, end with (count side_missions_random -1))
 				if ((_sm_pos >= _range_start) && (_sm_pos <= _range_end) ) exitWith { // Already in range, skip exchange
 					hint localize format["+++ init.sqf: FirstSMArray - SM#%1 is already at pos %2 so already is in designated range, skip this step", _sm_id, _sm_pos ];
 				};
 				// Find new position for the SM id in the designated range
 				while { true } do {
-					_new_pos = floor(random (_range_end-_range_start) + 1) + _range_start; // Get random position in the range, e.g. 5 in [1..10]
+					_new_pos = floor( random (_range_end-_range_start + 1) ) + _range_start; // Get random position in the range, e.g. 5 in [1..10]
 					_moved_id = side_missions_random select _new_pos; // Get id of SM to exchange with current first one
 					if (! (_moved_id in _fixed_id )) exitWith { // If found id not in first SM list, echange it
 						side_missions_random set [_new_pos, _sm_id]; // Move first  SM to  the pos inro designated range
@@ -319,19 +321,6 @@ if (isServer) then {
 			} else { hint localize format["*** init.sqf: FirstSMArray - SM#%1 not found in the mission SM list", _sm_id] };
 		};
 	};
-/**
-	    if (! (56 in _first_array) ) then {
-    		_ind56 = side_missions_random find 56;
-    		if (_ind56 >= 0) then { // set it 2nd-3rd SM in the sequence
-    			if ((_ind56 == 0) || (_ind56 > 9) ) then { // move 56th SM to the 2..10 position in array (so index will be  1..9)
-    				_ind = floor(random 9) + 1; // 1..9 = new index for 56th SM
-    				side_missions_random set[_ind56, side_missions_random select _ind]; // move SM from new 56th SM index to the current 56th SM index
-    				side_missions_random set[_ind, 56]; // put 56th SM to the 1..9 index in array
-    				hint localize format["+++ SM array: 56th SM (radiomast installation) exchanged index from %1 to the %2",_ind56, _ind];
-    			} else { hint localize format["+++ SM array: 56th SM (radiomast installation) is at index %1",_ind56, _ind]; };
-    		} else { hint localize "+++ SM array: 56th SM (radiomast installation) not used in the mission" };
-        };
-*/
 
 //    side_missions_random = side_missions_random - [40,41]; // temporarily remove all SM with prisoners (not work!!)
 

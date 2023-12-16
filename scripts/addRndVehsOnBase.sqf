@@ -4,15 +4,22 @@
 	description: Adds some vehicles on base at game start. Vehicles are not recoverable and wilд be removed from map on kill
 	returns: nothing
 */
+#include "x_setup.sqf"
 
 // #define __DEBUG__
 
+#ifdef __DEFAULT__
 // positions for Camel only, not use it for BMP
 _camelPosArr = [[+9428,9749,0], [11079,9844,0], [9721,9849,0], [9222,10346], [+9767,9962,0], [+9804,9956,0], [+9842,9954,0]]; // Camel positions
 _camelDirArr = [           225,              0,            90,          180,              0,              0,              0];  // Camel directions
 _landPosArr  = [ [9439.2,9800.7,0], [10254.87,10062,0], [10503,10090,0], [9153,10045,0], [9064,10036,0] ]; // cars (land) vehicles positions
 _landDirArr  = [               180,               180,                0,              0,           350  ]; // cars (land) vehicles directions
 _landTypeArr = [ "ACE_BRDM2", "ACE_BMP1_D", "ACE_UAZ", "ACE_UAZ_MG", "ACE_UAZ_AGS30", "ACE_BRDM2_ATGM", "ACE_BRDM2_SA9"  ];
+#endif
+
+#ifdef __OFP_WORLD__
+
+#endif
 
 #define __LAND_VEH_NUM__ 2 // how many vehicle create on the base in init procedure
 

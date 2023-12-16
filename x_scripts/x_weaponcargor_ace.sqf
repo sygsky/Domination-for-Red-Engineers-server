@@ -306,7 +306,7 @@ if (isNil "x_ranked_weapons") then {
 ];
 };
 
-
+/*
 // New format to add weapon/magazine cargo to the main ammobox without many statements, only by array using
 #ifdef __NEW__
 
@@ -357,8 +357,8 @@ _cargo = [
     ,5
 ];
 
-
 #endif
+*/
 
 _ve spawn {
 	private ["_ve", "_old_rank", "_index", "_weapons", "_i", "_rk"];

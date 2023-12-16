@@ -188,7 +188,7 @@ while { true } do {
 		if (count _arr > 0) then {
             for "_i" from 0 to (count _arr) - 1 do {
                 _vehicle = _arr select _i;
-                if ( !_vehicle call SYG_pointIsOnBase ) exitWith {};
+                if ( !(_vehicle call SYG_pointIsOnBase) ) exitWith {};
 				// in rect of base
 				if ( isNull _vehicle ) exitWith {};
 				_found = _vehicle isKindOf "Land_MAP_AH64_Wreck";
@@ -198,7 +198,7 @@ while { true } do {
 						if ( _found ) exitWith {
 							// dead body
 							_cnt_dead = _cnt_dead + 1;
-						}
+						};
 						// check for zombies found (not player and alive)
 						if ( primaryWeapon _vehicle == "") then { // may be zombi or AI at rearming progress
 							if (name _vehicle == "Error: No unit") then {
