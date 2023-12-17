@@ -1066,7 +1066,7 @@ XHandleNetStartScriptClient = {
         // call as:		["remote_execute", format["%1 setPos %2", _reveal_name, getPos _nearest]] call XSendNetStartScriptClient;
         //
 		case "remote_execute" : {
-			hint localize format["+++ x_netinitclient.sqf ""remote_execute"": ""%1""", _this select 1 ];
+			hint localize format["+++ x_netinitclient.sqf: %1", _this ];
 			_this call (compile (_this select 1));
 		};
 

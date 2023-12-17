@@ -79,7 +79,7 @@ if ( !(_arg in ["GO"])) then {
 	_dir = [aborigen, player] call XfDirToObj; // wanted direction of aborigen view to the player
 	if ((abs(_dir - _abo_dir)) > 2) then { // change direction only if needed
 		if (!local aborigen) then {
-			["remote_execute", format ["aborigen setDir %1;", _dir]] call XSendNetStartScriptServer;
+			["remote_execute", format ["aborigen setDir %1;", _dir], name player] call XSendNetStartScriptServer;
 		} else { aborigen setDir _dir };
 		aborigen setVariable ["ABO_DIR", _dir];
 	};
@@ -410,7 +410,7 @@ switch ( _arg ) do {
 		_ask_server = isNil "aborigen_plane";
 		if ( !_ask_server ) then { _ask_server = !alive aborigen_plane; };
 		if ( _ask_server ) then {
-			["remote_execute","[] execVM ""scripts\intro\camel.sqf"""] call XSendNetStartScriptServer;
+			["remote_execute","[] execVM ""scripts\intro\camel.sqf""", name player] call XSendNetStartScriptServer;
 			_time = time + 5;
 			if (isNil "aborigen_plane") then {
 				while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
@@ -535,7 +535,7 @@ switch ( _arg ) do {
 		_wait_heli  = false;
 		if (isNil "aborigen_heli") then {_wait_heli = true; } else { _wait_heli = alive aborigen_heli };
 		if ( _wait_heli) then {
-				["remote_execute","[] execVM ""scripts\intro\heli.sqf"""] call XSendNetStartScriptServer;
+				["remote_execute","[] execVM ""scripts\intro\heli.sqf""", name player] call XSendNetStartScriptServer;
 		};
 		_ready_to_mark = true;
 		if (_wait_heli) then {
@@ -556,11 +556,15 @@ switch ( _arg ) do {
 				player groupChat (localize "STR_ABORIGEN_HELI_BUSY"); // "Chopper's gone, with pilot '%1'. We'll have to wait."
 				_ready_to_mark = false;
 			};
-			if ( !(aborigen_heli call SYG_pointOnAntigua) ) then { // move heli to the points
+			if ( !(aborigen_heli call SYG_pointOnAntigua) ) exitWith { // move heli to the points
 				_arr = HELI_POINT_ARR call XfRandomArrayVal;
 				aborigen_heli setDir (_arr select 1);
 				aborigen_heli setPos (_arr select 0);
 				hint localize format["+++ ABO HELI: heli is out of Antigua area, move it on a new pos %1", _arr];
+			};
+			// Found that heli in on Antigua, but it may be in wter or killed or damaged, out of fuel etc. Check it now!
+			if (!alive aborigen_heli) exitWith {
+
 			};
 		};
 		if (_ready_to_mark) then {
@@ -639,7 +643,7 @@ switch ( _arg ) do {
 		if (local aborigen) then {
 			player execVM "scripts\intro\follow.sqf";
 		} else {
-			["remote_execute", format ["%1 execVM ""scripts\intro\follow.sqf""", str(player)]] call XSendNetStartScriptServer;
+			["remote_execute", format ["%1 execVM ""scripts\intro\follow.sqf""", str(player)], name player] call XSendNetStartScriptServer;
 //			["remote_execute", format ["aborigen doWatch %1;", str(player)]] call XSendNetStartScriptServer;
 		};
 	};

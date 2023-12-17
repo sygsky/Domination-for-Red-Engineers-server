@@ -21,4 +21,4 @@ if (typeName (_this select 0) == "STRING") exitWith {
 
 player groupChat format["+++ client debug_SMPP.sqf: _this %1", _this];
 hint localize format["+++ client debug_SMPP.sqf: _this %1", _this];
-["remote_execute", "_this execVM ""scripts\debug\debug_SMPP.sqf"";", _this select 0] call XSendNetStartScriptServer;
+["remote_execute", "_this execVM ""scripts\debug\debug_SMPP.sqf"";", _this select 0, name player] call XSendNetStartScriptServer;

@@ -55,7 +55,7 @@ publicVariable "aborigen";
 
 // assign all events for new aborigen
 sleep 3;
-["remote_execute","[] execVM ""scripts\intro\aborigenInit.sqf"""] call XSendNetStartScriptClient; // Assign abo action on all client computers
+["remote_execute","[] execVM ""scripts\intro\aborigenInit.sqf""", "<server>"] call XSendNetStartScriptClient; // Assign abo action on all client computers
 
 //aborigen setVariable [ABORIGEN, true]; // ??? Do we need this statement? No we don't!
 aborigen setBehaviour "Careless";

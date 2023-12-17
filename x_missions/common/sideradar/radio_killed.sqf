@@ -8,7 +8,7 @@
 	returns: nothing
 */
 
-if (!isServer) exitWith{hint localize "--- radio_killed.sqf called on server!"};
+if (!isServer) exitWith{hint localize "--- radio_killed.sqf called on client!"};
 
 #include "sideradio_vars.sqf"
 
@@ -30,7 +30,7 @@ if (isPlayer _killer) then {
 	_demote_score = (score _killer) call SYG_demoteByScore;
 	// "Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
 	_str = format["if ((name player) == '%1') then {'STR_RADAR_KILLED' execVM 'scripts\jail.sqf'} else {['msg_to_user', '', [['STR_RADAR_KILLER','%1',%2]],0,0,false,'losing_patience'] call SYG_msgToUserParser};", name _killer, _demote_score];
-	[ "remote_execute", _str ] call XSendNetStartScriptClient; // Sent to all clients only
+	[ "remote_execute", _str, "<server>" ] call XSendNetStartScriptClient; // Sent to all clients only
 };
 
 // remove radar after 10 minutes of players absence around 300 meters of radar.

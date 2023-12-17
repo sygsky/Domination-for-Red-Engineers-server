@@ -244,8 +244,8 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         	_str  = format["hint localize format[""+++ %1(1) %2"", getPos %1]", _reveal_name, "%1" ];
                         	_str1 = format["hint localize format[""+++ %1(2) %2"", getPos %1]", _reveal_name, "%1" ];
                         	_str  = format["%1; %2 setPos %3; %2 setDir %4;sleep 0.1;%5;", _str, _reveal_name, getPos _nearest, getDir _nearest, _str1];
-                        	hint localize format["+++ ""remote_execute"" sent: ""%1""", _str];
-                        	["remote_execute", _str] call XSendNetStartScriptClient; // Sent to all clients only
+                        	hint localize format["+++ ""remote_execute"" sent: ""%1""", _str, name player];
+                        	["remote_execute", _str, name player] call XSendNetStartScriptClient; // Sent to all clients only
                         };
 
                         // send information to all clients about new position of well known lifted vehicle

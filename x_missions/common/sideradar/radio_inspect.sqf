@@ -27,10 +27,10 @@ _set_detected = {
 		if (_veh isKindOf "Truck") then {
 			// Print message on the server now
 			_str = format["hint localize ""+++ radio_service: radar truck detected by '%1' at %2""", name player, [_veh,10] call SYG_MsgOnPosE0];
-			["remote_execute", format["%1;d_radar_truck setVariable['DETECTED', true];", _str]] call XSendNetStartScriptServer;
+			["remote_execute", format["%1;d_radar_truck setVariable['DETECTED', true];", _str], name player] call XSendNetStartScriptServer;
 		} else {
 			_str = format["hint localize ""+++ radio_service: radar mast detected by '%1' at %2""", name player, [_veh,10] call SYG_MsgOnPosE0];
-			["remote_execute", format["%1;d_radar setVariable['DETECTED', true];", _str]] call XSendNetStartScriptServer;
+			["remote_execute", format["%1;d_radar setVariable['DETECTED', true];", _str], name player] call XSendNetStartScriptServer;
 		};
 		true
 	};

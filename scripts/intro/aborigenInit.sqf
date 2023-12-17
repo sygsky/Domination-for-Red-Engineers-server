@@ -153,7 +153,8 @@ if (alive aborigen) then {
 					["remote_execute",
 						format["aborigen setDir %1; aborigen playMove ""%2"";",
 							[aborigen, player] call XfDirToObj, _list call XfRandomArrayVal
-						]
+						],
+						name player
 					] call XSendNetStartScriptServer;
 				};
 				sleep 10;

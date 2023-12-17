@@ -49,7 +49,7 @@ _list = [];
 } forEach vehicles;
 hint localize format["+++ x_m57.sqf: global coll vehicles (size %1) scanned for '%2', found %3 and set as old alive %4", _cnt, BOAT_TYPE, _cnt_boat, count _list ];
 
-["remote_execute", "sleep 30; playSound 'sea_devil1'; ['sea_devil1', 22] call SYG_showMusicTitle"] call XSendNetStartScriptClientAll; // Sent to all clients only
+["remote_execute", "sleep 30; playSound 'sea_devil1'; ['sea_devil1', 22] call SYG_showMusicTitle", "<server>"] call XSendNetStartScriptClientAll; // Sent to all clients only
 
 _pos    = + _circle_pos;
 _sites = [
