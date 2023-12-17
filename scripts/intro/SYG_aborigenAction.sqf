@@ -533,7 +533,7 @@ switch ( _arg ) do {
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		_wait_heli  = false;
-		if (isNil "aborigen_heli") then {_wait_heli = true; } else { _wait_heli = alive aborigen_heli };
+		if (isNil "aborigen_heli") then {_wait_heli = true; } else { _wait_heli = !alive aborigen_heli };
 		if ( _wait_heli) then {
 				["remote_execute","[] execVM ""scripts\intro\heli.sqf""", name player] call XSendNetStartScriptServer;
 		};
@@ -562,10 +562,7 @@ switch ( _arg ) do {
 				aborigen_heli setPos (_arr select 0);
 				hint localize format["+++ ABO HELI: heli is out of Antigua area, move it on a new pos %1", _arr];
 			};
-			// Found that heli in on Antigua, but it may be in wter or killed or damaged, out of fuel etc. Check it now!
-			if (!alive aborigen_heli) exitWith {
-
-			};
+			// Found that heli in on lasn of Antigua, re-use it as is.
 		};
 		if (_ready_to_mark) then {
 			_heli_type = aborigen_heli call SYG_getVehicleMarkerType;
