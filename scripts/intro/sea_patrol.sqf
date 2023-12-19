@@ -37,6 +37,10 @@
 #define OFFSET_STAT_LAST_TIME 1
 #define OFFSET_STAT_UNITS 2
 
+#define BOAT_STATUS_UNKNOWN 0
+#define   BOAT_STATUS_READY 1
+#define  BOAT_STATUS_RESCUE 0
+
 // Time to create a new vehicle to replace the captured one in seconds (600 == 10 mins)
 #define TIME_TO_REPLACE_CAPTURED_VEH 600
 
