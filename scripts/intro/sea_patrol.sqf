@@ -8,10 +8,19 @@
 											   _id is index in array
 			[ _boat, _grp, [_wp_arr (points)], _id, _state ]
 
-		_state = [_last_pos, _time, _units]:
+		_state = [_last_pos, _time, _units, status]:
 			0: _last position as [x,y<,z>] of last stored position ,
 			1: _time is last position getting time,
 			2: _units are all units in the intial group, we need it to remove bodies
+			TODO: 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
+
+			Algorithm is very clear:
+			1. Boat starts and go throught his WPs, last WP is circular, state = 1.
+			2. If script detects that boat is empty, state  == -1,
+			3. Special script sends some small rescue boat to the sea devil.
+				If boat is successful, new command is populated in the devil
+				and devil try to continue hsi trip or to move out of island boundaries and after is removed from the list. state = 0
+			4. if resque boat is failed during designated period (stoped during 5 mins, killed etc), devil also is marked to be deleted, state = 0;
 
 	returns: nothing
 */
@@ -646,7 +655,7 @@ while { true } do {
 		_time_to_clear = _time + 1800;
 		while {( (call XPlayersNumber) == 0 ) && (time < _time_to_clear)} do {sleep 60};
 		if ( (call XPlayersNumber) != 0 ) exitWith {
-			hint localize format[ "*** sea_patrol.sqf: mission was empty too short period of %1 secs, no boats removed", round(time - time) ];
+			hint localize format[ "*** sea_patrol.sqf: mission was empty too short period of %1 secs, no boats removed", round(time - _time) ];
 		};
 		hint localize format[ "*** sea_patrol.sqf: MAIN loop suspended due to players absent, all %1 patrols removed", count _patrol_arr ];
 		{ sleep 1; _x call _remove_patrol } forEach _patrol_arr;
