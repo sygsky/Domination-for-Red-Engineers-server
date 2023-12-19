@@ -15,8 +15,10 @@
 			TODO: 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
 
 			Algorithm is very clear:
-			1. Boat starts and go throught his WPs, last WP is circular, state = 1.
-			2. If script detects that boat is empty, state  == -1,
+			1. Boat starts and go through his WPs, last WP is circular, state = 1.
+			2. If script detects that boat is empty, state == -1.
+				While at last 2 units are in crew, sea devil continue his patrol.
+				If crew count == 1, sea devil goes to the ocean and is removed, state = 0.
 			3. Special script sends some small rescue boat to the sea devil.
 				If boat is successful, new command is populated in the devil
 				and devil try to continue hsi trip or to move out of island boundaries and after is removed from the list. state = 0
