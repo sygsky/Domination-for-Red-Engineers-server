@@ -1,9 +1,13 @@
 // by Sygsky, sea devil capture mission (#655, Sygsky proposal). x_missions/m/x_m57.sqf
+//
+// This SM always is successfull and can't return failure code
+//
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
 //#define __DEBUG_SM_57__
 #define BOAT_TYPE "RHIB2Turret"
+#define BOAT_GRU_TYPE "RHIB"
 #define POINT_TYPE "Heli_H_civil"
 
 x_sm_pos = [[8585.3,10103.7,0]]; // index: 57,   Capturing the sea devil boat, point near base shore on the west side of airbase
@@ -73,6 +77,13 @@ for "_i" from 0 to ((count _sites) - 1) do {
 	_sites set [_i, _item]; // Store created item in the place of its data
 	hint localize format["+++ x_m57.sqf: %1 created, pos %2, vUp %3", typeOf _item, getPos _item, vectorUp _item];
 };
+
+// 1. Start GRU boat (M2 RHIB).
+// 2. Respawn GRU boatit while side mission is not completed.
+// 3. Wait GRU boat at SM point while players count > 0.
+// 4. Remove GRU boat when SM is empty.
+[_circle_pos, BOAT_GRU_TYPE] execVM "x_mission\common\GRU_boat_respawn.sqf";
+
 // Await end of this SM
 _do = true;
 _pos = + _circle_pos; // Check for the circle position, not any other object
@@ -127,7 +138,7 @@ _cnt = 60;
 while { // Waiting for players to move away from the SM by a designated distance, up to a maximum of 10 minutes (600 seconds)
 	_names = [_circle_pos, 60] call SYG_findNearestPlayers;
 	_cnt = _cnt - 1;
-	( count _names > 0 ) && ( _cnt >=0 )
+	( count _names > 0 ) && ( _cnt >= 0 )
 } do { sleep 10; };
 if ( count _names == 0 ) then {
 	[ "say_sound", getPos (_sites select 0), "steal" ] call XSendNetStartScriptClientAll; // Play sound on circle center

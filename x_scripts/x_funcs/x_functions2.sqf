@@ -584,7 +584,7 @@ XfCreateMarkerGlobal = {
 };
 
 // create a local marker
-// parameters: marker name, marker pos, marker shape, marker color, marker size;(optional) marker text, marker dir, marker type, marker brush
+// parameters: marker name, marker pos, marker shape, marker color, marker size;(optional) marker text, marker dir, marker type, marker brush (for areas)
 // example: ["my marker",  position player, "ICON", "ColorBlue", [0.5,0.5]<,"AmmoBox",0,"Marker">] call XfCreateMarkerLocal;
 XfCreateMarkerLocal = {
 	private ["_m_name","_m_pos","_m_shape","_m_col","_m_size","_m_text","_m_dir","_m_type","_m_brush"];
