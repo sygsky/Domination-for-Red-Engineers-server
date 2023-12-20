@@ -32,8 +32,7 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 		    if (count _objs > 0) then {
 		        objectID2 = _objs select 0;
 		        if (alive objectID2) then {
-		            if(damage objectID2 > 0.0000001 || fuel objectID2<0.3333) then { true }
-		            else { false };
+		            (damage objectID2 > 0.00001) || (fuel objectID2  < 0.9)
 		        } else { false };
 		    } else { false };
 		} else { false };
@@ -41,7 +40,7 @@ if (_str_p in d_is_engineer /*|| __AIVer*/) then {
 #else
 	x_sfunc = {
 		private ["_objs"];
-		if ((vehicle player) == player)then{_objs = nearestObjects [player,["LandVehicle","Air"],5];if (count _objs > 0) then {objectID2 = _objs select 0;if (alive objectID2) then {if(damage objectID2 > 0.0000001 || fuel objectID2<1)then{true}else{false};}else{false};};}else{false};
+		if ( canStand player )then{_objs = nearestObjects [player,["LandVehicle","Air","Ship"],5];if (count _objs > 0) then {objectID2 = _objs select 0;if (alive objectID2) then {if(damage objectID2 > 0.0000001 || fuel objectID2<1)then{true}else{false};}else{false};};}else{false};
 	};
 #endif
 
