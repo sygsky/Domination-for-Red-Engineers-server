@@ -82,7 +82,7 @@ for "_i" from 0 to ((count _sites) - 1) do {
 // 2. Respawn GRU boatit while side mission is not completed.
 // 3. Wait GRU boat at SM point while players count > 0.
 // 4. Remove GRU boat when SM is empty.
-[_circle_pos, BOAT_GRU_TYPE] execVM "x_mission\common\GRU_boat_respawn.sqf";
+// TODO: enable this scipt execution: [_circle_pos, BOAT_GRU_TYPE] execVM "x_mission\common\GRU_boat_respawn.sqf";
 
 // Await end of this SM
 _do = true;
