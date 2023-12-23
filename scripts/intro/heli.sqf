@@ -26,9 +26,9 @@ _setPosAndDir = {
 
 hint localize "+++ heli.sqf: start";
 _isNil = isNil "aborigen_heli";
-_delete = if (!_isNil) then {!(alive aborigen_heli)} else { false };
+_delete = if (_isNil) then { false } else { !(alive aborigen_heli)};
 _create = _isNil || _delete;
-hint localize format["+++ heli.sqf: _delete is %1, isNull %2", _delete, isNull aborigen_heli];
+hint localize format["+++ heli.sqf: _delete is %1, _create %2", _delete, _create];
 
 if ( _delete ) then { // delete heli
 	if (isNull aborigen_heli) exitWith {};
@@ -43,9 +43,9 @@ if ( _create  ) exitWith { // create and set pos on islands
 	aborigen_heli = createVehicle [ HELI_TYPE call XfRandomArrayVal, [0,0,1000], [], 0, "NONE"];
 	sleep 0.1;
 	aborigen_heli setVelocity [0,0,0];
-	hint localize format["+++ heli.sqf: %1 heli created (alive %2) at ASL pos %3", typeOf aborigen_heli, alive aborigen_heli, getPosASL aborigen_heli];
 	call _setPosAndDir; // get new dir and pos for the heli
 	publicVariable "aborigen_heli";
+	hint localize format["+++ heli.sqf: %1 heli created (alive %2) at ASL pos %3", typeOf aborigen_heli, alive aborigen_heli, getPosASL aborigen_heli];
 };
 // set zero damage and not full fuel
 aborigen_heli setDamage 0;
