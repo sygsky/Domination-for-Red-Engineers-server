@@ -143,11 +143,11 @@ if ( ([_end_pos, __TELEPORT_DEVIATION__] call SYG_isNearIronMass) ) then {
 		// initial sound message on the destination teleport near iron mass
 		switch	_this do {
 			case 0: {
-				(localize "STR_SYS_75_BASE") call XfHQChat;
+				(localize "STR_SYS_75_BASE") call XfHQChat; // "Base. A large mass of iron was found nearby!"
 			};
 			case 1;
 			case 2: {
-				(format[localize "STR_SYS_75_4",_this]) call XfHQChat;
+				(format[localize "STR_SYS_75_4",_this]) call XfHQChat; // "MHQ #%1. A large mass of iron was found nearby!"
 			};
 		};
 		sleep 1;

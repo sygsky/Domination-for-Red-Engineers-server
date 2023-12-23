@@ -1799,9 +1799,12 @@ STR_ABORIGEN_GO,Will you go with me?,Kommst du mit mir?,¿Vendrás conmigo?,По
 STR_ABORIGEN_GO_TIMEOUT,"That's all. I'm  tired to follow you, %1...","Das ist alles. Ich bin es leid, dir zu folgen, %1...","Eso es todo. Estoy cansado de seguirte, %1...","Всё. Я устал ходить за тобой, %1..."
 STR_ABORIGEN_GO_DISTOUT,"That's it. I'm not going any further, got tired, %1...","Das war's. Ich gehe nicht mehr weiter, bin müde, %1...","Se acabó. No voy a ir más lejos, me cansé, %1...","Всё. Дальше не пойду, устал, %1..."
 
-STR_ABORIGEN_NAME,What's your name?,Ihr Name?,¿Su nombre?,Ваше имя?
-STR_ABORIGEN_NAME_1,My name %1. What's yours?,Mein Name ist %1. Und wie heißen Sie?,Me llamo %1. ¿Cuál es el tuyo?,Моё имя %1. A Ваше?
-STR_ABORIGEN_NAME_2,"You replied angrily: My name is %1.","Sie antworteten gereizt: Mein Name ist %1.","Usted respondió irritado: Mi nombre es %1","Вы раздражённо ответили: Меня зовут %1."
+STR_ABORIGEN_NAME,Do GRU countersign!,Das Passwort der GRU!,¡La contraseña del GRU!,Пароль ГРУ!
+STR_ABORIGEN_NAME_1,My password: '%1'. Your challenge?,Ich bin - '%1'. Kennwort?,Soy - '%1'. ¿Contraseña?,Вы: - '%1'. Отзыв?
+STR_ABORIGEN_NAME_2,"Aborigen answer:- '%1'! Salutations, comrade!","Der Aborigine antwortet: - '%1'! Hallo, Genosse!","El aborigen responde: - '%1'. ¡Hola, camarada!","Абориген отвечает: - '%1'. Здравствуй, товарищ!"
+STR_ABORIGEN_WIZARD,"I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!","Einen Wunsch von dir werde ich erfüllen! Willst du zur Basis gehen? Du wirst dort sein. Peng, peng, peng, peng, peng, peng!","¡Cumpliré uno de tus deseos! ¿Quieres ir a la base? Estarás allí. ¡Bang, bang, bang, bang, bang!","Я выполню одно ваше пожелание! Вы хотите на базу? Вы там будете. Трах-тибидох-тибидох!"
+STR_ABORIGEN_GO_BASE,Magical transference,Die magische Bewegung!,¡El movimiento mágico!,Волшебное перемещение!
+
 STR_ABORIGEN_NAME_UNKNOWN,doesn't matter,ist unwichtig,no es importante,не имеет значения
 STR_ABORIGEN_UNKNOWN,"I don't understand what you mean by the word '%1'","Ich verstehe nicht, was Sie mit '%1' meinen","No estoy seguro de lo que quiere decir con '%1'","Не понял, что вы имеете ввиду под словом '%1'"
 

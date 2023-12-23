@@ -4,7 +4,9 @@ if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
 
-// Uncomment to eneble teleport with turning accodring to the MHQ, else direction not changes after teleport
+//#define __DEBUG__
+
+// Uncomment to enable teleport with turning accodring to the MHQ, else direction not changes after teleport
 //#define __TELEPORT_WITH_TURNING__
 
 if (beam_target < 0) exitWith{};
@@ -17,7 +19,6 @@ if (vehicle player != player) then {
 	unassignVehicle player;
 };
 
-
 _global_pos = [];
 
 #ifdef __TELEPORT_WITH_TURNING__
@@ -29,7 +30,10 @@ _veh = objNull;
 switch (beam_target) do {
 	case 0: { // teleport to the base
 #ifndef __REVIVE__
-        //hint localize format["+++ d_side_player_str=%1, markerpos ""respawn_east""=%2",d_side_player_str, markerpos "respawn_east"];
+
+#ifdef __DEBUG__
+        hint localize format["+++ d_side_player_str=%1, markerpos ""respawn_east""=%2",d_side_player_str, markerpos "respawn_east"];
+#endif
 //		call compile format ["_global_pos = markerpos ""respawn_%1"";", d_side_player_str];
 		_global_pos = markerPos format["respawn_%1", d_side_player_str];
 #endif
@@ -108,6 +112,11 @@ if ( _typepos == 1 ) then {  //  teleport to some of our MHQ
 // _global_pos set [2, 0];  // always port to the ground, but this point already is zero at Z value
 _pos = getPos player; // start positon
 _global_pos resize 2;
+
+#ifdef __DEBUG__
+hint localize format[ "+++ beam_tele.sqf: _pos = %1, _global_pos = %2, player = %3", _pos, _global_pos, player ];
+#endif
+
 player setPos _global_pos;
 #ifdef __TELEPORT_WITH_TURNING__
 player setDir _global_dir;

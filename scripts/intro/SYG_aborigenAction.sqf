@@ -66,6 +66,7 @@ _create_water_point_near_Antigua = {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+                       START HERE                          +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+_player_name = name player;
 _arg = toUpper(_this select 3);
 _isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
 _isle_pos = _isle select 1; // isle center
@@ -79,7 +80,7 @@ if ( !(_arg in ["GO"])) then {
 	_dir = [aborigen, player] call XfDirToObj; // wanted direction of aborigen view to the player
 	if ((abs(_dir - _abo_dir)) > 2) then { // change direction only if needed
 		if (!local aborigen) then {
-			["remote_execute", format ["aborigen setDir %1;", _dir], name player] call XSendNetStartScriptServer;
+			["remote_execute", format ["aborigen setDir %1;", _dir], _player_name] call XSendNetStartScriptServer;
 		} else { aborigen setDir _dir };
 		aborigen setVariable ["ABO_DIR", _dir];
 	};
@@ -410,7 +411,7 @@ switch ( _arg ) do {
 		_ask_server = isNil "aborigen_plane";
 		if ( !_ask_server ) then { _ask_server = !alive aborigen_plane; };
 		if ( _ask_server ) then {
-			["remote_execute","[] execVM ""scripts\intro\camel.sqf""", name player] call XSendNetStartScriptServer;
+			["remote_execute","[] execVM ""scripts\intro\camel.sqf""", _player_name] call XSendNetStartScriptServer;
 			_time = time + 5;
 			if (isNil "aborigen_plane") then {
 				while {(isNil "aborigen_plane") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
@@ -547,7 +548,7 @@ switch ( _arg ) do {
 		};
 
 		if ( _create_heli) then {
-			[ "remote_execute","[] execVM ""scripts\intro\heli.sqf""", name player ] call XSendNetStartScriptServer;
+			[ "remote_execute","[] execVM ""scripts\intro\heli.sqf""", _player_name ] call XSendNetStartScriptServer;
 		};
 		_ready_to_mark = true;
 		if (_create_heli) then {
@@ -652,15 +653,32 @@ switch ( _arg ) do {
 		if (local aborigen) then {
 			player execVM "scripts\intro\follow.sqf";
 		} else {
-			["remote_execute", format ["%1 execVM ""scripts\intro\follow.sqf""", str(player)], name player] call XSendNetStartScriptServer;
+			["remote_execute", format ["%1 execVM ""scripts\intro\follow.sqf""", str(player)], _player_name] call XSendNetStartScriptServer;
 //			["remote_execute", format ["aborigen doWatch %1;", str(player)]] call XSendNetStartScriptServer;
 		};
 	};
 	case "NAME": {
 		_name = name aborigen;
 		if (_name in [ "Error: No unit", "" ]) then { _name = localize "STR_ABORIGEN_NAME_UNKNOWN"; }; // "doesn't matter"
-		player groupChat format[localize "STR_ABORIGEN_NAME_1", _name]; // "My name %1. What's yours?"
-		player groupChat format[localize "STR_ABORIGEN_NAME_2", name player]; // "You answered angrily: my name is %1."
+		player groupChat format[localize "STR_ABORIGEN_NAME_1", _name]; // "My password: '%1'. Your challenge?"
+		player groupChat format[localize "STR_ABORIGEN_NAME_2", _player_name]; // ""Aborigen answer:- '%1'! Salutations, comrade!""
+		if( ( (toUpper (_player_name)) in ["YETI","ENGINEERACE"]) && ( (localize "STR_LANGUAGE") == "RUSSIAN") ) then {
+			player groupChat (localize "STR_ABORIGEN_WIZARD"); // "I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!"
+			// Remove this action
+			(_this select 0) removeAction (_this select 2);
+//			hint localize format[ "+++ ABO NAME: action #%1 removed", _this select 2 ];
+			// Add wizard action
+			_id = (_this select 0) addAction[ localize "STR_ABORIGEN_GO_BASE", "scripts\intro\SYG_aborigenAction.sqf", "WIZARD"]; // "Magical transference"
+//			hint localize format[ "+++ ABO NAME: action #%1 added", _id ];
+			_spell = format["spell_%1", 7 call XfRandomCeil ];
+//			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
+			[ "say_sound", aborigen, _spell  ] call XSendNetStartScriptClientAll; // "spell_1".."spell_7" ceil
+		};
+	};
+	// Teleport player to the base as with MHQ
+	case "WIZARD": {
+		beam_target = 0;
+		0 execVM "dlg\beam_tele.sqf"; // Teleport to the base
 	};
 	default {
 		format[localize "STR_ABORIGEN_UNKNOWN", _arg] call XfGroupChat;
