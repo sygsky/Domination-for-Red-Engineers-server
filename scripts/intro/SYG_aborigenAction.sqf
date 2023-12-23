@@ -532,14 +532,26 @@ switch ( _arg ) do {
 		//+++       We'll play with the abo helicopter the same way         +++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-		_wait_heli  = false;
-		if (isNil "aborigen_heli") then {_wait_heli = true; } else { _wait_heli = !alive aborigen_heli };
-		if ( _wait_heli) then {
-				["remote_execute","[] execVM ""scripts\intro\heli.sqf""", name player] call XSendNetStartScriptServer;
+		_create_heli  = false;
+		if ( isNil "aborigen_heli" ) then {
+			_create_heli = true;
+		} else {
+			_create_heli = !alive aborigen_heli;
+			if (!_create_heli) then {
+				if ( !( aborigen_heli call SYG_pointOnAntigua ) ) exitWith { // heli is out, delete it in any case and request new one
+					aborigen_heli setDamage 1;
+					_create_heli = true;
+					sleep 0.5;
+				};
+			};
+		};
+
+		if ( _create_heli) then {
+			[ "remote_execute","[] execVM ""scripts\intro\heli.sqf""", name player ] call XSendNetStartScriptServer;
 		};
 		_ready_to_mark = true;
-		if (_wait_heli) then {
-			_time = time + 5;
+		if (_create_heli) then {
+			_time = time + 10;
 			if (isNil "aborigen_heli") then {
 				while {(isNil "aborigen_heli") && ( time < _time)} do { sleep 0.25 }; // wait max 5 seconds
 			} else {
@@ -556,23 +568,23 @@ switch ( _arg ) do {
 				player groupChat (localize "STR_ABORIGEN_HELI_BUSY"); // "Chopper's gone, with pilot '%1'. We'll have to wait."
 				_ready_to_mark = false;
 			};
-			if ( !(aborigen_heli call SYG_pointOnAntigua) ) exitWith { // move heli to the points
+			if ( !(aborigen_heli call SYG_pointOnAntigua) ) exitWith { // move heli to a point
 				_arr = HELI_POINT_ARR call XfRandomArrayVal;
 				aborigen_heli setDir (_arr select 1);
 				aborigen_heli setPos (_arr select 0);
 				hint localize format["+++ ABO HELI: heli is out of Antigua area, move it on a new pos %1", _arr];
 			};
-			// Found that heli in on lasn of Antigua, re-use it as is.
+			// Found that heli in on land of Antigua, re-use it as is.
 		};
 		if (_ready_to_mark) then {
-			_heli_type = aborigen_heli call SYG_getVehicleMarkerType;
+			_heli_marker_type = aborigen_heli call SYG_getVehicleMarkerType;
 			if ( (getMarkerType HELI_MARKER_NAME) == "" ) then { // create marker now
-				hint localize format["+++ ABO HELI: marker type to create %1 for %2", _heli_type, typeOf aborigen_heli];
-				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.7,0.7],"",0, _heli_type] call XfCreateMarkerLocal;
+				hint localize format["+++ ABO HELI: marker type to create %1 for %2", _heli_marker_type, typeOf aborigen_heli];
+				[ HELI_MARKER_NAME,  getPos aborigen_heli, "ICON", "ColorBlack", [0.7,0.7],"",0, _heli_marker_type] call XfCreateMarkerLocal;
 			} else {
-				hint localize format["+++ ABO HELI: marker (%1) alreay exists, re-use it for %2", HELI_MARKER_NAME, typeOf aborigen_heli];
+				hint localize format["+++ ABO HELI: marker (%1) already exists, re-use it for %2", HELI_MARKER_NAME, typeOf aborigen_heli];
 				HELI_MARKER_NAME setMarkerPosLocal (getPos aborigen_heli);
-				HELI_MARKER_NAME setMarkerTypeLocal _heli_type; // Show marker in case it is invisible being of type "Empty"
+				HELI_MARKER_NAME setMarkerTypeLocal _heli_marker_type; // Show marker in case it is invisible being of type "Empty"
 			};
 			player groupChat (localize "STR_ABORIGEN_HELI_INFO"); // "Helicopter? There's one of those... helicopter. See the black marker on the map. I don't know about fuel and a pilot..."
 		} else {
