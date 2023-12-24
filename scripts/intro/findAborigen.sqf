@@ -30,6 +30,9 @@ if (typeName _this == "SCALAR") then { // sleep needed period
 	if (_this > 0 ) then {sleep _this};
 };
 _type = format ["Civilian%1", (floor (random 19)) + 2];
+
+hint localize format["+++ Server: spawn_tent pos %1", getPos spawn_tent];
+
 //		hint localize format["+++ findAborigen.sqf: civ not found, create unit with type %1", _type];
 _house = nearestObject [spawn_tent, "Land_hlaska"];
 _pos = [];

@@ -30,6 +30,9 @@ hint localize format["+++ aborigenInit.sqf: processed unit %1, pos %2", typeOf a
 	aborigen addAction[ localize format["STR_ABORIGEN_%1", _x], "scripts\intro\SYG_aborigenAction.sqf", _x]; // "STR_ABORIGEN_BOAT", "STR_ABORIGEN_CAR" etc
 } forEach ["NAME", "BOAT", "CAR", "AIR", "WEAPON", "MEN", "FAQ", "RUMORS", "GO"];
 
+// Inform about tent  info
+["log2server", name player, format["spawn_tent pos %1, alive %2", getPos spawn_tent, alive spawn_tent] call XSendNetStartScriptServer;
+
 //  Add actions for some objects around the tent
 _arr = nearestObjects [spawn_tent, ["CampEast","Land_hlaska","BarrelBase","ReammoBox"], 50];
 hint localize format["+++ aborigenInit.sqf: found %1 items to add action 'Inspect': %2", count _arr, _arr call SYG_objArrToTypeStr];
