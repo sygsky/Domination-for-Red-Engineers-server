@@ -1,5 +1,5 @@
 /*
-	AAHALO\event_para_dropped.sqf
+	AAHALO\event_para_dropped.sqf, runs on client only
 
 	author: Sygsky
 	description: Event handler to check if player landed on base/circle/etc after intro/practice procedure
@@ -140,7 +140,7 @@ if (base_visit_mission < 1) then { // Player still not visited base
 	hint localize "+++ event_para_dropped.sqf: started check helpers for the player";
 	if ( player call SYG_pointOnAntigua ) then { // And player dropped on Antigua
 		// Print 2 times "%1 has been dropped on Antigua! Help a brother in arms get to base territory."
-		[ "msg_to_user", name player,  [ ["STR_ABORIGEN_INFO_HELP", name player],["STR_ABORIGEN_INFO_HELP", name player]], 15, 2, false, "gong_5" ] call XSendNetStartScriptClient;
+		[ "msg_to_user", "*",  [ ["STR_ABORIGEN_INFO_HELP", name player],["STR_ABORIGEN_INFO_HELP", name player]], 15, 2, false, "gong_5" ] call XSendNetStartScriptClient;
 		// Wait until player is on base, skip dead state or in some air vehicle
 		while { base_visit_mission < 1 } do {
 			sleep 15;
@@ -167,7 +167,7 @@ if (base_visit_mission < 1) then { // Player still not visited base
 				#endif
 					if ( ( count _crew ) == 0) exitWith {};
 					// "The officers of our limited party would like to thank the following Soldiers for their assistance to %1: %2"
-					[ "msg_to_user", "*", [ [ format["STR_ABORIGEN_INFO_THX", name player, _crew] ] ], 0, 2, false, "no_more_waiting" ] call XSendNetStartScriptClientAll;
+					[ "msg_to_user", "*", [ ["STR_ABORIGEN_INFO_THX", name player, _crew] ], 0, 2, false, "no_more_waiting" ] call XSendNetStartScriptClientAll;
 				}
 				#ifdef __DEBUG__
 				else {
