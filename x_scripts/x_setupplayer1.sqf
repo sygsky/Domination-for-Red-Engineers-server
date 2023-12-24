@@ -327,7 +327,7 @@ if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already v
                 };
     #endif
     hint localize format["+++ x_setupplayer1.sqf: Antigua _spawn_point %1, _boxname %2",_spawn_point, _boxname];
-	_spawn_pont set [2, 0]; // To ensure ammobox always is on surfice.
+	_spawn_pont set [2, 0]; // To ensure ammobox is on surfice.
     _box = _boxname createVehicleLocal _spawn_point;
     hint localize format["+++ x_setupplayer1.sqf: Antigua %1 createVehicleLocal %2 at %3", _boxname, _box, [_spawn_point,10 ] call SYG_MsgOnPosE0];
 //    _box setDir (random 360); // no rotation, default is good enough
