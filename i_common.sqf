@@ -1047,7 +1047,7 @@ SYG_nightSkipTo      =  3.30;   // skip server/client time to
 
 // Sabotage drop zone array
 drop_zone_arr = [
-	[ [  9386,  8921, 500 ], 600, 200, -5, -2000], // rectangle between Paraiso airfield and Somato
+	[ [  9386,  8921, 200 ], 600, 200, -5, -2000], // rectangle between Paraiso airfield and Somato
 	[ [ 10034, 10485, 2000 ], 700, 200, 8.5, 2000 ] // rectangle between Rashidan and Paraiso airfield
 ];
 
