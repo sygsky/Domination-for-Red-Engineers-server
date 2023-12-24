@@ -16,7 +16,7 @@ _unit = _this select 0; // player
 
 #ifdef __CONNECT_ON_PARA__
 if ( _base_visit_status <= 0 ) then {
-	[ "msg_to_user", "*", ["localize", "STR_INTRO_NOT_AT_BASE", name _unit], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "%1 have not reached the base this time..."
+	[ "msg_to_user", "*", ["localize", "STR_INTRO_NOT_AT_BASE", name _unit], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "%1 didn't manage to get to the base this time..."
 };
 #endif
 
