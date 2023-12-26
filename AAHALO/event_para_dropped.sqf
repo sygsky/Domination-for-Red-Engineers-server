@@ -135,7 +135,7 @@ hint localize "+++ event_para_dropped.sqf: start check helpers for the player ne
 
 // Inform other players about this player arrival to the Antigua!
 // Check if somebody helps player to visit the base
-_crew = [];
+_driver = objNull;
 if (base_visit_mission < 1) then { // Player still not visited base
 	hint localize "+++ event_para_dropped.sqf: started check helpers for the player";
 	if ( player call SYG_pointOnAntigua ) then { // And player dropped on Antigua
@@ -151,27 +151,28 @@ if (base_visit_mission < 1) then { // Player still not visited base
 			#ifdef __DEBUG__
 				hint localize format["+++ event_para_dropped.sqf: player entered vehicle %1 with crew of %2", typeOf _veh, count _crew ];
 			#endif
-				while { player in _veh } do { sleep 10; _crew = _crew + ( ( crew _veh ) -  _crew ) };
+				while { player in _veh } do {
+					_driver = driver _veh;
+					if ( (_driver == player) || (!alive _driver ) ) then {
+						_driver = objNull;
+					};
+					sleep 5;
+				};
 			#ifdef __DEBUG__
-				hint localize format["+++ event_para_dropped.sqf: player exited ""%1"" with crew of %2", typeOf _veh, count _crew ];
+				hint localize format["+++ event_para_dropped.sqf: player exited ""%1"", pilot %2", typeOf _veh, if ( alive _pilot) then {name _pilot} ];
 			#endif
 				sleep 10; // wait visit base to finish
 				if ( base_visit_mission > 0 ) then { // base was visited!!!
-					for "_i" from 0 to  (count _crew - 1) do {
-						_x = _crew select _i;
-						_crew set [ _i, if ( ( isPlayer _x ) && ( player != _x ) ) then { name _x } else { "RM_ME" } ];
-					};
-					_crew  = _crew - [ "RM_ME" ];
+					if ( (!alive _driver) || (_driver == player) || (!isPlayer _driver)) exitWith {};
 				#ifdef __DEBUG__
-					hint localize format["+++ event_para_dropped.sqf: %1 visited the base with help of %2", name player, _crew];
+					hint localize format["+++ event_para_dropped.sqf: %1 visited the base with help of %2", name player, name _pilot];
 				#endif
-					if ( ( count _crew ) == 0) exitWith {};
-					// "The officers of our limited party would like to thank the following Soldiers for their assistance to %1: %2"
-					[ "msg_to_user", "*", [ ["STR_ABORIGEN_INFO_THX", name player, _crew] ], 0, 2, false, "no_more_waiting" ] call XSendNetStartScriptClientAll;
+					// "The troops of our limited contingent commend fighter %2 for his assistance in delivering %1"
+					[ "msg_to_user", "*", [ ["STR_ABORIGEN_INFO_THX", name player, name _driver] ], 0, 2, false, "no_more_waiting" ] call XSendNetStartScriptClientAll;
 				}
 				#ifdef __DEBUG__
 				else {
-					hint localize "+++ event_para_dropped.sqf: player not visited base now, try next loop";
+					hint localize "+++ event_para_dropped.sqf: player not visited base now, try next loop (veh etc)";
 				};
 				#endif
 			};

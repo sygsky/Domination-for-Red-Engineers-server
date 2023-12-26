@@ -521,10 +521,10 @@ SYG_getMsgForCurrentDayTime = {
 // return empty string if no sound or illegal id not in [0..3] designated
 SYG_getDayTimeIdRandomSound = {
     switch (_this) do {
-        case 0 : { playSound format["night_%1", (floor (random 6)) + 1 ]; };   // STAT_NIGHT night_1..6
+        case 0 : { playSound format["night_%1", ceil(random 6) ]; };   // STAT_NIGHT night_1..6
         case 1 : {  ""  }; // STAT_DAY
-        case 2 : {  playSound format["morning_%1", (floor (random 3)) + 1 ]; }; // STAT_MORNING morning_1..3
-        case 3 : {   format["evening_%1", (floor (random 6)) + 1]; };// STAT_EVENING: evening_1..6
+        case 2 : {  playSound format["morning_%1", ceil (random 3) ]; }; // STAT_MORNING morning_1..3
+        case 3 : {   format["evening_%1", ceil (random 7)]; };// STAT_EVENING: evening_1..7
         default {""};
     };
 };

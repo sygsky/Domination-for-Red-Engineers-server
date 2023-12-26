@@ -436,9 +436,9 @@ _str = _str + format [localize "STR_SYS_357"/* "Очков за выполнен
 _str = _str + format [localize "STR_SYS_358"/* "Очков за выполнение дополнительной задачи, игрок в радиусе %1 м. от места операции: " */,d_ranked_a select 12] + str(d_ranked_a select 11) + "\n";
 
 _str = _str + (localize "STR_SYS_1211") + str(d_ranked_a select 14) + "\n"; // "Points needed to build a mg nest: "
-_str = _str + (localize "STR_SYS_1212") + str(d_ranked_a select 16) + "\n";                 // "Points needed to call in an air drop: "
-_str = _str + (localize "STR_SYS_1213") + str(d_ranked_a select 18) + "\n";                      // "Points for transporting other players: "
-_str = _str + (localize "STR_SYS_359") + str(d_transport_distance) + "\n"; // "Transport distance to get points: "
+_str = _str + (localize "STR_SYS_1212") + str(d_ranked_a select 16) + "\n"; // "Points needed to call in an air drop: "
+_str = _str + format[localize "STR_SYS_1213", _transport_distance] + "\n";  // "Player transport points: +1 for every 1000m over %1m"
+// _str = _str + (localize "STR_SYS_359") + str(d_transport_distance) + "\n";  // "Transport distance to get points: "
 _str = _str + (localize "STR_SYS_1214") + (d_wreck_lift_rank call XGetRankStringLocalized) + "\n"; //"Rank needed to fly the wreck lift chopper: "
 #endif
 

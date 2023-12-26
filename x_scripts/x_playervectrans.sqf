@@ -7,15 +7,15 @@ dd_index = 0;
 dd_first_index = -989;
 
 d_getOutEHPoints = {
-	private ["_vec", "_unit", "_var"];
+	private ["_vec", "_unit", "_var", "_dist"];
 	_vec = _this select 0;
 	_unit = _this select 2;
 	if (alive player && _unit != player && isPlayer _unit && alive _unit) then {
 		_var = _unit getVariable "D_TRANS_START";
 		if (format ["%1",_var] != "<null>") then {
-			if (_var distance position _unit > d_transport_distance) then
-			{
-				_var = d_ranked_a select 18;
+			_dist = _var distance position _unit;
+			if ( _dist > d_transport_distance) then { // 2000 m.
+				_var = ceil (_dist / 1000); // 2500 => 3, 3250 => 4, 9800 => 10
 				//player addScore ( _var );
 				_var call SYG_addBonusScore;
 				(format [localize "STR_SYS_360"/* "За перевозку 1-го бойца +%1 очков" */, _var ]) call XfHQChat;

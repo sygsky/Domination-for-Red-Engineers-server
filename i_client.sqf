@@ -219,7 +219,7 @@ if (X_Client) then {
     // Array with all predefined score for many achievments (client only)
     d_ranked_a = [
         10, 		// 0 очков необходимо инженеру для ремонта
-        [4,3,2,1], 	// 1 очков начисляется инженеру за ремонт авиа, танки, машины, другое. Now is deprected, score added for the number of repair steps, not vehicle type!!!
+        [4,3,2,1], 	// 1 --------------- Free: очков начисляется инженеру за ремонт авиа, танки, машины, другое. Now is deprecated, score added for the number of repair steps, not vehicle type!!!
         5, 			// 2 очков вычитается за 1 залп
         5,          // 3 points in the AI version for recruiting one soldier at lowest rank, each next rank add the same score number to cost
         1, 			// 4 очков вычитается за AAHALO parajump
@@ -236,7 +236,7 @@ if (X_Client) then {
         5, 	        //15 points needed in AI Ranked to call in an airtaxi
         80,			//16 очков необходимо для вызова снабжения
         5, 			//17 очков начисляются медику за лечение других игроков
-        5, 			//18 очки получаемые за перевозку других игроков
+        5, 			//18 ------------------- Free очки получаемые за перевозку других игроков
         20,			//19 очков необходимо для вызова артиллерийского удара
         10,			//20 очков вычитается за ремонт разрушенных сервисов на базе
         10,			//21 очков вычитается за развертывание пулеметного гнезда
@@ -244,7 +244,7 @@ if (X_Client) then {
         1,			//23 очков добавляется за посещение неизвестной до того палатки
         5,			//24 очка вычитают за провал задания ГРУ по доставке секретной карты...
         10,         //25 очков вычисляется за выполнение второстепенного задания в городе
-        "Corporal", //26 rank to resurrect internal objects on server map (vegetation, fences etc) - not used
+        "Corporal", //26 ---------------- Free: rank to resurrect internal objects on server map (vegetation, fences etc) - not used
         9,          //27 scores added for observer kill +1 for ordinal frag
         "Sergeant", //28 lowest rank abled to call the recruit
         1			//29 score for vehicle respawn
