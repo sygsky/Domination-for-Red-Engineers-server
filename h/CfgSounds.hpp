@@ -414,6 +414,8 @@ class CfgSounds {
     class evening_4 { name="Evening: ""Moscow nights"" in Japan, men's voices"; sound[] = {\sounds\timeofday\evening\podm_vech_jap2.ogg,db+10,1.0}; titles[] = {}; } // Evening (japan, men)
     class evening_5 { name="Evening: ""The Evening bells"""; sound[] = {\sounds\timeofday\evening\vechernij_zvon.ogg,db+10,1.0}; titles[] = {}; } // The Evening bells (Nikolay Gedda)
     class evening_6 { name="Evening: ""Evening harmonica"""; sound[] = {\sounds\timeofday\evening\troshin-garmon.ogg,db+10,1.0}; titles[] = {}; } // Evening harmonica (Troshin)
+    class evening_7  {name = ""; sound[] = {\sounds\timeofday\evening\shaov_dvijuha_evening.ogg, db+10, 1.0}; titles[] = {};};
+
 
     class night_1 { name="Night: bird?"; sound[] = {\sounds\timeofday\night\amb2.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (rus)
     class night_2 { name="Night: wolfs?"; sound[] = {\sounds\timeofday\night\amb3.ogg,db+10,1.0}; titles[] = {}; } // Evening nights (chinese)
@@ -435,7 +437,8 @@ class CfgSounds {
     class whatsapp       {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
     class unbeat         {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\upbeat.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
     class kk_jungles     {name = "King-Kong"; sound[] = {\sounds\defeat\kk-jungles.ogg, db+10, 1.0}; titles[] = {}; }; // Sound from film "King-Kong" (1976)
-
+    class shaov_defeat   {name = ""; sound[] = {\sounds\defeat\shaov_dvijuha_defeat.ogg, db+10, 1.0}; titles[] = {};};
+// shaov_dvijuha_evening
 
     // Ranks messages
     // for Russian language only
