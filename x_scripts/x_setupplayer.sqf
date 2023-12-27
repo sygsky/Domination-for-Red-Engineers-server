@@ -975,14 +975,17 @@ _local_msg_arr spawn {
 
 	// "PLAYER 1"
 	// check if name starts from "PLAYER #" ...
-	if ((toUpper _pl_name) in ["PLAYER", "PLAYER1","PLAYER 1", "PLAYER2","PLAYER 2", "PLAYER3", "PLAYER 3", "ADMIN", "USER"] ) exitWith {
+	if ((toUpper _pl_name) in ["PLAYER", "PLAYER1","PLAYER 1", "PLAYER2","PLAYER 2", "PLAYER3", "PLAYER 3", "ADMIN", "ADMINISTRATOR", "USER"] ) exitWith {
+		_pl_name spawn {
+			private ["_str"];
+			// "Soldier %1! The HQ of the local detachment of the SpN GRU of the USSR Ministry of Defense offers you to change your call sign to a more human looking!"
+			_str = format[ localize "STR_GREETING_WARN", _this ];
+			while { true } do {
+				// Each 20 seconds repeate message about login change from idiotic to normal
+				[ "msg_to_user", "", [ [_str] ], 0, 20, false, "losing_patience" ] spawn SYG_msgToUserParser;
+			};
+		};
 //		sleep 6;
-		[
-			"msg_to_user",
-			"",
-			[ [format[localize "STR_GREETING_WARN", _pl_name]] ], // "Soldier %1! The HQ of the local detachment of the SpN GRU of the USSR Ministry of Defense offers you to change your call sign to a more human looking!"
-			0, 5, false, "losing_patience"
-		] spawn SYG_msgToUserParser;
 	};
 
 	// "Oberon"

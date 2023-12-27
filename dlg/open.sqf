@@ -7,16 +7,15 @@ if (base_visit_session == 0) then {
 
 _this execVM "scripts\deathSound.sqf";
 
-//hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name _unit, name _killer];
 #include "x_setup.sqf"
 
-private ["_ok","_unit", "_killer","_display","_ctrl"];
-_killer = _this select 1;
-_unit = _this select 0; // player
+private ["_ok",/* "_killer",*/"_display","_ctrl"];
+//_killer = _this select 1;
+//hint localize format["+++ open.sqf runs for killed %1 and killer %2 +++", name player, name _killer];
 
 #ifdef __CONNECT_ON_PARA__
 if ( _base_visit_status <= 0 ) then {
-	[ "msg_to_user", "*", ["localize", "STR_INTRO_NOT_AT_BASE", name _unit], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "%1 didn't manage to get to the base this time..."
+	[ "msg_to_user", "*", [ ["STR_INTRO_NOT_AT_BASE", name player] ], 0, 2, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "%1 didn't manage to get to the base this time..."
 };
 #endif
 
