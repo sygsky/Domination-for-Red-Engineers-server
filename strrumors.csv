@@ -4,7 +4,7 @@
 // %2 stands for the location nearest to player, including landscapes feature (forest, marines, mountains etc)
 // %3 stands for nearest settlement
 //
-STR_RUM_NUM,97,97,97,97
+STR_RUM_NUM,98,98,98,98
 STR_RUM_NIGHT,They are sleeping in %3,Alle schlafen in %3,"En %3, todos duermen, sin embargo","В %3 все спят, однако"
 STR_RUM_0,Rumors are absent! It's weird...,Gerüchte sind nicht vorhanden! Es ist seltsam...,¡No hay rumores! Lo cual es extraño...,Слухи отсутствуют! Что странно...
 STR_RUM_1,Enemy refuel truck will help only if your vehicle engine is on,"Feind tanken LKW wird nur helfen, wenn Ihr Fahrzeug Motor ist auf",El camión cisterna enemigo repostará con el motor del equipo encendido,Вражеский бензовоз заправляет при включенном двигателе техники
@@ -103,3 +103,4 @@ STR_RUM_93,"The smugglers drop you over Antigua only the very first time. Then y
 STR_RUM_94,"In Antigua, use a boat, bike, biplane, heli.","In Antigua können Sie ein Boot, ein Fahrrad, einen Doppeldecker oder einen Hubschrauber benutzen.","En Antigua, usa un barco, una bicicleta, un biplano o un helicóptero.","На Антигуа используйте лодку, велосипед, биплан, вертолётик."
 STR_RUM_95,"Search for the car by the button in 'STATUS'. If it malfunctions, destroy it and search again.","Suchen Sie das Auto über den Knopf in 'STATUS'. Wenn er nicht funktioniert, zerstören Sie ihn und suchen Sie erneut.","Busca el coche por el botón en 'ESTADO'. Si funciona mal, destrúyelo y vuelve a buscarlo.","Ищи машину по кнопке в 'СТАТУС'. В случае её неисправности, уничтожай её и ищи снова."
 STR_RUM_96,"'Sea Devil' is an American patrol boat with a high-speed gun of incredible power taken from an A-10 attack aircraft","'Sea Devil' ist ein amerikanisches Patrouillenboot mit einer Hochgeschwindigkeitskanone von unglaublicher Stärke, die aus einem A-10-Kampfflugzeug stammt","'Sea Devil' es una patrullera estadounidense con un cañón de alta velocidad de increíble potencia tomado de un avión de ataque A-10","'Морской дьявол' - американский патрульный катер со скорострельной пушкой невероятной мощности, снятой со штурмовика А-10"
+STR_RUM_97,"According to an old Indian legend, a local war spirit is implanted in a man who has experienced hardship in Antigua","Nach einer alten indianischen Legende wird einem Mann, der in Antigua viel Leid erfahren hat, ein lokaler Kriegsgeist eingepflanzt","Según una antigua leyenda india, un espíritu de guerra local se implanta en un hombre que ha pasado penurias en Antigua","По старой индейской легенде, в человека, претерпевшего лишения на Антигуа, вселяется местный дух войны"
