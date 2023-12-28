@@ -4,7 +4,8 @@
 	description: play with new year period player activity (if score is changed player is active))).
 	If player is active in NY period (-10 NY +10 minutes) then congratulates him and add +10 scores.
 	Will work ONLY in MP, as in SP 'score' command doesn't work.
-	input parameters: _real_date execVM "scripts\new_year_check.sqf"
+	input parameters:
+	    SYG_client_start execVM "scripts\new_year_check.sqf"; //
 	returns: nothing
 */
 
@@ -26,11 +27,11 @@ if (_sleep <= 0) exitWith {hint localize format["+++ new_year_check.sqf: you are
 sleep _sleep; // wait up to the 10 minutes before NY
 _score = score player; // remember current score befoe NY
 playSound "drum_fanfare"; // NY check procedure started
-_sleep =  900; // sleep period to the 5 minutes after NY
+_sleep = 900; // sleep period to the 5 minutes after NY
 sleep _sleep; // slip to the 5 minutes after NY
 if ((score player) != _score ) exitWith { // Combat activity detected!!! Score changed during 15 minute interval over NY
 	10 call  SYG_addBonusScore;
-	["msg_to_user", "", ["STR_SYS_NEW_YEAR", 10 ], 0, 0, false, "good_news"] spawn SYG_msgToUserParser; // ""For combat activity on New Year's Eve, the chief engineer awards you +%1 points.""
+	["msg_to_user", "", [["STR_SYS_NEW_YEAR", 10 ]], 0, 0, false, "good_news"] spawn SYG_msgToUserParser; // ""For combat activity on New Year's Eve, the chief engineer awards you +%1 points.""
 	[ "log2server", name player, format[ "new_year_check.sqf: For combat activity on New Year's Eve, the chief engineer awards ""%1"" with +%2 points", name player, 10] ] call XSendNetStartScriptServer;
 };
 hint localize "-- new_year_check.sqf: The test of New Year's activity did not yield results";

@@ -302,6 +302,10 @@ SYG_arr2Str = {
 // 0:"msg_to_user": the identifier for this command, must be present
 // 1: player name or "" or "*" or vehicle to inform crew only, or array of players, or array of vehicles. Must be present!
 // 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
+//    Variants:
+//      2.1. Single string - printed as, may be localized if starts with "STR_"
+//      2.2. Array for format e.g. <format>["STR_SIM_ID", _parama, _param2,...]
+//      2.3. Mixed array of single strings (used as in 2.1) or arrays for format (as 2.2.)
 // 3: _delay_between_messages is seconds number to sleep between multiple messages;
 // 4: _initial_delay is seconds before first message show;
 // 5: no_title_msg if true - no title shown, else shown if false or "" empty string, or scalar <= 0;
