@@ -31,7 +31,7 @@ _veh = objNull; //createVehicle [_type, _pos, [], 1, "NONE"];
 _marker_type = "";
 _marker_color = MARKER_COLOR_DEF;
 
-_SM_current_id = current_mission_counter; // Index of current mission, if chanage, this SM is completed and we have to finish
+_SM_current_id = current_mission_counter; // Index of current mission, if changed, this SM is completed and we have to finish
 _delay = DELAY_DEFAULT;
 while { true } do {
 	if (current_mission_counter != _SM_current_id) exitWith {
