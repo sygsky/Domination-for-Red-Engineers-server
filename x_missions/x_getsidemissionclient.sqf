@@ -47,7 +47,7 @@ if (current_mission_index != -1) then {
                 if (player distance _pos < _dist) exitWith {
                     d_was_at_sm = true;
                     d_sm_running = false;
-					hint localize "+++ x_getsidemissionclient.sqf: player assigned to be was at SM";
+					hint localize "+++ x_getsidemissionclient.sqf: player visited SM, mark this state for the end of SM";
                 };
                 sleep (10.012 + (random 3));
             };

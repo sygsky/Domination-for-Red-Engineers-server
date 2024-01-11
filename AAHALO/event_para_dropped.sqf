@@ -83,7 +83,7 @@ if ( _pos1 call SYG_pointIsOnBase ) then {
 	};
 } else {
 	// "You have landed outside the base area (to the circle %1 m.). If you land on the yellow circle at the military recruitment tent, you will receive points: +%2"
-	_msgArr = [ "msg_to_user", "*", [[format["STR_INTRO_PARAJUMP_7_1%1",_fmt],round (_dist),_sc]], 0, 5, false, "losing_patience" ];
+	_msgArr = [ "msg_to_user", "*", [[format["STR_INTRO_PARAJUMP_7_1%1",_fmt],[_dist, 10] call SYG_roundTo,_sc]], 0, 5, false, "losing_patience" ];
 	hint localize format["+++ event_para_dropped%1.sqf: landed out of base far from any circle, %2 m. from circle", _sub_name, round _dist];
 };
 

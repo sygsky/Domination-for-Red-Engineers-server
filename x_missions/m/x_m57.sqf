@@ -10,7 +10,10 @@
 #define BOAT_GRU_TYPE "RHIB"
 #define POINT_TYPE "Heli_H_civil"
 
-x_sm_pos = [[8585.3,10103.7,0]]; // index: 57,   Capturing the sea devil boat, point near base shore on the west side of airbase
+// side mission index: 57,
+// Capturing the sea devil boat,
+// point near base shore on the west side of airbase and GRU_boat respawn point
+x_sm_pos = [[8585.3,10103.7,0],[8580,10095,0]];
 x_sm_type = "normal"; // "normal", "convoy", "undefined"
 
 #ifdef __SMMISSIONS_MARKER__
@@ -58,7 +61,7 @@ hint localize format["+++ x_m57.sqf: global coll vehicles (size %1) scanned for 
 _pos    = + _circle_pos;
 _sites = [
 #ifdef __DEBUG_SM_57__
-	[[(_pos select 0) - 10, (_pos select 1) - 3,0], 0, BOAT_TYPE], // create debug vehicle
+	[[(_pos select 0) - 10, (_pos select 1) - 3,0], 0, BOAT_GRU_TYPE], // create debug vehicle
 #endif
 	[              _pos,   0, POINT_TYPE],
 	[[8573.7,10073.6,0], 325, "WarfareBEastContructionSite1"],
@@ -82,7 +85,7 @@ for "_i" from 0 to ((count _sites) - 1) do {
 // 2. Respawn GRU boatit while side mission is not completed.
 // 3. Wait GRU boat at SM point while players count > 0.
 // 4. Remove GRU boat when SM is empty.
-// TODO: enable this scipt execution: [_circle_pos, BOAT_GRU_TYPE] execVM "x_mission\common\GRU_boat_respawn.sqf";
+[x_sm_pos select 1, BOAT_GRU_TYPE] execVM "x_missions\common\GRU_boat_respawn.sqf";
 
 // Await end of this SM
 _do = true;

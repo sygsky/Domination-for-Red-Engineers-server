@@ -1,5 +1,5 @@
 /*
-	GRU_boat_respawn.sqf
+	x_missions\common\GRU_boat_respawn.sqf
 	author: Sygsky
 	description:
 		Works on server only!
@@ -15,9 +15,12 @@
 
 if (!isServer) exitWith {hint localize "--- GRU_boat_respawn.sqf called on client, exit!"};
 
+#include "x_setup.sqf"
+
 #define GRU_BOAT_MARKER "GRU_boat_marker"
 #define MIN_DIST_TO_REDRAW_MARKER 100
 #define DELAY_DEFAULT 30
+#define DELAY_SMALL 5
 #define MINIMAL_DAMAGE_TO_SHOW 0.075
 #define MARKER_COLOR_DEF "ColorGreen"
 #define MARKER_COLOR_DMG "ColorRed"
@@ -29,6 +32,8 @@ if (!isServer) exitWith {hint localize "--- GRU_boat_respawn.sqf called on clien
 // 0.  Creates the boat
 _pos  = _this select 0;
 _type = _this select 1;
+
+hint localize format["+++ GRU_boat_respawn.sqf started: pos %1, type %2", _pos, _type];
 
 _veh = objNull; //createVehicle [_type, _pos, [], 1, "NONE"];
 _marker       = ""; // Boat marker
@@ -75,33 +80,36 @@ while { true } do {
 	// If the boat dies, a new one is created.
 	if ( !(alive _veh) ) then {
 		if (!isNull _veh) then {
-			// TODO: send msg about new GRU boat dead STR_GRU_BOAT_DEAD "The GRU boat has been destroyed. Another one may be arriving soon."
-			["say_sound", _veh, "steal"] call XSendNetStartScriptClient;
+			// "The GRU boat has been destroyed. Another one may be arriving soon."
+			["msg_to_user","",["STR_GRU_BOAT_DEAD_0"], 0, 0, false, "naval"] call XSendNetStartScriptClient;
+//			["say_sound", _veh, "steal"] call XSendNetStartScriptClient;
 			sleep 1;
 			deleteVehicle _veh;
-			_marker setMarkerType "Empty"; // remove marker
+			_marker setMarkerType "Empty"; // Hide marker
 			sleep (30 + (random 30));
 		};
 		// "Extra mission continues. A special GRU boat appeared at the starting point. Probably with the help of the islanders."
 		_veh = createVehicle [_type, _pos, [], 1, "NONE"];
-		["msg_to_user","",["STR_GRU_BOAT_ARRIVED"], 0, 2, false, "return"] call XSendNetStartScriptClient;
+		["msg_to_user","",["STR_GRU_BOAT_ARRIVED"], 0, 2, false, "naval"] call XSendNetStartScriptClient;
 		if (_marker_type == "") then { // Init GRU boat marker now
 			_marker_type = _veh call SYG_getVehicleMarkerType;
 			_marker_pos = getPosASL _veh;
-			// TODO: add GRU boat name in the stringtable.csv!!!
-			// STR_GRU_BOAT_NAME=GRU boat,GRU boat,GRU boat,Катер ГРУ
-			_marker = [GRU_BOAT_MARKER, _marker_pos, "ICON", _marker_color, [0.7,0.7], localize "STR_GRU_BOAT_NAME", 0, _marker_type] call XfCreateMarkerLocal;
+			// STR_GRU_BOAT_NAME="GRU boat"
+			_marker = [GRU_BOAT_MARKER, _marker_pos, "ICON", _marker_color, [0.7,0.7], localize "STR_GRU_BOAT_NAME", 0, _marker_type] call XfCreateMarkerGlobal;
+			hint localize format["+++ GRU_boat_respawn.sqf: marker %1 created", _marker];
+		} else {
+			_marker setMarkerType _marker_type; // restore marker just in case
 		};
-		_marker setMarkerType _marker_type; // restore marker
 	};
 	if (_marker != "") then {
-		if ( (_veh distance _marker_pos) > MIN_DIST_TO_REDRAW_MARKER) then {
-			_delay = 5;
-			_marker_pos = 	getPosASL _veh;
-			_marker setMarkerPos _marker_pos;
+		_vpos = getPosASL _veh;
+		if ( ([_vpos, _marker_pos] call SYG_distance2D) > MIN_DIST_TO_REDRAW_MARKER) then {
+			_marker_pos = _vpos;
+			_marker setMarkerPos _vpos;
+			_delay = DELAY_SMALL;
 		} else { _delay = DELAY_DEFAULT };
 #ifdef __ACE__
-		If (damage _veh > MINIMAL_DAMAGE_TO_SHOW) then {
+		if (damage _veh > MINIMAL_DAMAGE_TO_SHOW) then {
 			_marker_color = MARKER_COLOR_DMG;
 		} else {
 			_marker_color = MARKER_COLOR_DEF;
