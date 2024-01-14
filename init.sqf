@@ -327,7 +327,7 @@ if (isServer) then {
 	// 48 - transformer substations of Corazol, 49 - captain Grant, 50 - arti big SM in field, 51: pilots,
 	// 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation, 57 - sea devil boat capturing (november of 2023)
 	//
-	_first_array = [57]; // Allow testing ANY SM (#57 etc)
+	_first_array = []; // Allow testing ANY SM (#57 etc)
 	if ( count _first_array > 0 ) then {
 		side_missions_random = _first_array + (side_missions_random - _first_array);
 		hint localize format["+++ SM _first_array: %1", _first_array];
