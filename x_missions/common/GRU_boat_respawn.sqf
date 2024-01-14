@@ -42,6 +42,7 @@ _marker_type  = ""; // Boat marker type
 _color		  = "";
 #endif
 _marker_color = MARKER_COLOR_DEF; // Marker color
+_marker_pos = [0,0,0];
 
 _SM_current_id = current_mission_counter; // Index of current mission, if changed, this SM is completed and we have to finish
 _delay = DELAY_DEFAULT;
@@ -110,9 +111,9 @@ while { true } do {
 		} else { _delay = DELAY_DEFAULT };
 #ifdef __ACE__
 		if (damage _veh > MINIMAL_DAMAGE_TO_SHOW) then {
-			_marker_color = MARKER_COLOR_DMG;
+			_color = MARKER_COLOR_DMG;
 		} else {
-			_marker_color = MARKER_COLOR_DEF;
+			_color = MARKER_COLOR_DEF;
 		};
 		if (_marker_color != _color) then {
 			_marker setMarkerColor _color;
@@ -129,3 +130,4 @@ if (!isNull _veh) then {
 	deleteVehicle _veh;
 };
 deleteMarker _marker;
+hint localize "+++ GRU_boat_respawn.sqf finished!";

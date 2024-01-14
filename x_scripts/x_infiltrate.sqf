@@ -236,6 +236,9 @@ while { true } do {
 				};
             }; // for "_i" from 0 to count _arr - 1 do //forEach _arr;
 		};
+		// set new time to clean
+		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2)); // 2..4 hours, 3 on average
+		_time_to_clean = time + _delay;
 #ifdef __DEBUG_CLEAN_PRINT__
 		hint localize format["+++ x_infiltrate.sqf: %3 base cleaning proc: %1 cleaned / %2 items added, next after %4",
 		        _str, count _items_to_clean, call SYG_missionTimeInfoStr, _delay call SYG_secondsToStr
@@ -248,9 +251,6 @@ while { true } do {
 			hint localize "+++ x_infiltrate.sqf: no items to clear found";
 		};
 #endif		
-		// set new time to clean
-		_delay = ON_BASE_GARBAGE_REMOVE_INTERVAL/2 + (random (ON_BASE_GARBAGE_REMOVE_INTERVAL/2)); // 2..4 hours, 3 on average
-		_time_to_clean = time + _delay;
 	}; // if ( time >= _time_to_clean ) then
 	
 #ifdef __DEBUG_INFILTRATE_PERIOD__

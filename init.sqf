@@ -163,8 +163,17 @@ if (isServer) then {
 #endif
 	FuncUnitDropPipeBomb = compile preprocessFileLineNumbers "scripts\unitDropPipeBombV2.sqf"; //+++ Sygsky: add enemy bomb-dropping ability
 	[] spawn {
+		private ["_arr"];
 		sleep 120; // spawn motocycles on base after arrival ones
-		[moto1,moto2,moto3,moto4,moto5,moto6] spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
+		_arr = [moto1,moto2,moto3,moto4,moto5,moto6];
+		// Add ATV at shore near boat sea circle
+#ifdef __ACE__
+		private ["_moto7"];
+		_moto7 = createVehicle ["ACE_ATV_HondaR", [8617,10081,0], [], 0, "NONE"];
+		_moto7 setDir 90;
+		_arr set [count _arr, _moto7];
+#endif
+		_arr spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 	};
 	[] execVM "scripts\intro\sea_patrol.sqf"; // NOTE: if disable/remove this service, remove sidemission #57 too, as it depends on that
 
@@ -264,21 +273,8 @@ if (isServer) then {
     };
 #endif
 
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // insert special missions at the SM list head, may be used for the DEBUG purposes
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 24 - gazstation near Arcadia, 29 - tanks at Cabo Juventudo,
-    // 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 44 - heli prototype on San Tomas, 47 - factory near Somato,
-    // 48 - transformer substations of Corazol, 49 - captain Grant, 50 - arti big SM in field, 51: pilots,
-    // 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation, 57 - sea devil boat capturing (november of 2023)
-    //
-    _first_array = []; // Allow testing SM #57
-    if ( count _first_array > 0 ) then {
-	    side_missions_random = _first_array + (side_missions_random - _first_array);
-        hint localize format["+++ SM _first_array: %1", _first_array];
-    };
-    // Move radiomast SM #56 to the beginning of SM list at pos 2..3
-    // ranked_sm_array = [ 5, [2,3,53] ];
+    // Move radiomast SM #56 to the beginning of SM list at pos 1..10
+    // ranked_sm_array = [... [[56],[1,10]] ...];
 
 	// SM to place at first part of SM list between designated indexes, e.g. SM#56 must be at pos [1..10], and SM#2 will be at pos [1..57(maxind)] etc
 	_first_sm_array = [ [ [56],[1,10] ], [ [57],[3,12] ], [[2,3,53], [5, 1000]] ];
@@ -321,6 +317,22 @@ if (isServer) then {
 			} else { hint localize format["*** init.sqf: FirstSMArray - SM#%1 not found in the mission SM list", _sm_id] };
 		};
 	};
+
+	//!!!!!!
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// insert special missions at the SM list head, may be used for the DEBUG purposes
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// 4 - water tank, 5: king, 10 - arti above base (San Sebastian), 21:Convoy Korazol-Estrella, 24 - gazstation near Arcadia, 29 - tanks at Cabo Juventudo,
+	// 32 - flag in Parato, 40-41 - prisoners in Tiberia and Tandag, 44 - heli prototype on San Tomas, 47 - factory near Somato,
+	// 48 - transformer substations of Corazol, 49 - captain Grant, 50 - arti big SM in field, 51: pilots,
+	// 54 - pilots at Hunapu, 55: new officer mission in the forest, 56: radiomast installation, 57 - sea devil boat capturing (november of 2023)
+	//
+	_first_array = [57]; // Allow testing ANY SM (#57 etc)
+	if ( count _first_array > 0 ) then {
+		side_missions_random = _first_array + (side_missions_random - _first_array);
+		hint localize format["+++ SM _first_array: %1", _first_array];
+	};
+
 
 //    side_missions_random = side_missions_random - [40,41]; // temporarily remove all SM with prisoners (not work!!)
 

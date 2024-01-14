@@ -27,6 +27,8 @@ _global_dir = 180;
 _typepos = 0;
 _veh = objNull;
 
+_sound  = if ( (typeName _this) == "STRING" ) then { _this } else { "" };
+
 switch (beam_target) do {
 	case 0: { // teleport to the base
 #ifndef __REVIVE__
@@ -121,9 +123,11 @@ player setPos _global_pos;
 #ifdef __TELEPORT_WITH_TURNING__
 player setDir _global_dir;
 #endif
-["say_sound", _pos, "teleport_from"] call XSendNetStartScriptClientAll; // play sound of teleport out event everywhere
-sleep 0.2;
-["say_sound", player, _sound_to] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
+if (_sound == "") then {
+	["say_sound", _pos, "teleport_from"] call XSendNetStartScriptClientAll; // play sound of teleport out event everywhere
+	sleep 0.2;
+	["say_sound", player, _sound_to] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
+} else { playSound _sound };
 sleep 1.8;
 // TODO: try to set vehicle locally on each client computer
 closeDialog 100001;

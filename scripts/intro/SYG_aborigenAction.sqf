@@ -12,6 +12,8 @@
 */
 
 #define POS_BICYCLE [17401,17980,0]
+// Rectangle for aborigent boats
+#define NEAR_TENT_BOAT_RECT [[17489,17980,0],500,400,0]
 #define ABO_BOAT_MARKER "aborigen_boat"
 #define BOAT_EMPTY_TIME 600
 
@@ -92,6 +94,12 @@ switch ( _arg ) do {
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//                    B O A T
+	//
+	// There are 3 areas for this action:
+	// 1. Circle around Antigua, includes all small islets near Antigua and some aquatory around it
+	// 2. Boat station on Antigua, #13 in all boat station mission array
+	// 3. Near tent rectangle for aborigen found boats
+	//
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case "BOAT": { // ask about boats
 		if (base_visit_mission > 0) exitWith {player groupChat (localize "STR_ABORIGEN_BOAT_INFO_0")}; // "Boats? There are a lot of them... on every kilometer of the coast of the Main Sahrani."
@@ -100,11 +108,12 @@ switch ( _arg ) do {
 		// find distance to the boat type "Zodiac" ( small boats )
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		_boat = objNull;
-		_arr = nearestObjects [ _isle_pos, ["Zodiac"], _rad ];
+		_arr = nearestObjects [ _isle_pos, ["Zodiac"], _rad ]; // All boats in Antigua geographycal boundaries around island center
 		// Check nearest boats to be out of "boats13" marker
 		_pos13 = markerPos "boats13";
 
-		_marker = "";  // It will be marker of selected boat
+		_marker = "";  // It will be marker of selected boat if any
+		// Select any boat if it not at "boats13" marker of boat yard
 		{
 			if (alive _x) then {
 				if ( ( _x distance _pos13 ) > 100 ) exitWith {
@@ -143,7 +152,7 @@ switch ( _arg ) do {
 			hint localize "+++ Boat: free boat found near Antigua (not boats near marker13!)";
 		}; // use nearest marker on Antigua to get marker type
 
-        if (!(alive _boat)) exitWith {
+        if (!(alive _boat)) exitWith { // No suitable boat found
 			_arr = _pos13 nearObjects [ "Zodiac", 75 ];
 			{
 				if ((alive _x) && (!locked _x)) exitWith { _boat = _x };
@@ -152,14 +161,14 @@ switch ( _arg ) do {
 	        	player groupChat (localize "STR_ABORIGEN_BOAT_INFO_1"); // "Boats? They're all gone all of a sudden. But look, honey, at the boat marker off Antigua."
 				hint localize "+++ Boat: last boat found at Antigua, on marker ""boats13""!";
 			};
-
         	// Time to check boats on marker "boats13" near island!
 			hint localize "--- Boat: no good markered boat groups found at all, skip player request...";
         	player groupChat (localize "STR_ABORIGEN_BOAT_NONE"); // "All the boats are taken apart, I don't know what to do!"
         };
 
-        _pnt = getPos _boat; // Not reset this value as it allows to point where boat was at this check!
-        if ( (_boat distance _isle_pos) > _rad) then {
+        _pnt = getPos _boat; // Not reset this value as it allows to remember point where boat was at this check!
+        _near_tent = [_pnt, NEAR_TENT_BOAT_RECT] call SYG_pointInRect; // Check if boat is near tent and not need be moved, here
+        if ( ! _near_tent ) then { // If found boat is not near tent shore, move it here near shore line
 			_pnt = call _create_water_point_near_Antigua;
 			_cnt = 10;
 			while { (!(surfaceIsWater _pnt)) && (_cnt > 0)} do {
@@ -664,21 +673,23 @@ switch ( _arg ) do {
 		player groupChat format[localize "STR_ABORIGEN_NAME_2", _player_name]; // ""Aborigen answer:- '%1'! Salutations, comrade!""
 		if( ( (toUpper (_player_name)) in ["YETI","ENGINEERACE"]) && ( (localize "STR_LANGUAGE") == "RUSSIAN") ) then {
 			player groupChat (localize "STR_ABORIGEN_WIZARD"); // "I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!"
-			// Remove this action
-			(_this select 0) removeAction (_this select 2);
+			(_this select 0) removeAction (_this select 2); // Remove this action
 //			hint localize format[ "+++ ABO NAME: action #%1 removed", _this select 2 ];
 			// Add wizard action
 			_id = (_this select 0) addAction[ localize "STR_ABORIGEN_GO_BASE", "scripts\intro\SYG_aborigenAction.sqf", "WIZARD"]; // "Magical transference"
 //			hint localize format[ "+++ ABO NAME: action #%1 added", _id ];
-			_spell = format["spell_%1", 7 call XfRandomCeil ];
+//			_spell = format["spell_%1", 7 call XfRandomCeil ];
 //			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
-			[ "say_sound", aborigen, _spell  ] call XSendNetStartScriptClientAll; // "spell_1".."spell_7" ceil
+//			[ "say_sound", aborigen, _spell  ] call XSendNetStartScriptClientAll; // "spell_1".."spell_7" ceil
 		};
 	};
 	// Teleport player to the base as with MHQ
 	case "WIZARD": {
-		beam_target = 0;
-		0 execVM "dlg\beam_tele.sqf"; // Teleport to the base
+		beam_target = 0; // Jump to the base
+		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
+//			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
+		_spell execVM "dlg\beam_tele.sqf"; // Teleport to the base
+		(_this select 0) removeAction (_this select 2); // Remove this action
 	};
 	default {
 		format[localize "STR_ABORIGEN_UNKNOWN", _arg] call XfGroupChat;
