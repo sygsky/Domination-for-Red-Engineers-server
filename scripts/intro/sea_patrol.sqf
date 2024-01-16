@@ -193,7 +193,9 @@ _is_ship_stuck = {
 		_edist = round (_boat distance _enemy);
 		if ( (alive _enemy) && (_edist < MAX_DIST_TO_ENEMY) ) exitWith { // If in battle, can't be stucked
 #ifdef __INFO__
-			_modes set [2, typeOf _enemy];
+			if (isPlayer _enemy) then { _modes set [2, name _enemy] } else {
+				_modes set [2, typeOf _enemy];
+			};
 			hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 in battle at %2, enemy dist %3, modes %4; return FALSE",
 			_this select OFFSET_ID,
 			[_boat, 10] call SYG_MsgOnPosE0,
@@ -558,7 +560,7 @@ _reset_roles = {
 		if (alive _x) then {
 			_x setDamage 0;
 			_role = assignedVehicleRole _x;
-			if ( (count _role) > 0) then {
+			if ( ((count _role) > 0) && (_x in _boat)) then {
 				if ( (_role select 0) == "Driver") exitWith {_driver = _x};
 				if ( (_role select 0) == "Turret") exitWith {
 					_id = (_role select 1) select 0;
@@ -583,8 +585,8 @@ _reset_roles = {
 	_gun_empty_ids = _gun_empty_ids - _gunner_ids; // define not filled turrets from list [0<,1>]
 #ifdef __INFO__
 	_beh = _grp call _get_modes;
-	hint localize format["+++ sea_patrol.sqf reset_roles: common count (%1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
-		_i, count _outers, _beh, _gunner_ids, _gun_empty_ids ];
+	hint localize format["+++ sea_patrol.sqf reset_roles: cnt (alive %1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
+		_cnt, count _outers, _beh, _gunner_ids, _gun_empty_ids ];
 #endif
 
 	// Fill driver if absent
