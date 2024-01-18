@@ -193,10 +193,10 @@ if (isServer) then {
 		// maintargets_list = (count target_names) call XfRandomIndexArray;
 	} else {
 		switch (_number_targets_h) do {
-			case 50: {maintargets_list = [3,4,2,0,1,7,6];};
-			case 60: {maintargets_list = [8,10,16,17];};
-			case 70: {maintargets_list = [8,9,11,19,14,18];};
-			case 80: {maintargets_list = [8,15,9,11,12,13];};
+			case 50: {maintargets_list = [3,4,2,0,1,7,6];}; // South Route: Chantoco, Somato, Arcadia, Cayo, Iguana, Dolores, Ortego
+			case 60: {maintargets_list = [8,10,16,17];};	// North West Route: Corazol, Mercallilo, Pacamac, Hunapu
+			case 70: {maintargets_list = [8,9,11,19,14,18];}; // North Middle Route: Corazol, Obregan, Bagango, Carmen, Eponia, Mataredo
+			case 80: {maintargets_list = [8,15,9,11,12,13];}; // North East Route: Corazol, Everon, Obregan, Bagango, Masbete, Pita
 			case 90: {
 			    // 22 towns (maximum number) fill them from whole list.
 			    // Paraiso/Chantico/Somato/Arcadia/Estrella/Cayo etc
