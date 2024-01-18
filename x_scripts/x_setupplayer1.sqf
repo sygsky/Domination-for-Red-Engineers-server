@@ -246,9 +246,13 @@ if ( _equip == "" ) then {
 				};
 				// send info to the server about new equipment (rucksack), note that weapons will be stored on server from player stuff during OPD callback
 			#ifdef __EQUIP_OPD_ONLY__
-				_equip = player call SYG_getPlayerRucksackAsStr;
-				["d_ad_wp", name player, _equip] call XSendNetStartScriptServer; // sent to the server player armament 1st time
-                SYG_playerRucksackContent = _equip; // initial player rucksack content in text form
+				// Store content on server only if player visited base and is registered
+//				_str = if (!isNil "base_visit_mission") then { if (base_visit_mission > 0) then {"STORE"} } else {""};
+//				if (_str != "") exitWith {
+					_equip = player call SYG_getPlayerRucksackAsStr;
+					["d_ad_wp", name player, _equip] call XSendNetStartScriptServer; // sent to the server player armament 1st time
+					SYG_playerRucksackContent = _equip; // initial player rucksack content in text form
+//				};
             #endif
 				hint localize format["+++ x_setupplayer1.sqf: player %1, rank %2, score %3, weapon %4, rucksack %5, language %6",
 						name player, _old_rank, score player, _weapp, _magp,  localize "STR_LANG"];

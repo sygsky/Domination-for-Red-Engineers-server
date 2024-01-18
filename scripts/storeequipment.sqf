@@ -1,5 +1,5 @@
 // scripts\storeequipment.sqf: by Sygsky
-// script to store\restore equipment for player. Run ony on client compuetrs as action command executed
+// script to store\restore equipment for player. Run ony on client computers as action command executed
 // Example:
 // [...] execVM "scripts\storeequipment.sqf";
 //     Parameters array passed to the script upon activation in _this variable is: [target, caller, ID, arguments]

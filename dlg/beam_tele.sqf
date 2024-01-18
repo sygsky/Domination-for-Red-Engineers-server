@@ -4,10 +4,14 @@ if (!X_Client) exitWith {};
 
 #include "x_setup.sqf"
 
-//#define __DEBUG__
+#define __DEBUG__
 
 // Uncomment to enable teleport with turning accodring to the MHQ, else direction not changes after teleport
 //#define __TELEPORT_WITH_TURNING__
+
+#ifdef __DEBUG__
+	hint localize format["+++ beam_tele.sqf: beam_target %1, _this %2", beam_target, _this];
+#endif
 
 if (beam_target < 0) exitWith{};
 
@@ -34,7 +38,7 @@ switch (beam_target) do {
 #ifndef __REVIVE__
 
 #ifdef __DEBUG__
-        hint localize format["+++ d_side_player_str=%1, markerpos ""respawn_east""=%2",d_side_player_str, markerpos "respawn_east"];
+        hint localize format["+++ beam_tele.sqf:  d_side_player_str=%1, markerpos ""respawn_east""=%2",d_side_player_str, markerpos "respawn_east"];
 #endif
 //		call compile format ["_global_pos = markerpos ""respawn_%1"";", d_side_player_str];
 		_global_pos = markerPos format["respawn_%1", d_side_player_str];
