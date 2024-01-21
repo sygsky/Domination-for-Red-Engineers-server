@@ -698,7 +698,7 @@ class Mission
 			position[]={9660.000000,139.994995,9992.799805};
 			id=1;
 			side="EMPTY";
-			vehicle="FlagCarrierSouth";
+			vehicle="FlagCarrierNorth";
 			lock="LOCKED";
 			skill=0.600000;
 			text="FLAG_BASE";

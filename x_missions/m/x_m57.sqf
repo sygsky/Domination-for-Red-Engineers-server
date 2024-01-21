@@ -59,14 +59,41 @@ hint localize format["+++ x_m57.sqf: global coll vehicles (size %1) scanned for 
 ["remote_execute", "sleep 30; playSound 'sea_devil1'; ['sea_devil1', 22] call SYG_showMusicTitle", "<server>"] call XSendNetStartScriptClientAll; // Sent to all clients only
 
 _pos    = + _circle_pos;
+
+#ifdef __OWN_SIDE_WEST__
+_flag_type = "FlagCarrierWest"; //
+_flag_Texture = "\ca\misc\data\usa_vlajka.pac";
+_factory = "WarfareBWestAircraftFactory";
+#endif
+#ifdef __OWN_SIDE_RACS__
+_flag_type = "FlagCarrierWest"; //
+_flag_Texture = "\ca\misc\data\usa_vlajka.pac";
+_factory = "WarfareBWestAircraftFactory";
+#endif
+#ifdef __OWN_SIDE_EAST__
+_flag_type = "FlagCarrierNorth"; //
+_flag_Texture =  "\ca\misc\data\rus_vlajka.pac";
+_factory = "WarfareBEastAircraftFactory";
+#endif
+
 _sites = [
 #ifdef __DEBUG_SM_57__
 	[[(_pos select 0) - 10, (_pos select 1) - 3,0], 0, BOAT_GRU_TYPE], // create debug vehicle
 #endif
-	[              _pos,   0, POINT_TYPE],
+	[              _pos,   0, POINT_TYPE], // underwater heli yellow circle
+	[[8592.9,10094.2,0],   0, _flag_type], // Flag to help find circle, added by request of gyuri
+#ifdef __OWN_SIDE_WEST__
+	[[8573.7,10073.6,0], 325, "WarfareBWestContructionSite1"],
+	[[8598.9,10070.5,0],  70, "WarfareBWestContructionSite"],
+#endif
+#ifdef __OWN_SIDE_RACS__
+	[[8573.7,10073.6,0], 325, "WarfareBWestContructionSite1"],
+	[[8598.9,10070.5,0],  70, "WarfareBWestContructionSite"],
+#ifdef __OWN_SIDE_EAST__
 	[[8573.7,10073.6,0], 325, "WarfareBEastContructionSite1"],
 	[[8598.9,10070.5,0],  70, "WarfareBEastContructionSite"],
-	[[8613.1,10102.8,0],   0, "WarfareBEastAircraftFactory"]
+#endif
+	[[8613.1,10102.8,0],   0, _factory]
 ];
 
 for "_i" from 0 to ((count _sites) - 1) do {
@@ -78,11 +105,12 @@ for "_i" from 0 to ((count _sites) - 1) do {
 	_pos set [2,0];
 	_item setPos _pos;
 	_sites set [_i, _item]; // Store created item in the place of its data
+	if (_item isKindOf "FlagCarrier") then { _item setFlagTexture _flag_Texture };
 	hint localize format["+++ x_m57.sqf: %1 created, pos %2, vUp %3", typeOf _item, getPos _item, vectorUp _item];
 };
 
 // 1. Start GRU boat (M2 RHIB).
-// 2. Respawn GRU boatit while side mission is not completed.
+// 2. Respawn GRU boat while side mission is not completed.
 // 3. Wait GRU boat at SM point while players count > 0.
 // 4. Remove GRU boat when SM is empty.
 [ _circle_pos, BOAT_GRU_TYPE] execVM "x_missions\common\GRU_boat_respawn.sqf";
@@ -95,7 +123,7 @@ while { _do } do {
 	sleep _delay;
 	_delay = 5;
 	_boat = nearestObject [ _pos, BOAT_TYPE ];
-	if ( (_boat distance _circle_pos) <= 2) then {
+	if ( (_boat distance _circle_pos) <= 3) then {
         if ( alive _boat ) then {
             if (  (side _boat) != d_side_enemy  ) then {
                 if ( !(_boat in _list) ) then { // New alive non-enemy vehicle is on circle, mission completed!!!
@@ -111,7 +139,7 @@ while { _do } do {
                         side_mission_winner = 2;
                         side_mission_resolved = true;
                     };
-                    hint localize format["+++ x_m57.sqf completed, captured %1 with crew: %2", typeOf _boat, _crew];
+                    hint localize format["+++ x_m57.sqf: completed, captured %1 with crew %2", typeOf _boat, _crew];
                     _do = false
                 } else { // This boat is in older list, refuse it now. Inform all players closer 50 meters to the circle pos
                     [ "msg_to_user", [100, _circle_pos], [["STR_SM_57_BAD_INFO"]], 0, 0, false, "losing_patience" ] call XSendNetStartScriptClientAll; // "The GRU is not interested in this boat, they need a newer one!"
@@ -147,15 +175,14 @@ if ( count _names == 0 ) then {
 	[ "say_sound", getPos (_sites select 0), "steal" ] call XSendNetStartScriptClientAll; // Play sound on circle center
 };
 
-_ind = 0;
 {
-    // Remove only buildings, not heli landing circle
-    if (typeOf _x != POINT_TYPE) then {
+    // Remove all except yellow circle and factory that will be repair/reload center for boats in a future
+    _type = typeOf _x;
+    if ( ! (_type in [POINT_TYPE,_factory]) ) then {
         if ( !alive _x ) then {
-            hint localize format[ "--- x_m57.sqf: when try to remove house %1, detected that it is not alive", typeOf _x];
-            _ind = _ind + 1;
+            hint localize format[ "--- x_m57.sqf: when try to remove item %1, detected that it is not alive", _type ];
         } else {
-            hint localize format[ "+++ x_m57.sqf: remove house %1 at pos %2!", typeOf _x, position _x ];
+            hint localize format[ "+++ x_m57.sqf: remove item %1 at pos %2!", _type, position _x ];
             deleteVehicle _x;
         };
     };

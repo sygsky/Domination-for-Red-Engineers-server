@@ -300,7 +300,8 @@ SYG_arr2Str = {
 //
 // Offset in command array are as follow:
 // 0:"msg_to_user": the identifier for this command, must be present
-// 1: player name or "" or "*" or vehicle to inform crew only, or array of players, or array of vehicles. Must be present!
+// 1: player name or "" or "*" or vehicle to inform crew only, or array of players,
+//     or array of vehicles or (special case: [_dist, _pos] as 2nd parameter). Must be present!
 // 2: array of each _msg format as is: [<"localize",>"STR_MSG_###"<,<"localize",>_str_format_param...>];. Must be present!
 //    Variants:
 //      2.1. Single string - printed as, may be localized if starts with "STR_"
