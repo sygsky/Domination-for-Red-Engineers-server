@@ -169,7 +169,7 @@ if (alive _chopper && !isNull _chopper && canMove _chopper && alive (driver _cho
 	//"Std definitions for x_createpara2.sqf detected" call XfGlobalChat; // last parameters stands for rejoin try if 2 men in group remained
 	_i = d_base_patrol_array call XfRandomFloorArray; // random index
 	_xx = d_base_patrol_array select _i; // value of this iundex
- 	hint localize format["%1 x_createpara2.sqf: paratroopers patrol area ind #%5 %2 selected for group %3(%4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp, _i];
+ 	hint localize format["+++ %1 x_createpara2.sqf: paratroopers patrol area ind #%5 %2 selected for group %3(%4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp, _i];
 
 	_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,_xx,[],-1,1,[],300 + (random 50),1,[2]]; // try rejoin if number of units <= 2
 //	_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[_current_target_pos,200],[],-1,0,[],300 + (random 50),0];	

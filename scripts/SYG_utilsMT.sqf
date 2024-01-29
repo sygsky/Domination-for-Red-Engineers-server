@@ -26,8 +26,7 @@ SYG_mt_initialized = true;
 // call:    [] call SYG_isMainTargetAllowed;
 // returns: __mainAllowed = call SYG_isMainTargetAllowed
 //
-SYG_isMainTargetAllowed = 
-{
+SYG_isMainTargetAllowed =  {
 	private ["_target_counter"];
     _target_counter = if (isServer) then {current_counter} else {client_target_counter}; // main target counter
     if ( _target_counter <= 0 ) exitWith {true}; // Lets start in any way at the mission beginning

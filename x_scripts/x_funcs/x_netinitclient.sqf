@@ -250,7 +250,7 @@ XHandleNetStartScriptClient = {
 		};
 
 		//+++ Sygsky: added for airbase take mission (before any towns)
-		case "airbase_clear": { // signal about airbase taken
+		case "+++ airbase_clear": { // signal about airbase taken
 		    // TODO: enable fanfares after airbase realization, now it is commented
 		    hint "+++ airbase cleared after initial battle on it";
 			//playSound "fanfare";
@@ -258,7 +258,7 @@ XHandleNetStartScriptClient = {
 		}; // "airbase_clear"
 		case "+++ take_airbase": { // signal about take airbase started
 			playSound "Alarm";
-    		hint "take Airbase before start to free Island";
+    		hint "+++ take Airbase before start to free Island";
 			//execVM "x_scripts\x_target_clear_client.sqf";
 		};
 		//--- Sygsky: added for airbase take mission (before any towns)

@@ -333,7 +333,7 @@ switch ( _arg ) do {
 				_marker setMarkerPosLocal (getPos _veh);
 			};
 			hint localize format["+++ +++ ABORIGEN CAR: marker %1(%2) created near %3", _marker, _marker_type, (markerPos _marker) call SYG_nearestSettlementName]; // SYG_nearest
-			player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "The car? So... here I'm drawing you a green marker on the map where there's something similar. It's about %1."
+			player groupChat (localize "STR_ABORIGEN_CAR_INFO_2"); // "The car? So... here I'm drawing you a green marker on the map where there's something similar. It's about %1."
 			if (!locked _veh) then {
 //			    _veh lock true;
 //			    _veh addAction [localize "STR_ABORIGEN_CAR_UNLOCK","scripts\intro\unlock_veh.sqf"]; // "Unlock"
@@ -406,7 +406,7 @@ switch ( _arg ) do {
 			// Inform about failure to find vehicle on place
 			player groupChat (localize ("STR_ABORIGEN_CAR_NONE_NUM" call SYG_getRandomText)); // "Sorry. I don't know anything about cars. We live here."
 		};
-		player groupChat format[localize "STR_ABORIGEN_CAR_INFO_2", _veh call SYG_nearestLocationName]; // "Cars? Okay... here I'm drawing markers on the map for you where you'll find some cars..."
+		player groupChat (localize "STR_ABORIGEN_CAR_INFO_2"); // "Cars? Okay... here I'm drawing markers on the map for you where you'll find some cars..."
 		if ( _cnt_locked > 0 ) then {
 			(localize "STR_ABORIGEN_CAR_UNLOCK_1") spawn {sleep 1; player groupChat _this}; // "... when you find it, unlock it!"
 		} else {

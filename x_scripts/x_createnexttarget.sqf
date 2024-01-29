@@ -21,7 +21,7 @@ if (current_counter > 0) then {
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 private ["_time","_msg"];
 
-hint localize format["+++ x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 )", current_counter, current_mission_counter];
+hint localize format["+++ x_scripts/x_createnexttarget.sqf: started, call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 )", current_counter, current_mission_counter];
 
 _time = time;
 if ( !( call SYG_isMainTargetAllowed ) ) then {
@@ -29,12 +29,12 @@ if ( !( call SYG_isMainTargetAllowed ) ) then {
     ["msg_to_user", "*", [_msg], 0, 4] call XSendNetStartScriptClient;
     hint localize format["+++ x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 ) false", current_counter, current_mission_counter];
 
-while { !(call SYG_isMainTargetAllowed) } do {
-		if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
-		sleep (4 + random 2);
-};
+    while { !(call SYG_isMainTargetAllowed) } do {
+            if (X_MP) then { if ((call XPlayersNumber) == 0) then {waitUntil { sleep 15; (call XPlayersNumber) > 0 }; } };
+            sleep (4 + random 2);
+    };
 
-if ( ((time - _time) > 60) ) then {
+    if ( ((time - _time) > 60) ) then {
 		_msg = [ "localize", "STR_SYS_1152" ]; // "The people of Sahrani thank you for your liberation mission!"
 		["msg_to_user", "*", [_msg], 0, 4] call XSendNetStartScriptClient;
 		hint localize format["+++ x_scripts/x_createnexttarget.sqf: call SYG_isMainTargetAllowed( current_counter %1, current_mission_counter %2 ) true", current_counter, current_mission_counter];
@@ -184,5 +184,7 @@ if (call SYG_getTargetTownName == "Rahmadi") then { /* TODO: add island patrol o
 #ifdef __AI__
 execVM "scripts\restore_barracks.sqf";
 #endif
+
+hint localize "+++ x_scripts/x_createnexttarget.sqf: finished";
 
 if (true) exitWith {};

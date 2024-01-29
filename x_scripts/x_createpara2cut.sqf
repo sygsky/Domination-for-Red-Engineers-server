@@ -47,7 +47,7 @@ _chopper flyInHeight 100; // fly on height about 100 meters
 // store time of the start of last infiltration on base
 __SetGVar(INFILTRATION_TIME, date);
 #ifdef __DEBUG_PRINT__
-hint localize format["+++ x_scripts/x_createpara2.sqf: Десант на базу запущен, местное время %1", date];
+hint localize format["+++ x_scripts/x_createpara2cut.sqf: Desant to base started, local time %1", date];
 #endif
 
 _parachute_type = (
@@ -59,11 +59,12 @@ _parachute_type = (
 
 if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then { // Create sabotage group and arrange it as chopper cargo
 	_paragrp = call SYG_createEnemyGroup;
+	if (typeName _paragrp != "GROUP") exitWith {hint localize format["--- x_createpara2cut.sqf: can't create enemy group, returned %1, script is exited!", _paragrp]};
 	_unit_array = ["sabotage", d_enemy_side] call x_getunitliste;
 	_real_units = _unit_array select 0;
 	_cnt_uni = (count _real_units) min (_chopper emptyPositions "Cargo"); // heli may be small one
 #ifdef __DEBUG_PRINT__
-    hint localize format["+++ x_scripts/x_createpara2.sqf: %1 / desant is %2 men., limit is %3,chopper  empty pos %4", typeOf _chopper, _cnt_uni, count _real_units, _chopper emptyPositions "Cargo" ];
+    hint localize format["+++ x_scripts/x_createpara2cut.sqf: %1 / desant is %2 men., limit is %3,chopper  empty pos %4", typeOf _chopper, _cnt_uni, count _real_units, _chopper emptyPositions "Cargo" ];
 #endif
 	_unit_array = [];
 	sleep 0.1;
@@ -85,6 +86,8 @@ if (alive _chopper && canMove _chopper && alive (driver _chopper) ) then { // Cr
 		_one_unit setSkill ((d_skill_array select 0) + (random (d_skill_array select 1)));
 	};
 };
+
+if (typeName _paragrp != "GROUP") exitWith {}; // Messagу about this already printed, exit now
 
  //_testgun = "ACE_ZSU" createVehicle position player;
 // player addScore 500;
@@ -153,7 +156,7 @@ _unit_array = nil;
 	// animate heli action
 	if ( alive _chopper  && _chopper isKindOf "ACE_CH47D" ) then {
 		_chopper animate ["ramp", 1]; // open ramp
-		// hint localize "+++ x_createpara2.sqf: _chopper animate [""ramp"", 1] executed";
+		// hint localize "+++ x_createpara2cut.sqf: _chopper animate [""ramp"", 1] executed";
 	};
 	sleep 1.123;
 #endif
@@ -202,24 +205,24 @@ if (_ejected) then { // create sabotage group
 	*/
 	
 #ifdef __USE_KRONSKY_SCRIPT__	
-	//"__USE_KRONSKY_SCRIPT__ in x_createpara2.sqf detected" call XfGlobalChat;
+	//"__USE_KRONSKY_SCRIPT__ in x_createpara2cut.sqf detected" call XfGlobalChat;
 	_xx = d_base_patrol_markers call XfRandomArrayVal;
 
 	// load Kronzky urban patrol script (UPS)
 	//sleep 15.0; // wait for paratroopers landing
 	
 	// select random area to patrol
- 	hint localize format["+++ %1 x_createpara2.sqf: patrol area %2 selected for group %3(%4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp];
+ 	hint localize format["+++ %1 x_createpara2cut.sqf: patrol area %2 selected for group %3(%4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp];
 	_xx = [ _leader, _xx, "SAVEDIST:", 150, "NOSLOW" ] execVM "scripts\UPS.sqf"; // run urban patrol logic
 
 	// use d_ups_array except of d_base_array
 	//_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[d_ups_array select 0,d_ups_array select 1,d_ups_array select 2,0],[],-1,1,[],500,1+10];
 	//_grp_array execVM "x_scripts\x_groupsm.sqf";
 #else	
-	//"Std definitions for x_createpara2.sqf detected" call XfGlobalChat; // last parameters stands for rejoin try if 2 men in group remained
+	//"Std definitions for x_createpara2cut.sqf detected" call XfGlobalChat; // last parameters stands for rejoin try if 2 men in group remained
 	_i = d_base_patrol_array call XfRandomFloorArray; // random index
 	_xx = d_base_patrol_array select _i; // value of this index
- 	hint localize format["+++ %1 x_createpara2.sqf: paratroopers patrol area ind #%5 %2 selected for group %3(%4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp, _i];
+ 	hint localize format["+++ %1 x_createpara2cut.sqf: paratroopers patrol area ind #%5 %2 selected for group %3(cnt %4)", call SYG_missionTimeInfoStr, _xx, _paragrp, count units _paragrp, _i];
 
 	_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,_xx,[],-1,1,[],300 + (random 50),1,[2]]; // try rejoin if number of units <= 2
 //	_grp_array = [_paragrp, [position _leader select 0, position _leader select 1, 0], 0,[_current_target_pos,200],[],-1,0,[],300 + (random 50),0];	
@@ -239,7 +242,7 @@ if (_ejected) then { // create sabotage group
 	_officer = [ d_sleader_W, _paragrp ] call SYG_ensureOfficerInGroup;
 	_cnt = (units  _paragrp) call SYG_rearmSabotageGroup;
 #ifdef	__DEBUG_PRINT__
-	hint localize format["+++ x_createpara2.sqf: sabotage.sqf started with squad of %1 units = %2 alive, %3 canStand", count (units  _paragrp), {alive _x} count (units  _paragrp),{canStand _x} count (units  _paragrp)];
+	hint localize format["+++ x_createpara2cut.sqf: sabotage.sqf started with squad of %1 units = %2 alive, %3 canStand", count (units  _paragrp), {alive _x} count (units  _paragrp),{canStand _x} count (units  _paragrp)];
 #endif
 	[_paragrp] execVM "scripts\sabotage.sqf"; // run sabotage logic (separate from patrol one)
 
@@ -252,7 +255,7 @@ if (_ejected) then { // create sabotage group
                 if ( _cnt <= 2) then {
                     if ( _cnt > 0) then {// join last member to this group
 #ifdef	__DEBUG_PRINT__
-                        hint localize format["+++ x_createpara2.sqf: prev. group id %1 (of %2 alive saboteur[s]) joined to this one", _i, _cnt];
+                        hint localize format["+++ x_createpara2cut.sqf: prev. group id %1 (of %2 alive saboteur[s]) joined to this one", _i, _cnt];
 #endif
                         (units _grp) join _paragrp;
                         sleep 1.04;
@@ -272,19 +275,19 @@ if (_ejected) then { // create sabotage group
         {
             _list = _list + [{alive _x} count units _x];
         } forEach d_on_base_groups;
-		hint localize format["+++ x_createpara2.sqf: d_on_base_groups counts %1", _list];
+		hint localize format["+++ x_createpara2cut.sqf: d_on_base_groups counts %1", _list];
 		_list = nil;
 #endif		
 	} else {
 #ifdef	__DEBUG_PRINT__
-		hint localize "--- x_createpara2.sqf: d_on_base_groups isNil ---";
+		hint localize "--- x_createpara2cut.sqf: d_on_base_groups isNil ---";
 #endif		
 	};
 };
 
 // heal all the men in current para group
 _paragrp spawn {
-    sleep 15; // wait for all to be on the earth
+    sleep 30; // wait for all to be on the earth
     // heal whole group for fun and just in case
     {
         if (alive _x) then {_x setDamage 0; sleep random 3;};
@@ -310,7 +313,7 @@ _nenemy = (driver _chopper) call SYG_nearestEnemy;
 if ( !isNull _nenemy) then {
     _grp reveal _nenemy;
 #ifdef __DEBUG_PRINT__
-    hint localize format["+++ x_scripts/x_createpara2.sqf: %1 (knowledge %2) revealed to paratroopers at dist. %2 m", typeOf _nenemy, (driver _chopper) knowsAbout _nenemy, round(_chopper distance _nenemy)];
+    hint localize format["+++ x_scripts/x_createpara2cut.sqf: %1 (knowledge %2) revealed to paratroopers at dist. %2 m", typeOf _nenemy, (driver _chopper) knowsAbout _nenemy, round(_chopper distance _nenemy)];
 #endif
 };
 

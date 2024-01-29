@@ -458,7 +458,9 @@ SYG_ensureOfficerInGroup = {
     if (isNull _grp) exitWith {hint localize format["--- SYG_ensureOfficerInGroup -> Expected argument [..., _grp] is illegal: %1", _this];};
     _units = units _grp;
     // 1. check if leader is already officer
-    if (leader _grp isKindOf _officer ) exitWith { leader _grp }; { // found as leader
+    if (leader _grp isKindOf _officer ) exitWith { leader _grp };
+     // found as leader
+    {
         if ( _x isKindOf _officer ) exitWith {
             _officer = _x;
              (leader _grp) setRank "PRIVATE";
