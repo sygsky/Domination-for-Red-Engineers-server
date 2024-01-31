@@ -132,13 +132,18 @@ _make_isle_grp = {
 #endif
 
 #ifdef __PRINT_ACTIVITY__
-	if ( count _start_point == 0) then {
-		hint localize format["+++ %1 x_isledefense.sqf: _start_point %2 is empty []", call SYG_missionTimeInfoStr, _i + 1];
+	if ( count _start_point == 0) exitWith {
+		hint localize format["+++ %1 x_isledefense.sqf: _start_point %2 was not prepared,", call SYG_missionTimeInfoStr, _i + 1];
+       	[grpNull, [], [0,0,0], [], DELAY_RESPAWN_KILLED, STATUS_DEAD, [], "LP"]
 	};
 #endif							
 
 	_agrp = grpNull;
     _agrp = call SYG_createGroup;
+    if (isNull _agrp) exitWith {
+        hint localize format["--- x_isledefense.sqf: can't create groupб patrol can't be [re]created"];
+       	[grpNull, [], [0,0,0], [], DELAY_RESPAWN_KILLED, STATUS_DEAD, [], "LP"]
+    };
 
 	_vehs = [];
 

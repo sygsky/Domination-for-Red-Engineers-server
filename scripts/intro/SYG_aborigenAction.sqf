@@ -671,10 +671,12 @@ switch ( _arg ) do {
 		if (_name in [ "Error: No unit", "" ]) then { _name = localize "STR_ABORIGEN_NAME_UNKNOWN"; }; // "doesn't matter"
 		player groupChat format[localize "STR_ABORIGEN_NAME_1", _name]; // "My password: '%1'. Your challenge?"
 		player groupChat format[localize "STR_ABORIGEN_NAME_2", _player_name]; // ""Aborigen answer:- '%1'! Salutations, comrade!""
-		if( ( (toUpper (_player_name)) in ["YETI","ENGINEERACE"]) && ( (localize "STR_LANGUAGE") == "RUSSIAN") ) then {
+		_uname = toUpper (_player_name);
+		_in_magic = _uname in ["YETI","ENGINEERACE"];
+		hint localize format[ "+++ ABO NAME: %1 => %2, set magic = %3", _player_name, _uname, _in_magic ];
+		if( _in_magic /* && ( (localize "STR_LANGUAGE") == "RUSSIAN") */ ) then {
 			player groupChat (localize "STR_ABORIGEN_WIZARD"); // "I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!"
 			(_this select 0) removeAction (_this select 2); // Remove this action
-//			hint localize format[ "+++ ABO NAME: action #%1 removed", _this select 2 ];
 			// Add wizard action
 			_id = (_this select 0) addAction[ localize "STR_ABORIGEN_GO_BASE", "scripts\intro\SYG_aborigenAction.sqf", "WIZARD"]; // "Magical transference"
 //			hint localize format[ "+++ ABO NAME: action #%1 added", _id ];
