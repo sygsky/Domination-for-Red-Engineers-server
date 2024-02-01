@@ -19,6 +19,7 @@
 #define RADAR_MARKER "Arrow"            // BIS marker for radar
 #define SM_MARKER "Unknown"             // BIS marker for question sign
 #define DIST_TO_SHIFT_MARKER 25         // shift size between marker and object to update marker position
+#define DIST_TO_REPORT_TRUCK_POS 500    // shift distance to report anout new marker position
 #define DIST_MAST_TO_TRUCK 15           // distance from truck to mast to allow handle mast from truck
 #define DIST_MAST_TO_INSTALL 10         // distance from truck to mast to allow handle mast from truck
 #define RADAR_SM_COLOR "ColorRed"

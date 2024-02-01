@@ -182,7 +182,7 @@ while { (alive _radar) && (sideradio_status < 1) } do { // 0 state is allowed
     };
 	// check if the position of the truck has changed by more than 1 km and print the new position
 	if (alive d_radar_truck) then {
-		if ( ([d_radar_truck,_last_pos] call SYG_distance2D) >= 1000) then {
+		if ( ([d_radar_truck,_last_pos] call SYG_distance2D) > DIST_TO_REPORT_TRUCK_POS) then {
 			_last_pos = getPosASL d_radar_truck;
 			_pl = [];
 			{
@@ -230,7 +230,7 @@ if ((sideradio_status == 1) && (alive _radar) && (alive _truck)) then  {
 
 		// check if the position of the truck has changed by more than 1 km and print the new position
 		if (alive d_radar_truck) then {
-			if ( ([d_radar_truck,_last_pos] call SYG_distance2D) >= 1000) then {
+			if ( ([d_radar_truck,_last_pos] call SYG_distance2D) > DIST_TO_REPORT_TRUCK_POS) then {
 				_last_pos = getPosASL d_radar_truck;
 				_pl = [];
 				{
