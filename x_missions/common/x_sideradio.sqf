@@ -87,11 +87,9 @@ _make_marker = {
 	_mrk_name setMarkerColorLocal (_this select 3); // set marker color
 
 	if (count _this > 4) then {
-		_mrk_name setMarkerTypeLocal (_this select 1);  // marker type
 		_mrk_name setMarkerSize (_this select 4);  // marker size
-	} else {
-		_mrk_name setMarkerType (_this select 1); // only marker type
 	};
+	_mrk_name setMarkerType (_this select 1); // only marker type
 	_mrk_name
 };
 
@@ -112,7 +110,7 @@ _check_truck_marker = 	{ // check truck marker
 
 		// create truck marker if needed
 		if ( _truck_marker == "" ) then {
-			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, _this, RADAR_SM_COLOR,[0.5, 0.5]] call _make_marker;
+			_truck_marker = [ "sideradio_truck", TRUCK_MARKER, _this, RADAR_SM_COLOR,[1, 1]] call _make_marker;
 			_crew = crew _this;
 			for "_i" from 0 to ( (count _crew) -1 ) do {
 				_x = _crew select _i;
