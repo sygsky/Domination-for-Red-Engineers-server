@@ -1697,6 +1697,7 @@ STR_RADAR_TRUCK_KILLED,"This truck isn't going anywhere anymore. Maybe there's a
 STR_RADAR_TRUCK_DEAD,The truck was destroyed.,Der Lkw wurde zerstört.,El camión fue destruido.,Грузовик был уничтожен.
 STR_RADAR_TRUCK_MOVING,"To perform the operation, stop!","Um den Vorgang auszuführen, halten Sie!","Para llevar a cabo la operación, detenga!","Для выполнения операции следует остановиться!"
 STR_RADAR_TRUCK_INFO,Look for the blue truck in the '%1' area,Suchen Sie den blauen Lastwagen im Bereich '%1',Busque el camión azul en la zona '%1',Ищите синий грузовик в районе '%1'
+STR_RADAR_TRUCK_INFO2,GRU truck is at %1,GRU-LKW steht bei %1,El camión GRU está en %1,Синий Урал находится в %1
 STR_RADAR_TRUCK_WAIT,We have to look for a new truck. But where?,Wir müssen uns nach einem neuen Lkw umsehen. Aber wo?,Tenemos que buscar un nuevo camión. ¿Pero dónde?,Надо искать новый грузовик. Но где?
 STR_RADAR_TRUCK_FIRM_TITLE,"Trucking ""Juarej"", Port of Dolores","Lkw-Transport ""Juarej"", Hafen von Dolores","Camionaje ""Juarej"", Puerto de Dolores","Грузоперевозки ""Хуарец"", Порт-Долорес"
 STR_RADAR_FAILED,"Mission failed, no help from GRU!","Mission gescheitert, keine Hilfe vom GRU!","¡Misión fallida, no hay ayuda de la GRU!","Миссия провалена, помощи от ГРУ не будет!"
