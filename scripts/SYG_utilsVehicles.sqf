@@ -285,7 +285,7 @@ SYG_findPlayersOnBase = {
 // _found_names = [_pos, _dist] call SYG_findNearestPlayers; // Include players in vehicles
 SYG_findNearestPlayers = {
     private ["_pos","_dist","_nearArr","_plNames","_x"];
-    _pos  = _this select 0;
+    _pos  = (_this select 0) call SYG_getPos;
     _dist = _this select 1;
 	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
 	if ( (count _nearArr) == 0 ) exitWith { [] };

@@ -87,7 +87,24 @@ _known_enemy_arr = []; // Array for known enemies
 
 #define DIST_TO_BE_STUCK 10
 
-// #639: allow boat, capture
+//
+//
+//
+_is_boat_captured = {
+    private [ "_boat" ];
+	_boat = _this select OFFSET_BOAT;
+    if ((side _boat) == d_side_player) exitWith { true };
+
+    // Check vehcile to be empty, if yes, continue check procedure
+    if ( ( { alive _x } count (crew _boat)) ==  0 ) exitWith {
+        if ( (count ([_boat, 20] call SYG_findNearestPlayers)) > 0 ) exitWith {true}; // Player[s] found nearby
+
+        // Find nearest circle of any type near the boat
+        !isNull (nearestObject [ _boat, "HeliH"]) // Heli circle is found (true) or not (false)
+    };
+    false
+};
+// #639: allow boat capture
 // Move boat from script serviced list to the common server vehicles list
 //
 _capture_boat = {
@@ -153,7 +170,8 @@ _is_ship_stuck = {
 	};
 
 	// #639: Allow naval boat capturing
-	if ( (side _boat) == d_side_player ) exitWith {
+	// #677: check yellow circle or player nearby to count boat as hijacked
+	if ( _this call _is_boat_captured ) exitWith {
 		// Move boat from serviced list to the common vehicle list
 		_this call _capture_boat;
 //		_this call _remove_patrol; // this method will be called in main loop directly after returning from _is_ship_stuck with result true
