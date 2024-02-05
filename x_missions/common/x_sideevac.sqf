@@ -171,6 +171,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
 								[_x] join objNull;
 								sleep 0.1;
 								[_x] join _owngroup;
+								if ((vehicle _x) != _x) then { _x action["GETOUT", vehicle _x]; sleep 0.1}; // Get out from any vehicle (found by Snooper)
 								_x disableAI "MOVE";
 								_x setUnitPos "DOWN"
 							};
@@ -276,7 +277,7 @@ while {(!_pilots_at_base) && (!_is_dead)} do {
                     _leader setRank "LIEUTENANT";
                     _newgroup allowFleeing 0;
                     [_newgroup, _poss] call XAttackWP;
-                    {extra_mission_remover_array set [ count extra_mission_remover_array, _x ] } foreach _units;
+                    {extra_mission_remover_array set [ count extra_mission_remover_array, _x ] } forEach _units;
                     sleep 1.012;
                 };
                 _unit_array = nil;
