@@ -52,6 +52,7 @@ SYG_found_ai_spotting       = "ai_spotting" in _search_array; // only server
 SYG_found_TCN_GrenadeFix    = "TCN_GrenadeFix" in _search_array; // on server
 SYG_found_EditorUpdate_v102 = "EditorUpdate_v102" in _search_array; // on server and client
 SYG_found_ECS               = "ECS_Core" in _search_array; // on server
+_six_found                  = "six_sys_suppression" in _search_array;
 
 #ifdef __SCUD__
 SYG_found_SCUD               = "GIG_Scud" in _search_array; // on server and client
@@ -79,9 +80,9 @@ if ( SYG_found_ai_spotting) then {
 d_found_DMSmokeGrenadeVB = (if ("DMSmokeGrenadeVB" in _search_array) then {true} else {false});
 //__DEBUG_SERVER("x_commonfuncs.sqf",d_found_DMSmokeGrenadeVB)
 
-if ("six_sys_suppression" in _search_array) then {
+if (_six_found) then {
 	d_suppression = false;
-    hint localize format["+++ six_sys_suppression found, set d_supression = %1",  d_suppression];
+    hint localize "+++ six_sys_suppression found, set d_supression = false";
 };
 
 if (d_found_DMSmokeGrenadeVB) then {
