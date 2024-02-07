@@ -15,7 +15,7 @@ hint localize format["+++ AddOns found (at _search_array) %1", count _search_arr
 #ifndef __ACE__
 if (isServer) then {
 	if (d_use_mod_tracked) then {
-		d_found_gdtmodtracked = (if ("GDTModTracked" in _search_array) then {true} else {false});
+		d_found_gdtmodtracked = "GDTModTracked" in _search_array;
 		//__DEBUG_SERVER("x_commonfuncs.sqf",d_found_gdtmodtracked)
 
 		if (!(d_found_gdtmodtracked)) then {
@@ -57,7 +57,9 @@ SYG_found_ECS               = "ECS_Core" in _search_array; // on server
 SYG_found_SCUD               = "GIG_Scud" in _search_array; // on server and client
 #endif
 
-hint localize format["+++ GL3 = %1, ai_spotting = %2, Grenade fix = %3, VopSound = %4 ", SYG_found_GL3, SYG_found_ai_spotting, SYG_found_TCN_GrenadeFix, "VopSound" in _search_array];
+hint localize format["+++ GL3 = %1, ai_spotting = %2, EditorUpdate = %3, Grenade fix = %4, VopSound = %5 ",
+    SYG_found_GL3, SYG_found_ai_spotting, SYG_found_EditorUpdate_v102,
+    SYG_found_TCN_GrenadeFix, "VopSound" in _search_array];
 #ifdef __ACE__
 if (SYG_found_ACE) then {hint localize "+++ ACE found!"} else { "--- ACE not found!"};
 if ((d_enemy_side == "WEST")  && isServer && SYG_found_GL3) then {

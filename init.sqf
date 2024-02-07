@@ -277,9 +277,10 @@ if (isServer) then {
     // ranked_sm_array = [... [[56],[1,10]] ...];
 
 	// SM to place at first part of SM list between designated indexes, e.g. SM#56 must be at pos [1..10], and SM#2 will be at pos [1..57(maxind)] etc
-	_first_sm_array = [ [ [56],[1,10] ], [ [57],[3,12] ], [[2,3,53], [5, 1000]] ];
+	// Dynamic SM cant be first in list, that is all konvoys (20,21,22) and all pilots (51, 52, 54)
+	_first_sm_array = [ [ [56],[1,10] ], [ [57],[3,12] ], [[2,3,53], [5, 1000]],[[20,21,22,51, 52, 54],[1, 1000]] ];
 	hint localize format["+++ init.sqf: FirstSMArray(%1)= %2", count _first_sm_array, _first_sm_array];
-	_fixed_id = [];
+	_fixed_id = []; // Rnown controlled SM ids, they can't be used to move out during changing positions
 	{
 		_x = _x select 0;
 		if (typeName _x == "SCALAR") then { _x = [_x] };
@@ -296,25 +297,29 @@ if (isServer) then {
 		hint localize format["+++ init.sqf: FirstSMArray - step %1, _fsm_arr %2, _fsm_range %3", _i + 1, _fsm_arr, _fsm_range];
 		_range_start = (_fsm_range select 0) min ( (count side_missions_random) - 1 ); // Just in case prevent overflow of id
 		_range_end   = (_fsm_range select 1) min ( (count side_missions_random) - 1 ); // Use array last index as max possible one
-		for "_i" from 0 to (count _fsm_arr) - 1 do {
-			_sm_id       = _fsm_arr select _i;
-			hint localize format["+++ init.sqf: FirstSMArray - ensure SM#%1 to be in the range %2:", _sm_id, _fsm_range];
-			_sm_pos = side_missions_random find _sm_id; // Current pos of SM to from ones to be in range
-			if (_sm_pos >= 0) then { // Found, put to the designated sub-range, e.g. [1..10] (indexes start from 0, end with (count side_missions_random -1))
-				if ((_sm_pos >= _range_start) && (_sm_pos <= _range_end) ) exitWith { // Already in range, skip exchange
-					hint localize format["+++ init.sqf: FirstSMArray - SM#%1 is already at pos %2 so already is in designated range, skip this step", _sm_id, _sm_pos ];
-				};
-				// Find new position for the SM id in the designated range
-				while { true } do {
-					_new_pos = floor( random (_range_end-_range_start + 1) ) + _range_start; // Get random position in the range, e.g. 5 in [1..10]
-					_moved_id = side_missions_random select _new_pos; // Get id of SM to exchange with current first one
-					if (! (_moved_id in _fixed_id )) exitWith { // If found id not in first SM list, echange it
-						side_missions_random set [_new_pos, _sm_id]; // Move first  SM to  the pos inro designated range
-						side_missions_random set [_sm_pos, _moved_id]; // Put found SM to first SM pos
-						hint localize format["+++ init.sqf: FirstSMArray - SM#%1 exchanged index from %2 to the ranged %3", _sm_id, _sm_pos, _new_pos ];
-					};
-				};
-			} else { hint localize format["*** init.sqf: FirstSMArray - SM#%1 not found in the mission SM list", _sm_id] };
+		if ( (_range_start < 0) || (_range_end < 0) || (_range_start > _range_end)) then {
+    		hint localize format["--- init.sqf: controlled SM sub-list %1 has illegal range %2, skipped...", _fsm_range, _fsm_range];
+		} else {
+            for "_i" from 0 to (count _fsm_arr) - 1 do {
+                _sm_id   = _fsm_arr select _i;  // For each SM id check it is already in range
+                hint localize format["+++ init.sqf: FirstSMArray - ensure SM#%1 to be in the range %2:", _sm_id, _fsm_range];
+                _sm_pos = side_missions_random find _sm_id; // Current pos of SM to from ones to be in range
+                if (_sm_pos >= 0) then { // Found, put to the designated sub-range, e.g. [1..10] (indexes start from 0, end with (count side_missions_random -1))
+                    if ((_sm_pos >= _range_start) && (_sm_pos <= _range_end) ) exitWith { // Already in range, skip exchange
+                        hint localize format["+++ init.sqf: FirstSMArray - SM#%1 is already at pos %2 so is in designated range, skip it", _sm_id, _sm_pos ];
+                    };
+                    // Find new position for the SM id in the designated range
+                    while { true } do {
+                        _new_pos = floor( random (_range_end-_range_start + 1) ) + _range_start; // Get random position in the range, e.g. 5 in [1..10]
+                        _moved_id = side_missions_random select _new_pos; // Get id of SM to exchange with current first one
+                        if (! (_moved_id in _fixed_id )) exitWith { // If found id not in first SM list, echange it
+                            side_missions_random set [_new_pos, _sm_id]; // Move first  SM to the pos into designated range
+                            side_missions_random set [_sm_pos, _moved_id]; // Put found SM to first SM pos
+                            hint localize format["+++ init.sqf: FirstSMArray - SM#%1 exchanged index from %2 to the ranged %3", _sm_id, _sm_pos, _new_pos ];
+                        };
+                    };
+                } else { hint localize format["*** init.sqf: FirstSMArray - SM#%1 not found in the mission SM list, skipped...", _sm_id] };
+            };
 		};
 	};
 
