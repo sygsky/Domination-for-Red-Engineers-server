@@ -84,24 +84,24 @@ SYG_findNearestSPPM = {
 // call: _vehArr = _pos | _object(RoadCone) call  SYG_getAllSPPMVehicles;
 //
 SYG_getAllSPPMVehicles = {
-	private ["_pos", "_arr", "_i", "_x", "_cnt0"];
+	private ["_pos", "_arr", "_i", "_x", "_cnt0", "_add"];
 	_pos = _this call SYG_getPos;
 	if (_pos select 0 == 0 && _pos select 1 == 0) exitWith {[]}; // bad parameters
-	_arr = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
-	_cnt0= count _arr;
+	_arr  = nearestObjects [_pos, ["LandVehicle", "Air","RHIB"], SPPM_VEH_MIN_DISTANCE];
+	_cnt0 = count _arr;
 	for "_i" from 0 to (count _arr) - 1 do {
 		_x = _arr select _i;
-        if (_x isKindOf "CAManBase") then { _arr set [_i, "RM_ME"] } else { //+++ Sygsky: Sometimes a man gets on this list!!!
-        	if (!alive _x) then {
-        		_arr set [_i, "RM_ME"];
-        	} else {
+   	    _add = false;
+        if ( !(_x isKindOf "CAManBase") ) then { //+++ Sygsky: Sometimes a man gets on this list!!!
+        	if (!alive _x) exitWith {};
+            if ((side _x) == d_side_enemy) exitWith {}; // Add only vehs not with enemy in it
 #ifdef __OWN_SIDE_EAST__
-	    		if ( !(_x call SYG_isWestVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only western vehicles can be SPPMed!
+            _add = _x call SYG_isWestVehicle; /// Only western vehicles can be SPPMed!
 #else
-    			if ( !(_x call SYG_isEastVehicle) ) then { _arr set [_i, "RM_ME"] }; /// Only eastern vehicles can be SPPMed!
+            _add = _x call SYG_isEastVehicle; /// Only eastern vehicles can be SPPMed!
 #endif
-        	};
         };
+        if (!_add) then { _arr set [_i, "RM_ME"] };
 	};
 	_arr call SYG_clearArrayB; // remove all "RM_ME" items from the list
 	// now make all SPPM vehicles to be captured ones
@@ -413,9 +413,9 @@ SYG_getVehSPPMMarker = {
     private [ "_veh","_items","_marker_name" ];
     _veh = _this;
     if (typeName _veh != "OBJECT") exitWith {""}; // not vehicle etc, exit
-    _items = _veh nearObjects ["RoadCone", __SPPM__];
+    _items = _veh nearObjects [SPPM_OBJ_TYPE, __SPPM__];
     if (count _items == 0) exitWith {""}; // No SPPM found near veh
-    _marker_name = (_items select 0) getVariable "SPPM_MARKER"; // SPPM conus must have variable "SPPM_MARKER"
+    _marker_name = (_items select 0) getVariable SPPM_MARKER_NAME; // SPPM conus must have variable "SPPM_MARKER"
     if ( isNil "_marker_name") exitWith {""};
     _marker_name
 };
