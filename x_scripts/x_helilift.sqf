@@ -235,6 +235,7 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         _nearest setVelocity _vel;
 //                        hint localize format["+++ x_helilist.sqf: set %1 velocity to synchronize on drop, npos %2, modelToWorld %3", _vel, _npos, _off];
                         if ( isEngineOn _nearest ) then { _nearest engineOn false; };
+                        // TODO: realize #679 (name за pilot dropp MHQ to the water
                         Attached_Vec = objNull;
 
                         // reveal to all players new position of MHQ. It can help!
