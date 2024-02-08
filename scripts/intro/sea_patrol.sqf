@@ -99,8 +99,9 @@ _is_boat_captured = {
     if ( ( { alive _x } count (crew _boat)) ==  0 ) exitWith {
         if ( (count ([_boat, 20] call SYG_findNearestPlayers)) > 0 ) exitWith {true}; // Player[s] found nearby
 
-        // Find nearest circle of any type near the boat
-        !isNull (nearestObject [ _boat, "HeliH"]) // Heli circle is found (true) or not (false)
+        // Find nearest circle of any type near the boat and SPPM center ("RoadCone")
+//s        !isNull (nearestObject [ _boat, "HeliH"]) // Heli circle is found (true) or not (false)
+        (count (nearestObjects [_boat, ["HeliH","RoadCone"], 20])) > 0
     };
     false
 };
