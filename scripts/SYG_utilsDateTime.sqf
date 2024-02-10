@@ -77,10 +77,15 @@ SYG_dateToStr = {
 // _oldtime = time;
 // sleep 600;
 // _str = [ time,_oldtime] call SYG_timeDiffToStr; // "00:10:00" as always positive difference between two times
+// _str = (time - _oldtime) call SYG_timeDiffToStr; // "00:10:00" as always positive difference between two times
 //
 SYG_timeDiffToStr = {
 	private ["_diff","_hours","_mins","_secs"];
-	_diff  = abs((_this select 0) - (_this select 1));
+	if (typeName _this == "SCALAR") then { // Dvalue already exists
+    	_diff  = abs(_this);
+	} else { // Must be array with 2 values
+	    _diff  = abs((_this select 0) - (_this select 1))
+	};
 	_hours = floor(_diff/HOUR_SECS);
 	_mins  = floor((_diff - _hours * HOUR_SECS)/60);
 	_secs  = round(_diff - (_hours * HOUR_SECS + _mins *60));
