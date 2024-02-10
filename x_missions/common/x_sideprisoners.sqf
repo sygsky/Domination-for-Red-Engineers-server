@@ -130,7 +130,7 @@ while {!_hostages_reached_dest && !_all_dead} do {
 						_rescued = true;
 						_retter = _x;
 						{
-							if (!(isNull _x) && alive _x) then {
+							if ( alive _x ) then {
 								_x setCaptive false;
 								_x enableAI "MOVE";
 							};

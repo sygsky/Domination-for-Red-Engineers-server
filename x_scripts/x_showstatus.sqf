@@ -176,7 +176,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 
 			if (_msg != "") then {
 				_s1 = if (alive (_ret select 0)) then {
-					format[localize "STR_SYS_117_1", [(_ret select 0), 50] call SYG_MsgOnPos0] // "Their leader is %1"
+					format[localize "STR_SYS_117_1", [(_ret select 0), 10] call SYG_MsgOnPos0] // "Their leader is %1"
 				} else {localize "STR_SYS_117_0"}; // "But the leader of this group of civilians has not been located"
 				_s = _s + "\n" + format[ localize _msg, _ret select 3 /*_alive_cnt*/, _ret select 2 /*_whole_cnt*/, round( _ret select 1 /*_dist*/), _s1 ];
 			} else {
