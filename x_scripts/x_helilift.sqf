@@ -235,16 +235,17 @@ while {(alive _vehicle) && (alive player) && player_is_driver} do {
                         _nearest setVelocity _vel;
 //                        hint localize format["+++ x_helilist.sqf: set %1 velocity to synchronize on drop, npos %2, modelToWorld %3", _vel, _npos, _off];
                         if ( isEngineOn _nearest ) then { _nearest engineOn false; };
-                        // TODO: realize #679 (name за pilot dropp MHQ to the water
+                        // TODO: realize #679 (name of the pilot who droped MHQ to the water
                         Attached_Vec = objNull;
 
                         // reveal to all players new position of MHQ. It can help!
                         sleep 1;
                         hint localize format["+++ _reveal_name = ""%1""", _reveal_name];
-                        if (_reveal_name != "") then {
+                        _pos = getPos _nearest;
+                        if ((_reveal_name != "") && (alive _nearest)) then {
                         	_str  = format["hint localize format[""+++ %1(1) %2"", getPos %1]", _reveal_name, "%1" ];
                         	_str1 = format["hint localize format[""+++ %1(2) %2"", getPos %1]", _reveal_name, "%1" ];
-                        	_str  = format["%1; %2 setPos %3; %2 setDir %4;sleep 0.1;%5;", _str, _reveal_name, getPos _nearest, getDir _nearest, _str1];
+                        	_str  = format["%1; %2 setPos %3; %2 setDir %4;sleep 0.1;%5;", _str, _reveal_name, _pos, getDir _nearest, _str1];
                         	hint localize format["+++ ""remote_execute"" sent: ""%1""", _str, name player];
                         	["remote_execute", _str, name player] call XSendNetStartScriptClient; // Sent to all clients only
                         };
