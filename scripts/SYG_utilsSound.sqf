@@ -598,7 +598,12 @@ SYG_truckDoorCloseSound = { format["truck_door_%1", (floor (random 4)) + 1] }; /
 
 SYG_rustyMastSound = { format["rusty_mast_%1", (floor (random 5)) + 1] }; // rusty_mast_1..5
 
-SYG_randomRadio = { format["radio_%1", (floor (random 9)) + 1] }; // radio_1..4
+SYG_randomRadio = {
+    private ["_rnd"];
+    _rnd = random 13;
+    if (_rnd <= 9) exitWith { format["radio_%1", ((ceil _rnd) min 9) max 1 ]}; // radio_1..9
+    ["morze2","morze_3","morze_5","morze_7"] select ( ((floor (_rnd - 9)) min 3) max 0 )
+}; // radio_1..9
 
 SYG_randomRadioNoise = { format["radionoise_%1", floor (random 6)] }; // radionoise_0..5
 
