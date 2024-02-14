@@ -1188,23 +1188,27 @@ SYG_roundPos = {
 
 
 //
-// Detects if positions is on land or in sea near shore. Detects shore on distance 20 meters
-// Call: _nearLand = _unit call SYG_posNearLand;
-// Call: _nearLand = (_getPos _unit) call SYG_posNearLand;
+// Detects if positions is on land or in sea near shore. Detects shore on default distance 20 meters or custom one see example #3
+// #1 Call: _nearLand = _unit call SYG_posNearLand;
+// #2 Call: _nearLand = (_getPos _unit) call SYG_posNearLand;
+// #3 Call: _nearLand = [_unit,_check_dist; call SYG_posNearLand; // _check_dist is regular net step to check lonnd is near or not
 //
 SYG_isNearLand = {
-	private ["_pos", "_dist", "_cnt", "_xpos0", "_ypos0", "_xpos"];
-	_pos = _this call SYG_getPos;
-	_cnt = 0;
+	private ["_pos", "_shore", "_xpos0", "_ypos0", "_xpos", "_step"];
+	if (typeName _this != "ARRAY") then {_this = [_this, 20]};
+	_pos = (_this select 0) call SYG_getPos;
+	_step = _this select 1;
+	_shore = false;
 	_xpos0 = _pos select 0;
 	_ypos0 = _pos select 1;
 	{
 		_xpos = _xpos0 + _x;
 		{
-			if (!surfaceIsWater	[_xpos, _ypos0 + _x] ) then {_cnt =  _cnt + 1};
-		} forEach [+20,0,-20]; // for Y
-	} forEach [-20,0,+20]; // for X
-	_cnt > 0
+			if (!surfaceIsWater	[_xpos, _ypos0 + _x] ) exitWith {_shore = true};
+		} forEach [_step,0,-_step]; // for Y
+		if (_shore) exitWith {};
+	} forEach [-_step,0,_step]; // for X
+	_shore
 };
 
 

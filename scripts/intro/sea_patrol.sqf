@@ -9,10 +9,10 @@
 			[ _boat, _grp, [_wp_arr (points)], _id, _state ]
 
 		_state = [_last_pos, _time, _units, status]:
-			0: _last position as [x,y<,z>] of last stored position ,
-			1: _time is last position getting time,
-			2: _units are all units in the intial group, we need it to remove bodies
-			TODO: 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
+			off 0: _last position as [x,y<,z>] of last stored position ,
+			off 1: _time is last position getting time,
+			off 2: _units are all units in the intial group, we need it to remove bodies
+			TODO: still not used, 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
 
 			Algorithm is very clear:
 			1. Boat starts and go through his WPs, last WP is circular, state = 1.
@@ -21,7 +21,7 @@
 				If crew count == 1, sea devil goes to the ocean and is removed, state = 0.
 			3. Special script sends some small rescue boat to the sea devil.
 				If boat is successful, new command is populated in the devil
-				and devil try to continue hsi trip or to move out of island boundaries and after is removed from the list. state = 0
+				and devil try to continue its trip or to move out of island boundaries and after is removed from the list, state = 0
 			4. if resque boat is failed during designated period (stoped during 5 mins, killed etc), devil also is marked to be deleted, state = 0;
 
 	returns: nothing
@@ -39,7 +39,7 @@
 
 #define BOAT_STATUS_UNKNOWN 0
 #define   BOAT_STATUS_READY 1
-#define  BOAT_STATUS_RESCUE 0
+#define  BOAT_STATUS_RESCUE 2
 
 // Time to create a new vehicle to replace the captured one in seconds (600 == 10 mins)
 #define TIME_TO_REPLACE_CAPTURED_VEH 600
@@ -191,7 +191,7 @@ _is_ship_stuck = {
 	_stucked = false;
 
 #ifdef __DEBUG__
-		hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1, params real(crit): dist %2(%3), time %4(%5), crew/units %6(%7)",
+		hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1, params real(crit): dist %2(%3), time %4(%5), alive crew/units %6(%7)",
 		_this select OFFSET_ID,
 		_dist, POS_DIST,
 		 time, _time,
@@ -223,7 +223,8 @@ _is_ship_stuck = {
 			];
 #endif
 			if ( _dist > POS_DIST ) exitWith {
-				_stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ]; _stat set [OFFSET_STAT_LAST_TIME, time + COMBAT_STALL_DELAY ]; // in battle time-out is longer
+				_stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ];
+				_stat set [OFFSET_STAT_LAST_TIME, time + COMBAT_STALL_DELAY ]; // in battle time-out is longer
 			};
 			if (! (_enemy in _known_enemy_arr)) then {
 				hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: enemy %1 added to the reveal list (size after is %2)", typeOf _enemy, count _known_enemy_arr ];
@@ -232,7 +233,10 @@ _is_ship_stuck = {
 			["say_sound", _boat, "naval"] call XSendNetStartScriptClientAll; // Say fear sound to the player )))
 		}; // Some near enemy detected, not stuacked
 
-		if ( _dist > POS_DIST ) exitWith { _stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ]; _stat set [OFFSET_STAT_LAST_TIME, time + PATROL_STALL_DELAY ]; }; // Distance from last point is far enough for boat to be not stalled
+		if ( _dist > POS_DIST ) exitWith {
+		    _stat set[ OFFSET_STAT_LAST_POS, getPosASL _boat ];
+		    _stat set [OFFSET_STAT_LAST_TIME, time + PATROL_STALL_DELAY ];
+		}; // Distance from last point is far enough for boat to be not stalled
 
 		if ( time > _time ) exitWith {
 			// check if boat is near land
@@ -330,6 +334,7 @@ _get_next_wp = {
 #endif
 	_wpa select _next_i
 };
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+   [_boat, _grp, _wp_arr, _id, _state...] call _create_patrol  +
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -344,7 +349,7 @@ _create_patrol = {
 	}; // try to rearm  upgraded vehicle
 
 //+++ #639
-//	_boat lock true;
+//    _boat lock true;
 	_boat setVariable ["PATROL_ITEM", _this select OFFSET_ID]; // Mark vehicle to be patrol one with some id
 //--- #639
 	_this set [OFFSET_BOAT, _boat];
@@ -356,9 +361,14 @@ _create_patrol = {
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//+  Experimental setting to try to disable enemy radar targeting +
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#ifdef __CAPTURED_BOATS__
-	_boat setCaptive true;
-#endif	
+	// Protect from radar on average 1 boat from the list if __CAPTURED_BOATS__ is defined
+#ifndef __CAPTURED_BOATS__
+    if ( (random (_patrol_arr)) < 1 ) then {
+#endif
+	    _boat setCaptive true;
+#ifndef __CAPTURED_BOATS__
+    };
+#endif
 
 	_wpa = _this select OFFSET_WPA; // waypoint description array
 	_boat setPos (_wpa select 0); // 1st WP position
@@ -496,7 +506,7 @@ _replace_patrol = {
 	_this call _create_patrol; // The only point where patrol is created
 };
 
-_patrol_arr = [];
+_patrol_arr = []; // MAIN array to store all ships, alive or null
 
 // _str = [_boat, _grp, _wp_arr, _id, _state...] call _item2str;
 _item2str = {
@@ -669,60 +679,73 @@ _reset_roles = {
 	true
 };
 
+#ifdef __STOP_IF_NO_PLAYERS__
+_check_empty_server = {
+    if (!X_MP) exitWith {}; // Only for MP server
+	if ( (call XPlayersNumber) > 0 ) exitWith { }; // Server has players, skip this method body
+    // Not recreate patrol if no players
+    _printInfo = false;
+    _time = time;
+    // Wait for the server to be empty for at least 30 minutes
+    _time_to_clear = _time + 1800;
+    while {( (call XPlayersNumber) == 0 ) && (time < _time_to_clear)} do {sleep 60};
+    if ( (call XPlayersNumber) != 0 ) exitWith {
+        hint localize format[ "*** sea_patrol.sqf: mission was empty too short period of %1 secs, no boats removed", round(time - _time) ];
+    };
+    hint localize format[ "*** sea_patrol.sqf: MAIN loop suspended due to players absent, all %1 patrols removed", count _patrol_arr ];
+    { sleep 1; _x call _remove_patrol } forEach _patrol_arr;
+
+    while {((call XPlayersNumber) == 0)} do { sleep 60 };
+    _time = (round (time - _time)) call SYG_secondsToStr; // "hh:mm:ss"
+    hint localize format[ "*** sea_patrol.sqf: MAIN loop resumed after players absent during %1. All %2 boat[s] will be re-created", _time, count _patrol_arr ];
+    _printInfo = true;
+};
+ #endif
+
+_exit_patrol_system = {
+    hint localize "*** sea_patrol.sqf: stop sea patrols (move them out) due to the all towns are liberated !!!";
+    ["msg_to_user","",["STR_SEA_PATROL_LEAVE"], 0, 0, false, "no_more_waiting"] call XSendNetStartScriptClient; // "GRU reports that enemy naval patrols are heading away from Sahrani."
+    // set last WP to the big distance from island center
+    {
+        _boat = _x select OFFSET_BOAT;
+        // For not null boat
+        if (!isNull _boat) then {
+            _grp  = _x select OFFSET_GRP;
+            _units = (_x select OFFSET_STAT) select OFFSET_STAT_UNITS;
+            // If patrol is not alive, skip it directly now
+            if ( (isNull _grp) || ( ({alive _x} count _units) == 0 ) || (!alive (driver _boat))) exitWith {
+                _x call _remove_patrol;
+            };
+            _last = (count (waypoints _grp)) - 1;
+            for "_i" from _last to 0 step -1 do {
+                deleteWaypoint [_grp, _i];
+            };
+            _pos = [d_island_center, _boat, 10000] call SYG_elongate2; // get pos 10 km out of boat pos in direction from island center
+            (driver _boat) moveTo _pos;
+            _grp setSpeedMode "FULL";
+        };
+    } forEach _patrol_arr;
+    //
+    sleep 600; // Wait 10 minutes
+    {
+        _x call _remove_patrol;
+    } forEach _patrol_arr;
+};
+
 //===============================================================================
 //                      +++ MAIN SERVICE LOOP +++
 //===============================================================================
 while { true } do {
 
-#ifdef __STOP_IF_NO_PLAYERS__
-	if ( X_MP && ( (call XPlayersNumber) == 0 ) ) then { // Not recreate patrol if no players
-		_printInfo = false;
-		_time = time;
-		// Wait for the server to be empty for at least 30 minutes
-		_time_to_clear = _time + 1800;
-		while {( (call XPlayersNumber) == 0 ) && (time < _time_to_clear)} do {sleep 60};
-		if ( (call XPlayersNumber) != 0 ) exitWith {
-			hint localize format[ "*** sea_patrol.sqf: mission was empty too short period of %1 secs, no boats removed", round(time - _time) ];
-		};
-		hint localize format[ "*** sea_patrol.sqf: MAIN loop suspended due to players absent, all %1 patrols removed", count _patrol_arr ];
-		{ sleep 1; _x call _remove_patrol } forEach _patrol_arr;
+    #ifdef __STOP_IF_NO_PLAYERS__
 
-		while {((call XPlayersNumber) == 0)} do { sleep 60 };
-		_time = (round (time - _time)) call SYG_secondsToStr; // "hh:mm:ss"
-		hint localize format[ "*** sea_patrol.sqf: MAIN loop resumed after players absent during %1. All %2 boat[s] will be re-created", _time, count _patrol_arr ];
-		_printInfo = true;
-	};
-#endif
+    call _check_empty_server;
+
+    #endif
 
 	// stop sea patrol system on the end of mission
 	if ( current_counter > number_targets ) exitWith {
-		hint localize "*** sea_patrol.sqf: stop sea patrols (move them out) due to the all towns are liberated !!!";
-		["msg_to_user","",["STR_SEA_PATROL_LEAVE"], 0, 0, false, "no_more_waiting"] call XSendNetStartScriptClient; // "GRU reports that enemy naval patrols are heading away from Sahrani."
-		// set last WP to the big distance from island center
-		{
-			_boat = _x select OFFSET_BOAT;
-			// For not null boat
-			if (!isNull _boat) then {
-				_grp  = _x select OFFSET_GRP;
-				_units = (_x select OFFSET_STAT) select OFFSET_STAT_UNITS;
-				// If patrol is not alive, skip it directly now
-				if ( (isNull _grp) || ( ({alive _x} count _units) == 0 ) || (!alive (driver _boat))) exitWith {
-					_x call _remove_patrol;
-				};
-				_last = (count (waypoints _grp)) - 1;
-                for "_i" from _last to 0 step -1 do {
-                	deleteWaypoint [_grp, _i];
-                };
-				_pos = [d_island_center, _boat, 10000] call SYG_elongate2; // get pos 10 km out of boat pos in direction from island center
-				(driver _boat) moveTo _pos;
-				_grp setSpeedMode "FULL";
-			};
-		} forEach _patrol_arr;
-		//
-		sleep 600; // Wait 10 minutes
-		{
-			_x call _remove_patrol;
-		} forEach _patrol_arr;
+	    call _exit_patrol_system;
 	};
 
 	if ( {alive _x } count _known_enemy_arr == 0) then { // No enemies detected
@@ -767,6 +790,8 @@ while { true } do {
 							hint localize format[ "+++ sea_patrol.sqf: reveal list resized down from %1 to %2", _cnt, count _known_enemy_arr ];
 						};
 					};
+					// TODO: remove time-out
+
 				} else {
 					// This boat is inoperable, so remove it now
 					_arr call _remove_patrol; // remove this step, to re-create it on the next step
