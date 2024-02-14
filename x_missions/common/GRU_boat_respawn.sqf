@@ -13,6 +13,24 @@
 	returns: nothing
 */
 
+// check if is called on client at "remote_execute" sent from server
+if ((_this select 0) == "remote_execute") exitWith {
+    // Call to client from server with ["remote_execute",_cmd_str, _veh] call (complile _cmd_str);
+    If (count _this < 3) exitWIth {
+        hint localize format["--- GRU_boat_respawn.sqf error: unexpected _this count (must be >= 3) on client call, _this = %1", _this];
+    };
+    _boat = _this select 2;
+    if (typeName _boat != "OBJECT") exitWith {
+        hint localize format["--- GRU_boat_respawn.sqf error: expected 'OBJECT' in (_bpat = _this select 2), found _boat = %1", _boat];
+    };
+    if (local _boat) exitWith {
+        _boat engineOn false;
+        sleep 0.6;
+        hint localize format["--- GRU_boat_respawn.sqf success: local boat engine stopped, after 0.5 sec. engine is %1",
+         if (isEngineOn _boat) then {"on"} else {"off"}];
+    };
+};
+
 if (!isServer) exitWith {hint localize "--- GRU_boat_respawn.sqf called on client, exit!"};
 
 #include "x_setup.sqf"
@@ -101,6 +119,18 @@ while { true } do {
 		} else {
 			_marker setMarkerType _marker_type; // restore marker just in case
 		};
+	} else {
+	    // Check if boat is empty and engine is on
+	    if ( isEngineOn _veh) then {
+	        if ( ( {isPlayer _x} count (crew _veh) ) == 0) then {// Boat is empty
+                if (local _veh) then {
+                    _veh engineOn false;
+                } else {
+                    Hint localize format["+++ GRU_boat_respawn.sqf: empty non local boat engine would be stopped on some client at %1", [_veh, 10 ] call SYG_MsgOnPos0];
+                    ["remote_execute","", "SERVER"] call  XSendNetStartScriptClientAll;
+                };
+	        };
+	    };
 	};
 	if (_marker != "") then {
 		_vpos = getPosASL _veh;
