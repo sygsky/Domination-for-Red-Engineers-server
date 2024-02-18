@@ -869,5 +869,10 @@ SYG_playExtraSounds = {
 	d_rebornmusic_index == 0
 };
 
+//BG Ammo and Fuel truck functions (Gyuri test mission)
+
+player exec "BG\datas.sqs";
+player exec "BG\fuelTruck.sqs";
+player exec "BG\ammoTruck.sqs";
 
 if (true) exitWith {}
