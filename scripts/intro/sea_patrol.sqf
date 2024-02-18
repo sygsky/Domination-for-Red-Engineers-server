@@ -363,7 +363,7 @@ _create_patrol = {
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// Protect from radar on average 1 boat from the list if __CAPTURED_BOATS__ is defined
 #ifndef __CAPTURED_BOATS__
-    if ( (random (_patrol_arr)) < 1 ) then {
+    if ( (random (count _patrol_arr)) < 1 ) then {
 #endif
 	    _boat setCaptive true;
 #ifndef __CAPTURED_BOATS__
