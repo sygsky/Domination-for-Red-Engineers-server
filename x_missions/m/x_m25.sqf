@@ -85,7 +85,12 @@ if (isServer) then {
 			_grp_ret = _this call XCreateInf;
 			_cnt = (_grp_ret select 0) call SYG_rearmSpecopsGroup;
 #ifdef __DEBUG__		
-			hint localize format["+++ %1 x_m25.sqf: %2 of %3 specops rearmed", call SYG_missionTimeInfoStr, _cnt, count units (_grp_ret select 0)];
+			hint localize format["+++ %1 x_m25.sqf: officer at %2, %3 of %4 specops rearmed",
+			    call SYG_missionTimeInfoStr,        // mission time
+			    [_sm_vehicle,1] call SYG_MsgOnPos0, // Accurate to 1 meter position of officer on islands
+			    _cnt,                               // Rearmed counter
+			    count units (_grp_ret select 0)     // Total counter
+		    ];
 #endif
 		};
 	}
