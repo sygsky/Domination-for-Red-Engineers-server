@@ -869,5 +869,4 @@ SYG_playExtraSounds = {
 	d_rebornmusic_index == 0
 };
 
-
 if (true) exitWith {}
