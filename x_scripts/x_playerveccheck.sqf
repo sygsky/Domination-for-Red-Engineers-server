@@ -237,10 +237,10 @@ while { true } do {
 	waitUntil {sleep 0.2; _role_arr = assignedVehicleRole player; vehicle player == player };
 	hint localize format [ "+++ x_playerveccheck.sqf: player out of vehicle, role %1, veh driver %2",
 	    _role_arr, if (isNull (driver _veh) ) then {"<null>"} else {typeOf (driver _veh)} ];
-    _role = if (count _role_arr == 0) then { "<none>" } else {_role_arr select 0};
+    _role = if (count _role_arr == 0) then { "<null>" } else {_role_arr select 0};
 	// Try to detect if it is needed to stop empty vehicle engine or not
-	if ( (_role == "Driver") && (alive _veh) && (local _veh) && ( isNull (driver _veh) ) ) then {
-        player action[ "Eject",_veh ];
+	if ( (_role == "Driver") && (alive _veh) && (local _veh) && ( alive (driver _veh) ) ) then {
+        player action[ "Eject", _veh ];
         if ( isEngineOn _veh) then { _veh engineOn false;}
 	};
 
