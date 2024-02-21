@@ -74,7 +74,7 @@ if (isServer) then {
 	XKilledSMTargetNormalNoDeadAdd = {
 		side_mission_winner=2;
 		side_mission_resolved = true;
-		hint localize format["+++ SideMission id %1 (#%2) (object: %3) completed by %4 (%5)", current_mission_index, current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 0))];
+		hint localize format["+++ SideMission id %1 (#%2) (object: %3) completed by %4 (%5)", current_mission_index, current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 1))];
 	};
 #endif
 #ifdef __TT__
@@ -95,7 +95,7 @@ if (isServer) then {
 	XKilledSMTarget500 = {
 		-500 call XKilledSMTargetCodeNoDeadAdd;
 		(_this select 0) call XAddDead0;
-		hint localize format["+++ SideMission id %1 (#%2) (object: %3, aborted by %4 (%5)", current_mission_index, current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 0))];
+		hint localize format["+++ SideMission id %1 (#%2) (object: %3, aborted by %4 (%5)", current_mission_index, current_mission_counter, typeOf (_this select 0), name (_this select 1), typeOf (vehicle (_this select 1))];
 	};
 
 	// _this: negative code to complete this sm -1,-1 etc
