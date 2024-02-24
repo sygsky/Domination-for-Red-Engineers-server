@@ -14,7 +14,7 @@
 
 _start_time        = _this; // Session start time
 _out_of_intro_time = time; // When we leave the intro and go into freefall with a parachute on our backs
-hint localize format[ "+++ SYG_checkPlayerAtBase.sqf: Started, intro start at %1, out intro start at %2, diff is %3", _start_time, _out_of_intro_time, _out_of_intro_time - _start_time ];
+hint localize format[ "+++ SYG_checkPlayerAtBase.sqf: Started, intro start at %1, intro stop at %2, diff is %3", _start_time, _out_of_intro_time, _out_of_intro_time - _start_time ];
 _spent_time = 0; // Time to reach the base
 _flare = objNull;
 _pos = getPos AISPAWN; // FLAG_BASE; // [9529.5,9759.2,0]; // point near central gate to the base
@@ -61,17 +61,19 @@ while { base_visit_session <= 0 } do {
 						_vehs_used_arr set [count _vehs_used_arr, format["%1(c=%2,s=%3)", typeOf _active_veh, _veh_exit_cnt, round(_in_time_sum)]]; // store visited vehicle type to print afer visit
 					};
 
-					base_visit_mission = 1;
-					_spent_time = time  - _out_of_intro_time; // _start_time;
-					[
-						"base_visit_mission",
-						name player,
-						base_visit_mission,
-						format["%1", _vehs_used_arr], // history of vehicles
-						_spent_time // Time spent to reach the base from Antigua
-					] call XSendNetStartScriptServer; // store new value on the server
-					base_visit_session = base_visit_mission;
-					hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
+                    if (base_visit_mission < 1) then {
+                        base_visit_mission = 1;
+                        _spent_time = time  - _out_of_intro_time; // _start_time;
+                        [
+                            "base_visit_mission",
+                            name player,
+                            base_visit_mission,
+                            format["%1", _vehs_used_arr], // history of vehicles
+                            _spent_time // Time spent to reach the base from Antigua
+                        ] call XSendNetStartScriptServer; // store new value on the server
+                        base_visit_session = base_visit_mission;
+    					hint localize "+++ SYG_checkPlayerAtBase.sqf: base_visit_session/mission = 1";
+                    };
 				} else {
 					hint localize "+++ SYG_checkPlayerAtBase.sqf: false base_visit_session/mission detectedm skipped";
 				};
