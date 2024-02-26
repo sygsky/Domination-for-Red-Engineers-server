@@ -296,12 +296,15 @@ if (!_replaced) exitWith {
     _name1 =  call _makeNameTarget;
 	_loc = _target call SYG_nearestLocation;
 	_str = if (typeName _loc == "LOCATION") then { text _loc} else {"<NO LOCATION>"};
-    hint localize format["+++ MANDO Missile not replaced (local %1, id %2): from %3.%4(s. %5) -> %6, dmg %7, dst %8 m., h %9, spd %10, near %11, exit",
+	_loc = _shooter call SYG_nearestLocation;
+    _str1 = if (typeName _loc == "LOCATION") then { text _loc} else {"<NO LOCATION>"};
+    hint localize format["+++ MANDO Missile not replaced (local %1, id %2): from %3.%4(s. %5, near %6) -> %7, dmg %8, dst %8 m., h %10, spd %11, near %12, exit",
     	_local,
     	_ind,
         _name,
         _type,
         round(speed _shooter),
+        _str1,
         _name1,
         (round((damage _target)*100))/100,
         round(_target distance _shooter), // distance from the shooter to the target
@@ -362,9 +365,12 @@ _arr call mando_missile_handler; // variable in ACE code
 //2020/04/04, 16:33:28 +++ MANDO Missile: from ACE_SoldierWAA.ACE_Missile_Stinger spd 0 m/s -> Виталий(ACE_Mi17_MG) dmg 0.01, h 12 d 88 spd 255 m/s, near Gulan
 _loc = _target call SYG_nearestLocation;
 _str = if (typeName _loc == "LOCATION") then { text _loc} else {"<NO LOCATION>"};
-hint localize format[ "+++ MANDO Missile: from %1.%2, spd %3 km/h -> %4, dmg %5, h %6, d %7, spd %8 km/h, near %9",
+_loc = _shooter call SYG_nearestLocation;
+_str1 = if (typeName _loc == "LOCATION") then { text _loc} else {"<NO LOCATION>"};
+hint localize format[ "+++ MANDO Missile: from %1.%2 near %3, spd %4 km/h -> %5, dmg %6, h %7, d %8, spd %9 km/h, near %10",
     _name,
     format["%1%2",_type,if((_arr select 20) > 0) then {format["/delay=%1",_arr select 20]} else {""}],
+    _str1,
     round(((velocity _shooter ) distance [0,0,0])*3.6), // round (speed _shooter),
     _name1,  (round((damage _target)*100))/100, round((getPos _target) select 2),
     round(_target distance _shooter),

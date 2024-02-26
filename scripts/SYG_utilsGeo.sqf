@@ -146,8 +146,11 @@ SYG_nearestLocationA = {
 		_loc = nearestLocation [_pos, _x];
 		_ploc = locationPosition _loc;
 		if ( (_pos distance _ploc) < _dist ) then {
-			_dist = _pos distance _ploc;
-			_nearloc = _loc;
+            // Some locations, e.g. "Vegetation..." may not have text name. Skip such ones.
+            if (text _loc != "") then {
+                _dist = _pos distance _ploc;
+                _nearloc = _loc;
+            };
 		};
 	} forEach _lst; // search for any listed locations
 	_nearloc
@@ -169,7 +172,8 @@ SYG_nearestLocationName = {text (_this call SYG_nearestLocation)};
  * to text of location call _text = text  _loc;
  */
 SYG_nearestLocation = {
-	[_this, ["NameCity","NameCityCapital","NameVillage","NameLocal","NameMarine","Hill"]] call SYG_nearestLocationA
+	[_this, ["NameCity","NameCityCapital","NameVillage","NameLocal","NameMarine","Hill","VegetationBroadleaf",
+	         "VegetationFir","VegetationPalm","VegetationVineyard"]] call SYG_nearestLocationA
 };
 
 /**

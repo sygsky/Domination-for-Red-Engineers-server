@@ -184,7 +184,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
                 _s  = _s + "\n" + format[localize "STR_SYS_117_ABSENCE", 1500]; // "No civilians have been detected within %1 meter of the mission marker and your GLONASS position. Continue searching!"
 			};
 		};
-		//case 25; Officer on Isla da Voda and isla da Vassal
+		//case 25; Officer on Isla del Vida and Isla del Vassal
 		case 42; // officer arrest
 		case 49; // officer Grant
 		case 55: {// officer arrest
