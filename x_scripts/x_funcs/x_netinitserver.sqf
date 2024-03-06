@@ -212,7 +212,7 @@ XHandleNetStartScriptServer = {
 					if ( _cnt == 0) exitWith {
 						if (_send) then {
 							["msg_to_user", "*", [["STR_SPPM_0"]], 5, 0, false, "losing_patience"] call XSendNetStartScriptClient; // "SPPM markers not found on map"
-							}
+						}
 					}; //
 
 					_arr = call SYG_updateAllSPPMMarkers;

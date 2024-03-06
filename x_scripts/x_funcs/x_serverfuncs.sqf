@@ -197,27 +197,34 @@ SYG_allGroupsCount = {
 // If _out_of_building == true, only points out of building are returned
 // call: _wp_arr = [_pnt, _radius <, _pnt_num<,_out_of_building>>] call x_getwparray
 x_getwparray = {
-	private["_tc", "_radius","_wp_a","_point","_pnt_num","_out_of_building","_i"];
+	private["_tc", "_radius","_wp_a","_point","_pnt_num","_out_of_building","_i","_bad_cnt"];
 	_tc = _this select 0; _radius = _this select 1; _wp_a = [];
 	if ( (count _this) > 2) then { _pnt_num = (_this select 2) max 1 } else {_pnt_num = 100}; // not less than 1 point created
 	if ( (count _this) > 3) then { _out_of_building = _this select 3 } else {_out_of_building = false};
+	_bad_cnt = 0;
 	for "_i" from 1 to _pnt_num do {
 		_point = [];
 		while {count _point == 0} do {
 			_point = [ _tc, _radius ] call XfGetRanPointCircle;
 			sleep 0.035;
 			if ( _out_of_building ) then {
-				if ( _point call SYG_isInHouseRect ) then { _point = []; };
+				if ( _point call SYG_isInHouseRect ) then {
+				    _point = [];
+				    _bad_cnt = _bad_cnt + 1;
+				};
 				sleep 0.015;
 			};
 		};
 		_wp_a set [ count _wp_a, _point ];
 		sleep 0.05;
 	};
+	if (_bad_cnt > 0) then {
+	    hint localize format["*** x_getwparray: %1 bad point[s] in building detected, %2 good points created", _bad_cnt, _pnt_num];
+	};
 	_wp_a
 };
 
-// Gets array of 100 base point at the border of n the circle of designated radious
+// Gets array of 100 base point at the border of the circle of designated radious
 // call: _wp_arr = [_pnt, _border_radius] call x_getwparray2
 x_getwparray2 = {
 	private["_tc", "_radius","_wp_a","_point","_i"];

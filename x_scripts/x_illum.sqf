@@ -47,7 +47,7 @@ _manArr = [];
 #endif
 hint localize format["+++ x_illum: start in %1+++", _this select 2];
 
-// script stoppeв by main target change from x_target_clear.sqf by setting d_run_illum= false or if (_current_counter != current_counter)
+// script stopped by main target change from x_target_clear.sqf by setting d_run_illum= false or if (_current_counter != current_counter)
 while {d_run_illum && (_current_counter == current_counter) } do {
 
 	//__DEBUG_NET("x_illum.sqf",(call XPlayersNumber))
@@ -63,8 +63,8 @@ while {d_run_illum && (_current_counter == current_counter) } do {
         if ( count _manArr < 10 ) then {
             _manArr = _tgt_center nearObjects [_manType, _radius]; // array of men found in the town boundaries
             _arrIsOld = false; // array is refreshed
-            if ( count _manArr == 0 ) exitWith {
-                hint localize format["--- x_illum: %1, loop for current town sleeps for 1 min as no %2 found in town radious %3 m.!",call SYG_nowTimeToStr, _manType, _radius];
+            if ( (({alive _x} count _manArr)) == 0 ) exitWith {
+                hint localize format["--- x_illum: %1, loop for current town sleeps for 1 min as no alive %2 found in town radious %3 m.!",call SYG_nowTimeToStr, _manType, _radius];
                 sleep 60; // wait for the new man entering the town red zone
                 //d_run_illum = false;
             };
@@ -82,7 +82,7 @@ while {d_run_illum && (_current_counter == current_counter) } do {
                 }
             };
         };
-        _manArr = _manArr - ["RM_ME"];
+        _manArr call SYG_clearArrayB; // Remove all "RM_ME" items in place, not achcnging containing array
         if ( count _manArr == 0 ) exitWith {
             hint localize format["--- x_illum: %1 loop skipped as no alive %2 counted in town men list!", call SYG_nowTimeToStr, _manType];
             if (!_arrIsOld) then { // no men in town at all as new list is empty
@@ -126,13 +126,16 @@ while {d_run_illum && (_current_counter == current_counter) } do {
     	sleep (25 + random 30);
 #endif
 	    if (!isNull _flare) then {deleteVehicle _flare};
-	}
-	else {sleep 300}; // check night come every 300 seconds (5 minutes) to not skip it during main target change
+	} else {  // check night come every 300 seconds (5 minutes) to not skip it during main target change
+	    sleep 300
+	};
 
 	if (X_MP && ((call XPlayersNumber) == 0) ) then {
 		hint localize format["+++ x_illum: %1, suspend as mission is empty (no players)", call SYG_nowTimeToStr];
-		waitUntil {sleep (25.012 + random 1);(call XPlayersNumber) > 0};
-		hint localize format["+++ x_illum: %1, resumed as new player was detected", call SYG_nowTimeToStr];
+		_time = time;
+		waitUntil {sleep (59 + random 2);(call XPlayersNumber) > 0};
+		_time = [time, _time] call SYG_timeDiffToStr; // Format sleep period as follows: "HH:MM:SS"
+		hint localize format["+++ x_illum: %1, resumed as new player was detected after delay of %2", call SYG_nowTimeToStr, _time];
 	};
 
 };
