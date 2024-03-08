@@ -622,24 +622,13 @@ XGetScoreFromRank = {
 
     //hint localize format["+++ XGetScoreFromRank(1): _rank_id - (count d_points_needed) %1", _this - (count d_points_needed)];
     if ( _this > ((count d_points_needed))) exitWith {d_pseudo_ranks select (_this - (count d_points_needed) - 1)};
-
     //hint localize format["+++ XGetScoreFromRank(2)"];
 #else
     if ( _this > (count d_points_needed)) exitWith {d_points_needed select ((count d_points_needed) -1)};
 #endif
+
     //hint localize format["+++ XGetScoreFromRank(3) _this %1", _this];
     d_points_needed select (_this - 1)
-};
-
-//
-// Find velu to subtruct from current score (_this) to demote rank of the unit by 1, if rank already 1,  returns 0
-// Calls: _score_to_subtruct = (score player) call SYG_demoteByScore;
-//
-SYG_demoteByScore = {
-	private ["_ind"];
-	_ind = _this call XGetRankIndexFromScore;
-	if ( _ind == 0 ) exitWith { 0 };
-	_this - ((_ind call XGetScoreFromRank) + (( _ind - 1 ) call XGetScoreFromRank)) / 2 // Retun value to suctract from designated score to set previous rank
 };
 
 XGetRankPic = {
