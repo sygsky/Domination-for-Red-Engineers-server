@@ -25,8 +25,6 @@
 		};
 */
 
-#define __CAR_JOKE__
-
 if (!isNil "ALL_CAR_ONLY_TYPE_LIST") exitWith {};
 
 // Lisy of car types allowed to be used as civilic cars to create
@@ -36,7 +34,7 @@ ALL_CAR_ONLY_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 			  "Landrover","Landrover_Closed","Landrover_Police",
 			  "car_sedan","car_hatchback"
 #ifdef __CAR_JOKE__
-			  ,"tractor" // This is for a joke only :o)
+			  ,"tractor","Bus_city" // This is for a joke only :o)
 #endif
 #ifdef __ACE__
 			  ,"ACE_HMMWV","ACE_UAZ"

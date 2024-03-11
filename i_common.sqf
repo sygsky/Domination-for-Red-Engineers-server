@@ -907,7 +907,7 @@ d_helilift1_types =
 // Note: "Bicycle" inherits from "Motocycle", "ACE_Bicycle" inherits from "Motocycle" too.
 ALL_CAR_ONLY_SEARCH_LIST = ["Motorcycle","hilux1_civil_1_open","Landrover_Closed","SkodaBase","UAZ","HMMWV"
 #ifdef __CAR_JOKE__
-    ,"tractor"
+    ,"tractor","Bus_city"
 #endif
 ];
 

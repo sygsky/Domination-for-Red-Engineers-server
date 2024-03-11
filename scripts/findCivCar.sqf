@@ -27,7 +27,9 @@ _mode = if (count _this == 0) then { "CHECK"} else { _this select 0};
 
 if ( _mode == "CHECK") exitWith { // Client code
 	hint localize format["+++ findCivCar.sqf on client run, player is %1, _this = %2",
-		if (vehicle player != player)  then { format["in %1", typeOf vehicle player] } else {"on feet"}, _this];
+		if (vehicle player != player)  then { format["in %1", typeOf vehicle player] } else {"on feet"},
+		_this
+	];
 
 	// "It doesn't work in the vehicle!"
 	if (vehicle player != player) exitWith { ["msg_to_user","*",[["STR_CAR_GO_OUT"]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser };
@@ -44,7 +46,7 @@ if ( _mode == "CHECK") exitWith { // Client code
 		CAR_MARKER_NAME setMarkerPosLocal _pos;
 	};
 
-	// Search for alive cars nearby and in nearest townif it is not far
+	// Search for alive cars nearby and in nearest town if it is not far
 	_pos = getPos player;
 	_arr = nearestObjects [_pos, ALL_CAR_ONLY_SEARCH_LIST, RADIUS_TO_FIND_CAR];
 	if ({ alive _x } count _arr == 0) then {
@@ -159,6 +161,8 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 						};
 					};
 				} else {  // Delete dead vehicle
+					// Play corresponding sound
+					["say_sound", getPos _x, "teleport_from"] call XSendNetStartScriptClientAll;
 					deleteVehicle _x;
 					FREE_CAR_LIST set [_i, "RM_ME"];
 				};
