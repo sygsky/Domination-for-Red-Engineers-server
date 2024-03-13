@@ -1,6 +1,8 @@
 /*
+    scripts\patrol\land\rahmadi_spawn_rects.sqf:
+
 	author: sygsky
-	description: Tahmadi, no Sahrani Main
+	description: Rahmadi patrol spawn rects, Sahrani ones are in different file "sahrani_spawn_rects.sqf"
 	returns: nothing
 */
 

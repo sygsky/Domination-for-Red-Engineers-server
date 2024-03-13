@@ -1,8 +1,8 @@
 /*
-	scripts/intro/sea_patrol.sqf
+	scripts\intro\sea_patrol.sqf:
 	author: Sygsky
 	description:
-		Support ships patrolling around all isles
+		Support ships patrolling around all isles of Sahrani archipeligo
 
 		Description of the info item for the patrol.
 											   _id is index in array
@@ -58,7 +58,7 @@
 // #define __CAPTURED_BOATS___
 #include "x_setup.sqf"
 
-#include "ships_wp_array.sqf"
+#include "scripts\patrol\sea\ships_wp_array.sqf"
 
 #define BOAT_TYPE "RHIB2Turret"
 /*

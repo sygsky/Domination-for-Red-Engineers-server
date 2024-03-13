@@ -1,6 +1,8 @@
 /*
+    scripts\patrol\land\sahrani_spawn_rects.sqf:
+
 	author: sygsky
-	description: Sahrani (without Rahmadi)
+	description: Sahrani (without Rahmadi) patrol spawn rects.
 	returns: nothing
 */
 _sahrani_spawn_rects = [

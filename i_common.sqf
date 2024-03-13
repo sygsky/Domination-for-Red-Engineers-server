@@ -71,19 +71,19 @@ d_version = [];
 d_version set [ count d_version, "AI" ]; // AI version
 #endif
 #ifdef __MANDO__
-d_version = d_version + ["MANDO"]; // MANDO version
+d_version set [ count d_version, ["MANDO"]; // MANDO version
 #endif
 #ifdef __REVIVE__
-d_version = d_version + ["REVIVE"]; // Revive version
+d_version set [ count d_version, ["REVIVE"]; // Revive version
 #endif
 #ifdef __TT__
-d_version = d_version + ["TT"]; // Two Teams version
+d_version set [ count d_version, ["TT"]; // Two Teams version
 #endif
 #ifdef __ACE__
 d_version set [ count d_version, "ACE" ]; // A.C.E. version
 #endif
 #ifdef __CSLA__
-d_version = d_version + ["CSLA"]; // CSLA version
+d_version set [ count d_version, ["CSLA"]; // CSLA version
 #endif
 #ifdef __P85__
 d_version set [ count d_version, "P85"]; // P85 version
@@ -92,13 +92,26 @@ d_version set [ count d_version, "P85"]; // P85 version
 d_version set [ count d_version, "RANKED"]; // Ranked version
 #endif
 
+// Ndew structures to play on maps with  ultiple islands (e.g. "OFP_World")
 #ifdef __NEW__
-SYG_islands_arr = [
+
+SYG_island_commons = [
+//  Array with common land patrol spawn areas (rects, circles, ellipses)
+    [],
+//  Array with common sea patrol routes
+    [],
+// Method of tasks creation: "MIXED", "SEQUENTIAL_ISLANDS', "RANDOM_ISLANDS"
+    "MIXED"
+];
+    #ifdef __DEFAULT__
+SYG_island_arr = [
 	[	// Island #1 (Main)
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28], // Towns
-		// Add some random patrols on the island
+		// Add some random land patrols on the island
         // If the array is empty, no patrols
         // If not empty: first element = center position, second element = a, third element = b, fourth element = angle, fifth element = number of groups
+        [],
+        // Add sea patrols
 		d_with_isledefense, // Patrol params: first element = center position, second element = a, third element = b, fourth element = angle, fifth element = number of groups
 		getArray(configFile>>"CfgWorlds">>worldName>>"centerPosition") // Center of the Sahrani
 	],
@@ -108,6 +121,10 @@ SYG_islands_arr = [
 		[2928, 2732, 0] // Center of Rahmadi
 	]
 ];
+    #endif
+
+    #ifdef __OFP_WORLD__
+    #endif
 #endif
 
 target_names =

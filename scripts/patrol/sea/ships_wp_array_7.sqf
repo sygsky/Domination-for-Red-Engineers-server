@@ -1,7 +1,7 @@
 /*
-	ships_wp_array_1.sqf
+	scripts/patrol/sea/ships_wp_array_7.sqf:
 	author: Sygsky
-	description: none
+	description: old version with 7 boats
 	returns: nothing
 */
 
