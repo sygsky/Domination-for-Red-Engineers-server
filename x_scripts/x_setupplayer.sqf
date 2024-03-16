@@ -137,7 +137,7 @@ if ( count resolved_targets > 0) then {
         _target_name = _target_array select 1;
         _obj_id = _target_array select 3;
         //hint localize format["+++ x_scripts/x_setupplayer.sqf: obj id %1",_obj_id];
-        _rad = (_target_array select 2) max 300;
+        _rad = _target_array select 2; // #685: not use town radius as (rad max 300)
         _no = _current_target_pos nearestObject "HeliHEmpty";
         _color = "ColorGreenAlpha";
         _objstatus = "DONE";
