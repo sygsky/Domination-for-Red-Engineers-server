@@ -45,7 +45,8 @@ while {true} do {
 			if (!(_recap_index in d_recapture_indices) && !(_recap_index in _allready_recaptured)) then {
 				_target_array = target_names select _recap_index;
 				_target_pos = _target_array select 0;
-				_radius = ((_target_array select 2) max 300) + 100; //+++ Sygsky: calculate radius, not use constant
+//				_radius = ((_target_array select 2) max 300) + 100; //+++ Sygsky: calculate radius, not use constant
+				_radius = (_target_array select 2) + 100; //+++ Sygsky: #685, calculate radius, not use constant
 
 				_checktrigger = createTrigger["EmptyDetector",_target_pos];
 //				_checktrigger setTriggerArea [400,400, 0, false];

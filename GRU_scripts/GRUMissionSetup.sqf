@@ -60,7 +60,8 @@ while {current_counter < number_targets} do {
 	if (count _ttinfo == 0) then {
 	    waitUntil {sleep 10; _ttinfo  = call SYG_getTargetTown; count _ttinfo > 0}
 	};
-	_rad = argp( _ttinfo, 2 ) max 300; // get 300 or higher radious
+//	_rad = argp( _ttinfo, 2 ) max 300; // get 300 or higher radious
+	_rad = argp( _ttinfo, 2 ); // #685: get predefined radious
 	_startScore = [ argp(_ttinfo,0), _rad +50, true ] call SYG_getScore4IntelTask;
 	
 	if ( _startScore < GRU_MAIN_TASK_MIN_SCORE ) then { // not enough score for the next run

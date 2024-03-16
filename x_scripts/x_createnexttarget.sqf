@@ -72,7 +72,8 @@ hint localize format[ "+++ x_scripts/x_createnexttarget.sqf: current_target_inde
 initial_ruins_count = count (_current_target_pos nearObjects ["Ruins", _current_target_radius]);
 
 check_trigger=createTrigger["EmptyDetector",_current_target_pos];
-check_trigger setTriggerArea [(_current_target_radius max 300) + 20, (_current_target_radius max 300) + 20, 0, false];
+//check_trigger setTriggerArea [(_current_target_radius max 300) + 20, (_current_target_radius max 300) + 20, 0, false];
+check_trigger setTriggerArea [_current_target_radius + 20, _current_target_radius + 20, 0, false]; // #685
 check_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
 
 // Static objects not used in lower conditions (""Static"" countType thislist >= d_static_count_for_target_clear)
@@ -93,7 +94,8 @@ check_trigger setTriggerStatements["(""Man"" countType thislist >= d_man_count_f
 
 while {!update_target} do {sleep 2.123};
 current_trigger = createTrigger["EmptyDetector",_current_target_pos];
-current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
+//current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
+current_trigger setTriggerArea [_current_target_radius + 50, _current_target_radius + 50, 0, false];
 current_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
 #ifdef __TOWN_WEAK_DEFENCE__
 // chack only for men

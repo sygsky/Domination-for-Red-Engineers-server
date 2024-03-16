@@ -12,13 +12,13 @@ _current_target_pos = _dummy select 0;
 _current_target_radius = _dummy select 2;
 _outer_size = 200;
 
-// TODO: counterattack on Paraiso should not start on base territory only!
+// TODO: counterattack on Paraiso should not start on airbase territory only!
 _counter_pos = _current_target_pos;
 _counter_rad = _current_target_radius + _outer_size;
 #ifdef __DEFAULT__
 switch (_dummy select 1 ) do { // change start pos for some special targets
 	case "Paraiso": {
-		// counterattack on Paraiso should not start on base territory!
+		// counterattack on Paraiso should not start on airbase territory!
 		_counter_pos = [[10299,8954,0],[11261,9341,0]] call XfRandomArrayVal;
 		_counter_rad = 100;
 	};
@@ -84,7 +84,8 @@ _type_list_attack = nil;
 
 sleep 301.122;
 current_trigger = createTrigger["EmptyDetector",_current_target_pos];
-current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
+//current_trigger setTriggerArea [(_current_target_radius max 300) + 50, (_current_target_radius max 300) + 50, 0, false];
+current_trigger setTriggerArea [_current_target_radius + 50, _current_target_radius + 50, 0, false];
 current_trigger setTriggerActivation [d_enemy_side, "PRESENT", false];
 current_trigger setTriggerStatements["(""Tank"" countType thislist  <= 0) && (""Man"" countType thislist < 4)", "counterattack = false;deleteVehicle current_trigger", ""];
 

@@ -145,7 +145,8 @@ if ( count resolved_targets > 0) then {
             if (direction _no > 355) then {
                 _objstatus = "FAILED";
                 _color = "ColorRedAlpha";
-                [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad + 100,_rad + 100],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal; // Mark occupied town (red diagonal shading)
+//                [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad + 100,_rad + 100],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal; // Mark occupied town (red diagonal shading)
+                [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad, _rad],"",0,"Marker","FDiagonal"] call XfCreateMarkerLocal; // #685: mark occupied town (red diagonal shading)
             } else {
                 [_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
             };
@@ -193,7 +194,8 @@ if (current_target_index != -1 && !target_clear) then {
 	_target_array2 = target_names select current_target_index;
 	_current_target_pos = _target_array2 select 0;
 	_current_target_name = _target_array2 select 1;
-	_rad = (_target_array2 select 2) max 300;
+//	_rad = (_target_array2 select 2) max 300;
+	_rad = _target_array2 select 2; // #685: draw zone with predefined radious
 	_color = (if (current_target_index in resolved_targets) then {"ColorGreenAlpha"} else {"ColorRedAlpha"});
 	[_current_target_name, _current_target_pos,"ELLIPSE",_color,[_rad,_rad]] call XfCreateMarkerLocal;
 	"dummy_marker" setMarkerPosLocal _current_target_pos;
