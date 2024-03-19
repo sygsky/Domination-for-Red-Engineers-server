@@ -406,7 +406,7 @@ _rname = _rank call XGetRankFromIndex; // rank name
 //_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_owned_para != "");	// check the rank and para weared on user at visit
 _doJump = call (SPAWN_INFO select 1);	// check the jump condition
 
-hint localize format["+++ x_intro: _doJump %1, _rank %2(%3), base_visit_mission %4, parachute %5", str(_doJump), _rank, _rname, base_visit_mission, _para ];
+hint localize format["+++ x_intro: _doJump %1, _rank %2(%3), base_visit_mission %4, base_visit_mission %5, parachute '%6'", str(_doJump), _rank, _rname, base_visit_mission, base_visit_mission, _para ];
 
 if (_owned_para != "") then {
 	(format[localize "STR_INTRO_PARAJUMP_11",_para]) call XfHQChat; // "You found a parachute (%1) on your back and decided to use it to please the smugglers."
@@ -949,9 +949,9 @@ if (_doJump) then {
     //                               JUMP
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #ifdef __ARRIVED_ON_ANTIGUA__
-    if ( base_visit_mission < 1 ) then {
+    if ( base_visit_mission < 1 ) then { // Jump over Antigua
     	[ _spawn_point, _para, "DC3", false, "ADD_PARA"] execVM "AAHALO\jump.sqf"; // no circle to hit on Antigua
-    } else {
+    } else { // Jump near base
     #endif
 	    [ _spawn_point, _para, "DC3", false, true] execVM "AAHALO\jump.sqf"; // last true means "check circle hit"
     #ifdef __ARRIVED_ON_ANTIGUA__
