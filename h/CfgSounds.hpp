@@ -18,21 +18,21 @@ class CfgSounds {
 #endif
 
     class USSR {name = ""; sound[] = {\sounds\USSR.ogg, db+10, 1.0};titles[] = {};};
-	class Funk {name="Funk";sound[]={\sounds\funk.ogg,db+20,1.0};titles[] = {};};
-	class Ari {name="Ari";sound[]={\sounds\ari.ogg,db+30,1.0};titles[] = {};};
+	class Funk {name="Funk";sound[]={\sounds\short\funk.ogg,db+20,1.0};titles[] = {};};
+	class Ari {name="Ari";sound[]={\sounds\short\ari.ogg,db+30,1.0};titles[] = {};};
 	class odinakovo {name="odinakovo";sound[]={\sounds\odinakovo.ogg,db+0,1.0};titles[] = {};};
 	class slavianskiy {name="slavianskiy";sound[]={\sounds\slavianskiy.ogg,db+0,1.0};titles[] = {};};
     class vam_bileter {name="vam_bileter";sound[]={\sounds\vam_bileter.ogg,db+0,1.0};titles[] = {};};
 	class highvoltage {name="highvoltage";sound[]={\sounds\highvoltage.ogg,db+0,1.0};titles[] = {};};
-	class upsidedown {name="upsidedown";sound[]={\sounds\upside_down.ogg,db+0,1.0};titles[] = {};};
+	class upsidedown {name="upsidedown";sound[]={\sounds\short\upside_down.ogg,db+0,1.0};titles[] = {};};
 	//class horse {name="horse";sound[]={\sounds\horse.ogg,db+0,1.0};titles[] = {};};
-	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
-	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
+	class Tank_GetIn {name="Tank_GetIn";sound[]={\sounds\short\Tank_GetIn.ogg,db+0,1.0};titles[] = {};};
+	class APC_GetIn {name="APC_GetIn";sound[]={\sounds\short\APC_GetIn.ogg,db+0,1.0};titles[] = {};};
 	class bicycle {name="bicycle himn";sound[]={\sounds\bicycle.ogg,db+0,1.0};titles[] = {};};
 	class bicycle_ring {name="bicycle ring";sound[]={\sounds\short\bicycle_ring_v1.ogg,db+0,1.0};titles[] = {};}; // From Arma-1 sound in weapons.pbo
 
 	class stalin_dal_prikaz {name="Soviet artillery himn";sound[]={\sounds\intro\vehicles\stalin_dal_prikaz.ogg,db+0,1.0};titles[] = {};};
-	class healing {name="healing";sound[]={\sounds\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
+	class healing {name="healing";sound[]={\sounds\short\healing.ogg,db+0,1.0};titles[] = {};}; // medic heal service
 
 //	class patrol { name="patrol"; sound[]={\sounds\patrol.ogg,db-20,1.0}; titles[] = {}; }; // remove as non needed
 //	class baraban { name="baraban"; sound[]={\sounds\baraban.ogg,db+0,1.0}; titles[] = {}; }; // removed as not interesting and ancient
@@ -43,7 +43,7 @@ class CfgSounds {
     class ortegogr { name="Found in one Arma mission (German)"; sound[]= {\sounds\enemy\ortegogr.ogg,db-1,1.0};  titles[] = {};};
     class desant   { name="Red Alert desant music"; sound[]= {\sounds\enemy\desant.ogg,db-1,1.0};  titles[] = {};}; // from Red Alert game, called only for 2st otwn occupied
 
-    class no_more_waiting { name=""; sound[]= {\sounds\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
+    class no_more_waiting { name=""; sound[]= {\sounds\short\no_more_waiting.ogg,db-1,1.0}; titles[] = {};}; // very short sound (observer killed?)
 
     class parajump1 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump1.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 1
     class parajump2 { name=""; sound[] = {\sounds\parajump\vozdushnye_potoki_jump2.ogg,db-1,1.0}; titles[] = {};} // You jumped from vehicle sound 2
@@ -88,8 +88,8 @@ class CfgSounds {
     class countdown       {name = ""; sound[] = {\sounds\countdown.ogg, db+10, 1.0}; titles[] = {}; }; // Rammstein
     class countdown_alarm {name = ""; sound[] = {\sounds\countdown_alarm.ogg, db+10, 1.0}; titles[] = {}; };
 
-    class return        {name = ""; sound[] = {\sounds\return.ogg, db+10, 1.0}; titles[] = {}; };
-    class steal         {name = ""; sound[] = {\sounds\steal.ogg, db+10, 1.0}; titles[] = {}; };
+    class return        {name = ""; sound[] = {\sounds\short\return.ogg, db+10, 1.0}; titles[] = {}; };
+    class steal         {name = ""; sound[] = {\sounds\short\steal.ogg, db+10, 1.0}; titles[] = {}; };
     class arabian_death { name=""; sound[] = {\sounds\arabian_death.ogg,db+10,1.0}; titles[] = {};} // defeat sound
     class the_complex   { name=""; sound[] = {\sounds\the_complex.ogg,db+10,1.0}; titles[] = {};} // defeat sound by Kevin MacLeod
 
@@ -799,7 +799,7 @@ class CfgSounds {
     class spell_2	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Trehgorus-Sha.ogg,db-1,1.0}; titles[] = {};}; //
     class spell_3	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Paragosy-Avanagh.ogg,db-1,1.0}; titles[] = {};}; //
     class spell_4	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Zemana-Aztilin.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_5	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Oseh-No-Devara.ogg,db-1,1.0}; titles[] = {};}; //
+    class spell_5	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Abes-Fabes-Cartoflyabes.ogg,db-1,1.0}; titles[] = {};}; //
     class spell_6	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Crevall-Asortium-Antimus.ogg,db-1,1.0}; titles[] = {};}; //
     class spell_7	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Engory-Helleye.ogg,db-1,1.0}; titles[] = {};}; //
 
