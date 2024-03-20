@@ -110,7 +110,7 @@ if (_mode == "HELP") exitWith {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++ CREATE ++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-hint localize format["+++ findCivCar.sqf on server run, _this = %1", _this];
+hint localize format["+++ findCivCar.sqf: on server, _this = %1", _this];
 
 // Server side code
 if (isNil "FREE_CAR_LIST") then { allow_car_list_changes = true; FREE_CAR_LIST = [] };
@@ -157,12 +157,12 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 						if ( ({alive _x} count (crew _x)) == 0 ) then {
 							_car = _x;  // Select oldest used empty alive car
 							FREE_CAR_LIST set [_i, "RM_ME"];
-							hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) wiLl be used", _i ];
+							hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) will be used, pos at %2", _i, _car call SYG_MsgOnPosE0  ];
 						};
 					};
 				} else {  // Delete dead vehicle
 					// Play corresponding sound
-					["say_sound", getPos _x, "teleport_from"] call XSendNetStartScriptClientAll;
+					["say_sound", getPos _x, "steal"] call XSendNetStartScriptClientAll;
 					deleteVehicle _x;
 					FREE_CAR_LIST set [_i, "RM_ME"];
 				};
