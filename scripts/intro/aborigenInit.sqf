@@ -42,21 +42,34 @@ hint localize format["+++ aborigenInit.sqf: found %1 items to add action 'Inspec
 
 ["msg_to_user","","STR_ABORIGEN_CREATED", 0,0,true] call SYG_msgToUserParser; // "There's an Aborigen %1 in Antigua"
 
-while { !(player call SYG_pointOnAntigua) } do { sleep 10; }; // While out of Antigua
+while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // While out of Antigua
 
 #ifdef __DO_SMOKE__
+
 // Add red smoke grenade near aborigen
-_pos = aborigen modelToWorld [0,5,0]; //
 
 #ifdef __ACE__
-_grenade = "ACE_SmokeGrenade_Red";
+_smoke_grenade_type = "ACE_SmokeGrenade_Red";
+#endif
+#ifndef __ACE__
+_smoke_grenade_type = "SmokeShellRed";
 #endif
 
-#ifndef __ACE__
-_grenade = "SmokeShellRed";
-#endif
-_grenade = _grenade createVehicleLocal _pos;
-hint localize format["+++ aborigenInit.sqf: smoke grenade created near aborigen", typeOf _grenade];
+aborigen addMagazine _smoke_grenade_type;
+reload aborigen;
+aborigen selectWeapon "SmokeShellRedMuzzle";
+sleep 0.121;
+aborigen doTarget player;
+
+hint localize format["+++ aborigenInit.sqf: aborigen local %1, will try to throw %2, mags %3", local aborigen, _smoke_grenade_type, magazines aborigen];
+
+sleep 1.634;
+aborigen fire "SmokeShellRedMuzzle";
+sleep 1.437;
+aborigen doWatch objNull;
+
+hint localize format["+++ aborigenInit.sqf: aborigen mags after throw %1", magazines aborigen];
+
 #endif
 
 while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
@@ -67,17 +80,20 @@ while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
 			    case "SmokeShellRed"
 #endif
 */
-
+_land_dist = round (player distance aborigen);
 if (alive aborigen) then { // show info
+    _add = d_ranked_a select 32;
+    _msg = if (_land_distance < 10) then {format [localize "STR_ABORIGEN_INFO_0", _add]} else {""}; // " You have been awarded (+%1) for landing close to an Aborigen. Know our crew!!!"
 	["msg_to_user", "",
 		[
-			[ "STR_ABORIGEN_INFO", round (player distance aborigen),  ([ player, aborigen ] call XfDirToObj) call SYG_getDirNameEng ],  // "The islander is %1 m away in the %2 direction."
+			[ "STR_ABORIGEN_INFO", _land_dist,  ([ player, aborigen ] call XfDirToObj) call SYG_getDirNameEng, _msg ],  // "The islander is %1 m away in the %2 direction.%3"
 			[ "STR_ABORIGEN_INFO_1" ] // "Find him, question him a few times until you understand everything."
 		],	0, 6, false
 	] spawn SYG_msgToUserParser;
 	_say1= "come_again_spa"; _say2 = "local_partisan_spa";
 	if (localize "STR_LANG" == "ENGLISH") then { _say1= "come_again_eng"; _say2 = "local_partisan_eng"};
 	aborigen say ([ _say1, _say2, "come_again_spa","hey_chico","adios","porque","hola","pamal"] call XfRandomArrayVal);
+
 } else {
 	player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"
 };
@@ -169,8 +185,9 @@ if (alive aborigen) then {
 
 while {alive aborigen} do {
 	sleep 10;
-	if ( ([getMarkerPos _marker, getPosASL aborigen] call SYG_distance2D) > 10) then {
-		_marker setMarkerPosLocal (getPosASL aborigen);
+	_pos = getPosASL aborigen;
+	if ( ([getMarkerPos _marker, _pos] call SYG_distance2D) > 10) then {
+		_marker setMarkerPosLocal _pos;
 	};
 };
 deleteMarkerLocal _marker;

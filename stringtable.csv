@@ -1739,7 +1739,8 @@ STR_CHOP_WELCOME_6,"It is not able to lift anything.","Er ist nicht in der Lage,
 
 // BOAT, CAR, WEAPON, MEN, RUMORS, GO, NAME
 STR_ABORIGEN_CREATED,"There's an Aborigen %1 in Antigua","In Antigua gibt es einen Aborigen %1","Hay un Aborigen %1 en Antigua","На Антигуа появился местный житель %1"
-STR_ABORIGEN_INFO,"The islander is %1 m away in the %2 direction.","Der Inselbewohner ist %1 m in die Richtung %2 entfernt","El isleño está a %1 m en la dirección %2","Местный житель находится на расстоянии %1 м. на %2"
+STR_ABORIGEN_INFO,"The islander is %1 m away in the %2 direction.%3","Der Inselbewohner ist %1 m in die Richtung %2 entfernt.%3","El isleño está a %1 m en la dirección %2.%3","Местный житель находится на расстоянии %1 м. на %2.%3"
+STR_ABORIGEN_INFO_0," You have been awarded (+%1) for landing close to an Aborigen. Know our crew!!!"," Sie haben (+%1) für die Landung in der Nähe eines Aborigen erhalten. Kenne unsere Crew!!!"," Has sido premiado con (+%1) por aterrizar cerca de un Aborigen. ¡¡¡Conoce a nuestra tripulación!!!"," Вам наградили (+%1) за приземмление близ абригена. Знай наших!!"
 STR_ABORIGEN_INFO_1,"Find him, question him a few times until you understand everything.","Finden Sie ihn und befragen Sie ihn ein paar Mal, bis Sie alles verstanden haben","Encuéntralo, interrógalo varias veces hasta que entiendas todo","Найдите его, расспросите несколько раз, пока всё не поймёте"
 STR_ABORIGEN_INFO_NONE,"Locals are not observed","Einheimische werden nicht beobachtet","Los locales no son observados","Местные жители не наблюдаются"
 STR_ABORIGEN_INFO_OUT,"I can't follow you anymore.","Ich kann dir nicht mehr folgen.","No puedo seguirte más.","Я не могу больше следовать за тобой."
