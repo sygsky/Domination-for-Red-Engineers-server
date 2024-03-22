@@ -11,6 +11,8 @@
 	returns: nothing
 */
 
+//#define __MAGIC_SPELL__
+
 #define POS_BICYCLE [17401,17980,0]
 // Rectangle for aborigent boats
 #define NEAR_TENT_BOAT_RECT [[17489,17980,0],500,400,0]
@@ -672,7 +674,13 @@ switch ( _arg ) do {
 		player groupChat format[localize "STR_ABORIGEN_NAME_1", _name]; // "My password: '%1'. Your challenge?"
 		player groupChat format[localize "STR_ABORIGEN_NAME_2", _player_name]; // ""Aborigen answer:- '%1'! Salutations, comrade!""
 		_uname = toUpper (_player_name);
+
+#ifdef __MAGIC_SPELL__
+		_in_magic = true; // All cal call teleport spell
+#else
 		_in_magic = _uname in ["YETI","ENGINEERACE"];
+#endif
+
 		hint localize format[ "+++ ABO NAME: %1 => %2, set magic = %3", _player_name, _uname, _in_magic ];
 		if( _in_magic /* && ( (localize "STR_LANGUAGE") == "RUSSIAN") */ ) then {
 			player groupChat (localize "STR_ABORIGEN_WIZARD"); // "I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!"

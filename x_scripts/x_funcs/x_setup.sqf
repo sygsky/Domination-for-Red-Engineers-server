@@ -38,6 +38,9 @@
 //#define __SCHMALFELDEN__
 //#define __UHAO__
 
+// Uncomment to use for OFP_World add-on
+//#define __OFP_WORLD__
+
 //#define __D_VER_NAME__ "Domination! One Team - West"
 //#define __D_VER_NAME__ "Domination! One Team - A.C.E."
 //#define __D_VER_NAME__ "Domination! One Team - A.C.E. RA"

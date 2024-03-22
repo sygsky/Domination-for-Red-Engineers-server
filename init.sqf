@@ -175,7 +175,7 @@ if (isServer) then {
 #endif
 		_arr spawn compile preprocessFileLineNumbers "scripts\motorespawn.sqf"; //+++ Sygsky: add N travelling motocycles at base
 	};
-	[] execVM "scripts\intro\sea_patrol.sqf"; // NOTE: if disable/remove this service, remove sidemission #57 too, as it depends on that
+	[] execVM "scripts\patrol\sea_patrol.sqf"; // NOTE: if disable/remove this service, remove sidemission #57 too, as it depends on that
 
 	if (d_weather) then {execVM "scripts\weather\weathergen2.sqf";};
 

@@ -13,7 +13,8 @@ copy x_setup.sqf x_missions\m /Y
 copy x_setup.sqf x_missions\common /Y
 copy x_setup.sqf scripts\baseillum /Y
 copy x_setup.sqf scripts\bonus /Y
-copy x_setup.sqf scripts\intro\
+copy x_setup.sqf scripts\intro /Y
+copy x_setup.sqf scripts\patrol /Y
 
 copy x_macros.sqf x_scripts /Y
 copy x_macros.sqf x_scripts\x_funcs /Y
@@ -28,7 +29,8 @@ copy x_macros.sqf x_missions\m /Y
 copy x_macros.sqf x_missions\common /Y
 copy x_macros.sqf scripts\baseillum /Y
 copy x_macros.sqf scripts\bonus /Y
-copy x_macros.sqf scripts\intro\
+copy x_macros.sqf scripts\intro /Y
+copy x_macros.sqf scripts\patrol /Y
 
 copy global_vars.sqf x_scripts /Y
 copy global_vars.sqf x_scripts\x_funcs /Y

@@ -1,5 +1,5 @@
 /*
-	scripts\intro\sea_patrol.sqf:
+	scripts\patrol\sea_patrol.sqf:
 	author: Sygsky
 	description:
 		Support ships patrolling around all isles of Sahrani archipeligo
@@ -58,7 +58,7 @@
 // #define __CAPTURED_BOATS___
 #include "x_setup.sqf"
 
-#include "scripts\patrol\sea\ships_wp_array.sqf"
+#include "sea\ships_wp_array.sqf"
 
 #define BOAT_TYPE "RHIB2Turret"
 /*

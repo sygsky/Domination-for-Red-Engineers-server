@@ -140,8 +140,7 @@ if (_sound == "") then { // select random music for an ordinal day
         	};
 #endif
             // add some personalized songs for well known players
-            _players =
-            [
+            _players = [
                 ["Ceres-de","CERES de","Ceres.","CERES"] , // Germany
                 ["Rokse [LT]"], // military radist
                 ["Shelter", "Marcin"], // polyaks
@@ -149,8 +148,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 ["Snooper" ] // Russian from Belorussia
 //                ["gyuri"] // Hungary People Republic, August 20, 1949
             ];
-            _sounds  =
-            [
+            _sounds  = [
                 ["amigohome_ernst_bush","ddrhymn","zaratustra"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
@@ -167,7 +165,7 @@ if (_sound == "") then { // select random music for an ordinal day
 					_pos = _x find _name;
 					if ( _pos >= 0 ) exitWith {
 					    { [ _personalSounds ,_sounds select _pos ] call SYG_addArrayInPlace } forEach [1,2,3];
-					    hint localize format["+++ x_intro.sqf: personal sounds added: %1", _sounds select _pos];
+					    hint localize format["+++ x_intro.sqf: personal sounds added: %1, name index (%2)", _sounds select _pos, _pos];
 					};
 				} forEach _players;
             };
