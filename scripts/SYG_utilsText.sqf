@@ -77,10 +77,9 @@ SYG_getRumourText = {
         _index = (_index + (floor((_rnd*_rnd*_rnd)*RUMOR_WIDTH)) + _counter) mod _counter ; // detected rumor index
         _index = (_index min (_counter - 1)) max 0; // to limit index with size of list
         _str1 = localize format["STR_RUM_%1",_index];
-    #ifdef __DEBUG__
+
         hint localize format["+++ SYG_getRumourText: SYG_rumor_index %1, SYG_rumor_hour %2, _index %3, _rnd %4, _counter %5",
                                  SYG_rumor_index,SYG_rumor_hour,_index,_rnd,_counter];
-    #endif
     };
     _name1 = (target_names call XfRandomArrayVal) select 1; // random main target name
     _name2 = text (player call SYG_nearestLocation); // nearest location name
@@ -311,7 +310,7 @@ SYG_arr2Str = {
 // 4: _initial_delay is seconds before first message show;
 // 5: no_title_msg if true - no title shown, else shown if false or "" empty string, or scalar <= 0;
 // 6: sound_name is the name of the sound to play with first message show on 'say' command; no way to play sound on each message.
-//		Or 6th  parameters is an array with follow items:	["say_sound", _object_to_play_sound, "sound_name" ]; // send sound from this player
+//		Or 6th  parameters is an array with follow items:	["say_sound", _object_to_play_sound, "sound_name" ]; // Send sound from this player, may be "" to skip it
 //
 // msg is displayed using titleText ["...", "PLAIN DOWN"] in common(blue)/vehicle(yellow) chat
 // msg additionally displayed as title in the middle of the screen

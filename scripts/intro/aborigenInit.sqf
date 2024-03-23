@@ -46,7 +46,9 @@ while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // While out of Ant
 
 #ifdef __DO_SMOKE__
 
-// Add red smoke grenade near aborigen
+//+++++++++++++++++++++++++++++++++++++++++++++
+//+++  Drop red smoke grenade near aborigen  +++
+//+++++++++++++++++++++++++++++++++++++++++++++
 
 #ifdef __ACE__
 _smoke_grenade_type = "ACE_SmokeGrenade_Red";
@@ -83,13 +85,18 @@ while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
 _land_dist = round (player distance aborigen);
 if (alive aborigen) then { // show info
     _add = d_ranked_a select 32;
-    _msg = if (_land_distance < 10) then {format [localize "STR_ABORIGEN_INFO_0", _add]} else {""}; // " You have been awarded (+%1) for landing close to an Aborigen. Know our crew!!!"
-	["msg_to_user", "",
+    _msg = if (_land_dist < 10) then {format [localize "STR_ABORIGEN_INFO_0", _add]} else {""}; // " You have been awarded (+%1) for landing close to an Aborigen. Know our crew!!!"
+	_arr = ["msg_to_user", "",
 		[
 			[ "STR_ABORIGEN_INFO", _land_dist,  ([ player, aborigen ] call XfDirToObj) call SYG_getDirNameEng, _msg ],  // "The islander is %1 m away in the %2 direction.%3"
 			[ "STR_ABORIGEN_INFO_1" ] // "Find him, question him a few times until you understand everything."
 		],	0, 6, false
-	] spawn SYG_msgToUserParser;
+	];
+	if (_land_dist < 10) then {
+	    _arr set [count _arr, "good_news"]; // Add success sound if +10 score added for landing near aborigen
+	    _add call SYG_addBonusScore;
+	}; // Add success sound for landing near aborigen
+	_arr spawn SYG_msgToUserParser;
 	_say1= "come_again_spa"; _say2 = "local_partisan_spa";
 	if (localize "STR_LANG" == "ENGLISH") then { _say1= "come_again_eng"; _say2 = "local_partisan_eng"};
 	aborigen say ([ _say1, _say2, "come_again_spa","hey_chico","adios","porque","hola","pamal"] call XfRandomArrayVal);

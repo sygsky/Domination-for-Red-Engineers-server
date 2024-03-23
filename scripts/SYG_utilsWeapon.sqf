@@ -2709,3 +2709,25 @@ SYG_getParamFromSettingsArray = {
 SYG_bombPos = {
 	(_this select 1) createVehicle (_this select 0);
 };
+
+// Throws designated grenade in designated direction
+// Call as: _arr call SYG_throwGrenade;
+// Where: _arr = [_unit, "GRENADE_TYPE","GRENADE_TYPE_TO_USE_IF_GRENADE_NOT_FOUND", _dir | _pos | unit];
+//
+//
+SYG_throwSmokeGrenade = {
+    if (typeName _this != "ARRAY") exitWith { format["--- SYG_throwGrenade: expected input array, found %1, exit!", _this] };
+    if (count _this < 4) exitWith {format["--- SYG_throwGrenade: expected input array len >= 4, found %1, exit!", typeName _this]};
+    private ["_unit", "_type1", "_type2", "_target"];
+    _unit = _this select 0;
+    _type = _this select 0;
+    if (!(_type in magazines _unit)) then {
+        hint localize format["*** SYG_throwGrenade: No %1 found in mags of %2", _type, magazines _unit];
+        _type = _this select 1;
+        if (!(_type in magazines _unit)) then {
+            _unit addMagazine _type;
+            sleep 0.14;
+        };
+    };
+    // TODO: Throw
+};
