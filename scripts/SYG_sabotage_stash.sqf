@@ -21,9 +21,12 @@ _spec = "NONE";
 _ind = -1;
 
 // find position in house or in town itself
+_center   = _this select 0;
+_town_rad = _this select 1;
+
 if ( (random 10) <= 5 ) then { // find position in a house
-	_list  = (_this select 0) nearObjects ["House", _this select 1];
-	if ( count _list == 0 ) exitWith { hint localize format["--- SYG_sabotage_stash.sqf: no houses in radius %1 found, find pos in empty areas", _this select 1] };
+	_list  = _center nearObjects ["House", _town_rad];
+	if ( count _list == 0 ) exitWith { hint localize format["--- SYG_sabotage_stash.sqf: no houses in radius %1 found, find pos in empty areas", _town_rad] };
 	_cnt = 0;
 	_steps = 20;
 	while { (_cnt < 2) && (_steps > 0) } do { // try only 20 random houses with 2 or more stand positions
@@ -60,24 +63,32 @@ if ( (random 10) <= 5 ) then { // find position in a house
 	#ifdef __OWN_SIDE_WEST__
 	_box  = _box_east;
 	#endif
+} else {
+    while { (count _pos) == 0 } do { // find position in the town area in 3D (as used in nearObject)
+        _house = objNull; // No house used so put box in town area
+        _spec = "NONE";
+        _pos = [_center, _town_rad] call XfGetRanPointCircle;
+        if ( (_center distance _pos) < _town_rad) then { // 2D distance is correct
+            // big boxes for the open areas
+            #ifdef __OWN_SIDE_EAST__
+            _box  = "WeaponBoxWest";
+            #endif
+            #ifdef __OWN_SIDE_WEST__
+            _box  = "WeaponBoxEast";
+            #endif
+        } else { _pos resize 0};
+    };
+
 };
 
-if ( count _pos == 0 ) then { // find position in the town area
-    _house = objNull; // No house used so put box in town area
-	_spec = "NONE";
-	_pos = [(_this select 0), (_this select 1)] call XfGetRanPointCircle;
-	// big boxes for the open areas
-	#ifdef __OWN_SIDE_EAST__
-	_box  = "WeaponBoxWest";
-	#endif
-	#ifdef __OWN_SIDE_WEST__
-	_box  = "WeaponBoxEast";
-	#endif
-};
 
 // set box position and rotate it
 #ifdef __DEBUG__
-_str = if (isNull _house) then {format["outdoor with radius %1",  (_this select 1)]} else {format["in %1 (at pos %2)",typeOf _house, _ind]};
+_str = if (isNull _house) then {
+    format["outdoor with radius %1, dist %2",  _center, _town_rad] call SYG_distance2D]
+} else {
+    format["in %1 (at pos %2, dist %3)",typeOf _house, _ind, [_center, _pos] call SYG_distance2D]
+};
 _str = format["+++ SYG_sabotage_stash.sqf: create %1 STASH at %2 %3", _box, _pos, _str];
 hint localize _str;
 //player groupChat _str;
