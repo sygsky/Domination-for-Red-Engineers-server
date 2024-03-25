@@ -1,7 +1,11 @@
 // scripts\jail.sqf
 // By sygsky: Remastered jail from Evolution
 // no special input parameters except ["TEST"] for testing purposes.
-// Call on client only,
+// Call on client only.
+// Reasons for jailing:
+// 1. Call from the flag to test functionality [...,...,...,"TEST"]
+// 2. Penalty for too negative score ["NEGATIVE"]  - direct call parameters, not from menu or event
+// 3. Penalty for killing GRU mast (with special message as input parameter) ["PENALTY", _score_minus, _MSG_TO_USE] - direct call parameters
 /*
 	author: Sygsky
 	description:
@@ -11,6 +15,8 @@
         caller (_this select 1): Object - the unit that activated the action
         ID (_this select 2): Number - ID of the activated action (same as ID returned by addAction)
         arguments (_this select 3): Anything - arguments given to the script if you are using the extended syntax
+
+        if called directly, input may be string to print about your guilty
 	returns: nothing
 */
 
@@ -31,8 +37,8 @@ scopeName "main";
 if ( !alive player ) then {
     waitUntil {
         sleep 0.05;
-        if  (isNull player) then  {  breakOut "main"; }; // if not alive, exit
-        if (dialog) then {breakOut "main"}; // if in dialog, exit
+        if ( isNull player ) then  { breakOut "main"; }; // Exit if useк disappered
+        if ( dialog ) then { breakOut "main" };             // Exit if in dialog, so dead etc
         alive player
     };
 };
@@ -42,16 +48,34 @@ if ( !alive player ) then {
 
 _test = false; // defines if this is test call or real one
 _msg1 = localize "STR_JAIL_1"; //"Hint: You have been punished for having a negitive score",
-_score_to_demote = 0;
-if ( typeName _this == "ARRAY") then {
-    if ( count _this > 3) then { // test call from test action at flag
-        _test = (typeName (_this select 3) == "STRING") && ((_this select 3) == "TEST");
-    };
+_score = score player;
+
+if ( typeName _this != "ARRAY") then {
+    hint localize format["---jail.sqf: expected ""ARRAY"", detected _this = %1 ", _this];
+    breakOut "main";
+};
+if ( count _this > 3) then { // test call from test action at flag
+    _test = if (typeName (_this select 3) == "STRING") then { (_this select 3) == "TEST" } else { false };
 } else {
-	// May replace the 1st message with custom one
-	_score_to_demote = - ( ((score player) call SYG_demoteByScore) min d_sub_tk_points);
-	_score_to_demote call SYG_addBonusScore;
-	if (typeName _this == "STRING") then {_msg1 = format[localize _this, _score_to_demote]}; // STR_RADAR_KILLED:"Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
+    _penalty = if (typeName (_this select 0) == "STRING") then { (_this select 0) == "PENALTY" } else { false };
+    if (_penalty) then {
+        // Direct call with penalty after any bad action
+        _score_to_demote = 0;
+        // Called with single parameter: String with %1 as demote score calculated internally
+        if (typeName _this == "STRING") then { // It is radar killed jail, 1st message is replaced with custom one
+            // STR_RADAR_KILLED:"Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
+            _score_to_demote = - ((score player) call SYG_demoteByScore);
+            _msg1 = format[localize _this, _score_to_demote];
+        } else {
+            _score_to_demote = - ( ((score player) call SYG_demoteByScore) min d_sub_tk_points); // Demoted and in any case player killed subtraction
+        };
+        if (_score_to_demote != 0) then {
+            _score_to_demote call SYG_addBonusScore;
+            _score = abs (_score_to_demote); // Await time in seconds equal to the score subtracted from the player!!!
+        };
+    } else {
+        // It is ["NEGATIVE[_SCORE]"] call
+    };
 };
 _playerPos = getPos player;
 _playerDir = getDir player;
@@ -102,7 +126,7 @@ player setDamage 0;
 player setVelocity [0,0,0];
 player playMove "AmovPercMstpSnonWnonDnon"; // stand up!
 
-_score = [ (abs((score player)-JAIL_START_PERIOD)) min 80, 10 ] call SYG_roundTo; // Minimum 80 seconds, max has no limits
+_score = [( abs(_score) + JAIL_START_PERIOD) max JAIL_START_PERIOD, 10 ] call SYG_roundTo; // Minimum 80 seconds, max has no limits
 
 _wpn = weapons player;
 _mags = magazines player;
@@ -186,9 +210,13 @@ _sound = nearestObject [player, "#soundonvehicle"];
 waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
 //if (isNull _sound) then {hint localize "--- jail.sqf: No initial sound object detected!"};
 
-for "_i" from 0 to (_score - 1) do {
-    if ( (_i mod 10) == 0 ) then {
-        _id = (floor(_i / 10)) mod (count _msg_arr);
+_cnt = _score - 1;
+_msg_cnt = count _msg_arr;
+_pos = getPos player;
+_sound = objNull;
+for "_i" from 0 to _cnt do {    // Number of seconds to hear sounds
+    if ( (_i mod 10) == 0 ) then { // 1 time in 10 seconds
+        _id = (floor(_i / 10)) mod _msg_cnt; // Change to next message
         //player groupChat format["Prepare sound with _i = %1",_i];
         cutText [_msg_arr select _id, "PLAIN"];
     };
@@ -196,13 +224,13 @@ for "_i" from 0 to (_score - 1) do {
     titleText [format ["%1",_i - _score],"PLAIN DOWN"];
 
 	{
-	    sleep 0.25;
+	    sleep 0.1;
         if ((isNull _sound) && (alive player)) then {
             player say _soundName;
-
-            waitUntil {_sound = (getPos player) nearestObject "#soundonvehicle";!isNull _sound };
+            _sound = _pos nearestObject "#soundonvehicle";
         };
-	} forEach [1,2,3,4];
+        waitUntil { !isNull _sound };
+	} forEach [1,2,3,4,5,6,7,8,9,10]; // 0.1 * 10 = 1 second
 };
 
 titleText ["", "PLAIN DOWN"];

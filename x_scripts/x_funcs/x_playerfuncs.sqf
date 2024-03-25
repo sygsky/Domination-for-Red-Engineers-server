@@ -598,7 +598,7 @@ XGetRankIndexFromScore = {
 };
 
 #endif
-// Finds and return score needed for designated rank
+// Finds and return score needed to get designated rank
 // call: _rankScore  = player call XGetScoreFromRank; // to get initial rank score for the player current rank
 //       _rankScore  = 1 call XGetScoreFromRank; // to get initial rank score for the  CORPORAL rank
 //       _rankScore  = "CORPORAL" call XGetScoreFromRank; // to get initial rank score for the  CORPORAL rank
