@@ -30,7 +30,7 @@ if (isPlayer _killer) then {
 	// STR_RADAR_KILLED: "Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
 	// STR_RADAR_KILLER: "%1 is being punished (-%2) for destroying a GRU mast. Isn't he a spy?"
 	// String format to send to jail is predefined to have 1 parameter (demote scores)
-	_str = format["if ((name player) == '%1') then {'STR_RADAR_KILLED' execVM 'scripts\jail.sqf'; -%2 call SYG_addBonusScore} else {['msg_to_user', '', [['STR_RADAR_KILLER','%1',%2]],0,0,false,'losing_patience'] call SYG_msgToUserParser};", name _killer, _demote_score];
+	_str = format["if ((name player) == '%1') then {['PENALTY',%2,'STR_RADAR_KILLED'] execVM 'scripts\jail.sqf'} else {['msg_to_user', '', [['STR_RADAR_KILLER','%1',%2]],0,0,false,'losing_patience'] call SYG_msgToUserParser};", name _killer, _demote_score];
 	[ "remote_execute", _str, "<server>" ] call XSendNetStartScriptClient; // Sent to all clients only
     hint localize format[ "+++ radio_service: radio_killed.sqf radar deleted by %1 at %2; status = %3, send %1 to the jail and demote score by -%4", _name, [_this select 0, 10] call SYG_MsgOnPosE0, sideradio_status, _demote_score];
 };

@@ -62,10 +62,10 @@ if ( count _this > 3) then { // test call from test action at flag
         // Direct call with penalty after any bad action
         _score_to_demote = 0;
         // Called with single parameter: String with %1 as demote score calculated internally
-        if (typeName _this == "STRING") then { // It is radar killed jail, 1st message is replaced with custom one
+        if (count _this > 2) then { // It is some penalty (radar killed) jail, 1st message is replaced with custom one if is is designated
             // STR_RADAR_KILLED:"Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
             _score_to_demote = - ((score player) call SYG_demoteByScore);
-            _msg1 = format[localize _this, _score_to_demote];
+            _msg1 = format[localize (_this select 2), _score_to_demote];
         } else {
             _score_to_demote = - ( ((score player) call SYG_demoteByScore) min d_sub_tk_points); // Demoted and in any case player killed subtraction
         };
