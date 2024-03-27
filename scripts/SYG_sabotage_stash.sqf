@@ -85,7 +85,7 @@ if ( (random 10) <= 5 ) then { // find position in a house
 // set box position and rotate it
 #ifdef __DEBUG__
 _str = if (isNull _house) then {
-    format["outdoor with radius %1, dist %2",  _center, _town_rad] call SYG_distance2D]
+    format["outdoor with radius %1, dist %2", _town_rad, [_center, _town_rad] call SYG_distance2D]
 } else {
     format["in %1 (at pos %2, dist %3)",typeOf _house, _ind, [_center, _pos] call SYG_distance2D]
 };
