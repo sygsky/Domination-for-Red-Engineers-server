@@ -86,7 +86,7 @@ while { base_visit_session <= 0 } do {
 
 			};
 			_delay = 5; // Player is on his own, slow check on base frequence
-		}  else { // player in vehicle, up the frequence of on base checks
+		} else { // player in vehicle, up the frequence of on base checks
 			// Handle with last used and newly visited vehicles
 			if ( !_was_in_veh ) then { // player entered vehicle 1-5 seconds ago
 				_was_in_veh  = true;
