@@ -1590,8 +1590,8 @@ STR_FIRE_2,You think: why is there a fire?,Sie denken: - wo ist hier das Feuer?,
 
 STR_FIRE_UNKNOWN,You can't understand what it is,"Ich kann nicht verstehen, was es ist",No está claro qué es,"Непонятно, что это такое"
 
-STR_JAIL_1,Hint: You are subject to disciplinary action for violation of the Charter of the Soviet army,Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der Sowjetischen Armee,Se le impone una sanción disciplinaria por violar los estatutos del Ejército Soviético,На вас наложено дисциплинарное взыскание за нарушение устава Советской Армии
-STR_JAIL_2,You will regain control after you have served your sentence of %1 seconds,"Sie werden die Kontrolle zurückzugewinnen, nachdem Sie gedient haben Ihren Satz von %1 Sekunden",Después de cumplir la pena durante %1 seg. el control será devuelto,После отбывания наказания в течении %1 сек. контроль будет возвращён
+STR_JAIL_1,Hint: You have received a disciplinary penalty for violating the Soviet Army regulations,Hinweis: Sie sind disziplinarmassnahmen für die Verletzung der Charta der Sowjetischen Armee,Se le impone una sanción disciplinaria por violar los estatutos del Ejército Soviético,На вас наложено дисциплинарное взыскание за нарушение устава Советской Армии
+STR_JAIL_2,"You will regain control after serving your punishment for %1 second","Du wirst die Kontrolle wiedererlangen, nachdem du deine Strafe für %1 Sekunde verbüßt hast","Recuperarás el control tras cumplir tu castigo durante %1 segundo",После отбывания наказания в течении %1 сек. контроль будет возвращён
 STR_JAIL_3,Or you can press  Alt + F4 to exit immediately,"Oder du kannst Alt + F4 drücken, um sofort zu beenden","O puedes pulsar Alt + F4 para salir inmediatamente","Чтобы покинуть остров немедленно, используйте Alt + F4"
 STR_JAIL_4,Don't be in a hurry to spoil military property!,"Habe es nicht eilig, militärisches Eigentum zu verderben!",¡No tengas prisa por estropear la propiedad militar!,Не спешите портить военное имущество!
 

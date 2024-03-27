@@ -58,7 +58,7 @@ if ( count _this > 3) then { // test call from test action at flag
     _test = if (typeName (_this select 3) == "STRING") then { (_this select 3) == "TEST" } else { false };
 } else {
     _penalty = if (typeName (_this select 0) == "STRING") then { (_this select 0) == "PENALTY" } else { false };
-    if (_penalty) then {
+    if (_penalty) exitWith {
         // Direct call with penalty after any bad action
         _score_to_demote = 0;
         // Called with single parameter: String with %1 as demote score calculated internally
@@ -73,9 +73,8 @@ if ( count _this > 3) then { // test call from test action at flag
             _score_to_demote call SYG_addBonusScore;
             _score = abs (_score_to_demote); // Await time in seconds equal to the score subtracted from the player!!!
         };
-    } else {
-        // It is ["NEGATIVE[_SCORE]"] call
     };
+        // It is ["NEGATIVE[_SCORE]"] call
 };
 _playerPos = getPos player;
 _playerDir = getDir player;
