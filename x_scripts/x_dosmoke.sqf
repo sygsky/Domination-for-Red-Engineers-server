@@ -39,7 +39,7 @@ if ( combatMode _killed != "YELLOW" ) then {
 
 #ifdef __DEBUG__
 if (_grp_killed in smoke_groups) exitWith {
-	hint localize "+++ x_dosmoke2.sqf: group of killed unit is already smoking, exit";
+	hint localize "+++ x_dosmoke.sqf: group of killed unit is already smoking, exit";
 };
 #endif
 
