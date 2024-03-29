@@ -2716,18 +2716,40 @@ SYG_bombPos = {
 //
 //
 SYG_throwSmokeGrenade = {
-    if (typeName _this != "ARRAY") exitWith { format["--- SYG_throwGrenade: expected input array, found %1, exit!", _this] };
-    if (count _this < 4) exitWith {format["--- SYG_throwGrenade: expected input array len >= 4, found %1, exit!", typeName _this]};
-    private ["_unit", "_type1", "_type2", "_target"];
+    if (typeName _this != "ARRAY") exitWith { hint localize format["--- SYG_throwGrenade: expected input array, found %1, exit!", _this] };
+    if (count _this < 4) exitWith { hint localize format["--- SYG_throwGrenade: expected input array len >= 4, found %1, exit!", typeName _this] };
+    private ["_unit","_shell","_dir","_muzzle"];
     _unit = _this select 0;
-    _type = _this select 0;
-    if (!(_type in magazines _unit)) then {
-        hint localize format["*** SYG_throwGrenade: No %1 found in mags of %2", _type, magazines _unit];
-        _type = _this select 1;
-        if (!(_type in magazines _unit)) then {
-            _unit addMagazine _type;
+    _shell = _this select 0;
+    if (!(_shell in magazines _unit)) then {
+        hint localize format["*** SYG_throwGrenade: No %1 found in mags of %2", _shell, magazines _unit];
+        _shell = _this select 1;
+        if (!(_shell in magazines _unit)) then {
+            _unit addMagazine _shell;
             sleep 0.14;
         };
     };
-    // TODO: Throw
+    _dir = [_unit, _this select 3] call XfDirToObj;
+    _unit setDir (_this select 3);
+    sleep 0.1;
+    _muzzle = (switch (_shell) do {
+#ifdef __ACE__
+        case "ACE_SmokeGrenade_Red"   : {"SmokeShellRedMuzzle"};
+        case "ACE_SmokeGrenade_White" : {"SmokeShellMuzzle"};
+        case "ACE_SmokeGrenade_Green" : {"SmokeShellGreenMuzzle"};
+        case "ACE_SmokeGrenade_Yellow": {"SmokeShellYellowMuzzle"};
+        case "ACE_SmokeGrenade_Violet": {"SmokeShellVioletMuzzle"};
+#endif
+        case "SmokeShellGreen": {"SmokeShellGreenMuzzle"};
+        case "SmokeShellRed"  : {"SmokeShellRedMuzzle"};
+        case "SmokeShell";
+        default                 {"SmokeShellMuzzle"};
+    });
+#ifdef __DEBUG__
+    hint localize format["+++ x_scripts/x_dosmoke.sqf: shell %1, muzzle %2, unit %3 selected to throw", _shell, _muzzle, _unit];
+#endif
+    // Throw
+    _unit selectWeapon _muzzle;
+    sleep 0.121;
+	_unit fire _muzzle;
 };
