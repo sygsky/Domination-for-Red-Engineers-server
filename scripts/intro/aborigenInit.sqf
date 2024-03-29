@@ -57,6 +57,14 @@ _smoke_grenade_type = "ACE_SmokeGrenade_Red";
 _smoke_grenade_type = "SmokeShellRed";
 #endif
 
+_arr = [aborigen, _smoke_grenade_type, player];
+if (local aborigen) then  {
+    _arr call SYG_throwSmokeGrenade
+} else {
+    ["remote_execute", "(_this select 2) call SYG_throwSmokeGrenade", _arr] call XSendNetStartScriptServer;
+};
+
+/*
 aborigen addMagazine _smoke_grenade_type;
 reload aborigen;
 aborigen selectWeapon "SmokeShellRedMuzzle";
@@ -71,6 +79,7 @@ sleep 1.437;
 aborigen doWatch objNull;
 
 hint localize format["+++ aborigenInit.sqf: aborigen mags after throw %1", magazines aborigen];
+*/
 
 #endif
 
