@@ -94,8 +94,7 @@ if (({alive _x} count _grp_units) > 0) then {
 #ifdef __DEBUG__
 			hint localize format["+++ x_scripts/x_dosmoke.sqf: shell %1, unit %2 selected to throw", _one_shell, _shell_unit];
 #endif			
-			_one_shell_muzzle = (switch (_one_shell) do
-			{
+			_one_shell_muzzle = (switch (_one_shell) do {
 #ifdef __ACE__
 			    case "ACE_SmokeGrenade_Red"   : {"SmokeShellRedMuzzle"};
 			    case "ACE_SmokeGrenade_White" : {"SmokeShellMuzzle"};
