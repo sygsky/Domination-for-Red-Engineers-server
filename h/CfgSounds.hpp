@@ -793,13 +793,13 @@ class CfgSounds {
 
     class naval       { name = "";                                     sound[] = {\sounds\short\Naval-Patrol-Horn.ogg,db-1,1.0}; titles[] = {};}; // Sea patrol detected sound
 
-    class spell_1	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Suta-Buhna-Muhkanash.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_2	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Trehgorus-Sha.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_3	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Paragosy-Avanagh.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_4	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Zemana-Aztilin.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_1	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Suta-Buhna-Muhkanash.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_2	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Trehgorus-Sha.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_3	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Paragosy-Avanagh.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_4	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Zemana-Aztilin.ogg,db-1,1.0}; titles[] = {};}; //
     class spell_5	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Abes-Fabes-Cartoflyabes.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_6	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Crevall-Asortium-Antimus.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_7	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Engory-Helleye.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_6	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Crevall-Asortium-Antimus.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_7	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Engory-Helleye.ogg,db-1,1.0}; titles[] = {};}; //
 
 
 // Naval-Patrol-Horn.ogg
