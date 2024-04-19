@@ -267,7 +267,8 @@ if (true) then {
 			sideradio_status = 1; // installation done
 			publicVariable "sideradio_status";
 			// play random radio signal (including from "Mayak" radiostation etc)
-			[ "say_radio", call SYG_randomRadio, [ "msg_to_user","", [["STR_RADAR_TRUCK_MAST_INSTALLED"]] ] ] call XSendNetStartScriptClientAll;
+			_str = call SYG_randomRadio;
+			[ "say_radio", _str, [ "msg_to_user","", [["STR_RADAR_TRUCK_MAST_INSTALLED"]] ] ] call XSendNetStartScriptClientAll;
 			_send_was_at_sm = (_veh distance RADAR_ZONE_CENTER) < INSTALL_RADIUS;
 		};
 		default {hint localize format["--- radio_menu.sqf: Expected command '%1' not parsed, must be LOAD, UNLOAD, INSTALL", _cmd]};
