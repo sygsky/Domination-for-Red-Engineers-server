@@ -218,7 +218,7 @@ if (X_Client) then {
     #ifdef __RANKED__
     // Array with all predefined score for many achievments (client only)
     d_ranked_a = [
-        10, 		// 0 очков необходимо инженеру для ремонта
+        10, 		// 0 очков необходимо инженеру для ремонта сервисов
         [4,3,2,1], 	// 1 --------------- Free: очков начисляется инженеру за ремонт авиа, танки, машины, другое. Now is deprecated, score added for the number of repair steps, not vehicle type!!!
         5, 			// 2 очков вычитается за 1 залп
         5,          // 3 points in the AI version for recruiting one soldier at lowest rank, each next rank add the same score number to cost
@@ -229,7 +229,7 @@ if (X_Client) then {
         ["Sergeant","Lieutenant","Captain","Major"], // 8  ранги необходимые для управления различной техникой: легкая броня, танки, боевые верты, самолеты
         40, 		// 9 максимально очков начисляется за взятие города
         500, 		//10 дистанция на которой ещё начисляются очки за взятие города
-        20, 		//11 очков за дополнительную миссию
+        20, 		//11 scores added on success of the SM
         250, 		//12 дистанция за которую начисляются очки за допку
         5,  		//13 очков требуется для починки разрушенных сервисов на базе
         10, 		//14 очков необходимо для развертывания пулеметного гнезда
@@ -247,10 +247,10 @@ if (X_Client) then {
         "Corporal", //26 ---------------- Free: rank to resurrect internal objects on server map (vegetation, fences etc) - not used
         9,          //27 scores added for observer kill +1 for ordinal frag
         "Sergeant", //28 lowest rank abled to call the recruit
-        1			//29 score for vehicle respawn
-        ,2  	    //30 score for detection of bonus vehicle near the battle field
-        ,2			//31 score for registration of bonus vehicle on the base territory
-        ,10			//32 score for landing to the yellow circle near barracs after intro parajump
+        1,			//29 score for vehicle respawn
+        2,  	    //30 score for detection of bonus vehicle near the battle field
+        2,			//31 score for registration of bonus vehicle on the base territory
+        10			//32 score for landing to the yellow circle near barracs after intro parajump
     ];
 
     // distance a player has to transport others to get points
