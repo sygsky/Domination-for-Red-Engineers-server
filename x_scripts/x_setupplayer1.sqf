@@ -16,10 +16,8 @@
 #ifdef __ACE__
 //+++ Sygsky: added on heli wind effect for server only as all heli are created on host (server) computer
 if ( d_with_wind_effect ) then {
-//	"ACE_HeliWind" createVehicle [0,0,0]; // Not needed, it is enough to create variable
-    ACE_Wind_Heli_Enabled = true;
-//	ACE_Wind_Modifier_Vehicles = 0.75; // Not used at all
- };
+	ACE_Wind_Modifier_Vehicles = 1; // Not used at all
+};
 //hint localize format["x_setupserver.sqf: d_with_wind_effect == %1",d_with_wind_effect];
 #endif
 
