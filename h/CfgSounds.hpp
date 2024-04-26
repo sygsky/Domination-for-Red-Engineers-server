@@ -259,6 +259,7 @@ class CfgSounds {
     class stripped_voyage    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\stripped_voyage.ogg, db+10,1.0}; titles[] = {}; }; // Some sound from Soviet film "Stripped Voyage" (196)
     class troshin    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\troshin.ogg, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
     class corrida_shaov    {name = ""; sound[] = {\sounds\defeat\corrida_shaov.ogg, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
+    class kavkazskaya_plennitsa    {name = ""; sound[] = {\sounds\defeat\kavkazskaya_plennitsa.ogg, db+10,1.0}; titles[] = {}; }; // From film "Kavkazskaya plennitsa", 1967
 
 
     class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10,1.0}; titles[] = {}; };
