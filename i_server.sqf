@@ -886,7 +886,7 @@ d_static_count_for_target_clear = 1;
 // add some random patrols on the island
 // if the array is empty, no patrols
 // same size like a rectangular trigger
-// first item = first element : center position as getPos array, second element : a, third element : b, fourth element : angle; second item = number of groups
+// first item = [first element : center position as getPos array, second element : a, third element : b, fourth element : angle; second item = number of groups]
 d_with_isledefense =
 #ifdef __SCHMALFELDEN__
 	[[[2535.49,3112,0], 2000, 2000, 0], 3];

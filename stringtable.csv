@@ -1165,7 +1165,8 @@ STR_INTRO_5_0," (working day)"," (Arbeitstag)"," (día hábil)"," (рабочи�
 STR_INTRO_5_1," (holiday)"," (arbeitsfreier Tag)"," (día de descanso)"," (выходной)"
 STR_INTRO_SIDE,USSR,UdSSR,URSS,СССР
 STR_INTRO_TEAM,One team -,One team -,Parte -,Сторона -
-STR_INTRO_FULL,Domination! One team - A.C.E. East,Domination! One team - A.C.E. East,¡Liberación! Lado-URSS (mod A. C. E.),Освобождение! Сторона - СССР (мод A.C.E.)
+STR_INTRO_DEFAULT,Domination! One team - A.C.E. East,Domination! One team - A.C.E. East,¡Liberación! Lado-URSS (mod A. C. E.),Освобождение! Сторона - СССР (мод A.C.E.)
+STR_INTRO_OFP_WORLD,Domination! One team - A.C.E. East,Domination! One team - A.C.E. East,¡Liberación! Lado-URSS (mod A. C. E.),Освобождение! Сторона - СССР (мод A.C.E.)
 
 STR_INTRO_PARAJUMP,Get to the base any way you want (%1 m)!,Erreichen Sie die Basis mit allen nötigen Mitteln (%1 m)!,¡Llega a la base por cualquier medio (%1 m)!,Доберитесь до базы любым способом (%1 м.)!
 STR_INTRO_PARAJUMP_1,"I'll have to jump%1. What else can I do?","Ich werde springen müssen%1. Was kann ich sonst tun?","Tendré que saltar%1. ¿Qué otra cosa puedo hacer?","Придётся прыгнуть%1. А что делать?"
