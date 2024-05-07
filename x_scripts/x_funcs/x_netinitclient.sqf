@@ -879,7 +879,7 @@ XHandleNetStartScriptClient = {
                     private ["_time2skip"];
                     _time2skip = (_this select 2); // hours to skip
                     if ( typeName _time2skip ==  "ARRAY") then { _time2skip = _time2skip select 0};
-                    hint localize format["+++ shortnight skip:: daytime %1, skiptime %2, time %3, date %4;", daytime, _time2skip, time, date];
+                    hint localize format["+++ shortnight skip: daytime %1, skiptime %2, time %3, date %4;", daytime, _time2skip, time, date];
                     skipTime _time2skip;
                     hint localize format["+++ shortnight skip: after skip daytime %1, time %2, date %3;", daytime, time, date];
                 };
