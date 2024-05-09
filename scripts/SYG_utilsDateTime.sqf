@@ -422,18 +422,20 @@ SYG_JDN = {
 #define OFF_HOLIDAY_HOL 4 // day off (1), work day (0)
 
 // [day|Nth weekday,mon<, "common_music_name" || ["rnd_music1",..."rnd_music#"]>]
+_arr1 = ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"];
+_arr2 = ["Varshavianka","Varshavianka_eng","warschawyanka_german"];
 SYG_holidayTable = [
     [ 1,  1, ["snovymgodom","grig","zastolnaya","nutcracker","home_alone","merry_xmas","vangelis","enchanted_boy"], "STR_HOLIDAY_1_JAN", 1], // New Year Day
-    [ 9,  2, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"], "STR_HOLIDAY_9_FEB", 0], // Day of the Soviet Civil aviations
+    [ 9,  2, _arr1, "STR_HOLIDAY_9_FEB", 0], // Day of the Soviet Civil aviations
     [23,  2, ["burnash","soviet_officers"],"STR_HOLIDAY_23_FEB",0], // 23th of February
     [ 8,  3, ["esli_ranili_druga"],"STR_HOLIDAY_8_MAR",1], // 8th of March
     [12,  4, ["cosmos_1","cosmos_2","cosmos_3"],"STR_HOLIDAY_12_APR",0], // Cosmonautics day
     [22,  4, ["lenin","lenin_1"],"STR_HOLIDAY_22_APR",0], // Birthday of V.I. Lenin
-    [ 1,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May
-    [ 2,  5, ["Varshavianka","Varshavianka_eng","warschawyanka_german"], "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
-    [ 9,  5, "invasion","STR_HOLIDAY_9_MAY",1], // 9th of May
+    [ 1,  5, _arr2, "STR_HOLIDAY_1_MAY",1], // 1st May
+    [ 2,  5, _arr2, "STR_HOLIDAY_1_MAY",1], // 1st May 2nd day
+    [ 9,  5, ["Letyat_perelyotnye_pticy_2nd","Letyat_perelyotnye_pticy_end"],"STR_HOLIDAY_9_MAY",1], // 9th of May
     [ 28, 5, "border_guards","STR_HOLIDAY_28_MAY",0], // //Border Guard Day
-    [ 18, 8, ["hugging_the_sky","we_teach_planes_to_fly",localize "STR_AVIAMARCH"],"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
+    [ 18, 8, _arr1,"STR_HOLIDAY_18_AUG", 0], // 18 of Aug: Day of Soviet Aviation
     [  1, 9, "uchat_v_shkole", "STR_HOLIDAY_1_SEP", 0], // 1st of September, Day of Knowledge
     [[6, 2], 9, "march_of_soviet_tankmen","STR_HOLIDAY_TANKIST_DAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
     [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhymn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
