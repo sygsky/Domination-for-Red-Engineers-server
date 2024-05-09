@@ -26,6 +26,7 @@ if (isServer) then {
 
 hint localize format["+++ init.sqf: isServer = %1, X_Server = %2, X_Client = %3, X_JIP = %4, X_SPE = %5, X_MP = %6, X_INIT = %7, mission ""%8"" in world ""%9""",
 	isServer, X_Server, X_Client, X_JIP, X_SPE, X_MP, X_INIT, missionName, worldName];
+hint localize format["+++ init.sqf: сadetMode %1, WeaponCursor %2, 3rdPersonView %3", cadetMode, difficultyEnabled "WeaponCursor", difficultyEnabled "3rdPersonView"];
 
 SYG_firesAreCreated  = false; // are fires on airbase created
 publicVariable "SYG_firesAreCreated";
