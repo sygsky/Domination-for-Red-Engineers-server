@@ -142,18 +142,19 @@ if (_sound == "") then { // select random music for an ordinal day
             // add some personalized songs for well known players
             _players = [
                 ["Ceres-de","CERES de","Ceres.","CERES"] , // Germany
-                ["Rokse [LT]"], // military radist
-                ["Shelter", "Marcin"], // polyaks
-                ["Petigp", "gyuri", "Frosty"], // hungarian
-                ["Snooper" ] // Russian from Belorussia
-//                ["gyuri"] // Hungary People Republic, August 20, 1949
+                ["Rokse [LT]"], // Military radist
+                ["Shelter", "Marcin"], // Polyaks
+                ["Petigp", "gyuri", "Frosty"], // hungarian, Hungary People Republic, August 20, 1949
+                ["Snooper" ], // Russian from Belorussia
+                ["ihatelife"] // American
             ];
             _sounds  = [
                 ["amigohome_ernst_bush","ddrhymn","zaratustra"],
                 ["morze","morze2","morze_0","morze_2","morze_3","morze_4","morze_5","morze_6","morze_7"],
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
                 ["hungarian_dances","hungarian_dances","hungarian_dances"],
-                ["toccata","toccata","hungarian_dances","hungarian_dances","grig","grig"]
+                ["toccata","toccata","hungarian_dances","hungarian_dances","grig","grig"],
+                ["everybody_knows"]
             ];
             _name    = name player;
             _personalSounds = [];
@@ -183,7 +184,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2",/*"del_vampiro1",
                 "del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
-                "peregrinus","kk_the_hole","shaov_defeat","evening_7"
+                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows"
             ];
 
             // music to play only in day time
@@ -196,13 +197,13 @@ if (_sound == "") then { // select random music for an ordinal day
 
             // only night music
 //            _music = _night_music + _personalSounds;
-            _music = +_night_music;
+            _music = +_night_music; // Night music may play at day too
             if ( count _personalSounds > 0 ) then {
 	            [_music, _personalSounds] call SYG_addArrayInPlace;
-            } else {
+            } else { // Why we add tерыуы sounds for all players& I don't undertand it.
             	[_music, ["ddrhymn", "four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
             };
-            // if day time add day music too
+            // If it is day time  now, add day music, so day music plays only at day
             if ( (daytime > SYG_startDay) && (daytime < SYG_startEvening) ) then { [_music, _daytime_music] call SYG_addArrayInPlace };
             _music_cnt = count _music;
             _music = _music call _XfRandomArrayVal;
@@ -216,7 +217,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
                 /*"del_vampiro1","del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
-                "wild_geese","dangerous_chase","kk_the_hole"
+                "wild_geese","dangerous_chase","kk_the_hole","everybody_knows"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif

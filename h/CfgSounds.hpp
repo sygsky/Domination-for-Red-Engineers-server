@@ -726,6 +726,7 @@ class CfgSounds {
     class Hungary    { name="Hungary day";                              sound[] = {\sounds\intro\holidays\Hungary.ogg,db-1,1.0}; titles[] = {};}; // Day of Hungarian Peple Republic
     class kk_the_hole { name="King-Kong film, the hole";                sound[] = {\sounds\intro\kk_the_hole.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
     class jimmy_dont_miss { name="";                					sound[] = {\sounds\intro\jimmy_dont_miss.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
+    class everybody_knows { name="";                					sound[] = {\sounds\intro\everybody_knows.ogg,db-1,1.0}; titles[] = {};}; // "War Dogs" 2016, final titles songs
 
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
