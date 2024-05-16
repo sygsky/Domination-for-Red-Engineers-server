@@ -861,13 +861,24 @@ _car = (if (!d_lock_ai_car) then {["UAZ_AGS30","D30","UAZMG"]} else {[]});
 d_helilift1_types =
 #ifdef __OWN_SIDE_EAST__
 	if (__CSLAVer) then {
-		["CSLAWarfareEastMobileHQ","CSLAWarfareEastSalvageTruck","CSLA_BVP2","CSLA_BVP1","CSLA_OT64C","CSLA_BRDM2","CSLA_9P148","CSLA_OZ90","CSLA_DTP90","CSLA_T815Ammo8","CSLA_T815CAP6","CSLA_UAZ","CSLA_T813o","WarfareEastSalvageTruck","UralRepair","UralRefuel","UralReammo","UralOpen","BMP2","UAZ_AGS30","M119","D30","UAZMG","BRDM2","BRDM2_ATGM","BMP2_MHQ","BMP2Ambul"] + _armor + _car
+		["CSLAWarfareEastMobileHQ","CSLAWarfareEastSalvageTruck","CSLA_BVP2","CSLA_BVP1","CSLA_OT64C","CSLA_BRDM2","CSLA_9P148","CSLA_OZ90","CSLA_DTP90","CSLA_T815Ammo8","CSLA_T815CAP6","CSLA_UAZ","CSLA_T813o","WarfareEastSalvageTruck","UralRepair","UralRefuel","UralReammo","UralOpen",
+    #ifdef __ARRIVED_ON_ANTIGUA__
+		"UralCivil2",
+    #endif
+		"BMP2","UAZ_AGS30","M119","D30","UAZMG","BRDM2","BRDM2_ATGM","BMP2_MHQ","BMP2Ambul"] + _armor + _car
 	} else {
 		if (__ACEVer) then {
-//			["BMP2_MHQ","ACE_BMP2_Ambul","WarfareEastSalvageTruck","ACE_Ural_Repair","ACE_Ural_Reammo","ACE_Ural_Refuel","ACE_Ural","ACE_BMP2","ACE_BMD1","ACE_BMP2_D","ACE_BMP2_K","ACE_BMD1p","BRDM2","ACE_BRDM2_ATGM","ACE_UAZ_MG","ACE_UAZ_AGS30","ACE_UAZ","M119","D30","ACE_ZSU"] + _armor + _car
-			[ "BMP2_MHQ","ACE_BMP2_Ambul","ACE_M113_Ambul","WarfareEastSalvageTruck","ACE_Ural_Repair","ACE_Ural_Reammo","ACE_Ural_Refuel","ACE_Ural","ACE_UAZ_MG","ACE_UAZ_AGS30","ACE_UAZ","M119","D30","ACE_ZU23M","ACE_BMD1","ACE_BMD1p" ] + _car + SYG_SMALL_HELI_LIST_ACE_W //+++ Sygsky to prevent lift heavy vec
+			[ "BMP2_MHQ","ACE_BMP2_Ambul","ACE_M113_Ambul","WarfareEastSalvageTruck","ACE_Ural_Repair","ACE_Ural_Reammo","ACE_Ural_Refuel","ACE_Ural",
+    #ifdef __ARRIVED_ON_ANTIGUA__
+			"UralCivil2",
+    #endif
+			"ACE_UAZ_MG","ACE_UAZ_AGS30","ACE_UAZ","M119","D30","ACE_ZU23M","ACE_BMD1","ACE_BMD1p" ] + _car + SYG_SMALL_HELI_LIST_ACE_W //+++ Sygsky to prevent lift heavy vec
 		} else {
-			["BMP2_MHQ","BMP2Ambul","WarfareEastSalvageTruck","UralRepair","UralRefuel","UralReammo","UralOpen","BMP2","UAZ_AGS30","M119","D30","UAZMG","BRDM2","BRDM2_ATGM"] + _armor + _car
+			["BMP2_MHQ","BMP2Ambul","WarfareEastSalvageTruck","UralRepair","UralRefuel","UralReammo","UralOpen",
+    #ifdef __ARRIVED_ON_ANTIGUA__
+			"UralCivil2",
+    #endif
+			"BMP2","UAZ_AGS30","M119","D30","UAZMG","BRDM2","BRDM2_ATGM"] + _armor + _car
 		}
 	};
 #endif

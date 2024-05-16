@@ -68,22 +68,26 @@ aborigen disableAI "MOVE";
 
 // _this = [_killed, _killer];
 aborigen addEventHandler ["killed", {
-    private ["_name"];
+    private ["_name","_killer"];
 	(_this select 0) call XAddDead0;
-	if (isPlayer (_this select 1)) then {
-	    _name = name (_this select 1);
+	_killer = _this select 1;
+	_isNull = isNull _killer;
+	if ( !(isNull _killer) && (isPlayer _killer) ) then {
+	    _name = name _killer;
 	    //-20 call SYG_addBonusScore;
-	    // "%1 killed the wonderful man, an Aborigen with a capital letter. %1 will be punished! For now, just -20 points."
-	    [ "change_score", _name, -20, ["msg_to_user", [ ["STR_ABORIGEN_KILLER", _name ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClient;
+	    _sub_score = _killer call SYG_demoteByScore; // t=Returns socre to subtract to demore 1 rank lower or 0 if score are aready negative
+	    if (_sub_score == 0) then {_sub_score = d_ranked_a select 11}; // Normal score for the SM success
+	    // STR_ABORIGEN_KILLER = "%1 killed the wonderful man, the true Aborigen. %1 will be punished! For now, just -20 points."
+	    [ "change_score", _name, -_sub_score, ["msg_to_user", [ ["STR_ABORIGEN_KILLER", _name ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClientAll;
 	} else {
-	    // "Just now the wonderful man was killed, the Aborigen with a capital letter. But the enemy made a wrong move. And another will take his place!"
-	    ["msg_to_user", [ ["STR_ABORIGEN_KILLER_0"] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClient;
-	    _name = str (_this select 1);
+	    // STR_ABORIGEN_KILLER_0 = "Just now this wonderful man was killed, the true Aborigen. But the enemy made a wrong move. And another will take his place!"
+	    ["msg_to_user", [ ["STR_ABORIGEN_KILLER_0"] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClientAll;
+	    _name = str _killer;
 	};
 	hint localize  format["--- aborigen killed by %1(%2), dist %3, at %4!",
 		_name,
-		typeOf (vehicle (_this select 1)),
-		round((_this select 0) distance (_this select 1)),
-		[(_this select 1),10] call SYG_MsgOnPos0];
+		typeOf (vehicle _killer),
+		round((_this select 0) distance _killer),
+		[_killer,10] call SYG_MsgOnPos0];
 	100 execVM "scripts\intro\findAborigen.sqf"; // add new aborigen except killed one after 100 seconds
 } ];

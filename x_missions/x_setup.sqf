@@ -45,7 +45,7 @@
 //#define __D_VER_NAME__ "Domination! One Team - A.C.E."
 //#define __D_VER_NAME__ "Domination! One Team - A.C.E. RA"
 // +++ Sygsky: #define __D_VER_NAME__ "Domination! One Team - A.C.E. East"
-#define __D_VER_NAME__ $STR_INTRO_FULL
+#define __D_VER_NAME__ $STR_INTRO_DEFAULT
 //#define __D_VER_NAME__ "Domination! One Team - West AI"
 //#define __D_VER_NAME__ "Domination! One Team - West REVIVE"
 //#define __D_VER_NAME__ "Domination! One Team - East"

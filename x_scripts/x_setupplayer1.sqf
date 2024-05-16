@@ -13,6 +13,14 @@
 
 #define __DEBUG__
 
+#ifdef __ACE__
+//+++ Sygsky: added on heli wind effect for server only as all heli are created on host (server) computer
+if ( d_with_wind_effect ) then {
+	ACE_Wind_Modifier_Vehicles = 1; // Not used at all
+};
+//hint localize format["x_setupserver.sqf: d_with_wind_effect == %1",d_with_wind_effect];
+#endif
+
 private ["_endtime","_p","_rifle","_weapp","_magp","_old_rank","_index","_rpg","_mg","_sniper","_medic","_diversant",
 		 "_pistol","_equip","_rearmed","_handle"];
 // ask the server for the client score etc

@@ -696,9 +696,9 @@ switch ( _arg ) do {
 	// Teleport player to the base as with MHQ
 	case "WIZARD": {
 		beam_target = 0; // Jump to the base
-		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
+//		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
 //			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
-		_spell execVM "dlg\beam_tele.sqf"; // Teleport to the base
+		"spell_5" execVM "dlg\beam_tele.sqf"; // Teleport to the base
 		(_this select 0) removeAction (_this select 2); // Remove this action
 	};
 	default {

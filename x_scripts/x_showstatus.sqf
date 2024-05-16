@@ -8,6 +8,9 @@ if (!X_Client) exitWith {};
 
 //#define __DEBUG__
 
+#define SEARCH_RADIUS 300
+#define ACCURACY_VALUE 100
+
 _ok = createDialog "XD_StatusDialog";
 
 _XD_display = findDisplay 11001;
@@ -103,7 +106,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			_str = "";
 			if (format ["%1",_pos] != "[0,0,0]") then {
 				// find civilians
-				_units = nearestObjects [_pos, ["Civilian"], 300];
+				_units = nearestObjects [_pos, ["Civilian"], SEARCH_RADIUS];
 				_cnt = count _units;
 				if ( _cnt == 0 ) exitWith {_str = format[localize "STR_SM_30_1", 500]}; // "GRU: civilians not found in radius %1 m."
 				for "_i" from 0 to (_cnt - 1) do {
@@ -121,7 +124,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
                     _units set [_i, _str];
 				};
 				_str = [_units, ","] call SYG_joinArr;
-				_str = format[ localize "STR_SM_30_2", 300, _str]; // "GRU: searching for civilians within a radius of %1 m gives the following: %2"
+				_str = format[ localize "STR_SM_30_2", SEARCH_RADIUS, _str]; // "GRU: searching for civilians within a radius of %1 m gives the following: %2"
 			} else { _str = localize "STR_SM_30_3"}; // "GRU: no data about the position of the search!"
 			if (_str != "") then {_s = _s + "\n" + _str};
 
@@ -458,11 +461,10 @@ if (current_target_index != -1) then {
 			#endif
 			_list = _center nearObjects [ _box, _searchDist ]; // search outside box, not inside one (see such in the base)
 			_s1 = if (count _list == 0 ) then {
-				localize "STR_SEC_8_0" // 0 - in the buildings
-			} else { localize "STR_SEC_8_1" }; // 1 - out of the building
+				localize "STR_SEC_8_0" // 0 - in the buildings: "Probably a stash in one of the construction (not only house)"
+			} else { localize "STR_SEC_8_1" }; // 1 - out of the building: "Probably a stash somewhere outside the construction (not only house)."
 			_s = format["%1\n%2", _s, _s1];
-//			_max_dist = 200; // for outdoor stash
-			_max_dist = 100; // for indoor stash
+			_max_dist = ACCURACY_VALUE; // Accuracy boundary for ыыыыефыр зprinted distance
 			if (count _list == 0 ) then { // it must be indoor box, specify its correct type
 				_box_west =
 				#ifdef __ACE__
@@ -484,27 +486,28 @@ if (current_target_index != -1) then {
 				#endif
 			};
 			// search for the box near player
-			_list = player nearObjects [ _box, 300 ];
-			if ( count _list == 0 ) then { _s1 = localize "STR_SEC_8_14" } // "Where is the damn stash?"
-			else {
+			_list = nearestObjects [ player, [_box], SEARCH_RADIUS ];
+			if ( count _list == 0 ) then {
+			    _s1 = format [localize "STR_SEC_8_14", SEARCH_RADIUS] // "Where is this stash? It's definitely not within a %1 meter radius!"
+			} else {
 				// add more info on stash (approximate) distance
-				#ifdef __OLD__
-				_rank_id = (player call XGetRankIndexFromScoreExt) max 1; // rank index with min value of 1
-				#endif
 				_rank = player call XGetRankStringLocalized; // localized rank name
 //				if (_rank_id == 0) exitWith { _s1 = format[localize "STR_SEC_8_10", _rank]; }; // "As a ranking private, you're sure you don't understand anything."
 				// print extended info
-				_s1   = if ( (random 2) < 1 ) then {"STR_SEC_8_11"} else {"STR_SEC_8_12"};
+				_s1 = "";
+				if (count _list > 1) then {
+                    _s1 = "STR_SEC_8_15"; // "Looks like there's more than one stash!"
+				};
+                if (_s1 != "") then {
+                    _s1  = _s1 + "\n";
+                };
+                // STR_SEC_8_11: "As %1, you are almost certain that stash at a distance of no more than %2 m. (you don't know more accurately)."
+                // STR_SEC_8_12: "As %1, you intuitively feel that the hiding place is no further than %2 m. (but how much less?)."
+    			_s1 = _s1 + (if ( (random 2) < 1 ) then {localize "STR_SEC_8_11"} else {localize  "STR_SEC_8_12"});
 				// make artificially approximate distance by rank
 				_dist = round( ( _list select 0 ) distance player);
-				#ifdef __OLD__
-				_step = round( _max_dist / _rank_id ); // accuracy step
-				_dist = _dist - (_dist mod _step) +  _step; // show distance never less than accuracy step size
-//				hint localize format["+++ STASH info: _dist %1, _step %2, _rank_id %3", _dist, _step, _rank_id];
-				#else
 				_dist =  _dist - (_dist mod _max_dist) + _max_dist; // distance is always on the boundary of granularity value
-				#endif
-				_s1   = format[ localize _s1, _rank, _dist ]; // "As %1, you are almost certain that stash at a distance of no more than %2 m. (you don't know more accurately)."
+				_s1   = format[ _s1, _rank, _dist ]; // "As %1, you are almost certain that stash at a distance of no more than %2 m. (you don't know more accurately)."
 			};
 			_s = format["%1\n%2",_s, _s1 ]; // add extended info to the result one
 		};

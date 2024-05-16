@@ -163,7 +163,7 @@ SYG_townScoresAdd = {
             if ( !(_id in _arr)) then {  // add new player to list of town liberation participates
                 _arr set [count _arr, _id];
                 _arr = SYG_townScores select 1;
-                _arr set [count _arr, (d_player_array_misc select _id) select 3]; // set player score, from d_player_array_misc player_item: [[d_player_air_autokick, time, _name, 0, "", arg(1)]]
+                _arr set [count _arr, (d_player_array_misc select _id) select 3]; // Store player initial score, from d_player_array_misc player_item: [[d_player_air_autokick, time, _name, 0, "", arg(1)]]
             };
         };
     }forEach _this;
@@ -275,7 +275,7 @@ SYG_townStatClear = {
 // Checks if designated player Id exists in the array. If id not existed its item is initialized to zero (0)
 // id MUST be >= 0!!!
 // call as: _val = _id call SYG_townStatCheck;
-// returns: score value at designated item index, if item is created on this call, zero(0) is returned
+// returns: score value at designated item index, if item is created on this call zero(0) is returned
 //
 SYG_townStatCheck = {
 	//hint localize format["--- SYG_townStatCheck: _this = %1", _this];
@@ -363,7 +363,7 @@ SYG_townStatCalcScores = {
 			// send to player client later
 			_name_arr set [count _name_arr, d_player_array_names select _id]; // [name1,name2...]
 			_kill_arr set [count _kill_arr, _kills];
-			_max = _max max _kills; // check max value
+			_max = _max max _kills; // Find max value
 		};
 	};
 	if ( count _kill_arr > 0 ) then { // play with scores, set relative values

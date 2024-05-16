@@ -350,7 +350,7 @@ SYG_isBuilding = {
 // Parameters: [_building, killer]
 //
 SYG_invulnerableBuilding = {
-	private ["_building","_killer","_pos","_new","_azi","_str","_code"];
+	private ["_building","_killer","_pos","_new","_azi","_str","_code","_score"];
 	_building = _this select 0;
 	if (count _this > 2) then { _pos = _this select 2 } else { _pos = getPos _building; _pos set[ 2, 0 ] };
 	if (count _this > 3 ) then { _azi = _this select 3 } else { _azi = getDir _building };
@@ -372,8 +372,11 @@ SYG_invulnerableBuilding = {
 	if (isNull _killer) exitWith{};
 	_killer = gunner _killer;
 	if (!isPlayer _killer) exitWith {};
-	[ "change_score", name _killer, -10, [ "msg_to_user", "",  [ ["STR_KILLED_WALL", name _killer, 10]], 0, 2, false, "losing_patience" ] ] call XSendNetStartScriptClientAll;
+	_score = d_ranked_a select 0;
+	// STR_KILLED_WALL = "Attempt to kill base building ('%1' scores removed -%2)"
+	[ "change_score", name _killer, -_score, [ "msg_to_user", "",  [ ["STR_KILLED_WALL", name _killer, _score]], 0, 2, false, "losing_patience" ] ] call XSendNetStartScriptClientAll;
 	// TODO: combine lower line wuth the upper one, it is possible!!!
+	// STR_JAIL_4: "Don't be in a hurry to spoil military property!"
 	[ "msg_to_user", name _killer,  [ ["STR_JAIL_4"]], 0, 65, false, "losing_patience" ] call XSendNetStartScriptClientAll;
 };
 

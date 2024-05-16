@@ -114,7 +114,9 @@ if ( !( isNull  _killer ) ) then { // not NULL killer
     if ( _killer isKindOf "CAManBase") then { _name = name _killer } else { _name = _killer };
 	_str = ("STR_TV_NUM" call SYG_getRandomText); // "Damn tower, it fell!..."
 	if (!isNil "_kamikadze") then {
-		[ "change_score", name _killer, -20, [ "msg_to_user", name _killer,  [ [_str],["STR_TV_VEH", 20] ], 7, 2, false ] ] call XSendNetStartScriptClientAll;
+	    _score = d_ranked_a select 11;
+	    // STR_TV_VEH = "For the loss of a valuable unit without damage to the enemy you lose points: -%1"
+		[ "change_score", name _killer, -_score, [ "msg_to_user", name _killer,  [ [_str],["STR_TV_VEH", _score] ], 7, 2, false ] ] call XSendNetStartScriptClientAll;
 	} else {
 		[ "msg_to_user", _name,  [ [_str] ], 0, 0, false, "gong_15" ] call XSendNetStartScriptClient;
 	};

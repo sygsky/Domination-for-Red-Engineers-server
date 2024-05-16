@@ -27,13 +27,15 @@ class Mission
 		"ACE_Config_Vehicle",
 		"ace_config_weapon",
 		"ace_sys_huntir",
-		"CAWheeled3_TT650"
+		"CAWheeled3_TT650",
+		"ace_sys_heliwind"
 	};
 	addOnsAuto[]=
 	{
 		"ACE_Config_Men",
 		"cacharacters",
 		"WarfareBuildings",
+		"ace_sys_heliwind",
 		"camisc",
 		"CAAir3_Su34",
 		"CATracked",
@@ -72,7 +74,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=13;
+		items=14;
 		class Item0
 		{
 			side="LOGIC";
@@ -685,6 +687,23 @@ class Mission
 					vehicle="WarfareBWestAircraftFactory";
 					leader=1;
 					rank="CAPTAIN";
+					skill=0.600000;
+				};
+			};
+		};
+		class Item13
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={5000.617188,-58.722317,13474.392578};
+					id=307;
+					side="LOGIC";
+					vehicle="ACE_HeliWind";
+					leader=1;
 					skill=0.600000;
 				};
 			};

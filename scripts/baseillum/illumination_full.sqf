@@ -71,7 +71,7 @@ if (call SYG_getDayTimeId != 0 ) then {
 _flares = [];
 // loop for flares whole night
 _id_pos = 0; // next flare object in list id
-//hint localize format["+++ Illumination: start flare launch loop, daytime = %1, ( daytime > SYG_startNight ) || ( time < SYG_startMorning ) = %2", daytime, ( daytime > SYG_startNight ) || ( daytime < SYG_startMorning )];
+hint localize format["+++ Illumination: start flare launch loop, daytime = %1, ( daytime > SYG_startNight ) || ( time < SYG_startMorning ) = %2", daytime, ( daytime > SYG_startNight ) || ( daytime < SYG_startMorning )];
 _cnt = 0; // overall launch flare count for this night
 _points_check_time = time  - 1;
 while { ( daytime > SYG_startNight ) || ( daytime < SYG_startMorning ) } do {
@@ -125,10 +125,11 @@ while { ( daytime > SYG_startNight ) || ( daytime < SYG_startMorning ) } do {
 
 // allow the next illumination to start on the next night
 SYG_illum_runner = nil;
+// "Flares spent on the base illumination at night: %1 PC."
 ["msg_to_user", "",  [ ["STR_ILLUM_4", _cnt]], 0, 2, false, "message_received" ] call XSendNetStartScriptClient;
 
 // wait until all the flares goes out
 while { ({!isNull _x} count _flares) > 0 } do {sleep 5; };
 _flares = [];
 
-hint localize "+++ Illumination over base stopped (at morning)";
+hint localize format["+++ Illumination over base stopped (at morning %1)", daytime];

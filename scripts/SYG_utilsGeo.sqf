@@ -461,10 +461,10 @@ SYG_isleAtPoint = {
 /**
  * Detects if point is on Rahmadi isles group, not on main Island Sahrani
  * call:
- *    _bool = (getPos player) call SYG_pointOnRahmadi; // true or false is returned
+ *    _bool = (getPos player || player || vehicle ) call SYG_pointOnRahmadi; // true or false is returned
  */
 SYG_pointOnRahmadi = {
-	_this = _this call SYG_getPos;
+//	_this = _this call SYG_getPos;
 	[ _this call SYG_getPos, SYG_RahmadiIslet select 1, SYG_RahmadiIslet select 2 ] call SYG_pointInCircle
 };
 

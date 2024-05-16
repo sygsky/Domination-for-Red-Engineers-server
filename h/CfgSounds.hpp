@@ -259,6 +259,7 @@ class CfgSounds {
     class stripped_voyage    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\stripped_voyage.ogg, db+10,1.0}; titles[] = {}; }; // Some sound from Soviet film "Stripped Voyage" (196)
     class troshin    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\troshin.ogg, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
     class corrida_shaov    {name = ""; sound[] = {\sounds\defeat\corrida_shaov.ogg, db+10,1.0}; titles[] = {}; }; // From some song performed by Troshin
+    class kavkazskaya_plennitsa    {name = ""; sound[] = {\sounds\defeat\kavkazskaya_plennitsa.ogg, db+10,1.0}; titles[] = {}; }; // From film "Kavkazskaya plennitsa", 1967
 
 
     class church_voice    {name = "church_voice"; sound[] = {\sounds\church\church_voice.ogg, db+10,1.0}; titles[] = {}; };
@@ -725,6 +726,7 @@ class CfgSounds {
     class Hungary    { name="Hungary day";                              sound[] = {\sounds\intro\holidays\Hungary.ogg,db-1,1.0}; titles[] = {};}; // Day of Hungarian Peple Republic
     class kk_the_hole { name="King-Kong film, the hole";                sound[] = {\sounds\intro\kk_the_hole.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
     class jimmy_dont_miss { name="";                					sound[] = {\sounds\intro\jimmy_dont_miss.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
+    class everybody_knows { name="";                					sound[] = {\sounds\intro\everybody_knows.ogg,db-1,1.0}; titles[] = {};}; // "War Dogs" 2016, final titles songs
 
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
@@ -793,13 +795,13 @@ class CfgSounds {
 
     class naval       { name = "";                                     sound[] = {\sounds\short\Naval-Patrol-Horn.ogg,db-1,1.0}; titles[] = {};}; // Sea patrol detected sound
 
-    class spell_1	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Suta-Buhna-Muhkanash.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_2	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Trehgorus-Sha.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_3	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Paragosy-Avanagh.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_4	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Zemana-Aztilin.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_1	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Suta-Buhna-Muhkanash.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_2	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Trehgorus-Sha.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_3	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Paragosy-Avanagh.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_4	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Zemana-Aztilin.ogg,db-1,1.0}; titles[] = {};}; //
     class spell_5	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Abes-Fabes-Cartoflyabes.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_6	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Crevall-Asortium-Antimus.ogg,db-1,1.0}; titles[] = {};}; //
-    class spell_7	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Engory-Helleye.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_6	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Crevall-Asortium-Antimus.ogg,db-1,1.0}; titles[] = {};}; //
+//    class spell_7	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Engory-Helleye.ogg,db-1,1.0}; titles[] = {};}; //
 
 
 // Naval-Patrol-Horn.ogg

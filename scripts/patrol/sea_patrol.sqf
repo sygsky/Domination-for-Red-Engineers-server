@@ -47,6 +47,9 @@
 // Time to create a new vehicle to replace the killed one in seconds (600 == 10 mins)
 #define TIME_TO_REPLACE_KIA_VEH 600
 
+// Reaction time to the absence of all players
+#define TIME_TO_WAIT_EMPTY_SERVER 300
+
 #define MAX_DIST_TO_ENEMY 2500
 #define DIST_TO_REVEAL 10000
 
@@ -686,8 +689,8 @@ _check_empty_server = {
     // Not recreate patrol if no players
     _printInfo = false;
     _time = time;
-    // Wait for the server to be empty for at least 30 minutes
-    _time_to_clear = _time + 1800;
+    // Wait for the server to be empty for at least TIME_TO_WAIT_EMPTY_SERVER (5, 20, 30 etc) minutes
+    _time_to_clear = _time + TIME_TO_WAIT_EMPTY_SERVER;
     while {( (call XPlayersNumber) == 0 ) && (time < _time_to_clear)} do {sleep 60};
     if ( (call XPlayersNumber) != 0 ) exitWith {
         hint localize format[ "*** sea_patrol.sqf: mission was empty too short period of %1 secs, no boats removed", round(time - _time) ];

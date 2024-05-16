@@ -2710,24 +2710,51 @@ SYG_bombPos = {
 	(_this select 1) createVehicle (_this select 0);
 };
 
-// Throws designated grenade in designated direction
+// Throws designated grenade in designated direction or object
 // Call as: _arr call SYG_throwGrenade;
-// Where: _arr = [_unit, "GRENADE_TYPE","GRENADE_TYPE_TO_USE_IF_GRENADE_NOT_FOUND", _dir | _pos | unit];
+// Where: _arr = [_unit, "GRENADE_TYPE", _dir_to_throw | _pos | unit];
 //
 //
 SYG_throwSmokeGrenade = {
-    if (typeName _this != "ARRAY") exitWith { format["--- SYG_throwGrenade: expected input array, found %1, exit!", _this] };
-    if (count _this < 4) exitWith {format["--- SYG_throwGrenade: expected input array len >= 4, found %1, exit!", typeName _this]};
-    private ["_unit", "_type1", "_type2", "_target"];
-    _unit = _this select 0;
-    _type = _this select 0;
-    if (!(_type in magazines _unit)) then {
-        hint localize format["*** SYG_throwGrenade: No %1 found in mags of %2", _type, magazines _unit];
-        _type = _this select 1;
-        if (!(_type in magazines _unit)) then {
-            _unit addMagazine _type;
+//    hint localize format["+++ SYG_throwSmokeGrenade: _this = %1", _this];
+    if (typeName _this != "ARRAY") exitWith { hint localize format["--- SYG_throwSmokeGrenade: expected input array, found %1, exit!", _this] };
+    if (count _this < 3) exitWith { hint localize format["--- SYG_throwSmokeGrenade: expected input array len >= 3, found %1, exit!", count _this] };
+    private ["_unit","_shell","_dir","_muzzle","_muzzle"];
+    _unit = _this select 0;     // Unot to throw out
+    _shell = _this select 1;    // Shell type
+    _target = _this select 2;   // target to throw in
+    if (!(_shell in magazines _unit)) then {
+        hint localize format["*** SYG_throwSmokeGrenade: No %1 found, add it to the mags of %2", _shell, magazines _unit];
+        if (!(_shell in magazines _unit)) then {
+            _unit addMagazine _shell;
             sleep 0.14;
         };
+        reload _unit;
     };
-    // TODO: Throw
+    _dir = [_unit, _target] call XfDirToObj;
+    _unit setDir _dir;
+    _str = _target call SYG_getKillerInfo;
+    hint localize format[ "+++ SYG_throwSmokeGrenade: unit %1, shell %2, target %3, dir %4", _unit, _shell, _str , round _dir ];
+    sleep 0.1;
+    _muzzle = (switch (_shell) do {
+#ifdef __ACE__
+        case "ACE_SmokeGrenade_Red"   : {"SmokeShellRedMuzzle"};
+        case "ACE_SmokeGrenade_White" : {"SmokeShellMuzzle"};
+        case "ACE_SmokeGrenade_Green" : {"SmokeShellGreenMuzzle"};
+        case "ACE_SmokeGrenade_Yellow": {"SmokeShellYellowMuzzle"};
+        case "ACE_SmokeGrenade_Violet": {"SmokeShellVioletMuzzle"};
+#endif
+        case "SmokeShellGreen": {"SmokeShellGreenMuzzle"};
+        case "SmokeShellRed"  : {"SmokeShellRedMuzzle"};
+        case "SmokeShell";
+        default                 {"SmokeShellMuzzle"};
+    });
+#ifdef __DEBUG__
+    hint localize format["+++ SYG_throwSmokeGrenade: shell %1, muzzle %2, unit %3 selected to throw", _shell, _muzzle, _unit call SYG_getUnitName];
+#endif
+    // Throw
+    _unit selectWeapon _muzzle;
+    if (typeOf _target == "OBJECT") then  { _unit doWatch _target; sleep 1.121; } else { sleep 0.121; };
+	_unit fire _muzzle;
+    if (typeOf _target == "OBJECT") then  { _unit doWatch objNull};
 };
