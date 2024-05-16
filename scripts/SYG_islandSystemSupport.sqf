@@ -28,9 +28,8 @@ SYG_island_commons = [
 _patrol_spawn_areas = [
 ];
 
-_d_with_isledefense = ["RECT"];
-_d_with_isledefense set[1, d_with_isledefense select 0];
-_d_with_isledefense set [2, d_with_isledefense select 1];
+// Islands (Sahrani, Rahmadi)
+_d_with_isledefense = ["RECT",d_with_isledefense select 0, d_with_isledefense select 1];
 
 SYG_island_arr = [
 
@@ -39,7 +38,7 @@ SYG_island_arr = [
 	[
 	    // Towns array
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28],
-		 // Special Side Missions array (53 is SM on Rahmady - airpane hijack)
+		 // Special Side Missions array (53 is SM on Rahmady - airplane hijack)
 		[57,56,44,/* 53, */54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0],
 		// Add special land patrols on the island for this island
         [
@@ -59,8 +58,9 @@ SYG_island_arr = [
             ["RECT",[[17091.1,9558.37,0],70,30,345]], // spawn13
             ["RECT",[[10198.8,16417.9,0],60,15,20]] // spawn14
         ],
+        // Number of patrols allowed
         5,
-        // TODO: Add sea patrols
+        // TODO: Add sea patrol routes
 
 		d_with_isledefense, // [[[12422.8,11518.5,0], 6850, 6850, 0], 5];
 		getArray(configFile>>"CfgWorlds">>worldName>>"centerPosition") // Center of the Sahrani

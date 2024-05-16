@@ -20,10 +20,10 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static informatio
 #ifdef __DEFAULT__
 
 	SYG_Sahrani_p0 = [13231.3,8890.26,0]; // City Corazol center
-	SYG_Sahrani_p1 = [14878.6,7736.74,0]; // Vector dividing island to 2 parts (North and South) begininig, point p1
+	SYG_Sahrani_p1 = [14878.6,7736.74,0]; // Vector dividing island to 2 parts (North and South) begining, point p1
 	SYG_Sahrani_p2 = [5264.39,16398.1,0]; // Vector dividing island to 2 parts (North and South) end, point p2
 	SYG_Sahrani_desert_max_Y = 7890; // max Y coordinates for desert region of Sahrani
-	SYG_Sahrani_desert_rects = // rectangles containing all desert lands
+	SYG_desert_rects = // rectangles containing all desert lands
 	[
 	    [   [9529,  4390,0], 10000, 3500,   0 ], // South from Somato
 	    [   [17551,18732,0],  1200, 1200,   0 ], // Antigua area
@@ -32,7 +32,7 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static informatio
 	//*** *** *** *** *** *** *** ***
 	//*** Coordinates of circles with island of Sahrani in circumstances ***
 	//*** ["Name",[cx,cy,cz],rad, "Text"] ***
-	SYG_SahraniIsletCircles = [
+	SYG_IsleCircles = [
 		["isle1",[12322.5,10609.7,0],600,"острова в заливе Abra de Boca"],	// 0
 		["isle2",[14005.7,8008.81,0],220,"Islas Gatunas"],	// 1
 		["isle3",[17485.8,4014.21,0],1550,"Юго-восточные острова (Asharah)"],	// 2
@@ -430,7 +430,7 @@ SYG_isDesert = {
 	// this is a max Y coordinate of desert region on Sahrani (by my estimation)
 	//argp(_pos,1) < SYG_Sahrani_desert_max_Y
 	_ret = false;
-    { if ([_pos,_x] call SYG_pointInRect) exitWith {_ret = true};  } forEach SYG_Sahrani_desert_rects;
+    { if ([_pos,_x] call SYG_pointInRect) exitWith {_ret = true};  } forEach SYG_desert_rects;
     _ret
 };
 
@@ -454,7 +454,7 @@ SYG_isleAtPoint = {
 	if ( _pos select 0 == 0 ) exitWith { _ret }; // point not found
 	{
 		if ([_this,_x select 1, _x select 2] call SYG_pointInCircle) exitWith {_ret = _x select 3;}; // name of islet of point
-	} forEach SYG_SahraniIsletCircles;
+	} forEach SYG_IsleCircles;
 	_ret
 };
 
@@ -477,7 +477,7 @@ SYG_pointOnRahmadi = {
  */
 SYG_pointOnAntigua = {
 	private ["_isle","_pos"];
-	_isle = SYG_SahraniIsletCircles select 3;
+	_isle = SYG_IsleCircles select 3;
 	_pos = _this call SYG_getPos;
 	hint localize format["+++ SYG_pointOnAntigua: isle %1, typeOf _this = %2, _pos %3", _isle, typeOf _this, str(_pos) ];
 	[ _pos, _isle select 1, _isle select 2 ] call SYG_pointInCircle

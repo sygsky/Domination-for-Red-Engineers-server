@@ -72,7 +72,7 @@ _create_water_point_near_Antigua = {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _player_name = name player;
 _arg = toUpper(_this select 3);
-_isle = SYG_SahraniIsletCircles select 3; // Antigua enveloped circle descr
+_isle = SYG_IsleCircles select 3; // Antigua enveloped circle descr
 _isle_pos = _isle select 1; // isle center
 _rad = _isle select 2;
 
