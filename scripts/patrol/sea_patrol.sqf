@@ -33,13 +33,13 @@
 #define OFFSET_ID   3
 #define OFFSET_STAT 4
 
-#define OFFSET_STAT_LAST_POS 0
+#define OFFSET_STAT_LAST_POS  0
 #define OFFSET_STAT_LAST_TIME 1
-#define OFFSET_STAT_UNITS 2
+#define OFFSET_STAT_UNITS     2
 
 #define BOAT_STATUS_UNKNOWN 0
-#define   BOAT_STATUS_READY 1
-#define  BOAT_STATUS_RESCUE 2
+#define BOAT_STATUS_READY   1
+#define BOAT_STATUS_RESCUE  2
 
 // Time to create a new vehicle to replace the captured one in seconds (600 == 10 mins)
 #define TIME_TO_REPLACE_CAPTURED_VEH 600
@@ -95,7 +95,7 @@ _is_boat_captured = {
 	_boat = _this select OFFSET_BOAT;
     if ((side _boat) == d_side_player) exitWith { true };
 
-    // Check vehcile to be empty, if yes, continue check procedure
+    // Check vehicle to be empty, if yes, continue check procedure
     if ( ( { alive _x } count (crew _boat)) ==  0 ) exitWith {
         if ( (count ([_boat, 20] call SYG_findNearestPlayers)) > 0 ) exitWith {true}; // Player[s] found nearby
 
@@ -125,8 +125,8 @@ _capture_boat = {
 		TIME_TO_REPLACE_CAPTURED_VEH
 	];
 	_this set [OFFSET_BOAT, objNull]; // mark boat be absent
-	["msg_to_user", _boat,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
 	 (_this select OFFSET_STAT) set [OFFSET_STAT_LAST_TIME, time + TIME_TO_REPLACE_CAPTURED_VEH];
+	["msg_to_user", _boat,  [ ["STR_GRU_46_6"]], 0, 2, false, "good_news" ] call XSendNetStartScriptClient; // "You have captured this vehicle from the patrol. Use it to your advantage!"
 };
 
 // Call as:

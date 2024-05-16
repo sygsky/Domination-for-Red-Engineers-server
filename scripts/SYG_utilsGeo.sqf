@@ -1195,7 +1195,7 @@ SYG_roundPos = {
 // Detects if positions is on land or in sea near shore. Detects shore on default distance 20 meters or custom one see example #3
 // #1 Call: _nearLand = _unit call SYG_posNearLand;
 // #2 Call: _nearLand = (_getPos _unit) call SYG_posNearLand;
-// #3 Call: _nearLand = [_unit,_check_dist; call SYG_posNearLand; // _check_dist is regular net step to check lonnd is near or not
+// #3 Call: _nearLand = [_unit,_check_dist] call SYG_posNearLand; // _check_dist is regular net step to check lond is near or not
 //
 SYG_isNearLand = {
 	private ["_pos", "_shore", "_xpos0", "_ypos0", "_xpos", "_step"];
@@ -1214,6 +1214,5 @@ SYG_isNearLand = {
 	} forEach [-_step,0,_step]; // for X
 	_shore
 };
-
 
 if (true) exitWith {};
