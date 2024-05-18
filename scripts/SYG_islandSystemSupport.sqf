@@ -36,12 +36,13 @@ SYG_island_arr = [
 #ifdef __DEFAULT__
     // Island #1 (Main)
 	[
+	    "Sahrani_Main", // Offset 0: Island Main
 	    // Towns array
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28],
+		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28], // Offset:1
 		 // Special Side Missions array (53 is SM on Rahmady - airplane hijack)
-		[57,56,44,/* 53, */54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0],
+		[57,56,44,/* 53, */54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0], // Offset 2
 		// Add special land patrols on the island for this island
-        [
+        [ // Offset 3
             // Sahrani Main
             ["RECT",[[7105.91,8488.53,0],200,20,-40]], // spawn1
             ["RECT",[[8808.7,5080.61,0],200,20,45]], // spawn2
@@ -59,14 +60,16 @@ SYG_island_arr = [
             ["RECT",[[10198.8,16417.9,0],60,15,20]] // spawn14
         ],
         // Number of patrols allowed
-        5,
+        5, // Offset 4
         // TODO: Add sea patrol routes
+        [], // Offset 5: Sea patrols descriptors array
 
-		d_with_isledefense, // [[[12422.8,11518.5,0], 6850, 6850, 0], 5];
-		getArray(configFile>>"CfgWorlds">>worldName>>"centerPosition") // Center of the Sahrani
+		d_with_isledefense, // [[[12422.8,11518.5,0], 6850, 6850, 0], 5]; // Offset 6
+		getArray(configFile>>"CfgWorlds">>worldName>>"centerPosition") // Center of the Sahrani // Offset 7
 	],
 	// Island #2 Rahmadi, just in case, to demonstrate all features of the new structure
 	[
+	    "Rahmadi", // Rahmadi island
 		[ 20 ], // 20 => index for Rahmadi in the common list only
 		[ 53 ], // Special SM array for this island, if empty, common SM will be used
 		[ // Special spawn rects for patrols
