@@ -70,7 +70,7 @@ SYG_island_arr = [
 	// Island #2 Rahmadi, just in case, to demonstrate all features of the new structure
 	[
 	    "Rahmadi", // Rahmadi island
-		[ 20 ], // 20 => index for Rahmadi in the common list only
+		[ 20 ], // 20 => index for Rahmadi town in the common list only
 		[ 53 ], // Special SM array for this island, if empty, common SM will be used
 		[ // Special spawn rects for patrols
             // If the array is empty, no patrols
