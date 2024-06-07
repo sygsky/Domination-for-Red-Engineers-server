@@ -10,19 +10,39 @@
 #include "x_macros.sqf"
 
 
-// New structures to play on maps with  ultiple islands (e.g. "OFP_World")
+// New structures to play on maps with  multiple islands (e.g. "OFP_World", Sahrani Main + Rahmadi etc.)
+_main_island_array = [
 
-SYG_island_commons = [
-    //  Array with common land patrol spawn areas (rects, circles, ellipses). Used if no island spawn areas
-    [
-    ],
-    //  Array with common sea patrol routes
-    [], // Common sea paths, may be separated for far situated island ones
-    [], // Common SM array, for Sahrani all SM are here as Rahmadi island is very small and rather close to the Main island
-    5, // Maximal number of patrols, can't be more than max number of patrols in commons
-    //  Method of tasks creation: "MIXED", "SEQUENTIAL_ISLANDS', "RANDOM_ISLANDS"
-    "MIXED"
-//
+    //  Method of main tasks (towns) creation:
+    // "MIXED" - all towns on map are randomized and used from common list (as it was in std Domination on Sahrani)
+    // "SEQUENTIAL_ISLANDS' - islands in the natural order from SYG_island_arr
+    // "RANDOM_ISLANDS" - random island order
+    // [0,1...] for island indexes
+    "MIXED", //  Island order in battle sequence
+
+    // SM orders variants:
+    // 1."MIXED" - select SM randomly from all SM summary list, as it was in original Sahrani Domination
+    // 2. "RANDOM_ISLANDS" - random SM from the SM list for the active island.
+    //      If no more SM on active island, random SM from remained list is used
+    // 3. [0,1...] - array of random SM. Only these ones are used in battle
+    "MIXED",
+
+    // Common sea lanes started during whole game, not dependent on island activity.
+    // If empty, no special lanes will be created
+    [],
+
+    //  A big common border around all the islands of the map, mandatory!
+    [],
+
+    // Islands + rpatrol respawn area ids where to create patrols along this active island.
+    // For example, if there is a permanent player base on one island, you can organize patrols there.
+    // But immediately arises the problem of finding the boundaries of such a patrol.
+    // Example: [[1,[0,2,5]]] means that permanent patrol respawns will be on island #1 (Malden?) with area ids #0,#2, #5.
+    // Island id may be replaced with island name, eg: [["Malden",[0,2,5]]] or with #defines
+    // #define MALDEN 1
+    // [[MALDEN,[0,2,5]]]
+    []
+
 ];
 
 _patrol_spawn_areas = [
@@ -31,14 +51,17 @@ _patrol_spawn_areas = [
 // Islands (Sahrani, Rahmadi)
 _d_with_isledefense = ["RECT",d_with_isledefense select 0, d_with_isledefense select 1];
 
+//
+// Common array of separate island descriptions
+//
 SYG_island_arr = [
 
 #ifdef __DEFAULT__
     // Island #1 (Main)
 	[
-	    "Sahrani_Main", // Offset 0: Island Main
-	    // Towns array
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28], // Offset:1
+	    "Sahrani_Main", // Offset 0: Island name
+	    // Towns index array
+		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28], // Offset in common array:1
 		 // Special Side Missions array (53 is SM on Rahmady - airplane hijack)
 		[57,56,44,/* 53, */54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0], // Offset 2
 		// Add special land patrols on the island for this island
@@ -62,7 +85,7 @@ SYG_island_arr = [
         // Number of patrols allowed
         5, // Offset 4
         // TODO: Add sea patrol routes
-        [], // Offset 5: Sea patrols descriptors array
+        [], // Offset 5: Sea patrols path array
 
 		d_with_isledefense, // [[[12422.8,11518.5,0], 6850, 6850, 0], 5]; // Offset 6
 		getArray(configFile>>"CfgWorlds">>worldName>>"centerPosition") // Center of the Sahrani // Offset 7
@@ -93,7 +116,7 @@ SYG_island_arr = [
 ];
 #endif
 
-#ifdef __OFP_WORLD__
+#ifdef __MULTI_ISLAND_WORLD__
 
 #endif
 

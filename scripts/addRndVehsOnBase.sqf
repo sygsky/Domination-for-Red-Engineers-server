@@ -17,7 +17,7 @@ _landDirArr  = [               180,               180,                0,        
 _landTypeArr = [ "ACE_BRDM2", "ACE_BMP1_D", "ACE_UAZ", "ACE_UAZ_MG", "ACE_UAZ_AGS30", "ACE_BRDM2_ATGM", "ACE_BRDM2_SA9"  ];
 #endif
 
-#ifdef __OFP_WORLD__
+#ifdef __MULTI_ISLAND_WORLD__
 
 #endif
 

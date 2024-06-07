@@ -29,8 +29,8 @@ textsParam1[] = {"South Route","North West Route","North Middle Route","North Ea
 				"Random 2","Random 4","Random 6","Random 8","Random 10","Random 12","Random 14","Random 16","Random 18","Random 22"};
 #endif
 
-#ifdef __OFP_WORLD__
-// Set number of towns for OFP World map, not sure how it can be set for 4 big islands
+#ifdef __MULTI_ISLAND_WORLD__
+// Set number of towns for OFP World map, not sure how it can be set for 4 big islands (Nogova, Malden, Everon, Kolguev
 #endif
 
 #ifdef __TT__
