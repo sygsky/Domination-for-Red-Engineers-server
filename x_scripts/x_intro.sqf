@@ -133,7 +133,7 @@ if (_sound == "") then { // select random music for an ordinal day
 #ifdef __TEST__
         	if (name player == "Rokse [LT]") exitWith {
         		_music = ["burnash","johnny","druzba","adjutant",/*"vague",*/"enchanted_boy","ahead_friends","mission_impossible",
-        		"lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers","travel_with_friends","on_thin_ice","dangerous_chase"] call _XfRandomArrayVal;
+        		"lastdime","lastdime2","lastdime3","esli_ranili_druga","soviet_officers",/*"travel_with_friends",*/"on_thin_ice","dangerous_chase"] call _XfRandomArrayVal;
         		playSound _music;
         		_sound = _music;
         		hint localize format["+++ Sound (not music!) for ""%1"" player as intro", _sound];
@@ -154,7 +154,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
                 ["hungarian_dances","hungarian_dances","hungarian_dances"],
                 ["toccata","toccata","hungarian_dances","hungarian_dances","grig","grig"],
-                ["everybody_knows"]
+                ["everybody_knows","pink_floyd_diamond"]
             ];
             _name    = name player;
             _personalSounds = [];
@@ -178,20 +178,20 @@ if (_sound == "") then { // select random music for an ordinal day
             // add some rarely heard music now if no personal music set
 
 #ifdef __TIME_OF_DAY_MISIC__
-            // music to play day and night, night music can be played at day time, but day music can be played at night time
+            // music TO PLAY DAY AND NIGHT, night music can be played at day time, but DAY MUSIC CAN BE PLAYED AT NIGHT TIME
             _night_music = [
                 "bond",/*"bond1",*/"from_russia_with_love","adjutant","total_recall_mountain"/*,"adagio","morze"*/,"morze_3",
                 "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2",/*"del_vampiro1",
                 "del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
-                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows"
+                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows","pink_floyd_diamond"
             ];
 
             // music to play only in day time
             _daytime_music = [
                 "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
                 "Letyat_perelyotnye_pticy_2nd","ruffian"/*,"morze"*/,"morze_3"/*,"chapaev"*/,"rider","Vremia_vpered_Sviridov",
-                "Letyat_perelyotnye_pticy_end","toccata","travel_with_friends","on_thin_ice","wild_geese",
+                "Letyat_perelyotnye_pticy_end","toccata",/*"travel_with_friends",*/"on_thin_ice","wild_geese",
                 "dangerous_chase"
             ];
 
@@ -200,7 +200,7 @@ if (_sound == "") then { // select random music for an ordinal day
             _music = +_night_music; // Night music may play at day too
             if ( count _personalSounds > 0 ) then {
 	            [_music, _personalSounds] call SYG_addArrayInPlace;
-            } else { // Why we add tерыуы sounds for all players& I don't undertand it.
+            } else { // Why we add these sounds for all players, I don't undertand it.
             	[_music, ["ddrhymn", "four_tankists","stavka_bolshe_chem","Varshavianka_eng"]] call SYG_addArrayInPlace;
             };
             // If it is day time  now, add day music, so day music plays only at day
@@ -216,8 +216,8 @@ if (_sound == "") then { // select random music for an ordinal day
                 "ruffian"/*,"morze"*/,"morze_3","treasure_island_intro","fear2"/*,"chapaev"*/,"soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool",
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
-                /*"del_vampiro1","del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"travel_with_friends","on_thin_ice","peregrinus",
-                "wild_geese","dangerous_chase","kk_the_hole","everybody_knows"
+                /*"del_vampiro1","del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague","travel_with_friends",*/"on_thin_ice","peregrinus",
+                "wild_geese","dangerous_chase","kk_the_hole","everybody_knows","pink_floyd_diamond"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
@@ -226,7 +226,7 @@ if (_sound == "") then { // select random music for an ordinal day
 			_music = ["strelok","Letyat_perelyotnye_pticy_2nd"/*,"chapaev"*/,"soviet_officers","tovarich_moy",
 			    "Vremia_vpered_Sviridov","grant","burnash","adjutant","lastdime",
 				"Letyat_perelyotnye_pticy_end","sovest1","sovest2","bolivar","hound_baskervill",
-				"travel_with_friends","on_thin_ice","peregrinus"] call _XfRandomArrayVal;
+				/*"travel_with_friends",*/"on_thin_ice","peregrinus"] call _XfRandomArrayVal;
 #endif
 
 

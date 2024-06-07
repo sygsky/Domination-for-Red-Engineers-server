@@ -307,6 +307,7 @@ class CfgSounds {
     class rammstein_8 { name=""; sound[] = {\sounds\ramm\rammstein_8.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
     class rammstein_9 { name=""; sound[] = {\sounds\ramm\rammstein_9.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
 
+    class pink_floyd { name=""; sound[] = {\sounds\ramm\pink_floyd.ogg,db+10,1.0}; titles[] = {}; } // Pink Floyd, from "Shine on you Crazy Diamond"
 
     // laughter of enemy on your defeat
     class laughter_1 { name="Laughter 1"; sound[] = {\sounds\defeat\laughter\1.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
@@ -388,12 +389,12 @@ class CfgSounds {
     class silly_noise       { name=""; sound[] = {\sounds\defeat\laughter\silly_noise.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
     class you_got_no_skills { name=""; sound[] = {\sounds\defeat\laughter\you_got_no_skills.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
 
-    class exclamation1 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation2 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation3 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\3.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation4 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\4.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation5 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\5.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class exclamation6 { name="eclamation";   sound[] = {\sounds\defeat\exclamations\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation1 { name="";   sound[] = {\sounds\defeat\exclamations\1.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation2 { name="";   sound[] = {\sounds\defeat\exclamations\2.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation3 { name="";   sound[] = {\sounds\defeat\exclamations\3.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation4 { name="";   sound[] = {\sounds\defeat\exclamations\4.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation5 { name="";   sound[] = {\sounds\defeat\exclamations\5.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class exclamation6 { name="";   sound[] = {\sounds\defeat\exclamations\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class tanki { name="eclamation";   sound[] = {\sounds\defeat\exclamations\tanki.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
 
 	// internal submarine effect sounds
@@ -644,7 +645,7 @@ class CfgSounds {
 	class              lastdime3 { name=""; sound[]= {\sounds\intro\lastdime3.ogg,db-1,1.0}; titles[] = {};  };
 	class      esli_ranili_druga { name=""; sound[]= {\sounds\intro\esli_ranili_druga.ogg,db-1,1.0}; titles[] = {};    };
 	class        soviet_officers { name=""; sound[]= {\sounds\intro\holidays\feb_23\soviet_officers.ogg,db-1,1.0}; titles[] = {};  };
-	class    travel_with_friends { name=""; sound[]= {\sounds\intro\travel_with_friends.ogg,db-1,1.0}; titles[] = {};  }; // Sovier children song
+//	class    travel_with_friends { name=""; sound[]= {\sounds\intro\travel_with_friends.ogg,db-1,1.0}; titles[] = {};  }; // Sovier children song
 	class            on_thin_ice { name=""; sound[]= {\sounds\intro\on_thin_ice.ogg,db-1,1.0}; titles[] = {};  }; // from Soviet film "On thin ice"
 
 //    class Art_Of_Noise_mono { name=""; sound[] = {\sounds\Art_Of_Noise_mono.ogg,db-1,1.0}; titles[] = {}; }; // used in intro
@@ -702,6 +703,7 @@ class CfgSounds {
     class farewell_slavs { name="Farewell of Slavs, Russian march"; sound[] = {\sounds\intro\farewell_slavs.ogg,db+0,1.0}; titles[] = {};}; // Well known military march of old Russian Emmpire
 //    class jaws    {name = "Jaws Title"; sound[] = {\sounds\intro\jaws.ogg, db+10, 1.0}; titles[] = {};}; // from "Jaws" film
     class wild_geese {name = "Film 'The Wild Geese' theme"; sound[] = {\sounds\intro\wild_geese.ogg, db+10, 1.0}; titles[] = {};}; // from "The Wild geese" film
+    class pink_floyd_diamond {name = ""; sound[] = {\sounds\intro\pink_floyd_diamond.ogg, db+10, 1.0}; titles[] = {};}; // Pink Floyd "Shine on you Crazy Diamond" 1975, intro
 
 //+++++++++++++++++++++++ Holiday music
 

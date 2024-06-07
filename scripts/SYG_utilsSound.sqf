@@ -111,7 +111,8 @@ SYG_northDefeatTracks =
     ["ATrack7",[0,8.743],[57.582,7.755],[65.505,9.385],[77.076,11.828]],
     ["ATrack7",[117.908,8.1],[184.943,6.878],[191.822,9.257],[201.144,6.848]],
     ["ATrack9","ATrack10","ATrack19","bolero"],
-    ["metel","gayane1","gayane2"],["gayane3","mountains","shaov_defeat"],
+    ["metel","gayane1","gayane2"],
+    ["gayane3","mountains","shaov_defeat"],
     _ramm_track1, _ramm_track2, _ramm_track3
 ];
 
@@ -124,7 +125,8 @@ SYG_southDefeatTracks =
     ["ATrack8",[103.377,7.157],[141.480,11.66],[153.293,9.286]],
     ["ATrack11","ATrack12","ATrack13"],
     ["arroyo","arabian_death","the_complex"],
-    ["sinbad_baghdad","whatsapp","unbeat","stripped_voyage"]
+    ["sinbad_baghdad","whatsapp","unbeat"],
+    ["stripped_voyage","pink_floyd","pink_floyd2"]
 ];
 
 SYG_baseDefeatTracks =
@@ -133,7 +135,7 @@ SYG_baseDefeatTracks =
     "betrayed","aztecs4","Gandalf_Simades","whold","end","thetrembler","arroyo","bolero","Delerium_Wisdom","pimbompimbom",
     "gamlet_hunt","treasure_island_defeat","musicbox_silent_night","i_new_a_guy","decisions","church_organ_1","sorcerie",
     "melody","medieval_defeat","defeat2","arabian_death", "village_consort","radionanny","hound_chase","moon_stone","take_five",
-    "troshin", "corrida_shaov","shaov_defeat","kavkazskaya_plennitsa",
+    "troshin", "corrida_shaov","shaov_defeat","kavkazskaya_plennitsa","pink_floyd","pink_floyd2",
 //    ["cosmos", [0,8.281] ],
 //    ["cosmos", [14.25,9.25] ],
 //    ["cosmos", [28.8,-1] ],
