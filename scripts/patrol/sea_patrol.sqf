@@ -12,17 +12,16 @@
 			off 0: _last position as [x,y<,z>] of last stored position ,
 			off 1: _time is last position getting time,
 			off 2: _units are all units in the intial group, we need it to remove bodies
-			TODO: still not used, 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
+			TODO: off 3still not used, 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
 
 			Algorithm is very clear:
 			1. Boat starts and go through his WPs, last WP is circular, state = 1.
-			2. If script detects that boat is empty, state == -1.
-				While at last 2 units are in crew, sea devil continue his patrol.
-				If crew count == 1, sea devil goes to the ocean and is removed, state = 0.
-			3. Special script sends some small rescue boat to the sea devil.
+			2. While at last 2 units are in crew, sea devil continue his patrol.
+				If crew count == 1, sea devil goes to the ocean and is removed, state during this execution = 0.
+			TODO: 3. If script detects that boat is empty and no enemy near, special script sends some small rescue boat to the sea devil.
 				If boat is successful, new command is populated in the devil
 				and devil try to continue its trip or to move out of island boundaries and after is removed from the list, state = 0
-			4. if resque boat is failed during designated period (stoped during 5 mins, killed etc), devil also is marked to be deleted, state = 0;
+			    4. if locked resque boat is failed during designated period (stopped during 5 mins, killed etc), devil also is marked to be deleted, state = 0;
 
 	returns: nothing
 */
@@ -33,9 +32,10 @@
 #define OFFSET_ID   3
 #define OFFSET_STAT 4
 
-#define OFFSET_STAT_LAST_POS  0
-#define OFFSET_STAT_LAST_TIME 1
-#define OFFSET_STAT_UNITS     2
+#define OFFSET_STAT_LAST_POS    0
+#define OFFSET_STAT_LAST_TIME   1
+#define OFFSET_STAT_UNITS       2
+#define OFFSET_STAT_DEL_TIME    3 // If > 0, means the time when devil must be replaced
 
 #define BOAT_STATUS_UNKNOWN 0
 #define BOAT_STATUS_READY   1
@@ -44,6 +44,9 @@
 // Time to create a new vehicle to replace the captured one in seconds (600 == 10 mins)
 #define TIME_TO_REPLACE_CAPTURED_VEH 600
 
+// Time to replace empty boat in seconds (600 == 10 mins)
+#define TIME_TO_REPLACE_EMPTY_VEH 600
+
 // Time to create a new vehicle to replace the killed one in seconds (600 == 10 mins)
 #define TIME_TO_REPLACE_KIA_VEH 600
 
@@ -51,7 +54,7 @@
 #define TIME_TO_WAIT_EMPTY_SERVER 300
 
 #define MAX_DIST_TO_ENEMY 2500
-#define DIST_TO_REVEAL 10000
+#define DIST_TO_REVEAL 6000
 
 //#define __DEBUG__	// Debug settings with shortened delays etc
 #define __INFO__ // Print info about each patrol status
@@ -150,7 +153,7 @@ _get_modes = {
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Checks ship to be stuck or on shore or be catured by players
+// Checks ship to be stuck or on shore or be captured by players
 // Call: _good = [_boat, _grp, _wp_arr, _id, _state...] call _is_ship_stuck;
 // Use SYG_isNearLand method to detect if boat near land
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -183,10 +186,21 @@ _is_ship_stuck = {
 	};
 
 	_grp = _this select OFFSET_GRP;
-	if (isNull _grp) exitWith {
-		hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 group is null, return TRUE", _this select OFFSET_ID ];
+	// #691: wait some time before to remove boat to help players to capture it 9ROkse)
+	if ( ({alive _x} count (units _grp)) == 0) exitWith {
+	    private ["_del_time"];
+	    _del_time = (_this select OFFSET_STAT) select OFFSET_STAT_DEL_TIME;
+	    if ( _del_time == 0) exitWith {
+    	    (_this select OFFSET_STAT) set [OFFSET_STAT_DEL_TIME, time + TIME_TO_REPLACE_EMPTY_VEH]; // Set time to delete boat after it is empty
+    		hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 is marked to be empty, return TRUE", _this select OFFSET_ID ];
+    		true;
+	    };
+		hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 is empty during %2 secs, return TRUE",
+		    _this select OFFSET_ID,
+		    round ( time - (_del_time - TIME_TO_REPLACE_EMPTY_VEH)) ];
 		true
 	};
+
 	_stat = _this select OFFSET_STAT;
 	_pos  = _stat select OFFSET_STAT_LAST_POS;
 	_time = _stat select OFFSET_STAT_LAST_TIME;
@@ -375,7 +389,7 @@ _create_patrol = {
 
 	_wpa = _this select OFFSET_WPA; // waypoint description array
 	_boat setPos (_wpa select 0); // 1st WP position
-	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY, units _grp]];
+	_this set [OFFSET_STAT,[getPosASL _boat, time + PATROL_STALL_DELAY, units _grp, 0]];
 
 //	_grp setBehaviour "YELLOW"; // Start as careless, change on first WP to "SAFE"
 	_grp setBehaviour "SAFE"; // Start as careless, change on first WP to "SAFE"
@@ -768,7 +782,10 @@ while { true } do {
 			// Repair, exchange seats from cargo to driver and at last first gunner if possible
 			// Driver and one of gunners are 2 obligatory seats
 			if ( _arr call _is_ship_stuck) then {
-				_arr call _remove_patrol; // remove veh this step, to re-create it on the next step
+			    // #691 Check if patrol is empty during predefined period
+			    if ( ( (_arr select OFFSET_STAT) select OFFSET_STAT_DEL_TIME ) < time) then {
+    				_arr call _remove_patrol; // remove veh this step, to re-create it on the next step
+			    };
 			} else {
 				// Check if crew is still operable and on duty
 				if (_arr call _reset_roles) then {
