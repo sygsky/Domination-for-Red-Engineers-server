@@ -28,6 +28,9 @@ if ( (_unit != _killer) /*|| (X_MP && (call XPlayersNumber) == 1)*/ ) exitWith {
     if ( !(call SYG_playExtraSounds) ) exitWith { false }; // yeti doesn't like such sounds
 
     // if killed in tank
+    // TODO: check if playe was in tank on kill event. Oк is near killed tank now.
+    // Really it can be removed out of tank on "killed" event.
+    // So "killed" event has no chance to detect player in tank
     _exit = false;
     if ( (vehicle _unit) isKindOf "Tank" ) then { _exit = call SYG_playDeathInTankSound }; // play only for RUSSIAN language interface
     if ( _exit) exitWith {};
@@ -36,7 +39,7 @@ if ( (_unit != _killer) /*|| (X_MP && (call XPlayersNumber) == 1)*/ ) exitWith {
     if ((vehicle _killer) isKindof "Tank") exitWith { call SYG_playDeathFromEnemyTankSound };
 
     // check for helicopter
-    if ( (vehicle _killer) isKindOf "Helicopter" && (format["%1",side _killer] == d_enemy_side) ) exitWith {
+    if ( (vehicle _killer) isKindOf "Helicopter" && ((side _killer) == d_side_enemy) ) exitWith {
 	    playSound format["heli_over_%1", (floor (random 4)) + 1]; // play sound of heli fly over your poor remnants
     };
 

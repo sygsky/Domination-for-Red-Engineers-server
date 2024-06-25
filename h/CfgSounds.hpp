@@ -395,7 +395,7 @@ class CfgSounds {
     class exclamation4 { name="";   sound[] = {\sounds\defeat\exclamations\4.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation5 { name="";   sound[] = {\sounds\defeat\exclamations\5.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation6 { name="";   sound[] = {\sounds\defeat\exclamations\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
-    class tanki { name="eclamation";   sound[] = {\sounds\defeat\exclamations\tanki.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+    class tanki { name="eclamation";   sound[] = {\sounds\defeat\tanki.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
 
 	// internal submarine effect sounds
     class submarine_sound_1   {name = ""; sound[] = {\sounds\submarine\submarine_sound_1.ogg, db+10, 1.0}; titles[] = {};};

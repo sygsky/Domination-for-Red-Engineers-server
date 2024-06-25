@@ -527,14 +527,10 @@ SYG_playWeatherForecastMusic = {
 // returns: true if player is russian and sound played
 //          or false if not russian and sound not played
 //
-SYG_tanks_sounds = [ "chiz_tanki_1", "chiz_tanki_2","tanki_grohotaly" ];
+SYG_tanks_sounds = [ "chiz_tanki_1", "chiz_tanki_2","tanki_grohotaly", "tanki" ];
 SYG_playDeathInTankSound = {
-    if ( localize "STR_LANGUAGE" == "RUSSIAN") exitWith {
-        if (random 3 > 1) then {playSound RANDOM_ARR_ITEM(SYG_tanks_sounds)} // Chiz song about tankists
-        else {["say_sound", player, "tanki"] call XSendNetStartScriptClientAll}; // exclamation "Tanks!!!"
-        true
-    };
-    false
+    playSound RANDOM_ARR_ITEM(SYG_tanks_sounds); // Soviet folk songs about tankmen dead in battle on WWII
+    true
 };
 
 //
