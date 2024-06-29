@@ -89,6 +89,7 @@ _sites = [
 #ifdef __OWN_SIDE_RACS__
 	[[8573.7,10073.6,0], 325, "WarfareBWestContructionSite1"],
 	[[8598.9,10070.5,0],  70, "WarfareBWestContructionSite"],
+#endif
 #ifdef __OWN_SIDE_EAST__
 	[[8573.7,10073.6,0], 325, "WarfareBEastContructionSite1"],
 	[[8598.9,10070.5,0],  70, "WarfareBEastContructionSite"],
