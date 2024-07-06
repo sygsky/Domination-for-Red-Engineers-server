@@ -356,9 +356,9 @@ _ctrl ctrlSetText _s;
 if ( !isNil "ACE_FV") then {
 	_ctrl = _XD_display displayCtrl 11016;
 	_s = (round(ACE_FV/1.3))/10;
-	_color = [0,1,0,1];
-	if ( _s >= 3 ) then {_color = [1,1,0,1];};
-	if ( _s >= 7 ) then {_color = [1,0,0,1];};
+	_color = [0,1,0,1]; // Green
+	if ( _s >= 3 ) then {_color = [1,1,0,1];};  // Yellow
+	if ( _s >= 7 ) then {_color = [1,0,0,1];};  // Red
 	_ctrl ctrlSetTextColor _color;
 	_ctrl ctrlSetText format[localize "STR_SYS_11_1", _s];// "Усталость %1"
 };
