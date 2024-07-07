@@ -140,7 +140,7 @@ SYG_baseDefeatTracks =
 //    ["cosmos", [14.25,9.25] ],
 //    ["cosmos", [28.8,-1] ],
     ["ruffian",[0,10.27]],
-    ["Vremia_vpered_Sviridov",[0.479,9.778]],
+    ["Vremia_vpered_Sviridov",[0.0,9.776]],
 	_ramm_track1,
 	_ramm_track2,
 	_ramm_track3 ];
@@ -369,7 +369,7 @@ SYG_playRandomTrack = {
     }; // full track
 
     if ( typeName _this != "ARRAY") exitWith {// must be array or string
-        hint localize format["--- SYG_playRandomTrack: expected array, found %1", typeName _this];
+        hint localize format["--- SYG_playRandomTrack: expected array, found %1 (%2)", typeName _this, _this];
         ""
     };
 
@@ -536,7 +536,7 @@ SYG_playDeathInTankSound = {
 //
 // play random sound about death from enemy tank
 // "Время вперёд", далее "Раммштейн 1-й и 5-й", gayane2, the_complex.ogg, betrayed.ogg
-SYG_enemy_tanks_music = [ ["Vremia_vpered_Sviridov",0.451, 9.795], "gayane2", "the_complex", "betrayed","rammstein_1","rammstein_5"];
+SYG_enemy_tanks_music = [ ["Vremia_vpered_Sviridov",[0.0, 9.776]], "gayane2", "the_complex", "betrayed","rammstein_1","rammstein_5"];
 
 SYG_playDeathFromEnemyTankSound = {
     SYG_enemy_tanks_music call SYG_playRandomTrack;
