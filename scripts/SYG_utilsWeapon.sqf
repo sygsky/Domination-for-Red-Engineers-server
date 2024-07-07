@@ -2734,7 +2734,7 @@ SYG_throwSmokeGrenade = {
     _dir = [_unit, _target] call XfDirToObj;
     _unit setDir _dir;
     _str = _target call SYG_getKillerInfo;
-    hint localize format[ "+++ SYG_throwSmokeGrenade: unit %1, shell %2, target %3, dir %4", _unit, _shell, _str , round _dir ];
+    hint localize format[ "+++ SYG_throwSmokeGrenade: unit %1, shell %2, target %3, dir %4, dist %5", _unit, _shell, _str , round _dir, round([_unit, _target] call SYG_distance2D) ];
     sleep 0.1;
     _muzzle = (switch (_shell) do {
 #ifdef __ACE__

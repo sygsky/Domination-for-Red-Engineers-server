@@ -68,7 +68,7 @@ XfRandomIndexArray = {
  * e.g. to work with target_names(defined in i_common.sqf) so that exclude some small towns,
  * use [22, count target_names, d_big_towns_inds, d_small_towns_inds] call  XfRandomIndexArrayWithPredefVals to return 22 town indexes
  * excluding some of array [18,21,22,23,24,25,26,27]
- * Returns: array with _out_cnt indexes in range [0.._ind_max] excluding some (or all) of indexes stored in d_small_towns_inds(_unimportant_arr).
+ * Returns: randomized by pos items in array with _out_cnt indexes in range [0..(_out_cnt-1)] excluding some (or all) of indexes stored in d_small_towns_inds(_unimportant_arr).
  * Of course input named arrays must contain only indexes in range [0..(_cnt-1)]
   */
 XfIndexArrayWithPredefVals = {
