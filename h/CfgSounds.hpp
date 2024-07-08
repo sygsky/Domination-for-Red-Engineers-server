@@ -307,7 +307,8 @@ class CfgSounds {
     class rammstein_8 { name=""; sound[] = {\sounds\ramm\rammstein_8.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
     class rammstein_9 { name=""; sound[] = {\sounds\ramm\rammstein_9.ogg,db+10,1.0}; titles[] = {}; } // From "Rammstein" defeat sounds
 
-    class pink_floyd { name=""; sound[] = {\sounds\ramm\pink_floyd.ogg,db+10,1.0}; titles[] = {}; } // Pink Floyd, from "Shine on you Crazy Diamond"
+    class pink_floyd { name=""; sound[] = {\sounds\defeat\pink_floyd.ogg,db+10,1.0}; titles[] = {}; } // Pink Floyd, from "Shine on you Crazy Diamond"
+    class pink_floyd2 { name=""; sound[] = {\sounds\defeat\pink_floyd2.ogg,db+10,1.0}; titles[] = {}; } // Pink Floyd, from "Shine on you Crazy Diamond"
 
     // laughter of enemy on your defeat
     class laughter_1 { name="Laughter 1"; sound[] = {\sounds\defeat\laughter\1.ogg,db+10,1.0}; titles[] = {}; } // Some laughter on your defeat
