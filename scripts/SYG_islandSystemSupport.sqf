@@ -10,21 +10,22 @@
 #include "x_macros.sqf"
 
 
-// New structures to play on maps with  multiple islands (e.g. "OFP_World", Sahrani Main + Rahmadi etc.)
+// New structure to play on maps with  multiple islands (e.g. "OFP_World", Sahrani Main + Rahmadi etc.)
+// Describe the whole design of the mission
 _main_island_array = [
 
     //  Method of main tasks (towns) creation:
     // "MIXED" - all towns on map are randomized and used from common list (as it was in std Domination on Sahrani)
     // "SEQUENTIAL_ISLANDS' - islands in the natural order from SYG_island_arr
-    // "RANDOM_ISLANDS" - random island order
-    // [0,1...] for island indexes
-    "MIXED", //  Island order in battle sequence
+    // "RANDOM_ISLANDS" - from random island order
+    // [0,1...] from islands in pre-defined oredr
+    [[0,1],2], // All towns are mixed from islands 0 and 1, after created list is empty start to use towns from island 2
 
     // SM orders variants:
     // 1."MIXED" - select SM randomly from all SM summary list, as it was in original Sahrani Domination
-    // 2. "RANDOM_ISLANDS" - random SM from the SM list for the active island.
-    //      If no more SM on active island, random SM from remained list is used
-    // 3. [0,1...] - array of random SM. Only these ones are used in battle
+    // 2. "RANDOM_ON_TOWN_ISLANDS" - random SM from the SM list for the active island.
+    // If no more SM on active island, random SM from nearest available (non-empty) island are used
+    // 3. [0,1...] - whole array of needed SM in predefined order. Only these ones are used in the battle, one by one
     "MIXED",
 
     // Common sea lanes started during whole game, not dependent on island activity.
@@ -34,7 +35,7 @@ _main_island_array = [
     //  A big common border around all the islands of the map, mandatory!
     [],
 
-    // Islands + rpatrol respawn area ids where to create patrols along this active island.
+    // Islands + patrol respawn area ids where to create patrols along this active island.
     // For example, if there is a permanent player base on one island, you can organize patrols there.
     // But immediately arises the problem of finding the boundaries of such a patrol.
     // Example: [[1,[0,2,5]]] means that permanent patrol respawns will be on island #1 (Malden?) with area ids #0,#2, #5.
