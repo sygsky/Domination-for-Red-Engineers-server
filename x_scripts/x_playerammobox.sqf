@@ -11,7 +11,7 @@ _boxname = (
 	switch (d_own_side) do {
 		case "RACS": {"AmmoBoxGuer"};
 		case "WEST": {"AmmoBoxWest"};
-		case "EAST": {if (__ACEVer) then {"ACE_WeaponBox_East"} else {"AmmoBoxEast"}};
+		case "EAST": {if (__ACEVer) then {"ё_East"} else {"AmmoBoxEast"}};
 	}
 );
 _box_array = d_player_ammobox_pos;

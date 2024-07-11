@@ -333,7 +333,7 @@ _ve spawn {
 				_ve addmagazinecargo ["ACE_Dummy_EQUIP",48];
 
 			} else {
-				//weaponcargo that is allways in a box
+				//weaponcargo that is always in a box
 				_ve addweaponcargo ["NVGoggles",10];
 				_ve addweaponcargo ["Binocular",10];
 				_ve addweaponcargo ["LaserDesignator",10];
