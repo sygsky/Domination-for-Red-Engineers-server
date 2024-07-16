@@ -44,8 +44,8 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 
 	SYG_MINE_LIST = ["ACE_PipeBomb","ACE_TimeBomb","ACE_Mine","ACE_MineE","ACE_Claymore_M","PipeBomb","TimeBomb","Mine","MineE"];
 
-	SNIPER_WEAPON_LIST_WEST = ["ACE_M21", "M24", "m107", "ACE_Mk12SPR", "ACE_HK416_Leu","ACE_HK416_Leu_SD","ACE_HK416_Leu_gl", "ACE_HK416_Leu_gl_SD", "ACE_SCAR_L_Marksman", "ACE_HK417L_Leu", "ACE_HK417L_Leu_SD",  "ACE_SCAR_H_Sniper"];
-	SNIPER_WEAPON_LIST_EAST = ["KSVK", "SVD", "aks74pso", "ACE_VSS"];
+	SNIPER_WEAPON_LIST_WEST = ["ACE_M21", "ACE_M24", "ACE_M110", "ACE_Mk12SPR", "ACE_HK416_Leu","ACE_HK416_Leu_SD","ACE_HK416_Leu_gl", "ACE_HK416_Leu_gl_SD", "ACE_SCAR_L_Marksman", "ACE_HK417L_Leu", "ACE_HK417L_Leu_SD",  "ACE_SCAR_H_Sniper"];
+	SNIPER_WEAPON_LIST_EAST = ["ACE_KSVK", "ACE_SVD", "aks74pso", "ACE_VSS"];
 	SNIPER_WEAPON_LIST = SNIPER_WEAPON_LIST_WEST + SNIPER_WEAPON_LIST_EST;
 
 	MG_WEAPON_LIST_WEST = ["M240", "M249", "ACE_MG36"/*, "M60"*/]; // M60 is not good weapon
@@ -57,7 +57,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	LAUNCHER_WEAPON_LIST = ["Launcher"];
 	LIGHT_LAUNCHER_WEAPON_LIST = [ "ACE_RPG22","ACE_M72" ];
 
-	LONG_MUZZLE_WEAPON_LIST = [ "KSVK", "SVD", "ACE_M14" ] + SNIPER_WEAPON_LIST_WEST + MG_WEAPON_LIST;
+	LONG_MUZZLE_WEAPON_LIST = [ "ACE_KSVK", "SVD", "ACE_M14" ] + SNIPER_WEAPON_LIST_WEST + MG_WEAPON_LIST;
 
 	//================================================
 
@@ -214,7 +214,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	// ---------------------------------------------------------------------------------
  	// M21 SNIPER weapon arrays
 	// sniper weapon
-	SYG_M21_WPN_SET =  ["ACE_M21","ACE_M21_dmr","ACE_M21_police","ACE_M21_wdl"];
+	SYG_M21_WPN_SET =  ["ACE_M21","ACE_M21_dmr","ACE_M21_dmrS","ACE_M21_police","ACE_M21_wdl","ACE_M21_des"];
 	// sniper weapon silenced
 	//SYG_M21_WPN_SET_SD =  ["ACE_M21_dmrS"];
 	// mags: sniper
@@ -223,7 +223,7 @@ if ( isNil "SYG_UTILS_WEAPON_COMPILED" ) then  // generate some static informati
 	// ---------------------------------------------------------------------------------
  	// M24 SNIPER weapon arrays
 	// sniper weapon
-	SYG_M24_WPN_SET =  [ "ACE_M24","ACE_M40A3"];
+	SYG_M24_WPN_SET =  [ "ACE_M242","ACE_M40A3"];
 	// mags: sniper
 	SYG_M24_MAGS = ["ACE_5Rnd_762x51_SB"];
 
