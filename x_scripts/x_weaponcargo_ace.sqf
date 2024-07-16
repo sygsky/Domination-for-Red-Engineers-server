@@ -312,14 +312,16 @@ _ve spawn {
 			_ve call SYG_clearAmmoBox;
 			_old_rank = rank player;
 			_index = _old_rank call XGetRankIndex;
+
+            // weaponcargo that is allways in a box for any side
+            _ve addweaponcargo ["NVGoggles",5];
+            _ve addweaponcargo ["Binocular",5];
+            _ve addweaponcargo ["LaserDesignator",5];
+            _ve addweaponcargo ["ACE_ANPRC77_Alice",5];
+            _ve addweaponcargo ["ACE_ParachutePack",5]; // Western planning new style chute
+            _ve addweaponcargo ["ACE_ParachuteRoundPack",5]; // Ordinal round old style chute
+
 			if (d_enemy_side == "EAST") then {
-				// weaponcargo that is allways in a box
-				_ve addweaponcargo ["NVGoggles",5];
-				_ve addweaponcargo ["Binocular",5];
-				_ve addweaponcargo ["LaserDesignator",5];
-				_ve addweaponcargo ["ACE_ANPRC77_Alice",5];
-				_ve addweaponcargo ["ACE_ParachutePack",5]; // Western planning new style chute
-				_ve addweaponcargo ["ACE_ParachuteRoundPack",5]; // Ordinal round old style chute
 
 				// ranked stuff
 				{
@@ -332,13 +334,7 @@ _ve spawn {
 
 				_ve addmagazinecargo ["ACE_Dummy_EQUIP",48];
 
-			} else {
-				//weaponcargo that is always in a box
-				_ve addweaponcargo ["NVGoggles",10];
-				_ve addweaponcargo ["Binocular",10];
-				_ve addweaponcargo ["LaserDesignator",10];
-				//_ve addweaponcargo ["T-10",10];
-				//_ve addweaponcargo ["ACE_ANPRC77_Alice",100];
+			} else { // EAST side
 
 				// ranked stuff
 				{

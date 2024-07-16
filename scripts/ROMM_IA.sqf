@@ -103,7 +103,7 @@ _fD = {
 
 // TODO: check array os ACE sniper weapon names (create of use available)
 #ifdef __ACE__	
-	if (primaryWeapon _u in ["M24", "M107", "SVD","KSVK", "ACE_M14"]) exitWith {}; // exit if sniper
+	if (primaryWeapon _u in ["M24", "M107", "SVD","ACE_KSVK", "ACE_M14"]) exitWith {}; // exit if sniper
 #else
 	if (primaryWeapon _u in ["M24", "M107", "SVD","KSVK"]) exitWith {};
 #endif	

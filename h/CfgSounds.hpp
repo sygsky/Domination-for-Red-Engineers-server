@@ -806,6 +806,8 @@ class CfgSounds {
 //    class spell_6	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Crevall-Asortium-Antimus.ogg,db-1,1.0}; titles[] = {};}; //
 //    class spell_7	{ name = "";                                       sound[] = {\sounds\short\spells\Spell-Engory-Helleye.ogg,db-1,1.0}; titles[] = {};}; //
 
+    class three_kinds { name = "";                                     sound[] = {\sounds\short\three_kinds.ogg,db-1,1.0}; titles[] = {};}; //
+
 
 // Naval-Patrol-Horn.ogg
 

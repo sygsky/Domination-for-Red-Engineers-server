@@ -11,7 +11,8 @@ _boxname = (
 	switch (d_own_side) do {
 		case "RACS": {"AmmoBoxGuer"};
 		case "WEST": {"AmmoBoxWest"};
-		case "EAST": {if (__ACEVer) then {"ё_East"} else {"AmmoBoxEast"}};
+//		case "EAST": {if (__ACEVer) then {"ACE_WeaponBox_East"} else {"AmmoBoxEast"}};
+		case "EAST": {"AmmoBoxEast"};
 	}
 );
 _box_array = d_player_ammobox_pos;
@@ -32,9 +33,12 @@ if (playerSide == west) then {
 };
 #endif
 
+#ifndef __BLUEFOR_AMMOBOX__
+
 _box = _boxname createVehicleLocal (_box_array select 0);
 _box setDir (_box_array select 1);
 _box setPos (_box_array select 0);
+#endif
 
 #ifdef __RANKED__
 _box_script = (
@@ -69,23 +73,80 @@ _box_script = (
 	}
 );
 #endif
-[_box] execVM _box_script;
-d_player_ammobox_pos = nil;
 
+#ifdef __BLUEFOR_AMMOBOX__
+
+//+++++++++++++++++++++++
+//   Fill EAST box first
+//+++++++++++++++++++++++
+_ammo_box = d_player_ammobox_pos select 0; // EAST
+_ammo_box set [2, _boxname]; // set box type name
+_ammo_box set [3, _box_script]; // set box script
+
+_box = _boxname createVehicleLocal (_ammo_box select 0);
+_box setDir (_ammo_box select 1);
+_box setPos (_ammo_box select 0);
+_ammo_box set [4, _box];        // Box instance
+[_box] execVM _box_script;      // Run for EAST box
+
+//++++++++++++++++++++++
+//    Fill WEST box
+//++++++++++++++++++++++
+_ammo_box = d_player_ammobox_pos select 1; // WEST box array
+_boxname = _ammo_box select 2; // get box type name
+_ammo_box set [3, _box_script]; // Set box script for ranked
+
+_box = _boxname createVehicleLocal (_ammo_box select 0);
+_box setDir (_ammo_box select 1);
+_box setPos (_ammo_box select 0);
+_ammo_box set [4, _box];        // Box instance
+#undef AMMOBOXWEST
+
+#endif
+
+[_box] execVM _box_script; // Run for last box (may be single if not defined __BLUEFOR_AMMOBOX__)
+
+#ifndef __BLUEFOR_AMMOBOX__
+d_player_ammobox_pos = nil;
+#endif
+
+//+++++++++++++++++++++++++++++++++++++++++++++
+// main thread to refresh personal ammobox[es]
+//+++++++++++++++++++++++++++++++++++++++++++++
 [_box,_boxname,_box_array, _box_script ] spawn {
-	private ["_box", "_boxname", "_box_array","_box_script"];
+	private ["_box", "_boxname", "_box_array","_box_script","_x"];
+
+#ifndef __BLUEFOR_AMMOBOX__
 	_box = _this select 0;
 	_boxname = _this select 1;
 	_box_array = _this select 2;
 	_box_script = _this select 3;
+#endif
 
+    // Once in 25-30 minutes modify personal box content according to the rank of player
 	while {true} do {
-		sleep (1500 + random 500);
+		sleep (1500 + random 300);
+
+#ifndef __BLUEFOR_AMMOBOX__
 		if (!isNull _box) then {deleteVehicle _box;};
 		_box = _boxname createVehicleLocal (_box_array select 0);
 		_box setDir (_box_array select 1);
 		_box setPos (_box_array select 0);
 		[_box] execVM _box_script;
+#else
+        {
+            _box_array = _x;
+            _box = _box_array select 4;
+            if (!isNull _box) then {deleteVehicle _box;};
+            _boxname = _box_array select 2;
+            _box = _boxname createVehicleLocal (_box_array select 0);
+            _box setDir (_box_array select 1);
+            _box setPos (_box_array select 0);
+            [_box] execVM (_box_array select 3);
+            _box_array set [4, _box]; // Refresh box instance
+        } forEach d_player_ammobox_pos;
+#endif
+
 	};
 };
 

@@ -220,8 +220,12 @@
 #define __FREE_CAR_SEVICE__
 
 #ifdef __FREE_CAR_SEVICE__
-
 // Uncommend to allow use of tractors and bicycles among civic cars
 #define __CAR_JOKE__
+#endif
 
+#ifdef __OWN_SIDE_EAST__
+// Adds BLUEFOR ammo box above EAST ammo box if side == east.
+// Uncommnet if you want to have EAST and WEST weapons simultaneously
+#define __BLUEFOR_AMMOBOX__
 #endif
