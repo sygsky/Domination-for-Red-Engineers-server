@@ -123,6 +123,14 @@ _global_pos resize 2;
 hint localize format[ "+++ beam_tele.sqf: _pos = %1, _global_pos = %2, player = %3", _pos, _global_pos, player ];
 #endif
 
+if (_sound != "") then {
+    playSound _sound;
+    cutText ["","BLACK OUT", 0.1];
+    cutText ["","BLACK IN", 7.9];
+    sleep 7;
+};
+
+
 player setPos _global_pos;
 #ifdef __TELEPORT_WITH_TURNING__
 player setDir _global_dir;
@@ -131,7 +139,7 @@ if (_sound == "") then {
 	["say_sound", _pos, "teleport_from"] call XSendNetStartScriptClientAll; // play sound of teleport out event everywhere
 	sleep 0.2;
 	["say_sound", player, _sound_to] call XSendNetStartScriptClientAll; // play sound of teleport in event everywhere
-} else { playSound _sound };
+};
 sleep 1.8;
 // TODO: try to set vehicle locally on each client computer
 closeDialog 100001;
