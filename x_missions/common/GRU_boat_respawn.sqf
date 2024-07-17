@@ -85,16 +85,17 @@ while { true } do {
 				deleteVehicle _veh;
 				while {(call XPlayersNumber) == 0 } do { sleep 80; };
 				// "The GRU boat mysteriously disappeared while island was without players. Perhaps it was swallowed by the local Leviathan."
-				["msg_to_user","",["STR_GRU_BOAT_DISAPPEARED"], 0, 0, false, "under_water_3"] call XSendNetStartScriptClient;
+				// Prints after 30 seconds
+				["msg_to_user","",["STR_GRU_BOAT_DISAPPEARED"], 0, 30, false, "under_water_3"] call XSendNetStartScriptClient;
 			};
-			// 3. If the boat is delivered, everyone in it gets +10 points.
+			// 3. If the boat is delivered, everyone in it or near gets +10 points.
 			if ( (_veh distance _pos)  < 2 ) exitWith {
-				_names = [];
-				{
-					if ( isPLayer _x ) then { _names set [ count _names, name _x ] };
-				} forEach (crew _veh); // Are men in boat ?
-				if (count _name > 0 ) then { // "The GRU boat has been delivered to the agreed place. Thank you for your service, comrade! You get points: +%1."
-					[ "change_score", _names, d_ranked_a select 18, [ "msg_to_user", "",  [ ["STR_GRU_BOAT_DELIVERED", d_ranked_a select 18] ], 0, 0, false, "naval" ] ] call XSendNetStartScriptClient;
+                // "The GRU boat has been delivered to the agreed place. Thanks to comrades: %1."
+                [ "msg_to_user", "",  [ ["STR_GRU_BOAT_DELIVERED", names] ], 0, 0, false, "naval" ] call XSendNetStartScriptClient;
+				_names = [_boat, 30] call SYG_findNearestPlayers;
+				if (count _name > 0 ) then {
+				    // "Thank you for your service, comrade! You get points: +%1."
+					[ "change_score", _names, d_ranked_a select 18, [ "msg_to_user", "",  [ ["STR_GRU_BOAT_DELIVERED1", d_ranked_a select 18] ], 0, 5, false, "three_kinds" ] ] call XSendNetStartScriptClient;
 				};
 			};
 			sleep 5;
