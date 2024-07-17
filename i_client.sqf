@@ -56,7 +56,7 @@ if (X_Client) then {
             #ifdef __BLUEFOR_AMMOBOX__
         [
             [[9672.935,9993.026, 0.25],180, "AmmoBoxEast","SCRIPT", "INSTANCE"], // East ammobox descr
-            [[9672.935,9993.126, 1.55],180, "AmmoBoxWest","SCRIPT", "INSTANCE"]  // West ammobox descr
+            [[9672.935,9993.126, 1.55],180, "AmmoBoxWest","SCRIPT", "INSTANCE","DIR_AND_UP_VECTOR"]  // West ammobox descr
         ];
             #endif
 
@@ -195,8 +195,8 @@ if (X_Client) then {
 
     // points needed to get a specific rank. Start (private) rank is 0!
     // gets even used in the unranked versions, though it's just cosmetic there
-    d_points_needed = [
     #ifdef __OLD_SCORES__
+    d_points_needed = [
     //  score/ Name      /diff /r.num/r.cost
         40, // Ефрейтор   +40  1      0
         80, // Сержант    +40  2      5 (min, static)
@@ -204,15 +204,17 @@ if (X_Client) then {
         300, // Капитан   +150 4      10
         500, // Майор     +200 5      10
         800 // Полковник  +300 6      30
+        ];
     #else
+    d_points_needed = [
         40, // Ефрейтор   / Corporal   +40
         80, // Сержант    / Sergeant   +80
         120, // Лейтенант / Lieutenant +40
         180, // Капитан   / Captain    +40
         300, // Майор     / Major      +120
         800 // Полковник  / Colonel    +500
-    #endif
     ];
+    #endif
 
     d_rank_names = ["PRIVATE","CORPORAL","SERGEANT","LIEUTENANT","CAPTAIN","MAJOR","COLONEL"];
     // not official ranks for super-gamers only

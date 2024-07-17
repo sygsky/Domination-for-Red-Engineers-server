@@ -10,5 +10,6 @@
 
 ["msg_to_user", "", [ [_this select 3] ] ] spawn SYG_msgToUserParser; // message output
 (_this select 0) removeAction (_this select 2); // Remove action
+(_this select 0) setVariable ["ACTION_ARR", nil]; // Remove also action vector
 playSound "losing_patience"; // he-he
 if (true) exitWith {};
