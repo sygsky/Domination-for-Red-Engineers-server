@@ -8,4 +8,5 @@ if ( (_this select 0) isKindOf "AmmoBoxWest" ) then {
 };
 
 hint localize format["+++ x_scripts\x_weaponcargor_ace.sqf: _this = %1", _this];
+hint localize format["+++ x_scripts\x_weaponcargor_ace.sqf: d_player_ammobox_pos = %1", d_player_ammobox_pos];
 if (true) exitWith {};

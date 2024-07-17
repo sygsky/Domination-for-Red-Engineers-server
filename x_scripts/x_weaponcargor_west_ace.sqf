@@ -13,17 +13,15 @@ if (isNil "x_ranked_weapons_west") then {
 			// private rifles
 			[
 				["ACE_Dummy_RIFLE",48],["ACE_FAL_Para",5],["ACE_SA58",5],["ACE_HK416",5],["ACE_HK416_GL",5],
-				#ifdef __VEH_1985__
-				["ACE_HK417C",5],["ACE_SCAR_L_CQB",5],
-				["ACE_SCAR_L_CQB_Docter",5],["ACE_SCAR_H_CQB",5],["ACE_SCAR_H_CQB_Docter",5],
-				["ACE_SR25K",5],["ACE_M14",5],["ACE_M14_des",5],["ACE_M14_wdl",5],["ACE_M14_reflex",5],
-				["ACE_M14_nam",5],["ACE_M14_sop",5],["ACE_M14_sop_cmore",5],
-				#endif
 				["ACE_M16A2",5],["ACE_M16A2GL",5],["ACE_M16A4",5],["ACE_M16A4GL",5],
 				["ACE_M4A1",5],["ACE_MP5A4",5],["ACE_MP5A5",5],
 				["ACE_M1014",5]
 				#ifdef __VEH_1985__
-				,["ACE_MP5SD",5],["ACE_UMP45",5],["ACE_UMP45_SD",5],["ACE_G36C",5]
+				,["ACE_HK417C",5],["ACE_SCAR_L_CQB",5],
+				["ACE_SCAR_L_CQB_Docter",5],["ACE_SCAR_H_CQB",5],["ACE_SCAR_H_CQB_Docter",5],
+				["ACE_SR25K",5],["ACE_M14",5],["ACE_M14_des",5],["ACE_M14_wdl",5],["ACE_M14_reflex",5],
+				["ACE_M14_nam",5],["ACE_M14_sop",5],["ACE_M14_sop_cmore",5],
+				["ACE_MP5SD",5],["ACE_UMP45",5],["ACE_UMP45_SD",5],["ACE_G36C",5]
 				#endif
 			],
 			// corporal rifles (gets added to private rifles)
@@ -35,13 +33,13 @@ if (isNil "x_ranked_weapons_west") then {
 				,["ACE_HK417C_SD",5],["ACE_HK417L",5],["ACE_HK417L_SD",5],["ACE_HK417L_M68",5],
 				["ACE_HK417L_M68_SD",5],["ACE_HK417C_Eotech",5],
 				["ACE_HK417C_Eotech_SD",5],["ACE_HK417L_Eotech",5],["ACE_HK417L_Eotech_203",5],["ACE_HK417L_Eotech_SD",5],
-				["ACE_M16A4Aimpoint",5],["ACE_M4A1AimPointSD",5],["ACE_M4A1GLAimpoint",5]
-				,["ACE_SCAR_L_CQB_EOtech",5],["ACE_SCAR_L_CQB_EOtech_SD",5],["ACE_SCAR_L_CQB_Eotech_EGLM",5],["ACE_SCAR_L_CQB_AIM",5],
+				["ACE_M16A4Aimpoint",5],["ACE_M4A1AimPointSD",5],["ACE_M4A1GLAimpoint",5],
+				["ACE_SCAR_L_CQB_EOtech",5],["ACE_SCAR_L_CQB_EOtech_SD",5],["ACE_SCAR_L_CQB_Eotech_EGLM",5],["ACE_SCAR_L_CQB_AIM",5],
 				["ACE_SCAR_L_CQB_AIM_SD",5],["ACE_SCAR_H_CQB_EOtech",5],["ACE_SCAR_H_CQB_EOtech_SD",5],["ACE_SCAR_H_CQB_AIM",5],["ACE_SCAR_H_CQB_AIM_SD",5],
 				["ACE_SCAR_L",5],["ACE_SCAR_L_Eotech",5],["ACE_SCAR_L_CQB_Docter_SD",5],["ACE_SCAR_H_CQB_Docter_SD",5],
 				["ACE_M14_sop_aim",5],["ACE_M14_sopS",5],["ACE_M14_sop_aim_gl",5],["ACE_M14_sop_cmoreS",5],["ACE_M14_sop_gl",5],
-				["ACE_M14_sop_eotech",5],["ACE_M14_sop_eotech_gl",5],["ACE_M14_sop_aimS",5],["ACE_M14_sop_eotechS",5]
-				,["ACE_G36K",5],["ACE_G36KA1",5],["ACE_G36C_CompAim",5],["ACE_G36C_CompEo",5],["ACE_G36",5]
+				["ACE_M14_sop_eotech",5],["ACE_M14_sop_eotech_gl",5],["ACE_M14_sop_aimS",5],["ACE_M14_sop_eotechS",5],
+				["ACE_G36K",5],["ACE_G36KA1",5],["ACE_G36C_CompAim",5],["ACE_G36C_CompEo",5],["ACE_G36",5]
 			    #endif
 			],
 			// sergeant rifles (gets added to corporal and private rifles)
@@ -49,9 +47,9 @@ if (isNil "x_ranked_weapons_west") then {
 			    #ifdef __VEH_1985__
 				["ACE_SCAR_L_Specter",5],["ACE_SCAR_L_Specter_SD",5],["ACE_SCAR_L_Shortdot",5],["ACE_SCAR_L_Shortdot_SD",5],
 				["ACE_SCAR_L_CQB_mk4",5],["ACE_SCAR_L_CQB_mk4_SD",5],["ACE_SCAR_H_Shortdot",5],["ACE_SCAR_H_Shortdot_SD",5],
-				["ACE_M14_sop_elcan",5],["ACE_M14_sop_elcanS",5]
+				["ACE_M14_sop_elcan",5],["ACE_M14_sop_elcanS",5],
 			    #endif
-			    ,["ACE_SPAS12",5]
+			    ["ACE_SPAS12",5]
 			],
 			// lieutenant rifles (gets added to...)
 			[

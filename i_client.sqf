@@ -47,23 +47,21 @@ if (X_Client) then {
     #endif
     #ifdef __DEFAULT__
         #ifdef __TT__
-
         [
             [[2603.55,2858.77,0],260], // West
             [[18057.5,18193.8,0],80]  // Racs
         ];
-
         #else
         //[[9654.24,9993,0],270]; // [[9654.24,9993.49,0],270] box pos for orginal Xeno base building (Camp of Warfire)
             #ifdef __BLUEFOR_AMMOBOX__
-            [
-                [[9672.935,9993.026, 0.25],180, "AmmoBoxEast","SCRIPT", "INSTANCE"], // East ammobox descr
-                [[9672.935,9993.026, 1.55],180, "AmmoBoxWest","SCRIPT", "INSTANCE"]  // West ammobox descr
-            ];
+        [
+            [[9672.935,9993.026, 0.25],180, "AmmoBoxEast","SCRIPT", "INSTANCE"], // East ammobox descr
+            [[9672.935,9993.126, 1.55],180, "AmmoBoxWest","SCRIPT", "INSTANCE"]  // West ammobox descr
+        ];
             #endif
 
             #ifndef __BLUEFOR_AMMOBOX__
-            [[9672.935,9993.026, 0.25],180]; // Box pos for the depot as base building (Depot of Warfire) 9672.535156,142.730530,9993.026367
+        [[9672.935,9993.026, 0.25],180]; // Box pos for the depot as base building (Depot of Warfire) 9672.535156,142.730530,9993.026367
             #endif
 
         #endif

@@ -38,7 +38,7 @@
 //#define __SCHMALFELDEN__
 //#define __UHAO__
 
-// Uncomment to use for OFP_World add-on
+// Uncomment to use for multi-island world, e.g. OFP_World add-on
 //#define __MULTI_ISLAND_WORLD__
 
 //#define __D_VER_NAME__ "Domination! One Team - West"
@@ -220,8 +220,12 @@
 #define __FREE_CAR_SEVICE__
 
 #ifdef __FREE_CAR_SEVICE__
-
 // Uncommend to allow use of tractors and bicycles among civic cars
 #define __CAR_JOKE__
+#endif
 
+#ifdef __OWN_SIDE_EAST__
+// Adds BLUEFOR ammo box above EAST ammo box if side == east.
+// Uncommnet if you want to have EAST and WEST weapons simultaneously
+#define __BLUEFOR_AMMOBOX__
 #endif

@@ -1,8 +1,8 @@
 // by Xeno, x_scripts\x_playerammobox.sqf - player personal ammo box handling
-private ["_box","_box_array"];
-
 #include "x_setup.sqf"
 #include "x_macros.sqf"
+
+private ["_box","_box_array"];
 
 _box_array = [];
 
@@ -34,7 +34,7 @@ if (playerSide == west) then {
 #endif
 
 #ifndef __BLUEFOR_AMMOBOX__
-
+hint localize format["+++ x_playerammobox.sqf: _box_array = %1", _box_array];
 _box = _boxname createVehicleLocal (_box_array select 0);
 _box setDir (_box_array select 1);
 _box setPos (_box_array select 0);
@@ -99,8 +99,8 @@ _ammo_box set [3, _box_script]; // Set box script for ranked
 _box = _boxname createVehicleLocal (_ammo_box select 0);
 _box setDir (_ammo_box select 1);
 _box setPos (_ammo_box select 0);
+_box setVectorDirAndUp[[0,0,1],[0,1,0]];
 _ammo_box set [4, _box];        // Box instance
-#undef AMMOBOXWEST
 
 #endif
 

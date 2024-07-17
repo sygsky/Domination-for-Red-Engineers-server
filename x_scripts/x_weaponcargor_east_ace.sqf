@@ -13,35 +13,19 @@ if (isNil "x_ranked_weapons") then {
         [
     // ################################################################################ Auto Rifles
                 // РЯДОВОЙ 0
-            [
-                ["ACE_Dummy_RIFLE",3],["ACE_AK74",10],["ACE_AKS74U",10],["ACE_Bizon",10],["ACE_AKM",10]/*, ["ACE_AKMS",10], ["ACE_AK47",10],["ACE_AKS47",10],["ACE_AKS47nobutt",10]*/
-    //				,["ACE_M1014",10]
-            ],
+            [ ["ACE_Dummy_RIFLE",3],["ACE_AK74",10],["ACE_AKS74U",10],["ACE_Bizon",10],["ACE_AKM",10]/*, ["ACE_AKMS",10], ["ACE_AK47",10],["ACE_AKS47",10],["ACE_AKS47nobutt",10],["ACE_M1014",10] */ ],
                 // ЕФРЕЙТОР 1
-            [
-                ["ACE_AK74GL",10],["ACE_AKMGL",10]/*,["ACE_AKMSGL",10]*/,["ACE_AK47GL",10],["ACE_SPAS12",10]
-    //				,["ACE_M1014_Eotech", 10]
-            ],
+            [ ["ACE_AK74GL",10],["ACE_AKMGL",10]/*,["ACE_AKMSGL",10]*/,["ACE_AK47GL",10],["ACE_SPAS12",10],["ACE_M1014_Eotech", 10] ],
                 // СЕРЖАНТ 2
-            [
-                ["ACE_AKS74USD",10],["ACE_Bizon_SD",10],["ACE_AKMS_PBS1",10],["ACE_Val",10]
-            ],
+            [ ["ACE_AKS74USD",10],["ACE_Bizon_SD",10],["ACE_AKMS_PBS1",10],["ACE_Val",10] ],
                 // ЛЕЙТЕНАНТ 3
-            [
-                ["ACE_AKS74U_Cobra",10],["ACE_Bizon_Cobra",10],["ACE_AKM_Cobra",10],["ACE_AKMGL_Cobra",10]/* ,["ACE_AKMS_Cobra",10] */
-                #endif
-            ],
+            [ ["ACE_AKS74U_Cobra",10],["ACE_Bizon_Cobra",10],["ACE_AKM_Cobra",10],["ACE_AKMGL_Cobra",10]/* ,["ACE_AKMS_Cobra",10] */ ],
                 // КАПИТАН 4
-            [
-                ["ACE_Val_Cobra",10],["ACE_AKS74USD_Cobra",10],["ACE_Bizon_SD_Cobra",10]
-            ],
+            [ ["ACE_Val_Cobra",10],["ACE_AKS74USD_Cobra",10],["ACE_Bizon_SD_Cobra",10] ],
                 // МАЙОР 5
-            [
-                ["ACE_AKMS_PBS1_Cobra",10]
-            ],
+            [  ],
                 // ПОЛКОВНИК 6++
-            [
-            ]
+            [ ]
        ],
         [
     //################################################################################ Sniper rifles
@@ -56,18 +40,14 @@ if (isNil "x_ranked_weapons") then {
                 // КАПИТАН
             [ ["ACE_KSVK",10] ],
                 // МАЙОР
-            [
-                //["ACE_SV98",10]
-            ],
+            [ /*["ACE_SV98",10]*/ ],
                 // ПОЛКОВНИК
-            [
-                //["ACE_OSV96",10]
-            ]
+            [ /*["ACE_OSV96",10]*/ ]
         ],
         [
     //################################################################################ Machine guns
                 // РЯДОВОЙ
-            [  ],
+            [ ],
                 // ЕФРЕЙТОР
             [  /* ["ACE_RPK74",10], */["ACE_RPK74M",10] ],
                 // СЕРЖАНТ
@@ -84,7 +64,7 @@ if (isNil "x_ranked_weapons") then {
         [
     //################################################################################ RPG
                 // РЯДОВОЙ
-            [  ],
+            [ ],
                 // ЕФРЕЙТОР
             [ ["ACE_RPG7_PGO7",10] ],
                 // СЕРЖАНТ
