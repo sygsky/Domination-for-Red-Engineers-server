@@ -125,11 +125,11 @@ hint localize format[ "+++ beam_tele.sqf: _pos = %1, _global_pos = %2, player = 
 
 if (_sound != "") then {
     playSound _sound;
-    cutText ["","BLACK OUT", 0.1];
-    cutText ["","BLACK IN", 7.9];
+    cutText ["","BLACK IN", 0.1];
+    sleep 0.2;
+    cutText ["","BLACK OUT", 7.8];
     sleep 7;
 };
-
 
 player setPos _global_pos;
 #ifdef __TELEPORT_WITH_TURNING__
