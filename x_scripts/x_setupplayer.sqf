@@ -1832,12 +1832,10 @@ player call SYG_handlePlayerDammage; // handle hit events
     }   forEach _common_boxes;
 //    hint localize format["*** getVectoDirAndUp (box5) = [%1,%2]", vectorDir box5, vectorUp box5];
 #ifdef __ACE__
-    _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox", "ACE_WeaponBox_East","WeaponBoxEast","WeaponBoxWest"/*,"ACE_MedicBox"*/];
+    _personal_boxes = ["ACE_RuckBox", "ACE_HuntIRBox"/*,"ACE_MedicBox"*/];
     _personal_boxes = nearestObjects [FLAG_BASE, _personal_boxes, 30]  - _common_boxes;
     _arr1 = _personal_boxes call SYG_vehToType;
     _action_arr = [ localize "STR_CHECK_ITEM", "scripts\info_ammobox.sqf", "STR_SYS_MAINBOX" ];
-    _box addAction _action_arr;
-    _box setVariable ["ACTION_ARR", _action_arr];
     {
         _x addAction _action_arr;
         _x setVariable ["ACTION_ARR", _action_arr];

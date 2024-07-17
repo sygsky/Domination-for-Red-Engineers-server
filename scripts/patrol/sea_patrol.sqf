@@ -107,6 +107,7 @@ _is_boat_captured = {
         if (isEngineOn _boat) then {
             if ( (count ([_boat, 50] call SYG_findNearestPlayers)) > 0 ) then {
                 _boat engineOn false;
+                hint localize format["+++ sea_patrol.sqf: empty boat #%1 engine stopped.",_this select OFFSET_ID];
             }; // Player[s] found nearby
         };
 
@@ -127,7 +128,7 @@ _capture_boat = {
 	_boat setVariable ["CAPTURED_ITEM", "SEA_PATROL"];
 	_boat setVariable ["PATROL_ITEM", nil];
 	[_boat] call XAddCheckDead;
-	hint localize format[ "+++ sea_patrol.sqf boat_%1 captured by %2 (%3) at %4, will be re-created after %5 sec.",
+	hint localize format[ "+++ sea_patrol.sqf: boat_%1 captured by %2 (%3) at %4, will be re-created after %5 sec.",
 		_this select OFFSET_ID,
 		side _boat,
 		_crew,

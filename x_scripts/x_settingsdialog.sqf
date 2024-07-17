@@ -235,9 +235,9 @@ _str = _str + (localize format["STR_SET_38", __TELEPORT_DEVIATION__]);
 #endif
 
 #ifdef __VEH_1985__
-_str = _str + (localize "STR_SET_39"); // "Only vehicles BEFORE 1985 inclusivelly allowed\n"
+_str = _str + (localize "STR_SET_39"); // "The mission uses all available equipment\n"
 #else
-_str = _str + (localize "STR_SET_39_0"); // "The mission uses all available equipment\n"
+_str = _str + (localize "STR_SET_39_0"); // "Military gear and equipment after 1985 not allowed\n"
 #endif
 
 #ifndef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__

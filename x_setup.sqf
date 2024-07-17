@@ -194,7 +194,7 @@
 // uncomment to disable teleport near large metall masses in designated distance
 #define __TELEPORT_DEVIATION__ 20
 
-// uncomment to allow only vehicle BEFORE 1985 inclusivelly
+// uncomment to allow vehicle after 1985
 //#define __VEH_1985__
 
 // uncomment to get bonuses not on base but near finished towns or SM
@@ -226,6 +226,6 @@
 
 #ifdef __OWN_SIDE_EAST__
 // Adds BLUEFOR ammo box above EAST ammo box if side == east.
-// Uncommnet if you want to have EAST and WEST weapons simultaneously
+// Uncomment if you want to have EAST and WEST weapons simultaneously
 #define __BLUEFOR_AMMOBOX__
 #endif

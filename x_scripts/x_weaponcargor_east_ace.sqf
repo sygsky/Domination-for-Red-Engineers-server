@@ -23,16 +23,16 @@ if (isNil "x_ranked_weapons") then {
                 // КАПИТАН 4
             [ ["ACE_Val_Cobra",10],["ACE_AKS74USD_Cobra",10],["ACE_Bizon_SD_Cobra",10] ],
                 // МАЙОР 5
-            [  ],
+            [ ],
                 // ПОЛКОВНИК 6++
             [ ]
        ],
         [
     //################################################################################ Sniper rifles
                 // РЯДОВОЙ
-            [ ["ACE_Dummy_SNIPER",3] ],
+            [ ],
                 // ЕФРЕЙТОР
-            [ ["ACE_AKS74PSO",10] ],
+            [  ["ACE_Dummy_SNIPER",3],["ACE_AKS74PSO",10] ],
                 // СЕРЖАНТ
             [ ["ACE_SVD",10] ],
                 // ЛЕЙТЕНАНТ
@@ -47,7 +47,7 @@ if (isNil "x_ranked_weapons") then {
         [
     //################################################################################ Machine guns
                 // РЯДОВОЙ
-            [ ],
+            [ ["ACE_Dummy_MG",3],["ACE_RPK47",10] ],
                 // ЕФРЕЙТОР
             [  /* ["ACE_RPK74",10], */["ACE_RPK74M",10] ],
                 // СЕРЖАНТ
@@ -66,7 +66,7 @@ if (isNil "x_ranked_weapons") then {
                 // РЯДОВОЙ
             [ ],
                 // ЕФРЕЙТОР
-            [ ["ACE_RPG7_PGO7",10] ],
+            [ ["ACE_Dummy_LAUNCHER",3],["ACE_RPG7_PGO7",10] ],
                 // СЕРЖАНТ
             [ ["ACE_RPG27",10],["ACE_RPO",10] ],
                 // ЛЕЙТЕНАНТ
@@ -107,7 +107,7 @@ _ve spawn {
 	_old_rank = "";
 	
 	_ammo_list = [
-//    	["ACE_Dummy_EQUIP",3],
+    	["ACE_Dummy_EQUIP",3],
     	["ACE_Bandage",100],["ACE_Morphine",100],["ACE_Epinephrine",100],["Laserbatteries",100],
     	["ACE_IRStrobe",100],["ACE_SandBag_Magazine",100],["ACE_Flashbang",100],["ACE_POMZ_M",100],
     	["ACE_Dummy_RIFLE",3],
@@ -116,7 +116,8 @@ _ve spawn {
     	["ACE_9Rnd_12Ga_Buck00",100],
     	["ACE_Dummy_SNIPER",3],
     	["ACE_10Rnd_762x54_SB_SVD",100],["ACE_10Rnd_9x39_SB_VSS",100],["ACE_5Rnd_127x108_BT_KSVK",100],
-    	["ACE_Dummy_MG",3],["ACE_45Rnd_545x39_BT_AK",100],["ACE_40Rnd_762x39_BT_AK",100],["ACE_75Rnd_762x39_BT_AK",100],
+    	["ACE_Dummy_MG",3],
+    	["ACE_45Rnd_545x39_BT_AK",100],["ACE_40Rnd_762x39_BT_AK",100],["ACE_75Rnd_762x39_BT_AK",100],
     	["ACE_100Rnd_762x54_BT_PK",100],["ACE_NSV_CSWDM",100],
     	["ACE_Dummy_LAUNCHER",3],
     	["ACE_RPG7_PG7VL",100],["ACE_RPG7_PG7V",100],["ACE_Strela",100],["ACE_RPG7_PG7VR",100],
@@ -129,11 +130,11 @@ _ve spawn {
     	["ACE_1Rnd_Flare_Yellow",100],["ACE_40mm_FlareWhite_GP25",100],["ACE_40mm_FlareGreen_GP25",100],
     	["ACE_40mm_FlareRed_GP25",100],["ACE_40mm_FlareYellow_GP25",100],["ACE_40mm_SmokeWhite_GP25",100],
     	["ACE_40mm_SmokeRed_GP25",100],["ACE_40mm_SmokeGreen_GP25",100],["ACE_40mm_SmokeYellow_GP25",100],
+    	["ACE_40mm_HEDP_GP25",100],["ACE_40mm_VOG25P_GP25",100],
     	["ACE_Dummy_EQUIP",3],
     	["ACE_SmokeGrenade_White",100],["ACE_SmokeGrenade_Red",100],["ACE_SmokeGrenade_Green",100],
     	["ACE_SmokeGrenade_Yellow",100],["ACE_SmokeGrenade_Violet",100],["ACE_HandGrenade",100],
-    	["ACE_HandGrenadeRGN",30],["ACE_HandGrenadeRGO",30],["ACE_40mm_HEDP_GP25",100],
-    	["ACE_40mm_VOG25P_GP25",100],["ACE_PipeBomb",100],["ACE_MineE",100]
+    	["ACE_HandGrenadeRGN",30],["ACE_HandGrenadeRGO",30],["ACE_PipeBomb",100],["ACE_MineE",100]
     ];
 
 	while { alive _ve } do {
