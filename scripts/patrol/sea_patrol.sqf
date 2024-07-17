@@ -12,7 +12,7 @@
 			off 0: _last position as [x,y<,z>] of last stored position ,
 			off 1: _time is last position getting time,
 			off 2: _units are all units in the intial group, we need it to remove bodies
-			TODO: off 3still not used, 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
+			TODO: off, still not used, 3: absent or 0 = unknown, 1 = ready and active, -1 = waiting resque boat, -2 waiting reset
 
 			Algorithm is very clear:
 			1. Boat starts and go through his WPs, last WP is circular, state = 1.
@@ -103,10 +103,14 @@ _is_boat_captured = {
 
     // Check vehicle to be empty, if yes, continue check procedure
     if ( ( { alive _x } count (crew _boat)) ==  0 ) exitWith {
-        if ( (count ([_boat, 20] call SYG_findNearestPlayers)) > 0 ) exitWith {true}; // Player[s] found nearby
+        // #699.1: Turn off the engine on an empty boat
+        if (isEngineOn _boat) then {
+            if ( (count ([_boat, 50] call SYG_findNearestPlayers)) > 0 ) then {
+                _boat engineOn false;
+            }; // Player[s] found nearby
+        };
 
-        // Find nearest circle of any type near the boat and SPPM center ("RoadCone")
-//s        !isNull (nearestObject [ _boat, "HeliH"]) // Heli circle is found (true) or not (false)
+        // Ship is standing on underwater SM cicle or on SPPM point
         (count (nearestObjects [_boat, ["HeliH","RoadCone"], 20])) > 0
     };
     false
@@ -179,14 +183,13 @@ _is_ship_stuck = {
 	// #639: Allow naval boat capturing
 	// #677: check yellow circle or player nearby to count boat as hijacked
 	if ( _this call _is_boat_captured ) exitWith {
-		// Move boat from serviced list to the common vehicle list
+		// Move boat from service list to the common vehicle list
 		_this call _capture_boat;
-//		_this call _remove_patrol; // this method will be called in main loop directly after returning from _is_ship_stuck with result true
 		true
 	};
 
 	_grp = _this select OFFSET_GRP;
-	// #691: wait some time before to remove boat to help players to capture it 9ROkse)
+	// #691: wait some time before to remove boat to help players to capture it (Rokse)
 	if ( ({alive _x} count (units _grp)) == 0) exitWith {
 	    private ["_del_time"];
 	    _del_time = (_this select OFFSET_STAT) select OFFSET_STAT_DEL_TIME;
