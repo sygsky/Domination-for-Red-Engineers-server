@@ -877,7 +877,11 @@ XGetPlayerPoints = {
 	if ( (toUpper (_name)) == "YETI") then {
 	    _sound = format["suicide_yeti_%1", floor (random 5)]; // personal suicide sound for yeti (0..4);
 	} else {
-		// try to find special sound for german players
+	    //+++
+		// try to find special sound for specific players: with german, women etc.
+		// The problem may be on the server, where we have no 'player' operator, only its name,
+		// and if it is 1st connection for this player, we can't find it in common name array for reegistered players
+		//---
 		_sound = "";
 		_woman = d_player_entities find (_stuff select 4); // player_id in SQM, e.g. "bravo_3"
 		if (_woman < 0) then {_woman = false} else {_woman = (call (SYG_players_arr select _woman)) call SYG_isWoman};
