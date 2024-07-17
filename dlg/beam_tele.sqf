@@ -125,9 +125,9 @@ hint localize format[ "+++ beam_tele.sqf: _pos = %1, _global_pos = %2, player = 
 
 if (_sound != "") then {
     playSound _sound;
-    cutText ["","BLACK IN", 0.1];
-    sleep 0.2;
-    cutText ["","BLACK OUT", 7.8];
+    cutText ["","BLACK FADED", 0];
+    sleep 0.5;
+    cutText ["","BLACK IN", 7];
     sleep 7;
 };
 
