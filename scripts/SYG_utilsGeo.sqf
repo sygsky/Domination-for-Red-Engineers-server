@@ -647,8 +647,7 @@ SYG_gendirlistE = ["C","С-СВ","СВ","В-СВ","В","В-ЮВ","ЮВ","В-ЮВ
 // call: _dirname = _dir call SYG_getDirName;
 SYG_getDirName = {
 //	hint localize format["SYG_getDirName: this %1", _this];
-	_this  = _this mod 360;
-	if ( _this < 0 ) then {_this = _this + 360;};
+	_this  = _this call SYG_normalizeAngle;
 	switch localize "STR_LANG" do {
 		case "RUSSIAN": { SYG_gendirlistE select (round (_this/22.5))};
 		case "ENGLISH";
@@ -659,9 +658,7 @@ SYG_getDirName = {
 
 SYG_getDirNameEng = {
 //	hint localize format["SYG_getDirNameEng: this %1", _this];
-		_this  = _this mod 360;
-	if ( _this < 0 ) then {_this = _this + 360;};
-	SYG_gendirlistW select (round (_this/22.5))
+	SYG_gendirlistW select (round ((_this call SYG_normalizeAngle)/22.5))
 };
 
 

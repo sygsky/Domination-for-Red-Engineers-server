@@ -226,10 +226,10 @@ SYG_rotatePointAroundPoint = {
 	private ["_pnt1","_pnt2","_x","_y","_dx","_dy","_ang","_sin","_cos"];
 	_pnt1 = _this select 0; // zero point
 	_pnt2 = _this select 1; // rotated point
-	_x = argp(_pnt1,0);
-	_y = argp(_pnt1,1);
-	_dx = argp(_pnt2,0)- _x;
-	_dy = argp(_pnt2,1)- _y;
+	_x = x(_pnt1);
+	_y = y(_pnt1);
+	_dx = x(_pnt2) - _x;
+	_dy = y(_pnt2) - _y;
 	_ang  = _this select 2;
 	_sin = sin _ang;
 	_cos = cos _ang;
@@ -246,8 +246,8 @@ SYG_addDiff2Pos = {
     _offs = _this select 1;
     _newPos = [];
     {
-        _newPos set [_x, argp(_pos,_x) + argp(_offs, _x)];
-    } forEach [0,1,2];
+        _newPos set [ _x, (_pos select _x) + (_offs select _x) ];
+    } forEach [2,1,0];
     _newPos
 };
 
@@ -264,24 +264,35 @@ SYG_calcPosRotation = {
 // _posRelArr = [_house, _relArr] call SYG_calcRelArr;
 //
 // Where: _relArr = [[_dx,_dy,_dz], _ang]; _posRelArr = [[_x,_y,_z], _dir];
-//
+// TODO: It seems to be incorrect to rotate rel point around objtc center as
+// TODO: command worldToModel already rotated it correct.
+// TODO: That means you have to rotate rel object point its center according to the direction of base object
 SYG_calcRelArr = {
     private ["_house","_houseDir","_thingObjArr","_thingRelPos","_thingAng","_thingPos","_thingDir"];
     _house = _this select 0;
     _houseDir = getDir _house;
     _thingObjArr = _this select 1;
-    _thingRelPos = argp(_thingObjArr,0);
-    _thingAng = argp(_thingObjArr,1);
-    _thingPos = [_house modelToWorld [0,0,0], ([[0,0,0], _thingRelPos, -_houseDir] call SYG_rotatePointAroundPoint)] call SYG_addDiff2Pos;
-    _thingDir = (_thingAng + _houseDir + 360) mod 360;
+    _thingRelPos = _thingObjArr select 0;
+    _thingAng = _thingObjArr select 1;
+    _thingPos = _house modelToWorld _thingRelPos;
+    _thingDir = (_thingAng + _houseDir) call SYG_normalizeAngle;
     [_thingPos, _thingDir]
 };
 
+//
+// Converts any angle to positive value <= 360 degrees
+// Examples:
+// -90  => 270
+// -480 => 240
+// 460  => 120
+SYG_normalizeAngle = {
+    ((_this mod 360) + 360) mod 360
+};
 /**
  * Creates array with info to store object position according to house
  *
  * call: _rel_arr = [_house, _unit] call SYG_worldObjectToModel;
- * where _rel_arr = [[_dx,_dy,_dz], _angle, _house_center_world_pos]; // _angle is object angle in house model space
+ * Returns: _rel_arr = [[_dx,_dy,_dz], _angle, _house_center_world_pos]; // _angle is object angle in house coordinates system
  */
 SYG_worldObjectToModel = {
     private ["_house","_unit","_pos"];
@@ -289,7 +300,7 @@ SYG_worldObjectToModel = {
     _house = _this select 0;
     _unit  = _this select 1;
     _pos   = _unit modelToWorld [0,0,0];
-    [ _house worldToModel _pos, ((getDir _unit) - (getDir _house) + 360) mod 360, _house modelToWorld [0,0,0] ]
+    [ _house worldToModel _pos, ((getDir _unit) - (getDir _house)) call SYG_normalizeAngle, _house modelToWorld [0,0,0] ]
 };
 
 /**
@@ -314,9 +325,14 @@ SYG_pointInCircle = {
 };
 
 // =======================================
-// Ellipse in format [[center x, center y<, center z>], a<, b<,angle>>], with or without rotation
 // call : _in_ellipse = [_pnt, _elli] call SYG_pointInEllipse;
-// (x-x0)^2/a^2+(y-y0)^2/b^2 <= 1
+//
+// Variants on 2nd input area parameter (_elli) are:
+// 1. [[_x,_y,_z], _a] - circle
+// 2.  [[_x,_y,_z], _a, _b] - ellipse no rotation
+// 3.  [[_x,_y,_z], _a, _b, -rot] - ellipse with rotation
+//
+// Formula: (x-x0)^2/a^2+(y-y0)^2/b^2 <= 1
 SYG_pointInEllipse = { 
 	private ["_pnt","_elli","_elli_center","_dx","_dy","_a","_b","_ret"];
 	_elli = _this select 1;
@@ -330,7 +346,7 @@ SYG_pointInEllipse = {
     _elli_center = _elli select 0;
     if ( count _elli > 3) then { // ellipse may be rotated
         if ( typeName (_elli select 3) == "SCALAR" ) then  { // Ellipse is rotated
-			if ( _elli select 3 != 0 ) then  { // Ellipse is rotated, rotete point around ellipse center too
+			if ( _elli select 3 != 0 ) then  { // Ellipse is rotated, rotaete point around ellipse center too
 				_pnt = [ _elli_center, _pnt, _elli select 3] call SYG_rotatePointAroundPoint;
 			};
         };
@@ -358,12 +374,13 @@ SYG_pointInRect = {
 	_rpnt = _rect select 0; // Rectangle central point
 	//player groupChat format["SYG_pointInRect: rect %1, pnt %2, rot %3", _rect,_pnt, argp(_rect,3)];
 	if ( count _rect > 3 ) then {// may be rotated
-		if ( argp(_rect,3) != 0) then {
-			_pnt = [_rpnt,_pnt,argp(_rect,3)] call SYG_rotatePointAroundPoint;
+		if ( (_rect select 3) != 0 ) then {
+			_pnt = [_rpnt,_pnt,_rect select 3] call SYG_rotatePointAroundPoint;
 		};
 	};
 	//player groupChat format["SYG_pointInRect: rect %1, pnt %2", _rect,_pnt];
-	((abs(argp(_pnt,0)-argp(_rpnt,0)) <= argp(_rect,1)) && (abs(argp(_pnt,1)-argp(_rpnt,1)) <= argp(_rect,2)))
+	if (abs((_pnt select 0)-(_rpnt  select 0)) > (_rect select 1)) exitWith {false};
+	( abs((_pnt select 1)-(_rpnt select 1)) <= (_rect select 2))
 };
 
 /**
@@ -396,10 +413,8 @@ SYG_elongate2 = {
  */
 SYG_elongate2Z = {
 	private ["_pnt1","_pnt2","_elongate","_dx","_dy"];
-	_pnt1 = _this select 0;
-	if ( typeName _pnt1 == "OBJECT") then {_pnt1 = getPos _pnt1;};
-	_pnt2 = _this select 1;
-	if ( typeName _pnt2 == "OBJECT") then {_pnt2 = getPos _pnt2;};
+	_pnt1 = (_this select 0) call SYG_getPos;
+	_pnt2 = (_this select 1) call SYG_getPos;
 	_elongate = (_this select 2)/(_pnt1 distance _pnt2);
 
 	_dx = x(_pnt2) - x(_pnt1); // (_pnt2 select 0) - (_pnt1 select 0);
@@ -454,7 +469,7 @@ SYG_speedBetweenPoints2D = {
  * _res = [_num, _root_degree] call SYG_anyRoot;
  */
 SYG_anyRoot = {
-	exp(ln(_this select 0)/_this select 1)
+	exp(ln(_this select 0)/(_this select 1))
 };
 
 /**
@@ -493,9 +508,9 @@ SYG_averPoint = {
 	_posZ = 0.0;
 	{
 		_pnt = _x call SYG_getPos;
-		_posX = _posX + (_pnt select 0);
-		_posY = _posY + (_pnt select 1);
-		if ( count _pnt > 2 ) then { _posZ = _posZ + ( _pnt select 2 ); };
+		_posX = _posX + z(_pnt);
+		_posY = _posY + y(_pnt);
+		_posZ = _posZ + z(_pnt);
 	} forEach _this;
 	_cnt = count _this;
 	[_posX/_cnt, _posY/_cnt, _posZ/_cnt]

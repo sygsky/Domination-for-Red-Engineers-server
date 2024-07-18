@@ -49,8 +49,7 @@ while {alive _unit} do
 	_left = round _left;
 	_right = round _right;
 
-	_dir = random (_right - _left) + _left;
-	if (_dir < 0) then {_dir = _dir + 360}; 
+	_dir = (random (_right - _left) + _left) call SYG_normalizeAngle;
 
 	_pos  = position _unit;
 	if (_height) then {_zaxis = random 20};
