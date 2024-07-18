@@ -1,5 +1,8 @@
 // x_scripts\x_arifire.sqf, by Xeno
-private ["_arti_operator", "_height", "_type", "_radius", "_number_shells", "_arix", "_ariy", "_ang", "_posf", "_posb", "_posl", "_posr", "_center_x", "_center_y", "_arti_distance", "_travel_time", "_first_run", "_enemy_units", "_points_p", "_series", "_wp_array", "_x1", "_y1", "_angle", "_strenght", "_i", "_j", "_soldier_type", "_uuu", "_shell", "_xo", "_pos", "_pod", "_helper_bomb", "_remove_them", "_ari_salvos"];
+private ["_arti_operator", "_height", "_type", "_radius", "_number_shells", "_arix", "_ariy", "_ang", "_posf", "_posb",
+    "_posl", "_posr", "_center_x", "_center_y", "_arti_distance", "_travel_time", "_first_run", "_enemy_units",
+    "_points_p", "_series", "_wp_array", "_x1", "_y1", "_angle", "_strenght", "_i", "_j", "_soldier_type", "_uuu",
+    "_shell", "_xo", "_pos", "_pod", "_helper_bomb", "_remove_them", "_ari_salvos", "_cnt"];
 if (!isServer) exitWith {};
 
 #include "x_setup.sqf"
@@ -30,7 +33,7 @@ switch (ari_type) do {
         _arix = getPos AriTarget select 0;
         _ariy = getPos AriTarget select 1;
         call compile format ["_ang = (_arix - (getPos %1 select 0)) atan2 (_ariy - (getPos %1 select 1));", _arti_operator];
-        if(abs _ang != _ang) then {angle = _ang + 360};
+        if(abs _ang != _ang) then {_ang = _ang + 360};
         _posf = [_arix + _radius * sin(_ang), _ariy + _radius * cos(_ang)]; //in front range
         _posb = [_arix - _radius * sin(_ang), _ariy - _radius * cos(_ang)]; //behind range
         _posl = [_arix + _radius * sin(_ang-90), _ariy + _radius * cos(_ang-90)]; //left lateral
@@ -83,17 +86,20 @@ for "_series" from 1 to ari_salvos do {
 	while {count _wp_array < _number_shells} do {	
 		if (ari_type == "flare") then {
 			{
-				_x1 = (_x select 0) - 20 + random 40; // No need for circular randomness
-				_y1 = (_x select 1) - 20 + random 40;
-				_wp_array = _wp_array + [[_x1, _y1, _height + random 10]];
+			    _rndPos = [_x, 20] call SYG_rndPointInRad;
+			    _rndPos set [2, _height + random 10];
+//				_x1 = (_x select 0) - 20 + random 40; //No need for circular randomness
+//				_y1 = (_x select 1) - 20 + random 40;
+				_wp_array = _wp_array + [_rndPos];
 				sleep 0.0153;
 			} forEach [_posf, _posb, _posl, _posr];
 		} else {
-			_angle = floor random 360;
-			_randrad = _radius call XfRndRadious; // correct random distribution
-			_x1 = _center_x - (_randrad * sin _angle);
-			_y1 = _center_y - (_randrad * cos _angle);
-			_wp_array = _wp_array + [[_x1, _y1, (if (ari_type == "he") then {_height + random 50} else {_height})]];
+            _rndPos = [_x, _radius] call SYG_rndPointInRad;
+            _rndPos set [2, if (ari_type == "he") then {_height + random 50} else {_height}];
+//			_angle = floor random 360;
+//			_x1 = _center_x - ((random _radius) * sin _angle);
+//			_y1 = _center_y - ((random _radius) * cos _angle);
+			_wp_array = _wp_array + [ _rndPos];
 			sleep 0.0153; // 0.2
 		};
 	};
@@ -106,13 +112,17 @@ for "_series" from 1 to ari_salvos do {
 	switch (ari_type) do {
 		case "flare": {
 			sleep 1;
-			_strenght = 8; // Use this until we get flares with proper arty brightness. Maybe ACE can provide such flares for this use?
+#ifdef __ACE__
+            _strength = 2; // ACE rocks!
+#else
+			_strenght = 8; //Use this until we get flares with proper arty brightness. Maybe ACE can provide such flares for this use?
+#endif
 			for "_i" from 0 to (_number_shells-1) do {
 				for "_j" from 0 to (_strenght-1) do {
 					_type createVehicle [(_wp_array select _i) select 0, (_wp_array select _i) select 1, ((_wp_array select _i) select 2)-_j/100];
 					sleep 0.002;
 				};
-				if (((_i+1) % 4 == 0) && (_i > 1)) then {sleep (18 + (ceil random 5))} else {sleep (0.5 + (random 1.5))};
+				if (((_i+1) % 4 == 0) && (_i > 1)) then {sleep (18 + (ceil random 5))} else {sleep (0.5 + random 1.5)};
 			};
 		};
 		case "he": {
@@ -120,7 +130,8 @@ for "_series" from 1 to ari_salvos do {
 				case "EAST": {"SoldierEB"};
 				case "WEST": {"SoldierWB"};
 			};
-			_enemy_units = nearestObjects [[position AriTarget select 0,position AriTarget select 1,0] ,[_soldier_type],_radius];
+			_enemy_units  = position AriTarget nearObjects [_soldier_type,_radius];
+//			_enemy_units = nearestObjects [[position AriTarget select 0,position AriTarget select 1,0] ,[_soldier_type],_radius];
 			for "_i" from 0 to (count _enemy_units - 1) do {
 				_uuu = _enemy_units select _i;
 				if (!alive _uuu) then {_enemy_units set [_i, "X_RM_ME"]};
@@ -151,7 +162,9 @@ for "_series" from 1 to ari_salvos do {
 				case "EAST": {"SoldierEB"};
 				case "WEST": {"SoldierWB"};
 			};
-			_enemy_units = nearestObjects [[position AriTarget select 0,position AriTarget select 1,0] ,[_soldier_type],_radius];
+            _enemy_units  = position AriTarget nearObjects [_soldier_type,_radius];
+// 			_enemy_units = nearestObjects [[position AriTarget select 0,position AriTarget select 1,0] ,[_soldier_type],_radius];
+			_cnt = count _enemy_units; // Number of enemies in area of arti strike
 			for "_i" from 0 to (count _enemy_units - 1) do {
 				_uuu = _enemy_units select _i;
 				if (!alive _uuu) then {_enemy_units set [_i, "X_RM_ME"]};
@@ -176,11 +189,11 @@ for "_series" from 1 to ari_salvos do {
 	
 	if (_first_run) then {
 		_first_run = false;
-		ari_type spawn {
-			if (_this in ["dpicm","he"]) then {
-				sleep 2.123;
-				AriTarget execVM "x_scripts\x_arihit.sqf";
-			};
+		if (ari_type in ["dpicm","he"]) then {
+            ari_type spawn {
+                sleep 2.123;
+                AriTarget execVM "x_scripts\x_arihit.sqf";
+            };
 		};
 	};
 		
@@ -197,10 +210,16 @@ for "_series" from 1 to ari_salvos do {
 
 sleep 2;
 
+//
+// Now check number of killed enemy infantry
+//
 {
 	if (!alive _x) then {_points_p = _points_p + 1};
 } forEach _enemy_units;
 ["d_parti_add",_arti_operator,_points_p] call XSendNetStartScriptClient;
+["log2server", name player, format["+++ Arti strike results, by resque#1(%1): total enemies in strike zone %2, alive %3, killed (+score) after %4",
+    _arti_operator, _cnt, count _enemy_units, _points_p]] call XSendNetStartScriptServer;
+
 _enemy_units = nil;
 sleep 0.5;
 

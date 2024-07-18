@@ -107,11 +107,10 @@ XHandleNetStartScriptClient = {
 			#endif
 		};
 		case "d_parti_add": {
-			if (str(player) == (_this select 1) && ((_this select 2) != 0 )) then {
-				//player addScore (_this select 2)
-				(_this select 2) call SYG_addBonusScore
+			if ( str(player) == (_this select 1)  ) then {
+                //player addScore (_this select 2)
+                (_this select 2) call SYG_addBonusScore
 			};
-
 		};
 		case "d_create_box": {
 			private ["_the_box", "_box", "_boxscript"];
