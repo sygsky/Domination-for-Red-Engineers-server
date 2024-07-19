@@ -2,7 +2,7 @@
 // The purpose of this script is unclear.
 // It seems to do follow:
 // 1. Find allgroups in arti strike zone
-// 2. All tank-like vehicle are coverd with shell smoke bomb
+// 2. All tank-like vehicle are covered with shell smoke bomb
 // 3. All infantry groups smoke with available smoke grenades and try to leave strike zone!!!
 //
 // Modified:
