@@ -508,7 +508,7 @@ SYG_averPoint = {
 	_posZ = 0.0;
 	{
 		_pnt = _x call SYG_getPos;
-		_posX = _posX + z(_pnt);
+		_posX = _posX + x(_pnt);
 		_posY = _posY + y(_pnt);
 		_posZ = _posZ + z(_pnt);
 	} forEach _this;
