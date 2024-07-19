@@ -6,14 +6,14 @@ private ["_name", "_miscp", "_index", "_bit_array", "_var", "_bitasnum","_tmp_a"
 #include "x_macros.sqf"
 
 #define __DEBUG_PRINT__
+#ifdef __DEBUG_PRINT__
+hint localize format[ "+++ x_scripts\x_serverOPC.sqf: _this = %1", _this ];
+#endif
 
 _name = _this select 0;
 
 if (_name == "__SERVER__") exitWith {};
 
-#ifdef __DEBUG_PRINT__
-hint localize format[ "+++ x_scripts\x_serverOPC.sqf: player name is ""%1""", _name ];
-#endif
 
 //__DEBUG_NET("x_serverOPC player connected",_name)
 

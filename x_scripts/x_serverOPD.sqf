@@ -2,15 +2,17 @@
 if (!isServer) exitWith{};
 private ["_name", "_index", "_parray", "_oldwtime", "_connecttime", "_newwtime","_str","_arr","_equipStr","_wpnArr","_player","_cnt"];
 
+#define __DEBUG_PRINT__
+#ifdef __DEBUG_PRINT__
+hint localize format[ "+++ x_scripts\x_serverOPD.sqf: _this = %1", _this ];
+#endif
+
 _name = _this select 0;
 if (_name == "__SERVER__") exitWith {};
 
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __DEBUG_PRINT__
-
-// __DEBUG_NET("x_serverOPD player disconnected",_name)
 
 _index = d_player_array_names find _name;
 if (_index >= 0) exitWith {

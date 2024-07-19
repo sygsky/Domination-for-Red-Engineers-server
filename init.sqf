@@ -498,8 +498,8 @@ if (isServer) then {
 	hint localize format["+++ ACE:ace_sys_network_OPD count %1", count ace_sys_network_OPD];
 
 #else
-	onPlayerConnected "xhandle = [_this select 0] execVM ""x_scripts\x_serverOPC.sqf""";
-	onPlayerDisconnected "xhandle = [_this select 0] execVM ""x_scripts\x_serverOPD.sqf""";
+	onPlayerConnected "xhandle = _this execVM ""x_scripts\x_serverOPC.sqf""";
+	onPlayerDisconnected "xhandle = _this execVM ""x_scripts\x_serverOPD.sqf""";
 #endif
 
 //#define __DEBUG_CREW_FILLING__
