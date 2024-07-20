@@ -182,8 +182,8 @@ _ve spawn {
         ["ACE_20Rnd_762x51_B_FAL",48],["ACE_30Rnd_9x19_B_MP5",48],["ACE_30Rnd_9x19_SD_MP5",48],["ACE_25Rnd_1143x23_B_UMP45",48],
         ["ACE_20Rnd_556x45_SB_Stanag",48],["ACE_30Rnd_556x45_B_Stanag",48],["ACE_30Rnd_556x45_SD_Stanag",48],
         ["ACE_30Rnd_556x45_BT_Stanag",48],["ACE_20Rnd_762x51_B_SCAR",48],["ACE_20Rnd_762x51_SB_SCAR",48],["ACE_20Rnd_762x51_B_HK417",48],
-        ["ACE_20Rnd_762x51_SB_HK417",48],["ACE_20Rnd_762x51_B_M14",48],["ACE_30Rnd_556x45_B_G36",48],["ACE_30Rnd_556x45_BT_G36",48],
-        ["ACE_100Rnd_556x45_B_G36",48],["ACE_100Rnd_556x45_BT_G36",48],
+        ["ACE_20Rnd_762x51_SB_HK417",48],["ACE_20Rnd_762x51_B_M14",48],["ACE_30Rnd_556x45_BT_G36",48],
+        ["ACE_100Rnd_556x45_BT_G36",48],
         ["ACE_8Rnd_12Ga_Buck00",48],["ACE_9Rnd_12Ga_Slug",48],["ACE_9Rnd_12Ga_Buck00",48],
 
         ["ACE_Dummy_SNIPER",40],
@@ -192,11 +192,10 @@ _ve spawn {
         ["ACE_10Rnd_127x99_BT_Barrett",15],["ACE_10Rnd_127x99_API_Barrett",15],["ACE_5Rnd_25x59_HEDP_Barrett",15],["ACE_8Rnd_12Ga_Slug",48],
 
         ["ACE_Dummy_MG",48],
-        ["ACE_200Rnd_556x45_B_M249",48],["ACE_200Rnd_556x45_BT_M249",48],["ACE_100Rnd_762x51_B_M240",48],
-        ["ACE_100Rnd_762x51_BT_M240",48],["ACE_50Rnd_762x51_B_M240",48],["ACE_50Rnd_762x51_BT_M240",48],
+        ["ACE_200Rnd_556x45_BT_M249",48],["ACE_100Rnd_762x51_BT_M240",48],["ACE_50Rnd_762x51_BT_M240",48],
         ["ACE_100Rnd_762x51_B_M60",48],["ACE_M2_CSWDM",48],
-        ["ACE_Dummy_PISTOL",48],
 
+        ["ACE_Dummy_PISTOL",48],
         ["ACE_15Rnd_9x19_B_M9",48],["ACE_15Rnd_9x19_SD_M9",48],["ACE_7Rnd_1143x23_B_M1911",48],["ACE_17Rnd_9x19_G17",48],
         ["ACE_33Rnd_9x19_G18",48],
 
