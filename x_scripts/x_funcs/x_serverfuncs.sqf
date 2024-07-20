@@ -219,7 +219,7 @@ x_getwparray = {
 		sleep 0.05;
 	};
 	if (_bad_cnt > 0) then {
-	    hint localize format["*** x_getwparray: %1 bad point[s] in building detected, %2 good points created", _bad_cnt, _pnt_num];
+	    hint localize format["*** x_getwparray: %1 bad point[s] (in buildings) detected, %2 good points created", _bad_cnt, _pnt_num];
 	};
 	_wp_a
 };
@@ -864,16 +864,20 @@ XAddPlayerScore = {
 };
 
 // Sends info about player score etc if found it in server cache
-// input params: ["d_p_a", name player<, missionStart<,"RUSSIAN|GERMAN|ENGLISH|SPANISH">>]
+// input params: ["d_p_a", name player<, missionStart<,"RUSSIAN|GERMAN|ENGLISH|SPANISH"<,player_role(string)>>>]
 XGetPlayerPoints = {
-	private ["_name", "_index", "_stuff", "_sound","_dt","_woman"];
+	private ["_name", "_index", "_stuff", "_sound","_dt","_woman","_role"];
 	_name = (_this select 1);
 	_index = d_player_array_names find _name;
 	//__DEBUG_NET("XGetPlayerPoints",_name)
 	//__DEBUG_NET("XGetPlayerPoints",_index)
 	_stuff = if (_index >= 0) then { d_player_array_misc select _index } else { [] }; // whole stuff, full player_array_misc item
-	hint localize format["+++ XGetPlayerPoints: _this = %1, _stuff = %2", _this, _stuff];
+	hint localize format["+++ XGetPlayerPoints: _this = %1, d_player_array_names = %2, _stuff = %3", _this, d_player_array_names, _stuff];
 	// Prepare also semi-unique (up to 15 users) suicide sound for this player as parameter index 3
+	if ( ((_staff select 4) == "") && (((count _this) > 4)) ) then {
+	    // lets add player role finally!
+	    _stuff set [4, _this select 4];
+	};
 	if ( (toUpper (_name)) == "YETI") then {
 	    _sound = format["suicide_yeti_%1", floor (random 5)]; // personal suicide sound for yeti (0..4);
 	} else {
@@ -883,8 +887,11 @@ XGetPlayerPoints = {
 		// and if it is 1st connection for this player, we can't find it in common name array for reegistered players
 		//---
 		_sound = "";
-		_woman = d_player_entities find (_stuff select 4); // player_id in SQM, e.g. "bravo_3"
+		_role = _stuff select 4; // Player role
+
+		_woman = d_player_entities find _role; // player_role in SQM, e.g. "bravo_3", "delta_1" (engineer #1)
 		if (_woman < 0) then {_woman = false} else {_woman = (call (SYG_players_arr select _woman)) call SYG_isWoman};
+		hint localize format["+++ XGetPlayerPoints: woman = %1, role = %2, role index = %3 (-1 is not found error)", _woman, _role, d_player_entities find _role];
 
 		if ( _woman ) exitWith {
 			_sound = _index call SYG_getSuicideFemaleScreamSoundById; // set sound from common list, not personal (yeti, any german player etc)

@@ -310,7 +310,7 @@ SYG_setObjectInHousePos = {
     _house   = arg(0);
     _obj     = arg(1);
     _rel_arr = arg(2);
-    _angle   = ( _rel_arr select 1) + (getDir _house)) CALL SYG_normalizeAngle;
+    _angle   = (( _rel_arr select 1) + (getDir _house)) call SYG_normalizeAngle;
     _obj setDir _angle;
     _pos = _house modelToWorld (_rel_arr select 0);
     _obj setPos (_pos);

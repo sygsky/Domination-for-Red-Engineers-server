@@ -135,7 +135,7 @@ XHandleNetStartScriptServer = {
 
 		// It is 1st message from client, info from user about his name, missionStart, language, addons found etc.
 		// This message is answered with  user score, weapons etc
-		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN"<,"ACE_found">>>]
+		// Example: ["d_p_a", name player<, missionStart<,"RUSSIAN"<,"ACE_found"<,playerRole>>>>]
 		case "d_p_a": {
             // store server time directly now for better accuracy
             SYG_server_time  = time;       // current server time at the synchonizaton moment

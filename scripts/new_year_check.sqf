@@ -11,7 +11,7 @@
 
 _start = _this;
 if ( (_start select 0) == 0 ) exitWith {hint localize "--- new_year_check.sqf: multipleer not found, exiting"};
-if ( ((_start select 1) != 12) || ((_start select 2) < 30 ) ) exitWith {hint localize "--- new_year_check.sqf: it is before 30th of December, good bye, soldier!"}; // check to be 31-DECEMBER-XXXX
+if ( ((_start select 1) != 12) || ((_start select 2) < 30 ) ) exitWith {hint localize "+++ new_year_check.sqf: it is before 30th of December, good bye, soldier!"}; // check to be 31-DECEMBER-XXXX
 hint localize format["+++ new_year_check.sqf: new year activity procedure started with missionStart = %1", _start];
 
 _time = time; // current time of mission
