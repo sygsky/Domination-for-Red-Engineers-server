@@ -155,7 +155,7 @@ _str = _str +  format[localize "STR_SET_12_1",d_ranked_a select 20] + "\n"; // "
 
 _str = _str + (localize "STR_SET_8") ; // "Mandatory side missions"
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
-_str = _str +  format[localize "STR_SET_8_1", __SIDE_MISSION_PER_MAIN_TARGET_COUNT__] + "\n";
+_str = _str +  format[localize "STR_SET_8_1", __SIDE_MISSION_PER_MAIN_TARGET_COUNT__] + "\n"; // ", towns per SM: %1"
 #else
 _str = _str + ": " + _strNoCR;
 #endif

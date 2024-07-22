@@ -3,7 +3,7 @@ if (!XClient) exitWith {};
 
 #include "x_setup.sqf"
 
-_which = _this select 0;
+_which = _this select 0; // 1 - main target, 0 - side mission
 
 #ifdef __SIDE_MISSION_PER_MAIN_TARGET_COUNT__
 if (_which == 1) then {
