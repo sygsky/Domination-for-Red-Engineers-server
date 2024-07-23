@@ -431,6 +431,7 @@ class CfgSounds {
     class armory2  { name=""; sound[] = {\sounds\short\armory\armory2.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 2
     class armory3  { name=""; sound[] = {\sounds\short\armory\armory3.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 3
     class armory4  { name=""; sound[] = {\sounds\short\armory\armory4.ogg,db+10,1.0}; titles[] = {}; } // Armory store event 4
+    class armory5  { name=""; sound[] = {\sounds\short\armory\armory5.ogg,db+10,1.0}; titles[] = {}; } // Armory sound event 5
 
     class chiz_tanki_1   {name = "Чиж. 'По танку вдарила болванка...'"; sound[] = {\sounds\defeat\chiz_tanki_1.ogg, db+10, 1.0}; titles[] = {}; }; // "The tank was hit by a dummy..." song of the ensemble " Chizh"
     class chiz_tanki_2   {name = "Чиж. 'Нас извлекут из под обломков...'"; sound[] = {\sounds\defeat\chiz_tanki_2.ogg, db+10, 1.0}; titles[] = {}; }; // "We will be pulled from under the rubble..." song of the ensemble " Chizh"

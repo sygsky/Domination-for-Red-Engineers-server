@@ -100,7 +100,15 @@ _sites = [
 for "_i" from 0 to ((count _sites) - 1) do {
 	_x = _sites select _i;
 	_pos = _x select 0;
-	_item = createVehicle [ _x select 2, _pos, [], 0, "NONE" ]; // [_type, _pos, [markers],_rad, "HOW_TO_POS"]
+	_type =  _x select 2;
+	_item = createVehicle [ _type, _pos, [], 0, "NONE" ]; // [_type, _pos, [markers],_rad, "HOW_TO_POS"]
+	if ( _type == _flag_type ) then {
+	    sleep 1;
+        // #699.3: Add "reload ammo" command on this flag
+        _item setVehicleInit "this execVM ""x_missions\common\GRU_boat_flag_init.sqf"""; // To add command "Re-ammo GRU boat". No other boats re-loaded
+        // For connected player we will add command throw system command
+        ["remote_execute","(_this select 2) execVM ""x_missions\common\GRU_boat_flag_init.sqf""", _item ] call XSendNetStartScriptClientAll;
+	};
 	_item setDir (_x select 1);
 	_pos = getPos _item;
 	_pos set [2,0];

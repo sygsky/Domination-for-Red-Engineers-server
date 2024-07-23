@@ -2380,7 +2380,7 @@ SYG_typesVehCanLift = {
 	[ vehicle, launcher type, magazine ammo type, realod weapon] call SYG_reloadAmmo;
 	e.g.
 	[_x,"ACE_M6_Stinger_Launcher", "ACE_M6_FIM92"<, true>] call SYG_reloadAmmo; // Ammo itself for this example will be "ACE_FIM92round" and is not used
-	Note: can reload only statdart weapon set, existed on config/ No custom weapon sets are supported/
+	Note: can reload only statdard weapon set, existed on config/ No custom weapon sets are supported/
 */
 SYG_reloadAmmo = {
 	private ["_veh", "_wpnType", "_magType", "_ammoCnt", "_magCntCfg", "_magCntVeh", "_addMagCnt", "_ammoCntCfg","_str"];
