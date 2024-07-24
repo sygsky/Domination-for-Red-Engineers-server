@@ -30,9 +30,9 @@ if (_remote) exitWith {
     if (local _boat) exitWith {
         _boat engineOn false;
         sleep 0.6;
-        ["log2server", name player, format["The moving GRU boat has been stopped (in real %1).", isEngineOn _boat]] call XSendNetStartScriptServer;
+        ["log2server", name player, format["The moving GRU boat has been switched off (in real %1).", isEngineOn _boat]] call XSendNetStartScriptServer;
         hint localize format["--- GRU_boat_respawn.sqf success: local boat engine stopped, after 0.5 sec. engine is %1",
-         if (isEngineOn _boat) then {"on"} else {"off"}];
+        if (isEngineOn _boat) then {"on"} else {"off"}];
     };
 };
 
@@ -82,7 +82,7 @@ while { true } do {
 			};
 			// 4. Wait for all players to leave and delete the GRU boat.
 			if ( (call XPlayersNumber) == 0 ) exitWith {
-				deleteVehicle _veh;
+				hint localize "+++ GRU_boat_respawn.sqf: GRU boat removed when no players in game";
 				while {(call XPlayersNumber) == 0 } do { sleep 80; };
 				// "The GRU boat mysteriously disappeared while island was without players. Perhaps it was swallowed by the local Leviathan."
 				// Prints after 30 seconds
@@ -91,14 +91,20 @@ while { true } do {
 			// 3. If the boat is delivered, everyone in it or near gets +10 points.
 			if ( (_veh distance _pos)  < 2 ) exitWith {
                 // "The GRU boat has been delivered to the agreed place. Thanks to comrades: %1."
-                [ "msg_to_user", "",  [ ["STR_GRU_BOAT_DELIVERED", names] ], 0, 0, false, "naval" ] call XSendNetStartScriptClient;
+                [ "msg_to_user", "",  [ ["STR_GRU_BOAT_DELIVERED", names] ], 0, 0, false, "naval" ] call XSendNetStartScriptClientAll;
+        		hint localize "+++ GRU_boat_respawn.sqf: GRU boat removed after being delibvered to the flag";
 				_names = [_boat, 30] call SYG_findNearestPlayers;
 				if (count _name > 0 ) then {
 				    // "Thank you for your service, comrade! You get points: +%1."
-					[ "change_score", _names, d_ranked_a select 18, [ "msg_to_user", "",  [ ["STR_GRU_BOAT_DELIVERED1", d_ranked_a select 18] ], 0, 5, false, "three_kinds" ] ] call XSendNetStartScriptClient;
+					[ "change_score", _names, d_ranked_a select 18, [ "msg_to_user", "",  [ ["STR_GRU_BOAT_DELIVERED1", d_ranked_a select 18] ], 0, 5, false, "three_kinds" ] ] call XSendNetStartScriptClientAll;
 				};
+				sleep 2;
 			};
 			sleep 5;
+		};
+		if (!isNull _veh) then  {
+		    deleteVehicle _veh;
+            ["say_sound", getPos _veh, "steal"] call XSendNetStartScriptClient;
 		};
 	};
 

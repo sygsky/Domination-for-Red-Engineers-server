@@ -17,8 +17,8 @@ if (!isServer) exitWith {};
 // Top Y bound for sandstorms
 #define SANDSTORM_TOP_Y 7500
 
-#define FOG_ON_ISLAND_MIN_TIME 5    // hours to be out fog
-#define FOG_ON_ISLAND_MAX_TIME 19   // hours to be in fog
+#define FOG_ON_ISLAND_MIN_TIME 5    // Hours of time to not create fog
+#define FOG_ON_ISLAND_MAX_TIME 19   // Hours of time to create fog
 #define CLOUDY_X_STEP_SIZE 20
 #define CLOUDY_Y_STEP_SIZE (-10 + (floor random 21))
 #define FOG_X_STEP_SIZE 2
@@ -65,7 +65,7 @@ while { true } do {
     _forecast_change = false;
 	if (X_MP) then {
 	    if ((call XPlayersNumber) == 0) then {
-    		waitUntil {sleep (1.012 + random 1);(call XPlayersNumber) > 0};
+    		waitUntil {sleep (15.012 + random 1);(call XPlayersNumber) > 0};
 	    };
 	};
 	//__DEBUG_NET("weathergen2.sqf",(call XPlayersNumber))
