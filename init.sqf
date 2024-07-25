@@ -249,39 +249,15 @@ if (isServer) then {
     hint localize format["+++ __EASY_SM_GO_FIRST__, goes first: %1", side_missions_random];
 #endif
 
-//+++ Sygsky: move ranked player missions from the list beginning
-#ifdef __DEFAULT__
-    if (!isNil("ranked_sm_array") ) then {
-        hint localize format["+++ ranked_sm_array = %1",ranked_sm_array];
-        private ["_lowestPos","_rankedSMArr","_ind", "_newInd","_val"];
-        _lowestPos = ranked_sm_array select 0; // first allowed position for missions that need some rank (to drive tanks, helis, airplanes)
-        _rankedSMArr = ranked_sm_array select 1; // mission ids
-        // forEach ranked_sm_array;
-        {
-            _ind = side_missions_random find _x;
-            if ( (_ind >= 0) && (_ind < _lowestPos) ) then { // found, bump it to righter position in array
-                _val = _rankedSMArr select 0;
-                while { _val in _rankedSMArr } do {
-                    _newInd = [_lowestPos, count side_missions_random] call XfGetRandomRangeInt;
-                    _val = side_missions_random select _newInd;
-                };
-                side_missions_random set [_ind, _val];
-                side_missions_random set [_newInd, _x];
-            }
-        } forEach _rankedSMArr;
-    } else {
-        hint localize "+++ ranked_sm_array = nil";
-    };
-#endif
-
     // Move radiomast SM #56 to the beginning of SM list at pos 1..10
     // ranked_sm_array = [... [[56],[1,10]] ...];
 
 	// SM to place at first part of SM list between designated indexes, e.g. SM#56 must be at pos [1..10], and SM#2 will be at pos [1..57(maxind)] etc
+	// [2,3,53] - Sm with vehicles to kidnap (jets+abr, heli can me drived from any rank)
 	// Dynamic SM cant be first in list, that is all konvoys (20,21,22) and all pilots (51, 52, 54)
-	_first_sm_array = [ [ [56],[1,10] ], [ [57],[3,12] ], [[2,3,53], [5, 1000]],[[20,21,22,51, 52, 54],[1, 1000]] ];
+	_first_sm_array = [ [ [56],[1,10] ],[[2,3,53], [5, 1000]],[[20,21,22,51,52,54],[1, 1000]] ];
 	hint localize format["+++ init.sqf: FirstSMArray(%1)= %2", count _first_sm_array, _first_sm_array];
-	_fixed_id = []; // Rnown controlled SM ids, they can't be used to move out during changing positions
+	_fixed_id = []; // Known controlled SM ids, they can't be used to move out during changing positions
 	{
 		_x = _x select 0;
 		if (typeName _x == "SCALAR") then { _x = [_x] };
