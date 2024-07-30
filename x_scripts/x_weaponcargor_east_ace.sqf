@@ -64,9 +64,9 @@ if (isNil "x_ranked_weapons") then {
         [
     //################################################################################ RPG
                 // РЯДОВОЙ
-            [ ],
+            [ ["ACE_Dummy_LAUNCHER",3],["ACE_Strela",10],["ACE_RPG7",10],["ACE_RPG22",10]],
                 // ЕФРЕЙТОР
-            [ ["ACE_Dummy_LAUNCHER",3],["ACE_RPG7_PGO7",10] ],
+            [ ["ACE_RPG7_PGO7",10] ],
                 // СЕРЖАНТ
             [ ["ACE_RPG27",10],["ACE_RPO",10] ],
                 // ЛЕЙТЕНАНТ

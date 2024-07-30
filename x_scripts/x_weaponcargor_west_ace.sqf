@@ -85,13 +85,13 @@ if (isNil "x_ranked_weapons_west") then {
 			// private sniper rifles
 			[ ],
 			// corporal sniper rifles
-			[ ["ACE_Dummy_SNIPER",48] ],
+			[ ["ACE_Dummy_SNIPER",48],["ACE_Mk12SPR",5] ],
 			// sergeant sniper rifles
-			[ ["ACE_Mk12SPR",5] ],
+			[ ["ACE_Mk12SPR_SD",5] ],
 			// lieutenant sniper rifles
 			[ ["ACE_M242",5] ],
 			// captain sniper rifles
-			[ ["ACE_Mk12SPR_SD",5],["ACE_M21",5],["ACE_M21_des",5],["ACE_M21_wdl",5],["ACE_M21_dmr",5],["ACE_M21_police",5] /*,["ACE_M21_dmrS",5]*/ ],
+			[ ["ACE_M21",5],["ACE_M21_des",5],["ACE_M21_wdl",5],["ACE_M21_dmr",5],["ACE_M21_police",5] /*,["ACE_M21_dmrS",5]*/ ],
 			// major sniper rifles
 			[
                 ["ACE_HK416_Leu",5],["ACE_HK416_Leu_SD",5],["ACE_HK417L_Leu",5],["ACE_HK417L_Leu_SD",5],["ACE_SCAR_L_Marksman",5],
