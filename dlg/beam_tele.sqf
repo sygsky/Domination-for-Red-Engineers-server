@@ -123,12 +123,9 @@ _global_pos resize 2;
 hint localize format[ "+++ beam_tele.sqf: _pos = %1, _global_pos = %2, player = %3", _pos, _global_pos, player ];
 #endif
 
-if (_sound != "") then {
-    playSound _sound;
-    cutText ["","BLACK FADED", 0];
-    sleep 0.5;
-    cutText ["","BLACK IN", 7];
-    sleep 7;
+if (_sound != "") then { // It is magical transfer (not by teleport!)
+    spell_сast = true; // Fix spell used to thransfer for the base
+    call SYG_stunEffect;
 };
 
 player setPos _global_pos;
