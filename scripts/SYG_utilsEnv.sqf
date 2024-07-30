@@ -365,3 +365,25 @@ SYG_receiveRadio = {
 	} forEach _list;
 	if (! isNull _radio ) exitWith { _radio say _this; };
 };
+
+//
+// Call on client only!!!
+// Produces a stun effect on the player (white light in the eyes, weak sound).
+// Duration around 9.2 seconds
+//
+SYG_stunEffect = {
+
+#define FADE_OUT_DURATION 0.3
+#define FADE_IN_DURATION 6
+
+    playSound "FlashbangRing";
+    FADE_OUT_DURATION fadeSound (0.2); // stun him
+
+    cutText["","WHITE OUT",FADE_OUT_DURATION];  // Blind him fast
+    sleep FADE_OUT_DURATION; // Wait until blindness on
+
+    FADE_IN_DURATION fadeSound 1; // Smoothly restore hearing
+    sleep (FADE_IN_DURATION/2); // Wait until light effect executed
+
+	cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
+};
