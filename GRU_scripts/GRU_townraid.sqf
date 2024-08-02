@@ -96,6 +96,8 @@ for "_check" from 0 to 0 do {
 		playSound "ACE_VERSION_DING";
 		sleep 0.1;
 
+        call SYG_stunEffect;
+/*
 		playSound "FlashbangRing";
 		FADE_OUT_DURATION fadeSound (0.2); // stun him
 
@@ -106,7 +108,9 @@ for "_check" from 0 to 0 do {
 
 		//(call _rnd_port_msg) spawn {sleep 1; _this call GRU_msg2player;}; // self-feeling rnd message
 		sleep (FADE_IN_DURATION/2);
+
 		cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
+^/
 		// define if gru-portal succeed or not
 		_rnd = random 10;
 		if ( _rnd >= 0.2) then  {

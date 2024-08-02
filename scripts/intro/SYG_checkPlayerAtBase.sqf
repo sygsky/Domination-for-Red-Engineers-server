@@ -118,13 +118,17 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, bas
 #ifdef __ACE__
 // inform players that I've reached the base
 if (!isNil "SYG_initialEquipmentStr") then {
-	_str = (_spent_time/3600) call SYG_userTimeToStr; // Let's convert it to hours to match the parameter of this method
+    _str = (_spent_time/3600) call SYG_userTimeToStr; // Let's convert it to hours to match the parameter of this method
 	// "You have been given a weapon. Take care of it!",
 	// "%1 have reached the base in %2! Life will get easier from here.",
 	// "You are assigned to the SpecNaz GRU detachment at Sahrani and to the local flying club, for the use of jump flags."
 	// Sends upper messages to you only
 	[ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE",name player,_str],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // Send to client:"%1 have reached the base! Life will get easier from here."
-	// Send this message to all
+	// Send this message to all except this player
+    if (!isNil "spell_сast") then { // If spell, not inform all about time you reached base
+        _str = localize "STR_INTRO_ON_BASE_SPELL"; // "some time"
+        spell_cast = nil; // No need for it more
+    };
 	[ "msg_to_user", "*", [["STR_INTRO_ON_BASE",name player,_str]], 0, 2, false, "no_more_waiting" ] call XSendNetStartScriptClient; // Send to all others: "%1 have reached the base! Life will get easier from here."
 	// rearm from parajump set to the original equipment from last exit
 	hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
