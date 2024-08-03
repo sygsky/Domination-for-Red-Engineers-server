@@ -471,15 +471,15 @@ SYG_msgToUserParser = {
 SYG_getUnitName = {
 	if ( _this isKindOf "Man" ) exitWith { name _this };
 	if ( !(_this isKindOf "AllVehicles") ) exitWith { "<unknown>" };
-	if ( !(isNull (gunner _this) ) ) exitWith { name (gunner _this) };
 	if ( !(isNull (driver _this) ) ) exitWith { name (driver _this) };
+	if ( !(isNull (gunner _this) ) ) exitWith { name (gunner _this) };
 	if ( !(isNull (commander _this) ) ) exitWith { name (commander _this) };
 	"<unknown>"
 };
 
 //
 // Call: _str = _killer call SYG_getKillerInfo;
-// Retruns string with killer info: "unit/player<(vehicle type)>"
+// Returns string with killer info: "unit/player<(vehicle type)>"
 //
 SYG_getKillerInfo = {
 	private ["_veh","_name"];

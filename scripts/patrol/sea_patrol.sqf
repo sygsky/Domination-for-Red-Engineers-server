@@ -233,9 +233,8 @@ _is_ship_stuck = {
 		_edist = round (_boat distance _enemy);
 		if ( (alive _enemy) && (_edist < MAX_DIST_TO_ENEMY) ) exitWith { // If in battle, can't be stucked
 #ifdef __INFO__
-			if (isPlayer _enemy) then { _modes set [2, name _enemy] } else {
-				_modes set [2, typeOf _enemy];
-			};
+            _enemy = _enemy call SYG_getKillerInfo; // Print name_vehicle if available
+			_modes set [2, _enemy];
 			hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 in battle at %2, enemy dist %3, modes %4; return FALSE",
 			_this select OFFSET_ID,
 			[_boat, 10] call SYG_MsgOnPosE0,
