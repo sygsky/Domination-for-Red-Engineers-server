@@ -441,7 +441,7 @@ class CfgSounds {
     class tanki_grohotaly   {name = "На поел танки грохотали из фильма 'На войне как на войне' (1968)"; sound[] = {\sounds\defeat\tanki_grohotaly.ogg, db+10, 1.0}; titles[] = {}; }; // "Tanks rumbled in the field" "Tanks were rumbling in the field" folk song from the war 1941-1945 times
 
     class whatsapp       {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
-    class unbeat         {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\upbeat.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
+    class upbeat         {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\upbeat.ogg, db+10, 1.0}; titles[] = {}; }; // Some sound from one of WhatsApp messages
     class kk_jungles     {name = "King-Kong"; sound[] = {\sounds\defeat\kk-jungles.ogg, db+10, 1.0}; titles[] = {}; }; // Sound from film "King-Kong" (1976)
     class shaov_defeat   {name = ""; sound[] = {\sounds\defeat\shaov_dvijuha_defeat.ogg, db+10, 1.0}; titles[] = {};};
 

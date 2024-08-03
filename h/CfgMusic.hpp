@@ -213,7 +213,7 @@ class CfgMusic {
     class i_new_a_guy { name=""; sound[] = {\sounds\i_new_a_guy.ogg,db+10,1.0};}
     class decisions   { name=""; sound[] = {\sounds\decisions.ogg,db+5,1.0};};
     class whatsapp    {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\whatsapp.ogg, db+10, 1.0};}; // Some sound from one of WhatsApp messages
-    class unbeat      {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\unbeat.ogg, db+10, 1.0};}; // Some sound from one of WhatsApp messages
+    class upbeat      {name = "From WhatsApp msg"; sound[] = {\sounds\defeat\upbeat.ogg, db+10, 1.0};}; // Some sound from one of WhatsApp messages
 
     class stripped_voyage    {name = "From Stripped Voyage film"; sound[] = {\sounds\defeat\stripped_voyage, db+10, 1.0};}; // Some sound from Soviet film "Stripped Voyage" (196)
 
