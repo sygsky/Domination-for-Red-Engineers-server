@@ -51,7 +51,7 @@ sleep 0.05;
 [aborigen] join _newgroup;
 sleep 0.05;
 aborigen setPos _pos;
-hint localize format["+++ findAborigen.sqf: group %1, _pos %2, pos %3 ", group aborigen, _pos, getPos aborigen];
+hint localize format["+++ findAborigen.sqf: group %1, setPos %2, getPos %3 ", group aborigen, _pos, getPos aborigen];
 //aborigen setVehiclePosition [_pos, [], 0, "CAN_COLLIDE"];
 
 publicVariable "aborigen";

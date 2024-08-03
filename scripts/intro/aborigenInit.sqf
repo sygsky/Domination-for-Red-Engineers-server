@@ -10,7 +10,8 @@
 */
 #include "x_setup.sqf"
 
-if (isNil "aborigen") exitWith {"--- aborigenInit.sqf: ""aborigen"" var is nil, exit"};
+if (isNil "aborigen") exitWith {hint localize "--- aborigenInit.sqf: ""aborigen"" var is nil, exit"};
+hint localize format["+++ aborigenInit.sqf: aborigen (%1alive) = %2", if( alive aborigen) then {""} else {"not "}, aborigen];
 while {!alive aborigen} do {sleep 5};
 
 #define ABORIGEN "ABORIGEN"
@@ -140,14 +141,16 @@ while {(alive aborigen) && ((player distance aborigen) > 10) } do {
 deleteVehicle _grenade;
 #endif
 
+hint localize "+++ aborigenInit.sqf: creater aborigen marker";
+
 // set marker on civ
 _marker = "aborigen_marker";
-if ((markerType "aborigen_marker") == "") then {
+if ((markerType _marker) == "") then {
 	_marker = createMarkerLocal[_marker, getPosASL aborigen];
 	_marker setMarkerTypeLocal  "Vehicle";
 	_marker setMarkerColorLocal "ColorGreen";
 	if ( (name aborigen) == "Error: No unit") then {
-		_marker setMarkerTextLocal ("*");
+		_marker setMarkerTextLocal ("<?>");
 	} else { _marker setMarkerTextLocal (name aborigen); };
 
 	_marker setMarkerSizeLocal [0.5, 0.5];
@@ -199,6 +202,7 @@ if (alive aborigen) then {
 	};
 };
 
+hint localize format["+++ aborigenInit.sqf: aborigen %1alive, marker loop...", if (alive aborigen) then {""} else {"not "}];
 while {alive aborigen} do {
 	sleep 10;
 	_pos = getPosASL aborigen;
@@ -206,6 +210,7 @@ while {alive aborigen} do {
 		_marker setMarkerPosLocal _pos;
 	};
 };
+hint localize format["+++ aborigenInit.sqf: aborigen dead, exit marker loop"];
 deleteMarkerLocal _marker;
 // exit this humorescue
 
