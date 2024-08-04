@@ -180,7 +180,7 @@ if (alive aborigen) then {
 			"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
 		];
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
-		while { (canStand aborigen) && ((player distance aborigen) > 30)} do {
+		while { (canStand aborigen) && ((player distance aborigen) > 30)} do { // TODO: play moves only of player is on Antigua
 			_arr = aborigen nearObjects [ "CAManBase", 50];
 			_cnt = {(canStand _x) && (isPlayer _x)} count _arr;
 			if (_cnt  == 1) then { // only for single player
