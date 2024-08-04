@@ -25,6 +25,7 @@ if ( ! _null ) then { deleteVehicle aborigen };
 if (_alive) exitWith {
 	hint localize "+++ findAborigen.sqf: aborigen alive, exit";
 };
+hint localize "+++ findAborigen.sqf: aborigen not alive, continue...";
 
 if (typeName _this == "SCALAR") then { // sleep needed period
 	if (_this > 0 ) then {sleep _this};
@@ -44,7 +45,7 @@ if (alive _house) then {
 if (count _pos == 0) then {
 	_pos = [getPos spawn_tent, 60, 60, 0] call XfGetRanPointSquareOld; // No flat position requested, use smallest rect
 };
-//		hint localize format["+++ _find_civilian: civ not found, create unit with type %1 at pos %2", _type, _pos];
+hint localize format["+++ findAborigen.sqf: civ not found, create unit with type %1 at pos %2", _type, _pos];
 _newgroup = call SYG_createCivGroup;
 aborigen = _newgroup createUnit [_type, _pos, [], 0,"NONE"];
 sleep 0.05;

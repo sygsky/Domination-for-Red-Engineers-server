@@ -19,7 +19,7 @@ while {!alive aborigen} do {sleep 5};
 #define __DO_SMOKE__
 
 _val = aborigen getVariable ABORIGEN;
-if ( !isNil "_val" ) exitWith { hint localize "*** Aborigen alive and already intialized!" };
+if ( !isNil "_val" ) exitWith { hint localize "*** aborigenInit.sqf: aborigen alive and already intialized!" };
 aborigen setVariable [ABORIGEN, true];
 
 while { (isNull player) || (isNil "SYG_UTILS_COMPILED")} do {sleep 0.2};

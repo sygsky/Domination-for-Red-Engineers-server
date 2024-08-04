@@ -317,7 +317,7 @@ if (base_visit_mission == 1) exitWith {"*** x_setupplayer1.sqf: player already v
         hint localize "--- x_setupplayer1.sqf: tent on Antigua is dead, create ammo in any case";
     };
     _spawn_point = spawn_tent buildingPos ([2,3] call XfRandomArrayVal);
-    hint localize format["+++ x_setupplayer1.sqf: Antigua _spawn_point %1(%2), tent at % 3",_spawn_point, [_spawn_point,10 ] call SYG_MsgOnPosE0, [spawn_tent,10 ] call SYG_MsgOnPosE0];
+    hint localize format["+++ x_setupplayer1.sqf: Antigua _spawn_point %1(%2), tent at % 3 m",_spawn_point, [_spawn_point,10 ] call SYG_MsgOnPosE0, [spawn_tent,10 ] call SYG_MsgOnPosE0];
     private ["_boxname"];
 
     #ifndef __TT__
