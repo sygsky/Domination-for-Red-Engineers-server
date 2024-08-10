@@ -298,7 +298,7 @@ if (!_replaced) exitWith {
 	_str = if (typeName _loc == "LOCATION") then { text _loc} else {"<NO LOCATION>"};
 	_loc = _shooter call SYG_nearestLocation;
     _str1 = if (typeName _loc == "LOCATION") then { text _loc} else {"<NO LOCATION>"};
-    hint localize format["+++ MANDO Missile not replaced (local %1, id %2): from %3.%4(s. %5, near %6) -> %7, dmg %8, dst %8 m., h %10, spd %11, near %12, exit",
+    hint localize format["+++ MANDO Missile not replaced (local %1, id %2): from %3.%4 (spd %5, near %6) -> %7, dmg %8, dst %8 m., h %10, spd %11, near %12, exit",
     	_local,
     	_ind,
         _name,
