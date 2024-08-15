@@ -124,7 +124,7 @@ hint localize format[ "+++ beam_tele.sqf: _pos = %1, _global_pos = %2, player = 
 #endif
 
 if (_sound != "") then { // It is magical transfer (not by teleport!)
-    spell_сast = true; // Fix spell used to thransfer for the base
+    spell_cast = true; // Fix spell used to thransfer for the base
     call SYG_stunEffect;
 };
 

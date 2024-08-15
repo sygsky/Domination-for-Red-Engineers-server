@@ -43,7 +43,7 @@ if (_shooter isKindOf "CAManBase") exitWith {
         _shooter removeWeapon "ACE_FIM92A";
         _shooter addMagazine "ACE_Stinger";
         _shooter addWeapon "ACE_FIM92A"; // this reloads Stringer for an AA soldier
-		_mags01= magazines _shooter;
+		_mags1= magazines _shooter;
 
         hint localize format["+++ MyFalseMissile.sqf: restore ammo for %3:", typeOf _shooter];
         hint localize format["+++ MyFalseMissile.sqf: initial %1", _mags0 call SYG_compactArray];

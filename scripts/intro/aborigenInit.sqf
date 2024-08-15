@@ -11,7 +11,7 @@
 #include "x_setup.sqf"
 
 if (isNil "aborigen") exitWith {hint localize "--- aborigenInit.sqf: ""aborigen"" var is nil, exit"};
-hint localize format["+++ aborigenInit.sqf: aborigen (%1alive) = %2", if( alive aborigen) then {""} else {"not "}, aborigen];
+hint localize format["+++ aborigenInit.sqf: abo (%1alive) = %2", if( alive aborigen) then {""} else {"not "}, aborigen];
 while {!alive aborigen} do {sleep 5};
 
 #define ABORIGEN "ABORIGEN"
@@ -19,7 +19,7 @@ while {!alive aborigen} do {sleep 5};
 #define __DO_SMOKE__
 
 _val = aborigen getVariable ABORIGEN;
-if ( !isNil "_val" ) exitWith { hint localize "*** aborigenInit.sqf: aborigen alive and already intialized!" };
+if ( !isNil "_val" ) exitWith { hint localize "*** aborigenInit.sqf: abo alive and already intialized!" };
 aborigen setVariable [ABORIGEN, true];
 
 while { (isNull player) || (isNil "SYG_UTILS_COMPILED")} do {sleep 0.2};
@@ -115,14 +115,15 @@ if (alive aborigen) then { // show info
 	player groupChat (localize "STR_ABORIGEN_INFO_NONE"); // "Locals are not observed"
 };
 
-//++++++++++++++++++++++++++ Giggle while not closer than 5 meters +++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++ Giggle while not closer than 10 meters +++++++++++++++++++++++++++++++++++
 _prevSound = ""; // No sound still
 _sound = "";
 _delay = 0;
 _arr = ["no_way_jose",1,"cantar1",13,"local_partisan_spa",4, "pamal", 3,"porque", 1,"adios", 2]; // Sound array for initial aborigen activity
 _cnt = (count _arr) / 2;
-while {(alive aborigen) && ((player distance aborigen) > 10) } do {
-	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal);
+_time = time + 300;
+while { (alive aborigen) && ((player distance aborigen) > 10) && (time < _time)} do {
+	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal); // TODO: This may not work (as abo is server burnt)!!!
 	// Prevent the same sound from playing twice in a row
 	while {_sound == _prevSound} do {
 	   _ind = floor(random _cnt) * 2;
@@ -131,7 +132,7 @@ while {(alive aborigen) && ((player distance aborigen) > 10) } do {
 	};
 	aborigen say _sound;
 	_delay = _delay + ((random 2) + 5);
-	hint localize format["+++ aborigenInit.sqf: abo say '%1', prev '%2', delay %3", _sound, _prevSound, _delay ];
+	hint localize format["+++ aborigenInit.sqf: abo say '%1', prev '%2', delay %3, time %4", _sound, _prevSound, _delay, round( time - _time ) ];
 	_prevSound = _sound;
 	sleep _delay;
 	//	aborigen setDir (getDir aborigen) + ((random 20) - 10); // It is not working really
@@ -141,7 +142,7 @@ while {(alive aborigen) && ((player distance aborigen) > 10) } do {
 deleteVehicle _grenade;
 #endif
 
-hint localize "+++ aborigenInit.sqf: creater aborigen marker";
+hint localize "+++ aborigenInit.sqf: player dist <= 10 m, abo marker created";
 
 // set marker on civ
 _marker = "aborigen_marker";
@@ -162,7 +163,7 @@ aborigen setDir ([aborigen, player] call XfDirToObj);
 while { (alive aborigen) && (alive player) && ((player distance aborigen) < 40)} do { sleep 5};
 if (alive aborigen) then {
 	aborigen spawn {
-		private ["_list","_arr","_cnt"];
+		private ["_list","_arr","_cnt","_anim", "_dir", "_dir1"];
 		_list = [
 			"ActsPercMstpSlowWrflDnon_Lolling",  // Stretches, as if the unit has just woken up
 			"ActsPercMstpSnonWnonDnon_DancingDuoIvan", // Does various dance moves
@@ -180,29 +181,43 @@ if (alive aborigen) then {
 			"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
 		];
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
-		while { (canStand aborigen) && ((player distance aborigen) > 30)} do { // TODO: play moves only of player is on Antigua
-			_arr = aborigen nearObjects [ "CAManBase", 50];
-			_cnt = {(canStand _x) && (isPlayer _x)} count _arr;
-			if (_cnt  == 1) then { // only for single player
-				if (local aborigen) then {
-					aborigen setDir ([aborigen, player] call XfDirToObj);
-					aborigen playMove (_list call XfRandomArrayVal);
-				} else {
-					["remote_execute",
-						format["aborigen setDir %1; aborigen playMove ""%2"";",
-							[aborigen, player] call XfDirToObj, _list call XfRandomArrayVal
-						],
-						name player
-					] call XSendNetStartScriptServer;
-				};
-				sleep 10;
-			};
-			sleep (random 5);
+        _dir = [aborigen, player] call XfDirToObj;
+		while { (alive aborigen) && (base_visit_mission < 1) } do { // Player not visited vase and alive aborigen
+            hint localize format["+++ aborigenInit.sqf: abo animation is ""%1""", animationState aborigen];
+		    while {!(canStand aborigen)} do {sleep 5}; // Wait until aborigen can stand
+		    if (alive player) then {
+		        _cnt = count ([aborigen, 50] call SYG_findNearestPlayers); // Count all player near aborigen include players in vehicles
+		        if ( _cnt == 0 ) then { // No players in vicinity
+    		        while {(animationState aborigen) in _list} do {
+    		            sleep 1;
+	    	        };
+                    _dir = [aborigen, player] call XfDirToObj;
+                    aborigen setDir _dir;
+                    _anim = _list call XfRandomArrayVal;
+                    if (local aborigen) then {
+                        aborigen playMove _anim;
+                    } else {
+                        ["remote_execute",
+                            format[ "aborigen playMove ""%1"";", _anim ],
+                            name player
+                        ] call XSendNetStartScriptServer;
+                        sleep 2;
+                    };
+                } else {  // player very close to aborigen
+                    _dir1 = [ aborigen, player ] call XfDirToObj;
+                    if (abs (_dir1 - _dir) > 5) then {
+                        aborigen setDir _dir1;
+//                        aborigen glanceAt player;
+                        _dir = _dir1;
+                    };
+                    sleep (2 + (random 2));
+                };
+			} else  { sleep 5 }; // Sleep until alive player
 		};
 	};
 };
 
-hint localize format["+++ aborigenInit.sqf: aborigen %1alive, marker loop...", if (alive aborigen) then {""} else {"not "}];
+hint localize format["+++ aborigenInit.sqf: abo %1alive, marker loop...", if (alive aborigen) then {""} else {"not "}];
 while {alive aborigen} do {
 	sleep 10;
 	_pos = getPosASL aborigen;
@@ -210,7 +225,7 @@ while {alive aborigen} do {
 		_marker setMarkerPosLocal _pos;
 	};
 };
-hint localize format["+++ aborigenInit.sqf: aborigen dead, exit marker loop"];
+hint localize format["+++ aborigenInit.sqf: abo dead, exit marker loop"];
 deleteMarkerLocal _marker;
 // exit this humorescue
 

@@ -125,7 +125,7 @@ if (!isNil "SYG_initialEquipmentStr") then {
 	// Sends upper messages to you only
 	[ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE",name player,_str],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // Send to client:"%1 have reached the base! Life will get easier from here."
 	// Send this message to all except this player
-    if (!isNil "spell_сast") then { // If spell, not inform all about time you reached base
+    if (!isNil "spell_cast") then { // If spell, not inform all about time you reached base
         _str = localize "STR_INTRO_ON_BASE_SPELL"; // "some time"
         spell_cast = nil; // No need for it more
     };
