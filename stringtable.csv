@@ -97,20 +97,20 @@ STR_SYS_18_2,"Near %1 (%2 m.), repairs without rucksack!","In der Nähe von %1 (
 STR_SYS_19,"Repair %1%2, refuel %3 L.: %4... wait...","Reparatur %1%2, Tankstellen %3 L.: %4... warten Sie...","Reparación %1%2, recarga %3 L.: %4... esperadlo...","Ремонт %1%2, заправка %3 л.: %4... ожидайте..."
 
 STR_SYS_20,Select respawn place,Wahl eines Revival-Ortes,Elegir un lugar de renacimiento,Выбор места возрождения
-STR_SYS_21,MHQ %1 gets transported by airlift...,MHQ %1 wird per Luftbrücke transportiert...,KSHM %1 en el aire...,КШМ %1 в воздухе...
-STR_SYS_22,MHQ %1 currently driving...,MHQ %1 in Bewegung ...,KSHM %1 en movimiento...,КШМ %1 в движении...
+STR_SYS_21,MHQ %1 gets transported by airlift...,MHQ %1 wird per Luftbrücke transportiert...,MHQ %1 en el aire...,КШМ %1 в воздухе...
+STR_SYS_22,MHQ %1 currently driving...,MHQ %1 in Bewegung ...,MHQ %1 en movimiento...,КШМ %1 в движении...
 
 STR_SYS_23,%1 has been destroyed and is queued for recovery,%1 wurde zerstört und steht zur Wiederherstellung in der Warteschlange,%1 se ha destruido y se ha puesto en cola para restaurar,"%1 уничтожен(а), и поставлена в очередь на на восстановление"
 
-STR_SYS_25,MHQ %1 is in water...,MHQ %1 ist im Wasser...,KSHM %1 está ahora en el agua...,КШМ %1 сейчас в воде...
-STR_SYS_26,Teleport on MHQ %1 is faulty (%2%3)...,Der TELEPORT auf MHQ %1 ist defekt (%2%3)...,El teletransportador en KSHM %1 está defectuoso (%2%3)...,Телепорт на КШМ %1 неисправен (%2%3)...
-STR_SYS_27,"MHQ/teleport %1 dmg: %2%3!","MHQ/teleportiere %1 dmg: %2%3!","¡KSHM/teletransportador dañado %1: %2%3!","Повр. КШМ/телепорта %1: %2%3!"
-STR_SYS_28,MHQ %1/teleport destroyed...,Teleporter/MHQ %1 wurde zerstört...,Teletransportador /KSHM %1 destruido...,Телепорт/КШМ %1 уничтожены...
+STR_SYS_25,MHQ %1 is in water...,MHQ %1 ist im Wasser...,MHQ %1 está ahora en el agua...,КШМ %1 сейчас в воде...
+STR_SYS_26,Teleport on MHQ %1 is faulty (%2%3)...,Der TELEPORT auf MHQ %1 ist defekt (%2%3)...,El teletransportador en MHQ %1 está defectuoso (%2%3)...,Телепорт на КШМ %1 неисправен (%2%3)...
+STR_SYS_27,"MHQ/teleport %1 dmg: %2%3!","MHQ/teleportiere %1 dmg: %2%3!","¡MHQ/teletransportador dañado %1: %2%3!","Повр. КШМ/телепорта %1: %2%3!"
+STR_SYS_28,MHQ %1/teleport destroyed...,Teleporter/MHQ %1 wurde zerstört...,Teletransportador /MHQ %1 destruido...,Телепорт/КШМ %1 уничтожены...
 
 STR_SYS_30,Respawn,Respawn,Renacimiento,Возрождение
 STR_SYS_31,(last one),(die Letzte),(último),(последний)
-STR_SYS_32,%1 MHQ %2 is in air(lift),%1 MHQ %2 ist in Luft,%1 KSHM %2 en el aire,%1 КШМ %2 в воздухе
-STR_SYS_33,%1 MHQ %2 is available,%1 Respawn %2 verfügbar,%1 KSHM %2 está disponible,%1 КШМ %2 доступна
+STR_SYS_32,%1 MHQ %2 is in air(lift),%1 MHQ %2 ist in Luft,%1 MHQ %2 en el aire,%1 КШМ %2 в воздухе
+STR_SYS_33,%1 MHQ %2 is available,%1 Respawn %2 verfügbar,%1 MHQ %2 está disponible,%1 КШМ %2 доступна
 STR_SYS_34,Teleport,Teleport,Teletransporte,Телепорт
 STR_SYS_35,Lift vehicle,Fahrzeug anheben,Levantar la técnica,Поднять технику
 STR_SYS_36,Drop vehicle,Drop-fahrzeug,Restablecer la técnica,Сбросить технику
@@ -167,14 +167,14 @@ STR_SYS_68_3,"You were absent from the island %1","Du warst nicht auf der Insel 
 
 STR_SYS_69,Select Teleport Destination,Wählen Sie Teleportieren Ziel,Selección del lugar de teletransporte,Выбор места телепортирования
 STR_SYS_70,Base,Base,Base,База
-STR_SYS_71,MHQ One,MHQ One,KSHM 1,КШМ 1
-STR_SYS_72,MHQ Two,MHQ Two,KSHM 2,КШМ 2
+STR_SYS_71,MHQ One,MHQ One,MHQ 1,КШМ 1
+STR_SYS_72,MHQ Two,MHQ Two,MHQ 2,КШМ 2
 STR_SYS_73,Teleport not available in a vehicle !!!,Teleport nicht in einem Fahrzeug !!!,¡El teletransportador no está disponible desde la tecnología!!!,Телепорт недоступен из техники!!!
 STR_SYS_74,You are carrying the enemy flag. Teleport is not possible !!!,Sie tragen die fahne. Teleport ist nicht möglich !!!,Llevas una bandera enemiga. ¡El teletransportador no está disponible!!!,Вы несете вражеский флаг. Телепорт недоступен!!!
 STR_SYS_75,"Teleporting in water is off, it will explode !!!","Das Teleportieren im Wasser ist ausgeschaltet, es wird explodieren !!!","¡Teletransportarse en el agua está desactivado, va a estallar!!!","Телепортирование в воде отключено, рванёт!!!"
 STR_SYS_75_1,Teleporting not possible while factory %1 is ruined !!!,"Das teleportieren nicht möglich, während Fabrik %1 ist kaputt !!!",¡No se puede teletransportar mientras se destruye el Servicio %1!!!,"Телепортирование невозможно, разрушен сервис %1!!!"
-STR_SYS_75_2,Teleporting not possible while MHQ has damage (%1%2)!!!,"Teleportieren nicht möglich, während MHQ Schaden hat (%1%2)!!!","No es posible teletransportarse, debido a los daños de KSHM (%1%2)!!!","Телепортирование невозможно, из-за повреждений КШМ (%1%2)!!!"
-STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport will stop working!","MHQ %1%2 Schaden, sofort reparieren, sonst funktioniert der Teleport nicht mehr!","Dañado KSHM %1%2, reparar inmediatamente, de lo contrario el teletransportador dejará de funcionar!","Повр. КШМ %1%2, немедленно почините, иначе перестанет работать телепорт!"
+STR_SYS_75_2,Teleporting not possible while MHQ has damage (%1%2)!!!,"Teleportieren nicht möglich, während MHQ Schaden hat (%1%2)!!!","No es posible teletransportarse, debido a los daños de MHQ (%1%2)!!!","Телепортирование невозможно, из-за повреждений КШМ (%1%2)!!!"
+STR_SYS_75_3,"Damage to MHQ %1%2, repair immediately, otherwise the teleport will stop working!","MHQ %1%2 Schaden, sofort reparieren, sonst funktioniert der Teleport nicht mehr!","Dañado MHQ %1%2, reparar inmediatamente, de lo contrario el teletransportador dejará de funcionar!","Повр. КШМ %1%2, немедленно почините, иначе перестанет работать телепорт!"
 STR_SYS_75_4,MHQ #%1. A large mass of iron was found nearby!,MHQ #%1. In der Nähe - eine Masse aus Eisen!,"MHQ #%1. Cerca, una masa de hierro!",КШМ #%1. Рядом ферро-магнитная масса!
 STR_SYS_75_40,MHQ #%1. A mass of ferromagnetic was found nearby!,MHQ #%1. Eine Masse von ferromagnetischen wurde in der Nähe gefunden!,MHQ #%1. ¡Se encontró una masa de ferromagnéticos cerca!,КШМ #%1. Рядом ферро-магнитная масса!
 STR_SYS_75_BASE,Base. A large mass of iron was found nearby!,Base. In der Nähe - eine Masse aus Eisen!,"MHQ #%1. Cerca, una masa de hierro!",База. Рядом ферро-магнитная масса!
@@ -189,7 +189,7 @@ STR_SYS_77,Cancel service,Rückgängig Service,Cancelar Servicio,Отменит�
 STR_SYS_78,Lift %1,Hubschrauber %1,Helicóptero de transporte %1,Трансп. вертолёт %1
 STR_SYS_79,Wreck Lift,Wrack heben,Transporte de escombros,Трансп. обломков
 STR_SYS_79_1,Chopper Menu,Chopper-Menü,Menú del helicóptero,Меню вертолёта
-STR_SYS_79_2,MHQ Menu,MHQ Menu,Menú KSHM,Меню КШМ
+STR_SYS_79_2,MHQ Menu,MHQ Menu,Menú MHQ,Меню КШМ
 STR_SYS_79_3,You're not allowed to fly!,Sie sind nicht erlaubt zu Fliegen!,¡El nacido no puede volar!,Рождённый ползать летать не может!
 
 STR_SYS_80,Main Targets,Hauptziele,Objetivos principales,Главные цели
@@ -545,7 +545,7 @@ STR_SYS_240,Your team has eliminated the Governor...,Ihr Team eliminiert Gouvern
 STR_SYS_241,The Governor infamously fled the city...,Der Gouverneur es ist schändlich floh aus der Stadt...,El gobernador escapó infamemente de la ciudad...,Губернатор позорно сбежал из города...
 STR_SYS_242,Your team has destroyed the communications tower of the enemy...,Ihr Team zerstört den Turm aufgrund der Feind...,Su unidad destruyó la torre de comunicaciones enemigas...,Ваш отряд уничтожил вышку связи противника...
 STR_SYS_243,"Your team has destroyed an ammotruck, full of enemy best ammunition...",Ihr Team zerstört Lastwagen mit Munition...,Su escuadrón destruyó un camión con municiones de guerra...,Ваш отряд уничтожил грузовик с боезапасом...
-STR_SYS_244,Your team has destroyed the enemy MHQ...,Ihr Team zerstört MHQ des Feindes...,Tu escuadrón destruyó el KSHM del enemigo...,Ваш отряд уничтожил КШМ противника...
+STR_SYS_244,Your team has destroyed the enemy MHQ...,Ihr Team zerstört MHQ des Feindes...,Tu escuadrón destruyó el MHQ del enemigo...,Ваш отряд уничтожил КШМ противника...
 STR_SYS_245,Your team has destroyed the command post of the enemy...,Ihr Team zerstört Kommandozentrum der Feind...,Tu escuadrón destruyó el puesto de mando del enemigo...,Ваш отряд уничтожил командный пункт противника...
 STR_SYS_246,Your team has destroyed a heroin factory...,Ihr Team zerstörte Fabrik für die Herstellung von Heroin...,Su escuadrón destruyó la fábrica de heroína...,Ваш отряд уничтожил завод по производству героина...
 STR_SYS_247,Your team has destroyed a large plant for the production of heroin...,Ihr team zerstört hat eine große Anlage für die Herstellung von heroin...,Su escuadrón destruyó una gran planta de heroína...,Ваш отряд уничтожил большой завод по производству героина...
@@ -688,7 +688,7 @@ STR_SYS_324_2,Fuel: %1,Kraftstoff: %1,Combustible: %1,Топливо: %1
 STR_SYS_324_3,Damage: %1,Störungen: %1,Daños: %1,Повреждения: %1
 STR_SYS_324_4,Dir: %1 (%2),Richtung: %1 (%2),Por ejemplo: %1 (%2),Напр: %1 (%2)
 
-STR_SYS_325,"This is a mobile respawn vehicle. You can drop an ammocrate, use it to respawn or teleport or create a vehicle.","Dies ist eine mobile respawn Fahrzeug. Drop können Sie eine ammocrate, es verwenden, um respawn oder teleport oder erstellen Sie ein Fahrzeug.","Es KSHM. Se utiliza para transportar cajas de suministros, revivir después de la muerte, teletransportar y descargar maquinaria.","Это КШМ. Используется для перевозки ящиков снабжения, возрождения после смерти, телепортирования и выгрузки техники."
+STR_SYS_325,"This is a mobile respawn vehicle. You can drop an ammocrate, use it to respawn or teleport or create a vehicle.","Dies ist eine mobile respawn Fahrzeug. Drop können Sie eine ammocrate, es verwenden, um respawn oder teleport oder erstellen Sie ein Fahrzeug.","Es MHQ. Se utiliza para transportar cajas de suministros, revivir después de la muerte, teletransportar y descargar maquinaria.","Это КШМ. Используется для перевозки ящиков снабжения, возрождения после смерти, телепортирования и выгрузки техники."
 STR_SYS_326,This is an engineer salvage truck. You can load static weapons and unload them.,Dies ist ein Ingenieur-Bergung von LKW. Laden Sie statische Waffen-und entladen.,Es un camión de ingeniería. Puede cargar/descargar maquinaria de máquina en ella,Это инженерный грузовик. Вы можете загружать/выгружать в него станковую технику
 STR_SYS_329,%2: unload requires rank %1.,%2: entfernen Sie erfordert Rang %1.,%2: la descarga requiere el título %1.,%2: для выгрузки требуется звание %1.
 STR_SYS_329_1,Vehicles for unloading not provided.,"Fahrzeuge, für das entladen nicht zur Verfügung.",No se proporcionan dispositivos de descarga,Устройства для выгрузки не предусмотрены
@@ -711,7 +711,7 @@ STR_SYS_343,Show player marker names:,Show player marker Namen:,Mostrar marcador
 STR_SYS_344,Show player marker direction:,Show player Markierung Richtung:,Mostrar la dirección de los marcadores de jugador:,Отображение направления у маркеров игроков:
 STR_SYS_345,Show vehicle marker direction:,Show Fahrzeug-Markierung Richtung:,Visualización de la dirección en los marcadores de la técnica:,Отображение направления у маркеров техники:
 STR_SYS_346,Player marker type:,Spieler-marker-Typ:,Tipo de marcador de jugador:,Тип маркера игрока:
-STR_SYS_347,MHQ vehicles (create):,MHQ Fahrzeuge (schaffen):,Técnica de KSHM (descarga):,Техника из КШМ (выгрузка):
+STR_SYS_347,MHQ vehicles (create):,MHQ Fahrzeuge (schaffen):,Técnica de MHQ (descarga):,Техника из КШМ (выгрузка):
 STR_SYS_348,Weather system enabled:,Wetter-system aktiviert:,Sistema de fenómenos meteorológicos:,Система погодных явлений:
 STR_SYS_349,MG gunners able to build mg nest:,MGunners mg-Nester zu bauen:,Ametralladores despliegan nidos de ametralladoras:,Пулемётчики развёртывают пулемётные гнезда:
 STR_SYS_350,Points a player looses for teamkill:,"Punkte, die ein Spieler verliert für Teamkills:",Puntos de penalización por fuego amistoso :,Очки штрафа за дружественный огонь :
@@ -810,8 +810,8 @@ STR_SYS_541_2,Good job. The counterattack was defeated...,Gute Arbeit. Der Gegen
 STR_SYS_600,You were killed by %1. %1 looses %2 scores!,"Sie wurden getötet, von %1. %1 verliert %2 Punkte!",Lo mató %1. Está relegado a - %2 puntos.!,Вас убил %1. Он отштрафован на -%2 оч.!
 
 STR_SYS_601,Respawn at Base,Respawn an der Basis,Renacimiento en la base,Возрождение на базе
-STR_SYS_602,Teleport to MHQ %1,Teleport auf MHQ %1,Teletransporte a KSHM %1,Телепорт на КШМ %1
-STR_SYS_603,Respawn at MHQ %1,Respawn bei MHQ %1,Revival en KSHM %1,Возрождение на КШМ %1
+STR_SYS_602,Teleport to MHQ %1,Teleport auf MHQ %1,Teletransporte a MHQ %1,Телепорт на КШМ %1
+STR_SYS_603,Respawn at MHQ %1,Respawn bei MHQ %1,Revival en MHQ %1,Возрождение на КШМ %1
 STR_SYS_601_1,%1. Dmg. %2%3,%1. Schaden %2%3,%1. Dañado %2%3,%1. Повр. %2%3
 
 STR_SYS_604,"Sahrani People welcome the %1 of the warrior-internationalist in their troubled land: ""Liberate us from the boot of the occupier, a soldier!""","Sahrani Menschen begrüßen die %1 des Kriegers-internationalistischen in ihrem unruhigen Land: "" Befreien Sie ihn aus dem Boot der Besatzer, Soldat!""","La población de Sahrani da la bienvenida al guerrero internacionalista %1 en su tierra sufrida: \ n""¡Libéranos de la bota del Interventor, soldado!""","Население Сахрани приветствует %1-го воина-интернационалиста на своей многострадальной земле:\n""Освободи нас от сапога интервента, солдат!"""
@@ -1013,8 +1013,8 @@ STR_SYS_1206,Points needed to recruit first AI soldier:,Punkte für den Entwurf 
 STR_SYS_1207,Points needed to call in an air taxi:,"Punkte benötigt, um in einem Lufttaxi zu rufen:",Puntos por llamar a un taxi aéreo:,Очков за вызов воздушного такси:
 
 STR_SYS_1208,Points needed for AAHALO parajump:,Punkte für AAHALO parajump benötigt:,Puntos necesarios para aterrizar desde la base:,Очков необходимо для десантирования с базы:
-STR_SYS_1209,Points needed to create a vehicle at a MHQ:,"Punkte benötigt, um ein Fahrzeug an einem MHQ zu erstellen:",Puntos necesarios para descargar equipos de KSHM:,Очков необходимо для выгрузки техники из КШМ:
-STR_SYS_1210,Points that get subtracted for creating a vehicle at a MHQ:,"Punkte, die subtrahiert werden, um ein Fahrzeug an einem MHQ zu erstellen:",Puntos deducidos por la descarga de equipos de KSHM:,Очков вычитается за выгрузку техники из КШМ:
+STR_SYS_1209,Points needed to create a vehicle at a MHQ:,"Punkte benötigt, um ein Fahrzeug an einem MHQ zu erstellen:",Puntos necesarios para descargar equipos de MHQ:,Очков необходимо для выгрузки техники из КШМ:
+STR_SYS_1210,Points that get subtracted for creating a vehicle at a MHQ:,"Punkte, die subtrahiert werden, um ein Fahrzeug an einem MHQ zu erstellen:",Puntos deducidos por la descarga de equipos de MHQ:,Очков вычитается за выгрузку техники из КШМ:
 
 STR_SYS_1211,Points needed to build a NG nest:,"Punkte benötigt, um ein MG nest zu bauen:",Puntos necesarios para desplegar el nido de ametralladora:,Очков необходимо для развёртывания пулемётного гнезда:
 STR_SYS_1212,Points needed to call in an air drop:,"Punkte, die benötigt werden, um einen Lufttropfen einzuholen:",Puntos necesarios para la llamada de suministro:,Очков необходимо для вызова снабжения:
@@ -1450,7 +1450,7 @@ STR_TSD9_65,Expand all,Alle Details,Expandir todo,Развернуть все
 STR_TSD9_66,The choice of dialogue,Dialog auswählen,Selección de diálogo,Выбор диалога
 //-----------------------------------------------------------------------------
 
-STR_MIS_1,MHQ Respawn,MHQ Respawn,KSHM,КШМ
+STR_MIS_1,MHQ Respawn,MHQ Respawn,MHQ,КШМ
 STR_MIS_2,Chopper,Chopper,Helicópteros,Вертолёты
 STR_MIS_3,R1,R1,Reparación,Рем.
 STR_MIS_4,F1,F1,Carbur.,Гор.
@@ -1488,8 +1488,8 @@ STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Verst
 STR_SET_8,Mandatory side missions,Obligatorischen Nebenmissionen,Misiones de terceros obligatorias,Обязательные сторонние миссии
 STR_SET_8_1,", towns per SM: %1",", Städte pro 1 SM: %1",", ciudades por 1 SM: %1",", городов за 1 доп.миссию: %1"
 STR_SET_9,Teleport works only when all services on the base are available,Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind,El teletransportador solo funciona con todos los servicios en la base,Телепорт действует только при всех исправных сервисах на базе
-STR_SET_9_1,Teleport works until the destruction of MHQ,Teleport funktioniert bis zur Zerstörung von MHQ,El teletransportador funciona hasta la destrucción de KSHM,Телепорт функционирует до уничтожения КШМ
-STR_SET_9_2,Teleport shuts off when MHQ is damaged at %1%2,"Teleport wird abgeschaltet, wenn MHQ bei %1%2 beschädigt ist.",El teletransportador se desactiva cuando el KSHM está dañado hasta %1%2,Телепорт отключается при повреждении КШМ до %1%2
+STR_SET_9_1,Teleport works until the destruction of MHQ,Teleport funktioniert bis zur Zerstörung von MHQ,El teletransportador funciona hasta la destrucción de MHQ,Телепорт функционирует до уничтожения КШМ
+STR_SET_9_2,Teleport shuts off when MHQ is damaged at %1%2,"Teleport wird abgeschaltet, wenn MHQ bei %1%2 beschädigt ist.",El teletransportador se desactiva cuando el MHQ está dañado hasta %1%2,Телепорт отключается при повреждении КШМ до %1%2
 STR_SET_10,Jail:,Gefängnis:,Celda de arresto:,Гауптвахта:
 STR_SET_10_1, when scores lower than %1, wenn der scores niedriger ist als %1, si el número de puntos es inferior a %1,", если число очков ниже %1"
 STR_SET_11,Cloning RPG-missiles: ,Klon-RPG-Rakete: ,Clonación de misiles RPG: ,"Клонирование РПГ-ракет: "
@@ -1505,7 +1505,7 @@ STR_SET_19,Show chopper welcome message:,Chopper-Begrüßungsnachricht anzeigen:
 STR_SET_20,Show vehicle welcome message:,Fahrzeug-Begrüßungsnachricht anzeigen:,Mostrar saludo en la técnica:,Показывать приветствие в технике:
 STR_SET_21,Island repair stations can repair vehicles:,Inselreparaturstationen können Fahrzeuge reparieren:,Estaciones de reparación en tierra están en funcionamiento:,Наземные ремонтные станции работают:
 STR_SET_22,Teamstatus Dialog enabled:,Teamstatus-Dialog aktiviert:,Menú estado habilitado:,Меню статус включено:
-STR_SET_23,Time a player has to wait until he can create a new vehicle at a MHQ (sec):,"Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet (sec):",Tiempo entre descargas de equipos de KSHM (sec):,Время между выгрузками техники из КШМ:
+STR_SET_23,Time a player has to wait until he can create a new vehicle at a MHQ (sec):,"Zeit, die ein Spieler zwischen der Erstellung eines neuen Fahrzeugs in einem MHQ wartet (sec):",Tiempo entre descargas de equipos de MHQ (sec):,Время между выгрузками техники из КШМ:
 STR_SET_24,Able to fly:,Able to fly:,Se les permite volar:,Им разрешено летать:
 STR_SET_25,"Maximum number of ammoboxes: ","Maximale Anzahl von Ammoboxen: ","Cajas de suministro: máximo ","Ящики снабжения: максимум "
 STR_SET_25_1,", currently in use: ",", aktuell in Verwendung: ",", activado: ",", активированы: "
