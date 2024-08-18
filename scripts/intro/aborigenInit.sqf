@@ -12,7 +12,7 @@
 
 if (isNil "aborigen") exitWith {hint localize "--- aborigenInit.sqf: ""aborigen"" var is nil, exit"};
 hint localize format["+++ aborigenInit.sqf: abo (%1alive) = %2", if( alive aborigen) then {""} else {"not "}, aborigen];
-while {!alive aborigen} do {sleep 5};
+while {!alive aborigen} do {sleep 5}; // Wait for aborigen to respawn
 
 #define ABORIGEN "ABORIGEN"
 
@@ -41,7 +41,7 @@ hint localize format["+++ aborigenInit.sqf: found %1 items to add action 'Inspec
 	_x addAction [localize "STR_CHECK_ITEM", "scripts\intro\SYG_aborigenAction.sqf", "FAQ"];
 } forEach _arr;
 
-["msg_to_user","","STR_ABORIGEN_CREATED", 0,0,true] call SYG_msgToUserParser; // "There's an Aborigen %1 in Antigua"
+["msg_to_user","",["STR_ABORIGEN_CREATED", name aborigen], 0,0,true] call SYG_msgToUserParser; // "There's an Aborigen %1 in Antigua"
 
 while { !(player call SYG_pointOnAntigua) } do { sleep 5; }; // While out of Antigua
 
