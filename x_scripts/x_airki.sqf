@@ -32,10 +32,10 @@ if (!isServer) exitWith {};
 #define FLYBY_HEIGHT_MI 500
 #define FLYBY_HEIGHT_SU 1000
 
-// how many player is not detected near target in seconds
-#define PLAYER_NOT_AT_TARGET_LIMIT 1200
+// how long time player is not detected near target in seconds
+// #define PLAYER_NOT_AT_TARGET_LIMIT 1200
 // how far from point of interest а player is checked
-#define PLAYER__AT_TARGET_CHECK_RADIOUS 1000
+//#define PLAYER_AT_TARGET_CHECK_RADIOUS 1000
 
 _type = _this select 0; // vehicle type (KA, MIMG, SU: attack heli, light heli, airjet)
 
@@ -338,7 +338,7 @@ while { true } do {
 	//==========================
 	//= creation of vehicle[s] =
 	//==========================
-	while {current_target_index < 0} do {sleep 5;}; // wait until new town ready
+	while {current_target_index < 0} do {sleep 15;}; // wait until new town ready
 
 	_dummy = target_names select current_target_index; // current town info array
     _current_target_pos = _dummy select 0;

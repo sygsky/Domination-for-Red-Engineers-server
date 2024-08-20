@@ -686,7 +686,21 @@ switch ( _arg ) do {
 			player groupChat (localize "STR_ABORIGEN_WIZARD"); // "I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!"
 			(_this select 0) removeAction (_this select 2); // Remove this action
 			// Add wizard action
+#ifdef __NEW__
+//			"Maledictum" - выругаться...
+//         "Incantamentum" - заклинание (вуду)
+            _curse_before = (random 100) < 50;
+            if (_curse_before) then {
+    			_id = (_this select 0) addAction[ "Maledictum!", "scripts\intro\SYG_aborigenAction.sqf", "CURSE"]; // "Maledictum"
+            };
+			_id = (_this select 0) addAction[ "Incantamentum!", "scripts\intro\SYG_aborigenAction.sqf", "WIZARD"]; // "Incantamentum"
+            if (!_curse_before) then {
+    			_id = (_this select 0) addAction[ "Maledictum!", "scripts\intro\SYG_aborigenAction.sqf", "CURSE"]; // "Maledictum"
+            };
+#else
 			_id = (_this select 0) addAction[ localize "STR_ABORIGEN_GO_BASE", "scripts\intro\SYG_aborigenAction.sqf", "WIZARD"]; // "Magical transference"
+#endif
+
 //			hint localize format[ "+++ ABO NAME: action #%1 added", _id ];
 //			_spell = format["spell_%1", 7 call XfRandomCeil ];
 //			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
@@ -699,6 +713,15 @@ switch ( _arg ) do {
 //		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
 //			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
 		"spell_5" execVM "dlg\beam_tele.sqf"; // Teleport to the base
+		(_this select 0) removeAction (_this select 2); // Remove this action
+	};
+	// Move player to the random position on the island or in a water, doesn't matter
+	case "CURSE": {
+		beam_target = 0; // Jump to the base
+//		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
+//			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
+// Move to the random point on islands somewhere in forest
+		"curse_upon_you" execVM "dlg\beam_tele.sqf"; // Teleport to the base
 		(_this select 0) removeAction (_this select 2); // Remove this action
 	};
 	default {

@@ -1195,7 +1195,7 @@ SYG_roundPos = {
 // #3 Call: _nearLand = [_unit,_check_dist] call SYG_posNearLand; // _check_dist is regular net step to check lond is near or not
 //
 SYG_isNearLand = {
-	private ["_pos", "_shore", "_xpos0", "_ypos0", "_xpos", "_step"];
+	private ["_pos", "_shore", "_xpos0", "_ypos0", "_xpos", "_step","_x"];
 	if (typeName _this != "ARRAY") then {_this = [_this, 20]};
 	_pos = (_this select 0) call SYG_getPos;
 	_step = _this select 1;
