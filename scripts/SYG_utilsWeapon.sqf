@@ -2730,7 +2730,9 @@ SYG_throwSmokeGrenade = {
             sleep 0.14;
         };
         reload _unit;
-    };
+    } else {
+        hint localize format["*** SYG_throwSmokeGrenade: shells detected, mags = %1", magazines _unit];
+    } ;
     _dir = [_unit, _target] call XfDirToObj;
     _unit setDir _dir;
     _str = _target call SYG_getKillerInfo;
