@@ -911,7 +911,7 @@ XHandleNetStartScriptClient = {
 
         // mark user as participant of SM. Params are: ["was_at_sm",_player_name_list<,"sound_name">]
         case "was_at_sm" : {
-            if (count _this < 2) exitWith {hint localize ["--- x_netinitclient.sqf: %1", _this];};
+            if (count _this < 2) exitWith {hint localize ["--- x_netinitclient.sqf: lost args = %1", _this];};
             private ["_val"];
             _val =  _this select 1;
             if ( typeName ( _val ) != "ARRAY" ) then {

@@ -27,15 +27,18 @@ sm_points_racs = 0;
 {
 	_tank = _tank_type createVehicle (_posi_array select _x);
 	_tank setDir (_dirs select (_x -1 ));
-	_tank addEventHandler ["killed", {dead_tanks = dead_tanks + 1;_this spawn x_removevehiextra;}];
 #ifndef __TT_
     #ifdef __RANKED__
-    (_vehicles select 0) addEventHandler ["killed", { _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // mark neighbouring users to be at SM
+    _tank addEventHandler ["killed", { dead_tanks = dead_tanks + 1; _this spawn x_removevehiextra; _this execVM "x_missions\common\eventKilledAtSM.sqf" } ]; // mark neighbouring users to be at SM
+    #endif
+    #ifndef __RANKED__
+	_tank addEventHandler ["killed", {dead_tanks = dead_tanks + 1;_this spawn x_removevehiextra;}];
     #endif
 #endif
-	#ifdef __TT__
-	_tank addEventHandler ["killed", {switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1;};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
-	#endif
+
+#ifdef __TT__
+	_tank addEventHandler ["killed", { dead_tanks = dead_tanks + 1; _this spawn x_removevehiextra; switch (side (_this select 1)) do {case west: {sm_points_west = sm_points_west + 1;};case resistance: {sm_points_racs = sm_points_racs + 1}}}];
+#endif
 	_tank lock true;
 	sleep 0.512;
 } forEach [ 1, 2, 3, 4, 5, 6];
