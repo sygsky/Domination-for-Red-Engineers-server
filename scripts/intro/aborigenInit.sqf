@@ -199,7 +199,8 @@ if (alive aborigen) then {
                     } else {
                         ["remote_execute",
                             format[ "aborigen playMove ""%1"";", _anim ],
-                            name player
+                            name player,
+                            format["abo animation ""%1""", animationState aborigen]
                         ] call XSendNetStartScriptServer;
                         sleep 2;
                     };
