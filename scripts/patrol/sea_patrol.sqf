@@ -233,7 +233,7 @@ _is_ship_stuck = {
 		_edist = round (_boat distance _enemy);
 		if ( (alive _enemy) && (_edist < MAX_DIST_TO_ENEMY) ) exitWith { // If in battle, can't be stucked
 #ifdef __INFO__
-            _enemy = _enemy call SYG_getKillerInfo; // Print name_vehicle if available
+            _enemy_info = _enemy call SYG_getKillerInfo; // Print name_vehicle if available
 			_modes set [2, _enemy];
 			hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: the boat_%1 in battle at %2, enemy dist %3, modes %4; return FALSE",
 			_this select OFFSET_ID,
@@ -247,7 +247,7 @@ _is_ship_stuck = {
 				_stat set [OFFSET_STAT_LAST_TIME, time + COMBAT_STALL_DELAY ]; // in battle time-out is longer
 			};
 			if (! (_enemy in _known_enemy_arr)) then {
-				hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: enemy %1 added to the reveal list (size after is %2)", typeOf _enemy, count _known_enemy_arr ];
+				hint localize format[ "+++ sea_patrol.sqf is_ship_stuck: enemy %1 added to the reveal list (size after is %2)", _enemy_info, count _known_enemy_arr ];
 				_known_enemy_arr set [count _known_enemy_arr, _enemy]
 			};
 			["say_sound", _boat, "naval"] call XSendNetStartScriptClientAll; // Say fear sound to the player )))
