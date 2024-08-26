@@ -110,7 +110,7 @@ for "_check" from 0 to 0 do {
 		sleep (FADE_IN_DURATION/2);
 
 		cutText["","WHITE IN",FADE_IN_DURATION]; // restore vision
-^/
+*/
 		// define if gru-portal succeed or not
 		_rnd = random 10;
 		if ( _rnd >= 0.2) then  {
