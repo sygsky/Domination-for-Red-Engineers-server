@@ -167,12 +167,26 @@ SYG_nearestLocationName = {text (_this call SYG_nearestLocation)};
  *     //     or
  *     _ret = player call SYG_nearestLocation;
  * returns:
- *      location : nearest map well known name
+ *      location : nearest well known name on map
  * to get position of location, call _pos = position _loc;
  * to text of location call _text = text  _loc;
  */
 SYG_nearestLocation = {
 	[_this, ["NameCity","NameCityCapital","NameVillage","NameLocal","NameMarine","Hill","VegetationBroadleaf",
+	         "VegetationFir","VegetationPalm","VegetationVineyard"]] call SYG_nearestLocationA
+};
+
+/*
+ *   Search for the nearest location from the designated point (_this)
+ * Call:
+ *     _ret = getPos player call SYG_nearestLandLocation;
+ *     //     or
+ *     _ret = player call SYG_nearestLandLocation;
+ * Returns:
+ *      location : nearest well known name on map
+ */
+SYG_nearestLandLocation = {
+	[_this, ["NameCity","NameCityCapital","NameVillage","ViewPoint","Hill","VegetationBroadleaf",
 	         "VegetationFir","VegetationPalm","VegetationVineyard"]] call SYG_nearestLocationA
 };
 
@@ -1184,9 +1198,9 @@ SYG_townWithPoint = {
 // _round_pos = () call SYG_roundPos;  // _round_pos = [9298,    10145,   140]
 //
 SYG_roundPos = {
-    [ round (_this select 0), round (_this select 1), round (_this select 2) ]
+    if (count _this == 2) exitWith { [ round (_this select 0), round (_this select 1) ]  };
+    [round (_this select 0), round (_this select 1), round (_this select 2) ];
 };
-
 
 //
 // Detects if positions is on land or in sea near shore. Detects shore on default distance 20 meters or custom one see example #3
@@ -1210,6 +1224,20 @@ SYG_isNearLand = {
 		if (_shore) exitWith {};
 	} forEach [-_step,0,_step]; // for X
 	_shore
+};
+
+//
+// Moves desiganted object to any position on the land
+// Algorithm:
+// 1. Select true random point (RP) in the mapvalid area
+// 1.1. if found RP is in known town area, teleport with call to SYG_teleportToTown
+//      or simply find nearest house (with rooms available)
+// 2. Seach for the nearest to it named object
+//
+SYG_teleportToLand = {
+    // Settlements, nature points (forests etc)
+    _loc = _this call SYG_nearestLandLocation;
+    __b = nearestBuilding player;
 };
 
 if (true) exitWith {};
