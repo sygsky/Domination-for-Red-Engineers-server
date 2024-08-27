@@ -76,17 +76,19 @@ _isle = SYG_IsleCircles select 3; // Antigua enveloped circle descr
 _isle_pos = _isle select 1; // isle center
 _rad = _isle select 2;
 
-_abo_dir = getDir aborigen;
+_abo_dir = aborigen getVariable "ABO_DIR";
 if (isNil "_abo_dir") then {_abo_dir = 0};
 // Rotate aborigen to player, try server command
 if ( !(_arg in ["GO"])) then {
 	aborigen doWatch player;
+	if ( canStand aborigen) then {
 	_dir = [aborigen, player] call XfDirToObj; // wanted direction of aborigen view to the player
-	if ((abs(_dir - _abo_dir)) > 2) then { // change direction only if needed
-		if (!local aborigen) then {
-			["remote_execute", format ["aborigen setDir %1;", _dir], _player_name] call XSendNetStartScriptServer;
-		} else { aborigen setDir _dir };
-		aborigen setVariable ["ABO_DIR", _dir];
+        if ((abs(_dir - _abo_dir)) > 2) then { // change direction only if needed
+            if (!local aborigen) then {
+                ["remote_execute", format ["aborigen setDir %1;", _dir], _player_name] call XSendNetStartScriptServer;
+            } else { aborigen setDir _dir };
+            aborigen setVariable ["ABO_DIR", _dir];
+    	};
 	};
 };
 aborigen say (["surprize","disagreement","disagreement_tongue","horks_and_spits"] call XfRandomArrayVal);
