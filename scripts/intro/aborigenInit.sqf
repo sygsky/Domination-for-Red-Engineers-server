@@ -200,6 +200,7 @@ if (alive aborigen) then {
                         ["remote_execute",
                             format[ "aborigen playMove ""%1"";", _anim ],
                             name player,
+                            format[" dist %1 m.", round (aborigen distance player)],
                             format["abo animation ""%1""", animationState aborigen]
                         ] call XSendNetStartScriptServer;
                         sleep 2;
