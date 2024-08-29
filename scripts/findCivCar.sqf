@@ -21,8 +21,9 @@
 #define CAR_MARKER_NAME      "free_car_marker_name"
 #define CAR_MARKER_COLOR     "ColorBlack"
 
-if (typeName _this == "STRING") then { _this = [_this]};
+if (typeName _this != "ARRAY") then { _this = [_this]};
 _mode = if (count _this == 0) then { "CHECK"} else { _this select 0};
+if( (typeName _mode) != "STRING" ) exitWith { hint localize format["--- findCivCar.sqf: 1st param is not STRING (_this = %1), exit!", _this]};
 // call as: _car call _set_marker
 
 if ( _mode == "CHECK") exitWith { // Client code
@@ -80,7 +81,10 @@ if ( _mode == "CHECK") exitWith { // Client code
 		};
 	} forEach _arr;
 
-	if ( !isNull _car ) exitWith {}; // Car found and marker too, exit
+	if ( !isNull _car ) exitWith {
+	    sleep 0.1;
+        [ "log2server", name player, format[ "findCivCar.sqf: free car (%1) for player found on dist %2 m.", typeOf _car, round(player distance _car) ] ] call XSendNetStartScriptServer;
+	}; // Car found and marker too, exit
 	// Not found
 	// Try to define position for the vehicle near player (or in near town radious)
 	CAR_MARKER_NAME setMarkerTypeLocal "Empty"; // Hide free car marker
@@ -90,7 +94,7 @@ if ( _mode == "CHECK") exitWith { // Client code
 		["msg_to_user","*",[[ "STR_CAR_NOT_FOUND", RADIUS_TO_FIND_CAR]], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser; // "No cars found in the vicinity. Try again... a little later"
 	};
 	// Execute remote command to create/move free car to the designated position
-	["remote_execute", format ["[""CREATE"",%1, ""%2""] execVM ""scripts\findCivCar.sqf""", _pos1, name player]] call XSendNetStartScriptServer;
+	["remote_execute", format ["[""CREATE"",%1, ""%2"", %3] execVM ""scripts\findCivCar.sqf""", _pos1, name player, getPos player ] ] call XSendNetStartScriptServer;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -110,7 +114,8 @@ if (_mode == "HELP") exitWith {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++ CREATE ++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-hint localize format["+++ findCivCar.sqf: on server, _this = %1", _this];
+// _this = ["remote_execute", format ["[""CREATE"",%1,""%2"",%3"] execVM ""scripts\findCivCar.sqf""", _pos1, name player, getPos player]];
+hint localize format["+++ findCivCar.sqf: ""CREATE"" on server, _this = %1", _this];
 
 // Server side code
 if (isNil "FREE_CAR_LIST") then { allow_car_list_changes = true; FREE_CAR_LIST = [] };
@@ -127,11 +132,14 @@ _create_car = {
 	_car setDir (random 360);
 	_car setPos (getPos _car);
 	FREE_CAR_LIST set [count FREE_CAR_LIST, _car];
-	hint localize format["+++ findCivCar.sqf(server): car #%1 (%2) created at %3", (count FREE_CAR_LIST) - 1, _type, _pos1 call SYG_MsgOnPosE0];
+	hint localize format["+++ findCivCar.sqf(server): car #%1 (%2) created at %3",
+	    (count FREE_CAR_LIST) - 1,
+	    _type,
+	    _pos1 call SYG_MsgOnPosE0];
 	_car
 };
 
-if (typeName _this != "ARRAY") exitWith { hint localize format["--- findCivCar.sqf(server): _this not ARRAY (%1), exit!", typeName _this] };
+// if (typeName _this != "ARRAY") exitWith { hint localize format["--- findCivCar.sqf(server): _this not ARRAY (%1), exit!", typeName _this] };
 
 _pos1 = _this select 1; // pos to set car
 
@@ -155,9 +163,9 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 				if ( alive _x) then { // Car ready and is empty
 					if ( isNull _car ) then { // Car not selected
 						if ( ({alive _x} count (crew _x)) == 0 ) then {
-							_car = _x;  // Select oldest used empty alive car
+							_car = _x;  // Select oldest empty alive car
 							FREE_CAR_LIST set [_i, "RM_ME"];
-							hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) will be used, pos at %2", _i, _car call SYG_MsgOnPosE0  ];
+							hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) will be used, pos at %2, dist %3 м", _i, _car call SYG_MsgOnPosE0, _this select 2 ];
 						};
 					};
 				} else {  // Delete dead vehicle
@@ -175,7 +183,7 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 		FREE_CAR_LIST call SYG_cleanArray;
 		hint localize format["+++ findCivCar.sqf(server): free car list cleaned from size %1 to  %2", _cnt, count FREE_CAR_LIST];
 	};
-	if (alive _car) then {	// Exsiting car is found, add it to the end of list
+	if (alive _car) then {	// Existing car is found, add it to the end of list
 		_car setVectorUp [0,0,1];
 		_car setDir (random 360);
 		_car setPos _pos1;
@@ -190,6 +198,9 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 	};
 };
 allow_car_list_changes = true;
-hint localize format["+++ findCivCar.sqf(server): car %1 found for the player%2!",
-	typeOf _car, if (count _this > 2) then { format[" %1", _this select 2]} else {""} ]
+hint localize format["+++ findCivCar.sqf(server): car %1 found%2%3",
+	typeOf _car,
+	if (count _this > 2) then { format[" for the player %1", _this select 2]} else {", <no player name set>"},
+	if (count _this > 3) then { format [" on dist %1 m.!", round(_car distance (_this select 3))] } else {", <no pos set>"}
+];
 
