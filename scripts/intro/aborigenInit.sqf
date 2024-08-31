@@ -188,7 +188,7 @@ if (alive aborigen) then {
 		    if (alive player) then {
 		        _cnt = count ([aborigen, 50] call SYG_findNearestPlayers); // Count all player near aborigen include players in vehicles
 		        if ( _cnt == 0 ) then { // No players in vicinity
-    		        while {(animationState aborigen) in _list} do {
+    		        while { toLower(animationState aborigen) in _list} do {
     		            sleep 1;
 	    	        };
                     _dir = [aborigen, player] call XfDirToObj;
