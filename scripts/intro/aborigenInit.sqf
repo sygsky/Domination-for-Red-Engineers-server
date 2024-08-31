@@ -142,7 +142,11 @@ while { (alive aborigen) && ((player distance aborigen) > 10) && (time < _time)}
 deleteVehicle _grenade;
 #endif
 
-hint localize "+++ aborigenInit.sqf: player dist <= 10 m, abo marker created";
+hint localize format["+++ aborigenInit.sqf: exit start loop, player %1, dist %2 m, time %3 sec, abo marker will be created",
+                   if (alive player) then {"alive" } else {"dead"},
+                   round (player distance aborigen),
+                   round (time - _time)
+                ];
 
 // set marker on civ
 _marker = "aborigen_marker";
@@ -164,21 +168,21 @@ while { (alive aborigen) && (alive player) && ((player distance aborigen) < 40)}
 if (alive aborigen) then {
 	aborigen spawn {
 		private ["_list","_arr","_cnt","_anim", "_dir", "_dir1"];
-		_list = [
-			"ActsPercMstpSlowWrflDnon_Lolling",  // Stretches, as if the unit has just woken up
-			"ActsPercMstpSnonWnonDnon_DancingDuoIvan", // Does various dance moves
-			"ActsPercMstpSnonWnonDnon_DancingDuoStefan", // Dances
-			"ActsPercMstpSnonWnonDnon_DancingStefan",	// As above
-			"TestDance",
-			"TestFlipflop",
-			"TestJabbaFun",
-			"AmovPercMstpSnonWnonDnon_exerciseKata",	//		Martial arts moves
-			"AmovPercMstpSnonWnonDnon_exercisePushup",	//	Pushups
-			"AmovPercMstpSnonWnonDnon_Ease",	//	"At ease"
-			"AmovPercMstpSnonWnonDnon_AmovPsitMstpSnonWnonDnon_ground",	//	Sits on the ground
-			"AmovPercMstpSnonWnonDnon",	//	Stand without weapon
-			"AmovPercMstpSlowWrflDnon_seeWatch",	//	Checks watch with weapon in other hand
-			"AmovPercMstpSlowWrflDnon_AmovPsitMstpSlowWrflDnon"	//	Sits on ground
+		_list = [ // lower case ia needed as it is use internally to name animations
+			"actspercmstpslowwrfldnon_lolling",  // Stretches, as if the unit has just woken up
+			"actspercmstpsnonwnondnon_dancingduoivan", // Does various dance moves
+			"actspercmstpsnonwnondnon_dancingduostefan", // Dances
+			"actspercmstpsnonwnondnon_dancingstefan",	// As above
+			"testdance",
+			"testflipflop",
+			"testjabbafun",
+			"amovpercmstpsnonwnondnon_exercisekata",	//		Martial arts moves
+			"amovpercmstpsnonwnondnon_exercisepushup",	//	Pushups
+			"amovpercmstpsnonwnondnon_ease",	//	"At ease"
+			"amovpercmstpsnonwnondnon_amovpsitmstpsnonwnondnon_ground",	//	Sits on the ground
+			"amovpercmstpsnonwnondnon",	//	Stand without weapon
+			"amovpercmstpslowwrfldnon_seewatch",	//	Checks watch with weapon in other hand
+			"amovpercmstpslowwrfldnon_amovpsitmstpslowwrfldnon"	//	Sits on ground
 		];
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
         _dir = [aborigen, player] call XfDirToObj;
@@ -188,7 +192,7 @@ if (alive aborigen) then {
 		    if (alive player) then {
 		        _cnt = count ([aborigen, 50] call SYG_findNearestPlayers); // Count all player near aborigen include players in vehicles
 		        if ( _cnt == 0 ) then { // No players in vicinity
-    		        while {(animationState aborigen) in _list} do {
+    		        while {toLower(animationState aborigen) in _list} do {
     		            sleep 1;
 	    	        };
                     _dir = [aborigen, player] call XfDirToObj;
