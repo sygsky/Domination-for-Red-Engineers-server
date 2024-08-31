@@ -142,11 +142,7 @@ while { (alive aborigen) && ((player distance aborigen) > 10) && (time < _time)}
 deleteVehicle _grenade;
 #endif
 
-hint localize format["+++ aborigenInit.sqf: exit start loop, player %1, dist %2 m, time %3 sec, abo marker will be created",
-                   if (alive player) then {"alive" } else {"dead"},
-                   round (player distance aborigen),
-                   round (time - _time)
-                ];
+hint localize "+++ aborigenInit.sqf: player dist <= 10 m, abo marker created";
 
 // set marker on civ
 _marker = "aborigen_marker";
@@ -192,7 +188,7 @@ if (alive aborigen) then {
 		    if (alive player) then {
 		        _cnt = count ([aborigen, 50] call SYG_findNearestPlayers); // Count all player near aborigen include players in vehicles
 		        if ( _cnt == 0 ) then { // No players in vicinity
-    		        while {toLower(animationState aborigen) in _list} do {
+    		        while {(animationState aborigen) in _list} do {
     		            sleep 1;
 	    	        };
                     _dir = [aborigen, player] call XfDirToObj;
