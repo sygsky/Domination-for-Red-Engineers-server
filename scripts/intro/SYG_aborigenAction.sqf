@@ -688,6 +688,8 @@ switch ( _arg ) do {
 			player groupChat (localize "STR_ABORIGEN_WIZARD"); // "I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!"
 			(_this select 0) removeAction (_this select 2); // Remove this action
 			// Add wizard action
+
+#define __NEW__
 #ifdef __NEW__
 //			"Maledictum" - выругаться...
 //         "Incantamentum" - заклинание (вуду)
@@ -711,20 +713,20 @@ switch ( _arg ) do {
 	};
 	// Teleport player to the base as with MHQ
 	case "WIZARD": {
+		(_this select 0) removeAction (_this select 2); // Remove this action
 		beam_target = 0; // Jump to the base
 //		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
 //			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
 		"spell_5" execVM "dlg\beam_tele.sqf"; // Teleport to the base
-		(_this select 0) removeAction (_this select 2); // Remove this action
 	};
-	// Move player to the random position on the island or in a water, doesn't matter
+	// TODO: Move player to the random position on the island or in a water, doesn't matter
+	// Simply fake player without moving
 	case "CURSE": {
-		beam_target = 0; // Jump to the base
-//		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
-//			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
-// Move to the random point on islands somewhere in forest
-		"curse_upon_you" execVM "dlg\beam_tele.sqf"; // Teleport to the base
-		(_this select 0) removeAction (_this select 2); // Remove this action
+//		(_this select 0) removeAction (_this select 2); // Remove this action
+		player say "curse_upon_you"; // Teleport to the base
+		// “You cursed foully... Nothing happened! But it could have thrown you anywhere”
+		["msg_to_user", "", [["STR_ABORIGEN_CURSE"]]] call SYG_msgToUserParser; // message output
+		call SYG_stunEffect;
 	};
 	default {
 		format[localize "STR_ABORIGEN_UNKNOWN", _arg] call XfGroupChat;

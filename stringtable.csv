@@ -1808,6 +1808,7 @@ STR_ABORIGEN_NAME,Do GRU countersign!,Das Passwort der GRU!,¡La contraseña del
 STR_ABORIGEN_NAME_1,My password: '%1'. Your challenge?,Ich bin - '%1'. Kennwort?,Soy - '%1'. ¿Contraseña?,Вы: - '%1'. Отзыв?
 STR_ABORIGEN_NAME_2,"Aborigen answer:- '%1'! Salutations, comrade!","Der Aborigine antwortet: - '%1'! Hallo, Genosse!","El aborigen responde: - '%1'. ¡Hola, camarada!","Абориген отвечает: - '%1'. Здравствуй, товарищ!"
 STR_ABORIGEN_WIZARD,"I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!","Einen Wunsch von dir werde ich erfüllen! Willst du zur Basis gehen? Du wirst dort sein. Peng, peng, peng, peng, peng, peng!","¡Cumpliré uno de tus deseos! ¿Quieres ir a la base? Estarás allí. ¡Bang, bang, bang, bang, bang!","Я выполню одно ваше пожелание! Вы хотите на базу? Вы там будете. Трах-тибидох-тибидох!"
+STR_ABORIGEN_CURSE,“You cursed foully... Nothing happened! But it could have thrown you anywhere”,"Du hast böse geflucht... Es ist nichts passiert! Aber es hätte dich überall hinschleudern können","Maldijiste asquerosamente... ¡No pasó nada! Pero podría haberte lanzado a cualquier parte","Вы грязно выругались... Ничего не произошло! А ведь могло и забросить куда придётся"
 STR_ABORIGEN_GO_BASE,Magical transference,Die magische Bewegung!,¡El movimiento mágico!,Волшебное перемещение!
 
 STR_ABORIGEN_NAME_UNKNOWN,doesn't matter,ist unwichtig,no es importante,не имеет значения
