@@ -678,9 +678,9 @@ switch ( _arg ) do {
 		_uname = toUpper (_player_name);
 
 #ifdef __MAGIC_SPELL__
-		_in_magic = true; // All cal call teleport spell
+		_in_magic = true; // All can call teleport spell
 #else
-		_in_magic = _uname in ["YETI","ENGINEERACE","MASLODIUM","GEORGE.T","SNOOPER","ROKSE [LT]","GYURI","FLAVI"];
+		_in_magic = _uname in ["YETI","ENGINEERACE","MASLODIUM","GEORGE.T","SNOOPER","ROKSE [LT]","GYURI","FLAVI","ISAAQ"];
 #endif
 
 		hint localize format[ "+++ ABO NAME: %1 => %2, set magic = %3", _player_name, _uname, _in_magic ];
