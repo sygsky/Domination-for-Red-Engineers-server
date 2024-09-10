@@ -21,7 +21,7 @@ d_mountine_towns   = [ "Hunapu", "Pacamac", "Masbete", "Benoma", "Eponia" ];
 // Big town indexes. Should be present in list when play with not maximum number of towns
 d_big_towns_inds = [5,6,7,8,11]; // array of indexes, not ids
 
-// Small towns indexes. Can be abse nt from list when playing not minimum number of towns
+// Small towns indexes. Can be absent from list when playing not minimum number of towns
 d_small_towns_inds = [3,13,15,16,17,18,19,21,22,23,24,25,26,27,28]; // +++ Chantico (offset 3, not id) moved to the list of small towns as it is too easy to seize it from base (if there are tanks in it)
 
 #endif
@@ -34,8 +34,8 @@ if (number_targets >= 50) then {
 			case 70: {6};   // "North Middle Route"
 			case 80: {6};   // "North East Route"
 			case 90: {22}; // "Complete, ordered"
-			case 91: {count d_small_towns_inds}; // "All smalles"
-			default {22};   // "Max num random"
+			case 91: {count d_small_towns_inds}; // "All smallest"
+			default {12};   // "Average num random"
 		}
 	);
 	number_targets = _h;

@@ -61,9 +61,10 @@ SYG_island_arr = [
     // Island #1 (Main)
 	[
 	    "Sahrani_Main", // Offset 0: Island name
-	    // Towns index array
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28], // Offset in common array:1
-		 // Special Side Missions array (53 is SM on Rahmady - airplane hijack)
+	    // Towns index array: [ <[big rowns list],[small towns list],> all towns list
+	    // Big+small towns lists may be absent (both are on or off)
+		[d_big_towns_inds,d_small_towns_inds,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,/*20 - Rahmadi*/ 21,22,23,24,25,26,27,28], // Offset in common array:1
+		 // Special Side Missions array (53 is SM on Rahmadi - airplane hijack)
 		[57,56,44,/* 53, */54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0], // Offset 2
 		// Add special land patrols on the island for this island
         [ // Offset 3

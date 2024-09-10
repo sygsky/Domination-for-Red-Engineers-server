@@ -186,7 +186,10 @@ if (isServer) then {
         // As many as possible big towns should be included into resulting array
         // And some small ones also may be randomly preselected or be totally absent if output count is too low (< 9)
         //               created cnt,       whole number, important indexes, unimportant indexes
-        _params = [_number_targets_h, count target_names,  d_big_towns_inds,  d_small_towns_inds]; //
+//        _params = [_number_targets_h, count target_names,  d_big_towns_inds,  d_small_towns_inds]; // Allow to filter  unimportant towns first
+        // #705: Ensure that small towns are always on the mission list
+        _arr_small = if ( ((count target_names) - (count d_small_towns_inds)) <= (_number_targets_h + 1) ) then {[]} else {d_small_towns_inds};
+        _params = [_number_targets_h, count target_names,  d_big_towns_inds,  _arr_small]; // #705: allow all towns to have chance to be in misison list
         _str = format["+++ init target town params: %1",_params ];
         hint localize _str;
         _arr = _params call XfIndexArrayWithPredefVals;
@@ -194,12 +197,12 @@ if (isServer) then {
 		// maintargets_list = (count target_names) call XfRandomIndexArray;
 	} else {
 		switch (_number_targets_h) do {
-			case 50: {maintargets_list = [3,4,2,0,1,7,6];}; // South Route: Chantoco, Somato, Arcadia, Cayo, Iguana, Dolores, Ortego
+			case 50: {maintargets_list = [3,4,2,0,24,1,7,6];}; // South Route: Chantico, Somato, Arcadia, Cayo, Tiberia, Iguana, Dolores, Ortego
 			case 60: {maintargets_list = [8,10,16,17];};	// North West Route: Corazol, Mercallilo, Pacamac, Hunapu
 			case 70: {maintargets_list = [8,9,11,19,14,18];}; // North Middle Route: Corazol, Obregan, Bagango, Carmen, Eponia, Mataredo
-			case 80: {maintargets_list = [8,15,9,11,12,13];}; // North East Route: Corazol, Everon, Obregan, Bagango, Masbete, Pita
+			case 80: {maintargets_list = [8,15,9,11,23,12,13];}; // North East Route: Corazol, Everon, Obregan, Bagango, Benoma, Masbete, Pita
 			case 90: {
-			    // 22 towns (maximum number) fill them from whole list.
+			    // 22 towns (maximum number) fill them from static list.
 			    // Paraiso/Chantico/Somato/Arcadia/Estrella/Cayo etc
 			    maintargets_list = [5,3,4,2,20,0,1,7,6,8,15,9,10,11,12,13,19,14,18,16,17,21];
 			}; // 22
