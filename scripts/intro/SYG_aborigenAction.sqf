@@ -622,12 +622,21 @@ switch ( _arg ) do {
 		if ( !(alive _ammo) ) exitWith {
 			[player, (localize "STR_ABORIGEN_WEAPON_NONE")] call XfGroupChat; // "Looks like there aren't any guns here, hehe"
 		};
-		_txt = format[ localize "STR_ABORIGEN_WEAPON_INFO", // I saw some kind of weapon at %1 m towards %2%3
-               				round ([player,_ammo] call SYG_distance2D),
-               				([player, _ammo] call XfDirToObj) call SYG_getDirName,
-               				if ((_ammo) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}];
-		hint localize format["+++ WEAPON: found %1 at %2 m.", typeOf _ammo, round (player distance _ammo)];
+		_dist = round (player distance _ammo);
+		_txt = "";
+		if (_dist < 3) then { // Show different messages if weapon nearer 3 meters or farther
+            _txt = format[localize "STR_ABORIGEN_WEAPON_INFO_0", // "I saw some kind of weapon nearby%1" ([" in box"|" thrown in"])
+                          if ((_ammo) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}
+                         ];
+		} else {
+            _txt = format[ localize "STR_ABORIGEN_WEAPON_INFO", // I saw some kind of weapon at %1 m towards %2%3
+                                round ([player,_ammo] call SYG_distance2D),
+                                ([player, _ammo] call XfDirToObj) call SYG_getDirName,
+                                if ((_ammo) isKindOf "WeaponHolder") then {localize "STR_ABORIGEN_WEAPON_INFO_HOLDER"} else {localize "STR_ABORIGEN_WEAPON_INFO_BOX"}
+                         ];
+		};
 		player groupChat _txt; // "I saw some kind of weapon at %1 m towards %2%3"
+		hint localize format["+++ WEAPON: found %1 at %2 m.", typeOf _ammo, _dist];
 	};
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++

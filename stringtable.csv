@@ -1786,6 +1786,7 @@ STR_ABORIGEN_HELI_UNKNOWN,"Helicopter? No... no, he's not here, maybe he'll be h
 
 STR_ABORIGEN_WEAPON,What about guns?,Was ist mit Waffen?,¿Y las armas?,"Как тут с оружием?"
 STR_ABORIGEN_WEAPON_INFO,I saw some kind of weapon at %1 m towards %2%3,Ich sah eine Art Waffe bei %1 m in Richtung %2%3,Vi algún tipo de arma en %1 m hacia %2%3,Я видел оружие в %1 м на %2%3
+STR_ABORIGEN_WEAPON_INFO_0,"Somewhere nearby, I saw some kind of weapon%1","Irgendwo in der Nähe habe ich eine Art von Waffe gesehen%1","En algún lugar cercano, vi algún tipo de arma%1",Я видел оружие где-то тут рядом%1
 STR_ABORIGEN_WEAPON_INFO_BOX,", in a box.",", in einer Schachtel."," en una caja.",", в ящике."
 STR_ABORIGEN_WEAPON_INFO_HOLDER,", thrown in.",", eingeworfen.",", tirado.",", валяющееся."
 STR_ABORIGEN_WEAPON_NONE,"Looks like there aren't any guns here, hehe","Sieht aus, als gäbe es hier keine Waffen, hehe","Parece que aquí no hay armas, jeje","Кажись, оружия то и нету нигде, хе-хе"
