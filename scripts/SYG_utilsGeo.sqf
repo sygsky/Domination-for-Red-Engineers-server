@@ -438,7 +438,7 @@ SYG_whatPartOfIsland = {
  */
 SYG_isDesert = {
 	private ["_pos","_ret","_x"];
-	hint localize format["+++ SYG_isDesert: _this = %1",_this];
+//	hint localize format["+++ SYG_isDesert: _this = %1",_this];
 	_pos = _this call SYG_getPos;
 	if (  (_pos select 0) == 0 ) exitWith {false};
 	// this is a max Y coordinate of desert region on Sahrani (by my estimation)

@@ -160,6 +160,7 @@ if ((markerType _marker) == "") then {
 aborigen setMimic "Normal";
 // Do watch while alive or near
 aborigen setDir ([aborigen, player] call XfDirToObj);
+hint localize "+++ aborigenInit.sqf: wait player to be far from aborigen > 40 meters";
 while { (alive aborigen) && (alive player) && ((player distance aborigen) < 40)} do { sleep 5};
 if (alive aborigen) then {
 	aborigen spawn {
@@ -182,20 +183,26 @@ if (alive aborigen) then {
 		];
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
         _dir = [aborigen, player] call XfDirToObj;
+        _state = ""; // "far"/"near"
 		while { (alive aborigen) && (base_visit_mission < 1) } do { // Player not visited vase and alive aborigen
-            hint localize format["+++ aborigenInit.sqf: abo animation is ""%1""", animationState aborigen];
+//            hint localize format["+++ aborigenInit.sqf: abo animation is ""%1""", animationState aborigen];
 		    while {!(canStand aborigen)} do {sleep 5}; // Wait until aborigen can stand
 		    if (alive player) then {
 		        _cnt = count ([aborigen, 50] call SYG_findNearestPlayers); // Count all player near aborigen include players in vehicles
 		        if ( _cnt == 0 ) then { // No players in vicinity
+		            if (_state != "far") then {hint localize "+++ aborigenInit.sqf: no player near abo, stop watching"; _state = "far" };
+		            aborigen doWatch objNull;
     		        while { toLower(animationState aborigen) in _list} do {
-    		            sleep 1;
+//                        hint localize format["+++ aborigenInit.sqf: abo is in listed animation ""%1""", animationState aborigen];
+    		            sleep 5;
 	    	        };
                     _dir = [aborigen, player] call XfDirToObj;
-                    aborigen setDir _dir;
+//                    aborigen setDir _dir;
                     _anim = _list call XfRandomArrayVal;
                     if (local aborigen) then {
+                        hint localize format["+++ aborigenInit.sqf: abo is local, so set animation to ""%1""", _anim];
                         aborigen playMove _anim;
+                        sleep 5;
                     } else {
                         ["remote_execute",
                             format[ "aborigen playMove ""%1"";", _anim ],
@@ -203,15 +210,24 @@ if (alive aborigen) then {
                             format[" dist %1 m.", round (aborigen distance player)],
                             format["abo animation ""%1""", animationState aborigen]
                         ] call XSendNetStartScriptServer;
-                        sleep 2;
+                        sleep 5;
                     };
                 } else {  // player very close to aborigen
+		            if (_state != "far") then {hint localize "+++ aborigenInit.sqf: some player near abo, start watching"; _state = "near" };
+                    aborigen doWatch (_arr select 0);
+                    aborigen switchMove "AmovPercMstpSnonWnonDnon"; // Stand without weapon
+/*
                     _dir1 = [ aborigen, player ] call XfDirToObj;
                     if (abs (_dir1 - _dir) > 5) then {
-                        aborigen setDir _dir1;
-//                        aborigen glanceAt player;
+                        _delay = (abs(_dir1 - _dir) * 0.1) min 6;
+                        for "_dir_new" from _dir to _dir1 step 1 do {
+                            aborigen setDir _dir_new;
+                            sleep _delay;
+                        };
+                        aborigen lookAt player;
                         _dir = _dir1;
                     };
+*/
                     sleep (2 + (random 2));
                 };
 			} else  { sleep 5 }; // Sleep until alive player

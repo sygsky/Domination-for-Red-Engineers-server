@@ -732,7 +732,7 @@ switch ( _arg ) do {
 	// Simply fake player without moving
 	case "CURSE": {
 //		(_this select 0) removeAction (_this select 2); // Remove this action
-		player say "curse_upon_you"; // Teleport to the base
+		player say "spell_8"; // Bad speech
 		// “You cursed foully... Nothing happened! But it could have thrown you anywhere”
 		["msg_to_user", "", [["STR_ABORIGEN_CURSE"]]] call SYG_msgToUserParser; // message output
 		call SYG_stunEffect;
