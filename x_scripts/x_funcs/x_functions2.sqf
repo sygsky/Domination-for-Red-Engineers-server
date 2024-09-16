@@ -28,6 +28,19 @@ XfRandomArrayVal = {
 	_this select (_this call XfRandomFloorArray);
 };
 
+// get a random item from an partial array width (not all, shortened before end)
+// parameters: [array, num]
+// example: _randomval = [_myarray, _myarray_num] call XfRandomArrayVal;
+// num always < count array
+XfRandomArrayValPart = {
+    private ["_num", "_arr"];
+    _num = _this select 1;
+    _arr = _this select 0;
+    if ( (_num > (count _arr)) || (_num < 0) ) exitWith { _arr call XfRandomArrayVal };
+	_arr select (floor random _num)
+};
+
+
 // get a random numer, ceiled
 // parameters: number
 // example: _randomint = 30 call XfRandomCeil;
