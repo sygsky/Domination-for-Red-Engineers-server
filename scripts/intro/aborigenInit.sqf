@@ -203,9 +203,10 @@ if (alive aborigen) then {
 		            _cnt = [aborigen,  50] call SYG_findNearestPlayers;
                     if (_cnt > 0) exitWith { // Some player is too close <= 50 meters
     		            if (_state != "near") then {hint localize "+++ aborigenInit.sqf: some player near abo, start watching"; _state = "near" };
-                        aborigen doWatch (_arr select 0);
                         aborigen switchMove "AmovPercMstpSnonWnonDnon"; // Stand without weapon
-                        sleep 1;
+                        sleep 0.1;
+                        aborigen doWatch (_arr select 0);
+                        sleep 0.9;
                         hint localize format["+++ aborigenInit.sqf: after 1 sec abo anim == ""%1"""; animationState aborigen]
                         sleep (2 + (random 2));
                     };
