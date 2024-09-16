@@ -118,18 +118,26 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, bas
 #ifdef __ACE__
 // inform players that I've reached the base
 if (!isNil "SYG_initialEquipmentStr") then {
-    _str = (_spent_time/3600) call SYG_userTimeToStr; // Let's convert it to hours to match the parameter of this method
-	// "You have been given a weapon. Take care of it!",
-	// "%1 have reached the base in %2! Life will get easier from here.",
-	// "You are assigned to the SpecNaz GRU detachment at Sahrani and to the local flying club, for the use of jump flags."
-	// Sends upper messages to you only
-	[ "msg_to_user", "*", [["STR_INTRO_REARMED"],["STR_INTRO_ON_BASE",name player,_str],["STR_INTRO_ON_BASE1"]], 5, 0, false, "no_more_waiting" ] spawn SYG_msgToUserParser; // Send to client:"%1 have reached the base! Life will get easier from here."
-	// Send this message to all except this player
+    _str   = (_spent_time/3600) call SYG_userTimeToStr; // Let's convert it to hours to match the parameter of this method
+	_bonus = d_ranked_a select 32;
+	_sound = "no_more_waiting";
+
     if (!isNil "spell_cast") then { // If spell, not inform all about time you reached base
-        _str = localize "STR_INTRO_ON_BASE_SPELL"; // "some time"
+        _msg = "STR_INTRO_ON_BASE0"; // "%1 reached base for some time. But not receive +%2 points (voodoo used)! Life will be easier, more fun!"
         spell_cast = nil; // No need for it more
+        _bonus call SYG_addBonusScore;
+        _sound = "spell_wrong"; // For wrong spell
+    } else {
+        _msg = "STR_INTRO_ON_BASE"; // "%1 reached base for %2! Life will be easier, more fun, especially with +%3 for that",
     };
-	[ "msg_to_user", "*", [["STR_INTRO_ON_BASE",name player,_str]], 0, 2, false, "no_more_waiting" ] call XSendNetStartScriptClient; // Send to all others: "%1 have reached the base! Life will get easier from here."
+
+    // Sends upper messages to you only
+	// STR_INTRO_REARMED  = "You have been given a weapon. Take care of it!",
+    // STR_INTRO_ON_BASE1 = "You are assigned to the SpecNaz GRU detachment at Sahrani and to the local flying club, for the use of jump flags."
+    [ "msg_to_user", "*", [["STR_INTRO_REARMED"],[_msg,name player,_str, _bonus],["STR_INTRO_ON_BASE1"]], 5, 0, false, _sound] spawn SYG_msgToUserParser; // Send to client:"%1 have reached the base! Life will get easier from here."
+    // Send this message to all except this player
+    [ "msg_to_user", "*", [[_msg,name player,_str, _bonus]], 0, 2, false, _sound ] call XSendNetStartScriptClient;
+
 	// rearm from parajump set to the original equipment from last exit
 	hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
 	[player, SYG_initialEquipmentStr] call SYG_rearmUnit;
@@ -140,6 +148,7 @@ sleep 0.5;
 ["say_sound", player, call SYG_armorySound] call XSendNetStartScriptClientAll; // playSound on all connected player computers immediately
 //playSound (call SYG_armorySound); // random armory sound
 #endif
+
 // remove parachute
 _para = player call SYG_getParachute;
 if ( _para != "") then { player removeWeapon _para }; // The parachute is used, remove it from inventory
