@@ -93,7 +93,7 @@ _winner = 0;
 					if (isPlayer _killer) exitWith {
 						_score = -(d_ranked_a select 24); // -5 for killing of sidemission civilian
 						// "Soldier %1 killed a civilian from the current sidemission. The soldier is penalized for %2 points."
-						[ "change_score", name _killer, _score, ["msg_to_user", [ ["STR_SM_HOSTAGES_1", name _killer, _score ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClient;
+						[ "change_score", name _killer, _score, ["msg_to_user", "", [ ["STR_SM_HOSTAGES_1", name _killer, _score ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClient;
 						hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1 (%2 player)", name _killer, if (alive _killer) then {"alive"} else {"dead"}];
 					};
 					hint localize format["--- x_sideprisoners.sqf: hostage is killed by %1 (%2, AI, %3)" ,

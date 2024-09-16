@@ -43,7 +43,7 @@ doStop aborigen;
 if ( (alive aborigen) && (alive _player) ) then {
 	//                       "That's all. I'm  tired to follow you, %1..." || "That's it. I'm not going any further, got tired, %1..."
 	if (time < _time) then { _msg =  "STR_ABORIGEN_GO_TIMEOUT" } else { _msg =  "STR_ABORIGEN_GO_DISTOUT" };
-	["msg_to_user", [ [ _msg, name _player ] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClient;
+	["msg_to_user", "", [ [ _msg, name _player ] ], 0, 1, false, "losing_patience"] call XSendNetStartScriptClient;
 };
 
 // aborigen doFollow aborigen;
