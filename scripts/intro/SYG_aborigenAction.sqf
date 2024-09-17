@@ -692,7 +692,10 @@ switch ( _arg ) do {
 		_in_magic = _uname in ["YETI","ENGINEERACE","MASLODIUM","GEORGE.T","SNOOPER","ROKSE [LT]","GYURI","FLAVI","ISAAQ","IHATELIFE"];
 #endif
 
-		hint localize format[ "+++ ABO NAME: %1 => %2, set magic = %3", _player_name, _uname, _in_magic ];
+        _str = format[ "+++ SYG_aborigenAction.sqf: ""NAME"" selected, ucase(""%1"") => ""%2"", magic allowed = %3, abo name = ""%4""", _player_name, _uname, _in_magic, _name ];
+		hint localize _str;
+		["log2server", name player, _str] call XSendNetStartScriptServer; // Send info about magic to the server log
+
 		if( _in_magic /* && ( (localize "STR_LANGUAGE") == "RUSSIAN") */ ) then {
 			player groupChat (localize "STR_ABORIGEN_WIZARD"); // "I will grant one wish of yours! You want to go to the base? You'll be there. Brah-tibidoh-tibidoh-tibidoh!"
 			(_this select 0) removeAction (_this select 2); // Remove this action
@@ -726,7 +729,10 @@ switch ( _arg ) do {
 		beam_target = 0; // Jump to the base
 //		_spell = format["spell_%1", 7 call XfRandomCeil ]; // spell_1..7
 //			hint localize format["+++ ABO NAME: spell is %1, aborigen = %2", _spell, typeOf aborigen];
+
 		"spell_5" execVM "dlg\beam_tele.sqf"; // Teleport to the base
+		// Send info to server about magic to be called
+        [ "log2server", name player, "+++ SYG_aborigenAction.sqf: ""WIZARD"" selected" ] call XSendNetStartScriptServer;
 	};
 	// TODO: Move player to the random position on the island or in a water, doesn't matter
 	// Simply fake player without moving
