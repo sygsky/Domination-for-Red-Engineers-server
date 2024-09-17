@@ -207,7 +207,7 @@ if (alive aborigen) then {
                         sleep 0.1;
                         aborigen doWatch (_arr select 0);
                         sleep 0.9;
-                        hint localize format["+++ aborigenInit.sqf: after 1 sec abo anim == ""%1"""; animationState aborigen]
+                        hint localize format["+++ aborigenInit.sqf: after 1 sec abo anim == ""%1""", animationState aborigen];
                         sleep (2 + (random 2));
                     };
                     // Any player is at distance 50-300 m. from aborigen
