@@ -6,11 +6,11 @@ if (!X_Client) exitWith {};
 
 #define __DEBUG__
 
-// Uncomment to enable teleport with turning accodring to the MHQ, else direction not changes after teleport
+// Uncomment to enable teleport with turning according to the MHQ, else direction not changes after teleport
 //#define __TELEPORT_WITH_TURNING__
 
 #ifdef __DEBUG__
-	hint localize format["+++ beam_tele.sqf: beam_target %1, _this %2", beam_target, _this];
+hint localize format["+++ beam_tele.sqf: beam_target %1, _this %2", beam_target, _this];
 #endif
 
 if (beam_target < 0) exitWith{};
