@@ -61,7 +61,7 @@ if ( _mode == "CHECK") exitWith { // Client code
 	};
 	_car = objNull;
 	{
-		if ( alive _x ) exitWith { // Send message to the player about car found
+		if ( (alive _x) && (!(_x call SYG_vehIsUpsideDown))) exitWith { // Send message to the player about car found
 			_car  = _x;
 			_str = "";
 			_marker_type = _car call SYG_getVehicleMarkerType;
@@ -160,7 +160,7 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 			FREE_CAR_LIST set [_i, "RM_ME"]
 		} else {
 			if (typeName _x == "OBJECT") then {
-				if ( alive _x) then { // Car ready and is empty
+				if ( (alive _x) && (!(_x call SYG_vehIsUpsideDown))) then { // Car ready and not upsidedown and is empty
 					if ( isNull _car ) then { // Car not selected
 						if ( ({alive _x} count (crew _x)) == 0 ) then {
 							_car = _x;  // Select oldest empty alive car
@@ -168,7 +168,7 @@ if ( (count FREE_CAR_LIST) <  MAX_COUNT ) then {
 							hint localize format[ "+++ findCivCar.sqf(server): veh at list.get(%1) will be used, pos at %2, dist %3 м", _i, _car call SYG_MsgOnPosE0, _this select 2 ];
 						};
 					};
-				} else {  // Delete dead vehicle
+				} else {  // Delete dead or upsidedown vehicle
 					// Play corresponding sound
 					["say_sound", getPos _x, "steal"] call XSendNetStartScriptClientAll;
 					deleteVehicle _x;

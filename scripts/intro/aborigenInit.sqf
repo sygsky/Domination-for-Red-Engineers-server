@@ -200,8 +200,8 @@ if (alive aborigen) then {
 		        _cnt = count ([aborigen, 300] call SYG_findNearestPlayers); // Count all players in aborigen vicinity of 1500 m.
 		        if ( _cnt > 0 ) then { // Some players in vicinity 300 meters
 		            // Check if players not very close to abo
-		            _cnt = [aborigen,  50] call SYG_findNearestPlayers;
-                    if (_cnt > 0) exitWith { // Some player is too close <= 50 meters
+		            _arr = [aborigen,  50] call SYG_findNearestPlayers;
+                    if ((count _arr) > 0) exitWith { // Some player is too close <= 50 meters
     		            if (_state != "near") then {hint localize "+++ aborigenInit.sqf: some player near abo, start watching"; _state = "near" };
                         aborigen switchMove "AmovPercMstpSnonWnonDnon"; // Stand without weapon
                         sleep 0.1;
@@ -218,8 +218,6 @@ if (alive aborigen) then {
     		            sleep 5;
 	    	        };
 	    	        if (!alive aborigen) exitWith {};
-                    _dir = [aborigen, player] call XfDirToObj;
-//                    aborigen setDir _dir;
                     _anim = [_list, _anim_cnt] call XfRandomArrayValPart;
                     if (local aborigen) then {
                         hint localize format["+++ aborigenInit.sqf: abo is local, so set animation to ""%1""", _anim];
