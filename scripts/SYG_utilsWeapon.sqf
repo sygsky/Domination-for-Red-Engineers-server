@@ -2715,6 +2715,7 @@ SYG_bombPos = {
 // Where: _arr = [_unit, "GRENADE_TYPE", _dir_to_throw | _pos | unit];
 //
 //
+#define __UGLY_WAY__
 SYG_throwSmokeGrenade = {
 //    hint localize format["+++ SYG_throwSmokeGrenade: _this = %1", _this];
     if (typeName _this != "ARRAY") exitWith { hint localize format["--- SYG_throwSmokeGrenade: expected input array, found %1, exit!", _this] };
@@ -2732,6 +2733,13 @@ SYG_throwSmokeGrenade = {
         reload _unit;
     } else {
         hint localize format["*** SYG_throwSmokeGrenade: shells detected, mags = %1", magazines _unit];
+#ifdef __UGLY_WAY__
+        hint localize "*** SYG_throwSmokeGrenade: UGLY SOLUTION - shell removed and added again";
+        _unit removeMagazines _shell;
+        sleep 0.12;
+        _unit addMagazine _shell;
+        sleep 0.08;
+#endif
     } ;
     _dir = [_unit, _target] call XfDirToObj;
     _unit setDir _dir;
