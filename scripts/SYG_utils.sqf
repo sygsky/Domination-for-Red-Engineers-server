@@ -622,11 +622,13 @@ SYG_AIPriceByRankString = {
 // Calls: _score_to_subtruct = (score player) call SYG_demoteByScore;
 //
 SYG_demoteByScore = {
-	private ["_ind", "_prev"];
-	_ind = _this call XGetRankIndexFromScore;
-	if ( _ind == 0 ) exitWith { _this max 0 }; // If rank is private, returns score to get zero or zero if already negative score
+	private ["_ind", "_prev","_score"];
+    _score = if ( typeName _this == "OBJECT") then { if (isPlayer _this) then { score _this} else {0} } else {0};
+    if ( typeName _this != "SCALAR") exitWith {0};
+	_ind = _score call XGetRankIndexFromScore;
+	if ( _ind == 0 ) exitWith { _score max 0 }; // If rank is private, returns score to get zero or zero if already negative score
 	if ( _ind == 1 ) then { _prev = 0 } else { _prev = ( _ind - 1 ) call XGetScoreFromRank }; // If rank is corporal, score to reset to t middle of private rank score
-	_this - ((_ind call XGetScoreFromRank) + _prev) / 2 // Return value to subract from designated score to ensure set previous rank
+	_score - ((_ind call XGetScoreFromRank) + _prev) / 2 // Return value to subtract from designated score to ensure set previous rank
 };
 
 if (true) exitWith {};
