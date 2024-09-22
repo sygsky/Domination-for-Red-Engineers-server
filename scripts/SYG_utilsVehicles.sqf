@@ -237,24 +237,6 @@ SYG_nearestSoldierGroups = {
 	_grps
 };
 
-// Finds nearest player nearby: _nearest_player = [_pos, _dist] call SYG_findNearestPlayer;
-// Returns nearest alive player found or objNull if none
-SYG_findNearestPlayer = {
-    private ["_pos","_dist","_nearArr","_pl","_x"];
-    _pos  = _this select 0;
-    _dist = _this select 1;
-	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
-	if ( (count _nearArr) == 0 ) exitWith { objNull };
-	_pl = objNull;
-	{
-	    {
-    	    if ( ( alive _x ) && ( isPLayer _x ) ) exitWith { _pl = _x };
-	    } forEach crew _x;
-	    if ( !isNull _pl ) exitWith {};
-	} forEach _nearArr;
-	_pl
-};
-
 //
 // d_base_array = [[9821.47,9971.04,0], 600, 200, 0];
 //
@@ -282,12 +264,12 @@ SYG_findPlayersOnBase = {
 	} forEach _nearArr;
 	_plNames
 };
+
 // _found_names = [_pos, _dist] call SYG_findNearestPlayers; // Include players in vehicles
 SYG_findNearestPlayers = {
-    private ["_pos","_dist","_nearArr","_plNames","_x"];
+    private ["_pos","_nearArr","_plNames","_x"];
     _pos  = (_this select 0) call SYG_getPos;
-    _dist = _this select 1;
-	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _dist ];
+	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _this select 1 ];
 	if ( (count _nearArr) == 0 ) exitWith { [] };
 	_plNames = [];
 	{
@@ -296,6 +278,23 @@ SYG_findNearestPlayers = {
 	    } forEach crew _x;
 	} forEach _nearArr;
 	_plNames
+};
+
+// Finds nearest player nearby: _nearest_player = [_pos, _dist] call SYG_findNearestPlayer;
+// Returns nearest alive player found or objNull if none
+SYG_findNearestPlayer = {
+    private ["_pos","_nearArr","_pl","_x"];
+    _pos  = (_this select 0) call SYG_getPos;
+	_nearArr = nearestObjects [ _pos, ["CAManBase","LandVehicle","Air","Ship"], _this select 1 ];
+	if ( (count _nearArr) == 0 ) exitWith { objNull };  // No any vehicles/players detected
+	_pl = objNull;
+	{
+	    {
+    	    if ( ( alive _x ) && ( isPLayer _x ) ) then { _pl =_x };
+	    } forEach crew _x;
+	    if (alive _pl) exitWith {};
+	} forEach _nearArr;
+	_pl
 };
 
 // _vecs_arr = [_unit || _pos, 500, ["LandVehicle"]] call Syg_findNearestVehicles;

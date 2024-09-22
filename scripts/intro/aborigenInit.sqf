@@ -193,19 +193,19 @@ if (alive aborigen) then {
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Dancing
         _dir = [aborigen, player] call XfDirToObj;
         _state = ""; // "far"/"near"
-		while { (alive aborigen) && (base_visit_mission < 1) } do { // Player not visited vase and alive aborigen
+		while { (alive aborigen) && (base_visit_mission < 1) } do { // Player not visited base and aborigen alive
 //            hint localize format["+++ aborigenInit.sqf: abo animation is ""%1""", animationState aborigen];
 		    while {!(canStand aborigen)} do {sleep 5}; // Wait until aborigen can stand
 		    if (alive player) then {
 		        _cnt = count ([aborigen, 300] call SYG_findNearestPlayers); // Count all players in aborigen vicinity of 1500 m.
 		        if ( _cnt > 0 ) then { // Some players in vicinity 300 meters
 		            // Check if players not very close to abo
-		            _arr = [aborigen,  50] call SYG_findNearestPlayers;
-                    if ((count _arr) > 0) exitWith { // Some player is too close <= 50 meters
+		            _pl = [aborigen,  50] call SYG_findNearestPlayer; // Returns the player OBJECT
+                    if (alive _pl) exitWith { // Some player is too close <= 50 meters
     		            if (_state != "near") then {hint localize "+++ aborigenInit.sqf: some player near abo, start watching"; _state = "near" };
                         aborigen switchMove "AmovPercMstpSnonWnonDnon"; // Stand without weapon
                         sleep 0.1;
-                        aborigen doWatch (_arr select 0);
+                        aborigen doWatch _pl;
                         sleep 0.9;
                         hint localize format["+++ aborigenInit.sqf: after 1 sec abo anim == ""%1""", animationState aborigen];
                         sleep (2 + (random 2));

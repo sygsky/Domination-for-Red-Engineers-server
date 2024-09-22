@@ -31,7 +31,7 @@ if (alive d_radar)  then  { // unload mast if truck is killed
         };
     };
 };
-_msg = format["+++  radio_service: Radar truck (%1) killed by %2, near players %3",typeOf _veh, _msg, _arr1]
+_msg = format["+++  radio_service: Radar truck (%1) killed by %2, near players %3",typeOf _veh, _msg, _arr1];
 ["log2server", name player, _msg] call XSendNetStartScriptServer;
 
 // remove truck after 10 minutes of players absence around 100 meters of truck.
