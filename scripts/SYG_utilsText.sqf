@@ -458,6 +458,21 @@ SYG_msgToUserParser = {
     } forEach _msg_arr; // for each messages: _x is format parameters array
 };
 
+//
+// Finds unit object, it may be player, ai, vehicle, objNull
+// Call as: _unit = _veh call SYG_getKiller;
+// Returns first found unit in vehicle in follow search order: driver, gunner, commander
+//
+SYG_getUnit = {
+    if (isNull _this) exitWith {objNull};
+	if ( _this isKindOf "Man" ) exitWith { _this };
+	if ( !(_this isKindOf "AllVehicles") ) exitWith { objNull };
+	if ( !(isNull (driver _this) ) ) exitWith { driver _this };
+	if ( !(isNull (gunner _this) ) ) exitWith { gunner _this };
+	if ( !(isNull (commander _this) ) ) exitWith { commander _this };
+	objNull
+};
+
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 // Gets name of killer in any case, or direct name of unit as gunner in some vehicle
@@ -469,11 +484,10 @@ SYG_msgToUserParser = {
 //
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SYG_getUnitName = {
+    private ["_unit"];
+    _unit = _this call SYG_getUnit;
+    if (!alive _unit) exitWith { "<null>" };
 	if ( _this isKindOf "Man" ) exitWith { name _this };
-	if ( !(_this isKindOf "AllVehicles") ) exitWith { "<unknown>" };
-	if ( !(isNull (driver _this) ) ) exitWith { name (driver _this) };
-	if ( !(isNull (gunner _this) ) ) exitWith { name (gunner _this) };
-	if ( !(isNull (commander _this) ) ) exitWith { name (commander _this) };
 	"<unknown>"
 };
 
