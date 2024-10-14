@@ -27,7 +27,7 @@
 
 if (!isNil "ALL_CAR_ONLY_TYPE_LIST") exitWith {};
 
-// Lisy of car types allowed to be used as civilic cars to create
+// List of car types allowed to be used as civilic cars to create
 ALL_CAR_ONLY_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 			  "hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open",
 			  "datsun1_civil_1_open","datsun1_civil_2_covered","datsun1_civil_3_open",
