@@ -1125,7 +1125,7 @@ depot addEventHandler["killed", {[_this select 0, _this select 1,[9673.95,9992.7
 #endif
 // ГРАЖДАНСКИЕ В ГОРОДЕ
 //##############################################################################
-// add more civilian cars if you want
+// add more civilian cars if you want, used in town to create transport if population is allowed
 d_civ_cars = ["Skoda","SkodaBlue","SkodaRed","SkodaGreen","car_hatchback","car_sedan"];
 // creates randomly spawned civilians (buses, cars, pedestrian) in some cities, if a player is near that city (to enable it set it to true)
 d_create_civilian = false;

@@ -111,6 +111,7 @@ if (!(__ACEVer)) then {
 // Xoartimsg params : [_pos_enemy,_hit_radius]
 Xoartimsg = {
 	if ( ( (player distance (_this select 0) ) <= (_this select 1) ) ) then {  // always inform by sound
+	    private ["_veh","_x"];
 		_veh = vehicle player;
 		if (_veh != player) then {
 			// check if player in closed vehicle (not in bicycle, moto or atv)
@@ -135,7 +136,7 @@ Xoartimsg = {
 
 #ifndef __ACE__
 XFindObstacle = {
-	private ["_objs", "_strlist", "_list", "_retval"];
+	private ["_objs", "_strlist", "_list", "_retval","_x"];
 	_objs = nearestObjects [player,[""],2];
 	_strlist = []; {_strlist = _strlist + [str(_x)];}forEach _objs;
 	_list = "";
@@ -182,7 +183,7 @@ if (_str_p in d_can_use_mgnests) then {
 // Update client info for recaptured town[s]
 //
 XRecapturedUpdate = {
-	private ["_index","_target_array", "_target_name", "_targetName","_current_target_pos","_state","_target_rad","_winner"];
+	private ["_index","_target_array", "_target_name", "_targetName","_current_target_pos","_state","_target_rad","_winner","_x"];
 	_index = _this select 0;
 	_state = _this select 1;
 	_target_array = target_names select _index;
