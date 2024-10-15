@@ -1188,7 +1188,7 @@ SYG_townWithPoint = {
     	//	[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
     	//	[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
     	_dist = [_x select 0, _pos] call SYG_distance2D; // Dist to the town center
-    	if ( ((_x select 2) - _ext ) >= _dist) exitWith { _town = _x };	// Point is in town boundaries
+    	if ( ((_x select 2) + _ext ) >= _dist) exitWith { _town = _x };	// Point is in town boundaries
     } forEach target_names;
     // return true if point is IN nearest town borders
     _town
