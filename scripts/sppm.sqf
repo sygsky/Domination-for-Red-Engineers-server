@@ -32,12 +32,14 @@ if ((vehicle player != player) && (!((vehicle player) isKindOf "ParachuteBase") 
         (localize "STR_SPPM_2") call XfHQChat; // "SPPM markers are not used on the base"
     };
 
-    // in town borders you can't add SPPM markers
-    _town = _pos call SYG_townWithPoint;
-    if ( count _town > 0 ) exitWith {
-        format[ (localize "STR_SPPM_2_1"), _town select 1] call XfHQChat; // "SPPM markers are not used in towns (%1 is at distance %2 m, boundary radius %3 m)"
+    // in town borders + 50 meters you can't add SPPM markers
+    _town = [ _pos, 50 ] call SYG_townWithPoint;
+    if ( count _town > 0 ) exitWith { // sOMSome town center is too close to the wanted SPPM point
+        // [[9349,5893,0],   "Cayo"      ,210, 2]
+        _dist = [_pos, _town select 0] call SYG_distance2D;
+        (format[ (localize "STR_SPPM_2_1"), _town select 1, _dist, (_town select 2) + 50]) call XfHQChat; // "SPPM markers are not used in towns (%1 is at distance %2 m, boundary radius %3 m)"
         // Todo: показать бы маркер... да окно сразу же и закрывается, но можно на 15 секунд показать, а потом убрать,
-        // а ты сразу смотри на карту и убедишься что  и как
+        // а ты сразу смотри на карту и убедишься что и как
     };
 
     // Add SPPM marker now  (all vehicle checks are done on server)

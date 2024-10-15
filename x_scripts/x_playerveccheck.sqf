@@ -189,6 +189,7 @@ while { true } do {
         } else { // not in native vehicle on base, is player on executing GRU mission? check his options!
             // check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
             _not_allowed =  !(_veh isKindOf "Motorcycle" || _veh isKindOf "ACE_ATV_HondaR" || _veh isKindOf "Truck5t" || _veh isKindOf "Ural" || _veh isKindOf "Zodiac");
+            // ALL_CAR_ONLY_SEARCH_LIST
         };
 
 //        hint localize format[ "+++ x_playerveccheck: _not_allowed %1, _bulky_weapon %2", _not_allowed, _bulky_weapon ];

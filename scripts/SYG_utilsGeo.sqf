@@ -1174,19 +1174,27 @@ SYG_pointIsInTownBorders = {
 // _town_with_point = player call  SYG_townWithPoint;
 // _town_with_point = _veh call  SYG_townWithPoint;
 // _town_with_point = (getPos _veh) call  SYG_townWithPoint;
+// _town_with_point = [(getPos _veh),_extent_in_meters] call  SYG_townWithPoint;
 // Returns found town record if point is within some town from main targets list or empty [] arry if not
 //
 SYG_townWithPoint = {
-    private ["_dist","_pos","_town","_x"];
-    _pos = _this call SYG_getPos;
+    private ["_dist","_pos","_town","_x","_ext"];
+    if ( typeName _this == "ARRAY") then {
+        _pos = (_this select 0) call SYG_getPos;
+        _ext = _this select 1;
+
+    } else {
+        _pos = _this call SYG_getPos;
+        _ext = 0;
+    };
     _town = [];
-    // find town that contains designated point in its boundaries
+    // find town that contains designated point in its boundaries <+ extent>
     {
     	//[                                     Id   // Index, not identifier
     	//	[[9349,5893,0],   "Cayo"      ,210, 2],  //  0
     	//	[[10693,4973,0],  "Iguana"    ,270, 3],  //  1
     	_dist = [_x select 0, _pos] call SYG_distance2D; // Dist to the town center
-    	if ( (_x select 2) >= _dist) exitWith { _town = _x };	// Point is in town boundaries
+    	if ( ((_x select 2) - _ext ) >= _dist) exitWith { _town = _x };	// Point is in town boundaries
     } forEach target_names;
     // return true if point is IN nearest town borders
     _town

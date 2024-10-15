@@ -2154,6 +2154,7 @@ SYG_isNearIronMass = {
 
 //
 // Call as: _nearPosArr = [_veh | _pos<, _dist = 20>] call  isNearIronMass;
+// TODO: use armor properties from config files for different vehicle class to calculate ferromagnetic effects
 //
 SYG_ironMassNear = {
 	private ["_veh"];
@@ -2206,7 +2207,7 @@ SYG_findTeleportError = {
 };
 
 //
-// [_pnt, _shift] call SYG_deviateTPPoint; // deviate telport point depending on near ferromagnetic mass or teleport damage.
+// [_pnt, _shift] call SYG_deviateTPPoint; // Deviate telport point depending on near ferromagnetic mass or teleport damage.
 //
 SYG_deviateTeleportPoint = {
 	private ["_err","_pos","_rad","_ang","_dx","_dy"];
@@ -2332,8 +2333,7 @@ SYG_hasParachute = {
 };
 
 /**
- * Retunrs unit has parachute in his inventory
- *
+ * Returns string with parachute type of unit inventory. Or "" if not found
  */
 SYG_getParachute = {
 	if (!(_this isKindOf "CAManBase")) exitWith { "<not a man>" };
