@@ -12,6 +12,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
+#define __ALLOW_PLANE_TRACKING__ // Allow to track each enemy patrol plane
 //#define __DEBUG__
 
 //#define __SYG_AIRKI_DEBUG__
@@ -350,6 +351,15 @@ while { true } do {
 		_heli_type = _heli_arr call XfRandomArrayVal;
 		_vehicle = createVehicle [_heli_type, _pos, [], 100, "FLY"];
 		_vehicle setVariable ["damage",0]; // TODO: for future use
+
+#ifdef __ALLOW_PLANE_TRACKING__ // #708 - Plane tracking allowes
+    if ( _type == "SU") then {
+        //  Allow to track new plane with some marker, e.g. as it is defined in marker for bonus vehicle
+        _vehicle call SYG_startPlaneTracking;
+    };
+#endif
+
+
 
 		_vehicles set [count _vehicles, _vehicle];
 		[_vehicle, _grp, _crew_member, _grpskill] call SYG_populateVehicle;

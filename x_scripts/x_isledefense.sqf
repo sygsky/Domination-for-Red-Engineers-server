@@ -408,6 +408,7 @@ _getFeetmen = {
 };
 
 //
+// Search enemy vehicle with welthy driver in it
 // call: 
 // ...
 // _veh = [_veh1,_veh2 ...] call _firstGoodVehicle;
@@ -415,11 +416,28 @@ _getFeetmen = {
 //...
 //
 _firstGoodVehicle = {
-	private ["_veh", "_crew_not_east_or_zero","_x"];
+	private ["_veh", "_x"];
 	_veh = objNull;
 	{
-		_crew_not_east_or_zero = if (!isNull _x) then { if ( ({alive _x} count (crew _x)) > 0 ) then { (side _x) != east } else {true} } else {true};
-		if ( (!isNull _x && alive _x) && ({alive _x} count (crew _x) > 0) && _crew_not_east_or_zero && (!isNull driver _x ) && (canMove driver _x) ) exitWith {_veh = _x;};
+	    if (!isNull _x) then {
+	        if ( ({alive _x} count (crew _x)) > 0 ) then {
+            #ifdef __OWN_SIDE_EAST__
+	            if ( (side _x) !=  east ) then {
+                    if ( !isNull driver _x ) then {
+                        if (canMove driver _x) then {_veh = _x};
+                    };
+	            };
+	        #endif
+            #ifdef __OWN_SIDE_WEST__
+	            if ( (side _x) !=  west ) then {
+                    if ( !isNull driver _x ) then {
+                        if (canMove driver _x) then {_veh = _x};
+                    };
+	            };
+            #endif
+	        };
+	    };
+	    if (alive _veh) exitWith {};
 	} forEach _this;
 	_veh
 };
