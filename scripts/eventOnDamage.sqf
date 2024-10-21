@@ -93,10 +93,11 @@ _muzzle = _wpns select (count _wpns - 1); // get last weapon (it should be a smo
 _veh selectWeapon _muzzle;
 _shooter = _veh findNearestEnemy _veh;
 if (alive _shooter) then {
+    // Find gunner or commander of vehicle (Ka50 has no gunner!)
 	_gunner = gunner _shooter;
 	_name = if (isPlayer _gunner) then {name _gunner} else { typeOf _shooter };
 #ifdef __PRINT__
-	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to the nearest enemy %2 (%3 m)", typeOf _veh, _name, round(_gunner distance _veh)];
+	hint localize format["+++ eventOnDamage.sqf: veh ""%1"" fires smoke curtain to the nearest enemy %2 (%3 m)", typeOf _veh, _name, round(_shooter distance _veh)];
 #endif
     _veh glanceAt _shooter; sleep 3.634;
 } else {
