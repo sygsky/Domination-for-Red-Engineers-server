@@ -186,10 +186,27 @@ while { true } do {
                 };
             };
 		#endif
-        } else { // not in native vehicle on base, is player on executing GRU mission? check his options!
-            // check for GRU on task allowed transport (not armed trucks, bicycle, motocycle, ATV etc)
-            _not_allowed =  !(_veh isKindOf "Motorcycle" || _veh isKindOf "ACE_ATV_HondaR" || _veh isKindOf "Truck5t" || _veh isKindOf "Ural" || _veh isKindOf "Zodiac");
-            // ALL_CAR_ONLY_SEARCH_LIST
+        } else {
+            // Not in native vehicle on base, is player on executing GRU mission? check his options!
+            // All civic vehicles are allowed to visit(not armed trucks, bicycle, motocycle, ATV, zodiac, vanilla civic cars etc)
+            while {_not_allowed} do {
+                {
+                    _not_allowed =  !(_veh isKindOf _x);
+                } forEach [
+            #ifdef __ACE__
+                    "ACE_ATV_HondaR",
+            #endif
+                    "Truck5t",
+                    "Ural",
+                    "Zodiac"
+                ];
+            };
+            // Check for all civic cars. All they arу allowed to be drived
+            while {_not_allowed} do {
+                {
+                    _not_allowed =  !(_veh isKindOf _x);
+                } forEach ALL_CAR_ONLY_SEARCH_LIST;
+            };
         };
 
 //        hint localize format[ "+++ x_playerveccheck: _not_allowed %1, _bulky_weapon %2", _not_allowed, _bulky_weapon ];
@@ -221,7 +238,7 @@ while { true } do {
             //hint localize format["+++ x_playerveccheck.sqf: _index == %1, _attempts_count == %2, STR_SYS_252_NUM == %3, new str == ""%4""", _index, _attempts_count, localize "STR_SYS_252_NUM", localize (format["STR_SYS_252_%1",_index])];
         } else { // player allowed to be in vehicle
 //            hint localize format[ "+++ x_playerveccheck: player allowed to be in vehicle %1, airbattle %2, cargo %3", typeOf _veh, _air_battle, _cargo ];
-            if ( _air_battle && !_cargo ) then { // periodically send info to server about player battle air vehicle activity
+            if ( _air_battle && !_cargo ) then { // Periodically send info to server about player battle air vehicle activity
                 [ _veh, "on", name player ] call _sendInfoOnAirVehToServer; // add info about to server
                 _activity_info_sent = true;
                 hint localize format[ "+++ x_playerveccheck: start activity report on %1", typeOf _veh ];
