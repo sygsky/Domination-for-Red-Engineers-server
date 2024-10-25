@@ -23,7 +23,7 @@ _sendInfoOnAirVehToServer = {
 };
 
 private ["_veh", "_not_allowed", "_needed_rank", "_index", "_activity_info_sent",
-         "_not_allowed","_bulky_weapon","_needed_rank","_cargo","_role","_new_role",
+         "_bulky_weapon","_needed_rank","_cargo","_role","_new_role",
          "_index","_air_battle","_role_arr","_enemy_vec","_player_not_in_GRU_mission",
 #ifdef __DISABLE_GRU_BE_PILOTS__
          "_player_is_GRU","_battle_heli",
@@ -186,38 +186,36 @@ while { true } do {
                 };
             };
 		#endif
-        } else {
-            // Not in native vehicle on base, is player on executing GRU mission? check his options!
-            // All civic vehicles are allowed to visit(not armed trucks, bicycle, motocycle, ATV, zodiac, vanilla civic cars etc)
-            while {_not_allowed} do {
-                {
-                    _not_allowed =  !(_veh isKindOf _x);
-                } forEach [
-            #ifdef __ACE__
-                    "ACE_ATV_HondaR",
-            #endif
-                    "Truck5t",
-                    "Ural",
-                    "Zodiac"
-                ];
-            };
+        } else { // player is in GRU mission, so check i=hi svehicle
+            // All civic vehicles are allowed to visit on GRU mission (not armed trucks, bicycle, motocycle, ATV, zodiac, vanilla civic cars etc)
+            _not_allowed = true;
+            {
+                if (_veh isKindOf _x) exitWith {_not_allowed = false};
+            } forEach [ // Bivycle is child of motorcycle, so is checked in any case
+        #ifdef __ACE__
+                "ACE_ATV_HondaR",
+        #endif
+                "Truck5t",
+                "Ural",
+                "Zodiac"
+            ];
             // Check for all civic cars. All they arу allowed to be drived
-            while {_not_allowed} do {
+            if (_not_allowed) then {
                 {
-                    _not_allowed =  !(_veh isKindOf _x);
+                   if (_veh isKindOf _x) exitWith {_not_allowed = false};
                 } forEach ALL_CAR_ONLY_SEARCH_LIST;
             };
         };
 
 //        hint localize format[ "+++ x_playerveccheck: _not_allowed %1, _bulky_weapon %2", _not_allowed, _bulky_weapon ];
-
+        // not_allowed == true means that player is not in civic vehicle!
         if ( _not_allowed || (_bulky_weapon != "") ) then {
             player action[ "Eject",_veh ];
             _attempts_count = _attempts_count + 1;
             if ( _role == "Driver" ) then {
                 if (isEngineOn _veh) then { _veh engineOn false; };
             };
-            if ( !_player_not_in_GRU_mission ) exitWith {
+            if ( _not_allowed && (!_player_not_in_GRU_mission) ) exitWith {
                 (localize "STR_GRU_38") call XfGlobalChat; // "No, no! I can't disobey orders about not using such vehicle during GRU task!"
 //                hint localize format["--- player is on GRU duty and not allowed into %1",typeOf _veh];
             };
