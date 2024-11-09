@@ -24,7 +24,7 @@ class Header {
 #ifdef __DEFAULT__
 titleParam1 = "Main targets:"; // "Main Targets"
 valuesParam1[] = {50,60,70,80,90,91,2,4,6,8,10,12,14,16,18,22};
-defValueParam1 = 14; // 22 // "South Route" ...
+defValueParam1 = 16; // 22 // "South Route" ...
 textsParam1[] = {"South Route","North West Route","North Middle Route","North East Route","All ordered","All Small Rnd",
 				"Random 2","Random 4","Random 6","Random 8","Random 10","Random 12","Random 14","Random 16","Random 18","Random 22"};
 #endif
