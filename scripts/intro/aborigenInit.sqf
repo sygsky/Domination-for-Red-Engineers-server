@@ -232,7 +232,7 @@ if (alive aborigen) then {
                         ] call XSendNetStartScriptServer;
                         sleep 5;
                     };
-                };
+                } else {sleep 5};
 			} else  { sleep 5 }; // Sleep until alive player
 		};
         hint localize "+++ aborigenInit.sqf: exit abo animation loop as abo is not alive";
