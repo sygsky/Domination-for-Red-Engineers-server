@@ -290,7 +290,7 @@ SYG_findNearestPlayer = {
 	_pl = objNull;
 	{
 	    {
-    	    if ( ( alive _x ) && ( isPLayer _x ) ) then { _pl =_x };
+    	    if ( ( alive _x ) && ( isPLayer _x ) ) exitWith { _pl =_x };
 	    } forEach crew _x;
 	    if (alive _pl) exitWith {};
 	} forEach _nearArr;

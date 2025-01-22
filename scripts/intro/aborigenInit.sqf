@@ -217,7 +217,7 @@ if (alive aborigen) then {
 //                        hint localize format["+++ aborigenInit.sqf: abo is in listed animation ""%1""", animationState aborigen];
     		            sleep 5;
 	    	        };
-	    	        if (!alive aborigen) exitWith {};
+	    	        if (!alive aborigen) exitWith { sleep 5; };
                     _anim = [_list, _anim_cnt] call XfRandomArrayValPart;
                     if (local aborigen) then {
                         hint localize format["+++ aborigenInit.sqf: abo is local, so set animation to ""%1""", _anim];
@@ -235,6 +235,7 @@ if (alive aborigen) then {
                 };
 			} else  { sleep 5 }; // Sleep until alive player
 		};
+        hint localize "+++ aborigenInit.sqf: exit abo animation loop as abo is not alive";
 	};
 };
 

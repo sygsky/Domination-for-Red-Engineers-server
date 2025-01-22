@@ -12,7 +12,7 @@ if (!isServer) exitWith {};
 #include "x_setup.sqf"
 #include "x_macros.sqf"
 
-#define __ALLOW_PLANE_TRACKING__ // Allow to track each enemy patrol plane
+// #define __ALLOW_PLANE_TRACKING__ // Allow to track each enemy patrol plane
 //#define __DEBUG__
 
 //#define __SYG_AIRKI_DEBUG__

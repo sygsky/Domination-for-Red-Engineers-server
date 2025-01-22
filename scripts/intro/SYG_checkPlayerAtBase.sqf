@@ -38,8 +38,12 @@ _was_in_veh = false;
 // if (isNil "base_visit_session") then { base_visit_session = 0 }; // init visit status
 _delay = 5;
 while { base_visit_session <= 0 } do {
-	sleep _delay;
-	// launch a yellow flare over the base to attract the player's attention (to tell him where to go)
+	if (_delay > 0 ) then {
+    	sleep _delay;
+	} else {
+        hint localize "--- SYG_checkPLayerAtBase.sqf: _delay == 0";
+	};
+	// launch a violet flare over the base to attract the player's attention (to tell him where to go)
 	if (!alive _flare) then {
 		_flag_pos set [ 0, (_pos select 0) + (random 5) ];
 		_flag_pos set [ 1, (_pos select 1) + (random 5) ];
