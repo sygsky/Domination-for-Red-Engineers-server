@@ -442,7 +442,7 @@ _create_patrol = {
 // Returns the same array as input one
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _remove_patrol = {
-	private [ "_boat", "_grp", "_x", "_pos", "_arr", "_del_arr", "_cnt_null", "_cnt_dead", "_cnt_alive", "_grp_state" ];
+	private [ "_units", "_boat", "_grp", "_x", "_pos", "_arr", "_del_arr", "_cnt_null", "_cnt_dead", "_cnt_alive", "_grp_state","_x" ];
 	_boat = _this select OFFSET_BOAT;
 	_grp  = _this select OFFSET_GRP;
 	_cnt_null = 0; _cnt_dead = 0; _cnt_alive = 0;
@@ -764,7 +764,7 @@ while { true } do {
     #endif
 
 	// stop sea patrol system on the end of mission
-	if ( current_counter > number_targets ) exitWith {
+	if ( current_counter >= number_targets ) exitWith {
 	    call _exit_patrol_system;
 	};
 
@@ -829,4 +829,3 @@ while { true } do {
 };
 
 hint localize "*** sea_patrol.sqf: all boats are removed, service is finished";
-
