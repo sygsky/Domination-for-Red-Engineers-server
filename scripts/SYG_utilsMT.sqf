@@ -13,7 +13,7 @@ private [ "_unit", "_dist", "_lastPos", "_curPos", "_boat", "_grp", "_wplist","_
 #define RAR(ARR) ((ARR)select(floor(random(count(ARR)))))
 #define RANDOM_ARR_ITEM(ARR) ((ARR)select(floor(random(count(ARR)))))
 
-#define __EXTENDED_TOWN_RADIOUS_MAN__  1000
+#define __EXTENDED_TOWN_RADIOUS_MAN__  800
 #define __EXTENDED_TOWN_RADIOUS_VEHICLE__  200
 
 if ( !isNil "SYG_mt_initialized" )exitWith { hint "--- SYG_utilsMT already initialized"};
