@@ -236,21 +236,21 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 #endif
 			if (format["%1",_pos] != "[0,0,0]") then { // _pos is a mission marker position
 				// find pilots. They would be alive and rarely dead
-				_units = nearestObjects [_pos, [_pilottype], 500];
+				_range = 500;
+				_units = nearestObjects [_pos, [_pilottype], _range];
 				_near = objNull;
 				{
-					_var = _x getVariable "SIDEMISSION";
-					if ( (alive _x) && (!isNil "_var" ) ) exitWith {
+					if ( alive _x) exitWith {
 						_near = _x;
 						_s1 = localize "STR_SYS_133"; // "точки задания"
 					};
 				} forEach _units;
 				if ( isNull _near ) then { // search around player
 				    _pos = getPos player;
-					_units = nearestObjects [_pos, [_pilottype], 1500];
+				    _range = 1500;
+					_units = nearestObjects [_pos, [_pilottype], _range];
 					{
-						_var = _x getVariable "SIDEMISSION";
-						if ( (alive _x) && (!isNil "_var" ) ) exitWith {
+						if ( alive _x ) exitWith {
 							_near = _x;
 							_s1 = localize "STR_SYS_132"; // "вашей Глонасс-позицией"
 						};
@@ -261,7 +261,7 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 					_dist   = (ceil(_dist/50))*50;
 					_angle  = [ _pos, _near ] call XfDirToObj;
 					_s1     = format[ localize "STR_SYS_131_1", _dist, (ceil(_angle/10))*10, _s1 ]; // "Pilot[s] about %1 m. of %3, azimuth search %2 gr. "
-				} else { _s1 = format[localize "STR_SYS_134_1", 1500]; }; // "There are no pilots at either the mission point or near your Glonass position (%1 m)."
+				} else { _s1 = format[localize "STR_SYS_134_1", _range]; }; // "There are no pilots at either the mission point or near your Glonass position (%1 m)."
 				_units = nil;
 			};
 			_s = _s + "\n" + _s1;
