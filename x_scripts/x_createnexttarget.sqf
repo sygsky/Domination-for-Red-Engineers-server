@@ -47,6 +47,9 @@ current_target_index = maintargets_list select current_counter;
 
 current_counter = current_counter + 1;
 
+//    next_town_name = ( target_names select ( maintargets_list select ( current_counter + 1 ) ) ) select 2;
+
+
 sleep 1.0123;
 if (current_counter <= 1) then { // first time after start
 /*

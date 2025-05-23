@@ -83,7 +83,6 @@ _points_array = [points_west,points_racs,kill_points_west,kill_points_racs];
 resolved_targets = resolved_targets + [[current_target_index,mt_winner]];
 ["mt_winner",mt_winner] call XSendNetVarClient;
 
-
 sleep 0.5;
 public_points = false;
 

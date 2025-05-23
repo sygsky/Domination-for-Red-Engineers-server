@@ -299,9 +299,18 @@ SYG_townStatItemUpdate = {
 };
 
 //
-// Print town stat, assign town liberation bonus score to all players (active and not active)
+// Print town stat on serevr log, assign town liberation bonus score to all players (active and not active)
 // call as: "Paraiso" call SYG_townStatReport;
 // Returns: none, print town statistics into arma.rpt
+//
+// Resulted print will be as follows:
+//
+// ++++++ Town "Paraiso" #1 real kills report, 22.05.2025 22:21:15 ++++++
+// ++++++              name,  kills,   state
+// ++++++            "yeti":    193, offline
+// ++++++       "ihatelife":     28, offline
+// ++++++      "Rokse [LT]":     43,  online
+// ++++++ Town "Paraiso" real players kills summary: 264, avg. 88, dur. 43:25:46
 //
 SYG_townStatReport = {
     private ["_arr","_arr1","_sum", "_id","_kills","_kills_sum","_num","_onlineNames","_name"];

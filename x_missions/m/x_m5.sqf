@@ -20,7 +20,7 @@ if (X_Client) then {
 	current_mission_resolved_text = localize "STR_SYS_144"; //"Король наказан! Молодцы, ребята!";
 };
 
-if (call SYG_isSMPosRequest) exitWith {argp(x_sm_pos,0)}; // it is request for pos, not SM execution
+if (call SYG_isSMPosRequest) exitWith {x_sm_pos select 0}; // it is request for pos, not SM execution
 
 if (isServer) then {
 
