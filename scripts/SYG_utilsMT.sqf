@@ -299,7 +299,7 @@ SYG_townStatItemUpdate = {
 };
 
 //
-// Print town stat on serevr log, assign town liberation bonus score to all players (active and not active)
+// Print town stat on server log, assign town liberation bonus score to all players (active and not active)
 // call as: "Paraiso" call SYG_townStatReport;
 // Returns: none, print town statistics into arma.rpt
 //
@@ -347,6 +347,10 @@ SYG_townStatReport = {
         if (_num == 0) then {"0"} else {(round( _kills_sum / _num * 10)) / 10 },
         [time, SYG_townScores select 2] call SYG_timeDiffToStr // Duration of existence of the Main Target
     ];
+    if ((current_counter + 1) < number_targets) then {
+        _name = target_names select(maintargets_list select (current_counter +1)); // Town name
+        hint localize format["Next town: '%1'", _name];
+    };
     hint localize "]";
 
 };
