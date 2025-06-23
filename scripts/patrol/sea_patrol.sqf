@@ -609,16 +609,16 @@ _reset_roles = {
 		if (alive _x) then {
 			_x setDamage 0;
 			_role = assignedVehicleRole _x;
-			if ( ((count _role) > 0) && (_x in _boat)) then {
-				if ( (_role select 0) == "Driver") exitWith {_driver = _x};
-				if ( (_role select 0) == "Turret") exitWith {
+			if ( ( (count _role) > 0) && (_x in _boat) ) then {
+				if ( (_role select 0) == "Driver" ) exitWith {_driver = _x};
+				if ( (_role select 0) == "Turret" ) exitWith {
 					_id = (_role select 1) select 0;
 					_gunner_ids set[count _gunner_ids, _id]; // Count seats occupied by gunners
 					_gunners set [count _gunners, _x]; // To handle gunners on seats
 				};
 				// must be in cargo but may be out of ship!
 			} else {
-				_outers set [count _outers, _x]; // Crew out of boat
+				_outers set [count _outers, _x]; // Crew out of boat or in cargo
 			};
 			_cnt = _cnt + 1; // Count alive units in the group
 		} else {
@@ -633,7 +633,7 @@ _reset_roles = {
 	// check too small crew, less then 2 (driver + gunner)
 	_gun_empty_ids = _gun_empty_ids - _gunner_ids; // define not filled turrets from list [0<,1>]
 #ifdef __INFO__
-	_beh = _grp call _get_modes;
+	_beh = _grp call _get_modes; // Behaviour
 	hint localize format["+++ sea_patrol.sqf reset_roles: cnt (alive %1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
 		_cnt, count _outers, _beh, _gunner_ids, _gun_empty_ids ];
 #endif
@@ -690,8 +690,8 @@ _reset_roles = {
 	} forEach _outers;
 	_units = units _grp;
 #ifdef __INFO__
-	if ( (count _units)  != 3 ) then {
-		hint localize format["+++ sea_patrol.sqf reset_roles: Expected units count = %1, must be 3", count _units];
+	if ( (count _units)  == 0 ) then {
+		hint localize format["+++ sea_patrol.sqf reset_roles: units count = %1, must be 2 or 3", count _units];
 	};
 #endif
 

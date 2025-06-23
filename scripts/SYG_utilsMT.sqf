@@ -347,8 +347,8 @@ SYG_townStatReport = {
         if (_num == 0) then {"0"} else {(round( _kills_sum / _num * 10)) / 10 },
         [time, SYG_townScores select 2] call SYG_timeDiffToStr // Duration of existence of the Main Target
     ];
-    if ((current_counter + 1) < number_targets) then {
-        _name = target_names select(maintargets_list select (current_counter +1)); // Town name
+    if ((current_counter) < number_targets) then { // Now current counter already incremented and points to the next target town
+        _name = (target_names select(maintargets_list select (current_counter))) select 1; // Town name only needed
         hint localize format["Next town: '%1'", _name];
     };
     hint localize "]";
