@@ -665,6 +665,7 @@ XfGetLeader = {
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetStandUnits = {
+    private ["_x"];
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this} else { if ((typeName _this) == "OBJECT") then {_this = crew _this}};
 	({canStand _x} count _this)
 };
@@ -673,6 +674,7 @@ XfGetStandUnits = {
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetHealthyUnits = {
+    private ["_x"];
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this} else { if ((typeName _this) == "OBJECT") then {_this = crew _this}};
 	({alive _x && (damage _x == 0)} count _this)
 };
@@ -681,6 +683,7 @@ XfGetHealthyUnits = {
 // call: _cnt = units _grp call XfGetAliveUnits;
 // or call: _cnt = _grp call XfGetAliveUnits
 XfGetUnitsOnFeet = {
+    private ["_x"];
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this} else { if ((typeName _this) == "OBJECT") then {_this = crew _this}};
 	({(alive _x) && (vehicle _x == _x)} count _this)
 };

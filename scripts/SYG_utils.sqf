@@ -435,7 +435,7 @@ SYG_ACEUnitConscious = {
 SYG_getAllConsciousUnits = {
 	private ["_x"];
 	if ( (typeName _this) == "GROUP" ) then { _this = units _this;};
-	({ _x call SYG_ACEUnitUnconscious} count _this )
+	({ _x call SYG_ACEUnitConscious} count _this )
 };
 
 // Make officer to be the leader of this units group
