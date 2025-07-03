@@ -689,7 +689,7 @@ switch ( _arg ) do {
 #ifdef __MAGIC_SPELL__
 		_in_magic = true; // All can call teleport spell
 #else
-		_in_magic = _uname in ["YETI","ENGINEERACE","MASLODIUM","GEORGE.T","SNOOPER","ROKSE [LT]","GYURI","FLAVI","ISAAQ","IHATELIFE","FLANKER","777","COMRAD (LT)"];
+		_in_magic = _uname in ["YETI","ENGINEERACE","MASLODIUM","GEORGE.T","SNOOPER","ROKSE [LT]","GYURI","FLAVI","ISAAQ","IHATELIFE","FLANKER","777","COMRAD (LT)","MixerDust"];
 #endif
 
         _str = format[ "+++ SYG_aborigenAction.sqf: ""NAME"" selected, ucase(""%1"") => ""%2"", magic allowed = %3, abo name = ""%4""", _player_name, _uname, _in_magic, _name ];
