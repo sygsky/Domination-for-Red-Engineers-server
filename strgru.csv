@@ -5,7 +5,7 @@ STR_GRU_3,discontinued,beendet,eliminada,снята
 STR_GRU_4,task,der Auftrag,tarea,задача
 STR_GRU_5,"%1 %2 ""%3"" %4","%1 %2 ""%3"" %4","%1 %2 ""%3"" %4","%1 %2 ""%3"" %4"
 STR_GRU_6,"New %2 %1 ""%3"" arrived","Neue %2 %1 ""%3"" angekommen","Nuevo %1 %2 - "" %3""","Поступила новая %1 %2 - ""%3"""
-STR_GRU_7,"%1 %2 ""%3"" completed (by %4), scores +%5","%1 %2 ""%3"" abgeschlossen (von %4), scores +%5","%1%2 ""%3"" completado (%4), puntos + %5","%1 %2 ""%3"" выполнена (%4), очки +%5"
+STR_GRU_7,"%1 %2 ""%3"" completed (%4), scores +%5","%1 %2 ""%3"" abgeschlossen (%4), scores +%5","%1%2 ""%3"" completado (%4), puntos + %5","%1 %2 ""%3"" выполнена (%4), очки +%5"
 STR_GRU_8,"%1 %2 ""%3"" failed (by %4)","%1 %2 ""%3"" scheitern (von %4)","%1%2 ""%3"" falló (%4)","%1 %2 ""%3"" провалена (%4)"
 STR_GRU_9,one of you,einer von Euch,uno de ustedes,одним из вас
 STR_GRU_10,"the %1 task ""%2"" is started to fulfil by ""%3"", town %4","die Aufgabe %1 ""%2"" wird von ""%3"", Stadt %4 zu erfüllen begonnen","la tarea %1 ""%2"" se inicia para cumplir con ""%3"", ciudad %4","задачу %1 ""%2"" начал выполнять ""%3"", н.п. %4"
