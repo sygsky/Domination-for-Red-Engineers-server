@@ -10,10 +10,6 @@
 //	Default values:
 //	nul = [this, 240, "SAFE", "AUTO", false, 1] execVM "GuardPost.sqf"
 //
-//	For feedback and support - check thread in the BIS forums. 
-//	http://forums.bistudio.com/showthread.php?p=1681721
-
-
 
 if (!isServer) exitWith {};
 

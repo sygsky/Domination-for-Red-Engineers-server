@@ -270,8 +270,8 @@ SYG_distRoundTo = {
  * Added on 22-11-2022 by Rokse [LT] request
  * Handles with waypoints, call it on the client ONLY:
  * to set WP: ["SET", getPos AISPAWN<,"WP description">] call SYG_handleWP;
- * to remove WP: ("REMOVE" || ["REMOVE"]) call SYG_handleWP;
- * to get WP count: ("COUNT" || ["COUNT"]) call SYG_handleWP;
+ * to remove WP: "REMOVE" call SYG_handleWP;
+ * to get WP count: "COUNT" call SYG_handleWP;
  *
  */
 SYG_handleWP = {
@@ -308,13 +308,13 @@ SYG_handleWP = {
 		};
 	};
 	if (typeName _cmd == "ARRAY") exitWith {
-		if (count _cmd < 2) exitWith {hint localize format["--- SYG_handleWP: expected parameters array size  2, detected %1", count _cmd]};
+		if (count _cmd < 2) exitWith {hint localize format["--- SYG_handleWP: expected parameters array size 2, detected %1", count _cmd]};
 		_str = _cmd select 0;
-		if ((typeName _str) != "STRING") exitWith {hint localize format["--- SYG_handleWP: expected [STRING,POS], found [%1,...]", typeName _str]};
+		if ((typeName _str) != "STRING") exitWith {hint localize format["--- SYG_handleWP: expected [STRING,...], found [%1,...]", typeName _str]};
 		if (count _cmd < 2) exitWith { hint localize "--- SYG_handleWP: expected SET command array size 2, detected 1"};
-		private ["_pos","_i"];
+		private ["_pos","_i","_x"];
 		_pos = _cmd select 1; // Position where to assign WP
-		if ((toUpper _str) != "SET") exitWith { hint localize format["--- SYG_handleWP: expected [""SET"",POS] found [""%1"",%2]", _str, _pos] };
+		if ((toUpper _str) != "SET") exitWith { hint localize format["--- SYG_handleWP: expected [""SET"",POS] found %1"], _cmd] };
 		_grp = group player;
 		_wpa = waypoints _grp;
 //		hint localize format["+++ SYG_handleWP: SET, wpa = %1", _wpa];
@@ -338,16 +338,17 @@ SYG_handleWP = {
 // Spawn as: [] spawn SYG_showDestinationWPUntilOnBase;
 //
 SYG_showDestWPIfNotOnBase = {
-	private ["_pos"];
+	private ["_pos","_str"];
 	_pos = getPos AISPAWN;
 	["SET", _pos] call SYG_handleWP; // set intitial destiantion point
 	hint localize "+++ SYG_showDestWPIfNotOnBase: first WP created";
+	_str = localize "STR_SYS_70"; // "Base"
 	while { base_visit_session < 1 }  do { // player stil not visited base, so check WP existance
 	 	// each 10 seconds check if WP is wiped out by some circumstances
 		sleep 10;
 		if (alive player) then { // check only for alive player
-			// undate WP just in case
-			["SET", _pos] call SYG_handleWP; // set intitial destiantion point
+			// update WP just in case
+			["SET", _pos, _str] call SYG_handleWP; // set intitial destiantion point
 			// print information about WP creaed
 			// hint localize "+++ SYG_showDestWPIfNotOnBase: refresh WP";
 		};
