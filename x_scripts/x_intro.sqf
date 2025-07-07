@@ -146,7 +146,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 ["Shelter", "Marcin"], // Polyaks
                 ["Petigp", "gyuri", "Frosty"], // hungarian, Hungary People Republic, August 20, 1949
                 ["Snooper" ], // Russian from Belorussia
-                ["ihatelife"] // American
+                ["ihatelife","George.T"] // American
             ];
             _sounds  = [
                 ["amigohome_ernst_bush","ddrhymn","zaratustra"],
@@ -154,7 +154,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 ["stavka_bolshe_chem","stavka_bolshe_chem","four_tankists","four_tankists"],
                 ["hungarian_dances","hungarian_dances","hungarian_dances"],
                 ["toccata","toccata","hungarian_dances","hungarian_dances","grig","grig"],
-                ["everybody_knows","pink_floyd_diamond"]
+                ["everybody_knows","pink_floyd_diamond","desperate_housewives"]
             ];
             _name    = name player;
             _personalSounds = [];
@@ -184,7 +184,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2",/*"del_vampiro1",
                 "del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
-                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows","pink_floyd_diamond"
+                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows","pink_floyd_diamond","desperate_housewives"
             ];
 
             // music to play only in day time
@@ -192,7 +192,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
                 "Letyat_perelyotnye_pticy_2nd","ruffian"/*,"morze"*/,"morze_3"/*,"chapaev"*/,"rider","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","toccata",/*"travel_with_friends",*/"on_thin_ice","wild_geese",
-                "dangerous_chase"
+                "dangerous_chase","desperate_housewives"
             ];
 
             // only night music
@@ -217,7 +217,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
                 /*"del_vampiro1","del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague","travel_with_friends",*/"on_thin_ice","peregrinus",
-                "wild_geese","dangerous_chase","kk_the_hole","everybody_knows","pink_floyd_diamond"
+                "wild_geese","dangerous_chase","kk_the_hole","everybody_knows","pink_floyd_diamond","desperate_housewives"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
