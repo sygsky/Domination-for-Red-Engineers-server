@@ -311,10 +311,10 @@ SYG_handleWP = {
 		if (count _cmd < 2) exitWith {hint localize format["--- SYG_handleWP: expected parameters array size 2, detected %1", count _cmd]};
 		_str = _cmd select 0;
 		if ((typeName _str) != "STRING") exitWith {hint localize format["--- SYG_handleWP: expected [STRING,...], found [%1,...]", typeName _str]};
-		if (count _cmd < 2) exitWith { hint localize "--- SYG_handleWP: expected SET command array size 2, detected 1"};
+		if (count _cmd < 2) exitWith { hint localize format["--- SYG_handleWP: expected SET command array size 2 or 3, detected %1", count _cmd ]};
 		private ["_pos","_i","_x"];
 		_pos = _cmd select 1; // Position where to assign WP
-		if ((toUpper _str) != "SET") exitWith { hint localize format["--- SYG_handleWP: expected [""SET"",POS] found %1"], _cmd] };
+		if ((toUpper _str) != "SET") exitWith { hint localize format["--- SYG_handleWP: expected [""SET"",POS] found %1", _cmd] };
 		_grp = group player;
 		_wpa = waypoints _grp;
 //		hint localize format["+++ SYG_handleWP: SET, wpa = %1", _wpa];
