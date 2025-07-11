@@ -1485,7 +1485,7 @@ STR_SET_3,Ranked,Ranked,Rangos,Ранговая
 STR_SET_4,With revive,Mit revive,Con la revitalización,С оживлением
 STR_SET_5,"Usage of ""Javelin""","Verwendung von ""Javelin""","Uso De ""Javelin""","Использование ""Джавелин"""
 STR_SET_6,Simple side missions at the beginning,Einfache Nebenmissionen am Anfang,Tareas adicionales simples al principio,Простые дополнительные задания в начале
-STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Versteckte rostige Leichtfahrzeuge in der Basiszone am Anfang,Vehículos ligeros oxidados ocultos en la zona de la base al principio,Скрытая ржавая лёгкая техники в районе базы при старте
+STR_SET_7,Hidden rusty light vehicles in the area of the base at the start,Versteckte rostige Leichtfahrzeuge in der Basiszone am Anfang,Vehículos ligeros oxidados ocultos en la zona de la base al principio,Скрытая ржавая лёгкая техника в районе базы при старте
 STR_SET_8,Mandatory side missions,Obligatorischen Nebenmissionen,Misiones de terceros obligatorias,Обязательные сторонние миссии
 STR_SET_8_1,", towns per SM: %1",", Städte pro 1 SM: %1",", ciudades por 1 SM: %1",", городов за 1 доп.миссию: %1"
 STR_SET_9,Teleport works only when all services on the base are available,Teleport funktioniert nur wenn alle Dienste auf der Basis verfügbar sind,El teletransportador solo funciona con todos los servicios en la base,Телепорт действует только при всех исправных сервисах на базе
@@ -1529,7 +1529,7 @@ STR_SET_37,Lighthouse sirens at night are in effect\n,Nächtliche Leuchtturmsire
 STR_SET_37_0,The night sirens of the lighthouses are not activated\n,Die Nachtsirenen der Leuchttürme sind nicht aktiviert\n,Las sirenas nocturnas de los faros no se activan\n,Ночные сирены маяков не активированы\n
 STR_SET_38,Teleport is influenced by ferromagnetic masses on dist <= %1 m. and damage\n,Teleport wird von ferromagnetischen Massen auf Dist <= %1 m. und Schaden beeinflusst\n,El teletransporte está influenciado por las masas ferromagnéticas en dist <= %1 m. y el daño\n,На телепорт влияют ферро-магнитные массы на дист. до 20 м. и повреждения\n
 STR_SET_39,The mission uses all available equipment\n,Die Mission nutzt alle verfügbaren Geräte\n,La misión utiliza todo el equipo disponible\n,В миссии используется все доступная техника\n
-STR_SET_39_0,Military gear and equipment after 1985 not allowed\n,Militärische Ausrüstung nach 1985 nicht erlaubt\n,No se admiten equipos militares posteriores a 1985,Военное снаряжение и техника после 1985 года запрещены
+STR_SET_39_0,Military gear and equipment after 1985 not allowed\n,Militärische Ausrüstung nach 1985 nicht erlaubt\n,No se admiten equipos militares posteriores a 1985\n,Военное снаряжение и техника после 1985 года запрещены\n
 STR_SET_40,Parajumps without parachute are allowed)))\n,Fallschirmsprünge ohne Fallschirm sind erlaubt)))\n,Los saltos en paracaídas sin paracaídas están permitidos)))\n,Прыжки без парашюта разрешены)))\n
 STR_SET_41,DOSAAF vehicles allowed\n,DOSAAF-Fahrzeuge präsentieren\n,Vehículos DOSAAF presentes\n,Присутствуют ДОСААФ машины\n
 STR_SET_42,"Parachute into the mission if your rank is lower than %1.\n","Fallschirmabsprung in eine Mission, wenn der Rang niedriger ist als %1.\n","Saltar en paracaídas en una misión si el rango es inferior a %1.\n","Заход в миссию на парашюте, если звание ниже чем %1.\n"

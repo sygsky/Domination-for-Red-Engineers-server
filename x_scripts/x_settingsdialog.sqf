@@ -241,7 +241,7 @@ _str = _str + (localize "STR_SET_39_0"); // "Military gear and equipment after 1
 #endif
 
 #ifndef __DISABLE_PARAJUMP_WITHOUT_PARACHUTE__
-_str = _str + (localize "STR_SET_40");
+_str = _str + (localize "STR_SET_40"); // STR_SET_40,Parajumps without parachute are allowed)))\n
 #endif
 
 #ifdef __DOSAAF_BONUS__
