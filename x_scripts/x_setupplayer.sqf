@@ -1204,7 +1204,7 @@ XBaseEnemies = {
 //            hint localize format["+++ XBaseEnemies: %1", _this];
         	private ["_alarm_obj","_no","_thislist","_height","_x","_pos","_sound","_unit"];
 //            hint localize format["+++ XBaseEnemies: %1", _this];
-            _alarm_obj = FLAG_BASE;
+            _alarm_obj = objNull; // Object to play alarm above it with sound and flare
             _height    = 250; // default flare start height
             if ( ( count _this ) >  1 ) then {
                 _thislist = _this select 1;
@@ -1221,7 +1221,7 @@ XBaseEnemies = {
                             	[ "WarfareBEastAircraftFactory", "WarfareBWestAircraftFactory", "FlagCarrier", "Land_Vysilac_FM", "Land_hlaska","Land_vez","Land_strazni_vez"],
                             	1000
                             ];
-			            	hint localize format["+++ XBaseEnemies: nearestObjects count %1, thislist %2", count _no, count _thislist];
+			            	hint localize format["+++ XBaseEnemies: enemy is %1, nearestObjects count %2, thislist count %3", typeOf _x, count _no, count _thislist];
 			            	_unit  = _x;
                             {
 								_pos  = position _x;
@@ -1231,18 +1231,22 @@ XBaseEnemies = {
                                 };
                             } forEach _no;
                         };
+                        if (!isNull _alarm_obj) exitWith {};
                     } forEach _thislist;
                 };
             };
-            _sound = if ( (random 10) < 1 ) then { call SYG_getBaseAttackSound } else { "alarm" };
-            if ( player call SYG_pointIsOnBase ) then { _alarm_obj say _sound } else { playSound _sound };
-            // throw flare above alarm object
-			// if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
-            if ( count ( _alarm_obj nearObjects ["F_40mm_Yellow", 400] ) == 0 ) then {
-	            [_alarm_obj, _height, "YELLOW", 400] execVM "scripts\emulateFlareFired.sqf";
-	           	hint localize format["+++ XBaseEnemies: throw yellow flare above %1, pos %2", typeOf _alarm_obj, getPos _alarm_obj ];
-            } else { hint localize format["+++ XBaseEnemies: YELLOW flare near %1 already on", typeOf _alarm_obj]; };
+            if (!isNull _alarm_obj) then {
+                _sound = if ( (random 10) < 1 ) then { call SYG_getBaseAttackSound } else { "alarm" };
+                if ( player call SYG_pointIsOnBase ) then { _alarm_obj say _sound } else { playSound _sound };
+                // throw flare above alarm object
+                // if ( count ( nearestObjects [ _alarm_obj, [ "F_40mm_Yellow" ], 400 ] ) == 0 ) then {
+                if ( count ( _alarm_obj nearObjects ["F_40mm_Yellow", 400] ) == 0 ) then {
+                    [_alarm_obj, _height, "YELLOW", 400] execVM "scripts\emulateFlareFired.sqf";
+                    hint localize format["+++ XBaseEnemies: throw yellow flare above %1, pos %2", typeOf _alarm_obj, getPos _alarm_obj ];
+                } else { hint localize format["+++ XBaseEnemies: YELLOW flare near %1 already on", typeOf _alarm_obj]; };
+            };
 		};
+
 		case 1: {
 			hint composeText[
 				parseText("<t color='#f00000ff' size='2'>" + (localize "STR_SYS_62") /* "ОТБОЙ:" */ + "</t>"), lineBreak,
@@ -1256,7 +1260,8 @@ XBaseEnemies = {
 _trigger = createTrigger["EmptyDetector" ,d_base_array select 0];
 _trigger setTriggerArea [d_base_array select 1, d_base_array select 2, 0, true];
 _trigger setTriggerActivation [d_enemy_side, "PRESENT", true];
-_trigger setTriggerStatements["{ _x isKindOf 'LandVehicle' || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "[0, thislist] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+//_trigger setTriggerStatements["{ _x isKindOf 'LandVehicle' || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "[0, thislist] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
+_trigger setTriggerStatements["{ (({alive _x } count crew _x) > 0) || ((_x isKindOf 'CAManBase') && ((name  _x) != 'Error: No unit')) } count thislist > 0", "[0, thislist] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [d_base_array select 1,d_base_array select 2];", "[1] call XBaseEnemies;'enemy_base' setMarkerSizeLocal [0,0];"];
 #endif
 
 if (d_weather) then {execVM "scripts\weather\weatherrec2.sqf";};
