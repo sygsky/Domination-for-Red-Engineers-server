@@ -314,7 +314,10 @@ SYG_handleWP = {
 		if (count _cmd < 2) exitWith { hint localize (format["--- SYG_handleWP: expected SET command array size 2 or 3, detected %1", count _cmd ]) };
 		private ["_pos","_i","_x"];
 		_pos = _cmd select 1; // Position where to assign WP
-		if ((toUpper _str) != "SET") exitWith { hint localize (format["--- SYG_handleWP: expected ['SET', ...] found %1", _cmd]) };
+		if ((toUpper _str) != "SET") exitWith {
+		    _str = format["--- SYG_handleWP: expected ['SET', ...] found %1", _cmd];
+		    hint localize _str;
+	    };
 		_grp = group player;
 		_wpa = waypoints _grp;
 //		hint localize format["+++ SYG_handleWP: SET, wpa = %1", _wpa];

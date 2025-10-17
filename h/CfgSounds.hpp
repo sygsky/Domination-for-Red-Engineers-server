@@ -710,7 +710,7 @@ class CfgSounds {
     class wild_geese {name = "Film 'The Wild Geese' theme"; sound[] = {\sounds\intro\wild_geese.ogg, db+10, 1.0}; titles[] = {};}; // from "The Wild geese" film
     class pink_floyd_diamond {name = ""; sound[] = {\sounds\intro\pink_floyd_diamond.ogg, db+10, 1.0}; titles[] = {};}; // Pink Floyd "Shine on you Crazy Diamond" 1975, intro
     class desperate_housewives {name = ""; sound[] = {\sounds\intro\desperate_housewives.ogg, db+10, 1.0}; titles[] = {};}; // Film "Desperate housewives", 2004, USA
-
+    class squid_game {name = ""; sound[] = {\sounds\intro\squid_game.ogg, db+10, 1.0}; titles[] = {};}; // Film "Squid Game", 2021, South Korea
 
 //+++++++++++++++++++++++ Holiday music
 

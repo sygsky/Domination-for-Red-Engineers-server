@@ -1598,6 +1598,7 @@ STR_JAIL_1,Hint: You have received a disciplinary penalty for violating the Sovi
 STR_JAIL_2,"You will regain control after serving your punishment for %1 second","Du wirst die Kontrolle wiedererlangen, nachdem du deine Strafe für %1 Sekunde verbüßt hast","Recuperarás el control tras cumplir tu castigo durante %1 segundo",После отбывания наказания в течении %1 сек. контроль будет возвращён
 STR_JAIL_3,Or you can press  Alt + F4 to exit immediately,"Oder du kannst Alt + F4 drücken, um sofort zu beenden","O puedes pulsar Alt + F4 para salir inmediatamente","Чтобы покинуть остров немедленно, используйте Alt + F4"
 STR_JAIL_4,Don't be in a hurry to spoil military property!,"Habe es nicht eilig, militärisches Eigentum zu verderben!",¡No tengas prisa por estropear la propiedad militar!,Не спешите портить военное имущество!
+STR_JAIL_ABO,"You are punished for killing a friendly native","Sie wurden für die Tötung eines freundlichen Ureinwohners bestraft","Has sido castigado por matar a un nativo amistoso","Вы наказаны за убийство дружественного аборигена"
 
 STR_ENG_FUND_1,The Engineering Fund rises to %1,Das Der technische Fonds steigt auf %1,El fondo de ingeniería sube a %1,Инженерный Фонд вырос до %1
 STR_ENG_FUND_2,The Engineering Fund reduced to 1%,Der Engineering-Fonds wurde auf %1 reduziert,El fondo de ingeniería se redujo a %1,Инженерный фонд уменьшился до %1
@@ -1748,11 +1749,18 @@ STR_ABORIGEN_INFO_0," You have been awarded (+%1) for landing close to an Aborig
 STR_ABORIGEN_INFO_1,"Find him, question him a few times until you understand everything.","Finden Sie ihn und befragen Sie ihn ein paar Mal, bis Sie alles verstanden haben","Encuéntralo, interrógalo varias veces hasta que entiendas todo","Найдите его, расспросите несколько раз, пока всё не поймёте"
 STR_ABORIGEN_INFO_NONE,"Locals are not observed","Einheimische werden nicht beobachtet","Los locales no son observados","Местные жители не наблюдаются"
 STR_ABORIGEN_INFO_OUT,"I can't follow you anymore.","Ich kann dir nicht mehr folgen.","No puedo seguirte más.","Я не могу больше следовать за тобой."
+
+STR_ABORIGEN_INFO_NUM,3,3,3,3
+STR_ABORIGEN_INFO_0,"I can't follow you anymore.","Ich kann dir nicht mehr folgen.","No puedo seguirte más.","Я не могу больше следовать за тобой"
+STR_ABORIGEN_INFO_1,"Sorry, but I have more inportant duties","Sorry, ich habe Wichtigeres zu tun","Lo siento, tengo cosas más importantes que hacer","Извини, есть дела и поважнее"
+STR_ABORIGEN_INFO_2,"My post is here, and you find yourself something more interesting to do, like run down to the base","Mein Posten ist hier, und du such dir was Interessanteres zu tun, geh zum Beispiel zur Basis","Mi puesto está aquí, y tú búscate algo más interesante que hacer, por ejemplo, ve a la base","Мой пост здесь, а ты найди себе занятие поинтереснее, например сбегай до базы"
+
+
 STR_ABORIGEN_INFO_HELP,"%1 has been dropped on Antigua! Help a brother in arms get to base territory.",,,
 STR_ABORIGEN_INFO_THX,"The troops of our limited contingent commend fighter %2 for his assistance in delivering %1","Das Personal unseres begrenzten Kontingents lobt Flieger %2 für seine Unterstützung bei der Auslieferung von %1","El personal de nuestro contingente limitado elogia al caza %2 por su ayuda en la entrega de %1","Личный состав нашего ограниченного контингента выносит благодарность бойцу %2 за помощь по доставке %1"
 STR_ABORIGEN_KILLED,"Dead Aborigen... what bastard killed our informant?","Toter Aborigen... welcher Bastard hat unseren Informanten getötet?","Aborigen muerto... ¿qué bastardo mató a nuestro informante?","Дохлый абориген... какая сволочь убила нашего связного?"
 STR_ABORIGEN_KILLER,"%1 killed the wonderful man, the true Aborigen. %1 will be punished! For now, just -20 points.","%1 hat einen wunderbaren Mann getötet, den Aborigen mit einem großen Buchstaben. %1 wird bestraft werden! Für den Moment nur -20 Punkte.","%1 mató a un hombre maravilloso, el Aborigen con mayúscula. %1 castigado. Por ahora, sólo -20 puntos","%1 убил(а) замечательного человека, Аборигена с большой буквы. %1 ждёт кара! А пока просто -20 очков."
-STR_ABORIGEN_KILLER_0,"Just now this wonderful man was killed, the true Aborigen. But the enemy made a wrong move. And another will take his place!","Soeben wurde ein wunderbarer Mann getötet, der Aborigen mit einem großen Buchstaben. Aber der Feind hat einen falschen Zug gemacht. Und ein anderer wird seinen Platz einnehmen!","Acaba de morir un hombre maravilloso, el Aborigen con mayúscula. Pero el enemigo dio un paso en falso. ¡Y otro ocupará su lugar!","Только что был убит замечательный человек, Абориген с большой буквы. Но враги просчитались. И на его место встанет другой!"
+STR_ABORIGEN_KILLER_0,"Our Aborigen was killed (%1). I hope the villain will be punished!","Unser Aborigen wurde getötet (%1). Ich hoffe, der Schurke wird bestraft!","Nuestro Aborigen fue asesinado (%1). ¡Espero que el villano sea castigado!","Наш Абориген был убит (%1). надеюсь, негодяй будет наказан!"
 
 STR_ABORIGEN_BOAT,Where find boat?,Wo finde ich ein Boot?,¿Dónde encontrar el barco?,Где найти лодку?
 STR_ABORIGEN_BOAT_INFO,The nearest boat (%1) is %2 m away direction %3,Nächstes Boot (%1) ist %2 m Richtung %3,El barco más cercano (%1) está a %2 m en dirección %3,Ближайшая лодка (%1) находится на расстоянии %2 м. к %3 от вас

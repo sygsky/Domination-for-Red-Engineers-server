@@ -37,7 +37,7 @@ scopeName "main";
 if ( !alive player ) then {
     waitUntil {
         sleep 0.05;
-        if ( isNull player ) then  { breakOut "main"; }; // Exit if useк disappered
+        if ( isNull player ) then  { breakOut "main"; }; // Exit if user disappered
         if ( dialog ) then { breakOut "main" };             // Exit if in dialog, so dead etc
         alive player
     };
@@ -47,7 +47,7 @@ if ( !alive player ) then {
 #include "x_macros.sqf"
 
 _test = false; // defines if this is test call or real one
-_msg1 = localize "STR_JAIL_1"; //"Hint: You have been punished for having a negitive score",
+_msg1 = localize "STR_JAIL_1"; //"Hint: You have received a disciplinary penalty for violating the Soviet Army regulations",
 _score = score player;
 
 if ( typeName _this != "ARRAY") then {
@@ -57,12 +57,13 @@ if ( typeName _this != "ARRAY") then {
 if ( count _this > 3) then { // test call from test action at flag
     _test = if (typeName (_this select 3) == "STRING") then { (_this select 3) == "TEST" } else { false };
 } else {
-    _penalty = if (typeName (_this select 0) == "STRING") then { (_this select 0) == "PENALTY" } else { false };
+    // Example: ["ABORIGEN", _score_to_minus, _msg] execVM "scripts\jail.sqf";
+    _penalty = if (typeName (_this select 0) == "STRING") then { (_this select 0) IN ["PENALTY","ABORIGEN"] } else { false };
     if (_penalty) exitWith {
         // Direct call with penalty after any bad action
         _score_to_demote = 0;
         // Called with single parameter: String with %1 as demote score calculated internally
-        if (count _this > 2) then { // It is some penalty (radar killed) jail, 1st message is replaced with custom one if is is designated
+        if (count _this > 2) then { // It is some penalty (radar/aborigen killed) jail, 1st message is replaced with custom one if is is designated
             // STR_RADAR_KILLED:"Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
             _score_to_demote = - ((score player) call SYG_demoteByScore);
             _msg1 = format[localize (_this select 2), _score_to_demote];
@@ -74,7 +75,7 @@ if ( count _this > 3) then { // test call from test action at flag
             _score = abs (_score_to_demote); // Await time in seconds equal to the score subtracted from the player!!!
         };
     };
-        // It is ["NEGATIVE[_SCORE]"] call
+    // It is ["NEGATIVE[_SCORE]"] call
 };
 _playerPos = getPos player;
 _playerDir = getDir player;
@@ -125,7 +126,7 @@ player setDamage 0;
 player setVelocity [0,0,0];
 player playMove "AmovPercMstpSnonWnonDnon"; // stand up!
 
-_score = [( abs(_score) + JAIL_START_PERIOD) max JAIL_START_PERIOD, 10 ] call SYG_roundTo; // Minimum 80 seconds, max has no limits
+_score = [( abs(_score) + JAIL_START_PERIOD) max JAIL_START_PERIOD, 10 ] call SYG_roundTo; // Minimum 60 seconds, max has no limits
 
 _wpn = weapons player;
 _mags = magazines player;

@@ -61,6 +61,8 @@ while { base_visit_session <= 0 } do {
 			if (( getPos player ) call SYG_pointIsOnBase) then {  // player is in base rect!
 				// Ensure player being on base 2 seconds
 				sleep 2;
+                _spent_time = time  - _out_of_intro_time; // _start_time;
+
 				if (( getPos player ) call SYG_pointIsOnBase) then {
 					// add last visited vehicle to the history array
 					if (!isNull _active_veh) then {
@@ -69,7 +71,6 @@ while { base_visit_session <= 0 } do {
 
                     if (base_visit_mission < 1) then {
                         base_visit_mission = 1;
-                        _spent_time = time  - _out_of_intro_time; // _start_time;
                         [
                             "base_visit_mission",
                             name player,
@@ -142,7 +143,7 @@ _arr set[count _arr, [_msg,name player,_str, _bonus]];
 // STR_INTRO_ON_BASE1 = "You are assigned to the SpecNaz GRU detachment at Sahrani and to the local flying club, for the use of jump flags."
 _arr set[count _arr, ["STR_INTRO_ON_BASE1"]];
 
-// Sends upper common mesages to you only
+// Sends upper common messages to you only
 [ "msg_to_user", "*", _arr, 5, 0, false, _sound] spawn SYG_msgToUserParser; // Multui-msgs send to user
 
 // Send this message to all except this player
