@@ -184,7 +184,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2",/*"del_vampiro1",
                 "del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
-                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows","pink_floyd_diamond","desperate_housewives"
+                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows","pink_floyd_diamond","desperate_housewives","squid_game"
             ];
 
             // music to play only in day time
@@ -192,7 +192,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "grant","burnash","lastdime","lastdime2","lastdime3","mission_impossible","strelok","capricorn1title",
                 "Letyat_perelyotnye_pticy_2nd","ruffian"/*,"morze"*/,"morze_3"/*,"chapaev"*/,"rider","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","toccata",/*"travel_with_friends",*/"on_thin_ice","wild_geese",
-                "dangerous_chase","desperate_housewives"
+                "dangerous_chase","desperate_housewives","squid_game"
             ];
 
             // only night music
@@ -217,7 +217,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "tovarich_moy","rider","hound_baskervill","condor","way_to_dock","Vremia_vpered_Sviridov",
                 "Letyat_perelyotnye_pticy_end","melody_by_voice","sovest1","sovest2","toccata",
                 /*"del_vampiro1","del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague","travel_with_friends",*/"on_thin_ice","peregrinus",
-                "wild_geese","dangerous_chase","kk_the_hole","everybody_knows","pink_floyd_diamond","desperate_housewives"
+                "wild_geese","dangerous_chase","kk_the_hole","everybody_knows","pink_floyd_diamond","desperate_housewives","squid_game"
             ]
                 + _personalSounds ) call _XfRandomArrayVal;
 #endif
