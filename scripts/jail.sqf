@@ -61,17 +61,17 @@ if ( count _this > 3) then { // test call from test action at flag
     _penalty = if (typeName (_this select 0) == "STRING") then { (_this select 0) IN ["PENALTY","ABORIGEN"] } else { false };
     if (_penalty) exitWith {
         // Direct call with penalty after any bad action
-        _score_to_demote = 0;
+        _score_to_demote = d_sub_tk_points; // Default value to subtract is 20
         // Called with single parameter: String with %1 as demote score calculated internally
-        if (count _this > 2) then { // It is some penalty (radar/aborigen killed) jail, 1st message is replaced with custom one if is is designated
+        if (count _this > 2) then { // It is some penalty for (radar/aborigen killed) in jail, 1st message is replaced with custom one if it is designated
             // STR_RADAR_KILLED:"Hint: You're being punished (-%1) for destroying a GRU mast. Are you not a spy?"
-            _score_to_demote = - ((score player) call SYG_demoteByScore);
+            // STR_ABORIGEN_KILLER_0,"Our Aborigen was killed (-%1). I hope the villain will be punished!"
+            _score_to_demote = (abs (_this select 1)) max (abs(_score_to_demote)); // get maximum value to demote
             _msg1 = format[localize (_this select 2), _score_to_demote];
-        } else {
-            _score_to_demote = - ( ((score player) call SYG_demoteByScore) min d_sub_tk_points); // Demoted and in any case player killed subtraction
         };
-        if (_score_to_demote != 0) then {
-            _score_to_demote call SYG_addBonusScore;
+        _score_to_demote = - ( ( _score call SYG_demoteByScore ) max _score_to_demote ); // Try to demoted and in any case aborigen killed subtraction
+        if ( _score_to_demote != 0 ) then {
+            _score_to_demote call SYG_addBonusScore;// Subtract penalty scores
             _score = abs (_score_to_demote); // Await time in seconds equal to the score subtracted from the player!!!
         };
     };

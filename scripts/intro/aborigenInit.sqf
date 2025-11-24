@@ -95,11 +95,11 @@ while {((getPos player) select 2) > 5} do { sleep 2}; // while in air
 _land_dist = round (player distance aborigen);
 if (alive aborigen) then { // show info
     _add = d_ranked_a select 32;
-    _msg = if (_land_dist < 10) then {format [localize "STR_ABORIGEN_INFO_0", _add]} else {""}; // " You have been awarded (+%1) for landing close to an Aborigen. Know our crew!!!"
+    _msg = if (_land_dist < 10) then {format [localize "STR_ABORIGEN_INFO_00", _add]} else {""}; // " You have been awarded (+%1) for landing close to an Aborigen. Know our crew!!!"
 	_arr = ["msg_to_user", "",
 		[
 			[ "STR_ABORIGEN_INFO", _land_dist,  ([ player, aborigen ] call XfDirToObj) call SYG_getDirNameEng, _msg ],  // "The islander is %1 m away in the %2 direction.%3"
-			[ "STR_ABORIGEN_INFO_1" ] // "Find him, question him a few times until you understand everything."
+			[ "STR_ABORIGEN_INFO_01" ] // "Find him, question him a few times until you understand everything."
 		],	0, 6, false
 	];
 	if (_land_dist < 10) then {

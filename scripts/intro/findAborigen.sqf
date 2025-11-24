@@ -81,22 +81,16 @@ aborigen addEventHandler ["killed", {
         //d_sub_tk_points(-20) call SYG_addBonusScore;
         // TODO: send this action to the killer computer
         // STR_JAIL_ABO="You are punished for killing a friendly native"
-        _str = format["if ((name player) == '%1') then {['ABORIGEN',%2,'STR_JAIL_ABO'] execVM 'scripts\jail.sqf'",
-            _name, d_sub_tk_points];
+        _str = format["if ((str player) == ""%1"") then {[""ABORIGEN"",0,""STR_JAIL_ABO""] execVM ""scripts\jail.sqf""};", _name];
         [ "remote_execute", _str, "<server>" ] call XSendNetStartScriptClientAll; // Sent to all clients only
-        hint localize format["+++ findAborigen.sqf: aborigen killed by '%1', put him to the jail on the client...", _name];
-
-/*
-        _sub_score = _killer call SYG_demoteByScore; // Returns score to subtract to demote 1 rank lower or 0 if score are aready negative
-        if (_sub_score == 0) then {_sub_score = d_ranked_a select 11}; // Normal score for the SM success
-        // STR_ABORIGEN_KILLER = "%1 killed the wonderful man, the true Aborigen. %1 will be punished! For now, just -20 points."
-        [ "change_score", _name, -_sub_score, ["msg_to_user", "", [ ["STR_ABORIGEN_KILLER", _name ] ], 0, 1, false, "losing_patience"] ] call XSendNetStartScriptClientAll;
-*/
-        // STR_ABORIGEN_KILLER_0 = "Just now this wonderful man was killed, the true Aborigen. But the enemy made a wrong move. And another will take his place!"
-        ["msg_to_user", "", [ ["STR_ABORIGEN_KILLER_0"], _name], 0, 1, false, "losing_patience"] call XSendNetStartScriptClientAll;
+        hint localize format["+++ findAborigen.sqf: aborigen killed by ""%1"", put him to the jail on the client...", _name];
+        _name = name _killer;
+        // STR_ABORIGEN_KILLER = "%1 killed the wonderful man, the true Aborigen. %1 will be punished! For now, just -%2 points."
+        // STR_ABORIGEN_KILLER_0 = STR_ABORIGEN_KILLER_0,"Our Aborigen was killed (-%1). I hope the villain will be punished!"
+        ["msg_to_user", "", [ ["STR_ABORIGEN_KILLER_0",d_sub_tk_points], ["STR_ABORIGEN_KILLER",_name, d_sub_tk_points]], 5, 1, false, "losing_patience"] call XSendNetStartScriptClientAll;
 	};
-	hint localize  format["--- findAborigen.sqf: aborigen killed by %1(%2), dist %3, at %4!",
-		_name,
+	hint localize  format["*** findAborigen.sqf: aborigen killed by %1(%2), dist %3, at %4!",
+		name _killer,
 		typeOf (vehicle _killer),
 		round((_this select 0) distance _killer),
 		[_killer,10] call SYG_MsgOnPos0];

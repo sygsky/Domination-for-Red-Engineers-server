@@ -1,4 +1,6 @@
 /*
+    NOTE: not used any more!
+
 	scripts\intro\follow.sqf
 	author: Sygsky
 	description: allow aborigen to follow player not very long time

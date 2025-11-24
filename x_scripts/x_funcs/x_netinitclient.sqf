@@ -241,7 +241,7 @@ XHandleNetStartScriptClient = {
 					_bon = round( ( (_arr select 1) select _ind )  * (d_ranked_a select 9) ); // // Bonus scores here are coefficients for the unknown on server max score values
 				} else { _bon = 0 };
 			};
-			
+
 			// inform player about counter attack state (param 0) and town bonus (or its absence) (param 1)
 			[(_this select 3), _bon, _arr] execVM "x_scripts\x_target_clear_client.sqf"; // set counterattack state as 1st parameter for execVM, set players bonus score is 2nd one
 			call SYG_townStatInit; // reset split score statistics for the next town
@@ -715,7 +715,7 @@ XHandleNetStartScriptClient = {
 //#ifdef __PRINT__
 //				hint localize format["--- 'MHQ_respawned' called with NIL variable %1 ", _this select 1];
 //#endif
-			};	
+			};
 		};
 		case "flare_launched":	{ // add flare light for client
 			(_this select 1) execVM "scripts\emulateFlareFiredLocal.sqf";
@@ -1070,7 +1070,9 @@ XHandleNetStartScriptClient = {
         // call as:		["remote_execute", format["%1 setPos %2", _reveal_name, getPos _nearest]] call XSendNetStartScriptClient;
         //
 		case "remote_execute" : {
-			hint localize format["+++ x_netinitclient.sqf: %1", _this ];
+			hint localize format["+++ x_netinitclient.sqf: %1, player %2(%3)", _this, str player, name player ];
+//			_code = compile (_this select 1);
+//			hint localize format["+++ x_netinitclient.sqf: code %1", _code];
 			_this call (compile (_this select 1));
 		};
 
