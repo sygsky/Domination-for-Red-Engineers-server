@@ -617,7 +617,7 @@ SYG_AIPriceByRankString = {
 };
 
 //
-// Find value to subtruct from current score (_this) to demote rank of the unit by 1, if rank already 0,
+// Find value to subtract from current score (_this) to demote rank of the unit by 1, if rank already 0,
 //  returns positive score or 0 if score are already negative
 // Calls: _score_to_subtruct = (score player) call SYG_demoteByScore;
 //
@@ -627,7 +627,7 @@ SYG_demoteByScore = {
     if ( typeName _this != "SCALAR") exitWith {0};
 	_ind = _score call XGetRankIndexFromScore;
 	if ( _ind == 0 ) exitWith { _score max 0 }; // If rank is private, returns score to get zero or zero if already negative score
-	if ( _ind == 1 ) then { _prev = 0 } else { _prev = ( _ind - 1 ) call XGetScoreFromRank }; // If rank is corporal, score to reset to t middle of private rank score
+	if ( _ind == 1 ) then { _prev = 0 } else { _prev = ( _ind - 1 ) call XGetScoreFromRank }; // If rank is corporal, score to reset to the middle of private rank score
 	_score - ((_ind call XGetScoreFromRank) + _prev) / 2 // Return value to subtract from designated score to ensure set previous rank
 };
 

@@ -2110,7 +2110,7 @@ SYG_getVecRoleBulkyWeapon = {
                 if (_veh isKindOf "Helicopter") then {
                     //["rks","rfl","smg","pst","rpg","lng"]
 //                    if (_driver || (_veh call SYG_isBattleHeli) ) then {_bulky_weapon = ["smg"]; breakTo "main";}
-                    if (_driver || (_veh call SYG_isBattleHeli) ) then {_bulky_weapon = ["lng"]; breakTo "main";};
+                    if (_driver || (_veh call SYG_isBattleHeli) ) then {_bulky_weapon = ["lng"]; breakTo "main";}; // Add "rpg" to allow RPG usage in any helis
                 } else {
                     if ( (_veh isKindOf "Plane") ) then {
                     	if (! ((typeOf _veh) in ["Camel","Camel2","DC3"]))  then { _bulky_weapon = ["smg"]; breakTo "main";};
