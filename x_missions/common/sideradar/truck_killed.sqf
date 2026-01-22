@@ -5,6 +5,8 @@
 	returns: nothing
 */
 
+#include "sideradio_vars.sqf"
+
 _msg = (_this select 1) call SYG_getKillerInfo;
 _veh = _this select 0;
 
@@ -13,11 +15,16 @@ if (alive d_radar)  then  { // unload mast if truck is killed
 	_asl = getPosASL d_radar;
 	if ((_asl select 2) < 0) then {
 		_pos = _veh modelToWorld [0, -DIST_MAST_TO_INSTALL, 0];
-		d_radar setPos _pos;
+		//+++ fix #716 Sygsky 2026-01-23 01:09:49
+		if (surfaceIsWater _pos) then {
+		    _pos = RADAR_BASE_POINT;    //  Set radar to base in case if dead truck is in water now
+		};
+		//--- fix #716
+   		d_radar setPos _pos;
 		["say_sound", _veh, call SYG_rustyMastSound] call XSendNetStartScriptClientAll;
 	};
     // Find all players around
-    _arr = _veh nearObjects ["CaManBase", 20];
+    _arr = _veh nearObjects ["CaManBase", 50];
     for "_i" from 0 to (count _arr) - 1 do {
         _x = _arr select _i;
         if (isPLayer _x) then {
@@ -31,7 +38,7 @@ if (alive d_radar)  then  { // unload mast if truck is killed
         };
     };
 };
-_msg = format["+++  radio_service: Radar truck (%1) killed by %2, near players %3",typeOf _veh, _msg, _arr1];
+_msg = format["+++  radio_service: Radar truck (%1) killed by %2, near players %3", typeOf _veh, _msg, _arr1];
 ["log2server", name player, _msg] call XSendNetStartScriptServer;
 
 // remove truck after 10 minutes of players absence around 100 meters of truck.

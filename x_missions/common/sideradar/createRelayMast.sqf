@@ -66,7 +66,7 @@ _pos = getPos d_radar;
 d_radar setPos [_pos select 0, _pos select 1, -5.7 ];
 // calculate random angle vector
 if (_base) then {
-	d_radar setVectorUp [1,0,0]
+	d_radar setVectorUp RADAR_BASE_VECTOR_UP
 } else {
 	_angle = random 360;
 	d_radar setVectorUp [cos _angle,sin _angle,0]
