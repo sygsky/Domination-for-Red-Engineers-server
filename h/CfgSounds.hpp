@@ -740,6 +740,7 @@ class CfgSounds {
     class jimmy_dont_miss { name="";                					sound[] = {\sounds\intro\jimmy_dont_miss.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
     class everybody_knows { name="";                					sound[] = {\sounds\intro\everybody_knows.ogg,db-1,1.0}; titles[] = {};}; // "War Dogs" 2016, final titles songs
     class cosma_maldonne { name="";                					    sound[] = {\sounds\intro\cosma_maldonne.ogg,db-1,1.0}; titles[] = {};}; // "Vladimir Cosma - Maldonne" film
+    class House_Of_The_Rising_Sun { name="";       					    sound[] = {\sounds\intro\House_Of_The_Rising_Sun.ogg,db-1,1.0}; titles[] = {};}; // "House_Of_The_Rising_Sun", 1964, The Animals
 
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
