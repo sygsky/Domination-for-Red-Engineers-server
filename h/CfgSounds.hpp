@@ -245,7 +245,9 @@ class CfgSounds {
     class radionanny { name=""; sound[] = {\sounds\Radio_nanny_call_sign.ogg,db+10,1.0}; titles[] = {}; }; // defeat sound from Radio-nanny sign call
     class sinbad_baghdad { name=""; sound[] = {\sounds\defeat\sinbad_baghdad.ogg,db+10,1.0}; titles[] = {}; }; // defeat sound from film "7th voyage of Sinbad "
     class moon_stone {name = ""; sound[] = {\sounds\defeat\moon_stone.ogg, db+10,1.0}; titles[] = {}; }; // Famous Soviet singer Edvard Hill: "Moon stone" song
-    class take_five    {name = "Dave Brubeck"; sound[] = {\sounds\take_five.ogg, db+10,1.0}; titles[] = {}; }; // "Take Five" by Dave Brubeck
+    class take_five    {name = "Dave Brubeck"; sound[] = {\sounds\defeat\take_five.ogg, db+10,1.0}; titles[] = {}; }; // "Take Five" by Dave Brubeck
+    class holms { name="";      	           sound[] = {\sounds\defeat\holms.ogg,db-1,1.0}; titles[] = {};}; // "Шерлок Холмс", СССР
+
 
     class metel       { name=""; sound[] = {\sounds\metel.ogg,db+0,1.0}; titles[] = {}; }; // defeat music from "Metel" of Pushkin novel
     class gayane1     { name=""; sound[] = {\sounds\gayane1.ogg,db+0,1.0}; titles[] = {}; }; // "Gayane" ballet
@@ -400,6 +402,7 @@ class CfgSounds {
     class exclamation5 { name="";   sound[] = {\sounds\defeat\exclamations\5.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class exclamation6 { name="";   sound[] = {\sounds\defeat\exclamations\6.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
     class tanki { name="eclamation";   sound[] = {\sounds\defeat\tanki.ogg,db+10,1.0}; titles[] = {}; } // say some exclamation
+
 
 	// internal submarine effect sounds
     class submarine_sound_1   {name = ""; sound[] = {\sounds\submarine\submarine_sound_1.ogg, db+10, 1.0}; titles[] = {};};
@@ -736,6 +739,7 @@ class CfgSounds {
     class kk_the_hole { name="King-Kong film, the hole";                sound[] = {\sounds\intro\kk_the_hole.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
     class jimmy_dont_miss { name="";                					sound[] = {\sounds\intro\jimmy_dont_miss.ogg,db-1,1.0}; titles[] = {};}; // Kin-Kong 1976 film, The hole eposode
     class everybody_knows { name="";                					sound[] = {\sounds\intro\everybody_knows.ogg,db-1,1.0}; titles[] = {};}; // "War Dogs" 2016, final titles songs
+    class cosma_maldonne { name="";                					    sound[] = {\sounds\intro\cosma_maldonne.ogg,db-1,1.0}; titles[] = {};}; // "Vladimir Cosma - Maldonne" film
 
 
 //--------------------------------------------- INTRO/DESANTSM MUSIC -------------------------------------------
@@ -743,6 +747,7 @@ class CfgSounds {
     class usa_desant_heli { name="Babyyyyyyy";                          sound[] = {\sounds\intro\vehicles\usa_desant_heli.ogg,db-1,1.0}; titles[] = {};}; // Baby-y-y-y-y...
 
     class Oberon { name="Oberon (Yuri Vizbbor song)";                   sound[] = {\sounds\intro\players\Oberon.ogg,db-1,1.0}; titles[] = {};}; // Song for player "Oberon"
+    class faces_of_war_flavi { name="";                                 sound[] = {\sounds\intro\players\faces_of_war_flavi.ogg,db-1,1.0}; titles[] = {};}; // Song for player "Flavi"
 
     class radionoise_0 { name="";                   	                sound[] = {\sounds\radio\radionoise_0.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible
     class radionoise_1 { name="";               	                    sound[] = {\sounds\radio\radionoise_1.ogg,db-1,1.0}; titles[] = {};}; // radio ininteligible

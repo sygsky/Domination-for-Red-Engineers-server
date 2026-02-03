@@ -440,8 +440,8 @@ SYG_holidayTable = [
     [[6, 2], 9, "march_of_soviet_tankmen","STR_HOLIDAY_TANKIST_DAY",0], // // Tankists Day: 2nd Sunday (week day index is 6)  of September (9th month)
     [ 7, 10, ["communism","Vremia_vpered_Sviridov","ddrhymn"],"STR_HOLIDAY_7_OCT",1], // Day of USSR constitution / Day of DDR
     [29, 10, "komsomol","STR_HOLIDAY_28_OCT",0], // Komsomol day
-    [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1]  // 7th of November
-
+    [ 7, 11, ["soviet_officers","ahead_friends","Varshavianka","Varshavianka_eng","warschawyanka_german"],"STR_HOLIDAY_7_NOV",1],  // 7th of November
+    [25, 12, ["snovymgodom","nutcracker","home_alone","merry_xmas","vangelis"],"STR_HOLIDAY_XMAS_DEC",0]  // 25th of December
 ];
 
 // Checks current server date agains holiday list and return array of data if detected, or empty array [] if not
