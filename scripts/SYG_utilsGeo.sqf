@@ -914,7 +914,7 @@ SYG_MsgOnPos0 = {
 
 //
 // Creates message based on user format string with 3 params %1, %2, %3 in follow order:
-// distance_to_location, direction_to_location, location_name. E.g. "%1 m. from %2 m. to %3"
+// distance_to_location, direction_to_location, location_name. E.g. "%1 m. to %2  from %3" ("150 m. to W from Pita")
 //
 // call as: _msg_localized = [_obj|_pos, _localized_format_msg<,roundTo>] call SYG_MsgOnPosA;
 //

@@ -15,6 +15,7 @@
 // check if is called on client at "remote_execute" sent from server
 if (!X_Client) exitWith { hint localize "--- GRU_boat_flag_reammo.sqf: called not on client, exit!"};
 
+#define GRU_BOAT_MARKER "GRU_boat_marker"
 #define BOAT_TYPE "RHIB2Turret"
 #define BOAT_GRU_TYPE "RHIB"
 #define MAX_DIST 10
@@ -22,31 +23,52 @@ if (!X_Client) exitWith { hint localize "--- GRU_boat_flag_reammo.sqf: called no
 
 _flag = _this select 0;
 // find nearest boat
-_boat = nearestObject [ _flag, BOAT_GRU_TYPE ];
+_boat = nearestObject [ _flag, "Ship" ];
 if ( isNull _boat ) exitWith {
+    _type = markerType GRU_BOAT_MARKER;
+    _str = "STR_GRU_BOAT_ABSENT"; // "GRU boat not detected nearby flag"
+    if (_type == "") then {
+        _str = "STR_GRU_BOAT_ABSENT_FULL"; // "GRU boat not detected nearby flag and marker also is absent"
+    } else {
+        _posMrk = markerPos GRU_BOAT_MARKER;
+        _posShip = [BOAT_GRU_TYPE , _posMrk] call SYG_distance2D; // Marker pos
+        _arr = nearestObjects [_posMrk, [BOAT_GRU_TYPE], 500];
+        if ( count _arr == 0 ) exitWith {
+            // "%1 m. to %2  from %3" ("150 m. to W from Pita") =>
+            // [_obj|_pos, _localized_format_msg<,roundTo>] call SYG_MsgOnPosA;
+            _str = [_posMrk, localize "STR_GRU_BOAT_ABSENT_NEAR_MARKER", 50] call SYG_MsgOnPosA; // format["Found GRU boat marker at %1, but no boat in radius 500 m. found", "150 m. to W from Pita"]
+        } else {
+            // Found ship near marker!!!
+            _str = [_arr select 0, localize "STR_GRU_BOAT_FOUND_NEAR_MARKER", 50] call SYG_MsgOnPosA;  // format["Found GRU boat at %1, marker is near it", "150 m. to W from Pita"]
+            _dist = round ([_posMrk,_posShip] call SYG_distance2D);
+            _str = [format["%1 (%2 m)"], _str, _dist] call SYG_MsgOnPosA;
+        };
+    };
+
     // "GRU boat not detected nearby flag"
-    [ "msg_to_user", name player, ["STR_GRU_BOAT_ABSENT"], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
+    [ "msg_to_user", name player, _str, 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
 };
+
 
 if ( [_boat, _flag] call SYG_distance2D < MAX_DIST) exitWith {
     // "Boat cant be served on distance more than %1 meters"
-    [ "msg_to_user", name player, ["STR_GRU_BOAT_BADDIST", MAX_DIST], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
+    [ "msg_to_user", name player, ["STR_GRU_BOAT_BADDIST", MAX_DIST], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
 };
 
-if ( typeOf _boat == BOAT_TYPE) exitWith {
-    // "Can't serve US boats, only GRU allowed"
-    [ "msg_to_user", name player, ["STR_GRU_BOAT_BADTYPE"], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
+if ( (typeOf _boat) != OAT_GRU_TYPE) exitWith {
+    // "Can serve only GRU boat of type '%1', found  ship '%2' is not allowed"
+    [ "msg_to_user", name player, ["STR_GRU_BOAT_BADTYPE", "BOAT_GRU_TYPE", typeOf _boat], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
 };
 
 _cnt = [_boat,"M2", "100Rnd_127x99_M2", true] call SYG_reloadAmmo;
 if (_cnt < 0) exitWith {
     // "Can't re-ammo this boat, ask Engineer ACE about problem, say him number ""%1"""
-    [ "msg_to_user", name player, ["STR_GRU_BOAT_ERRLOAD", _cnt], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
+    [ "msg_to_user", name player, ["STR_GRU_BOAT_ERRLOAD", _cnt], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
 };
 
 if (_cnt == 0) exitWith {
     // "No need to reload, ammo is full"
-    [ "msg_to_user", name player, ["STR_GRU_BOAT_FULLLOAD"], 0, 0, false, "no_more_waiting" ] call SYG_msgToUserParser;
+    [ "msg_to_user", name player, ["STR_GRU_BOAT_FULLLOAD"], 0, 0, false, "losing_patience" ] call SYG_msgToUserParser;
 };
 
 for "_i" from 1 to _cnt do {

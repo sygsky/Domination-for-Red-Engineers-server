@@ -117,6 +117,7 @@ while { true } do {
 			sleep 1;
 			deleteVehicle _veh;
 			_marker setMarkerType "Empty"; // Hide marker
+			hint localize format["+++ GRU_boat_respawn.sqf: marker type set to '%1'", markerType _marker];
 			sleep (30 + (random 30));
 		};
 		// "Extra mission continues. A special GRU boat appeared at the starting point. Probably with the help of the islanders."
@@ -127,15 +128,17 @@ while { true } do {
 			_marker_pos = getPosASL _veh;
 			// STR_GRU_BOAT_NAME="GRU boat"
 			_marker = [GRU_BOAT_MARKER, _marker_pos, "ICON", _marker_color, [0.7,0.7], localize "STR_GRU_BOAT_NAME", 0, _marker_type] call XfCreateMarkerGlobal;
-			hint localize format["+++ GRU_boat_respawn.sqf: marker %1 created", _marker];
+			hint localize format["+++ GRU_boat_respawn.sqf: marker '%1' created", _marker];
 		} else {
 			_marker setMarkerType _marker_type; // restore marker just in case
+			hint localize format["+++ GRU_boat_respawn.sqf: marker type set to '%1'", _marker_type];
 		};
 	} else {
 	    // Check if boat is empty and engine is on
 	    if ( isEngineOn _veh) then {
 	        if ( ( {(isPlayer _x) && (alive _x)} count (crew _veh) ) == 0) then {// Boat is empty
                 if (local _veh) then {
+                    Hint localize format["+++ GRU_boat_respawn.sqf: empty local boat engine would be stopped on server at %1", [_veh, 10 ] call SYG_MsgOnPos0];
                     _veh engineOn false;
                 } else {
                     Hint localize format["+++ GRU_boat_respawn.sqf: empty non local boat engine would be stopped on some client at %1", [_veh, 10 ] call SYG_MsgOnPos0];

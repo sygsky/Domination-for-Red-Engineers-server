@@ -43,12 +43,13 @@ _vehs_counter_attack =  (floor(random 3)) + 2; // 2..4
 // generate different type of vehicles group sizes
 _number_basic = (floor (random _vehs_counter_attack)) + 1; // 1..4
 _number_specops = (floor (random _vehs_counter_attack)) + 1; // 1..4
-_number_tank = floor (random _vehs_counter_attack) + 1; // 1..3
-_number_bmp = floor (random _vehs_counter_attack) + 1; // 1..3
+_number_tank = floor (random _vehs_counter_attack) + 1; // 1..4
+_number_bmp = floor (random _vehs_counter_attack) + 1; // 1..4
 
 _numbervecs = (_vehs_counter_attack - 2) max 1; // 1..2
 
 _type_list_attack = [["basic",0],["specops",0],["tank",(floor (random _numbervecs)) + 1],["bmp",(floor (random _numbervecs)) + 1]];
+hint localize format[ "+++ x_counterattack.sqf: _numbervecs = %1, _type_list_attack array = %1", _numbervecs, _type_list_attack ];
 
 sleep (120 + random 120);
 
