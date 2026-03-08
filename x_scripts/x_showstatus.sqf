@@ -293,7 +293,10 @@ if (!((current_mission_text == localize "STR_SYS_120") || all_sm_res || stop_sm)
 			if (sideradio_status == 1) then { _s = _s + "\n" + (localize "STR_RADAR_TASK1") } else { // "Return the truck to the GRU PC!"
 				if (sideradio_status == 2) then { _s = _s + "\n" + (localize "STR_RADAR_TASK2") }; // "The side mission is practically done! Wait for the task to be completed!"
 			};
-			_s = _s + "\n" + localize "STR_RADAR_FAILURE_CONDITION";
+			_s = _s + "\n" + localize "STR_RADAR_FAILURE_CONDITION"; // "Mission failure conditions: loss of the mast before installing it, failure to deliver the truck to the GRU PC after installing the mast."
+		};
+
+		case 57: { // GRU steal boat mission
 		};
 
 	};

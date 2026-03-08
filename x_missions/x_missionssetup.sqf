@@ -11,8 +11,8 @@ d_mission_filename = "x_m";
 // to remove a specific side mission just remove the index from sm_array
 
 #ifdef __DEFAULT__
-sm_array = [57,56,44,53,54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0];
-nonstatic_sm_array = [20,21,22,51,52,54,56,57]; // indexes for not static mission objectives, where no troops can be found (сonvoy, pilots, radiomast, sea devil etc)
+sm_array = [/*57,*/56,44,53,54,55,40,20,30,21,22,25,42,26,52,51,50,49,48,47,46,45,43,3,41,39,38,37,36,35,34,33,32,31,29,28,27,24,23,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,2,1,0];
+nonstatic_sm_array = [20,21,22,51,52,54,56/*,57*/]; // indexes for not static mission objectives, where no troops can be found (сonvoy, pilots, radiomast, sea devil etc)
 #endif
 
 #ifdef __EASY_SM_GO_FIRST__
@@ -24,7 +24,7 @@ easy_sm_array = []; // no easy side missions near base
 #endif
 
 #ifdef __TT__
-sm_array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55];
+sm_array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57];
 #endif
 #ifdef __SCHMALFELDEN__
 sm_array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
