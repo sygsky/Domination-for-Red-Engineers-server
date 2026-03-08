@@ -10,4 +10,4 @@ echo SYG_mission_start = [%dt:~6,4%,%dt:~3,2%,%dt:~0,2%,%tm:~0,2%,%tm:~3,2%,%tm:
 
 rem start "" "C:\Program Files\ArmA\arma_server.exe" -maxmem=1024 -config=server.cfg -cfg=basic.cfg -mod=@ACE;@SIX_Pack3;@ai_spotting -name=server -pid=pids.log -ranking=ranks.txt
 rem start "" "C:\Program Files\ArmA\arma_server.exe" -maxmem=1024 -config=server.cfg -mod=@ACE;@SIX_Pack3;@ai_spotting -name=server -pid=pids.log -ranking=ranks.txt
-start "" "C:\Program Files\ArmA\arma_server.exe" -maxmem=1024 -config=server.cfg -mod=@ACE;@SIX_Pack3;@ai_spotting -name=server -pid=pids.log -ranking=ranks.txt
+start "" "C:\Program Files\ArmA\arma_server.exe" -port=2502 -cpuCount=4 -maxmem=1280 -config=server.cfg -mod=@ACE;@SIX_Pack3;@ai_spotting;@EditorUpdate -name=server -pid=pids.log "-ranking=C:\Program Files\ArmA\ranks.log"
