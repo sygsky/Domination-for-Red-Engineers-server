@@ -11,6 +11,16 @@
 
 #include "x_setup.sqf"
 
+// _ret = [_pnt1, _pnt2, _pos] call SYG_isAboveTravelLine;
+// +1 if above, 0 if on linbe, -1 if under line
+SYG_isAboveTravelLine = {
+    private ["_pos", "_r"];
+    _pos = _this call SYG_getPos;
+    _r = _this call SYG_distPoint2Vector1;
+    if ( _r > 0.0 ) then {-1} else {if (_r < 0.0) then {1}else{0}}
+};
+
+
 
 _start_time        = _this; // Session start time
 _out_of_intro_time = time; // When we leave the intro and go into freefall with a parachute on our backs
@@ -144,7 +154,7 @@ _arr set[count _arr, [_msg,name player,_str, _bonus]];
 _arr set[count _arr, ["STR_INTRO_ON_BASE1"]];
 
 // Sends upper common messages to you only
-[ "msg_to_user", "*", _arr, 5, 0, false, _sound] spawn SYG_msgToUserParser; // Multui-msgs send to user
+[ "msg_to_user", "*", _arr, 5, 0, false, _sound] spawn SYG_msgToUserParser; // Multu-msg-arr send to user
 
 // Send this message to all except this player
 [ "msg_to_user", "*", [[_msg,name player,_str, _bonus]], 0, 2, false, _sound ] call XSendNetStartScriptClient;

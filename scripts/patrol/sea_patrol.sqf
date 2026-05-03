@@ -426,9 +426,10 @@ _create_patrol = {
 	sleep 0.1;
 #ifdef __INFO__
 	if (_printInfo) then {
-		hint localize format["*** sea_patrol.sqf create_patrol: boat_%1 at %2, speed = %3 kmh, dir %4, dest %5",
+		hint localize format["*** sea_patrol.sqf create_patrol: boat_%1 at %2, units cnt %3, speed = %4 kmh, dir %5, dest %6",
 			_this select OFFSET_ID,
 			_boat call SYG_MsgOnPosE0,
+			count units _grp,
 			round(speed _boat),
 			round(_dir),
 			expectedDestination (driver _boat)
@@ -585,6 +586,8 @@ _resupply_boat = {
 // Try to fill driver and at least 1 gunner from cargo or driver from any gunners
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _reset_roles = {
+    private ["_stat","_units","_boat","_grp","_driver","_ind","_gun_empty_ids","_beh","_gunner_cnt","_gunner_ids","_gunners",
+            "_outers","_cnt","_i","_x","_role","_unit","_str",""];
 	_stat = _this select OFFSET_STAT;
 	_units = _stat select OFFSET_STAT_UNITS;
 	if ( ( { alive _x } count _units ) == 0 ) exitWith {  // Nobody alive in crew, boat can't be supported more

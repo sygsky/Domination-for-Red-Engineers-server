@@ -450,7 +450,7 @@ SYG_elongate1 = {
  * returns 3D vector of speed directed from pnt1 to pnt2
  * _pnt1: initial point of vector, may be some object/marker etc
  * _pnt2: ending point of vector, may be some object/marker etc
- * speend in meters per second, must be positive
+ * speed in meters per second, must be positive
  */
 SYG_speedBetweenPoints2D = {
 	private ["_pnt1","_pnt2","_elongate","_dx","_dy","_speed"];
