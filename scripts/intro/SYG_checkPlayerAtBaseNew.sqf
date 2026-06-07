@@ -23,8 +23,10 @@
 #define BONUS_FOOT_ONLY 200
 #define BONUS_NO_AIR_WATER 50
 #define THRESHOLD_INTENSIVE 0.20 // 20% limit for land vehicle usage to get max bonus
-#define KERZON_LINE_ADD 4000 // Add length to Kerzon line
+#define KERZON_LINE_ADD 8000 // Add length to Kerzon line
 #define LINE_COLOR "ColorRedAlpha"
+
+hint localize "+++ NEW SYG_checkPlayerAtBase.sqf started";
 
 // --- Helper: Simplified Travel Type to values of (0-3) ---
 // Uses your existing SYG_getVehicleType1
@@ -58,8 +60,8 @@ _fnc_drawKerzonLine = {
 
     // 2. Calculate Midpoint of the original segment
     _mid = [
-        (_p1 select 0 + _p2 select 0) / 2,
-        (_p1 select 1 + _p2 select 1) / 2,
+        ((_p1 select 0) + (_p2 select 0)) / 2,
+        ((_p1 select 1) + (_p2 select 1)) / 2,
         0
     ];
 
@@ -78,14 +80,15 @@ _fnc_drawKerzonLine = {
     _marker setMarkerSizeLocal [_extLen / 2, 1.5];
 
     _marker setMarkerDirLocal _dir;
-    _marker setMarkerColorLocal LINE_COLOR;
-    _marker setMarkerAlphaLocal 0.4;
+    _marker setMarkerColorLocal LINE_COLOR; // Alpha blended color
+//    _marker setMarkerAlphaLocal 0.4; // Only in Arma2+
 
 // Было:
 // format ["Kerzon Line drawn. Extended length: %1m", round _extLen] call XfHQChat;
 
 // Стало:
 format [localize "MSG_KERZON_LINE_DRAWN", round _extLen] call XfHQChat;
+hint localize format [localize "MSG_KERZON_LINE_DRAWN", round _extLen];
 };
 
 // --- Helper: Remove Kerzon Line ---
@@ -96,6 +99,7 @@ _fnc_removeKerzonLine = {
 
 // Стало:
 localize "MSG_KERZON_LINE_REMOVED" call XfHQChat;
+hint localize "MSG_KERZON_LINE_REMOVED";
 };
 
 // --- Helper: Show Status HUD ---
@@ -228,7 +232,7 @@ while { base_visit_session <= 0 } do {
 	        // You might need to swap -1/1 check depending on line direction.
 	        _rel = [SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _p_pos] call SYG_pointToVectorRel;
 
-	        // Start tracking if NOT above the line (assuming '1' is Above/Safe, '-1' is Below/Danger)
+	        // Start tracking if NOT above the line (assuming '-1' is Above/Safe, '+1' is Below/Danger)
 	        // Adjust this condition based on your specific line orientation!
 	        if (!_travel_active && _rel != 1) then {
 	            _travel_active = true;
@@ -279,7 +283,7 @@ while { base_visit_session <= 0 } do {
 	                // Simple check: if speed is near zero for a long time, penalty?
 	                // Or check against spawn markers as discussed.
 	                // For now, let's just log if they are stationary in air/water
-	                if (speed _p_veh < 1 && _travel_curr_len > 100) then {
+	                if ((speed _p_veh) < 1 && (_travel_curr_len > 100)) then {
 	                     // Optional: Penalize hovering?
 	                     // "Warning: Stationary flight/ sailing detected." call XfHQChat;
 	                };
