@@ -1162,7 +1162,7 @@ if (_doJump) then {
     };
     if (alive player) then {
         if (base_visit_session <= 0) then {
-            ["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 0, false ] spawn SYG_msgToUserParser; // "I'm gonna go to the blue flares... distance %1 m"
+            ["msg_to_user", "", [["STR_INTRO_PARAJUMP_6", (round ((player distance FLAG_BASE)/50)) * 50]], 0, 0, false ] spawn SYG_msgToUserParser; // "I'm gonna go to the violet flares... distance %1 m"
         };
     };
 

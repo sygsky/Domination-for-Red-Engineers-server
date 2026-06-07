@@ -1218,6 +1218,22 @@ STR_INTRO_MSG_4,"The order is to arrive at the base and report for arrival. Afte
 STR_INTRO_MSG_5,"Follow the course for the purple flares (almost white in the daytime)","Folgen Sie dem Kurs für die lila Flares (tagsüber fast weiß)","Siga el curso de los flares púrpura (casi blanco en el día)","Следуйте курсом на фиолетовые ракеты (днём почти белые)"
 STR_INTRO_MSG_6,Will I be back from this misterios island?,Werde ich von dieser misteriösen Insel zurückkehren?,¿Volveré de esta misteriosa isla?,Вернусь ли я с этого таинственного острова?
 
+MSG_KERZON_LINE_DRAWN,"Kerzon Line drawn. Extended length: %1m","Kerzon-Linie gezeichnet. Erweiterte Länge: %1m","Línea Kerzon dibujada. Longitud extendida: %1m","Линия Керзона отрисована. Удлинённая длина: %1m"
+MSG_KERZON_LINE_REMOVED,"Kerzon Line removed.","Kerzon-Linie entfernt.","Línea Kerzon eliminada.","Линия Керзона удалена."
+MSG_TRAVEL_TRACKING_STARTED,"Travel tracking STARTED.","Reiseverfolgung GESTARTET.","Seguimiento de viaje INICIADO.","Отслеживание пути ЗАПУЩЕНО."
+MSG_VEHICLE_CHANGED,"Vehicle changed to: %1","Fahrzeug gewechselt zu: %1","Vehículo cambiado a: %1","Транспорт сменён на: %1"
+MSG_TRAVEL_STATUS,"STATUS | Dist to Line: %1m | To Base: %2m | Mode: %3","STATUS | Distanz zur Linie: %1m | Zur Basis: %2m | Modus: %3","ESTADO | Dist. a línea: %1m | A base: %2m | Modo: %3","СТАТУС | До линии: %1м | До базы: %2м | Режим: %3"
+MSG_TRAVEL_BONUS_REVOKED,"Mission Failed: Travel bonus revoked.","Mission fehlgeschlagen: Reisebonus entzogen.","Misión fallida: Bono de viaje revocado.","Миссия провалена: бонус за путь отменён."
+MSG_BONUS_FOOT_MASTER,"BONUS AWARDED: +%1 (Foot Master)","BONUS VERGEBEN: +%1 (Fußmeister)","BONO OTORGADO: +%1 (Maestro a pie)","БОНУС НАЧИСЛЕН: +%1 (Мастер пешего хода)"
+MSG_BONUS_LAND_ONLY,"BONUS AWARDED: +%1 (Land Only)","BONUS VERGEBEN: +%1 (Nur Land)","BONO OTORGADO: +%1 (Solo tierra)","БОНУС НАЧИСЛЕН: +%1 (Только наземный транспорт)"
+MSG_BONUS_NONE_EXTENSIVE,"No travel bonus awarded (Used Air/Water extensively).","Kein Reisebonus vergeben (Luft/Wasser extensiv genutzt).","Sin bono de viaje (Uso extensivo de aire/agua).","Бонус за путь не начислен (Активное использование авиации/флота)."
+MSG_BONUS_NONE_VODOO,"Voodoo used: No travel bonus.","Voodoo genutzt: Kein Reisebonus.","Vudú usado: Sin bono de viaje.","Использовано вуду: бонус за путь не начислен."
+MSG_TRAVEL_MODE_FOOT,"ON FOOT","ZU FUSS","A PIE","ПЕШКОМ"
+MSG_TRAVEL_MODE_AIR,"AIR","LUFT","AIRE","АВИА"
+MSG_TRAVEL_MODE_WATER,"WATER","WASSER","AGUA","ВОДА"
+MSG_TRAVEL_MODE_LAND,"LAND VEHICLE","LANDFAHRZEUG","VEHÍCULO TERRESTRE","НАЗЕМНЫЙ ТРАНСПОРТ"
+MSG_TRAVEL_MODE_UNK,"UNKNOWN","UNBEKANNT","DESCONOCIDO","НЕИЗВЕСТНО"
+
 STR_MON_1,January,Januar,enero,января
 STR_MON_2,February,Februar,febrero,февраля
 STR_MON_3,March,März,marzo,марта

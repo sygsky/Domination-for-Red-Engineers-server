@@ -95,7 +95,7 @@ SYG_getVehicleType = {
 // returns 0: tank, 1: car/moto, 2: static, 3: heli, 4: plane, 5: Ship, -1: Unknnown/not vehicle
 SYG_getVehicleType1 = {
     if( typeName _this == "OBJECT" ) then { _this = typeOf _this};
-    if (typeName _this != "STRING")exitWith {-1}; // unknown argument
+    if (typeName _this != "STRING") exitWith {-1}; // unknown argument
     if ( _this isKindOf "LandVehicle" ) exitWith {
         if ( _this isKindOf "Tank" ) exitWith { 0 };
         if ( (_this isKindOf "Car") || (_this isKindOf "Motorcycle") ) exitWith { 1 };

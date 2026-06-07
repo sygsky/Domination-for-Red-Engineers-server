@@ -51,7 +51,7 @@ if (_base_visit_status < 1) exitWith { // player killed before it reached the ba
 	player setPos _spawn_point;
 	player setDir (random 360);
 	hint localize format["+++ open.sqf: base_visit_session <= 0, respawn at %1", [round (_spawn_point select 0), round (_spawn_point select 1)] ];
-	if (base_visit_session < 0) then { // if not changed, restore status to original vqlue
+	if (base_visit_session < 0) then { // if not changed, restore status to original value
 		base_visit_session = _base_visit_status;
 	};
 };

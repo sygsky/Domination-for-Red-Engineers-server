@@ -229,3 +229,10 @@
 // Uncomment if you want to have EAST and WEST weapons simultaneously
 #define __BLUEFOR_AMMOBOX__
 #endif
+
+// Enable enhanced travel bonus system for the arrival from Antigua.
+// Default behavior: +10 points if the Voodoo spell is NOT used.
+// Enhanced behavior (if defined):
+//   +50 points: If the player uses ONLY land vehicles after crossing the Kerzon Line.
+//   +200 points: If the player reaches the base mostly on foot (using land vehicles for <20% of the effective distance below the Kerzon Line).
+#define SYG_TRAVEL_BONUS_ENHANCED
