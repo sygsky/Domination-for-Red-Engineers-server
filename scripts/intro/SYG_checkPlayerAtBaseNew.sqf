@@ -24,6 +24,7 @@
 #define BONUS_NO_AIR_WATER 50
 #define THRESHOLD_INTENSIVE 0.20 // 20% limit for land vehicle usage to get max bonus
 #define KERZON_LINE_ADD 8000 // Add length to Kerzon line
+#define KERZON_LINE_THICKNESS 10 // Thickness to see it on map at any scale
 #define LINE_COLOR "ColorRedAlpha"
 
 hint localize "+++ NEW SYG_checkPlayerAtBase.sqf started";
@@ -76,19 +77,20 @@ _fnc_drawKerzonLine = {
     _marker setMarkerShapeLocal "RECTANGLE";
 
     // Size: [Half-Length, Half-Width]
-    // Half-Length = (_baseLen + 4000) / 2
-    _marker setMarkerSizeLocal [_extLen / 2, 1.5];
+    // Half-Length = (_baseLen + 8000) / 2
+    _marker setMarkerSizeLocal [_extLen / 2, KERZON_LINE_THICKNESS];
 
     _marker setMarkerDirLocal _dir;
     _marker setMarkerColorLocal LINE_COLOR; // Alpha blended color
-//    _marker setMarkerAlphaLocal 0.4; // Only in Arma2+
+    _marker setMarkerBrushLocal "Solid";
+    //    _marker setMarkerAlphaLocal 0.4; // Only in Arma2+
 
-// Было:
-// format ["Kerzon Line drawn. Extended length: %1m", round _extLen] call XfHQChat;
+    // Было:
+    // format ["Kerzon Line drawn. Extended length: %1m", round _extLen] call XfHQChat;
 
-// Стало:
-format [localize "MSG_KERZON_LINE_DRAWN", round _extLen] call XfHQChat;
-hint localize format [localize "MSG_KERZON_LINE_DRAWN", round _extLen];
+    // Стало: "+++ Kerzon Line drawn. Length: %1m, dir: %2, marker: %3"
+    hint localize format ["+++ Kerzon Line drawn. Length: %1m, dir: %2, marker: %3", round _extLen, round(_dir), _marker];
+    [player, format [localize "MSG_KERZON_LINE_DRAWN", LINE_COLOR]] call XfVehicleChat; // "Kerzon Line drawn in %1"
 };
 
 // --- Helper: Remove Kerzon Line ---

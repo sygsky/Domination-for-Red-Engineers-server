@@ -1218,7 +1218,7 @@ STR_INTRO_MSG_4,"The order is to arrive at the base and report for arrival. Afte
 STR_INTRO_MSG_5,"Follow the course for the purple flares (almost white in the daytime)","Folgen Sie dem Kurs für die lila Flares (tagsüber fast weiß)","Siga el curso de los flares púrpura (casi blanco en el día)","Следуйте курсом на фиолетовые ракеты (днём почти белые)"
 STR_INTRO_MSG_6,Will I be back from this misterios island?,Werde ich von dieser misteriösen Insel zurückkehren?,¿Volveré de esta misteriosa isla?,Вернусь ли я с этого таинственного острова?
 
-MSG_KERZON_LINE_DRAWN,"Kerzon Line drawn. Extended length: %1m","Kerzon-Linie gezeichnet. Erweiterte Länge: %1m","Línea Kerzon dibujada. Longitud extendida: %1m","Линия Керзона отрисована. Удлинённая длина: %1m"
+MSG_KERZON_LINE_DRAWN,"Kerzon Line drawn in %1","Kerzon-Linie gezeichnet. Color: %1","Línea Kerzon dibujada. Color: %1","Линия Керзона отрисована. Цвет: %1"
 MSG_KERZON_LINE_REMOVED,"Kerzon Line removed.","Kerzon-Linie entfernt.","Línea Kerzon eliminada.","Линия Керзона удалена."
 MSG_TRAVEL_TRACKING_STARTED,"Travel tracking STARTED.","Reiseverfolgung GESTARTET.","Seguimiento de viaje INICIADO.","Отслеживание пути ЗАПУЩЕНО."
 MSG_VEHICLE_CHANGED,"Vehicle changed to: %1","Fahrzeug gewechselt zu: %1","Vehículo cambiado a: %1","Транспорт сменён на: %1"
