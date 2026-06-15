@@ -78,7 +78,7 @@ _fnc_drawKerzonLine = {
 
     // Size: [Half-Length, Half-Width]
     // Half-Length = (_baseLen + 8000) / 2
-    _marker setMarkerSizeLocal [_extLen / 2, KERZON_LINE_THICKNESS];
+    _marker setMarkerSizeLocal [KERZON_LINE_THICKNESS, _extLen / 2 ];
 
     _marker setMarkerDirLocal _dir;
     _marker setMarkerColorLocal LINE_COLOR; // Alpha blended color
@@ -89,7 +89,7 @@ _fnc_drawKerzonLine = {
     // format ["Kerzon Line drawn. Extended length: %1m", round _extLen] call XfHQChat;
 
     // Стало: "+++ Kerzon Line drawn. Length: %1m, dir: %2, marker: %3"
-    hint localize format ["+++ Kerzon Line drawn. Length: %1m, dir: %2, marker: %3", round _extLen, round(_dir), _marker];
+    hint localize format ["+++ Kerzon Line drawn. Length: %1m, dir: %2, marker: %3, p1,p2: %4,%5", round _extLen, round(_dir), _marker, _p1, _p2];
     [player, format [localize "MSG_KERZON_LINE_DRAWN", LINE_COLOR]] call XfVehicleChat; // "Kerzon Line drawn in %1"
 };
 
@@ -185,24 +185,6 @@ _was_in_veh = false;
     // "Линия Керзона появилась на карте. Чтобы получить повышенный бонус (+50 на машинах и пешком, +200 только пешшком) не пересекайте её на катерах или по воздуху."
 #endif
 
-#ifdef SYG_TRAVEL_BONUS_ENHANCED
-    // --- Init Travel Bonus Variables ---
-    _travel_active = false;
-    _travel_lengths = [0,0,0,0]; // [Foot, Air, Water, Ground]
-    _travel_veh = objNull;
-    _travel_type = 0;
-    _travel_dist_ref = -1;
-    _travel_curr_len = 0;
-    _travel_bonus_ok = true;
-
-    // Init HUD tracking vars
-    _last_status_time = 0;
-    _last_transport_type = -1;
-    _last_dist_base = -1;
-
-    // Draw the line once
-    [] call _fnc_drawKerzonLine;
-#endif
 
 _delay = 5;
 while { base_visit_session <= 0 } do {
@@ -242,11 +224,10 @@ while { base_visit_session <= 0 } do {
 	            _travel_type = (_p_veh) call _fnc_getTravelType;
 	            _travel_dist_ref = [_p_pos, BASE_CENTER_POS] call SYG_distance2D;
 	            _travel_curr_len = 0;
-                // Было:
-                // "Travel tracking STARTED." call XfHQChat;
 
-                // Стало:
+                // "Travel tracking STARTED." call XfHQChat;
                 localize "MSG_TRAVEL_TRACKING_STARTED" call XfHQChat;
+                // TODO: inform all that player is now really far from the Antigua
 	        };
 
 	        // 2. Update Progress
@@ -268,10 +249,7 @@ while { base_visit_session <= 0 } do {
 	                _typeStr = switch (_travel_type) do {
 	                    case 0: {"ON FOOT"}; case 1: {"AIR"}; case 2: {"WATER"}; case 3: {"LAND"}; default {"UNK"};
 	                };
-                    // Было:
                     // format ["Vehicle changed to: %1", _typeStr] call XfHQChat;
-
-                    // Стало:
                     format [localize "MSG_VEHICLE_CHANGED", _typeStr] call XfHQChat;
                 };
 
@@ -297,6 +275,8 @@ while { base_visit_session <= 0 } do {
 	                _changed = false;
 	                if (_new_type != _last_transport_type) then { _changed = true; _last_transport_type = _new_type; };
 	                if (_last_dist_base > 0) then {
+	                    // Check when change > 1% of the distance from start point to base
+	                    //So if whole dist == 8 km, 1% if 80 m
 	                    if (abs(_curr_dist - _last_dist_base) / _last_dist_base > 0.01) then { _changed = true; };
 	                };
 	                _last_dist_base = _curr_dist;
@@ -360,25 +340,32 @@ while { base_visit_session <= 0 } do {
 			_delay = 1;
 		};
 	} else {
-		// Player dead
-		_vehs_used_arr resize 0;
-		_active_veh  = objNull;
-		_was_in_veh  = false;
-		_in_time_sum = 0;
-		_delay       = 10;
+    	// Player dead
+    	_vehs_used_arr resize 0;
+    	_active_veh  = objNull;
+    	_was_in_veh  = false;
+    	_in_time_sum = 0;
+    	_delay       = 10;
 #ifdef SYG_TRAVEL_BONUS_ENHANCED
-        // Reset bonus tracking on death? Or keep it?
-        // Usually death resets progress in intro missions.
-        _travel_active = false;
-        _travel_bonus_ok = false; // No bonus if died
-        // Было:
-        // "Mission Failed: Travel bonus revoked." call XfHQChat;
+    	// Reset travel tracking on death, but KEEP bonus eligibility
+    	// Player will respawn at tent and start journey again
+    	_travel_active = false;
+    	_travel_lengths = [0,0,0,0]; // Reset all accumulated distances
+    	_travel_veh = objNull;
+    	_travel_type = 0;
+    	_travel_dist_ref = -1;
+    	_travel_curr_len = 0;
+    	// _travel_bonus_ok remains TRUE - player can still earn bonus after respawn
 
-        // Стало:
-        localize "MSG_TRAVEL_BONUS_REVOKED" call XfHQChat; // "Mission Failed: Travel bonus revoked."
+    	// Reset HUD tracking vars
+    	_last_status_time = 0;
+    	_last_transport_type = -1;
+    	_last_dist_base = -1;
+
+    	// Notify player (localized message)
+    	localize "MSG_TRAVEL_RESET_DEATH" call XfHQChat; // "You died. Travel progress reset. Start again!"
 #endif
-	};
-
+    };
 };
 
 // Player reached base so remove Kerzon line
