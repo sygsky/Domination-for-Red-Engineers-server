@@ -1233,6 +1233,10 @@ MSG_TRAVEL_MODE_AIR,"AIR","LUFT","AIRE","АВИА"
 MSG_TRAVEL_MODE_WATER,"WATER","WASSER","AGUA","ВОДА"
 MSG_TRAVEL_MODE_LAND,"LAND VEHICLE","LANDFAHRZEUG","VEHÍCULO TERRESTRE","НАЗЕМНЫЙ ТРАНСПОРТ"
 MSG_TRAVEL_MODE_UNK,"UNKNOWN","UNBEKANNT","DESCONOCIDO","НЕИЗВЕСТНО"
+MSG_BONUS_STATUS_FULL,"HQ: Good discipline. Traveling by land/foot. Maximum bonus eligibility restored.","HQ: Gute Disziplin. Reise zu Lande/zu Fuß. Maximale Bonusberechtigung wiederhergestellt.","HQ: Buena disciplina. Viajando por tierra/a pie. Elegibilidad máxima para bonos restaurada.","Штаб: Хорошая дисциплина. Передвижение пешком/по земле. Право на максимальный бонус восстановлено."
+MSG_BONUS_STATUS_WARN,"HQ: Warning. Air/Water usage detected. Maximum bonus at risk. Switch to land transport.","HQ: Warnung. Nutzung von Luft/Wasser festgestellt. Maximaler Bonus gefährdet. Auf Landtransport umsteigen.","HQ: Advertencia. Uso de aire/agua detectado. Bono máximo en riesgo. Cambie a transporte terrestre.","Штаб: Внимание. Зафиксировано использование авиации/флота. Максимальный бонус под угрозой. Смените транспорт на наземный."
+MSG_BONUS_STATUS_LOST,"HQ: Alert. Excessive air/water travel. Maximum travel bonus forfeited. Land-only bonus still possible.","HQ: Alarm. Übermäßige Nutzung von Luft/Wasser. Maximaler Reisebonus verwirkt. Nur noch Landbonus möglich.","HQ: Alerta. Viaje aéreo/acuático excesivo. Bono máximo de viaje perdido. Aún es posible el bono solo terrestre.","Штаб: Тревога. Чрезмерное использование авиации/флота. Максимальный бонус за путь потерян. Остаётся шанс на бонус за наземный транспорт."
+MSG_BONUS_RESET_DEATH,"HQ: You died. Travel progress reset. Maximum bonus eligibility restored. Start again!","HQ: Sie sind gefallen. Reisefortschritt zurückgesetzt. Maximale Bonusberechtigung wiederhergestellt. Fangen Sie neu an!","HQ: Has muerto. Progreso de viaje reiniciado. Elegibilidad máxima para bonos restaurada. ¡Empieza de nuevo!","Штаб: Вы погибли. Прогресс пути сброшен. Право на максимальный бонус восстановлено. Начинайте заново!"
 
 STR_MON_1,January,Januar,enero,января
 STR_MON_2,February,Februar,febrero,февраля

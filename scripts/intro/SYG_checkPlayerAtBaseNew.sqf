@@ -1,4 +1,5 @@
 /*
+    Current debug vaaraion with new changes
 	scripts\intro\SYG_checkPlayerAtBase.sqf run on client only
 	author: Sygsky
 	description: checks if player visited base rectangle. If yes, set variable base_visit_session = 1 and exit
@@ -22,12 +23,13 @@
 #define BASE_CENTER_POS (d_base_array select 0)
 #define BONUS_FOOT_ONLY 200
 #define BONUS_NO_AIR_WATER 50
-#define THRESHOLD_INTENSIVE 0.20 // 20% limit for land vehicle usage to get max bonus
+#define THRESHOLD_INTENSIVE 0.20 // 20% limit for air/water usage to get max bonus
 #define KERZON_LINE_ADD 8000 // Add length to Kerzon line
 #define KERZON_LINE_THICKNESS 10 // Thickness to see it on map at any scale
 #define LINE_COLOR "ColorRedAlpha"
+#define BONUS_EVAL_INTERVAL 5 // Seconds between dynamic bonus status checks
 
-hint localize "+++ NEW SYG_checkPlayerAtBase.sqf started";
+hint localize "+++ NEW SYG_checkPlayerAtBaseNew.sqf started";
 
 // --- Helper: Simplified Travel Type to values of (0-3) ---
 // Uses your existing SYG_getVehicleType1
@@ -66,7 +68,7 @@ _fnc_drawKerzonLine = {
         0
     ];
 
-    // 3. Extend length: Base + 2km left + 2km right = +4000m total
+    // 3. Extend length: Base + added length
     _extLen = _baseLen + KERZON_LINE_ADD;
 
     // 4. Create/Update local marker
@@ -76,19 +78,13 @@ _fnc_drawKerzonLine = {
     _marker = createMarkerLocal [_markerName, _mid];
     _marker setMarkerShapeLocal "RECTANGLE";
 
-    // Size: [Half-Length, Half-Width]
-    // Half-Length = (_baseLen + 8000) / 2
+    // Size: [Half-Width, Half-Length] -> Swapped to align with Dir
     _marker setMarkerSizeLocal [KERZON_LINE_THICKNESS, _extLen / 2 ];
 
     _marker setMarkerDirLocal _dir;
     _marker setMarkerColorLocal LINE_COLOR; // Alpha blended color
     _marker setMarkerBrushLocal "Solid";
-    //    _marker setMarkerAlphaLocal 0.4; // Only in Arma2+
 
-    // Было:
-    // format ["Kerzon Line drawn. Extended length: %1m", round _extLen] call XfHQChat;
-
-    // Стало: "+++ Kerzon Line drawn. Length: %1m, dir: %2, marker: %3"
     hint localize format ["+++ Kerzon Line drawn. Length: %1m, dir: %2, marker: %3, p1,p2: %4,%5", round _extLen, round(_dir), _marker, _p1, _p2];
     [player, format [localize "MSG_KERZON_LINE_DRAWN", LINE_COLOR]] call XfVehicleChat; // "Kerzon Line drawn in %1"
 };
@@ -96,12 +92,8 @@ _fnc_drawKerzonLine = {
 // --- Helper: Remove Kerzon Line ---
 _fnc_removeKerzonLine = {
     deleteMarkerLocal "SYG_KerzonLineMarker";
-// Было:
-// "Kerzon Line removed." call XfHQChat;
-
-// Стало:
-localize "MSG_KERZON_LINE_REMOVED" call XfHQChat;
-hint localize "MSG_KERZON_LINE_REMOVED";
+    localize "MSG_KERZON_LINE_REMOVED" call XfHQChat;
+    hint localize "MSG_KERZON_LINE_REMOVED";
 };
 
 // --- Helper: Show Status HUD ---
@@ -111,7 +103,6 @@ _fnc_showStatus = {
     _pos = getPos player;
 
     // Distance to Kerzon Line (using your vector distance function)
-    // SYG_distPoint2Vector1 returns signed distance, we need absolute for display
     _distToLine = round(abs([SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _pos] call SYG_distPoint2Vector1));
 
     // Distance to Base
@@ -119,13 +110,7 @@ _fnc_showStatus = {
 
     // Transport Type String
     _typeCode = (vehicle player) call _fnc_getTravelType;
-    // Было:
-    // _typeStr = switch (_typeCode) do {
-    //     case 0: {"ON FOOT"}; case 1: {"AIR"}; case 2: {"WATER"}; case 3: {"LAND VEHICLE"}; default {"UNKNOWN"};
-    // };
-    // _msg = format ["STATUS | Dist to Line: %1m | To Base: %2m | Mode: %3", ...];
 
-    // Стало:
     _typeStr = switch (_typeCode) do {
         case 0: {localize "MSG_TRAVEL_MODE_FOOT"};  // "ON FOOT"
         case 1: {localize "MSG_TRAVEL_MODE_AIR"};   // "AIR"
@@ -153,7 +138,6 @@ _flare = objNull;
 _pos = getPos AISPAWN; // FLAG_BASE; // [9529.5,9759.2,0]; // point near central gate to the base
 _flag_pos = [];
 _factor = (400 / 1600) max 12.5;
-// set flare position as slightly random one
 
 // Array of vehiles ised
 _vehs_used_arr = [];
@@ -163,130 +147,168 @@ _in_time_sum = 0;
 _get_in_time = 0;
 _was_in_veh = false;
 
-// if (isNil "base_visit_session") then { base_visit_session = 0 }; // init visit status
 #ifdef SYG_TRAVEL_BONUS_ENHANCED
-    // --- Init Travel Bonus Variables ---
-    _travel_active = false;
-    _travel_lengths = [0,0,0,0]; // [Foot, Air, Water, Ground]
-    _travel_veh = objNull;
-    _travel_type = 0;
-    _travel_dist_ref = -1;
-    _travel_curr_len = 0;
-    _travel_bonus_ok = true;
+// --- Init Travel Bonus Variables ---
+_travel_active = false;
+_travel_lengths = [0,0,0,0]; // [Foot, Air, Water, Ground]
+_travel_veh = objNull;
+_travel_type = 0;
+_travel_dist_ref = -1;
+_travel_curr_len = 0;
 
-    // Init HUD tracking vars
-    _last_status_time = 0;
-    _last_transport_type = -1;
-    _last_dist_base = -1;
+// Dynamic Bonus Tracking
+_bonus_level = 2;          // 2=Full(+200), 1=Partial(+50), 0=None
+_last_bonus_level = -1;    // To detect changes
+_min_dist_for_eval = 500;  // Don't evaluate until 500m traveled
 
-    // Draw the line once
-    [] call _fnc_drawKerzonLine;
-    // TODO: Print info about Red Kerzon line is drown on the map, don't intersect it on air vehcile or boat to get extended bonus
-    // "Линия Керзона появилась на карте. Чтобы получить повышенный бонус (+50 на машинах и пешком, +200 только пешшком) не пересекайте её на катерах или по воздуху."
+// Init HUD tracking vars
+_last_status_time = 0;
+_last_transport_type = -1;
+_last_dist_base = -1;
+
+// Draw the line once
+[] call _fnc_drawKerzonLine;
 #endif
 
 
 _delay = 5;
 while { base_visit_session <= 0 } do {
 	sleep _delay;
-	// launch a yellow flare over the base to attract the player's attention (to tell him where to go)
+	// launch a violet flare over the base to attract the player's attention (to tell him where to go)
 
 	if (!alive _flare) then {
 		_flag_pos set [ 0, (_pos select 0) + (random 5) ];
 		_flag_pos set [ 1, (_pos select 1) + (random 5) ];
 		_flag_pos set [ 2, 250 + (random 5) ]; // flare spawn height AGL
 		_flare = "F_40mm_White" createVehicleLocal _flag_pos;
-//		_flare = "F_40mm_Yellow" createVehicleLocal _flag_pos;
-//		[ _flare, "YELLOW", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
-		[ _flare, "VIOLET", _factor] execVM "scripts\emulateFlareFiredLocal.sqf"; // not works
+		[ _flare, "VIOLET", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
 	};
 
 	if ( alive player ) then {
 
 #ifdef SYG_TRAVEL_BONUS_ENHANCED
 	    // --- NEW TRAVEL BONUS LOGIC ---
-	    if (_travel_bonus_ok) then {
-	        _p_veh = vehicle player;
-	        _p_pos = getPos player;
+	    _p_veh = vehicle player;
+	    _p_pos = getPos player;
 
-	        // 1. Check if crossed Kerzon Line (Start Tracking)
+	    // 1. Check if crossed Kerzon Line (Start Tracking)
 	        // SYG_pointToVectorRel: -1 left, 1 right, 0 on line.
 	        // Assuming "Below" means one specific side (e.g., -1 or 1 depending on line orientation).
 	        // Let's assume we track when player is on the "Base Side" of the line.
 	        // You might need to swap -1/1 check depending on line direction.
-	        _rel = [SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _p_pos] call SYG_pointToVectorRel;
+	    _rel = [SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _p_pos] call SYG_pointToVectorRel;
 
-	        // Start tracking if NOT above the line (assuming '-1' is Above/Safe, '+1' is Below/Danger)
-	        // Adjust this condition based on your specific line orientation!
-	        if (!_travel_active && _rel != 1) then {
-	            _travel_active = true;
+	    // Start tracking if NOT above the line (adjust condition based on line orientation!)
+	    if (!_travel_active && _rel != 1) then {
+	        _travel_active = true;
+	        _travel_veh = _p_veh;
+	        _travel_type = (_p_veh) call _fnc_getTravelType;
+	        _travel_dist_ref = [_p_pos, BASE_CENTER_POS] call SYG_distance2D;
+	        _travel_curr_len = 0;
+
+            // "Travel tracking STARTED." call XfHQChat;
+            localize "MSG_TRAVEL_TRACKING_STARTED" call XfHQChat;
+            // TODO: inform all that player is now really far from the Antigua
+	    };
+
+	    // 2. Update Progress
+	    if (_travel_active) then {
+	        _new_type = (_p_veh) call _fnc_getTravelType;
+	        _curr_dist = [_p_pos, BASE_CENTER_POS] call SYG_distance2D;
+
+	        // Vehicle Change?
+	        if (_p_veh != _travel_veh) then {
+	            // Save segment length to array
+	            _travel_lengths set [_travel_type, (_travel_lengths select _travel_type) + _travel_curr_len];
+
+	            // Switch to new vehicle
 	            _travel_veh = _p_veh;
-	            _travel_type = (_p_veh) call _fnc_getTravelType;
-	            _travel_dist_ref = [_p_pos, BASE_CENTER_POS] call SYG_distance2D;
+	            _travel_type = _new_type;
 	            _travel_curr_len = 0;
 
-                // "Travel tracking STARTED." call XfHQChat;
-                localize "MSG_TRAVEL_TRACKING_STARTED" call XfHQChat;
-                // TODO: inform all that player is now really far from the Antigua
+	            // Notify player
+	            _typeStr = switch (_travel_type) do {
+	                case 0: {localize "MSG_TRAVEL_MODE_FOOT"};
+                    case 1: {localize "MSG_TRAVEL_MODE_AIR"};
+                    case 2: {localize "MSG_TRAVEL_MODE_WATER"};
+                    case 3: {localize "MSG_TRAVEL_MODE_LAND"};
+                    default {localize "MSG_TRAVEL_MODE_UNK"};
+	            };
+                // format ["Vehicle changed to: %1", _typeStr] call XfHQChat;
+                format [localize "MSG_VEHICLE_CHANGED", _typeStr] call XfHQChat;
+            };
+
+	        // Calculate Delta (Your "Trick": + if closer, - if farther)
+	        _delta = _travel_dist_ref - _curr_dist;
+	        _travel_curr_len = _travel_curr_len + _delta;
+	        _travel_dist_ref = _curr_dist;
+
+	        // 3. Anti-Cheat: Static Air/Water Check (Optional logging)
+	        if (_travel_type in [1, 2]) then {
+	            if ((speed _p_veh) < 1 && (_travel_curr_len > 100)) then {
+	                 // Optional: Penalize hovering?
+	            };
 	        };
 
-	        // 2. Update Progress
-	        if (_travel_active) then {
-	            _new_type = (_p_veh) call _fnc_getTravelType;
-	            _curr_dist = [_p_pos, BASE_CENTER_POS] call SYG_distance2D;
+	        // 4. DYNAMIC BONUS EVALUATION
+            if (time - _last_status_time > BONUS_EVAL_INTERVAL) then {
+                // Sum effective distance
+                _total_eff = 0;
+                { _total_eff = _total_eff + _x } forEach _travel_lengths;
+                _total_eff = _total_eff + _travel_curr_len;
 
-	            // Vehicle Change?
-	            if (_p_veh != _travel_veh) then {
-	                // Save segment length to array
-	                _travel_lengths set [_travel_type, (_travel_lengths select _travel_type) + _travel_curr_len];
+                // Evaluate only if enough distance traveled
+                if (_total_eff > _min_dist_for_eval) then {
+                    _air_water_dist = (_travel_lengths select 1) + (_travel_lengths select 2);
+                    _ratio = _air_water_dist / _total_eff;
 
-	                // Switch to new vehicle
-	                _travel_veh = _p_veh;
-	                _travel_type = _new_type;
-	                _travel_curr_len = 0;
+                    // Determine current bonus level
+                    if (_ratio < 0.01) then {
+                        _new_level = 2; // Full bonus
+                    } else {
+                        if (_ratio < THRESHOLD_INTENSIVE) then {
+                            _new_level = 1; // Partial bonus
+                        } else {
+                            _new_level = 0; // No bonus
+                        };
+                    };
 
-	                // Notify player
-	                _typeStr = switch (_travel_type) do {
-	                    case 0: {"ON FOOT"}; case 1: {"AIR"}; case 2: {"WATER"}; case 3: {"LAND"}; default {"UNK"};
-	                };
-                    // format ["Vehicle changed to: %1", _typeStr] call XfHQChat;
-                    format [localize "MSG_VEHICLE_CHANGED", _typeStr] call XfHQChat;
+                    // If level changed, notify player!
+                    if (_new_level != _last_bonus_level) then {
+                        _last_bonus_level = _new_level;
+
+                        _msg_key = switch (_new_level) do {
+                            case 2: { "MSG_BONUS_STATUS_FULL" };
+                            case 1: { "MSG_BONUS_STATUS_WARN" };
+                            case 0: { "MSG_BONUS_STATUS_LOST" };
+                            default { "" };
+                        };
+
+                        if (_msg_key != "") then {
+                            localize _msg_key call XfHQChat;
+                        };
+                    };
                 };
 
-	            // Calculate Delta (Your "Trick": + if closer, - if farther)
-	            _delta = _travel_dist_ref - _curr_dist;
-	            _travel_curr_len = _travel_curr_len + _delta;
-	            _travel_dist_ref = _curr_dist;
+                _last_status_time = time;
+            };
 
-	            // 3. Anti-Cheat: Static Air/Water Check
-	            if (_travel_type in [1, 2]) then {
-	                // Simple check: if speed is near zero for a long time, penalty?
-	                // Or check against spawn markers as discussed.
-	                // For now, let's just log if they are stationary in air/water
-	                if ((speed _p_veh) < 1 && (_travel_curr_len > 100)) then {
-	                     // Optional: Penalize hovering?
-	                     // "Warning: Stationary flight/ sailing detected." call XfHQChat;
-	                };
-	            };
+	        // 5. HUD Update (Throttled separately from bonus eval)
+            // Note: We use _last_status_time for both to save a variable,
+            // but bonus eval happens every BONUS_EVAL_INTERVAL seconds.
+            // If you want separate throttling for HUD text, add another timer.
+            // For now, let's keep HUD update frequent if transport/dist changes significantly.
 
-	            // 4. HUD Update (Throttled)
-	            if (time - _last_status_time > 2) then {
-	                // Check if significant change occurred
-	                _changed = false;
-	                if (_new_type != _last_transport_type) then { _changed = true; _last_transport_type = _new_type; };
-	                if (_last_dist_base > 0) then {
-	                    // Check when change > 1% of the distance from start point to base
-	                    //So if whole dist == 8 km, 1% if 80 m
-	                    if (abs(_curr_dist - _last_dist_base) / _last_dist_base > 0.01) then { _changed = true; };
-	                };
-	                _last_dist_base = _curr_dist;
+            _changed = false;
+            if (_new_type != _last_transport_type) then { _changed = true; _last_transport_type = _new_type; };
+            if (_last_dist_base > 0) then {
+                if (abs(_curr_dist - _last_dist_base) / _last_dist_base > 0.01) then { _changed = true; };
+            };
+            _last_dist_base = _curr_dist;
 
-	                if (_changed) then {
-	                    [] call _fnc_showStatus;
-	                    _last_status_time = time;
-	                };
-	            };
-	        };
+            if (_changed) then {
+                [] call _fnc_showStatus;
+            };
 	    };
 #endif
 
@@ -348,14 +370,16 @@ while { base_visit_session <= 0 } do {
     	_delay       = 10;
 #ifdef SYG_TRAVEL_BONUS_ENHANCED
     	// Reset travel tracking on death, but KEEP bonus eligibility
-    	// Player will respawn at tent and start journey again
     	_travel_active = false;
     	_travel_lengths = [0,0,0,0]; // Reset all accumulated distances
     	_travel_veh = objNull;
     	_travel_type = 0;
     	_travel_dist_ref = -1;
     	_travel_curr_len = 0;
-    	// _travel_bonus_ok remains TRUE - player can still earn bonus after respawn
+
+        // Reset Dynamic Bonus Status to Max
+        _bonus_level = 2;
+        _last_bonus_level = -1;
 
     	// Reset HUD tracking vars
     	_last_status_time = 0;
@@ -363,7 +387,7 @@ while { base_visit_session <= 0 } do {
     	_last_dist_base = -1;
 
     	// Notify player (localized message)
-    	localize "MSG_TRAVEL_RESET_DEATH" call XfHQChat; // "You died. Travel progress reset. Start again!"
+    	localize "MSG_BONUS_RESET_DEATH" call XfHQChat;
 #endif
     };
 };
@@ -376,11 +400,11 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, bas
 // --- Post-Loop Cleanup & Bonus Calculation ---
 
 #ifdef SYG_TRAVEL_BONUS_ENHANCED
-    // Remove Visuals
-    [] call _fnc_removeKerzonLine;
+    // Remove Visuals (already called above, but safe to call again or ensure cleanup)
+    // [] call _fnc_removeKerzonLine;
 
-    // Calculate Bonus
-    if (_travel_bonus_ok && isNil "spell_cast") then {
+    // Calculate Final Bonus based on Dynamic Logic
+    if (isNil "spell_cast") then {
         // Finalize last segment
         if (_travel_active) then {
             _travel_lengths set [_travel_type, (_travel_lengths select _travel_type) + _travel_curr_len];
@@ -391,37 +415,25 @@ hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit player check loop, bas
         { _total_eff_dist = _total_eff_dist + _x } forEach _travel_lengths;
 
         if (_total_eff_dist > 100) then {
-            _ratio_foot = (_travel_lengths select 0) / _total_eff_dist;
-            _ratio_air  = (_travel_lengths select 1) / _total_eff_dist;
-            _ratio_water= (_travel_lengths select 2) / _total_eff_dist;
-            _ratio_ground=(_travel_lengths select 3) / _total_eff_dist;
+            _air_water_dist = (_travel_lengths select 1) + (_travel_lengths select 2);
+            _ratio = _air_water_dist / _total_eff_dist;
 
-            _used_mechanized = _ratio_air + _ratio_water + _ratio_ground;
-            _used_airwater = _ratio_air + _ratio_water;
-
-            // Logic:
-            // 1. Mostly Foot (Mechanized < 20%) -> +200
-            // 2. No Air/Water (Air/Water < threshold, but used Land) -> +50
-
-            if (_used_mechanized < THRESHOLD_INTENSIVE) then {
+            // Final Decision
+            if (_ratio < 0.01) then {
                 BONUS_FOOT_ONLY call SYG_addBonusScore;
-                // format ["BONUS AWARDED: +%1 (Foot Master)", BONUS_FOOT_ONLY] call XfHQChat;
-                format [localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY] call XfHQChat; // "BONUS AWARDED: +%1 (Foot Master)"
+                format [localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY] call XfHQChat;
             } else {
-                if (_used_airwater < 0.01) then { // Almost zero air/water
+                if (_ratio < THRESHOLD_INTENSIVE) then {
                     BONUS_NO_AIR_WATER call SYG_addBonusScore;
-                    // format ["BONUS AWARDED: +%1 (Land Only)", BONUS_NO_AIR_WATER] call XfHQChat;
-                    format [localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER] call XfHQChat; // "BONUS AWARDED: +%1 (Land Only)"
+                    format [localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER] call XfHQChat;
                 } else {
-                    //"No travel bonus awarded (Used Air/Water extensively)." call XfHQChat;
-                    localize "MSG_BONUS_NONE_EXTENSIVE" call XfHQChat;                         // "No travel bonus awarded (Used Air/Water extensively)."
+                    localize "MSG_BONUS_NONE_EXTENSIVE" call XfHQChat;
                 };
             };
         };
     } else {
         if (!isNil "spell_cast") then {
-            "Voodoo used: No travel bonus." call XfHQChat;
-            localize "MSG_BONUS_NONE_VODOO" call XfHQChat;                             // "Voodoo used: No travel bonus."
+            localize "MSG_BONUS_NONE_VODOO" call XfHQChat;
         };
     };
 #endif
@@ -448,7 +460,6 @@ if (isNil "spell_cast") then { // If spell, not inform all about time you reache
     _sound = "spell_wrong"; // For wrong spell
 };
 
-// STR_INTRO_REARMED  = "You have been given a weapon. Take care of it!",
 _arr set[count _arr, [_msg,name player,_str, _bonus]];
 // STR_INTRO_ON_BASE1 = "You are assigned to the SpecNaz GRU detachment at Sahrani and to the local flying club, for the use of jump flags."
 _arr set[count _arr, ["STR_INTRO_ON_BASE1"]];
@@ -464,8 +475,8 @@ if (!isNil "SYG_initialEquipmentStr") then {
 	hint localize format["+++ SYG_checkPlayerAtBase.sqf: restore equipment: %1",SYG_initialEquipmentStr];
 	[player, SYG_initialEquipmentStr] call SYG_rearmUnit;
     sleep 0.5;
-    ["say_sound", player, call SYG_armorySound] call XSendNetStartScriptClientAll; // playSound on all connected player computers immediately
-	SYG_initialEquipmentStr = nil; // not needed more
+    ["say_sound", player, call SYG_armorySound] call XSendNetStartScriptClientAll;
+	SYG_initialEquipmentStr = nil;
 };
 #endif
 

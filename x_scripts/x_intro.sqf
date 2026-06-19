@@ -978,7 +978,7 @@ if (_doJump) then {
     waitUntil { camCommitted _camera }; // wait until come
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    if ( alive player) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
+    if ( alive player) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBaseNew.sqf" }; // run service to check alive player to be on base not in vehicle
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	if (!alive player) exitWith {}; // Exit ALL follow animations and messages
 

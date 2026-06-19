@@ -119,9 +119,9 @@ if (alive aborigen) then { // show info
 _prevSound = ""; // No sound still
 _sound = "";
 _delay = 0;
-_arr = ["no_way_jose",1,"cantar1",13,"local_partisan_spa",4, "pamal", 3,"porque", 1,"adios", 2]; // Sound array for initial aborigen activity
+_arr = ["no_way_jose",2,"cantar1",13,"local_partisan_spa",4, "pamal", 3,"porque", 3,"adios", 4]; // Sound array for initial aborigen activity
 _cnt = (count _arr) / 2;
-_time = time + 300;
+_time = time + 180;
 while { (alive aborigen) && ((player distance aborigen) > 10) && (time < _time)} do {
 	aborigen setMimic (["Default","Normal","Smile","Hurt","Ironic","Sad","Cynic","Surprised","Agresive","Angry"] call XfRandomArrayVal); // TODO: This may not work (as abo is server burnt)!!!
 	// Prevent the same sound from playing twice in a row
