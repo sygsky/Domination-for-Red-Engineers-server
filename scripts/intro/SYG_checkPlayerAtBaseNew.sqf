@@ -19,9 +19,14 @@
 #define BONUS_NO_AIR_WATER 50
 #define THRESHOLD_INTENSIVE 0.20 // 20% limit for air/water usage to get max bonus
 #define KERZON_LINE_ADD 8000 // Add length to Kerzon line
-#define KERZON_LINE_THICKNESS 10 // Thickness to see it on map at any scale
+#define KERZON_LINE_THICKNESS 6 // Thickness in meters to see it on map at any scale
 #define LINE_COLOR "ColorRedAlpha"
 #define BONUS_EVAL_INTERVAL 3 // Seconds between dynamic bonus status checks
+
+// HUD Update Thresholds
+#define HUD_UPDATE_MIN_DIST 100   // Meters from last report point
+#define HUD_UPDATE_MIN_RATIO 0.01 // 1% of remaining distance
+#define HUD_UPDATE_ABS_MIN 10     // Minimum absolute change in meters
 
 // --- Helper: Simplified Travel Type to values of (0-3) ---
 _fnc_getTravelType = {
@@ -79,12 +84,13 @@ _fnc_removeKerzonLine = {
     deleteMarkerLocal "SYG_KerzonLineMarker";
     _str = localize "MSG_KERZON_LINE_REMOVED";
     _str call XfHQChat;
-    hint localize _str; // "Kerzon Line removed."
+    hint localize _str;
 };
 
 // --- Helper: Show Status HUD ---
 _fnc_showStatus = {
-    private ["_pos", "_distToLine", "_distToBase", "_typeCode", "_typeStr", "_msg", "_totalEff", "_statsStr", "_pAir", "_pWater", "_pLand", "_pFoot"];
+    private ["_pos", "_distToLine", "_distToBase", "_typeCode", "_typeStr", "_msg", "_totalEff", "_statsStr", "_pAir",
+    "_pWater", "_pLand", "_pFoot"];
 
     _pos = getPos player;
     _distToLine = round(abs([SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _pos] call SYG_distPoint2Vector1));
@@ -105,29 +111,32 @@ _fnc_showStatus = {
     { _totalEff = _totalEff + _x } forEach _travel_lengths;
     _totalEff = _totalEff + _travel_curr_len;
     _statsStr = "";
-    if (_totalEff > 0 && !isNil "_dist_line_to_base_ref" && _dist_line_to_base_ref > 0) then {
+    if ( (_totalEff > 0) && (!isNil "_dist_line_to_base_ref") && (_dist_line_to_base_ref > 0)) then {
         _pAir = round(((_travel_lengths select 1) / _dist_line_to_base_ref) * 100);
         _pWater = round(((_travel_lengths select 2) / _dist_line_to_base_ref) * 100);
         _pLand = round(((_travel_lengths select 3) / _dist_line_to_base_ref) * 100);
         _pFoot = round(((_travel_lengths select 0) / _dist_line_to_base_ref) * 100);
 
-        // Format: ав.10%,вод.15%,наз.25%,пеш.15%
-        _statsStr = format ["ав.%1%%,вод.%2%%,наз.%3%%,пеш.%4%%", _pAir, _pWater, _pLand, _pFoot];
+        _statsStr = format [localize "MSG_TRAVEL_STATS_SHORT", _pAir, _pWater, _pLand, _pFoot];
     } else {
         _statsStr = "ожидание...";
     };
 
-    // Main Status Message
-    // MSG_TRAVEL_STATUS: "STATUS | Dist to Line: %1m | To Base: %2m (of %3m)| Mode: %4"
+    // "STATUS | Dist to Line: %1m | To Base: %2m (%3m)| Mode: %4"
     _msg = format [localize "MSG_TRAVEL_STATUS", _distToLine, _distToBase, _dist_line_to_base_ref, _typeStr];
     _msg call XfHQChat;
 
-    // Stats Message (separate line or same? Let's put it in same chat bubble if possible, or next)
-    // Using XfHQChat again might overwrite. Let's append if possible, or just send second msg.
-    // For simplicity, let's send a second short message or rely on the user reading fast.
-    // Better: Combine into one complex string if XfHQChat supports multiline, otherwise separate.
-    // Assuming standard single-line chat:
     format [localize "MSG_TRAVEL_STATS", _statsStr] call XfHQChat;
+    hint localize format ["+++ SYG_checkPlayerAtBase.sqf: %1. %2", _statsStr, _msg];
+    hint localize format ["+++ SYG_checkPlayerAtBase.sqf:_travel_lengths is %1", _travel_lengths];
+};
+
+// --- Placeholder: Send Message to All ---
+_sendMsgToAll = {
+    private ["_msg"];
+    _msg = _this;
+    // TODO: Implement network broadcast
+    // diag_log format ["[GLOBAL MSG] %1", _msg];
 };
 
 #endif
@@ -171,6 +180,8 @@ _dist_line_to_base_ref = -1;
 _last_status_time = 0;
 _last_transport_type = -1;
 _last_dist_base = -1;
+_last_report_pos = []; // Position at last status update
+_last_km_reported = -1; // For global km announcements
 
 [] call _fnc_drawKerzonLine;
 #endif
@@ -199,11 +210,10 @@ while { base_visit_session <= 0 } do {
 	    _rel = [SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _p_pos] call SYG_pointToVectorRel;
 
 	    // CHECK FOR RETURN BEHIND LINE (Reset Logic)
-	    // Assuming '-1' is the Safe/Antigua side. If active and rel becomes -1, we went back.
+	    // Assuming '-1' is the Safe/Antigua side.
 	    if (_travel_active && _rel == -1) then {
 	        localize "MSG_TRAVEL_RETURN_BEHIND_LINE" call XfHQChat;
 
-            // Reset everything like death
             _travel_active = false;
             _travel_lengths = [0,0,0,0];
             _travel_veh = objNull;
@@ -218,8 +228,10 @@ while { base_visit_session <= 0 } do {
             _last_status_time = 0;
             _last_transport_type = -1;
             _last_dist_base = -1;
+            _last_report_pos = [];
+            _last_km_reported = -1;
 
-            hint localize format ["DEBUG: Reset due to return behind line. Last dist to base was: %1m", _last_dist_base];
+            hint localize format ["DEBUG: Reset due to return behind line."];
 	    };
 
 	    // Start tracking if NOT above the line (assuming '+1' is Base Side)
@@ -228,14 +240,16 @@ while { base_visit_session <= 0 } do {
 	        _travel_veh = _p_veh;
 	        _travel_type = (_p_veh) call _fnc_getTravelType;
 
-            // Capture reference distance ONCE when crossing
-            _dist_line_to_base_ref = [_p_pos, BASE_CENTER_POS] call SYG_distance2D;
-
+            _dist_line_to_base_ref = round([_p_pos, BASE_CENTER_POS] call SYG_distance2D);
 	        _travel_dist_ref = _dist_line_to_base_ref;
 	        _travel_curr_len = 0;
 
             localize "MSG_TRAVEL_TRACKING_STARTED" call XfHQChat;
             hint localize format ["DEBUG: Tracking started. Ref dist to base: %1m", round _dist_line_to_base_ref];
+
+            // Init report position
+            _last_report_pos = _p_pos;
+            _last_dist_base = _dist_line_to_base_ref;
 	    };
 
 	    // 2. Update Progress
@@ -301,16 +315,49 @@ while { base_visit_session <= 0 } do {
                 _last_status_time = time;
             };
 
-	        // 4. HUD Update
+	        // 4. HUD Update Logic
             _changed = false;
-            if (_new_type != _last_transport_type) then { _changed = true; _last_transport_type = _new_type; };
-            if (_last_dist_base > 0) then {
-                if (abs(_curr_dist - _last_dist_base) / _last_dist_base > 0.01) then { _changed = true; };
+
+            // Check Transport Change
+            if (_new_type != _last_transport_type) then {
+                _changed = true;
+                _last_transport_type = _new_type;
             };
-            _last_dist_base = _curr_dist;
+
+            // Check Distance/Position Change (Only if below Kerzon Line)
+            if (_rel != -1 && count _last_report_pos > 0) then {
+                _dist_moved = [_p_pos, _last_report_pos] call SYG_distance2D;
+                _dist_diff_abs = abs(_curr_dist - _last_dist_base);
+
+                // Condition: Moved >= 100m OR (Approached > 1% AND absolute change >= 10m)
+                _cond_dist = if (_travel_type == 1) then {
+                    _dist_moved >= HUD_UPDATE_MIN_DIST * 10 // For air vehicles
+                } else {
+                    _dist_moved >= HUD_UPDATE_MIN_DIST // For water and land vehicles
+                };
+                _cond_ratio = (_last_dist_base > 0) && ((_dist_diff_abs / _last_dist_base) > HUD_UPDATE_MIN_RATIO);
+                _cond_abs = _dist_diff_abs >= HUD_UPDATE_ABS_MIN;
+
+                if (_cond_dist || (_cond_ratio && _cond_abs)) then {
+                    _changed = true;
+                };
+            };
 
             if (_changed) then {
                 [] call _fnc_showStatus;
+
+                // Update report anchors
+                _last_report_pos = _p_pos;
+                _last_dist_base = _curr_dist;
+
+                // Global KM Announcement
+                _curr_km = floor(_curr_dist / 1000);
+                if (_curr_km != _last_km_reported) then {
+                    _last_km_reported = _curr_km;
+                    // MSG_GLOBAL_KM_UPDATE = "New arrival '%1' is already %2 km from base."
+                    _global_msg = format [localize "MSG_GLOBAL_KM_UPDATE", name player, _curr_km];
+                    _global_msg call _sendMsgToAll;
+                };
             };
 	    };
 #endif
@@ -386,6 +433,8 @@ while { base_visit_session <= 0 } do {
     	_last_status_time = 0;
     	_last_transport_type = -1;
     	_last_dist_base = -1;
+        _last_report_pos = [];
+        _last_km_reported = -1;
 
     	localize "MSG_BONUS_RESET_DEATH" call XfHQChat;
 #endif
@@ -407,6 +456,8 @@ if (isNil "spell_cast") then {
     if (_total_eff_dist > 100) then {
         _air_water_dist = (_travel_lengths select 1) + (_travel_lengths select 2);
         _ratio = _air_water_dist / _total_eff_dist;
+
+        hint localize format["+++ SYG_checkPlayerAtBase.sqf: finally - _total_eff_dist %1, _air_water_dist %2, _ratio %3", _total_eff_dist, _air_water_dist, _ratio];
 
         if (_ratio < 0.01) then {
             BONUS_FOOT_ONLY call SYG_addBonusScore;
