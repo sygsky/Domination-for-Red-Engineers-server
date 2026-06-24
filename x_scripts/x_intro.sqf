@@ -186,7 +186,7 @@ if (_sound == "") then { // select random music for an ordinal day
                 "treasure_island_intro","fear2","soviet_officers"/*,"cosmos"*/,"manchester_et_liverpool","tovarich_moy",
                 "hound_baskervill","condor","way_to_dock","melody_by_voice","sovest1","sovest2",/*"del_vampiro1",
                 "del_vampiro2",*/"zaratustra","bolivar",/*"jrtheme","vague",*/"enchanted_boy","bloody",
-                "peregrinus","kk_the_hole","shaov_defeat","evening_7","everybody_knows","pink_floyd_diamond","desperate_housewives","squid_game","cosma_maldonne"
+                "peregrinus","kk_the_hole","shaov_defeat",/*"evening_7",*"everybody_knows","pink_floyd_diamond","desperate_housewives","squid_game","cosma_maldonne"
             ];
 
             // music to play only in day time
@@ -978,7 +978,7 @@ if (_doJump) then {
     waitUntil { camCommitted _camera }; // wait until come
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    if ( alive player) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
+    if ( alive player) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBaseNew.sqf" }; // run service to check alive player to be on base not in vehicle
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	if (!alive player) exitWith {}; // Exit ALL follow animations and messages
 
