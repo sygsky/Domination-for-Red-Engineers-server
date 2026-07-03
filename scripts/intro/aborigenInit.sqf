@@ -197,11 +197,11 @@ if (alive aborigen) then {
 //            hint localize format["+++ aborigenInit.sqf: abo animation is ""%1""", animationState aborigen];
 		    while {!(canStand aborigen)} do {sleep 5}; // Wait until aborigen can stand
 		    if (alive player) then {
-		        _cnt = count ([aborigen, 300] call SYG_findNearestPlayers); // Count all players in aborigen vicinity of 1500 m.
+		        _cnt = count ([aborigen, 300] call SYG_findNearestPlayers); // Count all players in aborigen vicinity of 300 m.
 		        if ( _cnt > 0 ) then { // Some players in vicinity 300 meters
 		            // Check if players not very close to abo
-		            _pl = [aborigen,  50] call SYG_findNearestPlayer; // Returns the player OBJECT
-                    if (alive _pl) exitWith { // Some player is too close <= 50 meters
+		            _pl = [aborigen,  30] call SYG_findNearestPlayer; // Returns the player OBJECT
+                    if (alive _pl) exitWith { // Some player is too close <= 30 meters
     		            if (_state != "near") then {hint localize "+++ aborigenInit.sqf: some player near abo, start watching"; _state = "near" };
                         aborigen switchMove "AmovPercMstpSnonWnonDnon"; // Stand without weapon
                         sleep 0.1;
@@ -210,7 +210,7 @@ if (alive aborigen) then {
                         hint localize format["+++ aborigenInit.sqf: after 1 sec abo anim == ""%1""", animationState aborigen];
                         sleep (2 + (random 2));
                     };
-                    // Any player is at distance 50-300 m. from aborigen
+                    // Any player is at distance 30-300 m. from aborigen
 		            if (_state != "far") then {hint localize "+++ aborigenInit.sqf: no player near abo, stop watching"; _state = "far" };
 		            aborigen doWatch objNull;
     		        while { toLower(animationState aborigen) in _list} do {
@@ -227,8 +227,8 @@ if (alive aborigen) then {
                         ["remote_execute",
                             format[ "aborigen playMove ""%1"";", _anim ],
                             name player,
-                            format[" dist %1 m.", round (aborigen distance player)],
-                            format["abo animation ""%1""", animationState aborigen]
+                            format[" dist %1 m.", round (aborigen distance player)]//,
+                            //format["abo animation ""%1""", animationState aborigen]
                         ] call XSendNetStartScriptServer;
                         sleep 5;
                     };
