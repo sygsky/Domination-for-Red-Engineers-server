@@ -685,7 +685,7 @@ switch ( _arg ) do {
 #ifdef __MAGIC_SPELL__
 		_in_magic = true; // All can call teleport spell
 #else
-		_in_magic = _uname in ["YETI","ENGINEERACE","MASLODIUM","GEORGE.T","SNOOPER","ROKSE [LT]","GYURI","FLAVI","ISAAQ",
+		_in_magic = _uname in ["YETI","ENGINEERACE","MASLODIUM","GEORGE.T","G.CONDOR","SNOOPER","ROKSE [LT]","GYURI","FLAVI","ISAAQ",
 		                       "IHATELIFE","FLANKER","777","COMRAD (LT)","MIXERDUST","NIBELUNGENRING","ЕВГЕНИЙ","KOS91"];
 #endif
 
