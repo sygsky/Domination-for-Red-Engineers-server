@@ -73,6 +73,8 @@ _fnc_drawKerzonLine = {
     _marker setMarkerDirLocal _dir;
     _marker setMarkerColorLocal LINE_COLOR;
     _marker setMarkerBrushLocal "Solid";
+    // Draw line title (with the same color as line)
+    _marker setMarkerTextLocal (localize "STR_KERZON_LINE"); // STR_KERZON_LINE,"Kerzon Line"
 
     hint localize format ["+++ Kerzon Line drawn. Length: %1m, dir: %2", round _extLen, round(_dir)];
     [player, format [localize "MSG_KERZON_LINE_DRAWN", LINE_COLOR]] call XfVehicleChat;
