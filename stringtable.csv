@@ -1241,6 +1241,7 @@ MSG_TRAVEL_STATUS,"STATUS | Dist to Line: %1m | To Base: %2m (%3m)| Mode: %4","S
 MSG_TRAVEL_STATS,"Stats: %1","Stats: %1","Stats: %1","Стат: %1"
 MSG_TRAVEL_STATS_SHORT,"Air:%1%% Wat:%2%% Land:%3%% Foot:%4%%","Luft:%1%% Wass:%2%% Land:%3%% Fuß:%4%%","Aér:%1%% Acu:%2%% Terr:%3%% Pie:%4%%","Ав.%1%% Вод.%2%% Наз.%3%% Пеш.%4%%"
 MSG_GLOBAL_KM_UPDATE,"New arrival '%1' is already %2 km from base.","Neuer Ankömmling '%1' ist bereits %2 km von der Basis entfernt.","El nuevo llegado '%1' ya está a %2 km de la base.","Новоприбывший игрок '%1' уже в %2 км. от базы."
+MSG_GLOBAL_KM_UPDATE0,"New arrival '%1' is already very close.","Neuer Ankömmling '%1' ist schon ganz in der Nähe.","El nuevo llegado '%1' ya está muy cerca.","Новоприбывший игрок '%1' уже совсем близко."
 
 STR_MON_1,January,Januar,enero,января
 STR_MON_2,February,Februar,febrero,февраля

@@ -112,12 +112,15 @@ _fnc_showStatus = {
     _totalEff = _totalEff + _travel_curr_len;
     _statsStr = "";
     if ( (_totalEff > 0) && (!isNil "_dist_line_to_base_ref") && (_dist_line_to_base_ref > 0)) then {
-        _pAir = round(((_travel_lengths select 1) / _dist_line_to_base_ref) * 100);
-        _pWater = round(((_travel_lengths select 2) / _dist_line_to_base_ref) * 100);
-        _pLand = round(((_travel_lengths select 3) / _dist_line_to_base_ref) * 100);
-        _pFoot = round(((_travel_lengths select 0) / _dist_line_to_base_ref) * 100);
-
-        _statsStr = format [localize "MSG_TRAVEL_STATS_SHORT", _pAir, _pWater, _pLand, _pFoot];
+        _type_path = [];
+        for "_i" from 0 to 3 do {
+            _len = _travel_lengths select _i;
+            if (_i == _typeCode) then {
+                _len = _len + _travel_curr_len; // Add to current path length
+            };
+            _type_path set [i, round(( _len / _dist_line_to_base_ref) * 100) ];
+        };
+        _statsStr = format [localize "MSG_TRAVEL_STATS_SHORT", _type_path select 1, _type_path select 2, _type_path select 3, _type_path select 0];
     } else {
         _statsStr = "ожидание...";
     };
@@ -356,6 +359,10 @@ while { base_visit_session <= 0 } do {
                     _last_km_reported = _curr_km;
                     // MSG_GLOBAL_KM_UPDATE = "New arrival '%1' is already %2 km from base."
                     _global_msg = format [localize "MSG_GLOBAL_KM_UPDATE", name player, _curr_km];
+                    if (_curr_km == 0) then {
+                        // MSG_GLOBAL_KM_UPDATE0 = "New arrival '%1' is already very close."
+                        _global_msg = format [localize "MSG_GLOBAL_KM_UPDATE0", name player];
+                    };
                     _global_msg call _sendMsgToAll;
                 };
             };
