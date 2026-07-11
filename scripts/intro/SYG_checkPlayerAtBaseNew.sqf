@@ -17,10 +17,12 @@
 #define BASE_CENTER_POS (d_base_array select 0)
 #define BONUS_FOOT_ONLY 200
 #define BONUS_NO_AIR_WATER 50
-#define THRESHOLD_INTENSIVE 0.20 // 20% limit for air/water usage to get max bonus
-#define KERZON_LINE_ADD 8000 // Add length to Kerzon line
-#define KERZON_LINE_THICKNESS 6 // Thickness in meters to see it on map at any scale
-#define LINE_COLOR "ColorRedAlpha"
+#define THRESHOLD_INTENSIVE 0.20 // Limit for land vehicles usage to get average bonus
+#define THRESHOLD_AIR_WATER 0.01 // Limit for air/water usage to get max bonus
+#define KERZON_LINE_ADD 8000    // Add length to Kerzon line
+#define KERZON_LINE_THICKNESS 10 // Thickness in meters to see it on map at any scale
+//#define LINE_COLOR "ColorRedAlpha"
+#define LINE_COLOR "ColorRed"
 #define BONUS_EVAL_INTERVAL 3 // Seconds between dynamic bonus status checks
 
 // HUD Update Thresholds
@@ -46,41 +48,54 @@ _fnc_getTravelType = {
     };
 };
 
-// --- Helper: Draw Kerzon Line (Extended Local Marker) ---
+// --- Helper: Draw Kerzon Line (Extended Local Marker + Text) ---
 _fnc_drawKerzonLine = {
-    private ["_p1", "_p2", "_mid", "_dir", "_baseLen", "_extLen", "_markerName", "_marker"];
+    private ["_p1", "_p2", "_mid", "_dir", "_baseLen", "_extLen", "_markerName", "_marker", "_textMarker"];
 
     _p1 = SYG_Kerzon_line select 0;
     _p2 = SYG_Kerzon_line select 1;
 
+    // 1. Calculate base geometry
     _baseLen = [_p1, _p2] call SYG_distance2D;
     _dir = [_p1, _p2] call XfDirToObj;
 
+    // 2. Calculate Midpoint
     _mid = [
         ((_p1 select 0) + (_p2 select 0)) / 2,
         ((_p1 select 1) + (_p2 select 1)) / 2,
         0
     ];
 
+    // 3. Extend length
     _extLen = _baseLen + KERZON_LINE_ADD;
 
+    // 4. Create/Update RED LINE marker
     _markerName = "SYG_KerzonLineMarker";
     deleteMarkerLocal _markerName;
 
     _marker = createMarkerLocal [_markerName, _mid];
     _marker setMarkerShapeLocal "RECTANGLE";
-    _marker setMarkerSizeLocal [KERZON_LINE_THICKNESS, _extLen / 2 ];
+    _marker setMarkerSizeLocal [KERZON_LINE_THICKNESS, _extLen / 2];
     _marker setMarkerDirLocal _dir;
     _marker setMarkerColorLocal LINE_COLOR;
     _marker setMarkerBrushLocal "Solid";
-    // Draw line title (with the same color as line)
-    _marker setMarkerTextLocal (localize "STR_KERZON_LINE"); // STR_KERZON_LINE,"Kerzon Line"
 
-    hint localize format ["+++ Kerzon Line drawn. Length: %1m, dir: %2", round _extLen, round(_dir)];
-    [player, format [localize "MSG_KERZON_LINE_DRAWN", LINE_COLOR]] call XfVehicleChat;
+    // 5. Create small TEXT marker with normal text, marker name wiil be "SYG_KerzonTextMarker"
+    ["SYG_KerzonTextMarker", SYG_Kerzon_line select 2,"ICON", LINE_COLOR,[0.01,0.01], localize "STR_KERZON_LINE",0,"DOT"] call XfCreateMarkerLocal;
+/*
+    _textMarker = createMarkerLocal ["SYG_KerzonTextMarker", _mid];
+    _textMarker setMarkerShapeLocal "ICON"; // Icon shape supports text
+    _textMarker setMarkerTypeLocal "Empty"; // Invisible icon
+    _textMarker setMarkerDirLocal _dir;     // Rotate text along the line
+    _textMarker setMarkerTextLocal (localize "STR_KERZON_LINE"); // Your localized string
+    _textMarker setMarkerColorLocal LINE_COLOR; // Your localized string
+*/
+    hint localize format ["+++ Kerzon Line drawn. Length: %1m", round _extLen];
 };
 
+
 // --- Helper: Remove Kerzon Line ---
+/*
 _fnc_removeKerzonLine = {
     private ["_str"];
     deleteMarkerLocal "SYG_KerzonLineMarker";
@@ -88,14 +103,24 @@ _fnc_removeKerzonLine = {
     _str call XfHQChat;
     hint localize _str;
 };
+*/
+// --- Helper: Remove Kerzon Line & Text ---
+_fnc_removeKerzonLine = {
+    deleteMarkerLocal "SYG_KerzonLineMarker";
+    deleteMarkerLocal "SYG_KerzonTextMarker"; // Remove the text marker too
+
+    localize "MSG_KERZON_LINE_REMOVED" call XfHQChat;
+    hint localize "MSG_KERZON_LINE_REMOVED";
+};
 
 // --- Helper: Show Status HUD ---
 _fnc_showStatus = {
     private ["_pos", "_distToLine", "_distToBase", "_typeCode", "_typeStr", "_msg", "_totalEff", "_statsStr", "_pAir",
-    "_pWater", "_pLand", "_pFoot"];
+    "_pWater", "_pLand", "_pFoot","_i"];
 
     _pos = getPos player;
-    _distToLine = round(abs([SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _pos] call SYG_distPoint2Vector1));
+//    _distToLine = round(abs([SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _pos] call SYG_distPoint2Vector1));
+    _distToLine = round([ _cross_point, _pos] call SYG_distance2D);
     _distToBase = round([_pos, BASE_CENTER_POS] call SYG_distance2D);
 
     _typeCode = (vehicle player) call _fnc_getTravelType;
@@ -114,21 +139,24 @@ _fnc_showStatus = {
     _totalEff = _totalEff + _travel_curr_len;
     _statsStr = "";
     if ( (_totalEff > 0) && (!isNil "_dist_line_to_base_ref") && (_dist_line_to_base_ref > 0)) then {
-        _type_path = [];
+        _type_path = [0,0,0,0];
         for "_i" from 0 to 3 do {
             _len = _travel_lengths select _i;
+//            if (isNull _len) then {  _len = 0; };
             if (_i == _typeCode) then {
-                _len = _len + _travel_curr_len; // Add to current path length
+                _len = _len + _travel_curr_len; // Add to current vehicle type path length
             };
-            _type_path set [i, round(( _len / _dist_line_to_base_ref) * 100) ];
+            _type_path set [_i, round(( _len / _dist_line_to_base_ref) * 100) ];
         };
+        // MSG_TRAVEL_STATS_SHORT,"Air: %1%%, Wat: %2%%, Land: %3%%, Foot: %4%%"
         _statsStr = format [localize "MSG_TRAVEL_STATS_SHORT", _type_path select 1, _type_path select 2, _type_path select 3, _type_path select 0];
+//        hint localize format["+++ _typeCode = %1, _travel_lengths = %2, _type_path = %3", _typeCode, _travel_lengths, _type_path ];
     } else {
-        _statsStr = "ожидание...";
+        _statsStr = localize "MSG_TRAVEL_STAT_WAIT"; // MSG_TRAVEL_STAT_WAIT,"Waiting..."
     };
 
     // "STATUS | Dist to Line: %1m | To Base: %2m (%3m)| Mode: %4"
-    _msg = format [localize "MSG_TRAVEL_STATUS", _distToLine, _distToBase, _dist_line_to_base_ref, _typeStr];
+    _msg = format [localize "MSG_TRAVEL_STATUS", [_distToLine,10] call SYG_distRoundTo, [_distToBase,10] call SYG_distRoundTo, [_dist_line_to_base_ref,10] call SYG_distRoundTo, _typeStr];
     _msg call XfHQChat;
 
     format [localize "MSG_TRAVEL_STATS", _statsStr] call XfHQChat;
@@ -165,6 +193,7 @@ _get_in_time = 0;
 _was_in_veh = false;
 
 #ifdef SYG_TRAVEL_BONUS_ENHANCED
+private ["_cross_point"];
 // --- Init Travel Bonus Variables ---
 _travel_active = false;
 _travel_lengths = [0,0,0,0]; // [Foot, Air, Water, Ground]
@@ -217,6 +246,7 @@ while { base_visit_session <= 0 } do {
 	    // CHECK FOR RETURN BEHIND LINE (Reset Logic)
 	    // Assuming '-1' is the Safe/Antigua side.
 	    if (_travel_active && _rel == -1) then {
+	        // "HQ: Alert! You crossed back behind the Kerzon Line. Progress reset."
 	        localize "MSG_TRAVEL_RETURN_BEHIND_LINE" call XfHQChat;
 
             _travel_active = false;
@@ -245,26 +275,27 @@ while { base_visit_session <= 0 } do {
 	        _travel_veh = _p_veh;
 	        _travel_type = (_p_veh) call _fnc_getTravelType;
 
-            _dist_line_to_base_ref = round([_p_pos, BASE_CENTER_POS] call SYG_distance2D);
+            _dist_line_to_base_ref = round([_p_pos, BASE_CENTER_POS] call SYG_distance2D); // Distance to base from line cross point
 	        _travel_dist_ref = _dist_line_to_base_ref;
 	        _travel_curr_len = 0;
 
-            localize "MSG_TRAVEL_TRACKING_STARTED" call XfHQChat;
-            hint localize format ["DEBUG: Tracking started. Ref dist to base: %1m", round _dist_line_to_base_ref];
+            localize "MSG_TRAVEL_TRACKING_STARTED" call XfHQChat; // MSG_TRAVEL_TRACKING_STARTED,"Travel tracking STARTED."
+            hint localize format ["+++ DEBUG: Tracking started. Ref dist to base: %1m", round _dist_line_to_base_ref];
 
             // Init report position
             _last_report_pos = _p_pos;
+            _cross_point = _p_pos; // Save point where the player crossed line on the way to the base
             _last_dist_base = _dist_line_to_base_ref;
 	    };
 
 	    // 2. Update Progress
 	    if (_travel_active) then {
 	        _new_type = (_p_veh) call _fnc_getTravelType;
-	        _curr_dist = [_p_pos, BASE_CENTER_POS] call SYG_distance2D;
+	        _curr_dist = [_p_pos, BASE_CENTER_POS] call SYG_distance2D; // Distance to base
 
 	        // Vehicle Change?
 	        if (_p_veh != _travel_veh) then {
-	            _travel_lengths set [_travel_type, (_travel_lengths select _travel_type) + _travel_curr_len];
+                _travel_lengths set [_travel_type   , (_travel_lengths select _travel_type) + _travel_curr_len]; // Add acumulated path length
 	            _travel_veh = _p_veh;
 	            _travel_type = _new_type;
 	            _travel_curr_len = 0;
@@ -276,7 +307,7 @@ while { base_visit_session <= 0 } do {
                     case 3: {localize "MSG_TRAVEL_MODE_LAND"};
                     default {localize "MSG_TRAVEL_MODE_UNK"};
 	            };
-                format [localize "MSG_VEHICLE_CHANGED", _typeStr] call XfHQChat;
+                format [localize "MSG_VEHICLE_CHANGED", _typeStr] call XfHQChat; // MSG_VEHICLE_CHANGED,"Vehicle changed to: %1"
             };
 
 	        // Calculate Delta
@@ -285,7 +316,7 @@ while { base_visit_session <= 0 } do {
 	        _travel_dist_ref = _curr_dist;
 
 	        // 3. DYNAMIC BONUS EVALUATION
-            if (time - _last_status_time > BONUS_EVAL_INTERVAL) then {
+            if ((time - _last_status_time) > BONUS_EVAL_INTERVAL) then {
                 _total_eff = 0;
                 { _total_eff = _total_eff + _x } forEach _travel_lengths;
                 _total_eff = _total_eff + _travel_curr_len;
@@ -307,9 +338,9 @@ while { base_visit_session <= 0 } do {
                     if (_new_level != _last_bonus_level) then {
                         _last_bonus_level = _new_level;
                         _msg_key = switch (_new_level) do {
-                            case 2: { "MSG_BONUS_STATUS_FULL" };
-                            case 1: { "MSG_BONUS_STATUS_WARN" };
-                            case 0: { "MSG_BONUS_STATUS_LOST" };
+                            case 2: { "MSG_BONUS_STATUS_FULL" }; // "HQ: Good discipline. Traveling by land/foot. Maximum bonus eligibility restored."
+                            case 1: { "MSG_BONUS_STATUS_WARN" }; // "HQ: Warning. Air/Water usage detected. Maximum bonus at risk. Switch to land transport."
+                            case 0: { "MSG_BONUS_STATUS_LOST" }; // "HQ: Alert. Excessive air/water travel. Maximum travel bonus forfeited. Land-only bonus still possible."
                             default { "" };
                         };
                         if (_msg_key != "") then {
@@ -462,28 +493,36 @@ if (isNil "spell_cast") then {
     _total_eff_dist = 0;
     { _total_eff_dist = _total_eff_dist + _x } forEach _travel_lengths;
 
-    if (_total_eff_dist > 100) then {
-        _air_water_dist = (_travel_lengths select 1) + (_travel_lengths select 2);
-        _ratio = _air_water_dist / _total_eff_dist;
+    _air_water_dist = (_travel_lengths select 1) + (_travel_lengths select 2);
+    _ratio = _air_water_dist / _total_eff_dist;
 
-        hint localize format["+++ SYG_checkPlayerAtBase.sqf: finally - _total_eff_dist %1, _air_water_dist %2, _ratio %3", _total_eff_dist, _air_water_dist, _ratio];
+    hint localize format["+++ SYG_checkPlayerAtBase.sqf: finally - _total_eff_dist %1, _air_water_dist %2, _ratio %3", _total_eff_dist, _air_water_dist, _ratio];
 
-        if (_ratio < 0.01) then {
-            BONUS_FOOT_ONLY call SYG_addBonusScore;
-            format [localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY] call XfHQChat;
-        } else {
-            if (_ratio < THRESHOLD_INTENSIVE) then {
-                BONUS_NO_AIR_WATER call SYG_addBonusScore;
-                format [localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER] call XfHQChat;
-            } else {
-                localize "MSG_BONUS_NONE_EXTENSIVE" call XfHQChat;
-            };
+    if (_ratio < 0.01) then {
+        // Air-water path < 1 %
+        _land_dist = (_travel_lengths select 3);
+        _ratio = _land_dist / _total_eff_dist;
+        if (_ratio > THRESHOLD_INTENSIVE) exitWith {
+            // Land path > 20%
+            BONUS_NO_AIR_WATER call SYG_addBonusScore;
+            // MSG_BONUS_LAND_ONLY,"BONUS AWARDED: +%1 (Land Only %2%%)"
+            ["mag_to_user","*",[[localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)]], 0, 0,false,"admiration"] call SYG_msgToUserParser;
+//            format [localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)] call XfHQChat; // "BONUS AWARDED: +%1 (Land Only)"
         };
+        // Big bonus!!
+        BONUS_FOOT_ONLY call SYG_addBonusScore;
+        // "BONUS AWARDED: +%1 (Foot Master %2%%)"
+        ["mag_to_user","*",[[localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)]], 0, 0,false,"surprise"] call SYG_msgToUserParser;
+
+//        format [localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)] call XfHQChat; // "BONUS AWARDED: +%1 (Foot Master)"
+    } else {
+        // "No travel bonus awarded (Used Air/Water extensively %1%%)."
+        ["mag_to_user","*",[[localize "MSG_BONUS_NONE_EXTENSIVE", round(_ratio)]], 0, 0,false,"disappointed"] call SYG_msgToUserParser;
+//        localize format["MSG_BONUS_NONE_EXTENSIVE", round(_ratio)] call XfHQChat; // "No travel bonus awarded (Used Air/Water extensively)."
     };
 } else {
-    if (!isNil "spell_cast") then {
-        localize "MSG_BONUS_NONE_VODOO" call XfHQChat;
-    };
+    // "Voodoo used: No travel bonus."
+    localize "MSG_BONUS_NONE_VODOO" call XfHQChat;
 };
 #endif
 

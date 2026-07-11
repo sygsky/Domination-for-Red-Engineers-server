@@ -297,7 +297,7 @@ SYG_arr2Str = {
 // Offsets:     0,                      1,                 2,                        3,              4,             5,             6
 // ["msg_to_user",_player_name | "*" | "",[_msg1, ... _msgN]<,_delay_between_messages<,_initial_delay<,no_title_msg><,sound_name>>>>]
 //
-// Offset in command array are as follow:
+// Offsets in command array are as follow:
 // 0:"msg_to_user": the identifier for this command, must be present
 // 1: player name or "" or "*" or vehicle to inform crew only, or array of players,
 //     or array of vehicles or (special case: [_dist, _pos] as 2nd parameter). Must be present!

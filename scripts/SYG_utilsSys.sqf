@@ -262,7 +262,7 @@ SYG_distRoundTo = {
     private ["_dist","_bound"];
     _dist = _this select 0;
     _bound = _this select 1;
-    if ( _dist < _bound) exitWith { round _dist }; // Return meters if distance less then bound size
+    if ( _dist <= _bound) exitWith { round _dist }; // Return meters if distance less then bound size
     (round( _dist /_bound)) * _bound
 };
 

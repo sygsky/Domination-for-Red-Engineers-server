@@ -159,7 +159,7 @@ if (base_visit_mission < 1) then { // Player still not visited base
 					sleep 5;
 				};
 			#ifdef __DEBUG__
-				hint localize format["+++ event_para_dropped.sqf: player exited ""%1"", pilot %2", typeOf _veh, if ( alive _pilot) then {name _pilot} ];
+				hint localize format["+++ event_para_dropped.sqf: player exited ""%1"", pilot %2", typeOf _veh, if ( alive (driver  _veh))  then {name (driver  _veh)} else {"<NONE>"} ];
 			#endif
 				sleep 10; // wait visit base to finish
 				if ( base_visit_mission > 0 ) then { // base was visited!!!

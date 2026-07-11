@@ -120,6 +120,11 @@ class CfgSounds {
     class woman_excl6 {name = ""; sound[] = {\sounds\women\excl\woman_excl6.ogg, db+0, 1.0}; titles[] = {}; };
     class woman_excl7 {name = ""; sound[] = {\sounds\women\excl\woman_excl7.ogg, db+0, 1.0}; titles[] = {}; };
 
+    class admiration {name = ""; sound[] = {\sounds\women\excl\Admiration.ogg, db+0, 1.0}; titles[] = {}; };
+    class surprise {name = ""; sound[] = {\sounds\women\excl\Surprise, db+0, 1.0}; titles[] = {}; };
+    class confusion {name = ""; sound[] = {\sounds\women\excl\Confusion.ogg, db+0, 1.0}; titles[] = {}; };
+    class disappointed {name = ""; sound[] = {\sounds\women\excl\Disappointed.ogg, db+0, 1.0}; titles[] = {}; };
+
 // woman sorry etc
     class sorry_0  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-0.ogg, db+0, 1.0}; titles[] = {}; };
     class sorry_1  {name = "Female sorry"; sound[] = {\sounds\women\sorry\female-sorry-1.ogg, db+0, 1.0}; titles[] = {}; };

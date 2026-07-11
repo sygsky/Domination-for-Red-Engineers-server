@@ -109,7 +109,7 @@ XHandleNetStartScriptServer = {
 			[(_this select 1)] call XAddCheckDead;
 		};
 
-		// store currect player score
+		// store correct player score
 		// send full score (_newscore), in town kill score (_mtkills)
         // Variants:
         // 1. ["d_ad_sc", name player || _player_id, _newscore, _mtkills] call XSendNetStartScriptServer;

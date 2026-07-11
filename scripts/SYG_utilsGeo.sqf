@@ -19,7 +19,8 @@ if ( isNil "SYG_UTILS_GEO_COMPILED" ) then 	{ // generate some static informatio
 
 #ifdef __DEFAULT__
 
-    SYG_Kerzon_line = [[5592.84, 16576.33, 0],[20806.31,13623.12,0]]; // 1-2 points of line where usage of air vehicles and boats is allowed to get bigger bonus
+    // 1-2 points of line where usage of air vehicles and boats is allowed to get bigger bonus, 3 point is for line label if any
+    SYG_Kerzon_line = [[5592.84, 16576.33, 0],[20806.31,13623.12,0],[13216,15077,0]];
 
 	SYG_Sahrani_p0 = [13231.3,8890.26,0]; // City Corazol center
 	SYG_Sahrani_p1 = [14878.6,7736.74,0]; // Vector dividing island to 2 parts (North and South) begining, point p1
