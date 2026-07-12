@@ -177,7 +177,7 @@
 // add some Vehicles and ammoBoxes on hills near Corazol and on base
 // #define __DEBUG_ADD_VEHICLES__
 
-// support for SPPM markers and options
+// support for SPPM markers and options with min distance to the SPPM center (as average coordinates point)
 #define __SPPM__ 40
 
 #define __NO_AI_IN_PLANE__ // prevents AI to enter plane as driver/pilot, gunner or commaner. Cargo role is allowed
@@ -194,7 +194,7 @@
 // uncomment to disable teleport near large metall masses in designated distance
 #define __TELEPORT_DEVIATION__ 20
 
-// uncomment to allow only vehicle BEFORE 1985 inclusivelly
+// uncomment to allow vehicle after 1985
 //#define __VEH_1985__
 
 // uncomment to get bonuses not on base but near finished towns or SM
@@ -226,6 +226,13 @@
 
 #ifdef __OWN_SIDE_EAST__
 // Adds BLUEFOR ammo box above EAST ammo box if side == east.
-// Uncommnet if you want to have EAST and WEST weapons simultaneously
+// Uncomment if you want to have EAST and WEST weapons simultaneously
 #define __BLUEFOR_AMMOBOX__
 #endif
+
+// Enable enhanced travel bonus system for the arrival from Antigua.
+// Default behavior: +10 points if the Voodoo spell is NOT used.
+// Enhanced behavior (if defined):
+//   +50 points: If the player uses ONLY land vehicles after crossing the Kerzon Line.
+//   +200 points: If the player reaches the base mostly on foot (using land vehicles for <20% of the effective distance below the Kerzon Line).
+#define SYG_TRAVEL_BONUS_ENHANCED

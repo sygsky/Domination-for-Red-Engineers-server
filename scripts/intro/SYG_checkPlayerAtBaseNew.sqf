@@ -18,8 +18,8 @@
 #define BONUS_FOOT_ONLY 200
 #define BONUS_NO_AIR_WATER 50
 #define THRESHOLD_INTENSIVE 0.20 // Limit for land vehicles usage to get average bonus
-#define THRESHOLD_AIR_WATER 0.01 // Limit for air/water usage to get max bonus
-#define KERZON_LINE_ADD 8000    // Add length to Kerzon line
+#define THRESHOLD_AIR_WATER 0.02 // Limit for air/water usage to get max bonus
+#define KERZON_LINE_ADD 8000    // Additional length for Kerzon line
 #define KERZON_LINE_THICKNESS 10 // Thickness in meters to see it on map at any scale
 //#define LINE_COLOR "ColorRedAlpha"
 #define LINE_COLOR "ColorRed"
@@ -116,7 +116,7 @@ _fnc_removeKerzonLine = {
 // --- Helper: Show Status HUD ---
 _fnc_showStatus = {
     private ["_pos", "_distToLine", "_distToBase", "_typeCode", "_typeStr", "_msg", "_totalEff", "_statsStr", "_pAir",
-    "_pWater", "_pLand", "_pFoot","_i"];
+    "_pWater", "_pLand", "_pFoot","_i","_dist1","_dist2","_dist3"];
 
     _pos = getPos player;
 //    _distToLine = round(abs([SYG_Kerzon_line select 0, SYG_Kerzon_line select 1, _pos] call SYG_distPoint2Vector1));
@@ -156,7 +156,10 @@ _fnc_showStatus = {
     };
 
     // "STATUS | Dist to Line: %1m | To Base: %2m (%3m)| Mode: %4"
-    _msg = format [localize "MSG_TRAVEL_STATUS", [_distToLine,10] call SYG_distRoundTo, [_distToBase,10] call SYG_distRoundTo, [_dist_line_to_base_ref,10] call SYG_distRoundTo, _typeStr];
+    _dist1 = [_distToLine,10] call SYG_distRoundTo;
+    _dist2 = [_distToBase,10] call SYG_distRoundTo;
+    _dist3 = [_dist_line_to_base_ref,10] call SYG_distRoundTo;
+    _msg = format [localize "MSG_TRAVEL_STATUS", _dist1, _dist2 , _dist3, _typeStr];
     _msg call XfHQChat;
 
     format [localize "MSG_TRAVEL_STATS", _statsStr] call XfHQChat;
@@ -506,23 +509,19 @@ if (isNil "spell_cast") then {
             // Land path > 20%
             BONUS_NO_AIR_WATER call SYG_addBonusScore;
             // MSG_BONUS_LAND_ONLY,"BONUS AWARDED: +%1 (Land Only %2%%)"
-            ["mag_to_user","*",[[localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)]], 0, 0,false,"admiration"] call SYG_msgToUserParser;
-//            format [localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)] call XfHQChat; // "BONUS AWARDED: +%1 (Land Only)"
+            ["mag_to_user","*",[[localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)]], 0, 0,false,"surprise"] call SYG_msgToUserParser;
         };
         // Big bonus!!
         BONUS_FOOT_ONLY call SYG_addBonusScore;
         // "BONUS AWARDED: +%1 (Foot Master %2%%)"
-        ["mag_to_user","*",[[localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)]], 0, 0,false,"surprise"] call SYG_msgToUserParser;
-
-//        format [localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)] call XfHQChat; // "BONUS AWARDED: +%1 (Foot Master)"
+        ["mag_to_user","*",[[localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)]], 0, 0,false,"admiration"] call SYG_msgToUserParser;
     } else {
         // "No travel bonus awarded (Used Air/Water extensively %1%%)."
         ["mag_to_user","*",[[localize "MSG_BONUS_NONE_EXTENSIVE", round(_ratio)]], 0, 0,false,"disappointed"] call SYG_msgToUserParser;
-//        localize format["MSG_BONUS_NONE_EXTENSIVE", round(_ratio)] call XfHQChat; // "No travel bonus awarded (Used Air/Water extensively)."
     };
 } else {
     // "Voodoo used: No travel bonus."
-    localize "MSG_BONUS_NONE_VODOO" call XfHQChat;
+    ["mag_to_user","*",[[localize "MSG_BONUS_NONE_VODOO"]], 0, 0,false,"confusion"] call SYG_msgToUserParser;
 };
 #endif
 

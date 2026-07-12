@@ -387,26 +387,29 @@ sm_bonus_vehicle_array = (
 "ACE_BMP2_D",       // 10
 "ACE_BMP2_K",       // 11
 
-"ACE_T55_A",        // 12 "ACE_BMD1",
-"ACE_T55_AM",       // 13 "ACE_BMD1p",
+"ACE_BMD1",         // 12
+"ACE_BMD1p",        // 13
 
-"ACE_ZSU",          // 14 //"ACE_T62_M",
-"ACE_UAZ_AGS30",    // 15 "ACE_T62_MK",
-"ACE_BMD1p",    	// 16 "ACE_T62_MV",
+"ACE_T55_A",        // 14
+"ACE_T55_AM",       // 15
 
-"ACE_T64_B",        // 17
-"ACE_T64_BK",       // 18
+"ACE_ZSU",          // 16 //"ACE_T62_M",
+"ACE_UAZ_AGS30",    // 17 "ACE_T62_MK",
+"ACE_BMD1p",    	// 18 "ACE_T62_MV",
 
-"ACE_T72",          // 19
-"ACE_T72_B",        // 20
-"ACE_T72_BK",       // 21
+"ACE_T64_B",        // 19
+"ACE_T64_BK",       // 20
 
-"ACE_T80_B",        // 22
-"ACE_T80_BV",       // 23 "ACE_T80_BK",
-"ACE_T80_BVK",      // 24
-"ACE_T80_U",        // 25
-"ACE_BMP2_K"//,     // 26
-//"ACE_T90"         // 27
+"ACE_T72",          // 21
+"ACE_T72_B",        // 22
+"ACE_T72_BK",       // 23
+
+"ACE_T80_B",        // 24
+"ACE_T80_BV",       // 25 "ACE_T80_BK",
+"ACE_T80_BVK",      // 26
+"ACE_T80_U",        // 27
+"ACE_BMP2_K"//,     // 28
+//"ACE_T90"         // 29
 ]
 				} else {
 					["BMP2","BRDM2","UAZMG","UAZ_AGS30","BRDM2_ATGM","BMP2","BRDM2"]
