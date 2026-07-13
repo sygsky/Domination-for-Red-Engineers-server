@@ -235,4 +235,4 @@
 // Enhanced behavior (if defined):
 //   +50 points: If the player uses ONLY land vehicles after crossing the Kerzon Line.
 //   +200 points: If the player reaches the base mostly on foot (using land vehicles for <20% of the effective distance below the Kerzon Line).
-#define SYG_TRAVEL_BONUS_ENHANCED
+#define __SYG_TRAVEL_BONUS_ENHANCED__

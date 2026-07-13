@@ -11,7 +11,7 @@
 
 #include "x_setup.sqf"
 
-#ifdef SYG_TRAVEL_BONUS_ENHANCED
+#ifdef __SYG_TRAVEL_BONUS_ENHANCED__
 
 // --- Configuration ---
 #define BASE_CENTER_POS (d_base_array select 0)
@@ -195,7 +195,7 @@ _in_time_sum = 0;
 _get_in_time = 0;
 _was_in_veh = false;
 
-#ifdef SYG_TRAVEL_BONUS_ENHANCED
+#ifdef __SYG_TRAVEL_BONUS_ENHANCED__
 private ["_cross_point"];
 // --- Init Travel Bonus Variables ---
 _travel_active = false;
@@ -238,7 +238,7 @@ while { base_visit_session <= 0 } do {
 
 	if ( alive player ) then {
 
-#ifdef SYG_TRAVEL_BONUS_ENHANCED
+#ifdef __SYG_TRAVEL_BONUS_ENHANCED__
 	    // --- NEW TRAVEL BONUS LOGIC ---
 	    _p_veh = vehicle player;
 	    _p_pos = getPos player;
@@ -461,7 +461,7 @@ while { base_visit_session <= 0 } do {
     	_was_in_veh  = false;
     	_in_time_sum = 0;
     	_delay       = 10;
-#ifdef SYG_TRAVEL_BONUS_ENHANCED
+#ifdef __SYG_TRAVEL_BONUS_ENHANCED__
     	_travel_active = false;
     	_travel_lengths = [0,0,0,0];
     	_travel_veh = objNull;
@@ -487,7 +487,7 @@ while { base_visit_session <= 0 } do {
 [] call _fnc_removeKerzonLine;
 hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit loop, session=%1", base_visit_session];
 
-#ifdef SYG_TRAVEL_BONUS_ENHANCED
+#ifdef __SYG_TRAVEL_BONUS_ENHANCED__
 if (isNil "spell_cast") then {
     if (_travel_active) then {
         _travel_lengths set [_travel_type, (_travel_lengths select _travel_type) + _travel_curr_len];

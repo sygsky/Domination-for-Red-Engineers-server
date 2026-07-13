@@ -115,6 +115,15 @@ _str = _str + _strYesCR;
 _str = _str + _strNoCR;
 #endif
 
+//+++ 12-JUN-2026: Kerzon line and bonus for hardness on base arrival
+_str = _str + (localize "STR_SET_44")/* Kerzon line */ + ": "; // STR_SET_44,"Bonus for reaching the base on foot: "
+#ifdef __SYG_TRAVEL_BONUS_ENHANCED__
+_str = _str + _strYesCR;
+#else
+_str = _str + _strNoCR;
+#endif
+
+
 //+++ 11-JUN-2018: new non-Xeno defines starts from here
 
 _str = _str + (localize "STR_SET_5")/* Javelin" */ + ": ";
@@ -131,7 +140,7 @@ _str = _str + _strYesCR;
 _str = _str + _strNoCR;
 #endif
 
-_str = _str + (localize "STR_SET_7") + ": "; // "Light vehicle[s] at the base in the beginning"
+_str = _str + (localize "STR_SET_7") + ": "; // "Hidden rusty light vehicles in the area of the base at the start"
 #ifdef __ADDITIONAL_BASE_VEHICLES__
 _str = _str + _strYesCR;
 #else

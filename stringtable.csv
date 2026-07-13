@@ -1523,7 +1523,7 @@ STR_SET_9,Teleport works only when all services on the base are available,Telepo
 STR_SET_9_1,Teleport works until the destruction of MHQ,Teleport funktioniert bis zur Zerstörung von MHQ,El teletransportador funciona hasta la destrucción de MHQ,Телепорт функционирует до уничтожения КШМ
 STR_SET_9_2,Teleport shuts off when MHQ is damaged at %1%2,"Teleport wird abgeschaltet, wenn MHQ bei %1%2 beschädigt ist.",El teletransportador se desactiva cuando el MHQ está dañado hasta %1%2,Телепорт отключается при повреждении КШМ до %1%2
 STR_SET_10,Jail:,Gefängnis:,Celda de arresto:,Гауптвахта:
-STR_SET_10_1, when scores lower than %1, wenn der scores niedriger ist als %1, si el número de puntos es inferior a %1,", если число очков ниже %1"
+STR_SET_10_1, when scores lower than %1, wenn der scores niedriger ist als %1, si el número de puntos es inferior a %1, если число очков ниже %1
 STR_SET_11,Cloning RPG-missiles: ,Klon-RPG-Rakete: ,Clonación de misiles RPG: ,"Клонирование РПГ-ракет: "
 STR_SET_12,Points will be added when the service is restored (%1),"Punkte werden Hinzugefügt, wenn der Dienst wiederhergestellt wird (-%1)",Para reparar los servicios dan puntos (%1),За ремонт сервисов дают очки (%1)
 STR_SET_12_1,"When repairing the service, points are deducted (-%1)",Punkte werden bei der Reparatur abgezogen (-%1),Para reparar los servicios dan puntos (%1),За ремонт сервисов вычитают очки (-%1)
@@ -1566,6 +1566,7 @@ STR_SET_41,DOSAAF vehicles allowed\n,DOSAAF-Fahrzeuge präsentieren\n,Vehículos
 STR_SET_42,"Parachute into the mission if your rank is lower than %1.\n","Fallschirmabsprung in eine Mission, wenn der Rang niedriger ist als %1.\n","Saltar en paracaídas en una misión si el rango es inferior a %1.\n","Заход в миссию на парашюте, если звание ниже чем %1.\n"
 STR_SET_43,"No grass: disabled.\n","Fallschirmabsprung in eine Mission, wenn der Rang niedriger ist als %1.\n","Saltar en paracaídas en una misión si el rango es inferior a %1.\n","Без травы: запрещено.\n"
 STR_SET_43_0,"No grass: allowed.\n","Kein Gras: erlaubt. \n","No hierba: permitido.\n","Без травы: разрешено.\n"
+STR_SET_44,"Bonus for reaching the base on foot (Kerzon line): ","Bonus für das Erreichen der Basis zu Fuß (Kerzon line): ","Bono por llegar a la base a pie (Kerzon line): ","Бонус за сложность достижения базы пешком (Линия Керзона): "
 
 STR_SPPM,SPPM :,SPPM :,SPPM :,СППМ :
 STR_SPPM_ADD,Add,Erstellen,Crear,Создать
