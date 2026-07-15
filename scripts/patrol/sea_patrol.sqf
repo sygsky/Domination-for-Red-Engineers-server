@@ -585,9 +585,10 @@ _resupply_boat = {
 // As: _usable_ship =[_boat, _grp, _wp_arr, _id, _state...] call _reset_roles; // true is ship is good, else bad
 // Try to fill driver and at least 1 gunner from cargo or driver from any gunners
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*
 _reset_roles = {
     private ["_stat","_units","_boat","_grp","_driver","_ind","_gun_empty_ids","_beh","_gunner_cnt","_gunner_ids","_gunners",
-            "_outers","_cnt","_i","_x","_role","_unit","_str",""];
+            "_outers","_cnt","_i","_x","_role","_unit","_str"];
 	_stat = _this select OFFSET_STAT;
 	_units = _stat select OFFSET_STAT_UNITS;
 	if ( ( { alive _x } count _units ) == 0 ) exitWith {  // Nobody alive in crew, boat can't be supported more
@@ -700,6 +701,153 @@ _reset_roles = {
 
 	_stat set [OFFSET_STAT_UNITS, _units];
 	true
+};
+*/
+
+_reset_roles = {
+    // --- Input & Core Objects ---
+    private ["_stat",         // Status array containing crew and boat info
+             "_units",        // Array of units in the patrol group
+             "_boat",         // The vehicle object (RHIB or similar)
+             "_grp",          // The group object controlling the crew
+
+             // --- Role Detection Variables ---
+             "_driver",       // Object: current driver of the boat
+             "_ind",          // Index: determines boat type (0 for RHIB2Turret, 1 for RHIB)
+             "_gun_empty_ids",// Array: default turret IDs from config that need filling
+             "_gunner_cnt",   // Number: total expected gunners based on config
+             "_gunner_ids",   // Array: IDs of turrets currently occupied by alive gunners
+             "_gunners",      // Array: objects of currently assigned gunners
+             "_outers",       // Array: crew members currently outside the boat or in cargo
+
+             // --- Loop & Logic Counters ---
+             "_cnt",          // Counter: used for array sizing and alive unit count
+             "_i",            // Counter: loop index (if needed manually)
+             "_x",            // Iterator: current unit being processed in forEach
+             "_role",         // Array: result of assignedVehicleRole (e.g., ["Driver"] or ["Turret", [0]])
+             "_id",           // Number: specific turret ID extracted from role
+
+             // --- Reassignment & Debug Variables ---
+             "_unit",         // Object: temporary variable for new or reassigned unit
+             "_str",          // String: description source for debug logs ("outers" or "new unit")
+             "_beh"           // String/Array: current behaviour mode of the group (for debug)
+    ];
+
+    _stat = _this select OFFSET_STAT;
+    _units = _stat select OFFSET_STAT_UNITS;
+
+    if ( ( { alive _x } count _units ) == 0 ) exitWith {  // Nobody alive in crew, boat can't be supported more
+#ifdef __DEBUG__
+        hint localize "+++ sea_patrol.sqf reset_roles: all units are dead, return FALSE";
+#endif
+        false
+    };
+
+    _boat = _this select OFFSET_BOAT;
+    _grp = _this select OFFSET_GRP;
+    _driver = objNull;
+    _ind = ["RHIB2Turret","RHIB"] find (typeOf _boat);
+    _gun_empty_ids = [[0,1],[0]] select _ind; // All gunner[s] id from the boat config
+    _gunner_cnt = count _gun_empty_ids; // Official gunner count in the config team
+    _gunner_ids = [];
+    _gunners = [];
+    _outers = []; // Men of team out of boat
+
+    // Detect all roles of the crew in vehicle
+    _cnt = 0;
+    _i = 0;
+    {
+        if (alive _x) then {
+            _x setDamage 0;
+            _role = assignedVehicleRole _x;
+            if ( ( (count _role) > 0) && (_x in _boat) ) then {
+                if ( (_role select 0) == "Driver" ) exitWith {_driver = _x};
+                if ( (_role select 0) == "Turret" ) exitWith {
+                    _id = (_role select 1) select 0;
+                    _gunner_ids set[count _gunner_ids, _id]; // Count seats occupied by gunners
+                    _gunners set [count _gunners, _x]; // To handle gunners on seats
+                };
+                // must be in cargo but may be out of ship!
+            } else {
+                _outers set [count _outers, _x]; // Crew out of boat or in cargo
+            };
+            _cnt = _cnt + 1; // Count alive units in the group
+        } else {
+            // Remove dead unit of the team
+            deleteVehicle _x;
+        };
+        _i = _i + 1;
+    } forEach _units;
+
+    if ( (alive (driver _boat)) && ( (count _gunner_ids) == _gunner_cnt) ) exitWith { true }; // Driver and 1 (RHIB) or 2 (RHIB2Turret) gunner[s] are on the place
+
+    // check too small crew, less then 2 (driver + gunner)
+    _gun_empty_ids = _gun_empty_ids - _gunner_ids; // define not filled turrets from list [0<,1>]
+#ifdef __INFO__
+    _beh = _grp call _get_modes; // Behaviour
+    hint localize format["+++ sea_patrol.sqf reset_roles: cnt (alive %1/out %2), beh %3, gunner_ids %4, _gun_empty_ids %5 ...",
+        _cnt, count _outers, _beh, _gunner_ids, _gun_empty_ids ];
+#endif
+
+    // Fill driver if absent
+    _unit = objNull;
+    if (!alive _driver) then {
+        if ( (count _outers) > 0 ) then {
+            _cnt = count _outers;
+            _unit = _outers select (_cnt -1);
+            unassignVehicle _unit;
+            _unit setPos [0,0,0];
+            _outers resize (_cnt - 1);
+#ifdef __INFO__
+            hint localize "+++ sea_patrol.sqf reset_roles: outer assigned as driver...";
+#endif
+        } else {
+            _unit = _grp createUnit [ BOAT_UNIT, [0,0,0], [], 0, "NONE"];
+            [_unit] joinSilent _grp;
+#ifdef __INFO__
+            hint localize "+++ sea_patrol.sqf reset_roles: new unit assigned as driver...";
+#endif
+        };
+        _unit assignAsDriver _boat;
+        _unit moveInDriver _boat; // load cargo also, for the future replacement crew members procedure
+        _unit setUnitRank "CORPORAL";
+    };
+    sleep 0.1;
+
+    // Turrets fill from outers or new units...
+    {
+        _str = "";
+        if (count _outers > 0) then {
+            _cnt  = count _outers;
+            _unit = _outers select (_cnt - 1);
+            _outers resize (_cnt - 1);
+            _str = "outers";
+        } else {
+            _unit = _grp createUnit [ BOAT_UNIT, [0,0,0], [], 0, "NONE"];
+            [_unit] joinSilent _grp;
+            _str = "new unit";
+        };
+        unassignVehicle _unit;
+        _unit setPos [0,0,0];
+        _unit moveInTurret [_boat, [_x]];
+#ifdef __INFO__
+        hint localize format["+++ sea_patrol.sqf reset_roles: gunner#%1 (%2) assigned from %3", _x, assignedVehicleRole _unit, _str];
+#endif
+        sleep 0.1;
+    } forEach _gun_empty_ids;
+
+    {
+        if ( !isNull _x )  then { deleteVehicle _x };
+    } forEach _outers;
+    _units = units _grp;
+#ifdef __INFO__
+    if ( (count _units)  == 0 ) then {
+        hint localize format["+++ sea_patrol.sqf reset_roles: units count = %1, must be 2 or 3", count _units];
+    };
+#endif
+
+    _stat set [OFFSET_STAT_UNITS, _units];
+    true
 };
 
 #ifdef __STOP_IF_NO_PLAYERS__
