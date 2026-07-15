@@ -479,6 +479,7 @@ while { base_visit_session <= 0 } do {
         _last_report_pos = [];
         _last_km_reported = -1;
 
+        // MSG_BONUS_RESET_DEATH,"HQ: You died. Travel progress reset. Maximum bonus eligibility restored. Start again!"
     	localize "MSG_BONUS_RESET_DEATH" call XfHQChat;
 #endif
     };
@@ -488,6 +489,7 @@ while { base_visit_session <= 0 } do {
 hint localize format["+++ SYG_checkPlayerAtBase.sqf: exit loop, session=%1", base_visit_session];
 
 #ifdef __SYG_TRAVEL_BONUS_ENHANCED__
+_str = "";
 if (isNil "spell_cast") then {
     if (_travel_active) then {
         _travel_lengths set [_travel_type, (_travel_lengths select _travel_type) + _travel_curr_len];
@@ -501,7 +503,7 @@ if (isNil "spell_cast") then {
 
     hint localize format["+++ SYG_checkPlayerAtBase.sqf: finally - _total_eff_dist %1, _air_water_dist %2, _ratio %3", _total_eff_dist, _air_water_dist, _ratio];
 
-    if (_ratio < 0.01) then {
+    if ( _ratio < 0.01 ) then {
         // Air-water path < 1 %
         _land_dist = (_travel_lengths select 3);
         _ratio = _land_dist / _total_eff_dist;
@@ -509,20 +511,28 @@ if (isNil "spell_cast") then {
             // Land path > 20%
             BONUS_NO_AIR_WATER call SYG_addBonusScore;
             // MSG_BONUS_LAND_ONLY,"BONUS AWARDED: +%1 (Land Only %2%%)"
-            ["mag_to_user","*",[[localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)]], 0, 0,false,"surprise"] call SYG_msgToUserParser;
+            ["msg_to_user","*",[[localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)]], 0, 0,false,"surprise"] call SYG_msgToUserParser;
+            _str = format["KERZON BONUS = %1, car ratio = %2", BONUS_NO_AIR_WATER, round(_ratio)];
         };
         // Big bonus!!
         BONUS_FOOT_ONLY call SYG_addBonusScore;
         // "BONUS AWARDED: +%1 (Foot Master %2%%)"
-        ["mag_to_user","*",[[localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)]], 0, 0,false,"admiration"] call SYG_msgToUserParser;
+        ["msg_to_user","*",[[localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)]], 0, 0,false,"admiration"] call SYG_msgToUserParser;
+        _str = format["KERZON BONUS = %1, car ratio = %2", BONUS_FOOT_ONLY, round(_ratio)];
     } else {
         // "No travel bonus awarded (Used Air/Water extensively %1%%)."
-        ["mag_to_user","*",[[localize "MSG_BONUS_NONE_EXTENSIVE", round(_ratio)]], 0, 0,false,"disappointed"] call SYG_msgToUserParser;
+        ["msg_to_user","*",[[localize "MSG_BONUS_NONE_EXTENSIVE", round(_ratio)]], 0, 0,false,"disappointed"] call SYG_msgToUserParser;
+        _str = format["KERZON BONUS NOT APPLIED, ratio = %1", round(_ratio)];
     };
 } else {
     // "Voodoo used: No travel bonus."
-    ["mag_to_user","*",[[localize "MSG_BONUS_NONE_VODOO"]], 0, 0,false,"confusion"] call SYG_msgToUserParser;
+    ["msg_to_user","*",[[localize "MSG_BONUS_NONE_VODOO"]], 0, 0,false,"confusion"] call SYG_msgToUserParser;
+    _str = "KERZON BONUS NOT APPLIED, vodoo used!";
 };
+if (_str != "") then {
+    [ "log2server", name player, _str ];
+};
+
 #endif
 
 #ifdef __ACE__
