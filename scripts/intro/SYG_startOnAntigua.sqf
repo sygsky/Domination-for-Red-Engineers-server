@@ -1,6 +1,6 @@
 /*
 	scripts\intro\SYG_startOnAntigua.sqf:
-		process arrival on Antigua while you not visited the base. Runs once only on server!
+		process arrival on Antigua while you not visited the base. *** Runs once only on server! ***
 	author: Sygsky
 	description: creates ammobox, aborigen, prepare aborigen to meet player
 	returns: nothing
@@ -45,6 +45,11 @@ ALL_CAR_ONLY_TYPE_LIST =  ["Skoda","SkodaGreen","SkodaRed","SkodaBlue",
 // _moto_type_list = ["M1030","TT650G","TT650C"]; // Not needed
 
 hint localize "+++ SYG_startOnAntigua.sqf: started...";
+#ifdef __SYG_TRAVEL_BONUS_ENHANCED__
+hint localize "+++ KERZON LINE IN USE...";
+#else
+hint localize "+++ KERZON LINE NOT IN USE...";
+#endif
 [] execVM "scripts\intro\findAborigen.sqf";
 
 _arr = [car1,car2,car3,car4,car5,car6,car7,car8,car9];
