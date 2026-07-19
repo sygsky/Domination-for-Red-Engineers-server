@@ -512,25 +512,27 @@ if (isNil "spell_cast") then {
             BONUS_NO_AIR_WATER call SYG_addBonusScore;
             // MSG_BONUS_LAND_ONLY,"BONUS AWARDED: +%1 (Land Only %2%%)"
             ["msg_to_user","*",[[localize "MSG_BONUS_LAND_ONLY", BONUS_NO_AIR_WATER, round(_ratio)]], 0, 0,false,"surprise"] call SYG_msgToUserParser;
-            _str = format["KERZON BONUS = %1, car ratio = %2", BONUS_NO_AIR_WATER, round(_ratio)];
+            _str = format["+++ KERZON BONUS = %1, car ratio = %2", BONUS_NO_AIR_WATER, round(_ratio)];
         };
         // Big bonus!!
         BONUS_FOOT_ONLY call SYG_addBonusScore;
         // "BONUS AWARDED: +%1 (Foot Master %2%%)"
         ["msg_to_user","*",[[localize "MSG_BONUS_FOOT_MASTER", BONUS_FOOT_ONLY, round(_ratio)]], 0, 0,false,"admiration"] call SYG_msgToUserParser;
-        _str = format["KERZON BONUS = %1, car ratio = %2", BONUS_FOOT_ONLY, round(_ratio)];
+        _str = format["+++ KERZON BONUS = %1, car ratio = %2", BONUS_FOOT_ONLY, round(_ratio)];
     } else {
         // "No travel bonus awarded (Used Air/Water extensively %1%%)."
         ["msg_to_user","*",[[localize "MSG_BONUS_NONE_EXTENSIVE", round(_ratio)]], 0, 0,false,"disappointed"] call SYG_msgToUserParser;
-        _str = format["KERZON BONUS NOT APPLIED, ratio = %1", round(_ratio)];
+        _str = format["+++ KERZON BONUS NOT APPLIED, ratio = %1", round(_ratio)];
     };
 } else {
     // "Voodoo used: No travel bonus."
     ["msg_to_user","*",[[localize "MSG_BONUS_NONE_VODOO"]], 0, 0,false,"confusion"] call SYG_msgToUserParser;
-    _str = "KERZON BONUS NOT APPLIED, vodoo used!";
+    _str = "+++ KERZON BONUS NOT APPLIED, vodoo used!";
 };
 if (_str != "") then {
-    [ "log2server", name player, _str ];
+    [ "log2server", name player, _str ] call XSendNetStartScriptServer;
+} else {
+    hint localize "+++ KERZON line info not send to the server";
 };
 
 #endif
