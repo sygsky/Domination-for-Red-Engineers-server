@@ -685,7 +685,10 @@ XHandleNetStartScriptClient = {
 					_equip = _equip call SYG_str2Arr;
 				} else { _equip = _equip call SYG_str2Arr };
 				if (typeName _equip == "ARRAY") then {
-					if (count _equip > 5) then { base_visit_mission = _equip select 6 }; // base is already visited in previous session[s]
+					if (count _equip > 5) then {
+					    base_visit_mission = _equip select 6
+					    hint localize ["+++ d_player_stuff settings: base_visit_mission = %1, base_visit_session set to 0", base_visit_mission];
+					}; // base is already visited in previous session[s]
 				};
 			};
 			base_visit_session = 0;	// base always is not visited in this session

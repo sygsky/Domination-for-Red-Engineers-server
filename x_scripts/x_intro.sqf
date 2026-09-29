@@ -405,7 +405,7 @@ _rname = _rank call XGetRankFromIndex; // rank name
 //_doJump = /*(base_visit_mission < 1) ||*/ (_rank < 1) || (_owned_para != "");	// check the rank and para weared on user at visit
 _doJump = call (SPAWN_INFO select 1);	// check the jump condition
 
-hint localize format["+++ x_intro: _doJump %1, _rank %2(%3), base_visit_mission %4, base_visit_mission %5, parachute '%6'", str(_doJump), _rank, _rname, base_visit_mission, base_visit_mission, _para ];
+hint localize format["+++ x_intro: _doJump %1, _rank %2(%3), base_visit_session %4, base_visit_mission %5, parachute '%6'", str(_doJump), _rank, _rname, base_visit_session, base_visit_mission, _para ];
 
 if (_owned_para != "") then {
 	(format[localize "STR_INTRO_PARAJUMP_11",_para]) call XfHQChat; // "You found a parachute (%1) on your back and decided to use it to please the smugglers."
@@ -978,7 +978,8 @@ if (_doJump) then {
     waitUntil { camCommitted _camera }; // wait until come
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    if ( alive player) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBaseNew.sqf" }; // run service to check alive player to be on base not in vehicle
+	// Check for base_visit_mission value if need checking Kerzon line trespassing
+    if ( (alive player) && (base_visit_mission < 1) ) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBaseNew.sqf" }; // run service to check alive player to be on base not in vehicle
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	if (!alive player) exitWith {}; // Exit ALL follow animations and messages
 

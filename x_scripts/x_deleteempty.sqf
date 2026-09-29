@@ -37,7 +37,7 @@ _cnt = 0;
 		{deleteVehicle _x; sleep 3.321 } forEach (crew _x) + [_x];
 	};
 } forEach _no;
-hint localize format["+++ x_deleteempty.sqf: deleted %1 veh[s] from %2 found (%3 types) in ""%4""", _cnt, count _no, count _vecs, _target select 1]; // debug printing
+hint localize format["+++ x_deleteempty.sqf: deleted %1 veh[s] from %2 found (search in %3 types) in ""%4""", _cnt, count _no, count _vecs, _target select 1]; // debug printing
 _no = nil;
 
 if (true) exitWith {};
