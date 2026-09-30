@@ -978,8 +978,8 @@ if (_doJump) then {
     waitUntil { camCommitted _camera }; // wait until come
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// Check for base_visit_mission value if need checking Kerzon line trespassing
-    if ( (alive player) && (base_visit_mission < 1) ) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBaseNew.sqf" }; // run service to check alive player to be on base not in vehicle
+	// Check for base_visit_mission value in the SYG_checkPlayerAtBase.sqf itself, not here
+    if ( alive player ) then { _start_time execVM "scripts\intro\SYG_checkPlayerAtBase.sqf" }; // run service to check alive player to be on base not in vehicle
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	if (!alive player) exitWith {}; // Exit ALL follow animations and messages
 
