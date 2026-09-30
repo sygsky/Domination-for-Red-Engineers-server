@@ -567,9 +567,8 @@ if (!isNil "SYG_initialEquipmentStr") then {
 _para = player call SYG_getParachute;
 if ( _para != "") then { player removeWeapon _para };
 
-if (alive _flare) then { deleteVehicle _flare };
-
 if (_drawKerzonLine ) then { // Flares only of player still not visited the abse
+    if (alive _flare) then { deleteVehicle _flare };
     sleep 0.3;
     _flare = "F_40mm_Green" createVehicleLocal _flag_pos;
     [ _flare, "GREEN", _factor] execVM "scripts\emulateFlareFiredLocal.sqf";
